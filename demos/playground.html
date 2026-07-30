@@ -144,6 +144,10 @@
   <script type="module">
     import WB from '../src/core/wb-lazy.js';
     import { formatHtml } from '../src/wb-viewmodels/demo.js';
+    // Shared clipboard-write core (#291) — same helper x-copy/x-copybutton
+    // use (src/wb-viewmodels/copy.js), so the Playground's copy actions
+    // below don't hand-roll their own navigator.clipboard try/catch.
+    import { writeToClipboard } from '../src/wb-viewmodels/copy.js';
 
     const input = document.getElementById('pg-input');
     const preview = document.getElementById('pg-preview');
@@ -446,10 +450,11 @@
       input.focus();
       input.setSelectionRange(start, start + markup.length);
       input.scrollTop = Math.max(0, line * lineHeight - 8);
-      navigator.clipboard.writeText(markup).then(() => {
+      writeToClipboard(markup).then((ok) => {
+        if (!ok) return;
         const cb = document.getElementById('pg-copy');
         if (cb) { const o = cb.textContent; cb.textContent = '✓ Copied'; setTimeout(() => { cb.textContent = o; }, 1200); }
-      }).catch(() => {});
+      });
     });
 
     // Right-click a preview element → copy its SOURCE markup to the clipboard.
@@ -465,12 +470,13 @@
       const end = nextStart < 0 ? input.value.length : nextStart;
       const markup = input.value.slice(start, end).trim();
       e.preventDefault();
-      navigator.clipboard.writeText(markup).then(() => {
+      writeToClipboard(markup).then((ok) => {
+        if (!ok) return;
         const cb = document.getElementById('pg-copy');
         const orig = cb.textContent;
         cb.textContent = '✓ Element copied';
         setTimeout(() => { cb.textContent = orig; }, 1500);
-      }).catch(() => {});
+      });
     });
 
     // Theme control — the real <wb-themecontrol> component (never a one-off
@@ -862,12 +868,11 @@
 
     const copyBtn = document.getElementById('pg-copy');
     copyBtn.addEventListener('click', async () => {
-      try {
-        await navigator.clipboard.writeText(input.value);
-        const orig = copyBtn.textContent;
-        copyBtn.textContent = '✓ Copied';
-        setTimeout(() => { copyBtn.textContent = orig; }, 1500);
-      } catch (e) { /* clipboard blocked — no-op */ }
+      const ok = await writeToClipboard(input.value);
+      if (!ok) return;
+      const orig = copyBtn.textContent;
+      copyBtn.textContent = '✓ Copied';
+      setTimeout(() => { copyBtn.textContent = orig; }, 1500);
     });
     document.getElementById('pg-clear').addEventListener('click', () => {
       endpointPanel.hidden = true;

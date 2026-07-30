@@ -65,9 +65,9 @@
     },
     "hoverText": {
       "type": "string",
-      "description": "Tooltip text shown on hover",
+      "description": "Alias for `tooltip` -- hover text shown as a themed WB tooltip (x-tooltip / tooltip.js), not the native browser title tooltip (#283).",
       "default": "",
-      "appliesAttribute": "title"
+      "appliesAttribute": "x-tooltip"
     }
   },
   "$view": [

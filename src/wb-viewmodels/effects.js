@@ -411,7 +411,7 @@ export function sparkle(element, options = {}) {
           const sparkles = ['✨', '⭐', '🌟'];
           spark.textContent = sparkles[Math.floor(Math.random() * sparkles.length)];
           spark.style.cssText = `
-            position:absolute;top:50%;left:50%;font-size:${size}px;pointer-events:none;
+            position:absolute;top:50%;left:50%;font-size:${size / 16}rem;pointer-events:none;
             animation:wb-sparkle ${duration}s ease-out forwards;
             --end-x:${Math.cos(angle) * distance}px;--end-y:${Math.sin(angle) * distance}px;
             z-index:1000;filter:drop-shadow(0 0 4px gold);
@@ -576,7 +576,7 @@ export function snow(element, options = {}) {
       
       flake.textContent = '❄️';
       flake.style.cssText = `
-        position:absolute;font-size:${size}px;left:${startX}%;top:-30px;
+        position:absolute;font-size:${size / 16}rem;left:${startX}%;top:-30px;
         animation:wb-snow-fall ${duration}s linear ${delay}s forwards;opacity:0.8;
       `;
       container.appendChild(flake);

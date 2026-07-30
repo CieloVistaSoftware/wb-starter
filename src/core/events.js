@@ -127,7 +127,7 @@ function getErrorContainer() {
       }
       .wb-stack-frame {
         font-family: 'JetBrains Mono', 'Fira Code', Consolas, monospace;
-        font-size: 11px;
+        font-size: 0.6875rem;
         line-height: 1.6;
         color: #a5f3fc;
       }
@@ -143,7 +143,7 @@ function getErrorContainer() {
         padding: 2px 6px;
         border-radius: 3px;
         font-family: monospace;
-        font-size: 11px;
+        font-size: 0.6875rem;
       }
     `;
     document.head.appendChild(style);
@@ -199,7 +199,7 @@ function showToast(level, message, data = {}) {
   let headerHTML = `
     <div style="display:flex;align-items:center;gap:0.5rem;margin-bottom:0.5rem;">
       <span style="font-size:1.2rem;">${c.icon}</span>
-      <span style="font-weight:700;font-size:12px;letter-spacing:0.5px;">${c.label}</span>
+      <span style="font-weight:700;font-size:0.75rem;letter-spacing:0.5px;">${c.label}</span>
   `;
   
   // Add module badge
@@ -211,12 +211,12 @@ function showToast(level, message, data = {}) {
   // Add line number
   if (data.line || stackInfo.line !== '?') {
     const lineNum = data.line || stackInfo.line;
-    headerHTML += `<span style="opacity:0.7;font-size:11px;">Line ${lineNum}</span>`;
+    headerHTML += `<span style="opacity:0.7;font-size:0.6875rem;">Line ${lineNum}</span>`;
   }
   
   headerHTML += `
       <button class="wb-error-copy-btn" 
-              style="margin-left:auto;margin-right:8px;background:rgba(255,255,255,0.2);border:1px solid rgba(255,255,255,0.4);color:white;cursor:pointer;font-size:11px;padding:2px 8px;border-radius:4px;">
+              style="margin-left:auto;margin-right:8px;background:rgba(255,255,255,0.2);border:1px solid rgba(255,255,255,0.4);color:white;cursor:pointer;font-size:0.6875rem;padding:2px 8px;border-radius:4px;">
         📋 Copy
       </button>
       <button onclick="this.closest('.wb-error-toast').remove()" 
@@ -228,7 +228,7 @@ function showToast(level, message, data = {}) {
   let messageHTML = '';
   if (data.name) {
     messageHTML += `
-      <div style="font-size:11px;color:#fca5a5;margin-bottom:0.25rem;font-family:monospace;">
+      <div style="font-size:0.6875rem;color:#fca5a5;margin-bottom:0.25rem;font-family:monospace;">
         ${escapeHtml(data.name)}
       </div>
     `;
@@ -236,7 +236,7 @@ function showToast(level, message, data = {}) {
   
   // Message
   messageHTML += `
-    <div style="font-size:13px;font-weight:500;margin-bottom:0.5rem;word-break:break-word;">
+    <div style="font-size:0.8125rem;font-weight:500;margin-bottom:0.5rem;word-break:break-word;">
       ${escapeHtml(String(message))}
     </div>
   `;
@@ -245,7 +245,7 @@ function showToast(level, message, data = {}) {
   if (data.file || data.fullPath) {
     const filePath = data.file || data.fullPath;
     messageHTML += `
-      <div style="font-size:11px;opacity:0.8;margin-bottom:0.5rem;">
+      <div style="font-size:0.6875rem;opacity:0.8;margin-bottom:0.5rem;">
         <strong>File:</strong> ${escapeHtml(filePath)}${data.line ? ':' + data.line : ''}${data.column ? ':' + data.column : ''}
       </div>
     `;
@@ -254,7 +254,7 @@ function showToast(level, message, data = {}) {
   // Error log location hint
   if (level === 'error') {
     messageHTML += `
-      <div style="font-size:10px;opacity:0.6;margin-top:0.5rem;font-style:italic;">
+      <div style="font-size:0.625rem;opacity:0.6;margin-top:0.5rem;font-style:italic;">
         📁 Error log saved to: data/errors.json
       </div>
     `;
@@ -265,7 +265,7 @@ function showToast(level, message, data = {}) {
   if (level === 'error' && stackInfo.frames.length > 0) {
     stackHTML = `
       <details style="margin-top:0.5rem;">
-        <summary style="cursor:pointer;font-size:11px;opacity:0.8;user-select:none;">
+        <summary style="cursor:pointer;font-size:0.6875rem;opacity:0.8;user-select:none;">
           Stack Trace (${stackInfo.frames.length} frames)
         </summary>
         <div class="wb-stack-frame" style="
@@ -285,7 +285,7 @@ function showToast(level, message, data = {}) {
     const shortStack = data.stack.split('\n').slice(0, 6).join('\n');
     stackHTML = `
       <details style="margin-top:0.5rem;">
-        <summary style="cursor:pointer;font-size:11px;opacity:0.8;user-select:none;">
+        <summary style="cursor:pointer;font-size:0.6875rem;opacity:0.8;user-select:none;">
           Stack Trace
         </summary>
         <div class="wb-stack-frame" style="

@@ -100,7 +100,8 @@ every element labeled:
 | `clickable` | boolean | `false` | Make entire card clickable |
 | `variant` | string | `"default"` | Style: `default`, `glass`, `bordered`, `flat`, `rack` |
 | `hoverable` | boolean | `true` | Enable hover effects |
-| `hoverText` | string | `""` | Tooltip on hover |
+| `tooltip` | string | `""` | Hover text shown as a themed WB tooltip (not the native browser `title` tooltip) |
+| `hoverText` | string | `""` | Alias for `tooltip` (pre-existing name) |
 | `badge` | string | `""` | Badge text in header |
 
 ## Usage
@@ -135,6 +136,19 @@ every element labeled:
   elevated
   clickable
   variant="glass">
+  Main content goes here.
+</wb-card>
+```
+
+### With a Tooltip
+
+`tooltip` (alias: `hoverText`) shows a themed WB tooltip on hover -- not the
+unstyled, slow, browser-inconsistent native `title` tooltip (#283):
+
+```html
+<wb-card
+  title="Hover Me"
+  tooltip="Extra detail shown on hover">
   Main content goes here.
 </wb-card>
 ```

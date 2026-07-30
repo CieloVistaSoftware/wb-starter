@@ -90,7 +90,7 @@
     <h3>Textarea</h3>
     <wb-demo>
       <textarea placeholder="Standard textarea" rows="3"></textarea>
-      <textarea data-autosize placeholder="Auto-sizing textarea - grows as you type"></textarea>
+      <textarea autosize placeholder="Auto-sizing textarea - grows as you type"></textarea>
     </wb-demo>
   </section>
 
@@ -284,14 +284,14 @@
     <h3>Tabs</h3>
     <wb-demo>
       <wb-tabs>
-        <div data-tab-title="Overview">
+        <div tab-title="Overview">
           <p>This is the overview tab content. Tabs organize content into separate views with keyboard navigation.</p>
         </div>
-        <div data-tab-title="Features">
+        <div tab-title="Features">
           <p>Features include smooth transitions, responsive design, and full accessibility compliance.</p>
         </div>
-        <div data-tab-title="Usage">
-          <p>Simply wrap your content in a wb-tabs element with data-tab-title on each panel.</p>
+        <div tab-title="Usage">
+          <p>Simply wrap your content in a wb-tabs element with tab-title on each panel.</p>
         </div>
       </wb-tabs>
     </wb-demo>
@@ -299,13 +299,13 @@
     <h3>Accordion</h3>
     <wb-demo>
       <wb-accordion>
-        <div data-accordion-title="What is wb-starter?">
+        <div accordion-title="What is wb-starter?">
           <p>wb-starter is a zero-build web component library with behaviors and themes.</p>
         </div>
-        <div data-accordion-title="How do I install it?">
+        <div accordion-title="How do I install it?">
           <p>No installation needed! Just include the script and start using components immediately.</p>
         </div>
-        <div data-accordion-title="Is it production ready?">
+        <div accordion-title="Is it production ready?">
           <p>Yes! wb-starter is schema-driven, fully tested, and enterprise hardened.</p>
         </div>
       </wb-accordion>
@@ -374,7 +374,7 @@
 
     <h3>Audio Player</h3>
     <wb-demo>
-      <wb-audio data-src="https://files.freemusicarchive.org/storage-freemusicarchive-org/music/no_curator/Tours/Enthusiast/Tours_-_01_-_Enthusiast.mp3" data-show-eq="true" data-volume="0.7"></wb-audio>
+      <wb-audio src="https://files.freemusicarchive.org/storage-freemusicarchive-org/music/no_curator/Tours/Enthusiast/Tours_-_01_-_Enthusiast.mp3" show-eq volume="0.7"></wb-audio>
     </wb-demo>
 
     <h3>YouTube Embed</h3>
@@ -442,6 +442,30 @@
       <div class="copy-target-demo">
         <code id="copy-target-snippet">npm install wb-starter --save</code>
         <button variant="secondary" x-copy copy-target="#copy-target-snippet" copy-feedback="Snippet copied!">📋 Copy From Target</button>
+      </div>
+    </wb-demo>
+
+    <h3>Copy Button (overlay — distinct from x-copy above)</h3>
+    <div class="section-note">
+      <strong>x-copy</strong> above makes the clicked element itself the copy trigger.
+      <strong>x-copybutton</strong> instead overlays a SEPARATE corner button on any element,
+      leaving the element itself unchanged (a `<textarea>` stays typeable, for example). See
+      <a href="/docs/behaviors/x-copybutton.md">docs/behaviors/x-copybutton.md</a>.
+    </div>
+
+    <wb-demo title="x-copybutton on a textarea">
+      <textarea x-copybutton rows="3" cols="40">npm install wb-starter</textarea>
+    </wb-demo>
+
+    <wb-demo title="x-copybutton on a pre/code block">
+      <pre x-copybutton><code>const wb = require('wb-starter');
+wb.init();</code></pre>
+    </wb-demo>
+
+    <wb-demo title="x-copybutton targeting another element">
+      <div class="copy-target-demo">
+        <code id="copybutton-target-snippet">npm install wb-starter --save</code>
+        <button x-copybutton="#copybutton-target-snippet" label="Copy install command" position="top-right">Install command ↑</button>
       </div>
     </wb-demo>
 

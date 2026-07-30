@@ -355,6 +355,11 @@
           "description": "Copy to clipboard behavior"
         },
         {
+          "file": "behaviors/x-copybutton.md",
+          "title": "X-Copybutton",
+          "description": "Overlays a positioned copy button on any element"
+        },
+        {
           "file": "behaviors/x-draggable.md",
           "title": "X-Draggable",
           "description": "Draggable behavior"

@@ -187,6 +187,24 @@ Every component example is a `<wb-demo>` — it renders the **live control** AND
   `.wb-mdhtml th code` are `white-space: nowrap` for exactly this reason
   (`src/styles/behaviors/mdhtml.css`).
 
+## 24. Elements must never unintentionally overlap
+
+- Two normal-flow content elements (text, images, buttons — anything the user reads or
+  clicks) must never render on top of one another. A collision usually means a missing
+  clearfix, a stray `position: absolute`, a z-index accident, or a bad negative margin.
+- This does **not** apply to *intentional* overlap: fixed/sticky headers, popovers,
+  tooltips, dropdown menus, badges pinned to a card corner, resize handles anchored to a
+  boundary, or decorative absolutely-positioned layers (glass-card shimmer, backdrops).
+  Those are opted out because they are taken out of normal flow (`position: absolute` /
+  `fixed` / `sticky`) or carry a recognizable decorative role — not because the check
+  special-cases them by name.
+- Detection is bounding-box intersection (via `getClientRects()`, so wrapped multi-line
+  inline elements aren't falsely flagged by one oversized box) scoped to elements that
+  render their own visible content and sit in normal document flow. A geometry-only check
+  on a *container* (e.g. a flex-grow page wrapper whose box extends into empty space above
+  the footer) is not a real collision — scoping to leaf content elements avoids that class
+  of false positive without pixel-diffing. See `tests/integration/overlap.spec.ts` (#274).
+
 ---
 
 ## Enforcement & references
@@ -200,6 +218,7 @@ Every component example is a `<wb-demo>` — it renders the **live control** AND
 | 9 (composition) | `tests/compliance/no-legacy-component-inheritance-docs.spec.ts` |
 | 11 (colors) | `tests/compliance/css-oop-compliance.spec.ts` |
 | 22 (switch invokes effect) | `tests/behaviors/notify-control-switch.spec.ts` |
+| 24 (no unintended overlap) | `tests/integration/overlap.spec.ts` (#274) |
 
 Open work to bring existing surfaces to this standard: #246 (behaviors-showcase selects),
 #247 (behaviors-showcase mobile nav), #248 (no horizontal scrollbars), and the remaining

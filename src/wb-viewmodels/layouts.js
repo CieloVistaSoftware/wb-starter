@@ -672,7 +672,7 @@ export function drawerLayout(element, options = {}) {
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 10px;
+      font-size: 0.625rem;
       color: var(--text-secondary, #9ca3af);
       padding: 0;
       outline: none;

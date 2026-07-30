@@ -2,16 +2,21 @@
  * #294: font-size/padding/margin/gap/border-radius/width/height that should
  * SCALE with the user's browser font-size setting must use rem, not px.
  *
- * A full project-wide conversion (774 likely-convert occurrences across ~40
- * files as of this writing — see `node scripts/audit-px-units.mjs`) is real
- * design + verification work, not a mechanical pass; not attempted here.
+ * A full project-wide conversion of every convertible property (padding,
+ * margin, gap, border-radius, width/height, etc.) is real design +
+ * verification work, not a mechanical pass; not fully attempted here.
+ * `font-size` specifically WAS fully swept (every literal `font-size:Npx`
+ * across src/pages/demos/docs converted to rem — see the dedicated
+ * zero-tolerance gate in `font-size-no-px.spec.ts`), which is why the
+ * baseline below dropped from the original audit's 774.
  *
- * This gate implements the acceptance criteria's minimum bar: no NEW px
- * creep. It re-runs the audit and fails only if the LIKELY_CONVERT count
- * increases past the recorded baseline — existing px is grandfathered in,
- * new px in a convertible context is not.
+ * This gate implements the acceptance criteria's minimum bar for the
+ * remaining (non-font-size) properties: no NEW px creep. It re-runs the
+ * audit and fails only if the LIKELY_CONVERT count increases past the
+ * recorded baseline — existing px is grandfathered in, new px in a
+ * convertible context is not.
  *
- * To lower the baseline (after converting some files to rem), re-run the
+ * To lower the baseline (after converting more files to rem), re-run the
  * audit script and update BASELINE below to match the new, lower count.
  */
 import { test, expect } from '@playwright/test';
@@ -21,7 +26,7 @@ import path from 'path';
 import { fileURLToPath } from 'url';
 
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '../..');
-const BASELINE = 774;
+const BASELINE = 730;
 
 test('audit: no new px creep in convertible contexts (#294)', () => {
   execFileSync(process.execPath, [path.join(ROOT, 'scripts/audit-px-units.mjs')], { cwd: ROOT });

@@ -67,6 +67,18 @@
       ],
       "default": "auto",
       "appliesClass": "wb-card--{value}"
+    },
+    "tooltip": {
+      "type": "string",
+      "description": "Hover text shown as a themed WB tooltip (x-tooltip / tooltip.js), not the native browser title tooltip. `hoverText`/`hover-text` is the pre-existing documented alias and wins only when `tooltip` is unset (#283).",
+      "default": "",
+      "appliesAttribute": "x-tooltip"
+    },
+    "hoverText": {
+      "type": "string",
+      "description": "Alias for `tooltip` -- hover text shown as a themed WB tooltip, not the native browser title tooltip.",
+      "default": "",
+      "appliesAttribute": "x-tooltip"
     }
   },
   "$view": [],

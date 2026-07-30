@@ -405,7 +405,7 @@ function generateInputDemos(behaviors) {
 
   html += '    <h3>Textarea</h3>\n    <div class="demo-grid-2">\n';
   html += '      <textarea placeholder="Standard textarea" rows="3"></textarea>\n';
-  html += '      <textarea data-autosize placeholder="Auto-sizing textarea - grows as you type"></textarea>\n';
+  html += '      <textarea autosize placeholder="Auto-sizing textarea - grows as you type"></textarea>\n';
   html += '    </div>\n';
 
   return html;
@@ -601,14 +601,14 @@ function generateNavigationDemos(behaviors) {
   if (behaviors.some(b => b.name === 'wb-tabs')) {
     html += '    <h3>Tabs</h3>\n    <div class="demo-full">\n';
     html += '      <wb-tabs>\n';
-    html += '        <div data-tab-title="Overview">\n';
+    html += '        <div tab-title="Overview">\n';
     html += '          <p>This is the overview tab content. Tabs organize content into separate views with keyboard navigation.</p>\n';
     html += '        </div>\n';
-    html += '        <div data-tab-title="Features">\n';
+    html += '        <div tab-title="Features">\n';
     html += '          <p>Features include smooth transitions, responsive design, and full accessibility compliance.</p>\n';
     html += '        </div>\n';
-    html += '        <div data-tab-title="Usage">\n';
-    html += '          <p>Simply wrap your content in a wb-tabs element with data-tab-title on each panel.</p>\n';
+    html += '        <div tab-title="Usage">\n';
+    html += '          <p>Simply wrap your content in a wb-tabs element with tab-title on each panel.</p>\n';
     html += '        </div>\n';
     html += '      </wb-tabs>\n';
     html += '    </div>\n\n';
@@ -617,13 +617,13 @@ function generateNavigationDemos(behaviors) {
   if (behaviors.some(b => b.name === 'wb-accordion')) {
     html += '    <h3>Accordion</h3>\n    <div class="demo-full">\n';
     html += '      <wb-accordion>\n';
-    html += '        <div data-accordion-title="What is wb-starter?">\n';
+    html += '        <div accordion-title="What is wb-starter?">\n';
     html += '          <p>wb-starter is a zero-build web component library with behaviors and themes.</p>\n';
     html += '        </div>\n';
-    html += '        <div data-accordion-title="How do I install it?">\n';
+    html += '        <div accordion-title="How do I install it?">\n';
     html += '          <p>No installation needed! Just include the script and start using components immediately.</p>\n';
     html += '        </div>\n';
-    html += '        <div data-accordion-title="Is it production ready?">\n';
+    html += '        <div accordion-title="Is it production ready?">\n';
     html += '          <p>Yes! wb-starter is schema-driven, fully tested, and enterprise hardened.</p>\n';
     html += '        </div>\n';
     html += '      </wb-accordion>\n';
@@ -702,7 +702,7 @@ function generateMediaDemos(behaviors) {
 
   if (behaviors.some(b => b.name === 'wb-audio')) {
     html += '    <h3>Audio Player</h3>\n    <div class="demo-full">\n';
-    html += '      <wb-audio data-src="https://files.freemusicarchive.org/storage-freemusicarchive-org/music/no_curator/Tours/Enthusiast/Tours_-_01_-_Enthusiast.mp3" data-show-eq="true" data-volume="0.7"></wb-audio>\n';
+    html += '      <wb-audio src="https://files.freemusicarchive.org/storage-freemusicarchive-org/music/no_curator/Tours/Enthusiast/Tours_-_01_-_Enthusiast.mp3" show-eq volume="0.7"></wb-audio>\n';
     html += '    </div>\n\n';
   }
 

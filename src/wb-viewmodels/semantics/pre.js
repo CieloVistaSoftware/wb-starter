@@ -1,7 +1,19 @@
+import { writeToClipboard } from '../copy.js';
+
 /**
  * Pre - Enhanced <pre> element (Preformatted Text)
  * Adds line numbers, copy button, scrollability, code block features
  * Helper Attribute: [x-behavior="pre"]
+ *
+ * The copy control below is a header row item positioned alongside the
+ * language badge and hide/show toggle inside this behavior's OWN
+ * .x-pre-wrapper (see the "Header controls" measurement block) -- it is not
+ * built via x-copybutton's separate .x-copybutton-wrapper, since that would
+ * nest a second relative/absolute positioning context inside this one and
+ * break the sequential right-offset measurement every other header control
+ * here depends on. It DOES reuse x-copybutton's/x-copy's shared
+ * writeToClipboard() (../copy.js) for the actual clipboard write + fallback,
+ * so that logic exists in exactly one place project-wide (#291).
  */
 export function pre(element, options = {}) {
   if (element.tagName !== 'PRE') {
@@ -94,14 +106,12 @@ export function pre(element, options = {}) {
     copyButton.style.right = `${nextControlRightPx}px`;
 
     copyButton.addEventListener('click', async () => {
-      try {
-        await navigator.clipboard.writeText(element.textContent);
+      const ok = await writeToClipboard(element.textContent);
+      if (ok) {
         copyButton.textContent = '✓';
         setTimeout(() => {
           copyButton.textContent = '📋';
         }, 2000);
-      } catch (err) {
-        console.error('[pre] Failed to copy:', err);
       }
     });
 

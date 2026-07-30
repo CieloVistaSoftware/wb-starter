@@ -450,7 +450,8 @@ When using `image`, `audio`, or `video` UI types:
 |----------|-----|---------|-------------|
 | `icon` | Icon Picker | "📈" | Emoji or icon |
 | `badge` | Text | "" | Badge text |
-| `hoverText` | Text | "" | Tooltip on hover |
+| `tooltip` | Text | "" | Hover text shown as a themed WB tooltip (not the native browser `title` tooltip) |
+| `hoverText` | Text | "" | Alias for `tooltip` (pre-existing name) |
 | `alt` | Text | "Image" | Image alt text |
 | `status` | Select | "" | Online status |
 | `format` | Select | "24" | Time format |

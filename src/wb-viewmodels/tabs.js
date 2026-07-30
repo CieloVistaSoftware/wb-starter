@@ -38,7 +38,10 @@ export function tabs(element, options = {}) {
 
     // Process Panels
     originalPanels.forEach((panel, i) => {
-      const title = panel.getAttribute('tab-title') || panel.getAttribute('tab') || `Tab ${i + 1}`;
+      // Plain `tab-title`/`tab` is canonical (v3); `data-tab-title` accepted
+      // for back-compat (matches the accordion-title dual-read in collapse.js).
+      const title = panel.getAttribute('tab-title') || panel.getAttribute('tab') ||
+        panel.getAttribute('data-tab-title') || `Tab ${i + 1}`;
       const isActive = i === 0;
 
       // Create Tab Button

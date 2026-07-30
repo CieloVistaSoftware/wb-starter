@@ -70,6 +70,10 @@ export const BEHAVIOR_CSS_MAP = {
   chip: ['chip.css'],
   code: ['code.css'],
   collapse: ['collapse.css'],
+  // x-copybutton (#291) — copy() itself (x-copy) is pure JS with nothing to
+  // style, but copyButton() injects a real positioned button, so it needs
+  // its own CSS file loaded.
+  copybutton: ['copybutton.css'],
   counter: ['counter.css'],
   table: ['data.css'],
   demo: ['demo.css'],

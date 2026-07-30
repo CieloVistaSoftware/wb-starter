@@ -25,7 +25,7 @@ function initErrorDisplay() {
     background: rgba(20, 20, 20, 0.95);
     color: #fff;
     font-family: 'JetBrains Mono', monospace;
-    font-size: 12px;
+    font-size: 0.75rem;
     border-radius: 8px;
     box-shadow: 0 4px 20px rgba(0,0,0,0.5);
     border: 1px solid #ef4444;
@@ -37,9 +37,9 @@ function initErrorDisplay() {
     <div style="padding:10px 12px;background:#1a1a1a;border-bottom:1px solid #333;display:flex;justify-content:space-between;align-items:center;border-radius:8px 8px 0 0;position:sticky;top:0;">
       <span style="font-weight:bold;color:#ef4444;">❌ Errors (<span id="wb-error-count">0</span>)</span>
       <div>
-        <button id="wb-error-copy" style="background:#3b82f6;border:none;color:#fff;padding:4px 10px;border-radius:4px;cursor:pointer;font-size:11px;margin-right:4px;">📋 Copy</button>
-        <button id="wb-error-clear" style="background:#333;border:none;color:#fff;padding:4px 10px;border-radius:4px;cursor:pointer;font-size:11px;margin-right:4px;">Clear</button>
-        <button id="wb-error-close" style="background:#ef4444;border:none;color:#fff;padding:4px 10px;border-radius:4px;cursor:pointer;font-size:11px;">✕</button>
+        <button id="wb-error-copy" style="background:#3b82f6;border:none;color:#fff;padding:4px 10px;border-radius:4px;cursor:pointer;font-size:0.6875rem;margin-right:4px;">📋 Copy</button>
+        <button id="wb-error-clear" style="background:#333;border:none;color:#fff;padding:4px 10px;border-radius:4px;cursor:pointer;font-size:0.6875rem;margin-right:4px;">Clear</button>
+        <button id="wb-error-close" style="background:#ef4444;border:none;color:#fff;padding:4px 10px;border-radius:4px;cursor:pointer;font-size:0.6875rem;">✕</button>
       </div>
     </div>
     <div id="wb-error-list" style="padding:8px;"></div>
@@ -127,16 +127,16 @@ export async function logError(message, details = {}) {
   
   const time = new Date(error.timestamp).toLocaleTimeString();
   let detailsHtml = '';
-  if (details.file) detailsHtml += `<div style="color:#888;font-size:11px;">📁 ${details.file}:${details.line || '?'}</div>`;
-  if (error.to) detailsHtml += `<div style="color:#3b82f6;font-size:11px;">➡️ To: ${escapeHtml(error.to)}</div>`;
-  if (details.response) detailsHtml += `<div style="color:#f59e0b;font-size:11px;">📡 Response: ${escapeHtml(details.response)}</div>`;
-  if (details.src) detailsHtml += `<div style="color:#a78bfa;font-size:11px;">📄 Src: ${escapeHtml(details.src)}</div>`;
-  if (details.stack) detailsHtml += `<div style="color:#666;font-size:10px;margin-top:4px;max-height:60px;overflow:auto;">${escapeHtml(details.stack)}</div>`;
+  if (details.file) detailsHtml += `<div style="color:#888;font-size:0.6875rem;">📁 ${details.file}:${details.line || '?'}</div>`;
+  if (error.to) detailsHtml += `<div style="color:#3b82f6;font-size:0.6875rem;">➡️ To: ${escapeHtml(error.to)}</div>`;
+  if (details.response) detailsHtml += `<div style="color:#f59e0b;font-size:0.6875rem;">📡 Response: ${escapeHtml(details.response)}</div>`;
+  if (details.src) detailsHtml += `<div style="color:#a78bfa;font-size:0.6875rem;">📄 Src: ${escapeHtml(details.src)}</div>`;
+  if (details.stack) detailsHtml += `<div style="color:#666;font-size:0.625rem;margin-top:4px;max-height:60px;overflow:auto;">${escapeHtml(details.stack)}</div>`;
   
   item.innerHTML = `
     <div style="display:flex;justify-content:space-between;margin-bottom:4px;">
       <span style="color:#ef4444;">❌ Error</span>
-      <span style="color:#666;font-size:10px;">${time}</span>
+      <span style="color:#666;font-size:0.625rem;">${time}</span>
     </div>
     <div style="color:#fff;">${escapeHtml(error.message)}</div>
     ${detailsHtml}

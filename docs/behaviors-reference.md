@@ -24,12 +24,13 @@ Behaviors are applied using attributes with a configurable prefix (default: `x-`
 ### 1. Decoration (`x-{behavior}`)
 Enhances an element without changing its fundamental structure.
 
-```html
-<!-- Add ripple effect to a button -->
+<wb-demo>
 <button x-ripple>Click Me</button>
-<!-- Add tooltip -->
+</wb-demo>
+
+<wb-demo>
 <div x-tooltip="Hello World">Hover Me</div>
-```
+</wb-demo>
 
 | Element | Behavior | Result |
 |---------|----------|--------|
@@ -42,15 +43,14 @@ Enhances an element without changing its fundamental structure.
 ### 2. Morphing (`x-as-{behavior}`)
 Transforms an element into a complex component. The `-as-` infix is required for morphing behaviors to make the transformation explicit.
 
-```html
-<!-- Explicitly morph an article into a card -->
+<wb-demo>
 <article x-as-card>
   <header>
     <h3>Title</h3>
   </header>
   <main>Content</main>
 </article>
-```
+</wb-demo>
 
 | Element | Behavior | Result |
 |---------|----------|--------|
@@ -76,13 +76,16 @@ Behaviors can be configured to automatically attach to standard HTML5 semantic e
 
 To enable, set `"autoInject": true` in your `config/site.json` or pass it to `WB.init()`.
 
-```html
-<!-- When autoInject is enabled: -->
-<!-- Decorating: dialog gets backdrop and animations -->
-<dialog>...</dialog>
-<!-- Decorating: img gets lazy loading and lightbox -->
-<img src="...">
-```
+When enabled, plain semantic elements like `<dialog>` and `<img>` below get the
+`dialog`/`image` behaviors attached automatically, with no `x-` attribute needed:
+
+<wb-demo>
+<dialog>Auto-decorated dialog content.</dialog>
+</wb-demo>
+
+<wb-demo>
+<img src="photo.jpg" alt="Auto-decorated image">
+</wb-demo>
 
 ---
 

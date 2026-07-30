@@ -140,6 +140,18 @@ const WB_LAZY_ONLY_ELEMENTS = {
 // Porting wb.js's dynamic approach here would remove the need for this list
 // entirely -- a larger follow-up, not done as part of this consolidation.
 const WB_LAZY_ONLY_ATTRIBUTES = {
+  // mdhtml.js marks rendered code blocks with bare `x-pre`/`x-code` presence
+  // attributes (src/wb-viewmodels/mdhtml.js) and relies on WB.scan() to pick
+  // them up -- on wb.js that "just works" via its dynamic x-{name} shorthand
+  // resolution (see the file comment above), but wb-lazy.js has no such
+  // dynamic path and neither name was ever added to this static table, so
+  // every rendered <pre>/<code> block on a wb-lazy.js-driven page (any
+  // standalone demo, doc-viewer.html reached via one) silently never got the
+  // pre()/code() enhancement (#322) -- confirmed live: WB.inject() was never
+  // even called for these elements, since no selector in customElementMappings
+  // matched `[x-pre]`/`[x-code]` at all.
+  'x-pre': 'pre',
+  'x-code': 'code',
   'x-breadcrumb': 'breadcrumb',
   'x-toast': 'toast',
   'x-notify': 'notify',

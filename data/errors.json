@@ -1,10 +1,10 @@
 {
-  "lastUpdated": "2026-07-30T18:45:56.632Z",
+  "lastUpdated": "2026-07-30T21:34:07.035Z",
   "count": 1,
   "errors": [
     {
-      "id": 1785437156632,
-      "timestamp": "2026-07-30T18:45:56.632Z",
+      "id": 1785447247034,
+      "timestamp": "2026-07-30T21:34:07.034Z",
       "level": "error",
       "source": "WB:LegacySyntax",
       "module": "wb.js",
@@ -12,7 +12,7 @@
       "column": 41,
       "function": "(anonymous)",
       "message": "Legacy syntax data-wb=\"card\" detected on <div>. Please use <wb-card> instead.",
-      "stack": "Error: Legacy syntax data-wb=\"card\" detected on <div>. Please use <wb-card> instead.\n    at http://localhost:3000/src/core/wb.js:731:41\n    at NodeList.forEach (<anonymous>)\n    at Object.scan (http://localhost:3000/src/core/wb.js:723:42)\n    at Object.init (http://localhost:3000/src/core/wb.js:1170:18)\n    at http://localhost:3000/demos/legacy-syntax-check.html:14:12",
+      "stack": "Error: Legacy syntax data-wb=\"card\" detected on <div>. Please use <wb-card> instead.\n    at http://localhost:3000/src/core/wb.js:731:41\n    at NodeList.forEach (<anonymous>)\n    at Object.scan (http://localhost:3000/src/core/wb.js:723:42)\n    at async Object.init (http://localhost:3000/src/core/wb.js:1170:9)",
       "frames": [
         {
           "function": "(anonymous)",
@@ -33,17 +33,10 @@
           "file": "wb.js",
           "fullPath": "http://localhost:3000/src/core/wb.js",
           "line": 1170,
-          "column": 18
-        },
-        {
-          "function": "(anonymous)",
-          "file": "legacy-syntax-check.html",
-          "fullPath": "http://localhost:3000/demos/legacy-syntax-check.html",
-          "line": 14,
-          "column": 12
+          "column": 9
         }
       ],
-      "url": "http://localhost:3000/demos/legacy-syntax-check.html",
+      "url": "http://localhost:3000/tests/compliance/legacy-syntax-check.html",
       "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/145.0.7632.6 Safari/537.36",
       "interaction": {
         "from": "System",

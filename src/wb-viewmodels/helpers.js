@@ -779,7 +779,7 @@ export function debug(element, options = {}) {
     background:rgba(0,0,0,0.9);
     color:#fff;
     font-family:monospace;
-    font-size:12px;
+    font-size:0.75rem;
     border-radius:8px;
     box-shadow:0 4px 20px rgba(0,0,0,0.5);
     z-index:99999;
@@ -790,7 +790,7 @@ export function debug(element, options = {}) {
   header.style.cssText = 'padding:8px 12px;background:#1a1a1a;border-bottom:1px solid #333;display:flex;justify-content:space-between;align-items:center;border-radius:8px 8px 0 0;position:sticky;top:0;';
   header.innerHTML = `
     <span style="font-weight:bold;">🐛 Console</span>
-    <button id="wb-debug-clear" style="background:#333;border:none;color:#fff;padding:2px 8px;border-radius:4px;cursor:pointer;font-size:11px;">Clear</button>
+    <button id="wb-debug-clear" style="background:#333;border:none;color:#fff;padding:2px 8px;border-radius:4px;cursor:pointer;font-size:0.6875rem;">Clear</button>
   `;
   element.appendChild(header);
   

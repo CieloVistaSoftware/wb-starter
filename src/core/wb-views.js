@@ -173,7 +173,7 @@ function processWbViewElement(element, viewName) {
         
         if (!sourceEl) {
           console.error(`[WB Views] use="${use}" - element not found`);
-          element.innerHTML = `<span style="color:red;font-size:11px;">use: ${use} not found</span>`;
+          element.innerHTML = `<span style="color:red;font-size:0.6875rem;">use: ${use} not found</span>`;
           return;
         }
         
@@ -188,7 +188,7 @@ function processWbViewElement(element, viewName) {
       
       if (refData === undefined) {
         console.error(`[WB Views] use="${use}" - path not found on window`);
-        element.innerHTML = `<span style="color:red;font-size:11px;">use: ${use} not found</span>`;
+        element.innerHTML = `<span style="color:red;font-size:0.6875rem;">use: ${use} not found</span>`;
         return;
       }
       
@@ -250,7 +250,7 @@ function processWbViewElement(element, viewName) {
         renderData = { ...data, ...fetchedData };
       } catch (error) {
         console.error(`[WB Views] Fetch failed: ${src}`, error);
-        element.innerHTML = `<span style="color:red;font-size:11px;">Load failed: ${src}</span>`;
+        element.innerHTML = `<span style="color:red;font-size:0.6875rem;">Load failed: ${src}</span>`;
         return;
       }
     }
@@ -505,7 +505,7 @@ export function renderView(viewName, data, target, body = '') {
   if (!template) {
     const available = [...viewRegistry.keys()].join(', ') || '(none)';
     console.error(`[WB Views] Unknown view: "${viewName}". Available: ${available}`);
-    target.innerHTML = `<span style="color:red;font-size:11px;background:#300;padding:2px 6px;border-radius:3px;">Unknown view: ${viewName}</span>`;
+    target.innerHTML = `<span style="color:red;font-size:0.6875rem;background:#300;padding:2px 6px;border-radius:3px;">Unknown view: ${viewName}</span>`;
     return () => {};
   }
   
@@ -685,7 +685,7 @@ function processWbView(element) {
   if (!viewName) {
     console.error('[WB Views] No view name found. Attributes:', 
       Array.from(element.attributes).map(a => a.name));
-    element.innerHTML = '<span style="color:orange;font-size:11px;background:#330;padding:2px 6px;border-radius:3px;">No view name</span>';
+    element.innerHTML = '<span style="color:orange;font-size:0.6875rem;background:#330;padding:2px 6px;border-radius:3px;">No view name</span>';
     const cleanup = () => {};
     processedElements.set(element, cleanup);
     return cleanup;
@@ -716,7 +716,7 @@ function processWbView(element) {
         
         if (!sourceEl) {
           console.error(`[WB Views] use="${use}" - element not found`);
-          element.innerHTML = `<span style="color:red;font-size:11px;">use: ${use} not found</span>`;
+          element.innerHTML = `<span style="color:red;font-size:0.6875rem;">use: ${use} not found</span>`;
           return;
         }
         
@@ -737,7 +737,7 @@ function processWbView(element) {
       
       if (refData === undefined) {
         console.error(`[WB Views] use="${use}" - path not found on window`);
-        element.innerHTML = `<span style="color:red;font-size:11px;">use: ${use} not found</span>`;
+        element.innerHTML = `<span style="color:red;font-size:0.6875rem;">use: ${use} not found</span>`;
         return;
       }
       
@@ -799,7 +799,7 @@ function processWbView(element) {
         renderData = { ...data, ...fetchedData };
       } catch (error) {
         console.error(`[WB Views] Fetch failed: ${src}`, error);
-        element.innerHTML = `<span style="color:red;font-size:11px;">Load failed: ${src}</span>`;
+        element.innerHTML = `<span style="color:red;font-size:0.6875rem;">Load failed: ${src}</span>`;
         return;
       }
     }

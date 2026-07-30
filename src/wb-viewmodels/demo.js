@@ -304,7 +304,15 @@ export async function demo(element, options = {}) {
     // already covered by the global scan; only the new pre/code panel
     // needs one here.
     if (window.WB) {
-        window.WB.scan(pre);
+        // eager:true -- WB.scan()'s default lazy path defers [x-behavior]
+        // elements to an IntersectionObserver instead of applying them
+        // synchronously, so the code panel could sit unstyled/unscanned for
+        // an indeterminate delay (confirmed live on public/doc-viewer.html:
+        // the nested <code x-behavior="code"> got hljs highlighting while
+        // the wrapping <pre x-behavior="pre"> sat with no x-pre class at
+        // the same snapshot). The panel is built and appended synchronously
+        // right above -- there's no perf reason to defer scanning it lazily.
+        window.WB.scan(pre, { eager: true });
     }
 
     return () => {};

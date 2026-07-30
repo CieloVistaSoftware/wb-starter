@@ -216,7 +216,7 @@
 }
 .wb-mdhtml .code-caption {
   font-family: 'JetBrains Mono', 'Fira Code', Consolas, monospace;
-  font-size: 10px;
+  font-size: 0.625rem;
   color: var(--text-muted);
   margin-top: 0.25rem;
   align-self: flex-end;

@@ -70,7 +70,7 @@ async function init() {
       // Show the actual error
       const errorDiv = document.createElement('pre');
       errorDiv.style.cssText =
-        'margin: 1rem; padding: 1rem; background: #1e1e1e; color: #f87171; border-radius: 8px; overflow: auto; font-size: 12px;';
+        'margin: 1rem; padding: 1rem; background: #1e1e1e; color: #f87171; border-radius: 8px; overflow: auto; font-size: 0.75rem;';
       errorDiv.textContent = error.stack || error.message || String(error);
       app.appendChild(errorDiv);
     } else {

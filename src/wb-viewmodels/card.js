@@ -27,6 +27,7 @@
  */
 
 import { attachVideoLoadRetry, attachImageLoadRetry } from './media-load-retry.js';
+import { tooltip as tooltipBehavior } from './tooltip.js';
 
 // Always-on, dedicated cardimage/cardvideo load tracing -- this exact failure
 // ("video/image cards not rendering") keeps recurring, especially on the
@@ -152,7 +153,14 @@ export function cardBase(element, options = {}) {
     hoverable: parseBoolean(options.hoverable) ?? (element.dataset.hoverable !== 'false'),
     elevated: parseBoolean(options.elevated) ?? (element.dataset.elevated === 'true' || (element.hasAttribute('data-elevated') && element.dataset.elevated !== 'false') || element.hasAttribute('elevated')),
     size: options.size || element.dataset.size || element.getAttribute('size') || 'auto',
-    hoverText: options.hoverText || element.dataset.hoverText || '',
+    // #283: `tooltip` is the WB-standard attribute name for hover text
+    // (ATTRIBUTE-NAMING-STANDARD.md's cheat sheet: "Set tooltip -> `tooltip`
+    // or native `title`"). `hoverText` / `hover-text` stays supported as the
+    // pre-existing documented alias (card.md, docs/properties.md,
+    // cardprofile.schema.json) -- both resolve to the same themed tooltip
+    // below, `tooltip` taking priority if a card author sets both.
+    tooltip: options.tooltip || element.getAttribute('tooltip') || '',
+    hoverText: options.hoverText || element.dataset.hoverText || element.getAttribute('hoverText') || element.getAttribute('hover-text') || '',
     onClick: options.onClick || element.dataset.onClick || '',
     dataContext: options.dataContext || element.dataset.dataContext || '{}',
     // v3.0: Skip structure building if schema already did it
@@ -175,9 +183,29 @@ export function cardBase(element, options = {}) {
     element.classList.add(`wb-card--${config.behavior.replace('card', '')}`);
   }
   
-  // Apply hover text
-  if (config.hoverText) {
-    element.setAttribute('title', config.hoverText);
+  // Apply hover text as a THEMED WB tooltip (x-tooltip / tooltip.js), not
+  // the native browser `title` attribute -- native title tooltips are
+  // unstyled, slow to appear, and inconsistent across browsers (#283). A
+  // plain `title` attribute set independently by the author (not via
+  // tooltip/hoverText) is left untouched and keeps working as a normal
+  // native tooltip.
+  //
+  // Set x-tooltip for discoverability/consistency with the same marker
+  // pattern cardhero's CTA buttons use (search "x-tooltip" in this file),
+  // but don't rely on WB's scan/observer to pick it up -- an ATTRIBUTE
+  // change on an element already in the DOM isn't covered by wb-lazy.js's
+  // MutationObserver (it only watches childList + the `x-behavior`
+  // attribute), so a card enhanced after the page's initial eager scan
+  // would otherwise never get wired up. Call tooltip() directly instead;
+  // it's idempotent (guards on element._wbTooltip), so a later scan/observer
+  // pass finding the same [x-tooltip] element is a safe no-op, not a
+  // double-attach.
+  const hoverContent = config.tooltip || config.hoverText;
+  let tooltipCleanup = null;
+  if (hoverContent) {
+    element.setAttribute('x-tooltip', hoverContent);
+    const cleanupPromise = tooltipBehavior(element, { content: hoverContent });
+    tooltipCleanup = () => { cleanupPromise.then((fn) => { if (typeof fn === 'function') fn(); }); };
   }
   
   // Apply base styles
@@ -608,6 +636,9 @@ export function cardBase(element, options = {}) {
       if (clickHandler) {
         element.removeEventListener('click', clickHandler);
       }
+      if (tooltipCleanup) {
+        tooltipCleanup();
+      }
     }
   };
 }
@@ -1025,18 +1056,20 @@ export function cardprofile(element, options = {}) {
     bio: options.bio || element.dataset.bio || element.getAttribute('bio'),
     cover: options.cover || element.dataset.cover || element.getAttribute('cover'),
     // schema-declared but previously never read -- size/align had zero
-    // effect (#19: every declared attribute must produce a real effect),
-    // and hoverText never became the title attribute it's documented to.
+    // effect (#19: every declared attribute must produce a real effect).
     size: options.size || element.dataset.size || element.getAttribute('size') || 'md',
     align: options.align || element.dataset.align || element.getAttribute('align') || 'center',
     hoverText: options.hoverText || element.dataset.hoverText || element.getAttribute('hoverText') || element.getAttribute('hover-text'),
     ...options
   };
 
+  // #283: hoverText/tooltip -> themed WB tooltip is handled once, generically,
+  // by cardBase() (it reads config.hoverText/config.tooltip straight off this
+  // same `config` object via the spread below) -- don't also set a native
+  // `title` here, that would silently re-add the plain browser tooltip
+  // cardBase just wired the themed one to replace.
   const base = cardBase(element, { ...config, behavior: 'cardprofile' });
   element.innerHTML = '';
-
-  if (config.hoverText) element.setAttribute('title', config.hoverText);
 
   // Cover
   if (config.cover) {

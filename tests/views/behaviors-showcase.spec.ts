@@ -395,8 +395,11 @@ test.describe('Navigation Section', () => {
     const tabs = page.locator('#navigation [x-tabs]').first();
     await expect(tabs).toBeVisible();
     
-    // Should have tab panels
-    const panels = tabs.locator('[data-tab-title]');
+    // Should have tab panels. tabs.js hydrates each [tab-title] child into a
+    // rendered `.wb-tabs__panel` section and discards the original attribute
+    // (see src/wb-viewmodels/tabs.js), so the post-hydration DOM must be
+    // queried by the rendered class, not the pre-hydration attribute.
+    const panels = tabs.locator('.wb-tabs__panel');
     expect(await panels.count()).toBeGreaterThanOrEqual(2);
   });
 
@@ -404,8 +407,12 @@ test.describe('Navigation Section', () => {
     const accordion = page.locator('#navigation wb-accordion').first();
     await expect(accordion).toBeVisible();
     
-    // Should have accordion items
-    const items = accordion.locator('[data-accordion-title]');
+    // Should have accordion items. collapse.js's accordion() hydrates each
+    // [accordion-title] child into a rendered `.wb-accordion-item` and
+    // discards the original attribute (see src/wb-viewmodels/collapse.js),
+    // so the post-hydration DOM must be queried by the rendered class, not
+    // the pre-hydration attribute.
+    const items = accordion.locator('.wb-accordion-item');
     expect(await items.count()).toBeGreaterThanOrEqual(2);
   });
 

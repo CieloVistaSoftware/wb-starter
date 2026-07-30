@@ -1478,7 +1478,7 @@ h5, h6 {
   background: var(--bg-secondary);
   color: var(--text-primary);
   font-family: inherit;
-  font-size: 12px; /* Small but readable */
+  font-size: 0.75rem; /* Small but readable */
   line-height: 1.5;
 }
 
@@ -1628,7 +1628,7 @@ h5, h6 {
   content: '⊕';
   position: absolute;
   color: #555;
-  font-size: 10px;
+  font-size: 0.625rem;
   line-height: 1;
   left: 6px;
 }
@@ -1640,7 +1640,7 @@ h5, h6 {
   content: '⊕';
   position: absolute;
   color: #555;
-  font-size: 10px;
+  font-size: 0.625rem;
   line-height: 1;
   right: 6px;
 }
