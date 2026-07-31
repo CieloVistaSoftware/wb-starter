@@ -146,6 +146,16 @@ lines.push('      border-radius: 12px;');
 lines.push('      border: 1px solid var(--border-color);');
 lines.push('      margin-bottom: 2rem;');
 lines.push('    }');
+lines.push('    .demo-section__grid {');
+lines.push('      display: grid;');
+lines.push('      gap: 1.5rem;');
+lines.push('    }');
+lines.push('    .demo-section__grid--cols-1 { grid-template-columns: 1fr; }');
+lines.push('    .demo-section__grid--cols-2 { grid-template-columns: repeat(2, 1fr); }');
+lines.push('    .demo-section__grid--cols-3 { grid-template-columns: repeat(3, 1fr); }');
+lines.push('    .demo-section__grid--cols-4 { grid-template-columns: repeat(4, 1fr); }');
+lines.push('    .demo-section__grid--cols-5 { grid-template-columns: repeat(5, 1fr); }');
+lines.push('    .demo-section__grid--cols-6 { grid-template-columns: repeat(6, 1fr); }');
 lines.push('  </style>');
 lines.push('');
 lines.push('</head>');
@@ -173,24 +183,49 @@ if (schema.sections) {
     const section = schema.sections[i];
     const sectionNum = i + 1;
 
+    const cols = section.columns || 3;
+
     lines.push(`  <!-- ${sectionNum}. ${section.heading} -->`);
     lines.push(`  <h2>${section.heading}</h2>`);
     lines.push('  <div class="demo-section">');
-    lines.push(`    <wb-demo columns="${section.columns || 3}">`);
 
-    for (const demo of section.demos) {
-      const attrs = attrString(demo.attrs);
-      if (demo.children) {
-        lines.push(`      <${demo.tag}${attrs}>`);
-        lines.push(`        ${demo.children}`);
-        lines.push(`      </${demo.tag}>`);
-      } else {
-        lines.push(`      <${demo.tag}${attrs}>`);
-        lines.push(`      </${demo.tag}>`);
+    if (section.demos.length > 1) {
+      // §2 "one code sample per rendered element": a section with several
+      // differently-configured instances gets one <wb-demo> per instance
+      // (each with its own code sample) instead of bundling them all under
+      // one shared <wb-demo>. The grid wrapper keeps the side-by-side
+      // comparison layout the `columns` setting originally implied.
+      lines.push(`    <div class="demo-section__grid demo-section__grid--cols-${cols}">`);
+      for (const demo of section.demos) {
+        const attrs = attrString(demo.attrs);
+        lines.push('      <wb-demo columns="1">');
+        if (demo.children) {
+          lines.push(`        <${demo.tag}${attrs}>`);
+          lines.push(`          ${demo.children}`);
+          lines.push(`        </${demo.tag}>`);
+        } else {
+          lines.push(`        <${demo.tag}${attrs}>`);
+          lines.push(`        </${demo.tag}>`);
+        }
+        lines.push('      </wb-demo>');
       }
+      lines.push('    </div>');
+    } else {
+      lines.push(`    <wb-demo columns="${cols}">`);
+      for (const demo of section.demos) {
+        const attrs = attrString(demo.attrs);
+        if (demo.children) {
+          lines.push(`      <${demo.tag}${attrs}>`);
+          lines.push(`        ${demo.children}`);
+          lines.push(`      </${demo.tag}>`);
+        } else {
+          lines.push(`      <${demo.tag}${attrs}>`);
+          lines.push(`      </${demo.tag}>`);
+        }
+      }
+      lines.push('    </wb-demo>');
     }
 
-    lines.push('    </wb-demo>');
     lines.push('  </div>');
     lines.push('');
   }
