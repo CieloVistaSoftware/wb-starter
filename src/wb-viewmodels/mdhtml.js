@@ -215,9 +215,26 @@ export async function mdhtml(element, options = {}) {
       // quote was silently eaten. Confirmed live: every JSON-in-attribute
       // demo using `options=`/`data-options=` on doc-viewer.html rendered
       // its source panel (and, worse, its actual DOM attribute) corrupted.
+      //
+      // Second, separate flaw found live on docs/behaviors-reference.md's
+      // own dialog demo: the value-matching group `["'][^"']*["']` doesn't
+      // pair its closing quote with its opening one -- `[^"']*` stops at
+      // ANY quote character, single or double. A real, legitimate
+      // `onclick="document.getElementById('x').open()"` (double-quoted
+      // attribute, single-quoted JS string literal inside) matched only as
+      // far as the FIRST embedded single quote, so the "closing quote" the
+      // regex found was actually the open-paren's quote, not the
+      // attribute's real terminator. The replace ate `onclick="document.
+      // getElementById('` and left `x').open()">Open Dialog</button>`
+      // dangling, corrupting `<button ...>` into a malformed
+      // `<buttonx').open()">` tag -- confirmed via the live DOM, not
+      // guessed. Fixed by requiring the closing quote to match the SAME
+      // quote character as the opening one (two alternatives, one per
+      // quote style), so embedded quotes of the other kind are correctly
+      // treated as ordinary content instead of a premature terminator.
       safeHtml = html
         .replace(/<script\b[^<]*(?:(?!<\/script>)<[^<]*)*<\/script>/gi, '')
-        .replace(/\s+on\w+\s*=\s*["'][^"']*["']/gi, '');
+        .replace(/\s+on\w+\s*=\s*("[^"]*"|'[^']*')/gi, '');
     }
 
     // Render HTML

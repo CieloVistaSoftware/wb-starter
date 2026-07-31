@@ -20,18 +20,18 @@ const schema = JSON.parse(fs.readFileSync(schemaPath, 'utf8'));
 function generatePageFromSchema(schema) {
   const behaviorInventory = schema.behaviorInventory || {};
 
-  // Start HTML structure
+  // Start HTML structure.
+  // pages/*.html are FRAGMENTS injected via innerHTML into the SPA shell
+  // (see src/core/site-engine.js loadPage()) -- never emit <html>/<head>/
+  // <body>, and page-specific CSS links must be root-relative (no leading
+  // "../" or "/") since they resolve against the shell's document base,
+  // not this file's own directory (tests/compliance/
+  // injected-pages-root-relative-resources.spec.ts).
   let html = `<!-- ═══════════════════════════════════════════════════════════════════════════
      wb-starter - BEHAVIORS SHOWCASE
      Auto-generated from behaviors.schema.json
      ═══════════════════════════════════════════════════════════════════════════ -->
-<html>
-
-<head>
-  <link rel="stylesheet" href="../src/styles/pages/behaviors.css">
-</head>
-
-<body>
+<link rel="stylesheet" href="src/styles/pages/behaviors.css">
 `;
 
   // Generate header and nav from $view
@@ -48,11 +48,7 @@ function generatePageFromSchema(schema) {
   <footer id="footer">
     <p>wb-starter v3.0 • ${countTotalBehaviors(behaviorInventory)} behaviors • 23 themes</p>
     <p><a href="?page=docs">Documentation</a> • <a href="?page=themes">Themes</a> • <a href="?page=home">Home</a></p>
-  </footer>
-
-</body>
-
-</html>`;
+  </footer>`;
 
   return html;
 }

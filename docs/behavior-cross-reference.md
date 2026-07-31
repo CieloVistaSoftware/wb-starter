@@ -59,12 +59,20 @@ These behaviors enhance the element while preserving its identity.
 
 **Examples:**
 
-```html
-<!-- Basic buttons - auto-styled -->
+Basic buttons - auto-styled:
+
+<wb-demo>
+<wb-container>
 <button>Default Primary</button>
 <button type="submit">Submit Form</button>
 <button type="reset">Reset</button>
-<!-- All variants -->
+</wb-container>
+</wb-demo>
+
+All variants:
+
+<wb-demo>
+<wb-container>
 <button variant="primary">Primary</button>
 <button variant="secondary">Secondary</button>
 <button variant="success">Success</button>
@@ -73,13 +81,25 @@ These behaviors enhance the element while preserving its identity.
 <button variant="ghost">Ghost</button>
 <button variant="link">Link Style</button>
 <button variant="outline">Outline</button>
-<!-- All sizes -->
+</wb-container>
+</wb-demo>
+
+All sizes:
+
+<wb-demo>
+<wb-container>
 <button size="xs">Extra Small</button>
 <button size="sm">Small</button>
 <button size="md">Medium (default)</button>
 <button size="lg">Large</button>
 <button size="xl">Extra Large</button>
-<!-- With icons -->
+</wb-container>
+</wb-demo>
+
+With icons:
+
+<wb-demo>
+<wb-container>
 <button icon="💾">Save</button>
 <button
   icon="🗑️"
@@ -92,16 +112,28 @@ These behaviors enhance the element while preserving its identity.
   Next
 </button>
 <button icon="←">Back</button>
-<!-- States -->
+</wb-container>
+</wb-demo>
+
+States:
+
+<wb-demo>
+<wb-container>
 <button loading>Saving...</button>
 <button disabled>Disabled</button>
+</wb-container>
+</wb-demo>
+
+Combined (variant + size + icon together):
+
+<wb-demo>
+<wb-container>
 <button
   variant="success"
   icon="✓"
   size="lg">
   Complete Purchase
 </button>
-<!-- Combined -->
 <button
   variant="danger"
   size="sm"
@@ -115,16 +147,18 @@ These behaviors enhance the element while preserving its identity.
   icon-position="right">
   Confirm Order
 </button>
-```
+</wb-container>
+</wb-demo>
 
 **Button Group Example:**
-```html
-<div style="display: flex; gap: 0.5rem;">
+
+<wb-demo>
+<wb-row gap="0.5rem">
   <button variant="outline">Cancel</button>
   <button variant="primary">Save Draft</button>
   <button variant="success">Publish</button>
-</div>
-```
+</wb-row>
+</wb-demo>
 
 ---
 
@@ -150,8 +184,10 @@ These behaviors enhance the element while preserving its identity.
 
 **Examples:**
 
-```html
-<!-- Basic inputs - auto-styled -->
+Basic inputs - auto-styled:
+
+<wb-demo>
+<wb-container>
 <input
   type="text"
   placeholder="Your name">
@@ -170,7 +206,13 @@ These behaviors enhance the element while preserving its identity.
 <input
   type="tel"
   placeholder="(555) 123-4567">
-<!-- All sizes -->
+</wb-container>
+</wb-demo>
+
+All sizes:
+
+<wb-demo>
+<wb-container>
 <input
   type="text"
   size="xs"
@@ -191,7 +233,13 @@ These behaviors enhance the element while preserving its identity.
   type="text"
   size="xl"
   placeholder="Extra large">
-<!-- Validation states -->
+</wb-container>
+</wb-demo>
+
+Validation states:
+
+<wb-demo>
+<wb-container>
 <input
   type="email"
   variant="success"
@@ -200,7 +248,13 @@ These behaviors enhance the element while preserving its identity.
   type="email"
   variant="error"
   value="invalid-email">
-<!-- With prefix/suffix -->
+</wb-container>
+</wb-demo>
+
+With prefix/suffix:
+
+<wb-demo>
+<wb-container>
 <input
   type="text"
   prefix="$"
@@ -226,7 +280,13 @@ These behaviors enhance the element while preserving its identity.
   prefix="$"
   suffix="USD"
   placeholder="Amount">
-<!-- Clearable -->
+</wb-container>
+</wb-demo>
+
+Clearable:
+
+<wb-demo>
+<wb-container>
 <input
   type="text"
   clearable
@@ -240,7 +300,13 @@ These behaviors enhance the element while preserving its identity.
   clearable
   variant="error"
   placeholder="Fix this email">
-<!-- Combined -->
+</wb-container>
+</wb-demo>
+
+Combined (size + prefix + clearable together):
+
+<wb-demo>
+<wb-container>
 <input
   type="text"
   size="lg"
@@ -253,11 +319,14 @@ These behaviors enhance the element while preserving its identity.
   suffix="/month"
   size="lg"
   placeholder="99">
-```
+</wb-container>
+</wb-demo>
 
 **Form Field Examples:**
-```html
-<!-- Login form -->
+
+Login form:
+
+<wb-demo>
 <form>
   <label>Email
     <input
@@ -277,7 +346,11 @@ These behaviors enhance the element while preserving its identity.
     Sign In
   </button>
 </form>
-<!-- Price input -->
+</wb-demo>
+
+Price input:
+
+<wb-demo>
 <label>Product Price
   <input
     type="number"
@@ -286,14 +359,18 @@ These behaviors enhance the element while preserving its identity.
     placeholder="99"
     size="lg">
 </label>
-<!-- Search with icon -->
+</wb-demo>
+
+Search with icon:
+
+<wb-demo>
 <input
   type="search"
   prefix="🔍"
   clearable
   size="lg"
   placeholder="Search documentation...">
-```
+</wb-demo>
 
 ---
 
@@ -317,18 +394,28 @@ These behaviors enhance the element while preserving its identity.
 
 **Examples:**
 
-```html
-<!-- Basic collapsible -->
+Basic collapsible:
+
+<wb-demo>
 <details>
   <summary>What is WB Behaviors?</summary>
   <p>WB Behaviors is a behavior-based UI library that enhances semantic HTML.</p>
 </details>
-<!-- Starts open -->
+</wb-demo>
+
+Starts open:
+
+<wb-demo>
 <details open>
   <summary>Important Notice</summary>
   <p>This section is expanded by default so users see it immediately.</p>
 </details>
-<!-- FAQ section -->
+</wb-demo>
+
+FAQ section:
+
+<wb-demo>
+<wb-container>
 <details>
   <summary>How do I install WB Behaviors?</summary>
   <p>Run <code>npm install wb-starter</code> in your project directory.</p>
@@ -341,7 +428,12 @@ These behaviors enhance the element while preserving its identity.
   <summary>Is it accessible?</summary>
   <p>Absolutely. WB uses native HTML elements and adds ARIA attributes where needed.</p>
 </details>
-<!-- Nested details -->
+</wb-container>
+</wb-demo>
+
+Nested details:
+
+<wb-demo>
 <details>
   <summary>Product Categories</summary>
   <details>
@@ -361,7 +453,11 @@ These behaviors enhance the element while preserving its identity.
     </ul>
   </details>
 </details>
-<!-- With rich content -->
+</wb-demo>
+
+With rich content:
+
+<wb-demo>
 <details>
   <summary>View Code Example</summary>
   <pre><code>
@@ -370,7 +466,11 @@ function greet(name) {
 }
   </code></pre>
 </details>
-<!-- Settings panel -->
+</wb-demo>
+
+Settings panel:
+
+<wb-demo>
 <details>
   <summary>Advanced Settings</summary>
   <label>
@@ -386,11 +486,12 @@ function greet(name) {
     </select>
   </label>
 </details>
-```
+</wb-demo>
 
 **Accordion Pattern (multiple details):**
-```html
-<div class="accordion">
+
+<wb-demo>
+<wb-stack class="accordion" gap="0.5rem">
   <details open>
     <summary>Step 1: Create Account</summary>
     <p>Fill out the registration form with your email and password.</p>
@@ -403,8 +504,8 @@ function greet(name) {
     <summary>Step 3: Complete Profile</summary>
     <p>Add your name, photo, and preferences.</p>
   </details>
-</div>
-```
+</wb-stack>
+</wb-demo>
 
 ---
 

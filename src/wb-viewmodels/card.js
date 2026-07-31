@@ -2589,10 +2589,15 @@ export function cardportfolio(element, options = {}) {
   }
   element.innerHTML = '';
   
-  // Size handling
+  // Size handling. compact/horizontal have their own CSS-driven max-width
+  // (card.css `.wb-portfolio.wb-portfolio--compact` / `--horizontal`,
+  // specificity 0,2,0) -- setting an inline default here for those variants
+  // would force !important to let that CSS win (same "inline always beats
+  // class" issue documented throughout this file), so skip the inline
+  // default for them and let card.css own their width.
   if (config.variant === 'full') {
     element.style.maxWidth = '800px';
-  } else if (config.size === 'auto') {
+  } else if (config.size === 'auto' && config.variant !== 'compact' && config.variant !== 'horizontal') {
     element.style.maxWidth = '400px';
   }
 
@@ -2619,8 +2624,15 @@ export function cardportfolio(element, options = {}) {
   // (display:flex; height:60px; fixed bg + border-bottom + 0.8em font). The
   // flex squeezed the avatar into a column and the fixed 60px height clipped
   // the header so its 120px avatar + text overflowed onto the sections below.
-  // Neutralize the whole navbar rule inline → an auto-height centered stack.
-  header.style.cssText = `display:block;height:auto;min-height:0;background:transparent;border-bottom:none;font-size:1rem;text-align:center;padding:1.5rem;${config.cover ? 'margin-top:-60px;' : ''}`;
+  // display/text-align/padding now live in card.css's compound
+  // `.wb-portfolio__header.wb-header` rule (0,2,0 always outranks the plain
+  // .wb-header selector's 0,1,0 -- same pattern as .wb-card__footer.wb-footer
+  // above) instead of being forced inline, so the compact/horizontal/full/
+  // size-scaling CSS below can override the default padding/display without
+  // needing !important. Only the properties nothing else needs to override
+  // (height/background/border-bottom/font-size, plus the cover offset) stay
+  // inline.
+  header.style.cssText = `height:auto;min-height:0;background:transparent;border-bottom:none;font-size:1rem;${config.cover ? 'margin-top:-60px;' : ''}`;
 
   // Avatar (real image, OR a fallback initials placeholder). This block used
   // to be gated on `config.avatar` alone, which meant the availability dot
@@ -2633,14 +2645,19 @@ export function cardportfolio(element, options = {}) {
   if (config.avatar || (config.availability && availabilityConfig[config.availability])) {
     const avatarWrap = document.createElement('figure');
     avatarWrap.className = 'wb-portfolio__avatar-wrap';
-    avatarWrap.style.cssText = 'margin:0 auto;position:relative;display:inline-block;';
+    // margin/position/display now live in card.css's `.wb-portfolio__avatar-wrap`
+    // base rule -- kept out of inline so the horizontal variant's own margin
+    // override (card.css) can win by normal cascade instead of !important.
 
     if (config.avatar) {
       const avatarImg = document.createElement('img');
       avatarImg.className = 'wb-portfolio__avatar';
       avatarImg.src = config.avatar;
       avatarImg.alt = config.name || 'Avatar';
-      avatarImg.style.cssText = 'width:120px;height:120px;border-radius:50%;border:4px solid var(--bg-secondary,#1f2937);object-fit:cover;display:block;';
+      // width/height/border-radius/border/object-fit/display now live in
+      // card.css's `.wb-portfolio__avatar` base rule -- see the comment on
+      // avatarWrap above; same reason (lets compact/full/size-scaling CSS
+      // resize the avatar without !important).
       avatarWrap.appendChild(avatarImg);
     } else {
       // No avatar image supplied — render initials (or a generic mark) in a
@@ -2664,7 +2681,14 @@ export function cardportfolio(element, options = {}) {
       const availDot = document.createElement('span');
       availDot.className = 'wb-portfolio__availability';
       availDot.title = availabilityConfig[config.availability].label;
-      availDot.style.cssText = `position:absolute;bottom:8px;right:8px;width:24px;height:24px;border-radius:50%;background:${availabilityConfig[config.availability].color};border:3px solid var(--bg-secondary,#1f2937);cursor:help;`;
+      // position/size/border/cursor now live in card.css's
+      // `.wb-portfolio__availability` base rule -- only `background` stays
+      // inline since it's the one genuinely per-instance value (the status
+      // color), matching the same only-inline-what's-dynamic pattern
+      // `setAvailability()` below already uses. Keeping the rest out of
+      // inline lets the compact variant's smaller-dot CSS override them
+      // without !important.
+      availDot.style.background = availabilityConfig[config.availability].color;
       avatarWrap.appendChild(availDot);
     }
 
@@ -2675,7 +2699,10 @@ export function cardportfolio(element, options = {}) {
   if (config.name) {
     const nameEl = document.createElement('h2');
     nameEl.className = 'wb-portfolio__name';
-    nameEl.style.cssText = 'margin:1rem 0 0;font-size:clamp(0.9rem,5vw,1.75rem);font-weight:700;color:var(--text-primary,#f9fafb);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:100%;';
+    // margin/font-size/color/white-space/overflow/max-width now live in
+    // card.css's `.wb-portfolio__name` base rule -- see the avatarWrap
+    // comment above; lets compact/horizontal/full/size-scaling CSS resize
+    // or rewrap the name without !important.
     nameEl.textContent = config.name;
     header.appendChild(nameEl);
   }
@@ -2718,7 +2745,9 @@ export function cardportfolio(element, options = {}) {
   // ==================== MAIN CONTENT ====================
   const main = document.createElement('main');
   main.className = 'wb-portfolio__main';
-  main.style.cssText = 'padding:0 1.5rem 1.5rem;';
+  // padding now lives in card.css's `.wb-portfolio__main` base rule -- see
+  // the avatarWrap comment above; lets the compact variant's own padding
+  // override win without !important.
 
   // Bio Section
   if (config.bio) {

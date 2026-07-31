@@ -91,7 +91,7 @@
    but nothing styled it). Colors come from the theme — no literals.
    Doubled selector (.wb-card.wb-card--success → 0,2,0) so it outranks the
    single-class .wb-card--hoverable / .wb-card--auto border rules. */
-/* !important: the .wb-card--hoverable/--auto rules reset `border` (shorthand)
+/* Forced-priority: the .wb-card--hoverable/--auto rules reset `border` (shorthand)
    after these, so the semantic accent must be marked to always win. */
 .wb-card.wb-card--success { border-left: 4px solid var(--success-color) !important; }
 .wb-card.wb-card--danger  { border-left: 4px solid var(--danger-color) !important; }
@@ -584,11 +584,70 @@ wb-cardnotification,
    padding by variant AND size makes the difference visible on its own,
    independent of how wide the surrounding grid column happens to be.
 
-   `!important` throughout: the header/avatar/name/main elements this
-   targets all carry per-instance inline sizing set in card.js (documented
-   there as "inline always beats class" — same reason the semantic
-   .wb-card--success etc. rules above use !important).
+   The header/avatar/name/main/availability elements below used to carry
+   per-instance inline sizing set in card.js, which would have forced a
+   forced-priority declaration here to win (same "inline always beats class"
+   issue as the semantic .wb-card--success etc. rules above). Instead,
+   card.js now leaves those static defaults to the base rules directly below
+   and only keeps genuinely dynamic values inline (e.g. the availability
+   dot's status color) — so the variant/size overrides that follow win by
+   normal CSS specificity (0,2,0/0,3,0 compound selectors beating these
+   0,1,0 bases); no forced-priority declaration needed.
    ═══════════════════════════════════════════════════════════════════════════ */
+
+/* Base defaults — moved here from card.js inline styles. The header uses a
+   compound selector (`.wb-portfolio__header.wb-header`) because tag-map.js
+   auto-maps bare <header> tags to the 'header' behavior, which adds a
+   same-specificity `.wb-header` class (header.css: display:flex, 60px
+   height, etc.) — 0,2,0 always outranks `.wb-header`'s 0,1,0 regardless of
+   CSS load order, same fix pattern as `.wb-card__footer.wb-footer` above. */
+.wb-portfolio__header,
+.wb-portfolio__header.wb-header {
+  display: block;
+  text-align: center;
+  padding: 1.5rem;
+}
+
+.wb-portfolio__avatar-wrap {
+  margin: 0 auto;
+  position: relative;
+  display: inline-block;
+}
+
+.wb-portfolio__avatar {
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  border: 4px solid var(--bg-secondary, #1f2937);
+  object-fit: cover;
+  display: block;
+}
+
+.wb-portfolio__name {
+  margin: 1rem 0 0;
+  font-size: clamp(0.9rem, 5vw, 1.75rem);
+  font-weight: 700;
+  color: var(--text-primary, #f9fafb);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 100%;
+}
+
+.wb-portfolio__main {
+  padding: 0 1.5rem 1.5rem;
+}
+
+.wb-portfolio__availability {
+  position: absolute;
+  bottom: 8px;
+  right: 8px;
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  border: 3px solid var(--bg-secondary, #1f2937);
+  cursor: help;
+}
 
 /* Fallback avatar (no `avatar` image supplied) — initials circle so the
    availability dot always has something to anchor to. */
@@ -608,97 +667,105 @@ wb-cardnotification,
   line-height: 1;
 }
 
-/* ── Variant: Compact — denser header, smaller avatar/name, narrower card ── */
+/* ── Variant: Compact — denser header, smaller avatar/name, narrower card ──
+   No forced-priority declarations below: card.js no longer sets these
+   properties inline for the portfolio header/avatar/name/main/availability
+   (see the base rules above), and each selector here is a 2-class compound
+   (0,2,0), which already outranks the 0,1,0 base rules and the 0,1,0
+   `.wb-header` rule
+   regardless of CSS source order. */
 .wb-portfolio.wb-portfolio--compact {
-  max-width: 280px !important;
+  max-width: 280px;
 }
 .wb-portfolio--compact .wb-portfolio__header {
-  padding: 0.75rem !important;
+  padding: 0.75rem;
 }
 .wb-portfolio--compact .wb-portfolio__avatar {
-  width: 64px !important;
-  height: 64px !important;
+  width: 64px;
+  height: 64px;
   font-size: 1.25rem;
 }
 .wb-portfolio--compact .wb-portfolio__name {
-  font-size: 1.05rem !important;
-  margin-top: 0.5rem !important;
+  font-size: 1.05rem;
+  margin-top: 0.5rem;
 }
 .wb-portfolio--compact .wb-portfolio__main {
-  padding: 0 0.75rem 0.75rem !important;
+  padding: 0 0.75rem 0.75rem;
 }
 .wb-portfolio--compact .wb-portfolio__availability {
-  width: 14px !important;
-  height: 14px !important;
-  bottom: 2px !important;
-  right: 2px !important;
-  border-width: 2px !important;
+  width: 14px;
+  height: 14px;
+  bottom: 2px;
+  right: 2px;
+  border-width: 2px;
 }
 
 /* ── Variant: Horizontal — identity column beside content, not stacked ── */
 .wb-portfolio.wb-portfolio--horizontal {
-  flex-direction: row !important;
-  align-items: stretch !important;
-  max-width: 600px !important;
+  flex-direction: row;
+  align-items: stretch;
+  max-width: 600px;
 }
 .wb-portfolio--horizontal .wb-portfolio__header {
-  display: flex !important;
+  display: flex;
   flex-direction: column;
-  align-items: flex-start !important;
-  text-align: left !important;
-  flex: 0 0 auto !important;
-  width: 160px !important;
+  align-items: flex-start;
+  text-align: left;
+  flex: 0 0 auto;
+  width: 160px;
   border-right: 1px solid var(--border-color, #374151);
 }
 .wb-portfolio--horizontal .wb-portfolio__avatar-wrap {
-  margin: 0 auto 0 0 !important;
+  margin: 0 auto 0 0;
 }
 .wb-portfolio--horizontal .wb-portfolio__name {
-  white-space: normal !important;
-  max-width: 100% !important;
+  white-space: normal;
+  max-width: 100%;
 }
 .wb-portfolio--horizontal .wb-portfolio__main {
-  flex: 1 !important;
+  flex: 1;
   min-width: 0;
 }
 
 /* ── Variant: Full — larger, more spacious identity block ── */
 .wb-portfolio--full .wb-portfolio__header {
-  padding: 2.25rem !important;
+  padding: 2.25rem;
 }
 .wb-portfolio--full .wb-portfolio__avatar {
-  width: 160px !important;
-  height: 160px !important;
+  width: 160px;
+  height: 160px;
   font-size: 2.5rem;
 }
 .wb-portfolio--full .wb-portfolio__name {
-  font-size: 2rem !important;
+  font-size: 2rem;
 }
 
 /* ── Size scaling — avatar/name/header padding grow with size, so
-   diversity reads even when the grid column caps the rendered width. ── */
-.wb-portfolio.wb-card--xs .wb-portfolio__avatar { width: 56px !important; height: 56px !important; font-size: 1.1rem; }
-.wb-portfolio.wb-card--xs .wb-portfolio__name { font-size: 1rem !important; }
-.wb-portfolio.wb-card--xs .wb-portfolio__header { padding: 0.75rem !important; }
+   diversity reads even when the grid column caps the rendered width. Each
+   selector is a 3-class compound (0,3,0), safely outranking both the base
+   rules above and the compact/full 2-class variant rules. ── */
+.wb-portfolio.wb-card--xs .wb-portfolio__avatar { width: 56px; height: 56px; font-size: 1.1rem; }
+.wb-portfolio.wb-card--xs .wb-portfolio__name { font-size: 1rem; }
+.wb-portfolio.wb-card--xs .wb-portfolio__header { padding: 0.75rem; }
 
-.wb-portfolio.wb-card--sm .wb-portfolio__avatar { width: 72px !important; height: 72px !important; font-size: 1.4rem; }
-.wb-portfolio.wb-card--sm .wb-portfolio__name { font-size: 1.2rem !important; }
-.wb-portfolio.wb-card--sm .wb-portfolio__header { padding: 1rem !important; }
+.wb-portfolio.wb-card--sm .wb-portfolio__avatar { width: 72px; height: 72px; font-size: 1.4rem; }
+.wb-portfolio.wb-card--sm .wb-portfolio__name { font-size: 1.2rem; }
+.wb-portfolio.wb-card--sm .wb-portfolio__header { padding: 1rem; }
 
-.wb-portfolio.wb-card--md .wb-portfolio__avatar { width: 96px !important; height: 96px !important; font-size: 1.7rem; }
-.wb-portfolio.wb-card--md .wb-portfolio__name { font-size: 1.4rem !important; }
+.wb-portfolio.wb-card--md .wb-portfolio__avatar { width: 96px; height: 96px; font-size: 1.7rem; }
+.wb-portfolio.wb-card--md .wb-portfolio__name { font-size: 1.4rem; }
 
-.wb-portfolio.wb-card--lg .wb-portfolio__avatar { width: 128px !important; height: 128px !important; font-size: 2rem; }
-.wb-portfolio.wb-card--lg .wb-portfolio__name { font-size: 1.6rem !important; }
-.wb-portfolio.wb-card--lg .wb-portfolio__header { padding: 1.75rem !important; }
+.wb-portfolio.wb-card--lg .wb-portfolio__avatar { width: 128px; height: 128px; font-size: 2rem; }
+.wb-portfolio.wb-card--lg .wb-portfolio__name { font-size: 1.6rem; }
+.wb-portfolio.wb-card--lg .wb-portfolio__header { padding: 1.75rem; }
 
-.wb-portfolio.wb-card--xl .wb-portfolio__avatar { width: 152px !important; height: 152px !important; font-size: 2.25rem; }
-.wb-portfolio.wb-card--xl .wb-portfolio__name { font-size: 1.85rem !important; }
-.wb-portfolio.wb-card--xl .wb-portfolio__header { padding: 2rem !important; }
+.wb-portfolio.wb-card--xl .wb-portfolio__avatar { width: 152px; height: 152px; font-size: 2.25rem; }
+.wb-portfolio.wb-card--xl .wb-portfolio__name { font-size: 1.85rem; }
+.wb-portfolio.wb-card--xl .wb-portfolio__header { padding: 2rem; }
 
-.wb-portfolio.wb-card--full .wb-portfolio__avatar { width: 176px !important; height: 176px !important; font-size: 2.5rem; }
-.wb-portfolio.wb-card--full .wb-portfolio__name { font-size: 2.1rem !important; }
-.wb-portfolio.wb-card--full .wb-portfolio__header { padding: 2.25rem !important; }
+.wb-portfolio.wb-card--full .wb-portfolio__avatar { width: 176px; height: 176px; font-size: 2.5rem; }
+.wb-portfolio.wb-card--full .wb-portfolio__name { font-size: 2.1rem; }
+.wb-portfolio.wb-card--full .wb-portfolio__header { padding: 2.25rem; }
 
 /* ═══════════════════════════════════════════════════════════════════════════
    FALLBACK: Force 1rem padding on ALL wb-* card custom elements
