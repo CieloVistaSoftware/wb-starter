@@ -129,7 +129,13 @@ export function code(element, options = {}) {
   } else {
     // Standalone code block (not inline, not in pre)
     const isBlock = config.variant !== 'inline';
-    
+    // Only single-token content (no whitespace, e.g. a tag-name chip like
+    // "wb-card") should be forced onto one line. Multi-word inline code
+    // (e.g. a formula like "Colors = Primary + 0°, 120°, 240°") must still
+    // wrap normally at spaces, or it overflows its container -- confirmed
+    // live on pages/themes.html's harmony-formula boxes.
+    const isSingleToken = !/\s/.test((element.textContent || '').trim());
+
     Object.assign(element.style, {
       fontFamily: 'ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace',
       fontSize: fontSize,
@@ -139,16 +145,15 @@ export function code(element, options = {}) {
       color: 'var(--text-primary, inherit)',
       border: '1px solid var(--border-color, rgba(255,255,255,0.1))',
       display: !isBlock ? 'inline' : 'block',
-      // Inline code (e.g. a short `<wb-card>` tag-name reference) must stay
-      // on one line -- `white-space: normal` lets the browser wrap at the
-      // hyphen inside "wb-card" like it would for a hyphenated English word,
-      // splitting "<wb-" onto one line and "card>" onto the next (confirmed
-      // live on pages/components.html). `overflow:hidden` is a no-op on a
-      // plain `display:inline` box (only applies to block/inline-block/flex/
-      // grid containers per spec), so `nowrap` here can't cause clipping --
-      // it just lets the token run as one atomic unit on its line, same as
+      // A single-token inline code chip (e.g. `<wb-card>`) must stay on one
+      // line -- `white-space: normal` lets the browser wrap at the hyphen
+      // inside "wb-card" like a hyphenated English word, splitting "<wb-"
+      // onto one line and "card>" onto the next (confirmed live on
+      // pages/components.html). `overflow:hidden` is a no-op on a plain
+      // `display:inline` box, so `nowrap` here can't cause clipping -- it
+      // just lets the token run as one atomic unit on its line, same as
       // block/pre code already does via `pre`/`pre-wrap`.
-      whiteSpace: !isBlock ? 'nowrap' : (config.scrollable ? 'pre' : 'pre-wrap'),
+      whiteSpace: !isBlock ? (isSingleToken ? 'nowrap' : 'normal') : (config.scrollable ? 'pre' : 'pre-wrap'),
       wordBreak: 'break-word', // Always break to prevent overflow
       overflowWrap: 'break-word',
       overflow: (isBlock && config.scrollable) ? 'auto' : 'hidden',
