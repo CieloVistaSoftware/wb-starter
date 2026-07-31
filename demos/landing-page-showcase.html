@@ -8,6 +8,12 @@
   <link rel="stylesheet" href="../src/styles/site.css">
   <script type="module">
     import WB from '../src/core/wb-lazy.js';
+    import { VERSION } from '../src/core/version.js';
+    // Set the real version BEFORE scan builds the badge -- wb-badge reads
+    // its `label` attribute once at build time, so patching it afterward
+    // wouldn't re-render the already-built element.
+    const versionBadge = document.getElementById('lp-version-badge');
+    if (versionBadge) versionBadge.setAttribute('label', `v${VERSION.version} — zero build step`);
     window.WB = WB;
     await WB.init({ autoInject: true });
     await WB.scan(document.body, { eager: true });
@@ -32,7 +38,7 @@
 
   <!-- HERO -->
   <section class="lp-hero">
-    <wb-badge label="v3.0 — zero build step" variant="primary" pill></wb-badge>
+    <wb-badge id="lp-version-badge" label="v3.0 — zero build step" variant="primary" pill></wb-badge>
     <h1>Ship real UI.<br>No bundler required.</h1>
     <p class="lead">wb-starter is a composition-based web component library. Drop an attribute on a semantic element — <code>x-ripple</code>, <code>wb-card</code>, <code>x-typewriter</code> — and it just works. No React, no build step, no framework lock-in.</p>
     <div id="lp-typewriter" class="lp-prompt" x-typewriter text="<button x-ripple x-tooltip=&quot;Click me&quot;>Ship it</button>" speed="35"></div>

@@ -415,7 +415,13 @@ export default class WBSite {
         window.WBLoadingManager.stopMonitoring(loadingTimerId);
       }
       if (res.ok) {
-        const html = await res.text();
+        // {{WB_VERSION}} is the one placeholder token a page fragment may
+        // use to display the release number -- resolved here from the
+        // single canonical VERSION import (same one renderHeader() uses),
+        // never hardcoded per-page. A hardcoded "v3.0" litters across
+        // several pages/*.html went stale the moment the real version
+        // ticked past 3.0.0.
+        const html = (await res.text()).replaceAll('{{WB_VERSION}}', VERSION.version);
         // Preload this page's behavior CSS BEFORE the content becomes
         // visible — otherwise it paints unstyled for a moment and then
         // reflows as each behavior's CSS trickles in async, a real CLS

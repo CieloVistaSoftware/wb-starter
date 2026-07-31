@@ -46,7 +46,7 @@ function generatePageFromSchema(schema) {
   html += `
   <!-- FOOTER -->
   <footer id="footer">
-    <p>wb-starter v3.0 • ${countTotalBehaviors(behaviorInventory)} behaviors • 23 themes</p>
+    <p>wb-starter v{{WB_VERSION}} • ${countTotalBehaviors(behaviorInventory)} behaviors • 23 themes</p>
     <p><a href="?page=docs">Documentation</a> • <a href="?page=themes">Themes</a> • <a href="?page=home">Home</a></p>
   </footer>`;
 
