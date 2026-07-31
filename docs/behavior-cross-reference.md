@@ -524,161 +524,75 @@ Settings panel:
 
 **Examples:**
 
-```html
-<!-- Basic modal -->
-<dialog id="basicModal">
-  <h2>Welcome!</h2>
-  <p>Thanks for visiting our site.</p>
-  <button onclick="this.closest('dialog').close()">Got it</button>
-</dialog>
-<button onclick="document.getElementById('basicModal').showModal()"> Show Welcome </button>
-<!-- Confirmation dialog -->
-<dialog id="confirmDelete">
-  <h2>Delete Item?</h2>
-  <p>This action cannot be undone. Are you sure?</p>
-  <div style="display: flex; gap: 0.5rem; justify-content: flex-end;">
-    <button
-      variant="ghost"
-      onclick="this.closest('dialog').close()">
-      Cancel
-    </button>
-    <button
-      variant="danger"
-      onclick="deleteItem(); this.closest('dialog').close()">
-      Delete
-    </button>
-  </div>
-</dialog>
-<button
-  variant="danger"
-  onclick="document.getElementById('confirmDelete').showModal()">
+The `dialog` behavior only decorates a **real, already-open** `<dialog open>` in
+place (see the Auto-Injection demo above) — it does not wire up a show/hide
+trigger. For a self-contained trigger button that builds and opens a dialog on
+click with no JavaScript, use the `<wb-modal>` custom tag (`semantics/dialog.js`,
+exported as `modal`): `modal-title`/`modal-content` attributes supply the
+dialog's contents, and the element's own text becomes the trigger label. Every
+`<wb-modal>` dialog gets the same auto-generated Cancel/OK footer.
+
+Basic modal:
+
+<wb-demo>
+<wb-modal
+  modal-title="Welcome!"
+  modal-content="<p>Thanks for visiting our site.</p>">
+  Show Welcome
+</wb-modal>
+</wb-demo>
+
+Confirmation dialog:
+
+<wb-demo>
+<wb-modal
+  modal-title="Delete Item?"
+  modal-content="<p>This action cannot be undone. Are you sure?</p>">
   🗑️ Delete
-</button>
-<!-- Form in dialog -->
-<dialog id="loginDialog">
-  <h2>Sign In</h2>
-  <form method="dialog">
-    <label> Email
-      <input
-        type="email"
-        required
-        placeholder="you@example.com">
-    </label>
-    <label> Password
-      <input
-        type="password"
-        required
-        placeholder="••••••••">
-    </label>
-    <div style="display: flex; gap: 0.5rem; justify-content: flex-end; margin-top: 1rem;">
-      <button
-        type="button"
-        variant="ghost"
-        onclick="this.closest('dialog').close()">
-        Cancel
-      </button>
-      <button
-        type="submit"
-        variant="primary">
-        Sign In
-      </button>
-    </div>
-  </form>
-</dialog>
-<button onclick="document.getElementById('loginDialog').showModal()"> Sign In </button>
-<!-- Image lightbox dialog -->
-<dialog id="imageDialog">
+</wb-modal>
+</wb-demo>
+
+Form in dialog:
+
+<wb-demo>
+<wb-modal
+  modal-title="Sign In"
+  modal-content='<label>Email <input type="email" placeholder="you@example.com"></label><label>Password <input type="password" placeholder="••••••••"></label>'>
+  Sign In
+</wb-modal>
+</wb-demo>
+
+Image lightbox dialog:
+
+<wb-demo>
+<wb-modal
+  modal-title="Full Size Photo"
+  modal-content='<img src="large-photo.jpg" alt="Full size photo">'>
   <img
-    src="large-photo.jpg"
-    alt="Full size photo"
-    style="max-width: 90vw; max-height: 80vh;">
-  <button
-    onclick="this.closest('dialog').close()"
-    style="position: absolute; top: 1rem; right: 1rem;">
-    ✕
-  </button>
-</dialog>
-<img
-  src="thumbnail.jpg"
-  alt="Click to enlarge"
-  onclick="document.getElementById('imageDialog').showModal()"
-  style="cursor: pointer;">
-<!-- Terms and conditions -->
-<dialog id="termsDialog">
-  <h2>Terms of Service</h2>
-  <div style="max-height: 300px; overflow-y: auto;">
-    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit...</p>
-    <p>Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua...</p>
-    <!-- More content -->
-  </div>
-  <form
-    method="dialog"
-    style="margin-top: 1rem;">
-    <label>
-      <input
-        type="checkbox"
-        required>
-        I agree to the terms and conditions
-    </label>
-    <div style="display: flex; gap: 0.5rem; justify-content: flex-end; margin-top: 1rem;">
-      <button
-        type="button"
-        variant="ghost"
-        onclick="this.closest('dialog').close()">
-        Decline
-      </button>
-      <button
-        type="submit"
-        variant="success">
-        Accept
-      </button>
-    </div>
-  </form>
-</dialog>
-<!-- Settings dialog -->
-<dialog id="settingsDialog">
-  <h2>Settings</h2>
-  <form method="dialog">
-    <fieldset>
-      <legend>Notifications</legend>
-      <label>
-        <input
-          type="checkbox"
-          checked>
-          Email notifications
-      </label>
-      <label>
-        <input type="checkbox"> Push notifications
-      </label>
-      <label>
-        <input
-          type="checkbox"
-          checked>
-          Weekly digest
-      </label>
-    </fieldset>
-    <fieldset>
-      <legend>Privacy</legend>
-      <label>
-        <input type="checkbox"> Show online status
-      </label>
-      <label>
-        <input
-          type="checkbox"
-          checked>
-          Allow search engines
-      </label>
-    </fieldset>
-    <div style="display: flex; gap: 0.5rem; justify-content: flex-end; margin-top: 1rem;">
-      <button
-        type="submit"
-        variant="primary">
-        Save Settings
-      </button>
-    </div>
-  </form>
-</dialog>
-```
+    src="thumbnail.jpg"
+    alt="Click to enlarge">
+</wb-modal>
+</wb-demo>
+
+Terms and conditions:
+
+<wb-demo>
+<wb-modal
+  modal-title="Terms of Service"
+  modal-content='<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit...</p><p>Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua...</p><label><input type="checkbox"> I agree to the terms and conditions</label>'>
+  📜 View Terms
+</wb-modal>
+</wb-demo>
+
+Settings dialog:
+
+<wb-demo>
+<wb-modal
+  modal-title="Settings"
+  modal-content='<fieldset><legend>Notifications</legend><label><input type="checkbox" checked> Email notifications</label><label><input type="checkbox"> Push notifications</label><label><input type="checkbox" checked> Weekly digest</label></fieldset><fieldset><legend>Privacy</legend><label><input type="checkbox"> Show online status</label><label><input type="checkbox" checked> Allow search engines</label></fieldset>'>
+  ⚙️ Settings
+</wb-modal>
+</wb-demo>
 
 ---
 
@@ -701,8 +615,9 @@ Settings panel:
 
 **Examples:**
 
-```html
-<!-- Basic data table -->
+Basic data table:
+
+<wb-demo>
 <table>
   <thead>
     <tr>
@@ -729,7 +644,11 @@ Settings panel:
     </tr>
   </tbody>
 </table>
-<!-- With caption -->
+</wb-demo>
+
+With caption:
+
+<wb-demo>
 <table>
   <caption>Q4 2025 Sales Report</caption>
   <thead>
@@ -759,7 +678,11 @@ Settings panel:
     </tr>
   </tfoot>
 </table>
-<!-- Pricing table -->
+</wb-demo>
+
+Pricing table:
+
+<wb-demo>
 <table>
   <thead>
     <tr>
@@ -796,7 +719,11 @@ Settings panel:
     </tr>
   </tbody>
 </table>
-<!-- Schedule/calendar table -->
+</wb-demo>
+
+Schedule/calendar table:
+
+<wb-demo>
 <table>
   <thead>
     <tr>
@@ -835,7 +762,11 @@ Settings panel:
     </tr>
   </tbody>
 </table>
-<!-- Status table with badges -->
+</wb-demo>
+
+Status table with badges:
+
+<wb-demo>
 <table>
   <thead>
     <tr>
@@ -884,7 +815,7 @@ Settings panel:
     </tr>
   </tbody>
 </table>
-```
+</wb-demo>
 
 ---
 
@@ -902,8 +833,9 @@ Settings panel:
 
 **Examples:**
 
-```html
-<!-- Contact form -->
+Contact form:
+
+<wb-demo>
 <form
   action="/contact"
   method="post">
@@ -944,7 +876,11 @@ Settings panel:
     Send Message
   </button>
 </form>
-<!-- Registration form -->
+</wb-demo>
+
+Registration form:
+
+<wb-demo>
 <form
   action="/register"
   method="post">
@@ -1020,7 +956,11 @@ Settings panel:
     Create Account
   </button>
 </form>
-<!-- Payment form -->
+</wb-demo>
+
+Payment form:
+
+<wb-demo>
 <form
   action="/checkout"
   method="post">
@@ -1035,7 +975,9 @@ Settings panel:
         placeholder="1234 5678 9012 3456"
         prefix="💳">
     </label>
-    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
+    <wb-grid
+      columns="2"
+      gap="1rem">
       <label> Expiry
         <input
           type="text"
@@ -1052,7 +994,7 @@ Settings panel:
           pattern="[0-9]{3,4}"
           placeholder="123">
       </label>
-    </div>
+    </wb-grid>
   </fieldset>
   <button
     type="submit"
@@ -1062,27 +1004,35 @@ Settings panel:
     Pay $99.00
   </button>
 </form>
-<!-- Search form -->
+</wb-demo>
+
+Search form:
+
+<wb-demo>
 <form
   action="/search"
-  method="get"
-  style="display: flex; gap: 0.5rem;">
-  <input
-    type="search"
-    name="q"
-    placeholder="Search..."
-    clearable
-    size="lg"
-    style="flex: 1;">
-  <button
-    type="submit"
-    variant="primary"
-    size="lg"
-    icon="🔍">
-    Search
-  </button>
+  method="get">
+  <wb-row gap="0.5rem">
+    <input
+      type="search"
+      name="q"
+      placeholder="Search..."
+      clearable
+      size="lg">
+    <button
+      type="submit"
+      variant="primary"
+      size="lg"
+      icon="🔍">
+      Search
+    </button>
+  </wb-row>
 </form>
-<!-- Filter form -->
+</wb-demo>
+
+Filter form:
+
+<wb-demo>
 <form>
   <fieldset>
     <legend>Price Range</legend>
@@ -1160,7 +1110,7 @@ Settings panel:
     Clear All
   </button>
 </form>
-```
+</wb-demo>
 
 ---
 
@@ -1177,15 +1127,20 @@ Settings panel:
 
 **Examples:**
 
-```html
-<!-- Basic select -->
+Basic select:
+
+<wb-demo>
 <select>
   <option value="">Choose an option...</option>
   <option value="1">Option 1</option>
   <option value="2">Option 2</option>
   <option value="3">Option 3</option>
 </select>
-<!-- With optgroups -->
+</wb-demo>
+
+With optgroups:
+
+<wb-demo>
 <select>
   <option value="">Select a car...</option>
   <optgroup label="Swedish Cars">
@@ -1198,7 +1153,11 @@ Settings panel:
     <option value="bmw">BMW</option>
   </optgroup>
 </select>
-<!-- Country selector -->
+</wb-demo>
+
+Country selector:
+
+<wb-demo>
 <select name="country">
   <option value="">Select country...</option>
   <option value="us">🇺🇸 United States</option>
@@ -1209,7 +1168,11 @@ Settings panel:
   <option value="fr">🇫🇷 France</option>
   <option value="jp">🇯🇵 Japan</option>
 </select>
-<!-- Multiple selection -->
+</wb-demo>
+
+Multiple selection:
+
+<wb-demo>
 <select
   multiple
   size="5">
@@ -1221,7 +1184,11 @@ Settings panel:
   <option value="vue">Vue</option>
   <option value="angular">Angular</option>
 </select>
-<!-- With disabled options -->
+</wb-demo>
+
+With disabled options:
+
+<wb-demo>
 <select>
   <option value="">Choose a plan...</option>
   <option value="free">Free - $0/mo</option>
@@ -1232,20 +1199,22 @@ Settings panel:
     Enterprise - Contact Us
   </option>
 </select>
-<!-- Date selectors -->
-<div style="display: flex; gap: 0.5rem;">
+</wb-demo>
+
+Date selectors:
+
+<wb-demo>
+<wb-row gap="0.5rem">
   <select name="month">
     <option value="">Month</option>
     <option value="1">January</option>
     <option value="2">February</option>
     <option value="3">March</option>
-    <!-- ... -->
   </select>
   <select name="day">
     <option value="">Day</option>
     <option value="1">1</option>
     <option value="2">2</option>
-    <!-- ... -->
   </select>
   <select name="year">
     <option value="">Year</option>
@@ -1253,8 +1222,8 @@ Settings panel:
     <option value="2025">2025</option>
     <option value="2024">2024</option>
   </select>
-</div>
-```
+</wb-row>
+</wb-demo>
 
 ---
 
@@ -1272,16 +1241,26 @@ Settings panel:
 
 **Examples:**
 
-```html
-<!-- Basic textarea -->
+Basic textarea:
+
+<wb-demo>
 <textarea placeholder="Enter your message..."></textarea>
-<!-- With character limit -->
+</wb-demo>
+
+With character limit:
+
+<wb-demo>
 <textarea
   maxlength="500"
   counter
   placeholder="Write your bio (max 500 characters)...">
 </textarea>
-<!-- Different sizes -->
+</wb-demo>
+
+Different sizes:
+
+<wb-demo>
+<wb-container>
 <textarea
   rows="3"
   placeholder="Short message...">
@@ -1290,13 +1269,23 @@ Settings panel:
   rows="10"
   placeholder="Long description...">
 </textarea>
-<!-- Code input -->
+</wb-container>
+</wb-demo>
+
+Code input:
+
+<wb-demo>
 <textarea
   rows="15"
   style="font-family: monospace;"
   placeholder="// Paste your code here...">
 </textarea>
-<!-- Various use cases -->
+</wb-demo>
+
+Various use cases:
+
+<wb-demo>
+<wb-container>
 <label> Product Description
   <textarea
     rows="5"
@@ -1330,7 +1319,8 @@ Settings panel:
 }'>
   </textarea>
 </label>
-```
+</wb-container>
+</wb-demo>
 
 ---
 
@@ -1347,15 +1337,20 @@ Settings panel:
 
 **Examples:**
 
-```html
-<!-- Single checkbox -->
+Single checkbox:
+
+<wb-demo>
 <label>
   <input
     type="checkbox"
     name="subscribe">
     Subscribe to newsletter
 </label>
-<!-- Terms agreement -->
+</wb-demo>
+
+Terms agreement:
+
+<wb-demo>
 <label>
   <input
     type="checkbox"
@@ -1364,7 +1359,11 @@ Settings panel:
     I agree to the <a href="/terms">Terms of Service</a> and <a href="/privacy">Privacy Policy
   </a>
 </label>
-<!-- Checkbox group -->
+</wb-demo>
+
+Checkbox group:
+
+<wb-demo>
 <fieldset>
   <legend>Select your interests:</legend>
   <label>
@@ -1403,7 +1402,11 @@ Settings panel:
       Food & Cooking
   </label>
 </fieldset>
-<!-- Settings toggles -->
+</wb-demo>
+
+Settings toggles:
+
+<wb-demo>
 <fieldset>
   <legend>Notification Settings</legend>
   <label>
@@ -1433,7 +1436,11 @@ Settings panel:
       Weekly digest
   </label>
 </fieldset>
-<!-- Feature selection -->
+</wb-demo>
+
+Feature selection:
+
+<wb-demo>
 <fieldset>
   <legend>Select Features</legend>
   <label>
@@ -1466,15 +1473,21 @@ Settings panel:
       📤 Data Export
   </label>
 </fieldset>
-<!-- Indeterminate state (via JS) -->
+</wb-demo>
+
+Select-all pattern (the `toggleAll()`/indeterminate wiring is application JavaScript,
+not something the doc-viewer's sanitized renderer executes — the markup below
+shows the structural pattern; wiring `checkbox.indeterminate = true` is a
+one-line JS API left to your own code):
+
+<wb-demo>
 <label>
   <input
     type="checkbox"
-    id="selectAll"
-    onchange="toggleAll(this)">
+    id="selectAll">
   <strong>Select All</strong>
 </label>
-<div style="padding-left: 1.5rem;">
+<wb-stack gap="0.25rem">
   <label>
     <input
       type="checkbox"
@@ -1493,8 +1506,8 @@ Settings panel:
       class="item">
       Item 3
   </label>
-</div>
-```
+</wb-stack>
+</wb-demo>
 
 ---
 
@@ -1511,8 +1524,12 @@ Settings panel:
 
 **Examples:**
 
-```html
-<!-- Basic radio group -->
+Each `<fieldset>` below is one grouped set of radios sharing a `name` — the whole
+group is the unit (one `<wb-demo>` per group, not one per `<input>`).
+
+Basic radio group:
+
+<wb-demo>
 <fieldset>
   <legend>Choose a size:</legend>
   <label>
@@ -1545,7 +1562,11 @@ Settings panel:
       Extra Large
   </label>
 </fieldset>
-<!-- Payment method -->
+</wb-demo>
+
+Payment method:
+
+<wb-demo>
 <fieldset>
   <legend>Payment Method</legend>
   <label>
@@ -1578,7 +1599,11 @@ Settings panel:
       ₿ Cryptocurrency
   </label>
 </fieldset>
-<!-- Shipping options -->
+</wb-demo>
+
+Shipping options:
+
+<wb-demo>
 <fieldset>
   <legend>Shipping Speed</legend>
   <label>
@@ -1603,7 +1628,11 @@ Settings panel:
       ✈️ Overnight - $24.99
   </label>
 </fieldset>
-<!-- Rating scale -->
+</wb-demo>
+
+Rating scale:
+
+<wb-demo>
 <fieldset>
   <legend>How satisfied are you?</legend>
   <label>
@@ -1642,7 +1671,11 @@ Settings panel:
       5 - Very Satisfied
   </label>
 </fieldset>
-<!-- Pricing plans -->
+</wb-demo>
+
+Pricing plans:
+
+<wb-demo>
 <fieldset>
   <legend>Choose Your Plan</legend>
   <label style="display: block; padding: 1rem; border: 1px solid var(--border-color); border-radius: 8px; margin-bottom: 0.5rem;">
@@ -1674,7 +1707,11 @@ Settings panel:
     <small>Collaboration features for teams</small>
   </label>
 </fieldset>
-<!-- Yes/No questions -->
+</wb-demo>
+
+Yes/No questions:
+
+<wb-demo>
 <fieldset>
   <legend>Do you have prior experience?</legend>
   <label>
@@ -1692,7 +1729,11 @@ Settings panel:
       No
   </label>
 </fieldset>
-<!-- Frequency selection -->
+</wb-demo>
+
+Frequency selection:
+
+<wb-demo>
 <fieldset>
   <legend>How often do you exercise?</legend>
   <label>
@@ -1731,7 +1772,7 @@ Settings panel:
       Never
   </label>
 </fieldset>
-```
+</wb-demo>
 
 ---
 
@@ -1749,8 +1790,14 @@ Settings panel:
 
 **Examples:**
 
-```html
-<!-- Basic range -->
+The doc-viewer's sanitized renderer strips inline event-handler attributes
+(`oninput`, etc. — see the button/checkbox sections above), so the `<output>`
+value below shows its initial value only and does not live-update on drag;
+wiring `input.addEventListener('input', ...)` is one line of your own JS.
+
+Basic range:
+
+<wb-demo>
 <label> Volume
   <input
     type="range"
@@ -1758,54 +1805,73 @@ Settings panel:
     max="100"
     value="50">
 </label>
-<!-- With output display -->
+</wb-demo>
+
+With output display:
+
+<wb-demo>
 <label> Brightness: <output id="brightnessValue">75</output>%
   <input
     type="range"
     min="0"
     max="100"
-    value="75"
-    oninput="document.getElementById('brightnessValue').textContent = this.value">
+    value="75">
 </label>
-<!-- Price range -->
+</wb-demo>
+
+Price range:
+
+<wb-demo>
 <label> Max Price: $<output id="priceValue">500</output>
   <input
     type="range"
     min="0"
     max="1000"
     step="50"
-    value="500"
-    oninput="document.getElementById('priceValue').textContent = this.value">
+    value="500">
 </label>
-<!-- Rating slider -->
+</wb-demo>
+
+Rating slider:
+
+<wb-demo>
 <label> Rating: <output id="ratingValue">3</output> / 5
   <input
     type="range"
     min="1"
     max="5"
     step="1"
-    value="3"
-    oninput="document.getElementById('ratingValue').textContent = this.value">
+    value="3">
 </label>
-<!-- Temperature control -->
+</wb-demo>
+
+Temperature control:
+
+<wb-demo>
 <label> Temperature: <output id="tempValue">72</output>°F
   <input
     type="range"
     min="60"
     max="85"
-    value="72"
-    oninput="document.getElementById('tempValue').textContent = this.value">
+    value="72">
 </label>
-<!-- Opacity slider -->
+</wb-demo>
+
+Opacity slider:
+
+<wb-demo>
 <label> Opacity: <output id="opacityValue">100</output>%
   <input
     type="range"
     min="0"
     max="100"
-    value="100"
-    oninput="document.getElementById('opacityValue').textContent = this.value">
+    value="100">
 </label>
-<!-- Zoom control -->
+</wb-demo>
+
+Zoom control:
+
+<wb-demo>
 <label style="display: flex; align-items: center; gap: 0.5rem;">
   <span>🔍-</span>
   <input
@@ -1816,17 +1882,20 @@ Settings panel:
     style="flex: 1;">
   <span>🔍+</span>
 </label>
-<!-- Color hue picker -->
+</wb-demo>
+
+Color hue picker:
+
+<wb-demo>
 <label> Hue: <output id="hueValue">180</output>°
   <input
     type="range"
     min="0"
     max="360"
     value="180"
-    oninput="document.getElementById('hueValue').textContent = this.value"
     style="background: linear-gradient(to right, red, yellow, lime, cyan, blue, magenta, red);">
 </label>
-```
+</wb-demo>
 
 ---
 

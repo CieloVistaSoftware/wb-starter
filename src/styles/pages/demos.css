@@ -54,6 +54,19 @@
   font-size: 1.4rem;
 }
 
+/* Category description paragraph (scripts/generate-demos-list.mjs) */
+.demos-category__desc {
+  color: var(--text-secondary);
+  margin: 0.5rem 0 1rem;
+}
+
+/* "Forced Dark Mode" curated example box (scripts/generate-demos-list.mjs
+   CATEGORY_EXAMPLES.architecture) */
+.demos-forced-dark-demo {
+  padding: 1rem;
+  border-radius: 8px;
+}
+
 /* Curated live <wb-demo> examples sit above a category's link-cards, giving
    an immediate taste of what's in the category before clicking through. */
 .demos-inline-examples {

@@ -34,7 +34,13 @@ const SKIP_DIRS = new Set([
 const PX_FONT_SIZE_RE = /font-size\s*:\s*-?[\d.]+px/i;
 
 const ALLOWLIST = new Set<string>([
-  // (empty — every known instance was converted in #294's sweep)
+  // src/wb-overlay-ext/ is a local, gitignored browser-extension content
+  // script (never committed — see .gitignore) that injects an inspector
+  // overlay into arbitrary third-party host pages. Its UI must stay a fixed
+  // size regardless of the host page's root font-size (rem would inherit
+  // whatever site is being inspected), so px here is intentional, not a
+  // #294 regression.
+  'src/wb-overlay-ext/overlay.css',
 ]);
 
 function walk(dir: string, out: string[]): void {

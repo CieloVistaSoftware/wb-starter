@@ -29,8 +29,18 @@ for (const file of pageFiles) {
   test.describe(`Page Fragment: ${file}`, () => {
     let html: string;
 
+    let htmlWithoutCodeExamples: string;
+
     test.beforeAll(() => {
       html = fs.readFileSync(path.join(pagesDir, file), 'utf8');
+      // Pages document their own usage (e.g. home.html's "One script does it
+      // all" snippet) with escaped sample markup inside <pre><code>. That
+      // sample legitimately shows a <link href="...site.css">/WB.init() call
+      // as TEXT teaching how the shell page wires things up -- it isn't a
+      // real tag/script this fragment is loading. Strip <pre> blocks before
+      // scanning for real violations, same rationale as stripping <script>
+      // blocks below for the inline-style check.
+      htmlWithoutCodeExamples = html.replace(/<pre[\s\S]*?<\/pre>/gi, '');
     });
 
     test('must not contain <!DOCTYPE>', () => {
@@ -58,15 +68,15 @@ for (const file of pageFiles) {
     });
 
     test('must not link to site.css', () => {
-      expect(html).not.toMatch(/href=["'][^"']*site\.css/i);
+      expect(htmlWithoutCodeExamples).not.toMatch(/href=["'][^"']*site\.css/i);
     });
 
     test('must not link to themes.css', () => {
-      expect(html).not.toMatch(/href=["'][^"']*themes\.css/i);
+      expect(htmlWithoutCodeExamples).not.toMatch(/href=["'][^"']*themes\.css/i);
     });
 
     test('must not contain WB.init()', () => {
-      expect(html).not.toMatch(/WB\.init\s*\(/i);
+      expect(htmlWithoutCodeExamples).not.toMatch(/WB\.init\s*\(/i);
     });
 
     test('must have <h1> tag', () => {

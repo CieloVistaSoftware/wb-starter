@@ -136,7 +136,7 @@ const CATEGORY_EXAMPLES = {
   ],
   architecture: [
     `<wb-demo><wb-themecontrol></wb-themecontrol></wb-demo>`,
-    `<wb-demo><div x-darkmode target="self" theme="dark" style="padding:1rem;border-radius:8px;"><strong>Forced Dark Mode</strong> — stays dark regardless of the global theme.</div></wb-demo>`,
+    `<wb-demo><div x-darkmode target="self" theme="dark" class="demos-forced-dark-demo"><strong>Forced Dark Mode</strong> — stays dark regardless of the global theme.</div></wb-demo>`,
   ],
 };
 
@@ -187,7 +187,7 @@ function cardFor(name) {
 const siteCategorySections = SITE_CATEGORIES.map(({ title, icon, description, href, stats }) => (
 `  <details class="demos-category" data-category="${title}">
     <summary class="demos-category__title">${icon} ${title}</summary>
-    <p style="color: var(--text-secondary); margin: 0.5rem 0 1rem;">${description}${stats ? ` — ${stats}` : ''}</p>
+    <p class="demos-category__desc">${description}${stats ? ` — ${stats}` : ''}</p>
     <div class="page__grid demos-card-grid">
       <wb-card-link title="${title}" href="${href}" target="_blank" icon="${icon}"></wb-card-link>
     </div>
