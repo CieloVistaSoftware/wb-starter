@@ -24,7 +24,8 @@
     "checked": {
       "type": "boolean",
       "description": "Checked state",
-      "default": false
+      "default": false,
+      "appliesClass": "wb-checkbox--checked"
     },
     "disabled": {
       "type": "boolean",

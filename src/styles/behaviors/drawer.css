@@ -53,7 +53,13 @@
   position: fixed;
   display: flex;
   flex-direction: column;
-  background: var(--wb-drawer-bg, var(--bg-surface, #ffffff));
+  /* --bg-surface never existed anywhere in themes.css (confirmed: 0 matches
+     project-wide) -- this fallback chain silently bottomed out at the
+     literal #ffffff every single time, in every theme including dark,
+     which is why the drawer panel always rendered solid white regardless
+     of theme. --bg-primary is the real, theme-defined variable every
+     other overlay panel (dialog, etc.) actually uses. */
+  background: var(--wb-drawer-bg, var(--bg-primary, #1f2937));
   box-shadow: var(--wb-drawer-shadow, -4px 0 20px rgba(0, 0, 0, 0.15));
   z-index: calc(var(--wb-drawer-z-index, 1000) + 1);
   max-width: var(--wb-drawer-max-width, 100vw);

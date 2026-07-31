@@ -10,7 +10,7 @@
     "implicitRole": "tooltip"
   },
   "compliance": {
-    "baseClass": "wb-tooltip",
+    "baseClass": "wb-tooltip-trigger",
     "supportLevel": "stable",
     "accessibility": "high"
   },

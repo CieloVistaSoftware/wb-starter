@@ -14,7 +14,7 @@
   gap: 0.5rem;
   padding: 0 var(--wb-search-padding-x, 0.75rem);
   height: var(--wb-search-height, 2.5rem);
-  background: var(--wb-search-bg, var(--bg-surface, #ffffff));
+  background: var(--wb-search-bg, var(--bg-primary, #ffffff));
   border: var(--wb-search-border, 1px solid var(--border-color, #d1d5db));
   border-radius: var(--wb-search-radius, 6px);
   font-size: var(--wb-search-font-size, 0.875rem);
@@ -132,7 +132,7 @@
 /* Dark theme adjustments */
 @media (prefers-color-scheme: dark) {
   .wb-search__wrapper {
-    --wb-search-bg: var(--bg-surface, #1f2937);
+    --wb-search-bg: var(--bg-primary, #1f2937);
     --wb-search-border: 1px solid var(--border-color, #374151);
     --wb-search-color: var(--text-primary, #f9fafb);
     --wb-search-placeholder-color: var(--text-tertiary, #6b7280);

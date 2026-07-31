@@ -37,7 +37,12 @@
   height: var(--wb-checkbox-size, 18px);
   border: var(--wb-checkbox-border, 2px solid var(--border-color, #d1d5db));
   border-radius: var(--wb-checkbox-radius, 4px);
-  background: var(--wb-checkbox-bg, var(--bg-surface, #ffffff));
+  /* --bg-surface never existed anywhere in themes.css -- this always
+     bottomed out at the literal fallback anyway. Keeping white as the
+     explicit default (an unchecked checkbox conventionally stays light
+     for border contrast even in dark themes), just without the dead
+     variable reference. */
+  background: var(--wb-checkbox-bg, #ffffff);
   transition: background 0.15s ease, border-color 0.15s ease;
 }
 
