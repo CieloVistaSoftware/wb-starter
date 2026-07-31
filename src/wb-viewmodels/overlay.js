@@ -212,16 +212,47 @@ export function drawer(element, options = {}) {
   // stamped x-schema="drawer" on the element.
   const schemaProcessed = options.schemaProcessed || element.getAttribute('x-schema');
 
+  // Captured BEFORE the config object below, and before either path runs --
+  // neither PATH A nor PATH B ever writes into the host's own textContent
+  // (PATH A only relocates the schema-BUILT panel/backdrop out of the host;
+  // PATH B never touches `element` at all, it only appends its own
+  // drawerEl/backdropEl to document.body) -- confirmed by reading both
+  // branches below, so it's safe to read once, up front.
+  const originalText = (element.textContent || '').trim();
+
   const config = {
     // Plain title/content match drawer.schema.json's actual property names.
     // drawer-title/drawer-content stay as a fallback for the legacy
     // [x-drawer] attribute usage (plain <button x-drawer drawer-title="…">,
     // e.g. pages/components.html) which predates the schema and never used
     // the schema's naming.
-    title: options.title || element.getAttribute('title') || element.getAttribute('drawer-title') || element.getAttribute('heading') || 'Drawer',
-    content: options.content || element.getAttribute('content') || element.getAttribute('drawer-content') || element.getAttribute('description') || 'Drawer content',
+    //
+    // No more hardcoded 'Drawer'/'Drawer content' placeholders (#overlays.html
+    // live bug: "WTF where did this text come from?"). PATH B builds its own
+    // panel from scratch and never reads the host's own text, so every
+    // attribute-less demo like `<wb-drawer position="left">position=left</wb-drawer>`
+    // popped open showing the literal, unrelated words "Drawer"/"Drawer
+    // content" instead of "position=left". Title now defaults to '' (matches
+    // drawer.schema.json's own `"default": ""` and its $view's
+    // `"createdWhen": "title"` -- PATH B's show() below skips rendering a
+    // header title line entirely when it's empty, same as PATH A already
+    // does via the schema). Content falls back to the host's own original
+    // text before falling back to the old hardcoded string, so a bare-text
+    // demo shows its own words instead of a generic placeholder.
+    title: options.title || element.getAttribute('title') || element.getAttribute('drawer-title') || element.getAttribute('heading') || '',
+    content: options.content || element.getAttribute('content') || element.getAttribute('drawer-content') || element.getAttribute('description') || originalText || 'Drawer content',
     position: options.position || element.getAttribute('position') || 'right',
     width: options.width || element.getAttribute('width') || '320px',
+    // height backs top/bottom positions (drawer.schema.json's `height`
+    // property) the same way width backs left/right -- was missing
+    // entirely before, so PATH B had no way to size a top/bottom panel.
+    height: options.height || element.getAttribute('height') || 'auto',
+    // variant was never read anywhere in this function (confirmed by grep
+    // across the whole file before this fix) despite drawer.schema.json
+    // declaring a real default/overlay/push enum -- live bug: "These
+    // variants are all the same?" because nothing ever looked at the
+    // attribute. Default matches the schema's own `"default": "overlay"`.
+    variant: options.variant || element.getAttribute('variant') || 'overlay',
     ...options
   };
 
@@ -311,57 +342,119 @@ export function drawer(element, options = {}) {
   // ═══════════════════════════════════════════════════════
   // PATH B: No schema involved (legacy [x-drawer] usage) — build our own DOM
   // ═══════════════════════════════════════════════════════
-  let drawerEl = null;
+  //
+  // Rewritten (live bugs on demos/site/overlays.html, wb-lazy.js path --
+  // PATH A never runs there, see the big comment above this function): this
+  // used to build a totally separate, hand-rolled inline-style panel that
+  // (a) always showed hardcoded 'Drawer'/'Drawer content' placeholder text
+  // instead of the host's own content, (b) only branched on
+  // `position === 'right'`, silently rendering top/bottom as a left
+  // sidebar, and (c) never read `variant` at all, so
+  // default/overlay/push were pixel-identical. Now builds its DOM with the
+  // SAME `.wb-drawer__backdrop`/`.wb-drawer__panel`/`.wb-drawer--{position}`/
+  // `.wb-drawer__panel--open` classes src/styles/behaviors/drawer.css
+  // already defines for PATH A (Tier-1 Law 9 -- reuse real CSS instead of
+  // a second hand-rolled inline-style implementation that can drift out of
+  // sync with it), so position support is defined in exactly one place.
+  let panelEl = null;
   let backdropEl = null;
+  let pushTarget = null;
+
+  const isHorizontalEdge = () => config.position === 'top' || config.position === 'bottom';
 
   const show = () => {
-    if (drawerEl) return;
-    
-    backdropEl = document.createElement('div');
-    backdropEl.style.cssText = `
-      position: fixed; top: 0; left: 0; right: 0; bottom: 0;
-      background: rgba(0,0,0,0.5); z-index: 9999;
-      animation: wb-fade-in 0.2s ease;
-    `;
-    backdropEl.onclick = hide;
-    document.body.appendChild(backdropEl);
-    
-    drawerEl = document.createElement('div');
-    const isRight = config.position === 'right';
-    drawerEl.style.cssText = `
-      position: fixed; top: 0; ${isRight ? 'right' : 'left'}: 0; bottom: 0;
-      width: ${config.width}; background: var(--bg-primary, #1f2937);
-      border-${isRight ? 'left' : 'right'}: 1px solid var(--border-color, #374151);
-      z-index: 10000; display: flex; flex-direction: column;
-      animation: wb-slide-in 0.3s ease;
-      box-shadow: ${isRight ? '-' : ''}10px 0 30px rgba(0,0,0,0.3);
-    `;
-    drawerEl.innerHTML = `
-      <div style="padding:1rem;border-bottom:1px solid var(--border-color);display:flex;justify-content:space-between;align-items:center;background:var(--bg-secondary,#1e293b);">
-        <h3 style="margin:0;color:var(--primary,#6366f1);">${config.title}</h3>
-        <button style="background:none;border:none;font-size:1.5rem;cursor:pointer;color:var(--text-secondary);">&times;</button>
+    if (panelEl) return;
+
+    const isPush = config.variant === 'push';
+
+    // 'push' has no dimming backdrop -- it shoves the page's own content
+    // aside instead of overlaying it (Material Design's "push" navigation
+    // drawer is the reference pattern; drawerLayout() in layouts.js is a
+    // different, persistent sidebar primitive with no page-push behavior to
+    // borrow from, confirmed by reading it). 'default' and 'overlay' both
+    // use the dimming backdrop -- docs/components/drawer.md documents no
+    // distinct treatment for 'default', and the schema's own declared
+    // default IS 'overlay', so 'default' is treated as an explicit alias
+    // for 'overlay' rather than inventing a third undocumented interaction.
+    if (!isPush) {
+      backdropEl = document.createElement('div');
+      backdropEl.className = 'wb-drawer__backdrop';
+      backdropEl.onclick = hide;
+      document.body.appendChild(backdropEl);
+    }
+
+    panelEl = document.createElement('div');
+    panelEl.className = `wb-drawer__panel wb-drawer--${config.position} wb-drawer--${config.variant}`;
+    // --wb-drawer-width/--wb-drawer-height are drawer.schema.json's own
+    // declared $cssAPI custom properties (drawer.css already reads them) --
+    // setting them per-instance is the documented override mechanism, not a
+    // one-off inline style (Law 9).
+    if (isHorizontalEdge()) {
+      panelEl.style.setProperty('--wb-drawer-height', config.height);
+    } else {
+      panelEl.style.setProperty('--wb-drawer-width', config.width);
+    }
+    panelEl.innerHTML = `
+      <div class="wb-drawer__header">
+        ${config.title ? `<h2 class="wb-drawer__title">${config.title}</h2>` : ''}
+        <button type="button" class="wb-drawer__close" aria-label="Close">&times;</button>
       </div>
-      <div style="padding:1rem;flex:1;overflow:auto;color:var(--text-primary);">${config.content}</div>
+      <div class="wb-drawer__body">${config.content}</div>
     `;
-    drawerEl.querySelector('button').onclick = hide;
-    document.body.appendChild(drawerEl);
+    panelEl.querySelector('.wb-drawer__close').onclick = hide;
+    document.body.appendChild(panelEl);
     document.body.classList.add('wb-scroll-lock');
+
+    if (isPush) {
+      // Push the page's own content wrapper (`body > .page`, the standard
+      // top-level wrapper every demos/site/*.html page renders into) --
+      // NEVER document.body itself: panelEl is `position: fixed` and is
+      // also a direct child of body, so a transform on body would make body
+      // the fixed-position containing block for its own panel child,
+      // breaking the panel's fixed-to-viewport positioning the instant the
+      // push page-content animates. Measuring after append (not using
+      // config.width/height directly) so an 'auto' height still produces a
+      // real pixel push amount for top/bottom.
+      pushTarget = document.querySelector('body > .page');
+    }
+
+    // Panel/backdrop must exist in the DOM with their CLOSED transform for
+    // at least one frame before `--open` is added, or the browser paints
+    // the open state directly with no visible slide-in transition.
+    requestAnimationFrame(() => {
+      if (backdropEl) backdropEl.classList.add('wb-drawer__backdrop--open');
+      panelEl.classList.add('wb-drawer__panel--open');
+      if (pushTarget) {
+        const rect = panelEl.getBoundingClientRect();
+        const amount = isHorizontalEdge() ? rect.height : rect.width;
+        const sign = (config.position === 'right' || config.position === 'bottom') ? -1 : 1;
+        pushTarget.style.setProperty(isHorizontalEdge() ? '--wb-drawer-push-y' : '--wb-drawer-push-x', `${sign * amount}px`);
+        pushTarget.classList.add('wb-drawer-push-target');
+        pushTarget.classList.add('wb-drawer-push-target--open');
+      }
+    });
   };
 
   const hide = () => {
     if (backdropEl) { backdropEl.remove(); backdropEl = null; }
-    if (drawerEl) { drawerEl.remove(); drawerEl = null; }
+    if (panelEl) { panelEl.remove(); panelEl = null; }
+    if (pushTarget) {
+      pushTarget.classList.remove('wb-drawer-push-target--open');
+      pushTarget.style.removeProperty('--wb-drawer-push-x');
+      pushTarget.style.removeProperty('--wb-drawer-push-y');
+      pushTarget = null;
+    }
     document.body.classList.remove('wb-scroll-lock');
   };
 
-  const toggle = () => drawerEl ? hide() : show();
+  const toggle = () => panelEl ? hide() : show();
   element.addEventListener('click', toggle);
   element.wbDrawer = { show, hide, toggle };
 
-  return () => { 
-    hide(); 
+  return () => {
+    hide();
     element.removeEventListener('click', toggle);
-    element.classList.remove('wb-drawer-trigger'); 
+    element.classList.remove('wb-drawer-trigger');
   };
 }
 

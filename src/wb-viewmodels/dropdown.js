@@ -20,8 +20,18 @@ export function dropdown(element, options = {}) {
   const config = {
     items: (options.items || element.getAttribute('items') || '').split(',').filter(Boolean),
     label: options.label || element.getAttribute('label') || '',
-    position: options.position || element.getAttribute('position') || 'bottom-left',
+    // dropdown.schema.json's actual enum is bottom-start/bottom-end/
+    // top-start/top-end (RTL-aware logical naming) -- the default here
+    // must match, or the posStyles lookup below always misses and every
+    // position value collapses to the same fallback.
+    position: options.position || element.getAttribute('position') || 'bottom-start',
     closeOnSelect: options.closeOnSelect ?? (element.getAttribute('close-on-select') !== 'false'),
+    // dropdown.schema.json declares trigger: click|hover, but this was never
+    // actually read anywhere in this file -- only the unconditional click
+    // handler below existed, so `trigger="hover"` silently did nothing
+    // (confirmed live: hovering never opened the menu, only clicking did,
+    // identical to every other dropdown regardless of this attribute).
+    trigger: options.trigger || element.getAttribute('trigger') || 'click',
     ...options
   };
 
@@ -60,16 +70,20 @@ export function dropdown(element, options = {}) {
   const menu = document.createElement('div');
   menu.className = 'wb-dropdown__menu';
   
-  // Position styles
+  // Position styles. Keys MUST match dropdown.schema.json's `position`
+  // enum (bottom-start/bottom-end/top-start/top-end) -- this used to be
+  // keyed left/right, which never matched any real attribute value, so
+  // every position silently fell through to the same default (confirmed
+  // live: all 4 position-variant demos rendered identically).
   const posStyles = {
-    'bottom-left': 'top:100%;left:0;',
-    'bottom-right': 'top:100%;right:0;',
-    'top-left': 'bottom:100%;left:0;',
-    'top-right': 'bottom:100%;right:0;'
+    'bottom-start': 'top:100%;left:0;',
+    'bottom-end': 'top:100%;right:0;',
+    'top-start': 'bottom:100%;left:0;',
+    'top-end': 'bottom:100%;right:0;'
   };
-  
+
   menu.style.cssText = `
-    position:absolute;${posStyles[config.position] || posStyles['bottom-left']}
+    position:absolute;${posStyles[config.position] || posStyles['bottom-start']}
     background:var(--bg-secondary,#1f2937);
     border:1px solid var(--border-color,#374151);
     border-radius:8px;min-width:150px;
@@ -115,6 +129,15 @@ export function dropdown(element, options = {}) {
   if (trigger) {
     element.innerHTML = '';
     element.appendChild(trigger);
+  } else {
+    // No label, no child <a>/<button>/<div> items -- the host's own bare
+    // text content (e.g. <wb-dropdown position="...">click me</wb-dropdown>)
+    // IS the trigger (clickHandler below already handles `e.target ===
+    // element`), but it had zero visual styling: no background, border,
+    // padding, or pointer cursor -- confirmed live, it just looked like
+    // plain unstyled text with no clickable affordance. Style the host
+    // itself the same way .wb-dropdown__trigger styles a real button.
+    element.classList.add('wb-dropdown-trigger');
   }
   element.appendChild(menu);
 

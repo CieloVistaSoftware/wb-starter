@@ -31,6 +31,7 @@
    rule's favor (same 0,1,0 specificity as .wb-dialog, declared after it). */
 .wb-dialog-trigger {
   display: inline-block;
+  position: relative; /* anchors demo.js's top-right .wb-demo__card-doc-link badge */
   padding: 1rem;
   border: 1px solid var(--border-color);
   border-radius: var(--radius-md, 6px);

@@ -109,27 +109,31 @@ function findWbComponents(html) {
     return [...new Set(matches)]; // unique
 }
 
-// #388: attach a small top-right doc-link "badge" directly onto ONE card,
-// instead of relying on the single shared '.wb-demo__links' line below the
-// whole grid (which reads as detached from any individual card once a demo
-// holds more than one).
+// #388/#390: attach a small top-right doc-link "badge" directly onto ONE
+// component instance, instead of relying on the single shared
+// '.wb-demo__links' line below the whole grid (which reads as detached from
+// any individual instance once a demo holds more than one). Originally
+// card-only (#388); generalized to every wb-* component (#390) after the
+// same "Docs: wb-dialog" shared-line pattern read just as detached on
+// non-card demos (dialog/drawer/dropdown, demos/site/overlays.html) --
+// same problem, same fix, no reason to treat cards specially here.
 //
 // Why a self-healing MutationObserver instead of a single appendChild: a
-// card's own behavior (cardimage/cardhero/cardlink/etc, card.js) is applied
-// lazily via WB's IntersectionObserver-driven injection (wb-lazy.js) on its
-// own schedule, independent of this demo's build order -- and nearly every
-// card behavior rebuilds via `element.innerHTML = ''` before laying out its
-// header/main/footer. If that rebuild lands AFTER we've attached this link,
-// it silently wipes it out. Every card is only ever rebuilt once by its own
+// component's own behavior (card.js, overlay.js, dropdown.js, etc.) is
+// applied lazily via WB's IntersectionObserver-driven injection (wb-lazy.js)
+// on its own schedule, independent of this demo's build order -- and many
+// behaviors rebuild via `element.innerHTML = ''` before laying out their
+// own DOM. If that rebuild lands AFTER we've attached this link, it
+// silently wipes it out. Every element is only ever rebuilt once by its own
 // behavior, so watch for exactly that: if the link goes missing, put it
 // back. Idempotent (checks for an existing link first), so it settles after
 // at most one heal and stops mutating on its own re-insert.
-function attachCardDocLink(cardEl, file, comp, root) {
+function attachInstanceDocLink(hostEl, file, comp, root) {
     const href = root + 'public/doc-viewer.html?file=' + encodeURIComponent('docs/' + file);
     const label = `wb-${comp} docs`;
 
     const build = () => {
-        if (cardEl.querySelector(':scope > .wb-demo__card-doc-link')) return;
+        if (hostEl.querySelector(':scope > .wb-demo__card-doc-link')) return;
         const link = document.createElement('a');
         link.className = 'wb-demo__card-doc-link';
         link.href = href;
@@ -138,19 +142,19 @@ function attachCardDocLink(cardEl, file, comp, root) {
         link.setAttribute('aria-label', label);
         link.title = label;
         link.textContent = '📖';
-        cardEl.appendChild(link);
+        hostEl.appendChild(link);
     };
 
     build();
 
     const observer = new MutationObserver(() => {
-        if (!cardEl.isConnected) {
+        if (!hostEl.isConnected) {
             observer.disconnect();
             return;
         }
         build();
     });
-    observer.observe(cardEl, { childList: true });
+    observer.observe(hostEl, { childList: true });
     // Belt-and-suspenders: every lazy injection settles well within this —
     // never leave the observer running indefinitely.
     setTimeout(() => observer.disconnect(), 8000);
@@ -223,13 +227,17 @@ export async function demo(element, options = {}) {
     // Link each component to its REAL doc opened in the doc-viewer, resolved from
     // docs/manifest.json. Components with no doc get NO link — never a dead link.
     //
-    // #388: CARD children of the grid get their OWN top-right link (attached
-    // directly to that specific card, see attachCardDocLink above) instead of
-    // being folded into the generic shared line — a multi-card demo used to
-    // read as one detached caption under the whole group, not tied to any
-    // individual card. Everything else (badges/alerts/buttons/etc, or
-    // whatever isn't a card in a rare mixed block) keeps the original
-    // shared-line behavior below, unchanged.
+    // #388/#390: any wb-* child of the grid gets its OWN top-right link
+    // (attachInstanceDocLink above) instead of being folded into the
+    // generic shared line — a multi-instance demo used to read as one
+    // detached caption under the whole group, not tied to any individual
+    // element. Originally card-only (#388); generalized to every wb-*
+    // component (#390) so a page like demos/site/overlays.html
+    // (dialog/drawer/dropdown, no cards at all) gets the same per-instance
+    // placement instead of falling back to the shared line. Only things
+    // that never resolve to a real wb-* element in the grid (a plain
+    // <button x-tooltip> decorated element, for instance) still use the
+    // shared-line fallback below.
     const allComponents = findWbComponents(rawBlock);
     // wb-cardlink is excluded: its own behavior (card.js cardlink()) already
     // stretches a real <a href> over the ENTIRE card (deliberately, for
@@ -239,21 +247,22 @@ export async function demo(element, options = {}) {
     // confirmed live: card.querySelectorAll('a[href]') returned 2 anchors,
     // one of them effectively unreachable. A card that's already entirely
     // a link doesn't need a second "read the docs" affordance layered on it.
-    const cardChildren = Array.from(grid.children).filter(
-        (child) => child.tagName && child.tagName.startsWith('WB-CARD') && child.tagName !== 'WB-CARDLINK'
+    const perInstanceChildren = Array.from(grid.children).filter(
+        (child) => child.tagName && child.tagName.startsWith('WB-') && child.tagName !== 'WB-CARDLINK'
     );
-    const sharedComponents = allComponents.filter((comp) => !comp.startsWith('card'));
-    if (cardChildren.length > 0 || sharedComponents.length > 0) {
+    const perInstanceComps = new Set(perInstanceChildren.map((el) => el.tagName.slice(3).toLowerCase()));
+    const sharedComponents = allComponents.filter((comp) => !perInstanceComps.has(comp));
+    if (perInstanceChildren.length > 0 || sharedComponents.length > 0) {
         // Deterministic: await the (cached) manifest and build the links inline —
         // a floating .then() left empty divs when init raced page load.
         const manifest = await loadDocsManifest().catch(() => null);
         const root = siteRoot();
 
-        cardChildren.forEach((cardEl) => {
-            const comp = cardEl.tagName.slice(3).toLowerCase(); // WB-CARDHERO -> cardhero
+        perInstanceChildren.forEach((hostEl) => {
+            const comp = hostEl.tagName.slice(3).toLowerCase(); // WB-CARDHERO -> cardhero
             const file = findDocFile(manifest, comp);
             if (!file) return; // never a dead link
-            attachCardDocLink(cardEl, file, comp, root);
+            attachInstanceDocLink(hostEl, file, comp, root);
         });
 
         const linked = sharedComponents
