@@ -1075,16 +1075,24 @@ export function cardprofile(element, options = {}) {
   if (config.cover) {
     const coverFig = base.createFigure();
     coverFig.className = 'wb-card__figure wb-card__cover';
-    coverFig.style.cssText = `position:relative;margin:0;height:28px;background-image:url(${config.cover});background-size:cover;background-position:center;`;
+    coverFig.style.cssText = `position:relative;margin:0;height:36px;background-image:url(${config.cover});background-size:cover;background-position:center;`;
 
     // Role sits on the cover (the card's top half) instead of below the
     // avatar/name, so it reads immediately alongside the cover photo.
-    // Vertically centered (not a fixed top offset) so it stays fully
-    // visible even with the cover strip this thin.
+    // top:50%/translateY(-50%) centered the badge's BOUNDING BOX correctly
+    // within the cover strip, but with the strip flush against the card's
+    // own top-right corner, that centered position landed almost entirely
+    // inside the card's 8px border-radius + overflow:hidden curve -- the
+    // rectangular bounding-box math never overflowed, but the pill's own
+    // rounded corner still visibly clipped against that curve (confirmed
+    // via screenshot; a plain getBoundingClientRect containment check
+    // can't detect corner-radius clipping, only real rectangle overlap).
+    // Fixed top offset that clears the corner radius, on a slightly
+    // taller strip so there's still balanced clearance below.
     if (config.role) {
       const roleBadge = document.createElement('div');
       roleBadge.className = 'wb-card__subtitle wb-card__role';
-      roleBadge.style.cssText = 'position:absolute;top:50%;right:0.5rem;transform:translateY(-50%);padding:0.15rem 0.6rem;border-radius:999px;background:rgba(0,0,0,0.55);color:#fff;font-size:0.7rem;';
+      roleBadge.style.cssText = 'position:absolute;top:8px;right:0.6rem;padding:0.15rem 0.6rem;border-radius:999px;background:rgba(0,0,0,0.55);color:#fff;font-size:0.7rem;';
       roleBadge.textContent = config.role;
       coverFig.appendChild(roleBadge);
     }

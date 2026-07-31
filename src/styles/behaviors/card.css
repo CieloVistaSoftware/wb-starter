@@ -86,6 +86,26 @@
   text-align: left;
 }
 
+/* Same class-collision as #350 above, header side: a card's own semantic
+   <header> gets WB's generic site-chrome header behavior auto-injected too
+   (tag-map.js: 'header' -> 'header' behavior), adding .wb-header alongside
+   .wb-card__header. .wb-header (header.css) sets a fixed `height: 60px` --
+   the card header's own inline style never sets `height` at all (only
+   padding/display/etc, which DO win via inline specificity), so that one
+   property leaked straight through. A card header whose natural content
+   (title + subtitle) needed 74px got clamped to 60px, clipping the
+   subtitle by ~14px -- confirmed live: subtitle's bottom edge measured
+   6px PAST the header's own bottom border. Reassert `height: auto` (plus
+   the other .wb-header properties, for safety) at 0,2,0 specificity so
+   the card's own content-driven height always wins. */
+.wb-card__header.wb-header {
+  height: auto;
+  align-items: flex-start;
+  justify-content: space-between;
+  padding: 1rem;
+  font-size: 1em;
+}
+
 /* Semantic variants — a left accent bar in the variant's theme color so the card
    visibly reads as success/danger/etc. (variant="success" added .wb-card--success
    but nothing styled it). Colors come from the theme — no literals.
