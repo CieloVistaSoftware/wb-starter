@@ -49,8 +49,17 @@ wb-code-card {
    fill extra columns with — without this, wb-demo's own display:block kept
    it (and the code panel below it, a full-width sibling) stretched to the
    page's full content width regardless of how narrow the one rendered
-   element actually is. */
-wb-demo:has(> .wb-demo__grid--cols-1) {
+   element actually is.
+   `:not(:has(> :nth-child(2)))` on the grid -- exactly one child, not
+   just one COLUMN -- is required here: a --cols-1 grid legitimately holds
+   several stacked rows too (e.g. a size-comparison section, one card per
+   row so each can reach its own real max-width instead of being clamped
+   by a shared column track). Without the child-count check, that stacked
+   case ALSO got width:fit-content, collapsing the whole section down to
+   whatever narrow max-content width the grid sizing algorithm picked --
+   confirmed live: 7 differently-sized cards all rendered ~150-270px wide,
+   none reaching their own declared max-width. */
+wb-demo:has(> .wb-demo__grid--cols-1:not(:has(> :nth-child(2)))) {
   width: fit-content;
   max-width: 100%;
 }

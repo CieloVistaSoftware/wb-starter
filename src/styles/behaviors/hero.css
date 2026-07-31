@@ -100,20 +100,35 @@ wb-cardhero .wb-card__hero-pretitle {
   text-transform: uppercase;
 }
 
-/* Title — big, tight, with depth. */
-wb-cardhero .wb-card__hero-title {
+/* Title — big, tight, with depth.
+   `color` set directly here (not left to inherit from .wb-card__hero-content)
+   -- .wb-card__title's own `color: var(--text-primary)` rule is a DIRECT
+   match on this same element, and a direct rule always beats an inherited
+   one regardless of specificity. That silently discarded the scrim's
+   intended light --text-on-accent color in favor of the theme's regular
+   body-text color, which is not guaranteed to be legible against an
+   arbitrary background photo. Confirmed live: "Summer Collection 2026"
+   rendered in --text-primary (illegible blue-on-photo), not white.
+   Selector also compounds BOTH classes already on the element (0,2,1),
+   not just `.wb-card__hero-title` (0,1,1) -- site.css's `.page h3` is
+   ALSO 0,1,1 and ties, so which one wins came down to stylesheet load
+   order (site.css won). The extra class guarantees this rule wins
+   regardless of load order. */
+wb-cardhero .wb-card__title.wb-card__hero-title {
   margin: 0;
   font-weight: 800;
   line-height: 1.05;
   font-size: clamp(2rem, 6cqi, 3.5rem);
   letter-spacing: -0.01em;
+  color: var(--text-on-accent, #fff);
   text-shadow: 0 2px 14px hsl(var(--overlay-dark-hsl) / 0.35);
 }
 
-wb-cardhero .wb-card__hero-subtitle {
+wb-cardhero .wb-card__subtitle.wb-card__hero-subtitle {
   margin: 0.75rem 0 0;
   font-size: clamp(1rem, 2.5cqi, 1.35rem);
   line-height: 1.5;
+  color: var(--text-on-accent, #fff);
   opacity: 0.94;
   text-shadow: 0 1px 8px hsl(var(--overlay-dark-hsl) / 0.3);
 }

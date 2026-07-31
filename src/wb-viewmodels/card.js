@@ -275,8 +275,10 @@ export function cardBase(element, options = {}) {
   }
   
   // Size class (max/min-width scale, card.css) — 'xs' was missing from the
-  // allowlist so <wb-card size="xs"> silently did nothing (#282).
-  if (config.size && ['xs','sm','md','lg','xl','full'].includes(config.size)) {
+  // allowlist so <wb-card size="xs"> silently did nothing (#282). 'auto'
+  // (a real schema-declared enum value, matching .wb-card--auto in
+  // card.css) was missing too, for the same reason.
+  if (config.size && ['xs','sm','md','lg','xl','full','auto'].includes(config.size)) {
     element.classList.add(`wb-card--${config.size}`);
   }
   

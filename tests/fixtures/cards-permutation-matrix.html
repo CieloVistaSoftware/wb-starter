@@ -7,6 +7,14 @@
   <title>Card Components -- Permutation Matrix (test fixture, not a demo page)</title>
   <link rel="stylesheet" href="../../src/styles/themes.css">
   <link rel="stylesheet" href="../../src/styles/site.css">
+  <style>
+    /* Same pattern as demos/site/cards.html: standalone page with no
+       site__main wrapper providing padding, so body itself needs it
+       directly. Matches DEMOS-AND-DOCS-STANDARDS.md #13 (>=1rem
+       clearance from any edge) -- "every page on our web site must
+       follow our standards," including test fixtures. */
+    body { padding: var(--space-xl); }
+  </style>
 </head>
 
 <body>
@@ -72,7 +80,18 @@
   <!-- 4. size variants -->
   <section id="card-size-variants">
   <h2>size variants</h2>
-  <wb-demo columns="3">
+  <!-- columns="1", not 3: a size variant's whole point is its own distinct
+       max-width (200/280/360/480/600px/100%/none). A shared 3-up grid
+       gives every column an EQUAL 1fr track, so any card whose max-width
+       exceeds that track's own width (lg/xl/full/auto here) gets clamped
+       down to the track's width regardless of its own max-width -- all
+       four rendered pixel-identical, and combined with size never
+       affecting height/padding/font-size either, the whole section
+       visually read as "one size" (confirmed live: lg/xl/full/auto all
+       measured the same 379px; only xs/sm/md, whose max-width was
+       already tighter than the track, differed). A single column lets
+       each card size to its own real max-width. -->
+  <wb-demo columns="1">
     <wb-card size="xs">
       size=xs
     </wb-card>
