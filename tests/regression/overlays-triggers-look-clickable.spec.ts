@@ -29,11 +29,21 @@ async function ready(page) {
 
 async function assertLooksClickable(locator) {
   await expect(locator).toBeVisible();
+  // The trigger CLASS (.wb-dialog-trigger/.wb-drawer-trigger/
+  // .wb-dropdown-trigger) is applied by the behavior's own async/lazy
+  // injection (wb-lazy.js's IntersectionObserver-driven scan), not
+  // synchronously with the element becoming visible in the DOM -- reading
+  // computed style right after toBeVisible() can race that injection
+  // (confirmed live: cursor read back as 'auto' on a fresh page load).
+  // Poll until the styling has actually landed.
+  await expect
+    .poll(() => locator.evaluate((el) => getComputedStyle(el).cursor), { timeout: 10000 })
+    .toBe('pointer');
+
   const style = await locator.evaluate((el) => {
     const s = getComputedStyle(el);
     return { cursor: s.cursor, bg: s.backgroundColor, border: s.borderWidth, padding: s.paddingTop, radius: s.borderRadius };
   });
-  expect(style.cursor, 'cursor should be pointer').toBe('pointer');
   expect(style.bg, 'background must not be transparent').not.toBe('rgba(0, 0, 0, 0)');
   expect(parseFloat(style.border), 'must have a real border').toBeGreaterThan(0);
   expect(parseFloat(style.padding), 'must have real padding').toBeGreaterThan(0);

@@ -89,10 +89,37 @@ test.describe('demos/site/overlays.html <wb-drawer> PATH B: content, position, v
       const trigger = section.locator(`wb-drawer[position="${pos}"]`);
       await trigger.scrollIntoViewIfNeeded();
       await trigger.click();
-      const panel = page.locator('.wb-drawer__panel--open');
-      await expect(panel, `position=${pos} should open a panel`).toBeVisible({ timeout: 5000 });
+
+      // The panel element exists synchronously right after click() (show()
+      // appends it to document.body before its rAF-deferred `--open` add),
+      // still in its CLOSED transform -- attach the transitionend listener
+      // NOW, before `--open` triggers the animated transform, so there is
+      // no race where the transition could complete before we start
+      // listening (which polling/fixed-sleep approaches both hit: e.g.
+      // position=left's x read as -283 instead of the settled 0, and a
+      // fixed 350ms sleep was still occasionally too short under load).
+      const panel = page.locator('.wb-drawer__panel').last();
+      await expect(panel).toBeAttached();
+      const transitionSettled = panel.evaluate((el) => new Promise((resolve) => {
+        const done = () => { el.removeEventListener('transitionend', done); resolve(true); };
+        el.addEventListener('transitionend', done, { once: true });
+        // Safety net only (e.g. prefers-reduced-motion disabling the
+        // transition entirely) -- well past the declared 0.3s duration.
+        setTimeout(done, 600);
+      }));
+
+      const openPanel = page.locator('.wb-drawer__panel--open');
+      await expect(openPanel, `position=${pos} should open a panel`).toBeVisible({ timeout: 5000 });
+      await transitionSettled;
       rects[pos] = await panel.evaluate((el) => el.getBoundingClientRect().toJSON());
-      await trigger.click();
+      // Close via the panel's own close button, not a second click on the
+      // trigger -- once open, the full-screen .wb-drawer__backdrop (fixed,
+      // inset:0, z-index above the trigger) visually covers the trigger, so
+      // Playwright's actionability check can never click it again (confirmed:
+      // this is correct modal UX, a backdrop is SUPPOSED to block interaction
+      // with what's behind it -- not a product bug, the earlier version of
+      // this test asserting "click trigger again to close" was wrong).
+      await page.locator('.wb-drawer__panel--open .wb-drawer__close').click();
       await expect(page.locator('.wb-drawer__panel--open')).toHaveCount(0, { timeout: 5000 });
     }
 
@@ -128,7 +155,7 @@ test.describe('demos/site/overlays.html <wb-drawer> PATH B: content, position, v
     await expect(page.locator('.wb-drawer__backdrop--open')).toHaveCount(0);
     const pageTransform = await page.locator('body > .page').evaluate((el) => getComputedStyle(el).transform);
     expect(pageTransform, 'push variant should translate the page content wrapper').not.toBe('none');
-    await pushTrigger.click();
+    await page.locator('.wb-drawer__panel--open .wb-drawer__close').click();
     await expect(page.locator('.wb-drawer__panel--open')).toHaveCount(0, { timeout: 5000 });
     await expect
       .poll(async () => page.locator('body > .page').evaluate((el) => getComputedStyle(el).transform))
@@ -144,7 +171,10 @@ test.describe('demos/site/overlays.html <wb-drawer> PATH B: content, position, v
     await expect(page.locator('.wb-drawer__backdrop--open')).toHaveCount(1);
     const overlayPageTransform = await page.locator('body > .page').evaluate((el) => getComputedStyle(el).transform);
     expect(overlayPageTransform).toBe('none');
-    await overlayTrigger.click();
+    // Close via the close button, not a second trigger click -- the
+    // dimming backdrop now covers the trigger (correct modal UX), so
+    // Playwright can't click through it to reach the trigger again.
+    await page.locator('.wb-drawer__panel--open .wb-drawer__close').click();
     await expect(page.locator('.wb-drawer__panel--open')).toHaveCount(0, { timeout: 5000 });
 
     // default: also dims with a backdrop (alias of overlay), but carries
@@ -158,7 +188,7 @@ test.describe('demos/site/overlays.html <wb-drawer> PATH B: content, position, v
     await expect(defaultPanel).not.toHaveClass(/wb-drawer--overlay/);
     await expect(defaultPanel).not.toHaveClass(/wb-drawer--push/);
     await expect(page.locator('.wb-drawer__backdrop--open')).toHaveCount(1);
-    await defaultTrigger.click();
+    await page.locator('.wb-drawer__panel--open .wb-drawer__close').click();
     await expect(page.locator('.wb-drawer__panel--open')).toHaveCount(0, { timeout: 5000 });
   });
 });

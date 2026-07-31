@@ -195,6 +195,27 @@ export function dropdown(element, options = {}) {
 
   element.addEventListener('click', clickHandler);
 
+  // trigger="hover" was read into config but never actually used anywhere
+  // in this file (confirmed by grep before this fix) -- only the
+  // unconditional click handler above existed, so hovering never opened
+  // the menu regardless of the attribute. A short close delay lets the
+  // pointer travel from the trigger into the menu itself without closing
+  // it (standard hover-menu UX -- without it, any gap between trigger and
+  // menu edge closes the menu before the item underneath can be clicked).
+  let hoverCloseTimer = null;
+  if (config.trigger === 'hover') {
+    element.addEventListener('mouseenter', () => {
+      if (hoverCloseTimer) { clearTimeout(hoverCloseTimer); hoverCloseTimer = null; }
+      if (!isOpen) toggle();
+    });
+    element.addEventListener('mouseleave', () => {
+      hoverCloseTimer = setTimeout(() => {
+        if (isOpen) toggle();
+        hoverCloseTimer = null;
+      }, 150);
+    });
+  }
+
   // Close on outside click
   const outsideClickHandler = (e) => {
     if (!element.contains(e.target)) close();
