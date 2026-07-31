@@ -9,8 +9,15 @@ import { test, expect } from '@playwright/test';
  *    multi-item comparison sections never got one. Added ids to all 34.
  * 2. wb-cardlink's own behavior (card.js) stretches a real <a href> over
  *    the whole card -- demo.js's #388 "card doc-link" badge feature added
- *    a SECOND <a href> on top of it, overlapping and fighting the
- *    stretched anchor for clicks. Excluded wb-cardlink from that feature.
+ *    a SECOND <a href> on top of it. Originally "fixed" by excluding
+ *    wb-cardlink from the badge entirely, but #390 ("put all links on the
+ *    card itself, upper right hand corner" -- no carve-outs) reversed that:
+ *    the badge's own z-index (demo.css, z-index:5) keeps its small corner
+ *    independently clickable above the stretched anchor underneath it, so
+ *    both anchors coexist and both are reachable. Verified live via a real
+ *    Playwright click (not this MCP browser tool, which was separately
+ *    confirmed unreliable here -- IntersectionObserver-driven lazy builds
+ *    don't fire in its backgrounded/hidden tab).
  * 3. (Separate page, found investigating a related text-wrap report)
  *    inline <code> tag-name chips like <wb-card> could wrap mid-hyphen
  *    ("<wb-" / "card>" on separate lines) because their white-space was
@@ -35,15 +42,29 @@ test.describe('demos/site/cards.html: full-page fixes', () => {
     }
   });
 
-  test('link card has exactly one real stretched <a> anchor, no competing doc-link badge', async ({ page }) => {
+  test('link card has both its own stretched <a> anchor AND an independently-clickable doc-link badge', async ({ page }) => {
     await page.goto('/demos/site/cards.html', { waitUntil: 'domcontentloaded' });
     await page.waitForFunction(() => (window as any).WB, { timeout: 20000 });
 
     const card = page.locator('#card-gallery wb-cardlink').first();
     await card.scrollIntoViewIfNeeded();
-    const anchors = card.locator('a[href]');
-    await expect(anchors).toHaveCount(1);
-    await expect(anchors).toHaveAttribute('href', /.+/);
+
+    const stretched = card.locator('a[href]:not(.wb-demo__card-doc-link)');
+    await expect(stretched).toHaveCount(1);
+    await expect(stretched).toHaveAttribute('href', /.+/);
+
+    const badge = card.locator('a.wb-demo__card-doc-link');
+    await expect(badge).toHaveCount(1);
+
+    // The badge must be independently clickable (its z-index keeps it
+    // reachable above the full-card stretched anchor beneath it) -- clicking
+    // it should navigate to the docs, not the card's own stretched href.
+    const [popup] = await Promise.all([
+      page.waitForEvent('popup'),
+      badge.click(),
+    ]);
+    expect(popup.url()).toContain('doc-viewer.html');
+    await popup.close();
   });
 
   test('other card types inside a wb-demo still get their doc-link badge (regression guard)', async ({ page }) => {

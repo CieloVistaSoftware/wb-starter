@@ -18,10 +18,18 @@
     :not(pre) > code { background: rgba(0,0,0,0.3); padding: 0.2rem 0.4rem; border-radius: 4px; font-family: monospace; }
 
     /* Block code examples: vertical (one line per line, no wrap → scroll), with
-       room for the language label + copy button. */
+       room for the language label + copy button. This previously said "no wrap
+       → scroll" but the CSS actually did the opposite (pre-wrap +
+       overflow-wrap:anywhere, overflow-x:hidden) -- long lines wrapped instead
+       of scrolling, and `anywhere` breaks at ANY character once a line nears
+       the edge, including mid-identifier (same class of bug as the inline
+       <code> tag-chip mid-hyphen wrap fixed elsewhere this session). Matches
+       code.js's own scrollable block-code convention now: `white-space: pre`
+       never wraps, `overflow-x: auto` lets a genuinely long line scroll
+       horizontally within its own box instead of breaking. */
     pre[language] { position: relative; margin: 1rem 0 0; padding: 2.5rem 1rem 1rem;
       background: var(--bg-primary); border: 1px solid var(--border-color); border-radius: 8px;
-      overflow-x: hidden; white-space: pre-wrap; overflow-wrap: anywhere; line-height: 1.6; font-size: 0.9rem;
+      overflow-x: auto; white-space: pre; line-height: 1.6; font-size: 0.9rem;
       font-family: 'JetBrains Mono', 'Fira Code', Consolas, monospace; }
     pre[language] code { background: none; padding: 0; font: inherit; }
     pre[language]::before { content: attr(language); position: absolute; top: 0.55rem; left: 1rem;

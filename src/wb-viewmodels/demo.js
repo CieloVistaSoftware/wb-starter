@@ -239,16 +239,19 @@ export async function demo(element, options = {}) {
     // <button x-tooltip> decorated element, for instance) still use the
     // shared-line fallback below.
     const allComponents = findWbComponents(rawBlock);
-    // wb-cardlink is excluded: its own behavior (card.js cardlink()) already
-    // stretches a real <a href> over the ENTIRE card (deliberately, for
-    // native right-click/middle-click support -- see that function's own
-    // comment). A second doc-link <a> badge on top of that visually
-    // overlaps the full-card anchor and fights it for clicks/z-index --
-    // confirmed live: card.querySelectorAll('a[href]') returned 2 anchors,
-    // one of them effectively unreachable. A card that's already entirely
-    // a link doesn't need a second "read the docs" affordance layered on it.
+    // wb-cardlink used to be excluded here: its own behavior (card.js
+    // cardlink()) already stretches a real <a href> over the ENTIRE card
+    // (deliberately, for native right-click/middle-click support -- see
+    // that function's own comment), and a doc-link badge added on top
+    // looked like it would fight the stretched anchor for clicks. Turned
+    // out not to matter: the badge's own z-index (demo.css
+    // .wb-demo__card-doc-link, z-index:5 vs the stretched anchor's default
+    // auto) keeps it independently clickable in its own small corner --
+    // confirmed live, both anchors reachable. Re-included per explicit
+    // request: "put all links on the card itself, upper right hand
+    // corner" -- no carve-outs, every card including cardlink gets one.
     const perInstanceChildren = Array.from(grid.children).filter(
-        (child) => child.tagName && child.tagName.startsWith('WB-') && child.tagName !== 'WB-CARDLINK'
+        (child) => child.tagName && child.tagName.startsWith('WB-')
     );
     const perInstanceComps = new Set(perInstanceChildren.map((el) => el.tagName.slice(3).toLowerCase()));
     const sharedComponents = allComponents.filter((comp) => !perInstanceComps.has(comp));
