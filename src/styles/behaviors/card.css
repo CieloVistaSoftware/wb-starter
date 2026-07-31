@@ -615,8 +615,8 @@ wb-cardnotification,
 }
 
 .wb-portfolio__avatar {
-  width: 120px;
-  height: 120px;
+  width: 7.5rem;
+  height: 7.5rem;
   border-radius: 50%;
   border: 4px solid var(--bg-secondary, #1f2937);
   object-fit: cover;
@@ -640,10 +640,10 @@ wb-cardnotification,
 
 .wb-portfolio__availability {
   position: absolute;
-  bottom: 8px;
-  right: 8px;
-  width: 24px;
-  height: 24px;
+  bottom: 0.5rem;
+  right: 0.5rem;
+  width: 1.5rem;
+  height: 1.5rem;
   border-radius: 50%;
   border: 3px solid var(--bg-secondary, #1f2937);
   cursor: help;
@@ -652,8 +652,8 @@ wb-cardnotification,
 /* Fallback avatar (no `avatar` image supplied) — initials circle so the
    availability dot always has something to anchor to. */
 .wb-portfolio__avatar-placeholder {
-  width: 120px;
-  height: 120px;
+  width: 7.5rem;
+  height: 7.5rem;
   border-radius: 50%;
   border: 4px solid var(--bg-secondary, #1f2937);
   background: var(--bg-tertiary, #374151);
@@ -675,14 +675,14 @@ wb-cardnotification,
    `.wb-header` rule
    regardless of CSS source order. */
 .wb-portfolio.wb-portfolio--compact {
-  max-width: 280px;
+  max-width: 17.5rem;
 }
 .wb-portfolio--compact .wb-portfolio__header {
   padding: 0.75rem;
 }
 .wb-portfolio--compact .wb-portfolio__avatar {
-  width: 64px;
-  height: 64px;
+  width: 4rem;
+  height: 4rem;
   font-size: 1.25rem;
 }
 .wb-portfolio--compact .wb-portfolio__name {
@@ -693,8 +693,8 @@ wb-cardnotification,
   padding: 0 0.75rem 0.75rem;
 }
 .wb-portfolio--compact .wb-portfolio__availability {
-  width: 14px;
-  height: 14px;
+  width: 0.875rem;
+  height: 0.875rem;
   bottom: 2px;
   right: 2px;
   border-width: 2px;
@@ -704,7 +704,7 @@ wb-cardnotification,
 .wb-portfolio.wb-portfolio--horizontal {
   flex-direction: row;
   align-items: stretch;
-  max-width: 600px;
+  max-width: 37.5rem;
 }
 .wb-portfolio--horizontal .wb-portfolio__header {
   display: flex;
@@ -712,7 +712,7 @@ wb-cardnotification,
   align-items: flex-start;
   text-align: left;
   flex: 0 0 auto;
-  width: 160px;
+  width: 10rem;
   border-right: 1px solid var(--border-color, #374151);
 }
 .wb-portfolio--horizontal .wb-portfolio__avatar-wrap {
@@ -732,8 +732,8 @@ wb-cardnotification,
   padding: 2.25rem;
 }
 .wb-portfolio--full .wb-portfolio__avatar {
-  width: 160px;
-  height: 160px;
+  width: 10rem;
+  height: 10rem;
   font-size: 2.5rem;
 }
 .wb-portfolio--full .wb-portfolio__name {
@@ -744,26 +744,26 @@ wb-cardnotification,
    diversity reads even when the grid column caps the rendered width. Each
    selector is a 3-class compound (0,3,0), safely outranking both the base
    rules above and the compact/full 2-class variant rules. ── */
-.wb-portfolio.wb-card--xs .wb-portfolio__avatar { width: 56px; height: 56px; font-size: 1.1rem; }
+.wb-portfolio.wb-card--xs .wb-portfolio__avatar { width: 3.5rem; height: 3.5rem; font-size: 1.1rem; }
 .wb-portfolio.wb-card--xs .wb-portfolio__name { font-size: 1rem; }
 .wb-portfolio.wb-card--xs .wb-portfolio__header { padding: 0.75rem; }
 
-.wb-portfolio.wb-card--sm .wb-portfolio__avatar { width: 72px; height: 72px; font-size: 1.4rem; }
+.wb-portfolio.wb-card--sm .wb-portfolio__avatar { width: 4.5rem; height: 4.5rem; font-size: 1.4rem; }
 .wb-portfolio.wb-card--sm .wb-portfolio__name { font-size: 1.2rem; }
 .wb-portfolio.wb-card--sm .wb-portfolio__header { padding: 1rem; }
 
-.wb-portfolio.wb-card--md .wb-portfolio__avatar { width: 96px; height: 96px; font-size: 1.7rem; }
+.wb-portfolio.wb-card--md .wb-portfolio__avatar { width: 6rem; height: 6rem; font-size: 1.7rem; }
 .wb-portfolio.wb-card--md .wb-portfolio__name { font-size: 1.4rem; }
 
-.wb-portfolio.wb-card--lg .wb-portfolio__avatar { width: 128px; height: 128px; font-size: 2rem; }
+.wb-portfolio.wb-card--lg .wb-portfolio__avatar { width: 8rem; height: 8rem; font-size: 2rem; }
 .wb-portfolio.wb-card--lg .wb-portfolio__name { font-size: 1.6rem; }
 .wb-portfolio.wb-card--lg .wb-portfolio__header { padding: 1.75rem; }
 
-.wb-portfolio.wb-card--xl .wb-portfolio__avatar { width: 152px; height: 152px; font-size: 2.25rem; }
+.wb-portfolio.wb-card--xl .wb-portfolio__avatar { width: 9.5rem; height: 9.5rem; font-size: 2.25rem; }
 .wb-portfolio.wb-card--xl .wb-portfolio__name { font-size: 1.85rem; }
 .wb-portfolio.wb-card--xl .wb-portfolio__header { padding: 2rem; }
 
-.wb-portfolio.wb-card--full .wb-portfolio__avatar { width: 176px; height: 176px; font-size: 2.5rem; }
+.wb-portfolio.wb-card--full .wb-portfolio__avatar { width: 11rem; height: 11rem; font-size: 2.5rem; }
 .wb-portfolio.wb-card--full .wb-portfolio__name { font-size: 2.1rem; }
 .wb-portfolio.wb-card--full .wb-portfolio__header { padding: 2.25rem; }
 

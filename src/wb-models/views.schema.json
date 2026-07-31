@@ -4,6 +4,7 @@
   "title": "WB Views Registry Schema",
   "description": "Schema for validating WB Views registry files. Views are reusable HTML templates that auto-register as custom elements.",
   "schemaFor": "views",
+  "schemaType": "definition",
   "type": "object",
   "required": [
     "views"

@@ -241,6 +241,25 @@ function loadSchemas(): Map<string, Schema> {
         console.log(`Skipping non-component schema: ${file}`);
         continue;
       }
+      // schemaType is the project-wide "is this a real single-element
+      // component" signal (see tests/compliance/schema-validation.spec.ts,
+      // which already tiers on it: 'component' [default] vs 'base' /
+      // 'definition' / 'behavior' / 'page'). This runner used to test EVERY
+      // schema with a behavior/schemaFor as if it were a live <wb-*> custom
+      // element -- but behavior.schema.json (schemaType 'behavior': the
+      // master metadata catalog for ALL behaviors), home-page.schema.json
+      // (schemaType 'page': a page-layout composition), search-index.schema.json
+      // and views.schema.json (schemaType 'definition': data-file formats for
+      // the search index / views registry, not components) all declare
+      // schemaFor for cross-referencing purposes but were never meant to be
+      // instantiated as <wb-behavior>/<wb-home-page>/<wb-search-index>/
+      // <wb-views> tags -- no such custom elements exist. Testing them here
+      // generated fake tags, then reported real elements/classes/children as
+      // "missing" for structures that were never supposed to exist.
+      if (schema.schemaType && schema.schemaType !== 'component') {
+        console.log(`Skipping non-component schema (schemaType=${schema.schemaType}): ${file}`);
+        continue;
+      }
       const name = schema.behavior || file.replace('.schema.json', '');
       schemas.set(name, schema);
     } catch (e) {
@@ -526,8 +545,20 @@ test.describe('Component Compliance', () => {
             }
             // Handle single-click tests
             else if (btnTest.selector) {
-              const btn = el.locator(btnTest.selector);
-              const btnCount = await btn.count();
+              // 'element'/'' mean "the component root itself" -- the same
+              // convention runAssertions() (CHECK 5) and the visual check
+              // (CHECK 9) already honor. Without this, any schema whose
+              // button test targets the host element directly (e.g.
+              // button.schema.json's own "Basic Click"/"Variant Classes",
+              // since <wb-button> IS the clickable button, no inner
+              // selector to point at) got a literal `el.locator('element')`
+              // CSS-tag lookup -- which never matches a real element named
+              // <element> -- and failed every such test with a false
+              // "Button not found".
+              const btn = (btnTest.selector === 'element' || btnTest.selector === '')
+                ? el
+                : el.locator(btnTest.selector);
+              const btnCount = (btnTest.selector === 'element' || btnTest.selector === '') ? 1 : await btn.count();
 
               if (btnCount === 0) {
                 allErrors.push(`[BUTTON] ${btnTest.name}: Button not found at "${btnTest.selector}"`);
@@ -592,11 +623,25 @@ test.describe('Component Compliance', () => {
           
           try {
             if (visTest.expect) {
-              const target = visTest.expect.selector === 'element' ? el : el.locator(visTest.expect.selector).first();
-              
-              // Check classes
+              // No selector (input.schema.json's "Error State"/"Helper Text",
+              // among others) means "the component root itself", same as the
+              // explicit 'element' convention CHECK 5/7 use -- `el.locator(undefined)`
+              // isn't a no-op, it's a hard Playwright error ("Cannot read
+              // properties of undefined (reading '_frame')"), which is why
+              // these always landed as a [VISUAL] ... Error rather than a
+              // real pass/fail on the class/style check that was intended.
+              const noSelector = !visTest.expect.selector || visTest.expect.selector === 'element';
+              const target = noSelector ? el : el.locator(visTest.expect.selector).first();
+
+              // Check classes. Schemas overwhelmingly write hasClass as a
+              // single string (card.schema.json's "Basic Card" -> "wb-card",
+              // etc.) -- only accepting an array here meant `for...of` silently
+              // iterated the STRING'S CHARACTERS instead ('w','b','-','c'...),
+              // checking for nonsense one-letter classes and reporting them
+              // as "missing".
               if (visTest.expect.hasClass) {
-                for (const cls of visTest.expect.hasClass) {
+                const classes = Array.isArray(visTest.expect.hasClass) ? visTest.expect.hasClass : [visTest.expect.hasClass];
+                for (const cls of classes) {
                   const hasClass = await target.evaluate((el, c) => el.classList.contains(c), cls);
                   if (!hasClass) {
                     allErrors.push(`[VISUAL] ${visTest.name}: Missing class "${cls}"`);

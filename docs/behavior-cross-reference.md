@@ -1913,15 +1913,25 @@ Color hue picker:
 
 **Examples:**
 
-```html
-<!-- Basic progress -->
+Basic progress:
+
+<wb-demo>
 <progress
   value="70"
   max="100">
 </progress>
-<!-- Indeterminate (loading) -->
+</wb-demo>
+
+Indeterminate (loading):
+
+<wb-demo>
 <progress></progress>
-<!-- Various completion levels -->
+</wb-demo>
+
+Various completion levels:
+
+<wb-demo>
+<wb-container>
 <label>Not started: <progress
     value="0"
     max="100">
@@ -1947,7 +1957,12 @@ Color hue picker:
     max="100">
   </progress>
 </label>
-<!-- File upload progress -->
+</wb-container>
+</wb-demo>
+
+File upload progress:
+
+<wb-demo>
 <div>
   <p>Uploading document.pdf...</p>
   <progress
@@ -1956,7 +1971,11 @@ Color hue picker:
   </progress>
   <span>45%</span>
 </div>
-<!-- Download progress -->
+</wb-demo>
+
+Download progress:
+
+<wb-demo>
 <div>
   <p>Downloading update (125 MB / 500 MB)</p>
   <progress
@@ -1964,7 +1983,11 @@ Color hue picker:
     max="500">
   </progress>
 </div>
-<!-- Step progress -->
+</wb-demo>
+
+Step progress:
+
+<wb-demo>
 <div>
   <p>Step 2 of 4</p>
   <progress
@@ -1972,7 +1995,11 @@ Color hue picker:
     max="4">
   </progress>
 </div>
-<!-- Course progress -->
+</wb-demo>
+
+Course progress:
+
+<wb-demo>
 <div>
   <h3>JavaScript Fundamentals</h3>
   <p>12 of 20 lessons completed</p>
@@ -1981,8 +2008,12 @@ Color hue picker:
     max="20">
   </progress>
 </div>
-<!-- Multiple progress bars (dashboard) -->
-<div>
+</wb-demo>
+
+Multiple progress bars (dashboard):
+
+<wb-demo>
+<wb-container>
   <label>Storage Used (7.5 GB / 10 GB) <progress
       value="75"
       max="100">
@@ -1998,8 +2029,8 @@ Color hue picker:
       max="100">
     </progress>
   </label>
-</div>
-```
+</wb-container>
+</wb-demo>
 
 ---
 
@@ -2016,23 +2047,44 @@ Color hue picker:
 
 **Examples:**
 
-```html
-<!-- Inline code in text -->
+Inline code in text:
+
+<wb-demo>
+<wb-container>
 <p>Use the <code>console.log()</code> function to debug your code.</p>
 <p>The <code>Array.map()</code> method creates a new array.</p>
 <p>Set <code>display: flex</code> on the container.</p>
 <p>Run <code>npm install</code> to install dependencies.</p>
 <p>The <code>async/await</code> syntax makes asynchronous code easier to read.</p>
-<!-- Variable names -->
+</wb-container>
+</wb-demo>
+
+Variable names:
+
+<wb-demo>
 <p>Store the result in <code>userData</code> variable.</p>
-<!-- File paths -->
+</wb-demo>
+
+File paths:
+
+<wb-demo>
 <p>Configuration is in <code>/config/site.json</code>.</p>
-<!-- Commands -->
+</wb-demo>
+
+Commands:
+
+<wb-demo>
 <p>Press <code>Ctrl+C</code> to copy.</p>
-<!-- Multiple inline codes -->
+</wb-demo>
+
+Multiple inline codes:
+
+<wb-demo>
+<wb-container>
 <p>Compare <code>==</code> (loose equality) vs <code>===</code> (strict equality).</p>
 <p>Use <code>let</code> for variables that change, <code>const</code> for constants.</p>
-```
+</wb-container>
+</wb-demo>
 
 ---
 
@@ -2053,14 +2105,19 @@ Color hue picker:
 
 **Examples:**
 
-```html
-<!-- Basic code block -->
+Basic code block:
+
+<wb-demo>
 <pre>
 function greet(name) {
   return `Hello, ${name}!`;
 }
 </pre>
-<!-- With line numbers -->
+</wb-demo>
+
+With line numbers:
+
+<wb-demo>
 <pre line-numbers>
 const express = require('express');
 const app = express();
@@ -2071,7 +2128,11 @@ app.get('/', (req, res) => {
 
 app.listen(3000);
 </pre>
-<!-- JavaScript example -->
+</wb-demo>
+
+JavaScript example:
+
+<wb-demo>
 <pre language="javascript">
 // Fetch data from API
 async function fetchUsers() {
@@ -2080,7 +2141,11 @@ async function fetchUsers() {
   return users;
 }
 </pre>
-<!-- HTML example -->
+</wb-demo>
+
+HTML example:
+
+<wb-demo>
 <pre language="html">
 &lt;article&gt;
   &lt;header&gt;
@@ -2091,7 +2156,11 @@ async function fetchUsers() {
   &lt;/main&gt;
 &lt;/article&gt;
 </pre>
-<!-- CSS example -->
+</wb-demo>
+
+CSS example:
+
+<wb-demo>
 <pre language="css">
 .card {
   display: flex;
@@ -2106,7 +2175,11 @@ async function fetchUsers() {
   box-shadow: 0 4px 16px rgba(0, 0, 0, 0.15);
 }
 </pre>
-<!-- JSON example -->
+</wb-demo>
+
+JSON example:
+
+<wb-demo>
 <pre language="json">
 {
   "name": "wb-starter",
@@ -2117,7 +2190,11 @@ async function fetchUsers() {
   }
 }
 </pre>
-<!-- Shell commands -->
+</wb-demo>
+
+Shell commands:
+
+<wb-demo>
 <pre language="bash">
 # Install dependencies
 npm install
@@ -2128,7 +2205,11 @@ npm run dev
 # Build for production
 npm run build
 </pre>
-<!-- Terminal output -->
+</wb-demo>
+
+Terminal output:
+
+<wb-demo>
 <pre>
 $ npm test
 
@@ -2138,7 +2219,7 @@ $ npm test
 
   3 passing (42ms)
 </pre>
-```
+</wb-demo>
 
 ---
 
@@ -2173,8 +2254,9 @@ These behaviors transform the element into a component.
 
 **Examples:**
 
-```html
-<!-- Basic semantic card -->
+Basic semantic card:
+
+<wb-demo>
 <article>
   <header>
     <h3>Getting Started</h3>
@@ -2186,7 +2268,11 @@ These behaviors transform the element into a component.
     <a href="/docs/start">Read more →</a>
   </footer>
 </article>
-<!-- Card with image -->
+</wb-demo>
+
+Card with image:
+
+<wb-demo>
 <article>
   <figure>
     <img
@@ -2204,7 +2290,11 @@ These behaviors transform the element into a component.
     <button variant="primary">Add to Cart</button>
   </footer>
 </article>
-<!-- Glass variant -->
+</wb-demo>
+
+Glass variant:
+
+<wb-demo>
 <article variant="glass">
   <header>
     <h3>Glassmorphism Card</h3>
@@ -2213,7 +2303,11 @@ These behaviors transform the element into a component.
     <p>Beautiful frosted glass effect with blur backdrop.</p>
   </main>
 </article>
-<!-- Elevated card -->
+</wb-demo>
+
+Elevated card:
+
+<wb-demo>
 <article elevated>
   <header>
     <h3>Elevated Card</h3>
@@ -2222,7 +2316,11 @@ These behaviors transform the element into a component.
     <p>This card has a stronger shadow for emphasis.</p>
   </main>
 </article>
-<!-- Clickable card -->
+</wb-demo>
+
+Clickable card:
+
+<wb-demo>
 <article clickable>
   <header>
     <h3>Click Me!</h3>
@@ -2231,7 +2329,11 @@ These behaviors transform the element into a component.
     <p>This entire card is clickable and interactive.</p>
   </main>
 </article>
-<!-- Profile card -->
+</wb-demo>
+
+Profile card:
+
+<wb-demo>
 <article>
   <figure style="text-align: center; padding: 2rem;">
     <img
@@ -2252,7 +2354,11 @@ These behaviors transform the element into a component.
     <a href="#">LinkedIn</a>
   </footer>
 </article>
-<!-- Blog post card -->
+</wb-demo>
+
+Blog post card:
+
+<wb-demo>
 <article>
   <figure>
     <img
@@ -2271,7 +2377,11 @@ These behaviors transform the element into a component.
     <span>By John Doe</span>
   </footer>
 </article>
-<!-- Pricing card -->
+</wb-demo>
+
+Pricing card:
+
+<wb-demo>
 <article
   variant="glass"
   elevated>
@@ -2297,7 +2407,11 @@ These behaviors transform the element into a component.
     </button>
   </footer>
 </article>
-<!-- Feature card -->
+</wb-demo>
+
+Feature card:
+
+<wb-demo>
 <article>
   <header>
     <span style="font-size: 2rem;">🚀</span>
@@ -2307,7 +2421,11 @@ These behaviors transform the element into a component.
     <p>Optimized for performance with lazy loading and minimal JavaScript overhead.</p>
   </main>
 </article>
-<!-- Notification/Alert card -->
+</wb-demo>
+
+Notification/Alert card:
+
+<wb-demo>
 <article style="border-left: 4px solid var(--success);">
   <header>
     <h3>✓ Payment Successful</h3>
@@ -2319,7 +2437,11 @@ These behaviors transform the element into a component.
     <a href="/orders/12345">View Order Details</a>
   </footer>
 </article>
-<!-- Stat card -->
+</wb-demo>
+
+Stat card:
+
+<wb-demo>
 <article>
   <main style="text-align: center; padding: 2rem;">
     <p style="font-size: 3rem; font-weight: bold; margin: 0;">2,847</p>
@@ -2327,11 +2449,12 @@ These behaviors transform the element into a component.
     <p style="color: var(--success); font-size: 0.875rem;">↑ 12% from last month</p>
   </main>
 </article>
-```
+</wb-demo>
 
 **Card Grid Example:**
-```html
-<div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 1.5rem;">
+
+<wb-demo>
+<wb-grid min-width="250px" gap="1.5rem">
   <article>
     <header>
       <h3>Card 1</h3>
@@ -2356,8 +2479,8 @@ These behaviors transform the element into a component.
       <p>Third card content.</p>
     </main>
   </article>
-</div>
-```
+</wb-grid>
+</wb-demo>
 
 ---
 
@@ -2381,8 +2504,9 @@ These behaviors transform the element into a component.
 
 **Examples:**
 
-```html
-<!-- Internal link card -->
+Internal link card:
+
+<wb-demo>
 <article href="/docs/getting-started">
   <header>
     <h3>📚 Documentation</h3>
@@ -2391,7 +2515,11 @@ These behaviors transform the element into a component.
     <p>Complete guide to using WB Behaviors.</p>
   </main>
 </article>
-<!-- External link card -->
+</wb-demo>
+
+External link card:
+
+<wb-demo>
 <article
   href="https://github.com/wb-framework"
   target="_blank">
@@ -2402,8 +2530,12 @@ These behaviors transform the element into a component.
     <p>View source code, report issues, and contribute.</p>
   </main>
 </article>
-<!-- Navigation cards -->
-<div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 1rem;">
+</wb-demo>
+
+Navigation cards:
+
+<wb-demo>
+<wb-grid columns="2" gap="1rem">
   <article href="/products">
     <header>
       <span style="font-size: 2rem;">🛍️</span>
@@ -2440,8 +2572,13 @@ These behaviors transform the element into a component.
       <p>Get help</p>
     </main>
   </article>
-</div>
-<!-- Resource links -->
+</wb-grid>
+</wb-demo>
+
+Resource links:
+
+<wb-demo>
+<wb-container>
 <article
   href="https://docs.example.com"
   target="_blank">
@@ -2458,7 +2595,7 @@ These behaviors transform the element into a component.
   </main>
 </article>
 <article
-  href="https://www.youtube.com/watch?v=..."
+  href="https://www.youtube.com/watch?v=example"
   target="_blank">
   <figure>
     <img
@@ -2472,7 +2609,8 @@ These behaviors transform the element into a component.
     <p>Watch our step-by-step guide on YouTube.</p>
   </main>
 </article>
-```
+</wb-container>
+</wb-demo>
 
 ---
 
@@ -2497,8 +2635,9 @@ These behaviors transform the element into a component.
 
 **Examples:**
 
-```html
-<!-- Basic semantic navbar -->
+Basic semantic navbar:
+
+<wb-demo>
 <nav>
   <a
     href="/"
@@ -2520,7 +2659,11 @@ These behaviors transform the element into a component.
     </li>
   </ul>
 </nav>
-<!-- With logo image -->
+</wb-demo>
+
+With logo image:
+
+<wb-demo>
 <nav>
   <a href="/">
     <img
@@ -2543,18 +2686,30 @@ These behaviors transform the element into a component.
     </li>
   </ul>
 </nav>
-<!-- Generated navbar -->
+</wb-demo>
+
+Generated navbar (content built from `brand`/`items` attributes, no children needed):
+
+<wb-demo>
 <nav
   brand="WB Behaviors"
   items="Home, Features, Docs, Pricing, Contact">
 </nav>
-<!-- Sticky navbar -->
+</wb-demo>
+
+Sticky navbar:
+
+<wb-demo>
 <nav
   brand="MySite"
   items="Home, About, Blog, Contact"
   sticky>
 </nav>
-<!-- Full featured navbar -->
+</wb-demo>
+
+Full featured navbar:
+
+<wb-demo>
 <nav>
   <div style="display: flex; align-items: center; gap: 1rem;">
     <a
@@ -2590,7 +2745,11 @@ These behaviors transform the element into a component.
       style="width: 32px; height: 32px; border-radius: 50%;">
   </div>
 </nav>
-<!-- E-commerce navbar -->
+</wb-demo>
+
+E-commerce navbar:
+
+<wb-demo>
 <nav>
   <a href="/">ShopName</a>
   <ul>
@@ -2617,7 +2776,11 @@ These behaviors transform the element into a component.
     <button variant="ghost">🛒 (3)</button>
   </div>
 </nav>
-<!-- Documentation navbar -->
+</wb-demo>
+
+Documentation navbar:
+
+<wb-demo>
 <nav>
   <a href="/">
     <strong>WB Docs</strong>
@@ -2650,7 +2813,7 @@ These behaviors transform the element into a component.
     </button>
   </div>
 </nav>
-```
+</wb-demo>
 
 ---
 
@@ -2673,13 +2836,18 @@ These behaviors transform the element into a component.
 
 **Examples:**
 
-```html
-<!-- Basic sidebar -->
+Basic sidebar (content built from `items`/`active` attributes, no children needed):
+
+<wb-demo>
 <aside
   items="Dashboard, Projects, Team, Settings"
   active="Dashboard">
 </aside>
-<!-- Semantic sidebar -->
+</wb-demo>
+
+Semantic sidebar:
+
+<wb-demo>
 <aside>
   <nav>
     <a
@@ -2693,7 +2861,11 @@ These behaviors transform the element into a component.
     <a href="/settings">⚙️ Settings</a>
   </nav>
 </aside>
-<!-- Sidebar with sections -->
+</wb-demo>
+
+Sidebar with sections:
+
+<wb-demo>
 <aside>
   <nav>
     <strong style="display: block; padding: 0.5rem; opacity: 0.7; font-size: 0.75rem;">MAIN</strong>
@@ -2710,7 +2882,11 @@ These behaviors transform the element into a component.
     <a href="/logout">Log out</a>
   </nav>
 </aside>
-<!-- Documentation sidebar -->
+</wb-demo>
+
+Documentation sidebar:
+
+<wb-demo>
 <aside>
   <nav>
     <strong>Getting Started</strong>
@@ -2731,7 +2907,11 @@ These behaviors transform the element into a component.
     <a href="/docs/api">JavaScript API</a>
   </nav>
 </aside>
-<!-- Admin sidebar with icons -->
+</wb-demo>
+
+Admin sidebar with icons:
+
+<wb-demo>
 <aside>
   <div style="padding: 1rem; border-bottom: 1px solid var(--border-color);">
     <strong>Admin Panel</strong>
@@ -2749,11 +2929,12 @@ These behaviors transform the element into a component.
     <a href="/logout">🚪 Log out</a>
   </div>
 </aside>
-```
+</wb-demo>
 
 **Layout with Sidebar:**
-```html
-<div style="display: flex; min-height: 100vh;">
+
+<wb-demo>
+<wb-flex min-height="100vh">
   <aside style="width: 240px; flex-shrink: 0;">
     <nav>
       <a href="/dashboard">Dashboard</a>
@@ -2765,8 +2946,8 @@ These behaviors transform the element into a component.
     <h1>Dashboard</h1>
     <p>Main content goes here.</p>
   </main>
-</div>
-```
+</wb-flex>
+</wb-demo>
 
 ---
 
@@ -2962,8 +3143,9 @@ if (getConfig('autoInject')) {
 
 ### wb-grid
 
-```html
-<!-- Basic 3-column grid -->
+Basic 3-column grid:
+
+<wb-demo>
 <wb-grid
   columns="3"
   gap="1rem">
@@ -2971,7 +3153,11 @@ if (getConfig('autoInject')) {
   <div>Column 2</div>
   <div>Column 3</div>
 </wb-grid>
-<!-- Responsive grid with min-width -->
+</wb-demo>
+
+Responsive grid with min-width:
+
+<wb-demo>
 <wb-grid
   min-width="250px"
   gap="2rem">
@@ -2980,31 +3166,37 @@ if (getConfig('autoInject')) {
   <article>Card 3</article>
   <article>Card 4</article>
 </wb-grid>
-```
+</wb-demo>
 
 ### wb-flex / wb-row
 
-```html
-<!-- Horizontal layout -->
+Horizontal layout:
+
+<wb-demo>
 <wb-flex
   gap="1rem"
   justify="space-between">
   <div>Left</div>
   <div>Right</div>
 </wb-flex>
-<!-- Button row (wb-row is alias for flex) -->
+</wb-demo>
+
+Button row (wb-row is alias for flex):
+
+<wb-demo>
 <wb-row
   gap="0.5rem"
   justify="flex-end">
   <button variant="ghost">Cancel</button>
   <button variant="primary">Save</button>
 </wb-row>
-```
+</wb-demo>
 
 ### wb-stack / wb-column
 
-```html
-<!-- Vertical stack -->
+Vertical stack:
+
+<wb-demo>
 <wb-stack gap="1rem">
   <input
     type="text"
@@ -3014,50 +3206,65 @@ if (getConfig('autoInject')) {
     placeholder="Email">
   <button>Submit</button>
 </wb-stack>
-<!-- wb-column is alias for stack -->
+</wb-demo>
+
+wb-column is alias for stack:
+
+<wb-demo>
 <wb-column gap="1rem">
   <h3>Title</h3>
   <p>Content</p>
 </wb-column>
-```
+</wb-demo>
 
 ### wb-container
 
-```html
-<!-- Centered content with max-width -->
+Centered content with max-width:
+
+<wb-demo>
 <wb-container
   max-width="800px"
   padding="2rem">
   <h1>Article Title</h1>
   <p>Content goes here...</p>
 </wb-container>
-<!-- Multi-column grid mode -->
+</wb-demo>
+
+Multi-column grid mode:
+
+<wb-demo>
 <wb-container
   columns="2"
   gap="2rem">
   <div>Left column</div>
   <div>Right column</div>
 </wb-container>
-```
+</wb-demo>
 
 ### wb-center
 
-```html
-<!-- Max-width centering -->
+Max-width centering:
+
+<wb-demo>
 <wb-center max-width="600px">
   <h1>Centered Heading</h1>
 </wb-center>
-<!-- Intrinsic centering (based on content width) -->
+</wb-demo>
+
+Intrinsic centering (based on content width):
+
+<wb-demo>
 <wb-center intrinsic>
   <button variant="primary">Centered Button</button>
 </wb-center>
-```
+</wb-demo>
 
 ### wb-cover
 
-```html
-<!-- Full-screen hero with vertical centering -->
-<wb-cover min-height="100vh">
+Full-screen hero with vertical centering:
+
+<wb-demo>
+<wb-cover min-height="320px">
   <header>Logo</header>
   <div principal>
     <h1>Main Content</h1>
@@ -3065,12 +3272,13 @@ if (getConfig('autoInject')) {
   </div>
   <footer>Scroll down ↓</footer>
 </wb-cover>
-```
+</wb-demo>
 
 ### wb-sidebar
 
-```html
-<!-- Two-column layout with sidebar -->
+Two-column layout with sidebar:
+
+<wb-demo>
 <wb-sidebar
   side="left"
   side-width="250px"
@@ -3082,12 +3290,13 @@ if (getConfig('autoInject')) {
     <h1>Main Content</h1>
   </main>
 </wb-sidebar>
-```
+</wb-demo>
 
 ### wb-masonry
 
-```html
-<!-- Pinterest-style masonry -->
+Pinterest-style masonry:
+
+<wb-demo>
 <wb-masonry
   columns="3"
   gap="1rem">
@@ -3104,12 +3313,13 @@ if (getConfig('autoInject')) {
     src="tall2.jpg"
     alt="">
 </wb-masonry>
-```
+</wb-demo>
 
 ### wb-reel
 
-```html
-<!-- Horizontal scroll carousel -->
+Horizontal scroll carousel:
+
+<wb-demo>
 <wb-reel
   item-width="300px"
   gap="1rem">
@@ -3118,50 +3328,59 @@ if (getConfig('autoInject')) {
   <article>Card 3</article>
   <article>Card 4</article>
 </wb-reel>
-```
+</wb-demo>
 
 ### wb-frame
 
-```html
-<!-- 16:9 video frame -->
+16:9 video frame:
+
+<wb-demo>
 <wb-frame ratio="16/9">
-  <iframe src="https://youtube.com/embed/..."></iframe>
+  <iframe src="about:blank" title="16:9 video frame placeholder"></iframe>
 </wb-frame>
-<!-- Square avatar frame -->
+</wb-demo>
+
+Square avatar frame:
+
+<wb-demo>
 <wb-frame ratio="1/1">
   <img
     src="avatar.jpg"
     alt="User">
 </wb-frame>
-```
+</wb-demo>
 
 ### wb-sticky
 
-```html
-<!-- Sticky header -->
+Sticky header:
+
+<wb-demo>
 <wb-sticky
   top="0"
   z-index="100">
   <header>This stays at top when scrolling</header>
 </wb-sticky>
-```
+</wb-demo>
 
 ### wb-drawer
 
-```html
-<!-- Collapsible sidebar drawer -->
+`<wb-drawer>` (`drawer` behavior, `semantics`/`overlay.js`) is itself the
+clickable trigger — its own text is the visible label, `title`/`width`/
+`position` configure the slide-in panel, and clicking it opens an overlay
+panel built from those attributes. (An earlier version of this doc showed
+`<wb-drawer>` as a static, always-visible sidebar with `resizable`/
+`save-state` attributes that don't exist on this behavior — that pattern is
+`<wb-drawer-layout>`, a different tag/behavior; see
+[Drawer Components](components/drawer.md).)
+
+<wb-demo>
 <wb-drawer
   position="left"
   width="250px"
-  resizable
-  save-state
-  id="mainNav">
-  <nav>
-    <a href="/">Home</a>
-    <a href="/about">About</a>
-  </nav>
+  title="Menu">
+  Click to open the navigation drawer
 </wb-drawer>
-```
+</wb-demo>
 
 ---
 
@@ -3169,26 +3388,39 @@ if (getConfig('autoInject')) {
 
 All card tags use `card-*` prefix for easy autocomplete and grouping:
 
-```html
-<!-- Basic card -->
+Basic card:
+
+<wb-demo>
 <card-basic>
   <h3>Card Title</h3>
   <p>Card content goes here.</p>
 </card-basic>
-<!-- Image card -->
+</wb-demo>
+
+Image card:
+
+<wb-demo>
 <card-image
   src="photo.jpg"
   title="Beautiful Sunset"
   alt="Sunset over mountains">
 </card-image>
-<!-- Profile card -->
+</wb-demo>
+
+Profile card:
+
+<wb-demo>
 <card-profile
   avatar="avatar.jpg"
   name="Jane Doe"
   title="Senior Developer"
   bio="Full-stack developer with 10+ years experience.">
 </card-profile>
-<!-- Pricing card -->
+</wb-demo>
+
+Pricing card:
+
+<wb-demo>
 <card-pricing
   plan="Pro"
   price="$29"
@@ -3197,7 +3429,11 @@ All card tags use `card-*` prefix for easy autocomplete and grouping:
   cta="Get Started"
   popular="true">
 </card-pricing>
-<!-- Product card -->
+</wb-demo>
+
+Product card:
+
+<wb-demo>
 <card-product
   image="product.jpg"
   title="Widget Pro"
@@ -3205,21 +3441,33 @@ All card tags use `card-*` prefix for easy autocomplete and grouping:
   rating="4.5"
   reviews="128">
 </card-product>
-<!-- Stats card -->
+</wb-demo>
+
+Stats card:
+
+<wb-demo>
 <card-stats
   value="2,847"
   label="Active Users"
   change="+12%"
   trend="up">
 </card-stats>
-<!-- Testimonial card -->
+</wb-demo>
+
+Testimonial card:
+
+<wb-demo>
 <card-testimonial
   quote="This product changed everything!"
   author="John Smith"
   role="CEO, TechCorp"
   avatar="john.jpg">
 </card-testimonial>
-<!-- Hero card -->
+</wb-demo>
+
+Hero card:
+
+<wb-demo>
 <card-hero
   title="Welcome"
   subtitle="Get started today"
@@ -3227,53 +3475,81 @@ All card tags use `card-*` prefix for easy autocomplete and grouping:
   cta="Learn More"
   href="/start">
 </card-hero>
-<!-- Video card -->
+</wb-demo>
+
+Video card:
+
+<wb-demo>
 <card-video
   src="demo.mp4"
   poster="poster.jpg"
   title="Product Demo">
 </card-video>
-<!-- File card -->
+</wb-demo>
+
+File card:
+
+<wb-demo>
 <card-file
   filename="report.pdf"
   size="2.4 MB"
   icon="📄"
   href="/downloads/report.pdf">
 </card-file>
-<!-- Notification card -->
+</wb-demo>
+
+Notification card:
+
+<wb-demo>
 <card-notification
   type="success"
   title="Payment Received"
   message="Your payment of $99.00 was successful."
   time="2 minutes ago">
 </card-notification>
-<!-- Portfolio card -->
+</wb-demo>
+
+Portfolio card:
+
+<wb-demo>
 <card-portfolio
   image="project.jpg"
   title="E-commerce Redesign"
   category="Web Design"
   href="/portfolio/ecommerce">
 </card-portfolio>
-<!-- Link card (clickable) -->
+</wb-demo>
+
+Link card (clickable):
+
+<wb-demo>
 <card-link
   href="/docs"
   title="Documentation"
   description="Learn how to use the framework"
   icon="📚">
 </card-link>
-<!-- Horizontal card -->
+</wb-demo>
+
+Horizontal card:
+
+<wb-demo>
 <card-horizontal
   image="thumb.jpg"
   title="Article Title"
   description="Brief description of the article...">
 </card-horizontal>
-<!-- Overlay card -->
+</wb-demo>
+
+Overlay card:
+
+<wb-demo>
 <card-overlay
   image="background.jpg"
   title="Overlay Title"
   subtitle="Text appears over the image">
 </card-overlay>
-```
+</wb-demo>
 
 ---
 
@@ -3281,8 +3557,10 @@ All card tags use `card-*` prefix for easy autocomplete and grouping:
 
 These work on ANY element and are always active:
 
-```html
-<!-- Tooltip on any element -->
+Tooltip on any element:
+
+<wb-demo>
+<wb-container>
 <button tooltip="Save your work">💾 Save</button>
 <span tooltip="Click for more information">ℹ️</span>
 <a
@@ -3290,10 +3568,22 @@ These work on ANY element and are always active:
   tooltip="Go to homepage">
   Home
 </a>
-<!-- Toast message on click -->
+</wb-container>
+</wb-demo>
+
+Toast message on click:
+
+<wb-demo>
+<wb-container>
 <button toast-message="Copied to clipboard!">📋 Copy</button>
 <button toast-message="Item added to cart">🛒 Add to Cart</button>
-<!-- Ripple effect on any clickable element -->
+</wb-container>
+</wb-demo>
+
+Ripple effect on any clickable element:
+
+<wb-demo>
+<wb-container>
 <div
   ripple
   style="padding: 2rem; cursor: pointer;">
@@ -3304,7 +3594,13 @@ These work on ANY element and are always active:
   ripple>
   Ripple Link
 </a>
-<!-- Badge on any element -->
+</wb-container>
+</wb-demo>
+
+Badge on any element:
+
+<wb-demo>
+<wb-container>
 <span badge="3">🔔 Notifications</span>
 <button badge="New">✨ Features</button>
 <a
@@ -3312,7 +3608,8 @@ These work on ANY element and are always active:
   badge="99+">
   📧 Inbox
 </a>
-```
+</wb-container>
+</wb-demo>
 
 ---
 

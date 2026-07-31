@@ -370,6 +370,16 @@ export function skeleton(element) {
   const width = element.getAttribute('width');
   const height = element.getAttribute('height');
 
+  // wb-skeleton is in schema-builder.js's SCHEMA_EXCLUDED_TAGS (self-
+  // sufficient behavior, same as card/search) -- so schema-builder never
+  // runs for it and never applies compliance.baseClass ("wb-skeleton") or
+  // the variant's appliesClass ("wb-skeleton--{{value}}"). Nothing else
+  // ever added either, so every <wb-skeleton> silently rendered with NO
+  // class at all (skeleton.css's selectors never matched, and the
+  // permutation-compliance test's [BASE CLASS] check correctly caught it).
+  // This behavior must apply both itself, same as search()/searchField().
+  element.classList.add('wb-skeleton', `wb-skeleton--${variant}`);
+
   element.setAttribute('variant', variant);
   if (width) element.style.width = width;
   if (height) element.style.height = height;
