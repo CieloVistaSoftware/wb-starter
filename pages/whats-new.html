@@ -3,6 +3,24 @@
   <p>What's actually live on this site right now — every push to <code>main</code> deploys straight to <a href="https://cielovistasoftware.github.io/wb-starter/" target="_blank" rel="noopener">cielovistasoftware.github.io/wb-starter</a>, so this list is the real changelog, not a promise of a future release.</p>
 </div>
 
+<section id="whats-new-2026-07-30">
+  <h2>2026-07-30</h2>
+  <ul>
+    <li>Fixed a sanitizer bug in the markdown renderer that silently ate any attribute whose name contained "on" followed by more letters before its own <code>=</code> (e.g. <code>options='...'</code>) — this was corrupting JSON-in-attribute examples site-wide, including live <code>&lt;wb-select&gt;</code> dropdowns that quietly lost all their options.</li>
+    <li>Fixed <code>&lt;wb-cardportfolio&gt;</code>'s variant, size, and availability-status indicator — none of them had any visible effect before today.</li>
+    <li>Fixed <code>&lt;wb-timeline&gt;</code> not rendering at all (missing a base <code>display: block</code>).</li>
+    <li>Fixed <code>&lt;wb-drawer&gt;</code> on standalone demo pages: it showed generic placeholder text instead of its real content, "top"/"bottom" positions rendered identically to "left", and the <code>variant</code> attribute (default/overlay/push) had no effect at all.</li>
+    <li>Fixed <code>&lt;wb-dropdown&gt;</code>: position values didn't match the real attribute names so every position looked the same, menus opened empty when using plain text content, and <code>trigger="hover"</code> never actually worked.</li>
+    <li>Fixed progress bars and other enum-variant showcase pages rendering at 0%/invisible because the demo generator never filled in a representative value.</li>
+    <li>Added a real button-like appearance (background, border, cursor) to dialog/drawer/dropdown triggers that previously looked like plain unstyled text.</li>
+    <li>Fixed inline code chips and code blocks wrapping mid-word instead of scrolling or breaking at real word boundaries, on the Components page and the frameworks demo.</li>
+    <li>Every demo's "read the docs" link now sits as a small badge in the component's own top-right corner instead of a detached line below the whole group.</li>
+    <li>Converted every remaining static code example on the Select doc page and the full Behavior Cross-Reference doc (159 examples) into live, rendered demos.</li>
+    <li>Fixed 8 standalone demo pages that had zero padding, so headings and text sat flush against the browser edge.</li>
+    <li>Closed out a large batch of compliance-gate debt: reduced excess <code>!important</code> CSS usage back under the project's own limit, fixed a broken page-fragment generator that was shipping full HTML documents where the app expected bare fragments, fixed 10 pages' stylesheet links that 404'd under this site's actual deployed URL, and cleared out stale px-to-rem and data-attribute audit failures.</li>
+  </ul>
+</section>
+
 <section id="whats-new-2026-07-29">
   <h2>2026-07-29</h2>
   <ul>
