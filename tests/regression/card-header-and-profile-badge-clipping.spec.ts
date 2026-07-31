@@ -46,7 +46,13 @@ test('demos/site/cards.html: card header is never clamped below its own content 
     const s = document.querySelector('wb-card .wb-card__subtitle')!;
     return h.getBoundingClientRect().bottom - s.getBoundingClientRect().bottom;
   });
-  expect(gap, 'subtitle must keep clearance above the header bottom border, not overflow past it').toBeGreaterThanOrEqual(8);
+  // Exactly ~0.5rem (8px), not just "at least" -- the header's own
+  // padding-bottom was reduced to 0 specifically because it was
+  // double-stacking with the subtitle's own margin-bottom:0.5rem into a
+  // 24-25px gap. "at least 8px" alone wouldn't have caught that
+  // regression coming back (25px still satisfies >=8px).
+  expect(gap, 'subtitle-to-header-border gap must be ~0.5rem (8px), not stacked with header padding').toBeGreaterThanOrEqual(7);
+  expect(gap, 'subtitle-to-header-border gap must be ~0.5rem (8px), not stacked with header padding').toBeLessThanOrEqual(11);
 });
 
 test('demos/site/cards.html: wb-cardprofile role badge clears the card\'s rounded corner', async ({ page }) => {

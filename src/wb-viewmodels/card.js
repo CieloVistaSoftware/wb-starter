@@ -106,7 +106,14 @@ const VAR_PRIMARY = 'var(--primary,#6366f1)';
 // figure) claims most of the flex column's space. That silently clipped
 // the header's own bottom padding -- title/subtitle text sat flush against
 // the card's border with no visible gap. Confirmed live via screenshot.
-const STYLE_HEADER = `padding:1rem;border-bottom:1px solid ${VAR_BORDER_COLOR};background:${VAR_BG_TERTIARY};display:flex;justify-content:space-between;align-items:flex-start;gap:1rem;flex-shrink:0;`;
+// padding-bottom:0, not 1rem -- title/subtitle each already carry their
+// own margin-bottom:0.5rem (STYLE_TITLE/STYLE_SUBTITLE below), so a full
+// 1rem of header padding UNDERNEATH that stacked into a 24-25px gap
+// instead of the 0.5rem John asked for. Top/left/right stay 1rem (the
+// only clearance source for the header's top edge; nothing else supplies
+// it). Bottom clearance now comes entirely from the last child's own
+// 0.5rem margin -- exactly the value asked for, no double-counting.
+const STYLE_HEADER = `padding:1rem 1rem 0 1rem;border-bottom:1px solid ${VAR_BORDER_COLOR};background:${VAR_BG_TERTIARY};display:flex;justify-content:space-between;align-items:flex-start;gap:1rem;flex-shrink:0;`;
 const STYLE_FOOTER = `padding:1rem;border-top:1px solid ${VAR_BORDER_COLOR};background:${VAR_BG_TERTIARY};font-size:0.875rem;color:${VAR_TEXT_SECONDARY};`;
 const STYLE_MAIN = `padding:1rem;flex:1;color:${VAR_TEXT_PRIMARY};`;
 // margin-bottom:0.5rem (not 0) -- title and subtitle sat almost touching

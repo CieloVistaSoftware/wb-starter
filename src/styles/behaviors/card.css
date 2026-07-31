@@ -34,7 +34,11 @@
    ═══════════════════════════════════════════════════════════════════════════ */
 
 .wb-card__header {
-  padding: 1rem; /* 1rem all sides */
+  /* bottom:0, not 1rem -- title/subtitle already carry their own
+     margin-bottom:0.5rem, so a full 1rem underneath double-stacked into a
+     24-25px gap instead of the 0.5rem asked for. Bottom clearance comes
+     from the last child's own margin now. */
+  padding: 1rem 1rem 0 1rem;
   border-bottom: 1px solid var(--border-color);
   background: var(--bg-tertiary);
   display: flex;
@@ -102,7 +106,7 @@
   height: auto;
   align-items: flex-start;
   justify-content: space-between;
-  padding: 1rem;
+  padding: 1rem 1rem 0 1rem;
   font-size: 1em;
 }
 
