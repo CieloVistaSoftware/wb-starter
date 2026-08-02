@@ -142,12 +142,22 @@ body:has(.site__header) {
   background: var(--bg-primary);
   border-bottom: 1px solid var(--border-color);
   z-index: 1000; /* Increased z-index to stay above other content */
-  transition: transform 0.3s ease;
+  transition: transform 0.3s ease, margin-bottom 0.3s ease;
   position: relative;
 }
 
+/* #390: transform alone slides the header out of VIEW but not out of the
+   flex column's LAYOUT -- .site__header keeps its flex-shrink:0, 64px-tall
+   box either way, so .site__body (flex:1, fills whatever the header/footer
+   don't use) never actually grew into the vacated space; the header hiding
+   used to just leave a blank 64px gap where it had been. margin-bottom
+   equal to the header's own height, animated in step with the transform,
+   collapses that layout contribution to 0 in sync with the slide -- .site__
+   body's flex-basis genuinely grows, which is the whole point ("maximize
+   screen area"), not merely visual. */
 .site__header--hidden {
   transform: translateY(-100%);
+  margin-bottom: -64px;
 }
 
 .site__header--sticky {

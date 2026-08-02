@@ -2,8 +2,8 @@
      wb-starter - BEHAVIORS SHOWCASE
      Auto-generated from behaviors.schema.json
      ═══════════════════════════════════════════════════════════════════════════ -->
-<link rel="stylesheet" href="src/styles/pages/behaviors.css">
-<header id="header"><div id="autogen-behaviors-html-0"><h1>⚡ WB Behaviors Showcase</h1>
+<link rel="stylesheet" href="/src/styles/pages/behaviors.css">
+<header id="header" x-ignore><div id="autogen-behaviors-html-0"><h1>⚡ WB Behaviors Showcase</h1>
 <p class="header-subtitle">170+ behaviors • Interactive demos • Copy-ready code</p>
 </div>
 <wb-themecontrol></wb-themecontrol>
@@ -29,26 +29,20 @@
       <strong>Buttons behaviors:</strong> Button behaviors: Variants, sizes, and interactive effects like ripple and toast.
     </div>
 
-    <wb-demo>
-      <button variant="primary">Primary</button>
-      <button variant="secondary">Secondary</button>
-      <button variant="ghost">Ghost</button>
-      <button variant="primary" disabled>Disabled</button>
-    </wb-demo>
+    <wb-demo><button variant="primary">Primary</button></wb-demo>
+    <wb-demo><button variant="secondary">Secondary</button></wb-demo>
+    <wb-demo><button variant="ghost">Ghost</button></wb-demo>
+    <wb-demo><button variant="primary" disabled>Disabled</button></wb-demo>
 
     <h3>Button Sizes</h3>
-    <wb-demo>
-      <button variant="primary" size="sm">Small</button>
-      <button variant="primary">Medium</button>
-      <button variant="primary" size="lg">Large</button>
-    </wb-demo>
+    <wb-demo><button variant="primary" size="sm">Small</button></wb-demo>
+    <wb-demo><button variant="primary">Medium</button></wb-demo>
+    <wb-demo><button variant="primary" size="lg">Large</button></wb-demo>
 
     <h3>Button with Behaviors</h3>
-    <wb-demo>
-      <button variant="primary" x-ripple>With Ripple</button>
-      <button variant="primary" x-toast data-message="Action completed!" data-type="success">With Toast</button>
-      <button variant="primary" x-tooltip="Helpful hint!" data-position="top">With Tooltip</button>
-    </wb-demo>
+    <wb-demo><button variant="primary" x-ripple>With Ripple</button></wb-demo>
+    <wb-demo><button variant="primary" x-toast message="Action completed!" toast-variant="success">With Toast</button></wb-demo>
+    <wb-demo><button variant="primary" x-tooltip="Helpful hint!" position="top">With Tooltip</button></wb-demo>
   </section>
 
   <!-- ═══════════════════════════════════════════════════════════════════════════
@@ -61,31 +55,23 @@
     </div>
 
     <h3>Basic Inputs</h3>
-    <div class="demo-grid-3">
-      <input type="text" placeholder="Basic text input">
-      <input type="email" placeholder="Email input">
-      <input type="number" placeholder="Number input">
-    </div>
+    <wb-demo><input type="text" placeholder="Basic text input"></wb-demo>
+    <wb-demo><input type="email" placeholder="Email input"></wb-demo>
+    <wb-demo><input type="number" placeholder="Number input"></wb-demo>
 
     <h3>Special Input Types</h3>
-    <div class="demo-grid-3">
-      <input type="password" x-password placeholder="Password with toggle">
-      <input type="text" x-search placeholder="Search with icon">
-      <input type="text" x-colorpicker value="#6366f1">
-    </div>
+    <wb-demo><input type="password" x-password placeholder="Password with toggle"></wb-demo>
+    <wb-demo><input type="text" x-search placeholder="Search with icon"></wb-demo>
+    <wb-demo><input type="text" x-colorpicker value="#6366f1"></wb-demo>
 
     <h3>Masked Inputs</h3>
-    <div class="demo-grid-3">
-      <input x-masked data-mask="(999) 999-9999" placeholder="Phone: (999) 999-9999">
-      <input x-masked data-mask="99/99/9999" placeholder="Date: MM/DD/YYYY">
-      <input x-masked data-mask="9999 9999 9999 9999" placeholder="Credit Card">
-    </div>
+    <wb-demo><input x-masked mask="(999) 999-9999" placeholder="Phone: (999) 999-9999"></wb-demo>
+    <wb-demo><input x-masked mask="99/99/9999" placeholder="Date: MM/DD/YYYY"></wb-demo>
+    <wb-demo><input x-masked mask="9999 9999 9999 9999" placeholder="Credit Card"></wb-demo>
 
     <h3>Textarea</h3>
-    <div class="demo-grid-2">
-      <textarea placeholder="Standard textarea" rows="3"></textarea>
-      <textarea autosize placeholder="Auto-sizing textarea - grows as you type"></textarea>
-    </div>
+    <wb-demo><textarea placeholder="Standard textarea" rows="3"></textarea></wb-demo>
+    <wb-demo><textarea autosize placeholder="Auto-sizing textarea - grows as you type"></textarea></wb-demo>
   </section>
 
   <!-- ═══════════════════════════════════════════════════════════════════════════
@@ -94,57 +80,41 @@
   <section id="selection">
     <h2>☑️ Selection</h2>
     <div class="section-note">
-      <strong>Selection behaviors:</strong> Selection behaviors: Checkboxes, radios, switches, selects, ratings, and steppers.
+      <strong>Selection behaviors:</strong> Selection behaviors: Checkboxes, radios, selects, and steppers. (Switches and ratings are wb-* components — see <a href="?page=components">Components</a>.)
     </div>
 
     <h3>Checkboxes</h3>
-    <div class="demo-row">
-      <label class="selection-label"><input type="checkbox"> Unchecked</label>
-      <label class="selection-label"><input type="checkbox" checked> Checked</label>
-      <label class="selection-label"><input type="checkbox" disabled> Disabled</label>
-    </div>
+    <wb-demo><label class="selection-label"><input type="checkbox"> Unchecked</label></wb-demo>
+    <wb-demo><label class="selection-label"><input type="checkbox" checked> Checked</label></wb-demo>
+    <wb-demo><label class="selection-label"><input type="checkbox" disabled> Disabled</label></wb-demo>
 
     <h3>Radio Buttons</h3>
-    <div class="demo-row">
+    <wb-demo>
       <label class="selection-label"><input type="radio" name="demo-radio" checked> Option A</label>
       <label class="selection-label"><input type="radio" name="demo-radio"> Option B</label>
       <label class="selection-label"><input type="radio" name="demo-radio"> Option C</label>
-    </div>
-
-    <h3>Switch Toggle</h3>
-    <div class="demo-row">
-      <wb-switch label="Dark Mode"></wb-switch>
-      <wb-switch label="Notifications" checked></wb-switch>
-      <wb-switch label="Disabled" disabled></wb-switch>
-    </div>
+    </wb-demo>
 
     <h3>Select Dropdown</h3>
-    <div class="demo-grid-2">
+    <wb-demo>
       <select>
         <option>Select an option</option>
         <option>Option 1</option>
         <option>Option 2</option>
         <option>Option 3</option>
       </select>
+    </wb-demo>
+    <wb-demo>
       <select multiple size="3">
         <option>Multiple 1</option>
         <option>Multiple 2</option>
         <option>Multiple 3</option>
       </select>
-    </div>
-
-    <h3>Rating</h3>
-    <div class="demo-row">
-      <wb-rating value="3" max="5"></wb-rating>
-      <wb-rating value="4" max="5" icon="❤️"></wb-rating>
-      <wb-rating value="2" max="5" icon="👍"></wb-rating>
-    </div>
+    </wb-demo>
 
     <h3>Stepper & Range</h3>
-    <div class="demo-grid-2">
-      <div x-stepper data-value="5" data-min="0" data-max="10"></div>
-      <input type="range" min="0" max="100" value="50">
-    </div>
+    <wb-demo><div x-stepper value="5" min="0" max="10"></div></wb-demo>
+    <wb-demo><input type="range" min="0" max="100" value="50"></wb-demo>
   </section>
 
   <!-- ═══════════════════════════════════════════════════════════════════════════
@@ -153,64 +123,14 @@
   <section id="feedback">
     <h2>📢 Feedback</h2>
     <div class="section-note">
-      <strong>Feedback behaviors:</strong> Feedback behaviors: Alerts, badges, progress bars, spinners, and toast notifications.
-    </div>
-
-    <h3>Alerts (All Variants)</h3>
-    <div class="alerts-stack">
-      <wb-alert variant="info" title="Information" message="This is an informational message." data-dismissible></wb-alert>
-      <wb-alert variant="success" title="Success" message="Operation completed successfully." data-dismissible></wb-alert>
-      <wb-alert variant="warning" title="Warning" message="Please review before continuing." data-dismissible></wb-alert>
-      <wb-alert variant="error" title="Error" message="Something went wrong." data-dismissible></wb-alert>
-    </div>
-
-    <h3>Badges (All Variants)</h3>
-    <div class="demo-row">
-      <wb-badge>Default Badge</wb-badge>
-      <wb-badge variant="primary">Primary Badge</wb-badge>
-      <wb-badge variant="success">Success Badge</wb-badge>
-      <wb-badge variant="warning">Warning Badge</wb-badge>
-      <wb-badge variant="error">Error Badge</wb-badge>
-      <wb-badge variant="info">Info Badge</wb-badge>
-      <wb-badge data-pill>Pill Badge</wb-badge>
-    </div>
-
-    <h3>Progress Bars</h3>
-    <div class="progress-stack">
-      <div class="progress-item">
-        <span class="progress-label">25%</span>
-        <wb-progress data-value="25"></wb-progress>
-      </div>
-      <div class="progress-item">
-        <span class="progress-label">50%</span>
-        <wb-progress data-value="50"></wb-progress>
-      </div>
-      <div class="progress-item">
-        <span class="progress-label">75% (striped)</span>
-        <wb-progress data-value="75" data-striped></wb-progress>
-      </div>
-      <div class="progress-item">
-        <span class="progress-label">100%</span>
-        <wb-progress data-value="100"></wb-progress>
-      </div>
-    </div>
-
-    <h3>Spinners</h3>
-    <div class="demo-row">
-      <wb-spinner></wb-spinner>
-      <wb-spinner color="success"></wb-spinner>
-      <wb-spinner color="warning"></wb-spinner>
-      <wb-spinner color="error"></wb-spinner>
-      <wb-spinner size="lg"></wb-spinner>
+      <strong>Feedback behaviors:</strong> Feedback behaviors: Toast notifications. (Alerts, badges, progress bars, and spinners are wb-* components — see <a href="?page=components">Components</a>.)
     </div>
 
     <h3>Toast Notifications</h3>
-    <div class="demo-row">
-      <button variant="primary" x-toast data-message="Info message" data-type="info">Info Toast</button>
-      <button variant="primary" x-toast data-message="Success!" data-type="success">Success Toast</button>
-      <button variant="primary" x-toast data-message="Warning!" data-type="warning">Warning Toast</button>
-      <button variant="primary" x-toast data-message="Error!" data-type="error">Error Toast</button>
-    </div>
+    <wb-demo><button variant="primary" x-toast message="Info message" toast-variant="info">Info Toast</button></wb-demo>
+    <wb-demo><button variant="primary" x-toast message="Success!" toast-variant="success">Success Toast</button></wb-demo>
+    <wb-demo><button variant="primary" x-toast message="Warning!" toast-variant="warning">Warning Toast</button></wb-demo>
+    <wb-demo><button variant="primary" x-toast message="Error!" toast-variant="error">Error Toast</button></wb-demo>
   </section>
 
   <!-- ═══════════════════════════════════════════════════════════════════════════
@@ -219,44 +139,25 @@
   <section id="overlays">
     <h2>🪟 Overlays</h2>
     <div class="section-note">
-      <strong>Overlays behaviors:</strong> Overlay behaviors: Modals, drawers, tooltips, popovers, confirm dialogs, and lightboxes.
-    </div>
-
-    <h3>Modal Dialog</h3>
-    <div class="demo-row">
-      <wb-modal class="wb-btn" data-modal-title="Modal Dialog" data-modal-content="This is a modal dialog. Press ESC or click outside to close.">Open Modal</wb-modal>
-    </div>
-
-    <h3>Drawer</h3>
-    <div class="demo-row">
-      <wb-drawer class="wb-btn" title="Left Drawer" content="Slide-out panel from the left." position="left">Left Drawer</wb-drawer>
-      <wb-drawer class="wb-btn" title="Right Drawer" content="Slide-out panel from the right." position="right">Right Drawer</wb-drawer>
+      <strong>Overlays behaviors:</strong> Overlay behaviors: Tooltips, popovers, confirm dialogs, and lightboxes. (Modals and drawers are wb-* components — see <a href="?page=components">Components</a>.)
     </div>
 
     <h3>Tooltips</h3>
-    <div class="demo-row">
-      <button variant="secondary" x-tooltip="Top tooltip" data-position="top">Top</button>
-      <button variant="secondary" x-tooltip="Bottom tooltip" data-position="bottom">Bottom</button>
-      <button variant="secondary" x-tooltip="Left tooltip" data-position="left">Left</button>
-      <button variant="secondary" x-tooltip="Right tooltip" data-position="right">Right</button>
-    </div>
+    <wb-demo><button variant="secondary" x-tooltip="Top tooltip" position="top">Top</button></wb-demo>
+    <wb-demo><button variant="secondary" x-tooltip="Bottom tooltip" position="bottom">Bottom</button></wb-demo>
+    <wb-demo><button variant="secondary" x-tooltip="Left tooltip" position="left">Left</button></wb-demo>
+    <wb-demo><button variant="secondary" x-tooltip="Right tooltip" position="right">Right</button></wb-demo>
 
     <h3>Popover</h3>
-    <div class="demo-row">
-      <button variant="primary" x-popover data-title="Popover Title" data-content="This is additional information displayed in a popover.">Show Popover</button>
-    </div>
+    <wb-demo><button variant="primary" x-popover popover-title="Popover Title" popover-content="This is additional information displayed in a popover.">Show Popover</button></wb-demo>
 
     <h3>Confirm & Prompt</h3>
-    <div class="demo-row">
-      <button variant="primary" x-confirm data-title="Confirm Action" data-message="Are you sure you want to proceed?">Confirm Dialog</button>
-      <button variant="primary" x-prompt data-title="Enter Value" data-message="Please enter your name:">Prompt Dialog</button>
-    </div>
+    <wb-demo><button variant="primary" x-confirm confirm-title="Confirm Action" confirm-message="Are you sure you want to proceed?">Confirm Dialog</button></wb-demo>
+    <wb-demo><button variant="primary" x-prompt prompt-title="Enter Value" prompt-message="Please enter your name:">Prompt Dialog</button></wb-demo>
 
     <h3>Lightbox</h3>
-    <div class="demo-row">
-      <button variant="primary" x-lightbox data-src="https://picsum.photos/1200/800?r=lb1">View Image 1</button>
-      <button variant="primary" x-lightbox data-src="https://picsum.photos/1200/800?r=lb2">View Image 2</button>
-    </div>
+    <wb-demo><button variant="primary" x-lightbox src="https://picsum.photos/1200/800?r=lb1">View Image 1</button></wb-demo>
+    <wb-demo><button variant="primary" x-lightbox src="https://picsum.photos/1200/800?r=lb2">View Image 2</button></wb-demo>
   </section>
 
   <!-- ═══════════════════════════════════════════════════════════════════════════
@@ -265,53 +166,17 @@
   <section id="navigation">
     <h2>🧭 Navigation</h2>
     <div class="section-note">
-      <strong>Navigation behaviors:</strong> Navigation behaviors: Tabs, accordion, breadcrumbs, pagination, and step wizards.
-    </div>
-
-    <h3>Tabs</h3>
-    <div class="demo-full">
-      <wb-tabs>
-        <div tab-title="Overview">
-          <p>This is the overview tab content. Tabs organize content into separate views with keyboard navigation.</p>
-        </div>
-        <div tab-title="Features">
-          <p>Features include smooth transitions, responsive design, and full accessibility compliance.</p>
-        </div>
-        <div tab-title="Usage">
-          <p>Simply wrap your content in a wb-tabs element with tab-title on each panel.</p>
-        </div>
-      </wb-tabs>
-    </div>
-
-    <h3>Accordion</h3>
-    <div class="demo-full">
-      <wb-accordion>
-        <div accordion-title="What is wb-starter?">
-          <p>wb-starter is a zero-build web component library with behaviors and themes.</p>
-        </div>
-        <div accordion-title="How do I install it?">
-          <p>No installation needed! Just include the script and start using components immediately.</p>
-        </div>
-        <div accordion-title="Is it production ready?">
-          <p>Yes! wb-starter is schema-driven, fully tested, and enterprise hardened.</p>
-        </div>
-      </wb-accordion>
+      <strong>Navigation behaviors:</strong> Navigation behaviors: Breadcrumbs, pagination, and step wizards. (Tabs and accordion are wb-* components — see <a href="?page=components">Components</a>.)
     </div>
 
     <h3>Breadcrumb</h3>
-    <div class="demo-full">
-      <nav x-breadcrumb data-items="Home,Products,Electronics,Smartphones"></nav>
-    </div>
+    <wb-demo><nav x-breadcrumb items="Home,Products,Electronics,Smartphones"></nav></wb-demo>
 
     <h3>Pagination</h3>
-    <div class="demo-full">
-      <nav x-pagination data-total="100" data-per-page="10" data-current="5"></nav>
-    </div>
+    <wb-demo><nav x-pagination total="100" per-page="10" current="5"></nav></wb-demo>
 
     <h3>Steps Wizard</h3>
-    <div class="demo-full">
-      <div x-steps data-items="Cart,Shipping,Payment,Confirm" data-current="2"></div>
-    </div>
+    <wb-demo><div x-steps items="Cart,Shipping,Payment,Confirm" current="2"></div></wb-demo>
   </section>
 
   <!-- ═══════════════════════════════════════════════════════════════════════════
@@ -324,14 +189,10 @@
     </div>
 
     <h3>Timeline</h3>
-    <div class="demo-full">
-      <div x-timeline data-items="Project kickoff,Design phase,Development,Testing,Launch"></div>
-    </div>
+    <wb-demo><div x-timeline items="Project kickoff,Design phase,Development,Testing,Launch"></div></wb-demo>
 
     <h3>Keyboard Keys</h3>
-    <div class="demo-row">
-      <p>Press <span x-kbd>Ctrl</span> + <span x-kbd>S</span> to save, or <span x-kbd>⌘</span> + <span x-kbd>K</span> on Mac.</p>
-    </div>
+    <wb-demo><p>Press <span x-kbd>Ctrl</span> + <span x-kbd>S</span> to save, or <span x-kbd>⌘</span> + <span x-kbd>K</span> on Mac.</p></wb-demo>
   </section>
 
   <!-- ═══════════════════════════════════════════════════════════════════════════
@@ -340,34 +201,25 @@
   <section id="media">
     <h2>🖼️ Media</h2>
     <div class="section-note">
-      <strong>Media behaviors:</strong> Media behaviors: Images with lazy loading, galleries, YouTube embeds, and audio players.
+      <strong>Media behaviors:</strong> Media behaviors: Images with lazy loading, galleries, and YouTube embeds. (Audio player is a wb-* component — see <a href="?page=components">Components</a>.)
     </div>
 
     <h3>Enhanced Images</h3>
-    <div class="demo-row">
-      <img x-image src="https://picsum.photos/200/150?r=enh1" alt="Lazy loaded" data-lazy class="demo-image">
-      <img x-image src="https://picsum.photos/200/150?r=enh2" alt="Zoomable" data-zoomable class="demo-image">
-    </div>
+    <wb-demo><img x-image src="https://picsum.photos/200/150?r=enh1" alt="Lazy loaded" lazy class="demo-image"></wb-demo>
+    <wb-demo><img x-image src="https://picsum.photos/200/150?r=enh2" alt="Zoomable" zoomable class="demo-image"></wb-demo>
 
     <h3>Gallery</h3>
-    <div class="demo-full">
-      <div x-gallery data-columns="4">
+    <wb-demo>
+      <div x-gallery columns="4">
         <img src="https://picsum.photos/200/200?r=gal1" alt="Gallery 1">
         <img src="https://picsum.photos/200/200?r=gal2" alt="Gallery 2">
         <img src="https://picsum.photos/200/200?r=gal3" alt="Gallery 3">
         <img src="https://picsum.photos/200/200?r=gal4" alt="Gallery 4">
       </div>
-    </div>
-
-    <h3>Audio Player</h3>
-    <div class="demo-full">
-      <wb-audio src="https://files.freemusicarchive.org/storage-freemusicarchive-org/music/no_curator/Tours/Enthusiast/Tours_-_01_-_Enthusiast.mp3" show-eq volume="0.7"></wb-audio>
-    </div>
+    </wb-demo>
 
     <h3>YouTube Embed</h3>
-    <div class="demo-full youtube-container">
-      <div x-youtube data-id="dQw4w9WgXcQ" data-ratio="16:9"></div>
-    </div>
+    <wb-demo class="youtube-container"><div x-youtube id="dQw4w9WgXcQ" ratio="16:9"></div></wb-demo>
   </section>
 
   <!-- ═══════════════════════════════════════════════════════════════════════════
@@ -380,38 +232,32 @@
     </div>
 
     <h3>Attention Seekers (click to trigger)</h3>
-    <div class="demo-row">
-      <button class="effect-demo" x-bounce>Bounce</button>
-      <button class="effect-demo" x-shake>Shake</button>
-      <button class="effect-demo" x-pulse>Pulse</button>
-      <button class="effect-demo" x-flash>Flash</button>
-      <button class="effect-demo" x-tada>Tada</button>
-      <button class="effect-demo" x-wobble>Wobble</button>
-      <button class="effect-demo" x-jello>Jello</button>
-      <button class="effect-demo" x-heartbeat>💓 Heartbeat</button>
-    </div>
+    <wb-demo><button class="effect-demo" x-bounce>Bounce</button></wb-demo>
+    <wb-demo><button class="effect-demo" x-shake>Shake</button></wb-demo>
+    <wb-demo><button class="effect-demo" x-pulse>Pulse</button></wb-demo>
+    <wb-demo><button class="effect-demo" x-flash>Flash</button></wb-demo>
+    <wb-demo><button class="effect-demo" x-tada>Tada</button></wb-demo>
+    <wb-demo><button class="effect-demo" x-wobble>Wobble</button></wb-demo>
+    <wb-demo><button class="effect-demo" x-jello>Jello</button></wb-demo>
+    <wb-demo><button class="effect-demo" x-heartbeat>💓 Heartbeat</button></wb-demo>
 
     <h3>Entrance Animations</h3>
-    <wb-demo>
-      <button class="effect-demo" x-fadein>Fadein</button>
-      <button class="effect-demo" x-slidein data-direction="left">Slidein Left</button>
-      <button class="effect-demo" x-slidein data-direction="right">Slidein Right</button>
-      <button class="effect-demo" x-slidein data-direction="up">Slidein Up</button>
-      <button class="effect-demo" x-zoomin>Zoomin</button>
-      <button class="effect-demo" x-flip>Flip</button>
-    </wb-demo>
+    <wb-demo><button class="effect-demo" x-fadein>Fadein</button></wb-demo>
+    <wb-demo><button class="effect-demo" x-slidein direction="left">Slidein Left</button></wb-demo>
+    <wb-demo><button class="effect-demo" x-slidein direction="right">Slidein Right</button></wb-demo>
+    <wb-demo><button class="effect-demo" x-slidein direction="up">Slidein Up</button></wb-demo>
+    <wb-demo><button class="effect-demo" x-zoomin>Zoomin</button></wb-demo>
+    <wb-demo><button class="effect-demo" x-flip>Flip</button></wb-demo>
 
     <h3>Special Effects</h3>
-    <wb-demo>
-      <button variant="primary" x-confetti>🎊 Confetti</button>
-      <button variant="primary" x-fireworks>🎆 Fireworks</button>
-      <button variant="primary" x-snow>❄️ Snow</button>
-      <button variant="primary" x-sparkle>✨ Sparkle</button>
-      <button variant="primary" x-glow>💡 Glow</button>
-      <button variant="primary" x-rainbow>🌈 Rainbow</button>
-      <button variant="primary" x-ripple>Click for Ripple</button>
-      <div x-ripple class="ripple-box">Ripple on any element</div>
-    </wb-demo>
+    <wb-demo><button variant="primary" x-confetti>🎊 Confetti</button></wb-demo>
+    <wb-demo><button variant="primary" x-fireworks>🎆 Fireworks</button></wb-demo>
+    <wb-demo><button variant="primary" x-snow>❄️ Snow</button></wb-demo>
+    <wb-demo><button variant="primary" x-sparkle>✨ Sparkle</button></wb-demo>
+    <wb-demo><button variant="primary" x-glow>💡 Glow</button></wb-demo>
+    <wb-demo><button variant="primary" x-rainbow>🌈 Rainbow</button></wb-demo>
+    <wb-demo><button variant="primary" x-ripple>Click for Ripple</button></wb-demo>
+    <wb-demo><div x-ripple class="ripple-box">Ripple on any element</div></wb-demo>
   </section>
 
   <!-- ═══════════════════════════════════════════════════════════════════════════
@@ -423,34 +269,26 @@
       <strong>Utilities behaviors:</strong> Utility behaviors: Copy, share, print, fullscreen, clock, countdown, and dark mode toggle.
     </div>
 
-    <wb-demo title="Copy functionality">
-      <button variant="primary" x-copy data-copy="Text copied to clipboard!">📋 Copy Text</button>
-      <button variant="primary" x-copy data-copy="npm install wb-framework">📋 Copy Command</button>
-    </wb-demo>
+    <h3>Copy functionality</h3>
+    <wb-demo><button variant="primary" x-copy copy-text="Text copied to clipboard!">📋 Copy Text</button></wb-demo>
+    <wb-demo><button variant="primary" x-copy copy-text="npm install wb-framework">📋 Copy Command</button></wb-demo>
 
     <h3>Share, Print & Fullscreen</h3>
-    <wb-demo>
-      <button variant="secondary" x-share data-share-title="wb-starter" data-share-url="https://example.com">📤 Share</button>
-      <button variant="secondary" x-print data-share-title="wb-starter" data-share-url="https://example.com">🖨️ Print</button>
-      <button variant="secondary" x-fullscreen data-share-title="wb-starter" data-share-url="https://example.com">⛶ Fullscreen</button>
-    </wb-demo>
+    <wb-demo><button variant="secondary" x-share share-title="wb-starter" share-url="https://example.com">📤 Share</button></wb-demo>
+    <wb-demo><button variant="secondary" x-print>🖨️ Print</button></wb-demo>
+    <wb-demo><button variant="secondary" x-fullscreen>⛶ Fullscreen</button></wb-demo>
 
     <h3>Clock & Countdown</h3>
-    <wb-demo>
-      <div x-clock class="time-display"></div>
-      <div x-countdown to="2027-12-31" class="time-display"></div>
-      <span x-relativetime data-date="2025-01-01" class="time-display">Jan 1, 2025</span>
-    </wb-demo>
+    <wb-demo><div x-clock class="time-display"></div></wb-demo>
+    <wb-demo><div x-countdown to="2027-12-31" class="time-display"></div></wb-demo>
+    <wb-demo><span x-relativetime date="2025-01-01" class="time-display">Jan 1, 2025</span></wb-demo>
 
     <h3>Dark Mode Toggle</h3>
-    <wb-demo>
-      <button variant="primary" x-darkmode>🌙 Toggle Dark Mode</button>
-      <wb-themecontrol></wb-themecontrol>
-    </wb-demo>
+    <wb-demo><button variant="primary" x-darkmode>🌙 Toggle Dark Mode</button></wb-demo>
 
     <h3>Text Truncate</h3>
     <wb-demo>
-      <p x-truncate data-lines="2" class="truncate-box">
+      <p x-truncate lines="2" class="truncate-box">
         This is a very long text that will be truncated after two lines. Lorem ipsum dolor sit amet, consectetur
         adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
       </p>

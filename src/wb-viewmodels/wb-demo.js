@@ -62,9 +62,15 @@ function getLazyObserver() {
           });
         }
       },
-      // Start building slightly before it's actually on screen so scrolling
-      // to it doesn't show a pop-in.
-      { root, rootMargin: '400px' }
+      // Start building well before it's actually on screen so scrolling to
+      // it doesn't show a pop-in. 400px wasn't enough margin for a fast
+      // scroll/jump (e.g. a nav-link jump straight to a section) to outrun
+      // the observer callback -- confirmed live, #390: jumping to "Pricing
+      // Cards" on pages/components.html showed the raw unbuilt
+      // <wb-cardpricing> (collapsed, near-zero size before its behavior
+      // JS runs) for a beat before it rendered. 1200px gives a much larger
+      // head start without going back to eager-building everything.
+      { root, rootMargin: '1200px' }
     );
   }
   return lazyObserver;

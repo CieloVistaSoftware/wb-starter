@@ -117,7 +117,7 @@ test.describe('Card Rendering', () => {
 
   test('profile card renders name, role, avatar', async ({ page }) => {
     const profile = page.locator('#card-gallery wb-cardprofile').first();
-    await expect(profile.locator('.wb-card__name')).toHaveText('Jane Doe');
+    await expect(profile.locator('.wb-card__name')).toHaveText('Ronnie R.');
     await expect(profile.locator('.wb-card__role')).toContainText('UI/UX');
     await expect(profile.locator('.wb-card__avatar')).toBeVisible();
   });

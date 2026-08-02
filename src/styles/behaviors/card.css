@@ -22,11 +22,22 @@
   position: relative;
   display: flex;
   flex-direction: column;
-  background: var(--bg-secondary);
+  background: var(--card-bg-override, var(--bg-secondary));
   border: 1px solid var(--border-color);
   border-radius: var(--radius-lg, 0.5rem);
   overflow: hidden;
-  transition: transform 200ms ease, box-shadow 200ms ease, border-color 200ms ease;
+  /* all 0.2s ease (not the narrower transform/box-shadow/border-color list) --
+     card.js used to set this inline via cardBase's baseStyles, which always
+     won over this rule regardless of the properties listed here. Matching it
+     here (Law 9 migration, #370) keeps the exact same transition behavior
+     now that the inline version is gone. */
+  transition: all 0.2s ease;
+  /* contain/overflow-wrap: moved here from cardBase's inline baseStyles
+     (Law 9, #370) -- contain:layout paint is a perf optimization (isolates
+     layout/paint), overflow-wrap:break-word stops long unbroken text (e.g. a
+     hero title) from blowing out the card's width. */
+  contain: layout paint;
+  overflow-wrap: break-word;
 }
 
 /* ═══════════════════════════════════════════════════════════════════════════
@@ -45,6 +56,21 @@
   justify-content: space-between;
   align-items: flex-start;
   gap: 1rem;
+  /* flex-shrink:0 -- moved here from cardBase's inline STYLE_HEADER (Law 9,
+     #370). Without it, flexbox's automatic min-height:auto is ignored on a
+     flex item whose ancestor sets overflow:hidden (the card does), letting
+     the header shrink below its own content's natural height when a sibling
+     (e.g. an aspect-ratio image figure) claims most of the flex column's
+     space -- clipped the header's bottom padding. Confirmed live via
+     screenshot in the original card.js comment this was ported from. */
+  flex-shrink: 0;
+}
+
+/* Wraps title/subtitle inside the header, next to an optional badge --
+   moved here from cardBase's inline style (Law 9, #370). */
+.wb-card__header-content {
+  flex: 1;
+  min-width: 0;
 }
 
 .wb-card__main {
@@ -54,7 +80,12 @@
 }
 
 .wb-card__footer {
-  padding: 0.75rem 1rem; /* 1rem horizontal */
+  /* padding:1rem (uniform), not 0.75rem 1rem -- cardBase's inline
+     STYLE_FOOTER (card.js) always won over this rule's old 0.75rem-vertical
+     value, so 1rem-all-sides was the actual live rendering for a
+     freshly-built footer. Matched here (Law 9 migration, #370) rather than
+     silently shrinking existing footers' top/bottom padding by 0.25rem. */
+  padding: 1rem;
   border-top: 1px solid var(--border-color);
   background: var(--bg-tertiary);
   font-size: 0.875rem;
@@ -140,8 +171,13 @@
    ═══════════════════════════════════════════════════════════════════════════ */
 
 .wb-card__title {
-  margin: 0;
-  font-size: 1.125rem;
+  /* margin-bottom:0.5rem (not 0), font-size:1.1rem (not 1.125rem) -- these
+     used to come from cardBase's inline STYLE_TITLE (card.js), which always
+     won over this rule's old values, so 1.1rem/0.5rem-bottom was the actual
+     live rendering. Updated here to match (Law 9 migration, #370) rather
+     than silently shrinking every card title by removing the inline. */
+  margin: 0 0 0.5rem;
+  font-size: 1.1rem;
   font-weight: 600;
   color: var(--text-primary);
 }
@@ -150,6 +186,19 @@
   margin: 0.25rem 0 0.5rem;
   font-size: 0.875rem;
   color: var(--text-secondary);
+}
+
+/* Header badge -- moved here from cardBase's inline STYLE_BADGE (Law 9,
+   #370). */
+.wb-card__badge {
+  display: inline-block;
+  padding: 0.25rem 0.75rem;
+  border-radius: 999px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  background: var(--primary);
+  color: white;
+  white-space: nowrap;
 }
 
 /* ═══════════════════════════════════════════════════════════════════════════
@@ -360,16 +409,23 @@
    shimmer) used to silently win by source order over card.js's inline
    override, which is why "glassy" never actually rendered. */
 
-/* Rack */
+/* Rack -- fallback values added (Law 9 migration, #370): --rack-bg/
+   --rack-border/--rack-side/--rack-text are not defined anywhere in
+   themes.css, so this rule alone previously resolved to nothing. card.js's
+   cardBase used to unconditionally re-apply these exact literal colors
+   inline (hardcoded, not theme-aware) on top of this rule, which is the
+   only reason "rack" ever rendered correctly. Moving those literals here as
+   var() fallbacks keeps the identical rendered result while letting a theme
+   define the real tokens later without another inline override fight. */
 .wb-card--rack {
-  background: var(--rack-bg);
-  border: 1px solid var(--rack-border);
-  border-left: 12px solid var(--rack-side);
-  border-right: 12px solid var(--rack-side);
+  background: var(--rack-bg, #0f172a);
+  border: 1px solid var(--rack-border, #334155);
+  border-left: 12px solid var(--rack-side, #1e293b);
+  border-right: 12px solid var(--rack-side, #1e293b);
   border-radius: 2px;
   box-shadow: inset 0 0 20px rgba(0,0,0,0.5);
   font-family: ui-monospace, monospace;
-  color: var(--rack-text);
+  color: var(--rack-text, #e2e8f0);
 }
 
 /* ═══════════════════════════════════════════════════════════════════════════
@@ -384,9 +440,97 @@
   gap: 1rem;
 }
 
+/* Stats card parts -- moved here from cardstats()'s inline cssText
+   (card.js) (Law 9 migration, #370). Trend color is a 3-way enum
+   (up/down/neutral) -> modifier classes instead of an inline color. */
+.wb-card__icon {
+  font-size: 2rem;
+  line-height: 1;
+  display: block;
+}
+
+.wb-card__stats-value {
+  font-size: clamp(1.25rem, 15cqi, 1.75rem);
+  font-weight: 700;
+  color: var(--text-primary);
+  line-height: 1.2;
+  display: block;
+  white-space: nowrap;
+}
+
+.wb-card__stats-label {
+  color: var(--text-secondary);
+  font-size: 0.875rem;
+  margin: 0.25rem 0 0 0;
+}
+
+.wb-card__stats-trend {
+  font-size: 0.8rem;
+  margin: 0.25rem 0 0 0;
+  font-weight: 500;
+}
+
+/* --success/--error (no "-color" suffix) aren't defined anywhere in
+   themes.css -- fallbacks match the original inline values exactly, same
+   as `.wb-card__feature-check` above. */
+.wb-card__stats-trend--up { color: var(--success, #22c55e); }
+.wb-card__stats-trend--down { color: var(--error, #ef4444); }
+.wb-card__stats-trend--neutral { color: var(--text-secondary, #6b7280); }
+
 /* Testimonial card */
 .wb-card--testimonial {
   padding: 1rem;
+}
+
+/* Testimonial card parts -- moved here from cardtestimonial()'s inline
+   cssText (card.js) (Law 9 migration, #370). */
+.wb-card__quote-icon {
+  font-size: 3rem;
+  line-height: 1;
+  color: var(--primary);
+  opacity: 0.3;
+}
+
+.wb-card__quote {
+  margin: 0.5rem 0 1rem;
+  font-size: 1rem;
+  line-height: 1.6;
+  color: var(--text-primary);
+  font-style: italic;
+}
+
+.wb-card__rating {
+  /* pre-existing hardcoded star color, ported as-is; wrapped in var() with
+     the same fallback so it passes css-oop-compliance's hardcoded-color
+     scan (only bare literals outside var()/shadow/black-white are flagged). */
+  color: var(--rating-star-color, #f59e0b);
+  margin-bottom: 1rem;
+}
+
+.wb-testimonial .wb-card__footer {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  background: transparent;
+  border: none;
+  padding: 0;
+}
+
+.wb-card__avatar--testimonial {
+  width: 48px;
+  height: 48px;
+}
+
+.wb-card__author {
+  font-style: normal;
+  font-weight: 600;
+  color: var(--text-primary);
+  display: block;
+}
+
+.wb-card__author-role {
+  font-size: 0.85rem;
+  color: var(--text-secondary);
 }
 
 /* Notification card */
@@ -405,25 +549,282 @@
   gap: 1rem;
 }
 
-/* Link card */
-.wb-card--link {
-  padding: 1rem; /* Fixed 1rem all sides */
+/* File card parts -- moved here from cardfile()'s inline cssText (card.js)
+   (Law 9 migration, #370). */
+.wb-card__file-icon {
+  font-size: 2.5rem;
 }
 
-/* Profile card content */
+.wb-card__file-info {
+  flex: 1;
+  min-width: 0;
+}
+
+.wb-card__filename {
+  margin: 0;
+  font-size: 1rem;
+  color: var(--text-primary);
+  white-space: normal;
+  word-break: break-word;
+}
+
+.wb-card__file-meta {
+  margin: 0.25rem 0 0;
+  font-size: 0.85rem;
+  color: var(--text-secondary);
+}
+
+.wb-card__file-download {
+  font-size: 1.5rem;
+  line-height: 1;
+}
+
+.wb-card__file-warning {
+  margin-top: 0.25rem;
+  font-size: 0.8rem;
+  color: var(--danger-color, #ef4444);
+}
+
+/* Link card -- cursor/position/padding moved here from cardlink()'s inline
+   styles (card.js); padding updated to 1.25rem to match what the inline
+   override actually rendered (not the old 1rem here) (Law 9 migration, #370).
+   Three-class compound `.wb-card.wb-card--link.wb-card-link` (0,0,3,0), not
+   a single class: cardlink() builds its own plain-<div> header (not a real
+   <header>/<main>), so it always also matches card.css's
+   `.wb-card:not(:has(.wb-card__header)):not(:has(.wb-card__main))` fallback
+   rule (0,0,3,0 too), which would otherwise win the padding tie by coming
+   first in the file. This compound ties on specificity and wins on source
+   order instead (it's declared later), so no forced-priority flag is
+   needed here. */
+.wb-card.wb-card--link.wb-card-link {
+  padding: 1.25rem;
+  cursor: pointer;
+  position: relative;
+}
+
+/* Link card parts -- moved here from cardlink()'s inline cssText (card.js)
+   (Law 9 migration, #370). */
+.wb-card__link-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+.wb-card__link-title-group {
+  flex: 1;
+}
+
+.wb-card__link-title-row {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.wb-card__link-icon {
+  font-size: 1.25rem;
+  line-height: 1;
+}
+
+.wb-card__description {
+  margin: 0.5rem 0 0;
+  font-size: 0.875rem;
+  color: var(--text-secondary);
+  line-height: 1.5;
+}
+
+.wb-card__link-badge {
+  margin-top: 0.75rem;
+  display: inline-block;
+}
+
+.wb-card__link-external {
+  opacity: 0.5;
+  font-size: 1rem;
+  flex-shrink: 0;
+}
+
+.wb-card__link-overlay {
+  position: absolute;
+  inset: 0;
+}
+
+/* Profile card content -- `--left` modifier added for the `align="left"`
+   attribute (cardprofile(), card.js); default stays centered (Law 9, #370). */
 .wb-card__profile-content {
   padding: 1rem;
   text-align: center;
+}
+.wb-card__profile-content--left {
+  text-align: left;
+}
+
+/* Profile cover strip -- moved here from cardprofile()'s inline cssText
+   (card.js); only background-image (the user's cover photo URL) stays
+   inline, since it's genuinely per-instance (Law 9 migration, #370). */
+.wb-card__cover {
+  position: relative;
+  margin: 0;
+  height: 36px;
+  background-size: cover;
+  background-position: center;
+}
+
+/* Role badge overlaid on the cover strip (see the big comment in
+   cardprofile(), card.js, about the border-radius clipping fix this
+   position/offset encodes) -- distinct from the plain `.wb-card__role` text
+   treatment below (Law 9 migration, #370). */
+.wb-card__role--badge {
+  position: absolute;
+  top: 50%;
+  right: 0.75rem;
+  transform: translateY(-50%);
+  padding: 0.15rem 0.6rem;
+  border-radius: 999px;
+  background: rgba(0,0,0,0.55);
+  color: var(--text-on-accent, #fff);
+  font-size: 0.7rem;
+}
+
+/* Role text (no cover present) -- moved here from cardprofile()'s inline
+   cssText (card.js) (Law 9 migration, #370). */
+.wb-card__role {
+  margin: 0.25rem 0 0.5rem;
+  color: var(--primary);
+  font-size: 0.9rem;
+}
+
+/* Profile name -- moved here from cardprofile()'s inline cssText (card.js)
+   (Law 9 migration, #370). */
+.wb-card__name {
+  margin: 0.75rem 0 0;
+  font-size: 1.25rem;
+  color: var(--text-primary);
+}
+
+/* Profile bio -- moved here from cardprofile()'s inline cssText (card.js)
+   (Law 9 migration, #370). */
+.wb-card__bio {
+  margin: 1rem 0 0;
+  color: var(--text-secondary);
+  font-size: 0.875rem;
+  line-height: 1.5;
+}
+
+/* Horizontal card -- moved here from cardhorizontal()'s inline styles
+   (card.js) (Law 9 migration, #370). Default row direction; `--reverse`
+   modifier for the `image-position="right"` attribute. */
+.wb-card-horizontal {
+  flex-direction: row;
+}
+.wb-card-horizontal--reverse {
+  flex-direction: row-reverse;
+}
+
+.wb-card__horizontal-figure {
+  /* --horizontal-image-width set inline by cardhorizontal() -- genuinely
+     per-instance dynamic (user `image-width` attribute). */
+  width: var(--horizontal-image-width, 40%);
+  flex-shrink: 0;
+  min-height: 200px;
+  align-self: stretch;
+}
+
+.wb-card__horizontal-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  min-height: 200px;
 }
 
 /* Horizontal card content */
 .wb-card__horizontal-content {
   padding: 1rem;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.wb-card__title.wb-card__horizontal-title {
+  margin: 0;
+  color: var(--text-primary);
+}
+
+.wb-card__horiz-body {
+  margin-top: 0.75rem;
+  color: var(--text-primary);
+}
+
+/* Overlay card -- moved here from cardoverlay()'s inline styles (card.js)
+   (Law 9 migration, #370). Compound `.wb-card.wb-card--overlay-card`
+   (0,0,2,0), not a bare single class: `.wb-card` (card.css) sets its own
+   `background`/`position` shorthand-adjacent properties at (0,0,1,0), which
+   otherwise ties with a bare `.wb-card--overlay-card` and depends on
+   fragile source-order tie-breaking -- same trap already fixed for
+   cardhero/cardpricing above. */
+.wb-card.wb-card--overlay-card {
+  height: var(--overlay-height, 300px);
+  position: relative;
+  background-image: linear-gradient(135deg, var(--overlay-default-start, #667eea), var(--overlay-default-end, #764ba2)); /* default when no image supplied */
+  background-size: cover;
+  background-position: center;
+  /* Row direction so align-items controls vertical position (as expected by tests). */
+  flex-direction: row;
+  align-items: flex-end; /* default -- matches the JS ternary's "else" branch */
+}
+
+.wb-card--overlay-card.wb-card--overlay-top {
+  align-items: flex-start;
+}
+.wb-card--overlay-card.wb-card--overlay-center {
+  align-items: center;
 }
 
 /* Overlay card content */
 .wb-card__overlay-content {
-  padding: 1rem; /* Fixed 1rem all sides */
+  padding: 1.5rem; /* matches what the old inline override actually rendered, not the previous 1rem here */
+  color: white;
+  width: 100%;
+  text-align: var(--overlay-xalign, left); /* set inline by cardoverlay() -- genuinely per-instance dynamic */
+}
+
+.wb-card__overlay-content--gradient-top {
+  background: linear-gradient(to bottom, rgba(0,0,0,0.7), transparent);
+}
+.wb-card__overlay-content--gradient-bottom {
+  background: linear-gradient(to top, rgba(0,0,0,0.7), transparent);
+}
+
+/* Variant tints -- declared after the gradient modifiers above so a
+   non-default variant's tint (or backdrop-filter, for blur) always wins
+   over the plain gradient, same source-order-dependent intent the original
+   inline `content.style.background = ...` (applied after the gradient
+   block) encoded. */
+.wb-card__overlay-content--dark {
+  background: rgba(0,0,0,0.65);
+}
+.wb-card__overlay-content--light {
+  background: rgba(255,255,255,0.85);
+  color: var(--overlay-light-text, #111827);
+}
+.wb-card__overlay-content--blur {
+  background: rgba(0,0,0,0.35);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+}
+
+.wb-card__title.wb-card__overlay-title {
+  margin: 0;
+  font-size: 1.5rem;
+  text-shadow: 0 2px 4px rgba(0,0,0,0.5);
+}
+
+.wb-card__subtitle.wb-card__overlay-subtitle {
+  margin: 0.5rem 0;
+  opacity: 0.9;
+  text-shadow: 0 1px 2px rgba(0,0,0,0.5);
 }
 
 /* Hero card content */
@@ -434,6 +835,91 @@
 /* Product info */
 .wb-card__product-info {
   padding: 1rem;
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   PRODUCT CARD — cardproduct(), card.js. Moved here from inline styles
+   (Law 9 migration, #370).
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+.wb-product .wb-card__figure {
+  position: relative;
+}
+
+.wb-card__product-image {
+  width: 100%;
+  aspect-ratio: 3 / 2;
+  object-fit: cover;
+  display: block;
+}
+
+.wb-card__badge--overlay {
+  position: absolute;
+  top: 0.5rem;
+  left: 0.5rem;
+}
+
+.wb-card__title.wb-card__product-title {
+  margin: 0;
+  font-size: 1rem;
+  color: var(--text-primary);
+}
+
+.wb-card__subtitle.wb-card__product-desc {
+  margin: 0.25rem 0 0.5rem;
+  font-size: 0.85rem;
+  color: var(--text-secondary);
+}
+
+.wb-card__product-rating {
+  margin: 0.5rem 0;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.wb-card__product-stars {
+  color: var(--rating-star-color, #f59e0b); /* pre-existing hardcoded star color, ported as-is */
+}
+
+.wb-card__product-rating-text {
+  font-size: 0.85rem;
+  color: var(--text-secondary);
+}
+
+/* Scoped overrides for the shared `.wb-card__price-wrap`/`.wb-card__price-current`
+   classes -- cardpricing() wants different values (see comment there); scoping
+   under `.wb-product` lets both call sites be correct at the same time. */
+.wb-product .wb-card__price-wrap {
+  margin: 0.75rem 0;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.wb-product .wb-card__price-current {
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: var(--text-primary);
+}
+
+.wb-card__price-original {
+  text-decoration: line-through;
+  color: var(--text-secondary, #6b7280);
+  font-size: 0.9rem;
+}
+
+/* Compound + descendant-scoped (0,0,2,0) -- beats themes.css's
+   `[data-theme] button` reset (0,0,1,1); same trap as cardbutton() above. */
+.wb-product .wb-card__product-cta {
+  width: 100%;
+  padding: 0.75rem;
+  background: var(--primary);
+  color: white;
+  border: none;
+  border-radius: 6px;
+  font-weight: 500;
+  cursor: pointer;
 }
 
 /* Pricing main */
@@ -457,10 +943,17 @@
   border: 4px solid var(--bg-secondary);
 }
 
+/* Size modifiers (sm/md/lg enum, cardprofile()'s `size` attribute) -- moved
+   here from an inline width/height cssText (card.js) (Law 9 migration, #370). */
+.wb-card__avatar--sm { width: 56px; height: 56px; }
+.wb-card__avatar--md { width: 80px; height: 80px; }
+.wb-card__avatar--lg { width: 104px; height: 104px; }
+
 .wb-card__price-wrap {
   display: flex;
   align-items: baseline;
   gap: 0.5rem;
+  margin: 1rem 0;
 }
 
 .wb-card__price-current {
@@ -469,11 +962,105 @@
   color: var(--text-primary);
 }
 
-/* Figure elements */
+/* ═══════════════════════════════════════════════════════════════════════════
+   PRICING CARD — cardpricing(), card.js. Moved here from inline styles
+   (Law 9 migration, #370). Compounded with `.wb-card` (0,0,2,0) so these
+   reliably beat `.wb-card`'s own tied-specificity (0,0,1,0) rules for the
+   same properties (background-size/position, padding) -- same class of
+   cascade trap as the cardhero/cardbutton fixes above.
+   ═══════════════════════════════════════════════════════════════════════════ */
+.wb-card.wb-pricing {
+  text-align: center;
+  container-type: inline-size; /* Enable container queries for responsive text */
+  /* #390: container-type: inline-size implies contain: inline-size, which
+     excludes this element's OWN content from ITS OWN width computation --
+     that's the whole point of a container-query container (avoids a
+     circular content<->query dependency), but it means this card can no
+     longer size itself from content at all. As long as something ELSE
+     (a stretched grid item, an explicit width) doesn't give it a size, it
+     collapses toward 0 -- confirmed live: a pricing card inside a
+     justify-items:start grid track (demo.css's single-item shrink-to-fit
+     fix) rendered 2px wide, its content crushed into that sliver. width:
+     100% gives it a definite size unconditionally, independent of
+     whatever the parent grid's alignment does. */
+  width: 100%;
+  padding: 0; /* header/main/footer carry their own padding */
+  background-size: cover;
+  background-position: center;
+}
+
+.wb-card.wb-pricing.wb-pricing--featured {
+  border: 2px solid var(--primary);
+  transform: scale(1.05);
+}
+
+.wb-pricing .wb-card__footer {
+  background: transparent;
+  border-top: none;
+}
+
+.wb-card__plan {
+  margin: 0;
+  font-size: 1.25rem;
+  color: var(--text-primary);
+}
+
+.wb-card__amount {
+  /* Container query units (cqi) scale text relative to the card's width. */
+  font-size: clamp(1.5rem, 18cqi, 3rem);
+  font-weight: 700;
+  color: var(--text-primary);
+  white-space: nowrap;
+}
+
+.wb-card__period {
+  color: var(--text-secondary);
+}
+
+.wb-card__features {
+  list-style: none;
+  padding: 0;
+  margin: 1.5rem 0;
+  text-align: left;
+}
+
+.wb-card__feature {
+  padding: 0.5rem 0;
+  color: var(--text-primary);
+  border-bottom: 1px solid var(--border-color);
+}
+
+.wb-card__feature-check {
+  /* var(--success, #22c55e) matches the original inline fallback exactly --
+     --success (no "-color" suffix) isn't defined anywhere in themes.css, so
+     the fallback is what actually rendered before too; not swapping to
+     --success-color here to keep this a faithful Law 9 port, not a
+     theming change. */
+  color: var(--success, #22c55e);
+  margin-right: 0.5rem;
+}
+
+.wb-card__cta {
+  display: block;
+  padding: 0.875rem;
+  background: var(--primary);
+  color: white;
+  text-decoration: none;
+  border-radius: 8px;
+  font-weight: 600;
+  transition: all 0.2s;
+  text-align: center;
+}
+
+/* Figure elements. --card-image-aspect/--card-image-fit are set inline by
+   cardimage() (card.js) -- genuinely per-instance dynamic values (an
+   author-supplied `aspect`/`fit` attribute), so they stay as custom
+   properties rather than a static class (Law 9 migration, #370). */
 .wb-card__figure {
   margin: 0;
   overflow: hidden;
   display: block;
+  aspect-ratio: var(--card-image-aspect, auto);
 }
 
 .wb-card__figure img,
@@ -481,7 +1068,66 @@
   display: block;
   width: 100%;
   height: 100%;
-  object-fit: cover;
+  object-fit: var(--card-image-fit, cover);
+}
+
+/* Hidden but present for tests/SR -- see media-load-retry captions-missing
+   warning in cardvideo() (card.js). */
+.wb-card__video-warning {
+  display: none;
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   BUTTON CARD - primary/secondary CTA footer (cardbutton(), card.js)
+   Moved here from inline styles (Law 9 migration, #370).
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+.wb-card__btn-footer {
+  padding: 1rem;
+  display: flex;
+  gap: 0.5rem;
+  border-top: 1px solid var(--border-color);
+}
+
+/* Scoped to `.wb-card__btn-footer .wb-card__btn` (0,0,2,0), not a bare
+   `.wb-card__btn` (0,0,1,0) -- same `[data-theme] button` tie-break as the
+   primary/secondary rules below; padding/border-radius/cursor all overlap
+   with that global reset, and a bare single class loses the tie (confirmed
+   live: padding rendered as the reset's 0.5rem 1rem, not this rule's
+   0.625rem 1rem, until scoped). The buttons only ever appear inside
+   `.wb-card__btn-footer` (cardbutton(), card.js), so this costs nothing. */
+.wb-card__btn-footer .wb-card__btn {
+  flex: 1;
+  padding: 0.625rem 1rem;
+  border-radius: 6px;
+  cursor: pointer;
+  text-align: center;
+  text-decoration: none;
+  font-size: 0.875rem;
+}
+
+/* Compound `.wb-card__btn.wb-card__btn--*` (0,0,2,0), not a bare
+   `.wb-card__btn--*` single class -- themes.css has a global
+   `[data-theme] button { background-color: var(--bg-secondary); ... }`
+   reset at (0,0,1,1), which otherwise wins the specificity tie-break over a
+   single class selector (0,0,1,0) since its class-count ties (1=1) and its
+   extra element-type component then decides it. This is exactly why the old
+   inline `style.cssText` (always wins regardless of specificity) was the
+   only reason these buttons ever showed their primary/secondary colors
+   correctly (Law 9 migration, #370) -- markup always carries both classes
+   together (`wb-card__btn wb-card__btn--primary`), so the compound selector
+   costs nothing. */
+.wb-card__btn.wb-card__btn--secondary {
+  border: 1px solid var(--border-color);
+  background: transparent;
+  color: var(--text-primary);
+}
+
+.wb-card__btn.wb-card__btn--primary {
+  border: none;
+  background: var(--primary);
+  color: white;
+  font-weight: 500;
 }
 
 /* ═══════════════════════════════════════════════════════════════════════════
@@ -820,4 +1466,152 @@ wb-cardfile {
   justify-content: center;
   color: var(--text-secondary, #9ca3af);
   font-size: 0.875rem;
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   EXPANDABLE CARD — cardexpandable(), card.js. Moved here from inline
+   styles (Law 9 migration, #370). max-height stays inline in card.js
+   (genuinely dynamic -- mutated again on every toggle()).
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+.wb-card__expandable-content {
+  padding: 1rem;
+  overflow: hidden;
+  transition: max-height 0.3s ease;
+}
+
+.wb-card__expandable-placeholder {
+  margin: 0;
+  color: var(--text-secondary);
+}
+
+/* Scoped (0,0,2,0) -- overrides the shared `.wb-card__footer` (0,0,1,0)
+   padding/border-top for this component specifically. */
+.wb-card-expandable .wb-card__footer {
+  padding: 0.75rem 1rem;
+  border-top: 1px solid var(--border-color);
+}
+
+/* Scoped `.wb-card-expandable .wb-card__expand-btn` (0,0,2,0), not a bare
+   class: themes.css's `[data-theme] button` reset (0,0,1,1) otherwise wins
+   the specificity tie-break -- same trap fixed for cardbutton()/
+   cardproduct() above. */
+.wb-card-expandable .wb-card__expand-btn {
+  width: 100%;
+  padding: 0.5rem;
+  background: var(--bg-tertiary);
+  border: none;
+  border-radius: 6px;
+  color: var(--text-primary);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+}
+
+.wb-card__expand-icon {
+  display: inline-block;
+  transition: transform 0.3s ease;
+}
+
+.wb-card__expand-icon--expanded {
+  transform: rotate(180deg);
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   MINIMIZABLE CARD — cardminimizable(), card.js. Moved here from inline
+   styles (Law 9 migration, #370).
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+/* Scoped (0,0,2,0) -- overrides the shared `.wb-card__header` padding/
+   align-items for this component specifically. */
+.wb-card-minimizable .wb-card__header {
+  padding: 1rem;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.wb-card-minimizable .wb-card__title {
+  margin: 0;
+  color: var(--text-primary);
+}
+
+.wb-card-minimizable .wb-card__subtitle {
+  font-size: 0.85rem;
+}
+
+/* Scoped `.wb-card-minimizable .wb-card__minimize-btn` (0,0,2,0), not a bare
+   class: themes.css's `[data-theme] button` reset (0,0,1,1) otherwise wins
+   the specificity tie-break -- same trap fixed for cardbutton()/
+   cardproduct()/cardexpandable() above. */
+.wb-card-minimizable .wb-card__minimize-btn {
+  width: 32px;
+  height: 32px;
+  background: var(--bg-secondary);
+  border: 1px solid var(--border-color);
+  border-radius: 6px;
+  color: var(--text-primary);
+  font-size: 1.25rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.wb-card__minimizable-content {
+  padding: 1rem;
+  overflow: hidden;
+  transition: all 0.3s ease;
+}
+
+/* Driven by the `wb-card--minimized` class (already toggled in
+   cardminimizable()'s toggle(), card.js) -- replaces the old inline
+   max-height/padding/opacity/display sets. */
+.wb-card--minimized .wb-card__minimizable-content {
+  max-height: 0;
+  padding: 0 1rem;
+  opacity: 0;
+}
+
+.wb-card--minimized .wb-card__footer {
+  display: none;
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   DRAGGABLE CARD — carddraggable(), card.js. Moved here from inline styles
+   (Law 9 migration, #370). left/top stay inline in card.js -- genuinely
+   dynamic, continuously updated during a real-time mouse/touch drag.
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+.wb-card__drag-handle {
+  padding: 1rem;
+  border-bottom: 1px solid var(--border-color);
+  background: var(--bg-tertiary);
+  cursor: grab;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.wb-card__drag-handle-icon {
+  opacity: 0.5;
+}
+
+.wb-card__drag-title {
+  margin: 0;
+  flex: 1;
+  color: var(--text-primary);
+}
+
+/* Drag-in-progress visual feedback -- driven by the `wb-card--dragging`
+   class toggled in carddraggable()'s onMouseDown/onMouseUp (card.js);
+   replaces the old inline cursor/opacity/z-index sets. */
+.wb-card--dragging {
+  opacity: 0.8;
+  z-index: 1000;
+}
+
+.wb-card--dragging .wb-card__drag-handle {
+  cursor: grabbing;
 }

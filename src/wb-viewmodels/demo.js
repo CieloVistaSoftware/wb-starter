@@ -132,6 +132,23 @@ function attachInstanceDocLink(hostEl, file, comp, root) {
     const href = root + 'public/doc-viewer.html?file=' + encodeURIComponent('docs/' + file);
     const label = `wb-${comp} docs`;
 
+    // #295: the badge is positioned top-right via `position: absolute`
+    // (demo.css), which anchors to hostEl ONLY if hostEl itself is a
+    // positioning context. wb-card already sets position:relative in its
+    // own CSS, so this was invisible there -- but #390 generalized this
+    // badge to EVERY wb-* grid child, and most (wb-spinner, wb-badge,
+    // plain wb-alert, ...) are position:static. With no positioned
+    // ancestor at all, the badge's containing block falls back to the
+    // *viewport* (the initial containing block), so it renders pinned near
+    // the top-right of the whole page instead of the small component it's
+    // meant to label -- confirmed live: overflowed the page by 9px at
+    // 375px on docs/V3-GUIDE.md's embedded <wb-demo>. Force a positioning
+    // context only when one doesn't already exist, so this is a no-op for
+    // every component (like wb-card) that already provides one.
+    if (getComputedStyle(hostEl).position === 'static') {
+        hostEl.style.position = 'relative';
+    }
+
     const build = () => {
         if (hostEl.querySelector(':scope > .wb-demo__card-doc-link')) return;
         const link = document.createElement('a');
@@ -166,6 +183,12 @@ export async function demo(element, options = {}) {
     element._demoInitialized = true;
 
     element.classList.add('wb-demo');
+    // Opt out of Standard §7's single-item shrink-to-fit (demo.css) for demos
+    // whose one child is deliberately full-bleed (e.g. a page hero) rather
+    // than a small widget that should collapse to its own content width.
+    if (element.hasAttribute('full-width')) {
+        element.classList.add('wb-demo--full-width');
+    }
 
     let rawBlock = '';
     // Source priority: _rawSource FIRST. It's captured at connectedCallback,
@@ -193,10 +216,14 @@ export async function demo(element, options = {}) {
     const configuredCols = parseInt(options.columns || element.getAttribute('columns') || '3', 10);
     // Standard §7: a demo is only as wide as what it renders — a single
     // narrow card wrapped in the default 3-column grid still stretched the
-    // whole wb-demo (and the code panel below it) to fill 3 columns' worth
-    // of width even though only 1 was ever occupied. Clamp to however many
-    // children actually exist; demo.css's cols-1 rule then sizes the whole
-    // demo to fit that content instead of the full container width.
+    // whole wb-demo to fill 3 columns' worth of width even though only 1
+    // was ever occupied. Clamp to however many children actually exist;
+    // demo.css's cols-1 rule then sizes the whole demo (grid + code panel,
+    // as one unit) to fit that content on desktop. Standard §26: below
+    // 700px only, demo.css splits this apart instead — the grid still
+    // hugs its content, but `wb-demo` and its code panel stay full width,
+    // so scrolling past many single-item demos on mobile doesn't jitter
+    // the page's horizontal footprint.
     const childCount = element.children.length;
     const cols = childCount > 0 ? Math.min(configuredCols, childCount) : configuredCols;
 
@@ -297,7 +324,13 @@ export async function demo(element, options = {}) {
     pre.setAttribute('x-behavior', 'pre');
     pre.dataset.language = 'html';
     pre.dataset.showCopy = 'true';
-    pre.setAttribute('wrap', 'true'); // Standard §6: wrap, never a horizontal scrollbar (plain v3 attr)
+    // #390: John's explicit override for wb-demo code panels specifically --
+    // horizontal scroll instead of wrapping. No `wrap` attribute means
+    // pre.css's default applies (overflow-x: auto, white-space: pre; see
+    // pre.css "Default (no wrap modifier): editor style -- long lines
+    // scroll, never break"). Standard §6 (never a horizontal scrollbar)
+    // still governs plain <pre x-behavior="pre"> elsewhere; this carve-out
+    // is scoped to wb-demo-generated code panels only.
 
     const code = document.createElement('code');
     code.className = 'language-html';

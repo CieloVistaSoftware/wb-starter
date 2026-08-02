@@ -32,7 +32,16 @@
   border-bottom: none;
 }
 
-.component-section h2 {
+/* Direct-child combinator (`>`), not a descendant selector -- these are meant
+   for this page's OWN section headings only (`<h3>Basic Cards</h3>` etc.,
+   direct children of `.component-section`). A descendant selector also
+   matched a component's own internal heading nested several levels deep
+   (e.g. `<wb-card><header><div><h3 class="wb-card__title">`), and used to
+   win there too since `.component-section h3` (0,1,1) outranks
+   `.wb-card__title` (0,1,0) -- invisible while card.js still set the title's
+   margin/font-size inline (always beats any class), but a real regression
+   once that inline style was migrated to card.css alone (Law 9, #370). */
+.component-section > h2 {
   margin: 0 0 1.5rem;
   padding-bottom: 0.5rem;
   border-bottom: 2px solid var(--primary);
@@ -40,7 +49,7 @@
   font-size: 1.5rem;
 }
 
-.component-section h3 {
+.component-section > h3 {
   margin: 2rem 0 1rem;
   color: var(--text-secondary);
   font-size: 1rem;
@@ -59,6 +68,22 @@
   }
   .page__hero h1 {
     font-size: 1.2rem !important;
+  }
+
+  /* #390: .component-section already gives its content 1rem of horizontal
+     breathing room (its own padding, above) -- wb-demo's own 1rem
+     horizontal padding (Standard §13, demo.css) then stacked ON TOP of
+     that, pushing the code panel ~2rem from the section edge instead of
+     the intended ~1rem. Standard §13 is already satisfied by the section's
+     padding here, so drop wb-demo's redundant horizontal half; keep its
+     vertical padding (spacing above/below the grid+code stack is still
+     needed regardless of the ancestor). Scoped to this page's card-styled
+     mobile sections only -- wb-demo elsewhere (standalone demo pages, docs
+     markdown with no padded ancestor) keeps its own full 1rem, still the
+     only source of breathing room there. */
+  .component-section wb-demo {
+    padding-left: 0;
+    padding-right: 0;
   }
 }
 

@@ -2,25 +2,7 @@
 // Contains WBSite class and site logic
 import WB from './wb.js';  // v3.0: Use main wb.js with schema support
 import { initViews } from './wb-views.js';
-import { VERSION } from './version.js';
 import { preloadCssForHtml } from './style-loader.js';
-
-// VERSION.builtAt is stamped in UTC (scripts/stamp-version.js: `new
-// Date().toISOString()`) — displayed here in Central time (John's local
-// zone) instead of raw Zulu time. Intl handles the CST/CDT seasonal switch
-// automatically.
-function formatBuiltAtCentral(isoString) {
-  try {
-    return new Intl.DateTimeFormat('en-US', {
-      timeZone: 'America/Chicago',
-      year: 'numeric', month: 'short', day: 'numeric',
-      hour: 'numeric', minute: '2-digit',
-      timeZoneName: 'short',
-    }).format(new Date(isoString));
-  } catch (e) {
-    return isoString; // never break the header over a formatting failure
-  }
-}
 
 export default class WBSite {
   constructor() {
@@ -75,35 +57,10 @@ export default class WBSite {
         this.navigateTo(page);
       });
 
-      // Clear-cache-and-reload link (the version number, in the shell header).
-      document.addEventListener('click', async (e) => {
-        const reloadBtn = e.target.closest('#headerVersion');
-        if (!reloadBtn) return;
-        e.preventDefault();
-        reloadBtn.textContent = '⏳';
-        try {
-          if (window.caches) {
-            const keys = await caches.keys();
-            await Promise.all(keys.map((k) => caches.delete(k)));
-          }
-          if (navigator.serviceWorker) {
-            const regs = await navigator.serviceWorker.getRegistrations();
-            await Promise.all(regs.map((r) => r.unregister()));
-          }
-        } catch (err) {
-          console.warn('[clear-cache] partial failure:', err && err.message);
-        }
-        // A plain location.reload() only bypasses Cache Storage/the service
-        // worker (both cleared above) — it does NOT bypass the browser's own
-        // ordinary HTTP disk cache. GitHub Pages serves every response with
-        // Cache-Control: max-age=600, so within that 10-minute window a
-        // reload can still be served entirely from local disk cache without
-        // ever reaching the network, regardless of what was just cleared.
-        // Force a genuinely new URL so there is nothing to serve from cache.
-        location.href = location.pathname + location.search
-          + (location.search ? '&' : '?') + '_cb=' + Date.now()
-          + location.hash;
-      });
+      // Clear-cache-and-reload for the header's version link is handled by
+      // the x-release behavior itself now (src/wb-viewmodels/release.js) --
+      // this used to be a second, hand-rolled copy of that exact logic
+      // wired to #headerVersion specifically.
 
       // Intercept clicks for SPA navigation
       document.addEventListener('click', (e) => {
@@ -219,7 +176,7 @@ export default class WBSite {
             ${branding.headerLogoImage ? `<span class="header__logo-icon" id="headerLogoIcon">${branding.headerLogoImage}</span>` : ''}
             <span class="header__logo-text" id="headerLogoText">${branding.companyName}</span>
           </a>
-          <a href="#" class="header__version" id="headerVersion" x-ripple title="Build ${VERSION.commit} · ${formatBuiltAtCentral(VERSION.builtAt)} — tap to clear cache and reload">v${VERSION.version}</a>
+          <a href="#" class="header__version" id="headerVersion" x-ripple x-release></a>
         </div>
         <div class="header__right" id="headerRight" style="gap: 1rem;">
           ${headerSettings.displaySearchBar ? `
@@ -316,16 +273,31 @@ export default class WBSite {
   }
 
   initStickyHeader() {
-    const main = document.getElementById('main');
+    // #390: was `document.getElementById('main')` (.site__main) -- confirmed
+    // live that element never scrolls itself (its own CSS comment: "Removed
+    // overflow-y: auto - body scrolls now so nav can stick"). #siteBody
+    // (.site__body) is the actual single scroll container -- listening on
+    // .site__main meant this whole feature never fired, on any viewport.
+    const body = document.getElementById('siteBody');
     const header = document.getElementById('siteHeader');
-    if (!main || !header) return;
+    if (!body || !header) return;
 
-    let lastScrollY = main.scrollTop;
+    // #390: new spec -- auto-hide-on-scroll is a mobile-landscape-only
+    // behavior. Landscape phones are short (~320-430px tall); that's where
+    // a fixed 64px header eating vertical space actually hurts. Landscape
+    // TABLETS/desktops are much taller, so max-height (not max-width) is
+    // the right discriminator between "phone, sideways" and "anything
+    // wider-screened, sideways." Outside this condition the header just
+    // stays put, same as before this feature existed.
+    const isMobileLandscape = () => window.matchMedia('(orientation: landscape) and (max-height: 500px)').matches;
+
+    let lastScrollY = body.scrollTop;
     const threshold = 50; // Min scroll to trigger
 
-    main.addEventListener('scroll', () => {
-      const currentScrollY = main.scrollTop;
-      
+    body.addEventListener('scroll', () => {
+      if (!isMobileLandscape()) return;
+      const currentScrollY = body.scrollTop;
+
       // Don't hide if near top
       if (currentScrollY < threshold) {
         header.classList.remove('site__header--hidden');
@@ -333,10 +305,10 @@ export default class WBSite {
         return;
       }
 
-      // Scrolling Down -> Hide
+      // Scrolling Down -> Hide (maximizes screen area while reading)
       if (currentScrollY > lastScrollY + 10) {
         header.classList.add('site__header--hidden');
-      } 
+      }
       // Scrolling Up -> Show
       else if (currentScrollY < lastScrollY - 10) {
         header.classList.remove('site__header--hidden');
@@ -344,6 +316,15 @@ export default class WBSite {
 
       lastScrollY = currentScrollY;
     }, { passive: true });
+
+    // Leaving mobile-landscape (rotate to portrait, resize a desktop
+    // window, ...) must not leave the header stuck hidden with no more
+    // scroll events available to un-hide it.
+    window.addEventListener('resize', () => {
+      if (!isMobileLandscape()) {
+        header.classList.remove('site__header--hidden');
+      }
+    });
   }
 
   renderFooter() {
@@ -415,13 +396,16 @@ export default class WBSite {
         window.WBLoadingManager.stopMonitoring(loadingTimerId);
       }
       if (res.ok) {
-        // {{WB_VERSION}} is the one placeholder token a page fragment may
-        // use to display the release number -- resolved here from the
-        // single canonical VERSION import (same one renderHeader() uses),
-        // never hardcoded per-page. A hardcoded "v3.0" litters across
-        // several pages/*.html went stale the moment the real version
-        // ticked past 3.0.0.
-        const html = (await res.text()).replaceAll('{{WB_VERSION}}', VERSION.version);
+        // A page fragment that needs to show the release number uses
+        // <span x-release> (or <wb-release>) -- src/wb-viewmodels/release.js
+        // reads the single canonical VERSION import itself, the same one
+        // every other consumer (including this shell's own header) reads.
+        // A hardcoded "v3.0" litters across several pages/*.html went stale
+        // the moment the real version ticked past 3.0.0; a placeholder-
+        // token substitution step used to live here for exactly that
+        // reason -- x-release replaced it with a real, self-sufficient
+        // behavior instead of a second bespoke mechanism.
+        const html = await res.text();
         // Preload this page's behavior CSS BEFORE the content becomes
         // visible — otherwise it paints unstyled for a moment and then
         // reflows as each behavior's CSS trickles in async, a real CLS

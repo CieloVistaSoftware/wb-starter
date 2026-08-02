@@ -4,11 +4,17 @@
  * Make an element draggable.
  */
 export function draggable(element, options = {}) {
+  // #390: was element.dataset.* (data-handle/data-axis/data-bounds/
+  // data-grid) -- but every real usage (demos/site/interactive.html:
+  // `<wb-draggable axis="x">`) authors plain attributes, and Tier-1 Law 11
+  // forbids data-* on wb-*/x-* elements anyway. dataset.axis was always
+  // undefined for these demos, so axis="x"/"y" silently did nothing --
+  // every draggable behaved as axis="both" regardless of what was set.
   const config = {
-    handle: options.handle || element.dataset.handle,
-    axis: options.axis || element.dataset.axis || 'both', // x, y, both
-    bounds: options.bounds || element.dataset.bounds, // selector, 'parent', 'viewport'
-    grid: parseInt(options.grid || element.dataset.grid || '0', 10),
+    handle: options.handle || element.getAttribute('handle'),
+    axis: options.axis || element.getAttribute('axis') || 'both', // x, y, both
+    bounds: options.bounds || element.getAttribute('bounds'), // selector, 'parent', 'viewport'
+    grid: parseInt(options.grid || element.getAttribute('grid') || '0', 10),
     ...options
   };
 
@@ -98,8 +104,18 @@ export function draggable(element, options = {}) {
     
     startX = e.clientX;
     startY = e.clientY;
-    initialLeft = element.offsetLeft;
-    initialTop = element.offsetTop;
+    // #390: was element.offsetLeft/offsetTop (position within the
+    // offsetParent, from normal document flow) -- but this element is
+    // `position: relative` (forced below the constructor's computedStyle
+    // check), where style.left/top are offsets FROM the normal flow
+    // position, a different coordinate space entirely. Reading the
+    // CURRENTLY APPLIED left/top (0 on the first drag, whatever was last
+    // set on subsequent drags) keeps the baseline in the same coordinate
+    // space the drag writes back into -- confirmed live: the old
+    // offsetLeft-based version moved the element several multiples of
+    // the actual mouse delta, worse on every subsequent drag.
+    initialLeft = parseFloat(element.style.left) || 0;
+    initialTop = parseFloat(element.style.top) || 0;
     
     element.classList.add('wb-draggable--dragging');
     handle.style.cursor = 'grabbing';

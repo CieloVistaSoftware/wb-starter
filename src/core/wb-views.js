@@ -36,6 +36,20 @@ const viewRegistry = new Map();
 /** @type {Map<string, Object>} View name → schema/meta */
 const viewMeta = new Map();
 
+/**
+ * #390: view name → resolved template URL, for entries registered via a
+ * registry `{url: '...'}` reference. loadViewsFromURL used to fetch every
+ * one of these immediately, on every single page load, regardless of
+ * whether that page renders any element using the view — confirmed live,
+ * home page load fetched all 20+ page-builder partials (hero-cosmic.html,
+ * pricing-three-tier.html, testimonials-grid.html, ...) even though home
+ * uses none of them. The template HTML is now fetched lazily, on first
+ * actual use (see ensureViewLoaded, called from processWbView /
+ * processWbViewElement right before rendering) -- registering the tag name
+ * itself (registerViewAsElement) stays eager since that's a synchronous,
+ * network-free customElements.define() call. */
+const pendingViewUrls = new Map();
+
 /** @type {WeakMap<HTMLElement, Function>} Track processed elements and their cleanup */
 const processedElements = new WeakMap();
 
@@ -56,6 +70,31 @@ export function registerView(name, html, meta = {}) {
   viewRegistry.set(name, html.trim());
   viewMeta.set(name, meta);
   dlog(`[WB Views] ✓ Registered: "${name}" (${html.length} chars)`);
+}
+
+/**
+ * #390: fetch a registry-URL view's template HTML on first actual use,
+ * instead of loadViewsFromURL fetching every registered view eagerly.
+ * No-op (returns immediately) once loaded or if the name was never a
+ * registry-URL view in the first place (plain/local views are already in
+ * viewRegistry from registerView, nothing to lazily load).
+ */
+async function ensureViewLoaded(name) {
+  if (viewRegistry.has(name)) return;
+  const pending = pendingViewUrls.get(name);
+  if (!pending) return;
+  try {
+    const res = await fetch(pending.url);
+    if (res.ok) {
+      registerView(name, await res.text(), pending.meta);
+    } else {
+      console.warn(`[WB Views] Failed to fetch template for "${name}" from ${pending.url}`);
+    }
+  } catch (e) {
+    console.warn(`[WB Views] Error fetching template for "${name}":`, e);
+  } finally {
+    pendingViewUrls.delete(name);
+  }
 }
 
 /**
@@ -160,23 +199,24 @@ function processWbViewElement(element, viewName) {
   
   async function render() {
     if (cleanup) cleanup();
-    
+    await ensureViewLoaded(viewName); // #390: lazy-fetch this view's template on first actual use
+
     let renderData = data;
-    
+
     // Handle 'use' attribute
     if (use) {
       let refData;
-      
+
       // Reference by #id
       if (use.startsWith('#')) {
         const sourceEl = document.getElementById(use.slice(1));
-        
+
         if (!sourceEl) {
           console.error(`[WB Views] use="${use}" - element not found`);
           element.innerHTML = `<span style="color:red;font-size:0.6875rem;">use: ${use} not found</span>`;
           return;
         }
-        
+
         refData = getViewData(sourceEl, getViewName(sourceEl) || viewName);
         renderData = { ...refData, ...data };
         cleanup = renderView(viewName, renderData, element, body);
@@ -293,21 +333,14 @@ export async function loadViewsFromURL(urls) {
         if (typeof config === 'string') {
           registerView(name, config);
         } else if (config.url) {
-          // Fetch template from URL — resolved relative to the registry it came
-          // from, so partial paths work under any base (e.g. /wb-starter/ on
-          // GitHub Pages). Absolute '/src/...' 404s on sub-path hosts. (#225)
-          try {
-            const tplUrl = new URL(config.url, new URL(url, document.baseURI)).href;
-            const tplRes = await fetch(tplUrl);
-            if (tplRes.ok) {
-              const html = await tplRes.text();
-              registerView(name, html, config);
-            } else {
-              console.warn(`[WB Views] Failed to fetch template for "${name}" from ${tplUrl}`);
-            }
-          } catch (e) {
-            console.warn(`[WB Views] Error fetching template for "${name}":`, e);
-          }
+          // #390: resolved relative to the registry it came from, so partial
+          // paths work under any base (e.g. /wb-starter/ on GitHub Pages) --
+          // absolute '/src/...' 404s on sub-path hosts (#225). Stored for
+          // lazy fetch on first use (ensureViewLoaded) instead of fetched
+          // here immediately -- see pendingViewUrls' own comment for why.
+          const tplUrl = new URL(config.url, new URL(url, document.baseURI)).href;
+          pendingViewUrls.set(name, { url: tplUrl, meta: config });
+          viewMeta.set(name, config);
         } else {
           registerView(name, config.template, config);
         }
@@ -702,31 +735,33 @@ function processWbView(element) {
   
   async function render() {
     if (cleanup) cleanup();
-    
+    await ensureViewLoaded(viewName); // #390: lazy-fetch this view's template on first actual use
+
     let renderData = data;
-    
+
     // Handle 'use' attribute - reference global/window object OR element by #id
     if (use) {
       let refData;
       let refViewName = viewName;
-      
+
       // Reference by #id
       if (use.startsWith('#')) {
         const sourceEl = document.getElementById(use.slice(1));
-        
+
         if (!sourceEl) {
           console.error(`[WB Views] use="${use}" - element not found`);
           element.innerHTML = `<span style="color:red;font-size:0.6875rem;">use: ${use} not found</span>`;
           return;
         }
-        
+
         // Get view name and data from source element
         refViewName = getViewName(sourceEl) || viewName;
+        await ensureViewLoaded(refViewName); // may differ from viewName
         refData = getViewData(sourceEl, refViewName);
-        
+
         // Merge: source data + local overrides (local wins)
         renderData = { ...refData, ...data };
-        
+
         // Render with merged data
         cleanup = renderView(refViewName, renderData, element, body);
         return;

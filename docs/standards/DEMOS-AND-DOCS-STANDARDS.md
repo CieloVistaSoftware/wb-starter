@@ -52,6 +52,10 @@ Every component example is a `<wb-demo>` — it renders the **live control** AND
 
 - Long lines **wrap** (`white-space: pre-wrap`; `overflow-x: hidden`). There is **no**
   horizontal scrolling of code, at any viewport width.
+- **Carve-out for `<wb-demo>`-generated code panels specifically (#390):** these use
+  horizontal scroll instead of wrapping (`demo.js` omits the `wrap` attribute, so
+  `pre.css`'s default editor-style scrolling applies). Explicit override from John. Every
+  other `<pre x-behavior="pre">` on the site still follows the no-scrollbar rule above.
 
 ## 7. A demo is only as wide as what it renders
 
@@ -227,6 +231,23 @@ Every component example is a `<wb-demo>` — it renders the **live control** AND
   source is exempt. See `demos/frameworks.html` for both cases side by side: the HTMX
   section uses `<wb-demo>`; the React/Vue/Svelte/Angular/SolidJS sections are the
   labeled exception. Tracked: #324.
+
+## 26. `<wb-demo>` code panel is full width on mobile — no layout shift between demos
+
+- **Mobile only (≤700px).** Below that width, the **code sample** portion of `<wb-demo>`
+  (distinct from the rendered control governed by §7) must span the **full width** of its
+  container, even when the rendered control above it is narrow.
+- Goal: eliminate "window slop" — the page width, scrollbar, or demo container resizing/
+  shifting as different `<wb-demo>` blocks (with shorter or longer code) scroll into view
+  on a long mobile page.
+- The rendered control still follows §7 (sized to what it renders); only the code panel
+  underneath is stretched full width, so the page's horizontal footprint stays constant
+  regardless of which demo is on screen.
+- **Above 700px (desktop/tablet), §26 does NOT apply.** The whole demo — control and code
+  panel together — hugs its content as one unit per §7, same as ever. Forcing the code
+  panel full width on wide viewports orphans a small control in a large empty gap with a
+  much wider code block directly below it, which reads worse than the problem §26 exists
+  to fix. §26 is a narrow-viewport fix for a narrow-viewport problem.
 
 ---
 

@@ -309,10 +309,11 @@ app.get('/pages/:page', (req, res, next) => {
       console.log('Live Reload connected');
     })();
   </script>
-  <style>body { padding: 2rem; max-width: 1200px; margin: 0 auto; }</style>
 </head>
 <body class="site">
-  ${content}
+  <div class="demo-page">
+    ${content}
+  </div>
 </body>
 </html>`;
       res.send(wrapped);

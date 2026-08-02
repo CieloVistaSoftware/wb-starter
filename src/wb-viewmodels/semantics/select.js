@@ -66,10 +66,24 @@ function buildWbSelect(element, options) {
 
   const label = options.label || element.getAttribute('label') || '';
   const placeholder = options.placeholder || element.getAttribute('placeholder') || 'Select...';
-  let optionList = [];
-  try {
-    optionList = JSON.parse(options.options || element.getAttribute('options') || '[]');
-  } catch (e) { /* malformed options= — render with none, not a thrown error */ }
+  // Real <option> children (the documented, HTML-native usage -- see this
+  // file's own header comment and docs/components/forms/forms.readme.md)
+  // take priority over the options="[...]" JSON attribute. Must be read
+  // BEFORE `element.innerHTML = ''` below wipes them -- that line used to
+  // run first, silently destroying any authored <option> children with
+  // nothing ever reading them first, so every documented
+  // <wb-select><option>...</option></wb-select> example rendered an empty
+  // dropdown (confirmed live, #390).
+  const childOptions = Array.from(element.querySelectorAll(':scope > option')).map((o) => ({
+    value: o.getAttribute('value') ?? o.textContent.trim(),
+    label: o.textContent.trim(),
+  }));
+  let optionList = childOptions;
+  if (optionList.length === 0) {
+    try {
+      optionList = JSON.parse(options.options || element.getAttribute('options') || '[]');
+    } catch (e) { /* malformed options= — render with none, not a thrown error */ }
+  }
   const value = options.value || element.getAttribute('value') || '';
   const name = options.name || element.getAttribute('name') || '';
   const multiple = options.multiple ?? element.hasAttribute('multiple');
