@@ -204,6 +204,7 @@ const behaviorModules = {
   // this table, getBehavior('move') threw "Unknown behavior: move" the
   // moment anything actually used the tag/attribute.
   move: 'move', moveup: 'move', movedown: 'move', moveleft: 'move', moveright: 'move', moveall: 'move',
+  release: 'release',
   toggle: 'toggle',
   ripple: 'ripple',
   darkmode: 'darkmode',

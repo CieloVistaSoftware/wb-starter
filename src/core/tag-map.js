@@ -27,6 +27,37 @@ export const elementMap = {
   'wb-alert': 'alert',
   'wb-article': 'article',
   'wb-articles': 'articles',
+  // wb-autocomplete/wb-colorpicker/wb-counter/wb-error/wb-fieldset/wb-file/
+  // wb-floatinglabel/wb-formrow/wb-help/wb-inputgroup/wb-label/wb-masked/
+  // wb-tags (#365 audit): each has its own real behavior function
+  // (src/wb-viewmodels/*.js, already registered in wb-viewmodels/index.js's
+  // behaviorModules) AND its own schema.json, but was missing here entirely
+  // -- getElementBehavior() (used by both wb.js's _detectSchemaName() and
+  // its own unconditional wb-* injection loop in scan()) returns null for
+  // any tag not in this map, so WB.scan() never dispatched ANY of these 13
+  // tags at all: no schema fetch, no behavior injection, no x-schema
+  // attribute, nothing -- a silent total no-op, confirmed live via a bare
+  // `<wb-X></wb-X>` producing zero classes/children/console output for each.
+  // Each behavior already handles being called on a plain non-input host
+  // element (autocomplete/colorpicker/file/tags/floatinglabel all build a
+  // real child <input> or wrapper when `element` isn't already one), so
+  // wiring the tag here restores the same real, functioning render these
+  // already get via their (working) x-{name} attribute form on native
+  // elements -- it does not change x-* behavior at all, only enables the
+  // <wb-X> custom-tag form to actually run.
+  'wb-autocomplete': 'autocomplete',
+  'wb-colorpicker': 'colorpicker',
+  'wb-counter': 'counter',
+  'wb-error': 'error',
+  'wb-fieldset': 'fieldset',
+  'wb-file': 'file',
+  'wb-floatinglabel': 'floatinglabel',
+  'wb-formrow': 'formrow',
+  'wb-help': 'help',
+  'wb-inputgroup': 'inputgroup',
+  'wb-label': 'label',
+  'wb-masked': 'masked',
+  'wb-tags': 'tags',
   'wb-audio': 'audio',
   'wb-avatar': 'avatar',
   'wb-badge': 'badge',
@@ -91,6 +122,7 @@ export const elementMap = {
   'wb-input': 'input',
   'wb-mdhtml': 'mdhtml',
   'wb-move': 'move',
+  'wb-release': 'release',
   'wb-navbar': 'navbar',
   'wb-notes': 'notes',
   'wb-progress': 'progress',
@@ -200,6 +232,7 @@ export const extensionMap = {
   'x-darkmode': 'darkmode',
   'x-themecontrol': 'themecontrol',
   'x-move': 'move',
+  'x-release': 'release',
   // docs/behaviors/*.md documents x-progressbar ("attribute-based progress
   // bar... apply directly to any element, no custom tag required") and
   // semantics/progress.js's own code comment says it was "gate widened...
