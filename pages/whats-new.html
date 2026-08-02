@@ -3,6 +3,19 @@
   <p>What's actually live on this site right now — every push to <code>main</code> deploys straight to <a href="https://cielovistasoftware.github.io/wb-starter/" target="_blank" rel="noopener">cielovistasoftware.github.io/wb-starter</a>, so this list is the real changelog, not a promise of a future release.</p>
 </div>
 
+<section id="whats-new-2026-08-01">
+  <h2>2026-08-01</h2>
+  <ul>
+    <li>Fixed <code>&lt;wb-select&gt;</code> silently discarding real <code>&lt;option&gt;</code> children — every documented example (<code>&lt;wb-select&gt;&lt;option&gt;...&lt;/option&gt;&lt;/wb-select&gt;</code>) rendered an empty dropdown with only the placeholder.</li>
+    <li>Fixed <code>&lt;wb-draggable&gt;</code>/<code>x-draggable</code> jumping to a wildly wrong position on every drag instead of tracking the mouse — and getting worse with each subsequent drag. Also fixed <code>axis="x"</code>/<code>axis="y"</code>, which never actually constrained movement.</li>
+    <li>The Behaviors page no longer mixes in 15 full <code>wb-*</code> component demos (alerts, badges, progress bars, spinners, modals, drawers, tabs, accordion, audio player, switch, rating) — it's scoped back to genuine <code>x-*</code> attribute behaviors, with links to the Components page for the rest.</li>
+    <li>Fixed the deprecated <code>&lt;wb-checkbox&gt;</code>/<code>&lt;wb-textarea&gt;</code> wrapper elements on the Form Controls demo page — converted to native <code>&lt;input type="checkbox"&gt;</code>/<code>&lt;textarea&gt;</code>, which already get the same styling with no wrapper needed.</li>
+    <li>The home page no longer eagerly fetches the entire page-builder partial library (20+ files) on load — those now load lazily, only when a page actually uses one.</li>
+    <li><code>&lt;wb-demo&gt;</code>'s code sample panel now scrolls horizontally instead of wrapping, and spans full width on mobile (≤700px) so scrolling past a page of demos doesn't jitter the page width — desktop still hugs each demo's own content.</li>
+    <li>Added a <code>size</code> attribute to <code>x-gallery</code> for fixed-size thumbnails (e.g. <code>size="150px"</code>), independent of the <code>columns</code> count.</li>
+  </ul>
+</section>
+
 <section id="whats-new-2026-07-30">
   <h2>2026-07-30</h2>
   <ul>
