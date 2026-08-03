@@ -272,6 +272,15 @@ function getAutoInjectBehaviors(element) {
   // Skip if x-behavior is already present (explicit overrides implicit)
   if (element.hasAttribute('x-behavior')) return behaviors;
 
+  // Skip native/auto-inject entirely when explicitly opted out. wb.js's own
+  // autoInjectMappings loop already honors x-ignore this way (see its
+  // "Only skip if explicitly ignored" comment) -- this engine lacked the
+  // same check, so a plain <header>/<footer>/etc. used for page content
+  // (not the generic wb-header/wb-footer navbar treatment) had no working
+  // escape hatch on this engine, silently getting hijacked by the native
+  // behavior's classes/layout regardless of x-ignore.
+  if (element.hasAttribute('x-ignore')) return behaviors;
+
   const prefix = getConfig('prefix') || 'x';
   const prefixAttr = `${prefix}-`;
   for (const { selector, behavior } of autoInjectMappings) {
@@ -519,7 +528,14 @@ const WB = {
   // a control before it's ever scrolled close enough to enhance, and see
   // nothing happen, which reads as broken rather than "not lazy-loaded yet".
   async scan(root = document.body, { eager = false } = {}) {
-    const elements = root.querySelectorAll('[x-behavior]');
+    // querySelectorAll() only matches DESCENDANTS of root, never root itself
+    // — invisible until demo.js's `WB.scan(pre, { eager: true })` call, where
+    // `pre` (the exact <pre x-behavior="pre"> just created) IS root. See
+    // wb.js's matching fix for the full incident this caused (§7 sizing fed
+    // by the code panel's un-wrapped raw-source width).
+    const elements = root.matches?.('[x-behavior]')
+      ? [root, ...root.querySelectorAll('[x-behavior]')]
+      : root.querySelectorAll('[x-behavior]');
     const injections = [];
 
     elements.forEach(element => {
@@ -555,6 +571,11 @@ const WB = {
         const autoElements = root.querySelectorAll(selector);
         autoElements.forEach(element => {
           if (!getConfig('autoInject') && !element.hasAttribute('variant')) return;
+          // Skip if explicitly opted out (matches getAutoInjectBehaviors()'s
+          // own x-ignore check, and wb.js's autoInjectMappings loop) -- this
+          // inline copy lacked it, so a plain <header>/<footer>/etc. used for
+          // page content had no working escape hatch on the initial scan.
+          if (element.hasAttribute('x-ignore')) return;
           // Skip if x-behavior is present (already handled)
           if (!element.hasAttribute('x-behavior')) {
             if (eager) {

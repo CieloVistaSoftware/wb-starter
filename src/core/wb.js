@@ -728,7 +728,20 @@ const WB = {
       // code panel on the main SPA (autoInject correctly off there) lost its
       // syntax highlighting entirely, since nothing else was left to invoke
       // pre()/code() for elements tagged only via x-behavior.
-      root.querySelectorAll('[x-behavior]').forEach(element => {
+      //
+      // querySelectorAll() only matches DESCENDANTS of root, never root
+      // itself — invisible until demo.js's `WB.scan(pre, { eager: true })`
+      // call, where `pre` (the exact <pre x-behavior="pre"> just created)
+      // IS root. That left pre.js's behavior never invoked, so the code
+      // panel never got its `.x-pre` class/wrapper (pre.css's overflow-x:
+      // auto), and its un-wrapped raw-source width fed back into wb-demo's
+      // own `width: fit-content` sizing (§7) — confirmed live: every
+      // single-item demo's outer box was sized to its RAW CODE TEXT's
+      // unwrapped width, not the rendered widget it's supposed to hug.
+      const xBehaviorEls = root.matches?.('[x-behavior]')
+        ? [root, ...root.querySelectorAll('[x-behavior]')]
+        : root.querySelectorAll('[x-behavior]');
+      xBehaviorEls.forEach(element => {
         const htmlEl = /** @type {HTMLElement} */ (element);
         const behaviorList = (htmlEl.getAttribute('x-behavior') || '').split(/\s+/).filter(Boolean);
         behaviorList.forEach(name => {
