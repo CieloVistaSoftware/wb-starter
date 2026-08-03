@@ -1,4 +1,4 @@
-<link rel="stylesheet" href="src/styles/pages/demos.css">
+<link rel="stylesheet" href="/src/styles/pages/demos.css">
 
 <div id="demos-hero" class="page__hero">
   <h1>🎮 Demos</h1>
@@ -77,7 +77,6 @@
   <details class="demos-category" data-category="Narrative & Tools">
     <summary class="demos-category__title">🏗️ Narrative & Tools</summary>
     <div class="demos-inline-examples">
-      <wb-demo><wb-themecontrol></wb-themecontrol></wb-demo>
       <wb-demo><div x-darkmode target="self" theme="dark" class="demos-forced-dark-demo"><strong>Forced Dark Mode</strong> — stays dark regardless of the global theme.</div></wb-demo>
     </div>
     <div class="page__grid demos-card-grid">
@@ -115,13 +114,36 @@
     const sections = Array.from(grid.querySelectorAll('.demos-category'));
     const cards = Array.from(grid.querySelectorAll('wb-card-link'));
 
+    // #253: content search. scripts/generate-demos-search-index.mjs scans
+    // every demos/**/*.html and writes data/demos-search-index.json — a map
+    // of each demo's href to searchable terms pulled from its visible text,
+    // wb-* tags and x-* behaviors (not just the card's title). Loaded once
+    // at page load; a card matches on title OR content-index terms so a
+    // search like "kampala" finds a demo even though that word never
+    // appears in its <wb-card-link title>.
+    let contentIndex = new Map(); // href -> single lowercase searchable string
+    fetch('data/demos-search-index.json')
+      .then((res) => (res.ok ? res.json() : null))
+      .then((data) => {
+        if (!data || !Array.isArray(data.demos)) return;
+        contentIndex = new Map(
+          data.demos.map((d) => [d.href, [d.title, ...(d.tags || []), ...(d.behaviors || []), ...(d.terms || [])].join(' ').toLowerCase()])
+        );
+        // Re-run the current search once the content index arrives, in case
+        // the visitor typed before the fetch resolved.
+        if (input.value.trim()) input.dispatchEvent(new Event('input'));
+      })
+      .catch(() => { /* content search degrades to title-only match — not fatal */ });
+
     input.addEventListener('input', () => {
       const query = input.value.trim().toLowerCase();
       let visibleCount = 0;
 
       cards.forEach((card) => {
         const title = (card.getAttribute('title') || '').toLowerCase();
-        const matches = !query || title.includes(query);
+        const href = card.getAttribute('href') || '';
+        const contentText = contentIndex.get(href) || '';
+        const matches = !query || title.includes(query) || contentText.includes(query);
         card.hidden = !matches;
         if (matches) visibleCount++;
       });
