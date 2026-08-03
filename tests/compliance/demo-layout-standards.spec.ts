@@ -142,6 +142,58 @@ test.describe('Demo layout standards (§13) — live spacing', () => {
   }
 });
 
+test.describe('Demo layout standards (§7) — single-item demos are not full width', () => {
+  // A <wb-demo> holding exactly one rendered child (grid--cols-1 with a
+  // single grid item) must shrink to fit that child -- not stretch to the
+  // page's full content width just because it's a block-level element with
+  // nothing else to fill extra grid columns. The CSS rule for this
+  // (src/styles/behaviors/demo.css, `wb-demo:has(> .wb-demo__grid--cols-1 >
+  // :only-child) { width: fit-content; }`) previously nested a `:has()`
+  // inside another `:has()`'s own argument, which the CSS Selectors spec
+  // disallows -- the whole selector silently failed to parse (no console
+  // warning; invalid rules are just dropped), so EVERY single-item demo on
+  // the entire site had been stretching to full page width. Checks that a
+  // single-item demo's own width tracks its child's actual rendered width
+  // (plus the demo's own padding), not the page's available content width
+  // -- regardless of whether that one child happens to be narrow or wide.
+  for (const file of FILES) {
+    test(`${file}: single-item wb-demo blocks shrink to fit their content`, async ({ page }) => {
+      const urlPath = '/' + file.replace(/\\/g, '/');
+      await page.goto(urlPath, { waitUntil: 'domcontentloaded' });
+      const demos = page.locator('wb-demo');
+      if ((await demos.count()) === 0) test.skip(true, 'no <wb-demo> blocks on this page');
+
+      await page.waitForTimeout(800); // settle lazy/eager scan + grid build
+
+      const violations = await page.evaluate(() => {
+        const problems: string[] = [];
+        const TOLERANCE_PX = 24; // padding rounding + border slack
+        document.querySelectorAll('wb-demo').forEach((demo, i) => {
+          const grid = demo.querySelector(':scope > .wb-demo__grid--cols-1');
+          if (!grid || grid.children.length !== 1) return; // not a single-item demo
+          const child = grid.children[0] as HTMLElement;
+
+          const demoWidth = demo.getBoundingClientRect().width;
+          const childWidth = child.getBoundingClientRect().width;
+          const cs = getComputedStyle(demo as HTMLElement);
+          const hPad = (parseFloat(cs.paddingLeft) || 0) + (parseFloat(cs.paddingRight) || 0);
+          const expectedWidth = childWidth + hPad;
+
+          if (demoWidth > expectedWidth + TOLERANCE_PX) {
+            const label = (demo.textContent || '').trim().slice(0, 40);
+            problems.push(
+              `wb-demo[${i}] "${label}": rendered ${demoWidth.toFixed(0)}px wide but its single child + padding only needs ${expectedWidth.toFixed(0)}px -- stretched to full width instead of shrinking to fit`
+            );
+          }
+        });
+        return problems;
+      });
+
+      expect(violations, `${file}:\n${violations.join('\n')}`).toHaveLength(0);
+    });
+  }
+});
+
 test.describe('Layout standard: no text within 1rem of a content-panel edge', () => {
   // General anti-cramping rule (John, DEMOS-AND-DOCS-STANDARDS.md §13): any
   // element that reads as a visually bounded content PANEL (a real border,
@@ -186,7 +238,14 @@ test.describe('Layout standard: no text within 1rem of a content-panel edge', ()
 
           const cs = getComputedStyle(el);
           const parent = el.parentElement ? getComputedStyle(el.parentElement) : null;
-          const hasBorder = ['Top', 'Right', 'Bottom', 'Left'].some(
+          // #447: a single-side border (e.g. a heading's border-bottom
+          // underline/divider) isn't an enclosing "panel" -- it doesn't
+          // crowd the text against edges the way a real bordered box does.
+          // Require all four sides so a genuine panel (a card, a bordered
+          // box) is still caught, but a plain underlined heading isn't
+          // (confirmed live: demos/autoinject.html's "Zero-Config Form" h2
+          // has only a border-bottom divider, flagged as a false positive).
+          const hasBorder = ['Top', 'Right', 'Bottom', 'Left'].every(
             (side) => parseFloat((cs as any)[`border${side}Width`]) > 0 && cs[`border${side}Style` as any] !== 'none'
           );
           const bg = cs.backgroundColor;

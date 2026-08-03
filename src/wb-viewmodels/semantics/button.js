@@ -45,17 +45,17 @@ wb-button {
   font-weight: 500; cursor: pointer; transition: all 0.2s ease;
   line-height: 1.5; text-decoration: none; user-select: none;
   font-family: inherit; font-size: inherit; color: inherit;
-  background: var(--bg-secondary, #2a2a2a); padding: 0.5rem 1rem;
+  background: var(--bg-secondary, #2a2a2a); padding: 1rem 1rem;
 }
 wb-button:focus-visible { outline: 2px solid var(--primary, #6366f1); outline-offset: 2px; }
 wb-button[disabled] { opacity: 0.6; cursor: not-allowed; pointer-events: none; }
 
 /* Sizes */
-wb-button[size="xs"] { padding: 0.125rem 0.5rem; font-size: 0.75rem; }
-wb-button[size="sm"] { padding: 0.25rem 0.75rem; font-size: 0.875rem; }
-wb-button[size="md"] { padding: 0.5rem 1rem; font-size: 1rem; }
-wb-button[size="lg"] { padding: 0.75rem 1.5rem; font-size: 1.125rem; }
-wb-button[size="xl"] { padding: 1rem 2rem; font-size: 1.25rem; }
+wb-button[size="xs"] { padding: 1rem 0.5rem; font-size: 0.75rem; }
+wb-button[size="sm"] { padding: 1rem 0.75rem; font-size: 0.875rem; }
+wb-button[size="md"] { padding: 1rem 1rem; font-size: 1rem; }
+wb-button[size="lg"] { padding: 1.125rem 1.5rem; font-size: 1.125rem; }
+wb-button[size="xl"] { padding: 1.25rem 2rem; font-size: 1.25rem; }
 
 /* Variants */
 wb-button[variant="primary"] { background: var(--primary, #6366f1); color: #fff; }
@@ -91,7 +91,7 @@ wb-button .wb-button__spinner { display: inline-block; animation: wb-btn-spin 1s
   font-weight: 500; cursor: pointer; transition: all 0.2s ease;
   line-height: 1.5; text-decoration: none; user-select: none;
   font-family: inherit; font-size: inherit; color: inherit;
-  background: var(--bg-secondary, #2a2a2a); padding: 0.5rem 1rem;
+  background: var(--bg-secondary, #2a2a2a); padding: 1rem 1rem;
 }
 .wb-button:focus-visible { outline: 2px solid var(--primary, #6366f1); outline-offset: 2px; }
 .wb-button:disabled { opacity: 0.6; cursor: not-allowed; pointer-events: none; }
@@ -102,11 +102,11 @@ wb-button .wb-button__spinner { display: inline-block; animation: wb-btn-spin 1s
    TAG, never a native <button size="sm">, so those classes had zero
    matching CSS and every size/variant rendered identically (confirmed
    live: "Small"/"Medium"/"Large" demo buttons were all the same size). */
-.wb-button--xs { padding: 0.125rem 0.5rem; font-size: 0.75rem; }
-.wb-button--sm { padding: 0.25rem 0.75rem; font-size: 0.875rem; }
-.wb-button--md { padding: 0.5rem 1rem; font-size: 1rem; }
-.wb-button--lg { padding: 0.75rem 1.5rem; font-size: 1.125rem; }
-.wb-button--xl { padding: 1rem 2rem; font-size: 1.25rem; }
+.wb-button--xs { padding: 1rem 0.5rem; font-size: 0.75rem; }
+.wb-button--sm { padding: 1rem 0.75rem; font-size: 0.875rem; }
+.wb-button--md { padding: 1rem 1rem; font-size: 1rem; }
+.wb-button--lg { padding: 1.125rem 1.5rem; font-size: 1.125rem; }
+.wb-button--xl { padding: 1.25rem 2rem; font-size: 1.25rem; }
 
 .wb-button--primary { background: var(--primary, #6366f1); color: #fff; }
 .wb-button--primary:hover { filter: brightness(0.85); }

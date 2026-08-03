@@ -20,7 +20,18 @@
 header {
   display: flex;
   justify-content: space-between;
-  align-items: center;
+  /* flex-start, not center: John asked for the theme control in the
+     header's upper-right corner. Also fixes a real bug this surfaced --
+     this whole flex layout was silently never applying at all, because
+     src/styles/pages/*.css was linked with a bare relative href
+     ("src/styles/pages/behaviors.css"), which only resolves correctly when
+     the page loads at the site root. A direct visit to
+     /pages/behaviors.html (not routed through the SPA) resolves it against
+     /pages/ instead, producing a 404'd, doubled path
+     (/pages/src/styles/pages/behaviors.css) -- silently dropped, no
+     console error. Fixed across all 11 pages/*.html files with this same
+     pattern by making the href root-relative (a leading `/`). */
+  align-items: flex-start;
   margin-bottom: var(--space-xl, 2rem);
   padding-bottom: var(--space-lg, 1.5rem);
   flex-wrap: wrap;
@@ -52,7 +63,7 @@ header h1 {
 
 .nav-links a {
   text-decoration: none;
-  padding: 0.5rem 1rem;
+  padding: 1rem;
   border-radius: 999px;
   transition: all 0.2s ease;
   font-size: 1rem;

@@ -41,28 +41,35 @@ button-tooltip[disabled] {
  * <head> at runtime. That injected rule has equal (0,1,0) specificity but comes
  * LATER in source order, so a single-class `.wb-button--sm` was being overridden
  * and every button collapsed to the same md padding/font-size. (#button-sizes) */
+/* Vertical padding floored at 1rem (16px) across every size -- Standard
+   §13's >=1rem text-padding rule applies to buttons (its own exclusion
+   list names badges/pills/kbd/pagination/tabs/avatars as the intentionally
+   compact atoms; buttons aren't on it). xs/sm/md previously had a
+   vertical padding well under that (2px/4px/8px), caught by CI. Size
+   distinction is preserved via horizontal padding + font-size instead of
+   vertical compactness. */
 .wb-button.wb-button--xs {
-  padding: 0.125rem 0.5rem;
+  padding: 1rem 0.5rem;
   font-size: 0.75rem;
 }
 
 .wb-button.wb-button--sm {
-  padding: 0.25rem 0.75rem;
+  padding: 1rem 0.75rem;
   font-size: 0.875rem;
 }
 
 .wb-button.wb-button--md {
-  padding: 0.5rem 1rem;
+  padding: 1rem 1rem;
   font-size: 1rem;
 }
 
 .wb-button.wb-button--lg {
-  padding: 0.75rem 1.5rem;
+  padding: 1.125rem 1.5rem;
   font-size: 1.125rem;
 }
 
 .wb-button.wb-button--xl {
-  padding: 1rem 2rem;
+  padding: 1.25rem 2rem;
   font-size: 1.25rem;
 }
 
@@ -217,8 +224,10 @@ button-tooltip[disabled] {
    .wb-btn.wb-btn--* (specificity 0,2,0) is REQUIRED to beat themes.css's
    `[data-theme] button { font: inherit }` reset (0,1,1), which otherwise forces
    every button back to the inherited 16px. (button sizes) */
-.wb-btn.wb-btn--xs { padding: 0.125rem 0.5rem; font-size: 0.75rem; }
-.wb-btn.wb-btn--sm { padding: 0.25rem 0.75rem; font-size: 0.875rem; }
-.wb-btn.wb-btn--md { padding: 0.5rem 1rem; font-size: 1rem; }
-.wb-btn.wb-btn--lg { padding: 0.75rem 1.5rem; font-size: 1.125rem; }
-.wb-btn.wb-btn--xl { padding: 1rem 2rem; font-size: 1.25rem; }
+/* Vertical padding floored at 1rem (16px), same reasoning as .wb-button's
+   size scale above -- Standard §13 applies to buttons regardless of size. */
+.wb-btn.wb-btn--xs { padding: 1rem 0.5rem; font-size: 0.75rem; }
+.wb-btn.wb-btn--sm { padding: 1rem 0.75rem; font-size: 0.875rem; }
+.wb-btn.wb-btn--md { padding: 1rem 1rem; font-size: 1rem; }
+.wb-btn.wb-btn--lg { padding: 1.125rem 1.5rem; font-size: 1.125rem; }
+.wb-btn.wb-btn--xl { padding: 1.25rem 2rem; font-size: 1.25rem; }
