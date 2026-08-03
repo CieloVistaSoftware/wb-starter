@@ -71,7 +71,12 @@ export function formatHtml(raw) {
 // Site root that works from '/', '/demos/x.html', '/pages/x.html',
 // '/public/doc-viewer.html' — locally or under a GitHub Pages sub-path.
 function siteRoot() {
-    return location.pathname.replace(/(?:public|demos|pages|articles)\/.*$/, '');
+    const stripped = location.pathname.replace(/(?:public|demos|pages|articles)\/.*$/, '');
+    // At the site root the path is a bare 'index.html' with no
+    // public/demos/pages/articles segment for the regex above to match, so
+    // it's a no-op there — strip the trailing filename directly, which also
+    // covers the GitHub Pages sub-path case ('/wb-starter/index.html').
+    return stripped.replace(/[^/]*$/, '');
 }
 
 // docs/manifest.json, fetched once and shared by every wb-demo on the page.
@@ -182,7 +187,6 @@ export async function demo(element, options = {}) {
     if (element._demoInitialized) return () => {};
     element._demoInitialized = true;
 
-    element.classList.add('wb-demo');
     // Opt out of Standard §7's single-item shrink-to-fit (demo.css) for demos
     // whose one child is deliberately full-bleed (e.g. a page hero) rather
     // than a small widget that should collapse to its own content width.

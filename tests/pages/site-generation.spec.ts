@@ -141,10 +141,10 @@ test.describe('Site Generation — Phase 4', () => {
         // Wait for WB init
         await page.waitForFunction(() => (window as any).WB, null, { timeout: 10000 }).catch(() => {});
 
-        // Wait for at least one wb-demo to finish init (demo() adds .wb-demo class and .wb-demo__grid child)
+        // Wait for at least one wb-demo to finish init (demo() adds a .wb-demo__grid child — #447 removed the redundant .wb-demo class)
         await page.waitForSelector('wb-demo .wb-demo__grid', { timeout: 10000 }).catch(() => {});
 
-        const demos = page.locator('wb-demo.wb-demo');
+        const demos = page.locator('wb-demo:has(.wb-demo__grid)');
         const count = await demos.count();
         let emptyCount = 0;
 
