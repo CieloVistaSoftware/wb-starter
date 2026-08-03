@@ -917,7 +917,7 @@
    `[data-theme] button` reset (0,0,1,1); same trap as cardbutton() above. */
 .wb-product .wb-card__product-cta {
   width: 100%;
-  padding: 0.75rem;
+  padding: 1rem;
   background: var(--primary);
   color: white;
   border: none;

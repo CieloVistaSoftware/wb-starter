@@ -7,6 +7,11 @@
  * 'error' event (fired for 404s, network failures, AND 0-byte/undecodable
  * files), which the app's global error handler (src/core/error-logger.js)
  * catches and surfaces in its error overlay.
+ *
+ * success.mp3/warning.mp3/danger.mp3 are now real audio (the production
+ * bug they demonstrated is fixed) -- this test uses a dedicated,
+ * intentionally-empty fixture instead, so it stays deterministic
+ * regardless of what the production files contain.
  */
 import { test, expect } from '@playwright/test';
 
@@ -22,10 +27,10 @@ test('wb-audio throws a catchable runtime error when its src is missing/empty', 
 
   await page.evaluate(() => {
     const container = document.createElement('div');
-    // A real 0-byte file already checked into the repo -- genuinely
-    // undecodable, not a network 404 (keeps this test deterministic
-    // regardless of external network availability).
-    container.innerHTML = '<wb-audio src="/demos/success.mp3"></wb-audio>';
+    // A real 0-byte file dedicated to this test -- genuinely undecodable,
+    // not a network 404 (keeps this test deterministic regardless of
+    // external network availability).
+    container.innerHTML = '<wb-audio src="/tests/fixtures/broken-audio-0-bytes.mp3"></wb-audio>';
     document.body.appendChild(container);
     return (window as any).WB.scan(container);
   });
@@ -36,6 +41,6 @@ test('wb-audio throws a catchable runtime error when its src is missing/empty', 
   ).catch(() => {});
   await page.waitForTimeout(1500);
 
-  const audioError = pageErrors.find(e => e.includes('wb-audio') && e.includes('success.mp3'));
+  const audioError = pageErrors.find(e => e.includes('wb-audio') && e.includes('broken-audio-0-bytes.mp3'));
   expect(audioError, `expected a wb-audio runtime error for the empty file, got: ${JSON.stringify(pageErrors)}`).toBeTruthy();
 });
