@@ -3,21 +3,39 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>My Awesome Site - Built with WB</title>
-  <meta name="description" content="A modern website starter kit powered by WB Behaviors">
+  <!-- #446: this used to be a static, never-customized placeholder ("My
+       Awesome Site - Built with WB") -- harmless once the SPA's own JS sets
+       the real title client-side (site-engine.js reads config/site.json's
+       searchEngineOptimization.pageTitle), but anything that reads the page
+       WITHOUT running JS first (search crawlers, social-share preview cards,
+       the tab's title during the brief pre-JS paint) saw the placeholder
+       instead of the real site identity. Kept in sync with config/site.json
+       by hand for now -- there's no build step to generate this from config
+       automatically. -->
+  <title>wb-starter v3.0 - Zero Build Web Components</title>
+  <meta name="description" content="170+ behaviors, 23 themes, zero build process. The professional web component library.">
+  <meta property="og:title" content="wb-starter v3.0 - Zero Build Web Components">
+  <meta property="og:description" content="170+ behaviors, 23 themes, zero build process. The professional web component library.">
+  <meta property="og:image" content="https://cielovistasoftware.github.io/wb-starter/assets/icons/icon-512.png">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://cielovistasoftware.github.io/wb-starter/">
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="wb-starter v3.0 - Zero Build Web Components">
+  <meta name="twitter:description" content="170+ behaviors, 23 themes, zero build process. The professional web component library.">
+  <meta name="twitter:image" content="https://cielovistasoftware.github.io/wb-starter/assets/icons/icon-512.png">
   <link rel="icon" type="image/svg+xml" href="favicon.svg">
   <link rel="apple-touch-icon" href="assets/icons/icon-192.png">
 
   <!-- Layer 1: Foundation (render-blocking, already highest priority — no preload needed) -->
-  <link rel="stylesheet" href="src/styles/normalize.css?v=27a31eb">
-  <link rel="stylesheet" href="src/styles/themes.css?v=27a31eb">
-  <link rel="stylesheet" href="src/styles/site.css?v=27a31eb">
-  <link rel="stylesheet" href="src/styles/safari-fixes.css?v=27a31eb">
-  <link rel="modulepreload" href="src/core/wb.js?v=27a31eb">
-  <link rel="modulepreload" href="src/core/site-engine.js?v=27a31eb">
+  <link rel="stylesheet" href="src/styles/normalize.css?v=401aec0">
+  <link rel="stylesheet" href="src/styles/themes.css?v=401aec0">
+  <link rel="stylesheet" href="src/styles/site.css?v=401aec0">
+  <link rel="stylesheet" href="src/styles/safari-fixes.css?v=401aec0">
+  <link rel="modulepreload" href="src/core/wb.js?v=401aec0">
+  <link rel="modulepreload" href="src/core/site-engine.js?v=401aec0">
 
   <!-- Page Transitions CSS -->
-  <link rel="stylesheet" href="src/styles/transitions.css?v=27a31eb">
+  <link rel="stylesheet" href="src/styles/transitions.css?v=401aec0">
   <!-- Navbar CSS already loads via site.css's own @import — no separate link needed. -->
 
   <!-- Fonts -->
@@ -74,9 +92,9 @@
   </template>
 
   <!-- Premium Navbar Scroll Effect -->
-  <script src="src/lib/premium-navbar.js?v=27a31eb"></script>
+  <script src="src/lib/premium-navbar.js?v=401aec0"></script>
 
   <!-- Main Application Bootstrap -->
-  <script type="module" src="./src/main.js?v=27a31eb"></script>
+  <script type="module" src="./src/main.js?v=401aec0"></script>
 </body>
 </html>
