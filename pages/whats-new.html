@@ -3,6 +3,20 @@
   <p>What's actually live on this site right now — every push to <code>main</code> deploys straight to <a href="https://cielovistasoftware.github.io/wb-starter/" target="_blank" rel="noopener">cielovistasoftware.github.io/wb-starter</a>, so this list is the real changelog, not a promise of a future release.</p>
 </div>
 
+<section id="whats-new-2026-08-02">
+  <h2>2026-08-02</h2>
+  <ul>
+    <li>Fixed <code>&lt;wb-input&gt;</code> rendering no real <code>&lt;input&gt;</code> element at all on any standalone demo page (32 broken instances on the Form Controls page alone) — the schema-driven markup it depends on was never built under this site's lazy-loading runtime. It's now constructed directly, matching how other components already handle this.</li>
+    <li>Fixed the theme picker breaking syntax-highlighting colors site-wide on any page that includes it — it was resolving to a dev-only file path that doesn't exist in production.</li>
+    <li>Fixed silent failures across the site being swallowed instead of shown — component errors now surface in the visible error log instead of vanishing into the console.</li>
+    <li><code>&lt;wb-button icon="..."&gt;</code> now throws a clear error (with a link to the icon list) if set but left empty, instead of silently rendering no icon.</li>
+    <li>Fixed <code>&lt;wb-audio&gt;</code> silently doing nothing on a missing/empty file — it now throws a clear error, and 8 broken audio examples on the Content page were pointed at a real audio file.</li>
+    <li>Fixed the Shop Now / Learn More buttons on the Card Components hero demo, and the pricing/portfolio CTA buttons on Card Components and the main Components page — all had no destination before today.</li>
+    <li>Fixed the theme picker showing up twice (unsynced) on some pages — consolidated to one, in the site header.</li>
+    <li>Fixed the doc-link icon disappearing on the home page hero card, a role badge sitting too low on profile cards, the avatar status dot being too small, a dropdown menu getting clipped when it opened upward, an input field showing three stacked borders instead of one, and the date/time picker icon being invisible in dark mode.</li>
+  </ul>
+</section>
+
 <section id="whats-new-2026-08-01">
   <h2>2026-08-01</h2>
   <ul>
