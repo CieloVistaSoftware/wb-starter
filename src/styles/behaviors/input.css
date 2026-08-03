@@ -34,6 +34,21 @@ textarea {
   border-radius: var(--radius-md, 6px);
 }
 
+/* date/time/datetime-local/week/month's native calendar/clock picker icon
+   defaults to a dark glyph baked into the browser's own UA rendering --
+   invisible against this theme's dark input background (confirmed live,
+   "can't see the icon"). Invert it so it reads light-on-dark instead;
+   Webkit/Blink-only pseudo-element, no equivalent needed for Firefox
+   (renders its own visible-by-default icon already). */
+input[type="date"]::-webkit-calendar-picker-indicator,
+input[type="time"]::-webkit-calendar-picker-indicator,
+input[type="datetime-local"]::-webkit-calendar-picker-indicator,
+input[type="week"]::-webkit-calendar-picker-indicator,
+input[type="month"]::-webkit-calendar-picker-indicator {
+  filter: invert(0.8);
+  cursor: pointer;
+}
+
 .wb-input:focus,
 .wb-textarea:focus,
 .wb-select:focus {

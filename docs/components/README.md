@@ -36,7 +36,7 @@ All card variants are independent components that share structure via semantic H
 
 | Component | Custom Tag | Description |
 |-----------|------------|-------------|
-| card | `<wb-card>` | Base card component |
+| card | `<wb-card>` | Card component |
 | cardimage | `<wb-cardimage>` | Card with featured image |
 | cardvideo | `<wb-cardvideo>` | Card with video player |
 | cardbutton | `<wb-cardbutton>` | Card with action buttons |

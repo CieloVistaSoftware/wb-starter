@@ -108,27 +108,27 @@ every element labeled:
 
 ### Custom Element (Recommended)
 
-```html
+<wb-demo>
 <wb-card
   title="Card Title"
   subtitle="Subtitle text">
   This is the card content.
 </wb-card>
-```
+</wb-demo>
 
 ### Semantic Element
 
-```html
+<wb-demo>
 <article
   x-card
   title="Card Title">
   This is the card content.
 </article>
-```
+</wb-demo>
 
 ### With All Options
 
-```html
+<wb-demo>
 <wb-card
   title="Featured Card"
   subtitle="A brief description"
@@ -138,54 +138,54 @@ every element labeled:
   variant="glass">
   Main content goes here.
 </wb-card>
-```
+</wb-demo>
 
 ### With a Tooltip
 
 `tooltip` (alias: `hoverText`) shows a themed WB tooltip on hover -- not the
 unstyled, slow, browser-inconsistent native `title` tooltip (#283):
 
-```html
+<wb-demo>
 <wb-card
   title="Hover Me"
   tooltip="Extra detail shown on hover">
   Main content goes here.
 </wb-card>
-```
+</wb-demo>
 
 ## Variants
 
 ### Default
-```html
+<wb-demo>
 <wb-card title="Default Card"> Standard card styling. </wb-card>
-```
+</wb-demo>
 
 ### Glass
-```html
+<wb-demo>
 <wb-card
   title="Glass Card"
   variant="glass">
   Frosted glass effect with blur.
 </wb-card>
-```
+</wb-demo>
 
 ### Elevated
-```html
+<wb-demo>
 <wb-card
   title="Elevated Card"
   elevated>
   Card with drop shadow.
 </wb-card>
-```
+</wb-demo>
 
 ### Clickable
-```html
+<wb-demo>
 <wb-card
   title="Click Me"
   clickable>
   Click anywhere on this card.
 </wb-card>
-```
+</wb-demo>
 
 ## Generated Structure
 

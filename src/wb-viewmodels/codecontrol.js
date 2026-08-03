@@ -77,9 +77,6 @@ const SIZES = {
   lg: { fontSize: '1rem', padding: '0.625rem 2.25rem 0.625rem 1rem', minWidth: '160px', arrowSize: '14' }
 };
 
-// Path to highlight.js styles
-const HLJS_STYLES_PATH = '/node_modules/highlight.js/styles/';
-
 // Global event for syncing all codecontrol instances
 const SYNC_EVENT = 'x:codetheme:sync';
 
@@ -193,11 +190,16 @@ export function codecontrol(element, options = {}) {
   const applyTheme = (themeId, broadcast = true) => {
     currentTheme = themeId;
     
+    // #431: HLJS_STYLES_PATH ('/node_modules/highlight.js/styles/') is a
+    // dev-only path never deployed to production -- every non-local theme
+    // 404'd there, silently stripping all syntax coloring. Real highlight.js
+    // themes are served from cdnjs instead, matching the pattern
+    // semantics/code.js's own fallback loader already uses correctly.
     const themeObj = CODE_THEMES.find(t => t.id === themeId);
     if (themeObj && themeObj.path) {
       themeLink.href = themeObj.path;
     } else {
-      themeLink.href = `${HLJS_STYLES_PATH}${themeId}.css`;
+      themeLink.href = `https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/${themeId}.min.css`;
     }
     
     select.value = themeId;
@@ -264,5 +266,5 @@ export function codecontrol(element, options = {}) {
 }
 
 // Export themes list for external use
-export { CODE_THEMES, HLJS_STYLES_PATH, SIZES };
+export { CODE_THEMES, SIZES };
 export default codecontrol;

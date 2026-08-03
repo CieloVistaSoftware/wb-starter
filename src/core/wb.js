@@ -152,6 +152,7 @@ import '../wb-viewmodels/wb-demo.js';
 
 import { getConfig, setConfig } from './config.js';
 import { pubsub } from './pubsub.js';
+import { logError } from './error-logger.js';
 import SchemaBuilder from './mvvm/schema-builder.js';
 import { ensureBehaviorCss } from './style-loader.js';
 
@@ -626,9 +627,27 @@ const WB = {
           // WB.processSchema is async-capable; collect the promise and allow it to load schemas on-demand
           try {
             const p = WB.processSchema(htmlEl, null, /*blocking*/ true);
-            if (p && typeof p.then === 'function') schemaPromises.push(p);
+            if (p && typeof p.then === 'function') {
+              schemaPromises.push(
+                // #436: a rejected promise here used to have no .catch, so a
+                // thrown error inside an async behavior's init silently
+                // vanished into an unhandled rejection nobody saw. Route it
+                // through the real error overlay (logError), same as the
+                // synchronous throw below, instead of letting either path
+                // stay invisible.
+                p.catch(err => {
+                  logError(err && err.message || String(err), { file: tag, stack: err && err.stack });
+                })
+              );
+            }
           } catch (err) {
-            console.warn('[WB.scan] processSchema threw:', err && err.message);
+            // No error may be silently swallowed in this system -- surface
+            // every behavior-init failure through the real error overlay
+            // (error-logger.js's logError), not just a console.warn nobody
+            // reliably sees. One component throwing must not stop the rest
+            // of the page's scan from completing, so this stays caught here
+            // rather than left to propagate -- but it must always be seen.
+            logError(err && err.message || String(err), { file: tag, stack: err && err.stack });
           }
         }
       });

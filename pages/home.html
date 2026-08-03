@@ -2,25 +2,18 @@
 <!-- pageRules: noInlineStyles=true, noPageSpecificCSS=true, fragment=true, showcase=false -->
 <!-- $layout: 4 rows, gap=2rem, maxWidth=1200px -->
 
-<h1>Build stunning UIs</h1>
-<wb-cardhero variant="cosmic" pretitle="100 Components" title="Build stunning UIs" subtitle="just HTML — no build step" cta="Explore Components" cta-href="?page=components" cta-secondary="Documentation" cta-secondary-href="?page=docs"></wb-cardhero>
-
-<h2>One script does it all</h2>
-<p>Start with two stylesheets, one module script, and auto-inject enabled. Plain HTML becomes interactive without a build step.</p>
-<wb-card variant="float">
-  <p>Minimal example:</p>
-  <pre><code>&lt;link rel="stylesheet" href="src/styles/themes.css"&gt;
-&lt;link rel="stylesheet" href="src/styles/site.css"&gt;
-&lt;wb-card title="Hello" variant="elevated"&gt;
-  &lt;p&gt;It just works.&lt;/p&gt;
-&lt;/wb-card&gt;
-&lt;button x-toast message="Saved!" type="success"&gt;Save&lt;/button&gt;
-&lt;script type="module"&gt;
-  import WB from 'src/core/wb-lazy.js';
-  await WB.init({ autoInject: true });
-&lt;/script&gt;</code></pre>
-  <p>Two stylesheets. One module script. Auto-inject enabled. Done.</p>
-</wb-card>
+<wb-demo full-width>
+  <div>
+    <link rel="stylesheet" href="/src/styles/themes.css">
+    <link rel="stylesheet" href="/src/styles/site.css">
+    <h1>Build stunning UIs</h1>
+    <wb-cardhero variant="cosmic" pretitle="100 Components" title="Build stunning UIs" subtitle="just HTML — no build step" cta="Explore Components" cta-href="?page=components" cta-secondary="Documentation" cta-secondary-href="?page=docs"></wb-cardhero>
+    <script type="module">
+      import WB from '/src/core/wb-lazy.js';
+      await WB.init({ autoInject: true });
+    </script>
+  </div>
+</wb-demo>
 
 <h2>By the Numbers</h2>
 <wb-container max-width="900px" padding="2rem">
@@ -89,7 +82,7 @@
 </wb-stack>
 
 <h2>Audio</h2>
-<wb-audio src="demos/sample.wav" show-eq volume="0.5"></wb-audio>
+<wb-audio src="demos/sample.wav" show-eq volume="0.5" style="width: 40%;"></wb-audio>
 
 <h2>Ready to build something?</h2>
 <wb-card variant="glass">

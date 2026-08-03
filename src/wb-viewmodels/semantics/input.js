@@ -4,19 +4,120 @@
  * Helper Attribute: [x-behavior="input"]
  */
 export function input(element, options = {}) {
-  // <wb-input> is a schema-driven host whose $view already builds a full
-  // structure declaratively -- label, wrapper div, icon spans, clear
-  // button, and the real <input> (placeholder/value/name/type now bound
-  // directly in input.schema.json's $view, same fix shape as #362). Unlike
-  // switch.js/select.js/textarea.js, this function had no host-vs-child
-  // guard at all: dispatched on the WB-INPUT host itself (elementMap
-  // ['wb-input'] dispatches it there too, same as on the real child via
-  // nativeMap['input']), it wrapped the ENTIRE already-built component in a
-  // second bogus wrapper div, with wb-input__field class and raw-text-input
-  // inline styles (width/flex/padding) applied straight onto the host tag.
-  // The schema already does everything this function would otherwise do
-  // for the host, so just no-op there. (#367)
-  if (element.tagName === 'WB-INPUT') return () => {};
+  // #439: <wb-input> is declared as a schema-driven host in
+  // input.schema.json's $view (label, wrapper, icon spans, clear button,
+  // the real <input>) -- but that $view is only ever interpreted by
+  // schema-builder.js's processElement()/WB.processSchema(), which the
+  // EAGER runtime (wb.js, main SPA) calls generically for every wb-*
+  // element. The LAZY runtime (wb-lazy.js, used by every standalone
+  // demos/site/*.html page) never calls processSchema at all -- it only
+  // dispatches tag-mapped behavior functions. #367's no-op here assumed
+  // the schema "already does everything," true only under the eager
+  // runtime. Under the lazy runtime this left <wb-input> completely
+  // unbuilt: no real <input> child at all, just the host tag's raw
+  // attribute-dump text content -- confirmed live, nothing to type into.
+  // card.js/hero.js/etc. avoid this gap because they build their own DOM
+  // by hand in JS rather than depending on $view interpretation at
+  // runtime; mirror that here instead of the schema-builder path, whose
+  // behavior under the lazy runtime is unverified.
+  if (element.tagName === 'WB-INPUT') {
+    if (element.querySelector('input')) return () => {}; // already built (eager runtime already ran)
+
+    const label = element.getAttribute('label') || '';
+    const placeholder = element.getAttribute('placeholder') || '';
+    const value = element.getAttribute('value') || '';
+    const name = element.getAttribute('name') || '';
+    const inputType = element.getAttribute('input-type') || element.getAttribute('inputType') || 'text';
+    const helper = element.getAttribute('helper') || '';
+    const error = element.getAttribute('error') || '';
+    const icon = element.getAttribute('icon') || '';
+    const iconPosition = element.getAttribute('icon-position') || 'start';
+    const clearable = element.hasAttribute('clearable');
+    const disabled = element.hasAttribute('disabled');
+    const readonly = element.hasAttribute('readonly');
+    const required = element.hasAttribute('required');
+
+    element.innerHTML = '';
+    // NOT .wb-input on the host -- that class is input.css's styling for a
+    // plain bare <input> (border/padding/background), meant for the real
+    // <input> field below, not this wrapper tag. Adding it here gave the
+    // host its own visible border too, stacking a second ring around the
+    // real input's own border ("three rings" reported live).
+
+    if (label) {
+      const labelEl = document.createElement('label');
+      labelEl.textContent = label;
+      if (required) {
+        const req = document.createElement('span');
+        req.textContent = '*';
+        labelEl.appendChild(req);
+      }
+      element.appendChild(labelEl);
+    }
+
+    const wrapper = document.createElement('div');
+    wrapper.className = 'wb-input__wrapper';
+    wrapper.style.cssText = 'position:relative;display:flex;align-items:center;width:100%;';
+
+    if (icon && iconPosition === 'start') {
+      const iconEl = document.createElement('span');
+      iconEl.textContent = icon;
+      wrapper.appendChild(iconEl);
+    }
+
+    const realInput = document.createElement('input');
+    realInput.type = inputType;
+    if (placeholder) realInput.placeholder = placeholder;
+    if (value) realInput.value = value;
+    if (name) realInput.name = name;
+    if (disabled) realInput.disabled = true;
+    if (readonly) realInput.readOnly = true;
+    if (required) realInput.required = true;
+    realInput.classList.add('wb-input__field');
+    // Border/radius/padding/background/color already come from input.css's
+    // generic bare-<input> rule (line 28) -- setting them again here as
+    // inline styles just stacked a second, redundant border on top of it
+    // (and a THIRD from the host <wb-input> tag incorrectly also getting
+    // the .wb-input class below, now removed). Only set what CSS can't:
+    // flex sizing within the wrapper.
+    Object.assign(realInput.style, {
+      width: 'auto',
+      flex: '1',
+      minWidth: '0'
+    });
+    wrapper.appendChild(realInput);
+
+    if (icon && iconPosition === 'end') {
+      const iconEl = document.createElement('span');
+      iconEl.textContent = icon;
+      wrapper.appendChild(iconEl);
+    }
+
+    if (clearable) {
+      const clearBtn = document.createElement('button');
+      clearBtn.type = 'button';
+      clearBtn.textContent = '✕';
+      clearBtn.addEventListener('click', () => { realInput.value = ''; realInput.focus(); });
+      wrapper.appendChild(clearBtn);
+    }
+
+    element.appendChild(wrapper);
+
+    if (helper && !error) {
+      const helperEl = document.createElement('span');
+      helperEl.className = 'wb-input__helper';
+      helperEl.textContent = helper;
+      element.appendChild(helperEl);
+    }
+    if (error) {
+      const errorEl = document.createElement('span');
+      errorEl.className = 'wb-input__error';
+      errorEl.textContent = error;
+      element.appendChild(errorEl);
+    }
+
+    return () => { element.innerHTML = ''; };
+  }
 
   // A DIFFERENT explicit x-{behavior} attribute (x-search, x-password,
   // x-autocomplete, ...) opts this element into its own richer, complete

@@ -21,6 +21,17 @@ wb-code-card {
   padding: 1rem;
 }
 
+/* #425: an open dropdown positioned to open upward (top-start/top-end)
+   extends above its trigger and got clipped by wb-demo's own
+   overflow:hidden above. Lift the clip specifically while a dropdown
+   inside is open, rather than removing overflow:hidden globally (it's
+   still needed to prevent wide code samples from blowing out the page
+   width). Flat selector, not CSS nesting -- no other file in this
+   codebase uses nesting syntax. */
+wb-demo:has(.wb-dropdown.open) {
+  overflow: visible;
+}
+
 .wb-demo__grid {
   display: grid;
   gap: 1rem;

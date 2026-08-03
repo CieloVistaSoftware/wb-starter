@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Shop Now — Summer Collection 2026</title>
+  <link rel="stylesheet" href="../../src/styles/themes.css">
+  <link rel="stylesheet" href="../../src/styles/site.css">
+  <style>
+    body > .page { padding: var(--space-xl); }
+  </style>
+</head>
+
+<body>
+  <div class="page">
+  <nav style="margin-bottom: 1rem;">
+    <a href="cards.html" style="color: var(--text-secondary, #aaa); text-decoration: none;">← Back to Card Components</a>
+  </nav>
+  <h1>🛍️ Shop Now — Summer Collection 2026</h1>
+  <p>Fresh styles, bold colors. This is the real page the cardhero "Shop Now" CTA on <a href="cards.html">cards.html</a> links to.</p>
+
+  <wb-demo columns="3">
+    <wb-cardproduct image="https://picsum.photos/seed/summer-tee/400/300" title="Bold Print Tee" description="Lightweight cotton, vivid summer print" price="$34" rating="4.6" reviews="89"></wb-cardproduct>
+  </wb-demo>
+  <wb-demo columns="3">
+    <wb-cardproduct image="https://picsum.photos/seed/summer-shorts/400/300" title="Linen Shorts" description="Breathable linen blend, relaxed fit" price="$42" rating="4.4" reviews="52"></wb-cardproduct>
+  </wb-demo>
+  <wb-demo columns="3">
+    <wb-cardproduct image="https://picsum.photos/seed/summer-hat/400/300" title="Wide Brim Hat" description="UPF 50+ sun protection, packable" price="$28" rating="4.8" reviews="134"></wb-cardproduct>
+  </wb-demo>
+
+  </div>
+
+  <script type="module">
+    import WB from '../../src/core/wb-lazy.js';
+    window.WB = WB;
+    await WB.init({ autoInject: true });
+    await WB.scan(document.body, { eager: true });
+  </script>
+</body>
+
+</html>

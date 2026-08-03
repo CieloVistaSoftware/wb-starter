@@ -169,7 +169,7 @@ All card variants are independent components that share structure via semantic H
 
 | Component | Custom Tag | Description | Doc Link |
 |-----------|------------|-------------|---------|
-| card | `<wb-card>` | Base card component | [card.md](./cards/card.md) |
+| card | `<wb-card>` | Card component | [card.md](./cards/card.md) |
 | cardimage | `<wb-cardimage>` | Card with featured image | [cardimage.md](./cards/cardimage.md) |
 | cardvideo | `<wb-cardvideo>` | Card with video player | [cardvideo.md](./cards/cardvideo.md) |
 | cardbutton | `<wb-cardbutton>` | Card with action buttons | [cardbutton.md](./cards/cardbutton.md) |

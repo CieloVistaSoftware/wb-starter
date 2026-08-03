@@ -86,6 +86,19 @@ export function audio(element, options = {}) {
   if (config.loop) audioEl.loop = true;
   audioEl.volume = Math.max(0, Math.min(1, config.volume));
 
+  // #433: surface a real runtime error (caught by the app's global error
+  // overlay) when the src fails to load or resolves to no actual content --
+  // a 404, a network failure, and a 0-byte/corrupt file all fire the native
+  // 'error' event on the media element (a 0-byte file fails to decode,
+  // MEDIA_ERR_SRC_NOT_SUPPORTED). Silently doing nothing here previously let
+  // broken audio sources ship undetected (confirmed live: several <wb-audio>
+  // instances pointed at empty placeholder files).
+  audioEl.addEventListener('error', () => {
+    const mediaError = audioEl.error;
+    const reason = mediaError ? `code ${mediaError.code} (${mediaError.message || 'no message'})` : 'unknown';
+    throw new Error(`wb-audio: failed to load src "${config.src}" -- ${reason}. The file is missing, unreachable, or has no real content (0 bytes).`);
+  });
+
   // Only replace with the custom Marantz transport when the author actually
   // asked for the enhanced UI: the <wb-audio> custom tag (which has nothing
   // native to fall back to), or show-eq (which needs the custom UI to expose

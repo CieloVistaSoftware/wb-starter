@@ -184,6 +184,7 @@ export default class WBSite {
               <input type="search" placeholder="Search..." aria-label="Search" class="wb-input-glass" style="padding: 0.4rem 0.8rem; width: 200px;">
             </div>
           ` : ''}
+          <wb-themecontrol id="headerThemeControl"></wb-themecontrol>
           <a class="header__playground-btn" id="playgroundLink" href="demos/playground.html" target="_blank" rel="noopener" x-ripple title="Playground — paste HTML, see it render live" aria-label="Open the Playground">🧪</a>
           <button class="header__notes-btn" id="notesToggle" x-ripple title="Toggle Notes" aria-label="Toggle Notes">📝</button>
         </div>

@@ -52,55 +52,54 @@ Wrapped in `<wb-demo>`, so the live component renders below with its source show
 
 ### Basic Hero
 
-```html
+<wb-demo>
 <wb-cardhero
   title="Welcome to Our Site"
   subtitle="Build something amazing"
   background="/images/hero-bg.jpg">
 </wb-cardhero>
-```
+</wb-demo>
 
 ### With CTAs
 
-```html
+<wb-demo>
 <wb-cardhero
   title="Get Started Today"
   subtitle="Join thousands of happy users"
   cta="Sign Up Free"
-  ctaHref="/signup"
-  ctaSecondary="Learn More"
-  ctaSecondaryHref="/about">
+  cta-href="/signup"
+  cta-secondary="Learn More"
+  cta-secondary-href="/about">
 </wb-cardhero>
-```
+</wb-demo>
 
 ### Left Aligned
 
-```html
+<wb-demo>
 <wb-cardhero
   title="Left Aligned Hero"
   xalign="left"
   height="500px">
 </wb-cardhero>
-```
+</wb-demo>
 
 ### With Gradient Background
 
-```html
+<wb-demo>
 <wb-cardhero
   title="Gradient Hero"
   background="linear-gradient(135deg, #667eea 0%, #764ba2 100%)">
 </wb-cardhero>
-```
+</wb-demo>
 
-### Using Slots (HTML in Title)
+### Rich HTML Title/Subtitle
 
-```html
-<wb-cardhero background="/images/hero.jpg">
-  <h1 slot="title">Rich <em>HTML</em> Title</h1>
-  <p slot="subtitle">Subtitle with <strong>formatting</strong>
-  </p>
-</wb-cardhero>
-```
+Not currently supported. `title`/`subtitle` are plain-string attributes only
+-- there is no `slot="..."` mechanism (wb-starter is light DOM only, per
+ATTRIBUTE-NAMING-STANDARD.md's Content/Children rules: never a `slot`
+attribute). A prior version of this doc showed a `slot="title"`/
+`slot="subtitle"` example that never actually worked; removed rather than
+left teaching a pattern the framework doesn't support. See #422.
 
 ## Generated Structure
 

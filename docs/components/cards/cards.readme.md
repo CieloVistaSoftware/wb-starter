@@ -10,7 +10,7 @@ The Cards component library provides 19 specialized card variants for displaying
 
 | Component | Custom Tag | Description |
 |-----------|------------|-------------|
-| [card](./card.md) | `<wb-card>` | Base card component |
+| [card](./card.md) | `<wb-card>` | Card component |
 | [cardimage](./cardimage.md) | `<wb-cardimage>` | Card with featured image |
 | [cardvideo](./cardvideo.md) | `<wb-cardvideo>` | Card with video player |
 | [cardbutton](./cardbutton.md) | `<wb-cardbutton>` | Card with action buttons |

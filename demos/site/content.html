@@ -133,22 +133,22 @@
   <section id="audio-audio">
   <h2>🎵 Audio</h2>
     <wb-demo>
-    <wb-audio src="../audio.mp3">
+    <wb-audio src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3">
       src=../audio.mp3
     </wb-audio>
   </wb-demo>
   <wb-demo>
-    <wb-audio src="../audio.mp3" show-eq>
+    <wb-audio src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3" show-eq>
       src=../audio.mp3, show-eq
     </wb-audio>
   </wb-demo>
   <wb-demo>
-    <wb-audio src="../audio.mp3" volume="0.5">
+    <wb-audio src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3" volume="0.5">
       src=../audio.mp3, volume=0.5
     </wb-audio>
   </wb-demo>
   <wb-demo>
-    <wb-audio src="../audio.mp3" loop>
+    <wb-audio src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3" loop>
       src=../audio.mp3, loop
     </wb-audio>
   </wb-demo>
@@ -158,22 +158,22 @@
   <section id="audio-boolean-toggles">
   <h2>Boolean toggles</h2>
     <wb-demo>
-    <wb-audio loop src="../audio.mp3">
+    <wb-audio loop src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3">
       loop, src=../audio.mp3
     </wb-audio>
   </wb-demo>
   <wb-demo>
-    <wb-audio autoplay src="../audio.mp3">
+    <wb-audio autoplay src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3">
       autoplay, src=../audio.mp3
     </wb-audio>
   </wb-demo>
   <wb-demo>
-    <wb-audio muted src="../audio.mp3">
+    <wb-audio muted src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3">
       muted, src=../audio.mp3
     </wb-audio>
   </wb-demo>
   <wb-demo>
-    <wb-audio show-eq src="../audio.mp3">
+    <wb-audio show-eq src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3">
       show-eq, src=../audio.mp3
     </wb-audio>
   </wb-demo>
@@ -491,9 +491,14 @@
     const paddingWarning = document.getElementById('padding-warning');
 
     function hasRequiredPadding() {
-      const bodyStyle = window.getComputedStyle(document.body);
-      const paddingLeft = parseFloat(bodyStyle.paddingLeft);
-      const paddingRight = parseFloat(bodyStyle.paddingRight);
+      // #432: the page's real layout padding is on `body > .page`
+      // (`body > .page { padding: var(--space-xl); }`), never on <body>
+      // itself -- checking document.body's own computed padding always
+      // read 0, so this gate could never pass and the dialog never opened.
+      const pageEl = document.querySelector('body > .page') || document.body;
+      const pageStyle = window.getComputedStyle(pageEl);
+      const paddingLeft = parseFloat(pageStyle.paddingLeft);
+      const paddingRight = parseFloat(pageStyle.paddingRight);
       return paddingLeft >= 16 && paddingRight >= 16;
     }
 

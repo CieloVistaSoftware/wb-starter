@@ -51,7 +51,7 @@
 
     <h2>Hero Card</h2>
     <wb-demo id="demo-hero" columns="1" full-width>
-      <wb-cardhero title="Summer Collection 2026" subtitle="Fresh styles, bold colors" cta="Shop Now" cta-secondary="Learn More" background="https://picsum.photos/seed/hero99/1200/600" height="360px"></wb-cardhero>
+      <wb-cardhero title="Summer Collection 2026" subtitle="Fresh styles, bold colors" cta="Shop Now" cta-href="shop-now.html" cta-secondary="Learn More" cta-secondary-href="learn-more.html" background="https://picsum.photos/seed/hero99/1200/600" height="360px"></wb-cardhero>
     </wb-demo>
 
     <h2>Profile Card</h2>
@@ -69,13 +69,13 @@
 
     <h2>Pricing Cards</h2>
         <wb-demo id="demo-pricing">
-      <wb-cardpricing plan="Starter" price="$0" period="/month" features="3 Projects,Community Support,1 GB Storage" cta="Get Started"></wb-cardpricing>
+      <wb-cardpricing plan="Starter" price="$0" period="/month" features="3 Projects,Community Support,1 GB Storage" cta="Get Started" cta-href="https://github.com/CieloVistaSoftware/wb-starter#readme"></wb-cardpricing>
     </wb-demo>
     <wb-demo id="demo-pricing-2">
-      <wb-cardpricing plan="Pro" price="$19" period="/month" features="Unlimited Projects,Priority Support,50 GB Storage,API Access" cta="Upgrade" featured></wb-cardpricing>
+      <wb-cardpricing plan="Pro" price="$19" period="/month" features="Unlimited Projects,Priority Support,50 GB Storage,API Access" cta="Upgrade" cta-href="https://github.com/CieloVistaSoftware/wb-starter#readme" featured></wb-cardpricing>
     </wb-demo>
     <wb-demo id="demo-pricing-3">
-      <wb-cardpricing plan="Enterprise" price="$99" period="/month" features="Everything in Pro,SSO & SAML,Dedicated Manager,SLA" cta="Contact Sales"></wb-cardpricing>
+      <wb-cardpricing plan="Enterprise" price="$99" period="/month" features="Everything in Pro,SSO & SAML,Dedicated Manager,SLA" cta="Contact Sales" cta-href="https://github.com/CieloVistaSoftware/wb-starter/issues"></wb-cardpricing>
     </wb-demo>
 
     <h2>Stats Cards</h2>
@@ -127,15 +127,15 @@
       <wb-cardfile filename="team-photo.jpg" type="image" size="4.1 MB" date="2026-02-15" href="#"></wb-cardfile>
     </wb-demo>
     <wb-demo id="demo-file-3">
-      <wb-cardfile filename="backup.zip" type="zip" size="128 MB" date="2026-02-14" href="#"></wb-cardfile>
+      <wb-cardfile filename="backup.zip" type="zip" size="128 MB" date="2026-02-14" href="#" hover-text="Full system backup, encrypted at rest"></wb-cardfile>
     </wb-demo>
 
     <h2>Link Card</h2>
         <wb-demo id="demo-link">
-      <wb-cardlink href="https://example.com" icon="📚" title="Documentation" description="Browse the full API reference." target="_blank"></wb-cardlink>
+      <wb-cardlink href="https://github.com/CieloVistaSoftware/wb-starter#readme" icon="📚" title="Documentation" description="Browse the full API reference." target="_blank"></wb-cardlink>
     </wb-demo>
     <wb-demo id="demo-link-2">
-      <wb-cardlink href="https://example.com" icon="🚀" title="Release Notes" description="See what's new in the latest version." target="_blank"></wb-cardlink>
+      <wb-cardlink href="https://cielovistasoftware.github.io/wb-starter/pages/whats-new.html" icon="🚀" title="Release Notes" description="See what's new in the latest version." target="_blank"></wb-cardlink>
     </wb-demo>
 
     <h2>Horizontal Card</h2>
@@ -168,7 +168,7 @@
 
     <h2>Portfolio Card</h2>
     <wb-demo id="demo-portfolio" columns="1">
-      <wb-cardportfolio name="Jane Doe" title="Senior UI Engineer" company="Cielo Vista Software" location="Rochester, MN" avatar="https://i.pravatar.cc/150?u=portfolio" cover="https://picsum.photos/seed/wbcover/800/300" bio="Full-stack developer with 10+ years experience." skills="JavaScript,TypeScript,Web Components,CSS" email="jane@example.com" website="https://example.com" github="https://github.com" linkedin="https://linkedin.com" cta="View Full Profile" availability="available" tagline="Building the web, one component at a time"></wb-cardportfolio>
+      <wb-cardportfolio name="Jane Doe" title="Senior UI Engineer" company="Cielo Vista Software" location="Rochester, MN" avatar="https://i.pravatar.cc/150?u=portfolio" cover="https://picsum.photos/seed/wbcover/800/300" bio="Full-stack developer with 10+ years experience." skills="JavaScript,TypeScript,Web Components,CSS" email="jane@example.com" website="https://example.com" github="https://github.com" linkedin="https://linkedin.com" cta="View Full Profile" cta-href="../../pages/about.html" availability="available" tagline="Building the web, one component at a time"></wb-cardportfolio>
     </wb-demo>
 
   </wb-stack>

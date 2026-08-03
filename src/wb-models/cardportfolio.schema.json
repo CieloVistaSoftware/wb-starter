@@ -260,6 +260,18 @@
       "public": true,
       "createdWhen": "cta",
       "description": "Footer with CTA"
+    },
+    {
+      "name": "ctaLink",
+      "tag": "a",
+      "parent": "footer",
+      "public": true,
+      "createdWhen": "cta",
+      "content": "{{cta}}",
+      "attributes": {
+        "href": "{{ctaHref}}"
+      },
+      "description": "Call-to-action button (was previously missing entirely -- footer rendered empty)"
     }
   ],
   "$methods": {

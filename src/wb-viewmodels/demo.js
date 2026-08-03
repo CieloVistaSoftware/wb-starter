@@ -277,7 +277,15 @@ export async function demo(element, options = {}) {
     // confirmed live, both anchors reachable. Re-included per explicit
     // request: "put all links on the card itself, upper right hand
     // corner" -- no carve-outs, every card including cardlink gets one.
-    const perInstanceChildren = Array.from(grid.children).filter(
+    // #434: querySelectorAll('*'), not grid.children -- a wb-* component
+    // wrapped inside a plain <div> (e.g. bundled alongside a stylesheet
+    // link/script as a self-contained "view source" example) is a real,
+    // documented component just as much as a direct grid child, but
+    // grid.children only sees the wrapping <div>, silently falling through
+    // to the deprecated shared "Docs: wb-x" line below the grid instead of
+    // its own per-instance corner badge (confirmed live: pages/home.html's
+    // hero cardhero, nested one <div> deep).
+    const perInstanceChildren = Array.from(grid.querySelectorAll('*')).filter(
         (child) => child.tagName && child.tagName.startsWith('WB-')
     );
     const perInstanceComps = new Set(perInstanceChildren.map((el) => el.tagName.slice(3).toLowerCase()));

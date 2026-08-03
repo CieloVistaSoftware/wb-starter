@@ -18,6 +18,13 @@
        theme/spacing variables, not ad-hoc values") -- var(--space-xl) is
        the same 2rem site__main already uses, not a new literal. */
     body > .page { padding: var(--space-xl); }
+
+    /* #428: x-toggle defaults to toggling a class literally named "active"
+       when no class/toggle-class attribute is set (toggle.js) -- #toggle-box
+       had no rule for that class at all, so the class toggled correctly in
+       the DOM but nothing visibly changed. Give it a real color change so
+       the demo actually demonstrates what it claims to. */
+    #toggle-box.active { background: var(--success-color, #22c55e); }
   </style>
 </head>
 

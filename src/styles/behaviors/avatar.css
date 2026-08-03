@@ -46,8 +46,8 @@ wb-avatar span[class*="wb-avatar__status"] {
   position: absolute;
   bottom: 0;
   right: 0;
-  width: 25%;
-  height: 25%;
+  width: 37.5%;
+  height: 37.5%;
   border-radius: 50%;
   border: 2px solid var(--bg-primary, #1f2937);
 }

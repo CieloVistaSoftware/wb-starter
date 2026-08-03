@@ -156,7 +156,22 @@
       "public": true,
       "content": "{{cta}}",
       "createdWhen": "cta",
+      "attributes": {
+        "href": "{{ctaHref}}"
+      },
       "description": "Call-to-action button"
+    },
+    {
+      "name": "ctaSecondary",
+      "tag": "a",
+      "parent": "content",
+      "public": true,
+      "content": "{{ctaSecondary}}",
+      "createdWhen": "ctaSecondary",
+      "attributes": {
+        "href": "{{ctaSecondaryHref}}"
+      },
+      "description": "Secondary call-to-action button (was previously missing entirely -- ctaSecondary/ctaSecondaryHref properties existed but nothing rendered them)"
     }
   ],
   "$methods": {

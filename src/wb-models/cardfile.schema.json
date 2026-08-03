@@ -64,6 +64,12 @@
       ],
       "default": "default",
       "appliesClass": "wb-card-file--{{value}}"
+    },
+    "hoverText": {
+      "type": "string",
+      "description": "Alias for `tooltip` -- hover text shown as a themed WB tooltip (x-tooltip / tooltip.js), not the native browser title tooltip (#283).",
+      "default": "",
+      "appliesAttribute": "x-tooltip"
     }
   },
   "$view": [

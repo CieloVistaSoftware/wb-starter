@@ -148,6 +148,9 @@
       "parent": "footer",
       "public": true,
       "content": "{{cta}}",
+      "attributes": {
+        "href": "{{ctaHref}}"
+      },
       "description": "Call-to-action button"
     }
   ],

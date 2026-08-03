@@ -71,7 +71,7 @@
         {
           "file": "components/cards/card.md",
           "title": "Card Component",
-          "description": "Base card component"
+          "description": "Card component"
         },
         {
           "file": "components/cards/cardbutton.md",

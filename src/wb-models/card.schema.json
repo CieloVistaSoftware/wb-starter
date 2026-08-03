@@ -2,7 +2,7 @@
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "card.schema.json",
   "title": "Card Component",
-  "description": "Base card component. IS-A article, HAS-A header, main, footer.",
+  "description": "Card component. IS-A article, HAS-A header, main, footer.",
   "schemaFor": "card",
   "baseClass": "wb-card",
   "semanticElement": {

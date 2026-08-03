@@ -165,6 +165,20 @@ export function button(element, options = {}) {
     const iconPosition = options.iconPosition || element.getAttribute('icon-position') || 'start';
     const loading = options.loading ?? element.hasAttribute('loading');
 
+    // Explicitly set (author wrote icon or icon="") but resolves empty --
+    // distinct from simply omitting the attribute (that's the normal
+    // no-icon default, not an error). "" used to be a listed enum value in
+    // button.schema.json, which is why an auto-generated showcase demo used
+    // to render exactly this broken state with no feedback at all.
+    if (element.hasAttribute('icon') && !icon) {
+      // #436: WB.scan()'s own try/catch now routes this through the real
+      // error overlay (logError, wb.js) instead of a console.warn nobody
+      // reliably saw -- a plain throw is enough.
+      throw new Error(
+        'wb-button: icon attribute was set but no icon name was given. See the full icon library at demos/site/forms.html#button-icon-variants.'
+      );
+    }
+
     if (loading) {
       const spinner = document.createElement('span');
       spinner.className = 'wb-button__spinner';

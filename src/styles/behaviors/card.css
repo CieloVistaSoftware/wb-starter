@@ -665,20 +665,24 @@
 .wb-card__cover {
   position: relative;
   margin: 0;
-  height: 36px;
+  height: 44px;
   background-size: cover;
   background-position: center;
 }
 
-/* Role badge overlaid on the cover strip (see the big comment in
-   cardprofile(), card.js, about the border-radius clipping fix this
-   position/offset encodes) -- distinct from the plain `.wb-card__role` text
-   treatment below (Law 9 migration, #370). */
+/* Role badge overlaid on the cover strip. #406: a fixed top offset, not
+   true 50% vertical centering -- centering the badge's bounding box within
+   the (formerly 36px) cover strip landed it almost entirely inside the
+   card's own 8px border-radius curve, so the pill's rounded corner visibly
+   clipped against that curve even though the rectangle math never
+   overflowed. A fixed offset that clears the radius, on a slightly taller
+   strip (36px -> 44px) so there's still balanced clearance below, per the
+   already-documented intent in cardprofile(), card.js -- distinct from the
+   plain `.wb-card__role` text treatment below (Law 9 migration, #370). */
 .wb-card__role--badge {
   position: absolute;
-  top: 50%;
+  top: 0.75rem;
   right: 0.75rem;
-  transform: translateY(-50%);
   padding: 0.15rem 0.6rem;
   border-radius: 999px;
   background: rgba(0,0,0,0.55);

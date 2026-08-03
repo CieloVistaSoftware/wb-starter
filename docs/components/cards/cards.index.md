@@ -6,7 +6,7 @@ All card variants use the **WBServices pattern** with **Light DOM architecture**
 
 ```
 cardBase (shared foundation)
-├── card            - Base card component
+├── card            - Card component
 ├── cardimage       - Card with featured image
 ├── cardvideo       - Card with video player
 ├── cardbutton      - Card with action buttons
@@ -164,7 +164,7 @@ src/wb-viewmodels/
 ## Documentation
 
 ### Base & Common
-- [card.md](./card.md) - Base card component
+- [card.md](./card.md) - Card component
 - [cardbutton.md](./cardbutton.md) - Action buttons
 - [cardimage.md](./cardimage.md) - Featured image
 - [cardvideo.md](./cardvideo.md) - Video player

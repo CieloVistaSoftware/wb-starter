@@ -24,7 +24,6 @@
       "type": "string",
       "description": "Icon name from built-in library, or any emoji/text",
       "enum": [
-        "",
         "star",
         "check",
         "close",
