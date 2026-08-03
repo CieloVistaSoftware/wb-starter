@@ -18,6 +18,7 @@
        theme/spacing variables, not ad-hoc values") -- var(--space-xl) is
        the same 2rem site__main already uses, not a new literal. */
     body > .page { padding: var(--space-xl); }
+    @media (max-width: 640px) { body > .page { padding: 1rem; } }
   </style>
 </head>
 
@@ -33,84 +34,50 @@
   <section id="header-header">
   <h2>📰 Header</h2>
     <wb-demo>
-    <wb-header title="Title">
-      title=Title
-    </wb-header>
+    <wb-header title="Title"></wb-header>
   </wb-demo>
   <wb-demo>
-    <wb-header icon="📂" title="Title">
-      icon=📂, title=Title
-    </wb-header>
+    <wb-header icon="📂" title="Title"></wb-header>
   </wb-demo>
   <wb-demo>
-    <wb-header icon="🚀" title="App" badge="v1.0">
-      icon=🚀, title=App, badge=v1.0
-    </wb-header>
+    <wb-header icon="🚀" title="App" badge="v1.0"></wb-header>
   </wb-demo>
-  <wb-demo>
-    <wb-header title="Site" sticky>
-      title=Site, sticky
-    </wb-header>
-  </wb-demo>
+  <wb-header title="Site" sticky></wb-header>
   </section>
 
   <!-- 2. Boolean toggles -->
   <section id="header-boolean-toggles">
   <h2>Boolean toggles</h2>
-  <wb-demo columns="1">
-    <wb-header sticky>
-      sticky
-    </wb-header>
-  </wb-demo>
+  <wb-header title="Scroll down to see me stick" sticky></wb-header>
   </section>
 
   <!-- 3. 📄 Footer -->
   <section id="footer-footer">
   <h2>📄 Footer</h2>
     <wb-demo>
-    <wb-footer copyright="© 2025">
-      copyright=© 2025
-    </wb-footer>
+    <wb-footer copyright="© 2025"></wb-footer>
   </wb-demo>
   <wb-demo>
-    <wb-footer brand="Acme" copyright="© 2025">
-      brand=Acme, copyright=© 2025
-    </wb-footer>
+    <wb-footer brand="Acme" copyright="© 2025"></wb-footer>
   </wb-demo>
-  <wb-demo>
-    <wb-footer copyright="© 2025" sticky>
-      copyright=© 2025, sticky
-    </wb-footer>
-  </wb-demo>
+  <wb-footer copyright="© 2025" sticky></wb-footer>
   </section>
 
   <!-- 4. Boolean toggles -->
   <section id="footer-boolean-toggles">
   <h2>Boolean toggles</h2>
-  <wb-demo columns="1">
-    <wb-footer sticky>
-      sticky
-    </wb-footer>
-  </wb-demo>
+  <wb-footer copyright="Scroll down to see me stick" sticky></wb-footer>
   </section>
 
   <!-- 5. 🧭 Navbar -->
   <section id="navbar-navbar">
   <h2>🧭 Navbar</h2>
     <wb-demo>
-    <wb-navbar brand="MySite">
-      brand=MySite
-    </wb-navbar>
+    <wb-navbar brand="MySite" items="Home,About,Contact"></wb-navbar>
   </wb-demo>
+  <wb-navbar brand="MySite" items="Home,About,Contact" sticky></wb-navbar>
   <wb-demo>
-    <wb-navbar brand="MySite" sticky>
-      brand=MySite, sticky
-    </wb-navbar>
-  </wb-demo>
-  <wb-demo>
-    <wb-navbar brand="MySite" variant="dark">
-      brand=MySite, variant=dark
-    </wb-navbar>
+    <wb-navbar brand="MySite" items="Home,About,Contact" variant="dark"></wb-navbar>
   </wb-demo>
   </section>
 
@@ -118,30 +85,20 @@
   <section id="navbar-variant-variants">
   <h2>variant variants</h2>
     <wb-demo>
-    <wb-navbar variant="default">
-      variant=default
-    </wb-navbar>
+    <wb-navbar brand="MySite" items="Home,About,Contact" variant="default"></wb-navbar>
   </wb-demo>
   <wb-demo>
-    <wb-navbar variant="dark">
-      variant=dark
-    </wb-navbar>
+    <wb-navbar brand="MySite" items="Home,About,Contact" variant="dark"></wb-navbar>
   </wb-demo>
   <wb-demo>
-    <wb-navbar variant="transparent">
-      variant=transparent
-    </wb-navbar>
+    <wb-navbar brand="MySite" items="Home,About,Contact" variant="transparent"></wb-navbar>
   </wb-demo>
   </section>
 
   <!-- 7. Boolean toggles -->
   <section id="navbar-boolean-toggles">
   <h2>Boolean toggles</h2>
-  <wb-demo columns="1">
-    <wb-navbar sticky>
-      sticky
-    </wb-navbar>
-  </wb-demo>
+  <wb-navbar brand="Scroll down to see me stick" sticky></wb-navbar>
   </section>
 
   <!-- 8. 📑 Tabs -->
@@ -149,27 +106,32 @@
   <h2>📑 Tabs</h2>
     <wb-demo>
     <wb-tabs active-tab="0">
-      active-tab=0
+      <div tab-title="Overview">active-tab=0 -- Overview panel is active by default.</div>
+      <div tab-title="Details">Details panel content.</div>
     </wb-tabs>
   </wb-demo>
   <wb-demo>
     <wb-tabs active-tab="1">
-      active-tab=1
+      <div tab-title="Overview">Overview panel content.</div>
+      <div tab-title="Details">active-tab=1 -- Details panel is active by default.</div>
     </wb-tabs>
   </wb-demo>
   <wb-demo>
     <wb-tabs variant="pills">
-      variant=pills
+      <div tab-title="Overview">variant=pills -- Overview panel.</div>
+      <div tab-title="Details">Details panel.</div>
     </wb-tabs>
   </wb-demo>
   <wb-demo>
     <wb-tabs variant="underline">
-      variant=underline
+      <div tab-title="Overview">variant=underline -- Overview panel.</div>
+      <div tab-title="Details">Details panel.</div>
     </wb-tabs>
   </wb-demo>
   <wb-demo>
     <wb-tabs full-width>
-      full-width
+      <div tab-title="Overview">full-width -- Overview panel.</div>
+      <div tab-title="Details">Details panel.</div>
     </wb-tabs>
   </wb-demo>
   </section>
@@ -179,12 +141,14 @@
   <h2>variant variants</h2>
     <wb-demo>
     <wb-tabs variant="default">
-      variant=default
+      <div tab-title="Overview">variant=default -- Overview panel.</div>
+      <div tab-title="Details">Details panel.</div>
     </wb-tabs>
   </wb-demo>
   <wb-demo>
     <wb-tabs variant="bordered">
-      variant=bordered
+      <div tab-title="Overview">variant=bordered -- Overview panel.</div>
+      <div tab-title="Details">Details panel.</div>
     </wb-tabs>
   </wb-demo>
   </section>
@@ -194,17 +158,20 @@
   <h2>size variants</h2>
     <wb-demo>
     <wb-tabs size="sm">
-      size=sm
+      <div tab-title="Overview">size=sm -- Overview panel.</div>
+      <div tab-title="Details">Details panel.</div>
     </wb-tabs>
   </wb-demo>
   <wb-demo>
     <wb-tabs size="md">
-      size=md
+      <div tab-title="Overview">size=md -- Overview panel.</div>
+      <div tab-title="Details">Details panel.</div>
     </wb-tabs>
   </wb-demo>
   <wb-demo>
     <wb-tabs size="lg">
-      size=lg
+      <div tab-title="Overview">size=lg -- Overview panel.</div>
+      <div tab-title="Details">Details panel.</div>
     </wb-tabs>
   </wb-demo>
   </section>
@@ -214,7 +181,8 @@
   <h2>Boolean toggles</h2>
   <wb-demo columns="1">
     <wb-tabs vertical>
-      vertical
+      <div tab-title="Overview">vertical -- Overview panel.</div>
+      <div tab-title="Details">Details panel.</div>
     </wb-tabs>
   </wb-demo>
   </section>

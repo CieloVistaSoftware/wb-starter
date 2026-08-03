@@ -18,6 +18,7 @@
        theme/spacing variables, not ad-hoc values") -- var(--space-xl) is
        the same 2rem site__main already uses, not a new literal. */
     body > .page { padding: var(--space-xl); }
+    @media (max-width: 640px) { body > .page { padding: 1rem; } }
   </style>
 </head>
 

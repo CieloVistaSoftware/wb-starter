@@ -35,13 +35,39 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
   <style>
-    body { 
-      padding: 2rem; 
-      max-width: 900px; 
-      margin: 0 auto; 
+    /* #295: "no horizontal page scroll, ever" is a page-level guarantee, so
+       it belongs on the page shell (here), not .wb-mdhtml (mdhtml.css) --
+       that file already contains everything it renders (tables scroll in
+       their own wrapper, code wraps, word-break stays normal). The one gap
+       .wb-mdhtml itself can't close: an absolutely-positioned descendant
+       whose containing block resolves to the *viewport* (e.g. a
+       <wb-demo> per-instance doc-link badge -- demo.js's
+       attachInstanceDocLink -- attached to a wb-* component that isn't
+       itself position:relative) lays out relative to the initial
+       containing block, escaping every ancestor's overflow clipping,
+       including .wb-mdhtml's own. Confirmed live at 375px on
+       docs/V3-GUIDE.md's embedded <wb-demo> block. That badge-positioning
+       gap is a separate, pre-existing bug (out of scope here -- lives in
+       demo.css/demo.js, not this doc's rendering); html/overflow-x:hidden
+       is the correct backstop regardless of its root cause, since ANY
+       viewport-anchored escapee is, by definition, only stoppable at the
+       true root.
+    */
+    html { overflow-x: hidden; }
+    body {
+      padding: 2rem;
+      max-width: 900px;
+      margin: 0 auto;
+      overflow-x: hidden;
       background: var(--bg-primary);
       color: var(--text-primary);
       font-family: 'Inter', system-ui, sans-serif;
+    }
+    /* #450: 2rem (32px) flat on every side ate ~17% of a 375px phone screen
+       with no mobile override, same class of bug as demos/site/*.html's
+       identical `body > .page` padding. */
+    @media (max-width: 640px) {
+      body { padding: 1rem; }
     }
     .back-link { 
       display: inline-flex; 
