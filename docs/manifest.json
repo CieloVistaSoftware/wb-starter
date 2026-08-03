@@ -48,6 +48,11 @@
           "description": "Article: Why AI tools must be framework agnostic"
         },
         {
+          "file": "linkedin-update-article.md",
+          "title": "wb-starter v3.0.3 Update (LinkedIn)",
+          "description": "Article: 70 components, zero build, and the Light DOM correction"
+        },
+        {
           "file": "standards/V3-STANDARDS.md",
           "title": "V3 STANDARDS",
           "description": "Documentation for V3 STANDARDS"
