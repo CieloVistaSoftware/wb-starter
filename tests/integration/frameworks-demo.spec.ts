@@ -4,8 +4,16 @@ import { test, expect } from '@playwright/test';
  * #241 — frameworks.html code examples must be syntax-highlighted (theme colors)
  * and have a copy button. They shipped as plain, uncolored monospace text because
  * the `language="…"` / `copy="true"` shorthand on <pre> never mapped to a
- * highlighter. The page now highlights them directly (local highlight.js +
- * theme-variable colors) and adds a copy button per block.
+ * highlighter.
+ *
+ * #449 — the page originally fixed this with its own hand-rolled highlighter +
+ * `.code-copy-btn`, written under the (then-true, now-stale) assumption that
+ * WB's own code behavior never activates on these hand-written blocks. It does
+ * now, and running both systems on the same elements conflicted (a specificity
+ * war left the line-number gutter overlapping the code text). The page now
+ * defers entirely to the global pre.js/pre.css system -- same highlighting +
+ * copy button + line numbers + language badge every other code panel gets,
+ * via `.x-pre__copy` instead of the removed `.code-copy-btn`.
  *
  * #324 — the HTMX section moved to a real <wb-demo> (it's plain, build-step-free
  * HTML, so <wb-demo> can render it live AND show its exact source — see
@@ -34,14 +42,19 @@ test.describe('frameworks demo: code examples highlighted + copyable (#241)', ()
       'code should be tokenized into colored spans'
     ).toBeGreaterThan(2);
 
-    // A copy button on every block.
-    expect(await page.locator('pre[language] .code-copy-btn').count()).toBe(n);
+    // A copy button on every block (#449: the global system's own button,
+    // `.x-pre__copy`). It lives in the `.x-pre-wrapper` pre.js wraps each
+    // block in, as a SIBLING of <pre> (not a child of it like the removed
+    // `.code-copy-btn` was) -- select via the wrapper, not a `pre[language]`
+    // descendant. The page's own script eager-scans each block sequentially,
+    // so poll (like the hljs checks above) instead of a one-shot `.count()`
+    // that could catch it mid-loop.
+    await expect(page.locator('.x-pre-wrapper:has(pre[language]) .x-pre__copy')).toHaveCount(n, { timeout: 15000 });
 
-    // Standard §6: code wraps — no horizontal scrollbar on any block.
-    const scrollers = await page.$$eval('pre[language]', (els) =>
-      els.filter((el) => el.scrollWidth > el.clientWidth + 2).length
-    );
-    expect(scrollers, 'no pre[language] block may horizontally scroll').toBe(0);
+    // Wrap-vs-scroll behavior for these blocks is covered by its own dedicated
+    // regression test (tests/regression/frameworks-code-block-no-wrap.spec.ts)
+    // -- this page is a documented §6 carve-out (scrolls, doesn't wrap), the
+    // opposite of the site-wide default, so it doesn't belong duplicated here.
   });
 });
 

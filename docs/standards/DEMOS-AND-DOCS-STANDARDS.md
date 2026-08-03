@@ -56,6 +56,12 @@ Every component example is a `<wb-demo>` — it renders the **live control** AND
   horizontal scroll instead of wrapping (`demo.js` omits the `wrap` attribute, so
   `pre.css`'s default editor-style scrolling applies). Explicit override from John. Every
   other `<pre x-behavior="pre">` on the site still follows the no-scrollbar rule above.
+- **Carve-out for `demos/frameworks.html`'s 5 hand-written framework code samples
+  (#241, #449):** same reasoning and same mechanism (these `<pre language="…">` blocks
+  omit `wrap` too) — long import/JSX lines read worse wrapped mid-identifier than
+  scrolled. Explicit override from John (confirmed again after #449 briefly wrapped them
+  by mistake while fixing an unrelated padding bug). Test:
+  `tests/regression/frameworks-code-block-no-wrap.spec.ts`.
 
 ## 7. A demo is only as wide as what it renders
 
