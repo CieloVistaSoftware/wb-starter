@@ -6,6 +6,18 @@ No bundler, no JSX, no Shadow DOM — the browser does the work.
 
 This guide covers **how to use it** and **how it works internally**.
 
+## Contents
+
+1. [Mental model](#1-mental-model)
+2. [Quick start](#2-quick-start)
+3. [Using components (custom tags)](#3-using-components-custom-tags)
+4. [Using behaviors (x-* attributes)](#4-using-behaviors-x-attributes)
+5. [Auto-enhanced plain elements](#5-auto-enhanced-plain-elements)
+6. [Theming](#6-theming)
+7. [How it works internally](#7-how-it-works-internally)
+8. [Render from JSON](#8-render-from-json)
+9. [Writing your own behavior (recipe)](#9-writing-your-own-behavior-recipe)
+
 ---
 
 ## 1. Mental model
@@ -34,6 +46,25 @@ Key principles:
 ## 2. Quick start
 
 A standalone page needs the theme + base styles and one module script:
+
+<wb-demo full-width>
+<wb-card
+  title="Hello"
+  variant="elevated">
+  <p>It just works.</p>
+</wb-card>
+<button
+  x-toast
+  message="Saved!"
+  type="success">
+  Save
+</button>
+</wb-demo>
+
+The full page this comes from — everything outside `<body>` is boilerplate
+`<wb-demo>` can't represent (a `<!DOCTYPE>`/`<head>`/module script aren't
+renderable fragments), so it's shown separately below rather than folded
+into the live example above:
 
 ```html
 <!DOCTYPE html>
