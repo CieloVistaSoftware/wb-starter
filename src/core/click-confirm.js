@@ -20,7 +20,7 @@
 import { createToast } from '../wb-viewmodels/feedback.js';
 import { getConfig } from './config.js';
 
-const CLICKABLE_SELECTOR = 'button, wb-button, .wb-card--clickable, [clickable]';
+const CLICKABLE_SELECTOR = 'button, wb-button, wb-switch, .wb-card--clickable, [clickable]';
 
 function labelFor(el) {
   // Some elements (e.g. a <wb-button class="wb-alert__close">, which has
