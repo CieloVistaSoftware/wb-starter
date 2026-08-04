@@ -137,6 +137,7 @@ function traceMediaLoads() {
 
 import { behaviors } from '../wb-viewmodels/index.js';
 import { Events } from './events.js';
+import './click-confirm.js';
 import { Theme } from './theme.js';
 import { getNativeBehavior, nativeMap, getElementBehavior } from './tag-map.js';
 import { semanticPropertyMappings } from './semantic-attributes.js';

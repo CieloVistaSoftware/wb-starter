@@ -10,6 +10,7 @@
 
 import { getBehavior, hasBehavior, listBehaviors, preloadBehaviors, getCacheStats, behaviorModules } from '../wb-viewmodels/index.js';
 import { Events } from './events.js';
+import './click-confirm.js';
 import { Theme } from './theme.js';
 import { getConfig, setConfig } from './config.js';
 import { elementMap, nativeMap, extensionMap } from './tag-map.js';
