@@ -56,6 +56,19 @@
        don't sit flush on top of each other. */
     #pg-preview > * + * { margin-top: 1rem; }
     #pg-preview > wb-card, #pg-preview > [class*="wb-card"] { display: block; }
+    /* Sample form example (SAMPLE, below): a bare <label>Text <input></label>
+       with no wrapper div stayed on one line -- <label> is inline by default
+       and neither its text node nor an <input>/<select>/<textarea> child
+       forces a break on its own. John: "we want the label to be on new
+       line." Stack label text above its own field; excludes checkbox/radio
+       labels (`<label><input type=checkbox> Remote</label>`), which are
+       meant to stay inline next to their own text. */
+    #pg-preview label:not(:has(> input[type="checkbox"], > input[type="radio"])) {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 0.25rem;
+    }
     /* YouTube example set (20 real-world URL formats, twentyYouTubeFormats()):
        each embed is its own <div x-youtube>, block-level and full-width by
        default, so all 20 stacked one per row -- a very tall, slow-to-scan
