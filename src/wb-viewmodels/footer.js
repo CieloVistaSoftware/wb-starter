@@ -18,8 +18,11 @@
 // file fetched twice per page load, alongside header.css).
 
 export function footer(element) {
-  // Add base class
-  element.classList.add('wb-footer');
+  // #448: skip the class on a literal <wb-footer> host -- footer.css
+  // selects the `wb-footer` TAG directly for that case now. Still added
+  // for a native <footer> host (autoInject), since footer.css's
+  // `.wb-footer` rules still select it by class.
+  if (element.tagName.toLowerCase() !== 'wb-footer') element.classList.add('wb-footer');
   
   // Get attributes
   const sticky = element.hasAttribute('data-sticky');

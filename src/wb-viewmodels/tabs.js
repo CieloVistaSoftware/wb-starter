@@ -7,7 +7,8 @@
  * -----------------------------------------------------------------------------
  */
 export function tabs(element, options = {}) {
-  element.classList.add('wb-tabs');
+  // #448: no classList.add('wb-tabs') -- no CSS selector anywhere depends
+  // on the bare class.
 
   // 1. Check if structure exists (Pre-rendered from Template)
   let nav = element.querySelector('.wb-tabs__nav');

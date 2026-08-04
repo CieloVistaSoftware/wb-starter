@@ -18,8 +18,12 @@
 // fetched twice per page load).
 
 export function header(element) {
-  // Add base class
-  element.classList.add('wb-header');
+  // #448: skip the class on a literal <wb-header> host -- header.css
+  // selects the `wb-header` TAG directly for that case now. Still added
+  // for a native <header> host (autoInject; header.css's own comment
+  // documents this exact collision), since header.css's `.wb-header` rules
+  // still select it by class.
+  if (element.tagName.toLowerCase() !== 'wb-header') element.classList.add('wb-header');
   
   // Get attributes. Plain `sticky` is canonical (schema property, Law 11);
   // `data-sticky` accepted for back-compat only.

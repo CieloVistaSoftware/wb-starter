@@ -63,7 +63,13 @@ export async function mdhtml(element, options = {}) {
     ...options
   };
 
-  element.classList.add('wb-mdhtml');
+  // #448: skip the bare 'wb-mdhtml' token on a literal <wb-mdhtml> host --
+  // mdhtml.css selects the `wb-mdhtml` TAG directly for that case now.
+  // Still added for every OTHER host -- confirmed live: public/doc-viewer.html
+  // calls mdhtml() directly on a plain <div id="content">, not a
+  // <wb-mdhtml> tag, and mdhtml.css's `.wb-mdhtml` class rules still need to
+  // select that div.
+  if (element.tagName.toLowerCase() !== 'wb-mdhtml') element.classList.add('wb-mdhtml');
   element.classList.add('wb-mdhtml--loading');
 
   try {
