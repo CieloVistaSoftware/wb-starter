@@ -1,8 +1,9 @@
 # Proposal: v4 Golden-Ratio Layout Specification
 
-**Status:** proposal, not adopted. wb-starter is currently v3.0.3 — nothing
-in this document is implemented yet. This is a starting point for design
-discussion, not a description of existing behavior.
+**Status:** partially adopted (#472). `--golden-ratio: 1.618` and the
+`--space-lg`/`--space-xl`/`--space-2xl` calc() chain in section 2 below are
+now live in `src/styles/themes.css`. `--nav-width`/`--content-padding` are
+still proposal-only — not implemented anywhere.
 
 **Provenance:** the golden-ratio layout formulas below are adapted from a
 real, pre-existing document — `Layout Formula System` in
@@ -55,11 +56,12 @@ a visual rhythm consistent as the scale grows.
 }
 ```
 
-Note this only changes `--space-lg`/`--space-xl` — `xs`/`sm`/`md` stay as
-today's real pixel values so small, already-tuned spacing (button padding,
-badge padding, etc.) isn't disturbed. `--space-2xl` isn't shown above;
-if adopted, it would need its own decision (continue the ×1.618 chain, or
-keep it hand-picked like today).
+Note this only changes `--space-lg`/`--space-xl`/`--space-2xl` — `xs`/`sm`/`md`
+stay as today's real pixel values so small, already-tuned spacing (button
+padding, badge padding, etc.) isn't disturbed. As adopted (#472), `--space-2xl`
+continues the ×1.618 chain one more step (`--space-md * golden-ratio^3`,
+~4.236rem) rather than staying hand-picked — see "Open Questions" below,
+now resolved.
 
 ## 3. Where This Would Apply
 
@@ -70,14 +72,15 @@ be defined ONCE in the shared `:root` block (not per-theme — this is
 layout math, not a color choice), the same way `--radius-md` and similar
 structural tokens already work today.
 
-## 4. Open Questions (not yet decided)
+## 4. Open Questions
 
-- Does `--space-2xl` continue the golden-ratio chain (`×1.618` again,
-  landing around 68px) or stay hand-picked?
-- Do any existing components rely on the *current* `--space-lg`/`--space-xl`
-  pixel values in a way that a ~26px/~42px value (vs today's 24px/32px)
-  would visibly break? Needs an audit before adopting, not assumed safe.
-- Is `--nav-width`/`--content-padding` actually needed given wb-starter's
+- ~~Does `--space-2xl` continue the golden-ratio chain~~ Resolved (#472):
+  yes, continues to `~4.236rem`.
+- ~~Do any existing components rely on the *current* `--space-lg`/`--space-xl`
+  pixel values~~ Resolved (#472): checked via `demo-layout-standards.spec.ts`
+  content-panel padding gate before adopting — no new failures vs. the
+  pre-existing baseline.
+- Still open: is `--nav-width`/`--content-padding` actually needed given wb-starter's
   existing layout behaviors (`wb-sidebar`, `wb-container`, etc. — see
   `docs/architecture/proposals/proposed-custom-elements.md`), or is this
   solving a problem that doesn't exist in wb-starter's actual layout system?
