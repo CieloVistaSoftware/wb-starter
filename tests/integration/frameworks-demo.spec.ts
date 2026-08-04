@@ -59,17 +59,26 @@ test.describe('frameworks demo: code examples highlighted + copyable (#241)', ()
 });
 
 /**
- * #324 — DEMOS-AND-DOCS-STANDARDS.md §1/§16/§25.
+ * #324 / #460 — DEMOS-AND-DOCS-STANDARDS.md §1/§16/§25.
  *
  * HTMX needs no build step, so it's real, executable HTML and MUST use <wb-demo>
  * like any other component example (§25's own carve-out for what stays exempt).
  * The React/Vue/Svelte/Angular/SolidJS sections mount via framework-specific
- * script/build output that <wb-demo> can't represent as 1:1 source — they keep the
- * hand-rolled highlighted <pre> pattern (already covered by the #241 test above),
- * and the three that have no live render at all (Svelte/Angular/SolidJS) must carry
- * an explicit "no live render" label rather than silently omitting one.
+ * script/compiler output that <wb-demo> can't represent as 1:1 source — they keep
+ * the hand-rolled highlighted <pre> pattern (already covered by the #241 test
+ * above) instead of <wb-demo>'s paired live+source.
+ *
+ * #460 narrowed which of those actually have NO live render at all: React and Vue
+ * already rendered live via CDN UMD builds. Investigation found Svelte's compiler
+ * and SolidJS's real JSX transform (babel-plugin-jsx-dom-expressions) both run
+ * fine client-side at runtime, with no server build step — so they now render live
+ * too (compiled from the exact source shown in their code sample, at page-load
+ * time). Angular is the only one left that genuinely can't: modern Angular ships
+ * no browser-ready UMD/JIT bundle at all (see DEMOS-AND-DOCS-STANDARDS.md §25 and
+ * #460 for the full investigation), so it keeps the explicit "no live render"
+ * label rather than silently omitting one.
  */
-test.describe('frameworks demo: wb-demo / build-step exception (§25, #324)', () => {
+test.describe('frameworks demo: wb-demo / build-step exception (§25, #324, #460)', () => {
   test('HTMX section renders as a real <wb-demo> (live control + matching source)', async ({ page }) => {
     const errs: string[] = [];
     page.on('pageerror', (e) => errs.push(String(e)));
@@ -104,18 +113,89 @@ test.describe('frameworks demo: wb-demo / build-step exception (§25, #324)', ()
     expect(await page.locator('#vue-demo wb-demo').count()).toBe(0);
   });
 
-  test('Svelte/Angular/SolidJS sections each carry an explicit "no live render" label', async ({ page }) => {
+  test('Svelte section compiles client-side and renders live, interactively, with its real source shown (#460)', async ({ page }) => {
+    const errs: string[] = [];
+    page.on('pageerror', (e) => errs.push(String(e)));
+
+    await page.goto('/demos/frameworks.html', { waitUntil: 'domcontentloaded' });
+
+    const button = page.locator('#svelte-root button');
+    await expect(button, 'svelte/compiler (loaded from esm.sh) must compile and mount a real component').toBeVisible({ timeout: 15000 });
+    await expect(button).toHaveText('Svelte Button');
+
+    // Real Svelte reactivity: clicking increments `count`, re-rendering the
+    // `tooltip="Count: {count}"` attribute — not a static/hand-written button.
+    await expect(button).toHaveAttribute('tooltip', 'Count: 0');
+    await button.click();
+    await button.click();
+    await expect(button).toHaveAttribute('tooltip', 'Count: 2');
+
+    // WB's own x-ripple behavior must have wired up on the compiled-and-mounted
+    // button just like any other WB-enhanced element (adds the wb-ripple class).
+    await expect(button).toHaveClass(/wb-ripple/);
+
+    // x-toast must also have wired up and fire a real, live toast on click —
+    // same "reads the current attribute at click time, not a stale bind-time
+    // snapshot" contract #458's fix guarantees. Two clicks already happened
+    // above, so a toast should already be in the container.
+    await expect(page.locator('.wb-toast-container .wb-toast').last()).toBeVisible();
+
+    // Source: the section's own highlighted pre[language] block, still present.
+    await expect(page.locator('#svelte-demo pre[language]')).toBeVisible();
+
+    // Not wrapped in <wb-demo> — compiled Svelte output isn't 1:1 with the
+    // hand-authored .svelte-equivalent source shown below it.
+    expect(await page.locator('#svelte-demo wb-demo').count()).toBe(0);
+
+    expect(errs, 'no page errors while compiling/mounting the Svelte demo').toEqual([]);
+  });
+
+  test('SolidJS section compiles client-side and renders live, interactively, with its real source shown (#460)', async ({ page }) => {
+    const errs: string[] = [];
+    page.on('pageerror', (e) => errs.push(String(e)));
+
+    await page.goto('/demos/frameworks.html', { waitUntil: 'domcontentloaded' });
+
+    const button = page.locator('#solid-root button');
+    await expect(button, 'babel-plugin-jsx-dom-expressions (loaded from esm.sh via @babel/standalone) must compile and mount a real component').toBeVisible({ timeout: 15000 });
+    await expect(button).toHaveText('SolidJS Button');
+
+    // Real Solid fine-grained reactivity: clicking increments the createSignal-
+    // backed `count`, re-rendering the `tooltip` attribute.
+    await expect(button).toHaveAttribute('tooltip', 'Count: 0');
+    await button.click();
+    await button.click();
+    await button.click();
+    await expect(button).toHaveAttribute('tooltip', 'Count: 3');
+
+    // WB's own x-ripple behavior must have wired up on the compiled-and-mounted
+    // button just like any other WB-enhanced element (adds the wb-ripple class).
+    await expect(button).toHaveClass(/wb-ripple/);
+
+    // Source: the section's own highlighted pre[language] block, still present.
+    await expect(page.locator('#solid-demo pre[language]')).toBeVisible();
+
+    // Not wrapped in <wb-demo> — compiled Solid output isn't 1:1 with the
+    // hand-authored JSX source shown below it.
+    expect(await page.locator('#solid-demo wb-demo').count()).toBe(0);
+
+    expect(errs, 'no page errors while compiling/mounting the SolidJS demo').toEqual([]);
+  });
+
+  test('Angular section is the sole remaining "no live render" exception, with a specific reason (#460)', async ({ page }) => {
     await page.goto('/demos/frameworks.html', { waitUntil: 'domcontentloaded' });
 
     const notes = page.locator('.wb-demo-buildstep-note');
-    await expect(notes).toHaveCount(3);
-    for (let i = 0; i < 3; i++) {
-      await expect(notes.nth(i)).toContainText('No live render');
-      await expect(notes.nth(i)).toContainText('build step');
-    }
+    await expect(notes).toHaveCount(1);
+    await expect(notes.first()).toContainText('No live render');
+    await expect(notes.first()).toContainText('Angular');
+    // The label names the SPECIFIC reason (no browser-ready UMD/JIT bundle since
+    // Ivy) rather than a generic "requires a build step" -- §25 requires the
+    // exception's explanation to be accurate and specific, not just present.
+    await expect(notes.first()).toContainText('UMD');
 
-    // Each still has its highlighted, copyable source (covered structurally by the
-    // #241 test above) and no <wb-demo> wrapper (nothing here can execute live).
+    // Angular's source is still there (still a defect under §16 if it weren't),
+    // just not live and not wrapped in <wb-demo>.
     expect(await page.locator('wb-demo').count()).toBe(1); // HTMX only
   });
 });

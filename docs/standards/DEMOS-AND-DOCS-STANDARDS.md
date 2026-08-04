@@ -219,24 +219,59 @@ Every component example is a `<wb-demo>` — it renders the **live control** AND
 
 - §1/§16 require `<wb-demo>` because it renders the **exact same markup** it shows as
   "source" — the live control and the code below it are structurally guaranteed to
-  match. That guarantee breaks for **framework-integration snippets** (React JSX, Vue
-  SFC/template syntax, Svelte, Angular, SolidJS, …): the *instructive* source is
-  framework code that only produces DOM after a compiler/bundler step this static site
-  doesn't run. Wrapping the post-mount HTML (or the mounting `<script>`) in `<wb-demo>`
-  would show something other than what a developer using that framework would actually
-  write — losing the pedagogical content `<wb-demo>` exists to preserve.
-- For this narrow case ONLY: keep the code sample as a syntax-highlighted, copyable
-  `<pre>` block (§4 still applies in full) and label it explicitly as non-live — e.g.
-  "This example requires a `<Framework>` build step." A code sample with no live render
-  is a defect (§16) **unless** it carries this explicit label; a silently-missing live
-  render is still a defect.
+  match. That guarantee breaks for **framework-integration snippets** whose instructive
+  source only produces DOM after a compile step — wrapping the post-mount HTML (or the
+  mounting `<script>`) in `<wb-demo>` would show something other than what a developer
+  using that framework would actually write, losing the pedagogical content `<wb-demo>`
+  exists to preserve. This does NOT mean "no live render" — React, Vue, Svelte, and
+  SolidJS all get a real live render on `demos/frameworks.html` (see below); they're
+  just not wrapped in `<wb-demo>` specifically, because `<wb-demo>` additionally
+  requires the rendered markup and the shown "source" to be 1:1 identical, which
+  compiled framework output never is.
+- **What counts as "requires a build step" narrowed (#460):** originally this section
+  covered React, Vue, Svelte, Angular, and SolidJS as a group. Investigation (#460)
+  found that's only true for **Angular**. React and Vue already ran live via CDN UMD
+  builds + a plain `<script>` tag (no compiler needed at all). Svelte and SolidJS
+  turned out to be genuinely compilable **client-side, at runtime, with no server build
+  or bundler**:
+  - **Svelte**: `svelte/compiler` is plain JS. Loaded from a CDN (e.g. esm.sh) in a
+    `<script type="module">`, it compiles the exact `.svelte`-equivalent source shown
+    in the page's code sample into a real Svelte component, which is then mounted
+    (after rewriting the compiled output's bare `svelte/internal` import specifiers to
+    resolvable URLs and loading it via a `Blob` + dynamic `import()`).
+  - **SolidJS**: the actual JSX-to-DOM transform Solid ships is a Babel plugin,
+    `babel-plugin-jsx-dom-expressions` (which `babel-preset-solid` merely wraps with
+    Solid's default options) — plain JS, runnable via `@babel/standalone` in the
+    browser (the same in-browser-Babel technique React historically supported via
+    `<script type="text/babel">`). Running that real plugin, at runtime, on the exact
+    source shown produces the same kind of output Solid's own build pipeline would.
+  - Both are the framework's REAL compiler/transform output, generated in-browser
+    instead of ahead of time — not a hand-written imitation of what the framework
+    would produce.
+  - **Angular remains the exception.** Unlike the frameworks above, Angular has not
+    published a browser-ready UMD or JIT-compiler bundle for any version since the Ivy
+    renderer became the default (~v9) — current `@angular/core` ships only deep
+    `esm2022/**/*.mjs` internal modules meant to be resolved and tree-shaken by a
+    bundler (Angular CLI/esbuild), not consumed directly via a CDN `<script>` tag or
+    import map. Reviving Angular's old CLI-free SystemJS quickstart would mean pinning
+    to a years-obsolete, pre-Ivy version using deprecated APIs (ViewEngine, NgModule
+    bootstrap) not reflected in a modern code sample — a misleading, non-representative
+    demo, not an honest one. Angular keeps the "no live render" treatment below.
+- For whichever framework(s) genuinely can't run without a real build step (currently:
+  Angular only) — keep the code sample as a syntax-highlighted, copyable `<pre>` block
+  (§4 still applies in full) and label it explicitly as non-live, with a SPECIFIC
+  reason (not just "requires a build step" — say what's actually missing, e.g. "has not
+  published a browser-ready UMD or JIT bundle since ..."). A code sample with no live
+  render is a defect (§16) **unless** it carries this explicit, specific label; a
+  silently-missing live render is still a defect.
 - This is NOT a blanket exception for anything merely inconvenient to wrap. If the
   snippet is plain, framework-agnostic HTML/attributes that already runs with no build
   step (e.g. an HTMX example — real HTML, `hx-*`/`x-*` attributes, no compiler), it
   MUST use `<wb-demo>` like any other component example — only genuinely non-executable
-  source is exempt. See `demos/frameworks.html` for both cases side by side: the HTMX
-  section uses `<wb-demo>`; the React/Vue/Svelte/Angular/SolidJS sections are the
-  labeled exception. Tracked: #324.
+  source is exempt. See `demos/frameworks.html` for all cases side by side: the HTMX
+  section uses `<wb-demo>`; React/Vue/Svelte/SolidJS render live but aren't wrapped in
+  `<wb-demo>` (compiled/mounted output isn't 1:1 with the shown source); Angular is the
+  sole remaining labeled "no live render" exception. Tracked: #324, #460.
 
 ## 26. `<wb-demo>` code panel is full width on mobile — no layout shift between demos
 

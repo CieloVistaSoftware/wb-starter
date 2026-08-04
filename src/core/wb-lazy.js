@@ -754,7 +754,7 @@ const WB = {
       observe: shouldObserve = true,
       theme = null,
       debug = false,
-      autoInject = false, // Default to false unless specified
+      autoInject, // No default here — see the setConfig() call below for why.
       preload = [] // Array of behavior names to preload
     } = options;
 
@@ -764,10 +764,34 @@ const WB = {
       setConfig('logLevel', 'debug');
     }
 
-    // Set autoInject — unconditional (see wb.js's init() for why: only ever
-    // setting it to `true` left config.js's `true` module default in effect
-    // for any caller passing `autoInject: false` or omitting it).
-    setConfig('autoInject', autoInject);
+    // Set autoInject — ONLY when the caller explicitly passed it, not
+    // unconditionally. #461 (found while investigating #460): WB.init() is
+    // meant to be called defensively/idempotently by every independent
+    // component that uses WB — see any
+    // framework code sample on demos/frameworks.html (React's useEffect,
+    // Vue's/Svelte's onMount(ed), Angular's ngOnInit, Solid's onMount): each
+    // calls a bare `WB.init()` with no options, on top of whatever the
+    // page's own top-level script already configured. Config is a shared,
+    // page-wide singleton (setConfig mutates one module-level object) — if
+    // a bare call unconditionally overwrote autoInject with ITS OWN local
+    // default (`false`), the LAST WB.init() call to actually RESOLVE (not
+    // necessarily the one that ran last in source order — async work like a
+    // client-side compile step can reorder completion) would silently win
+    // and turn autoInject back off for the rest of the page's lifetime.
+    // Confirmed live on demos/frameworks.html: the Svelte/SolidJS sections'
+    // own onMount() calls a bare WB.init() AFTER their async compile step,
+    // which can resolve AFTER the page's bottom-of-body
+    // `WB.init({ autoInject: true })` — clobbering it back to false and
+    // silently breaking auto-injected behaviors (and the site-wide click-
+    // confirmation toast, #456) for the WHOLE page, not just the newly-
+    // mounted element. Only writing when the key is actually present in
+    // `options` preserves both documented contracts at once: an explicit
+    // `{ autoInject: false }` still forces it off (tests/compliance/
+    // autoinject-default-false.spec.ts), and config.js's own module-level
+    // default (false) still applies when NO call on the page ever passes it
+    // at all — but a defensive, options-less re-init from one component
+    // never stomps on a value a DIFFERENT call already explicitly set.
+    if ('autoInject' in options) setConfig('autoInject', autoInject);
 
     // Set theme
     if (theme) {

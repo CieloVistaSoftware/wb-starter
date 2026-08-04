@@ -247,14 +247,97 @@ root.render(e(ReactApp));</code></pre>
     </div>
   </section>
 
-  <!-- Svelte Example (Code Only) -->
-  <section>
+  <!-- Svelte Demo -->
+  <section id="svelte-demo">
     <span class="framework-badge badge-svelte">Svelte</span>
     <h2>Svelte Integration</h2>
     <p>In Svelte, you just add the attributes to your markup. No special bindings needed.</p>
-    <p class="wb-text-secondary wb-demo-buildstep-note" style="font-size: 0.9rem; margin-bottom: 1rem;"><em>No live render: this example requires a Svelte build step (DEMOS-AND-DOCS-STANDARDS.md §25).</em></p>
-    
-    <pre language="html" show-copy><code class="language-html">&lt;script&gt;
+
+    <!-- #460 / DEMOS-AND-DOCS-STANDARDS.md §25 (narrowed to Angular only):
+         Svelte's compiler (svelte/compiler) is plain JS and runs fine client-
+         side -- the module script below compiles the EXACT source shown in
+         the <pre> block below, AT RUNTIME, via svelte/compiler loaded from
+         esm.sh, then mounts the real resulting Svelte component. This is
+         Svelte's own real compiler output, generated in-browser instead of
+         ahead of time by a bundler -- no server build step, same "live
+         render + real source, not paired by <wb-demo>" pattern the
+         React/Vue sections above already use (§16), for the same reason:
+         <wb-demo> requires the rendered markup and its "source" to be
+         identical, and compiled-Svelte-output is not 1:1 with hand-authored
+         Svelte source. -->
+    <div id="svelte-root" style="padding: 1rem; border: 1px dashed #ff3e00; border-radius: 8px; min-height: 2.5rem;"></div>
+
+    <script type="module">
+      import WB from '../src/core/wb-lazy.js';
+
+      const svelteSource = `<script>
+  import WB from 'wb-behaviors';
+  import { onMount } from 'svelte';
+
+  onMount(() => {
+    WB.init();
+  });
+
+  let count = 0;
+  function handleClick() {
+    count += 1;
+  }
+<\/script>
+
+<button
+  class="wb-btn-gradient"
+  x-ripple x-tooltip x-toast
+  tooltip="Count: {count}"
+  message="Svelte count is now {count}"
+  toast-variant="info"
+  on:click={handleClick}
+>
+  Svelte Button
+</button>`;
+
+      const SVELTE_VERSION = '4.2.20';
+      const { compile } = await import(`https://esm.sh/svelte@${SVELTE_VERSION}/compiler`);
+      const { js } = compile(svelteSource, { css: 'injected' });
+      const wbUrl = new URL('../src/core/wb-lazy.js', import.meta.url).href;
+
+      // Rewrite the compiled output's bare import specifiers to resolvable
+      // URLs -- svelte/internal (the compiler's own runtime helpers) and
+      // svelte/internal/disclose-version to the SAME esm.sh version as the
+      // compiler above (a version mismatch between compiler and runtime
+      // isn't guaranteed compatible); the author-facing 'svelte' import
+      // (onMount) to esm.sh's top-level entry; 'wb-behaviors' to this page's
+      // real, already-initialized WB singleton so the demo shares state with
+      // the rest of the page instead of loading a second copy.
+      let code = js.code;
+      code = code.replaceAll('"svelte/internal/disclose-version"', `"https://esm.sh/svelte@${SVELTE_VERSION}/internal/disclose-version"`);
+      code = code.replaceAll('"svelte/internal"', `"https://esm.sh/svelte@${SVELTE_VERSION}/internal"`);
+      code = code.replaceAll("'svelte'", `'https://esm.sh/svelte@${SVELTE_VERSION}'`);
+      code = code.replaceAll("'wb-behaviors'", `'${wbUrl}'`);
+
+      const blobUrl = URL.createObjectURL(new Blob([code], { type: 'text/javascript' }));
+      const { default: SvelteComponent } = await import(blobUrl);
+      const svelteRoot = document.getElementById('svelte-root');
+      new SvelteComponent({ target: svelteRoot });
+
+      // This script's own top-level awaits (fetching the compiler from
+      // esm.sh) race the bottom module script's WB.init({autoInject:true})
+      // -- module scripts execute in document order, but an async import()
+      // suspends only THIS script, so the page-wide init can finish first
+      // and its one-time initial scan can run before this button even
+      // exists yet. Explicitly (and eagerly, bypassing the default
+      // IntersectionObserver lazy gate -- same reasoning as the wb-demo/
+      // pre[language] eager-scans below) scanning the mount point after
+      // mounting guarantees x-ripple/x-tooltip get wired up regardless of
+      // that race, instead of relying on the compiled component's own
+      // onMount()-triggered WB.init() call (which is real and matches the
+      // shown source, but isn't guaranteed to still see a fresh un-scanned
+      // element by the time IT runs either).
+      await WB.scan(svelteRoot, { eager: true });
+    </script>
+
+    <div style="margin-top: 1.5rem;">
+      <p style="margin-bottom: 0.5rem; font-size: 0.9rem; color: var(--text-secondary);">Code used in this demo:</p>
+      <pre language="html" show-copy><code class="language-html">&lt;script&gt;
   import WB from 'wb-behaviors';
   import { onMount } from 'svelte';
 
@@ -268,14 +351,17 @@ root.render(e(ReactApp));</code></pre>
   }
 &lt;/script&gt;
 
-&lt;button 
+&lt;button
   class="wb-btn-gradient"
-  x-ripple x-tooltip
+  x-ripple x-tooltip x-toast
   tooltip="Count: {count}"
+  message="Svelte count is now {count}"
+  toast-variant="info"
   on:click={handleClick}
 &gt;
   Svelte Button
 &lt;/button&gt;</code></pre>
+    </div>
   </section>
 
   <!-- Angular Example (Code Only) -->
@@ -283,8 +369,22 @@ root.render(e(ReactApp));</code></pre>
     <span class="framework-badge badge-angular" style="background: #dd0031; color: #fff;">Angular</span>
     <h2>Angular Integration</h2>
     <p>In Angular, use standard attribute binding. WB behaviors initialize automatically.</p>
-    <p class="wb-text-secondary wb-demo-buildstep-note" style="font-size: 0.9rem; margin-bottom: 1rem;"><em>No live render: this example requires an Angular build step (DEMOS-AND-DOCS-STANDARDS.md §25).</em></p>
-    
+    <!-- #460 / DEMOS-AND-DOCS-STANDARDS.md §25: unlike React, Vue, Svelte, and
+         SolidJS -- each of which still publishes a public API loadable via a
+         single CDN script/module (a UMD build, or, for Svelte/Solid, a
+         compiler that runs client-side) -- Angular has not shipped a
+         browser-ready UMD or JIT-compiler bundle for any version since the
+         Ivy renderer became default (~v9): current @angular/core publishes
+         ONLY deep esm2022/**/*.mjs internal modules meant to be resolved and
+         tree-shaken by a bundler (Angular CLI/esbuild), not consumed
+         directly. The old CLI-free "quickstart" (SystemJS + UMD bundles)
+         that worked through Angular 8 was retired for exactly this reason.
+         Reviving it would mean pinning to a years-obsolete, pre-Ivy Angular
+         version using deprecated APIs (ViewEngine, NgModule bootstrap) not
+         reflected in the code sample below -- a misleading, non-representative
+         demo, not an honest one. See #460 for the full investigation. -->
+    <p class="wb-text-secondary wb-demo-buildstep-note" style="font-size: 0.9rem; margin-bottom: 1rem;"><em>No live render: Angular has not published a browser-ready UMD or JIT bundle since its Ivy renderer became default (~v9) -- current Angular ships only bundler-oriented internal ES modules. This example requires a real Angular build step (Angular CLI/esbuild) (DEMOS-AND-DOCS-STANDARDS.md §25, #460).</em></p>
+
     <pre language="typescript" show-copy><code class="language-typescript">import { Component, OnInit } from '@angular/core';
 import WB from 'wb-behaviors';
 
@@ -313,14 +413,100 @@ export class DemoComponent implements OnInit {
 }</code></pre>
   </section>
 
-  <!-- SolidJS Example (Code Only) -->
-  <section>
+  <!-- SolidJS Demo -->
+  <section id="solid-demo">
     <span class="framework-badge badge-solid" style="background: #2c4f7c; color: #fff;">SolidJS</span>
     <h2>SolidJS Integration</h2>
     <p>SolidJS uses fine-grained reactivity. Initialize WB in <code>onMount</code>.</p>
-    <p class="wb-text-secondary wb-demo-buildstep-note" style="font-size: 0.9rem; margin-bottom: 1rem;"><em>No live render: this example requires a SolidJS build step (DEMOS-AND-DOCS-STANDARDS.md §25).</em></p>
-    
-    <pre language="javascript" show-copy><code class="language-javascript">import { createSignal, onMount } from 'solid-js';
+
+    <!-- #460 / DEMOS-AND-DOCS-STANDARDS.md §25 (narrowed to Angular only):
+         Solid's JSX-to-DOM transform is NOT baked into its compiled npm
+         package -- it's a Babel plugin, babel-plugin-jsx-dom-expressions
+         (the same one babel-preset-solid wraps with Solid's default
+         options), which is plain JS and runs fine in the browser via
+         @babel/standalone (the same in-browser-Babel technique React
+         historically supported via <script type="text/babel">). The module
+         script below runs that REAL transform, at runtime, on the EXACT
+         source shown in the <pre> block below, then mounts the resulting
+         component with solid-js/web's own render(). Not a hand-written
+         imitation of what Solid would produce -- it IS what Solid's real
+         compiler produces, just compiled here instead of ahead of time. -->
+    <div id="solid-root" style="padding: 1rem; border: 1px dashed #2c4f7c; border-radius: 8px; min-height: 2.5rem;"></div>
+
+    <script type="module">
+      import WB from '../src/core/wb-lazy.js';
+
+      const solidSource = `import { createSignal, onMount } from 'solid-js';
+import WB from 'wb-behaviors';
+
+function Counter() {
+  const [count, setCount] = createSignal(0);
+
+  onMount(() => {
+    WB.init();
+  });
+
+  return (
+    <button
+      class="wb-btn-gradient"
+      x-ripple x-tooltip
+      tooltip={\`Count: \${count()}\`}
+      onClick={() => setCount(c => c + 1)}
+    >
+      SolidJS Button
+    </button>
+  );
+}
+
+export default Counter;`;
+
+      const SOLID_VERSION = '1';
+
+      // @babel/standalone attaches window.Babel -- loaded once, shared by
+      // this section's script.
+      if (!window.Babel) {
+        await new Promise((resolve, reject) => {
+          const s = document.createElement('script');
+          s.src = 'https://unpkg.com/@babel/standalone/babel.min.js';
+          s.onload = resolve;
+          s.onerror = () => reject(new Error('Failed to load @babel/standalone'));
+          document.head.appendChild(s);
+        });
+      }
+
+      const { default: jsxDomExpressions } = await import('https://esm.sh/babel-plugin-jsx-dom-expressions');
+      const { code: compiledJs } = window.Babel.transform(solidSource, {
+        presets: [],
+        plugins: [[jsxDomExpressions, { moduleName: 'solid-js/web', generate: 'dom' }]],
+        filename: 'solid-demo.jsx'
+      });
+
+      const wbUrl = new URL('../src/core/wb-lazy.js', import.meta.url).href;
+      let code = compiledJs;
+      code = code.replaceAll('"solid-js/web"', `"https://esm.sh/solid-js@${SOLID_VERSION}/web"`);
+      code = code.replaceAll("'solid-js'", `'https://esm.sh/solid-js@${SOLID_VERSION}'`);
+      code = code.replaceAll("'wb-behaviors'", `'${wbUrl}'`);
+
+      const blobUrl = URL.createObjectURL(new Blob([code], { type: 'text/javascript' }));
+      const [{ default: Counter }, solidWeb] = await Promise.all([
+        import(blobUrl),
+        import(`https://esm.sh/solid-js@${SOLID_VERSION}/web`)
+      ]);
+      const solidRoot = document.getElementById('solid-root');
+      solidWeb.render(Counter, solidRoot);
+
+      // Same race as the Svelte section above (this script's own awaits --
+      // loading @babel/standalone and the jsx-dom-expressions transform --
+      // can finish after the bottom module script's one-time WB.init() scan
+      // already ran): eagerly scan the mount point explicitly instead of
+      // relying solely on the compiled component's own onMount()-triggered
+      // WB.init() call.
+      await WB.scan(solidRoot, { eager: true });
+    </script>
+
+    <div style="margin-top: 1.5rem;">
+      <p style="margin-bottom: 0.5rem; font-size: 0.9rem; color: var(--text-secondary);">Code used in this demo:</p>
+      <pre language="javascript" show-copy><code class="language-javascript">import { createSignal, onMount } from 'solid-js';
 import WB from 'wb-behaviors';
 
 function Counter() {
@@ -341,6 +527,7 @@ function Counter() {
     &lt;/button&gt;
   );
 }</code></pre>
+    </div>
   </section>
 
   <!-- HTMX Example -->

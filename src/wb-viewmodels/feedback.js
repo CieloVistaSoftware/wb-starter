@@ -49,11 +49,21 @@ export function createToast(message, variant = 'info', duration = 3000) {
 export function toast(element, options = {}) {
   if (element._wbToastInit) return () => {};
   element._wbToastInit = true;
-  const message = options.message || element.getAttribute('message') || element.getAttribute('toast-message') || 'Notification';
-  const variant = options.variant || element.getAttribute('toast-variant') || element.getAttribute('variant') || 'info';
-  const duration = parseInt(options.duration || element.getAttribute('duration') || '3000');
 
+  // #458: message/variant/duration are read INSIDE showToast (at click time),
+  // not captured once here at bind time. A framework (React, etc.) that
+  // re-renders and updates these attributes after the initial mount needs
+  // each click to see the CURRENT attribute values -- the _wbToastInit guard
+  // above means toast() itself never re-runs for this element, so any value
+  // captured out here would stay frozen at whatever it was on first bind
+  // forever (confirmed live: a React counter's message attribute changed on
+  // every render, but every toast still showed the count from the very first
+  // render). options.message/variant/duration (explicit programmatic
+  // overrides) are still honored the same way on every click.
   const showToast = () => {
+    const message = options.message || element.getAttribute('message') || element.getAttribute('toast-message') || 'Notification';
+    const variant = options.variant || element.getAttribute('toast-variant') || element.getAttribute('variant') || 'info';
+    const duration = parseInt(options.duration || element.getAttribute('duration') || '3000');
     createToast(message, variant, duration);
     element.dispatchEvent(new CustomEvent('wb:toast:show', {
       bubbles: true,
