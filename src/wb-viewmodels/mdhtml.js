@@ -51,11 +51,91 @@ async function loadMarked() {
   return markedPromise;
 }
 
+// #295: a <table> given `display: block` (mdhtml.css, so wide tables scroll
+// inside their own container instead of blowing out the page) is STILL a
+// table-layout box internally -- its thead/tr/th children keep their table
+// display values, and browsers may still size the table to its min-content
+// width (driven by non-wrapping columns) rather than honoring width/
+// max-width:100% on the table element itself. Confirmed live: at 375px,
+// V3-GUIDE.md's "Mental model" table rendered its <thead>/<tr>/<th> boxes at
+// ~655px wide, well past the viewport, even with the table's own
+// overflow-x:auto/max-width:100% in place. Wrapping the table in a plain
+// block-level <div> and moving the scroll/width containment onto THAT div
+// sidesteps the quirk entirely -- a plain block box is never subject to
+// table intrinsic-sizing rules, so it reliably clips/scrolls its content.
+function wrapTables(root) {
+  root.querySelectorAll('table').forEach((table) => {
+    if (table.parentElement && table.parentElement.classList.contains('wb-mdhtml__table-wrap')) return;
+    const wrapper = document.createElement('div');
+    wrapper.className = 'wb-mdhtml__table-wrap';
+    table.parentNode.insertBefore(wrapper, table);
+    wrapper.appendChild(table);
+  });
+}
+
+// #295: hyphenated identifiers/compound words (e.g. `x-toast`, `wb-card`,
+// well-known) get split at the hyphen when the browser wraps text -- the
+// default Unicode line-breaking algorithm (UAX #14) treats a bare ASCII
+// hyphen between two word characters as a normal soft line-break
+// opportunity. Confirmed live: none of overflow-wrap (anywhere/break-word/
+// normal) or word-break (normal/keep-all -- keep-all is CJK-only per MDN)
+// stop the break; it isn't a CSS misconfiguration. The only reliable fix is
+// swapping the literal '-' for a NON-BREAKING HYPHEN (U+2011), which renders
+// visually identical in every font actually used here but is never treated
+// as a break opportunity.
+//
+// Applied to everything EXCEPT inside <pre>: pre's copy-to-clipboard button
+// (pre.js) copies element.textContent verbatim, so mutating hyphens there
+// would silently corrupt copied code with an invisible non-ASCII character.
+// Code blocks are also allowed to wrap/scroll more aggressively by design
+// (§6) so the mid-word break there is a separate, already-accepted
+// tradeoff, not this bug.
+//
+// ALSO skipped: any text node that looks like a repo path or filename
+// (contains '/', or a dotted extension like ".md"/".html"). doc-viewer.html's
+// own linkifyDocPaths() and the "auto-link path references" feature match
+// `code`/`strong`/`b` text verbatim against a path regex AFTER this function
+// has already run -- swapping a hyphen for U+2011 inside e.g.
+// "docs/NOTES-V3-GUIDE.md" silently broke that match (confirmed live: three
+// existing tests -- doc-viewer-pathlinks, v3-guide-doc-links,
+// behaviors/docs-links's #125 case -- went from passing to failing the
+// moment this ran unconditionally). Exact hyphen preservation for a
+// path/filename matters more than the line-break cosmetic there.
+const HYPHEN_RUN = /\b[A-Za-z0-9]+(?:-[A-Za-z0-9]+)+\b/g;
+const PATH_LIKE = /[\\/]|\.[A-Za-z0-9]{1,5}\b/;
+function protectHyphenatedTokens(root) {
+  const walker = document.createTreeWalker(root, NodeFilter.SHOW_TEXT, {
+    acceptNode(node) {
+      if (!node.nodeValue || node.nodeValue.indexOf('-') === -1) return NodeFilter.FILTER_REJECT;
+      if (node.parentElement && node.parentElement.closest('pre')) return NodeFilter.FILTER_REJECT;
+      if (PATH_LIKE.test(node.nodeValue)) return NodeFilter.FILTER_REJECT;
+      return NodeFilter.FILTER_ACCEPT;
+    }
+  });
+  const nodes = [];
+  let n;
+  while ((n = walker.nextNode())) nodes.push(n);
+  nodes.forEach((node) => {
+    const replaced = node.nodeValue.replace(HYPHEN_RUN, (m) => m.replace(/-/g, '‑'));
+    if (replaced !== node.nodeValue) node.nodeValue = replaced;
+  });
+}
+
 export async function mdhtml(element, options = {}) {
   const config = {
     src: options.src || element.dataset.src || element.getAttribute('src'),
     sanitize: options.sanitize ?? (element.getAttribute('sanitize') !== 'false'),
-    breaks: options.breaks ?? (element.getAttribute('breaks') !== 'false'),
+    // John: "all text must flow until the end of the sentence, no 1/2 line
+    // breaks" -- this defaulted to `true` (marked's `breaks` option: every
+    // single \n in the SOURCE becomes a hard <br>), so any .md file authored
+    // with the common ~80-char hard-wrap convention rendered with visible
+    // line breaks at those arbitrary source positions instead of flowing to
+    // fill the actual container width -- standard CommonMark/GFM behavior
+    // (and what every other markdown renderer does) treats a single
+    // newline as just whitespace within a paragraph; only a blank line
+    // starts a new paragraph. Default now matches that; opt IN per-instance
+    // via `breaks="true"` if a specific doc genuinely wants hard breaks.
+    breaks: options.breaks ?? (element.getAttribute('breaks') === 'true'),
     gfm: options.gfm ?? (element.getAttribute('gfm') !== 'false'),
     headerIds: options.headerIds ?? (element.getAttribute('header-ids') !== 'false'),
     highlight: options.highlight ?? element.getAttribute('highlight'),
@@ -249,6 +329,11 @@ export async function mdhtml(element, options = {}) {
     element.classList.add('wb-mdhtml--loaded');
     // Runtime/test hook: mark hydrated so tests can wait deterministically
     try { element.setAttribute('x-hydrated', '1'); element.dispatchEvent(new CustomEvent('wb:mdhtml:hydrated', { bubbles: true })); } catch (e) { /* best-effort */ }
+
+    // #295: contain wide tables in their own scroll box and keep
+    // hyphenated tokens whole -- see the two functions' own comments above.
+    try { wrapTables(element); } catch (e) { /* best-effort, never break rendering */ }
+    try { protectHyphenatedTokens(element); } catch (e) { /* best-effort, never break rendering */ }
 
     // Add captions to code blocks (System-wide)
     if (config.captions !== false) {
