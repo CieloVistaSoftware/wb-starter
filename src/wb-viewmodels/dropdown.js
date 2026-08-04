@@ -35,7 +35,12 @@ export function dropdown(element, options = {}) {
     ...options
   };
 
-  element.classList.add('wb-dropdown');
+  // #448: skip the class on a literal <wb-dropdown> host -- dropdown.css
+  // selects the `wb-dropdown` TAG directly for that case now. Still added
+  // for every OTHER host (x-dropdown on a <button>, per demos/site/
+  // interactive.html), since dropdown.css's `.wb-dropdown`/`.wb-dropdown.open`
+  // rules still select those by class.
+  if (element.tagName.toLowerCase() !== 'wb-dropdown') element.classList.add('wb-dropdown');
   element.style.position = 'relative';
   element.style.display = 'inline-block';
 

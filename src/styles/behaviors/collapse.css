@@ -6,7 +6,9 @@
  * -----------------------------------------------------------------------------
  */
 
-.wb-collapse {
+/* #448: tag selector -- collapse() no longer adds a redundant classList.add
+   ('wb-collapse') that just duplicated the <wb-collapse> tag name. */
+wb-collapse {
   display: block;
 }
 

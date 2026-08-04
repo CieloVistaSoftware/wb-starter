@@ -17,7 +17,10 @@ export function collapse(element, options = {}) {
     ...options
   };
 
-  element.classList.add('wb-collapse');
+  // #448: no classList.add('wb-collapse') -- collapse.css selects the
+  // `wb-collapse` TAG directly now, so the class just duplicated the tag
+  // name. (No live demo/page usage of x-collapse on a non-<wb-collapse>
+  // element was found.)
 
   // If target is specified, act as a remote trigger
   if (config.target) {

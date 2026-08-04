@@ -28,6 +28,12 @@ wb-code-card {
    still needed to prevent wide code samples from blowing out the page
    width). Flat selector, not CSS nesting -- no other file in this
    codebase uses nesting syntax. */
+/* #448: also match a literal <wb-dropdown open> host directly (tag
+   selector) -- dropdown() no longer adds a same-named `.wb-dropdown` class
+   to that specific host, only to non-<wb-dropdown> hosts (e.g. x-dropdown
+   on a <button>), which the `.wb-dropdown.open` half of this selector still
+   covers. */
+wb-demo:has(wb-dropdown.open),
 wb-demo:has(.wb-dropdown.open) {
   overflow: visible;
 }

@@ -26,8 +26,12 @@ async function inject(page, html: string) {
     await (window as any).WB.scan(container);
     return Array.from(container.querySelectorAll('[id]')).map((el) => el.id);
   }, html);
+  // #448: a literal <wb-switch> host no longer carries a same-named
+  // `.wb-switch` class -- switch.css selects the tag directly. Wait for the
+  // real built structure (the track switchInput() creates) instead, which
+  // proves the behavior actually ran.
   await page.waitForFunction(
-    (elementIds: string[]) => elementIds.every((id) => document.getElementById(id)?.classList.contains('wb-switch')),
+    (elementIds: string[]) => elementIds.every((id) => document.getElementById(id)?.querySelector('.wb-switch__track')),
     ids,
     { timeout: 5000 }
   );

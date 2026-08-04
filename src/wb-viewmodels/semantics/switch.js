@@ -41,7 +41,12 @@ export function switchInput(element, options = {}) {
   // Schema-built <wb-switch> gets this from its baseClass; the self-built
   // path above bypasses schema entirely, so add it explicitly here too —
   // makes `.wb-switch` a reliable selector regardless of dispatch path.
-  host.classList.add('wb-switch');
+  // #448: skip it specifically for a literal <wb-switch> HOST -- that just
+  // duplicated the tag name, and switch.css now also selects the
+  // `wb-switch` TAG directly. Still added for the bare-<input>/self-built
+  // x-switch-on-a-<div> cases above, which aren't the `wb-switch` tag and
+  // still need the class.
+  if (host.tagName.toLowerCase() !== 'wb-switch') host.classList.add('wb-switch');
 
   // switch.schema.json declares size/variant with appliesClass:
   // "wb-switch--{{value}}" -- but that's SCHEMA-BUILDER's mechanism, and

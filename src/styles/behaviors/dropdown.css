@@ -6,6 +6,12 @@
  * -----------------------------------------------------------------------------
  */
 
+/* #448: `wb-dropdown` TAG selector added alongside the `.wb-dropdown`
+   class -- dropdown() (dropdown.js) still adds `.wb-dropdown` for the
+   x-dropdown-on-any-element case (e.g. demos/site/interactive.html's
+   `<button x-dropdown>`), but skips it for a literal <wb-dropdown> host,
+   which now matches via tag instead. */
+wb-dropdown,
 .wb-dropdown {
   position: relative;
   display: inline-block;
@@ -40,6 +46,7 @@
   margin-top: 4px;
 }
 
+wb-dropdown.open .wb-dropdown-menu,
 .wb-dropdown.open .wb-dropdown-menu {
   display: block;
 }

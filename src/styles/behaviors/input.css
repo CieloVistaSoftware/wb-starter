@@ -3,12 +3,19 @@
  * -----------------------------------------------------------------------------
  * Extracted from components.css (Post-Phase 3 cleanup)
  * Works with src/wb-viewmodels/semantics/input.js
+ *
+ * #448: `wb-select` below is a TAG selector, not a class -- select()
+ * (semantics/select.js) no longer adds a classList.add('wb-select') that
+ * just duplicated the <wb-select> tag name (that container is only ever
+ * the <wb-select> custom tag itself; a native <select> never reaches that
+ * code path at all). `.wb-input`/`.wb-textarea` are unrelated components,
+ * untouched.
  * -----------------------------------------------------------------------------
  */
 
 .wb-input,
 .wb-textarea,
-.wb-select {
+wb-select {
   display: block;
   width: 100%;
   padding: 0.5rem 0.75rem;
@@ -51,7 +58,7 @@ input[type="month"]::-webkit-calendar-picker-indicator {
 
 .wb-input:focus,
 .wb-textarea:focus,
-.wb-select:focus {
+wb-select:focus {
   border-color: var(--primary);
   outline: 0;
   box-shadow: 0 0 0 3px hsla(var(--hue-primary), var(--saturation-primary), var(--lightness-primary), 0.2);
@@ -65,7 +72,7 @@ input[type="month"]::-webkit-calendar-picker-indicator {
 
 .wb-input:disabled,
 .wb-textarea:disabled,
-.wb-select:disabled {
+wb-select:disabled {
   background-color: var(--bg-secondary);
   opacity: 1;
   cursor: not-allowed;

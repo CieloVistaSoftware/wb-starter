@@ -94,7 +94,10 @@ function buildWbSelect(element, options) {
   const clearable = options.clearable ?? element.hasAttribute('clearable');
 
   element.innerHTML = '';
-  element.classList.add('wb-select');
+  // #448: no bare 'wb-select' token -- input.css selects the `wb-select`
+  // TAG directly now (this container is only ever the <wb-select> custom
+  // tag itself; a native <select> takes the early-return branch above and
+  // never reaches this function at all, so the class never mattered for it).
   if (size !== 'md') element.classList.add(`wb-select--${size}`);
   if (variant !== 'default') element.classList.add(`wb-select--${variant}`);
 
@@ -144,7 +147,7 @@ function buildWbSelect(element, options) {
   return () => {
     if (cleanupField) cleanupField();
     element.innerHTML = '';
-    element.classList.remove('wb-select', `wb-select--${size}`, `wb-select--${variant}`);
+    element.classList.remove(`wb-select--${size}`, `wb-select--${variant}`);
     delete element.wbSelect;
   };
 }

@@ -55,7 +55,9 @@ export function themecontrol(element, options = {}) {
     return () => {};
   }
 
-  element.classList.add('wb-themecontrol');
+  // #448: no classList.add('wb-themecontrol') -- themecontrol.css selects
+  // the `wb-themecontrol` TAG directly now, so it just duplicated the tag
+  // name.
 
   // Create the control UI
   const wrapper = document.createElement('div');
@@ -133,7 +135,6 @@ export function themecontrol(element, options = {}) {
   // Mark as ready
   // Cleanup
   return () => {
-    element.classList.remove('wb-themecontrol');
     select.removeEventListener('change', onChange);
     wrapper.remove();
     delete element.wbThemeControl;

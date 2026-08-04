@@ -6,7 +6,10 @@
  * -----------------------------------------------------------------------------
  */
 
-.wb-themecontrol {
+/* #448: tag selector -- themecontrol() no longer adds a redundant
+   classList.add('wb-themecontrol') that just duplicated the
+   <wb-themecontrol> tag name. */
+wb-themecontrol {
   display: inline-block;
 }
 

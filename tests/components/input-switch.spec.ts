@@ -77,9 +77,11 @@ test.describe('Input and Switch Behaviors', () => {
     // We look for the wrapper that the behavior creates
     
     // Wait for transformation
-    await page.waitForSelector('.wb-switch');
-    
-    const switchWrapper = page.locator('.wb-switch');
+    // #448: wb-switch no longer carries a same-named `.wb-switch` class on
+    // a literal <wb-switch> host -- select the tag directly.
+    await page.waitForSelector('wb-switch');
+
+    const switchWrapper = page.locator('wb-switch');
     await expect(switchWrapper).toBeVisible();
     
     // Check for the slider element
