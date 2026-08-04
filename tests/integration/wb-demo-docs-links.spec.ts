@@ -62,4 +62,36 @@ test.describe('wb-demo Docs: links resolve to real docs (#262)', () => {
       expect(h, 'href must not nest doc-viewer under /public/public/').not.toMatch(/public\/public\//);
     }
   });
+
+  // #454: siteRoot() (demo.js) only recognized public/, demos/, pages/,
+  // articles/ as site-root-relative directories. Pages under tests/fixtures/
+  // (e.g. this one) fell through to a fallback that left siteRoot() as
+  // '/tests/fixtures/' instead of '/', 404ing the docs/manifest.json fetch
+  // and silently suppressing every wb-demo Docs: link/badge on the page even
+  // though the markup was correctly wrapped in <wb-demo>...</wb-demo> (fixed
+  // by adding 'tests/fixtures' to siteRoot()'s regex). Covers the per-card
+  // badge form specifically ('.wb-demo__card-doc-link') since every example
+  // on this fixture is a real wb-* grid child, not the shared-line fallback.
+  test('tests/fixtures/cards-permutation-matrix.html: every card doc-link badge opens a real doc', async ({
+    page,
+    baseURL,
+  }) => {
+    await page.goto('/tests/fixtures/cards-permutation-matrix.html', { waitUntil: 'domcontentloaded' });
+    await expect
+      .poll(() => page.locator('wb-demo .wb-demo__grid').count(), { timeout: 30000 })
+      .toBeGreaterThan(0);
+    await expect
+      .poll(() => page.locator('.wb-demo__card-doc-link').count(), { timeout: 30000 })
+      .toBeGreaterThan(0);
+    const hrefs = await page.$$eval('.wb-demo__card-doc-link', (as) => as.map((a) => a.getAttribute('href') || ''));
+    // Every one of the 65 <wb-demo> blocks on this page wraps a card, so this
+    // must produce a real per-instance badge count, not just a nonzero one.
+    expect(hrefs.length).toBeGreaterThanOrEqual(65);
+    await assertAllResolve(hrefs, baseURL);
+    for (const h of hrefs) {
+      expect(h, 'href must point back to site root, not nest under /tests/fixtures/').not.toMatch(
+        /tests\/fixtures\/(public|docs)\//
+      );
+    }
+  });
 });
