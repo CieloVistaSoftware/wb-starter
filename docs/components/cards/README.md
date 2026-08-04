@@ -6,7 +6,7 @@ This folder contains documentation for all card components.
 
 | Component | Tag | Purpose |
 |-----------|-----|---------|
-| [card](./card.md) | `<wb-card>` | Base card |
+| [card](./card.md) | `<wb-card>` | Default card |
 | [cardimage](./cardimage.md) | `<wb-cardimage>` | Image card |
 | [cardvideo](./cardvideo.md) | `<wb-cardvideo>` | Video card |
 | [cardbutton](./cardbutton.md) | `<wb-cardbutton>` | Action buttons |

@@ -2,7 +2,7 @@
 [Edit this file](./cards.readme.md)
 
 ## Overview
-The Cards component library provides 19 specialized card variants for displaying content in organized, visually appealing containers. All card components inherit from the base card behavior and use semantic HTML.
+The Cards component library provides 19 specialized card variants for displaying content in organized, visually appealing containers. All card components compose the shared `card` behavior and use semantic HTML.
 
 ---
 
@@ -34,7 +34,7 @@ The Cards component library provides 19 specialized card variants for displaying
 
 ## Common Attributes
 
-All card components support these base attributes:
+All card components support these common attributes:
 
 | Attribute | Type | Default | Description |
 |-----------|------|---------|-------------|
@@ -91,12 +91,12 @@ All card variants share the `card` behavior and compose additional functionality
 
 ## Schema
 - See: [src/wb-models/card.schema.json](../../src/wb-models/card.schema.json)
-- Defines base properties shared by all card variants
+- Defines common properties shared by all card variants
 
 ---
 
 ## Implementation
-- **Base Behavior**: [src/wb-viewmodels/card.js](../../src/wb-viewmodels/card.js)
+- **Shared Behavior**: [src/wb-viewmodels/card.js](../../src/wb-viewmodels/card.js)
 - **Styles**: [src/styles/components/card.css](../../src/styles/components/card.css)
 - **Tests**: Component tests in `tests/behaviors/ui/card.spec.ts`
 
@@ -104,4 +104,4 @@ All card variants share the `card` behavior and compose additional functionality
 
 ## See Also
 - [Cards Index](./cards.index.md) - Detailed architecture overview
-- [Base Card Documentation](./card.md) - Complete API reference
+- [Card Documentation](./card.md) - Complete API reference

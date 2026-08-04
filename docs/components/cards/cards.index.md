@@ -4,28 +4,27 @@ All card variants use the **WBServices pattern** with **Light DOM architecture**
 
 ## Architecture
 
-```
-cardBase (shared foundation)
-├── card            - Card component
-├── cardimage       - Card with featured image
-├── cardvideo       - Card with video player
-├── cardbutton      - Card with action buttons
-├── cardhero        - Full-width hero card
-├── cardprofile     - User profile card
-├── cardpricing     - Pricing plan card
-├── cardstats       - Statistics/metric card
-├── cardtestimonial - Quote/testimonial card
-├── cardproduct     - E-commerce product card
-├── cardnotification- Alert/notification card
-├── cardfile        - File/document card
-├── cardlink        - Clickable link card
-├── cardhorizontal  - Side-by-side layout
-├── cardoverlay     - Image with text overlay
-├── cardexpandable  - Expandable/collapsible
-├── cardminimizable - Minimizable card
-├── carddraggable   - Draggable/movable card
-└── cardportfolio   - Portfolio/contact card
-```
+All card variants compose the shared `card` behavior and Light-DOM markup:
+
+- card            - Card component
+- cardimage       - Card with featured image
+- cardvideo       - Card with video player
+- cardbutton      - Card with action buttons
+- cardhero        - Full-width hero card
+- cardprofile     - User profile card
+- cardpricing     - Pricing plan card
+- cardstats       - Statistics/metric card
+- cardtestimonial - Quote/testimonial card
+- cardproduct     - E-commerce product card
+- cardnotification- Alert/notification card
+- cardfile        - File/document card
+- cardlink        - Clickable link card
+- cardhorizontal  - Side-by-side layout
+- cardoverlay     - Image with text overlay
+- cardexpandable  - Expandable/collapsible
+- cardminimizable - Minimizable card
+- carddraggable   - Draggable/movable card
+- cardportfolio   - Portfolio/contact card
 
 ## Usage Patterns
 
@@ -49,7 +48,7 @@ cardBase (shared foundation)
 </article>
 </wb-demo>
 
-## Base Card Properties (Inherited by All)
+## Common Card Properties
 
 | Property | Type | Default | Description |
 |----------|------|---------|-------------|
@@ -65,7 +64,7 @@ cardBase (shared foundation)
 
 | Card Variant | Primary Element | Secondary Elements |
 |--------------|----------------|-------------------|
-| card (base) | `<article>` | `<header>`, `<main>`, `<footer>` |
+| card (default) | `<article>` | `<header>`, `<main>`, `<footer>` |
 | cardtestimonial | `<article>` | `<blockquote>`, `<cite>`, `<figure>` |
 | cardnotification | `<aside>` | - |
 | cardportfolio | `<article>` | `<address>`, `<figure>` |
@@ -163,7 +162,7 @@ src/wb-viewmodels/
 
 ## Documentation
 
-### Base & Common
+### Card & Common
 - [card.md](./card.md) - Card component
 - [cardbutton.md](./cardbutton.md) - Action buttons
 - [cardimage.md](./cardimage.md) - Featured image
