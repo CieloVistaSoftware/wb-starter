@@ -23,12 +23,26 @@ import { getConfig } from './config.js';
 const CLICKABLE_SELECTOR = 'button, wb-button, .wb-card--clickable, [clickable]';
 
 function labelFor(el) {
-  const text = (el.textContent || '').trim().replace(/\s+/g, ' ');
+  // Some elements (e.g. a <wb-button class="wb-alert__close">, which has
+  // position:relative) end up hosting an unrelated overlay as a real DOM
+  // CHILD rather than a sibling (a wb-demo "Docs:" badge, in the confirmed
+  // live case) -- el.textContent would fold that in too ("×📖" instead of
+  // "×"). Strip known overlay/badge children before reading text.
+  const clone = el.cloneNode(true);
+  clone.querySelectorAll('.wb-demo__card-doc-link, .wb-demo__links').forEach((n) => n.remove());
+  const text = (clone.textContent || '').trim().replace(/\s+/g, ' ');
   if (text) return text.length > 60 ? text.slice(0, 57) + '…' : text;
   return el.getAttribute('title') || el.getAttribute('aria-label') || el.tagName.toLowerCase();
 }
 
 if (typeof document !== 'undefined') {
+  // CAPTURE phase, not bubble -- must run BEFORE the target's own click
+  // handlers (bubble-phase, incl. card.js's built-in createToast() calls)
+  // fire, so `toastCountBefore` below is captured prior to this click's
+  // own side effects. A bubble-phase document listener would run AFTER
+  // the target's handlers already executed, making the before/after
+  // comparison always equal (always "already has a toast") -- confirmed
+  // this the hard way while building the dedup check itself.
   document.addEventListener('click', (e) => {
     if (!getConfig('autoInject')) return;
     const target = e.target.closest(CLICKABLE_SELECTOR);
@@ -38,14 +52,33 @@ if (typeof document !== 'undefined') {
     if (target.hasAttribute('x-toast') || target._wbToastInit) return;
     // Never confirm a click that landed on the toast UI itself.
     if (target.closest('.wb-toast, .wb-toast-container')) return;
-    // Demo TOOLING chrome, not the content being demonstrated -- the code
-    // panel's own copy button already shows its own "Code copied to
-    // clipboard" toast via a direct createToast() call (not x-toast, so
-    // the check above misses it), and a "Docs:" link / theme switcher
-    // isn't a demo "action" a confirmation is meaningful for. Confirmed
-    // live: without this, clicking a wb-demo code panel's copy button
-    // fired BOTH its own toast and this generic one.
-    if (target.closest('.x-pre-wrapper, .wb-demo__links, .wb-demo__card-doc-link, wb-themecontrol')) return;
-    createToast(`Clicked: ${labelFor(target)}`, 'info', 2000);
-  });
+    // Demo TOOLING chrome, not the content being demonstrated -- a "Docs:"
+    // link / theme switcher isn't a demo "action" a confirmation is
+    // meaningful for.
+    if (target.closest('.wb-demo__links, .wb-demo__card-doc-link, wb-themecontrol')) return;
+
+    // Most wb-card-family components (cardbutton, cardproduct, cardfile,
+    // cardexpandable, cardminimizable, a plain clickable card, ...) already
+    // call createToast() directly inside their own click handling
+    // (card.js) -- NOT via the x-toast attribute, so the check above never
+    // catches them. Confirmed live: clicking wb-cardbutton's primary
+    // button fired both its own toast (the button's own label, e.g. "OK")
+    // AND this generic one ("Clicked: OK") stacked on top.
+    //
+    // Click listeners run synchronously in registration/bubble order, so
+    // by the time THIS document-level bubble listener's callback body
+    // executes, the target's own (element-level, earlier-run) handler has
+    // already finished -- but createToast()'s DOM insertion is itself
+    // synchronous, so a toast it just created already exists in the DOM
+    // RIGHT NOW too. Defer one tick (setTimeout 0) and re-check: if the
+    // toast count grew since this click started, something else already
+    // confirmed it -- skip, rather than maintain a brittle per-component
+    // exclusion list that has to be updated every time a new card variant
+    // adds its own toast.
+    const toastCountBefore = document.querySelectorAll('.wb-toast').length;
+    setTimeout(() => {
+      if (document.querySelectorAll('.wb-toast').length > toastCountBefore) return;
+      createToast(`Clicked: ${labelFor(target)}`, 'info', 2000);
+    }, 0);
+  }, true);
 }
