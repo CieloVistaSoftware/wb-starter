@@ -50,7 +50,12 @@ export function audio(element, options = {}) {
   };
 
   injectAudioStyles();
-  element.classList.add('wb-audio');
+  // #448: skip the class on a literal <wb-audio> host -- audio.css selects
+  // the `wb-audio` TAG directly for that case now. Still added for a
+  // native <audio> host (autoInject's native.audio entry, tag 'audio' !==
+  // 'wb-audio'), since audio.css's `.wb-audio` rules still select it by
+  // class.
+  if (element.tagName.toLowerCase() !== 'wb-audio') element.classList.add('wb-audio');
   
   // Dark studio look
   Object.assign(element.style, {

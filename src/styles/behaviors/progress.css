@@ -10,6 +10,11 @@
    BASE PROGRESS BAR (from demo.css)
    ═══════════════════════════════════════════════════════════════════════════ */
 
+/* #448: `wb-progress` TAG selector added alongside the `.wb-progress`
+   class -- progress() skips the bare 'wb-progress' token only for a literal
+   <wb-progress> host; a native <progress> (autoInject) or a plain
+   <div x-progress> still gets the class, and still needs it selected here. */
+wb-progress,
 .wb-progress {
   position: relative;
   height: 6px;
@@ -231,4 +236,5 @@
 }
 
 /* Custom <wb-progress> must be block to honor height (issue #127) */
+wb-progress,
 .wb-progress { display: block; width: 100%; }

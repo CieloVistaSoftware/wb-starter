@@ -41,7 +41,14 @@ export function table(element, options = {}) {
     filteredData = [...currentData];
   }
 
-  tableEl.classList.add('wb-table');
+  // #448: skip the class specifically when tableEl IS the <wb-table> HOST
+  // itself (a <wb-table> used with no nested <table> child) -- data.css
+  // selects the `wb-table` TAG directly for that case now. Still added when
+  // tableEl is a native <table> (either autoInject's native.table entry, or
+  // the child <table> a <wb-table> wraps), since data.css's `table.wb-table`/
+  // `.wb-table > table` rules still need the class there (a native `table`
+  // tag can never match a `wb-table` tag selector).
+  if (tableEl.tagName.toLowerCase() !== 'wb-table') tableEl.classList.add('wb-table');
   if (config.striped) tableEl.classList.add('wb-table--striped');
   if (config.hover) tableEl.classList.add('wb-table--hover');
   if (config.bordered) tableEl.classList.add('wb-table--bordered');

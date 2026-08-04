@@ -259,7 +259,12 @@ export function searchField(element, options = {}) {
   // matched, so host-level styling silently never applied (#359).
   const size = element.getAttribute('size') || 'md';
   const variant = element.getAttribute('variant') || 'default';
-  element.classList.add('wb-search');
+  // #448: no bare 'wb-search' token on this CONTAINER host -- it just
+  // duplicated the <wb-search> tag name. search.css's `.wb-search` class
+  // rule stays fully intact and unconverted: it's still legitimately
+  // needed below, since search(input, ...) (the child <input> this
+  // container wraps) independently adds that same class to itself, and
+  // that input's tag is never `wb-search`.
   if (size !== 'md') element.classList.add(`wb-search--${size}`);
   if (variant !== 'default') element.classList.add(`wb-search--${variant}`);
   if (element.hasAttribute('disabled')) element.classList.add('wb-search--disabled');

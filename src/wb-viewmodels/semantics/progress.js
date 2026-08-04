@@ -39,7 +39,14 @@ export function progress(element, options = {}) {
       ? (showValue ? `${customLabel} ${Math.round(pct)}%` : customLabel)
       : `${Math.round(pct)}%`;
 
-    element.classList.add('wb-progress', `wb-progress--${size}`, `wb-progress--${variant}`);
+    // #448: skip the bare 'wb-progress' token on a literal <wb-progress>
+    // host -- progress.css selects the `wb-progress` TAG directly for that
+    // case now. Still added for every OTHER host (x-progress/x-progressbar
+    // on a plain <div>, per this file's own docs), since progress.css's
+    // `.wb-progress` rules still select those by class. The size/variant
+    // modifier classes are never redundant either way and always apply.
+    if (element.tagName.toLowerCase() !== 'wb-progress') element.classList.add('wb-progress');
+    element.classList.add(`wb-progress--${size}`, `wb-progress--${variant}`);
     if (showLabel) element.classList.add('wb-progress--labeled');
     if (indeterminate) element.classList.add('wb-progress--indeterminate');
     // .wb-progress--animated is a DESCENDANT selector in progress.css

@@ -13,6 +13,12 @@
  * Fixed with `.wb-mdhtml pre:not(.x-pre)` — once pre.js has enhanced a
  * block it manages its own complete padding via .x-pre, so mdhtml.css's
  * generic rule should never apply to it at all.
+ *
+ * #448: mdhtml.css's selectors were converted from the `.wb-mdhtml` class to
+ * the `wb-mdhtml` TAG (mdhtml() no longer adds a classList.add('wb-mdhtml')
+ * that just duplicated the tag name) — the specificity property this test
+ * guards still holds (tag+tag+:not(.x-pre)'s one class still outranks the
+ * single-class `.x-pre--has-line-numbers`), just via a tag selector now.
  */
 import { test, expect } from '@playwright/test';
 import { ROOT, readFile } from '../base';
@@ -20,10 +26,10 @@ import * as path from 'path';
 
 test('mdhtml.css must not style pre.js-enhanced (.x-pre) code blocks', () => {
   const css = readFile(path.join(ROOT, 'src/styles/behaviors/mdhtml.css'));
-  const preRuleMatch = css.match(/\.wb-mdhtml\s+pre(?!\s*code)[^{]*\{[^}]*padding[^}]*\}/);
-  expect(preRuleMatch, 'expected a .wb-mdhtml pre rule setting padding').not.toBeNull();
+  const preRuleMatch = css.match(/wb-mdhtml\s+pre(?!\s*code)[^{]*\{[^}]*padding[^}]*\}/);
+  expect(preRuleMatch, 'expected a wb-mdhtml pre rule setting padding').not.toBeNull();
   expect(
     preRuleMatch![0],
-    'the .wb-mdhtml pre padding rule must exclude .x-pre (pre.js-enhanced blocks manage their own padding, including extra room for the line-number gutter) — otherwise its higher specificity clobbers .x-pre--has-line-numbers regardless of load order'
-  ).toMatch(/\.wb-mdhtml\s+pre:not\(\.x-pre\)/);
+    'the wb-mdhtml pre padding rule must exclude .x-pre (pre.js-enhanced blocks manage their own padding, including extra room for the line-number gutter) — otherwise its higher specificity clobbers .x-pre--has-line-numbers regardless of load order'
+  ).toMatch(/wb-mdhtml\s+pre:not\(\.x-pre\)/);
 });

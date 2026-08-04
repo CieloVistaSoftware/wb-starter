@@ -10,6 +10,12 @@
    BASE DIALOG
    ═══════════════════════════════════════════════════════════════════════════ */
 
+/* #448: `wb-dialog` TAG selector added alongside the `.wb-dialog` class --
+   dialog() skips adding `.wb-dialog` only when a <wb-dialog> is acting as
+   its own visible trigger (pre-click state); the class stays load-bearing
+   for a dynamically-created native <dialog> popup and an in-place-enhanced
+   pre-existing native <dialog>, neither of which is a `wb-dialog` tag. */
+wb-dialog,
 .wb-dialog {
   background: var(--bg-secondary);
   border: 1px solid var(--border-color);
@@ -40,12 +46,14 @@
   color: var(--text-primary);
 }
 
+wb-dialog::backdrop,
 .wb-dialog::backdrop {
   background: rgba(0, 0, 0, 0.6);
   backdrop-filter: blur(4px);
   animation: wb-fade-in 0.3s ease;
 }
 
+wb-dialog[open],
 .wb-dialog[open] {
   animation: wb-scale-in 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
 }

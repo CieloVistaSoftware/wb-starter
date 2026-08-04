@@ -15,7 +15,13 @@
                       demo.css (base)
    ============================================================================= */
 
-/* Responsive wrapper — allows horizontal scroll on narrow viewports */
+/* Responsive wrapper — allows horizontal scroll on narrow viewports.
+   #448: `wb-table` TAG selector added alongside the `.wb-table` class --
+   table() (semantics/table.js) skips adding `.wb-table` only when the host
+   IS the literal <wb-table> tag (used with no nested <table> child); a
+   native <table> (autoInject, or the child a <wb-table> wraps) still gets
+   the class, since a `table` tag can never match a `wb-table` selector. */
+wb-table,
 .wb-table {
   display: block;
   overflow-x: auto;
@@ -39,6 +45,8 @@ table.wb-table {
   color: var(--text-primary);
 }
 
+wb-table th,
+wb-table td,
 .wb-table th,
 .wb-table td {
   padding: 0.75rem 1rem;
@@ -46,6 +54,7 @@ table.wb-table {
   border-bottom: 1px solid var(--border-color);
 }
 
+wb-table th,
 .wb-table th {
   font-weight: 600;
   background-color: var(--bg-tertiary);
@@ -64,6 +73,7 @@ table.wb-table {
 }
 
 /* Active row (from components.css) */
+wb-table tbody tr.active,
 .wb-table tbody tr.active {
   background-color: var(--bg-tertiary);
   border-left: 3px solid var(--primary);

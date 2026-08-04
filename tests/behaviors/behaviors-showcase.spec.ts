@@ -404,7 +404,9 @@ test.describe('Behaviors Showcase Page', () => {
         const cardBox = await card.boundingBox();
         if (!cardBox) continue;
         
-        const codeBlocks = await card.locator('pre, code, .wb-mdhtml').all();
+        // #448: wb-mdhtml no longer carries a same-named `.wb-mdhtml` class
+        // -- select the tag directly too.
+        const codeBlocks = await card.locator('pre, code, wb-mdhtml, .wb-mdhtml').all();
         
         for (const code of codeBlocks) {
           const codeBox = await code.boundingBox();

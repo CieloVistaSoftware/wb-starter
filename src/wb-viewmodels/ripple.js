@@ -16,7 +16,12 @@ export function ripple(element, options = {}) {
 
   // .wb-ripple in effects.css supplies position:relative + overflow:hidden —
   // no need to set them inline here.
-  element.classList.add('wb-ripple');
+  // #448: skip the class on a literal <wb-ripple> host -- effects.css
+  // selects the `wb-ripple` TAG directly for that case now. Still added for
+  // every OTHER host (x-ripple on <wb-button>/<button>/<input>/<div>, the
+  // overwhelmingly common usage across every demo page), since effects.css's
+  // `.wb-ripple` rule still selects those by class.
+  if (element.tagName.toLowerCase() !== 'wb-ripple') element.classList.add('wb-ripple');
 
   const createRipple = (e) => {
     const rect = element.getBoundingClientRect();

@@ -179,7 +179,14 @@ export function dialog(element, options = {}) {
   }
 
   element.classList.add('wb-dialog-trigger');
-  element.classList.add('wb-dialog'); // Marker for test compliance
+  // #448: no classList.add('wb-dialog') here -- it just duplicated this
+  // element's own <wb-dialog> tag name (the "Marker for test compliance"
+  // comment predates #448's compliance test, which now flags exactly this
+  // pattern). dialog.css's `wb-dialog`/`::backdrop`/`[open]` rules select
+  // the tag directly; the class stays load-bearing for the OTHER two
+  // branches above (a dynamically-created native <dialog> popup, and an
+  // in-place-enhanced pre-existing native <dialog>), neither of which is
+  // this <wb-dialog>-as-its-own-trigger case.
   element.classList.add('wb-modal');
   element.style.cursor = 'pointer';
 
