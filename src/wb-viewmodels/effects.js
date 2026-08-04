@@ -115,8 +115,10 @@ export function confetti(element, options = {}) {
   };
   
   element.classList.add('wb-confetti-trigger');
-  element.classList.add('wb-confetti');
-  
+  // #448: no classList.add('wb-confetti') -- it just duplicated
+  // <wb-confetti>'s own tag name; no CSS selector depends on the bare class
+  // (only .wb-confetti-trigger/-piece, unaffected).
+
   // MAKE IT VISIBLE! Render as a button if empty
   if (!element.textContent.trim()) {
     element.innerHTML = `<span>🎉</span><span>${config.label}</span>`;
@@ -478,8 +480,9 @@ export function rainbow(element, options = {}) {
 export function fireworks(element, options = {}) {
   const count = parseInt(options.count || element.getAttribute('count') || '30');
   element.classList.add('wb-fireworks-trigger');
-  element.classList.add('wb-fireworks');
-  
+  // #448: no classList.add('wb-fireworks') -- it just duplicated
+  // <wb-fireworks>'s own tag name; no CSS selector depends on the bare class.
+
   // Make visible
   if (!element.textContent.trim()) {
     element.innerHTML = '🎆 <span>Fireworks!</span>';
@@ -541,8 +544,9 @@ export function fireworks(element, options = {}) {
 export function snow(element, options = {}) {
   const count = parseInt(options.count || element.getAttribute('count') || '30');
   element.classList.add('wb-snow-trigger');
-  element.classList.add('wb-snow');
-  
+  // #448: no classList.add('wb-snow') -- it just duplicated <wb-snow>'s own
+  // tag name; no CSS selector depends on the bare class.
+
   // Make visible
   if (!element.textContent.trim()) {
     element.innerHTML = '❄️ <span>Let it Snow!</span>';

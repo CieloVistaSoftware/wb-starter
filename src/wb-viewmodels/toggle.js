@@ -16,7 +16,8 @@ export function toggle(element, options = {}) {
     ...options
   };
 
-  element.classList.add('wb-toggle');
+  // #448: no classList.add('wb-toggle') -- no CSS selector anywhere depends
+  // on the bare class.
   element.style.cursor = 'pointer';
   element.style.userSelect = 'none';
   element.style.transition = 'all 0.1s ease';

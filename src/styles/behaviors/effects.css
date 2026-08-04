@@ -11,7 +11,11 @@
   to { transform: rotate(360deg); }
 }
 
-.wb-spinner {
+/* #448: tag selector -- spinner() no longer adds a redundant
+   classList.add('wb-spinner') that just duplicated the <wb-spinner> tag
+   name (no live demo/page usage of x-spinner on a non-<wb-spinner> element
+   was found). */
+wb-spinner {
   width: 20px;
   height: 20px;
   border: 2px solid var(--border-color);
@@ -79,16 +83,19 @@
 /* =============================================================================
    CONTAINER
 ============================================================================= */
-.wb-container {
+/* #448: tag selectors -- container() no longer adds a redundant
+   classList.add('wb-container') that just duplicated the <wb-container>
+   tag name. */
+wb-container {
   position: relative;
   transition: border-color 0.2s, background 0.2s;
 }
 
-.wb-container:hover {
+wb-container:hover {
   border-color: var(--primary);
 }
 
-.wb-container.drop-target {
+wb-container.drop-target {
   border-color: var(--success-color);
   background: var(--success-bg);
 }
@@ -238,7 +245,13 @@ MARQUEE & RIPPLE
 
 /* Ripple-enabled elements need relative positioning + clipping so the
    ripple circle stays contained — set here, not inline via JS, so
-   ripple.js doesn't have to write style.position/style.overflow itself. */
+   ripple.js doesn't have to write style.position/style.overflow itself.
+   #448: `wb-ripple` TAG selector added alongside the `.wb-ripple` class --
+   ripple() still adds `.wb-ripple` for the x-ripple-on-any-element case
+   (the overwhelmingly common usage -- <wb-button>/<button>/<input>/<div>
+   across nearly every demo page), but skips it for a literal <wb-ripple>
+   host, which now matches via tag instead. */
+wb-ripple,
 .wb-ripple {
   position: relative;
   overflow: hidden;
@@ -263,10 +276,17 @@ MARQUEE & RIPPLE
 /* =============================================================================
    STICKY BEHAVIOR STYLES
 ============================================================================= */
+/* #448: `wb-sticky` TAG selector added alongside the `.wb-sticky` class --
+   sticky() (sticky.js) still adds `.wb-sticky` for the x-sticky-on-any-
+   element case (this file's own <nav x-sticky>/<header x-sticky> docs),
+   but skips it for a literal <wb-sticky> host, which now matches via tag
+   instead. */
+wb-sticky,
 .wb-sticky {
   transition: box-shadow 0.2s ease;
 }
 
+wb-sticky.is-stuck,
 .wb-sticky.is-stuck {
   box-shadow: 0 2px 10px rgba(0, 0, 0, 0.15);
 }

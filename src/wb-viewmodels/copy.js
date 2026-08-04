@@ -54,8 +54,9 @@ export function copy(element, options = {}) {
     ...options
   };
 
-  element.classList.add('wb-copy');
-  
+  // #448: no classList.add('wb-copy') -- copybutton.css's own comment
+  // confirms .wb-copy has "no dedicated CSS"; nothing selects the bare class.
+
   // Store original content
   const originalContent = element.innerHTML;
   let timeout = null;

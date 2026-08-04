@@ -257,7 +257,12 @@ export function drawer(element, options = {}) {
   };
 
   element.classList.add('wb-drawer-trigger');
-  element.classList.add('wb-drawer'); // Marker for test compliance
+  // #448: no classList.add('wb-drawer') here -- it just duplicated this
+  // element's own <wb-drawer> tag name (the "Marker for test compliance"
+  // comment predates #448's compliance test, which now flags exactly this
+  // pattern). No CSS selector depends on the bare class -- layout.css's
+  // visibility rule already selects the wb-drawer TAG plus the OTHER real
+  // classes here (wb-drawer.wb-drawer-trigger, wb-drawer.wb-drawer-layout).
 
   // ═══════════════════════════════════════════════════════
   // PATH A: Schema already built the panel/backdrop — enhance, don't rebuild

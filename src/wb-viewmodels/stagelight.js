@@ -164,8 +164,9 @@ export default function stagelight(element, options = {}) {
     ...options
   };
 
-  // === STEP 1: ADD BASE CLASS ===
-  element.classList.add('wb-stagelight');
+  // #448: no classList.add('wb-stagelight') -- no CSS selector anywhere
+  // depends on the bare class; it just duplicated <wb-stagelight>'s own
+  // tag name.
 
   // === STEP 2: CREATE DOM STRUCTURE BASED ON VARIANT ===
   if (config.variant === 'beam') {

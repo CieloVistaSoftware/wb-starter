@@ -7,7 +7,8 @@
  * -----------------------------------------------------------------------------
  */
 export function slider(element, options = {}) {
-  element.classList.add('wb-slider');
-  return () => element.classList.remove('wb-slider');
+  // #448: no classList.add('wb-slider') -- no CSS selector anywhere depends
+  // on the bare class; it just duplicated <wb-slider>'s own tag name.
+  return () => {};
 }
 export default slider;

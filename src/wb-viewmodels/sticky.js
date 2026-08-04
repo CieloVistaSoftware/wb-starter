@@ -20,8 +20,13 @@
  */
 
 export function sticky(element, options = {}) {
-  // Add base class for compliance
-  element.classList.add('wb-sticky');
+  // #448: skip the class on a literal <wb-sticky> host -- effects.css
+  // selects the `wb-sticky` TAG directly for that case now. The class is
+  // still added for every OTHER host (this docstring's own <nav x-sticky>/
+  // <header x-sticky> examples), since those tags aren't `wb-sticky` and
+  // effects.css's `.wb-sticky`/`.wb-sticky.is-stuck` rules still select them
+  // by class.
+  if (element.tagName.toLowerCase() !== 'wb-sticky') element.classList.add('wb-sticky');
 
   // Config: plain attributes are canonical (Law 11); data-* kept as a
   // back-compat fallback only.

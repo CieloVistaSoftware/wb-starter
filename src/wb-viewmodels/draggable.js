@@ -18,7 +18,8 @@ export function draggable(element, options = {}) {
     ...options
   };
 
-  element.classList.add('wb-draggable');
+  // #448: no classList.add('wb-draggable') -- no CSS selector anywhere
+  // depends on the bare class.
 
   // Get handle element
   const handle = config.handle ? element.querySelector(config.handle) : element;

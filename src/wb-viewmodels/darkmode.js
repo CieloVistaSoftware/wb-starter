@@ -31,7 +31,8 @@ export function darkmode(element, options = {}) {
 
   // Apply dark theme immediately
   targetEl.setAttribute('data-theme', config.theme);
-  element.classList.add('wb-darkmode');
+  // #448: no classList.add('wb-darkmode') -- no CSS selector anywhere
+  // depends on the bare class.
 
   // If element is a button, make it toggle
   if (element.tagName === 'BUTTON') {

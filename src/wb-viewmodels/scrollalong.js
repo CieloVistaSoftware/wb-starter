@@ -12,9 +12,10 @@
  */
 
 export function scrollalong(element) {
-  // Add base class for compliance
-  element.classList.add('wb-scrollalong');
-  
+  // #448: no classList.add('wb-scrollalong') -- no CSS selector anywhere
+  // depends on the bare class; it just duplicated <wb-scrollalong>'s own
+  // tag name.
+
   // Apply Sticky Positioning
   // We assume the element is already sized correctly by CSS
   element.style.position = 'sticky';

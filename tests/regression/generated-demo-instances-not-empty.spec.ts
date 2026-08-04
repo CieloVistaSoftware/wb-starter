@@ -26,7 +26,9 @@ import { test, expect } from '@playwright/test';
 test.describe('Generated demo instances render visibly (interactive.html)', () => {
   test('every <wb-draggable> instance has non-zero size and real content', async ({ page }) => {
     await page.goto('http://localhost:3000/demos/site/interactive.html');
-    await page.waitForSelector('wb-draggable.wb-draggable', { timeout: 10_000 });
+    // #448: wb-draggable no longer carries a same-named `.wb-draggable`
+    // class -- the tag selector alone is enough.
+    await page.waitForSelector('wb-draggable', { timeout: 10_000 });
 
     const drags = page.locator('wb-draggable');
     const count = await drags.count();
@@ -67,7 +69,9 @@ test.describe('Generated demo instances render visibly (interactive.html)', () =
 
   test('sibling dialog demos on overlays.html have distinct, self-describing labels', async ({ page }) => {
     await page.goto('http://localhost:3000/demos/site/overlays.html');
-    await page.waitForSelector('wb-dialog.wb-dialog', { timeout: 10_000 });
+    // #448: a <wb-dialog> acting as its own trigger no longer carries a
+    // same-named `.wb-dialog` class -- the tag selector alone is enough.
+    await page.waitForSelector('wb-dialog', { timeout: 10_000 });
 
     const labels = await page.locator('wb-dialog').evaluateAll((els) =>
       els.slice(0, 4).map((el) => el.textContent?.trim() ?? ''),
@@ -85,7 +89,9 @@ test.describe('Generated demo instances render visibly (interactive.html)', () =
     // (confirmed live: clicking "Centered" or "Fullscreen" opened the exact
     // same dialog as "Basic Dialog").
     await page.goto('http://localhost:3000/demos/site/overlays.html');
-    await page.waitForSelector('wb-dialog.wb-dialog', { timeout: 10_000 });
+    // #448: a <wb-dialog> acting as its own trigger no longer carries a
+    // same-named `.wb-dialog` class -- the tag selector alone is enough.
+    await page.waitForSelector('wb-dialog', { timeout: 10_000 });
 
     const trigger = page.locator('wb-dialog[variant="fullscreen"]').first();
     await trigger.click();

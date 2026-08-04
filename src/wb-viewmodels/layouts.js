@@ -31,7 +31,9 @@ export function grid(element, options = {}) {
     ...options
   };
 
-  element.classList.add('wb-grid');
+  // #448: no classList.add('wb-grid') -- layout.css already selects the
+  // `wb-grid` TAG directly (grid-template-columns default etc.), so the
+  // class never did anything a tag selector couldn't.
   element.style.display = 'grid';
   element.style.gap = config.gap;
 
@@ -79,7 +81,7 @@ export function grid(element, options = {}) {
     element.insertBefore(frag, element.firstChild);
   }
 
-  return () => element.classList.remove('wb-grid', 'wb-grid--alt-rows');
+  return () => element.classList.remove('wb-grid--alt-rows');
 }
 
 /**
@@ -126,8 +128,9 @@ export function container(element, options = {}) {
     ...options
   };
 
-  element.classList.add('wb-container');
-  
+  // #448: no classList.add('wb-container') -- effects.css's .wb-container
+  // selector was converted to the `wb-container` TAG selector.
+
   // Map align/justify values to CSS
   const alignMap = { start: 'flex-start', center: 'center', end: 'flex-end', stretch: 'stretch' };
   const justifyMap = { start: 'flex-start', center: 'center', end: 'flex-end', 'space-between': 'space-between', 'space-around': 'space-around', 'space-evenly': 'space-evenly' };
@@ -163,7 +166,6 @@ export function container(element, options = {}) {
   }
   
   return () => {
-    element.classList.remove('wb-container');
     element.style.cssText = '';
   };
 }
@@ -183,7 +185,8 @@ export function stack(element, options = {}) {
     ...options
   };
 
-  element.classList.add('wb-stack');
+  // #448: no classList.add('wb-stack') -- no CSS selector anywhere depends
+  // on the bare class.
   element.style.display = 'flex';
   element.style.flexDirection = 'column';
   element.style.gap = config.gap;
@@ -191,7 +194,7 @@ export function stack(element, options = {}) {
   if (config.align) element.style.alignItems = config.align;
   if (config.wrap) element.style.flexWrap = config.wrap;
 
-  return () => element.classList.remove('wb-stack');
+  return () => {};
 }
 
 /**
@@ -206,14 +209,15 @@ export function cluster(element, options = {}) {
     ...options
   };
 
-  element.classList.add('wb-cluster');
+  // #448: no classList.add('wb-cluster') -- no CSS selector anywhere
+  // depends on the bare class.
   element.style.display = 'flex';
   element.style.flexWrap = 'wrap';
   element.style.gap = config.gap;
   element.style.justifyContent = config.justify;
   element.style.alignItems = config.align;
 
-  return () => element.classList.remove('wb-cluster');
+  return () => {};
 }
 
 /**
@@ -551,7 +555,13 @@ export function drawerLayout(element, options = {}) {
     ...options
   };
 
-  element.classList.add('wb-drawer-layout');
+  // #448: no classList.add('wb-drawer-layout') -- no CSS selector anywhere
+  // depends on the bare class (layout.css already selects `wb-drawer-layout`
+  // only in compound form alongside a DIFFERENT tag, `wb-drawer.wb-drawer-layout`,
+  // which this element never matches). 'wb-drawer' (below) is kept -- it's a
+  // genuinely different class name than this tag (`wb-drawer-layout`), not
+  // a self-matching duplicate, and layout.css's wb-drawer visibility rules
+  // rely on it.
   element.classList.add('wb-drawer');
   
   const isVertical = config.position === 'top' || config.position === 'bottom';

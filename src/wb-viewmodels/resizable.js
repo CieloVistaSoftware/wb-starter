@@ -17,7 +17,8 @@ export function resizable(element, options = {}) {
     ...options
   };
 
-  element.classList.add('wb-resizable');
+  // #448: no classList.add('wb-resizable') -- no CSS selector anywhere
+  // depends on the bare class.
 
   // Ensure element is positioned
   const computedStyle = window.getComputedStyle(element);
