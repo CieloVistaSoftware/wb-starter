@@ -813,6 +813,11 @@
           "description": "Architecture proposal for custom elements"
         },
         {
+          "file": "architecture/proposals/v4-golden-ratio-layout-spec.md",
+          "title": "v4 Golden-Ratio Layout Spec (Proposal)",
+          "description": "Proposed golden-ratio-derived spacing scale, adapted from a real prior document"
+        },
+        {
           "file": "architecture/standards/ATTRIBUTE-NAMING-STANDARD.md",
           "title": "Attribute Naming Standard",
           "description": "Standards for attribute naming conventions"
