@@ -109,6 +109,17 @@ export function badge(element, options = {}) {
 
   if (dot) {
     element.textContent = ''; // a dot badge has no text
+    // #415: dot + removable are NOT mutually exclusive -- dot = a small
+    // colored indicator instead of a text label, removable = has a
+    // close/remove affordance. When both are set, the whole-element 8px
+    // circle-collapse (badge.css `.wb-badge--dot`) is scoped off via
+    // `:not(.wb-badge--removable)` so there's room for the remove button
+    // built below; render the dot itself as a small inline indicator here.
+    if (removable && !element.querySelector('.wb-badge__dot')) {
+      const dotEl = document.createElement('span');
+      dotEl.className = 'wb-badge__dot';
+      element.appendChild(dotEl);
+    }
   } else {
     // Render the `label` attribute as the badge text — but only if the author
     // didn't already put content inside the tag (children win over label).
@@ -124,17 +135,22 @@ export function badge(element, options = {}) {
       iconEl.textContent = icon;
       element.insertBefore(iconEl, element.firstChild);
     }
-    // removable → append a × button that removes the badge.
-    if (removable && !element.querySelector('.wb-badge__remove')) {
-      element.classList.add('wb-badge--removable');
-      const btn = document.createElement('button');
-      btn.type = 'button';
-      btn.className = 'wb-badge__remove';
-      btn.setAttribute('aria-label', 'Remove');
-      btn.textContent = '×';
-      btn.addEventListener('click', (e) => { e.stopPropagation(); element.remove(); });
-      element.appendChild(btn);
-    }
+  }
+
+  // removable → append a × button that removes the badge. #415: this must
+  // run regardless of `dot` -- a dot badge can (and should) still get a
+  // working remove button; it was previously nested inside the `else`
+  // above, so `dot` silently swallowed `removable` entirely (neither the
+  // dot visual nor the remove button rendered together).
+  if (removable && !element.querySelector('.wb-badge__remove')) {
+    element.classList.add('wb-badge--removable');
+    const btn = document.createElement('button');
+    btn.type = 'button';
+    btn.className = 'wb-badge__remove';
+    btn.setAttribute('aria-label', 'Remove');
+    btn.textContent = '×';
+    btn.addEventListener('click', (e) => { e.stopPropagation(); element.remove(); });
+    element.appendChild(btn);
   }
 
   return () => {

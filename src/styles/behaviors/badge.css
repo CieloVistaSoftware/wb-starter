@@ -92,13 +92,28 @@ wb-badge,
 /* Pill */
 .wb-badge--pill { border-radius: 9999px; }
 
-/* Dot */
-.wb-badge--dot {
+/* Dot — collapses the whole element into a small colored circle. Scoped off
+   of `.wb-badge--removable` (#415): a dot+removable badge needs room for the
+   × button built by feedback.js's badge(), so it can't collapse to 8px --
+   instead it keeps normal badge sizing/rounding (respects size/pill) and
+   renders the dot as the `.wb-badge__dot` inline indicator below. */
+.wb-badge--dot:not(.wb-badge--removable) {
   width: 8px;
   height: 8px;
   padding: 0;
   border-radius: 50%;
   font-size: 0;
+}
+
+/* Dot indicator — used in place of the whole-element collapse above when
+   dot + removable are combined (#415). */
+.wb-badge__dot {
+  display: inline-block;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: currentColor;
+  flex: none;
 }
 
 /* Outline */
