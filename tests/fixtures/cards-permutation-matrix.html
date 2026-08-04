@@ -420,33 +420,43 @@
   </section>
 
   <!-- 23. imagePosition variants -->
+  <!-- #455: these two had no `image=` attribute at all, so cardhorizontal()
+       (src/wb-viewmodels/card.js) skipped its `if (config.image)` figure/img
+       build entirely -- image-position has nothing to demonstrate without an
+       actual image, unlike every other section in this file. -->
   <section id="cardhorizontal-imageposition-variants">
   <h2>imagePosition variants</h2>
   <wb-demo columns="2">
-    <wb-cardhorizontal image-position="left">
+    <wb-cardhorizontal image="https://picsum.photos/seed/cardhorizontal-imgpos-left/600/400" image-position="left">
       image-position=left
     </wb-cardhorizontal>
-    <wb-cardhorizontal image-position="right">
+    <wb-cardhorizontal image="https://picsum.photos/seed/cardhorizontal-imgpos-right/600/400" image-position="right">
       image-position=right
     </wb-cardhorizontal>
   </wb-demo>
   </section>
 
   <!-- 24. variant variants -->
+  <!-- #455: John: "none of this text is shwoing, change it to descrbe what
+       it should look like" -- the old "variant=default" etc. echoed the raw
+       attribute rather than describing the variant, and (separately) never
+       rendered at all until cardhorizontal()'s own missing innerHTML->content
+       fallback was fixed (card.js). Real descriptive copy per variant now
+       doubles as documentation of what each one visually does. -->
   <section id="cardhorizontal-variant-variants">
   <h2>variant variants</h2>
   <wb-demo columns="2">
     <wb-cardhorizontal variant="default">
-      variant=default
+      This is the default style: a plain surface with a standard border, no shadow or emphasis.
     </wb-cardhorizontal>
     <wb-cardhorizontal variant="elevated">
-      variant=elevated
+      This card has elevation: a soft drop shadow and lighter background make it look raised off the page.
     </wb-cardhorizontal>
     <wb-cardhorizontal variant="bordered">
-      variant=bordered
+      This card has a visible border: a bold 2px outline and transparent background, no shadow.
     </wb-cardhorizontal>
     <wb-cardhorizontal variant="minimal">
-      variant=minimal
+      This is a minimal, plain style: stripped of border and shadow so only the content shows.
     </wb-cardhorizontal>
   </wb-demo>
   </section>

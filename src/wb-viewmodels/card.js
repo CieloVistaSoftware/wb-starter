@@ -1954,6 +1954,15 @@ export function cardhorizontal(element, options = {}) {
     image: options.image || element.dataset.image || element.getAttribute('image'),
     imagePosition: options.imagePosition || element.dataset.imagePosition || element.getAttribute('image-position') || 'left',
     imageWidth: options.imageWidth || element.dataset.imageWidth || element.getAttribute('image-width') || '40%',
+    // #455: unlike card()/cardimage()/cardvideo(), this never fell back to
+    // element.innerHTML -- only a `content="..."` ATTRIBUTE worked (via
+    // cardBase's own generic getAttribute('content') fallback below). Any
+    // instance authored with plain inner text as its body (every example in
+    // the permutation-matrix's "variant variants" / "imagePosition variants"
+    // sections, tests/fixtures/cards-permutation-matrix.html) silently lost
+    // that text the instant `element.innerHTML = ''` ran a few lines down --
+    // confirmed live, zero .wb-card__horiz-body elements ever got created.
+    content: options.content || element.dataset.content || element.innerHTML,
     ...options
   };
 
