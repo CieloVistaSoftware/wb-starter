@@ -37,6 +37,18 @@ const THEMES = [
 ];
 
 export function themecontrol(element, options = {}) {
+  // Confirmed live: two full "Theme: [dropdown]" pairs rendered inside the
+  // SAME <wb-themecontrol id="headerThemeControl"> element, each showing a
+  // DIFFERENT selected theme -- this function had no re-init guard (every
+  // other stateful behavior in this codebase has one, e.g. toast()'s
+  // element._wbToastInit), so a second WB scan/observe pass reaching an
+  // already-initialized element just appended a SECOND
+  // .wb-themecontrol__wrapper via element.appendChild() below, rather than
+  // skipping or replacing the first. The two dropdowns then drifted apart
+  // because each call's own applyTheme(currentTheme) read localStorage at
+  // ITS OWN invocation time, not just once.
+  if (element._wbThemeControlInit) return () => {};
+  element._wbThemeControlInit = true;
   const config = {
     target: options.target || element.getAttribute('target') || 'html',
     default: options.default || element.getAttribute('default') || 'dark',
@@ -138,6 +150,7 @@ export function themecontrol(element, options = {}) {
     select.removeEventListener('change', onChange);
     wrapper.remove();
     delete element.wbThemeControl;
+    delete element._wbThemeControlInit;
   };
 }
 
