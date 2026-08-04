@@ -124,6 +124,52 @@ function findWbComponents(html) {
     return [...new Set(matches)]; // unique
 }
 
+// John, live: "when looking at the behaviors there are no links to the x-*
+// docs. for the behaviors." -- findWbComponents above only matches literal
+// <wb-*> TAGS, so a demo decorating a plain native element (e.g.
+// `<button x-ripple>`, pages/behaviors.html's whole "Buttons"/"Inputs"/
+// "Feedback" sections) never produced ANY doc link -- sharedComponents
+// stayed empty and the whole "Docs:" line was skipped. Matches both
+// documented behavior syntaxes from docs/behaviors-reference.md: decoration
+// (`x-ripple`) and morphing (`x-as-card`) -- the (?:as-)? group strips the
+// morph prefix so `x-as-card` still resolves to doc lookup name "card".
+// Requires a preceding whitespace (not `<`) so it never matches a leading
+// slice of an `<x-foo>` CUSTOM ELEMENT TAG name, same anchoring approach as
+// no-redundant-x-attribute-on-native-tag.spec.ts's `(^|\s)x-${tag}` check.
+function findXBehaviors(html) {
+    const regex = /(?:^|\s)x-(?:as-)?([a-z][a-z0-9]*)(?=[\s=/>]|$)/gi;
+    const matches = [];
+    let match;
+    while ((match = regex.exec(html)) !== null) {
+        matches.push(match[1].toLowerCase());
+    }
+    return [...new Set(matches)]; // unique
+}
+
+// Same basename-match strategy as findDocFile, plus a fallback: unlike
+// wb-* components (one doc file per component), most x-* behaviors are
+// documented as a table ROW inside docs/behaviors-reference.md rather than
+// their own page (only a handful -- tooltip, autosize, x-collapse, etc. --
+// get a dedicated file). Falling back to that shared reference page keeps
+// "never a dead link" true for the majority (ripple, toast, masked,
+// stepper, ...) instead of silently dropping them from the Docs: line.
+function findBehaviorDocFile(manifest, name) {
+    if (!manifest || !Array.isArray(manifest.categories)) return null;
+    const names = [`${name}.md`, `x-${name}.md`, `wb-${name}.md`];
+    for (const cat of manifest.categories) {
+        for (const d of cat.docs || []) {
+            const base = String(d.file || '').split('/').pop().toLowerCase();
+            if (names.includes(base)) return d.file;
+        }
+    }
+    for (const cat of manifest.categories) {
+        for (const d of cat.docs || []) {
+            if (String(d.file || '').toLowerCase().endsWith('behaviors-reference.md')) return d.file;
+        }
+    }
+    return null;
+}
+
 // #388/#390: attach a small top-right doc-link "badge" directly onto ONE
 // component instance, instead of relying on the single shared
 // '.wb-demo__links' line below the whole grid (which reads as detached from
@@ -304,7 +350,8 @@ export async function demo(element, options = {}) {
     );
     const perInstanceComps = new Set(perInstanceChildren.map((el) => el.tagName.slice(3).toLowerCase()));
     const sharedComponents = allComponents.filter((comp) => !perInstanceComps.has(comp));
-    if (perInstanceChildren.length > 0 || sharedComponents.length > 0) {
+    const xBehaviors = findXBehaviors(rawBlock);
+    if (perInstanceChildren.length > 0 || sharedComponents.length > 0 || xBehaviors.length > 0) {
         // Deterministic: await the (cached) manifest and build the links inline —
         // a floating .then() left empty divs when init raced page load.
         const manifest = await loadDocsManifest().catch(() => null);
@@ -317,17 +364,21 @@ export async function demo(element, options = {}) {
             attachInstanceDocLink(hostEl, file, comp, root);
         });
 
-        const linked = sharedComponents
-            .map((comp) => ({ comp, file: findDocFile(manifest, comp) }))
+        const linkedComponents = sharedComponents
+            .map((comp) => ({ label: `wb-${comp}`, file: findDocFile(manifest, comp) }))
             .filter((x) => x.file);
+        const linkedBehaviors = xBehaviors
+            .map((name) => ({ label: `x-${name}`, file: findBehaviorDocFile(manifest, name) }))
+            .filter((x) => x.file);
+        const linked = [...linkedComponents, ...linkedBehaviors];
         if (linked.length) {
             const linksDiv = document.createElement('div');
             linksDiv.className = 'wb-demo__links';
             linksDiv.textContent = 'Docs: ';
-            linked.forEach(({ comp, file }, i) => {
+            linked.forEach(({ label, file }, i) => {
                 const link = document.createElement('a');
                 link.href = root + 'public/doc-viewer.html?file=' + encodeURIComponent('docs/' + file);
-                link.textContent = `wb-${comp}`;
+                link.textContent = label;
                 link.target = '_blank';
                 link.rel = 'noopener';
                 linksDiv.appendChild(link);

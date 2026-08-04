@@ -257,7 +257,18 @@ export const extensionMap = {
   // Morphing (x-as-{name})
   'x-as-card': 'card',
   'x-as-timeline': 'timeline',
-  'x-as-article': 'article'
+  'x-as-article': 'article',
+
+  // John, screenshot on docs/behaviors-reference.md's cluster example:
+  // "don't use class names when an x-cluster behavior works better...
+  // Intellisense will list all x-behaviors." stack()/cluster() (layouts.js)
+  // already worked via the <wb-stack>/<wb-cluster> TAG form (elementMap
+  // above), but had no attribute-decoration form for applying them to an
+  // arbitrary element -- unlike most other behaviors in this table. Canonical
+  // location (not wb-lazy.js's own WB_LAZY_ONLY_ATTRIBUTES table) so both
+  // runtimes and any tooling reading getExtensionAttributes() pick it up.
+  'x-stack': 'stack',
+  'x-cluster': 'cluster'
 };
 
 // ============================================================================
