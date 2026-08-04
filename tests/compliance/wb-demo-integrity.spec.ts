@@ -67,4 +67,54 @@ test.describe('<wb-demo> markup integrity — example fixtures', () => {
       <wb-demo><button>ok</button></wb-demo>`;
     expect(scanHtml(html)).toEqual([]);
   });
+
+  // #453: demos/frameworks.html false-positived "2 open vs 1 close" because
+  // a JS `//` line comment inside a <script type="module"> block literally
+  // said "single <wb-demo> (the HTMX section)..." -- stripComments() only
+  // stripped HTML <!--...--> comments, so the bare <wb-demo> text inside the
+  // JS comment matched OPEN_RE as a second, false "open" tag.
+  test('ignores <wb-demo> mentioned inside a JS // comment in a <script> block', () => {
+    const html = `
+      <wb-demo><button>real demo</button></wb-demo>
+      <script type="module">
+        // This page's single <wb-demo> (the HTMX section) sits far below the fold.
+        const soleDemo = document.querySelector('wb-demo');
+      </script>
+    `;
+    expect(scanHtml(html)).toEqual([]);
+  });
+
+  test('ignores <wb-demo> mentioned inside a JS /* */ block comment in a <script> block', () => {
+    const html = `
+      <wb-demo><button>real demo</button></wb-demo>
+      <script type="module">
+        /* only one <wb-demo> on this page, see the HTMX section below */
+      </script>
+    `;
+    expect(scanHtml(html)).toEqual([]);
+  });
+
+  test('does not mistake // inside a JS string (e.g. a URL) for a comment', () => {
+    const html = `
+      <wb-demo><button>real demo</button></wb-demo>
+      <script type="module">
+        const url = 'https://example.com/wb-demo/not-a-tag';
+        // a real comment mentioning <wb-demo> again here
+      </script>
+    `;
+    expect(scanHtml(html)).toEqual([]);
+  });
+
+  test('still catches a genuinely unbalanced <wb-demo> even with a script block present', () => {
+    const html = `
+      <wb-demo><button>one</button></wb-demo>
+      <wb-demo><input type="text">
+      <script type="module">
+        // unrelated comment, not mentioning the tag at all
+        const x = 1;
+      </script>
+    `;
+    const issues = scanHtml(html);
+    expect(issues.some((i) => i.includes('unbalanced'))).toBe(true);
+  });
 });

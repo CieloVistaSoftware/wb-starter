@@ -25,8 +25,139 @@ const OPEN_RE = /<wb-demo(?:\s[^>]*)?>/g;
 const CLOSE_RE = /<\/wb-demo>/g;
 const EMPTY_RE = /<wb-demo(?:\s[^>]*)?>\s*<\/wb-demo>/g;
 
-function stripComments(html) {
+function stripHtmlComments(html) {
   return html.replace(/<!--[\s\S]*?-->/g, '');
+}
+
+// Characters after which a `/` is a regex-literal start rather than a
+// division operator -- the standard heuristic (start-of-input, or the
+// previous significant token is an operator/punctuator rather than an
+// identifier, number, `)`, `]`, or closing string/template quote).
+const REGEX_CONTEXT_RE = /[([{,;:!&|?+\-*%^~=<>]/;
+
+/**
+ * Scoped JS-comment stripper for the raw text of a single <script> block.
+ * Walks the source char-by-char tracking string/template/regex literals so
+ * `//` or `/*` inside a string, template literal, or regex is left alone --
+ * a blind "strip to end of line on //" would wrongly truncate legitimate
+ * content like `https://` URLs embedded in JS strings. Comments are
+ * replaced with a single space (block) or nothing (line, up to but not
+ * including the newline) so token boundaries aren't accidentally joined.
+ */
+function stripJsComments(code) {
+  let out = '';
+  let i = 0;
+  const n = code.length;
+  let lastSignificant = '';
+
+  while (i < n) {
+    const c = code[i];
+    const c2 = i + 1 < n ? code[i + 1] : '';
+
+    // Line comment: // ... up to (not including) the newline.
+    if (c === '/' && c2 === '/') {
+      i += 2;
+      while (i < n && code[i] !== '\n') i++;
+      continue;
+    }
+
+    // Block comment: /* ... */ (collapsed to a single space).
+    if (c === '/' && c2 === '*') {
+      i += 2;
+      while (i < n && !(code[i] === '*' && code[i + 1] === '/')) i++;
+      i = Math.min(i + 2, n);
+      out += ' ';
+      continue;
+    }
+
+    // String / template literals -- copy verbatim (respecting backslash
+    // escapes) so any // or <wb-demo>-looking text inside is left intact
+    // and never mistaken for a real tag or a comment.
+    if (c === "'" || c === '"' || c === '`') {
+      const quote = c;
+      out += c;
+      i++;
+      while (i < n) {
+        const cj = code[i];
+        out += cj;
+        if (cj === '\\' && i + 1 < n) {
+          out += code[i + 1];
+          i += 2;
+          continue;
+        }
+        i++;
+        if (cj === quote) break;
+      }
+      lastSignificant = quote;
+      continue;
+    }
+
+    // Regex literal -- only when a `/` is plausible here syntactically;
+    // otherwise it's division and falls through to the default case.
+    if (c === '/' && (lastSignificant === '' || REGEX_CONTEXT_RE.test(lastSignificant))) {
+      let j = i + 1;
+      let inClass = false;
+      let sawClose = false;
+      let buf = '/';
+      while (j < n) {
+        const cj = code[j];
+        if (cj === '\n') break; // regex literals can't span lines -- bail out
+        buf += cj;
+        if (cj === '\\' && j + 1 < n) {
+          buf += code[j + 1];
+          j += 2;
+          continue;
+        }
+        if (cj === '[') inClass = true;
+        else if (cj === ']') inClass = false;
+        else if (cj === '/' && !inClass) {
+          j++;
+          sawClose = true;
+          break;
+        }
+        j++;
+      }
+      if (sawClose) {
+        while (j < n && /[a-z]/i.test(code[j])) {
+          buf += code[j];
+          j++;
+        }
+        out += buf;
+        i = j;
+        lastSignificant = '/';
+        continue;
+      }
+      // Not actually a regex (no closing `/` before end of line) -- treat
+      // the `/` as an ordinary character and keep scanning normally.
+    }
+
+    out += c;
+    if (!/\s/.test(c)) lastSignificant = c;
+    i++;
+  }
+
+  return out;
+}
+
+// Strip JS-style comments, but only inside real <script>...</script>
+// blocks -- and only when the block is JS (no type attribute, or a
+// JS-ish type like "module"/"text/javascript"). Content outside <script>
+// tags is left untouched, so a `//` inside an href/URL in plain markup
+// is never affected.
+const SCRIPT_BLOCK_RE = /(<script\b[^>]*>)([\s\S]*?)(<\/script>)/gi;
+const JS_SCRIPT_TYPES = new Set(['', 'module', 'text/javascript', 'application/javascript', 'text/babel']);
+
+function stripJsCommentsInScripts(html) {
+  return html.replace(SCRIPT_BLOCK_RE, (match, openTag, body, closeTag) => {
+    const typeMatch = openTag.match(/\btype\s*=\s*(?:"([^"]*)"|'([^']*)'|(\S+))/i);
+    const type = typeMatch ? (typeMatch[1] ?? typeMatch[2] ?? typeMatch[3] ?? '').toLowerCase() : '';
+    if (!JS_SCRIPT_TYPES.has(type)) return match;
+    return openTag + stripJsComments(body) + closeTag;
+  });
+}
+
+function stripComments(html) {
+  return stripJsCommentsInScripts(stripHtmlComments(html));
 }
 
 function getAllHtmlFiles(dir) {
