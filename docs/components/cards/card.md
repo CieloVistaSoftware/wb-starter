@@ -36,7 +36,7 @@ Composition keeps variants flexible: new features are added to a specific card t
 without affecting any other. Capabilities come from composing behaviors and markup —
 the wb-starter way (Light DOM, `x-*` behaviors, schema-driven properties).
 
-The `wb-card` is the foundational card component in the wb-starter library, designed for maximum flexibility, accessibility, and maintainability. Built on the Light DOM architecture and the WBServices pattern, it provides a robust base for dozens of card variants (image, hero, testimonial, product, etc.) while ensuring:
+The `wb-card` is the foundational card component in the wb-starter library, designed for maximum flexibility, accessibility, and maintainability. Built on the Light DOM architecture and the WBServices pattern, it provides a robust foundation for dozens of card variants (image, hero, testimonial, product, etc.) while ensuring:
 
 - **Consistent UI/UX:** All cards share a unified structure and behavior, making your app look and feel cohesive.
 - **Modern Web Standards:** Custom elements, ES Modules, and schema-driven properties.
@@ -269,7 +269,7 @@ card.update({ title: 'New Title', elevated: true });
 
 ## Card Variants
 
-The base card is extended by specialized variants:
+Specialized variants build on the shared card structure:
 
 | Variant | Purpose | Tag |
 |---------|---------|-----|

@@ -269,7 +269,7 @@ Each variant is a separate exported function:
 ```javascript
 // src/wb-viewmodels/card.js
 
-// base card
+// default card
 export function card(element, options) {}
 
 // hero variant

@@ -1035,7 +1035,7 @@ CSS Rules:
 ```text
 Card Profile
 
-Simple profile card. INHERITS from card.base (IS-A card), CONTAINS profile elements (HAS-A avatar, name, role, bio, cover).
+Profile card. Composes the shared card structure with profile elements (avatar, name, role, bio, cover).
 ```
 
 <details><summary>View 8 Attribute Tooltips</summary>

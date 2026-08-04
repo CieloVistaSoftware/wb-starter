@@ -235,7 +235,7 @@ All components use CSS variables for theming:
 ## Documentation Files
 
 - [Cards Overview](./cards/cards.index.md)
-- [Base Card](./cards/card.md)
+- [Card](./cards/card.md)
 - [Search Component](../search.md)
 - [Semantic Elements](./semantic/semantic.index.md)
 - [Effects](./effects/)

@@ -7,11 +7,11 @@ The Card component is a flexible UI container for displaying grouped content. It
 ---
 
 ## Variants
-There are 19 distinct card behaviors available. All inherit from the base `card` behavior but provide specialized rendering and logic:
+There are 19 distinct card behaviors available. All share the `card` behavior but provide specialized rendering and logic:
 
 | Category | Behaviors |
 |----------|-----------|
-| **Base** | `card` |
+| **Core** | `card` |
 | **Media** | `cardimage`, `cardvideo`, `cardoverlay`, `cardhero` |
 | **Content** | `cardprofile`, `cardtestimonial`, `cardstats`, `cardfile`, `cardnotification` |
 | **Commerce** | `cardproduct`, `cardpricing` |
@@ -43,8 +43,8 @@ Supported attributes:
 
 ## Schema
 - See: [src/wb-models/card.schema.json](../src/wb-models/card.schema.json)
-- Defines base properties, styles, and test scenarios for all card types.
-- Specialized schemas (e.g., [src/wb-models/cardimage.schema.json](../src/wb-models/cardimage.schema.json)) extend this base for unique features.
+- Defines shared properties, styles, and test scenarios for all card types.
+- Specialized schemas (e.g., [src/wb-models/cardimage.schema.json](../src/wb-models/cardimage.schema.json)) build on these shared properties for unique features.
 
 ---
 
@@ -106,7 +106,7 @@ When using `<article>` or `<section>`, the component will automatically enhance 
 ---
 
 ## Extending
-- To create a new card type, extend the base schema and add only unique properties and tests.
+- To create a new card type, start from the shared card schema and add only unique properties and tests.
 - Update this documentation when new features or variants are added.
 
 ---
