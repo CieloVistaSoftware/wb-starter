@@ -42,7 +42,8 @@ export function navbar(element, options = {}) {
     ...options
   };
 
-  element.classList.add('wb-navbar');
+  // #448: no classList.add('wb-navbar') -- no CSS selector anywhere depends
+  // on the bare class.
   element.style.display = 'flex';
   element.style.alignItems = 'center';
   element.style.justifyContent = 'space-between';

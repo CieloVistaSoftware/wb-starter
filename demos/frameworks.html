@@ -386,7 +386,7 @@ function Counter() {
     // Initialize WB (autoInject/MutationObserver handles the React/Vue mounts).
     await WB.init({ autoInject: true });
 
-    // This page's single <wb-demo> (the HTMX section) sits far below the
+    // This page's single wb-demo (the HTMX section) sits far below the
     // fold, so WB.init()'s default scan only lazily registers it with an
     // IntersectionObserver -- it never builds its grid/code-panel/CSS
     // without a real scroll into view. There's only one on the whole page,
