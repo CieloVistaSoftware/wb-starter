@@ -69,13 +69,23 @@ export function formatHtml(raw) {
 }
 
 // Site root that works from '/', '/demos/x.html', '/pages/x.html',
-// '/public/doc-viewer.html' — locally or under a GitHub Pages sub-path.
+// '/public/doc-viewer.html', '/tests/fixtures/x.html' — locally or under a
+// GitHub Pages sub-path.
+//
+// #454: 'tests/fixtures' was missing from this list. Pages living there
+// (e.g. cards-permutation-matrix.html) fell through to the fallback below,
+// which only strips the trailing filename — leaving siteRoot() as
+// '/tests/fixtures/' instead of '/'. Every doc-link feature keyed off this
+// (the docs/manifest.json fetch AND every generated ?file= doc-viewer href)
+// silently broke: the manifest fetch 404'd, so no doc ever resolved and no
+// Docs: link/badge was ever built, even though the page's <wb-demo> wrapping
+// was otherwise correct.
 function siteRoot() {
-    const stripped = location.pathname.replace(/(?:public|demos|pages|articles)\/.*$/, '');
-    // At the site root the path is a bare 'index.html' with no
-    // public/demos/pages/articles segment for the regex above to match, so
-    // it's a no-op there — strip the trailing filename directly, which also
-    // covers the GitHub Pages sub-path case ('/wb-starter/index.html').
+    const stripped = location.pathname.replace(/(?:public|demos|pages|articles|tests\/fixtures)\/.*$/, '');
+    // At the site root the path is a bare 'index.html' with no recognized
+    // directory segment for the regex above to match, so it's a no-op there
+    // — strip the trailing filename directly, which also covers the GitHub
+    // Pages sub-path case ('/wb-starter/index.html').
     return stripped.replace(/[^/]*$/, '');
 }
 
