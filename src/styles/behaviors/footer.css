@@ -2,6 +2,11 @@
  * Footer Behavior Styles
  */
 
+/* #448: `wb-footer` TAG selector added alongside the `.wb-footer` class --
+   footer() skips adding `.wb-footer` only for a literal <wb-footer> host; a
+   native <footer> host (autoInject) still gets the class, and still needs
+   it selected here. */
+wb-footer,
 .wb-footer {
   display: flex;
   align-items: center;
@@ -75,6 +80,7 @@
 
 /* Responsive */
 @media (max-width: 768px) {
+  wb-footer,
   .wb-footer {
     flex-direction: column;
     text-align: center;

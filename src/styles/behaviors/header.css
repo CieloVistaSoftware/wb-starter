@@ -2,12 +2,25 @@
  * Header Behavior Styles
  */
 
+/* #448: `wb-header` TAG selector added alongside the `.wb-header` class --
+   header() skips adding `.wb-header` only for a literal <wb-header> host; a
+   native <header> host (autoInject) still gets the class, and still needs
+   it selected here. */
+wb-header,
 .wb-header {
   display: flex;
   align-items: center;
   justify-content: space-between;
   padding: 0 1.5rem;
-  height: 60px;
+  /* min-height, not height: a fixed height silently clips a title/subtitle
+     that needs more than 60px (e.g. wraps to 2 lines) instead of growing to
+     fit -- confirmed live on pages/behaviors.html's hero <header>, which
+     picked up this class via tag-map's native auto-inject and overflowed
+     past its own box into the next element. That specific collision is
+     fixed at the source (x-ignore opts a plain, non-navbar <header> out of
+     this class entirely), but a real <wb-header> with a long title/subtitle
+     would hit the exact same clipping with a fixed height. */
+  min-height: 60px;
   background: var(--bg-primary);
   border-bottom: 1px solid var(--border-color);
   gap: 1rem;
@@ -86,6 +99,7 @@
 
 /* Responsive */
 @media (max-width: 768px) {
+  wb-header,
   .wb-header {
     padding: 0 1rem;
   }

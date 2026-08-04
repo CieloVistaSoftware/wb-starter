@@ -23,8 +23,12 @@ test.describe('Header Behavior', () => {
     await page.waitForTimeout(200);
     
     const header = page.locator('#testHeader');
-    await expect(header).toHaveClass(/wb-header/);
-    
+    // #448: a literal <wb-header> host no longer carries a same-named
+    // `.wb-header` class -- header.css selects the tag directly. Its own
+    // icon/title children (checked below) already prove header() enhanced
+    // it; this just confirms the enhancement ran on the right element.
+    await expect(header).toHaveJSProperty('tagName', 'WB-HEADER');
+
     const icon = header.locator('.wb-header__icon');
     await expect(icon).toHaveText('📂');
     
