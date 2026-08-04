@@ -1138,7 +1138,7 @@ const WB = {
       observe: shouldObserve = true,
       theme = null,
       debug = false,
-      autoInject = false, // Default to false unless specified
+      autoInject, // No default here — see the setConfig() call below for why.
       prefix = 'x', // Default prefix
       useSchemas = true, // v3.0: Enable schema-based DOM building
       // Base-path aware (relative to this module) so schemas load under any base —
@@ -1159,14 +1159,44 @@ const WB = {
     // full (much noisier) [WB.scan]/[WB.observe] trace.
     traceMediaLoads();
 
-    // Set autoInject — unconditional: config.js's module-level default was
-    // `true`, and this previously only ever set it to `true` (never `false`),
-    // so any caller passing `autoInject: false` (or omitting it, relying on
-    // the documented "false by default") silently stayed enhanced. Confirmed
-    // live: the main SPA's own config/site.json sets autoInjectComponents to
-    // false, and site-engine.js passes it straight through, yet every page
-    // had native elements auto-enhanced regardless.
-    setConfig('autoInject', autoInject);
+    // Set autoInject — ONLY when the caller explicitly passed it, not
+    // unconditionally. Originally made unconditional because config.js's
+    // module-level default used to be `true`, and only ever writing `true`
+    // (never `false`) left that stale `true` default in effect for any
+    // caller passing `autoInject: false` (or omitting it, relying on the
+    // documented "false by default") — confirmed live: the main SPA's own
+    // config/site.json sets autoInjectComponents to false, and
+    // site-engine.js passed it straight through, yet every page had native
+    // elements auto-enhanced regardless.
+    //
+    // #461 (found while investigating #460): that unconditional write
+    // introduced a DIFFERENT bug once
+    // config.js's own default was corrected to `false` (see config.js):
+    // WB.init() is meant to be called defensively/idempotently by every
+    // independent component that uses WB — see any framework code sample on
+    // demos/frameworks.html (React's useEffect, Vue's/Svelte's
+    // onMount(ed), Angular's ngOnInit, Solid's onMount): each calls a bare
+    // `WB.init()` with no options, on top of whatever the page's own
+    // top-level script already configured. Config is a shared, page-wide
+    // singleton — a bare call unconditionally overwriting autoInject with
+    // ITS OWN local default (`false`) meant the LAST WB.init() call to
+    // actually RESOLVE (not necessarily the one that ran last in source
+    // order — async work like a client-side compile step can reorder
+    // completion) silently won and turned autoInject back off for the rest
+    // of the page's lifetime. Confirmed live on demos/frameworks.html: the
+    // Svelte/SolidJS sections' own onMount() calls a bare WB.init() AFTER
+    // their async compile step, which can resolve AFTER the page's
+    // bottom-of-body `WB.init({ autoInject: true })` — clobbering it back
+    // to false and silently breaking auto-injected behaviors (and the
+    // site-wide click-confirmation toast, #456) for the WHOLE page, not
+    // just the newly-mounted element. Only writing when the key is actually
+    // present in `options` preserves both contracts at once: an explicit
+    // `{ autoInject: false }` still forces it off (tests/compliance/
+    // autoinject-default-false.spec.ts), and config.js's own module-level
+    // default (false) still applies when NO call on the page ever passes it
+    // at all — but a defensive, options-less re-init from one component
+    // never stomps on a value a DIFFERENT call already explicitly set.
+    if ('autoInject' in options) setConfig('autoInject', autoInject);
 
     // Set prefix
     setConfig('prefix', prefix);
