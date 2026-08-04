@@ -360,19 +360,19 @@ Tools for arranging content.
 **`stack`**
 
 <wb-demo>
-<div class="wb-stack">
+<wb-stack gap="1rem">
   <div>Item 1</div>
   <div>Item 2</div>
-</div>
+</wb-stack>
 </wb-demo>
 
 **`cluster`**
 
 <wb-demo>
-<div class="wb-cluster">
+<wb-cluster gap="1rem">
   <div>Item 1</div>
   <div>Item 2</div>
-</div>
+</wb-cluster>
 </wb-demo>
 
 `grid`, `flex`, `container`, `center`, `masonry`, `sticky`, `scrollable`,
