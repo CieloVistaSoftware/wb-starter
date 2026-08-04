@@ -322,13 +322,40 @@
   box-shadow: none;
 }
 
+/* Minimal (#457) — same gap as bordered/flat above: cardhorizontal,
+   cardimage, cardlink, cardpricing, cardproduct, cardstats, cardtestimonial
+   and cardvideo (see their .schema.json `variant` enums) all declare
+   "minimal", and cardBase() (card.js) applies the resulting `wb-card--minimal`
+   class generically for every one of them -- but until now the ONLY CSS rule
+   for it was scoped to `.wb-testimonial.wb-card--minimal` below, so every
+   other card type's "minimal" variant rendered pixel-identical to "default"
+   (confirmed live: a cardhorizontal with variant="minimal" kept the default
+   surface — background var(--bg-secondary), 1px border, no visible change).
+   Generic, unscoped rule (matching the bordered/flat convention) so ANY card
+   type declaring "minimal" gets the same stripped-down treatment: transparent
+   background, no border, no shadow. cardBase() already special-cases
+   'minimal' in its `ownsOwnSurface` list (skips the inline default-surface
+   override), so this class-based rule is free to take effect without an
+   inline style fighting it. */
+.wb-card--minimal {
+  background: transparent;
+  border: none;
+  box-shadow: none;
+}
+
 /* Testimonial "minimal"/"centered" — cardtestimonial.schema.json declares both
    in its variant enum with zero CSS anywhere (neither the wb-card--{variant}
    classes the JS actually applies, nor the wb-testimonial--{variant} classes
    the schema's appliesClass names) -- confirmed live: both rendered
    pixel-identical to "default". Scoped to .wb-testimonial so this can't
    collide with an unrelated "minimal"/"centered" variant on another card
-   type reusing the same generic class name. */
+   type reusing the same generic class name.
+   Note (#457): the generic `.wb-card--minimal` rule above now covers the
+   same background/border/box-shadow properties for every card type,
+   including testimonial -- this scoped rule is kept as the documented,
+   testimonial-specific anchor (and stays available if testimonial ever
+   needs to diverge from the generic treatment) but is otherwise redundant
+   with it today. */
 .wb-testimonial.wb-card--minimal {
   background: transparent;
   border: none;
@@ -670,18 +697,18 @@
   background-position: center;
 }
 
-/* Role badge overlaid on the cover strip. #406: a fixed top offset, not
-   true 50% vertical centering -- centering the badge's bounding box within
-   the (formerly 36px) cover strip landed it almost entirely inside the
-   card's own 8px border-radius curve, so the pill's rounded corner visibly
-   clipped against that curve even though the rectangle math never
-   overflowed. A fixed offset that clears the radius, on a slightly taller
-   strip (36px -> 44px) so there's still balanced clearance below, per the
-   already-documented intent in cardprofile(), card.js -- distinct from the
-   plain `.wb-card__role` text treatment below (Law 9 migration, #370). */
+/* Role badge overlaid on the cover strip. #406 originally used a fixed
+   `top: 0.75rem` instead of true 50% centering, because centering the
+   badge inside the strip's then-36px height clipped its rounded corner
+   against the card's own 8px border-radius. The strip has since grown to
+   44px (unrelated later change) -- reported again (John, repeatedly) that
+   the fixed offset visibly sits above center, not centered, on the taller
+   strip. True vertical centering via top:50%/translateY(-50%) instead --
+   confirmed live it no longer clips at 44px. */
 .wb-card__role--badge {
   position: absolute;
-  top: 0.75rem;
+  top: 50%;
+  transform: translateY(-50%);
   right: 0.75rem;
   padding: 0.15rem 0.6rem;
   border-radius: 999px;

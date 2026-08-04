@@ -117,4 +117,49 @@ test.describe('Typed card variants actually differ from default', () => {
     // never there.
     expect(minimal.background, 'minimal background must differ from default').not.toBe(def.background);
   });
+
+  /**
+   * #457: card.css's only "minimal" rule was scoped to
+   * `.wb-testimonial.wb-card--minimal`, so cardBase()'s generic
+   * `wb-card--{variant}` class had zero CSS backing it for every OTHER card
+   * type that declares "minimal" in its schema's variant enum -- confirmed
+   * live: cardhorizontal/cardimage/cardlink all rendered pixel-identical to
+   * "default" (solid background + 1px border) despite carrying the
+   * `wb-card--minimal` class. A generic, unscoped `.wb-card--minimal` rule
+   * was added (card.css) so every declaring type gets real treatment; these
+   * three types had no prior coverage at all (unlike cardstats/cardproduct/
+   * cardpricing/cardvideo above).
+   */
+  test('cardhorizontal: minimal differs from default', async ({ page }) => {
+    await inject(page, `
+      <wb-cardhorizontal id="ch-default" variant="default" title="Article" content="Body text"></wb-cardhorizontal>
+      <wb-cardhorizontal id="ch-minimal" variant="minimal" title="Article" content="Body text"></wb-cardhorizontal>
+    `);
+    const def = await surface(page, '#ch-default');
+    const minimal = await surface(page, '#ch-minimal');
+    expect(minimal.background, 'minimal background must differ from default').not.toBe(def.background);
+    expect(minimal.border, 'minimal border must differ from default').not.toBe(def.border);
+  });
+
+  test('cardimage: minimal differs from default', async ({ page }) => {
+    await inject(page, `
+      <wb-cardimage id="ci-default" variant="default" src="/demos/audio.mp3" title="Image"></wb-cardimage>
+      <wb-cardimage id="ci-minimal" variant="minimal" src="/demos/audio.mp3" title="Image"></wb-cardimage>
+    `);
+    const def = await surface(page, '#ci-default');
+    const minimal = await surface(page, '#ci-minimal');
+    expect(minimal.background, 'minimal background must differ from default').not.toBe(def.background);
+    expect(minimal.border, 'minimal border must differ from default').not.toBe(def.border);
+  });
+
+  test('cardlink: minimal differs from default', async ({ page }) => {
+    await inject(page, `
+      <wb-cardlink id="cl-default" variant="default" href="https://example.com" title="Link"></wb-cardlink>
+      <wb-cardlink id="cl-minimal" variant="minimal" href="https://example.com" title="Link"></wb-cardlink>
+    `);
+    const def = await surface(page, '#cl-default');
+    const minimal = await surface(page, '#cl-minimal');
+    expect(minimal.background, 'minimal background must differ from default').not.toBe(def.background);
+    expect(minimal.border, 'minimal border must differ from default').not.toBe(def.border);
+  });
 });
