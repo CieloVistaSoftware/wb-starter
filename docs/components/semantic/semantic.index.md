@@ -62,7 +62,7 @@ Semantic elements come with built-in behaviors (e.g., `<dialog>` for modals, `<p
 
 ## Files in this Directory
 
-- [article.md](./article.md) - Article element (base for cards)
+- [article.md](./article.md) - Article element (used by cards)
 - [aside.md](./aside.md) - Aside element (notifications, alerts)
 - [blockquote.md](./blockquote.md) - Blockquote element (testimonials)
 - [address.md](./address.md) - Address element (contact info)

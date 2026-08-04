@@ -1,6 +1,6 @@
 # wb-control
 
-A base class for form controls and custom elements.
+A reusable control button component for form controls and custom elements.
 
 - **Usage:**
   ```html

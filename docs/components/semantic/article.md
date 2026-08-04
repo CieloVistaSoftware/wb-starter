@@ -46,7 +46,7 @@ All card components use the `<article>` semantic element:
 
 | Component | Custom Tag | Usage |
 |-----------|------------|-------|
-| card | `<wb-card>` | Base card |
+| card | `<wb-card>` | Default card |
 | cardimage | `<wb-cardimage>` | Image card |
 | cardvideo | `<wb-cardvideo>` | Video card |
 | cardbutton | `<wb-cardbutton>` | Action buttons |
@@ -100,16 +100,16 @@ All card components use the `<article>` semantic element:
 </article>
 </wb-demo>
 
-## Inheritance Chain
+## Composition
+
+Card variants compose, rather than inherit, their structure:
 
 ```
-<article> (HTML5 semantic)
-    ↓
-cardBase (WB base)
-    ↓
-card (WB component)
-    ↓
-card variants
+<article> (HTML5 semantic element)
+    +
+card behavior (adds header/main/footer structure)
+    +
+variant-specific behavior and markup
 ```
 
 ## Accessibility
