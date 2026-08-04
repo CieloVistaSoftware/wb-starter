@@ -37,7 +37,9 @@ export function article(element, options = {}) {
 
   const body = takeChildren(element);
 
-  element.classList.add('wb-article');
+  // #448: no classList.add('wb-article') here -- article.css's .wb-article
+  // selector was converted to the `wb-article` TAG selector, so the tag
+  // itself is styled without a same-named class duplicating it.
   element.classList.toggle('wb-article--featured', featured);
 
   const hasHeaderContent = image || category || date || readingTime || title || subtitle || author;
@@ -132,7 +134,8 @@ export function articles(element, options = {}) {
 
   const body = takeChildren(element);
 
-  element.classList.add('wb-articles');
+  // #448: no bare 'wb-articles' class -- no CSS selector anywhere depends
+  // on it (only the .wb-articles--{layout} modifiers, unaffected).
 
   if (title) {
     const header = document.createElement('header');

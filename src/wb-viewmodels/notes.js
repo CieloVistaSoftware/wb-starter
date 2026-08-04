@@ -47,8 +47,9 @@ export function notes(element, options = {}) {
   let dragStart = { x: 0, y: 0 };
   let resizeStart = { x: 0, y: 0, width: 0, height: 0 };
 
-  // Add classes
-  element.classList.add('wb-notes', `wb-notes--${config.position}`);
+  // Add classes. #448: no bare 'wb-notes' token -- notes.css/site.css select
+  // the `wb-notes` TAG directly now, so it just duplicated the tag name.
+  element.classList.add(`wb-notes--${config.position}`);
   element.style.setProperty('--notes-max-width', config.maxWidth);
   element.style.setProperty('--notes-min-width', config.minWidth);
   element.style.width = config.defaultWidth;
@@ -561,7 +562,7 @@ export function notes(element, options = {}) {
 
   // Cleanup
   return () => {
-    element.classList.remove('wb-notes', `wb-notes--${currentPosition}`, 'wb-notes--open');
+    element.classList.remove(`wb-notes--${currentPosition}`, 'wb-notes--open');
     resizeHandle.removeEventListener('mousedown', onResizeStart);
     resizeHandleModal.removeEventListener('mousedown', onModalResizeStart);
     header.removeEventListener('mousedown', onDragStart);

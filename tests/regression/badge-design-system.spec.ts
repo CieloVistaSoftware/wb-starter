@@ -32,8 +32,15 @@ async function inject(page: Page, html: string) {
     return Array.from(container.children).map(el => el.id).filter(Boolean);
   }, html);
 
+  // #448: a literal <wb-badge> host no longer carries a same-named
+  // `.wb-badge` class -- badge.css selects the tag directly. Wait for a
+  // variant modifier class instead, which only gets added once badge()
+  // has actually run.
   await page.waitForFunction(
-    (elementIds: string[]) => elementIds.every(id => document.getElementById(id)?.classList.contains('wb-badge')),
+    (elementIds: string[]) => elementIds.every(id => {
+      const el = document.getElementById(id);
+      return el && Array.from(el.classList).some(c => c.startsWith('wb-badge--'));
+    }),
     ids,
     { timeout: 5000 }
   );

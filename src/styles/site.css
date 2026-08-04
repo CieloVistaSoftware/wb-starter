@@ -191,7 +191,10 @@ body > button[x-copy] {
 /* =============================================================================
    SPINNER
    ============================================================================= */
-.wb-spinner {
+/* #448: tag selectors -- spinner() no longer adds a redundant
+   classList.add('wb-spinner') that just duplicated the <wb-spinner> tag
+   name. */
+wb-spinner {
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -204,7 +207,7 @@ body > button[x-copy] {
   animation: none;
 }
 
-.wb-spinner div {
+wb-spinner div {
   /* Explicit longhands instead of the `border` shorthand: if --border-color is
      ever unset, only the color is lost, not the whole border (which previously
      made the ring vanish entirely). #182 */
@@ -1351,7 +1354,9 @@ a.wb-btn-glass {
 /* =============================================================================
    NOTES DRAWER
    ============================================================================= */
-.wb-notes {
+/* #448: tag selector -- notes() no longer adds a redundant classList.add
+   ('wb-notes') that just duplicated the <wb-notes> tag name. */
+wb-notes {
   position: fixed;
   z-index: 1000;
   pointer-events: none;

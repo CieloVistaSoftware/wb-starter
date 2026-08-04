@@ -5,7 +5,11 @@
  * -----------------------------------------------------------------------------
  */
 
-.wb-article {
+/* #448: tag selector, not a class -- article() no longer adds a
+   classList.add('wb-article') that just duplicated the <wb-article> tag
+   name; select the tag directly instead (same fix pattern as #447's
+   wb-demo). */
+wb-article {
   display: block;
   color: var(--text-primary, #f9fafb);
 }
@@ -108,7 +112,7 @@
   gap: 1.5rem;
 }
 
-.wb-articles--grid > .wb-article {
+.wb-articles--grid > wb-article {
   border: 1px solid var(--border-color, #374151);
   border-radius: var(--radius-lg, 8px);
   padding: 1rem;
@@ -121,7 +125,7 @@
   gap: 1.5rem;
 }
 
-.wb-articles--list > .wb-article {
+.wb-articles--list > wb-article {
   padding-bottom: 1.5rem;
   border-bottom: 1px solid var(--border-color, #374151);
 }
@@ -131,7 +135,7 @@
   column-gap: 1.5rem;
 }
 
-.wb-articles--masonry > .wb-article {
+.wb-articles--masonry > wb-article {
   break-inside: avoid;
   margin-bottom: 1.5rem;
 }

@@ -6,14 +6,19 @@
  * -----------------------------------------------------------------------------
  */
 
-/* The <wb-badge> TAG: inline + only as wide as its content — bare/label-less
-   badges were rendering full-width because the custom element had no sizing. */
-wb-badge { display: inline-flex; align-items: center; width: fit-content; vertical-align: middle; }
-
+/* #448: `wb-badge` TAG selector carries the FULL badge look (merged with
+   the old separate tag-only display/sizing rule below) -- badge() skips
+   adding the redundant `.wb-badge` class to a literal <wb-badge> host, so
+   the tag alone must supply everything the class used to (background/
+   border/padding/etc.), not just inline-flex/width sizing. The class rule
+   is kept for the `badge="..."` semantic attribute on a plain element
+   (badge() still adds `.wb-badge` there, per semantic-attributes.js). */
+wb-badge,
 .wb-badge {
   display: inline-flex;
   align-items: center;
   width: fit-content;
+  vertical-align: middle;
   padding: 0.25rem 0.5rem;
   font-size: 0.875rem;
   font-weight: 600;

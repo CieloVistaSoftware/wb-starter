@@ -84,7 +84,13 @@ export function badge(element, options = {}) {
   // attention to a "NEW"/"LIVE" badge. Composes with any variant/pill/outline.
   const glow = options.glow ?? element.hasAttribute('glow');
 
-  element.classList.add('wb-badge', `wb-badge--${variant}`);
+  // #448: skip the bare 'wb-badge' token on a literal <wb-badge> host --
+  // badge.css already has a dedicated `wb-badge` tag rule for that case.
+  // Still added for every OTHER host (the `badge="..."` semantic attribute
+  // on a plain element, per semantic-attributes.js), since badge.css's
+  // `.wb-badge` class rule still selects those.
+  if (element.tagName.toLowerCase() !== 'wb-badge') element.classList.add('wb-badge');
+  element.classList.add(`wb-badge--${variant}`);
   if (size && ['xs', 'sm', 'md', 'lg'].includes(size)) element.classList.add(`wb-badge--${size}`);
   if (pill) element.classList.add('wb-badge--pill');
   if (dot) element.classList.add('wb-badge--dot');
@@ -197,7 +203,10 @@ export function spinner(element, options = {}) {
   const size = options.size || element.getAttribute('size') || 'md';
   const variant = options.variant || options.color || element.getAttribute('variant') || element.getAttribute('color');
   const speed = options.speed || element.getAttribute('speed');
-  element.classList.add('wb-spinner');
+  // #448: no classList.add('wb-spinner') -- effects.css/site.css's
+  // .wb-spinner selectors were converted to the `wb-spinner` TAG (no live
+  // demo/page usage of x-spinner on a non-<wb-spinner> element was found,
+  // so there's nothing else the bare class needs to keep matching).
   if (size) element.classList.add(`wb-spinner--${size}`);
   if (variant) element.classList.add(`wb-spinner--${variant}`);
   if (speed) element.classList.add(`wb-spinner--${speed}`);
@@ -262,7 +271,8 @@ export function chip(element, options = {}) {
   const variant = options.variant || element.getAttribute('variant') || 'default';
   const size = options.size || element.getAttribute('size') || 'md';
 
-  element.classList.add('wb-chip');
+  // #448: no classList.add('wb-chip') -- chip.css selects the `wb-chip` TAG
+  // directly now, so the class just duplicated the tag name.
   element.classList.toggle(`wb-chip--${variant}`, variant !== 'default');
   element.classList.toggle(`wb-chip--${size}`, size !== 'md');
   element.classList.toggle('wb-chip--outlined', outlined);
@@ -316,11 +326,10 @@ export function alert(element, options = {}) {
 
   element.setAttribute('role', 'alert');
   element.setAttribute('variant', variant);
-  // alert.css styles entirely through classes (.wb-alert base +
-  // .wb-alert--<variant>) -- the variant attribute alone matches no
-  // selector, so every alert rendered with zero styling regardless of
-  // variant (#375).
-  element.classList.add('wb-alert');
+  // alert.css styles the `wb-alert` TAG (#448 converted the old bare
+  // .wb-alert class selector to a tag selector) + .wb-alert--<variant> --
+  // the variant attribute alone matches no selector, so every alert
+  // rendered with zero styling regardless of variant (#375).
   element.classList.add(`wb-alert--${variant}`);
 
   const content = message || element.innerHTML || 'Alert message';
@@ -372,13 +381,11 @@ export function skeleton(element) {
 
   // wb-skeleton is in schema-builder.js's SCHEMA_EXCLUDED_TAGS (self-
   // sufficient behavior, same as card/search) -- so schema-builder never
-  // runs for it and never applies compliance.baseClass ("wb-skeleton") or
-  // the variant's appliesClass ("wb-skeleton--{{value}}"). Nothing else
-  // ever added either, so every <wb-skeleton> silently rendered with NO
-  // class at all (skeleton.css's selectors never matched, and the
-  // permutation-compliance test's [BASE CLASS] check correctly caught it).
-  // This behavior must apply both itself, same as search()/searchField().
-  element.classList.add('wb-skeleton', `wb-skeleton--${variant}`);
+  // runs for it. skeleton.css selects the `wb-skeleton` TAG directly
+  // (never a bare `.wb-skeleton` class), so only the variant modifier class
+  // is needed here -- #448 removed the redundant base token, which just
+  // duplicated the tag name and was never itself selected by any rule.
+  element.classList.add(`wb-skeleton--${variant}`);
 
   element.setAttribute('variant', variant);
   if (width) element.style.width = width;

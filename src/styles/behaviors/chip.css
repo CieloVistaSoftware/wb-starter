@@ -6,7 +6,9 @@
  * -----------------------------------------------------------------------------
  */
 
-.wb-chip {
+/* #448: tag selector -- chip() no longer adds a redundant classList.add
+   ('wb-chip') that just duplicated the <wb-chip> tag name. */
+wb-chip {
   display: inline-flex;
   align-items: center;
   gap: 0.25rem;

@@ -46,7 +46,11 @@ export function rating(element, options = {}) {
 
   // Clear element
   element.innerHTML = '';
-  element.classList.add('wb-rating', `wb-rating--${config.size}`);
+  // #448: no bare 'wb-rating' token -- it just duplicated <wb-rating>'s own
+  // tag name (no CSS selector depends on it; rating.css's `.wb-rating span`
+  // rule is already dead/unmatched per its own comment). The size modifier
+  // class is real and stays.
+  element.classList.add(`wb-rating--${config.size}`);
   element.style.display = 'inline-flex';
   element.style.gap = '0.25rem';
   element.style.cursor = config.readonly ? 'default' : 'pointer';
@@ -133,7 +137,6 @@ export function rating(element, options = {}) {
   return () => {
     // Cleanup
     element.innerHTML = '';
-    element.classList.remove('wb-rating');
     delete element.wbRating;
   };
 }
