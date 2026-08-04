@@ -8,22 +8,9 @@
   <link rel="stylesheet" href="../../src/styles/themes.css">
   <link rel="stylesheet" href="../../src/styles/site.css">
 
-  <style>
-    /* .page normally sits inside <main class="site__main">, which provides
-       padding: 2rem (site.css) -- this is a standalone page with no
-       site__main wrapper, so .page alone only centers/caps width, giving
-       zero-margin edge-to-edge content. Scoped to body's direct child only,
-       so this never double-pads .page inside the real SPA. Matches
-       DEMOS-AND-DOCS-STANDARDS.md #13 ("proper margins & padding... from
-       theme/spacing variables, not ad-hoc values") -- var(--space-xl) is
-       the same 2rem site__main already uses, not a new literal. */
-    body > .page { padding: var(--space-xl); }
-    @media (max-width: 640px) { body > .page { padding: 1rem; } }
-  </style>
 </head>
 
 <body>
-  <div class="page">
   <nav style="margin-bottom: 1rem;">
     <a href="index.html" style="color: var(--text-secondary, #aaa); text-decoration: none;">← Back to Index</a>
   </nav>
@@ -33,59 +20,39 @@
   <!-- 1. 🔘 Button -->
   <section id="button-button">
   <h2>🔘 Button</h2>
-    <wb-demo>
+  <wb-demo columns="3">
     <wb-button label="Primary" variant="primary">
-      label=Primary, variant=primary
+      This is example button content.
     </wb-button>
-  </wb-demo>
-  <wb-demo>
     <wb-button label="Secondary" variant="secondary">
-      label=Secondary, variant=secondary
+      This is example button content.
     </wb-button>
-  </wb-demo>
-  <wb-demo>
     <wb-button label="Success" variant="success">
-      label=Success, variant=success
+      This is example button content.
     </wb-button>
-  </wb-demo>
-  <wb-demo>
     <wb-button label="Warning" variant="warning">
-      label=Warning, variant=warning
+      This is example button content.
     </wb-button>
-  </wb-demo>
-  <wb-demo>
     <wb-button label="Error" variant="error">
-      label=Error, variant=error
+      This is example button content.
     </wb-button>
-  </wb-demo>
-  <wb-demo>
     <wb-button label="Ghost" variant="ghost">
-      label=Ghost, variant=ghost
+      This is example button content.
     </wb-button>
-  </wb-demo>
-  <wb-demo>
     <wb-button label="Outline" variant="outline">
-      label=Outline, variant=outline
+      This is example button content.
     </wb-button>
-  </wb-demo>
-  <wb-demo>
     <wb-button label="Small" variant="primary" size="sm">
-      label=Small, variant=primary, size=sm
+      This is example button content.
     </wb-button>
-  </wb-demo>
-  <wb-demo>
     <wb-button label="Large" variant="primary" size="lg">
-      label=Large, variant=primary, size=lg
+      This is example button content.
     </wb-button>
-  </wb-demo>
-  <wb-demo>
     <wb-button label="Loading..." variant="primary" loading>
-      label=Loading..., variant=primary, loading
+      This is example button content.
     </wb-button>
-  </wb-demo>
-  <wb-demo>
     <wb-button label="🚀 With Icon" variant="primary" icon="🚀">
-      label=🚀 With Icon, variant=primary, icon=🚀
+      This is example button content.
     </wb-button>
   </wb-demo>
   </section>
@@ -93,104 +60,66 @@
   <!-- 2. icon variants -->
   <section id="button-icon-variants">
   <h2>icon variants</h2>
-    <wb-demo>
+  <wb-demo columns="3">
     <wb-button icon="star">
-      icon=star
+      This is example button content.
     </wb-button>
-  </wb-demo>
-  <wb-demo>
     <wb-button icon="check">
-      icon=check
+      This is example button content.
     </wb-button>
-  </wb-demo>
-  <wb-demo>
     <wb-button icon="close">
-      icon=close
+      This is example button content.
     </wb-button>
-  </wb-demo>
-  <wb-demo>
     <wb-button icon="warning">
-      icon=warning
+      This is example button content.
     </wb-button>
-  </wb-demo>
-  <wb-demo>
     <wb-button icon="info">
-      icon=info
+      This is example button content.
     </wb-button>
-  </wb-demo>
-  <wb-demo>
     <wb-button icon="error">
-      icon=error
+      This is example button content.
     </wb-button>
-  </wb-demo>
-  <wb-demo>
     <wb-button icon="heart">
-      icon=heart
+      This is example button content.
     </wb-button>
-  </wb-demo>
-  <wb-demo>
     <wb-button icon="search">
-      icon=search
+      This is example button content.
     </wb-button>
-  </wb-demo>
-  <wb-demo>
     <wb-button icon="edit">
-      icon=edit
+      This is example button content.
     </wb-button>
-  </wb-demo>
-  <wb-demo>
     <wb-button icon="trash">
-      icon=trash
+      This is example button content.
     </wb-button>
-  </wb-demo>
-  <wb-demo>
     <wb-button icon="plus">
-      icon=plus
+      This is example button content.
     </wb-button>
-  </wb-demo>
-  <wb-demo>
     <wb-button icon="minus">
-      icon=minus
+      This is example button content.
     </wb-button>
-  </wb-demo>
-  <wb-demo>
     <wb-button icon="home">
-      icon=home
+      This is example button content.
     </wb-button>
-  </wb-demo>
-  <wb-demo>
     <wb-button icon="settings">
-      icon=settings
+      This is example button content.
     </wb-button>
-  </wb-demo>
-  <wb-demo>
     <wb-button icon="download">
-      icon=download
+      This is example button content.
     </wb-button>
-  </wb-demo>
-  <wb-demo>
     <wb-button icon="upload">
-      icon=upload
+      This is example button content.
     </wb-button>
-  </wb-demo>
-  <wb-demo>
     <wb-button icon="arrow_right">
-      icon=arrow_right
+      This is example button content.
     </wb-button>
-  </wb-demo>
-  <wb-demo>
     <wb-button icon="arrow_left">
-      icon=arrow_left
+      This is example button content.
     </wb-button>
-  </wb-demo>
-  <wb-demo>
     <wb-button icon="copy">
-      icon=copy
+      This is example button content.
     </wb-button>
-  </wb-demo>
-  <wb-demo>
     <wb-button icon="save">
-      icon=save
+      This is example button content.
     </wb-button>
   </wb-demo>
   </section>
@@ -198,59 +127,43 @@
   <!-- 3. iconPosition variants -->
   <section id="button-iconposition-variants">
   <h2>iconPosition variants</h2>
-    <wb-demo>
+  <wb-demo columns="2">
     <wb-button icon-position="start">
-      icon-position=start
+      This is example button content.
     </wb-button>
-  </wb-demo>
-  <wb-demo>
     <wb-button icon-position="end">
-      icon-position=end
+      This is example button content.
     </wb-button>
   </wb-demo>
   </section>
 
-  <!-- 4. variant variants -->
-  <section id="button-variant-variants">
-  <h2>variant variants</h2>
-    <wb-demo>
+  <!-- 4. Variants -->
+  <section id="button-variants">
+  <h2>Variants</h2>
+  <wb-demo columns="3">
     <wb-button variant="primary">
-      variant=primary
+      This is example button content.
     </wb-button>
-  </wb-demo>
-  <wb-demo>
     <wb-button variant="secondary">
-      variant=secondary
+      This is example button content.
     </wb-button>
-  </wb-demo>
-  <wb-demo>
     <wb-button variant="success">
-      variant=success
+      This is example button content.
     </wb-button>
-  </wb-demo>
-  <wb-demo>
     <wb-button variant="warning">
-      variant=warning
+      This is example button content.
     </wb-button>
-  </wb-demo>
-  <wb-demo>
     <wb-button variant="error">
-      variant=error
+      This is example button content.
     </wb-button>
-  </wb-demo>
-  <wb-demo>
     <wb-button variant="ghost">
-      variant=ghost
+      This is example button content.
     </wb-button>
-  </wb-demo>
-  <wb-demo>
     <wb-button variant="outline">
-      variant=outline
+      This is example button content.
     </wb-button>
-  </wb-demo>
-  <wb-demo>
     <wb-button variant="link">
-      variant=link
+      This is example button content.
     </wb-button>
   </wb-demo>
   </section>
@@ -258,54 +171,40 @@
   <!-- 5. size variants -->
   <section id="button-size-variants">
   <h2>size variants</h2>
-    <wb-demo>
+  <wb-demo columns="3">
     <wb-button size="xs">
-      size=xs
+      This is example button content.
     </wb-button>
-  </wb-demo>
-  <wb-demo>
     <wb-button size="sm">
-      size=sm
+      This is example button content.
     </wb-button>
-  </wb-demo>
-  <wb-demo>
     <wb-button size="md">
-      size=md
+      This is example button content.
     </wb-button>
-  </wb-demo>
-  <wb-demo>
     <wb-button size="lg">
-      size=lg
+      This is example button content.
     </wb-button>
-  </wb-demo>
-  <wb-demo>
     <wb-button size="xl">
-      size=xl
+      This is example button content.
     </wb-button>
   </wb-demo>
   </section>
 
-  <!-- 6. Boolean toggles -->
-  <section id="button-boolean-toggles">
-  <h2>Boolean toggles</h2>
-    <wb-demo>
+  <!-- 6. Toggles -->
+  <section id="button-toggles">
+  <h2>Toggles</h2>
+  <wb-demo columns="1">
     <wb-button disabled>
-      disabled
+      This is example button content.
     </wb-button>
-  </wb-demo>
-  <wb-demo>
     <wb-button loading>
-      loading
+      This is example button content.
     </wb-button>
-  </wb-demo>
-  <wb-demo>
     <wb-button full-width>
-      full-width
+      This is example button content.
     </wb-button>
-  </wb-demo>
-  <wb-demo>
     <wb-button icon-only>
-      icon-only
+      This is example button content.
     </wb-button>
   </wb-demo>
   </section>
@@ -313,125 +212,115 @@
   <!-- 7. ☑️ Checkbox -->
   <section id="checkbox-checkbox">
   <h2>☑️ Checkbox</h2>
-    <wb-demo>
-    <label><input type="checkbox"> Default checkbox</label>
-  </wb-demo>
-  <wb-demo>
-    <label><input type="checkbox" checked> Checked</label>
-  </wb-demo>
-  <wb-demo>
-    <label><input type="checkbox" disabled> Disabled</label>
-  </wb-demo>
-  <wb-demo>
-    <label><input type="checkbox" variant="primary"> Primary</label>
-  </wb-demo>
-  <wb-demo>
-    <label><input type="checkbox" variant="success" checked> Success variant</label>
-  </wb-demo>
-  <wb-demo>
-    <label><input type="checkbox" size="sm"> Small checkbox</label>
-  </wb-demo>
-  <wb-demo>
-    <label><input type="checkbox" size="lg"> Large checkbox</label>
+  <wb-demo columns="3">
+    <wb-checkbox label="Default checkbox">
+      This is example checkbox content.
+    </wb-checkbox>
+    <wb-checkbox label="Checked" checked>
+      This is example checkbox content.
+    </wb-checkbox>
+    <wb-checkbox label="Disabled" disabled>
+      This is example checkbox content.
+    </wb-checkbox>
+    <wb-checkbox label="Primary" variant="primary">
+      This is example checkbox content.
+    </wb-checkbox>
+    <wb-checkbox label="Success variant" variant="success" checked>
+      This is example checkbox content.
+    </wb-checkbox>
+    <wb-checkbox label="Small checkbox" size="sm">
+      This is example checkbox content.
+    </wb-checkbox>
+    <wb-checkbox label="Large checkbox" size="lg">
+      This is example checkbox content.
+    </wb-checkbox>
   </wb-demo>
   </section>
 
   <!-- 8. size variants -->
   <section id="checkbox-size-variants">
   <h2>size variants</h2>
-    <wb-demo>
-    <label><input type="checkbox" size="sm"> size=sm</label>
-  </wb-demo>
-  <wb-demo>
-    <label><input type="checkbox" size="md"> size=md</label>
-  </wb-demo>
-  <wb-demo>
-    <label><input type="checkbox" size="lg"> size=lg</label>
-  </wb-demo>
-  </section>
-
-  <!-- 9. variant variants -->
-  <section id="checkbox-variant-variants">
-  <h2>variant variants</h2>
-    <wb-demo>
-    <label><input type="checkbox" variant="default"> variant=default</label>
-  </wb-demo>
-  <wb-demo>
-    <label><input type="checkbox" variant="primary"> variant=primary</label>
-  </wb-demo>
-  <wb-demo>
-    <label><input type="checkbox" variant="success"> variant=success</label>
+  <wb-demo columns="2">
+    <wb-checkbox size="sm">
+      This is example checkbox content.
+    </wb-checkbox>
+    <wb-checkbox size="md">
+      This is example checkbox content.
+    </wb-checkbox>
+    <wb-checkbox size="lg">
+      This is example checkbox content.
+    </wb-checkbox>
   </wb-demo>
   </section>
 
-  <!-- 10. Boolean toggles -->
-  <section id="checkbox-boolean-toggles">
-  <h2>Boolean toggles</h2>
-    <wb-demo>
-    <label><input type="checkbox" checked> checked</label>
+  <!-- 9. Variants -->
+  <section id="checkbox-variants">
+  <h2>Variants</h2>
+  <wb-demo columns="2">
+    <wb-checkbox variant="default">
+      This is example checkbox content.
+    </wb-checkbox>
+    <wb-checkbox variant="primary">
+      This is example checkbox content.
+    </wb-checkbox>
+    <wb-checkbox variant="success">
+      This is example checkbox content.
+    </wb-checkbox>
   </wb-demo>
-  <wb-demo>
-    <label><input type="checkbox" disabled> disabled</label>
-  </wb-demo>
-  <wb-demo>
-    <label><input type="checkbox" indeterminate> indeterminate</label>
-  </wb-demo>
-  <wb-demo>
-    <label><input type="checkbox" required> required</label>
+  </section>
+
+  <!-- 10. Toggles -->
+  <section id="checkbox-toggles">
+  <h2>Toggles</h2>
+  <wb-demo columns="1">
+    <wb-checkbox checked>
+      This is example checkbox content.
+    </wb-checkbox>
+    <wb-checkbox disabled>
+      This is example checkbox content.
+    </wb-checkbox>
+    <wb-checkbox indeterminate>
+      This is example checkbox content.
+    </wb-checkbox>
+    <wb-checkbox required>
+      This is example checkbox content.
+    </wb-checkbox>
   </wb-demo>
   </section>
 
   <!-- 11. 📝 Input -->
   <section id="input-input">
   <h2>📝 Input</h2>
-    <wb-demo>
+  <wb-demo columns="3">
     <wb-input label="Text Input" placeholder="Enter text...">
-      label=Text Input, placeholder=Enter text...
+      This is example input content.
     </wb-input>
-  </wb-demo>
-  <wb-demo>
     <wb-input label="Email" input-type="email" placeholder="you@example.com">
-      label=Email, input-type=email, placeholder=you@example.com
+      This is example input content.
     </wb-input>
-  </wb-demo>
-  <wb-demo>
     <wb-input label="Password" input-type="password" placeholder="••••••••">
-      label=Password, input-type=password, placeholder=••••••••
+      This is example input content.
     </wb-input>
-  </wb-demo>
-  <wb-demo>
     <wb-input label="With Helper" placeholder="Type here" helper="This is helper text">
-      label=With Helper, placeholder=Type here, helper=This is helper text
+      This is example input content.
     </wb-input>
-  </wb-demo>
-  <wb-demo>
     <wb-input label="Error State" variant="error" error="This field is required" value="">
-      label=Error State, variant=error, error=This field is required, value=
+      This is example input content.
     </wb-input>
-  </wb-demo>
-  <wb-demo>
     <wb-input label="Success State" variant="success" value="Valid input">
-      label=Success State, variant=success, value=Valid input
+      This is example input content.
     </wb-input>
-  </wb-demo>
-  <wb-demo>
     <wb-input label="With Icon" icon="🔍" placeholder="Search..." clearable>
-      label=With Icon, icon=🔍, placeholder=Search..., clearable
+      This is example input content.
     </wb-input>
-  </wb-demo>
-  <wb-demo>
     <wb-input label="Disabled" disabled value="Cannot edit">
-      label=Disabled, disabled, value=Cannot edit
+      This is example input content.
     </wb-input>
-  </wb-demo>
-  <wb-demo>
     <wb-input label="Small Input" size="sm" placeholder="Small">
-      label=Small Input, size=sm, placeholder=Small
+      This is example input content.
     </wb-input>
-  </wb-demo>
-  <wb-demo>
     <wb-input label="Large Input" size="lg" placeholder="Large">
-      label=Large Input, size=lg, placeholder=Large
+      This is example input content.
     </wb-input>
   </wb-demo>
   </section>
@@ -439,74 +328,52 @@
   <!-- 12. inputType variants -->
   <section id="input-inputtype-variants">
   <h2>inputType variants</h2>
-    <wb-demo>
+  <wb-demo columns="3">
     <wb-input input-type="text">
-      input-type=text
+      This is example input content.
     </wb-input>
-  </wb-demo>
-  <wb-demo>
     <wb-input input-type="email">
-      input-type=email
+      This is example input content.
     </wb-input>
-  </wb-demo>
-  <wb-demo>
     <wb-input input-type="password">
-      input-type=password
+      This is example input content.
     </wb-input>
-  </wb-demo>
-  <wb-demo>
     <wb-input input-type="number">
-      input-type=number
+      This is example input content.
     </wb-input>
-  </wb-demo>
-  <wb-demo>
     <wb-input input-type="tel">
-      input-type=tel
+      This is example input content.
     </wb-input>
-  </wb-demo>
-  <wb-demo>
     <wb-input input-type="url">
-      input-type=url
+      This is example input content.
     </wb-input>
-  </wb-demo>
-  <wb-demo>
     <wb-input input-type="search">
-      input-type=search
+      This is example input content.
     </wb-input>
-  </wb-demo>
-  <wb-demo>
     <wb-input input-type="date">
-      input-type=date
+      This is example input content.
     </wb-input>
-  </wb-demo>
-  <wb-demo>
     <wb-input input-type="time">
-      input-type=time
+      This is example input content.
     </wb-input>
-  </wb-demo>
-  <wb-demo>
     <wb-input input-type="datetime-local">
-      input-type=datetime-local
+      This is example input content.
     </wb-input>
   </wb-demo>
   </section>
 
-  <!-- 13. variant variants -->
-  <section id="input-variant-variants">
-  <h2>variant variants</h2>
-    <wb-demo>
+  <!-- 13. Variants -->
+  <section id="input-variants">
+  <h2>Variants</h2>
+  <wb-demo columns="2">
     <wb-input variant="default">
-      variant=default
+      This is example input content.
     </wb-input>
-  </wb-demo>
-  <wb-demo>
     <wb-input variant="success">
-      variant=success
+      This is example input content.
     </wb-input>
-  </wb-demo>
-  <wb-demo>
     <wb-input variant="error">
-      variant=error
+      This is example input content.
     </wb-input>
   </wb-demo>
   </section>
@@ -514,19 +381,15 @@
   <!-- 14. size variants -->
   <section id="input-size-variants">
   <h2>size variants</h2>
-    <wb-demo>
+  <wb-demo columns="2">
     <wb-input size="sm">
-      size=sm
+      This is example input content.
     </wb-input>
-  </wb-demo>
-  <wb-demo>
     <wb-input size="md">
-      size=md
+      This is example input content.
     </wb-input>
-  </wb-demo>
-  <wb-demo>
     <wb-input size="lg">
-      size=lg
+      This is example input content.
     </wb-input>
   </wb-demo>
   </section>
@@ -534,39 +397,31 @@
   <!-- 15. iconPosition variants -->
   <section id="input-iconposition-variants">
   <h2>iconPosition variants</h2>
-    <wb-demo>
+  <wb-demo columns="2">
     <wb-input icon-position="start">
-      icon-position=start
+      This is example input content.
     </wb-input>
-  </wb-demo>
-  <wb-demo>
     <wb-input icon-position="end">
-      icon-position=end
+      This is example input content.
     </wb-input>
   </wb-demo>
   </section>
 
-  <!-- 16. Boolean toggles -->
-  <section id="input-boolean-toggles">
-  <h2>Boolean toggles</h2>
-    <wb-demo>
+  <!-- 16. Toggles -->
+  <section id="input-toggles">
+  <h2>Toggles</h2>
+  <wb-demo columns="1">
     <wb-input disabled>
-      disabled
+      This is example input content.
     </wb-input>
-  </wb-demo>
-  <wb-demo>
     <wb-input readonly>
-      readonly
+      This is example input content.
     </wb-input>
-  </wb-demo>
-  <wb-demo>
     <wb-input required>
-      required
+      This is example input content.
     </wb-input>
-  </wb-demo>
-  <wb-demo>
     <wb-input clearable>
-      clearable
+      This is example input content.
     </wb-input>
   </wb-demo>
   </section>
@@ -574,34 +429,24 @@
   <!-- 17. 🔍 Search -->
   <section id="search-search">
   <h2>🔍 Search</h2>
-    <wb-demo>
+  <wb-demo columns="3">
     <wb-search placeholder="Search...">
-      placeholder=Search...
+      This is example search content.
     </wb-search>
-  </wb-demo>
-  <wb-demo>
     <wb-search placeholder="Search docs..." size="lg">
-      placeholder=Search docs..., size=lg
+      This is example search content.
     </wb-search>
-  </wb-demo>
-  <wb-demo>
     <wb-search placeholder="Glass search" variant="glass">
-      placeholder=Glass search, variant=glass
+      This is example search content.
     </wb-search>
-  </wb-demo>
-  <wb-demo>
     <wb-search placeholder="Minimal" variant="minimal">
-      placeholder=Minimal, variant=minimal
+      This is example search content.
     </wb-search>
-  </wb-demo>
-  <wb-demo>
     <wb-search placeholder="Instant search" instant>
-      placeholder=Instant search, instant
+      This is example search content.
     </wb-search>
-  </wb-demo>
-  <wb-demo>
     <wb-search placeholder="Loading..." loading>
-      placeholder=Loading..., loading
+      This is example search content.
     </wb-search>
   </wb-demo>
   </section>
@@ -609,59 +454,47 @@
   <!-- 18. size variants -->
   <section id="search-size-variants">
   <h2>size variants</h2>
-    <wb-demo>
+  <wb-demo columns="2">
     <wb-search size="sm">
-      size=sm
+      This is example search content.
     </wb-search>
-  </wb-demo>
-  <wb-demo>
     <wb-search size="md">
-      size=md
+      This is example search content.
     </wb-search>
-  </wb-demo>
-  <wb-demo>
     <wb-search size="lg">
-      size=lg
+      This is example search content.
     </wb-search>
   </wb-demo>
   </section>
 
-  <!-- 19. variant variants -->
-  <section id="search-variant-variants">
-  <h2>variant variants</h2>
-    <wb-demo>
+  <!-- 19. Variants -->
+  <section id="search-variants">
+  <h2>Variants</h2>
+  <wb-demo columns="2">
     <wb-search variant="default">
-      variant=default
+      This is example search content.
     </wb-search>
-  </wb-demo>
-  <wb-demo>
     <wb-search variant="glass">
-      variant=glass
+      This is example search content.
     </wb-search>
-  </wb-demo>
-  <wb-demo>
     <wb-search variant="minimal">
-      variant=minimal
+      This is example search content.
     </wb-search>
   </wb-demo>
   </section>
 
-  <!-- 20. Boolean toggles -->
-  <section id="search-boolean-toggles">
-  <h2>Boolean toggles</h2>
-    <wb-demo>
+  <!-- 20. Toggles -->
+  <section id="search-toggles">
+  <h2>Toggles</h2>
+  <wb-demo columns="1">
     <wb-search instant>
-      instant
+      This is example search content.
     </wb-search>
-  </wb-demo>
-  <wb-demo>
     <wb-search disabled>
-      disabled
+      This is example search content.
     </wb-search>
-  </wb-demo>
-  <wb-demo>
     <wb-search loading>
-      loading
+      This is example search content.
     </wb-search>
   </wb-demo>
   </section>
@@ -669,39 +502,21 @@
   <!-- 21. 📋 Select -->
   <section id="select-select">
   <h2>📋 Select</h2>
-    <wb-demo>
+  <wb-demo columns="3">
     <wb-select>
-      <option value="us">United States</option>
-      <option value="ca">Canada</option>
-      <option value="uk">United Kingdom</option>
+      This is example select content.
     </wb-select>
-  </wb-demo>
-  <wb-demo>
     <wb-select searchable>
-      <option value="us">United States</option>
-      <option value="ca">Canada</option>
-      <option value="uk">United Kingdom</option>
+      This is example select content.
     </wb-select>
-  </wb-demo>
-  <wb-demo>
     <wb-select clearable>
-      <option value="us">United States</option>
-      <option value="ca">Canada</option>
-      <option value="uk">United Kingdom</option>
+      This is example select content.
     </wb-select>
-  </wb-demo>
-  <wb-demo>
     <wb-select multiple>
-      <option value="js">JavaScript</option>
-      <option value="py">Python</option>
-      <option value="ts">TypeScript</option>
+      This is example select content.
     </wb-select>
-  </wb-demo>
-  <wb-demo>
     <wb-select disabled>
-      <option value="us">United States</option>
-      <option value="ca">Canada</option>
-      <option value="uk">United Kingdom</option>
+      This is example select content.
     </wb-select>
   </wb-demo>
   </section>
@@ -709,63 +524,41 @@
   <!-- 22. size variants -->
   <section id="select-size-variants">
   <h2>size variants</h2>
-    <wb-demo>
+  <wb-demo columns="2">
     <wb-select size="sm">
-      <option value="us">United States</option>
-      <option value="ca">Canada</option>
-      <option value="uk">United Kingdom</option>
+      This is example select content.
     </wb-select>
-  </wb-demo>
-  <wb-demo>
     <wb-select size="md">
-      <option value="us">United States</option>
-      <option value="ca">Canada</option>
-      <option value="uk">United Kingdom</option>
+      This is example select content.
     </wb-select>
-  </wb-demo>
-  <wb-demo>
     <wb-select size="lg">
-      <option value="us">United States</option>
-      <option value="ca">Canada</option>
-      <option value="uk">United Kingdom</option>
+      This is example select content.
     </wb-select>
   </wb-demo>
   </section>
 
-  <!-- 23. variant variants -->
-  <section id="select-variant-variants">
-  <h2>variant variants</h2>
-    <wb-demo>
+  <!-- 23. Variants -->
+  <section id="select-variants">
+  <h2>Variants</h2>
+  <wb-demo columns="2">
     <wb-select variant="default">
-      <option value="us">United States</option>
-      <option value="ca">Canada</option>
-      <option value="uk">United Kingdom</option>
+      This is example select content.
     </wb-select>
-  </wb-demo>
-  <wb-demo>
     <wb-select variant="success">
-      <option value="us">United States</option>
-      <option value="ca">Canada</option>
-      <option value="uk">United Kingdom</option>
+      This is example select content.
     </wb-select>
-  </wb-demo>
-  <wb-demo>
     <wb-select variant="error">
-      <option value="us">United States</option>
-      <option value="ca">Canada</option>
-      <option value="uk">United Kingdom</option>
+      This is example select content.
     </wb-select>
   </wb-demo>
   </section>
 
-  <!-- 24. Boolean toggles -->
-  <section id="select-boolean-toggles">
-  <h2>Boolean toggles</h2>
+  <!-- 24. Toggles -->
+  <section id="select-toggles">
+  <h2>Toggles</h2>
   <wb-demo columns="1">
     <wb-select required>
-      <option value="us">United States</option>
-      <option value="ca">Canada</option>
-      <option value="uk">United Kingdom</option>
+      This is example select content.
     </wb-select>
   </wb-demo>
   </section>
@@ -773,24 +566,18 @@
   <!-- 25. 🔘 Switch -->
   <section id="switch-switch">
   <h2>🔘 Switch</h2>
-    <wb-demo>
+  <wb-demo columns="2">
     <wb-switch label="Test">
-      label=Test
+      This is example switch content.
     </wb-switch>
-  </wb-demo>
-  <wb-demo>
     <wb-switch label="Test" checked>
-      label=Test, checked
+      This is example switch content.
     </wb-switch>
-  </wb-demo>
-  <wb-demo>
     <wb-switch label="Test" disabled>
-      label=Test, disabled
+      This is example switch content.
     </wb-switch>
-  </wb-demo>
-  <wb-demo>
     <wb-switch label="Test" size="lg">
-      label=Test, size=lg
+      This is example switch content.
     </wb-switch>
   </wb-demo>
   </section>
@@ -798,14 +585,12 @@
   <!-- 26. labelPosition variants -->
   <section id="switch-labelposition-variants">
   <h2>labelPosition variants</h2>
-    <wb-demo>
+  <wb-demo columns="2">
     <wb-switch label-position="start">
-      label-position=start
+      This is example switch content.
     </wb-switch>
-  </wb-demo>
-  <wb-demo>
     <wb-switch label-position="end">
-      label-position=end
+      This is example switch content.
     </wb-switch>
   </wb-demo>
   </section>
@@ -813,54 +598,44 @@
   <!-- 27. size variants -->
   <section id="switch-size-variants">
   <h2>size variants</h2>
-    <wb-demo>
+  <wb-demo columns="2">
     <wb-switch size="sm">
-      size=sm
+      This is example switch content.
     </wb-switch>
-  </wb-demo>
-  <wb-demo>
     <wb-switch size="md">
-      size=md
+      This is example switch content.
     </wb-switch>
-  </wb-demo>
-  <wb-demo>
     <wb-switch size="lg">
-      size=lg
+      This is example switch content.
     </wb-switch>
   </wb-demo>
   </section>
 
-  <!-- 28. variant variants -->
-  <section id="switch-variant-variants">
-  <h2>variant variants</h2>
-    <wb-demo>
+  <!-- 28. Variants -->
+  <section id="switch-variants">
+  <h2>Variants</h2>
+  <wb-demo columns="2">
     <wb-switch variant="default">
-      variant=default
+      This is example switch content.
     </wb-switch>
-  </wb-demo>
-  <wb-demo>
     <wb-switch variant="primary">
-      variant=primary
+      This is example switch content.
     </wb-switch>
-  </wb-demo>
-  <wb-demo>
     <wb-switch variant="success">
-      variant=success
+      This is example switch content.
     </wb-switch>
   </wb-demo>
   </section>
 
-  <!-- 29. Boolean toggles -->
-  <section id="switch-boolean-toggles">
-  <h2>Boolean toggles</h2>
-    <wb-demo>
+  <!-- 29. Toggles -->
+  <section id="switch-toggles">
+  <h2>Toggles</h2>
+  <wb-demo columns="1">
     <wb-switch checked>
-      checked
+      This is example switch content.
     </wb-switch>
-  </wb-demo>
-  <wb-demo>
     <wb-switch disabled>
-      disabled
+      This is example switch content.
     </wb-switch>
   </wb-demo>
   </section>
@@ -868,69 +643,73 @@
   <!-- 30. 📝 Textarea -->
   <section id="textarea-textarea">
   <h2>📝 Textarea</h2>
-    <wb-demo>
-    <textarea placeholder="Enter text...">placeholder=Enter text...</textarea>
-  </wb-demo>
-  <wb-demo>
-    <textarea rows="5">rows=5</textarea>
-  </wb-demo>
-  <wb-demo>
-    <textarea max-length="500" show-count>max-length=500, show-count</textarea>
-  </wb-demo>
-  <wb-demo>
-    <textarea autosize>autosize</textarea>
-  </wb-demo>
-  <wb-demo>
-    <textarea disabled>disabled</textarea>
+  <wb-demo columns="3">
+    <wb-textarea placeholder="Enter text...">
+      This is example textarea content.
+    </wb-textarea>
+    <wb-textarea rows="5">
+      This is example textarea content.
+    </wb-textarea>
+    <wb-textarea max-length="500" show-count>
+      This is example textarea content.
+    </wb-textarea>
+    <wb-textarea autosize>
+      This is example textarea content.
+    </wb-textarea>
+    <wb-textarea disabled>
+      This is example textarea content.
+    </wb-textarea>
   </wb-demo>
   </section>
 
   <!-- 31. resize variants -->
-  <!-- Note (#390): `resize` was never a real attribute here -- confirmed
-       via trace, nothing in textarea.js or textarea.css reads it, on
-       either <wb-textarea> or a bare <textarea>. Pre-existing, unrelated
-       to the wb-textarea->textarea conversion; carried over unchanged. -->
   <section id="textarea-resize-variants">
   <h2>resize variants</h2>
-    <wb-demo>
-    <textarea resize="none">resize=none</textarea>
-  </wb-demo>
-  <wb-demo>
-    <textarea resize="vertical">resize=vertical</textarea>
-  </wb-demo>
-  <wb-demo>
-    <textarea resize="horizontal">resize=horizontal</textarea>
-  </wb-demo>
-  <wb-demo>
-    <textarea resize="both">resize=both</textarea>
-  </wb-demo>
-  </section>
-
-  <!-- 32. variant variants -->
-  <section id="textarea-variant-variants">
-  <h2>variant variants</h2>
-    <wb-demo>
-    <textarea variant="default">variant=default</textarea>
-  </wb-demo>
-  <wb-demo>
-    <textarea variant="success">variant=success</textarea>
-  </wb-demo>
-  <wb-demo>
-    <textarea variant="error">variant=error</textarea>
+  <wb-demo columns="2">
+    <wb-textarea resize="none">
+      This is example textarea content.
+    </wb-textarea>
+    <wb-textarea resize="vertical">
+      This is example textarea content.
+    </wb-textarea>
+    <wb-textarea resize="horizontal">
+      This is example textarea content.
+    </wb-textarea>
+    <wb-textarea resize="both">
+      This is example textarea content.
+    </wb-textarea>
   </wb-demo>
   </section>
 
-  <!-- 33. Boolean toggles -->
-  <section id="textarea-boolean-toggles">
-  <h2>Boolean toggles</h2>
-    <wb-demo>
-    <textarea show-count>show-count</textarea>
+  <!-- 32. Variants -->
+  <section id="textarea-variants">
+  <h2>Variants</h2>
+  <wb-demo columns="2">
+    <wb-textarea variant="default">
+      This is example textarea content.
+    </wb-textarea>
+    <wb-textarea variant="success">
+      This is example textarea content.
+    </wb-textarea>
+    <wb-textarea variant="error">
+      This is example textarea content.
+    </wb-textarea>
   </wb-demo>
-  <wb-demo>
-    <textarea readonly>readonly</textarea>
-  </wb-demo>
-  <wb-demo>
-    <textarea required>required</textarea>
+  </section>
+
+  <!-- 33. Toggles -->
+  <section id="textarea-toggles">
+  <h2>Toggles</h2>
+  <wb-demo columns="1">
+    <wb-textarea show-count>
+      This is example textarea content.
+    </wb-textarea>
+    <wb-textarea readonly>
+      This is example textarea content.
+    </wb-textarea>
+    <wb-textarea required>
+      This is example textarea content.
+    </wb-textarea>
   </wb-demo>
   </section>
 
@@ -939,7 +718,7 @@
   <h2>📦 Slider</h2>
   <wb-demo columns="1">
     <wb-slider>
-      Slider
+      This is example slider content.
     </wb-slider>
   </wb-demo>
   </section>
@@ -949,7 +728,7 @@
   <h2>📦 Toggle</h2>
   <wb-demo columns="1">
     <wb-toggle target="#content">
-      target=#content
+      This is example toggle content.
     </wb-toggle>
   </wb-demo>
   </section>
@@ -958,7 +737,6 @@
   <section id="wb-button-x-behavior-composition">
   <h2>🧩 wb-button + x-* behavior composition</h2>
   <p class="wb-note">Any <code>x-*</code> behavior (ripple, tooltip, toast, etc.) composes onto a button the same way it does onto any other element — stack as many as you want, in any order, with no wrapper components.</p>
-  <p class="wb-note">See these same <code>x-*</code> button behaviors working inside React, Vue, Svelte, Angular, and SolidJS: <a href="../frameworks.html">Framework Integration Demo →</a></p>
   <style>
     .wb-behaviors { list-style: none; margin: 1rem 0; padding: 0; display: flex; flex-direction: column; gap: 0.75rem; }
     .wb-behaviors li { display: flex; align-items: baseline; gap: 0.75rem; }
@@ -966,22 +744,12 @@
     .wb-behavior-desc { color: var(--text-secondary); font-size: 0.9rem; }
   </style>
   <p class="wb-note">Each <code>x-</code> attribute adds one capability to the button — no JavaScript.</p>
-    <wb-demo>
+  <wb-demo columns="3">
     <wb-button variant="primary" x-ripple>Ripple</wb-button>
-  </wb-demo>
-  <wb-demo>
     <wb-button variant="secondary" x-tooltip="Helpful hint" position="top">Tooltip</wb-button>
-  </wb-demo>
-  <wb-demo>
     <wb-button variant="success" x-toast message="Saved!" toast-variant="success">Toast on click</wb-button>
-  </wb-demo>
-  <wb-demo>
     <wb-button variant="info" x-copy copy-text="Copied from a wb-button!">Copy to clipboard</wb-button>
-  </wb-demo>
-  <wb-demo>
     <wb-button variant="warning" x-wobble>Wobble</wb-button>
-  </wb-demo>
-  <wb-demo>
     <wb-button variant="ghost" x-tada>Tada</wb-button>
   </wb-demo>
   <ul class="wb-behaviors">
@@ -993,13 +761,9 @@
     <li><span class="wb-behavior-tag">x-tada</span><span class="wb-behavior-desc">tada celebration animation</span></li>
   </ul>
   <p class="wb-note">Stack multiple <code>x-</code> attributes on one button — they layer, they don't conflict.</p>
-    <wb-demo>
+  <wb-demo columns="1">
     <wb-button variant="primary" x-ripple x-tooltip="Ripple + tooltip + toast" position="top" x-toast message="Saved!" toast-variant="success">Save (ripple + tooltip + toast)</wb-button>
-  </wb-demo>
-  <wb-demo>
     <wb-button variant="error" x-ripple x-wobble x-toast message="Deleted" toast-variant="error">Delete (ripple + wobble + toast)</wb-button>
-  </wb-demo>
-  <wb-demo>
     <wb-button variant="info" x-copy copy-text="npm i wb-starter" x-tooltip="Click to copy the install command" position="bottom" x-ripple>Copy install cmd</wb-button>
   </wb-demo>
   </section>
@@ -1008,14 +772,14 @@
   <section id="x-fieldset-collapsible-fieldset">
   <h2>🧩 x-fieldset — collapsible fieldset</h2>
   <wb-demo>
-    <fieldset>
+    <fieldset x-fieldset>
       <legend>Personal Info</legend>
       <label>Name: <input type="text"></label>
       <label>Email: <input type="email"></label>
     </fieldset>
   </wb-demo>
   <wb-demo>
-    <fieldset collapsible>
+    <fieldset x-fieldset collapsible>
       <legend>Advanced Settings (collapsible)</legend>
       <label>API Key: <input type="text"></label>
     </fieldset>
@@ -1026,7 +790,7 @@
   <section id="x-form-ajax-validate-behavior">
   <h2>🧩 x-form — ajax/validate behavior</h2>
   <wb-demo>
-    <form>
+    <form x-form>
       <label>Username: <input type="text"></label><br>
       <label>Password: <input type="password"></label><br>
       <button type="submit">Submit</button>
@@ -1094,43 +858,25 @@
   <!-- BUTTONS -->
   <h2 id="semanticsforms-h2-15">Button <code id="semanticsforms-code-16">&lt;button&gt;</code></h2>
   <div id="semanticsforms-div-17" class="demo-section">
-        <wb-demo>
+    <wb-demo>
       <button variant="primary">Primary</button>
-    </wb-demo>
-    <wb-demo>
       <button variant="secondary">Secondary</button>
-    </wb-demo>
-    <wb-demo>
       <button variant="success">Success</button>
-    </wb-demo>
-    <wb-demo>
       <button variant="danger">Danger</button>
-    </wb-demo>
-    <wb-demo>
       <button variant="warning">Warning</button>
-    </wb-demo>
-    <wb-demo>
       <button variant="ghost">Ghost</button>
     </wb-demo>
 
-        <wb-demo>
+    <wb-demo>
       <button variant="primary" size="sm">Small</button>
-    </wb-demo>
-    <wb-demo>
       <button variant="primary" size="md">Medium</button>
-    </wb-demo>
-    <wb-demo>
       <button variant="primary" size="lg">Large</button>
     </wb-demo>
 
     <p>The <code>loading</code>/<code>icon</code>/<code>icon-position</code> attributes only work on the <code>&lt;wb-button&gt;</code> custom tag — a native <code>&lt;button&gt;</code> only maps <code>size</code>/<code>variant</code> to styling classes.</p>
-        <wb-demo>
+    <wb-demo>
       <wb-button variant="primary" loading>Loading</wb-button>
-    </wb-demo>
-    <wb-demo>
       <wb-button variant="secondary" icon="💾">Save</wb-button>
-    </wb-demo>
-    <wb-demo>
       <wb-button variant="danger" icon="🗑️" icon-position="right">Delete</wb-button>
     </wb-demo>
   </div>
@@ -1240,13 +986,9 @@
   <h2 id="semanticsforms-h2-71">Switch</h2>
   <div id="semanticsforms-div-72" class="demo-section">
     <p><strong>Known gap (#322):</strong> <code>&lt;wb-switch&gt;</code> needs its schema built before it can render — that never happens on this page's runtime (<code>wb-lazy.js</code>, used by every standalone demo page), so it won't render here yet. This markup is the correct API; it works today on the main site (<code>?page=behaviors</code>).</p>
-        <wb-demo>
+    <wb-demo>
       <wb-switch label="Notifications"></wb-switch>
-    </wb-demo>
-    <wb-demo>
       <wb-switch label="Dark Mode" checked></wb-switch>
-    </wb-demo>
-    <wb-demo>
       <wb-switch label="Disabled" disabled></wb-switch>
     </wb-demo>
   </div>
@@ -1255,13 +997,9 @@
   <h2 id="semanticsforms-h2-77">Rating</h2>
   <div id="semanticsforms-div-78" class="demo-section">
     <p><code>icon</code> takes a literal emoji character, not a keyword — <code>icon="heart"</code> renders the literal text "heart", not ❤️. <code>precision</code> isn't a real attribute (not read anywhere in rating.js).</p>
-        <wb-demo>
+    <wb-demo>
       <wb-rating value="3" max="5"></wb-rating>
-    </wb-demo>
-    <wb-demo>
       <wb-rating value="4.5" max="5" color="gold"></wb-rating>
-    </wb-demo>
-    <wb-demo>
       <wb-rating value="2" max="10" icon="❤️"></wb-rating>
     </wb-demo>
   </div>
@@ -1329,7 +1067,7 @@
   <div id="semanticsforms-div-113" class="demo-section">
     <p><code>x-form</code> has no <code>loading-text</code> option (that only exists in an unregistered alternate implementation).</p>
     <wb-demo>
-      <form ajax action="#">
+      <form x-form ajax action="#">
         <div style="display: grid; gap: 1rem; max-width: 400px;">
           <input name="name" placeholder="Name" required>
           <input type="email" name="email" placeholder="Email" required>
@@ -1340,8 +1078,6 @@
     </wb-demo>
   </div>
   </section>
-
-  </div>
 
   <script type="module">
     import WB from '../../src/core/wb-lazy.js';

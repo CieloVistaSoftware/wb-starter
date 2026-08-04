@@ -8,29 +8,9 @@
   <link rel="stylesheet" href="../../src/styles/themes.css">
   <link rel="stylesheet" href="../../src/styles/site.css">
 
-  <style>
-    /* .page normally sits inside <main class="site__main">, which provides
-       padding: 2rem (site.css) -- this is a standalone page with no
-       site__main wrapper, so .page alone only centers/caps width, giving
-       zero-margin edge-to-edge content. Scoped to body's direct child only,
-       so this never double-pads .page inside the real SPA. Matches
-       DEMOS-AND-DOCS-STANDARDS.md #13 ("proper margins & padding... from
-       theme/spacing variables, not ad-hoc values") -- var(--space-xl) is
-       the same 2rem site__main already uses, not a new literal. */
-    body > .page { padding: var(--space-xl); }
-    @media (max-width: 640px) { body > .page { padding: 1rem; } }
-
-    /* #428: x-toggle defaults to toggling a class literally named "active"
-       when no class/toggle-class attribute is set (toggle.js) -- #toggle-box
-       had no rule for that class at all, so the class toggled correctly in
-       the DOM but nothing visibly changed. Give it a real color change so
-       the demo actually demonstrates what it claims to. */
-    #toggle-box.active { background: var(--success-color, #22c55e); }
-  </style>
 </head>
 
 <body>
-  <div class="page">
   <nav style="margin-bottom: 1rem;">
     <a href="index.html" style="color: var(--text-secondary, #aaa); text-decoration: none;">← Back to Index</a>
   </nav>
@@ -40,19 +20,15 @@
   <!-- 1. 📦 Draggable -->
   <section id="draggable-draggable">
   <h2>📦 Draggable</h2>
-    <wb-demo>
+  <wb-demo columns="2">
     <wb-draggable axis="both">
-      axis=both
+      This is example draggable content.
     </wb-draggable>
-  </wb-demo>
-  <wb-demo>
     <wb-draggable axis="x">
-      axis=x
+      This is example draggable content.
     </wb-draggable>
-  </wb-demo>
-  <wb-demo>
     <wb-draggable axis="y">
-      axis=y
+      This is example draggable content.
     </wb-draggable>
   </wb-demo>
   </section>
@@ -62,7 +38,7 @@
   <h2>📦 Resizable</h2>
   <wb-demo columns="1">
     <wb-resizable handles="se">
-      handles=se
+      This is example resizable content.
     </wb-resizable>
   </wb-demo>
   </section>
@@ -70,14 +46,12 @@
   <!-- 3. 📦 Copy -->
   <section id="copy-copy">
   <h2>📦 Copy</h2>
-    <wb-demo>
+  <wb-demo columns="2">
     <wb-copy text="Hello World">
-      text=Hello World
+      This is example copy content.
     </wb-copy>
-  </wb-demo>
-  <wb-demo>
     <wb-copy text="npm install wb-starter">
-      text=npm install wb-starter
+      This is example copy content.
     </wb-copy>
   </wb-demo>
   </section>
@@ -87,7 +61,7 @@
   <h2>📦 Dark Mode Toggle</h2>
   <wb-demo columns="1">
     <wb-darkmode>
-      Dark Mode Toggle
+      This is example dark mode toggle content.
     </wb-darkmode>
   </wb-demo>
   </section>
@@ -97,7 +71,7 @@
   <h2>📦 Theme Control</h2>
   <wb-demo columns="1">
     <wb-themecontrol>
-      Theme Control
+      This is example theme control content.
     </wb-themecontrol>
   </wb-demo>
   </section>
@@ -105,14 +79,12 @@
   <!-- 6. 📦 Collapse -->
   <section id="collapse-collapse">
   <h2>📦 Collapse</h2>
-    <wb-demo>
+  <wb-demo columns="2">
     <wb-collapse>
-      expanded=false
+      This is example collapse content.
     </wb-collapse>
-  </wb-demo>
-  <wb-demo>
     <wb-collapse expanded>
-      expanded
+      This is example collapse content.
     </wb-collapse>
   </wb-demo>
   </section>
@@ -120,24 +92,22 @@
   <!-- 7. 📦 Hero -->
   <section id="hero-hero">
   <h2>📦 Hero</h2>
-    <wb-demo>
+  <wb-demo columns="2">
     <wb-hero variant="default">
-      variant=default
+      This is example hero content.
     </wb-hero>
-  </wb-demo>
-  <wb-demo>
     <wb-hero variant="cosmic">
-      variant=cosmic
+      This is example hero content.
     </wb-hero>
   </wb-demo>
   </section>
 
-  <!-- 8. variant variants -->
-  <section id="hero-variant-variants">
-  <h2>variant variants</h2>
+  <!-- 8. Variants -->
+  <section id="hero-variants">
+  <h2>Variants</h2>
   <wb-demo columns="2">
     <wb-hero variant="">
-      variant=
+      This is example hero content.
     </wb-hero>
   </wb-demo>
   </section>
@@ -147,7 +117,7 @@
   <h2>📦 WB Views Registry Schema</h2>
   <wb-demo columns="1">
     <wb-views>
-      WB Views Registry Schema
+      This is example wb views registry schema content.
     </wb-views>
   </wb-demo>
   </section>
@@ -242,8 +212,6 @@
     </wb-demo>
   </div>
   </section>
-
-  </div>
 
   <script type="module">
     import WB from '../../src/core/wb-lazy.js';

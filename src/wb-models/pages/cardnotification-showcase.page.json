@@ -1,12 +1,8 @@
 {
-  "$schema": "http://json-schema.org/draft-07/schema#",
-  "title": "🔔 Notification Card Showcase",
   "description": "Auto-generated showcase for cardnotification component — all variants, combinations, and toggles.",
-  "schemaFor": "cardnotification-showcase",
   "page": {
     "lang": "en",
     "theme": "dark",
-    "title": "🔔 Notification Card Showcase",
     "stylesheets": [
       "../src/styles/themes.css",
       "../src/styles/site.css"
@@ -17,8 +13,11 @@
         "src": "../src/core/wb-lazy.js",
         "init": "WB.init({ autoInject: true })"
       }
-    ]
+    ],
+    "title": "🔔 Notification Card Showcase"
   },
+  "title": "🔔 Notification Card Showcase",
+  "schemaFor": "cardnotification-showcase",
   "header": {
     "tag": "h1",
     "content": "🔔 Notification Card Showcase",
@@ -74,7 +73,7 @@
       ]
     },
     {
-      "heading": "variant variants",
+      "heading": "Variants",
       "tag": "wb-cardnotification",
       "columns": 2,
       "demos": [
@@ -109,7 +108,7 @@
       ]
     },
     {
-      "heading": "Boolean toggles",
+      "heading": "Toggles",
       "tag": "wb-cardnotification",
       "columns": 1,
       "demos": [
@@ -127,8 +126,18 @@
     "category": "auto-showcase",
     "icon": "🔔",
     "sourceSchema": "cardnotification.schema.json",
-    "generatedAt": "2026-02-12T02:31:35.442Z",
+    "generatedAt": "2026-08-04T19:28:32.890Z",
     "sectionCount": 3,
     "totalDemos": 10
+  },
+  "_composed": {
+    "source": "C:\\Users\\jwpmi\\Downloads\\AI\\wb-starter\\.claude\\worktrees\\agent-a14ffa2c736ab61b0\\src\\wb-models\\pages\\cardnotification-showcase.page.json",
+    "composedAt": "2026-08-04T19:28:34.555Z",
+    "stats": {
+      "extendsResolved": true,
+      "refsResolved": 0,
+      "includesResolved": 0,
+      "generated": 0
+    }
   }
 }

@@ -8,22 +8,9 @@
   <link rel="stylesheet" href="../../src/styles/themes.css">
   <link rel="stylesheet" href="../../src/styles/site.css">
 
-  <style>
-    /* .page normally sits inside <main class="site__main">, which provides
-       padding: 2rem (site.css) -- this is a standalone page with no
-       site__main wrapper, so .page alone only centers/caps width, giving
-       zero-margin edge-to-edge content. Scoped to body's direct child only,
-       so this never double-pads .page inside the real SPA. Matches
-       DEMOS-AND-DOCS-STANDARDS.md #13 ("proper margins & padding... from
-       theme/spacing variables, not ad-hoc values") -- var(--space-xl) is
-       the same 2rem site__main already uses, not a new literal. */
-    body > .page { padding: var(--space-xl); }
-    @media (max-width: 640px) { body > .page { padding: 1rem; } }
-  </style>
 </head>
 
 <body>
-  <div class="page">
   <nav style="margin-bottom: 1rem;">
     <a href="index.html" style="color: var(--text-secondary, #aaa); text-decoration: none;">← Back to Index</a>
   </nav>
@@ -33,19 +20,15 @@
   <!-- 1. 🎉 Confetti -->
   <section id="confetti-confetti">
   <h2>🎉 Confetti</h2>
-    <wb-demo>
+  <wb-demo columns="2">
     <wb-confetti>
-      Confetti
+      This is example confetti content.
     </wb-confetti>
-  </wb-demo>
-  <wb-demo>
     <wb-confetti count="100">
-      count=100
+      This is example confetti content.
     </wb-confetti>
-  </wb-demo>
-  <wb-demo>
     <wb-confetti repeat>
-      repeat
+      This is example confetti content.
     </wb-confetti>
   </wb-demo>
   </section>
@@ -53,19 +36,15 @@
   <!-- 2. 🎆 Fireworks -->
   <section id="fireworks-fireworks">
   <h2>🎆 Fireworks</h2>
-    <wb-demo>
+  <wb-demo columns="2">
     <wb-fireworks>
-      Fireworks
+      This is example fireworks content.
     </wb-fireworks>
-  </wb-demo>
-  <wb-demo>
     <wb-fireworks count="50">
-      count=50
+      This is example fireworks content.
     </wb-fireworks>
-  </wb-demo>
-  <wb-demo>
     <wb-fireworks repeat>
-      repeat
+      This is example fireworks content.
     </wb-fireworks>
   </wb-demo>
   </section>
@@ -73,29 +52,25 @@
   <!-- 3. 💧 Ripple -->
   <section id="ripple-ripple">
   <h2>💧 Ripple</h2>
-    <wb-demo>
+  <wb-demo columns="2">
     <wb-ripple>
-      Ripple
+      This is example ripple content.
     </wb-ripple>
-  </wb-demo>
-  <wb-demo>
     <wb-ripple color="rgba(0,0,0,0.2)">
-      color=rgba(0,0,0,0.2)
+      This is example ripple content.
     </wb-ripple>
-  </wb-demo>
-  <wb-demo>
     <wb-ripple duration="300">
-      duration=300
+      This is example ripple content.
     </wb-ripple>
   </wb-demo>
   </section>
 
-  <!-- 4. Boolean toggles -->
-  <section id="ripple-boolean-toggles">
-  <h2>Boolean toggles</h2>
+  <!-- 4. Toggles -->
+  <section id="ripple-toggles">
+  <h2>Toggles</h2>
   <wb-demo columns="1">
     <wb-ripple centered>
-      centered
+      This is example ripple content.
     </wb-ripple>
   </wb-demo>
   </section>
@@ -103,19 +78,15 @@
   <!-- 5. ❄️ Snow -->
   <section id="snow-snow">
   <h2>❄️ Snow</h2>
-    <wb-demo>
+  <wb-demo columns="2">
     <wb-snow>
-      Snow
+      This is example snow content.
     </wb-snow>
-  </wb-demo>
-  <wb-demo>
     <wb-snow count="50">
-      count=50
+      This is example snow content.
     </wb-snow>
-  </wb-demo>
-  <wb-demo>
     <wb-snow>
-      repeat=false
+      This is example snow content.
     </wb-snow>
   </wb-demo>
   </section>
@@ -123,49 +94,37 @@
   <!-- 6. 📦 Stage Light -->
   <section id="stagelight-stage-light">
   <h2>📦 Stage Light</h2>
-    <wb-demo>
+  <wb-demo columns="2">
     <wb-stagelight variant="beam" color="#6366f1" intensity="0.7">
-      variant=beam, color=#6366f1, intensity=0.7
+      This is example stage light content.
     </wb-stagelight>
-  </wb-demo>
-  <wb-demo>
     <wb-stagelight variant="spotlight" color="#f59e0b" intensity="0.5" size="400px">
-      variant=spotlight, color=#f59e0b, intensity=0.5, size=400px
+      This is example stage light content.
     </wb-stagelight>
-  </wb-demo>
-  <wb-demo>
     <wb-stagelight variant="fixture" color="#ef4444" label="Red Light">
-      variant=fixture, color=#ef4444, label=Red Light
+      This is example stage light content.
     </wb-stagelight>
-  </wb-demo>
-  <wb-demo>
     <wb-stagelight variant="beam" color="#22c55e" speed="5s">
-      variant=beam, color=#22c55e, speed=5s
+      This is example stage light content.
     </wb-stagelight>
   </wb-demo>
   </section>
 
-  <!-- 7. variant variants -->
-  <section id="stagelight-variant-variants">
-  <h2>variant variants</h2>
-    <wb-demo>
+  <!-- 7. Variants -->
+  <section id="stagelight-variants">
+  <h2>Variants</h2>
+  <wb-demo columns="2">
     <wb-stagelight variant="beam">
-      variant=beam
+      This is example stage light content.
     </wb-stagelight>
-  </wb-demo>
-  <wb-demo>
     <wb-stagelight variant="spotlight">
-      variant=spotlight
+      This is example stage light content.
     </wb-stagelight>
-  </wb-demo>
-  <wb-demo>
     <wb-stagelight variant="fixture">
-      variant=fixture
+      This is example stage light content.
     </wb-stagelight>
   </wb-demo>
   </section>
-
-  </div>
 
   <script type="module">
     import WB from '../../src/core/wb-lazy.js';

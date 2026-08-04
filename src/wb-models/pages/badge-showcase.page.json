@@ -89,11 +89,382 @@
             "variant": "primary",
             "outline": true
           }
+        },
+        {
+          "tag": "wb-badge",
+          "attrs": {
+            "label": "Glass",
+            "variant": "glass"
+          }
+        },
+        {
+          "tag": "wb-badge",
+          "attrs": {
+            "label": "Premium",
+            "variant": "gradient",
+            "pill": true,
+            "icon": "⭐"
+          }
+        },
+        {
+          "tag": "wb-badge",
+          "attrs": {
+            "label": "Live",
+            "variant": "success",
+            "pill": true,
+            "glow": true,
+            "icon": "🟢"
+          }
+        },
+        {
+          "tag": "wb-badge",
+          "attrs": {
+            "label": "Glass Glow",
+            "variant": "glass",
+            "pill": true,
+            "glow": true
+          }
+        },
+        {
+          "tag": "wb-badge",
+          "attrs": {
+            "label": "default-xs-pill-dot-outline-removable",
+            "variant": "default",
+            "size": "xs",
+            "pill": true,
+            "dot": true,
+            "outline": true,
+            "removable": true
+          }
+        },
+        {
+          "tag": "wb-badge",
+          "attrs": {
+            "label": "default-sm-plain",
+            "variant": "default",
+            "size": "sm",
+            "pill": false,
+            "dot": false,
+            "outline": false,
+            "removable": false
+          }
+        },
+        {
+          "tag": "wb-badge",
+          "attrs": {
+            "label": "default-md-pill-outline",
+            "variant": "default",
+            "size": "md",
+            "pill": true,
+            "dot": false,
+            "outline": true,
+            "removable": false
+          }
+        },
+        {
+          "tag": "wb-badge",
+          "attrs": {
+            "label": "default-lg-dot-removable",
+            "variant": "default",
+            "size": "lg",
+            "pill": false,
+            "dot": true,
+            "outline": false,
+            "removable": true
+          }
+        },
+        {
+          "tag": "wb-badge",
+          "attrs": {
+            "label": "primary-xs-outline-removable",
+            "variant": "primary",
+            "size": "xs",
+            "pill": false,
+            "dot": false,
+            "outline": true,
+            "removable": true
+          }
+        },
+        {
+          "tag": "wb-badge",
+          "attrs": {
+            "label": "primary-sm-pill-dot",
+            "variant": "primary",
+            "size": "sm",
+            "pill": true,
+            "dot": true,
+            "outline": false,
+            "removable": false
+          }
+        },
+        {
+          "tag": "wb-badge",
+          "attrs": {
+            "label": "primary-md-dot-removable",
+            "variant": "primary",
+            "size": "md",
+            "pill": false,
+            "dot": true,
+            "outline": false,
+            "removable": true
+          }
+        },
+        {
+          "tag": "wb-badge",
+          "attrs": {
+            "label": "primary-lg-pill-outline",
+            "variant": "primary",
+            "size": "lg",
+            "pill": true,
+            "dot": false,
+            "outline": true,
+            "removable": false
+          }
+        },
+        {
+          "tag": "wb-badge",
+          "attrs": {
+            "label": "secondary-xs-pill-dot",
+            "variant": "secondary",
+            "size": "xs",
+            "pill": true,
+            "dot": true,
+            "outline": false,
+            "removable": false
+          }
+        },
+        {
+          "tag": "wb-badge",
+          "attrs": {
+            "label": "secondary-sm-outline-removable",
+            "variant": "secondary",
+            "size": "sm",
+            "pill": false,
+            "dot": false,
+            "outline": true,
+            "removable": true
+          }
+        },
+        {
+          "tag": "wb-badge",
+          "attrs": {
+            "label": "secondary-md-pill-dot-outline-removable",
+            "variant": "secondary",
+            "size": "md",
+            "pill": true,
+            "dot": true,
+            "outline": true,
+            "removable": true
+          }
+        },
+        {
+          "tag": "wb-badge",
+          "attrs": {
+            "label": "secondary-lg-pill-dot-outline-removable",
+            "variant": "secondary",
+            "size": "lg",
+            "pill": true,
+            "dot": true,
+            "outline": true,
+            "removable": true
+          }
+        },
+        {
+          "tag": "wb-badge",
+          "attrs": {
+            "label": "success-xs-pill-dot-outline-removable",
+            "variant": "success",
+            "size": "xs",
+            "pill": true,
+            "dot": true,
+            "outline": true,
+            "removable": true
+          }
+        },
+        {
+          "tag": "wb-badge",
+          "attrs": {
+            "label": "success-sm-plain",
+            "variant": "success",
+            "size": "sm",
+            "pill": false,
+            "dot": false,
+            "outline": false,
+            "removable": false
+          }
+        },
+        {
+          "tag": "wb-badge",
+          "attrs": {
+            "label": "success-md-pill-dot-outline-removable",
+            "variant": "success",
+            "size": "md",
+            "pill": true,
+            "dot": true,
+            "outline": true,
+            "removable": true
+          }
+        },
+        {
+          "tag": "wb-badge",
+          "attrs": {
+            "label": "success-lg-pill-dot-outline-removable",
+            "variant": "success",
+            "size": "lg",
+            "pill": true,
+            "dot": true,
+            "outline": true,
+            "removable": true
+          }
+        },
+        {
+          "tag": "wb-badge",
+          "attrs": {
+            "label": "warning-xs-pill-dot-outline-removable",
+            "variant": "warning",
+            "size": "xs",
+            "pill": true,
+            "dot": true,
+            "outline": true,
+            "removable": true
+          }
+        },
+        {
+          "tag": "wb-badge",
+          "attrs": {
+            "label": "warning-sm-plain",
+            "variant": "warning",
+            "size": "sm",
+            "pill": false,
+            "dot": false,
+            "outline": false,
+            "removable": false
+          }
+        },
+        {
+          "tag": "wb-badge",
+          "attrs": {
+            "label": "warning-md-pill-dot-outline-removable",
+            "variant": "warning",
+            "size": "md",
+            "pill": true,
+            "dot": true,
+            "outline": true,
+            "removable": true
+          }
+        },
+        {
+          "tag": "wb-badge",
+          "attrs": {
+            "label": "warning-lg-pill-dot-outline-removable",
+            "variant": "warning",
+            "size": "lg",
+            "pill": true,
+            "dot": true,
+            "outline": true,
+            "removable": true
+          }
+        },
+        {
+          "tag": "wb-badge",
+          "attrs": {
+            "label": "error-xs-pill-dot-outline-removable",
+            "variant": "error",
+            "size": "xs",
+            "pill": true,
+            "dot": true,
+            "outline": true,
+            "removable": true
+          }
+        },
+        {
+          "tag": "wb-badge",
+          "attrs": {
+            "label": "error-sm-plain",
+            "variant": "error",
+            "size": "sm",
+            "pill": false,
+            "dot": false,
+            "outline": false,
+            "removable": false
+          }
+        },
+        {
+          "tag": "wb-badge",
+          "attrs": {
+            "label": "error-md-pill-dot-outline-removable",
+            "variant": "error",
+            "size": "md",
+            "pill": true,
+            "dot": true,
+            "outline": true,
+            "removable": true
+          }
+        },
+        {
+          "tag": "wb-badge",
+          "attrs": {
+            "label": "error-lg-pill-dot-outline-removable",
+            "variant": "error",
+            "size": "lg",
+            "pill": true,
+            "dot": true,
+            "outline": true,
+            "removable": true
+          }
+        },
+        {
+          "tag": "wb-badge",
+          "attrs": {
+            "label": "info-xs-pill-dot-outline-removable",
+            "variant": "info",
+            "size": "xs",
+            "pill": true,
+            "dot": true,
+            "outline": true,
+            "removable": true
+          }
+        },
+        {
+          "tag": "wb-badge",
+          "attrs": {
+            "label": "info-sm-plain",
+            "variant": "info",
+            "size": "sm",
+            "pill": false,
+            "dot": false,
+            "outline": false,
+            "removable": false
+          }
+        },
+        {
+          "tag": "wb-badge",
+          "attrs": {
+            "label": "info-md-pill-dot-outline-removable",
+            "variant": "info",
+            "size": "md",
+            "pill": true,
+            "dot": true,
+            "outline": true,
+            "removable": true
+          }
+        },
+        {
+          "tag": "wb-badge",
+          "attrs": {
+            "label": "info-lg-pill-dot-outline-removable",
+            "variant": "info",
+            "size": "lg",
+            "pill": true,
+            "dot": true,
+            "outline": true,
+            "removable": true
+          }
         }
       ]
     },
     {
-      "heading": "variant variants",
+      "heading": "Variants",
       "tag": "wb-badge",
       "columns": 3,
       "demos": [
@@ -138,6 +509,18 @@
           "attrs": {
             "variant": "info"
           }
+        },
+        {
+          "tag": "wb-badge",
+          "attrs": {
+            "variant": "glass"
+          }
+        },
+        {
+          "tag": "wb-badge",
+          "attrs": {
+            "variant": "gradient"
+          }
         }
       ]
     },
@@ -173,7 +556,7 @@
       ]
     },
     {
-      "heading": "Boolean toggles",
+      "heading": "Toggles",
       "tag": "wb-badge",
       "columns": 3,
       "demos": [
@@ -200,6 +583,12 @@
           "attrs": {
             "removable": true
           }
+        },
+        {
+          "tag": "wb-badge",
+          "attrs": {
+            "glow": true
+          }
         }
       ]
     }
@@ -208,13 +597,13 @@
     "category": "auto-showcase",
     "icon": "🏷️",
     "sourceSchema": "badge.schema.json",
-    "generatedAt": "2026-02-12T02:54:05.256Z",
+    "generatedAt": "2026-08-04T19:28:22.682Z",
     "sectionCount": 4,
-    "totalDemos": 23
+    "totalDemos": 58
   },
   "_composed": {
-    "source": "C:\\Users\\jwpmi\\Downloads\\AI\\wb-starter\\src\\wb-models\\pages\\badge-showcase.page.json",
-    "composedAt": "2026-02-12T02:54:05.546Z",
+    "source": "C:\\Users\\jwpmi\\Downloads\\AI\\wb-starter\\.claude\\worktrees\\agent-a14ffa2c736ab61b0\\src\\wb-models\\pages\\badge-showcase.page.json",
+    "composedAt": "2026-08-04T19:28:25.108Z",
     "stats": {
       "extendsResolved": true,
       "refsResolved": 0,

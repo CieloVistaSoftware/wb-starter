@@ -55,6 +55,14 @@ function camelToKebab(str) {
   return str.replace(/([a-z])([A-Z])/g, '$1-$2').toLowerCase();
 }
 
+// #411: a property literally named `variant` (the common case -- buttons,
+// cards, alerts...) produced the redundant "variant variants" heading.
+// Special-case it to a natural "Variants"; other property names (e.g.
+// `size`) keep the existing "{propName} variants" phrasing.
+function enumSectionHeading(propName) {
+  return propName === 'variant' ? 'Variants' : `${propName} variants`;
+}
+
 function slugify(str) {
   return String(str).toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '');
 }
@@ -85,12 +93,22 @@ function findSchema(name) {
 // (#268/#279 and onward) -- a single static placeholder shared by every
 // instance defeats that just as badly as being invisible: four <wb-dialog>
 // triggers with title="Basic Dialog"/"Large"/"No Close"/"Centered" all just
-// said "Dialog", indistinguishable at a glance (confirmed live). Build the
-// placeholder FROM that instance's own attrs so each one is self-labeling.
-function placeholderChildren(schema, attrs = {}) {
-  const parts = Object.entries(attrs).map(([k, v]) => (v === true ? k : `${k}=${v}`));
-  if (parts.length > 0) return parts.join(', ');
-  return schema.title || schema.schemaFor || 'Demo content';
+// said "Dialog", indistinguishable at a glance (confirmed live).
+//
+// #413: building that placeholder FROM the instance's own attrs
+// (`variant=info, message=Sample message`) went too far the other way --
+// the element's opening tag already shows those exact attrs, and the code
+// sample rendered below the demo shows them again, so the body text was a
+// third, word-for-word repetition of information already on screen twice.
+// Per docs/architecture/standards/ATTRIBUTE-NAMING-STANDARD.md ("Content
+// (Children)"), body content should be genuinely distinct copy, not an
+// echo of the attributes -- e.g. `<wb-alert variant="warning"><strong>
+// Warning:</strong> This is the alert content.</wb-alert>`. A generator
+// can't hand-write per-component prose, but it can stay non-empty (still
+// solving the original 0-height problem) without parroting the attrs.
+function placeholderChildren(schema) {
+  const label = (schema.title || schema.schemaFor || 'component').toLowerCase();
+  return `This is example ${label} content.`;
 }
 
 function generateComponentSections(schema) {
@@ -105,7 +123,7 @@ function generateComponentSections(schema) {
       for (const [key, val] of Object.entries(combo)) {
         attrs[camelToKebab(key)] = val;
       }
-      return { tag, attrs, children: placeholderChildren(schema, attrs) };
+      return { tag, attrs, children: placeholderChildren(schema) };
     });
     const columns = demos.length <= 2 ? demos.length : demos.length <= 4 ? 2 : 3;
     sections.push({
@@ -130,11 +148,11 @@ function generateComponentSections(schema) {
           attrs[camelToKebab(rk)] = rv.default || `Sample ${rk}`;
         }
       }
-      return { tag, attrs, children: placeholderChildren(schema, attrs) };
+      return { tag, attrs, children: placeholderChildren(schema) };
     });
     const columns = demos.length <= 2 ? demos.length : demos.length <= 4 ? 2 : 3;
     sections.push({
-      heading: `${propName} variants`,
+      heading: enumSectionHeading(propName),
       component: schema.schemaFor,
       tag,
       columns,
@@ -154,13 +172,16 @@ function generateComponentSections(schema) {
           attrs[camelToKebab(rk)] = rv.default || `Sample ${rk}`;
         }
       }
-      return { tag, attrs, children: placeholderChildren(schema, attrs) };
+      return { tag, attrs, children: placeholderChildren(schema) };
     });
     // Always one per row: a boolean toggle's whole point is showing its own
     // effect (e.g. `full-width`), which a multi-column grid cell clips.
     const columns = 1;
     sections.push({
-      heading: `Boolean toggles`,
+      // #412: replace the disliked "Boolean toggles" literal with a
+      // shorter heading that matches the one-word style used elsewhere
+      // ("Variants").
+      heading: `Toggles`,
       component: schema.schemaFor,
       tag,
       columns,
@@ -184,7 +205,7 @@ function generateComponentSections(schema) {
         component: schema.schemaFor,
         tag,
         columns: 1,
-        demos: [{ tag, attrs: defaultAttrs, children: placeholderChildren(schema, defaultAttrs) }]
+        demos: [{ tag, attrs: defaultAttrs, children: placeholderChildren(schema) }]
       });
     }
   }

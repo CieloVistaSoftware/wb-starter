@@ -77,18 +77,14 @@ function camelToKebab(str) {
   return str.replace(/([a-z])([A-Z])/g, '$1-$2').toLowerCase();
 }
 
-// ─── Build smart demo content for each property value ───
-
-function buildDemoLabel(attrs) {
-  const parts = [];
-  for (const [key, val] of Object.entries(attrs)) {
-    if (val === true) {
-      parts.push(key);
-    } else if (typeof val === 'string' && val.length < 30) {
-      parts.push(`${key}="${val}"`);
-    }
-  }
-  return parts.join(', ') || 'default';
+// ─── Section heading for an enum-variant sweep (#411) ───
+// A property literally named `variant` produced "variant variants" --
+// the common case, since most components (buttons, cards, alerts...) name
+// their variant-selector property exactly that. Special-case it to a
+// natural "Variants" heading; other property names (e.g. `size`) keep the
+// existing "{propName} variants" phrasing, which already reads fine.
+function enumSectionHeading(propName) {
+  return propName === 'variant' ? 'Variants' : `${propName} variants`;
 }
 
 // ─── Generate sections from schema data ───
@@ -159,7 +155,7 @@ function generateSections(schema) {
 
     const columns = demos.length <= 2 ? demos.length : demos.length <= 4 ? 2 : 3;
     sections.push({
-      heading: `${propName} variants`,
+      heading: enumSectionHeading(propName),
       tag,
       columns,
       demos
@@ -185,7 +181,10 @@ function generateSections(schema) {
 
     const columns = demos.length <= 2 ? demos.length : 3;
     sections.push({
-      heading: `Boolean toggles`,
+      // #412: "Boolean toggles" was a placeholder the site owner disliked
+      // with no replacement given. "Toggles" stays short and matches the
+      // one-word style of the other auto-generated headings ("Variants").
+      heading: `Toggles`,
       tag,
       columns,
       demos

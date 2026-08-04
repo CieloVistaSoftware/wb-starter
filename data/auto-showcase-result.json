@@ -1,9 +1,9 @@
 {
-  "generatedAt": "2026-02-12T02:54:05.580Z",
-  "sourceSchema": "C:\\Users\\jwpmi\\Downloads\\AI\\wb-starter\\src\\wb-models\\badge.schema.json",
-  "pageSchema": "C:\\Users\\jwpmi\\Downloads\\AI\\wb-starter\\src\\wb-models\\pages\\badge-showcase.page.json",
-  "outputHtml": "C:\\Users\\jwpmi\\Downloads\\AI\\wb-starter\\demos\\badge-showcase.html",
-  "component": "badge",
+  "generatedAt": "2026-08-04T19:28:37.054Z",
+  "sourceSchema": "C:\\Users\\jwpmi\\Downloads\\AI\\wb-starter\\.claude\\worktrees\\agent-a14ffa2c736ab61b0\\src\\wb-models\\progress.schema.json",
+  "pageSchema": "C:\\Users\\jwpmi\\Downloads\\AI\\wb-starter\\.claude\\worktrees\\agent-a14ffa2c736ab61b0\\src\\wb-models\\pages\\progress-showcase.page.json",
+  "outputHtml": "C:\\Users\\jwpmi\\Downloads\\AI\\wb-starter\\.claude\\worktrees\\agent-a14ffa2c736ab61b0\\demos\\progress-showcase.html",
+  "component": "progress",
   "sections": 4,
-  "totalDemos": 23
+  "totalDemos": 27
 }

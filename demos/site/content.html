@@ -8,22 +8,9 @@
   <link rel="stylesheet" href="../../src/styles/themes.css">
   <link rel="stylesheet" href="../../src/styles/site.css">
 
-  <style>
-    /* .page normally sits inside <main class="site__main">, which provides
-       padding: 2rem (site.css) -- this is a standalone page with no
-       site__main wrapper, so .page alone only centers/caps width, giving
-       zero-margin edge-to-edge content. Scoped to body's direct child only,
-       so this never double-pads .page inside the real SPA. Matches
-       DEMOS-AND-DOCS-STANDARDS.md #13 ("proper margins & padding... from
-       theme/spacing variables, not ad-hoc values") -- var(--space-xl) is
-       the same 2rem site__main already uses, not a new literal. */
-    body > .page { padding: var(--space-xl); }
-    @media (max-width: 640px) { body > .page { padding: 1rem; } }
-  </style>
 </head>
 
 <body>
-  <div class="page">
   <nav style="margin-bottom: 1rem;">
     <a href="index.html" style="color: var(--text-secondary, #aaa); text-decoration: none;">← Back to Index</a>
   </nav>
@@ -33,39 +20,31 @@
   <!-- 1. 📄 Article Component -->
   <section id="article-article-component">
   <h2>📄 Article Component</h2>
-    <wb-demo>
+  <wb-demo columns="3">
     <wb-article title="Article">
-      title=Article
+      This is example article component content.
     </wb-article>
-  </wb-demo>
-  <wb-demo>
     <wb-article title="Article" subtitle="Deck">
-      title=Article, subtitle=Deck
+      This is example article component content.
     </wb-article>
-  </wb-demo>
-  <wb-demo>
     <wb-article title="Article" image="cover.jpg">
-      title=Article, image=cover.jpg
+      This is example article component content.
     </wb-article>
-  </wb-demo>
-  <wb-demo>
     <wb-article title="Article" author="John Doe" date="2026-01-01">
-      title=Article, author=John Doe, date=2026-01-01
+      This is example article component content.
     </wb-article>
-  </wb-demo>
-  <wb-demo>
     <wb-article title="Article" featured>
-      title=Article, featured
+      This is example article component content.
     </wb-article>
   </wb-demo>
   </section>
 
-  <!-- 2. Boolean toggles -->
-  <section id="article-boolean-toggles">
-  <h2>Boolean toggles</h2>
+  <!-- 2. Toggles -->
+  <section id="article-toggles">
+  <h2>Toggles</h2>
   <wb-demo columns="1">
     <wb-article featured>
-      featured
+      This is example article component content.
     </wb-article>
   </wb-demo>
   </section>
@@ -73,19 +52,15 @@
   <!-- 3. 📰 Articles List Component -->
   <section id="articles-articles-list-component">
   <h2>📰 Articles List Component</h2>
-    <wb-demo>
+  <wb-demo columns="2">
     <wb-articles layout="grid">
-      layout=grid
+      This is example articles list component content.
     </wb-articles>
-  </wb-demo>
-  <wb-demo>
     <wb-articles layout="list">
-      layout=list
+      This is example articles list component content.
     </wb-articles>
-  </wb-demo>
-  <wb-demo>
     <wb-articles layout="grid" columns="2">
-      layout=grid, columns=2
+      This is example articles list component content.
     </wb-articles>
   </wb-demo>
   </section>
@@ -95,17 +70,17 @@
   <h2>layout variants</h2>
   <wb-demo columns="2">
     <wb-articles layout="masonry">
-      layout=masonry
+      This is example articles list component content.
     </wb-articles>
   </wb-demo>
   </section>
 
-  <!-- 5. Boolean toggles -->
-  <section id="articles-boolean-toggles">
-  <h2>Boolean toggles</h2>
+  <!-- 5. Toggles -->
+  <section id="articles-toggles">
+  <h2>Toggles</h2>
   <wb-demo columns="1">
     <wb-articles pagination>
-      pagination
+      This is example articles list component content.
     </wb-articles>
   </wb-demo>
   </section>
@@ -113,19 +88,15 @@
   <!-- 6. 📝 Markdown to HTML -->
   <section id="mdhtml-markdown-to-html">
   <h2>📝 Markdown to HTML</h2>
-    <wb-demo>
+  <wb-demo columns="2">
     <wb-mdhtml src="../code.md">
-      src=../code.md
+      This is example markdown to html content.
     </wb-mdhtml>
-  </wb-demo>
-  <wb-demo>
     <wb-mdhtml gfm>
-      gfm
+      This is example markdown to html content.
     </wb-mdhtml>
-  </wb-demo>
-  <wb-demo>
     <wb-mdhtml sanitize gfm>
-      sanitize, gfm
+      This is example markdown to html content.
     </wb-mdhtml>
   </wb-demo>
   </section>
@@ -133,49 +104,37 @@
   <!-- 7. 🎵 Audio -->
   <section id="audio-audio">
   <h2>🎵 Audio</h2>
-    <wb-demo>
+  <wb-demo columns="2">
     <wb-audio src="../audio.mp3">
-      src=../audio.mp3
+      This is example audio content.
     </wb-audio>
-  </wb-demo>
-  <wb-demo>
     <wb-audio src="../audio.mp3" show-eq>
-      src=../audio.mp3, show-eq
+      This is example audio content.
     </wb-audio>
-  </wb-demo>
-  <wb-demo>
     <wb-audio src="../audio.mp3" volume="0.5">
-      src=../audio.mp3, volume=0.5
+      This is example audio content.
     </wb-audio>
-  </wb-demo>
-  <wb-demo>
     <wb-audio src="../audio.mp3" loop>
-      src=../audio.mp3, loop
+      This is example audio content.
     </wb-audio>
   </wb-demo>
   </section>
 
-  <!-- 8. Boolean toggles -->
-  <section id="audio-boolean-toggles">
-  <h2>Boolean toggles</h2>
-    <wb-demo>
+  <!-- 8. Toggles -->
+  <section id="audio-toggles">
+  <h2>Toggles</h2>
+  <wb-demo columns="1">
     <wb-audio loop src="../audio.mp3">
-      loop, src=../audio.mp3
+      This is example audio content.
     </wb-audio>
-  </wb-demo>
-  <wb-demo>
     <wb-audio autoplay src="../audio.mp3">
-      autoplay, src=../audio.mp3
+      This is example audio content.
     </wb-audio>
-  </wb-demo>
-  <wb-demo>
     <wb-audio muted src="../audio.mp3">
-      muted, src=../audio.mp3
+      This is example audio content.
     </wb-audio>
-  </wb-demo>
-  <wb-demo>
     <wb-audio show-eq src="../audio.mp3">
-      show-eq, src=../audio.mp3
+      This is example audio content.
     </wb-audio>
   </wb-demo>
   </section>
@@ -183,49 +142,37 @@
   <!-- 9. 📊 Table -->
   <section id="table-table">
   <h2>📊 Table</h2>
-    <wb-demo>
+  <wb-demo columns="2">
     <wb-table>
-      Table
+      This is example table content.
     </wb-table>
-  </wb-demo>
-  <wb-demo>
     <wb-table sortable>
-      sortable
+      This is example table content.
     </wb-table>
-  </wb-demo>
-  <wb-demo>
     <wb-table striped>
-      striped
+      This is example table content.
     </wb-table>
-  </wb-demo>
-  <wb-demo>
     <wb-table paginated page-size="5">
-      paginated, page-size=5
+      This is example table content.
     </wb-table>
   </wb-demo>
   </section>
 
-  <!-- 10. Boolean toggles -->
-  <section id="table-boolean-toggles">
-  <h2>Boolean toggles</h2>
-    <wb-demo>
+  <!-- 10. Toggles -->
+  <section id="table-toggles">
+  <h2>Toggles</h2>
+  <wb-demo columns="1">
     <wb-table filterable>
-      filterable
+      This is example table content.
     </wb-table>
-  </wb-demo>
-  <wb-demo>
     <wb-table paginated>
-      paginated
+      This is example table content.
     </wb-table>
-  </wb-demo>
-  <wb-demo>
     <wb-table compact>
-      compact
+      This is example table content.
     </wb-table>
-  </wb-demo>
-  <wb-demo>
     <wb-table bordered>
-      bordered
+      This is example table content.
     </wb-table>
   </wb-demo>
   </section>
@@ -233,24 +180,18 @@
   <!-- 11. 📝 Notes -->
   <section id="notes-notes">
   <h2>📝 Notes</h2>
-    <wb-demo>
+  <wb-demo columns="2">
     <wb-notes>
-      Notes
+      This is example notes content.
     </wb-notes>
-  </wb-demo>
-  <wb-demo>
     <wb-notes position="left">
-      position=left
+      This is example notes content.
     </wb-notes>
-  </wb-demo>
-  <wb-demo>
     <wb-notes position="right">
-      position=right
+      This is example notes content.
     </wb-notes>
-  </wb-demo>
-  <wb-demo>
     <wb-notes position="modal">
-      position=modal
+      This is example notes content.
     </wb-notes>
   </wb-demo>
   </section>
@@ -260,7 +201,7 @@
   <h2>📦 Code Control</h2>
   <wb-demo columns="1">
     <wb-codecontrol>
-      Code Control
+      This is example code control content.
     </wb-codecontrol>
   </wb-demo>
   </section>
@@ -275,7 +216,7 @@
   <div class="demo-section">
     <p>Standard Player</p>
     <wb-demo>
-      <audio id="semanticsmedia-audio-20" controls src="../audio.mp3"></audio>
+      <audio id="semanticsmedia-audio-20" controls src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3"></audio>
     </wb-demo>
 
     <p>Studio EQ Player — with 15-band graphic equalizer</p>
@@ -370,19 +311,15 @@
   <!-- DETAILS -->
   <h2>Details <code>&lt;details&gt;</code></h2>
   <div class="demo-section">
-        <wb-demo>
+    <wb-demo columns="3">
       <details>
         <summary>Detail Item 1</summary>
         <p>This is the content for item 1.</p>
       </details>
-    </wb-demo>
-    <wb-demo>
       <details open>
         <summary>Detail Item 2 (open by default)</summary>
         <p>This is the content for item 2.</p>
       </details>
-    </wb-demo>
-    <wb-demo>
       <details animated="false">
         <summary>Detail Item 3 (no animation)</summary>
         <p>This is the content for item 3.</p>
@@ -415,10 +352,8 @@
   <!-- PROGRESS -->
   <h2>Progress <code>&lt;wb-progress&gt;</code></h2>
   <div class="demo-section">
-        <wb-demo>
+    <wb-demo columns="2">
       <wb-progress value="70" label="Loading..."></wb-progress>
-    </wb-demo>
-    <wb-demo>
       <wb-progress indeterminate label="Working..."></wb-progress>
     </wb-demo>
   </div>
@@ -492,14 +427,9 @@
     const paddingWarning = document.getElementById('padding-warning');
 
     function hasRequiredPadding() {
-      // #432: the page's real layout padding is on `body > .page`
-      // (`body > .page { padding: var(--space-xl); }`), never on <body>
-      // itself -- checking document.body's own computed padding always
-      // read 0, so this gate could never pass and the dialog never opened.
-      const pageEl = document.querySelector('body > .page') || document.body;
-      const pageStyle = window.getComputedStyle(pageEl);
-      const paddingLeft = parseFloat(pageStyle.paddingLeft);
-      const paddingRight = parseFloat(pageStyle.paddingRight);
+      const bodyStyle = window.getComputedStyle(document.body);
+      const paddingLeft = parseFloat(bodyStyle.paddingLeft);
+      const paddingRight = parseFloat(bodyStyle.paddingRight);
       return paddingLeft >= 16 && paddingRight >= 16;
     }
 
@@ -514,8 +444,6 @@
     });
   </script>
   </section>
-
-  </div>
 
   <script type="module">
     import WB from '../../src/core/wb-lazy.js';

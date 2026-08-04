@@ -1,7 +1,7 @@
 {
-  "generatedAt": "2026-07-16T22:09:09.501Z",
+  "generatedAt": "2026-08-04T19:32:42.747Z",
   "siteSchema": "src/wb-models/pages/wb-component-library.site.json",
-  "outputDir": "C:\\Users\\jwpmi\\Downloads\\AI\\wb-starter\\demos\\site",
+  "outputDir": "C:\\Users\\jwpmi\\Downloads\\AI\\wb-starter\\.claude\\worktrees\\agent-a14ffa2c736ab61b0\\demos\\site",
   "elapsed": "0.1s",
   "summary": {
     "totalPages": 8,
@@ -10,7 +10,7 @@
     "skipped": 0,
     "totalComponents": 70,
     "totalSections": 207,
-    "totalDemos": 761
+    "totalDemos": 767
   },
   "pages": [
     {
@@ -149,7 +149,7 @@
       "filename": "feedback.html",
       "componentCount": 10,
       "sectionCount": 40,
-      "totalDemos": 203,
+      "totalDemos": 210,
       "components": [
         {
           "name": "alert",
@@ -167,7 +167,7 @@
           "name": "badge",
           "status": "ok",
           "sections": 4,
-          "demos": 51
+          "demos": 58
         },
         {
           "name": "chip",
@@ -222,13 +222,13 @@
       "filename": "forms.html",
       "componentCount": 9,
       "sectionCount": 42,
-      "totalDemos": 158,
+      "totalDemos": 157,
       "components": [
         {
           "name": "button",
           "status": "ok",
           "sections": 6,
-          "demos": 51
+          "demos": 50
         },
         {
           "name": "checkbox",

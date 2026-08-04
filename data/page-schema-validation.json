@@ -1,5 +1,5 @@
 {
-  "validated": "2026-07-30T22:39:51.210Z",
+  "validated": "2026-08-04T19:28:36.662Z",
   "componentSchemasLoaded": 96,
   "pagesValidated": 1,
   "totalErrors": 0,
@@ -7,10 +7,10 @@
   "allValid": true,
   "results": [
     {
-      "file": "C:\\Users\\jwpmi\\Downloads\\AI\\wb-starter\\src\\wb-models\\pages\\multi-component-demo.page.json",
-      "title": "🧩 Multi-Component Demo",
-      "sections": 8,
-      "totalDemos": 41,
+      "file": "C:\\Users\\jwpmi\\Downloads\\AI\\wb-starter\\.claude\\worktrees\\agent-a14ffa2c736ab61b0\\src\\wb-models\\pages\\progress-showcase.page.json",
+      "title": "📊 Progress Showcase",
+      "sections": 4,
+      "totalDemos": 27,
       "errors": [],
       "warnings": [],
       "valid": true

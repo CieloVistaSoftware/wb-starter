@@ -7,22 +7,10 @@
   <title>Overlays & Popups</title>
   <link rel="stylesheet" href="../../src/styles/themes.css">
   <link rel="stylesheet" href="../../src/styles/site.css">
-  <style>
-    /* .page normally sits inside <main class="site__main">, which provides
-       padding: 2rem (site.css) -- this is a standalone page with no
-       site__main wrapper, so .page alone only centers/caps width, giving
-       zero-margin edge-to-edge content. Scoped to body's direct child only,
-       so this never double-pads .page inside the real SPA. Matches
-       DEMOS-AND-DOCS-STANDARDS.md #13 ("proper margins & padding... from
-       theme/spacing variables, not ad-hoc values") -- var(--space-xl) is
-       the same 2rem site__main already uses, not a new literal. */
-    body > .page { padding: var(--space-xl); }
-    @media (max-width: 640px) { body > .page { padding: 1rem; } }
-  </style>
+
 </head>
 
 <body>
-  <div class="page">
   <nav style="margin-bottom: 1rem;">
     <a href="index.html" style="color: var(--text-secondary, #aaa); text-decoration: none;">← Back to Index</a>
   </nav>
@@ -32,24 +20,18 @@
   <!-- 1. 🪟 Dialog -->
   <section id="dialog-dialog">
   <h2>🪟 Dialog</h2>
-    <wb-demo>
+  <wb-demo columns="2">
     <wb-dialog title="Basic Dialog">
-      Click me
+      This is example dialog content.
     </wb-dialog>
-  </wb-demo>
-  <wb-demo>
     <wb-dialog title="Large" size="lg">
-      Click me
+      This is example dialog content.
     </wb-dialog>
-  </wb-demo>
-  <wb-demo>
     <wb-dialog title="No Close">
-      Click me
+      This is example dialog content.
     </wb-dialog>
-  </wb-demo>
-  <wb-demo>
     <wb-dialog title="Centered" variant="centered">
-      Click me
+      This is example dialog content.
     </wb-dialog>
   </wb-demo>
   </section>
@@ -57,49 +39,37 @@
   <!-- 2. size variants -->
   <section id="dialog-size-variants">
   <h2>size variants</h2>
-    <wb-demo>
+  <wb-demo columns="3">
     <wb-dialog size="sm">
-      Click me
+      This is example dialog content.
     </wb-dialog>
-  </wb-demo>
-  <wb-demo>
     <wb-dialog size="md">
-      Click me
+      This is example dialog content.
     </wb-dialog>
-  </wb-demo>
-  <wb-demo>
     <wb-dialog size="lg">
-      Click me
+      This is example dialog content.
     </wb-dialog>
-  </wb-demo>
-  <wb-demo>
     <wb-dialog size="xl">
-      Click me
+      This is example dialog content.
     </wb-dialog>
-  </wb-demo>
-  <wb-demo>
     <wb-dialog size="full">
-      Click me
+      This is example dialog content.
     </wb-dialog>
   </wb-demo>
   </section>
 
-  <!-- 3. variant variants -->
-  <section id="dialog-variant-variants">
-  <h2>variant variants</h2>
-    <wb-demo>
+  <!-- 3. Variants -->
+  <section id="dialog-variants">
+  <h2>Variants</h2>
+  <wb-demo columns="2">
     <wb-dialog variant="default">
-      Click me
+      This is example dialog content.
     </wb-dialog>
-  </wb-demo>
-  <wb-demo>
     <wb-dialog variant="centered">
-      Click me
+      This is example dialog content.
     </wb-dialog>
-  </wb-demo>
-  <wb-demo>
     <wb-dialog variant="fullscreen">
-      Click me
+      This is example dialog content.
     </wb-dialog>
   </wb-demo>
   </section>
@@ -107,19 +77,15 @@
   <!-- 4. 📜 Drawer -->
   <section id="drawer-drawer">
   <h2>📜 Drawer</h2>
-    <wb-demo>
+  <wb-demo columns="2">
     <wb-drawer title="Right Drawer" position="right">
-      Click me
+      This is example drawer content.
     </wb-drawer>
-  </wb-demo>
-  <wb-demo>
     <wb-drawer title="Left Drawer" position="left">
-      Click me
+      This is example drawer content.
     </wb-drawer>
-  </wb-demo>
-  <wb-demo>
     <wb-drawer title="Wide" width="400px">
-      Click me
+      This is example drawer content.
     </wb-drawer>
   </wb-demo>
   </section>
@@ -127,44 +93,34 @@
   <!-- 5. position variants -->
   <section id="drawer-position-variants">
   <h2>position variants</h2>
-    <wb-demo>
+  <wb-demo columns="2">
     <wb-drawer position="left">
-      Click me
+      This is example drawer content.
     </wb-drawer>
-  </wb-demo>
-  <wb-demo>
     <wb-drawer position="right">
-      Click me
+      This is example drawer content.
     </wb-drawer>
-  </wb-demo>
-  <wb-demo>
     <wb-drawer position="top">
-      Click me
+      This is example drawer content.
     </wb-drawer>
-  </wb-demo>
-  <wb-demo>
     <wb-drawer position="bottom">
-      Click me
+      This is example drawer content.
     </wb-drawer>
   </wb-demo>
   </section>
 
-  <!-- 6. variant variants -->
-  <section id="drawer-variant-variants">
-  <h2>variant variants</h2>
-    <wb-demo>
+  <!-- 6. Variants -->
+  <section id="drawer-variants">
+  <h2>Variants</h2>
+  <wb-demo columns="2">
     <wb-drawer variant="default">
-      Click me
+      This is example drawer content.
     </wb-drawer>
-  </wb-demo>
-  <wb-demo>
     <wb-drawer variant="overlay">
-      Click me
+      This is example drawer content.
     </wb-drawer>
-  </wb-demo>
-  <wb-demo>
     <wb-drawer variant="push">
-      Click me
+      This is example drawer content.
     </wb-drawer>
   </wb-demo>
   </section>
@@ -172,19 +128,15 @@
   <!-- 7. 📋 Dropdown -->
   <section id="dropdown-dropdown">
   <h2>📋 Dropdown</h2>
-    <wb-demo>
-    <wb-dropdown position="bottom-start" items="Profile,Settings,Logout">
-      Click me
+  <wb-demo columns="2">
+    <wb-dropdown position="bottom-start">
+      This is example dropdown content.
     </wb-dropdown>
-  </wb-demo>
-  <wb-demo>
-    <wb-dropdown position="bottom-end" items="Profile,Settings,Logout">
-      Click me
+    <wb-dropdown position="bottom-end">
+      This is example dropdown content.
     </wb-dropdown>
-  </wb-demo>
-  <wb-demo>
-    <wb-dropdown trigger="hover" items="Edit,Duplicate,Delete">
-      Click me
+    <wb-dropdown trigger="hover">
+      This is example dropdown content.
     </wb-dropdown>
   </wb-demo>
   </section>
@@ -192,14 +144,12 @@
   <!-- 8. position variants -->
   <section id="dropdown-position-variants">
   <h2>position variants</h2>
-    <wb-demo>
-    <wb-dropdown position="top-start" items="Profile,Settings,Logout">
-      Click me
+  <wb-demo columns="2">
+    <wb-dropdown position="top-start">
+      This is example dropdown content.
     </wb-dropdown>
-  </wb-demo>
-  <wb-demo>
-    <wb-dropdown position="top-end" items="Profile,Settings,Logout">
-      Click me
+    <wb-dropdown position="top-end">
+      This is example dropdown content.
     </wb-dropdown>
   </wb-demo>
   </section>
@@ -208,13 +158,11 @@
   <section id="dropdown-trigger-variants">
   <h2>trigger variants</h2>
   <wb-demo columns="2">
-    <wb-dropdown trigger="click" items="Edit,Duplicate,Delete">
-      Click me
+    <wb-dropdown trigger="click">
+      This is example dropdown content.
     </wb-dropdown>
   </wb-demo>
   </section>
-
-  </div>
 
   <script type="module">
     import WB from '../../src/core/wb-lazy.js';
