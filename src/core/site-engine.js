@@ -147,7 +147,7 @@ export default class WBSite {
         if (window.showNotesModal) {
           window.showNotesModal();
         } else {
-          const notesEl = document.querySelector('[]');
+          const notesEl = document.getElementById('siteNotes');
           if (notesEl && notesEl.wbNotes) {
             notesEl.wbNotes.toggle();
           }
