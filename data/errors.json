@@ -1,38 +1,1609 @@
 {
-  "lastUpdated": "2026-07-30T21:34:07.035Z",
-  "count": 1,
+  "lastUpdated": "2026-08-05T05:01:23.814Z",
+  "count": 36,
   "errors": [
     {
-      "id": 1785447247034,
-      "timestamp": "2026-07-30T21:34:07.034Z",
+      "id": 1785898883060,
+      "timestamp": "2026-08-05T03:01:23.060Z",
       "level": "error",
       "source": "WB:LegacySyntax",
       "module": "wb.js",
-      "line": 731,
+      "line": 764,
       "column": 41,
       "function": "(anonymous)",
       "message": "Legacy syntax data-wb=\"card\" detected on <div>. Please use <wb-card> instead.",
-      "stack": "Error: Legacy syntax data-wb=\"card\" detected on <div>. Please use <wb-card> instead.\n    at http://localhost:3000/src/core/wb.js:731:41\n    at NodeList.forEach (<anonymous>)\n    at Object.scan (http://localhost:3000/src/core/wb.js:723:42)\n    at async Object.init (http://localhost:3000/src/core/wb.js:1170:9)",
+      "stack": "Error: Legacy syntax data-wb=\"card\" detected on <div>. Please use <wb-card> instead.\n    at http://localhost:3000/src/core/wb.js:764:41\n    at NodeList.forEach (<anonymous>)\n    at Object.scan (http://localhost:3000/src/core/wb.js:756:42)\n    at Object.init (http://localhost:3000/src/core/wb.js:1233:18)\n    at http://localhost:3000/demos/legacy-syntax-check.html:14:12",
       "frames": [
         {
           "function": "(anonymous)",
           "file": "wb.js",
           "fullPath": "http://localhost:3000/src/core/wb.js",
-          "line": 731,
+          "line": 764,
           "column": 41
         },
         {
           "function": "Object.scan",
           "file": "wb.js",
           "fullPath": "http://localhost:3000/src/core/wb.js",
-          "line": 723,
+          "line": 756,
           "column": 42
         },
         {
           "function": "Object.init",
           "file": "wb.js",
           "fullPath": "http://localhost:3000/src/core/wb.js",
-          "line": 1170,
+          "line": 1233,
+          "column": 18
+        },
+        {
+          "function": "(anonymous)",
+          "file": "legacy-syntax-check.html",
+          "fullPath": "http://localhost:3000/demos/legacy-syntax-check.html",
+          "line": 14,
+          "column": 12
+        }
+      ],
+      "url": "http://localhost:3000/demos/legacy-syntax-check.html",
+      "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/145.0.7632.6 Safari/537.36",
+      "interaction": {
+        "from": "System",
+        "to": "Background Process"
+      }
+    },
+    {
+      "id": 1785898901766,
+      "timestamp": "2026-08-05T03:01:41.766Z",
+      "level": "error",
+      "source": "WB:LegacySyntax",
+      "module": "wb.js",
+      "line": 764,
+      "column": 41,
+      "function": "(anonymous)",
+      "message": "Legacy syntax data-wb=\"card\" detected on <div>. Please use <wb-card> instead.",
+      "stack": "Error: Legacy syntax data-wb=\"card\" detected on <div>. Please use <wb-card> instead.\n    at http://localhost:3000/src/core/wb.js:764:41\n    at NodeList.forEach (<anonymous>)\n    at Object.scan (http://localhost:3000/src/core/wb.js:756:42)\n    at Object.init (http://localhost:3000/src/core/wb.js:1233:18)\n    at http://localhost:3000/demos/legacy-syntax-check.html:14:12",
+      "frames": [
+        {
+          "function": "(anonymous)",
+          "file": "wb.js",
+          "fullPath": "http://localhost:3000/src/core/wb.js",
+          "line": 764,
+          "column": 41
+        },
+        {
+          "function": "Object.scan",
+          "file": "wb.js",
+          "fullPath": "http://localhost:3000/src/core/wb.js",
+          "line": 756,
+          "column": 42
+        },
+        {
+          "function": "Object.init",
+          "file": "wb.js",
+          "fullPath": "http://localhost:3000/src/core/wb.js",
+          "line": 1233,
+          "column": 18
+        },
+        {
+          "function": "(anonymous)",
+          "file": "legacy-syntax-check.html",
+          "fullPath": "http://localhost:3000/demos/legacy-syntax-check.html",
+          "line": 14,
+          "column": 12
+        }
+      ],
+      "url": "http://localhost:3000/demos/legacy-syntax-check.html",
+      "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/145.0.7632.6 Safari/537.36",
+      "interaction": {
+        "from": "System",
+        "to": "Background Process"
+      }
+    },
+    {
+      "id": 1785898930935,
+      "timestamp": "2026-08-05T03:02:10.935Z",
+      "level": "error",
+      "source": "WB:LegacySyntax",
+      "module": "wb.js",
+      "line": 764,
+      "column": 41,
+      "function": "(anonymous)",
+      "message": "Legacy syntax data-wb=\"card\" detected on <div>. Please use <wb-card> instead.",
+      "stack": "Error: Legacy syntax data-wb=\"card\" detected on <div>. Please use <wb-card> instead.\n    at http://localhost:3000/src/core/wb.js:764:41\n    at NodeList.forEach (<anonymous>)\n    at Object.scan (http://localhost:3000/src/core/wb.js:756:42)\n    at Object.init (http://localhost:3000/src/core/wb.js:1233:18)\n    at http://localhost:3000/demos/legacy-syntax-check.html:14:12",
+      "frames": [
+        {
+          "function": "(anonymous)",
+          "file": "wb.js",
+          "fullPath": "http://localhost:3000/src/core/wb.js",
+          "line": 764,
+          "column": 41
+        },
+        {
+          "function": "Object.scan",
+          "file": "wb.js",
+          "fullPath": "http://localhost:3000/src/core/wb.js",
+          "line": 756,
+          "column": 42
+        },
+        {
+          "function": "Object.init",
+          "file": "wb.js",
+          "fullPath": "http://localhost:3000/src/core/wb.js",
+          "line": 1233,
+          "column": 18
+        },
+        {
+          "function": "(anonymous)",
+          "file": "legacy-syntax-check.html",
+          "fullPath": "http://localhost:3000/demos/legacy-syntax-check.html",
+          "line": 14,
+          "column": 12
+        }
+      ],
+      "url": "http://localhost:3000/demos/legacy-syntax-check.html",
+      "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/145.0.7632.6 Safari/537.36",
+      "interaction": {
+        "from": "System",
+        "to": "Background Process"
+      }
+    },
+    {
+      "id": 1785899032699,
+      "timestamp": "2026-08-05T03:03:52.699Z",
+      "level": "error",
+      "source": "WB:LegacySyntax",
+      "module": "wb.js",
+      "line": 764,
+      "column": 41,
+      "function": "(anonymous)",
+      "message": "Legacy syntax data-wb=\"card\" detected on <div>. Please use <wb-card> instead.",
+      "stack": "Error: Legacy syntax data-wb=\"card\" detected on <div>. Please use <wb-card> instead.\n    at http://localhost:3000/src/core/wb.js:764:41\n    at NodeList.forEach (<anonymous>)\n    at Object.scan (http://localhost:3000/src/core/wb.js:756:42)\n    at Object.init (http://localhost:3000/src/core/wb.js:1233:18)\n    at http://localhost:3000/demos/legacy-syntax-check.html:14:12",
+      "frames": [
+        {
+          "function": "(anonymous)",
+          "file": "wb.js",
+          "fullPath": "http://localhost:3000/src/core/wb.js",
+          "line": 764,
+          "column": 41
+        },
+        {
+          "function": "Object.scan",
+          "file": "wb.js",
+          "fullPath": "http://localhost:3000/src/core/wb.js",
+          "line": 756,
+          "column": 42
+        },
+        {
+          "function": "Object.init",
+          "file": "wb.js",
+          "fullPath": "http://localhost:3000/src/core/wb.js",
+          "line": 1233,
+          "column": 18
+        },
+        {
+          "function": "(anonymous)",
+          "file": "legacy-syntax-check.html",
+          "fullPath": "http://localhost:3000/demos/legacy-syntax-check.html",
+          "line": 14,
+          "column": 12
+        }
+      ],
+      "url": "http://localhost:3000/demos/legacy-syntax-check.html",
+      "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/145.0.7632.6 Safari/537.36",
+      "interaction": {
+        "from": "System",
+        "to": "Background Process"
+      }
+    },
+    {
+      "id": 1785899063885,
+      "timestamp": "2026-08-05T03:04:23.885Z",
+      "level": "error",
+      "source": "WB:LegacySyntax",
+      "module": "wb.js",
+      "line": 764,
+      "column": 41,
+      "function": "(anonymous)",
+      "message": "Legacy syntax data-wb=\"card\" detected on <div>. Please use <wb-card> instead.",
+      "stack": "Error: Legacy syntax data-wb=\"card\" detected on <div>. Please use <wb-card> instead.\n    at http://localhost:3000/src/core/wb.js:764:41\n    at NodeList.forEach (<anonymous>)\n    at Object.scan (http://localhost:3000/src/core/wb.js:756:42)\n    at Object.init (http://localhost:3000/src/core/wb.js:1233:18)\n    at http://localhost:3000/demos/legacy-syntax-check.html:14:12",
+      "frames": [
+        {
+          "function": "(anonymous)",
+          "file": "wb.js",
+          "fullPath": "http://localhost:3000/src/core/wb.js",
+          "line": 764,
+          "column": 41
+        },
+        {
+          "function": "Object.scan",
+          "file": "wb.js",
+          "fullPath": "http://localhost:3000/src/core/wb.js",
+          "line": 756,
+          "column": 42
+        },
+        {
+          "function": "Object.init",
+          "file": "wb.js",
+          "fullPath": "http://localhost:3000/src/core/wb.js",
+          "line": 1233,
+          "column": 18
+        },
+        {
+          "function": "(anonymous)",
+          "file": "legacy-syntax-check.html",
+          "fullPath": "http://localhost:3000/demos/legacy-syntax-check.html",
+          "line": 14,
+          "column": 12
+        }
+      ],
+      "url": "http://localhost:3000/demos/legacy-syntax-check.html",
+      "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/145.0.7632.6 Safari/537.36",
+      "interaction": {
+        "from": "System",
+        "to": "Background Process"
+      }
+    },
+    {
+      "id": 1785899083822,
+      "timestamp": "2026-08-05T03:04:43.822Z",
+      "level": "error",
+      "source": "WB:LegacySyntax",
+      "module": "wb.js",
+      "line": 764,
+      "column": 41,
+      "function": "(anonymous)",
+      "message": "Legacy syntax data-wb=\"card\" detected on <div>. Please use <wb-card> instead.",
+      "stack": "Error: Legacy syntax data-wb=\"card\" detected on <div>. Please use <wb-card> instead.\n    at http://localhost:3000/src/core/wb.js:764:41\n    at NodeList.forEach (<anonymous>)\n    at Object.scan (http://localhost:3000/src/core/wb.js:756:42)\n    at Object.init (http://localhost:3000/src/core/wb.js:1233:18)\n    at http://localhost:3000/demos/legacy-syntax-check.html:14:12",
+      "frames": [
+        {
+          "function": "(anonymous)",
+          "file": "wb.js",
+          "fullPath": "http://localhost:3000/src/core/wb.js",
+          "line": 764,
+          "column": 41
+        },
+        {
+          "function": "Object.scan",
+          "file": "wb.js",
+          "fullPath": "http://localhost:3000/src/core/wb.js",
+          "line": 756,
+          "column": 42
+        },
+        {
+          "function": "Object.init",
+          "file": "wb.js",
+          "fullPath": "http://localhost:3000/src/core/wb.js",
+          "line": 1233,
+          "column": 18
+        },
+        {
+          "function": "(anonymous)",
+          "file": "legacy-syntax-check.html",
+          "fullPath": "http://localhost:3000/demos/legacy-syntax-check.html",
+          "line": 14,
+          "column": 12
+        }
+      ],
+      "url": "http://localhost:3000/demos/legacy-syntax-check.html",
+      "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/145.0.7632.6 Safari/537.36",
+      "interaction": {
+        "from": "System",
+        "to": "Background Process"
+      }
+    },
+    {
+      "id": 1785899112371,
+      "timestamp": "2026-08-05T03:05:12.371Z",
+      "level": "error",
+      "source": "WB:LegacySyntax",
+      "module": "wb.js",
+      "line": 764,
+      "column": 41,
+      "function": "(anonymous)",
+      "message": "Legacy syntax data-wb=\"card\" detected on <div>. Please use <wb-card> instead.",
+      "stack": "Error: Legacy syntax data-wb=\"card\" detected on <div>. Please use <wb-card> instead.\n    at http://localhost:3000/src/core/wb.js:764:41\n    at NodeList.forEach (<anonymous>)\n    at Object.scan (http://localhost:3000/src/core/wb.js:756:42)\n    at async Object.init (http://localhost:3000/src/core/wb.js:1233:9)",
+      "frames": [
+        {
+          "function": "(anonymous)",
+          "file": "wb.js",
+          "fullPath": "http://localhost:3000/src/core/wb.js",
+          "line": 764,
+          "column": 41
+        },
+        {
+          "function": "Object.scan",
+          "file": "wb.js",
+          "fullPath": "http://localhost:3000/src/core/wb.js",
+          "line": 756,
+          "column": 42
+        },
+        {
+          "function": "Object.init",
+          "file": "wb.js",
+          "fullPath": "http://localhost:3000/src/core/wb.js",
+          "line": 1233,
+          "column": 9
+        }
+      ],
+      "url": "http://localhost:3000/tests/compliance/legacy-syntax-check.html",
+      "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/145.0.7632.6 Safari/537.36",
+      "interaction": {
+        "from": "System",
+        "to": "Background Process"
+      }
+    },
+    {
+      "id": 1785899535322,
+      "timestamp": "2026-08-05T03:12:15.322Z",
+      "level": "error",
+      "source": "WB:LegacySyntax",
+      "module": "wb.js",
+      "line": 764,
+      "column": 41,
+      "function": "(anonymous)",
+      "message": "Legacy syntax data-wb=\"card\" detected on <div>. Please use <wb-card> instead.",
+      "stack": "Error: Legacy syntax data-wb=\"card\" detected on <div>. Please use <wb-card> instead.\n    at http://localhost:3000/src/core/wb.js:764:41\n    at NodeList.forEach (<anonymous>)\n    at Object.scan (http://localhost:3000/src/core/wb.js:756:42)\n    at Object.init (http://localhost:3000/src/core/wb.js:1233:18)\n    at http://localhost:3000/demos/legacy-syntax-check.html:14:12",
+      "frames": [
+        {
+          "function": "(anonymous)",
+          "file": "wb.js",
+          "fullPath": "http://localhost:3000/src/core/wb.js",
+          "line": 764,
+          "column": 41
+        },
+        {
+          "function": "Object.scan",
+          "file": "wb.js",
+          "fullPath": "http://localhost:3000/src/core/wb.js",
+          "line": 756,
+          "column": 42
+        },
+        {
+          "function": "Object.init",
+          "file": "wb.js",
+          "fullPath": "http://localhost:3000/src/core/wb.js",
+          "line": 1233,
+          "column": 18
+        },
+        {
+          "function": "(anonymous)",
+          "file": "legacy-syntax-check.html",
+          "fullPath": "http://localhost:3000/demos/legacy-syntax-check.html",
+          "line": 14,
+          "column": 12
+        }
+      ],
+      "url": "http://localhost:3000/demos/legacy-syntax-check.html",
+      "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/145.0.7632.6 Safari/537.36",
+      "interaction": {
+        "from": "System",
+        "to": "Background Process"
+      }
+    },
+    {
+      "id": 1785899611015,
+      "timestamp": "2026-08-05T03:13:31.015Z",
+      "level": "error",
+      "source": "WB:LegacySyntax",
+      "module": "wb.js",
+      "line": 764,
+      "column": 41,
+      "function": "(anonymous)",
+      "message": "Legacy syntax data-wb=\"card\" detected on <div>. Please use <wb-card> instead.",
+      "stack": "Error: Legacy syntax data-wb=\"card\" detected on <div>. Please use <wb-card> instead.\n    at http://localhost:3000/src/core/wb.js:764:41\n    at NodeList.forEach (<anonymous>)\n    at Object.scan (http://localhost:3000/src/core/wb.js:756:42)\n    at Object.init (http://localhost:3000/src/core/wb.js:1233:18)\n    at http://localhost:3000/demos/legacy-syntax-check.html:14:12",
+      "frames": [
+        {
+          "function": "(anonymous)",
+          "file": "wb.js",
+          "fullPath": "http://localhost:3000/src/core/wb.js",
+          "line": 764,
+          "column": 41
+        },
+        {
+          "function": "Object.scan",
+          "file": "wb.js",
+          "fullPath": "http://localhost:3000/src/core/wb.js",
+          "line": 756,
+          "column": 42
+        },
+        {
+          "function": "Object.init",
+          "file": "wb.js",
+          "fullPath": "http://localhost:3000/src/core/wb.js",
+          "line": 1233,
+          "column": 18
+        },
+        {
+          "function": "(anonymous)",
+          "file": "legacy-syntax-check.html",
+          "fullPath": "http://localhost:3000/demos/legacy-syntax-check.html",
+          "line": 14,
+          "column": 12
+        }
+      ],
+      "url": "http://localhost:3000/demos/legacy-syntax-check.html",
+      "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/145.0.7632.6 Safari/537.36",
+      "interaction": {
+        "from": "System",
+        "to": "Background Process"
+      }
+    },
+    {
+      "id": 1785899970569,
+      "timestamp": "2026-08-05T03:19:30.569Z",
+      "level": "error",
+      "source": "WB:LegacySyntax",
+      "module": "wb.js",
+      "line": 764,
+      "column": 41,
+      "function": "(anonymous)",
+      "message": "Legacy syntax data-wb=\"card\" detected on <div>. Please use <wb-card> instead.",
+      "stack": "Error: Legacy syntax data-wb=\"card\" detected on <div>. Please use <wb-card> instead.\n    at http://localhost:3000/src/core/wb.js:764:41\n    at NodeList.forEach (<anonymous>)\n    at Object.scan (http://localhost:3000/src/core/wb.js:756:42)\n    at Object.init (http://localhost:3000/src/core/wb.js:1233:18)\n    at http://localhost:3000/demos/legacy-syntax-check.html:14:12",
+      "frames": [
+        {
+          "function": "(anonymous)",
+          "file": "wb.js",
+          "fullPath": "http://localhost:3000/src/core/wb.js",
+          "line": 764,
+          "column": 41
+        },
+        {
+          "function": "Object.scan",
+          "file": "wb.js",
+          "fullPath": "http://localhost:3000/src/core/wb.js",
+          "line": 756,
+          "column": 42
+        },
+        {
+          "function": "Object.init",
+          "file": "wb.js",
+          "fullPath": "http://localhost:3000/src/core/wb.js",
+          "line": 1233,
+          "column": 18
+        },
+        {
+          "function": "(anonymous)",
+          "file": "legacy-syntax-check.html",
+          "fullPath": "http://localhost:3000/demos/legacy-syntax-check.html",
+          "line": 14,
+          "column": 12
+        }
+      ],
+      "url": "http://localhost:3000/demos/legacy-syntax-check.html",
+      "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/145.0.7632.6 Safari/537.36",
+      "interaction": {
+        "from": "System",
+        "to": "Background Process"
+      }
+    },
+    {
+      "id": 1785900220502,
+      "timestamp": "2026-08-05T03:23:40.502Z",
+      "message": "Unable to Load Documentation",
+      "details": {
+        "file": "src/wb-viewmodels/mdhtml.js",
+        "to": "wb-mdhtml",
+        "reason": "HTTP 404 Not Found when fetching http://localhost:3000/docs/__does_not_exist__.md",
+        "response": "HTTP 404 Not Found when fetching http://localhost:3000/docs/__does_not_exist__.md",
+        "src": "http://localhost:3000/docs/__does_not_exist__.md",
+        "stack": "Error: HTTP 404 Not Found when fetching http://localhost:3000/docs/__does_not_exist__.md\n    at mdhtml (http://localhost:3000/src/wb-viewmodels/mdhtml.js:224:17)"
+      },
+      "to": "wb-mdhtml",
+      "url": "http://localhost:3000/public/doc-viewer.html?file=%2Fdocs%2F__does_not_exist__.md",
+      "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/145.0.7632.6 Safari/537.36"
+    },
+    {
+      "id": 1785900432822,
+      "timestamp": "2026-08-05T03:27:12.822Z",
+      "level": "error",
+      "source": "WB:LegacySyntax",
+      "module": "wb.js",
+      "line": 764,
+      "column": 41,
+      "function": "(anonymous)",
+      "message": "Legacy syntax data-wb=\"card\" detected on <div>. Please use <wb-card> instead.",
+      "stack": "Error: Legacy syntax data-wb=\"card\" detected on <div>. Please use <wb-card> instead.\n    at http://localhost:3000/src/core/wb.js:764:41\n    at NodeList.forEach (<anonymous>)\n    at Object.scan (http://localhost:3000/src/core/wb.js:756:42)\n    at Object.init (http://localhost:3000/src/core/wb.js:1233:18)\n    at http://localhost:3000/demos/legacy-syntax-check.html:14:12",
+      "frames": [
+        {
+          "function": "(anonymous)",
+          "file": "wb.js",
+          "fullPath": "http://localhost:3000/src/core/wb.js",
+          "line": 764,
+          "column": 41
+        },
+        {
+          "function": "Object.scan",
+          "file": "wb.js",
+          "fullPath": "http://localhost:3000/src/core/wb.js",
+          "line": 756,
+          "column": 42
+        },
+        {
+          "function": "Object.init",
+          "file": "wb.js",
+          "fullPath": "http://localhost:3000/src/core/wb.js",
+          "line": 1233,
+          "column": 18
+        },
+        {
+          "function": "(anonymous)",
+          "file": "legacy-syntax-check.html",
+          "fullPath": "http://localhost:3000/demos/legacy-syntax-check.html",
+          "line": 14,
+          "column": 12
+        }
+      ],
+      "url": "http://localhost:3000/demos/legacy-syntax-check.html",
+      "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/145.0.7632.6 Safari/537.36",
+      "interaction": {
+        "from": "System",
+        "to": "Background Process"
+      }
+    },
+    {
+      "id": 1785900443164,
+      "timestamp": "2026-08-05T03:27:23.164Z",
+      "level": "error",
+      "source": "WB: navbar",
+      "module": "navigation.js",
+      "line": 125,
+      "column": 33,
+      "function": "(anonymous)",
+      "message": "Failed to execute 'querySelector' on 'Element': 'a, []' is not a valid selector.",
+      "stack": "SyntaxError: Failed to execute 'querySelector' on 'Element': 'a, []' is not a valid selector.\n    at http://localhost:3000/src/wb-viewmodels/navigation.js:125:33\n    at Array.filter (<anonymous>)\n    at navbar (http://localhost:3000/src/wb-viewmodels/navigation.js:121:57)\n    at Object.inject (http://localhost:3000/src/core/wb-lazy.js:436:23)",
+      "frames": [
+        {
+          "function": "(anonymous)",
+          "file": "navigation.js",
+          "fullPath": "http://localhost:3000/src/wb-viewmodels/navigation.js",
+          "line": 125,
+          "column": 33
+        },
+        {
+          "function": "navbar",
+          "file": "navigation.js",
+          "fullPath": "http://localhost:3000/src/wb-viewmodels/navigation.js",
+          "line": 121,
+          "column": 57
+        },
+        {
+          "function": "Object.inject",
+          "file": "wb-lazy.js",
+          "fullPath": "http://localhost:3000/src/core/wb-lazy.js",
+          "line": 436,
+          "column": 23
+        }
+      ],
+      "url": "http://localhost:3000/index.html",
+      "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/145.0.7632.6 Safari/537.36",
+      "interaction": {
+        "from": "System",
+        "to": "Background Process"
+      }
+    },
+    {
+      "id": 1785900444610,
+      "timestamp": "2026-08-05T03:27:24.610Z",
+      "level": "error",
+      "source": "WB: navbar",
+      "module": "navigation.js",
+      "line": 125,
+      "column": 33,
+      "function": "(anonymous)",
+      "message": "Failed to execute 'querySelector' on 'Element': 'a, []' is not a valid selector.",
+      "stack": "SyntaxError: Failed to execute 'querySelector' on 'Element': 'a, []' is not a valid selector.\n    at http://localhost:3000/src/wb-viewmodels/navigation.js:125:33\n    at Array.filter (<anonymous>)\n    at navbar (http://localhost:3000/src/wb-viewmodels/navigation.js:121:57)\n    at Object.inject (http://localhost:3000/src/core/wb-lazy.js:436:23)",
+      "frames": [
+        {
+          "function": "(anonymous)",
+          "file": "navigation.js",
+          "fullPath": "http://localhost:3000/src/wb-viewmodels/navigation.js",
+          "line": 125,
+          "column": 33
+        },
+        {
+          "function": "navbar",
+          "file": "navigation.js",
+          "fullPath": "http://localhost:3000/src/wb-viewmodels/navigation.js",
+          "line": 121,
+          "column": 57
+        },
+        {
+          "function": "Object.inject",
+          "file": "wb-lazy.js",
+          "fullPath": "http://localhost:3000/src/core/wb-lazy.js",
+          "line": 436,
+          "column": 23
+        }
+      ],
+      "url": "http://localhost:3000/index.html",
+      "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/145.0.7632.6 Safari/537.36",
+      "interaction": {
+        "from": "System",
+        "to": "Background Process"
+      }
+    },
+    {
+      "id": 1785900444627,
+      "timestamp": "2026-08-05T03:27:24.627Z",
+      "level": "error",
+      "source": "WB: navbar",
+      "module": "navigation.js",
+      "line": 125,
+      "column": 33,
+      "function": "(anonymous)",
+      "message": "Failed to execute 'querySelector' on 'Element': 'a, []' is not a valid selector.",
+      "stack": "SyntaxError: Failed to execute 'querySelector' on 'Element': 'a, []' is not a valid selector.\n    at http://localhost:3000/src/wb-viewmodels/navigation.js:125:33\n    at Array.filter (<anonymous>)\n    at navbar (http://localhost:3000/src/wb-viewmodels/navigation.js:121:57)\n    at Object.inject (http://localhost:3000/src/core/wb-lazy.js:436:23)",
+      "frames": [
+        {
+          "function": "(anonymous)",
+          "file": "navigation.js",
+          "fullPath": "http://localhost:3000/src/wb-viewmodels/navigation.js",
+          "line": 125,
+          "column": 33
+        },
+        {
+          "function": "navbar",
+          "file": "navigation.js",
+          "fullPath": "http://localhost:3000/src/wb-viewmodels/navigation.js",
+          "line": 121,
+          "column": 57
+        },
+        {
+          "function": "Object.inject",
+          "file": "wb-lazy.js",
+          "fullPath": "http://localhost:3000/src/core/wb-lazy.js",
+          "line": 436,
+          "column": 23
+        }
+      ],
+      "url": "http://localhost:3000/index.html",
+      "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/145.0.7632.6 Safari/537.36",
+      "interaction": {
+        "from": "System",
+        "to": "Background Process"
+      }
+    },
+    {
+      "id": 1785900444928,
+      "timestamp": "2026-08-05T03:27:24.928Z",
+      "level": "error",
+      "source": "WB: navbar",
+      "module": "navigation.js",
+      "line": 125,
+      "column": 33,
+      "function": "(anonymous)",
+      "message": "Failed to execute 'querySelector' on 'Element': 'a, []' is not a valid selector.",
+      "stack": "SyntaxError: Failed to execute 'querySelector' on 'Element': 'a, []' is not a valid selector.\n    at http://localhost:3000/src/wb-viewmodels/navigation.js:125:33\n    at Array.filter (<anonymous>)\n    at navbar (http://localhost:3000/src/wb-viewmodels/navigation.js:121:57)\n    at Object.inject (http://localhost:3000/src/core/wb-lazy.js:436:23)",
+      "frames": [
+        {
+          "function": "(anonymous)",
+          "file": "navigation.js",
+          "fullPath": "http://localhost:3000/src/wb-viewmodels/navigation.js",
+          "line": 125,
+          "column": 33
+        },
+        {
+          "function": "navbar",
+          "file": "navigation.js",
+          "fullPath": "http://localhost:3000/src/wb-viewmodels/navigation.js",
+          "line": 121,
+          "column": 57
+        },
+        {
+          "function": "Object.inject",
+          "file": "wb-lazy.js",
+          "fullPath": "http://localhost:3000/src/core/wb-lazy.js",
+          "line": 436,
+          "column": 23
+        }
+      ],
+      "url": "http://localhost:3000/index.html",
+      "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/145.0.7632.6 Safari/537.36",
+      "interaction": {
+        "from": "System",
+        "to": "Background Process"
+      }
+    },
+    {
+      "id": 1785900444947,
+      "timestamp": "2026-08-05T03:27:24.947Z",
+      "level": "error",
+      "source": "WB: navbar",
+      "module": "navigation.js",
+      "line": 125,
+      "column": 33,
+      "function": "(anonymous)",
+      "message": "Failed to execute 'querySelector' on 'Element': 'a, []' is not a valid selector.",
+      "stack": "SyntaxError: Failed to execute 'querySelector' on 'Element': 'a, []' is not a valid selector.\n    at http://localhost:3000/src/wb-viewmodels/navigation.js:125:33\n    at Array.filter (<anonymous>)\n    at navbar (http://localhost:3000/src/wb-viewmodels/navigation.js:121:57)\n    at Object.inject (http://localhost:3000/src/core/wb-lazy.js:436:23)",
+      "frames": [
+        {
+          "function": "(anonymous)",
+          "file": "navigation.js",
+          "fullPath": "http://localhost:3000/src/wb-viewmodels/navigation.js",
+          "line": 125,
+          "column": 33
+        },
+        {
+          "function": "navbar",
+          "file": "navigation.js",
+          "fullPath": "http://localhost:3000/src/wb-viewmodels/navigation.js",
+          "line": 121,
+          "column": 57
+        },
+        {
+          "function": "Object.inject",
+          "file": "wb-lazy.js",
+          "fullPath": "http://localhost:3000/src/core/wb-lazy.js",
+          "line": 436,
+          "column": 23
+        }
+      ],
+      "url": "http://localhost:3000/index.html",
+      "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/145.0.7632.6 Safari/537.36",
+      "interaction": {
+        "from": "System",
+        "to": "Background Process"
+      }
+    },
+    {
+      "id": 1785900445148,
+      "timestamp": "2026-08-05T03:27:25.148Z",
+      "level": "error",
+      "source": "WB: navbar",
+      "module": "navigation.js",
+      "line": 125,
+      "column": 33,
+      "function": "(anonymous)",
+      "message": "Failed to execute 'querySelector' on 'Element': 'a, []' is not a valid selector.",
+      "stack": "SyntaxError: Failed to execute 'querySelector' on 'Element': 'a, []' is not a valid selector.\n    at http://localhost:3000/src/wb-viewmodels/navigation.js:125:33\n    at Array.filter (<anonymous>)\n    at navbar (http://localhost:3000/src/wb-viewmodels/navigation.js:121:57)\n    at Object.inject (http://localhost:3000/src/core/wb-lazy.js:436:23)",
+      "frames": [
+        {
+          "function": "(anonymous)",
+          "file": "navigation.js",
+          "fullPath": "http://localhost:3000/src/wb-viewmodels/navigation.js",
+          "line": 125,
+          "column": 33
+        },
+        {
+          "function": "navbar",
+          "file": "navigation.js",
+          "fullPath": "http://localhost:3000/src/wb-viewmodels/navigation.js",
+          "line": 121,
+          "column": 57
+        },
+        {
+          "function": "Object.inject",
+          "file": "wb-lazy.js",
+          "fullPath": "http://localhost:3000/src/core/wb-lazy.js",
+          "line": 436,
+          "column": 23
+        }
+      ],
+      "url": "http://localhost:3000/index.html",
+      "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/145.0.7632.6 Safari/537.36",
+      "interaction": {
+        "from": "System",
+        "to": "Background Process"
+      }
+    },
+    {
+      "id": 1785900445157,
+      "timestamp": "2026-08-05T03:27:25.157Z",
+      "level": "error",
+      "source": "WB: navbar",
+      "module": "navigation.js",
+      "line": 125,
+      "column": 33,
+      "function": "(anonymous)",
+      "message": "Failed to execute 'querySelector' on 'Element': 'a, []' is not a valid selector.",
+      "stack": "SyntaxError: Failed to execute 'querySelector' on 'Element': 'a, []' is not a valid selector.\n    at http://localhost:3000/src/wb-viewmodels/navigation.js:125:33\n    at Array.filter (<anonymous>)\n    at navbar (http://localhost:3000/src/wb-viewmodels/navigation.js:121:57)\n    at Object.inject (http://localhost:3000/src/core/wb-lazy.js:436:23)",
+      "frames": [
+        {
+          "function": "(anonymous)",
+          "file": "navigation.js",
+          "fullPath": "http://localhost:3000/src/wb-viewmodels/navigation.js",
+          "line": 125,
+          "column": 33
+        },
+        {
+          "function": "navbar",
+          "file": "navigation.js",
+          "fullPath": "http://localhost:3000/src/wb-viewmodels/navigation.js",
+          "line": 121,
+          "column": 57
+        },
+        {
+          "function": "Object.inject",
+          "file": "wb-lazy.js",
+          "fullPath": "http://localhost:3000/src/core/wb-lazy.js",
+          "line": 436,
+          "column": 23
+        }
+      ],
+      "url": "http://localhost:3000/index.html",
+      "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/145.0.7632.6 Safari/537.36",
+      "interaction": {
+        "from": "System",
+        "to": "Background Process"
+      }
+    },
+    {
+      "id": 1785900445354,
+      "timestamp": "2026-08-05T03:27:25.354Z",
+      "level": "error",
+      "source": "WB: navbar",
+      "module": "navigation.js",
+      "line": 125,
+      "column": 33,
+      "function": "(anonymous)",
+      "message": "Failed to execute 'querySelector' on 'Element': 'a, []' is not a valid selector.",
+      "stack": "SyntaxError: Failed to execute 'querySelector' on 'Element': 'a, []' is not a valid selector.\n    at http://localhost:3000/src/wb-viewmodels/navigation.js:125:33\n    at Array.filter (<anonymous>)\n    at navbar (http://localhost:3000/src/wb-viewmodels/navigation.js:121:57)\n    at Object.inject (http://localhost:3000/src/core/wb-lazy.js:436:23)",
+      "frames": [
+        {
+          "function": "(anonymous)",
+          "file": "navigation.js",
+          "fullPath": "http://localhost:3000/src/wb-viewmodels/navigation.js",
+          "line": 125,
+          "column": 33
+        },
+        {
+          "function": "navbar",
+          "file": "navigation.js",
+          "fullPath": "http://localhost:3000/src/wb-viewmodels/navigation.js",
+          "line": 121,
+          "column": 57
+        },
+        {
+          "function": "Object.inject",
+          "file": "wb-lazy.js",
+          "fullPath": "http://localhost:3000/src/core/wb-lazy.js",
+          "line": 436,
+          "column": 23
+        }
+      ],
+      "url": "http://localhost:3000/index.html",
+      "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/145.0.7632.6 Safari/537.36",
+      "interaction": {
+        "from": "System",
+        "to": "Background Process"
+      }
+    },
+    {
+      "id": 1785900445365,
+      "timestamp": "2026-08-05T03:27:25.365Z",
+      "level": "error",
+      "source": "WB: navbar",
+      "module": "navigation.js",
+      "line": 125,
+      "column": 33,
+      "function": "(anonymous)",
+      "message": "Failed to execute 'querySelector' on 'Element': 'a, []' is not a valid selector.",
+      "stack": "SyntaxError: Failed to execute 'querySelector' on 'Element': 'a, []' is not a valid selector.\n    at http://localhost:3000/src/wb-viewmodels/navigation.js:125:33\n    at Array.filter (<anonymous>)\n    at navbar (http://localhost:3000/src/wb-viewmodels/navigation.js:121:57)\n    at Object.inject (http://localhost:3000/src/core/wb-lazy.js:436:23)",
+      "frames": [
+        {
+          "function": "(anonymous)",
+          "file": "navigation.js",
+          "fullPath": "http://localhost:3000/src/wb-viewmodels/navigation.js",
+          "line": 125,
+          "column": 33
+        },
+        {
+          "function": "navbar",
+          "file": "navigation.js",
+          "fullPath": "http://localhost:3000/src/wb-viewmodels/navigation.js",
+          "line": 121,
+          "column": 57
+        },
+        {
+          "function": "Object.inject",
+          "file": "wb-lazy.js",
+          "fullPath": "http://localhost:3000/src/core/wb-lazy.js",
+          "line": 436,
+          "column": 23
+        }
+      ],
+      "url": "http://localhost:3000/index.html",
+      "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/145.0.7632.6 Safari/537.36",
+      "interaction": {
+        "from": "System",
+        "to": "Background Process"
+      }
+    },
+    {
+      "id": 1785900659299,
+      "timestamp": "2026-08-05T03:30:59.299Z",
+      "level": "error",
+      "source": "WB:LegacySyntax",
+      "module": "wb.js",
+      "line": 764,
+      "column": 41,
+      "function": "(anonymous)",
+      "message": "Legacy syntax data-wb=\"card\" detected on <div>. Please use <wb-card> instead.",
+      "stack": "Error: Legacy syntax data-wb=\"card\" detected on <div>. Please use <wb-card> instead.\n    at http://localhost:3000/src/core/wb.js:764:41\n    at NodeList.forEach (<anonymous>)\n    at Object.scan (http://localhost:3000/src/core/wb.js:756:42)\n    at Object.init (http://localhost:3000/src/core/wb.js:1233:18)\n    at http://localhost:3000/demos/legacy-syntax-check.html:14:12",
+      "frames": [
+        {
+          "function": "(anonymous)",
+          "file": "wb.js",
+          "fullPath": "http://localhost:3000/src/core/wb.js",
+          "line": 764,
+          "column": 41
+        },
+        {
+          "function": "Object.scan",
+          "file": "wb.js",
+          "fullPath": "http://localhost:3000/src/core/wb.js",
+          "line": 756,
+          "column": 42
+        },
+        {
+          "function": "Object.init",
+          "file": "wb.js",
+          "fullPath": "http://localhost:3000/src/core/wb.js",
+          "line": 1233,
+          "column": 18
+        },
+        {
+          "function": "(anonymous)",
+          "file": "legacy-syntax-check.html",
+          "fullPath": "http://localhost:3000/demos/legacy-syntax-check.html",
+          "line": 14,
+          "column": 12
+        }
+      ],
+      "url": "http://localhost:3000/demos/legacy-syntax-check.html",
+      "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/145.0.7632.6 Safari/537.36",
+      "interaction": {
+        "from": "System",
+        "to": "Background Process"
+      }
+    },
+    {
+      "id": 1785905366815,
+      "timestamp": "2026-08-05T04:49:26.815Z",
+      "level": "error",
+      "source": "WB:LegacySyntax",
+      "module": "wb.js",
+      "line": 764,
+      "column": 41,
+      "function": "(anonymous)",
+      "message": "Legacy syntax data-wb=\"card\" detected on <div>. Please use <wb-card> instead.",
+      "stack": "Error: Legacy syntax data-wb=\"card\" detected on <div>. Please use <wb-card> instead.\n    at http://localhost:3000/src/core/wb.js:764:41\n    at NodeList.forEach (<anonymous>)\n    at Object.scan (http://localhost:3000/src/core/wb.js:756:42)\n    at Object.init (http://localhost:3000/src/core/wb.js:1233:18)\n    at http://localhost:3000/demos/legacy-syntax-check.html:14:12",
+      "frames": [
+        {
+          "function": "(anonymous)",
+          "file": "wb.js",
+          "fullPath": "http://localhost:3000/src/core/wb.js",
+          "line": 764,
+          "column": 41
+        },
+        {
+          "function": "Object.scan",
+          "file": "wb.js",
+          "fullPath": "http://localhost:3000/src/core/wb.js",
+          "line": 756,
+          "column": 42
+        },
+        {
+          "function": "Object.init",
+          "file": "wb.js",
+          "fullPath": "http://localhost:3000/src/core/wb.js",
+          "line": 1233,
+          "column": 18
+        },
+        {
+          "function": "(anonymous)",
+          "file": "legacy-syntax-check.html",
+          "fullPath": "http://localhost:3000/demos/legacy-syntax-check.html",
+          "line": 14,
+          "column": 12
+        }
+      ],
+      "url": "http://localhost:3000/demos/legacy-syntax-check.html",
+      "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/145.0.7632.6 Safari/537.36",
+      "interaction": {
+        "from": "System",
+        "to": "Background Process"
+      }
+    },
+    {
+      "id": 1785905375869,
+      "timestamp": "2026-08-05T04:49:35.869Z",
+      "level": "error",
+      "source": "WB:LegacySyntax",
+      "module": "wb.js",
+      "line": 764,
+      "column": 41,
+      "function": "(anonymous)",
+      "message": "Legacy syntax data-wb=\"card\" detected on <div>. Please use <wb-card> instead.",
+      "stack": "Error: Legacy syntax data-wb=\"card\" detected on <div>. Please use <wb-card> instead.\n    at http://localhost:3000/src/core/wb.js:764:41\n    at NodeList.forEach (<anonymous>)\n    at Object.scan (http://localhost:3000/src/core/wb.js:756:42)\n    at Object.init (http://localhost:3000/src/core/wb.js:1233:18)\n    at http://localhost:3000/demos/legacy-syntax-check.html:14:12",
+      "frames": [
+        {
+          "function": "(anonymous)",
+          "file": "wb.js",
+          "fullPath": "http://localhost:3000/src/core/wb.js",
+          "line": 764,
+          "column": 41
+        },
+        {
+          "function": "Object.scan",
+          "file": "wb.js",
+          "fullPath": "http://localhost:3000/src/core/wb.js",
+          "line": 756,
+          "column": 42
+        },
+        {
+          "function": "Object.init",
+          "file": "wb.js",
+          "fullPath": "http://localhost:3000/src/core/wb.js",
+          "line": 1233,
+          "column": 18
+        },
+        {
+          "function": "(anonymous)",
+          "file": "legacy-syntax-check.html",
+          "fullPath": "http://localhost:3000/demos/legacy-syntax-check.html",
+          "line": 14,
+          "column": 12
+        }
+      ],
+      "url": "http://localhost:3000/demos/legacy-syntax-check.html",
+      "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/145.0.7632.6 Safari/537.36",
+      "interaction": {
+        "from": "System",
+        "to": "Background Process"
+      }
+    },
+    {
+      "id": 1785905394320,
+      "timestamp": "2026-08-05T04:49:54.320Z",
+      "level": "error",
+      "source": "WB:LegacySyntax",
+      "module": "wb.js",
+      "line": 764,
+      "column": 41,
+      "function": "(anonymous)",
+      "message": "Legacy syntax data-wb=\"card\" detected on <div>. Please use <wb-card> instead.",
+      "stack": "Error: Legacy syntax data-wb=\"card\" detected on <div>. Please use <wb-card> instead.\n    at http://localhost:3000/src/core/wb.js:764:41\n    at NodeList.forEach (<anonymous>)\n    at Object.scan (http://localhost:3000/src/core/wb.js:756:42)\n    at Object.init (http://localhost:3000/src/core/wb.js:1233:18)\n    at http://localhost:3000/demos/legacy-syntax-check.html:14:12",
+      "frames": [
+        {
+          "function": "(anonymous)",
+          "file": "wb.js",
+          "fullPath": "http://localhost:3000/src/core/wb.js",
+          "line": 764,
+          "column": 41
+        },
+        {
+          "function": "Object.scan",
+          "file": "wb.js",
+          "fullPath": "http://localhost:3000/src/core/wb.js",
+          "line": 756,
+          "column": 42
+        },
+        {
+          "function": "Object.init",
+          "file": "wb.js",
+          "fullPath": "http://localhost:3000/src/core/wb.js",
+          "line": 1233,
+          "column": 18
+        },
+        {
+          "function": "(anonymous)",
+          "file": "legacy-syntax-check.html",
+          "fullPath": "http://localhost:3000/demos/legacy-syntax-check.html",
+          "line": 14,
+          "column": 12
+        }
+      ],
+      "url": "http://localhost:3000/demos/legacy-syntax-check.html",
+      "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/145.0.7632.6 Safari/537.36",
+      "interaction": {
+        "from": "System",
+        "to": "Background Process"
+      }
+    },
+    {
+      "id": 1785905461863,
+      "timestamp": "2026-08-05T04:51:01.863Z",
+      "level": "error",
+      "source": "WB:LegacySyntax",
+      "module": "wb.js",
+      "line": 764,
+      "column": 41,
+      "function": "(anonymous)",
+      "message": "Legacy syntax data-wb=\"card\" detected on <div>. Please use <wb-card> instead.",
+      "stack": "Error: Legacy syntax data-wb=\"card\" detected on <div>. Please use <wb-card> instead.\n    at http://localhost:3000/src/core/wb.js:764:41\n    at NodeList.forEach (<anonymous>)\n    at Object.scan (http://localhost:3000/src/core/wb.js:756:42)\n    at Object.init (http://localhost:3000/src/core/wb.js:1233:18)\n    at http://localhost:3000/demos/legacy-syntax-check.html:14:12",
+      "frames": [
+        {
+          "function": "(anonymous)",
+          "file": "wb.js",
+          "fullPath": "http://localhost:3000/src/core/wb.js",
+          "line": 764,
+          "column": 41
+        },
+        {
+          "function": "Object.scan",
+          "file": "wb.js",
+          "fullPath": "http://localhost:3000/src/core/wb.js",
+          "line": 756,
+          "column": 42
+        },
+        {
+          "function": "Object.init",
+          "file": "wb.js",
+          "fullPath": "http://localhost:3000/src/core/wb.js",
+          "line": 1233,
+          "column": 18
+        },
+        {
+          "function": "(anonymous)",
+          "file": "legacy-syntax-check.html",
+          "fullPath": "http://localhost:3000/demos/legacy-syntax-check.html",
+          "line": 14,
+          "column": 12
+        }
+      ],
+      "url": "http://localhost:3000/demos/legacy-syntax-check.html",
+      "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/145.0.7632.6 Safari/537.36",
+      "interaction": {
+        "from": "System",
+        "to": "Background Process"
+      }
+    },
+    {
+      "id": 1785905482474,
+      "timestamp": "2026-08-05T04:51:22.474Z",
+      "level": "error",
+      "source": "WB:LegacySyntax",
+      "module": "wb.js",
+      "line": 764,
+      "column": 41,
+      "function": "(anonymous)",
+      "message": "Legacy syntax data-wb=\"card\" detected on <div>. Please use <wb-card> instead.",
+      "stack": "Error: Legacy syntax data-wb=\"card\" detected on <div>. Please use <wb-card> instead.\n    at http://localhost:3000/src/core/wb.js:764:41\n    at NodeList.forEach (<anonymous>)\n    at Object.scan (http://localhost:3000/src/core/wb.js:756:42)\n    at Object.init (http://localhost:3000/src/core/wb.js:1233:18)\n    at http://localhost:3000/demos/legacy-syntax-check.html:14:12",
+      "frames": [
+        {
+          "function": "(anonymous)",
+          "file": "wb.js",
+          "fullPath": "http://localhost:3000/src/core/wb.js",
+          "line": 764,
+          "column": 41
+        },
+        {
+          "function": "Object.scan",
+          "file": "wb.js",
+          "fullPath": "http://localhost:3000/src/core/wb.js",
+          "line": 756,
+          "column": 42
+        },
+        {
+          "function": "Object.init",
+          "file": "wb.js",
+          "fullPath": "http://localhost:3000/src/core/wb.js",
+          "line": 1233,
+          "column": 18
+        },
+        {
+          "function": "(anonymous)",
+          "file": "legacy-syntax-check.html",
+          "fullPath": "http://localhost:3000/demos/legacy-syntax-check.html",
+          "line": 14,
+          "column": 12
+        }
+      ],
+      "url": "http://localhost:3000/demos/legacy-syntax-check.html",
+      "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/145.0.7632.6 Safari/537.36",
+      "interaction": {
+        "from": "System",
+        "to": "Background Process"
+      }
+    },
+    {
+      "id": 1785905499665,
+      "timestamp": "2026-08-05T04:51:39.665Z",
+      "level": "error",
+      "source": "WB:LegacySyntax",
+      "module": "wb.js",
+      "line": 764,
+      "column": 41,
+      "function": "(anonymous)",
+      "message": "Legacy syntax data-wb=\"card\" detected on <div>. Please use <wb-card> instead.",
+      "stack": "Error: Legacy syntax data-wb=\"card\" detected on <div>. Please use <wb-card> instead.\n    at http://localhost:3000/src/core/wb.js:764:41\n    at NodeList.forEach (<anonymous>)\n    at Object.scan (http://localhost:3000/src/core/wb.js:756:42)\n    at Object.init (http://localhost:3000/src/core/wb.js:1233:18)\n    at http://localhost:3000/demos/legacy-syntax-check.html:14:12",
+      "frames": [
+        {
+          "function": "(anonymous)",
+          "file": "wb.js",
+          "fullPath": "http://localhost:3000/src/core/wb.js",
+          "line": 764,
+          "column": 41
+        },
+        {
+          "function": "Object.scan",
+          "file": "wb.js",
+          "fullPath": "http://localhost:3000/src/core/wb.js",
+          "line": 756,
+          "column": 42
+        },
+        {
+          "function": "Object.init",
+          "file": "wb.js",
+          "fullPath": "http://localhost:3000/src/core/wb.js",
+          "line": 1233,
+          "column": 18
+        },
+        {
+          "function": "(anonymous)",
+          "file": "legacy-syntax-check.html",
+          "fullPath": "http://localhost:3000/demos/legacy-syntax-check.html",
+          "line": 14,
+          "column": 12
+        }
+      ],
+      "url": "http://localhost:3000/demos/legacy-syntax-check.html",
+      "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/145.0.7632.6 Safari/537.36",
+      "interaction": {
+        "from": "System",
+        "to": "Background Process"
+      }
+    },
+    {
+      "id": 1785905524480,
+      "timestamp": "2026-08-05T04:52:04.480Z",
+      "level": "error",
+      "source": "WB:LegacySyntax",
+      "module": "wb.js",
+      "line": 764,
+      "column": 41,
+      "function": "(anonymous)",
+      "message": "Legacy syntax data-wb=\"card\" detected on <div>. Please use <wb-card> instead.",
+      "stack": "Error: Legacy syntax data-wb=\"card\" detected on <div>. Please use <wb-card> instead.\n    at http://localhost:3000/src/core/wb.js:764:41\n    at NodeList.forEach (<anonymous>)\n    at Object.scan (http://localhost:3000/src/core/wb.js:756:42)\n    at async Object.init (http://localhost:3000/src/core/wb.js:1233:9)",
+      "frames": [
+        {
+          "function": "(anonymous)",
+          "file": "wb.js",
+          "fullPath": "http://localhost:3000/src/core/wb.js",
+          "line": 764,
+          "column": 41
+        },
+        {
+          "function": "Object.scan",
+          "file": "wb.js",
+          "fullPath": "http://localhost:3000/src/core/wb.js",
+          "line": 756,
+          "column": 42
+        },
+        {
+          "function": "Object.init",
+          "file": "wb.js",
+          "fullPath": "http://localhost:3000/src/core/wb.js",
+          "line": 1233,
+          "column": 9
+        }
+      ],
+      "url": "http://localhost:3000/tests/compliance/legacy-syntax-check.html",
+      "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/145.0.7632.6 Safari/537.36",
+      "interaction": {
+        "from": "System",
+        "to": "Background Process"
+      }
+    },
+    {
+      "id": 1785905916421,
+      "timestamp": "2026-08-05T04:58:36.421Z",
+      "level": "error",
+      "source": "WB:LegacySyntax",
+      "module": "wb.js",
+      "line": 764,
+      "column": 41,
+      "function": "(anonymous)",
+      "message": "Legacy syntax data-wb=\"card\" detected on <div>. Please use <wb-card> instead.",
+      "stack": "Error: Legacy syntax data-wb=\"card\" detected on <div>. Please use <wb-card> instead.\n    at http://localhost:3000/src/core/wb.js:764:41\n    at NodeList.forEach (<anonymous>)\n    at Object.scan (http://localhost:3000/src/core/wb.js:756:42)\n    at Object.init (http://localhost:3000/src/core/wb.js:1233:18)\n    at http://localhost:3000/demos/legacy-syntax-check.html:14:12",
+      "frames": [
+        {
+          "function": "(anonymous)",
+          "file": "wb.js",
+          "fullPath": "http://localhost:3000/src/core/wb.js",
+          "line": 764,
+          "column": 41
+        },
+        {
+          "function": "Object.scan",
+          "file": "wb.js",
+          "fullPath": "http://localhost:3000/src/core/wb.js",
+          "line": 756,
+          "column": 42
+        },
+        {
+          "function": "Object.init",
+          "file": "wb.js",
+          "fullPath": "http://localhost:3000/src/core/wb.js",
+          "line": 1233,
+          "column": 18
+        },
+        {
+          "function": "(anonymous)",
+          "file": "legacy-syntax-check.html",
+          "fullPath": "http://localhost:3000/demos/legacy-syntax-check.html",
+          "line": 14,
+          "column": 12
+        }
+      ],
+      "url": "http://localhost:3000/demos/legacy-syntax-check.html",
+      "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/145.0.7632.6 Safari/537.36",
+      "interaction": {
+        "from": "System",
+        "to": "Background Process"
+      }
+    },
+    {
+      "id": 1785905926357,
+      "timestamp": "2026-08-05T04:58:46.357Z",
+      "level": "error",
+      "source": "WB:LegacySyntax",
+      "module": "wb.js",
+      "line": 764,
+      "column": 41,
+      "function": "(anonymous)",
+      "message": "Legacy syntax data-wb=\"card\" detected on <div>. Please use <wb-card> instead.",
+      "stack": "Error: Legacy syntax data-wb=\"card\" detected on <div>. Please use <wb-card> instead.\n    at http://localhost:3000/src/core/wb.js:764:41\n    at NodeList.forEach (<anonymous>)\n    at Object.scan (http://localhost:3000/src/core/wb.js:756:42)\n    at Object.init (http://localhost:3000/src/core/wb.js:1233:18)\n    at http://localhost:3000/demos/legacy-syntax-check.html:14:12",
+      "frames": [
+        {
+          "function": "(anonymous)",
+          "file": "wb.js",
+          "fullPath": "http://localhost:3000/src/core/wb.js",
+          "line": 764,
+          "column": 41
+        },
+        {
+          "function": "Object.scan",
+          "file": "wb.js",
+          "fullPath": "http://localhost:3000/src/core/wb.js",
+          "line": 756,
+          "column": 42
+        },
+        {
+          "function": "Object.init",
+          "file": "wb.js",
+          "fullPath": "http://localhost:3000/src/core/wb.js",
+          "line": 1233,
+          "column": 18
+        },
+        {
+          "function": "(anonymous)",
+          "file": "legacy-syntax-check.html",
+          "fullPath": "http://localhost:3000/demos/legacy-syntax-check.html",
+          "line": 14,
+          "column": 12
+        }
+      ],
+      "url": "http://localhost:3000/demos/legacy-syntax-check.html",
+      "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/145.0.7632.6 Safari/537.36",
+      "interaction": {
+        "from": "System",
+        "to": "Background Process"
+      }
+    },
+    {
+      "id": 1785905951262,
+      "timestamp": "2026-08-05T04:59:11.262Z",
+      "level": "error",
+      "source": "WB:LegacySyntax",
+      "module": "wb.js",
+      "line": 764,
+      "column": 41,
+      "function": "(anonymous)",
+      "message": "Legacy syntax data-wb=\"card\" detected on <div>. Please use <wb-card> instead.",
+      "stack": "Error: Legacy syntax data-wb=\"card\" detected on <div>. Please use <wb-card> instead.\n    at http://localhost:3000/src/core/wb.js:764:41\n    at NodeList.forEach (<anonymous>)\n    at Object.scan (http://localhost:3000/src/core/wb.js:756:42)\n    at Object.init (http://localhost:3000/src/core/wb.js:1233:18)\n    at http://localhost:3000/demos/legacy-syntax-check.html:14:12",
+      "frames": [
+        {
+          "function": "(anonymous)",
+          "file": "wb.js",
+          "fullPath": "http://localhost:3000/src/core/wb.js",
+          "line": 764,
+          "column": 41
+        },
+        {
+          "function": "Object.scan",
+          "file": "wb.js",
+          "fullPath": "http://localhost:3000/src/core/wb.js",
+          "line": 756,
+          "column": 42
+        },
+        {
+          "function": "Object.init",
+          "file": "wb.js",
+          "fullPath": "http://localhost:3000/src/core/wb.js",
+          "line": 1233,
+          "column": 18
+        },
+        {
+          "function": "(anonymous)",
+          "file": "legacy-syntax-check.html",
+          "fullPath": "http://localhost:3000/demos/legacy-syntax-check.html",
+          "line": 14,
+          "column": 12
+        }
+      ],
+      "url": "http://localhost:3000/demos/legacy-syntax-check.html",
+      "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/145.0.7632.6 Safari/537.36",
+      "interaction": {
+        "from": "System",
+        "to": "Background Process"
+      }
+    },
+    {
+      "id": 1785906026525,
+      "timestamp": "2026-08-05T05:00:26.525Z",
+      "level": "error",
+      "source": "WB:LegacySyntax",
+      "module": "wb.js",
+      "line": 764,
+      "column": 41,
+      "function": "(anonymous)",
+      "message": "Legacy syntax data-wb=\"card\" detected on <div>. Please use <wb-card> instead.",
+      "stack": "Error: Legacy syntax data-wb=\"card\" detected on <div>. Please use <wb-card> instead.\n    at http://localhost:3000/src/core/wb.js:764:41\n    at NodeList.forEach (<anonymous>)\n    at Object.scan (http://localhost:3000/src/core/wb.js:756:42)\n    at Object.init (http://localhost:3000/src/core/wb.js:1233:18)\n    at http://localhost:3000/demos/legacy-syntax-check.html:14:12",
+      "frames": [
+        {
+          "function": "(anonymous)",
+          "file": "wb.js",
+          "fullPath": "http://localhost:3000/src/core/wb.js",
+          "line": 764,
+          "column": 41
+        },
+        {
+          "function": "Object.scan",
+          "file": "wb.js",
+          "fullPath": "http://localhost:3000/src/core/wb.js",
+          "line": 756,
+          "column": 42
+        },
+        {
+          "function": "Object.init",
+          "file": "wb.js",
+          "fullPath": "http://localhost:3000/src/core/wb.js",
+          "line": 1233,
+          "column": 18
+        },
+        {
+          "function": "(anonymous)",
+          "file": "legacy-syntax-check.html",
+          "fullPath": "http://localhost:3000/demos/legacy-syntax-check.html",
+          "line": 14,
+          "column": 12
+        }
+      ],
+      "url": "http://localhost:3000/demos/legacy-syntax-check.html",
+      "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/145.0.7632.6 Safari/537.36",
+      "interaction": {
+        "from": "System",
+        "to": "Background Process"
+      }
+    },
+    {
+      "id": 1785906049621,
+      "timestamp": "2026-08-05T05:00:49.621Z",
+      "level": "error",
+      "source": "WB:LegacySyntax",
+      "module": "wb.js",
+      "line": 764,
+      "column": 41,
+      "function": "(anonymous)",
+      "message": "Legacy syntax data-wb=\"card\" detected on <div>. Please use <wb-card> instead.",
+      "stack": "Error: Legacy syntax data-wb=\"card\" detected on <div>. Please use <wb-card> instead.\n    at http://localhost:3000/src/core/wb.js:764:41\n    at NodeList.forEach (<anonymous>)\n    at Object.scan (http://localhost:3000/src/core/wb.js:756:42)\n    at Object.init (http://localhost:3000/src/core/wb.js:1233:18)\n    at http://localhost:3000/demos/legacy-syntax-check.html:14:12",
+      "frames": [
+        {
+          "function": "(anonymous)",
+          "file": "wb.js",
+          "fullPath": "http://localhost:3000/src/core/wb.js",
+          "line": 764,
+          "column": 41
+        },
+        {
+          "function": "Object.scan",
+          "file": "wb.js",
+          "fullPath": "http://localhost:3000/src/core/wb.js",
+          "line": 756,
+          "column": 42
+        },
+        {
+          "function": "Object.init",
+          "file": "wb.js",
+          "fullPath": "http://localhost:3000/src/core/wb.js",
+          "line": 1233,
+          "column": 18
+        },
+        {
+          "function": "(anonymous)",
+          "file": "legacy-syntax-check.html",
+          "fullPath": "http://localhost:3000/demos/legacy-syntax-check.html",
+          "line": 14,
+          "column": 12
+        }
+      ],
+      "url": "http://localhost:3000/demos/legacy-syntax-check.html",
+      "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/145.0.7632.6 Safari/537.36",
+      "interaction": {
+        "from": "System",
+        "to": "Background Process"
+      }
+    },
+    {
+      "id": 1785906061959,
+      "timestamp": "2026-08-05T05:01:01.959Z",
+      "level": "error",
+      "source": "WB:LegacySyntax",
+      "module": "wb.js",
+      "line": 764,
+      "column": 41,
+      "function": "(anonymous)",
+      "message": "Legacy syntax data-wb=\"card\" detected on <div>. Please use <wb-card> instead.",
+      "stack": "Error: Legacy syntax data-wb=\"card\" detected on <div>. Please use <wb-card> instead.\n    at http://localhost:3000/src/core/wb.js:764:41\n    at NodeList.forEach (<anonymous>)\n    at Object.scan (http://localhost:3000/src/core/wb.js:756:42)\n    at Object.init (http://localhost:3000/src/core/wb.js:1233:18)\n    at http://localhost:3000/demos/legacy-syntax-check.html:14:12",
+      "frames": [
+        {
+          "function": "(anonymous)",
+          "file": "wb.js",
+          "fullPath": "http://localhost:3000/src/core/wb.js",
+          "line": 764,
+          "column": 41
+        },
+        {
+          "function": "Object.scan",
+          "file": "wb.js",
+          "fullPath": "http://localhost:3000/src/core/wb.js",
+          "line": 756,
+          "column": 42
+        },
+        {
+          "function": "Object.init",
+          "file": "wb.js",
+          "fullPath": "http://localhost:3000/src/core/wb.js",
+          "line": 1233,
+          "column": 18
+        },
+        {
+          "function": "(anonymous)",
+          "file": "legacy-syntax-check.html",
+          "fullPath": "http://localhost:3000/demos/legacy-syntax-check.html",
+          "line": 14,
+          "column": 12
+        }
+      ],
+      "url": "http://localhost:3000/demos/legacy-syntax-check.html",
+      "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/145.0.7632.6 Safari/537.36",
+      "interaction": {
+        "from": "System",
+        "to": "Background Process"
+      }
+    },
+    {
+      "id": 1785906083808,
+      "timestamp": "2026-08-05T05:01:23.808Z",
+      "level": "error",
+      "source": "WB:LegacySyntax",
+      "module": "wb.js",
+      "line": 764,
+      "column": 41,
+      "function": "(anonymous)",
+      "message": "Legacy syntax data-wb=\"card\" detected on <div>. Please use <wb-card> instead.",
+      "stack": "Error: Legacy syntax data-wb=\"card\" detected on <div>. Please use <wb-card> instead.\n    at http://localhost:3000/src/core/wb.js:764:41\n    at NodeList.forEach (<anonymous>)\n    at Object.scan (http://localhost:3000/src/core/wb.js:756:42)\n    at async Object.init (http://localhost:3000/src/core/wb.js:1233:9)",
+      "frames": [
+        {
+          "function": "(anonymous)",
+          "file": "wb.js",
+          "fullPath": "http://localhost:3000/src/core/wb.js",
+          "line": 764,
+          "column": 41
+        },
+        {
+          "function": "Object.scan",
+          "file": "wb.js",
+          "fullPath": "http://localhost:3000/src/core/wb.js",
+          "line": 756,
+          "column": 42
+        },
+        {
+          "function": "Object.init",
+          "file": "wb.js",
+          "fullPath": "http://localhost:3000/src/core/wb.js",
+          "line": 1233,
           "column": 9
         }
       ],

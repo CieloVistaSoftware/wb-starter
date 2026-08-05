@@ -568,6 +568,105 @@ app.post("/api/error-log/clear", (req, res) => {
   }
 });
 
+// Dedicated notes-append endpoint (#382-class fix) -- notes.js used to fetch
+// data/notes.json, append client-side, then POST the whole array back via
+// the generic /api/save (a blind overwrite). Under concurrent writers that's
+// the exact same lost-update race #382 found in the old error-logger: two
+// saves in flight both read the same "before" state, and the second's
+// overwrite silently discards the first's append. Doing the read-modify-
+// write HERE, synchronously, in one request handler, is atomic per request
+// with no explicit lock needed (Node never interleaves a handler that has
+// no `await` between its read and its write).
+const NOTES_REL_PATH = 'data/notes.json';
+
+function readNotesLog() {
+  const fullPath = path.join(rootDir, NOTES_REL_PATH);
+  if (!fs.existsSync(fullPath)) return { notes: [] };
+  try {
+    const parsed = JSON.parse(fs.readFileSync(fullPath, 'utf8'));
+    return { notes: Array.isArray(parsed.notes) ? parsed.notes : [] };
+  } catch {
+    return { notes: [] };
+  }
+}
+
+function writeNotesLog(notes) {
+  const fullPath = path.join(rootDir, NOTES_REL_PATH);
+  const dir = path.dirname(fullPath);
+  if (!fs.existsSync(dir)) fs.mkdirSync(dir, { recursive: true });
+  fs.writeFileSync(fullPath, JSON.stringify({ notes, lastUpdated: new Date().toISOString() }, null, 2), 'utf8');
+}
+
+function normalizeNoteContent(str) {
+  return String(str).trim().replace(/\r\n/g, '\n').replace(/\s+/g, ' ');
+}
+
+app.post("/api/notes/append", (req, res) => {
+  try {
+    const { note } = req.body;
+    if (!note || !note.content) {
+      return res.status(400).json({ error: 'Missing note or note.content' });
+    }
+
+    const { notes } = readNotesLog();
+    const normalized = normalizeNoteContent(note.content);
+    const isDuplicate = notes.some((n) => normalizeNoteContent(n.content) === normalized);
+    if (isDuplicate) {
+      return res.json({ success: true, duplicate: true, notes });
+    }
+
+    notes.push(note);
+    writeNotesLog(notes);
+    res.json({ success: true, duplicate: false, notes });
+  } catch (error) {
+    console.error('[Notes Append Error]', error);
+    res.status(500).json({ error: error.message });
+  }
+});
+
+app.get("/api/notes", (req, res) => {
+  try {
+    res.json(readNotesLog());
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+});
+
+app.post("/api/save-image", (req, res) => {
+  try {
+    const { location, dataUrl } = req.body;
+
+    if (!location || !dataUrl) {
+      return res.status(400).json({ error: 'Missing location or dataUrl' });
+    }
+
+    const match = /^data:image\/[a-zA-Z0-9.+-]+;base64,(.+)$/.exec(dataUrl);
+    if (!match) {
+      return res.status(400).json({ error: 'dataUrl must be a base64 image data URL' });
+    }
+
+    const safePath = path.normalize(location).replace(/^(\.\.[\/\\])+/, '');
+    const fullPath = path.join(rootDir, safePath);
+
+    if (!fullPath.startsWith(rootDir)) {
+      return res.status(403).json({ error: 'Access denied' });
+    }
+
+    const dir = path.dirname(fullPath);
+    if (!fs.existsSync(dir)) {
+      fs.mkdirSync(dir, { recursive: true });
+    }
+
+    fs.writeFileSync(fullPath, Buffer.from(match[1], 'base64'));
+
+    console.log(`[Server] Saved image to ${location}`);
+    res.json({ success: true, location });
+  } catch (error) {
+    console.error('[Save Image Error]', error);
+    res.status(500).json({ error: error.message });
+  }
+});
+
 app.post("/api/save", (req, res) => {
   try {
     const { location, data } = req.body;

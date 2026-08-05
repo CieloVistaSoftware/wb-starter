@@ -9,7 +9,7 @@
  * -----------------------------------------------------------------------------
  */
 
-.wb-checkbox {
+.wb-checkbox, wb-checkbox {
   display: inline-flex;
   align-items: center;
   gap: var(--wb-checkbox-label-gap, 0.5rem);

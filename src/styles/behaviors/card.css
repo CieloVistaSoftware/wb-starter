@@ -18,7 +18,10 @@
    CRITICAL: 1rem padding on left and right is MANDATORY
    ═══════════════════════════════════════════════════════════════════════════ */
 
-.wb-card {
+/* wb-card tag selector alongside the class -- card.js (#478) no longer adds
+   the class when the host tag already IS <wb-card> (redundant), so the base
+   rule needs to match the tag directly for that case. */
+.wb-card, wb-card {
   position: relative;
   display: flex;
   flex-direction: column;
@@ -164,6 +167,36 @@
 /* Cards WITHOUT header/main/footer need padding on the card itself */
 .wb-card:not(:has(.wb-card__header)):not(:has(.wb-card__main)) {
   padding: 1rem;
+}
+
+/* cardstats compact/large (#479) -- the fallback rule directly above has
+   specificity 0,3,0 (base class + two :not(:has(.class))); a plain 2-class
+   compound (.wb-stats.wb-card--compact, 0,2,0) loses to it regardless of
+   source order, which is why "compact"/"large" rendered pixel-identical to
+   default despite the class being present. Matching its specificity with a
+   3rd class here, placed after it, wins on source order. */
+.wb-card.wb-stats.wb-card--compact {
+  padding: 0.5rem 0.75rem;
+}
+.wb-card.wb-stats.wb-card--compact .wb-card__stats-value {
+  font-size: 1.1rem;
+}
+.wb-card.wb-stats.wb-card--large {
+  padding: 2rem;
+}
+.wb-card.wb-stats.wb-card--large .wb-card__stats-value {
+  font-size: 2.5rem;
+}
+
+/* cardproduct horizontal (#479) -- base .wb-card/wb-card sets
+   flex-direction:column; a 2-class compound safely outranks that 1-class/
+   tag-selector base rule. */
+.wb-product.wb-card--horizontal {
+  flex-direction: row;
+}
+.wb-product.wb-card--horizontal .wb-card__figure {
+  width: 40%;
+  flex-shrink: 0;
 }
 
 /* ═══════════════════════════════════════════════════════════════════════════
@@ -623,7 +656,7 @@
    first in the file. This compound ties on specificity and wins on source
    order instead (it's declared later), so no forced-priority flag is
    needed here. */
-.wb-card.wb-card--link.wb-card-link {
+.wb-card.wb-card--link:is(.wb-card-link, wb-card-link) {
   padding: 1.25rem;
   cursor: pointer;
   position: relative;
@@ -1003,18 +1036,35 @@
 .wb-card.wb-pricing {
   text-align: center;
   container-type: inline-size; /* Enable container queries for responsive text */
-  /* #390: container-type: inline-size implies contain: inline-size, which
-     excludes this element's OWN content from ITS OWN width computation --
-     that's the whole point of a container-query container (avoids a
-     circular content<->query dependency), but it means this card can no
-     longer size itself from content at all. As long as something ELSE
-     (a stretched grid item, an explicit width) doesn't give it a size, it
+  /* #390/#391: container-type: inline-size implies contain: inline-size,
+     which excludes this element's OWN content from ITS OWN width
+     computation -- that's the whole point of a container-query container
+     (avoids a circular content<->query dependency), but it means this card
+     can no longer size itself from content at all: with `width: auto` it
      collapses toward 0 -- confirmed live: a pricing card inside a
      justify-items:start grid track (demo.css's single-item shrink-to-fit
-     fix) rendered 2px wide, its content crushed into that sliver. width:
-     100% gives it a definite size unconditionally, independent of
-     whatever the parent grid's alignment does. */
-  width: 100%;
+     fix) rendered 2px wide, its content crushed into that sliver.
+     #390 originally patched this with `width: 100%`, which does give the
+     card a definite size -- but a definite PERCENTAGE size means it always
+     fills 100% of whatever its grid track happens to be, so it re-inflates
+     right back to full track width in the exact single-item context #391
+     needed it to shrink for (confirmed live, #391: a pricing card whose
+     content only needed ~280px rendered 400+px wide, exactly matching its
+     grid track). A percentage can't distinguish "give me a real size so I
+     don't collapse" from "stretch to fill whatever's available" -- those
+     are two different asks that happened to be satisfied by the same
+     value. min-width (a literal length, not derived from content OR from
+     the containing block) satisfies ONLY the first ask: it stops the
+     containment collapse without opting into track-filling stretch, so
+     `justify-items: start` (single-item demos) can size the card to this
+     floor instead of the full track, while `justify-items: stretch` (the
+     grid default everywhere else -- multi-column showcases, the real
+     spa-pricing.html section) still stretches it edge-to-edge same as
+     before, since stretch alignment doesn't go through intrinsic sizing at
+     all. 280px matches the existing `.wb-card--md` floor (this card's
+     header/price/feature-list/CTA needs comparable room). */
+  width: auto;
+  min-width: 280px;
   padding: 0; /* header/main/footer carry their own padding */
   background-size: cover;
   background-position: center;

@@ -46,8 +46,13 @@ export async function writeToClipboard(text) {
  */
 export function copy(element, options = {}) {
   const config = {
-    text: options.text || element.getAttribute('copy-text'),
-    target: options.target || element.getAttribute('copy-target'),
+    // copy.schema.json declares plain `text`/`target` (Law 11/v3 canonical
+    // attributes) -- the copy-text/copy-target legacy names below were the
+    // ONLY thing ever read, so <wb-copy text="..."> (what the schema itself
+    // documents, and what demos/site/interactive.html actually writes)
+    // silently fell through to copying the element's own textContent instead.
+    text: options.text || element.getAttribute('text') || element.getAttribute('copy-text'),
+    target: options.target || element.getAttribute('target') || element.getAttribute('copy-target'),
     feedback: options.feedback || element.getAttribute('copy-feedback') || 'Copied!',
     duration: parseInt(options.duration || element.getAttribute('copy-duration') || '2000', 10),
     toast: options.toast ?? element.hasAttribute('toast'),

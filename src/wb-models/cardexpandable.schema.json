@@ -34,8 +34,13 @@
     },
     "maxHeight": {
       "type": "string",
-      "description": "Max height when collapsed",
+      "description": "Max height when collapsed (pixel/unit string). Ignored when `lines` is set -- use maxHeight for non-text/mixed content where line-clamp doesn't apply.",
       "default": "100px"
+    },
+    "lines": {
+      "type": "number",
+      "description": "Clamp collapsed text to exactly N full lines via CSS line-clamp, instead of an arbitrary pixel maxHeight. Takes priority over maxHeight when set.",
+      "default": null
     },
     "variant": {
       "type": "string",

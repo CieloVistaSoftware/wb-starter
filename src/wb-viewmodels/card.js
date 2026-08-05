@@ -184,8 +184,14 @@ export function cardBase(element, options = {}) {
   // Validate semantic container
   validateSemanticContainer(element, config.behavior);
 
-  // Apply base classes
-  element.classList.add('wb-card');
+  // Apply base classes. Skip the bare 'wb-card' class when the host tag IS
+  // literally <wb-card> -- redundant (card.css selects the tag directly too,
+  // see its own comment) and flagged by tests/compliance/
+  // no-redundant-tag-name-class.spec.ts (#478). Every OTHER card variant
+  // (<wb-cardimage>, <article> auto-inject, ...) still needs the class since
+  // its own tag name isn't "wb-card" -- shared card.css rules have nothing
+  // else to select there.
+  if (element.tagName.toLowerCase() !== 'wb-card') element.classList.add('wb-card');
   if (config.behavior !== 'card') {
     element.classList.add(`wb-card--${config.behavior.replace('card', '')}`);
   }
@@ -1847,7 +1853,9 @@ export function cardlink(element, options = {}) {
   };
 
   const base = cardBase(element, { ...config, behavior: 'cardlink' });
-  element.classList.add('wb-card-link');
+  // Redundant when the host tag IS <wb-card-link> (#478) -- card.css matches
+  // the tag directly there via :is(.wb-card-link, wb-card-link).
+  if (element.tagName.toLowerCase() !== 'wb-card-link') element.classList.add('wb-card-link');
   
   element.innerHTML = '';
   element.style.cursor = 'pointer';
@@ -2122,6 +2130,13 @@ export function cardexpandable(element, options = {}) {
     // silently ignored and always rendered collapsed.
     expanded: parseBoolean(options.expanded) ?? (element.dataset.expanded === 'true' || element.getAttribute('expanded') === 'true' || (element.hasAttribute('data-expanded') && element.dataset.expanded !== 'false') || element.hasAttribute('expanded')),
     maxHeight: options.maxHeight || element.dataset.maxHeight || element.getAttribute('max-height') || '100px',
+    // #435: a pixel maxHeight truncates text mid-line, which looks broken
+    // for arbitrary content -- `lines` clamps to exactly N full lines via
+    // CSS line-clamp instead. An alternative to maxHeight, not a
+    // replacement: maxHeight still applies as-is for non-text/mixed content
+    // where line-clamp doesn't make sense (images, nested cards, ...). When
+    // both are set, `lines` wins for the collapsed state.
+    lines: options.lines || element.dataset.lines || element.getAttribute('lines') || null,
     ...options
   };
 
@@ -2134,10 +2149,30 @@ export function cardexpandable(element, options = {}) {
     element.appendChild(base.createHeader());
   }
 
+  // Applies/removes a line-clamp on `el` -- shared by initial render and toggle().
+  const applyLineClamp = (el, lineCount) => {
+    if (lineCount) {
+      el.style.display = '-webkit-box';
+      el.style.webkitBoxOrient = 'vertical';
+      el.style.webkitLineClamp = String(lineCount);
+      el.style.overflow = 'hidden';
+    } else {
+      el.style.display = 'block';
+      el.style.webkitBoxOrient = '';
+      el.style.webkitLineClamp = '';
+      el.style.overflow = 'visible';
+    }
+  };
+
   // Content
   const contentWrap = document.createElement('main');
   contentWrap.className = 'wb-card__expandable-content';
-  contentWrap.style.cssText = `padding:1rem;overflow:hidden;transition:max-height 0.3s ease;max-height:${config.expanded ? '1000px' : config.maxHeight};`;
+  if (config.lines) {
+    contentWrap.style.cssText = 'padding:1rem;';
+    applyLineClamp(contentWrap, config.expanded ? null : config.lines);
+  } else {
+    contentWrap.style.cssText = `padding:1rem;overflow:hidden;transition:max-height 0.3s ease;max-height:${config.expanded ? '1000px' : config.maxHeight};`;
+  }
   contentWrap.innerHTML = base.config.content || rawContent || '<div style="margin:0;color:var(--text-secondary);">Add content here...</div>';
   // Generate ID for aria-controls
   const contentId = 'expandable-content-' + Math.random().toString(36).substr(2, 9);
@@ -2174,7 +2209,11 @@ export function cardexpandable(element, options = {}) {
   
   const toggle = () => {
     isExpanded = !isExpanded;
-    contentWrap.style.maxHeight = isExpanded ? '1000px' : config.maxHeight;
+    if (config.lines) {
+      applyLineClamp(contentWrap, isExpanded ? null : config.lines);
+    } else {
+      contentWrap.style.maxHeight = isExpanded ? '1000px' : config.maxHeight;
+    }
     icon.style.transform = isExpanded ? 'rotate(180deg)' : 'rotate(0deg)';
     icon.classList.toggle('wb-card__expand-icon--expanded', isExpanded);
     text.textContent = isExpanded ? 'Show Less' : 'Show More';

@@ -1,3 +1,69 @@
 {
-  "notes": []
+  "notes": [
+    {
+      "id": "note-1785906168395",
+      "page": null,
+      "content": "Test note content 1785906166985",
+      "selectedElement": null,
+      "createdAt": "2026-08-05T05:02:48.395Z",
+      "updatedAt": "2026-08-05T05:02:48.395Z"
+    },
+    {
+      "id": "note-1785906170886",
+      "page": null,
+      "content": "Test note content 1785906170721",
+      "selectedElement": null,
+      "createdAt": "2026-08-05T05:02:50.886Z",
+      "updatedAt": "2026-08-05T05:02:50.886Z"
+    },
+    {
+      "id": "note-1785906170934",
+      "page": null,
+      "content": "Duplicate test 1785906170778",
+      "selectedElement": null,
+      "createdAt": "2026-08-05T05:02:50.934Z",
+      "updatedAt": "2026-08-05T05:02:50.934Z"
+    },
+    {
+      "id": "note-1785906171315",
+      "page": null,
+      "content": "Outgoing note 1785906171168",
+      "selectedElement": null,
+      "createdAt": "2026-08-05T05:02:51.315Z",
+      "updatedAt": "2026-08-05T05:02:51.315Z"
+    },
+    {
+      "id": "note-1785906270139",
+      "page": null,
+      "content": "Test note content 1785906268879",
+      "selectedElement": null,
+      "createdAt": "2026-08-05T05:04:30.139Z",
+      "updatedAt": "2026-08-05T05:04:30.139Z"
+    },
+    {
+      "id": "note-1785906274696",
+      "page": null,
+      "content": "Test note content 1785906274507",
+      "selectedElement": null,
+      "createdAt": "2026-08-05T05:04:34.696Z",
+      "updatedAt": "2026-08-05T05:04:34.696Z"
+    },
+    {
+      "id": "note-1785906274725",
+      "page": null,
+      "content": "Duplicate test 1785906274537",
+      "selectedElement": null,
+      "createdAt": "2026-08-05T05:04:34.725Z",
+      "updatedAt": "2026-08-05T05:04:34.725Z"
+    },
+    {
+      "id": "note-1785906274730",
+      "page": null,
+      "content": "Outgoing note 1785906274554",
+      "selectedElement": null,
+      "createdAt": "2026-08-05T05:04:34.730Z",
+      "updatedAt": "2026-08-05T05:04:34.730Z"
+    }
+  ],
+  "lastUpdated": "2026-08-05T05:04:34.733Z"
 }

@@ -2,7 +2,6 @@
  * WB Events - Enhanced Error Logging with Module, Line, and Stack Trace
  */
 
-const ERROR_LOG_PATH = 'data/errors.json';
 let errorContainer = null;
 let errors = [];
 let lastInteraction = { from: 'System', to: 'Idle', timestamp: 0 };
@@ -336,23 +335,27 @@ function showToast(level, message, data = {}) {
 }
 
 /**
- * Save error to JSON file
+ * Append one error entry to the shared server-side log (#382 follow-up: this
+ * used to POST this page's ENTIRE local `errors` array to the generic
+ * `/api/save`, which does a blind `fs.writeFileSync` overwrite. Every page
+ * that calls Events.error() (legacy-syntax-check.html, any real behavior-
+ * injection failure via wb.js/wb-lazy.js) has its OWN in-memory `errors`
+ * array, so under N concurrent pages/workers, two pages' overwrites race and
+ * the second clobbers whatever the first just logged (lost-update) --
+ * exactly the mechanism error-logger.js's appendErrorToLog() was fixed for,
+ * but this file's own separate save path was missed. Posting just the one
+ * new entry to the dedicated append endpoint (server.js does the
+ * read-modify-write in one synchronous pass per request) makes this
+ * race-free the same way.
  */
 async function saveToFile(entry) {
   try {
-    const response = await fetch('/api/save', {
+    const response = await fetch('/api/error-log/append', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        location: ERROR_LOG_PATH,
-        data: {
-          lastUpdated: new Date().toISOString(),
-          count: errors.length,
-          errors: errors.slice(-100)
-        }
-      })
+      body: JSON.stringify({ error: entry })
     });
-    
+
     if (!response.ok) {
       console.warn('[Events] Failed to save error log');
     }
@@ -564,11 +567,14 @@ export const Events = {
   },
   
   /**
-   * Clear all errors
+   * Clear all errors. A deliberate, single user action -- unlike per-error
+   * appends, a full reset here is intentional and not subject to the same
+   * lost-update race, so it goes through the dedicated clear endpoint
+   * (matches error-logger.js's clearErrorLogFile()).
    */
   clearErrors() {
     errors = [];
-    saveToFile({});
+    fetch('/api/error-log/clear', { method: 'POST' }).catch(() => {});
   },
   
   /**

@@ -471,6 +471,24 @@ wb-spinner div {
   border-top: 1px solid var(--border-color);
   padding: 1.5rem 2rem;
   flex-shrink: 0; /* Never let flex squeeze the footer to make room elsewhere */
+  transition: transform 0.3s ease, margin-top 0.3s ease;
+  position: relative;
+}
+
+/* #393: mirrors .site__header--hidden (#390) for the footer. transform alone
+   would slide the footer out of VIEW but not out of the flex column's LAYOUT
+   -- .site__footer keeps its flex-shrink:0 box either way, so .site__body
+   (flex:1) never actually grows into the vacated space; same bug #390 fixed
+   for the header. Unlike the header's fixed 64px, the footer's height isn't
+   a build-time constant (renderFooter()'s social/footer links are optional
+   per-site config), so initStickyFooter() (src/core/site-engine.js) measures
+   the real height at runtime and sets --site-footer-collapse-height instead
+   of a hardcoded number. margin-top equal to the negative of that measured
+   height collapses the footer's layout contribution in step with the
+   downward slide, so .site__body's flex-basis genuinely grows. */
+.site__footer--hidden {
+  transform: translateY(100%);
+  margin-top: calc(-1 * var(--site-footer-collapse-height, 0px));
 }
 
 .footer__content {
@@ -1349,237 +1367,6 @@ a.wb-btn-glass {
   height: 1px;
   background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
   margin: 3rem 0;
-}
-
-/* =============================================================================
-   NOTES DRAWER
-   ============================================================================= */
-/* #448: tag selector -- notes() no longer adds a redundant classList.add
-   ('wb-notes') that just duplicated the <wb-notes> tag name. */
-wb-notes {
-  position: fixed;
-  z-index: 1000;
-  pointer-events: none;
-  inset: 0;
-}
-
-.wb-notes__backdrop {
-  position: absolute;
-  inset: 0;
-  background: rgba(0, 0, 0, 0.5);
-  opacity: 0;
-  transition: opacity 0.3s;
-  pointer-events: none;
-}
-
-.wb-notes__backdrop.visible {
-  opacity: 1;
-  pointer-events: auto;
-}
-
-.wb-notes__drawer {
-  position: absolute;
-  background: var(--bg-secondary);
-  border: 1px solid var(--border-color);
-  box-shadow: var(--shadow-lg);
-  display: flex;
-  flex-direction: column;
-  transition: transform 0.3s ease;
-  width: 320px;
-  max-width: 90vw;
-  pointer-events: auto;
-}
-
-/* Positions */
-.wb-notes--left .wb-notes__drawer {
-  top: 0;
-  bottom: 0;
-  left: 0;
-  transform: translateX(-100%);
-  border-right-width: 1px;
-}
-
-.wb-notes--right .wb-notes__drawer {
-  top: 0;
-  bottom: 0;
-  right: 0;
-  transform: translateX(100%);
-  border-left-width: 1px;
-}
-
-.wb-notes--modal .wb-notes__drawer {
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%) scale(0.9);
-  opacity: 0;
-  border-radius: 8px;
-  width: 500px;
-  height: 400px;
-  transition: transform 0.3s, opacity 0.3s;
-}
-
-/* Open State */
-.wb-notes--open.wb-notes--left .wb-notes__drawer {
-  transform: translateX(0);
-}
-
-.wb-notes--open.wb-notes--right .wb-notes__drawer {
-  transform: translateX(0);
-}
-
-.wb-notes--open.wb-notes--modal .wb-notes__drawer {
-  transform: translate(-50%, -50%) scale(1);
-  opacity: 1;
-}
-
-/* Header */
-.wb-notes__header {
-  padding: 0 0.75rem;
-  height: 40px;
-  background: var(--bg-tertiary);
-  border-bottom: 1px solid var(--border-color);
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  cursor: grab;
-  z-index: 20;
-  position: relative;
-}
-
-.wb-notes__header.dragging {
-  cursor: grabbing;
-}
-
-.wb-notes__title {
-  font-weight: 600;
-  color: var(--text-primary);
-  font-size: 0.9rem;
-}
-
-.wb-notes__actions {
-  display: flex;
-  gap: 0.5rem;
-  align-items: center;
-}
-
-.wb-notes__btn-row {
-  display: flex;
-  gap: 2px;
-}
-
-.wb-notes__wide-btn {
-  background: transparent;
-  border: 1px solid transparent;
-  color: var(--text-secondary);
-  padding: 4px 8px;
-  border-radius: 4px;
-  cursor: pointer;
-  font-size: 0.9rem;
-  position: relative;
-  z-index: 50; /* Ensure clickable */
-}
-
-.wb-notes__wide-btn:hover {
-  background: var(--bg-primary);
-  color: var(--text-primary);
-}
-
-.wb-notes__wide-btn.active {
-  background: var(--primary);
-  color: white;
-}
-
-.wb-notes__wide-btn[data-action="close"]:hover {
-  background-color: var(--danger-color);
-  color: white;
-}
-
-/* Content */
-.wb-notes__textarea {
-  flex: 1;
-  width: 100%;
-  resize: none;
-  border: none;
-  padding: 1rem;
-  background: var(--bg-secondary);
-  color: var(--text-primary);
-  font-family: inherit;
-  font-size: 0.75rem; /* Small but readable */
-  line-height: 1.5;
-}
-
-.wb-notes__textarea:focus {
-  outline: none;
-}
-
-/* Footer */
-.wb-notes__footer {
-  padding: 0.5rem 1rem;
-  border-top: 1px solid var(--border-color);
-  background: var(--bg-tertiary);
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  font-size: 0.85rem;
-}
-
-.wb-notes__status {
-  color: var(--text-muted);
-}
-
-.wb-notes__status--success { color: var(--success-color); }
-.wb-notes__status--error { color: var(--danger-color); }
-.wb-notes__status--warning { color: var(--warning-color); }
-
-/* Resize Handles */
-.wb-notes__resize-handle {
-  position: absolute;
-  top: 0;
-  bottom: 0;
-  width: 6px;
-  cursor: col-resize;
-  z-index: 10;
-}
-
-.wb-notes--left .wb-notes__resize-handle {
-  right: -3px;
-}
-
-.wb-notes--right .wb-notes__resize-handle {
-  left: -3px;
-}
-
-.wb-notes__resize-handle:hover,
-.wb-notes__resize-handle.dragging {
-  background: var(--primary);
-}
-
-.wb-notes__resize-handle-modal {
-  position: absolute;
-  bottom: 0;
-  right: 0;
-  width: 16px;
-  height: 16px;
-  cursor: nwse-resize;
-  z-index: 10;
-}
-
-.wb-notes--modal .wb-notes__resize-handle-modal::after {
-  content: '';
-  position: absolute;
-  bottom: 4px;
-  right: 4px;
-  width: 8px;
-  height: 8px;
-  border-right: 2px solid var(--text-muted);
-  border-bottom: 2px solid var(--text-muted);
-}
-
-
-.wb-notes__wide-btn--confirm {
-  color: var(--danger-color);
-  border-color: var(--danger-color);
-  font-weight: bold;
 }
 
 /* =============================================================================

@@ -191,20 +191,26 @@ wb-notes.wb-notes--open .wb-notes__drawer {
   min-width: 0;
 }
 
-/* Button row - fits all buttons in one line */
+/* Button row -- each button sizes to its own label instead of being forced
+   into a fixed-width box. The row used to assume single-glyph icon buttons
+   ("«", "📋") and capped every button at max-width:36px -- fine for one
+   character, but notes.js's actual buttons carry real text labels ("Left",
+   "Modal", "📋 Copy", "💾 Save", "👁️ View"), which overflowed/wrapped inside
+   that 36px cap and got clipped by the row's own overflow, rendering as
+   blank/missing buttons (reported live: "it needs a save button" -- the
+   button existed in the DOM the whole time, just visually unreadable). */
 .wb-notes__btn-row {
   display: flex;
   gap: 2px;
-  flex-wrap: nowrap;
+  flex-wrap: wrap;
 }
 
-/* Wide compact buttons */
 .wb-notes__wide-btn {
-  flex: 1;
+  flex: 0 1 auto;
   min-width: 24px;
-  max-width: 36px;
   height: 26px;
-  padding: 0 4px;
+  padding: 0 0.5rem;
+  white-space: nowrap;
   background: var(--bg-tertiary);
   border: 1px solid var(--border-color);
   border-radius: 4px;
@@ -234,16 +240,34 @@ wb-notes.wb-notes--open .wb-notes__drawer {
   border-color: var(--success-color);
 }
 
-/* Clear button in footer - red on hover */
-.wb-notes__wide-btn--clear {
-  max-width: none;
-  padding: 0 8px;
-  font-size: 0.7rem;
+/* New-note button in footer -- non-destructive (saves the outgoing note
+   first), so no confirm step and no danger color -- just a clear accent. */
+.wb-notes__wide-btn--new:hover {
+  background: var(--primary);
+  border-color: var(--primary);
 }
 
-.wb-notes__wide-btn--clear:hover {
+/* Close button pinned to the header's own top-right corner, separate from
+   the toolbar rows below. */
+.wb-notes__close-corner {
+  flex-shrink: 0;
+  width: 24px;
+  height: 24px;
+  border: 1px solid transparent;
+  border-radius: 4px;
+  background: transparent;
+  color: var(--text-secondary);
+  cursor: pointer;
+  font-size: 0.9rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.wb-notes__close-corner:hover {
   background: var(--danger-color);
   border-color: var(--danger-color);
+  color: white;
 }
 
 /* Textarea */

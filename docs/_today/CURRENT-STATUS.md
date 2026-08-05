@@ -1,38 +1,41 @@
-# 🅿️ PARKING LOT (2026-08-03 session — stopped for the day by direct instruction "i want to quit soon")
+# 🅿️ PARKING LOT (2026-08-04 session — pushing to `.io` at John's direct instruction)
 
-**Task:** Continued a large backlog of John's live bug reports (screenshots + text) against the deployed `.io` site, root-causing and fixing each with a regression test, plus dispatched several parallel background agents for larger, independent pieces of work per John's explicit "run parallel jobs" instruction.
+**Task:** Worked through John's live feedback (screenshots + text) against the deployed `.io` site and a backlog of open GitHub issues, fixing each with verification (live browser check and/or the relevant regression/compliance test), plus dispatched ~9 parallel background agents for a batch of independent issues per John's explicit "work 10 or 15 issues asynchronously" instruction.
 
-**Landed & pushed (origin/main, through commit `e086dda`):**
-- Fixed `docs/manifest.json` 404 on the root SPA (`siteRoot()` in `demo.js` didn't handle `/index.html`) — was silently killing every component's "Docs:" link there.
-- Fixed `WB.scan(root)` never processing `root` itself (only descendants) — was silently breaking syntax highlighting/line-numbers/copy-button on every dynamically-injected code panel site-wide (the root cause behind `demos/frameworks.html`'s clipped code text).
-- Removed a legacy, duplicate code-highlighting system on `demos/frameworks.html`; Svelte and SolidJS framework demos now genuinely compile and render live in the browser (verified via real interactive clicks); Angular confirmed and documented as genuinely not achievable without a real build step.
-- 45-component redundant-tag-name-class sweep (issue #448) — complete, all components fixed.
-- Site-wide click-confirmation toast (`src/core/click-confirm.js`, issue #456) on every button/card/switch, with dedup logic (capture-phase + defer) so components that already show their own toast (cardbutton, cardproduct, etc.) don't double up.
-- `wb-themecontrol` gained a re-init guard — was duplicating into two out-of-sync dropdowns after repeated scan/observe passes over a long session.
-- New compliance gate: no native tag (`<form>`, `<fieldset>`) may carry a redundant `x-<sametag>` attribute — 3 real instances found and fixed.
-- `demos/site/cards.html`: theme picker added, placeholder links/identity replaced with real ones (issue #404 follow-through).
-- `tests/fixtures/cards-permutation-matrix.html`: doc-links fixed (same `siteRoot()` class of bug, extended to `tests/fixtures/`), glass-card CSS now theme-aware (was invisible on light themes).
-- `wb-cardprofile` role badge now genuinely vertically centered (a repeat report — the earlier #406 "fix" used a fixed offset that stopped working once the cover strip grew taller).
-- `wb-cardhorizontal`: fixed a real bug where plain inner text content was silently discarded (never captured as a fallback before being wiped) — issue #455.
-- Mobile page padding fixed across 11 files (was eating up to 38% of small phone screens).
-- `index.html` real title/description + og/twitter meta tags (was showing generic placeholder text).
-- Large "no OOP language" sweep across docs (issue #462/#465-adjacent) — "Base Card" → "Card", plus 12 more doc files reworded from inheritance framing to composition framing.
-- `pages/whats-new.html` — added the 2026-08-03 dated section.
+**Landed (about to push to origin/main):**
+- `x-password` now auto-infers from `type="password"` alone, matching checkbox/radio/range (#481).
+- Fixed a real double-border on styled inputs — a generic wrapper div was reusing input.css's own `.wb-input` class (#485).
+- Fixed Components page section-heading spacing — a page-specific rule was silently losing a specificity fight and never applying (#487).
+- **wb-notes drawer resurrected and redesigned**: now saves to a real file (`data/notes.json` + `data/note-images/`) via a new `/api/save-image` server endpoint, not just localStorage; supports pasting a screenshot directly into a note; supports picking/attaching a reference to any element on the page; redesigned layout (Save/New in the footer, Close pinned to the header corner, searchable Lookup, 0.5rem header padding, button-sizing fix so labels don't get clipped).
+- Fixed `content.html`'s searchable table — the search input was never actually created (#433).
+- `cardproduct` images now get the same load-retry/failure handling as image/video cards (#476).
+- Systemic fix for the "redundant tag-name class" pattern (`<wb-card>` carrying `class="wb-card"`, etc.) — root-caused to `schema-builder.js`'s generic class-adding path having no guard; fixed there plus card.js/checkbox.js and their CSS (#478).
+- "Forced Dark/Light/Cyberpunk Mode" demo cards now render as real styled `<wb-card>`s instead of a bare unstyled div (#430).
+- `cardstats` compact/large and `cardproduct` horizontal variants now have real CSS backing them — root cause was a CSS specificity loss against a fallback rule (#479).
+- `cardexpandable` gained a `lines` property (CSS line-clamp) as an alternative to pixel `maxHeight` (#435).
+- Fixed `wb-copy` reading the wrong attribute name (schema says `text`, code read `copy-text`) and `wb-darkmode`'s click-to-toggle only ever attaching to literal `<button>` tags (#429).
+- Restored `pages/behaviors.html` after `scripts/generate-behaviors-page.js` (confirmed stale/unmaintained) silently regressed it back to pre-#304/#390 state when run for an unrelated docs fix — **do not run that script**, it needs a rewrite first (#484, filed).
+- Footer now auto-collapses on mobile-landscape scroll, mirroring the header (#393).
+- `<wb-demo>`'s default `columns` changed from 3 to 1 (#392).
+- `demos/site/cards.html`: mismatched images/avatars and dead/placeholder links fixed across the curated gallery (#403/#404/#407).
+- Closed several already-fixed/duplicate issues after live re-verification: #459 (glass card theme-aware), #464 (themecontrol re-init guard), #277 (auto-injection-compliance test), #351 (glass blur fallback), #304/#389 (behaviors.html duplicate of #478's fix).
+- `docs/V3-GUIDE.md` §3: split a 6-component crammed `<wb-demo>` into 6 separate ones per standard §2/§17/§18 (#483); added real Overview/Install content to its tabs example.
+- `pages/whats-new.html`: added the 2026-08-04 dated section (this session's work, user-facing language).
 
-**🔴 NOT yet done / explicitly deferred (John's own words, or scope too large to safely start before wrap-up):**
-- **#468** — V3-GUIDE.md's Quick Start `wb-card` example reads "too stubby" — needs test-first investigation, likely overlaps the still-unsolved #391 shrink-to-fit CSS gap (grid `1fr` tracks + container-query components). Don't reattempt blind — #391 documents a `max-content` attempt that collapsed a different card to a 2px sliver.
-- **#469** — `docs/components/cards/card.md` cards must follow layout standards — same test-first ask, same likely overlap with #391.
-- **#470** — increase theme count from 23 to 50. Large content-creation task, not started.
-- **#466** — End key doesn't scroll to the true bottom of `public/doc-viewer.html` pages (stops short, confirmed via real keypress not synthetic). Root cause not yet found — worth checking whether late-loading content shifts `scrollHeight` after the browser's own key-scroll calculation runs.
-- **#463** — "support add to cart clicks" (wb-cardproduct) — deliberately filed as a scoping question, not started. Needs a decision on where cart state lives and what UI surfaces it before any code.
-- **#457, #465** — noticed incidentally by background agents, filed, deliberately left alone (out of scope for the task that found them): `.wb-card--minimal` has no real CSS anywhere except scoped to testimonial cards; `cardprofile.schema.json`/`card.schema.json` have real `$extends`/IS-A/HAS-A schema metadata (16 files) that's the live source of stale IntelliSense tooltip language — bigger, riskier, real schema architecture work.
-- **391** (long-standing) — Standard §7 shrink-to-fit still imprecise for some real cards. Directly blocks #468/#469 above.
+**⚠️ Known environment issue (recurring — also hit in the 2026-08-03 session, see below):** running multiple background agents in parallel against this same checkout caused at least one stale read-then-full-file-rewrite that silently discarded concurrent edits to `card.js`/`card.css`/`copy.js`/`schema-builder.js` (#478, #479, #435, #429's copy.js half). Caught via a targeted grep-based integrity sweep after the fact and re-applied every lost fix (re-verified against the regression/compliance tests afterward — all green). **If dispatching parallel agents again, do a post-hoc integrity check on any file more than one agent might plausibly touch, don't assume "closed the issue" means the code is still there.**
 
-**Environment note for next session:** multiple background agents this session shared the SAME dev server/browser-pane instance as the main session (not fully isolated despite separate git worktrees), causing real cross-talk — stray port-3000 processes needing to be killed/restarted at least 4 times, and agents temporarily writing-then-reverting files in the shared checkout mid-verification (confirmed by their own reports). If this recurs, check for a stray `node server.js` process bound to the main checkout before assuming a real server bug.
+**🔴 Filed but NOT fixed (deliberately out of scope for the agent/task that found them):**
+- **#482** — `wb-cardvideo` has no `aspect-ratio` unlike `wb-cardimage` (inconsistent box height on load failure).
+- **#486** — 4 pre-existing `pages/behaviors.html` compliance failures (shrink-to-fit, text padding, 2 absolute-path links).
+- **#488** — `variant="glass"` + `elevated` together lose the glass background (specificity conflict), found incidentally while re-verifying #351.
+- A cards.html `auto-showcase.mjs` regeneration risk flagged by the #403/404/407 agent (same class of bug as #484 — a generator script that can silently undo hand-fixes) — John started this as its own background task (`task_a64b83db`, "Guard auto-showcase.mjs against clobbering hand-edited demo content") in a separate session; check its outcome next session.
+
+**Still running when this was written (check `gh issue list` / notifications for outcome):**
+- #382 — flaky `error-log-empty.spec.ts` under parallel load.
+- #322 — `x-behavior` attribute scanning never firing on `wb-lazy.js` pages (doc-viewer/standalone demos) — core-runtime fix, verify carefully before trusting.
 
 **Next step, in order:**
-1. #391 first — it's the blocker for both #468 and #469. Needs careful root-cause work on the shrink-to-fit CSS (grid `1fr` + container-query interaction), not another guess.
-2. Then #468/#469 (test-first, as explicitly requested).
-3. #466 (End key) — moderate-difficulty investigation, self-contained.
-4. #470 (50 themes) — large but mechanical once started, good candidate for a dedicated session.
-5. #463 (add-to-cart) — needs a design decision from John before any code.
+1. Confirm #382 and #322 landed cleanly (re-run their tests; re-check for the parallel-agent file-clobbering pattern above, especially #322 since `wb-lazy.js` is foundational).
+2. Run the full `npm run test:compliance` gate — push only if 0 failed (standing rule).
+3. Commit, push to `origin/main` (this is what deploys to `.io`).
+4. Long-standing carryover from 2026-08-03, still not started: #391 (shrink-to-fit CSS gap, blocks #468/#469), #470 (50 themes), #463 (add-to-cart, needs a design decision from John), #457/#465 (schema architecture debt).

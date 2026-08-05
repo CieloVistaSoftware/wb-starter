@@ -9,10 +9,11 @@ test.describe('Notes Behavior', () => {
       () => (window as any).WB && (window as any).WB.behaviors && Object.keys((window as any).WB.behaviors).length > 0,
       { timeout: 10000 }
     );
-    await page.waitForFunction(
-      () => (window as any).WBSite && (window as any).WBSite.currentPage,
-      { timeout: 10000 }
-    );
+    // demos/test-harness.html is a bare WB.init() fixture -- it never creates
+    // a window.WBSite (that's the main SPA's site-engine.js only). This
+    // helper used to wait on it anyway, so EVERY test in this file failed
+    // identically on a 10s timeout at this line, regardless of what it was
+    // actually testing -- pre-existing, unrelated to today's notes.js work.
     await page.waitForTimeout(100);
     
     // Clear localStorage to prevent state interference
@@ -28,10 +29,10 @@ test.describe('Notes Behavior', () => {
       document.body.appendChild(container);
     }, html);
     
-    await page.evaluate(() => {
-      (window as any).WB.scan(document.getElementById('test-container'));
+    await page.evaluate(async () => {
+      await (window as any).WB.scan(document.getElementById('test-container'), { eager: true });
     });
-    
+
     await page.waitForTimeout(50);
   }
 
@@ -118,28 +119,52 @@ test.describe('Notes Behavior', () => {
       await expect(btn).toBeAttached();
     });
 
-    test('should have copy button', async ({ page }) => {
+    test('should have pick-element button', async ({ page }) => {
       await injectNotes(page, '<wb-notes></wb-notes>');
-      const btn = page.locator('#test-container .wb-notes__wide-btn[data-action="copy"]');
+      const btn = page.locator('#test-container .wb-notes__wide-btn[data-action="pick"]');
       await expect(btn).toBeAttached();
     });
 
-    test('should have save button', async ({ page }) => {
+    test('should have lookup button', async ({ page }) => {
       await injectNotes(page, '<wb-notes></wb-notes>');
-      const btn = page.locator('#test-container .wb-notes__wide-btn[data-action="save"]');
+      const btn = page.locator('#test-container .wb-notes__wide-btn[data-action="view"]');
       await expect(btn).toBeAttached();
     });
 
-    test('should have close button', async ({ page }) => {
+    test('should NOT have a copy button in the UI (John: "probably do not need the copy button")', async ({ page }) => {
       await injectNotes(page, '<wb-notes></wb-notes>');
-      const btn = page.locator('#test-container .wb-notes__wide-btn[data-action="close"]');
+      const btn = page.locator('#test-container [data-action="copy"]');
+      await expect(btn).toHaveCount(0);
+    });
+
+    test('should have save button in the footer, at the bottom', async ({ page }) => {
+      await injectNotes(page, '<wb-notes></wb-notes>');
+      const btn = page.locator('#test-container .wb-notes__footer .wb-notes__wide-btn[data-action="save"]');
       await expect(btn).toBeAttached();
     });
 
-    test('should have clear button in footer', async ({ page }) => {
+    test('should have close button pinned to the header corner', async ({ page }) => {
       await injectNotes(page, '<wb-notes></wb-notes>');
-      const btn = page.locator('#test-container .wb-notes__footer .wb-notes__wide-btn[data-action="clear"]');
+      const btn = page.locator('#test-container .wb-notes__header .wb-notes__close-corner[data-action="close"]');
       await expect(btn).toBeAttached();
+    });
+
+    test('should have a New button in footer (replaces the old destructive Clear)', async ({ page }) => {
+      await injectNotes(page, '<wb-notes></wb-notes>');
+      const btn = page.locator('#test-container .wb-notes__footer .wb-notes__wide-btn[data-action="new"]');
+      await expect(btn).toBeAttached();
+      await expect(btn).toContainText('New');
+    });
+
+    test('header should have a 0.5rem top gap above the title', async ({ page }) => {
+      await injectNotes(page, '<wb-notes></wb-notes>');
+      // notes.css is JIT-loaded (ensureBehaviorCss) -- give the fetch a beat
+      // to land before reading computed style, or this reads the browser's
+      // pre-stylesheet default (0px) instead of the real value.
+      await expect.poll(
+        () => page.locator('#test-container .wb-notes__header').evaluate((el) => getComputedStyle(el).paddingTop),
+        { timeout: 5000 }
+      ).toBe('8px'); // 0.5rem
     });
   });
 
@@ -225,7 +250,7 @@ test.describe('Notes Behavior', () => {
         const el = document.querySelector('wb-notes') as any;
         el.wbNotes.open();
       });
-      await page.click('#test-container .wb-notes__wide-btn[data-action="close"]');
+      await page.click('#test-container .wb-notes__close-corner[data-action="close"]');
       const notes = page.locator('#test-container wb-notes');
       await expect(notes).not.toHaveClass(/wb-notes--open/);
     });
@@ -266,6 +291,8 @@ test.describe('Notes Behavior', () => {
   test.describe('Save with Duplicate Prevention', () => {
     test('should show warning when no content to save', async ({ page }) => {
       await injectNotes(page, '<wb-notes></wb-notes>');
+      await page.evaluate(() => (document.querySelector('#test-container wb-notes') as any).wbNotes.open());
+      await page.fill('#test-container .wb-notes__textarea', ''); // open() prepends a header line -- clear it back out
       await page.click('#test-container .wb-notes__wide-btn[data-action="save"]');
       const status = page.locator('#test-container .wb-notes__status');
       await expect(status).toContainText('No notes to save');
@@ -273,6 +300,7 @@ test.describe('Notes Behavior', () => {
 
     test('should show success when saving content', async ({ page }) => {
       await injectNotes(page, '<wb-notes></wb-notes>');
+      await page.evaluate(() => (document.querySelector('#test-container wb-notes') as any).wbNotes.open());
       await page.fill('#test-container .wb-notes__textarea', 'Test note content ' + Date.now());
       await page.click('#test-container .wb-notes__wide-btn[data-action="save"]');
       const status = page.locator('#test-container .wb-notes__status');
@@ -281,8 +309,9 @@ test.describe('Notes Behavior', () => {
 
     test('should prevent duplicate content on second save', async ({ page }) => {
       await injectNotes(page, '<wb-notes></wb-notes>');
+      await page.evaluate(() => (document.querySelector('#test-container wb-notes') as any).wbNotes.open());
       const content = 'Duplicate test ' + Date.now();
-      
+
       // First save
       await page.fill('#test-container .wb-notes__textarea', content);
       await page.click('#test-container .wb-notes__wide-btn[data-action="save"]');
@@ -296,31 +325,53 @@ test.describe('Notes Behavior', () => {
   });
 
   // ==========================================
-  // COPY TESTS
+  // COPY TESTS -- copyToClipboard() stays as a wbNotes.copy() API method
+  // (declared in notes.schema.json's $methods), just no longer has a
+  // dedicated UI button.
   // ==========================================
-  test.describe('Copy', () => {
-    test('should show warning when no content to copy', async ({ page }) => {
+  test.describe('Copy (API only, no UI button)', () => {
+    test('wbNotes.copy() should still be callable', async ({ page }) => {
       await injectNotes(page, '<wb-notes></wb-notes>');
-      await page.click('#test-container .wb-notes__wide-btn[data-action="copy"]');
-      const status = page.locator('#test-container .wb-notes__status');
-      await expect(status).toContainText('No notes to copy');
+      const hasMethod = await page.evaluate(() => {
+        const el = document.querySelector('wb-notes') as any;
+        return typeof el.wbNotes.copy === 'function';
+      });
+      expect(hasMethod).toBe(true);
     });
   });
 
   // ==========================================
-  // CLEAR TESTS
+  // NEW-NOTE TESTS (replaces the old destructive "Clear")
   // ==========================================
-  test.describe('Clear', () => {
-    test('clear button should be in footer', async ({ page }) => {
+  test.describe('New Note', () => {
+    test('new button should be in the footer', async ({ page }) => {
       await injectNotes(page, '<wb-notes></wb-notes>');
-      const clearInFooter = page.locator('#test-container .wb-notes__footer .wb-notes__wide-btn--clear');
-      await expect(clearInFooter).toBeAttached();
+      const btn = page.locator('#test-container .wb-notes__footer .wb-notes__wide-btn--new');
+      await expect(btn).toBeAttached();
     });
 
-    test('clear button should have "Clear" text', async ({ page }) => {
+    test('clicking New saves the outgoing note, then starts a fresh one', async ({ page }) => {
       await injectNotes(page, '<wb-notes></wb-notes>');
-      const clearBtn = page.locator('#test-container .wb-notes__wide-btn[data-action="clear"]');
-      await expect(clearBtn).toContainText('Clear');
+      await page.evaluate(() => (document.querySelector('#test-container wb-notes') as any).wbNotes.open());
+      const content = 'Outgoing note ' + Date.now();
+      await page.fill('#test-container .wb-notes__textarea', content);
+      await page.click('#test-container .wb-notes__wide-btn[data-action="new"]');
+      await page.waitForTimeout(300);
+
+      const textarea = page.locator('#test-container .wb-notes__textarea');
+      await expect(textarea).not.toContainText(content); // reset to a fresh note
+      const status = page.locator('#test-container .wb-notes__status');
+      await expect(status).toContainText('Saved'); // outgoing content was saved first
+    });
+
+    test('clicking New with empty content just starts fresh (nothing to save)', async ({ page }) => {
+      await injectNotes(page, '<wb-notes></wb-notes>');
+      await page.evaluate(() => (document.querySelector('#test-container wb-notes') as any).wbNotes.open());
+      await page.fill('#test-container .wb-notes__textarea', '');
+      await page.click('#test-container .wb-notes__wide-btn[data-action="new"]');
+      await page.waitForTimeout(200);
+      const status = page.locator('#test-container .wb-notes__status');
+      await expect(status).toContainText('Started a new note');
     });
   });
 

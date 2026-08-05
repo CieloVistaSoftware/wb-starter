@@ -311,9 +311,15 @@ function applyDefaults(data, properties) {
  */
 function buildStructure(element, schema, data) {
   const baseClass = getBaseClass(schema);
-  
-  // Apply base class
-  element.classList.add(baseClass);
+
+  // Apply base class -- skip when the host tag already IS baseClass (e.g.
+  // <wb-mdhtml> getting classList.add('wb-mdhtml')); redundant, and flagged
+  // by tests/compliance/no-redundant-tag-name-class.spec.ts (#478). Every
+  // per-component behavior fn's OWN identical guard (card.js, checkbox.js,
+  // mdhtml.js, ...) only covers ITS OWN classList.add call -- this generic
+  // schema-driven path adds the same class independently and needs the same
+  // guard, or a component's own correct guard gets silently bypassed here.
+  if (element.tagName.toLowerCase() !== baseClass) element.classList.add(baseClass);
   
   // Apply additional classes (for variants like wb-card--profile)
   if (schema.compliance?.additionalClasses) {

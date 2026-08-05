@@ -853,6 +853,11 @@
           "description": "Alert feedback component"
         },
         {
+          "file": "components/feedback/avatar.md",
+          "title": "Avatar",
+          "description": "Avatar feedback component"
+        },
+        {
           "file": "components/feedback/badge.md",
           "title": "Badge",
           "description": "Badge feedback component"

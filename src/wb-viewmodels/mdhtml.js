@@ -366,37 +366,66 @@ export async function mdhtml(element, options = {}) {
       });
     }
 
-    // Apply WB behaviors to generated content
-    if (window.WB) {
-        // 1. Pre-process Pre blocks (configure them before scanning)
-        element.querySelectorAll('pre').forEach(el => {
-            // Check if it has a code block with language class
-            const code = el.querySelector('code');
-            if (code) {
-                // Extract language from class (e.g., "language-js")
-                const langMatch = code.className.match(/language-(\w+)/);
-                if (langMatch) {
-                    el.dataset.language = langMatch[1];
-                    code.dataset.language = langMatch[1];
-                }
-                
-                // Default options for markdown code blocks
-                el.dataset.showLineNumbers = "true";
-                el.dataset.showCopy = "true";
-                
-                // Mark for injection with x-{behavior} attributes
-                // WB.scan() looks for selectors like [x-pre], [x-code] etc.
-                el.setAttribute('x-pre', '');
-                code.setAttribute('x-code', '');
+    // Apply WB behaviors to generated content.
+    //
+    // #322: marking used to happen ONLY inside the `if (window.WB)` guard
+    // below, alongside the actual scan() call -- but attribute marking has
+    // no dependency on a WB runtime being loaded, only the scan() call does.
+    // That mattered on public/doc-viewer.html specifically: it calls this
+    // mdhtml() function directly, BEFORE wb.js has been dynamically
+    // imported (wb.js is loaded lazily there, only once docHasWbContent()
+    // detects wb-*/x-* markup already present in the rendered DOM -- see
+    // its 'wb:mdhtml:loaded' handler). With marking gated behind
+    // `window.WB` too, `window.WB` was undefined at this exact point on
+    // that page, so x-pre/x-code never got set at all -- not only did the
+    // scan() call below never run, docHasWbContent()'s own x-* attribute
+    // check had nothing to find either, so wb.js never even got imported
+    // for plain markdown docs (no <wb-*> tags), and a later manual
+    // WB.scan(docEl) call (docs that DID import wb.js for other reasons,
+    // e.g. an embedded <wb-demo>) still found no [x-pre]/[x-code] elements
+    // to enhance. Confirmed live: every plain ```fenced``` code block
+    // rendered through doc-viewer.html stayed unstyled (no .x-pre-wrapper,
+    // no copy button, no line numbers), while only <wb-demo>'s OWN code
+    // panels (styled via demo.js's separate, unconditional scan call) got
+    // pre()'s enhancement. Splitting the marking out from the WB-gated
+    // scan() fixes both: marking now always happens, so (a) a later
+    // scan() call (whenever WB does load) has something to find, and
+    // (b) docHasWbContent()'s x-* check now sees the x-pre/x-code
+    // attributes it just set and correctly decides the doc needs WB.
+    // 1. Pre-process Pre blocks (configure them before scanning)
+    element.querySelectorAll('pre').forEach(el => {
+        // Check if it has a code block with language class
+        const code = el.querySelector('code');
+        if (code) {
+            // Extract language from class (e.g., "language-js")
+            const langMatch = code.className.match(/language-(\w+)/);
+            if (langMatch) {
+                el.dataset.language = langMatch[1];
+                code.dataset.language = langMatch[1];
             }
-        });
 
-        // 2. Pre-process inline code
-        element.querySelectorAll('code:not(pre code)').forEach(el => {
-             el.setAttribute('x-code', '');
-        });
+            // Default options for markdown code blocks
+            el.dataset.showLineNumbers = "true";
+            el.dataset.showCopy = "true";
 
-        // 3. Scan the entire element for behaviors (including the ones we just marked)
+            // Mark for injection with x-{behavior} attributes
+            // WB.scan() looks for selectors like [x-pre], [x-code] etc.
+            el.setAttribute('x-pre', '');
+            code.setAttribute('x-code', '');
+        }
+    });
+
+    // 2. Pre-process inline code
+    element.querySelectorAll('code:not(pre code)').forEach(el => {
+         el.setAttribute('x-code', '');
+    });
+
+    // 3. Scan the entire element for behaviors (including the ones we just
+    // marked) -- still gated: only actually inject if a WB runtime has
+    // loaded by this point (e.g. wb-lazy.js pages, which import WB up front).
+    // Pages that load WB later (doc-viewer.html) rely on their OWN later
+    // scan() call to pick up the attributes marked above.
+    if (window.WB) {
         window.WB.scan(element);
     }
 

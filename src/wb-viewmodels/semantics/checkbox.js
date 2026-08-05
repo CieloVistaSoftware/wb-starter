@@ -154,7 +154,9 @@ export function checkbox(element, options = {}) {
     labelEl.appendChild(input);
     if (label) labelEl.appendChild(document.createTextNode(label));
     host.appendChild(labelEl);
-    host.classList.add('wb-checkbox');
+    // Redundant when host IS <wb-checkbox> (#478) -- checkbox.css matches the
+    // tag directly too now.
+    if (host.tagName.toLowerCase() !== 'wb-checkbox') host.classList.add('wb-checkbox');
     return checkbox(input, options);
   }
 

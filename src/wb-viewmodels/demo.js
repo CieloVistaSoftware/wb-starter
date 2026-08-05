@@ -12,7 +12,7 @@ import { getPageSource, extractTagBlock } from './page-source-cache.js';
  * into real custom elements.
  *
  * Attributes:
- *   columns — grid columns (default 3)
+ *   columns — grid columns (default 1)
  *
  * CSS: src/styles/behaviors/demo.css
  * Zero inline styles.
@@ -273,7 +273,7 @@ export async function demo(element, options = {}) {
         }
     }
 
-    const configuredCols = parseInt(options.columns || element.getAttribute('columns') || '3', 10);
+    const configuredCols = parseInt(options.columns || element.getAttribute('columns') || '1', 10);
     // Standard §7: a demo is only as wide as what it renders — a single
     // narrow card wrapped in the default 3-column grid still stretched the
     // whole wb-demo to fill 3 columns' worth of width even though only 1

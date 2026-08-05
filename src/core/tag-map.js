@@ -175,6 +175,12 @@ export const nativeMap = {
   'input[type="checkbox"]': 'checkbox',
   'input[type="radio"]': 'radio',
   'input[type="range"]': 'range',
+  // #481: type="password" is as unambiguous a signal as checkbox/radio/range
+  // above -- no reason it alone shouldn't be enough to get the show/hide
+  // toggle. Explicit x-password still works too (getAutoInjectBehavior()'s
+  // hasAttribute(candidate) check below skips the auto-inject path when it's
+  // already present, so it's never double-applied).
+  'input[type="password"]': 'password',
   // <input> is native semantic HTML -- autoInject decorates it like any
   // other native element (button/select/textarea below), not a special
   // case requiring x-input. Order matters: getNativeBehavior() returns on

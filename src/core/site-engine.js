@@ -35,7 +35,8 @@ export default class WBSite {
       this.render();
       this.initResizableNav();
       this.initStickyHeader();
-      
+      this.initStickyFooter();
+
       // Initialize Views System
       await initViews({
         registry: [
@@ -127,7 +128,7 @@ export default class WBSite {
         </main>
       </div>
       ${this.renderFooter()}
-      <div x-eager id="siteNotes"></div>
+      <wb-notes id="siteNotes" x-eager position="right"></wb-notes>
     `;
     const toggleBtn = app.querySelector('.nav__toggle');
     if (toggleBtn) {
@@ -324,6 +325,67 @@ export default class WBSite {
     window.addEventListener('resize', () => {
       if (!isMobileLandscape()) {
         header.classList.remove('site__header--hidden');
+      }
+    });
+  }
+
+  // #393: same collapse-on-mobile-landscape-scroll treatment as
+  // initStickyHeader() (#390), applied to the footer. Hide on scroll-down
+  // (maximize reading area), show on scroll-up, gated to mobile-landscape
+  // only -- same isMobileLandscape() check, same threshold/debounce.
+  initStickyFooter() {
+    const body = document.getElementById('siteBody');
+    const footer = document.getElementById('siteFooter');
+    if (!body || !footer) return;
+
+    const isMobileLandscape = () => window.matchMedia('(orientation: landscape) and (max-height: 500px)').matches;
+
+    // Unlike the header's fixed 64px (site.css `.site__header { height: 64px }`),
+    // the footer's height is NOT a constant -- renderFooter() makes the social
+    // links and additional footer links optional per-site config, so its real
+    // height varies. Measure it and hand the value to CSS as a custom property
+    // so `.site__footer--hidden`'s margin-top cancels exactly that much height --
+    // the same "real reclaim, not just a transform" fix #390 applied to the
+    // header, just measured at runtime instead of hardcoded.
+    const syncFooterHeight = () => {
+      footer.style.setProperty('--site-footer-collapse-height', `${footer.offsetHeight}px`);
+    };
+    syncFooterHeight();
+
+    let lastScrollY = body.scrollTop;
+    const threshold = 50; // Min scroll to trigger
+
+    body.addEventListener('scroll', () => {
+      if (!isMobileLandscape()) return;
+      const currentScrollY = body.scrollTop;
+
+      // Don't hide if near top
+      if (currentScrollY < threshold) {
+        footer.classList.remove('site__footer--hidden');
+        lastScrollY = currentScrollY;
+        return;
+      }
+
+      // Scrolling Down -> Hide (maximizes screen area while reading)
+      if (currentScrollY > lastScrollY + 10) {
+        footer.classList.add('site__footer--hidden');
+      }
+      // Scrolling Up -> Show
+      else if (currentScrollY < lastScrollY - 10) {
+        footer.classList.remove('site__footer--hidden');
+      }
+
+      lastScrollY = currentScrollY;
+    }, { passive: true });
+
+    // Leaving mobile-landscape must not leave the footer stuck hidden with no
+    // more scroll events available to un-hide it. Also re-measure -- rotating
+    // or resizing can change which optional footer content wraps, changing
+    // its height.
+    window.addEventListener('resize', () => {
+      syncFooterHeight();
+      if (!isMobileLandscape()) {
+        footer.classList.remove('site__footer--hidden');
       }
     });
   }
