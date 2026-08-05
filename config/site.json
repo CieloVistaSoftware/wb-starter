@@ -70,6 +70,12 @@
       "menuItemText": "What's New",
       "menuItemEmoji": "🆕",
       "pageToLoad": "whats-new"
+    },
+    {
+      "menuItemId": "issues",
+      "menuItemText": "Issues",
+      "menuItemEmoji": "🐛",
+      "pageToLoad": "issues"
     }
   ],
 

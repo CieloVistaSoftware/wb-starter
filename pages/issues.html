@@ -1,0 +1,123 @@
+<div class="page__hero">
+  <h1>🐛 Issues</h1>
+  <p>Live from <a href="https://github.com/CieloVistaSoftware/wb-starter/issues" target="_blank" rel="noopener">GitHub</a> — open and closed, including the full issue body.</p>
+</div>
+
+<div class="issues-toolbar">
+  <div class="issues-tabs" role="tablist" aria-label="Filter issues by state">
+    <button type="button" class="issues-tab issues-tab--active" data-state="open">Open</button>
+    <button type="button" class="issues-tab" data-state="closed">Closed</button>
+    <button type="button" class="issues-tab" data-state="all">All</button>
+  </div>
+  <input type="search" id="issues-search" class="issues-search" placeholder="Filter by title or number…">
+</div>
+
+<p id="issues-status" class="issues-status">Loading issues…</p>
+<ul id="issues-list" class="issues-list"></ul>
+
+<style>
+  .issues-toolbar { display: flex; gap: 1rem; flex-wrap: wrap; align-items: center; justify-content: space-between; margin: 1.5rem 0 1rem; }
+  .issues-tabs { display: flex; gap: 0.5rem; }
+  .issues-tab { background: var(--bg-secondary); color: var(--text-secondary); border: 1px solid var(--border-color); border-radius: 6px; padding: 0.4rem 0.9rem; cursor: pointer; font-size: 0.875rem; }
+  .issues-tab--active { background: var(--primary); color: #fff; border-color: var(--primary); }
+  .issues-search { background: var(--bg-secondary); color: var(--text-primary); border: 1px solid var(--border-color); border-radius: 6px; padding: 0.4rem 0.75rem; min-width: 240px; }
+  .issues-status { color: var(--text-secondary); }
+  .issues-list { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 0.5rem; }
+  .issue-row { border: 1px solid var(--border-color); border-radius: 8px; background: var(--bg-secondary); overflow: hidden; }
+  .issue-row__summary { display: flex; align-items: center; gap: 0.75rem; padding: 0.75rem 1rem; cursor: pointer; }
+  .issue-row__state { font-size: 0.75rem; font-weight: 700; padding: 0.15em 0.6em; border-radius: 999px; white-space: nowrap; }
+  .issue-row__state--open { background: color-mix(in srgb, #22c55e 25%, transparent); color: #22c55e; }
+  .issue-row__state--closed { background: color-mix(in srgb, #a855f7 25%, transparent); color: #a855f7; }
+  .issue-row__number { color: var(--text-secondary); font-family: monospace; }
+  .issue-row__title { flex: 1; font-weight: 600; }
+  .issue-row__labels { display: flex; gap: 0.35rem; flex-wrap: wrap; }
+  .issue-row__label { font-size: 0.7rem; padding: 0.1em 0.5em; border-radius: 999px; background: var(--bg-tertiary); color: var(--text-secondary); }
+  .issue-row__body { display: none; padding: 0 1rem 1rem; border-top: 1px solid var(--border-color); white-space: pre-wrap; color: var(--text-secondary); font-size: 0.9rem; line-height: 1.6; }
+  .issue-row--expanded .issue-row__body { display: block; padding-top: 1rem; }
+</style>
+
+<script>
+(function () {
+  const REPO = 'CieloVistaSoftware/wb-starter';
+  const listEl = document.getElementById('issues-list');
+  const statusEl = document.getElementById('issues-status');
+  const searchEl = document.getElementById('issues-search');
+  const tabs = Array.from(document.querySelectorAll('.issues-tab'));
+  let allIssues = [];
+  let currentState = 'open';
+
+  function escapeHtml(s) {
+    return String(s).replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+  }
+
+  function render() {
+    const q = searchEl.value.trim().toLowerCase();
+    const filtered = allIssues.filter((issue) => {
+      if (currentState !== 'all' && issue.state !== currentState) return false;
+      if (!q) return true;
+      return issue.title.toLowerCase().includes(q) || String(issue.number).includes(q);
+    });
+
+    if (!filtered.length) {
+      listEl.innerHTML = '';
+      statusEl.textContent = allIssues.length ? 'No issues match this filter.' : 'No issues found.';
+      statusEl.style.display = '';
+      return;
+    }
+    statusEl.style.display = 'none';
+
+    listEl.innerHTML = filtered.map((issue) => {
+      const labels = (issue.labels || []).map((l) =>
+        `<span class="issue-row__label" style="background:#${l.color || '333'}22;color:#${l.color || '999'}">${escapeHtml(l.name)}</span>`
+      ).join('');
+      const body = issue.body ? escapeHtml(issue.body) : '_No description provided._';
+      return `
+        <li class="issue-row" data-number="${issue.number}">
+          <div class="issue-row__summary">
+            <span class="issue-row__state issue-row__state--${issue.state}">${issue.state}</span>
+            <span class="issue-row__number">#${issue.number}</span>
+            <span class="issue-row__title">${escapeHtml(issue.title)}</span>
+            <span class="issue-row__labels">${labels}</span>
+          </div>
+          <div class="issue-row__body">${body}</div>
+        </li>`;
+    }).join('');
+
+    listEl.querySelectorAll('.issue-row__summary').forEach((summary) => {
+      summary.addEventListener('click', () => {
+        summary.closest('.issue-row').classList.toggle('issue-row--expanded');
+      });
+    });
+  }
+
+  tabs.forEach((tab) => {
+    tab.addEventListener('click', () => {
+      tabs.forEach((t) => t.classList.remove('issues-tab--active'));
+      tab.classList.add('issues-tab--active');
+      currentState = tab.dataset.state;
+      render();
+    });
+  });
+  searchEl.addEventListener('input', render);
+
+  async function load() {
+    try {
+      // Public, unauthenticated GitHub REST API -- works identically on the
+      // deployed GitHub Pages site (static hosting, no server-side proxy
+      // possible) and in local dev. state=all + per_page=100 up front is
+      // simpler than two requests; the state filter above is client-side.
+      const res = await fetch(`https://api.github.com/repos/${REPO}/issues?state=all&per_page=100&sort=created&direction=desc`);
+      if (!res.ok) throw new Error(`GitHub API responded ${res.status}`);
+      const data = await res.json();
+      // The /issues endpoint also returns pull requests -- exclude them.
+      allIssues = data.filter((i) => !i.pull_request);
+      render();
+    } catch (err) {
+      statusEl.textContent = 'Could not load issues: ' + err.message + ' (GitHub API rate limits unauthenticated requests to 60/hour per IP).';
+      statusEl.style.display = '';
+    }
+  }
+
+  load();
+})();
+</script>
