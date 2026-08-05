@@ -13,6 +13,7 @@ import { Events } from './events.js';
 import './click-confirm.js';
 import { Theme } from './theme.js';
 import { getConfig, setConfig } from './config.js';
+import { setupGlobalErrorHandler } from './error-logger.js';
 import { elementMap, nativeMap, extensionMap } from './tag-map.js';
 import { semanticPropertyMappings } from './semantic-attributes.js';
 import { ensureBehaviorCss } from './style-loader.js';
@@ -764,6 +765,13 @@ const WB = {
       setConfig('debug', true);
       setConfig('logLevel', 'debug');
     }
+
+    // Live report: "hundreds of stack traces [in devtools], not one showing
+    // in the error log" -- setupGlobalErrorHandler() was a complete, working
+    // implementation that nothing ever called (idempotent, guarded inside
+    // error-logger.js itself, so it's safe alongside this init()'s own
+    // defensive re-call pattern below).
+    setupGlobalErrorHandler();
 
     // Set autoInject — ONLY when the caller explicitly passed it, not
     // unconditionally. #461 (found while investigating #460): WB.init() is

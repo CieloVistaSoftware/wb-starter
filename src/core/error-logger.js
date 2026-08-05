@@ -250,10 +250,19 @@ function updateErrorCount() {
   if (countEl) countEl.textContent = errors.length;
 }
 
+let globalHandlerInstalled = false;
+
 /**
- * Setup global error catching
+ * Setup global error catching. Safe to call more than once (WB.init() is
+ * meant to be called defensively/idempotently by every independent
+ * component that uses WB, per wb.js's own init() -- without this guard,
+ * each extra call would attach a duplicate pair of listeners, logging every
+ * real error once per WB.init() call on the page instead of once).
  */
 export function setupGlobalErrorHandler() {
+  if (globalHandlerInstalled) return;
+  globalHandlerInstalled = true;
+
   // Catch uncaught errors
   window.addEventListener('error', (event) => {
     logError(event.message, {

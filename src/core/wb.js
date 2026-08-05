@@ -152,6 +152,7 @@ import '../wb-viewmodels/wb-grid.js';
 import '../wb-viewmodels/wb-demo.js';
 
 import { getConfig, setConfig } from './config.js';
+import { setupGlobalErrorHandler } from './error-logger.js';
 import { pubsub } from './pubsub.js';
 import { logError } from './error-logger.js';
 import SchemaBuilder from './mvvm/schema-builder.js';
@@ -1158,6 +1159,13 @@ const WB = {
     // in every environment, not just when someone has already turned on the
     // full (much noisier) [WB.scan]/[WB.observe] trace.
     traceMediaLoads();
+
+    // Live report: "hundreds of stack traces [in devtools], not one showing
+    // in the error log" -- setupGlobalErrorHandler() was a complete, working
+    // implementation that nothing ever called. Idempotent (guarded inside
+    // error-logger.js itself), safe alongside init()'s own defensive re-call
+    // pattern documented below.
+    setupGlobalErrorHandler();
 
     // Set autoInject — ONLY when the caller explicitly passed it, not
     // unconditionally. Originally made unconditional because config.js's
