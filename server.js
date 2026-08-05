@@ -4,7 +4,7 @@ import { fileURLToPath } from 'url';
 import express from 'express';
 import compression from 'compression';
 import { WebSocketServer } from 'ws';
-import { exec, execSync } from 'child_process';
+import { exec, execSync, execFileSync } from 'child_process';
 import { marked } from 'marked';
 
 const __filename = fileURLToPath(import.meta.url);
@@ -601,6 +601,39 @@ function normalizeNoteContent(str) {
   return String(str).trim().replace(/\r\n/g, '\n').replace(/\s+/g, ' ');
 }
 
+// Every saved note becomes a real, tracked GitHub issue -- otherwise notes
+// just sit in data/notes.json where nobody reviews them, disconnected from
+// the actual issue-tracking workflow. Best-effort: `gh` requiring auth/
+// network is common in this environment (this route is dev-server-only
+// anyway, same as every other data/*.json-writing route -- there is no
+// server on the deployed GitHub Pages site), so a failure here must never
+// block the note itself from saving. execFileSync (array args, no shell)
+// avoids command injection from arbitrary note text.
+function createIssueFromNote(note) {
+  try {
+    const firstLine = String(note.content).split('\n').find((l) => l.trim()) || 'Note';
+    const title = firstLine.trim().slice(0, 80);
+    const bodyParts = [
+      note.content,
+      '',
+      '---',
+      note.page ? `Page: ${note.page}` : null,
+      note.selectedElement ? `Element: ${JSON.stringify(note.selectedElement)}` : null,
+      `Created: ${note.createdAt}`
+    ].filter(Boolean);
+
+    const out = execFileSync(
+      'gh',
+      ['issue', 'create', '--title', title, '--body', bodyParts.join('\n'), '--label', 'from-notes'],
+      { cwd: rootDir, encoding: 'utf8', timeout: 15000 }
+    );
+    return out.trim(); // gh issue create prints the new issue's URL
+  } catch (error) {
+    console.warn('[Notes -> Issue] Failed to auto-create issue (note was still saved):', error.message);
+    return null;
+  }
+}
+
 app.post("/api/notes/append", (req, res) => {
   try {
     const { note } = req.body;
@@ -615,9 +648,18 @@ app.post("/api/notes/append", (req, res) => {
       return res.json({ success: true, duplicate: true, notes });
     }
 
+    // tests/components/notes*.spec.ts drives every notes test against this
+    // SAME dev server (demos/test-harness.html), not an isolated instance --
+    // without this guard, every test run would spam a real GitHub issue per
+    // test note. The test harness is the only real-world caller whose
+    // Referer ever contains this path.
+    const isTestHarness = (req.headers.referer || '').includes('/demos/test-harness.html');
+    const issueUrl = isTestHarness ? null : createIssueFromNote(note);
+    note.issueUrl = issueUrl;
+
     notes.push(note);
     writeNotesLog(notes);
-    res.json({ success: true, duplicate: false, notes });
+    res.json({ success: true, duplicate: false, notes, issueUrl });
   } catch (error) {
     console.error('[Notes Append Error]', error);
     res.status(500).json({ error: error.message });

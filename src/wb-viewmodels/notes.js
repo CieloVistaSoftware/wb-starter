@@ -196,7 +196,10 @@ export function notes(element, options = {}) {
       }
 
       lastPickedElement = null;
-      showStatus('Saved to ' + config.savePath, 'success');
+      showStatus(
+        result.issueUrl ? 'Saved — filed as ' + result.issueUrl : 'Saved to ' + config.savePath,
+        'success'
+      );
 
       element.dispatchEvent(new CustomEvent('wb:notes:save', {
         bubbles: true,
