@@ -589,7 +589,8 @@
       "tag": "header",
       "required": true,
       "attributes": {
-        "id": "header"
+        "id": "header",
+        "x-ignore": true
       }
     },
     {
@@ -614,11 +615,6 @@
         "class": "header-subtitle"
       },
       "content": "170+ behaviors • Interactive demos • Copy-ready code"
-    },
-    {
-      "name": "themeControl",
-      "tag": "wb-themecontrol",
-      "parent": "header"
     },
     {
       "name": "nav",

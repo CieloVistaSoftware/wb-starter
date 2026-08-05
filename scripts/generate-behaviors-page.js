@@ -3,6 +3,25 @@
 /**
  * Generate behaviors.html from behaviors.schema.json
  * Creates a complete showcase page with all behavior categories and demos
+ *
+ * IMPORTANT (#484): pages/behaviors.html was hand-fixed after #304/#390 to
+ * (a) contain zero wb-* custom-component demos (they belong on
+ * pages/components.html instead -- gated by
+ * tests/compliance/behaviors-page-no-wb-components.spec.ts), (b) wrap each
+ * distinctly-configured element in its own <wb-demo> rather than grouping
+ * multiple elements into one (gated by
+ * tests/compliance/demo-layout-standards.spec.ts's "no permutation-matrix"
+ * check -- grouping is only correct where several elements are genuinely
+ * ONE configured instance, e.g. a radio group sharing `name`, or
+ * x-gallery's multi-image single instance), and (c) use plain v3 attributes
+ * (`message`, `position`, `items`, ...) instead of legacy `data-*`.
+ *
+ * The functions below must keep producing that exact shape. If you add a
+ * new behavior to behaviors.schema.json's behaviorInventory, add its demo
+ * here following the same rules -- do NOT reintroduce a wb-* tag, a
+ * grouped <wb-demo>, or a data-* attribute. Verify with:
+ *   node scripts/generate-behaviors-page.js
+ *   git diff pages/behaviors.html   (should be empty/expected)
  */
 
 import fs from 'fs';
@@ -31,7 +50,7 @@ function generatePageFromSchema(schema) {
      wb-starter - BEHAVIORS SHOWCASE
      Auto-generated from behaviors.schema.json
      ═══════════════════════════════════════════════════════════════════════════ -->
-<link rel="stylesheet" href="src/styles/pages/behaviors.css">
+<link rel="stylesheet" href="/src/styles/pages/behaviors.css">
 `;
 
   // Generate header and nav from $view
@@ -70,10 +89,15 @@ function generateFromView(viewArray) {
     const tag = part.tag || 'div';
     let elementHtml = `<${tag}`;
 
-    // Add attributes
+    // Add attributes. Boolean `true` (or an empty string) renders as a
+    // bare attribute (e.g. x-ignore) instead of x-ignore="true".
     if (part.attributes) {
       for (const [attr, value] of Object.entries(part.attributes)) {
-        elementHtml += ` ${attr}="${value}"`;
+        if (value === true || value === '') {
+          elementHtml += ` ${attr}`;
+        } else {
+          elementHtml += ` ${attr}="${value}"`;
+        }
       }
     }
 
@@ -149,15 +173,19 @@ function generateCategorySection(category, behaviors) {
     utilities: '🔧 Utilities'
   };
 
+  // NOTE: some notes below deliberately call out which behaviors in this
+  // category are wb-* components (and therefore demoed on
+  // pages/components.html instead, not here) -- see the file-header
+  // comment and tests/compliance/behaviors-page-no-wb-components.spec.ts.
   const sectionNotes = {
     buttons: 'Button behaviors: Variants, sizes, and interactive effects like ripple and toast.',
     inputs: 'Input behaviors: Auto-enhanced inputs with validation variants, password toggle, and masking.',
-    selection: 'Selection behaviors: Checkboxes, radios, switches, selects, ratings, and steppers.',
-    feedback: 'Feedback behaviors: Alerts, badges, progress bars, spinners, and toast notifications.',
-    overlays: 'Overlay behaviors: Modals, drawers, tooltips, popovers, confirm dialogs, and lightboxes.',
-    navigation: 'Navigation behaviors: Tabs, accordion, breadcrumbs, pagination, and step wizards.',
+    selection: 'Selection behaviors: Checkboxes, radios, selects, and steppers. (Switches and ratings are wb-* components — see <a href="?page=components">Components</a>.)',
+    feedback: 'Feedback behaviors: Toast notifications. (Alerts, badges, progress bars, and spinners are wb-* components — see <a href="?page=components">Components</a>.)',
+    overlays: 'Overlay behaviors: Tooltips, popovers, confirm dialogs, and lightboxes. (Modals and drawers are wb-* components — see <a href="?page=components">Components</a>.)',
+    navigation: 'Navigation behaviors: Breadcrumbs, pagination, and step wizards. (Tabs and accordion are wb-* components — see <a href="?page=components">Components</a>.)',
     data: 'Data behaviors: Avatars, skeletons, timelines, and keyboard keys.',
-    media: 'Media behaviors: Images with lazy loading, galleries, YouTube embeds, and audio players.',
+    media: 'Media behaviors: Images with lazy loading, galleries, and YouTube embeds. (Audio player is a wb-* component — see <a href="?page=components">Components</a>.)',
     effects: 'Effect behaviors: Attention seekers, entrance animations, particle effects, and ripples.',
     utilities: 'Utility behaviors: Copy, share, print, fullscreen, clock, countdown, and dark mode toggle.'
   };
@@ -211,443 +239,203 @@ function generateBehaviorDemos(category, behaviors) {
   }
 }
 
-// Group behaviors by their type
-function groupBehaviorsByType(behaviors) {
-  const groups = {};
-
-  for (const behavior of behaviors) {
-    const type = behavior.type || 'element';
-    if (!groups[type]) groups[type] = [];
-    groups[type].push(behavior);
-  }
-
-  return groups;
-}
-
-// Generate a section for a specific behavior type
-function generateTypeSection(category, type, behaviors) {
-  const typeTitles = {
-    element: getCategoryTypeTitle(category, type),
-    modifier: getCategoryTypeTitle(category, type),
-    action: getCategoryTypeTitle(category, type),
-    container: getCategoryTypeTitle(category, type)
-  };
-
-  let html = `\n    <h3>${typeTitles[type] || type}</h3>\n`;
-
-  // Generate appropriate demo based on category and type
-  html += generateDemoForCategory(category, behaviors);
-
-  return html;
-}
-
-// Get appropriate title for category/type combination
-function getCategoryTypeTitle(category, type) {
-  const titles = {
-    buttons: {
-      element: 'Button Components',
-      modifier: 'Button Variants',
-      action: 'Button Behaviors'
-    },
-    inputs: {
-      element: 'Input Components',
-      modifier: 'Input Enhancements',
-      action: 'Input Behaviors'
-    },
-    selection: {
-      element: 'Selection Components',
-      modifier: 'Selection Enhancements',
-      action: 'Selection Behaviors'
-    },
-    feedback: {
-      element: 'Feedback Components',
-      modifier: 'Feedback Variants',
-      action: 'Feedback Behaviors'
-    },
-    overlays: {
-      element: 'Overlay Components',
-      modifier: 'Overlay Enhancements',
-      action: 'Overlay Behaviors'
-    },
-    navigation: {
-      element: 'Navigation Components',
-      modifier: 'Navigation Enhancements',
-      action: 'Navigation Behaviors'
-    },
-    data: {
-      element: 'Data Components',
-      modifier: 'Data Enhancements',
-      action: 'Data Behaviors'
-    },
-    media: {
-      element: 'Media Components',
-      modifier: 'Media Enhancements',
-      action: 'Media Behaviors'
-    },
-    effects: {
-      element: 'Effect Components',
-      modifier: 'Effect Variants',
-      action: 'Effect Behaviors'
-    },
-    utilities: {
-      element: 'Utility Components',
-      modifier: 'Utility Enhancements',
-      action: 'Utility Behaviors'
-    }
-  };
-
-  return titles[category]?.[type] || `${category} ${type}`;
-}
-
-// Generate demo HTML for a specific category
-function generateDemoForCategory(category, behaviors) {
-  switch (category) {
-    case 'buttons':
-      return generateButtonDemos(behaviors);
-    case 'inputs':
-      return generateInputDemos(behaviors);
-    case 'selection':
-      return generateSelectionDemos(behaviors);
-    case 'feedback':
-      return generateFeedbackDemos(behaviors);
-    case 'overlays':
-      return generateOverlayDemos(behaviors);
-    case 'navigation':
-      return generateNavigationDemos(behaviors);
-    case 'data':
-      return generateDataDemos(behaviors);
-    case 'media':
-      return generateMediaDemos(behaviors);
-    case 'effects':
-      return generateEffectDemos(behaviors);
-    case 'utilities':
-      return generateUtilityDemos(behaviors);
-    default:
-      return generateGenericDemos(behaviors);
-  }
-}
-
-// Generate button demos
+// Generate button demos.
+// One <wb-demo> per distinctly-configured button -- no grouping.
 function generateButtonDemos(behaviors) {
-  let html = '    <wb-demo>\n';
+  let html = '';
 
-  // Button variants
   if (behaviors.some(b => b.name === 'wb-btn')) {
-    html += '      <button variant="primary">Primary</button>\n';
-    html += '      <button variant="secondary">Secondary</button>\n';
-    html += '      <button variant="ghost">Ghost</button>\n';
-    html += '      <button variant="primary" disabled>Disabled</button>\n';
+    html += '    <wb-demo><button variant="primary">Primary</button></wb-demo>\n';
+    html += '    <wb-demo><button variant="secondary">Secondary</button></wb-demo>\n';
+    html += '    <wb-demo><button variant="ghost">Ghost</button></wb-demo>\n';
+    html += '    <wb-demo><button variant="primary" disabled>Disabled</button></wb-demo>\n';
   }
 
-  // Button sizes
-  html += '    </wb-demo>\n\n    <h3>Button Sizes</h3>\n    <wb-demo>\n';
-  html += '      <button variant="primary" size="sm">Small</button>\n';
-  html += '      <button variant="primary">Medium</button>\n';
-  html += '      <button variant="primary" size="lg">Large</button>\n';
+  html += '\n    <h3>Button Sizes</h3>\n';
+  html += '    <wb-demo><button variant="primary" size="sm">Small</button></wb-demo>\n';
+  html += '    <wb-demo><button variant="primary">Medium</button></wb-demo>\n';
+  html += '    <wb-demo><button variant="primary" size="lg">Large</button></wb-demo>\n';
 
-  // Button with behaviors
-  html += '    </wb-demo>\n\n    <h3>Button with Behaviors</h3>\n    <wb-demo>\n';
+  html += '\n    <h3>Button with Behaviors</h3>\n';
   if (behaviors.some(b => b.name === 'x-ripple')) {
-    html += '      <button variant="primary" x-ripple>With Ripple</button>\n';
+    html += '    <wb-demo><button variant="primary" x-ripple>With Ripple</button></wb-demo>\n';
   }
   if (behaviors.some(b => b.name === 'x-toast')) {
-    html += '      <button variant="primary" x-toast data-message="Action completed!" data-type="success">With Toast</button>\n';
+    html += '    <wb-demo><button variant="primary" x-toast message="Action completed!" toast-variant="success">With Toast</button></wb-demo>\n';
   }
   if (behaviors.some(b => b.name === 'x-tooltip')) {
-    html += '      <button variant="primary" x-tooltip="Helpful hint!" data-position="top">With Tooltip</button>\n';
+    html += '    <wb-demo><button variant="primary" x-tooltip="Helpful hint!" position="top">With Tooltip</button></wb-demo>\n';
   }
 
-  html += '    </wb-demo>\n';
   return html;
 }
 
-// Generate input demos
+// Generate input demos.
+// One <wb-demo> per distinctly-configured input -- no grouping.
 function generateInputDemos(behaviors) {
-  let html = '    <h3>Basic Inputs</h3>\n    <div class="demo-grid-3">\n';
-  html += '      <input type="text" placeholder="Basic text input">\n';
-  html += '      <input type="email" placeholder="Email input">\n';
-  html += '      <input type="number" placeholder="Number input">\n';
-  html += '    </div>\n\n';
-
-  if (behaviors.some(b => b.name.includes('validation') || b.name.includes('variant'))) {
-    html += '    <h3>Validation Variants</h3>\n    <div class="demo-grid-3">\n';
-    html += '      <input type="text" placeholder="Success state" data-variant="success">\n';
-    html += '      <input type="text" placeholder="Warning state" data-variant="warning">\n';
-    html += '      <input type="text" placeholder="Error state" data-variant="error">\n';
-    html += '    </div>\n\n';
-  }
+  let html = '    <h3>Basic Inputs</h3>\n';
+  html += '    <wb-demo><input type="text" placeholder="Basic text input"></wb-demo>\n';
+  html += '    <wb-demo><input type="email" placeholder="Email input"></wb-demo>\n';
+  html += '    <wb-demo><input type="number" placeholder="Number input"></wb-demo>\n';
 
   if (behaviors.some(b => b.name === 'x-password' || b.name === 'x-search' || b.name === 'x-colorpicker')) {
-    html += '    <h3>Special Input Types</h3>\n    <div class="demo-grid-3">\n';
+    html += '\n    <h3>Special Input Types</h3>\n';
     if (behaviors.some(b => b.name === 'x-password')) {
-      html += '      <input type="password" x-password placeholder="Password with toggle">\n';
+      html += '    <wb-demo><input type="password" x-password placeholder="Password with toggle"></wb-demo>\n';
     }
     if (behaviors.some(b => b.name === 'x-search')) {
-      html += '      <input type="text" x-search placeholder="Search with icon">\n';
+      html += '    <wb-demo><input type="text" x-search placeholder="Search with icon"></wb-demo>\n';
     }
     if (behaviors.some(b => b.name === 'x-colorpicker')) {
-      html += '      <input type="text" x-colorpicker value="#6366f1">\n';
+      html += '    <wb-demo><input type="text" x-colorpicker value="#6366f1"></wb-demo>\n';
     }
-    html += '    </div>\n\n';
   }
 
   if (behaviors.some(b => b.name === 'x-masked')) {
-    html += '    <h3>Masked Inputs</h3>\n    <div class="demo-grid-3">\n';
-    html += '      <input x-masked data-mask="(999) 999-9999" placeholder="Phone: (999) 999-9999">\n';
-    html += '      <input x-masked data-mask="99/99/9999" placeholder="Date: MM/DD/YYYY">\n';
-    html += '      <input x-masked data-mask="9999 9999 9999 9999" placeholder="Credit Card">\n';
-    html += '    </div>\n\n';
+    html += '\n    <h3>Masked Inputs</h3>\n';
+    html += '    <wb-demo><input x-masked mask="(999) 999-9999" placeholder="Phone: (999) 999-9999"></wb-demo>\n';
+    html += '    <wb-demo><input x-masked mask="99/99/9999" placeholder="Date: MM/DD/YYYY"></wb-demo>\n';
+    html += '    <wb-demo><input x-masked mask="9999 9999 9999 9999" placeholder="Credit Card"></wb-demo>\n';
   }
 
-  html += '    <h3>Textarea</h3>\n    <div class="demo-grid-2">\n';
-  html += '      <textarea placeholder="Standard textarea" rows="3"></textarea>\n';
-  html += '      <textarea autosize placeholder="Auto-sizing textarea - grows as you type"></textarea>\n';
-  html += '    </div>\n';
+  html += '\n    <h3>Textarea</h3>\n';
+  html += '    <wb-demo><textarea placeholder="Standard textarea" rows="3"></textarea></wb-demo>\n';
+  html += '    <wb-demo><textarea autosize placeholder="Auto-sizing textarea - grows as you type"></textarea></wb-demo>\n';
 
   return html;
 }
 
-// Generate selection demos
+// Generate selection demos.
+// One <wb-demo> per distinctly-configured element, EXCEPT the radio group
+// (all share name="demo-radio" -- one actual control group, per Standard
+// §17) which stays in a single <wb-demo>. wb-switch and wb-rating are
+// wb-* components -- demoed on pages/components.html instead, not here.
 function generateSelectionDemos(behaviors) {
   let html = '';
 
   if (behaviors.some(b => b.name.includes('checkbox'))) {
-    html += '    <h3>Checkboxes</h3>\n    <div class="demo-row">\n';
-    html += '      <label class="selection-label"><input type="checkbox"> Unchecked</label>\n';
-    html += '      <label class="selection-label"><input type="checkbox" checked> Checked</label>\n';
-    html += '      <label class="selection-label"><input type="checkbox" disabled> Disabled</label>\n';
-    html += '    </div>\n\n';
+    html += '    <h3>Checkboxes</h3>\n';
+    html += '    <wb-demo><label class="selection-label"><input type="checkbox"> Unchecked</label></wb-demo>\n';
+    html += '    <wb-demo><label class="selection-label"><input type="checkbox" checked> Checked</label></wb-demo>\n';
+    html += '    <wb-demo><label class="selection-label"><input type="checkbox" disabled> Disabled</label></wb-demo>\n';
   }
 
   if (behaviors.some(b => b.name.includes('radio'))) {
-    html += '    <h3>Radio Buttons</h3>\n    <div class="demo-row">\n';
+    html += '\n    <h3>Radio Buttons</h3>\n    <wb-demo>\n';
     html += '      <label class="selection-label"><input type="radio" name="demo-radio" checked> Option A</label>\n';
     html += '      <label class="selection-label"><input type="radio" name="demo-radio"> Option B</label>\n';
     html += '      <label class="selection-label"><input type="radio" name="demo-radio"> Option C</label>\n';
-    html += '    </div>\n\n';
-  }
-
-  if (behaviors.some(b => b.name === 'wb-switch')) {
-    html += '    <h3>Switch Toggle</h3>\n    <div class="demo-row">\n';
-    html += '      <wb-switch label="Dark Mode"></wb-switch>\n';
-    html += '      <wb-switch label="Notifications" checked></wb-switch>\n';
-    html += '      <wb-switch label="Disabled" disabled></wb-switch>\n';
-    html += '    </div>\n\n';
+    html += '    </wb-demo>\n';
   }
 
   if (behaviors.some(b => b.name.includes('select'))) {
-    html += '    <h3>Select Dropdown</h3>\n    <div class="demo-grid-2">\n';
+    html += '\n    <h3>Select Dropdown</h3>\n    <wb-demo>\n';
     html += '      <select>\n';
     html += '        <option>Select an option</option>\n';
     html += '        <option>Option 1</option>\n';
     html += '        <option>Option 2</option>\n';
     html += '        <option>Option 3</option>\n';
     html += '      </select>\n';
+    html += '    </wb-demo>\n';
+    html += '    <wb-demo>\n';
     html += '      <select multiple size="3">\n';
     html += '        <option>Multiple 1</option>\n';
     html += '        <option>Multiple 2</option>\n';
     html += '        <option>Multiple 3</option>\n';
     html += '      </select>\n';
-    html += '    </div>\n\n';
-  }
-
-  if (behaviors.some(b => b.name === 'wb-rating')) {
-    html += '    <h3>Rating</h3>\n    <div class="demo-row">\n';
-    html += '      <wb-rating value="3" max="5"></wb-rating>\n';
-    html += '      <wb-rating value="4" max="5" icon="❤️"></wb-rating>\n';
-    html += '      <wb-rating value="2" max="5" icon="👍"></wb-rating>\n';
-    html += '    </div>\n\n';
+    html += '    </wb-demo>\n';
   }
 
   if (behaviors.some(b => b.name === 'x-stepper')) {
-    html += '    <h3>Stepper & Range</h3>\n    <div class="demo-grid-2">\n';
-    html += '      <div x-stepper data-value="5" data-min="0" data-max="10"></div>\n';
-    html += '      <input type="range" min="0" max="100" value="50">\n';
-    html += '    </div>\n';
+    html += '\n    <h3>Stepper & Range</h3>\n';
+    html += '    <wb-demo><div x-stepper value="5" min="0" max="10"></div></wb-demo>\n';
+    html += '    <wb-demo><input type="range" min="0" max="100" value="50"></wb-demo>\n';
   }
 
   return html;
 }
 
-// Generate feedback demos
+// Generate feedback demos.
+// wb-alert/wb-badge/wb-progress/wb-spinner are wb-* components -- demoed
+// on pages/components.html instead, not here. Only the x-toast behavior
+// (a real attribute-behavior, not a component) belongs on this page.
 function generateFeedbackDemos(behaviors) {
   let html = '';
 
-  if (behaviors.some(b => b.name === 'wb-alert')) {
-    html += '    <h3>Alerts (All Variants)</h3>\n    <div class="alerts-stack">\n';
-    html += '      <wb-alert variant="info" title="Information" message="This is an informational message." data-dismissible></wb-alert>\n';
-    html += '      <wb-alert variant="success" title="Success" message="Operation completed successfully." data-dismissible></wb-alert>\n';
-    html += '      <wb-alert variant="warning" title="Warning" message="Please review before continuing." data-dismissible></wb-alert>\n';
-    html += '      <wb-alert variant="error" title="Error" message="Something went wrong." data-dismissible></wb-alert>\n';
-    html += '    </div>\n\n';
-  }
-
-  if (behaviors.some(b => b.name === 'wb-badge')) {
-    html += '    <h3>Badges (All Variants)</h3>\n    <div class="demo-row">\n';
-    html += '      <wb-badge>Default Badge</wb-badge>\n';
-    html += '      <wb-badge variant="primary">Primary Badge</wb-badge>\n';
-    html += '      <wb-badge variant="success">Success Badge</wb-badge>\n';
-    html += '      <wb-badge variant="warning">Warning Badge</wb-badge>\n';
-    html += '      <wb-badge variant="error">Error Badge</wb-badge>\n';
-    html += '      <wb-badge variant="info">Info Badge</wb-badge>\n';
-    html += '      <wb-badge data-pill>Pill Badge</wb-badge>\n';
-    html += '    </div>\n\n';
-  }
-
-  if (behaviors.some(b => b.name === 'wb-progress')) {
-    html += '    <h3>Progress Bars</h3>\n    <div class="progress-stack">\n';
-    html += '      <div class="progress-item">\n';
-    html += '        <span class="progress-label">25%</span>\n';
-    html += '        <wb-progress data-value="25"></wb-progress>\n';
-    html += '      </div>\n';
-    html += '      <div class="progress-item">\n';
-    html += '        <span class="progress-label">50%</span>\n';
-    html += '        <wb-progress data-value="50"></wb-progress>\n';
-    html += '      </div>\n';
-    html += '      <div class="progress-item">\n';
-    html += '        <span class="progress-label">75% (striped)</span>\n';
-    html += '        <wb-progress data-value="75" data-striped></wb-progress>\n';
-    html += '      </div>\n';
-    html += '      <div class="progress-item">\n';
-    html += '        <span class="progress-label">100%</span>\n';
-    html += '        <wb-progress data-value="100"></wb-progress>\n';
-    html += '      </div>\n';
-    html += '    </div>\n\n';
-  }
-
-  if (behaviors.some(b => b.name === 'wb-spinner')) {
-    html += '    <h3>Spinners</h3>\n    <div class="demo-row">\n';
-    html += '      <wb-spinner></wb-spinner>\n';
-    html += '      <wb-spinner color="success"></wb-spinner>\n';
-    html += '      <wb-spinner color="warning"></wb-spinner>\n';
-    html += '      <wb-spinner color="error"></wb-spinner>\n';
-    html += '      <wb-spinner size="lg"></wb-spinner>\n';
-    html += '    </div>\n\n';
-  }
-
   if (behaviors.some(b => b.name === 'x-toast')) {
-    html += '    <h3>Toast Notifications</h3>\n    <div class="demo-row">\n';
-    html += '      <button variant="primary" x-toast data-message="Info message" data-type="info">Info Toast</button>\n';
-    html += '      <button variant="primary" x-toast data-message="Success!" data-type="success">Success Toast</button>\n';
-    html += '      <button variant="primary" x-toast data-message="Warning!" data-type="warning">Warning Toast</button>\n';
-    html += '      <button variant="primary" x-toast data-message="Error!" data-type="error">Error Toast</button>\n';
-    html += '    </div>\n';
+    html += '    <h3>Toast Notifications</h3>\n';
+    html += '    <wb-demo><button variant="primary" x-toast message="Info message" toast-variant="info">Info Toast</button></wb-demo>\n';
+    html += '    <wb-demo><button variant="primary" x-toast message="Success!" toast-variant="success">Success Toast</button></wb-demo>\n';
+    html += '    <wb-demo><button variant="primary" x-toast message="Warning!" toast-variant="warning">Warning Toast</button></wb-demo>\n';
+    html += '    <wb-demo><button variant="primary" x-toast message="Error!" toast-variant="error">Error Toast</button></wb-demo>\n';
   }
 
   return html;
 }
 
-// Generate overlay demos
+// Generate overlay demos.
+// wb-modal/wb-drawer are wb-* components -- demoed on pages/components.html
+// instead, not here. One <wb-demo> per distinctly-configured element.
 function generateOverlayDemos(behaviors) {
   let html = '';
 
-  if (behaviors.some(b => b.name === 'wb-modal')) {
-    html += '    <h3>Modal Dialog</h3>\n    <div class="demo-row">\n';
-    html += '      <wb-modal class="wb-btn" data-modal-title="Modal Dialog" data-modal-content="This is a modal dialog. Press ESC or click outside to close.">Open Modal</wb-modal>\n';
-    html += '    </div>\n\n';
-  }
-
-  if (behaviors.some(b => b.name === 'wb-drawer')) {
-    html += '    <h3>Drawer</h3>\n    <div class="demo-row">\n';
-    html += '      <wb-drawer class="wb-btn" title="Left Drawer" content="Slide-out panel from the left." position="left">Left Drawer</wb-drawer>\n';
-    html += '      <wb-drawer class="wb-btn" title="Right Drawer" content="Slide-out panel from the right." position="right">Right Drawer</wb-drawer>\n';
-    html += '    </div>\n\n';
-  }
-
   if (behaviors.some(b => b.name === 'x-tooltip')) {
-    html += '    <h3>Tooltips</h3>\n    <div class="demo-row">\n';
-    html += '      <button variant="secondary" x-tooltip="Top tooltip" data-position="top">Top</button>\n';
-    html += '      <button variant="secondary" x-tooltip="Bottom tooltip" data-position="bottom">Bottom</button>\n';
-    html += '      <button variant="secondary" x-tooltip="Left tooltip" data-position="left">Left</button>\n';
-    html += '      <button variant="secondary" x-tooltip="Right tooltip" data-position="right">Right</button>\n';
-    html += '    </div>\n\n';
+    html += '    <h3>Tooltips</h3>\n';
+    html += '    <wb-demo><button variant="secondary" x-tooltip="Top tooltip" position="top">Top</button></wb-demo>\n';
+    html += '    <wb-demo><button variant="secondary" x-tooltip="Bottom tooltip" position="bottom">Bottom</button></wb-demo>\n';
+    html += '    <wb-demo><button variant="secondary" x-tooltip="Left tooltip" position="left">Left</button></wb-demo>\n';
+    html += '    <wb-demo><button variant="secondary" x-tooltip="Right tooltip" position="right">Right</button></wb-demo>\n';
   }
 
   if (behaviors.some(b => b.name === 'x-popover')) {
-    html += '    <h3>Popover</h3>\n    <div class="demo-row">\n';
-    html += '      <button variant="primary" x-popover data-title="Popover Title" data-content="This is additional information displayed in a popover.">Show Popover</button>\n';
-    html += '    </div>\n\n';
+    html += '\n    <h3>Popover</h3>\n';
+    html += '    <wb-demo><button variant="primary" x-popover popover-title="Popover Title" popover-content="This is additional information displayed in a popover.">Show Popover</button></wb-demo>\n';
   }
 
   if (behaviors.some(b => b.name === 'x-confirm' || b.name === 'x-prompt')) {
-    html += '    <h3>Confirm & Prompt</h3>\n    <div class="demo-row">\n';
+    html += '\n    <h3>Confirm & Prompt</h3>\n';
     if (behaviors.some(b => b.name === 'x-confirm')) {
-      html += '      <button variant="primary" x-confirm data-title="Confirm Action" data-message="Are you sure you want to proceed?">Confirm Dialog</button>\n';
+      html += '    <wb-demo><button variant="primary" x-confirm confirm-title="Confirm Action" confirm-message="Are you sure you want to proceed?">Confirm Dialog</button></wb-demo>\n';
     }
     if (behaviors.some(b => b.name === 'x-prompt')) {
-      html += '      <button variant="primary" x-prompt data-title="Enter Value" data-message="Please enter your name:">Prompt Dialog</button>\n';
+      html += '    <wb-demo><button variant="primary" x-prompt prompt-title="Enter Value" prompt-message="Please enter your name:">Prompt Dialog</button></wb-demo>\n';
     }
-    html += '    </div>\n\n';
   }
 
   if (behaviors.some(b => b.name === 'x-lightbox')) {
-    html += '    <h3>Lightbox</h3>\n    <div class="demo-row">\n';
-    html += '      <button variant="primary" x-lightbox data-src="https://picsum.photos/1200/800?r=lb1">View Image 1</button>\n';
-    html += '      <button variant="primary" x-lightbox data-src="https://picsum.photos/1200/800?r=lb2">View Image 2</button>\n';
-    html += '    </div>\n';
+    html += '\n    <h3>Lightbox</h3>\n';
+    html += '    <wb-demo><button variant="primary" x-lightbox src="https://picsum.photos/1200/800?r=lb1">View Image 1</button></wb-demo>\n';
+    html += '    <wb-demo><button variant="primary" x-lightbox src="https://picsum.photos/1200/800?r=lb2">View Image 2</button></wb-demo>\n';
   }
 
   return html;
 }
 
-// Generate navigation demos
+// Generate navigation demos.
+// wb-tabs/wb-accordion are wb-* components -- demoed on
+// pages/components.html instead, not here.
 function generateNavigationDemos(behaviors) {
   let html = '';
 
-  if (behaviors.some(b => b.name === 'wb-tabs')) {
-    html += '    <h3>Tabs</h3>\n    <div class="demo-full">\n';
-    html += '      <wb-tabs>\n';
-    html += '        <div tab-title="Overview">\n';
-    html += '          <p>This is the overview tab content. Tabs organize content into separate views with keyboard navigation.</p>\n';
-    html += '        </div>\n';
-    html += '        <div tab-title="Features">\n';
-    html += '          <p>Features include smooth transitions, responsive design, and full accessibility compliance.</p>\n';
-    html += '        </div>\n';
-    html += '        <div tab-title="Usage">\n';
-    html += '          <p>Simply wrap your content in a wb-tabs element with tab-title on each panel.</p>\n';
-    html += '        </div>\n';
-    html += '      </wb-tabs>\n';
-    html += '    </div>\n\n';
-  }
-
-  if (behaviors.some(b => b.name === 'wb-accordion')) {
-    html += '    <h3>Accordion</h3>\n    <div class="demo-full">\n';
-    html += '      <wb-accordion>\n';
-    html += '        <div accordion-title="What is wb-starter?">\n';
-    html += '          <p>wb-starter is a zero-build web component library with behaviors and themes.</p>\n';
-    html += '        </div>\n';
-    html += '        <div accordion-title="How do I install it?">\n';
-    html += '          <p>No installation needed! Just include the script and start using components immediately.</p>\n';
-    html += '        </div>\n';
-    html += '        <div accordion-title="Is it production ready?">\n';
-    html += '          <p>Yes! wb-starter is schema-driven, fully tested, and enterprise hardened.</p>\n';
-    html += '        </div>\n';
-    html += '      </wb-accordion>\n';
-    html += '    </div>\n\n';
-  }
-
   if (behaviors.some(b => b.name === 'x-breadcrumb')) {
-    html += '    <h3>Breadcrumb</h3>\n    <div class="demo-full">\n';
-    html += '      <nav x-breadcrumb data-items="Home,Products,Electronics,Smartphones"></nav>\n';
-    html += '    </div>\n\n';
+    html += '    <h3>Breadcrumb</h3>\n';
+    html += '    <wb-demo><nav x-breadcrumb items="Home,Products,Electronics,Smartphones"></nav></wb-demo>\n';
   }
 
   if (behaviors.some(b => b.name === 'x-pagination')) {
-    html += '    <h3>Pagination</h3>\n    <div class="demo-full">\n';
-    html += '      <nav x-pagination data-total="100" data-per-page="10" data-current="5"></nav>\n';
-    html += '    </div>\n\n';
+    html += '\n    <h3>Pagination</h3>\n';
+    html += '    <wb-demo><nav x-pagination total="100" per-page="10" current="5"></nav></wb-demo>\n';
   }
 
   if (behaviors.some(b => b.name === 'x-steps')) {
-    html += '    <h3>Steps Wizard</h3>\n    <div class="demo-full">\n';
-    html += '      <div x-steps data-items="Cart,Shipping,Payment,Confirm" data-current="2"></div>\n';
-    html += '    </div>\n';
+    html += '\n    <h3>Steps Wizard</h3>\n';
+    html += '    <wb-demo><div x-steps items="Cart,Shipping,Payment,Confirm" current="2"></div></wb-demo>\n';
   }
 
   return html;
 }
 
-// Generate data demos
+// Generate data demos.
 function generateDataDemos(behaviors) {
   let html = '';
 
@@ -660,58 +448,52 @@ function generateDataDemos(behaviors) {
   // behaviors, contradicting its own purpose.
 
   if (behaviors.some(b => b.name === 'x-timeline')) {
-    html += '    <h3>Timeline</h3>\n    <div class="demo-full">\n';
-    html += '      <div x-timeline data-items="Project kickoff,Design phase,Development,Testing,Launch"></div>\n';
-    html += '    </div>\n\n';
+    html += '    <h3>Timeline</h3>\n';
+    html += '    <wb-demo><div x-timeline items="Project kickoff,Design phase,Development,Testing,Launch"></div></wb-demo>\n';
   }
 
   if (behaviors.some(b => b.name === 'x-kbd')) {
-    html += '    <h3>Keyboard Keys</h3>\n    <div class="demo-row">\n';
-    html += '      <p>Press <span x-kbd>Ctrl</span> + <span x-kbd>S</span> to save, or <span x-kbd>⌘</span> + <span x-kbd>K</span> on Mac.</p>\n';
-    html += '    </div>\n';
+    html += '\n    <h3>Keyboard Keys</h3>\n';
+    html += '    <wb-demo><p>Press <span x-kbd>Ctrl</span> + <span x-kbd>S</span> to save, or <span x-kbd>⌘</span> + <span x-kbd>K</span> on Mac.</p></wb-demo>\n';
   }
 
   return html;
 }
 
-// Generate media demos
+// Generate media demos.
+// wb-audio is a wb-* component -- demoed on pages/components.html instead,
+// not here. Gallery stays a single <wb-demo> since x-gallery's multiple
+// <img> children are ONE configured instance, not several distinct demos.
 function generateMediaDemos(behaviors) {
   let html = '';
 
   if (behaviors.some(b => b.name === 'x-image')) {
-    html += '    <h3>Enhanced Images</h3>\n    <div class="demo-row">\n';
-    html += '      <img x-image src="https://picsum.photos/200/150?r=enh1" alt="Lazy loaded" data-lazy class="demo-image">\n';
-    html += '      <img x-image src="https://picsum.photos/200/150?r=enh2" alt="Zoomable" data-zoomable class="demo-image">\n';
-    html += '    </div>\n\n';
+    html += '    <h3>Enhanced Images</h3>\n';
+    html += '    <wb-demo><img x-image src="https://picsum.photos/200/150?r=enh1" alt="Lazy loaded" lazy class="demo-image"></wb-demo>\n';
+    html += '    <wb-demo><img x-image src="https://picsum.photos/200/150?r=enh2" alt="Zoomable" zoomable class="demo-image"></wb-demo>\n';
   }
 
   if (behaviors.some(b => b.name === 'x-gallery')) {
-    html += '    <h3>Gallery</h3>\n    <div class="demo-full">\n';
-    html += '      <div x-gallery data-columns="4">\n';
+    html += '\n    <h3>Gallery</h3>\n    <wb-demo>\n';
+    html += '      <div x-gallery columns="4">\n';
     html += '        <img src="https://picsum.photos/200/200?r=gal1" alt="Gallery 1">\n';
     html += '        <img src="https://picsum.photos/200/200?r=gal2" alt="Gallery 2">\n';
     html += '        <img src="https://picsum.photos/200/200?r=gal3" alt="Gallery 3">\n';
     html += '        <img src="https://picsum.photos/200/200?r=gal4" alt="Gallery 4">\n';
     html += '      </div>\n';
-    html += '    </div>\n\n';
-  }
-
-  if (behaviors.some(b => b.name === 'wb-audio')) {
-    html += '    <h3>Audio Player</h3>\n    <div class="demo-full">\n';
-    html += '      <wb-audio src="https://files.freemusicarchive.org/storage-freemusicarchive-org/music/no_curator/Tours/Enthusiast/Tours_-_01_-_Enthusiast.mp3" show-eq volume="0.7"></wb-audio>\n';
-    html += '    </div>\n\n';
+    html += '    </wb-demo>\n';
   }
 
   if (behaviors.some(b => b.name === 'x-youtube')) {
-    html += '    <h3>YouTube Embed</h3>\n    <div class="demo-full youtube-container">\n';
-    html += '      <div x-youtube data-id="dQw4w9WgXcQ" data-ratio="16:9"></div>\n';
-    html += '    </div>\n';
+    html += '\n    <h3>YouTube Embed</h3>\n';
+    html += '    <wb-demo class="youtube-container"><div x-youtube id="dQw4w9WgXcQ" ratio="16:9"></div></wb-demo>\n';
   }
 
   return html;
 }
 
-// Generate effects demos
+// Generate effects demos.
+// One <wb-demo> per effect -- no grouping.
 function generateEffectDemos(behaviors) {
   let html = '';
 
@@ -721,13 +503,12 @@ function generateEffectDemos(behaviors) {
   ].includes(b.name));
 
   if (attentionSeekers.length > 0) {
-    html += '    <h3>Attention Seekers (click to trigger)</h3>\n    <div class="demo-row">\n';
+    html += '    <h3>Attention Seekers (click to trigger)</h3>\n';
     attentionSeekers.forEach(behavior => {
       const displayName = behavior.name.replace('x-', '').charAt(0).toUpperCase() + behavior.name.replace('x-', '').slice(1);
       const emoji = behavior.name === 'x-heartbeat' ? '💓 ' : '';
-      html += `      <button class="effect-demo" ${behavior.name}>${emoji}${displayName}</button>\n`;
+      html += `    <wb-demo><button class="effect-demo" ${behavior.name}>${emoji}${displayName}</button></wb-demo>\n`;
     });
-    html += '    </div>\n\n';
   }
 
   // Entrance animations
@@ -736,18 +517,17 @@ function generateEffectDemos(behaviors) {
   ].includes(b.name));
 
   if (entranceAnimations.length > 0) {
-    html += '    <h3>Entrance Animations</h3>\n    <wb-demo>\n';
+    html += '\n    <h3>Entrance Animations</h3>\n';
     entranceAnimations.forEach(behavior => {
       const displayName = behavior.name.replace('x-', '').charAt(0).toUpperCase() + behavior.name.replace('x-', '').slice(1);
       if (behavior.name === 'x-slidein') {
-        html += `      <button class="effect-demo" ${behavior.name} data-direction="left">${displayName} Left</button>\n`;
-        html += `      <button class="effect-demo" ${behavior.name} data-direction="right">${displayName} Right</button>\n`;
-        html += `      <button class="effect-demo" ${behavior.name} data-direction="up">${displayName} Up</button>\n`;
+        html += `    <wb-demo><button class="effect-demo" ${behavior.name} direction="left">${displayName} Left</button></wb-demo>\n`;
+        html += `    <wb-demo><button class="effect-demo" ${behavior.name} direction="right">${displayName} Right</button></wb-demo>\n`;
+        html += `    <wb-demo><button class="effect-demo" ${behavior.name} direction="up">${displayName} Up</button></wb-demo>\n`;
       } else {
-        html += `      <button class="effect-demo" ${behavior.name}>${displayName}</button>\n`;
+        html += `    <wb-demo><button class="effect-demo" ${behavior.name}>${displayName}</button></wb-demo>\n`;
       }
     });
-    html += '    </wb-demo>\n\n';
   }
 
   // Special effects
@@ -756,7 +536,7 @@ function generateEffectDemos(behaviors) {
   ].includes(b.name));
 
   if (specialEffects.length > 0) {
-    html += '    <h3>Special Effects</h3>\n    <wb-demo>\n';
+    html += '\n    <h3>Special Effects</h3>\n';
     specialEffects.forEach(behavior => {
       const displayName = behavior.name.replace('x-', '').charAt(0).toUpperCase() + behavior.name.replace('x-', '').slice(1);
       const emoji = {
@@ -770,74 +550,68 @@ function generateEffectDemos(behaviors) {
       }[behavior.name] || '';
 
       if (behavior.name === 'x-ripple') {
-        html += `      <button variant="primary" ${behavior.name}>Click for Ripple</button>\n`;
-        html += `      <div ${behavior.name} class="ripple-box">Ripple on any element</div>\n`;
+        html += `    <wb-demo><button variant="primary" ${behavior.name}>Click for Ripple</button></wb-demo>\n`;
+        html += `    <wb-demo><div ${behavior.name} class="ripple-box">Ripple on any element</div></wb-demo>\n`;
       } else {
-        html += `      <button variant="primary" ${behavior.name}>${emoji}${displayName}</button>\n`;
+        html += `    <wb-demo><button variant="primary" ${behavior.name}>${emoji}${displayName}</button></wb-demo>\n`;
       }
     });
-    html += '    </wb-demo>\n';
   }
 
   return html;
 }
 
-// Generate utility demos
+// Generate utility demos.
+// One <wb-demo> per distinctly-configured element -- no grouping. Note
+// share/print/fullscreen each get their OWN <wb-demo> and only x-share
+// gets the share-title/share-url attributes (print/fullscreen take none),
+// same for clock/countdown/relativetime -- they are three separate demos,
+// not one shared block. wb-themecontrol is header-only UI chrome (see
+// src/core/site-engine.js), not a per-page demo, so it is never rendered
+// here.
 function generateUtilityDemos(behaviors) {
   let html = '';
 
-  // Copy functionality
   if (behaviors.some(b => b.name === 'x-copy')) {
-    html += '    <wb-demo title="Copy functionality">\n';
-    html += '      <button variant="primary" x-copy data-copy="Text copied to clipboard!">📋 Copy Text</button>\n';
-    html += '      <button variant="primary" x-copy data-copy="npm install wb-framework">📋 Copy Command</button>\n';
-    html += '    </wb-demo>\n\n';
+    html += '    <h3>Copy functionality</h3>\n';
+    html += '    <wb-demo><button variant="primary" x-copy copy-text="Text copied to clipboard!">📋 Copy Text</button></wb-demo>\n';
+    html += '    <wb-demo><button variant="primary" x-copy copy-text="npm install wb-framework">📋 Copy Command</button></wb-demo>\n';
   }
 
-  // Share, Print & Fullscreen
-  const shareUtilities = behaviors.filter(b => ['x-share', 'x-print', 'x-fullscreen'].includes(b.name));
-  if (shareUtilities.length > 0) {
-    html += '    <h3>Share, Print & Fullscreen</h3>\n    <wb-demo>\n';
-    shareUtilities.forEach(behavior => {
-      const displayName = behavior.name.replace('x-', '').charAt(0).toUpperCase() + behavior.name.replace('x-', '').slice(1);
-      const emoji = {
-        'x-share': '📤 ',
-        'x-print': '🖨️ ',
-        'x-fullscreen': '⛶ '
-      }[behavior.name] || '';
-      html += `      <button variant="secondary" ${behavior.name} data-share-title="wb-starter" data-share-url="https://example.com">${emoji}${displayName}</button>\n`;
-    });
-    html += '    </wb-demo>\n\n';
+  if (behaviors.some(b => b.name === 'x-share' || b.name === 'x-print' || b.name === 'x-fullscreen')) {
+    html += '\n    <h3>Share, Print & Fullscreen</h3>\n';
+    if (behaviors.some(b => b.name === 'x-share')) {
+      html += '    <wb-demo><button variant="secondary" x-share share-title="wb-starter" share-url="https://example.com">📤 Share</button></wb-demo>\n';
+    }
+    if (behaviors.some(b => b.name === 'x-print')) {
+      html += '    <wb-demo><button variant="secondary" x-print>🖨️ Print</button></wb-demo>\n';
+    }
+    if (behaviors.some(b => b.name === 'x-fullscreen')) {
+      html += '    <wb-demo><button variant="secondary" x-fullscreen>⛶ Fullscreen</button></wb-demo>\n';
+    }
   }
 
-  // Clock & Countdown
-  const timeUtilities = behaviors.filter(b => ['x-clock', 'x-countdown', 'x-relativetime'].includes(b.name));
-  if (timeUtilities.length > 0) {
-    html += '    <h3>Clock & Countdown</h3>\n    <wb-demo>\n';
-    timeUtilities.forEach(behavior => {
-      if (behavior.name === 'x-clock') {
-        html += '      <div x-clock class="time-display"></div>\n';
-      } else if (behavior.name === 'x-countdown') {
-        html += '      <div x-countdown to="2027-12-31" class="time-display"></div>\n';
-      } else if (behavior.name === 'x-relativetime') {
-        html += '      <span x-relativetime data-date="2025-01-01" class="time-display">Jan 1, 2025</span>\n';
-      }
-    });
-    html += '    </wb-demo>\n\n';
+  if (behaviors.some(b => b.name === 'x-clock' || b.name === 'x-countdown' || b.name === 'x-relativetime')) {
+    html += '\n    <h3>Clock & Countdown</h3>\n';
+    if (behaviors.some(b => b.name === 'x-clock')) {
+      html += '    <wb-demo><div x-clock class="time-display"></div></wb-demo>\n';
+    }
+    if (behaviors.some(b => b.name === 'x-countdown')) {
+      html += '    <wb-demo><div x-countdown to="2027-12-31" class="time-display"></div></wb-demo>\n';
+    }
+    if (behaviors.some(b => b.name === 'x-relativetime')) {
+      html += '    <wb-demo><span x-relativetime date="2025-01-01" class="time-display">Jan 1, 2025</span></wb-demo>\n';
+    }
   }
 
-  // Dark Mode Toggle
   if (behaviors.some(b => b.name === 'x-darkmode')) {
-    html += '    <h3>Dark Mode Toggle</h3>\n    <wb-demo>\n';
-    html += '      <button variant="primary" x-darkmode>🌙 Toggle Dark Mode</button>\n';
-    html += '      <wb-themecontrol></wb-themecontrol>\n';
-    html += '    </wb-demo>\n\n';
+    html += '\n    <h3>Dark Mode Toggle</h3>\n';
+    html += '    <wb-demo><button variant="primary" x-darkmode>🌙 Toggle Dark Mode</button></wb-demo>\n';
   }
 
-  // Text Truncate
   if (behaviors.some(b => b.name === 'x-truncate')) {
-    html += '    <h3>Text Truncate</h3>\n    <wb-demo>\n';
-    html += '      <p x-truncate data-lines="2" class="truncate-box">\n';
+    html += '\n    <h3>Text Truncate</h3>\n    <wb-demo>\n';
+    html += '      <p x-truncate lines="2" class="truncate-box">\n';
     html += '        This is a very long text that will be truncated after two lines. Lorem ipsum dolor sit amet, consectetur\n';
     html += '        adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.\n';
     html += '      </p>\n';
