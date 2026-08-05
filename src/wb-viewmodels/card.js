@@ -299,7 +299,19 @@ export function cardBase(element, options = {}) {
   if (config.elevated) {
     element.classList.add('wb-card--elevated');
     element.style.boxShadow = 'var(--shadow-elevated, 0 4px 12px rgba(0,0,0,0.15))';
-    element.style.background = 'var(--bg-elevated, var(--bg-secondary))'; // LIGHTER than base; theme-aware (#198)
+    // #488: only set the generic elevated background inline when the card
+    // doesn't already own its own surface (glass/bordered/flat/rack/minimal).
+    // This boolean `elevated` attribute is independent of `config.variant`,
+    // so a `variant="glass" elevated` card used to hit this unconditionally
+    // -- the inline style always wins over ANY class selector (including the
+    // .wb-card--glass.wb-card--elevated compound rule added in card.css for
+    // this same issue), silently replacing glass's translucent background
+    // with an opaque one regardless of CSS specificity. Same
+    // inline-beats-class guard already applied to the base surface above
+    // (ownsOwnSurface, ~line 263) and to hoverLeave's border-color below.
+    if (!ownsOwnSurface) {
+      element.style.background = 'var(--bg-elevated, var(--bg-secondary))'; // LIGHTER than base; theme-aware (#198)
+    }
   }
   
   // Hoverable
@@ -798,6 +810,10 @@ export function cardvideo(element, options = {}) {
     muted: parseBoolean(options.muted) ?? (element.dataset.muted === 'true' || element.getAttribute('muted') === 'true' || (element.hasAttribute('data-muted') && element.dataset.muted !== 'false') || element.hasAttribute('muted')),
     loop: parseBoolean(options.loop) ?? (element.dataset.loop === 'true' || element.getAttribute('loop') === 'true' || (element.hasAttribute('data-loop') && element.dataset.loop !== 'false') || element.hasAttribute('loop')),
     controls: parseBoolean(options.controls) ?? (element.dataset.controls !== 'false' && element.getAttribute('controls') !== 'false'),
+    // Same aspect-ratio pattern as cardimage() above: a fixed box size,
+    // deterministic regardless of load success/failure, instead of falling
+    // back to the browser's intrinsic video default (~300x150) (#482).
+    aspect: getAttr(element, options, 'aspect') || '16/9',
     content: options.content || element.dataset.content || element.innerHTML,
     ...options
   };
@@ -813,9 +829,10 @@ export function cardvideo(element, options = {}) {
   let retryCleanup = null;
   if (config.src) {
     const coverFigure = base.createFigure();
+    coverFigure.style.aspectRatio = config.aspect;
     const video = document.createElement('video');
     video.src = config.src;
-    video.style.cssText = 'width:100%;display:block;';
+    video.style.cssText = 'width:100%;height:100%;display:block;';
     if (config.poster) video.poster = config.poster;
     if (config.autoplay) video.autoplay = true;
     if (config.muted) video.muted = true;

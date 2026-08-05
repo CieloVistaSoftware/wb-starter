@@ -413,6 +413,36 @@
   background: var(--bg-elevated);
 }
 
+/* #488: glass + elevated collide -- both `.wb-card--glass` (background:
+   var(--card-glass-bg), translucent) and `.wb-card--elevated` (background:
+   var(--bg-elevated), opaque) are single-class selectors at identical
+   specificity (0,0,1,0); elevated is declared later in the file, so its
+   opaque background always won outright when both classes land on the same
+   element, making backdrop-filter blur a fully opaque surface with no
+   visible glass effect. Same compound-selector tie-break already used
+   elsewhere in this file for same-specificity collisions (see
+   .wb-card__footer.wb-footer / .wb-card__header.wb-header above): reassert
+   glass's translucent background/border at (0,0,2,0) so glass always wins
+   the surface when both variants are applied together, while elevated's
+   box-shadow (not overridden here) still supplies the elevation cue. */
+.wb-card--glass.wb-card--elevated {
+  background: var(--card-glass-bg);
+  border-color: var(--card-glass-border);
+}
+
+.wb-card--glass.wb-card--elevated:hover {
+  background: var(--card-glass-bg-hover);
+  border-color: var(--card-glass-border-hover);
+}
+
+@supports not (backdrop-filter: blur(1px)) {
+  .wb-card--glass.wb-card--elevated,
+  .wb-card--glass.wb-card--elevated:hover {
+    background: var(--card-glass-bg-fallback);
+    border-color: var(--card-glass-border-fallback);
+  }
+}
+
 /* Float — the most-used card variant in the showcase, but it had NO CSS rule, so
    "float" cards fell back to the flat base and (with --border-color undefined)
    read as undemarcated blocks (issue 180). Give it clear elevation + the hairline
