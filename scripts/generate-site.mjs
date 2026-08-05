@@ -405,7 +405,13 @@ function generatePageHtml(pageSchema) {
   lines.push('');
   lines.push('</head>');
   lines.push('');
-  lines.push('<body>');
+  // #274/live report: was a bare <body> -- these standalone pages aren't
+  // routed through the .site/.site__body app shell (see components.html),
+  // so with no page-level padding class their content sat flush against
+  // the viewport edge (headings, code blocks, everything at x=0). site.css
+  // already declares `.demo-page` for exactly this; it just never got
+  // wired onto this generator's actual output.
+  lines.push('<body class="demo-page">');
 
   // Nav back to index
   lines.push('  <nav style="margin-bottom: 1rem;">');

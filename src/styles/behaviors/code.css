@@ -8,7 +8,12 @@
 
 .x-code {
   background: var(--bg-tertiary);
-  padding: 0.75rem;
+  /* Sized for the common case: a short inline snippet sitting amid normal
+     body text (a table cell, a list item, prose). 0.75rem vertical padding
+     here used to bleed into the line above/below -- padding on an inline
+     box doesn't grow the line's own height, so tightly-packed text (e.g.
+     several <code> badges across neighboring <li>s) visually overlapped. */
+  padding: 0.15em 0.4em;
   border-radius: 6px;
   font-family: monospace;
   /* Was a hardcoded 0.8rem — every native <code> gets this class via
@@ -18,4 +23,10 @@
      surrounding text size, same as normalize.css's own code/kbd/samp rule. */
   font-size: 1em;
   overflow-x: auto;
+}
+
+/* Standalone <pre><code> blocks want real breathing room -- nothing sits
+   beside them, so the bigger padding here can't bleed into another line. */
+pre > .x-code {
+  padding: 0.75rem;
 }

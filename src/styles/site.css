@@ -27,6 +27,13 @@
 *, *::before, *::after { box-sizing: border-box; }
 body { margin: 0; font-family: system-ui, -apple-system, sans-serif; }
 
+/* #274: prose <li>s have zero margin by default, so a long item that wraps
+   to 2+ lines sits flush against the next item -- their line boxes visually
+   touch/overlap with no gap at all. Seen project-wide on any content page
+   with wrapped list text (about.html, whats-new.html, etc). */
+li { margin-bottom: 0.35em; }
+li:last-child { margin-bottom: 0; }
+
 /* =============================================================================
    STANDALONE DEMO PAGE CONTAINER
    ============================================================================= */
@@ -40,6 +47,14 @@ body { margin: 0; font-family: system-ui, -apple-system, sans-serif; }
   max-width: 1100px;
   margin: 2rem auto;
   padding: 0 1.5rem;
+}
+
+/* #450's mobile pattern (body > .page, doc-viewer.html) applied here too --
+   1.5rem side padding is ~36% of a 375px viewport's width. */
+@media (max-width: 640px) {
+  .demo-page {
+    padding: 0 1rem;
+  }
 }
 
 /* =============================================================================

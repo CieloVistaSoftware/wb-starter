@@ -62,7 +62,14 @@ test.describe('No element overlap (§22) — project-wide detection', () => {
       const errs: string[] = [];
       page.on('pageerror', (e) => errs.push(String(e)));
 
-      await page.goto(urlPath, { waitUntil: 'domcontentloaded' });
+      // networkidle (not domcontentloaded) -- under concurrent-worker load
+      // (many tests hitting the shared dev server at once), slow image
+      // fetches finish AFTER the fixed settle timeout below, so an overlay
+      // positioned against an image (e.g. wb-card__overlay on a still-
+      // loading card image) gets measured mid-layout-shift. Confirmed via
+      // repeated runs: flaked only under full-suite concurrency, passed
+      // every time in isolation -- a load-timing race, not a real defect.
+      await page.goto(urlPath, { waitUntil: 'networkidle' });
       await page.waitForTimeout(800); // settle lazy/eager scan + layout
 
       const violations = await page.evaluate((minOverlapDim) => {

@@ -17,6 +17,22 @@
     window.WB = WB;
     await WB.init({ autoInject: true });
     await WB.scan(document.body, { eager: true });
+
+    // Neither CTA had a destination at all (live report: clicking either
+    // did nothing) -- wb-button renders a real <button> internally
+    // (button.schema.json's semanticElement.tagName), so wrapping it in an
+    // <a> would nest a button inside a link (invalid HTML); navigating on
+    // click is the correct approach for a real component instead.
+    document.getElementById('lp-cta-start')?.addEventListener('click', () => {
+      // doc-viewer.html prefixes any bare (no-slash) filename with 'docs/'
+      // (its own comment: legacy links passed bare names meaning a docs/
+      // file) -- './README.md' has a slash so it's left alone and reaches
+      // the real repo-root README via /api/markdown's plain rootDir join.
+      window.location.href = '/public/doc-viewer.html?file=./README.md';
+    });
+    document.getElementById('lp-cta-components')?.addEventListener('click', () => {
+      window.location.href = '/?page=components';
+    });
   </script>
   <style>
     .lp-section { max-width: 1100px; margin: 0 auto; padding: 4rem 1.5rem; }
@@ -41,10 +57,10 @@
     <wb-badge id="lp-version-badge" label="v3.0 — zero build step" variant="primary" pill></wb-badge>
     <h1>Ship real UI.<br>No bundler required.</h1>
     <p class="lead">wb-starter is a composition-based web component library. Drop an attribute on a semantic element — <code>x-ripple</code>, <code>wb-card</code>, <code>x-typewriter</code> — and it just works. No React, no build step, no framework lock-in.</p>
-    <div id="lp-typewriter" class="lp-prompt" x-typewriter text="<button x-ripple x-tooltip=&quot;Click me&quot;>Ship it</button>" speed="35"></div>
+    <pre class="lp-prompt"><code class="language-html">&lt;button x-ripple x-tooltip="Click me"&gt;Ship it&lt;/button&gt;</code></pre>
     <div class="lp-cta">
-      <wb-button variant="primary" x-ripple>Get Started</wb-button>
-      <wb-button variant="secondary" x-ripple x-tooltip="18 card variants, 23 themes, 100+ behaviors">See the Components</wb-button>
+      <wb-button id="lp-cta-start" variant="primary" x-ripple>Get Started</wb-button>
+      <wb-button id="lp-cta-components" variant="secondary" x-ripple x-tooltip="18 card variants, 23 themes, 100+ behaviors">See the Components</wb-button>
     </div>
   </section>
 
