@@ -609,10 +609,20 @@ function normalizeNoteContent(str) {
 // server on the deployed GitHub Pages site), so a failure here must never
 // block the note itself from saving. execFileSync (array args, no shell)
 // avoids command injection from arbitrary note text.
+// Every note's content starts with notes.js's own auto-generated
+// "[date, time] Page: X" (or a bare URL) header line -- useless as an
+// issue title (every note's title would read as a timestamp) and not
+// itself real content, so a note that's ONLY this header line (the "New"
+// button was clicked but nothing was actually typed) isn't a real report.
+const HEADER_LINE_RE = /^\[[^\]]+\]\s/;
+
 function createIssueFromNote(note) {
   try {
-    const firstLine = String(note.content).split('\n').find((l) => l.trim()) || 'Note';
-    const title = firstLine.trim().slice(0, 80);
+    const lines = String(note.content).split('\n').map((l) => l.trim()).filter(Boolean);
+    const realLines = lines.filter((l) => !HEADER_LINE_RE.test(l));
+    if (!realLines.length) return null; // header-only save -- nothing to report
+
+    const title = realLines[0].slice(0, 80);
     const bodyParts = [
       note.content,
       '',

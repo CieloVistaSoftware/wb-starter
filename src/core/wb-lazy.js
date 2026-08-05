@@ -18,6 +18,7 @@ import { elementMap, nativeMap, extensionMap } from './tag-map.js';
 import { semanticPropertyMappings } from './semantic-attributes.js';
 import { ensureBehaviorCss } from './style-loader.js';
 import { makeDlog, traceStatusLabel } from './debug-trace.js';
+import SchemaBuilder from './mvvm/schema-builder.js';
 
 // Debug logging — silent unless localStorage['wb-debug'] names a category
 // (or is '1' for everything). Was forced true|| for a while; reverted per
@@ -304,6 +305,101 @@ function getAutoInjectBehaviors(element) {
   return behaviors;
 }
 
+// v3.0 schema-building step (#489, split off #322) -- mirrors wb.js's own
+// WB.processSchema() (src/core/wb.js), which builds a <wb-*> host's internal
+// DOM from its matching *.schema.json's $view BEFORE any behavior runs
+// against it. wb-lazy.js (this file -- the runtime every standalone demo
+// page, the doc-viewer, and test-harness.html load) never had an equivalent
+// call anywhere, so x-schema was never set and schema-dependent behaviors
+// found nothing pre-built to enhance. Confirmed live: switchInput()
+// (src/wb-viewmodels/semantics/switch.js) looks for a pre-built <input> via
+// `host.querySelector('input')` -- switch.schema.json's $view is what builds
+// that input/track/thumb structure, and that never ran here.
+//
+// Hooked into WB.inject() itself (below) rather than duplicated across
+// scan()/observe()/lazyInject() separately, so it runs exactly once, in the
+// right order (schema built, THEN the behavior attaches to the result),
+// regardless of which of those three paths triggered this particular
+// injection.
+//
+// Tags skipped below are confirmed (by reading the actual behavior source --
+// see wb.js's WB.processSchema for the full per-tag incident history) to
+// build their own complete DOM unconditionally, so letting schema ALSO run
+// on them would be a pure async race that silently wipes whichever of the
+// two finishes second (the wb-card* family, wb-demo, wb-details,
+// wb-skeleton, wb-dialog, wb-select, wb-article/wb-articles, wb-fix-card),
+// or -- for wb-cluster/wb-stack/wb-row/wb-search/wb-accordion, which have no
+// schema.json of their own at all -- a dead fetch that just 404s.
+const SCHEMA_SKIP_TAGS = new Set([
+  'wb-demo', 'wb-details', 'wb-cluster', 'wb-stack', 'wb-row', 'wb-search',
+  'wb-accordion', 'wb-article', 'wb-articles', 'wb-select', 'wb-skeleton',
+  'wb-dialog', 'wb-fix-card', 'wb-view',
+]);
+
+// One fetch attempt per derived schema NAME (not per element) -- avoids
+// re-hammering the server with repeated 404s for a wb-* tag that genuinely
+// has no matching schema.json (e.g. wb-grid, wb-modal). Keyed by the
+// in-flight Promise (not a plain boolean): a page with several instances of
+// the same tag (e.g. multiple <wb-switch>) fires several concurrent
+// WB.inject() calls in the same synchronous scan() pass, all reaching this
+// point before the first one's fetch has resolved -- a boolean flag set
+// eagerly (as this used to do) would make every caller AFTER the first
+// think loading was already "handled" and immediately call processElement()
+// against a still-unregistered schema, silently skipping every instance but
+// the very first (confirmed live: 1 of 17 <wb-switch> on forms.html got
+// x-schema, the other 16 didn't). Awaiting the SAME shared promise -- the
+// same pattern loadSchemaFile()'s own inFlightSchemaFetches map already uses
+// for concurrent identical-filename fetches -- fixes that race.
+const schemaLoadPromises = new Map(); // name -> in-flight Promise, removed once settled
+const schemaLoadFailed = new Set();   // names confirmed to have no *.schema.json
+
+async function ensureSchemaRegistered(name) {
+  if (SchemaBuilder.getSchema(name) || schemaLoadFailed.has(name)) return;
+  let promise = schemaLoadPromises.get(name);
+  if (!promise) {
+    promise = SchemaBuilder.loadSchemaFile(`${name}.schema.json`)
+      .then(ok => { if (!ok) schemaLoadFailed.add(name); })
+      .finally(() => schemaLoadPromises.delete(name));
+    schemaLoadPromises.set(name, promise);
+  }
+  await promise;
+}
+
+/**
+ * Build a <wb-*> element's internal DOM from its schema (if one exists and
+ * this tag isn't self-sufficient) before a behavior is injected into it.
+ * No-op for anything that isn't an eligible wb-* custom element, already
+ * schema-built, or has no known behavior mapping at all.
+ * @param {HTMLElement} element
+ */
+async function buildSchemaIfNeeded(element) {
+  const tag = element.tagName.toLowerCase();
+  if (!tag.startsWith('wb-') || tag.startsWith('wb-card') || SCHEMA_SKIP_TAGS.has(tag)) return;
+  // wb-modal only self-builds a trigger when used with modal-title/
+  // modal-content (dialog.js's TRIGGER mode) -- matches wb.js's
+  // WB.processSchema exactly.
+  if (tag === 'wb-modal' && (element.hasAttribute('modal-title') || element.hasAttribute('modal-content'))) return;
+  if (element.hasAttribute('x-schema')) return; // already schema-built
+
+  // tag-map.js's elementMap is the same source of truth wb.js's own
+  // _detectSchemaName() reads from -- NOT a name derived straight off the
+  // tag string. That distinction matters: a real registered custom element
+  // like wb-grid (wb-viewmodels/wb-grid.js, whose own connectedCallback
+  // builds its DOM directly) has no elementMap entry at all, so it's
+  // correctly never even attempted here, exactly as on wb.js -- deriving
+  // the name from the tag instead (`grid`) would 404 against a schema file
+  // that was never meant to exist.
+  const name = elementMap[tag];
+  if (!name) return;
+
+  await ensureSchemaRegistered(name);
+  // processElement() re-derives/validates the schema name itself (and is
+  // idempotent via its own processedElements WeakSet) -- safely no-ops if
+  // nothing got registered above (no matching *.schema.json) or it's a tag
+  // its own internal SCHEMA_EXCLUDED_TAGS list also excludes.
+  SchemaBuilder.processElement(element);
+}
+
 // Track applied behaviors for cleanup
 const applied = new WeakMap();
 
@@ -429,6 +525,14 @@ const WB = {
       // behaviors assume `element.parentNode` is non-null (they wrap the
       // element via `parentNode.insertBefore`), so applying to a detached
       // element throws deep inside the behavior instead of failing cleanly.
+      if (!element.isConnected) {
+        return null;
+      }
+
+      // v3.0: build the host's internal DOM from its schema (if any) BEFORE
+      // the behavior runs against it -- see buildSchemaIfNeeded()'s comment
+      // above for the full rationale (#489, split off #322).
+      await buildSchemaIfNeeded(element);
       if (!element.isConnected) {
         return null;
       }

@@ -612,7 +612,18 @@ export function notes(element, options = {}) {
     reader.onload = async () => {
       const dataUrl = reader.result;
       const ext = (imageItem.type.split('/')[1] || 'png').replace('jpeg', 'jpg');
-      const location = `data/note-images/note-image-${Date.now()}.${ext}`;
+      // John (via a filed note): "Make the save file name automatic, but
+      // allow user to edit that name first." Auto-generated name pre-fills
+      // the prompt; OK with it unchanged keeps the old fully-automatic
+      // behavior, Cancel aborts the paste. Sanitized for filesystem safety
+      // client-side as a nicety -- /api/save-image already normalizes/
+      // bounds-checks the path server-side regardless (Law: never trust the
+      // client for the actual security boundary).
+      const autoName = `note-image-${Date.now()}`;
+      const chosenName = window.prompt('Save pasted image as (filename, no extension):', autoName);
+      if (chosenName === null) return; // user cancelled the paste
+      const safeName = chosenName.trim().replace(/[^a-zA-Z0-9_-]/g, '-') || autoName;
+      const location = `data/note-images/${safeName}.${ext}`;
       showStatus('Uploading pasted image...', 'info');
       try {
         const res = await fetch('/api/save-image', {
