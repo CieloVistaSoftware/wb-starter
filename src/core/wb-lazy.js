@@ -426,7 +426,15 @@ function getLazyObserver() {
           }
         }
       });
-    }, { rootMargin: '200px' });
+    }, {
+      // Start injecting well before the element is actually on screen so
+      // scrolling to it doesn't show a visible pop-in. 200px wasn't enough
+      // head start — a slight but visible delay was noticeable live when
+      // scrolling lazy elements into view (#491). 1200px matches the value
+      // wb-demo.js's lazy observer already settled on for the same class of
+      // pop-in (#390: 400px still lost to fast scrolls/nav jumps).
+      rootMargin: '1200px'
+    });
   }
   return lazyObserver;
 }
