@@ -38,22 +38,22 @@ Wrapped in `<wb-demo>`, so the live component renders below with its source show
 
 ### Custom Element
 
-```html
+<wb-demo>
 <wb-button>Click Me</wb-button>
-```
+</wb-demo>
 
 ### Native Button (Enhanced)
 
 `autoInjectComponents` is on by default — a plain `<button>` is enhanced
 automatically, no `x-button` attribute needed.
 
-```html
+<wb-demo>
 <button>Click Me</button>
-```
+</wb-demo>
 
 ### With Icon
 
-```html
+<wb-demo columns="2">
 <wb-button
   label="Save"
   icon="💾">
@@ -63,11 +63,11 @@ automatically, no `x-button` attribute needed.
   icon="→"
   iconPosition="end">
 </wb-button>
-```
+</wb-demo>
 
 ### Variants
 
-```html
+<wb-demo columns="4">
 <wb-button
   label="Primary"
   variant="primary">
@@ -100,11 +100,11 @@ automatically, no `x-button` attribute needed.
   label="Link"
   variant="link">
 </wb-button>
-```
+</wb-demo>
 
 ### Sizes
 
-```html
+<wb-demo columns="5">
 <wb-button
   label="XS"
   size="xs">
@@ -125,11 +125,11 @@ automatically, no `x-button` attribute needed.
   label="XL"
   size="xl">
 </wb-button>
-```
+</wb-demo>
 
 ### States
 
-```html
+<wb-demo columns="3">
 <wb-button
   label="Disabled"
   disabled>
@@ -142,7 +142,7 @@ automatically, no `x-button` attribute needed.
   label="Full Width"
   fullWidth>
 </wb-button>
-```
+</wb-demo>
 
 ## Generated Structure
 
