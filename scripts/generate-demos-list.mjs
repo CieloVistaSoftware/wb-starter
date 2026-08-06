@@ -181,18 +181,26 @@ function cardFor(name) {
 }
 
 // The 8 real component/behavior categories — one <details> per category,
-// same visual pattern as the narrative sections below, opened by default
-// (this IS the primary catalog, not a footnote) with a single card linking
-// to that category's full page.
-const siteCategorySections = SITE_CATEGORIES.map(({ title, icon, description, href, stats }) => (
+// same visual pattern as the narrative sections below, with a single
+// clickable card per category. #402: the description used to sit in its own
+// plain <p> above a separate, smaller "view category" link-card -- two
+// elements doing the job of one, and only the small card was actually
+// clickable. wb-card-link already renders a `description` line inside the
+// card (card.js cardlink()) and stretches the <a> over the whole card, so
+// passing the description through as an attribute instead makes the ENTIRE
+// card (title + description) the single click target, no redundant link
+// underneath.
+const siteCategorySections = SITE_CATEGORIES.map(({ title, icon, description, href, stats }) => {
+  const desc = `${description}${stats ? ` — ${stats}` : ''}`.replace(/"/g, '&quot;');
+  return (
 `  <details class="demos-category" data-category="${title}">
     <summary class="demos-category__title">${icon} ${title}</summary>
-    <p class="demos-category__desc">${description}${stats ? ` — ${stats}` : ''}</p>
     <div class="page__grid demos-card-grid">
-      <wb-card-link title="${title}" href="${href}" target="_blank" icon="${icon}"></wb-card-link>
+      <wb-card-link title="${title}" description="${desc}" href="${href}" target="_blank" icon="${icon}"></wb-card-link>
     </div>
   </details>`
-)).join('\n');
+  );
+}).join('\n');
 
 const sections = CATEGORIES
   .map(({ key, title, icon }) => {
