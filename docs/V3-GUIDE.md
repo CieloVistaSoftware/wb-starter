@@ -121,25 +121,47 @@ into the live example above:
 
 Custom `wb-*` tags map to behaviors. Pass **plain attributes**; children are slotted as content.
 
+**Card** — `<wb-card>`:
+
 <wb-demo>
 <wb-card
   title="Pro"
   variant="glass">
   <p>Card body.</p>
 </wb-card>
+</wb-demo>
+
+**Spinner** — `<wb-spinner>`:
+
+<wb-demo>
 <wb-spinner
   size="lg"
   color="success">
 </wb-spinner>
+</wb-demo>
+
+**Progress bar** — `<wb-progress>`:
+
+<wb-demo>
 <wb-progress
   value="75"
   striped>
 </wb-progress>
+</wb-demo>
+
+**Badge** — `<wb-badge>`:
+
+<wb-demo>
 <wb-badge
   variant="success"
   pill>
   New
 </wb-badge>
+</wb-demo>
+
+**Tabs** — `<wb-tabs>`:
+
+<wb-demo>
 <wb-tabs>
   <div tab-title="Overview">
     <p>…</p>
@@ -148,6 +170,11 @@ Custom `wb-*` tags map to behaviors. Pass **plain attributes**; children are slo
     <p>…</p>
   </div>
 </wb-tabs>
+</wb-demo>
+
+**Accordion** — `<wb-accordion>`:
+
+<wb-demo>
 <wb-accordion title="What is wb-starter?">
   <p>A zero-build component library.</p>
 </wb-accordion>
