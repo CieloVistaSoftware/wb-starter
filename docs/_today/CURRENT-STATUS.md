@@ -1,22 +1,28 @@
-# 🅿️ PARKING LOT (2026-08-06 session — demo improvements and indentation standards)
+# 🅿️ PARKING LOT (2026-08-06 session — comprehensive demo standards fixes)
 
-**Task:** Improved masonry layout demo visibility and fixed HTML indentation across demo sections to comply with Standard §5.
+**Task:** Fixed critical HTML indentation violations, code panel width issues, and added modal spacing compliance testing.
 
 **Completed:**
-- **Masonry demo expanded**: increased from 4 to 8 articles with varying content lengths (Microservices Architecture, GraphQL vs REST, State Management, Machine Learning Integration, Web Security Best Practices, Performance Monitoring, API Rate Limiting, Testing Pyramid) to clearly show staggered masonry layout effect.
-- **HTML indentation standardized**: reformatted all article demos to follow Standard §5 (one tag per line with proper nesting). Masonry articles split across 3 lines (opening tag, content, closing tag).
-- **Pagination demo fixed**: multi-attribute opening tag now spans lines with `pagination` and `page-size="3"` on separate lines per §5.
-- **Code panel layout corrected**: removed `data-code-width="normal"` constraint from masonry demo to allow full-width display per layout standards.
-- **All compliance tests passing**: 8/8 pre-commit checks green, version stamped to v3.0.6, cache-busted index files.
+- **Masonry demo expanded**: 4→8 articles with varying content lengths clearly showing staggered masonry effect
+- **HTML indentation standardized**: all article demos follow Standard §5 (one tag per line); masonry articles split across 3 lines (opening tag, content, closing tag); pagination demo multi-attribute tags span lines
+- **Table formatting fixed**: 25-row main table reformatted from single-line `<tr><td>data</td>...</tr>` to proper vertical formatting with one `<td>` per line, matching toggle table examples and showing proper HTML structure in code panels
+- **Audio code panel width**: increased from default to "wide" (800px max-width) to match proportions of rendered content
+- **Modal spacing compliance test**: new regression test validates dialogs have ≥1rem padding, button gaps ≥0.5rem, heading spacing ≥1rem per Standard §13; catches cramped layouts
+- **All compliance tests passing**: 8/8 pre-commit checks green, 3 commits, version v3.0.6
 
 **Files touched:**
-- `demos/site/content.html` — masonry section (lines 77-102), pagination section (lines 110-127)
+- `demos/site/content.html` — masonry (77-102), pagination (110-145), audio (162 data-code-width), table rows (213-237 reformatted)
+- `tests/regression/modal-spacing-compliance.spec.ts` — new test file, 4 test cases
 
-**Last action:** Committed "fix: improve masonry demo with 8 articles and proper indentation standards" (cfffb14)
+**Commits:**
+1. cfffb14 - masonry + indentation improvements
+2. 9e65c81 - table formatting fix
+3. e626cef - audio code panel width
+4. 3d6fd91 - modal spacing compliance test
 
-**Next step:** Verify browser display matches standards, then can push if no other issues.
+**Next step:** Code panels now show proper HTML structure across all demos (masonry, pagination, tables, audio); gap/spacing control system for demos can be implemented as future enhancement
 
-**Open questions:** None identified.
+**Open questions:** Gap control system request noted for future work (per-demo gap override, shorthand syntax)
 
 ---
 
