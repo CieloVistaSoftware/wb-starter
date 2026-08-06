@@ -144,16 +144,123 @@
   <h2>📊 Table</h2>
   <wb-demo columns="2">
     <wb-table>
-      This is example table content.
+      <thead>
+        <tr>
+          <th>Product</th>
+          <th>Price</th>
+          <th>Stock</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Laptop Pro</td>
+          <td>$1,299</td>
+          <td>45</td>
+        </tr>
+        <tr>
+          <td>Wireless Mouse</td>
+          <td>$29.99</td>
+          <td>156</td>
+        </tr>
+        <tr>
+          <td>USB-C Hub</td>
+          <td>$49.99</td>
+          <td>89</td>
+        </tr>
+      </tbody>
     </wb-table>
     <wb-table sortable>
-      This is example table content.
+      <thead>
+        <tr>
+          <th>Employee</th>
+          <th>Department</th>
+          <th>Salary</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Sarah Chen</td>
+          <td>Engineering</td>
+          <td>$120,000</td>
+        </tr>
+        <tr>
+          <td>Marcus Johnson</td>
+          <td>Design</td>
+          <td>$95,000</td>
+        </tr>
+        <tr>
+          <td>Elena Rodriguez</td>
+          <td>Marketing</td>
+          <td>$85,000</td>
+        </tr>
+      </tbody>
     </wb-table>
     <wb-table striped>
-      This is example table content.
+      <thead>
+        <tr>
+          <th>Project</th>
+          <th>Status</th>
+          <th>Completion</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Dashboard Redesign</td>
+          <td>In Progress</td>
+          <td>65%</td>
+        </tr>
+        <tr>
+          <td>API Documentation</td>
+          <td>Completed</td>
+          <td>100%</td>
+        </tr>
+        <tr>
+          <td>Mobile App</td>
+          <td>Planning</td>
+          <td>10%</td>
+        </tr>
+      </tbody>
     </wb-table>
-    <wb-table paginated page-size="5">
-      This is example table content.
+    <wb-table paginated page-size="3">
+      <thead>
+        <tr>
+          <th>User</th>
+          <th>Last Login</th>
+          <th>Status</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>alex@example.com</td>
+          <td>2 hours ago</td>
+          <td>Active</td>
+        </tr>
+        <tr>
+          <td>jordan@example.com</td>
+          <td>1 day ago</td>
+          <td>Idle</td>
+        </tr>
+        <tr>
+          <td>casey@example.com</td>
+          <td>3 days ago</td>
+          <td>Inactive</td>
+        </tr>
+        <tr>
+          <td>riley@example.com</td>
+          <td>Just now</td>
+          <td>Active</td>
+        </tr>
+        <tr>
+          <td>morgan@example.com</td>
+          <td>5 hours ago</td>
+          <td>Active</td>
+        </tr>
+        <tr>
+          <td>avery@example.com</td>
+          <td>2 days ago</td>
+          <td>Idle</td>
+        </tr>
+      </tbody>
     </wb-table>
   </wb-demo>
   </section>
@@ -163,16 +270,138 @@
   <h2>Toggles</h2>
   <wb-demo columns="1">
     <wb-table filterable>
-      This is example table content.
+      <thead>
+        <tr>
+          <th>Customer</th>
+          <th>Email</th>
+          <th>Country</th>
+          <th>Subscription</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Acme Corp</td>
+          <td>contact@acme.com</td>
+          <td>USA</td>
+          <td>Premium</td>
+        </tr>
+        <tr>
+          <td>TechFlow Inc</td>
+          <td>hello@techflow.co</td>
+          <td>Canada</td>
+          <td>Professional</td>
+        </tr>
+        <tr>
+          <td>Global Services</td>
+          <td>info@global.com</td>
+          <td>UK</td>
+          <td>Basic</td>
+        </tr>
+        <tr>
+          <td>Innovation Labs</td>
+          <td>team@innovate.io</td>
+          <td>Germany</td>
+          <td>Premium</td>
+        </tr>
+      </tbody>
     </wb-table>
-    <wb-table paginated>
-      This is example table content.
+    <wb-table paginated page-size="4">
+      <thead>
+        <tr>
+          <th>Transaction</th>
+          <th>Amount</th>
+          <th>Date</th>
+          <th>Type</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>#TXN-2026-001</td>
+          <td>$450.00</td>
+          <td>Aug 6, 2026</td>
+          <td>Payment</td>
+        </tr>
+        <tr>
+          <td>#TXN-2026-002</td>
+          <td>-$75.50</td>
+          <td>Aug 5, 2026</td>
+          <td>Refund</td>
+        </tr>
+        <tr>
+          <td>#TXN-2026-003</td>
+          <td>$1,200.00</td>
+          <td>Aug 4, 2026</td>
+          <td>Payment</td>
+        </tr>
+        <tr>
+          <td>#TXN-2026-004</td>
+          <td>$89.99</td>
+          <td>Aug 3, 2026</td>
+          <td>Purchase</td>
+        </tr>
+        <tr>
+          <td>#TXN-2026-005</td>
+          <td>$325.00</td>
+          <td>Aug 2, 2026</td>
+          <td>Payment</td>
+        </tr>
+      </tbody>
     </wb-table>
     <wb-table compact>
-      This is example table content.
+      <thead>
+        <tr>
+          <th>Metric</th>
+          <th>Value</th>
+          <th>Change</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Page Views</td>
+          <td>42,589</td>
+          <td>+12.3%</td>
+        </tr>
+        <tr>
+          <td>Visitors</td>
+          <td>8,942</td>
+          <td>+5.7%</td>
+        </tr>
+        <tr>
+          <td>Bounce Rate</td>
+          <td>32.1%</td>
+          <td>-2.4%</td>
+        </tr>
+      </tbody>
     </wb-table>
     <wb-table bordered>
-      This is example table content.
+      <thead>
+        <tr>
+          <th>Event</th>
+          <th>Date</th>
+          <th>Location</th>
+          <th>Attendees</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Web Summit 2026</td>
+          <td>Sept 10-12</td>
+          <td>Lisbon, Portugal</td>
+          <td>3,500+</td>
+        </tr>
+        <tr>
+          <td>Developer Conference</td>
+          <td>Sept 20-21</td>
+          <td>San Francisco, USA</td>
+          <td>2,100+</td>
+        </tr>
+        <tr>
+          <td>Design Workshop</td>
+          <td>Oct 5</td>
+          <td>Berlin, Germany</td>
+          <td>250</td>
+        </tr>
+      </tbody>
     </wb-table>
   </wb-demo>
   </section>

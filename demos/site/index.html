@@ -9,6 +9,9 @@
   <link rel="stylesheet" href="../../src/styles/site.css">
   <style>
     .site-index { max-width: 960px; margin: 2rem auto; }
+    .site-back-link { position: absolute; top: 1rem; left: 1rem; }
+    .site-back-link a { color: var(--text-secondary, #aaa); text-decoration: none; font-size: 0.875rem; transition: color 0.2s; }
+    .site-back-link a:hover { color: var(--text-primary, #fff); text-decoration: underline; }
     .page-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 1.5rem; margin-top: 2rem; }
     .page-card { background: var(--surface-color, #1e1e1e); border: 1px solid var(--border-color, #333); border-radius: 12px; padding: 1.5rem; transition: transform 0.2s, box-shadow 0.2s; }
     .page-card:hover { transform: translateY(-2px); box-shadow: 0 8px 24px rgba(0,0,0,0.3); }
@@ -24,6 +27,9 @@
 </head>
 
 <body>
+  <div class="site-back-link">
+    <a href="/">← Home</a>
+  </div>
   <div class="site-index">
     <div class="site-header">
       <h1>WB Component Library</h1>
