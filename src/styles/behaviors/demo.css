@@ -64,7 +64,27 @@ wb-demo:has(.wb-dropdown.open) {
 
 .wb-demo__code {
   width: 100%;
+  max-width: var(--demo-code-max-width, 100%);
   overflow-x: auto;
+}
+
+/* Per-demo code width control: use data-code-width or --demo-code-max-width
+   Example: <wb-demo style="--demo-code-max-width: 600px;">
+   Presets: narrow (400px), normal (600px), wide (800px), full (100%) */
+wb-demo[data-code-width="narrow"] .wb-demo__code {
+  max-width: 400px;
+}
+
+wb-demo[data-code-width="normal"] .wb-demo__code {
+  max-width: 600px;
+}
+
+wb-demo[data-code-width="wide"] .wb-demo__code {
+  max-width: 800px;
+}
+
+wb-demo[data-code-width="full"] .wb-demo__code {
+  max-width: 100%;
 }
 
 .wb-demo__grid--cols-1 { grid-template-columns: 1fr; }

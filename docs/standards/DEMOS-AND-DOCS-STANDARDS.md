@@ -309,21 +309,26 @@ Every component example is a `<wb-demo>` — it renders the **live control** AND
   to hook into the control's behavior in their own code (form controls, toggles, tabs,
   search, anything with a meaningful `detail` payload). Tracked: #385.
 
-## 28. Code panel width is always full demo width
+## 28. Code panel width is customizable per demo
 
 - The `<wb-demo>` code panel (the `<pre>` source block below each rendered control)
-  must span **the full width of its `wb-demo` container** at all viewport sizes. This
+  defaults to **full width of its `wb-demo` container** at all viewport sizes. This
   ensures consistent horizontal layout and prevents code samples from appearing
   cramped or artificially narrow relative to the rendered component above.
 - **Long lines flow naturally (no wrapping).** If a code line is longer than the
   container, the code panel provides a **horizontal scrollbar** — never forces a
   word-wrap that breaks identifiers mid-line (see §5 & §23). This applies to
   `<wb-demo>`-generated code panels specifically (see §6 carve-out).
-- **Visual consistency.** Code samples in multi-column demos (3-column, 2-column,
-  etc.) maintain readable line length as the panel scrolls horizontally if needed,
-  rather than collapsing the entire column layout to fit narrow code.
-- **CSS:** `.wb-demo__code { width: 100%; overflow-x: auto; }` at all viewport widths.
-  This rule is already enforced in `src/styles/behaviors/demo.css`.
+- **Per-demo width control:** Use `data-code-width` attribute to constrain a specific
+  demo's code panel. Presets:
+  - `data-code-width="narrow"` — max 400px (tight code samples)
+  - `data-code-width="normal"` — max 600px (readable line length)
+  - `data-code-width="wide"` — max 800px (generous spacing)
+  - `data-code-width="full"` — 100% (default, full container width)
+  - Or use CSS: `style="--demo-code-max-width: 500px;"` for custom widths.
+- **Example:** `<wb-demo data-code-width="narrow">...</wb-demo>`
+- **CSS:** `.wb-demo__code { width: 100%; max-width: var(--demo-code-max-width, 100%); overflow-x: auto; }`
+  (enforced in `src/styles/behaviors/demo.css`).
 
 ---
 
