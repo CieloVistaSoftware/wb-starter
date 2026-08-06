@@ -11,6 +11,20 @@
     <li>The homepage's "Get Started" and "See the Components" buttons didn't go anywhere when clicked — now open the real setup guide and the Components page, respectively.</li>
     <li>Replaced the homepage's animated "typing" code sample with a plain static one — it looked like a live, clickable control when it was only ever meant to be an illustration.</li>
     <li><code>&lt;input type="password"&gt;</code> now gets the show/hide toggle automatically (closes a carry-over from yesterday's fix that had been silently lost).</li>
+    <li>New <strong>Issues</strong> page in the main menu — browse every open/closed GitHub issue, full body included, with a live count and date range for whichever filter you're on.</li>
+    <li>New <strong>Error Log</strong> button at the bottom of the main menu, linking straight to the error viewer.</li>
+    <li>Real runtime errors were only ever showing up in your browser's own devtools console — the site's own error log and error viewer never actually received them. Fixed the wiring; errors now land in both places.</li>
+    <li>The notes drawer now automatically files a real GitHub issue for every note you save, instead of just sitting in a local file nobody reviews.</li>
+    <li>On the Behaviors page (and everywhere else), examples decorated with an <code>x-*</code> attribute (like <code>x-toast</code>, <code>x-ripple</code>) now get the same clickable "docs" icon in the corner that components already had, instead of a plain text link easy to miss.</li>
+    <li>Every size and color variant of the dropdown/select control now actually looks different — they used to render almost identically regardless of which size or variant you picked.</li>
+    <li>Changing the theme in one place (like the header) now instantly updates every other theme picker on the page — they used to fall out of sync until you reloaded.</li>
+    <li>Fixed a drawer/sidebar toggle button that threw an error on every click after the first.</li>
+    <li>Fixed a navigation bar crash that could happen when it contained custom link markup.</li>
+    <li>wb-audio's documentation examples pointed at audio files that never existed — replaced with real, working audio.</li>
+    <li>Demos page: each category is now one clickable card (title + description together), instead of a description sitting above a separate, smaller "view" link.</li>
+    <li>Added documentation for 9 previously-undocumented layout behaviors (center, masonry, sticky, scrollable, sidebarlayout, switcher, cover, reel, icon).</li>
+    <li>Demo blocks can now show you how to listen for the events a control fires — add it to a demo and see a live log update as you interact with the control above it.</li>
+    <li>Fixed several component bugs: card glass+elevated variants losing their glass look, video cards with no fixed aspect ratio, a heading-margin rule losing to a more specific unrelated rule on the Components page, and a stale page generator that would have undone several of these fixes if it had been re-run.</li>
   </ul>
 </section>
 
