@@ -1,3 +1,25 @@
+# 🅿️ PARKING LOT (2026-08-06 session — demo improvements and indentation standards)
+
+**Task:** Improved masonry layout demo visibility and fixed HTML indentation across demo sections to comply with Standard §5.
+
+**Completed:**
+- **Masonry demo expanded**: increased from 4 to 8 articles with varying content lengths (Microservices Architecture, GraphQL vs REST, State Management, Machine Learning Integration, Web Security Best Practices, Performance Monitoring, API Rate Limiting, Testing Pyramid) to clearly show staggered masonry layout effect.
+- **HTML indentation standardized**: reformatted all article demos to follow Standard §5 (one tag per line with proper nesting). Masonry articles split across 3 lines (opening tag, content, closing tag).
+- **Pagination demo fixed**: multi-attribute opening tag now spans lines with `pagination` and `page-size="3"` on separate lines per §5.
+- **Code panel layout corrected**: removed `data-code-width="normal"` constraint from masonry demo to allow full-width display per layout standards.
+- **All compliance tests passing**: 8/8 pre-commit checks green, version stamped to v3.0.6, cache-busted index files.
+
+**Files touched:**
+- `demos/site/content.html` — masonry section (lines 77-102), pagination section (lines 110-127)
+
+**Last action:** Committed "fix: improve masonry demo with 8 articles and proper indentation standards" (cfffb14)
+
+**Next step:** Verify browser display matches standards, then can push if no other issues.
+
+**Open questions:** None identified.
+
+---
+
 # 🅿️ PARKING LOT (2026-08-04 session — pushing to `.io` at John's direct instruction)
 
 **Task:** Worked through John's live feedback (screenshots + text) against the deployed `.io` site and a backlog of open GitHub issues, fixing each with verification (live browser check and/or the relevant regression/compliance test), plus dispatched ~9 parallel background agents for a batch of independent issues per John's explicit "work 10 or 15 issues asynchronously" instruction.
