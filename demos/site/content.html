@@ -88,15 +88,23 @@
   <!-- 6. 📝 Markdown to HTML -->
   <section id="mdhtml-markdown-to-html">
   <h2>📝 Markdown to HTML</h2>
-  <wb-demo columns="2">
+  <wb-demo columns="2" data-code-width="narrow">
     <wb-mdhtml src="../code.md">
-      This is example markdown to html content.
+      # Markdown Example
+      This renders **real** markdown with *proper* formatting.
     </wb-mdhtml>
     <wb-mdhtml gfm>
-      This is example markdown to html content.
+      ## GitHub Flavored Markdown
+      - Supports ~~strikethrough~~ text
+      - Task lists: - [ ] Todo - [x] Done
+      - Tables and code blocks
     </wb-mdhtml>
     <wb-mdhtml sanitize gfm>
-      This is example markdown to html content.
+      ### Sanitized & Safe
+      Removes dangerous HTML while keeping valid **markdown** rendering.
+      ```javascript
+      console.log('Code blocks render safely');
+      ```
     </wb-mdhtml>
   </wb-demo>
   </section>

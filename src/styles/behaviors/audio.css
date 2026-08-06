@@ -101,11 +101,37 @@ wb-audio audio::-webkit-media-controls-time-remaining-display,
 
 .wb-audio__play-btn--playing {
   color: var(--success-color, #22c55e);
-  border-color: rgba(34,197,94,0.3);
+  border-color: rgba(34,197,94,0.6);
+  background: linear-gradient(145deg, rgba(34,197,94,0.15) 0%, rgba(34,197,94,0.08) 100%);
   box-shadow:
     0 2px 8px rgba(0,0,0,0.4),
-    0 0 12px rgba(34,197,94,0.2),
-    inset 0 1px 0 rgba(255,255,255,0.1);
+    0 0 12px rgba(34,197,94,0.3),
+    0 0 24px rgba(34,197,94,0.2),
+    0 0 40px rgba(34,197,94,0.1),
+    inset 0 1px 0 rgba(255,255,255,0.1),
+    inset 0 0 8px rgba(34,197,94,0.1);
+  animation: audio-playing-pulse 1.5s ease-in-out infinite;
+}
+
+@keyframes audio-playing-pulse {
+  0%, 100% {
+    box-shadow:
+      0 2px 8px rgba(0,0,0,0.4),
+      0 0 12px rgba(34,197,94,0.3),
+      0 0 24px rgba(34,197,94,0.2),
+      0 0 40px rgba(34,197,94,0.1),
+      inset 0 1px 0 rgba(255,255,255,0.1),
+      inset 0 0 8px rgba(34,197,94,0.1);
+  }
+  50% {
+    box-shadow:
+      0 2px 8px rgba(0,0,0,0.4),
+      0 0 16px rgba(34,197,94,0.4),
+      0 0 32px rgba(34,197,94,0.25),
+      0 0 50px rgba(34,197,94,0.15),
+      inset 0 1px 0 rgba(255,255,255,0.1),
+      inset 0 0 12px rgba(34,197,94,0.15);
+  }
 }
 
 /* Marantz-style Display */
