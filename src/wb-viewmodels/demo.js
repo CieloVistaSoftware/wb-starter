@@ -189,9 +189,9 @@ function findBehaviorDocFile(manifest, name) {
 // behavior, so watch for exactly that: if the link goes missing, put it
 // back. Idempotent (checks for an existing link first), so it settles after
 // at most one heal and stops mutating on its own re-insert.
-function attachInstanceDocLink(hostEl, file, comp, root) {
+function attachInstanceDocLink(hostEl, file, label, root) {
     const href = root + 'public/doc-viewer.html?file=' + encodeURIComponent('docs/' + file);
-    const label = `wb-${comp} docs`;
+    const title = `${label} docs`;
 
     // #295: the badge is positioned top-right via `position: absolute`
     // (demo.css), which anchors to hostEl ONLY if hostEl itself is a
@@ -217,8 +217,8 @@ function attachInstanceDocLink(hostEl, file, comp, root) {
         link.href = href;
         link.target = '_blank';
         link.rel = 'noopener';
-        link.setAttribute('aria-label', label);
-        link.title = label;
+        link.setAttribute('aria-label', title);
+        link.title = title;
         link.textContent = '📖';
         hostEl.appendChild(link);
     };
@@ -361,13 +361,34 @@ export async function demo(element, options = {}) {
             const comp = hostEl.tagName.slice(3).toLowerCase(); // WB-CARDHERO -> cardhero
             const file = findDocFile(manifest, comp);
             if (!file) return; // never a dead link
-            attachInstanceDocLink(hostEl, file, comp, root);
+            attachInstanceDocLink(hostEl, file, `wb-${comp}`, root);
+        });
+
+        // John (reported repeatedly): pages/behaviors.html's demos are
+        // native elements decorated with an x-* ATTRIBUTE (<button
+        // x-ripple>, <button x-toast>), never a <wb-*> TAG -- the
+        // per-instance corner badge above only ever matched perInstanceChildren
+        // (WB-* tags), so every x-* behavior fell through to the shared
+        // "Docs: x-toast" text line below the whole grid instead. Give each
+        // ELEMENT THAT ACTUALLY CARRIES the attribute its own corner badge,
+        // the same as a wb-* component gets, instead of a second, different
+        // treatment for behaviors vs. components. `x-as-{name}` (morphing
+        // syntax) needs its own selector -- `[x-${name}]` alone won't match it.
+        const resolvedXBehaviorNames = new Set();
+        xBehaviors.forEach((name) => {
+            const file = findBehaviorDocFile(manifest, name);
+            if (!file) return; // never a dead link
+            const hosts = grid.querySelectorAll(`[x-${name}], [x-as-${name}]`);
+            if (!hosts.length) return; // name matched in source text but no live element carries it
+            resolvedXBehaviorNames.add(name);
+            hosts.forEach((hostEl) => attachInstanceDocLink(hostEl, file, `x-${name}`, root));
         });
 
         const linkedComponents = sharedComponents
             .map((comp) => ({ label: `wb-${comp}`, file: findDocFile(manifest, comp) }))
             .filter((x) => x.file);
         const linkedBehaviors = xBehaviors
+            .filter((name) => !resolvedXBehaviorNames.has(name))
             .map((name) => ({ label: `x-${name}`, file: findBehaviorDocFile(manifest, name) }))
             .filter((x) => x.file);
         const linked = [...linkedComponents, ...linkedBehaviors];

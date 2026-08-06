@@ -189,8 +189,10 @@ export function navbar(element, options = {}) {
       element.appendChild(menu);
     }
     
-    // Style all links in the navbar to match
-    element.querySelectorAll('a, []').forEach(link => {
+    // Style all links in the navbar to match -- was 'a, []' (same invalid
+    // empty-attribute-selector bug as the existingChildren filter above),
+    // throwing on every navbar render that reaches this custom-children branch.
+    element.querySelectorAll('a, [wb="link"]').forEach(link => {
       // Don't style the brand link
       if (!link.classList.contains('wb-navbar__brand')) {
         styleNavbarItem(link);
