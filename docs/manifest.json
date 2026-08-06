@@ -908,6 +908,11 @@
           "description": "Textarea form component"
         },
         {
+          "file": "components/layout/center.md",
+          "title": "Center",
+          "description": "Center layout behavior"
+        },
+        {
           "file": "components/layout/cluster.md",
           "title": "Cluster",
           "description": "Cluster layout component"
@@ -916,6 +921,11 @@
           "file": "components/layout/container.md",
           "title": "Container",
           "description": "Container layout component"
+        },
+        {
+          "file": "components/layout/cover.md",
+          "title": "Cover",
+          "description": "Cover layout behavior"
         },
         {
           "file": "components/layout/flex.md",
@@ -931,6 +941,41 @@
           "file": "components/layout/header.md",
           "title": "Header",
           "description": "Header layout component"
+        },
+        {
+          "file": "components/layout/icon.md",
+          "title": "Icon",
+          "description": "Icon layout behavior"
+        },
+        {
+          "file": "components/layout/masonry.md",
+          "title": "Masonry",
+          "description": "Masonry grid layout behavior"
+        },
+        {
+          "file": "components/layout/reel.md",
+          "title": "Reel",
+          "description": "Horizontal scroll-snap reel behavior"
+        },
+        {
+          "file": "components/layout/scrollable.md",
+          "title": "Scrollable",
+          "description": "Scrollable container behavior"
+        },
+        {
+          "file": "components/layout/sidebarlayout.md",
+          "title": "Sidebar Layout",
+          "description": "Sidebar + main content layout behavior"
+        },
+        {
+          "file": "components/layout/sticky.md",
+          "title": "Sticky",
+          "description": "Sticky positioning behavior"
+        },
+        {
+          "file": "components/layout/switcher.md",
+          "title": "Switcher",
+          "description": "Responsive row/column switcher behavior"
         },
         {
           "file": "components/mdhtml.md",
