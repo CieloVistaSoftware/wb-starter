@@ -14,10 +14,9 @@
 
 1. Read `docs/claude/TIER1-LAWS.md` — the 10 laws
 2. Read `docs/_today/CURRENT-STATUS.md` — what's happening now
-3. Check `/Lock` folder — what's off-limits
-4. Use `recent_chats` — continue from last session
-5. Identify the task domain → load only the relevant Tier 2 section
-6. Start working
+3. Use `recent_chats` — continue from last session
+4. Identify the task domain → load only the relevant Tier 2 section
+5. Start working
 
 ## Files
 
