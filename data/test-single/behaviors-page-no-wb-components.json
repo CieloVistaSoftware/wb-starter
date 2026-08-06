@@ -1,0 +1,20 @@
+{
+  "state": "passed",
+  "mode": "single",
+  "specFile": "tests/compliance/behaviors-page-no-wb-components.spec.ts",
+  "startedAt": "2026-08-01T23:48:28.802Z",
+  "updatedAt": "2026-08-01T23:48:34.186Z",
+  "command": "npx playwright test --workers=8 tests/compliance/behaviors-page-no-wb-components.spec.ts",
+  "pid": 20416,
+  "passed": 2,
+  "failed": 0,
+  "skipped": 0,
+  "total": 2,
+  "currentFile": "tests\\compliance\\behaviors-page-no-wb-components.spec.ts",
+  "output": "\nRunning 2 tests using 2 workers\n\n  ok 1 [compliance] › tests\\compliance\\behaviors-page-no-wb-components.spec.ts:22:1 › behaviors.html contains no wb-* custom component demos (8ms)\n  ok 2 [compliance] › tests\\compliance\\behaviors-page-no-wb-components.spec.ts:33:1 › newbehaviors.html (explicitly marked archived/unused) has been deleted, not left to rot (7ms)\n\n════════════════════════════════════════════════════════════\n  WB TEST RESULTS\n════════════════════════════════════════════════════════════\n  Total: 2 tests in 1.7s\n  ✓ Passed:  2\n  ✗ Failed:  0\n\n  By Project:\n    ✓ compliance: 2/2 passed\n════════════════════════════════════════════════════════════\n\n\n  2 passed (2.0s)\n",
+  "errors": "",
+  "failures": [],
+  "completedAt": "2026-08-01T23:48:34.186Z",
+  "duration": "5.38s",
+  "exitCode": 0
+}

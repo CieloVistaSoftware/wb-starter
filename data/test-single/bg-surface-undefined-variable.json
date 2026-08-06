@@ -1,0 +1,20 @@
+{
+  "state": "passed",
+  "mode": "single",
+  "specFile": "tests/regression/bg-surface-undefined-variable.spec.ts",
+  "startedAt": "2026-07-31T03:09:14.369Z",
+  "updatedAt": "2026-07-31T03:09:22.543Z",
+  "command": "npx playwright test --workers=8 tests/regression/bg-surface-undefined-variable.spec.ts",
+  "pid": 31076,
+  "passed": 2,
+  "failed": 0,
+  "skipped": 0,
+  "total": 2,
+  "currentFile": "tests\\regression\\bg-surface-undefined-variable.spec.ts",
+  "output": "\nRunning 2 tests using 2 workers\n\n  ok 2 [regression] › tests\\regression\\bg-surface-undefined-variable.spec.ts:30:1 › no CSS file references the nonexistent --bg-surface variable (16ms)\n  ok 1 [regression] › tests\\regression\\bg-surface-undefined-variable.spec.ts:15:1 › demos/site/overlays.html: wb-drawer panel uses a real theme background, not the dead --bg-surface white fallback (1.9s)\n\n════════════════════════════════════════════════════════════\n  WB TEST RESULTS\n════════════════════════════════════════════════════════════\n  Total: 2 tests in 4.4s\n  ✓ Passed:  2\n  ✗ Failed:  0\n\n  By Project:\n    ✓ regression: 2/2 passed\n════════════════════════════════════════════════════════════\n\n\n  2 passed (4.6s)\n",
+  "errors": "",
+  "failures": [],
+  "completedAt": "2026-07-31T03:09:22.543Z",
+  "duration": "8.17s",
+  "exitCode": 0
+}

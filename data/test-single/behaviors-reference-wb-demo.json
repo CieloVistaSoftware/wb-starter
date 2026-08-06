@@ -1,0 +1,20 @@
+{
+  "state": "passed",
+  "mode": "single",
+  "specFile": "tests/integration/behaviors-reference-wb-demo.spec.ts",
+  "startedAt": "2026-07-30T22:38:08.094Z",
+  "updatedAt": "2026-07-30T22:38:22.393Z",
+  "command": "npx playwright test --workers=8 tests/integration/behaviors-reference-wb-demo.spec.ts",
+  "pid": 5340,
+  "passed": 1,
+  "failed": 0,
+  "skipped": 0,
+  "total": 1,
+  "currentFile": "tests\\integration\\behaviors-reference-wb-demo.spec.ts",
+  "output": "\nRunning 1 test using 1 worker\n\n  ok 1 [integration] › tests\\integration\\behaviors-reference-wb-demo.spec.ts:62:3 › docs/behaviors-reference.md: live <wb-demo> examples › every <wb-demo> renders live + source, and the added Live Examples upgrade (8.5s)\n\n════════════════════════════════════════════════════════════\n  WB TEST RESULTS\n════════════════════════════════════════════════════════════\n  Total: 1 tests in 10.8s\n  ✓ Passed:  1\n  ✗ Failed:  0\n\n  By Project:\n    ✓ integration: 1/1 passed\n════════════════════════════════════════════════════════════\n\n\n  1 passed (11.0s)\n",
+  "errors": "",
+  "failures": [],
+  "completedAt": "2026-07-30T22:38:22.393Z",
+  "duration": "14.30s",
+  "exitCode": 0
+}

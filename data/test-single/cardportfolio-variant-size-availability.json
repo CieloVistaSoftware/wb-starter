@@ -1,0 +1,25 @@
+{
+  "state": "passed",
+  "mode": "single",
+  "specFile": "tests/regression/cardportfolio-variant-size-availability.spec.ts",
+  "startedAt": "2026-08-04T01:29:21.839Z",
+  "updatedAt": "2026-08-04T01:32:16.455Z",
+  "command": "npx playwright test --workers=8 tests/regression/cardportfolio-variant-size-availability.spec.ts",
+  "pid": 27556,
+  "passed": 4,
+  "failed": 1,
+  "skipped": 0,
+  "total": 5,
+  "currentFile": "tests\\regression\\cardportfolio-variant-size-availability.spec.ts",
+  "output": "\nRunning 3 tests using 3 workers\n\n  ok 1 [regression] › tests\\regression\\cardportfolio-variant-size-availability.spec.ts:67:3 › wb-cardportfolio variant/size/availability (regression) › variant=compact/horizontal/full render visually distinct from default (17.0s)\n  ok 3 [regression] › tests\\regression\\cardportfolio-variant-size-availability.spec.ts:35:3 › wb-cardportfolio variant/size/availability (regression) › availability dot renders and is color-distinct with no avatar attribute set (23.9s)\n  x  2 [regression] › tests\\regression\\cardportfolio-variant-size-availability.spec.ts:117:3 › wb-cardportfolio variant/size/availability (regression) › size=sm/md/lg/xl/full show increasing visual weight even inside a multi-column grid (34.0s)\n  ok 4 [regression] › tests\\regression\\cardportfolio-variant-size-availability.spec.ts:117:3 › wb-cardportfolio variant/size/availability (regression) › size=sm/md/lg/xl/full show increasing visual weight even inside a multi-column grid (retry #1) (7.2s)\n\n════════════════════════════════════════════════════════════\n  WB TEST RESULTS\n════════════════════════════════════════════════════════════\n  Total: 4 tests in 160.9s\n  ✓ Passed:  3\n  ✗ Failed:  1\n\n  By Project:\n    ✗ regression: 3/4 passed\n\n  See failures: data/test-results/failures.json\n  Live log:    data/test-results/failures-live.log\n════════════════════════════════════════════════════════════\n\n\n\n  1) [regression] › tests\\regression\\cardportfolio-variant-size-availability.spec.ts:117:3 › wb-cardportfolio variant/size/availability (regression) › size=sm/md/lg/xl/full show increasing visual weight even inside a multi-column grid \n\n    \u001b[31mTest timeout of 30000ms exceeded.\u001b[39m\n\n    Error: locator.evaluate: Test timeout of 30000ms exceeded.\n\n      120 |     await section.locator('wb-cardportfolio').first().waitFor();\n      121 |\n    > 122 |     const bySize = await section.evaluate((sectionEl) => {\n          |                                  ^\n      123 |       const read = (size: string) => {\n      124 |         const el = Array.from(sectionEl.querySelectorAll('wb-cardportfolio')).find(\n      125 |           (c) => c.getAttribute('size') === size,\n        at C:\\Users\\jwpmi\\Downloads\\AI\\wb-starter\\tests\\regression\\cardportfolio-variant-size-availability.spec.ts:122:34\n\n    Error Context: data\\test-results\\cardportfolio-variant-size-8a8b7--inside-a-multi-column-grid-regression\\error-context.md\n\n  1 flaky\n    [regression] › tests\\regression\\cardportfolio-variant-size-availability.spec.ts:117:3 › wb-cardportfolio variant/size/availability (regression) › size=sm/md/lg/xl/full show increasing visual weight even inside a multi-column grid \n  2 passed (2.7m)\n",
+  "errors": "\n⏱️ FAILED: size=sm/md/lg/xl/full show increasing visual weight even inside a multi-column grid\n   Test timeout of 30000ms exceeded.\n",
+  "failures": [
+    {
+      "file": "tests\\regression\\cardportfolio-variant-size-availability.spec.ts",
+      "name": "wb-cardportfolio variant/size/availability (regression) › size=sm/md/lg/xl/full show increasing visual weight even inside a multi-column grid"
+    }
+  ],
+  "completedAt": "2026-08-04T01:32:16.455Z",
+  "duration": "174.62s",
+  "exitCode": 0
+}

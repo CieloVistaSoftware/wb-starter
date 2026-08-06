@@ -1,0 +1,20 @@
+{
+  "state": "passed",
+  "mode": "single",
+  "specFile": "tests/regression/drawer-path-b-content-position-variant.spec.ts",
+  "startedAt": "2026-07-31T00:48:46.904Z",
+  "updatedAt": "2026-07-31T00:49:36.208Z",
+  "command": "npx playwright test --workers=8 tests/regression/drawer-path-b-content-position-variant.spec.ts",
+  "pid": 34032,
+  "passed": 4,
+  "failed": 0,
+  "skipped": 0,
+  "total": 4,
+  "currentFile": "tests\\regression\\drawer-path-b-content-position-variant.spec.ts",
+  "output": "\nRunning 4 tests using 4 workers\n\n  ok 2 [regression] › tests\\regression\\drawer-path-b-content-position-variant.spec.ts:69:3 › demos/site/overlays.html <wb-drawer> PATH B: content, position, variant › drawer with a title attribute but no content attribute shows the title AND its own text as content (not the old generic placeholder) (10.9s)\n  ok 1 [regression] › tests\\regression\\drawer-path-b-content-position-variant.spec.ts:145:3 › demos/site/overlays.html <wb-drawer> PATH B: content, position, variant › variant=push translates the page content aside with no dimming backdrop; variant=default/overlay both dim with a backdrop (15.0s)\n  ok 4 [regression] › tests\\regression\\drawer-path-b-content-position-variant.spec.ts:54:3 › demos/site/overlays.html <wb-drawer> PATH B: content, position, variant › bare-text drawer (no title/content attribute) shows its own text, not \"Drawer\"/\"Drawer content\" (15.4s)\n  ok 3 [regression] › tests\\regression\\drawer-path-b-content-position-variant.spec.ts:83:3 › demos/site/overlays.html <wb-drawer> PATH B: content, position, variant › position=top and position=bottom render as distinct horizontal panels, not as a left sidebar (27.7s)\n\n════════════════════════════════════════════════════════════\n  WB TEST RESULTS\n════════════════════════════════════════════════════════════\n  Total: 4 tests in 43.6s\n  ✓ Passed:  4\n  ✗ Failed:  0\n\n  By Project:\n    ✓ regression: 4/4 passed\n════════════════════════════════════════════════════════════\n\n\n  4 passed (44.0s)\n",
+  "errors": "",
+  "failures": [],
+  "completedAt": "2026-07-31T00:49:36.208Z",
+  "duration": "49.30s",
+  "exitCode": 0
+}

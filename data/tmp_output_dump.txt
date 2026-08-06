@@ -1,0 +1,507 @@
+at C:\Users\jwpmi\Downloads\AI\wb-starter\tests\compliance\no-element-overlap.spec.ts:225:64
+
+    Error Context: data\test-results\no-element-overlap-No-elem-4e280-intentional-element-overlap-compliance\error-context.md
+
+  15) [compliance-css] › tests\compliance\no-element-overlap.spec.ts:60:5 › No element overlap (§22) — project-wide detection › demos\frameworks.html: no unintentional element overlap 
+
+    Error: demos\frameworks.html:
+    <span.hljs-tag> "<input v-model="message" class="wb-input" overlaps <span.hljs-tag> "<button class="wb-btn-glass" x-ripple x-" (779x15px @ [221,8115])
+    <span.hljs-tag> "<input v-model="message" class="wb-input" overlaps <span.hljs-string> ""'Current length: ' + message.length"" (779x15px @ [221,8115])
+    <span.hljs-string> ""margin-bottom: 1rem; width: 100%;"" overlaps <span.hljs-tag> "<button class="wb-btn-glass" x-ripple x-" (779x15px @ [221,8115])
+    <span.hljs-string> ""margin-bottom: 1rem; width: 100%;"" overlaps <span.hljs-string> ""'Current length: ' + message.length"" (779x15px @ [221,8115])
+    <span.hljs-tag> "<button class="wb-btn-glass" x-ripple x-" overlaps <span.language-javascript> "import { createApp, ref, onMounted } fro" (779x15px @ [221,8130])
+    <span.hljs-string> ""'Current length: ' + message.length"" overlaps <span.language-javascript> "import { createApp, ref, onMounted } fro" (779x15px @ [221,8130])
+    <span.language-javascript> "import WB from 'wb-behaviors'; import { " overlaps <span.hljs-tag> "<button class="wb-btn-gradient" x-ripple" (822x15px @ [221,8595])
+
+    [2mexpect([22m[31mreceived[39m[2m).[22mtoHaveLength[2m([22m[32mexpected[39m[2m)[22m
+
+    Expected length: [32m0[39m
+    Received length: [31m7[39m
+    Received array:  [31m["<span.hljs-tag> \"<input v-model=\"message\" class=\"wb-input\" overlaps <span.hljs-tag> \"<button class=\"wb-btn-glass\" x-ripple x-\" (779x15px @ [221,8115])", "<span.hljs-tag> \"<input v-model=\"message\" class=\"wb-input\" overlaps <span.hljs-string> \"\"'Current length: ' + message.length\"\" (779x15px @ [221,8115])", "<span.hljs-string> \"\"margin-bottom: 1rem; width: 100%;\"\" overlaps <span.hljs-tag> \"<button class=\"wb-btn-glass\" x-ripple x-\" (779x15px @ [221,8115])", "<span.hljs-string> \"\"margin-bottom: 1rem; width: 100%;\"\" overlaps <span.hljs-string> \"\"'Current length: ' + message.length\"\" (779x15px @ [221,8115])", "<span.hljs-tag> \"<button class=\"wb-btn-glass\" x-ripple x-\" overlaps <span.language-javascript> \"import { createApp, ref, onMounted } fro\" (779x15px @ [221,8130])", "<span.hljs-string> \"\"'Current length: ' + message.length\"\" overlaps <span.language-javascript> \"import { createApp, ref, onMounted } fro\" (779x15px @ [221,8130])", "<span.language-javascript> \"import WB from 'wb-behaviors'; import { \" overlaps <span.hljs-tag> \"<button class=\"wb-btn-gradient\" x-ripple\" (822x15px @ [221,8595])"][39m
+
+      223 |       }, MIN_OVERLAP_DIM);
+      224 |
+    > 225 |       expect(violations, `${file}:\n${violations.join('\n')}`).toHaveLength(0);
+          |                                                                ^
+      226 |     });
+      227 |   }
+      228 | });
+        at C:\Users\jwpmi\Downloads\AI\wb-starter\tests\compliance\no-element-overlap.spec.ts:225:64
+
+    Error Context: data\test-results\no-element-overlap-No-elem-5cb7c-intentional-element-overlap-compliance-css\error-context.md
+
+  16) [compliance-css] › tests\compliance\no-element-overlap.spec.ts:60:5 › No element overlap (§22) — project-wide detection › demos\multi-component-demo-generated.html: no unintentional element overlap 
+
+    Error: demos\multi-component-demo-generated.html:
+    <div.wb-progress__bar> "" overlaps <span.wb-progress__label> "60%" (21x12px @ [160,2166])
+    <div.wb-progress__bar> "" overlaps <span.wb-progress__label> "60%" (21x15px @ [525,2167])
+    <div.wb-progress__bar> "" overlaps <span.wb-progress__label> "60%" (21x15px @ [889,2169])
+    <div.wb-progress__bar> "" overlaps <span.wb-progress__label> "60%" (21x15px @ [160,2369])
+    <div.wb-progress__bar> "" overlaps <span.wb-progress__label> "60%" (21x15px @ [525,2373])
+
+    [2mexpect([22m[31mreceived[39m[2m).[22mtoHaveLength[2m([22m[32mexpected[39m[2m)[22m
+
+    Expected length: [32m0[39m
+    Received length: [31m5[39m
+    Received array:  [31m["<div.wb-progress__bar> \"\" overlaps <span.wb-progress__label> \"60%\" (21x12px @ [160,2166])", "<div.wb-progress__bar> \"\" overlaps <span.wb-progress__label> \"60%\" (21x15px @ [525,2167])", "<div.wb-progress__bar> \"\" overlaps <span.wb-progress__label> \"60%\" (21x15px @ [889,2169])", "<div.wb-progress__bar> \"\" overlaps <span.wb-progress__label> \"60%\" (21x15px @ [160,2369])", "<div.wb-progress__bar> \"\" overlaps <span.wb-progress__label> \"60%\" (21x15px @ [525,2373])"][39m
+
+      223 |       }, MIN_OVERLAP_DIM);
+      224 |
+    > 225 |       expect(violations, `${file}:\n${violations.join('\n')}`).toHaveLength(0);
+          |                                                                ^
+      226 |     });
+      227 |   }
+      228 | });
+        at C:\Users\jwpmi\Downloads\AI\wb-starter\tests\compliance\no-element-overlap.spec.ts:225:64
+
+    Error Context: data\test-results\no-element-overlap-No-elem-13c62-intentional-element-overlap-compliance-css\error-context.md
+
+  17) [compliance-css] › tests\compliance\no-element-overlap.spec.ts:60:5 › No element overlap (§22) — project-wide detection › demos\schema-first-architecture.html: no unintentional element overlap 
+
+    Error: demos\schema-first-architecture.html:
+    <p> "We propose that this problem has a struc" overlaps <p> "Schema-First Architecture bridges this g" (296x115px @ [656,1451])
+
+    [2mexpect([22m[31mreceived[39m[2m).[22mtoHaveLength[2m([22m[32mexpected[39m[2m)[22m
+
+    Expected length: [32m0[39m
+    Received length: [31m1[39m
+    Received array:  [31m["<p> \"We propose that this problem has a struc\" overlaps <p> \"Schema-First Architecture bridges this g\" (296x115px @ [656,1451])"][39m
+
+      223 |       }, MIN_OVERLAP_DIM);
+      224 |
+    > 225 |       expect(violations, `${file}:\n${violations.join('\n')}`).toHaveLength(0);
+          |                                                                ^
+      226 |     });
+      227 |   }
+      228 | });
+        at C:\Users\jwpmi\Downloads\AI\wb-starter\tests\compliance\no-element-overlap.spec.ts:225:64
+
+    Error Context: data\test-results\no-element-overlap-No-elem-21f38-intentional-element-overlap-compliance-css\error-context.md
+
+  18) [compliance-css] › tests\compliance\no-element-overlap.spec.ts:60:5 › No element overlap (§22) — project-wide detection › demos\site\cards.html: no unintentional element overlap 
+
+    Error: demos\site\cards.html:
+    <header.wb-card__header.wb-header> "WelcomeStandard card" overlaps <a.wb-demo__card-doc-link> "📖" (16x16px @ [644,360])
+    <header.wb-card__header.wb-header> "Glass CardWith BadgeNEW" overlaps <a.wb-demo__card-doc-link> "📖" (16x16px @ [327,784])
+    <img.wb-img> "" overlaps <a.wb-demo__card-doc-link> "📖" (16x16px @ [673,1381])
+    <img> "" overlaps <a.wb-demo__card-doc-link> "📖" (16x16px @ [673,1961])
+    <div.wb-card__overlay> "" overlaps <a.wb-demo__card-doc-link> "📖" (16x16px @ [478,2641])
+    <header.wb-card__header> "Save DocumentYour changes are ready" overlaps <a.wb-demo__card-doc-link> "📖" (16x16px @ [321,3939])
+    <header.wb-card__header> "Delete AccountThis action is permanent" overlaps <a.wb-demo__card-doc-link> "📖" (16x16px @ [335,4270])
+    <header.wb-card__header> "Starter" overlaps <a.wb-demo__card-doc-link> "📖" (16x16px @ [457,4719])
+    <header.wb-card__header> "Pro" overlaps <a.wb-demo__card-doc-link> "📖" (17x17px @ [604,5303])
+    <header.wb-card__header> "Enterprise" overlaps <a.wb-demo__card-doc-link> "📖" (16x16px @ [521,5962])
+    <header.wb-card__header> "FAQ: How does it work?Click to reveal th" overlaps <a.wb-demo__card-doc-link> "📖" (16x16px @ [1175,14179])
+    <main#expandable-content-afxtatvuo.wb-card__expandable-content> "The card system uses a behavior-based ar" overlaps <footer.wb-card__footer> "▼Show More" (1070x21px @ [105,14354])
+    <main#expandable-content-afxtatvuo.wb-card__expandable-content> "The card system uses a behavior-based ar" overlaps <button.wb-card__expand-btn> "▼Show More" (1070x8px @ [105,14367])
+    <header.wb-card__header> "Dashboard WidgetServer Status−" overlaps <a.wb-demo__card-doc-link> "📖" (16x16px @ [521,14742])
+    <video> "" overlaps <a.wb-demo__card-doc-link> "📖" (16x16px @ [428,16210])
+    <figure.wb-portfolio__cover> "" overlaps <img.wb-portfolio__avatar> "" (120x36px @ [228,16848])
+
+    [2mexpect([22m[31mreceived[39m[2m).[22mtoHaveLength[2m([22m[32mexpected[39m[2m)[22m
+
+    Expected length: [32m0[39m
+    Received length: [31m16[39m
+    Received array:  [31m["<header.wb-card__header.wb-header> \"WelcomeStandard card\" overlaps <a.wb-demo__card-doc-link> \"📖\" (16x16px @ [644,360])", "<header.wb-card__header.wb-header> \"Glass CardWith BadgeNEW\" overlaps <a.wb-demo__card-doc-link> \"📖\" (16x16px @ [327,784])", "<img.wb-img> \"\" overlaps <a.wb-demo__card-doc-link> \"📖\" (16x16px @ [673,1381])", "<img> \"\" overlaps <a.wb-demo__card-doc-link> \"📖\" (16x16px @ [673,1961])", "<div.wb-card__overlay> \"\" overlaps <a.wb-demo__card-doc-link> \"📖\" (16x16px @ [478,2641])", "<header.wb-card__header> \"Save DocumentYour changes are ready\" overlaps <a.wb-demo__card-doc-link> \"📖\" (16x16px @ [321,3939])", "<header.wb-card__header> \"Delete AccountThis action is permanent\" overlaps <a.wb-demo__card-doc-link> \"📖\" (16x16px @ [335,4270])", "<header.wb-card__header> \"Starter\" overlaps <a.wb-demo__card-doc-link> \"📖\" (16x16px @ [457,4719])", "<header.wb-card__header> \"Pro\" overlaps <a.wb-demo__card-doc-link> \"📖\" (17x17px @ [604,5303])", "<header.wb-card__header> \"Enterprise\" overlaps <a.wb-demo__card-doc-link> \"📖\" (16x16px @ [521,5962])", …][39m
+
+      223 |       }, MIN_OVERLAP_DIM);
+      224 |
+    > 225 |       expect(violations, `${file}:\n${violations.join('\n')}`).toHaveLength(0);
+          |                                                                ^
+      226 |     });
+      227 |   }
+      228 | });
+        at C:\Users\jwpmi\Downloads\AI\wb-starter\tests\compliance\no-element-overlap.spec.ts:225:64
+
+    Error Context: data\test-results\no-element-overlap-No-elem-26b27-intentional-element-overlap-compliance-css\error-context.md
+
+  19) [compliance-css] › tests\compliance\no-element-overlap.spec.ts:60:5 › No element overlap (§22) — project-wide detection › demos\site\content.html: no unintentional element overlap 
+
+    Error: demos\site\content.html:
+    <img.wb-img> "" overlaps <figcaption> "Technology and Nature" (800x33px @ [128,14987])
+    <div.wb-progress__bar> "" overlaps <span.wb-progress__label> "Loading..." (21x15px @ [139,18022])
+
+    [2mexpect([22m[31mreceived[39m[2m).[22mtoHaveLength[2m([22m[32mexpected[39m[2m)[22m
+
+    Expected length: [32m0[39m
+    Received length: [31m2[39m
+    Received array:  [31m["<img.wb-img> \"\" overlaps <figcaption> \"Technology and Nature\" (800x33px @ [128,14987])", "<div.wb-progress__bar> \"\" overlaps <span.wb-progress__label> \"Loading...\" (21x15px @ [139,18022])"][39m
+
+      223 |       }, MIN_OVERLAP_DIM);
+      224 |
+    > 225 |       expect(violations, `${file}:\n${violations.join('\n')}`).toHaveLength(0);
+          |                                                                ^
+      226 |     });
+      227 |   }
+      228 | });
+        at C:\Users\jwpmi\Downloads\AI\wb-starter\tests\compliance\no-element-overlap.spec.ts:225:64
+
+    Error Context: data\test-results\no-element-overlap-No-elem-e773f-intentional-element-overlap-compliance-css\error-context.md
+
+  20) [compliance-css] › tests\compliance\no-element-overlap.spec.ts:60:5 › No element overlap (§22) — project-wide detection › demos\site\effects.html: no unintentional element overlap 
+
+    Error: demos\site\effects.html:
+    <div.wb-stagelight__beam> "" overlaps <div.wb-stagelight__beam> "" (428x763px @ [494,-28])
+    <div.wb-stagelight__beam> "" overlaps <div.wb-stagelight__beam> "" (428x763px @ [494,-28])
+
+    [2mexpect([22m[31mreceived[39m[2m).[22mtoHaveLength[2m([22m[32mexpected[39m[2m)[22m
+
+    Expected length: [32m0[39m
+    Received length: [31m2[39m
+    Received array:  [31m["<div.wb-stagelight__beam> \"\" overlaps <div.wb-stagelight__beam> \"\" (428x763px @ [494,-28])", "<div.wb-stagelight__beam> \"\" overlaps <div.wb-stagelight__beam> \"\" (428x763px @ [494,-28])"][39m
+
+      223 |       }, MIN_OVERLAP_DIM);
+      224 |
+    > 225 |       expect(violations, `${file}:\n${violations.join('\n')}`).toHaveLength(0);
+          |                                                                ^
+      226 |     });
+      227 |   }
+      228 | });
+        at C:\Users\jwpmi\Downloads\AI\wb-starter\tests\compliance\no-element-overlap.spec.ts:225:64
+
+    Error Context: data\test-results\no-element-overlap-No-elem-d88e4-intentional-element-overlap-compliance-css\error-context.md
+
+  21) [compliance-css] › tests\compliance\no-element-overlap.spec.ts:60:5 › No element overlap (§22) — project-wide detection › demos\site\feedback.html: no unintentional element overlap 
+
+    Error: demos\site\feedback.html:
+    <div.wb-progress__bar> "" overlaps <span.wb-progress__label> "50%" (11x15px @ [163,21444])
+    <div.wb-progress__bar> "" overlaps <a.wb-demo__card-doc-link> "📖" (16x16px @ [251,21759])
+    <div.wb-progress__bar> "" overlaps <span.wb-progress__label> "Loading..." (24x15px @ [164,21921])
+    <div.wb-progress__bar> "" overlaps <span.wb-progress__label> "50%" (11x15px @ [156,22110])
+    <div.wb-progress__bar.wb-progress__bar--striped> "" overlaps <span.wb-progress__label> "50%" (11x15px @ [145,22299])
+    <div.wb-progress__bar> "" overlaps <span.wb-progress__label> "50%" (11x15px @ [174,22488])
+    <div.wb-progress__bar> "" overlaps <span.wb-progress__label> "50%" (11x15px @ [174,22677])
+    <div.wb-progress__bar> "" overlaps <span.wb-progress__label> "50%" (11x15px @ [166,22866])
+    <div.wb-progress__bar> "" overlaps <span.wb-progress__label> "50%" (11x15px @ [145,23053])
+    <div.wb-progress__bar> "" overlaps <span.wb-progress__label> "50%" (11x15px @ [145,23246])
+    <div.wb-progress__bar> "" overlaps <a.wb-demo__card-doc-link> "📖" (13x16px @ [265,23430])
+
+    [2mexpect([22m[31mreceived[39m[2m).[22mtoHaveLength[2m([22m[32mexpected[39m[2m)[22m
+
+    Expected length: [32m0[39m
+    Received length: [31m11[39m
+    Received array:  [31m["<div.wb-progress__bar> \"\" overlaps <span.wb-progress__label> \"50%\" (11x15px @ [163,21444])", "<div.wb-progress__bar> \"\" overlaps <a.wb-demo__card-doc-link> \"📖\" (16x16px @ [251,21759])", "<div.wb-progress__bar> \"\" overlaps <span.wb-progress__label> \"Loading...\" (24x15px @ [164,21921])", "<div.wb-progress__bar> \"\" overlaps <span.wb-progress__label> \"50%\" (11x15px @ [156,22110])", "<div.wb-progress__bar.wb-progress__bar--striped> \"\" overlaps <span.wb-progress__label> \"50%\" (11x15px @ [145,22299])", "<div.wb-progress__bar> \"\" overlaps <span.wb-progress__label> \"50%\" (11x15px @ [174,22488])", "<div.wb-progress__bar> \"\" overlaps <span.wb-progress__label> \"50%\" (11x15px @ [174,22677])", "<div.wb-progress__bar> \"\" overlaps <span.wb-progress__label> \"50%\" (11x15px @ [166,22866])", "<div.wb-progress__bar> \"\" overlaps <span.wb-progress__label> \"50%\" (11x15px @ [145,23053])", "<div.wb-progress__bar> \"\" overlaps <span.wb-progress__label> \"50%\" (11x15px @ [145,23246])", …][39m
+
+      223 |       }, MIN_OVERLAP_DIM);
+      224 |
+    > 225 |       expect(violations, `${file}:\n${violations.join('\n')}`).toHaveLength(0);
+          |                                                                ^
+      226 |     });
+      227 |   }
+      228 | });
+        at C:\Users\jwpmi\Downloads\AI\wb-starter\tests\compliance\no-element-overlap.spec.ts:225:64
+
+    Error Context: data\test-results\no-element-overlap-No-elem-ffb65-intentional-element-overlap-compliance-css\error-context.md
+
+  22) [compliance-css] › tests\compliance\no-element-overlap.spec.ts:60:5 › No element overlap (§22) — project-wide detection › demos\site\forms.html: no unintentional element overlap 
+
+    Error: demos\site\forms.html:
+    <input.wb-switch__input> "" overlaps <span.wb-switch__thumb> "" (14x17px @ [92,40410])
+
+    [2mexpect([22m[31mreceived[39m[2m).[22mtoHaveLength[2m([22m[32mexpected[39m[2m)[22m
+
+    Expected length: [32m0[39m
+    Received length: [31m1[39m
+    Received array:  [31m["<input.wb-switch__input> \"\" overlaps <span.wb-switch__thumb> \"\" (14x17px @ [92,40410])"][39m
+
+      223 |       }, MIN_OVERLAP_DIM);
+      224 |
+    > 225 |       expect(violations, `${file}:\n${violations.join('\n')}`).toHaveLength(0);
+          |                                                                ^
+      226 |     });
+      227 |   }
+      228 | });
+        at C:\Users\jwpmi\Downloads\AI\wb-starter\tests\compliance\no-element-overlap.spec.ts:225:64
+
+    Error Context: data\test-results\no-element-overlap-No-elem-6c60e-intentional-element-overlap-compliance-css\error-context.md
+
+  23) [compliance-css] › tests\compliance\no-element-overlap.spec.ts:60:5 › No element overlap (§22) — project-wide detection › pages\behaviors.html: no unintentional element overlap 
+
+    Error: pages\behaviors.html:
+    <input.wb-switch__input> "" overlaps <span.wb-switch__thumb> "" (14x17px @ [92,6482])
+    <div.wb-progress__bar> "" overlaps <span.wb-progress__label> "50%" (11x15px @ [188,10965])
+
+    [2mexpect([22m[31mreceived[39m[2m).[22mtoHaveLength[2m([22m[32mexpected[39m[2m)[22m
+
+    Expected length: [32m0[39m
+    Received length: [31m2[39m
+    Received array:  [31m["<input.wb-switch__input> \"\" overlaps <span.wb-switch__thumb> \"\" (14x17px @ [92,6482])", "<div.wb-progress__bar> \"\" overlaps <span.wb-progress__label> \"50%\" (11x15px @ [188,10965])"][39m
+
+      223 |       }, MIN_OVERLAP_DIM);
+      224 |
+    > 225 |       expect(violations, `${file}:\n${violations.join('\n')}`).toHaveLength(0);
+          |                                                                ^
+      226 |     });
+      227 |   }
+      228 | });
+        at C:\Users\jwpmi\Downloads\AI\wb-starter\tests\compliance\no-element-overlap.spec.ts:225:64
+
+    Error Context: data\test-results\no-element-overlap-No-elem-4125c-intentional-element-overlap-compliance-css\error-context.md
+
+  24) [compliance-css] › tests\compliance\no-element-overlap.spec.ts:60:5 › No element overlap (§22) — project-wide detection › pages\components.html: no unintentional element overlap 
+
+    Error: pages\components.html:
+    <header.wb-card__header.wb-header> "This is the title" overlaps <a.wb-demo__card-doc-link> "📖" (16x16px @ [376,619])
+    <header.wb-card__header.wb-header> "This is the title" overlaps <a.wb-demo__card-doc-link> "📖" (16x16px @ [325,883])
+    <header.wb-card__header> "Outlined Card" overlaps <a.wb-demo__card-doc-link> "📖" (16x16px @ [282,1207])
+    <img> "" overlaps <a.wb-demo__card-doc-link> "📖" (16x16px @ [386,1513])
+    <img> "" overlaps <a.wb-demo__card-doc-link> "📖" (16x16px @ [473,1915])
+    <video> "" overlaps <a.wb-demo__card-doc-link> "📖" (16x16px @ [428,2419])
+    <div.wb-card__overlay> "" overlaps <a.wb-demo__card-doc-link> "📖" (16x16px @ [443,3380])
+    <header.wb-card__header> "Starter" overlaps <a.wb-demo__card-doc-link> "📖" (16x16px @ [436,5107])
+    <header.wb-card__header> "Pro" overlaps <a.wb-demo__card-doc-link> "📖" (17x17px @ [516,5786])
+    <header.wb-card__header> "Enterprise" overlaps <a.wb-demo__card-doc-link> "📖" (16x16px @ [557,6390])
+    <div.wb-progress__bar> "" overlaps <span.wb-progress__label> "50%" (10x15px @ [163,17264])
+    <div.wb-progress__bar> "" overlaps <a.wb-demo__card-doc-link> "📖" (14x16px @ [251,17579])
+
+    [2mexpect([22m[31mreceived[39m[2m).[22mtoHaveLength[2m([22m[32mexpected[39m[2m)[22m
+
+    Expected length: [32m0[39m
+    Received length: [31m12[39m
+    Received array:  [31m["<header.wb-card__header.wb-header> \"This is the title\" overlaps <a.wb-demo__card-doc-link> \"📖\" (16x16px @ [376,619])", "<header.wb-card__header.wb-header> \"This is the title\" overlaps <a.wb-demo__card-doc-link> \"📖\" (16x16px @ [325,883])", "<header.wb-card__header> \"Outlined Card\" overlaps <a.wb-demo__card-doc-link> \"📖\" (16x16px @ [282,1207])", "<img> \"\" overlaps <a.wb-demo__card-doc-link> \"📖\" (16x16px @ [386,1513])", "<img> \"\" overlaps <a.wb-demo__card-doc-link> \"📖\" (16x16px @ [473,1915])", "<video> \"\" overlaps <a.wb-demo__card-doc-link> \"📖\" (16x16px @ [428,2419])", "<div.wb-card__overlay> \"\" overlaps <a.wb-demo__card-doc-link> \"📖\" (16x16px @ [443,3380])", "<header.wb-card__header> \"Starter\" overlaps <a.wb-demo__card-doc-link> \"📖\" (16x16px @ [436,5107])", "<header.wb-card__header> \"Pro\" overlaps <a.wb-demo__card-doc-link> \"📖\" (17x17px @ [516,5786])", "<header.wb-card__header> \"Enterprise\" overlaps <a.wb-demo__card-doc-link> \"📖\" (16x16px @ [557,6390])", …][39m
+
+      223 |       }, MIN_OVERLAP_DIM);
+      224 |
+    > 225 |       expect(violations, `${file}:\n${violations.join('\n')}`).toHaveLength(0);
+          |                                                                ^
+      226 |     });
+      227 |   }
+      228 | });
+        at C:\Users\jwpmi\Downloads\AI\wb-starter\tests\compliance\no-element-overlap.spec.ts:225:64
+
+    Error Context: data\test-results\no-element-overlap-No-elem-5e614-intentional-element-overlap-compliance-css\error-context.md
+
+  25) [compliance-css] › tests\compliance\no-element-overlap.spec.ts:60:5 › No element overlap (§22) — project-wide detection › pages\hero-variants.html: no unintentional element overlap 
+
+    Error: pages\hero-variants.html:
+    <section#herovariants-section-1> "Hero Variants 12 stunning hero section s" overlaps <div#herovariants-div-7.wb-orb.wb-orb--primary> "" (296x108px @ [912,247])
+    <div.page__hero> "Hero Variants 12 stunning hero section s" overlaps <div#herovariants-div-7.wb-orb.wb-orb--primary> "" (128x28px @ [912,247])
+    <div#herovariants-div-7.wb-orb.wb-orb--primary> "" overlaps <p#herovariants-p-13.wb-hero__subtitle> "Floating orbs with gradient mesh backgro" (12x25px @ [912,626])
+    <div#herovariants-div-26.wb-orb.wb-orb--primary> "" overlaps <span#herovariants-span-31.wb-gradient-text> "Left" (35x53px @ [304,1905])
+    <div#herovariants-div-26.wb-orb.wb-orb--primary> "" overlaps <p#herovariants-p-32.wb-hero__subtitle> "Perfect for showcasing products, apps, o" (272x26px @ [304,1969])
+    <div#herovariants-div-56.wb-orb.wb-orb--cosmic> "" overlaps <div#herovariants-div-57.wb-hero__content.wb-glass> "Particles Reach for the Stars Animated s" (348x190px @ [644,2651])
+    <div#herovariants-div-56.wb-orb.wb-orb--cosmic> "" overlaps <p#herovariants-p-61.wb-hero__subtitle> "Animated starfield with shooting stars. " (276x52px @ [644,2651])
+    <div#herovariants-div-56.wb-orb.wb-orb--cosmic> "" overlaps <a#herovariants-a-62.wb-btn-gradient> "Explore Space →" (90x53px @ [644,2739])
+    <div#herovariants-div-56.wb-orb.wb-orb--cosmic> "" overlaps <span#herovariants-span-63> "Explore Space →" (58x21px @ [644,2755])
+    <div#herovariants-div-56.wb-orb.wb-orb--cosmic> "" overlaps <div#herovariants-div-65.wb-hero.wb-hero--diagonal> "Diagonal Bold Angles Dynamic diagonal cu" (404x12px @ [644,3043])
+    <div#herovariants-div-56.wb-orb.wb-orb--cosmic> "" overlaps <div#herovariants-div-66.wb-orb.wb-orb--primary> "" (299x70px @ [749,2985])
+    <div#herovariants-div-66.wb-orb.wb-orb--primary> "" overlaps <p#herovariants-p-71.wb-hero__subtitle> "Dynamic diagonal cut with gradient accen" (147x25px @ [749,3314])
+    <div#herovariants-div-89.wb-hero.wb-hero--grid> "Grid Enter the Matrix Retro-futuristic g" overlaps <div> "" (1136x192px @ [72,4771])
+    <div> "" overlaps <div#herovariants-div-90.wb-hero__grid-glow> "" (1136x6px @ [72,4727])
+    <div> "" overlaps <div#herovariants-div-92.wb-hero__content.wb-glass> "Grid Enter the Matrix Retro-futuristic g" (698x128px @ [291,4727])
+    <div> "" overlaps <div#herovariants-div-121.wb-hero.wb-hero--mesh> "Mesh Living Colors Animated gradient mes" (1136x134px @ [72,6403])
+    <div> "" overlaps <div> "" (2286x434px @ [-504,6102])
+    <div#herovariants-div-90.wb-hero__grid-glow> "" overlaps <div#herovariants-div-92.wb-hero__content.wb-glass> "Grid Enter the Matrix Retro-futuristic g" (698x237px @ [291,4496])
+    <div#herovariants-div-92.wb-hero__content.wb-glass> "Grid Enter the Matrix Retro-futuristic g" overlaps <div> "" (698x84px @ [291,4771])
+    <a#herovariants-a-97.wb-btn-gradient> "Jack In →" overlaps <div> "" (133x35px @ [573,4771])
+    <span#herovariants-span-98> "Jack In →" overlaps <div> "" (67x18px @ [606,4771])
+    <div#herovariants-div-109.wb-hero.wb-hero--aurora> "Aurora Northern Lights Mesmerizing auror" overlaps <div> "" (1136x205px @ [72,6102])
+    <video.wb-video> "" overlaps <div> "" (1136x205px @ [72,6102])
+    <div#herovariants-div-114.wb-hero__content.wb-glass> "Aurora Northern Lights Mesmerizing auror" overlaps <div> "" (601x82px @ [340,6102])
+    <a#herovariants-a-119.wb-btn-glass> "Experience" overlaps <div> "" (144x33px @ [568,6102])
+    <div#herovariants-div-121.wb-hero.wb-hero--mesh> "Mesh Living Colors Animated gradient mes" overlaps <div#herovariants-div-131.wb-orb.wb-orb--primary> "" (296x12px @ [912,6967])
+    <div> "" overlaps <div#herovariants-div-130.wb-hero.wb-hero--card> "Card Floating Glass Content in a frosted" (1136x207px @ [72,7075])
+    <div> "" overlaps <div#herovariants-div-131.wb-orb.wb-orb--primary> "" (404x316px @ [912,6967])
+    <div.wb-zoom-bg.wb-zoom-bg--1> "" overlaps <div#herovariants-div-142.wb-orb.wb-orb--cosmic> "" (505x494px @ [189,7853])
+    <div#herovariants-div-142.wb-orb.wb-orb--cosmic> "" overlaps <div#herovariants-div-143.wb-orb.wb-orb--primary> "" (9x303px @ [685,7958])
+    <div#herovariants-div-142.wb-orb.wb-orb--cosmic> "" overlaps <div#herovariants-div-144.wb-hero__content.wb-glass> "Cosmic Deep Space The Orion Nebula. A vi" (310x331px @ [385,7870])
+    <div#herovariants-div-142.wb-orb.wb-orb--cosmic> "" overlaps <span#herovariants-span-147.wb-gradient-text> "Space" (55x53px @ [640,7970])
+    <div#herovariants-div-142.wb-orb.wb-orb--cosmic> "" overlaps <p#herovariants-p-148.wb-hero__subtitle> "The Orion Nebula. A view into a stellar " (261x27px @ [434,8034])
+    <div#herovariants-div-142.wb-orb.wb-orb--cosmic> "" overlaps <a#herovariants-a-149.wb-btn-glass> "Discover" (118x55px @ [576,8097])
+    <div#herovariants-div-143.wb-orb.wb-orb--primary> "" overlaps <div#herovariants-div-144.wb-hero__content.wb-glass> "Cosmic Deep Space The Orion Nebula. A vi" (210x243px @ [685,7958])
+    <div#herovariants-div-143.wb-orb.wb-orb--primary> "" overlaps <span#herovariants-span-147.wb-gradient-text> "Space" (63x53px @ [685,7970])
+    <div#herovariants-div-143.wb-orb.wb-orb--primary> "" overlaps <p#herovariants-p-148.wb-hero__subtitle> "The Orion Nebula. A view into a stellar " (161x27px @ [685,8034])
+    <div#herovariants-div-143.wb-orb.wb-orb--primary> "" overlaps <a#herovariants-a-149.wb-btn-glass> "Discover" (19x55px @ [685,8097])
+
+    [2mexpect([22m[31mreceived[39m[2m).[22mtoHaveLength[2m([22m[32mexpected[39m[2m)[22m
+
+    Expected length: [32m0[39m
+    Received length: [31m38[39m
+    Received array:  [31m["<section#herovariants-section-1> \"Hero Variants 12 stunning hero section s\" overlaps <div#herovariants-div-7.wb-orb.wb-orb--primary> \"\" (296x108px @ [912,247])", "<div.page__hero> \"Hero Variants 12 stunning hero section s\" overlaps <div#herovariants-div-7.wb-orb.wb-orb--primary> \"\" (128x28px @ [912,247])", "<div#herovariants-div-7.wb-orb.wb-orb--primary> \"\" overlaps <p#herovariants-p-13.wb-hero__subtitle> \"Floating orbs with gradient mesh backgro\" (12x25px @ [912,626])", "<div#herovariants-div-26.wb-orb.wb-orb--primary> \"\" overlaps <span#herovariants-span-31.wb-gradient-text> \"Left\" (35x53px @ [304,1905])", "<div#herovariants-div-26.wb-orb.wb-orb--primary> \"\" overlaps <p#herovariants-p-32.wb-hero__subtitle> \"Perfect for showcasing products, apps, o\" (272x26px @ [304,1969])", "<div#herovariants-div-56.wb-orb.wb-orb--cosmic> \"\" overlaps <div#herovariants-div-57.wb-hero__content.wb-glass> \"Particles Reach for the Stars Animated s\" (348x190px @ [644,2651])", "<div#herovariants-div-56.wb-orb.wb-orb--cosmic> \"\" overlaps <p#herovariants-p-61.wb-hero__subtitle> \"Animated starfield with shooting stars. \" (276x52px @ [644,2651])", "<div#herovariants-div-56.wb-orb.wb-orb--cosmic> \"\" overlaps <a#herovariants-a-62.wb-btn-gradient> \"Explore Space →\" (90x53px @ [644,2739])", "<div#herovariants-div-56.wb-orb.wb-orb--cosmic> \"\" overlaps <span#herovariants-span-63> \"Explore Space →\" (58x21px @ [644,2755])", "<div#herovariants-div-56.wb-orb.wb-orb--cosmic> \"\" overlaps <div#herovariants-div-65.wb-hero.wb-hero--diagonal> \"Diagonal Bold Angles Dynamic diagonal cu\" (404x12px @ [644,3043])", …][39m
+
+      223 |       }, MIN_OVERLAP_DIM);
+      224 |
+    > 225 |       expect(violations, `${file}:\n${violations.join('\n')}`).toHaveLength(0);
+          |                                                                ^
+      226 |     });
+      227 |   }
+      228 | });
+        at C:\Users\jwpmi\Downloads\AI\wb-starter\tests\compliance\no-element-overlap.spec.ts:225:64
+
+    Error Context: data\test-results\no-element-overlap-No-elem-25c39-intentional-element-overlap-compliance-css\error-context.md
+
+  26) [compliance-css] › tests\compliance\no-element-overlap.spec.ts:60:5 › No element overlap (§22) — project-wide detection › pages\home.html: no unintentional element overlap 
+
+    Error: pages\home.html:
+    <p> "Minimal example:" overlaps <h2> "By the Numbers" (124x7px @ [49,655])
+    <wb-card.wb-card.wb-card--elevated.wb-card--auto> "Hello It just works. 📖" overlaps <wb-cardstats#autogen-home-stat-0.wb-card.wb-card--stats.wb-card--auto> "🧩100+Behaviors" (58x82px @ [353,740])
+    <header.wb-card__header> "Hello" overlaps <a.wb-demo__card-doc-link> "📖" (16x16px @ [394,698])
+    <header.wb-card__header> "Hello" overlaps <wb-cardstats#autogen-home-stat-0.wb-card.wb-card--stats.wb-card--auto> "🧩100+Behaviors" (57x6px @ [353,740])
+    <button> "Save" overlaps <wb-cardstats#autogen-home-stat-0.wb-card.wb-card--stats.wb-card--auto> "🧩100+Behaviors" (165x82px @ [427,740])
+    <button> "Save" overlaps <wb-cardstats#autogen-home-stat-1.wb-card.wb-card--stats.wb-card--auto> "☀️LightDOM Only" (165x82px @ [608,740])
+    <span.language-javascript> "import WB from '/src/core/wb-lazy.js'; a" overlaps <wb-cardstats#autogen-home-stat-2.wb-card.wb-card--stats.wb-card--auto> "⚡<1sBuild Time" (239x15px @ [353,1136])
+    <span.language-javascript> "import WB from '/src/core/wb-lazy.js'; a" overlaps <header.wb-card__header> "⚡" (76x15px @ [370,1136])
+    <span.language-javascript> "import WB from '/src/core/wb-lazy.js'; a" overlaps <span.wb-card__icon> "⚡" (44x15px @ [386,1136])
+    <span.language-javascript> "import WB from '/src/core/wb-lazy.js'; a" overlaps <data.wb-card__stats-value> "<1s" (48x15px @ [478,1136])
+    <span.language-javascript> "import WB from '/src/core/wb-lazy.js'; a" overlaps <wb-cardstats#autogen-home-stat-3.wb-card.wb-card--stats.wb-card--auto> "✅100%Standards" (7x15px @ [608,1136])
+    <span.hljs-keyword> "await" overlaps <header.wb-card__header> "⚡" (24x15px @ [370,1136])
+    <span.hljs-keyword> "await" overlaps <span.wb-card__icon> "⚡" (8x15px @ [386,1136])
+    <span.hljs-title.function_> "init" overlaps <header.wb-card__header> "⚡" (24x15px @ [422,1136])
+    <span.hljs-title.function_> "init" overlaps <span.wb-card__icon> "⚡" (8x15px @ [422,1136])
+    <span.hljs-attr> "autoInject" overlaps <data.wb-card__stats-value> "<1s" (48x15px @ [478,1136])
+    <p> "Two stylesheets. One module script. Auto" overlaps <wb-cardstats#autogen-home-stat-2.wb-card.wb-card--stats.wb-card--auto> "⚡<1sBuild Time" (141x21px @ [353,1214])
+
+    [2mexpect([22m[31mreceived[39m[2m).[22mtoHaveLength[2m([22m[32mexpected[39m[2m)[22m
+
+    Expected length: [32m0[39m
+    Received length: [31m17[39m
+    Received array:  [31m["<p> \"Minimal example:\" overlaps <h2> \"By the Numbers\" (124x7px @ [49,655])", "<wb-card.wb-card.wb-card--elevated.wb-card--auto> \"Hello It just works. 📖\" overlaps <wb-cardstats#autogen-home-stat-0.wb-card.wb-card--stats.wb-card--auto> \"🧩100+Behaviors\" (58x82px @ [353,740])", "<header.wb-card__header> \"Hello\" overlaps <a.wb-demo__card-doc-link> \"📖\" (16x16px @ [394,698])", "<header.wb-card__header> \"Hello\" overlaps <wb-cardstats#autogen-home-stat-0.wb-card.wb-card--stats.wb-card--auto> \"🧩100+Behaviors\" (57x6px @ [353,740])", "<button> \"Save\" overlaps <wb-cardstats#autogen-home-stat-0.wb-card.wb-card--stats.wb-card--auto> \"🧩100+Behaviors\" (165x82px @ [427,740])", "<button> \"Save\" overlaps <wb-cardstats#autogen-home-stat-1.wb-card.wb-card--stats.wb-card--auto> \"☀️LightDOM Only\" (165x82px @ [608,740])", "<span.language-javascript> \"import WB from '/src/core/wb-lazy.js'; a\" overlaps <wb-cardstats#autogen-home-stat-2.wb-card.wb-card--stats.wb-card--auto> \"⚡<1sBuild Time\" (239x15px @ [353,1136])", "<span.language-javascript> \"import WB from '/src/core/wb-lazy.js'; a\" overlaps <header.wb-card__header> \"⚡\" (76x15px @ [370,1136])", "<span.language-javascript> \"import WB from '/src/core/wb-lazy.js'; a\" overlaps <span.wb-card__icon> \"⚡\" (44x15px @ [386,1136])", "<span.language-javascript> \"import WB from '/src/core/wb-lazy.js'; a\" overlaps <data.wb-card__stats-value> \"<1s\" (48x15px @ [478,1136])", …][39m
+
+      223 |       }, MIN_OVERLAP_DIM);
+      224 |
+    > 225 |       expect(violations, `${file}:\n${violations.join('\n')}`).toHaveLength(0);
+          |                                                                ^
+      226 |     });
+      227 |   }
+      228 | });
+        at C:\Users\jwpmi\Downloads\AI\wb-starter\tests\compliance\no-element-overlap.spec.ts:225:64
+
+    Error Context: data\test-results\no-element-overlap-No-elem-84cbb-intentional-element-overlap-compliance-css\error-context.md
+
+  27) [compliance-css] › tests\compliance\no-element-overlap.spec.ts:60:5 › No element overlap (§22) — project-wide detection › pages\newbehaviors.html: no unintentional element overlap 
+
+    Error: pages\newbehaviors.html:
+    <div.page__hero> "⚡ WB Behaviors Showcase Complete interac" overlaps <nav#nav.nav-links> "🔘 Buttons 📝 Inputs ☑️ Selection 📢 Fee" (625x34px @ [96,92])
+    <div.page__hero> "⚡ WB Behaviors Showcase Complete interac" overlaps <a> "🔘 Buttons" (100x17px @ [96,109])
+    <div.page__hero> "⚡ WB Behaviors Showcase Complete interac" overlaps <a> "📝 Inputs" (98x17px @ [206,109])
+    <div.page__hero> "⚡ WB Behaviors Showcase Complete interac" overlaps <a> "☑️ Selection" (117x17px @ [313,109])
+    <div.page__hero> "⚡ WB Behaviors Showcase Complete interac" overlaps <a> "📢 Feedback" (119x17px @ [440,109])
+    <div.page__hero> "⚡ WB Behaviors Showcase Complete interac" overlaps <a> "🪟 Overlays" (113x17px @ [569,109])
+    <div.page__hero> "⚡ WB Behaviors Showcase Complete interac" overlaps <a> "🧭 Navigation" (30x17px @ [691,109])
+    <label.wb-themecontrol__label.wb-label> "Theme:" overlaps <a> "🔧 Utilities" (47x7px @ [96,182])
+    <select.wb-themecontrol__select> "DarkLightCyberpunkOceanSunsetForestMidni" overlaps <nav#nav.nav-links> "🔘 Buttons 📝 Inputs ☑️ Selection 📢 Fee" (150x31px @ [151,174])
+    <select.wb-themecontrol__select> "DarkLightCyberpunkOceanSunsetForestMidni" overlaps <a> "🔧 Utilities" (44x14px @ [151,174])
+    <input.wb-switch__input> "" overlaps <span.wb-switch__thumb> "" (14x17px @ [365,6296])
+    <div> "" overlaps <div> "" (4x33px @ [112,10306])
+    <div> "" overlaps <div> "" (4x33px @ [140,10306])
+    <div> "" overlaps <div> "" (4x33px @ [169,10306])
+    <div> "" overlaps <div> "" (6x33px @ [196,10306])
+
+    [2mexpect([22m[31mreceived[39m[2m).[22mtoHaveLength[2m([22m[32mexpected[39m[2m)[22m
+
+    Expected length: [32m0[39m
+    Received length: [31m15[39m
+    Received array:  [31m["<div.page__hero> \"⚡ WB Behaviors Showcase Complete interac\" overlaps <nav#nav.nav-links> \"🔘 Buttons 📝 Inputs ☑️ Selection 📢 Fee\" (625x34px @ [96,92])", "<div.page__hero> \"⚡ WB Behaviors Showcase Complete interac\" overlaps <a> \"🔘 Buttons\" (100x17px @ [96,109])", "<div.page__hero> \"⚡ WB Behaviors Showcase Complete interac\" overlaps <a> \"📝 Inputs\" (98x17px @ [206,109])", "<div.page__hero> \"⚡ WB Behaviors Showcase Complete interac\" overlaps <a> \"☑️ Selection\" (117x17px @ [313,109])", "<div.page__hero> \"⚡ WB Behaviors Showcase Complete interac\" overlaps <a> \"📢 Feedback\" (119x17px @ [440,109])", "<div.page__hero> \"⚡ WB Behaviors Showcase Complete interac\" overlaps <a> \"🪟 Overlays\" (113x17px @ [569,109])", "<div.page__hero> \"⚡ WB Behaviors Showcase Complete interac\" overlaps <a> \"🧭 Navigation\" (30x17px @ [691,109])", "<label.wb-themecontrol__label.wb-label> \"Theme:\" overlaps <a> \"🔧 Utilities\" (47x7px @ [96,182])", "<select.wb-themecontrol__select> \"DarkLightCyberpunkOceanSunsetForestMidni\" overlaps <nav#nav.nav-links> \"🔘 Buttons 📝 Inputs ☑️ Selection 📢 Fee\" (150x31px @ [151,174])", "<select.wb-themecontrol__select> \"DarkLightCyberpunkOceanSunsetForestMidni\" overlaps <a> \"🔧 Utilities\" (44x14px @ [151,174])", …][39m
+
+      223 |       }, MIN_OVERLAP_DIM);
+      224 |
+    > 225 |       expect(violations, `${file}:\n${violations.join('\n')}`).toHaveLength(0);
+          |                                                                ^
+      226 |     });
+      227 |   }
+      228 | });
+        at C:\Users\jwpmi\Downloads\AI\wb-starter\tests\compliance\no-element-overlap.spec.ts:225:64
+
+    Error Context: data\test-results\no-element-overlap-No-elem-7592b-intentional-element-overlap-compliance-css\error-context.md
+
+  28) [compliance-css] › tests\compliance\no-element-overlap.spec.ts:60:5 › No element overlap (§22) — project-wide detection › pages\themes.html: no unintentional element overlap 
+
+    Error: pages\themes.html:
+    <div.hcs-wave> "" overlaps <div.hcs-wave.hcs-wave--secondary> "" (873x120px @ [237,798])
+    <div.hcs-wave> "" overlaps <div.hcs-wave.hcs-wave--accent> "" (977x120px @ [103,798])
+    <div.hcs-wave.hcs-wave--secondary> "" overlaps <div.hcs-wave.hcs-wave--accent> "" (843x120px @ [237,798])
+    <div.wb-progress__bar> "" overlaps <span.wb-progress__label> "50%" (11x15px @ [697,5727])
+
+    [2mexpect([22m[31mreceived[39m[2m).[22mtoHaveLength[2m([22m[32mexpected[39m[2m)[22m
+
+    Expected length: [32m0[39m
+    Received length: [31m4[39m
+    Received array:  [31m["<div.hcs-wave> \"\" overlaps <div.hcs-wave.hcs-wave--secondary> \"\" (873x120px @ [237,798])", "<div.hcs-wave> \"\" overlaps <div.hcs-wave.hcs-wave--accent> \"\" (977x120px @ [103,798])", "<div.hcs-wave.hcs-wave--secondary> \"\" overlaps <div.hcs-wave.hcs-wave--accent> \"\" (843x120px @ [237,798])", "<div.wb-progress__bar> \"\" overlaps <span.wb-progress__label> \"50%\" (11x15px @ [697,5727])"][39m
+
+      223 |       }, MIN_OVERLAP_DIM);
+      224 |
+    > 225 |       expect(violations, `${file}:\n${violations.join('\n')}`).toHaveLength(0);
+          |                                                                ^
+      226 |     });
+      227 |   }
+      228 | });
+        at C:\Users\jwpmi\Downloads\AI\wb-starter\tests\compliance\no-element-overlap.spec.ts:225:64
+
+    Error Context: data\test-results\no-element-overlap-No-elem-0c60f-intentional-element-overlap-compliance-css\error-context.md
+
+  29) [compliance-css] › tests\compliance\no-element-overlap.spec.ts:60:5 › No element overlap (§22) — project-wide detection › pages\whats-new.html: no unintentional element overlap 
+
+    Error: pages\whats-new.html:
+    <li> "Fixed a sanitizer bug in the markdown re" overlaps <li> "Fixed <wb-cardportfolio>'s variant, size" (907x5px @ [112,471])
+    <li> "Fixed a sanitizer bug in the markdown re" overlaps <code.x-code> "<wb-cardportfolio>" (170x5px @ [153,471])
+    <code.x-code> "options='...'" overlaps <li> "Fixed <wb-cardportfolio>'s variant, size" (126x5px @ [112,471])
+    <code.x-code> "options='...'" overlaps <code.x-code> "<wb-cardportfolio>" (85x5px @ [153,471])
+    <code.x-code> "<wb-select>" overlaps <li> "Fixed <wb-cardportfolio>'s variant, size" (108x5px @ [775,471])
+    <li> "Fixed <wb-cardportfolio>'s variant, size" overlaps <li> "Fixed <wb-timeline> not rendering at all" (567x5px @ [112,492])
+    <li> "Fixed <wb-cardportfolio>'s variant, size" overlaps <code.x-code> "<wb-timeline>" (126x5px @ [153,492])
+    <li> "Fixed <wb-cardportfolio>'s variant, size" overlaps <code.x-code> "display: block" (135x5px @ [535,492])
+    <code.x-code> "<wb-cardportfolio>" overlaps <li> "Fixed <wb-timeline> not rendering at all" (170x5px @ [153,492])
+    <code.x-code> "<wb-cardportfolio>" overlaps <code.x-code> "<wb-timeline>" (126x5px @ [153,492])
+    <li> "Fixed <wb-timeline> not rendering at all" overlaps <li> "Fixed <wb-drawer> on standalone demo pag" (567x5px @ [112,513])
+    <li> "Fixed <wb-timeline> not rendering at all" overlaps <code.x-code> "<wb-drawer>" (108x5px @ [153,513])
+    <code.x-code> "<wb-timeline>" overlaps <li> "Fixed <wb-drawer> on standalone demo pag" (126x5px @ [153,513])
+    <code.x-code> "<wb-timeline>" overlaps <code.x-code> "<wb-drawer>" (108x5px @ [153,513])
+    <code.x-code> "display: block" overlaps <li> "Fixed <wb-drawer> on standalone demo pag" (135x5px @ [535,513])
+    <li> "Fixed <wb-drawer> on standalone demo pag" overlaps <li> "Fixed <wb-dropdown>: position values did" (1033x5px @ [112,555])
+    <li> "Fixed <wb-drawer> on standalone demo pag" overlaps <code.x-code> "<wb-dropdown>" (126x5px @ [153,555])
+    <code.x-code> "variant" overlaps <li> "Fixed <wb-dropdown>: position values did" (73x5px @ [308,555])
+    <li> "Fixed <wb-dropdown>: position values did" overlaps <li> "Fixed progress bars and other enum-varia" (1077x3px @ [112,598])
+    <code.x-code> "<wb-dropdown>" overlaps <code.x-code> "trigger="hover"" (43x5px @ [236,576])
+    <code.x-code> "trigger="hover"" overlaps <li> "Fixed progress bars and other enum-varia" (144x3px @ [236,598])
+    <li> "Added margins/padding to the Card Compon" overlaps <li> "Added this "What's New" page." (221x3px @ [112,1056])
+    <li> "Fixed <wb-search> never getting its vari" overlaps <li> "Fixed cardhero variants, cardproduct bad" (441x3px @ [112,1325])
+    <code.x-code> "<wb-search>" overlaps <li> "Fixed cardhero variants, cardproduct bad" (108x3px @ [153,1325])
+
+    [2mexpect([22m[31mreceived[39m[2m).[22mtoHaveLength[2m([22m[32mexpected[39m[2m)[22m
+
+    Expected length: [32m0[39m
+    Received length: [31m24[39m
+    Received array:  [31m["<li> \"Fixed a sanitizer bug in the markdown re\" overlaps <li> \"Fixed <wb-cardportfolio>'s variant, size\" (907x5px @ [112,471])", "<li> \"Fixed a sanitizer bug in the markdown re\" overlaps <code.x-code> \"<wb-cardportfolio>\" (170x5px @ [153,471])", "<code.x-code> \"options='...'\" overlaps <li> \"Fixed <wb-cardportfolio>'s variant, size\" (126x5px @ [112,471])", "<code.x-code> \"options='...'\" overlaps <code.x-code> \"<wb-cardportfolio>\" (85x5px @ [153,471])", "<code.x-code> \"<wb-select>\" overlaps <li> \"Fixed <wb-cardportfolio>'s variant, size\" (108x5px @ [775,471])", "<li> \"Fixed <wb-cardportfolio>'s variant, size\" overlaps <li> \"Fixed <wb-timeline> not rendering at all\" (567x5px @ [112,492])", "<li> \"Fixed <wb-cardportfolio>'s variant, size\" overlaps <code.x-code> \"<wb-timeline>\" (126x5px @ [153,492])", "<li> \"Fixed <wb-cardportfolio>'s variant, size\" overlaps <code.x-code> \"display: block\" (135x5px @ [535,492])", "<code.x-code> \"<wb-cardportfolio>\" overlaps <li> \"Fixed <wb-timeline> not rendering at all\" (170x5px @ [153,492])", "<code.x-code> \"<wb-cardportfolio>\" overlaps <code.x-code> \"<wb-timeline>\" (126x5px @ [153,492])", …][39m
+
+      223 |       }, MIN_OVERLAP_DIM);
+      224 |
+    > 225 |       expect(violations, `${file}:\n${violations.join('\n')}`).toHaveLength(0);
+          |                                                                ^
+      226 |     });
+      227 |   }
+      228 | });
+        at C:\Users\jwpmi\Downloads\AI\wb-starter\tests\compliance\no-element-overlap.spec.ts:225:64
+
+    Error Context: data\test-results\no-element-overlap-No-elem-4e280-intentional-element-overlap-compliance-css\error-context.md
+
+  29 failed
+    [compliance] › tests\compliance\no-element-overlap.spec.ts:60:5 › No element overlap (§22) — project-wide detection › demos\frameworks.html: no unintentional element overlap 
+    [compliance] › tests\compliance\no-element-overlap.spec.ts:60:5 › No element overlap (§22) — project-wide detection › demos\multi-component-demo-generated.html: no unintentional element overlap 
+    [compliance] › tests\compliance\no-element-overlap.spec.ts:60:5 › No element overlap (§22) — project-wide detection › demos\schema-first-architecture.html: no unintentional element overlap 
+    [compliance] › tests\compliance\no-element-overlap.spec.ts:60:5 › No element overlap (§22) — project-wide detection › demos\site\cards.html: no unintentional element overlap 
+    [compliance] › tests\compliance\no-element-overlap.spec.ts:60:5 › No element overlap (§22) — project-wide detection › demos\site\content.html: no unintentional element overlap 
+    [compliance] › tests\compliance\no-element-overlap.spec.ts:60:5 › No element overlap (§22) — project-wide detection › demos\site\feedback.html: no unintentional element overlap 
+    [compliance] › tests\compliance\no-element-overlap.spec.ts:60:5 › No element overlap (§22) — project-wide detection › demos\site\forms.html: no unintentional element overlap 
+    [compliance] › tests\compliance\no-element-overlap.spec.ts:60:5 › No element overlap (§22) — project-wide detection › pages\behaviors.html: no unintentional element overlap 
+    [compliance] › tests\compliance\no-element-overlap.spec.ts:60:5 › No element overlap (§22) — project-wide detection › pages\components.html: no unintentional element overlap 
+    [compliance] › tests\compliance\no-element-overlap.spec.ts:60:5 › No element overlap (§22) — project-wide detection › pages\hero-variants.html: no unintentional element overlap 
+    [compliance] › tests\compliance\no-element-overlap.spec.ts:60:5 › No element overlap (§22) — project-wide detection › pages\home.html: no unintentional element overlap 
+    [compliance] › tests\compliance\no-element-overlap.spec.ts:60:5 › No element overlap (§22) — project-wide detection › pages\newbehaviors.html: no unintentional element overlap 
+    [compliance] › tests\compliance\no-element-overlap.spec.ts:60:5 › No element overlap (§22) — project-wide detection › pages\themes.html: no unintentional element overlap 
+    [compliance] › tests\compliance\no-element-overlap.spec.ts:60:5 › No element overlap (§22) — project-wide detection › pages\whats-new.html: no unintentional element overlap 
+    [compliance-css] › tests\compliance\no-element-overlap.spec.ts:60:5 › No element overlap (§22) — project-wide detection › demos\frameworks.html: no unintentional element overlap 
+    [compliance-css] › tests\compliance\no-element-overlap.spec.ts:60:5 › No element overlap (§22) — project-wide detection › demos\multi-component-demo-generated.html: no unintentional element overlap 
+    [compliance-css] › tests\compliance\no-element-overlap.spec.ts:60:5 › No element overlap (§22) — project-wide detection › demos\schema-first-architecture.html: no unintentional element overlap 
+    [compliance-css] › tests\compliance\no-element-overlap.spec.ts:60:5 › No element overlap (§22) — project-wide detection › demos\site\cards.html: no unintentional element overlap 
+    [compliance-css] › tests\compliance\no-element-overlap.spec.ts:60:5 › No element overlap (§22) — project-wide detection › demos\site\content.html: no unintentional element overlap 
+    [compliance-css] › tests\compliance\no-element-overlap.spec.ts:60:5 › No element overlap (§22) — project-wide detection › demos\site\effects.html: no unintentional element overlap 
+    [compliance-css] › tests\compliance\no-element-overlap.spec.ts:60:5 › No element overlap (§22) — project-wide detection › demos\site\feedback.html: no unintentional element overlap 
+    [compliance-css] › tests\compliance\no-element-overlap.spec.ts:60:5 › No element overlap (§22) — project-wide detection › demos\site\forms.html: no unintentional element overlap 
+    [compliance-css] › tests\compliance\no-element-overlap.spec.ts:60:5 › No element overlap (§22) — project-wide detection › pages\behaviors.html: no unintentional element overlap 
+    [compliance-css] › tests\compliance\no-element-overlap.spec.ts:60:5 › No element overlap (§22) — project-wide detection › pages\components.html: no unintentional element overlap 
+    [compliance-css] › tests\compliance\no-element-overlap.spec.ts:60:5 › No element overlap (§22) — project-wide detection › pages\hero-variants.html: no unintentional element overlap 
+    [compliance-css] › tests\compliance\no-element-overlap.spec.ts:60:5 › No element overlap (§22) — project-wide detection › pages\home.html: no unintentional element overlap 
+    [compliance-css] › tests\compliance\no-element-overlap.spec.ts:60:5 › No element overlap (§22) — project-wide detection › pages\newbehaviors.html: no unintentional element overlap 
+    [compliance-css] › tests\compliance\no-element-overlap.spec.ts:60:5 › No element overlap (§22) — project-wide detection › pages\themes.html: no unintentional element overlap 
+    [compliance-css] › tests\compliance\no-element-overlap.spec.ts:60:5 › No element overlap (§22) — project-wide detection › pages\whats-new.html: no unintentional element overlap 
+  63 passed (1.5m)

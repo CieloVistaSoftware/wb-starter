@@ -1,0 +1,20 @@
+{
+  "state": "passed",
+  "mode": "single",
+  "specFile": "tests/regression/forms-no-deprecated-wrappers.spec.ts",
+  "startedAt": "2026-08-01T23:51:45.954Z",
+  "updatedAt": "2026-08-01T23:51:54.799Z",
+  "command": "npx playwright test --workers=8 tests/regression/forms-no-deprecated-wrappers.spec.ts",
+  "pid": 3772,
+  "passed": 3,
+  "failed": 0,
+  "skipped": 0,
+  "total": 3,
+  "currentFile": "tests\\regression\\forms-no-deprecated-wrappers.spec.ts",
+  "output": "\nRunning 3 tests using 3 workers\n\n  ok 1 [regression] › tests\\regression\\forms-no-deprecated-wrappers.spec.ts:15:3 › demos/site/forms.html uses native elements, not deprecated wrappers (#390) › no <wb-checkbox> or <wb-textarea> custom elements remain (2.2s)\n  ok 2 [regression] › tests\\regression\\forms-no-deprecated-wrappers.spec.ts:37:3 › demos/site/forms.html uses native elements, not deprecated wrappers (#390) › checkboxes and textareas actually render (regression didn't just hide them) (2.2s)\n  ok 3 [regression] › tests\\regression\\forms-no-deprecated-wrappers.spec.ts:24:3 › demos/site/forms.html uses native elements, not deprecated wrappers (#390) › no [wb-checkbox]/[wb-textarea] deprecation warning fires on a fresh load (2.3s)\n\n════════════════════════════════════════════════════════════\n  WB TEST RESULTS\n════════════════════════════════════════════════════════════\n  Total: 3 tests in 5.7s\n  ✓ Passed:  3\n  ✗ Failed:  0\n\n  By Project:\n    ✓ regression: 3/3 passed\n════════════════════════════════════════════════════════════\n\n\n  3 passed (6.0s)\n",
+  "errors": "",
+  "failures": [],
+  "completedAt": "2026-08-01T23:51:54.799Z",
+  "duration": "8.85s",
+  "exitCode": 0
+}

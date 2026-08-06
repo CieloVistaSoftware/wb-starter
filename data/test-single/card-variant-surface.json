@@ -1,0 +1,20 @@
+{
+  "state": "passed",
+  "mode": "single",
+  "specFile": "tests/regression/card-variant-surface.spec.ts",
+  "startedAt": "2026-08-04T01:31:26.834Z",
+  "updatedAt": "2026-08-04T01:32:36.263Z",
+  "command": "npx playwright test --workers=8 tests/regression/card-variant-surface.spec.ts",
+  "pid": 38216,
+  "passed": 2,
+  "failed": 0,
+  "skipped": 0,
+  "total": 2,
+  "currentFile": "tests\\regression\\card-variant-surface.spec.ts",
+  "output": "\nRunning 2 tests using 2 workers\n\n  ok 2 [regression] › tests\\regression\\card-variant-surface.spec.ts:56:3 › wb-card variant surface (cards demo page) › bordered variant stays visually distinct after a hover interaction (5.1s)\n  ok 1 [regression] › tests\\regression\\card-variant-surface.spec.ts:18:3 › wb-card variant surface (cards demo page) › bordered and flat variants render visually distinct from default (6.2s)\n\n════════════════════════════════════════════════════════════\n  WB TEST RESULTS\n════════════════════════════════════════════════════════════\n  Total: 2 tests in 33.4s\n  ✓ Passed:  2\n  ✗ Failed:  0\n\n  By Project:\n    ✓ regression: 2/2 passed\n════════════════════════════════════════════════════════════\n\n\n  2 passed (36.0s)\n",
+  "errors": "",
+  "failures": [],
+  "completedAt": "2026-08-04T01:32:36.263Z",
+  "duration": "69.43s",
+  "exitCode": 0
+}

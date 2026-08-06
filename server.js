@@ -258,6 +258,30 @@ app.get('/pages/:page', (req, res, next) => {
     fs.readFile(filePath, 'utf8', (err, content) => {
       if (err) return next(); // File not found, pass to static handler
 
+      // #486: pages/*.html fragments are written root-relative (no leading
+      // "/" or "../") in href/src -- correct for their PRODUCTION consumer,
+      // the SPA shell, which fetches the fragment and injects it via
+      // innerHTML at the site root (src/core/site-engine.js loadPage()), so
+      // a root-relative URL resolves against the shell's own document base.
+      // This standalone wrap is a DIFFERENT consumer with a DIFFERENT base:
+      // the fragment's raw markup (including any embedded <link>/<script>
+      // tags) is dropped into a page actually served AT /pages/<name>.html,
+      // so that same root-relative URL instead resolves against /pages/ and
+      // 404s (confirmed live: pages/behaviors.html's own
+      // "src/styles/pages/behaviors.css" link resolved to
+      // /pages/src/styles/pages/behaviors.css here, so the page's dedicated
+      // stylesheet silently never loaded under direct navigation, even
+      // though the exact same markup is correct once injected by the shell).
+      // Rewrite root-relative resource refs to domain-root-absolute ONLY in
+      // this wrap (matching how themes.css/site.css above are already
+      // loaded absolute) -- the source file on disk stays root-relative,
+      // correct for its real production consumer.
+      const RESOURCE_REF = /(<(?:link|script|img|source|audio|video)\b[^>]*?\b(?:href|src)\s*=\s*")([^"]+)(")/gi;
+      const rewritten = content.replace(RESOURCE_REF, (full, pre, ref, post) => {
+        if (/^(https?:|data:|mailto:|#|\/)/i.test(ref) || ref.startsWith('//')) return full;
+        return pre + '/' + ref + post;
+      });
+
       const wrapped = `<!DOCTYPE html>
 <html lang="en" data-theme="${theme}">
 <head>
@@ -292,7 +316,7 @@ app.get('/pages/:page', (req, res, next) => {
 </head>
 <body class="site">
   <div class="demo-page">
-    ${content}
+    ${rewritten}
   </div>
 </body>
 </html>`;

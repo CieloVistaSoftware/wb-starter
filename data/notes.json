@@ -1,3 +1,23 @@
 {
-  "notes": []
+  "notes": [
+    {
+      "id": "note-1785957540594",
+      "page": "demos",
+      "content": "[8/5/2026, 2:18:39 PM] Page: Demos\n\nfor notes, put the save button on bottom, i don't think we need the copy button put the x in top right corner to close this window.  Make the save file name automatic, but allopw user to edit that name first.",
+      "selectedElement": null,
+      "createdAt": "2026-08-05T19:19:00.594Z",
+      "updatedAt": "2026-08-05T19:19:00.594Z",
+      "issueUrl": "https://github.com/CieloVistaSoftware/wb-starter/issues/495"
+    },
+    {
+      "id": "note-1785957542886",
+      "page": "demos",
+      "content": "[8/5/2026, 2:19:01 PM] Page: Demos",
+      "selectedElement": null,
+      "createdAt": "2026-08-05T19:19:02.886Z",
+      "updatedAt": "2026-08-05T19:19:02.886Z",
+      "issueUrl": "https://github.com/CieloVistaSoftware/wb-starter/issues/496"
+    }
+  ],
+  "lastUpdated": "2026-08-05T19:19:04.159Z"
 }

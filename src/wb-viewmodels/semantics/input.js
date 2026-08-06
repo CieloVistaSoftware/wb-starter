@@ -165,7 +165,15 @@ export function input(element, options = {}) {
   };
 
   const wrapper = document.createElement('div');
-  wrapper.className = 'wb-input';
+  // #485: NOT .wb-input -- that class is input.css's border/padding/background
+  // styling for the real text field itself. Putting it on this wrapper div
+  // painted a second concentric border ring around the real <input>'s own
+  // border ("two lines" on the Success/Error variant demos). Same bug, same
+  // fix as the <wb-input> custom-tag branch above: the wrapper gets the
+  // purely structural wb-input__wrapper class (no CSS targets it visually)
+  // and carries only layout via inline styles; border/background stay
+  // exclusively on the real input.
+  wrapper.className = 'wb-input__wrapper';
   // Wrapper takes full width to mimic the input's behavior
   wrapper.style.cssText = 'position:relative;display:flex;align-items:center;width:100%;';
   element.parentNode.insertBefore(wrapper, element);
@@ -194,20 +202,24 @@ export function input(element, options = {}) {
   };
   element.style.padding = paddings[config.size] || paddings.md;
   
+  // #485: size/variant modifier classes go on the real input, not the
+  // wrapper -- .wb-input--{size} adds padding/font-size and
+  // .wb-input--{variant} adds border-color, all of which belong to the
+  // field itself. On the wrapper they padded/colored the structural div,
+  // contributing to the doubled-up ring/spacing.
   if (config.size !== 'md') {
-    wrapper.classList.add(`wb-input--${config.size}`);
     element.classList.add(`wb-input--${config.size}`);
   }
-  
+
   if (config.variant === 'success') {
     element.style.borderColor = 'var(--success-color, #22c55e)';
-    wrapper.classList.add('wb-input--success');
+    element.classList.add('wb-input--success');
   } else if (config.variant === 'warning') {
     element.style.borderColor = 'var(--warning-color, #f59e0b)';
-    wrapper.classList.add('wb-input--warning');
+    element.classList.add('wb-input--warning');
   } else if (config.variant === 'error') {
     element.style.borderColor = 'var(--danger-color, #ef4444)';
-    wrapper.classList.add('wb-input--error');
+    element.classList.add('wb-input--error');
   }
 
   if (config.prefix) {
@@ -243,7 +255,13 @@ export function input(element, options = {}) {
   return () => {
     wrapper.parentNode.insertBefore(element, wrapper);
     wrapper.remove();
-    element.classList.remove('wb-input__field');
+    element.classList.remove(
+      'wb-input__field',
+      `wb-input--${config.size}`,
+      'wb-input--success',
+      'wb-input--warning',
+      'wb-input--error'
+    );
   };
 }
 

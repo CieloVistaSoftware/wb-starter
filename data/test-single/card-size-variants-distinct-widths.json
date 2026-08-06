@@ -1,0 +1,25 @@
+{
+  "state": "passed",
+  "mode": "single",
+  "specFile": "tests/regression/card-size-variants-distinct-widths.spec.ts",
+  "startedAt": "2026-08-04T01:29:15.286Z",
+  "updatedAt": "2026-08-04T01:32:16.909Z",
+  "command": "npx playwright test --workers=8 tests/regression/card-size-variants-distinct-widths.spec.ts",
+  "pid": 33512,
+  "passed": 2,
+  "failed": 1,
+  "skipped": 0,
+  "total": 3,
+  "currentFile": "tests\\regression\\card-size-variants-distinct-widths.spec.ts",
+  "output": "\nRunning 1 test using 1 worker\n\n  x  1 [regression] › tests\\regression\\card-size-variants-distinct-widths.spec.ts:22:1 › wb-card size variants render at genuinely distinct widths (15.9s)\n  ok 2 [regression] › tests\\regression\\card-size-variants-distinct-widths.spec.ts:22:1 › wb-card size variants render at genuinely distinct widths (retry #1) (17.6s)\n\n════════════════════════════════════════════════════════════\n  WB TEST RESULTS\n════════════════════════════════════════════════════════════\n  Total: 2 tests in 164.8s\n  ✓ Passed:  1\n  ✗ Failed:  1\n\n  By Project:\n    ✗ regression: 1/2 passed\n\n  See failures: data/test-results/failures.json\n  Live log:    data/test-results/failures-live.log\n════════════════════════════════════════════════════════════\n\n\n\n  1) [regression] › tests\\regression\\card-size-variants-distinct-widths.spec.ts:22:1 › wb-card size variants render at genuinely distinct widths \n\n    Error: wb-card size=\"xs\" must get its wb-card--xs class applied\n\n    \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\n    Expected: \u001b[32mtrue\u001b[39m\n    Received: \u001b[31mfalse\u001b[39m\n\n      40 |\n      41 |   for (const { size, hasClass } of widths) {\n    > 42 |     expect(hasClass, `wb-card size=\"${size}\" must get its wb-card--${size} class applied`).toBe(true);\n         |                                                                                            ^\n      43 |   }\n      44 |\n      45 |   const bySize = Object.fromEntries(widths.map((w) => [w.size, w.width]));\n        at C:\\Users\\jwpmi\\Downloads\\AI\\wb-starter\\tests\\regression\\card-size-variants-distinct-widths.spec.ts:42:92\n\n    Error Context: data\\test-results\\card-size-variants-distinc-011d5-t-genuinely-distinct-widths-regression\\error-context.md\n\n  1 flaky\n    [regression] › tests\\regression\\card-size-variants-distinct-widths.spec.ts:22:1 › wb-card size variants render at genuinely distinct widths \n",
+  "errors": "\n❌ FAILED: wb-card size variants render at genuinely distinct widths\n   Error: wb-card size=\"xs\" must get its wb-card--xs class applied\n",
+  "failures": [
+    {
+      "file": "tests\\regression\\card-size-variants-distinct-widths.spec.ts",
+      "name": "wb-card size variants render at genuinely distinct widths"
+    }
+  ],
+  "completedAt": "2026-08-04T01:32:16.909Z",
+  "duration": "181.62s",
+  "exitCode": 0
+}

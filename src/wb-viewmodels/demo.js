@@ -331,6 +331,37 @@ export async function demo(element, options = {}) {
         window.WB.scan(grid);
     }
 
+    // #486: measure the GRID's own rendered width and hand it to demo.css as
+    // --wb-demo-shrink-width, for single-item demos only (desktop rule in
+    // demo.css falls back to plain `fit-content` otherwise). A pure-CSS
+    // `width: fit-content` on wb-demo sizes to its WIDEST in-flow child —
+    // including the `.wb-demo__code` panel below the grid, which pre.css
+    // sets to `width: 100%` (circular under intrinsic sizing, so it
+    // resolves to the full available width, not its own content width).
+    // That made every single-item demo measure fit-content against the
+    // code panel instead of the actual control, even a tiny button sitting
+    // above a wide, unwrapped code sample. CSS has no way to say "shrink to
+    // child A, ignore child B" between two normal in-flow siblings, so the
+    // grid's width is measured here instead — same per-instance-measurement
+    // pattern this codebase already uses for cross-sibling sizing (e.g.
+    // pre.js's control right-offsets). rAF: wait for the current script's
+    // layout/style pass (including a deferred eager WB.scan(document.body))
+    // to settle before measuring, so button/card classes are already
+    // applied and the measured width is the real final one, not a
+    // pre-upgrade placeholder.
+    if (cols === 1 && childCount === 1 && !element.classList.contains('wb-demo--full-width')) {
+        requestAnimationFrame(() => {
+            const only = grid.children[0];
+            if (!only) return;
+            const demoCs = getComputedStyle(element);
+            const hPad = (parseFloat(demoCs.paddingLeft) || 0) + (parseFloat(demoCs.paddingRight) || 0);
+            const shrinkWidth = only.getBoundingClientRect().width + hPad;
+            if (shrinkWidth > 0) {
+                element.style.setProperty('--wb-demo-shrink-width', shrinkWidth + 'px');
+            }
+        });
+    }
+
     // Add doc links. (#262: the old '?page=docs#wb-…' hrefs were
     // dead on EVERY surface — page-relative, so inside the doc-viewer they hit
     // doc-viewer.html?page=docs, and pages/docs.html has no #wb-* anchors anyway.)

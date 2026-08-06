@@ -1,0 +1,20 @@
+{
+  "state": "passed",
+  "mode": "single",
+  "specFile": "tests/regression/x-draggable-position.spec.ts",
+  "startedAt": "2026-08-01T23:55:31.878Z",
+  "updatedAt": "2026-08-01T23:55:39.520Z",
+  "command": "npx playwright test --workers=8 tests/regression/x-draggable-position.spec.ts",
+  "pid": 27732,
+  "passed": 4,
+  "failed": 0,
+  "skipped": 0,
+  "total": 4,
+  "currentFile": "tests\\regression\\x-draggable-position.spec.ts",
+  "output": "\nRunning 4 tests using 4 workers\n\n  ok 1 [regression] › tests\\regression\\x-draggable-position.spec.ts:36:3 › x-draggable position tracking (#390) › dragging N pixels moves the element approximately N pixels, not a multiple of it (833ms)\n  ok 2 [regression] › tests\\regression\\x-draggable-position.spec.ts:58:3 › x-draggable position tracking (#390) › two consecutive drags do not compound into an increasingly wrong offset (928ms)\n  ok 3 [regression] › tests\\regression\\x-draggable-position.spec.ts:109:3 › x-draggable position tracking (#390) › axis=\"y\" constrains movement to vertical only (811ms)\n  ok 4 [regression] › tests\\regression\\x-draggable-position.spec.ts:88:3 › x-draggable position tracking (#390) › axis=\"x\" constrains movement to horizontal only (734ms)\n\n════════════════════════════════════════════════════════════\n  WB TEST RESULTS\n════════════════════════════════════════════════════════════\n  Total: 4 tests in 4.5s\n  ✓ Passed:  4\n  ✗ Failed:  0\n\n  By Project:\n    ✓ regression: 4/4 passed\n════════════════════════════════════════════════════════════\n\n\n  4 passed (4.9s)\n",
+  "errors": "",
+  "failures": [],
+  "completedAt": "2026-08-01T23:55:39.520Z",
+  "duration": "7.64s",
+  "exitCode": 0
+}

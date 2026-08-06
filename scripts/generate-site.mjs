@@ -111,6 +111,49 @@ function placeholderChildren(schema) {
   return `This is example ${label} content.`;
 }
 
+// #490: components whose resting render is a CLOSED trigger -- the
+// position/variant-differentiated panel only exists after a click
+// (src/wb-viewmodels/overlay.js show(), dialog.js, dropdown.js). With the
+// generic shared placeholder above, every demo box on a showcase page is
+// pixel-identical at rest (John, live: "There is no difference in these
+// three elements, why?"). For these components the children text doubles as
+// the trigger's visible label AND the panel body, so echo the instance's
+// own attrs (e.g. "position=left") to make each box legible without
+// clicking it. This is the documented exception to #413's "don't parrot the
+// attrs" rule: #413 assumed the component's resting render already shows
+// its difference, which is true for every normally-visible component but
+// definitionally false for a closed overlay trigger.
+const TRIGGER_COMPONENTS = new Set(['dialog', 'drawer', 'dropdown', 'popover', 'offcanvas', 'sheet']);
+
+// Functional attrs a demo instance NEEDS to actually work when opened, but
+// which no schema property default or matrix combo supplies. dropdown: a
+// menu with no items= attribute and no element children opens as an empty
+// 150x2px sliver (root-caused in tests/regression/
+// dropdown-position-and-content.spec.ts; the items= attrs that fix added to
+// overlays.html by hand were wiped by the next site regeneration -- this
+// puts them in the generator so they survive). Excluded from the #490
+// attr-echo label: they are plumbing, not the permutation being showcased.
+const DEMO_EXTRA_ATTRS = {
+  dropdown: { items: 'Profile,Settings,Logout' }
+};
+
+// Build one demo instance: attr-echo children for closed-trigger components
+// (#490), generic placeholder for everything else (#413), plus any
+// functional extra attrs (which never override the showcased attrs and
+// never appear in the label).
+function buildDemo(schema, tag, attrs) {
+  const isTrigger = TRIGGER_COMPONENTS.has(schema.schemaFor);
+  // Skip the values generatePageHtml's attr emitter drops (false/null/
+  // undefined) -- the label must never claim an attribute that isn't
+  // actually rendered on the tag (e.g. showClose:false).
+  const label = Object.entries(attrs)
+    .filter(([, v]) => v !== false && v !== null && v !== undefined)
+    .map(([k, v]) => `${k}=${v}`).join(', ');
+  const children = (isTrigger && label) ? label : placeholderChildren(schema);
+  const extras = DEMO_EXTRA_ATTRS[schema.schemaFor] || {};
+  return { tag, attrs: { ...extras, ...attrs }, children };
+}
+
 function generateComponentSections(schema) {
   const sections = [];
   const tag = `wb-${schema.schemaFor}`;
@@ -123,7 +166,7 @@ function generateComponentSections(schema) {
       for (const [key, val] of Object.entries(combo)) {
         attrs[camelToKebab(key)] = val;
       }
-      return { tag, attrs, children: placeholderChildren(schema) };
+      return buildDemo(schema, tag, attrs);
     });
     const columns = demos.length <= 2 ? demos.length : demos.length <= 4 ? 2 : 3;
     sections.push({
@@ -148,11 +191,19 @@ function generateComponentSections(schema) {
           attrs[camelToKebab(rk)] = rv.default || `Sample ${rk}`;
         }
       }
-      return { tag, attrs, children: placeholderChildren(schema) };
+      return buildDemo(schema, tag, attrs);
     });
     const columns = demos.length <= 2 ? demos.length : demos.length <= 4 ? 2 : 3;
     sections.push({
       heading: enumSectionHeading(propName),
+      // Stable anchor id, decoupled from the display heading. #411's
+      // heading rephrase ("variant variants" -> "Variants") silently
+      // changed the derived section id from {comp}-variant-variants to
+      // {comp}-variants on regeneration, breaking every test that anchors
+      // on the long-established {comp}-{prop}-variants ids (e.g.
+      // tests/regression/drawer-path-b-content-position-variant.spec.ts's
+      // #drawer-variant-variants). Ids are API; headings are copy.
+      id: slugify(`${schema.schemaFor}-${attrName}-variants`),
       component: schema.schemaFor,
       tag,
       columns,
@@ -172,7 +223,7 @@ function generateComponentSections(schema) {
           attrs[camelToKebab(rk)] = rv.default || `Sample ${rk}`;
         }
       }
-      return { tag, attrs, children: placeholderChildren(schema) };
+      return buildDemo(schema, tag, attrs);
     });
     // Always one per row: a boolean toggle's whole point is showing its own
     // effect (e.g. `full-width`), which a multi-column grid cell clips.
@@ -205,7 +256,7 @@ function generateComponentSections(schema) {
         component: schema.schemaFor,
         tag,
         columns: 1,
-        demos: [{ tag, attrs: defaultAttrs, children: placeholderChildren(schema) }]
+        demos: [buildDemo(schema, tag, defaultAttrs)]
       });
     }
   }

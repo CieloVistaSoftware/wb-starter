@@ -1,0 +1,20 @@
+{
+  "state": "passed",
+  "mode": "single",
+  "specFile": "tests/regression/cardminimizable-footer.spec.ts",
+  "startedAt": "2026-07-30T22:00:18.480Z",
+  "updatedAt": "2026-07-30T22:00:36.591Z",
+  "command": "npx playwright test --workers=8 tests/regression/cardminimizable-footer.spec.ts",
+  "pid": 45720,
+  "passed": 1,
+  "failed": 0,
+  "skipped": 0,
+  "total": 1,
+  "currentFile": "tests\\regression\\cardminimizable-footer.spec.ts",
+  "output": "\nRunning 1 test using 1 worker\n\n  ok 1 [regression] › tests\\regression\\cardminimizable-footer.spec.ts:14:1 › <wb-cardminimizable footer> renders its footer without throwing (#344) (1.6s)\n\n════════════════════════════════════════════════════════════\n  WB TEST RESULTS\n════════════════════════════════════════════════════════════\n  Total: 1 tests in 6.7s\n  ✓ Passed:  1\n  ✗ Failed:  0\n\n  By Project:\n    ✓ regression: 1/1 passed\n════════════════════════════════════════════════════════════\n\n\n  1 passed (7.7s)\n",
+  "errors": "",
+  "failures": [],
+  "completedAt": "2026-07-30T22:00:36.591Z",
+  "duration": "18.11s",
+  "exitCode": 0
+}

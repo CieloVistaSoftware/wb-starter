@@ -1,0 +1,1560 @@
+
+Running 192 tests using 8 workers
+
+  Γ£ô    1 [compliance] ΓÇ║ tests\compliance\demo-layout-standards.spec.ts:64:5 ΓÇ║ Demo layout standards (┬º2, ┬º13) ΓÇö static scan ΓÇ║ demos\index.html: no permutation-matrix <wb-demo> blocks (┬º2) (124ms)
+  Γ£ô    3 [compliance] ΓÇ║ tests\compliance\demo-layout-standards.spec.ts:64:5 ΓÇ║ Demo layout standards (┬º2, ┬º13) ΓÇö static scan ΓÇ║ demos\mdhtml-pre-debug.html: no permutation-matrix <wb-demo> blocks (┬º2) (30ms)
+  Γ£ô    2 [compliance] ΓÇ║ tests\compliance\demo-layout-standards.spec.ts:64:5 ΓÇ║ Demo layout standards (┬º2, ┬º13) ΓÇö static scan ΓÇ║ demos\intellisense-check.html: no permutation-matrix <wb-demo> blocks (┬º2) (128ms)
+  Γ£ô    4 [compliance] ΓÇ║ tests\compliance\demo-layout-standards.spec.ts:64:5 ΓÇ║ Demo layout standards (┬º2, ┬º13) ΓÇö static scan ΓÇ║ demos\multi-component-demo-generated.html: no permutation-matrix <wb-demo> blocks (┬º2) (22ms)
+  Γ£ô    6 [compliance] ΓÇ║ tests\compliance\demo-layout-standards.spec.ts:64:5 ΓÇ║ Demo layout standards (┬º2, ┬º13) ΓÇö static scan ΓÇ║ demos\pre-debug.html: no permutation-matrix <wb-demo> blocks (┬º2) (324ms)
+  Γ£ô    5 [compliance] ΓÇ║ tests\compliance\demo-layout-standards.spec.ts:64:5 ΓÇ║ Demo layout standards (┬º2, ┬º13) ΓÇö static scan ΓÇ║ demos\playground.html: no permutation-matrix <wb-demo> blocks (┬º2) (684ms)
+  Γ£ô    7 [compliance] ΓÇ║ tests\compliance\demo-layout-standards.spec.ts:64:5 ΓÇ║ Demo layout standards (┬º2, ┬º13) ΓÇö static scan ΓÇ║ demos\registry-browser.html: no permutation-matrix <wb-demo> blocks (┬º2) (543ms)
+  Γ£ô    8 [compliance] ΓÇ║ tests\compliance\demo-layout-standards.spec.ts:64:5 ΓÇ║ Demo layout standards (┬º2, ┬º13) ΓÇö static scan ΓÇ║ demos\scrollalong-test.html: no permutation-matrix <wb-demo> blocks (┬º2) (24ms)
+
+Γ¥î FAILED: demos\site\cards.html: no permutation-matrix <wb-demo> blocks (┬º2)
+   Error: demos\site\cards.html:
+  Γ£ÿ    9 [compliance] ΓÇ║ tests\compliance\demo-layout-standards.spec.ts:64:5 ΓÇ║ Demo layout standards (┬º2, ┬º13) ΓÇö static scan ΓÇ║ demos\site\cards.html: no permutation-matrix <wb-demo> blocks (┬º2) (437ms)
+  Γ£ô   10 [compliance] ΓÇ║ tests\compliance\demo-layout-standards.spec.ts:64:5 ΓÇ║ Demo layout standards (┬º2, ┬º13) ΓÇö static scan ΓÇ║ demos\schema-first-architecture.html: no permutation-matrix <wb-demo> blocks (┬º2) (307ms)
+
+Γ¥î FAILED: demos\site\effects.html: no permutation-matrix <wb-demo> blocks (┬º2)
+   Error: demos\site\effects.html:
+  Γ£ÿ   11 [compliance] ΓÇ║ tests\compliance\demo-layout-standards.spec.ts:64:5 ΓÇ║ Demo layout standards (┬º2, ┬º13) ΓÇö static scan ΓÇ║ demos\site\effects.html: no permutation-matrix <wb-demo> blocks (┬º2) (29ms)
+  Γ£ô   12 [compliance] ΓÇ║ tests\compliance\demo-layout-standards.spec.ts:64:5 ΓÇ║ Demo layout standards (┬º2, ┬º13) ΓÇö static scan ΓÇ║ demos\charity-food.html: no permutation-matrix <wb-demo> blocks (┬º2) (39ms)
+
+Γ¥î FAILED: demos\site\forms.html: no permutation-matrix <wb-demo> blocks (┬º2)
+   Error: demos\site\forms.html:
+  Γ£ÿ   16 [compliance] ΓÇ║ tests\compliance\demo-layout-standards.spec.ts:64:5 ΓÇ║ Demo layout standards (┬º2, ┬º13) ΓÇö static scan ΓÇ║ demos\site\forms.html: no permutation-matrix <wb-demo> blocks (┬º2) (72ms)
+  Γ£ô   14 [compliance] ΓÇ║ tests\compliance\demo-layout-standards.spec.ts:64:5 ΓÇ║ Demo layout standards (┬º2, ┬º13) ΓÇö static scan ΓÇ║ demos\autoinject.html: no permutation-matrix <wb-demo> blocks (┬º2) (25ms)
+  Γ£ô   15 [compliance] ΓÇ║ tests\compliance\demo-layout-standards.spec.ts:64:5 ΓÇ║ Demo layout standards (┬º2, ┬º13) ΓÇö static scan ΓÇ║ demos\landing-page-showcase.html: no permutation-matrix <wb-demo> blocks (┬º2) (16ms)
+
+Γ¥î FAILED: demos\site\interactive.html: no permutation-matrix <wb-demo> blocks (┬º2)
+   Error: demos\site\interactive.html:
+  Γ£ÿ   19 [compliance] ΓÇ║ tests\compliance\demo-layout-standards.spec.ts:64:5 ΓÇ║ Demo layout standards (┬º2, ┬º13) ΓÇö static scan ΓÇ║ demos\site\interactive.html: no permutation-matrix <wb-demo> blocks (┬º2) (15ms)
+  Γ£ô   17 [compliance] ΓÇ║ tests\compliance\demo-layout-standards.spec.ts:64:5 ΓÇ║ Demo layout standards (┬º2, ┬º13) ΓÇö static scan ΓÇ║ demos\layout-test.html: no permutation-matrix <wb-demo> blocks (┬º2) (21ms)
+  Γ£ô   18 [compliance] ΓÇ║ tests\compliance\demo-layout-standards.spec.ts:64:5 ΓÇ║ Demo layout standards (┬º2, ┬º13) ΓÇö static scan ΓÇ║ demos\legacy-syntax-check.html: no permutation-matrix <wb-demo> blocks (┬º2) (134ms)
+  Γ£ô   13 [compliance] ΓÇ║ tests\compliance\demo-layout-standards.spec.ts:64:5 ΓÇ║ Demo layout standards (┬º2, ┬º13) ΓÇö static scan ΓÇ║ demos\frameworks.html: no permutation-matrix <wb-demo> blocks (┬º2) (368ms)
+
+Γ¥î FAILED: demos\site\overlays.html: no permutation-matrix <wb-demo> blocks (┬º2)
+   Error: demos\site\overlays.html:
+  Γ£ÿ   21 [compliance] ΓÇ║ tests\compliance\demo-layout-standards.spec.ts:64:5 ΓÇ║ Demo layout standards (┬º2, ┬º13) ΓÇö static scan ΓÇ║ demos\site\overlays.html: no permutation-matrix <wb-demo> blocks (┬º2) (99ms)
+  Γ£ô   20 [compliance] ΓÇ║ tests\compliance\demo-layout-standards.spec.ts:64:5 ΓÇ║ Demo layout standards (┬º2, ┬º13) ΓÇö static scan ΓÇ║ demos\site\learn-more.html: no permutation-matrix <wb-demo> blocks (┬º2) (14ms)
+  Γ£ô   22 [compliance] ΓÇ║ tests\compliance\demo-layout-standards.spec.ts:64:5 ΓÇ║ Demo layout standards (┬º2, ┬º13) ΓÇö static scan ΓÇ║ demos\site\shop-now.html: no permutation-matrix <wb-demo> blocks (┬º2) (54ms)
+  Γ£ô   23 [compliance] ΓÇ║ tests\compliance\demo-layout-standards.spec.ts:64:5 ΓÇ║ Demo layout standards (┬º2, ┬º13) ΓÇö static scan ΓÇ║ demos\test-harness.html: no permutation-matrix <wb-demo> blocks (┬º2) (8ms)
+  Γ£ô   25 [compliance] ΓÇ║ tests\compliance\demo-layout-standards.spec.ts:64:5 ΓÇ║ Demo layout standards (┬º2, ┬º13) ΓÇö static scan ΓÇ║ pages\ai-docs.html: no permutation-matrix <wb-demo> blocks (┬º2) (7ms)
+  Γ£ô   24 [compliance] ΓÇ║ tests\compliance\demo-layout-standards.spec.ts:64:5 ΓÇ║ Demo layout standards (┬º2, ┬º13) ΓÇö static scan ΓÇ║ pages\ai-permutation-test.html: no permutation-matrix <wb-demo> blocks (┬º2) (5ms)
+  Γ£ô   26 [compliance] ΓÇ║ tests\compliance\demo-layout-standards.spec.ts:64:5 ΓÇ║ Demo layout standards (┬º2, ┬º13) ΓÇö static scan ΓÇ║ pages\about.html: no permutation-matrix <wb-demo> blocks (┬º2) (7ms)
+  Γ£ô   27 [compliance] ΓÇ║ tests\compliance\demo-layout-standards.spec.ts:64:5 ΓÇ║ Demo layout standards (┬º2, ┬º13) ΓÇö static scan ΓÇ║ pages\behaviors.html: no permutation-matrix <wb-demo> blocks (┬º2) (8ms)
+  Γ£ô   28 [compliance] ΓÇ║ tests\compliance\demo-layout-standards.spec.ts:64:5 ΓÇ║ Demo layout standards (┬º2, ┬º13) ΓÇö static scan ΓÇ║ pages\contact.html: no permutation-matrix <wb-demo> blocks (┬º2) (10ms)
+  Γ£ô   29 [compliance] ΓÇ║ tests\compliance\demo-layout-standards.spec.ts:64:5 ΓÇ║ Demo layout standards (┬º2, ┬º13) ΓÇö static scan ΓÇ║ pages\components.html: no permutation-matrix <wb-demo> blocks (┬º2) (159ms)
+  Γ£ô   30 [compliance] ΓÇ║ tests\compliance\demo-layout-standards.spec.ts:64:5 ΓÇ║ Demo layout standards (┬º2, ┬º13) ΓÇö static scan ΓÇ║ pages\demos.html: no permutation-matrix <wb-demo> blocks (┬º2) (5ms)
+  Γ£ô   32 [compliance] ΓÇ║ tests\compliance\demo-layout-standards.spec.ts:64:5 ΓÇ║ Demo layout standards (┬º2, ┬º13) ΓÇö static scan ΓÇ║ pages\features.html: no permutation-matrix <wb-demo> blocks (┬º2) (57ms)
+  Γ£ô   33 [compliance] ΓÇ║ tests\compliance\demo-layout-standards.spec.ts:64:5 ΓÇ║ Demo layout standards (┬º2, ┬º13) ΓÇö static scan ΓÇ║ pages\hero-variants.html: no permutation-matrix <wb-demo> blocks (┬º2) (10ms)
+  Γ£ô   34 [compliance] ΓÇ║ tests\compliance\demo-layout-standards.spec.ts:64:5 ΓÇ║ Demo layout standards (┬º2, ┬º13) ΓÇö static scan ΓÇ║ pages\home.html: no permutation-matrix <wb-demo> blocks (┬º2) (5ms)
+  Γ£ô   31 [compliance] ΓÇ║ tests\compliance\demo-layout-standards.spec.ts:64:5 ΓÇ║ Demo layout standards (┬º2, ┬º13) ΓÇö static scan ΓÇ║ pages\docs.html: no permutation-matrix <wb-demo> blocks (┬º2) (110ms)
+  Γ£ô   35 [compliance] ΓÇ║ tests\compliance\demo-layout-standards.spec.ts:64:5 ΓÇ║ Demo layout standards (┬º2, ┬º13) ΓÇö static scan ΓÇ║ pages\issues.html: no permutation-matrix <wb-demo> blocks (┬º2) (5ms)
+  Γ£ô   36 [compliance] ΓÇ║ tests\compliance\demo-layout-standards.spec.ts:64:5 ΓÇ║ Demo layout standards (┬º2, ┬º13) ΓÇö static scan ΓÇ║ pages\newpage.html: no permutation-matrix <wb-demo> blocks (┬º2) (9ms)
+  Γ£ô   37 [compliance] ΓÇ║ tests\compliance\demo-layout-standards.spec.ts:64:5 ΓÇ║ Demo layout standards (┬º2, ┬º13) ΓÇö static scan ΓÇ║ pages\offshoring.html: no permutation-matrix <wb-demo> blocks (┬º2) (56ms)
+  Γ£ô   40 [compliance] ΓÇ║ tests\compliance\demo-layout-standards.spec.ts:64:5 ΓÇ║ Demo layout standards (┬º2, ┬º13) ΓÇö static scan ΓÇ║ pages\services.html: no permutation-matrix <wb-demo> blocks (┬º2) (7ms)
+  Γ£ô   41 [compliance] ΓÇ║ tests\compliance\demo-layout-standards.spec.ts:64:5 ΓÇ║ Demo layout standards (┬º2, ┬º13) ΓÇö static scan ΓÇ║ pages\terms.html: no permutation-matrix <wb-demo> blocks (┬º2) (4ms)
+  Γ£ô   42 [compliance] ΓÇ║ tests\compliance\demo-layout-standards.spec.ts:64:5 ΓÇ║ Demo layout standards (┬º2, ┬º13) ΓÇö static scan ΓÇ║ pages\themes.html: no permutation-matrix <wb-demo> blocks (┬º2) (5ms)
+  Γ£ô   38 [compliance] ΓÇ║ tests\compliance\demo-layout-standards.spec.ts:64:5 ΓÇ║ Demo layout standards (┬º2, ┬º13) ΓÇö static scan ΓÇ║ pages\links.html: no permutation-matrix <wb-demo> blocks (┬º2) (57ms)
+  Γ£ô   39 [compliance] ΓÇ║ tests\compliance\demo-layout-standards.spec.ts:64:5 ΓÇ║ Demo layout standards (┬º2, ┬º13) ΓÇö static scan ΓÇ║ pages\privacy.html: no permutation-matrix <wb-demo> blocks (┬º2) (7ms)
+  Γ£ô   45 [compliance] ΓÇ║ tests\compliance\demo-layout-standards.spec.ts:64:5 ΓÇ║ Demo layout standards (┬º2, ┬º13) ΓÇö static scan ΓÇ║ pages\whats-new.html: no permutation-matrix <wb-demo> blocks (┬º2) (55ms)
+  -   44 [compliance] ΓÇ║ tests\compliance\demo-layout-standards.spec.ts:94:5 ΓÇ║ Demo layout standards (┬º13) ΓÇö live spacing ΓÇ║ demos\charity-food.html: wb-demo containers/items have >=1rem spacing (┬º13)
+  -   43 [compliance] ΓÇ║ tests\compliance\demo-layout-standards.spec.ts:94:5 ΓÇ║ Demo layout standards (┬º13) ΓÇö live spacing ΓÇ║ demos\autoinject.html: wb-demo containers/items have >=1rem spacing (┬º13)
+
+Γ¥î FAILED: demos\site\feedback.html: no permutation-matrix <wb-demo> blocks (┬º2)
+   Error: demos\site\feedback.html:
+  Γ£ÿ   49 [compliance] ΓÇ║ tests\compliance\demo-layout-standards.spec.ts:64:5 ΓÇ║ Demo layout standards (┬º2, ┬º13) ΓÇö static scan ΓÇ║ demos\site\feedback.html: no permutation-matrix <wb-demo> blocks (┬º2) (98ms)
+  -   47 [compliance] ΓÇ║ tests\compliance\demo-layout-standards.spec.ts:94:5 ΓÇ║ Demo layout standards (┬º13) ΓÇö live spacing ΓÇ║ demos\index.html: wb-demo containers/items have >=1rem spacing (┬º13)
+
+Γ¥î FAILED: demos\site\content.html: no permutation-matrix <wb-demo> blocks (┬º2)
+   Error: demos\site\content.html:
+  Γ£ÿ   50 [compliance] ΓÇ║ tests\compliance\demo-layout-standards.spec.ts:64:5 ΓÇ║ Demo layout standards (┬º2, ┬º13) ΓÇö static scan ΓÇ║ demos\site\content.html: no permutation-matrix <wb-demo> blocks (┬º2) (164ms)
+  Γ£ô   46 [compliance] ΓÇ║ tests\compliance\demo-layout-standards.spec.ts:94:5 ΓÇ║ Demo layout standards (┬º13) ΓÇö live spacing ΓÇ║ demos\frameworks.html: wb-demo containers/items have >=1rem spacing (┬º13) (9.6s)
+  -   52 [compliance] ΓÇ║ tests\compliance\demo-layout-standards.spec.ts:94:5 ΓÇ║ Demo layout standards (┬º13) ΓÇö live spacing ΓÇ║ demos\mdhtml-pre-debug.html: wb-demo containers/items have >=1rem spacing (┬º13)
+  -   51 [compliance] ΓÇ║ tests\compliance\demo-layout-standards.spec.ts:94:5 ΓÇ║ Demo layout standards (┬º13) ΓÇö live spacing ΓÇ║ demos\layout-test.html: wb-demo containers/items have >=1rem spacing (┬º13)
+  Γ£ô   55 [compliance] ΓÇ║ tests\compliance\demo-layout-standards.spec.ts:64:5 ΓÇ║ Demo layout standards (┬º2, ┬º13) ΓÇö static scan ΓÇ║ demos\site\index.html: no permutation-matrix <wb-demo> blocks (┬º2) (172ms)
+
+Γ¥î FAILED: demos\site\layout.html: no permutation-matrix <wb-demo> blocks (┬º2)
+   Error: demos\site\layout.html:
+  Γ£ÿ   54 [compliance] ΓÇ║ tests\compliance\demo-layout-standards.spec.ts:64:5 ΓÇ║ Demo layout standards (┬º2, ┬º13) ΓÇö static scan ΓÇ║ demos\site\layout.html: no permutation-matrix <wb-demo> blocks (┬º2) (888ms)
+  Γ£ô   57 [compliance] ΓÇ║ tests\compliance\demo-layout-standards.spec.ts:64:5 ΓÇ║ Demo layout standards (┬º2, ┬º13) ΓÇö static scan ΓÇ║ demos\wb-views-demo.html: no permutation-matrix <wb-demo> blocks (┬º2) (40ms)
+  -   56 [compliance] ΓÇ║ tests\compliance\demo-layout-standards.spec.ts:94:5 ΓÇ║ Demo layout standards (┬º13) ΓÇö live spacing ΓÇ║ demos\playground.html: wb-demo containers/items have >=1rem spacing (┬º13)
+  Γ£ô   53 [compliance] ΓÇ║ tests\compliance\demo-layout-standards.spec.ts:94:5 ΓÇ║ Demo layout standards (┬º13) ΓÇö live spacing ΓÇ║ demos\multi-component-demo-generated.html: wb-demo containers/items have >=1rem spacing (┬º13) (7.3s)
+  -   60 [compliance] ΓÇ║ tests\compliance\demo-layout-standards.spec.ts:94:5 ΓÇ║ Demo layout standards (┬º13) ΓÇö live spacing ΓÇ║ demos\scrollalong-test.html: wb-demo containers/items have >=1rem spacing (┬º13)
+  -   59 [compliance] ΓÇ║ tests\compliance\demo-layout-standards.spec.ts:94:5 ΓÇ║ Demo layout standards (┬º13) ΓÇö live spacing ΓÇ║ demos\schema-first-architecture.html: wb-demo containers/items have >=1rem spacing (┬º13)
+  -   58 [compliance] ΓÇ║ tests\compliance\demo-layout-standards.spec.ts:94:5 ΓÇ║ Demo layout standards (┬º13) ΓÇö live spacing ΓÇ║ demos\pre-debug.html: wb-demo containers/items have >=1rem spacing (┬º13)
+  Γ£ô   61 [compliance] ΓÇ║ tests\compliance\demo-layout-standards.spec.ts:94:5 ΓÇ║ Demo layout standards (┬º13) ΓÇö live spacing ΓÇ║ demos\site\cards.html: wb-demo containers/items have >=1rem spacing (┬º13) (9.0s)
+  Γ£ô   62 [compliance] ΓÇ║ tests\compliance\demo-layout-standards.spec.ts:94:5 ΓÇ║ Demo layout standards (┬º13) ΓÇö live spacing ΓÇ║ demos\site\content.html: wb-demo containers/items have >=1rem spacing (┬º13) (9.0s)
+  Γ£ô   63 [compliance] ΓÇ║ tests\compliance\demo-layout-standards.spec.ts:94:5 ΓÇ║ Demo layout standards (┬º13) ΓÇö live spacing ΓÇ║ demos\site\effects.html: wb-demo containers/items have >=1rem spacing (┬º13) (8.1s)
+  Γ£ô   64 [compliance] ΓÇ║ tests\compliance\demo-layout-standards.spec.ts:94:5 ΓÇ║ Demo layout standards (┬º13) ΓÇö live spacing ΓÇ║ demos\site\feedback.html: wb-demo containers/items have >=1rem spacing (┬º13) (8.5s)
+  -   66 [compliance] ΓÇ║ tests\compliance\demo-layout-standards.spec.ts:94:5 ΓÇ║ Demo layout standards (┬º13) ΓÇö live spacing ΓÇ║ demos\site\index.html: wb-demo containers/items have >=1rem spacing (┬º13)
+  Γ£ô   65 [compliance] ΓÇ║ tests\compliance\demo-layout-standards.spec.ts:94:5 ΓÇ║ Demo layout standards (┬º13) ΓÇö live spacing ΓÇ║ demos\site\forms.html: wb-demo containers/items have >=1rem spacing (┬º13) (4.9s)
+  Γ£ô   72 [compliance] ΓÇ║ tests\compliance\demo-layout-standards.spec.ts:94:5 ΓÇ║ Demo layout standards (┬º13) ΓÇö live spacing ΓÇ║ demos\site\overlays.html: wb-demo containers/items have >=1rem spacing (┬º13) (2.7s)
+  -   67 [compliance] ΓÇ║ tests\compliance\demo-layout-standards.spec.ts:94:5 ΓÇ║ Demo layout standards (┬º13) ΓÇö live spacing ΓÇ║ demos\landing-page-showcase.html: wb-demo containers/items have >=1rem spacing (┬º13)
+  -   68 [compliance] ΓÇ║ tests\compliance\demo-layout-standards.spec.ts:94:5 ΓÇ║ Demo layout standards (┬º13) ΓÇö live spacing ΓÇ║ demos\legacy-syntax-check.html: wb-demo containers/items have >=1rem spacing (┬º13)
+  Γ£ô   69 [compliance] ΓÇ║ tests\compliance\demo-layout-standards.spec.ts:94:5 ΓÇ║ Demo layout standards (┬º13) ΓÇö live spacing ΓÇ║ demos\site\interactive.html: wb-demo containers/items have >=1rem spacing (┬º13) (8.6s)
+  -   74 [compliance] ΓÇ║ tests\compliance\demo-layout-standards.spec.ts:94:5 ΓÇ║ Demo layout standards (┬º13) ΓÇö live spacing ΓÇ║ demos\test-harness.html: wb-demo containers/items have >=1rem spacing (┬º13)
+  -   75 [compliance] ΓÇ║ tests\compliance\demo-layout-standards.spec.ts:94:5 ΓÇ║ Demo layout standards (┬º13) ΓÇö live spacing ΓÇ║ demos\wb-views-demo.html: wb-demo containers/items have >=1rem spacing (┬º13)
+  -   76 [compliance] ΓÇ║ tests\compliance\demo-layout-standards.spec.ts:94:5 ΓÇ║ Demo layout standards (┬º13) ΓÇö live spacing ΓÇ║ pages\about.html: wb-demo containers/items have >=1rem spacing (┬º13)
+
+ΓÅ▒∩╕Å FAILED: demos\intellisense-check.html: wb-demo containers/items have >=1rem spacing (┬º13)
+   Test timeout of 30000ms exceeded while setting up "page".
+  Γ£ÿ   48 [compliance] ΓÇ║ tests\compliance\demo-layout-standards.spec.ts:94:5 ΓÇ║ Demo layout standards (┬º13) ΓÇö live spacing ΓÇ║ demos\intellisense-check.html: wb-demo containers/items have >=1rem spacing (┬º13) (30.2s)
+  Γ£ô   71 [compliance] ΓÇ║ tests\compliance\demo-layout-standards.spec.ts:94:5 ΓÇ║ Demo layout standards (┬º13) ΓÇö live spacing ΓÇ║ demos\site\learn-more.html: wb-demo containers/items have >=1rem spacing (┬º13) (11.6s)
+  Γ£ô   73 [compliance] ΓÇ║ tests\compliance\demo-layout-standards.spec.ts:94:5 ΓÇ║ Demo layout standards (┬º13) ΓÇö live spacing ΓÇ║ demos\site\shop-now.html: wb-demo containers/items have >=1rem spacing (┬º13) (9.6s)
+  -   79 [compliance] ΓÇ║ tests\compliance\demo-layout-standards.spec.ts:94:5 ΓÇ║ Demo layout standards (┬º13) ΓÇö live spacing ΓÇ║ pages\ai-permutation-test.html: wb-demo containers/items have >=1rem spacing (┬º13)
+  Γ£ô   70 [compliance] ΓÇ║ tests\compliance\demo-layout-standards.spec.ts:94:5 ΓÇ║ Demo layout standards (┬º13) ΓÇö live spacing ΓÇ║ demos\site\layout.html: wb-demo containers/items have >=1rem spacing (┬º13) (15.2s)
+  -   78 [compliance] ΓÇ║ tests\compliance\demo-layout-standards.spec.ts:94:5 ΓÇ║ Demo layout standards (┬º13) ΓÇö live spacing ΓÇ║ pages\ai-docs.html: wb-demo containers/items have >=1rem spacing (┬º13)
+  Γ£ô   77 [compliance] ΓÇ║ tests\compliance\demo-layout-standards.spec.ts:94:5 ΓÇ║ Demo layout standards (┬º13) ΓÇö live spacing ΓÇ║ demos\registry-browser.html: wb-demo containers/items have >=1rem spacing (┬º13) (4.0s)
+  -   83 [compliance] ΓÇ║ tests\compliance\demo-layout-standards.spec.ts:94:5 ΓÇ║ Demo layout standards (┬º13) ΓÇö live spacing ΓÇ║ pages\docs.html: wb-demo containers/items have >=1rem spacing (┬º13)
+  -   86 [compliance] ΓÇ║ tests\compliance\demo-layout-standards.spec.ts:94:5 ΓÇ║ Demo layout standards (┬º13) ΓÇö live spacing ΓÇ║ pages\home.html: wb-demo containers/items have >=1rem spacing (┬º13)
+  -   85 [compliance] ΓÇ║ tests\compliance\demo-layout-standards.spec.ts:94:5 ΓÇ║ Demo layout standards (┬º13) ΓÇö live spacing ΓÇ║ pages\hero-variants.html: wb-demo containers/items have >=1rem spacing (┬º13)
+  Γ£ô   80 [compliance] ΓÇ║ tests\compliance\demo-layout-standards.spec.ts:94:5 ΓÇ║ Demo layout standards (┬º13) ΓÇö live spacing ΓÇ║ pages\behaviors.html: wb-demo containers/items have >=1rem spacing (┬º13) (8.3s)
+  -   84 [compliance] ΓÇ║ tests\compliance\demo-layout-standards.spec.ts:94:5 ΓÇ║ Demo layout standards (┬º13) ΓÇö live spacing ΓÇ║ pages\features.html: wb-demo containers/items have >=1rem spacing (┬º13)
+  -   81 [compliance] ΓÇ║ tests\compliance\demo-layout-standards.spec.ts:94:5 ΓÇ║ Demo layout standards (┬º13) ΓÇö live spacing ΓÇ║ pages\contact.html: wb-demo containers/items have >=1rem spacing (┬º13)
+  Γ£ô   90 [compliance] ΓÇ║ tests\compliance\demo-layout-standards.spec.ts:94:5 ΓÇ║ Demo layout standards (┬º13) ΓÇö live spacing ΓÇ║ pages\offshoring.html: wb-demo containers/items have >=1rem spacing (┬º13) (3.3s)
+  -   87 [compliance] ΓÇ║ tests\compliance\demo-layout-standards.spec.ts:94:5 ΓÇ║ Demo layout standards (┬º13) ΓÇö live spacing ΓÇ║ pages\issues.html: wb-demo containers/items have >=1rem spacing (┬º13)
+  Γ£ô   82 [compliance] ΓÇ║ tests\compliance\demo-layout-standards.spec.ts:94:5 ΓÇ║ Demo layout standards (┬º13) ΓÇö live spacing ΓÇ║ pages\demos.html: wb-demo containers/items have >=1rem spacing (┬º13) (11.0s)
+  -   89 [compliance] ΓÇ║ tests\compliance\demo-layout-standards.spec.ts:94:5 ΓÇ║ Demo layout standards (┬º13) ΓÇö live spacing ΓÇ║ pages\newpage.html: wb-demo containers/items have >=1rem spacing (┬º13)
+  -   88 [compliance] ΓÇ║ tests\compliance\demo-layout-standards.spec.ts:94:5 ΓÇ║ Demo layout standards (┬º13) ΓÇö live spacing ΓÇ║ pages\links.html: wb-demo containers/items have >=1rem spacing (┬º13)
+  -   92 [compliance] ΓÇ║ tests\compliance\demo-layout-standards.spec.ts:94:5 ΓÇ║ Demo layout standards (┬º13) ΓÇö live spacing ΓÇ║ pages\services.html: wb-demo containers/items have >=1rem spacing (┬º13)
+  -   91 [compliance] ΓÇ║ tests\compliance\demo-layout-standards.spec.ts:94:5 ΓÇ║ Demo layout standards (┬º13) ΓÇö live spacing ΓÇ║ pages\privacy.html: wb-demo containers/items have >=1rem spacing (┬º13)
+  -   93 [compliance] ΓÇ║ tests\compliance\demo-layout-standards.spec.ts:94:5 ΓÇ║ Demo layout standards (┬º13) ΓÇö live spacing ΓÇ║ pages\terms.html: wb-demo containers/items have >=1rem spacing (┬º13)
+  -   96 [compliance] ΓÇ║ tests\compliance\demo-layout-standards.spec.ts:160:5 ΓÇ║ Demo layout standards (┬º7) ΓÇö single-item demos are not full width ΓÇ║ demos\autoinject.html: single-item wb-demo blocks shrink to fit their content
+  -   94 [compliance] ΓÇ║ tests\compliance\demo-layout-standards.spec.ts:94:5 ΓÇ║ Demo layout standards (┬º13) ΓÇö live spacing ΓÇ║ pages\themes.html: wb-demo containers/items have >=1rem spacing (┬º13)
+  -   95 [compliance] ΓÇ║ tests\compliance\demo-layout-standards.spec.ts:94:5 ΓÇ║ Demo layout standards (┬º13) ΓÇö live spacing ΓÇ║ pages\whats-new.html: wb-demo containers/items have >=1rem spacing (┬º13)
+  -  101 [compliance] ΓÇ║ tests\compliance\demo-layout-standards.spec.ts:160:5 ΓÇ║ Demo layout standards (┬º7) ΓÇö single-item demos are not full width ΓÇ║ demos\intellisense-check.html: single-item wb-demo blocks shrink to fit their content
+  Γ£ô   97 [compliance] ΓÇ║ tests\compliance\demo-layout-standards.spec.ts:94:5 ΓÇ║ Demo layout standards (┬º13) ΓÇö live spacing ΓÇ║ pages\components.html: wb-demo containers/items have >=1rem spacing (┬º13) (7.3s)
+  -  102 [compliance] ΓÇ║ tests\compliance\demo-layout-standards.spec.ts:160:5 ΓÇ║ Demo layout standards (┬º7) ΓÇö single-item demos are not full width ΓÇ║ demos\landing-page-showcase.html: single-item wb-demo blocks shrink to fit their content
+  -   98 [compliance] ΓÇ║ tests\compliance\demo-layout-standards.spec.ts:160:5 ΓÇ║ Demo layout standards (┬º7) ΓÇö single-item demos are not full width ΓÇ║ demos\charity-food.html: single-item wb-demo blocks shrink to fit their content
+  -  104 [compliance] ΓÇ║ tests\compliance\demo-layout-standards.spec.ts:160:5 ΓÇ║ Demo layout standards (┬º7) ΓÇö single-item demos are not full width ΓÇ║ demos\legacy-syntax-check.html: single-item wb-demo blocks shrink to fit their content
+  -  103 [compliance] ΓÇ║ tests\compliance\demo-layout-standards.spec.ts:160:5 ΓÇ║ Demo layout standards (┬º7) ΓÇö single-item demos are not full width ΓÇ║ demos\layout-test.html: single-item wb-demo blocks shrink to fit their content
+  -  100 [compliance] ΓÇ║ tests\compliance\demo-layout-standards.spec.ts:160:5 ΓÇ║ Demo layout standards (┬º7) ΓÇö single-item demos are not full width ΓÇ║ demos\index.html: single-item wb-demo blocks shrink to fit their content
+  -  105 [compliance] ΓÇ║ tests\compliance\demo-layout-standards.spec.ts:160:5 ΓÇ║ Demo layout standards (┬º7) ΓÇö single-item demos are not full width ΓÇ║ demos\mdhtml-pre-debug.html: single-item wb-demo blocks shrink to fit their content
+  -  108 [compliance] ΓÇ║ tests\compliance\demo-layout-standards.spec.ts:160:5 ΓÇ║ Demo layout standards (┬º7) ΓÇö single-item demos are not full width ΓÇ║ demos\pre-debug.html: single-item wb-demo blocks shrink to fit their content
+  -  110 [compliance] ΓÇ║ tests\compliance\demo-layout-standards.spec.ts:160:5 ΓÇ║ Demo layout standards (┬º7) ΓÇö single-item demos are not full width ΓÇ║ demos\schema-first-architecture.html: single-item wb-demo blocks shrink to fit their content
+  -  111 [compliance] ΓÇ║ tests\compliance\demo-layout-standards.spec.ts:160:5 ΓÇ║ Demo layout standards (┬º7) ΓÇö single-item demos are not full width ΓÇ║ demos\scrollalong-test.html: single-item wb-demo blocks shrink to fit their content
+  -  107 [compliance] ΓÇ║ tests\compliance\demo-layout-standards.spec.ts:160:5 ΓÇ║ Demo layout standards (┬º7) ΓÇö single-item demos are not full width ΓÇ║ demos\playground.html: single-item wb-demo blocks shrink to fit their content
+  Γ£ô  113 [compliance] ΓÇ║ tests\compliance\demo-layout-standards.spec.ts:160:5 ΓÇ║ Demo layout standards (┬º7) ΓÇö single-item demos are not full width ΓÇ║ demos\site\content.html: single-item wb-demo blocks shrink to fit their content (9.4s)
+
+Γ¥î FAILED: demos\frameworks.html: single-item wb-demo blocks shrink to fit their content
+   Error: demos\frameworks.html:
+  Γ£ÿ   99 [compliance] ΓÇ║ tests\compliance\demo-layout-standards.spec.ts:160:5 ΓÇ║ Demo layout standards (┬º7) ΓÇö single-item demos are not full width ΓÇ║ demos\frameworks.html: single-item wb-demo blocks shrink to fit their content (7.2s)
+
+Γ¥î FAILED: demos\site\cards.html: single-item wb-demo blocks shrink to fit their content
+  Γ£ÿ  112 [compliance] ΓÇ║ tests\compliance\demo-layout-standards.spec.ts:160:5 ΓÇ║ Demo layout standards (┬º7) ΓÇö single-item demos are not full width ΓÇ║ demos\site\cards.html: single-item wb-demo blocks shrink to fit their content (12.9s)
+   Error: demos\site\cards.html:
+  -  117 [compliance] ΓÇ║ tests\compliance\demo-layout-standards.spec.ts:160:5 ΓÇ║ Demo layout standards (┬º7) ΓÇö single-item demos are not full width ΓÇ║ demos\site\index.html: single-item wb-demo blocks shrink to fit their content
+
+Γ¥î FAILED: demos\site\effects.html: single-item wb-demo blocks shrink to fit their content
+   Error: demos\site\effects.html:
+  Γ£ÿ  114 [compliance] ΓÇ║ tests\compliance\demo-layout-standards.spec.ts:160:5 ΓÇ║ Demo layout standards (┬º7) ΓÇö single-item demos are not full width ΓÇ║ demos\site\effects.html: single-item wb-demo blocks shrink to fit their content (5.3s)
+  Γ£ô  118 [compliance] ΓÇ║ tests\compliance\demo-layout-standards.spec.ts:160:5 ΓÇ║ Demo layout standards (┬º7) ΓÇö single-item demos are not full width ΓÇ║ demos\site\learn-more.html: single-item wb-demo blocks shrink to fit their content (3.3s)
+
+Γ¥î FAILED: demos\registry-browser.html: single-item wb-demo blocks shrink to fit their content
+   Error: demos\registry-browser.html:
+  Γ£ÿ  109 [compliance] ΓÇ║ tests\compliance\demo-layout-standards.spec.ts:160:5 ΓÇ║ Demo layout standards (┬º7) ΓÇö single-item demos are not full width ΓÇ║ demos\registry-browser.html: single-item wb-demo blocks shrink to fit their content (6.9s)
+
+Γ¥î FAILED: demos\multi-component-demo-generated.html: single-item wb-demo blocks shrink to fit their content
+   Error: demos\multi-component-demo-generated.html:
+  Γ£ÿ  106 [compliance] ΓÇ║ tests\compliance\demo-layout-standards.spec.ts:160:5 ΓÇ║ Demo layout standards (┬º7) ΓÇö single-item demos are not full width ΓÇ║ demos\multi-component-demo-generated.html: single-item wb-demo blocks shrink to fit their content (26.5s)
+
+Γ¥î FAILED: demos\site\shop-now.html: single-item wb-demo blocks shrink to fit their content
+   Error: demos\site\shop-now.html:
+  Γ£ÿ  119 [compliance] ΓÇ║ tests\compliance\demo-layout-standards.spec.ts:160:5 ΓÇ║ Demo layout standards (┬º7) ΓÇö single-item demos are not full width ΓÇ║ demos\site\shop-now.html: single-item wb-demo blocks shrink to fit their content (6.3s)
+
+Γ¥î FAILED: demos\site\forms.html: single-item wb-demo blocks shrink to fit their content
+   Error: demos\site\forms.html:
+  Γ£ÿ  116 [compliance] ΓÇ║ tests\compliance\demo-layout-standards.spec.ts:160:5 ΓÇ║ Demo layout standards (┬º7) ΓÇö single-item demos are not full width ΓÇ║ demos\site\forms.html: single-item wb-demo blocks shrink to fit their content (14.5s)
+  Γ£ô  121 [compliance] ΓÇ║ tests\compliance\demo-layout-standards.spec.ts:160:5 ΓÇ║ Demo layout standards (┬º7) ΓÇö single-item demos are not full width ΓÇ║ demos\site\interactive.html: single-item wb-demo blocks shrink to fit their content (2.8s)
+  -  124 [compliance] ΓÇ║ tests\compliance\demo-layout-standards.spec.ts:160:5 ΓÇ║ Demo layout standards (┬º7) ΓÇö single-item demos are not full width ΓÇ║ pages\ai-permutation-test.html: single-item wb-demo blocks shrink to fit their content
+
+Γ¥î FAILED: demos\site\feedback.html: single-item wb-demo blocks shrink to fit their content
+   Error: demos\site\feedback.html:
+  Γ£ÿ  115 [compliance] ΓÇ║ tests\compliance\demo-layout-standards.spec.ts:160:5 ΓÇ║ Demo layout standards (┬º7) ΓÇö single-item demos are not full width ΓÇ║ demos\site\feedback.html: single-item wb-demo blocks shrink to fit their content (15.1s)
+  -  123 [compliance] ΓÇ║ tests\compliance\demo-layout-standards.spec.ts:160:5 ΓÇ║ Demo layout standards (┬º7) ΓÇö single-item demos are not full width ΓÇ║ demos\test-harness.html: single-item wb-demo blocks shrink to fit their content
+  Γ£ô  125 [compliance] ΓÇ║ tests\compliance\demo-layout-standards.spec.ts:160:5 ΓÇ║ Demo layout standards (┬º7) ΓÇö single-item demos are not full width ΓÇ║ pages\behaviors.html: single-item wb-demo blocks shrink to fit their content (6.4s)
+
+Γ¥î FAILED: demos\site\layout.html: single-item wb-demo blocks shrink to fit their content
+   Error: demos\site\layout.html:
+  Γ£ÿ  120 [compliance] ΓÇ║ tests\compliance\demo-layout-standards.spec.ts:160:5 ΓÇ║ Demo layout standards (┬º7) ΓÇö single-item demos are not full width ΓÇ║ demos\site\layout.html: single-item wb-demo blocks shrink to fit their content (8.2s)
+  -  127 [compliance] ΓÇ║ tests\compliance\demo-layout-standards.spec.ts:160:5 ΓÇ║ Demo layout standards (┬º7) ΓÇö single-item demos are not full width ΓÇ║ pages\contact.html: single-item wb-demo blocks shrink to fit their content
+  -  126 [compliance] ΓÇ║ tests\compliance\demo-layout-standards.spec.ts:160:5 ΓÇ║ Demo layout standards (┬º7) ΓÇö single-item demos are not full width ΓÇ║ demos\wb-views-demo.html: single-item wb-demo blocks shrink to fit their content
+  Γ£ô  129 [compliance] ΓÇ║ tests\compliance\demo-layout-standards.spec.ts:160:5 ΓÇ║ Demo layout standards (┬º7) ΓÇö single-item demos are not full width ΓÇ║ pages\demos.html: single-item wb-demo blocks shrink to fit their content (4.8s)
+  -  128 [compliance] ΓÇ║ tests\compliance\demo-layout-standards.spec.ts:160:5 ΓÇ║ Demo layout standards (┬º7) ΓÇö single-item demos are not full width ΓÇ║ pages\about.html: single-item wb-demo blocks shrink to fit their content
+
+Γ¥î FAILED: demos\site\overlays.html: single-item wb-demo blocks shrink to fit their content
+   Error: demos\site\overlays.html:
+  Γ£ÿ  122 [compliance] ΓÇ║ tests\compliance\demo-layout-standards.spec.ts:160:5 ΓÇ║ Demo layout standards (┬º7) ΓÇö single-item demos are not full width ΓÇ║ demos\site\overlays.html: single-item wb-demo blocks shrink to fit their content (8.4s)
+  -  131 [compliance] ΓÇ║ tests\compliance\demo-layout-standards.spec.ts:160:5 ΓÇ║ Demo layout standards (┬º7) ΓÇö single-item demos are not full width ΓÇ║ pages\hero-variants.html: single-item wb-demo blocks shrink to fit their content
+  -  133 [compliance] ΓÇ║ tests\compliance\demo-layout-standards.spec.ts:160:5 ΓÇ║ Demo layout standards (┬º7) ΓÇö single-item demos are not full width ΓÇ║ pages\issues.html: single-item wb-demo blocks shrink to fit their content
+  -  132 [compliance] ΓÇ║ tests\compliance\demo-layout-standards.spec.ts:160:5 ΓÇ║ Demo layout standards (┬º7) ΓÇö single-item demos are not full width ΓÇ║ pages\home.html: single-item wb-demo blocks shrink to fit their content
+  -  134 [compliance] ΓÇ║ tests\compliance\demo-layout-standards.spec.ts:160:5 ΓÇ║ Demo layout standards (┬º7) ΓÇö single-item demos are not full width ΓÇ║ pages\newpage.html: single-item wb-demo blocks shrink to fit their content
+  -  137 [compliance] ΓÇ║ tests\compliance\demo-layout-standards.spec.ts:160:5 ΓÇ║ Demo layout standards (┬º7) ΓÇö single-item demos are not full width ΓÇ║ pages\services.html: single-item wb-demo blocks shrink to fit their content
+  Γ£ô  135 [compliance] ΓÇ║ tests\compliance\demo-layout-standards.spec.ts:160:5 ΓÇ║ Demo layout standards (┬º7) ΓÇö single-item demos are not full width ΓÇ║ pages\offshoring.html: single-item wb-demo blocks shrink to fit their content (5.4s)
+  -  139 [compliance] ΓÇ║ tests\compliance\demo-layout-standards.spec.ts:160:5 ΓÇ║ Demo layout standards (┬º7) ΓÇö single-item demos are not full width ΓÇ║ pages\themes.html: single-item wb-demo blocks shrink to fit their content
+  -  140 [compliance] ΓÇ║ tests\compliance\demo-layout-standards.spec.ts:160:5 ΓÇ║ Demo layout standards (┬º7) ΓÇö single-item demos are not full width ΓÇ║ pages\ai-docs.html: single-item wb-demo blocks shrink to fit their content
+  -  138 [compliance] ΓÇ║ tests\compliance\demo-layout-standards.spec.ts:160:5 ΓÇ║ Demo layout standards (┬º7) ΓÇö single-item demos are not full width ΓÇ║ pages\terms.html: single-item wb-demo blocks shrink to fit their content
+  -  136 [compliance] ΓÇ║ tests\compliance\demo-layout-standards.spec.ts:160:5 ΓÇ║ Demo layout standards (┬º7) ΓÇö single-item demos are not full width ΓÇ║ pages\privacy.html: single-item wb-demo blocks shrink to fit their content
+  -  141 [compliance] ΓÇ║ tests\compliance\demo-layout-standards.spec.ts:160:5 ΓÇ║ Demo layout standards (┬º7) ΓÇö single-item demos are not full width ΓÇ║ pages\components.html: single-item wb-demo blocks shrink to fit their content
+  -  142 [compliance] ΓÇ║ tests\compliance\demo-layout-standards.spec.ts:160:5 ΓÇ║ Demo layout standards (┬º7) ΓÇö single-item demos are not full width ΓÇ║ pages\whats-new.html: single-item wb-demo blocks shrink to fit their content
+  -  130 [compliance] ΓÇ║ tests\compliance\demo-layout-standards.spec.ts:160:5 ΓÇ║ Demo layout standards (┬º7) ΓÇö single-item demos are not full width ΓÇ║ pages\features.html: single-item wb-demo blocks shrink to fit their content
+  Γ£ô  143 [compliance] ΓÇ║ tests\compliance\demo-layout-standards.spec.ts:219:5 ΓÇ║ Layout standard: no text within 1rem of a content-panel edge ΓÇ║ demos\autoinject.html: content-panel elements keep >=1rem text padding (8.2s)
+  Γ£ô  147 [compliance] ΓÇ║ tests\compliance\demo-layout-standards.spec.ts:219:5 ΓÇ║ Layout standard: no text within 1rem of a content-panel edge ΓÇ║ demos\index.html: content-panel elements keep >=1rem text padding (4.6s)
+  Γ£ô  144 [compliance] ΓÇ║ tests\compliance\demo-layout-standards.spec.ts:219:5 ΓÇ║ Layout standard: no text within 1rem of a content-panel edge ΓÇ║ demos\charity-food.html: content-panel elements keep >=1rem text padding (10.3s)
+  Γ£ô  148 [compliance] ΓÇ║ tests\compliance\demo-layout-standards.spec.ts:219:5 ΓÇ║ Layout standard: no text within 1rem of a content-panel edge ΓÇ║ demos\intellisense-check.html: content-panel elements keep >=1rem text padding (6.0s)
+  Γ£ô  145 [compliance] ΓÇ║ tests\compliance\demo-layout-standards.spec.ts:219:5 ΓÇ║ Layout standard: no text within 1rem of a content-panel edge ΓÇ║ demos\frameworks.html: content-panel elements keep >=1rem text padding (11.9s)
+  Γ£ô  149 [compliance] ΓÇ║ tests\compliance\demo-layout-standards.spec.ts:219:5 ΓÇ║ Layout standard: no text within 1rem of a content-panel edge ΓÇ║ demos\landing-page-showcase.html: content-panel elements keep >=1rem text padding (7.8s)
+  -  146 [compliance] ΓÇ║ tests\compliance\demo-layout-standards.spec.ts:160:5 ΓÇ║ Demo layout standards (┬º7) ΓÇö single-item demos are not full width ΓÇ║ pages\docs.html: single-item wb-demo blocks shrink to fit their content
+  Γ£ô  150 [compliance] ΓÇ║ tests\compliance\demo-layout-standards.spec.ts:219:5 ΓÇ║ Layout standard: no text within 1rem of a content-panel edge ΓÇ║ demos\layout-test.html: content-panel elements keep >=1rem text padding (4.2s)
+  Γ£ô  154 [compliance] ΓÇ║ tests\compliance\demo-layout-standards.spec.ts:219:5 ΓÇ║ Layout standard: no text within 1rem of a content-panel edge ΓÇ║ demos\multi-component-demo-generated.html: content-panel elements keep >=1rem text padding (3.0s)
+  Γ£ô  152 [compliance] ΓÇ║ tests\compliance\demo-layout-standards.spec.ts:219:5 ΓÇ║ Layout standard: no text within 1rem of a content-panel edge ΓÇ║ demos\mdhtml-pre-debug.html: content-panel elements keep >=1rem text padding (4.2s)
+  Γ£ô  157 [compliance] ΓÇ║ tests\compliance\demo-layout-standards.spec.ts:219:5 ΓÇ║ Layout standard: no text within 1rem of a content-panel edge ΓÇ║ demos\registry-browser.html: content-panel elements keep >=1rem text padding (3.7s)
+  Γ£ô  159 [compliance] ΓÇ║ tests\compliance\demo-layout-standards.spec.ts:219:5 ΓÇ║ Layout standard: no text within 1rem of a content-panel edge ΓÇ║ demos\scrollalong-test.html: content-panel elements keep >=1rem text padding (4.3s)
+  -  153 [compliance] ΓÇ║ tests\compliance\demo-layout-standards.spec.ts:160:5 ΓÇ║ Demo layout standards (┬º7) ΓÇö single-item demos are not full width ΓÇ║ pages\links.html: single-item wb-demo blocks shrink to fit their content
+  Γ£ô  156 [compliance] ΓÇ║ tests\compliance\demo-layout-standards.spec.ts:219:5 ΓÇ║ Layout standard: no text within 1rem of a content-panel edge ΓÇ║ demos\pre-debug.html: content-panel elements keep >=1rem text padding (9.3s)
+  Γ£ô  162 [compliance] ΓÇ║ tests\compliance\demo-layout-standards.spec.ts:219:5 ΓÇ║ Layout standard: no text within 1rem of a content-panel edge ΓÇ║ demos\site\effects.html: content-panel elements keep >=1rem text padding (3.5s)
+  Γ£ô  165 [compliance] ΓÇ║ tests\compliance\demo-layout-standards.spec.ts:219:5 ΓÇ║ Layout standard: no text within 1rem of a content-panel edge ΓÇ║ demos\site\index.html: content-panel elements keep >=1rem text padding (3.7s)
+
+Γ¥î FAILED: demos\playground.html: content-panel elements keep >=1rem text padding
+   Error: demos\playground.html:
+  Γ£ÿ  155 [compliance] ΓÇ║ tests\compliance\demo-layout-standards.spec.ts:219:5 ΓÇ║ Layout standard: no text within 1rem of a content-panel edge ΓÇ║ demos\playground.html: content-panel elements keep >=1rem text padding (4.5s)
+
+Γ¥î FAILED: demos\site\cards.html: content-panel elements keep >=1rem text padding
+   Error: demos\site\cards.html:
+  Γ£ÿ  160 [compliance] ΓÇ║ tests\compliance\demo-layout-standards.spec.ts:219:5 ΓÇ║ Layout standard: no text within 1rem of a content-panel edge ΓÇ║ demos\site\cards.html: content-panel elements keep >=1rem text padding (7.4s)
+  Γ£ô  151 [compliance] ΓÇ║ tests\compliance\demo-layout-standards.spec.ts:219:5 ΓÇ║ Layout standard: no text within 1rem of a content-panel edge ΓÇ║ demos\legacy-syntax-check.html: content-panel elements keep >=1rem text padding (20.5s)
+
+Γ¥î FAILED: demos\schema-first-architecture.html: content-panel elements keep >=1rem text padding
+   Error: demos\schema-first-architecture.html:
+  Γ£ÿ  158 [compliance] ΓÇ║ tests\compliance\demo-layout-standards.spec.ts:219:5 ΓÇ║ Layout standard: no text within 1rem of a content-panel edge ΓÇ║ demos\schema-first-architecture.html: content-panel elements keep >=1rem text padding (8.6s)
+
+Γ¥î FAILED: demos\site\interactive.html: content-panel elements keep >=1rem text padding
+   Error: demos\site\interactive.html:
+  Γ£ÿ  166 [compliance] ΓÇ║ tests\compliance\demo-layout-standards.spec.ts:219:5 ΓÇ║ Layout standard: no text within 1rem of a content-panel edge ΓÇ║ demos\site\interactive.html: content-panel elements keep >=1rem text padding (5.0s)
+  Γ£ô  170 [compliance] ΓÇ║ tests\compliance\demo-layout-standards.spec.ts:219:5 ΓÇ║ Layout standard: no text within 1rem of a content-panel edge ΓÇ║ demos\site\layout.html: content-panel elements keep >=1rem text padding (3.4s)
+  Γ£ô  169 [compliance] ΓÇ║ tests\compliance\demo-layout-standards.spec.ts:219:5 ΓÇ║ Layout standard: no text within 1rem of a content-panel edge ΓÇ║ demos\site\learn-more.html: content-panel elements keep >=1rem text padding (4.3s)
+  Γ£ô  167 [compliance] ΓÇ║ tests\compliance\demo-layout-standards.spec.ts:219:5 ΓÇ║ Layout standard: no text within 1rem of a content-panel edge ΓÇ║ demos\site\overlays.html: content-panel elements keep >=1rem text padding (20.8s)
+  Γ£ô  172 [compliance] ΓÇ║ tests\compliance\demo-layout-standards.spec.ts:219:5 ΓÇ║ Layout standard: no text within 1rem of a content-panel edge ΓÇ║ pages\about.html: content-panel elements keep >=1rem text padding (4.3s)
+  Γ£ô  173 [compliance] ΓÇ║ tests\compliance\demo-layout-standards.spec.ts:219:5 ΓÇ║ Layout standard: no text within 1rem of a content-panel edge ΓÇ║ pages\ai-docs.html: content-panel elements keep >=1rem text padding (2.5s)
+
+Γ¥î FAILED: demos\site\content.html: content-panel elements keep >=1rem text padding
+   Error: demos\site\content.html:
+  Γ£ÿ  161 [compliance] ΓÇ║ tests\compliance\demo-layout-standards.spec.ts:219:5 ΓÇ║ Layout standard: no text within 1rem of a content-panel edge ΓÇ║ demos\site\content.html: content-panel elements keep >=1rem text padding (11.9s)
+  Γ£ô  176 [compliance] ΓÇ║ tests\compliance\demo-layout-standards.spec.ts:219:5 ΓÇ║ Layout standard: no text within 1rem of a content-panel edge ΓÇ║ demos\test-harness.html: content-panel elements keep >=1rem text padding (3.0s)
+
+Γ¥î FAILED: demos\site\shop-now.html: content-panel elements keep >=1rem text padding
+   Error: demos\site\shop-now.html:
+  Γ£ÿ  168 [compliance] ΓÇ║ tests\compliance\demo-layout-standards.spec.ts:219:5 ΓÇ║ Layout standard: no text within 1rem of a content-panel edge ΓÇ║ demos\site\shop-now.html: content-panel elements keep >=1rem text padding (4.3s)
+
+Γ¥î FAILED: demos\site\feedback.html: content-panel elements keep >=1rem text padding
+  Γ£ÿ  163 [compliance] ΓÇ║ tests\compliance\demo-layout-standards.spec.ts:219:5 ΓÇ║ Layout standard: no text within 1rem of a content-panel edge ΓÇ║ demos\site\feedback.html: content-panel elements keep >=1rem text padding (8.1s)
+   Error: demos\site\feedback.html:
+
+Γ¥î FAILED: pages\contact.html: content-panel elements keep >=1rem text padding
+   Error: pages\contact.html:
+  Γ£ÿ  177 [compliance] ΓÇ║ tests\compliance\demo-layout-standards.spec.ts:219:5 ΓÇ║ Layout standard: no text within 1rem of a content-panel edge ΓÇ║ pages\contact.html: content-panel elements keep >=1rem text padding (5.6s)
+
+Γ¥î FAILED: demos\site\forms.html: content-panel elements keep >=1rem text padding
+   Error: demos\site\forms.html:
+  Γ£ÿ  164 [compliance] ΓÇ║ tests\compliance\demo-layout-standards.spec.ts:219:5 ΓÇ║ Layout standard: no text within 1rem of a content-panel edge ΓÇ║ demos\site\forms.html: content-panel elements keep >=1rem text padding (7.9s)
+
+Γ¥î FAILED: demos\wb-views-demo.html: content-panel elements keep >=1rem text padding
+   Error: demos\wb-views-demo.html:
+  Γ£ÿ  171 [compliance] ΓÇ║ tests\compliance\demo-layout-standards.spec.ts:219:5 ΓÇ║ Layout standard: no text within 1rem of a content-panel edge ΓÇ║ demos\wb-views-demo.html: content-panel elements keep >=1rem text padding (6.6s)
+  Γ£ô  179 [compliance] ΓÇ║ tests\compliance\demo-layout-standards.spec.ts:219:5 ΓÇ║ Layout standard: no text within 1rem of a content-panel edge ΓÇ║ pages\docs.html: content-panel elements keep >=1rem text padding (3.7s)
+
+Γ¥î FAILED: pages\ai-permutation-test.html: content-panel elements keep >=1rem text padding
+   Error: pages\ai-permutation-test.html:
+  Γ£ÿ  174 [compliance] ΓÇ║ tests\compliance\demo-layout-standards.spec.ts:219:5 ΓÇ║ Layout standard: no text within 1rem of a content-panel edge ΓÇ║ pages\ai-permutation-test.html: content-panel elements keep >=1rem text padding (3.3s)
+  Γ£ô  181 [compliance] ΓÇ║ tests\compliance\demo-layout-standards.spec.ts:219:5 ΓÇ║ Layout standard: no text within 1rem of a content-panel edge ΓÇ║ pages\issues.html: content-panel elements keep >=1rem text padding (2.5s)
+
+Γ¥î FAILED: pages\behaviors.html: content-panel elements keep >=1rem text padding
+   Error: page.evaluate: Execution context was destroyed, most likely because of a navigation
+  Γ£ÿ  175 [compliance] ΓÇ║ tests\compliance\demo-layout-standards.spec.ts:219:5 ΓÇ║ Layout standard: no text within 1rem of a content-panel edge ΓÇ║ pages\behaviors.html: content-panel elements keep >=1rem text padding (6.5s)
+
+Γ¥î FAILED: pages\components.html: content-panel elements keep >=1rem text padding
+   Error: pages\components.html:
+  Γ£ÿ  178 [compliance] ΓÇ║ tests\compliance\demo-layout-standards.spec.ts:219:5 ΓÇ║ Layout standard: no text within 1rem of a content-panel edge ΓÇ║ pages\components.html: content-panel elements keep >=1rem text padding (5.3s)
+  Γ£ô  183 [compliance] ΓÇ║ tests\compliance\demo-layout-standards.spec.ts:219:5 ΓÇ║ Layout standard: no text within 1rem of a content-panel edge ΓÇ║ pages\features.html: content-panel elements keep >=1rem text padding (3.7s)
+  Γ£ô  184 [compliance] ΓÇ║ tests\compliance\demo-layout-standards.spec.ts:219:5 ΓÇ║ Layout standard: no text within 1rem of a content-panel edge ΓÇ║ pages\newpage.html: content-panel elements keep >=1rem text padding (8.8s)
+  Γ£ô  182 [compliance] ΓÇ║ tests\compliance\demo-layout-standards.spec.ts:219:5 ΓÇ║ Layout standard: no text within 1rem of a content-panel edge ΓÇ║ pages\hero-variants.html: content-panel elements keep >=1rem text padding (5.7s)
+
+Γ¥î FAILED: pages\demos.html: content-panel elements keep >=1rem text padding
+   Error: pages\demos.html:
+  Γ£ÿ  180 [compliance] ΓÇ║ tests\compliance\demo-layout-standards.spec.ts:219:5 ΓÇ║ Layout standard: no text within 1rem of a content-panel edge ΓÇ║ pages\demos.html: content-panel elements keep >=1rem text padding (4.2s)
+  Γ£ô  186 [compliance] ΓÇ║ tests\compliance\demo-layout-standards.spec.ts:219:5 ΓÇ║ Layout standard: no text within 1rem of a content-panel edge ΓÇ║ pages\terms.html: content-panel elements keep >=1rem text padding (2.0s)
+  Γ£ô  188 [compliance] ΓÇ║ tests\compliance\demo-layout-standards.spec.ts:219:5 ΓÇ║ Layout standard: no text within 1rem of a content-panel edge ΓÇ║ pages\links.html: content-panel elements keep >=1rem text padding (2.5s)
+  Γ£ô  189 [compliance] ΓÇ║ tests\compliance\demo-layout-standards.spec.ts:219:5 ΓÇ║ Layout standard: no text within 1rem of a content-panel edge ΓÇ║ pages\home.html: content-panel elements keep >=1rem text padding (2.1s)
+  Γ£ô  190 [compliance] ΓÇ║ tests\compliance\demo-layout-standards.spec.ts:219:5 ΓÇ║ Layout standard: no text within 1rem of a content-panel edge ΓÇ║ pages\privacy.html: content-panel elements keep >=1rem text padding (2.3s)
+
+Γ¥î FAILED: pages\themes.html: content-panel elements keep >=1rem text padding
+   Error: pages\themes.html:
+  Γ£ÿ  187 [compliance] ΓÇ║ tests\compliance\demo-layout-standards.spec.ts:219:5 ΓÇ║ Layout standard: no text within 1rem of a content-panel edge ΓÇ║ pages\themes.html: content-panel elements keep >=1rem text padding (3.2s)
+  Γ£ô  192 [compliance] ΓÇ║ tests\compliance\demo-layout-standards.spec.ts:219:5 ΓÇ║ Layout standard: no text within 1rem of a content-panel edge ΓÇ║ pages\offshoring.html: content-panel elements keep >=1rem text padding (2.4s)
+
+Γ¥î FAILED: pages\whats-new.html: content-panel elements keep >=1rem text padding
+   Error: pages\whats-new.html:
+  Γ£ÿ  191 [compliance] ΓÇ║ tests\compliance\demo-layout-standards.spec.ts:219:5 ΓÇ║ Layout standard: no text within 1rem of a content-panel edge ΓÇ║ pages\whats-new.html: content-panel elements keep >=1rem text padding (2.3s)
+  Γ£ô  185 [compliance] ΓÇ║ tests\compliance\demo-layout-standards.spec.ts:219:5 ΓÇ║ Layout standard: no text within 1rem of a content-panel edge ΓÇ║ pages\services.html: content-panel elements keep >=1rem text padding (23.1s)
+
+ΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉ
+  WB TEST RESULTS
+ΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉ
+  Total: 192 tests in 319.1s
+  Γ£ô Passed:  95
+  Γ£ù Failed:  35
+  Γùï Skipped: 62
+
+  By Project:
+    Γ£ù compliance: 95/192 passed
+
+  See failures: data/test-results/failures.json
+  Live log:    data/test-results/failures-live.log
+ΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉ
+
+
+
+  1) [compliance] ΓÇ║ tests\compliance\demo-layout-standards.spec.ts:64:5 ΓÇ║ Demo layout standards (┬º2, ┬º13) ΓÇö static scan ΓÇ║ demos\site\cards.html: no permutation-matrix <wb-demo> blocks (┬º2) 
+
+    Error: demos\site\cards.html:
+    <wb-demo> block has 2 differently-configured <wb-card> children sharing one code sample: title="Welcome" subtitle="Standard card" hoverable | title="Glass Card" subtitle="With Badge" badge="NEW" variant="glass" clickable hoverable elevated
+    <wb-demo> block has 2 differently-configured <wb-cardimage> children sharing one code sample: src="https://placehold.co/600x400/1e293b/e2e8f0?text=Mountain+Vista" title="Mountain Vista" subtitle="Nature photography" | src="https://placehold.co/600x400/0c4a6e/e0f2fe?text=Ocean+Breeze" title="Ocean Breeze" subtitle="Coastal landscapes"
+    <wb-demo> block has 2 differently-configured <wb-cardbutton> children sharing one code sample: title="Save Document" subtitle="Your changes are ready" primary="Save Now" secondary="Discard" | title="Delete Account" subtitle="This action is permanent" primary="Confirm Delete" secondary="Go Back"
+    <wb-demo> block has 3 differently-configured <wb-cardpricing> children sharing one code sample: plan="Starter" price="$0" period="/month" features="3 Projects,Community Support,1 GB Storage" cta="Get Started" | plan="Pro" price="$19" period="/month" features="Unlimited Projects,Priority Support,50 GB Storage,API Access" cta="Upgrade" featured | plan="Enterprise" price="$99" period="/month" features="Everything in Pro,SSO & SAML,Dedicated Manager,SLA" cta="Contact Sales"
+    <wb-demo> block has 4 differently-configured <wb-cardstats> children sharing one code sample: value="42K" label="Users" icon="≡ƒæÑ" trend="up" trend-value="+12.5%" | value="$1.2M" label="Revenue" icon="≡ƒÆ░" trend="up" trend-value="+8.3%" | value="99.9%" label="Uptime" icon="ΓÜí" trend="up" trend-value="+0.1%" | value="4.8" label="Rating" icon="Γ¡É" trend="up" trend-value="+0.3"
+    <wb-demo> block has 3 differently-configured <wb-cardproduct> children sharing one code sample: image="https://placehold.co/400x300/1f2937/f3f4f6?text=Sneakers" title="Premium Sneakers" description="Lightweight with responsive cushioning" price="$129" rating="4.5" reviews="238" | image="https://placehold.co/400x300/1f2937/f3f4f6?text=Smart+Watch" title="Smart Watch" description="Health tracking and notifications" price="$299" rating="4.8" reviews="1024" | image="https://placehold.co/400x300/1f2937/f3f4f6?text=Headphones" title="Wireless Headphones" description="Active noise cancellation" price="$89" rating="4.3" reviews="567"
+    <wb-demo> block has 2 differently-configured <wb-cardnotification> children sharing one code sample: variant="success" title="Changes Saved!" message="Your profile has been updated successfully." | variant="error" title="Upload Failed" message="File exceeds the 10MB size limit."
+    <wb-demo> block has 3 differently-configured <wb-cardfile> children sharing one code sample: filename="quarterly-report.pdf" type="pdf" size="2.4 MB" date="2026-02-16" href="https://github.com/CieloVistaSoftware/wb-starter/pulse" | filename="team-photo.jpg" type="image" size="4.1 MB" date="2026-02-15" href="https://github.com/CieloVistaSoftware/wb-starter/graphs/contributors" | filename="backup.zip" type="zip" size="128 MB" date="2026-02-14" href="https://github.com/CieloVistaSoftware/wb-starter/archive/refs/heads/main.zip"
+    <wb-demo> block has 2 differently-configured <wb-cardlink> children sharing one code sample: href="https://github.com/CieloVistaSoftware/wb-starter#readme" icon="≡ƒôÜ" title="Documentation" description="Browse the full API reference." target="_blank" | href="https://github.com/CieloVistaSoftware/wb-starter/releases" icon="≡ƒÜÇ" title="Release Notes" description="See what's new in the latest version." target="_blank"
+    <wb-demo> block has 2 differently-configured <wb-cardoverlay> children sharing one code sample: image="https://placehold.co/800x500/1e293b/fbbf24?text=City+Lights" title="City Lights" subtitle="Urban photography" height="300px" | image="https://placehold.co/800x500/166534/dcfce7?text=Mountain+Trail" title="Mountain Trail" subtitle="Adventure awaits" height="300px"
+    <wb-demo> block has 8 differently-configured <wb-card> children sharing one code sample: title="Default Card" subtitle="A simple card" footer="Card footer" | title="Glass Card" variant="glass" subtitle="With glass effect" | title="Bordered Card" variant="bordered" footer="Bordered style" | title="Flat Card" variant="flat" subtitle="Minimal look" | title="Elevated Card" elevated subtitle="With shadow" | title="Clickable Card" clickable subtitle="Click me" footer="Interactive" | title="Small Card" size="sm" subtitle="Compact size" | title="Large Card" size="lg" subtitle="Spacious layout" footer="Extra room"
+    <wb-demo> block has 4 differently-configured <wb-card> children sharing one code sample: variant="default" | variant="glass" | variant="bordered" | variant="flat"
+    <wb-demo> block has 7 differently-configured <wb-card> children sharing one code sample: size="xs" | size="sm" | size="md" | size="lg" | size="xl" | size="full" | size="auto"
+    <wb-demo> block has 2 differently-configured <wb-card> children sharing one code sample: elevated | clickable
+    <wb-demo> block has 3 differently-configured <wb-cardbutton> children sharing one code sample: title="Card" primary="OK" | title="Card" primary="Submit" content="Content" | title="Card" primary="Yes" secondary="No"
+    <wb-demo> block has 3 differently-configured <wb-cardbutton> children sharing one code sample: variant="default" primary="Sample primary" | variant="elevated" primary="Sample primary" | variant="bordered" primary="Sample primary"
+    <wb-demo> block has 3 differently-configured <wb-carddraggable> children sharing one code sample: title="Basic" content="Content" | title="Constrained" content="Content" constrain="parent" | title="X Only" content="Content" axis="x"
+    <wb-demo> block has 3 differently-configured <wb-carddraggable> children sharing one code sample: constrain="none" | constrain="parent" | constrain="viewport"
+    <wb-demo> block has 3 differently-configured <wb-carddraggable> children sharing one code sample: axis="both" | axis="x" | axis="y"
+    <wb-demo> block has 2 differently-configured <wb-carddraggable> children sharing one code sample: variant="default" | variant="elevated"
+    <wb-demo> block has 3 differently-configured <wb-cardexpandable> children sharing one code sample: title="Basic" content="Content" | title="Expanded" content="Content" expanded | title="Custom" content="Content" max-height="150px"
+    <wb-demo> block has 3 differently-configured <wb-cardexpandable> children sharing one code sample: variant="default" title="Sample title" | variant="elevated" title="Sample title" | variant="bordered" title="Sample title"
+    <wb-demo> block has 3 differently-configured <wb-cardfile> children sharing one code sample: filename="document.pdf" | filename="document.pdf" file-type="pdf" size="1.2 MB" | filename="photo.jpg" file-type="image" size="2.4 MB" href="/files/photo.jpg"
+    <wb-demo> block has 7 differently-configured <wb-cardfile> children sharing one code sample: file-type="pdf" filename="Sample filename" | file-type="doc" filename="Sample filename" | file-type="image" filename="Sample filename" | file-type="video" filename="Sample filename" | file-type="audio" filename="Sample filename" | file-type="zip" filename="Sample filename" | file-type="file" filename="Sample filename"
+    <wb-demo> block has 3 differently-configured <wb-cardfile> children sharing one code sample: variant="default" filename="Sample filename" | variant="compact" filename="Sample filename" | variant="elevated" filename="Sample filename"
+    <wb-demo> block has 7 differently-configured <wb-cardhero> children sharing one code sample: background="hero.jpg" title="Welcome" | background="hero.jpg" title="Welcome" subtitle="Subtitle" | background="hero.jpg" title="Welcome" cta="Click Me" | background="hero.jpg" title="Welcome" subtitle="Sub" cta="Go" variant="cosmic" | background="hero.jpg" title="Welcome" xalign="left" | background="hero.jpg" title="Welcome" full-height
+    <wb-demo> block has 5 differently-configured <wb-cardhero> children sharing one code sample: variant="default" background="Sample background" title="Sample title" | variant="cosmic" background="Sample background" title="Sample title" | variant="split" background="Sample background" title="Sample title" | variant="minimal" background="Sample background" title="Sample title" | variant="gradient" background="Sample background" title="Sample title"
+    <wb-demo> block has 3 differently-configured <wb-cardhero> children sharing one code sample: xalign="left" background="Sample background" title="Sample title" | xalign="center" background="Sample background" title="Sample title" | xalign="right" background="Sample background" title="Sample title"
+    <wb-demo> block has 4 differently-configured <wb-cardhorizontal> children sharing one code sample: image="https://picsum.photos/seed/cardhorizontal/600/400" title="Title" | image="https://picsum.photos/seed/cardhorizontal/600/400" title="Title" subtitle="Subtitle" | image="https://picsum.photos/seed/cardhorizontal/600/400" title="Title" image-position="right" | image="https://picsum.photos/seed/cardhorizontal/600/400" title="Title" variant="elevated"
+    <wb-demo> block has 2 differently-configured <wb-cardhorizontal> children sharing one code sample: image-position="left" | image-position="right"
+    <wb-demo> block has 4 differently-configured <wb-cardhorizontal> children sharing one code sample: variant="default" | variant="elevated" | variant="bordered" | variant="minimal"
+    <wb-demo> block has 8 differently-configured <wb-cardimage> children sharing one code sample: src="https://picsum.photos/seed/cardimage/600/400" | src="https://picsum.photos/seed/cardimage/600/400" alt="Description" | src="https://picsum.photos/seed/cardimage/600/400" title="Title" | src="https://picsum.photos/seed/cardimage/600/400" title="Title" subtitle="Subtitle" | src="https://picsum.photos/seed/cardimage/600/400" caption="Photo by John" | src="https://picsum.photos/seed/cardimage/600/400" aspect="1/1" | src="https://picsum.photos/seed/cardimage/600/400" position="bottom" title="Title" | src="https://picsum.photos/seed/cardimage/600/400" variant="elevated"
+    <wb-demo> block has 6 differently-configured <wb-cardimage> children sharing one code sample: aspect="16/9" src="https://picsum.photos/seed/cardimage/600/400" | aspect="4/3" src="https://picsum.photos/seed/cardimage/600/400" | aspect="1/1" src="https://picsum.photos/seed/cardimage/600/400" | aspect="3/2" src="https://picsum.photos/seed/cardimage/600/400" | aspect="21/9" src="https://picsum.photos/seed/cardimage/600/400" | aspect="auto" src="https://picsum.photos/seed/cardimage/600/400"
+    <wb-demo> block has 4 differently-configured <wb-cardimage> children sharing one code sample: position="top" src="https://picsum.photos/seed/cardimage/600/400" | position="bottom" src="https://picsum.photos/seed/cardimage/600/400" | position="left" src="https://picsum.photos/seed/cardimage/600/400" | position="right" src="https://picsum.photos/seed/cardimage/600/400"
+    <wb-demo> block has 4 differently-configured <wb-cardimage> children sharing one code sample: fit="cover" src="https://picsum.photos/seed/cardimage/600/400" | fit="contain" src="https://picsum.photos/seed/cardimage/600/400" | fit="fill" src="https://picsum.photos/seed/cardimage/600/400" | fit="none" src="https://picsum.photos/seed/cardimage/600/400"
+    <wb-demo> block has 2 differently-configured <wb-cardimage> children sharing one code sample: loading="lazy" src="https://picsum.photos/seed/cardimage/600/400" | loading="eager" src="https://picsum.photos/seed/cardimage/600/400"
+    <wb-demo> block has 4 differently-configured <wb-cardimage> children sharing one code sample: variant="default" src="https://picsum.photos/seed/cardimage/600/400" | variant="elevated" src="https://picsum.photos/seed/cardimage/600/400" | variant="bordered" src="https://picsum.photos/seed/cardimage/600/400" | variant="minimal" src="https://picsum.photos/seed/cardimage/600/400"
+    <wb-demo> block has 6 differently-configured <wb-cardlink> children sharing one code sample: href="https://example.com" | href="https://example.com" title="Link Title" | href="https://example.com" title="Title" description="Description" | href="https://example.com" icon="≡ƒöù" | href="https://example.com" badge="NEW" | href="https://example.com" target="_blank"
+    <wb-demo> block has 2 differently-configured <wb-cardlink> children sharing one code sample: target="_self" href="https://example.com" | target="_blank" href="https://example.com"
+    <wb-demo> block has 5 differently-configured <wb-cardlink> children sharing one code sample: variant="default" href="https://example.com" | variant="elevated" href="https://example.com" | variant="bordered" href="https://example.com" | variant="minimal" href="https://example.com" | variant="glass" href="https://example.com"
+    <wb-demo> block has 2 differently-configured <wb-cardminimizable> children sharing one code sample: title="Basic" content="Content" | title="Minimized" content="Content" minimized
+    <wb-demo> block has 3 differently-configured <wb-cardminimizable> children sharing one code sample: variant="default" title="Sample title" | variant="elevated" title="Sample title" | variant="bordered" title="Sample title"
+    <wb-demo> block has 5 differently-configured <wb-cardnotification> children sharing one code sample: message="Info message" | variant="success" title="Success" message="Done!" | variant="warning" message="Warning!" | variant="error" message="Error!" | variant="info" title="Notice" message="Info" icon="≡ƒöö"
+    <wb-demo> block has 4 differently-configured <wb-cardnotification> children sharing one code sample: variant="info" message="Sample message" | variant="success" message="Sample message" | variant="warning" message="Sample message" | variant="error" message="Sample message"
+    <wb-demo> block has 6 differently-configured <wb-cardoverlay> children sharing one code sample: image="bg.jpg" title="Title" | image="bg.jpg" title="Title" subtitle="Subtitle" | image="bg.jpg" title="Title" position="top" | image="bg.jpg" title="Title" position="center" | image="bg.jpg" title="Title" xalign="center"
+    <wb-demo> block has 3 differently-configured <wb-cardoverlay> children sharing one code sample: position="top" image="Sample image" | position="center" image="Sample image" | position="bottom" image="Sample image"
+    <wb-demo> block has 3 differently-configured <wb-cardoverlay> children sharing one code sample: xalign="left" image="Sample image" | xalign="center" image="Sample image" | xalign="right" image="Sample image"
+    <wb-demo> block has 4 differently-configured <wb-cardoverlay> children sharing one code sample: variant="default" image="Sample image" | variant="dark" image="Sample image" | variant="light" image="Sample image" | variant="blur" image="Sample image"
+    <wb-demo> block has 6 differently-configured <wb-cardpricing> children sharing one code sample: plan="Basic" price="$9" | plan="Pro" price="$29" featured | plan="Basic" price="$9" period="/year" | plan="Pro" price="$29" features="Feature 1,Feature 2" | plan="Pro" price="$29" cta="Subscribe Now" | plan="Enterprise" price="$99" description="For large teams" featured
+    <wb-demo> block has 4 differently-configured <wb-cardpricing> children sharing one code sample: variant="default" plan="Sample plan" price="Sample price" | variant="bordered" plan="Sample plan" price="Sample price" | variant="elevated" plan="Sample plan" price="Sample price" | variant="minimal" plan="Sample plan" price="Sample price"
+    <wb-demo> block has 5 differently-configured <wb-cardproduct> children sharing one code sample: title="Product" price="$29" | title="Product" price="$29" original-price="$49" | image="product.jpg" title="Product" price="$29" | title="Product" price="$29" rating="4.5" reviews="128" | title="Product" price="$29" badge="Sale" featured
+    <wb-demo> block has 4 differently-configured <wb-cardproduct> children sharing one code sample: variant="default" title="Sample title" price="Sample price" | variant="compact" title="Sample title" price="Sample price" | variant="horizontal" title="Sample title" price="Sample price" | variant="minimal" title="Sample title" price="Sample price"
+    <wb-demo> block has 6 differently-configured <wb-cardstats> children sharing one code sample: value="100" | value="1,234" label="Users" | value="100" icon="≡ƒôè" | value="100" trend="up" trend-value="+10%" | value="100" trend="down" trend-value="-5%" | value="$50K" label="Revenue" icon="≡ƒÆ░" trend="up" trend-value="+12%"
+    <wb-demo> block has 4 differently-configured <wb-cardstats> children sharing one code sample: trend="" value="Sample value" | trend="up" value="Sample value" | trend="down" value="Sample value" | trend="neutral" value="Sample value"
+    <wb-demo> block has 4 differently-configured <wb-cardstats> children sharing one code sample: variant="default" value="Sample value" | variant="compact" value="Sample value" | variant="large" value="Sample value" | variant="minimal" value="Sample value"
+    <wb-demo> block has 8 differently-configured <wb-cardtestimonial> children sharing one code sample: quote="Great!" author="John" | quote="Great!" author="John" role="CEO" | quote="Great!" author="John" avatar="https://i.pravatar.cc/150?u=john" | quote="Great!" author="John" rating="5" | quote="Great!" author="John" rating="3" | quote="Excellent service!" author="Jane" role="CTO at Acme" avatar="https://i.pravatar.cc/150?u=jane" rating="5" | quote="Great!" author="John" variant="elevated" | quote="Great!" author="John" variant="centered"
+    <wb-demo> block has 5 differently-configured <wb-cardtestimonial> children sharing one code sample: variant="default" quote="Sample quote" author="Sample author" | variant="elevated" quote="Sample quote" author="Sample author" | variant="bordered" quote="Sample quote" author="Sample author" | variant="minimal" quote="Sample quote" author="Sample author" | variant="centered" quote="Sample quote" author="Sample author"
+    <wb-demo> block has 3 differently-configured <wb-cardtestimonial> children sharing one code sample: size="sm" quote="Sample quote" author="Sample author" | size="md" quote="Sample quote" author="Sample author" | size="lg" quote="Sample quote" author="Sample author"
+    <wb-demo> block has 7 differently-configured <wb-cardvideo> children sharing one code sample: src="https://www.w3schools.com/html/mov_bbb.mp4" | src="https://www.w3schools.com/html/mov_bbb.mp4" title="Video Title" | src="https://www.w3schools.com/html/mov_bbb.mp4" poster="https://picsum.photos/seed/videoposter/800/450" | src="https://www.w3schools.com/html/mov_bbb.mp4" autoplay muted | src="https://www.w3schools.com/html/mov_bbb.mp4" loop | src="https://www.w3schools.com/html/mov_bbb.mp4" aspect="4/3"
+    <wb-demo> block has 5 differently-configured <wb-cardvideo> children sharing one code sample: aspect="16/9" src="https://www.w3schools.com/html/mov_bbb.mp4" | aspect="4/3" src="https://www.w3schools.com/html/mov_bbb.mp4" | aspect="1/1" src="https://www.w3schools.com/html/mov_bbb.mp4" | aspect="21/9" src="https://www.w3schools.com/html/mov_bbb.mp4" | aspect="9/16" src="https://www.w3schools.com/html/mov_bbb.mp4"
+    <wb-demo> block has 4 differently-configured <wb-cardvideo> children sharing one code sample: variant="default" src="https://www.w3schools.com/html/mov_bbb.mp4" | variant="minimal" src="https://www.w3schools.com/html/mov_bbb.mp4" | variant="bordered" src="https://www.w3schools.com/html/mov_bbb.mp4" | variant="elevated" src="https://www.w3schools.com/html/mov_bbb.mp4"
+    <wb-demo> block has 3 differently-configured <wb-cardvideo> children sharing one code sample: autoplay src="https://www.w3schools.com/html/mov_bbb.mp4" | muted src="https://www.w3schools.com/html/mov_bbb.mp4" | loop src="https://www.w3schools.com/html/mov_bbb.mp4"
+
+    [2mexpect([22m[31mreceived[39m[2m).[22mtoHaveLength[2m([22m[32mexpected[39m[2m)[22m
+
+    Expected length: [32m0[39m
+    Received length: [31m62[39m
+    Received array:  [31m["<wb-demo> block has 2 differently-configured <wb-card> children sharing one code sample: title=\"Welcome\" subtitle=\"Standard card\" hoverable | title=\"Glass Card\" subtitle=\"With Badge\" badge=\"NEW\" variant=\"glass\" clickable hoverable elevated", "<wb-demo> block has 2 differently-configured <wb-cardimage> children sharing one code sample: src=\"https://placehold.co/600x400/1e293b/e2e8f0?text=Mountain+Vista\" title=\"Mountain Vista\" subtitle=\"Nature photography\" | src=\"https://placehold.co/600x400/0c4a6e/e0f2fe?text=Ocean+Breeze\" title=\"Ocean Breeze\" subtitle=\"Coastal landscapes\"", "<wb-demo> block has 2 differently-configured <wb-cardbutton> children sharing one code sample: title=\"Save Document\" subtitle=\"Your changes are ready\" primary=\"Save Now\" secondary=\"Discard\" | title=\"Delete Account\" subtitle=\"This action is permanent\" primary=\"Confirm Delete\" secondary=\"Go Back\"", "<wb-demo> block has 3 differently-configured <wb-cardpricing> children sharing one code sample: plan=\"Starter\" price=\"$0\" period=\"/month\" features=\"3 Projects,Community Support,1 GB Storage\" cta=\"Get Started\" | plan=\"Pro\" price=\"$19\" period=\"/month\" features=\"Unlimited Projects,Priority Support,50 GB Storage,API Access\" cta=\"Upgrade\" featured | plan=\"Enterprise\" price=\"$99\" period=\"/month\" features=\"Everything in Pro,SSO & SAML,Dedicated Manager,SLA\" cta=\"Contact Sales\"", "<wb-demo> block has 4 differently-configured <wb-cardstats> children sharing one code sample: value=\"42K\" label=\"Users\" icon=\"≡ƒæÑ\" trend=\"up\" trend-value=\"+12.5%\" | value=\"$1.2M\" label=\"Revenue\" icon=\"≡ƒÆ░\" trend=\"up\" trend-value=\"+8.3%\" | value=\"99.9%\" label=\"Uptime\" icon=\"ΓÜí\" trend=\"up\" trend-value=\"+0.1%\" | value=\"4.8\" label=\"Rating\" icon=\"Γ¡É\" trend=\"up\" trend-value=\"+0.3\"", "<wb-demo> block has 3 differently-configured <wb-cardproduct> children sharing one code sample: image=\"https://placehold.co/400x300/1f2937/f3f4f6?text=Sneakers\" title=\"Premium Sneakers\" description=\"Lightweight with responsive cushioning\" price=\"$129\" rating=\"4.5\" reviews=\"238\" | image=\"https://placehold.co/400x300/1f2937/f3f4f6?text=Smart+Watch\" title=\"Smart Watch\" description=\"Health tracking and notifications\" price=\"$299\" rating=\"4.8\" reviews=\"1024\" | image=\"https://placehold.co/400x300/1f2937/f3f4f6?text=Headphones\" title=\"Wireless Headphones\" description=\"Active noise cancellation\" price=\"$89\" rating=\"4.3\" reviews=\"567\"", "<wb-demo> block has 2 differently-configured <wb-cardnotification> children sharing one code sample: variant=\"success\" title=\"Changes Saved!\" message=\"Your profile has been updated successfully.\" | variant=\"error\" title=\"Upload Failed\" message=\"File exceeds the 10MB size limit.\"", "<wb-demo> block has 3 differently-configured <wb-cardfile> children sharing one code sample: filename=\"quarterly-report.pdf\" type=\"pdf\" size=\"2.4 MB\" date=\"2026-02-16\" href=\"https://github.com/CieloVistaSoftware/wb-starter/pulse\" | filename=\"team-photo.jpg\" type=\"image\" size=\"4.1 MB\" date=\"2026-02-15\" href=\"https://github.com/CieloVistaSoftware/wb-starter/graphs/contributors\" | filename=\"backup.zip\" type=\"zip\" size=\"128 MB\" date=\"2026-02-14\" href=\"https://github.com/CieloVistaSoftware/wb-starter/archive/refs/heads/main.zip\"", "<wb-demo> block has 2 differently-configured <wb-cardlink> children sharing one code sample: href=\"https://github.com/CieloVistaSoftware/wb-starter#readme\" icon=\"≡ƒôÜ\" title=\"Documentation\" description=\"Browse the full API reference.\" target=\"_blank\" | href=\"https://github.com/CieloVistaSoftware/wb-starter/releases\" icon=\"≡ƒÜÇ\" title=\"Release Notes\" description=\"See what's new in the latest version.\" target=\"_blank\"", "<wb-demo> block has 2 differently-configured <wb-cardoverlay> children sharing one code sample: image=\"https://placehold.co/800x500/1e293b/fbbf24?text=City+Lights\" title=\"City Lights\" subtitle=\"Urban photography\" height=\"300px\" | image=\"https://placehold.co/800x500/166534/dcfce7?text=Mountain+Trail\" title=\"Mountain Trail\" subtitle=\"Adventure awaits\" height=\"300px\"", ΓÇª][39m
+
+      85 |       }
+      86 |
+    > 87 |       expect(violations, `${file}:\n${violations.join('\n')}`).toHaveLength(0);
+         |                                                                ^
+      88 |     });
+      89 |   }
+      90 | });
+        at C:\Users\jwpmi\Downloads\AI\wb-starter\tests\compliance\demo-layout-standards.spec.ts:87:64
+
+  2) [compliance] ΓÇ║ tests\compliance\demo-layout-standards.spec.ts:64:5 ΓÇ║ Demo layout standards (┬º2, ┬º13) ΓÇö static scan ΓÇ║ demos\site\content.html: no permutation-matrix <wb-demo> blocks (┬º2) 
+
+    Error: demos\site\content.html:
+    <wb-demo> block has 5 differently-configured <wb-article> children sharing one code sample: title="Article" | title="Article" subtitle="Deck" | title="Article" image="cover.jpg" | title="Article" author="John Doe" date="2026-01-01" | title="Article" featured
+    <wb-demo> block has 3 differently-configured <wb-articles> children sharing one code sample: layout="grid" | layout="list" | layout="grid" columns="2"
+    <wb-demo> block has 3 differently-configured <wb-mdhtml> children sharing one code sample: src="../code.md" | gfm | sanitize gfm
+    <wb-demo> block has 4 differently-configured <wb-audio> children sharing one code sample:  | show-eq | volume="0.5" | loop
+    <wb-demo> block has 4 differently-configured <wb-audio> children sharing one code sample: loop | autoplay | muted | show-eq
+    <wb-demo> block has 4 differently-configured <wb-table> children sharing one code sample:  | sortable | striped | paginated page-size="5"
+    <wb-demo> block has 4 differently-configured <wb-table> children sharing one code sample: filterable | paginated | compact | bordered
+    <wb-demo> block has 4 differently-configured <wb-notes> children sharing one code sample:  | position="left" | position="right" | position="modal"
+    <wb-demo> block has 3 differently-configured <details> children sharing one code sample:  | open | animated="false"
+    <wb-demo> block has 2 differently-configured <wb-progress> children sharing one code sample: value="70" label="Loading..." | indeterminate label="Working..."
+
+    [2mexpect([22m[31mreceived[39m[2m).[22mtoHaveLength[2m([22m[32mexpected[39m[2m)[22m
+
+    Expected length: [32m0[39m
+    Received length: [31m10[39m
+    Received array:  [31m["<wb-demo> block has 5 differently-configured <wb-article> children sharing one code sample: title=\"Article\" | title=\"Article\" subtitle=\"Deck\" | title=\"Article\" image=\"cover.jpg\" | title=\"Article\" author=\"John Doe\" date=\"2026-01-01\" | title=\"Article\" featured", "<wb-demo> block has 3 differently-configured <wb-articles> children sharing one code sample: layout=\"grid\" | layout=\"list\" | layout=\"grid\" columns=\"2\"", "<wb-demo> block has 3 differently-configured <wb-mdhtml> children sharing one code sample: src=\"../code.md\" | gfm | sanitize gfm", "<wb-demo> block has 4 differently-configured <wb-audio> children sharing one code sample:  | show-eq | volume=\"0.5\" | loop", "<wb-demo> block has 4 differently-configured <wb-audio> children sharing one code sample: loop | autoplay | muted | show-eq", "<wb-demo> block has 4 differently-configured <wb-table> children sharing one code sample:  | sortable | striped | paginated page-size=\"5\"", "<wb-demo> block has 4 differently-configured <wb-table> children sharing one code sample: filterable | paginated | compact | bordered", "<wb-demo> block has 4 differently-configured <wb-notes> children sharing one code sample:  | position=\"left\" | position=\"right\" | position=\"modal\"", "<wb-demo> block has 3 differently-configured <details> children sharing one code sample:  | open | animated=\"false\"", "<wb-demo> block has 2 differently-configured <wb-progress> children sharing one code sample: value=\"70\" label=\"Loading...\" | indeterminate label=\"Working...\""][39m
+
+      85 |       }
+      86 |
+    > 87 |       expect(violations, `${file}:\n${violations.join('\n')}`).toHaveLength(0);
+         |                                                                ^
+      88 |     });
+      89 |   }
+      90 | });
+        at C:\Users\jwpmi\Downloads\AI\wb-starter\tests\compliance\demo-layout-standards.spec.ts:87:64
+
+  3) [compliance] ΓÇ║ tests\compliance\demo-layout-standards.spec.ts:64:5 ΓÇ║ Demo layout standards (┬º2, ┬º13) ΓÇö static scan ΓÇ║ demos\site\effects.html: no permutation-matrix <wb-demo> blocks (┬º2) 
+
+    Error: demos\site\effects.html:
+    <wb-demo> block has 3 differently-configured <wb-confetti> children sharing one code sample:  | count="100" | repeat
+    <wb-demo> block has 3 differently-configured <wb-fireworks> children sharing one code sample:  | count="50" | repeat
+    <wb-demo> block has 3 differently-configured <wb-ripple> children sharing one code sample:  | color="rgba(0,0,0,0.2)" | duration="300"
+    <wb-demo> block has 3 differently-configured <wb-snow> children sharing one code sample:  | count="50"
+    <wb-demo> block has 4 differently-configured <wb-stagelight> children sharing one code sample: variant="beam" color="#6366f1" intensity="0.7" | variant="spotlight" color="#f59e0b" intensity="0.5" size="400px" | variant="fixture" color="#ef4444" label="Red Light" | variant="beam" color="#22c55e" speed="5s"
+    <wb-demo> block has 3 differently-configured <wb-stagelight> children sharing one code sample: variant="beam" | variant="spotlight" | variant="fixture"
+
+    [2mexpect([22m[31mreceived[39m[2m).[22mtoHaveLength[2m([22m[32mexpected[39m[2m)[22m
+
+    Expected length: [32m0[39m
+    Received length: [31m6[39m
+    Received array:  [31m["<wb-demo> block has 3 differently-configured <wb-confetti> children sharing one code sample:  | count=\"100\" | repeat", "<wb-demo> block has 3 differently-configured <wb-fireworks> children sharing one code sample:  | count=\"50\" | repeat", "<wb-demo> block has 3 differently-configured <wb-ripple> children sharing one code sample:  | color=\"rgba(0,0,0,0.2)\" | duration=\"300\"", "<wb-demo> block has 3 differently-configured <wb-snow> children sharing one code sample:  | count=\"50\"", "<wb-demo> block has 4 differently-configured <wb-stagelight> children sharing one code sample: variant=\"beam\" color=\"#6366f1\" intensity=\"0.7\" | variant=\"spotlight\" color=\"#f59e0b\" intensity=\"0.5\" size=\"400px\" | variant=\"fixture\" color=\"#ef4444\" label=\"Red Light\" | variant=\"beam\" color=\"#22c55e\" speed=\"5s\"", "<wb-demo> block has 3 differently-configured <wb-stagelight> children sharing one code sample: variant=\"beam\" | variant=\"spotlight\" | variant=\"fixture\""][39m
+
+      85 |       }
+      86 |
+    > 87 |       expect(violations, `${file}:\n${violations.join('\n')}`).toHaveLength(0);
+         |                                                                ^
+      88 |     });
+      89 |   }
+      90 | });
+        at C:\Users\jwpmi\Downloads\AI\wb-starter\tests\compliance\demo-layout-standards.spec.ts:87:64
+
+  4) [compliance] ΓÇ║ tests\compliance\demo-layout-standards.spec.ts:64:5 ΓÇ║ Demo layout standards (┬º2, ┬º13) ΓÇö static scan ΓÇ║ demos\site\feedback.html: no permutation-matrix <wb-demo> blocks (┬º2) 
+
+    Error: demos\site\feedback.html:
+    <wb-demo> block has 8 differently-configured <wb-alert> children sharing one code sample: variant="info" message="Test" | variant="success" message="Test" | variant="warning" message="Test" | variant="error" message="Test" | variant="info" title="Title" message="Test" | variant="info" message="Test" icon="Γä╣∩╕Å" | variant="info" message="Test" dismissible | variant="warning" title="Warning" message="Be careful" icon="ΓÜá∩╕Å" dismissible
+    <wb-demo> block has 4 differently-configured <wb-alert> children sharing one code sample: variant="info" message="Sample message" | variant="success" message="Sample message" | variant="warning" message="Sample message" | variant="error" message="Sample message"
+    <wb-demo> block has 5 differently-configured <wb-avatar> children sharing one code sample: initials="JD" | src="https://i.pravatar.cc/150?u=avatar1" | initials="JD" size="lg" | initials="JD" status="online" | initials="JD" shape="square"
+    <wb-demo> block has 6 differently-configured <wb-avatar> children sharing one code sample: size="xs" | size="sm" | size="md" | size="lg" | size="xl" | size="2xl"
+    <wb-demo> block has 3 differently-configured <wb-avatar> children sharing one code sample: shape="circle" | shape="square" | shape="rounded"
+    <wb-demo> block has 5 differently-configured <wb-avatar> children sharing one code sample: status="" | status="online" | status="offline" | status="busy" | status="away"
+    <wb-demo> block has 40 differently-configured <wb-badge> children sharing one code sample: label="New" | label="Done" variant="success" | label="Warning" variant="warning" | label="Error" variant="error" | label="5" variant="primary" pill | variant="success" dot | label="Tag" variant="info" removable | label="Outline" variant="primary" outline | label="Glass" variant="glass" | label="Premium" variant="gradient" pill icon="Γ¡É" | label="Live" variant="success" pill glow icon="≡ƒƒó" | label="Glass Glow" variant="glass" pill glow | label="default-xs-pill-dot-outline-removable" variant="default" size="xs" pill dot outline removable | label="default-sm-plain" variant="default" size="sm" | label="default-md-pill-outline" variant="default" size="md" pill outline | label="default-lg-dot-removable" variant="default" size="lg" dot removable | label="primary-xs-outline-removable" variant="primary" size="xs" outline removable | label="primary-sm-pill-dot" variant="primary" size="sm" pill dot | label="primary-md-dot-removable" variant="primary" size="md" dot removable | label="primary-lg-pill-outline" variant="primary" size="lg" pill outline | label="secondary-xs-pill-dot" variant="secondary" size="xs" pill dot | label="secondary-sm-outline-removable" variant="secondary" size="sm" outline removable | label="secondary-md-pill-dot-outline-removable" variant="secondary" size="md" pill dot outline removable | label="secondary-lg-pill-dot-outline-removable" variant="secondary" size="lg" pill dot outline removable | label="success-xs-pill-dot-outline-removable" variant="success" size="xs" pill dot outline removable | label="success-sm-plain" variant="success" size="sm" | label="success-md-pill-dot-outline-removable" variant="success" size="md" pill dot outline removable | label="success-lg-pill-dot-outline-removable" variant="success" size="lg" pill dot outline removable | label="warning-xs-pill-dot-outline-removable" variant="warning" size="xs" pill dot outline removable | label="warning-sm-plain" variant="warning" size="sm" | label="warning-md-pill-dot-outline-removable" variant="warning" size="md" pill dot outline removable | label="warning-lg-pill-dot-outline-removable" variant="warning" size="lg" pill dot outline removable | label="error-xs-pill-dot-outline-removable" variant="error" size="xs" pill dot outline removable | label="error-sm-plain" variant="error" size="sm" | label="error-md-pill-dot-outline-removable" variant="error" size="md" pill dot outline removable | label="error-lg-pill-dot-outline-removable" variant="error" size="lg" pill dot outline removable | label="info-xs-pill-dot-outline-removable" variant="info" size="xs" pill dot outline removable | label="info-sm-plain" variant="info" size="sm" | label="info-md-pill-dot-outline-removable" variant="info" size="md" pill dot outline removable | label="info-lg-pill-dot-outline-removable" variant="info" size="lg" pill dot outline removable
+    <wb-demo> block has 9 differently-configured <wb-badge> children sharing one code sample: variant="default" | variant="primary" | variant="secondary" | variant="success" | variant="warning" | variant="error" | variant="info" | variant="glass" | variant="gradient"
+    <wb-demo> block has 4 differently-configured <wb-badge> children sharing one code sample: size="xs" | size="sm" | size="md" | size="lg"
+    <wb-demo> block has 5 differently-configured <wb-badge> children sharing one code sample: pill | dot | outline | removable | glow
+    <wb-demo> block has 4 differently-configured <wb-chip> children sharing one code sample: label="Tag" | label="Tag" dismissible | label="Tag" variant="primary" | label="Tag" icon="≡ƒÅ╖∩╕Å"
+    <wb-demo> block has 6 differently-configured <wb-chip> children sharing one code sample: variant="default" | variant="primary" | variant="success" | variant="warning" | variant="error" | variant="info"
+    <wb-demo> block has 3 differently-configured <wb-chip> children sharing one code sample: size="sm" | size="md" | size="lg"
+    <wb-demo> block has 3 differently-configured <wb-chip> children sharing one code sample: dismissible | disabled | outlined
+    <wb-demo> block has 14 differently-configured <wb-progress> children sharing one code sample: value="0" | value="25" | value="50" | value="75" | value="100" | value="50" label="Loading..." | value="50" show-value | value="50" striped | value="50" variant="success" | value="50" variant="warning" | value="50" variant="error" | value="50" size="sm" | value="50" size="lg" | indeterminate
+    <wb-demo> block has 6 differently-configured <wb-progress> children sharing one code sample: variant="default" | variant="primary" | variant="success" | variant="warning" | variant="error" | variant="info"
+    <wb-demo> block has 5 differently-configured <wb-progress> children sharing one code sample: size="xs" | size="sm" | size="md" | size="lg" | size="xl"
+    <wb-demo> block has 2 differently-configured <wb-progress> children sharing one code sample: show-value | striped
+    <wb-demo> block has 5 differently-configured <wb-rating> children sharing one code sample: value="0" | value="3" | value="5" | value="3.5" half | value="4" readonly
+    <wb-demo> block has 3 differently-configured <wb-rating> children sharing one code sample: size="sm" | size="md" | size="lg"
+    <wb-demo> block has 3 differently-configured <wb-rating> children sharing one code sample: readonly | disabled | half
+    <wb-demo> block has 5 differently-configured <wb-skeleton> children sharing one code sample: variant="text" | variant="text" lines="3" | variant="circle" | variant="rect" height="150px" | variant="card"
+    <wb-demo> block has 5 differently-configured <wb-spinner> children sharing one code sample:  | size="sm" | size="lg" | variant="success" | speed="fast"
+    <wb-demo> block has 3 differently-configured <wb-spinner> children sharing one code sample: size="xs" | size="md" | size="xl"
+    <wb-demo> block has 4 differently-configured <wb-spinner> children sharing one code sample: variant="default" | variant="primary" | variant="warning" | variant="error"
+    <wb-demo> block has 2 differently-configured <wb-spinner> children sharing one code sample: speed="slow" | speed="medium"
+    <wb-demo> block has 9 differently-configured <wb-toast> children sharing one code sample: message="Test" | message="Test" variant="info" | message="Test" variant="success" | message="Test" variant="warning" | message="Test" variant="error" | message="Test" title="Notice" | message="Test" duration="5000" | message="Test" position="bottom-right" | message="Test" action="Undo"
+    <wb-demo> block has 4 differently-configured <wb-toast> children sharing one code sample: variant="info" message="Sample message" | variant="success" message="Sample message" | variant="warning" message="Sample message" | variant="error" message="Sample message"
+    <wb-demo> block has 6 differently-configured <wb-toast> children sharing one code sample: position="top-right" message="Sample message" | position="top-left" message="Sample message" | position="top-center" message="Sample message" | position="bottom-right" message="Sample message" | position="bottom-left" message="Sample message" | position="bottom-center" message="Sample message"
+    <wb-demo> block has 9 differently-configured <wb-tooltip> children sharing one code sample: content="Tooltip text" | content="Tooltip text" position="top" | content="Tooltip text" position="bottom" | content="Tooltip text" position="left" | content="Tooltip text" position="right" | content="Tooltip text" variant="light" | content="Tooltip text" variant="primary" | content="Tooltip text" delay="500"
+    <wb-demo> block has 8 differently-configured <wb-tooltip> children sharing one code sample: position="top" content="Sample content" | position="bottom" content="Sample content" | position="left" content="Sample content" | position="right" content="Sample content" | position="top-start" content="Sample content" | position="top-end" content="Sample content" | position="bottom-start" content="Sample content" | position="bottom-end" content="Sample content"
+    <wb-demo> block has 4 differently-configured <wb-tooltip> children sharing one code sample: variant="default" content="Sample content" | variant="dark" content="Sample content" | variant="light" content="Sample content" | variant="primary" content="Sample content"
+    <wb-demo> block has 4 differently-configured <wb-tooltip> children sharing one code sample: trigger="hover" content="Sample content" | trigger="focus" content="Sample content" | trigger="click" content="Sample content" | trigger="hover-focus" content="Sample content"
+    <wb-demo> block has 4 differently-configured <wb-button> children sharing one code sample: id="btn-top" x-tooltip="Tooltip text" position="top" | id="btn-bottom" x-tooltip="Tooltip text" position="bottom" | id="btn-left" x-tooltip="Tooltip text" position="left" | id="btn-right" x-tooltip="Tooltip text" position="right"
+
+    [2mexpect([22m[31mreceived[39m[2m).[22mtoHaveLength[2m([22m[32mexpected[39m[2m)[22m
+
+    Expected length: [32m0[39m
+    Received length: [31m34[39m
+    Received array:  [31m["<wb-demo> block has 8 differently-configured <wb-alert> children sharing one code sample: variant=\"info\" message=\"Test\" | variant=\"success\" message=\"Test\" | variant=\"warning\" message=\"Test\" | variant=\"error\" message=\"Test\" | variant=\"info\" title=\"Title\" message=\"Test\" | variant=\"info\" message=\"Test\" icon=\"Γä╣∩╕Å\" | variant=\"info\" message=\"Test\" dismissible | variant=\"warning\" title=\"Warning\" message=\"Be careful\" icon=\"ΓÜá∩╕Å\" dismissible", "<wb-demo> block has 4 differently-configured <wb-alert> children sharing one code sample: variant=\"info\" message=\"Sample message\" | variant=\"success\" message=\"Sample message\" | variant=\"warning\" message=\"Sample message\" | variant=\"error\" message=\"Sample message\"", "<wb-demo> block has 5 differently-configured <wb-avatar> children sharing one code sample: initials=\"JD\" | src=\"https://i.pravatar.cc/150?u=avatar1\" | initials=\"JD\" size=\"lg\" | initials=\"JD\" status=\"online\" | initials=\"JD\" shape=\"square\"", "<wb-demo> block has 6 differently-configured <wb-avatar> children sharing one code sample: size=\"xs\" | size=\"sm\" | size=\"md\" | size=\"lg\" | size=\"xl\" | size=\"2xl\"", "<wb-demo> block has 3 differently-configured <wb-avatar> children sharing one code sample: shape=\"circle\" | shape=\"square\" | shape=\"rounded\"", "<wb-demo> block has 5 differently-configured <wb-avatar> children sharing one code sample: status=\"\" | status=\"online\" | status=\"offline\" | status=\"busy\" | status=\"away\"", "<wb-demo> block has 40 differently-configured <wb-badge> children sharing one code sample: label=\"New\" | label=\"Done\" variant=\"success\" | label=\"Warning\" variant=\"warning\" | label=\"Error\" variant=\"error\" | label=\"5\" variant=\"primary\" pill | variant=\"success\" dot | label=\"Tag\" variant=\"info\" removable | label=\"Outline\" variant=\"primary\" outline | label=\"Glass\" variant=\"glass\" | label=\"Premium\" variant=\"gradient\" pill icon=\"Γ¡É\" | label=\"Live\" variant=\"success\" pill glow icon=\"≡ƒƒó\" | label=\"Glass Glow\" variant=\"glass\" pill glow | label=\"default-xs-pill-dot-outline-removable\" variant=\"default\" size=\"xs\" pill dot outline removable | label=\"default-sm-plain\" variant=\"default\" size=\"sm\" | label=\"default-md-pill-outline\" variant=\"default\" size=\"md\" pill outline | label=\"default-lg-dot-removable\" variant=\"default\" size=\"lg\" dot removable | label=\"primary-xs-outline-removable\" variant=\"primary\" size=\"xs\" outline removable | label=\"primary-sm-pill-dot\" variant=\"primary\" size=\"sm\" pill dot | label=\"primary-md-dot-removable\" variant=\"primary\" size=\"md\" dot removable | label=\"primary-lg-pill-outline\" variant=\"primary\" size=\"lg\" pill outline | label=\"secondary-xs-pill-dot\" variant=\"secondary\" size=\"xs\" pill dot | label=\"secondary-sm-outline-removable\" variant=\"secondary\" size=\"sm\" outline removable | label=\"secondary-md-pill-dot-outline-removable\" variant=\"secondary\" size=\"md\" pill dot outline removable | label=\"secondary-lg-pill-dot-outline-removable\" variant=\"secondary\" size=\"lg\" pill dot outline removable | label=\"success-xs-pill-dot-outline-removable\" variant=\"success\" size=\"xs\" pill dot outline removable | label=\"success-sm-plain\" variant=\"success\" size=\"sm\" | label=\"success-md-pill-dot-outline-removable\" variant=\"success\" size=\"md\" pill dot outline removable | label=\"success-lg-pill-dot-outline-removable\" variant=\"success\" size=\"lg\" pill dot outline removable | label=\"warning-xs-pill-dot-outline-removable\" variant=\"warning\" size=\"xs\" pill dot outline removable | label=\"warning-sm-plain\" variant=\"warning\" size=\"sm\" | label=\"warning-md-pill-dot-outline-removable\" variant=\"warning\" size=\"md\" pill dot outline removable | label=\"warning-lg-pill-dot-outline-removable\" variant=\"warning\" size=\"lg\" pill dot outline removable | label=\"error-xs-pill-dot-outline-removable\" variant=\"error\" size=\"xs\" pill dot outline removable | label=\"error-sm-plain\" variant=\"error\" size=\"sm\" | label=\"error-md-pill-dot-outline-removable\" variant=\"error\" size=\"md\" pill dot outline removable | label=\"error-lg-pill-dot-outline-removable\" variant=\"error\" size=\"lg\" pill dot outline removable | label=\"info-xs-pill-dot-outline-removable\" variant=\"info\" size=\"xs\" pill dot outline removable | label=\"info-sm-plain\" variant=\"info\" size=\"sm\" | label=\"info-md-pill-dot-outline-removable\" variant=\"info\" size=\"md\" pill dot outline removable | label=\"info-lg-pill-dot-outline-removable\" variant=\"info\" size=\"lg\" pill dot outline removable", "<wb-demo> block has 9 differently-configured <wb-badge> children sharing one code sample: variant=\"default\" | variant=\"primary\" | variant=\"secondary\" | variant=\"success\" | variant=\"warning\" | variant=\"error\" | variant=\"info\" | variant=\"glass\" | variant=\"gradient\"", "<wb-demo> block has 4 differently-configured <wb-badge> children sharing one code sample: size=\"xs\" | size=\"sm\" | size=\"md\" | size=\"lg\"", "<wb-demo> block has 5 differently-configured <wb-badge> children sharing one code sample: pill | dot | outline | removable | glow", ΓÇª][39m
+
+      85 |       }
+      86 |
+    > 87 |       expect(violations, `${file}:\n${violations.join('\n')}`).toHaveLength(0);
+         |                                                                ^
+      88 |     });
+      89 |   }
+      90 | });
+        at C:\Users\jwpmi\Downloads\AI\wb-starter\tests\compliance\demo-layout-standards.spec.ts:87:64
+
+  5) [compliance] ΓÇ║ tests\compliance\demo-layout-standards.spec.ts:64:5 ΓÇ║ Demo layout standards (┬º2, ┬º13) ΓÇö static scan ΓÇ║ demos\site\forms.html: no permutation-matrix <wb-demo> blocks (┬º2) 
+
+    Error: demos\site\forms.html:
+    <wb-demo> block has 11 differently-configured <wb-button> children sharing one code sample: label="Primary" variant="primary" | label="Secondary" variant="secondary" | label="Success" variant="success" | label="Warning" variant="warning" | label="Error" variant="error" | label="Ghost" variant="ghost" | label="Outline" variant="outline" | label="Small" variant="primary" size="sm" | label="Large" variant="primary" size="lg" | label="Loading..." variant="primary" loading | label="≡ƒÜÇ With Icon" variant="primary" icon="≡ƒÜÇ"
+    <wb-demo> block has 20 differently-configured <wb-button> children sharing one code sample: icon="star" | icon="check" | icon="close" | icon="warning" | icon="info" | icon="error" | icon="heart" | icon="search" | icon="edit" | icon="trash" | icon="plus" | icon="minus" | icon="home" | icon="settings" | icon="download" | icon="upload" | icon="arrow_right" | icon="arrow_left" | icon="copy" | icon="save"
+    <wb-demo> block has 2 differently-configured <wb-button> children sharing one code sample: icon-position="start" | icon-position="end"
+    <wb-demo> block has 8 differently-configured <wb-button> children sharing one code sample: variant="primary" | variant="secondary" | variant="success" | variant="warning" | variant="error" | variant="ghost" | variant="outline" | variant="link"
+    <wb-demo> block has 5 differently-configured <wb-button> children sharing one code sample: size="xs" | size="sm" | size="md" | size="lg" | size="xl"
+    <wb-demo> block has 4 differently-configured <wb-button> children sharing one code sample: disabled | loading | full-width | icon-only
+    <wb-demo> block has 7 differently-configured <wb-checkbox> children sharing one code sample: label="Default checkbox" | label="Checked" checked | label="Disabled" disabled | label="Primary" variant="primary" | label="Success variant" variant="success" checked | label="Small checkbox" size="sm" | label="Large checkbox" size="lg"
+    <wb-demo> block has 3 differently-configured <wb-checkbox> children sharing one code sample: size="sm" | size="md" | size="lg"
+    <wb-demo> block has 3 differently-configured <wb-checkbox> children sharing one code sample: variant="default" | variant="primary" | variant="success"
+    <wb-demo> block has 4 differently-configured <wb-checkbox> children sharing one code sample: checked | disabled | indeterminate | required
+    <wb-demo> block has 10 differently-configured <wb-input> children sharing one code sample: label="Text Input" placeholder="Enter text..." | label="Email" input-type="email" placeholder="you@example.com" | label="Password" input-type="password" placeholder="ΓÇóΓÇóΓÇóΓÇóΓÇóΓÇóΓÇóΓÇó" | label="With Helper" placeholder="Type here" helper="This is helper text" | label="Error State" variant="error" error="This field is required" value="" | label="Success State" variant="success" value="Valid input" | label="With Icon" icon="≡ƒöì" placeholder="Search..." clearable | label="Disabled" disabled value="Cannot edit" | label="Small Input" size="sm" placeholder="Small" | label="Large Input" size="lg" placeholder="Large"
+    <wb-demo> block has 10 differently-configured <wb-input> children sharing one code sample: input-type="text" | input-type="email" | input-type="password" | input-type="number" | input-type="tel" | input-type="url" | input-type="search" | input-type="date" | input-type="time" | input-type="datetime-local"
+    <wb-demo> block has 3 differently-configured <wb-input> children sharing one code sample: variant="default" | variant="success" | variant="error"
+    <wb-demo> block has 3 differently-configured <wb-input> children sharing one code sample: size="sm" | size="md" | size="lg"
+    <wb-demo> block has 2 differently-configured <wb-input> children sharing one code sample: icon-position="start" | icon-position="end"
+    <wb-demo> block has 4 differently-configured <wb-input> children sharing one code sample: disabled | readonly | required | clearable
+    <wb-demo> block has 6 differently-configured <wb-search> children sharing one code sample: placeholder="Search..." | placeholder="Search docs..." size="lg" | placeholder="Glass search" variant="glass" | placeholder="Minimal" variant="minimal" | placeholder="Instant search" instant | placeholder="Loading..." loading
+    <wb-demo> block has 3 differently-configured <wb-search> children sharing one code sample: size="sm" | size="md" | size="lg"
+    <wb-demo> block has 3 differently-configured <wb-search> children sharing one code sample: variant="default" | variant="glass" | variant="minimal"
+    <wb-demo> block has 3 differently-configured <wb-search> children sharing one code sample: instant | disabled | loading
+    <wb-demo> block has 5 differently-configured <wb-select> children sharing one code sample:  | searchable | clearable | multiple | disabled
+    <wb-demo> block has 3 differently-configured <wb-select> children sharing one code sample: size="sm" | size="md" | size="lg"
+    <wb-demo> block has 3 differently-configured <wb-select> children sharing one code sample: variant="default" | variant="success" | variant="error"
+    <wb-demo> block has 4 differently-configured <wb-switch> children sharing one code sample: label="Test" | label="Test" checked | label="Test" disabled | label="Test" size="lg"
+    <wb-demo> block has 2 differently-configured <wb-switch> children sharing one code sample: label-position="start" | label-position="end"
+    <wb-demo> block has 3 differently-configured <wb-switch> children sharing one code sample: size="sm" | size="md" | size="lg"
+    <wb-demo> block has 3 differently-configured <wb-switch> children sharing one code sample: variant="default" | variant="primary" | variant="success"
+    <wb-demo> block has 2 differently-configured <wb-switch> children sharing one code sample: checked | disabled
+    <wb-demo> block has 5 differently-configured <wb-textarea> children sharing one code sample: placeholder="Enter text..." | rows="5" | max-length="500" show-count | autosize | disabled
+    <wb-demo> block has 4 differently-configured <wb-textarea> children sharing one code sample: resize="none" | resize="vertical" | resize="horizontal" | resize="both"
+    <wb-demo> block has 3 differently-configured <wb-textarea> children sharing one code sample: variant="default" | variant="success" | variant="error"
+    <wb-demo> block has 3 differently-configured <wb-textarea> children sharing one code sample: show-count | readonly | required
+    <wb-demo> block has 6 differently-configured <wb-button> children sharing one code sample: variant="primary" x-ripple | variant="secondary" x-tooltip="Helpful hint" position="top" | variant="success" x-toast message="Saved!" toast-variant="success" | variant="info" x-copy copy-text="Copied from a wb-button!" | variant="warning" x-wobble | variant="ghost" x-tada
+    <wb-demo> block has 3 differently-configured <wb-button> children sharing one code sample: variant="primary" x-ripple x-tooltip="Ripple + tooltip + toast" position="top" x-toast message="Saved!" toast-variant="success" | variant="error" x-ripple x-wobble x-toast message="Deleted" toast-variant="error" | variant="info" x-copy copy-text="npm i wb-starter" x-tooltip="Click to copy the install command" position="bottom" x-ripple
+    <wb-demo> block has 6 differently-configured <button> children sharing one code sample: variant="primary" | variant="secondary" | variant="success" | variant="danger" | variant="warning" | variant="ghost"
+    <wb-demo> block has 3 differently-configured <button> children sharing one code sample: variant="primary" size="sm" | variant="primary" size="md" | variant="primary" size="lg"
+    <wb-demo> block has 3 differently-configured <wb-button> children sharing one code sample: variant="primary" loading | variant="secondary" icon="≡ƒÆ╛" | variant="danger" icon="≡ƒùæ∩╕Å" icon-position="right"
+    <wb-demo> block has 3 differently-configured <wb-switch> children sharing one code sample: label="Notifications" | label="Dark Mode" checked | label="Disabled" disabled
+    <wb-demo> block has 3 differently-configured <wb-rating> children sharing one code sample: value="3" max="5" | value="4.5" max="5" color="gold" | value="2" max="10" icon="Γ¥ñ∩╕Å"
+
+    [2mexpect([22m[31mreceived[39m[2m).[22mtoHaveLength[2m([22m[32mexpected[39m[2m)[22m
+
+    Expected length: [32m0[39m
+    Received length: [31m39[39m
+    Received array:  [31m["<wb-demo> block has 11 differently-configured <wb-button> children sharing one code sample: label=\"Primary\" variant=\"primary\" | label=\"Secondary\" variant=\"secondary\" | label=\"Success\" variant=\"success\" | label=\"Warning\" variant=\"warning\" | label=\"Error\" variant=\"error\" | label=\"Ghost\" variant=\"ghost\" | label=\"Outline\" variant=\"outline\" | label=\"Small\" variant=\"primary\" size=\"sm\" | label=\"Large\" variant=\"primary\" size=\"lg\" | label=\"Loading...\" variant=\"primary\" loading | label=\"≡ƒÜÇ With Icon\" variant=\"primary\" icon=\"≡ƒÜÇ\"", "<wb-demo> block has 20 differently-configured <wb-button> children sharing one code sample: icon=\"star\" | icon=\"check\" | icon=\"close\" | icon=\"warning\" | icon=\"info\" | icon=\"error\" | icon=\"heart\" | icon=\"search\" | icon=\"edit\" | icon=\"trash\" | icon=\"plus\" | icon=\"minus\" | icon=\"home\" | icon=\"settings\" | icon=\"download\" | icon=\"upload\" | icon=\"arrow_right\" | icon=\"arrow_left\" | icon=\"copy\" | icon=\"save\"", "<wb-demo> block has 2 differently-configured <wb-button> children sharing one code sample: icon-position=\"start\" | icon-position=\"end\"", "<wb-demo> block has 8 differently-configured <wb-button> children sharing one code sample: variant=\"primary\" | variant=\"secondary\" | variant=\"success\" | variant=\"warning\" | variant=\"error\" | variant=\"ghost\" | variant=\"outline\" | variant=\"link\"", "<wb-demo> block has 5 differently-configured <wb-button> children sharing one code sample: size=\"xs\" | size=\"sm\" | size=\"md\" | size=\"lg\" | size=\"xl\"", "<wb-demo> block has 4 differently-configured <wb-button> children sharing one code sample: disabled | loading | full-width | icon-only", "<wb-demo> block has 7 differently-configured <wb-checkbox> children sharing one code sample: label=\"Default checkbox\" | label=\"Checked\" checked | label=\"Disabled\" disabled | label=\"Primary\" variant=\"primary\" | label=\"Success variant\" variant=\"success\" checked | label=\"Small checkbox\" size=\"sm\" | label=\"Large checkbox\" size=\"lg\"", "<wb-demo> block has 3 differently-configured <wb-checkbox> children sharing one code sample: size=\"sm\" | size=\"md\" | size=\"lg\"", "<wb-demo> block has 3 differently-configured <wb-checkbox> children sharing one code sample: variant=\"default\" | variant=\"primary\" | variant=\"success\"", "<wb-demo> block has 4 differently-configured <wb-checkbox> children sharing one code sample: checked | disabled | indeterminate | required", ΓÇª][39m
+
+      85 |       }
+      86 |
+    > 87 |       expect(violations, `${file}:\n${violations.join('\n')}`).toHaveLength(0);
+         |                                                                ^
+      88 |     });
+      89 |   }
+      90 | });
+        at C:\Users\jwpmi\Downloads\AI\wb-starter\tests\compliance\demo-layout-standards.spec.ts:87:64
+
+  6) [compliance] ΓÇ║ tests\compliance\demo-layout-standards.spec.ts:64:5 ΓÇ║ Demo layout standards (┬º2, ┬º13) ΓÇö static scan ΓÇ║ demos\site\interactive.html: no permutation-matrix <wb-demo> blocks (┬º2) 
+
+    Error: demos\site\interactive.html:
+    <wb-demo> block has 3 differently-configured <wb-draggable> children sharing one code sample: axis="both" | axis="x" | axis="y"
+    <wb-demo> block has 2 differently-configured <wb-copy> children sharing one code sample: text="Hello World" | text="npm install wb-starter"
+    <wb-demo> block has 2 differently-configured <wb-collapse> children sharing one code sample:  | expanded
+    <wb-demo> block has 2 differently-configured <wb-hero> children sharing one code sample: variant="default" | variant="cosmic"
+
+    [2mexpect([22m[31mreceived[39m[2m).[22mtoHaveLength[2m([22m[32mexpected[39m[2m)[22m
+
+    Expected length: [32m0[39m
+    Received length: [31m4[39m
+    Received array:  [31m["<wb-demo> block has 3 differently-configured <wb-draggable> children sharing one code sample: axis=\"both\" | axis=\"x\" | axis=\"y\"", "<wb-demo> block has 2 differently-configured <wb-copy> children sharing one code sample: text=\"Hello World\" | text=\"npm install wb-starter\"", "<wb-demo> block has 2 differently-configured <wb-collapse> children sharing one code sample:  | expanded", "<wb-demo> block has 2 differently-configured <wb-hero> children sharing one code sample: variant=\"default\" | variant=\"cosmic\""][39m
+
+      85 |       }
+      86 |
+    > 87 |       expect(violations, `${file}:\n${violations.join('\n')}`).toHaveLength(0);
+         |                                                                ^
+      88 |     });
+      89 |   }
+      90 | });
+        at C:\Users\jwpmi\Downloads\AI\wb-starter\tests\compliance\demo-layout-standards.spec.ts:87:64
+
+  7) [compliance] ΓÇ║ tests\compliance\demo-layout-standards.spec.ts:64:5 ΓÇ║ Demo layout standards (┬º2, ┬º13) ΓÇö static scan ΓÇ║ demos\site\layout.html: no permutation-matrix <wb-demo> blocks (┬º2) 
+
+    Error: demos\site\layout.html:
+    <wb-demo> block has 4 differently-configured <wb-header> children sharing one code sample: title="Title" | icon="≡ƒôé" title="Title" | icon="≡ƒÜÇ" title="App" badge="v1.0" | title="Site" sticky
+    <wb-demo> block has 3 differently-configured <wb-footer> children sharing one code sample: copyright="┬⌐ 2025" | brand="Acme" copyright="┬⌐ 2025" | copyright="┬⌐ 2025" sticky
+    <wb-demo> block has 3 differently-configured <wb-navbar> children sharing one code sample: brand="MySite" | brand="MySite" sticky | brand="MySite" variant="dark"
+    <wb-demo> block has 3 differently-configured <wb-navbar> children sharing one code sample: variant="default" | variant="dark" | variant="transparent"
+    <wb-demo> block has 5 differently-configured <wb-tabs> children sharing one code sample: active-tab="0" | active-tab="1" | variant="pills" | variant="underline" | full-width
+    <wb-demo> block has 2 differently-configured <wb-tabs> children sharing one code sample: variant="default" | variant="bordered"
+    <wb-demo> block has 3 differently-configured <wb-tabs> children sharing one code sample: size="sm" | size="md" | size="lg"
+    <wb-demo> block has 3 differently-configured <wb-details> children sharing one code sample: summary="Details" | summary="Details" open | summary="Details" animated
+    <wb-demo> block has 3 differently-configured <wb-details> children sharing one code sample: variant="default" summary="Sample summary" | variant="bordered" summary="Sample summary" | variant="filled" summary="Sample summary"
+    <wb-demo> block has 3 differently-configured <wb-drawer-layout> children sharing one code sample: position="left" | position="right" | collapsed
+    <wb-demo> block has 3 differently-configured <wb-sticky> children sharing one code sample:  | offset="60" | animated
+    <wb-demo> block has 3 differently-configured <wb-timeline> children sharing one code sample: items="Project Kickoff,Design Phase,Development,Testing,Launch" | items="Q1 Planning,Q2 Execution,Q3 Review,Q4 Delivery" | items="Research,Prototype,Build,Ship"
+
+    [2mexpect([22m[31mreceived[39m[2m).[22mtoHaveLength[2m([22m[32mexpected[39m[2m)[22m
+
+    Expected length: [32m0[39m
+    Received length: [31m12[39m
+    Received array:  [31m["<wb-demo> block has 4 differently-configured <wb-header> children sharing one code sample: title=\"Title\" | icon=\"≡ƒôé\" title=\"Title\" | icon=\"≡ƒÜÇ\" title=\"App\" badge=\"v1.0\" | title=\"Site\" sticky", "<wb-demo> block has 3 differently-configured <wb-footer> children sharing one code sample: copyright=\"┬⌐ 2025\" | brand=\"Acme\" copyright=\"┬⌐ 2025\" | copyright=\"┬⌐ 2025\" sticky", "<wb-demo> block has 3 differently-configured <wb-navbar> children sharing one code sample: brand=\"MySite\" | brand=\"MySite\" sticky | brand=\"MySite\" variant=\"dark\"", "<wb-demo> block has 3 differently-configured <wb-navbar> children sharing one code sample: variant=\"default\" | variant=\"dark\" | variant=\"transparent\"", "<wb-demo> block has 5 differently-configured <wb-tabs> children sharing one code sample: active-tab=\"0\" | active-tab=\"1\" | variant=\"pills\" | variant=\"underline\" | full-width", "<wb-demo> block has 2 differently-configured <wb-tabs> children sharing one code sample: variant=\"default\" | variant=\"bordered\"", "<wb-demo> block has 3 differently-configured <wb-tabs> children sharing one code sample: size=\"sm\" | size=\"md\" | size=\"lg\"", "<wb-demo> block has 3 differently-configured <wb-details> children sharing one code sample: summary=\"Details\" | summary=\"Details\" open | summary=\"Details\" animated", "<wb-demo> block has 3 differently-configured <wb-details> children sharing one code sample: variant=\"default\" summary=\"Sample summary\" | variant=\"bordered\" summary=\"Sample summary\" | variant=\"filled\" summary=\"Sample summary\"", "<wb-demo> block has 3 differently-configured <wb-drawer-layout> children sharing one code sample: position=\"left\" | position=\"right\" | collapsed", ΓÇª][39m
+
+      85 |       }
+      86 |
+    > 87 |       expect(violations, `${file}:\n${violations.join('\n')}`).toHaveLength(0);
+         |                                                                ^
+      88 |     });
+      89 |   }
+      90 | });
+        at C:\Users\jwpmi\Downloads\AI\wb-starter\tests\compliance\demo-layout-standards.spec.ts:87:64
+
+  8) [compliance] ΓÇ║ tests\compliance\demo-layout-standards.spec.ts:64:5 ΓÇ║ Demo layout standards (┬º2, ┬º13) ΓÇö static scan ΓÇ║ demos\site\overlays.html: no permutation-matrix <wb-demo> blocks (┬º2) 
+
+    Error: demos\site\overlays.html:
+    <wb-demo> block has 4 differently-configured <wb-dialog> children sharing one code sample: title="Basic Dialog" | title="Large" size="lg" | title="No Close" | title="Centered" variant="centered"
+    <wb-demo> block has 5 differently-configured <wb-dialog> children sharing one code sample: size="sm" | size="md" | size="lg" | size="xl" | size="full"
+    <wb-demo> block has 3 differently-configured <wb-dialog> children sharing one code sample: variant="default" | variant="centered" | variant="fullscreen"
+    <wb-demo> block has 3 differently-configured <wb-drawer> children sharing one code sample: title="Right Drawer" position="right" | title="Left Drawer" position="left" | title="Wide" width="400px"
+    <wb-demo> block has 4 differently-configured <wb-drawer> children sharing one code sample: position="left" | position="right" | position="top" | position="bottom"
+    <wb-demo> block has 3 differently-configured <wb-drawer> children sharing one code sample: variant="default" | variant="overlay" | variant="push"
+    <wb-demo> block has 3 differently-configured <wb-dropdown> children sharing one code sample: position="bottom-start" | position="bottom-end" | trigger="hover"
+    <wb-demo> block has 2 differently-configured <wb-dropdown> children sharing one code sample: position="top-start" | position="top-end"
+
+    [2mexpect([22m[31mreceived[39m[2m).[22mtoHaveLength[2m([22m[32mexpected[39m[2m)[22m
+
+    Expected length: [32m0[39m
+    Received length: [31m8[39m
+    Received array:  [31m["<wb-demo> block has 4 differently-configured <wb-dialog> children sharing one code sample: title=\"Basic Dialog\" | title=\"Large\" size=\"lg\" | title=\"No Close\" | title=\"Centered\" variant=\"centered\"", "<wb-demo> block has 5 differently-configured <wb-dialog> children sharing one code sample: size=\"sm\" | size=\"md\" | size=\"lg\" | size=\"xl\" | size=\"full\"", "<wb-demo> block has 3 differently-configured <wb-dialog> children sharing one code sample: variant=\"default\" | variant=\"centered\" | variant=\"fullscreen\"", "<wb-demo> block has 3 differently-configured <wb-drawer> children sharing one code sample: title=\"Right Drawer\" position=\"right\" | title=\"Left Drawer\" position=\"left\" | title=\"Wide\" width=\"400px\"", "<wb-demo> block has 4 differently-configured <wb-drawer> children sharing one code sample: position=\"left\" | position=\"right\" | position=\"top\" | position=\"bottom\"", "<wb-demo> block has 3 differently-configured <wb-drawer> children sharing one code sample: variant=\"default\" | variant=\"overlay\" | variant=\"push\"", "<wb-demo> block has 3 differently-configured <wb-dropdown> children sharing one code sample: position=\"bottom-start\" | position=\"bottom-end\" | trigger=\"hover\"", "<wb-demo> block has 2 differently-configured <wb-dropdown> children sharing one code sample: position=\"top-start\" | position=\"top-end\""][39m
+
+      85 |       }
+      86 |
+    > 87 |       expect(violations, `${file}:\n${violations.join('\n')}`).toHaveLength(0);
+         |                                                                ^
+      88 |     });
+      89 |   }
+      90 | });
+        at C:\Users\jwpmi\Downloads\AI\wb-starter\tests\compliance\demo-layout-standards.spec.ts:87:64
+
+  9) [compliance] ΓÇ║ tests\compliance\demo-layout-standards.spec.ts:94:5 ΓÇ║ Demo layout standards (┬º13) ΓÇö live spacing ΓÇ║ demos\intellisense-check.html: wb-demo containers/items have >=1rem spacing (┬º13) 
+
+    [31mTest timeout of 30000ms exceeded while setting up "page".[39m
+
+    Error: browserContext.newPage: Test timeout of 30000ms exceeded.
+
+  10) [compliance] ΓÇ║ tests\compliance\demo-layout-standards.spec.ts:160:5 ΓÇ║ Demo layout standards (┬º7) ΓÇö single-item demos are not full width ΓÇ║ demos\frameworks.html: single-item wb-demo blocks shrink to fit their content 
+
+    Error: demos\frameworks.html:
+    wb-demo[0] "Click Me (HTMX)
+        ≡ƒôû
+        Docs: wb-demo": rendered 870px wide but its single child + padding only needs 218px -- stretched to full width instead of shrinking to fit
+
+    [2mexpect([22m[31mreceived[39m[2m).[22mtoHaveLength[2m([22m[32mexpected[39m[2m)[22m
+
+    Expected length: [32m0[39m
+    Received length: [31m1[39m
+    Received array:  [31m["wb-demo[0] \"Click Me (HTMX)[39m
+    [31m    ≡ƒôû[39m
+    [31m    Docs: wb-demo\": rendered 870px wide but its single child + padding only needs 218px -- stretched to full width instead of shrinking to fit"][39m
+
+      190 |       });
+      191 |
+    > 192 |       expect(violations, `${file}:\n${violations.join('\n')}`).toHaveLength(0);
+          |                                                                ^
+      193 |     });
+      194 |   }
+      195 | });
+        at C:\Users\jwpmi\Downloads\AI\wb-starter\tests\compliance\demo-layout-standards.spec.ts:192:64
+
+    Error Context: data\test-results\demo-layout-standards-Demo-4f8b2-shrink-to-fit-their-content-compliance\error-context.md
+
+  11) [compliance] ΓÇ║ tests\compliance\demo-layout-standards.spec.ts:160:5 ΓÇ║ Demo layout standards (┬º7) ΓÇö single-item demos are not full width ΓÇ║ demos\multi-component-demo-generated.html: single-item wb-demo blocks shrink to fit their content 
+
+    Error: demos\multi-component-demo-generated.html:
+    wb-demo[0] "New≡ƒôû
+          12<wb-badge label="New">
+    </w": rendered 250px wide but its single child + padding only needs 79px -- stretched to full width instead of shrinking to fit
+    wb-demo[1] "Done≡ƒôû
+          1234<wb-badge
+      label="Done": rendered 250px wide but its single child + padding only needs 84px -- stretched to full width instead of shrinking to fit
+    wb-demo[2] "Warning≡ƒôû
+          1234<wb-badge
+      label="W": rendered 250px wide but its single child + padding only needs 104px -- stretched to full width instead of shrinking to fit
+    wb-demo[3] "Error≡ƒôû
+          1234<wb-badge
+      label="Err": rendered 244px wide but its single child + padding only needs 81px -- stretched to full width instead of shrinking to fit
+    wb-demo[4] "5≡ƒôû
+          12345<wb-badge
+      label="5"
+      v": rendered 250px wide but its single child + padding only needs 58px -- stretched to full width instead of shrinking to fit
+    wb-demo[5] "≡ƒôû
+          12345<wb-badge
+      label="Badge"
+    ": rendered 250px wide but its single child + padding only needs 40px -- stretched to full width instead of shrinking to fit
+    wb-demo[6] "Tag├ù≡ƒôû
+          12345<wb-badge
+      label="Tag": rendered 227px wide but its single child + padding only needs 111px -- stretched to full width instead of shrinking to fit
+    wb-demo[7] "Outline≡ƒôû
+          12345<wb-badge
+      label="": rendered 250px wide but its single child + padding only needs 97px -- stretched to full width instead of shrinking to fit
+    wb-demo[8] "iInfo messageΓ£ò≡ƒôû
+          12<wb-cardnotific": rendered 341px wide but its single child + padding only needs 238px -- stretched to full width instead of shrinking to fit
+    wb-demo[9] "sSuccessDone!Γ£ò≡ƒôû
+          12345<wb-cardnoti": rendered 280px wide but its single child + padding only needs 209px -- stretched to full width instead of shrinking to fit
+    wb-demo[10] "wWarning!Γ£ò≡ƒôû
+          1234<wb-cardnotificat": rendered 280px wide but its single child + padding only needs 212px -- stretched to full width instead of shrinking to fit
+    wb-demo[11] "eError!Γ£ò≡ƒôû
+          1234<wb-cardnotificatio": rendered 280px wide but its single child + padding only needs 189px -- stretched to full width instead of shrinking to fit
+    wb-demo[12] "≡ƒööNoticeInfoΓ£ò≡ƒôû
+          123456<wb-cardnoti": rendered 280px wide but its single child + padding only needs 202px -- stretched to full width instead of shrinking to fit
+
+    [2mexpect([22m[31mreceived[39m[2m).[22mtoHaveLength[2m([22m[32mexpected[39m[2m)[22m
+
+    Expected length: [32m0[39m
+    Received length: [31m13[39m
+    Received array:  [31m["wb-demo[0] \"New≡ƒôû[39m
+    [31m      12<wb-badge label=\"New\">[39m
+    [31m</w\": rendered 250px wide but its single child + padding only needs 79px -- stretched to full width instead of shrinking to fit", "wb-demo[1] \"Done≡ƒôû[39m
+    [31m      1234<wb-badge[39m
+    [31m  label=\"Done\": rendered 250px wide but its single child + padding only needs 84px -- stretched to full width instead of shrinking to fit", "wb-demo[2] \"Warning≡ƒôû[39m
+    [31m      1234<wb-badge[39m
+    [31m  label=\"W\": rendered 250px wide but its single child + padding only needs 104px -- stretched to full width instead of shrinking to fit", "wb-demo[3] \"Error≡ƒôû[39m
+    [31m      1234<wb-badge[39m
+    [31m  label=\"Err\": rendered 244px wide but its single child + padding only needs 81px -- stretched to full width instead of shrinking to fit", "wb-demo[4] \"5≡ƒôû[39m
+    [31m      12345<wb-badge[39m
+    [31m  label=\"5\"[39m
+    [31m  v\": rendered 250px wide but its single child + padding only needs 58px -- stretched to full width instead of shrinking to fit", "wb-demo[5] \"≡ƒôû[39m
+    [31m      12345<wb-badge[39m
+    [31m  label=\"Badge\"[39m
+    [31m\": rendered 250px wide but its single child + padding only needs 40px -- stretched to full width instead of shrinking to fit", "wb-demo[6] \"Tag├ù≡ƒôû[39m
+    [31m      12345<wb-badge[39m
+    [31m  label=\"Tag\": rendered 227px wide but its single child + padding only needs 111px -- stretched to full width instead of shrinking to fit", "wb-demo[7] \"Outline≡ƒôû[39m
+    [31m      12345<wb-badge[39m
+    [31m  label=\"\": rendered 250px wide but its single child + padding only needs 97px -- stretched to full width instead of shrinking to fit", "wb-demo[8] \"iInfo messageΓ£ò≡ƒôû[39m
+    [31m      12<wb-cardnotific\": rendered 341px wide but its single child + padding only needs 238px -- stretched to full width instead of shrinking to fit", "wb-demo[9] \"sSuccessDone!Γ£ò≡ƒôû[39m
+    [31m      12345<wb-cardnoti\": rendered 280px wide but its single child + padding only needs 209px -- stretched to full width instead of shrinking to fit", ΓÇª][39m
+
+      190 |       });
+      191 |
+    > 192 |       expect(violations, `${file}:\n${violations.join('\n')}`).toHaveLength(0);
+          |                                                                ^
+      193 |     });
+      194 |   }
+      195 | });
+        at C:\Users\jwpmi\Downloads\AI\wb-starter\tests\compliance\demo-layout-standards.spec.ts:192:64
+
+    Error Context: data\test-results\demo-layout-standards-Demo-10d97-shrink-to-fit-their-content-compliance\error-context.md
+
+  12) [compliance] ΓÇ║ tests\compliance\demo-layout-standards.spec.ts:160:5 ΓÇ║ Demo layout standards (┬º7) ΓÇö single-item demos are not full width ΓÇ║ demos\registry-browser.html: single-item wb-demo blocks shrink to fit their content 
+
+    Error: demos\registry-browser.html:
+    wb-demo[0] "New≡ƒôû
+            1234<wb-badge
+      label="New": rendered 262px wide but its single child + padding only needs 79px -- stretched to full width instead of shrinking to fit
+
+    [2mexpect([22m[31mreceived[39m[2m).[22mtoHaveLength[2m([22m[32mexpected[39m[2m)[22m
+
+    Expected length: [32m0[39m
+    Received length: [31m1[39m
+    Received array:  [31m["wb-demo[0] \"New≡ƒôû[39m
+    [31m        1234<wb-badge[39m
+    [31m  label=\"New\": rendered 262px wide but its single child + padding only needs 79px -- stretched to full width instead of shrinking to fit"][39m
+
+      190 |       });
+      191 |
+    > 192 |       expect(violations, `${file}:\n${violations.join('\n')}`).toHaveLength(0);
+          |                                                                ^
+      193 |     });
+      194 |   }
+      195 | });
+        at C:\Users\jwpmi\Downloads\AI\wb-starter\tests\compliance\demo-layout-standards.spec.ts:192:64
+
+    Error Context: data\test-results\demo-layout-standards-Demo-af880-shrink-to-fit-their-content-compliance\error-context.md
+
+  13) [compliance] ΓÇ║ tests\compliance\demo-layout-standards.spec.ts:160:5 ΓÇ║ Demo layout standards (┬º7) ΓÇö single-item demos are not full width ΓÇ║ demos\site\cards.html: single-item wb-demo blocks shrink to fit their content 
+
+    Error: demos\site\cards.html:
+    wb-demo[3] "UI/UX DesignerRonnie R.Creating beautifu": rendered 675px wide but its single child + padding only needs 343px -- stretched to full width instead of shrinking to fit
+    wb-demo[13] "FAQ: How does it work?Click to reveal th": rendered 754px wide but its single child + padding only needs 688px -- stretched to full width instead of shrinking to fit
+    wb-demo[14] "Dashboard WidgetServer StatusΓêÆActive con": rendered 482px wide but its single child + padding only needs 435px -- stretched to full width instead of shrinking to fit
+    wb-demo[16] "Video missing captionsBig Buck BunnySamp": rendered 389px wide but its single child + padding only needs 354px -- stretched to full width instead of shrinking to fit
+    wb-demo[17] "Dana K.Senior UI Engineer at Cielo Vista": rendered 661px wide but its single child + padding only needs 432px -- stretched to full width instead of shrinking to fit
+    wb-demo[55] "iSample messageΓ£ò≡ƒôû
+      <wb-cardnotificatio": rendered 347px wide but its single child + padding only needs 260px -- stretched to full width instead of shrinking to fit
+    wb-demo[69] "Sample titleSample priceAdd to Cart≡ƒôû
+      ": rendered 311px wide but its single child + padding only needs 219px -- stretched to full width instead of shrinking to fit
+
+    [2mexpect([22m[31mreceived[39m[2m).[22mtoHaveLength[2m([22m[32mexpected[39m[2m)[22m
+
+    Expected length: [32m0[39m
+    Received length: [31m7[39m
+    Received array:  [31m["wb-demo[3] \"UI/UX DesignerRonnie R.Creating beautifu\": rendered 675px wide but its single child + padding only needs 343px -- stretched to full width instead of shrinking to fit", "wb-demo[13] \"FAQ: How does it work?Click to reveal th\": rendered 754px wide but its single child + padding only needs 688px -- stretched to full width instead of shrinking to fit", "wb-demo[14] \"Dashboard WidgetServer StatusΓêÆActive con\": rendered 482px wide but its single child + padding only needs 435px -- stretched to full width instead of shrinking to fit", "wb-demo[16] \"Video missing captionsBig Buck BunnySamp\": rendered 389px wide but its single child + padding only needs 354px -- stretched to full width instead of shrinking to fit", "wb-demo[17] \"Dana K.Senior UI Engineer at Cielo Vista\": rendered 661px wide but its single child + padding only needs 432px -- stretched to full width instead of shrinking to fit", "wb-demo[55] \"iSample messageΓ£ò≡ƒôû[39m
+    [31m  <wb-cardnotificatio\": rendered 347px wide but its single child + padding only needs 260px -- stretched to full width instead of shrinking to fit", "wb-demo[69] \"Sample titleSample priceAdd to Cart≡ƒôû[39m
+    [31m  \": rendered 311px wide but its single child + padding only needs 219px -- stretched to full width instead of shrinking to fit"][39m
+
+      190 |       });
+      191 |
+    > 192 |       expect(violations, `${file}:\n${violations.join('\n')}`).toHaveLength(0);
+          |                                                                ^
+      193 |     });
+      194 |   }
+      195 | });
+        at C:\Users\jwpmi\Downloads\AI\wb-starter\tests\compliance\demo-layout-standards.spec.ts:192:64
+
+    Error Context: data\test-results\demo-layout-standards-Demo-aa018-shrink-to-fit-their-content-compliance\error-context.md
+
+  14) [compliance] ΓÇ║ tests\compliance\demo-layout-standards.spec.ts:160:5 ΓÇ║ Demo layout standards (┬º7) ΓÇö single-item demos are not full width ΓÇ║ demos\site\effects.html: single-item wb-demo blocks shrink to fit their content 
+
+    Error: demos\site\effects.html:
+    wb-demo[3] "123<wb-ripple centered>
+      This is exampl": rendered 376px wide but its single child + padding only needs 32px -- stretched to full width instead of shrinking to fit
+
+    [2mexpect([22m[31mreceived[39m[2m).[22mtoHaveLength[2m([22m[32mexpected[39m[2m)[22m
+
+    Expected length: [32m0[39m
+    Received length: [31m1[39m
+    Received array:  [31m["wb-demo[3] \"123<wb-ripple centered>[39m
+    [31m  This is exampl\": rendered 376px wide but its single child + padding only needs 32px -- stretched to full width instead of shrinking to fit"][39m
+
+      190 |       });
+      191 |
+    > 192 |       expect(violations, `${file}:\n${violations.join('\n')}`).toHaveLength(0);
+          |                                                                ^
+      193 |     });
+      194 |   }
+      195 | });
+        at C:\Users\jwpmi\Downloads\AI\wb-starter\tests\compliance\demo-layout-standards.spec.ts:192:64
+
+    Error Context: data\test-results\demo-layout-standards-Demo-0828c-shrink-to-fit-their-content-compliance\error-context.md
+
+  15) [compliance] ΓÇ║ tests\compliance\demo-layout-standards.spec.ts:160:5 ΓÇ║ Demo layout standards (┬º7) ΓÇö single-item demos are not full width ΓÇ║ demos\site\feedback.html: single-item wb-demo blocks shrink to fit their content 
+
+    Error: demos\site\feedback.html:
+    wb-demo[2] "Γä╣∩╕ÅAlertSample message├ù≡ƒôû≡ƒôû
+      12345<wb-al": rendered 368px wide but its single child + padding only needs 267px -- stretched to full width instead of shrinking to fit
+    wb-demo[7] "?≡ƒôû
+      123<wb-avatar bordered>
+      This is ": rendered 376px wide but its single child + padding only needs 72px -- stretched to full width instead of shrinking to fit
+    wb-demo[24] "This is example skeleton content.
+        
+     ": rendered 394px wide but its single child + padding only needs 264px -- stretched to full width instead of shrinking to fit
+    wb-demo[36] "This is example tooltip content.
+        ≡ƒôû
+    ": rendered 385px wide but its single child + padding only needs 252px -- stretched to full width instead of shrinking to fit
+    wb-demo[38] "40%≡ƒôû
+      12345<div
+      x-progressbar
+      valu": rendered 420px wide but its single child + padding only needs 332px -- stretched to full width instead of shrinking to fit
+    wb-demo[39] "80%≡ƒôû
+      123456<div
+      x-progressbar
+      val": rendered 420px wide but its single child + padding only needs 332px -- stretched to full width instead of shrinking to fit
+    wb-demo[40] "Show Notify≡ƒôû
+      123456<button
+      x-notify": rendered 411px wide but its single child + padding only needs 152px -- stretched to full width instead of shrinking to fit
+
+    [2mexpect([22m[31mreceived[39m[2m).[22mtoHaveLength[2m([22m[32mexpected[39m[2m)[22m
+
+    Expected length: [32m0[39m
+    Received length: [31m7[39m
+    Received array:  [31m["wb-demo[2] \"Γä╣∩╕ÅAlertSample message├ù≡ƒôû≡ƒôû[39m
+    [31m  12345<wb-al\": rendered 368px wide but its single child + padding only needs 267px -- stretched to full width instead of shrinking to fit", "wb-demo[7] \"?≡ƒôû[39m
+    [31m  123<wb-avatar bordered>[39m
+    [31m  This is \": rendered 376px wide but its single child + padding only needs 72px -- stretched to full width instead of shrinking to fit", "wb-demo[24] \"This is example skeleton content.┬╖┬╖┬╖┬╖┬╖[39m
+    [31m \": rendered 394px wide but its single child + padding only needs 264px -- stretched to full width instead of shrinking to fit", "wb-demo[36] \"This is example tooltip content.[39m
+    [31m    ≡ƒôû[39m
+    [31m\": rendered 385px wide but its single child + padding only needs 252px -- stretched to full width instead of shrinking to fit", "wb-demo[38] \"40%≡ƒôû[39m
+    [31m  12345<div[39m
+    [31m  x-progressbar[39m
+    [31m  valu\": rendered 420px wide but its single child + padding only needs 332px -- stretched to full width instead of shrinking to fit", "wb-demo[39] \"80%≡ƒôû[39m
+    [31m  123456<div[39m
+    [31m  x-progressbar[39m
+    [31m  val\": rendered 420px wide but its single child + padding only needs 332px -- stretched to full width instead of shrinking to fit", "wb-demo[40] \"Show Notify≡ƒôû[39m
+    [31m  123456<button[39m
+    [31m  x-notify\": rendered 411px wide but its single child + padding only needs 152px -- stretched to full width instead of shrinking to fit"][39m
+
+      190 |       });
+      191 |
+    > 192 |       expect(violations, `${file}:\n${violations.join('\n')}`).toHaveLength(0);
+          |                                                                ^
+      193 |     });
+      194 |   }
+      195 | });
+        at C:\Users\jwpmi\Downloads\AI\wb-starter\tests\compliance\demo-layout-standards.spec.ts:192:64
+
+    Error Context: data\test-results\demo-layout-standards-Demo-7768a-shrink-to-fit-their-content-compliance\error-context.md
+
+  16) [compliance] ΓÇ║ tests\compliance\demo-layout-standards.spec.ts:160:5 ΓÇ║ Demo layout standards (┬º7) ΓÇö single-item demos are not full width ΓÇ║ demos\site\forms.html: single-item wb-demo blocks shrink to fit their content 
+
+    Error: demos\site\forms.html:
+    wb-demo[33] "This is example slider content.
+        
+      1": rendered 376px wide but its single child + padding only needs 243px -- stretched to full width instead of shrinking to fit
+    wb-demo[34] "This is example toggle content.
+        
+      1": rendered 376px wide but its single child + padding only needs 251px -- stretched to full width instead of shrinking to fit
+    wb-demo[37] "Personal Info
+          Name: 
+          Email: ": rendered 315px wide but its single child + padding only needs 281px -- stretched to full width instead of shrinking to fit
+    wb-demo[38] "Advanced Settings (collapsible)
+          AP": rendered 394px wide but its single child + padding only needs 283px -- stretched to full width instead of shrinking to fit
+    wb-demo[39] "Username: 
+          Password: ≡ƒæü∩╕Å
+          Sub": rendered 341px wide but its single child + padding only needs 282px -- stretched to full width instead of shrinking to fit
+    wb-demo[57] "Option 1
+                Option 2
+              ": rendered 192px wide but its single child + padding only needs 105px -- stretched to full width instead of shrinking to fit
+    wb-demo[58] "≡ƒôû
+            12345<input
+      type="text"
+      x": rendered 482px wide but its single child + padding only needs 207px -- stretched to full width instead of shrinking to fit
+    wb-demo[59] "50
+            123456<input
+      type="range"
+     ": rendered 218px wide but its single child + padding only needs 165px -- stretched to full width instead of shrinking to fit
+    wb-demo[60] "75%0100
+            12345678<input
+      type="r": rendered 244px wide but its single child + padding only needs 165px -- stretched to full width instead of shrinking to fit
+    wb-demo[61] "Send Message
+            
+          ≡ƒôû
+        12345": rendered 605px wide but its single child + padding only needs 253px -- stretched to full width instead of shrinking to fit
+
+    [2mexpect([22m[31mreceived[39m[2m).[22mtoHaveLength[2m([22m[32mexpected[39m[2m)[22m
+
+    Expected length: [32m0[39m
+    Received length: [31m10[39m
+    Received array:  [31m["wb-demo[33] \"This is example slider content.┬╖┬╖┬╖┬╖┬╖[39m
+    [31m  1\": rendered 376px wide but its single child + padding only needs 243px -- stretched to full width instead of shrinking to fit", "wb-demo[34] \"This is example toggle content.┬╖┬╖┬╖┬╖┬╖[39m
+    [31m  1\": rendered 376px wide but its single child + padding only needs 251px -- stretched to full width instead of shrinking to fit", "wb-demo[37] \"Personal Info[39m
+    [31m      Name:┬╖[39m
+    [31m      Email: \": rendered 315px wide but its single child + padding only needs 281px -- stretched to full width instead of shrinking to fit", "wb-demo[38] \"Advanced Settings (collapsible)[39m
+    [31m      AP\": rendered 394px wide but its single child + padding only needs 283px -- stretched to full width instead of shrinking to fit", "wb-demo[39] \"Username:┬╖[39m
+    [31m      Password: ≡ƒæü∩╕Å[39m
+    [31m      Sub\": rendered 341px wide but its single child + padding only needs 282px -- stretched to full width instead of shrinking to fit", "wb-demo[57] \"Option 1[39m
+    [31m            Option 2[39m
+    [31m          \": rendered 192px wide but its single child + padding only needs 105px -- stretched to full width instead of shrinking to fit", "wb-demo[58] \"≡ƒôû[39m
+    [31m        12345<input[39m
+    [31m  type=\"text\"[39m
+    [31m  x\": rendered 482px wide but its single child + padding only needs 207px -- stretched to full width instead of shrinking to fit", "wb-demo[59] \"50[39m
+    [31m        123456<input[39m
+    [31m  type=\"range\"[39m
+    [31m \": rendered 218px wide but its single child + padding only needs 165px -- stretched to full width instead of shrinking to fit", "wb-demo[60] \"75%0100[39m
+    [31m        12345678<input[39m
+    [31m  type=\"r\": rendered 244px wide but its single child + padding only needs 165px -- stretched to full width instead of shrinking to fit", "wb-demo[61] \"Send Message┬╖┬╖┬╖┬╖┬╖┬╖┬╖┬╖┬╖[39m
+    [31m      ≡ƒôû[39m
+    [31m    12345\": rendered 605px wide but its single child + padding only needs 253px -- stretched to full width instead of shrinking to fit"][39m
+
+      190 |       });
+      191 |
+    > 192 |       expect(violations, `${file}:\n${violations.join('\n')}`).toHaveLength(0);
+          |                                                                ^
+      193 |     });
+      194 |   }
+      195 | });
+        at C:\Users\jwpmi\Downloads\AI\wb-starter\tests\compliance\demo-layout-standards.spec.ts:192:64
+
+    Error Context: data\test-results\demo-layout-standards-Demo-db719-shrink-to-fit-their-content-compliance\error-context.md
+
+  17) [compliance] ΓÇ║ tests\compliance\demo-layout-standards.spec.ts:160:5 ΓÇ║ Demo layout standards (┬º7) ΓÇö single-item demos are not full width ΓÇ║ demos\site\layout.html: single-item wb-demo blocks shrink to fit their content 
+
+    Error: demos\site\layout.html:
+    wb-demo[1] "≡ƒôû
+      123<wb-header sticky>
+      This is exa": rendered 376px wide but its single child + padding only needs 112px -- stretched to full width instead of shrinking to fit
+    wb-demo[3] "123<wb-footer sticky>
+      This is example ": rendered 376px wide but its single child + padding only needs 96px -- stretched to full width instead of shrinking to fit
+    wb-demo[6] "123<wb-navbar sticky>
+      This is example ": rendered 376px wide but its single child + padding only needs 114px -- stretched to full width instead of shrinking to fit
+    wb-demo[10] "This is example tabs content.
+        ≡ƒôû
+      1": rendered 359px wide but its single child + padding only needs 235px -- stretched to full width instead of shrinking to fit
+    wb-demo[13] "Sample summary
+            Γû╝
+          
+          
+     ": rendered 385px wide but its single child + padding only needs 285px -- stretched to full width instead of shrinking to fit
+    wb-demo[15] "This is example scrollalong content.
+       ": rendered 420px wide but its single child + padding only needs 282px -- stretched to full width instead of shrinking to fit
+
+    [2mexpect([22m[31mreceived[39m[2m).[22mtoHaveLength[2m([22m[32mexpected[39m[2m)[22m
+
+    Expected length: [32m0[39m
+    Received length: [31m6[39m
+    Received array:  [31m["wb-demo[1] \"≡ƒôû[39m
+    [31m  123<wb-header sticky>[39m
+    [31m  This is exa\": rendered 376px wide but its single child + padding only needs 112px -- stretched to full width instead of shrinking to fit", "wb-demo[3] \"123<wb-footer sticky>[39m
+    [31m  This is example \": rendered 376px wide but its single child + padding only needs 96px -- stretched to full width instead of shrinking to fit", "wb-demo[6] \"123<wb-navbar sticky>[39m
+    [31m  This is example \": rendered 376px wide but its single child + padding only needs 114px -- stretched to full width instead of shrinking to fit", "wb-demo[10] \"This is example tabs content.[39m
+    [31m    ≡ƒôû[39m
+    [31m  1\": rendered 359px wide but its single child + padding only needs 235px -- stretched to full width instead of shrinking to fit", "wb-demo[13] \"Sample summary[39m
+    [31m        Γû╝┬╖┬╖┬╖┬╖┬╖┬╖┬╖┬╖┬╖┬╖┬╖┬╖┬╖┬╖[39m
+    [31m \": rendered 385px wide but its single child + padding only needs 285px -- stretched to full width instead of shrinking to fit", "wb-demo[15] \"This is example scrollalong content.[39m
+    [31m   \": rendered 420px wide but its single child + padding only needs 282px -- stretched to full width instead of shrinking to fit"][39m
+
+      190 |       });
+      191 |
+    > 192 |       expect(violations, `${file}:\n${violations.join('\n')}`).toHaveLength(0);
+          |                                                                ^
+      193 |     });
+      194 |   }
+      195 | });
+        at C:\Users\jwpmi\Downloads\AI\wb-starter\tests\compliance\demo-layout-standards.spec.ts:192:64
+
+    Error Context: data\test-results\demo-layout-standards-Demo-3aeaa-shrink-to-fit-their-content-compliance\error-context.md
+
+  18) [compliance] ΓÇ║ tests\compliance\demo-layout-standards.spec.ts:160:5 ΓÇ║ Demo layout standards (┬º7) ΓÇö single-item demos are not full width ΓÇ║ demos\site\overlays.html: single-item wb-demo blocks shrink to fit their content 
+
+    Error: demos\site\overlays.html:
+    wb-demo[8] "Menu Γû╝
+      123<wb-dropdown trigger="click"": rendered 394px wide but its single child + padding only needs 129px -- stretched to full width instead of shrinking to fit
+
+    [2mexpect([22m[31mreceived[39m[2m).[22mtoHaveLength[2m([22m[32mexpected[39m[2m)[22m
+
+    Expected length: [32m0[39m
+    Received length: [31m1[39m
+    Received array:  [31m["wb-demo[8] \"Menu Γû╝[39m
+    [31m  123<wb-dropdown trigger=\"click\"\": rendered 394px wide but its single child + padding only needs 129px -- stretched to full width instead of shrinking to fit"][39m
+
+      190 |       });
+      191 |
+    > 192 |       expect(violations, `${file}:\n${violations.join('\n')}`).toHaveLength(0);
+          |                                                                ^
+      193 |     });
+      194 |   }
+      195 | });
+        at C:\Users\jwpmi\Downloads\AI\wb-starter\tests\compliance\demo-layout-standards.spec.ts:192:64
+
+    Error Context: data\test-results\demo-layout-standards-Demo-ae2cb-shrink-to-fit-their-content-compliance\error-context.md
+
+  19) [compliance] ΓÇ║ tests\compliance\demo-layout-standards.spec.ts:160:5 ΓÇ║ Demo layout standards (┬º7) ΓÇö single-item demos are not full width ΓÇ║ demos\site\shop-now.html: single-item wb-demo blocks shrink to fit their content 
+
+    Error: demos\site\shop-now.html:
+    wb-demo[0] "Bold Print TeeLightweight cotton, vivid ": rendered 570px wide but its single child + padding only needs 466px -- stretched to full width instead of shrinking to fit
+    wb-demo[1] "Linen ShortsBreathable linen blend, rela": rendered 596px wide but its single child + padding only needs 466px -- stretched to full width instead of shrinking to fit
+    wb-demo[2] "Wide Brim HatUPF 50+ sun protection, pac": rendered 570px wide but its single child + padding only needs 466px -- stretched to full width instead of shrinking to fit
+
+    [2mexpect([22m[31mreceived[39m[2m).[22mtoHaveLength[2m([22m[32mexpected[39m[2m)[22m
+
+    Expected length: [32m0[39m
+    Received length: [31m3[39m
+    Received array:  [31m["wb-demo[0] \"Bold Print TeeLightweight cotton, vivid \": rendered 570px wide but its single child + padding only needs 466px -- stretched to full width instead of shrinking to fit", "wb-demo[1] \"Linen ShortsBreathable linen blend, rela\": rendered 596px wide but its single child + padding only needs 466px -- stretched to full width instead of shrinking to fit", "wb-demo[2] \"Wide Brim HatUPF 50+ sun protection, pac\": rendered 570px wide but its single child + padding only needs 466px -- stretched to full width instead of shrinking to fit"][39m
+
+      190 |       });
+      191 |
+    > 192 |       expect(violations, `${file}:\n${violations.join('\n')}`).toHaveLength(0);
+          |                                                                ^
+      193 |     });
+      194 |   }
+      195 | });
+        at C:\Users\jwpmi\Downloads\AI\wb-starter\tests\compliance\demo-layout-standards.spec.ts:192:64
+
+    Error Context: data\test-results\demo-layout-standards-Demo-bdbd7-shrink-to-fit-their-content-compliance\error-context.md
+
+  20) [compliance] ΓÇ║ tests\compliance\demo-layout-standards.spec.ts:219:5 ΓÇ║ Layout standard: no text within 1rem of a content-panel edge ΓÇ║ demos\playground.html: content-panel elements keep >=1rem text padding 
+
+    Error: demos\playground.html:
+    <button class=""> "Submit Application" has 8px padding on its tightest side < 16px
+
+    [2mexpect([22m[31mreceived[39m[2m).[22mtoHaveLength[2m([22m[32mexpected[39m[2m)[22m
+
+    Expected length: [32m0[39m
+    Received length: [31m1[39m
+    Received array:  [31m["<button class=\"\"> \"Submit Application\" has 8px padding on its tightest side < 16px"][39m
+
+      271 |       }, { minPad: MIN_TEXT_EDGE_PX, minW: MIN_PANEL_WIDTH, minH: MIN_PANEL_HEIGHT });
+      272 |
+    > 273 |       expect(violations, `${file}:\n${violations.join('\n')}`).toHaveLength(0);
+          |                                                                ^
+      274 |     });
+      275 |   }
+      276 | });
+        at C:\Users\jwpmi\Downloads\AI\wb-starter\tests\compliance\demo-layout-standards.spec.ts:273:64
+
+    Error Context: data\test-results\demo-layout-standards-Layo-dfb46-ents-keep-1rem-text-padding-compliance\error-context.md
+
+  21) [compliance] ΓÇ║ tests\compliance\demo-layout-standards.spec.ts:219:5 ΓÇ║ Layout standard: no text within 1rem of a content-panel edge ΓÇ║ demos\schema-first-architecture.html: content-panel elements keep >=1rem text padding 
+
+    Error: demos\schema-first-architecture.html:
+    <button class=""> "Schema Valid" has 8px padding on its tightest side < 16px
+    <button class=""> "Schema Valid" has 8px padding on its tightest side < 16px
+    <button class="btn-fake-blue"> "Hallucination (Invalid)" has 8px padding on its tightest side < 16px
+    <th class=""> "Phase" has 8px padding on its tightest side < 16px
+    <th class=""> "Errors Generated" has 8px padding on its tightest side < 16px
+
+    [2mexpect([22m[31mreceived[39m[2m).[22mtoHaveLength[2m([22m[32mexpected[39m[2m)[22m
+
+    Expected length: [32m0[39m
+    Received length: [31m5[39m
+    Received array:  [31m["<button class=\"\"> \"Schema Valid\" has 8px padding on its tightest side < 16px", "<button class=\"\"> \"Schema Valid\" has 8px padding on its tightest side < 16px", "<button class=\"btn-fake-blue\"> \"Hallucination (Invalid)\" has 8px padding on its tightest side < 16px", "<th class=\"\"> \"Phase\" has 8px padding on its tightest side < 16px", "<th class=\"\"> \"Errors Generated\" has 8px padding on its tightest side < 16px"][39m
+
+      271 |       }, { minPad: MIN_TEXT_EDGE_PX, minW: MIN_PANEL_WIDTH, minH: MIN_PANEL_HEIGHT });
+      272 |
+    > 273 |       expect(violations, `${file}:\n${violations.join('\n')}`).toHaveLength(0);
+          |                                                                ^
+      274 |     });
+      275 |   }
+      276 | });
+        at C:\Users\jwpmi\Downloads\AI\wb-starter\tests\compliance\demo-layout-standards.spec.ts:273:64
+
+    Error Context: data\test-results\demo-layout-standards-Layo-c4531-ents-keep-1rem-text-padding-compliance\error-context.md
+
+  22) [compliance] ΓÇ║ tests\compliance\demo-layout-standards.spec.ts:219:5 ΓÇ║ Layout standard: no text within 1rem of a content-panel edge ΓÇ║ demos\site\cards.html: content-panel elements keep >=1rem text padding 
+
+    Error: demos\site\cards.html:
+    <button class="wb-card__btn wb-card__btn--secondary"> "Discard" has 10px padding on its tightest side < 16px
+    <button class="wb-card__btn wb-card__btn--primary"> "Save Now" has 10px padding on its tightest side < 16px
+    <button class="wb-card__btn wb-card__btn--secondary"> "Go Back" has 10px padding on its tightest side < 16px
+    <button class="wb-card__btn wb-card__btn--primary"> "Confirm Delete" has 10px padding on its tightest side < 16px
+    <a class="wb-card__cta"> "Get Started" has 14px padding on its tightest side < 16px
+    <a class="wb-card__cta"> "Upgrade" has 14px padding on its tightest side < 16px
+    <a class="wb-card__cta"> "Contact Sales" has 14px padding on its tightest side < 16px
+    <button class="wb-card__product-cta"> "Add to Cart" has 12px padding on its tightest side < 16px
+    <button class="wb-card__product-cta"> "Add to Cart" has 12px padding on its tightest side < 16px
+    <button class="wb-card__product-cta"> "Add to Cart" has 12px padding on its tightest side < 16px
+    <a class="wb-portfolio__cta"> "View Full Profile" has 14px padding on its tightest side < 16px
+    <button class="wb-card__btn wb-card__btn--primary"> "OK" has 10px padding on its tightest side < 16px
+    <button class="wb-card__btn wb-card__btn--primary"> "Submit" has 10px padding on its tightest side < 16px
+    <button class="wb-card__btn wb-card__btn--secondary"> "No" has 10px padding on its tightest side < 16px
+    <button class="wb-card__btn wb-card__btn--primary"> "Yes" has 10px padding on its tightest side < 16px
+    <button class="wb-card__btn wb-card__btn--primary"> "Sample primary" has 10px padding on its tightest side < 16px
+    <button class="wb-card__btn wb-card__btn--primary"> "Sample primary" has 10px padding on its tightest side < 16px
+    <button class="wb-card__btn wb-card__btn--primary"> "Sample primary" has 10px padding on its tightest side < 16px
+    <span class="wb-portfolio__avatar wb-portfolio__avatar-placeholder"> "JS" has 0px padding on its tightest side < 16px
+    <span class="wb-portfolio__avatar wb-portfolio__avatar-placeholder"> "SC" has 0px padding on its tightest side < 16px
+    <span class="wb-portfolio__avatar wb-portfolio__avatar-placeholder"> "AR" has 0px padding on its tightest side < 16px
+    <span class="wb-portfolio__avatar wb-portfolio__avatar-placeholder"> "SN" has 0px padding on its tightest side < 16px
+    <span class="wb-portfolio__avatar wb-portfolio__avatar-placeholder"> "SN" has 0px padding on its tightest side < 16px
+    <span class="wb-portfolio__avatar wb-portfolio__avatar-placeholder"> "SN" has 0px padding on its tightest side < 16px
+    <span class="wb-portfolio__avatar wb-portfolio__avatar-placeholder"> "SN" has 0px padding on its tightest side < 16px
+    <span class="wb-portfolio__avatar wb-portfolio__avatar-placeholder"> "SN" has 0px padding on its tightest side < 16px
+    <span class="wb-portfolio__avatar wb-portfolio__avatar-placeholder"> "SN" has 0px padding on its tightest side < 16px
+    <span class="wb-portfolio__avatar wb-portfolio__avatar-placeholder"> "SN" has 0px padding on its tightest side < 16px
+    <span class="wb-portfolio__avatar wb-portfolio__avatar-placeholder"> "SN" has 0px padding on its tightest side < 16px
+    <span class="wb-portfolio__avatar wb-portfolio__avatar-placeholder"> "SN" has 0px padding on its tightest side < 16px
+    <span class="wb-portfolio__avatar wb-portfolio__avatar-placeholder"> "SN" has 0px padding on its tightest side < 16px
+    <span class="wb-portfolio__avatar wb-portfolio__avatar-placeholder"> "SN" has 0px padding on its tightest side < 16px
+    <a class="wb-card__cta"> "Get Started" has 14px padding on its tightest side < 16px
+    <a class="wb-card__cta"> "Get Started" has 14px padding on its tightest side < 16px
+    <a class="wb-card__cta"> "Get Started" has 14px padding on its tightest side < 16px
+    <a class="wb-card__cta"> "Get Started" has 14px padding on its tightest side < 16px
+    <a class="wb-card__cta"> "Subscribe Now" has 14px padding on its tightest side < 16px
+    <a class="wb-card__cta"> "Get Started" has 14px padding on its tightest side < 16px
+    <a class="wb-card__cta"> "Get Started" has 14px padding on its tightest side < 16px
+    <a class="wb-card__cta"> "Get Started" has 14px padding on its tightest side < 16px
+    <a class="wb-card__cta"> "Get Started" has 14px padding on its tightest side < 16px
+    <a class="wb-card__cta"> "Get Started" has 14px padding on its tightest side < 16px
+    <a class="wb-card__cta"> "Get Started" has 14px padding on its tightest side < 16px
+    <button class="wb-card__product-cta"> "Add to Cart" has 12px padding on its tightest side < 16px
+    <button class="wb-card__product-cta"> "Add to Cart" has 12px padding on its tightest side < 16px
+    <button class="wb-card__product-cta"> "Add to Cart" has 12px padding on its tightest side < 16px
+    <button class="wb-card__product-cta"> "Add to Cart" has 12px padding on its tightest side < 16px
+    <button class="wb-card__product-cta"> "Add to Cart" has 12px padding on its tightest side < 16px
+    <button class="wb-card__product-cta"> "Add to Cart" has 12px padding on its tightest side < 16px
+    <button class="wb-card__product-cta"> "Add to Cart" has 12px padding on its tightest side < 16px
+    <button class="wb-card__product-cta"> "Add to Cart" has 12px padding on its tightest side < 16px
+    <button class="wb-card__product-cta"> "Add to Cart" has 12px padding on its tightest side < 16px
+    <button class="wb-card__product-cta"> "Add to Cart" has 12px padding on its tightest side < 16px
+
+    [2mexpect([22m[31mreceived[39m[2m).[22mtoHaveLength[2m([22m[32mexpected[39m[2m)[22m
+
+    Expected length: [32m0[39m
+    Received length: [31m53[39m
+    Received array:  [31m["<button class=\"wb-card__btn wb-card__btn--secondary\"> \"Discard\" has 10px padding on its tightest side < 16px", "<button class=\"wb-card__btn wb-card__btn--primary\"> \"Save Now\" has 10px padding on its tightest side < 16px", "<button class=\"wb-card__btn wb-card__btn--secondary\"> \"Go Back\" has 10px padding on its tightest side < 16px", "<button class=\"wb-card__btn wb-card__btn--primary\"> \"Confirm Delete\" has 10px padding on its tightest side < 16px", "<a class=\"wb-card__cta\"> \"Get Started\" has 14px padding on its tightest side < 16px", "<a class=\"wb-card__cta\"> \"Upgrade\" has 14px padding on its tightest side < 16px", "<a class=\"wb-card__cta\"> \"Contact Sales\" has 14px padding on its tightest side < 16px", "<button class=\"wb-card__product-cta\"> \"Add to Cart\" has 12px padding on its tightest side < 16px", "<button class=\"wb-card__product-cta\"> \"Add to Cart\" has 12px padding on its tightest side < 16px", "<button class=\"wb-card__product-cta\"> \"Add to Cart\" has 12px padding on its tightest side < 16px", ΓÇª][39m
+
+      271 |       }, { minPad: MIN_TEXT_EDGE_PX, minW: MIN_PANEL_WIDTH, minH: MIN_PANEL_HEIGHT });
+      272 |
+    > 273 |       expect(violations, `${file}:\n${violations.join('\n')}`).toHaveLength(0);
+          |                                                                ^
+      274 |     });
+      275 |   }
+      276 | });
+        at C:\Users\jwpmi\Downloads\AI\wb-starter\tests\compliance\demo-layout-standards.spec.ts:273:64
+
+    Error Context: data\test-results\demo-layout-standards-Layo-7ac72-ents-keep-1rem-text-padding-compliance\error-context.md
+
+  23) [compliance] ΓÇ║ tests\compliance\demo-layout-standards.spec.ts:219:5 ΓÇ║ Layout standard: no text within 1rem of a content-panel edge ΓÇ║ demos\site\content.html: content-panel elements keep >=1rem text padding 
+
+    Error: demos\site\content.html:
+    <button class="wb-button"> "Open Modal Dialog" has 8px padding on its tightest side < 16px
+
+    [2mexpect([22m[31mreceived[39m[2m).[22mtoHaveLength[2m([22m[32mexpected[39m[2m)[22m
+
+    Expected length: [32m0[39m
+    Received length: [31m1[39m
+    Received array:  [31m["<button class=\"wb-button\"> \"Open Modal Dialog\" has 8px padding on its tightest side < 16px"][39m
+
+      271 |       }, { minPad: MIN_TEXT_EDGE_PX, minW: MIN_PANEL_WIDTH, minH: MIN_PANEL_HEIGHT });
+      272 |
+    > 273 |       expect(violations, `${file}:\n${violations.join('\n')}`).toHaveLength(0);
+          |                                                                ^
+      274 |     });
+      275 |   }
+      276 | });
+        at C:\Users\jwpmi\Downloads\AI\wb-starter\tests\compliance\demo-layout-standards.spec.ts:273:64
+
+    Error Context: data\test-results\demo-layout-standards-Layo-3a817-ents-keep-1rem-text-padding-compliance\error-context.md
+
+  24) [compliance] ΓÇ║ tests\compliance\demo-layout-standards.spec.ts:219:5 ΓÇ║ Layout standard: no text within 1rem of a content-panel edge ΓÇ║ demos\site\feedback.html: content-panel elements keep >=1rem text padding 
+
+    Error: demos\site\feedback.html:
+    <wb-badge class="wb-badge--primary wb-badge--lg wb-badge--pill wb-badge--outline"> "This is example badge content." has 6px padding on its tightest side < 16px
+    <wb-badge class="wb-badge--lg wb-badge--default"> "This is example badge content." has 6px padding on its tightest side < 16px
+
+    [2mexpect([22m[31mreceived[39m[2m).[22mtoHaveLength[2m([22m[32mexpected[39m[2m)[22m
+
+    Expected length: [32m0[39m
+    Received length: [31m2[39m
+    Received array:  [31m["<wb-badge class=\"wb-badge--primary wb-badge--lg wb-badge--pill wb-badge--outline\"> \"This is example badge content.\" has 6px padding on its tightest side < 16px", "<wb-badge class=\"wb-badge--lg wb-badge--default\"> \"This is example badge content.\" has 6px padding on its tightest side < 16px"][39m
+
+      271 |       }, { minPad: MIN_TEXT_EDGE_PX, minW: MIN_PANEL_WIDTH, minH: MIN_PANEL_HEIGHT });
+      272 |
+    > 273 |       expect(violations, `${file}:\n${violations.join('\n')}`).toHaveLength(0);
+          |                                                                ^
+      274 |     });
+      275 |   }
+      276 | });
+        at C:\Users\jwpmi\Downloads\AI\wb-starter\tests\compliance\demo-layout-standards.spec.ts:273:64
+
+    Error Context: data\test-results\demo-layout-standards-Layo-d0054-ents-keep-1rem-text-padding-compliance\error-context.md
+
+  25) [compliance] ΓÇ║ tests\compliance\demo-layout-standards.spec.ts:219:5 ΓÇ║ Layout standard: no text within 1rem of a content-panel edge ΓÇ║ demos\site\forms.html: content-panel elements keep >=1rem text padding 
+
+    Error: demos\site\forms.html:
+    <wb-select class=""> "This is example select content." has 8px padding on its tightest side < 16px
+    <wb-select class=""> "This is example select content." has 8px padding on its tightest side < 16px
+    <wb-select class=""> "This is example select content." has 8px padding on its tightest side < 16px
+    <wb-select class=""> "This is example select content." has 8px padding on its tightest side < 16px
+    <wb-select class=""> "This is example select content." has 8px padding on its tightest side < 16px
+    <wb-select class=""> "This is example select content." has 8px padding on its tightest side < 16px
+    <wb-select class=""> "This is example select content." has 8px padding on its tightest side < 16px
+    <wb-select class=""> "This is example select content." has 8px padding on its tightest side < 16px
+    <wb-select class=""> "This is example select content." has 8px padding on its tightest side < 16px
+    <wb-select class=""> "This is example select content." has 8px padding on its tightest side < 16px
+    <wb-select class=""> "This is example select content." has 8px padding on its tightest side < 16px
+    <wb-select class=""> "This is example select content." has 8px padding on its tightest side < 16px
+    <textarea class=""> "Type here and watch me grow!" has 2px padding on its tightest side < 16px
+    <button class="wb-button wb-button--primary"> "Send Message" has 8px padding on its tightest side < 16px
+
+    [2mexpect([22m[31mreceived[39m[2m).[22mtoHaveLength[2m([22m[32mexpected[39m[2m)[22m
+
+    Expected length: [32m0[39m
+    Received length: [31m14[39m
+    Received array:  [31m["<wb-select class=\"\"> \"This is example select content.\" has 8px padding on its tightest side < 16px", "<wb-select class=\"\"> \"This is example select content.\" has 8px padding on its tightest side < 16px", "<wb-select class=\"\"> \"This is example select content.\" has 8px padding on its tightest side < 16px", "<wb-select class=\"\"> \"This is example select content.\" has 8px padding on its tightest side < 16px", "<wb-select class=\"\"> \"This is example select content.\" has 8px padding on its tightest side < 16px", "<wb-select class=\"\"> \"This is example select content.\" has 8px padding on its tightest side < 16px", "<wb-select class=\"\"> \"This is example select content.\" has 8px padding on its tightest side < 16px", "<wb-select class=\"\"> \"This is example select content.\" has 8px padding on its tightest side < 16px", "<wb-select class=\"\"> \"This is example select content.\" has 8px padding on its tightest side < 16px", "<wb-select class=\"\"> \"This is example select content.\" has 8px padding on its tightest side < 16px", ΓÇª][39m
+
+      271 |       }, { minPad: MIN_TEXT_EDGE_PX, minW: MIN_PANEL_WIDTH, minH: MIN_PANEL_HEIGHT });
+      272 |
+    > 273 |       expect(violations, `${file}:\n${violations.join('\n')}`).toHaveLength(0);
+          |                                                                ^
+      274 |     });
+      275 |   }
+      276 | });
+        at C:\Users\jwpmi\Downloads\AI\wb-starter\tests\compliance\demo-layout-standards.spec.ts:273:64
+
+    Error Context: data\test-results\demo-layout-standards-Layo-9451d-ents-keep-1rem-text-padding-compliance\error-context.md
+
+  26) [compliance] ΓÇ║ tests\compliance\demo-layout-standards.spec.ts:219:5 ΓÇ║ Layout standard: no text within 1rem of a content-panel edge ΓÇ║ demos\site\interactive.html: content-panel elements keep >=1rem text padding 
+
+    Error: demos\site\interactive.html:
+    <div class="wb-collapse__content"> "This is example collapse content." has 12px padding on its tightest side < 16px
+    <button class=""> "Toggle Class≡ƒôû" has 8px padding on its tightest side < 16px
+    <code class="x-code"> "wb-themecontrol" has 4.2px padding on its tightest side < 16px
+    <code class="x-code"> "x-darkmode" has 4.2px padding on its tightest side < 16px
+
+    [2mexpect([22m[31mreceived[39m[2m).[22mtoHaveLength[2m([22m[32mexpected[39m[2m)[22m
+
+    Expected length: [32m0[39m
+    Received length: [31m4[39m
+    Received array:  [31m["<div class=\"wb-collapse__content\"> \"This is example collapse content.\" has 12px padding on its tightest side < 16px", "<button class=\"\"> \"Toggle Class≡ƒôû\" has 8px padding on its tightest side < 16px", "<code class=\"x-code\"> \"wb-themecontrol\" has 4.2px padding on its tightest side < 16px", "<code class=\"x-code\"> \"x-darkmode\" has 4.2px padding on its tightest side < 16px"][39m
+
+      271 |       }, { minPad: MIN_TEXT_EDGE_PX, minW: MIN_PANEL_WIDTH, minH: MIN_PANEL_HEIGHT });
+      272 |
+    > 273 |       expect(violations, `${file}:\n${violations.join('\n')}`).toHaveLength(0);
+          |                                                                ^
+      274 |     });
+      275 |   }
+      276 | });
+        at C:\Users\jwpmi\Downloads\AI\wb-starter\tests\compliance\demo-layout-standards.spec.ts:273:64
+
+    Error Context: data\test-results\demo-layout-standards-Layo-1aa84-ents-keep-1rem-text-padding-compliance\error-context.md
+
+  27) [compliance] ΓÇ║ tests\compliance\demo-layout-standards.spec.ts:219:5 ΓÇ║ Layout standard: no text within 1rem of a content-panel edge ΓÇ║ demos\site\shop-now.html: content-panel elements keep >=1rem text padding 
+
+    Error: demos\site\shop-now.html:
+    <button class="wb-card__product-cta"> "Add to Cart" has 12px padding on its tightest side < 16px
+    <button class="wb-card__product-cta"> "Add to Cart" has 12px padding on its tightest side < 16px
+
+    [2mexpect([22m[31mreceived[39m[2m).[22mtoHaveLength[2m([22m[32mexpected[39m[2m)[22m
+
+    Expected length: [32m0[39m
+    Received length: [31m2[39m
+    Received array:  [31m["<button class=\"wb-card__product-cta\"> \"Add to Cart\" has 12px padding on its tightest side < 16px", "<button class=\"wb-card__product-cta\"> \"Add to Cart\" has 12px padding on its tightest side < 16px"][39m
+
+      271 |       }, { minPad: MIN_TEXT_EDGE_PX, minW: MIN_PANEL_WIDTH, minH: MIN_PANEL_HEIGHT });
+      272 |
+    > 273 |       expect(violations, `${file}:\n${violations.join('\n')}`).toHaveLength(0);
+          |                                                                ^
+      274 |     });
+      275 |   }
+      276 | });
+        at C:\Users\jwpmi\Downloads\AI\wb-starter\tests\compliance\demo-layout-standards.spec.ts:273:64
+
+    Error Context: data\test-results\demo-layout-standards-Layo-f8d17-ents-keep-1rem-text-padding-compliance\error-context.md
+
+  28) [compliance] ΓÇ║ tests\compliance\demo-layout-standards.spec.ts:219:5 ΓÇ║ Layout standard: no text within 1rem of a content-panel edge ΓÇ║ demos\wb-views-demo.html: content-panel elements keep >=1rem text padding 
+
+    Error: demos\wb-views-demo.html:
+    <th class=""> "View Name" has 8px padding on its tightest side < 16px
+    <th class=""> "Has Hyphen?" has 8px padding on its tightest side < 16px
+    <th class=""> "Custom Tag" has 8px padding on its tightest side < 16px
+    <td class=""> "No" has 8px padding on its tightest side < 16px
+    <td class=""> "<wb-toolbar> (auto-prefixed)" has 8px padding on its tightest side < 16px
+    <td class=""> "No" has 8px padding on its tightest side < 16px
+    <td class=""> "<wb-card> (auto-prefixed)" has 8px padding on its tightest side < 16px
+    <td class=""> "Yes" has 8px padding on its tightest side < 16px
+    <td class=""> "<alert-box> (as-is)" has 8px padding on its tightest side < 16px
+    <td class=""> "Yes" has 8px padding on its tightest side < 16px
+    <td class=""> "<stat-tile> (as-is)" has 8px padding on its tightest side < 16px
+    <td class=""> "Yes" has 8px padding on its tightest side < 16px
+    <td class=""> "<nav-link> (as-is)" has 8px padding on its tightest side < 16px
+
+    [2mexpect([22m[31mreceived[39m[2m).[22mtoHaveLength[2m([22m[32mexpected[39m[2m)[22m
+
+    Expected length: [32m0[39m
+    Received length: [31m13[39m
+    Received array:  [31m["<th class=\"\"> \"View Name\" has 8px padding on its tightest side < 16px", "<th class=\"\"> \"Has Hyphen?\" has 8px padding on its tightest side < 16px", "<th class=\"\"> \"Custom Tag\" has 8px padding on its tightest side < 16px", "<td class=\"\"> \"No\" has 8px padding on its tightest side < 16px", "<td class=\"\"> \"<wb-toolbar> (auto-prefixed)\" has 8px padding on its tightest side < 16px", "<td class=\"\"> \"No\" has 8px padding on its tightest side < 16px", "<td class=\"\"> \"<wb-card> (auto-prefixed)\" has 8px padding on its tightest side < 16px", "<td class=\"\"> \"Yes\" has 8px padding on its tightest side < 16px", "<td class=\"\"> \"<alert-box> (as-is)\" has 8px padding on its tightest side < 16px", "<td class=\"\"> \"Yes\" has 8px padding on its tightest side < 16px", ΓÇª][39m
+
+      271 |       }, { minPad: MIN_TEXT_EDGE_PX, minW: MIN_PANEL_WIDTH, minH: MIN_PANEL_HEIGHT });
+      272 |
+    > 273 |       expect(violations, `${file}:\n${violations.join('\n')}`).toHaveLength(0);
+          |                                                                ^
+      274 |     });
+      275 |   }
+      276 | });
+        at C:\Users\jwpmi\Downloads\AI\wb-starter\tests\compliance\demo-layout-standards.spec.ts:273:64
+
+    Error Context: data\test-results\demo-layout-standards-Layo-a91c3-ents-keep-1rem-text-padding-compliance\error-context.md
+
+  29) [compliance] ΓÇ║ tests\compliance\demo-layout-standards.spec.ts:219:5 ΓÇ║ Layout standard: no text within 1rem of a content-panel edge ΓÇ║ pages\ai-permutation-test.html: content-panel elements keep >=1rem text padding 
+
+    Error: pages\ai-permutation-test.html:
+    <th class=""> "Status" has 12px padding on its tightest side < 16px
+    <th class=""> "Source" has 12px padding on its tightest side < 16px
+    <th class=""> "Description" has 12px padding on its tightest side < 16px
+    <th class=""> "Checks" has 12px padding on its tightest side < 16px
+    <th class=""> "Failed" has 12px padding on its tightest side < 16px
+    <th class=""> "Details" has 12px padding on its tightest side < 16px
+
+    [2mexpect([22m[31mreceived[39m[2m).[22mtoHaveLength[2m([22m[32mexpected[39m[2m)[22m
+
+    Expected length: [32m0[39m
+    Received length: [31m6[39m
+    Received array:  [31m["<th class=\"\"> \"Status\" has 12px padding on its tightest side < 16px", "<th class=\"\"> \"Source\" has 12px padding on its tightest side < 16px", "<th class=\"\"> \"Description\" has 12px padding on its tightest side < 16px", "<th class=\"\"> \"Checks\" has 12px padding on its tightest side < 16px", "<th class=\"\"> \"Failed\" has 12px padding on its tightest side < 16px", "<th class=\"\"> \"Details\" has 12px padding on its tightest side < 16px"][39m
+
+      271 |       }, { minPad: MIN_TEXT_EDGE_PX, minW: MIN_PANEL_WIDTH, minH: MIN_PANEL_HEIGHT });
+      272 |
+    > 273 |       expect(violations, `${file}:\n${violations.join('\n')}`).toHaveLength(0);
+          |                                                                ^
+      274 |     });
+      275 |   }
+      276 | });
+        at C:\Users\jwpmi\Downloads\AI\wb-starter\tests\compliance\demo-layout-standards.spec.ts:273:64
+
+    Error Context: data\test-results\demo-layout-standards-Layo-8cc98-ents-keep-1rem-text-padding-compliance\error-context.md
+
+  30) [compliance] ΓÇ║ tests\compliance\demo-layout-standards.spec.ts:219:5 ΓÇ║ Layout standard: no text within 1rem of a content-panel edge ΓÇ║ pages\behaviors.html: content-panel elements keep >=1rem text padding 
+
+    Error: page.evaluate: Execution context was destroyed, most likely because of a navigation
+
+      222 |       await page.waitForTimeout(800);
+      223 |
+    > 224 |       const violations = await page.evaluate(({ minPad, minW, minH }) => {
+          |                                     ^
+      225 |         const problems: string[] = [];
+      226 |         const all = Array.from(document.querySelectorAll('body *')) as HTMLElement[];
+      227 |
+        at C:\Users\jwpmi\Downloads\AI\wb-starter\tests\compliance\demo-layout-standards.spec.ts:224:37
+
+    Error Context: data\test-results\demo-layout-standards-Layo-46def-ents-keep-1rem-text-padding-compliance\error-context.md
+
+  31) [compliance] ΓÇ║ tests\compliance\demo-layout-standards.spec.ts:219:5 ΓÇ║ Layout standard: no text within 1rem of a content-panel edge ΓÇ║ pages\components.html: content-panel elements keep >=1rem text padding 
+
+    Error: pages\components.html:
+    <a class="wb-card__cta"> "Start Free" has 14px padding on its tightest side < 16px
+    <a class="wb-card__cta"> "Go Pro" has 14px padding on its tightest side < 16px
+    <a class="wb-card__cta"> "Contact Us" has 14px padding on its tightest side < 16px
+    <button class="wb-card__product-cta"> "Add to Cart" has 12px padding on its tightest side < 16px
+    <button class="wb-card__product-cta"> "Add to Cart" has 12px padding on its tightest side < 16px
+    <button class="wb-card__product-cta"> "Add to Cart" has 12px padding on its tightest side < 16px
+    <button class="wb-card__product-cta"> "Add to Cart" has 12px padding on its tightest side < 16px
+    <button class="wb-btn"> "Γä╣∩╕Å Info Alert" has 8px padding on its tightest side < 16px
+    <button class="wb-btn"> "Γ£à Success Alert" has 8px padding on its tightest side < 16px
+    <button class="wb-btn"> "ΓÜá∩╕Å Warning Alert" has 8px padding on its tightest side < 16px
+    <button class="wb-btn"> "Γ¥î Error Alert" has 8px padding on its tightest side < 16px
+    <wb-modal class="wb-btn wb-modal-trigger wb-dialog-trigger"> "Open Modal" has 8px padding on its tightest side < 16px
+    <button class="wb-btn wb-popover-trigger"> "Show Popover" has 8px padding on its tightest side < 16px
+    <button class="wb-btn"> "≡ƒôï Copy Text" has 8px padding on its tightest side < 16px
+    <button class="wb-btn wb-fullscreen"> "Γ¢╢ Fullscreen" has 8px padding on its tightest side < 16px
+    <div class="time-display wb-countdown"> "146d 21:15:03" has 8px padding on its tightest side < 16px
+    <button class="wb-btn"> "≡ƒîÖ Toggle Dark Mode" has 8px padding on its tightest side < 16px
+
+    [2mexpect([22m[31mreceived[39m[2m).[22mtoHaveLength[2m([22m[32mexpected[39m[2m)[22m
+
+    Expected length: [32m0[39m
+    Received length: [31m17[39m
+    Received array:  [31m["<a class=\"wb-card__cta\"> \"Start Free\" has 14px padding on its tightest side < 16px", "<a class=\"wb-card__cta\"> \"Go Pro\" has 14px padding on its tightest side < 16px", "<a class=\"wb-card__cta\"> \"Contact Us\" has 14px padding on its tightest side < 16px", "<button class=\"wb-card__product-cta\"> \"Add to Cart\" has 12px padding on its tightest side < 16px", "<button class=\"wb-card__product-cta\"> \"Add to Cart\" has 12px padding on its tightest side < 16px", "<button class=\"wb-card__product-cta\"> \"Add to Cart\" has 12px padding on its tightest side < 16px", "<button class=\"wb-card__product-cta\"> \"Add to Cart\" has 12px padding on its tightest side < 16px", "<button class=\"wb-btn\"> \"Γä╣∩╕Å Info Alert\" has 8px padding on its tightest side < 16px", "<button class=\"wb-btn\"> \"Γ£à Success Alert\" has 8px padding on its tightest side < 16px", "<button class=\"wb-btn\"> \"ΓÜá∩╕Å Warning Alert\" has 8px padding on its tightest side < 16px", ΓÇª][39m
+
+      271 |       }, { minPad: MIN_TEXT_EDGE_PX, minW: MIN_PANEL_WIDTH, minH: MIN_PANEL_HEIGHT });
+      272 |
+    > 273 |       expect(violations, `${file}:\n${violations.join('\n')}`).toHaveLength(0);
+          |                                                                ^
+      274 |     });
+      275 |   }
+      276 | });
+        at C:\Users\jwpmi\Downloads\AI\wb-starter\tests\compliance\demo-layout-standards.spec.ts:273:64
+
+    Error Context: data\test-results\demo-layout-standards-Layo-15286-ents-keep-1rem-text-padding-compliance\error-context.md
+
+  32) [compliance] ΓÇ║ tests\compliance\demo-layout-standards.spec.ts:219:5 ΓÇ║ Layout standard: no text within 1rem of a content-panel edge ΓÇ║ pages\contact.html: content-panel elements keep >=1rem text padding 
+
+    Error: pages\contact.html:
+    <button class="wb-ripple"> "Send Message" has 8px padding on its tightest side < 16px
+
+    [2mexpect([22m[31mreceived[39m[2m).[22mtoHaveLength[2m([22m[32mexpected[39m[2m)[22m
+
+    Expected length: [32m0[39m
+    Received length: [31m1[39m
+    Received array:  [31m["<button class=\"wb-ripple\"> \"Send Message\" has 8px padding on its tightest side < 16px"][39m
+
+      271 |       }, { minPad: MIN_TEXT_EDGE_PX, minW: MIN_PANEL_WIDTH, minH: MIN_PANEL_HEIGHT });
+      272 |
+    > 273 |       expect(violations, `${file}:\n${violations.join('\n')}`).toHaveLength(0);
+          |                                                                ^
+      274 |     });
+      275 |   }
+      276 | });
+        at C:\Users\jwpmi\Downloads\AI\wb-starter\tests\compliance\demo-layout-standards.spec.ts:273:64
+
+    Error Context: data\test-results\demo-layout-standards-Layo-d0097-ents-keep-1rem-text-padding-compliance\error-context.md
+
+  33) [compliance] ΓÇ║ tests\compliance\demo-layout-standards.spec.ts:219:5 ΓÇ║ Layout standard: no text within 1rem of a content-panel edge ΓÇ║ pages\demos.html: content-panel elements keep >=1rem text padding 
+
+    Error: pages\demos.html:
+    <div class="demos-forced-dark-demo"> "Forced Dark Mode ΓÇö stays dark regardless" has 0px padding on its tightest side < 16px
+
+    [2mexpect([22m[31mreceived[39m[2m).[22mtoHaveLength[2m([22m[32mexpected[39m[2m)[22m
+
+    Expected length: [32m0[39m
+    Received length: [31m1[39m
+    Received array:  [31m["<div class=\"demos-forced-dark-demo\"> \"Forced Dark Mode ΓÇö stays dark regardless\" has 0px padding on its tightest side < 16px"][39m
+
+      271 |       }, { minPad: MIN_TEXT_EDGE_PX, minW: MIN_PANEL_WIDTH, minH: MIN_PANEL_HEIGHT });
+      272 |
+    > 273 |       expect(violations, `${file}:\n${violations.join('\n')}`).toHaveLength(0);
+          |                                                                ^
+      274 |     });
+      275 |   }
+      276 | });
+        at C:\Users\jwpmi\Downloads\AI\wb-starter\tests\compliance\demo-layout-standards.spec.ts:273:64
+
+    Error Context: data\test-results\demo-layout-standards-Layo-6e5cd-ents-keep-1rem-text-padding-compliance\error-context.md
+
+  34) [compliance] ΓÇ║ tests\compliance\demo-layout-standards.spec.ts:219:5 ΓÇ║ Layout standard: no text within 1rem of a content-panel edge ΓÇ║ pages\themes.html: content-panel elements keep >=1rem text padding 
+
+    Error: pages\themes.html:
+    <code class="x-code"> "<html data-theme="ocean">
+      ...
+    </html>" has 2.4px padding on its tightest side < 16px
+    <code class="x-code"> "// Switch theme programmatically
+    documen" has 2.4px padding on its tightest side < 16px
+    <code class="x-code"> ".my-component {
+      background: var(--bg-s" has 2.4px padding on its tightest side < 16px
+
+    [2mexpect([22m[31mreceived[39m[2m).[22mtoHaveLength[2m([22m[32mexpected[39m[2m)[22m
+
+    Expected length: [32m0[39m
+    Received length: [31m3[39m
+    Received array:  [31m["<code class=\"x-code\"> \"<html data-theme=\"ocean\">[39m
+    [31m  ...[39m
+    [31m</html>\" has 2.4px padding on its tightest side < 16px", "<code class=\"x-code\"> \"// Switch theme programmatically[39m
+    [31mdocumen\" has 2.4px padding on its tightest side < 16px", "<code class=\"x-code\"> \".my-component {[39m
+    [31m  background: var(--bg-s\" has 2.4px padding on its tightest side < 16px"][39m
+
+      271 |       }, { minPad: MIN_TEXT_EDGE_PX, minW: MIN_PANEL_WIDTH, minH: MIN_PANEL_HEIGHT });
+      272 |
+    > 273 |       expect(violations, `${file}:\n${violations.join('\n')}`).toHaveLength(0);
+          |                                                                ^
+      274 |     });
+      275 |   }
+      276 | });
+        at C:\Users\jwpmi\Downloads\AI\wb-starter\tests\compliance\demo-layout-standards.spec.ts:273:64
+
+    Error Context: data\test-results\demo-layout-standards-Layo-1a2c2-ents-keep-1rem-text-padding-compliance\error-context.md
+
+  35) [compliance] ΓÇ║ tests\compliance\demo-layout-standards.spec.ts:219:5 ΓÇ║ Layout standard: no text within 1rem of a content-panel edge ΓÇ║ pages\whats-new.html: content-panel elements keep >=1rem text padding 
+
+    Error: pages\whats-new.html:
+    <code class="x-code"> "<input type="checkbox">" has 2.4px padding on its tightest side < 16px
+
+    [2mexpect([22m[31mreceived[39m[2m).[22mtoHaveLength[2m([22m[32mexpected[39m[2m)[22m
+
+    Expected length: [32m0[39m
+    Received length: [31m1[39m
+    Received array:  [31m["<code class=\"x-code\"> \"<input type=\"checkbox\">\" has 2.4px padding on its tightest side < 16px"][39m
+
+      271 |       }, { minPad: MIN_TEXT_EDGE_PX, minW: MIN_PANEL_WIDTH, minH: MIN_PANEL_HEIGHT });
+      272 |
+    > 273 |       expect(violations, `${file}:\n${violations.join('\n')}`).toHaveLength(0);
+          |                                                                ^
+      274 |     });
+      275 |   }
+      276 | });
+        at C:\Users\jwpmi\Downloads\AI\wb-starter\tests\compliance\demo-layout-standards.spec.ts:273:64
+
+    Error Context: data\test-results\demo-layout-standards-Layo-02d50-ents-keep-1rem-text-padding-compliance\error-context.md
+
+  35 failed
+    [compliance] ΓÇ║ tests\compliance\demo-layout-standards.spec.ts:64:5 ΓÇ║ Demo layout standards (┬º2, ┬º13) ΓÇö static scan ΓÇ║ demos\site\cards.html: no permutation-matrix <wb-demo> blocks (┬º2) 
+    [compliance] ΓÇ║ tests\compliance\demo-layout-standards.spec.ts:64:5 ΓÇ║ Demo layout standards (┬º2, ┬º13) ΓÇö static scan ΓÇ║ demos\site\content.html: no permutation-matrix <wb-demo> blocks (┬º2) 
+    [compliance] ΓÇ║ tests\compliance\demo-layout-standards.spec.ts:64:5 ΓÇ║ Demo layout standards (┬º2, ┬º13) ΓÇö static scan ΓÇ║ demos\site\effects.html: no permutation-matrix <wb-demo> blocks (┬º2) 
+    [compliance] ΓÇ║ tests\compliance\demo-layout-standards.spec.ts:64:5 ΓÇ║ Demo layout standards (┬º2, ┬º13) ΓÇö static scan ΓÇ║ demos\site\feedback.html: no permutation-matrix <wb-demo> blocks (┬º2) 
+    [compliance] ΓÇ║ tests\compliance\demo-layout-standards.spec.ts:64:5 ΓÇ║ Demo layout standards (┬º2, ┬º13) ΓÇö static scan ΓÇ║ demos\site\forms.html: no permutation-matrix <wb-demo> blocks (┬º2) 
+    [compliance] ΓÇ║ tests\compliance\demo-layout-standards.spec.ts:64:5 ΓÇ║ Demo layout standards (┬º2, ┬º13) ΓÇö static scan ΓÇ║ demos\site\interactive.html: no permutation-matrix <wb-demo> blocks (┬º2) 
+    [compliance] ΓÇ║ tests\compliance\demo-layout-standards.spec.ts:64:5 ΓÇ║ Demo layout standards (┬º2, ┬º13) ΓÇö static scan ΓÇ║ demos\site\layout.html: no permutation-matrix <wb-demo> blocks (┬º2) 
+    [compliance] ΓÇ║ tests\compliance\demo-layout-standards.spec.ts:64:5 ΓÇ║ Demo layout standards (┬º2, ┬º13) ΓÇö static scan ΓÇ║ demos\site\overlays.html: no permutation-matrix <wb-demo> blocks (┬º2) 
+    [compliance] ΓÇ║ tests\compliance\demo-layout-standards.spec.ts:94:5 ΓÇ║ Demo layout standards (┬º13) ΓÇö live spacing ΓÇ║ demos\intellisense-check.html: wb-demo containers/items have >=1rem spacing (┬º13) 
+    [compliance] ΓÇ║ tests\compliance\demo-layout-standards.spec.ts:160:5 ΓÇ║ Demo layout standards (┬º7) ΓÇö single-item demos are not full width ΓÇ║ demos\frameworks.html: single-item wb-demo blocks shrink to fit their content 
+    [compliance] ΓÇ║ tests\compliance\demo-layout-standards.spec.ts:160:5 ΓÇ║ Demo layout standards (┬º7) ΓÇö single-item demos are not full width ΓÇ║ demos\multi-component-demo-generated.html: single-item wb-demo blocks shrink to fit their content 
+    [compliance] ΓÇ║ tests\compliance\demo-layout-standards.spec.ts:160:5 ΓÇ║ Demo layout standards (┬º7) ΓÇö single-item demos are not full width ΓÇ║ demos\registry-browser.html: single-item wb-demo blocks shrink to fit their content 
+    [compliance] ΓÇ║ tests\compliance\demo-layout-standards.spec.ts:160:5 ΓÇ║ Demo layout standards (┬º7) ΓÇö single-item demos are not full width ΓÇ║ demos\site\cards.html: single-item wb-demo blocks shrink to fit their content 
+    [compliance] ΓÇ║ tests\compliance\demo-layout-standards.spec.ts:160:5 ΓÇ║ Demo layout standards (┬º7) ΓÇö single-item demos are not full width ΓÇ║ demos\site\effects.html: single-item wb-demo blocks shrink to fit their content 
+    [compliance] ΓÇ║ tests\compliance\demo-layout-standards.spec.ts:160:5 ΓÇ║ Demo layout standards (┬º7) ΓÇö single-item demos are not full width ΓÇ║ demos\site\feedback.html: single-item wb-demo blocks shrink to fit their content 
+    [compliance] ΓÇ║ tests\compliance\demo-layout-standards.spec.ts:160:5 ΓÇ║ Demo layout standards (┬º7) ΓÇö single-item demos are not full width ΓÇ║ demos\site\forms.html: single-item wb-demo blocks shrink to fit their content 
+    [compliance] ΓÇ║ tests\compliance\demo-layout-standards.spec.ts:160:5 ΓÇ║ Demo layout standards (┬º7) ΓÇö single-item demos are not full width ΓÇ║ demos\site\layout.html: single-item wb-demo blocks shrink to fit their content 
+    [compliance] ΓÇ║ tests\compliance\demo-layout-standards.spec.ts:160:5 ΓÇ║ Demo layout standards (┬º7) ΓÇö single-item demos are not full width ΓÇ║ demos\site\overlays.html: single-item wb-demo blocks shrink to fit their content 
+    [compliance] ΓÇ║ tests\compliance\demo-layout-standards.spec.ts:160:5 ΓÇ║ Demo layout standards (┬º7) ΓÇö single-item demos are not full width ΓÇ║ demos\site\shop-now.html: single-item wb-demo blocks shrink to fit their content 
+    [compliance] ΓÇ║ tests\compliance\demo-layout-standards.spec.ts:219:5 ΓÇ║ Layout standard: no text within 1rem of a content-panel edge ΓÇ║ demos\playground.html: content-panel elements keep >=1rem text padding 
+    [compliance] ΓÇ║ tests\compliance\demo-layout-standards.spec.ts:219:5 ΓÇ║ Layout standard: no text within 1rem of a content-panel edge ΓÇ║ demos\schema-first-architecture.html: content-panel elements keep >=1rem text padding 
+    [compliance] ΓÇ║ tests\compliance\demo-layout-standards.spec.ts:219:5 ΓÇ║ Layout standard: no text within 1rem of a content-panel edge ΓÇ║ demos\site\cards.html: content-panel elements keep >=1rem text padding 
+    [compliance] ΓÇ║ tests\compliance\demo-layout-standards.spec.ts:219:5 ΓÇ║ Layout standard: no text within 1rem of a content-panel edge ΓÇ║ demos\site\content.html: content-panel elements keep >=1rem text padding 
+    [compliance] ΓÇ║ tests\compliance\demo-layout-standards.spec.ts:219:5 ΓÇ║ Layout standard: no text within 1rem of a content-panel edge ΓÇ║ demos\site\feedback.html: content-panel elements keep >=1rem text padding 
+    [compliance] ΓÇ║ tests\compliance\demo-layout-standards.spec.ts:219:5 ΓÇ║ Layout standard: no text within 1rem of a content-panel edge ΓÇ║ demos\site\forms.html: content-panel elements keep >=1rem text padding 
+    [compliance] ΓÇ║ tests\compliance\demo-layout-standards.spec.ts:219:5 ΓÇ║ Layout standard: no text within 1rem of a content-panel edge ΓÇ║ demos\site\interactive.html: content-panel elements keep >=1rem text padding 
+    [compliance] ΓÇ║ tests\compliance\demo-layout-standards.spec.ts:219:5 ΓÇ║ Layout standard: no text within 1rem of a content-panel edge ΓÇ║ demos\site\shop-now.html: content-panel elements keep >=1rem text padding 
+    [compliance] ΓÇ║ tests\compliance\demo-layout-standards.spec.ts:219:5 ΓÇ║ Layout standard: no text within 1rem of a content-panel edge ΓÇ║ demos\wb-views-demo.html: content-panel elements keep >=1rem text padding 
+    [compliance] ΓÇ║ tests\compliance\demo-layout-standards.spec.ts:219:5 ΓÇ║ Layout standard: no text within 1rem of a content-panel edge ΓÇ║ pages\ai-permutation-test.html: content-panel elements keep >=1rem text padding 
+    [compliance] ΓÇ║ tests\compliance\demo-layout-standards.spec.ts:219:5 ΓÇ║ Layout standard: no text within 1rem of a content-panel edge ΓÇ║ pages\behaviors.html: content-panel elements keep >=1rem text padding 
+    [compliance] ΓÇ║ tests\compliance\demo-layout-standards.spec.ts:219:5 ΓÇ║ Layout standard: no text within 1rem of a content-panel edge ΓÇ║ pages\components.html: content-panel elements keep >=1rem text padding 
+    [compliance] ΓÇ║ tests\compliance\demo-layout-standards.spec.ts:219:5 ΓÇ║ Layout standard: no text within 1rem of a content-panel edge ΓÇ║ pages\contact.html: content-panel elements keep >=1rem text padding 
+    [compliance] ΓÇ║ tests\compliance\demo-layout-standards.spec.ts:219:5 ΓÇ║ Layout standard: no text within 1rem of a content-panel edge ΓÇ║ pages\demos.html: content-panel elements keep >=1rem text padding 
+    [compliance] ΓÇ║ tests\compliance\demo-layout-standards.spec.ts:219:5 ΓÇ║ Layout standard: no text within 1rem of a content-panel edge ΓÇ║ pages\themes.html: content-panel elements keep >=1rem text padding 
+    [compliance] ΓÇ║ tests\compliance\demo-layout-standards.spec.ts:219:5 ΓÇ║ Layout standard: no text within 1rem of a content-panel edge ΓÇ║ pages\whats-new.html: content-panel elements keep >=1rem text padding 
+  62 skipped
+  95 passed (5.3m)

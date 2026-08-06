@@ -1,0 +1,20 @@
+{
+  "state": "passed",
+  "mode": "single",
+  "specFile": "tests/regression/dropdown-position-and-content.spec.ts",
+  "startedAt": "2026-07-31T00:50:26.400Z",
+  "updatedAt": "2026-07-31T00:50:36.842Z",
+  "command": "npx playwright test --workers=8 tests/regression/dropdown-position-and-content.spec.ts",
+  "pid": 36004,
+  "passed": 2,
+  "failed": 0,
+  "skipped": 0,
+  "total": 2,
+  "currentFile": "tests\\regression\\dropdown-position-and-content.spec.ts",
+  "output": "\nRunning 2 tests using 2 workers\n\n  ok 2 [regression] › tests\\regression\\dropdown-position-and-content.spec.ts:59:3 › demos/site/overlays.html: dropdowns actually work › bottom-start/bottom-end/top-start/top-end each position the menu distinctly (2.7s)\n  ok 1 [regression] › tests\\regression\\dropdown-position-and-content.spec.ts:31:3 › demos/site/overlays.html: dropdowns actually work › every dropdown menu has real, visible items when opened (not an empty sliver) (2.9s)\n\n════════════════════════════════════════════════════════════\n  WB TEST RESULTS\n════════════════════════════════════════════════════════════\n  Total: 2 tests in 6.1s\n  ✓ Passed:  2\n  ✗ Failed:  0\n\n  By Project:\n    ✓ regression: 2/2 passed\n════════════════════════════════════════════════════════════\n\n\n  2 passed (6.4s)\n",
+  "errors": "",
+  "failures": [],
+  "completedAt": "2026-07-31T00:50:36.842Z",
+  "duration": "10.44s",
+  "exitCode": 0
+}

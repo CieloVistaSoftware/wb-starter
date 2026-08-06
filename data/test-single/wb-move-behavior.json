@@ -1,0 +1,20 @@
+{
+  "state": "passed",
+  "mode": "single",
+  "specFile": "tests/regression/wb-move-behavior.spec.ts",
+  "startedAt": "2026-07-30T22:00:02.493Z",
+  "updatedAt": "2026-07-30T22:00:16.868Z",
+  "command": "npx playwright test --workers=8 tests/regression/wb-move-behavior.spec.ts",
+  "pid": 44684,
+  "passed": 3,
+  "failed": 0,
+  "skipped": 0,
+  "total": 3,
+  "currentFile": "tests\\regression\\wb-move-behavior.spec.ts",
+  "output": "\nRunning 3 tests using 3 workers\n\n  ok 2 [regression] › tests\\regression\\wb-move-behavior.spec.ts:26:3 › wb-move behavior (#344) › <wb-move> resolves without \"Unknown behavior\" and gets the baseClass (1.2s)\n  ok 1 [regression] › tests\\regression\\wb-move-behavior.spec.ts:87:3 › wb-move behavior (#344) › movedown does not throw ReferenceError when clicked (#344) (2.1s)\n  ok 3 [regression] › tests\\regression\\wb-move-behavior.spec.ts:55:3 › wb-move behavior (#344) › moveright/moveleft swap adjacent grid items without throwing (#344) (2.2s)\n\n════════════════════════════════════════════════════════════\n  WB TEST RESULTS\n════════════════════════════════════════════════════════════\n  Total: 3 tests in 7.2s\n  ✓ Passed:  3\n  ✗ Failed:  0\n\n  By Project:\n    ✓ regression: 3/3 passed\n════════════════════════════════════════════════════════════\n\n\n  3 passed (7.6s)\n",
+  "errors": "",
+  "failures": [],
+  "completedAt": "2026-07-30T22:00:16.868Z",
+  "duration": "14.38s",
+  "exitCode": 0
+}

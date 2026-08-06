@@ -1,0 +1,20 @@
+{
+  "state": "passed",
+  "mode": "single",
+  "specFile": "tests/compliance/font-size-no-px.spec.ts",
+  "startedAt": "2026-07-31T02:37:08.510Z",
+  "updatedAt": "2026-07-31T02:37:20.097Z",
+  "command": "npx playwright test --workers=8 tests/compliance/font-size-no-px.spec.ts",
+  "pid": 45672,
+  "passed": 1,
+  "failed": 0,
+  "skipped": 0,
+  "total": 1,
+  "currentFile": "tests\\compliance\\font-size-no-px.spec.ts",
+  "output": "\nRunning 1 test using 1 worker\n\n  ok 1 [compliance] › tests\\compliance\\font-size-no-px.spec.ts:57:1 › no literal font-size:Npx anywhere in src/pages/demos/docs (#294) (126ms)\n\n════════════════════════════════════════════════════════════\n  WB TEST RESULTS\n════════════════════════════════════════════════════════════\n  Total: 1 tests in 2.9s\n  ✓ Passed:  1\n  ✗ Failed:  0\n\n  By Project:\n    ✓ compliance: 1/1 passed\n════════════════════════════════════════════════════════════\n\n\n  1 passed (3.6s)\n",
+  "errors": "",
+  "failures": [],
+  "completedAt": "2026-07-31T02:37:20.097Z",
+  "duration": "11.59s",
+  "exitCode": 0
+}

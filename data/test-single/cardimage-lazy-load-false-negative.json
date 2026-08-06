@@ -1,0 +1,20 @@
+{
+  "state": "passed",
+  "mode": "single",
+  "specFile": "tests/regression/cardimage-lazy-load-false-negative.spec.ts",
+  "startedAt": "2026-08-04T01:30:10.151Z",
+  "updatedAt": "2026-08-04T01:32:20.621Z",
+  "command": "npx playwright test --workers=8 tests/regression/cardimage-lazy-load-false-negative.spec.ts",
+  "pid": 10576,
+  "passed": 1,
+  "failed": 0,
+  "skipped": 0,
+  "total": 1,
+  "currentFile": "tests\\regression\\cardimage-lazy-load-false-negative.spec.ts",
+  "output": "\nRunning 1 test using 1 worker\n\n  ok 1 [regression] › tests\\regression\\cardimage-lazy-load-false-negative.spec.ts:27:3 › cardimage image actually loads, not just has a src attribute (#cardimage-lazy) › a valid src does not get permanently marked \"Image unavailable\" for staying off-screen (35.0s)\n\n════════════════════════════════════════════════════════════\n  WB TEST RESULTS\n════════════════════════════════════════════════════════════\n  Total: 1 tests in 67.9s\n  ✓ Passed:  1\n  ✗ Failed:  0\n\n  By Project:\n    ✓ regression: 1/1 passed\n════════════════════════════════════════════════════════════\n\n\n  1 passed (1.3m)\n",
+  "errors": "",
+  "failures": [],
+  "completedAt": "2026-08-04T01:32:20.621Z",
+  "duration": "130.47s",
+  "exitCode": 0
+}

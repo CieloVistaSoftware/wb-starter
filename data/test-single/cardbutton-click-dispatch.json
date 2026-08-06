@@ -1,0 +1,20 @@
+{
+  "state": "passed",
+  "mode": "single",
+  "specFile": "tests/regression/cardbutton-click-dispatch.spec.ts",
+  "startedAt": "2026-07-30T22:57:39.017Z",
+  "updatedAt": "2026-07-30T22:58:30.536Z",
+  "command": "npx playwright test --workers=8 tests/regression/cardbutton-click-dispatch.spec.ts",
+  "pid": 35712,
+  "passed": 2,
+  "failed": 0,
+  "skipped": 0,
+  "total": 2,
+  "currentFile": "tests\\regression\\cardbutton-click-dispatch.spec.ts",
+  "output": "\nRunning 2 tests using 2 workers\n\n  ok 1 [regression] › tests\\regression\\cardbutton-click-dispatch.spec.ts:36:3 › wb-cardbutton click dispatch (cards demo page) › a button with primaryHref renders as a real link, not a dead button (3.1s)\n  ok 2 [regression] › tests\\regression\\cardbutton-click-dispatch.spec.ts:14:3 › wb-cardbutton click dispatch (cards demo page) › clicking a primary/secondary button with no href dispatches a bubbling event (6.0s)\n\n════════════════════════════════════════════════════════════\n  WB TEST RESULTS\n════════════════════════════════════════════════════════════\n  Total: 2 tests in 39.3s\n  ✓ Passed:  2\n  ✗ Failed:  0\n\n  By Project:\n    ✓ regression: 2/2 passed\n════════════════════════════════════════════════════════════\n\n\n  2 passed (42.5s)\n",
+  "errors": "",
+  "failures": [],
+  "completedAt": "2026-07-30T22:58:30.536Z",
+  "duration": "51.52s",
+  "exitCode": 0
+}

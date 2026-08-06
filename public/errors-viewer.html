@@ -247,10 +247,12 @@
 
     function renderErrors(data) {
       const container = document.getElementById('error-container');
-      const errors = data.errors || [];
+      const errors = (data.errors || []).filter(error =>
+        !error.url?.includes('legacy-syntax-check.html')
+      );
       
       // Update stats
-      document.getElementById('total-count').textContent = data.count || errors.length;
+      document.getElementById('total-count').textContent = errors.length;
       document.getElementById('last-updated').textContent = data.lastUpdated ? new Date(data.lastUpdated).toLocaleTimeString() : '-';
       
       // Most errors are plain window.onerror/unhandledrejection captures

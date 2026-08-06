@@ -22,13 +22,25 @@
   background-color: var(--bg-color);
 }
 
-/* Native button reset — browsers override inherited colors with OS defaults */
+/* Native button reset — browsers override inherited colors with OS defaults.
+   #486: vertical padding floored at 1rem (16px) -- Standard §13 requires
+   >=1rem padding on every side of a button's text, and buttons aren't on
+   the standard's "compact atom" exclusion list (badges/pills/kbd/etc). This
+   selector's specificity ([data-theme] + button = 0,1,1) beats any single
+   class like `.effect-demo` (0,1,0) with no compound modifier, so a button
+   that never gets a `.wb-button`/`.wb-btn--*`/`wb-button[size]` match (e.g.
+   pages/behaviors.html's x-*-decorated demo buttons, which button.js
+   deliberately skips styling for -- see wb-btn-bare-class-audit.spec.ts)
+   fell all the way through to this bare 0.5rem/1rem reset regardless of
+   any lower-specificity class meant to style it. Matches the same 1rem
+   floor already applied everywhere else buttons are sized (button.css,
+   button.js's injected BUTTON_CSS). */
 [data-theme] button {
   color: var(--text-primary);
   background-color: var(--bg-secondary);
   border: 1px solid var(--border-color);
   border-radius: var(--radius-md, 6px);
-  padding: 0.5rem 1rem;
+  padding: 1rem;
   font: inherit;
   cursor: pointer;
 }

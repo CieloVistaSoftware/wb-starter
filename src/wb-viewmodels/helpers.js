@@ -111,7 +111,12 @@ export function print(element, options = {}) {
   if (!element.textContent.trim()) {
     element.textContent = config.label;
   }
-  element.style.cssText = 'cursor:pointer;padding:0.5rem 1rem;background:var(--bg-tertiary,#374151);border-radius:6px;display:inline-flex;align-items:center;gap:0.5rem;border:1px solid var(--border-color,#4b5563);';
+  // #486: padding floored at 1rem (16px) -- Standard §13 requires >=1rem
+  // padding on every side of a button's text; 0.5rem (8px) failed
+  // demo-layout-standards.spec.ts on pages/behaviors.html's decorated
+  // trigger buttons. Inline style (not a stylesheet rule) because it always
+  // wins regardless of specificity, matching this function's existing approach.
+  element.style.cssText = 'cursor:pointer;padding:1rem;background:var(--bg-tertiary,#374151);border-radius:6px;display:inline-flex;align-items:center;gap:0.5rem;border:1px solid var(--border-color,#4b5563);';
   
   element.onclick = () => {
     if (config.target) {
@@ -150,7 +155,12 @@ export function share(element, options = {}) {
   if (!element.textContent.trim()) {
     element.textContent = config.label;
   }
-  element.style.cssText = 'cursor:pointer;padding:0.5rem 1rem;background:var(--bg-tertiary,#374151);border-radius:6px;display:inline-flex;align-items:center;gap:0.5rem;border:1px solid var(--border-color,#4b5563);';
+  // #486: padding floored at 1rem (16px) -- Standard §13 requires >=1rem
+  // padding on every side of a button's text; 0.5rem (8px) failed
+  // demo-layout-standards.spec.ts on pages/behaviors.html's decorated
+  // trigger buttons. Inline style (not a stylesheet rule) because it always
+  // wins regardless of specificity, matching this function's existing approach.
+  element.style.cssText = 'cursor:pointer;padding:1rem;background:var(--bg-tertiary,#374151);border-radius:6px;display:inline-flex;align-items:center;gap:0.5rem;border:1px solid var(--border-color,#4b5563);';
   
   element.onclick = async () => {
     if (navigator.share) {
@@ -185,7 +195,12 @@ export function fullscreen(element, options = {}) {
   if (!element.textContent.trim()) {
     element.textContent = config.label;
   }
-  element.style.cssText = 'cursor:pointer;padding:0.5rem 1rem;background:var(--bg-tertiary,#374151);border-radius:6px;display:inline-flex;align-items:center;gap:0.5rem;border:1px solid var(--border-color,#4b5563);';
+  // #486: padding floored at 1rem (16px) -- Standard §13 requires >=1rem
+  // padding on every side of a button's text; 0.5rem (8px) failed
+  // demo-layout-standards.spec.ts on pages/behaviors.html's decorated
+  // trigger buttons. Inline style (not a stylesheet rule) because it always
+  // wins regardless of specificity, matching this function's existing approach.
+  element.style.cssText = 'cursor:pointer;padding:1rem;background:var(--bg-tertiary,#374151);border-radius:6px;display:inline-flex;align-items:center;gap:0.5rem;border:1px solid var(--border-color,#4b5563);';
   
   let targetEl = config.target ? document.querySelector(config.target) : document.documentElement;
   
@@ -337,7 +352,9 @@ export function clipboard(element, options = {}) {
   if (!element.textContent.trim()) {
     element.innerHTML = config.label;
   }
-  element.style.cssText = 'cursor:pointer;padding:0.5rem 1rem;background:var(--bg-tertiary,#374151);border-radius:6px;display:inline-flex;align-items:center;gap:0.5rem;border:1px solid var(--border-color,#4b5563);transition:all 0.2s;';
+  // #486: padding floored at 1rem (16px) -- Standard §13, same as the other
+  // decorated trigger buttons above.
+  element.style.cssText = 'cursor:pointer;padding:1rem;background:var(--bg-tertiary,#374151);border-radius:6px;display:inline-flex;align-items:center;gap:0.5rem;border:1px solid var(--border-color,#4b5563);transition:all 0.2s;';
   
   const original = element.innerHTML;
 
@@ -383,7 +400,12 @@ export function scroll(element, options = {}) {
   if (!element.textContent.trim()) {
     element.textContent = config.label;
   }
-  element.style.cssText = 'cursor:pointer;padding:0.5rem 1rem;background:var(--bg-tertiary,#374151);border-radius:6px;display:inline-flex;align-items:center;gap:0.5rem;border:1px solid var(--border-color,#4b5563);';
+  // #486: padding floored at 1rem (16px) -- Standard §13 requires >=1rem
+  // padding on every side of a button's text; 0.5rem (8px) failed
+  // demo-layout-standards.spec.ts on pages/behaviors.html's decorated
+  // trigger buttons. Inline style (not a stylesheet rule) because it always
+  // wins regardless of specificity, matching this function's existing approach.
+  element.style.cssText = 'cursor:pointer;padding:1rem;background:var(--bg-tertiary,#374151);border-radius:6px;display:inline-flex;align-items:center;gap:0.5rem;border:1px solid var(--border-color,#4b5563);';
 
   element.onclick = (e) => {
     e.preventDefault();
@@ -516,7 +538,10 @@ export function countdown(element, options = {}) {
   element.style.fontFamily = 'monospace';
   element.style.fontSize = '1.25rem';
   element.style.fontWeight = 'bold';
-  element.style.padding = '0.5rem 1rem';
+  // #486: padding floored at 1rem (16px) -- Standard §13 requires >=1rem
+  // padding on every side of text in a content panel; 0.5rem (8px) failed
+  // demo-layout-standards.spec.ts on pages/behaviors.html.
+  element.style.padding = '1rem';
   element.style.background = 'var(--bg-tertiary, #374151)';
   element.style.borderRadius = '6px';
   element.style.display = 'inline-block';
@@ -602,7 +627,10 @@ export function clock(element, options = {}) {
   // Base styles
   element.style.fontFamily = 'monospace';
   element.style.display = 'inline-block';
-  element.style.padding = '0.5rem 1rem';
+  // #486: padding floored at 1rem (16px) -- Standard §13 requires >=1rem
+  // padding on every side of text in a content panel; 0.5rem (8px) failed
+  // demo-layout-standards.spec.ts on pages/behaviors.html.
+  element.style.padding = '1rem';
   element.style.borderRadius = '6px';
   
   // Variant-specific styles
@@ -697,7 +725,10 @@ export function relativetime(element, options = {}) {
  */
 export function offline(element, options = {}) {
   element.classList.add('wb-offline');
-  element.style.padding = '0.5rem 1rem';
+  // #486: padding floored at 1rem (16px) -- Standard §13 requires >=1rem
+  // padding on every side of text in a content panel; 0.5rem (8px) failed
+  // demo-layout-standards.spec.ts on pages/behaviors.html.
+  element.style.padding = '1rem';
   element.style.borderRadius = '6px';
   element.style.display = 'inline-flex';
   element.style.alignItems = 'center';

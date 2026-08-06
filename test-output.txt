@@ -1,0 +1,50 @@
+
+Running 1 test using 1 worker
+
+
+Γ¥î FAILED: demos\autoinject.html: content-panel elements keep >=1rem text padding
+   Error: demos\autoinject.html:
+  Γ£ÿ  1 [compliance] ΓÇ║ tests\compliance\demo-layout-standards.spec.ts:219:5 ΓÇ║ Layout standard: no text within 1rem of a content-panel edge ΓÇ║ demos\autoinject.html: content-panel elements keep >=1rem text padding (3.9s)
+
+ΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉ
+  WB TEST RESULTS
+ΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉ
+  Total: 1 tests in 19.6s
+  Γ£ô Passed:  0
+  Γ£ù Failed:  1
+
+  By Project:
+    Γ£ù compliance: 0/1 passed
+
+  See failures: data/test-results/failures.json
+  Live log:    data/test-results/failures-live.log
+ΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉ
+
+
+
+  1) [compliance] ΓÇ║ tests\compliance\demo-layout-standards.spec.ts:219:5 ΓÇ║ Layout standard: no text within 1rem of a content-panel edge ΓÇ║ demos\autoinject.html: content-panel elements keep >=1rem text padding 
+
+    Error: demos\autoinject.html:
+    <button class=""> "Standard Button" has 8px padding on its tightest side < 16px
+    <button class=""> "Open Dialog" has 8px padding on its tightest side < 16px
+    <button class="btn btn-primary"> "Add New Checkbox" has 8px padding on its tightest side < 16px
+
+    [2mexpect([22m[31mreceived[39m[2m).[22mtoHaveLength[2m([22m[32mexpected[39m[2m)[22m
+
+    Expected length: [32m0[39m
+    Received length: [31m3[39m
+    Received array:  [31m["<button class=\"\"> \"Standard Button\" has 8px padding on its tightest side < 16px", "<button class=\"\"> \"Open Dialog\" has 8px padding on its tightest side < 16px", "<button class=\"btn btn-primary\"> \"Add New Checkbox\" has 8px padding on its tightest side < 16px"][39m
+
+      271 |       }, { minPad: MIN_TEXT_EDGE_PX, minW: MIN_PANEL_WIDTH, minH: MIN_PANEL_HEIGHT });
+      272 |
+    > 273 |       expect(violations, `${file}:\n${violations.join('\n')}`).toHaveLength(0);
+          |                                                                ^
+      274 |     });
+      275 |   }
+      276 | });
+        at C:\Users\jwpmi\Downloads\AI\wb-starter\tests\compliance\demo-layout-standards.spec.ts:273:64
+
+    Error Context: data\test-results\demo-layout-standards-Layo-bb9b8-ents-keep-1rem-text-padding-compliance\error-context.md
+
+  1 failed
+    [compliance] ΓÇ║ tests\compliance\demo-layout-standards.spec.ts:219:5 ΓÇ║ Layout standard: no text within 1rem of a content-panel edge ΓÇ║ demos\autoinject.html: content-panel elements keep >=1rem text padding 

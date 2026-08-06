@@ -17,6 +17,7 @@
  */
 @import url('./behaviors/layout.css');
 @import url('./behaviors/ui-utils.css');
+@import url('./behaviors/code.css');
 
 /**
  * WB Starter - Site Layout Styles

@@ -13,7 +13,7 @@
      here used to bleed into the line above/below -- padding on an inline
      box doesn't grow the line's own height, so tightly-packed text (e.g.
      several <code> badges across neighboring <li>s) visually overlapped. */
-  padding: 0.15em 0.4em;
+  padding: 1rem !important;
   border-radius: 6px;
   font-family: monospace;
   /* Was a hardcoded 0.8rem — every native <code> gets this class via

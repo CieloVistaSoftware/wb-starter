@@ -1,0 +1,20 @@
+{
+  "state": "passed",
+  "mode": "single",
+  "specFile": "tests/regression/frameworks-code-block-no-wrap.spec.ts",
+  "startedAt": "2026-07-31T01:33:09.328Z",
+  "updatedAt": "2026-07-31T01:33:17.924Z",
+  "command": "npx playwright test --workers=8 tests/regression/frameworks-code-block-no-wrap.spec.ts",
+  "pid": 25280,
+  "passed": 1,
+  "failed": 0,
+  "skipped": 0,
+  "total": 1,
+  "currentFile": "tests\\regression\\frameworks-code-block-no-wrap.spec.ts",
+  "output": "\nRunning 1 test using 1 worker\n\n  ok 1 [regression] › tests\\regression\\frameworks-code-block-no-wrap.spec.ts:18:1 › demos/frameworks.html: code blocks never wrap mid-line, scroll horizontally instead (3.2s)\n\n════════════════════════════════════════════════════════════\n  WB TEST RESULTS\n════════════════════════════════════════════════════════════\n  Total: 1 tests in 5.0s\n  ✓ Passed:  1\n  ✗ Failed:  0\n\n  By Project:\n    ✓ regression: 1/1 passed\n════════════════════════════════════════════════════════════\n\n\n  1 passed (5.3s)\n",
+  "errors": "",
+  "failures": [],
+  "completedAt": "2026-07-31T01:33:17.924Z",
+  "duration": "8.60s",
+  "exitCode": 0
+}

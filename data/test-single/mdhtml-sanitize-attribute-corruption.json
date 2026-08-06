@@ -1,0 +1,20 @@
+{
+  "state": "passed",
+  "mode": "single",
+  "specFile": "tests/regression/mdhtml-sanitize-attribute-corruption.spec.ts",
+  "startedAt": "2026-07-30T22:33:45.793Z",
+  "updatedAt": "2026-07-30T22:33:58.292Z",
+  "command": "npx playwright test --workers=8 tests/regression/mdhtml-sanitize-attribute-corruption.spec.ts",
+  "pid": 41748,
+  "passed": 3,
+  "failed": 0,
+  "skipped": 0,
+  "total": 3,
+  "currentFile": "tests\\regression\\mdhtml-sanitize-attribute-corruption.spec.ts",
+  "output": "\nRunning 3 tests using 3 workers\n\n  ok 2 [regression] › tests\\regression\\mdhtml-sanitize-attribute-corruption.spec.ts:24:3 › mdhtml.js sanitizer: on* stripping does not eat unrelated attributes › the fixed regex leaves a JSON-in-attribute value like options='[...]' intact (627ms)\n  ok 3 [regression] › tests\\regression\\mdhtml-sanitize-attribute-corruption.spec.ts:46:3 › mdhtml.js sanitizer: on* stripping does not eat unrelated attributes › docs/behaviors-reference.md: the live <wb-select> keeps its real options attribute and dropdown entries (2.9s)\n  ok 1 [regression] › tests\\regression\\mdhtml-sanitize-attribute-corruption.spec.ts:68:3 › mdhtml.js sanitizer: on* stripping does not eat unrelated attributes › docs/components/semantics/select.md: every wb-select example renders its real options, not just the placeholder (3.2s)\n\n════════════════════════════════════════════════════════════\n  WB TEST RESULTS\n════════════════════════════════════════════════════════════\n  Total: 3 tests in 8.3s\n  ✓ Passed:  3\n  ✗ Failed:  0\n\n  By Project:\n    ✓ regression: 3/3 passed\n════════════════════════════════════════════════════════════\n\n\n  3 passed (8.6s)\n",
+  "errors": "",
+  "failures": [],
+  "completedAt": "2026-07-30T22:33:58.292Z",
+  "duration": "12.50s",
+  "exitCode": 0
+}

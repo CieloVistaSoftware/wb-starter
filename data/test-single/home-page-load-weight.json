@@ -1,0 +1,20 @@
+{
+  "state": "passed",
+  "mode": "single",
+  "specFile": "tests/regression/home-page-load-weight.spec.ts",
+  "startedAt": "2026-08-01T20:50:26.672Z",
+  "updatedAt": "2026-08-01T20:50:35.284Z",
+  "command": "npx playwright test --workers=8 tests/regression/home-page-load-weight.spec.ts",
+  "pid": 27352,
+  "passed": 4,
+  "failed": 0,
+  "skipped": 0,
+  "total": 4,
+  "currentFile": "tests\\regression\\home-page-load-weight.spec.ts",
+  "output": "\nRunning 4 tests using 4 workers\n\n  ok 2 [regression] › tests\\regression\\home-page-load-weight.spec.ts:77:3 › home page load weight (#390) › loading \"/\" fires the window load event in under 2000ms (1.1s)\n  ok 3 [regression] › tests\\regression\\home-page-load-weight.spec.ts:62:3 › home page load weight (#390) › loading \"/\" fires fewer than 100 total requests (1.5s)\n  ok 1 [regression] › tests\\regression\\home-page-load-weight.spec.ts:43:3 › home page load weight (#390) › loading \"/\" does not fetch a DIFFERENT page's HTML fragment or page-specific CSS (1.6s)\n  ok 4 [regression] › tests\\regression\\home-page-load-weight.spec.ts:28:3 › home page load weight (#390) › loading \"/\" does not fetch the page-builder partial library (1.5s)\n\n════════════════════════════════════════════════════════════\n  WB TEST RESULTS\n════════════════════════════════════════════════════════════\n  Total: 4 tests in 5.3s\n  ✓ Passed:  4\n  ✗ Failed:  0\n\n  By Project:\n    ✓ regression: 4/4 passed\n════════════════════════════════════════════════════════════\n\n\n  4 passed (5.6s)\n",
+  "errors": "",
+  "failures": [],
+  "completedAt": "2026-08-01T20:50:35.284Z",
+  "duration": "8.61s",
+  "exitCode": 0
+}

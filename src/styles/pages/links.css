@@ -39,11 +39,9 @@
     .links-list {
       padding: 1rem !important;
       margin: 0 !important;
-      max-width: 100vw !important;
       box-sizing: border-box;
     }
     .links-add-form {
       gap: 0.5rem !important;
     }
   }
-}

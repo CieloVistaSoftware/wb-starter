@@ -1,0 +1,569 @@
+{
+  "state": "failed",
+  "mode": "single",
+  "specFile": "pages/header.spec.ts",
+  "startedAt": "2026-07-30T21:59:09.125Z",
+  "updatedAt": "2026-07-30T22:12:46.147Z",
+  "command": "npx playwright test --workers=8 pages/header.spec.ts semantics-new semantics-code-scroll notes.spec feedback-visual figure.spec pill-shortcut toast-single behaviors-page-data-attrs-sweep",
+  "pid": 39640,
+  "passed": 142,
+  "failed": 68,
+  "skipped": 0,
+  "total": 210,
+  "currentFile": "tests\\regression\\behaviors-page-data-attrs-sweep.spec.ts",
+  "output": "pec.ts:29:24\n\n    Error Context: data\\test-results\\pages-header-Header-Behavior-renders-with-icon-and-title-behaviors-retry1\\error-context.md\n\n  51) [behaviors] › tests\\pages\\header.spec.ts:35:3 › Header Behavior › renders badge on right side \n\n    Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoHaveText\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m failed\n\n    Locator: locator('#testHeader .wb-header__right .wb-tag-glass')\n    Expected: \u001b[32m\"v1.0\"\u001b[39m\n    Timeout: 5000ms\n    Error: element(s) not found\n\n    Call log:\n    \u001b[2m  - Expect \"toHaveText\" with timeout 5000ms\u001b[22m\n    \u001b[2m  - waiting for locator('#testHeader .wb-header__right .wb-tag-glass')\u001b[22m\n\n\n      46 |     \n      47 |     const badge = page.locator('#testHeader .wb-header__right .wb-tag-glass');\n    > 48 |     await expect(badge).toHaveText('v1.0');\n         |                         ^\n      49 |   });\n      50 |\n      51 |   test('applies sticky class when sticky present', async ({ page }) => {\n        at C:\\Users\\jwpmi\\Downloads\\AI\\wb-starter\\tests\\pages\\header.spec.ts:48:25\n\n    Error Context: data\\test-results\\pages-header-Header-Behavior-renders-badge-on-right-side-behaviors\\error-context.md\n\n    Retry #1 ───────────────────────────────────────────────────────────────────────────────────────\n\n    Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoHaveText\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m failed\n\n    Locator: locator('#testHeader .wb-header__right .wb-tag-glass')\n    Expected: \u001b[32m\"v1.0\"\u001b[39m\n    Timeout: 5000ms\n    Error: element(s) not found\n\n    Call log:\n    \u001b[2m  - Expect \"toHaveText\" with timeout 5000ms\u001b[22m\n    \u001b[2m  - waiting for locator('#testHeader .wb-header__right .wb-tag-glass')\u001b[22m\n\n\n      46 |     \n      47 |     const badge = page.locator('#testHeader .wb-header__right .wb-tag-glass');\n    > 48 |     await expect(badge).toHaveText('v1.0');\n         |                         ^\n      49 |   });\n      50 |\n      51 |   test('applies sticky class when sticky present', async ({ page }) => {\n        at C:\\Users\\jwpmi\\Downloads\\AI\\wb-starter\\tests\\pages\\header.spec.ts:48:25\n\n    Error Context: data\\test-results\\pages-header-Header-Behavior-renders-badge-on-right-side-behaviors-retry1\\error-context.md\n\n  52) [behaviors] › tests\\pages\\header.spec.ts:67:3 › Header Behavior › renders subtitle ───────────\n\n    Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoHaveText\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m failed\n\n    Locator: locator('#testHeader .wb-header__subtitle')\n    Expected: \u001b[32m\"Analytics\"\u001b[39m\n    Timeout: 5000ms\n    Error: element(s) not found\n\n    Call log:\n    \u001b[2m  - Expect \"toHaveText\" with timeout 5000ms\u001b[22m\n    \u001b[2m  - waiting for locator('#testHeader .wb-header__subtitle')\u001b[22m\n\n\n      78 |     \n      79 |     const subtitle = page.locator('#testHeader .wb-header__subtitle');\n    > 80 |     await expect(subtitle).toHaveText('Analytics');\n         |                            ^\n      81 |   });\n      82 |\n      83 |   test('logo links when logoHref provided', async ({ page }) => {\n        at C:\\Users\\jwpmi\\Downloads\\AI\\wb-starter\\tests\\pages\\header.spec.ts:80:28\n\n    Error Context: data\\test-results\\pages-header-Header-Behavior-renders-subtitle-behaviors\\error-context.md\n\n    Retry #1 ───────────────────────────────────────────────────────────────────────────────────────\n\n    Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoHaveText\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m failed\n\n    Locator: locator('#testHeader .wb-header__subtitle')\n    Expected: \u001b[32m\"Analytics\"\u001b[39m\n    Timeout: 5000ms\n    Error: element(s) not found\n\n    Call log:\n    \u001b[2m  - Expect \"toHaveText\" with timeout 5000ms\u001b[22m\n    \u001b[2m  - waiting for locator('#testHeader .wb-header__subtitle')\u001b[22m\n\n\n      78 |     \n      79 |     const subtitle = page.locator('#testHeader .wb-header__subtitle');\n    > 80 |     await expect(subtitle).toHaveText('Analytics');\n         |                            ^\n      81 |   });\n      82 |\n      83 |   test('logo links when logoHref provided', async ({ page }) => {\n        at C:\\Users\\jwpmi\\Downloads\\AI\\wb-starter\\tests\\pages\\header.spec.ts:80:28\n\n    Error Context: data\\test-results\\pages-header-Header-Behavior-renders-subtitle-behaviors-retry1\\error-context.md\n\n  53) [behaviors] › tests\\pages\\header.spec.ts:83:3 › Header Behavior › logo links when logoHref provided \n\n    Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoHaveAttribute\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m failed\n\n    Locator: locator('#testHeader .wb-header__logo')\n    Expected: \u001b[32m\"/home\"\u001b[39m\n    Timeout: 5000ms\n    Error: element(s) not found\n\n    Call log:\n    \u001b[2m  - Expect \"toHaveAttribute\" with timeout 5000ms\u001b[22m\n    \u001b[2m  - waiting for locator('#testHeader .wb-header__logo')\u001b[22m\n\n\n      94 |     \n      95 |     const logo = page.locator('#testHeader .wb-header__logo');\n    > 96 |     await expect(logo).toHaveAttribute('href', '/home');\n         |                        ^\n      97 |   });\n      98 |\n      99 |   test('API: setTitle updates title', async ({ page }) => {\n        at C:\\Users\\jwpmi\\Downloads\\AI\\wb-starter\\tests\\pages\\header.spec.ts:96:24\n\n    Error Context: data\\test-results\\pages-header-Header-Behavi-6c6ef-inks-when-logoHref-provided-behaviors\\error-context.md\n\n    Retry #1 ───────────────────────────────────────────────────────────────────────────────────────\n\n    Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoHaveAttribute\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m failed\n\n    Locator: locator('#testHeader .wb-header__logo')\n    Expected: \u001b[32m\"/home\"\u001b[39m\n    Timeout: 5000ms\n    Error: element(s) not found\n\n    Call log:\n    \u001b[2m  - Expect \"toHaveAttribute\" with timeout 5000ms\u001b[22m\n    \u001b[2m  - waiting for locator('#testHeader .wb-header__logo')\u001b[22m\n\n\n      94 |     \n      95 |     const logo = page.locator('#testHeader .wb-header__logo');\n    > 96 |     await expect(logo).toHaveAttribute('href', '/home');\n         |                        ^\n      97 |   });\n      98 |\n      99 |   test('API: setTitle updates title', async ({ page }) => {\n        at C:\\Users\\jwpmi\\Downloads\\AI\\wb-starter\\tests\\pages\\header.spec.ts:96:24\n\n    Error Context: data\\test-results\\pages-header-Header-Behavi-6c6ef-inks-when-logoHref-provided-behaviors-retry1\\error-context.md\n\n  54) [behaviors] › tests\\pages\\header.spec.ts:99:3 › Header Behavior › API: setTitle updates title \n\n    Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoHaveText\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m failed\n\n    Locator: locator('#testHeader .wb-header__title')\n    Expected: \u001b[32m\"Updated\"\u001b[39m\n    Timeout: 5000ms\n    Error: element(s) not found\n\n    Call log:\n    \u001b[2m  - Expect \"toHaveText\" with timeout 5000ms\u001b[22m\n    \u001b[2m  - waiting for locator('#testHeader .wb-header__title')\u001b[22m\n\n\n      119 |     \n      120 |     const title = page.locator('#testHeader .wb-header__title');\n    > 121 |     await expect(title).toHaveText('Updated');\n          |                         ^\n      122 |   });\n      123 |\n      124 |   test('API: setBadge updates badge', async ({ page }) => {\n        at C:\\Users\\jwpmi\\Downloads\\AI\\wb-starter\\tests\\pages\\header.spec.ts:121:25\n\n    Error Context: data\\test-results\\pages-header-Header-Behavior-API-setTitle-updates-title-behaviors\\error-context.md\n\n    Retry #1 ───────────────────────────────────────────────────────────────────────────────────────\n\n    Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoHaveText\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m failed\n\n    Locator: locator('#testHeader .wb-header__title')\n    Expected: \u001b[32m\"Updated\"\u001b[39m\n    Timeout: 5000ms\n    Error: element(s) not found\n\n    Call log:\n    \u001b[2m  - Expect \"toHaveText\" with timeout 5000ms\u001b[22m\n    \u001b[2m  - waiting for locator('#testHeader .wb-header__title')\u001b[22m\n\n\n      119 |     \n      120 |     const title = page.locator('#testHeader .wb-header__title');\n    > 121 |     await expect(title).toHaveText('Updated');\n          |                         ^\n      122 |   });\n      123 |\n      124 |   test('API: setBadge updates badge', async ({ page }) => {\n        at C:\\Users\\jwpmi\\Downloads\\AI\\wb-starter\\tests\\pages\\header.spec.ts:121:25\n\n    Error Context: data\\test-results\\pages-header-Header-Behavior-API-setTitle-updates-title-behaviors-retry1\\error-context.md\n\n  55) [behaviors] › tests\\pages\\header.spec.ts:124:3 › Header Behavior › API: setBadge updates badge \n\n    Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoHaveText\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m failed\n\n    Locator: locator('#testHeader .wb-header__right .wb-tag-glass')\n    Expected: \u001b[32m\"v2.0\"\u001b[39m\n    Timeout: 5000ms\n    Error: element(s) not found\n\n    Call log:\n    \u001b[2m  - Expect \"toHaveText\" with timeout 5000ms\u001b[22m\n    \u001b[2m  - waiting for locator('#testHeader .wb-header__right .wb-tag-glass')\u001b[22m\n\n\n      144 |     \n      145 |     const badge = page.locator('#testHeader .wb-header__right .wb-tag-glass');\n    > 146 |     await expect(badge).toHaveText('v2.0');\n          |                         ^\n      147 |   });\n      148 |\n      149 |   test('preserves slot content', async ({ page }) => {\n        at C:\\Users\\jwpmi\\Downloads\\AI\\wb-starter\\tests\\pages\\header.spec.ts:146:25\n\n    Error Context: data\\test-results\\pages-header-Header-Behavior-API-setBadge-updates-badge-behaviors\\error-context.md\n\n    Retry #1 ───────────────────────────────────────────────────────────────────────────────────────\n\n    Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoHaveText\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m failed\n\n    Locator: locator('#testHeader .wb-header__right .wb-tag-glass')\n    Expected: \u001b[32m\"v2.0\"\u001b[39m\n    Timeout: 5000ms\n    Error: element(s) not found\n\n    Call log:\n    \u001b[2m  - Expect \"toHaveText\" with timeout 5000ms\u001b[22m\n    \u001b[2m  - waiting for locator('#testHeader .wb-header__right .wb-tag-glass')\u001b[22m\n\n\n      144 |     \n      145 |     const badge = page.locator('#testHeader .wb-header__right .wb-tag-glass');\n    > 146 |     await expect(badge).toHaveText('v2.0');\n          |                         ^\n      147 |   });\n      148 |\n      149 |   test('preserves slot content', async ({ page }) => {\n        at C:\\Users\\jwpmi\\Downloads\\AI\\wb-starter\\tests\\pages\\header.spec.ts:146:25\n\n    Error Context: data\\test-results\\pages-header-Header-Behavior-API-setBadge-updates-badge-behaviors-retry1\\error-context.md\n\n  56) [behaviors] › tests\\semantics\\semantics-code-scroll.spec.ts:5:3 › Code Behavior Scroll Options › Default behavior (scrollable=false) wraps text and expands \n\n    Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoHaveClass\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m failed\n\n    Locator: locator('#test-pre-default')\n    Expected pattern: \u001b[32m/x-pre/\u001b[39m\n    Received string:  \u001b[31m\"\"\u001b[39m\n    Timeout: 5000ms\n\n    Call log:\n    \u001b[2m  - Expect \"toHaveClass\" with timeout 5000ms\u001b[22m\n    \u001b[2m  - waiting for locator('#test-pre-default')\u001b[22m\n    \u001b[2m    8 × locator resolved to <wb-code id=\"test-pre-default\">…</wb-code>\u001b[22m\n    \u001b[2m      - unexpected value \"\"\u001b[22m\n\n\n      10 |\n      11 |     const pre = page.locator('#test-pre-default');\n    > 12 |     await expect(pre).toHaveClass(/x-pre/);\n         |                       ^\n      13 |     \n      14 |     // Check styles\n      15 |     await expect(pre).toHaveCSS('white-space', 'pre-wrap');\n        at C:\\Users\\jwpmi\\Downloads\\AI\\wb-starter\\tests\\semantics\\semantics-code-scroll.spec.ts:12:23\n\n    Error Context: data\\test-results\\semantics-semantics-code-s-f96b9-alse-wraps-text-and-expands-behaviors\\error-context.md\n\n    Retry #1 ───────────────────────────────────────────────────────────────────────────────────────\n\n    Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoHaveClass\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m failed\n\n    Locator: locator('#test-pre-default')\n    Expected pattern: \u001b[32m/x-pre/\u001b[39m\n    Received string:  \u001b[31m\"\"\u001b[39m\n    Timeout: 5000ms\n\n    Call log:\n    \u001b[2m  - Expect \"toHaveClass\" with timeout 5000ms\u001b[22m\n    \u001b[2m  - waiting for locator('#test-pre-default')\u001b[22m\n    \u001b[2m    8 × locator resolved to <wb-code id=\"test-pre-default\">…</wb-code>\u001b[22m\n    \u001b[2m      - unexpected value \"\"\u001b[22m\n\n\n      10 |\n      11 |     const pre = page.locator('#test-pre-default');\n    > 12 |     await expect(pre).toHaveClass(/x-pre/);\n         |                       ^\n      13 |     \n      14 |     // Check styles\n      15 |     await expect(pre).toHaveCSS('white-space', 'pre-wrap');\n        at C:\\Users\\jwpmi\\Downloads\\AI\\wb-starter\\tests\\semantics\\semantics-code-scroll.spec.ts:12:23\n\n    Error Context: data\\test-results\\semantics-semantics-code-s-f96b9-alse-wraps-text-and-expands-behaviors-retry1\\error-context.md\n\n  57) [behaviors] › tests\\semantics\\semantics-code-scroll.spec.ts:19:3 › Code Behavior Scroll Options › Scrollable behavior (scrollable=true) does not wrap and scrolls \n\n    Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoHaveClass\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m failed\n\n    Locator: locator('#test-pre-scroll')\n    Expected pattern: \u001b[32m/x-pre/\u001b[39m\n    Received string:  \u001b[31m\"\"\u001b[39m\n    Timeout: 5000ms\n\n    Call log:\n    \u001b[2m  - Expect \"toHaveClass\" with timeout 5000ms\u001b[22m\n    \u001b[2m  - waiting for locator('#test-pre-scroll')\u001b[22m\n    \u001b[2m    8 × locator resolved to <wb-code scrollable=\"true\" id=\"test-pre-scroll\">…</wb-code>\u001b[22m\n    \u001b[2m      - unexpected value \"\"\u001b[22m\n\n\n      24 |\n      25 |     const pre = page.locator('#test-pre-scroll');\n    > 26 |     await expect(pre).toHaveClass(/x-pre/);\n         |                       ^\n      27 |     \n      28 |     // Check styles\n      29 |     await expect(pre).toHaveCSS('white-space', 'pre');\n        at C:\\Users\\jwpmi\\Downloads\\AI\\wb-starter\\tests\\semantics\\semantics-code-scroll.spec.ts:26:23\n\n    Error Context: data\\test-results\\semantics-semantics-code-s-ed1cc-e-does-not-wrap-and-scrolls-behaviors\\error-context.md\n\n    Retry #1 ───────────────────────────────────────────────────────────────────────────────────────\n\n    Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoHaveClass\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m failed\n\n    Locator: locator('#test-pre-scroll')\n    Expected pattern: \u001b[32m/x-pre/\u001b[39m\n    Received string:  \u001b[31m\"\"\u001b[39m\n    Timeout: 5000ms\n\n    Call log:\n    \u001b[2m  - Expect \"toHaveClass\" with timeout 5000ms\u001b[22m\n    \u001b[2m  - waiting for locator('#test-pre-scroll')\u001b[22m\n    \u001b[2m    8 × locator resolved to <wb-code scrollable=\"true\" id=\"test-pre-scroll\">…</wb-code>\u001b[22m\n    \u001b[2m      - unexpected value \"\"\u001b[22m\n\n\n      24 |\n      25 |     const pre = page.locator('#test-pre-scroll');\n    > 26 |     await expect(pre).toHaveClass(/x-pre/);\n         |                       ^\n      27 |     \n      28 |     // Check styles\n      29 |     await expect(pre).toHaveCSS('white-space', 'pre');\n        at C:\\Users\\jwpmi\\Downloads\\AI\\wb-starter\\tests\\semantics\\semantics-code-scroll.spec.ts:26:23\n\n    Error Context: data\\test-results\\semantics-semantics-code-s-ed1cc-e-does-not-wrap-and-scrolls-behaviors-retry1\\error-context.md\n\n  58) [behaviors] › tests\\semantics\\semantics-code-scroll.spec.ts:33:3 › Code Behavior Scroll Options › Standalone code block default behavior \n\n    Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoHaveClass\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m failed\n\n    Locator: locator('#test-code-default')\n    Expected pattern: \u001b[32m/x-code/\u001b[39m\n    Received string:  \u001b[31m\"\"\u001b[39m\n    Timeout: 5000ms\n\n    Call log:\n    \u001b[2m  - Expect \"toHaveClass\" with timeout 5000ms\u001b[22m\n    \u001b[2m  - waiting for locator('#test-code-default')\u001b[22m\n    \u001b[2m    8 × locator resolved to <wb-code variant=\"block\" id=\"test-code-default\">…</wb-code>\u001b[22m\n    \u001b[2m      - unexpected value \"\"\u001b[22m\n\n\n      38 |\n      39 |     const code = page.locator('#test-code-default');\n    > 40 |     await expect(code).toHaveClass(/x-code/);\n         |                        ^\n      41 |     \n      42 |     // Check styles\n      43 |     await expect(code).toHaveCSS('white-space', 'pre-wrap');\n        at C:\\Users\\jwpmi\\Downloads\\AI\\wb-starter\\tests\\semantics\\semantics-code-scroll.spec.ts:40:24\n\n    Error Context: data\\test-results\\semantics-semantics-code-s-bddbe-code-block-default-behavior-behaviors\\error-context.md\n\n    Retry #1 ───────────────────────────────────────────────────────────────────────────────────────\n\n    Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoHaveClass\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m failed\n\n    Locator: locator('#test-code-default')\n    Expected pattern: \u001b[32m/x-code/\u001b[39m\n    Received string:  \u001b[31m\"\"\u001b[39m\n    Timeout: 5000ms\n\n    Call log:\n    \u001b[2m  - Expect \"toHaveClass\" with timeout 5000ms\u001b[22m\n    \u001b[2m  - waiting for locator('#test-code-default')\u001b[22m\n    \u001b[2m    8 × locator resolved to <wb-code variant=\"block\" id=\"test-code-default\">…</wb-code>\u001b[22m\n    \u001b[2m      - unexpected value \"\"\u001b[22m\n\n\n      38 |\n      39 |     const code = page.locator('#test-code-default');\n    > 40 |     await expect(code).toHaveClass(/x-code/);\n         |                        ^\n      41 |     \n      42 |     // Check styles\n      43 |     await expect(code).toHaveCSS('white-space', 'pre-wrap');\n        at C:\\Users\\jwpmi\\Downloads\\AI\\wb-starter\\tests\\semantics\\semantics-code-scroll.spec.ts:40:24\n\n    Error Context: data\\test-results\\semantics-semantics-code-s-bddbe-code-block-default-behavior-behaviors-retry1\\error-context.md\n\n  59) [behaviors] › tests\\semantics\\semantics-code-scroll.spec.ts:47:3 › Code Behavior Scroll Options › Standalone code block scrollable behavior \n\n    Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoHaveClass\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m failed\n\n    Locator: locator('#test-code-scroll')\n    Expected pattern: \u001b[32m/x-code/\u001b[39m\n    Received string:  \u001b[31m\"\"\u001b[39m\n    Timeout: 5000ms\n\n    Call log:\n    \u001b[2m  - Expect \"toHaveClass\" with timeout 5000ms\u001b[22m\n    \u001b[2m  - waiting for locator('#test-code-scroll')\u001b[22m\n    \u001b[2m    8 × locator resolved to <wb-code variant=\"block\" scrollable=\"true\" id=\"test-code-scroll\">…</wb-code>\u001b[22m\n    \u001b[2m      - unexpected value \"\"\u001b[22m\n\n\n      52 |\n      53 |     const code = page.locator('#test-code-scroll');\n    > 54 |     await expect(code).toHaveClass(/x-code/);\n         |                        ^\n      55 |     \n      56 |     // Check styles\n      57 |     await expect(code).toHaveCSS('white-space', 'pre');\n        at C:\\Users\\jwpmi\\Downloads\\AI\\wb-starter\\tests\\semantics\\semantics-code-scroll.spec.ts:54:24\n\n    Error Context: data\\test-results\\semantics-semantics-code-s-cb901-e-block-scrollable-behavior-behaviors\\error-context.md\n\n    Retry #1 ───────────────────────────────────────────────────────────────────────────────────────\n\n    Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoHaveClass\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m failed\n\n    Locator: locator('#test-code-scroll')\n    Expected pattern: \u001b[32m/x-code/\u001b[39m\n    Received string:  \u001b[31m\"\"\u001b[39m\n    Timeout: 5000ms\n\n    Call log:\n    \u001b[2m  - Expect \"toHaveClass\" with timeout 5000ms\u001b[22m\n    \u001b[2m  - waiting for locator('#test-code-scroll')\u001b[22m\n    \u001b[2m    8 × locator resolved to <wb-code variant=\"block\" scrollable=\"true\" id=\"test-code-scroll\">…</wb-code>\u001b[22m\n    \u001b[2m      - unexpected value \"\"\u001b[22m\n\n\n      52 |\n      53 |     const code = page.locator('#test-code-scroll');\n    > 54 |     await expect(code).toHaveClass(/x-code/);\n         |                        ^\n      55 |     \n      56 |     // Check styles\n      57 |     await expect(code).toHaveCSS('white-space', 'pre');\n        at C:\\Users\\jwpmi\\Downloads\\AI\\wb-starter\\tests\\semantics\\semantics-code-scroll.spec.ts:54:24\n\n    Error Context: data\\test-results\\semantics-semantics-code-s-cb901-e-block-scrollable-behavior-behaviors-retry1\\error-context.md\n\n  60) [behaviors] › tests\\semantics\\semantics-new.spec.ts:19:3 › New Semantic Behaviors › List behavior renders items correctly \n\n    Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoHaveClass\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m failed\n\n    Locator: locator('#test-list')\n    Expected pattern: \u001b[32m/wb-list/\u001b[39m\n    Received string:  \u001b[31m\"\"\u001b[39m\n    Timeout: 5000ms\n\n    Call log:\n    \u001b[2m  - Expect \"toHaveClass\" with timeout 5000ms\u001b[22m\n    \u001b[2m  - waiting for locator('#test-list')\u001b[22m\n    \u001b[2m    9 × locator resolved to <wb-list id=\"test-list\" items=\"Item 1, Item 2, Item 3\">…</wb-list>\u001b[22m\n    \u001b[2m      - unexpected value \"\"\u001b[22m\n\n\n      24 |\n      25 |     const list = page.locator('#test-list');\n    > 26 |     await expect(list).toHaveClass(/wb-list/);\n         |                        ^\n      27 |     await expect(list.locator('li')).toHaveCount(3);\n      28 |     await expect(list.locator('li').first()).toHaveText('Item 1');\n      29 |   });\n        at C:\\Users\\jwpmi\\Downloads\\AI\\wb-starter\\tests\\semantics\\semantics-new.spec.ts:26:24\n\n    Retry #1 ───────────────────────────────────────────────────────────────────────────────────────\n\n    Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoHaveClass\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m failed\n\n    Locator: locator('#test-list')\n    Expected pattern: \u001b[32m/wb-list/\u001b[39m\n    Received string:  \u001b[31m\"\"\u001b[39m\n    Timeout: 5000ms\n\n    Call log:\n    \u001b[2m  - Expect \"toHaveClass\" with timeout 5000ms\u001b[22m\n    \u001b[2m  - waiting for locator('#test-list')\u001b[22m\n    \u001b[2m    8 × locator resolved to <wb-list id=\"test-list\" items=\"Item 1, Item 2, Item 3\">…</wb-list>\u001b[22m\n    \u001b[2m      - unexpected value \"\"\u001b[22m\n\n\n      24 |\n      25 |     const list = page.locator('#test-list');\n    > 26 |     await expect(list).toHaveClass(/wb-list/);\n         |                        ^\n      27 |     await expect(list.locator('li')).toHaveCount(3);\n      28 |     await expect(list.locator('li').first()).toHaveText('Item 1');\n      29 |   });\n        at C:\\Users\\jwpmi\\Downloads\\AI\\wb-starter\\tests\\semantics\\semantics-new.spec.ts:26:24\n\n  61) [behaviors] › tests\\semantics\\semantics-new.spec.ts:31:3 › New Semantic Behaviors › List behavior handles JSON items \n\n    Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoHaveCount\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m failed\n\n    Locator:  locator('#test-list-json').locator('li')\n    Expected: \u001b[32m2\u001b[39m\n    Received: \u001b[31m0\u001b[39m\n    Timeout:  5000ms\n\n    Call log:\n    \u001b[2m  - Expect \"toHaveCount\" with timeout 5000ms\u001b[22m\n    \u001b[2m  - waiting for locator('#test-list-json').locator('li')\u001b[22m\n    \u001b[2m    8 × locator resolved to 0 elements\u001b[22m\n    \u001b[2m      - unexpected value \"0\"\u001b[22m\n\n\n      36 |\n      37 |     const list = page.locator('#test-list-json');\n    > 38 |     await expect(list.locator('li')).toHaveCount(2);\n         |                                      ^\n      39 |     await expect(list.locator('li').nth(1)).toHaveText('Item B, with comma');\n      40 |   });\n      41 |\n        at C:\\Users\\jwpmi\\Downloads\\AI\\wb-starter\\tests\\semantics\\semantics-new.spec.ts:38:38\n\n    Retry #1 ───────────────────────────────────────────────────────────────────────────────────────\n\n    Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoHaveCount\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m failed\n\n    Locator:  locator('#test-list-json').locator('li')\n    Expected: \u001b[32m2\u001b[39m\n    Received: \u001b[31m0\u001b[39m\n    Timeout:  5000ms\n\n    Call log:\n    \u001b[2m  - Expect \"toHaveCount\" with timeout 5000ms\u001b[22m\n    \u001b[2m  - waiting for locator('#test-list-json').locator('li')\u001b[22m\n    \u001b[2m    8 × locator resolved to 0 elements\u001b[22m\n    \u001b[2m      - unexpected value \"0\"\u001b[22m\n\n\n      36 |\n      37 |     const list = page.locator('#test-list-json');\n    > 38 |     await expect(list.locator('li')).toHaveCount(2);\n         |                                      ^\n      39 |     await expect(list.locator('li').nth(1)).toHaveText('Item B, with comma');\n      40 |   });\n      41 |\n        at C:\\Users\\jwpmi\\Downloads\\AI\\wb-starter\\tests\\semantics\\semantics-new.spec.ts:38:38\n\n  62) [behaviors] › tests\\semantics\\semantics-new.spec.ts:42:3 › New Semantic Behaviors › Description List behavior renders items correctly \n\n    Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoHaveClass\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m failed\n\n    Locator: locator('#test-dl')\n    Expected pattern: \u001b[32m/wb-dl/\u001b[39m\n    Received string:  \u001b[31m\"\"\u001b[39m\n    Timeout: 5000ms\n\n    Call log:\n    \u001b[2m  - Expect \"toHaveClass\" with timeout 5000ms\u001b[22m\n    \u001b[2m  - waiting for locator('#test-dl')\u001b[22m\n    \u001b[2m    8 × locator resolved to <wb-desclist id=\"test-dl\" items=\"[{\"term\":\"Term 1\",\"desc\":\"Desc 1\"},{\"term\":\"Term 2\",\"desc\":\"Desc 2\"}]\">…</wb-desclist>\u001b[22m\n    \u001b[2m      - unexpected value \"\"\u001b[22m\n\n\n      47 |\n      48 |     const dl = page.locator('#test-dl');\n    > 49 |     await expect(dl).toHaveClass(/wb-dl/);\n         |                      ^\n      50 |     await expect(dl.locator('dt')).toHaveCount(2);\n      51 |     await expect(dl.locator('dd')).toHaveCount(2);\n      52 |     await expect(dl.locator('dt').first()).toHaveText('Term 1');\n        at C:\\Users\\jwpmi\\Downloads\\AI\\wb-starter\\tests\\semantics\\semantics-new.spec.ts:49:22\n\n    Retry #1 ───────────────────────────────────────────────────────────────────────────────────────\n\n    Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoHaveClass\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m failed\n\n    Locator: locator('#test-dl')\n    Expected pattern: \u001b[32m/wb-dl/\u001b[39m\n    Received string:  \u001b[31m\"\"\u001b[39m\n    Timeout: 5000ms\n\n    Call log:\n    \u001b[2m  - Expect \"toHaveClass\" with timeout 5000ms\u001b[22m\n    \u001b[2m  - waiting for locator('#test-dl')\u001b[22m\n    \u001b[2m    8 × locator resolved to <wb-desclist id=\"test-dl\" items=\"[{\"term\":\"Term 1\",\"desc\":\"Desc 1\"},{\"term\":\"Term 2\",\"desc\":\"Desc 2\"}]\">…</wb-desclist>\u001b[22m\n    \u001b[2m      - unexpected value \"\"\u001b[22m\n\n\n      47 |\n      48 |     const dl = page.locator('#test-dl');\n    > 49 |     await expect(dl).toHaveClass(/wb-dl/);\n         |                      ^\n      50 |     await expect(dl.locator('dt')).toHaveCount(2);\n      51 |     await expect(dl.locator('dd')).toHaveCount(2);\n      52 |     await expect(dl.locator('dt').first()).toHaveText('Term 1');\n        at C:\\Users\\jwpmi\\Downloads\\AI\\wb-starter\\tests\\semantics\\semantics-new.spec.ts:49:22\n\n  63) [behaviors] › tests\\semantics\\semantics-new.spec.ts:56:3 › New Semantic Behaviors › Empty state behavior renders correctly \n\n    Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoHaveClass\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m failed\n\n    Locator: locator('#test-empty')\n    Expected pattern: \u001b[32m/wb-empty/\u001b[39m\n    Received string:  \u001b[31m\"\"\u001b[39m\n    Timeout: 5000ms\n\n    Call log:\n    \u001b[2m  - Expect \"toHaveClass\" with timeout 5000ms\u001b[22m\n    \u001b[2m  - waiting for locator('#test-empty')\u001b[22m\n    \u001b[2m    8 × locator resolved to <wb-empty icon=\"∅\" id=\"test-empty\" message=\"No Data\"></wb-empty>\u001b[22m\n    \u001b[2m      - unexpected value \"\"\u001b[22m\n\n\n      61 |\n      62 |     const empty = page.locator('#test-empty');\n    > 63 |     await expect(empty).toHaveClass(/wb-empty/);\n         |                         ^\n      64 |     await expect(empty.locator('.wb-empty__icon')).toHaveText('∅');\n      65 |     await expect(empty.locator('.wb-empty__message')).toHaveText('No Data');\n      66 |   });\n        at C:\\Users\\jwpmi\\Downloads\\AI\\wb-starter\\tests\\semantics\\semantics-new.spec.ts:63:25\n\n    Retry #1 ───────────────────────────────────────────────────────────────────────────────────────\n\n    Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoHaveClass\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m failed\n\n    Locator: locator('#test-empty')\n    Expected pattern: \u001b[32m/wb-empty/\u001b[39m\n    Received string:  \u001b[31m\"\"\u001b[39m\n    Timeout: 5000ms\n\n    Call log:\n    \u001b[2m  - Expect \"toHaveClass\" with timeout 5000ms\u001b[22m\n    \u001b[2m  - waiting for locator('#test-empty')\u001b[22m\n    \u001b[2m    8 × locator resolved to <wb-empty icon=\"∅\" id=\"test-empty\" message=\"No Data\"></wb-empty>\u001b[22m\n    \u001b[2m      - unexpected value \"\"\u001b[22m\n\n\n      61 |\n      62 |     const empty = page.locator('#test-empty');\n    > 63 |     await expect(empty).toHaveClass(/wb-empty/);\n         |                         ^\n      64 |     await expect(empty.locator('.wb-empty__icon')).toHaveText('∅');\n      65 |     await expect(empty.locator('.wb-empty__message')).toHaveText('No Data');\n      66 |   });\n        at C:\\Users\\jwpmi\\Downloads\\AI\\wb-starter\\tests\\semantics\\semantics-new.spec.ts:63:25\n\n  64) [behaviors] › tests\\semantics\\semantics-new.spec.ts:68:3 › New Semantic Behaviors › Code behavior works on PRE tag \n\n    Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoHaveClass\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m failed\n\n    Locator: locator('#test-pre')\n    Expected pattern: \u001b[32m/wb-pre/\u001b[39m\n    Received string:  \u001b[31m\"\"\u001b[39m\n    Timeout: 5000ms\n\n    Call log:\n    \u001b[2m  - Expect \"toHaveClass\" with timeout 5000ms\u001b[22m\n    \u001b[2m  - waiting for locator('#test-pre')\u001b[22m\n    \u001b[2m    8 × locator resolved to <wb-code id=\"test-pre\" language=\"javascript\">…</wb-code>\u001b[22m\n    \u001b[2m      - unexpected value \"\"\u001b[22m\n\n\n      74 |     const pre = page.locator('#test-pre');\n      75 |     // Should have pre behavior applied (copy button, etc)\n    > 76 |     await expect(pre).toHaveClass(/wb-pre/);\n         |                       ^\n      77 |     await expect(pre.locator('.wb-pre__copy')).toBeVisible();\n      78 |     \n      79 |     // Should have code behavior applied (highlighting)\n        at C:\\Users\\jwpmi\\Downloads\\AI\\wb-starter\\tests\\semantics\\semantics-new.spec.ts:76:23\n\n    Error Context: data\\test-results\\semantics-semantics-new-Ne-a891b-e-behavior-works-on-PRE-tag-behaviors\\error-context.md\n\n    Retry #1 ───────────────────────────────────────────────────────────────────────────────────────\n\n    Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoHaveClass\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m failed\n\n    Locator: locator('#test-pre')\n    Expected pattern: \u001b[32m/wb-pre/\u001b[39m\n    Received string:  \u001b[31m\"\"\u001b[39m\n    Timeout: 5000ms\n\n    Call log:\n    \u001b[2m  - Expect \"toHaveClass\" with timeout 5000ms\u001b[22m\n    \u001b[2m  - waiting for locator('#test-pre')\u001b[22m\n    \u001b[2m    8 × locator resolved to <wb-code id=\"test-pre\" language=\"javascript\">…</wb-code>\u001b[22m\n    \u001b[2m      - unexpected value \"\"\u001b[22m\n\n\n      74 |     const pre = page.locator('#test-pre');\n      75 |     // Should have pre behavior applied (copy button, etc)\n    > 76 |     await expect(pre).toHaveClass(/wb-pre/);\n         |                       ^\n      77 |     await expect(pre.locator('.wb-pre__copy')).toBeVisible();\n      78 |     \n      79 |     // Should have code behavior applied (highlighting)\n        at C:\\Users\\jwpmi\\Downloads\\AI\\wb-starter\\tests\\semantics\\semantics-new.spec.ts:76:23\n\n    Error Context: data\\test-results\\semantics-semantics-new-Ne-a891b-e-behavior-works-on-PRE-tag-behaviors-retry1\\error-context.md\n\n  65) [behaviors] › tests\\semantics\\semantics-new.spec.ts:86:3 › New Semantic Behaviors › Stat behavior renders correctly \n\n    Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoHaveClass\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m failed\n\n    Locator: locator('#test-stat')\n    Expected pattern: \u001b[32m/wb-stat/\u001b[39m\n    Received string:  \u001b[31m\"\"\u001b[39m\n    Timeout: 5000ms\n\n    Call log:\n    \u001b[2m  - Expect \"toHaveClass\" with timeout 5000ms\u001b[22m\n    \u001b[2m  - waiting for locator('#test-stat')\u001b[22m\n    \u001b[2m    8 × locator resolved to <wb-stat value=\"100\" label=\"Users\" id=\"test-stat\"></wb-stat>\u001b[22m\n    \u001b[2m      - unexpected value \"\"\u001b[22m\n\n\n      91 |\n      92 |     const stat = page.locator('#test-stat');\n    > 93 |     await expect(stat).toHaveClass(/wb-stat/);\n         |                        ^\n      94 |     await expect(stat.locator('.wb-stat__value')).toHaveText('100');\n      95 |     await expect(stat.locator('.wb-stat__label')).toHaveText('Users');\n      96 |   });\n        at C:\\Users\\jwpmi\\Downloads\\AI\\wb-starter\\tests\\semantics\\semantics-new.spec.ts:93:24\n\n    Retry #1 ───────────────────────────────────────────────────────────────────────────────────────\n\n    Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoHaveClass\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m failed\n\n    Locator: locator('#test-stat')\n    Expected pattern: \u001b[32m/wb-stat/\u001b[39m\n    Received string:  \u001b[31m\"\"\u001b[39m\n    Timeout: 5000ms\n\n    Call log:\n    \u001b[2m  - Expect \"toHaveClass\" with timeout 5000ms\u001b[22m\n    \u001b[2m  - waiting for locator('#test-stat')\u001b[22m\n    \u001b[2m    8 × locator resolved to <wb-stat value=\"100\" label=\"Users\" id=\"test-stat\"></wb-stat>\u001b[22m\n    \u001b[2m      - unexpected value \"\"\u001b[22m\n\n\n      91 |\n      92 |     const stat = page.locator('#test-stat');\n    > 93 |     await expect(stat).toHaveClass(/wb-stat/);\n         |                        ^\n      94 |     await expect(stat.locator('.wb-stat__value')).toHaveText('100');\n      95 |     await expect(stat.locator('.wb-stat__label')).toHaveText('Users');\n      96 |   });\n        at C:\\Users\\jwpmi\\Downloads\\AI\\wb-starter\\tests\\semantics\\semantics-new.spec.ts:93:24\n\n  66) [behaviors] › tests\\semantics\\semantics-new.spec.ts:98:3 › New Semantic Behaviors › Timeline behavior renders correctly \n\n    Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoHaveClass\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m failed\n\n    Locator: locator('#test-timeline')\n    Expected pattern: \u001b[32m/wb-timeline/\u001b[39m\n    Received string:  \u001b[31m\"\"\u001b[39m\n    Timeout: 5000ms\n\n    Call log:\n    \u001b[2m  - Expect \"toHaveClass\" with timeout 5000ms\u001b[22m\n    \u001b[2m  - waiting for locator('#test-timeline')\u001b[22m\n    \u001b[2m    8 × locator resolved to <wb-timeline id=\"test-timeline\" items=\"Step 1, Step 2\"></wb-timeline>\u001b[22m\n    \u001b[2m      - unexpected value \"\"\u001b[22m\n\n\n      103 |\n      104 |     const timeline = page.locator('#test-timeline');\n    > 105 |     await expect(timeline).toHaveClass(/wb-timeline/);\n          |                            ^\n      106 |     await expect(timeline.locator('.wb-timeline__item')).toHaveCount(2);\n      107 |   });\n      108 |\n        at C:\\Users\\jwpmi\\Downloads\\AI\\wb-starter\\tests\\semantics\\semantics-new.spec.ts:105:28\n\n    Retry #1 ───────────────────────────────────────────────────────────────────────────────────────\n\n    Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoHaveClass\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m failed\n\n    Locator: locator('#test-timeline')\n    Expected pattern: \u001b[32m/wb-timeline/\u001b[39m\n    Received string:  \u001b[31m\"\"\u001b[39m\n    Timeout: 5000ms\n\n    Call log:\n    \u001b[2m  - Expect \"toHaveClass\" with timeout 5000ms\u001b[22m\n    \u001b[2m  - waiting for locator('#test-timeline')\u001b[22m\n    \u001b[2m    8 × locator resolved to <wb-timeline id=\"test-timeline\" items=\"Step 1, Step 2\"></wb-timeline>\u001b[22m\n    \u001b[2m      - unexpected value \"\"\u001b[22m\n\n\n      103 |\n      104 |     const timeline = page.locator('#test-timeline');\n    > 105 |     await expect(timeline).toHaveClass(/wb-timeline/);\n          |                            ^\n      106 |     await expect(timeline.locator('.wb-timeline__item')).toHaveCount(2);\n      107 |   });\n      108 |\n        at C:\\Users\\jwpmi\\Downloads\\AI\\wb-starter\\tests\\semantics\\semantics-new.spec.ts:105:28\n\n  67) [behaviors] › tests\\semantics\\semantics-new.spec.ts:109:3 › New Semantic Behaviors › JSON behavior renders correctly \n\n    Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoHaveClass\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m failed\n\n    Locator: locator('#test-json')\n    Expected pattern: \u001b[32m/wb-json/\u001b[39m\n    Received string:  \u001b[31m\"\"\u001b[39m\n    Timeout: 5000ms\n\n    Call log:\n    \u001b[2m  - Expect \"toHaveClass\" with timeout 5000ms\u001b[22m\n    \u001b[2m  - waiting for locator('#test-json')\u001b[22m\n    \u001b[2m    8 × locator resolved to <wb-json id=\"test-json\">{\"a\":1}</wb-json>\u001b[22m\n    \u001b[2m      - unexpected value \"\"\u001b[22m\n\n\n      114 |\n      115 |     const json = page.locator('#test-json');\n    > 116 |     await expect(json).toHaveClass(/wb-json/);\n          |                        ^\n      117 |     // Should be highlighted\n      118 |     await expect(json.locator('code')).toHaveClass(/language-json/);\n      119 |   });\n        at C:\\Users\\jwpmi\\Downloads\\AI\\wb-starter\\tests\\semantics\\semantics-new.spec.ts:116:24\n\n    Error Context: data\\test-results\\semantics-semantics-new-Ne-3319e--behavior-renders-correctly-behaviors\\error-context.md\n\n    Retry #1 ───────────────────────────────────────────────────────────────────────────────────────\n\n    Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoHaveClass\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m failed\n\n    Locator: locator('#test-json')\n    Expected pattern: \u001b[32m/wb-json/\u001b[39m\n    Received string:  \u001b[31m\"\"\u001b[39m\n    Timeout: 5000ms\n\n    Call log:\n    \u001b[2m  - Expect \"toHaveClass\" with timeout 5000ms\u001b[22m\n    \u001b[2m  - waiting for locator('#test-json')\u001b[22m\n    \u001b[2m    8 × locator resolved to <wb-json id=\"test-json\">{\"a\":1}</wb-json>\u001b[22m\n    \u001b[2m      - unexpected value \"\"\u001b[22m\n\n\n      114 |\n      115 |     const json = page.locator('#test-json');\n    > 116 |     await expect(json).toHaveClass(/wb-json/);\n          |                        ^\n      117 |     // Should be highlighted\n      118 |     await expect(json.locator('code')).toHaveClass(/language-json/);\n      119 |   });\n        at C:\\Users\\jwpmi\\Downloads\\AI\\wb-starter\\tests\\semantics\\semantics-new.spec.ts:116:24\n\n    Error Context: data\\test-results\\semantics-semantics-new-Ne-3319e--behavior-renders-correctly-behaviors-retry1\\error-context.md\n\n  68) [regression] › tests\\regression\\behaviors-page-data-attrs-sweep.spec.ts:95:3 › Behaviors page: data-* attribute sweep stays fixed › confirm and prompt dialogs show their configured title/message \n\n    Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeVisible\u001b[2m(\u001b[22m\u001b[2m)\u001b[22m failed\n\n    Locator: getByText('Confirm Action')\n    Expected: visible\n    Error: strict mode violation: getByText('Confirm Action') resolved to 2 elements:\n        1) <span class=\"hljs-string\">\"Confirm Action\"</span> aka getByText('\"Confirm Action\"')\n        2) <h3>Confirm Action</h3> aka getByRole('heading', { name: 'Confirm Action' })\n\n    Call log:\n    \u001b[2m  - Expect \"toBeVisible\" with timeout 5000ms\u001b[22m\n    \u001b[2m  - waiting for getByText('Confirm Action')\u001b[22m\n\n\n       99 |     const confirmBtn = page.locator('button', { hasText: 'Confirm Dialog' });\n      100 |     await confirmBtn.click();\n    > 101 |     await expect(page.getByText('Confirm Action')).toBeVisible();\n          |                                                    ^\n      102 |     await expect(page.getByText('Are you sure you want to proceed?')).toBeVisible();\n      103 |     await page.locator('button.cancel').click();\n      104 |\n        at C:\\Users\\jwpmi\\Downloads\\AI\\wb-starter\\tests\\regression\\behaviors-page-data-attrs-sweep.spec.ts:101:52\n\n    Error Context: data\\test-results\\behaviors-page-data-attrs--95863-ir-configured-title-message-regression\\error-context.md\n\n    Retry #1 ───────────────────────────────────────────────────────────────────────────────────────\n\n    Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeVisible\u001b[2m(\u001b[22m\u001b[2m)\u001b[22m failed\n\n    Locator: getByText('Confirm Action')\n    Expected: visible\n    Error: strict mode violation: getByText('Confirm Action') resolved to 2 elements:\n        1) <span class=\"hljs-string\">\"Confirm Action\"</span> aka getByText('\"Confirm Action\"')\n        2) <h3>Confirm Action</h3> aka getByRole('heading', { name: 'Confirm Action' })\n\n    Call log:\n    \u001b[2m  - Expect \"toBeVisible\" with timeout 5000ms\u001b[22m\n    \u001b[2m  - waiting for getByText('Confirm Action')\u001b[22m\n\n\n       99 |     const confirmBtn = page.locator('button', { hasText: 'Confirm Dialog' });\n      100 |     await confirmBtn.click();\n    > 101 |     await expect(page.getByText('Confirm Action')).toBeVisible();\n          |                                                    ^\n      102 |     await expect(page.getByText('Are you sure you want to proceed?')).toBeVisible();\n      103 |     await page.locator('button.cancel').click();\n      104 |\n        at C:\\Users\\jwpmi\\Downloads\\AI\\wb-starter\\tests\\regression\\behaviors-page-data-attrs-sweep.spec.ts:101:52\n\n    Error Context: data\\test-results\\behaviors-page-data-attrs--95863-ir-configured-title-message-regression-retry1\\error-context.md\n\n  69) [regression] › tests\\regression\\behaviors-page-data-attrs-sweep.spec.ts:67:3 › Behaviors page: data-* attribute sweep stays fixed › tooltips show at the button-declared position, not all defaulting to one side \n\n    Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeVisible\u001b[2m(\u001b[22m\u001b[2m)\u001b[22m failed\n\n    Locator: locator('.wb-tooltip.wb-tooltip--visible').last()\n    Expected: visible\n    Timeout: 5000ms\n    Error: element(s) not found\n\n    Call log:\n    \u001b[2m  - Expect \"toBeVisible\" with timeout 5000ms\u001b[22m\n    \u001b[2m  - waiting for locator('.wb-tooltip.wb-tooltip--visible').last()\u001b[22m\n\n\n      75 |       // [class*=\"tooltip\"] substring selector -- be exact.\n      76 |       const tooltip = page.locator('.wb-tooltip.wb-tooltip--visible').last();\n    > 77 |       await expect(tooltip).toBeVisible({ timeout: 5000 });\n         |                             ^\n      78 |       const cls = await tooltip.getAttribute('class');\n      79 |       seen.add((cls || '').replace(/\\s*wb-tooltip--visible\\s*/, '').trim());\n      80 |       await page.mouse.move(0, 0);\n        at C:\\Users\\jwpmi\\Downloads\\AI\\wb-starter\\tests\\regression\\behaviors-page-data-attrs-sweep.spec.ts:77:29\n\n    Error Context: data\\test-results\\behaviors-page-data-attrs--0cda9--all-defaulting-to-one-side-regression\\error-context.md\n\n  68 failed\n    [behaviors] › tests\\components\\feedback-visual.spec.ts:11:3 › Progress Bars › should have appropriate height \n    [behaviors] › tests\\components\\feedback-visual.spec.ts:62:3 › Spinners › should render with spinning animation \n    [behaviors] › tests\\components\\feedback-visual.spec.ts:118:3 › Skeleton Loaders › should have shimmer animation \n    [behaviors] › tests\\components\\feedback-visual.spec.ts:143:3 › Skeleton Loaders › text variant creates multiple lines \n    [behaviors] › tests\\components\\notes.spec.ts:42:5 › Notes Behavior › Structure › should add wb-notes class to element \n    [behaviors] › tests\\components\\notes.spec.ts:48:5 › Notes Behavior › Structure › should create backdrop element \n    [behaviors] › tests\\components\\notes.spec.ts:54:5 › Notes Behavior › Structure › should create drawer element \n    [behaviors] › tests\\components\\notes.spec.ts:60:5 › Notes Behavior › Structure › should create header element \n    [behaviors] › tests\\components\\notes.spec.ts:66:5 › Notes Behavior › Structure › should create textarea element \n    [behaviors] › tests\\components\\notes.spec.ts:72:5 › Notes Behavior › Structure › should create footer element \n    [behaviors] › tests\\components\\notes.spec.ts:78:5 › Notes Behavior › Structure › should create status element in footer \n    [behaviors] › tests\\components\\notes.spec.ts:89:5 › Notes Behavior › Buttons › should have collapse left button («) \n    [behaviors] › tests\\components\\notes.spec.ts:96:5 › Notes Behavior › Buttons › should have collapse right button (») \n    [behaviors] › tests\\components\\notes.spec.ts:103:5 › Notes Behavior › Buttons › should have left position button \n    [behaviors] › tests\\components\\notes.spec.ts:109:5 › Notes Behavior › Buttons › should have modal position button \n    [behaviors] › tests\\components\\notes.spec.ts:115:5 › Notes Behavior › Buttons › should have right position button \n    [behaviors] › tests\\components\\notes.spec.ts:121:5 › Notes Behavior › Buttons › should have copy button \n    [behaviors] › tests\\components\\notes.spec.ts:127:5 › Notes Behavior › Buttons › should have save button \n    [behaviors] › tests\\components\\notes.spec.ts:133:5 › Notes Behavior › Buttons › should have close button \n    [behaviors] › tests\\components\\notes.spec.ts:139:5 › Notes Behavior › Buttons › should have clear button in footer \n    [behaviors] › tests\\components\\notes.spec.ts:150:5 › Notes Behavior › Position › should default to left position \n    [behaviors] › tests\\components\\notes.spec.ts:156:5 › Notes Behavior › Position › should respect position=\"right\" \n    [behaviors] › tests\\components\\notes.spec.ts:162:5 › Notes Behavior › Position › should respect position=\"modal\" \n    [behaviors] › tests\\components\\notes.spec.ts:168:5 › Notes Behavior › Position › should mark left button active when position is left \n    [behaviors] › tests\\components\\notes.spec.ts:174:5 › Notes Behavior › Position › should mark right button active when position is right \n    [behaviors] › tests\\components\\notes.spec.ts:180:5 › Notes Behavior › Position › should mark modal button active when position is modal \n    [behaviors] › tests\\components\\notes.spec.ts:191:5 › Notes Behavior › Open/Close › should add wb-notes--open class when opened via API \n    [behaviors] › tests\\components\\notes.spec.ts:201:5 › Notes Behavior › Open/Close › should remove wb-notes--open class when closed via API \n    [behaviors] › tests\\components\\notes.spec.ts:212:5 › Notes Behavior › Open/Close › should toggle open state via API \n    [behaviors] › tests\\components\\notes.spec.ts:222:5 › Notes Behavior › Open/Close › close button should close drawer \n    [behaviors] › tests\\components\\notes.spec.ts:238:5 › Notes Behavior › Collapse Arrows › collapse left button should set position to left and close \n    [behaviors] › tests\\components\\notes.spec.ts:250:5 › Notes Behavior › Collapse Arrows › collapse right button should set position to right and close \n    [behaviors] › tests\\components\\notes.spec.ts:267:5 › Notes Behavior › Save with Duplicate Prevention › should show warning when no content to save \n    [behaviors] › tests\\components\\notes.spec.ts:274:5 › Notes Behavior › Save with Duplicate Prevention › should show success when saving content \n    [behaviors] › tests\\components\\notes.spec.ts:282:5 › Notes Behavior › Save with Duplicate Prevention › should prevent duplicate content on second save \n    [behaviors] › tests\\components\\notes.spec.ts:302:5 › Notes Behavior › Copy › should show warning when no content to copy \n    [behaviors] › tests\\components\\notes.spec.ts:314:5 › Notes Behavior › Clear › clear button should be in footer \n    [behaviors] › tests\\components\\notes.spec.ts:320:5 › Notes Behavior › Clear › clear button should have \"Clear\" text \n    [behaviors] › tests\\components\\notes.spec.ts:331:5 › Notes Behavior › API › should expose wbNotes object on element \n    [behaviors] › tests\\components\\notes.spec.ts:340:5 › Notes Behavior › API › should have open method \n    [behaviors] › tests\\components\\notes.spec.ts:349:5 › Notes Behavior › API › should have close method \n    [behaviors] › tests\\components\\notes.spec.ts:358:5 › Notes Behavior › API › should have toggle method \n    [behaviors] › tests\\components\\notes.spec.ts:367:5 › Notes Behavior › API › should have setPosition method \n    [behaviors] › tests\\components\\notes.spec.ts:376:5 › Notes Behavior › API › should have collapseToSide method \n    [behaviors] › tests\\components\\notes.spec.ts:385:5 › Notes Behavior › API › content property should get/set textarea value \n    [behaviors] › tests\\components\\notes.spec.ts:395:5 › Notes Behavior › API › isOpen property should reflect state \n    [behaviors] › tests\\components\\notes.spec.ts:408:5 › Notes Behavior › API › position property should reflect current position \n    [behaviors] › tests\\components\\notes.spec.ts:422:5 › Notes Behavior › Keyboard › Escape key should close drawer \n    [behaviors] › tests\\components\\pill-shortcut.spec.ts:51:3 › Pill Behavior Shortcut › x-pill=\"\" creates a badge with pill style \n    [behaviors] › tests\\pages\\header.spec.ts:13:3 › Header Behavior › renders with icon and title ──\n    [behaviors] › tests\\pages\\header.spec.ts:35:3 › Header Behavior › renders badge on right side ──\n    [behaviors] › tests\\pages\\header.spec.ts:67:3 › Header Behavior › renders subtitle ─────────────\n    [behaviors] › tests\\pages\\header.spec.ts:83:3 › Header Behavior › logo links when logoHref provided \n    [behaviors] › tests\\pages\\header.spec.ts:99:3 › Header Behavior › API: setTitle updates title ──\n    [behaviors] › tests\\pages\\header.spec.ts:124:3 › Header Behavior › API: setBadge updates badge ─\n    [behaviors] › tests\\semantics\\semantics-code-scroll.spec.ts:5:3 › Code Behavior Scroll Options › Default behavior (scrollable=false) wraps text and expands \n    [behaviors] › tests\\semantics\\semantics-code-scroll.spec.ts:19:3 › Code Behavior Scroll Options › Scrollable behavior (scrollable=true) does not wrap and scrolls \n    [behaviors] › tests\\semantics\\semantics-code-scroll.spec.ts:33:3 › Code Behavior Scroll Options › Standalone code block default behavior \n    [behaviors] › tests\\semantics\\semantics-code-scroll.spec.ts:47:3 › Code Behavior Scroll Options › Standalone code block scrollable behavior \n    [behaviors] › tests\\semantics\\semantics-new.spec.ts:19:3 › New Semantic Behaviors › List behavior renders items correctly \n    [behaviors] › tests\\semantics\\semantics-new.spec.ts:31:3 › New Semantic Behaviors › List behavior handles JSON items \n    [behaviors] › tests\\semantics\\semantics-new.spec.ts:42:3 › New Semantic Behaviors › Description List behavior renders items correctly \n    [behaviors] › tests\\semantics\\semantics-new.spec.ts:56:3 › New Semantic Behaviors › Empty state behavior renders correctly \n    [behaviors] › tests\\semantics\\semantics-new.spec.ts:68:3 › New Semantic Behaviors › Code behavior works on PRE tag \n    [behaviors] › tests\\semantics\\semantics-new.spec.ts:86:3 › New Semantic Behaviors › Stat behavior renders correctly \n    [behaviors] › tests\\semantics\\semantics-new.spec.ts:98:3 › New Semantic Behaviors › Timeline behavior renders correctly \n    [behaviors] › tests\\semantics\\semantics-new.spec.ts:109:3 › New Semantic Behaviors › JSON behavior renders correctly \n    [regression] › tests\\regression\\behaviors-page-data-attrs-sweep.spec.ts:95:3 › Behaviors page: data-* attribute sweep stays fixed › confirm and prompt dialogs show their configured title/message \n  1 flaky\n    [regression] › tests\\regression\\behaviors-page-data-attrs-sweep.spec.ts:67:3 › Behaviors page: data-* attribute sweep stays fixed › tooltips show at the button-declared position, not all defaulting to one side \n  29 passed (13.4m)\n",
+  "errors": "d show warning when no content to copy\n   Test timeout of 30000ms exceeded.\n\n⏱️ FAILED: should show warning when no content to save\n   Test timeout of 30000ms exceeded.\n\n⏱️ FAILED: clear button should be in footer\n   Test timeout of 30000ms exceeded.\n\n⏱️ FAILED: should show success when saving content\n   Test timeout of 30000ms exceeded.\n\n⏱️ FAILED: clear button should have \"Clear\" text\n   Test timeout of 30000ms exceeded.\n\n⏱️ FAILED: should expose wbNotes object on element\n   Test timeout of 30000ms exceeded.\n\n⏱️ FAILED: should have toggle method\n   Test timeout of 30000ms exceeded.\nError in reporter Error: ENOENT: no such file or directory, open 'C:\\Users\\jwpmi\\Downloads\\AI\\wb-starter\\data\\test-results\\failures-live.log'\n    at Object.writeFileSync (node:fs:2412:20)\n    at appendFileSync (node:fs:2494:6)\n    at WBTestReporter.logFailureImmediately (file:///C:/Users/jwpmi/Downloads/AI/wb-starter/scripts/tools/test-reporter.ts:218:5)\n    at WBTestReporter.onTestEnd (file:///C:/Users/jwpmi/Downloads/AI/wb-starter/scripts/tools/test-reporter.ts:187:14)\n    at ReporterV2Wrapper.onTestEnd (C:\\Users\\jwpmi\\Downloads\\AI\\wb-starter\\node_modules\\playwright\\lib\\reporters\\reporterV2.js:74:31)\n    at C:\\Users\\jwpmi\\Downloads\\AI\\wb-starter\\node_modules\\playwright\\lib\\reporters\\multiplexer.js:57:38\n    at wrap (C:\\Users\\jwpmi\\Downloads\\AI\\wb-starter\\node_modules\\playwright\\lib\\reporters\\multiplexer.js:104:5)\n    at Multiplexer.onTestEnd (C:\\Users\\jwpmi\\Downloads\\AI\\wb-starter\\node_modules\\playwright\\lib\\reporters\\multiplexer.js:57:7)\n    at InternalReporter.onTestEnd (C:\\Users\\jwpmi\\Downloads\\AI\\wb-starter\\node_modules\\playwright\\lib\\reporters\\internalReporter.js:75:31)\n    at JobDispatcher._reportTestEnd (C:\\Users\\jwpmi\\Downloads\\AI\\wb-starter\\node_modules\\playwright\\lib\\runner\\dispatcher.js:512:31)\n    at JobDispatcher._onTestEnd (C:\\Users\\jwpmi\\Downloads\\AI\\wb-starter\\node_modules\\playwright\\lib\\runner\\dispatcher.js:275:10)\n    at WorkerHost.emit (node:events:508:28)\n    at ChildProcess.<anonymous> (C:\\Users\\jwpmi\\Downloads\\AI\\wb-starter\\node_modules\\playwright\\lib\\runner\\processHost.js:97:16)\n    at ChildProcess.emit (node:events:508:28)\n    at emit (node:internal/child_process:949:14)\n    at processTicksAndRejections (node:internal/process/task_queues:90:21) {\n  errno: -4058,\n  code: 'ENOENT',\n  syscall: 'open',\n  path: 'C:\\\\Users\\\\jwpmi\\\\Downloads\\\\AI\\\\wb-starter\\\\data\\\\test-results\\\\failures-live.log'\n}\n\n⏱️ FAILED: should have close method\n   Test timeout of 30000ms exceeded.\n\n⏱️ FAILED: should have setPosition method\n   Test timeout of 30000ms exceeded.\n\n⏱️ FAILED: content property should get/set textarea value\n   Test timeout of 30000ms exceeded.\n\n⏱️ FAILED: should have collapseToSide method\n   Test timeout of 30000ms exceeded.\n\n⏱️ FAILED: clear button should have \"Clear\" text\n   Test timeout of 30000ms exceeded.\n\n⏱️ FAILED: should expose wbNotes object on element\n   Test timeout of 30000ms exceeded.\n\n⏱️ FAILED: should have setPosition method\n   Test timeout of 30000ms exceeded.\n\n⏱️ FAILED: should have close method\n   Test timeout of 30000ms exceeded.\n\n⏱️ FAILED: should have open method\n   Test timeout of 30000ms exceeded.\n\n⏱️ FAILED: content property should get/set textarea value\n   Test timeout of 30000ms exceeded.\n\n⏱️ FAILED: should have toggle method\n   Test timeout of 30000ms exceeded.\n\n⏱️ FAILED: Escape key should close drawer\n   Test timeout of 30000ms exceeded.\n\n⏱️ FAILED: position property should reflect current position\n   Test timeout of 30000ms exceeded.\n\n⏱️ FAILED: isOpen property should reflect state\n   Test timeout of 30000ms exceeded.\n\n❌ FAILED: x-pill=\"\" creates a badge with pill style\n   Error: expect(locator).toHaveClass(expected) failed\n\n⏱️ FAILED: should have collapseToSide method\n   Test timeout of 30000ms exceeded.\nError in reporter Error: ENOENT: no such file or directory, open 'C:\\Users\\jwpmi\\Downloads\\AI\\wb-starter\\data\\test-results\\failures-live.log'\n    at Object.writeFileSync (node:fs:2412:20)\n    at appendFileSync (node:fs:2494:6)\n    at WBTestReporter.logFailureImmediately (file:///C:/Users/jwpmi/Downloads/AI/wb-starter/scripts/tools/test-reporter.ts:218:5)\n    at WBTestReporter.onTestEnd (file:///C:/Users/jwpmi/Downloads/AI/wb-starter/scripts/tools/test-reporter.ts:187:14)\n    at ReporterV2Wrapper.onTestEnd (C:\\Users\\jwpmi\\Downloads\\AI\\wb-starter\\node_modules\\playwright\\lib\\reporters\\reporterV2.js:74:31)\n    at C:\\Users\\jwpmi\\Downloads\\AI\\wb-starter\\node_modules\\playwright\\lib\\reporters\\multiplexer.js:57:38\n    at wrap (C:\\Users\\jwpmi\\Downloads\\AI\\wb-starter\\node_modules\\playwright\\lib\\reporters\\multiplexer.js:104:5)\n    at Multiplexer.onTestEnd (C:\\Users\\jwpmi\\Downloads\\AI\\wb-starter\\node_modules\\playwright\\lib\\reporters\\multiplexer.js:57:7)\n    at InternalReporter.onTestEnd (C:\\Users\\jwpmi\\Downloads\\AI\\wb-starter\\node_modules\\playwright\\lib\\reporters\\internalReporter.js:75:31)\n    at JobDispatcher._reportTestEnd (C:\\Users\\jwpmi\\Downloads\\AI\\wb-starter\\node_modules\\playwright\\lib\\runner\\dispatcher.js:512:31)\n    at JobDispatcher._onTestEnd (C:\\Users\\jwpmi\\Downloads\\AI\\wb-starter\\node_modules\\playwright\\lib\\runner\\dispatcher.js:275:10)\n    at WorkerHost.emit (node:events:508:28)\n    at ChildProcess.<anonymous> (C:\\Users\\jwpmi\\Downloads\\AI\\wb-starter\\node_modules\\playwright\\lib\\runner\\processHost.js:97:16)\n    at ChildProcess.emit (node:events:508:28)\n    at emit (node:internal/child_process:949:14)\n    at processTicksAndRejections (node:internal/process/task_queues:90:21) {\n  errno: -4058,\n  code: 'ENOENT',\n  syscall: 'open',\n  path: 'C:\\\\Users\\\\jwpmi\\\\Downloads\\\\AI\\\\wb-starter\\\\data\\\\test-results\\\\failures-live.log'\n}\n\n❌ FAILED: renders badge on right side\n   Error: expect(locator).toHaveText(expected) failed\n\n❌ FAILED: renders subtitle\n   Error: expect(locator).toHaveText(expected) failed\n\n❌ FAILED: x-pill=\"\" creates a badge with pill style\n   Error: expect(locator).toHaveClass(expected) failed\n\n❌ FAILED: renders with icon and title\n   Error: expect(locator).toHaveText(expected) failed\n\n❌ FAILED: logo links when logoHref provided\n   Error: expect(locator).toHaveAttribute(expected) failed\n\n⏱️ FAILED: position property should reflect current position\n   Test timeout of 30000ms exceeded.\n\n⏱️ FAILED: Escape key should close drawer\n   Test timeout of 30000ms exceeded.\n\n❌ FAILED: renders badge on right side\n   Error: expect(locator).toHaveText(expected) failed\n\n❌ FAILED: renders subtitle\n   Error: expect(locator).toHaveText(expected) failed\n\n❌ FAILED: logo links when logoHref provided\n   Error: expect(locator).toHaveAttribute(expected) failed\n\n❌ FAILED: API: setBadge updates badge\n   Error: expect(locator).toHaveText(expected) failed\n\n❌ FAILED: API: setTitle updates title\n   Error: expect(locator).toHaveText(expected) failed\n\n⏱️ FAILED: isOpen property should reflect state\n   Test timeout of 30000ms exceeded.\n\n❌ FAILED: Standalone code block default behavior\n   Error: expect(locator).toHaveClass(expected) failed\n\n❌ FAILED: Scrollable behavior (scrollable=true) does not wrap and scrolls\n   Error: expect(locator).toHaveClass(expected) failed\n\n❌ FAILED: Default behavior (scrollable=false) wraps text and expands\n   Error: expect(locator).toHaveClass(expected) failed\n\n❌ FAILED: List behavior renders items correctly\n   Error: expect(locator).toHaveClass(expected) failed\n\n❌ FAILED: Standalone code block scrollable behavior\n   Error: expect(locator).toHaveClass(expected) failed\n\n❌ FAILED: API: setTitle updates title\n   Error: expect(locator).toHaveText(expected) failed\n\n❌ FAILED: API: setBadge updates badge\n   Error: expect(locator).toHaveText(expected) failed\n\n❌ FAILED: List behavior handles JSON items\n   Error: expect(locator).toHaveCount(expected) failed\n\n❌ FAILED: Scrollable behavior (scrollable=true) does not wrap and scrolls\n   Error: expect(locator).toHaveClass(expected) failed\n\n❌ FAILED: Default behavior (scrollable=false) wraps text and expands\n   Error: expect(locator).toHaveClass(expected) failed\n\n❌ FAILED: Standalone code block default behavior\n   Error: expect(locator).toHaveClass(expected) failed\n\n❌ FAILED: List behavior renders items correctly\n   Error: expect(locator).toHaveClass(expected) failed\n\n❌ FAILED: Standalone code block scrollable behavior\n   Error: expect(locator).toHaveClass(expected) failed\n\n❌ FAILED: Description List behavior renders items correctly\n   Error: expect(locator).toHaveClass(expected) failed\n\n❌ FAILED: List behavior handles JSON items\n   Error: expect(locator).toHaveCount(expected) failed\n\n❌ FAILED: Empty state behavior renders correctly\n   Error: expect(locator).toHaveClass(expected) failed\n\n❌ FAILED: Timeline behavior renders correctly\n   Error: expect(locator).toHaveClass(expected) failed\n\n❌ FAILED: Stat behavior renders correctly\n   Error: expect(locator).toHaveClass(expected) failed\n\n❌ FAILED: Code behavior works on PRE tag\n   Error: expect(locator).toHaveClass(expected) failed\n\n❌ FAILED: JSON behavior renders correctly\n   Error: expect(locator).toHaveClass(expected) failed\n\n❌ FAILED: Empty state behavior renders correctly\n   Error: expect(locator).toHaveClass(expected) failed\n\n❌ FAILED: Timeline behavior renders correctly\n   Error: expect(locator).toHaveClass(expected) failed\n\n❌ FAILED: confirm and prompt dialogs show their configured title/message\n   Error: expect(locator).toBeVisible() failed\n\n❌ FAILED: Description List behavior renders items correctly\n   Error: expect(locator).toHaveClass(expected) failed\n\n❌ FAILED: JSON behavior renders correctly\n   Error: expect(locator).toHaveClass(expected) failed\n\n❌ FAILED: tooltips show at the button-declared position, not all defaulting to one side\n   Error: expect(locator).toBeVisible() failed\n\n❌ FAILED: Stat behavior renders correctly\n   Error: expect(locator).toHaveClass(expected) failed\n\n❌ FAILED: Code behavior works on PRE tag\n   Error: expect(locator).toHaveClass(expected) failed\n\n❌ FAILED: confirm and prompt dialogs show their configured title/message\n   Error: expect(locator).toBeVisible() failed\n",
+  "failures": [
+    {
+      "file": "tests\\components\\feedback-visual.spec.ts",
+      "name": "Progress Bars › should have appropriate height"
+    },
+    {
+      "file": "tests\\components\\feedback-visual.spec.ts",
+      "name": "Skeleton Loaders › should have shimmer animation"
+    },
+    {
+      "file": "tests\\components\\feedback-visual.spec.ts",
+      "name": "Spinners › should render with spinning animation"
+    },
+    {
+      "file": "tests\\components\\feedback-visual.spec.ts",
+      "name": "Skeleton Loaders › text variant creates multiple lines"
+    },
+    {
+      "file": "tests\\components\\feedback-visual.spec.ts",
+      "name": "Spinners › should render with spinning animation (retry #1)"
+    },
+    {
+      "file": "tests\\components\\feedback-visual.spec.ts",
+      "name": "Progress Bars › should have appropriate height (retry #1)"
+    },
+    {
+      "file": "tests\\components\\feedback-visual.spec.ts",
+      "name": "Skeleton Loaders › text variant creates multiple lines (retry #1)"
+    },
+    {
+      "file": "tests\\components\\feedback-visual.spec.ts",
+      "name": "Skeleton Loaders › should have shimmer animation (retry #1)"
+    },
+    {
+      "file": "tests\\components\\notes.spec.ts",
+      "name": "Notes Behavior › Structure › should add wb-notes class to element"
+    },
+    {
+      "file": "tests\\components\\notes.spec.ts",
+      "name": "Notes Behavior › Structure › should create backdrop element"
+    },
+    {
+      "file": "tests\\components\\notes.spec.ts",
+      "name": "Notes Behavior › Structure › should create drawer element"
+    },
+    {
+      "file": "tests\\components\\notes.spec.ts",
+      "name": "Notes Behavior › Structure › should create footer element"
+    },
+    {
+      "file": "tests\\components\\notes.spec.ts",
+      "name": "Notes Behavior › Structure › should create header element"
+    },
+    {
+      "file": "tests\\components\\notes.spec.ts",
+      "name": "Notes Behavior › Structure › should create status element in footer"
+    },
+    {
+      "file": "tests\\components\\notes.spec.ts",
+      "name": "Notes Behavior › Structure › should create textarea element"
+    },
+    {
+      "file": "tests\\components\\notes.spec.ts",
+      "name": "Notes Behavior › Buttons › should have collapse left button («)"
+    },
+    {
+      "file": "tests\\components\\notes.spec.ts",
+      "name": "Notes Behavior › Structure › should create backdrop element (retry #1)"
+    },
+    {
+      "file": "tests\\components\\notes.spec.ts",
+      "name": "Notes Behavior › Structure › should add wb-notes class to element (retry #1)"
+    },
+    {
+      "file": "tests\\components\\notes.spec.ts",
+      "name": "Notes Behavior › Structure › should create drawer element (retry #1)"
+    },
+    {
+      "file": "tests\\components\\notes.spec.ts",
+      "name": "Notes Behavior › Structure › should create footer element (retry #1)"
+    },
+    {
+      "file": "tests\\components\\notes.spec.ts",
+      "name": "Notes Behavior › Structure › should create header element (retry #1)"
+    },
+    {
+      "file": "tests\\components\\notes.spec.ts",
+      "name": "Notes Behavior › Structure › should create status element in footer (retry #1)"
+    },
+    {
+      "file": "tests\\components\\notes.spec.ts",
+      "name": "Notes Behavior › Structure › should create textarea element (retry #1)"
+    },
+    {
+      "file": "tests\\components\\notes.spec.ts",
+      "name": "Notes Behavior › Buttons › should have collapse left button («) (retry #1)"
+    },
+    {
+      "file": "tests\\components\\notes.spec.ts",
+      "name": "Notes Behavior › Buttons › should have left position button"
+    },
+    {
+      "file": "tests\\components\\notes.spec.ts",
+      "name": "Notes Behavior › Buttons › should have collapse right button (»)"
+    },
+    {
+      "file": "tests\\components\\notes.spec.ts",
+      "name": "Notes Behavior › Buttons › should have modal position button"
+    },
+    {
+      "file": "tests\\components\\notes.spec.ts",
+      "name": "Notes Behavior › Buttons › should have clear button in footer"
+    },
+    {
+      "file": "tests\\components\\notes.spec.ts",
+      "name": "Notes Behavior › Buttons › should have copy button"
+    },
+    {
+      "file": "tests\\components\\notes.spec.ts",
+      "name": "Notes Behavior › Buttons › should have save button"
+    },
+    {
+      "file": "tests\\components\\notes.spec.ts",
+      "name": "Notes Behavior › Buttons › should have close button"
+    },
+    {
+      "file": "tests\\components\\notes.spec.ts",
+      "name": "Notes Behavior › Buttons › should have right position button"
+    },
+    {
+      "file": "tests\\components\\notes.spec.ts",
+      "name": "Notes Behavior › Buttons › should have left position button (retry #1)"
+    },
+    {
+      "file": "tests\\components\\notes.spec.ts",
+      "name": "Notes Behavior › Buttons › should have collapse right button (») (retry #1)"
+    },
+    {
+      "file": "tests\\components\\notes.spec.ts",
+      "name": "Notes Behavior › Buttons › should have modal position button (retry #1)"
+    },
+    {
+      "file": "tests\\components\\notes.spec.ts",
+      "name": "Notes Behavior › Buttons › should have close button (retry #1)"
+    },
+    {
+      "file": "tests\\components\\notes.spec.ts",
+      "name": "Notes Behavior › Buttons › should have save button (retry #1)"
+    },
+    {
+      "file": "tests\\components\\notes.spec.ts",
+      "name": "Notes Behavior › Buttons › should have clear button in footer (retry #1)"
+    },
+    {
+      "file": "tests\\components\\notes.spec.ts",
+      "name": "Notes Behavior › Buttons › should have right position button (retry #1)"
+    },
+    {
+      "file": "tests\\components\\notes.spec.ts",
+      "name": "Notes Behavior › Position › should default to left position"
+    },
+    {
+      "file": "tests\\components\\notes.spec.ts",
+      "name": "Notes Behavior › Position › should respect position=\"right\""
+    },
+    {
+      "file": "tests\\components\\notes.spec.ts",
+      "name": "Notes Behavior › Buttons › should have copy button (retry #1)"
+    },
+    {
+      "file": "tests\\components\\notes.spec.ts",
+      "name": "Notes Behavior › Position › should respect position=\"modal\""
+    },
+    {
+      "file": "tests\\components\\notes.spec.ts",
+      "name": "Notes Behavior › Position › should mark left button active when position is left"
+    },
+    {
+      "file": "tests\\components\\notes.spec.ts",
+      "name": "Notes Behavior › Position › should mark right button active when position is right"
+    },
+    {
+      "file": "tests\\components\\notes.spec.ts",
+      "name": "Notes Behavior › Position › should respect position=\"right\" (retry #1)"
+    },
+    {
+      "file": "tests\\components\\notes.spec.ts",
+      "name": "Notes Behavior › Position › should default to left position (retry #1)"
+    },
+    {
+      "file": "tests\\components\\notes.spec.ts",
+      "name": "Notes Behavior › Open/Close › should remove wb-notes--open class when closed via API"
+    },
+    {
+      "file": "tests\\components\\notes.spec.ts",
+      "name": "Notes Behavior › Position › should mark modal button active when position is modal"
+    },
+    {
+      "file": "tests\\components\\notes.spec.ts",
+      "name": "Notes Behavior › Open/Close › should add wb-notes--open class when opened via API"
+    },
+    {
+      "file": "tests\\components\\notes.spec.ts",
+      "name": "Notes Behavior › Position › should mark left button active when position is left (retry #1)"
+    },
+    {
+      "file": "tests\\components\\notes.spec.ts",
+      "name": "Notes Behavior › Position › should mark right button active when position is right (retry #1)"
+    },
+    {
+      "file": "tests\\components\\notes.spec.ts",
+      "name": "Notes Behavior › Position › should respect position=\"modal\" (retry #1)"
+    },
+    {
+      "file": "tests\\components\\notes.spec.ts",
+      "name": "Notes Behavior › Open/Close › should toggle open state via API"
+    },
+    {
+      "file": "tests\\components\\notes.spec.ts",
+      "name": "Notes Behavior › Position › should mark modal button active when position is modal (retry #1)"
+    },
+    {
+      "file": "tests\\components\\notes.spec.ts",
+      "name": "Notes Behavior › Open/Close › close button should close drawer"
+    },
+    {
+      "file": "tests\\components\\notes.spec.ts",
+      "name": "Notes Behavior › Open/Close › should remove wb-notes--open class when closed via API (retry #1)"
+    },
+    {
+      "file": "tests\\components\\notes.spec.ts",
+      "name": "Notes Behavior › Open/Close › should add wb-notes--open class when opened via API (retry #1)"
+    },
+    {
+      "file": "tests\\components\\notes.spec.ts",
+      "name": "Notes Behavior › Collapse Arrows › collapse left button should set position to left and close"
+    },
+    {
+      "file": "tests\\components\\notes.spec.ts",
+      "name": "Notes Behavior › Open/Close › should toggle open state via API (retry #1)"
+    },
+    {
+      "file": "tests\\components\\notes.spec.ts",
+      "name": "Notes Behavior › Collapse Arrows › collapse right button should set position to right and close"
+    },
+    {
+      "file": "tests\\components\\notes.spec.ts",
+      "name": "Notes Behavior › Save with Duplicate Prevention › should show success when saving content"
+    },
+    {
+      "file": "tests\\components\\notes.spec.ts",
+      "name": "Notes Behavior › Save with Duplicate Prevention › should show warning when no content to save"
+    },
+    {
+      "file": "tests\\components\\notes.spec.ts",
+      "name": "Notes Behavior › Save with Duplicate Prevention › should prevent duplicate content on second save"
+    },
+    {
+      "file": "tests\\components\\notes.spec.ts",
+      "name": "Notes Behavior › Open/Close › close button should close drawer (retry #1)"
+    },
+    {
+      "file": "tests\\components\\notes.spec.ts",
+      "name": "Notes Behavior › Copy › should show warning when no content to copy"
+    },
+    {
+      "file": "tests\\components\\notes.spec.ts",
+      "name": "Notes Behavior › Collapse Arrows › collapse left button should set position to left and close (retry #1)"
+    },
+    {
+      "file": "tests\\components\\notes.spec.ts",
+      "name": "Notes Behavior › Clear › clear button should be in footer"
+    },
+    {
+      "file": "tests\\components\\notes.spec.ts",
+      "name": "Notes Behavior › Collapse Arrows › collapse right button should set position to right and close (retry #1)"
+    },
+    {
+      "file": "tests\\components\\notes.spec.ts",
+      "name": "Notes Behavior › Save with Duplicate Prevention › should prevent duplicate content on second save (retry #1)"
+    },
+    {
+      "file": "tests\\components\\notes.spec.ts",
+      "name": "Notes Behavior › Copy › should show warning when no content to copy (retry #1)"
+    },
+    {
+      "file": "tests\\components\\notes.spec.ts",
+      "name": "Notes Behavior › Save with Duplicate Prevention › should show warning when no content to save (retry #1)"
+    },
+    {
+      "file": "tests\\components\\notes.spec.ts",
+      "name": "Notes Behavior › Clear › clear button should be in footer (retry #1)"
+    },
+    {
+      "file": "tests\\components\\notes.spec.ts",
+      "name": "Notes Behavior › Save with Duplicate Prevention › should show success when saving content (retry #1)"
+    },
+    {
+      "file": "tests\\components\\notes.spec.ts",
+      "name": "Notes Behavior › Clear › clear button should have \"Clear\" text"
+    },
+    {
+      "file": "tests\\components\\notes.spec.ts",
+      "name": "Notes Behavior › API › should expose wbNotes object on element"
+    },
+    {
+      "file": "tests\\components\\notes.spec.ts",
+      "name": "Notes Behavior › API › should have toggle method"
+    },
+    {
+      "file": "tests\\components\\notes.spec.ts",
+      "name": "Notes Behavior › API › should have open method"
+    },
+    {
+      "file": "tests\\components\\notes.spec.ts",
+      "name": "Notes Behavior › API › should have close method"
+    },
+    {
+      "file": "tests\\components\\notes.spec.ts",
+      "name": "Notes Behavior › API › should have setPosition method"
+    },
+    {
+      "file": "tests\\components\\notes.spec.ts",
+      "name": "Notes Behavior › API › content property should get/set textarea value"
+    },
+    {
+      "file": "tests\\components\\notes.spec.ts",
+      "name": "Notes Behavior › API › should have collapseToSide method"
+    },
+    {
+      "file": "tests\\components\\notes.spec.ts",
+      "name": "Notes Behavior › Clear › clear button should have \"Clear\" text (retry #1)"
+    },
+    {
+      "file": "tests\\components\\notes.spec.ts",
+      "name": "Notes Behavior › API › should expose wbNotes object on element (retry #1)"
+    },
+    {
+      "file": "tests\\components\\notes.spec.ts",
+      "name": "Notes Behavior › API › should have setPosition method (retry #1)"
+    },
+    {
+      "file": "tests\\components\\notes.spec.ts",
+      "name": "Notes Behavior › API › should have close method (retry #1)"
+    },
+    {
+      "file": "tests\\components\\notes.spec.ts",
+      "name": "Notes Behavior › API › should have open method (retry #1)"
+    },
+    {
+      "file": "tests\\components\\notes.spec.ts",
+      "name": "Notes Behavior › API › content property should get/set textarea value (retry #1)"
+    },
+    {
+      "file": "tests\\components\\notes.spec.ts",
+      "name": "Notes Behavior › API › should have toggle method (retry #1)"
+    },
+    {
+      "file": "tests\\components\\notes.spec.ts",
+      "name": "Notes Behavior › Keyboard › Escape key should close drawer"
+    },
+    {
+      "file": "tests\\components\\notes.spec.ts",
+      "name": "Notes Behavior › API › position property should reflect current position"
+    },
+    {
+      "file": "tests\\components\\notes.spec.ts",
+      "name": "Notes Behavior › API › isOpen property should reflect state"
+    },
+    {
+      "file": "tests\\components\\pill-shortcut.spec.ts",
+      "name": "Pill Behavior Shortcut › x-pill=\"\" creates a badge with pill style"
+    },
+    {
+      "file": "tests\\components\\notes.spec.ts",
+      "name": "Notes Behavior › API › should have collapseToSide method (retry #1)"
+    },
+    {
+      "file": "tests\\pages\\header.spec.ts",
+      "name": "Header Behavior › renders with icon and title"
+    },
+    {
+      "file": "tests\\pages\\header.spec.ts",
+      "name": "Header Behavior › renders badge on right side"
+    },
+    {
+      "file": "tests\\pages\\header.spec.ts",
+      "name": "Header Behavior › renders subtitle"
+    },
+    {
+      "file": "tests\\components\\pill-shortcut.spec.ts",
+      "name": "Pill Behavior Shortcut › x-pill=\"\" creates a badge with pill style (retry #1)"
+    },
+    {
+      "file": "tests\\pages\\header.spec.ts",
+      "name": "Header Behavior › renders with icon and title (retry #1)"
+    },
+    {
+      "file": "tests\\pages\\header.spec.ts",
+      "name": "Header Behavior › logo links when logoHref provided"
+    },
+    {
+      "file": "tests\\components\\notes.spec.ts",
+      "name": "Notes Behavior › API › position property should reflect current position (retry #1)"
+    },
+    {
+      "file": "tests\\components\\notes.spec.ts",
+      "name": "Notes Behavior › Keyboard › Escape key should close drawer (retry #1)"
+    },
+    {
+      "file": "tests\\pages\\header.spec.ts",
+      "name": "Header Behavior › renders badge on right side (retry #1)"
+    },
+    {
+      "file": "tests\\pages\\header.spec.ts",
+      "name": "Header Behavior › renders subtitle (retry #1)"
+    },
+    {
+      "file": "tests\\pages\\header.spec.ts",
+      "name": "Header Behavior › logo links when logoHref provided (retry #1)"
+    },
+    {
+      "file": "tests\\pages\\header.spec.ts",
+      "name": "Header Behavior › API: setBadge updates badge"
+    },
+    {
+      "file": "tests\\pages\\header.spec.ts",
+      "name": "Header Behavior › API: setTitle updates title"
+    },
+    {
+      "file": "tests\\components\\notes.spec.ts",
+      "name": "Notes Behavior › API › isOpen property should reflect state (retry #1)"
+    },
+    {
+      "file": "tests\\semantics\\semantics-code-scroll.spec.ts",
+      "name": "Code Behavior Scroll Options › Standalone code block default behavior"
+    },
+    {
+      "file": "tests\\semantics\\semantics-code-scroll.spec.ts",
+      "name": "Code Behavior Scroll Options › Scrollable behavior (scrollable=true) does not wrap and scrolls"
+    },
+    {
+      "file": "tests\\semantics\\semantics-code-scroll.spec.ts",
+      "name": "Code Behavior Scroll Options › Default behavior (scrollable=false) wraps text and expands"
+    },
+    {
+      "file": "tests\\semantics\\semantics-new.spec.ts",
+      "name": "New Semantic Behaviors › List behavior renders items correctly"
+    },
+    {
+      "file": "tests\\semantics\\semantics-code-scroll.spec.ts",
+      "name": "Code Behavior Scroll Options › Standalone code block scrollable behavior"
+    },
+    {
+      "file": "tests\\pages\\header.spec.ts",
+      "name": "Header Behavior › API: setTitle updates title (retry #1)"
+    },
+    {
+      "file": "tests\\pages\\header.spec.ts",
+      "name": "Header Behavior › API: setBadge updates badge (retry #1)"
+    },
+    {
+      "file": "tests\\semantics\\semantics-new.spec.ts",
+      "name": "New Semantic Behaviors › List behavior handles JSON items"
+    },
+    {
+      "file": "tests\\semantics\\semantics-code-scroll.spec.ts",
+      "name": "Code Behavior Scroll Options › Scrollable behavior (scrollable=true) does not wrap and scrolls (retry #1)"
+    },
+    {
+      "file": "tests\\semantics\\semantics-code-scroll.spec.ts",
+      "name": "Code Behavior Scroll Options › Default behavior (scrollable=false) wraps text and expands (retry #1)"
+    },
+    {
+      "file": "tests\\semantics\\semantics-code-scroll.spec.ts",
+      "name": "Code Behavior Scroll Options › Standalone code block default behavior (retry #1)"
+    },
+    {
+      "file": "tests\\semantics\\semantics-new.spec.ts",
+      "name": "New Semantic Behaviors › List behavior renders items correctly (retry #1)"
+    },
+    {
+      "file": "tests\\semantics\\semantics-code-scroll.spec.ts",
+      "name": "Code Behavior Scroll Options › Standalone code block scrollable behavior (retry #1)"
+    },
+    {
+      "file": "tests\\semantics\\semantics-new.spec.ts",
+      "name": "New Semantic Behaviors › Description List behavior renders items correctly"
+    },
+    {
+      "file": "tests\\semantics\\semantics-new.spec.ts",
+      "name": "New Semantic Behaviors › List behavior handles JSON items (retry #1)"
+    },
+    {
+      "file": "tests\\semantics\\semantics-new.spec.ts",
+      "name": "New Semantic Behaviors › Empty state behavior renders correctly"
+    },
+    {
+      "file": "tests\\semantics\\semantics-new.spec.ts",
+      "name": "New Semantic Behaviors › Timeline behavior renders correctly"
+    },
+    {
+      "file": "tests\\semantics\\semantics-new.spec.ts",
+      "name": "New Semantic Behaviors › Stat behavior renders correctly"
+    },
+    {
+      "file": "tests\\semantics\\semantics-new.spec.ts",
+      "name": "New Semantic Behaviors › Code behavior works on PRE tag"
+    },
+    {
+      "file": "tests\\semantics\\semantics-new.spec.ts",
+      "name": "New Semantic Behaviors › JSON behavior renders correctly"
+    },
+    {
+      "file": "tests\\semantics\\semantics-new.spec.ts",
+      "name": "New Semantic Behaviors › Empty state behavior renders correctly (retry #1)"
+    },
+    {
+      "file": "tests\\semantics\\semantics-new.spec.ts",
+      "name": "New Semantic Behaviors › Timeline behavior renders correctly (retry #1)"
+    },
+    {
+      "file": "tests\\regression\\behaviors-page-data-attrs-sweep.spec.ts",
+      "name": "Behaviors page: data-* attribute sweep stays fixed › confirm and prompt dialogs show their configured title/message"
+    },
+    {
+      "file": "tests\\semantics\\semantics-new.spec.ts",
+      "name": "New Semantic Behaviors › Description List behavior renders items correctly (retry #1)"
+    },
+    {
+      "file": "tests\\semantics\\semantics-new.spec.ts",
+      "name": "New Semantic Behaviors › JSON behavior renders correctly (retry #1)"
+    },
+    {
+      "file": "tests\\regression\\behaviors-page-data-attrs-sweep.spec.ts",
+      "name": "Behaviors page: data-* attribute sweep stays fixed › tooltips show at the button-declared position, not all defaulting to one side"
+    },
+    {
+      "file": "tests\\semantics\\semantics-new.spec.ts",
+      "name": "New Semantic Behaviors › Stat behavior renders correctly (retry #1)"
+    },
+    {
+      "file": "tests\\semantics\\semantics-new.spec.ts",
+      "name": "New Semantic Behaviors › Code behavior works on PRE tag (retry #1)"
+    },
+    {
+      "file": "tests\\regression\\behaviors-page-data-attrs-sweep.spec.ts",
+      "name": "Behaviors page: data-* attribute sweep stays fixed › confirm and prompt dialogs show their configured title/message (retry #1)"
+    }
+  ],
+  "completedAt": "2026-07-30T22:12:46.147Z",
+  "duration": "817.02s",
+  "exitCode": 1
+}

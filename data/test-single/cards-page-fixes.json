@@ -1,0 +1,20 @@
+{
+  "state": "passed",
+  "mode": "single",
+  "specFile": "tests/regression/cards-page-fixes.spec.ts",
+  "startedAt": "2026-07-31T01:38:13.145Z",
+  "updatedAt": "2026-07-31T01:38:21.073Z",
+  "command": "npx playwright test --workers=8 tests/regression/cards-page-fixes.spec.ts",
+  "pid": 41700,
+  "passed": 4,
+  "failed": 0,
+  "skipped": 0,
+  "total": 4,
+  "currentFile": "tests\\regression\\cards-page-fixes.spec.ts",
+  "output": "\nRunning 4 tests using 4 workers\n\n  ok 3 [regression] › tests\\regression\\cards-page-fixes.spec.ts:28:3 › demos/site/cards.html: full-page fixes › every wb-demo in #card-gallery has a unique, stable id (1.8s)\n  ok 4 [regression] › tests\\regression\\cards-page-fixes.spec.ts:70:3 › demos/site/cards.html: full-page fixes › other card types inside a wb-demo still get their doc-link badge (regression guard) (1.6s)\n  ok 2 [regression] › tests\\regression\\cards-page-fixes.spec.ts:45:3 › demos/site/cards.html: full-page fixes › link card has both its own stretched <a> anchor AND an independently-clickable doc-link badge (2.0s)\n  ok 1 [regression] › tests\\regression\\cards-page-fixes.spec.ts:79:3 › demos/site/cards.html: full-page fixes › ?page=components: inline <code> tag-name chip does not wrap mid-word (2.8s)\n\n════════════════════════════════════════════════════════════\n  WB TEST RESULTS\n════════════════════════════════════════════════════════════\n  Total: 4 tests in 4.7s\n  ✓ Passed:  4\n  ✗ Failed:  0\n\n  By Project:\n    ✓ regression: 4/4 passed\n════════════════════════════════════════════════════════════\n\n\n  4 passed (5.0s)\n",
+  "errors": "",
+  "failures": [],
+  "completedAt": "2026-07-31T01:38:21.073Z",
+  "duration": "7.93s",
+  "exitCode": 0
+}

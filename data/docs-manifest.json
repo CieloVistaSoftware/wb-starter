@@ -1,6 +1,6 @@
 {
-  "generated": "2026-07-30T18:07:22.433Z",
-  "totalFiles": 190,
+  "generated": "2026-08-06T18:18:58.400Z",
+  "totalFiles": 203,
   "categories": [
     "_today",
     "architecture",
@@ -127,6 +127,12 @@
         "path": "docs/linkedin-standards-article.md",
         "title": "LinkedIn Article: The 3 Non-Negotiable Standards of Our Front-End Architecture",
         "name": "linkedin-standards-article",
+        "category": "root"
+      },
+      {
+        "path": "docs/linkedin-update-article.md",
+        "title": "Cielo Vista Software Update",
+        "name": "linkedin-update-article",
         "category": "root"
       },
       {
@@ -306,6 +312,12 @@
         "category": "architecture"
       },
       {
+        "path": "docs/architecture/proposals/v4-golden-ratio-layout-spec.md",
+        "title": "Proposal: v4 Golden-Ratio Layout Specification",
+        "name": "v4-golden-ratio-layout-spec",
+        "category": "architecture"
+      },
+      {
         "path": "docs/architecture/standards/ATTRIBUTE-NAMING-STANDARD.md",
         "title": "WB-Starter Attribute Naming Standard",
         "name": "ATTRIBUTE-NAMING-STANDARD",
@@ -463,6 +475,12 @@
         "path": "docs/behaviors/x-copy.md",
         "title": "x-copy",
         "name": "x-copy",
+        "category": "behaviors"
+      },
+      {
+        "path": "docs/behaviors/x-copybutton.md",
+        "title": "x-copybutton",
+        "name": "x-copybutton",
         "category": "behaviors"
       },
       {
@@ -724,6 +742,12 @@
         "category": "components"
       },
       {
+        "path": "docs/components/feedback/avatar.md",
+        "title": "Avatar - wb-starter v3.0",
+        "name": "avatar",
+        "category": "components"
+      },
+      {
         "path": "docs/components/feedback/badge.md",
         "title": "Badge",
         "name": "badge",
@@ -796,6 +820,12 @@
         "category": "components"
       },
       {
+        "path": "docs/components/layout/center.md",
+        "title": "Center - wb-starter v3.0",
+        "name": "center",
+        "category": "components"
+      },
+      {
         "path": "docs/components/layout/cluster.md",
         "title": "Cluster",
         "name": "cluster",
@@ -805,6 +835,12 @@
         "path": "docs/components/layout/container.md",
         "title": "Container",
         "name": "container",
+        "category": "components"
+      },
+      {
+        "path": "docs/components/layout/cover.md",
+        "title": "Cover - wb-starter v3.0",
+        "name": "cover",
         "category": "components"
       },
       {
@@ -826,9 +862,51 @@
         "category": "components"
       },
       {
+        "path": "docs/components/layout/icon.md",
+        "title": "Icon - wb-starter v3.0",
+        "name": "icon",
+        "category": "components"
+      },
+      {
         "path": "docs/components/layout/layout.readme.md",
         "title": "Layout Components Documentation",
         "name": "layout.readme",
+        "category": "components"
+      },
+      {
+        "path": "docs/components/layout/masonry.md",
+        "title": "Masonry - wb-starter v3.0",
+        "name": "masonry",
+        "category": "components"
+      },
+      {
+        "path": "docs/components/layout/reel.md",
+        "title": "Reel - wb-starter v3.0",
+        "name": "reel",
+        "category": "components"
+      },
+      {
+        "path": "docs/components/layout/scrollable.md",
+        "title": "Scrollable - wb-starter v3.0",
+        "name": "scrollable",
+        "category": "components"
+      },
+      {
+        "path": "docs/components/layout/sidebarlayout.md",
+        "title": "Sidebar Layout - wb-starter v3.0",
+        "name": "sidebarlayout",
+        "category": "components"
+      },
+      {
+        "path": "docs/components/layout/sticky.md",
+        "title": "Sticky - wb-starter v3.0",
+        "name": "sticky",
+        "category": "components"
+      },
+      {
+        "path": "docs/components/layout/switcher.md",
+        "title": "Switcher - wb-starter v3.0",
+        "name": "switcher",
         "category": "components"
       },
       {
@@ -1109,7 +1187,7 @@
       },
       {
         "path": "docs/_today/CURRENT-STATUS.md",
-        "title": "🅿️ PARKING LOT (2026-07-29, session — mostly PUSHED, parked mid-audit by direct instruction)",
+        "title": "🅿️ PARKING LOT (2026-08-04 session — pushing to `.io` at John's direct instruction)",
         "name": "CURRENT-STATUS",
         "category": "_today"
       },
@@ -1202,7 +1280,7 @@
     },
     {
       "path": "docs/_today/CURRENT-STATUS.md",
-      "title": "🅿️ PARKING LOT (2026-07-29, session — mostly PUSHED, parked mid-audit by direct instruction)",
+      "title": "🅿️ PARKING LOT (2026-08-04 session — pushing to `.io` at John's direct instruction)",
       "name": "CURRENT-STATUS",
       "category": "_today"
     },
@@ -1288,6 +1366,12 @@
       "path": "docs/architecture/proposals/proposed-custom-elements.md",
       "title": "Proposed Custom HTML Tags for Layouts",
       "name": "proposed-custom-elements",
+      "category": "architecture"
+    },
+    {
+      "path": "docs/architecture/proposals/v4-golden-ratio-layout-spec.md",
+      "title": "Proposal: v4 Golden-Ratio Layout Specification",
+      "name": "v4-golden-ratio-layout-spec",
       "category": "architecture"
     },
     {
@@ -1468,6 +1552,12 @@
       "path": "docs/behaviors/x-copy.md",
       "title": "x-copy",
       "name": "x-copy",
+      "category": "behaviors"
+    },
+    {
+      "path": "docs/behaviors/x-copybutton.md",
+      "title": "x-copybutton",
+      "name": "x-copybutton",
       "category": "behaviors"
     },
     {
@@ -1747,6 +1837,12 @@
       "category": "components"
     },
     {
+      "path": "docs/components/feedback/avatar.md",
+      "title": "Avatar - wb-starter v3.0",
+      "name": "avatar",
+      "category": "components"
+    },
+    {
       "path": "docs/components/feedback/badge.md",
       "title": "Badge",
       "name": "badge",
@@ -1819,6 +1915,12 @@
       "category": "components"
     },
     {
+      "path": "docs/components/layout/center.md",
+      "title": "Center - wb-starter v3.0",
+      "name": "center",
+      "category": "components"
+    },
+    {
       "path": "docs/components/layout/cluster.md",
       "title": "Cluster",
       "name": "cluster",
@@ -1828,6 +1930,12 @@
       "path": "docs/components/layout/container.md",
       "title": "Container",
       "name": "container",
+      "category": "components"
+    },
+    {
+      "path": "docs/components/layout/cover.md",
+      "title": "Cover - wb-starter v3.0",
+      "name": "cover",
       "category": "components"
     },
     {
@@ -1849,9 +1957,51 @@
       "category": "components"
     },
     {
+      "path": "docs/components/layout/icon.md",
+      "title": "Icon - wb-starter v3.0",
+      "name": "icon",
+      "category": "components"
+    },
+    {
       "path": "docs/components/layout/layout.readme.md",
       "title": "Layout Components Documentation",
       "name": "layout.readme",
+      "category": "components"
+    },
+    {
+      "path": "docs/components/layout/masonry.md",
+      "title": "Masonry - wb-starter v3.0",
+      "name": "masonry",
+      "category": "components"
+    },
+    {
+      "path": "docs/components/layout/reel.md",
+      "title": "Reel - wb-starter v3.0",
+      "name": "reel",
+      "category": "components"
+    },
+    {
+      "path": "docs/components/layout/scrollable.md",
+      "title": "Scrollable - wb-starter v3.0",
+      "name": "scrollable",
+      "category": "components"
+    },
+    {
+      "path": "docs/components/layout/sidebarlayout.md",
+      "title": "Sidebar Layout - wb-starter v3.0",
+      "name": "sidebarlayout",
+      "category": "components"
+    },
+    {
+      "path": "docs/components/layout/sticky.md",
+      "title": "Sticky - wb-starter v3.0",
+      "name": "sticky",
+      "category": "components"
+    },
+    {
+      "path": "docs/components/layout/switcher.md",
+      "title": "Switcher - wb-starter v3.0",
+      "name": "switcher",
       "category": "components"
     },
     {
@@ -2140,6 +2290,12 @@
       "path": "docs/linkedin-standards-article.md",
       "title": "LinkedIn Article: The 3 Non-Negotiable Standards of Our Front-End Architecture",
       "name": "linkedin-standards-article",
+      "category": "root"
+    },
+    {
+      "path": "docs/linkedin-update-article.md",
+      "title": "Cielo Vista Software Update",
+      "name": "linkedin-update-article",
       "category": "root"
     },
     {

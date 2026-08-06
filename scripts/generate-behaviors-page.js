@@ -50,7 +50,7 @@ function generatePageFromSchema(schema) {
      wb-starter - BEHAVIORS SHOWCASE
      Auto-generated from behaviors.schema.json
      ═══════════════════════════════════════════════════════════════════════════ -->
-<link rel="stylesheet" href="/src/styles/pages/behaviors.css">
+<link rel="stylesheet" href="src/styles/pages/behaviors.css">
 `;
 
   // Generate header and nav from $view

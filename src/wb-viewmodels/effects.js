@@ -487,7 +487,12 @@ export function fireworks(element, options = {}) {
   if (!element.textContent.trim()) {
     element.innerHTML = '🎆 <span>Fireworks!</span>';
   }
-  element.style.cssText = 'cursor:pointer;padding:0.75rem 1.5rem;background:linear-gradient(135deg,#1a1a2e,#16213e);color:#fff;border-radius:8px;font-weight:bold;display:inline-flex;align-items:center;gap:0.5rem;';
+  // #486: vertical padding floored at 1rem (16px) -- Standard §13 requires
+  // >=1rem padding on every side of a button's text; 0.75rem (12px) failed
+  // demo-layout-standards.spec.ts on pages/behaviors.html's "🎆 Fireworks"
+  // trigger. Inline style (not a stylesheet rule) because it always wins
+  // regardless of specificity, matching this function's existing approach.
+  element.style.cssText = 'cursor:pointer;padding:1rem 1.5rem;background:linear-gradient(135deg,#1a1a2e,#16213e);color:#fff;border-radius:8px;font-weight:bold;display:inline-flex;align-items:center;gap:0.5rem;';
   
   // Inject keyframes
   if (!document.getElementById('wb-firework-styles')) {

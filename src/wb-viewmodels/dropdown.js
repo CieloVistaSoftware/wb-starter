@@ -41,6 +41,7 @@ export function dropdown(element, options = {}) {
   // interactive.html), since dropdown.css's `.wb-dropdown`/`.wb-dropdown.open`
   // rules still select those by class.
   if (element.tagName.toLowerCase() !== 'wb-dropdown') element.classList.add('wb-dropdown');
+  element.classList.add('wb-dropdown-trigger');
   element.style.position = 'relative';
   element.style.display = 'inline-block';
 
@@ -142,13 +143,13 @@ export function dropdown(element, options = {}) {
     // padding, or pointer cursor -- confirmed live, it just looked like
     // plain unstyled text with no clickable affordance. Style the host
     // itself the same way .wb-dropdown__trigger styles a real button.
-    element.classList.add('wb-dropdown-trigger');
   }
   element.appendChild(menu);
 
   let isOpen = false;
 
   const toggle = () => {
+    if (config.trigger === 'hover' && isOpen) return;
     isOpen = !isOpen;
     menu.style.display = isOpen ? 'block' : 'none';
     element.classList.toggle('open', isOpen);
@@ -191,7 +192,7 @@ export function dropdown(element, options = {}) {
       if (item.tagName !== 'A') {
         e.preventDefault();
       }
-    } else if (e.target.closest('.wb-dropdown__trigger') || (!trigger && e.target === element)) {
+    } else if (e.target.closest('.wb-dropdown__trigger') || e.target === element) {
       // Trigger clicked
       e.preventDefault();
       toggle();
@@ -252,7 +253,7 @@ export function dropdown(element, options = {}) {
     element.removeEventListener('keydown', keyHandler);
     menu.remove();
     if (trigger) trigger.remove();
-    element.classList.remove('wb-dropdown', 'open');
+    element.classList.remove('wb-dropdown', 'wb-dropdown-trigger', 'open');
   };
 }
 

@@ -1,0 +1,20 @@
+{
+  "state": "passed",
+  "mode": "single",
+  "specFile": "tests/regression/code-language-badge-overlap.spec.ts",
+  "startedAt": "2026-07-30T22:08:17.447Z",
+  "updatedAt": "2026-07-30T22:09:38.287Z",
+  "command": "npx playwright test --workers=8 tests/regression/code-language-badge-overlap.spec.ts",
+  "pid": 3416,
+  "passed": 1,
+  "failed": 0,
+  "skipped": 0,
+  "total": 1,
+  "currentFile": "tests\\regression\\code-language-badge-overlap.spec.ts",
+  "output": "\nRunning 1 test using 1 worker\n\n  ok 1 [regression] › tests\\regression\\code-language-badge-overlap.spec.ts:23:3 › x-code language badge does not overlap the code text › badge sits above the first line of code, not on top of it (4.5s)\n\n════════════════════════════════════════════════════════════\n  WB TEST RESULTS\n════════════════════════════════════════════════════════════\n  Total: 1 tests in 26.0s\n  ✓ Passed:  1\n  ✗ Failed:  0\n\n  By Project:\n    ✓ regression: 1/1 passed\n════════════════════════════════════════════════════════════\n\n\n  1 passed (33.6s)\n",
+  "errors": "",
+  "failures": [],
+  "completedAt": "2026-07-30T22:09:38.287Z",
+  "duration": "80.84s",
+  "exitCode": 0
+}

@@ -1,0 +1,20 @@
+{
+  "state": "passed",
+  "mode": "single",
+  "specFile": "tests/regression/multi-component-demo-progress-value.spec.ts",
+  "startedAt": "2026-07-30T22:40:12.174Z",
+  "updatedAt": "2026-07-30T22:40:21.479Z",
+  "command": "npx playwright test --workers=8 tests/regression/multi-component-demo-progress-value.spec.ts",
+  "pid": 12788,
+  "passed": 1,
+  "failed": 0,
+  "skipped": 0,
+  "total": 1,
+  "currentFile": "tests\\regression\\multi-component-demo-progress-value.spec.ts",
+  "output": "\nRunning 1 test using 1 worker\n\n  ok 1 [regression] › tests\\regression\\multi-component-demo-progress-value.spec.ts:24:3 › multi-component-demo-generated.html: progress enum sweep is actually visible › every wb-progress demo in the enum-variants section has a non-zero value/fill (2.5s)\n\n════════════════════════════════════════════════════════════\n  WB TEST RESULTS\n════════════════════════════════════════════════════════════\n  Total: 1 tests in 5.3s\n  ✓ Passed:  1\n  ✗ Failed:  0\n\n  By Project:\n    ✓ regression: 1/1 passed\n════════════════════════════════════════════════════════════\n\n\n  1 passed (5.7s)\n",
+  "errors": "",
+  "failures": [],
+  "completedAt": "2026-07-30T22:40:21.479Z",
+  "duration": "9.30s",
+  "exitCode": 0
+}

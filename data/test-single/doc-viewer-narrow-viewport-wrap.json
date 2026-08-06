@@ -1,0 +1,20 @@
+{
+  "state": "passed",
+  "mode": "single",
+  "specFile": "tests/regression/doc-viewer-narrow-viewport-wrap.spec.ts",
+  "startedAt": "2026-08-01T00:59:13.627Z",
+  "updatedAt": "2026-08-01T00:59:27.862Z",
+  "command": "npx playwright test --workers=8 tests/regression/doc-viewer-narrow-viewport-wrap.spec.ts",
+  "pid": 43324,
+  "passed": 4,
+  "failed": 0,
+  "skipped": 0,
+  "total": 4,
+  "currentFile": "tests\\regression\\doc-viewer-narrow-viewport-wrap.spec.ts",
+  "output": "\nRunning 4 tests using 4 workers\n\n  ok 1 [regression] › tests\\regression\\doc-viewer-narrow-viewport-wrap.spec.ts:38:3 › doc-viewer: narrow-viewport wrap (#295) › no horizontal page scroll at 375px (2.9s)\n  ok 2 [regression] › tests\\regression\\doc-viewer-narrow-viewport-wrap.spec.ts:118:3 › doc-viewer: narrow-viewport wrap (#295) › .wb-mdhtml does not allow mid-word breaks (word-break: normal, not break-word) (3.0s)\n  ok 3 [regression] › tests\\regression\\doc-viewer-narrow-viewport-wrap.spec.ts:47:3 › doc-viewer: narrow-viewport wrap (#295) › no element wider than the viewport at 375px (unless self-contained in its own scrollable box) (2.8s)\n  ok 4 [regression] › tests\\regression\\doc-viewer-narrow-viewport-wrap.spec.ts:82:3 › doc-viewer: narrow-viewport wrap (#295) › hyphenated tokens like x-toast are never split across a line break at 375px (2.9s)\n\n════════════════════════════════════════════════════════════\n  WB TEST RESULTS\n════════════════════════════════════════════════════════════\n  Total: 4 tests in 8.6s\n  ✓ Passed:  4\n  ✗ Failed:  0\n\n  By Project:\n    ✓ regression: 4/4 passed\n════════════════════════════════════════════════════════════\n\n\n  4 passed (8.9s)\n",
+  "errors": "",
+  "failures": [],
+  "completedAt": "2026-08-01T00:59:27.862Z",
+  "duration": "14.23s",
+  "exitCode": 0
+}

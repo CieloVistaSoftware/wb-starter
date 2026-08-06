@@ -84,9 +84,15 @@ wb-demo:has(.wb-dropdown.open) {
    incomplete fix (some real cards stay wider than ideal) but never
    actively breaks rendering, which max-content did -- the safer of the
    two known-imperfect options until a real fix is found. Tracked as a
-   known remaining gap, not silently accepted as done. */
+   known remaining gap, not silently accepted as done.
+   #486: also give the GRID itself (not just item alignment within it)
+   width:fit-content -- justify-items:start alone only aligns the item
+   inside an otherwise full-width 1fr track; the TRACK stays full width
+   until the grid's own box is told to shrink too. */
 .wb-demo__grid--cols-1:has(> :only-child) {
   justify-items: start;
+  width: fit-content;
+  max-width: 100%;
 }
 
 /* Standard §7 (default / desktop): a single-item demo (demo.js clamps
@@ -118,9 +124,28 @@ wb-demo:has(.wb-dropdown.open) {
    collapsing the whole section down to whatever narrow max-content width
    the grid sizing algorithm picked -- confirmed live (prior investigation):
    7 differently-sized cards all rendered ~150-270px wide, none reaching
-   their own declared max-width. */
+   their own declared max-width.
+   #486: plain `width: fit-content` here ALSO measures wb-demo's OTHER
+   child -- the `.wb-demo__code` panel below the grid -- not just the
+   grid. `.x-pre` (pre.css) sets that panel to `width: 100%`, which is
+   circular under intrinsic sizing and resolves to the full available
+   width instead of the panel's own content width; a short one-line
+   control (e.g. a lone button) then measured wb-demo's fit-content as
+   the WIDE code panel's width, not the button's -- confirmed live: a
+   single "Primary" button demo rendered 315px wide (matching its code
+   panel's need: 2.5rem line-number gutter + the longest unwrapped code
+   line) when the button itself only needed 120px. CSS alone can't tell
+   fit-content "size to child A, ignore child B" when both are normal
+   in-flow children -- demo.js measures the GRID's own rendered width in
+   JS instead (same per-instance-measurement pattern this file already
+   uses elsewhere, e.g. pre.js's control right-offsets) and writes it to
+   this custom property; the code panel's existing width:100% then just
+   fills that fixed box and scrolls horizontally (pre.css's
+   overflow-x:auto) instead of dictating the whole unit's size. Falls
+   back to plain fit-content if JS hasn't set the variable yet (first
+   paint) or never runs (progressive enhancement, not a hard dependency). */
 wb-demo:has(> .wb-demo__grid--cols-1 > :only-child) {
-  width: fit-content;
+  width: var(--wb-demo-shrink-width, fit-content);
   max-width: 100%;
 }
 

@@ -1,0 +1,87 @@
+
+❌ FAILED: demos\multi-component-demo-generated.html: no unintentional element overlap
+   Error: demos\multi-component-demo-generated.html:
+
+❌ FAILED: demos\site\cards.html: no unintentional element overlap
+   Error: demos\site\cards.html:
+
+❌ FAILED: demos\site\content.html: no unintentional element overlap
+   Error: demos\site\content.html:
+
+❌ FAILED: demos\frameworks.html: no unintentional element overlap
+   Error: demos\frameworks.html:
+
+❌ FAILED: demos\schema-first-architecture.html: no unintentional element overlap
+   Error: demos\schema-first-architecture.html:
+
+❌ FAILED: demos\site\feedback.html: no unintentional element overlap
+   Error: demos\site\feedback.html:
+
+❌ FAILED: pages\behaviors.html: no unintentional element overlap
+   Error: pages\behaviors.html:
+
+❌ FAILED: pages\hero-variants.html: no unintentional element overlap
+   Error: pages\hero-variants.html:
+
+❌ FAILED: demos\site\forms.html: no unintentional element overlap
+   Error: demos\site\forms.html:
+
+❌ FAILED: pages\components.html: no unintentional element overlap
+   Error: pages\components.html:
+
+❌ FAILED: pages\home.html: no unintentional element overlap
+   Error: pages\home.html:
+
+❌ FAILED: pages\newbehaviors.html: no unintentional element overlap
+   Error: pages\newbehaviors.html:
+
+❌ FAILED: pages\whats-new.html: no unintentional element overlap
+   Error: pages\whats-new.html:
+
+❌ FAILED: pages\themes.html: no unintentional element overlap
+   Error: pages\themes.html:
+
+❌ FAILED: demos\frameworks.html: no unintentional element overlap
+   Error: demos\frameworks.html:
+
+❌ FAILED: demos\site\effects.html: no unintentional element overlap
+   Error: demos\site\effects.html:
+
+❌ FAILED: demos\site\cards.html: no unintentional element overlap
+   Error: demos\site\cards.html:
+
+❌ FAILED: demos\schema-first-architecture.html: no unintentional element overlap
+   Error: demos\schema-first-architecture.html:
+
+❌ FAILED: demos\multi-component-demo-generated.html: no unintentional element overlap
+   Error: demos\multi-component-demo-generated.html:
+
+❌ FAILED: demos\site\content.html: no unintentional element overlap
+   Error: demos\site\content.html:
+
+❌ FAILED: demos\site\forms.html: no unintentional element overlap
+   Error: demos\site\forms.html:
+
+❌ FAILED: demos\site\feedback.html: no unintentional element overlap
+   Error: demos\site\feedback.html:
+
+❌ FAILED: pages\components.html: no unintentional element overlap
+   Error: pages\components.html:
+
+❌ FAILED: pages\behaviors.html: no unintentional element overlap
+   Error: pages\behaviors.html:
+
+❌ FAILED: pages\home.html: no unintentional element overlap
+   Error: pages\home.html:
+
+❌ FAILED: pages\newbehaviors.html: no unintentional element overlap
+   Error: pages\newbehaviors.html:
+
+❌ FAILED: pages\themes.html: no unintentional element overlap
+   Error: pages\themes.html:
+
+❌ FAILED: pages\hero-variants.html: no unintentional element overlap
+   Error: pages\hero-variants.html:
+
+❌ FAILED: pages\whats-new.html: no unintentional element overlap
+   Error: pages\whats-new.html:
