@@ -100,6 +100,19 @@ function buildWbSelect(element, options) {
   // never reaches this function at all, so the class never mattered for it).
   if (size !== 'md') element.classList.add(`wb-select--${size}`);
   if (variant !== 'default') element.classList.add(`wb-select--${variant}`);
+  // #497: the classes above only ever reached this HOST wrapper. The
+  // actually-visible control is the real <select class="wb-select__field">
+  // built below -- input.css's `.wb-select--*` size/variant rules are bare
+  // class selectors (not scoped to the `wb-select` tag), so they never
+  // matched anything on the host's *child*. Result: every size/variant
+  // combination rendered the field with the same constant padding/
+  // font-size/border-color (confirmed live -- "almost zero variation"
+  // across ~23 pasted combos). Adding the identical classes to the field
+  // itself lets the existing CSS rules match the element users actually
+  // see, with zero CSS changes needed.
+  const fieldClasses = [];
+  if (size !== 'md') fieldClasses.push(`wb-select--${size}`);
+  if (variant !== 'default') fieldClasses.push(`wb-select--${variant}`);
 
   let labelEl = null;
   if (label) {
@@ -111,6 +124,7 @@ function buildWbSelect(element, options) {
 
   const sel = document.createElement('select');
   sel.className = 'wb-select__field';
+  if (fieldClasses.length) sel.classList.add(...fieldClasses);
   if (name) sel.name = name;
   if (multiple) sel.multiple = true;
   if (disabled) sel.disabled = true;
