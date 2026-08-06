@@ -99,13 +99,31 @@ function initErrorDisplay() {
  */
 export async function logError(message, details = {}) {
   initErrorDisplay();
-  
+
   const error = {
     id: Date.now(),
     timestamp: new Date().toISOString(),
+    // #442: optional fields below are only ever populated by callers routed
+    // through events.js's Events.error()/log() (source/level/module/line/
+    // etc., extracted from a parsed stack trace) -- direct logError() callers
+    // (mdhtml.js, wb.js's schema-processing catch) simply omit them and get
+    // the original message/details/to shape. Promoting them to top level
+    // (rather than leaving them buried in `details`) is what lets
+    // errors-viewer.html render them (it reads error.source/level/module/
+    // line/stack/interaction), so this one persisted shape now serves both
+    // previously-separate systems instead of each needing its own schema.
+    level: details.level || 'error',
+    source: details.source,
     message: String(message),
     details: details,
     to: details.to || '',
+    module: details.module || details.file,
+    line: details.line,
+    column: details.column,
+    function: details.function,
+    stack: details.stack,
+    frames: details.frames,
+    interaction: details.interaction,
     url: window.location.href,
     userAgent: navigator.userAgent
   };
@@ -135,7 +153,7 @@ export async function logError(message, details = {}) {
   
   item.innerHTML = `
     <div style="display:flex;justify-content:space-between;margin-bottom:4px;">
-      <span style="color:#ef4444;">❌ Error</span>
+      <span style="color:#ef4444;">❌ Error${error.source ? ` <span style="color:#888;font-weight:normal;">[${escapeHtml(error.source)}]</span>` : ''}</span>
       <span style="color:#666;font-size:0.625rem;">${time}</span>
     </div>
     <div style="color:#fff;">${escapeHtml(error.message)}</div>

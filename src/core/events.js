@@ -2,8 +2,20 @@
  * WB Events - Enhanced Error Logging with Module, Line, and Stack Trace
  */
 
+// #442: error-logger.js's logError() is the single source of truth for
+// error persistence/display -- this file used to keep its OWN parallel
+// in-memory `errors` array and its OWN independent POST to
+// /api/error-log/append, so anything routed through Events.error() (e.g.
+// wb.js's WB:LegacySyntax detection) never showed up in error-logger.js's
+// on-screen panel (#wb-error-display) or its getErrors(), even though both
+// systems happened to write the same on-disk data/errors.json. Delegating
+// storage to logError() here keeps this file's real value -- the richer
+// stack-trace parsing and toast-style presentation below -- as an
+// *additional* presentation layer on top of one shared error store, instead
+// of a second system that can drift out of sync with the first.
+import { logError, getErrors as getLoggedErrors, clearErrors as clearLoggedErrors } from './error-logger.js';
+
 let errorContainer = null;
-let errors = [];
 let lastInteraction = { from: 'System', to: 'Idle', timestamp: 0 };
 
 /**
@@ -335,36 +347,6 @@ function showToast(level, message, data = {}) {
 }
 
 /**
- * Append one error entry to the shared server-side log (#382 follow-up: this
- * used to POST this page's ENTIRE local `errors` array to the generic
- * `/api/save`, which does a blind `fs.writeFileSync` overwrite. Every page
- * that calls Events.error() (legacy-syntax-check.html, any real behavior-
- * injection failure via wb.js/wb-lazy.js) has its OWN in-memory `errors`
- * array, so under N concurrent pages/workers, two pages' overwrites race and
- * the second clobbers whatever the first just logged (lost-update) --
- * exactly the mechanism error-logger.js's appendErrorToLog() was fixed for,
- * but this file's own separate save path was missed. Posting just the one
- * new entry to the dedicated append endpoint (server.js does the
- * read-modify-write in one synchronous pass per request) makes this
- * race-free the same way.
- */
-async function saveToFile(entry) {
-  try {
-    const response = await fetch('/api/error-log/append', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ error: entry })
-    });
-
-    if (!response.ok) {
-      console.warn('[Events] Failed to save error log');
-    }
-  } catch (e) {
-    // Silent fail - don't create infinite loop
-  }
-}
-
-/**
  * Escape HTML for safe display
  */
 function escapeHtml(str) {
@@ -447,32 +429,16 @@ export const Events = {
       showToast(level, fullMessage, data);
     }
     
-    // Save errors to file and memory
+    // Persist through error-logger.js's logError() -- the single source of
+    // truth for error storage (#442). See the top-of-file note: this used
+    // to push to a private `errors` array and POST independently instead.
     if (level === 'error') {
       // Check if interaction is relevant (within last 5 seconds)
-      const interaction = (Date.now() - lastInteraction.timestamp < 5000) 
+      const interaction = (Date.now() - lastInteraction.timestamp < 5000)
         ? { from: lastInteraction.from, to: lastInteraction.to }
         : { from: 'System', to: 'Background Process' };
 
-      const entry = {
-        id: Date.now(),
-        timestamp: new Date().toISOString(),
-        level,
-        source,
-        module: data.module,
-        line: data.line,
-        column: data.column,
-        function: data.function,
-        message: String(message),
-        stack: data.stack,
-        frames: data.frames,
-        file: data.file || data.fullPath,
-        url: typeof window !== 'undefined' ? window.location.href : '',
-        userAgent: typeof navigator !== 'undefined' ? navigator.userAgent : '',
-        interaction
-      };
-      errors.push(entry);
-      saveToFile(entry);
+      logError(fullMessage, { ...data, source, level, interaction });
     }
   },
   
@@ -560,28 +526,27 @@ export const Events = {
   },
   
   /**
-   * Get all logged errors
+   * Get all logged errors (#442: delegates to error-logger.js's shared
+   * store -- this file no longer keeps its own copy).
    */
   getErrors() {
-    return errors;
+    return getLoggedErrors();
   },
-  
+
   /**
-   * Clear all errors. A deliberate, single user action -- unlike per-error
-   * appends, a full reset here is intentional and not subject to the same
-   * lost-update race, so it goes through the dedicated clear endpoint
-   * (matches error-logger.js's clearErrorLogFile()).
+   * Clear all errors (#442: delegates to error-logger.js's clearErrors(),
+   * which hits the same dedicated clear endpoint this file used to call
+   * directly).
    */
   clearErrors() {
-    errors = [];
-    fetch('/api/error-log/clear', { method: 'POST' }).catch(() => {});
+    clearLoggedErrors();
   },
-  
+
   /**
    * Get error count
    */
   getErrorCount() {
-    return errors.length;
+    return getLoggedErrors().length;
   }
 };
 
