@@ -73,12 +73,32 @@
   <!-- 4. layout variants -->
   <section id="articles-layout-variants">
   <h2>layout variants</h2>
-  <wb-demo columns="2">
+  <wb-demo columns="1">
     <wb-articles layout="masonry">
-      <wb-article title="Microservices Architecture">Break monoliths into manageable services for scalability and independent deployment.</wb-article>
-      <wb-article title="GraphQL vs REST">Compare API architectures: when to use GraphQL for efficient data fetching versus traditional REST endpoints.</wb-article>
-      <wb-article title="State Management">Managing application state effectively with Redux, Zustand, Recoil, and context patterns.</wb-article>
-      <wb-article title="Machine Learning Integration">Integrate ML models into web applications for intelligent features and data-driven decisions.</wb-article>
+      <wb-article title="Microservices Architecture">
+        Break monoliths into manageable services for scalability and independent deployment. Implement service discovery, distributed tracing, and circuit breakers for resilient microservice systems.
+      </wb-article>
+      <wb-article title="GraphQL vs REST">
+        Compare API architectures: when to use GraphQL for efficient data fetching versus traditional REST endpoints. GraphQL allows clients to request exactly the data they need, reducing over-fetching and under-fetching problems.
+      </wb-article>
+      <wb-article title="State Management">
+        Managing application state effectively with Redux, Zustand, Recoil, and context patterns. Choose the right state solution for your application's complexity.
+      </wb-article>
+      <wb-article title="Machine Learning Integration">
+        Integrate ML models into web applications for intelligent features and data-driven decisions. Use TensorFlow.js for client-side inference or call remote ML APIs for complex models.
+      </wb-article>
+      <wb-article title="Web Security Best Practices">
+        Protect applications from XSS, CSRF, SQL injection, and other vulnerabilities. Implement content security policies, secure headers, input validation, and output encoding.
+      </wb-article>
+      <wb-article title="Performance Monitoring">
+        Track metrics like Core Web Vitals, FCP, LCP, and CLS. Use tools like Lighthouse, WebPageTest, and Real User Monitoring to identify and fix performance bottlenecks.
+      </wb-article>
+      <wb-article title="API Rate Limiting">
+        Implement effective rate limiting strategies to prevent abuse and ensure fair resource allocation. Use token buckets, sliding windows, or leaky bucket algorithms.
+      </wb-article>
+      <wb-article title="Testing Pyramid">
+        Implement a balanced testing strategy with unit tests at the base, integration tests in the middle, and end-to-end tests at the top for comprehensive coverage.
+      </wb-article>
     </wb-articles>
   </wb-demo>
   </section>
@@ -87,13 +107,27 @@
   <section id="articles-toggles">
   <h2>Toggles</h2>
   <wb-demo columns="1">
-    <wb-articles pagination page-size="3">
-      <wb-article title="Cloud Computing Basics">AWS, Azure, and Google Cloud explained. Understand services, pricing models, and when to use each platform.</wb-article>
-      <wb-article title="Containerization with Docker">Docker simplifies deployment. Learn images, containers, registries, and compose for microservices.</wb-article>
-      <wb-article title="Kubernetes Orchestration">Manage containers at scale with Kubernetes: pods, services, deployments, and monitoring.</wb-article>
-      <wb-article title="Serverless Functions">AWS Lambda, Azure Functions, and Google Cloud Functions for event-driven, scalable applications.</wb-article>
-      <wb-article title="Infrastructure as Code">Terraform, CloudFormation, and Pulumi for defining and managing cloud infrastructure programmatically.</wb-article>
-      <wb-article title="Monitoring and Observability">Prometheus, Grafana, ELK stack for comprehensive application monitoring, logging, and alerting.</wb-article>
+    <wb-articles
+      pagination
+      page-size="3">
+      <wb-article title="Cloud Computing Basics">
+        AWS, Azure, and Google Cloud explained. Understand services, pricing models, and when to use each platform.
+      </wb-article>
+      <wb-article title="Containerization with Docker">
+        Docker simplifies deployment. Learn images, containers, registries, and compose for microservices.
+      </wb-article>
+      <wb-article title="Kubernetes Orchestration">
+        Manage containers at scale with Kubernetes: pods, services, deployments, and monitoring.
+      </wb-article>
+      <wb-article title="Serverless Functions">
+        AWS Lambda, Azure Functions, and Google Cloud Functions for event-driven, scalable applications.
+      </wb-article>
+      <wb-article title="Infrastructure as Code">
+        Terraform, CloudFormation, and Pulumi for defining and managing cloud infrastructure programmatically.
+      </wb-article>
+      <wb-article title="Monitoring and Observability">
+        Prometheus, Grafana, ELK stack for comprehensive application monitoring, logging, and alerting.
+      </wb-article>
     </wb-articles>
   </wb-demo>
   </section>

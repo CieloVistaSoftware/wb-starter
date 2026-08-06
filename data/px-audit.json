@@ -1,8 +1,8 @@
 {
   "totals": {
-    "LIKELY_CONVERT": 745,
+    "LIKELY_CONVERT": 748,
     "LIKELY_OK": 545,
-    "UNCLASSIFIED": 170,
+    "UNCLASSIFIED": 172,
     "mediaBreakpoints": 36
   },
   "byBucket": {
@@ -29,7 +29,7 @@
       "src/styles/behaviors/code.css": 1,
       "src/styles/behaviors/collapse.css": 3,
       "src/styles/behaviors/copybutton.css": 1,
-      "src/styles/behaviors/demo.css": 1,
+      "src/styles/behaviors/demo.css": 4,
       "src/styles/behaviors/dialog.css": 3,
       "src/styles/behaviors/drawer.css": 2,
       "src/styles/behaviors/dropdown.css": 4,
@@ -214,7 +214,7 @@
       "src/styles/behaviors/badge.css": 2,
       "src/styles/behaviors/card.css": 14,
       "src/styles/behaviors/data.css": 1,
-      "src/styles/behaviors/demo.css": 1,
+      "src/styles/behaviors/demo.css": 3,
       "src/styles/behaviors/dialog.css": 1,
       "src/styles/behaviors/hero.css": 4,
       "src/styles/behaviors/layout.css": 2,
