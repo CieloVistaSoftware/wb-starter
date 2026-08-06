@@ -552,18 +552,37 @@
   <!-- 11. 📝 Notes -->
   <section id="notes-notes">
   <h2>📝 Notes</h2>
-  <wb-demo columns="2">
-    <wb-notes>
-      This is example notes content.
+  <p>Notes drawer opens from the side. Click "Open Notes" to see it in action.</p>
+  <wb-demo columns="1">
+    <div style="display: flex; gap: 1rem; flex-wrap: wrap;">
+      <button onclick="document.querySelector('#notes-default').classList.add('wb-notes--open')">
+        Open Notes
+      </button>
+      <button onclick="document.querySelector('#notes-left').classList.add('wb-notes--open')">
+        Open Notes (Left)
+      </button>
+      <button onclick="document.querySelector('#notes-right').classList.add('wb-notes--open')">
+        Open Notes (Right)
+      </button>
+      <button onclick="document.querySelector('#notes-modal').classList.add('wb-notes--open')">
+        Open Notes (Modal)
+      </button>
+    </div>
+    <wb-notes id="notes-default">
+      <strong>Notes Drawer</strong><br>
+      A resizable panel for taking notes alongside your work. Click anywhere outside to close.
     </wb-notes>
-    <wb-notes position="left">
-      This is example notes content.
+    <wb-notes id="notes-left" position="left">
+      <strong>Notes (Left Side)</strong><br>
+      Opens from the left edge of the screen instead of the right.
     </wb-notes>
-    <wb-notes position="right">
-      This is example notes content.
+    <wb-notes id="notes-right" position="right">
+      <strong>Notes (Right Side)</strong><br>
+      Opens from the right edge. This is the default position.
     </wb-notes>
-    <wb-notes position="modal">
-      This is example notes content.
+    <wb-notes id="notes-modal" position="modal">
+      <strong>Notes (Modal)</strong><br>
+      Opens as a centered modal dialog instead of a side drawer. Supports clicking the backdrop to close.
     </wb-notes>
   </wb-demo>
   </section>
