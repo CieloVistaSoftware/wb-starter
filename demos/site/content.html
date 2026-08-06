@@ -150,123 +150,52 @@
   <!-- 9. 📊 Table -->
   <section id="table-table">
   <h2>📊 Table</h2>
-  <wb-demo columns="2">
-    <wb-table>
+  <wb-demo columns="1" data-code-width="normal">
+    <wb-table striped hover sortable>
       <thead>
         <tr>
-          <th>Product</th>
-          <th>Price</th>
-          <th>Stock</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <td>Laptop Pro</td>
-          <td>$1,299</td>
-          <td>45</td>
-        </tr>
-        <tr>
-          <td>Wireless Mouse</td>
-          <td>$29.99</td>
-          <td>156</td>
-        </tr>
-        <tr>
-          <td>USB-C Hub</td>
-          <td>$49.99</td>
-          <td>89</td>
-        </tr>
-      </tbody>
-    </wb-table>
-    <wb-table sortable>
-      <thead>
-        <tr>
-          <th>Employee</th>
-          <th>Department</th>
-          <th>Salary</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <td>Sarah Chen</td>
-          <td>Engineering</td>
-          <td>$120,000</td>
-        </tr>
-        <tr>
-          <td>Marcus Johnson</td>
-          <td>Design</td>
-          <td>$95,000</td>
-        </tr>
-        <tr>
-          <td>Elena Rodriguez</td>
-          <td>Marketing</td>
-          <td>$85,000</td>
-        </tr>
-      </tbody>
-    </wb-table>
-    <wb-table striped>
-      <thead>
-        <tr>
-          <th>Project</th>
-          <th>Status</th>
-          <th>Completion</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <td>Dashboard Redesign</td>
-          <td>In Progress</td>
-          <td>65%</td>
-        </tr>
-        <tr>
-          <td>API Documentation</td>
-          <td>Completed</td>
-          <td>100%</td>
-        </tr>
-        <tr>
-          <td>Mobile App</td>
-          <td>Planning</td>
-          <td>10%</td>
-        </tr>
-      </tbody>
-    </wb-table>
-    <wb-table paginated page-size="3">
-      <thead>
-        <tr>
-          <th>User</th>
-          <th>Last Login</th>
+          <th>Repository</th>
+          <th>Stars</th>
+          <th>Issues</th>
+          <th>Last Update</th>
           <th>Status</th>
         </tr>
       </thead>
       <tbody>
         <tr>
-          <td>alex@example.com</td>
+          <td>wb-starter</td>
+          <td>2,847</td>
+          <td>12</td>
           <td>2 hours ago</td>
           <td>Active</td>
         </tr>
         <tr>
-          <td>jordan@example.com</td>
+          <td>cielovista-tools</td>
+          <td>1,294</td>
+          <td>28</td>
           <td>1 day ago</td>
-          <td>Idle</td>
+          <td>Active</td>
         </tr>
         <tr>
-          <td>casey@example.com</td>
+          <td>web-components-lib</td>
+          <td>5,612</td>
+          <td>5</td>
           <td>3 days ago</td>
-          <td>Inactive</td>
+          <td>Stable</td>
         </tr>
         <tr>
-          <td>riley@example.com</td>
-          <td>Just now</td>
+          <td>design-system</td>
+          <td>892</td>
+          <td>41</td>
+          <td>6 hours ago</td>
           <td>Active</td>
         </tr>
         <tr>
-          <td>morgan@example.com</td>
-          <td>5 hours ago</td>
-          <td>Active</td>
-        </tr>
-        <tr>
-          <td>avery@example.com</td>
-          <td>2 days ago</td>
-          <td>Idle</td>
+          <td>documentation-site</td>
+          <td>456</td>
+          <td>8</td>
+          <td>1 week ago</td>
+          <td>Archived</td>
         </tr>
       </tbody>
     </wb-table>
@@ -277,137 +206,130 @@
   <section id="table-toggles">
   <h2>Toggles</h2>
   <wb-demo columns="1">
-    <wb-table filterable>
+    <wb-table filterable striped>
       <thead>
         <tr>
-          <th>Customer</th>
-          <th>Email</th>
-          <th>Country</th>
-          <th>Subscription</th>
+          <th>Bug Report</th>
+          <th>Severity</th>
+          <th>Assigned To</th>
+          <th>Status</th>
         </tr>
       </thead>
       <tbody>
         <tr>
-          <td>Acme Corp</td>
-          <td>contact@acme.com</td>
-          <td>USA</td>
-          <td>Premium</td>
+          <td>#BUG-1024: Button hover state</td>
+          <td>Medium</td>
+          <td>Sarah Chen</td>
+          <td>Open</td>
         </tr>
         <tr>
-          <td>TechFlow Inc</td>
-          <td>hello@techflow.co</td>
-          <td>Canada</td>
-          <td>Professional</td>
+          <td>#BUG-1023: Mobile layout break</td>
+          <td>Critical</td>
+          <td>Marcus Johnson</td>
+          <td>In Progress</td>
         </tr>
         <tr>
-          <td>Global Services</td>
-          <td>info@global.com</td>
-          <td>UK</td>
-          <td>Basic</td>
+          <td>#BUG-1022: Animation jank</td>
+          <td>Low</td>
+          <td>Elena Rodriguez</td>
+          <td>Closed</td>
         </tr>
         <tr>
-          <td>Innovation Labs</td>
-          <td>team@innovate.io</td>
-          <td>Germany</td>
-          <td>Premium</td>
+          <td>#BUG-1021: Performance issue</td>
+          <td>High</td>
+          <td>James Wilson</td>
+          <td>In Progress</td>
         </tr>
       </tbody>
     </wb-table>
-    <wb-table paginated page-size="4">
+    <wb-table paginated page-size="5" striped>
       <thead>
         <tr>
-          <th>Transaction</th>
+          <th>Invoice</th>
+          <th>Client</th>
           <th>Amount</th>
-          <th>Date</th>
-          <th>Type</th>
+          <th>Due Date</th>
+          <th>Paid</th>
         </tr>
       </thead>
       <tbody>
         <tr>
-          <td>#TXN-2026-001</td>
-          <td>$450.00</td>
-          <td>Aug 6, 2026</td>
-          <td>Payment</td>
+          <td>INV-2026-089</td>
+          <td>Acme Corporation</td>
+          <td>$8,500</td>
+          <td>Aug 15, 2026</td>
+          <td>✓</td>
         </tr>
         <tr>
-          <td>#TXN-2026-002</td>
-          <td>-$75.50</td>
-          <td>Aug 5, 2026</td>
-          <td>Refund</td>
+          <td>INV-2026-088</td>
+          <td>TechFlow Solutions</td>
+          <td>$12,300</td>
+          <td>Aug 20, 2026</td>
+          <td>✗</td>
         </tr>
         <tr>
-          <td>#TXN-2026-003</td>
-          <td>$1,200.00</td>
-          <td>Aug 4, 2026</td>
-          <td>Payment</td>
+          <td>INV-2026-087</td>
+          <td>Global Innovations</td>
+          <td>$6,750</td>
+          <td>Aug 18, 2026</td>
+          <td>✓</td>
         </tr>
         <tr>
-          <td>#TXN-2026-004</td>
-          <td>$89.99</td>
-          <td>Aug 3, 2026</td>
-          <td>Purchase</td>
+          <td>INV-2026-086</td>
+          <td>NextGen Labs</td>
+          <td>$15,200</td>
+          <td>Aug 25, 2026</td>
+          <td>✗</td>
         </tr>
         <tr>
-          <td>#TXN-2026-005</td>
-          <td>$325.00</td>
-          <td>Aug 2, 2026</td>
-          <td>Payment</td>
+          <td>INV-2026-085</td>
+          <td>Creative Studios</td>
+          <td>$4,500</td>
+          <td>Aug 12, 2026</td>
+          <td>✓</td>
+        </tr>
+        <tr>
+          <td>INV-2026-084</td>
+          <td>Cloud Systems</td>
+          <td>$22,000</td>
+          <td>Aug 30, 2026</td>
+          <td>✗</td>
         </tr>
       </tbody>
     </wb-table>
-    <wb-table compact>
+    <wb-table compact bordered>
       <thead>
         <tr>
-          <th>Metric</th>
-          <th>Value</th>
-          <th>Change</th>
+          <th>Library</th>
+          <th>Version</th>
+          <th>Security</th>
+          <th>Updates</th>
         </tr>
       </thead>
       <tbody>
         <tr>
-          <td>Page Views</td>
-          <td>42,589</td>
-          <td>+12.3%</td>
+          <td>@babel/core</td>
+          <td>7.23.5</td>
+          <td>✓ Safe</td>
+          <td>2 available</td>
         </tr>
         <tr>
-          <td>Visitors</td>
-          <td>8,942</td>
-          <td>+5.7%</td>
+          <td>react</td>
+          <td>18.2.0</td>
+          <td>✓ Safe</td>
+          <td>0 available</td>
         </tr>
         <tr>
-          <td>Bounce Rate</td>
-          <td>32.1%</td>
-          <td>-2.4%</td>
-        </tr>
-      </tbody>
-    </wb-table>
-    <wb-table bordered>
-      <thead>
-        <tr>
-          <th>Event</th>
-          <th>Date</th>
-          <th>Location</th>
-          <th>Attendees</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <td>Web Summit 2026</td>
-          <td>Sept 10-12</td>
-          <td>Lisbon, Portugal</td>
-          <td>3,500+</td>
+          <td>typescript</td>
+          <td>5.2.2</td>
+          <td>✓ Safe</td>
+          <td>1 available</td>
         </tr>
         <tr>
-          <td>Developer Conference</td>
-          <td>Sept 20-21</td>
-          <td>San Francisco, USA</td>
-          <td>2,100+</td>
-        </tr>
-        <tr>
-          <td>Design Workshop</td>
-          <td>Oct 5</td>
-          <td>Berlin, Germany</td>
-          <td>250</td>
+          <td>webpack</td>
+          <td>5.88.0</td>
+          <td>⚠ Review</td>
+          <td>3 available</td>
         </tr>
       </tbody>
     </wb-table>
