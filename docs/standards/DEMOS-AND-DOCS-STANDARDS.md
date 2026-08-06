@@ -309,6 +309,22 @@ Every component example is a `<wb-demo>` — it renders the **live control** AND
   to hook into the control's behavior in their own code (form controls, toggles, tabs,
   search, anything with a meaningful `detail` payload). Tracked: #385.
 
+## 28. Code panel width is always full demo width
+
+- The `<wb-demo>` code panel (the `<pre>` source block below each rendered control)
+  must span **the full width of its `wb-demo` container** at all viewport sizes. This
+  ensures consistent horizontal layout and prevents code samples from appearing
+  cramped or artificially narrow relative to the rendered component above.
+- **Long lines flow naturally (no wrapping).** If a code line is longer than the
+  container, the code panel provides a **horizontal scrollbar** — never forces a
+  word-wrap that breaks identifiers mid-line (see §5 & §23). This applies to
+  `<wb-demo>`-generated code panels specifically (see §6 carve-out).
+- **Visual consistency.** Code samples in multi-column demos (3-column, 2-column,
+  etc.) maintain readable line length as the panel scrolls horizontally if needed,
+  rather than collapsing the entire column layout to fit narrow code.
+- **CSS:** `.wb-demo__code { width: 100%; overflow-x: auto; }` at all viewport widths.
+  This rule is already enforced in `src/styles/behaviors/demo.css`.
+
 ---
 
 ## Enforcement & references
@@ -324,6 +340,7 @@ Every component example is a `<wb-demo>` — it renders the **live control** AND
 | 22 (switch invokes effect) | `tests/behaviors/notify-control-switch.spec.ts` |
 | 24 (no unintended overlap) | `tests/integration/overlap.spec.ts` (#274) |
 | 1, 16, 25 (wb-demo / build-step exception) | `tests/integration/frameworks-demo.spec.ts` (#324) |
+| 28 (code panel full width) | `src/styles/behaviors/demo.css` (`.wb-demo__code` rule) |
 
 Open work to bring existing surfaces to this standard: #246 (behaviors-showcase selects),
 #247 (behaviors-showcase mobile nav), #248 (no horizontal scrollbars), and the remaining
