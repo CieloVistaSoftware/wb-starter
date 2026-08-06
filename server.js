@@ -17,35 +17,15 @@ const WS_PORT = 3001;
 // Define project root (current directory)
 const rootDir = __dirname;
 
-// === ALWAYS BIND OUR PORTS ===
-// Starting/restarting the dev server must ALWAYS come up on port 3000 — there is
-// no acceptable "port 3000 in use" failure. Kill any stale process squatting on
-// the dev ports BEFORE we bind anything (runs for `npm start` and the preview,
-// both of which launch this file).
-function freePort(p) {
-  try {
-    if (process.platform === 'win32') {
-      const out = execSync(`netstat -ano | findstr ":${p} "`, { encoding: 'utf8', stdio: ['ignore', 'pipe', 'ignore'] });
-      const pids = [...new Set(
-        out.split(/\r?\n/).filter((l) => l.includes('LISTENING'))
-          .map((l) => l.trim().split(/\s+/).pop())
-          .filter((pid) => /^\d+$/.test(pid) && pid !== '0' && Number(pid) !== process.pid)
-      )];
-      for (const pid of pids) {
-        try { execSync(`taskkill /PID ${pid} /F`, { stdio: 'ignore' }); console.log(`[port] freed :${p} (killed stale PID ${pid})`); } catch { /* already gone */ }
-      }
-    } else {
-      const out = execSync(`lsof -ti tcp:${p} || true`, { encoding: 'utf8', stdio: ['ignore', 'pipe', 'ignore'] });
-      for (const pid of out.split(/\s+/).filter(Boolean)) {
-        if (Number(pid) !== process.pid) {
-          try { execSync(`kill -9 ${pid}`, { stdio: 'ignore' }); console.log(`[port] freed :${p} (killed stale PID ${pid})`); } catch { /* already gone */ }
-        }
-      }
-    }
-  } catch { /* nothing was listening on the port — fine */ }
-}
-freePort(port);
-freePort(WS_PORT);
+// === PORT POLICY ===
+// John: "if parallel worktrees need port 3000 and it's already being used
+// then use next available port." This used to force-kill whatever process
+// was listening on 3000 before binding -- with many parallel agent
+// worktrees each launching their own copy of this server, every startup
+// murdered every other running instance (including the main checkout's),
+// causing a full day of stale-server whack-a-mole. Now: if the preferred
+// port is busy, fall through to the next free one (see tryListen at the
+// bottom of this file). Nothing gets killed.
 
 // === LIVE RELOAD SYSTEM ===
 let wss;
@@ -861,8 +841,23 @@ app.use((req, res, next) => {
   res.sendFile(path.join(rootDir, 'index.html'));
 });
 
-app.listen(port, () => {
-  console.log(`WB Starter running at http://localhost:${port}`);
+// Bind to the preferred port, falling through to the next free one when
+// it's taken (up to +20) instead of killing the current occupant -- see the
+// PORT POLICY comment at the top of this file.
+function tryListen(p, attemptsLeft) {
+  const server = app.listen(p, () => onListening(p));
+  server.on('error', (err) => {
+    if (err.code === 'EADDRINUSE' && attemptsLeft > 0) {
+      console.log(`[port] :${p} in use -- trying :${p + 1}`);
+      tryListen(p + 1, attemptsLeft - 1);
+    } else {
+      throw err;
+    }
+  });
+}
+
+function onListening(p) {
+  console.log(`WB Starter running at http://localhost:${p}`);
   if (ENABLE_COLLAB) {
     console.log(`Collab Server running at ws://localhost:${WS_PORT}/collab`);
   } else {
@@ -872,7 +867,7 @@ app.listen(port, () => {
   // Open the site in the default browser on `npm start`. Skipped in CI and when
   // WB_NO_OPEN=1 (set by Playwright's webServer) so tests never pop a browser.
   if (!process.env.CI && process.env.WB_NO_OPEN !== '1') {
-    const url = `http://localhost:${port}`;
+    const url = `http://localhost:${p}`;
     const cmd = process.platform === 'win32' ? `start "" "${url}"`
       : process.platform === 'darwin' ? `open "${url}"`
       : `xdg-open "${url}"`;
@@ -880,4 +875,6 @@ app.listen(port, () => {
       if (err) console.log(`Open your browser at ${url} (auto-open failed: ${err.message})`);
     });
   }
-});
+}
+
+tryListen(port, 20);
