@@ -137,6 +137,23 @@ export function themecontrol(element, options = {}) {
 
   select.addEventListener('change', onChange);
 
+  // John: "All theme controls must read from 1 place, one time. This will
+  // keep them all in sync on different pages." applyTheme() already
+  // dispatches wb:theme:change (bubbles) on ITS OWN element whenever it
+  // runs, but nothing was listening -- a page with more than one
+  // <wb-themecontrol> (e.g. the header's + one embedded in a doc/demo)
+  // only ever synced on a fresh page load (each instance's own initial
+  // localStorage read), not live: changing the theme in one left every
+  // other instance's dropdown showing the stale value until reload.
+  // Listen on document (not element) since a sibling instance elsewhere in
+  // the DOM is never an ancestor this event would otherwise bubble through.
+  const onExternalThemeChange = (e) => {
+    if (e.target === element) return; // our own change already set select.value
+    currentTheme = e.detail.theme;
+    select.value = e.detail.theme;
+  };
+  document.addEventListener('wb:theme:change', onExternalThemeChange);
+
   // Expose methods
   element.wbThemeControl = {
     getTheme: () => currentTheme,
@@ -148,6 +165,7 @@ export function themecontrol(element, options = {}) {
   // Cleanup
   return () => {
     select.removeEventListener('change', onChange);
+    document.removeEventListener('wb:theme:change', onExternalThemeChange);
     wrapper.remove();
     delete element.wbThemeControl;
     delete element._wbThemeControlInit;

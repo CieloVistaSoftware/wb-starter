@@ -605,6 +605,19 @@ export function drawerLayout(element, options = {}) {
     element.style.border = 'none';
   }
   
+  // Arrow logic -- must live in this outer scope (not nested inside the
+  // toggleSelector-less branch below where it's first used to set the
+  // initial arrow) since toggle() below is a closure over THIS scope and
+  // referenced getArrow before it was ever declared here (live error:
+  // "getArrow is not defined" on every toggle click).
+  const getArrow = (collapsed) => {
+    if (config.position === 'left') return collapsed ? '▶' : '◀';
+    if (config.position === 'right') return collapsed ? '◀' : '▶';
+    if (config.position === 'top') return collapsed ? '▼' : '▲';
+    if (config.position === 'bottom') return collapsed ? '▲' : '▼';
+    return '?';
+  };
+
   // Toggle Logic
   const toggle = () => {
     isCollapsed = !isCollapsed;
@@ -660,15 +673,6 @@ export function drawerLayout(element, options = {}) {
     // Create default toggle button
     toggleBtn = document.createElement('button');
     toggleBtn.className = 'wb-drawer-toggle';
-    
-    // Arrow logic
-    const getArrow = (collapsed) => {
-        if (config.position === 'left') return collapsed ? '▶' : '◀';
-        if (config.position === 'right') return collapsed ? '◀' : '▶';
-        if (config.position === 'top') return collapsed ? '▼' : '▲';
-        if (config.position === 'bottom') return collapsed ? '▲' : '▼';
-        return '?';
-    };
     
     toggleBtn.innerHTML = getArrow(isCollapsed);
     
