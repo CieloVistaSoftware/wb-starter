@@ -290,6 +290,25 @@ Every component example is a `<wb-demo>` — it renders the **live control** AND
   much wider code block directly below it, which reads worse than the problem §26 exists
   to fix. §26 is a narrow-viewport fix for a narrow-viewport problem.
 
+## 27. A demo whose control fires a custom event should teach how to listen for it
+
+- `<wb-demo>` shows a control's markup, but markup alone doesn't teach a reader how to
+  react to what the control **does** afterward. When a demoed control fires one or more
+  documented `wb:*`/`x:*` custom events (see `docs/behaviors-reference.md`'s Events
+  table), add an `events` attribute listing them:
+  `<wb-demo events="wb:switch:change">`.
+- This adds two things, automatically, right below the existing source panel — no
+  hand-written prose required:
+  1. An example `addEventListener` code sample, syntax-highlighted and copyable like any
+     other code panel (§4/§5).
+  2. A **live** log that shows the event actually firing in real time as the reader
+     interacts with the rendered control above it — proof, not just claims.
+- Not every demo needs this — a control with no interesting event (e.g. a static
+  `<wb-badge>`) doesn't gain anything from an empty events section, so the attribute is
+  opt-in, not mandatory on every `<wb-demo>`. Add it where a reader would plausibly want
+  to hook into the control's behavior in their own code (form controls, toggles, tabs,
+  search, anything with a meaningful `detail` payload). Tracked: #385.
+
 ---
 
 ## Enforcement & references

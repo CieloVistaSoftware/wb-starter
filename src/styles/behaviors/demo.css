@@ -283,3 +283,50 @@ wb-demo > .x-pre-wrapper {
   color: var(--primary);
   border-color: var(--primary);
 }
+
+/* #385: "Events" section -- optional, only rendered when a demo declares
+   `<wb-demo events="wb:switch:change">`. Heading + example addEventListener
+   code sample (styled like the source panel above it) + a live log panel
+   that proves the event actually fires when the reader interacts with the
+   rendered control. */
+.wb-demo__events-heading {
+  margin-top: 0.75rem;
+  margin-bottom: 0.25rem;
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--color-text-2, var(--text-primary));
+}
+
+.wb-demo__events-code {
+  margin-top: 0;
+}
+
+.wb-demo__events-log {
+  margin-top: 0.5rem;
+  padding: 0.75rem;
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-sm, 4px);
+  background: var(--bg-secondary);
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+  font-size: 0.8rem;
+  color: var(--text-primary);
+  max-height: 10rem;
+  overflow-y: auto;
+  text-align: left;
+}
+
+.wb-demo__events-log-empty {
+  color: var(--text-muted);
+  font-style: italic;
+}
+
+.wb-demo__events-log-entry {
+  padding: 0.15rem 0;
+  border-bottom: 1px dashed var(--border-color);
+  white-space: pre-wrap;
+  overflow-wrap: break-word;
+}
+
+.wb-demo__events-log-entry:last-child {
+  border-bottom: none;
+}

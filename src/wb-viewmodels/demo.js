@@ -68,6 +68,29 @@ export function formatHtml(raw) {
     return out.join('\n');
 }
 
+// #385: parse a demo's `events` attribute into the list of custom event
+// names it should teach readers to listen for, e.g.
+// `events="wb:switch:change, wb:switch:other"` -> ['wb:switch:change',
+// 'wb:switch:other']. Accepts comma AND/OR whitespace as separators so
+// either `events="a, b"` or `events="a b"` works.
+function parseEventNames(raw) {
+    return String(raw == null ? '' : raw)
+        .split(/[\s,]+/)
+        .map((s) => s.trim())
+        .filter(Boolean);
+}
+
+// #385: example addEventListener wiring shown in the demo's "Events"
+// section. Generic `el` target -- matches how a reader would actually grab
+// the element (via querySelector/getElementById in their own code), not
+// tied to any one demo's specific tag/id, which would suggest the selector
+// itself is meaningful when it isn't.
+function buildEventListenerCode(eventNames) {
+    return eventNames
+        .map((name) => `el.addEventListener('${name}', (e) => {\n  console.log(e.detail);\n});`)
+        .join('\n\n');
+}
+
 // Site root that works from '/', '/demos/x.html', '/pages/x.html',
 // '/public/doc-viewer.html', '/tests/fixtures/x.html' — locally or under a
 // GitHub Pages sub-path.
@@ -460,6 +483,79 @@ export async function demo(element, options = {}) {
         // the same snapshot). The panel is built and appended synchronously
         // right above -- there's no perf reason to defer scanning it lazily.
         window.WB.scan(pre, { eager: true });
+    }
+
+    // #385: wb-demo showed HOW to wire up a control's markup but never HOW
+    // to listen for the custom events it fires afterward. Optional `events`
+    // attribute (e.g. `events="wb:switch:change"`) adds two things when
+    // present: an example addEventListener code sample (same
+    // syntax-highlighted/copyable treatment as the source panel above), and
+    // a REAL listener on `grid` that logs each firing to a small panel live
+    // -- so a reader interacting with the rendered control above SEES the
+    // event happen instead of only reading about it.
+    const eventNames = parseEventNames(options.events || element.getAttribute('events'));
+    if (eventNames.length) {
+        const eventsHeading = document.createElement('div');
+        eventsHeading.className = 'wb-demo__events-heading';
+        eventsHeading.textContent = 'Listening for events';
+        element.appendChild(eventsHeading);
+
+        const eventsPre = document.createElement('pre');
+        eventsPre.className = 'wb-demo__code wb-demo__events-code';
+        eventsPre.setAttribute('x-behavior', 'pre');
+        eventsPre.dataset.language = 'javascript';
+        eventsPre.dataset.showCopy = 'true';
+
+        const eventsCode = document.createElement('code');
+        eventsCode.className = 'language-javascript';
+        eventsCode.setAttribute('x-behavior', 'code');
+        eventsCode.dataset.language = 'javascript';
+        eventsCode.textContent = buildEventListenerCode(eventNames);
+        eventsPre.appendChild(eventsCode);
+        element.appendChild(eventsPre);
+
+        if (window.WB) {
+            window.WB.scan(eventsPre, { eager: true });
+        }
+
+        // Live log panel. Listens on `grid` specifically -- not `element`
+        // (the whole wb-demo, which by this point also contains the source
+        // and events code panels themselves) -- so it only ever hears
+        // events from the rendered control(s), never accidentally from a
+        // click/copy interaction with the code panels above. Events bubble,
+        // so one listener per name here catches every descendant of grid.
+        const log = document.createElement('div');
+        log.className = 'wb-demo__events-log';
+        const logEmpty = document.createElement('div');
+        logEmpty.className = 'wb-demo__events-log-empty';
+        logEmpty.textContent = 'Interact with the demo above to see these events fire, live:';
+        log.appendChild(logEmpty);
+        element.appendChild(log);
+
+        // Cap the log so a chatty/repeating event (e.g. drag move) can't
+        // grow the panel unbounded -- newest entry on top, oldest falls off.
+        const MAX_ENTRIES = 5;
+        eventNames.forEach((name) => {
+            grid.addEventListener(name, (e) => {
+                if (logEmpty.isConnected) logEmpty.remove();
+                let detailStr = '';
+                if (e.detail !== undefined) {
+                    try {
+                        detailStr = JSON.stringify(e.detail);
+                    } catch (err) {
+                        detailStr = String(e.detail);
+                    }
+                }
+                const entry = document.createElement('div');
+                entry.className = 'wb-demo__events-log-entry';
+                const time = new Date().toLocaleTimeString();
+                entry.textContent = `[${time}] ${name}` + (detailStr ? ' ' + detailStr : '');
+                log.insertBefore(entry, log.firstChild);
+                while (log.children.length > MAX_ENTRIES) {
+                    log.removeChild(log.lastChild);
+                }
+            });
+        });
     }
 
     return () => {};

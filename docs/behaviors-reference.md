@@ -186,7 +186,7 @@ Enhances standard HTML elements with better styling and functionality.
 
 **`switch`**
 
-<wb-demo>
+<wb-demo events="wb:switch:change">
 <wb-switch label="Dark mode"></wb-switch>
 </wb-demo>
 
@@ -301,7 +301,7 @@ Rich interactive components.
 
 **`tabs`**
 
-<wb-demo>
+<wb-demo events="wb:tabs:change">
 <wb-tabs>
   <div tab="Tab 1">Content 1</div>
   <div tab="Tab 2">Content 2</div>

@@ -53,6 +53,7 @@ function getLazyObserver() {
             tag: el.getAttribute('tag'),
             columns: el.getAttribute('columns'),
             contentClass: el.getAttribute('content-class'),
+            events: el.getAttribute('events'),
             // Built well after the page's one-time eager WB.scan(document.body)
             // already ran -- unlike the first EAGER_BUILD_COUNT blocks (built
             // synchronously during initial parse, so the global scan still
@@ -112,7 +113,8 @@ export class WBDemo extends HTMLElement {
         title: this.getAttribute('title'),
         tag: this.getAttribute('tag'),
         columns: this.getAttribute('columns'),
-        contentClass: this.getAttribute('content-class')
+        contentClass: this.getAttribute('content-class'),
+        events: this.getAttribute('events')
       });
     } else {
       getLazyObserver().observe(this);
