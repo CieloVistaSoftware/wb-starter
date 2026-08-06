@@ -77,15 +77,18 @@ header h1 {
 /* ═══════════════════════════════════════════════════════════════════
    SECTIONS
    ═══════════════════════════════════════════════════════════════════ */
+section {
   margin-bottom: var(--space-xl, 2rem);
   padding-bottom: var(--space-xl, 2rem);
 }
 
+section h2 {
   margin: var(--space-xl, 2rem) 0 var(--space-lg, 1.5rem);
   padding-bottom: 0.5rem;
   font-size: 1.5rem;
 }
 
+section h3 {
   margin: var(--space-lg, 1.5rem) 0 var(--space-md, 1rem);
   font-size: 1.125rem;
 }
@@ -217,7 +220,10 @@ header h1 {
 .time-display {
   font-size: 1.125rem;
   font-family: monospace;
-  padding: 0.5rem 1rem;
+  /* #486: vertical padding floored at 1rem (16px) -- Standard §13 requires
+     >=1rem padding on every side of text in a content panel; 0.5rem (8px)
+     failed demo-layout-standards.spec.ts on the countdown demo. */
+  padding: 1rem;
   border-radius: 8px;
 }
 
