@@ -9,6 +9,7 @@
     <button type="button" class="issues-tab" data-state="closed">Closed</button>
     <button type="button" class="issues-tab" data-state="all">All</button>
   </div>
+  <span id="issues-summary" class="issues-summary"></span>
   <input type="search" id="issues-search" class="issues-search" placeholder="Filter by title or number…">
 </div>
 
@@ -21,6 +22,7 @@
   .issues-tab { background: var(--bg-secondary); color: var(--text-secondary); border: 1px solid var(--border-color); border-radius: 6px; padding: 0.4rem 0.9rem; cursor: pointer; font-size: 0.875rem; }
   .issues-tab--active { background: var(--primary); color: #fff; border-color: var(--primary); }
   .issues-search { background: var(--bg-secondary); color: var(--text-primary); border: 1px solid var(--border-color); border-radius: 6px; padding: 0.4rem 0.75rem; min-width: 240px; }
+  .issues-summary { color: var(--text-secondary); font-size: 0.8rem; }
   .issues-status { color: var(--text-secondary); }
   .issues-list { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 0.5rem; }
   .issue-row { border: 1px solid var(--border-color); border-radius: 8px; background: var(--bg-secondary); overflow: hidden; }
@@ -41,6 +43,7 @@
   const REPO = 'CieloVistaSoftware/wb-starter';
   const listEl = document.getElementById('issues-list');
   const statusEl = document.getElementById('issues-status');
+  const summaryEl = document.getElementById('issues-summary');
   const searchEl = document.getElementById('issues-search');
   const tabs = Array.from(document.querySelectorAll('.issues-tab'));
   let allIssues = [];
@@ -50,6 +53,27 @@
     return String(s).replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
   }
 
+  const fmtDate = (iso) => new Date(iso).toLocaleDateString(undefined, { year: 'numeric', month: 'short', day: 'numeric' });
+
+  // John: "When these buttons are clicked add a count of those issues and
+  // the date ranges here." Uses createdAt for open issues (when they were
+  // opened) and closedAt for closed ones (when they were resolved) -- for
+  // "all", spans the full createdAt range since that's the one date every
+  // issue has.
+  function updateSummary(filtered) {
+    if (!filtered.length) {
+      summaryEl.textContent = '';
+      return;
+    }
+    const dateField = currentState === 'closed' ? 'closed_at' : 'created_at';
+    const dates = filtered.map((i) => new Date(i[dateField] || i.created_at).getTime()).sort((a, b) => a - b);
+    const oldest = fmtDate(dates[0]);
+    const newest = fmtDate(dates[dates.length - 1]);
+    const range = oldest === newest ? oldest : `${oldest} – ${newest}`;
+    const noun = filtered.length === 1 ? 'issue' : 'issues';
+    summaryEl.textContent = `${filtered.length} ${noun} · ${range}`;
+  }
+
   function render() {
     const q = searchEl.value.trim().toLowerCase();
     const filtered = allIssues.filter((issue) => {
@@ -57,6 +81,8 @@
       if (!q) return true;
       return issue.title.toLowerCase().includes(q) || String(issue.number).includes(q);
     });
+
+    updateSummary(filtered);
 
     if (!filtered.length) {
       listEl.innerHTML = '';
