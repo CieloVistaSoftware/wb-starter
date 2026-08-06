@@ -130,13 +130,27 @@
     try {
       // Public, unauthenticated GitHub REST API -- works identically on the
       // deployed GitHub Pages site (static hosting, no server-side proxy
-      // possible) and in local dev. state=all + per_page=100 up front is
-      // simpler than two requests; the state filter above is client-side.
-      const res = await fetch(`https://api.github.com/repos/${REPO}/issues?state=all&per_page=100&sort=created&direction=desc`);
-      if (!res.ok) throw new Error(`GitHub API responded ${res.status}`);
-      const data = await res.json();
+      // possible) and in local dev. A single per_page=100 request silently
+      // truncated once the repo passed 100 issues (John: "why does issue
+      // viewer counts differ from ?page=issues" -- this page was missing
+      // every issue older than the 100 most recent). Page through until a
+      // response comes back short of per_page, the standard "last page"
+      // signal -- capped at 10 pages (1000 issues) as a runaway backstop.
+      const perPage = 100;
+      let page = 1;
+      let all = [];
+      while (page <= 10) {
+        statusEl.textContent = `Loading issues… (${all.length} so far)`;
+        statusEl.style.display = '';
+        const res = await fetch(`https://api.github.com/repos/${REPO}/issues?state=all&per_page=${perPage}&page=${page}&sort=created&direction=desc`);
+        if (!res.ok) throw new Error(`GitHub API responded ${res.status}`);
+        const batch = await res.json();
+        all = all.concat(batch);
+        if (batch.length < perPage) break; // last page
+        page++;
+      }
       // The /issues endpoint also returns pull requests -- exclude them.
-      allIssues = data.filter((i) => !i.pull_request);
+      allIssues = all.filter((i) => !i.pull_request);
       render();
     } catch (err) {
       statusEl.textContent = 'Could not load issues: ' + err.message + ' (GitHub API rate limits unauthenticated requests to 60/hour per IP).';
