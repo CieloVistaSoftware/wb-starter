@@ -17,7 +17,7 @@ Audio player with optional 15-band graphic equalizer.
 
 | Property | Type | Default | Description |
 |----------|------|---------|-------------|
-| `src` | string | Required | Audio source URL |
+| `src` | string | Optional | Audio source URL (defaults to pleasant royalty-free demo) |
 | `volume` | number | `0.8` | Initial volume (0-1) |
 | `loop` | boolean | `false` | Loop playback |
 | `autoplay` | boolean | `false` | Auto-play (requires muted) |
@@ -29,7 +29,7 @@ Audio player with optional 15-band graphic equalizer.
 Wrapped in `<wb-demo>`, so the live component renders below with its source shown underneath:
 
 <wb-demo>
-<wb-audio src="music.mp3"></wb-audio>
+<wb-audio></wb-audio>
 </wb-demo>
 
 ## Usage
@@ -37,7 +37,11 @@ Wrapped in `<wb-demo>`, so the live component renders below with its source show
 ### Custom Element
 
 ```html
-<wb-audio src="music.mp3"></wb-audio>
+<!-- Uses default pleasant royalty-free demo track -->
+<wb-audio></wb-audio>
+
+<!-- Or provide your own source -->
+<wb-audio src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3"></wb-audio>
 ```
 
 ### Native Audio (Enhanced)
@@ -45,7 +49,7 @@ Wrapped in `<wb-demo>`, so the live component renders below with its source show
 ```html
 <audio
   x-audio
-  src="music.mp3"
+  src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3"
   controls>
 </audio>
 ```
@@ -54,7 +58,7 @@ Wrapped in `<wb-demo>`, so the live component renders below with its source show
 
 ```html
 <wb-audio
-  src="music.mp3"
+  src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3"
   showEq>
 </wb-audio>
 ```
@@ -62,8 +66,8 @@ Wrapped in `<wb-demo>`, so the live component renders below with its source show
 ### Background Audio
 
 ```html
+<!-- No src = uses default demo, muted loop in background -->
 <wb-audio
-  src="ambient.mp3"
   autoplay
   muted
   loop>
@@ -74,7 +78,7 @@ Wrapped in `<wb-demo>`, so the live component renders below with its source show
 
 ```html
 <wb-audio
-  src="track.mp3"
+  src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3"
   bass="6"
   treble="3">
 </wb-audio>
@@ -86,7 +90,7 @@ Wrapped in `<wb-demo>`, so the live component renders below with its source show
 <div class="wb-audio">
   <audio
     class="wb-audio__player"
-    src="music.mp3"
+    src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3"
     controls>
   </audio>
   <!-- EQ Panel (when showEq is true) -->

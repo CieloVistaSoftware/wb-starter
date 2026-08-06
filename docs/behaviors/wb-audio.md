@@ -5,7 +5,7 @@ A premium custom audio player with a 15-band graphic equalizer, Web Audio API su
 Wrapped in `<wb-demo>`, so the live component renders below with its source shown underneath:
 
 <wb-demo>
-<wb-audio src="audio.mp3"></wb-audio>
+<wb-audio></wb-audio>
 </wb-demo>
 
 ---
@@ -16,16 +16,16 @@ Wrapped in `<wb-demo>`, so the live component renders below with its source show
 <!-- Basic usage (uses default demo audio) -->
 <wb-audio></wb-audio>
 <!-- With custom audio source -->
-<wb-audio src="audio.mp3"></wb-audio>
+<wb-audio src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3"></wb-audio>
 <!-- With equalizer and custom volume -->
 <wb-audio
-  src="music.mp3"
+  src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3"
   show-eq
   volume="0.8">
 </wb-audio>
 <!-- With controls, looping, and podcast -->
 <wb-audio
-  src="podcast.mp3"
+  src="https://archive.org/download/nineinchnails_ghosts_I_IV/01_Ghosts_I.mp3"
   controls
   loop>
 </wb-audio>
