@@ -76,6 +76,12 @@
       "menuItemText": "Issues",
       "menuItemEmoji": "🐛",
       "pageToLoad": "issues"
+    },
+    {
+      "menuItemId": "error-log",
+      "menuItemText": "Error Log",
+      "menuItemEmoji": "🚨",
+      "href": "errors-viewer.html"
     }
   ],
 
