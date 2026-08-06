@@ -119,10 +119,13 @@ export function navbar(element, options = {}) {
 
   // Check for existing custom children (links dropped by user in builder)
   const existingChildren = Array.from(element.children).filter(child => {
-    // Look for links or elements with
-    return child.tagName === 'A' || 
+    // Direct child is a link/wb-link, OR a link/wb-link sits nested inside
+    // it (e.g. a wrapper <div><a>...</a></div>) -- was querySelector('a,
+    // []'), an invalid selector ('[]' has no attribute name) that threw on
+    // every navbar render.
+    return child.tagName === 'A' ||
            child.getAttribute('wb') === 'link' ||
-           child.querySelector?.('a, []');
+           child.querySelector?.('a, [wb="link"]');
   });
 
   // If items are provided via data attributes AND no custom children, generate the content

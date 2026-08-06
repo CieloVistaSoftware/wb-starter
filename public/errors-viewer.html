@@ -253,7 +253,11 @@
       document.getElementById('total-count').textContent = data.count || errors.length;
       document.getElementById('last-updated').textContent = data.lastUpdated ? new Date(data.lastUpdated).toLocaleTimeString() : '-';
       
-      const sources = new Set(errors.map(e => e.source));
+      // Most errors are plain window.onerror/unhandledrejection captures
+      // with no `source` at all (only Events.error()-routed ones set it) --
+      // counting that shared `undefined` as its own "source" inflated this
+      // stat by one for every page that had ANY unsourced error.
+      const sources = new Set(errors.map(e => e.source).filter(Boolean));
       document.getElementById('unique-sources').textContent = sources.size;
 
       if (errors.length === 0) {
@@ -331,22 +335,13 @@
 
     async function clearErrors() {
       if (!confirm('Are you sure you want to clear all errors?')) return;
-      
-      try {
-        const emptyLog = {
-          lastUpdated: new Date().toISOString(),
-          count: 0,
-          errors: []
-        };
 
-        const response = await fetch('/api/save', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({
-            location: 'data/errors.json',
-            data: emptyLog
-          })
-        });
+      try {
+        // Was posting straight to the generic /api/save with a hand-built
+        // empty log -- error-logger.js's OWN clear button already uses the
+        // dedicated /api/error-log/clear route; use the same one canonical
+        // path here instead of a second, parallel way to do the same thing.
+        const response = await fetch('/api/error-log/clear', { method: 'POST' });
 
         if (response.ok) {
           loadErrors();
