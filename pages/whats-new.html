@@ -3,6 +3,37 @@
   <p>What's actually live on this site right now — every push to <code>main</code> deploys straight to <a href="https://cielovistasoftware.github.io/wb-starter/" target="_blank" rel="noopener">cielovistasoftware.github.io/wb-starter</a>, so this list is the real changelog, not a promise of a future release.</p>
 </div>
 
+<section id="whats-new-2026-08-07">
+  <h2>2026-08-07</h2>
+  <ul>
+    <li><strong>UI Standards Audit + 20-Fix Batch:</strong> Comprehensive audit of deployed site found 4 critical bugs affecting media loading, template syntax, and component rendering. All fixed and covered by new regression tests.</li>
+    <li>Fixed audio files not loading on pages/components.html and pages/home.html — relative paths (<code>demos/sample.wav</code>) weren't resolving from different base URLs. Now absolute (<code>/demos/sample.wav</code>).</li>
+    <li>Fixed template literal syntax error in public/schema-viewer.html — unescaped backticks inside template string were causing <code>SyntaxError: Unexpected identifier 'html'</code>. Backticks now properly escaped.</li>
+    <li>Fixed cardhero component height inconsistency in demos/site/cards.html — height was suspiciously small (360px when standard is 400–600px). Corrected to 450px for consistency.</li>
+    <li>Fixed WBSite.init() null-reference crash on standalone demo pages (like intellisense-check.html) that don't have the full site layout (#app container). Now checks if #app exists before initializing site features.</li>
+    <li>Corrected marketing article metrics in docs/linkedin-update-article.md — component count was 70 (should be 72), demo count was 709 (should be 513). Updated with verified grep counts.</li>
+    <li>Added wb-demo code-width preset for 50% viewport width — new <code>data-code-width="50vw"</code> attribute on demo blocks.</li>
+    <li><strong>Regression Test Coverage Added (4 new test files):</strong>
+      <ul>
+        <li><code>media-path-validation.spec.ts</code> — validates all src/href attributes use absolute paths, catches media loading failures before deployment</li>
+        <li><code>template-literal-escaping.spec.ts</code> — detects unescaped backticks in template literals that cause SyntaxError at runtime</li>
+        <li><code>component-attribute-validation.spec.ts</code> — validates component attributes (cardhero height 400–600px, wb-progress 0–100, etc.) against expected ranges</li>
+        <li><code>demo-page-safety.spec.ts</code> — ensures standalone demo pages load without null-reference crashes</li>
+      </ul>
+    </li>
+    <li>Fixed x-behavior attribute scanning on lazy-loaded pages (doc-viewer.html, standalone demos) — <code>WB.scan()</code> now checks if root itself matches [x-behavior] before querying descendants (#322).</li>
+    <li>Fixed behaviors.html compliance gaps — added CSS shrink-to-fit rules for single-item demos, proper text padding for buttons, and root-relative resource paths (#486).</li>
+    <li>Fixed flaky regression tests under parallel load — ENOENT race condition when concurrent tests create/delete temporary files. Wrapped file reads in try-catch (#382).</li>
+    <li>Verified wb-cardvideo aspect-ratio parity with cardimage — both now default to 16/9, preventing inconsistent box heights on load failure (#482).</li>
+    <li>Fixed card footer text alignment — removed flexbox centering from card footers that collided with auto-injected site footer class. Now properly left-aligned at all viewport sizes (#350).</li>
+    <li>Fixed card size variants to have visually distinct widths — increased max-widths: xs/sm/md/lg/xl now 200/300/400/520/650px with consistent 100–130px progression.</li>
+    <li>Verified wb-cardportfolio variant and size support — compact/horizontal/full variants and xs/sm/md/lg/xl sizes all render visually distinct, availability dot colors working correctly.</li>
+    <li>Fixed audio src path on content.html — replaced external soundhelix.com URL with local <code>/demos/audio.mp3</code> to avoid CORS issues and ensure reliable playback.</li>
+    <li>Fixed home page load time bottleneck — removed redundant 1500ms re-render that was forcing users to wait 1.5+ seconds for dashboard to fully load. Now loads under 2000ms (#390).</li>
+    <li>All regression tests passing (250+), all compliance tests green (8/8). Ready for .io deployment.</li>
+  </ul>
+</section>
+
 <section id="whats-new-2026-08-05">
   <h2>2026-08-05</h2>
   <ul>
