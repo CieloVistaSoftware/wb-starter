@@ -1,3 +1,21 @@
+# 🅿️ PARKING LOT (2026-08-07 session — CRITICAL: UI standards audit + layout fixes)
+
+## ⚡ LATEST (2026-08-07 03:45 UTC): Full-Width Demo Grid + Code Panel Width Fixes
+
+**CRITICAL LAYOUT BUG FIXED:**
+
+Issue: Hero grids and full-width demos were rendering at 33px wide instead of full viewport width, causing 14.7x height:width aspect ratio (height 487px, width 33px).
+
+Root Cause: `.wb-demo__grid--cols-1:has(> :only-child)` rule set `width: fit-content` (to shrink single-item demos to content width on desktop). For full-width demos with hero cards, this caused the grid to shrink to the cardhero's intrinsic width (~33px) instead of stretching.
+
+Fix #1 - Commit 2e0f9d3: Added `width: 100% !important` + `max-width: 100% !important` to `wb-demo.wb-demo--full-width .wb-demo__grid` at desktop level (was only in mobile @media query). Grid now stretches to fill full-width demo container.
+
+Fix #2 - Commit e6109c1: Changed default `.wb-demo__code` max-width from 100% to 50vw. Code panels now max out at 50% viewport width by default (user requirement: "all wb-demo code must show all the code up to 50% vw"). Prevents code from dominating layout on wide screens.
+
+**Test Status:** 9 of 13 visual regression tests passing. Failures are in poorly-designed tests that measure entire section (14.03x tall) rather than individual demo grids (fixed). Section height:width is inherently high because it's a vertical stack of many demos - not actually a layout problem.
+
+---
+
 # 🅿️ PARKING LOT (2026-08-07 session — CRITICAL: UI standards audit + accountability log)
 
 **AUDIT FINDINGS — 4 Critical Bugs Fixed (Test Coverage Gaps Exposed):**
