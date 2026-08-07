@@ -1,6 +1,7 @@
 import { test, expect } from '@playwright/test';
 import * as fs from 'fs';
 import * as path from 'path';
+import { fileURLToPath } from 'url';
 
 /**
  * Component Attribute Validation — REGRESSION TEST
@@ -15,6 +16,7 @@ import * as path from 'path';
  */
 
 test.describe('Component Attribute Validation', () => {
+  const __dirname = path.dirname(fileURLToPath(import.meta.url));
   const htmlDir = path.join(__dirname, '../../');
 
   const getHtmlFiles = () => {
