@@ -159,7 +159,7 @@ wb-mdhtml pre:not(.x-pre) code,
 wb-mdhtml .x-pre,
 .wb-mdhtml .x-pre {
   white-space: pre-wrap;
-  overflow-x: hidden;
+  overflow-x: auto;
   word-break: break-word;
   overflow-wrap: break-word;
   /* #295: same hanging-indent rationale as the un-enhanced pre rule above

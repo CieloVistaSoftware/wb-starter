@@ -5,9 +5,10 @@
  * -----------------------------------------------------------------------------
  */
 
-/* #448: tag selector -- alert() no longer adds a redundant classList.add
-   ('wb-alert') that just duplicated the <wb-alert> tag name. */
-wb-alert {
+/* #448: tag selector + class selector for both <wb-alert> tags and
+   <div x-alert> elements that get the .wb-alert class added by alert() */
+wb-alert,
+.wb-alert {
   display: flex;
   align-items: flex-start;
   gap: 0.5rem;
