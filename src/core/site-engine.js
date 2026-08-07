@@ -14,6 +14,10 @@ export default class WBSite {
 
   async init() {
     const app = document.getElementById('app');
+
+    // Skip site-engine initialization for standalone demo pages (no app container)
+    if (!app) return;
+
     const loadingEl = app.querySelector('.site__loading');
     let loadingTimerId;
     if (loadingEl && window.WBLoadingManager) {
