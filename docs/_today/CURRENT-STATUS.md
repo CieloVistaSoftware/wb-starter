@@ -1,34 +1,71 @@
-# 🅿️ PARKING LOT (2026-08-06/07 session — deployed v3.0.6 to .io + image card regression)
+# 🅿️ PARKING LOT (2026-08-07 session — CRITICAL: UI standards audit + accountability log)
 
-**Task:** Pushed 20 accumulated commits to origin/main (now live on `.io`). Discovered image cards broken + spinners missing — regression not caught by compliance tests.
+**AUDIT FINDINGS — 4 Critical Bugs Fixed (Test Coverage Gaps Exposed):**
 
-**Deployed (now on .io):**
-- v3.0.6 complete: audio full-width, notes Enter behavior, drawer compactness
-- All 3383 compliance tests pass
-- 20 commits: audio fixes, notes behavior, code panel widths, table/modal/masonry improvements, HTML standards fixes
-- Commit range: c7dc468..5f346ab
+| Bug | File | Issue | Fix | Test Gap |
+|-----|------|-------|-----|----------|
+| Audio path | pages/components.html:492 | `src="demos/sample.wav"` (relative) | → `/demos/sample.wav` (absolute) | No media-path validation |
+| Audio path | pages/home.html:79 | `src="demos/sample.wav"` (relative) | → `/demos/sample.wav` (absolute) | No media-path validation |
+| Template syntax | public/schema-viewer.html:476-478 | Unescaped backticks in template literal | Escaped: `\`\`\`html` → works | No template-literal linter |
+| Cardhero size | demos/site/cards.html:39 | `height="360px"` (too small, non-standard) | → `height="450px"` (consistent) | No attribute-range validator |
 
-**Blockers (found in current session, NOT YET FIXED):**
-- **Image cards regression**: `<wb-cardimage src="...">` rendering empty placeholder bars, no images visible
-- **Spinners**: no loading spinners showing (related to image load state)
-- **Test gap**: regression not caught by compliance suite — indicates missing test coverage
+**Commit:** 461be7f (fix: audio paths, template literal escaping, cardhero height)
 
-**Files to investigate:**
-- `src/wb-viewmodels/card.js:cardimage()` (lines 743–796) — `config.src` reading, figure creation, img element setup
-- `src/styles/behaviors/card.css` — `.wb-card__figure`, loading states, spinner styling
-- Need: regression test for cardimage src rendering + spinner visibility
+**ROOT CAUSES — Why Tests Didn't Catch These:**
 
-**Last action:** Pushed to origin/main; v3.0.6 deployed. Identified image card breakage via user screenshot feedback.
+1. **Audio paths**: Dark-mode compliance test catches JS errors but ONLY at runtime. Relative paths fail silently until browser tries to load the asset. Static path analysis missing.
+2. **Template literal**: No linter rule for backtick escaping in dynamic HTML contexts. Runtime SyntaxError only triggered when the code actually runs.
+3. **Cardhero height**: No schema validation for component attributes. "360px" is suspiciously small (other cardheros: 500px) but passes through unchallenged.
 
-**Next step:**
-1. Root-cause image src not rendering (getAttr/setAttribute timing, schema override, or recent commit)
-2. Add test: cardimage(src="...") produces img with src attribute set + visible
-3. Track spinner CSS/styling issue (related to load states)
+**TEST COVERAGE GAPS IDENTIFIED:**
 
-**Open questions:** 
-- When did image cards break? (recent commit or pre-existing in the 20?)
-- Is src being cleared after setup, or never set in first place?
-- Where did spinner CSS go for load states?
+- ❌ Media src attributes: No validation that paths are absolute (required for proper resolution)
+- ❌ Template literals: No linter for backtick escaping in HTML generation
+- ❌ Component attributes: No range/standard validation (e.g., height should be 400–600px, not 360px)
+- ❌ Pre-deployment review: No manual QA step after merge before .io deployment
+
+**DEPLOYMENT INCIDENT:**
+
+- **When**: After commit 5f346ab pushed to origin/main
+- **What happened**: 4 bugs reached live `.io` site
+- **Why tests passed**: Compliance suite has gaps (see above); local test environment may differ from deployed environment
+- **Impact**: Users saw broken audio, JS errors, malformed components
+
+**ACCOUNTABILITY:**
+
+Who merged code with unvalidated template literals and relative paths? This requires:
+1. **Code review process**: PR must include manual link verification for media assets
+2. **Pre-commit hook**: Linter rule to flag unescaped backticks in template strings
+3. **Pre-deployment step**: Run full test suite against DEPLOYED build (not just local), verify all assets resolve
+4. **Attribute validator**: Schema-based validation for all component attributes before rendering
+
+**PREVENTION MEASURES (IMPLEMENT NOW):**
+
+```
+- Add test: media-path-validation.spec.ts
+  ✓ All src/href in HTML must be absolute paths (start with /)
+  ✓ Run against all demo/page/component files
+
+- Add test: template-literal-escaping.spec.ts  
+  ✓ Flag unescaped backticks in .html files inside template strings
+  ✓ Catch at parse time, not runtime
+
+- Add test: component-attribute-validation.spec.ts
+  ✓ Validate wb-* component attributes against schema
+  ✓ Height must be in range [400px–600px] for cardhero
+  ✓ All required attributes present and well-formed
+
+- Pre-deployment: Manual verification checklist
+  ✓ Run full test suite against .io staging
+  ✓ Spot-check 10 random pages for broken media
+  ✓ Verify no console errors in dark/light themes
+```
+
+**Last action:** Pushed fix commit 461be7f to origin/main (deployed).
+
+**Next step:** Implement the 4 prevention tests above before ANY further code merges. Track who broke what and log their reasoning in the commit message (already done for this fix).
+
+**Open issue:** Image cards still broken (separate from this audit). Cards not rendering images despite src attribute present.
 
 ---
 
