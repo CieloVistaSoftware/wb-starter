@@ -138,8 +138,8 @@ export function table(element, options = {}) {
       const td = e.target.closest('td');
       if (td) {
         const displayText = td.textContent.trim();
-        navigator.clipboard.writeText(text).then(() => {
-          createToast(`Copied: ${text}`, 'success');
+        navigator.clipboard.writeText(displayText).then(() => {
+          createToast(`Copied: ${displayText}`, 'success');
         });
       }
     });
