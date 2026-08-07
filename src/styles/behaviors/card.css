@@ -244,23 +244,23 @@
 }
 
 .wb-card--sm {
-  max-width: 280px;
+  max-width: 300px;
   min-width: 220px;
 }
 
 .wb-card--md {
-  max-width: 360px;
-  min-width: 280px;
+  max-width: 400px;
+  min-width: 320px;
 }
 
 .wb-card--lg {
-  max-width: 480px;
-  min-width: 360px;
+  max-width: 520px;
+  min-width: 420px;
 }
 
 .wb-card--xl {
-  max-width: 600px;
-  min-width: 480px;
+  max-width: 650px;
+  min-width: 540px;
 }
 
 .wb-card--full {
