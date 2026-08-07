@@ -33,6 +33,7 @@
     "demo-file-validation.spec.ts",
     "demos-directory-index.spec.ts",
     "demos-list-complete.spec.ts",
+    "demos-list-drift.spec.ts",
     "demos-no-legacy-data-attrs.spec.ts",
     "demos-registry-coverage.spec.ts",
     "legacy-attr-compliance.spec.ts",

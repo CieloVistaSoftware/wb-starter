@@ -140,6 +140,18 @@ const CATEGORY_EXAMPLES = {
   ],
 };
 
+// #501: the drift comparison must be line-ending agnostic. Git is configured
+// with core.autocrlf=true on Windows, so the checked-out working copy has CRLF
+// while everything this script builds uses LF — a raw `!==` therefore reported
+// "stale" on every Windows run even when the content was byte-identical after
+// normalization, which made `--check` (and the compliance gate built on it)
+// useless as a real drift signal. Compare normalized text; write only when the
+// normalized content actually changed so a no-op run doesn't flip the working
+// copy's line endings and dirty the tree.
+function norm(text) {
+  return text == null ? null : text.replace(/\r\n/g, '\n');
+}
+
 function titleOf(file, fallback) {
   const html = fs.readFileSync(file, 'utf8');
   const m = html.match(/<title>([^<]*)<\/title>/i);
@@ -289,12 +301,19 @@ ${indexSections}
 `;
 const currentIndex = fs.existsSync(INDEX) ? fs.readFileSync(INDEX, 'utf8') : null;
 
+const pageStale = norm(next) !== norm(page);
+const indexStale = norm(indexHtml) !== norm(currentIndex);
+
 if (CHECK) {
-  if (next !== page) { console.error(`demos list is stale — run: node scripts/generate-demos-list.mjs`); process.exit(1); }
-  if (currentIndex !== indexHtml) { console.error(`demos/index.html is stale — run: node scripts/generate-demos-list.mjs`); process.exit(1); }
+  if (pageStale) { console.error(`pages/demos.html is stale — run: node scripts/generate-demos-list.mjs`); process.exit(1); }
+  if (indexStale) { console.error(`demos/index.html is stale — run: node scripts/generate-demos-list.mjs`); process.exit(1); }
   console.log(`demos list up to date (${files.length} demos).`);
 } else {
-  fs.writeFileSync(PAGE, next);
-  fs.writeFileSync(INDEX, indexHtml);
-  console.log(`Wrote ${files.length} demo links (in ${CATEGORIES.filter((c) => byCategory.get(c.key).length).length} categories) into pages/demos.html and demos/index.html.`);
+  if (pageStale) fs.writeFileSync(PAGE, next);
+  if (indexStale) fs.writeFileSync(INDEX, indexHtml);
+  const changed = [pageStale && 'pages/demos.html', indexStale && 'demos/index.html'].filter(Boolean);
+  console.log(
+    `${files.length} demo links (in ${CATEGORIES.filter((c) => byCategory.get(c.key).length).length} categories) — ` +
+      (changed.length ? `wrote ${changed.join(' and ')}.` : 'already up to date, nothing written.')
+  );
 }
