@@ -199,8 +199,14 @@ wb-demo.wb-demo--full-width {
    card sitting at its own narrow intrinsic content width inside an
    invisibly-wide grid. Confirmed live: a <wb-cardhero> with a full-width
    <wb-demo> collapsed to a ~40px sliver of clipped text on mobile before
-   this override. */
+   this override. Also must override .wb-demo__grid--cols-1:has(> :only-child)'s
+   `width: fit-content` rule (which otherwise would shrink the grid to its
+   content's intrinsic width, creating the 11.44x height:width problem --
+   confirmed live: cardhero in full-width single-item demo collapsed to 33px
+   wide with 487px height = 14.7x aspect ratio). */
 wb-demo.wb-demo--full-width .wb-demo__grid {
+  width: 100% !important;
+  max-width: 100% !important;
   justify-items: stretch;
 }
 
