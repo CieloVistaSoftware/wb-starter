@@ -141,6 +141,9 @@
 .wb-drawer__footer {
   padding: var(--wb-drawer-padding, 1.5rem);
   border-top: 1px solid var(--border-color, #374151);
+  display: flex;
+  justify-content: flex-end;
+  gap: 1rem;
 }
 
 /* variant="push" (drawer.schema.json's variant enum) -- shoves the page's
