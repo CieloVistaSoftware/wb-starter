@@ -62,6 +62,60 @@ This ensures that if you have a global Dark theme (white text) and force a secti
 - **Professional**: `slate`, `coffee`, `noir`
 - **Atmospheric**: `arctic`, `retro-wave`, `aurora`, `twilight`, `grape`
 
+## Typography Scale (Golden Ratio)
+
+The type scale uses a golden-ratio progression (1.618) for consistent visual hierarchy. These tokens are derived mathematically from `--text-base` (1rem), not hand-picked:
+
+```css
+/* Text size tokens (golden-ratio derived) */
+--text-xs: 0.75rem;                                                               /* ~12px, hand-picked base */
+--text-sm: 0.875rem;                                                              /* ~14px, hand-picked base */
+--text-base: 1rem;                                                                /* 16px, foundation */
+--text-lg: calc(var(--text-base) * var(--golden-ratio));                          /* ~1.618rem (25.9px) */
+--text-xl: calc(var(--text-base) * var(--golden-ratio) * var(--golden-ratio));    /* ~2.618rem (41.9px) */
+--text-2xl: calc(var(--text-base) * var(--golden-ratio) * var(--golden-ratio) * var(--golden-ratio)); /* ~4.236rem (67.8px) */
+--text-3xl: calc(var(--text-base) * var(--golden-ratio) * var(--golden-ratio) * var(--golden-ratio) * var(--golden-ratio)); /* ~6.854rem (109.7px) */
+```
+
+**Usage:** Apply these to headings, display text, and content that needs emphasis:
+
+```css
+h1 { font-size: var(--text-3xl); }
+h2 { font-size: var(--text-2xl); }
+h3 { font-size: var(--text-xl); }
+h4 { font-size: var(--text-lg); }
+body { font-size: var(--text-base); }
+small { font-size: var(--text-sm); }
+```
+
+## Spacing Scale (Golden Ratio)
+
+Spacing also follows the golden-ratio progression for visual consistency:
+
+```css
+--space-xs: 0.25rem;  /* 4px */
+--space-sm: 0.5rem;   /* 8px */
+--space-md: 1rem;     /* 16px */
+--space-lg: calc(var(--space-md) * var(--golden-ratio));  /* ~1.618rem (25.9px) */
+--space-xl: calc(var(--space-md) * var(--golden-ratio) * var(--golden-ratio));  /* ~2.618rem (41.9px) */
+--space-2xl: calc(var(--space-md) * var(--golden-ratio) * var(--golden-ratio) * var(--golden-ratio));  /* ~4.236rem (67.8px) */
+```
+
+## Aspect Ratio
+
+For golden rectangle proportions on media containers:
+
+```css
+--aspect-golden: var(--golden-ratio);  /* 1.618:1 ratio */
+```
+
+**Usage:** Apply to images, cards, or media containers:
+
+```css
+img { aspect-ratio: var(--aspect-golden); }
+.hero { aspect-ratio: var(--aspect-golden); }
+```
+
 ## Creating a New Theme
 
 To add a new theme, define it in `src/styles/themes.css`:
@@ -80,3 +134,5 @@ To add a new theme, define it in `src/styles/themes.css`:
   /* ... define all required variables */
 }
 ```
+
+**Note:** The `--golden-ratio`, `--text-*`, and `--space-*` tokens are defined in the shared `:root` block and inherited by all themes. Do not override them per-theme.

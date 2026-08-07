@@ -1,39 +1,34 @@
-# 🅿️ PARKING LOT (2026-08-07 session — final UI polish: full-width audio, notes behavior, compactness)
+# 🅿️ PARKING LOT (2026-08-06/07 session — deployed v3.0.6 to .io + image card regression)
 
-**Task:** Fixed remaining user feedback: audio code panel width (4x wider), notes Enter behavior (newline not autosave), notes drawer compactness (buttons too tall).
+**Task:** Pushed 20 accumulated commits to origin/main (now live on `.io`). Discovered image cards broken + spinners missing — regression not caught by compliance tests.
 
-**Completed:**
-- **Audio code panel**: changed from "wide" (800px) to "full" (100%) per Standard §28
-- **Notes input behavior**: removed Enter key autosave handler — textarea now creates newlines like a normal editor; Save/New actions via buttons or Ctrl+S only
-- **Notes drawer compactness**: reduced overall heights and padding for tighter layout:
-  * Header padding: 0.5rem → 0.375rem
-  * Button height: 26px → 22px (4px reduction)
-  * Footer min-height: 36px → 32px
-  * Button row gaps: 2px → 1px
-  * Font size: 0.75rem → 0.7rem
-- **All compliance tests passing**: 8/8 pre-commit checks green, v3.0.6
+**Deployed (now on .io):**
+- v3.0.6 complete: audio full-width, notes Enter behavior, drawer compactness
+- All 3383 compliance tests pass
+- 20 commits: audio fixes, notes behavior, code panel widths, table/modal/masonry improvements, HTML standards fixes
+- Commit range: c7dc468..5f346ab
 
-**Files touched:**
-- `demos/site/content.html` — audio line 162 (data-code-width="full")
-- `src/wb-viewmodels/notes.js` — removed lines 652-658 (Enter keydown handler)
-- `src/styles/behaviors/notes.css` — reduced padding/heights throughout
+**Blockers (found in current session, NOT YET FIXED):**
+- **Image cards regression**: `<wb-cardimage src="...">` rendering empty placeholder bars, no images visible
+- **Spinners**: no loading spinners showing (related to image load state)
+- **Test gap**: regression not caught by compliance suite — indicates missing test coverage
 
-**Commits this session:**
-1. 5b2f8fc - code panel width compliance test + link demo narrow width
-2. cb3963f - table.js copyable click handler variable fix
-3. fce44a2 - audio full-width, notes behavior, compact sizing
+**Files to investigate:**
+- `src/wb-viewmodels/card.js:cardimage()` (lines 743–796) — `config.src` reading, figure creation, img element setup
+- `src/styles/behaviors/card.css` — `.wb-card__figure`, loading states, spinner styling
+- Need: regression test for cardimage src rendering + spinner visibility
 
-**Prior session context:**
-- Masonry demo expanded (8 articles with varied lengths)
-- HTML indentation standardized per Standard §5
-- Table formatting fixed (vertical `<td>` layout)
-- Modal spacing compliance test (Standard §13)
-- Notes demo: trigger buttons + structured content
-- Code panel width compliance test (Standard §28)
+**Last action:** Pushed to origin/main; v3.0.6 deployed. Identified image card breakage via user screenshot feedback.
 
-**Next step:** All requested fixes landed. Notes component now behaves like a normal text editor. Code panels appropriately sized. All tests green.
+**Next step:**
+1. Root-cause image src not rendering (getAttr/setAttribute timing, schema override, or recent commit)
+2. Add test: cardimage(src="...") produces img with src attribute set + visible
+3. Track spinner CSS/styling issue (related to load states)
 
-**Open questions:** None — all user feedback addressed
+**Open questions:** 
+- When did image cards break? (recent commit or pre-existing in the 20?)
+- Is src being cleared after setup, or never set in first place?
+- Where did spinner CSS go for load states?
 
 ---
 

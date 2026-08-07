@@ -1,10 +1,8 @@
 import { test, expect } from '@playwright/test';
 
 /**
- * <wb-drawer> used as a self-triggering button (pages/behaviors.html:
- * `<wb-drawer class="wb-btn" title="Left Drawer" content="Slide-out panel
- * from the left." position="left">Left Drawer</wb-drawer>`) rendered as an
- * empty/malformed box instead of a working "Left Drawer" button.
+ * A native button using x-drawer (pages/components.html) must remain a
+ * visible, working "Left Drawer" trigger.
  *
  * Root cause (two competing DOM owners for the same element):
  *   1. drawer.schema.json's $view built a real backdrop/panel structure
@@ -18,15 +16,12 @@ import { test, expect } from '@playwright/test';
  *      document.body -- competing with the schema's (invisible, unstyled)
  *      copy still sitting inside the host.
  *
- * Fix: drawer() now detects schema-built markup (x-schema="drawer") and
- * relocates the schema's own .wb-drawer__backdrop/.wb-drawer__panel to
- * document.body instead of building a second copy; layout.css/site.css make
- * `.wb-drawer-trigger` visible; src/styles/behaviors/drawer.css provides the
- * fixed-position open/closed styling.
+ * The test follows the current x-drawer contract, which exercises the
+ * self-building overlay path directly.
  */
 
 async function ready(page) {
-  await page.goto('/?page=behaviors');
+  await page.goto('/?page=components');
   await page.waitForFunction(() => (window as any).WB && (window as any).WB.behaviors, { timeout: 20000 });
   await page.waitForFunction(() => (window as any).WBSite && (window as any).WBSite.currentPage, { timeout: 20000 });
   await page.waitForTimeout(1000);
@@ -40,7 +35,7 @@ async function ready(page) {
   // instead of a fixed timeout: element.wbDrawer is only set at the end of
   // drawer()'s Path A, after relocation and listener wiring are both done.
   await page.waitForFunction(
-    () => Array.from(document.querySelectorAll('wb-drawer')).every((el: any) => !!el.wbDrawer),
+    () => Array.from(document.querySelectorAll('[x-drawer]')).every((el: any) => !!el.wbDrawer),
     { timeout: 15000 }
   );
 }
@@ -51,13 +46,13 @@ test.describe('<wb-drawer> trigger renders and opens correctly (not a broken box
   });
 
   test('trigger is visible and shows its own label text', async ({ page }) => {
-    const trigger = page.locator('wb-drawer', { hasText: 'Left Drawer' }).first();
+    const trigger = page.locator('[x-drawer]', { hasText: 'Left Drawer' }).first();
     await expect(trigger).toBeVisible();
     await expect(trigger).toHaveText('Left Drawer');
   });
 
   test('clicking the trigger opens a fixed-position panel with the configured title/content', async ({ page }) => {
-    const trigger = page.locator('wb-drawer', { hasText: 'Left Drawer' }).first();
+    const trigger = page.locator('[x-drawer]', { hasText: 'Left Drawer' }).first();
     await trigger.scrollIntoViewIfNeeded();
     await trigger.click();
 
@@ -84,10 +79,10 @@ test.describe('<wb-drawer> trigger renders and opens correctly (not a broken box
     // a SINGLE trigger ending up with two competing panels (the schema-built
     // one plus a second one drawer() used to build itself on click) -- so
     // assert per-trigger, not page-wide.
-    const triggers = page.locator('wb-drawer');
+    const triggers = page.locator('[x-drawer]');
     await expect(triggers).toHaveCount(2);
 
-    const leftTrigger = page.locator('wb-drawer', { hasText: 'Left Drawer' }).first();
+    const leftTrigger = page.locator('[x-drawer]', { hasText: 'Left Drawer' }).first();
     await leftTrigger.scrollIntoViewIfNeeded();
     await leftTrigger.click();
 
@@ -115,7 +110,7 @@ test.describe('<wb-drawer> trigger renders and opens correctly (not a broken box
   });
 
   test('clicking the close button closes the panel', async ({ page }) => {
-    const trigger = page.locator('wb-drawer', { hasText: 'Left Drawer' }).first();
+    const trigger = page.locator('[x-drawer]', { hasText: 'Left Drawer' }).first();
     await trigger.scrollIntoViewIfNeeded();
     await trigger.click();
 

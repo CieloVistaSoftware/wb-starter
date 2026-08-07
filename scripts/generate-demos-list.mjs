@@ -88,17 +88,17 @@ const CATEGORIES = [
 // these (a missing entry falls into 'more' with a console warning, not a
 // hard failure — a new demo never silently disappears from the page).
 const DEMO_CATEGORY = {
-  // Architecture & Meta (playground/wizard/schema/registry/frameworks —
+  // Architecture & Meta (playground/schema/registry/frameworks —
   // demos ABOUT the framework's own machinery, not a single component)
   'autoinject.html': 'architecture',
   'charity-food.html': 'architecture', // full composed reference site, not a single-feature demo
   'frameworks.html': 'architecture',
+  'landing-page-showcase.html': 'architecture', // framework showcase, not a single-feature demo
   'multi-component-demo-generated.html': 'architecture', // showcases $extends/$generate/$ref/$include composition, not any one component
   'playground.html': 'architecture',
   'registry-browser.html': 'architecture',
   'schema-first-architecture.html': 'architecture',
   'wb-views-demo.html': 'architecture',
-  'wizard.html': 'architecture',
 };
 
 // A few real, small <wb-demo>-wrapped examples per category, shown ABOVE that

@@ -1,0 +1,6 @@
+{
+  "pid": 5248,
+  "playwrightPid": 40848,
+  "startedAt": "2026-08-07T00:26:34.908Z",
+  "command": "npx playwright test --workers=8 v3-guide-quick-start-card-proportions"
+}

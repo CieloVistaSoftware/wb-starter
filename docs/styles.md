@@ -129,6 +129,11 @@ The `index.html` head must only load **TWO** CSS files for the foundation:
 | A standalone page (e.g., Builder) | `pages/[page].css` (loaded manually) |
 | A one-off tweak for a specific demo | Inline `<style>` (only if absolutely necessary) |
 
+**Font Size & Spacing:** Always use the golden-ratio scale tokens:
+- Text: `var(--text-xs)`, `var(--text-sm)`, `var(--text-base)`, `var(--text-lg)`, `var(--text-xl)`, `var(--text-2xl)`, `var(--text-3xl)`
+- Spacing: `var(--space-xs)`, `var(--space-sm)`, `var(--space-md)`, `var(--space-lg)`, `var(--space-xl)`, `var(--space-2xl)`
+- Media aspect ratio: `aspect-ratio: var(--aspect-golden)` (1.618:1)
+
 ---
 
 ---

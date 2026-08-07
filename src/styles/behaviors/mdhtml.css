@@ -77,6 +77,13 @@ wb-mdhtml p,
 .wb-mdhtml p {
   margin: 0.75rem 0;
   line-height: 1.6;
+  /* #471: explicitly enable text flow — source line breaks are soft (single
+     newlines treated as whitespace, not hard <br>). white-space:normal is the
+     CSS default, but marked is set to `breaks:false` by default (mdhtml.js),
+     so prose with hard-wrapped source lines should flow to container width.
+     overflow-wrap:break-word ensures long unbreakable tokens still fit. */
+  white-space: normal;
+  overflow-wrap: break-word;
 }
 
 wb-mdhtml code,

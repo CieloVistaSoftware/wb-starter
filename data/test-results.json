@@ -1,1 +1,11 @@
-{}
+{
+  "timestamp": "2026-08-07T00:28:23.284Z",
+  "duration": "108.40s",
+  "exitCode": null,
+  "passed": 0,
+  "failed": 0,
+  "skipped": 0,
+  "total": 0,
+  "results": [],
+  "failures": []
+}

@@ -1,6 +1,6 @@
 {
-  "lastRun": "2026-08-06T23:42:45.947Z",
-  "totalChecks": 39126,
+  "lastRun": "2026-08-07T01:02:30.628Z",
+  "totalChecks": 39248,
   "bugs": [
     {
       "id": "bug-regression-tests",
@@ -53,5 +53,5 @@
       "fixed": true
     }
   ],
-  "checkIndex": 6
+  "checkIndex": 0
 }

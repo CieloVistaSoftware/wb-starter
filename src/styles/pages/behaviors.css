@@ -195,6 +195,13 @@ section h3 {
 /* ═══════════════════════════════════════════════════════════════════
    DEMO ELEMENTS
    ═══════════════════════════════════════════════════════════════════ */
+
+/* #486: Buttons in demo containers must have >=1rem padding per Standard §13.
+   Applies to buttons with x-* behaviors that don't get styled by button.js. */
+wb-demo button {
+  padding: 1rem 1rem;
+}
+
 .effect-demo {
   padding: 1rem 1.5rem;
   border-radius: 8px;
