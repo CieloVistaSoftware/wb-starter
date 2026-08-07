@@ -9,12 +9,12 @@ Image card with text overlay.
 | Custom Tag | `<wb-cardoverlay>` |
 | Behavior | `cardoverlay` |
 | Semantic | `<article>` |
-| Base Class | `wb-card wb-card-overlay` |
-| Inherits | card |
+| Root CSS Class | `wb-card wb-card-overlay` |
+| Composes | card structure + CSS (no base class) |
 
 ## Properties
 
-Inherits all [card properties](./card.md) plus:
+Supports every [card property](./card.md) — that shared structure and CSS are applied by the card behavior, not inherited from a base class — plus its own:
 
 | Property | Type | Default | Description |
 |----------|------|---------|-------------|

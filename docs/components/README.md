@@ -2,30 +2,40 @@
 
 ## Overview
 
-The wb-starter provides 41+ components using **Light DOM architecture** and the **WBServices** pattern. All components use proper HTMLElement inheritance and ES Modules.
+The wb-starter provides 41+ components using **Light DOM architecture** and the **WBServices** pattern. Components are **composed, not subclassed**: a `<wb-*>` tag maps to a behavior function that decorates the element in place, and shared structure comes from semantic HTML, helper functions, and design tokens. Everything ships as ES Modules.
 
 ## Architecture (v3.0)
+
+This is a **dispatch** diagram, not a class hierarchy. Nothing below inherits from
+WBServices — the registry looks up which behavior function to run, then that function
+decorates the element that is already in the page.
 
 ```
 ┌─────────────────────────────────────────────────────────┐
 │                    WBServices                            │
-│  Central service registry for component initialization   │
+│  Central registry: tag/attribute  →  behavior function   │
 └─────────────────────────────────────────────────────────┘
-                           │
+                           │  looks up + calls
          ┌─────────────────┼─────────────────┐
          ▼                 ▼                 ▼
+     card(el)          search(el)         modal(el)      ← behavior functions
+         │                 │                 │
+         ▼ decorates       ▼ decorates       ▼ decorates
    ┌──────────┐      ┌──────────┐      ┌──────────┐
-   │ wb-card  │      │ wb-search│      │ wb-modal │
-   │  (Light  │      │  (Light  │      │  (Light  │
-   │   DOM)   │      │   DOM)   │      │   DOM)   │
+   │ wb-card  │      │ wb-search│      │ wb-modal │      ← elements in Light DOM
    └──────────┘      └──────────┘      └──────────┘
+         ▲                 ▲                 ▲
+         └─────────────────┴─────────────────┘
+      any element may also stack x-* behaviors (x-ripple,
+      x-tooltip, …) — capability adds up, it does not cascade
+      down from a parent class
 ```
 
 ### Key Principles
 
 1. **Custom Elements**: All components use `<wb-*>` tags
 2. **Light DOM Only**: No Shadow DOM - styles cascade naturally
-3. **HTMLElement Inheritance**: Proper class-based architecture
+3. **Composition, Not Inheritance**: capability is applied by behavior functions `(element, options)` — there is no component base class to subclass
 4. **ES Modules Only**: No CommonJS (require/module.exports)
 5. **Schema-Driven**: JSON schemas define component properties
 

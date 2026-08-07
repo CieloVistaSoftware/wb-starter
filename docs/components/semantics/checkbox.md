@@ -9,7 +9,7 @@ Checkbox input with label and custom styling.
 | Custom Tag | `<wb-checkbox>` |
 | Behavior | `checkbox` |
 | Semantic | `<div>` (role="checkbox") |
-| Base Class | `wb-checkbox` |
+| Root CSS Class | `wb-checkbox` |
 | Category | Forms |
 | Schema | `src/wb-models/checkbox.schema.json` |
 

@@ -78,8 +78,29 @@ Every component example is a `<wb-demo>` — it renders the **live control** AND
 ## 9. Composition over inheritance
 
 - Components compose via `<wb-*>` tags + `x-*` behaviors. There is **no** component
-  base-class hierarchy. Do not write "is-a", "variants inherit from `cardBase`", or
-  "Why Inheritance Matters" — reframe as composition.
+  base-class hierarchy. Do not write "is-a relationship", "variants inherit from
+  `cardBase`", or "Why Inheritance Matters" — reframe as composition.
+- Say what actually happens: capability is **applied to** an element by a behavior
+  function `(element, options)`; it is never **acquired by** subclassing. Shared
+  structure comes from semantic HTML, exported helper functions, and design tokens.
+  Never present inheritance as a virtue of this architecture.
+- In component reference tables use **"Root CSS Class"** (or BEM "Block"), never
+  "Base Class", and **"Composes"**, never "Inherits".
+- Diagrams follow the same rule: no class/inheritance trees. A chain of `↓` arrows
+  between component names reads as a hierarchy — draw composition as elements plus
+  the behaviors applied to them, and label dispatch arrows ("calls", "decorates") so
+  they can't be misread as "extends".
+- **Two exceptions, both narrow and both out of scope for this rule.** They describe
+  different mechanisms that happen to reuse the word:
+  1. **CSS inheritance / the cascade** — a real browser mechanism (`docs/styles.md`,
+     `docs/themes.md`). Correct terminology; leave it.
+  2. **Schema-layer `$inherits` / `$extends` / IS-A / HAS-A** — JSON documents merged
+     into one effective schema before render (`docs/claude/SCHEMAS-GUIDE.md`), and the
+     IS-A/HAS-A naming convention in
+     `docs/architecture/standards/ATTRIBUTE-NAMING-STANDARD.md`. This is a deliberate
+     data-layer design tracked by **issue #465** — do not rewrite it under this rule.
+  When either appears, say which mechanism you mean so it can't be read as a component
+  class hierarchy.
 - **HTML `extends` is purged.** The old design (customized built-ins:
   `class X extends HTMLButtonElement`, `customElements.define(…, { extends: 'button' })`,
   `is="…"`) is gone. Docs and demos must not show `extends`-based component code —

@@ -36,7 +36,7 @@ All project docs are organized into 3 tiers. See `docs/claude/README.md` for the
 ## Quick Reference
 
 **Owner:** John (Cielo Vista Software)  
-**Architecture:** WBServices pattern, Light DOM only, proper HTMLElement inheritance  
+**Architecture:** WBServices pattern, Light DOM only, composition over inheritance — capability is applied to an element by behavior functions, never acquired by subclassing a component base class  
 **Project location:** `C:\Users\jwpmi\Downloads\AI\wb-starter`
 
 ### MCP Access

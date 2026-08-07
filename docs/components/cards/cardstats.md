@@ -9,12 +9,12 @@ Statistics/metric display card using semantic `<data>` element.
 | Custom Tag | `<wb-cardstats>` |
 | Behavior | `cardstats` |
 | Semantic | `<article>` + `<data>` |
-| Base Class | `wb-card wb-stats` |
-| Inherits | card |
+| Root CSS Class | `wb-card wb-stats` |
+| Composes | card structure + CSS (no base class) |
 
 ## Properties
 
-Inherits all [card properties](./card.md) plus:
+Supports every [card property](./card.md) — that shared structure and CSS are applied by the card behavior, not inherited from a base class — plus its own:
 
 | Property | Type | Default | Description |
 |----------|------|---------|-------------|

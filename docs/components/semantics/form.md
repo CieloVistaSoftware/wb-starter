@@ -9,7 +9,7 @@ Enhanced form with AJAX submission, validation, and auto-save.
 | Custom Tag | `<wb-form>` |
 | Behavior | `form` |
 | Semantic | `<form>` |
-| Base Class | `wb-form` |
+| Root CSS Class | `wb-form` |
 | Category | Forms |
 
 ## Properties

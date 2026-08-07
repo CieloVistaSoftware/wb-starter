@@ -91,14 +91,14 @@ When using `<article>` or `<section>`, the component will automatically enhance 
 - Tests are run using `index.html` as the entry point, with test cards injected dynamically.
 - All tests must pass before documentation is updated.
 - Tests cover:
-  - Rendering and base classes
+  - Rendering and root CSS classes
   - Hoverable, clickable, and elevated states
   - Default and custom variants
 
 ---
 
 ## Styles
-- Base class: `wb-card`
+- Root class: `wb-card` (applied by the card behavior, not inherited)
 - Default variant: `wb-card--default`
 - Other variants: `wb-card--[variant]`
 - Additional: `wb-card--hoverable`, `wb-card--clickable`, `wb-card--elevated`

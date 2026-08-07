@@ -9,12 +9,12 @@ Card with an embedded video player. Uses `<video>` element with accessibility co
 | Custom Tag | `<wb-cardvideo>` |
 | Behavior | `cardvideo` |
 | Semantic | `<article>` + `<figure>` + `<video>` |
-| Base Class | `wb-card wb-card-video` |
-| Inherits | card |
+| Root CSS Class | `wb-card wb-card-video` |
+| Composes | card structure + CSS (no base class) |
 
 ## Properties
 
-Inherits all [card properties](./card.md) plus:
+Supports every [card property](./card.md) — that shared structure and CSS are applied by the card behavior, not inherited from a base class — plus its own:
 
 | Property | Type | Default | Description |
 |----------|------|---------|-------------|

@@ -12,7 +12,7 @@ A structural sidebar container that pushes content or sits alongside it.
 |----------|-------|
 | Custom Tag | `<wb-drawer-layout>` |
 | Behavior | `drawerLayout` |
-| Base Class | `wb-drawer-layout` |
+| Root CSS Class | `wb-drawer-layout` |
 | Schema | `src/wb-models/drawerLayout.schema.json` |
 
 ### Properties
@@ -72,7 +72,7 @@ A modal panel that slides in over page content.
 |----------|-------|
 | Custom Tag | `<wb-drawer>` |
 | Behavior | `drawer` |
-| Base Class | `wb-drawer` |
+| Root CSS Class | `wb-drawer` |
 | Schema | `src/wb-models/drawer.schema.json` |
 
 ### Properties

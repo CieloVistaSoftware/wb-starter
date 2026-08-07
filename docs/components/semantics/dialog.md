@@ -9,7 +9,7 @@ Modal dialog using native HTML5 dialog element.
 | Custom Tag | `<wb-dialog>` |
 | Behavior | `dialog` |
 | Semantic | `<dialog>` |
-| Base Class | `wb-dialog` |
+| Root CSS Class | `wb-dialog` |
 | Category | Overlay |
 | Schema | `src/wb-models/dialog.schema.json` |
 

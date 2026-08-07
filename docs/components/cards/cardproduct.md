@@ -9,12 +9,12 @@ E-commerce product card with image, pricing, and add-to-cart functionality.
 | Custom Tag | `<wb-cardproduct>` |
 | Behavior | `cardproduct` |
 | Semantic | `<article>` + `<figure>` + `<data>` |
-| Base Class | `wb-card wb-product` |
-| Inherits | card |
+| Root CSS Class | `wb-card wb-product` |
+| Composes | card structure + CSS (no base class) |
 
 ## Properties
 
-Inherits all [card properties](./card.md) plus:
+Supports every [card property](./card.md) — that shared structure and CSS are applied by the card behavior, not inherited from a base class — plus its own:
 
 | Property | Type | Default | Description |
 |----------|------|---------|-------------|

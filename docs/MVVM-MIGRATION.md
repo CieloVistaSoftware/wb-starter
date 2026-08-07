@@ -313,7 +313,7 @@ test('card without title hides header', async () => {
 
 Automated tests verify all components meet standards:
 
-- Base class present
+- Root CSS class present
 - Proper ARIA attributes
 - Keyboard accessibility
 - Theme compatibility

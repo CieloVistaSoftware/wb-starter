@@ -9,7 +9,7 @@ Star rating component for displaying or collecting ratings.
 | Custom Tag | `<wb-rating>` |
 | Behavior | `rating` |
 | Semantic | `<div>` (role="slider") |
-| Base Class | `wb-rating` |
+| Root CSS Class | `wb-rating` |
 | Category | Feedback |
 | Schema | `src/wb-models/rating.schema.json` |
 

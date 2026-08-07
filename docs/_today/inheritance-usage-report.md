@@ -1,13 +1,25 @@
 # "inheritance" usage report — `.md` files
 
+> **STATUS: RESOLVED — historical record only. Do not act on the line numbers below.**
+> Groups 1–3 were rewritten to composition framing under **#418** (see
+> `docs/standards/DEMOS-AND-DOCS-STANDARDS.md` §9 for the resulting rule, and
+> `docs/claude/TIER1-LAWS.md` §2 for the architecture statement). Group 4
+> (schema-layer `$inherits` / IS-A / HAS-A) was deliberately **left in place** —
+> it is a data-layer schema-merging mechanism, not component inheritance, and its
+> naming is tracked separately in **#465**. Line numbers here are from 2026-07-02
+> and no longer match the files.
+
 **Generated:** 2026-07-02
 **Scope:** all `*.md` files in the wb-starter repo (case-insensitive match on `inheritance`)
 **Total:** 31 occurrences across 13 files
 
-> Note the tension worth reviewing: the CieloVista standard is *composition over
+> Original note (superseded): the CieloVista standard is *composition over
 > inheritance* (Light DOM, no Shadow DOM), yet many docs assert "proper HTMLElement
-> **inheritance**." Both can be true (components `extends HTMLElement` while behaviors
-> favor composition), but the wording is worth aligning. Grouped below by theme.
+> **inheritance**." The resolution under #418 is that "proper HTMLElement inheritance"
+> was never an accurate description of the architecture: `<wb-*>` tags map to behavior
+> functions that decorate elements in place, most `extends HTMLElement` wrappers were
+> removed in #279, and the handful that remain are Custom-Elements-API registration
+> shims holding no shared component logic. Grouped below by theme.
 
 ---
 

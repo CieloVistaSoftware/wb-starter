@@ -9,7 +9,7 @@ Interactive button with variants, sizes, and optional icon.
 | Custom Tag | `<wb-button>` |
 | Behavior | `button` |
 | Semantic | `<button>` |
-| Base Class | `wb-button` |
+| Root CSS Class | `wb-button` |
 | Category | Forms |
 | Schema | `src/wb-models/button.schema.json` |
 

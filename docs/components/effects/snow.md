@@ -9,7 +9,7 @@ Falling snow animation effect.
 | Custom Tag | `<wb-snow>` |
 | Behavior | `snow` |
 | Semantic | `<div>` |
-| Base Class | `wb-snow` |
+| Root CSS Class | `wb-snow` |
 | Category | Effects |
 | Schema | `src/wb-models/snow.schema.json` |
 

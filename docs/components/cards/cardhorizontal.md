@@ -9,12 +9,12 @@ Card with side-by-side image and content layout.
 | Custom Tag | `<wb-cardhorizontal>` |
 | Behavior | `cardhorizontal` |
 | Semantic | `<article>` + `<figure>` |
-| Base Class | `wb-card wb-card-horizontal` |
-| Inherits | card |
+| Root CSS Class | `wb-card wb-card-horizontal` |
+| Composes | card structure + CSS (no base class) |
 
 ## Properties
 
-Inherits all [card properties](./card.md) plus:
+Supports every [card property](./card.md) — that shared structure and CSS are applied by the card behavior, not inherited from a base class — plus its own:
 
 | Property | Type | Default | Description |
 |----------|------|---------|-------------|

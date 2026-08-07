@@ -9,7 +9,7 @@ Fireworks burst explosion effect.
 | Custom Tag | `<wb-fireworks>` |
 | Behavior | `fireworks` |
 | Semantic | `<div>` |
-| Base Class | `wb-fireworks` |
+| Root CSS Class | `wb-fireworks` |
 | Category | Effects |
 | Schema | `src/wb-models/fireworks.schema.json` |
 

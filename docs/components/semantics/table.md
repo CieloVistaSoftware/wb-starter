@@ -9,7 +9,7 @@ Interactive data table with sorting and search.
 | Custom Tag | `<wb-table>` |
 | Behavior | `table` |
 | Semantic | `<table>` |
-| Base Class | `wb-table` |
+| Root CSS Class | `wb-table` |
 | Category | Data |
 
 ## Properties

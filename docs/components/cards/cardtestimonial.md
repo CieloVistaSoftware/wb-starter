@@ -9,12 +9,12 @@ Quote/testimonial card using semantic `<blockquote>` and `<cite>` elements.
 | Custom Tag | `<wb-cardtestimonial>` |
 | Behavior | `cardtestimonial` |
 | Semantic | `<article>` + `<blockquote>` + `<cite>` |
-| Base Class | `wb-card wb-testimonial` |
-| Inherits | card |
+| Root CSS Class | `wb-card wb-testimonial` |
+| Composes | card structure + CSS (no base class) |
 
 ## Properties
 
-Inherits all [card properties](./card.md) plus:
+Supports every [card property](./card.md) — that shared structure and CSS are applied by the card behavior, not inherited from a base class — plus its own:
 
 | Property | Type | Default | Description |
 |----------|------|---------|-------------|

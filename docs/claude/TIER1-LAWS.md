@@ -13,13 +13,21 @@ Shadow DOM causes silent failures. Components render empty, tests still pass bec
 - Every `<wb-*>` component renders directly into Light DOM
 - If you see Shadow DOM in existing code, it's a bug — don't copy it
 
-## 2. WBServices Pattern — Not WBBaseComponent
+## 2. Composition — WBServices Pattern, Never A Component Base Class
 
-Architecture v3.0 uses the WBServices pattern with proper HTMLElement inheritance.
+Architecture v3.0 is composition, not inheritance. Capability is **applied to** an
+element by behavior functions; it is never **acquired by** subclassing.
 
-- Never create or extend `WBBaseComponent`
+- Never create or extend `WBBaseComponent` — there is no component base class
+- A `<wb-*>` tag maps to a behavior function (`src/core/tag-map.js`), which decorates
+  the element in place in Light DOM
 - Components are registered via `WBServices.register()`
 - Behavior functions receive `(element, options)` — they don't use `this`
+- The few tags that still keep an `extends HTMLElement` class are registration shims
+  the Custom Elements API requires. They hold no shared component logic and are not a
+  hierarchy to inherit from — most were removed in #279 in favor of behaviors
+- Shared logic lives in exported helper functions and CSS/design tokens, not in a
+  parent class
 
 ## 3. ES Modules Only — No CommonJS, Ever
 

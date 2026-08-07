@@ -9,12 +9,12 @@ User profile card with avatar, name, role, and bio.
 | Custom Tag | `<wb-cardprofile>` |
 | Behavior | `cardprofile` |
 | Semantic | `<article>` |
-| Base Class | `wb-card wb-card--profile` |
-| Inherits | card |
+| Root CSS Class | `wb-card wb-card--profile` |
+| Composes | card structure + CSS (no base class) |
 
 ## Properties
 
-Inherits all [card properties](./card.md) plus:
+Supports every [card property](./card.md) — that shared structure and CSS are applied by the card behavior, not inherited from a base class — plus its own:
 
 | Property | Type | Default | Description |
 |----------|------|---------|-------------|

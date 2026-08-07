@@ -9,7 +9,7 @@ Progress bar with determinate and indeterminate states.
 | Custom Tag | `<wb-progress>` |
 | Behavior | `progress` |
 | Semantic | `<div>` (role="progressbar") |
-| Base Class | `wb-progress` |
+| Root CSS Class | `wb-progress` |
 | Category | Feedback |
 | Schema | `src/wb-models/progress.schema.json` |
 

@@ -9,7 +9,7 @@ Audio player with optional 15-band graphic equalizer.
 | Custom Tag | `<wb-audio>` |
 | Behavior | `audio` |
 | Semantic | `<div>` |
-| Base Class | `wb-audio` |
+| Root CSS Class | `wb-audio` |
 | Category | Media |
 | Schema | `src/wb-models/audio.schema.json` |
 

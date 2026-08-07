@@ -42,7 +42,7 @@ All three are equivalent and produce the same result.
 | **Light DOM Only** | No Shadow DOM - elements enhanced in standard DOM |
 | **Lazy Loading** | Behaviors loaded on-demand via IntersectionObserver |
 | **WBServices Pattern** | Dependency injection for shared services |
-| **HTMLElement Inheritance** | Components extend HTMLElement properly |
+| **Composition over Inheritance** | Capability is applied by behavior functions `(element, options)`; no component base class |
 | **x-behavior Attribute** | Standard attribute for behavior declaration |
 
 ---

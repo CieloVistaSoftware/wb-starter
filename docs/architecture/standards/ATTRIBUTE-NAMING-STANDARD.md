@@ -98,6 +98,13 @@ WB uses three patterns for applying behaviors:
 | `x-behavior` | **HAS-A** | Extensions (adds capability) | `x-ripple` |
 | `x-as-component` | **BECOMES** | Morphing (transforms element) | `x-as-card` |
 
+> **IS-A here is a naming rule, not a class relationship.** It answers "does this thing
+> get its own tag, or does it decorate a tag that already exists?" — nothing subclasses
+> anything. `<wb-cardpricing>` does not extend a `card` class; the `cardpricing` behavior
+> function decorates the element in place, exactly as `x-ripple` does. This IS-A/HAS-A
+> vocabulary is also used by the schema layer, which is a deliberate design tracked in
+> **issue #465**.
+
 ```html
 <!-- IS-A: Custom element (noun) -->
 <wb-cardstats

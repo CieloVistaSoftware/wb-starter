@@ -9,12 +9,12 @@ Card with expandable/collapsible content.
 | Custom Tag | `<wb-cardexpandable>` |
 | Behavior | `cardexpandable` |
 | Semantic | `<article>` |
-| Base Class | `wb-card wb-card-expandable` |
-| Inherits | card |
+| Root CSS Class | `wb-card wb-card-expandable` |
+| Composes | card structure + CSS (no base class) |
 
 ## Properties
 
-Inherits all [card properties](./card.md) plus:
+Supports every [card property](./card.md) — that shared structure and CSS are applied by the card behavior, not inherited from a base class — plus its own:
 
 | Property | Type | Default | Description |
 |----------|------|---------|-------------|

@@ -3,7 +3,7 @@
 
 ## Overview
 
-WBServices is the central service registry and initialization pattern for all components in the wb-starter v3.0 architecture. It ensures every component uses Light DOM, proper HTMLElement inheritance, and ES Modules, while providing a unified way to register, initialize, and share services or logic across components.
+WBServices is the central service registry and initialization pattern for all components in the wb-starter v3.0 architecture. It ensures every component uses Light DOM, composition (behavior functions applied to elements rather than a component class hierarchy), and ES Modules, while providing a unified way to register, initialize, and share services or logic across components.
 
 ---
 
@@ -11,7 +11,7 @@ WBServices is the central service registry and initialization pattern for all co
 
 - **Central Registry:** All components and services are registered via `WBServices.register()`.
 - **No Shadow DOM:** Components render in Light DOM for full CSS cascade and accessibility.
-- **Proper Inheritance:** Components extend HTMLElement directly, not a custom base class.
+- **Composition, Not Inheritance:** A component's capability comes from a behavior function that decorates the element in place. There is no component base class to subclass, and no shared logic is reached through a parent class — reuse happens through exported helper functions, semantic HTML, and design tokens.
 - **Schema-Driven:** Each component has a JSON schema describing its properties and structure.
 - **ES Modules Only:** All logic is imported/exported using ESM syntax.
 
@@ -76,7 +76,7 @@ theme.setTheme('dark');
 ## Best Practices
 
 - Always register components/services via `WBServices.register()`.
-- Never extend a custom base class (use HTMLElement directly).
+- Never introduce a component base class — compose behaviors onto the element instead, and factor shared logic into exported helper functions.
 - Use schemas for all component properties.
 - Prefer dependency injection via WBServices over direct imports for shared logic.
 
@@ -156,7 +156,7 @@ This means:
 
 ## x-Behaviors: What They Are and How They Work
 
-**x-behaviors** are attribute-based enhancements that add logic, interactivity, or effects to any element (including <wb-*> components and standard HTML tags) without requiring custom elements or class inheritance.
+**x-behaviors** are attribute-based enhancements that add logic, interactivity, or effects to any element (including <wb-*> components and standard HTML tags) without requiring custom elements or a class hierarchy.
 
 ### What Are x-Behaviors?
 - Declared as attributes like `x-ripple`, `x-tooltip`, `x-badge`, etc.
@@ -188,4 +188,4 @@ This means:
 ### Key Points
 - x-behaviors are additive: you can use multiple on the same element.
 - They work on any element, not just wb-components.
-- No class inheritance or custom element registration is required for behaviors.
+- Behaviors are pure composition: no class hierarchy and no custom element registration is required.

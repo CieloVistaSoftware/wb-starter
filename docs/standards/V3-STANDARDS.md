@@ -237,7 +237,7 @@ export function card(element, options = {}) {
     ...options
   };
   
-  // Apply base class
+  // Apply the BEM block class
   element.classList.add('wb-card');
   
   // Apply variant class
@@ -369,8 +369,8 @@ document.body.appendChild(card);
 
 ## CSS Class Naming (BEM)
 
-| Component | Base Class | Modifier | Element |
-|-----------|------------|----------|---------|
+| Component | Block | Modifier | Element |
+|-----------|-------|----------|---------|
 | `<wb-card>` | `.wb-card` | `.wb-card--glass` | `.wb-card__header` |
 | `<wb-modal>` | `.wb-modal` | `.wb-modal--lg` | `.wb-modal__title` |
 | `<wb-badge>` | `.wb-badge` | `.wb-badge--success` | `.wb-badge__icon` |

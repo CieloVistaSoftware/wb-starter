@@ -9,7 +9,7 @@ Enhanced select dropdown with search, clear, and multi-select.
 | Custom Tag | `<wb-select>` |
 | Behavior | `select` |
 | Semantic | `<div>` (role="combobox") |
-| Base Class | `wb-select` |
+| Root CSS Class | `wb-select` |
 | Category | Forms |
 | Schema | `src/wb-models/select.schema.json` |
 

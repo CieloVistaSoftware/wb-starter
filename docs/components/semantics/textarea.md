@@ -9,7 +9,7 @@ Multi-line text input with autosize and character count.
 | Custom Tag | `<wb-textarea>` |
 | Behavior | `textarea` |
 | Semantic | `<div>` (role="textbox") |
-| Base Class | `wb-textarea` |
+| Root CSS Class | `wb-textarea` |
 | Category | Forms |
 | Schema | `src/wb-models/textarea.schema.json` |
 

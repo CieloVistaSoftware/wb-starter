@@ -9,7 +9,7 @@ Enhanced HTML5 video player with configurable defaults.
 | Custom Tag | `<wb-video>` |
 | Behavior | `video` |
 | Semantic | `<video>` |
-| Base Class | `wb-video` |
+| Root CSS Class | `wb-video` |
 | Category | Media |
 
 ## Properties

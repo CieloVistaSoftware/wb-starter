@@ -9,7 +9,7 @@ User avatar with image, initials fallback, and status indicator.
 | Custom Tag | `<wb-avatar>` |
 | Behavior | `avatar` |
 | Semantic | `<div>` (implicit role `img`) |
-| Base Class | `wb-avatar` |
+| Root CSS Class | `wb-avatar` |
 | Category | Feedback |
 | Schema | `src/wb-models/avatar.schema.json` |
 

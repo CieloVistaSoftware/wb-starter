@@ -9,7 +9,7 @@ Alert/notification card using semantic `<aside>` element.
 | Custom Tag | `<wb-cardnotification>` |
 | Behavior | `cardnotification` |
 | Semantic | `<aside>` with `role="alert"` |
-| Base Class | `wb-notification` |
+| Root CSS Class | `wb-notification` |
 | CSS File | `src/styles/behaviors/card.css` |
 | Schema | `src/wb-models/cardnotification.schema.json` |
 

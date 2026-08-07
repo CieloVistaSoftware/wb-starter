@@ -9,7 +9,7 @@ Text input field with label, helper text, and validation states.
 | Custom Tag | `<wb-input>` |
 | Behavior | `input` |
 | Semantic | `<div>` (role="textbox") |
-| Base Class | `wb-input` |
+| Root CSS Class | `wb-input` |
 | Category | Forms |
 | Schema | `src/wb-models/input.schema.json` |
 

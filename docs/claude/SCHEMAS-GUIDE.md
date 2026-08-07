@@ -101,10 +101,24 @@ Consult these meta-schemas when working in their respective domains. If you touc
 
 ## Schema Inheritance Hierarchy — The Lowest Wins
 
-Schemas form an inheritance chain. **The most specific (lowest) schema takes precedence.** If a child schema defines a property that also exists in a parent, the child's definition wins.
+> **This is data-layer schema layering, not component inheritance.** The project's
+> component architecture is composition-only: there is no component base class, and
+> `<wb-*>` capability comes from behavior functions applied to an element (see
+> `docs/claude/TIER1-LAWS.md` §2). What follows describes a *separate* mechanism —
+> JSON documents merged by `allOf` / `$ref` / `$inherits` before a component is ever
+> rendered. No runtime object inherits from another here; the loader flattens several
+> JSON files into one effective schema.
+>
+> Whether this layer should keep the words "inheritance" / `$inherits` / IS-A /
+> HAS-A, or be renamed to "schema composition" / "schema layering", is tracked
+> separately in **issue #465** — do not rename it as part of #418.
+
+Schemas form a layering chain. **The most specific (lowest) schema takes precedence.** If a lower schema defines a property that also exists in a layer above it, the lower definition wins.
 
 ```
-Level 0: _base/html-element.schema.json       ← ALL elements inherit from this
+(JSON documents merged into one effective schema — NOT a class hierarchy)
+
+Level 0: _base/html-element.schema.json       ← every element's schema layers on this
 │  _identity: id, class
 │  _layout: display, position, width, height, margin, padding, overflow, z-index
 │  _flexChild: grow, shrink, basis, align-self, order
@@ -132,9 +146,9 @@ Level 3: cardbutton.schema.json                ← Specific variants OVERRIDE pa
          ... (20+ card variants)
 ```
 
-### How Inheritance Works in Practice
+### How Schema Layering Works in Practice
 
-**Properties merge, child wins on conflict:**
+**Properties merge, the lower schema wins on conflict:**
 - `card.base` defines `title` with `type: "string"`, `default: ""`
 - `cardbutton` can redefine `title` with a different default or constraints
 - The engine uses `cardbutton`'s definition, not `card.base`'s
@@ -322,7 +336,7 @@ Schema changes can break other tests. After schema edits, also run:
 
 1. **Wrong `behavior` value.** Must match the behavior function name, not the filename. For `cardprofile.schema.json`, behavior is `"cardprofile"` — not `"card-profile"`, not `"profile"`.
 
-2. **Forgetting card variants inherit from card.base.** Don't duplicate base properties — use `"$inherits": "card.base.schema.json#compliance"`.
+2. **Forgetting that a card variant's SCHEMA layers on `card.base.schema.json`.** (The variant *component* does not subclass anything — only the JSON documents merge.) Don't duplicate the shared properties — use `"$inherits": "card.base.schema.json#compliance"`.
 
 3. **Using `x-behavior` in setup when component is a `<wb-*>` tag.** If registered as a custom element (`<wb-alert>`), the setup must use that tag. Only use `x-alert` for behavior-only attachment to arbitrary elements.
 

@@ -9,7 +9,7 @@ Enhanced accordion/disclosure component with smooth animations.
 | Custom Tag | `<wb-details>` |
 | Behavior | `details` |
 | Semantic | `<details>` |
-| Base Class | `wb-details` |
+| Root CSS Class | `wb-details` |
 | Category | Content |
 
 ## Properties

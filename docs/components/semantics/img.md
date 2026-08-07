@@ -9,7 +9,7 @@ Enhanced image component with lazy loading, aspect ratio, and fallback support.
 | Custom Tag | `<wb-img>` |
 | Behavior | `img` |
 | Semantic | `<img>` |
-| Base Class | `wb-img` |
+| Root CSS Class | `wb-img` |
 | Category | Media |
 
 ## Properties

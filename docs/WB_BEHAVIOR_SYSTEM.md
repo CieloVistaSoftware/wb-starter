@@ -10,7 +10,7 @@ The **WB (Web Behavior)** system is a functional, progressive enhancement librar
 ## Table of Contents
 
 1. [Core Concept: Functional Enhancement](#core-concept-functional-enhancement)
-2. [How Behaviors "Inherit" from HTML Elements](#how-behaviors-inherit-from-html-elements)
+2. [How Behaviors Build On Native HTML Elements](#how-behaviors-build-on-native-html-elements)
 3. [The Complete Call Chain](#the-complete-call-chain)
 4. [HTML Declaration Pattern](#html-declaration-pattern)
 5. [Behavior Anatomy](#behavior-anatomy)
@@ -50,11 +50,13 @@ export function button(element, options = {}) {
 
 ---
 
-## How Behaviors "Inherit" from HTML Elements
+## How Behaviors Build On Native HTML Elements
 
-### The Browser Provides Inheritance
+### The Element Already Has Its Native API
 
-When you call a behavior function, you pass in a **native HTML element** that already has all standard properties and methods:
+A behavior never needs to acquire DOM capability, because it never creates the object
+in the first place. You hand it a **native HTML element** that the parser already built,
+with every standard property and method on it. The behavior only adds what's missing:
 
 ```javascript
 import { button } from './behaviors/js/semantics/button.js';
@@ -71,7 +73,11 @@ button(myButton, { variant: 'primary' });
 
 ### Semantic Behaviors Map to Native Elements
 
-| Behavior File | Expects Element Type | Native Inheritance |
+Each behavior is written against the element type it decorates, and checks that it got
+one. The interface column is what the browser already put on that element — the behavior
+composes on top of it, it does not redefine or subclass it.
+
+| Behavior File | Expects Element Type | Native Interface Already Present |
 |--------------|---------------------|-------------------|
 | `button.js` | `<button>` | `HTMLButtonElement` |
 | `img.js` | `<img>` | `HTMLImageElement` |
@@ -893,7 +899,7 @@ export function button(element, options) {
 
 1. **Functional, not Class-based** - Behaviors are functions that enhance native elements
 2. **Progressive Enhancement** - Start with semantic HTML, enhance with `x-behavior`
-3. **No Inheritance** - The browser provides inheritance; we just add features
+3. **No Class Hierarchy** - The element arrives with its full native DOM interface already on it; a behavior composes extra features onto that, it never subclasses anything
 4. **Declarative** - Configuration via data attributes
 5. **Composable** - Stack multiple behaviors on one element
 6. **Automatic** - `WB.init()` scans and observes, no manual wiring

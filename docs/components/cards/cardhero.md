@@ -9,12 +9,12 @@ Full-width hero banner card with background image/gradient and CTAs.
 | Custom Tag | `<wb-cardhero>` |
 | Behavior | `cardhero` |
 | Semantic | `<article>` |
-| Base Class | `wb-card wb-hero` |
-| Inherits | card |
+| Root CSS Class | `wb-card wb-hero` |
+| Composes | card structure + CSS (no base class) |
 
 ## Properties
 
-Inherits all [card properties](./card.md) plus:
+Supports every [card property](./card.md) — that shared structure and CSS are applied by the card behavior, not inherited from a base class — plus its own:
 
 | Property | Type | Default | Description |
 |----------|------|---------|-------------|

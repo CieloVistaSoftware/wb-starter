@@ -9,7 +9,7 @@ Toggle switch for boolean settings.
 | Custom Tag | `<wb-switch>` |
 | Behavior | `switch` |
 | Semantic | `<div>` (role="switch") |
-| Base Class | `wb-switch` |
+| Root CSS Class | `wb-switch` |
 | Category | Forms |
 | Schema | `src/wb-models/switch.schema.json` |
 

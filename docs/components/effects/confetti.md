@@ -9,7 +9,7 @@ Colorful confetti explosion effect.
 | Custom Tag | `<wb-confetti>` |
 | Behavior | `confetti` |
 | Semantic | `<div>` |
-| Base Class | `wb-confetti` |
+| Root CSS Class | `wb-confetti` |
 | Category | Effects |
 | Schema | `src/wb-models/confetti.schema.json` |
 

@@ -9,7 +9,7 @@ Enhanced code display with copy button and language badge.
 | Custom Tag | `<wb-code>` |
 | Behavior | `code` |
 | Semantic | `<code>` |
-| Base Class | `wb-code` |
+| Root CSS Class | `wb-code` |
 | Category | Content |
 
 ## Properties

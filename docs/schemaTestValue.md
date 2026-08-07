@@ -33,7 +33,7 @@ were updated automatically and
 | ❌ behavior: No exported function found | ✅ |
 | ❌ behaviors-showcase: No exported function found | ✅ |
 
-### MISSING BASE CLASS ASSIGNMENTS
+### MISSING ROOT CSS CLASS ASSIGNMENTS
 | Issue | Fixed |
 |-------|:-----:|
 | ❌ checkbox: Doesn't add "wb-checkbox-input" | ✅ |
