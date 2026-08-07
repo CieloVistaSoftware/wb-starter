@@ -649,13 +649,8 @@ export function notes(element, options = {}) {
     reader.readAsDataURL(file);
   });
 
-  // Handle Enter key to save
-  textarea.addEventListener('keydown', (e) => {
-    if (e.key === 'Enter' && !e.shiftKey) {
-      e.preventDefault();
-      saveToFile();
-    }
-  });
+  // Textarea behaves like a normal editor — Enter creates newlines.
+  // Save happens via button clicks (💾 Save, ➕ New) or Ctrl+S
 
   // Keyboard shortcuts (on element)
   element.addEventListener('keydown', (e) => {
