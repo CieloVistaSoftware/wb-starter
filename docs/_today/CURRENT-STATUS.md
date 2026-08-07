@@ -1,31 +1,39 @@
-# 🅿️ PARKING LOT (2026-08-06 session — comprehensive demo standards fixes)
+# 🅿️ PARKING LOT (2026-08-07 session — final UI polish: full-width audio, notes behavior, compactness)
 
-**Task:** Fixed critical HTML indentation violations, code panel width issues, and added modal spacing compliance testing.
+**Task:** Fixed remaining user feedback: audio code panel width (4x wider), notes Enter behavior (newline not autosave), notes drawer compactness (buttons too tall).
 
 **Completed:**
-- **Masonry demo expanded**: 4→8 articles with varying content lengths clearly showing staggered masonry effect
-- **HTML indentation standardized**: all article demos follow Standard §5 (one tag per line); masonry articles split across 3 lines (opening tag, content, closing tag); pagination demo multi-attribute tags span lines
-- **Table formatting fixed**: 25-row main table reformatted from single-line `<tr><td>data</td>...</tr>` to proper vertical formatting with one `<td>` per line, matching toggle table examples and showing proper HTML structure in code panels
-- **Audio code panel width**: increased from default to "wide" (800px max-width) to match proportions of rendered content
-- **Modal spacing compliance test**: new regression test validates dialogs have ≥1rem padding, button gaps ≥0.5rem, heading spacing ≥1rem per Standard §13; catches cramped layouts
-- **Notes demo fixed**: replaced non-rendering placeholder text with trigger buttons and proper content structure showing how to open notes drawers
-- **All compliance tests passing**: 8/8 pre-commit checks green, 6 commits, version v3.0.6
+- **Audio code panel**: changed from "wide" (800px) to "full" (100%) per Standard §28
+- **Notes input behavior**: removed Enter key autosave handler — textarea now creates newlines like a normal editor; Save/New actions via buttons or Ctrl+S only
+- **Notes drawer compactness**: reduced overall heights and padding for tighter layout:
+  * Header padding: 0.5rem → 0.375rem
+  * Button height: 26px → 22px (4px reduction)
+  * Footer min-height: 36px → 32px
+  * Button row gaps: 2px → 1px
+  * Font size: 0.75rem → 0.7rem
+- **All compliance tests passing**: 8/8 pre-commit checks green, v3.0.6
 
 **Files touched:**
-- `demos/site/content.html` — masonry (77-102), pagination (110-145), audio (162 data-code-width), table rows (213-237 reformatted), notes (553-581 new triggers + content)
-- `tests/regression/modal-spacing-compliance.spec.ts` — new test file, 4 test cases
+- `demos/site/content.html` — audio line 162 (data-code-width="full")
+- `src/wb-viewmodels/notes.js` — removed lines 652-658 (Enter keydown handler)
+- `src/styles/behaviors/notes.css` — reduced padding/heights throughout
 
-**Commits:**
-1. cfffb14 - masonry + indentation improvements
-2. 9e65c81 - table formatting fix
-3. e626cef - audio code panel width
-4. 3d6fd91 - modal spacing compliance test
-5. 7189972 - parking lot update
-6. 156242b - notes demo fix (trigger buttons + structured content)
+**Commits this session:**
+1. 5b2f8fc - code panel width compliance test + link demo narrow width
+2. cb3963f - table.js copyable click handler variable fix
+3. fce44a2 - audio full-width, notes behavior, compact sizing
 
-**Next step:** Code panels now show proper HTML structure across all demos (masonry, pagination, tables, audio); gap/spacing control system for demos can be implemented as future enhancement
+**Prior session context:**
+- Masonry demo expanded (8 articles with varied lengths)
+- HTML indentation standardized per Standard §5
+- Table formatting fixed (vertical `<td>` layout)
+- Modal spacing compliance test (Standard §13)
+- Notes demo: trigger buttons + structured content
+- Code panel width compliance test (Standard §28)
 
-**Open questions:** Gap control system request noted for future work (per-demo gap override, shorthand syntax)
+**Next step:** All requested fixes landed. Notes component now behaves like a normal text editor. Code panels appropriately sized. All tests green.
+
+**Open questions:** None — all user feedback addressed
 
 ---
 
