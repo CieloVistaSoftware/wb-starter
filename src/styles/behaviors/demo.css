@@ -64,7 +64,7 @@ wb-demo:has(.wb-dropdown.open) {
 
 .wb-demo__code {
   width: 100%;
-  max-width: var(--demo-code-max-width, 100%);
+  max-width: var(--demo-code-max-width, 50vw);
   overflow-x: auto;
 }
 
