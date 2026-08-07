@@ -1,6 +1,6 @@
 # Cielo Vista Software Update
 
-**wb-starter v3.0.3: 70 production components, zero build process, architecture that holds up at scale**
+**wb-starter v3.0.6: 72 production components, zero build process, architecture that holds up at scale**
 
 By John Peters, Lead Developer at Cielo Vista Software • Updated August 2, 2026
 
@@ -12,8 +12,8 @@ The founding principle held — **zero build step, drop the tag in, it works** �
 
 | Metric | Achievement |
 |---|---|
-| Components | **70 production components**, 8 categories |
-| Demos | **709 live, interactive demos** |
+| Components | **72 production components**, 8 categories |
+| Demos | **513 live, interactive demos** |
 | Architecture | Zero-build, schema-first |
 | Standards | 100% Web Standards |
 | Error Handling | Enterprise-grade, regression-tested |
@@ -28,7 +28,7 @@ Every component's markup and styles stay fully inspectable and stylable from the
 
 ## 🔧 Technical Excellence
 
-What makes this durable at 70 components instead of 5:
+What makes this durable at 72 components instead of 5:
 
 **Light DOM, composition-first** — no Shadow DOM, no base-class chains, attributes in, real DOM out.
 

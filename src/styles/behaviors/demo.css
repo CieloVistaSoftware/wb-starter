@@ -87,6 +87,10 @@ wb-demo[data-code-width="full"] .wb-demo__code {
   max-width: 100%;
 }
 
+wb-demo[data-code-width="50vw"] .wb-demo__code {
+  max-width: 50vw;
+}
+
 .wb-demo__grid--cols-1 { grid-template-columns: 1fr; }
 
 /* justify-items: start (not the grid default `stretch`), single-item grids
