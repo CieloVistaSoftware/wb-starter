@@ -247,11 +247,11 @@ wb-demo.wb-demo--full-width .wb-demo__grid {
   }
 }
 
-.wb-demo__grid--cols-2 { grid-template-columns: repeat(2, 1fr); }
-.wb-demo__grid--cols-3 { grid-template-columns: repeat(3, 1fr); }
-.wb-demo__grid--cols-4 { grid-template-columns: repeat(4, 1fr); }
-.wb-demo__grid--cols-5 { grid-template-columns: repeat(5, 1fr); }
-.wb-demo__grid--cols-6 { grid-template-columns: repeat(6, 1fr); }
+.wb-demo__grid--cols-2 { grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); }
+.wb-demo__grid--cols-3 { grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); }
+.wb-demo__grid--cols-4 { grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); }
+.wb-demo__grid--cols-5 { grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); }
+.wb-demo__grid--cols-6 { grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); }
 
 .wb-demo__grid > * {
   min-width: 0;
