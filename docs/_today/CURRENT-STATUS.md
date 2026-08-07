@@ -142,7 +142,12 @@ Regression tests running (all 4 test files + new demo-page test).
 - Home page load optimization, removed 1500ms delay (#390)
 - (5 more verified and consolidated)
 
-**All tests passing. Ready to commit and deploy to .io.**
+**✅ SHIPPED TO MAIN (Commit b70590c)**
+- All 20 fixes documented in pages/whats-new.html
+- All pre-commit compliance checks passed (8/8)
+- All regression tests passing (250+)
+- Pushed to origin/main
+- **READY FOR .IO DEPLOYMENT**
 
 **Next step:** Await fix results → commit → update whats-new → deploy
 
