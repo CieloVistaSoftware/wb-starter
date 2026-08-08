@@ -17,7 +17,7 @@
       { "columns": 1, "width": "full-bleed", "headingLevel": 1, "content": ["hero"] },
       { "columns": 1, "width": "900px", "heading": "By the Numbers", "headingLevel": 2, "content": ["stats"] },
       { "columns": 1, "width": "1200px", "heading": "Features", "headingLevel": 2, "subheading": "Everything you need to build modern UIs", "content": ["features"] },
-      { "columns": 2, "ratio": "60/40", "width": "1200px", "heading": "Live Demos", "headingLevel": 2, "content": ["notifications", "audio"] }
+      { "columns": 2, "ratio": "60/40", "width": "1200px", "heading": "Notification Card Examples", "headingLevel": 2, "content": ["notifications", "audio"] }
     ]
   },
   "properties": {

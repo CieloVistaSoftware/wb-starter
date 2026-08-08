@@ -61,7 +61,7 @@ Row-based system. Each row stacks vertically. Columns collapse to 1 on mobile (m
 | 0 | 1 | full-bleed | h1 (from hero title) | hero |
 | 1 | 1 | 900px | "By the Numbers" (h2) | stats |
 | 2 | 1 | 1200px | "Features" (h2) | features |
-| 3 | 2 (60/40) | 1200px | "Live Demos" (h2) | notifications, audio |
+| 3 | 2 (60/40) | 1200px | "Notification Card Examples" (h2) | notifications, audio |
 
 ## Page Rules
 - `fragment: true` — no DOCTYPE/html/head/body (server wraps it)
