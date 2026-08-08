@@ -194,14 +194,15 @@ questionable.
 
 ## Decisions
 
-- **Transition strategy: dual maintenance.** Both `<wb-card>` and `<article x-card>` resolve to
-  the same schema indefinitely — no flag day, no forced migration deadline. This directly
-  changes step 3 above from "risky, needs a window" to "purely additive, safe to ship alone."
+- **Transition strategy: dual maintenance, indefinitely.** Both `<wb-card>` and
+  `<article x-card>` resolve to the same schema for as long as this stays useful — no flag
+  day, no forced migration deadline, no target date to "finish." This directly changes step 3
+  above from "risky, needs a window" to "purely additive, safe to ship alone."
+- **Opt-out: `x-ignore`, no new attribute.** One opt-out, not two — covers both "skip native
+  behavior" and "skip composite DOM building" under a single name. Section 2 above is final.
+- **`proposed-custom-elements.md` is obsolete**, marked as such at the top of that file. It
+  asked for more `wb-*` tags; this proposal's `x-*` attribute form is now the way to add the
+  same layout behaviors (`x-grid`, `x-flex`, `x-stack`, …) it was proposing tags for.
 
-## Open questions for you
-
-- Any objection to reusing `x-ignore` as the schema-path opt-out, vs. a distinct name (e.g.
-  `x-no-schema`) to keep "skip native behavior" and "skip composite DOM building" separately
-  toggleable? I don't see a case in the current code for wanting one without the other, but
-  flagging the choice explicitly.
-- `proposed-custom-elements.md` — withdraw, or reframe as attribute names?
+All three open questions from the original draft are resolved as of this update — nothing
+outstanding here blocks starting issue #521 (the schema-builder.js detection change).

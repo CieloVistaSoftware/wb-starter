@@ -1,3 +1,11 @@
+> **OBSOLETE — superseded by
+> [`remove-wb-prefix-authoring-surface.md`](remove-wb-prefix-authoring-surface.md) (decided).**
+> This document proposes *more* `wb-*` tags; the project is instead moving to an `x-*`
+> attribute-based authoring surface (dual-maintained alongside existing `wb-*` tags
+> indefinitely, no forced migration). The layout behaviors below are still worth exposing —
+> just as `x-grid`, `x-flex`, `x-stack`, etc. on whatever semantic tag the author already
+> chose, not as new custom tags. Kept here for historical reference only.
+
 # Proposed Custom HTML Tags for Layouts
 
 This document outlines a set of proposed custom HTML tags to expose the existing layout behaviors as semantic elements. This aligns with the "Pseudo-Custom Elements" (PCE) architecture.
