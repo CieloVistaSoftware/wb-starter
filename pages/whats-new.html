@@ -3,6 +3,22 @@
   <p>What's actually live on this site right now — every push to <code>main</code> deploys straight to <a href="https://cielovistasoftware.github.io/wb-starter/" target="_blank" rel="noopener">cielovistasoftware.github.io/wb-starter</a>, so this list is the real changelog, not a promise of a future release.</p>
 </div>
 
+<section id="whats-new-2026-08-08">
+  <h2>2026-08-08</h2>
+  <ul>
+    <li>Reconciled overlapping fixes from two parallel work streams that had independently patched the same 7 issues in different ways — reviewed each pair, kept the better-rooted fix (or merged the best of both), and verified the result against the full compliance suite before shipping.</li>
+    <li>Fixed the home page's "Live Demos" section heading to read "Notification Card Examples" (#507).</li>
+    <li>Fixed generated progress-bar demos rendering an empty track — the demo generator never filled a value for ranged-number props that aren't required, and a schema-rebuild race could separately wipe an already-painted bar (#510).</li>
+    <li>Fixed <code>navigateTo()</code> throwing on standalone demo pages with no site shell — <code>init()</code> now reports whether it actually initialized, and callers only navigate when it did (#511).</li>
+    <li>Fixed a failed module import (e.g. a blocked/slow network request) causing one root failure to log dozens of duplicate errors, and re-triggering a fresh failing request for every later caller. Failures now retry once with a cache-busting request, then are memoized for a short cooldown so every caller in that window shares one error and one log entry, and a module killed by a transient blip can recover instead of staying dead for the page's life (#512, #513).</li>
+    <li>Fixed <code>docs/behaviors-reference.md</code>'s live wb-audio/img/video examples pointing at nonexistent placeholder files; added a compliance gate that audits every doc for this. Also added x-stack/x-cluster attribute-decoration examples to the layout table (#514).</li>
+    <li>Fixed <code>/errors-viewer</code> (no extension) 404ing — added the missing route alongside the existing <code>/errors-viewer.html</code> one. Also fixed a latent bug this surfaced: any page served via <code>res.sendFile()</code> 404s when the server's own checkout path contains a dot-prefixed folder (like this repo's own <code>.claude/worktrees/&lt;name&gt;/</code> agent-worktree convention) — now scoped correctly regardless of checkout location (#516).</li>
+    <li>Fixed the standalone <code>&lt;wb-cardhero&gt;</code> demo on the Components page collapsing to a narrow, unreadable sliver — it was missing the same <code>full-width</code> opt-out every other standalone hero-card demo on the site already uses.</li>
+    <li>Issues page: expanded issue bodies now render as real formatted markdown (headings, code blocks) instead of raw text with visible <code>##</code>/<code>```</code> markers. Added an "In Progress" filter tab, and click feedback on the toolbar buttons.</li>
+    <li>Removed an unnecessary <code>!important</code> that was forcing every inline <code>&lt;code&gt;</code> snippet into an oversized box regardless of content length (even a 2-character snippet got a 58×60px box) — the correct, smaller sizing was already defined elsewhere with normal CSS specificity.</li>
+  </ul>
+</section>
+
 <section id="whats-new-2026-08-07">
   <h2>2026-08-07</h2>
   <ul>
