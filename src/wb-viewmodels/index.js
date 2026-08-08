@@ -18,6 +18,16 @@ const moduleCache = new Map();
 // Track which behaviors are loading to prevent duplicate requests
 const loadingPromises = new Map();
 
+// #513: a failure is memoized for a cooldown window so every caller in that
+// window shares one error (and, via error.wbModuleLoadFailure below, one log
+// entry in wb-lazy.js) instead of repeating the same failed request and the
+// same console.error per element. The window expires rather than being
+// permanent -- a module killed by a five-second network blip must recover
+// on its own, not stay dead for the rest of the page's life.
+const MODULE_FAILURE_COOLDOWN_MS = 5000;
+const failedModules = new Map(); // moduleName -> { error, at }
+const moduleImportRetries = 2;
+
 /**
  * Export name aliases
  * Maps behavior names to specific export names in the module
@@ -231,22 +241,53 @@ async function loadModule(moduleName) {
   if (moduleCache.has(moduleName)) {
     return moduleCache.get(moduleName);
   }
-  
+
+  // Within the cooldown, every caller shares the memoized failure -- no new
+  // request, no new log entry. After it expires, fall through to a fresh
+  // attempt below.
+  const priorFailure = failedModules.get(moduleName);
+  if (priorFailure && (Date.now() - priorFailure.at) < MODULE_FAILURE_COOLDOWN_MS) {
+    return Promise.reject(priorFailure.error);
+  }
+
   // Return existing promise if already loading
   if (loadingPromises.has(moduleName)) {
     return loadingPromises.get(moduleName);
   }
-  
+
   // Create loading promise
-  const loadPromise = import(`./${moduleName}.js`)
+  const moduleUrl = new URL(`./${moduleName}.js`, import.meta.url);
+  const loadPromise = (async () => {
+    let lastError;
+    for (let attempt = 0; attempt <= moduleImportRetries; attempt++) {
+      try {
+        const attemptUrl = new URL(moduleUrl.href);
+        // Cache-bust whenever this isn't the very first attempt ever made
+        // for this module -- an unqualified re-import can resolve straight
+        // from the browser's own module map, which remembers the failure
+        // forever and never sends a new request. A timestamp (not a small
+        // attempt counter) keeps the URL unique across separate post-cooldown
+        // retries too, so it can't collide with a query string the browser
+        // already has cached as failed.
+        if (attempt > 0 || priorFailure) attemptUrl.searchParams.set('wb-retry', String(Date.now()));
+        return await import(attemptUrl.href);
+      } catch (error) {
+        lastError = error;
+      }
+    }
+    throw lastError;
+  })()
     .then(module => {
       moduleCache.set(moduleName, module);
       loadingPromises.delete(moduleName);
+      failedModules.delete(moduleName);
       dlog(`[WB] Loaded module: ${moduleName}.js`);
       return module;
     })
     .catch(error => {
       loadingPromises.delete(moduleName);
+      failedModules.set(moduleName, { error, at: Date.now() });
+      if (error && typeof error === 'object') error.wbModuleLoadFailure = true;
       console.error(`[WB] Failed to load module: ${moduleName}.js`, error);
       throw error;
     });

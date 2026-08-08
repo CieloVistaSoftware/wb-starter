@@ -557,11 +557,14 @@ const WB = {
       return cleanup;
     } catch (error) {
       // Pass full Error object for stack trace extraction
-      Events.error(`WB: ${behaviorName}`, error, {
-        element: element.tagName,
-        id: element.id,
-        behavior: behaviorName
-      });
+      if (!error?.wbModuleLoadReported) {
+        if (error?.wbModuleLoadFailure) error.wbModuleLoadReported = true;
+        Events.error(`WB: ${behaviorName}`, error, {
+          element: element.tagName,
+          id: element.id,
+          behavior: behaviorName
+        });
+      }
       
       // Mark element as having an error
       element.setAttribute('x-error', 'true');
@@ -667,7 +670,12 @@ const WB = {
 
     // Custom elements scan (always active)
     customElementMappings.forEach(({ selector, behavior }) => {
-      const customElements = root.querySelectorAll(selector);
+      // querySelectorAll() excludes root itself. Include it when callers scan
+      // one custom element directly (as the playground does for its theme
+      // control), otherwise the registration silently never runs.
+      const customElements = root.matches?.(selector)
+        ? [root, ...root.querySelectorAll(selector)]
+        : root.querySelectorAll(selector);
       customElements.forEach(element => {
         if (eager) {
           injections.push(WB.inject(element, behavior));
