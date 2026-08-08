@@ -12,11 +12,24 @@ export default class WBSite {
     this.mobileNavOpen = false;
   }
 
+  /**
+   * Boot the site shell: load config/site.json, render header/nav/footer and
+   * wire SPA navigation.
+   *
+   * @returns {Promise<boolean>} `true` when the shell was initialized and the
+   *   instance is usable (config loaded, chrome rendered, #main present).
+   *   `false` when this page is not a site-shell page and initialization was
+   *   deliberately skipped — callers MUST NOT call navigateTo() in that case,
+   *   because there is neither a config nor a #main container to navigate.
+   *   (#511: skipping init but navigating anyway threw "Cannot read
+   *   properties of null (reading 'navigationMenu')" on every load of
+   *   demos/intellisense-check.html.)
+   */
   async init() {
     const app = document.getElementById('app');
 
     // Skip site-engine initialization for standalone demo pages (no app container)
-    if (!app) return;
+    if (!app) return false;
 
     const loadingEl = app.querySelector('.site__loading');
     let loadingTimerId;
@@ -97,6 +110,7 @@ export default class WBSite {
         window.WBLoadingManager.stopMonitoring(loadingTimerId);
       }
       console.log('✅ WB Site initialized:', this.config.branding.companyName);
+      return true;
     } catch (error) {
       if (loadingTimerId && window.WBLoadingManager) {
         window.WBLoadingManager.stopMonitoring(loadingTimerId);
@@ -422,6 +436,18 @@ export default class WBSite {
   }
 
   async navigateTo(pageId) {
+    // Defense in depth (#511). The real fix is in the callers: init() now
+    // reports whether it actually initialized, and src/index.js / src/main.js
+    // only navigate when it did. But navigateTo() is public API — it hangs off
+    // window.WBSite and is reachable from the console, from demos and from any
+    // future caller — and on a page without the site shell there is neither a
+    // config to resolve pageId against nor a #main container to render into.
+    // Bail visibly rather than throwing a null property read.
+    if (!this.config) {
+      console.warn('[WBSite] navigateTo() ignored — site config is not loaded (this page has no site shell).');
+      return;
+    }
+
     // Remember the scroll position of the page we're leaving so returning to it
     // restores where the user was. The window is the scroll container.
     if (this.currentPage) {

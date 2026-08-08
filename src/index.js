@@ -78,8 +78,15 @@ window.WB = WB;
 // Site boot logic (moved from index.html)
 import WBSite from './core/site-engine.js';
 const site = new WBSite();
-site.init().then(() => {
+site.init().then((initialized) => {
   window.__WB_INITIALIZED__ = true;
-  site.navigateTo(site.currentPage);
+  // init() resolves false on standalone demo pages (demos/*.html load this
+  // module directly and have no #app container), where it deliberately skips
+  // loading config/site.json and rendering the shell. navigateTo() needs both,
+  // so calling it unconditionally here threw "Cannot read properties of null
+  // (reading 'navigationMenu')" on every load of those pages (#511).
+  if (initialized) {
+    site.navigateTo(site.currentPage);
+  }
 });
 window.WBSite = site;
