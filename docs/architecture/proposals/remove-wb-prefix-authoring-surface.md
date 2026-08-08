@@ -108,12 +108,17 @@ independently re-implement the tag test today and would need the same guard adde
 This closes an existing inconsistency as a side effect, not just an accommodation for this
 proposal.
 
-### 3. Registration changes minimally
+### 3. Registration: additive during the transition, not a replacement
 
-`registerSchema()` stops deriving a tag name (`schema-builder.js:126`) and just keys
-`schemaRegistry` by behavior name, as it already does internally. `tagToSchema` (a `wb-*` tag
-→ name map) goes away entirely — nothing needs it once detection reads the attribute value
-directly.
+**Decided (see Migration plan): dual maintenance, not a flag day.** `registerSchema()` keeps
+deriving the `wb-${name}` tag key (`schema-builder.js:126`) and `tagToSchema` stays exactly as
+it is — old `<wb-card>` markup keeps resolving through the existing path, untouched.
+`detectSchema()` gains a *second*, independent check: does the element carry an `x-{name}`
+attribute matching a registered schema? If either check matches, build it. No existing
+call site's behavior changes; a new one is added alongside. This is what makes step 3 in the
+migration plan safe to land before steps 4-6 (docs/tests/demos) are finished — both authoring
+forms work simultaneously for as long as needed, and `wb-*` tags are only removed once nothing
+in the repo (or, more importantly, nothing in a consumer's project) still depends on them.
 
 ### 4. CSS: mechanical augmentation, not a redesign
 
@@ -163,26 +168,38 @@ questionable.
    regardless of the rest, low risk, unblocks nothing else so it can go first.
 2. **CSS dual-selector pass** — mechanical, file-by-file, ~29 files in
    `src/styles/behaviors/`. No behavior change, purely additive.
-3. **Detection swap** — `tagName.startsWith('wb-')` → `x-{name}` attribute check, 3 call sites
-   in `schema-builder.js`, plus `registerSchema()`'s tag derivation removed. This is the one
-   change that's actually risky — every `wb-*` tag in every page/demo/test stops resolving the
-   instant this lands unless step 4 has already happened, so it needs a transition window
-   (dual-support both detection paths for one release) rather than a flag day.
-4. **Rewrite the 66 doc pages** (`docs/components/**/*.md`) and the ~29 live demo instances in
-   `pages/*.html`/`demos/*.html` to the new `x-*` attribute form.
-5. **Update the ~50 affected test files** — 10 in `tests/compliance/`, ~44 in
-   `tests/regression/`. Several (`schema-tag-name-resolution.spec.ts`,
-   `no-redundant-tag-name-class.spec.ts`, `page-schema-validation.spec.ts`) test the naming
-   convention itself and need redesigning, not just a locator find-replace.
-6. **Regenerate `data/custom-elements.json`** against the new attribute-based authoring
-   surface.
+3. **Add attribute detection alongside tag detection (dual maintenance — decided)** —
+   `detectSchema()`, `scan()`, and `startObserver()`'s tag test in `schema-builder.js` each
+   gain an `x-{name}` attribute check as an *additional* match, not a replacement. `<wb-card>`
+   and `<article x-card>` both resolve to the same schema from this point on. Nothing else in
+   the repo has to change for this step to ship — it's the safest possible way to make the new
+   authoring form real without breaking a single existing page, demo, or test. This is the
+   concrete next chunk of work; see below.
+4. **New authoring — `x-*` form — becomes the one taught in docs/demos going forward.**
+   Existing `docs/components/**/*.md` pages and `pages/*.html`/`demos/*.html` instances are
+   migrated opportunistically (e.g. whenever a page is touched for another reason) rather than
+   in one 66-file sweep, now that both forms genuinely coexist with no deadline forcing a rush.
+5. **Test suite catches up as pages migrate** — no separate 50-file sweep either; a test only
+   needs updating when the page/demo it covers actually switches attribute forms. The 3 tests
+   that assert the naming convention itself
+   (`schema-tag-name-resolution.spec.ts`, `no-redundant-tag-name-class.spec.ts`,
+   `page-schema-validation.spec.ts`) need a decision on what "the convention" means once two
+   forms are both valid — likely "either form is acceptable," not "wb-* is required."
+6. **Regenerate `data/custom-elements.json`** once there's enough real `x-*` usage in the repo
+   to make IntelliSense for it worthwhile — not urgent while `wb-*` is still the dominant form.
 7. **Decide per-tag on the 6 real Custom Elements** (§5) — separate follow-up, own proposal.
+   Not blocked by, and doesn't block, steps 1-6.
+8. **Retire `wb-*` tag detection entirely** — only once nothing in the repo (or a consumer's
+   project) still authors with it. No target date; dual maintenance has no forced end.
+
+## Decisions
+
+- **Transition strategy: dual maintenance.** Both `<wb-card>` and `<article x-card>` resolve to
+  the same schema indefinitely — no flag day, no forced migration deadline. This directly
+  changes step 3 above from "risky, needs a window" to "purely additive, safe to ship alone."
 
 ## Open questions for you
 
-- Transition window in step 3: dual-support both `<wb-card>` and `<article x-card>`
-  simultaneously for one release, or accept a coordinated flag-day migration (docs + demos +
-  tests + detection swap all in one PR)?
 - Any objection to reusing `x-ignore` as the schema-path opt-out, vs. a distinct name (e.g.
   `x-no-schema`) to keep "skip native behavior" and "skip composite DOM building" separately
   toggleable? I don't see a case in the current code for wanting one without the other, but
