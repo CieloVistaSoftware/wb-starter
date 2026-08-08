@@ -67,6 +67,44 @@ function slugify(str) {
   return String(str).toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '');
 }
 
+// #510: fill the attrs a demo needs to be VISIBLE but that no `required`
+// flag or enum sweep supplies. A ranged number prop (wb-progress's `value`,
+// min 0 / max 100) is never marked `required` and its schema default is the
+// boundary 0, so the enum/boolean sweeps below emitted
+// `<wb-progress variant="success">` with no value at all -- every fill
+// rendered 0% wide, i.e. an empty track. Confirmed live on
+// demos/site/feedback.html: all six "Variants" bars, all five "size
+// variants" bars and both "Toggles" bars painted nothing, which is exactly
+// the user report behind #510 ("the progress bars show nothing").
+// scripts/auto-showcase.mjs already carried this rule; generate-site.mjs --
+// the script that actually writes demos/site/*.html -- did not.
+function representativeValue(def) {
+  return Math.round(def.minimum + (def.maximum - def.minimum) * 0.6);
+}
+
+function isUnfilledRangedNumber(def) {
+  return def.type === 'number'
+    && typeof def.minimum === 'number'
+    && typeof def.maximum === 'number'
+    && def.maximum > def.minimum
+    && (def.default === undefined || def.default === def.minimum);
+}
+
+// Shared by the enum-sweep and boolean-toggle sections: add `required` props
+// and visibility-critical ranged numbers, never touching the prop the
+// section is actually showcasing.
+function fillSupportingAttrs(attrs, props, showcasedProp) {
+  for (const [name, def] of Object.entries(props)) {
+    if (name === showcasedProp) continue;
+    if (def.required) {
+      attrs[camelToKebab(name)] = def.default || `Sample ${name}`;
+    } else if (isUnfilledRangedNumber(def)) {
+      attrs[camelToKebab(name)] = representativeValue(def);
+    }
+  }
+  return attrs;
+}
+
 function findSchema(name) {
   const candidates = [
     join(MODELS_DIR, `${name}.schema.json`),
@@ -185,12 +223,7 @@ function generateComponentSections(schema) {
   for (const [propName, propDef] of enumProps) {
     const attrName = camelToKebab(propName);
     const demos = propDef.enum.map(val => {
-      const attrs = { [attrName]: val };
-      for (const [rk, rv] of Object.entries(props)) {
-        if (rv.required && rk !== propName) {
-          attrs[camelToKebab(rk)] = rv.default || `Sample ${rk}`;
-        }
-      }
+      const attrs = fillSupportingAttrs({ [attrName]: val }, props, propName);
       return buildDemo(schema, tag, attrs);
     });
     const columns = demos.length <= 2 ? demos.length : demos.length <= 4 ? 2 : 3;
@@ -217,12 +250,7 @@ function generateComponentSections(schema) {
   );
   if (boolProps.length > 0) {
     const demos = boolProps.map(([propName]) => {
-      const attrs = { [camelToKebab(propName)]: true };
-      for (const [rk, rv] of Object.entries(props)) {
-        if (rv.required && rk !== propName) {
-          attrs[camelToKebab(rk)] = rv.default || `Sample ${rk}`;
-        }
-      }
+      const attrs = fillSupportingAttrs({ [camelToKebab(propName)]: true }, props, propName);
       return buildDemo(schema, tag, attrs);
     });
     // Always one per row: a boolean toggle's whole point is showing its own

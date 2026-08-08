@@ -496,7 +496,7 @@ const WB = {
     // schemaProcessed-aware cooperation — same latent race as the card family,
     // found auditing schemas during this same investigation (not a live
     // complaint). Matches schema-builder.js's own SCHEMA_EXCLUDED_TAGS.
-    if (element.tagName === 'WB-SKELETON') {
+    if (element.tagName === 'WB-SKELETON' || element.tagName === 'WB-PROGRESS') {
       return;
     }
 
