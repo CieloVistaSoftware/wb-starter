@@ -5,11 +5,13 @@
 
 <div class="issues-toolbar">
   <div class="issues-tabs" role="tablist" aria-label="Filter issues by state">
-    <button type="button" class="issues-tab issues-tab--active" data-state="open">Open</button>
-    <button type="button" class="issues-tab" data-state="closed">Closed</button>
-    <button type="button" class="issues-tab" data-state="all">All</button>
+    <button type="button" class="issues-tab issues-tab--active" data-state="open" x-ripple>Open</button>
+    <button type="button" class="issues-tab" data-state="closed" x-ripple>Closed</button>
+    <button type="button" class="issues-tab" data-state="all" x-ripple>All</button>
+    <button type="button" class="issues-tab" data-state="in-progress" x-ripple>In Progress</button>
   </div>
   <span id="issues-summary" class="issues-summary"></span>
+  <span id="issues-active" class="issues-summary" aria-live="polite">Current Active: 0</span>
   <input type="search" id="issues-search" class="issues-search" placeholder="Filter by title or number…">
 </div>
 
@@ -29,12 +31,17 @@
   .issue-row__summary { display: flex; align-items: center; gap: 0.75rem; padding: 0.75rem 1rem; cursor: pointer; }
   .issue-row__state { font-size: 0.75rem; font-weight: 700; padding: 0.15em 0.6em; border-radius: 999px; white-space: nowrap; }
   .issue-row__state--open { background: color-mix(in srgb, #22c55e 25%, transparent); color: #22c55e; }
+  .issue-row__state--in-progress { background: color-mix(in srgb, #f0b429 25%, transparent); color: #f0b429; }
   .issue-row__state--closed { background: color-mix(in srgb, #a855f7 25%, transparent); color: #a855f7; }
   .issue-row__number { color: var(--text-secondary); font-family: monospace; }
   .issue-row__title { flex: 1; font-weight: 600; }
   .issue-row__labels { display: flex; gap: 0.35rem; flex-wrap: wrap; }
   .issue-row__label { font-size: 0.7rem; padding: 0.1em 0.5em; border-radius: 999px; background: var(--bg-tertiary); color: var(--text-secondary); }
-  .issue-row__body { display: none; padding: 0 1rem 1rem; border-top: 1px solid var(--border-color); white-space: pre-wrap; color: var(--text-secondary); font-size: 0.9rem; line-height: 1.6; }
+  .issue-row__body { display: none; padding: 0 1rem 1rem; border-top: 1px solid var(--border-color); color: var(--text-secondary); font-size: 0.9rem; line-height: 1.6; }
+  /* Rendered markdown (wb-mdhtml) needs normal HTML flow, not the raw-text
+     pre-wrap this div used before -- headings/lists/code blocks would
+     otherwise inherit literal whitespace preservation meant for plain text. */
+  .issue-row__body wb-mdhtml { display: block; }
   .issue-row--expanded .issue-row__body { display: block; padding-top: 1rem; }
 </style>
 
@@ -44,6 +51,7 @@
   const listEl = document.getElementById('issues-list');
   const statusEl = document.getElementById('issues-status');
   const summaryEl = document.getElementById('issues-summary');
+  const activeEl = document.getElementById('issues-active');
   const searchEl = document.getElementById('issues-search');
   const tabs = Array.from(document.querySelectorAll('.issues-tab'));
   let allIssues = [];
@@ -74,15 +82,39 @@
     summaryEl.textContent = `${filtered.length} ${noun} · ${range}`;
   }
 
+  // An issue counts as "being worked on" when it carries the explicit
+  // status:in-progress label OR priority:1 (John's convention for flagging
+  // active work) -- same detection the VS Code Issue Viewer uses
+  // (src/shared/github-issues-view.ts), so both surfaces agree.
+  function isInProgress(issue) {
+    return (issue.labels || []).some((label) => {
+      const name = String(label.name || '').trim().toLowerCase();
+      return name === 'status:in-progress' || name === 'priority:1';
+    });
+  }
+
+  function updateActiveCount() {
+    const activeCount = allIssues.filter((issue) => issue.state === 'open' && isInProgress(issue)).length;
+    activeEl.textContent = `Current Active: ${activeCount}`;
+  }
+
   function render() {
     const q = searchEl.value.trim().toLowerCase();
     const filtered = allIssues.filter((issue) => {
-      if (currentState !== 'all' && issue.state !== currentState) return false;
+      // "in-progress" isn't a real GitHub issue.state (only open/closed exist
+      // there) -- it's the same derived state as updateActiveCount()'s
+      // "Current Active" number, so this tab and that count always agree.
+      if (currentState === 'in-progress') {
+        if (!(issue.state === 'open' && isInProgress(issue))) return false;
+      } else if (currentState !== 'all' && issue.state !== currentState) {
+        return false;
+      }
       if (!q) return true;
       return issue.title.toLowerCase().includes(q) || String(issue.number).includes(q);
     });
 
     updateSummary(filtered);
+    updateActiveCount();
 
     if (!filtered.length) {
       listEl.innerHTML = '';
@@ -96,22 +128,44 @@
       const labels = (issue.labels || []).map((l) =>
         `<span class="issue-row__label" style="background:#${l.color || '333'}22;color:#${l.color || '999'}">${escapeHtml(l.name)}</span>`
       ).join('');
-      const body = issue.body ? escapeHtml(issue.body) : '_No description provided._';
+      const rowState = issue.state === 'open' && isInProgress(issue) ? 'in-progress' : issue.state;
+      const rowStateText = rowState === 'in-progress' ? 'in-progress' : issue.state;
       return `
         <li class="issue-row" data-number="${issue.number}">
           <div class="issue-row__summary">
-            <span class="issue-row__state issue-row__state--${issue.state}">${issue.state}</span>
+            <span class="issue-row__state issue-row__state--${rowState}">${rowStateText}</span>
             <span class="issue-row__number">#${issue.number}</span>
             <span class="issue-row__title">${escapeHtml(issue.title)}</span>
             <span class="issue-row__labels">${labels}</span>
           </div>
-          <div class="issue-row__body">${body}</div>
+          <div class="issue-row__body"><wb-mdhtml></wb-mdhtml></div>
         </li>`;
     }).join('');
 
+    // wb-mdhtml renders whatever markup already sits inside it as markdown
+    // (src/wb-viewmodels/mdhtml.js) -- set via .textContent, not innerHTML,
+    // so the browser HTML-escapes the raw body text into it; mdhtml.js's own
+    // decode-then-parse step (its "code samples are frequently written
+    // HTML-escaped" handling) expects exactly that and un-escapes it before
+    // handing the real markdown to `marked`. Assigning raw markdown directly
+    // via innerHTML here would get double-escaped instead.
+    const rows = listEl.querySelectorAll('.issue-row');
+    rows.forEach((row, i) => {
+      const md = row.querySelector('wb-mdhtml');
+      if (md) md.textContent = filtered[i].body || '_No description provided._';
+    });
+
     listEl.querySelectorAll('.issue-row__summary').forEach((summary) => {
-      summary.addEventListener('click', () => {
-        summary.closest('.issue-row').classList.toggle('issue-row--expanded');
+      summary.addEventListener('click', async () => {
+        const row = summary.closest('.issue-row');
+        row.classList.toggle('issue-row--expanded');
+        // Lazy: only pay for markdown parsing once a row is actually opened,
+        // and only once per row (not on every re-toggle).
+        const md = row.querySelector('wb-mdhtml');
+        if (md && !md.dataset.rendered && window.WB) {
+          md.dataset.rendered = '1';
+          await window.WB.inject(md, 'mdhtml');
+        }
       });
     });
   }

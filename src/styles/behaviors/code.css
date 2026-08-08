@@ -9,11 +9,19 @@
 .x-code {
   background: var(--bg-tertiary);
   /* Sized for the common case: a short inline snippet sitting amid normal
-     body text (a table cell, a list item, prose). 0.75rem vertical padding
-     here used to bleed into the line above/below -- padding on an inline
-     box doesn't grow the line's own height, so tightly-packed text (e.g.
-     several <code> badges across neighboring <li>s) visually overlapped. */
-  padding: 1rem !important;
+     body text (a table cell, a list item, prose). A prior fix here used
+     padding: 1rem !important on all four sides to stop adjacent <code>
+     badges from visually overlapping across lines -- but 1rem of padding
+     on every side of an inline element (padding doesn't grow the line's
+     own height) balloons even a 2-character snippet like "WB" into a
+     58x60px box, reported repeatedly as "these are too big".
+     !important was never actually needed: mdhtml.css's `.wb-mdhtml code`
+     rule (ancestor class + element, specificity 0-1-1) already sets this
+     exact value with no !important -- it was only losing to the OLD 1rem
+     value here because !important overrides specificity outright. Dropping
+     !important lets normal cascade rules decide, and lets a page-specific
+     override win without escalating to !important of its own. */
+  padding: 0.15rem 0.4rem;
   border-radius: 6px;
   font-family: monospace;
   /* Was a hardcoded 0.8rem — every native <code> gets this class via
