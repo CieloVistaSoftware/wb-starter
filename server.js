@@ -450,24 +450,38 @@ app.use(express.json({ limit: '10mb' }));
 app.use(express.text({ limit: '10mb' }));
 
 // Special Routes for HTML files in public/
+//
+// `root` is passed explicitly (not folded into an absolute path via
+// path.join) because `send` (Express's sendFile backend) runs its dotfile
+// security check against every segment of whatever path it's given when no
+// `root` option is present -- including the server's own ancestor
+// directories. Any checkout living under a dot-prefixed path (this repo's
+// own `.claude/worktrees/<name>/` convention for agent worktrees) then
+// 404s on every one of these routes, because `.claude` itself matches the
+// check. Passing `root` scopes the check to the relative path under it,
+// which is what these routes actually intend.
 app.get('/schema-viewer.html', (req, res) => {
-  res.sendFile(path.join(rootDir, 'public', 'schema-viewer.html'));
+  res.sendFile('schema-viewer.html', { root: path.join(rootDir, 'public') });
 });
 
 app.get('/fix-viewer.html', (req, res) => {
-  res.sendFile(path.join(rootDir, 'public', 'fix-viewer.html'));
+  res.sendFile('fix-viewer.html', { root: path.join(rootDir, 'public') });
 });
 
 app.get('/errors-viewer.html', (req, res) => {
-  res.sendFile(path.join(rootDir, 'public', 'errors-viewer.html'));
+  res.sendFile('errors-viewer.html', { root: path.join(rootDir, 'public') });
+});
+
+app.get('/errors-viewer', (req, res) => {
+  res.sendFile('errors-viewer.html', { root: path.join(rootDir, 'public') });
 });
 
 app.get('/performance-dashboard.html', (req, res) => {
-  res.sendFile(path.join(rootDir, 'public', 'performance-dashboard.html'));
+  res.sendFile('performance-dashboard.html', { root: path.join(rootDir, 'public') });
 });
 
 app.get('/doc-viewer.html', (req, res) => {
-  res.sendFile(path.join(rootDir, 'public', 'doc-viewer.html'));
+  res.sendFile('doc-viewer.html', { root: path.join(rootDir, 'public') });
 });
 
 // API Endpoint to log content issues
