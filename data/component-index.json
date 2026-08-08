@@ -1,0 +1,848 @@
+{
+  "generated": "2026-08-08T18:49:19.602Z",
+  "total": 84,
+  "withDemo": 36,
+  "withoutDemo": 48,
+  "components": [
+    {
+      "name": "address",
+      "title": "<address> Element",
+      "description": "The <address> element provides contact information for a person, organization, or entity. In WB-Starter, it's used in portfolio and contact cards.",
+      "category": "semantic",
+      "tag": "address",
+      "docPath": "docs/components/semantic/address.md",
+      "demoPage": null,
+      "demoAnchor": null
+    },
+    {
+      "name": "alert",
+      "title": "Alert",
+      "description": "Alert component for displaying messages with severity levels",
+      "category": "feedback",
+      "tag": "wb-alert",
+      "docPath": "docs/components/feedback/alert.md",
+      "demoPage": null,
+      "demoAnchor": null
+    },
+    {
+      "name": "article",
+      "title": "Article Component",
+      "description": "Semantic article component for blog posts, news, and documentation pages.",
+      "category": "semantic",
+      "tag": "article",
+      "docPath": "docs/components/semantic/article.md",
+      "demoPage": null,
+      "demoAnchor": null
+    },
+    {
+      "name": "aside",
+      "title": "<aside> Element",
+      "description": "The <aside> element represents content that is tangentially related to the content around it. In WB-Starter, it's used for notifications, alerts, and side con",
+      "category": "semantic",
+      "tag": "aside",
+      "docPath": "docs/components/semantic/aside.md",
+      "demoPage": null,
+      "demoAnchor": null
+    },
+    {
+      "name": "audio",
+      "title": "Audio",
+      "description": "Audio player with optional 15-band graphic equalizer",
+      "category": "semantics",
+      "tag": "audio",
+      "docPath": "docs/components/semantics/audio.md",
+      "demoPage": "components",
+      "demoAnchor": "component-audio"
+    },
+    {
+      "name": "avatar",
+      "title": "Avatar",
+      "description": "User avatar with image, initials fallback, and status indicator",
+      "category": "feedback",
+      "tag": "wb-avatar",
+      "docPath": "docs/components/feedback/avatar.md",
+      "demoPage": "components",
+      "demoAnchor": "component-avatar"
+    },
+    {
+      "name": "badge",
+      "title": "Badge",
+      "description": "Small label/tag for status indicators, counts, or categories",
+      "category": "feedback",
+      "tag": "wb-badge",
+      "docPath": "docs/components/feedback/badge.md",
+      "demoPage": "components",
+      "demoAnchor": "component-badge"
+    },
+    {
+      "name": "blockquote",
+      "title": "<blockquote> Element",
+      "description": "The <blockquote> element represents an extended quotation from another source. In WB-Starter, it's used for testimonials and quoted content.",
+      "category": "semantic",
+      "tag": "blockquote",
+      "docPath": "docs/components/semantic/blockquote.md",
+      "demoPage": null,
+      "demoAnchor": null
+    },
+    {
+      "name": "button",
+      "title": "Button",
+      "description": "Interactive button with variants, sizes, and optional icon",
+      "category": "forms",
+      "tag": "wb-button",
+      "docPath": "docs/components/forms/button.md",
+      "demoPage": "components",
+      "demoAnchor": "component-button"
+    },
+    {
+      "name": "button",
+      "title": "Button",
+      "description": "Interactive button with variants, sizes, and optional icon",
+      "category": "semantics",
+      "tag": "button",
+      "docPath": "docs/components/semantics/button.md",
+      "demoPage": "components",
+      "demoAnchor": "component-button"
+    },
+    {
+      "name": "card",
+      "title": "Card Component",
+      "description": "Card component. IS-A article, HAS-A header, main, footer.",
+      "category": "cards",
+      "tag": "wb-card",
+      "docPath": "docs/components/cards/card.md",
+      "demoPage": "components",
+      "demoAnchor": "component-card"
+    },
+    {
+      "name": "card",
+      "title": "Card Component",
+      "description": "Card component. IS-A article, HAS-A header, main, footer.",
+      "category": "forms",
+      "tag": "wb-card",
+      "docPath": "docs/components/forms/card.md",
+      "demoPage": "components",
+      "demoAnchor": "component-card"
+    },
+    {
+      "name": "cardbutton",
+      "title": "Button Card",
+      "description": "Card with action buttons in footer",
+      "category": "cards",
+      "tag": "wb-cardbutton",
+      "docPath": "docs/components/cards/cardbutton.md",
+      "demoPage": null,
+      "demoAnchor": null
+    },
+    {
+      "name": "carddraggable",
+      "title": "Draggable Card",
+      "description": "Card that can be dragged around the page",
+      "category": "cards",
+      "tag": "wb-carddraggable",
+      "docPath": "docs/components/cards/carddraggable.md",
+      "demoPage": null,
+      "demoAnchor": null
+    },
+    {
+      "name": "cardexpandable",
+      "title": "Expandable Card",
+      "description": "Card with collapsible/expandable content section",
+      "category": "cards",
+      "tag": "wb-cardexpandable",
+      "docPath": "docs/components/cards/cardexpandable.md",
+      "demoPage": null,
+      "demoAnchor": null
+    },
+    {
+      "name": "cardfile",
+      "title": "File Card",
+      "description": "File display card with icon, name, size, and download",
+      "category": "cards",
+      "tag": "wb-cardfile",
+      "docPath": "docs/components/cards/cardfile.md",
+      "demoPage": "components",
+      "demoAnchor": "component-cardfile"
+    },
+    {
+      "name": "cardhero",
+      "title": "Hero Card",
+      "description": "Hero banner with background image, title, subtitle, and optional CTA",
+      "category": "cards",
+      "tag": "wb-cardhero",
+      "docPath": "docs/components/cards/cardhero.md",
+      "demoPage": "components",
+      "demoAnchor": "component-cardhero"
+    },
+    {
+      "name": "cardhorizontal",
+      "title": "Horizontal Card",
+      "description": "Card with horizontal layout - image on side, content on other",
+      "category": "cards",
+      "tag": "wb-cardhorizontal",
+      "docPath": "docs/components/cards/cardhorizontal.md",
+      "demoPage": "components",
+      "demoAnchor": "component-cardhorizontal"
+    },
+    {
+      "name": "cardimage",
+      "title": "Image Card",
+      "description": "Card with featured image and optional title/subtitle",
+      "category": "cards",
+      "tag": "wb-cardimage",
+      "docPath": "docs/components/cards/cardimage.md",
+      "demoPage": "components",
+      "demoAnchor": "component-cardimage"
+    },
+    {
+      "name": "cardlink",
+      "title": "Link Card",
+      "description": "Clickable card that navigates to a URL",
+      "category": "cards",
+      "tag": "wb-cardlink",
+      "docPath": "docs/components/cards/cardlink.md",
+      "demoPage": "components",
+      "demoAnchor": "component-cardlink"
+    },
+    {
+      "name": "cardminimizable",
+      "title": "Minimizable Card",
+      "description": "Card with minimize/expand toggle button in header",
+      "category": "cards",
+      "tag": "wb-cardminimizable",
+      "docPath": "docs/components/cards/cardminimizable.md",
+      "demoPage": null,
+      "demoAnchor": null
+    },
+    {
+      "name": "cardnotification",
+      "title": "Notification Card",
+      "description": "Dismissible notification card with variant-based styling",
+      "category": "cards",
+      "tag": "wb-cardnotification",
+      "docPath": "docs/components/cards/cardnotification.md",
+      "demoPage": "components",
+      "demoAnchor": "component-cardnotification"
+    },
+    {
+      "name": "cardoverlay",
+      "title": "Overlay Card",
+      "description": "Card with text overlaid on background image",
+      "category": "cards",
+      "tag": "wb-cardoverlay",
+      "docPath": "docs/components/cards/cardoverlay.md",
+      "demoPage": "components",
+      "demoAnchor": "component-cardoverlay"
+    },
+    {
+      "name": "cardportfolio",
+      "title": "Portfolio Card",
+      "description": "Full-featured professional portfolio card with skills, experience, projects, and more",
+      "category": "cards",
+      "tag": "wb-cardportfolio",
+      "docPath": "docs/components/cards/cardportfolio.md",
+      "demoPage": "components",
+      "demoAnchor": "component-cardportfolio"
+    },
+    {
+      "name": "cardpricing",
+      "title": "Pricing Card",
+      "description": "Pricing tier card with plan name, price, features list, and CTA",
+      "category": "cards",
+      "tag": "wb-cardpricing",
+      "docPath": "docs/components/cards/cardpricing.md",
+      "demoPage": "components",
+      "demoAnchor": "component-cardpricing"
+    },
+    {
+      "name": "cardproduct",
+      "title": "Product Card",
+      "description": "E-commerce product card with image, price, rating, and CTA",
+      "category": "cards",
+      "tag": "wb-cardproduct",
+      "docPath": "docs/components/cards/cardproduct.md",
+      "demoPage": "components",
+      "demoAnchor": "component-cardproduct"
+    },
+    {
+      "name": "cardprofile",
+      "title": "Card Profile",
+      "description": "Simple profile card. INHERITS from card.base (IS-A card), CONTAINS profile elements (HAS-A avatar, name, role, bio, cover).",
+      "category": "cards",
+      "tag": "wb-cardprofile",
+      "docPath": "docs/components/cards/cardprofile.md",
+      "demoPage": null,
+      "demoAnchor": null
+    },
+    {
+      "name": "cardstats",
+      "title": "Stats Card",
+      "description": "Statistics display card with value, label, icon, and trend indicator",
+      "category": "cards",
+      "tag": "wb-cardstats",
+      "docPath": "docs/components/cards/cardstats.md",
+      "demoPage": null,
+      "demoAnchor": null
+    },
+    {
+      "name": "cardtestimonial",
+      "title": "Testimonial Card",
+      "description": "Customer testimonial/review card with quote, author, avatar, and rating",
+      "category": "cards",
+      "tag": "wb-cardtestimonial",
+      "docPath": "docs/components/cards/cardtestimonial.md",
+      "demoPage": "components",
+      "demoAnchor": "component-cardtestimonial"
+    },
+    {
+      "name": "cardvideo",
+      "title": "Video Card",
+      "description": "Card with embedded video player",
+      "category": "cards",
+      "tag": "wb-cardvideo",
+      "docPath": "docs/components/cards/cardvideo.md",
+      "demoPage": "components",
+      "demoAnchor": "component-cardvideo"
+    },
+    {
+      "name": "center",
+      "title": "Center - wb-starter v3.0",
+      "description": "Horizontally centers an element's content, either by constraining and centering the box itself (default) or by centering its children with flexbox (intrinsic)",
+      "category": "layout",
+      "tag": "wb-center",
+      "docPath": "docs/components/layout/center.md",
+      "demoPage": null,
+      "demoAnchor": null
+    },
+    {
+      "name": "checkbox",
+      "title": "Checkbox",
+      "description": "Checkbox input with label and custom styling",
+      "category": "forms",
+      "tag": "wb-checkbox",
+      "docPath": "docs/components/forms/checkbox.md",
+      "demoPage": null,
+      "demoAnchor": null
+    },
+    {
+      "name": "checkbox",
+      "title": "Checkbox",
+      "description": "Checkbox input with label and custom styling",
+      "category": "semantics",
+      "tag": "checkbox",
+      "docPath": "docs/components/semantics/checkbox.md",
+      "demoPage": null,
+      "demoAnchor": null
+    },
+    {
+      "name": "cluster",
+      "title": "Cluster",
+      "description": "Moved from layout.readme.md. Update content as needed.",
+      "category": "layout",
+      "tag": "wb-cluster",
+      "docPath": "docs/components/layout/cluster.md",
+      "demoPage": null,
+      "demoAnchor": null
+    },
+    {
+      "name": "code",
+      "title": "Code - wb-starter v3.0",
+      "description": "Enhanced code display with copy button and language badge.",
+      "category": "semantics",
+      "tag": "code",
+      "docPath": "docs/components/semantics/code.md",
+      "demoPage": null,
+      "demoAnchor": null
+    },
+    {
+      "name": "confetti",
+      "title": "Confetti",
+      "description": "Confetti particle animation effect",
+      "category": "effects",
+      "tag": "wb-confetti",
+      "docPath": "docs/components/effects/confetti.md",
+      "demoPage": "behaviors",
+      "demoAnchor": null
+    },
+    {
+      "name": "container",
+      "title": "Container",
+      "description": "Moved from layout.readme.md. Update content as needed.",
+      "category": "layout",
+      "tag": "wb-container",
+      "docPath": "docs/components/layout/container.md",
+      "demoPage": null,
+      "demoAnchor": null
+    },
+    {
+      "name": "cover",
+      "title": "Cover - wb-starter v3.0",
+      "description": "A full-height (or custom-height) flex column that vertically centers one designated \"principal\" child, with any other children pushed to the top and bottom — th",
+      "category": "layout",
+      "tag": "wb-cover",
+      "docPath": "docs/components/layout/cover.md",
+      "demoPage": null,
+      "demoAnchor": null
+    },
+    {
+      "name": "data",
+      "title": "<data> Element",
+      "description": "The <data> element links content with a machine-readable value. In WB-Starter, it's used for statistics, prices, and other numeric data.",
+      "category": "semantic",
+      "tag": "data",
+      "docPath": "docs/components/semantic/data.md",
+      "demoPage": null,
+      "demoAnchor": null
+    },
+    {
+      "name": "demo",
+      "title": "Demo Container",
+      "description": "A container that renders children normally in a CSS grid and shows the raw HTML as a syntax-highlighted, auto-formatted code sample below. Uses fetch for raw page source, formatHtml for consistent 2-space indentation, and textContent to prevent browser inflation.",
+      "category": "demo",
+      "tag": "wb-demo",
+      "docPath": "docs/components/demo/demo.md",
+      "demoPage": null,
+      "demoAnchor": null
+    },
+    {
+      "name": "details",
+      "title": "Details",
+      "description": "Native HTML5 details disclosure widget with optional animation",
+      "category": "semantic",
+      "tag": "details",
+      "docPath": "docs/components/semantic/details.md",
+      "demoPage": "components",
+      "demoAnchor": "component-details"
+    },
+    {
+      "name": "details",
+      "title": "Details",
+      "description": "Native HTML5 details disclosure widget with optional animation",
+      "category": "semantics",
+      "tag": "details",
+      "docPath": "docs/components/semantics/details.md",
+      "demoPage": "components",
+      "demoAnchor": "component-details"
+    },
+    {
+      "name": "dialog",
+      "title": "Dialog",
+      "description": "Modal dialog using native HTML5 dialog element",
+      "category": "semantics",
+      "tag": "dialog",
+      "docPath": "docs/components/semantics/dialog.md",
+      "demoPage": null,
+      "demoAnchor": null
+    },
+    {
+      "name": "dl",
+      "title": "DL (Description List) Component Design & User Guide",
+      "description": "The dl component enhances the standard <dl> (Description List) element, which is often underused due to its default styling limitations. This component tran",
+      "category": "semantics",
+      "tag": "dl",
+      "docPath": "docs/components/semantics/dl.md",
+      "demoPage": null,
+      "demoAnchor": null
+    },
+    {
+      "name": "drawer",
+      "title": "Drawer",
+      "description": "Slide-out panel overlay from screen edge",
+      "category": "components",
+      "tag": "wb-drawer",
+      "docPath": "docs/components/drawer.md",
+      "demoPage": "components",
+      "demoAnchor": "component-drawer"
+    },
+    {
+      "name": "figure",
+      "title": "<figure> and <figcaption> Elements",
+      "description": "The <figure> element represents self-contained content with an optional caption. In WB-Starter, it's used for images, videos, code snippets, and file previews",
+      "category": "semantic",
+      "tag": "figure",
+      "docPath": "docs/components/semantic/figure.md",
+      "demoPage": null,
+      "demoAnchor": null
+    },
+    {
+      "name": "figure",
+      "title": "Figure Component Design & User Guide",
+      "description": "The figure component upgrades the standard <figure> and <figcaption> elements into interactive media containers. It solves common needs like image zooming",
+      "category": "semantics",
+      "tag": "figure",
+      "docPath": "docs/components/semantics/figure.md",
+      "demoPage": null,
+      "demoAnchor": null
+    },
+    {
+      "name": "fireworks",
+      "title": "Fireworks",
+      "description": "Fireworks particle burst animation effect",
+      "category": "effects",
+      "tag": "wb-fireworks",
+      "docPath": "docs/components/effects/fireworks.md",
+      "demoPage": "behaviors",
+      "demoAnchor": null
+    },
+    {
+      "name": "flex",
+      "title": "Flex",
+      "description": "Moved from layout.readme.md. Update content as needed.",
+      "category": "layout",
+      "tag": "wb-flex",
+      "docPath": "docs/components/layout/flex.md",
+      "demoPage": null,
+      "demoAnchor": null
+    },
+    {
+      "name": "form",
+      "title": "Form Behavior",
+      "description": "Schema for x-form behavior (form enhancement)",
+      "category": "semantics",
+      "tag": "form",
+      "docPath": "docs/components/semantics/form.md",
+      "demoPage": null,
+      "demoAnchor": null
+    },
+    {
+      "name": "grid",
+      "title": "Grid",
+      "description": "Moved from layout.readme.md. Update content as needed.",
+      "category": "layout",
+      "tag": "wb-grid",
+      "docPath": "docs/components/layout/grid.md",
+      "demoPage": null,
+      "demoAnchor": null
+    },
+    {
+      "name": "header",
+      "title": "Header",
+      "description": "Page header with logo, title, and optional navigation",
+      "category": "layout",
+      "tag": "wb-header",
+      "docPath": "docs/components/layout/header.md",
+      "demoPage": null,
+      "demoAnchor": null
+    },
+    {
+      "name": "icon",
+      "title": "Icon - wb-starter v3.0",
+      "description": "A small layout helper for pairing an inline <svg> icon with adjacent text — sets up an inline-flex row with consistent spacing and sizes the first <svg> chi",
+      "category": "layout",
+      "tag": "wb-icon",
+      "docPath": "docs/components/layout/icon.md",
+      "demoPage": null,
+      "demoAnchor": null
+    },
+    {
+      "name": "img",
+      "title": "Image - wb-starter v3.0",
+      "description": "Enhanced image component with lazy loading, aspect ratio, and fallback support.",
+      "category": "semantics",
+      "tag": "img",
+      "docPath": "docs/components/semantics/img.md",
+      "demoPage": "behaviors",
+      "demoAnchor": null
+    },
+    {
+      "name": "input",
+      "title": "Input",
+      "description": "Text input field with label, helper text, and validation states",
+      "category": "forms",
+      "tag": "wb-input",
+      "docPath": "docs/components/forms/input.md",
+      "demoPage": "components",
+      "demoAnchor": "component-input"
+    },
+    {
+      "name": "input",
+      "title": "Input",
+      "description": "Text input field with label, helper text, and validation states",
+      "category": "semantics",
+      "tag": "input",
+      "docPath": "docs/components/semantics/input.md",
+      "demoPage": "components",
+      "demoAnchor": "component-input"
+    },
+    {
+      "name": "list",
+      "title": "List Component",
+      "description": "The List component (semantics/list.js) is a utility behavior that populates a list (<ul> or <ol>) from a items attribute.",
+      "category": "semantics",
+      "tag": "list",
+      "docPath": "docs/components/semantics/list.md",
+      "demoPage": null,
+      "demoAnchor": null
+    },
+    {
+      "name": "masonry",
+      "title": "Masonry - wb-starter v3.0",
+      "description": "Pinterest-style masonry grid using native CSS multi-column layout — items flow top-to-bottom within a column, then wrap to the next column, with no gaps between",
+      "category": "layout",
+      "tag": "wb-masonry",
+      "docPath": "docs/components/layout/masonry.md",
+      "demoPage": null,
+      "demoAnchor": null
+    },
+    {
+      "name": "mdhtml",
+      "title": "Markdown to HTML",
+      "description": "Renders Markdown content as HTML, either from inline content or external source",
+      "category": "components",
+      "tag": "wb-mdhtml",
+      "docPath": "docs/components/mdhtml.md",
+      "demoPage": null,
+      "demoAnchor": null
+    },
+    {
+      "name": "ol",
+      "title": "OL (Ordered List) Component Design & User Guide",
+      "description": "The ol component transforms the standard ordered list into a versatile tool for displaying sequences. It goes beyond simple numbering to support complex visua",
+      "category": "semantics",
+      "tag": "ol",
+      "docPath": "docs/components/semantics/ol.md",
+      "demoPage": null,
+      "demoAnchor": null
+    },
+    {
+      "name": "pre",
+      "title": "Pre Component Design & User Guide",
+      "description": "The pre component upgrades the <pre> element to be a full-featured code block container. It addresses the needs of technical documentation by adding line nu",
+      "category": "semantics",
+      "tag": "pre",
+      "docPath": "docs/components/semantics/pre.md",
+      "demoPage": null,
+      "demoAnchor": null
+    },
+    {
+      "name": "progress",
+      "title": "Progress",
+      "description": "Progress bar with determinate and indeterminate states",
+      "category": "feedback",
+      "tag": "wb-progress",
+      "docPath": "docs/components/feedback/progress.md",
+      "demoPage": "components",
+      "demoAnchor": "component-progress"
+    },
+    {
+      "name": "progress",
+      "title": "Progress",
+      "description": "Progress bar with determinate and indeterminate states",
+      "category": "semantics",
+      "tag": "progress",
+      "docPath": "docs/components/semantics/progress.md",
+      "demoPage": "components",
+      "demoAnchor": "component-progress"
+    },
+    {
+      "name": "radio",
+      "title": "Radio Component Design & User Guide",
+      "description": "The radio component modernizes the <input type=\"radio\"> element. Like the checkbox component, it focuses on providing a consistent, custom appearance while ",
+      "category": "semantics",
+      "tag": "radio",
+      "docPath": "docs/components/semantics/radio.md",
+      "demoPage": null,
+      "demoAnchor": null
+    },
+    {
+      "name": "range",
+      "title": "Range Component Design & User Guide",
+      "description": "The range component improves the <input type=\"range\"> slider by adding contextual information that is often missing: the current value and the min/max bound",
+      "category": "semantics",
+      "tag": "range",
+      "docPath": "docs/components/semantics/range.md",
+      "demoPage": null,
+      "demoAnchor": null
+    },
+    {
+      "name": "rating",
+      "title": "Rating",
+      "description": "Star rating component for displaying or collecting ratings",
+      "category": "semantics",
+      "tag": "rating",
+      "docPath": "docs/components/semantics/rating.md",
+      "demoPage": null,
+      "demoAnchor": null
+    },
+    {
+      "name": "reel",
+      "title": "Reel - wb-starter v3.0",
+      "description": "A horizontally scrolling row with CSS scroll-snap — each child snaps into place as the user scrolls or swipes, the way a carousel of cards often works without a",
+      "category": "layout",
+      "tag": "wb-reel",
+      "docPath": "docs/components/layout/reel.md",
+      "demoPage": null,
+      "demoAnchor": null
+    },
+    {
+      "name": "scrollable",
+      "title": "Scrollable - wb-starter v3.0",
+      "description": "Turns an element into a scrollable region with an optional size cap, so its content scrolls internally instead of growing the page.",
+      "category": "layout",
+      "tag": "wb-scrollable",
+      "docPath": "docs/components/layout/scrollable.md",
+      "demoPage": null,
+      "demoAnchor": null
+    },
+    {
+      "name": "select",
+      "title": "Select",
+      "description": "Enhanced select dropdown with search, clear, and multi-select",
+      "category": "forms",
+      "tag": "wb-select",
+      "docPath": "docs/components/forms/select.md",
+      "demoPage": "components",
+      "demoAnchor": "component-select"
+    },
+    {
+      "name": "select",
+      "title": "Select",
+      "description": "Enhanced select dropdown with search, clear, and multi-select",
+      "category": "semantics",
+      "tag": "select",
+      "docPath": "docs/components/semantics/select.md",
+      "demoPage": "behaviors",
+      "demoAnchor": null
+    },
+    {
+      "name": "sidebarlayout",
+      "title": "Sidebar Layout - wb-starter v3.0",
+      "description": "A two-column layout: a fixed-ish sidebar next to a main content area that grows to fill the remaining space. Built on flexbox with the [Every Layout \"sidebar\" p",
+      "category": "layout",
+      "tag": "wb-sidebarlayout",
+      "docPath": "docs/components/layout/sidebarlayout.md",
+      "demoPage": null,
+      "demoAnchor": null
+    },
+    {
+      "name": "snow",
+      "title": "Snow",
+      "description": "Falling snowflake animation effect",
+      "category": "effects",
+      "tag": "wb-snow",
+      "docPath": "docs/components/effects/snow.md",
+      "demoPage": "behaviors",
+      "demoAnchor": null
+    },
+    {
+      "name": "spinner",
+      "title": "Spinner",
+      "description": "Loading spinner indicator",
+      "category": "feedback",
+      "tag": "wb-spinner",
+      "docPath": "docs/components/feedback/spinner.md",
+      "demoPage": "components",
+      "demoAnchor": "component-spinner"
+    },
+    {
+      "name": "sticky",
+      "title": "Sticky",
+      "description": "Makes element stick to viewport on scroll",
+      "category": "layout",
+      "tag": "wb-sticky",
+      "docPath": "docs/components/layout/sticky.md",
+      "demoPage": null,
+      "demoAnchor": null
+    },
+    {
+      "name": "switch",
+      "title": "Switch",
+      "description": "Toggle switch for boolean settings",
+      "category": "forms",
+      "tag": "wb-switch",
+      "docPath": "docs/components/forms/switch.md",
+      "demoPage": null,
+      "demoAnchor": null
+    },
+    {
+      "name": "switch",
+      "title": "Switch",
+      "description": "Toggle switch for boolean settings",
+      "category": "semantics",
+      "tag": "switch",
+      "docPath": "docs/components/semantics/switch.md",
+      "demoPage": null,
+      "demoAnchor": null
+    },
+    {
+      "name": "switcher",
+      "title": "Switcher - wb-starter v3.0",
+      "description": "A responsive layout that switches between a horizontal row and a stacked column based on available space, with no media query — each child's flex-basis is com",
+      "category": "layout",
+      "tag": "wb-switcher",
+      "docPath": "docs/components/layout/switcher.md",
+      "demoPage": null,
+      "demoAnchor": null
+    },
+    {
+      "name": "table",
+      "title": "Table",
+      "description": "Data table with sorting, filtering, and pagination",
+      "category": "semantics",
+      "tag": "table",
+      "docPath": "docs/components/semantics/table.md",
+      "demoPage": null,
+      "demoAnchor": null
+    },
+    {
+      "name": "tabs",
+      "title": "Tabs",
+      "description": "Tab navigation for switching between content panels",
+      "category": "components",
+      "tag": "wb-tabs",
+      "docPath": "docs/components/tabs.md",
+      "demoPage": "components",
+      "demoAnchor": "component-tabs"
+    },
+    {
+      "name": "textarea",
+      "title": "Textarea",
+      "description": "Multi-line text input with autosize and character count",
+      "category": "forms",
+      "tag": "wb-textarea",
+      "docPath": "docs/components/forms/textarea.md",
+      "demoPage": "behaviors",
+      "demoAnchor": null
+    },
+    {
+      "name": "textarea",
+      "title": "Textarea",
+      "description": "Multi-line text input with autosize and character count",
+      "category": "semantics",
+      "tag": "textarea",
+      "docPath": "docs/components/semantics/textarea.md",
+      "demoPage": "behaviors",
+      "demoAnchor": null
+    },
+    {
+      "name": "time",
+      "title": "<time> Element",
+      "description": "The <time> element represents a specific period in time. In WB-Starter, it's used for timestamps, dates, and durations in cards and content.",
+      "category": "semantic",
+      "tag": "time",
+      "docPath": "docs/components/semantic/time.md",
+      "demoPage": null,
+      "demoAnchor": null
+    },
+    {
+      "name": "ul",
+      "title": "UL (Unordered List) Component Design & User Guide",
+      "description": "The ul component enhances the unordered list to support common UI patterns like checklists and icon lists. It allows developers to move beyond simple bullet p",
+      "category": "semantics",
+      "tag": "ul",
+      "docPath": "docs/components/semantics/ul.md",
+      "demoPage": null,
+      "demoAnchor": null
+    },
+    {
+      "name": "video",
+      "title": "Video - wb-starter v3.0",
+      "description": "Enhanced HTML5 video player with configurable defaults.",
+      "category": "semantics",
+      "tag": "video",
+      "docPath": "docs/components/semantics/video.md",
+      "demoPage": null,
+      "demoAnchor": null
+    }
+  ]
+}

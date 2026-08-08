@@ -162,3 +162,91 @@
 .page-footer a:hover {
   text-decoration: underline;
 }
+
+/* Component Index (sortable/searchable catalog, top of the components page) */
+.component-index {
+  margin-bottom: 2.5rem;
+}
+
+.component-index__toolbar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 0.75rem;
+}
+
+.component-index__label {
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+.component-index__search {
+  flex: 1 1 240px;
+  min-width: 200px;
+  padding: 0.5rem 0.75rem;
+  border-radius: 8px;
+  border: 1px solid var(--border-color);
+  background: var(--bg-secondary);
+  color: var(--text-primary);
+  font-size: 0.9rem;
+}
+
+.component-index__summary {
+  color: var(--text-secondary);
+  font-size: 0.875rem;
+  white-space: nowrap;
+}
+
+.component-index__status {
+  color: var(--text-secondary);
+}
+
+.component-index__table {
+  width: 100%;
+  border-collapse: collapse;
+  color: var(--text-primary);
+}
+
+.component-index__table th {
+  text-align: left;
+  padding: 1rem;
+  background: var(--bg-tertiary);
+  font-weight: 600;
+  user-select: none;
+  cursor: pointer;
+}
+
+.component-index__table th[sort]:hover {
+  color: var(--primary);
+}
+
+.component-index__table th[aria-sort="ascending"]::after {
+  content: " \25B2";
+}
+
+.component-index__table th[aria-sort="descending"]::after {
+  content: " \25BC";
+}
+
+.component-index__table td {
+  padding: 0.75rem 1rem;
+  border-bottom: 1px solid var(--border-color);
+  vertical-align: top;
+}
+
+.component-index__table tbody tr:hover {
+  background: var(--bg-secondary);
+}
+
+.component-index__muted {
+  color: var(--text-secondary);
+}
+
+@media (max-width: 600px) {
+  .component-index__table {
+    display: block;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+}
