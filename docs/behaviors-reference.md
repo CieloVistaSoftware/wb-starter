@@ -85,7 +85,7 @@ When enabled, plain semantic elements like `<dialog>` and `<img>` below get the
 </wb-demo>
 
 <wb-demo>
-<img src="photo.jpg" alt="Auto-decorated image">
+<img src="../assets/icons/icon-512.png" alt="Auto-decorated image">
 </wb-demo>
 
 ---
@@ -122,13 +122,13 @@ Enhances standard HTML elements with better styling and functionality.
 **`audio`**
 
 <wb-demo>
-<wb-audio src="music.mp3"></wb-audio>
+<wb-audio src="../demos/audio.mp3"></wb-audio>
 </wb-demo>
 
 **`video`**
 
 <wb-demo>
-<wb-video src="movie.mp4"></wb-video>
+<wb-video src="https://archive.org/download/BigBuckBunny_124/Content/big_buck_bunny_720p_surround.mp4"></wb-video>
 </wb-demo>
 
 **`img` → `image`**
@@ -136,7 +136,7 @@ Enhances standard HTML elements with better styling and functionality.
 <wb-demo>
 <img
   x-image
-  src="photo.jpg"
+  src="../assets/icons/icon-512.png"
   alt="Photo">
 </wb-demo>
 
@@ -322,8 +322,8 @@ Tools for arranging content.
 | `grid` | `<wb-grid>` | - | CSS Grid layout |
 | `flex` | `<wb-flex>`, `<wb-row>` | - | Flexbox layout |
 | `container` | `<wb-container>` | - | Responsive container |
-| [`stack`](behaviors/wb-stack.md) | `<wb-stack>`, `<wb-column>` | - | Vertical stack |
-| [`cluster`](behaviors/wb-cluster.md) | `<wb-cluster>` | - | Horizontal cluster |
+| [`stack`](behaviors/wb-stack.md) | `<wb-stack>`, `<wb-column>`, `[x-stack]` | - | Vertical stack |
+| [`cluster`](behaviors/wb-cluster.md) | `<wb-cluster>`, `[x-cluster]` | - | Horizontal cluster |
 | `center` | `<wb-center>` | - | Centered content |
 | `masonry` | `<wb-masonry>` | - | Masonry grid layout |
 | `sticky` | `<wb-sticky>` | - | Sticky positioning |
@@ -366,6 +366,13 @@ Tools for arranging content.
 </wb-stack>
 </wb-demo>
 
+<wb-demo>
+<div x-stack gap="1rem">
+  <div>Item 1</div>
+  <div>Item 2</div>
+</div>
+</wb-demo>
+
 **`cluster`**
 
 <wb-demo>
@@ -373,6 +380,13 @@ Tools for arranging content.
   <div>Item 1</div>
   <div>Item 2</div>
 </wb-cluster>
+</wb-demo>
+
+<wb-demo>
+<div x-cluster gap="1rem">
+  <div>Item 1</div>
+  <div>Item 2</div>
+</div>
 </wb-demo>
 
 `grid`, `flex`, `container`, `center`, `masonry`, `sticky`, `scrollable`,
