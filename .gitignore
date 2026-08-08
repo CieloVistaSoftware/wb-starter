@@ -37,3 +37,14 @@ test-results/
 *.pem
 *.crx
 src/wb-overlay-ext/
+
+# Agent worktrees (each is its own git repo) — never committed as gitlinks.
+# A prior session accidentally `git add`ed one from the parent repo, which
+# git recorded as a submodule reference (mode 160000) with no matching
+# .gitmodules entry. GitHub's checkout action recursively inits submodules
+# on every workflow run, including the Pages deploy -- with 30+ of these
+# broken gitlinks accumulated in history, `pages-build-deployment` fatally
+# errored on `git submodule update --init` on EVERY push since 2026-08-07,
+# silently blocking every .io deployment. Ignoring the whole directory so
+# this can't happen again.
+.claude/worktrees/
