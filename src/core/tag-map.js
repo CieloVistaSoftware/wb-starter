@@ -150,6 +150,7 @@ export const elementMap = {
   'wb-tabs': 'tabs',
   'wb-textarea': 'textarea',
   'wb-themecontrol': 'themecontrol',
+  'wb-codecolorcontrol': 'codecolorcontrol',
   'wb-toast': 'toast',
   'wb-toggle': 'toggle',
   'wb-tooltip': 'tooltip',

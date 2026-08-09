@@ -219,6 +219,7 @@ const behaviorModules = {
   ripple: 'ripple',
   darkmode: 'darkmode',
   themecontrol: 'themecontrol',
+  codecolorcontrol: 'codecolorcontrol',
   codecontrol: 'codecontrol',
   lazy: 'helpers', print: 'helpers', share: 'helpers', fullscreen: 'helpers',
   hotkey: 'helpers', clipboard: 'helpers', scroll: 'helpers', truncate: 'helpers',

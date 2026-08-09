@@ -107,6 +107,7 @@ export const BEHAVIOR_CSS_MAP = {
   search: ['search.css'],
   searchfield: ['search.css'],
   skeleton: ['skeleton.css'],
+  codecolorcontrol: ['codecolorcontrol.css'],
   stat: ['stat.css'],
   stepper: ['stepper.css'],
   steps: ['steps.css'],

@@ -1,0 +1,51 @@
+/**
+ * Code Color Control Behavior Styles
+ * -----------------------------------------------------------------------------
+ * Works with src/wb-viewmodels/codecolorcontrol.js
+ * -----------------------------------------------------------------------------
+ */
+
+wb-codecolorcontrol {
+  display: inline-block;
+}
+
+.wb-codecolorcontrol__wrapper {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.wb-codecolorcontrol__label {
+  font-weight: 500;
+  font-size: 0.875rem;
+  color: var(--text-primary, #333);
+}
+
+.wb-codecolorcontrol__field {
+  display: inline-flex;
+  cursor: pointer;
+}
+
+.wb-codecolorcontrol__input {
+  width: 2rem;
+  height: 2rem;
+  padding: 0;
+  border: 1px solid var(--border-color, #ddd);
+  border-radius: var(--radius-md, 6px);
+  cursor: pointer;
+  background: none;
+}
+
+.wb-codecolorcontrol__reset {
+  padding: 0.5rem 0.75rem;
+  font-size: 0.875rem;
+  border: 1px solid var(--border-color, #ddd);
+  border-radius: var(--radius-md, 6px);
+  background: var(--bg-primary, #fff);
+  color: var(--text-primary, #333);
+  cursor: pointer;
+}
+
+.wb-codecolorcontrol__reset:hover {
+  background: var(--bg-secondary, #f5f5f5);
+}
