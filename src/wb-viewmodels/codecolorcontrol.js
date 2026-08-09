@@ -1,13 +1,13 @@
 /**
  * Code Color Control Behavior
  * -----------------------------------------------------------------------------
- * Two color pickers (background, text) for code panels (--bg-code /
- * --text-code, src/styles/behaviors/pre.css) plus a reset button. Neither
- * variable is set by any of the 51 themes in themes.css -- every theme falls
- * back to pre.css's own hardcoded default (#1e1e1e / #d4d4d4) regardless of
- * whether the active theme is dark or light. This control lets an author
- * override them directly rather than editing CSS, same "one control, one
- * source of truth, dispatch on change" shape as themecontrol.js.
+ * Dropdown to select a code panel color preset (--bg-code/--text-code,
+ * src/styles/behaviors/pre.css) -- applies immediately. Neither variable is
+ * set by any of the 51 themes in themes.css -- every theme falls back to
+ * pre.css's own hardcoded default (#1e1e1e/#d4d4d4) regardless of whether
+ * the active theme is dark or light. Same "one control, one source of
+ * truth, dispatch on change" shape as themecontrol.js, including its exact
+ * dropdown UI (John: presets, not individual color swatches).
  *
  * Custom Tag: <wb-codecolorcontrol>
  * -----------------------------------------------------------------------------
@@ -15,10 +15,24 @@
 
 const STORAGE_KEY = 'wb-code-colors';
 
+// First entry is the default (matches pre.css's own fallback exactly, so
+// selecting it and never having touched the control produce identical
+// output). A handful of well-known editor palettes, not a full syntax-token
+// system -- this control only ever sets two variables.
+const PRESETS = [
+  { id: 'default', name: 'Default', bg: '#1e1e1e', text: '#d4d4d4' },
+  { id: 'github-dark', name: 'GitHub Dark', bg: '#0d1117', text: '#c9d1d9' },
+  { id: 'monokai', name: 'Monokai', bg: '#272822', text: '#f8f8f2' },
+  { id: 'solarized-dark', name: 'Solarized Dark', bg: '#002b36', text: '#839496' },
+  { id: 'solarized-light', name: 'Solarized Light', bg: '#fdf6e3', text: '#657b83' },
+  { id: 'github-light', name: 'GitHub Light', bg: '#f6f8fa', text: '#24292f' },
+  { id: 'dracula', name: 'Dracula', bg: '#282a36', text: '#f8f8f2' },
+  { id: 'nord', name: 'Nord', bg: '#2e3440', text: '#d8dee9' },
+];
+
 function readStored() {
   try {
-    const raw = localStorage.getItem(STORAGE_KEY);
-    return raw ? JSON.parse(raw) : null;
+    return localStorage.getItem(STORAGE_KEY);
   } catch (e) {
     return null;
   }
@@ -26,15 +40,14 @@ function readStored() {
 
 function writeStored(value) {
   try {
-    if (value) localStorage.setItem(STORAGE_KEY, JSON.stringify(value));
+    if (value) localStorage.setItem(STORAGE_KEY, value);
     else localStorage.removeItem(STORAGE_KEY);
   } catch (e) { /* best-effort */ }
 }
 
-// #1e1e1e/#d4d4d4 match pre.css's own var(--bg-code, #1e1e1e) fallback --
-// duplicated here (not read from getComputedStyle) so the reset button can
-// restore this EXACT value even on a page where pre.css hasn't loaded yet.
-const DEFAULTS = { bg: '#1e1e1e', text: '#d4d4d4' };
+function findPreset(id) {
+  return PRESETS.find((p) => p.id === id) || PRESETS[0];
+}
 
 export function codecolorcontrol(element, options = {}) {
   // Same re-init guard every other stateful behavior in this codebase uses
@@ -46,6 +59,7 @@ export function codecolorcontrol(element, options = {}) {
 
   const config = {
     target: options.target || element.getAttribute('target') || 'html',
+    default: options.default || element.getAttribute('default') || 'default',
     showLabel: options.showLabel ?? (element.getAttribute('show-label') !== 'false'),
     persist: options.persist ?? (element.getAttribute('persist') !== 'false'),
     ...options,
@@ -60,90 +74,69 @@ export function codecolorcontrol(element, options = {}) {
   const wrapper = document.createElement('div');
   wrapper.className = 'wb-codecolorcontrol__wrapper';
 
+  let label = null;
   if (config.showLabel) {
-    const label = document.createElement('span');
+    label = document.createElement('label');
     label.className = 'wb-codecolorcontrol__label';
     label.textContent = 'Code Colors:';
     wrapper.appendChild(label);
   }
 
-  function makeField(key, title) {
-    const field = document.createElement('label');
-    field.className = 'wb-codecolorcontrol__field';
-    field.title = title;
-    const input = document.createElement('input');
-    input.type = 'color';
-    input.className = 'wb-codecolorcontrol__input';
-    field.appendChild(input);
-    wrapper.appendChild(field);
-    return input;
-  }
-
-  const bgInput = makeField('bg', 'Code background color');
-  const textInput = makeField('text', 'Code text color');
-
-  const resetBtn = document.createElement('button');
-  resetBtn.type = 'button';
-  resetBtn.className = 'wb-codecolorcontrol__reset';
-  resetBtn.textContent = 'Reset';
-  wrapper.appendChild(resetBtn);
+  const select = document.createElement('select');
+  select.className = 'wb-codecolorcontrol__select';
+  PRESETS.forEach((preset) => {
+    const option = document.createElement('option');
+    option.value = preset.id;
+    option.textContent = preset.name;
+    select.appendChild(option);
+  });
+  wrapper.appendChild(select);
 
   element.appendChild(wrapper);
 
-  const apply = (bg, text, { save = true } = {}) => {
-    targetEl.style.setProperty('--bg-code', bg);
-    targetEl.style.setProperty('--text-code', text);
-    bgInput.value = bg;
-    textInput.value = text;
-    if (config.persist && save) writeStored({ bg, text });
-    element.dispatchEvent(new CustomEvent('wb:codecolors:change', { bubbles: true, detail: { bg, text } }));
+  let currentId = config.default;
+
+  const applyPreset = (id) => {
+    const preset = findPreset(id);
+    currentId = preset.id;
+    targetEl.style.setProperty('--bg-code', preset.bg);
+    targetEl.style.setProperty('--text-code', preset.text);
+    select.value = preset.id;
+
+    if (config.persist) writeStored(preset.id);
+
+    element.dispatchEvent(new CustomEvent('wb:codecolors:change', {
+      bubbles: true,
+      detail: { id: preset.id, name: preset.name, bg: preset.bg, text: preset.text },
+    }));
   };
 
-  const stored = config.persist ? readStored() : null;
-  const initial = stored || DEFAULTS;
-  // Reflect current values into the inputs without re-writing storage on
-  // first render -- only an actual user edit (or explicit reset) persists.
-  bgInput.value = initial.bg;
-  textInput.value = initial.text;
-  if (stored) {
-    targetEl.style.setProperty('--bg-code', stored.bg);
-    targetEl.style.setProperty('--text-code', stored.text);
+  if (config.persist) {
+    const saved = readStored();
+    if (saved && PRESETS.some((p) => p.id === saved)) currentId = saved;
   }
+  applyPreset(currentId);
 
-  const onBgInput = () => apply(bgInput.value, textInput.value);
-  const onTextInput = () => apply(bgInput.value, textInput.value);
-  const onReset = () => {
-    targetEl.style.removeProperty('--bg-code');
-    targetEl.style.removeProperty('--text-code');
-    writeStored(null);
-    bgInput.value = DEFAULTS.bg;
-    textInput.value = DEFAULTS.text;
-    element.dispatchEvent(new CustomEvent('wb:codecolors:change', { bubbles: true, detail: { ...DEFAULTS, reset: true } }));
-  };
-
-  bgInput.addEventListener('input', onBgInput);
-  textInput.addEventListener('input', onTextInput);
-  resetBtn.addEventListener('click', onReset);
+  const onChange = (e) => applyPreset(e.target.value);
+  select.addEventListener('change', onChange);
 
   // Same cross-instance sync pattern as themecontrol.js -- a page with more
   // than one <wb-codecolorcontrol> stays in sync live, not just on reload.
   const onExternalChange = (e) => {
     if (e.target === element) return;
-    bgInput.value = e.detail.bg;
-    textInput.value = e.detail.text;
+    currentId = e.detail.id;
+    select.value = e.detail.id;
   };
   document.addEventListener('wb:codecolors:change', onExternalChange);
 
   element.wbCodeColorControl = {
-    getColors: () => ({ bg: bgInput.value, text: textInput.value }),
-    setColors: apply,
-    reset: onReset,
+    getPreset: () => currentId,
+    setPreset: applyPreset,
+    getPresets: () => [...PRESETS],
   };
 
   return () => {
-    bgInput.removeEventListener('input', onBgInput);
-    textInput.removeEventListener('input', onTextInput);
-    resetBtn.removeEventListener('click', onReset);
+    select.removeEventListener('change', onChange);
     document.removeEventListener('wb:codecolors:change', onExternalChange);
     wrapper.remove();
     delete element.wbCodeColorControl;
@@ -151,4 +144,5 @@ export function codecolorcontrol(element, options = {}) {
   };
 }
 
+export { PRESETS };
 export default codecolorcontrol;
