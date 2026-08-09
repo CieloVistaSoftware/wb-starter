@@ -29,6 +29,22 @@ const OVERVIEW_FILES = new Set([
   'navigation.readme.md', 'semantic.index.md', 'semantic.readme.md',
 ]);
 
+// John: anchor ids should read like "pricingCardDemo"/"portfolioCardDemo",
+// not the generic "component-{tag}" scheme this used before -- derived from
+// the component's own display TITLE (already human-readable), camelCased,
+// with a "Demo" suffix. "Pricing Card" -> "pricingCardDemo".
+const usedAnchorIds = new Set();
+function toDemoAnchorId(title, fallbackName) {
+  const words = title.replace(/[^a-zA-Z0-9]+/g, ' ').trim().split(/\s+/).filter(Boolean);
+  const camel = words.map((w, i) => (i === 0 ? w.toLowerCase() : w[0].toUpperCase() + w.slice(1).toLowerCase())).join('');
+  let id = `${camel}Demo`;
+  // Collision fallback: extremely unlikely (two different components with
+  // the same display title) but must never silently produce a duplicate id.
+  if (usedAnchorIds.has(id)) id = `${camel}${fallbackName[0].toUpperCase()}${fallbackName.slice(1)}Demo`;
+  usedAnchorIds.add(id);
+  return id;
+}
+
 function walk(dir, acc = []) {
   for (const entry of fs.readdirSync(dir, { withFileTypes: true })) {
     const full = path.join(dir, entry.name);
@@ -151,9 +167,23 @@ const components = [];
 // shift the offsets of later ones.
 const idInjections = [];
 
+// Bug (found live, alongside the demoAnchor fix above): docs/components/
+// cards/card.md and docs/components/forms/card.md both document a
+// component literally named "card" -- two doc files, same name, no
+// de-dup, so the catalog had TWO "card" entries, each independently
+// calling findDemoLocation('card') and (once the demoAnchor bug above
+// was fixed) each claiming AND getting an id injected into a DIFFERENT
+// components.html block -- two blocks both landing id="component-card",
+// invalid duplicate HTML ids. Keep only the first doc file found for a
+// given name; a genuine cross-listing (if that's what these two files
+// are) needs a real "see also" link between them, not two catalog rows.
+const seenNames = new Set();
+
 for (const docPath of docs) {
   const relDoc = path.relative(ROOT, docPath).split(path.sep).join('/');
   const name = path.basename(docPath, '.md');
+  if (seenNames.has(name)) continue;
+  seenNames.add(name);
   const category = path.basename(path.dirname(docPath));
 
   const schema = readSchema(name);
@@ -173,9 +203,20 @@ for (const docPath of docs) {
   // already guarantees each block is claimed by at most one component, so
   // an id is injected (and therefore promised in the JSON) for every
   // components.html match, no further dedup needed here.
-  const getsAnchor = demo?.page === 'components' && !demo.block.openAttrs.includes(' id=');
-  if (getsAnchor) {
-    idInjections.push({ pos: demo.block.openStart, name });
+  const onComponentsPage = demo?.page === 'components';
+  // demoAnchor is always derived here (not conditionally on "did this run
+  // inject it") -- it must reflect "will this component have an anchor
+  // id" the instant it's matched to a components.html block, whether that
+  // id already exists in the HTML from a prior run or still needs
+  // injecting this run. Bug history (#521-adjacent): an earlier version
+  // only set this on first injection, so every subsequent regeneration
+  // reset it to null (every "View demo" link produced literal
+  // `href="#null"`) despite the real id still sitting right there in the
+  // HTML.
+  const demoAnchor = onComponentsPage ? toDemoAnchorId(title, name) : null;
+  const alreadyHasId = onComponentsPage && demo.block.openAttrs.includes(' id=');
+  if (onComponentsPage && !alreadyHasId) {
+    idInjections.push({ pos: demo.block.openStart, anchorId: demoAnchor });
   }
 
   components.push({
@@ -186,7 +227,7 @@ for (const docPath of docs) {
     tag,
     docPath: relDoc,
     demoPage: demo?.page || null,
-    demoAnchor: getsAnchor ? `component-${name}` : null,
+    demoAnchor,
   });
 }
 
@@ -195,9 +236,9 @@ components.sort((a, b) => a.name.localeCompare(b.name));
 if (idInjections.length) {
   idInjections.sort((a, b) => b.pos - a.pos); // descending, so splicing doesn't shift earlier offsets
   let html = componentsHtml;
-  for (const { pos, name } of idInjections) {
+  for (const { pos, anchorId } of idInjections) {
     const insertAt = pos + '<wb-demo'.length;
-    html = html.slice(0, insertAt) + ` id="component-${name}"` + html.slice(insertAt);
+    html = html.slice(0, insertAt) + ` id="${anchorId}"` + html.slice(insertAt);
   }
   fs.writeFileSync(path.join(ROOT, 'pages/components.html'), html);
   console.log(`Injected ${idInjections.length} anchor id(s) into pages/components.html.`);

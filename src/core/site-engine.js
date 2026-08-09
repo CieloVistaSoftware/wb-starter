@@ -100,7 +100,16 @@ export default class WBSite {
             if (target) {
               e.preventDefault();
               target.scrollIntoView({ behavior: 'smooth', block: 'start' });
-              history.replaceState(null, '', href);
+              // pushState (not replaceState): a link like the component
+              // index's "View demo" jumps from a scroll position way up the
+              // page down to a specific component -- that jump must be a
+              // real, back-navigable step. replaceState overwrote the
+              // CURRENT history entry instead of adding one, so Back skipped
+              // straight past the click's origin to whatever page loaded
+              // before this one entirely, not back to the pre-click scroll
+              // position. Confirmed live report: the components page's own
+              // table of "View demo" links did exactly this.
+              history.pushState(null, '', href);
             }
           }
         }

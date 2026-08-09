@@ -1,8 +1,8 @@
 {
-  "generated": "2026-08-08T19:24:10.065Z",
-  "total": 84,
-  "withDemo": 36,
-  "withoutDemo": 48,
+  "generated": "2026-08-09T01:38:43.017Z",
+  "total": 74,
+  "withDemo": 30,
+  "withoutDemo": 44,
   "components": [
     {
       "name": "address",
@@ -52,7 +52,7 @@
       "tag": "audio",
       "docPath": "docs/components/semantics/audio.md",
       "demoPage": "components",
-      "demoAnchor": null
+      "demoAnchor": "audioDemo"
     },
     {
       "name": "avatar",
@@ -62,7 +62,7 @@
       "tag": "wb-avatar",
       "docPath": "docs/components/feedback/avatar.md",
       "demoPage": "components",
-      "demoAnchor": null
+      "demoAnchor": "avatarDemo"
     },
     {
       "name": "badge",
@@ -72,7 +72,7 @@
       "tag": "wb-badge",
       "docPath": "docs/components/feedback/badge.md",
       "demoPage": "components",
-      "demoAnchor": null
+      "demoAnchor": "badgeDemo"
     },
     {
       "name": "blockquote",
@@ -92,17 +92,7 @@
       "tag": "wb-button",
       "docPath": "docs/components/forms/button.md",
       "demoPage": "components",
-      "demoAnchor": null
-    },
-    {
-      "name": "button",
-      "title": "Button",
-      "description": "Interactive button with variants, sizes, and optional icon",
-      "category": "semantics",
-      "tag": "button",
-      "docPath": "docs/components/semantics/button.md",
-      "demoPage": "components",
-      "demoAnchor": null
+      "demoAnchor": "buttonDemo"
     },
     {
       "name": "card",
@@ -112,17 +102,7 @@
       "tag": "wb-card",
       "docPath": "docs/components/cards/card.md",
       "demoPage": "components",
-      "demoAnchor": null
-    },
-    {
-      "name": "card",
-      "title": "Card Component",
-      "description": "Card component. IS-A article, HAS-A header, main, footer.",
-      "category": "forms",
-      "tag": "wb-card",
-      "docPath": "docs/components/forms/card.md",
-      "demoPage": "components",
-      "demoAnchor": null
+      "demoAnchor": "cardComponentDemo"
     },
     {
       "name": "cardbutton",
@@ -162,7 +142,7 @@
       "tag": "wb-cardfile",
       "docPath": "docs/components/cards/cardfile.md",
       "demoPage": "components",
-      "demoAnchor": null
+      "demoAnchor": "fileCardDemo"
     },
     {
       "name": "cardhero",
@@ -172,7 +152,7 @@
       "tag": "wb-cardhero",
       "docPath": "docs/components/cards/cardhero.md",
       "demoPage": "components",
-      "demoAnchor": null
+      "demoAnchor": "heroCardDemo"
     },
     {
       "name": "cardhorizontal",
@@ -182,7 +162,7 @@
       "tag": "wb-cardhorizontal",
       "docPath": "docs/components/cards/cardhorizontal.md",
       "demoPage": "components",
-      "demoAnchor": null
+      "demoAnchor": "horizontalCardDemo"
     },
     {
       "name": "cardimage",
@@ -192,7 +172,7 @@
       "tag": "wb-cardimage",
       "docPath": "docs/components/cards/cardimage.md",
       "demoPage": "components",
-      "demoAnchor": null
+      "demoAnchor": "imageCardDemo"
     },
     {
       "name": "cardlink",
@@ -202,7 +182,7 @@
       "tag": "wb-cardlink",
       "docPath": "docs/components/cards/cardlink.md",
       "demoPage": "components",
-      "demoAnchor": null
+      "demoAnchor": "linkCardDemo"
     },
     {
       "name": "cardminimizable",
@@ -222,7 +202,7 @@
       "tag": "wb-cardnotification",
       "docPath": "docs/components/cards/cardnotification.md",
       "demoPage": "components",
-      "demoAnchor": null
+      "demoAnchor": "notificationCardDemo"
     },
     {
       "name": "cardoverlay",
@@ -232,7 +212,7 @@
       "tag": "wb-cardoverlay",
       "docPath": "docs/components/cards/cardoverlay.md",
       "demoPage": "components",
-      "demoAnchor": null
+      "demoAnchor": "overlayCardDemo"
     },
     {
       "name": "cardportfolio",
@@ -242,7 +222,7 @@
       "tag": "wb-cardportfolio",
       "docPath": "docs/components/cards/cardportfolio.md",
       "demoPage": "components",
-      "demoAnchor": null
+      "demoAnchor": "portfolioCardDemo"
     },
     {
       "name": "cardpricing",
@@ -252,7 +232,7 @@
       "tag": "wb-cardpricing",
       "docPath": "docs/components/cards/cardpricing.md",
       "demoPage": "components",
-      "demoAnchor": null
+      "demoAnchor": "pricingCardDemo"
     },
     {
       "name": "cardproduct",
@@ -262,7 +242,7 @@
       "tag": "wb-cardproduct",
       "docPath": "docs/components/cards/cardproduct.md",
       "demoPage": "components",
-      "demoAnchor": null
+      "demoAnchor": "productCardDemo"
     },
     {
       "name": "cardprofile",
@@ -292,7 +272,7 @@
       "tag": "wb-cardtestimonial",
       "docPath": "docs/components/cards/cardtestimonial.md",
       "demoPage": "components",
-      "demoAnchor": null
+      "demoAnchor": "testimonialCardDemo"
     },
     {
       "name": "cardvideo",
@@ -302,7 +282,7 @@
       "tag": "wb-cardvideo",
       "docPath": "docs/components/cards/cardvideo.md",
       "demoPage": "components",
-      "demoAnchor": null
+      "demoAnchor": "videoCardDemo"
     },
     {
       "name": "center",
@@ -321,16 +301,6 @@
       "category": "forms",
       "tag": "wb-checkbox",
       "docPath": "docs/components/forms/checkbox.md",
-      "demoPage": null,
-      "demoAnchor": null
-    },
-    {
-      "name": "checkbox",
-      "title": "Checkbox",
-      "description": "Checkbox input with label and custom styling",
-      "category": "semantics",
-      "tag": "checkbox",
-      "docPath": "docs/components/semantics/checkbox.md",
       "demoPage": null,
       "demoAnchor": null
     },
@@ -412,17 +382,7 @@
       "tag": "details",
       "docPath": "docs/components/semantic/details.md",
       "demoPage": "components",
-      "demoAnchor": null
-    },
-    {
-      "name": "details",
-      "title": "Details",
-      "description": "Native HTML5 details disclosure widget with optional animation",
-      "category": "semantics",
-      "tag": "details",
-      "docPath": "docs/components/semantics/details.md",
-      "demoPage": "components",
-      "demoAnchor": null
+      "demoAnchor": "detailsDemo"
     },
     {
       "name": "dialog",
@@ -452,7 +412,7 @@
       "tag": "wb-drawer",
       "docPath": "docs/components/drawer.md",
       "demoPage": "components",
-      "demoAnchor": null
+      "demoAnchor": "drawerDemo"
     },
     {
       "name": "figure",
@@ -461,16 +421,6 @@
       "category": "semantic",
       "tag": "figure",
       "docPath": "docs/components/semantic/figure.md",
-      "demoPage": null,
-      "demoAnchor": null
-    },
-    {
-      "name": "figure",
-      "title": "Figure Component Design & User Guide",
-      "description": "The figure component upgrades the standard <figure> and <figcaption> elements into interactive media containers. It solves common needs like image zooming",
-      "category": "semantics",
-      "tag": "figure",
-      "docPath": "docs/components/semantics/figure.md",
       "demoPage": null,
       "demoAnchor": null
     },
@@ -552,17 +502,7 @@
       "tag": "wb-input",
       "docPath": "docs/components/forms/input.md",
       "demoPage": "components",
-      "demoAnchor": null
-    },
-    {
-      "name": "input",
-      "title": "Input",
-      "description": "Text input field with label, helper text, and validation states",
-      "category": "semantics",
-      "tag": "input",
-      "docPath": "docs/components/semantics/input.md",
-      "demoPage": "components",
-      "demoAnchor": null
+      "demoAnchor": "inputDemo"
     },
     {
       "name": "list",
@@ -622,17 +562,7 @@
       "tag": "wb-progress",
       "docPath": "docs/components/feedback/progress.md",
       "demoPage": "components",
-      "demoAnchor": null
-    },
-    {
-      "name": "progress",
-      "title": "Progress",
-      "description": "Progress bar with determinate and indeterminate states",
-      "category": "semantics",
-      "tag": "progress",
-      "docPath": "docs/components/semantics/progress.md",
-      "demoPage": "components",
-      "demoAnchor": null
+      "demoAnchor": "progressDemo"
     },
     {
       "name": "radio",
@@ -661,8 +591,8 @@
       "category": "semantics",
       "tag": "rating",
       "docPath": "docs/components/semantics/rating.md",
-      "demoPage": null,
-      "demoAnchor": null
+      "demoPage": "components",
+      "demoAnchor": "ratingDemo"
     },
     {
       "name": "reel",
@@ -692,17 +622,7 @@
       "tag": "wb-select",
       "docPath": "docs/components/forms/select.md",
       "demoPage": "components",
-      "demoAnchor": null
-    },
-    {
-      "name": "select",
-      "title": "Select",
-      "description": "Enhanced select dropdown with search, clear, and multi-select",
-      "category": "semantics",
-      "tag": "select",
-      "docPath": "docs/components/semantics/select.md",
-      "demoPage": "behaviors",
-      "demoAnchor": null
+      "demoAnchor": "selectDemo"
     },
     {
       "name": "sidebarlayout",
@@ -732,7 +652,7 @@
       "tag": "wb-spinner",
       "docPath": "docs/components/feedback/spinner.md",
       "demoPage": "components",
-      "demoAnchor": null
+      "demoAnchor": "spinnerDemo"
     },
     {
       "name": "sticky",
@@ -751,16 +671,6 @@
       "category": "forms",
       "tag": "wb-switch",
       "docPath": "docs/components/forms/switch.md",
-      "demoPage": null,
-      "demoAnchor": null
-    },
-    {
-      "name": "switch",
-      "title": "Switch",
-      "description": "Toggle switch for boolean settings",
-      "category": "semantics",
-      "tag": "switch",
-      "docPath": "docs/components/semantics/switch.md",
       "demoPage": null,
       "demoAnchor": null
     },
@@ -792,7 +702,7 @@
       "tag": "wb-tabs",
       "docPath": "docs/components/tabs.md",
       "demoPage": "components",
-      "demoAnchor": null
+      "demoAnchor": "tabsDemo"
     },
     {
       "name": "textarea",
@@ -801,16 +711,6 @@
       "category": "forms",
       "tag": "wb-textarea",
       "docPath": "docs/components/forms/textarea.md",
-      "demoPage": "behaviors",
-      "demoAnchor": null
-    },
-    {
-      "name": "textarea",
-      "title": "Textarea",
-      "description": "Multi-line text input with autosize and character count",
-      "category": "semantics",
-      "tag": "textarea",
-      "docPath": "docs/components/semantics/textarea.md",
       "demoPage": "behaviors",
       "demoAnchor": null
     },
