@@ -3,6 +3,19 @@
   <p>What's actually live on this site right now — every push to <code>main</code> deploys straight to <a href="https://cielovistasoftware.github.io/wb-starter/" target="_blank" rel="noopener">cielovistasoftware.github.io/wb-starter</a>, so this list is the real changelog, not a promise of a future release.</p>
 </div>
 
+<section id="whats-new-2026-08-09">
+  <h2>2026-08-09</h2>
+  <ul>
+    <li>Fixed <code>pages/behaviors.html</code>'s missing <code>x-alert</code> demo section (3 broken tests), and a matching gap in <code>alert()</code> that only ever read a literal <code>variant</code> attribute even though the schema declares <code>type</code> as an alias (#522).</li>
+    <li>Added regression coverage confirming <code>demos/frameworks.html</code>'s legacy code-panel duplication stays fixed, and that <code>wb-lazy.js</code>'s IntersectionObserver preload still enhances off-screen elements before they scroll into view — both behaviors were already correct in production but untested (#449, #491).</li>
+    <li>Fixed <code>wb-articles</code> never getting its base class on a schema-built host, then fixed the fix: an unconditional class-add broke the no-redundant-tag-name-class rule on a real <code>&lt;wb-articles&gt;</code> tag — now guarded the same way <code>chip()</code> already guards this exact case (#523).</li>
+    <li>Fixed <code>.wb-card__cta</code>/<code>.wb-card__product-cta</code> buttons crowding their own text against the edge — the real culprit was inline <code>style.cssText</code> in <code>cardpricing()</code>/<code>cardproduct()</code> silently overriding the CSS class's padding (#520).</li>
+    <li>Fixed every <code>wb-cardfile</code> example in the "fileType variants"/"Variants" sections of <code>demos/site/cards.html</code> showing a visible red "No href given" warning and collapsing its filename text to one character per line — the warning renders as a third flex sibling next to the icon and info column, squeezing info's <code>flex:1;min-width:0</code> down to nothing. Gave every example a real href. Separately fixed <code>cardfile()</code> reading a bare <code>type</code> attribute that no real markup ever sets (the schema declares <code>file-type</code>) — every file card showed the same generic folder icon regardless of its declared type.</li>
+    <li>Fixed a false-positive <code>wb-audio</code> runtime error: re-running <code>audio()</code> on the same host (a lazy rebuild) replaces the inner <code>&lt;audio&gt;</code> element without detaching the old one's error listener first, so a late error on that now-detached, nobody's-looking-at-it element used to throw for a source that's actually intact.</li>
+    <li>Fixed GitHub issue bodies rendered on the Issues page auto-promoting embedded <code>&lt;wb-*&gt;</code>/<code>x-*</code> code examples into real, live, fetching elements — a feature built for curated docs content, not arbitrary issue text. An issue merely illustrating a bug (like #527's own <code>&lt;wb-mdhtml src="/docs/guide.md"&gt;</code> example) would reproduce that exact bug live on the Issues page.</li>
+  </ul>
+</section>
+
 <section id="whats-new-2026-08-08">
   <h2>2026-08-08</h2>
   <ul>
