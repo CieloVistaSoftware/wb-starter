@@ -41,7 +41,7 @@
   /* Rendered markdown (wb-mdhtml) needs normal HTML flow, not the raw-text
      pre-wrap this div used before -- headings/lists/code blocks would
      otherwise inherit literal whitespace preservation meant for plain text. */
-  .issue-row__body wb-mdhtml { display: block; }
+  .issue-row__body .issue-row__mdhtml { display: block; }
   .issue-row--expanded .issue-row__body { display: block; padding-top: 1rem; }
 </style>
 
@@ -138,20 +138,30 @@
             <span class="issue-row__title">${escapeHtml(issue.title)}</span>
             <span class="issue-row__labels">${labels}</span>
           </div>
-          <div class="issue-row__body"><wb-mdhtml></wb-mdhtml></div>
+          <div class="issue-row__body"><div class="issue-row__mdhtml"></div></div>
         </li>`;
     }).join('');
 
-    // wb-mdhtml renders whatever markup already sits inside it as markdown
-    // (src/wb-viewmodels/mdhtml.js) -- set via .textContent, not innerHTML,
-    // so the browser HTML-escapes the raw body text into it; mdhtml.js's own
-    // decode-then-parse step (its "code samples are frequently written
-    // HTML-escaped" handling) expects exactly that and un-escapes it before
-    // handing the real markdown to `marked`. Assigning raw markdown directly
-    // via innerHTML here would get double-escaped instead.
+    // A plain div, not a real <wb-mdhtml> tag -- tag-map.js registers
+    // wb-mdhtml for WB's own generic auto-scan/lazy-load, which would call
+    // mdhtml() on it with DEFAULT options (autoLiveRender left at its true
+    // default) the moment it lands in the DOM, racing ahead of the explicit
+    // { autoLiveRender: false } call below and re-introducing the exact bug
+    // that option exists to prevent (confirmed live: it did, even before any
+    // row was ever clicked open). mdhtml() itself supports this -- it only
+    // needs the wb-mdhtml TAG for CSS tag-selectors, and adds the .wb-mdhtml
+    // CLASS itself on any other host (same pattern public/doc-viewer.html's
+    // own plain <div id="content"> already relies on).
+    //
+    // Set via .textContent, not innerHTML, so the browser HTML-escapes the
+    // raw body text into it; mdhtml.js's own decode-then-parse step (its
+    // "code samples are frequently written HTML-escaped" handling) expects
+    // exactly that and un-escapes it before handing the real markdown to
+    // `marked`. Assigning raw markdown directly via innerHTML here would get
+    // double-escaped instead.
     const rows = listEl.querySelectorAll('.issue-row');
     rows.forEach((row, i) => {
-      const md = row.querySelector('wb-mdhtml');
+      const md = row.querySelector('.issue-row__mdhtml');
       if (md) md.textContent = filtered[i].body || '_No description provided._';
     });
 
@@ -161,7 +171,7 @@
         row.classList.toggle('issue-row--expanded');
         // Lazy: only pay for markdown parsing once a row is actually opened,
         // and only once per row (not on every re-toggle).
-        const md = row.querySelector('wb-mdhtml');
+        const md = row.querySelector('.issue-row__mdhtml');
         if (md && !md.dataset.rendered && window.WB) {
           md.dataset.rendered = '1';
           // autoLiveRender: false -- issue bodies are arbitrary/untrusted

@@ -108,8 +108,27 @@ export function audio(element, options = {}) {
   // single page visit; the file itself is intact) used to throw a false
   // positive for a source nobody is looking at anymore. Only a still-attached
   // element's error reflects something actually broken on screen.
+  // show-eq forces crossOrigin='anonymous' (needed for
+  // AudioContext.createMediaElementSource() to read the raw samples). A
+  // cross-origin src whose server sends no CORS headers at all (confirmed
+  // live: soundhelix.com -- no Access-Control-Allow-Origin on its response)
+  // gets its crossorigin-mode fetch blocked outright, breaking PLAYBACK
+  // entirely, not just the EQ visualization -- the exact same file plays
+  // fine the moment crossOrigin is removed. One retry without crossOrigin
+  // keeps the song playable; the EQ just won't have any visible effect on
+  // this specific source (a strictly better trade than "nothing plays").
+  let corsFallbackTried = false;
   audioEl.addEventListener('error', () => {
     if (!document.contains(audioEl)) return;
+    if (!corsFallbackTried && audioEl.crossOrigin && config.src) {
+      corsFallbackTried = true;
+      console.warn(`[WB Audio] "${config.src}" failed to load with crossOrigin="anonymous" (likely no CORS support on that server) -- retrying without it. The EQ will have no effect on this source, but playback will work.`);
+      audioEl.crossOrigin = null;
+      audioEl.removeAttribute('crossorigin');
+      audioEl.src = '';
+      audioEl.src = config.src;
+      return;
+    }
     const mediaError = audioEl.error;
     const reason = mediaError ? `code ${mediaError.code} (${mediaError.message || 'no message'})` : 'unknown';
     throw new Error(`wb-audio: failed to load src "${config.src}" -- ${reason}. The file is missing, unreachable, or has no real content (0 bytes).`);
