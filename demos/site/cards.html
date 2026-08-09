@@ -22,8 +22,8 @@
   <h2>🃏 Curated Card Gallery — one example per variant</h2>
 <wb-stack gap="1rem">
 
-    <h2>Base Card</h2>
-    <wb-demo id="demo-base" columns="2">
+    <h2>Card</h2>
+    <wb-demo id="demo-card" columns="2">
       <wb-card title="Welcome" subtitle="Standard card" hoverable>This is a basic card with default styling.</wb-card>
       <wb-card title="Glass Card" subtitle="With Badge" badge="NEW" variant="glass" clickable hoverable elevated>All features enabled.</wb-card>
     </wb-demo>
@@ -72,7 +72,7 @@
     </wb-demo>
 
     <h2>Product Card</h2>
-    <wb-demo id="demo-product" columns="3">
+    <wb-demo id="demo-product" columns="3" events="wb:cardproduct:addtocart">
       <wb-cardproduct image="https://placehold.co/400x300/1f2937/f3f4f6?text=Sneakers" title="Premium Sneakers" description="Lightweight with responsive cushioning" price="$129" rating="4.5" reviews="238"></wb-cardproduct>
       <wb-cardproduct image="https://placehold.co/400x300/1f2937/f3f4f6?text=Smart+Watch" title="Smart Watch" description="Health tracking and notifications" price="$299" rating="4.8" reviews="1024"></wb-cardproduct>
       <wb-cardproduct image="https://placehold.co/400x300/1f2937/f3f4f6?text=Headphones" title="Wireless Headphones" description="Active noise cancellation" price="$89" rating="4.3" reviews="567"></wb-cardproduct>
@@ -361,13 +361,13 @@
   <section id="cardfile-file-card">
   <h2>📄 File Card</h2>
   <wb-demo columns="2">
-    <wb-cardfile filename="document.pdf">
+    <wb-cardfile filename="document.pdf" href="https://github.com/CieloVistaSoftware/wb-starter/pulse">
       This is example file card content.
     </wb-cardfile>
-    <wb-cardfile filename="document.pdf" file-type="pdf" size="1.2 MB">
+    <wb-cardfile filename="document.pdf" file-type="pdf" size="1.2 MB" href="https://github.com/CieloVistaSoftware/wb-starter/pulse">
       This is example file card content.
     </wb-cardfile>
-    <wb-cardfile filename="photo.jpg" file-type="image" size="2.4 MB" href="/files/photo.jpg">
+    <wb-cardfile filename="photo.jpg" file-type="image" size="2.4 MB" href="https://github.com/CieloVistaSoftware/wb-starter/graphs/contributors">
       This is example file card content.
     </wb-cardfile>
   </wb-demo>
@@ -377,25 +377,25 @@
   <section id="cardfile-filetype-variants">
   <h2>fileType variants</h2>
   <wb-demo columns="3">
-    <wb-cardfile file-type="pdf" filename="Sample filename">
+    <wb-cardfile file-type="pdf" filename="Sample filename" href="https://github.com/CieloVistaSoftware/wb-starter/pulse">
       This is example file card content.
     </wb-cardfile>
-    <wb-cardfile file-type="doc" filename="Sample filename">
+    <wb-cardfile file-type="doc" filename="Sample filename" href="https://github.com/CieloVistaSoftware/wb-starter/pulse">
       This is example file card content.
     </wb-cardfile>
-    <wb-cardfile file-type="image" filename="Sample filename">
+    <wb-cardfile file-type="image" filename="Sample filename" href="https://github.com/CieloVistaSoftware/wb-starter/graphs/contributors">
       This is example file card content.
     </wb-cardfile>
-    <wb-cardfile file-type="video" filename="Sample filename">
+    <wb-cardfile file-type="video" filename="Sample filename" href="https://github.com/CieloVistaSoftware/wb-starter/pulse">
       This is example file card content.
     </wb-cardfile>
-    <wb-cardfile file-type="audio" filename="Sample filename">
+    <wb-cardfile file-type="audio" filename="Sample filename" href="https://github.com/CieloVistaSoftware/wb-starter/pulse">
       This is example file card content.
     </wb-cardfile>
-    <wb-cardfile file-type="zip" filename="Sample filename">
+    <wb-cardfile file-type="zip" filename="Sample filename" href="https://github.com/CieloVistaSoftware/wb-starter/archive/refs/heads/main.zip">
       This is example file card content.
     </wb-cardfile>
-    <wb-cardfile file-type="file" filename="Sample filename">
+    <wb-cardfile file-type="file" filename="Sample filename" href="https://github.com/CieloVistaSoftware/wb-starter/pulse">
       This is example file card content.
     </wb-cardfile>
   </wb-demo>
@@ -405,13 +405,13 @@
   <section id="cardfile-variants">
   <h2>Variants</h2>
   <wb-demo columns="2">
-    <wb-cardfile variant="default" filename="Sample filename">
+    <wb-cardfile variant="default" filename="Sample filename" href="https://github.com/CieloVistaSoftware/wb-starter/pulse">
       This is example file card content.
     </wb-cardfile>
-    <wb-cardfile variant="compact" filename="Sample filename">
+    <wb-cardfile variant="compact" filename="Sample filename" href="https://github.com/CieloVistaSoftware/wb-starter/pulse">
       This is example file card content.
     </wb-cardfile>
-    <wb-cardfile variant="elevated" filename="Sample filename">
+    <wb-cardfile variant="elevated" filename="Sample filename" href="https://github.com/CieloVistaSoftware/wb-starter/pulse">
       This is example file card content.
     </wb-cardfile>
   </wb-demo>
@@ -1369,6 +1369,7 @@
     await WB.init({ autoInject: true });
     await WB.scan(document.body, { eager: true });
     console.log('Card Components initialized');
+    window.__WB_DEMO_INITIALIZED__ = true;
   </script>
 </body>
 

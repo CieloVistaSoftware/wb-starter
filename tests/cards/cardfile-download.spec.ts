@@ -68,4 +68,17 @@ test.describe('wb-cardfile download', () => {
     await expect(card.locator('.wb-card__file-warning')).toBeVisible();
     await expect(card.locator('.wb-card__file-warning')).toHaveText(/no href/i);
   });
+
+  test('file-type attribute (the schema-declared name) picks the matching icon', async ({ page }) => {
+    // cardfile.schema.json declares this property as `fileType` (HTML attribute
+    // file-type=, per project convention -- every real demo/doc author used
+    // this spelling). The viewmodel only ever read the bare `type` attribute,
+    // which no real markup sets, so every card silently fell back to the
+    // generic file (📁) icon regardless of its declared file-type. Confirmed
+    // live: demos/site/cards.html's "fileType variants" section showed the
+    // identical folder icon for pdf/doc/image/video/audio/zip/file.
+    await inject(page, '<wb-cardfile file-type="image" filename="photo.jpg" href="/files/photo.jpg"></wb-cardfile>');
+    const icon = page.locator('#test-container wb-cardfile > span').first();
+    await expect(icon).toHaveText('🖼️');
+  });
 });

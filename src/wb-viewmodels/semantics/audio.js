@@ -98,7 +98,18 @@ export function audio(element, options = {}) {
   // MEDIA_ERR_SRC_NOT_SUPPORTED). Silently doing nothing here previously let
   // broken audio sources ship undetected (confirmed live: several <wb-audio>
   // instances pointed at empty placeholder files).
+  //
+  // audio() has no cleanup path: a second call on the same host (a lazy
+  // rebuild/re-scan re-running behaviors) replaces audioEl via
+  // element.innerHTML = '' without detaching this listener from the OLD
+  // element first. That old element's in-flight fetch gets torn down by the
+  // removal, and a late 'error' event on it (observed live as code 4,
+  // DEMUXER_ERROR_COULD_NOT_OPEN -- under concurrent load, never on a real
+  // single page visit; the file itself is intact) used to throw a false
+  // positive for a source nobody is looking at anymore. Only a still-attached
+  // element's error reflects something actually broken on screen.
   audioEl.addEventListener('error', () => {
+    if (!document.contains(audioEl)) return;
     const mediaError = audioEl.error;
     const reason = mediaError ? `code ${mediaError.code} (${mediaError.message || 'no message'})` : 'unknown';
     throw new Error(`wb-audio: failed to load src "${config.src}" -- ${reason}. The file is missing, unreachable, or has no real content (0 bytes).`);

@@ -10,9 +10,9 @@
  * -----------------------------------------------------------------------------
  * 
  * ARCHITECTURE:
- * - All card variants INHERIT from cardBase
+ * - All card variants compose the shared card structure
  * - Variants CONTAIN specialized content (images, profiles, etc.)
- * - Changes to cardBase propagate to ALL variants automatically
+ * - Shared structure changes propagate to ALL variants automatically
  * 
  * INHERITANCE: cardimage IS-A card
  * CONTAINMENT: cardimage HAS-A image (figure element)
@@ -139,10 +139,10 @@ function validateSemanticContainer(element, behaviorName) {
 }
 
 /**
- * Base Card
- * All variants inherit from this
+ * Shared Card Composition
+ * All variants compose this shared structure
  */
-export function cardBase(element, options = {}) {
+export function composeCard(element, options = {}) {
   // v3.0: Check if schema builder already processed this element
   // When true, DOM structure is already built from $view - we only add interactivity
   const schemaProcessed = options.schemaProcessed || element.getAttribute('x-schema');
@@ -714,7 +714,7 @@ export function card(element, options = {}) {
   // 3. Fallback to innerHTML (raw content mode)
   const initialContent = isSemantic ? '' : (hasContent || element.innerHTML);
 
-  const base = cardBase(element, { 
+  const base = composeCard(element, { 
     ...element.dataset, 
     ...options, 
     behavior: 'card',
@@ -753,7 +753,7 @@ export function cardimage(element, options = {}) {
     ...options
   };
 
-  const base = cardBase(element, { ...config, behavior: 'cardimage' });
+  const base = composeCard(element, { ...config, behavior: 'cardimage' });
   element.classList.add('wb-card-image');
   element.innerHTML = '';
 
@@ -818,7 +818,7 @@ export function cardvideo(element, options = {}) {
     ...options
   };
 
-  const base = cardBase(element, { ...config, behavior: 'cardvideo' });
+  const base = composeCard(element, { ...config, behavior: 'cardvideo' });
   element.classList.add('wb-card-video');
   element.innerHTML = '';
 
@@ -867,7 +867,7 @@ export function cardvideo(element, options = {}) {
  * Custom Tag: <card-button>
  */
 export function cardbutton(element, options = {}) {
-  // Use all inherited fields from cardBase, only add/override cardbutton-specific fields
+  // Compose shared card fields, then add cardbutton-specific fields.
   const config = {
     ...element.dataset,
     ...options,
@@ -878,7 +878,7 @@ export function cardbutton(element, options = {}) {
     behavior: 'cardbutton'
   };
 
-  const base = cardBase(element, config);
+  const base = composeCard(element, config);
   element.classList.add('wb-card-button');
   element.innerHTML = '';
   base.buildStructure();
@@ -952,12 +952,12 @@ export function cardhero(element, options = {}) {
     ...options
   };
 
-  const base = cardBase(element, { ...config, behavior: 'cardhero', hoverable: false });
+  const base = composeCard(element, { ...config, behavior: 'cardhero', hoverable: false });
   element.classList.add('wb-hero');
   if (config.variant && config.variant !== 'default') {
     element.classList.add(`wb-cardhero--${config.variant}`);
   }
-  // cardBase applies the default card surface (inline background:var(--bg-secondary)
+  // composeCard applies the default card surface (inline background:var(--bg-secondary)
   // + border). A hero owns its own full-bleed background, so clear those inline
   // props and let hero.css provide the rich default gradient (or the user's bg).
   element.style.removeProperty('background');
@@ -1096,11 +1096,11 @@ export function cardprofile(element, options = {}) {
   };
 
   // #283: hoverText/tooltip -> themed WB tooltip is handled once, generically,
-  // by cardBase() (it reads config.hoverText/config.tooltip straight off this
+  // by composeCard() (it reads config.hoverText/config.tooltip straight off this
   // same `config` object via the spread below) -- don't also set a native
   // `title` here, that would silently re-add the plain browser tooltip
-  // cardBase just wired the themed one to replace.
-  const base = cardBase(element, { ...config, behavior: 'cardprofile' });
+  // composeCard just wired the themed one to replace.
+  const base = composeCard(element, { ...config, behavior: 'cardprofile' });
   element.innerHTML = '';
 
   // Cover
@@ -1209,7 +1209,7 @@ export function cardpricing(element, options = {}) {
     ...options
   };
 
-  const base = cardBase(element, { ...config, behavior: 'cardpricing' });
+  const base = composeCard(element, { ...config, behavior: 'cardpricing' });
   element.classList.add('wb-pricing');
   element.innerHTML = '';
   element.style.textAlign = 'center';
@@ -1289,6 +1289,7 @@ export function cardpricing(element, options = {}) {
   const ctaBtn = document.createElement('a');
   ctaBtn.href = config.ctaHref;
   ctaBtn.className = 'wb-card__cta';
+  ctaBtn.style.cssText = 'display:block;padding:0.875rem;background:var(--primary,#6366f1);color:white;text-decoration:none;border-radius:8px;font-weight:600;transition:all 0.2s;text-align:center;';
   ctaBtn.textContent = config.cta;
   footer.appendChild(ctaBtn);
   
@@ -1313,7 +1314,7 @@ export function cardstats(element, options = {}) {
 
   // Defensive init: catch unexpected runtime errors to avoid killing the page
   try {
-    const base = cardBase(element, { ...config, behavior: 'cardstats', hoverable: false });
+    const base = composeCard(element, { ...config, behavior: 'cardstats', hoverable: false });
     element.classList.add('wb-stats');
     element.innerHTML = '';
     // Layout, container-query sizing, and default padding all live in
@@ -1401,7 +1402,7 @@ export function cardtestimonial(element, options = {}) {
     ...options
   };
 
-  const base = cardBase(element, { ...config, behavior: 'cardtestimonial', hoverable: false });
+  const base = composeCard(element, { ...config, behavior: 'cardtestimonial', hoverable: false });
   element.classList.add('wb-testimonial');
   element.innerHTML = '';
   element.style.padding = CARD_PADDING;
@@ -1484,12 +1485,12 @@ export function cardproduct(element, options = {}) {
     ...options
   };
 
-  // Map description to subtitle if subtitle is missing, so cardBase picks it up
+  // Map description to subtitle if subtitle is missing, so composeCard picks it up
   if (config.description && !config.subtitle) {
     config.subtitle = config.description;
   }
 
-  const base = cardBase(element, { ...config, behavior: 'cardproduct' });
+  const base = composeCard(element, { ...config, behavior: 'cardproduct' });
   element.classList.add('wb-product');
   element.innerHTML = '';
 
@@ -1506,7 +1507,7 @@ export function cardproduct(element, options = {}) {
 
     if (config.badge) {
       // cardproduct builds its own layout independently of
-      // cardBase().buildStructure() (which owns the shared header-badge
+      // composeCard().buildStructure() (which owns the shared header-badge
       // logic elsewhere in this file) -- it never calls that path, so the
       // badge has to render here or not at all (#380).
       const badgeEl = document.createElement('span');
@@ -1584,21 +1585,32 @@ export function cardproduct(element, options = {}) {
 
   // CTA button
   const ctaBtn = document.createElement('button');
+  ctaBtn.type = 'button';
   ctaBtn.className = 'wb-card__product-cta';
+  ctaBtn.style.cssText = 'width:100%;padding:0.75rem;background:var(--primary,#6366f1);color:white;border:none;border-radius:6px;font-weight:500;cursor:pointer;';
   ctaBtn.textContent = config.cta;
-  
-  // Dispatch event on click
-  ctaBtn.onclick = (e) => {
-    e.stopPropagation();
+
+  const addToCart = () => {
+    const detail = {
+      title: base.config.title,
+      price: config.price,
+      id: element.id
+    };
+
     element.dispatchEvent(new CustomEvent('wb:cardproduct:addtocart', {
       bubbles: true,
-      detail: {
-        title: base.config.title,
-        price: config.price,
-        id: element.id
-      }
+      detail
     }));
+
+    return detail;
   };
+
+  ctaBtn.onclick = (e) => {
+    e.stopPropagation();
+    addToCart();
+  };
+
+  element.wbCardProduct = { addToCart };
 
   info.appendChild(ctaBtn);
 
@@ -1747,7 +1759,13 @@ export function cardnotification(element, options = {}) {
 export function cardfile(element, options = {}) {
   const config = {
     filename: options.filename || element.dataset.filename || element.getAttribute('filename'),
-    type: options.type || element.dataset.type || element.getAttribute('type') || 'file',
+    // cardfile.schema.json declares this property as `fileType` (HTML
+    // attribute `file-type`, per project convention) -- reading the bare
+    // `type` attribute never matched any real markup (every demo/doc author
+    // used file-type=), so every card silently fell back to the generic
+    // 'file' icon regardless of its declared type. `type` kept as a
+    // fallback in case something out there authored it that way already.
+    type: options.type || element.dataset.fileType || element.getAttribute('file-type') || element.dataset.type || element.getAttribute('type') || 'file',
     size: options.size || element.dataset.size || element.getAttribute('size'),
     date: options.date || element.dataset.date || element.getAttribute('date'),
     downloadable: parseBoolean(options.downloadable) ?? (element.dataset.downloadable !== 'false' && element.getAttribute('downloadable') !== 'false'),
@@ -1757,7 +1775,7 @@ export function cardfile(element, options = {}) {
 
   const icons = { pdf: '📄', doc: '📝', image: '🖼️', video: '🎬', audio: '🎵', zip: '📦', file: '📁' };
 
-  const base = cardBase(element, { ...config, behavior: 'cardfile', hoverable: false });
+  const base = composeCard(element, { ...config, behavior: 'cardfile', hoverable: false });
   element.classList.add('wb-card-file');
   element.innerHTML = '';
   element.style.padding = CARD_PADDING;
@@ -1867,7 +1885,7 @@ export function cardlink(element, options = {}) {
     ...options
   };
 
-  const base = cardBase(element, { ...config, behavior: 'cardlink' });
+  const base = composeCard(element, { ...config, behavior: 'cardlink' });
   // Redundant when the host tag IS <wb-card-link> (#478) -- card.css matches
   // the tag directly there via :is(.wb-card-link, wb-card-link).
   if (element.tagName.toLowerCase() !== 'wb-card-link') element.classList.add('wb-card-link');
@@ -1979,7 +1997,7 @@ export function cardhorizontal(element, options = {}) {
     imageWidth: options.imageWidth || element.dataset.imageWidth || element.getAttribute('image-width') || '40%',
     // #455: unlike card()/cardimage()/cardvideo(), this never fell back to
     // element.innerHTML -- only a `content="..."` ATTRIBUTE worked (via
-    // cardBase's own generic getAttribute('content') fallback below). Any
+    // composeCard's own generic getAttribute('content') fallback below). Any
     // instance authored with plain inner text as its body (every example in
     // the permutation-matrix's "variant variants" / "imagePosition variants"
     // sections, tests/fixtures/cards-permutation-matrix.html) silently lost
@@ -1989,7 +2007,7 @@ export function cardhorizontal(element, options = {}) {
     ...options
   };
 
-  const base = cardBase(element, { ...config, behavior: 'cardhorizontal' });
+  const base = composeCard(element, { ...config, behavior: 'cardhorizontal' });
   element.classList.add('wb-card-horizontal');
   element.innerHTML = '';
   element.style.flexDirection = config.imagePosition === 'right' ? 'row-reverse' : 'row';
@@ -2055,14 +2073,14 @@ export function cardoverlay(element, options = {}) {
     gradient: parseBoolean(options.gradient) ?? (element.dataset.gradient !== 'false' && element.getAttribute('gradient') !== 'false'),
     height: options.height || element.dataset.height || element.getAttribute('height') || '300px',
     // Neither was ever read here before -- xalign only existed on cardhero
-    // (a different function), and variant only got cardBase's generic
+    // (a different function), and variant only got composeCard's generic
     // wb-card--{variant} class with no matching CSS for dark/light/blur.
     xalign: options.xalign || element.dataset.xalign || element.getAttribute('xalign') || 'left',
     variant: options.variant || element.dataset.variant || element.getAttribute('variant') || 'default',
     ...options
   };
 
-  const base = cardBase(element, { ...config, behavior: 'cardoverlay', hoverable: false });
+  const base = composeCard(element, { ...config, behavior: 'cardoverlay', hoverable: false });
   element.classList.add('wb-card-overlay');
   element.classList.add('wb-card--overlay-card');
   element.classList.add(`wb-card--overlay-${config.position}`);
@@ -2155,7 +2173,7 @@ export function cardexpandable(element, options = {}) {
     ...options
   };
 
-  const base = cardBase(element, { ...config, behavior: 'cardexpandable' });
+  const base = composeCard(element, { ...config, behavior: 'cardexpandable' });
   element.classList.add('wb-card-expandable');
   element.innerHTML = '';
 
@@ -2287,7 +2305,7 @@ export function cardminimizable(element, options = {}) {
     ...options
   };
 
-  const base = cardBase(element, { ...config, behavior: 'cardminimizable' });
+  const base = composeCard(element, { ...config, behavior: 'cardminimizable' });
   element.classList.add('wb-card-minimizable');
   element.classList.add('wb-card--minimizable'); // Explicitly add for compliance
   element.innerHTML = '';
@@ -2402,7 +2420,7 @@ export function carddraggable(element, options = {}) {
     ...options
   };
 
-  const base = cardBase(element, { ...config, behavior: 'carddraggable', hoverable: false });
+  const base = composeCard(element, { ...config, behavior: 'carddraggable', hoverable: false });
   element.classList.add('wb-card-draggable');
   
   element.innerHTML = '';
@@ -2662,7 +2680,7 @@ export function cardportfolio(element, options = {}) {
     ...options
   };
 
-  const base = cardBase(element, { ...config, behavior: 'cardportfolio', hoverable: false });
+  const base = composeCard(element, { ...config, behavior: 'cardportfolio', hoverable: false });
   element.classList.add('wb-portfolio');
   if (config.variant !== 'default') {
     element.classList.add(`wb-portfolio--${config.variant}`);
