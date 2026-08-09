@@ -164,7 +164,12 @@
         const md = row.querySelector('wb-mdhtml');
         if (md && !md.dataset.rendered && window.WB) {
           md.dataset.rendered = '1';
-          await window.WB.inject(md, 'mdhtml');
+          // autoLiveRender: false -- issue bodies are arbitrary/untrusted
+          // author text, not curated docs. Without this, a body that merely
+          // ILLUSTRATES a <wb-*>/x-* example (like #527, describing this
+          // exact bug) gets that example auto-promoted into a real, live,
+          // fetching/executing element on this page.
+          await window.WB.inject(md, 'mdhtml', { autoLiveRender: false });
         }
       });
     });

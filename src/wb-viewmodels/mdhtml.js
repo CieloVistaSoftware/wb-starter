@@ -140,6 +140,15 @@ export async function mdhtml(element, options = {}) {
     headerIds: options.headerIds ?? (element.getAttribute('header-ids') !== 'false'),
     highlight: options.highlight ?? element.getAttribute('highlight'),
     size: options.size || element.getAttribute('size') || 'xs',
+    // Auto-live-render (below) was built for CURATED docs content, where a
+    // maintainer wrote and vetted every embedded ```html example. Default
+    // true keeps that doc-viewer.html behavior unchanged. Anything rendering
+    // ARBITRARY/untrusted markdown (a GitHub issue body, a user comment) must
+    // opt out -- confirmed live: issue #527's own body text illustrating
+    // this exact bug (a fenced `<wb-mdhtml src="/docs/guide.md">` example)
+    // got auto-promoted to a real, live, fetching element on pages/issues.html,
+    // reproducing the very 404 the issue was reporting.
+    autoLiveRender: options.autoLiveRender ?? (element.getAttribute('auto-live-render') !== 'false'),
     ...options
   };
 
@@ -411,7 +420,7 @@ export async function mdhtml(element, options = {}) {
     // here -- this markup only ever exists in the fetched markdown, never
     // in doc-viewer.html's own static source), so the auto-generated code
     // panel still shows the exact source correctly without any extra work.
-    element.querySelectorAll('pre > code').forEach(code => {
+    if (config.autoLiveRender) element.querySelectorAll('pre > code').forEach(code => {
         const pre = code.parentElement;
         if (pre.closest('wb-demo')) return; // already inside a real wb-demo block
         const isHtmlLang = /\blanguage-html\b/.test(code.className) || (!code.className && /^\s*</.test(code.textContent || ''));
