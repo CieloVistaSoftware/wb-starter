@@ -12,7 +12,16 @@ const __dirname = path.dirname(__filename);
 
 const app = express();
 const port = process.env.PORT || 3000;
-const WS_PORT = 3001;
+// #518: derived from `port`, not a second independent hardcode -- an
+// isolated test run on a non-default PORT (WB_TEST_PORT in
+// playwright.config.ts) previously always collided with WHATEVER server
+// already held 3001 (normally the main checkout's own live-reload
+// socket), live-reload degrading silently instead of actually using its
+// own isolated port the way the whole point of the override intended.
+// Number(port) first -- `port` can be the STRING from process.env.PORT,
+// and `+ 1` on a string is concatenation ("3995" + 1 -> "39951"), not
+// arithmetic.
+const WS_PORT = Number(port) + 1;
 
 // Define project root (current directory)
 const rootDir = __dirname;

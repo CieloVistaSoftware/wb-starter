@@ -54,6 +54,29 @@ const complianceCategories: Record<string, string[]> = JSON.parse(
  * └─────────────────────────────────────────────────────────────────┘
  */
 
+// #518: this file used to hardcode port 3000 + reuseExistingServer:true
+// unconditionally. Any Playwright run started from a git worktree (every
+// background agent) silently reused whatever server already held port
+// 3000 -- normally the owner's own dev server running the MAIN checkout --
+// so an agent verified its fix against code that didn't contain its fix.
+// That produced false results in both directions: a correct fix reported
+// as still-broken (old code served), and a broken fix reported as passing
+// (someone else's fix served). Confirmed live this session: a stale,
+// locally-uncommitted demos/site/feedback.html in the main checkout made
+// an already-fixed test (#510) look freshly broken the moment a second
+// server got started on port 3000 for unrelated verification.
+//
+// WB_TEST_PORT lets a run opt into its own isolated port -- reused as the
+// server's own PORT env (server.js:14 already honors process.env.PORT),
+// so `command: 'npm start'` boots on the SAME port baseURL/webServer.port
+// expect, not the hardcoded default. reuseExistingServer only stays true
+// on the default port 3000 (matching the CI contract in the comment
+// below, where ci-tests.yml starts the server itself); any other port
+// ALWAYS gets its own fresh server, since reusing a foreign server on a
+// non-default port would silently defeat the whole point of asking for
+// isolation in the first place.
+const TEST_PORT = Number(process.env.WB_TEST_PORT) || 3000;
+
 export default defineConfig({
   testDir: './tests',
   outputDir: './data/test-results',
@@ -75,23 +98,25 @@ export default defineConfig({
   },
   
   use: {
-    baseURL: 'http://localhost:3000',
+    baseURL: `http://localhost:${TEST_PORT}`,
     trace: 'off',
   },
-  
+
   // Web server - automatically starts before tests.
-  // reuseExistingServer must be true even in CI: ci-tests.yml starts the
-  // server itself (node server.js &) before invoking Playwright, so Playwright
-  // must reuse it rather than trying to bind port 3000 a second time (which
-  // fails with "port 3000 is already used"). When no server is running
-  // (e.g. ci-compliance.yml), Playwright still starts one via `command`.
+  // reuseExistingServer must be true on the DEFAULT port even in CI:
+  // ci-tests.yml starts the server itself (node server.js &) before
+  // invoking Playwright, so Playwright must reuse it rather than trying to
+  // bind port 3000 a second time (which fails with "port 3000 is already
+  // used"). When no server is running (e.g. ci-compliance.yml), Playwright
+  // still starts one via `command`. A WB_TEST_PORT override never reuses --
+  // see the #518 comment above.
   webServer: {
     command: 'npm start',
-    port: 3000,
-    reuseExistingServer: true,
+    port: TEST_PORT,
+    reuseExistingServer: TEST_PORT === 3000,
     timeout: 10000,
     // Never pop a browser when Playwright starts the dev server for tests.
-    env: { WB_NO_OPEN: '1' },
+    env: { WB_NO_OPEN: '1', PORT: String(TEST_PORT) },
   },
   
   projects: [
