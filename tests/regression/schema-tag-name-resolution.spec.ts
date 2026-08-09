@@ -54,7 +54,10 @@ test.describe('Schema-driven tags resolve to a real, class-bearing element', () 
       page,
       '<wb-articles title="Recent"><wb-article title="One">A</wb-article><wb-article title="Two">B</wb-article></wb-articles>'
     );
-    await expect(el).toHaveClass(/wb-articles/);
+    // Not toHaveClass(/wb-articles/) on el -- a real <wb-articles> tag must NOT
+    // also carry a same-named class (no-redundant-tag-name-class.spec.ts).
+    // The structural check below proves articles() actually ran instead.
+    await expect(el.locator('.wb-articles__list')).toBeVisible();
     await expect(el.locator('wb-article')).toHaveCount(2);
   });
 });

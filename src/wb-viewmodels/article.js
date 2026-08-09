@@ -135,15 +135,13 @@ export function articles(element, options = {}) {
   const body = takeChildren(element);
 
   // #448 dropped the bare 'wb-articles' class on the assumption no CSS
-  // selector needed it. #521 fixed the analogous gap in chip() (feedback.js)
-  // by guarding classList.add() behind a tag-name check -- but that guard
-  // only makes sense where the CSS itself has a bare TAG selector (chip.css
-  // has `wb-chip {}`) that a same-named class would duplicate on a real
-  // <wb-chip>. article.css has no such `wb-articles {}` tag selector (only
-  // `.wb-articles__*` parts and `.wb-articles--{layout}` modifiers), so
-  // there's nothing for the class to be redundant with -- every consumer,
-  // real <wb-articles> tag included, needs the class unconditionally.
-  element.classList.add('wb-articles');
+  // selector needed it. #523 re-added it unconditionally to satisfy a
+  // schema-built (non-<wb-articles>-tagged) host, but that broke
+  // no-redundant-tag-name-class.spec.ts on real <wb-articles> tags
+  // (demos/site/content.html) -- same shape chip()'s #521 guard exists
+  // to prevent (feedback.js). Applying that same tag-name guard here:
+  // only a host whose tag ISN'T already wb-articles needs the class.
+  if (element.tagName.toLowerCase() !== 'wb-articles') element.classList.add('wb-articles');
 
   if (title) {
     const header = document.createElement('header');
