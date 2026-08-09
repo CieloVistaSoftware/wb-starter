@@ -1289,7 +1289,6 @@ export function cardpricing(element, options = {}) {
   const ctaBtn = document.createElement('a');
   ctaBtn.href = config.ctaHref;
   ctaBtn.className = 'wb-card__cta';
-  ctaBtn.style.cssText = 'display:block;padding:0.875rem;background:var(--primary,#6366f1);color:white;text-decoration:none;border-radius:8px;font-weight:600;transition:all 0.2s;text-align:center;';
   ctaBtn.textContent = config.cta;
   footer.appendChild(ctaBtn);
   
@@ -1586,7 +1585,6 @@ export function cardproduct(element, options = {}) {
   // CTA button
   const ctaBtn = document.createElement('button');
   ctaBtn.className = 'wb-card__product-cta';
-  ctaBtn.style.cssText = 'width:100%;padding:0.75rem;background:var(--primary,#6366f1);color:white;border:none;border-radius:6px;font-weight:500;cursor:pointer;';
   ctaBtn.textContent = config.cta;
   
   // Dispatch event on click
