@@ -349,7 +349,17 @@ export function chip(element, options = {}) {
  * CSS: src/styles/behaviors/alert.css
  */
 export function alert(element, options = {}) {
-  const variant = options.variant || element.getAttribute('variant') || 'info';
+  // alert.schema.json declares variant.aliases = ["type"] (#176) so the
+  // schema-driven path (schema-builder.js's extractData) already honors
+  // type= as a stand-in for variant=. This behavior is also dispatched
+  // DIRECTLY (wb.js's [x-alert] shorthand, and the wb-* tag auto-inject
+  // loop) with no options -- that path only ever read the literal
+  // `variant` attribute, so a `<div x-alert type="warning">` still fell
+  // through to the 'info' default here despite the schema class already
+  // being resolved to wb-alert--warning, leaving two conflicting variant
+  // classes on the same element. Reading `type` as a fallback keeps this
+  // direct path consistent with the schema's own alias contract.
+  const variant = options.variant || element.getAttribute('variant') || element.getAttribute('type') || 'info';
   const message = options.message || element.getAttribute('message') || '';
   const title = options.title || element.getAttribute('title') || '';
   const dismissible = options.dismissible ?? element.hasAttribute('dismissible');

@@ -91,7 +91,7 @@
     <wb-demo><label class="selection-label"><input type="checkbox" disabled> Disabled</label></wb-demo>
 
     <h3>Radio Buttons</h3>
-    <wb-demo>
+    <wb-demo data-code-width="narrow">
       <label class="selection-label"><input type="radio" name="demo-radio" checked> Option A</label>
       <label class="selection-label"><input type="radio" name="demo-radio"> Option B</label>
       <label class="selection-label"><input type="radio" name="demo-radio"> Option C</label>
@@ -125,8 +125,15 @@
   <section id="feedback">
     <h2>📢 Feedback</h2>
     <div class="section-note">
-      <strong>Feedback behaviors:</strong> Feedback behaviors: Toast notifications. (Alerts, badges, progress bars, and spinners are wb-* components — see <a href="?page=components">Components</a>.)
+      <strong>Feedback behaviors:</strong> Feedback behaviors: Alerts (attribute-decorated, via x-alert) and toast notifications. (Badges, progress bars, and spinners are wb-* components — see <a href="?page=components">Components</a>.)
     </div>
+
+    <h3>Alerts</h3>
+    <wb-demo><div x-alert type="info" message="Info alert message"></div></wb-demo>
+    <wb-demo><div x-alert type="success" message="Success alert message"></div></wb-demo>
+    <wb-demo><div x-alert type="warning" message="Warning alert message"></div></wb-demo>
+    <wb-demo><div x-alert type="error" message="Error alert message"></div></wb-demo>
+    <wb-demo><div x-alert type="info" title="Dismissible" message="Click the × to dismiss this alert" dismissible></div></wb-demo>
 
     <h3>Toast Notifications</h3>
     <wb-demo><button variant="primary" x-toast message="Info message" toast-variant="info">Info Toast</button></wb-demo>
