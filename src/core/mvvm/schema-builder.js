@@ -670,10 +670,22 @@ export function getMethods(schemaName) {
  * @returns {Object} Processing result with schema and data
  */
 export function processElement(element, schemaName = null) {
+  // Explicit opt-out, checked once here (the single entry point every
+  // caller funnels through -- scan(), the MutationObserver, and wb.js's own
+  // processSchema() all end up here, some passing an explicit schemaName
+  // that bypasses detectSchema()). Mirrors wb.js's native-tag autoInject
+  // skip (`x-ignore`, wb.js:204) -- previously never wired into this file
+  // at all, so <wb-card x-ignore> was fully built and injected despite the
+  // attribute (found auditing #521). One opt-out covers both the native
+  // and schema-driven paths; no separate attribute needed.
+  if (element.hasAttribute('x-ignore')) {
+    return { skipped: true, reason: 'x-ignore' };
+  }
+
   if (processedElements.has(element)) {
     return { skipped: true, reason: 'already processed' };
   }
-  
+
   const name = schemaName || detectSchema(element);
   dlog(`[Schema Builder] Processing element: ${element.tagName}, detected schema: ${name}`);
   if (!name) {
@@ -879,6 +891,28 @@ const SCHEMA_EXCLUDED_TAGS = new Set([
   'wb-cardprofile', 'wb-cardstats', 'wb-cardtestimonial', 'wb-fix-card'
 ]);
 
+// x-{name} attribute matching a registered schema: <article x-card> resolves
+// the same as <wb-card>. Same dynamically-named boolean-attribute convention
+// wb.js's native-tag autoInject already uses for behaviors (x-ripple,
+// x-password, ... -- wb.js:229's `${prefix}-${candidate}` check). Dual-
+// maintained alongside tag detection indefinitely, by design -- see
+// docs/architecture/proposals/remove-wb-prefix-authoring-surface.md. Neither
+// form is deprecated; both keep resolving to the same schema.
+//
+// x-behavior/x-ignore/x-schema are meta-attributes with their own separate
+// meaning (generic dispatch, opt-out, and "already processed" marking
+// respectively) and must never be misread as a schema-name attribute.
+const META_X_ATTRIBUTES = new Set(['x-behavior', 'x-ignore', 'x-schema']);
+
+function detectXAttributeSchema(element) {
+  for (const attr of element.attributes) {
+    if (!attr.name.startsWith('x-') || META_X_ATTRIBUTES.has(attr.name)) continue;
+    const name = attr.name.slice(2);
+    if (schemaRegistry.has(name)) return name;
+  }
+  return null;
+}
+
 function detectSchema(element) {
   const tagName = element.tagName.toLowerCase();
 
@@ -896,17 +930,8 @@ function detectSchema(element) {
     return schemaRegistry.has(derived) ? derived : null;
   }
 
-  // 2. Data attribute:
-  const dataWb = element.tagName.toLowerCase().startsWith('wb-');
-  if (dataWb) {
-    const behaviors = dataWb.split(/\s+/);
-    for (const b of behaviors) {
-      if (schemaRegistry.has(b)) return b;
-    }
-  }
-
-  // NO class detection - classes are for CSS only
-  return null;
+  // 2. x-{name} attribute on any other tag (see comment above).
+  return detectXAttributeSchema(element);
 }
 
 // =============================================================================
@@ -917,20 +942,24 @@ function detectSchema(element) {
  * Scan DOM for elements to process
  */
 export function scan(root = document.body) {
-  // Find wb-* tags
-  const wbTags = root.querySelectorAll('[class^="wb-"], [class*=" wb-"]');
-  
   for (const el of root.querySelectorAll('*')) {
     const tag = el.tagName.toLowerCase();
-    
+
     // Process wb-* tags (not wb-view)
     if (tag.startsWith('wb-') && tag !== 'wb-view') {
       processElement(el);
       continue;
     }
-    
+
     // Process x-behavior elements
     if (el.hasAttribute('x-behavior')) {
+      processElement(el);
+      continue;
+    }
+
+    // Process x-{name} attribute elements (dual-maintained alongside wb-*
+    // tags -- see detectXAttributeSchema()'s comment).
+    if (detectXAttributeSchema(el)) {
       processElement(el);
     }
   }
@@ -951,15 +980,19 @@ export function startObserver() {
         if (node.nodeType !== Node.ELEMENT_NODE) continue;
         
         const tag = node.tagName?.toLowerCase();
-        
+
         if (tag?.startsWith('wb-') && tag !== 'wb-view') {
           processElement(node);
         }
-        
+
         if (node.hasAttribute?.('x-behavior')) {
           processElement(node);
         }
-        
+
+        if (node.attributes && detectXAttributeSchema(node)) {
+          processElement(node);
+        }
+
         if (node.querySelectorAll) {
           scan(node);
         }

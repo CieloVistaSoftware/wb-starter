@@ -16,6 +16,9 @@ import * as path from 'path';
  *     documented API for <wb-accordion>/<wb-tabs> child items).
  *   - data-variant : a CSS attribute-selector hook (src/styles/behaviors/input.css,
  *     issue #133), not a JS-read config attribute.
+ *   - data-code-width : a CSS attribute-selector hook (src/styles/behaviors/demo.css,
+ *     Standard §28), same category as data-variant -- controls the demo's
+ *     code-panel width preset, never read by JS.
  *
  * To fix violations: run `node scripts/migrate-legacy-attrs.mjs <page>` (a codemod
  * with per-behavior verified mappings), or add a genuinely-structural attribute
@@ -25,6 +28,7 @@ const ALLOWED = new Set([
   'data-accordion-title',
   'data-tab-title',
   'data-variant',
+  'data-code-width',
 ]);
 
 // Live pages only. behaviors.html / newbehaviors.html are archived legacy dumps.

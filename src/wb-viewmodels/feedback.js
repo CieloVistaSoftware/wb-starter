@@ -297,8 +297,15 @@ export function chip(element, options = {}) {
   const variant = options.variant || element.getAttribute('variant') || 'default';
   const size = options.size || element.getAttribute('size') || 'md';
 
-  // #448: no classList.add('wb-chip') -- chip.css selects the `wb-chip` TAG
-  // directly now, so the class just duplicated the tag name.
+  // #448 made this tag-only ("chip.css selects the wb-chip TAG directly
+  // now") on the assumption chip() only ever runs on a real <wb-chip>. #521
+  // adds a second authoring form -- <span x-chip> -- where the tag ISN'T
+  // wb-chip, so chip.css's bare `wb-chip {}` selector can't reach it at
+  // all without the class. Same guard buildStructure() already uses
+  // (schema-builder.js) for the identical reason: skip only when the tag
+  // itself already IS the base class, to avoid #478's redundant-class
+  // violation on real <wb-chip> elements.
+  if (element.tagName.toLowerCase() !== 'wb-chip') element.classList.add('wb-chip');
   element.classList.toggle(`wb-chip--${variant}`, variant !== 'default');
   element.classList.toggle(`wb-chip--${size}`, size !== 'md');
   element.classList.toggle('wb-chip--outlined', outlined);

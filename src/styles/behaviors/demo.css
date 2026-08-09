@@ -91,6 +91,24 @@ wb-demo[data-code-width="50vw"] .wb-demo__code {
   max-width: 50vw;
 }
 
+/* #486's single-item shrink-to-fit (--wb-demo-shrink-width, above) sizes the
+   WHOLE demo -- code panel included, since .wb-demo__code is width:100% of
+   its wb-demo parent -- to the rendered control's own natural width. For a
+   small control (a plain text <wb-card>, ~250-340px) that leaves the code
+   panel just as cramped as the control, even though .wb-demo__code's own
+   max-width already allows up to 50vw -- a max-width can never make an
+   element WIDER than its constrained parent, only narrower. min-width on
+   the wb-demo itself is what actually lets the code panel reach the
+   requested width: min-width always wins over the JS-set `width` in the
+   box model, so the demo (and everything width:100% inside it) grows to
+   50vw regardless of how narrow the control's own shrink-measurement was.
+   Confirmed live: pages/components.html's "This is the title" card demo
+   was rendering source at ~250px with a horizontal scrollbar cutting off
+   every attribute value mid-word. */
+wb-demo[data-code-width="50vw"] {
+  min-width: 50vw;
+}
+
 .wb-demo__grid--cols-1 { grid-template-columns: 1fr; }
 
 /* justify-items: start (not the grid default `stretch`), single-item grids

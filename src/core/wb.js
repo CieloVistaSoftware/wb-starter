@@ -295,6 +295,22 @@ const WB = {
       return null;
     }
 
+    // Explicit opt-out, checked once here rather than at every individual
+    // caller. getAutoInjectBehavior() (line ~204) already checks this for
+    // the native-tag autoInject GUESS path, but scan()'s unconditional
+    // wb-* tag behavior loop (line ~696), the semantic-property loop
+    // (~714), and the generic x-behavior dispatch loop (~751) all call
+    // WB.inject() directly and never went through that check -- so
+    // <wb-chip x-ignore> (or any x-ignore'd element reached by those
+    // unconditional loops) still got its behavior injected despite the
+    // attribute (found auditing #521, alongside the identical gap in
+    // schema-builder.js's processElement()). WB.inject() is the one real
+    // choke point every path funnels through, native or schema-driven, so
+    // this is the single place the opt-out is guaranteed to actually stick.
+    if (element.hasAttribute('x-ignore')) {
+      return null;
+    }
+
     // Check if behavior exists
     if (!behaviors[behaviorName]) {
       // Not all schemas have behaviors - that's OK

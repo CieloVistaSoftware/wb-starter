@@ -1,5 +1,5 @@
 {
-  "generated": "2026-08-08T18:49:19.602Z",
+  "generated": "2026-08-08T19:24:10.065Z",
   "total": 84,
   "withDemo": 36,
   "withoutDemo": 48,
@@ -52,7 +52,7 @@
       "tag": "audio",
       "docPath": "docs/components/semantics/audio.md",
       "demoPage": "components",
-      "demoAnchor": "component-audio"
+      "demoAnchor": null
     },
     {
       "name": "avatar",
@@ -62,7 +62,7 @@
       "tag": "wb-avatar",
       "docPath": "docs/components/feedback/avatar.md",
       "demoPage": "components",
-      "demoAnchor": "component-avatar"
+      "demoAnchor": null
     },
     {
       "name": "badge",
@@ -72,7 +72,7 @@
       "tag": "wb-badge",
       "docPath": "docs/components/feedback/badge.md",
       "demoPage": "components",
-      "demoAnchor": "component-badge"
+      "demoAnchor": null
     },
     {
       "name": "blockquote",
@@ -92,7 +92,7 @@
       "tag": "wb-button",
       "docPath": "docs/components/forms/button.md",
       "demoPage": "components",
-      "demoAnchor": "component-button"
+      "demoAnchor": null
     },
     {
       "name": "button",
@@ -102,7 +102,7 @@
       "tag": "button",
       "docPath": "docs/components/semantics/button.md",
       "demoPage": "components",
-      "demoAnchor": "component-button"
+      "demoAnchor": null
     },
     {
       "name": "card",
@@ -112,7 +112,7 @@
       "tag": "wb-card",
       "docPath": "docs/components/cards/card.md",
       "demoPage": "components",
-      "demoAnchor": "component-card"
+      "demoAnchor": null
     },
     {
       "name": "card",
@@ -122,7 +122,7 @@
       "tag": "wb-card",
       "docPath": "docs/components/forms/card.md",
       "demoPage": "components",
-      "demoAnchor": "component-card"
+      "demoAnchor": null
     },
     {
       "name": "cardbutton",
@@ -162,7 +162,7 @@
       "tag": "wb-cardfile",
       "docPath": "docs/components/cards/cardfile.md",
       "demoPage": "components",
-      "demoAnchor": "component-cardfile"
+      "demoAnchor": null
     },
     {
       "name": "cardhero",
@@ -172,7 +172,7 @@
       "tag": "wb-cardhero",
       "docPath": "docs/components/cards/cardhero.md",
       "demoPage": "components",
-      "demoAnchor": "component-cardhero"
+      "demoAnchor": null
     },
     {
       "name": "cardhorizontal",
@@ -182,7 +182,7 @@
       "tag": "wb-cardhorizontal",
       "docPath": "docs/components/cards/cardhorizontal.md",
       "demoPage": "components",
-      "demoAnchor": "component-cardhorizontal"
+      "demoAnchor": null
     },
     {
       "name": "cardimage",
@@ -192,7 +192,7 @@
       "tag": "wb-cardimage",
       "docPath": "docs/components/cards/cardimage.md",
       "demoPage": "components",
-      "demoAnchor": "component-cardimage"
+      "demoAnchor": null
     },
     {
       "name": "cardlink",
@@ -202,7 +202,7 @@
       "tag": "wb-cardlink",
       "docPath": "docs/components/cards/cardlink.md",
       "demoPage": "components",
-      "demoAnchor": "component-cardlink"
+      "demoAnchor": null
     },
     {
       "name": "cardminimizable",
@@ -222,7 +222,7 @@
       "tag": "wb-cardnotification",
       "docPath": "docs/components/cards/cardnotification.md",
       "demoPage": "components",
-      "demoAnchor": "component-cardnotification"
+      "demoAnchor": null
     },
     {
       "name": "cardoverlay",
@@ -232,7 +232,7 @@
       "tag": "wb-cardoverlay",
       "docPath": "docs/components/cards/cardoverlay.md",
       "demoPage": "components",
-      "demoAnchor": "component-cardoverlay"
+      "demoAnchor": null
     },
     {
       "name": "cardportfolio",
@@ -242,7 +242,7 @@
       "tag": "wb-cardportfolio",
       "docPath": "docs/components/cards/cardportfolio.md",
       "demoPage": "components",
-      "demoAnchor": "component-cardportfolio"
+      "demoAnchor": null
     },
     {
       "name": "cardpricing",
@@ -252,7 +252,7 @@
       "tag": "wb-cardpricing",
       "docPath": "docs/components/cards/cardpricing.md",
       "demoPage": "components",
-      "demoAnchor": "component-cardpricing"
+      "demoAnchor": null
     },
     {
       "name": "cardproduct",
@@ -262,7 +262,7 @@
       "tag": "wb-cardproduct",
       "docPath": "docs/components/cards/cardproduct.md",
       "demoPage": "components",
-      "demoAnchor": "component-cardproduct"
+      "demoAnchor": null
     },
     {
       "name": "cardprofile",
@@ -292,7 +292,7 @@
       "tag": "wb-cardtestimonial",
       "docPath": "docs/components/cards/cardtestimonial.md",
       "demoPage": "components",
-      "demoAnchor": "component-cardtestimonial"
+      "demoAnchor": null
     },
     {
       "name": "cardvideo",
@@ -302,7 +302,7 @@
       "tag": "wb-cardvideo",
       "docPath": "docs/components/cards/cardvideo.md",
       "demoPage": "components",
-      "demoAnchor": "component-cardvideo"
+      "demoAnchor": null
     },
     {
       "name": "center",
@@ -412,7 +412,7 @@
       "tag": "details",
       "docPath": "docs/components/semantic/details.md",
       "demoPage": "components",
-      "demoAnchor": "component-details"
+      "demoAnchor": null
     },
     {
       "name": "details",
@@ -422,7 +422,7 @@
       "tag": "details",
       "docPath": "docs/components/semantics/details.md",
       "demoPage": "components",
-      "demoAnchor": "component-details"
+      "demoAnchor": null
     },
     {
       "name": "dialog",
@@ -452,7 +452,7 @@
       "tag": "wb-drawer",
       "docPath": "docs/components/drawer.md",
       "demoPage": "components",
-      "demoAnchor": "component-drawer"
+      "demoAnchor": null
     },
     {
       "name": "figure",
@@ -552,7 +552,7 @@
       "tag": "wb-input",
       "docPath": "docs/components/forms/input.md",
       "demoPage": "components",
-      "demoAnchor": "component-input"
+      "demoAnchor": null
     },
     {
       "name": "input",
@@ -562,7 +562,7 @@
       "tag": "input",
       "docPath": "docs/components/semantics/input.md",
       "demoPage": "components",
-      "demoAnchor": "component-input"
+      "demoAnchor": null
     },
     {
       "name": "list",
@@ -622,7 +622,7 @@
       "tag": "wb-progress",
       "docPath": "docs/components/feedback/progress.md",
       "demoPage": "components",
-      "demoAnchor": "component-progress"
+      "demoAnchor": null
     },
     {
       "name": "progress",
@@ -632,7 +632,7 @@
       "tag": "progress",
       "docPath": "docs/components/semantics/progress.md",
       "demoPage": "components",
-      "demoAnchor": "component-progress"
+      "demoAnchor": null
     },
     {
       "name": "radio",
@@ -692,7 +692,7 @@
       "tag": "wb-select",
       "docPath": "docs/components/forms/select.md",
       "demoPage": "components",
-      "demoAnchor": "component-select"
+      "demoAnchor": null
     },
     {
       "name": "select",
@@ -732,7 +732,7 @@
       "tag": "wb-spinner",
       "docPath": "docs/components/feedback/spinner.md",
       "demoPage": "components",
-      "demoAnchor": "component-spinner"
+      "demoAnchor": null
     },
     {
       "name": "sticky",
@@ -792,7 +792,7 @@
       "tag": "wb-tabs",
       "docPath": "docs/components/tabs.md",
       "demoPage": "components",
-      "demoAnchor": "component-tabs"
+      "demoAnchor": null
     },
     {
       "name": "textarea",
