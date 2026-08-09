@@ -1,0 +1,392 @@
+/**
+ * Components Page Tests
+ * Comprehensive tests for the /pages/components.html showcase page
+ */
+import { test, expect } from '@playwright/test';
+
+test.describe('Components Page', () => {
+  
+  test.beforeEach(async ({ page }) => {
+    await page.goto('http://localhost:3000/pages/components.html');
+    // Wait for WB to initialize
+    await page.waitForTimeout(500);
+  });
+
+  // =========================================================================
+  // PAGE STRUCTURE
+  // =========================================================================
+  test.describe('Page Structure', () => {
+    
+    test('page loads successfully', async ({ page }) => {
+      await expect(page).toHaveURL(/components/);
+      const content = page.locator('.page__hero');
+      await expect(content).toBeVisible();
+    });
+
+    test('has hero section with title', async ({ page }) => {
+      const hero = page.locator('.page__hero');
+      await expect(hero).toBeVisible();
+      await expect(hero.locator('h1')).toContainText('Components Library');
+    });
+
+    test('has all major sections', async ({ page }) => {
+      const sections = [
+        'Cards',
+        'Feedback Components',
+        'Overlays & Dialogs',
+        'Navigation',
+        'Form Components',
+        'Data Display',
+        'Media',
+        'Utilities'
+      ];
+      
+      for (const section of sections) {
+        const heading = page.locator(`h2:has-text("${section}")`);
+        await expect(heading).toBeVisible();
+      }
+    });
+  });
+
+  // =========================================================================
+  // CARDS SECTION
+  // =========================================================================
+  test.describe('Cards Section', () => {
+    
+    test('basic cards render correctly', async ({ page }) => {
+      const basicCard = page.locator('basic-card[title="Basic Card"]');
+      await expect(basicCard).toBeVisible();
+    });
+
+    test('card with header and footer renders', async ({ page }) => {
+      const card = page.locator('basic-card[title="With Footer"][footer="Card Footer"]');
+      await expect(card).toBeVisible();
+    });
+
+    test('image-card renders', async ({ page }) => {
+      const imageCard = page.locator('image-card').first();
+      await expect(imageCard).toBeVisible();
+    });
+
+    test('overlay-card renders correctly', async ({ page }) => {
+      const overlayCard = page.locator('overlay-card');
+      await expect(overlayCard).toBeVisible();
+    });
+
+    test('stats-card (stock indicators) render', async ({ page }) => {
+      const statsCards = page.locator('stats-card');
+      await expect(statsCards).toHaveCount(4); 
+    });
+
+    test('price-card renders with features', async ({ page }) => {
+      const pricingCards = page.locator('price-card');
+      await expect(pricingCards.first()).toBeVisible();
+    });
+
+    test('product-card renders', async ({ page }) => {
+      const productCards = page.locator('product-card');
+      expect(await productCards.count()).toBeGreaterThan(0);
+    });
+
+    test('testimonial-card renders', async ({ page }) => {
+      const testimonialCards = page.locator('testimonial-card');
+      await expect(testimonialCards.first()).toBeVisible();
+    });
+
+    test('notification-card renders all types', async ({ page }) => {
+      const notificationCards = page.locator('notification-card');
+      await expect(notificationCards).toHaveCount(4); // info, success, warning, error
+    });
+
+    test('file-card renders', async ({ page }) => {
+      const fileCards = page.locator('file-card');
+      expect(await fileCards.count()).toBeGreaterThan(0);
+    });
+
+    test('portfolio-card (business cards) render', async ({ page }) => {
+      const portfolioCards = page.locator('portfolio-card');
+      await expect(portfolioCards).toHaveCount(1);
+    });
+  });
+
+  // =========================================================================
+  // FEEDBACK SECTION
+  // =========================================================================
+  test.describe('Feedback Section', () => {
+    
+    test('badges render with variants', async ({ page }) => {
+      const badges = page.locator('wb-badge');
+      expect(await badges.count()).toBeGreaterThan(0);
+    });
+
+    test('alerts render all types', async ({ page }) => {
+      const alerts = page.locator('wb-alert');
+      await expect(alerts).toHaveCount(4); // info, success, warning, error
+    });
+
+    test('progress bars render', async ({ page }) => {
+      const progressBars = page.locator('wb-progress');
+      await expect(progressBars).toHaveCount(4);
+    });
+
+    test('spinners render with colors', async ({ page }) => {
+      const spinners = page.locator('wb-spinner');
+      expect(await spinners.count()).toBeGreaterThan(0);
+    });
+
+    test('avatars render', async ({ page }) => {
+      const avatars = page.locator('wb-avatar');
+      expect(await avatars.count()).toBeGreaterThan(0);
+    });
+
+    test('skeleton loaders render', async ({ page }) => {
+      const skeletons = page.locator('wb-skeleton');
+      expect(await skeletons.count()).toBeGreaterThan(0);
+    });
+
+    test('toast buttons exist', async ({ page }) => {
+      const toastButtons = page.locator('button[x-toast]');
+      expect(await toastButtons.count()).toBeGreaterThan(0);
+    });
+  });
+
+  // =========================================================================
+  // OVERLAYS SECTION
+  // =========================================================================
+  test.describe('Overlays Section', () => {
+    
+    test('modal trigger button exists', async ({ page }) => {
+      const modalBtn = page.locator('wb-modal');
+      await expect(modalBtn).toBeVisible();
+    });
+
+    test('drawer trigger buttons exist', async ({ page }) => {
+      const drawerBtns = page.locator('wb-drawer');
+      expect(await drawerBtns.count()).toBeGreaterThanOrEqual(2);
+    });
+
+    test('confirm dialog trigger exists', async ({ page }) => {
+      const confirmBtn = page.locator('button[x-confirm]');
+      await expect(confirmBtn).toBeVisible();
+    });
+
+    test('lightbox trigger exists', async ({ page }) => {
+      const lightboxBtn = page.locator('button[x-lightbox]');
+      await expect(lightboxBtn).toBeVisible();
+    });
+
+    test('popover trigger exists', async ({ page }) => {
+      const popoverBtn = page.locator('button[x-popover]');
+      await expect(popoverBtn).toBeVisible();
+    });
+  });
+
+  // =========================================================================
+  // NAVIGATION SECTION  
+  // =========================================================================
+  test.describe('Navigation Section', () => {
+    
+    test('tabs component renders', async ({ page }) => {
+      const tabs = page.locator('wb-tabs');
+      await expect(tabs).toBeVisible();
+    });
+
+    test('accordion component renders', async ({ page }) => {
+      const accordion = page.locator('wb-accordion');
+      await expect(accordion).toBeVisible();
+    });
+
+    test('breadcrumb renders', async ({ page }) => {
+      const breadcrumb = page.locator('nav[x-breadcrumb]');
+      await expect(breadcrumb).toBeVisible();
+    });
+
+    test('pagination renders', async ({ page }) => {
+      const pagination = page.locator('nav[x-pagination]');
+      await expect(pagination).toBeVisible();
+    });
+
+    test('steps component renders', async ({ page }) => {
+      const steps = page.locator('div[x-steps]');
+      await expect(steps).toBeVisible();
+    });
+  });
+
+  // =========================================================================
+  // FORMS SECTION
+  // =========================================================================
+  test.describe('Forms Section', () => {
+    
+    test('text inputs render', async ({ page }) => {
+      const inputs = page.locator('input[type="text"]');
+      expect(await inputs.count()).toBeGreaterThan(0);
+    });
+
+    test('password input with toggle exists', async ({ page }) => {
+      const passwordInput = page.locator('input[x-password]');
+      await expect(passwordInput).toBeVisible();
+    });
+
+    test('switch component exists', async ({ page }) => {
+      const switchComp = page.locator('wb-switch');
+      await expect(switchComp).toBeVisible();
+    });
+
+    test('rating component exists', async ({ page }) => {
+      const ratings = page.locator('wb-rating');
+      expect(await ratings.count()).toBeGreaterThanOrEqual(2);
+    });
+
+    test('stepper component exists', async ({ page }) => {
+      const stepper = page.locator('div[x-stepper]');
+      await expect(stepper).toBeVisible();
+    });
+  });
+
+  // =========================================================================
+  // DATA DISPLAY SECTION
+  // =========================================================================
+  test.describe('Data Display Section', () => {
+    
+    test('timeline renders', async ({ page }) => {
+      const timeline = page.locator('div[x-timeline]');
+      await expect(timeline).toBeVisible();
+    });
+    
+    test('code blocks render', async ({ page }) => {
+        const codeBlocks = page.locator('wb-mdhtml');
+        expect(await codeBlocks.count()).toBeGreaterThanOrEqual(2);
+    });
+
+    test('JSON viewer renders', async ({ page }) => {
+      const jsonViewer = page.locator('div[x-json]');
+      await expect(jsonViewer).toBeVisible();
+    });
+
+    test('keyboard key components render', async ({ page }) => {
+      const kbdElements = page.locator('span[x-kbd]');
+      expect(await kbdElements.count()).toBeGreaterThan(0);
+    });
+  });
+
+  // =========================================================================
+  // MEDIA SECTION
+  // =========================================================================
+  test.describe('Media Section', () => {
+    
+    test('gallery component renders', async ({ page }) => {
+      const gallery = page.locator('div[x-gallery]');
+      await expect(gallery).toBeVisible();
+    });
+
+    test('youtube embed exists', async ({ page }) => {
+      const youtube = page.locator('div[x-youtube]');
+      await expect(youtube).toBeVisible();
+    });
+    
+    test('audio player exists', async ({ page }) => {
+        const audio = page.locator('wb-audio');
+        await expect(audio).toBeVisible();
+    });
+
+  });
+
+
+  // =========================================================================
+  // UTILITY SECTION
+  // =========================================================================
+  test.describe('Utility Section', () => {
+    
+    test('copy button exists', async ({ page }) => {
+      const copyBtn = page.locator('button[x-copy]');
+      await expect(copyBtn).toBeVisible();
+    });
+
+    test('share button exists', async ({ page }) => {
+      const shareBtn = page.locator('button[x-share]');
+      await expect(shareBtn).toBeVisible();
+    });
+    
+    test('print button exists', async ({ page }) => {
+        const printBtn = page.locator('button[x-print]');
+        await expect(printBtn).toBeVisible();
+    });
+
+    test('tooltip buttons exist', async ({ page }) => {
+      const tooltipBtns = page.locator('[x-tooltip]');
+      expect(await tooltipBtns.count()).toBeGreaterThanOrEqual(4);
+    });
+
+    test('dark mode toggle exists', async ({ page }) => {
+      const darkModeBtn = page.locator('button[x-darkmode]');
+      await expect(darkModeBtn).toBeVisible();
+    });
+
+    test('theme control exists', async ({ page }) => {
+      const themeControl = page.locator('wb-themecontrol');
+      await expect(themeControl).toBeVisible();
+    });
+
+    test('clock component renders', async ({ page }) => {
+      const clock = page.locator('div[x-clock]');
+      await expect(clock).toBeVisible();
+    });
+
+    test('countdown component renders', async ({ page }) => {
+      const countdown = page.locator('div[x-countdown]');
+      await expect(countdown).toBeVisible();
+    });
+  });
+
+  // =========================================================================
+  // INTERACTIONS
+  // =========================================================================
+  test.describe('Interactive Behavior', () => {
+    
+    test('clicking toast button shows toast', async ({ page }) => {
+      const toastBtn = page.locator('button[x-toast]').first();
+      await toastBtn.click();
+      
+      // Wait for toast to appear
+      const toast = page.locator('.wb-toast, [class*="toast"], .toast'); 
+      await expect(toast.first()).toBeVisible({ timeout: 5000 });
+    });
+
+    test('accordion section can expand', async ({ page }) => {
+      const accordionTitle = page.locator('[data-accordion-title]').first();
+      await accordionTitle.click();
+      await page.waitForTimeout(300);
+      
+      // Check visibility of content within
+      const accordion = page.locator('wb-accordion');
+      await expect(accordion).toBeVisible();
+    });
+
+  });
+
+  // =========================================================================
+  // NO CONSOLE ERRORS
+  // =========================================================================
+  test('page loads without console errors', async ({ page }) => {
+    const errors: string[] = [];
+    
+    page.on('console', msg => {
+      if (msg.type() === 'error') {
+        errors.push(msg.text());
+      }
+    });
+
+    await page.goto('http://localhost:3000/pages/components.html');
+    await page.waitForTimeout(1000);
+    
+    // Filter out expected errors (like network errors for external images)
+    const realErrors = errors.filter(e => 
+      !e.includes('net::ERR') && 
+      !e.includes('Failed to load resource') &&
+      !e.includes('favicon')
+    );
+    
+    expect(realErrors).toEqual([]);
+  });
+
+});

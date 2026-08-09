@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Overlays & Popups</title>
+  <link rel="stylesheet" href="../../src/styles/themes.css">
+  <link rel="stylesheet" href="../../src/styles/site.css">
+
+</head>
+
+<body class="demo-page">
+  <nav style="margin-bottom: 1rem;">
+    <a href="index.html" style="color: var(--text-secondary, #aaa); text-decoration: none;">← Back to Index</a>
+  </nav>
+  <h1>🪟 Overlays & Popups</h1>
+  <p>Dialogs, drawers, dropdowns for modal content</p>
+
+  <!-- 1. 🪟 Dialog -->
+  <section id="dialog-dialog">
+  <h2>🪟 Dialog</h2>
+  <wb-demo columns="2">
+    <wb-dialog title="Basic Dialog" class="demo-open">
+      title=Basic Dialog
+    </wb-dialog>
+    <wb-dialog title="Large" size="lg" class="demo-open">
+      title=Large, size=lg
+    </wb-dialog>
+    <wb-dialog title="No Close" class="demo-open">
+      title=No Close
+    </wb-dialog>
+    <wb-dialog title="Centered" variant="centered" class="demo-open">
+      title=Centered, variant=centered
+    </wb-dialog>
+  </wb-demo>
+  </section>
+
+  <!-- 2. size variants -->
+  <section id="dialog-size-variants">
+  <h2>size variants</h2>
+  <wb-demo columns="3">
+    <wb-dialog size="sm" class="demo-open">
+      Small dialog (size=sm)
+    </wb-dialog>
+    <wb-dialog size="md" class="demo-open">
+      Medium dialog (size=md)
+    </wb-dialog>
+    <wb-dialog size="lg" class="demo-open">
+      Large dialog (size=lg)
+    </wb-dialog>
+    <wb-dialog size="xl" class="demo-open">
+      Extra-large dialog (size=xl)
+    </wb-dialog>
+    <wb-dialog size="full" class="demo-open">
+      Fullscreen dialog (size=full)
+    </wb-dialog>
+  </wb-demo>
+  </section>
+
+  <!-- 3. Variants -->
+  <section id="dialog-variant-variants">
+  <h2>Variants</h2>
+  <wb-demo columns="2">
+    <wb-dialog variant="default" class="demo-open">
+      Default dialog (variant=default)
+    </wb-dialog>
+    <wb-dialog variant="centered" class="demo-open">
+      Centered dialog (variant=centered)
+    </wb-dialog>
+    <wb-dialog variant="fullscreen" class="demo-open">
+      Fullscreen dialog (variant=fullscreen)
+    </wb-dialog>
+  </wb-demo>
+  </section>
+
+  <!-- 4. 📜 Drawer -->
+  <section id="drawer-drawer">
+  <h2>📜 Drawer</h2>
+  <wb-demo columns="2">
+    <wb-drawer title="Right Drawer" position="right" class="demo-open">
+      <wb-badge variant="info">position=right</wb-badge>
+    </wb-drawer>
+    <wb-drawer title="Left Drawer" position="left" class="demo-open">
+      <wb-badge variant="info">position=left</wb-badge>
+    </wb-drawer>
+    <wb-drawer title="Wide" width="400px" class="demo-open">
+      <wb-badge variant="info">width=400px</wb-badge>
+    </wb-drawer>
+  </wb-demo>
+  </section>
+
+  <!-- 5. position variants -->
+  <section id="drawer-position-variants">
+  <h2>position variants</h2>
+  <wb-demo columns="2">
+    <wb-drawer position="left" class="demo-open">
+      <wb-badge variant="info">Left drawer (position=left)</wb-badge>
+    </wb-drawer>
+    <wb-drawer position="right" class="demo-open">
+      <wb-badge variant="info">Right drawer (position=right)</wb-badge>
+    </wb-drawer>
+    <wb-drawer position="top" class="demo-open">
+      <wb-badge variant="info">Top drawer (position=top)</wb-badge>
+    </wb-drawer>
+    <wb-drawer position="bottom" class="demo-open">
+      <wb-badge variant="info">Bottom drawer (position=bottom)</wb-badge>
+    </wb-drawer>
+  </wb-demo>
+  </section>
+
+  <!-- 6. Variants -->
+  <section id="drawer-variant-variants">
+  <h2>Variants</h2>
+  <wb-demo columns="2">
+    <wb-drawer variant="default" class="demo-open">
+      <wb-badge variant="info">Default drawer (variant=default)</wb-badge>
+    </wb-drawer>
+    <wb-drawer variant="overlay" class="demo-open">
+      <wb-badge variant="info">Overlay drawer (variant=overlay)</wb-badge>
+    </wb-drawer>
+    <wb-drawer variant="push" class="demo-open">
+      <wb-badge variant="info">Push drawer (variant=push)</wb-badge>
+    </wb-drawer>
+  </wb-demo>
+  </section>
+
+  <!-- 7. 📋 Dropdown -->
+  <section id="dropdown-dropdown">
+  <h2>📋 Dropdown</h2>
+  <wb-demo columns="2">
+    <wb-dropdown items="Profile,Settings,Logout" position="bottom-start" label="position=bottom-start" class="demo-open">
+      Bottom-start menu (position=bottom-start)
+    </wb-dropdown>
+    <wb-dropdown items="Profile,Settings,Logout" position="bottom-end" label="position=bottom-end" class="demo-open">
+      Bottom-end menu (position=bottom-end)
+    </wb-dropdown>
+    <wb-dropdown items="Profile,Settings,Logout" trigger="hover" label="trigger=hover" class="demo-open">
+      Hover menu (trigger=hover)
+    </wb-dropdown>
+  </wb-demo>
+  </section>
+
+  <!-- 8. position variants -->
+  <section id="dropdown-position-variants">
+  <h2>position variants</h2>
+  <wb-demo columns="2">
+    <wb-dropdown items="Profile,Settings,Logout" position="top-start" label="position=top-start" class="demo-open">
+      Top-start menu (position=top-start)
+    </wb-dropdown>
+    <wb-dropdown items="Profile,Settings,Logout" position="top-end" label="position=top-end" class="demo-open">
+      Top-end menu (position=top-end)
+    </wb-dropdown>
+  </wb-demo>
+  </section>
+
+  <!-- 9. trigger variants -->
+  <section id="dropdown-trigger-variants">
+  <h2>trigger variants</h2>
+  <wb-demo columns="2">
+    <wb-dropdown items="Profile,Settings,Logout" trigger="click" label="trigger=click" class="demo-open">
+      Click menu (trigger=click)
+    </wb-dropdown>
+    <wb-dropdown items="Profile,Settings,Logout" trigger="hover" label="trigger=hover" class="demo-open">
+      Hover menu (trigger=hover)
+    </wb-dropdown>
+  </wb-demo>
+  </section>
+
+  <script type="module">
+    import WB from '../../src/core/wb-lazy.js';
+    window.WB = WB;
+    await WB.init({ autoInject: true });
+    await WB.scan(document.body, { eager: true });
+
+    console.log('Overlays & Popups initialized with labeled demo variants');
+    window.__WB_DEMO_INITIALIZED__ = true;
+  </script>
+</body>
+
+</html>

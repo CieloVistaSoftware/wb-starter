@@ -1,0 +1,961 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Playground — WB</title>
+  <link rel="stylesheet" href="../src/styles/themes.css">
+  <link rel="stylesheet" href="../src/styles/site.css">
+  <style>
+    body { max-width: 1200px; margin: 0 auto; padding: 1.5rem; background: var(--bg-color);
+      color: var(--text-primary); line-height: 1.6; }
+    h1 { margin: 0 0 0.25rem; }
+    .pg-sub { color: var(--text-secondary); margin: 0 0 1.5rem; }
+
+    /* Mobile-first: stack; two columns on wider screens. */
+    .pg-grid { display: grid; grid-template-columns: 1fr; gap: 1.5rem; align-items: start; }
+    @media (min-width: 860px) { .pg-grid { grid-template-columns: 1fr 1fr; } }
+
+    .pg-panel { border: 1px solid var(--border-color); border-radius: 10px; overflow: hidden;
+      background: var(--bg-secondary); display: flex; flex-direction: column; }
+    /* .pg-panel's own display:flex (author CSS) silently wins over the
+       browser's default [hidden]{display:none} (user-agent CSS) regardless
+       of selector specificity -- author origin always beats UA origin. This
+       page doesn't load normalize.css (which has a global [hidden]{display:
+       none!important} safety net for exactly this), so the hidden attribute
+       on #pg-endpoint did nothing at all: it showed on every page load,
+       and stayed showing across every example switch, unconditionally. */
+    .pg-panel[hidden] { display: none; }
+    /* Mobile-first fluent toolbar: wraps instead of overflowing; the button row
+       grows and wraps as space allows. */
+    .pg-panel__head { display: flex; align-items: center; justify-content: space-between;
+      flex-wrap: wrap; gap: 0.5rem;
+      padding: 0.6rem 1rem; font-weight: 600; font-size: 0.9rem;
+      border-bottom: 1px solid var(--border-color); }
+    .pg-panel__label { flex: 0 0 auto; }
+    .pg-toolbar { display: flex; flex-wrap: wrap; gap: 0.5rem; flex: 1 1 auto; justify-content: flex-end; }
+    .pg-toolbar .pg-btn { flex: 0 1 auto; }
+    @media (max-width: 560px) {
+      .pg-toolbar { justify-content: flex-start; }
+      .pg-toolbar .pg-btn { flex: 1 1 calc(50% - 0.5rem); } /* two-up on phones */
+    }
+    .pg-hint { color: var(--text-muted); font-size: 0.8rem; font-weight: 400; }
+
+    /* Height is AUTOMATIC — the editor grows to fit the markup (JS sets an inline
+       height from scrollHeight) up to a max, then scrolls. !important floors the
+       min so WB's textarea behavior (inline min-height:3rem) can't collapse it. */
+    #pg-input { width: 100%; min-height: 10rem !important; max-height: 80vh; overflow-y: auto;
+      resize: vertical; border: 0; box-sizing: border-box; background: var(--bg-primary);
+      color: var(--text-primary); padding: 1rem;
+      font-family: 'JetBrains Mono', 'Fira Code', Consolas, monospace;
+      font-size: 0.9rem; line-height: 1.6; tab-size: 2; white-space: pre; }
+    #pg-input:focus { outline: none; }
+
+    #pg-preview { padding: 1.25rem; min-height: 70vh; background: var(--bg-primary); }
+    /* Space stacked top-level previewed elements (e.g. the 50 cards) so they
+       don't sit flush on top of each other. */
+    #pg-preview > * + * { margin-top: 1rem; }
+    #pg-preview > wb-card, #pg-preview > [class*="wb-card"] { display: block; }
+    /* Sample form example (SAMPLE, below): a bare <label>Text <input></label>
+       with no wrapper div stayed on one line -- <label> is inline by default
+       and neither its text node nor an <input>/<select>/<textarea> child
+       forces a break on its own. John: "we want the label to be on new
+       line." Stack label text above its own field; excludes checkbox/radio
+       labels (`<label><input type=checkbox> Remote</label>`), which are
+       meant to stay inline next to their own text. */
+    #pg-preview label:not(:has(> input[type="checkbox"], > input[type="radio"])) {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 0.25rem;
+    }
+    /* YouTube example set (20 real-world URL formats, twentyYouTubeFormats()):
+       each embed is its own <div x-youtube>, block-level and full-width by
+       default, so all 20 stacked one per row -- a very tall, slow-to-scan
+       page for something that's really a gallery, not a vertical list.
+       John: "make this break to a new row and change all the rest of the
+       videos to be 3 to a row." Scoped to when #pg-preview holds 2+ sibling
+       [x-youtube] elements, so every other example set (cards, heroes, forms,
+       ...) keeps its normal single-column stack. */
+    #pg-preview:has(> [x-youtube] ~ [x-youtube]) {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1rem;
+    }
+    #pg-preview:has(> [x-youtube] ~ [x-youtube]) > * + * {
+      margin-top: 0; /* grid `gap` handles spacing instead of the stacked-layout margin above */
+    }
+    @media (max-width: 900px) {
+      #pg-preview:has(> [x-youtube] ~ [x-youtube]) {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+    @media (max-width: 600px) {
+      #pg-preview:has(> [x-youtube] ~ [x-youtube]) {
+        grid-template-columns: 1fr;
+      }
+    }
+    /* Signature hero example set: hero + its companion wb-modal trigger,
+       grouped as one visual unit with a small gap between them. */
+    .pg-signature-hero { display: flex; flex-direction: column; gap: 0.75rem; }
+    /* The preview is arbitrary pasted HTML — let long content wrap, never overflow.
+       `anywhere` (not `break-word`) is wrong here: it lets the browser break a
+       word mid-character even when the whole word would fit on the next line
+       (e.g. a hero title wrapping "config" + "ure" instead of just moving
+       "configure" down) — `break-word` only breaks as a last resort. */
+    /* :where() keeps this selector's specificity at ZERO despite the #id, so it
+       never outranks a real component class like .wb-card--xs's own max-width —
+       otherwise this safety net silently defeats legitimate size styling and
+       misrepresents real behavior to anyone testing sizes in the playground. */
+    #pg-preview { max-width: 100%; overflow-wrap: break-word; }
+    :where(#pg-preview) * { max-width: 100%; overflow-wrap: break-word; }
+
+    .pg-btn { padding: 0.4rem 0.9rem; border-radius: 6px; border: 1px solid var(--border-color);
+      background: var(--primary); color: var(--text-on-accent, #fff); cursor: pointer;
+      font-size: 0.85rem; }
+    .pg-btn:hover { filter: brightness(1.08); }
+    .pg-error { color: var(--danger-color, #f85149); font-size: 0.85rem; padding: 0.5rem 1rem; }
+  </style>
+</head>
+<body>
+  <h1>🧪 Playground</h1>
+  <p class="pg-sub">Paste any HTML on the left — see it rendered live on the right. <code>&lt;wb-*&gt;</code>
+    components and <code>x-*</code> behaviors are upgraded automatically.</p>
+
+  <div class="pg-grid">
+    <div class="pg-panel">
+      <div class="pg-panel__head">
+        <span class="pg-panel__label">HTML</span>
+        <span class="pg-toolbar">
+          <button id="pg-clear" class="pg-btn" type="button"
+            style="background:var(--bg-tertiary); color:var(--text-primary);">Clear</button>
+          <select id="pg-examples" class="pg-btn" title="Load an example set"
+            style="background:var(--bg-tertiary); color:var(--text-primary); appearance:auto;">
+            <option value="">🎴 Examples…</option>
+            <option value="form">Sample form</option>
+            <option value="cards">50 cards</option>
+            <option value="heroes">20 card heroes</option>
+            <option value="signature-heroes">20 signature heroes</option>
+            <option value="xbehaviors">50 x-* behaviors</option>
+            <option value="inputs">20 inputs with x-behaviors</option>
+            <option value="badges">50 badges</option>
+            <option value="selects">25 selects</option>
+            <option value="switches">25 switches (all different)</option>
+            <option value="youtube">20 YouTube URL formats</option>
+          </select>
+          <button id="pg-format" class="pg-btn" type="button"
+            style="background:var(--bg-tertiary); color:var(--text-primary);"
+            title="Format vertically (one attribute per line)">⭹ Format</button>
+          <button id="pg-copy" class="pg-btn" type="button"
+            style="background:var(--bg-tertiary); color:var(--text-primary);" title="Copy the HTML (or right-click a preview element)">📋 Copy</button>
+        </span>
+      </div>
+      <textarea id="pg-input" x-ignore spellcheck="false" aria-label="HTML input"></textarea>
+    </div>
+    <div class="pg-panel">
+      <div class="pg-panel__head">
+        <span class="pg-panel__label">Preview</span>
+        <span class="pg-toolbar">
+          <wb-themecontrol id="pg-themecontrol" show-label="false"></wb-themecontrol>
+          <select id="pg-sort" class="pg-btn" title="Sort the previewed elements"
+            style="background:var(--bg-tertiary); color:var(--text-primary); appearance:auto;">
+            <option value="">↕ Sort by…</option>
+          </select>
+          <span class="pg-hint">live</span>
+        </span>
+      </div>
+      <div id="pg-error" class="pg-error" hidden></div>
+      <div id="pg-preview"></div>
+    </div>
+  </div>
+
+  <!-- Appears when a previewed <form> is submitted: what an endpoint would receive. -->
+  <div class="pg-panel" id="pg-endpoint" hidden style="margin-top: 1.5rem;">
+    <div class="pg-panel__head">
+      <span>📮 Endpoint sees</span>
+      <span class="pg-hint" id="pg-endpoint-meta"></span>
+    </div>
+    <div id="pg-endpoint-body" style="padding: 1rem; background: var(--bg-primary);
+      font-family: 'JetBrains Mono', 'Fira Code', Consolas, monospace; font-size: 0.85rem;
+      line-height: 1.6; overflow-x: auto;"></div>
+  </div>
+
+  <script type="module">
+    import WB from '../src/core/wb-lazy.js';
+    import { formatHtml } from '../src/wb-viewmodels/demo.js';
+    // Shared clipboard-write core (#291) — same helper x-copy/x-copybutton
+    // use (src/wb-viewmodels/copy.js), so the Playground's copy actions
+    // below don't hand-roll their own navigator.clipboard try/catch.
+    import { writeToClipboard } from '../src/wb-viewmodels/copy.js';
+
+    const input = document.getElementById('pg-input');
+    const preview = document.getElementById('pg-preview');
+    const errorBox = document.getElementById('pg-error');
+
+    // A starter example so the page is useful immediately.
+    const SAMPLE = [
+      '<form>',
+      '  <label>',
+      '    Full Name',
+      '    <input type="text" name="fullName" placeholder="John Doe" required>',
+      '  </label>',
+      '',
+      '  <label>',
+      '    Email Address',
+      '    <input type="email" name="email" placeholder="john@example.com" required>',
+      '  </label>',
+      '',
+      '  <label>',
+      '    Department',
+      '    <select name="department">',
+      '      <option>Engineering</option>',
+      '      <option>Design</option>',
+      '      <option>Marketing</option>',
+      '      <option>Sales</option>',
+      '    </select>',
+      '  </label>',
+      '',
+      '  <label>',
+      '    Bio',
+      '    <textarea name="bio" rows="3" placeholder="Tell us about yourself..."><' + '/textarea>',
+      '  </label>',
+      '',
+      '  <label>',
+      '    Experience Level',
+      '    <input type="range" name="experience" min="0" max="10" value="5">',
+      '  </label>',
+      '',
+      '  <fieldset>',
+      '    <legend>Preferences</legend>',
+      '    <label><input type="checkbox" name="remote" checked> Remote</label>',
+      '    <label><input type="checkbox" name="relocation"> Relocation</label>',
+      '  </fieldset>',
+      '',
+      '  <fieldset>',
+      '    <legend>Contract Type</legend>',
+      '    <label><input type="radio" name="contract" checked> Full-time</label>',
+      '    <label><input type="radio" name="contract"> Contractor</label>',
+      '  </fieldset>',
+      '',
+      '  <button type="submit" style="width: 100%;">Submit Application</button>',
+      '</form>',
+    ].join('\n');
+
+    input.value = SAMPLE;
+
+    // Auto-height: as tall as the markup needs, up to max-height (then scroll).
+    // Inline style with 'important' so WB's textarea enhancement can't override it.
+    function fitEditor() {
+      input.style.setProperty('height', 'auto', 'important');
+      const max = Math.round(window.innerHeight * 0.8);
+      input.style.setProperty('height', Math.min(input.scrollHeight + 2, max) + 'px', 'important');
+    }
+
+    // Init WB WITHOUT global autoInject so it never enhances the playground's own
+    // UI (the input textarea was being autosized/shrunk). We only ever scan the
+    // preview subtree, so pasted <wb-*>/native elements still upgrade there.
+    let wbReady;
+    const ensureWB = () => (wbReady = wbReady || WB.init({ autoInject: false }));
+
+    async function render() {
+      errorBox.hidden = true;
+      errorBox.textContent = '';
+      // A previous example's <form> submission left this visible -- it must
+      // not persist into an unrelated (often non-form) example after a
+      // re-render or example switch.
+      endpointPanel.hidden = true;
+      preview.innerHTML = input.value;
+      try {
+        await ensureWB();
+        // Eager: pasted/generated examples should work the instant they
+        // appear. WB's default viewport-lazy loading (IntersectionObserver)
+        // is right for a long real content page, but wrong here — a user
+        // can click a control before it's ever scrolled near enough to
+        // enhance, and nothing happens, which reads as broken.
+        await WB.scan(preview, { eager: true });
+      } catch (e) {
+        errorBox.hidden = false;
+        errorBox.textContent = 'Render error: ' + (e && e.message ? e.message : e);
+      }
+    }
+
+    // When a previewed <form> is submitted, DON'T navigate — show exactly what an
+    // endpoint would receive (method, action, fields, urlencoded body, JSON).
+    const endpointPanel = document.getElementById('pg-endpoint');
+    const endpointBody = document.getElementById('pg-endpoint-body');
+    const endpointMeta = document.getElementById('pg-endpoint-meta');
+    const esc = (s) => String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+
+    preview.addEventListener('submit', (e) => {
+      const form = e.target.closest && e.target.closest('form');
+      if (!form) return;
+      e.preventDefault();
+      const method = (form.getAttribute('method') || 'GET').toUpperCase();
+      const action = form.getAttribute('action') || '(none — posts to same URL)';
+      const enctype = form.getAttribute('enctype') || 'application/x-www-form-urlencoded';
+
+      const entries = [...new FormData(form).entries()];
+      const obj = {};
+      for (const [k, v] of entries) obj[k] = (k in obj) ? [].concat(obj[k], v) : v;
+      const body = new URLSearchParams(entries.map(([k, v]) => [k, typeof v === 'string' ? v : v.name])).toString();
+      const unnamed = form.querySelectorAll(
+        'input:not([name]):not([type=submit]):not([type=button]):not([type=reset]), select:not([name]), textarea:not([name])'
+      ).length;
+
+      endpointMeta.textContent = `${method} ${action}`;
+      endpointBody.innerHTML =
+        `<div style="color:var(--text-secondary)"># ${esc(method)} ${esc(action)} · ${esc(enctype)}</div>` +
+        (entries.length
+          ? `<div style="margin:0.75rem 0"><strong>Fields</strong><br>` +
+              entries.map(([k, v]) => `&nbsp;&nbsp;${esc(k)} = <span style="color:var(--success-color)">${esc(typeof v === 'string' ? v : '(file) ' + v.name)}</span>`).join('<br>') +
+            `</div><div style="margin:0.75rem 0"><strong>Request body</strong><br>&nbsp;&nbsp;${esc(body)}</div>` +
+            `<div><strong>As JSON</strong><pre style="margin:0.25rem 0 0;white-space:pre-wrap">${esc(JSON.stringify(obj, null, 2))}</pre></div>`
+          : `<div style="color:var(--warning-color)">No named fields — a browser only submits controls that have a <code>name</code> attribute.</div>`) +
+        (unnamed ? `<div style="color:var(--warning-color);margin-top:0.5rem">⚠ ${unnamed} control(s) without <code>name</code> were omitted.</div>` : '');
+      endpointPanel.hidden = false;
+      endpointPanel.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    });
+
+    // Format the buffer to our vertical rules (§5): one attribute per line for
+    // multi-attribute tags, short tags on one line. Re-renders after.
+    function formatInput() {
+      const formatted = formatHtml(input.value);
+      if (formatted) {
+        input.value = formatted;
+        fitEditor();
+        render();
+      }
+    }
+    document.getElementById('pg-format').addEventListener('click', formatInput);
+
+    // Click an element in the Preview → scroll the source editor to that element's
+    // opening tag (and select it). Top-level preview children map 1:1, in order,
+    // to the top-level elements in the source.
+    const VOID_TAGS = new Set(['br', 'hr', 'img', 'input', 'meta', 'link', 'area', 'base', 'col', 'embed', 'source', 'track', 'wbr']);
+    function topLevelElementOffset(src, targetIdx) {
+      const re = /<(\/?)([a-zA-Z][\w-]*)([^>]*?)(\/?)>/g;
+      let depth = 0, count = -1, m;
+      while ((m = re.exec(src)) !== null) {
+        const closing = m[1] === '/';
+        const selfClose = m[4] === '/' || VOID_TAGS.has(m[2].toLowerCase());
+        if (closing) { depth = Math.max(0, depth - 1); continue; }
+        if (depth === 0) { count++; if (count === targetIdx) return m.index; }
+        if (!selfClose) depth++;
+      }
+      return -1;
+    }
+
+    // Split the source into its top-level elements (same tag-walk as
+    // topLevelElementOffset, but returns the full markup chunk for each one).
+    function splitTopLevelChunks(src) {
+      const re = /<(\/?)([a-zA-Z][\w-]*)([^>]*?)(\/?)>/g;
+      let depth = 0, curStart = -1, m;
+      const bounds = [];
+      while ((m = re.exec(src)) !== null) {
+        const closing = m[1] === '/';
+        const selfClose = m[4] === '/' || VOID_TAGS.has(m[2].toLowerCase());
+        if (closing) {
+          depth = Math.max(0, depth - 1);
+          if (depth === 0 && curStart >= 0) { bounds.push({ start: curStart, end: re.lastIndex }); curStart = -1; }
+          continue;
+        }
+        if (depth === 0) {
+          curStart = m.index;
+          if (selfClose) { bounds.push({ start: m.index, end: re.lastIndex }); curStart = -1; }
+        }
+        if (!selfClose) depth++;
+      }
+      return bounds.map((b) => src.slice(b.start, b.end));
+    }
+
+    // Parse an element chunk's opening tag: tag name + attribute map (bare
+    // boolean attrs like `pill` map to '').
+    function parseOpenTag(chunk) {
+      const m = /^<([a-zA-Z][\w-]*)([^>]*)>/.exec(chunk);
+      if (!m) return { tag: '', attrs: {} };
+      const attrs = {};
+      const attrRe = /([a-zA-Z][\w-]*)(?:\s*=\s*(?:"([^"]*)"|'([^']*)'|([^\s"'=<>`\/]+)))?/g;
+      let am;
+      while ((am = attrRe.exec(m[2])) !== null) {
+        attrs[am[1].toLowerCase()] = am[2] !== undefined ? am[2] : am[3] !== undefined ? am[3] : am[4] !== undefined ? am[4] : '';
+      }
+      return { tag: m[1].toLowerCase(), attrs };
+    }
+
+    // Sort key for a chunk under a given mode — used by the "Sort by…" dropdown.
+    const SIZE_ORDER = ['xs', 'sm', 'md', 'lg', 'xl'];
+    function sortKey(chunk, mode) {
+      const { tag, attrs } = parseOpenTag(chunk);
+      switch (mode) {
+        case 'variant': return attrs.variant ?? '￿';
+        case 'size': { const i = SIZE_ORDER.indexOf(attrs.size); return i < 0 ? SIZE_ORDER.length : i; }
+        case 'title': return (attrs.title || attrs.label || '').toLowerCase();
+        case 'tag': return tag;
+        case 'pill': case 'outline': case 'removable': case 'elevated':
+          return (mode in attrs) ? 0 : 1;
+        default: return 0;
+      }
+    }
+
+    // Every sort mode the dropdown can offer, and which attribute each example
+    // set actually carries — so "Sort by…" only ever lists modes that apply to
+    // what's currently loaded (badges get pill/outline/removable, cards get
+    // variant/size/elevated, heroes only have a title to sort by, and the
+    // sample form is a single element — nothing to sort).
+    const SORT_MODES = [
+      { value: 'variant', label: 'Variant' },
+      { value: 'size', label: 'Size' },
+      { value: 'title', label: 'Title (A→Z)' },
+      { value: 'tag', label: 'Tag name' },
+      { value: 'pill', label: 'Pill first' },
+      { value: 'outline', label: 'Outline first' },
+      { value: 'removable', label: 'Removable first' },
+      { value: 'elevated', label: 'Elevated first' },
+    ];
+    const EXAMPLE_SORT_MODES = {
+      form: [],
+      cards: ['variant', 'size', 'title', 'tag', 'elevated'],
+      heroes: ['title', 'tag'],
+      'signature-heroes': ['title', 'tag'],
+      xbehaviors: ['tag'],
+      badges: ['variant', 'size', 'title', 'tag', 'pill', 'outline', 'removable'],
+      selects: ['variant', 'size', 'title', 'tag'],
+      switches: ['variant', 'size', 'title', 'tag'],
+    };
+    const sortSelect = document.getElementById('pg-sort');
+    function setSortModes(modes) {
+      sortSelect.innerHTML = '<option value="">↕ Sort by…</option>' +
+        SORT_MODES.filter((m) => modes.includes(m.value))
+          .map((m) => `<option value="${m.value}">${m.label}</option>`).join('');
+      sortSelect.disabled = modes.length === 0;
+    }
+    setSortModes(EXAMPLE_SORT_MODES.form); // initial content is the sample form
+
+    document.getElementById('pg-sort').addEventListener('change', async (e) => {
+      const mode = e.target.value;
+      e.target.value = ''; // reset to placeholder
+      if (!mode) return;
+      const chunks = splitTopLevelChunks(input.value);
+      chunks.sort((a, b) => {
+        const ka = sortKey(a, mode), kb = sortKey(b, mode);
+        return ka < kb ? -1 : ka > kb ? 1 : 0;
+      });
+      input.value = chunks.join('\n');
+      endpointPanel.hidden = true;
+      fitEditor();
+      await render();
+      // A re-sorted preview should always start scrolled to its top.
+      preview.scrollTop = 0;
+      preview.closest('.pg-panel').scrollIntoView({ behavior: 'smooth', block: 'start' });
+    });
+
+    // An element that's actually interactive (a button/input/behavior
+    // trigger meant to DO something on click — ripple, confirm, toast,
+    // drawer, a form control the user is typing into, …) should just work
+    // normally. Jump-to-source is for INSPECTING a static example (a card,
+    // a badge, a hero) — stealing focus/scroll to the HTML textarea on
+    // every click made every interactive x-* example (the "50 x-*
+    // behaviors" set especially) reset the user's place in the editor the
+    // instant they tried to actually use one. An x-* ATTRIBUTE name (not a
+    // substring class match, which would false-positive on plenty of
+    // unrelated classes) is the reliable signal for "this is a behavior".
+    function isInteractive(el) {
+      let node = el;
+      while (node && node !== preview) {
+        if (node.matches?.('button, input, textarea, select, a')) return true;
+        if (node.getAttributeNames?.().some((n) => n.startsWith('x-'))) return true;
+        node = node.parentElement;
+      }
+      return false;
+    }
+
+    preview.addEventListener('click', (e) => {
+      const anchor = e.target.closest && e.target.closest('a[href^="#"]');
+      if (anchor) e.preventDefault(); // don't let demo CTA links jump the page
+      if (isInteractive(e.target)) return;
+      let node = e.target;
+      while (node && node.parentElement !== preview) node = node.parentElement;
+      if (!node) return;
+      const idx = Array.prototype.indexOf.call(preview.children, node);
+      if (idx < 0) return;
+      const start = topLevelElementOffset(input.value, idx);
+      if (start < 0) return;
+      const nextStart = topLevelElementOffset(input.value, idx + 1);
+      const end = (nextStart < 0 ? input.value.length : nextStart);
+      const markup = input.value.slice(start, end).replace(/\s+$/, '');
+      const line = input.value.slice(0, start).split('\n').length - 1;
+      const lineHeight = parseFloat(getComputedStyle(input).lineHeight) || 20;
+      // Jump to + SELECT the element's markup, and copy it automatically.
+      input.focus();
+      input.setSelectionRange(start, start + markup.length);
+      input.scrollTop = Math.max(0, line * lineHeight - 8);
+      writeToClipboard(markup).then((ok) => {
+        if (!ok) return;
+        const cb = document.getElementById('pg-copy');
+        if (cb) { const o = cb.textContent; cb.textContent = '✓ Copied'; setTimeout(() => { cb.textContent = o; }, 1200); }
+      });
+    });
+
+    // Right-click a preview element → copy its SOURCE markup to the clipboard.
+    preview.addEventListener('contextmenu', (e) => {
+      let node = e.target;
+      while (node && node.parentElement !== preview) node = node.parentElement;
+      if (!node) return;
+      const idx = Array.prototype.indexOf.call(preview.children, node);
+      if (idx < 0) return;
+      const start = topLevelElementOffset(input.value, idx);
+      if (start < 0) return;
+      const nextStart = topLevelElementOffset(input.value, idx + 1);
+      const end = nextStart < 0 ? input.value.length : nextStart;
+      const markup = input.value.slice(start, end).trim();
+      e.preventDefault();
+      writeToClipboard(markup).then((ok) => {
+        if (!ok) return;
+        const cb = document.getElementById('pg-copy');
+        const orig = cb.textContent;
+        cb.textContent = '✓ Element copied';
+        setTimeout(() => { cb.textContent = orig; }, 1500);
+      });
+    });
+
+    // Theme control — the real <wb-themecontrol> component (never a one-off
+    // hand-rolled select). It lives outside #pg-preview, so it isn't wiped by
+    // render()'s innerHTML swap; scan it once, here, on load.
+    ensureWB().then(() => WB.scan(document.getElementById('pg-themecontrol'), { eager: true }));
+
+    // ── Example sets (loaded from the Examples dropdown) ──────────────────────
+    const V = ['default', 'primary', 'success', 'danger', 'warning', 'info'];
+    const S = ['xs', 'sm', 'md', 'lg', 'xl'];
+    const LOREM = 'A short description that spans a line or two so wrapping and spacing are visible.';
+
+    function fiftyCards() {
+      const T = [
+        (i, v, s) => `<wb-card title="#${i} ${v} · ${s}" variant="${v}" size="${s}" footer="Footer ${i}">Body ${i}</wb-card>`,
+        (i, v, s) => `<wb-card title="#${i} ${v}" variant="${v}" subtitle="With subtitle + badge" badge="New">${LOREM}</wb-card>`,
+        (i, v, s) => `<wb-card title="#${i} elevated" variant="${v}" elevated footer="Elevated">Body ${i}</wb-card>`,
+        (i, v, s) => `<wb-card title="#${i} hoverable" variant="${v}" hoverable tooltip="Hover text for #${i}">Hover me — ${LOREM}</wb-card>`,
+        (i, v, s) => `<wb-card title="#${i} ${v}" variant="${v}">Title + body only, no footer. ${i}</wb-card>`,
+        (i, v, s) => `<wb-cardimage title="#${i} image card" subtitle="cardimage" src="https://picsum.photos/seed/${i}/320/120">Image card body ${i}</wb-cardimage>`,
+        (i, v, s) => `<wb-cardpricing title="Plan #${i}" price="$${i}9" variant="${v}">Feature A · Feature B · Feature C</wb-cardpricing>`,
+        (i, v, s) => `<wb-cardprofile title="Person #${i}" subtitle="Role ${s}" variant="${v}">${LOREM}</wb-cardprofile>`,
+      ];
+      const out = [];
+      for (let i = 0; i < 50; i++) out.push(T[i % T.length](i + 1, V[i % V.length], S[i % S.length]));
+      return out.join('\n');
+    }
+
+    function twentyHeroes() {
+      const heroes = [
+        ['Launch', 'Build faster with wb-starter', 'Schema-first, zero-build web components.', 'Get Started', 'View Docs'],
+        ['New', 'Compose, don\'t configure', 'Stack x-* behaviors on any element.', 'Try it', 'Learn more'],
+        ['v3', 'Themeable to the core', 'Every color flows from one theme system.', 'Explore themes', null],
+        ['Open Source', 'Own your components', 'Light DOM, no shadow boundaries.', 'Star on GitHub', 'Read the guide'],
+        ['Fast', 'No build step. Ever.', 'Drop a script tag and go.', 'Get Started', null],
+        ['Accessible', 'Semantics by default', 'Native elements, enhanced.', 'See a11y', 'Docs'],
+      ];
+      const bgs = [
+        null, null,
+        'linear-gradient(135deg, var(--success-color), var(--info-color))',
+        'linear-gradient(135deg, var(--danger-color), var(--warning-color))',
+        'https://picsum.photos/seed/hero/1200/500',
+        'linear-gradient(135deg, var(--primary), var(--secondary))',
+      ];
+      const heights = ['320px', '380px', '440px'];
+      const aligns = ['center', 'left', 'right'];
+      // Each CTA links to the doc it's talking about (opens in the doc-viewer).
+      const DV = (file) => '../public/doc-viewer.html?file=' + encodeURIComponent(file);
+      const CTA_HREF = {
+        'Get Started': DV('docs/V3-GUIDE.md'), 'View Docs': DV('docs/V3-GUIDE.md'),
+        'Docs': DV('docs/V3-GUIDE.md'), 'Read the guide': DV('docs/V3-GUIDE.md'),
+        'Try it': DV('docs/V3-GUIDE.md'), 'Learn more': DV('docs/behaviors/wb-behaviors.md'),
+        'Explore themes': DV('docs/themes.md'), 'See a11y': DV('docs/V3-GUIDE.md'),
+        'Star on GitHub': 'https://github.com/CieloVistaSoftware/wb-starter',
+      };
+      const href = (c) => CTA_HREF[c] || DV('docs/V3-GUIDE.md');
+      const out = [];
+      for (let i = 0; i < 20; i++) {
+        const [pre, title, sub, cta, cta2] = heroes[i % heroes.length];
+        // Offset the bg index by how many times we've already looped through
+        // heroes, so a repeated title always shows a DIFFERENT background
+        // (bgs.length === heroes.length, so without this offset every repeat
+        // of the same title would land on the exact same bg every time).
+        const round = Math.floor(i / heroes.length);
+        const bg = bgs[(i + round) % bgs.length];
+        const attrs = [
+          `pretitle="${pre} #${i + 1}"`,
+          `title="${title}"`,
+          `subtitle="${sub}"`,
+          `height="${heights[i % heights.length]}"`,
+          `xalign="${aligns[i % aligns.length]}"`,
+          cta ? `cta="${cta}"` : '',
+          cta ? `cta-href="${href(cta)}"` : '',
+          cta2 ? `cta-secondary="${cta2}"` : '',
+          cta2 ? `cta-secondary-href="${href(cta2)}"` : '',
+          bg ? `background="${bg}"` : '',
+        ].filter(Boolean);
+        out.push(`<wb-cardhero\n  ${attrs.join('\n  ')}>\n</wb-cardhero>`);
+      }
+      return out.join('\n');
+    }
+
+    // "Signature hero" style: a wb-cardhero (pretitle/title/subtitle/CTAs,
+    // x-fadein scroll-reveal, a tooltip on its primary CTA) paired with a real
+    // <wb-modal> trigger as its companion "live demo" beneath it. Built from
+    // a user-submitted template that also referenced x-parallax, a
+    // <wb-codepreview> tag, and Vue-style x-on:change directives — none of
+    // which exist in this codebase (verified against tag-map.js/wb-lazy.js);
+    // this version keeps only what's real: wb-cardhero's own attrs, x-fadein
+    // (wired in wb-lazy.js), x-tooltip (tooltip.js reads it directly, added
+    // to cardhero.js as an opt-in cta-tooltip/cta-secondary-tooltip attr),
+    // and wb-modal's actual self-contained trigger API (modal-title/
+    // modal-content on the trigger itself — not a separate <wb-modal id=…>
+    // referenced by a button).
+    function twentySignatureHeroes() {
+      const heroes = [
+        ['Zero Build.', 'Infinite Possibility.', 'The web framework that doesn’t need a framework.', 'Native elements. Schema-first behaviors. One script tag.'],
+        ['No Bundler.', 'No JSX. No Waiting.', 'Ship the way the browser already understands.', 'Drop a script tag and start composing components.'],
+        ['Light DOM.', 'Always.', 'Never fight a shadow boundary again.', 'Your CSS and devtools reach every component, always.'],
+        ['Schema First.', 'Behavior Second.', 'Describe the shape. Let behaviors do the rest.', 'One runtime scans the DOM and upgrades what it finds.'],
+        ['Compose,', 'Don’t Configure.', 'Stack x-* behaviors on any native element.', 'Small, focused functions — not a class to subclass.'],
+        ['Themeable', 'To The Core.', 'Every color flows from one variable system.', '25+ built-in themes, or define your own in minutes.'],
+      ];
+      const bgs = [
+        'linear-gradient(135deg, var(--primary), var(--secondary))',
+        'linear-gradient(135deg, var(--success-color), var(--info-color))',
+        'linear-gradient(135deg, var(--danger-color), var(--warning-color))',
+        'linear-gradient(135deg, var(--primary), var(--info-color))',
+      ];
+      const heights = ['420px', '480px', '520px'];
+      const aligns = ['left', 'center'];
+      const DV = (file) => '../public/doc-viewer.html?file=' + encodeURIComponent(file);
+      const out = [];
+      for (let i = 0; i < 20; i++) {
+        const [pre, title, sub, tip] = heroes[i % heroes.length];
+        const round = Math.floor(i / heroes.length);
+        const bg = bgs[(i + round) % bgs.length];
+        const attrs = [
+          `pretitle="${pre} #${i + 1}"`,
+          `title="${title}"`,
+          `subtitle="${sub}"`,
+          `height="${heights[i % heights.length]}"`,
+          `xalign="${aligns[i % aligns.length]}"`,
+          `cta="Try the Playground"`,
+          `cta-href="playground.html"`,
+          `cta-tooltip="${tip}"`,
+          `cta-secondary="Read the Guide"`,
+          `cta-secondary-href="${DV('docs/V3-GUIDE.md')}"`,
+          `background="${bg}"`,
+          `x-fadein`,
+        ];
+        out.push(
+          `<div class="pg-signature-hero">\n` +
+          `  <wb-cardhero\n    ${attrs.join('\n    ')}>\n  </wb-cardhero>\n` +
+          `  <wb-modal\n` +
+          `    modal-title="${title}"\n` +
+          `    modal-content="${sub}">\n` +
+          `    See it in action\n` +
+          `  </wb-modal>\n` +
+          `</div>`
+        );
+      }
+      return out.join('\n');
+    }
+
+    // 50 x-* behavior examples + attribute combinations. Every attribute name
+    // below is verified against the actual behavior source (src/wb-viewmodels/
+    // *.js) and confirmed wired to a real [x-*] selector in wb-lazy.js — not
+    // guessed from the attribute's "obvious" name. A few behaviors that exist
+    // as functions but aren't wired to an auto-inject [x-*] selector
+    // (x-parallax, x-countup, x-reveal, x-marquee, x-rotate, x-swing,
+    // x-rubberband) are intentionally left out rather than shown not-working.
+    function fiftyXBehaviors() {
+      return [
+        // Attention/animation effects (button — most of these are click-triggered)
+        '<button x-ripple>Ripple</button>',
+        '<button x-glow color="var(--success-color)">Glow</button>',
+        '<button x-pulse>Click to Pulse</button>',
+        '<button x-shake>Click to Shake</button>',
+        '<button x-bounce>Click to Bounce</button>',
+        '<button x-flash>Click to Flash</button>',
+        '<button x-tada>Click for Tada</button>',
+        '<button x-wobble>Click to Wobble</button>',
+        '<button x-jello>Click for Jello</button>',
+        '<button x-heartbeat>Click for Heartbeat</button>',
+        '<button x-flip>Click to Flip</button>',
+        '<div x-fadein>Fades in as it scrolls into view</div>',
+        '<div x-slidein>Slides in as it scrolls into view</div>',
+        '<div x-zoomin>Zooms in as it scrolls into view</div>',
+        '<h3 x-typewriter text="Typed out letter by letter" speed="40"></h3>',
+        '<div x-rainbow duration="3s">Cycles through rainbow colors</div>',
+        '<button x-confetti count="80" label="🎉 Celebrate"></button>',
+        '<button x-sparkle count="20">Sparkle Button</button>',
+        '<button x-fireworks count="40">Fireworks</button>',
+        '<button x-snow count="40">Let it Snow</button>',
+
+        // Overlays (all self-contained triggers — no separate target element needed)
+        '<button x-confirm confirm-title="Delete item?" confirm-message="This cannot be undone.">Delete</button>',
+        '<button x-prompt prompt-title="Your name" prompt-message="What should we call you?">Ask</button>',
+        '<button x-popover popover-title="Info" popover-content="Extra detail shown on click." position="top">Popover</button>',
+        '<button x-drawer drawer-title="Settings" drawer-content="Drawer content goes here." position="right">Open Drawer</button>',
+        '<img x-lightbox width="200" src="https://picsum.photos/seed/xb/800/500" alt="Click to enlarge">',
+        '<button x-tooltip="Shown on hover, not on click" position="top">Hover me</button>',
+
+        // Feedback
+        '<button x-toast message="Saved successfully!" toast-variant="success">Show Toast</button>',
+        '<button x-notify message="Heads up — something happened." duration="4000">Notify</button>',
+
+        // Utilities
+        '<button x-copy copy-text="npm install wb-starter">Copy Install Command</button>',
+        '<button x-share share-title="wb-starter" share-text="Zero-build web components" share-url="https://cielovistasoftware.github.io/wb-starter/">Share</button>',
+        '<button x-print label="🖨️ Print this page"></button>',
+        '<button x-fullscreen label="⛶ Go Fullscreen"></button>',
+        '<p x-truncate lines="1">This paragraph is much longer than the space allows and gets truncated to a single line with an ellipsis at the end so the layout never breaks.</p>',
+        '<button x-toggle toggle-class="active" toggle-self="true">Toggle My Own "active" Class</button>',
+        '<input x-counter max="50" placeholder="Type here — counts up to 50">',
+        '<button x-dropdown items="Edit,Duplicate,Archive,Delete" label="Actions"></button>',
+        '<div x-countdown date="2027-01-01T00:00:00" format="auto"></div>',
+        '<div x-clock variant="digital" format="24" show-seconds="true"></div>',
+        '<span x-relativetime datetime="2026-01-01T00:00:00"></span>',
+        '<nav x-breadcrumb items="Home,Docs,Behaviors"></nav>',
+        '<input x-search placeholder="Search…">',
+        '<textarea x-autosize placeholder="Grows as you type…" rows="2"></textarea>',
+        '<input x-colorpicker value="#6366f1">',
+        '<input x-tags placeholder="Type and press Enter to add a tag">',
+        '<input x-autocomplete items="Apple,Banana,Cherry,Date,Elderberry" placeholder="Start typing a fruit…">',
+
+        // Combinations — multiple x-* attributes stacked on one element
+        '<button x-ripple x-tooltip="Ripples on click, tooltip on hover">Ripple + Tooltip</button>',
+        '<button x-ripple x-toast message="Ripple fired the toast too" toast-variant="info">Ripple + Toast</button>',
+        '<div x-fadein x-glow color="var(--primary)">Fades in, then glows</div>',
+        '<button x-confetti x-tooltip="Click for confetti" count="60" label="🎊 Party"></button>',
+        '<button x-ripple x-confirm confirm-title="Really?" confirm-message="Ripple + confirm together.">Ripple + Confirm</button>',
+      ].join('\n');
+    }
+
+    // 20 real form-control examples, each with a different x-* behavior (or a
+    // real combination of two). Every attribute is verified against the
+    // actual behavior source (src/wb-viewmodels/*.js) and confirmed wired to
+    // a real [x-*] selector in wb-lazy.js. x-colorpicker, x-otp, and x-file
+    // build their OWN internal <input>(s) as children — a real <input> is a
+    // void element and can't have children, so those three go on a <div>
+    // instead (matching x-file's precedent), never on a bare <input>.
+    function twentyInputs() {
+      return [
+        '<input x-counter max="50" placeholder="Type here — counts up to 50">',
+        '<input x-search placeholder="Search…">',
+        '<div x-colorpicker value="#6366f1"></div>',
+        '<input x-tags placeholder="Type and press Enter to add a tag">',
+        '<input x-autocomplete items="Apple,Banana,Cherry,Date,Elderberry" placeholder="Start typing a fruit…">',
+        '<input x-password type="password" placeholder="Password with show/hide toggle">',
+        '<input x-masked mask="(999) 999-9999" placeholder="Phone number">',
+        '<input x-stepper value="5" min="0" max="10">',
+        '<div x-otp length="6"></div>',
+        '<input x-floatinglabel label="Email address" type="email">',
+        '<input x-label="Full name" placeholder="Jane Doe">',
+        '<input x-label="Email" required type="email" placeholder="you@example.com">',
+        '<input x-tooltip="This field is required" placeholder="Hover for hint">',
+        '<input x-ripple placeholder="Ripples on click (works on any element, not just buttons)">',
+
+        // Combinations — x-label paired with another input behavior
+        '<input x-label="Search" x-search placeholder="Type to search…">',
+        '<input x-label="Tags" x-tags placeholder="Press Enter to add">',
+        '<input x-counter max="100" x-label="Bio" placeholder="Tell us about yourself">',
+        '<input x-label="Password" x-password type="password" placeholder="Enter password">',
+        '<input x-label="Phone" x-masked mask="999-999-9999" placeholder="000-000-0000">',
+        '<input x-masked mask="AA-9999" x-label="License plate" label-position="right" placeholder="XX-0000">',
+      ].join('\n');
+    }
+
+    function fiftyBadges() {
+      const V = ['default', 'primary', 'secondary', 'success', 'warning', 'error', 'info', 'purple', 'pink', 'teal', 'orange'];
+      const S = ['xs', 'sm', 'md', 'lg'];
+      const MOD = ['', ' pill', ' outline', ' removable', ' pill removable'];
+      const out = [];
+      for (let i = 0; i < 50; i++) {
+        const v = V[i % V.length], s = S[i % S.length], m = MOD[i % MOD.length];
+        out.push(`<wb-badge label="#${i + 1} ${v}" variant="${v}" size="${s}"${m}></wb-badge>`);
+      }
+      // a couple of dot badges at the end
+      out.push('<wb-badge variant="success" dot></wb-badge>');
+      out.push('<wb-badge variant="error" dot></wb-badge>');
+      return out.join('\n');
+    }
+
+    function twentyFiveSelects() {
+      const V = ['default', 'success', 'error'];
+      const S = ['sm', 'md', 'lg'];
+      const OPTION_SETS = [
+        [{ value: 'apple', label: 'Apple' }, { value: 'banana', label: 'Banana' }, { value: 'cherry', label: 'Cherry' }],
+        [{ value: 'us', label: 'United States' }, { value: 'ca', label: 'Canada' }, { value: 'mx', label: 'Mexico' }, { value: 'uk', label: 'United Kingdom' }],
+        [{ value: 'red', label: 'Red' }, { value: 'green', label: 'Green' }, { value: 'blue', label: 'Blue' }],
+        [{ value: 'eng', label: 'Engineering' }, { value: 'design', label: 'Design' }, { value: 'sales', label: 'Sales' }, { value: 'support', label: 'Support' }],
+      ];
+      const out = [];
+      for (let i = 0; i < 20; i++) {
+        const v = V[i % V.length], s = S[i % S.length];
+        const options = OPTION_SETS[i % OPTION_SETS.length];
+        out.push(`<wb-select label="#${i + 1} ${v}/${s}" placeholder="Choose one…" variant="${v}" size="${s}" options='${JSON.stringify(options)}'></wb-select>`);
+      }
+      // Explicit flag combinations, one per notable behavior
+      out.push(`<wb-select label="Searchable" searchable placeholder="Type to filter…" options='${JSON.stringify(OPTION_SETS[0])}'></wb-select>`);
+      out.push(`<wb-select label="Clearable" clearable value="banana" options='${JSON.stringify(OPTION_SETS[0])}'></wb-select>`);
+      out.push(`<wb-select label="Multiple" multiple options='${JSON.stringify(OPTION_SETS[1])}'></wb-select>`);
+      out.push(`<wb-select label="Disabled" disabled value="us" options='${JSON.stringify(OPTION_SETS[1])}'></wb-select>`);
+      out.push(`<wb-select label="Required" required placeholder="This one is required" options='${JSON.stringify(OPTION_SETS[2])}'></wb-select>`);
+      return out.join('\n');
+    }
+
+    // 25 GENUINELY DISTINCT combinations (no two identical) via mixed-radix
+    // decoding of the index across all 5 property dimensions -- 2×2×2×3×3 =
+    // 144 possible combos, so the first 25 indices each decode to a unique
+    // one, guaranteed by construction (not just "probably different" like a
+    // simple modulo-per-dimension loop can produce). VARIANT and SIZE go
+    // FIRST (fastest-changing) since they're the visually distinctive
+    // properties -- put last, they'd barely change across only 25 of 144
+    // combos and every visible switch would look identical (confirmed live).
+    function twentyFiveSwitches() {
+      const VARIANT = ['default', 'primary', 'success'];
+      const SIZE = ['sm', 'md', 'lg'];
+      const CHECKED = [false, true];
+      const DISABLED = [false, true];
+      const LABEL_POS = ['end', 'start'];
+      const DIMS = [VARIANT, SIZE, CHECKED, DISABLED, LABEL_POS];
+
+      const out = [];
+      for (let i = 0; i < 25; i++) {
+        let rem = i;
+        const picked = DIMS.map((dim) => {
+          const v = dim[rem % dim.length];
+          rem = Math.floor(rem / dim.length);
+          return v;
+        });
+        const [variant, size, checked, disabled, labelPosition] = picked;
+        const label = `#${i + 1} ${variant}/${size}${checked ? ' checked' : ''}${disabled ? ' disabled' : ''} (label-${labelPosition})`;
+        const attrs = [
+          `label="${label}"`,
+          `variant="${variant}"`,
+          `size="${size}"`,
+          `label-position="${labelPosition}"`,
+          checked ? 'checked' : '',
+          disabled ? 'disabled' : '',
+        ].filter(Boolean).join(' ');
+        out.push(`<wb-switch ${attrs}></wb-switch>`);
+      }
+      return out.join('\n');
+    }
+
+    // Real-world YouTube URL shapes (from a public URL-format reference list)
+    // stress-testing x-youtube's url= parser: www/no-www/mobile domains,
+    // query params in either order, hash timestamps, /watch/ID (no query),
+    // /v/ID, youtu.be short links (with/without extra params), /embed/ID,
+    // youtube-nocookie.com, /e/ID, /shorts/ID, /live/ID — plus one
+    // intentionally-unparseable oembed API URL (not a real video page) to
+    // show the "couldn't parse" warning path fails gracefully, not silently.
+    // Each of the 20 format shapes is paired with a DIFFERENT real video ID —
+    // the source list only has ~10 underlying videos reused across formats,
+    // which looked like the same handful of videos repeated 6× over.
+    function twentyYouTubeFormats() {
+      const urls = [
+        'http://www.youtube.com/watch?v=-wtIMTCHWuI',
+        'https://m.youtube.com/watch?v=lalOy8Mbfdc',
+        'https://youtube.com/watch?v=yZv2daTWRZU&feature=em-uploademail',
+        'http://www.youtube.com/watch?v=0zM3nApSvMg#t=0m10s',
+        'https://www.youtube.com/watch?feature=player_embedded&v=dQw4w9WgXcQ',
+        'https://www.youtube.com/watch?app=desktop&v=9bZkp7q19f0',
+        'https://www.youtube.com/watch/kJQP7kiw5Fk',
+        'https://www.youtube.com/watch/JGwWNGJdvx8?app=desktop',
+        'http://www.youtube.com/v/fJ9rUzIMcZQ',
+        'https://www.youtube.com/v/OPf0YbXqDm0?fs=1&hl=en_US&rel=0',
+        'http://youtu.be/YQHsXMglC9A',
+        'https://youtu.be/RgKAFK5djSk?feature=youtube_gdata_player',
+        'https://youtu.be/oTJRivZTMLs?list=PLToa5JuFMsXTNkrLJbRlB--76IAOjRM9b',
+        'https://youtu.be/M9bq_alk-sw?si=B_RZg_I-lLaa7UU-',
+        'https://www.youtube.com/embed/nas1rJpm7wY?rel=0',
+        'https://www.youtube.com/embed/CevxZvSJLk8',
+        'https://www.youtube-nocookie.com/embed/hT_nvWreIhg?rel=0',
+        'https://www.youtube.com/e/60ItHLz5WEA',
+        'https://www.youtube.com/shorts/j9rZxAF3C0I',
+        'https://www.youtube.com/live/8hBmepWUJoc',
+        'http://www.youtube.com/oembed?url=http%3A//www.youtube.com/watch?v%3D-wtIMTCHWuI&format=json',
+      ];
+      return urls.map((u) => `<div x-youtube url="${u}"></div>`).join('\n');
+    }
+
+    document.getElementById('pg-examples').addEventListener('change', async (e) => {
+      const which = e.target.value;
+      if (!which) return;
+      if (which === 'form') input.value = SAMPLE;
+      else if (which === 'cards') input.value = fiftyCards();
+      else if (which === 'heroes') input.value = twentyHeroes();
+      else if (which === 'signature-heroes') input.value = twentySignatureHeroes();
+      else if (which === 'xbehaviors') input.value = fiftyXBehaviors();
+      else if (which === 'inputs') input.value = twentyInputs();
+      else if (which === 'badges') input.value = fiftyBadges();
+      else if (which === 'selects') input.value = twentyFiveSelects();
+      else if (which === 'switches') input.value = twentyFiveSwitches();
+      else if (which === 'youtube') input.value = twentyYouTubeFormats();
+      setSortModes(EXAMPLE_SORT_MODES[which] || []);
+      e.target.value = ''; // reset to placeholder
+      endpointPanel.hidden = true;
+      fitEditor();
+      await render();
+      // A freshly loaded example should always start scrolled to its top,
+      // whether the preview pane itself had scrolled or the whole page had.
+      preview.scrollTop = 0;
+      preview.closest('.pg-panel').scrollIntoView({ behavior: 'smooth', block: 'start' });
+    });
+
+    const copyBtn = document.getElementById('pg-copy');
+    copyBtn.addEventListener('click', async () => {
+      const ok = await writeToClipboard(input.value);
+      if (!ok) return;
+      const orig = copyBtn.textContent;
+      copyBtn.textContent = '✓ Copied';
+      setTimeout(() => { copyBtn.textContent = orig; }, 1500);
+    });
+    document.getElementById('pg-clear').addEventListener('click', () => {
+      endpointPanel.hidden = true;
+      input.value = '';
+      preview.innerHTML = '';
+      errorBox.hidden = true;
+      setSortModes([]);
+      fitEditor();
+      input.focus();
+    });
+    // Enter should behave like a code editor: carry the current line's
+    // indentation onto the new line, and indent one level deeper when the
+    // line so far hasn't closed its tag yet (e.g. `<wb-cardhero` opening a
+    // multi-line attribute list — this project's own §5 markup style).
+    input.addEventListener('keydown', (e) => {
+      if (e.key !== 'Enter') return;
+      const val = input.value;
+      const pos = input.selectionStart;
+      const lineStart = val.lastIndexOf('\n', pos - 1) + 1;
+      const beforeCursor = val.slice(lineStart, pos);
+      let indent = (beforeCursor.match(/^[ \t]*/) || [''])[0];
+      const trimmed = beforeCursor.trim();
+      if (trimmed && !trimmed.endsWith('>')) indent += '  ';
+      e.preventDefault();
+      document.execCommand('insertText', false, '\n' + indent);
+    });
+
+    let debounce;
+    input.addEventListener('input', () => {
+      fitEditor();
+      // Any manual edit invalidates whatever the endpoint panel is showing --
+      // it reflects a PAST submit of DIFFERENT content, not the current
+      // preview. Without this, submit a form once, then paste unrelated HTML
+      // (e.g. the YouTube example, which has no form at all), and the panel
+      // stays visible showing stale data with nothing live driving it (#364).
+      endpointPanel.hidden = true;
+      clearTimeout(debounce); debounce = setTimeout(render, 400);
+    });
+    window.addEventListener('resize', fitEditor);
+
+    fitEditor();
+    render();
+    // WB's initial pass may re-shrink the textarea after load — re-fit once settled.
+    setTimeout(fitEditor, 600);
+  </script>
+</body>
+</html>

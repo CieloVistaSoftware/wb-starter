@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Blank test fixture</title>
+</head>
+<body>
+  <!-- Deliberately no scripts, no WB bootstrap. Used by tests that need a
+       real page (for correct origin/module resolution via page.setContent())
+       without the real site's own site-engine.js calling WB.init() first —
+       that call races/leaks state into a test's own later WB.init() call
+       when done via page.goto('/') + page.setContent() on the same page
+       (module state isn't guaranteed to reset unless the navigation is a
+       true cross-document navigation, which setContent() alone is not). -->
+</body>
+</html>

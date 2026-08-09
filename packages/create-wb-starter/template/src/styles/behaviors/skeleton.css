@@ -1,0 +1,68 @@
+/**
+ * Skeleton Behavior Styles
+ * -----------------------------------------------------------------------------
+ * Custom element: <wb-skeleton>
+ * CSS targets tag and attributes directly — JS adds no classes.
+ * A skeleton is a shimmering placeholder block. That's it.
+ * -----------------------------------------------------------------------------
+ */
+
+wb-skeleton {
+  display: block;
+  height: 1rem;
+  border-radius: 4px;
+  background: linear-gradient(
+    90deg,
+    var(--bg-tertiary, rgba(255,255,255,0.05)) 0%,
+    var(--bg-secondary, rgba(255,255,255,0.15)) 50%,
+    var(--bg-tertiary, rgba(255,255,255,0.05)) 100%
+  );
+  background-size: 200% 100%;
+  animation: wb-skeleton-shimmer 1.5s ease-in-out infinite;
+}
+
+/* Lines — each child line */
+wb-skeleton > span {
+  display: block;
+  height: 1rem;
+  border-radius: 4px;
+  background: linear-gradient(
+    90deg,
+    var(--bg-tertiary, rgba(255,255,255,0.05)) 0%,
+    var(--bg-secondary, rgba(255,255,255,0.15)) 50%,
+    var(--bg-tertiary, rgba(255,255,255,0.05)) 100%
+  );
+  background-size: 200% 100%;
+  animation: wb-skeleton-shimmer 1.5s ease-in-out infinite;
+}
+
+wb-skeleton > span + span {
+  margin-top: 0.5rem;
+}
+
+/* Last line is shorter for visual realism */
+wb-skeleton > span:last-child:not(:first-child) {
+  width: 60%;
+}
+
+/* When skeleton has children (lines), hide own background */
+wb-skeleton:has(> span) {
+  background: none;
+  animation: none;
+  height: auto;
+}
+
+@keyframes wb-skeleton-shimmer {
+  0% { background-position: 200% 0; }
+  100% { background-position: -200% 0; }
+}
+
+/* Variants (issue #129) */
+wb-skeleton[variant="circle"] {
+  border-radius: 50%;
+  aspect-ratio: 1 / 1;
+  height: auto;
+}
+wb-skeleton[variant="rect"] {
+  border-radius: 4px;
+}

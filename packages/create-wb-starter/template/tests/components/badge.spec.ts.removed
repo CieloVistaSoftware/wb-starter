@@ -1,0 +1,320 @@
+/**
+ * Badge Behavior Tests
+ * Comprehensive tests for wb-badge component
+ * Source: src/wb-models/badge.schema.json
+ * CSS: src/styles/behaviors/badge.css
+ */
+import { test, expect, Page } from '@playwright/test';
+
+const BASE_URL = '/demos/test-harness.html';
+
+async function waitForWB(page: Page) {
+  await page.goto(BASE_URL);
+  await page.waitForFunction(
+    () => (window as any).WB && (window as any).WB.behaviors && Object.keys((window as any).WB.behaviors).length > 0,
+    { timeout: 10000 }
+  );
+  await page.waitForTimeout(100);
+}
+
+async function injectAndScan(page: Page, html: string) {
+  await waitForWB(page);
+
+  await page.evaluate((h: string) => {
+    const container = document.createElement('div');
+    container.id = 'test-container';
+    container.innerHTML = h;
+    document.body.appendChild(container);
+  }, html);
+
+  await page.evaluate(() => {
+    (window as any).WB.scan(document.getElementById('test-container'));
+  });
+
+  await page.waitForTimeout(500);
+}
+
+// ─── RENDERING ─────────────────────────────────────────────────────
+
+test.describe('Badge — Rendering', () => {
+
+  test('renders basic badge without errors', async ({ page }) => {
+    const errors: string[] = [];
+    page.on('pageerror', (err) => errors.push(err.message));
+
+    await injectAndScan(page, '<wb-badge>Basic</wb-badge>');
+
+    const badge = page.locator('.wb-badge').first();
+    await expect(badge).toBeVisible();
+    await expect(badge).toHaveText('Basic');
+    expect(errors).toHaveLength(0);
+  });
+
+  test('renders all schema test.setup fixtures', async ({ page }) => {
+    const errors: string[] = [];
+    page.on('pageerror', (err) => errors.push(err.message));
+
+    const fixtures = [
+      '<wb-badge>Basic badge content</wb-badge>',
+      '<wb-badge variant="default">variant=default</wb-badge>',
+      '<wb-badge variant="primary">variant=primary</wb-badge>',
+      '<wb-badge variant="secondary">variant=secondary</wb-badge>',
+      '<wb-badge size="xs">size=xs</wb-badge>',
+      '<wb-badge size="sm">size=sm</wb-badge>',
+      '<wb-badge size="md">size=md</wb-badge>',
+      '<wb-badge pill>with pill</wb-badge>',
+    ];
+
+    await injectAndScan(page, fixtures.join('\n'));
+
+    const badges = page.locator('.wb-badge');
+    await expect(badges).toHaveCount(8);
+    expect(errors).toHaveLength(0);
+  });
+});
+
+// ─── VARIANTS ──────────────────────────────────────────────────────
+
+test.describe('Badge — Variants', () => {
+
+  const variants = ['default', 'primary', 'secondary', 'success', 'warning', 'error', 'info'] as const;
+
+  for (const variant of variants) {
+    test(`applies wb-badge--${variant} class for variant="${variant}"`, async ({ page }) => {
+      await injectAndScan(page, `<wb-badge variant="${variant}">${variant}</wb-badge>`);
+
+      const badge = page.locator('.wb-badge').first();
+      await expect(badge).toBeVisible();
+      await expect(badge).toHaveClass(new RegExp(`wb-badge--${variant}`));
+    });
+  }
+
+  test('uses default variant when no variant specified', async ({ page }) => {
+    await injectAndScan(page, '<wb-badge>No variant</wb-badge>');
+
+    const badge = page.locator('.wb-badge').first();
+    await expect(badge).toBeVisible();
+    // Should have base class, with default styling via CSS
+    await expect(badge).toHaveClass(/wb-badge/);
+  });
+});
+
+// ─── SIZES ─────────────────────────────────────────────────────────
+
+test.describe('Badge — Sizes', () => {
+
+  const sizes = ['xs', 'sm', 'md', 'lg'] as const;
+
+  for (const size of sizes) {
+    test(`applies wb-badge--${size} class for size="${size}"`, async ({ page }) => {
+      await injectAndScan(page, `<wb-badge size="${size}">Size ${size}</wb-badge>`);
+
+      const badge = page.locator('.wb-badge').first();
+      await expect(badge).toBeVisible();
+      await expect(badge).toHaveClass(new RegExp(`wb-badge--${size}`));
+    });
+  }
+});
+
+// ─── MODIFIERS ─────────────────────────────────────────────────────
+
+test.describe('Badge — Modifiers', () => {
+
+  test('applies pill class when pill attribute set', async ({ page }) => {
+    await injectAndScan(page, '<wb-badge pill>Pill badge</wb-badge>');
+
+    const badge = page.locator('.wb-badge').first();
+    await expect(badge).toBeVisible();
+    await expect(badge).toHaveClass(/wb-badge--pill/);
+  });
+
+  test('applies dot class when dot attribute set', async ({ page }) => {
+    await injectAndScan(page, '<wb-badge dot></wb-badge>');
+
+    const badge = page.locator('.wb-badge').first();
+    await expect(badge).toBeVisible();
+    await expect(badge).toHaveClass(/wb-badge--dot/);
+  });
+
+  test('applies outline class when outline attribute set', async ({ page }) => {
+    await injectAndScan(page, '<wb-badge outline>Outline</wb-badge>');
+
+    const badge = page.locator('.wb-badge').first();
+    await expect(badge).toBeVisible();
+    await expect(badge).toHaveClass(/wb-badge--outline/);
+  });
+
+  test('combines variant + pill + outline', async ({ page }) => {
+    await injectAndScan(page, '<wb-badge variant="primary" pill outline>Combo</wb-badge>');
+
+    const badge = page.locator('.wb-badge').first();
+    await expect(badge).toBeVisible();
+    await expect(badge).toHaveClass(/wb-badge--primary/);
+    await expect(badge).toHaveClass(/wb-badge--pill/);
+    await expect(badge).toHaveClass(/wb-badge--outline/);
+  });
+});
+
+// ─── CSS STYLING ───────────────────────────────────────────────────
+
+test.describe('Badge — CSS Styling', () => {
+
+  test('displays as inline-block', async ({ page }) => {
+    await injectAndScan(page, '<wb-badge>Inline</wb-badge>');
+
+    const badge = page.locator('.wb-badge').first();
+    const display = await badge.evaluate((el) => getComputedStyle(el).display);
+    expect(display).toBe('inline-block');
+  });
+
+  test('success variant has success background color', async ({ page }) => {
+    await injectAndScan(page, '<wb-badge variant="success">OK</wb-badge>');
+
+    const badge = page.locator('.wb-badge--success').first();
+    await expect(badge).toBeVisible();
+    const bg = await badge.evaluate((el) => getComputedStyle(el).backgroundColor);
+    // Should have a non-transparent background
+    expect(bg).not.toBe('rgba(0, 0, 0, 0)');
+    expect(bg).not.toBe('transparent');
+  });
+
+  test('warning variant has distinct color from default', async ({ page }) => {
+    await injectAndScan(page, [
+      '<wb-badge variant="default" id="b-default">Default</wb-badge>',
+      '<wb-badge variant="warning" id="b-warning">Warning</wb-badge>',
+    ].join('\n'));
+
+    const defaultBg = await page.locator('#b-default').evaluate(
+      (el) => getComputedStyle(el).backgroundColor
+    );
+    const warningBg = await page.locator('#b-warning').evaluate(
+      (el) => getComputedStyle(el).backgroundColor
+    );
+    expect(defaultBg).not.toBe(warningBg);
+  });
+});
+
+// ─── SCHEMA TEST MATRIX ────────────────────────────────────────────
+
+test.describe('Badge — Schema Matrix Combinations', () => {
+
+  test('renders matrix combination: success + dot', async ({ page }) => {
+    await injectAndScan(page, '<wb-badge variant="success" dot></wb-badge>');
+
+    const badge = page.locator('.wb-badge').first();
+    await expect(badge).toBeVisible();
+    await expect(badge).toHaveClass(/wb-badge--success/);
+    await expect(badge).toHaveClass(/wb-badge--dot/);
+  });
+
+  test('renders matrix combination: primary + pill', async ({ page }) => {
+    await injectAndScan(page, '<wb-badge variant="primary" pill>5</wb-badge>');
+
+    const badge = page.locator('.wb-badge').first();
+    await expect(badge).toBeVisible();
+    await expect(badge).toHaveText('5');
+    await expect(badge).toHaveClass(/wb-badge--primary/);
+    await expect(badge).toHaveClass(/wb-badge--pill/);
+  });
+
+  test('renders matrix combination: info + removable', async ({ page }) => {
+    await injectAndScan(page, '<wb-badge variant="info" removable>Tag</wb-badge>');
+
+    const badge = page.locator('.wb-badge').first();
+    await expect(badge).toBeVisible();
+    await expect(badge).toHaveClass(/wb-badge--info/);
+  });
+
+  test('renders matrix combination: primary + outline', async ({ page }) => {
+    await injectAndScan(page, '<wb-badge variant="primary" outline>Outline</wb-badge>');
+
+    const badge = page.locator('.wb-badge').first();
+    await expect(badge).toBeVisible();
+    await expect(badge).toHaveClass(/wb-badge--primary/);
+    await expect(badge).toHaveClass(/wb-badge--outline/);
+  });
+
+  test('renders all 8 matrix combinations without errors', async ({ page }) => {
+    const errors: string[] = [];
+    page.on('pageerror', (err) => errors.push(err.message));
+
+    const combos = [
+      '<wb-badge>New</wb-badge>',
+      '<wb-badge variant="success">Done</wb-badge>',
+      '<wb-badge variant="warning">Warning</wb-badge>',
+      '<wb-badge variant="error">Error</wb-badge>',
+      '<wb-badge variant="primary" pill>5</wb-badge>',
+      '<wb-badge variant="success" dot></wb-badge>',
+      '<wb-badge variant="info" removable>Tag</wb-badge>',
+      '<wb-badge variant="primary" outline>Outline</wb-badge>',
+    ];
+
+    await injectAndScan(page, combos.join('\n'));
+
+    const badges = page.locator('.wb-badge');
+    const count = await badges.count();
+    expect(count).toBeGreaterThanOrEqual(8);
+    expect(errors).toHaveLength(0);
+  });
+});
+
+// ─── SEMANTIC ELEMENT ──────────────────────────────────────────────
+
+test.describe('Badge — Semantics', () => {
+
+  test('badge is a span element per schema', async ({ page }) => {
+    await injectAndScan(page, '<wb-badge>Semantic</wb-badge>');
+
+    const badge = page.locator('.wb-badge').first();
+    const tagName = await badge.evaluate((el) => el.tagName.toLowerCase());
+    // wb-badge is a custom element; inner or self should be accessible
+    expect(['wb-badge', 'span']).toContain(tagName);
+  });
+
+  test('badge is accessible with status role', async ({ page }) => {
+    await injectAndScan(page, '<wb-badge>Status</wb-badge>');
+
+    const badge = page.locator('.wb-badge').first();
+    await expect(badge).toBeVisible();
+    // Schema says implicitRole: "status" — check if role is set
+    const role = await badge.evaluate((el) => el.getAttribute('role'));
+    // Role may or may not be explicitly set depending on implementation
+    // At minimum, badge should be visible and have text content
+    const text = await badge.textContent();
+    expect(text).toContain('Status');
+  });
+});
+
+// ─── MULTIPLE BADGES ───────────────────────────────────────────────
+
+test.describe('Badge — Multiple Instances', () => {
+
+  test('renders multiple badges side by side', async ({ page }) => {
+    await injectAndScan(page, [
+      '<wb-badge variant="primary">One</wb-badge>',
+      '<wb-badge variant="success">Two</wb-badge>',
+      '<wb-badge variant="error">Three</wb-badge>',
+    ].join('\n'));
+
+    const badges = page.locator('.wb-badge');
+    await expect(badges).toHaveCount(3);
+    await expect(badges.nth(0)).toHaveText('One');
+    await expect(badges.nth(1)).toHaveText('Two');
+    await expect(badges.nth(2)).toHaveText('Three');
+  });
+
+  test('each badge has independent variant styling', async ({ page }) => {
+    await injectAndScan(page, [
+      '<wb-badge variant="primary" id="bp">P</wb-badge>',
+      '<wb-badge variant="error" id="be">E</wb-badge>',
+    ].join('\n'));
+
+    const primaryBg = await page.locator('#bp').evaluate(
+      (el) => getComputedStyle(el).backgroundColor
+    );
+    const errorBg = await page.locator('#be').evaluate(
+      (el) => getComputedStyle(el).backgroundColor
+    );
+    expect(primaryBg).not.toBe(errorBg);
+  });
+});

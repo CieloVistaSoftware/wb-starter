@@ -1,0 +1,61 @@
+/**
+ * Stepper Behavior Styles
+ * -----------------------------------------------------------------------------
+ * Works with src/wb-viewmodels/stepper.js — a [−][value][+] numeric control.
+ * Theme-driven only (no hardcoded colors). #178
+ * -----------------------------------------------------------------------------
+ */
+
+.wb-stepper {
+  display: inline-flex;
+  align-items: stretch;
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-md, 6px);
+  overflow: hidden;
+  background: var(--bg-secondary);
+  user-select: none;
+  line-height: 1;
+}
+
+.wb-stepper__btn {
+  border: 0;
+  background: var(--bg-tertiary);
+  color: var(--text-primary);
+  font-size: 1.1rem;
+  line-height: 1;
+  padding: 0.4rem 0.85rem;
+  cursor: pointer;
+  transition: background 0.15s ease, color 0.15s ease;
+}
+
+.wb-stepper__btn:hover {
+  background: var(--primary);
+  color: var(--text-primary);
+}
+
+.wb-stepper__btn:active {
+  transform: translateY(1px);
+}
+
+.wb-stepper__value {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 2.5rem;
+  padding: 0.4rem 0.5rem;
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+/* Input form: <input x-stepper> wrapped between the two buttons */
+.wb-stepper__input {
+  border: 0;
+  width: 3rem;
+  text-align: center;
+  background: var(--bg-secondary);
+  color: var(--text-primary);
+  font: inherit;
+}
+.wb-stepper__input:focus {
+  outline: none;
+}

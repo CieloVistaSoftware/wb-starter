@@ -1,0 +1,31 @@
+{
+  "name": "create-wb-starter",
+  "version": "0.1.0",
+  "type": "module",
+  "description": "Scaffold a full wb-starter site (zero-build web components, schema-first MVVM) into a new project directory.",
+  "bin": {
+    "create-wb-starter": "bin/create-wb-starter.js"
+  },
+  "files": [
+    "bin",
+    "template"
+  ],
+  "keywords": [
+    "create-wb-starter",
+    "wb-starter",
+    "scaffold",
+    "starter",
+    "no-build",
+    "web-components"
+  ],
+  "author": "CieloVista Software",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/CieloVistaSoftware/wb-starter.git",
+    "directory": "packages/create-wb-starter"
+  },
+  "engines": {
+    "node": ">=18"
+  }
+}

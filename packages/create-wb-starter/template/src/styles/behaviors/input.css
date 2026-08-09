@@ -1,0 +1,175 @@
+/**
+ * Input, Textarea & Select Behavior Styles
+ * -----------------------------------------------------------------------------
+ * Extracted from components.css (Post-Phase 3 cleanup)
+ * Works with src/wb-viewmodels/semantics/input.js
+ *
+ * #448: `wb-select` below is a TAG selector, not a class -- select()
+ * (semantics/select.js) no longer adds a classList.add('wb-select') that
+ * just duplicated the <wb-select> tag name (that container is only ever
+ * the <wb-select> custom tag itself; a native <select> never reaches that
+ * code path at all). `.wb-input`/`.wb-textarea` are unrelated components,
+ * untouched.
+ * -----------------------------------------------------------------------------
+ */
+
+.wb-input,
+.wb-textarea,
+wb-select {
+  display: block;
+  width: 100%;
+  padding: 0.5rem 0.75rem;
+  font-size: 1rem;
+  line-height: 1.5;
+  color: var(--text-primary);
+  background-color: var(--bg-primary);
+  background-clip: padding-box;
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-md, 6px);
+  transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+}
+
+/* Theme bare native form controls so <input>/<select>/<textarea> without a
+   .wb-input class aren't rendered browser-white in dark themes (#191). Excludes
+   controls with their own rendering (checkbox/radio/range/color/file/buttons). */
+input:not([type="checkbox"]):not([type="radio"]):not([type="range"]):not([type="color"]):not([type="file"]):not([type="submit"]):not([type="button"]):not([type="reset"]):not([type="image"]),
+select,
+textarea {
+  color: var(--text-primary);
+  background-color: var(--bg-primary);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-md, 6px);
+}
+
+/* date/time/datetime-local/week/month's native calendar/clock picker icon
+   defaults to a dark glyph baked into the browser's own UA rendering --
+   invisible against this theme's dark input background (confirmed live,
+   "can't see the icon"). Invert it so it reads light-on-dark instead;
+   Webkit/Blink-only pseudo-element, no equivalent needed for Firefox
+   (renders its own visible-by-default icon already). */
+input[type="date"]::-webkit-calendar-picker-indicator,
+input[type="time"]::-webkit-calendar-picker-indicator,
+input[type="datetime-local"]::-webkit-calendar-picker-indicator,
+input[type="week"]::-webkit-calendar-picker-indicator,
+input[type="month"]::-webkit-calendar-picker-indicator {
+  filter: invert(0.8);
+  cursor: pointer;
+}
+
+.wb-input:focus,
+.wb-textarea:focus,
+wb-select:focus {
+  border-color: var(--primary);
+  outline: 0;
+  box-shadow: 0 0 0 3px hsla(var(--hue-primary), var(--saturation-primary), var(--lightness-primary), 0.2);
+}
+
+.wb-input::placeholder,
+.wb-textarea::placeholder {
+  color: var(--text-muted);
+  opacity: 1;
+}
+
+.wb-input:disabled,
+.wb-textarea:disabled,
+wb-select:disabled {
+  background-color: var(--bg-secondary);
+  opacity: 1;
+  cursor: not-allowed;
+}
+
+/* Sizes */
+.wb-input--xs, .wb-select--xs, .wb-textarea--xs {
+  padding: 0.125rem 0.5rem;
+  font-size: 0.75rem;
+}
+
+.wb-input--sm, .wb-select--sm, .wb-textarea--sm {
+  padding: 0.25rem 0.75rem;
+  font-size: 0.875rem;
+}
+
+.wb-input--lg, .wb-select--lg, .wb-textarea--lg {
+  padding: 0.75rem 1rem;
+  font-size: 1.125rem;
+}
+
+.wb-input--xl, .wb-select--xl, .wb-textarea--xl {
+  padding: 1rem 1.25rem;
+  font-size: 1.25rem;
+}
+
+/* Validation States */
+.wb-input--success,
+.wb-textarea--success,
+.wb-select--success {
+  border-color: var(--success-color);
+}
+.wb-input--success:focus,
+.wb-textarea--success:focus,
+.wb-select--success:focus {
+  box-shadow: 0 0 0 3px hsla(142, 76%, 45%, 0.2);
+}
+
+.wb-input--error,
+.wb-textarea--error,
+.wb-select--error {
+  border-color: var(--danger-color);
+}
+.wb-input--error:focus,
+.wb-textarea--error:focus,
+.wb-select--error:focus {
+  box-shadow: 0 0 0 3px hsla(0, 84%, 60%, 0.2);
+}
+
+/* Checkbox & Radio */
+.wb-checkbox,
+.wb-radio {
+  accent-color: var(--primary);
+  width: 1.2em;
+  height: 1.2em;
+  cursor: pointer;
+}
+
+/* Range */
+.wb-range {
+  width: 100%;
+  cursor: pointer;
+  accent-color: var(--primary);
+}
+
+/* Validation variants via raw data-variant attribute (issue #133) */
+input[data-variant="success"],
+textarea[data-variant="success"],
+select[data-variant="success"] { border: 1px solid var(--success-color); }
+input[data-variant="error"],
+textarea[data-variant="error"],
+select[data-variant="error"] { border: 1px solid var(--danger-color); }
+
+/* -----------------------------------------------------------------------------
+ * Native form controls — theme-aware defaults (#191)
+ * Plain <input>/<textarea>/<select> in docs/showcases have no .wb-input class
+ * and were falling back to the browser-native white box on dark themes. Theme
+ * them from the active theme so they are dark on dark, light on light. Excludes
+ * range/checkbox/radio/color (they have their own theming via accent-color).
+ * Low specificity so .wb-input and component-specific rules still win.
+ * --------------------------------------------------------------------------- */
+input:not([type="range"]):not([type="checkbox"]):not([type="radio"]):not([type="color"]):not([type="file"]),
+textarea,
+select {
+  background-color: var(--bg-primary);
+  color: var(--text-primary);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-md, 6px);
+}
+input:not([type="range"]):not([type="checkbox"]):not([type="radio"])::placeholder,
+textarea::placeholder {
+  color: var(--text-muted);
+}
+
+/* Native checkbox/radio: theme-accent the control (was browser default). #201 */
+input[type="checkbox"],
+input[type="radio"] {
+  accent-color: var(--primary);
+  cursor: pointer;
+}

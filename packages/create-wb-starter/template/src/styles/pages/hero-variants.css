@@ -1,0 +1,46 @@
+
+
+/* Extracted from pages/hero-variants.html */
+@keyframes animStar {
+      from { transform: translateY(0px); }
+      to { transform: translateY(-2000px); }
+    }
+
+@keyframes grid-move {
+      0% { background-position: 0 0; }
+      100% { background-position: 0 1000px; }
+    }
+
+@keyframes aurora-expand {
+      0% { transform: scale(1); filter: blur(0); }
+      100% { transform: scale(2); filter: blur(20px); }
+    }
+
+@keyframes mesh-blob {
+      0% { transform: translate(0, 0) rotate(0deg); }
+      100% { transform: translate(-20px, 20px) rotate(10deg); }
+    }
+
+@keyframes gradient-bg {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+  }
+
+.wb-zoom-bg {
+      position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+      background-size: cover; background-position: center;
+      opacity: 0;
+    }
+    .wb-zoom-bg--1 { animation: zoomCycle 20s linear infinite; }
+    .wb-zoom-bg--2 { animation: zoomCycle 20s linear infinite; animation-delay: 10s; }
+    
+    @keyframes zoomCycle {
+      0% { opacity: 0; transform: scale(1); }
+      5% { opacity: 1; }
+      45% { opacity: 1; }
+      50% { opacity: 0; transform: scale(2); }
+      100% { opacity: 0; transform: scale(1); }
+    }
+
+.wb-tooltip-container:hover .wb-tooltip-glass { opacity: 1; }

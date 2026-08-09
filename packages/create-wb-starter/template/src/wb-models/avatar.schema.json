@@ -1,0 +1,215 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "avatar.schema.json",
+  "title": "Avatar",
+  "description": "User avatar with image, initials fallback, and status indicator",
+  "schemaFor": "avatar",
+  "baseClass": "wb-avatar",
+  "semanticElement": {
+    "tagName": "div",
+    "implicitRole": "img"
+  },
+  "compliance": {
+    "baseClass": "wb-avatar",
+    "supportLevel": "stable",
+    "accessibility": "high"
+  },
+  "properties": {
+    "src": {
+      "type": "string",
+      "description": "Image source URL",
+      "default": ""
+    },
+    "alt": {
+      "type": "string",
+      "description": "Alt text for image",
+      "default": ""
+    },
+    "initials": {
+      "type": "string",
+      "description": "Fallback initials (2 chars)",
+      "default": ""
+    },
+    "name": {
+      "type": "string",
+      "description": "Full name (generates initials if not provided)",
+      "default": ""
+    },
+    "size": {
+      "type": "string",
+      "enum": [
+        "xs",
+        "sm",
+        "md",
+        "lg",
+        "xl",
+        "2xl"
+      ],
+      "default": "md",
+      "appliesClass": "wb-avatar--{{value}}"
+    },
+    "shape": {
+      "type": "string",
+      "enum": [
+        "circle",
+        "square",
+        "rounded"
+      ],
+      "default": "circle",
+      "appliesClass": "wb-avatar--{{value}}"
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "",
+        "online",
+        "offline",
+        "busy",
+        "away"
+      ],
+      "description": "Status indicator (empty = no indicator)",
+      "default": ""
+    },
+    "bordered": {
+      "type": "boolean",
+      "description": "Show border",
+      "default": false,
+      "appliesClass": "wb-avatar--bordered"
+    }
+  },
+  "$view": [],
+  "$methods": {
+    "setImage": {
+      "description": "Sets the image source",
+      "params": [
+        "src",
+        "alt"
+      ]
+    },
+    "setInitials": {
+      "description": "Sets initials",
+      "params": [
+        "initials"
+      ]
+    },
+    "setStatus": {
+      "description": "Sets status",
+      "params": [
+        "status"
+      ]
+    },
+    "clearStatus": {
+      "description": "Removes status indicator",
+      "params": []
+    }
+  },
+  "$cssAPI": {
+    "--wb-avatar-size": {
+      "default": "40px",
+      "description": "Avatar size"
+    },
+    "--wb-avatar-bg": {
+      "default": "var(--bg-secondary, #e5e7eb)",
+      "description": "Background (for initials)"
+    },
+    "--wb-avatar-color": {
+      "default": "var(--text-secondary, #6b7280)",
+      "description": "Initials text color"
+    },
+    "--wb-avatar-font-size": {
+      "default": "0.875rem",
+      "description": "Initials font size"
+    },
+    "--wb-avatar-font-weight": {
+      "default": "600",
+      "description": "Initials font weight"
+    },
+    "--wb-avatar-border": {
+      "default": "2px solid var(--bg-surface, #ffffff)",
+      "description": "Border style"
+    },
+    "--wb-avatar-radius": {
+      "default": "50%",
+      "description": "Border radius"
+    },
+    "--wb-avatar-status-size": {
+      "default": "12px",
+      "description": "Status indicator size"
+    },
+    "--wb-avatar-status-online": {
+      "default": "#22c55e",
+      "description": "Online status color"
+    },
+    "--wb-avatar-status-offline": {
+      "default": "#9ca3af",
+      "description": "Offline status color"
+    },
+    "--wb-avatar-status-busy": {
+      "default": "#ef4444",
+      "description": "Busy status color"
+    },
+    "--wb-avatar-status-away": {
+      "default": "#f59e0b",
+      "description": "Away status color"
+    }
+  },
+  "accessibility": {
+    "role": "img",
+    "ariaLabel": "dynamic from name or alt"
+  },
+  "test": {
+    "setup": [
+      "<wb-avatar>Basic avatar content</wb-avatar>",
+      "<wb-avatar size=\"xs\">size=xs</wb-avatar>",
+      "<wb-avatar size=\"sm\">size=sm</wb-avatar>",
+      "<wb-avatar size=\"md\">size=md</wb-avatar>",
+      "<wb-avatar shape=\"circle\">shape=circle</wb-avatar>",
+      "<wb-avatar shape=\"square\">shape=square</wb-avatar>",
+      "<wb-avatar shape=\"rounded\">shape=rounded</wb-avatar>",
+      "<wb-avatar status=\"online\">status=online</wb-avatar>"
+    ],
+    "matrix": {
+      "combinations": [
+        {
+          "initials": "JD"
+        },
+        {
+          "src": "https://i.pravatar.cc/150?u=avatar1"
+        },
+        {
+          "initials": "JD",
+          "size": "lg"
+        },
+        {
+          "initials": "JD",
+          "status": "online"
+        },
+        {
+          "initials": "JD",
+          "shape": "square"
+        }
+      ]
+    },
+    "site": {
+      "page": "feedback",
+      "tag": "wb-avatar",
+      "renders": true,
+      "baseClass": "wb-avatar",
+      "minInstances": 5,
+      "checkText": [],
+      "checkClasses": [
+        "wb-avatar--xs",
+        "wb-avatar--square"
+      ],
+      "checkAttributes": [
+        "initials"
+      ]
+    }
+  },
+  "_metadata": {
+    "category": "feedback",
+    "icon": "👤",
+    "since": "1.0.0",
+    "status": "stable"
+  }
+}

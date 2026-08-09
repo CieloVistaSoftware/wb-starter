@@ -1,0 +1,152 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "spinner.schema.json",
+  "title": "Spinner",
+  "description": "Loading spinner indicator",
+  "schemaFor": "spinner",
+  "baseClass": "wb-spinner",
+  "semanticElement": {
+    "tagName": "div",
+    "implicitRole": "status"
+  },
+  "compliance": {
+    "baseClass": "wb-spinner",
+    "supportLevel": "stable",
+    "accessibility": "high"
+  },
+  "properties": {
+    "size": {
+      "type": "string",
+      "enum": [
+        "xs",
+        "sm",
+        "md",
+        "lg",
+        "xl"
+      ],
+      "default": "md",
+      "appliesClass": "wb-spinner--{{value}}"
+    },
+    "variant": {
+      "type": "string",
+      "enum": [
+        "default",
+        "primary",
+        "success",
+        "warning",
+        "error"
+      ],
+      "default": "primary",
+      "appliesClass": "wb-spinner--{{value}}"
+    },
+    "speed": {
+      "type": "string",
+      "enum": [
+        "slow",
+        "medium",
+        "fast"
+      ],
+      "default": "medium",
+      "appliesClass": "wb-spinner--{{value}}"
+    },
+    "label": {
+      "type": "string",
+      "description": "Accessible label",
+      "default": "Loading"
+    }
+  },
+  "$view": [
+    {
+      "name": "spinner",
+      "tag": "div",
+      "public": true,
+      "required": true,
+      "description": "Spinning element"
+    }
+  ],
+  "$methods": {
+    "show": {
+      "description": "Shows the spinner",
+      "params": []
+    },
+    "hide": {
+      "description": "Hides the spinner",
+      "params": []
+    }
+  },
+  "$cssAPI": {
+    "--wb-spinner-size": {
+      "default": "24px",
+      "description": "Spinner size"
+    },
+    "--wb-spinner-border-width": {
+      "default": "3px",
+      "description": "Border width"
+    },
+    "--wb-spinner-color": {
+      "default": "var(--primary, #6366f1)",
+      "description": "Spinner color"
+    },
+    "--wb-spinner-track-color": {
+      "default": "rgba(0,0,0,0.1)",
+      "description": "Track color"
+    },
+    "--wb-spinner-speed": {
+      "default": "0.8s",
+      "description": "Animation duration"
+    }
+  },
+  "accessibility": {
+    "role": "status",
+    "ariaLabel": "dynamic from label"
+  },
+  "test": {
+    "setup": [
+      "<wb-spinner>Basic spinner content</wb-spinner>",
+      "<wb-spinner size=\"xs\">size=xs</wb-spinner>",
+      "<wb-spinner size=\"sm\">size=sm</wb-spinner>",
+      "<wb-spinner size=\"md\">size=md</wb-spinner>",
+      "<wb-spinner variant=\"default\">variant=default</wb-spinner>",
+      "<wb-spinner variant=\"primary\">variant=primary</wb-spinner>",
+      "<wb-spinner variant=\"success\">variant=success</wb-spinner>",
+      "<wb-spinner speed=\"slow\">speed=slow</wb-spinner>"
+    ],
+    "matrix": {
+      "combinations": [
+        {},
+        {
+          "size": "sm"
+        },
+        {
+          "size": "lg"
+        },
+        {
+          "variant": "success"
+        },
+        {
+          "speed": "fast"
+        }
+      ]
+    },
+    "site": {
+      "page": "feedback",
+      "tag": "wb-spinner",
+      "renders": true,
+      "baseClass": "wb-spinner",
+      "minInstances": 5,
+      "checkText": [],
+      "checkClasses": [
+        "wb-spinner--xs",
+        "wb-spinner--default",
+        "wb-spinner--slow"
+      ],
+      "checkAttributes": []
+    }
+  },
+  "_metadata": {
+    "category": "feedback",
+    "icon": "⏳",
+    "since": "1.0.0",
+    "status": "stable"
+  }
+}

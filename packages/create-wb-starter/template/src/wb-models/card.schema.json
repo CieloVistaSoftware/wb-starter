@@ -1,0 +1,274 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "card.schema.json",
+  "title": "Card Component",
+  "description": "Card component. IS-A article, HAS-A header, main, footer.",
+  "schemaFor": "card",
+  "baseClass": "wb-card",
+  "semanticElement": {
+    "tagName": "article",
+    "implicitRole": "article"
+  },
+  "compliance": {
+    "baseClass": "wb-card",
+    "supportLevel": "stable",
+    "accessibility": "high"
+  },
+  "properties": {
+    "title": {
+      "type": "string",
+      "description": "Card title displayed in header",
+      "default": ""
+    },
+    "subtitle": {
+      "type": "string",
+      "description": "Card subtitle displayed below title",
+      "default": ""
+    },
+    "footer": {
+      "type": "string",
+      "description": "Card footer text",
+      "default": ""
+    },
+    "elevated": {
+      "type": "boolean",
+      "description": "Add drop shadow",
+      "default": false,
+      "appliesClass": "wb-card--elevated"
+    },
+    "clickable": {
+      "type": "boolean",
+      "description": "Make card clickable",
+      "default": false,
+      "appliesClass": "wb-card--clickable"
+    },
+    "variant": {
+      "type": "string",
+      "description": "Visual style variant",
+      "enum": [
+        "default",
+        "glass",
+        "bordered",
+        "flat"
+      ],
+      "default": "default"
+    },
+    "size": {
+      "type": "string",
+      "description": "Card size variant controlling max/min width",
+      "enum": [
+        "xs",
+        "sm",
+        "md",
+        "lg",
+        "xl",
+        "full",
+        "auto"
+      ],
+      "default": "auto",
+      "appliesClass": "wb-card--{value}"
+    },
+    "tooltip": {
+      "type": "string",
+      "description": "Hover text shown as a themed WB tooltip (x-tooltip / tooltip.js), not the native browser title tooltip. `hoverText`/`hover-text` is the pre-existing documented alias and wins only when `tooltip` is unset (#283).",
+      "default": "",
+      "appliesAttribute": "x-tooltip"
+    },
+    "hoverText": {
+      "type": "string",
+      "description": "Alias for `tooltip` -- hover text shown as a themed WB tooltip, not the native browser title tooltip.",
+      "default": "",
+      "appliesAttribute": "x-tooltip"
+    }
+  },
+  "$view": [],
+  "_$viewNote": "#202: EMPTY on purpose. The card BEHAVIOR (src/wb-viewmodels/card.js) is the SOLE renderer of the card DOM (.wb-card__*). A schema $view here ALSO built a competing .card__* structure, and the two nested → duplicate title/footer (rendered 4× on schema-processed pages). An empty $view makes the schema builder restore the slot content and build nothing; card.js owns the structure.",
+  "$methods": {
+    "show": {
+      "description": "Shows the card",
+      "params": []
+    },
+    "hide": {
+      "description": "Hides the card",
+      "params": []
+    },
+    "toggle": {
+      "description": "Toggles card visibility",
+      "params": []
+    },
+    "update": {
+      "description": "Updates card properties",
+      "params": [
+        "options"
+      ]
+    }
+  },
+  "$cssAPI": {
+    "--bg-secondary": {
+      "description": "Card background color",
+      "default": "inherit"
+    },
+    "--border-color": {
+      "description": "Card border color",
+      "default": "inherit"
+    },
+    "--radius-lg": {
+      "description": "Card border radius",
+      "default": "inherit"
+    },
+    "--shadow-elevated": {
+      "description": "Box shadow for elevated state; 0 4px 12px rgba(0,0,0,0.15)",
+      "default": "inherit"
+    },
+    "--shadow-hover": {
+      "description": "Box shadow on hover; 0 8px 24px rgba(0,0,0,0.2)",
+      "default": "inherit"
+    }
+  },
+  "test": {
+    "setup": [
+      "<wb-card>Basic card content</wb-card>",
+      "<wb-card variant=\"default\">variant=default</wb-card>",
+      "<wb-card variant=\"glass\">variant=glass</wb-card>",
+      "<wb-card variant=\"bordered\">variant=bordered</wb-card>",
+      "<wb-card elevated>with elevated</wb-card>",
+      "<wb-card clickable>with clickable</wb-card>",
+      "<wb-card title=\"Sample title\">title=\"Sample title\"</wb-card>",
+      "<wb-card subtitle=\"Sample subtitle\">subtitle=\"Sample subtitle\"</wb-card>"
+    ],
+    "functional": {
+      "visual": [
+        {
+          "name": "Basic Card",
+          "setup": "<wb-card>Content</wb-card>",
+          "expect": {
+            "visible": true,
+            "hasClass": "wb-card"
+          }
+        },
+        {
+          "name": "Card with Header/Footer",
+          "setup": "<wb-card title='Title' footer='Footer'>Content</wb-card>",
+          "expect": {
+            "textContains": "Title"
+          },
+          "checks": [
+            {
+              "selector": "header",
+              "visible": true
+            },
+            {
+              "selector": "footer",
+              "visible": true,
+              "textContains": "Footer"
+            }
+          ]
+        }
+      ],
+      "interactions": [
+        {
+          "name": "Clickable Card",
+          "setup": "<wb-card clickable>Click Me</wb-card>",
+          "action": "click",
+          "expect": {
+            "event": "click",
+            "hasClass": "wb-card--clickable"
+          }
+        }
+      ]
+    },
+    "matrix": {
+      "combinations": [
+        {
+          "title": "Default Card",
+          "subtitle": "A simple card",
+          "footer": "Card footer"
+        },
+        {
+          "title": "Glass Card",
+          "variant": "glass",
+          "subtitle": "With glass effect"
+        },
+        {
+          "title": "Bordered Card",
+          "variant": "bordered",
+          "footer": "Bordered style"
+        },
+        {
+          "title": "Flat Card",
+          "variant": "flat",
+          "subtitle": "Minimal look"
+        },
+        {
+          "title": "Elevated Card",
+          "elevated": true,
+          "subtitle": "With shadow"
+        },
+        {
+          "title": "Clickable Card",
+          "clickable": true,
+          "subtitle": "Click me",
+          "footer": "Interactive"
+        },
+        {
+          "title": "Small Card",
+          "size": "sm",
+          "subtitle": "Compact size"
+        },
+        {
+          "title": "Large Card",
+          "size": "lg",
+          "subtitle": "Spacious layout",
+          "footer": "Extra room"
+        }
+      ]
+    },
+    "site": {
+      "page": "cards",
+      "tag": "wb-card",
+      "renders": true,
+      "baseClass": "wb-card",
+      "minInstances": 8,
+      "checkText": [
+        "Default Card",
+        "A simple card",
+        "Card footer",
+        "Glass Card",
+        "With glass effect",
+        "Bordered Card"
+      ],
+      "checkClasses": [
+        "wb-card--xs"
+      ],
+      "checkAttributes": [
+        "title",
+        "subtitle",
+        "footer"
+      ]
+    }
+  },
+  "_metadata": {
+    "category": "cards",
+    "icon": "🃏",
+    "variants": [
+      "cardprofile",
+      "cardpricing",
+      "cardstats",
+      "cardimage",
+      "cardbutton",
+      "carddraggable",
+      "cardexpandable",
+      "cardfile",
+      "cardhero",
+      "cardhorizontal",
+      "cardlink",
+      "cardminimizable",
+      "cardnotification",
+      "cardoverlay",
+      "cardportfolio",
+      "cardproduct",
+      "cardtestimonial",
+      "cardvideo"
+    ]
+  }
+}

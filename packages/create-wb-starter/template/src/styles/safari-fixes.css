@@ -1,0 +1,187 @@
+/**
+ * Safari & WebKit Fixes
+ * =====================
+ * Targeted workarounds for known Safari/WebKit bugs.
+ * Apply these utility classes when needed.
+ * 
+ * @version 1.0.0
+ */
+
+/* ============================================
+   Detection: Safari/WebKit Only
+   Uses -webkit-touch-callout which only Safari supports
+   ============================================ */
+
+/* Safari Grid Bug: Items don't respect min-width: 0 by default */
+@supports (-webkit-touch-callout: none) {
+  .wb-grid > *,
+  wb-grid > * {
+    min-width: 0;
+    min-height: 0;
+  }
+}
+
+/* Safari Flex Gap Bug: gap not respected in some contexts */
+.safari-flex-gap {
+  gap: var(--gap, 1rem);
+}
+
+@supports (-webkit-touch-callout: none) {
+  .safari-flex-gap {
+    gap: 0;
+  }
+  .safari-flex-gap > * + * {
+    margin-inline-start: var(--gap, 1rem);
+  }
+  .safari-flex-gap[data-direction="column"] > * + * {
+    margin-inline-start: 0;
+    margin-block-start: var(--gap, 1rem);
+  }
+}
+
+/* Safari Grid Subgrid Fallback */
+@supports not (grid-template-columns: subgrid) {
+  .needs-subgrid {
+    display: contents;
+  }
+}
+
+/* Safari Sticky Bug: Doesn't work with overflow:hidden ancestors */
+/* Apply to sticky element's container */
+.safari-sticky-container {
+  overflow: visible !important;
+}
+
+/* Safari Animation: grid-template-rows 0 → auto doesn't animate */
+/* Use this pattern instead of height: 0 → auto */
+.collapse-grid {
+  display: grid;
+  grid-template-rows: 0fr;
+  transition: grid-template-rows 0.3s ease;
+}
+
+.collapse-grid[data-open="true"],
+.collapse-grid.open,
+.collapse-grid:has([open]) {
+  grid-template-rows: 1fr;
+}
+
+.collapse-grid > * {
+  overflow: hidden;
+  min-height: 0;
+}
+
+/* Safari Text Rendering: Fix blurry text on transforms */
+.safari-crisp-text {
+  -webkit-font-smoothing: antialiased;
+  -webkit-transform: translateZ(0);
+  transform: translateZ(0);
+}
+
+/* Safari Backdrop Filter: Needs webkit prefix */
+.backdrop-blur {
+  -webkit-backdrop-filter: blur(10px);
+  backdrop-filter: blur(10px);
+}
+
+/* Safari Input Zoom Prevention: Prevents zoom on focus for inputs < 16px */
+@supports (-webkit-touch-callout: none) {
+  input[type="text"],
+  input[type="email"],
+  input[type="password"],
+  input[type="search"],
+  input[type="tel"],
+  input[type="url"],
+  input[type="number"],
+  textarea,
+  select {
+    font-size: max(16px, 1em);
+  }
+}
+
+/* Safari Safe Area Insets: For notched devices */
+.safe-area-inset {
+  padding-top: env(safe-area-inset-top);
+  padding-right: env(safe-area-inset-right);
+  padding-bottom: env(safe-area-inset-bottom);
+  padding-left: env(safe-area-inset-left);
+}
+
+/* Safari Overscroll: Disable rubber-banding in specific containers */
+.no-overscroll {
+  overscroll-behavior: contain;
+  -webkit-overflow-scrolling: auto;
+}
+
+/* Safari Smooth Scroll Container */
+.smooth-scroll {
+  -webkit-overflow-scrolling: touch;
+  overflow-y: auto;
+}
+
+/* Safari Table Layout Fix */
+@supports (-webkit-touch-callout: none) {
+  table {
+    -webkit-border-horizontal-spacing: 0;
+    -webkit-border-vertical-spacing: 0;
+  }
+}
+
+/* Safari Flexbox Shrink Bug: Images don't shrink properly */
+@supports (-webkit-touch-callout: none) {
+  .flex-shrink-img img {
+    min-width: 0;
+    flex-shrink: 1;
+  }
+}
+
+/* Safari Position Fixed in Transform Context */
+/* Fixed elements inside transformed parents don't work - use this workaround */
+.safari-fixed-context {
+  transform: none !important;
+  -webkit-transform: none !important;
+}
+
+/* ============================================
+   iOS Specific
+   ============================================ */
+
+/* iOS: Prevent callout on long press */
+.no-callout {
+  -webkit-touch-callout: none;
+}
+
+/* iOS: Prevent text selection */
+.no-select {
+  -webkit-user-select: none;
+  user-select: none;
+}
+
+/* iOS: Tap highlight color */
+.no-tap-highlight {
+  -webkit-tap-highlight-color: transparent;
+}
+
+/* iOS: Momentum scrolling */
+.ios-scroll {
+  -webkit-overflow-scrolling: touch;
+}
+
+/* ============================================
+   Utility: Apply All Common Safari Fixes
+   ============================================ */
+
+.safari-fixes {
+  -webkit-font-smoothing: antialiased;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.safari-fixes img {
+  min-width: 0;
+}
+
+.safari-fixes input,
+.safari-fixes textarea,
+.safari-fixes select {
+  font-size: max(16px, 1em);
+}

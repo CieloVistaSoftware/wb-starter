@@ -1,0 +1,29 @@
+/**
+ * Rating Behavior Styles
+ * -----------------------------------------------------------------------------
+ * Extracted from demo.css (Phase 3 migration)
+ * Works with src/wb-viewmodels/semantics/rating.js
+ * -----------------------------------------------------------------------------
+ */
+
+.wb-rating span {
+  font-size: 1.2rem;
+  color: var(--border-color);
+  cursor: pointer;
+}
+
+.wb-rating span.active {
+  color: var(--rating-active-color);
+}
+
+/* Real star markup uses .wb-rating__star (rating.js), not a bare span --
+   the rule above never actually matched it. Size was also previously
+   hardcoded inline in JS regardless of the size attribute
+   (rating.schema.json declares sm/md/lg but nothing ever read or applied
+   it) -- confirmed live: size="sm"/"lg" rendered identical stars. */
+.wb-rating__star {
+  font-size: 1.5rem;
+}
+.wb-rating--sm .wb-rating__star { font-size: 1rem; }
+.wb-rating--md .wb-rating__star { font-size: 1.5rem; }
+.wb-rating--lg .wb-rating__star { font-size: 2.25rem; }

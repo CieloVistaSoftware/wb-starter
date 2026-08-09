@@ -1,0 +1,160 @@
+<link rel="stylesheet" href="src/styles/pages/demos.css">
+
+<div id="demos-hero" class="page__hero">
+  <h1>🎮 Demos</h1>
+  <p>Explore standalone demos and examples.</p>
+  <div class="grid-search-wrapper">
+    <input type="search" id="demos-search" placeholder="Search demos...">
+    <span class="grid-search-icon">🔍</span>
+  </div>
+</div>
+
+<div class="page__section">
+  <h2>Content</h2>
+
+  <p id="demos-empty" hidden>No demos match your search.</p>
+
+<!-- Cards below are generated from the demos/ folder by
+     scripts/generate-demos-list.mjs — edit that script, not this list. -->
+<div id="demos-grid">
+  <!-- demos:auto:start -->
+  <details class="demos-category" data-category="Card Components">
+    <summary class="demos-category__title">🃏 Card Components</summary>
+    <div class="page__grid demos-card-grid">
+      <wb-card-link title="Card Components" description="18 card variants — from simple to portfolio, pricing to testimonials" href="demos/site/cards.html" target="_blank" icon="🃏"></wb-card-link>
+    </div>
+  </details>
+  <details class="demos-category" data-category="Feedback & Status">
+    <summary class="demos-category__title">🔔 Feedback & Status</summary>
+    <div class="page__grid demos-card-grid">
+      <wb-card-link title="Feedback & Status" description="Alerts, badges, progress bars, ratings, spinners, toasts, tooltips" href="demos/site/feedback.html" target="_blank" icon="🔔"></wb-card-link>
+    </div>
+  </details>
+  <details class="demos-category" data-category="Form Controls">
+    <summary class="demos-category__title">📝 Form Controls</summary>
+    <div class="page__grid demos-card-grid">
+      <wb-card-link title="Form Controls" description="Buttons, inputs, selects, checkboxes, switches, textareas" href="demos/site/forms.html" target="_blank" icon="📝"></wb-card-link>
+    </div>
+  </details>
+  <details class="demos-category" data-category="Overlays & Popups">
+    <summary class="demos-category__title">🪟 Overlays & Popups</summary>
+    <div class="page__grid demos-card-grid">
+      <wb-card-link title="Overlays & Popups" description="Dialogs, drawers, dropdowns for modal content" href="demos/site/overlays.html" target="_blank" icon="🪟"></wb-card-link>
+    </div>
+  </details>
+  <details class="demos-category" data-category="Layout & Navigation">
+    <summary class="demos-category__title">📐 Layout & Navigation</summary>
+    <div class="page__grid demos-card-grid">
+      <wb-card-link title="Layout & Navigation" description="Headers, footers, navbars, tabs, drawers, sticky, scrollalong" href="demos/site/layout.html" target="_blank" icon="📐"></wb-card-link>
+    </div>
+  </details>
+  <details class="demos-category" data-category="Content & Media">
+    <summary class="demos-category__title">📄 Content & Media</summary>
+    <div class="page__grid demos-card-grid">
+      <wb-card-link title="Content & Media" description="Articles, markdown rendering, audio, tables" href="demos/site/content.html" target="_blank" icon="📄"></wb-card-link>
+    </div>
+  </details>
+  <details class="demos-category" data-category="Visual Effects">
+    <summary class="demos-category__title">✨ Visual Effects</summary>
+    <div class="page__grid demos-card-grid">
+      <wb-card-link title="Visual Effects" description="Confetti, fireworks, ripple, snow — fun stuff" href="demos/site/effects.html" target="_blank" icon="✨"></wb-card-link>
+    </div>
+  </details>
+  <details class="demos-category" data-category="Interactive & Utility">
+    <summary class="demos-category__title">🔧 Interactive & Utility</summary>
+    <div class="page__grid demos-card-grid">
+      <wb-card-link title="Interactive & Utility" description="Draggable, resizable, copy, dark mode, views" href="demos/site/interactive.html" target="_blank" icon="🔧"></wb-card-link>
+    </div>
+  </details>
+  <details class="demos-category" data-category="Narrative & Tools">
+    <summary class="demos-category__title">🏗️ Narrative & Tools</summary>
+    <div class="demos-inline-examples">
+      <wb-demo><wb-themecontrol></wb-themecontrol></wb-demo>
+      <wb-demo><div x-darkmode target="self" theme="dark" class="demos-forced-dark-demo"><strong>Forced Dark Mode</strong> — stays dark regardless of the global theme.</div></wb-demo>
+    </div>
+    <div class="page__grid demos-card-grid">
+      <wb-card-link title="Autoinject" href="demos/autoinject.html" target="_blank" icon="🎮"></wb-card-link>
+      <wb-card-link title="Uganda Community Food Bank" href="demos/charity-food.html" target="_blank" icon="🎮"></wb-card-link>
+      <wb-card-link title="Framework Integration Demo" href="demos/frameworks.html" target="_blank" icon="🎮"></wb-card-link>
+      <wb-card-link title="wb-starter — Zero-build web components for developers" href="demos/landing-page-showcase.html" target="_blank" icon="🎮"></wb-card-link>
+      <wb-card-link title="🧩 Multi-Component Demo" href="demos/multi-component-demo-generated.html" target="_blank" icon="🎮"></wb-card-link>
+      <wb-card-link title="Playground" href="demos/playground.html" target="_blank" icon="🎮"></wb-card-link>
+      <wb-card-link title="WB Views Registry Browser" href="demos/registry-browser.html" target="_blank" icon="🎮"></wb-card-link>
+      <wb-card-link title="Schema-First Architecture: A Deterministic Framework for AI-Driven Web Development" href="demos/schema-first-architecture.html" target="_blank" icon="🎮"></wb-card-link>
+      <wb-card-link title="WB Views Demo - Complete Examples" href="demos/wb-views-demo.html" target="_blank" icon="🎮"></wb-card-link>
+    </div>
+  </details>
+  <!-- demos:auto:end -->
+</div>
+
+</div>
+
+<script>
+  (function filterDemos() {
+    const input = document.getElementById('demos-search');
+    const grid = document.getElementById('demos-grid');
+    const empty = document.getElementById('demos-empty');
+    if (!input || !grid) return;
+
+    // Cards live nested inside per-category <section class="demos-category">
+    // blocks now (scripts/generate-demos-list.mjs) — query descends into them
+    // the same way regardless of nesting.
+    const sections = Array.from(grid.querySelectorAll('.demos-category'));
+    const cards = Array.from(grid.querySelectorAll('wb-card-link'));
+
+    // #253: content search. scripts/generate-demos-search-index.mjs scans
+    // every demos/**/*.html and writes data/demos-search-index.json — a map
+    // of each demo's href to searchable terms pulled from its visible text,
+    // wb-* tags and x-* behaviors (not just the card's title). Loaded once
+    // at page load; a card matches on title OR content-index terms so a
+    // search like "kampala" finds a demo even though that word never
+    // appears in its <wb-card-link title>.
+    let contentIndex = new Map(); // href -> single lowercase searchable string
+    fetch('data/demos-search-index.json')
+      .then((res) => (res.ok ? res.json() : null))
+      .then((data) => {
+        if (!data || !Array.isArray(data.demos)) return;
+        contentIndex = new Map(
+          data.demos.map((d) => [d.href, [d.title, ...(d.tags || []), ...(d.behaviors || []), ...(d.terms || [])].join(' ').toLowerCase()])
+        );
+        // Re-run the current search once the content index arrives, in case
+        // the visitor typed before the fetch resolved.
+        if (input.value.trim()) input.dispatchEvent(new Event('input'));
+      })
+      .catch(() => { /* content search degrades to title-only match — not fatal */ });
+
+    input.addEventListener('input', () => {
+      const query = input.value.trim().toLowerCase();
+      let visibleCount = 0;
+
+      cards.forEach((card) => {
+        const title = (card.getAttribute('title') || '').toLowerCase();
+        const href = card.getAttribute('href') || '';
+        const contentText = contentIndex.get(href) || '';
+        const matches = !query || title.includes(query) || contentText.includes(query);
+        card.hidden = !matches;
+        if (matches) visibleCount++;
+      });
+
+      // A category also matches (and stays fully visible) when the query hits
+      // the category name itself, e.g. typing "forms" keeps every Forms &
+      // Inputs card showing even though none of their titles contain "forms".
+      sections.forEach((section) => {
+        const categoryName = (section.getAttribute('data-category') || '').toLowerCase();
+        const categoryMatches = !!query && categoryName.includes(query);
+        if (categoryMatches) {
+          section.querySelectorAll('wb-card-link').forEach((card) => {
+            if (card.hidden) { card.hidden = false; visibleCount++; }
+          });
+        }
+        // Hide the whole section (heading + inline wb-demo examples included)
+        // once none of its cards are showing, so search doesn't leave behind
+        // an empty heading with nothing under it.
+        const sectionHasVisibleCard = Array.from(section.querySelectorAll('wb-card-link')).some((c) => !c.hidden);
+        section.hidden = !sectionHasVisibleCard;
+      });
+
+      empty.hidden = visibleCount > 0;
+    });
+  })();
+</script>

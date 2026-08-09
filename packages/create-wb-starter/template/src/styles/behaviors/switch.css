@@ -1,0 +1,171 @@
+/**
+ * Switch Behavior Styles
+ * -----------------------------------------------------------------------------
+ * Works with src/wb-viewmodels/semantics/switch.js + switch.schema.json.
+ * The schema builds: <wb-switch class="wb-switch"> input.wb-switch__input +
+ * span.wb-switch__track > span.wb-switch__thumb [+ label spans]. The native
+ * checkbox is visually hidden and drives the :checked state. (#197)
+ * -----------------------------------------------------------------------------
+ */
+
+/* #448: `wb-switch` TAG selector added alongside the `.wb-switch` class --
+   switchInput() (switch.js) still adds `.wb-switch` for the bare-<input>/
+   self-built x-switch-on-a-<div> cases, but skips it for a literal
+   <wb-switch> host, which now matches via tag instead. */
+wb-switch,
+.wb-switch {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  cursor: pointer;
+  user-select: none;
+  color: var(--text-primary);
+  vertical-align: middle;
+}
+
+/* visually-hidden native checkbox (state driver) */
+wb-switch input,
+.wb-switch input,
+.wb-switch__input {
+  position: absolute;
+  opacity: 0;
+  width: 1px;
+  height: 1px;
+  margin: 0;
+  pointer-events: none;
+}
+
+/* track */
+.wb-switch__track {
+  position: relative;
+  flex: none;
+  width: 3rem;
+  height: 1.5rem;
+  background: var(--bg-tertiary);
+  border: 1px solid var(--border-color);
+  border-radius: 999px;
+  transition: background 0.25s ease, border-color 0.25s ease;
+}
+
+/* knob */
+.wb-switch__thumb {
+  position: absolute;
+  top: 50%;
+  left: 0.2rem;
+  width: 1.05rem;
+  height: 1.05rem;
+  background: white;
+  border-radius: 50%;
+  transform: translateY(-50%);
+  transition: transform 0.25s ease;
+}
+
+/* ON state — input is a previous sibling of the track */
+.wb-switch__input:checked ~ .wb-switch__track {
+  background: var(--primary);
+  border-color: var(--primary);
+}
+.wb-switch__input:checked ~ .wb-switch__track .wb-switch__thumb {
+  transform: translate(1.45rem, -50%);
+}
+.wb-switch__input:focus-visible ~ .wb-switch__track {
+  box-shadow: 0 0 0 2px var(--primary);
+}
+.wb-switch__input:disabled ~ .wb-switch__track {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.wb-switch__label-start,
+.wb-switch__label-end {
+  font-size: 0.9rem;
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   SIZE / VARIANT — switch.schema.json declares both `size` (sm/md/lg) and
+   `variant` (default/primary/success) with appliesClass:
+   "wb-switch--{{value}}" (schema-builder applies these classes at build
+   time; switch.js/switchInput() never needs to read the attributes itself),
+   but this file had ZERO matching .wb-switch--* rules -- every size/variant
+   combination rendered pixel-identical (confirmed: John reported a grid of
+   9 switches spanning all 3 sizes x 3 variants "not working", i.e. no
+   visible difference between any of them). Same root-cause pattern already
+   fixed this session for card.js/badge.css/button.js typed variants.
+   Doubled selector (.wb-switch.wb-switch--X) to outrank the unscoped base
+   rules above regardless of source order.
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+wb-switch.wb-switch--sm .wb-switch__track,
+.wb-switch.wb-switch--sm .wb-switch__track {
+  width: 2.25rem;
+  height: 1.125rem;
+}
+wb-switch.wb-switch--sm .wb-switch__thumb,
+.wb-switch.wb-switch--sm .wb-switch__thumb {
+  width: 0.775rem;
+  height: 0.775rem;
+  left: 0.175rem;
+}
+wb-switch.wb-switch--sm .wb-switch__input:checked ~ .wb-switch__track .wb-switch__thumb,
+.wb-switch.wb-switch--sm .wb-switch__input:checked ~ .wb-switch__track .wb-switch__thumb {
+  transform: translate(1.1rem, -50%);
+}
+
+wb-switch.wb-switch--lg .wb-switch__track,
+.wb-switch.wb-switch--lg .wb-switch__track {
+  width: 3.75rem;
+  height: 1.875rem;
+}
+wb-switch.wb-switch--lg .wb-switch__thumb,
+.wb-switch.wb-switch--lg .wb-switch__thumb {
+  width: 1.375rem;
+  height: 1.375rem;
+  left: 0.25rem;
+}
+wb-switch.wb-switch--lg .wb-switch__input:checked ~ .wb-switch__track .wb-switch__thumb,
+.wb-switch.wb-switch--lg .wb-switch__input:checked ~ .wb-switch__track .wb-switch__thumb {
+  transform: translate(1.8rem, -50%);
+}
+
+/* variant colors the ON (checked) state only -- OFF is always the same
+   neutral track regardless of variant, matching most switch design systems
+   (color communicates "what will turn on", not a permanent brand). */
+wb-switch.wb-switch--default .wb-switch__input:checked ~ .wb-switch__track,
+.wb-switch.wb-switch--default .wb-switch__input:checked ~ .wb-switch__track {
+  background: var(--text-secondary);
+  border-color: var(--text-secondary);
+}
+wb-switch.wb-switch--primary .wb-switch__input:checked ~ .wb-switch__track,
+.wb-switch.wb-switch--primary .wb-switch__input:checked ~ .wb-switch__track {
+  background: var(--primary);
+  border-color: var(--primary);
+}
+wb-switch.wb-switch--success .wb-switch__input:checked ~ .wb-switch__track,
+.wb-switch.wb-switch--success .wb-switch__input:checked ~ .wb-switch__track {
+  background: var(--success-color);
+  border-color: var(--success-color);
+}
+
+/* ── Legacy bare <input type=checkbox> + .wb-switch__slider (back-compat) ───── */
+.wb-switch__slider {
+  position: absolute;
+  cursor: pointer;
+  inset: 0;
+  background-color: var(--bg-tertiary);
+  transition: 0.4s;
+  border-radius: 34px;
+}
+.wb-switch__slider:before {
+  position: absolute;
+  content: "";
+  height: 1.1rem;
+  width: 1.1rem;
+  left: 0.2rem;
+  bottom: 0.2rem;
+  background-color: white;
+  transition: 0.4s;
+  border-radius: 50%;
+}
+input:checked + .wb-switch__slider { background-color: var(--primary); }
+input:checked + .wb-switch__slider:before { transform: translateX(1.5rem); }
+input:disabled + .wb-switch__slider { opacity: 0.5; cursor: not-allowed; }

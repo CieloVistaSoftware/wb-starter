@@ -1,0 +1,544 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Documentation Viewer</title>
+  <!-- Adopt the theme the user picked on the docs listing. The theme system
+       (src/core/theme.js) persists the choice in the shared, same-origin
+       localStorage key 'wb-theme'; read it before paint so the doc opens
+       already themed instead of flashing the default. -->
+  <script>
+    try {
+      var wbTheme = localStorage.getItem('wb-theme');
+      if (wbTheme) document.documentElement.setAttribute('data-theme', wbTheme);
+    } catch (e) { /* storage disabled (private mode) — keep the default theme */ }
+  </script>
+  <link rel="stylesheet" href="../src/styles/themes.css">
+  <link rel="stylesheet" href="../src/styles/site.css">
+  <link rel="stylesheet" href="../src/styles/transitions.css">
+  <style>
+    /* Syntax highlighting driven by the theme system — no vendored CSS file.
+       highlight.js adds .hljs-* token classes; we color them with theme variables
+       so code follows the current theme (Ocean, Neon Dreams, …). */
+    .hljs { color: var(--text-primary); background: transparent; }
+    .hljs-comment, .hljs-quote, .hljs-meta { color: var(--text-muted, #8b98a8); font-style: italic; }
+    .hljs-keyword, .hljs-selector-tag, .hljs-literal, .hljs-section, .hljs-doctag { color: var(--primary, #a371f7); }
+    .hljs-string, .hljs-attr, .hljs-addition, .hljs-regexp .hljs-string { color: var(--success-color, #3fb950); }
+    .hljs-number, .hljs-regexp, .hljs-deletion, .hljs-bullet { color: var(--warning-color, #f0883e); }
+    .hljs-title, .hljs-name, .hljs-type, .hljs-built_in, .hljs-selector-id, .hljs-selector-class { color: var(--info-color, #58a6ff); }
+    .hljs-attribute, .hljs-variable, .hljs-template-variable, .hljs-symbol, .hljs-link { color: var(--danger-color, #f85149); }
+    .hljs-emphasis { font-style: italic; }
+    .hljs-strong { font-weight: 700; }
+  </style>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+  <style>
+    /* #295: "no horizontal page scroll, ever" is a page-level guarantee, so
+       it belongs on the page shell (here), not .wb-mdhtml (mdhtml.css) --
+       that file already contains everything it renders (tables scroll in
+       their own wrapper, code wraps, word-break stays normal). The one gap
+       .wb-mdhtml itself can't close: an absolutely-positioned descendant
+       whose containing block resolves to the *viewport* (e.g. a
+       <wb-demo> per-instance doc-link badge -- demo.js's
+       attachInstanceDocLink -- attached to a wb-* component that isn't
+       itself position:relative) lays out relative to the initial
+       containing block, escaping every ancestor's overflow clipping,
+       including .wb-mdhtml's own. Confirmed live at 375px on
+       docs/V3-GUIDE.md's embedded <wb-demo> block. That badge-positioning
+       gap is a separate, pre-existing bug (out of scope here -- lives in
+       demo.css/demo.js, not this doc's rendering); html/overflow-x:hidden
+       is the correct backstop regardless of its root cause, since ANY
+       viewport-anchored escapee is, by definition, only stoppable at the
+       true root.
+    */
+    html { overflow-x: hidden; }
+    body {
+      padding: 2rem;
+      max-width: 900px;
+      margin: 0 auto;
+      overflow-x: hidden;
+      background: var(--bg-primary);
+      color: var(--text-primary);
+      font-family: 'Inter', system-ui, sans-serif;
+    }
+    /* #450: 2rem (32px) flat on every side ate ~17% of a 375px phone screen
+       with no mobile override, same class of bug as demos/site/*.html's
+       identical `body > .page` padding. */
+    @media (max-width: 640px) {
+      body { padding: var(--space-md, 1rem); }
+    }
+    .back-link { 
+      display: inline-flex; 
+      align-items: center;
+      gap: 0.5rem;
+      margin-bottom: 2rem; 
+      color: var(--text-secondary); 
+      text-decoration: none; 
+      font-size: 0.9rem;
+      padding: 0.5rem 1rem;
+      background: var(--bg-secondary);
+      border-radius: 6px;
+      border: 1px solid var(--border-color);
+      transition: all 0.2s;
+    }
+    .back-link:hover { 
+      background: var(--bg-tertiary);
+      color: var(--text-primary);
+      border-color: var(--primary);
+    }
+    
+    /* All .wb-mdhtml markdown-rendering styles (headings, code, tables, wrap
+       behavior, --md-font-size) now live SOLELY in
+       src/styles/behaviors/mdhtml.css (loaded via site.css) — this used to
+       duplicate those rules with its own slightly different values, which is
+       exactly how the table/code font-size and code-wrap-vs-scroll bugs
+       silently drifted: a fix applied here never reached any other page
+       using <wb-mdhtml>. Fix markdown rendering in mdhtml.css from now on. */
+    .loading { color: var(--text-muted); font-style: italic; }
+    .error { color: var(--danger); padding: 1rem; background: rgba(239, 68, 68, 0.1); border-radius: 6px; border: 1px solid var(--danger); }
+  </style>
+</head>
+<body id="doc-viewer-body">
+  <div style="display:flex;gap:0.5rem;align-items:center;margin-bottom:2rem;flex-wrap:wrap;">
+    <!-- #243: docs open target="_blank" from ?page=docs — a real user-navigated
+         tab, not one opened via window.open(). Browsers silently block
+         window.close() on tabs like that (it only works on script-opened
+         windows), so the old "✕ Close" button did nothing and there was no
+         way back except browser-back/re-navigating. A real href to the Docs
+         index works regardless of how the tab got here. -->
+    <a id="back-to-docs" href="#" class="back-link" style="margin-bottom:0;">← Back to Docs</a>
+    <button id="text-smaller" class="back-link" style="margin-bottom:0;cursor:pointer;" title="Smaller text" aria-label="Decrease text size">A−</button>
+    <button id="text-larger" class="back-link" style="margin-bottom:0;cursor:pointer;" title="Larger text" aria-label="Increase text size">A+</button>
+    <button id="text-reset" class="back-link" style="margin-bottom:0;cursor:pointer;" title="Reset text size" aria-label="Reset text size">Reset</button>
+  </div>
+  <script>
+    (function () {
+      // Site root works from '/', '/public/doc-viewer.html', or under a
+      // GitHub Pages sub-path (/wb-starter/public/doc-viewer.html) — same
+      // pattern used elsewhere in this project (e.g. src/wb-viewmodels/demo.js).
+      const siteRoot = location.pathname.replace(/public\/.*$/, '');
+      document.getElementById('back-to-docs').href = siteRoot + '?page=docs';
+    })();
+    (function () {
+      var KEY = 'wb-doc-font-scale';
+      function clamp(v) { return Math.max(0.7, Math.min(2.0, v)); }
+      function apply(scale) { document.documentElement.style.fontSize = (scale * 100) + '%'; }
+      // On phones default to a larger scale so docs read at ~18px (#293). This
+      // inline root font-size is what the A-/A+ control adjusts; the CSS mobile
+      // bump can't reach it because inline wins, so we default it here.
+      var mobileDefault = (window.matchMedia && window.matchMedia('(max-width: 640px)').matches) ? 1.125 : 1;
+      var scale = clamp(parseFloat(localStorage.getItem(KEY) || String(mobileDefault)) || mobileDefault);
+      apply(scale);
+      function set(s) { scale = clamp(s); localStorage.setItem(KEY, String(scale)); apply(scale); }
+      document.addEventListener('click', function (e) {
+        var t = e.target;
+        if (!t || !t.id) return;
+        if (t.id === 'text-smaller') { e.preventDefault(); set(scale - 0.1); }
+        else if (t.id === 'text-larger') { e.preventDefault(); set(scale + 0.1); }
+        else if (t.id === 'text-reset') { e.preventDefault(); set(1); }
+      });
+    })();
+  </script>
+  <div id="content" class="wb-mdhtml">
+    <div id="loading-message" class="loading">Loading documentation...</div>
+  </div>
+
+  <script type="module">
+    import { mdhtml } from '../src/wb-viewmodels/mdhtml.js';
+    import hljs from '../src/lib/highlight.js';
+    import { demo } from '../src/wb-viewmodels/demo.js';
+    // This page calls mdhtml() directly rather than going through a real
+    // <wb-mdhtml> tag + WB.inject() — the normal path that would trigger
+    // JIT behavior-CSS loading (src/core/style-loader.js). Load it
+    // explicitly since every doc rendered here needs it (§6 code-wrap etc).
+    import { ensureBehaviorCss } from '../src/core/style-loader.js';
+    ensureBehaviorCss('mdhtml');
+
+    // Hide close button if not opened via script/link
+    if (!window.opener) {
+      const closeBtn = document.getElementById('close-button');
+      if (closeBtn) closeBtn.style.display = 'none';
+    }
+
+    // Site root computed from THIS page's own location
+    // (…/public/doc-viewer.html → …/) so doc paths resolve correctly under any
+    // base — local '/' or the GitHub Pages sub-path '/wb-starter/'. (#226)
+    const SITE_ROOT = new URL('../', window.location.href);
+
+    const params = new URLSearchParams(window.location.search);
+    let file = params.get('file') || 'docs/index.md';
+    // Normalize to a site-root-relative path: drop any leading slash (legacy
+    // links passed '/docs/x.md', which 404s at the domain root under a sub-path
+    // base) and default bare filenames into docs/. A path that already carries a
+    // directory (docs/…, data/…, mcp-server/…) is left as-is so non-docs repo
+    // files stay reachable — only slash-less legacy names get the docs/ prefix.
+    if (!/^https?:/i.test(file)) {
+      file = file.replace(/^\/+/, '');
+      if (!file.includes('/')) file = 'docs/' + file;
+    }
+    // Full, base-aware URL for the fetch — bypasses mdhtml's domain-root
+    // resolution so it works whether served at '/' or '/wb-starter/'.
+    const fileUrl = /^https?:/i.test(file) ? file : new URL(file, SITE_ROOT).href;
+    
+    // Helper to resolve relative paths
+    function resolveRelativePath(base, relative) {
+      // Remove filename from base if present, or ensure it ends with /
+      // Actually base passed in is usually the directory
+      const stack = base.split('/').filter(p => p.length > 0);
+      
+      const parts = relative.split('/');
+      
+      for (const part of parts) {
+        if (part === '.') continue;
+        if (part === '..') {
+          if (stack.length > 0 && stack[stack.length - 1] !== '..') {
+            stack.pop();
+          } else {
+            stack.push('..');
+          }
+        } else {
+          stack.push(part);
+        }
+      }
+      
+      return stack.join('/');
+    }
+
+    // Rebase relative resource links against the DOC's real served location.
+    // A doc rendered from docs/behaviors/x.md links to a demo as
+    // "../../demos/x.html" — correct relative to the doc on disk, but the browser
+    // would otherwise resolve it against THIS page (…/public/doc-viewer.html) and
+    // walk past the site root to the domain root (→ 404). Resolve non-.md links
+    // and media against docs/<dir>/ so they land at SITE_ROOT/demos/x.html etc.
+    // (.md links are left for the click interceptor's ?file= handling.)
+    function rebaseDocResources() {
+      const docBaseDir = new URL('.', new URL(file, SITE_ROOT));
+      const content = document.getElementById('content');
+      content.querySelectorAll('a[href]').forEach((a) => {
+        const href = a.getAttribute('href');
+        if (!href || href.startsWith('#') || /^[a-z][a-z0-9+.-]*:/i.test(href)) return; // anchors / scheme (http:, mailto:)
+        if (/\.md(#.*)?$/i.test(href)) return; // .md → handled by the click interceptor
+        a.href = new URL(href, docBaseDir).href;
+      });
+      content.querySelectorAll('img[src], source[src], video[src], audio[src]').forEach((el) => {
+        const src = el.getAttribute('src');
+        if (!src || src.startsWith('data:') || /^[a-z][a-z0-9+.-]*:/i.test(src)) return;
+        el.src = new URL(src, docBaseDir).href;
+      });
+    }
+
+    // Auto-link path references so docs that mention files as `inline code` or
+    // **bold** — like the tier/index docs whose tables list dozens of paths —
+    // become navigable without hand-authoring [text](path) in every doc. Any
+    // <code>/<strong>/<b> whose entire text is a repo path ending .md/.html is
+    // wrapped in an <a> with a href RELATIVE to THIS doc, so the .md click
+    // interceptor and rebaseDocResources resolve it exactly like a normal
+    // markdown link. Only targets that actually resolve (GET 200) are linked —
+    // a missing/stale reference stays plain text, so we never ship a dead link.
+    const LINKABLE_PATH = /^((?:docs|demos|data|src|scripts|tests|packages|mcp-server|vscode|\.github)\/[\w./-]+\.(?:md|html))$/;
+    function docRelHref(rootRelTarget) {
+      const from = file.replace(/[^/]*$/, '').split('/').filter(Boolean); // this doc's dir parts
+      const to = rootRelTarget.split('/').filter(Boolean);
+      let i = 0;
+      while (i < from.length && i < to.length && from[i] === to[i]) i++;
+      const up = from.slice(i).map(() => '..');
+      return [...up, ...to.slice(i)].join('/') || rootRelTarget;
+    }
+    async function linkifyDocPaths() {
+      const content = document.getElementById('content');
+      const candidates = [];
+      content.querySelectorAll('code:not(pre code), strong, b').forEach((el) => {
+        if (el.closest('a') || el.querySelector('a')) return; // already a link
+        const m = el.textContent.trim().match(LINKABLE_PATH);
+        if (m) candidates.push({ el, target: m[1] });
+      });
+      if (!candidates.length) return;
+      // Verify existence once per unique target — GET (not HEAD: this server
+      // answers HEAD 200 even for missing files, but GET 404s them correctly).
+      const exists = new Map();
+      await Promise.all([...new Set(candidates.map((c) => c.target))].map(async (t) => {
+        try { exists.set(t, (await fetch(new URL(t, SITE_ROOT).href, { method: 'GET' })).ok); }
+        catch { exists.set(t, false); }
+      }));
+      candidates.forEach(({ el, target }) => {
+        if (!exists.get(target)) return; // missing → leave as plain text
+        const a = document.createElement('a');
+        a.setAttribute('href', docRelHref(target));
+        a.className = 'wb-doc-pathlink';
+        el.replaceWith(a);
+        a.appendChild(el); // keep the code/bold styling inside the link
+      });
+    }
+
+    // Link Interceptor for Markdown navigation
+    document.addEventListener('click', (e) => {
+      const link = e.target.closest('a');
+      if (!link) return;
+      
+      const href = link.getAttribute('href');
+      if (!href) return;
+      
+      // Handle internal anchor links (e.g., #overview)
+      if (href.startsWith('#')) {
+        e.preventDefault();
+        const id = decodeURIComponent(href.substring(1));
+        const element = document.getElementById(id);
+        if (element) {
+          element.scrollIntoView({ behavior: 'smooth' });
+          history.pushState(null, '', href);
+        }
+        return;
+      }
+      
+      // Check if it's a relative markdown link
+      // Matches .md or .md#anchor, but not http:// or /absolute
+      if (href.match(/\.md(#.*)?$/) && !href.match(/^https?:/) && !href.startsWith('/')) {
+        e.preventDefault();
+        
+        const currentFile = new URLSearchParams(window.location.search).get('file') || '';
+        const currentDir = currentFile.substring(0, currentFile.lastIndexOf('/') + 1);
+        
+        // Handle hash
+        const [path, hash] = href.split('#');
+        
+        // Resolve path
+        const resolvedPath = resolveRelativePath(currentDir, path);
+        
+        // Construct new URL
+        const newUrl = new URL(window.location.href);
+        newUrl.searchParams.set('file', resolvedPath);
+        
+        // If it's the same file, just scroll (handled by browser if we didn't preventDefault, but we did)
+        if (resolvedPath === currentFile && hash) {
+             const element = document.getElementById(hash);
+             if (element) element.scrollIntoView();
+             history.pushState(null, '', newUrl.toString());
+             return;
+        }
+
+        if (hash) newUrl.hash = hash;
+        else newUrl.hash = '';
+        
+        window.location.href = newUrl.toString();
+      }
+    });
+
+    // Scroll to hash after load and apply highlighting
+    // True if the rendered doc embeds live WB content: any <wb-*> custom element
+    // or x-* behavior attribute. Lets authors drop a <wb-demo>…</wb-demo> (or any
+    // <wb-button variant="…">, x-ripple, …) straight into a .md and have it render.
+    function docHasWbContent(root) {
+      if (!root) return false;
+      for (const el of root.querySelectorAll('*')) {
+        if (el.tagName.toLowerCase().startsWith('wb-')) return true;
+        for (const attr of el.attributes) if (attr.name.toLowerCase().startsWith('x-')) return true;
+      }
+      return false;
+    }
+
+    // #466: End scrolled short of the real page bottom. Root cause (confirmed
+    // via Playwright: real `page.keyboard.press('End')`, real scrollHeight/
+    // scrollTop measurements over time — not a synthetic dispatchEvent):
+    // <wb-demo> is a real custom element (src/wb-viewmodels/wb-demo.js) whose
+    // connectedCallback only builds the first EAGER_BUILD_COUNT (5) blocks
+    // synchronously — every block after that is deferred behind its own
+    // IntersectionObserver (rootMargin: '1200px', rooted at the viewport here
+    // since this page has no #siteBody) and, once it intersects, an ASYNC
+    // demo() build (src/wb-viewmodels/demo.js — awaits getPageSource() +
+    // docs/manifest.json fetches before appending .wb-demo__grid + doc-link
+    // badges). Until a lazy block both intersects AND finishes that async
+    // build, the page's real height isn't reflected in scrollHeight yet.
+    //
+    // The native End key computes its scroll target ONCE, synchronously,
+    // against document.documentElement.scrollHeight at keydown time — and
+    // does nothing to correct course afterward. Worse, the jump ITSELF is
+    // often what first brings the remaining lazy blocks within the 1200px
+    // margin, so the page keeps growing for a beat right after landing,
+    // stranding the user above the true bottom with no re-trigger (confirmed
+    // live on docs/components/cards/card.md: 10 <wb-demo> blocks, the last 5
+    // lazy — a single End press landed at the OLD pre-growth bottom every
+    // time, exactly reproducing the filed report).
+    //
+    // Two more things had to be true simultaneously for the fix below to be
+    // safe, both confirmed live by pressing End as early as possible (right
+    // after 'load', matching a fast reader):
+    //
+    // 1. Calling demo() directly on a <wb-demo> BEFORE it has ever been
+    //    upgraded as the real WBDemo custom element skips
+    //    WBDemo.connectedCallback, so `_rawSource` was never captured —
+    //    demo.js's fallback (getPageSource(), which fetches location.href)
+    //    then fetches THIS STATIC PAGE'S OWN SOURCE, which contains zero
+    //    literal <wb-demo> tags (they only exist in the markdown rendered
+    //    into #content at runtime), silently producing an empty demo body
+    //    that never grows again.
+    // 2. <wb-demo> only upgrades to the real custom element once wb.js is
+    //    dynamically imported inside the 'wb:mdhtml:loaded' handler below —
+    //    which itself only fires once mdhtml() has finished fetching and
+    //    rendering the doc. Pressing End before that means there's nothing
+    //    real to scroll to yet regardless.
+    //
+    // `contentReady` (resolved at the end of the 'wb:mdhtml:loaded' handler,
+    // unconditionally — see below) gates the fix on both: nothing here runs
+    // until the doc has actually rendered and, for docs with live WB content,
+    // wb.js has upgraded every <wb-demo> and captured its `_rawSource`.
+    // Bounded (4s) so a genuinely broken/hung render can't wait forever.
+    let resolveContentReady;
+    const contentReadyPromise = new Promise((resolve) => { resolveContentReady = resolve; });
+    function contentReady() {
+      return Promise.race([contentReadyPromise, new Promise((resolve) => setTimeout(resolve, 4000))]);
+    }
+
+    const END_SCROLL_QUIET_MS = 200;
+    const END_SCROLL_MAX_WAIT_MS = 8000;
+    let scrollingToTrueEnd = false;
+    async function scrollToTrueBottom() {
+      if (scrollingToTrueEnd) return; // a press is already in flight — let it finish
+      scrollingToTrueEnd = true;
+      try {
+        await contentReady();
+
+        // Force every not-yet-built <wb-demo> to build NOW — demo() itself
+        // is what wb-demo.js's own IntersectionObserver callback would
+        // eventually call (reusing it here, not inventing a parallel
+        // mechanism); its `_demoInitialized` guard makes this a safe no-op
+        // for blocks already built, and safe against the real observer
+        // firing again later on the same element.
+        const pending = Array.from(document.querySelectorAll('wb-demo')).map((el) =>
+          demo(el, {
+            title: el.getAttribute('title'),
+            tag: el.getAttribute('tag'),
+            columns: el.getAttribute('columns'),
+            contentClass: el.getAttribute('content-class'),
+            isLazy: true
+          }).catch(() => {}) // one demo failing to build must not block the scroll
+        );
+        if (pending.length) await Promise.all(pending);
+
+        // Safety net for any OTHER late-settling growth this page doesn't
+        // specifically know about (images, fonts, a future async content
+        // type): scroll to the current bottom, then keep re-targeting while
+        // scrollHeight keeps changing, stopping once it's been quiet for a
+        // beat (or MAX_WAIT_MS, so a runaway growth source can't hang this
+        // forever).
+        const root = document.documentElement;
+        const currentMax = () => Math.max(0, root.scrollHeight - root.clientHeight);
+        let target = currentMax();
+        window.scrollTo({ top: target, behavior: 'smooth' });
+
+        await new Promise((resolve) => {
+          const startedAt = Date.now();
+          let lastHeight = root.scrollHeight;
+          let lastChangeAt = startedAt;
+          function tick() {
+            const h = root.scrollHeight;
+            if (h !== lastHeight) {
+              lastHeight = h;
+              lastChangeAt = Date.now();
+              const newTarget = currentMax();
+              if (newTarget !== target) {
+                target = newTarget;
+                window.scrollTo({ top: target, behavior: 'smooth' });
+              }
+            }
+            const quiet = Date.now() - lastChangeAt >= END_SCROLL_QUIET_MS;
+            const timedOut = Date.now() - startedAt >= END_SCROLL_MAX_WAIT_MS;
+            if (quiet || timedOut) { resolve(); return; }
+            requestAnimationFrame(tick);
+          }
+          requestAnimationFrame(tick);
+        });
+      } finally {
+        scrollingToTrueEnd = false;
+      }
+    }
+    document.addEventListener('keydown', (e) => {
+      if (e.key !== 'End' || e.ctrlKey || e.metaKey || e.altKey || e.shiftKey) return;
+      const t = e.target;
+      const tag = t && t.tagName;
+      // Preserve native End behavior inside text fields (move cursor to end
+      // of line) — only hijack the whole-page scroll case.
+      if (tag === 'INPUT' || tag === 'TEXTAREA' || (t && t.isContentEditable)) return;
+      e.preventDefault();
+      scrollToTrueBottom();
+    });
+
+    document.addEventListener('wb:mdhtml:loaded', async () => {
+      // Render live WB content embedded in the doc: authors drop a
+      // <wb-demo>…</wb-demo> (which shows the live control AND its source) — or any
+      // <wb-*> / x-* markup — straight into the .md and it renders. WB is loaded
+      // lazily, ONLY when a doc actually contains live content, so plain docs pay
+      // nothing and a framework failure can't break plain doc rendering.
+      const docEl = document.getElementById('content');
+      if (docHasWbContent(docEl)) {
+        try {
+          const mod = await import('../src/core/wb.js');
+          const WB = mod.default || mod.WB;
+          await WB.init({ scan: false, observe: false });
+          await WB.scan(docEl);
+        } catch (e) {
+          console.warn('[doc-viewer] live component render failed:', e);
+        }
+      }
+
+      // Apply syntax highlighting
+      document.querySelectorAll('pre code').forEach((block) => {
+        // If no language class is present, force plaintext to prevent auto-detection
+        // which can mess up ASCII art alignment
+        const hasLanguage = Array.from(block.classList).some(cls => cls.startsWith('language-'));
+        if (!hasLanguage) {
+           block.classList.add('language-plaintext');
+        }
+        hljs.highlightElement(block);
+      });
+
+      if (window.location.hash) {
+        // Decode hash to handle special characters
+        const id = decodeURIComponent(window.location.hash.substring(1));
+        const element = document.getElementById(id);
+        if (element) {
+            setTimeout(() => element.scrollIntoView(), 100);
+        }
+      }
+
+      // #466: everything an End-key press needs (docHasWbContent's <wb-demo>
+      // upgrade + eager builds) has happened by this point — unblock
+      // scrollToTrueBottom()'s contentReady() wait, unconditionally (even if
+      // the live-component render above failed, or this doc has none).
+      resolveContentReady();
+    });
+    
+    if (file) {
+      const content = document.getElementById('content');
+      content.dataset.src = fileUrl;
+      // Disable sanitization to allow embedded HTML/Scripts in documentation
+      content.dataset.sanitize = "false";
+      
+      // Initialize mdhtml
+      mdhtml(content, { size: 'md' })
+        .then(async () => {
+          // Turn `code`/**bold** path mentions into real links (existing targets
+          // only), THEN fix relative links/media so they resolve against the
+          // doc's location, not this viewer page (prevents ../../demos/x.html →
+          // domain-root 404). Linkify first so the new .html anchors get rebased.
+          await linkifyDocPaths();
+          rebaseDocResources();
+
+          // Title the tab after the document itself, not the static
+          // "Documentation Viewer": prefer the rendered H1, fall back to the
+          // .md filename.
+          const h1 = content.querySelector('h1');
+          const fromFile = decodeURIComponent(file).split('/').pop().replace(/\.md$/i, '');
+          const docName = (h1 && h1.textContent.trim()) || fromFile;
+          if (docName) { document.title = docName; }
+        })
+        .catch(err => {
+          content.innerHTML = `<div class="error">Failed to load documentation: ${err.message}</div>`;
+        });
+    } else {
+      document.getElementById('content').innerHTML = '<div class="error">No file specified.</div>';
+    }
+  </script>
+</body>
+</html>

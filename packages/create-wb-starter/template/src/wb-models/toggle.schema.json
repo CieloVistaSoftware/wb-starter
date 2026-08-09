@@ -1,0 +1,50 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "toggle.schema.json",
+  "title": "Toggle",
+  "description": "Toggle visibility or state of another element.",
+  "schemaFor": "toggle",
+  "compliance": {
+    "baseClass": "wb-toggle",
+    "supportLevel": "stable",
+    "accessibility": "high"
+  },
+  "properties": {
+    "target": {
+      "type": "string",
+      "description": "Selector of target element",
+      "default": ""
+    }
+  },
+  "$view": [],
+  "$methods": {},
+  "$cssAPI": {},
+  "test": {
+    "setup": [
+      "<wb-toggle>Basic toggle content</wb-toggle>",
+      "<wb-toggle target=\"Sample target\">target=\"Sample target\"</wb-toggle>",
+      "<wb-toggle>Test permutation 3</wb-toggle>",
+      "<wb-toggle>Test permutation 4</wb-toggle>",
+      "<wb-toggle>Test permutation 5</wb-toggle>"
+    ],
+    "matrix": {
+      "combinations": [
+        {
+          "target": "#content"
+        }
+      ]
+    },
+    "site": {
+      "page": "forms",
+      "tag": "wb-toggle",
+      "renders": true,
+      "baseClass": "wb-toggle",
+      "minInstances": 1,
+      "checkText": [],
+      "checkClasses": [],
+      "checkAttributes": [
+        "target"
+      ]
+    }
+  }
+}

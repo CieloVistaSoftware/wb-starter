@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Navbar Repro</title>
+    <script type="module">
+        import WB from './src/core/wb.js';
+        WB.init({ debug: true, autoInject: true });
+    </script>
+</head>
+<body>
+    <h1>Navbar Auto-Injection Test</h1>
+
+    <h2>1. Semantic HTML (The Architecture Doc Example)</h2>
+    <nav id="nav-semantic">
+        <ul>
+            <li><a href="#">Home</a></li>
+            <li><a href="#">About</a></li>
+            <li><a href="#">Contact</a></li>
+        </ul>
+    </nav>
+
+    <h2>2. Data Attributes (The Component Way)</h2>
+    <nav id="nav-data" data-brand="MySite" data-items="Home,About,Contact"></nav>
+
+    <script>
+        // Wait a bit for WB to run
+        setTimeout(() => {
+            const navSemantic = document.getElementById('nav-semantic');
+            console.log('Semantic Nav Content:', navSemantic.innerHTML);
+            
+            const navData = document.getElementById('nav-data');
+            console.log('Data Nav Content:', navData.innerHTML);
+
+            if (navSemantic.innerHTML.includes('<ul>')) {
+                console.log('PASS: Semantic content preserved');
+            } else {
+                console.error('FAIL: Semantic content wiped');
+            }
+        }, 1000);
+    </script>
+</body>
+</html>

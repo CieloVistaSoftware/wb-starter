@@ -1,0 +1,233 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "cardbutton.schema.json",
+  "title": "Button Card",
+  "description": "Card with action buttons in footer",
+  "schemaFor": "cardbutton",
+  "baseClass": "wb-card-button",
+  "semanticElement": {
+    "tagName": "article",
+    "implicitRole": "article"
+  },
+  "compliance": {
+    "baseClass": "wb-card-button",
+    "supportLevel": "stable",
+    "accessibility": "high"
+  },
+  "properties": {
+    "title": {
+      "type": "string",
+      "description": "Card title",
+      "default": ""
+    },
+    "content": {
+      "type": "string",
+      "description": "Card content/description",
+      "default": ""
+    },
+    "primary": {
+      "type": "string",
+      "description": "Primary button text",
+      "required": true,
+      "default": ""
+    },
+    "primaryHref": {
+      "type": "string",
+      "description": "Primary button link URL",
+      "default": ""
+    },
+    "secondary": {
+      "type": "string",
+      "description": "Secondary button text",
+      "default": ""
+    },
+    "secondaryHref": {
+      "type": "string",
+      "description": "Secondary button link URL",
+      "default": ""
+    },
+    "variant": {
+      "type": "string",
+      "enum": [
+        "default",
+        "elevated",
+        "bordered"
+      ],
+      "default": "default",
+      "appliesClass": "wb-card-button--{{value}}"
+    }
+  },
+  "$view": [
+    {
+      "name": "header",
+      "tag": "header",
+      "public": true,
+      "createdWhen": "title",
+      "description": "Card header"
+    },
+    {
+      "name": "title",
+      "tag": "h3",
+      "parent": "header",
+      "public": true,
+      "content": "{{title}}",
+      "createdWhen": "title",
+      "description": "Card title"
+    },
+    {
+      "name": "main",
+      "tag": "main",
+      "public": true,
+      "createdWhen": "content OR body",
+      "description": "Card content"
+    },
+    {
+      "name": "content",
+      "tag": "p",
+      "parent": "main",
+      "public": true,
+      "content": "<slot>{{content}}</slot>",
+      "description": "Content text"
+    },
+    {
+      "name": "footer",
+      "tag": "footer",
+      "public": true,
+      "required": true,
+      "description": "Button container"
+    },
+    {
+      "name": "primary-btn",
+      "tag": "button",
+      "parent": "footer",
+      "public": true,
+      "content": "{{primary}}",
+      "description": "Primary action button"
+    },
+    {
+      "name": "secondary-btn",
+      "tag": "button",
+      "parent": "footer",
+      "public": true,
+      "content": "{{secondary}}",
+      "createdWhen": "secondary",
+      "description": "Secondary action button"
+    }
+  ],
+  "$methods": {
+    "show": {
+      "description": "Shows the card",
+      "params": []
+    },
+    "hide": {
+      "description": "Hides the card",
+      "params": []
+    },
+    "toggle": {
+      "description": "Toggles visibility",
+      "params": []
+    }
+  },
+  "$cssAPI": {
+    "--wb-card-button-padding": {
+      "default": "1.5rem",
+      "description": "Card padding"
+    },
+    "--wb-card-button-radius": {
+      "default": "8px",
+      "description": "Border radius"
+    },
+    "--wb-card-button-gap": {
+      "default": "1rem",
+      "description": "Gap between elements"
+    },
+    "--wb-card-button-footer-gap": {
+      "default": "0.75rem",
+      "description": "Gap between buttons"
+    },
+    "--wb-card-button-primary-bg": {
+      "default": "var(--primary, #6366f1)",
+      "description": "Primary button background"
+    },
+    "--wb-card-button-primary-color": {
+      "default": "#ffffff",
+      "description": "Primary button text"
+    },
+    "--wb-card-button-secondary-bg": {
+      "default": "transparent",
+      "description": "Secondary button background"
+    },
+    "--wb-card-button-secondary-color": {
+      "default": "var(--text-primary, #1a1a1a)",
+      "description": "Secondary button text"
+    }
+  },
+  "events": {
+    "wb:cardbutton:primary": {
+      "description": "Primary button clicked",
+      "detail": {
+        "text": "string"
+      }
+    },
+    "wb:cardbutton:secondary": {
+      "description": "Secondary button clicked",
+      "detail": {
+        "text": "string"
+      }
+    }
+  },
+  "test": {
+    "setup": [
+      "<wb-cardbutton>Basic cardbutton content</wb-cardbutton>",
+      "<wb-cardbutton variant=\"default\">variant=default</wb-cardbutton>",
+      "<wb-cardbutton variant=\"elevated\">variant=elevated</wb-cardbutton>",
+      "<wb-cardbutton variant=\"bordered\">variant=bordered</wb-cardbutton>",
+      "<wb-cardbutton title=\"Sample title\">title=\"Sample title\"</wb-cardbutton>",
+      "<wb-cardbutton content=\"Sample content\">content=\"Sample content\"</wb-cardbutton>",
+      "<wb-cardbutton primary=\"Sample primary\">primary=\"Sample primary\"</wb-cardbutton>",
+      "<wb-cardbutton primary-href=\"Sample primaryHref\">primaryHref=\"Sample primaryHref\"</wb-cardbutton>",
+      "<wb-card-button title=\"Confirm\" primary=\"Yes\" secondary=\"No\"></wb-card-button>"
+    ],
+    "matrix": {
+      "combinations": [
+        {
+          "title": "Card",
+          "primary": "OK"
+        },
+        {
+          "title": "Card",
+          "primary": "Submit",
+          "content": "Content"
+        },
+        {
+          "title": "Card",
+          "primary": "Yes",
+          "secondary": "No"
+        }
+      ]
+    },
+    "site": {
+      "page": "cards",
+      "tag": "wb-cardbutton",
+      "renders": true,
+      "baseClass": "wb-card-button",
+      "minInstances": 3,
+      "checkText": [
+        "Card"
+      ],
+      "checkClasses": [
+        "wb-card-button--elevated"
+      ],
+      "checkAttributes": [
+        "title",
+        "primary"
+      ]
+    }
+  },
+  "_metadata": {
+    "category": "cards",
+    "icon": "🔘",
+    "since": "1.0.0",
+    "status": "stable"
+  }
+}

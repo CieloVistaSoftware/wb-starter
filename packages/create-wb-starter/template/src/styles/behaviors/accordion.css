@@ -1,0 +1,39 @@
+/**
+ * Accordion Behavior Styles
+ * -----------------------------------------------------------------------------
+ * Extracted from demo.css (Phase 3 migration)
+ * Works with src/wb-viewmodels/semantics/accordion.js
+ * -----------------------------------------------------------------------------
+ */
+
+.wb-accordion-item {
+  border: 1px solid var(--border-color);
+  margin-top: -1px;
+}
+
+.wb-accordion-item:first-child {
+  border-radius: 6px 6px 0 0;
+}
+
+.wb-accordion-item:last-child {
+  border-radius: 0 0 6px 6px;
+}
+
+.wb-accordion-head {
+  padding: 0.75rem;
+  background: var(--bg-secondary);
+  cursor: pointer;
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.85rem;
+}
+
+.wb-accordion-body {
+  padding: 0.75rem;
+  display: none;
+  font-size: 0.85rem;
+}
+
+.wb-accordion-item.open .wb-accordion-body {
+  display: block;
+}

@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Uganda Community Food Bank - WB Charity Site</title>
+    <!-- Core styles -->
+    <link rel="stylesheet" href="../src/styles/themes.css">
+    <link rel="stylesheet" href="../src/styles/site.css">
+    <!-- WB Behaviors -->
+    <script type="module">
+        import WB from '../src/core/wb-lazy.js';
+        WB.init();
+    </script>
+    <style>
+        /* Custom tweaks for the charity theme */
+        :root {
+            --primary-color: #10b981; /* Emerald green for food/freshness */
+        }
+    </style>
+</head>
+<body class="site">
+
+    <!-- Navigation -->
+    <wb-header fixed>
+        <div slot="brand" style="font-weight: bold; font-size: 1.2rem;">🇺🇬 Uganda Food Bank</div>
+        <wb-button variant="ghost" onclick="window.location.href='/?page=home'">Back to Home</wb-button>
+        <wb-button variant="primary" onclick="alert('Donation flow would open here!')">Donate Now</wb-button>
+    </wb-header>
+
+    <!-- Hero Section 
+         Fixed: Combined gradient and image into 'background' attribute so image shows through. 
+         Made gradient transparent.
+    -->
+    <wb-cardhero 
+        variant="split" 
+        height="500px"
+        background="linear-gradient(135deg, rgba(236, 253, 245, 0.85) 0%, rgba(209, 250, 229, 0.85) 100%), url('https://images.unsplash.com/photo-1489710437720-ebb67ec84dd2?auto=format&fit=crop&w=800&q=80')"
+        cta="Get Help"
+        cta-href="#programs"
+        cta-secondary="Volunteer"
+        cta-secondary-href="#volunteer"
+    >
+        <div slot="pretitle">
+            <wb-badge variant="success">Serving 5,000+ Families</wb-badge>
+        </div>
+        <h1 slot="title" style="color: #064e3b;">
+            Nourishing Our <br>
+            <span class="wb-gradient-text" style="background-image: linear-gradient(to right, #059669, #10b981);">Nation Together</span>
+        </h1>
+        <p slot="subtitle" style="color: #065f46;">
+            We believe no one in Uganda should go to bed hungry. Join us in our mission to provide nutritious meals to families across the region.
+        </p>
+    </wb-cardhero>
+
+    <!-- Urgent Needs / Stats -->
+    <wb-container padding="3rem 1rem" style="background: var(--bg-secondary);">
+        <wb-grid columns="3" gap="2rem">
+            <wb-card variant="float" xalign="center">
+                <div style="font-size: 2.5rem;">🌽</div>
+                <h3>Maize & Beans</h3>
+                <p>Urgently need posho (cornmeal) and beans as staples.</p>
+                <wb-progress value="75" max="100" variant="warning" style="margin-top: 1rem;"></wb-progress>
+                <small>75% goal reached</small>
+            </wb-card>
+
+            <wb-card variant="float" xalign="center">
+                <div style="font-size: 2.5rem;">🥕</div>
+                <h3>Fresh Produce</h3>
+                <p>Partnering with local farms to bring fresh items.</p>
+                <wb-badge variant="success">Fully Stocked</wb-badge>
+            </wb-card>
+
+            <wb-card variant="float" xalign="center">
+                <div style="font-size: 2.5rem;">🤝</div>
+                <h3>Volunteers</h3>
+                <p>We need 50 more volunteers for this weekend.</p>
+                <wb-button variant="outline" size="small" style="margin-top: 1rem;">Sign Up</wb-button>
+            </wb-card>
+        </wb-grid>
+    </wb-container>
+
+    <!-- Our Programs -->
+    <section id="programs" style="padding: 4rem 1rem;">
+        <wb-container>
+            <h2 style="text-align: center; marginBottom: 3rem;">Our Programs</h2>
+            
+            <wb-grid columns="2" gap="2rem">
+                <!-- Program 1 -->
+                <div class="wb-row" style="align-items: center; gap: 2rem;">
+                    <!-- Fixed: Added height/width/loading to ensure rendering -->
+                    <img src="https://images.unsplash.com/photo-1519238360173-04e9ae6031fa?auto=format&fit=crop&w=400&q=80" 
+                         alt="Happy children at pantry" 
+                         width="300" height="200"
+                         style="border-radius: 1rem; width: 100%; max-width: 300px; aspect-ratio: 3/2; object-fit: cover;">
+                    <div>
+                        <h3>Weekly Pantry</h3>
+                        <p>Open every Tuesday and Thursday, providing staples to registered families.</p>
+                        <wb-button variant="glass">View Schedule</wb-button>
+                    </div>
+                </div>
+
+                <!-- Program 2 -->
+                <div class="wb-row" style="align-items: center; gap: 2rem;">
+                    <img src="https://images.unsplash.com/photo-1543354786-8a5f4c51571d?auto=format&fit=crop&w=400&q=80" 
+                         alt="Hot Meals Sharing" 
+                         width="300" height="200"
+                         style="border-radius: 1rem; width: 100%; max-width: 300px; aspect-ratio: 3/2; object-fit: cover;">
+                    <div>
+                        <h3>Hot Meals</h3>
+                        <p>Community kitchen serving hot dinner every evening at 6:00 PM.</p>
+                        <wb-button variant="glass">View Menu</wb-button>
+                    </div>
+                </div>
+            </wb-grid>
+        </wb-container>
+    </section>
+
+    <!-- Footer -->
+    <wb-footer style="background: #064e3b; color: white; padding: 3rem 1rem;">
+        <wb-grid columns="3" gap="2rem">
+            <div>
+                <h4>Uganda Community Food Bank</h4>
+                <p>Plot 42 Kampala Road<br>Kampala, Uganda</p>
+                <p>📞 +256 772 123 456</p>
+            </div>
+            <div>
+                <h4>Quick Links</h4>
+                <div style="display: flex; flex-direction: column; gap: 0.5rem;">
+                    <a href="#" style="color:white; text-decoration: none;">Donate</a>
+                    <a href="#" style="color:white; text-decoration: none;">Volunteer</a>
+                    <a href="#" style="color:white; text-decoration: none;">About Us</a>
+                </div>
+            </div>
+            <div>
+                <h4>Newsletter</h4>
+                <p>Stay updated with our needs.</p>
+                <div style="display: flex; gap: 0.5rem;">
+                    <input type="email" placeholder="Your email" class="wb-input" style="background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.2); color: white;">
+                    <wb-button variant="primary">Subscribe</wb-button>
+                </div>
+            </div>
+        </wb-grid>
+        <div style="text-align: center; margin-top: 3rem; opacity: 0.7; font-size: 0.9rem;">
+            &copy; 2026 Community Food Bank. Built with WB.
+        </div>
+    </wb-footer>
+
+</body>
+</html>

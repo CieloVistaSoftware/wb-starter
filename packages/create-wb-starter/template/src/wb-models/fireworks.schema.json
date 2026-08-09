@@ -1,0 +1,132 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "fireworks.schema.json",
+  "title": "Fireworks",
+  "description": "Fireworks particle burst animation effect",
+  "schemaFor": "fireworks",
+  "baseClass": "wb-fireworks",
+  "semanticElement": {
+    "tagName": "div"
+  },
+  "compliance": {
+    "baseClass": "wb-fireworks",
+    "supportLevel": "stable",
+    "accessibility": "high"
+  },
+  "properties": {
+    "count": {
+      "type": "number",
+      "description": "Particles per burst",
+      "default": 30
+    },
+    "label": {
+      "type": "string",
+      "description": "Trigger button label",
+      "default": "Fireworks!"
+    },
+    "showButton": {
+      "type": "boolean",
+      "description": "Show trigger button",
+      "default": true
+    },
+    "repeat": {
+      "type": "boolean",
+      "description": "Loop animation",
+      "default": false
+    },
+    "delay": {
+      "type": "string",
+      "description": "Start delay",
+      "default": "0s"
+    },
+    "duration": {
+      "type": "string",
+      "description": "Animation duration",
+      "default": "1.5s"
+    },
+    "colors": {
+      "type": "string",
+      "description": "Particle colors as JSON array",
+      "default": "[\"#ff0\",\"#f00\",\"#0ff\",\"#f0f\"]"
+    }
+  },
+  "$view": [
+    {
+      "name": "button",
+      "tag": "button",
+      "public": true,
+      "content": "{{label}}",
+      "createdWhen": "showButton",
+      "description": "Trigger button"
+    },
+    {
+      "name": "container",
+      "tag": "div",
+      "public": false,
+      "description": "Particle container"
+    }
+  ],
+  "$methods": {
+    "fire": {
+      "description": "Triggers fireworks",
+      "params": []
+    },
+    "stop": {
+      "description": "Stops animation",
+      "params": []
+    }
+  },
+  "$cssAPI": {
+    "--wb-fireworks-z-index": {
+      "default": "9999",
+      "description": "Z-index"
+    }
+  },
+  "events": {
+    "wb:fireworks:start": {
+      "description": "Animation started"
+    },
+    "wb:fireworks:end": {
+      "description": "Animation ended"
+    }
+  },
+  "test": {
+    "setup": [
+      "<wb-fireworks>Basic fireworks content</wb-fireworks>",
+      "<wb-fireworks show-button>with showButton</wb-fireworks>",
+      "<wb-fireworks repeat>with repeat</wb-fireworks>",
+      "<wb-fireworks count=\"30\">count=30</wb-fireworks>",
+      "<wb-fireworks label=\"Fireworks!\">label=\"Fireworks!\"</wb-fireworks>",
+      "<wb-fireworks delay=\"0s\">delay=\"0s\"</wb-fireworks>",
+      "<wb-fireworks duration=\"1.5s\">duration=\"1.5s\"</wb-fireworks>",
+      "<wb-fireworks colors=\"[\"#ff0\",\"#f00\",\"#0ff\",\"#f0f\"]\">colors=\"[\"#ff0\",\"#f00\",\"#0ff\",\"#f0f\"]\"</wb-fireworks>"
+    ],
+    "matrix": {
+      "combinations": [
+        {},
+        {
+          "count": 50
+        },
+        {
+          "repeat": true
+        }
+      ]
+    },
+    "site": {
+      "page": "effects",
+      "tag": "wb-fireworks",
+      "renders": true,
+      "baseClass": "wb-fireworks",
+      "minInstances": 3,
+      "checkText": [],
+      "checkClasses": [],
+      "checkAttributes": []
+    }
+  },
+  "_metadata": {
+    "category": "effects",
+    "icon": "🎆",
+    "since": "1.0.0",
+    "status": "stable"
+  }
+}

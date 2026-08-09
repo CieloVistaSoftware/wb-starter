@@ -1,0 +1,57 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "hero.schema.json",
+  "title": "Hero",
+  "description": "Hero section behavior.",
+  "schemaFor": "hero",
+  "compliance": {
+    "baseClass": "wb-hero",
+    "supportLevel": "stable",
+    "accessibility": "high"
+  },
+  "properties": {
+    "variant": {
+      "type": "string",
+      "enum": [
+        "",
+        "default",
+        "cosmic"
+      ],
+      "default": "default"
+    }
+  },
+  "$view": [],
+  "$methods": {},
+  "$cssAPI": {},
+  "test": {
+    "setup": [
+      "<wb-hero>Basic hero content</wb-hero>",
+      "<wb-hero variant=\"default\">variant=default</wb-hero>",
+      "<wb-hero variant=\"cosmic\">variant=cosmic</wb-hero>",
+      "<wb-hero variant=\"default\" variant=\"cosmic\">Combined: variant=default, variant=cosmic</wb-hero>",
+      "<wb-hero>Test permutation 5</wb-hero>"
+    ],
+    "matrix": {
+      "combinations": [
+        {
+          "variant": "default"
+        },
+        {
+          "variant": "cosmic"
+        }
+      ]
+    },
+    "site": {
+      "page": "interactive",
+      "tag": "wb-hero",
+      "renders": true,
+      "baseClass": "wb-hero",
+      "minInstances": 2,
+      "checkText": [],
+      "checkClasses": [],
+      "checkAttributes": [
+        "variant"
+      ]
+    }
+  }
+}

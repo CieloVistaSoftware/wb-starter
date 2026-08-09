@@ -1,0 +1,2006 @@
+/*
+ * #342: this used to @import all 50 files in ./behaviors/*.css
+ * unconditionally — every page paid for every behavior's CSS whether it
+ * used that behavior or not (confirmed: home.html uses 9 wb-* tags + 6 x-*
+ * behaviors out of ~75 available). Everything except the two files below
+ * now loads just-in-time via src/core/style-loader.js's ensureBehaviorCss(),
+ * called from WB.inject()'s single dispatch point right before a behavior
+ * first runs — see src/styles/behavior-css-manifest.js for the full
+ * behaviorName -> file mapping and the reasoning behind what's excluded
+ * (modal.css: dead/legacy, not exercised by current dialog.js; stock.css:
+ * confirmed orphaned, zero references anywhere in the repo).
+ *
+ * layout.css and ui-utils.css stay here as unconditional imports: both are
+ * under 1.5KB, and layout.css's real content (.wb-grid--alt-rows) backs
+ * <wb-grid>, a genuine custom element that never calls WB.inject() and so
+ * never passes through the JIT hook.
+ */
+@import url('./behaviors/layout.css');
+@import url('./behaviors/ui-utils.css');
+@import url('./behaviors/code.css');
+
+/**
+ * WB Starter - Site Layout Styles
+ * Works with themes.css from wb-behaviors
+ */
+
+/* Reset */
+*, *::before, *::after { box-sizing: border-box; }
+body { margin: 0; font-family: system-ui, -apple-system, sans-serif; }
+
+/* #274: prose <li>s have zero margin by default, so a long item that wraps
+   to 2+ lines sits flush against the next item -- their line boxes visually
+   touch/overlap with no gap at all. Seen project-wide on any content page
+   with wrapped list text (about.html, whats-new.html, etc). */
+li { margin-bottom: 0.35em; }
+li:last-child { margin-bottom: 0; }
+
+/* =============================================================================
+   STANDALONE DEMO PAGE CONTAINER
+   ============================================================================= */
+/* demos/site/*.html pages are standalone (not routed through .site/.site__body,
+   which is the app shell used by pages/*.html — see components.html). Without
+   this, their content sits flush against the viewport edge with zero page
+   margin, unlike every shell-routed page. index.html already worked around
+   this with its own one-off inline <style>; this class gives every other
+   standalone demo page the same breathing room via one shared rule. */
+.demo-page {
+  max-width: 1100px;
+  margin: 2rem auto;
+  padding: 0 1.5rem;
+}
+
+/* #450's mobile pattern (body > .page, doc-viewer.html) applied here too --
+   1.5rem side padding is ~36% of a 375px viewport's width. */
+@media (max-width: 640px) {
+  .demo-page,
+  body > .page {
+    padding: 0 var(--space-md, 1rem) !important;
+  }
+}
+
+/* =============================================================================
+   SITE LAYOUT
+   ============================================================================= */
+.wb-scroll-lock {
+  overflow: hidden;
+}
+
+.wb-resizing {
+  cursor: ew-resize;
+  user-select: none;
+}
+
+.site {
+  /* Fixed to the viewport + clip overflow so .site__body is the SINGLE scroll
+     container (was min-height:100vh, which let the whole window scroll too — a
+     dual-scroll-container bug that broke the sticky nav and section anchoring).
+     100dvh (dynamic viewport height) is the fallback-safe upgrade to 100vh:
+     100vh is fixed to the LARGEST possible viewport, which on real browsers
+     (not devtools emulation) can be taller than what's actually visible once
+     browser chrome/toolbars are accounted for — the difference shows up as
+     dead space the footer can't reach. Unsupported browsers just keep 100vh. */
+  height: 100vh;
+  height: 100dvh;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  background: var(--bg-color);
+  color: var(--text-primary);
+}
+
+.site__loading {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  gap: 1rem;
+  color: var(--text-muted);
+}
+
+.site__body {
+  display: flex;
+  /* flex: 1 (flex-basis: 0%) is what actually sizes this — it grows to fill
+     whatever space header + footer don't use, so it self-corrects if either
+     one's height ever changes. A literal `height: calc(100vh - 60px)` used to
+     sit here too: harmless today only because flex-basis:0% overrides it for
+     sizing, but it quietly went stale the moment the header grew from 60px to
+     64px (see .site__header below) — dead, misleading code, removed. */
+  flex: 1;
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+
+/* =============================================================================
+   CUSTOM LAYOUT ELEMENTS
+   ============================================================================= */
+wb-grid, wb-flex, wb-stack, wb-cluster, wb-container,
+wb-row, wb-column,
+wb-sidebar, wb-center, wb-cover, wb-masonry, wb-switcher,
+wb-reel, wb-frame, wb-sticky, wb-drawer, wb-icon,
+wb-audio, wb-cardhero, wb-cardstats, notification-card {
+  display: block;
+}
+
+wb-drawer {
+  visibility: hidden;
+}
+/* Duplicate of the same-named rule in behaviors/layout.css (both loaded --
+   see the @import note at the top of this file). Kept in sync rather than
+   deduplicated here to avoid an unrelated refactor. See layout.css for the
+   full rationale on why .wb-drawer-trigger is included. */
+wb-drawer.wb-drawer-layout,
+wb-drawer.wb-drawer-trigger {
+  visibility: visible;
+}
+
+/* =============================================================================
+   HEADER
+   ============================================================================= */
+/* Exposed so other fixed-position UI (toast.css's .wb-toast-container) can
+ * anchor itself below the header instead of duplicating the 64px value.
+ * Defaults to 0 so standalone pages with no .site__header aren't pushed
+ * down for a header that doesn't exist. */
+:root {
+  --site-header-height: 0px;
+}
+body:has(.site__header) {
+  --site-header-height: 64px;
+}
+
+.site__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 1.5rem;
+  height: 64px; /* Increased height slightly for better breathing room */
+  flex-shrink: 0; /* Never let flex squeeze the header to make room elsewhere */
+  background: var(--bg-primary);
+  border-bottom: 1px solid var(--border-color);
+  z-index: 1000; /* Increased z-index to stay above other content */
+  transition: transform 0.3s ease, margin-bottom 0.3s ease;
+  position: relative;
+}
+
+/* #390: transform alone slides the header out of VIEW but not out of the
+   flex column's LAYOUT -- .site__header keeps its flex-shrink:0, 64px-tall
+   box either way, so .site__body (flex:1, fills whatever the header/footer
+   don't use) never actually grew into the vacated space; the header hiding
+   used to just leave a blank 64px gap where it had been. margin-bottom
+   equal to the header's own height, animated in step with the transform,
+   collapses that layout contribution to 0 in sync with the slide -- .site__
+   body's flex-basis genuinely grows, which is the whole point ("maximize
+   screen area"), not merely visual. */
+.site__header--hidden {
+  transform: translateY(-100%);
+  margin-bottom: -64px;
+}
+
+.site__header--sticky {
+  position: sticky;
+  top: 0;
+}
+
+.header__left {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem; /* Increased gap */
+}
+
+.header__right {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+/* Fix for potential stray toolbar buttons overlapping header */
+body > button.x-code__copy,
+body > button[x-copy] {
+  z-index: 9999; 
+}
+/* Ensure header contents don't get squished */
+.header__logo-text {
+  white-space: nowrap;
+}
+
+
+/* =============================================================================
+   SPINNER
+   ============================================================================= */
+/* #448: tag selectors -- spinner() no longer adds a redundant
+   classList.add('wb-spinner') that just duplicated the <wb-spinner> tag
+   name. */
+wb-spinner {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  /* effects.css also styles the <wb-spinner> ELEMENT as a ring (legacy); the
+     schema builds an inner <div> ring, so neutralize the element ring here to
+     avoid a double ring once --border-color is defined (#182). */
+  width: auto;
+  height: auto;
+  border: 0;
+  animation: none;
+}
+
+wb-spinner div {
+  /* Explicit longhands instead of the `border` shorthand: if --border-color is
+     ever unset, only the color is lost, not the whole border (which previously
+     made the ring vanish entirely). #182 */
+  border-width: 2px;
+  border-style: solid;
+  border-color: var(--border-color);
+  border-top-color: var(--primary);
+  border-radius: 50%;
+  animation: wb-spin 1.2s linear infinite;
+}
+
+/* Spinner Sizes */
+.wb-spinner--xs div { width: 12px; height: 12px; border-width: 1.5px; }
+.wb-spinner--sm div { width: 16px; height: 16px; border-width: 2px; }
+.wb-spinner--md div { width: 24px; height: 24px; border-width: 2px; }
+.wb-spinner--lg div { width: 32px; height: 32px; border-width: 3px; }
+.wb-spinner--xl div { width: 48px; height: 48px; border-width: 4px; }
+
+/* Spinner Speeds */
+.wb-spinner--slow div { animation-duration: 2s; }
+.wb-spinner--medium div { animation-duration: 1.2s; }
+.wb-spinner--fast div { animation-duration: 0.6s; }
+
+/* Spinner Colors */
+.wb-spinner--primary div { border-top-color: var(--primary); }
+.wb-spinner--secondary div { border-top-color: var(--secondary); }
+.wb-spinner--success div { border-top-color: var(--success-color); }
+.wb-spinner--warning div { border-top-color: var(--warning-color); }
+.wb-spinner--error div { border-top-color: var(--danger-color); }
+.wb-spinner--info div { border-top-color: var(--info-color); }
+
+@keyframes wb-spin { to { transform: rotate(360deg); } }
+
+/* Dialog styles → src/styles/behaviors/dialog.css (migrated Phase 2) */
+
+.header__notes-btn,
+.header__playground-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  border: none;
+  background: var(--bg-secondary);
+  color: var(--text-primary);
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 1.2rem;
+  transition: all 0.2s;
+  text-decoration: none;
+}
+
+.header__notes-btn:hover,
+.header__playground-btn:hover {
+  background: var(--bg-tertiary);
+  color: var(--primary);
+}
+
+.header__logo {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  text-decoration: none;
+  color: var(--text-primary);
+  font-weight: 600;
+  font-size: 1.1rem;
+}
+
+.header__logo-icon {
+  font-size: 1.5rem;
+  display: flex;
+  align-items: center;
+}
+
+.header__logo:hover {
+  color: var(--primary);
+}
+
+.header__version {
+  margin-left: 0.35rem;
+  font-size: 0.7em;
+  font-weight: 500;
+  color: var(--text-muted);
+  white-space: nowrap;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.header__version:hover {
+  color: var(--primary);
+  text-decoration: underline;
+}
+
+/* =============================================================================
+   NAVIGATION
+   ============================================================================= */
+.site__nav {
+  width: var(--nav-width, fit-content);
+  min-width: 60px;
+  padding-right: 0;
+  background: var(--bg-primary);
+  border-right: 1px solid var(--border-color);
+  /* Hidden is the unconditional default — see the min-width reveal rule
+     (769px breakpoint) + the unconditional .site__nav--mobile-open rule at the end of
+     this file for why. Some real mobile browsers lay out the very first
+     paint frame at a stale desktop-width viewport before <meta viewport>
+     finishes processing, so a max-width media query can silently fail to
+     match on that frame — if the base rule were display:flex, that frame
+     would show the full sidebar over the phone's content instead of the
+     collapsed nav (reported live, repeatedly: site-engine.js's
+     enforceMobileNavDefault JS workaround was a losing battle against the
+     same timing race). Defaulting hidden makes the failure mode safe. */
+  display: none;
+  flex-direction: column;
+  transition: width 0.3s ease;
+  overflow: visible; /* Changed from hidden to allow resizer handle */
+  /* Sticky sidebar — stay pinned to the viewport as the content scrolls, so the
+     menu is always at the user's current location (was position:relative, which
+     scrolled the nav off-screen). */
+  align-self: flex-start;
+  position: sticky;
+  top: 0;
+  max-height: calc(100vh - 60px);
+  overflow-y: auto;
+}
+
+.site__nav--collapsed {
+  width: 60px;
+  min-width: 60px;
+}
+
+.site__nav--collapsed .nav__label {
+  opacity: 0;
+  width: 0;
+  display: none;
+}
+
+.site__nav--collapsed .nav__item {
+  padding-left: 0.5rem;
+  padding-right: 2rem;
+}
+
+.nav__toggle {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  border: none;
+  background: var(--bg-secondary);
+  color: var(--text-primary);
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 1.2rem;
+  transition: all 0.2s;
+}
+
+.nav__toggle:hover {
+  background: var(--bg-tertiary);
+  color: var(--primary);
+}
+
+.nav__items {
+  display: flex;
+  flex-direction: column;
+  padding: 1rem 0;
+  gap: 0.25rem;
+  overflow-y: auto;
+  flex: 1;
+}
+
+.nav__item {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.5rem 1rem;
+  text-decoration: none;
+  color: var(--text-secondary);
+  border-radius: 0;
+  transition: all 0.2s;
+  white-space: nowrap;
+  overflow: hidden;
+  font-size: 0.85rem;
+}
+
+.nav__item:hover {
+  background: var(--bg-secondary);
+  color: var(--text-primary);
+}
+
+.nav__item--active {
+  background: var(--primary);
+  color: white;
+}
+
+.nav__item--active:hover {
+  background: var(--primary-dark);
+  color: white;
+}
+
+.nav__icon {
+  display: none; /* Icons hidden for cleaner look */
+  font-size: 1rem;
+  flex-shrink: 0;
+  width: 20px;
+  text-align: center;
+}
+
+/* Show icons when nav is collapsed */
+.site__nav--collapsed .nav__icon {
+  display: block;
+}
+
+.nav__label {
+  transition: opacity 0.2s, width 0.2s;
+}
+
+/* =============================================================================
+   MAIN CONTENT
+   ============================================================================= */
+.site__main {
+  flex: 1;
+  min-width: 0; /* allow the flex child to shrink below its content's min-content
+                   width; without this, minmax() grids force horizontal overflow
+                   on narrow viewports (#165) */
+  padding: 2rem;
+  background: var(--bg-color);
+  /* Removed overflow-y: auto - body scrolls now so nav can stick */
+}
+
+.page {
+  max-width: 1200px;
+  margin: 0 auto;
+  animation: fadeIn 0.3s ease;
+}
+
+.page__loading {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 200px;
+}
+
+.page--404 {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 400px;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* =============================================================================
+   FOOTER
+   ============================================================================= */
+.site__footer {
+  background: var(--bg-primary);
+  border-top: 1px solid var(--border-color);
+  padding: 1.5rem 2rem;
+  flex-shrink: 0; /* Never let flex squeeze the footer to make room elsewhere */
+  transition: transform 0.3s ease, margin-top 0.3s ease;
+  position: relative;
+}
+
+/* #393: mirrors .site__header--hidden (#390) for the footer. transform alone
+   would slide the footer out of VIEW but not out of the flex column's LAYOUT
+   -- .site__footer keeps its flex-shrink:0 box either way, so .site__body
+   (flex:1) never actually grows into the vacated space; same bug #390 fixed
+   for the header. Unlike the header's fixed 64px, the footer's height isn't
+   a build-time constant (renderFooter()'s social/footer links are optional
+   per-site config), so initStickyFooter() (src/core/site-engine.js) measures
+   the real height at runtime and sets --site-footer-collapse-height instead
+   of a hardcoded number. margin-top equal to the negative of that measured
+   height collapses the footer's layout contribution in step with the
+   downward slide, so .site__body's flex-basis genuinely grows. */
+.site__footer--hidden {
+  transform: translateY(100%);
+  margin-top: calc(-1 * var(--site-footer-collapse-height, 0px));
+}
+
+.footer__content {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  max-width: 1200px;
+  margin: 0 auto;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+.footer__left {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+  color: var(--text-muted);
+  font-size: 0.875rem;
+}
+
+.footer__links a {
+  color: var(--text-secondary);
+  text-decoration: none;
+}
+
+.footer__links a:hover {
+  color: var(--primary);
+}
+
+.footer__social {
+  display: flex;
+  gap: 0.75rem;
+}
+
+.footer__social-link {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  background: var(--bg-secondary);
+  border-radius: 50%;
+  text-decoration: none;
+  font-size: 1.1rem;
+  transition: all 0.2s;
+}
+
+.footer__social-link:hover {
+  background: var(--primary);
+  transform: translateY(-2px);
+}
+
+/* =============================================================================
+   GLOBAL HEADING STYLES
+   ============================================================================= */
+h1 {
+  font-size: 2.5rem;
+  margin: 0 0 0.5rem;
+  color: var(--text-primary);
+  font-weight: 700;
+}
+
+h2 {
+  font-size: 1.75rem;
+  margin: 2rem 0 1rem;
+  color: var(--text-primary);
+  font-weight: 700;
+}
+
+h3 {
+  font-size: 1.25rem;
+  margin: 1.5rem 0 0.75rem;
+  color: var(--primary);
+  font-weight: 600;
+}
+
+h4 {
+  font-size: 1.1rem;
+  margin: 1rem 0 0.5rem;
+  color: var(--text-primary);
+  font-weight: 600;
+}
+
+h5, h6 {
+  color: var(--text-primary);
+  font-weight: 600;
+}
+
+.page h1 {
+  color: var(--text-primary);
+}
+
+.page h2 {
+  color: var(--text-primary);
+}
+
+.page h3 {
+  color: var(--primary);
+}
+
+.page h4 {
+  color: var(--text-primary);
+}
+
+.page h5, .page h6 {
+  color: var(--text-primary);
+}
+
+/* =============================================================================
+   PAGE CONTENT STYLES
+   ============================================================================= */
+
+.page p, p {
+  line-height: 1.7;
+  color: var(--text-secondary);
+  margin: 0 0 1rem;
+}
+
+.page__hero {
+  text-align: center;
+  padding: 3rem 0;
+  margin-bottom: 2rem;
+  border-bottom: 1px solid var(--border-color);
+}
+
+.page__hero h1 {
+  font-size: 3rem;
+  margin-bottom: 1rem;
+}
+
+.page__hero p {
+  font-size: 1.25rem;
+  color: var(--text-muted);
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+.page__section {
+  margin-bottom: 3rem;
+}
+
+.page__grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 1.5rem;
+  margin-top: 1.5rem;
+}
+
+/* Generated page layout — flex column with gap between rows */
+.page-layout {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+.page-layout > section {
+  width: 100%;
+}
+
+/* =============================================================================
+   RESPONSIVE
+   ============================================================================= */
+
+/* Mobile-first: Safe viewport height for mobile browsers */
+@supports (height: 100dvh) {
+  .site {
+    min-height: 100dvh;
+  }
+  .site__body {
+    height: calc(100dvh - 60px);
+  }
+}
+
+/* Tablet (768px and below) */
+@media (max-width: 768px) {
+  /* Mobile nav - always starts hidden, toggle opens it */
+  .site__nav {
+    position: fixed;
+    left: 0;
+    top: 60px;
+    bottom: 0;
+    z-index: 99;
+    transform: translateX(-100%);
+    width: 280px !important;
+    transition: transform 0.3s ease;
+  }
+  
+  /* When nav is open on mobile (controlled by JS) */
+  .site__nav.site__nav--mobile-open {
+    transform: translateX(0);
+    box-shadow: 0 0 40px rgba(0, 0, 0, 0.5);
+  }
+  
+  /* Hide desktop collapsed state on mobile */
+  .site__nav.site__nav--collapsed {
+    transform: translateX(-100%);
+    width: 280px !important;
+  }
+  
+  .site__nav.site__nav--collapsed.site__nav--mobile-open {
+    transform: translateX(0);
+  }
+  
+  /* Hide nav resizer on mobile */
+  .nav__resizer {
+    display: none;
+  }
+  
+  /* Show icons on mobile for better UX */
+  .nav__icon {
+    display: block !important;
+  }
+  
+  /* Larger touch targets */
+  .nav__item {
+    padding: 0.75rem 1rem;
+    font-size: 1rem;
+  }
+  
+  .site__main {
+    padding: 1rem;
+  }
+  
+  .page h1 {
+    font-size: 1.75rem;
+  }
+  
+  .page__hero h1 {
+    font-size: 2rem;
+  }
+  
+  .page__hero {
+    padding: 2rem 0;
+  }
+  
+  .page__hero p {
+    font-size: 1rem;
+  }
+  
+  h1 { font-size: 2rem; }
+  h2 { font-size: 1.5rem; }
+  h3 { font-size: 1.1rem; }
+  
+  /* Footer content stays a row (base default) instead of forcing every
+     piece onto its own stacked line — copyright+links sit left, social
+     icons sit right, wrapping only if they genuinely don't fit together. */
+
+  /* Ensure header buttons are touch-friendly */
+  .nav__toggle,
+  .header__notes-btn {
+    width: 44px;
+    height: 44px;
+    font-size: 1.3rem;
+  }
+  
+  /* Tables scroll horizontally */
+  .wb-table {
+    display: block;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+  
+  /* Page grid single column */
+  .page__grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* Mobile backdrop overlay */
+.site__nav-backdrop {
+  display: none;
+  position: fixed;
+  inset: 0;
+  top: 60px;
+  background: rgba(0, 0, 0, 0.5);
+  z-index: 98;
+  opacity: 0;
+  /* Closed: invisible AND non-interactive, or this full-screen fixed overlay
+     swallows every click on the page content (#171). Only the OPEN (.visible)
+     backdrop captures taps — so tapping it closes the drawer. */
+  pointer-events: none;
+  transition: opacity 0.3s ease;
+}
+
+@media (max-width: 768px) {
+  .site__nav-backdrop {
+    display: block;
+  }
+
+  .site__nav-backdrop.visible {
+    opacity: 1;
+    pointer-events: auto;
+  }
+}
+
+/* Small phones (480px and below) */
+@media (max-width: 480px) {
+  .site__header {
+    padding: 0 1rem;
+    height: 56px;
+  }
+
+  /* Keep the header right cluster inside the viewport on phones. The marketing
+     "Get Started" CTA is redundant here (hamburger nav + in-page CTAs cover it)
+     and is the widest item, so hide it; tighten the remaining controls. (#165) */
+  .header__right {
+    gap: 0.5rem;
+    min-width: 0;
+  }
+  /* (the marketing CTA is hidden on small phones below — see the #ctaButton
+     rule placed after its base declaration so the cascade actually applies) */
+
+  .site__body {
+    height: calc(100dvh - 56px);
+    height: calc(100vh - 56px);
+  }
+  
+  .site__nav {
+    top: 56px;
+    width: 100% !important;
+    max-width: 100%;
+  }
+  
+  .site__nav-backdrop {
+    top: 56px;
+  }
+  
+  .site__main {
+    /* 1rem top gap so page content sits 1rem below the sticky header (#165) */
+    padding: 1rem 0.75rem 0.75rem;
+  }
+
+  .page h1 {
+    font-size: 1.5rem;
+  }
+  
+  .page__hero h1 {
+    font-size: 1.75rem;
+  }
+  
+  h1 { font-size: 1.5rem; }
+  h2 { font-size: 1.25rem; }
+  
+  /* Full-width buttons on small phones */
+  .btn, .wb-btn-gradient, .wb-btn-glass {
+    width: 100%;
+    justify-content: center;
+  }
+  
+  .footer__left {
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 0.5rem;
+    /* flex:1 1 auto wasn't enough — with flex-basis:auto, the OUTER
+       .footer__content row's wrap decision still uses footer__left's
+       UNWRAPPED text width (its max-content size) even though min-width:0
+       lets it shrink afterward. flex-basis:0 starts it at zero and lets
+       flex-grow fill the row, so the wrap decision no longer depends on
+       how wide the copyright text would be on a single line — footer__right
+       (the social icons) can now sit on the same row instead of being
+       pushed to its own line beneath two rows of wrapped text. */
+    flex: 1 1 0;
+    min-width: 0;
+  }
+}
+
+/* =============================================================================
+   BUTTONS
+   ============================================================================= */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.5rem 1rem;
+  border-radius: 6px;
+  border: 1px solid transparent;
+  cursor: pointer;
+  font-size: 0.9rem;
+  font-weight: 500;
+  transition: all 0.2s;
+  text-decoration: none;
+  line-height: 1.5;
+  gap: 0.5rem;
+}
+
+.btn:focus {
+  outline: 2px solid var(--primary);
+  outline-offset: 2px;
+}
+
+.btn:disabled, .btn[disabled] {
+  opacity: 0.5;
+  cursor: not-allowed;
+  pointer-events: none;
+}
+
+/* Variants */
+.btn--primary,
+.btn-primary {
+  background: var(--primary);
+  color: white;
+  border-color: var(--primary);
+}
+
+.btn--primary:hover,
+.btn-primary:hover {
+  background: var(--primary-dark, var(--primary));
+  filter: brightness(1.1);
+}
+
+.btn--secondary,
+.btn-secondary {
+  background: var(--bg-secondary);
+  color: var(--text-primary);
+  border-color: var(--border-color);
+}
+
+.btn--secondary:hover,
+.btn-secondary:hover {
+  background: var(--bg-tertiary);
+  border-color: var(--text-secondary);
+}
+
+.btn--success {
+  background: var(--success-color);
+  color: white;
+  border-color: var(--success-color);
+}
+.btn--success:hover {
+  filter: brightness(1.1);
+}
+
+.btn--warning {
+  background: var(--warning-color);
+  color: #1a1a1a;
+  border-color: var(--warning-color);
+}
+.btn--warning:hover {
+  filter: brightness(1.1);
+}
+
+.btn--error {
+  background: var(--danger-color);
+  color: white;
+  border-color: var(--danger-color);
+}
+.btn--error:hover {
+  filter: brightness(1.1);
+}
+
+.btn--ghost {
+  background: transparent;
+  color: var(--text-primary);
+  border-color: transparent;
+}
+.btn--ghost:hover {
+  background: rgba(255, 255, 255, 0.05);
+  color: var(--primary);
+}
+
+.btn--outline {
+  background: transparent;
+  border: 1px solid var(--border-color);
+  color: var(--text-primary);
+}
+.btn--outline:hover {
+  border-color: var(--primary);
+  color: var(--primary);
+}
+
+/* Sizes */
+.btn--xs { font-size: 0.75rem; padding: 0.25rem 0.5rem; }
+.btn--sm { font-size: 0.8rem; padding: 0.375rem 0.75rem; }
+.btn--md { font-size: 0.9rem; padding: 0.5rem 1rem; }
+.btn--lg { font-size: 1.1rem; padding: 0.75rem 1.5rem; }
+.btn--xl { font-size: 1.25rem; padding: 1rem 2rem; }
+
+/* =============================================================================
+   WB EVENTS TOAST ANIMATIONS
+============================================================================= */
+@keyframes wb-slide-in {
+  from {
+    opacity: 0;
+    transform: translateX(100%);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes wb-fade-out {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
+}
+
+/* =============================================================================
+   DOCS VIEWER SCROLLBARS
+   ============================================================================= */
+#docs-div-1 > * {
+  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none; /* IE/Edge */
+}
+
+#docs-div-1 > *::-webkit-scrollbar {
+  display: none; /* Chrome/Safari/Opera */
+}
+
+/* =============================================================================
+   ANIMATIONS
+   ============================================================================= */
+.wb-animate {
+  animation-fill-mode: both;
+}
+
+@keyframes wb-fade-in { from { opacity: 0; } to { opacity: 1; } }
+/* wb-fade-out is already defined above */
+@keyframes wb-slide-in-left { from { transform: translateX(-100%); opacity: 0; } to { transform: translateX(0); opacity: 1; } }
+@keyframes wb-slide-in-right { from { transform: translateX(100%); opacity: 0; } to { transform: translateX(0); opacity: 1; } }
+@keyframes wb-slide-in-up { from { transform: translateY(100%); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
+@keyframes wb-slide-in-down { from { transform: translateY(-100%); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
+@keyframes wb-zoom-in { from { transform: scale(0); opacity: 0; } to { transform: scale(1); opacity: 1; } }
+@keyframes wb-zoom-out { from { transform: scale(1); opacity: 1; } to { transform: scale(0); opacity: 0; } }
+@keyframes wb-flip { from { transform: perspective(400px) rotateY(90deg); opacity: 0; } to { transform: perspective(400px) rotateY(0deg); opacity: 1; } }
+@keyframes wb-rotate { from { transform: rotate(-180deg); opacity: 0; } to { transform: rotate(0); opacity: 1; } }
+@keyframes wb-bounce { 0%, 20%, 50%, 80%, 100% { transform: translateY(0); } 40% { transform: translateY(-30px); } 60% { transform: translateY(-15px); } }
+@keyframes wb-shake { 0%, 100% { transform: translateX(0); } 10%, 30%, 50%, 70%, 90% { transform: translateX(-10px); } 20%, 40%, 60%, 80% { transform: translateX(10px); } }
+@keyframes wb-pulse { 0% { transform: scale(1); } 50% { transform: scale(1.1); } 100% { transform: scale(1); } }
+@keyframes wb-flash { 0%, 50%, 100% { opacity: 1; } 25%, 75% { opacity: 0; } }
+@keyframes wb-tada { 0% { transform: scale(1); } 10%, 20% { transform: scale(0.9) rotate(-3deg); } 30%, 50%, 70%, 90% { transform: scale(1.1) rotate(3deg); } 40%, 60%, 80% { transform: scale(1.1) rotate(-3deg); } 100% { transform: scale(1) rotate(0); } }
+@keyframes wb-wobble { 0% { transform: translateX(0%); } 15% { transform: translateX(-25%) rotate(-5deg); } 30% { transform: translateX(20%) rotate(3deg); } 45% { transform: translateX(-15%) rotate(-3deg); } 60% { transform: translateX(10%) rotate(2deg); } 75% { transform: translateX(-5%) rotate(-1deg); } 100% { transform: translateX(0%); } }
+@keyframes wb-jello { 11.1% { transform: none; } 22.2% { transform: skewX(-12.5deg) skewY(-12.5deg); } 33.3% { transform: skewX(6.25deg) skewY(6.25deg); } 44.4% { transform: skewX(-3.125deg) skewY(-3.125deg); } 55.5% { transform: skewX(1.5625deg) skewY(1.5625deg); } 66.6% { transform: skewX(-0.78125deg) skewY(-0.78125deg); } 77.7% { transform: skewX(0.390625deg) skewY(0.390625deg); } 88.8% { transform: skewX(-0.1953125deg) skewY(-0.1953125deg); } 100% { transform: none; } }
+@keyframes wb-swing { 20% { transform: rotate(15deg); } 40% { transform: rotate(-10deg); } 60% { transform: rotate(5deg); } 80% { transform: rotate(-5deg); } 100% { transform: rotate(0deg); } }
+@keyframes wb-rubberband { 0% { transform: scale(1); } 30% { transform: scale(1.25, 0.75); } 40% { transform: scale(0.75, 1.25); } 50% { transform: scale(1.15, 0.85); } 65% { transform: scale(0.95, 1.05); } 75% { transform: scale(1.05, 0.95); } 100% { transform: scale(1); } }
+@keyframes wb-heartbeat { 0% { transform: scale(1); } 14% { transform: scale(1.3); } 28% { transform: scale(1); } 42% { transform: scale(1.3); } 70% { transform: scale(1); } }
+@keyframes wb-marquee { 0% { transform: translateX(0); } 100% { transform: translateX(-100%); } }
+
+/* =============================================================================
+   RESIZABLE
+   ============================================================================= */
+.wb-resizable__handle {
+  background-color: rgba(255, 255, 255, 0.2);
+  border: 1px solid rgba(255, 255, 255, 0.4);
+  border-radius: 50%;
+  transition: background-color 0.2s;
+}
+
+.wb-resizable__handle:hover {
+  background-color: var(--primary);
+}
+
+/* Resizable Nav — NOTE: do NOT re-declare .site__nav position here. The base
+   rule already sets position: relative (so the absolute .nav__resizer anchors),
+   and the mobile @media block flips it to position: fixed for the off-canvas
+   drawer. A duplicate position:relative here (after the media query) silently
+   overrode the mobile rule and caused horizontal overflow on phones (#165). */
+.nav__resizer {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 12px;
+  height: 100%;
+  cursor: col-resize;
+  background: transparent;
+  z-index: 100;
+  transition: background 0.2s;
+}
+
+.nav__resizer::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 4px;
+  height: 40px;
+  background: var(--border-color);
+  border-radius: 2px;
+  opacity: 0.5;
+  transition: opacity 0.2s, background 0.2s;
+}
+
+.nav__resizer:hover::after {
+  opacity: 1;
+  background: var(--primary);
+}
+
+.nav__resizer:hover {
+  background: rgba(99, 102, 241, 0.1);
+}
+
+/* Resizing handled by JS overlay now */
+
+/* Table styles → src/styles/behaviors/data.css (migrated Phase 1) */
+
+/* =============================================================================
+   PREMIUM HERO STYLES
+   ============================================================================= */
+
+/* Hero Section */
+.wb-hero {
+  position: relative;
+  min-height: 80vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  background: var(--bg-color);
+}
+
+.wb-hero__content {
+  position: relative;
+  z-index: 10;
+  text-align: center;
+  max-width: 800px;
+  padding: 2rem;
+}
+
+.wb-hero__subtitle {
+  font-size: 1.25rem;
+  color: var(--text-secondary);
+  max-width: 600px;
+  margin: 0 auto 2rem;
+  line-height: 1.7;
+}
+
+/* Gradient Text */
+.wb-gradient-text {
+  background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 50%, var(--accent) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* =============================================================================
+   FLOATING ORBS
+   ============================================================================= */
+.wb-orb {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(80px);
+  opacity: 0.5;
+  animation: wb-orb-float 8s ease-in-out infinite;
+  pointer-events: none;
+}
+
+.wb-orb--primary {
+  background: var(--primary);
+}
+
+.wb-orb--ocean {
+  background: var(--info-color);
+}
+
+.wb-orb--sunset {
+  background: var(--warning-color);
+}
+
+.wb-orb--cosmic {
+  background: linear-gradient(135deg, var(--primary), var(--secondary), var(--accent));
+}
+
+@keyframes wb-orb-float {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  33% { transform: translate(30px, -30px) scale(1.05); }
+  66% { transform: translate(-20px, 20px) scale(0.95); }
+}
+
+/* =============================================================================
+   GRADIENT BUTTONS
+   ============================================================================= */
+/* Element-qualified (button.wb-btn-gradient, a.wb-btn-gradient) so this beats
+   themes.css's `[data-theme] button` native-button reset (0-1-1 specificity)
+   on <button> usage -- the bare class alone (0-1-0) lost that fight and this
+   component's real padding never applied, leaving the reset's 0.5rem 1rem in
+   effect (8px, under the >=1rem minimum) instead of the 0.875rem/2rem below. */
+button.wb-btn-gradient,
+a.wb-btn-gradient {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  /* >=1rem on every side (was 0.875rem/14px vertical, under the minimum). */
+  padding: 1rem 2rem;
+  font-size: 1rem;
+  font-weight: 600;
+  color: white;
+  text-decoration: none;
+  border: none;
+  border-radius: 12px;
+  cursor: pointer;
+  overflow: hidden;
+  background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 50%, var(--accent) 100%);
+  background-size: 200% 200%;
+  animation: wb-gradient-shift 3s ease infinite;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.wb-btn-gradient:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 40px -10px var(--primary);
+}
+
+.wb-btn-gradient:active {
+  transform: translateY(0);
+}
+
+@keyframes wb-gradient-shift {
+  0%, 100% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+}
+
+/* =============================================================================
+   GLASS BUTTONS & ELEMENTS
+   ============================================================================= */
+/* Element-qualified for the same reason as .wb-btn-gradient above -- beats
+   themes.css's `[data-theme] button` reset (0-1-1) on <button> usage. */
+button.wb-btn-glass,
+a.wb-btn-glass {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  /* >=1rem on every side (was 0.875rem/14px vertical, under the minimum). */
+  padding: 1rem 2rem;
+  font-size: 1rem;
+  font-weight: 500;
+  color: var(--text-primary);
+  text-decoration: none;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 12px;
+  cursor: pointer;
+  background: rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(10px);
+  transition: all 0.2s;
+}
+
+.wb-btn-glass:hover {
+  background: rgba(255, 255, 255, 0.1);
+  border-color: rgba(255, 255, 255, 0.2);
+  transform: translateY(-2px);
+}
+
+.wb-glass {
+  background: rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 16px;
+}
+
+.wb-input-glass {
+  width: 100%;
+  padding: 0.75rem 1rem;
+  font-size: 1rem;
+  color: var(--text-primary);
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 8px;
+  outline: none;
+  transition: all 0.2s;
+}
+
+.wb-input-glass:focus {
+  border-color: var(--primary);
+  box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.2);
+}
+
+.wb-input-glass::placeholder {
+  color: var(--text-muted);
+}
+
+/* =============================================================================
+   BADGES & TAGS
+   ============================================================================= */
+.wb-badge-gradient {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.5rem 1rem;
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: white;
+  background: linear-gradient(135deg, var(--primary), var(--secondary));
+  border-radius: 999px;
+}
+
+.wb-tag-glass {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.375rem 0.75rem;
+  font-size: 0.8rem;
+  font-weight: 500;
+  color: var(--text-primary);
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 6px;
+}
+
+/* Pulsing Dot */
+.wb-dot-pulse {
+  display: inline-block;
+  width: 8px;
+  height: 8px;
+  background: var(--success-color);
+  border-radius: 50%;
+  animation: wb-pulse-dot 2s ease-in-out infinite;
+}
+
+@keyframes wb-pulse-dot {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.5; transform: scale(1.2); }
+}
+
+/* Floating card styles → src/styles/behaviors/card.css (migrated Phase 1) */
+
+/* =============================================================================
+   WINDOW CONTROLS (Traffic Lights)
+   ============================================================================= */
+.wb-window-controls {
+  display: flex;
+  gap: 0.5rem;
+  margin-bottom: 1rem;
+}
+
+.wb-window-dot {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+}
+
+.wb-window-dot--red { background: #ff5f56; }
+.wb-window-dot--yellow { background: #ffbd2e; }
+.wb-window-dot--green { background: #27ca40; }
+
+/* =============================================================================
+   BADGE GROUP
+   ============================================================================= */
+.wb-badge-group {
+  display: flex;
+  gap: 0.5rem;
+  position: relative;
+  z-index: 1;
+  flex-wrap: wrap;
+}
+
+/* Progress styles → src/styles/behaviors/progress.css (migrated Phase 2) */
+
+/* =============================================================================
+   AVATARS
+   ============================================================================= */
+.wb-avatar-gradient {
+  position: relative;
+  width: 48px;
+  height: 48px;
+  padding: 3px;
+  background: linear-gradient(135deg, var(--primary), var(--secondary), var(--accent));
+  border-radius: 50%;
+}
+
+.wb-avatar-gradient img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 50%;
+  border: 2px solid var(--bg-color);
+}
+
+/* =============================================================================
+   DIVIDERS
+   ============================================================================= */
+.wb-divider-gradient {
+  border: none;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+  margin: 3rem 0;
+}
+
+/* =============================================================================
+   PERFORMANCE UTILITIES
+   ============================================================================= */
+.wb-content-auto {
+  content-visibility: auto;
+  contain-intrinsic-size: 1px 1000px; /* Approximate height */
+}
+
+/* =============================================================================
+   EDIT MODE CONTROLS
+   ============================================================================= */
+.move-controls button {
+  padding: 0.25rem 0.5rem;
+  font-size: 0.75rem;
+  line-height: 1;
+  min-width: 24px;
+  height: 24px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Striped progress styles → src/styles/behaviors/progress.css (migrated Phase 2) */
+
+/* =============================================================================
+   RACKMOUNT COMPONENT
+   ============================================================================= */
+.wb-rackmount {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  padding: 1rem;
+  background: linear-gradient(180deg, #2a2a2a 0%, #1a1a1a 100%);
+  border: 1px solid #333;
+  border-radius: 4px;
+  box-shadow: 
+    inset 0 1px 0 rgba(255, 255, 255, 0.1),
+    0 4px 8px rgba(0, 0, 0, 0.5);
+  position: relative;
+  font-family: 'JetBrains Mono', monospace;
+}
+
+/* Rack Ears (Visual Only) */
+.wb-rackmount::before,
+.wb-rackmount::after {
+  content: '';
+  position: absolute;
+  top: 10px;
+  bottom: 10px;
+  width: 12px;
+  background: #111;
+  border: 1px solid #333;
+  border-radius: 2px;
+  box-shadow: inset 0 0 4px rgba(0,0,0,0.8);
+}
+
+.wb-rackmount::before { left: 4px; }
+.wb-rackmount::after { right: 4px; }
+
+/* Screw Holes */
+.wb-rackmount-screws,
+.wb-rackmount-screws-right {
+  position: absolute;
+  top: 0; bottom: 0; left: 0; right: 0;
+  pointer-events: none;
+}
+
+.wb-rackmount-screws::before,
+.wb-rackmount-screws::after {
+  content: '⊕';
+  position: absolute;
+  color: #555;
+  font-size: 0.625rem;
+  line-height: 1;
+  left: 6px;
+}
+.wb-rackmount-screws::before { top: 14px; }
+.wb-rackmount-screws::after { bottom: 14px; }
+
+.wb-rackmount-screws-right::before,
+.wb-rackmount-screws-right::after {
+  content: '⊕';
+  position: absolute;
+  color: #555;
+  font-size: 0.625rem;
+  line-height: 1;
+  right: 6px;
+}
+.wb-rackmount-screws-right::before { top: 14px; }
+.wb-rackmount-screws-right::after { bottom: 14px; }
+
+/* Content Area (Padded to avoid ears) */
+.wb-rackmount__content {
+  margin: 0 1.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.wb-rackmount__header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid #333;
+  padding-bottom: 0.5rem;
+  margin-bottom: 0.25rem;
+}
+
+.wb-rackmount__title {
+  font-size: 0.8rem;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  color: #888;
+  font-weight: 700;
+}
+
+.wb-rackmount__status {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #22c55e;
+  box-shadow: 0 0 5px #22c55e;
+}
+
+.wb-rackmount__status.off { background: #ef4444; box-shadow: 0 0 5px #ef4444; }
+.wb-rackmount__status.warn { background: #eab308; box-shadow: 0 0 5px #eab308; }
+
+/* Rackmount Button */
+.wb-btn-rack {
+  background: #222;
+  border: 1px solid #444;
+  color: #ccc;
+  padding: 0.5rem 1rem;
+  font-family: inherit;
+  font-size: 0.8rem;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: all 0.1s;
+  box-shadow: inset 0 1px 0 rgba(255,255,255,0.05);
+}
+
+.wb-btn-rack:hover {
+  background: #333;
+  color: #fff;
+  border-color: #666;
+}
+
+.wb-btn-rack:active {
+  background: #111;
+  box-shadow: inset 0 2px 4px rgba(0,0,0,0.5);
+  transform: translateY(1px);
+}
+
+/* =============================================================================
+   CONTROL CABINET (User Requested Style)
+   ============================================================================= */
+.control-cabinet {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  padding: 0.75rem;
+  background: linear-gradient(145deg, rgba(255, 255, 255, 0.05) 0%, rgba(255, 255, 255, 0.02) 100%);
+  backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 16px;
+  box-shadow: 
+    0 4px 24px -1px rgba(0, 0, 0, 0.2), 
+    inset 0 1px 0 rgba(255, 255, 255, 0.1);
+  min-width: 200px;
+}
+
+.control-cabinet button {
+  width: 100%;
+  justify-content: center;
+}
+
+.run-btn {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.75rem 1.5rem;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 8px;
+  color: var(--text-primary);
+  font-weight: 600;
+  font-size: 0.9rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  overflow: hidden;
+}
+
+.run-btn:hover:not(:disabled) {
+  background: rgba(255, 255, 255, 0.1);
+  border-color: rgba(255, 255, 255, 0.2);
+  transform: translateY(-1px);
+}
+
+.run-btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  background: rgba(0, 0, 0, 0.2);
+}
+
+.status-light {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background-color: var(--success-color);
+  box-shadow: 0 0 8px var(--success-color);
+  transition: background-color 0.3s, box-shadow 0.3s;
+}
+
+.run-btn.running .status-light {
+  background-color: var(--danger-color);
+  box-shadow: 0 0 8px var(--danger-color);
+  animation: pulse-red 1s infinite;
+}
+
+.refresh-btn {
+  background: var(--primary);
+  color: white;
+  border: none;
+  padding: 0.5rem 1rem;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: 600;
+}
+
+.refresh-btn:hover { filter: brightness(1.1); }
+
+@keyframes pulse-red {
+  0% { opacity: 1; box-shadow: 0 0 0 0 rgba(239, 68, 68, 0.7); }
+  70% { opacity: 1; box-shadow: 0 0 0 6px rgba(239, 68, 68, 0); }
+  100% { opacity: 1; box-shadow: 0 0 0 0 rgba(239, 68, 68, 0); }
+}
+
+/* CODE CAPTIONS (MDHTML) — moved to src/styles/behaviors/mdhtml.css
+   (.wb-mdhtml .code-wrapper / .code-caption), the single canonical source.
+   This unscoped duplicate centered every code block horizontally
+   (width:fit-content + margin:0 auto), unlike the flush-left surrounding
+   prose — see mdhtml.css's own comment for the full story. */
+
+/* =============================================================================
+   PREMIUM CTA BUTTON - HEADER VERSION
+   ============================================================================= */
+
+.navbar-cta,
+#ctaButton {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.75rem 1.5rem;
+  
+  /* Premium gradient background */
+  background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%);
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  font-weight: 600;
+  font-size: 0.95rem;
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+  flex-shrink: 0;
+  
+  /* Smooth transitions */
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: 0 4px 15px rgba(99, 102, 241, 0.4),
+              inset 0 1px 0 rgba(255, 255, 255, 0.2);
+}
+
+/* Hover state - scale + glow */
+.navbar-cta:hover,
+#ctaButton:hover {
+  transform: translateY(-3px) scale(1.05);
+  box-shadow: 0 8px 25px rgba(99, 102, 241, 0.6),
+              inset 0 1px 0 rgba(255, 255, 255, 0.3),
+              0 0 20px rgba(99, 102, 241, 0.5);
+}
+
+/* Active/Click state */
+.navbar-cta:active,
+#ctaButton:active {
+  transform: translateY(-1px) scale(1.02);
+  box-shadow: 0 4px 15px rgba(99, 102, 241, 0.4);
+}
+
+/* Animated background shimmer */
+.navbar-cta::before,
+#ctaButton::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+  transition: left 0.5s ease;
+  pointer-events: none;
+}
+
+.navbar-cta:hover::before,
+#ctaButton:hover::before {
+  left: 100%;
+}
+
+/* Focus state for accessibility */
+.navbar-cta:focus,
+#ctaButton:focus {
+  outline: 2px solid #6366f1;
+  outline-offset: 2px;
+}
+
+/* Responsive - smaller on mobile */
+@media (max-width: 768px) {
+  .navbar-cta,
+  #ctaButton {
+    padding: 0.6rem 1.2rem;
+    font-size: 0.85rem;
+  }
+}
+
+/* Small phones: hide the marketing "Get Started" CTA — it's the widest header
+   item and pushes the header past the viewport (#165). Declared here, AFTER the
+   base #ctaButton rule, so it isn't clobbered by the later base declaration.
+   The hamburger nav + in-page CTAs cover the same action on phones. */
+@media (max-width: 480px) {
+  .navbar-cta,
+  #ctaButton {
+    display: none;
+  }
+}
+
+/* =============================================================================
+   #165 — AUTHORITATIVE MOBILE OFF-CANVAS DRAWER
+   Placed last so it wins the cascade. The shell had duplicate/late .site__nav
+   rules that left the drawer visible (a stray strip) instead of off-screen.
+   ============================================================================= */
+@media (max-width: 768px) {
+  .site__nav {
+    position: fixed !important;
+    top: 56px;
+    bottom: 0 !important;
+    left: 0 !important;
+    width: min(82vw, 300px) !important;
+    max-height: none !important;
+    transform: translateX(-100%) !important;
+    transition: transform 0.3s ease;
+    z-index: 99;
+  }
+  .site__nav.site__nav--mobile-open {
+    transform: translateX(0) !important;
+    box-shadow: 0 0 40px rgba(0, 0, 0, 0.5);
+  }
+  /* The drag-to-resize handle sits on the nav's right edge; when the drawer is
+     off-screen it peeked through at x=0 as a stray strip. Hide it on phones —
+     the drawer isn't resizable there anyway. (#165) */
+  .nav__resizer {
+    display: none !important;
+  }
+}
+
+/* #165 — Hero must not crop its headline on phones. The 400px min-height with
+   vertically-centered content + overflow:hidden cropped the top once the title
+   wrapped to more lines. Let it grow to fit. */
+@media (max-width: 768px) {
+  wb-hero,
+  .wb-hero {
+    min-height: auto;
+    padding-top: 1.5rem;
+    padding-bottom: 1.5rem;
+  }
+}
+
+/* =============================================================================
+   BEHAVIORS SHOWCASE — SECTION NAV (#181)
+   pages/behaviors.css is not loaded by the SPA (see #186), so the section-nav
+   pill styling and anchor offset live here in the always-loaded shell stylesheet.
+   Selectors are safe globally: .nav-links is unique to the behaviors page, and
+   scroll-margin on anchored sections is benign everywhere.
+   ============================================================================= */
+.nav-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.6rem;
+  padding: 1rem;
+  margin-bottom: 2rem;
+  border-radius: 12px;
+  background: var(--bg-secondary);
+  border: 1px solid var(--border-color);
+}
+.nav-links a {
+  text-decoration: none;
+  padding: 0.4rem 0.9rem;
+  border-radius: 999px;
+  font-size: 0.95rem;
+  white-space: nowrap;
+  transition: all 0.2s ease;
+  background: var(--bg-tertiary);
+  color: var(--text-primary);
+  border: 1px solid var(--border-color);
+}
+.nav-links a:hover {
+  background: var(--primary);
+  color: var(--text-primary);
+  border-color: var(--primary);
+}
+/* Clear the 64px sticky header when jumping to a section, otherwise the heading
+   lands hidden behind the header and the link appears not to work. */
+section[id] {
+  scroll-margin-top: 80px;
+}
+
+/* =============================================================================
+   BEHAVIORS SHOWCASE — HERO HEADER (#179)
+   The first content element (the ⚡ hero title) rendered ~19px under the 64px
+   sticky header, clipping the emoji and the tops of the letters with no gap.
+   Push the page content clear of the header and give the h1 line-height room
+   for the emoji's ascent. Scoped to the behaviors page.
+   ============================================================================= */
+#mainPage-behaviors {
+  padding-top: 2rem;
+}
+#mainPage-behaviors .page__hero h1,
+#mainPage-behaviors > #header h1 {
+  margin: 0;
+  line-height: 1.45;
+  padding-top: 0.1em;
+}
+
+/* =============================================================================
+   HOME — CLICKABLE FEATURE CARDS (#184)
+   Each Features card links to its subsystem page; the SPA intercepts ?page=.
+   ============================================================================= */
+.feature-card-link {
+  display: block;
+  text-decoration: none;
+  color: inherit;
+  cursor: pointer;
+  border-radius: var(--radius-lg, 0.5rem);
+}
+.feature-card-link:focus-visible {
+  outline: 2px solid var(--primary);
+  outline-offset: 3px;
+}
+/* the descendant wb-card--float already lifts on hover; ensure the whole card
+   reacts to keyboard focus on the anchor too */
+.feature-card-link:focus-visible .wb-card {
+  border-color: var(--primary);
+}
+
+/* =============================================================================
+   PAGE SECTION RHYTHM (#186)
+   pages/*.css never loads in the SPA, so the section/heading/section-note
+   spacing lives here in the always-loaded shell stylesheet, scoped to the SPA
+   content container (#main) so it can't touch the shell. Restores the vertical
+   spacing the showcase pages were designed with.
+   ============================================================================= */
+#main section[id] {
+  margin-bottom: 2.5rem;
+  padding-bottom: 0.5rem;
+}
+#main section > h2 {
+  margin: 2.5rem 0 1rem;
+  font-size: 1.5rem;
+}
+#main section > h3 {
+  margin: 1.75rem 0 0.75rem;
+  font-size: 1.125rem;
+}
+#main .section-note {
+  padding: 0.75rem 1rem;
+  margin: 0 0 1.25rem;
+  border-left: 3px solid var(--primary);
+  border-radius: 0 8px 8px 0;
+  background: var(--bg-secondary);
+  font-size: 0.9rem;
+}
+#main .demo-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   MOBILE READABILITY + FLUENT NAV (#293)
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+/* Responsive images everywhere — scale to the column, never overflow. */
+img { max-width: 100%; height: auto; }
+
+@media (max-width: 640px) {
+  /* Bump the base ~12.5% so EVERY rem-based size (body text, code, the
+     --md-font-size docs, padding, gaps) reads comfortably on phones. One lever. */
+  html { font-size: 112.5%; }
+
+  /* Stack header/nav/main vertically — the fluent nav below flows in that
+     column, at the top of main, instead of beside it as a side drawer. */
+  .site__body { flex-direction: column; }
+
+  /* Header stacks/wraps instead of overflowing off the right edge — must size to
+     its content (base sets a fixed 64px height as a flex item). */
+  .site__header {
+    flex-wrap: wrap;
+    height: auto !important;
+    min-height: 60px;
+    flex: 0 0 auto !important;
+    row-gap: 0.5rem;
+    padding: 0.5rem 0.75rem;
+  }
+  .header__left, .header__right { flex-wrap: wrap; row-gap: 0.5rem; }
+
+  /* header__right's playground/notes buttons are developer tools, not
+     needed by a phone visitor — drop them so hamburger + logo + the
+     version link fit on a single row without wrapping. The clear-cache
+     reload action lives on the version number itself now (tap it), so
+     there's no separate button left that needs to stay visible here.
+     Scoped under .site__header: src/styles/behaviors/header.css (an
+     unrelated <wb-header> component) reuses these exact class names with an
+     unconditional display:flex and is injected into <head> at runtime after
+     site.css, so an unscoped same-specificity selector here loses the
+     cascade regardless of this media query matching. */
+  .site__header .header__playground-btn,
+  .site__header .header__notes-btn {
+    display: none;
+  }
+
+  /* Fluent nav: an in-flow VERTICAL stacked menu at the top of the content —
+     NOT a horizontal bar and NOT an off-canvas side drawer. Hidden by default,
+     the ☰ toggle reveals it in place (display-toggle — no max-height fight). */
+  .site__nav {
+    position: static !important;
+    transform: none !important;
+    flex: 0 0 auto !important;
+    width: 100% !important;
+    height: auto !important;
+    max-height: none !important;
+    top: auto;
+    bottom: auto;
+    overflow: visible;
+    display: none;   /* collapsed by default on phones */
+    box-shadow: none !important;
+    border-right: none;
+    border-bottom: 1px solid var(--border-color);
+  }
+  .site__nav.site__nav--mobile-open,
+  .site__nav.site__nav--collapsed.site__nav--mobile-open {
+    display: block !important;
+    transform: none !important;
+  }
+  /* Items stack VERTICALLY, full width. */
+  .site__nav .nav__items {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+    padding: 0.5rem;
+  }
+  .site__nav .nav__item { width: 100% !important; }
+  /* In-flow menu needs no drawer chrome. */
+  .site__nav-backdrop { display: none !important; }
+  .nav__resizer { display: none !important; }
+
+  /* Footer was 3 stacked blocks (copyright, links, social icons) each
+     carrying the desktop 1.5rem/2rem padding/gap meant for a single wide
+     row — compact it for a narrow column. .footer__left's own 1.5rem gap
+     (copyright <-> links) was untouched by the first pass and, once those
+     two wrap to separate lines on a narrow screen, that gap applies as
+     row-gap too — the single biggest remaining contributor to the height.
+     The <footer> element also carries a "wb-footer" class (added at
+     runtime by the same tag-name-collision mechanism found earlier on the
+     shell's own <header> — a reusable behavior's class landing on native
+     <header>/<footer> tags it was never meant to touch). behaviors/footer.css
+     has its OWN (max-width:768px) padding rule for .wb-footer that wins
+     equal-specificity ties by injection order, silently reintroducing the
+     desktop padding this override is trying to remove. Compound selector
+     to beat it outright rather than depend on cascade order. */
+  .site__footer.wb-footer {
+    padding: 0.5rem 1rem;
+  }
+  .footer__content {
+    gap: 0.2rem;
+  }
+  .footer__left {
+    gap: 0.35rem;
+    font-size: 0.8rem;
+  }
+  .footer__social {
+    gap: 0.5rem;
+  }
+  .footer__social-link {
+    width: 22px;
+    height: 22px;
+    font-size: 0.8rem;
+  }
+}
+
+/* =============================================================================
+   #293 regression — .site__nav's base rule now defaults to display:none
+   (see that rule's comment). Restore the sidebar for genuine tablet/desktop
+   widths. The 769px breakpoint deliberately avoids the existing 768px
+   max-width blocks above — no overlap, no cascade-order ambiguity.
+   ============================================================================= */
+@media (min-width: 769px) {
+  .site__nav {
+    display: flex;
+  }
+}
+
+/* Unconditional (no media query) and last in the file — the toggled-open
+   state must win at every breakpoint regardless of which max-width block
+   above matched, without depending on each of them separately remembering
+   to restore display alongside their own transform/position rules. */
+.site__nav.site__nav--mobile-open {
+  display: flex !important;
+}

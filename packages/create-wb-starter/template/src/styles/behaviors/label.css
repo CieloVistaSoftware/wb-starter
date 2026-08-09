@@ -1,0 +1,42 @@
+/**
+ * Label Behavior Styles
+ * -----------------------------------------------------------------------------
+ * Works with src/wb-viewmodels/label.js
+ * -----------------------------------------------------------------------------
+ */
+
+/* Groups a generated <label> with its control as one atomic inline unit —
+   without this, a bare pair of siblings can wrap between the label and the
+   control in a flowing layout, stranding the label alone on its own line. */
+.wb-label-group {
+  display: inline-flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+/* block, not inline-block: a <label> that WRAPS its own control (the
+   standard "<label>Full Name <input></label>" authoring pattern) needs to
+   stack as its own row — inline-block let it flow like text, wrapping
+   onto the same line as the next label whenever there was enough
+   horizontal room (confirmed live on demos/playground.html's form
+   example). Safe for the OTHER usage too (label.js's generated
+   label-beside-its-control pattern): that label is always a flex item
+   inside .wb-label-group (inline-flex), and a flex item's own display
+   value doesn't affect its position — the flex container's layout wins
+   regardless. */
+.wb-label {
+  display: block;
+  color: var(--text-primary);
+  font-size: var(--text-sm);
+}
+
+.wb-label--required::after {
+  content: ' *';
+  color: var(--danger-color);
+}
+
+.wb-label--optional::after {
+  content: ' (optional)';
+  color: var(--text-tertiary);
+  font-weight: normal;
+}

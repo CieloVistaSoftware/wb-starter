@@ -1,0 +1,3225 @@
+/**
+ * Card Behavior + Variants
+ * -----------------------------------------------------------------------------
+ * Comprehensive card system supporting various content types and layouts.
+ * Handles extensive variants like heroes, profiles, pricing, and media cards.
+ * 
+ * Usage:
+ *   <wb-card variant="glass" title="Title">Content</wb-card>
+ *   <wb-cardhero variant="cosmic" title="Hero Title" ...></wb-cardhero>
+ * -----------------------------------------------------------------------------
+ * 
+ * ARCHITECTURE:
+ * - All card variants compose the shared card structure
+ * - Variants CONTAIN specialized content (images, profiles, etc.)
+ * - Shared structure changes propagate to ALL variants automatically
+ * 
+ * INHERITANCE: cardimage IS-A card
+ * CONTAINMENT: cardimage HAS-A image (figure element)
+ * 
+ * SEMANTIC STANDARD (MANDATORY):
+ * - Container: <article> (preferred) or <section>
+ * - Header content (title, subtitle): <header>
+ * - Main content: <main>
+ * - Footer content (actions, buttons): <footer>
+ * 
+ * ALL text elements are EDITABLE via double-click in the builder
+ */
+
+import { attachVideoLoadRetry, attachImageLoadRetry } from './media-load-retry.js';
+import { tooltip as tooltipBehavior } from './tooltip.js';
+
+// Always-on, dedicated cardimage/cardvideo load tracing -- this exact failure
+// ("video/image cards not rendering") keeps recurring, especially on the
+// FIRST navigation to Components coming from Home/Behaviors, and needs to
+// stay traceable rather than re-diagnosed from scratch each time. Separate
+// from media-load-retry.js's own tracing (which only fires on a genuine
+// 'error'/timeout) -- this ALSO catches the "built fine, then silently
+// disappeared from the DOM" class of bug (a later re-scan/re-render wiping
+// the card), which a load-retry listener alone can't see since it only
+// watches the element it was attached to, not whether that element is still
+// attached at all. [WB:card-media] is a fixed, greppable prefix.
+function traceCardMedia(kind, cardEl, mediaEl, src) {
+  const startedAt = Date.now();
+  const id = cardEl.id ? `#${cardEl.id}` : '';
+  const where = `${location.pathname}${location.search}`;
+  console.log(`[WB:card-media] ${kind}${id} BUILD src=${src} page=${where}`);
+
+  const isImg = mediaEl.tagName === 'IMG';
+  const onLoad = () => {
+    console.log(`[WB:card-media] ${kind}${id} PAINTED get=${Date.now() - startedAt}ms ${isImg ? `${mediaEl.naturalWidth}x${mediaEl.naturalHeight}` : `readyState=${mediaEl.readyState}`}`);
+  };
+  const onError = () => {
+    console.warn(`[WB:card-media] ${kind}${id} ERROR src=${src} get=${Date.now() - startedAt}ms`);
+  };
+  mediaEl.addEventListener(isImg ? 'load' : 'loadeddata', onLoad, { once: true });
+  mediaEl.addEventListener('error', onError, { once: true });
+
+  // Post-hoc presence check: did this exact element survive, and did it
+  // actually paint anything? Catches "silently wiped by a later re-render"
+  // even when no error/timeout ever fired on the element itself.
+  setTimeout(() => {
+    const stillAttached = mediaEl.isConnected;
+    const stillInCard = cardEl.contains(mediaEl);
+    const painted = isImg
+      ? (mediaEl.complete && mediaEl.naturalWidth > 0)
+      : mediaEl.readyState >= 2;
+    if (!stillAttached || !stillInCard || !painted) {
+      console.warn(`[WB:card-media] ${kind}${id} STALE CHECK FAILED at +2000ms -- attached=${stillAttached} inCard=${stillInCard} painted=${painted} src=${src} page=${where}`);
+    }
+  }, 2000);
+}
+
+// Common card padding
+const CARD_PADDING = '1rem';
+
+// Helper to parse boolean values from options/dataset
+const parseBoolean = (val) => {
+  if (val === 'true') return true;
+  if (val === 'false') return false;
+  if (val === '') return true; // Handle boolean attributes (e.g. data-clickable="")
+  return val;
+};
+
+// Helper to get attribute from options, dataset, or direct attribute
+// Supports: options.src, element.dataset.src (data-src), element.getAttribute('src')
+const getAttr = (element, options, name) => {
+  return options[name] || element.dataset[name] || element.getAttribute(name) || '';
+};
+
+// Semantic element validation
+const PREFERRED_TAGS = ['ARTICLE', 'SECTION'];
+
+// Common CSS Variables
+const VAR_TEXT_PRIMARY = 'var(--text-primary,#f9fafb)';
+const VAR_TEXT_SECONDARY = 'var(--text-secondary,#9ca3af)';
+const VAR_BORDER_COLOR = 'var(--border-color,#374151)';
+const VAR_BG_TERTIARY = 'var(--bg-tertiary,#1e293b)';
+const VAR_BG_SECONDARY = 'var(--bg-secondary,#1f2937)';
+const VAR_PRIMARY = 'var(--primary,#6366f1)';
+
+// Common Component Styles
+// flex-shrink:0 -- without it, the CSS flexbox spec's automatic minimum
+// size (min-height:auto) is ignored on a flex item whose ancestor sets
+// overflow:hidden (the card does), letting this header shrink below its
+// own content's natural height when a sibling (e.g. an aspect-ratio image
+// figure) claims most of the flex column's space. That silently clipped
+// the header's own bottom padding -- title/subtitle text sat flush against
+// the card's border with no visible gap. Confirmed live via screenshot.
+// padding-bottom:0, not 1rem -- title/subtitle each already carry their
+// own margin-bottom:0.5rem (STYLE_TITLE/STYLE_SUBTITLE below), so a full
+// 1rem of header padding UNDERNEATH that stacked into a 24-25px gap
+// instead of the 0.5rem John asked for. Top/left/right stay 1rem (the
+// only clearance source for the header's top edge; nothing else supplies
+// it). Bottom clearance now comes entirely from the last child's own
+// 0.5rem margin -- exactly the value asked for, no double-counting.
+const STYLE_HEADER = `padding:1rem 1rem 0 1rem;border-bottom:1px solid ${VAR_BORDER_COLOR};background:${VAR_BG_TERTIARY};display:flex;justify-content:space-between;align-items:flex-start;gap:1rem;flex-shrink:0;`;
+const STYLE_FOOTER = `padding:1rem;border-top:1px solid ${VAR_BORDER_COLOR};background:${VAR_BG_TERTIARY};font-size:0.875rem;color:${VAR_TEXT_SECONDARY};`;
+const STYLE_MAIN = `padding:1rem;flex:1;color:${VAR_TEXT_PRIMARY};`;
+// margin-bottom:0.5rem (not 0) -- title and subtitle sat almost touching
+// (title had zero bottom margin, subtitle only 0.25rem top margin, and
+// block-level siblings collapse to the larger of the two, not the sum).
+// John: "there must be .5rem bottom gaps here" (screenshot, base card gallery).
+const STYLE_TITLE = `margin:0 0 0.5rem;font-size:1.1rem;font-weight:600;color:${VAR_TEXT_PRIMARY};`;
+const STYLE_SUBTITLE = `margin:0.25rem 0 0.5rem;font-size:0.875rem;color:${VAR_TEXT_SECONDARY};`;
+const STYLE_BADGE = `display:inline-block;padding:0.25rem 0.75rem;border-radius:999px;font-size:0.75rem;font-weight:600;background:${VAR_PRIMARY};color:white;white-space:nowrap;`;
+
+
+function validateSemanticContainer(element, behaviorName) {
+  const tag = element.tagName;
+  // MVVM: Allow standard containers OR any custom element (implied by hyphen)
+  // We do not enforce specific tag names here, decoupling View from Logic.
+  const isAllowed = ['ARTICLE', 'SECTION', 'DIV'].includes(tag) || tag.includes('-');
+  
+  if (!isAllowed) {
+    console.error(`[WB:${behaviorName}] Invalid container tag <${tag.toLowerCase()}>. Use <article>, <section>, or a custom element.`);
+    return false;
+  }
+  return true;
+}
+
+/**
+ * Shared Card Composition
+ * All variants compose this shared structure
+ */
+export function composeCard(element, options = {}) {
+  // v3.0: Check if schema builder already processed this element
+  // When true, DOM structure is already built from $view - we only add interactivity
+  const schemaProcessed = options.schemaProcessed || element.getAttribute('x-schema');
+  
+  const config = {
+    ...options, // Spread first to allow overrides, but specific logic below takes precedence
+    behavior: options.behavior || 'card',
+    title: options.title || element.dataset.title || element.getAttribute('title') || '',
+    subtitle: options.subtitle || element.dataset.subtitle || element.getAttribute('subtitle') || '',
+    content: options.content || element.dataset.content || element.getAttribute('content') || '',
+    footer: options.footer || element.dataset.footer || element.getAttribute('footer') || '',
+    variant: options.variant || element.dataset.variant || element.getAttribute('variant') || 'default',
+    badge: options.badge || element.dataset.badge || element.getAttribute('badge') || '',
+    clickable: parseBoolean(options.clickable) ?? (element.dataset.clickable === 'true' || (element.hasAttribute('data-clickable') && element.dataset.clickable !== 'false') || element.hasAttribute('clickable')),
+    hoverable: parseBoolean(options.hoverable) ?? (element.dataset.hoverable !== 'false'),
+    elevated: parseBoolean(options.elevated) ?? (element.dataset.elevated === 'true' || (element.hasAttribute('data-elevated') && element.dataset.elevated !== 'false') || element.hasAttribute('elevated')),
+    size: options.size || element.dataset.size || element.getAttribute('size') || 'auto',
+    // #283: `tooltip` is the WB-standard attribute name for hover text
+    // (ATTRIBUTE-NAMING-STANDARD.md's cheat sheet: "Set tooltip -> `tooltip`
+    // or native `title`"). `hoverText` / `hover-text` stays supported as the
+    // pre-existing documented alias (card.md, docs/properties.md,
+    // cardprofile.schema.json) -- both resolve to the same themed tooltip
+    // below, `tooltip` taking priority if a card author sets both.
+    tooltip: options.tooltip || element.getAttribute('tooltip') || '',
+    hoverText: options.hoverText || element.dataset.hoverText || element.getAttribute('hoverText') || element.getAttribute('hover-text') || '',
+    onClick: options.onClick || element.dataset.onClick || '',
+    dataContext: options.dataContext || element.dataset.dataContext || '{}',
+    // v3.0: Skip structure building if schema already did it
+    skipStructure: parseBoolean(options.skipStructure) ?? schemaProcessed ?? false,
+    schemaProcessed: schemaProcessed,
+  };
+
+  // Structure holders
+  let header = options.existingHeader || null;
+  let main = options.existingMain || null;
+  let footer = options.existingFooter || null;
+  let clickHandler = null;
+
+  // Validate semantic container
+  validateSemanticContainer(element, config.behavior);
+
+  // Apply base classes. Skip the bare 'wb-card' class when the host tag IS
+  // literally <wb-card> -- redundant (card.css selects the tag directly too,
+  // see its own comment) and flagged by tests/compliance/
+  // no-redundant-tag-name-class.spec.ts (#478). Every OTHER card variant
+  // (<wb-cardimage>, <article> auto-inject, ...) still needs the class since
+  // its own tag name isn't "wb-card" -- shared card.css rules have nothing
+  // else to select there.
+  if (element.tagName.toLowerCase() !== 'wb-card') element.classList.add('wb-card');
+  if (config.behavior !== 'card') {
+    element.classList.add(`wb-card--${config.behavior.replace('card', '')}`);
+  }
+  
+  // Apply hover text as a THEMED WB tooltip (x-tooltip / tooltip.js), not
+  // the native browser `title` attribute -- native title tooltips are
+  // unstyled, slow to appear, and inconsistent across browsers (#283). A
+  // plain `title` attribute set independently by the author (not via
+  // tooltip/hoverText) is left untouched and keeps working as a normal
+  // native tooltip.
+  //
+  // Set x-tooltip for discoverability/consistency with the same marker
+  // pattern cardhero's CTA buttons use (search "x-tooltip" in this file),
+  // but don't rely on WB's scan/observer to pick it up -- an ATTRIBUTE
+  // change on an element already in the DOM isn't covered by wb-lazy.js's
+  // MutationObserver (it only watches childList + the `x-behavior`
+  // attribute), so a card enhanced after the page's initial eager scan
+  // would otherwise never get wired up. Call tooltip() directly instead;
+  // it's idempotent (guards on element._wbTooltip), so a later scan/observer
+  // pass finding the same [x-tooltip] element is a safe no-op, not a
+  // double-attach.
+  const hoverContent = config.tooltip || config.hoverText;
+  let tooltipCleanup = null;
+  if (hoverContent) {
+    element.setAttribute('x-tooltip', hoverContent);
+    const cleanupPromise = tooltipBehavior(element, { content: hoverContent });
+    tooltipCleanup = () => { cleanupPromise.then((fn) => { if (typeof fn === 'function') fn(); }); };
+  }
+  
+  // Apply base styles
+  const baseStyles = {
+    transition: 'all 0.2s ease',
+    borderRadius: 'var(--radius-lg, 8px)',
+    overflow: 'hidden',
+    display: 'flex',
+    // flexDirection intentionally NOT set here -- `.wb-card { flex-direction:
+    // column }` (card.css) already provides the default, and setting it
+    // inline would (same "inline always beats class" bug fixed elsewhere in
+    // this file for background/border/padding) permanently block any typed
+    // variant's own CSS from switching direction, e.g.
+    // `.wb-product.wb-card--horizontal { flex-direction: row }` (#cardproduct
+    // horizontal variant test).
+    contain: 'layout paint', // Performance optimization
+    // break-word (not anywhere/break-word together) only breaks a word as a
+    // last resort when it can't fit a line alone — `word-break: break-word`
+    // forces the same over-eager mid-word breaking as `anywhere` even when
+    // the whole word would fit by wrapping normally (e.g. a hero title
+    // splitting "configure" into "configur" + "e").
+    overflowWrap: 'break-word'
+  };
+
+  // Every non-`default` variant class (glass/bordered/flat/rack, card.css)
+  // owns its own background/border -- but Object.assign below applies these
+  // as INLINE styles, which always beat a class selector regardless of CSS
+  // specificity. Setting the default surface unconditionally silently
+  // overrode every one of those classes (confirmed live: bordered/flat
+  // rendered pixel-identical to default despite having real CSS rules).
+  // Only apply the generic inline surface for the actual default variant.
+  // 'minimal' added: cardtestimonial's minimal variant (background:transparent
+  // in card.css) hit this exact same inline-override bug -- it rendered
+  // pixel-identical to default until added here.
+  // 'elevated' added: variant="elevated" (a string variant value, distinct
+  // from the boolean `elevated` attribute handled separately below) got its
+  // .wb-card--elevated class added, so its box-shadow came through, but its
+  // CSS-declared background:var(--bg-elevated) and border-color:transparent
+  // were silently overridden by this same generic inline background/border
+  // -- confirmed live: elevated and default shared the identical background
+  // and border color, only the shadow differed.
+  const ownsOwnSurface = ['glass', 'bordered', 'flat', 'rack', 'minimal', 'elevated'].includes(config.variant);
+  if (!ownsOwnSurface) {
+    baseStyles.background = config.background || element.style.background || 'var(--bg-secondary, #1f2937)';
+    baseStyles.border = '1px solid var(--border-color, #374151)';
+  } else if (config.background) {
+    // An explicit background always wins regardless of variant.
+    baseStyles.background = config.background;
+  }
+
+  // Rack variant overrides
+  if (config.variant === 'rack') {
+    baseStyles.background = '#0f172a'; // Dark slate
+    baseStyles.border = '1px solid #334155';
+    baseStyles.borderLeft = '12px solid #1e293b'; // Rack ears
+    baseStyles.borderRight = '12px solid #1e293b';
+    baseStyles.borderRadius = '2px';
+    baseStyles.boxShadow = 'inset 0 0 20px rgba(0,0,0,0.5)';
+    baseStyles.fontFamily = 'ui-monospace, monospace';
+  }
+  
+  Object.assign(element.style, baseStyles);
+  
+  // Variant class
+  if (config.variant !== 'default') {
+    element.classList.add(`wb-card--${config.variant}`);
+  }
+  
+  // Size class (max/min-width scale, card.css) — 'xs' was missing from the
+  // allowlist so <wb-card size="xs"> silently did nothing (#282). 'auto'
+  // (a real schema-declared enum value, matching .wb-card--auto in
+  // card.css) was missing too, for the same reason.
+  if (config.size && ['xs','sm','md','lg','xl','full','auto'].includes(config.size)) {
+    element.classList.add(`wb-card--${config.size}`);
+  }
+  
+  // Elevated - lighter background to appear raised
+  if (config.elevated) {
+    element.classList.add('wb-card--elevated');
+    element.style.boxShadow = 'var(--shadow-elevated, 0 4px 12px rgba(0,0,0,0.15))';
+    // #488: only set the generic elevated background inline when the card
+    // doesn't already own its own surface (glass/bordered/flat/rack/minimal).
+    // This boolean `elevated` attribute is independent of `config.variant`,
+    // so a `variant="glass" elevated` card used to hit this unconditionally
+    // -- the inline style always wins over ANY class selector (including the
+    // .wb-card--glass.wb-card--elevated compound rule added in card.css for
+    // this same issue), silently replacing glass's translucent background
+    // with an opaque one regardless of CSS specificity. Same
+    // inline-beats-class guard already applied to the base surface above
+    // (ownsOwnSurface, ~line 263) and to hoverLeave's border-color below.
+    if (!ownsOwnSurface) {
+      element.style.background = 'var(--bg-elevated, var(--bg-secondary))'; // LIGHTER than base; theme-aware (#198)
+    }
+  }
+  
+  // Hoverable
+  const hoverEnter = () => {
+    element.style.transform = 'translateY(-2px)';
+    element.style.boxShadow = 'var(--shadow-hover, 0 8px 24px rgba(0,0,0,0.2))';
+    element.style.borderColor = 'var(--primary, #6366f1)';
+  };
+  const hoverLeave = () => {
+    element.style.transform = '';
+    element.style.boxShadow = config.elevated ? 'var(--shadow-elevated, 0 4px 12px rgba(0,0,0,0.15))' : '';
+    // Same inline-beats-class issue as the base surface above: forcing the
+    // generic border color back on every mouseleave overrode `flat`'s
+    // border:none and `glass`'s theme-driven border on the very first
+    // hover. Let the owning variant's CSS class control its own color.
+    if (!ownsOwnSurface) {
+      element.style.borderColor = 'var(--border-color, #374151)';
+    } else {
+      element.style.removeProperty('border-color');
+    }
+  };
+  
+  if (config.hoverable) {
+    element.classList.add('wb-card--hoverable');
+    element.addEventListener('mouseenter', hoverEnter);
+    element.addEventListener('mouseleave', hoverLeave);
+  }
+  
+  if (config.clickable) {
+    element.classList.add('wb-card--clickable');
+    element.style.cursor = 'pointer';
+    element.setAttribute('tabindex', '0');
+    element.setAttribute('role', 'button');
+
+    clickHandler = () => {
+      element.classList.toggle('wb-card--active');
+    };
+    element.addEventListener('click', clickHandler);
+    
+    // Also handle Enter/Space for accessibility
+    element.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter' || e.key === ' ') {
+        e.preventDefault();
+        clickHandler();
+      }
+    });
+  }
+
+  // LOGIC: Dynamic onClick handler (v3.1)
+  if (config.onClick) {
+    // Ensure element looks interactive
+    element.style.cursor = 'pointer';
+    if (!element.hasAttribute('role')) element.setAttribute('role', 'button');
+    if (!element.hasAttribute('tabindex')) element.setAttribute('tabindex', '0');
+
+    const runAction = (e) => {
+      // Don't navigate if it's a hash link unless explicitly handled
+      if (element.tagName === 'A' && element.getAttribute('href') === '#') {
+        e.preventDefault();
+      }
+
+      try {
+        // Parse local data context safely
+        let data = {};
+        try { 
+          if (config.dataContext) data = JSON.parse(config.dataContext); 
+        } catch(err) {
+          console.warn('[WB:Logic] Invalid JSON in dataContext:', err);
+        }
+
+        // Execute script with context
+        // Scope: this=element, e=event, config=config, data=localData
+        const fn = new Function('e', 'config', 'data', 'element', config.onClick);
+        fn.call(element, e, config, data, element);
+      } catch (err) {
+        console.error('[WB:Logic] Script error:', err);
+        console.debug('Script Source:', config.onClick);
+      }
+    };
+
+    element.addEventListener('click', runAction);
+    
+    // Accessibility support for enter/space
+    element.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter' || e.key === ' ') {
+        e.preventDefault();
+        runAction(e);
+      }
+    });
+  }
+
+  // Return base context for variants to use
+  return {
+    element,
+    config,
+    header,
+    main,
+    footer,
+    CARD_PADDING,
+    
+    // =========================================
+    // UTILITY METHODS FOR BUILDING CARD PARTS
+    // =========================================
+    
+    /**
+     * Create a header section with title and optional subtitle
+     * ALWAYS renders title/subtitle if provided in config
+     */
+    createHeader: (extraContent = '') => {
+      const h = document.createElement('header');
+      h.className = 'wb-card__header';
+      h.style.cssText = STYLE_HEADER;
+      
+      const contentDiv = document.createElement('div');
+      contentDiv.className = 'wb-card__header-content';
+      contentDiv.style.cssText = 'flex:1;min-width:0;';
+
+      if (config.title) {
+        const titleEl = document.createElement('h3');
+        titleEl.className = 'wb-card__title';
+        titleEl.style.cssText = STYLE_TITLE;
+        titleEl.textContent = config.title;
+        contentDiv.appendChild(titleEl);
+      }
+      
+      if (config.subtitle) {
+        const subtitleEl = document.createElement('div');
+        subtitleEl.className = 'wb-card__subtitle';
+        subtitleEl.style.cssText = STYLE_SUBTITLE;
+        subtitleEl.textContent = config.subtitle;
+        contentDiv.appendChild(subtitleEl);
+      }
+      
+      if (extraContent) {
+        const extra = document.createElement('div');
+        extra.innerHTML = extraContent;
+        contentDiv.appendChild(extra);
+      }
+      
+      h.appendChild(contentDiv);
+
+      if (config.badge) {
+        const badgeEl = document.createElement('span');
+        badgeEl.className = 'wb-card__badge';
+        badgeEl.style.cssText = STYLE_BADGE;
+        badgeEl.textContent = config.badge;
+        h.appendChild(badgeEl);
+      }
+
+      return h;
+    },
+    
+    /**
+     * Create the main content area
+     */
+    createMain: (content = '') => {
+      const m = document.createElement('main');
+      m.className = 'wb-card__main';
+      m.style.cssText = STYLE_MAIN;
+      
+      // Use config.content if no content passed
+      const finalContent = content || config.content;
+      if (finalContent) {
+        if (typeof finalContent === 'string') {
+          m.innerHTML = finalContent;
+        }
+      }
+      return m;
+    },
+    
+    /**
+     * Create footer section
+     */
+    createFooter: (content = '') => {
+      const footEl = document.createElement('footer');
+      footEl.className = 'wb-card__footer';
+      footEl.style.cssText = STYLE_FOOTER;
+      
+      const footerText = content || config.footer;
+      if (footerText) {
+        if (typeof footerText === 'string') {
+          footEl.textContent = footerText;
+        }
+      }
+      return footEl;
+    },
+    
+    /**
+     * Create a figure element for images/media
+     */
+    createFigure: () => {
+      const fig = document.createElement('figure');
+    
+      fig.className = 'wb-card__figure';
+      fig.style.cssText = 'margin:0;overflow:hidden;';
+      
+      return fig;
+    },
+    
+    /**
+     * Build the complete card structure
+     * Call this from variants to get header + main + footer
+     */
+    buildStructure: (options = {}) => {
+      const { 
+        headerContent = '', 
+        mainContent = '', 
+        footerContent = '',
+        showHeader = true,
+        showMain = true,
+        showFooter = true
+      } = options;
+      
+      // MVVM: Do NOT wipe innerHTML. We enhance what's there.
+      // element.innerHTML = '';
+      
+      // HEADER - show if title/subtitle/badge config exists OR a semantic
+      // <header> is already present (enhance it to wb-card__header). (#159)
+      if (showHeader && (header || config.title || config.subtitle || headerContent || config.badge)) {
+        if (!header) {
+          const headerEl = document.createElement('header');
+          headerEl.className = 'wb-card__header';
+          headerEl.style.cssText = STYLE_HEADER;
+          
+          const headerContentWrap = document.createElement('div');
+          headerContentWrap.className = 'wb-card__header-content';
+          headerContentWrap.style.cssText = 'flex:1;min-width:0;';
+
+          if (config.title) {
+            const titleElem = document.createElement('h3');
+            titleElem.className = 'wb-card__title';
+            titleElem.style.cssText = STYLE_TITLE;
+            titleElem.textContent = config.title;
+            headerContentWrap.appendChild(titleElem);
+          }
+          
+          if (config.subtitle) {
+            const subtitleElem = document.createElement('div');
+            subtitleElem.className = 'wb-card__subtitle';
+            subtitleElem.style.cssText = STYLE_SUBTITLE;
+            subtitleElem.textContent = config.subtitle;
+            headerContentWrap.appendChild(subtitleElem);
+          }
+          
+          if (headerContent) {
+            const extraDiv = document.createElement('div');
+            extraDiv.className = 'wb-card__header-extra';
+            extraDiv.innerHTML = headerContent;
+            headerContentWrap.appendChild(extraDiv);
+          }
+
+          headerEl.appendChild(headerContentWrap);
+
+          if (config.badge) {
+            const headerBadge = document.createElement('span');
+            headerBadge.className = 'wb-card__badge';
+            headerBadge.style.cssText = STYLE_BADGE;
+            headerBadge.textContent = config.badge;
+            headerEl.appendChild(headerBadge);
+          }
+          
+          header = headerEl;
+          if (element.firstChild) {
+            element.insertBefore(headerEl, element.firstChild);
+          } else {
+            element.appendChild(headerEl);
+          }
+        } else {
+          // Enhance existing header
+          header.classList.add('wb-card__header');
+          header.style.padding = header.style.padding || '1rem';
+          header.style.borderBottom = header.style.borderBottom || '1px solid var(--border-color,#374151)';
+          header.style.background = header.style.background || VAR_BG_TERTIARY;
+          
+          // Inject badge if missing
+          if (config.badge && !header.querySelector('.wb-card__badge')) {
+            const existingHeaderBadge = document.createElement('span');
+            existingHeaderBadge.className = 'wb-card__badge';
+            existingHeaderBadge.style.cssText = STYLE_BADGE;
+            existingHeaderBadge.textContent = config.badge;
+            header.appendChild(existingHeaderBadge);
+          }
+        }
+      }
+      
+      // MAIN — render ONLY authored content. Never inject placeholder text: a card
+      // with no body (e.g. an image card) must show nothing there, not phantom
+      // "Lorem ipsum" that isn't in the source. (#202)
+      if (showMain) {
+        const mainText = mainContent || config.content;
+        if (!main && mainText) {
+          const mainEl = document.createElement('main');
+          mainEl.className = 'wb-card__main';
+          mainEl.style.cssText = STYLE_MAIN;
+          mainEl.innerHTML = mainText;
+          main = mainEl;
+          if (footer) {
+            element.insertBefore(mainEl, footer);
+          } else {
+            element.appendChild(mainEl);
+          }
+        } else if (main) {
+          // Enhance existing main
+          main.classList.add('wb-card__main');
+          main.style.padding = main.style.padding || '1rem';
+          main.style.flex = main.style.flex || '1';
+          main.style.color = main.style.color || VAR_TEXT_PRIMARY;
+
+          // If main is empty (e.g. created by SchemaBuilder with empty slot)
+          // but we have config.content, inject it.
+          if (!main.innerHTML.trim() && config.content) {
+             main.innerHTML = config.content;
+          }
+        }
+      }
+      
+      // FOOTER - show if footer config text exists OR a semantic <footer> is
+      // already present (enhance it to wb-card__footer). (#159)
+      if (showFooter && (footer || config.footer || footerContent)) {
+        if (!footer) {
+          const footerEl = document.createElement('footer');
+          footerEl.className = 'wb-card__footer';
+          footerEl.style.cssText = STYLE_FOOTER;
+          footerEl.textContent = footerContent || config.footer;
+          
+          footer = footerEl;
+          element.appendChild(footerEl);
+        } else {
+          // Enhance existing footer
+          footer.classList.add('wb-card__footer');
+          footer.style.padding = footer.style.padding || '0.75rem 1rem';
+          footer.style.borderTop = footer.style.borderTop || '1px solid var(--border-color,#374151)';
+          footer.style.background = footer.style.background || VAR_BG_TERTIARY;
+        }
+      }
+      
+      return { header, main, footer };
+    },
+    
+    // Cleanup function
+    cleanup: () => {
+      element.classList.remove('wb-card', `wb-card--${config.behavior.replace('card', '')}`,
+        `wb-card--${config.variant}`, `wb-card--${config.size}`, 'wb-card--hoverable', 'wb-card--elevated', 
+        'wb-card--clickable', 'wb-card--active');
+      if (config.hoverable) {
+        element.removeEventListener('mouseenter', hoverEnter);
+        element.removeEventListener('mouseleave', hoverLeave);
+      }
+      if (clickHandler) {
+        element.removeEventListener('click', clickHandler);
+      }
+      if (tooltipCleanup) {
+        tooltipCleanup();
+      }
+    }
+  };
+}
+
+/**
+ * Card Component
+ * Custom Tag: <wb-card>
+ */
+export function card(element, options = {}) {
+  // #202: a legacy MVVM template (schema $view / views-registry / partial) may
+  // have ALREADY wrapped our content in a competing `.card` structure
+  // (.card__header/.card__title/.card__body). card.js is the SOLE renderer of the
+  // card (.wb-card__*), so unwrap that legacy chrome — keep only its body content
+  // — before we build. Title/subtitle/footer come from attributes; the body is the
+  // real slotted content. This is what produced 2–4× duplicate title/footer.
+  const legacyCard = element.querySelector(':scope > .card, :scope > article.card, :scope > div.card');
+  if (legacyCard) {
+    const legacyBody = legacyCard.querySelector('.card__body, .card__main');
+    element.innerHTML = legacyBody ? legacyBody.innerHTML : '';
+  }
+
+  // FIX: Un-wrap auto-generated main if it contains semantic elements
+  // This happens because SchemaBuilder wraps ALL content in the 'main' part defined in schema
+  const autoMain = element.querySelector(':scope > .wb-card__main');
+  if (autoMain && (autoMain.querySelector('header') || autoMain.querySelector('main'))) {
+    const fragment = document.createDocumentFragment();
+    while (autoMain.firstChild) {
+      fragment.appendChild(autoMain.firstChild);
+    }
+    autoMain.remove();
+    element.appendChild(fragment);
+  }
+
+  // Check for existing semantic structure (direct children)
+  const hasHeader = element.querySelector(':scope > header');
+  const hasMain = element.querySelector(':scope > main');
+  const hasFooter = element.querySelector(':scope > footer');
+  
+  // Determine if we are upgrading raw content
+  const isSemantic = hasHeader || hasMain || hasFooter;
+  const hasContent = options.content || element.dataset.content;
+  
+  // Capture content:
+  // 1. If semantic structure exists, we don't capture innerHTML (it's already in the structure)
+  // 2. If valid content option/data provided, use it
+  // 3. Fallback to innerHTML (raw content mode)
+  const initialContent = isSemantic ? '' : (hasContent || element.innerHTML);
+
+  const base = composeCard(element, { 
+    ...element.dataset, 
+    ...options, 
+    behavior: 'card',
+    content: initialContent,
+    existingHeader: hasHeader,
+    existingMain: hasMain,
+    existingFooter: hasFooter
+  });
+
+  // FIX: Clear existing HTML if we captured it from innerHTML (raw mode)
+  // This prevents buildStructure() from duplicating it inside the new <main>
+  if (!isSemantic && !hasContent && initialContent) {
+    element.innerHTML = '';
+  }
+  
+  // Build structure handles both creation and enhancement
+  base.buildStructure();
+  
+  return base.cleanup;
+}
+
+/**
+ * Card Image Component
+ * Custom Tag: <card-image>
+ */
+export function cardimage(element, options = {}) {
+  const config = {
+    src: getAttr(element, options, 'src'),
+    alt: getAttr(element, options, 'alt'),
+    aspect: getAttr(element, options, 'aspect') || '16/9',
+    position: getAttr(element, options, 'position') || 'top',
+    fit: getAttr(element, options, 'fit') || 'cover',
+    title: getAttr(element, options, 'title'),
+    subtitle: getAttr(element, options, 'subtitle'),
+    content: options.content || element.dataset.content || element.innerHTML,
+    ...options
+  };
+
+  const base = composeCard(element, { ...config, behavior: 'cardimage' });
+  element.classList.add('wb-card-image');
+  element.innerHTML = '';
+
+  // Build header/main/footer structure
+  base.buildStructure();
+
+  const retryCleanups = [];
+
+  // Image at top
+  if (config.src && config.position === 'top') {
+    const figure = base.createFigure();
+    figure.style.aspectRatio = config.aspect;
+    const img = document.createElement('img');
+    img.src = config.src;
+    img.alt = config.alt;
+    img.loading = 'lazy';
+    img.style.cssText = `width:100%;height:100%;object-fit:${config.fit};display:block;`;
+    retryCleanups.push(attachImageLoadRetry(img));
+    traceCardMedia('cardimage', element, img, config.src);
+    figure.appendChild(img);
+    element.insertBefore(figure, element.firstChild);
+  }
+
+  // Image at bottom
+  if (config.src && config.position === 'bottom') {
+    const figureBottom = base.createFigure();
+    figureBottom.style.aspectRatio = config.aspect;
+    const imgBottom = document.createElement('img');
+    imgBottom.src = config.src;
+    imgBottom.alt = config.alt;
+    imgBottom.loading = 'lazy';
+    imgBottom.style.cssText = `width:100%;height:100%;object-fit:${config.fit};display:block;`;
+    retryCleanups.push(attachImageLoadRetry(imgBottom));
+    traceCardMedia('cardimage', element, imgBottom, config.src);
+    figureBottom.appendChild(imgBottom);
+    element.appendChild(figureBottom);
+  }
+
+  return () => { base.cleanup(); retryCleanups.forEach(fn => fn()); };
+}
+
+/**
+ * Card Video Component
+ * Custom Tag: <card-video>
+ */
+export function cardvideo(element, options = {}) {
+  const config = {
+    src: getAttr(element, options, 'src'),
+    poster: getAttr(element, options, 'poster'),
+    title: getAttr(element, options, 'title'),
+    subtitle: getAttr(element, options, 'subtitle'),
+    // Same bare-boolean-attribute gap as cardexpandable/cardminimizable above.
+    autoplay: parseBoolean(options.autoplay) ?? (element.dataset.autoplay === 'true' || element.getAttribute('autoplay') === 'true' || (element.hasAttribute('data-autoplay') && element.dataset.autoplay !== 'false') || element.hasAttribute('autoplay')),
+    muted: parseBoolean(options.muted) ?? (element.dataset.muted === 'true' || element.getAttribute('muted') === 'true' || (element.hasAttribute('data-muted') && element.dataset.muted !== 'false') || element.hasAttribute('muted')),
+    loop: parseBoolean(options.loop) ?? (element.dataset.loop === 'true' || element.getAttribute('loop') === 'true' || (element.hasAttribute('data-loop') && element.dataset.loop !== 'false') || element.hasAttribute('loop')),
+    controls: parseBoolean(options.controls) ?? (element.dataset.controls !== 'false' && element.getAttribute('controls') !== 'false'),
+    // Same aspect-ratio pattern as cardimage() above: a fixed box size,
+    // deterministic regardless of load success/failure, instead of falling
+    // back to the browser's intrinsic video default (~300x150) (#482).
+    aspect: getAttr(element, options, 'aspect') || '16/9',
+    content: options.content || element.dataset.content || element.innerHTML,
+    ...options
+  };
+
+  const base = composeCard(element, { ...config, behavior: 'cardvideo' });
+  element.classList.add('wb-card-video');
+  element.innerHTML = '';
+
+  // Build header/main/footer
+  base.buildStructure();
+
+  // Video figure
+  let retryCleanup = null;
+  if (config.src) {
+    const coverFigure = base.createFigure();
+    coverFigure.style.aspectRatio = config.aspect;
+    const video = document.createElement('video');
+    video.src = config.src;
+    video.style.cssText = 'width:100%;height:100%;display:block;';
+    if (config.poster) video.poster = config.poster;
+    if (config.autoplay) video.autoplay = true;
+    if (config.muted) video.muted = true;
+    if (config.loop) video.loop = true;
+    if (config.controls) video.controls = true;
+    video.playsInline = true;
+    retryCleanup = attachVideoLoadRetry(video);
+    traceCardMedia('cardvideo', element, video, config.src);
+
+    // Check for tracks/captions
+    const hasTracks = element.querySelector('track') || config.tracks;
+    if (!hasTracks) {
+      element.dataset.needsCaptions = "For accessibility, consider adding captions";
+      element.setAttribute('data-captions-missing', 'true');
+      // Add accessibility warning
+      const warning = document.createElement('div');
+      warning.className = 'wb-card__video-warning';
+      warning.style.cssText = 'display:none;'; // Hidden but present for tests/SR
+      warning.textContent = 'Video missing captions';
+      coverFigure.appendChild(warning);
+    }
+
+    coverFigure.appendChild(video);
+    element.insertBefore(coverFigure, element.firstChild);
+  }
+
+  return () => { base.cleanup(); if (retryCleanup) retryCleanup(); };
+}
+
+/**
+ * Card Button Component
+ * Custom Tag: <card-button>
+ */
+export function cardbutton(element, options = {}) {
+  // Compose shared card fields, then add cardbutton-specific fields.
+  const config = {
+    ...element.dataset,
+    ...options,
+    primary: options.primary || element.dataset.primary || element.getAttribute('primary'),
+    secondary: options.secondary || element.dataset.secondary || element.getAttribute('secondary'),
+    primaryHref: options.primaryHref || element.dataset.primaryHref || element.getAttribute('primary-href'),
+    secondaryHref: options.secondaryHref || element.dataset.secondaryHref || element.getAttribute('secondary-href'),
+    behavior: 'cardbutton'
+  };
+
+  const base = composeCard(element, config);
+  element.classList.add('wb-card-button');
+  element.innerHTML = '';
+  base.buildStructure();
+
+  // Add button footer if needed
+  if (config.primary || config.secondary) {
+    const btnFooter = document.createElement('footer');
+    btnFooter.className = 'wb-card__btn-footer';
+    btnFooter.style.cssText = 'padding:1rem;display:flex;gap:0.5rem;border-top:1px solid var(--border-color,#374151);';
+    // Buttons with no *Href just sat inert -- no click handler at all, so
+    // clicking e.g. "Confirm Delete" did visibly nothing. A component
+    // library button can't know the app's confirm/save logic, but it must
+    // signal the click happened -- same bubbling wb:{behavior}:{action}
+    // convention as cardnotification/cardproduct/etc (card.js) -- so a real
+    // consumer (or this project's own demo pages) has something to listen for.
+    if (config.secondary) {
+      const secBtn = document.createElement(config.secondaryHref ? 'a' : 'button');
+      secBtn.className = 'wb-card__btn wb-card__btn--secondary';
+      secBtn.textContent = config.secondary;
+      secBtn.style.cssText = 'flex:1;padding:0.625rem 1rem;border:1px solid var(--border-color,#4b5563);border-radius:6px;cursor:pointer;background:transparent;color:var(--text-primary,#f9fafb);text-align:center;text-decoration:none;font-size:0.875rem;';
+      if (config.secondaryHref) {
+        secBtn.href = config.secondaryHref;
+      } else {
+        secBtn.addEventListener('click', () => {
+          element.dispatchEvent(new CustomEvent('wb:cardbutton:secondary', { bubbles: true, detail: { label: config.secondary } }));
+        });
+      }
+      btnFooter.appendChild(secBtn);
+    }
+    if (config.primary) {
+      const priBtn = document.createElement(config.primaryHref ? 'a' : 'button');
+      priBtn.className = 'wb-card__btn wb-card__btn--primary';
+      priBtn.textContent = config.primary;
+      priBtn.style.cssText = 'flex:1;padding:0.625rem 1rem;border:none;border-radius:6px;cursor:pointer;background:var(--primary,#6366f1);color:white;text-align:center;text-decoration:none;font-size:0.875rem;font-weight:500;';
+      if (config.primaryHref) {
+        priBtn.href = config.primaryHref;
+      } else {
+        priBtn.addEventListener('click', () => {
+          element.dispatchEvent(new CustomEvent('wb:cardbutton:primary', { bubbles: true, detail: { label: config.primary } }));
+        });
+      }
+      btnFooter.appendChild(priBtn);
+    }
+    element.appendChild(btnFooter);
+  }
+  return base.cleanup;
+}
+
+/**
+ * Card Hero Component
+ * Custom Tag: <card-hero>
+ */
+export function cardhero(element, options = {}) {
+  const config = {
+    background: options.background || element.dataset.background || element.getAttribute('background'),
+    overlay: parseBoolean(options.overlay) ?? (element.dataset.overlay !== 'false' && element.getAttribute('overlay') !== 'false'),
+    xalign: options.xalign || element.dataset.xalign || element.getAttribute('xalign') || 'center',
+    height: options.height || element.dataset.height || element.getAttribute('height') || '400px',
+    cta: options.cta || element.dataset.cta || element.getAttribute('cta'),
+    ctaHref: options.ctaHref || element.dataset.ctaHref || element.getAttribute('cta-href'),
+    ctaTooltip: options.ctaTooltip || element.dataset.ctaTooltip || element.getAttribute('cta-tooltip'),
+    ctaSecondary: options.ctaSecondary || element.dataset.ctaSecondary || element.getAttribute('cta-secondary'),
+    ctaSecondaryHref: options.ctaSecondaryHref || element.dataset.ctaSecondaryHref || element.getAttribute('cta-secondary-href'),
+    ctaSecondaryTooltip: options.ctaSecondaryTooltip || element.dataset.ctaSecondaryTooltip || element.getAttribute('cta-secondary-tooltip'),
+    pretitle: options.pretitle || element.dataset.pretitle || element.getAttribute('pretitle'),
+    // Documented in cardhero.schema.json (enum: default/cosmic/split/
+    // minimal/gradient) but never actually read here -- CSS never got a
+    // corresponding .wb-cardhero--<variant> rule either, so every variant
+    // rendered pixel-identical (#383).
+    variant: options.variant || element.dataset.variant || element.getAttribute('variant') || 'default',
+    ...options
+  };
+
+  const base = composeCard(element, { ...config, behavior: 'cardhero', hoverable: false });
+  element.classList.add('wb-hero');
+  if (config.variant && config.variant !== 'default') {
+    element.classList.add(`wb-cardhero--${config.variant}`);
+  }
+  // composeCard applies the default card surface (inline background:var(--bg-secondary)
+  // + border). A hero owns its own full-bleed background, so clear those inline
+  // props and let hero.css provide the rich default gradient (or the user's bg).
+  element.style.removeProperty('background');
+  element.style.removeProperty('background-color');
+  element.style.removeProperty('border');
+
+  // CHECK FOR SLOTS/CHILDREN BEFORE CLEARING
+  // ----------------------------------------
+  // If the user provided content inside the tag, we want to preserve specific pieces
+  // marked with slot="..." or data-slot="..." to avoid putting HTML in attributes.
+  
+  const slots = {};
+  ['pretitle', 'title', 'subtitle'].forEach(slotName => {
+    // Check standard ShadowDOM-like slot syntax
+    let slotEl = element.querySelector(`[slot="${slotName}"]`);
+    // Fallback to data-slot
+    if (!slotEl) slotEl = element.querySelector(`[data-slot="${slotName}"]`);
+    
+    if (slotEl) {
+      slots[slotName] = slotEl.cloneNode(true);
+      // Remove slot attribute for cleaner DOM in result
+      slots[slotName].removeAttribute('slot');
+      slots[slotName].removeAttribute('data-slot');
+    }
+  });
+
+  element.innerHTML = '';
+  element.style.minHeight = config.height;
+  element.classList.add(`wb-card--xalign-${config.xalign}`);
+
+  // Background: a user-provided image/gradient is applied inline; the default
+  // rich theme gradient + all colors live in hero.css (wb-cardhero…), so there
+  // are NO hardcoded colors here.
+  if (config.background) {
+    element.style.backgroundImage =
+      (config.background.includes('gradient') || config.background.startsWith('var('))
+        ? config.background
+        : `url(${config.background})`;
+    element.style.backgroundSize = 'cover';
+    element.style.backgroundPosition = 'center';
+  }
+
+  // Legibility scrim + content are styled by classes in hero.css.
+  if (config.overlay) {
+    const overlayEl = document.createElement('div');
+    overlayEl.className = 'wb-card__overlay';
+    element.appendChild(overlayEl);
+  }
+
+  const content = document.createElement('div');
+  content.className = 'wb-card__hero-content';
+
+  // Pretitle (eyebrow). All visual styling lives in hero.css.
+  if (slots.pretitle) {
+    slots.pretitle.classList.add('wb-card__hero-pretitle');
+    content.appendChild(slots.pretitle);
+  } else if (base.config.pretitle) {
+    const preEl = document.createElement('div');
+    preEl.className = 'wb-card__hero-pretitle';
+    preEl.innerHTML = base.config.pretitle;
+    content.appendChild(preEl);
+  }
+
+  // Title.
+  if (slots.title) {
+    slots.title.classList.add('wb-card__title', 'wb-card__hero-title');
+    content.appendChild(slots.title);
+  } else if (base.config.title) {
+    const titleEl = document.createElement('h3');
+    titleEl.className = 'wb-card__title wb-card__hero-title';
+    titleEl.innerHTML = base.config.title;
+    content.appendChild(titleEl);
+  }
+
+  // Subtitle.
+  if (slots.subtitle) {
+    slots.subtitle.classList.add('wb-card__subtitle', 'wb-card__hero-subtitle');
+    content.appendChild(slots.subtitle);
+  } else if (base.config.subtitle) {
+    const subtitleEl = document.createElement('div');
+    subtitleEl.className = 'wb-card__subtitle wb-card__hero-subtitle';
+    subtitleEl.innerHTML = base.config.subtitle;
+    content.appendChild(subtitleEl);
+  }
+
+  // CTAs — hero-specific button classes (styled in hero.css, theme colors).
+  if (base.config.cta || base.config.ctaSecondary) {
+    const ctaGroup = document.createElement('div');
+    ctaGroup.className = 'wb-card__cta-group';
+
+    if (base.config.cta) {
+      const btn = document.createElement('a');
+      btn.className = 'wb-hero-cta wb-hero-cta--primary';
+      btn.href = base.config.ctaHref || '#';
+      btn.textContent = base.config.cta;
+      // Set BEFORE appending — the MutationObserver-driven auto-injection
+      // (wb-lazy.js) picks up new [x-tooltip] elements as they're inserted,
+      // so this is enough for the real tooltip behavior to attach on its own.
+      if (base.config.ctaTooltip) btn.setAttribute('x-tooltip', base.config.ctaTooltip);
+      ctaGroup.appendChild(btn);
+    }
+
+    if (base.config.ctaSecondary) {
+      const secondaryBtn = document.createElement('a');
+      secondaryBtn.className = 'wb-hero-cta wb-hero-cta--secondary';
+      secondaryBtn.href = base.config.ctaSecondaryHref || '#';
+      secondaryBtn.textContent = base.config.ctaSecondary;
+      if (base.config.ctaSecondaryTooltip) secondaryBtn.setAttribute('x-tooltip', base.config.ctaSecondaryTooltip);
+      ctaGroup.appendChild(secondaryBtn);
+    }
+    content.appendChild(ctaGroup);
+  }
+
+  element.appendChild(content);
+
+  return base.cleanup;
+}
+
+/**
+ * Card Profile Component
+ * Custom Tag: <card-profile>
+ */
+export function cardprofile(element, options = {}) {
+  const config = {
+    avatar: options.avatar || element.dataset.avatar || element.getAttribute('avatar'),
+    name: options.name || element.dataset.name || element.getAttribute('name'),
+    role: options.role || element.dataset.role || element.getAttribute('role'),
+    bio: options.bio || element.dataset.bio || element.getAttribute('bio'),
+    cover: options.cover || element.dataset.cover || element.getAttribute('cover'),
+    // schema-declared but previously never read -- size/align had zero
+    // effect (#19: every declared attribute must produce a real effect).
+    size: options.size || element.dataset.size || element.getAttribute('size') || 'md',
+    align: options.align || element.dataset.align || element.getAttribute('align') || 'center',
+    hoverText: options.hoverText || element.dataset.hoverText || element.getAttribute('hoverText') || element.getAttribute('hover-text'),
+    ...options
+  };
+
+  // #283: hoverText/tooltip -> themed WB tooltip is handled once, generically,
+  // by composeCard() (it reads config.hoverText/config.tooltip straight off this
+  // same `config` object via the spread below) -- don't also set a native
+  // `title` here, that would silently re-add the plain browser tooltip
+  // composeCard just wired the themed one to replace.
+  const base = composeCard(element, { ...config, behavior: 'cardprofile' });
+  element.innerHTML = '';
+
+  // Cover
+  if (config.cover) {
+    const coverFig = base.createFigure();
+    coverFig.className = 'wb-card__figure wb-card__cover';
+    coverFig.style.cssText = `position:relative;margin:0;height:36px;background-image:url(${config.cover});background-size:cover;background-position:center;`;
+
+    // Role sits on the cover (the card's top half) instead of below the
+    // avatar/name, so it reads immediately alongside the cover photo.
+    // top:50%/translateY(-50%) centered the badge's BOUNDING BOX correctly
+    // within the cover strip, but with the strip flush against the card's
+    // own top-right corner, that centered position landed almost entirely
+    // inside the card's 8px border-radius + overflow:hidden curve -- the
+    // rectangular bounding-box math never overflowed, but the pill's own
+    // rounded corner still visibly clipped against that curve (confirmed
+    // via screenshot; a plain getBoundingClientRect containment check
+    // can't detect corner-radius clipping, only real rectangle overlap).
+    // Fixed top offset that clears the corner radius, on a slightly
+    // taller strip so there's still balanced clearance below.
+    if (config.role) {
+      const roleBadge = document.createElement('div');
+      roleBadge.className = 'wb-card__subtitle wb-card__role';
+      roleBadge.style.cssText = 'position:absolute;top:8px;right:0.6rem;padding:0.15rem 0.6rem;border-radius:999px;background:rgba(0,0,0,0.55);color:#fff;font-size:0.7rem;';
+      roleBadge.textContent = config.role;
+      coverFig.appendChild(roleBadge);
+    }
+
+    element.appendChild(coverFig);
+  }
+
+  // Profile content
+  // A <div>, not <header> -- a literal <header> tag is auto-injected as the
+  // SITE header behavior (tag-map.js maps native 'header' -> 'header'),
+  // which forces display:flex/flex-direction:row via .wb-header (header.css)
+  // and made avatar/name/bio render side-by-side instead of stacked.
+  // No overlap with the cover -- a fixed -40px pull-up was calibrated for the
+  // old 100px cover; against the current thin cover strip it dragged the
+  // avatar up into the cover image instead of sitting cleanly below it.
+  const textAlign = config.align === 'left' ? 'left' : 'center';
+  const content = document.createElement('div');
+  content.className = 'wb-card__profile-content';
+  content.style.cssText = `text-align:${textAlign};padding:1rem;`;
+
+  const avatarSizes = { sm: '56px', md: '80px', lg: '104px' };
+  const avatarSize = avatarSizes[config.size] || avatarSizes.md;
+
+  if (config.avatar) {
+    const avatarImg = document.createElement('img');
+    avatarImg.className = 'wb-card__avatar';
+    avatarImg.src = config.avatar;
+    avatarImg.alt = config.name || 'Avatar';
+    avatarImg.style.cssText = `width:${avatarSize};height:${avatarSize};border-radius:50%;border:4px solid var(--bg-secondary,#1f2937);object-fit:cover;`;
+    content.appendChild(avatarImg);
+  }
+
+  if (config.name) {
+    const nameEl = document.createElement('h3');
+    nameEl.className = 'wb-card__title wb-card__name';
+    nameEl.style.cssText = 'margin:0.75rem 0 0;font-size:1.25rem;color:var(--text-primary,#f9fafb);';
+    nameEl.textContent = config.name;
+    content.appendChild(nameEl);
+  }
+
+  if (config.role && !config.cover) {
+    const roleEl = document.createElement('div');
+    roleEl.className = 'wb-card__subtitle wb-card__role';
+    roleEl.style.cssText = 'margin:0.25rem 0 0.5rem;color:var(--primary,#6366f1);font-size:0.9rem;';
+    roleEl.textContent = config.role;
+    content.appendChild(roleEl);
+  }
+
+  if (config.bio) {
+    const bioEl = document.createElement('div');
+    bioEl.className = 'wb-card__bio';
+    bioEl.style.cssText = 'margin:1rem 0 0;color:var(--text-secondary,#9ca3af);font-size:0.875rem;line-height:1.5;';
+    bioEl.textContent = config.bio;
+    content.appendChild(bioEl);
+  }
+
+  element.appendChild(content);
+
+  // Footer from base config
+  if (base.config.footer) {
+    element.appendChild(base.createFooter());
+  }
+
+  return base.cleanup;
+}
+
+/**
+ * Card Pricing Component
+ * Custom Tag: <card-pricing>
+ */
+export function cardpricing(element, options = {}) {
+  const config = {
+    plan: options.plan || element.dataset.plan || element.getAttribute('plan') || 'Basic Plan',
+    price: options.price || element.dataset.price || element.getAttribute('price') || '$0',
+    period: options.period || element.dataset.period || element.getAttribute('period') || '/month',
+    features: options.features || element.dataset.features?.split(',') || element.getAttribute('features')?.split(',') || ['Feature 1', 'Feature 2'],
+    cta: options.cta || element.dataset.cta || element.getAttribute('cta') || 'Get Started',
+    ctaHref: options.ctaHref || element.dataset.ctaHref || element.getAttribute('cta-href') || '#',
+    // Same bare-boolean-attribute gap as cardexpandable/cardminimizable above.
+    featured: parseBoolean(options.featured) ?? (element.dataset.featured === 'true' || element.getAttribute('featured') === 'true' || (element.hasAttribute('data-featured') && element.dataset.featured !== 'false') || element.hasAttribute('featured')),
+    background: options.background || element.dataset.background || element.getAttribute('background'),
+    ...options
+  };
+
+  const base = composeCard(element, { ...config, behavior: 'cardpricing' });
+  element.classList.add('wb-pricing');
+  element.innerHTML = '';
+  element.style.textAlign = 'center';
+  element.style.containerType = 'inline-size'; // Enable container queries for responsive text
+  element.style.padding = '0'; // Reset padding as we use header/main
+
+  if (config.featured) {
+    element.style.border = '2px solid var(--primary, #6366f1)';
+    element.style.transform = 'scale(1.05)';
+  }
+
+  // Apply background image if provided
+  if (config.background) {
+    element.style.backgroundImage = `url(${config.background})`;
+    element.style.backgroundSize = 'cover';
+    element.style.backgroundPosition = 'center';
+  }
+
+  // Header with Plan Name
+  const header = base.createHeader();
+  header.innerHTML = ''; // Clear default
+  header.style.textAlign = 'center';
+  
+  const planEl = document.createElement('h3');
+  planEl.className = 'wb-card__title wb-card__plan';
+  planEl.style.cssText = 'margin:0;font-size:1.25rem;color:var(--text-primary,#f9fafb);';
+  planEl.textContent = config.plan;
+  header.appendChild(planEl);
+  element.appendChild(header);
+
+  // Main content with Price and Features
+  const main = base.createMain();
+  main.style.textAlign = 'center';
+
+  // Price
+  const priceWrap = document.createElement('div');
+  priceWrap.className = 'wb-card__price-wrap';
+  priceWrap.style.cssText = 'margin:1rem 0;';
+
+  const priceEl = document.createElement('span');
+  priceEl.className = 'wb-card__amount';
+  // Use container query units (cqi) to scale text relative to card width
+  priceEl.style.cssText = 'font-size:clamp(1.5rem, 18cqi, 3rem);font-weight:700;color:var(--text-primary,#f9fafb);white-space:nowrap;';
+  priceEl.textContent = config.price;
+  priceWrap.appendChild(priceEl);
+
+  const periodEl = document.createElement('span');
+  periodEl.className = 'wb-card__period';
+  periodEl.style.cssText = 'color:var(--text-secondary,#9ca3af);';
+  periodEl.textContent = config.period;
+  priceWrap.appendChild(periodEl);
+
+  main.appendChild(priceWrap);
+
+  // Features
+  const featuresList = document.createElement('ul');
+  featuresList.className = 'wb-card__features';
+  featuresList.style.cssText = 'list-style:none;padding:0;margin:1.5rem 0;text-align:left;';
+
+  config.features.forEach(f => {
+    const li = document.createElement('li');
+    li.className = 'wb-card__feature';
+    li.style.cssText = 'padding:0.5rem 0;color:var(--text-primary,#f9fafb);border-bottom:1px solid var(--border-color,#374151);';
+    li.innerHTML = `<span style="color:var(--success,#22c55e);margin-right:0.5rem;">✓</span> ${f.trim()}`;
+    featuresList.appendChild(li);
+  });
+
+  main.appendChild(featuresList);
+  element.appendChild(main);
+
+  // Footer with CTA
+  const footer = base.createFooter();
+  footer.innerHTML = ''; // Clear default
+  footer.style.background = 'transparent';
+  footer.style.borderTop = 'none';
+  
+  const ctaBtn = document.createElement('a');
+  ctaBtn.href = config.ctaHref;
+  ctaBtn.className = 'wb-card__cta';
+  ctaBtn.style.cssText = 'display:block;padding:0.875rem;background:var(--primary,#6366f1);color:white;text-decoration:none;border-radius:8px;font-weight:600;transition:all 0.2s;text-align:center;';
+  ctaBtn.textContent = config.cta;
+  footer.appendChild(ctaBtn);
+  
+  element.appendChild(footer);
+
+  return base.cleanup;
+}
+
+/**
+ * Card Stats Component
+ * Custom Tag: <card-stats>
+ */
+export function cardstats(element, options = {}) {
+  const config = {
+    value: options.value || element.dataset.value || element.getAttribute('value'),
+    label: options.label || element.dataset.label || element.getAttribute('label'),
+    icon: options.icon || element.dataset.icon || element.getAttribute('icon'),
+    trend: options.trend || element.dataset.trend || element.getAttribute('trend'),
+    trendValue: options.trendValue || element.getAttribute('trend-value') || element.dataset.trendValue,
+    ...options
+  };
+
+  // Defensive init: catch unexpected runtime errors to avoid killing the page
+  try {
+    const base = composeCard(element, { ...config, behavior: 'cardstats', hoverable: false });
+    element.classList.add('wb-stats');
+    element.innerHTML = '';
+    // Layout, container-query sizing, and default padding all live in
+    // card.css's `.wb-stats` rule now (Law 9, #370 -- was unconditional
+    // inline styles here, which also silently beat wb-card--compact/large's
+    // own CSS regardless of specificity; wb-card__header/__main below get
+    // real classes so those variant rules can actually win).
+
+  // Semantic: Icon belongs in header
+  if (config.icon) {
+    const header = document.createElement('header');
+    // wb-card__header is required even though .wb-stats .wb-card__header
+    // (card.css) overrides its padding/border/background back to zero:
+    // card.css's fallback rule `.wb-card:not(:has(.wb-card__header)):not(
+    // :has(.wb-card__main)) { padding: 1rem }` outranks (0,3,0 vs 0,2,0
+    // specificity) `.wb-stats.wb-card--compact/--large`'s own padding when
+    // neither class is present, silently forcing 1rem on every variant
+    // (confirmed live).
+    header.className = 'wb-card__header';
+
+    const iconEl = document.createElement('span');
+    iconEl.className = 'wb-card__icon';
+    iconEl.style.cssText = 'font-size:2rem;line-height:1;display:block;';
+    iconEl.textContent = config.icon;
+
+    header.appendChild(iconEl);
+    element.appendChild(header);
+  }
+
+  // Semantic: Main content
+  const content = document.createElement('main');
+  content.className = 'wb-card__main';
+
+  if (config.value) {
+    const valueEl = document.createElement('data');
+    valueEl.value = config.value.replace(/[^0-9.-]/g, '') || config.value;
+    valueEl.className = 'wb-card__stats-value';
+    valueEl.style.cssText = 'font-size:clamp(1.25rem, 15cqi, 1.75rem);font-weight:700;color:var(--text-primary,#f9fafb);line-height:1.2;display:block;white-space:nowrap;';
+    valueEl.textContent = config.value;
+    content.appendChild(valueEl);
+  }
+
+  if (config.label) {
+    const labelEl = document.createElement('div');
+    labelEl.className = 'wb-card__stats-label';
+    labelEl.style.cssText = 'color:var(--text-secondary,#9ca3af);font-size:0.875rem;margin:0.25rem 0 0 0;';
+    labelEl.textContent = config.label;
+    content.appendChild(labelEl);
+  }
+
+  if (config.trend && config.trendValue) {
+    const trendEl = document.createElement('div');
+    trendEl.className = 'wb-card__stats-trend';
+    const trendColor = config.trend === 'up' ? 'var(--success, #22c55e)' : config.trend === 'down' ? 'var(--error, #ef4444)' : 'var(--text-secondary, #6b7280)';
+    const trendIcon = config.trend === 'up' ? '↑' : config.trend === 'down' ? '↓' : '→';
+    trendEl.style.cssText = `color:${trendColor};font-size:0.8rem;margin:0.25rem 0 0 0;font-weight:500;`;
+    trendEl.textContent = `${trendIcon} ${config.trendValue}`;
+    content.appendChild(trendEl);
+  }
+
+  element.appendChild(content);
+
+  // Runtime/test hook: mark cardstats as hydrated so tests can wait on it
+  try { element.setAttribute('x-hydrated', '1'); element.dispatchEvent(new CustomEvent('wb:cardstats:hydrated', { bubbles: true })); } catch (e) { /* best-effort */ }
+
+  return base.cleanup;
+  } catch (err) {
+    // Prevent unhandled errors from closing the test page; surface diagnostics instead.
+    try { console.error('[cardstats] init error:', err && err.message ? err.message : err); element.setAttribute('x-error', (err && err.message) || 'init-failed'); element.classList.add('wb-cardstats--error'); } catch (e) { /* best-effort */ }
+    return () => {};
+  }
+}
+
+/**
+ * Card Testimonial Component
+ * Custom Tag: <card-testimonial>
+ */
+export function cardtestimonial(element, options = {}) {
+  const config = {
+    quote: options.quote || element.dataset.quote || element.getAttribute('quote') || element.textContent,
+    author: options.author || element.dataset.author || element.getAttribute('author'),
+    role: options.role || element.dataset.role || element.getAttribute('role'),
+    avatar: options.avatar || element.dataset.avatar || element.getAttribute('avatar'),
+    rating: options.rating || element.dataset.rating || element.getAttribute('rating'),
+    ...options
+  };
+
+  const base = composeCard(element, { ...config, behavior: 'cardtestimonial', hoverable: false });
+  element.classList.add('wb-testimonial');
+  element.innerHTML = '';
+  element.style.padding = CARD_PADDING;
+
+  // Quote icon
+  const quoteIcon = document.createElement('div');
+  quoteIcon.style.cssText = 'font-size:3rem;line-height:1;color:var(--primary,#6366f1);opacity:0.3;';
+  quoteIcon.textContent = '"';
+  element.appendChild(quoteIcon);
+
+  // Quote
+  if (config.quote) {
+    const quoteEl = document.createElement('blockquote');
+    quoteEl.className = 'wb-card__quote';
+    quoteEl.style.cssText = 'margin:0.5rem 0 1rem;font-size:1rem;line-height:1.6;color:var(--text-primary,#f9fafb);font-style:italic;';
+    quoteEl.textContent = config.quote;
+    element.appendChild(quoteEl);
+  }
+
+  // Rating
+  if (config.rating) {
+    const ratingEl = document.createElement('div');
+    ratingEl.className = 'wb-card__rating';
+    ratingEl.style.cssText = 'color:#f59e0b;margin-bottom:1rem;';
+    ratingEl.textContent = '★'.repeat(parseInt(config.rating)) + '☆'.repeat(5 - parseInt(config.rating));
+    element.appendChild(ratingEl);
+  }
+
+  // Author
+  const authorWrap = document.createElement('footer');
+  authorWrap.className = 'wb-card__footer';
+  authorWrap.style.cssText = 'display:flex;align-items:center;gap:0.75rem;background:transparent;border:none;padding:0;';
+
+  if (config.avatar) {
+    const avatarImg = document.createElement('img');
+    avatarImg.className = 'wb-card__avatar';
+    avatarImg.src = config.avatar;
+    avatarImg.alt = config.author || '';
+    avatarImg.style.cssText = 'width:48px;height:48px;border-radius:50%;object-fit:cover;';
+    authorWrap.appendChild(avatarImg);
+  }
+
+  const authorInfo = document.createElement('div');
+  if (config.author) {
+    const authorName = document.createElement('cite');
+    authorName.className = 'wb-card__author';
+    authorName.style.cssText = 'font-style:normal;font-weight:600;color:var(--text-primary,#f9fafb);display:block;';
+    authorName.textContent = config.author;
+    authorInfo.appendChild(authorName);
+  }
+
+  if (config.role) {
+    const roleEl = document.createElement('span');
+    roleEl.className = 'wb-card__author-role';
+    roleEl.style.cssText = 'font-size:0.85rem;color:var(--text-secondary,#9ca3af);';
+    roleEl.textContent = config.role;
+    authorInfo.appendChild(roleEl);
+  }
+
+  authorWrap.appendChild(authorInfo);
+  element.appendChild(authorWrap);
+
+  return base.cleanup;
+}
+
+/**
+ * Card Product Component
+ * Custom Tag: <card-product>
+ */
+export function cardproduct(element, options = {}) {
+  const config = {
+    image: options.image || element.dataset.image || element.getAttribute('image'),
+    price: options.price || element.dataset.price || element.getAttribute('price'),
+    originalPrice: options.originalPrice || element.getAttribute('original-price') || element.dataset.originalPrice,
+    badge: options.badge || element.dataset.badge || element.getAttribute('badge'),
+    rating: options.rating || element.dataset.rating || element.getAttribute('rating'),
+    reviews: options.reviews || element.dataset.reviews || element.getAttribute('reviews'),
+    cta: options.cta || element.dataset.cta || element.getAttribute('cta') || 'Add to Cart',
+    description: options.description || element.dataset.description || element.getAttribute('description'),
+    ...options
+  };
+
+  // Map description to subtitle if subtitle is missing, so composeCard picks it up
+  if (config.description && !config.subtitle) {
+    config.subtitle = config.description;
+  }
+
+  const base = composeCard(element, { ...config, behavior: 'cardproduct' });
+  element.classList.add('wb-product');
+  element.innerHTML = '';
+
+  // Product image
+  if (config.image) {
+    const figure = base.createFigure();
+    figure.style.position = 'relative';
+    
+    const img = document.createElement('img');
+    img.src = config.image;
+    img.alt = base.config.title || 'Product';
+    img.style.cssText = 'width:100%;aspect-ratio:3/2;object-fit:cover;display:block;';
+    figure.appendChild(img);
+
+    if (config.badge) {
+      // cardproduct builds its own layout independently of
+      // composeCard().buildStructure() (which owns the shared header-badge
+      // logic elsewhere in this file) -- it never calls that path, so the
+      // badge has to render here or not at all (#380).
+      const badgeEl = document.createElement('span');
+      badgeEl.className = 'wb-card__badge';
+      badgeEl.style.cssText = STYLE_BADGE + 'position:absolute;top:0.5rem;left:0.5rem;';
+      badgeEl.textContent = config.badge;
+      figure.appendChild(badgeEl);
+    }
+
+    element.appendChild(figure);
+  }
+
+  // Product info
+  const info = document.createElement('div');
+  info.className = 'wb-card__product-info';
+  info.style.cssText = 'padding:1rem;';
+
+  if (base.config.title) {
+    const titleEl = document.createElement('h3');
+    titleEl.className = 'wb-card__title wb-card__product-title';
+    titleEl.style.cssText = 'margin:0;font-size:1rem;color:var(--text-primary,#f9fafb);';
+    titleEl.textContent = base.config.title;
+    info.appendChild(titleEl);
+  }
+
+  if (base.config.subtitle) {
+    const descEl = document.createElement('div');
+    descEl.className = 'wb-card__subtitle wb-card__product-desc';
+    descEl.style.cssText = 'margin:0.25rem 0 0.5rem;font-size:0.85rem;color:var(--text-secondary,#9ca3af);';
+    descEl.textContent = base.config.subtitle;
+    info.appendChild(descEl);
+  }
+
+  // Rating
+  if (config.rating) {
+    const ratingWrap = document.createElement('div');
+    ratingWrap.className = 'wb-card__product-rating';
+    ratingWrap.style.cssText = 'margin:0.5rem 0;display:flex;align-items:center;gap:0.5rem;';
+    
+    const stars = document.createElement('span');
+    stars.style.color = '#f59e0b';
+    stars.textContent = '★'.repeat(Math.floor(parseFloat(config.rating)));
+    ratingWrap.appendChild(stars);
+
+    const ratingText = document.createElement('span');
+    ratingText.style.cssText = 'font-size:0.85rem;color:var(--text-secondary,#9ca3af);';
+    ratingText.textContent = config.rating + (config.reviews ? ` (${config.reviews})` : '');
+    ratingWrap.appendChild(ratingText);
+
+    info.appendChild(ratingWrap);
+  }
+
+  // Price
+  const priceWrap = document.createElement('div');
+  priceWrap.className = 'wb-card__price-wrap';
+  priceWrap.style.cssText = 'margin:0.75rem 0;display:flex;align-items:center;gap:0.5rem;';
+
+  if (config.price) {
+    const priceEl = document.createElement('span');
+    priceEl.className = 'wb-card__price-current';
+    priceEl.style.cssText = 'font-size:1.25rem;font-weight:700;color:var(--text-primary,#f9fafb);';
+    priceEl.textContent = config.price;
+    priceWrap.appendChild(priceEl);
+  }
+
+  if (config.originalPrice) {
+    const origEl = document.createElement('span');
+    origEl.className = 'wb-card__price-original';
+    origEl.style.cssText = 'text-decoration:line-through;color:var(--text-secondary,#6b7280);font-size:0.9rem;';
+    origEl.textContent = config.originalPrice;
+    priceWrap.appendChild(origEl);
+  }
+
+  info.appendChild(priceWrap);
+
+  // CTA button
+  const ctaBtn = document.createElement('button');
+  ctaBtn.type = 'button';
+  ctaBtn.className = 'wb-card__product-cta';
+  ctaBtn.style.cssText = 'width:100%;padding:0.75rem;background:var(--primary,#6366f1);color:white;border:none;border-radius:6px;font-weight:500;cursor:pointer;';
+  ctaBtn.textContent = config.cta;
+
+  const addToCart = () => {
+    const detail = {
+      title: base.config.title,
+      price: config.price,
+      id: element.id
+    };
+
+    element.dispatchEvent(new CustomEvent('wb:cardproduct:addtocart', {
+      bubbles: true,
+      detail
+    }));
+
+    return detail;
+  };
+
+  ctaBtn.onclick = (e) => {
+    e.stopPropagation();
+    addToCart();
+  };
+
+  element.wbCardProduct = { addToCart };
+
+  info.appendChild(ctaBtn);
+
+  element.appendChild(info);
+
+  return base.cleanup;
+}
+
+/**
+ * Card Notification Component
+ * Custom Tag: <wb-cardnotification>
+ *
+ * v3.0 MVVM:
+ *   Schema  → owns DOM structure + CSS class-based variant colors
+ *   Behavior → owns interactivity (dismiss, keyboard, aria, default icon text)
+ *
+ * Attribute: variant="info|success|warning|error" (NOT "type")
+ */
+export function cardnotification(element, options = {}) {
+  const schemaProcessed = options.schemaProcessed || element.getAttribute('x-schema');
+
+  // Read variant (primary) with fallback to type (legacy).
+  // Check dataset (data-*) first to match the framework's attribute convention.
+  const variant = options.variant || element.dataset.variant || element.getAttribute('variant')
+    || options.type || element.dataset.type || element.getAttribute('type') || 'info';
+  const title = options.title || element.dataset.title || element.getAttribute('title') || '';
+  const message = options.message || element.dataset.message || element.getAttribute('message') || element.textContent || '';
+  const dismissible = parseBoolean(
+    options.dismissible ?? element.dataset.dismissible ?? element.getAttribute('dismissible')
+  ) !== false;
+  const customIcon = options.icon || element.dataset.icon || element.getAttribute('icon');
+
+  // Default icon letters per variant
+  const defaultIcons = { info: 'i', success: 's', warning: 'w', error: 'e' };
+
+  // ── Accessibility (always) ──
+  element.setAttribute('role', 'alert');
+
+  // ── Dismiss handler (shared by both paths) ──
+  const dismiss = () => {
+    element.dispatchEvent(new CustomEvent('wb:cardnotification:dismiss', {
+      bubbles: true,
+      detail: { variant, title }
+    }));
+    element.remove();
+  };
+
+  const keyHandler = (e) => {
+    if (e.key === 'Escape') dismiss();
+  };
+
+  // ═══════════════════════════════════════════════════════
+  // PATH A: Schema already built the DOM — enhance only
+  // ═══════════════════════════════════════════════════════
+  if (schemaProcessed) {
+    // Ensure variant class is present (schema should have added it,
+    // but belt-and-suspenders for edge cases)
+    element.classList.add('wb-notification');
+    if (variant !== 'default') {
+      element.classList.add(`wb-notification--${variant}`);
+    }
+
+    // Fill in default icon text if schema left it empty
+    const iconEl = element.querySelector('.wb-notification__icon');
+    if (iconEl && !iconEl.textContent.trim()) {
+      iconEl.textContent = customIcon || defaultIcons[variant] || 'i';
+    }
+
+    // Wire up dismiss button
+    const dismissBtn = element.querySelector('.wb-notification__dismiss');
+    if (dismissBtn) {
+      dismissBtn.setAttribute('aria-label', 'Dismiss notification');
+      dismissBtn.addEventListener('click', dismiss);
+    }
+
+    // Keyboard: Escape to dismiss
+    if (dismissible) {
+      element.setAttribute('tabindex', '0');
+      element.addEventListener('keydown', keyHandler);
+    }
+
+    return () => {
+      if (dismissBtn) dismissBtn.removeEventListener('click', dismiss);
+      element.removeEventListener('keydown', keyHandler);
+    };
+  }
+
+  // ═══════════════════════════════════════════════════════
+  // PATH B: No schema — build DOM from scratch (standalone)
+  // Uses CSS classes, no inline color styles
+  // ═══════════════════════════════════════════════════════
+  element.classList.add('wb-notification');
+  if (variant !== 'default') {
+    element.classList.add(`wb-notification--${variant}`);
+  }
+  element.innerHTML = '';
+
+  // Icon
+  const standaloneIconEl = document.createElement('span');
+  standaloneIconEl.className = 'wb-notification__icon';
+  standaloneIconEl.textContent = customIcon || defaultIcons[variant] || 'i';
+  element.appendChild(standaloneIconEl);
+
+  // Content
+  const content = document.createElement('main');
+  content.className = 'wb-notification__content';
+
+  if (title) {
+    const titleEl = document.createElement('strong');
+    titleEl.className = 'wb-notification__title';
+    titleEl.textContent = title;
+    content.appendChild(titleEl);
+  }
+
+  if (message) {
+    const msgEl = document.createElement('div');
+    msgEl.className = 'wb-notification__message';
+    msgEl.textContent = message;
+    content.appendChild(msgEl);
+  }
+
+  element.appendChild(content);
+
+  // Dismiss button
+  if (dismissible) {
+    const closeBtn = document.createElement('button');
+    closeBtn.className = 'wb-notification__dismiss';
+    closeBtn.textContent = '\u2715';
+    closeBtn.setAttribute('aria-label', 'Dismiss notification');
+    closeBtn.addEventListener('click', dismiss);
+    element.appendChild(closeBtn);
+
+    element.setAttribute('tabindex', '0');
+    element.addEventListener('keydown', keyHandler);
+  }
+
+  return () => {
+    element.removeEventListener('keydown', keyHandler);
+  };
+}
+
+/**
+ * Card File Component
+ * Custom Tag: <card-file>
+ */
+export function cardfile(element, options = {}) {
+  const config = {
+    filename: options.filename || element.dataset.filename || element.getAttribute('filename'),
+    // cardfile.schema.json declares this property as `fileType` (HTML
+    // attribute `file-type`, per project convention) -- reading the bare
+    // `type` attribute never matched any real markup (every demo/doc author
+    // used file-type=), so every card silently fell back to the generic
+    // 'file' icon regardless of its declared type. `type` kept as a
+    // fallback in case something out there authored it that way already.
+    type: options.type || element.dataset.fileType || element.getAttribute('file-type') || element.dataset.type || element.getAttribute('type') || 'file',
+    size: options.size || element.dataset.size || element.getAttribute('size'),
+    date: options.date || element.dataset.date || element.getAttribute('date'),
+    downloadable: parseBoolean(options.downloadable) ?? (element.dataset.downloadable !== 'false' && element.getAttribute('downloadable') !== 'false'),
+    href: options.href || element.dataset.href || element.getAttribute('href'),
+    ...options
+  };
+
+  const icons = { pdf: '📄', doc: '📝', image: '🖼️', video: '🎬', audio: '🎵', zip: '📦', file: '📁' };
+
+  const base = composeCard(element, { ...config, behavior: 'cardfile', hoverable: false });
+  element.classList.add('wb-card-file');
+  element.innerHTML = '';
+  element.style.padding = CARD_PADDING;
+  element.style.flexDirection = 'row';
+  element.style.alignItems = 'center';
+  element.style.gap = '1rem';
+
+  // Icon
+  const iconEl = document.createElement('span');
+  iconEl.style.cssText = 'font-size:2.5rem;';
+  iconEl.textContent = icons[config.type] || icons.file;
+  element.appendChild(iconEl);
+
+  // Info
+  const info = document.createElement('div');
+  info.style.cssText = 'flex:1;min-width:0;';
+
+  if (config.filename) {
+    const nameEl = document.createElement('h3');
+    nameEl.className = 'wb-card__filename';
+    nameEl.style.cssText = 'margin:0;font-size:1rem;color:var(--text-primary,#f9fafb);white-space:normal;word-break:break-word;';
+    nameEl.textContent = config.filename;
+    info.appendChild(nameEl);
+  }
+
+  const meta = [];
+  if (config.size) meta.push(config.size);
+  if (config.date) meta.push(config.date);
+
+  if (meta.length) {
+    const metaEl = document.createElement('div');
+    metaEl.className = 'wb-card__file-meta';
+    metaEl.style.cssText = 'margin:0.25rem 0 0;font-size:0.85rem;color:var(--text-secondary,#9ca3af);';
+    metaEl.textContent = meta.join(' • ');
+    info.appendChild(metaEl);
+  }
+
+  element.appendChild(info);
+
+  // Download: the whole card is the click target. Requires an explicit href
+  // -- filename is a DISPLAY label ("Sample filename"), not a URL; using it
+  // as one made `a.href` resolve as a relative path against the current
+  // page, so every card downloaded the current page itself (as .htm)
+  // regardless of the declared file-type. No href means nothing real to
+  // download, so the card isn't made clickable at all.
+  const downloadUrl = config.href;
+  if (config.downloadable && downloadUrl) {
+    const dlIcon = document.createElement('span');
+    dlIcon.className = 'wb-card__file-download';
+    dlIcon.style.cssText = 'font-size:1.5rem;line-height:1;';
+    dlIcon.textContent = '⬇️';
+    element.appendChild(dlIcon);
+
+    element.style.cursor = 'pointer';
+    element.setAttribute('role', 'button');
+    element.setAttribute('tabindex', '0');
+    element.setAttribute('aria-label', `Download ${config.filename || 'file'}`);
+
+    const triggerDownload = () => {
+      const a = document.createElement('a');
+      a.href = downloadUrl;
+      a.download = config.filename || '';
+      a.rel = 'noopener';
+      document.body.appendChild(a);
+      a.click();
+      a.remove();
+    };
+    const onClick = () => triggerDownload();
+    const onKey = (e) => {
+      if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); triggerDownload(); }
+    };
+    element.addEventListener('click', onClick);
+    element.addEventListener('keydown', onKey);
+
+    const baseCleanup = base.cleanup;
+    return () => {
+      element.removeEventListener('click', onClick);
+      element.removeEventListener('keydown', onKey);
+      if (typeof baseCleanup === 'function') { baseCleanup(); }
+    };
+  } else if (config.downloadable) {
+    // downloadable but no href: silently doing nothing on click is
+    // confusing for anyone authoring/testing this component -- surface it
+    // visibly instead of leaving it a silent dead end.
+    const warning = document.createElement('div');
+    warning.className = 'wb-card__file-warning';
+    warning.style.cssText = 'margin-top:0.25rem;font-size:0.8rem;color:var(--danger-color,#ef4444);';
+    warning.textContent = 'No href given — nothing to download.';
+    element.appendChild(warning);
+  }
+
+  return base.cleanup;
+}
+
+/**
+ * Card Link Component
+ * Custom Tag: <card-link>
+ */
+export function cardlink(element, options = {}) {
+  const config = {
+    href: options.href || element.dataset.href || element.getAttribute('href') || '#',
+    target: options.target || element.dataset.target || element.getAttribute('target') || '_self',
+    icon: options.icon || element.dataset.icon || element.getAttribute('icon'),
+    description: options.description || element.dataset.description || element.getAttribute('description') || '',
+    badge: options.badge || element.dataset.badge || element.getAttribute('badge') || '',
+    badgeVariant: options.badgeVariant || element.dataset.badgeVariant || element.getAttribute('badge-variant') || 'glass', // glass, gradient
+    ...options
+  };
+
+  const base = composeCard(element, { ...config, behavior: 'cardlink' });
+  // Redundant when the host tag IS <wb-card-link> (#478) -- card.css matches
+  // the tag directly there via :is(.wb-card-link, wb-card-link).
+  if (element.tagName.toLowerCase() !== 'wb-card-link') element.classList.add('wb-card-link');
+  
+  element.innerHTML = '';
+  element.style.cursor = 'pointer';
+  element.style.position = 'relative';
+  element.style.padding = '1.25rem';
+
+  // Header row with icon and external indicator
+  const headerRow = document.createElement('div');
+  headerRow.style.cssText = 'display:flex;align-items:flex-start;justify-content:space-between;gap:1rem;';
+
+  const titleGroup = document.createElement('div');
+  titleGroup.style.cssText = 'flex:1;';
+
+  // Icon + Title row
+  if (config.icon || base.config.title) {
+    const titleRow = document.createElement('div');
+    titleRow.style.cssText = 'display:flex;align-items:center;gap:0.5rem;';
+    
+    if (config.icon) {
+      const iconEl = document.createElement('span');
+      iconEl.className = 'wb-card__icon';
+      iconEl.style.cssText = 'font-size:1.25rem;line-height:1;';
+      iconEl.textContent = config.icon;
+      titleRow.appendChild(iconEl);
+    }
+    
+    if (base.config.title) {
+      const titleEl = document.createElement('h3');
+      titleEl.className = 'wb-card__title';
+      titleEl.style.cssText = STYLE_TITLE;
+      titleEl.textContent = base.config.title;
+      titleRow.appendChild(titleEl);
+    }
+    
+    titleGroup.appendChild(titleRow);
+  }
+
+  // Description (subtitle or description)
+  const desc = config.description || base.config.subtitle;
+  if (desc) {
+    const descEl = document.createElement('div');
+    descEl.className = 'wb-card__description';
+    descEl.style.cssText = 'margin:0.5rem 0 0;font-size:0.875rem;color:var(--text-secondary,#9ca3af);line-height:1.5;';
+    descEl.textContent = desc;
+    titleGroup.appendChild(descEl);
+  }
+
+  // Badge
+  if (config.badge) {
+    const badgeEl = document.createElement('span');
+    badgeEl.className = config.badgeVariant === 'gradient' ? 'wb-badge-gradient' : 'wb-tag-glass';
+    badgeEl.style.cssText = 'margin-top:0.75rem;display:inline-block;';
+    badgeEl.textContent = config.badge;
+    titleGroup.appendChild(badgeEl);
+  }
+
+  headerRow.appendChild(titleGroup);
+
+  // External indicator
+  if (config.target === '_blank') {
+    const extIcon = document.createElement('span');
+    extIcon.style.cssText = 'opacity:0.5;font-size:1rem;flex-shrink:0;';
+    extIcon.textContent = '↗';
+    headerRow.appendChild(extIcon);
+  }
+
+  element.appendChild(headerRow);
+
+  // A REAL anchor, stretched to cover the whole card (position:relative set
+  // above), instead of a JS window.open() on click. window.open() triggered
+  // from a plain element's click handler isn't a native link tap — some
+  // mobile browsers (confirmed: Samsung Internet) open it in a
+  // desktop-viewport window context that ignores the target page's own
+  // <meta viewport>, regardless of what that page declares. A real <a
+  // target="_blank"> is standard link navigation the browser handles
+  // exactly like any other tap — plus native accessibility (screen readers
+  // announce it as a link; right-click "open in new tab" works; middle-click
+  // opens in a background tab) that a div + role="link" only approximates.
+  let stretchedLink = null;
+  if (config.href && config.href !== '#') {
+    stretchedLink = document.createElement('a');
+    stretchedLink.href = config.href;
+    if (config.target === '_blank') {
+      stretchedLink.target = '_blank';
+      stretchedLink.rel = 'noopener';
+    }
+    stretchedLink.setAttribute('aria-label', base.config.title || config.href);
+    stretchedLink.style.cssText = 'position:absolute;inset:0;';
+    element.appendChild(stretchedLink);
+  }
+
+  return () => {
+    base.cleanup();
+    if (stretchedLink) stretchedLink.remove();
+  };
+}
+
+/**
+ * Card Horizontal Component
+ * Custom Tag: <card-horizontal>
+ */
+export function cardhorizontal(element, options = {}) {
+  const config = {
+    image: options.image || element.dataset.image || element.getAttribute('image'),
+    imagePosition: options.imagePosition || element.dataset.imagePosition || element.getAttribute('image-position') || 'left',
+    imageWidth: options.imageWidth || element.dataset.imageWidth || element.getAttribute('image-width') || '40%',
+    // #455: unlike card()/cardimage()/cardvideo(), this never fell back to
+    // element.innerHTML -- only a `content="..."` ATTRIBUTE worked (via
+    // composeCard's own generic getAttribute('content') fallback below). Any
+    // instance authored with plain inner text as its body (every example in
+    // the permutation-matrix's "variant variants" / "imagePosition variants"
+    // sections, tests/fixtures/cards-permutation-matrix.html) silently lost
+    // that text the instant `element.innerHTML = ''` ran a few lines down --
+    // confirmed live, zero .wb-card__horiz-body elements ever got created.
+    content: options.content || element.dataset.content || element.innerHTML,
+    ...options
+  };
+
+  const base = composeCard(element, { ...config, behavior: 'cardhorizontal' });
+  element.classList.add('wb-card-horizontal');
+  element.innerHTML = '';
+  element.style.flexDirection = config.imagePosition === 'right' ? 'row-reverse' : 'row';
+
+  // Image
+  if (config.image) {
+    const figure = base.createFigure();
+    figure.style.width = config.imageWidth;
+    figure.style.flexShrink = '0';
+    figure.style.minHeight = '200px';
+    figure.style.alignSelf = 'stretch';
+    
+    const img = document.createElement('img');
+    img.src = config.image;
+    img.alt = base.config.title || '';
+    img.style.cssText = 'width:100%;height:100%;object-fit:cover;display:block;min-height:200px;';
+    figure.appendChild(img);
+    element.appendChild(figure);
+  }
+
+  // Content
+  const content = document.createElement('div');
+  content.className = 'wb-card__horizontal-content';
+  content.style.cssText = 'flex:1;padding:1rem;display:flex;flex-direction:column;justify-content:center;';
+
+  if (base.config.title) {
+    const titleEl = document.createElement('h3');
+    titleEl.className = 'wb-card__title';
+    titleEl.style.cssText = 'margin:0;color:var(--text-primary,#f9fafb);';
+    titleEl.textContent = base.config.title;
+    content.appendChild(titleEl);
+  }
+
+  if (base.config.subtitle) {
+    const subtitleEl = document.createElement('div');
+    subtitleEl.className = 'wb-card__subtitle';
+    subtitleEl.style.cssText = 'margin:0.25rem 0 0.5rem;color:var(--text-secondary,#9ca3af);';
+    subtitleEl.textContent = base.config.subtitle;
+    content.appendChild(subtitleEl);
+  }
+
+  if (base.config.content) {
+    const bodyEl = document.createElement('div');
+    bodyEl.className = 'wb-card__horiz-body';
+    bodyEl.style.cssText = 'margin-top:0.75rem;color:var(--text-primary,#f9fafb);';
+    bodyEl.innerHTML = base.config.content;
+    content.appendChild(bodyEl);
+  }
+
+  element.appendChild(content);
+
+  return base.cleanup;
+}
+
+/**
+ * Card Overlay Component
+ * Custom Tag: <card-overlay>
+ */
+export function cardoverlay(element, options = {}) {
+  const config = {
+    image: options.image || element.dataset.image || element.getAttribute('image'),
+    position: options.position || element.dataset.position || element.getAttribute('position') || 'bottom',
+    gradient: parseBoolean(options.gradient) ?? (element.dataset.gradient !== 'false' && element.getAttribute('gradient') !== 'false'),
+    height: options.height || element.dataset.height || element.getAttribute('height') || '300px',
+    // Neither was ever read here before -- xalign only existed on cardhero
+    // (a different function), and variant only got composeCard's generic
+    // wb-card--{variant} class with no matching CSS for dark/light/blur.
+    xalign: options.xalign || element.dataset.xalign || element.getAttribute('xalign') || 'left',
+    variant: options.variant || element.dataset.variant || element.getAttribute('variant') || 'default',
+    ...options
+  };
+
+  const base = composeCard(element, { ...config, behavior: 'cardoverlay', hoverable: false });
+  element.classList.add('wb-card-overlay');
+  element.classList.add('wb-card--overlay-card');
+  element.classList.add(`wb-card--overlay-${config.position}`);
+  element.innerHTML = '';
+  
+  element.style.height = config.height;
+  element.style.position = 'relative';
+  element.style.backgroundImage = config.image ? `url(${config.image})` : 'linear-gradient(135deg, #667eea, #764ba2)';
+  element.style.backgroundSize = 'cover';
+  element.style.backgroundPosition = 'center';
+  
+  // Use row direction so align-items controls vertical position (as expected by tests)
+  element.style.flexDirection = 'row';
+  
+  if (config.position === 'top') {
+    element.style.alignItems = 'flex-start';
+  } else if (config.position === 'center') {
+    element.style.alignItems = 'center';
+  } else {
+    element.style.alignItems = 'flex-end';
+  }
+
+  // Content
+  const content = document.createElement('div');
+  content.className = 'wb-card__overlay-content';
+  content.style.cssText = `padding:1.5rem;color:white;width:100%;text-align:${config.xalign};`;
+
+  if (config.gradient) {
+    content.style.background = config.position === 'top'
+      ? 'linear-gradient(to bottom, rgba(0,0,0,0.7), transparent)'
+      : 'linear-gradient(to top, rgba(0,0,0,0.7), transparent)';
+  }
+
+  // Variant tint -- applied after the gradient so a non-default variant's
+  // tint (or backdrop-filter, for blur) always wins over the plain gradient.
+  if (config.variant === 'dark') {
+    content.style.background = 'rgba(0,0,0,0.65)';
+  } else if (config.variant === 'light') {
+    content.style.background = 'rgba(255,255,255,0.85)';
+    content.style.color = '#111827';
+  } else if (config.variant === 'blur') {
+    content.style.background = 'rgba(0,0,0,0.35)';
+    content.style.backdropFilter = 'blur(8px)';
+    content.style.webkitBackdropFilter = 'blur(8px)';
+  }
+
+  if (base.config.title) {
+    const titleEl = document.createElement('h3');
+    titleEl.className = 'wb-card__title wb-card__overlay-title';
+    titleEl.style.cssText = 'margin:0;font-size:1.5rem;text-shadow:0 2px 4px rgba(0,0,0,0.5);';
+    titleEl.textContent = base.config.title;
+    content.appendChild(titleEl);
+  }
+
+  if (base.config.subtitle) {
+    const subtitleEl = document.createElement('div');
+    subtitleEl.className = 'wb-card__subtitle wb-card__overlay-subtitle';
+    subtitleEl.style.cssText = 'margin:0.5rem 0;opacity:0.9;text-shadow:0 1px 2px rgba(0,0,0,0.5);';
+    subtitleEl.textContent = base.config.subtitle;
+    content.appendChild(subtitleEl);
+  }
+
+  element.appendChild(content);
+
+  return base.cleanup;
+}
+
+/**
+ * Card Expandable Component
+ * Custom Tag: <card-expandable>
+ */
+export function cardexpandable(element, options = {}) {
+  // Capture existing content as fallback before clearing
+  const rawContent = element.innerHTML.trim();
+
+  const config = {
+    // Bare `expanded` (no value) is the codebase's boolean-attribute convention
+    // (see clickable/elevated above) -- this only checked expanded="true",
+    // so <wb-cardexpandable expanded> (what every demo actually writes) was
+    // silently ignored and always rendered collapsed.
+    expanded: parseBoolean(options.expanded) ?? (element.dataset.expanded === 'true' || element.getAttribute('expanded') === 'true' || (element.hasAttribute('data-expanded') && element.dataset.expanded !== 'false') || element.hasAttribute('expanded')),
+    maxHeight: options.maxHeight || element.dataset.maxHeight || element.getAttribute('max-height') || '100px',
+    // #435: a pixel maxHeight truncates text mid-line, which looks broken
+    // for arbitrary content -- `lines` clamps to exactly N full lines via
+    // CSS line-clamp instead. An alternative to maxHeight, not a
+    // replacement: maxHeight still applies as-is for non-text/mixed content
+    // where line-clamp doesn't make sense (images, nested cards, ...). When
+    // both are set, `lines` wins for the collapsed state.
+    lines: options.lines || element.dataset.lines || element.getAttribute('lines') || null,
+    ...options
+  };
+
+  const base = composeCard(element, { ...config, behavior: 'cardexpandable' });
+  element.classList.add('wb-card-expandable');
+  element.innerHTML = '';
+
+  // Build header
+  if (base.config.title || base.config.subtitle) {
+    element.appendChild(base.createHeader());
+  }
+
+  // Applies/removes a line-clamp on `el` -- shared by initial render and toggle().
+  const applyLineClamp = (el, lineCount) => {
+    if (lineCount) {
+      el.style.display = '-webkit-box';
+      el.style.webkitBoxOrient = 'vertical';
+      el.style.webkitLineClamp = String(lineCount);
+      el.style.overflow = 'hidden';
+    } else {
+      el.style.display = 'block';
+      el.style.webkitBoxOrient = '';
+      el.style.webkitLineClamp = '';
+      el.style.overflow = 'visible';
+    }
+  };
+
+  // Content
+  const contentWrap = document.createElement('main');
+  contentWrap.className = 'wb-card__expandable-content';
+  if (config.lines) {
+    contentWrap.style.cssText = 'padding:1rem;';
+    applyLineClamp(contentWrap, config.expanded ? null : config.lines);
+  } else {
+    contentWrap.style.cssText = `padding:1rem;overflow:hidden;transition:max-height 0.3s ease;max-height:${config.expanded ? '1000px' : config.maxHeight};`;
+  }
+  contentWrap.innerHTML = base.config.content || rawContent || '<div style="margin:0;color:var(--text-secondary);">Add content here...</div>';
+  // Generate ID for aria-controls
+  const contentId = 'expandable-content-' + Math.random().toString(36).substr(2, 9);
+  contentWrap.id = contentId;
+  element.appendChild(contentWrap);
+
+  // Expand button
+  const btnWrap = document.createElement('footer');
+  btnWrap.className = 'wb-card__footer';
+  btnWrap.style.cssText = 'padding:0.75rem 1rem;border-top:1px solid var(--border-color,#374151);';
+
+  const btn = document.createElement('button');
+  btn.className = 'wb-card__expand-btn';
+  btn.style.cssText = 'width:100%;padding:0.5rem;background:var(--bg-tertiary,#374151);border:none;border-radius:6px;color:var(--text-primary,#f9fafb);cursor:pointer;display:flex;align-items:center;justify-content:center;gap:0.5rem;';
+  btn.setAttribute('aria-expanded', config.expanded);
+  btn.setAttribute('aria-controls', contentId);
+  
+  const icon = document.createElement('span');
+  icon.className = 'wb-card__expand-icon';
+  if (config.expanded) icon.classList.add('wb-card__expand-icon--expanded');
+  icon.textContent = '▼';
+  icon.style.display = 'inline-block';
+  icon.style.transition = 'transform 0.3s ease';
+  if (config.expanded) icon.style.transform = 'rotate(180deg)';
+  btn.appendChild(icon);
+
+  const text = document.createElement('span');
+  text.className = 'wb-card__expand-text';
+  text.textContent = config.expanded ? 'Show Less' : 'Show More';
+  btn.appendChild(text);
+
+  let isExpanded = config.expanded;
+  if (isExpanded) element.classList.add('wb-card--expanded');
+  
+  const toggle = () => {
+    isExpanded = !isExpanded;
+    if (config.lines) {
+      applyLineClamp(contentWrap, isExpanded ? null : config.lines);
+    } else {
+      contentWrap.style.maxHeight = isExpanded ? '1000px' : config.maxHeight;
+    }
+    icon.style.transform = isExpanded ? 'rotate(180deg)' : 'rotate(0deg)';
+    icon.classList.toggle('wb-card__expand-icon--expanded', isExpanded);
+    text.textContent = isExpanded ? 'Show Less' : 'Show More';
+    element.classList.toggle('wb-card--expanded', isExpanded);
+    btn.setAttribute('aria-expanded', isExpanded);
+    element.dispatchEvent(new CustomEvent('wb:cardexpandable:toggle', { 
+      bubbles: true, 
+      detail: { expanded: isExpanded } 
+    }));
+  };
+
+  btn.onclick = toggle;
+  
+  // Keyboard support
+  btn.onkeydown = (e) => {
+    if (e.key === 'Enter' || e.key === ' ') {
+      e.preventDefault();
+      toggle();
+    }
+  };
+
+  btnWrap.appendChild(btn);
+  element.appendChild(btnWrap);
+
+  // Footer (extra footer if needed, though we just added one)
+  if (base.config.footer) {
+    const extraFooter = base.createFooter();
+    // Merge content if possible or append
+    element.appendChild(extraFooter);
+  }
+
+  // API
+  element.wbCardExpandable = {
+    expand: () => { if (!isExpanded) toggle(); },
+    collapse: () => { if (isExpanded) toggle(); },
+    toggle: toggle,
+    get expanded() { return isExpanded; }
+  };
+
+  return base.cleanup;
+}
+
+/**
+ * Card Minimizable Component
+ * Custom Tag: <card-minimizable>
+ */
+export function cardminimizable(element, options = {}) {
+  // Capture existing content as fallback before clearing
+  const rawContent = element.innerHTML.trim();
+
+  const config = {
+    // Same bare-boolean-attribute gap as cardexpandable's `expanded` had --
+    // <wb-cardminimizable minimized> (the only form any demo writes) was
+    // never detected without this hasAttribute check.
+    minimized: parseBoolean(options.minimized) ?? (element.dataset.minimized === 'true' || element.getAttribute('minimized') === 'true' || (element.hasAttribute('data-minimized') && element.dataset.minimized !== 'false') || element.hasAttribute('minimized')),
+    ...options
+  };
+
+  const base = composeCard(element, { ...config, behavior: 'cardminimizable' });
+  element.classList.add('wb-card-minimizable');
+  element.classList.add('wb-card--minimizable'); // Explicitly add for compliance
+  element.innerHTML = '';
+
+  // Header with minimize button
+  const header = document.createElement('header');
+  header.className = 'wb-card__header';
+  header.style.cssText = 'padding:1rem;border-bottom:1px solid var(--border-color,#374151);background:var(--bg-tertiary,#1e293b);display:flex;align-items:center;gap:0.75rem;';
+
+  const titleWrap = document.createElement('div');
+  titleWrap.style.cssText = 'flex:1;min-width:0;';
+
+  if (base.config.title) {
+    const titleEl = document.createElement('h3');
+    titleEl.className = 'wb-card__title';
+    titleEl.style.cssText = 'margin:0;color:var(--text-primary,#f9fafb);';
+    titleEl.textContent = base.config.title;
+    titleWrap.appendChild(titleEl);
+  }
+
+  if (base.config.subtitle) {
+    const subtitleEl = document.createElement('div');
+    subtitleEl.className = 'wb-card__subtitle';
+    subtitleEl.style.cssText = 'margin:0.25rem 0 0.5rem;color:var(--text-secondary,#9ca3af);font-size:0.85rem;';
+    subtitleEl.textContent = base.config.subtitle;
+    titleWrap.appendChild(subtitleEl);
+  }
+
+  header.appendChild(titleWrap);
+
+  // Minimize button
+  const minBtn = document.createElement('button');
+  minBtn.className = 'wb-card__minimize-btn';
+  minBtn.style.cssText = 'width:32px;height:32px;background:var(--bg-secondary,#1f2937);border:1px solid var(--border-color,#374151);border-radius:6px;color:var(--text-primary,#f9fafb);font-size:1.25rem;cursor:pointer;display:flex;align-items:center;justify-content:center;';
+  minBtn.textContent = config.minimized ? '+' : '−';
+  header.appendChild(minBtn);
+
+  element.appendChild(header);
+
+  // Content
+  const content = document.createElement('main');
+  content.className = 'wb-card__minimizable-content';
+  content.style.cssText = `padding:1rem;overflow:hidden;transition:all 0.3s ease;${config.minimized ? 'max-height:0;padding:0 1rem;opacity:0;' : ''}`;
+  content.innerHTML = base.config.content || rawContent || '<div style="margin:0;color:var(--text-secondary);">Add content here...</div>';
+  element.appendChild(content);
+
+  // Toggle
+  let isMinimized = config.minimized;
+  if (isMinimized) element.classList.add('wb-card--minimized');
+
+  const toggle = () => {
+    isMinimized = !isMinimized;
+    content.style.maxHeight = isMinimized ? '0' : '1000px';
+    content.style.padding = isMinimized ? '0 1rem' : '1rem';
+    content.style.opacity = isMinimized ? '0' : '1';
+    minBtn.textContent = isMinimized ? '+' : '−';
+    minBtn.setAttribute('aria-expanded', !isMinimized);
+    minBtn.setAttribute('aria-label', isMinimized ? 'Expand' : 'Minimize');
+    element.classList.toggle('wb-card--minimized', isMinimized);
+    
+    // Update footer visibility if it exists
+    const footerEl = element.querySelector('.wb-card__footer');
+    if (footerEl) {
+      footerEl.style.display = isMinimized ? 'none' : '';
+    }
+
+    element.dispatchEvent(new CustomEvent('wb:cardminimizable:toggle', { 
+      bubbles: true, 
+      detail: { minimized: isMinimized } 
+    }));
+  };
+
+  minBtn.setAttribute('aria-expanded', !config.minimized);
+  minBtn.setAttribute('aria-label', config.minimized ? 'Expand' : 'Minimize');
+  minBtn.onclick = toggle;
+  
+  // Keyboard support
+  minBtn.onkeydown = (e) => {
+    if (e.key === 'Enter' || e.key === ' ') {
+      e.preventDefault();
+      toggle();
+    }
+  };
+
+  // Footer
+  if (base.config.footer) {
+    const minimizableFooterEl = base.createFooter();
+    minimizableFooterEl.style.display = isMinimized ? 'none' : '';
+    element.appendChild(minimizableFooterEl);
+  }
+
+  // API
+  element.wbCardMinimizable = {
+    toggle,
+    minimize: () => { if (!isMinimized) toggle(); },
+    expand: () => { if (isMinimized) toggle(); },
+    get minimized() { return isMinimized; }
+  };
+
+  return base.cleanup;
+}
+
+/**
+ * Card Draggable Component
+ * Custom Tag: <card-draggable>
+ */
+export function carddraggable(element, options = {}) {
+  const config = {
+    constrain: options.constrain || element.dataset.constrain || element.getAttribute('constrain') || 'none',
+    axis: options.axis || element.dataset.axis || element.getAttribute('axis') || 'both',
+    snapToGrid: parseInt(options.snapToGrid || element.dataset.snapToGrid || element.getAttribute('snap-to-grid') || 0),
+    ...options
+  };
+
+  const base = composeCard(element, { ...config, behavior: 'carddraggable', hoverable: false });
+  element.classList.add('wb-card-draggable');
+  
+  element.innerHTML = '';
+  // Only set position if not already positioned (absolute/fixed)
+  const computed = window.getComputedStyle(element);
+  if (computed.position === 'static') {
+    element.style.position = 'relative';
+  }
+  element.classList.add('wb-card--draggable');
+
+  // Header with drag handle
+  const headerEl = document.createElement('header');
+  headerEl.className = 'wb-card__header wb-card__drag-handle';
+  headerEl.style.cssText = 'padding:1rem;border-bottom:1px solid var(--border-color,#374151);background:var(--bg-tertiary,#1e293b);cursor:grab;display:flex;align-items:center;gap:0.5rem;';
+  headerEl.setAttribute('aria-label', 'Drag to move card');
+  headerEl.setAttribute('role', 'button');
+
+  const handleIcon = document.createElement('span');
+  handleIcon.style.cssText = 'opacity:0.5;';
+  handleIcon.textContent = '⋮⋮';
+  headerEl.appendChild(handleIcon);
+
+  if (base.config.title) {
+    const titleEl = document.createElement('h3');
+    titleEl.className = 'wb-card__title';
+    titleEl.style.cssText = 'margin:0;flex:1;color:var(--text-primary,#f9fafb);';
+    titleEl.textContent = base.config.title;
+    headerEl.appendChild(titleEl);
+  }
+
+  element.appendChild(headerEl);
+
+  // Content
+  const contentArea = base.createMain();
+  element.appendChild(contentArea);
+
+  // Footer
+  if (base.config.footer) {
+    element.appendChild(base.createFooter());
+  }
+
+  // Drag behavior
+  let isDragging = false;
+  let startX, startY, initialLeft, initialTop;
+
+  // Read current CSS left/top (works for both relative and absolute positioning)
+  const getCurrentLeft = () => parseInt(element.style.left, 10) || 0;
+  const getCurrentTop = () => parseInt(element.style.top, 10) || 0;
+
+  const onMouseDown = (e) => {
+    if (e.button !== 0) return; // Left click only
+    e.preventDefault(); // Prevent text selection
+    isDragging = true;
+    startX = e.clientX;
+    startY = e.clientY;
+    // Read the current CSS left/top values, NOT offsetLeft/offsetTop
+    // offsetLeft includes the element's normal flow position which causes
+    // a massive jump when applied back as left/top on a relative element
+    initialLeft = getCurrentLeft();
+    initialTop = getCurrentTop();
+    
+    headerEl.style.cursor = 'grabbing';
+    element.classList.add('wb-card--dragging');
+    element.style.opacity = '0.8';
+    element.style.zIndex = '1000';
+    
+    element.dispatchEvent(new CustomEvent('wb:carddraggable:dragstart', {
+      bubbles: true,
+      detail: { x: initialLeft, y: initialTop }
+    }));
+  };
+
+  headerEl.addEventListener('mousedown', onMouseDown);
+
+  // Touch support
+  const onTouchStart = (e) => {
+    const touch = e.touches[0];
+    onMouseDown({ clientX: touch.clientX, clientY: touch.clientY, button: 0, preventDefault: () => e.preventDefault() });
+  };
+  headerEl.addEventListener('touchstart', onTouchStart, { passive: false });
+
+  const onMouseMove = (e) => {
+    if (!isDragging) return;
+    
+    let deltaX = e.clientX - startX;
+    let deltaY = e.clientY - startY;
+    
+    // Axis constraint
+    if (config.axis === 'x') deltaY = 0;
+    if (config.axis === 'y') deltaX = 0;
+    
+    let newX = initialLeft + deltaX;
+    let newY = initialTop + deltaY;
+    
+    // Snap to grid
+    if (config.snapToGrid > 0) {
+      newX = Math.round(newX / config.snapToGrid) * config.snapToGrid;
+      newY = Math.round(newY / config.snapToGrid) * config.snapToGrid;
+    }
+    
+    // Parent constraint
+    if (config.constrain === 'parent' && element.parentElement) {
+      const parentRect = element.parentElement.getBoundingClientRect();
+      const elemRect = element.getBoundingClientRect();
+      // Calculate bounds relative to current CSS left/top
+      const currentLeft = getCurrentLeft();
+      const currentTop = getCurrentTop();
+      const minX = currentLeft - (elemRect.left - parentRect.left);
+      const minY = currentTop - (elemRect.top - parentRect.top);
+      const maxX = currentLeft + (parentRect.right - elemRect.right);
+      const maxY = currentTop + (parentRect.bottom - elemRect.bottom);
+      
+      newX = Math.max(minX, Math.min(maxX, newX));
+      newY = Math.max(minY, Math.min(maxY, newY));
+    }
+    
+    // Viewport constraint
+    if (config.constrain === 'viewport') {
+      const vpElemRect = element.getBoundingClientRect();
+      const vpCurrentLeft = getCurrentLeft();
+      const vpCurrentTop = getCurrentTop();
+      const vpMinX = vpCurrentLeft - vpElemRect.left;
+      const vpMinY = vpCurrentTop - vpElemRect.top;
+      const vpMaxX = vpCurrentLeft + (window.innerWidth - vpElemRect.right);
+      const vpMaxY = vpCurrentTop + (window.innerHeight - vpElemRect.bottom);
+
+      newX = Math.max(vpMinX, Math.min(vpMaxX, newX));
+      newY = Math.max(vpMinY, Math.min(vpMaxY, newY));
+    }
+    
+    element.style.left = newX + 'px';
+    element.style.top = newY + 'px';
+    
+    element.dispatchEvent(new CustomEvent('wb:carddraggable:drag', {
+      bubbles: true,
+      detail: { 
+        x: newX, 
+        y: newY,
+        deltaX: deltaX,
+        deltaY: deltaY
+      }
+    }));
+  };
+
+  const onTouchMove = (e) => {
+    if (!isDragging) return;
+    e.preventDefault();
+    const moveTouch = e.touches[0];
+    onMouseMove({ clientX: moveTouch.clientX, clientY: moveTouch.clientY });
+  };
+
+  const onMouseUp = () => {
+    if (isDragging) {
+      isDragging = false;
+      headerEl.style.cursor = 'grab';
+      element.classList.remove('wb-card--dragging');
+      element.style.opacity = '';
+      element.style.zIndex = '';
+      
+      element.dispatchEvent(new CustomEvent('wb:carddraggable:dragend', {
+        bubbles: true,
+        detail: { 
+          x: getCurrentLeft(), 
+          y: getCurrentTop() 
+        }
+      }));
+    }
+  };
+
+  document.addEventListener('mousemove', onMouseMove);
+  document.addEventListener('mouseup', onMouseUp);
+  document.addEventListener('touchmove', onTouchMove, { passive: false });
+  document.addEventListener('touchend', onMouseUp);
+
+  // API
+  element.wbCardDraggable = {
+    setPosition: (x, y) => {
+      element.style.left = x + 'px';
+      element.style.top = y + 'px';
+    },
+    getPosition: () => ({
+      x: parseInt(element.style.left || 0),
+      y: parseInt(element.style.top || 0)
+    }),
+    reset: () => {
+      element.style.left = '';
+      element.style.top = '';
+    }
+  };
+
+  // Cleanup
+  const originalCleanup = base.cleanup;
+  return () => {
+    originalCleanup();
+    headerEl.removeEventListener('mousedown', onMouseDown);
+    headerEl.removeEventListener('touchstart', onTouchStart);
+    document.removeEventListener('mousemove', onMouseMove);
+    document.removeEventListener('mouseup', onMouseUp);
+    document.removeEventListener('touchmove', onTouchMove);
+    document.removeEventListener('touchend', onMouseUp);
+  };
+}
+
+// ============================================
+// PORTFOLIO CARD - FULL-FEATURED
+// Custom Tag: <wb-cardportfolio>
+// ============================================
+export function cardportfolio(element, options = {}) {
+  // Parse JSON attributes safely
+  const parseJSON = (val) => {
+    if (!val) return null;
+    try { return JSON.parse(val); } catch { return null; }
+  };
+
+  const config = {
+    // Identity
+    name: options.name || element.dataset.name || element.getAttribute('name'),
+    title: options.title || element.dataset.title || element.getAttribute('title'),
+    company: options.company || element.dataset.company || element.getAttribute('company'),
+    location: options.location || element.dataset.location || element.getAttribute('location'),
+    tagline: options.tagline || element.dataset.tagline || element.getAttribute('tagline'),
+    availability: options.availability || element.dataset.availability || element.getAttribute('availability') || 'available',
+    
+    // Media
+    avatar: options.avatar || element.dataset.avatar || element.getAttribute('avatar'),
+    cover: options.cover || element.dataset.cover || element.getAttribute('cover'),
+    bio: options.bio || element.dataset.bio || element.getAttribute('bio'),
+    
+    // Contact
+    email: options.email || element.dataset.email || element.getAttribute('email'),
+    phone: options.phone || element.dataset.phone || element.getAttribute('phone'),
+    website: options.website || element.dataset.website || element.getAttribute('website'),
+    
+    // Social
+    linkedin: options.linkedin || element.dataset.linkedin || element.getAttribute('linkedin'),
+    twitter: options.twitter || element.dataset.twitter || element.getAttribute('twitter'),
+    github: options.github || element.dataset.github || element.getAttribute('github'),
+    dribbble: options.dribbble || element.dataset.dribbble || element.getAttribute('dribbble'),
+    
+    // Skills & Experience
+    skills: options.skills || element.dataset.skills || element.getAttribute('skills'),
+    skillLevels: parseJSON(options.skillLevels || element.dataset.skillLevels || element.getAttribute('skill-levels')),
+    experience: parseJSON(options.experience || element.dataset.experience || element.getAttribute('experience')),
+    education: parseJSON(options.education || element.dataset.education || element.getAttribute('education')),
+    projects: parseJSON(options.projects || element.dataset.projects || element.getAttribute('projects')),
+    certifications: options.certifications || element.dataset.certifications || element.getAttribute('certifications'),
+    languages: options.languages || element.dataset.languages || element.getAttribute('languages'),
+    stats: parseJSON(options.stats || element.dataset.stats || element.getAttribute('stats')),
+    
+    // CTA
+    cta: options.cta || element.dataset.cta || element.getAttribute('cta'),
+    ctaHref: options.ctaHref || element.dataset.ctaHref || element.getAttribute('cta-href'),
+    
+    // Variant
+    variant: options.variant || element.dataset.variant || element.getAttribute('variant') || 'default',
+    size: options.size || element.dataset.size || element.getAttribute('size') || 'auto',
+    ...options
+  };
+
+  const base = composeCard(element, { ...config, behavior: 'cardportfolio', hoverable: false });
+  element.classList.add('wb-portfolio');
+  if (config.variant !== 'default') {
+    element.classList.add(`wb-portfolio--${config.variant}`);
+  }
+  element.innerHTML = '';
+  
+  // Size handling. compact/horizontal have their own CSS-driven max-width
+  // (card.css `.wb-portfolio.wb-portfolio--compact` / `--horizontal`,
+  // specificity 0,2,0) -- setting an inline default here for those variants
+  // would force !important to let that CSS win (same "inline always beats
+  // class" issue documented throughout this file), so skip the inline
+  // default for them and let card.css own their width.
+  if (config.variant === 'full') {
+    element.style.maxWidth = '800px';
+  } else if (config.size === 'auto' && config.variant !== 'compact' && config.variant !== 'horizontal') {
+    element.style.maxWidth = '400px';
+  }
+
+  // Availability colors
+  const availabilityConfig = {
+    'available': { color: '#22c55e', label: 'Available for work', icon: '🟢' },
+    'busy': { color: '#f59e0b', label: 'Currently busy', icon: '🟡' },
+    'not-available': { color: '#ef4444', label: 'Not available', icon: '🔴' },
+    'open-to-opportunities': { color: '#3b82f6', label: 'Open to opportunities', icon: '🔵' }
+  };
+
+  // ==================== COVER ====================
+  if (config.cover) {
+    const coverFigure = document.createElement('figure');
+    coverFigure.className = 'wb-portfolio__cover';
+    coverFigure.style.cssText = `margin:0;height:150px;background-image:url(${config.cover});background-size:cover;background-position:center;position:relative;`;
+    element.appendChild(coverFigure);
+  }
+
+  // ==================== HEADER ====================
+  const header = document.createElement('header');
+  header.className = 'wb-portfolio__header';
+  // The <header> also inherits the generic .wb-header navbar rule
+  // (display:flex; height:60px; fixed bg + border-bottom + 0.8em font). The
+  // flex squeezed the avatar into a column and the fixed 60px height clipped
+  // the header so its 120px avatar + text overflowed onto the sections below.
+  // display/text-align/padding now live in card.css's compound
+  // `.wb-portfolio__header.wb-header` rule (0,2,0 always outranks the plain
+  // .wb-header selector's 0,1,0 -- same pattern as .wb-card__footer.wb-footer
+  // above) instead of being forced inline, so the compact/horizontal/full/
+  // size-scaling CSS below can override the default padding/display without
+  // needing !important. Only the properties nothing else needs to override
+  // (height/background/border-bottom/font-size, plus the cover offset) stay
+  // inline.
+  header.style.cssText = `height:auto;min-height:0;background:transparent;border-bottom:none;font-size:1rem;${config.cover ? 'margin-top:-60px;' : ''}`;
+
+  // Avatar (real image, OR a fallback initials placeholder). This block used
+  // to be gated on `config.avatar` alone, which meant the availability dot
+  // -- built inside it -- silently never rendered for the (very common) case
+  // of a portfolio card with no avatar image, even though `availability`
+  // defaults to 'available' (cardportfolio.schema.json) and is meant to
+  // always be visible. Build the wrap whenever there's an avatar image OR an
+  // availability status to show, and fall back to an initials circle so the
+  // dot always has something to attach to.
+  if (config.avatar || (config.availability && availabilityConfig[config.availability])) {
+    const avatarWrap = document.createElement('figure');
+    avatarWrap.className = 'wb-portfolio__avatar-wrap';
+    // margin/position/display now live in card.css's `.wb-portfolio__avatar-wrap`
+    // base rule -- kept out of inline so the horizontal variant's own margin
+    // override (card.css) can win by normal cascade instead of !important.
+
+    if (config.avatar) {
+      const avatarImg = document.createElement('img');
+      avatarImg.className = 'wb-portfolio__avatar';
+      avatarImg.src = config.avatar;
+      avatarImg.alt = config.name || 'Avatar';
+      // width/height/border-radius/border/object-fit/display now live in
+      // card.css's `.wb-portfolio__avatar` base rule -- see the comment on
+      // avatarWrap above; same reason (lets compact/full/size-scaling CSS
+      // resize the avatar without !important).
+      avatarWrap.appendChild(avatarImg);
+    } else {
+      // No avatar image supplied — render initials (or a generic mark) in a
+      // themed circle (styling in card.css: .wb-portfolio__avatar-placeholder,
+      // Law 9) so the availability dot below still has a visible anchor.
+      const placeholder = document.createElement('span');
+      placeholder.className = 'wb-portfolio__avatar wb-portfolio__avatar-placeholder';
+      const initials = (config.name || '')
+        .split(/\s+/)
+        .filter(Boolean)
+        .slice(0, 2)
+        .map(word => word[0].toUpperCase())
+        .join('') || '?';
+      placeholder.textContent = initials;
+      placeholder.setAttribute('aria-hidden', 'true');
+      avatarWrap.appendChild(placeholder);
+    }
+
+    // Availability indicator
+    if (config.availability && availabilityConfig[config.availability]) {
+      const availDot = document.createElement('span');
+      availDot.className = 'wb-portfolio__availability';
+      availDot.title = availabilityConfig[config.availability].label;
+      // position/size/border/cursor now live in card.css's
+      // `.wb-portfolio__availability` base rule -- only `background` stays
+      // inline since it's the one genuinely per-instance value (the status
+      // color), matching the same only-inline-what's-dynamic pattern
+      // `setAvailability()` below already uses. Keeping the rest out of
+      // inline lets the compact variant's smaller-dot CSS override them
+      // without !important.
+      availDot.style.background = availabilityConfig[config.availability].color;
+      avatarWrap.appendChild(availDot);
+    }
+
+    header.appendChild(avatarWrap);
+  }
+
+  // Name
+  if (config.name) {
+    const nameEl = document.createElement('h2');
+    nameEl.className = 'wb-portfolio__name';
+    // margin/font-size/color/white-space/overflow/max-width now live in
+    // card.css's `.wb-portfolio__name` base rule -- see the avatarWrap
+    // comment above; lets compact/horizontal/full/size-scaling CSS resize
+    // or rewrap the name without !important.
+    nameEl.textContent = config.name;
+    header.appendChild(nameEl);
+  }
+
+  // Title & Company
+  if (config.title) {
+    const titleEl = document.createElement('div');
+    titleEl.className = 'wb-portfolio__title';
+    titleEl.style.cssText = 'margin:0.25rem 0 0;color:var(--primary,#6366f1);font-weight:600;font-size:1.1rem;';
+    titleEl.textContent = config.title + (config.company ? ` at ${config.company}` : '');
+    header.appendChild(titleEl);
+  } else if (config.company) {
+    const companyEl = document.createElement('div');
+    companyEl.className = 'wb-portfolio__company';
+    companyEl.style.cssText = 'margin:0.25rem 0 0;color:var(--text-secondary,#9ca3af);';
+    companyEl.textContent = config.company;
+    header.appendChild(companyEl);
+  }
+
+  // Location
+  if (config.location) {
+    const locEl = document.createElement('div');
+    locEl.className = 'wb-portfolio__location';
+    locEl.style.cssText = 'margin:0.5rem 0 0;color:var(--text-secondary,#9ca3af);font-size:0.9rem;';
+    locEl.textContent = `📍 ${config.location}`;
+    header.appendChild(locEl);
+  }
+
+  // Tagline
+  if (config.tagline) {
+    const tagEl = document.createElement('div');
+    tagEl.className = 'wb-portfolio__tagline';
+    tagEl.style.cssText = 'margin:0.75rem 0 0;color:var(--text-secondary,#9ca3af);font-style:italic;font-size:0.95rem;';
+    tagEl.textContent = `"${config.tagline}"`;
+    header.appendChild(tagEl);
+  }
+
+  element.appendChild(header);
+
+  // ==================== MAIN CONTENT ====================
+  const main = document.createElement('main');
+  main.className = 'wb-portfolio__main';
+  // padding now lives in card.css's `.wb-portfolio__main` base rule -- see
+  // the avatarWrap comment above; lets the compact variant's own padding
+  // override win without !important.
+
+  // Bio Section
+  if (config.bio) {
+    const bioSection = document.createElement('section');
+    bioSection.className = 'wb-portfolio__bio';
+    bioSection.style.cssText = 'margin-bottom:1.5rem;';
+    
+    const bioText = document.createElement('div');
+    bioText.style.cssText = 'margin:0;color:var(--text-primary,#f9fafb);font-size:0.95rem;line-height:1.7;';
+    bioText.textContent = config.bio;
+    bioSection.appendChild(bioText);
+    main.appendChild(bioSection);
+  }
+
+  // Stats Section
+  if (config.stats && config.stats.length > 0) {
+    const statsSection = document.createElement('section');
+    statsSection.className = 'wb-portfolio__stats';
+    statsSection.style.cssText = 'display:flex;flex-direction:column;gap:0.5rem;padding:1rem;background:var(--bg-tertiary,#374151);border-radius:8px;margin-bottom:1.5rem;';
+    
+    config.stats.forEach(stat => {
+      const statItem = document.createElement('div');
+      statItem.style.cssText = 'display:flex;align-items:baseline;gap:0.5rem;';
+      
+      const valueEl = document.createElement('span');
+      valueEl.style.cssText = 'font-size:1.25rem;font-weight:700;color:var(--primary,#6366f1);';
+      valueEl.textContent = stat.value;
+      statItem.appendChild(valueEl);
+      
+      const labelEl = document.createElement('span');
+      labelEl.style.cssText = 'font-size:0.85rem;color:var(--text-secondary,#9ca3af);';
+      labelEl.textContent = stat.label;
+      statItem.appendChild(labelEl);
+      
+      statsSection.appendChild(statItem);
+    });
+    main.appendChild(statsSection);
+  }
+
+  // Skills Section
+  if (config.skills || config.skillLevels) {
+    const skillsSection = document.createElement('section');
+    skillsSection.className = 'wb-portfolio__skills';
+    skillsSection.style.cssText = 'margin-bottom:1.5rem;';
+    
+    const skillsTitle = document.createElement('h3');
+    skillsTitle.style.cssText = 'margin:0 0 0.75rem;font-size:0.9rem;font-weight:600;color:var(--text-secondary,#9ca3af);text-transform:uppercase;letter-spacing:0.05em;';
+    skillsTitle.textContent = '🛠️ Skills';
+    skillsSection.appendChild(skillsTitle);
+
+    // Skill pills (from comma-separated string)
+    if (config.skills) {
+      const skillPills = document.createElement('div');
+      skillPills.style.cssText = 'display:flex;flex-wrap:wrap;gap:0.5rem;';
+      
+      config.skills.split(',').forEach(skill => {
+        const pill = document.createElement('span');
+        pill.style.cssText = 'padding:0.35rem 0.75rem;background:var(--bg-tertiary,#374151);color:var(--text-primary,#f9fafb);border-radius:999px;font-size:0.85rem;';
+        pill.textContent = skill.trim();
+        skillPills.appendChild(pill);
+      });
+      skillsSection.appendChild(skillPills);
+    }
+
+    // Skill bars (from JSON array)
+    if (config.skillLevels && config.skillLevels.length > 0) {
+      const skillBars = document.createElement('div');
+      skillBars.style.cssText = 'margin-top:0.75rem;';
+      
+      config.skillLevels.forEach(skill => {
+        const skillRow = document.createElement('div');
+        skillRow.style.cssText = 'margin-bottom:0.5rem;';
+        
+        const skillHeader = document.createElement('div');
+        skillHeader.style.cssText = 'display:flex;justify-content:space-between;margin-bottom:0.25rem;font-size:0.85rem;';
+        skillHeader.innerHTML = `<span style="color:var(--text-primary,#f9fafb);">${skill.name}</span><span style="color:var(--text-secondary,#9ca3af);">${skill.level}%</span>`;
+        skillRow.appendChild(skillHeader);
+        
+        const barBg = document.createElement('div');
+        barBg.style.cssText = 'height:6px;background:var(--bg-tertiary,#374151);border-radius:3px;overflow:hidden;';
+        
+        const barFill = document.createElement('div');
+        barFill.style.cssText = `width:${skill.level}%;height:100%;background:var(--primary,#6366f1);border-radius:3px;transition:width 0.5s ease;`;
+        barBg.appendChild(barFill);
+        skillRow.appendChild(barBg);
+        
+        skillBars.appendChild(skillRow);
+      });
+      skillsSection.appendChild(skillBars);
+    }
+    
+    main.appendChild(skillsSection);
+  }
+
+  // Experience Section
+  if (config.experience && config.experience.length > 0) {
+    const expSection = document.createElement('section');
+    expSection.className = 'wb-portfolio__experience';
+    expSection.style.cssText = 'margin-bottom:1.5rem;';
+    
+    const expTitle = document.createElement('h3');
+    expTitle.style.cssText = 'margin:0 0 0.75rem;font-size:0.9rem;font-weight:600;color:var(--text-secondary,#9ca3af);text-transform:uppercase;letter-spacing:0.05em;';
+    expTitle.textContent = '💼 Experience';
+    expSection.appendChild(expTitle);
+
+    config.experience.forEach((exp, i) => {
+      const expItem = document.createElement('div');
+      expItem.style.cssText = `padding:0.75rem 0;${i > 0 ? 'border-top:1px solid var(--border-color,#374151);' : ''}`;
+      
+      const expHeader = document.createElement('div');
+      expHeader.style.cssText = 'display:flex;justify-content:space-between;align-items:flex-start;gap:0.5rem;flex-wrap:wrap;';
+      
+      const expRole = document.createElement('strong');
+      expRole.style.cssText = 'color:var(--text-primary,#f9fafb);';
+      expRole.textContent = exp.role || exp.title;
+      expHeader.appendChild(expRole);
+      
+      if (exp.period) {
+        const expPeriod = document.createElement('span');
+        expPeriod.style.cssText = 'color:var(--text-secondary,#9ca3af);font-size:0.85rem;';
+        expPeriod.textContent = exp.period;
+        expHeader.appendChild(expPeriod);
+      }
+      expItem.appendChild(expHeader);
+      
+      if (exp.company) {
+        const expCompany = document.createElement('div');
+        expCompany.style.cssText = 'color:var(--primary,#6366f1);font-size:0.9rem;margin-top:0.25rem;';
+        expCompany.textContent = exp.company;
+        expItem.appendChild(expCompany);
+      }
+      
+      if (exp.description) {
+        const expDesc = document.createElement('div');
+        expDesc.style.cssText = 'margin:0.5rem 0 0;color:var(--text-secondary,#9ca3af);font-size:0.9rem;line-height:1.5;';
+        expDesc.textContent = exp.description;
+        expItem.appendChild(expDesc);
+      }
+      
+      expSection.appendChild(expItem);
+    });
+    main.appendChild(expSection);
+  }
+
+  // Education Section
+  if (config.education && config.education.length > 0) {
+    const eduSection = document.createElement('section');
+    eduSection.className = 'wb-portfolio__education';
+    eduSection.style.cssText = 'margin-bottom:1.5rem;';
+    
+    const eduTitle = document.createElement('h3');
+    eduTitle.style.cssText = 'margin:0 0 0.75rem;font-size:0.9rem;font-weight:600;color:var(--text-secondary,#9ca3af);text-transform:uppercase;letter-spacing:0.05em;';
+    eduTitle.textContent = '🎓 Education';
+    eduSection.appendChild(eduTitle);
+
+    config.education.forEach(edu => {
+      const eduItem = document.createElement('div');
+      eduItem.style.cssText = 'padding:0.5rem 0;';
+      
+      const eduDegree = document.createElement('strong');
+      eduDegree.style.cssText = 'color:var(--text-primary,#f9fafb);display:block;';
+      eduDegree.textContent = edu.degree;
+      eduItem.appendChild(eduDegree);
+      
+      const eduSchool = document.createElement('span');
+      eduSchool.style.cssText = 'color:var(--text-secondary,#9ca3af);font-size:0.9rem;';
+      eduSchool.textContent = edu.school + (edu.year ? ` • ${edu.year}` : '');
+      eduItem.appendChild(eduSchool);
+      
+      eduSection.appendChild(eduItem);
+    });
+    main.appendChild(eduSection);
+  }
+
+  // Projects Section
+  if (config.projects && config.projects.length > 0) {
+    const projSection = document.createElement('section');
+    projSection.className = 'wb-portfolio__projects';
+    projSection.style.cssText = 'margin-bottom:1.5rem;';
+    
+    const projTitle = document.createElement('h3');
+    projTitle.style.cssText = 'margin:0 0 0.75rem;font-size:0.9rem;font-weight:600;color:var(--text-secondary,#9ca3af);text-transform:uppercase;letter-spacing:0.05em;';
+    projTitle.textContent = '🚀 Projects';
+    projSection.appendChild(projTitle);
+
+    const projGrid = document.createElement('div');
+    projGrid.style.cssText = 'display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:1rem;';
+
+    config.projects.forEach(proj => {
+      const projCard = document.createElement('a');
+      projCard.href = proj.url || '#';
+      projCard.target = proj.url ? '_blank' : '_self';
+      projCard.style.cssText = 'display:block;background:var(--bg-tertiary,#374151);border-radius:8px;overflow:hidden;text-decoration:none;transition:transform 0.2s,box-shadow 0.2s;';
+      projCard.onmouseenter = () => { projCard.style.transform = 'translateY(-2px)'; projCard.style.boxShadow = '0 4px 12px rgba(0,0,0,0.2)'; };
+      projCard.onmouseleave = () => { projCard.style.transform = ''; projCard.style.boxShadow = ''; };
+      
+      if (proj.image) {
+        const projImg = document.createElement('img');
+        projImg.src = proj.image;
+        projImg.alt = proj.name;
+        projImg.style.cssText = 'width:100%;height:100px;object-fit:cover;';
+        projCard.appendChild(projImg);
+      }
+      
+      const projInfo = document.createElement('div');
+      projInfo.style.cssText = 'padding:0.75rem;';
+      
+      const projName = document.createElement('strong');
+      projName.style.cssText = 'color:var(--text-primary,#f9fafb);display:block;margin-bottom:0.25rem;';
+      projName.textContent = proj.name;
+      projInfo.appendChild(projName);
+      
+      if (proj.description) {
+        const projDesc = document.createElement('span');
+        projDesc.style.cssText = 'color:var(--text-secondary,#9ca3af);font-size:0.8rem;';
+        projDesc.textContent = proj.description;
+        projInfo.appendChild(projDesc);
+      }
+      
+      projCard.appendChild(projInfo);
+      projGrid.appendChild(projCard);
+    });
+    
+    projSection.appendChild(projGrid);
+    main.appendChild(projSection);
+  }
+
+  // Certifications
+  if (config.certifications) {
+    const certSection = document.createElement('section');
+    certSection.className = 'wb-portfolio__certifications';
+    certSection.style.cssText = 'margin-bottom:1.5rem;';
+    
+    const certTitle = document.createElement('h3');
+    certTitle.style.cssText = 'margin:0 0 0.75rem;font-size:0.9rem;font-weight:600;color:var(--text-secondary,#9ca3af);text-transform:uppercase;letter-spacing:0.05em;';
+    certTitle.textContent = '🏆 Certifications';
+    certSection.appendChild(certTitle);
+    
+    const certList = document.createElement('ul');
+    certList.style.cssText = 'margin:0;padding-left:1.25rem;color:var(--text-primary,#f9fafb);font-size:0.9rem;';
+    
+    config.certifications.split(',').forEach(cert => {
+      const li = document.createElement('li');
+      li.style.cssText = 'margin-bottom:0.25rem;';
+      li.textContent = cert.trim();
+      certList.appendChild(li);
+    });
+    certSection.appendChild(certList);
+    main.appendChild(certSection);
+  }
+
+  // Languages
+  if (config.languages) {
+    const langSection = document.createElement('section');
+    langSection.className = 'wb-portfolio__languages';
+    langSection.style.cssText = 'margin-bottom:1.5rem;';
+    
+    const langTitle = document.createElement('h3');
+    langTitle.style.cssText = 'margin:0 0 0.75rem;font-size:0.9rem;font-weight:600;color:var(--text-secondary,#9ca3af);text-transform:uppercase;letter-spacing:0.05em;';
+    langTitle.textContent = '🌐 Languages';
+    langSection.appendChild(langTitle);
+    
+    const langPills = document.createElement('div');
+    langPills.style.cssText = 'display:flex;flex-wrap:wrap;gap:0.5rem;';
+    
+    config.languages.split(',').forEach(lang => {
+      const langPill = document.createElement('span');
+      langPill.style.cssText = 'padding:0.35rem 0.75rem;background:var(--bg-tertiary,#374151);color:var(--text-primary,#f9fafb);border-radius:999px;font-size:0.85rem;';
+      langPill.textContent = lang.trim();
+      langPills.appendChild(langPill);
+    });
+    langSection.appendChild(langPills);
+    main.appendChild(langSection);
+  }
+
+  element.appendChild(main);
+
+  // ==================== CONTACT ====================
+  if (config.email || config.phone || config.website) {
+    const contact = document.createElement('address');
+    contact.className = 'wb-portfolio__contact';
+    contact.style.cssText = 'padding:1rem 1.5rem;border-top:1px solid var(--border-color,#374151);font-style:normal;display:flex;flex-wrap:wrap;gap:1rem;justify-content:center;';
+
+    const contactItems = [
+      { value: config.email, href: `mailto:${config.email}`, icon: '📧' },
+      { value: config.phone, href: `tel:${config.phone}`, icon: '📱' },
+      { value: config.website, href: config.website, icon: '🌐', external: true }
+    ];
+
+    contactItems.forEach(item => {
+      if (item.value) {
+        const contactLink = document.createElement('a');
+        contactLink.href = item.href;
+        if (item.external) contactLink.target = '_blank';
+        contactLink.style.cssText = 'color:var(--text-primary,#f9fafb);text-decoration:none;font-size:0.9rem;display:flex;align-items:center;gap:0.25rem;';
+        contactLink.innerHTML = `${item.icon} <span>${item.value}</span>`;
+        contact.appendChild(contactLink);
+      }
+    });
+
+    element.appendChild(contact);
+  }
+
+  // ==================== SOCIAL ====================
+  const socialLinks = [
+    { url: config.linkedin, icon: '💼', label: 'LinkedIn' },
+    { url: config.twitter, icon: '🐦', label: 'Twitter' },
+    { url: config.github, icon: '🐙', label: 'GitHub' },
+    { url: config.dribbble, icon: '🏀', label: 'Dribbble' }
+  ].filter(s => s.url);
+
+  if (socialLinks.length > 0) {
+    const social = document.createElement('nav');
+    social.className = 'wb-portfolio__social';
+    social.setAttribute('aria-label', 'Social links');
+    social.style.cssText = 'padding:1rem 1.5rem;border-top:1px solid var(--border-color,#374151);display:flex;justify-content:center;gap:0.75rem;';
+
+    socialLinks.forEach(({ url, icon, label }) => {
+      const socialLink = document.createElement('a');
+      socialLink.href = url;
+      socialLink.target = '_blank';
+      socialLink.title = label;
+      socialLink.setAttribute('aria-label', label);
+      socialLink.style.cssText = 'width:44px;height:44px;display:flex;align-items:center;justify-content:center;background:var(--bg-tertiary,#374151);border-radius:50%;text-decoration:none;font-size:1.25rem;transition:transform 0.2s,background 0.2s;';
+      socialLink.onmouseenter = () => { socialLink.style.transform = 'scale(1.1)'; socialLink.style.background = 'var(--primary,#6366f1)'; };
+      socialLink.onmouseleave = () => { socialLink.style.transform = ''; socialLink.style.background = 'var(--bg-tertiary,#374151)'; };
+      socialLink.textContent = icon;
+      social.appendChild(socialLink);
+    });
+
+    element.appendChild(social);
+  }
+
+  // ==================== CTA FOOTER ====================
+  if (config.cta) {
+    const footer = document.createElement('footer');
+    footer.className = 'wb-portfolio__footer';
+    footer.style.cssText = 'padding:1rem 1.5rem;border-top:1px solid var(--border-color,#374151);';
+    
+    const ctaBtn = document.createElement('a');
+    ctaBtn.href = config.ctaHref || '#';
+    ctaBtn.className = 'wb-portfolio__cta';
+    ctaBtn.style.cssText = 'display:block;text-align:center;padding:0.875rem;background:var(--primary,#6366f1);color:white;text-decoration:none;border-radius:8px;font-weight:600;transition:all 0.2s;';
+    ctaBtn.onmouseenter = () => { ctaBtn.style.background = 'var(--primary-hover,#4f46e5)'; ctaBtn.style.transform = 'translateY(-1px)'; };
+    ctaBtn.onmouseleave = () => { ctaBtn.style.background = 'var(--primary,#6366f1)'; ctaBtn.style.transform = ''; };
+    ctaBtn.textContent = config.cta;
+    footer.appendChild(ctaBtn);
+    
+    element.appendChild(footer);
+  }
+
+  // API
+  element.wbPortfolio = {
+    setAvailability: (status) => {
+      const dot = element.querySelector('.wb-portfolio__availability');
+      if (dot && availabilityConfig[status]) {
+        dot.style.background = availabilityConfig[status].color;
+        dot.title = availabilityConfig[status].label;
+      }
+    }
+  };
+
+  return base.cleanup;
+}
+
+// ============================================
+// EXPORTED CONSTANTS
+// ============================================
+export const CARD_TYPES = [
+  'card', 'cardimage', 'cardvideo', 'cardbutton', 'cardhero', 
+  'cardprofile', 'cardpricing', 'cardstats', 'cardtestimonial', 
+  'cardproduct', 'cardnotification', 'cardfile', 'cardlink', 
+  'cardhorizontal', 'carddraggable', 'cardexpandable', 
+  'cardminimizable', 'cardoverlay', 'cardportfolio'
+];
+
+export default card;

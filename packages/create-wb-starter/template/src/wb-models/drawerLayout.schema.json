@@ -1,0 +1,149 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "drawerLayout.schema.json",
+  "title": "Drawer Layout",
+  "description": "Collapsible sidebar layout with toggle",
+  "schemaFor": "drawer-layout",
+  "baseClass": "wb-drawer-layout",
+  "semanticElement": {
+    "tagName": "aside"
+  },
+  "compliance": {
+    "baseClass": "wb-drawer-layout",
+    "supportLevel": "stable",
+    "accessibility": "high"
+  },
+  "properties": {
+    "position": {
+      "type": "string",
+      "enum": [
+        "left",
+        "right"
+      ],
+      "default": "left",
+      "appliesClass": "wb-drawer-layout--{{value}}"
+    },
+    "width": {
+      "type": "string",
+      "description": "Expanded width",
+      "default": "250px"
+    },
+    "minWidth": {
+      "type": "string",
+      "description": "Collapsed width",
+      "default": "48px"
+    },
+    "collapsed": {
+      "type": "boolean",
+      "description": "Initial collapsed state",
+      "default": false
+    }
+  },
+  "$view": [
+    {
+      "name": "toggle",
+      "tag": "button",
+      "public": true,
+      "description": "Collapse/expand toggle"
+    },
+    {
+      "name": "content",
+      "tag": "div",
+      "public": true,
+      "required": true,
+      "description": "Drawer content"
+    }
+  ],
+  "$methods": {
+    "expand": {
+      "description": "Expands the drawer",
+      "params": []
+    },
+    "collapse": {
+      "description": "Collapses the drawer",
+      "params": []
+    },
+    "toggle": {
+      "description": "Toggles collapsed state",
+      "params": []
+    },
+    "isCollapsed": {
+      "description": "Returns collapsed state",
+      "params": [],
+      "returns": "boolean"
+    }
+  },
+  "$cssAPI": {
+    "--wb-drawer-layout-width": {
+      "default": "250px",
+      "description": "Expanded width"
+    },
+    "--wb-drawer-layout-min-width": {
+      "default": "48px",
+      "description": "Collapsed width"
+    },
+    "--wb-drawer-layout-bg": {
+      "default": "var(--bg-surface, #ffffff)",
+      "description": "Background"
+    },
+    "--wb-drawer-layout-border": {
+      "default": "1px solid var(--border-color, #e0e0e0)",
+      "description": "Border"
+    },
+    "--wb-drawer-layout-transition": {
+      "default": "width 0.3s ease",
+      "description": "Transition"
+    }
+  },
+  "events": {
+    "wb:drawerLayout:toggle": {
+      "description": "Drawer toggled",
+      "detail": {
+        "collapsed": "boolean"
+      }
+    }
+  },
+  "test": {
+    "setup": [
+      "<wb-drawer-layout>Basic drawer-layout content</wb-drawer-layout>",
+      "<wb-drawer-layout position=\"left\">position=left</wb-drawer-layout>",
+      "<wb-drawer-layout position=\"right\">position=right</wb-drawer-layout>",
+      "<wb-drawer-layout collapsed>with collapsed</wb-drawer-layout>",
+      "<wb-drawer-layout width=\"250px\">width=\"250px\"</wb-drawer-layout>",
+      "<wb-drawer-layout min-width=\"48px\">minWidth=\"48px\"</wb-drawer-layout>"
+    ],
+    "matrix": {
+      "combinations": [
+        {
+          "position": "left"
+        },
+        {
+          "position": "right"
+        },
+        {
+          "collapsed": true
+        }
+      ]
+    },
+    "site": {
+      "page": "layout",
+      "tag": "wb-drawer-layout",
+      "renders": true,
+      "baseClass": "wb-drawer-layout",
+      "minInstances": 3,
+      "checkText": [],
+      "checkClasses": [
+        "wb-drawer-layout--right"
+      ],
+      "checkAttributes": [
+        "position"
+      ]
+    }
+  },
+  "_metadata": {
+    "category": "layout",
+    "icon": "📐",
+    "since": "1.0.0",
+    "status": "stable"
+  }
+}

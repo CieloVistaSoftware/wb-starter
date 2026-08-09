@@ -1,0 +1,74 @@
+/**
+ * Chip Behavior Styles
+ * -----------------------------------------------------------------------------
+ * Works with src/wb-viewmodels/feedback.js chip()
+ * Zero inline styles in JS.
+ * -----------------------------------------------------------------------------
+ */
+
+/* #448: tag selector -- chip() no longer adds a redundant classList.add
+   ('wb-chip') that just duplicated the <wb-chip> tag name. */
+wb-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+  padding: 0.25rem 0.75rem;
+  min-height: 1.5rem;
+  border-radius: 999px;
+  font-size: 0.875rem;
+  font-weight: 500;
+  background: var(--bg-tertiary, #374151);
+  color: var(--text-primary, #f9fafb);
+  box-sizing: border-box;
+}
+
+/* Variants */
+.wb-chip--primary { background: var(--primary, #6366f1); color: white; }
+.wb-chip--success { background: var(--success-color, #22c55e); color: white; }
+.wb-chip--warning { background: var(--warning-color, #f59e0b); color: white; }
+.wb-chip--error   { background: var(--danger-color, #ef4444); color: white; }
+.wb-chip--info    { background: var(--info-color, #3b82f6); color: white; }
+
+/* Sizes — min-height added (not just padding/font-size) so sm/md/lg show a
+   clearly distinct vertical size, not just ~2px of padding difference that
+   read as visually identical (John: "these do not [differ], they should
+   show vertical size too"). */
+.wb-chip--sm { padding: 0.125rem 0.5rem; min-height: 1.25rem; font-size: 0.75rem; }
+.wb-chip--lg { padding: 0.375rem 1rem; min-height: 1.875rem; font-size: 1rem; }
+
+/* Outlined — border instead of filled background */
+.wb-chip--outlined {
+  background: transparent;
+  border: 1px solid var(--border-color, #4b5563);
+  color: var(--text-primary, #f9fafb);
+}
+.wb-chip--outlined.wb-chip--primary { border-color: var(--primary, #6366f1); color: var(--primary, #6366f1); }
+.wb-chip--outlined.wb-chip--success { border-color: var(--success-color, #22c55e); color: var(--success-color, #22c55e); }
+.wb-chip--outlined.wb-chip--warning { border-color: var(--warning-color, #f59e0b); color: var(--warning-color, #f59e0b); }
+.wb-chip--outlined.wb-chip--error   { border-color: var(--danger-color, #ef4444); color: var(--danger-color, #ef4444); }
+.wb-chip--outlined.wb-chip--info    { border-color: var(--info-color, #3b82f6); color: var(--info-color, #3b82f6); }
+
+.wb-chip--disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  pointer-events: none;
+}
+
+/* Remove button */
+.wb-chip__remove {
+  background: none;
+  border: none;
+  color: inherit;
+  cursor: pointer;
+  opacity: 0.7;
+  padding: 0;
+  margin-left: 0.25rem;
+  font-size: 1.1rem;
+  line-height: 1;
+  display: flex;
+  align-items: center;
+}
+
+.wb-chip__remove:hover {
+  opacity: 1;
+}

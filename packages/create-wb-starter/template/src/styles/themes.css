@@ -1,0 +1,2096 @@
+/*
+ * WB Behaviors Theme Definitions
+ * Pure CSS theme implementation - SOLID compliant
+ * 
+ * Usage: Set data-theme attribute on <html> or <body>
+ * Example: <html data-theme="ocean">
+ * 
+ * All themes derive from HCS (Harmonic Color System) definitions
+ * Source: components/wb-control-panel/config/themes-hcs.json
+ * 
+ * @version 1.0.0
+ */
+
+/* =============================================================================
+   BASE THEME STRUCTURE
+   All themes provide these CSS custom properties
+   ============================================================================= */
+
+/* Apply theme text color to any element defining a theme */
+[data-theme] {
+  color: var(--text-primary);
+  background-color: var(--bg-color);
+}
+
+/* Native button reset — browsers override inherited colors with OS defaults.
+   #486: vertical padding floored at 1rem (16px) -- Standard §13 requires
+   >=1rem padding on every side of a button's text, and buttons aren't on
+   the standard's "compact atom" exclusion list (badges/pills/kbd/etc). This
+   selector's specificity ([data-theme] + button = 0,1,1) beats any single
+   class like `.effect-demo` (0,1,0) with no compound modifier, so a button
+   that never gets a `.wb-button`/`.wb-btn--*`/`wb-button[size]` match (e.g.
+   pages/behaviors.html's x-*-decorated demo buttons, which button.js
+   deliberately skips styling for -- see wb-btn-bare-class-audit.spec.ts)
+   fell all the way through to this bare 0.5rem/1rem reset regardless of
+   any lower-specificity class meant to style it. Matches the same 1rem
+   floor already applied everywhere else buttons are sized (button.css,
+   button.js's injected BUTTON_CSS). */
+[data-theme] button {
+  color: var(--text-primary);
+  background-color: var(--bg-secondary);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-md, 6px);
+  padding: 1rem;
+  font: inherit;
+  cursor: pointer;
+}
+
+/* Backwards-compatible aliases (some consumers/tests expect `--color-*` names) */
+:root, [data-theme] {
+  --color-primary: var(--primary);
+  --color-bg: var(--bg-color);
+  --color-text: var(--text-primary);
+  
+  /* Default fallback values */
+  --text-primary: hsl(220, 15%, 95%);
+  --text-secondary: hsl(220, 10%, 80%);
+  --text-muted: hsl(220, 10%, 60%);
+
+  /* Neutral border tone. Previously referenced by themes.css + dozens of behavior
+     styles (spinner, alert, card, button, code …) but DEFINED NOWHERE, so every
+     `border: …px solid var(--border-color)` shorthand was invalid and silently
+     dropped — invisible spinners (#182), undemarcated cards (#180), missing
+     outlines. Derived from the theme's own text color (a faint hairline) so it
+     adapts to light + dark themes without a hardcoded literal. */
+  --border-color: color-mix(in srgb, var(--text-primary) 22%, transparent);
+
+  /* Elevated surface for raised cards etc. Derived from the theme's own tertiary
+     surface so it adapts per theme — was undefined everywhere, so elevated cards
+     fell back to a hardcoded slate in every theme (#198). */
+  --bg-elevated: var(--bg-tertiary);
+  /* Text on saturated accent backgrounds (primary/secondary/state buttons),
+     replacing hardcoded white literals in button.css (#190). */
+  --text-on-accent: hsl(0, 0%, 100%);
+
+  /* Overlay base hues — compose with a per-use alpha, e.g.
+     `hsl(var(--overlay-dark-hsl) / 0.35)`. The COLOR is themed here; the opacity
+     is chosen at the call site. Replaces rgba(0,0,0,α)/rgba(255,255,255,α)
+     scrim/glass/shadow literals (hardcoded-color audit). */
+  --overlay-dark-hsl: 0 0% 0%;    /* scrims, shadows */
+  --overlay-light-hsl: 0 0% 100%; /* glass, sheen, hovers */
+
+  /* Pre-composed glass tokens (card.css .wb-card--glass, #232) — css-oop-
+     compliance only exempts hsl()/rgba() composition in shadow contexts or
+     exception-listed files, so the alpha is baked in here rather than
+     composed at the call site as a bare var() reference.
+     #459: previously a flat `hsl(0 0% 100% / α)` white tint, identical in
+     every theme. That reads as frosted glass against a DARK surface, but on
+     a light theme (Sakura, etc. — `--bg-color` near-white) the same
+     white-on-white overlay has ~zero contrast, so the whole effect went
+     invisible. Rederived from `var(--text-primary)` via color-mix(), same
+     pattern already used two lines above for `--border-color` and
+     `--bg-elevated`: text-primary is near-white on dark themes (same look
+     as before) and near-black on light themes (a dark-tinted overlay that
+     actually reads against a light surface) — auto-adapts per theme with no
+     per-theme override block needed. Alpha percentages unchanged. */
+  --card-glass-bg: color-mix(in srgb, var(--text-primary) 8%, transparent);
+  --card-glass-bg-hover: color-mix(in srgb, var(--text-primary) 12%, transparent);
+  --card-glass-border: color-mix(in srgb, var(--text-primary) 16%, transparent);
+  --card-glass-border-hover: color-mix(in srgb, var(--text-primary) 24%, transparent);
+  --card-glass-sheen: color-mix(in srgb, var(--text-primary) 14%, transparent);
+  /* Fallback tokens for browsers with no backdrop-filter support (#351,
+     card.css's `@supports not (backdrop-filter: blur(1px))` block). Higher
+     alpha than the tokens above so the surface still reads as intentionally
+     "glass-styled" (a distinct, more-opaque panel) instead of a flat,
+     barely-tinted box once blur isn't there to sell the effect. */
+  --card-glass-bg-fallback: color-mix(in srgb, var(--text-primary) 18%, transparent);
+  --card-glass-border-fallback: color-mix(in srgb, var(--text-primary) 32%, transparent);
+
+  /* Semantic state colors — used by alert, notification, rating */
+  --info-color: hsl(217, 91%, 60%);
+  --success-color: hsl(142, 71%, 45%);
+  --warning-color: hsl(45, 93%, 47%);
+  --danger-color: hsl(0, 84%, 60%);
+  
+  /* Alert backgrounds (10% opacity tints) */
+  --alert-info-bg: hsla(217, 91%, 60%, 0.1);
+  --alert-success-bg: hsla(142, 71%, 45%, 0.1);
+  --alert-warning-bg: hsla(45, 93%, 47%, 0.1);
+  --alert-danger-bg: hsla(0, 84%, 60%, 0.1);
+  
+  /* Notification dark backgrounds (12% opacity tints) */
+  --notification-info-dark-bg: hsla(207, 90%, 54%, 0.12);
+  --notification-info-dark-color: hsl(207, 89%, 78%);
+  --notification-success-dark-bg: hsla(122, 39%, 49%, 0.12);
+  --notification-success-dark-color: hsl(125, 39%, 72%);
+  --notification-warning-dark-bg: hsla(36, 100%, 50%, 0.12);
+  --notification-warning-dark-color: hsl(33, 100%, 75%);
+  --notification-danger-dark-bg: hsla(4, 90%, 58%, 0.12);
+  --notification-danger-dark-color: hsl(0, 74%, 77%);
+
+  /* Badge palette — backgrounds dark enough for white text to meet WCAG AA,
+     decoupled from the lighter semantic colors used by alerts/notifications.
+     on-color = text on saturated badges; on-light = dark text on light badges. */
+  --badge-on-color: hsl(0, 0%, 100%);
+  --badge-on-light: hsl(222, 20%, 12%);
+  --badge-gray-bg:  var(--bg-tertiary);
+  --badge-primary:  var(--primary);
+  --badge-secondary: var(--secondary);
+  --badge-success:  hsl(142, 64%, 26%);
+  --badge-warning:  var(--warning-color);
+  --badge-error:    hsl(0, 66%, 41%);
+  --badge-info:     hsl(217, 72%, 40%);
+  --badge-purple:   hsl(258, 52%, 47%);
+  --badge-pink:     hsl(330, 60%, 40%);
+  --badge-teal:     hsl(174, 72%, 23%);
+  --badge-orange:   hsl(28, 88%, 34%);
+
+  /* Badge glass tokens — same pre-composed-alpha pattern as --card-glass-*
+     above (css-oop-compliance only exempts hsl()/rgba() composition in
+     shadow contexts or exception-listed files, so alpha is baked in here).
+     Higher alpha than the card tokens (badges are much smaller than cards,
+     so the translucency needs to read clearly at badge scale). */
+  --badge-glass-bg: hsl(0 0% 100% / 0.14);
+  --badge-glass-border: hsl(0 0% 100% / 0.28);
+  --badge-glass-sheen: hsl(0 0% 100% / 0.22);
+
+  /* Rating star color */
+  --rating-active-color: hsl(45, 96%, 56%);
+}
+
+/* =============================================================================
+   DARK THEME (Default)
+   Standard - Complementary harmony, hue: 240
+   ============================================================================= */
+[data-theme="dark"],
+:root {
+  /* THE single configuration setting for Markdown font size. Every .md rendering
+     surface (mdhtml, doc-viewer) derives its text size from this — 1rem so docs
+     are readable on mobile. Change it here, everything follows. */
+  --md-font-size: 1rem;
+
+  /* Spacing + type scale — several pages (behaviors-showcase.html,
+     pages/behaviors.css, components.css) already reference these by name
+     (some with a matching fallback, e.g. `var(--space-lg, 1.5rem)`), but the
+     tokens themselves were never actually defined here, so every rule using
+     them without a fallback silently computed to nothing (no spacing at all).
+     xs/sm/md stay hand-picked (small, already-tuned values -- button/badge
+     padding etc. -- not worth disturbing); lg/xl/2xl are golden-ratio
+     derived per docs/architecture/proposals/v4-golden-ratio-layout-spec.md,
+     each step ×1.618 from the last rather than chosen by eye. */
+  --golden-ratio: 1.618;
+  --space-xs: 0.25rem;
+  --space-sm: 0.5rem;
+  --space-md: 1rem;
+  --space-lg: calc(var(--space-md) * var(--golden-ratio));                      /* ~1.618rem, 25.9px */
+  --space-xl: calc(var(--space-md) * var(--golden-ratio) * var(--golden-ratio)); /* ~2.618rem, 41.9px */
+  --space-2xl: calc(var(--space-md) * var(--golden-ratio) * var(--golden-ratio) * var(--golden-ratio)); /* ~4.236rem, 67.8px */
+  --text-xs: 0.75rem;
+  --text-sm: 0.875rem;
+  --text-base: 1rem;
+  /* lg/xl/2xl/3xl golden-ratio derived (#476), same philosophy as the
+     --space-* scale above: xs/sm/base stay hand-picked (small, legible,
+     already the only tier anything actually consumes -- counter.css/
+     label.css both only reference --text-sm), lg+ chain ×1.618 from base.
+     Confirmed zero prior consumers of lg/xl/2xl/3xl anywhere in src/styles/
+     before this change -- pure foundation, no visual regression risk. */
+  --text-lg: calc(var(--text-base) * var(--golden-ratio));                                                      /* ~1.618rem, 25.9px */
+  --text-xl: calc(var(--text-base) * var(--golden-ratio) * var(--golden-ratio));                                 /* ~2.618rem, 41.9px */
+  --text-2xl: calc(var(--text-base) * var(--golden-ratio) * var(--golden-ratio) * var(--golden-ratio));          /* ~4.236rem, 67.8px */
+  --text-3xl: calc(var(--text-base) * var(--golden-ratio) * var(--golden-ratio) * var(--golden-ratio) * var(--golden-ratio)); /* ~6.854rem, 109.7px */
+
+  /* Aspect ratio for a golden rectangle -- e.g. `aspect-ratio: var(--aspect-golden)`
+     on an image/card/media container. Companion to the text/space scales
+     above, same 1.618 source. */
+  --aspect-golden: var(--golden-ratio);
+
+  /* Foundation */
+  --hue-primary: 240;
+  --saturation-primary: 70;
+  --lightness-primary: 50;
+  
+  /* Primary */
+  --primary: hsl(240, 70%, 50%);
+  --primary-dark: hsl(240, 70%, 35%);
+  --primary-light: hsl(240, 50%, 75%);
+  --primary-rgb: 99, 102, 241;
+  
+  /* Secondary (Complementary +180°) */
+  --secondary: hsl(60, 60%, 50%);
+  --secondary-dark: hsl(60, 60%, 40%);
+  --secondary-light: hsl(60, 50%, 65%);
+  
+  /* Accent (Analogous -30°) */
+  --accent: hsl(210, 60%, 50%);
+  --accent-dark: hsl(210, 60%, 35%);
+  --accent-light: hsl(210, 45%, 70%);
+  
+  /* Backgrounds */
+  --bg-color: hsl(220, 25%, 10%);
+  --bg-primary: hsl(220, 25%, 15%);
+  --bg-secondary: hsl(220, 20%, 20%);
+  --bg-tertiary: hsl(220, 15%, 25%);
+  
+  /* Text */
+  --text-primary: hsl(220, 15%, 95%);
+  --text-secondary: hsl(220, 10%, 80%);
+  --text-muted: hsl(220, 10%, 60%);
+}
+
+[data-theme="light"] {
+  /* Foundation */
+  --hue-primary: 240;
+  --saturation-primary: 70;
+  --lightness-primary: 50;
+  
+  /* Primary */
+  --primary: hsl(240, 70%, 50%);
+  --primary-dark: hsl(240, 70%, 35%);
+  --primary-light: hsl(240, 50%, 75%);
+  --primary-rgb: 99, 102, 241;
+  
+  /* Secondary (Complementary +180°) */
+  --secondary: hsl(60, 60%, 50%);
+  --secondary-dark: hsl(60, 60%, 40%);
+  --secondary-light: hsl(60, 50%, 65%);
+  
+  /* Accent (Analogous -30°) */
+  --accent: hsl(210, 60%, 50%);
+  --accent-dark: hsl(210, 60%, 35%);
+  --accent-light: hsl(210, 45%, 70%);
+  
+  /* Backgrounds */
+  --bg-color: hsl(0, 0%, 98%);
+  --bg-primary: hsl(0, 0%, 100%);
+  --bg-secondary: hsl(210, 20%, 96%);
+  --bg-tertiary: hsl(210, 15%, 92%);
+  
+  /* Text */
+  --text-primary: hsl(222, 84%, 5%);
+  --text-secondary: hsl(215, 16%, 47%);
+  --text-muted: hsl(215, 16%, 47%);
+}
+
+/* =============================================================================
+   CYBERPUNK THEME
+   Vibrant magenta/cyan
+   ============================================================================= */
+[data-theme="cyberpunk"] {
+  /* Foundation */
+  --hue-primary: 300;
+  --saturation-primary: 80;
+  --lightness-primary: 50;
+  
+  /* Primary */
+  --primary: hsl(300, 80%, 50%);
+  --primary-dark: hsl(300, 80%, 35%);
+  --primary-light: hsl(300, 70%, 75%);
+  --primary-rgb: 219, 39, 119;
+  
+  /* Secondary */
+  --secondary: hsl(180, 80%, 50%);
+  --secondary-dark: hsl(180, 80%, 35%);
+  --secondary-light: hsl(180, 70%, 75%);
+  
+  /* Accent */
+  --accent: hsl(60, 80%, 50%);
+  --accent-dark: hsl(60, 80%, 35%);
+  --accent-light: hsl(60, 70%, 75%);
+  
+  /* Backgrounds */
+  --bg-color: hsl(240, 15%, 8%);
+  --bg-primary: hsl(240, 15%, 12%);
+  --bg-secondary: hsl(240, 12%, 16%);
+  --bg-tertiary: hsl(240, 10%, 20%);
+  
+  /* Text */
+  --text-primary: hsl(300, 20%, 95%);
+  --text-secondary: hsl(300, 15%, 80%);
+  --text-muted: hsl(300, 15%, 60%);
+}
+
+/* =============================================================================
+   OCEAN THEME
+   Calm blues
+   ============================================================================= */
+[data-theme="ocean"] {
+  /* Foundation */
+  --hue-primary: 200;
+  --saturation-primary: 70;
+  --lightness-primary: 50;
+  
+  /* Primary */
+  --primary: hsl(200, 70%, 50%);
+  --primary-dark: hsl(200, 70%, 35%);
+  --primary-light: hsl(200, 50%, 75%);
+  --primary-rgb: 59, 130, 246;
+  
+  /* Secondary */
+  --secondary: hsl(160, 60%, 50%);
+  --secondary-dark: hsl(160, 60%, 35%);
+  --secondary-light: hsl(160, 45%, 70%);
+  
+  /* Accent */
+  --accent: hsl(240, 60%, 50%);
+  --accent-dark: hsl(240, 60%, 35%);
+  --accent-light: hsl(240, 45%, 70%);
+  
+  /* Backgrounds */
+  --bg-color: hsl(200, 25%, 8%);
+  --bg-primary: hsl(200, 25%, 12%);
+  --bg-secondary: hsl(200, 20%, 16%);
+  --bg-tertiary: hsl(200, 15%, 20%);
+  
+  /* Text */
+  --text-primary: hsl(200, 15%, 95%);
+  --text-secondary: hsl(200, 10%, 80%);
+  --text-muted: hsl(200, 10%, 60%);
+}
+
+/* =============================================================================
+   SUNSET THEME
+   Warm oranges
+   ============================================================================= */
+[data-theme="sunset"] {
+  /* Foundation */
+  --hue-primary: 25;
+  --saturation-primary: 80;
+  --lightness-primary: 50;
+  
+  /* Primary */
+  --primary: hsl(25, 80%, 50%);
+  --primary-dark: hsl(25, 80%, 35%);
+  --primary-light: hsl(25, 70%, 75%);
+  --primary-rgb: 245, 158, 11;
+  
+  /* Secondary */
+  --secondary: hsl(45, 70%, 50%);
+  --secondary-dark: hsl(45, 70%, 35%);
+  --secondary-light: hsl(45, 60%, 70%);
+  
+  /* Accent */
+  --accent: hsl(5, 75%, 50%);
+  --accent-dark: hsl(5, 75%, 35%);
+  --accent-light: hsl(5, 65%, 75%);
+  
+  /* Backgrounds */
+  --bg-color: hsl(25, 20%, 8%);
+  --bg-primary: hsl(25, 20%, 12%);
+  --bg-secondary: hsl(25, 15%, 16%);
+  --bg-tertiary: hsl(25, 12%, 20%);
+  
+  /* Text */
+  --text-primary: hsl(25, 15%, 95%);
+  --text-secondary: hsl(25, 10%, 80%);
+  --text-muted: hsl(25, 10%, 60%);
+}
+
+/* =============================================================================
+   FOREST THEME
+   Natural greens
+   ============================================================================= */
+[data-theme="forest"] {
+  /* Foundation */
+  --hue-primary: 120;
+  --saturation-primary: 60;
+  --lightness-primary: 45;
+  
+  /* Primary */
+  --primary: hsl(120, 60%, 45%);
+  --primary-dark: hsl(120, 60%, 30%);
+  --primary-light: hsl(120, 45%, 65%);
+  --primary-rgb: 34, 197, 94;
+  
+  /* Secondary */
+  --secondary: hsl(80, 50%, 45%);
+  --secondary-dark: hsl(80, 50%, 30%);
+  --secondary-light: hsl(80, 40%, 65%);
+  
+  /* Accent */
+  --accent: hsl(160, 55%, 45%);
+  --accent-dark: hsl(160, 55%, 30%);
+  --accent-light: hsl(160, 40%, 65%);
+  
+  /* Backgrounds */
+  --bg-color: hsl(120, 15%, 8%);
+  --bg-primary: hsl(120, 15%, 12%);
+  --bg-secondary: hsl(120, 12%, 16%);
+  --bg-tertiary: hsl(120, 10%, 20%);
+  
+  /* Text */
+  --text-primary: hsl(120, 10%, 95%);
+  --text-secondary: hsl(120, 8%, 80%);
+  --text-muted: hsl(120, 8%, 60%);
+}
+
+/* =============================================================================
+   MIDNIGHT THEME
+   Deep monochromatic blue
+   ============================================================================= */
+[data-theme="midnight"] {
+  /* Foundation */
+  --hue-primary: 220;
+  --saturation-primary: 40;
+  --lightness-primary: 20;
+  
+  /* Primary */
+  --primary: hsl(220, 40%, 20%);
+  --primary-dark: hsl(220, 40%, 15%);
+  --primary-light: hsl(220, 30%, 35%);
+  --primary-rgb: 30, 58, 138;
+  
+  /* Secondary */
+  --secondary: hsl(220, 30%, 30%);
+  --secondary-dark: hsl(220, 30%, 25%);
+  --secondary-light: hsl(220, 25%, 45%);
+  
+  /* Accent */
+  --accent: hsl(200, 35%, 25%);
+  --accent-dark: hsl(200, 35%, 20%);
+  --accent-light: hsl(200, 25%, 40%);
+  
+  /* Backgrounds */
+  --bg-color: hsl(220, 20%, 5%);
+  --bg-primary: hsl(220, 20%, 8%);
+  --bg-secondary: hsl(220, 15%, 12%);
+  --bg-tertiary: hsl(220, 12%, 16%);
+  
+  /* Text */
+  --text-primary: hsl(220, 10%, 95%);
+  --text-secondary: hsl(220, 8%, 80%);
+  --text-muted: hsl(220, 8%, 60%);
+}
+
+/* =============================================================================
+   TWILIGHT THEME
+   Purple-blue with warm accents
+   ============================================================================= */
+[data-theme="twilight"] {
+  /* Foundation */
+  --hue-primary: 260;
+  --saturation-primary: 60;
+  --lightness-primary: 45;
+  
+  /* Primary */
+  --primary: hsl(260, 60%, 45%);
+  --primary-dark: hsl(260, 60%, 30%);
+  --primary-light: hsl(260, 45%, 65%);
+  --primary-rgb: 124, 58, 237;
+  
+  /* Secondary */
+  --secondary: hsl(30, 70%, 50%);
+  --secondary-dark: hsl(30, 70%, 35%);
+  --secondary-light: hsl(30, 60%, 70%);
+  
+  /* Accent */
+  --accent: hsl(200, 60%, 45%);
+  --accent-dark: hsl(200, 60%, 30%);
+  --accent-light: hsl(200, 45%, 65%);
+  
+  /* Backgrounds */
+  --bg-color: hsl(260, 20%, 8%);
+  --bg-primary: hsl(260, 20%, 12%);
+  --bg-secondary: hsl(260, 15%, 16%);
+  --bg-tertiary: hsl(260, 12%, 20%);
+  
+  /* Text */
+  --text-primary: hsl(260, 15%, 95%);
+  --text-secondary: hsl(260, 10%, 80%);
+  --text-muted: hsl(260, 10%, 60%);
+}
+
+/* =============================================================================
+   SAKURA THEME
+   Elegant pink
+   ============================================================================= */
+[data-theme="sakura"] {
+  /* Foundation */
+  --hue-primary: 340;
+  --saturation-primary: 70;
+  --lightness-primary: 65;
+  
+  /* Primary */
+  --primary: hsl(340, 70%, 65%);
+  --primary-dark: hsl(340, 70%, 50%);
+  --primary-light: hsl(340, 60%, 80%);
+  --primary-rgb: 236, 72, 153;
+  
+  /* Secondary */
+  --secondary: hsl(160, 40%, 60%);
+  --secondary-dark: hsl(160, 40%, 45%);
+  --secondary-light: hsl(160, 35%, 75%);
+  
+  /* Accent */
+  --accent: hsl(280, 60%, 65%);
+  --accent-dark: hsl(280, 60%, 50%);
+  --accent-light: hsl(280, 50%, 80%);
+  
+  /* Backgrounds */
+  --bg-color: hsl(340, 25%, 95%);
+  --bg-primary: hsl(340, 20%, 98%);
+  --bg-secondary: hsl(340, 15%, 92%);
+  --bg-tertiary: hsl(340, 12%, 88%);
+  
+  /* Text */
+  --text-primary: hsl(340, 40%, 15%);
+  --text-secondary: hsl(340, 20%, 40%);
+  --text-muted: hsl(340, 15%, 50%);
+}
+
+/* =============================================================================
+   ARCTIC THEME
+   Ice blue
+   ============================================================================= */
+[data-theme="arctic"] {
+  /* Foundation */
+  --hue-primary: 195;
+  --saturation-primary: 60;
+  --lightness-primary: 85;
+  
+  /* Primary */
+  --primary: hsl(195, 60%, 85%);
+  --primary-dark: hsl(195, 60%, 70%);
+  --primary-light: hsl(195, 50%, 95%);
+  --primary-rgb: 186, 230, 253;
+  
+  /* Secondary */
+  --secondary: hsl(210, 50%, 80%);
+  --secondary-dark: hsl(210, 50%, 65%);
+  --secondary-light: hsl(210, 40%, 90%);
+  
+  /* Accent */
+  --accent: hsl(180, 55%, 75%);
+  --accent-dark: hsl(180, 55%, 60%);
+  --accent-light: hsl(180, 45%, 85%);
+  
+  /* Backgrounds */
+  --bg-color: hsl(195, 20%, 98%);
+  --bg-primary: hsl(195, 15%, 100%);
+  --bg-secondary: hsl(195, 10%, 96%);
+  --bg-tertiary: hsl(195, 8%, 92%);
+  
+  /* Text */
+  --text-primary: hsl(195, 50%, 15%);
+  --text-secondary: hsl(195, 30%, 35%);
+  --text-muted: hsl(195, 20%, 50%);
+}
+
+/* =============================================================================
+   DESERT THEME
+   Warm sand tones
+   ============================================================================= */
+[data-theme="desert"] {
+  /* Foundation */
+  --hue-primary: 45;
+  --saturation-primary: 50;
+  --lightness-primary: 70;
+  
+  /* Primary */
+  --primary: hsl(45, 50%, 70%);
+  --primary-dark: hsl(45, 50%, 55%);
+  --primary-light: hsl(45, 40%, 85%);
+  --primary-rgb: 251, 191, 36;
+  
+  /* Secondary */
+  --secondary: hsl(25, 60%, 65%);
+  --secondary-dark: hsl(25, 60%, 50%);
+  --secondary-light: hsl(25, 50%, 80%);
+  
+  /* Accent */
+  --accent: hsl(15, 70%, 60%);
+  --accent-dark: hsl(15, 70%, 45%);
+  --accent-light: hsl(15, 60%, 75%);
+  
+  /* Backgrounds */
+  --bg-color: hsl(45, 15%, 95%);
+  --bg-primary: hsl(45, 10%, 98%);
+  --bg-secondary: hsl(45, 8%, 92%);
+  --bg-tertiary: hsl(45, 6%, 88%);
+  
+  /* Text */
+  --text-primary: hsl(45, 40%, 15%);
+  --text-secondary: hsl(45, 25%, 35%);
+  --text-muted: hsl(45, 20%, 50%);
+}
+
+/* =============================================================================
+   NEON DREAMS THEME
+   Purple neon
+   ============================================================================= */
+[data-theme="neon-dreams"] {
+  /* Foundation */
+  --hue-primary: 270;
+  --saturation-primary: 90;
+  --lightness-primary: 50;
+  
+  /* Primary */
+  --primary: hsl(270, 90%, 50%);
+  --primary-dark: hsl(270, 90%, 35%);
+  --primary-light: hsl(270, 80%, 75%);
+  --primary-rgb: 147, 51, 234;
+  
+  /* Secondary */
+  --secondary: hsl(300, 85%, 50%);
+  --secondary-dark: hsl(300, 85%, 35%);
+  --secondary-light: hsl(300, 75%, 75%);
+  
+  /* Accent */
+  --accent: hsl(180, 85%, 50%);
+  --accent-dark: hsl(180, 85%, 35%);
+  --accent-light: hsl(180, 75%, 75%);
+  
+  /* Backgrounds */
+  --bg-color: hsl(270, 25%, 5%);
+  --bg-primary: hsl(270, 25%, 8%);
+  --bg-secondary: hsl(270, 20%, 12%);
+  --bg-tertiary: hsl(270, 15%, 16%);
+  
+  /* Text */
+  --text-primary: hsl(270, 20%, 95%);
+  --text-secondary: hsl(270, 15%, 80%);
+  --text-muted: hsl(270, 15%, 60%);
+}
+
+/* =============================================================================
+   RETRO WAVE THEME
+   Retro pink/purple
+   ============================================================================= */
+[data-theme="retro-wave"] {
+  /* Foundation */
+  --hue-primary: 320;
+  --saturation-primary: 80;
+  --lightness-primary: 55;
+  
+  /* Primary */
+  --primary: hsl(320, 80%, 55%);
+  --primary-dark: hsl(320, 80%, 40%);
+  --primary-light: hsl(320, 70%, 75%);
+  --primary-rgb: 219, 39, 119;
+  
+  /* Secondary */
+  --secondary: hsl(260, 70%, 50%);
+  --secondary-dark: hsl(260, 70%, 35%);
+  --secondary-light: hsl(260, 60%, 70%);
+  
+  /* Accent */
+  --accent: hsl(200, 75%, 50%);
+  --accent-dark: hsl(200, 75%, 35%);
+  --accent-light: hsl(200, 65%, 70%);
+  
+  /* Backgrounds */
+  --bg-color: hsl(320, 20%, 8%);
+  --bg-primary: hsl(320, 20%, 12%);
+  --bg-secondary: hsl(320, 15%, 16%);
+  --bg-tertiary: hsl(320, 12%, 20%);
+  
+  /* Text */
+  --text-primary: hsl(320, 15%, 95%);
+  --text-secondary: hsl(320, 10%, 80%);
+  --text-muted: hsl(320, 10%, 60%);
+}
+
+/* =============================================================================
+   LAVENDER THEME
+   Soft purple pastels
+   ============================================================================= */
+[data-theme="lavender"] {
+  /* Foundation */
+  --hue-primary: 270;
+  --saturation-primary: 40;
+  --lightness-primary: 75;
+  
+  /* Primary */
+  --primary: hsl(270, 40%, 75%);
+  --primary-dark: hsl(270, 40%, 60%);
+  --primary-light: hsl(270, 30%, 85%);
+  --primary-rgb: 196, 181, 253;
+  
+  /* Secondary */
+  --secondary: hsl(300, 35%, 70%);
+  --secondary-dark: hsl(300, 35%, 55%);
+  --secondary-light: hsl(300, 25%, 80%);
+  
+  /* Accent */
+  --accent: hsl(240, 45%, 70%);
+  --accent-dark: hsl(240, 45%, 55%);
+  --accent-light: hsl(240, 35%, 80%);
+  
+  /* Backgrounds */
+  --bg-color: hsl(270, 15%, 96%);
+  --bg-primary: hsl(270, 10%, 98%);
+  --bg-secondary: hsl(270, 8%, 94%);
+  --bg-tertiary: hsl(270, 6%, 90%);
+  
+  /* Text */
+  --text-primary: hsl(270, 30%, 15%);
+  --text-secondary: hsl(270, 20%, 35%);
+  --text-muted: hsl(270, 15%, 50%);
+}
+
+/* =============================================================================
+   EMERALD THEME
+   Rich jewel-toned green
+   ============================================================================= */
+[data-theme="emerald"] {
+  /* Foundation */
+  --hue-primary: 140;
+  --saturation-primary: 70;
+  --lightness-primary: 45;
+  
+  /* Primary */
+  --primary: hsl(140, 70%, 45%);
+  --primary-dark: hsl(140, 70%, 30%);
+  --primary-light: hsl(140, 60%, 65%);
+  --primary-rgb: 16, 185, 129;
+  
+  /* Secondary */
+  --secondary: hsl(160, 65%, 40%);
+  --secondary-dark: hsl(160, 65%, 25%);
+  --secondary-light: hsl(160, 55%, 60%);
+  
+  /* Accent */
+  --accent: hsl(120, 75%, 40%);
+  --accent-dark: hsl(120, 75%, 25%);
+  --accent-light: hsl(120, 65%, 60%);
+  
+  /* Backgrounds */
+  --bg-color: hsl(140, 15%, 8%);
+  --bg-primary: hsl(140, 15%, 12%);
+  --bg-secondary: hsl(140, 12%, 16%);
+  --bg-tertiary: hsl(140, 10%, 20%);
+  
+  /* Text */
+  --text-primary: hsl(140, 10%, 95%);
+  --text-secondary: hsl(140, 8%, 80%);
+  --text-muted: hsl(140, 8%, 60%);
+}
+
+/* =============================================================================
+   RUBY THEME
+   Deep red elegance
+   ============================================================================= */
+[data-theme="ruby"] {
+  /* Foundation */
+  --hue-primary: 0;
+  --saturation-primary: 80;
+  --lightness-primary: 45;
+  
+  /* Primary */
+  --primary: hsl(0, 80%, 45%);
+  --primary-dark: hsl(0, 80%, 30%);
+  --primary-light: hsl(0, 70%, 65%);
+  --primary-rgb: 239, 68, 68;
+  
+  /* Secondary */
+  --secondary: hsl(20, 75%, 50%);
+  --secondary-dark: hsl(20, 75%, 35%);
+  --secondary-light: hsl(20, 65%, 70%);
+  
+  /* Accent */
+  --accent: hsl(340, 70%, 50%);
+  --accent-dark: hsl(340, 70%, 35%);
+  --accent-light: hsl(340, 60%, 70%);
+  
+  /* Backgrounds */
+  --bg-color: hsl(0, 20%, 8%);
+  --bg-primary: hsl(0, 20%, 12%);
+  --bg-secondary: hsl(0, 15%, 16%);
+  --bg-tertiary: hsl(0, 12%, 20%);
+  
+  /* Text */
+  --text-primary: hsl(0, 15%, 95%);
+  --text-secondary: hsl(0, 10%, 80%);
+  --text-muted: hsl(0, 10%, 60%);
+}
+
+/* =============================================================================
+   GOLDEN THEME
+   Luxurious gold and amber
+   ============================================================================= */
+[data-theme="golden"] {
+  /* Foundation */
+  --hue-primary: 45;
+  --saturation-primary: 80;
+  --lightness-primary: 55;
+  
+  /* Primary */
+  --primary: hsl(45, 80%, 55%);
+  --primary-dark: hsl(45, 80%, 40%);
+  --primary-light: hsl(45, 70%, 75%);
+  --primary-rgb: 245, 158, 11;
+  
+  /* Secondary */
+  --secondary: hsl(35, 75%, 50%);
+  --secondary-dark: hsl(35, 75%, 35%);
+  --secondary-light: hsl(35, 65%, 70%);
+  
+  /* Accent */
+  --accent: hsl(55, 85%, 50%);
+  --accent-dark: hsl(55, 85%, 35%);
+  --accent-light: hsl(55, 75%, 70%);
+  
+  /* Backgrounds */
+  --bg-color: hsl(45, 20%, 8%);
+  --bg-primary: hsl(45, 20%, 12%);
+  --bg-secondary: hsl(45, 15%, 16%);
+  --bg-tertiary: hsl(45, 12%, 20%);
+  
+  /* Text */
+  --text-primary: hsl(45, 15%, 95%);
+  --text-secondary: hsl(45, 10%, 80%);
+  --text-muted: hsl(45, 10%, 60%);
+}
+
+/* =============================================================================
+   SLATE THEME
+   Professional gray tones
+   ============================================================================= */
+[data-theme="slate"] {
+  /* Foundation */
+  --hue-primary: 210;
+  --saturation-primary: 15;
+  --lightness-primary: 45;
+  
+  /* Primary */
+  --primary: hsl(210, 15%, 45%);
+  --primary-dark: hsl(210, 15%, 30%);
+  --primary-light: hsl(210, 10%, 65%);
+  --primary-rgb: 100, 116, 139;
+  
+  /* Secondary */
+  --secondary: hsl(220, 10%, 50%);
+  --secondary-dark: hsl(220, 10%, 35%);
+  --secondary-light: hsl(220, 8%, 70%);
+  
+  /* Accent */
+  --accent: hsl(200, 20%, 40%);
+  --accent-dark: hsl(200, 20%, 25%);
+  --accent-light: hsl(200, 15%, 60%);
+  
+  /* Backgrounds */
+  --bg-color: hsl(210, 10%, 8%);
+  --bg-primary: hsl(210, 10%, 12%);
+  --bg-secondary: hsl(210, 8%, 16%);
+  --bg-tertiary: hsl(210, 6%, 20%);
+  
+  /* Text */
+  --text-primary: hsl(210, 5%, 95%);
+  --text-secondary: hsl(210, 4%, 80%);
+  --text-muted: hsl(210, 4%, 60%);
+}
+
+/* =============================================================================
+   COFFEE THEME
+   Warm brown tones
+   ============================================================================= */
+[data-theme="coffee"] {
+  /* Foundation */
+  --hue-primary: 25;
+  --saturation-primary: 40;
+  --lightness-primary: 35;
+  
+  /* Primary */
+  --primary: hsl(25, 40%, 35%);
+  --primary-dark: hsl(25, 40%, 25%);
+  --primary-light: hsl(25, 30%, 55%);
+  --primary-rgb: 154, 52, 18;
+  
+  /* Secondary */
+  --secondary: hsl(35, 45%, 40%);
+  --secondary-dark: hsl(35, 45%, 25%);
+  --secondary-light: hsl(35, 35%, 60%);
+  
+  /* Accent */
+  --accent: hsl(15, 50%, 35%);
+  --accent-dark: hsl(15, 50%, 20%);
+  --accent-light: hsl(15, 40%, 55%);
+  
+  /* Backgrounds */
+  --bg-color: hsl(25, 15%, 8%);
+  --bg-primary: hsl(25, 15%, 12%);
+  --bg-secondary: hsl(25, 12%, 16%);
+  --bg-tertiary: hsl(25, 10%, 20%);
+  
+  /* Text */
+  --text-primary: hsl(25, 10%, 95%);
+  --text-secondary: hsl(25, 8%, 80%);
+  --text-muted: hsl(25, 8%, 60%);
+}
+
+/* =============================================================================
+   MINT THEME
+   Fresh mint green
+   ============================================================================= */
+[data-theme="mint"] {
+  /* Foundation */
+  --hue-primary: 160;
+  --saturation-primary: 60;
+  --lightness-primary: 70;
+  
+  /* Primary */
+  --primary: hsl(160, 60%, 70%);
+  --primary-dark: hsl(160, 60%, 55%);
+  --primary-light: hsl(160, 50%, 85%);
+  --primary-rgb: 52, 211, 153;
+  
+  /* Secondary */
+  --secondary: hsl(140, 55%, 65%);
+  --secondary-dark: hsl(140, 55%, 50%);
+  --secondary-light: hsl(140, 45%, 80%);
+  
+  /* Accent */
+  --accent: hsl(180, 50%, 65%);
+  --accent-dark: hsl(180, 50%, 50%);
+  --accent-light: hsl(180, 40%, 80%);
+  
+  /* Backgrounds */
+  --bg-color: hsl(160, 20%, 95%);
+  --bg-primary: hsl(160, 15%, 98%);
+  --bg-secondary: hsl(160, 12%, 92%);
+  --bg-tertiary: hsl(160, 10%, 88%);
+  
+  /* Text */
+  --text-primary: hsl(160, 40%, 15%);
+  --text-secondary: hsl(160, 25%, 35%);
+  --text-muted: hsl(160, 20%, 50%);
+}
+
+/* =============================================================================
+   NOIR THEME
+   High contrast black/white
+   ============================================================================= */
+[data-theme="noir"] {
+  /* Foundation */
+  --hue-primary: 0;
+  --saturation-primary: 0;
+  --lightness-primary: 20;
+  
+  /* Primary */
+  --primary: hsl(0, 0%, 20%);
+  --primary-dark: hsl(0, 0%, 10%);
+  --primary-light: hsl(0, 0%, 40%);
+  --primary-rgb: 64, 64, 64;
+  
+  /* Secondary */
+  --secondary: hsl(0, 0%, 30%);
+  --secondary-dark: hsl(0, 0%, 20%);
+  --secondary-light: hsl(0, 0%, 50%);
+  
+  /* Accent */
+  --accent: hsl(0, 0%, 15%);
+  --accent-dark: hsl(0, 0%, 5%);
+  --accent-light: hsl(0, 0%, 35%);
+  
+  /* Backgrounds */
+  --bg-color: hsl(0, 0%, 0%);
+  --bg-primary: hsl(0, 0%, 5%);
+  --bg-secondary: hsl(0, 0%, 10%);
+  --bg-tertiary: hsl(0, 0%, 15%);
+  
+  /* Text */
+  --text-primary: hsl(0, 0%, 100%);
+  --text-secondary: hsl(0, 0%, 85%);
+  --text-muted: hsl(0, 0%, 70%);
+}
+
+/* =============================================================================
+   AURORA THEME
+   Northern lights inspired
+   ============================================================================= */
+[data-theme="aurora"] {
+  /* Foundation */
+  --hue-primary: 180;
+  --saturation-primary: 70;
+  --lightness-primary: 45;
+  
+  /* Primary */
+  --primary: hsl(180, 70%, 45%);
+  --primary-dark: hsl(180, 70%, 30%);
+  --primary-light: hsl(180, 60%, 65%);
+  --primary-rgb: 6, 182, 212;
+  
+  /* Secondary */
+  --secondary: hsl(160, 75%, 40%);
+  --secondary-dark: hsl(160, 75%, 25%);
+  --secondary-light: hsl(160, 65%, 60%);
+  
+  /* Accent */
+  --accent: hsl(200, 80%, 45%);
+  --accent-dark: hsl(200, 80%, 30%);
+  --accent-light: hsl(200, 70%, 65%);
+  
+  /* Backgrounds */
+  --bg-color: hsl(180, 25%, 5%);
+  --bg-primary: hsl(180, 25%, 8%);
+  --bg-secondary: hsl(180, 20%, 12%);
+  --bg-tertiary: hsl(180, 15%, 16%);
+  
+  /* Text */
+  --text-primary: hsl(180, 20%, 95%);
+  --text-secondary: hsl(180, 15%, 80%);
+  --text-muted: hsl(180, 15%, 60%);
+}
+
+/* =============================================================================
+   GRAPE THEME
+   Deep purple vibes
+   ============================================================================= */
+[data-theme="grape"] {
+  /* Foundation */
+  --hue-primary: 280;
+  --saturation-primary: 70;
+  --lightness-primary: 45;
+
+  /* Primary */
+  --primary: hsl(280, 70%, 45%);
+  --primary-dark: hsl(280, 70%, 30%);
+  --primary-light: hsl(280, 60%, 65%);
+  --primary-rgb: 147, 51, 234;
+
+  /* Secondary */
+  --secondary: hsl(300, 65%, 50%);
+  --secondary-dark: hsl(300, 65%, 35%);
+  --secondary-light: hsl(300, 55%, 70%);
+
+  /* Accent */
+  --accent: hsl(260, 75%, 45%);
+  --accent-dark: hsl(260, 75%, 30%);
+  --accent-light: hsl(260, 65%, 65%);
+
+  /* Backgrounds */
+  --bg-color: hsl(280, 20%, 8%);
+  --bg-primary: hsl(280, 20%, 12%);
+  --bg-secondary: hsl(280, 15%, 16%);
+  --bg-tertiary: hsl(280, 12%, 20%);
+
+  /* Text */
+  --text-primary: hsl(280, 15%, 95%);
+  --text-secondary: hsl(280, 10%, 80%);
+  --text-muted: hsl(280, 10%, 60%);
+}
+
+/* =============================================================================
+   CORAL DARK THEME
+   Vibrant coral with high saturation
+   ============================================================================= */
+[data-theme="coral-dark"] {
+  /* Foundation */
+  --hue-primary: 20;
+  --saturation-primary: 85;
+  --lightness-primary: 60;
+
+  /* Primary */
+  --primary: hsl(20, 85%, 60%);
+  --primary-dark: hsl(20, 85%, 45%);
+  --primary-light: hsl(20, 75%, 75%);
+  --primary-rgb: 217, 119, 41;
+
+  /* Secondary */
+  --secondary: hsl(180, 60%, 45%);
+  --secondary-dark: hsl(180, 60%, 30%);
+  --secondary-light: hsl(180, 50%, 65%);
+
+  /* Accent */
+  --accent: hsl(270, 60%, 55%);
+  --accent-dark: hsl(270, 60%, 40%);
+  --accent-light: hsl(270, 50%, 70%);
+
+  /* Backgrounds */
+  --bg-color: hsl(20, 25%, 10%);
+  --bg-primary: hsl(20, 25%, 14%);
+  --bg-secondary: hsl(20, 20%, 18%);
+  --bg-tertiary: hsl(20, 15%, 22%);
+
+  /* Text */
+  --text-primary: hsl(20, 15%, 95%);
+  --text-secondary: hsl(20, 10%, 80%);
+  --text-muted: hsl(20, 10%, 60%);
+}
+
+/* =============================================================================
+   TEAL DARK THEME
+   High-saturation teal
+   ============================================================================= */
+[data-theme="teal-dark"] {
+  /* Foundation */
+  --hue-primary: 170;
+  --saturation-primary: 85;
+  --lightness-primary: 55;
+
+  /* Primary */
+  --primary: hsl(170, 85%, 55%);
+  --primary-dark: hsl(170, 85%, 40%);
+  --primary-light: hsl(170, 75%, 70%);
+  --primary-rgb: 20, 201, 168;
+
+  /* Secondary */
+  --secondary: hsl(20, 80%, 60%);
+  --secondary-dark: hsl(20, 80%, 45%);
+  --secondary-light: hsl(20, 70%, 75%);
+
+  /* Accent */
+  --accent: hsl(50, 80%, 60%);
+  --accent-dark: hsl(50, 80%, 45%);
+  --accent-light: hsl(50, 70%, 75%);
+
+  /* Backgrounds */
+  --bg-color: hsl(170, 25%, 8%);
+  --bg-primary: hsl(170, 25%, 12%);
+  --bg-secondary: hsl(170, 20%, 16%);
+  --bg-tertiary: hsl(170, 15%, 20%);
+
+  /* Text */
+  --text-primary: hsl(170, 15%, 95%);
+  --text-secondary: hsl(170, 10%, 80%);
+  --text-muted: hsl(170, 10%, 60%);
+}
+
+/* =============================================================================
+   INDIGO DARK THEME
+   Medium-saturation indigo
+   ============================================================================= */
+[data-theme="indigo-dark"] {
+  /* Foundation */
+  --hue-primary: 250;
+  --saturation-primary: 60;
+  --lightness-primary: 60;
+
+  /* Primary */
+  --primary: hsl(250, 60%, 60%);
+  --primary-dark: hsl(250, 60%, 45%);
+  --primary-light: hsl(250, 50%, 75%);
+  --primary-rgb: 165, 140, 251;
+
+  /* Secondary */
+  --secondary: hsl(30, 70%, 60%);
+  --secondary-dark: hsl(30, 70%, 45%);
+  --secondary-light: hsl(30, 60%, 75%);
+
+  /* Accent */
+  --accent: hsl(170, 60%, 50%);
+  --accent-dark: hsl(170, 60%, 35%);
+  --accent-light: hsl(170, 50%, 65%);
+
+  /* Backgrounds */
+  --bg-color: hsl(250, 25%, 10%);
+  --bg-primary: hsl(250, 25%, 14%);
+  --bg-secondary: hsl(250, 20%, 18%);
+  --bg-tertiary: hsl(250, 15%, 22%);
+
+  /* Text */
+  --text-primary: hsl(250, 15%, 95%);
+  --text-secondary: hsl(250, 10%, 80%);
+  --text-muted: hsl(250, 10%, 60%);
+}
+
+/* =============================================================================
+   PLUM DARK THEME
+   Medium-saturation plum
+   ============================================================================= */
+[data-theme="plum-dark"] {
+  /* Foundation */
+  --hue-primary: 305;
+  --saturation-primary: 65;
+  --lightness-primary: 60;
+
+  /* Primary */
+  --primary: hsl(305, 65%, 60%);
+  --primary-dark: hsl(305, 65%, 45%);
+  --primary-light: hsl(305, 55%, 75%);
+  --primary-rgb: 217, 119, 196;
+
+  /* Secondary */
+  --secondary: hsl(100, 60%, 55%);
+  --secondary-dark: hsl(100, 60%, 40%);
+  --secondary-light: hsl(100, 50%, 70%);
+
+  /* Accent */
+  --accent: hsl(190, 70%, 50%);
+  --accent-dark: hsl(190, 70%, 35%);
+  --accent-light: hsl(190, 60%, 65%);
+
+  /* Backgrounds */
+  --bg-color: hsl(305, 25%, 9%);
+  --bg-primary: hsl(305, 25%, 13%);
+  --bg-secondary: hsl(305, 20%, 17%);
+  --bg-tertiary: hsl(305, 15%, 21%);
+
+  /* Text */
+  --text-primary: hsl(305, 15%, 95%);
+  --text-secondary: hsl(305, 10%, 80%);
+  --text-muted: hsl(305, 10%, 60%);
+}
+
+/* =============================================================================
+   SAGE DARK THEME
+   Low-saturation sage green
+   ============================================================================= */
+[data-theme="sage-dark"] {
+  /* Foundation */
+  --hue-primary: 140;
+  --saturation-primary: 40;
+  --lightness-primary: 55;
+
+  /* Primary */
+  --primary: hsl(140, 40%, 55%);
+  --primary-dark: hsl(140, 40%, 40%);
+  --primary-light: hsl(140, 30%, 70%);
+  --primary-rgb: 107, 158, 127;
+
+  /* Secondary */
+  --secondary: hsl(280, 35%, 50%);
+  --secondary-dark: hsl(280, 35%, 35%);
+  --secondary-light: hsl(280, 25%, 65%);
+
+  /* Accent */
+  --accent: hsl(15, 40%, 60%);
+  --accent-dark: hsl(15, 40%, 45%);
+  --accent-light: hsl(15, 30%, 75%);
+
+  /* Backgrounds */
+  --bg-color: hsl(140, 15%, 12%);
+  --bg-primary: hsl(140, 15%, 16%);
+  --bg-secondary: hsl(140, 12%, 20%);
+  --bg-tertiary: hsl(140, 10%, 24%);
+
+  /* Text */
+  --text-primary: hsl(140, 10%, 95%);
+  --text-secondary: hsl(140, 8%, 80%);
+  --text-muted: hsl(140, 8%, 60%);
+}
+
+/* =============================================================================
+   AMBER DARK THEME
+   High-saturation amber
+   ============================================================================= */
+[data-theme="amber-dark"] {
+  /* Foundation */
+  --hue-primary: 40;
+  --saturation-primary: 85;
+  --lightness-primary: 60;
+
+  /* Primary */
+  --primary: hsl(40, 85%, 60%);
+  --primary-dark: hsl(40, 85%, 45%);
+  --primary-light: hsl(40, 75%, 75%);
+  --primary-rgb: 217, 167, 15;
+
+  /* Secondary */
+  --secondary: hsl(170, 75%, 50%);
+  --secondary-dark: hsl(170, 75%, 35%);
+  --secondary-light: hsl(170, 65%, 65%);
+
+  /* Accent */
+  --accent: hsl(270, 70%, 55%);
+  --accent-dark: hsl(270, 70%, 40%);
+  --accent-light: hsl(270, 60%, 70%);
+
+  /* Backgrounds */
+  --bg-color: hsl(40, 25%, 8%);
+  --bg-primary: hsl(40, 25%, 12%);
+  --bg-secondary: hsl(40, 20%, 16%);
+  --bg-tertiary: hsl(40, 15%, 20%);
+
+  /* Text */
+  --text-primary: hsl(40, 15%, 95%);
+  --text-secondary: hsl(40, 10%, 80%);
+  --text-muted: hsl(40, 10%, 60%);
+}
+
+/* =============================================================================
+   SAPPHIRE DARK THEME
+   High-saturation sapphire blue
+   ============================================================================= */
+[data-theme="sapphire-dark"] {
+  /* Foundation */
+  --hue-primary: 220;
+  --saturation-primary: 80;
+  --lightness-primary: 60;
+
+  /* Primary */
+  --primary: hsl(220, 80%, 60%);
+  --primary-dark: hsl(220, 80%, 45%);
+  --primary-light: hsl(220, 70%, 75%);
+  --primary-rgb: 90, 149, 255;
+
+  /* Secondary */
+  --secondary: hsl(30, 85%, 60%);
+  --secondary-dark: hsl(30, 85%, 45%);
+  --secondary-light: hsl(30, 75%, 75%);
+
+  /* Accent */
+  --accent: hsl(110, 75%, 55%);
+  --accent-dark: hsl(110, 75%, 40%);
+  --accent-light: hsl(110, 65%, 70%);
+
+  /* Backgrounds */
+  --bg-color: hsl(220, 25%, 8%);
+  --bg-primary: hsl(220, 25%, 12%);
+  --bg-secondary: hsl(220, 20%, 16%);
+  --bg-tertiary: hsl(220, 15%, 20%);
+
+  /* Text */
+  --text-primary: hsl(220, 15%, 95%);
+  --text-secondary: hsl(220, 10%, 80%);
+  --text-muted: hsl(220, 10%, 60%);
+}
+
+/* =============================================================================
+   TURQUOISE DARK THEME
+   High-saturation turquoise
+   ============================================================================= */
+[data-theme="turquoise-dark"] {
+  /* Foundation */
+  --hue-primary: 175;
+  --saturation-primary: 85;
+  --lightness-primary: 55;
+
+  /* Primary */
+  --primary: hsl(175, 85%, 55%);
+  --primary-dark: hsl(175, 85%, 40%);
+  --primary-light: hsl(175, 75%, 70%);
+  --primary-rgb: 13, 210, 180;
+
+  /* Secondary */
+  --secondary: hsl(10, 80%, 65%);
+  --secondary-dark: hsl(10, 80%, 50%);
+  --secondary-light: hsl(10, 70%, 80%);
+
+  /* Accent */
+  --accent: hsl(45, 85%, 60%);
+  --accent-dark: hsl(45, 85%, 45%);
+  --accent-light: hsl(45, 75%, 75%);
+
+  /* Backgrounds */
+  --bg-color: hsl(175, 25%, 7%);
+  --bg-primary: hsl(175, 25%, 11%);
+  --bg-secondary: hsl(175, 20%, 15%);
+  --bg-tertiary: hsl(175, 15%, 19%);
+
+  /* Text */
+  --text-primary: hsl(175, 15%, 95%);
+  --text-secondary: hsl(175, 10%, 80%);
+  --text-muted: hsl(175, 10%, 60%);
+}
+
+/* =============================================================================
+   TOMATO DARK THEME
+   High-saturation tomato red
+   ============================================================================= */
+[data-theme="tomato-dark"] {
+  /* Foundation */
+  --hue-primary: 10;
+  --saturation-primary: 90;
+  --lightness-primary: 60;
+
+  /* Primary */
+  --primary: hsl(10, 90%, 60%);
+  --primary-dark: hsl(10, 90%, 45%);
+  --primary-light: hsl(10, 80%, 75%);
+  --primary-rgb: 236, 70, 35;
+
+  /* Secondary */
+  --secondary: hsl(185, 80%, 50%);
+  --secondary-dark: hsl(185, 80%, 35%);
+  --secondary-light: hsl(185, 70%, 65%);
+
+  /* Accent */
+  --accent: hsl(50, 85%, 55%);
+  --accent-dark: hsl(50, 85%, 40%);
+  --accent-light: hsl(50, 75%, 70%);
+
+  /* Backgrounds */
+  --bg-color: hsl(10, 25%, 9%);
+  --bg-primary: hsl(10, 25%, 13%);
+  --bg-secondary: hsl(10, 20%, 17%);
+  --bg-tertiary: hsl(10, 15%, 21%);
+
+  /* Text */
+  --text-primary: hsl(10, 15%, 95%);
+  --text-secondary: hsl(10, 10%, 80%);
+  --text-muted: hsl(10, 10%, 60%);
+}
+
+/* =============================================================================
+   ROSE DARK THEME
+   Medium-saturation rose pink
+   ============================================================================= */
+[data-theme="rose-dark"] {
+  /* Foundation */
+  --hue-primary: 335;
+  --saturation-primary: 70;
+  --lightness-primary: 62;
+
+  /* Primary */
+  --primary: hsl(335, 70%, 62%);
+  --primary-dark: hsl(335, 70%, 47%);
+  --primary-light: hsl(335, 60%, 77%);
+  --primary-rgb: 225, 99, 152;
+
+  /* Secondary */
+  --secondary: hsl(100, 65%, 50%);
+  --secondary-dark: hsl(100, 65%, 35%);
+  --secondary-light: hsl(100, 55%, 65%);
+
+  /* Accent */
+  --accent: hsl(195, 70%, 50%);
+  --accent-dark: hsl(195, 70%, 35%);
+  --accent-light: hsl(195, 60%, 65%);
+
+  /* Backgrounds */
+  --bg-color: hsl(335, 25%, 10%);
+  --bg-primary: hsl(335, 25%, 14%);
+  --bg-secondary: hsl(335, 20%, 18%);
+  --bg-tertiary: hsl(335, 15%, 22%);
+
+  /* Text */
+  --text-primary: hsl(335, 15%, 95%);
+  --text-secondary: hsl(335, 10%, 80%);
+  --text-muted: hsl(335, 10%, 60%);
+}
+
+/* =============================================================================
+   COPPER DARK THEME
+   Medium-saturation copper
+   ============================================================================= */
+[data-theme="copper-dark"] {
+  /* Foundation */
+  --hue-primary: 25;
+  --saturation-primary: 70;
+  --lightness-primary: 60;
+
+  /* Primary */
+  --primary: hsl(25, 70%, 60%);
+  --primary-dark: hsl(25, 70%, 45%);
+  --primary-light: hsl(25, 60%, 75%);
+  --primary-rgb: 201, 116, 69;
+
+  /* Secondary */
+  --secondary: hsl(165, 65%, 48%);
+  --secondary-dark: hsl(165, 65%, 33%);
+  --secondary-light: hsl(165, 55%, 63%);
+
+  /* Accent */
+  --accent: hsl(280, 60%, 55%);
+  --accent-dark: hsl(280, 60%, 40%);
+  --accent-light: hsl(280, 50%, 70%);
+
+  /* Backgrounds */
+  --bg-color: hsl(25, 20%, 11%);
+  --bg-primary: hsl(25, 20%, 15%);
+  --bg-secondary: hsl(25, 15%, 19%);
+  --bg-tertiary: hsl(25, 12%, 23%);
+
+  /* Text */
+  --text-primary: hsl(25, 15%, 95%);
+  --text-secondary: hsl(25, 10%, 80%);
+  --text-muted: hsl(25, 10%, 60%);
+}
+
+/* =============================================================================
+   JADE DARK THEME
+   Medium-saturation jade green
+   ============================================================================= */
+[data-theme="jade-dark"] {
+  /* Foundation */
+  --hue-primary: 160;
+  --saturation-primary: 65;
+  --lightness-primary: 55;
+
+  /* Primary */
+  --primary: hsl(160, 65%, 55%);
+  --primary-dark: hsl(160, 65%, 40%);
+  --primary-light: hsl(160, 55%, 70%);
+  --primary-rgb: 44, 171, 135;
+
+  /* Secondary */
+  --secondary: hsl(330, 70%, 60%);
+  --secondary-dark: hsl(330, 70%, 45%);
+  --secondary-light: hsl(330, 60%, 75%);
+
+  /* Accent */
+  --accent: hsl(50, 75%, 60%);
+  --accent-dark: hsl(50, 75%, 45%);
+  --accent-light: hsl(50, 65%, 75%);
+
+  /* Backgrounds */
+  --bg-color: hsl(160, 25%, 9%);
+  --bg-primary: hsl(160, 25%, 13%);
+  --bg-secondary: hsl(160, 20%, 17%);
+  --bg-tertiary: hsl(160, 15%, 21%);
+
+  /* Text */
+  --text-primary: hsl(160, 15%, 95%);
+  --text-secondary: hsl(160, 10%, 80%);
+  --text-muted: hsl(160, 10%, 60%);
+}
+
+/* =============================================================================
+   AMETHYST DARK THEME
+   Medium-saturation amethyst
+   ============================================================================= */
+[data-theme="amethyst-dark"] {
+  /* Foundation */
+  --hue-primary: 275;
+  --saturation-primary: 65;
+  --lightness-primary: 62;
+
+  /* Primary */
+  --primary: hsl(275, 65%, 62%);
+  --primary-dark: hsl(275, 65%, 47%);
+  --primary-light: hsl(275, 55%, 77%);
+  --primary-rgb: 201, 124, 233;
+
+  /* Secondary */
+  --secondary: hsl(105, 60%, 55%);
+  --secondary-dark: hsl(105, 60%, 40%);
+  --secondary-light: hsl(105, 50%, 70%);
+
+  /* Accent */
+  --accent: hsl(30, 75%, 60%);
+  --accent-dark: hsl(30, 75%, 45%);
+  --accent-light: hsl(30, 65%, 75%);
+
+  /* Backgrounds */
+  --bg-color: hsl(275, 25%, 10%);
+  --bg-primary: hsl(275, 25%, 14%);
+  --bg-secondary: hsl(275, 20%, 18%);
+  --bg-tertiary: hsl(275, 15%, 22%);
+
+  /* Text */
+  --text-primary: hsl(275, 15%, 95%);
+  --text-secondary: hsl(275, 10%, 80%);
+  --text-muted: hsl(275, 10%, 60%);
+}
+
+/* =============================================================================
+   MARIGOLD DARK THEME
+   High-saturation marigold
+   ============================================================================= */
+[data-theme="marigold-dark"] {
+  /* Foundation */
+  --hue-primary: 45;
+  --saturation-primary: 90;
+  --lightness-primary: 60;
+
+  /* Primary */
+  --primary: hsl(45, 90%, 60%);
+  --primary-dark: hsl(45, 90%, 45%);
+  --primary-light: hsl(45, 80%, 75%);
+  --primary-rgb: 227, 168, 15;
+
+  /* Secondary */
+  --secondary: hsl(175, 80%, 48%);
+  --secondary-dark: hsl(175, 80%, 33%);
+  --secondary-light: hsl(175, 70%, 63%);
+
+  /* Accent */
+  --accent: hsl(260, 75%, 55%);
+  --accent-dark: hsl(260, 75%, 40%);
+  --accent-light: hsl(260, 65%, 70%);
+
+  /* Backgrounds */
+  --bg-color: hsl(45, 25%, 8%);
+  --bg-primary: hsl(45, 25%, 12%);
+  --bg-secondary: hsl(45, 20%, 16%);
+  --bg-tertiary: hsl(45, 15%, 20%);
+
+  /* Text */
+  --text-primary: hsl(45, 15%, 95%);
+  --text-secondary: hsl(45, 10%, 80%);
+  --text-muted: hsl(45, 10%, 60%);
+}
+
+/* =============================================================================
+   SEAFOAM LIGHT THEME
+   Medium-saturation seafoam, light background
+   ============================================================================= */
+[data-theme="seafoam-light"] {
+  /* Foundation */
+  --hue-primary: 175;
+  --saturation-primary: 50;
+  --lightness-primary: 45;
+
+  /* Primary */
+  --primary: hsl(175, 50%, 45%);
+  --primary-dark: hsl(175, 50%, 30%);
+  --primary-light: hsl(175, 40%, 60%);
+  --primary-rgb: 73, 148, 127;
+
+  /* Secondary */
+  --secondary: hsl(15, 55%, 55%);
+  --secondary-dark: hsl(15, 55%, 40%);
+  --secondary-light: hsl(15, 45%, 70%);
+
+  /* Accent */
+  --accent: hsl(50, 60%, 50%);
+  --accent-dark: hsl(50, 60%, 35%);
+  --accent-light: hsl(50, 50%, 65%);
+
+  /* Backgrounds */
+  --bg-color: hsl(175, 20%, 95%);
+  --bg-primary: hsl(175, 15%, 98%);
+  --bg-secondary: hsl(175, 12%, 92%);
+  --bg-tertiary: hsl(175, 10%, 88%);
+
+  /* Text */
+  --text-primary: hsl(175, 40%, 18%);
+  --text-secondary: hsl(175, 25%, 38%);
+  --text-muted: hsl(175, 20%, 52%);
+}
+
+/* =============================================================================
+   PEONY LIGHT THEME
+   Medium-saturation peony pink, light background
+   ============================================================================= */
+[data-theme="peony-light"] {
+  /* Foundation */
+  --hue-primary: 325;
+  --saturation-primary: 55;
+  --lightness-primary: 50;
+
+  /* Primary */
+  --primary: hsl(325, 55%, 50%);
+  --primary-dark: hsl(325, 55%, 35%);
+  --primary-light: hsl(325, 45%, 65%);
+  --primary-rgb: 187, 76, 133;
+
+  /* Secondary */
+  --secondary: hsl(110, 50%, 45%);
+  --secondary-dark: hsl(110, 50%, 30%);
+  --secondary-light: hsl(110, 40%, 60%);
+
+  /* Accent */
+  --accent: hsl(190, 55%, 45%);
+  --accent-dark: hsl(190, 55%, 30%);
+  --accent-light: hsl(190, 45%, 60%);
+
+  /* Backgrounds */
+  --bg-color: hsl(325, 20%, 96%);
+  --bg-primary: hsl(325, 15%, 99%);
+  --bg-secondary: hsl(325, 12%, 93%);
+  --bg-tertiary: hsl(325, 10%, 89%);
+
+  /* Text */
+  --text-primary: hsl(325, 35%, 12%);
+  --text-secondary: hsl(325, 20%, 32%);
+  --text-muted: hsl(325, 15%, 48%);
+}
+
+/* =============================================================================
+   TAUPE LIGHT THEME
+   Low-saturation taupe, light background
+   ============================================================================= */
+[data-theme="taupe-light"] {
+  /* Foundation */
+  --hue-primary: 30;
+  --saturation-primary: 15;
+  --lightness-primary: 45;
+
+  /* Primary */
+  --primary: hsl(30, 15%, 45%);
+  --primary-dark: hsl(30, 15%, 30%);
+  --primary-light: hsl(30, 10%, 60%);
+  --primary-rgb: 113, 101, 89;
+
+  /* Secondary */
+  --secondary: hsl(0, 10%, 35%);
+  --secondary-dark: hsl(0, 10%, 20%);
+  --secondary-light: hsl(0, 8%, 50%);
+
+  /* Accent */
+  --accent: hsl(120, 20%, 50%);
+  --accent-dark: hsl(120, 20%, 35%);
+  --accent-light: hsl(120, 15%, 65%);
+
+  /* Backgrounds */
+  --bg-color: hsl(30, 15%, 94%);
+  --bg-primary: hsl(30, 10%, 97%);
+  --bg-secondary: hsl(30, 8%, 91%);
+  --bg-tertiary: hsl(30, 6%, 87%);
+
+  /* Text */
+  --text-primary: hsl(30, 12%, 18%);
+  --text-secondary: hsl(30, 8%, 38%);
+  --text-muted: hsl(30, 6%, 54%);
+}
+
+/* =============================================================================
+   KHAKI LIGHT THEME
+   Medium-saturation khaki, light background
+   ============================================================================= */
+[data-theme="khaki-light"] {
+  /* Foundation */
+  --hue-primary: 50;
+  --saturation-primary: 30;
+  --lightness-primary: 50;
+
+  /* Primary */
+  --primary: hsl(50, 30%, 50%);
+  --primary-dark: hsl(50, 30%, 35%);
+  --primary-light: hsl(50, 20%, 65%);
+  --primary-rgb: 154, 145, 77;
+
+  /* Secondary */
+  --secondary: hsl(190, 25%, 45%);
+  --secondary-dark: hsl(190, 25%, 30%);
+  --secondary-light: hsl(190, 20%, 60%);
+
+  /* Accent */
+  --accent: hsl(20, 35%, 55%);
+  --accent-dark: hsl(20, 35%, 40%);
+  --accent-light: hsl(20, 25%, 70%);
+
+  /* Backgrounds */
+  --bg-color: hsl(50, 15%, 95%);
+  --bg-primary: hsl(50, 10%, 98%);
+  --bg-secondary: hsl(50, 8%, 92%);
+  --bg-tertiary: hsl(50, 6%, 88%);
+
+  /* Text */
+  --text-primary: hsl(50, 20%, 15%);
+  --text-secondary: hsl(50, 15%, 35%);
+  --text-muted: hsl(50, 12%, 51%);
+}
+
+/* =============================================================================
+   STEEL LIGHT THEME
+   Low-saturation steel blue, light background
+   ============================================================================= */
+[data-theme="steel-light"] {
+  /* Foundation */
+  --hue-primary: 205;
+  --saturation-primary: 15;
+  --lightness-primary: 45;
+
+  /* Primary */
+  --primary: hsl(205, 15%, 45%);
+  --primary-dark: hsl(205, 15%, 30%);
+  --primary-light: hsl(205, 10%, 60%);
+  --primary-rgb: 101, 115, 130;
+
+  /* Secondary */
+  --secondary: hsl(0, 10%, 35%);
+  --secondary-dark: hsl(0, 10%, 20%);
+  --secondary-light: hsl(0, 8%, 50%);
+
+  /* Accent */
+  --accent: hsl(25, 25%, 50%);
+  --accent-dark: hsl(25, 25%, 35%);
+  --accent-light: hsl(25, 20%, 65%);
+
+  /* Backgrounds */
+  --bg-color: hsl(205, 20%, 96%);
+  --bg-primary: hsl(205, 15%, 99%);
+  --bg-secondary: hsl(205, 10%, 93%);
+  --bg-tertiary: hsl(205, 8%, 89%);
+
+  /* Text */
+  --text-primary: hsl(205, 18%, 13%);
+  --text-secondary: hsl(205, 12%, 33%);
+  --text-muted: hsl(205, 10%, 49%);
+}
+
+/* =============================================================================
+   MOSS LIGHT THEME
+   Medium-saturation moss green, light background
+   ============================================================================= */
+[data-theme="moss-light"] {
+  /* Foundation */
+  --hue-primary: 135;
+  --saturation-primary: 25;
+  --lightness-primary: 45;
+
+  /* Primary */
+  --primary: hsl(135, 25%, 45%);
+  --primary-dark: hsl(135, 25%, 30%);
+  --primary-light: hsl(135, 18%, 60%);
+  --primary-rgb: 94, 127, 101;
+
+  /* Secondary */
+  --secondary: hsl(15, 30%, 55%);
+  --secondary-dark: hsl(15, 30%, 40%);
+  --secondary-light: hsl(15, 22%, 70%);
+
+  /* Accent */
+  --accent: hsl(45, 35%, 55%);
+  --accent-dark: hsl(45, 35%, 40%);
+  --accent-light: hsl(45, 28%, 70%);
+
+  /* Backgrounds */
+  --bg-color: hsl(135, 18%, 95%);
+  --bg-primary: hsl(135, 12%, 98%);
+  --bg-secondary: hsl(135, 10%, 92%);
+  --bg-tertiary: hsl(135, 8%, 88%);
+
+  /* Text */
+  --text-primary: hsl(135, 20%, 16%);
+  --text-secondary: hsl(135, 15%, 36%);
+  --text-muted: hsl(135, 12%, 52%);
+}
+
+/* =============================================================================
+   SAND LIGHT THEME
+   Medium-saturation sand, light background
+   ============================================================================= */
+[data-theme="sand-light"] {
+  /* Foundation */
+  --hue-primary: 35;
+  --saturation-primary: 25;
+  --lightness-primary: 50;
+
+  /* Primary */
+  --primary: hsl(35, 25%, 50%);
+  --primary-dark: hsl(35, 25%, 35%);
+  --primary-light: hsl(35, 18%, 65%);
+  --primary-rgb: 147, 119, 85;
+
+  /* Secondary */
+  --secondary: hsl(175, 25%, 45%);
+  --secondary-dark: hsl(175, 25%, 30%);
+  --secondary-light: hsl(175, 18%, 60%);
+
+  /* Accent */
+  --accent: hsl(330, 30%, 50%);
+  --accent-dark: hsl(330, 30%, 35%);
+  --accent-light: hsl(330, 22%, 65%);
+
+  /* Backgrounds */
+  --bg-color: hsl(35, 18%, 94%);
+  --bg-primary: hsl(35, 12%, 97%);
+  --bg-secondary: hsl(35, 10%, 91%);
+  --bg-tertiary: hsl(35, 8%, 87%);
+
+  /* Text */
+  --text-primary: hsl(35, 18%, 17%);
+  --text-secondary: hsl(35, 12%, 37%);
+  --text-muted: hsl(35, 10%, 53%);
+}
+
+/* =============================================================================
+   BLUSH LIGHT THEME
+   Medium-saturation blush pink, light background
+   ============================================================================= */
+[data-theme="blush-light"] {
+  /* Foundation */
+  --hue-primary: 355;
+  --saturation-primary: 35;
+  --lightness-primary: 55;
+
+  /* Primary */
+  --primary: hsl(355, 35%, 55%);
+  --primary-dark: hsl(355, 35%, 40%);
+  --primary-light: hsl(355, 25%, 70%);
+  --primary-rgb: 177, 111, 127;
+
+  /* Secondary */
+  --secondary: hsl(185, 35%, 45%);
+  --secondary-dark: hsl(185, 35%, 30%);
+  --secondary-light: hsl(185, 25%, 60%);
+
+  /* Accent */
+  --accent: hsl(50, 40%, 55%);
+  --accent-dark: hsl(50, 40%, 40%);
+  --accent-light: hsl(50, 30%, 70%);
+
+  /* Backgrounds */
+  --bg-color: hsl(355, 20%, 96%);
+  --bg-primary: hsl(355, 15%, 99%);
+  --bg-secondary: hsl(355, 12%, 93%);
+  --bg-tertiary: hsl(355, 10%, 89%);
+
+  /* Text */
+  --text-primary: hsl(355, 30%, 12%);
+  --text-secondary: hsl(355, 20%, 32%);
+  --text-muted: hsl(355, 15%, 48%);
+}
+
+/* =============================================================================
+   SAGE LIGHT THEME
+   Low-saturation sage, light background
+   ============================================================================= */
+[data-theme="sage-light"] {
+  /* Foundation */
+  --hue-primary: 127;
+  --saturation-primary: 20;
+  --lightness-primary: 48;
+
+  /* Primary */
+  --primary: hsl(127, 20%, 48%);
+  --primary-dark: hsl(127, 20%, 33%);
+  --primary-light: hsl(127, 15%, 63%);
+  --primary-rgb: 98, 123, 101;
+
+  /* Secondary */
+  --secondary: hsl(280, 25%, 50%);
+  --secondary-dark: hsl(280, 25%, 35%);
+  --secondary-light: hsl(280, 18%, 65%);
+
+  /* Accent */
+  --accent: hsl(15, 30%, 55%);
+  --accent-dark: hsl(15, 30%, 40%);
+  --accent-light: hsl(15, 22%, 70%);
+
+  /* Backgrounds */
+  --bg-color: hsl(127, 15%, 95%);
+  --bg-primary: hsl(127, 10%, 98%);
+  --bg-secondary: hsl(127, 8%, 92%);
+  --bg-tertiary: hsl(127, 6%, 88%);
+
+  /* Text */
+  --text-primary: hsl(127, 18%, 16%);
+  --text-secondary: hsl(127, 12%, 36%);
+  --text-muted: hsl(127, 10%, 52%);
+}
+
+/* =============================================================================
+   MAUVE LIGHT THEME
+   Medium-saturation mauve, light background
+   ============================================================================= */
+[data-theme="mauve-light"] {
+  /* Foundation */
+  --hue-primary: 285;
+  --saturation-primary: 25;
+  --lightness-primary: 50;
+
+  /* Primary */
+  --primary: hsl(285, 25%, 50%);
+  --primary-dark: hsl(285, 25%, 35%);
+  --primary-light: hsl(285, 18%, 65%);
+  --primary-rgb: 151, 119, 163;
+
+  /* Secondary */
+  --secondary: hsl(105, 25%, 48%);
+  --secondary-dark: hsl(105, 25%, 33%);
+  --secondary-light: hsl(105, 18%, 63%);
+
+  /* Accent */
+  --accent: hsl(30, 35%, 55%);
+  --accent-dark: hsl(30, 35%, 40%);
+  --accent-light: hsl(30, 28%, 70%);
+
+  /* Backgrounds */
+  --bg-color: hsl(285, 18%, 96%);
+  --bg-primary: hsl(285, 12%, 99%);
+  --bg-secondary: hsl(285, 10%, 93%);
+  --bg-tertiary: hsl(285, 8%, 89%);
+
+  /* Text */
+  --text-primary: hsl(285, 20%, 14%);
+  --text-secondary: hsl(285, 15%, 34%);
+  --text-muted: hsl(285, 12%, 50%);
+}
+
+/* =============================================================================
+   CELADON LIGHT THEME
+   Low-saturation celadon green, light background
+   ============================================================================= */
+[data-theme="celadon-light"] {
+  /* Foundation */
+  --hue-primary: 165;
+  --saturation-primary: 20;
+  --lightness-primary: 48;
+
+  /* Primary */
+  --primary: hsl(165, 20%, 48%);
+  --primary-dark: hsl(165, 20%, 33%);
+  --primary-light: hsl(165, 15%, 63%);
+  --primary-rgb: 98, 127, 116;
+
+  /* Secondary */
+  --secondary: hsl(330, 25%, 52%);
+  --secondary-dark: hsl(330, 25%, 37%);
+  --secondary-light: hsl(330, 18%, 67%);
+
+  /* Accent */
+  --accent: hsl(50, 30%, 55%);
+  --accent-dark: hsl(50, 30%, 40%);
+  --accent-light: hsl(50, 22%, 70%);
+
+  /* Backgrounds */
+  --bg-color: hsl(165, 15%, 95%);
+  --bg-primary: hsl(165, 10%, 98%);
+  --bg-secondary: hsl(165, 8%, 92%);
+  --bg-tertiary: hsl(165, 6%, 88%);
+
+  /* Text */
+  --text-primary: hsl(165, 18%, 15%);
+  --text-secondary: hsl(165, 12%, 35%);
+  --text-muted: hsl(165, 10%, 51%);
+}
+
+/* =============================================================================
+   LINEN LIGHT THEME
+   Low-saturation linen, light background
+   ============================================================================= */
+[data-theme="linen-light"] {
+  /* Foundation */
+  --hue-primary: 20;
+  --saturation-primary: 15;
+  --lightness-primary: 50;
+
+  /* Primary */
+  --primary: hsl(20, 15%, 50%);
+  --primary-dark: hsl(20, 15%, 35%);
+  --primary-light: hsl(20, 10%, 65%);
+  --primary-rgb: 126, 109, 97;
+
+  /* Secondary */
+  --secondary: hsl(180, 20%, 45%);
+  --secondary-dark: hsl(180, 20%, 30%);
+  --secondary-light: hsl(180, 15%, 60%);
+
+  /* Accent */
+  --accent: hsl(290, 25%, 50%);
+  --accent-dark: hsl(290, 25%, 35%);
+  --accent-light: hsl(290, 18%, 65%);
+
+  /* Backgrounds */
+  --bg-color: hsl(20, 15%, 94%);
+  --bg-primary: hsl(20, 10%, 97%);
+  --bg-secondary: hsl(20, 8%, 91%);
+  --bg-tertiary: hsl(20, 6%, 87%);
+
+  /* Text */
+  --text-primary: hsl(20, 12%, 18%);
+  --text-secondary: hsl(20, 8%, 38%);
+  --text-muted: hsl(20, 6%, 54%);
+}
+
+/* =============================================================================
+   PISTACHIO LIGHT THEME
+   Medium-saturation pistachio green, light background
+   ============================================================================= */
+[data-theme="pistachio-light"] {
+  /* Foundation */
+  --hue-primary: 92;
+  --saturation-primary: 30;
+  --lightness-primary: 50;
+
+  /* Primary */
+  --primary: hsl(92, 30%, 50%);
+  --primary-dark: hsl(92, 30%, 35%);
+  --primary-light: hsl(92, 20%, 65%);
+  --primary-rgb: 146, 162, 85;
+
+  /* Secondary */
+  --secondary: hsl(10, 35%, 55%);
+  --secondary-dark: hsl(10, 35%, 40%);
+  --secondary-light: hsl(10, 25%, 70%);
+
+  /* Accent */
+  --accent: hsl(190, 30%, 45%);
+  --accent-dark: hsl(190, 30%, 30%);
+  --accent-light: hsl(190, 22%, 60%);
+
+  /* Backgrounds */
+  --bg-color: hsl(92, 18%, 95%);
+  --bg-primary: hsl(92, 12%, 98%);
+  --bg-secondary: hsl(92, 10%, 92%);
+  --bg-tertiary: hsl(92, 8%, 88%);
+
+  /* Text */
+  --text-primary: hsl(92, 25%, 15%);
+  --text-secondary: hsl(92, 18%, 35%);
+  --text-muted: hsl(92, 15%, 51%);
+}

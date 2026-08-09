@@ -1,0 +1,217 @@
+<div class="page__hero">
+  <h1>🆕 What's New</h1>
+  <p>What's actually live on this site right now — every push to <code>main</code> deploys straight to <a href="https://cielovistasoftware.github.io/wb-starter/" target="_blank" rel="noopener">cielovistasoftware.github.io/wb-starter</a>, so this list is the real changelog, not a promise of a future release.</p>
+</div>
+
+<section id="whats-new-2026-08-09">
+  <h2>2026-08-09</h2>
+  <ul>
+    <li>Fixed <code>pages/behaviors.html</code>'s missing <code>x-alert</code> demo section (3 broken tests), and a matching gap in <code>alert()</code> that only ever read a literal <code>variant</code> attribute even though the schema declares <code>type</code> as an alias (#522).</li>
+    <li>Added regression coverage confirming <code>demos/frameworks.html</code>'s legacy code-panel duplication stays fixed, and that <code>wb-lazy.js</code>'s IntersectionObserver preload still enhances off-screen elements before they scroll into view — both behaviors were already correct in production but untested (#449, #491).</li>
+    <li>Fixed <code>wb-articles</code> never getting its base class on a schema-built host, then fixed the fix: an unconditional class-add broke the no-redundant-tag-name-class rule on a real <code>&lt;wb-articles&gt;</code> tag — now guarded the same way <code>chip()</code> already guards this exact case (#523).</li>
+    <li>Fixed <code>.wb-card__cta</code>/<code>.wb-card__product-cta</code> buttons crowding their own text against the edge — the real culprit was inline <code>style.cssText</code> in <code>cardpricing()</code>/<code>cardproduct()</code> silently overriding the CSS class's padding (#520).</li>
+    <li>Fixed every <code>wb-cardfile</code> example in the "fileType variants"/"Variants" sections of <code>demos/site/cards.html</code> showing a visible red "No href given" warning and collapsing its filename text to one character per line — the warning renders as a third flex sibling next to the icon and info column, squeezing info's <code>flex:1;min-width:0</code> down to nothing. Gave every example a real href. Separately fixed <code>cardfile()</code> reading a bare <code>type</code> attribute that no real markup ever sets (the schema declares <code>file-type</code>) — every file card showed the same generic folder icon regardless of its declared type.</li>
+    <li>Fixed a false-positive <code>wb-audio</code> runtime error: re-running <code>audio()</code> on the same host (a lazy rebuild) replaces the inner <code>&lt;audio&gt;</code> element without detaching the old one's error listener first, so a late error on that now-detached, nobody's-looking-at-it element used to throw for a source that's actually intact.</li>
+    <li>Fixed GitHub issue bodies rendered on the Issues page auto-promoting embedded <code>&lt;wb-*&gt;</code>/<code>x-*</code> code examples into real, live, fetching elements — a feature built for curated docs content, not arbitrary issue text. An issue merely illustrating a bug (like #527's own <code>&lt;wb-mdhtml src="/docs/guide.md"&gt;</code> example) would reproduce that exact bug live on the Issues page.</li>
+  </ul>
+</section>
+
+<section id="whats-new-2026-08-08">
+  <h2>2026-08-08</h2>
+  <ul>
+    <li>Reconciled overlapping fixes from two parallel work streams that had independently patched the same 7 issues in different ways — reviewed each pair, kept the better-rooted fix (or merged the best of both), and verified the result against the full compliance suite before shipping.</li>
+    <li>Fixed the home page's "Live Demos" section heading to read "Notification Card Examples" (#507).</li>
+    <li>Fixed generated progress-bar demos rendering an empty track — the demo generator never filled a value for ranged-number props that aren't required, and a schema-rebuild race could separately wipe an already-painted bar (#510).</li>
+    <li>Fixed <code>navigateTo()</code> throwing on standalone demo pages with no site shell — <code>init()</code> now reports whether it actually initialized, and callers only navigate when it did (#511).</li>
+    <li>Fixed a failed module import (e.g. a blocked/slow network request) causing one root failure to log dozens of duplicate errors, and re-triggering a fresh failing request for every later caller. Failures now retry once with a cache-busting request, then are memoized for a short cooldown so every caller in that window shares one error and one log entry, and a module killed by a transient blip can recover instead of staying dead for the page's life (#512, #513).</li>
+    <li>Fixed <code>docs/behaviors-reference.md</code>'s live wb-audio/img/video examples pointing at nonexistent placeholder files; added a compliance gate that audits every doc for this. Also added x-stack/x-cluster attribute-decoration examples to the layout table (#514).</li>
+    <li>Fixed <code>/errors-viewer</code> (no extension) 404ing — added the missing route alongside the existing <code>/errors-viewer.html</code> one. Also fixed a latent bug this surfaced: any page served via <code>res.sendFile()</code> 404s when the server's own checkout path contains a dot-prefixed folder (like this repo's own <code>.claude/worktrees/&lt;name&gt;/</code> agent-worktree convention) — now scoped correctly regardless of checkout location (#516).</li>
+    <li>Fixed the standalone <code>&lt;wb-cardhero&gt;</code> demo on the Components page collapsing to a narrow, unreadable sliver — it was missing the same <code>full-width</code> opt-out every other standalone hero-card demo on the site already uses.</li>
+    <li>Issues page: expanded issue bodies now render as real formatted markdown (headings, code blocks) instead of raw text with visible <code>##</code>/<code>```</code> markers. Added an "In Progress" filter tab, and click feedback on the toolbar buttons.</li>
+    <li>Removed an unnecessary <code>!important</code> that was forcing every inline <code>&lt;code&gt;</code> snippet into an oversized box regardless of content length (even a 2-character snippet got a 58×60px box) — the correct, smaller sizing was already defined elsewhere with normal CSS specificity.</li>
+    <li>Added a sortable, searchable component index at the top of the Components page — search by name/category/description, sort any column, jump straight to a component's live demo or docs.</li>
+    <li>Fixed the GitHub Pages build serving a stale purple lightning-bolt <code>favicon.png</code> instead of the site's real blue star — the two icon files had silently drifted apart.</li>
+    <li>Fixed the Components page's "View demo" links: every one produced a literal broken <code>href="#null"</code> (a generator bug reset the anchor on every regeneration), duplicate anchor IDs collided across several components, clicking never created a back-navigable history entry, and the scroll landed thousands of pixels short on a page long enough for its images to still be loading. Anchor IDs are now readable (<code>pricingCardDemo</code>) instead of generic.</li>
+    <li>Fixed <code>x-ignore</code> silently doing nothing for several injection paths — it now actually opts an element out everywhere. Added dual authoring support so <code>&lt;span x-chip&gt;</code> resolves the same component as <code>&lt;wb-chip&gt;</code>.</li>
+    <li>Moved the Themes page's code-syntax-theme picker (49 real highlight.js themes) onto the page itself — it existed but was only ever placed on an internal demo page nobody visits.</li>
+    <li>Doc pages now render their usage examples as real, live, working components instead of read-only syntax-highlighted text — affects 61 component doc files. Root-caused (not patched per-instance) the shrink-to-fit collapse this exposed for async-loading widgets, and fixed a full-document boilerplate example that was incorrectly live-rendering its own illustrative <code>&lt;link&gt;</code> tags as real page resources. Every doc's code panel also now has a minimum readable width, regardless of how small the component it's demonstrating is.</li>
+  </ul>
+</section>
+
+<section id="whats-new-2026-08-07">
+  <h2>2026-08-07</h2>
+  <ul>
+    <li><strong>UI Standards Audit + 20-Fix Batch:</strong> Comprehensive audit of deployed site found 4 critical bugs affecting media loading, template syntax, and component rendering. All fixed and covered by new regression tests.</li>
+    <li>Fixed audio files not loading on pages/components.html and pages/home.html — relative paths (<code>demos/sample.wav</code>) weren't resolving from different base URLs. Now absolute (<code>/demos/sample.wav</code>).</li>
+    <li>Fixed template literal syntax error in public/schema-viewer.html — unescaped backticks inside template string were causing <code>SyntaxError: Unexpected identifier 'html'</code>. Backticks now properly escaped.</li>
+    <li>Fixed cardhero component height inconsistency in demos/site/cards.html — height was suspiciously small (360px when standard is 400–600px). Corrected to 450px for consistency.</li>
+    <li>Fixed WBSite.init() null-reference crash on standalone demo pages (like intellisense-check.html) that don't have the full site layout (#app container). Now checks if #app exists before initializing site features.</li>
+    <li>Corrected marketing article metrics in docs/linkedin-update-article.md — component count was 70 (should be 72), demo count was 709 (should be 513). Updated with verified grep counts.</li>
+    <li>Added wb-demo code-width preset for 50% viewport width — new <code>data-code-width="50vw"</code> attribute on demo blocks.</li>
+    <li><strong>Regression Test Coverage Added (4 new test files):</strong>
+      <ul>
+        <li><code>media-path-validation.spec.ts</code> — validates all src/href attributes use absolute paths, catches media loading failures before deployment</li>
+        <li><code>template-literal-escaping.spec.ts</code> — detects unescaped backticks in template literals that cause SyntaxError at runtime</li>
+        <li><code>component-attribute-validation.spec.ts</code> — validates component attributes (cardhero height 400–600px, wb-progress 0–100, etc.) against expected ranges</li>
+        <li><code>demo-page-safety.spec.ts</code> — ensures standalone demo pages load without null-reference crashes</li>
+      </ul>
+    </li>
+    <li>Fixed x-behavior attribute scanning on lazy-loaded pages (doc-viewer.html, standalone demos) — <code>WB.scan()</code> now checks if root itself matches [x-behavior] before querying descendants (#322).</li>
+    <li>Fixed behaviors.html compliance gaps — added CSS shrink-to-fit rules for single-item demos, proper text padding for buttons, and root-relative resource paths (#486).</li>
+    <li>Fixed flaky regression tests under parallel load — ENOENT race condition when concurrent tests create/delete temporary files. Wrapped file reads in try-catch (#382).</li>
+    <li>Verified wb-cardvideo aspect-ratio parity with cardimage — both now default to 16/9, preventing inconsistent box heights on load failure (#482).</li>
+    <li>Fixed card footer text alignment — removed flexbox centering from card footers that collided with auto-injected site footer class. Now properly left-aligned at all viewport sizes (#350).</li>
+    <li>Fixed card size variants to have visually distinct widths — increased max-widths: xs/sm/md/lg/xl now 200/300/400/520/650px with consistent 100–130px progression.</li>
+    <li>Verified wb-cardportfolio variant and size support — compact/horizontal/full variants and xs/sm/md/lg/xl sizes all render visually distinct, availability dot colors working correctly.</li>
+    <li>Fixed audio src path on content.html — replaced external soundhelix.com URL with local <code>/demos/audio.mp3</code> to avoid CORS issues and ensure reliable playback.</li>
+    <li>Fixed home page load time bottleneck — removed redundant 1500ms re-render that was forcing users to wait 1.5+ seconds for dashboard to fully load. Now loads under 2000ms (#390).</li>
+    <li>All regression tests passing (250+), all compliance tests green (8/8). Ready for .io deployment.</li>
+  </ul>
+</section>
+
+<section id="whats-new-2026-08-05">
+  <h2>2026-08-05</h2>
+  <ul>
+    <li>Fixed several pages/list items sitting flush against neighboring content with no gap at all (list items wrapping onto a new line touched the item below; several code snippets sitting close together visually overlapped) — added real minimum spacing project-wide.</li>
+    <li>8 of the standalone component-showcase pages (Cards, Content, Effects, Feedback, Forms, Interactive, Layout, Overlays) rendered with their content flush against the browser edge, no page margin at all — now match every other page's breathing room.</li>
+    <li>The homepage's "Get Started" and "See the Components" buttons didn't go anywhere when clicked — now open the real setup guide and the Components page, respectively.</li>
+    <li>Replaced the homepage's animated "typing" code sample with a plain static one — it looked like a live, clickable control when it was only ever meant to be an illustration.</li>
+    <li><code>&lt;input type="password"&gt;</code> now gets the show/hide toggle automatically (closes a carry-over from yesterday's fix that had been silently lost).</li>
+    <li>New <strong>Issues</strong> page in the main menu — browse every open/closed GitHub issue, full body included, with a live count and date range for whichever filter you're on.</li>
+    <li>New <strong>Error Log</strong> button at the bottom of the main menu, linking straight to the error viewer.</li>
+    <li>Real runtime errors were only ever showing up in your browser's own devtools console — the site's own error log and error viewer never actually received them. Fixed the wiring; errors now land in both places.</li>
+    <li>The notes drawer now automatically files a real GitHub issue for every note you save, instead of just sitting in a local file nobody reviews.</li>
+    <li>On the Behaviors page (and everywhere else), examples decorated with an <code>x-*</code> attribute (like <code>x-toast</code>, <code>x-ripple</code>) now get the same clickable "docs" icon in the corner that components already had, instead of a plain text link easy to miss.</li>
+    <li>Every size and color variant of the dropdown/select control now actually looks different — they used to render almost identically regardless of which size or variant you picked.</li>
+    <li>Changing the theme in one place (like the header) now instantly updates every other theme picker on the page — they used to fall out of sync until you reloaded.</li>
+    <li>Fixed a drawer/sidebar toggle button that threw an error on every click after the first.</li>
+    <li>Fixed a navigation bar crash that could happen when it contained custom link markup.</li>
+    <li>wb-audio's documentation examples pointed at audio files that never existed — replaced with real, working audio.</li>
+    <li>Demos page: each category is now one clickable card (title + description together), instead of a description sitting above a separate, smaller "view" link.</li>
+    <li>Added documentation for 9 previously-undocumented layout behaviors (center, masonry, sticky, scrollable, sidebarlayout, switcher, cover, reel, icon).</li>
+    <li>Demo blocks can now show you how to listen for the events a control fires — add it to a demo and see a live log update as you interact with the control above it.</li>
+    <li>Fixed several component bugs: card glass+elevated variants losing their glass look, video cards with no fixed aspect ratio, a heading-margin rule losing to a more specific unrelated rule on the Components page, and a stale page generator that would have undone several of these fixes if it had been re-run.</li>
+  </ul>
+</section>
+
+<section id="whats-new-2026-08-04">
+  <h2>2026-08-04</h2>
+  <ul>
+    <li><code>&lt;input type="password"&gt;</code> now gets the show/hide toggle automatically, just like <code>type="checkbox"</code>/<code>type="radio"</code>/<code>type="range"</code> already did — no more redundant <code>x-password</code> attribute needed.</li>
+    <li>Fixed a real double-border on styled inputs (Success/Error variants showed two concentric rings) — a wrapper div was reusing the same CSS class as the input it wrapped.</li>
+    <li>Fixed the Components page's section headings sitting too close to their content — a page-specific spacing rule was silently losing to a more specific rule elsewhere and never actually applying.</li>
+    <li><strong>Notes drawer, rebuilt:</strong> notes now save to a real file (not just this browser's local storage), support pasting a screenshot directly into a note, can capture a reference to any element on the page you click, and got a cleaner layout (Save/New at the bottom, Close pinned to the corner, a searchable Lookup for past notes).</li>
+    <li>Fixed the Content page's searchable table — the search box never actually appeared.</li>
+    <li>Product cards with a broken image now retry and show a clear failed state instead of a silent empty box forever, matching image/video cards.</li>
+    <li>45+ components no longer carry a redundant CSS class that just repeats their own tag name (this rule is now enforced project-wide, not just for the components caught so far).</li>
+    <li>The "Forced Dark/Light/Cyberpunk Mode" theme demos now render as real, properly-styled cards instead of a plain unstyled box.</li>
+    <li>Stats cards' Compact/Large variants, and Product cards' Horizontal variant, now actually look different from the default — previously the variant class was added but no CSS ever consumed it.</li>
+    <li>Expandable cards gained a <code>lines</code> option to clamp collapsed text to an exact number of lines, instead of an arbitrary pixel height that could cut off mid-word.</li>
+    <li>Fixed the Copy button demo silently copying the wrong text (it read an attribute name the component doesn't actually use), and the Dark Mode Toggle demo doing nothing at all when clicked — both now also look like real buttons instead of bare text.</li>
+    <li>The footer now auto-hides on scroll in mobile landscape mode, same as the header already did, to reclaim screen space.</li>
+    <li><code>&lt;wb-demo&gt;</code> blocks with no explicit column count now default to a single column instead of three.</li>
+    <li>Card Components demo: several images/avatars didn't match their card's stated topic or person, and some links went nowhere real — fixed across the gallery.</li>
+    <li>Documentation: split V3-GUIDE §3 from a cramped 6-component <code>&lt;wb-demo&gt;</code> into 6 separate ones per standard #2/#17/#18 — improved readability and component isolation (#483).</li>
+    <li>Performance: widened <code>wb-lazy.js</code> lazy-injection <code>rootMargin</code> from 200px to 1200px — components now begin loading sooner and feel more responsive on scroll (#491).</li>
+  </ul>
+</section>
+
+<section id="whats-new-2026-08-03">
+  <h2>2026-08-03</h2>
+  <ul>
+    <li>Fixed <code>docs/manifest.json</code> 404ing on the root SPA (<code>/index.html</code>) — every component's "Docs:" link on the main site was silently dead.</li>
+    <li>45 components (<code>&lt;wb-card&gt;</code>, <code>&lt;wb-button&gt;</code>, <code>&lt;wb-badge&gt;</code>, and more) no longer carry a redundant CSS class that just repeated their own tag name.</li>
+    <li>Fixed <code>WB.scan()</code> never processing the exact element passed to it (only its descendants) — this was silently breaking syntax highlighting, line numbers, and the copy button on every dynamically-injected code panel site-wide.</li>
+    <li>Framework Integration Demo: removed a legacy, duplicate code-highlighting system that was clipping the left edge of every code sample; Svelte and SolidJS examples now compile and render live in the browser (Angular can't without a real build step — explained why, on the page).</li>
+    <li>Playground: the 20-video YouTube example now grids 3-per-row instead of one huge column; sample form labels now sit above their field instead of beside it.</li>
+    <li>The site's browser-tab title and social-share preview card showed generic placeholder text ("My Awesome Site") instead of real branding — fixed, with proper preview images added.</li>
+    <li>Fixed flat, non-responsive page padding eating up to 38% of small phone screens across 11 pages — a full-width hero image was reading as a narrow strip because of it.</li>
+    <li>Every clickable button, card, and switch across the demo pages now shows a quick confirmation toast when clicked.</li>
+    <li>Card Components demo: added a theme picker, and replaced placeholder links/identity (generic <code>example.com</code> URLs, a stock "Jane Doe") with real destinations.</li>
+    <li>Fixed the profile card's role badge sitting visibly off-center on its cover photo (a repeat of an earlier "fix" that didn't actually center it).</li>
+    <li>Fixed the theme picker silently duplicating itself into two out-of-sync dropdowns over a long browsing session.</li>
+    <li>Removed several redundant <code>x-fieldset</code>/<code>x-form</code> attributes that were already automatic — added a test that catches this pattern going forward.</li>
+  </ul>
+</section>
+
+<section id="whats-new-2026-08-02">
+  <h2>2026-08-02</h2>
+  <ul>
+    <li>Fixed <code>&lt;wb-input&gt;</code> rendering no real <code>&lt;input&gt;</code> element at all on any standalone demo page (32 broken instances on the Form Controls page alone) — the schema-driven markup it depends on was never built under this site's lazy-loading runtime. It's now constructed directly, matching how other components already handle this.</li>
+    <li>Fixed the theme picker breaking syntax-highlighting colors site-wide on any page that includes it — it was resolving to a dev-only file path that doesn't exist in production.</li>
+    <li>Fixed silent failures across the site being swallowed instead of shown — component errors now surface in the visible error log instead of vanishing into the console.</li>
+    <li><code>&lt;wb-button icon="..."&gt;</code> now throws a clear error (with a link to the icon list) if set but left empty, instead of silently rendering no icon.</li>
+    <li>Fixed <code>&lt;wb-audio&gt;</code> silently doing nothing on a missing/empty file — it now throws a clear error, and 8 broken audio examples on the Content page were pointed at a real audio file.</li>
+    <li>Fixed the Shop Now / Learn More buttons on the Card Components hero demo, and the pricing/portfolio CTA buttons on Card Components and the main Components page — all had no destination before today.</li>
+    <li>Fixed the theme picker showing up twice (unsynced) on some pages — consolidated to one, in the site header.</li>
+    <li>Fixed the doc-link icon disappearing on the home page hero card, a role badge sitting too low on profile cards, the avatar status dot being too small, a dropdown menu getting clipped when it opened upward, an input field showing three stacked borders instead of one, and the date/time picker icon being invisible in dark mode.</li>
+  </ul>
+</section>
+
+<section id="whats-new-2026-08-01">
+  <h2>2026-08-01</h2>
+  <ul>
+    <li>Fixed <code>&lt;wb-select&gt;</code> silently discarding real <code>&lt;option&gt;</code> children — every documented example (<code>&lt;wb-select&gt;&lt;option&gt;...&lt;/option&gt;&lt;/wb-select&gt;</code>) rendered an empty dropdown with only the placeholder.</li>
+    <li>Fixed <code>&lt;wb-draggable&gt;</code>/<code>x-draggable</code> jumping to a wildly wrong position on every drag instead of tracking the mouse — and getting worse with each subsequent drag. Also fixed <code>axis="x"</code>/<code>axis="y"</code>, which never actually constrained movement.</li>
+    <li>The Behaviors page no longer mixes in 15 full <code>wb-*</code> component demos (alerts, badges, progress bars, spinners, modals, drawers, tabs, accordion, audio player, switch, rating) — it's scoped back to genuine <code>x-*</code> attribute behaviors, with links to the Components page for the rest.</li>
+    <li>Fixed the deprecated <code>&lt;wb-checkbox&gt;</code>/<code>&lt;wb-textarea&gt;</code> wrapper elements on the Form Controls demo page — converted to native <code>&lt;input type="checkbox"&gt;</code>/<code>&lt;textarea&gt;</code>, which already get the same styling with no wrapper needed.</li>
+    <li>The home page no longer eagerly fetches the entire page-builder partial library (20+ files) on load — those now load lazily, only when a page actually uses one.</li>
+    <li><code>&lt;wb-demo&gt;</code>'s code sample panel now scrolls horizontally instead of wrapping, and spans full width on mobile (≤700px) so scrolling past a page of demos doesn't jitter the page width — desktop still hugs each demo's own content.</li>
+    <li>Added a <code>size</code> attribute to <code>x-gallery</code> for fixed-size thumbnails (e.g. <code>size="150px"</code>), independent of the <code>columns</code> count.</li>
+  </ul>
+</section>
+
+<section id="whats-new-2026-07-30">
+  <h2>2026-07-30</h2>
+  <ul>
+    <li>Fixed a sanitizer bug in the markdown renderer that silently ate any attribute whose name contained "on" followed by more letters before its own <code>=</code> (e.g. <code>options='...'</code>) — this was corrupting JSON-in-attribute examples site-wide, including live <code>&lt;wb-select&gt;</code> dropdowns that quietly lost all their options.</li>
+    <li>Fixed <code>&lt;wb-cardportfolio&gt;</code>'s variant, size, and availability-status indicator — none of them had any visible effect before today.</li>
+    <li>Fixed <code>&lt;wb-timeline&gt;</code> not rendering at all (missing a base <code>display: block</code>).</li>
+    <li>Fixed <code>&lt;wb-drawer&gt;</code> on standalone demo pages: it showed generic placeholder text instead of its real content, "top"/"bottom" positions rendered identically to "left", and the <code>variant</code> attribute (default/overlay/push) had no effect at all.</li>
+    <li>Fixed <code>&lt;wb-dropdown&gt;</code>: position values didn't match the real attribute names so every position looked the same, menus opened empty when using plain text content, and <code>trigger="hover"</code> never actually worked.</li>
+    <li>Fixed progress bars and other enum-variant showcase pages rendering at 0%/invisible because the demo generator never filled in a representative value.</li>
+    <li>Added a real button-like appearance (background, border, cursor) to dialog/drawer/dropdown triggers that previously looked like plain unstyled text.</li>
+    <li>Fixed inline code chips and code blocks wrapping mid-word instead of scrolling or breaking at real word boundaries, on the Components page and the frameworks demo.</li>
+    <li>Every demo's "read the docs" link now sits as a small badge in the component's own top-right corner instead of a detached line below the whole group.</li>
+    <li>Converted every remaining static code example on the Select doc page and the full Behavior Cross-Reference doc (159 examples) into live, rendered demos.</li>
+    <li>Fixed 8 standalone demo pages that had zero padding, so headings and text sat flush against the browser edge.</li>
+    <li>Closed out a large batch of compliance-gate debt: reduced excess <code>!important</code> CSS usage back under the project's own limit, fixed a broken page-fragment generator that was shipping full HTML documents where the app expected bare fragments, fixed 10 pages' stylesheet links that 404'd under this site's actual deployed URL, and cleared out stale px-to-rem and data-attribute audit failures.</li>
+  </ul>
+</section>
+
+<section id="whats-new-2026-07-29">
+  <h2>2026-07-29</h2>
+  <ul>
+    <li>Fixed a Playwright-suite-wide "app ready" race: dozens of tests waited on the WB object existing, which is true before the app actually finishes initializing — now they wait for the real ready signal.</li>
+    <li>Restored the Behaviors page's missing content (spinner, and more) by regenerating it from its own schema, and fixed two stale button/alert markup patterns flagged by the compliance gate.</li>
+    <li>Rewrote a large batch of stale, pre-broken tests (dead entry points, renamed files, old CSS class names) so they test what the code actually does today.</li>
+    <li>Added margins/padding to the Card Components demo page and restored a missing closing <code>&lt;/html&gt;</code> tag.</li>
+    <li>Added this "What's New" page.</li>
+  </ul>
+</section>
+
+<section id="whats-new-2026-07-28">
+  <h2>2026-07-28</h2>
+  <ul>
+    <li>Split the Card Components demo page apart from its 56-card permutation test matrix — the demo page loads faster and the matrix now has its own dedicated test fixture.</li>
+    <li>Deprecated <code>&lt;wb-checkbox&gt;</code>/<code>&lt;wb-textarea&gt;</code> in favor of native <code>&lt;input type="checkbox"&gt;</code>/<code>&lt;textarea&gt;</code> with attributes — no more reinventing what the browser already does.</li>
+    <li>Fixed the Playground's "Endpoint sees" panel showing unconditionally instead of respecting its hidden state.</li>
+    <li>Fixed a 404 in the code-highlighting fallback loader.</li>
+    <li>Fixed <code>&lt;wb-search&gt;</code> never getting its variant/size CSS classes.</li>
+    <li>Fixed cardhero variants, cardproduct badges, a lazy-demo scanning bug, an error-log race condition, and button-transition test flakiness.</li>
+    <li>Fixed lightbox, alert variants, countdown, YouTube embeds, and a cardimage race condition that made valid images falsely show "unavailable."</li>
+  </ul>
+</section>
+
+<section id="whats-new-2026-07-1x">
+  <h2>Week of 2026-07-14 – 18</h2>
+  <ul>
+    <li>Consolidated demo pages into 8 clear categories, up from a sprawling flat index.</li>
+    <li>Fixed dispatch collisions where multiple behaviors fought over the same host element (switch, checkbox, select, textarea, input, button).</li>
+    <li>Added just-in-time CSS loading for behaviors — no more shipping every behavior's stylesheet on every page.</li>
+    <li>Fixed a CLS (layout shift) regression in the grid layout.</li>
+    <li>Added a selectable debug-trace category filter for easier troubleshooting.</li>
+  </ul>
+</section>
+
+<p><a href="https://github.com/CieloVistaSoftware/wb-starter/commits/main" target="_blank" rel="noopener">Full commit history on GitHub →</a></p>

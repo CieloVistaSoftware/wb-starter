@@ -1,0 +1,232 @@
+<div class="page__hero">
+  <h1>🐛 Issues</h1>
+  <p>Live from <a href="https://github.com/CieloVistaSoftware/wb-starter/issues" target="_blank" rel="noopener">GitHub</a> — open and closed, including the full issue body.</p>
+</div>
+
+<div class="issues-toolbar">
+  <div class="issues-tabs" role="tablist" aria-label="Filter issues by state">
+    <button type="button" class="issues-tab issues-tab--active" data-state="open" x-ripple>Open</button>
+    <button type="button" class="issues-tab" data-state="closed" x-ripple>Closed</button>
+    <button type="button" class="issues-tab" data-state="all" x-ripple>All</button>
+    <button type="button" class="issues-tab" data-state="in-progress" x-ripple>In Progress</button>
+  </div>
+  <span id="issues-summary" class="issues-summary"></span>
+  <span id="issues-active" class="issues-summary" aria-live="polite">Current Active: 0</span>
+  <input type="search" id="issues-search" class="issues-search" placeholder="Filter by title or number…">
+</div>
+
+<p id="issues-status" class="issues-status">Loading issues…</p>
+<ul id="issues-list" class="issues-list"></ul>
+
+<style>
+  .issues-toolbar { display: flex; gap: 1rem; flex-wrap: wrap; align-items: center; justify-content: space-between; margin: 1.5rem 0 1rem; }
+  .issues-tabs { display: flex; gap: 0.5rem; }
+  .issues-tab { background: var(--bg-secondary); color: var(--text-secondary); border: 1px solid var(--border-color); border-radius: 6px; padding: 0.4rem 0.9rem; cursor: pointer; font-size: 0.875rem; }
+  .issues-tab--active { background: var(--primary); color: #fff; border-color: var(--primary); }
+  .issues-search { background: var(--bg-secondary); color: var(--text-primary); border: 1px solid var(--border-color); border-radius: 6px; padding: 0.4rem 0.75rem; min-width: 240px; }
+  .issues-summary { color: var(--text-secondary); font-size: 0.8rem; }
+  .issues-status { color: var(--text-secondary); }
+  .issues-list { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 0.5rem; }
+  .issue-row { border: 1px solid var(--border-color); border-radius: 8px; background: var(--bg-secondary); overflow: hidden; }
+  .issue-row__summary { display: flex; align-items: center; gap: 0.75rem; padding: 0.75rem 1rem; cursor: pointer; }
+  .issue-row__state { font-size: 0.75rem; font-weight: 700; padding: 0.15em 0.6em; border-radius: 999px; white-space: nowrap; }
+  .issue-row__state--open { background: color-mix(in srgb, #22c55e 25%, transparent); color: #22c55e; }
+  .issue-row__state--in-progress { background: color-mix(in srgb, #f0b429 25%, transparent); color: #f0b429; }
+  .issue-row__state--closed { background: color-mix(in srgb, #a855f7 25%, transparent); color: #a855f7; }
+  .issue-row__number { color: var(--text-secondary); font-family: monospace; }
+  .issue-row__title { flex: 1; font-weight: 600; }
+  .issue-row__labels { display: flex; gap: 0.35rem; flex-wrap: wrap; }
+  .issue-row__label { font-size: 0.7rem; padding: 0.1em 0.5em; border-radius: 999px; background: var(--bg-tertiary); color: var(--text-secondary); }
+  .issue-row__body { display: none; padding: 0 1rem 1rem; border-top: 1px solid var(--border-color); color: var(--text-secondary); font-size: 0.9rem; line-height: 1.6; }
+  /* Rendered markdown (wb-mdhtml) needs normal HTML flow, not the raw-text
+     pre-wrap this div used before -- headings/lists/code blocks would
+     otherwise inherit literal whitespace preservation meant for plain text. */
+  .issue-row__body .issue-row__mdhtml { display: block; }
+  .issue-row--expanded .issue-row__body { display: block; padding-top: 1rem; }
+</style>
+
+<script>
+(function () {
+  const REPO = 'CieloVistaSoftware/wb-starter';
+  const listEl = document.getElementById('issues-list');
+  const statusEl = document.getElementById('issues-status');
+  const summaryEl = document.getElementById('issues-summary');
+  const activeEl = document.getElementById('issues-active');
+  const searchEl = document.getElementById('issues-search');
+  const tabs = Array.from(document.querySelectorAll('.issues-tab'));
+  let allIssues = [];
+  let currentState = 'open';
+
+  function escapeHtml(s) {
+    return String(s).replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+  }
+
+  const fmtDate = (iso) => new Date(iso).toLocaleDateString(undefined, { year: 'numeric', month: 'short', day: 'numeric' });
+
+  // John: "When these buttons are clicked add a count of those issues and
+  // the date ranges here." Uses createdAt for open issues (when they were
+  // opened) and closedAt for closed ones (when they were resolved) -- for
+  // "all", spans the full createdAt range since that's the one date every
+  // issue has.
+  function updateSummary(filtered) {
+    if (!filtered.length) {
+      summaryEl.textContent = '';
+      return;
+    }
+    const dateField = currentState === 'closed' ? 'closed_at' : 'created_at';
+    const dates = filtered.map((i) => new Date(i[dateField] || i.created_at).getTime()).sort((a, b) => a - b);
+    const oldest = fmtDate(dates[0]);
+    const newest = fmtDate(dates[dates.length - 1]);
+    const range = oldest === newest ? oldest : `${oldest} – ${newest}`;
+    const noun = filtered.length === 1 ? 'issue' : 'issues';
+    summaryEl.textContent = `${filtered.length} ${noun} · ${range}`;
+  }
+
+  // An issue counts as "being worked on" when it carries the explicit
+  // status:in-progress label OR priority:1 (John's convention for flagging
+  // active work) -- same detection the VS Code Issue Viewer uses
+  // (src/shared/github-issues-view.ts), so both surfaces agree.
+  function isInProgress(issue) {
+    return (issue.labels || []).some((label) => {
+      const name = String(label.name || '').trim().toLowerCase();
+      return name === 'status:in-progress' || name === 'priority:1';
+    });
+  }
+
+  function updateActiveCount() {
+    const activeCount = allIssues.filter((issue) => issue.state === 'open' && isInProgress(issue)).length;
+    activeEl.textContent = `Current Active: ${activeCount}`;
+  }
+
+  function render() {
+    const q = searchEl.value.trim().toLowerCase();
+    const filtered = allIssues.filter((issue) => {
+      // "in-progress" isn't a real GitHub issue.state (only open/closed exist
+      // there) -- it's the same derived state as updateActiveCount()'s
+      // "Current Active" number, so this tab and that count always agree.
+      if (currentState === 'in-progress') {
+        if (!(issue.state === 'open' && isInProgress(issue))) return false;
+      } else if (currentState !== 'all' && issue.state !== currentState) {
+        return false;
+      }
+      if (!q) return true;
+      return issue.title.toLowerCase().includes(q) || String(issue.number).includes(q);
+    });
+
+    updateSummary(filtered);
+    updateActiveCount();
+
+    if (!filtered.length) {
+      listEl.innerHTML = '';
+      statusEl.textContent = allIssues.length ? 'No issues match this filter.' : 'No issues found.';
+      statusEl.style.display = '';
+      return;
+    }
+    statusEl.style.display = 'none';
+
+    listEl.innerHTML = filtered.map((issue) => {
+      const labels = (issue.labels || []).map((l) =>
+        `<span class="issue-row__label" style="background:#${l.color || '333'}22;color:#${l.color || '999'}">${escapeHtml(l.name)}</span>`
+      ).join('');
+      const rowState = issue.state === 'open' && isInProgress(issue) ? 'in-progress' : issue.state;
+      const rowStateText = rowState === 'in-progress' ? 'in-progress' : issue.state;
+      return `
+        <li class="issue-row" data-number="${issue.number}">
+          <div class="issue-row__summary">
+            <span class="issue-row__state issue-row__state--${rowState}">${rowStateText}</span>
+            <span class="issue-row__number">#${issue.number}</span>
+            <span class="issue-row__title">${escapeHtml(issue.title)}</span>
+            <span class="issue-row__labels">${labels}</span>
+          </div>
+          <div class="issue-row__body"><div class="issue-row__mdhtml"></div></div>
+        </li>`;
+    }).join('');
+
+    // A plain div, not a real <wb-mdhtml> tag -- tag-map.js registers
+    // wb-mdhtml for WB's own generic auto-scan/lazy-load, which would call
+    // mdhtml() on it with DEFAULT options (autoLiveRender left at its true
+    // default) the moment it lands in the DOM, racing ahead of the explicit
+    // { autoLiveRender: false } call below and re-introducing the exact bug
+    // that option exists to prevent (confirmed live: it did, even before any
+    // row was ever clicked open). mdhtml() itself supports this -- it only
+    // needs the wb-mdhtml TAG for CSS tag-selectors, and adds the .wb-mdhtml
+    // CLASS itself on any other host (same pattern public/doc-viewer.html's
+    // own plain <div id="content"> already relies on).
+    //
+    // Set via .textContent, not innerHTML, so the browser HTML-escapes the
+    // raw body text into it; mdhtml.js's own decode-then-parse step (its
+    // "code samples are frequently written HTML-escaped" handling) expects
+    // exactly that and un-escapes it before handing the real markdown to
+    // `marked`. Assigning raw markdown directly via innerHTML here would get
+    // double-escaped instead.
+    const rows = listEl.querySelectorAll('.issue-row');
+    rows.forEach((row, i) => {
+      const md = row.querySelector('.issue-row__mdhtml');
+      if (md) md.textContent = filtered[i].body || '_No description provided._';
+    });
+
+    listEl.querySelectorAll('.issue-row__summary').forEach((summary) => {
+      summary.addEventListener('click', async () => {
+        const row = summary.closest('.issue-row');
+        row.classList.toggle('issue-row--expanded');
+        // Lazy: only pay for markdown parsing once a row is actually opened,
+        // and only once per row (not on every re-toggle).
+        const md = row.querySelector('.issue-row__mdhtml');
+        if (md && !md.dataset.rendered && window.WB) {
+          md.dataset.rendered = '1';
+          // autoLiveRender: false -- issue bodies are arbitrary/untrusted
+          // author text, not curated docs. Without this, a body that merely
+          // ILLUSTRATES a <wb-*>/x-* example (like #527, describing this
+          // exact bug) gets that example auto-promoted into a real, live,
+          // fetching/executing element on this page.
+          await window.WB.inject(md, 'mdhtml', { autoLiveRender: false });
+        }
+      });
+    });
+  }
+
+  tabs.forEach((tab) => {
+    tab.addEventListener('click', () => {
+      tabs.forEach((t) => t.classList.remove('issues-tab--active'));
+      tab.classList.add('issues-tab--active');
+      currentState = tab.dataset.state;
+      render();
+    });
+  });
+  searchEl.addEventListener('input', render);
+
+  async function load() {
+    try {
+      // Public, unauthenticated GitHub REST API -- works identically on the
+      // deployed GitHub Pages site (static hosting, no server-side proxy
+      // possible) and in local dev. A single per_page=100 request silently
+      // truncated once the repo passed 100 issues (John: "why does issue
+      // viewer counts differ from ?page=issues" -- this page was missing
+      // every issue older than the 100 most recent). Page through until a
+      // response comes back short of per_page, the standard "last page"
+      // signal -- capped at 10 pages (1000 issues) as a runaway backstop.
+      const perPage = 100;
+      let page = 1;
+      let all = [];
+      while (page <= 10) {
+        statusEl.textContent = `Loading issues… (${all.length} so far)`;
+        statusEl.style.display = '';
+        const res = await fetch(`https://api.github.com/repos/${REPO}/issues?state=all&per_page=${perPage}&page=${page}&sort=created&direction=desc`);
+        if (!res.ok) throw new Error(`GitHub API responded ${res.status}`);
+        const batch = await res.json();
+        all = all.concat(batch);
+        if (batch.length < perPage) break; // last page
+        page++;
+      }
+      // The /issues endpoint also returns pull requests -- exclude them.
+      allIssues = all.filter((i) => !i.pull_request);
+      render();
+    } catch (err) {
+      statusEl.textContent = 'Could not load issues: ' + err.message + ' (GitHub API rate limits unauthenticated requests to 60/hour per IP).';
+      statusEl.style.display = '';
+    }
+  }
+
+  load();
+})();
+</script>

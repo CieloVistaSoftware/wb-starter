@@ -1,0 +1,714 @@
+<!DOCTYPE html>
+<html id="scopedashboard-html-1" lang="en" data-theme="dark">
+<head id="scopedashboard-head-2">
+  <meta id="scopedashboard-meta-3" charset="UTF-8">
+  <meta id="scopedashboard-meta-4" name="viewport" content="width=device-width, initial-scale=1.0">
+  <title id="scopedashboard-title-5">SCOPE - Schema Compliance Dashboard</title>
+  <link id="scopedashboard-link-6" rel="stylesheet" href="../src/styles/themes.css">
+  <style id="scopedashboard-style-7">
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: 'Inter', system-ui, sans-serif;
+      background: var(--bg-primary, #0f172a);
+      color: var(--text-primary, #f8fafc);
+      min-height: 100vh;
+      padding: 2rem;
+    }
+    .dashboard { max-width: 1600px; margin: 0 auto; }
+    
+    /* Header */
+    .header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 2rem;
+      padding-bottom: 1rem;
+      border-bottom: 1px solid var(--border-color, #334155);
+    }
+    .header h1 { 
+      font-size: 1.75rem; 
+      display: flex; 
+      align-items: center; 
+      gap: 0.75rem; 
+    }
+    .header h1 span { font-size: 2rem; }
+    .header-actions { display: flex; gap: 0.75rem; }
+    .header-subtitle {
+      font-size: 0.875rem;
+      color: var(--text-muted, #94a3b8);
+      margin-top: 0.25rem;
+    }
+    
+    /* Metrics Grid */
+    .metrics {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 1rem;
+      margin-bottom: 2rem;
+    }
+    .metric {
+      background: var(--bg-secondary, #1e293b);
+      border: 1px solid var(--border-color, #334155);
+      border-radius: 12px;
+      padding: 1.25rem;
+      text-align: center;
+    }
+    .metric-value {
+      font-size: 2.5rem;
+      font-weight: 700;
+      line-height: 1;
+      margin-bottom: 0.5rem;
+    }
+    .metric-label {
+      font-size: 0.875rem;
+      color: var(--text-muted, #94a3b8);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+    .metric--success .metric-value { color: #22c55e; }
+    .metric--warning .metric-value { color: #f59e0b; }
+    .metric--danger .metric-value { color: #ef4444; }
+    .metric--info .metric-value { color: #3b82f6; }
+    
+    /* Tabs */
+    .tabs {
+      display: flex;
+      gap: 0.5rem;
+      margin-bottom: 1.5rem;
+      border-bottom: 1px solid var(--border-color, #334155);
+      padding-bottom: 0.5rem;
+      flex-wrap: wrap;
+    }
+    .tab {
+      padding: 0.5rem 1rem;
+      background: transparent;
+      border: none;
+      color: var(--text-muted, #94a3b8);
+      cursor: pointer;
+      border-radius: 6px;
+      font-size: 0.875rem;
+      transition: all 0.15s;
+    }
+    .tab:hover { background: var(--bg-tertiary, #334155); color: var(--text-primary); }
+    .tab.active { background: var(--primary, #6366f1); color: white; }
+    
+    /* Component Grid */
+    .components {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 1rem;
+    }
+    .component {
+      background: var(--bg-secondary, #1e293b);
+      border: 1px solid var(--border-color, #334155);
+      border-radius: 12px;
+      padding: 1rem;
+      transition: all 0.2s;
+    }
+    .component:hover {
+      border-color: var(--primary, #6366f1);
+      transform: translateY(-2px);
+    }
+    .component-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 0.75rem;
+    }
+    .component-name {
+      font-weight: 600;
+      font-size: 1rem;
+    }
+    .component-badge {
+      padding: 0.25rem 0.5rem;
+      border-radius: 6px;
+      font-size: 0.75rem;
+      font-weight: 600;
+    }
+    .badge--complete { background: rgba(34, 197, 94, 0.2); color: #22c55e; }
+    .badge--partial { background: rgba(245, 158, 11, 0.2); color: #f59e0b; }
+    .badge--missing { background: rgba(239, 68, 68, 0.2); color: #ef4444; }
+    
+    .component-checks {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      margin-bottom: 0.75rem;
+    }
+    .check {
+      display: flex;
+      align-items: center;
+      gap: 0.25rem;
+      font-size: 0.75rem;
+      color: var(--text-muted);
+    }
+    .check.pass { color: #22c55e; }
+    .check.fail { color: #ef4444; }
+    
+    .component-actions {
+      display: flex;
+      gap: 0.5rem;
+    }
+    .btn {
+      padding: 0.375rem 0.75rem;
+      border: none;
+      border-radius: 6px;
+      font-size: 0.75rem;
+      cursor: pointer;
+      transition: all 0.15s;
+    }
+    .btn-primary { background: var(--primary, #6366f1); color: white; }
+    .btn-primary:hover { filter: brightness(1.1); }
+    .btn-secondary { background: var(--bg-tertiary, #334155); color: var(--text-primary); }
+    .btn-secondary:hover { background: var(--bg-secondary); }
+    .btn-lg { padding: 0.75rem 1.5rem; font-size: 0.875rem; }
+    
+    /* Schema Editor Modal */
+    .modal-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.7);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      z-index: 1000;
+    }
+    .modal-overlay.active { display: flex; }
+    .modal {
+      background: var(--bg-secondary, #1e293b);
+      border: 1px solid var(--border-color);
+      border-radius: 16px;
+      width: 90%;
+      max-width: 900px;
+      max-height: 85vh;
+      display: flex;
+      flex-direction: column;
+    }
+    .modal-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1rem 1.5rem;
+      border-bottom: 1px solid var(--border-color);
+    }
+    .modal-title { font-size: 1.125rem; font-weight: 600; }
+    .modal-close {
+      background: none;
+      border: none;
+      color: var(--text-muted);
+      cursor: pointer;
+      font-size: 1.5rem;
+      line-height: 1;
+    }
+    .modal-body {
+      flex: 1;
+      overflow: auto;
+      padding: 1rem;
+    }
+    .modal-footer {
+      display: flex;
+      justify-content: flex-end;
+      gap: 0.75rem;
+      padding: 1rem 1.5rem;
+      border-top: 1px solid var(--border-color);
+    }
+    
+    /* Code Editor */
+    .editor {
+      width: 100%;
+      min-height: 400px;
+      background: var(--bg-primary, #0f172a);
+      border: 1px solid var(--border-color);
+      border-radius: 8px;
+      padding: 1rem;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.8125rem;
+      color: var(--text-primary);
+      resize: vertical;
+      line-height: 1.5;
+    }
+    
+    /* Category Sections */
+    .category {
+      margin-bottom: 2rem;
+    }
+    .category-header {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      margin-bottom: 1rem;
+      padding-bottom: 0.5rem;
+      border-bottom: 1px solid var(--border-color);
+    }
+    .category-icon { font-size: 1.25rem; }
+    .category-title { font-weight: 600; }
+    .category-count {
+      background: var(--bg-tertiary);
+      padding: 0.125rem 0.5rem;
+      border-radius: 999px;
+      font-size: 0.75rem;
+      color: var(--text-muted);
+    }
+    
+    /* Command Box */
+    .command-box {
+      background: var(--bg-primary);
+      border: 1px solid var(--border-color);
+      border-radius: 8px;
+      padding: 1rem;
+      margin-top: 2rem;
+    }
+    .command-box h3 {
+      font-size: 0.875rem;
+      margin-bottom: 0.75rem;
+      color: var(--text-muted);
+    }
+    .command {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.875rem;
+      background: var(--bg-secondary);
+      padding: 0.5rem 1rem;
+      border-radius: 6px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 0.5rem;
+    }
+    .command code { color: #22c55e; }
+    .command button {
+      background: var(--bg-tertiary);
+      border: none;
+      padding: 0.25rem 0.5rem;
+      border-radius: 4px;
+      cursor: pointer;
+      font-size: 0.75rem;
+    }
+    
+    /* Phase Progress */
+    .phase-progress {
+      background: var(--bg-secondary);
+      border: 1px solid var(--border-color);
+      border-radius: 12px;
+      padding: 1.5rem;
+      margin-bottom: 2rem;
+    }
+    .phase-progress h3 {
+      margin-bottom: 1rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+    .progress-bar {
+      height: 12px;
+      background: var(--bg-tertiary);
+      border-radius: 6px;
+      overflow: hidden;
+      margin-bottom: 0.5rem;
+    }
+    .progress-fill {
+      height: 100%;
+      background: linear-gradient(90deg, #22c55e, #16a34a);
+      transition: width 0.5s ease;
+    }
+    .progress-text {
+      font-size: 0.875rem;
+      color: var(--text-muted);
+    }
+  </style>
+</head>
+<body id="scopedashboard-body-8">
+  <div id="scopedashboard-div-9" class="dashboard">
+    <!-- Header -->
+    <header id="scopedashboard-header-10" class="header">
+      <div id="scopedashboard-div-11">
+        <h1 id="scopedashboard-h1-12"><span id="scopedashboard-span-13">🔬</span> SCOPE Dashboard</h1>
+        <p id="scopedashboard-p-14" class="header-subtitle">Schema Compliance & Operational Parity Engine</p>
+      </div>
+      <div id="scopedashboard-div-15" class="header-actions">
+        <button id="scopedashboard-button-16" class="btn btn-secondary" onclick="loadSchemas()">🔄 Refresh</button>
+        <button id="scopedashboard-button-17" class="btn btn-primary btn-lg" onclick="showTestInstructions()">▶️ Run Tests</button>
+      </div>
+    </header>
+    
+    <!-- Phase Progress -->
+    <div id="scopedashboard-div-18" class="phase-progress">
+      <h3 id="scopedashboard-h3-19">📊 Phase 1 Progress</h3>
+      <div id="scopedashboard-div-20" class="progress-bar">
+        <div class="progress-fill" id="progress-fill" style="width: 0%"></div>
+      </div>
+      <p id="scopedashboard-p-21" class="progress-text"><span id="progress-complete">0</span> of 21 components complete (<span id="progress-percent">0</span>%)</p>
+    </div>
+    
+    <!-- Metrics -->
+    <div class="metrics" id="metrics">
+      <div id="scopedashboard-div-22" class="metric metric--success">
+        <div class="metric-value" id="metric-complete">-</div>
+        <div id="scopedashboard-div-23" class="metric-label">Schemas Complete</div>
+      </div>
+      <div id="scopedashboard-div-24" class="metric metric--info">
+        <div class="metric-value" id="metric-total">-</div>
+        <div id="scopedashboard-div-25" class="metric-label">Total Schemas</div>
+      </div>
+      <div id="scopedashboard-div-26" class="metric metric--warning">
+        <div class="metric-value" id="metric-partial">-</div>
+        <div id="scopedashboard-div-27" class="metric-label">Need Updates</div>
+      </div>
+      <div id="scopedashboard-div-28" class="metric metric--danger">
+        <div class="metric-value" id="metric-missing">-</div>
+        <div id="scopedashboard-div-29" class="metric-label">Missing</div>
+      </div>
+    </div>
+    
+    <!-- Tabs -->
+    <div id="scopedashboard-div-30" class="tabs">
+      <button id="scopedashboard-button-31" class="tab active" data-filter="phase1">🎯 Phase 1 (21)</button>
+      <button id="scopedashboard-button-32" class="tab" data-filter="all">📦 All Schemas</button>
+      <button id="scopedashboard-button-33" class="tab" data-filter="cards">🃏 Cards</button>
+      <button id="scopedashboard-button-34" class="tab" data-filter="inputs">📝 Inputs</button>
+      <button id="scopedashboard-button-35" class="tab" data-filter="feedback">💬 Feedback</button>
+    </div>
+    
+    <!-- Phase 1 Components -->
+    <div class="category" id="phase1-category">
+      <div id="scopedashboard-div-36" class="category-header">
+        <span id="scopedashboard-span-37" class="category-icon">🎯</span>
+        <span id="scopedashboard-span-38" class="category-title">Phase 1 Components</span>
+        <span id="scopedashboard-span-39" class="category-count">20</span>
+      </div>
+      <div class="components" id="phase1-components"></div>
+    </div>
+    
+    <!-- All Components -->
+    <div class="category" id="all-category" style="display:none;">
+      <div id="scopedashboard-div-40" class="category-header">
+        <span id="scopedashboard-span-41" class="category-icon">📦</span>
+        <span id="scopedashboard-span-42" class="category-title">All Schemas</span>
+        <span class="category-count" id="all-count">0</span>
+      </div>
+      <div class="components" id="all-components"></div>
+    </div>
+    
+    <!-- Command Box -->
+    <div id="scopedashboard-div-43" class="command-box">
+      <h3 id="scopedashboard-h3-44">🖥️ Test Commands</h3>
+      <div id="scopedashboard-div-45" class="command">
+        <code id="scopedashboard-code-46">npm test</code>
+        <button id="scopedashboard-button-47" onclick="copyCommand('npm test')">📋 Copy</button>
+      </div>
+      <div id="scopedashboard-div-48" class="command">
+        <code id="scopedashboard-code-49">npm run test:single</code>
+        <button id="scopedashboard-button-50" onclick="copyCommand('npm run test:single')">📋 Copy</button>
+      </div>
+      <div id="scopedashboard-div-51" class="command">
+        <code id="scopedashboard-code-52">npm run test:ui</code>
+        <button id="scopedashboard-button-53" onclick="copyCommand('npm run test:ui')">📋 Copy</button>
+      </div>
+    </div>
+  </div>
+  
+  <!-- Schema Editor Modal -->
+  <div class="modal-overlay" id="modal">
+    <div id="scopedashboard-div-54" class="modal">
+      <div id="scopedashboard-div-55" class="modal-header">
+        <span class="modal-title" id="modal-title">Edit Schema</span>
+        <button id="scopedashboard-button-56" class="modal-close" onclick="closeModal()">×</button>
+      </div>
+      <div id="scopedashboard-div-57" class="modal-body">
+        <textarea class="editor" id="schema-editor"></textarea>
+      </div>
+      <div id="scopedashboard-div-58" class="modal-footer">
+        <button id="scopedashboard-button-59" class="btn btn-secondary" onclick="closeModal()">Cancel</button>
+        <button id="scopedashboard-button-60" class="btn btn-secondary" onclick="copySchema()">📋 Copy JSON</button>
+        <button id="scopedashboard-button-61" class="btn btn-primary" onclick="downloadSchema()">💾 Download</button>
+      </div>
+    </div>
+  </div>
+  
+  <script id="scopedashboard-script-62">
+    // Phase 1 components (the 20 priority components)
+    const PHASE1_COMPONENTS = [
+      { name: 'button', category: 'core' },
+      { name: 'input', category: 'inputs' },
+      { name: 'checkbox', category: 'inputs' },
+      { name: 'card', category: 'cards' },
+      { name: 'cardbutton', category: 'cards' },
+      { name: 'cardimage', category: 'cards' },
+      { name: 'cardhero', category: 'cards' },
+      { name: 'cardstats', category: 'cards' },
+      { name: 'cardprofile', category: 'cards' },
+      { name: 'cardpricing', category: 'cards' },
+      { name: 'switch', category: 'inputs' },
+      { name: 'select', category: 'inputs' },
+      { name: 'textarea', category: 'inputs' },
+      { name: 'alert', category: 'feedback' },
+      { name: 'toast', category: 'feedback' },
+      { name: 'spinner', category: 'feedback' },
+      { name: 'modal', category: 'overlays' },
+      { name: 'tooltip', category: 'overlays' },
+      { name: 'dropdown', category: 'overlays' },
+      { name: 'tabs', category: 'navigation' },
+      { name: 'details', category: 'core' }
+    ];
+    
+    let schemas = [];
+    let currentSchema = null;
+    
+    // Load schemas on page load
+    document.addEventListener('DOMContentLoaded', () => {
+      loadSchemas();
+      setupTabs();
+    });
+    
+    function setupTabs() {
+      document.querySelectorAll('.tab').forEach(tab => {
+        tab.addEventListener('click', () => {
+          document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+          tab.classList.add('active');
+          filterComponents(tab.dataset.filter);
+        });
+      });
+    }
+    
+    async function loadSchemas() {
+      // Check which schemas actually exist by trying to fetch them
+      const phase1Names = PHASE1_COMPONENTS.map(c => c.name);
+      const results = [];
+      
+      for (const comp of PHASE1_COMPONENTS) {
+        try {
+          const res = await fetch(`../src/behaviors/schema/${comp.name}.schema.json`);
+          if (res.ok) {
+            const schema = await res.json();
+            results.push({
+              name: comp.name,
+              category: comp.category,
+              status: evaluateSchema(schema),
+              hasTest: !!schema.test,
+              hasCompliance: !!schema.compliance,
+              hasInteractions: !!schema.interactions,
+              hasAccessibility: !!schema.accessibility
+            });
+          } else {
+            results.push({
+              name: comp.name,
+              category: comp.category,
+              status: 'missing',
+              hasTest: false,
+              hasCompliance: false
+            });
+          }
+        } catch (e) {
+          results.push({
+            name: comp.name,
+            category: comp.category,
+            status: 'missing',
+            hasTest: false,
+            hasCompliance: false
+          });
+        }
+      }
+      
+      schemas = results;
+      renderComponents();
+      updateMetrics();
+      updateProgress();
+    }
+    
+    function evaluateSchema(schema) {
+      // Check for complete schema structure
+      const hasCompliance = schema.compliance && schema.compliance.baseClass;
+      const hasTest = schema.test && schema.test.functional;
+      const hasProperties = schema.properties && Object.keys(schema.properties).length > 0;
+      const hasInteractions = schema.interactions && schema.interactions.elements;
+      
+      if (hasCompliance && hasTest && hasProperties && hasInteractions) {
+        return 'complete';
+      } else if (hasCompliance || hasTest) {
+        return 'partial';
+      }
+      return 'missing';
+    }
+    
+    function renderComponents() {
+      const phase1Container = document.getElementById('phase1-components');
+      const allContainer = document.getElementById('all-components');
+      
+      phase1Container.innerHTML = schemas.map(renderComponentCard).join('');
+      allContainer.innerHTML = schemas.map(renderComponentCard).join('');
+      document.getElementById('all-count').textContent = schemas.length;
+    }
+    
+    function renderComponentCard(schema) {
+      const statusBadge = {
+        complete: '<span id="scopedashboard-span-63" class="component-badge badge--complete">✅ Complete</span>',
+        partial: '<span id="scopedashboard-span-64" class="component-badge badge--partial">⚠️ Partial</span>',
+        missing: '<span id="scopedashboard-span-65" class="component-badge badge--missing">❌ Missing</span>'
+      }[schema.status] || '';
+      
+      const checks = schema.status !== 'missing' ? `
+        <div id="scopedashboard-div-66" class="component-checks">
+          <span id="scopedashboard-span-67" class="check ${schema.hasTest ? 'pass' : 'fail'}">${schema.hasTest ? '✓' : '✗'} Tests</span>
+          <span id="scopedashboard-span-68" class="check ${schema.hasCompliance ? 'pass' : 'fail'}">${schema.hasCompliance ? '✓' : '✗'} Compliance</span>
+          <span id="scopedashboard-span-69" class="check ${schema.hasInteractions ? 'pass' : 'fail'}">${schema.hasInteractions ? '✓' : '✗'} Interactions</span>
+        </div>
+      ` : '<div id="scopedashboard-div-70" class="component-checks"><span id="scopedashboard-span-71" class="check fail">Schema not found</span></div>';
+      
+      return `
+        <div id="scopedashboard-div-72" class="component" data-status="${schema.status}" data-name="${schema.name}" data-category="${schema.category}">
+          <div id="scopedashboard-div-73" class="component-header">
+            <span id="scopedashboard-span-74" class="component-name">${schema.name}</span>
+            ${statusBadge}
+          </div>
+          ${checks}
+          <div id="scopedashboard-div-75" class="component-actions">
+            ${schema.status !== 'missing' 
+              ? `<button id="scopedashboard-button-76" class="btn btn-secondary" onclick="viewSchema('${schema.name}')">👁️ View</button>
+                 <button id="scopedashboard-button-77" class="btn btn-primary" onclick="editSchema('${schema.name}')">✏️ Edit</button>`
+              : `<button id="scopedashboard-button-78" class="btn btn-primary" onclick="createSchema('${schema.name}')">➕ Create</button>`
+            }
+          </div>
+        </div>
+      `;
+    }
+    
+    function updateMetrics() {
+      const complete = schemas.filter(s => s.status === 'complete').length;
+      const partial = schemas.filter(s => s.status === 'partial').length;
+      const missing = schemas.filter(s => s.status === 'missing').length;
+      
+      document.getElementById('metric-complete').textContent = complete;
+      document.getElementById('metric-partial').textContent = partial;
+      document.getElementById('metric-missing').textContent = missing;
+      document.getElementById('metric-total').textContent = schemas.length;
+    }
+    
+    function updateProgress() {
+      const complete = schemas.filter(s => s.status === 'complete').length;
+      const percent = Math.round((complete / 21) * 100);
+      
+      document.getElementById('progress-fill').style.width = `${percent}%`;
+      document.getElementById('progress-complete').textContent = complete;
+      document.getElementById('progress-percent').textContent = percent;
+    }
+    
+    function filterComponents(filter) {
+      const phase1Cat = document.getElementById('phase1-category');
+      const allCat = document.getElementById('all-category');
+      
+      if (filter === 'phase1') {
+        phase1Cat.style.display = 'block';
+        allCat.style.display = 'none';
+      } else {
+        phase1Cat.style.display = 'none';
+        allCat.style.display = 'block';
+        
+        document.querySelectorAll('#all-components .component').forEach(el => {
+          if (filter === 'all') {
+            el.style.display = 'block';
+          } else {
+            el.style.display = el.dataset.category === filter ? 'block' : 'none';
+          }
+        });
+      }
+    }
+    
+    async function viewSchema(name) {
+      try {
+        const res = await fetch(`../src/behaviors/schema/${name}.schema.json`);
+        const schema = await res.json();
+        currentSchema = name;
+        document.getElementById('modal-title').textContent = `View: ${name}.schema.json`;
+        document.getElementById('schema-editor').value = JSON.stringify(schema, null, 2);
+        document.getElementById('schema-editor').readOnly = true;
+        document.getElementById('modal').classList.add('active');
+      } catch (e) {
+        alert('Failed to load schema: ' + e.message);
+      }
+    }
+    
+    async function editSchema(name) {
+      try {
+        const res = await fetch(`../src/behaviors/schema/${name}.schema.json`);
+        const schema = await res.json();
+        currentSchema = name;
+        document.getElementById('modal-title').textContent = `Edit: ${name}.schema.json`;
+        document.getElementById('schema-editor').value = JSON.stringify(schema, null, 2);
+        document.getElementById('schema-editor').readOnly = false;
+        document.getElementById('modal').classList.add('active');
+      } catch (e) {
+        alert('Failed to load schema: ' + e.message);
+      }
+    }
+    
+    function createSchema(name) {
+      currentSchema = name;
+      const template = {
+        "$schema": "http://json-schema.org/draft-07/schema#",
+        "title": name.charAt(0).toUpperCase() + name.slice(1),
+        "description": `${name} component`,
+        "behavior": name,
+        "properties": {},
+        "compliance": {
+          "baseClass": `wb-${name}`,
+          "requiredChildren": {},
+          "styles": {}
+        },
+        "interactions": {
+          "elements": {},
+          "keyboard": {}
+        },
+        "accessibility": {},
+        "events": {},
+        "test": {
+          "setup": [],
+          "matrix": { "combinations": [] },
+          "functional": {
+            "buttons": [],
+            "interactions": [],
+            "keyboard": [],
+            "visual": []
+          }
+        }
+      };
+      document.getElementById('modal-title').textContent = `Create: ${name}.schema.json`;
+      document.getElementById('schema-editor').value = JSON.stringify(template, null, 2);
+      document.getElementById('schema-editor').readOnly = false;
+      document.getElementById('modal').classList.add('active');
+    }
+    
+    function closeModal() {
+      document.getElementById('modal').classList.remove('active');
+      currentSchema = null;
+    }
+    
+    function copySchema() {
+      const content = document.getElementById('schema-editor').value;
+      navigator.clipboard.writeText(content).then(() => {
+        alert('Schema JSON copied to clipboard!');
+      });
+    }
+    
+    function downloadSchema() {
+      if (!currentSchema) return;
+      const content = document.getElementById('schema-editor').value;
+      const blob = new Blob([content], { type: 'application/json' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = `${currentSchema}.schema.json`;
+      a.click();
+      URL.revokeObjectURL(url);
+    }
+    
+    function copyCommand(cmd) {
+      navigator.clipboard.writeText(cmd).then(() => {
+        alert('Command copied!');
+      });
+    }
+    
+    function showTestInstructions() {
+      alert('To run tests, open your terminal in the project directory and run:\n\nnpm test\n\nThis will execute all Playwright tests against your schemas.');
+    }
+  </script>
+</body>
+</html>

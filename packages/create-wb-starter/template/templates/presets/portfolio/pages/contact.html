@@ -1,0 +1,66 @@
+<!-- 
+  PORTFOLIO CONTACT PAGE STUB
+  ===========================
+  Edit this page for inquiries.
+-->
+
+<section class="page-header" style="text-align: center; padding: 3rem 2rem;">
+  <h1>Let's Talk</h1>
+  <p style="color: var(--text-secondary); max-width: 600px; margin: 0 auto;">
+    Have a project in mind? We'd love to hear about it.
+  </p>
+</section>
+
+<section class="contact-content" style="padding: 2rem; max-width: 800px; margin: 0 auto;">
+  <form style="display: flex; flex-direction: column; gap: 1.5rem;">
+    
+    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
+      <div>
+        <label style="display: block; margin-bottom: 0.5rem;">Name *</label>
+        <wb-input placeholder="Your name" style="width: 100%;"></wb-input>
+      </div>
+      <div>
+        <label style="display: block; margin-bottom: 0.5rem;">Email *</label>
+        <wb-input type="email" placeholder="your@email.com" style="width: 100%;"></wb-input>
+      </div>
+    </div>
+    
+    <div>
+      <label style="display: block; margin-bottom: 0.5rem;">Company</label>
+      <wb-input placeholder="Your company (optional)" style="width: 100%;"></wb-input>
+    </div>
+    
+    <div>
+      <label style="display: block; margin-bottom: 0.5rem;">Project Type</label>
+      <wb-select style="width: 100%;">
+        <option>Brand Identity</option>
+        <option>Web Design</option>
+        <option>Mobile App</option>
+        <option>Other</option>
+      </wb-select>
+    </div>
+    
+    <div>
+      <label style="display: block; margin-bottom: 0.5rem;">Budget Range</label>
+      <wb-select style="width: 100%;">
+        <option>$5k - $10k</option>
+        <option>$10k - $25k</option>
+        <option>$25k - $50k</option>
+        <option>$50k+</option>
+      </wb-select>
+    </div>
+    
+    <div>
+      <label style="display: block; margin-bottom: 0.5rem;">Tell us about your project *</label>
+      <wb-textarea placeholder="Describe your project, goals, and timeline..." rows="6" style="width: 100%;"></wb-textarea>
+    </div>
+    
+    <wb-button variant="gradient" type="submit" size="lg">Send Message</wb-button>
+    
+  </form>
+</section>
+
+<section class="contact-info" style="padding: 3rem 2rem; text-align: center; background: var(--surface-elevated);">
+  <p style="color: var(--text-secondary); margin-bottom: 1rem;">Or reach out directly</p>
+  <p style="font-size: 1.5rem; margin: 0;">hello@yourstudio.com</p>
+</section>

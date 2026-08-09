@@ -1,0 +1,269 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "cardoverlay.schema.json",
+  "title": "Overlay Card",
+  "description": "Card with text overlaid on background image",
+  "schemaFor": "cardoverlay",
+  "baseClass": "wb-card-overlay",
+  "semanticElement": {
+    "tagName": "article",
+    "implicitRole": "article"
+  },
+  "compliance": {
+    "baseClass": "wb-card-overlay",
+    "supportLevel": "stable",
+    "accessibility": "high"
+  },
+  "properties": {
+    "image": {
+      "type": "string",
+      "description": "Background image URL",
+      "required": true,
+      "default": ""
+    },
+    "title": {
+      "type": "string",
+      "description": "Overlay title",
+      "default": ""
+    },
+    "subtitle": {
+      "type": "string",
+      "description": "Overlay subtitle",
+      "default": ""
+    },
+    "position": {
+      "type": "string",
+      "description": "Content position",
+      "enum": [
+        "top",
+        "center",
+        "bottom"
+      ],
+      "default": "bottom",
+      "appliesClass": "wb-card-overlay--{{value}}"
+    },
+    "xalign": {
+      "type": "string",
+      "description": "Horizontal text alignment (x-axis)",
+      "enum": [
+        "left",
+        "center",
+        "right"
+      ],
+      "default": "left",
+      "appliesClass": "wb-card-overlay--xalign-{{value}}"
+    },
+    "gradient": {
+      "type": "boolean",
+      "description": "Show gradient overlay for text readability",
+      "default": true,
+      "appliesClass": "wb-card-overlay--gradient"
+    },
+    "height": {
+      "type": "string",
+      "description": "Card height (CSS value)",
+      "default": "300px"
+    },
+    "variant": {
+      "type": "string",
+      "description": "Visual style variant",
+      "enum": [
+        "default",
+        "dark",
+        "light",
+        "blur"
+      ],
+      "default": "default",
+      "appliesClass": "wb-card-overlay--{{value}}"
+    }
+  },
+  "$view": [
+    {
+      "name": "background",
+      "tag": "div",
+      "public": false,
+      "required": true,
+      "description": "Background image container"
+    },
+    {
+      "name": "gradient-overlay",
+      "tag": "div",
+      "public": false,
+      "createdWhen": "gradient",
+      "description": "Gradient overlay for readability"
+    },
+    {
+      "name": "content",
+      "tag": "div",
+      "public": true,
+      "required": true,
+      "description": "Content container"
+    },
+    {
+      "name": "title",
+      "tag": "h3",
+      "parent": "content",
+      "public": true,
+      "content": "{{title}}",
+      "createdWhen": "title",
+      "description": "Overlay title"
+    },
+    {
+      "name": "subtitle",
+      "tag": "p",
+      "parent": "content",
+      "public": true,
+      "content": "{{subtitle}}",
+      "createdWhen": "subtitle",
+      "description": "Overlay subtitle"
+    },
+    {
+      "name": "body",
+      "tag": "div",
+      "parent": "content",
+      "public": true,
+      "content": "<slot></slot>",
+      "createdWhen": "body",
+      "description": "Additional content slot"
+    }
+  ],
+  "$methods": {
+    "show": {
+      "description": "Shows the card",
+      "params": []
+    },
+    "hide": {
+      "description": "Hides the card",
+      "params": []
+    },
+    "toggle": {
+      "description": "Toggles visibility",
+      "params": []
+    },
+    "setImage": {
+      "description": "Changes background image",
+      "params": [
+        "url"
+      ]
+    }
+  },
+  "$cssAPI": {
+    "--wb-card-overlay-height": {
+      "default": "300px",
+      "description": "Card height"
+    },
+    "--wb-card-overlay-radius": {
+      "default": "8px",
+      "description": "Border radius"
+    },
+    "--wb-card-overlay-padding": {
+      "default": "1.5rem",
+      "description": "Content padding"
+    },
+    "--wb-card-overlay-text-color": {
+      "default": "#ffffff",
+      "description": "Text color"
+    },
+    "--wb-card-overlay-text-shadow": {
+      "default": "0 1px 3px rgba(0,0,0,0.3)",
+      "description": "Text shadow"
+    },
+    "--wb-card-overlay-gradient-start": {
+      "default": "transparent",
+      "description": "Gradient start color"
+    },
+    "--wb-card-overlay-gradient-end": {
+      "default": "rgba(0,0,0,0.7)",
+      "description": "Gradient end color"
+    },
+    "--wb-card-overlay-title-size": {
+      "default": "1.5rem",
+      "description": "Title font size"
+    },
+    "--wb-card-overlay-title-weight": {
+      "default": "700",
+      "description": "Title font weight"
+    },
+    "--wb-card-overlay-subtitle-size": {
+      "default": "1rem",
+      "description": "Subtitle font size"
+    },
+    "--wb-card-overlay-subtitle-opacity": {
+      "default": "0.9",
+      "description": "Subtitle opacity"
+    }
+  },
+  "test": {
+    "setup": [
+      "<wb-cardoverlay>Basic cardoverlay content</wb-cardoverlay>",
+      "<wb-cardoverlay position=\"top\">position=top</wb-cardoverlay>",
+      "<wb-cardoverlay position=\"center\">position=center</wb-cardoverlay>",
+      "<wb-cardoverlay position=\"bottom\">position=bottom</wb-cardoverlay>",
+      "<wb-cardoverlay xalign=\"left\">xalign=left</wb-cardoverlay>",
+      "<wb-cardoverlay xalign=\"center\">xalign=center</wb-cardoverlay>",
+      "<wb-cardoverlay xalign=\"right\">xalign=right</wb-cardoverlay>",
+      "<wb-cardoverlay variant=\"default\">variant=default</wb-cardoverlay>",
+      "<wb-cardoverlay title=\"Test Title\">With title attribute</wb-cardoverlay>",
+      "<wb-card-overlay image=\"bg.jpg\" title=\"Overlay Title\"></wb-card-overlay>"
+    ],
+    "matrix": {
+      "combinations": [
+        {
+          "image": "bg.jpg",
+          "title": "Title"
+        },
+        {
+          "image": "bg.jpg",
+          "title": "Title",
+          "subtitle": "Subtitle"
+        },
+        {
+          "image": "bg.jpg",
+          "title": "Title",
+          "position": "top"
+        },
+        {
+          "image": "bg.jpg",
+          "title": "Title",
+          "position": "center"
+        },
+        {
+          "image": "bg.jpg",
+          "title": "Title",
+          "gradient": false
+        },
+        {
+          "image": "bg.jpg",
+          "title": "Title",
+          "xalign": "center"
+        }
+      ]
+    },
+    "site": {
+      "page": "cards",
+      "tag": "wb-cardoverlay",
+      "renders": true,
+      "baseClass": "wb-card-overlay",
+      "minInstances": 6,
+      "checkText": [
+        "Title",
+        "Subtitle"
+      ],
+      "checkClasses": [
+        "wb-card-overlay--top",
+        "wb-card-overlay--xalign-center",
+        "wb-card-overlay--dark"
+      ],
+      "checkAttributes": [
+        "image",
+        "title"
+      ]
+    }
+  },
+  "_metadata": {
+    "category": "cards",
+    "icon": "🖼️",
+    "since": "1.0.0",
+    "status": "stable"
+  }
+}

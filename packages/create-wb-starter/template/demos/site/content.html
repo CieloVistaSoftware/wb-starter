@@ -1,0 +1,849 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Content & Media</title>
+  <link rel="stylesheet" href="../../src/styles/themes.css">
+  <link rel="stylesheet" href="../../src/styles/site.css">
+
+</head>
+
+<body class="demo-page">
+  <nav style="margin-bottom: 1rem;">
+    <a href="index.html" style="color: var(--text-secondary, #aaa); text-decoration: none;">← Back to Index</a>
+  </nav>
+  <h1>📄 Content & Media</h1>
+  <p>Articles, markdown rendering, audio, tables</p>
+
+  <!-- 1. 📄 Article Component -->
+  <section id="article-article-component">
+  <h2>📄 Article Component</h2>
+  <wb-demo columns="3">
+    <wb-article title="Getting Started with Web Components">
+      Learn the fundamentals of building reusable web components using custom elements, shadow DOM, and HTML templates. This guide covers the essentials for modern web development.
+    </wb-article>
+    <wb-article title="Advanced CSS Patterns" subtitle="Modern layout techniques">
+      Discover cutting-edge CSS techniques including Grid, Flexbox, Container Queries, and more. These modern approaches simplify complex layouts and improve responsive design.
+    </wb-article>
+    <wb-article title="JavaScript Best Practices" image="https://placehold.co/400x300/667eea/ffffff?text=JavaScript">
+      Write maintainable, performant JavaScript code by following industry best practices. Topics include async patterns, error handling, and functional programming principles.
+    </wb-article>
+    <wb-article title="Web Performance Optimization" author="Sarah Chen" date="2026-09-15">
+      Improve your website's speed with proven techniques: code splitting, lazy loading, image optimization, and caching strategies that significantly boost user experience.
+    </wb-article>
+    <wb-article title="The Future of Web Standards" subtitle="A field guide to the platform ahead" category="Web Platform" author="Maya Patel" date="2026-08-01" reading-time="8 min read" image="https://placehold.co/800x320/0f766e/ffffff?text=Web+Standards" featured>
+      Explore the web platform changes that will shape the next generation of applications. This featured story combines a strong visual, editorial metadata, and a longer introduction so its emphasis is obvious beside the standard articles.
+    </wb-article>
+  </wb-demo>
+  </section>
+
+  <!-- 2. Toggles -->
+  <section id="article-toggles">
+  <h2>Toggles</h2>
+  <wb-demo columns="1">
+    <wb-article title="Designing for the platform ahead" subtitle="Featured story" category="Field Notes" author="Maya Patel" date="2026-08-01" reading-time="8 min read" image="https://placehold.co/800x320/0f766e/ffffff?text=Featured+Story" featured>
+      <strong>Featured Article:</strong> A comprehensive guide to building scalable web applications with modern frameworks, careful performance budgets, and real-world examples from production systems. The larger title, cover image, metadata, and padded treatment make the featured state visible at a glance.
+    </wb-article>
+  </wb-demo>
+  </section>
+
+  <!-- 3. 📰 Articles List Component -->
+  <section id="articles-articles-list-component">
+  <h2>📰 Articles List Component</h2>
+  <wb-demo columns="2">
+    <wb-articles title="Grid layout" layout="grid">
+      <wb-article title="TypeScript Mastery">TypeScript transforms JavaScript development with type safety. Learn advanced features: generics, unions, interfaces, and decorators for robust applications.</wb-article>
+      <wb-article title="React Hooks Deep Dive">Master modern React with Hooks. Understand useState, useEffect, useContext, and custom hooks for cleaner, more maintainable component code.</wb-article>
+      <wb-article title="Database Design Fundamentals">Design databases that scale. Learn normalization, indexing, relationships, and query optimization for high-performance applications.</wb-article>
+    </wb-articles>
+    <wb-articles title="List layout" layout="list">
+      <wb-article title="API Design Best Practices">Build RESTful APIs with proper versioning, pagination, error handling, and documentation for great developer experience.</wb-article>
+      <wb-article title="Testing Strategies">Comprehensive testing approach: unit tests, integration tests, end-to-end tests, and performance testing for reliable software.</wb-article>
+      <wb-article title="DevOps Essentials">Master deployment pipelines, containerization, CI/CD workflows, and infrastructure as code for modern development teams.</wb-article>
+    </wb-articles>
+    <wb-articles title="Two-column grid" layout="grid" columns="2">
+      <wb-article title="Security in Web Apps">Protect your applications from threats: authentication, authorization, CSRF prevention, and secure communication practices.</wb-article>
+      <wb-article title="Accessibility Standards">Build inclusive web experiences for all users. Learn WCAG, ARIA, keyboard navigation, and semantic HTML for better accessibility.</wb-article>
+    </wb-articles>
+  </wb-demo>
+  </section>
+
+  <!-- 4. layout variants -->
+  <section id="articles-layout-variants">
+  <h2>Layout variants</h2>
+  <wb-demo columns="1">
+    <wb-articles title="Masonry layout" layout="masonry" columns="3">
+      <wb-article title="Microservices Architecture">
+        Break monoliths into manageable services for scalability and independent deployment. Implement service discovery, distributed tracing, and circuit breakers for resilient microservice systems.
+      </wb-article>
+      <wb-article title="GraphQL vs REST">
+        Compare API architectures: when to use GraphQL for efficient data fetching versus traditional REST endpoints. GraphQL allows clients to request exactly the data they need, reducing over-fetching and under-fetching problems.
+      </wb-article>
+      <wb-article title="State Management">
+        Managing application state effectively with Redux, Zustand, Recoil, and context patterns. Choose the right state solution for your application's complexity.
+      </wb-article>
+      <wb-article title="Machine Learning Integration">
+        Integrate ML models into web applications for intelligent features and data-driven decisions. Use TensorFlow.js for client-side inference or call remote ML APIs for complex models.
+      </wb-article>
+      <wb-article title="Web Security Best Practices">
+        Protect applications from XSS, CSRF, SQL injection, and other vulnerabilities. Implement content security policies, secure headers, input validation, and output encoding.
+      </wb-article>
+      <wb-article title="Performance Monitoring">
+        Track metrics like Core Web Vitals, FCP, LCP, and CLS. Use tools like Lighthouse, WebPageTest, and Real User Monitoring to identify and fix performance bottlenecks.
+      </wb-article>
+      <wb-article title="API Rate Limiting">
+        Implement effective rate limiting strategies to prevent abuse and ensure fair resource allocation. Use token buckets, sliding windows, or leaky bucket algorithms.
+      </wb-article>
+      <wb-article title="Testing Pyramid">
+        Implement a balanced testing strategy with unit tests at the base, integration tests in the middle, and end-to-end tests at the top for comprehensive coverage.
+      </wb-article>
+    </wb-articles>
+  </wb-demo>
+  </section>
+
+  <!-- 5. Toggles -->
+  <section id="articles-toggles">
+  <h2>Toggles</h2>
+  <wb-demo columns="1">
+    <wb-articles
+      pagination
+      page-size="3">
+      <wb-article title="Cloud Computing Basics">
+        AWS, Azure, and Google Cloud explained. Understand services, pricing models, and when to use each platform.
+      </wb-article>
+      <wb-article title="Containerization with Docker">
+        Docker simplifies deployment. Learn images, containers, registries, and compose for microservices.
+      </wb-article>
+      <wb-article title="Kubernetes Orchestration">
+        Manage containers at scale with Kubernetes: pods, services, deployments, and monitoring.
+      </wb-article>
+      <wb-article title="Serverless Functions">
+        AWS Lambda, Azure Functions, and Google Cloud Functions for event-driven, scalable applications.
+      </wb-article>
+      <wb-article title="Infrastructure as Code">
+        Terraform, CloudFormation, and Pulumi for defining and managing cloud infrastructure programmatically.
+      </wb-article>
+      <wb-article title="Monitoring and Observability">
+        Prometheus, Grafana, ELK stack for comprehensive application monitoring, logging, and alerting.
+      </wb-article>
+    </wb-articles>
+  </wb-demo>
+  </section>
+
+  <!-- 6. 📝 Markdown to HTML -->
+  <section id="mdhtml-markdown-to-html">
+  <h2>📝 Markdown to HTML</h2>
+  <wb-demo columns="2" data-code-width="narrow">
+    <wb-mdhtml src="../code.md">
+      # Markdown Example
+      This renders **real** markdown with *proper* formatting.
+    </wb-mdhtml>
+    <wb-mdhtml gfm>
+      ## GitHub Flavored Markdown
+      - Supports ~~strikethrough~~ text
+      - Task lists: - [ ] Todo - [x] Done
+      - Tables and code blocks
+    </wb-mdhtml>
+    <wb-mdhtml sanitize gfm>
+      ### Sanitized & Safe
+      Removes dangerous HTML while keeping valid **markdown** rendering.
+      ```javascript
+      console.log('Code blocks render safely');
+      ```
+    </wb-mdhtml>
+  </wb-demo>
+  </section>
+
+  <!-- 7. 🎵 Audio -->
+  <section id="audio-audio">
+  <h2>🎵 Audio</h2>
+  <wb-demo columns="2" data-code-width="full">
+    <wb-audio src="../audio.mp3">
+      This is example audio content.
+    </wb-audio>
+    <wb-audio src="../audio.mp3" show-eq>
+      This is example audio content.
+    </wb-audio>
+    <wb-audio src="../audio.mp3" volume="0.5">
+      This is example audio content.
+    </wb-audio>
+    <wb-audio src="../audio.mp3" loop>
+      This is example audio content.
+    </wb-audio>
+  </wb-demo>
+  </section>
+
+  <!-- 8. Toggles -->
+  <section id="audio-toggles">
+  <h2>Toggles</h2>
+  <wb-demo columns="1">
+    <wb-audio loop src="../audio.mp3">
+      This is example audio content.
+    </wb-audio>
+    <wb-audio autoplay src="../audio.mp3">
+      This is example audio content.
+    </wb-audio>
+    <wb-audio muted src="../audio.mp3">
+      This is example audio content.
+    </wb-audio>
+    <wb-audio show-eq src="../audio.mp3">
+      This is example audio content.
+    </wb-audio>
+  </wb-demo>
+  </section>
+
+  <!-- 9. 📊 Table -->
+  <section id="table-table">
+  <h2>📊 Table</h2>
+  <wb-demo columns="1" data-code-width="normal">
+    <wb-table striped hover sortable paginated page-size="10">
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>User</th>
+          <th>Email</th>
+          <th>Role</th>
+          <th>Joined</th>
+          <th>Status</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>001</td>
+          <td>Alice Johnson</td>
+          <td>alice@company.com</td>
+          <td>Admin</td>
+          <td>2024-01-15</td>
+          <td>Active</td>
+        </tr>
+        <tr>
+          <td>002</td>
+          <td>Bob Smith</td>
+          <td>bob@company.com</td>
+          <td>Editor</td>
+          <td>2024-02-20</td>
+          <td>Active</td>
+        </tr>
+        <tr>
+          <td>003</td>
+          <td>Carol White</td>
+          <td>carol@company.com</td>
+          <td>Viewer</td>
+          <td>2024-03-10</td>
+          <td>Inactive</td>
+        </tr>
+        <tr>
+          <td>004</td>
+          <td>David Brown</td>
+          <td>david@company.com</td>
+          <td>Editor</td>
+          <td>2024-04-05</td>
+          <td>Active</td>
+        </tr>
+        <tr>
+          <td>005</td>
+          <td>Emma Davis</td>
+          <td>emma@company.com</td>
+          <td>Admin</td>
+          <td>2024-05-12</td>
+          <td>Active</td>
+        </tr>
+        <tr>
+          <td>006</td>
+          <td>Frank Miller</td>
+          <td>frank@company.com</td>
+          <td>Viewer</td>
+          <td>2024-06-18</td>
+          <td>Active</td>
+        </tr>
+        <tr>
+          <td>007</td>
+          <td>Grace Wilson</td>
+          <td>grace@company.com</td>
+          <td>Editor</td>
+          <td>2024-07-22</td>
+          <td>Active</td>
+        </tr>
+        <tr>
+          <td>008</td>
+          <td>Henry Moore</td>
+          <td>henry@company.com</td>
+          <td>Viewer</td>
+          <td>2024-08-01</td>
+          <td>Inactive</td>
+        </tr>
+        <tr>
+          <td>009</td>
+          <td>Iris Taylor</td>
+          <td>iris@company.com</td>
+          <td>Editor</td>
+          <td>2024-08-15</td>
+          <td>Active</td>
+        </tr>
+        <tr>
+          <td>010</td>
+          <td>Jack Anderson</td>
+          <td>jack@company.com</td>
+          <td>Admin</td>
+          <td>2024-08-20</td>
+          <td>Active</td>
+        </tr>
+        <tr>
+          <td>011</td>
+          <td>Karen Thomas</td>
+          <td>karen@company.com</td>
+          <td>Viewer</td>
+          <td>2024-08-25</td>
+          <td>Active</td>
+        </tr>
+        <tr>
+          <td>012</td>
+          <td>Leo Jackson</td>
+          <td>leo@company.com</td>
+          <td>Editor</td>
+          <td>2024-08-28</td>
+          <td>Active</td>
+        </tr>
+        <tr>
+          <td>013</td>
+          <td>Maya White</td>
+          <td>maya@company.com</td>
+          <td>Viewer</td>
+          <td>2024-08-30</td>
+          <td>Pending</td>
+        </tr>
+        <tr>
+          <td>014</td>
+          <td>Noah Harris</td>
+          <td>noah@company.com</td>
+          <td>Editor</td>
+          <td>2024-09-01</td>
+          <td>Active</td>
+        </tr>
+        <tr>
+          <td>015</td>
+          <td>Olivia Martin</td>
+          <td>olivia@company.com</td>
+          <td>Admin</td>
+          <td>2024-09-02</td>
+          <td>Active</td>
+        </tr>
+        <tr>
+          <td>016</td>
+          <td>Paul Garcia</td>
+          <td>paul@company.com</td>
+          <td>Viewer</td>
+          <td>2024-09-03</td>
+          <td>Active</td>
+        </tr>
+        <tr>
+          <td>017</td>
+          <td>Quinn Rodriguez</td>
+          <td>quinn@company.com</td>
+          <td>Editor</td>
+          <td>2024-09-04</td>
+          <td>Active</td>
+        </tr>
+        <tr>
+          <td>018</td>
+          <td>Rachel Lee</td>
+          <td>rachel@company.com</td>
+          <td>Viewer</td>
+          <td>2024-09-05</td>
+          <td>Inactive</td>
+        </tr>
+        <tr>
+          <td>019</td>
+          <td>Sam Walker</td>
+          <td>sam@company.com</td>
+          <td>Editor</td>
+          <td>2024-09-06</td>
+          <td>Active</td>
+        </tr>
+        <tr>
+          <td>020</td>
+          <td>Tina Hall</td>
+          <td>tina@company.com</td>
+          <td>Admin</td>
+          <td>2024-09-07</td>
+          <td>Active</td>
+        </tr>
+        <tr>
+          <td>021</td>
+          <td>Uma Patel</td>
+          <td>uma@company.com</td>
+          <td>Viewer</td>
+          <td>2024-09-08</td>
+          <td>Active</td>
+        </tr>
+        <tr>
+          <td>022</td>
+          <td>Victor Young</td>
+          <td>victor@company.com</td>
+          <td>Editor</td>
+          <td>2024-09-09</td>
+          <td>Pending</td>
+        </tr>
+        <tr>
+          <td>023</td>
+          <td>Wendy King</td>
+          <td>wendy@company.com</td>
+          <td>Viewer</td>
+          <td>2024-09-10</td>
+          <td>Active</td>
+        </tr>
+        <tr>
+          <td>024</td>
+          <td>Xavier Scott</td>
+          <td>xavier@company.com</td>
+          <td>Editor</td>
+          <td>2024-09-11</td>
+          <td>Active</td>
+        </tr>
+        <tr>
+          <td>025</td>
+          <td>Yara Green</td>
+          <td>yara@company.com</td>
+          <td>Admin</td>
+          <td>2024-09-12</td>
+          <td>Active</td>
+        </tr>
+      </tbody>
+    </wb-table>
+  </wb-demo>
+  </section>
+
+  <!-- 10. Toggles -->
+  <section id="table-toggles">
+  <h2>Toggles</h2>
+  <wb-demo columns="1">
+    <wb-table filterable striped>
+      <thead>
+        <tr>
+          <th>Bug Report</th>
+          <th>Severity</th>
+          <th>Assigned To</th>
+          <th>Status</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>#BUG-1024: Button hover state</td>
+          <td>Medium</td>
+          <td>Sarah Chen</td>
+          <td>Open</td>
+        </tr>
+        <tr>
+          <td>#BUG-1023: Mobile layout break</td>
+          <td>Critical</td>
+          <td>Marcus Johnson</td>
+          <td>In Progress</td>
+        </tr>
+        <tr>
+          <td>#BUG-1022: Animation jank</td>
+          <td>Low</td>
+          <td>Elena Rodriguez</td>
+          <td>Closed</td>
+        </tr>
+        <tr>
+          <td>#BUG-1021: Performance issue</td>
+          <td>High</td>
+          <td>James Wilson</td>
+          <td>In Progress</td>
+        </tr>
+      </tbody>
+    </wb-table>
+    <wb-table paginated page-size="5" striped>
+      <thead>
+        <tr>
+          <th>Invoice</th>
+          <th>Client</th>
+          <th>Amount</th>
+          <th>Due Date</th>
+          <th>Paid</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>INV-2026-089</td>
+          <td>Acme Corporation</td>
+          <td>$8,500</td>
+          <td>Aug 15, 2026</td>
+          <td>✓</td>
+        </tr>
+        <tr>
+          <td>INV-2026-088</td>
+          <td>TechFlow Solutions</td>
+          <td>$12,300</td>
+          <td>Aug 20, 2026</td>
+          <td>✗</td>
+        </tr>
+        <tr>
+          <td>INV-2026-087</td>
+          <td>Global Innovations</td>
+          <td>$6,750</td>
+          <td>Aug 18, 2026</td>
+          <td>✓</td>
+        </tr>
+        <tr>
+          <td>INV-2026-086</td>
+          <td>NextGen Labs</td>
+          <td>$15,200</td>
+          <td>Aug 25, 2026</td>
+          <td>✗</td>
+        </tr>
+        <tr>
+          <td>INV-2026-085</td>
+          <td>Creative Studios</td>
+          <td>$4,500</td>
+          <td>Aug 12, 2026</td>
+          <td>✓</td>
+        </tr>
+        <tr>
+          <td>INV-2026-084</td>
+          <td>Cloud Systems</td>
+          <td>$22,000</td>
+          <td>Aug 30, 2026</td>
+          <td>✗</td>
+        </tr>
+      </tbody>
+    </wb-table>
+    <wb-table compact bordered>
+      <thead>
+        <tr>
+          <th>Library</th>
+          <th>Version</th>
+          <th>Security</th>
+          <th>Updates</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>@babel/core</td>
+          <td>7.23.5</td>
+          <td>✓ Safe</td>
+          <td>2 available</td>
+        </tr>
+        <tr>
+          <td>react</td>
+          <td>18.2.0</td>
+          <td>✓ Safe</td>
+          <td>0 available</td>
+        </tr>
+        <tr>
+          <td>typescript</td>
+          <td>5.2.2</td>
+          <td>✓ Safe</td>
+          <td>1 available</td>
+        </tr>
+        <tr>
+          <td>webpack</td>
+          <td>5.88.0</td>
+          <td>⚠ Review</td>
+          <td>3 available</td>
+        </tr>
+      </tbody>
+    </wb-table>
+  </wb-demo>
+  </section>
+
+  <!-- 11. 📝 Notes -->
+  <section id="notes-notes">
+  <h2>📝 Notes</h2>
+  <p>Notes drawer opens from the side. Click "Open Notes" to see it in action.</p>
+  <wb-demo columns="1">
+    <div style="display: flex; gap: 1rem; flex-wrap: wrap;">
+      <button onclick="document.querySelector('#notes-default').classList.add('wb-notes--open')">
+        Open Notes
+      </button>
+      <button onclick="document.querySelector('#notes-left').classList.add('wb-notes--open')">
+        Open Notes (Left)
+      </button>
+      <button onclick="document.querySelector('#notes-right').classList.add('wb-notes--open')">
+        Open Notes (Right)
+      </button>
+      <button onclick="document.querySelector('#notes-modal').classList.add('wb-notes--open')">
+        Open Notes (Modal)
+      </button>
+    </div>
+    <wb-notes id="notes-default">
+      <strong>Notes Drawer</strong><br>
+      A resizable panel for taking notes alongside your work. Click anywhere outside to close.
+    </wb-notes>
+    <wb-notes id="notes-left" position="left">
+      <strong>Notes (Left Side)</strong><br>
+      Opens from the left edge of the screen instead of the right.
+    </wb-notes>
+    <wb-notes id="notes-right" position="right">
+      <strong>Notes (Right Side)</strong><br>
+      Opens from the right edge. This is the default position.
+    </wb-notes>
+    <wb-notes id="notes-modal" position="modal">
+      <strong>Notes (Modal)</strong><br>
+      Opens as a centered modal dialog instead of a side drawer. Supports clicking the backdrop to close.
+    </wb-notes>
+  </wb-demo>
+  </section>
+
+  <!-- 12. 📦 Code Control -->
+  <section id="codecontrol-code-control">
+  <h2>📦 Code Control</h2>
+  <wb-demo columns="1">
+    <wb-codecontrol>
+      This is example code control content.
+    </wb-codecontrol>
+  </wb-demo>
+  </section>
+
+  <!-- 13. 🎬 Semantic Media Elements -->
+  <section id="semantic-media-elements">
+  <h2>🎬 Semantic Media Elements</h2>
+<p>Enhanced media elements using standard HTML tags.</p>
+
+  <!-- AUDIO -->
+  <h2>Audio <code>&lt;audio&gt;</code></h2>
+  <div class="demo-section">
+    <p>Standard Player</p>
+    <wb-demo>
+      <audio id="semanticsmedia-audio-20" controls src="../audio.mp3"></audio>
+    </wb-demo>
+
+    <p>Studio EQ Player — with 15-band graphic equalizer</p>
+    <wb-demo>
+      <wb-audio
+        src="https://files.freemusicarchive.org/storage-freemusicarchive-org/music/no_curator/Tours/Enthusiast/Tours_-_01_-_Enthusiast.mp3"
+        show-eq
+        volume="0.7"
+        playlist="https://files.freemusicarchive.org/storage-freemusicarchive-org/music/no_curator/Tours/Enthusiast/Tours_-_01_-_Enthusiast.mp3|Tours - Enthusiast,https://archive.org/download/nineinchnails_ghosts_I_IV/01_Ghosts_I.mp3|Ghosts I - Track 1,https://archive.org/download/nineinchnails_ghosts_I_IV/02_Ghosts_I.mp3|Ghosts I - Track 2,https://archive.org/download/nineinchnails_ghosts_I_IV/03_Ghosts_I.mp3|Ghosts I - Track 3,https://archive.org/download/nineinchnails_ghosts_I_IV/04_Ghosts_I.mp3|Ghosts I - Track 4,https://archive.org/download/nineinchnails_ghosts_I_IV/05_Ghosts_I.mp3|Ghosts I - Track 5,https://archive.org/download/nineinchnails_ghosts_I_IV/06_Ghosts_I.mp3|Ghosts I - Track 6,https://archive.org/download/nineinchnails_ghosts_I_IV/07_Ghosts_I.mp3|Ghosts I - Track 7,https://archive.org/download/nineinchnails_ghosts_I_IV/08_Ghosts_I.mp3|Ghosts I - Track 8,https://archive.org/download/nineinchnails_ghosts_I_IV/09_Ghosts_I.mp3|Ghosts I - Track 9,https://archive.org/download/nineinchnails_ghosts_I_IV/10_Ghosts_II.mp3|Ghosts II - Track 1,https://archive.org/download/nineinchnails_ghosts_I_IV/11_Ghosts_II.mp3|Ghosts II - Track 2,https://archive.org/download/nineinchnails_ghosts_I_IV/12_Ghosts_II.mp3|Ghosts II - Track 3,https://archive.org/download/nineinchnails_ghosts_I_IV/13_Ghosts_II.mp3|Ghosts II - Track 4,https://archive.org/download/nineinchnails_ghosts_I_IV/14_Ghosts_II.mp3|Ghosts II - Track 5,https://archive.org/download/nineinchnails_ghosts_I_IV/15_Ghosts_II.mp3|Ghosts II - Track 6,https://archive.org/download/nineinchnails_ghosts_I_IV/16_Ghosts_II.mp3|Ghosts II - Track 7,https://archive.org/download/nineinchnails_ghosts_I_IV/17_Ghosts_II.mp3|Ghosts II - Track 8">
+      </wb-audio>
+    </wb-demo>
+  </div>
+
+  <!-- VIDEO -->
+  <h2>Video <code>&lt;video&gt;</code></h2>
+  <div class="demo-section">
+    <p>Standard Video</p>
+    <wb-demo>
+      <video controls src="https://www.w3schools.com/html/mov_bbb.mp4" style="width: 100%; border-radius: 8px;"></video>
+    </wb-demo>
+
+    <p>Background Video (Muted Loop)</p>
+    <wb-demo>
+      <video
+        src="https://www.w3schools.com/html/movie.mp4"
+        autoplay
+        muted
+        loop
+        style="width: 100%; border-radius: 8px; opacity: 0.6;">
+      </video>
+    </wb-demo>
+  </div>
+
+  <!-- IMAGE -->
+  <h2>Image <code>&lt;img&gt;</code></h2>
+  <div class="demo-section">
+    <p>Zoomable Image (Lightbox)</p>
+    <wb-demo>
+      <img src="https://picsum.photos/id/1018/800/600" zoomable alt="Nature Scene" style="width: 100%; border-radius: 8px;">
+    </wb-demo>
+
+    <p>Lazy Loaded with Aspect Ratio</p>
+    <wb-demo>
+      <img src="https://picsum.photos/id/1015/800/600" lazy aspect-ratio="4/3" alt="River" style="width: 100%; border-radius: 8px;">
+    </wb-demo>
+  </div>
+
+  <!-- FIGURE -->
+  <h2>Figure <code>&lt;figure&gt;</code></h2>
+  <div class="demo-section">
+    <p>Standard Figure</p>
+    <wb-demo>
+      <figure zoom>
+        <img src="https://picsum.photos/id/1016/800/600" alt="Canyon" style="width: 100%;">
+        <figcaption>A beautiful canyon view</figcaption>
+      </figure>
+    </wb-demo>
+
+    <p>Overlay Caption</p>
+    <wb-demo>
+      <figure caption-position="overlay" lightbox>
+        <img src="https://picsum.photos/id/1019/800/600" alt="Technology" style="width: 100%;">
+        <figcaption>Technology and Nature</figcaption>
+      </figure>
+    </wb-demo>
+  </div>
+  </section>
+
+  <!-- 14. 🏗️ Semantic Structure Elements -->
+  <section id="semantic-structure-elements">
+  <h2>🏗️ Semantic Structure Elements</h2>
+<p>Enhanced structural and data elements using standard HTML tags.</p>
+
+  <!-- TABLE -->
+  <h2>Table <code>&lt;table&gt;</code></h2>
+  <p>Features: sortable columns (click header), copyable cells (click cell), searchable, striped rows.</p>
+  <div class="demo-section">
+    <wb-demo columns="1">
+      <table sortable searchable striped hover copyable>
+        <thead>
+          <tr><th>ID</th><th>Name</th><th>Role</th><th>Status</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>1</td><td>Alice Smith</td><td>Developer</td><td>Active</td></tr>
+          <tr><td>2</td><td>Bob Jones</td><td>Designer</td><td>Active</td></tr>
+          <tr><td>3</td><td>Charlie Brown</td><td>Manager</td><td>Away</td></tr>
+        </tbody>
+      </table>
+    </wb-demo>
+  </div>
+
+  <!-- DETAILS -->
+  <h2>Details <code>&lt;details&gt;</code></h2>
+  <div class="demo-section">
+    <wb-demo columns="3">
+      <details>
+        <summary>Detail Item 1</summary>
+        <p>This is the content for item 1.</p>
+      </details>
+      <details open>
+        <summary>Detail Item 2 (open by default)</summary>
+        <p>This is the content for item 2.</p>
+      </details>
+      <details animated="false">
+        <summary>Detail Item 3 (no animation)</summary>
+        <p>This is the content for item 3.</p>
+      </details>
+    </wb-demo>
+  </div>
+
+  <!-- DIALOG -->
+  <h2>Dialog <code>&lt;dialog&gt;</code></h2>
+  <div class="demo-section">
+    <p>Native <code>&lt;dialog&gt;</code> shown via <code>showModal()</code> — hidden by default, so it isn't itself a <code>&lt;wb-demo&gt;</code> candidate (nothing to render inline); the trigger button is.</p>
+    <wb-demo columns="1">
+      <button id="open-dialog-btn">Open Modal Dialog</button>
+    </wb-demo>
+    <div id="padding-warning" class="padding-warning">
+      ⚠️ Modal blocked: Body requires at least 1rem padding on left and right sides.
+    </div>
+    <dialog id="demo-dialog">
+      <form method="dialog">
+        <h3>Confirmation</h3>
+        <p>This is a native dialog.</p>
+        <div style="display: flex; justify-content: flex-end; gap: 1rem; margin-top: 1rem;">
+          <button value="cancel">Cancel</button>
+          <button value="confirm" autofocus>Confirm</button>
+        </div>
+      </form>
+    </dialog>
+  </div>
+
+  <!-- PROGRESS -->
+  <h2>Progress <code>&lt;wb-progress&gt;</code></h2>
+  <div class="demo-section">
+    <wb-demo columns="2">
+      <wb-progress value="70" label="Loading..."></wb-progress>
+      <wb-progress indeterminate label="Working..."></wb-progress>
+    </wb-demo>
+  </div>
+
+  <!-- CODE & PRE -->
+  <h2>Code <code>&lt;code&gt;</code> &amp; <code>&lt;pre&gt;</code></h2>
+  <div class="demo-section">
+    <p>Inline Code</p>
+    <wb-demo columns="1">
+      <p>Use <code>console.log()</code> to install.</p>
+    </wb-demo>
+
+    <p>Code Block</p>
+    <wb-demo columns="1">
+      <pre x-behavior="pre" show-copy show-line-numbers language="javascript"><code>function hello() {
+  console.log("Hello World");
+  return true;
+}</code></pre>
+    </wb-demo>
+  </div>
+
+  <!-- LISTS -->
+  <h2>Lists <code>&lt;ul&gt;, &lt;ol&gt;, &lt;dl&gt;</code></h2>
+  <div class="demo-section">
+    <wb-demo columns="3">
+      <ul>
+        <li>Feature One</li>
+        <li>Feature Two</li>
+        <li>Feature Three</li>
+      </ul>
+      <ol>
+        <li>Step One</li>
+        <li>Step Two</li>
+        <li>Step Three</li>
+      </ol>
+      <dl>
+        <dt>HTML</dt>
+        <dd>HyperText Markup Language</dd>
+        <dt>CSS</dt>
+        <dd>Cascading Style Sheets</dd>
+      </dl>
+    </wb-demo>
+  </div>
+
+  <!-- TEXT-LEVEL SEMANTICS -->
+  <h2>Text-Level Semantics</h2>
+  <div class="demo-section">
+    <wb-demo columns="4">
+      <blockquote>"Web functionality." <cite>— Author</cite></blockquote>
+      <address>123 Street, Anytown</address>
+      <p>Deprecated: <del>old price</del> New: <ins>new price</ins></p>
+      <abbr title="HyperText Markup Language">HTML</abbr>
+      <p>Meeting at <time datetime="2026-07-12T09:00">9am, July 12</time></p>
+      <p>x<sup>2</sup> + y<sup>2</sup> = z<sup>2</sup></p>
+      <p>H<sub>2</sub>O</p>
+      <hr>
+    </wb-demo>
+  </div>
+
+  <!-- LINK -->
+  <h2>Link <code>.wb-link</code></h2>
+  <div class="demo-section">
+    <wb-demo columns="1" data-code-width="narrow">
+      <a href="#" class="wb-link">Styled Link</a>
+    </wb-demo>
+  </div>
+  <script type="module">
+// Modal padding validation
+    const openDialogBtn = document.getElementById('open-dialog-btn');
+    const demoDialog = document.getElementById('demo-dialog');
+    const paddingWarning = document.getElementById('padding-warning');
+
+    function hasRequiredPadding() {
+      const bodyStyle = window.getComputedStyle(document.body);
+      const paddingLeft = parseFloat(bodyStyle.paddingLeft);
+      const paddingRight = parseFloat(bodyStyle.paddingRight);
+      return paddingLeft >= 16 && paddingRight >= 16;
+    }
+
+    openDialogBtn.addEventListener('click', () => {
+      if (hasRequiredPadding()) {
+        paddingWarning.classList.remove('show');
+        demoDialog.showModal();
+      } else {
+        paddingWarning.classList.add('show');
+        console.warn('Modal blocked: Body requires at least 1rem padding on left and right sides.');
+      }
+    });
+  </script>
+  </section>
+
+  <script type="module">
+    import WB from '../../src/core/wb-lazy.js';
+    window.WB = WB;
+    await WB.init({ autoInject: true });
+    await WB.scan(document.body, { eager: true });
+    console.log('Content & Media initialized');
+    window.__WB_DEMO_INITIALIZED__ = true;
+  </script>
+</body>
+
+</html>

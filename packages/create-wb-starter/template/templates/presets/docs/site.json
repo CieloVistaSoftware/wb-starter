@@ -1,0 +1,59 @@
+{
+  "site": {
+    "name": "Project Docs",
+    "tagline": "Documentation",
+    "logo": "<span style='font-weight: bold; font-size: 1.5rem;'>📚 Docs</span>",
+    "favicon": "images/favicon.png",
+    "theme": "dark",
+    "version": "1.0.0",
+    "autoInject": false
+  },
+  
+  "nav": [
+    { "id": "home", "label": "Home", "icon": "🏠", "page": "home" },
+    { "id": "docs", "label": "Docs", "icon": "📖", "page": "docs" },
+    { "id": "api", "label": "API", "icon": "🔌", "page": "api" },
+    { "id": "examples", "label": "Examples", "icon": "💡", "page": "examples" },
+    { "id": "blog", "label": "Blog", "icon": "📝", "page": "blog" }
+  ],
+  
+  "header": {
+    "showLogo": true,
+    "showThemeSwitcher": true,
+    "showSearch": true,
+    "sticky": true,
+    "cta": {
+      "label": "GitHub",
+      "href": "https://github.com",
+      "variant": "outline",
+      "icon": "🐙"
+    }
+  },
+  
+  "footer": {
+    "copyright": "© 2025 Project Name. MIT License.",
+    "showSocial": true,
+    "social": [
+      { "name": "GitHub", "icon": "🐙", "url": "https://github.com" },
+      { "name": "Discord", "icon": "💬", "url": "https://discord.gg" },
+      { "name": "Twitter", "icon": "🐦", "url": "https://twitter.com" }
+    ],
+    "links": [
+      { "label": "Changelog", "page": "changelog" },
+      { "label": "Contributing", "page": "contributing" }
+    ]
+  },
+  
+  "layout": {
+    "navPosition": "left",
+    "navWidth": "fit-content",
+    "navCollapsible": true,
+    "navDefaultCollapsed": false
+  },
+  
+  "seo": {
+    "title": "Project Docs - Documentation",
+    "description": "Official documentation for Project Name",
+    "keywords": ["docs", "documentation", "api", "developer"]
+  }
+}

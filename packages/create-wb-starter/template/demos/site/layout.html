@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Layout & Navigation</title>
+  <link rel="stylesheet" href="../../src/styles/themes.css">
+  <link rel="stylesheet" href="../../src/styles/site.css">
+
+</head>
+
+<body class="demo-page">
+  <nav style="margin-bottom: 1rem;">
+    <a href="index.html" style="color: var(--text-secondary, #aaa); text-decoration: none;">← Back to Index</a>
+  </nav>
+  <h1>📐 Layout & Navigation</h1>
+  <p>Headers, footers, navbars, tabs, drawers, sticky, scrollalong</p>
+
+  <!-- 1. 📰 Header -->
+  <section id="header-header">
+  <h2>📰 Header</h2>
+  <wb-demo columns="2">
+    <wb-header title="Title">
+      This is example header content.
+    </wb-header>
+    <wb-header icon="📂" title="Title">
+      This is example header content.
+    </wb-header>
+    <wb-header icon="🚀" title="App" badge="v1.0">
+      This is example header content.
+    </wb-header>
+    <wb-header title="Site" sticky>
+      This is example header content.
+    </wb-header>
+  </wb-demo>
+  </section>
+
+  <!-- 2. Toggles -->
+  <section id="header-toggles">
+  <h2>Toggles</h2>
+  <wb-demo columns="1">
+    <wb-header sticky>
+      This is example header content.
+    </wb-header>
+  </wb-demo>
+  </section>
+
+  <!-- 3. 📄 Footer -->
+  <section id="footer-footer">
+  <h2>📄 Footer</h2>
+  <wb-demo columns="2">
+    <wb-footer copyright="© 2025">
+      This is example footer content.
+    </wb-footer>
+    <wb-footer brand="Acme" copyright="© 2025">
+      This is example footer content.
+    </wb-footer>
+    <wb-footer copyright="© 2025" sticky>
+      This is example footer content.
+    </wb-footer>
+  </wb-demo>
+  </section>
+
+  <!-- 4. Toggles -->
+  <section id="footer-toggles">
+  <h2>Toggles</h2>
+  <wb-demo columns="1">
+    <wb-footer sticky>
+      This is example footer content.
+    </wb-footer>
+  </wb-demo>
+  </section>
+
+  <!-- 5. 🧭 Navbar -->
+  <section id="navbar-navbar">
+  <h2>🧭 Navbar</h2>
+  <wb-demo columns="2">
+    <wb-navbar brand="MySite">
+      This is example navbar content.
+    </wb-navbar>
+    <wb-navbar brand="MySite" sticky>
+      This is example navbar content.
+    </wb-navbar>
+    <wb-navbar brand="MySite" variant="dark">
+      This is example navbar content.
+    </wb-navbar>
+  </wb-demo>
+  </section>
+
+  <!-- 6. Variants -->
+  <section id="navbar-variants">
+  <h2>Variants</h2>
+  <wb-demo columns="2">
+    <wb-navbar variant="default">
+      This is example navbar content.
+    </wb-navbar>
+    <wb-navbar variant="dark">
+      This is example navbar content.
+    </wb-navbar>
+    <wb-navbar variant="transparent">
+      This is example navbar content.
+    </wb-navbar>
+  </wb-demo>
+  </section>
+
+  <!-- 7. Toggles -->
+  <section id="navbar-toggles">
+  <h2>Toggles</h2>
+  <wb-demo columns="1">
+    <wb-navbar sticky>
+      This is example navbar content.
+    </wb-navbar>
+  </wb-demo>
+  </section>
+
+  <!-- 8. 📑 Tabs -->
+  <section id="tabs-tabs">
+  <h2>📑 Tabs</h2>
+  <wb-demo columns="3">
+    <wb-tabs active-tab="0">
+      This is example tabs content.
+    </wb-tabs>
+    <wb-tabs active-tab="1">
+      This is example tabs content.
+    </wb-tabs>
+    <wb-tabs variant="pills">
+      This is example tabs content.
+    </wb-tabs>
+    <wb-tabs variant="underline">
+      This is example tabs content.
+    </wb-tabs>
+    <wb-tabs full-width>
+      This is example tabs content.
+    </wb-tabs>
+  </wb-demo>
+  </section>
+
+  <!-- 9. Variants -->
+  <section id="tabs-variants">
+  <h2>Variants</h2>
+  <wb-demo columns="2">
+    <wb-tabs variant="default">
+      This is example tabs content.
+    </wb-tabs>
+    <wb-tabs variant="bordered">
+      This is example tabs content.
+    </wb-tabs>
+  </wb-demo>
+  </section>
+
+  <!-- 10. size variants -->
+  <section id="tabs-size-variants">
+  <h2>size variants</h2>
+  <wb-demo columns="2">
+    <wb-tabs size="sm">
+      This is example tabs content.
+    </wb-tabs>
+    <wb-tabs size="md">
+      This is example tabs content.
+    </wb-tabs>
+    <wb-tabs size="lg">
+      This is example tabs content.
+    </wb-tabs>
+  </wb-demo>
+  </section>
+
+  <!-- 11. Toggles -->
+  <section id="tabs-toggles">
+  <h2>Toggles</h2>
+  <wb-demo columns="1">
+    <wb-tabs vertical>
+      This is example tabs content.
+    </wb-tabs>
+  </wb-demo>
+  </section>
+
+  <!-- 12. 📂 Details -->
+  <section id="details-details">
+  <h2>📂 Details</h2>
+  <wb-demo columns="2">
+    <wb-details summary="Details">
+      This is example details content.
+    </wb-details>
+    <wb-details summary="Details" open>
+      This is example details content.
+    </wb-details>
+    <wb-details summary="Details" animated>
+      This is example details content.
+    </wb-details>
+  </wb-demo>
+  </section>
+
+  <!-- 13. Variants -->
+  <section id="details-variants">
+  <h2>Variants</h2>
+  <wb-demo columns="2">
+    <wb-details variant="default" summary="Sample summary">
+      This is example details content.
+    </wb-details>
+    <wb-details variant="bordered" summary="Sample summary">
+      This is example details content.
+    </wb-details>
+    <wb-details variant="filled" summary="Sample summary">
+      This is example details content.
+    </wb-details>
+  </wb-demo>
+  </section>
+
+  <!-- 14. Toggles -->
+  <section id="details-toggles">
+  <h2>Toggles</h2>
+  <wb-demo columns="1">
+    <wb-details open summary="Sample summary">
+      This is example details content.
+    </wb-details>
+  </wb-demo>
+  </section>
+
+  <!-- 15. 📐 Drawer Layout -->
+  <section id="drawer-layout-drawer-layout">
+  <h2>📐 Drawer Layout</h2>
+  <wb-demo columns="2">
+    <wb-drawer-layout position="left">
+      This is example drawer layout content.
+    </wb-drawer-layout>
+    <wb-drawer-layout position="right">
+      This is example drawer layout content.
+    </wb-drawer-layout>
+    <wb-drawer-layout collapsed>
+      This is example drawer layout content.
+    </wb-drawer-layout>
+  </wb-demo>
+  </section>
+
+  <!-- 16. 📜 ScrollAlong -->
+  <section id="scrollalong-scrollalong">
+  <h2>📜 ScrollAlong</h2>
+  <wb-demo columns="1">
+    <wb-scrollalong>
+      This is example scrollalong content.
+    </wb-scrollalong>
+  </wb-demo>
+  </section>
+
+  <!-- 17. 📌 Sticky -->
+  <section id="sticky-sticky">
+  <h2>📌 Sticky</h2>
+  <wb-demo columns="2">
+    <wb-sticky>
+      This is example sticky content.
+    </wb-sticky>
+    <wb-sticky offset="60">
+      This is example sticky content.
+    </wb-sticky>
+    <wb-sticky animated>
+      This is example sticky content.
+    </wb-sticky>
+  </wb-demo>
+  </section>
+
+  <!-- 18. 📅 Timeline -->
+  <section id="timeline-timeline">
+  <h2>📅 Timeline</h2>
+  <wb-demo columns="2">
+    <wb-timeline items="Project Kickoff,Design Phase,Development,Testing,Launch">
+      This is example timeline content.
+    </wb-timeline>
+    <wb-timeline items="Q1 Planning,Q2 Execution,Q3 Review,Q4 Delivery">
+      This is example timeline content.
+    </wb-timeline>
+    <wb-timeline items="Research,Prototype,Build,Ship">
+      This is example timeline content.
+    </wb-timeline>
+  </wb-demo>
+  </section>
+
+  <script type="module">
+    import WB from '../../src/core/wb-lazy.js';
+    window.WB = WB;
+    await WB.init({ autoInject: true });
+    await WB.scan(document.body, { eager: true });
+    console.log('Layout & Navigation initialized');
+    window.__WB_DEMO_INITIALIZED__ = true;
+  </script>
+</body>
+
+</html>

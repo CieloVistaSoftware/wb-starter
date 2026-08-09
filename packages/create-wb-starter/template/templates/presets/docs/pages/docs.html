@@ -1,0 +1,111 @@
+<!-- 
+  DOCUMENTATION PAGE STUB
+  =======================
+  Edit this page for your main documentation.
+  
+  Suggested sections:
+  - Sidebar navigation
+  - Getting started guide
+  - Configuration
+  - Core concepts
+-->
+
+<div style="display: grid; grid-template-columns: 250px 1fr; gap: 2rem; padding: 2rem; max-width: 1400px; margin: 0 auto;">
+  
+  <!-- Sidebar -->
+  <aside style="position: sticky; top: 2rem; height: fit-content;">
+    <nav style="display: flex; flex-direction: column; gap: 0.5rem;">
+      <p style="font-weight: bold; margin: 0 0 0.5rem; color: var(--text-secondary); font-size: 0.875rem; text-transform: uppercase;">Getting Started</p>
+      <a href="#introduction" style="padding: 0.5rem; border-radius: 0.25rem; text-decoration: none; color: var(--text-primary);">Introduction</a>
+      <a href="#installation" style="padding: 0.5rem; border-radius: 0.25rem; text-decoration: none; color: var(--text-primary);">Installation</a>
+      <a href="#quick-start" style="padding: 0.5rem; border-radius: 0.25rem; text-decoration: none; color: var(--text-primary);">Quick Start</a>
+      
+      <p style="font-weight: bold; margin: 1rem 0 0.5rem; color: var(--text-secondary); font-size: 0.875rem; text-transform: uppercase;">Core Concepts</p>
+      <a href="#components" style="padding: 0.5rem; border-radius: 0.25rem; text-decoration: none; color: var(--text-primary);">Components</a>
+      <a href="#configuration" style="padding: 0.5rem; border-radius: 0.25rem; text-decoration: none; color: var(--text-primary);">Configuration</a>
+      <a href="#theming" style="padding: 0.5rem; border-radius: 0.25rem; text-decoration: none; color: var(--text-primary);">Theming</a>
+      
+      <p style="font-weight: bold; margin: 1rem 0 0.5rem; color: var(--text-secondary); font-size: 0.875rem; text-transform: uppercase;">Advanced</p>
+      <a href="#plugins" style="padding: 0.5rem; border-radius: 0.25rem; text-decoration: none; color: var(--text-primary);">Plugins</a>
+      <a href="#migration" style="padding: 0.5rem; border-radius: 0.25rem; text-decoration: none; color: var(--text-primary);">Migration Guide</a>
+    </nav>
+  </aside>
+  
+  <!-- Content -->
+  <main style="max-width: 800px;">
+    
+    <section id="introduction">
+      <h1>Introduction</h1>
+      <p style="font-size: 1.125rem; color: var(--text-secondary);">
+        Welcome to the documentation. This guide will help you get started with Project Name.
+      </p>
+      <p>
+        Write an overview of your project here. Explain what it does, why it exists, 
+        and what problems it solves.
+      </p>
+    </section>
+    
+    <hr style="border: none; border-top: 1px solid var(--border); margin: 3rem 0;">
+    
+    <section id="installation">
+      <h2>Installation</h2>
+      <p>Install via npm, yarn, or pnpm:</p>
+      <wb-card variant="elevated" style="margin: 1rem 0;">
+        <code style="display: block; white-space: pre;">npm install your-package
+# or
+yarn add your-package
+# or
+pnpm add your-package</code>
+      </wb-card>
+    </section>
+    
+    <hr style="border: none; border-top: 1px solid var(--border); margin: 3rem 0;">
+    
+    <section id="quick-start">
+      <h2>Quick Start</h2>
+      <p>Here's a minimal example to get you started:</p>
+      <wb-card variant="elevated" style="margin: 1rem 0;">
+        <code style="display: block; white-space: pre;">import { Component } from 'your-package';
+
+// Initialize
+const instance = new Component({
+  option: 'value'
+});
+
+// Use it
+instance.doSomething();</code>
+      </wb-card>
+    </section>
+    
+    <hr style="border: none; border-top: 1px solid var(--border); margin: 3rem 0;">
+    
+    <section id="components">
+      <h2>Components</h2>
+      <p>Document your main components here. Include:</p>
+      <ul>
+        <li>Component name and purpose</li>
+        <li>Props/options</li>
+        <li>Usage examples</li>
+        <li>Common patterns</li>
+      </ul>
+    </section>
+    
+    <hr style="border: none; border-top: 1px solid var(--border); margin: 3rem 0;">
+    
+    <section id="configuration">
+      <h2>Configuration</h2>
+      <p>Explain configuration options:</p>
+      <wb-card variant="elevated" style="margin: 1rem 0;">
+        <code style="display: block; white-space: pre;">{
+  "option1": "value",
+  "option2": true,
+  "option3": {
+    "nested": "config"
+  }
+}</code>
+      </wb-card>
+    </section>
+    
+  </main>
+  
+</div>

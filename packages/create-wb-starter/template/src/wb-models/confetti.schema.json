@@ -1,0 +1,132 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "confetti.schema.json",
+  "title": "Confetti",
+  "description": "Confetti particle animation effect",
+  "schemaFor": "confetti",
+  "baseClass": "wb-confetti",
+  "semanticElement": {
+    "tagName": "div"
+  },
+  "compliance": {
+    "baseClass": "wb-confetti",
+    "supportLevel": "stable",
+    "accessibility": "high"
+  },
+  "properties": {
+    "count": {
+      "type": "number",
+      "description": "Number of particles",
+      "default": 50
+    },
+    "label": {
+      "type": "string",
+      "description": "Trigger button label",
+      "default": "Fire Confetti!"
+    },
+    "showButton": {
+      "type": "boolean",
+      "description": "Show trigger button",
+      "default": true
+    },
+    "repeat": {
+      "type": "boolean",
+      "description": "Loop animation",
+      "default": false
+    },
+    "delay": {
+      "type": "string",
+      "description": "Start delay",
+      "default": "0s"
+    },
+    "duration": {
+      "type": "string",
+      "description": "Animation duration",
+      "default": "3s"
+    },
+    "colors": {
+      "type": "string",
+      "description": "Particle colors as JSON array",
+      "default": "[\"#ff0\",\"#f0f\",\"#0ff\",\"#0f0\",\"#f00\"]"
+    }
+  },
+  "$view": [
+    {
+      "name": "button",
+      "tag": "button",
+      "public": true,
+      "content": "{{label}}",
+      "createdWhen": "showButton",
+      "description": "Trigger button"
+    },
+    {
+      "name": "container",
+      "tag": "div",
+      "public": false,
+      "description": "Particle container"
+    }
+  ],
+  "$methods": {
+    "fire": {
+      "description": "Triggers confetti",
+      "params": []
+    },
+    "stop": {
+      "description": "Stops animation",
+      "params": []
+    }
+  },
+  "$cssAPI": {
+    "--wb-confetti-z-index": {
+      "default": "9999",
+      "description": "Z-index"
+    }
+  },
+  "events": {
+    "wb:confetti:start": {
+      "description": "Animation started"
+    },
+    "wb:confetti:end": {
+      "description": "Animation ended"
+    }
+  },
+  "test": {
+    "setup": [
+      "<wb-confetti>Basic confetti content</wb-confetti>",
+      "<wb-confetti show-button>with showButton</wb-confetti>",
+      "<wb-confetti repeat>with repeat</wb-confetti>",
+      "<wb-confetti count=\"50\">count=50</wb-confetti>",
+      "<wb-confetti label=\"Fire Confetti!\">label=\"Fire Confetti!\"</wb-confetti>",
+      "<wb-confetti delay=\"0s\">delay=\"0s\"</wb-confetti>",
+      "<wb-confetti duration=\"3s\">duration=\"3s\"</wb-confetti>",
+      "<wb-confetti colors=\"[\"#ff0\",\"#f0f\",\"#0ff\",\"#0f0\",\"#f00\"]\">colors=\"[\"#ff0\",\"#f0f\",\"#0ff\",\"#0f0\",\"#f00\"]\"</wb-confetti>"
+    ],
+    "matrix": {
+      "combinations": [
+        {},
+        {
+          "count": 100
+        },
+        {
+          "repeat": true
+        }
+      ]
+    },
+    "site": {
+      "page": "effects",
+      "tag": "wb-confetti",
+      "renders": true,
+      "baseClass": "wb-confetti",
+      "minInstances": 3,
+      "checkText": [],
+      "checkClasses": [],
+      "checkAttributes": []
+    }
+  },
+  "_metadata": {
+    "category": "effects",
+    "icon": "🎉",
+    "since": "1.0.0",
+    "status": "stable"
+  }
+}

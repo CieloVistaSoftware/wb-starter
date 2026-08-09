@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ScrollAlong Behavior Test</title>
+  <script type="module" src="/src/core/wb-lazy.js"></script>
+  <link rel="stylesheet" href="/src/styles/themes.css">
+  <link rel="stylesheet" href="/src/styles/site.css">
+  <style>
+    body { margin: 0; padding: 0; }
+    .spacer { height: 200px; background: #eee; padding: 1rem; }
+    #scrollContainer { height: 600px; overflow-y: auto; border: 1px solid #ccc; margin: 2rem; }
+    nav { background: #333; color: #fff; padding: 1rem; margin-bottom: 1rem; }
+    .content { height: 2000px; background: linear-gradient(#fff, #ccc); }
+  </style>
+</head>
+<body>
+  <div class="spacer">Scroll down to see scrollalong behavior</div>
+  <div id="scrollContainer">
+    <nav id="testNav" x-scrollalong>
+      <ul style="display: flex; gap: 1rem; list-style: none; margin: 0; padding: 0;">
+        <li class="nav__item"><a href="#">Home</a></li>
+        <li class="nav__item"><a href="#">About</a></li>
+        <li class="nav__item"><a href="#">Contact</a></li>
+      </ul>
+    </nav>
+    <div class="content">Main content area</div>
+  </div>
+</body>
+  <script type="module">
+    import WB from '/src/core/wb-lazy.js';
+    window.WB = WB;
+    await WB.init({ autoInject: true });
+  </script>
+</html>

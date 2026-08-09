@@ -1,0 +1,41 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "demo.schema.json",
+  "title": "Demo Container",
+  "description": "A container that renders children normally in a CSS grid and shows the raw HTML as a syntax-highlighted, auto-formatted code sample below. Uses fetch for raw page source, formatHtml for consistent 2-space indentation, and textContent to prevent browser inflation.",
+  "schemaFor": "demo",
+  "baseClass": "wb-demo",
+  "semanticElement": {
+    "tagName": "div",
+    "implicitRole": "region"
+  },
+  "compliance": {
+    "baseClass": "wb-demo",
+    "supportLevel": "stable",
+    "accessibility": "high"
+  },
+  "properties": {
+    "columns": {
+      "type": "integer",
+      "description": "Number of grid columns for children (1-6)",
+      "default": 1,
+      "minimum": 1,
+      "maximum": 6
+    }
+  },
+  "$cssAPI": {
+    "--border-color": {
+      "description": "Border color for code sample",
+      "default": "inherit"
+    }
+  },
+  "$view": [],
+  "$methods": {},
+  "test": {
+    "setup": [
+      "<wb-demo><p>Simple content</p></wb-demo>",
+      "<wb-demo columns=\"2\"><p>A</p><p>B</p></wb-demo>",
+      "<wb-demo columns=\"3\"><wb-card title=\"One\"><p>Card 1</p></wb-card><wb-card title=\"Two\"><p>Card 2</p></wb-card><wb-card title=\"Three\"><p>Card 3</p></wb-card></wb-demo>"
+    ]
+  }
+}

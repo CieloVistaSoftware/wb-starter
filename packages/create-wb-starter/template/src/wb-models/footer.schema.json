@@ -1,0 +1,179 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "footer.schema.json",
+  "title": "Footer",
+  "description": "Page footer with copyright, links, and social icons",
+  "schemaFor": "footer",
+  "baseClass": "wb-footer",
+  "semanticElement": {
+    "tagName": "footer",
+    "implicitRole": "contentinfo"
+  },
+  "compliance": {
+    "baseClass": "wb-footer",
+    "supportLevel": "stable",
+    "accessibility": "high"
+  },
+  "properties": {
+    "copyright": {
+      "type": "string",
+      "description": "Copyright text",
+      "default": ""
+    },
+    "brand": {
+      "type": "string",
+      "description": "Brand name",
+      "default": ""
+    },
+    "links": {
+      "type": "string",
+      "description": "Navigation links as JSON [{label, href}]",
+      "default": ""
+    },
+    "social": {
+      "type": "string",
+      "description": "Social links as JSON [{platform, href}]",
+      "default": ""
+    },
+    "sticky": {
+      "type": "boolean",
+      "description": "Sticky at bottom",
+      "default": false,
+      "appliesClass": "wb-footer--sticky"
+    }
+  },
+  "$view": [
+    {
+      "name": "left",
+      "tag": "div",
+      "public": true,
+      "description": "Left section"
+    },
+    {
+      "name": "brand",
+      "tag": "span",
+      "parent": "left",
+      "public": true,
+      "content": "{{brand}}",
+      "createdWhen": "brand",
+      "description": "Brand"
+    },
+    {
+      "name": "copyright",
+      "tag": "span",
+      "parent": "left",
+      "public": true,
+      "content": "{{copyright}}",
+      "createdWhen": "copyright",
+      "description": "Copyright"
+    },
+    {
+      "name": "center",
+      "tag": "nav",
+      "public": true,
+      "createdWhen": "links",
+      "description": "Navigation links"
+    },
+    {
+      "name": "right",
+      "tag": "div",
+      "public": true,
+      "description": "Right section"
+    },
+    {
+      "name": "social",
+      "tag": "nav",
+      "parent": "right",
+      "public": true,
+      "createdWhen": "social",
+      "description": "Social links"
+    }
+  ],
+  "$methods": {
+    "setCopyright": {
+      "description": "Updates copyright",
+      "params": [
+        "text"
+      ]
+    },
+    "setBrand": {
+      "description": "Updates brand",
+      "params": [
+        "text"
+      ]
+    }
+  },
+  "$cssAPI": {
+    "--wb-footer-padding": {
+      "default": "1rem 2rem",
+      "description": "Padding"
+    },
+    "--wb-footer-bg": {
+      "default": "var(--bg-surface, #ffffff)",
+      "description": "Background"
+    },
+    "--wb-footer-border": {
+      "default": "1px solid var(--border-color, #e0e0e0)",
+      "description": "Border"
+    },
+    "--wb-footer-color": {
+      "default": "var(--text-secondary, #666)",
+      "description": "Text color"
+    },
+    "--wb-footer-link-color": {
+      "default": "var(--text-primary, #1a1a1a)",
+      "description": "Link color"
+    },
+    "--wb-footer-link-hover-color": {
+      "default": "var(--primary, #6366f1)",
+      "description": "Link hover"
+    }
+  },
+  "accessibility": {
+    "role": "contentinfo"
+  },
+  "test": {
+    "setup": [
+      "<wb-footer>Basic footer content</wb-footer>",
+      "<wb-footer sticky>with sticky</wb-footer>",
+      "<wb-footer copyright=\"Sample copyright\">copyright=\"Sample copyright\"</wb-footer>",
+      "<wb-footer brand=\"Sample brand\">brand=\"Sample brand\"</wb-footer>",
+      "<wb-footer links=\"Sample links\">links=\"Sample links\"</wb-footer>",
+      "<wb-footer social=\"Sample social\">social=\"Sample social\"</wb-footer>",
+      "<wb-footer copyright=\"© 2025 Acme\"></wb-footer>"
+    ],
+    "matrix": {
+      "combinations": [
+        {
+          "copyright": "© 2025"
+        },
+        {
+          "brand": "Acme",
+          "copyright": "© 2025"
+        },
+        {
+          "copyright": "© 2025",
+          "sticky": true
+        }
+      ]
+    },
+    "site": {
+      "page": "layout",
+      "tag": "wb-footer",
+      "renders": true,
+      "baseClass": "wb-footer",
+      "minInstances": 3,
+      "checkText": [],
+      "checkClasses": [],
+      "checkAttributes": [
+        "copyright"
+      ]
+    }
+  },
+  "_metadata": {
+    "category": "layout",
+    "icon": "📄",
+    "since": "1.0.0",
+    "status": "stable"
+  }
+}

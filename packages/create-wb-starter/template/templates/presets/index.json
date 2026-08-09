@@ -1,0 +1,44 @@
+{
+  "$schema": "../src/wb-models/views.schema.json",
+  "version": "1.0.0",
+  "description": "Site Presets - Ready-to-use navigation templates with stub pages",
+  
+  "presets": {
+    "saas": {
+      "name": "SaaS / Business",
+      "description": "Standard business or SaaS website with features, pricing, and blog",
+      "nav": ["Home", "Features", "Pricing", "About", "Blog", "Contact"],
+      "cta": "Sign Up"
+    },
+    "portfolio": {
+      "name": "Portfolio / Agency",
+      "description": "Creative portfolio or agency site showcasing work",
+      "nav": ["Home", "Work", "Services", "About", "Contact"],
+      "cta": null
+    },
+    "docs": {
+      "name": "Documentation",
+      "description": "Developer documentation site with API reference",
+      "nav": ["Home", "Docs", "API", "Examples", "Blog"],
+      "cta": "GitHub"
+    },
+    "ecommerce": {
+      "name": "E-commerce",
+      "description": "Online store with product categories",
+      "nav": ["Home", "Shop", "Categories", "Sale", "About", "Contact"],
+      "cta": "Cart"
+    },
+    "minimal": {
+      "name": "Minimal",
+      "description": "Clean, minimal site with just the essentials",
+      "nav": ["About", "Work", "Contact"],
+      "cta": null
+    }
+  },
+  
+  "usage": {
+    "copy": "Copy the preset folder to your project root",
+    "customize": "Edit site.json to change nav labels and icons",
+    "pages": "Edit stub pages in pages/ folder to add your content"
+  }
+}

@@ -1,0 +1,197 @@
+<header id="page-hero" class="page__hero pt-hero--tight">
+  <h1 class="wb-gradient-text">AI Permutation Testing</h1>
+  <p>Find &amp; test missing attribute combos in WB components.</p>
+</header>
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<!-- MAIN LAYOUT: H1 + Schema Picker + 3 Tabs              -->
+<!-- ═══════════════════════════════════════════════════════ -->
+<section id="section-engine" class="page__section pt-section--tight">
+
+  <h2>Permutation Engine</h2>
+
+  <!-- Schema Picker (always visible) -->
+  <div id="schema-picker-card" class="pt-panel pt-schema-picker">
+    <h3 class="pt-panel__title">Select Schema</h3>
+    <div id="schema-picker-row" class="pt-schema-picker-row">
+      <select id="schema-select" class="pt-select">
+        <option value="">— choose a schema —</option>
+      </select>
+      <button id="reset-btn" class="pt-btn pt-reset-btn">↻ Reset</button>
+    </div>
+    <div id="schema-info" class="pt-schema-info"></div>
+  </div>
+
+  <!-- Tab Bar — 3 tabs -->
+  <div class="pt-tabs" id="main-tabs">
+    <button class="pt-tabs__btn pt-tabs__btn--active" tab="tab-engine">🔧 Permutation Engine</button>
+    <button class="pt-tabs__btn" tab="tab-howto">📖 How to Use</button>
+    <button class="pt-tabs__btn" tab="tab-pages">📁 Project Pages</button>
+    <button class="pt-tabs__btn" tab="tab-results" id="tab-results-btn">🧪 Test Results <span id="tab-results-badge" class="pt-tabs__badge pt-hidden"></span></button>
+  </div>
+
+  <!-- Tab: Permutation Engine -->
+  <div id="tab-engine" class="pt-tab-panel pt-tab-panel--active">
+  <div id="engine-layout" class="pt-layout pt-layout--single">
+
+    <!-- Main Panel -->
+    <div id="main-panel" class="pt-main">
+
+      <!-- Activity Log — shows what the tool is doing -->
+      <div class="pt-panel pt-hidden" id="log-panel">
+        <h3 class="pt-panel__title">Activity Log</h3>
+        <p class="pt-hint">Real-time trace of what the engine is doing and why.</p>
+        <div id="activity-log" class="pt-log"></div>
+      </div>
+
+      <!-- Dimensions -->
+      <div class="pt-panel pt-hidden" id="dimensions-card">
+        <h3 class="pt-panel__title">Step 2 — Extracted Dimensions</h3>
+        <p class="pt-hint">These are the testable axes pulled from the schema's <code>properties</code>. Each enum or boolean becomes a dimension.</p>
+        <div id="dimensions-list"></div>
+        <p id="full-count" class="pt-muted"></p>
+      </div>
+
+      <!-- Existing combos -->
+      <div class="pt-panel pt-hidden" id="existing-card">
+        <h3 class="pt-panel__title">Step 3 — All Test Coverage</h3>
+        <p class="pt-hint">All combinations — existing from the schema plus newly generated gaps <span class="pt-legend-new">(outlined in green)</span>.</p>
+        <div id="existing-combos"></div>
+      </div>
+
+      <!-- Missing permutations — the main output -->
+      <div class="pt-panel pt-hidden" id="missing-card">
+        <h3 class="pt-panel__title">Step 4 — Missing Permutations (Gaps Found)</h3>
+        <p class="pt-hint" id="missing-explanation"></p>
+        <div id="missing-toolbar" class="pt-toolbar">
+          <label class="pt-toggle-label">
+            <input type="checkbox" id="pairwise-toggle" checked>
+            <span>Pairwise mode</span>
+          </label>
+          <button class="pt-btn pt-btn--accent" id="copy-json-btn">Copy All Missing as JSON</button>
+          <button class="pt-btn pt-btn--secondary" id="copy-html-btn">Copy All as HTML Setup</button>
+          <button class="pt-btn pt-btn--save" id="save-to-schema-btn">💾 Save Missing to Schema</button>
+        </div>
+        <div id="missing-combos"></div>
+        <p id="missing-summary" class="pt-summary"></p>
+      </div>
+
+
+      <!-- Hidden sandbox for live element injection -->
+      <div id="test-sandbox" class="pt-test-sandbox"></div>
+    </div>
+
+  </div>
+  </div><!-- /tab-engine -->
+
+  <!-- Tab: How to Use -->
+  <div id="tab-howto" class="pt-tab-panel">
+    <div id="section-howto" class="pt-panel">
+      <h3 class="pt-panel__title">How to Use This Tool</h3>
+      <p class="pt-hint">Schema-driven combinatorial testing — reads your component schemas, finds gaps in test coverage, and tells you exactly how to fix them.</p>
+      <div id="howto-steps" class="pt-explain">
+        <div id="howto-step-1" class="pt-explain__step">
+          <span class="pt-step-num">1</span>
+          <div>
+            <strong>Select a Schema</strong>
+            <p>Pick any <code>*.schema.json</code> from the dropdown. The tool fetches it live from <code>src/wb-models/</code> and parses it.</p>
+          </div>
+        </div>
+        <div id="howto-step-2" class="pt-explain__step">
+          <span class="pt-step-num">2</span>
+          <div>
+            <strong>Dimensions Are Extracted Automatically</strong>
+            <p>Every property with an <code>enum</code> array, a <code>boolean</code> type, or a set of defined values becomes a testable dimension. For example, <code>variant</code> with 7 enum values = 7 options, and any boolean property becomes a 2-value dimension (true/false). These are the axes of your test matrix.</p>
+          </div>
+        </div>
+        <div id="howto-step-3" class="pt-explain__step">
+          <span class="pt-step-num">3</span>
+          <div>
+            <strong>Existing Coverage Is Shown</strong>
+            <p>The schema's <code>test.matrix.combinations</code> array is displayed. These are the combos you already test. The tool fingerprints each one so it can diff against what's generated.</p>
+          </div>
+        </div>
+        <div id="howto-step-4" class="pt-explain__step">
+          <span class="pt-step-num">4</span>
+          <div>
+            <strong>Missing Permutations Are Computed</strong>
+            <p><strong>Pairwise mode (default):</strong> Generates the minimum set of test cases where every pair of values across every pair of dimensions appears at least once. This catches interaction bugs (e.g., "pill + error variant breaks layout") while reducing test count by 80–90% vs full cartesian.</p>
+            <p><strong>Full cartesian:</strong> Every possible combination. Use this for small schemas (≤3 dimensions). For badge with 7 variants × 4 sizes × 4 booleans = 448 combos — that's too many, use pairwise.</p>
+          </div>
+        </div>
+        <div id="howto-step-5" class="pt-explain__step">
+          <span class="pt-step-num">5</span>
+          <div>
+            <strong>Each Gap Is Explained With a Fix</strong>
+            <p>Every missing permutation shows: what combination is untested, why it matters (which interaction it covers), suggested HTML markup, and the JSON to paste into your schema's test matrix.</p>
+            <p><strong>💾 Save Missing to Schema</strong> writes all missing permutations directly into the schema file — both <code>test.matrix.combinations</code> (JSON) and <code>test.setup</code> (HTML lines) — via the dev server's <code>/api/save</code> endpoint. One click, no copy-paste. The page auto-reloads the schema afterward so coverage stats update immediately.</p>
+          </div>
+        </div>
+        <div id="howto-step-6" class="pt-explain__step">
+          <span class="pt-step-num">6</span>
+          <div>
+            <strong>Run All Tests Live</strong>
+            <p>Click <strong>▶ Run All Tests Live</strong> to inject every missing permutation as a real DOM element right here in the browser. The runner creates each <code>&lt;wb-*&gt;</code> element, sets the attributes from the combo, waits for WB to initialize the behavior, then verifies 5 things:</p>
+            <p>① Element exists in DOM &mdash; ② Root CSS class is present (e.g., <code>wb-badge</code>) &mdash; ③ Each <code>appliesClass</code> from the schema is applied (e.g., <code>wb-badge--primary</code>) &mdash; ④ Element has visible dimensions (not 0×0) &mdash; ⑤ Element is not hidden via CSS.</p>
+            <p>Failures show the expected vs. actual value and a suggested fix pointing to the specific ViewModel or CSS file to update.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div><!-- /tab-howto -->
+
+  <!-- Tab: Project Pages -->
+  <div id="tab-pages" class="pt-tab-panel">
+    <div id="section-pages" class="pt-panel">
+      <h3 class="pt-panel__title">Project Pages</h3>
+      <p class="pt-hint">Quick links to all pages in the WB-Starter project. The current page is highlighted.</p>
+      <div class="pt-page-grid" id="page-links-grid"></div>
+    </div>
+  </div><!-- /tab-pages -->
+
+  <!-- Tab: Test Results -->
+  <div id="tab-results" class="pt-tab-panel">
+    <div class="pt-panel" id="results-tab-panel">
+      <h3 class="pt-panel__title" id="results-tab-title">Live Test Results</h3>
+      <p class="pt-hint" id="results-tab-hint">Select a schema and click <strong>▶ Run All Tests Live</strong> in the Coverage panel to start.</p>
+
+      <div id="test-progress-wrap-tab" class="pt-hidden">
+        <div id="test-progress-bar" class="pt-progress-bar">
+          <div class="pt-progress-bar__fill" id="test-progress-fill-tab"></div>
+          <span class="pt-progress-bar__label" id="test-progress-label-tab">0 / 0</span>
+        </div>
+      </div>
+
+      <div id="test-summary-tab" class="pt-hidden"></div>
+
+      <div id="test-results-wrap" class="pt-table-wrap pt-table-wrap--tall">
+        <table class="pt-table pt-table--results" id="test-results-table">
+          <thead id="test-results-thead">
+            <tr><th class="pt-th-num">#</th><th>Status</th><th>Source</th><th>Description</th><th>Checks</th><th>Failed</th><th>Details</th></tr>
+          </thead>
+          <tbody id="test-results-tbody"></tbody>
+        </table>
+      </div>
+    </div>
+  </div><!-- /tab-results -->
+
+</section>
+
+<!-- Floating Coverage Panel (draggable, always visible) -->
+<div id="coverage-float" class="pt-float pt-hidden">
+  <div id="coverage-float-header" class="pt-float__header">
+    <h3 class="pt-float__title" id="coverage-title">Coverage Status</h3>
+    <button id="coverage-float-minimize" class="pt-float__minimize" title="Restore">□</button>
+  </div>
+  <div id="coverage-float-body" class="pt-float__body">
+    <button class="pt-btn pt-btn--run pt-run-btn-full" id="run-tests-btn">▶ Run All Tests Live</button>
+    <div id="coverage-stats">
+      <p class="pt-muted">Select a schema to begin.</p>
+    </div>
+    <canvas id="coverageChart" width="260" height="180"></canvas>
+  </div>
+</div>
+
+
+<link rel="stylesheet" href="src/styles/pages/ai-permutation-test.css">

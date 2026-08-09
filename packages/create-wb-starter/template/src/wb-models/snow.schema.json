@@ -1,0 +1,134 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "snow.schema.json",
+  "title": "Snow",
+  "description": "Falling snowflake animation effect",
+  "schemaFor": "snow",
+  "baseClass": "wb-snow",
+  "semanticElement": {
+    "tagName": "div"
+  },
+  "compliance": {
+    "baseClass": "wb-snow",
+    "supportLevel": "stable",
+    "accessibility": "high"
+  },
+  "properties": {
+    "count": {
+      "type": "number",
+      "description": "Number of snowflakes",
+      "default": 30
+    },
+    "label": {
+      "type": "string",
+      "description": "Trigger button label",
+      "default": "Let it Snow!"
+    },
+    "showButton": {
+      "type": "boolean",
+      "description": "Show trigger button",
+      "default": true
+    },
+    "repeat": {
+      "type": "boolean",
+      "description": "Loop animation",
+      "default": true
+    },
+    "delay": {
+      "type": "string",
+      "description": "Start delay",
+      "default": "0s"
+    },
+    "duration": {
+      "type": "string",
+      "description": "Fall duration",
+      "default": "8s"
+    }
+  },
+  "$view": [
+    {
+      "name": "button",
+      "tag": "button",
+      "public": true,
+      "content": "{{label}}",
+      "createdWhen": "showButton",
+      "description": "Trigger button"
+    },
+    {
+      "name": "container",
+      "tag": "div",
+      "public": false,
+      "description": "Snowflake container"
+    }
+  ],
+  "$methods": {
+    "start": {
+      "description": "Starts snow",
+      "params": []
+    },
+    "stop": {
+      "description": "Stops snow",
+      "params": []
+    },
+    "toggle": {
+      "description": "Toggles snow",
+      "params": []
+    }
+  },
+  "$cssAPI": {
+    "--wb-snow-z-index": {
+      "default": "9999",
+      "description": "Z-index"
+    },
+    "--wb-snow-color": {
+      "default": "#ffffff",
+      "description": "Snowflake color"
+    }
+  },
+  "events": {
+    "wb:snow:start": {
+      "description": "Animation started"
+    },
+    "wb:snow:stop": {
+      "description": "Animation stopped"
+    }
+  },
+  "test": {
+    "setup": [
+      "<wb-snow>Basic snow content</wb-snow>",
+      "<wb-snow show-button>with showButton</wb-snow>",
+      "<wb-snow repeat>with repeat</wb-snow>",
+      "<wb-snow count=\"30\">count=30</wb-snow>",
+      "<wb-snow label=\"Let it Snow!\">label=\"Let it Snow!\"</wb-snow>",
+      "<wb-snow delay=\"0s\">delay=\"0s\"</wb-snow>",
+      "<wb-snow duration=\"8s\">duration=\"8s\"</wb-snow>"
+    ],
+    "matrix": {
+      "combinations": [
+        {},
+        {
+          "count": 50
+        },
+        {
+          "repeat": false
+        }
+      ]
+    },
+    "site": {
+      "page": "effects",
+      "tag": "wb-snow",
+      "renders": true,
+      "baseClass": "wb-snow",
+      "minInstances": 3,
+      "checkText": [],
+      "checkClasses": [],
+      "checkAttributes": []
+    }
+  },
+  "_metadata": {
+    "category": "effects",
+    "icon": "❄️",
+    "since": "1.0.0",
+    "status": "stable"
+  }
+}

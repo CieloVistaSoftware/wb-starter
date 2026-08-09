@@ -1,0 +1,252 @@
+
+
+/* Extracted from pages/components.html */
+/* Page Hero */
+.page__hero {
+  text-align: center;
+  padding: 3rem 1.5rem;
+  margin-bottom: 2rem;
+  background: var(--bg-secondary);
+  border-radius: 12px;
+}
+
+.page__hero h1 {
+  margin: 0 0 0.5rem;
+  color: var(--primary);
+  font-size: 2rem;
+}
+
+.page__hero p {
+  margin: 0;
+  color: var(--text-secondary);
+}
+
+/* Component Sections */
+.component-section {
+  margin-bottom: 3rem;
+  padding-bottom: 2rem;
+  border-bottom: 1px solid var(--border-color);
+}
+
+.component-section:last-of-type {
+  border-bottom: none;
+}
+
+/* Direct-child combinator (`>`), not a descendant selector -- these are meant
+   for this page's OWN section headings only (`<h3>Basic Cards</h3>` etc.,
+   direct children of `.component-section`). A descendant selector also
+   matched a component's own internal heading nested several levels deep
+   (e.g. `<wb-card><header><div><h3 class="wb-card__title">`), and used to
+   win there too since `.component-section h3` (0,1,1) outranks
+   `.wb-card__title` (0,1,0) -- invisible while card.js still set the title's
+   margin/font-size inline (always beats any class), but a real regression
+   once that inline style was migrated to card.css alone (Law 9, #370). */
+.component-section > h2 {
+  margin: 0 0 1.5rem;
+  padding-bottom: 0.5rem;
+  border-bottom: 2px solid var(--primary);
+  color: var(--text-primary);
+  font-size: 1.5rem;
+}
+
+#main .component-section > h3 {
+  margin: 2rem 0 1rem;
+  color: var(--text-secondary);
+  font-size: 1rem;
+  font-weight: 600;
+}
+
+/* MOBILE-FIRST: Responsive overrides for components page */
+@media (max-width: 600px) {
+  .page__hero,
+  .component-section {
+    padding: 1rem !important;
+    margin: 0 !important;
+    border-radius: 8px !important;
+    max-width: 100vw !important;
+    box-sizing: border-box;
+  }
+  .page__hero h1 {
+    font-size: 1.2rem !important;
+  }
+
+  /* #390: .component-section already gives its content 1rem of horizontal
+     breathing room (its own padding, above) -- wb-demo's own 1rem
+     horizontal padding (Standard §13, demo.css) then stacked ON TOP of
+     that, pushing the code panel ~2rem from the section edge instead of
+     the intended ~1rem. Standard §13 is already satisfied by the section's
+     padding here, so drop wb-demo's redundant horizontal half; keep its
+     vertical padding (spacing above/below the grid+code stack is still
+     needed regardless of the ancestor). Scoped to this page's card-styled
+     mobile sections only -- wb-demo elsewhere (standalone demo pages, docs
+     markdown with no padded ancestor) keeps its own full 1rem, still the
+     only source of breathing room there. */
+  .component-section wb-demo {
+    padding-left: 0;
+    padding-right: 0;
+  }
+}
+
+/* Buttons */
+.wb-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 0.5rem 1rem;
+  font-size: 0.875rem;
+  font-weight: 600;
+  border-radius: 8px;
+  border: none;
+  cursor: pointer;
+  text-decoration: none;
+  transition: all 0.2s ease;
+  background: var(--primary);
+  color: white;
+}
+
+.wb-btn:hover {
+  opacity: 0.9;
+  transform: translateY(-1px);
+}
+
+.wb-btn--secondary {
+  background: var(--bg-tertiary);
+  color: var(--text-primary);
+}
+
+.wb-btn--ghost {
+  background: transparent;
+  color: var(--text-secondary);
+  border: 1px solid var(--border-color);
+}
+
+/* Form Elements — shared by checkbox AND radio labels (no checkbox-specific styling). */
+.selection-label {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: var(--text-primary);
+  cursor: pointer;
+}
+
+/* Time Display */
+.time-display {
+  font-family: monospace;
+  font-size: 1.25rem;
+  background: var(--bg-secondary);
+  padding: 0.5rem 1rem;
+  border-radius: 8px;
+  border: 1px solid var(--border-color);
+}
+
+/* Footer */
+.page-footer {
+  margin-top: 2rem;
+  padding: 1.5rem;
+  text-align: center;
+  background: var(--bg-secondary);
+  border-radius: 10px;
+}
+
+.page-footer p {
+  margin: 0.5rem 0;
+  color: var(--text-secondary);
+}
+
+.page-footer a {
+  color: var(--primary);
+  text-decoration: none;
+}
+
+.page-footer a:hover {
+  text-decoration: underline;
+}
+
+/* Component Index (sortable/searchable catalog, top of the components page) */
+.component-index {
+  margin-bottom: 2.5rem;
+}
+
+.component-index__toolbar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 0.75rem;
+}
+
+.component-index__label {
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+.component-index__search {
+  flex: 1 1 240px;
+  min-width: 200px;
+  padding: 0.5rem 0.75rem;
+  border-radius: 8px;
+  border: 1px solid var(--border-color);
+  background: var(--bg-secondary);
+  color: var(--text-primary);
+  font-size: 0.9rem;
+}
+
+.component-index__summary {
+  color: var(--text-secondary);
+  font-size: 0.875rem;
+  white-space: nowrap;
+}
+
+.component-index__status {
+  color: var(--text-secondary);
+}
+
+.component-index__table {
+  width: 100%;
+  border-collapse: collapse;
+  color: var(--text-primary);
+}
+
+.component-index__table th {
+  text-align: left;
+  padding: 1rem;
+  background: var(--bg-tertiary);
+  font-weight: 600;
+  user-select: none;
+  cursor: pointer;
+}
+
+.component-index__table th[sort]:hover {
+  color: var(--primary);
+}
+
+.component-index__table th[aria-sort="ascending"]::after {
+  content: " \25B2";
+}
+
+.component-index__table th[aria-sort="descending"]::after {
+  content: " \25BC";
+}
+
+.component-index__table td {
+  padding: 0.75rem 1rem;
+  border-bottom: 1px solid var(--border-color);
+  vertical-align: top;
+}
+
+.component-index__table tbody tr:hover {
+  background: var(--bg-secondary);
+}
+
+.component-index__muted {
+  color: var(--text-secondary);
+}
+
+@media (max-width: 600px) {
+  .component-index__table {
+    display: block;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+}

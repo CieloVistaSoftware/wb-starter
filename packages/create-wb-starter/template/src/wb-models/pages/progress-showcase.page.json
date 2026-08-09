@@ -1,0 +1,258 @@
+{
+  "description": "Auto-generated showcase for progress component — all variants, combinations, and toggles.",
+  "page": {
+    "lang": "en",
+    "theme": "dark",
+    "stylesheets": [
+      "../src/styles/themes.css",
+      "../src/styles/site.css"
+    ],
+    "scripts": [
+      {
+        "type": "module",
+        "src": "../src/core/wb-lazy.js",
+        "init": "WB.init({ autoInject: true })"
+      }
+    ],
+    "title": "📊 Progress Showcase"
+  },
+  "title": "📊 Progress Showcase",
+  "schemaFor": "progress-showcase",
+  "header": {
+    "tag": "h1",
+    "content": "📊 Progress Showcase",
+    "subtitle": {
+      "tag": "p",
+      "content": "Progress bar with determinate and indeterminate states"
+    }
+  },
+  "sections": [
+    {
+      "heading": "progress — Combinations",
+      "tag": "wb-progress",
+      "columns": 3,
+      "demos": [
+        {
+          "tag": "wb-progress",
+          "attrs": {
+            "value": 0
+          }
+        },
+        {
+          "tag": "wb-progress",
+          "attrs": {
+            "value": 25
+          }
+        },
+        {
+          "tag": "wb-progress",
+          "attrs": {
+            "value": 50
+          }
+        },
+        {
+          "tag": "wb-progress",
+          "attrs": {
+            "value": 75
+          }
+        },
+        {
+          "tag": "wb-progress",
+          "attrs": {
+            "value": 100
+          }
+        },
+        {
+          "tag": "wb-progress",
+          "attrs": {
+            "value": 50,
+            "label": "Loading..."
+          }
+        },
+        {
+          "tag": "wb-progress",
+          "attrs": {
+            "value": 50,
+            "show-value": true
+          }
+        },
+        {
+          "tag": "wb-progress",
+          "attrs": {
+            "value": 50,
+            "striped": true
+          }
+        },
+        {
+          "tag": "wb-progress",
+          "attrs": {
+            "value": 50,
+            "variant": "success"
+          }
+        },
+        {
+          "tag": "wb-progress",
+          "attrs": {
+            "value": 50,
+            "variant": "warning"
+          }
+        },
+        {
+          "tag": "wb-progress",
+          "attrs": {
+            "value": 50,
+            "variant": "error"
+          }
+        },
+        {
+          "tag": "wb-progress",
+          "attrs": {
+            "value": 50,
+            "size": "sm"
+          }
+        },
+        {
+          "tag": "wb-progress",
+          "attrs": {
+            "value": 50,
+            "size": "lg"
+          }
+        },
+        {
+          "tag": "wb-progress",
+          "attrs": {
+            "indeterminate": true
+          }
+        }
+      ]
+    },
+    {
+      "heading": "Variants",
+      "tag": "wb-progress",
+      "columns": 3,
+      "demos": [
+        {
+          "tag": "wb-progress",
+          "attrs": {
+            "variant": "default",
+            "value": 60
+          }
+        },
+        {
+          "tag": "wb-progress",
+          "attrs": {
+            "variant": "primary",
+            "value": 60
+          }
+        },
+        {
+          "tag": "wb-progress",
+          "attrs": {
+            "variant": "success",
+            "value": 60
+          }
+        },
+        {
+          "tag": "wb-progress",
+          "attrs": {
+            "variant": "warning",
+            "value": 60
+          }
+        },
+        {
+          "tag": "wb-progress",
+          "attrs": {
+            "variant": "error",
+            "value": 60
+          }
+        },
+        {
+          "tag": "wb-progress",
+          "attrs": {
+            "variant": "info",
+            "value": 60
+          }
+        }
+      ]
+    },
+    {
+      "heading": "size variants",
+      "tag": "wb-progress",
+      "columns": 3,
+      "demos": [
+        {
+          "tag": "wb-progress",
+          "attrs": {
+            "size": "xs",
+            "value": 60
+          }
+        },
+        {
+          "tag": "wb-progress",
+          "attrs": {
+            "size": "sm",
+            "value": 60
+          }
+        },
+        {
+          "tag": "wb-progress",
+          "attrs": {
+            "size": "md",
+            "value": 60
+          }
+        },
+        {
+          "tag": "wb-progress",
+          "attrs": {
+            "size": "lg",
+            "value": 60
+          }
+        },
+        {
+          "tag": "wb-progress",
+          "attrs": {
+            "size": "xl",
+            "value": 60
+          }
+        }
+      ]
+    },
+    {
+      "heading": "Toggles",
+      "tag": "wb-progress",
+      "columns": 3,
+      "demos": [
+        {
+          "tag": "wb-progress",
+          "attrs": {
+            "show-value": true
+          }
+        },
+        {
+          "tag": "wb-progress",
+          "attrs": {
+            "striped": true
+          }
+        }
+      ]
+    }
+  ],
+  "_metadata": {
+    "category": "auto-showcase",
+    "icon": "📊",
+    "sourceSchema": "progress.schema.json",
+    "generatedAt": "2026-08-04T19:28:36.305Z",
+    "sectionCount": 4,
+    "totalDemos": 27
+  },
+  "_composed": {
+    "source": "C:\\Users\\jwpmi\\Downloads\\AI\\wb-starter\\.claude\\worktrees\\agent-a14ffa2c736ab61b0\\src\\wb-models\\pages\\progress-showcase.page.json",
+    "composedAt": "2026-08-04T19:28:37.009Z",
+    "stats": {
+      "extendsResolved": true,
+      "refsResolved": 0,
+      "includesResolved": 0,
+      "generated": 0
+    }
+  }
+}

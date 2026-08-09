@@ -1,0 +1,53 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Label Behavior",
+  "type": "object",
+  "description": "Schema for x-label behavior. Goes directly on a form control (input, select, textarea); its value is the label text. Creates a real <label>, associates it via for/id, and inserts it right before the control (to its left) by default.",
+  "properties": {
+    "x-label": { "type": "string", "description": "The label text", "default": "" },
+    "label-position": { "type": "string", "enum": ["left", "right"], "description": "Which side of the control the label renders on. \"right\" is for RTL layouts (Hebrew, Arabic).", "default": "left" },
+    "required": { "type": "boolean", "description": "Mark label as required", "default": false },
+    "optional": { "type": "boolean", "description": "Mark label as optional", "default": false }
+  },
+  "required": [],
+  "schemaFor": "label",
+  "$view": [],
+  "$methods": {},
+  "$cssAPI": {},
+  "wbBehavior": {
+    "name": "label",
+    "type": "modifier",
+    "category": "inputs",
+    "description": "Generates an associated <label> from an x-label=\"text\" attribute on a form control; also enhances a plain <label x-label> with required/optional styling.",
+    "src": "src/wb-viewmodels/label.js"
+  },
+  "test": {
+    "setup": [
+      "<input x-label='Label text' id='test-label' type='text'>"
+    ],
+    "permutations": [
+      { "required": true, "optional": false },
+      { "required": false, "optional": true },
+      { "required": false, "optional": false }
+    ],
+    "assertions": [
+      {
+        "description": "Generates a <label for> pointing at the control, with the attribute's value as its text",
+        "selector": "label",
+        "checks": { "hasClass": "wb-label", "textContains": "Label text" }
+      },
+      {
+        "description": "Required state applies wb-label--required class",
+        "selector": "label",
+        "checks": { "hasClass": "wb-label--required" },
+        "when": { "required": true }
+      },
+      {
+        "description": "Optional state applies wb-label--optional class",
+        "selector": "label",
+        "checks": { "hasClass": "wb-label--optional" },
+        "when": { "optional": true }
+      }
+    ]
+  }
+}

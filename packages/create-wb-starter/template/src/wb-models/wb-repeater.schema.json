@@ -1,0 +1,25 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "wb-repeater.schema.json",
+  "title": "Repeater",
+  "description": "Repeat content based on data.",
+  "schemaFor": "repeater",
+  "compliance": {
+    "baseClass": "wb-repeater",
+    "supportLevel": "stable",
+    "accessibility": "high"
+  },
+  "properties": {},
+  "$view": [],
+  "$methods": {},
+  "$cssAPI": {},
+  "test": {
+    "setup": [
+      "<wb-repeater>Basic repeater content</wb-repeater>",
+      "<wb-repeater>Test permutation 2</wb-repeater>",
+      "<wb-repeater>Test permutation 3</wb-repeater>",
+      "<wb-repeater>Test permutation 4</wb-repeater>",
+      "<wb-repeater>Test permutation 5</wb-repeater>"
+    ]
+  }
+}

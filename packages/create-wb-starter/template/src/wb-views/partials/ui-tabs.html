@@ -1,0 +1,25 @@
+<wb-tabs class="wb-tabs"
+  <nav class="wb-tabs__nav" role="tablist" style="display:flex;gap:0;border-bottom:1px solid var(--border-color,#374151);margin-bottom:0.5rem;">
+    <button wb-for="tab in tabs" 
+            class="wb-tabs__tab {{tabFirst ? 'wb-tabs__tab--active' : ''}}" 
+            role="tab" 
+            data-index="{{tabIndex}}"
+            aria-selected="{{tabFirst}}"
+            aria-controls="panel-{{tabIndex}}"
+            id="tab-{{tabIndex}}"
+            style="padding:0.25rem 0.75rem;background:none;border:none;cursor:pointer;color:inherit;font-size:0.8rem;border-bottom:2px solid {{tabFirst ? 'var(--primary,#6366f1)' : 'transparent'}};margin-bottom:-1px;font-weight:{{tabFirst ? '600' : '400'}};opacity:{{tabFirst ? '1' : '0.7'}};">
+      {{tab.title}}
+    </button>
+  </nav>
+  <div class="wb-tabs__panels">
+    <section wb-for="tab in tabs" 
+             class="wb-tabs__panel" 
+             role="tabpanel" 
+             data-index="{{tabIndex}}" 
+             id="panel-{{tabIndex}}"
+             aria-labelledby="tab-{{tabIndex}}"
+             style="display:{{tabFirst ? 'block' : 'none'}};">
+      {{tab.content}}
+    </section>
+  </div>
+</div>

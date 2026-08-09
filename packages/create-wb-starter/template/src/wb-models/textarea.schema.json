@@ -1,0 +1,278 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "textarea.schema.json",
+  "title": "Textarea",
+  "description": "Multi-line text input with autosize and character count",
+  "schemaFor": "textarea",
+  "baseClass": "wb-textarea",
+  "semanticElement": {
+    "tagName": "div",
+    "implicitRole": "textbox"
+  },
+  "compliance": {
+    "baseClass": "wb-textarea",
+    "supportLevel": "deprecated",
+    "accessibility": "high"
+  },
+  "deprecated": "Use a bare <textarea> directly -- textarea.js's behavior already enhances it fully (autosize, character count, max-length indicator, no wrapper element needed). Retained for back-compat only.",
+  "properties": {
+    "label": {
+      "type": "string",
+      "description": "Field label",
+      "default": ""
+    },
+    "placeholder": {
+      "type": "string",
+      "description": "Placeholder text",
+      "default": ""
+    },
+    "value": {
+      "type": "string",
+      "description": "Text value",
+      "default": ""
+    },
+    "name": {
+      "type": "string",
+      "description": "Form field name",
+      "default": ""
+    },
+    "rows": {
+      "type": "number",
+      "description": "Visible rows",
+      "default": 3
+    },
+    "maxLength": {
+      "type": "number",
+      "description": "Max character limit",
+      "default": 0
+    },
+    "showCount": {
+      "type": "boolean",
+      "description": "Show character count",
+      "default": false
+    },
+    "autosize": {
+      "type": "boolean",
+      "description": "Auto-resize to content",
+      "default": false,
+      "appliesClass": "wb-textarea--autosize"
+    },
+    "disabled": {
+      "type": "boolean",
+      "description": "Disabled state",
+      "default": false
+    },
+    "readonly": {
+      "type": "boolean",
+      "description": "Read-only state",
+      "default": false
+    },
+    "required": {
+      "type": "boolean",
+      "description": "Required field",
+      "default": false
+    },
+    "resize": {
+      "type": "string",
+      "enum": [
+        "none",
+        "vertical",
+        "horizontal",
+        "both"
+      ],
+      "default": "vertical"
+    },
+    "variant": {
+      "type": "string",
+      "enum": [
+        "default",
+        "success",
+        "error"
+      ],
+      "default": "default",
+      "appliesClass": "wb-textarea--{{value}}"
+    }
+  },
+  "$view": [
+    {
+      "name": "label",
+      "tag": "label",
+      "public": true,
+      "content": "{{label}}",
+      "createdWhen": "label",
+      "description": "Field label"
+    },
+    {
+      "name": "textarea",
+      "tag": "textarea",
+      "public": true,
+      "required": true,
+      "attributes": {
+        "placeholder": "{{placeholder}}",
+        "rows": "{{rows}}",
+        "name": "{{name}}",
+        "variant": "{{variant}}"
+      },
+      "description": "Native textarea"
+    },
+    {
+      "name": "counter",
+      "tag": "span",
+      "public": true,
+      "createdWhen": "showCount",
+      "description": "Character counter"
+    }
+  ],
+  "$methods": {
+    "getValue": {
+      "description": "Gets current value",
+      "params": [],
+      "returns": "string"
+    },
+    "setValue": {
+      "description": "Sets value",
+      "params": [
+        "value"
+      ]
+    },
+    "clear": {
+      "description": "Clears the textarea",
+      "params": []
+    },
+    "focus": {
+      "description": "Focuses the textarea",
+      "params": []
+    },
+    "blur": {
+      "description": "Removes focus",
+      "params": []
+    },
+    "select": {
+      "description": "Selects all text",
+      "params": []
+    },
+    "enable": {
+      "description": "Enables the textarea",
+      "params": []
+    },
+    "disable": {
+      "description": "Disables the textarea",
+      "params": []
+    }
+  },
+  "$cssAPI": {
+    "--wb-textarea-padding": {
+      "default": "0.75rem",
+      "description": "Textarea padding"
+    },
+    "--wb-textarea-radius": {
+      "default": "4px",
+      "description": "Border radius"
+    },
+    "--wb-textarea-bg": {
+      "default": "var(--bg-surface, #ffffff)",
+      "description": "Background"
+    },
+    "--wb-textarea-border": {
+      "default": "1px solid var(--border-color, #d1d5db)",
+      "description": "Border"
+    },
+    "--wb-textarea-font-size": {
+      "default": "0.875rem",
+      "description": "Font size"
+    },
+    "--wb-textarea-line-height": {
+      "default": "1.5",
+      "description": "Line height"
+    },
+    "--wb-textarea-focus-border": {
+      "default": "var(--primary, #6366f1)",
+      "description": "Focus border"
+    },
+    "--wb-textarea-focus-ring": {
+      "default": "0 0 0 3px rgba(99, 102, 241, 0.2)",
+      "description": "Focus ring"
+    },
+    "--wb-textarea-disabled-bg": {
+      "default": "var(--bg-disabled, #f3f4f6)",
+      "description": "Disabled background"
+    },
+    "--wb-textarea-counter-size": {
+      "default": "0.75rem",
+      "description": "Counter font size"
+    },
+    "--wb-textarea-counter-color": {
+      "default": "var(--text-secondary, #6b7280)",
+      "description": "Counter color"
+    }
+  },
+  "events": {
+    "input": {
+      "description": "Fired on input",
+      "detail": {
+        "value": "string"
+      }
+    },
+    "change": {
+      "description": "Fired on change",
+      "detail": {
+        "value": "string"
+      }
+    }
+  },
+  "test": {
+    "functional": true,
+    "setup": [
+      "<wb-textarea>Basic textarea content</wb-textarea>",
+      "<wb-textarea resize=\"none\">resize=none</wb-textarea>",
+      "<wb-textarea resize=\"vertical\">resize=vertical</wb-textarea>",
+      "<wb-textarea resize=\"horizontal\">resize=horizontal</wb-textarea>",
+      "<wb-textarea variant=\"default\">variant=default</wb-textarea>",
+      "<wb-textarea variant=\"success\">variant=success</wb-textarea>",
+      "<wb-textarea variant=\"error\">variant=error</wb-textarea>",
+      "<wb-textarea show-count>with showCount</wb-textarea>"
+    ],
+    "matrix": {
+      "combinations": [
+        {
+          "placeholder": "Enter text..."
+        },
+        {
+          "rows": 5
+        },
+        {
+          "maxLength": 500,
+          "showCount": true
+        },
+        {
+          "autosize": true
+        },
+        {
+          "disabled": true
+        }
+      ]
+    },
+    "site": {
+      "page": "forms",
+      "tag": "wb-textarea",
+      "renders": true,
+      "baseClass": "wb-textarea",
+      "minInstances": 5,
+      "checkText": [
+        "Enter text..."
+      ],
+      "checkClasses": [
+        "wb-textarea--success"
+      ],
+      "checkAttributes": [
+        "placeholder"
+      ]
+    }
+  },
+  "_metadata": {
+    "category": "forms",
+    "icon": "📝",
+    "since": "1.0.0",
+    "status": "deprecated"
+  }
+}

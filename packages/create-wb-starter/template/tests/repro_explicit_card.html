@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Explicit Card Test</title>
+    <script type="module">
+        import WB from '../src/core/wb.js';
+        // This page verifies the NON-auto-inject path: a plain <article> stays
+        // plain, while an explicit <wb-card> custom tag still upgrades.
+        WB.init({ debug: true, autoInject: false });
+    </script>
+</head>
+
+<body>
+    <!-- 1. Plain Article (Should NOT be a card anymore) -->
+    <article id="plain">
+        <header>
+            <h3>Plain Article</h3>
+        </header>
+        <p>Just text.</p>
+    </article>
+
+    <!-- 2. Explicit Card (Should BE a card) -->
+    <wb-card id="explicit">
+        <header>
+            <h3>Explicit Card</h3>
+        </header>
+        <p>I have the behavior.</p>
+    </wb-card>
+</body>
+
+</html>

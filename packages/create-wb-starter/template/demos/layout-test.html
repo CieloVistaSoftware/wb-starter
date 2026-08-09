@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WB Layout Tags Demo</title>
+    <link rel="stylesheet" href="../src/styles/themes.css">
+    <link rel="stylesheet" href="../src/styles/site.css">
+    <script type="module">
+        import WB from '../src/core/wb-lazy.js';
+        WB.init({ debug: true, scan: true, observe: true });
+    </script>
+    <style>
+        /* Visual helpers for the demo */
+        .box {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border-color);
+            padding: 1rem;
+            border-radius: 8px;
+            min-height: 100px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+        }
+        h2 { margin-top: 2rem; border-bottom: 1px solid var(--border-color); padding-bottom: 0.5rem; }
+    </style>
+</head>
+<body>
+    <wb-container></wb-container>
+        <h1>Layout Tags Demo</h1>
+        <p>Demonstrating the new semantic layout tags.</p>
+   
+        <h2>1. Grid (&lt;wb-grid&gt;)</h2>
+        <wb-grid columns="3" gap="1rem">
+            <div class="box">1</div>
+            <div class="box">2</div>
+            <div class="box">3</div>
+            <div class="box">4</div>
+            <div class="box">5</div>
+            <div class="box">6</div>
+        </wb-grid>
+
+        <h2>2. Flex Cluster (&lt;wb-cluster&gt;)</h2>
+        <wb-cluster gap="0.5rem" align="center">
+            <button class="wb-button wb-button--primary">Save</button>
+            <button class="wb-button wb-button--secondary">Cancel</button>
+            <button class="wb-button wb-button--secondary">Export</button>
+            <span class="wb-badge-gradient">New!</span>
+        </wb-cluster>
+
+        <h2>3. Stack (&lt;wb-stack&gt;)</h2>
+        <wb-stack gap="1rem" style="max-width: 400px; border: 1px dashed #555; padding: 1rem;">
+            <div class="box" style="min-height: 50px;">Item 1</div>
+            <div class="box" style="min-height: 50px;">Item 2</div>
+            <div class="box" style="min-height: 50px;">Item 3</div>
+        </wb-stack>
+
+        <h2>4. Sidebar Layout (&lt;wb-sidebar&gt;)</h2>
+        <div style="border: 1px solid var(--border-color); height: 300px;">
+            <wb-sidebar side="left" width="200px" gap="1rem">
+                <div slot="sidebar" style="background: var(--bg-tertiary); height: 100%; padding: 1rem;">
+                    Sidebar Content
+                </div>
+                <div slot="content" style="background: var(--bg-secondary); height: 100%; padding: 1rem;">
+                    Main Content Area. The sidebar stays fixed width, I take the rest.
+                </div>
+            </wb-sidebar>
+        </div>
+
+        <h2>5. Switcher (&lt;wb-switcher&gt;)</h2>
+        <p>Resize window to see me switch from horizontal to vertical.</p>
+        <wb-switcher threshold="600px" gap="1rem">
+            <div class="box">A</div>
+            <div class="box">B</div>
+            <div class="box">C</div>
+        </wb-switcher>
+
+    </wb-container>
+</body>
+</html>

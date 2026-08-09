@@ -1,0 +1,225 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "header.schema.json",
+  "title": "Header",
+  "description": "Page header with logo, title, and optional navigation",
+  "schemaFor": "header",
+  "baseClass": "wb-header",
+  "semanticElement": {
+    "tagName": "header",
+    "implicitRole": "banner"
+  },
+  "compliance": {
+    "baseClass": "wb-header",
+    "supportLevel": "stable",
+    "accessibility": "high"
+  },
+  "properties": {
+    "icon": {
+      "type": "string",
+      "description": "Logo icon (emoji or text)",
+      "default": ""
+    },
+    "title": {
+      "type": "string",
+      "description": "Header title",
+      "default": ""
+    },
+    "subtitle": {
+      "type": "string",
+      "description": "Subtitle text",
+      "default": ""
+    },
+    "badge": {
+      "type": "string",
+      "description": "Badge text (e.g., version)",
+      "default": ""
+    },
+    "logoHref": {
+      "type": "string",
+      "description": "Logo link URL",
+      "default": "/"
+    },
+    "sticky": {
+      "type": "boolean",
+      "description": "Sticky at top",
+      "default": false,
+      "appliesClass": "wb-header--sticky"
+    }
+  },
+  "$view": [
+    {
+      "name": "left",
+      "tag": "div",
+      "public": true,
+      "description": "Left section"
+    },
+    {
+      "name": "logo",
+      "tag": "a",
+      "parent": "left",
+      "public": true,
+      "createdWhen": "icon OR title",
+      "description": "Logo link"
+    },
+    {
+      "name": "icon",
+      "tag": "span",
+      "parent": "logo",
+      "public": true,
+      "content": "{{icon}}",
+      "createdWhen": "icon",
+      "description": "Logo icon"
+    },
+    {
+      "name": "title",
+      "tag": "span",
+      "parent": "logo",
+      "public": true,
+      "content": "{{title}}",
+      "createdWhen": "title",
+      "description": "Title"
+    },
+    {
+      "name": "subtitle",
+      "tag": "span",
+      "parent": "left",
+      "public": true,
+      "content": "{{subtitle}}",
+      "createdWhen": "subtitle",
+      "description": "Subtitle"
+    },
+    {
+      "name": "center",
+      "tag": "div",
+      "public": true,
+      "description": "Center section slot"
+    },
+    {
+      "name": "right",
+      "tag": "div",
+      "public": true,
+      "description": "Right section"
+    },
+    {
+      "name": "badge",
+      "tag": "span",
+      "parent": "right",
+      "public": true,
+      "content": "{{badge}}",
+      "createdWhen": "badge",
+      "description": "Badge"
+    }
+  ],
+  "$methods": {
+    "setTitle": {
+      "description": "Updates title",
+      "params": [
+        "title"
+      ]
+    },
+    "setIcon": {
+      "description": "Updates icon",
+      "params": [
+        "icon"
+      ]
+    },
+    "setBadge": {
+      "description": "Updates badge",
+      "params": [
+        "badge"
+      ]
+    }
+  },
+  "$cssAPI": {
+    "--wb-header-height": {
+      "default": "60px",
+      "description": "Header height"
+    },
+    "--wb-header-padding": {
+      "default": "0 1rem",
+      "description": "Padding"
+    },
+    "--wb-header-bg": {
+      "default": "var(--bg-surface, #ffffff)",
+      "description": "Background"
+    },
+    "--wb-header-border": {
+      "default": "1px solid var(--border-color, #e0e0e0)",
+      "description": "Border"
+    },
+    "--wb-header-shadow": {
+      "default": "none",
+      "description": "Shadow"
+    },
+    "--wb-header-title-size": {
+      "default": "1.25rem",
+      "description": "Title font size"
+    },
+    "--wb-header-title-weight": {
+      "default": "700",
+      "description": "Title font weight"
+    },
+    "--wb-header-icon-size": {
+      "default": "1.5rem",
+      "description": "Icon size"
+    }
+  },
+  "accessibility": {
+    "role": "banner"
+  },
+  "test": {
+    "setup": [
+      "<wb-header>Basic header content</wb-header>",
+      "<wb-header sticky>with sticky</wb-header>",
+      "<wb-header icon=\"Sample icon\">icon=\"Sample icon\"</wb-header>",
+      "<wb-header title=\"Sample title\">title=\"Sample title\"</wb-header>",
+      "<wb-header subtitle=\"Sample subtitle\">subtitle=\"Sample subtitle\"</wb-header>",
+      "<wb-header badge=\"Sample badge\">badge=\"Sample badge\"</wb-header>",
+      "<wb-header logo-href=\"/\">logoHref=\"/\"</wb-header>",
+      "<wb-header icon=\"📂\" title=\"Project\"></wb-header>"
+    ],
+    "matrix": {
+      "combinations": [
+        {
+          "title": "Title"
+        },
+        {
+          "icon": "📂",
+          "title": "Title"
+        },
+        {
+          "icon": "🚀",
+          "title": "App",
+          "badge": "v1.0"
+        },
+        {
+          "title": "Site",
+          "sticky": true
+        }
+      ]
+    },
+    "site": {
+      "page": "layout",
+      "tag": "wb-header",
+      "renders": true,
+      "baseClass": "wb-header",
+      "minInstances": 4,
+      "checkText": [
+        "Title",
+        "App",
+        "Site"
+      ],
+      "checkClasses": [],
+      "checkAttributes": [
+        "title"
+      ]
+    }
+  },
+  "_metadata": {
+    "category": "layout",
+    "icon": "📰",
+    "since": "1.0.0",
+    "status": "stable"
+  }
+}

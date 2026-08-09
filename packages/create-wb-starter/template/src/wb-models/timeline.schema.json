@@ -1,0 +1,132 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "timeline.schema.json",
+  "title": "Timeline",
+  "description": "Vertical timeline component for displaying sequential events",
+  "schemaFor": "timeline",
+  "baseClass": "wb-timeline",
+  "semanticElement": {
+    "tagName": "div",
+    "implicitRole": "list"
+  },
+  "compliance": {
+    "baseClass": "wb-timeline",
+    "supportLevel": "stable",
+    "accessibility": "high"
+  },
+  "properties": {
+    "items": {
+      "type": "string",
+      "description": "Comma-separated list of timeline items",
+      "default": ""
+    }
+  },
+  "$view": [
+    {
+      "name": "item",
+      "tag": "div",
+      "public": true,
+      "description": "Individual timeline entry (repeated for each item)"
+    },
+    {
+      "name": "marker",
+      "tag": "div",
+      "parent": "item",
+      "public": true,
+      "description": "Circular marker dot"
+    },
+    {
+      "name": "line",
+      "tag": "div",
+      "parent": "item",
+      "public": false,
+      "description": "Connecting line between markers"
+    },
+    {
+      "name": "content",
+      "tag": "div",
+      "parent": "item",
+      "public": true,
+      "content": "{{item}}",
+      "description": "Item text content"
+    }
+  ],
+  "$methods": {
+    "show": {
+      "description": "Shows the timeline",
+      "params": []
+    },
+    "hide": {
+      "description": "Hides the timeline",
+      "params": []
+    },
+    "toggle": {
+      "description": "Toggles visibility",
+      "params": []
+    },
+    "update": {
+      "description": "Updates timeline items",
+      "params": ["items"]
+    }
+  },
+  "$cssAPI": {
+    "--wb-timeline-marker-size": {
+      "default": "0.75rem",
+      "description": "Marker dot diameter"
+    },
+    "--wb-timeline-marker-bg": {
+      "default": "var(--primary, #6366f1)",
+      "description": "Marker dot color"
+    },
+    "--wb-timeline-line-color": {
+      "default": "var(--border-color, #374151)",
+      "description": "Connecting line color"
+    },
+    "--wb-timeline-line-width": {
+      "default": "2px",
+      "description": "Connecting line thickness"
+    },
+    "--wb-timeline-gap": {
+      "default": "1.5rem",
+      "description": "Spacing between items"
+    }
+  },
+  "test": {
+    "setup": [
+      "<wb-timeline items='Step 1,Step 2,Step 3'></wb-timeline>"
+    ],
+    "matrix": {
+      "combinations": [
+        {
+          "items": "Project Kickoff,Design Phase,Development,Testing,Launch"
+        },
+        {
+          "items": "Q1 Planning,Q2 Execution,Q3 Review,Q4 Delivery"
+        },
+        {
+          "items": "Research,Prototype,Build,Ship"
+        }
+      ]
+    },
+    "site": {
+      "page": "layout",
+      "tag": "wb-timeline",
+      "renders": true,
+      "baseClass": "wb-timeline",
+      "minInstances": 3,
+      "checkText": [
+        "Project Kickoff,Design Phase,Development,Testing,Launch",
+        "Q1 Planning,Q2 Execution,Q3 Review,Q4 Delivery",
+        "Research,Prototype,Build,Ship"
+      ],
+      "checkClasses": [],
+      "checkAttributes": []
+    }
+  },
+  "_metadata": {
+    "category": "layout",
+    "icon": "📅",
+    "since": "1.0.0",
+    "status": "stable"
+  }
+}

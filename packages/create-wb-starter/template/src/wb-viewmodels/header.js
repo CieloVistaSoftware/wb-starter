@@ -1,0 +1,68 @@
+/**
+ * Header Behavior
+ * -----------------------------------------------------------------------------
+ * Generates a site/page header with logo, title, and optional elements.
+ * 
+ * Custom Tag: <wb-header>
+ * 
+ * Usage (plain attributes -- see src/wb-models/header.schema.json):
+ * <wb-header icon="📂" title="Project Index" badge="v1.0"></header>
+ * <wb-header icon="🚀" title="My App" subtitle="Dashboard" sticky></header>
+ * -----------------------------------------------------------------------------
+ */
+
+// behaviors/header.css is already loaded unconditionally on every page via
+// site.css's own @import — this used to also inject a duplicate <link> for
+// it here, fetching the same file a second time on every load (#312
+// follow-up, confirmed via HAR: header.css was the only behavior CSS file
+// fetched twice per page load).
+
+export function header(element) {
+  // #448: skip the class on a literal <wb-header> host -- header.css
+  // selects the `wb-header` TAG directly for that case now. Still added
+  // for a native <header> host (autoInject; header.css's own comment
+  // documents this exact collision), since header.css's `.wb-header` rules
+  // still select it by class.
+  if (element.tagName.toLowerCase() !== 'wb-header') element.classList.add('wb-header');
+  
+  // Get attributes. Plain `sticky` is canonical (schema property, Law 11);
+  // `data-sticky` accepted for back-compat only.
+  const sticky = element.hasAttribute('sticky') || element.hasAttribute('data-sticky');
+  
+  // Apply sticky if requested
+  if (sticky) {
+    element.classList.add('wb-header--sticky');
+  }
+  
+  // API
+  element.wbHeader = {
+    setTitle: (text) => {
+      const titleEl = element.querySelector('.wb-header__title');
+      if (titleEl) titleEl.textContent = text;
+    },
+    setIcon: (newIcon) => {
+      const iconEl = element.querySelector('.wb-header__icon');
+      if (iconEl) iconEl.textContent = newIcon;
+    },
+    setBadge: (text) => {
+      const badgeEl = element.querySelector('.wb-header__right .wb-tag-glass');
+      if (badgeEl) {
+        badgeEl.textContent = text;
+      } else {
+        // If badge element doesn't exist, we can't update it easily without breaking structure
+        // But we can try to find the right container
+        const right = element.querySelector('.wb-header__right');
+        if (right) {
+           // Check if we already have a badge
+           let badge = right.querySelector('.wb-tag-glass');
+           if (!badge) {
+               badge = document.createElement('span');
+               badge.className = 'wb-tag-glass';
+               right.prepend(badge);
+           }
+           badge.textContent = text;
+        }
+      }
+    }
+  };
+}

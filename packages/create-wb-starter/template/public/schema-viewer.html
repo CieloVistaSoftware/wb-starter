@@ -1,0 +1,537 @@
+<!DOCTYPE html>
+<html id="schemaviewer-html-1" lang="en" data-theme="dark">
+<head id="schemaviewer-head-2">
+  <meta id="schemaviewer-meta-3" charset="UTF-8">
+  <meta id="schemaviewer-meta-4" name="viewport" content="width=device-width, initial-scale=1.0">
+  <title id="schemaviewer-title-5">Builder Schema Viewer</title>
+  <link id="schemaviewer-link-6" rel="stylesheet" href="../src/styles/themes.css">
+  <link id="schemaviewer-link-7" rel="stylesheet" href="../src/styles/site.css">
+  <script id="schemaviewer-script-9" type="module">
+    import WB from '../src/core/wb-lazy.js';
+    window.WB = WB;
+    WB.init({ debug: false });
+  </script>
+  <style id="schemaviewer-style-10">
+    * { box-sizing: border-box; }
+    
+    body {
+      margin: 0;
+      font-family: system-ui, -apple-system, sans-serif;
+      background: var(--bg-color);
+      color: var(--text-primary);
+    }
+    
+    /* Header */
+    .sv-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 1rem 1.5rem;
+      background: var(--bg-primary);
+      border-bottom: 1px solid var(--border-color);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+    
+    .sv-header h1 {
+      margin: 0;
+      font-size: 1.25rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+    
+    .sv-header-actions {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+    
+    /* Schema Selector */
+    .sv-select {
+      padding: 0.5rem 1rem;
+      background: var(--bg-secondary);
+      border: 1px solid var(--border-color);
+      border-radius: 6px;
+      color: var(--text-primary);
+      font-size: 0.9rem;
+      min-width: 200px;
+      cursor: pointer;
+    }
+    
+    .sv-select:focus {
+      outline: none;
+      border-color: var(--primary);
+    }
+    
+    /* Main Layout */
+    .sv-main {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      height: calc(100vh - 60px);
+      overflow: hidden;
+    }
+    
+    /* Panels */
+    .sv-panel {
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+      border-right: 1px solid var(--border-color);
+    }
+    
+    .sv-panel:last-child {
+      border-right: none;
+    }
+    
+    .sv-panel-header {
+      padding: 0.75rem 1rem;
+      background: var(--bg-secondary);
+      border-bottom: 1px solid var(--border-color);
+      font-weight: 600;
+      font-size: 0.875rem;
+      color: var(--text-secondary);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    
+    .sv-panel-content {
+      flex: 1;
+      overflow: auto;
+      padding: 1rem;
+    }
+    
+    /* Preview Panel */
+    .sv-preview {
+      background: var(--bg-color);
+      min-height: 200px;
+      border-radius: 8px;
+      border: 2px dashed var(--border-color);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 2rem;
+      margin-bottom: 1.5rem;
+    }
+    
+    .sv-preview.has-content {
+      border-style: solid;
+      border-color: var(--primary);
+      display: block;
+    }
+    
+    .sv-preview-placeholder {
+      text-align: center;
+      color: var(--text-muted);
+    }
+    
+    .sv-preview-placeholder span {
+      font-size: 3rem;
+      display: block;
+      margin-bottom: 0.5rem;
+    }
+    
+    /* Component Info */
+    .sv-info {
+      margin-bottom: 1.5rem;
+    }
+    
+    .sv-info h2 {
+      margin: 0 0 0.5rem 0;
+      font-size: 1.25rem;
+      color: var(--primary);
+    }
+    
+    .sv-info p {
+      margin: 0;
+      color: var(--text-secondary);
+      font-size: 0.9rem;
+      line-height: 1.5;
+    }
+    
+    /* Properties List */
+    .sv-props-title {
+      font-size: 0.875rem;
+      font-weight: 600;
+      color: var(--text-secondary);
+      margin-bottom: 0.75rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+    
+    .sv-props-count {
+      background: var(--primary);
+      color: white;
+      padding: 0.125rem 0.5rem;
+      border-radius: 999px;
+      font-size: 0.75rem;
+    }
+    
+    .sv-prop {
+      padding: 0.75rem;
+      background: var(--bg-secondary);
+      border-radius: 6px;
+      margin-bottom: 0.5rem;
+      border-left: 3px solid var(--primary);
+    }
+    
+    .sv-prop-name {
+      font-family: monospace;
+      font-weight: 600;
+      color: var(--primary);
+      font-size: 0.9rem;
+    }
+    
+    .sv-prop-desc {
+      font-size: 0.8rem;
+      color: var(--text-primary);
+      margin: 0.25rem 0;
+    }
+    
+    .sv-prop-meta {
+      font-size: 0.75rem;
+      color: var(--text-secondary);
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+    }
+    
+    .sv-prop-meta span {
+      background: var(--bg-tertiary);
+      padding: 0.125rem 0.375rem;
+      border-radius: 3px;
+    }
+    
+    .sv-prop-meta .default {
+      color: var(--success-color);
+    }
+    
+    .sv-prop-meta .options {
+      color: var(--info-color, #0ea5e9);
+    }
+    
+    /* Code Example */
+    .sv-code-section {
+      margin-top: 1.5rem;
+    }
+    
+    .sv-code {
+      background: var(--bg-tertiary);
+      padding: 1rem;
+      border-radius: 6px;
+      font-family: monospace;
+      font-size: 0.8rem;
+      overflow-x: auto;
+      white-space: pre-wrap;
+      color: var(--text-secondary);
+    }
+    
+    /* JSON Editor */
+    .sv-json-editor {
+      width: 100%;
+      height: 100%;
+      min-height: 400px;
+      font-family: monospace;
+      font-size: 0.8rem;
+      padding: 1rem;
+      background: var(--bg-tertiary);
+      border: none;
+      color: var(--text-primary);
+      resize: none;
+    }
+    
+    .sv-json-editor:focus {
+      outline: none;
+    }
+    
+    /* Buttons */
+    .sv-btn {
+      padding: 0.5rem 1rem;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      font-weight: 500;
+      font-size: 0.875rem;
+      transition: all 0.2s;
+    }
+    
+    .sv-btn-primary {
+      background: var(--primary);
+      color: white;
+    }
+    
+    .sv-btn-primary:hover {
+      filter: brightness(1.1);
+    }
+    
+    .sv-btn-secondary {
+      background: var(--bg-tertiary);
+      color: var(--text-primary);
+    }
+    
+    .sv-btn-secondary:hover {
+      background: var(--bg-secondary);
+    }
+    
+    /* Empty State */
+    .sv-empty {
+      text-align: center;
+      padding: 3rem;
+      color: var(--text-muted);
+    }
+    
+    .sv-empty span {
+      font-size: 3rem;
+      display: block;
+      margin-bottom: 1rem;
+    }
+  </style>
+</head>
+<body id="schemaviewer-body-11">
+  <!-- Header -->
+  <header class="sv-header">
+    <h1>📋 Schema Viewer</h1>
+    <div class="sv-header-actions">
+      <select class="sv-select" id="schemaSelector">
+        <option value="">Select a component...</option>
+      </select>
+      <button class="sv-btn sv-btn-secondary" id="formatBtn">Format</button>
+      <button class="sv-btn sv-btn-primary" id="saveBtn">💾 Save</button>
+    </div>
+  </header>
+  
+  <!-- Main Content -->
+  <main class="sv-main">
+    <!-- Left Panel: Preview & Properties -->
+    <div class="sv-panel">
+      <div class="sv-panel-header">
+        <span>Preview & Properties</span>
+        <button class="sv-btn sv-btn-secondary" id="refreshBtn" style="padding: 0.25rem 0.5rem; font-size: 0.75rem;">↻ Refresh</button>
+      </div>
+      <div class="sv-panel-content" id="previewPanel">
+        <div class="sv-empty">
+          <span>📦</span>
+          <p>Select a component to preview</p>
+        </div>
+      </div>
+    </div>
+    
+    <!-- Right Panel: JSON Editor -->
+    <div class="sv-panel">
+      <div class="sv-panel-header">
+        <span>JSON Schema</span>
+      </div>
+      <div class="sv-panel-content" style="padding: 0;">
+        <textarea class="sv-json-editor" id="jsonEditor" spellcheck="false" placeholder="Select a schema to view JSON..."></textarea>
+      </div>
+    </div>
+  </main>
+
+  <script id="schemaviewer-script-73" type="module">
+    let schema = null;
+    let currentSchemaPath = '';
+
+    const schemas = [
+      'alert', 'audio', 'avatar', 'badge', 'button', 'card', 'checkbox', 'chip',
+      'confetti', 'details', 'dialog', 'drawer', 'drawerLayout', 'dropdown',
+      'fireworks', 'input', 'notes', 'progress', 'rating', 'select', 'skeleton',
+      'snow', 'spinner', 'switch', 'table', 'tabs', 'textarea', 'toast', 'tooltip'
+    ];
+
+    // Populate schema selector
+    function populateSelector() {
+      const selector = document.getElementById('schemaSelector');
+      schemas.forEach(name => {
+        const option = document.createElement('option');
+        option.value = `../src/wb-models/${name}.schema.json`;
+        option.textContent = name.charAt(0).toUpperCase() + name.slice(1);
+        selector.appendChild(option);
+      });
+    }
+
+    // Load schema
+    async function loadSchema(path) {
+      if (!path) return;
+      
+      try {
+        const response = await fetch(path);
+        if (!response.ok) throw new Error(`HTTP ${response.status}`);
+        
+        schema = await response.json();
+        currentSchemaPath = path;
+        
+        updateJSON();
+        renderPreview();
+      } catch (e) {
+        console.error('Schema load error:', e);
+        alert('Failed to load schema: ' + e.message);
+      }
+    }
+
+    // Update JSON editor
+    function updateJSON() {
+      document.getElementById('jsonEditor').value = JSON.stringify(schema, null, 2);
+    }
+
+    // Render preview panel
+    function renderPreview() {
+      const panel = document.getElementById('previewPanel');
+      
+      if (!schema) {
+        panel.innerHTML = `
+          <div class="sv-empty">
+            <span>📦</span>
+            <p>Select a component to preview</p>
+          </div>
+        `;
+        return;
+      }
+
+      const componentName = currentSchemaPath.split('/').pop().replace('.schema.json', '');
+      const props = schema.properties || {};
+      const propCount = Object.keys(props).length;
+
+      // Determine example HTML
+      let exampleHTML = '';
+      
+      // Strategy 1: Use test setup if available
+      if (schema.test && schema.test.setup && schema.test.setup.length > 0) {
+        exampleHTML = schema.test.setup[0];
+      } 
+      // Strategy 2: Construct from semantic element / properties
+      else {
+        let tagName = 'div';
+        if (schema.semanticElement && schema.semanticElement.tagName) {
+          tagName = schema.semanticElement.tagName;
+        } else if (schema.element) {
+          tagName = schema.element;
+        }
+        
+        exampleHTML = `<wb-${componentName}`;
+        
+        // Add default properties
+        Object.keys(props).slice(0, 5).forEach(key => {
+          // Skip internal properties starting with _
+          if (key.startsWith('_')) return;
+          
+          const prop = props[key];
+          if (prop.default !== undefined && prop.default !== null) {
+            if (typeof prop.default === 'boolean') {
+              if (prop.default) exampleHTML += ` wb-${key}`;
+            } else if (typeof prop.default !== 'object') {
+              exampleHTML += ` wb-${key}="${prop.default}"`;
+            }
+          }
+        });
+        
+        // Add content based on tag
+        if (['input', 'img', 'hr', 'br'].includes(tagName)) {
+          exampleHTML += `>`;
+        } else {
+          exampleHTML += `>Example ${componentName}</${tagName}>`;
+        }
+      }
+
+      panel.innerHTML = `
+        <!-- Component Info -->
+        <div class="sv-info">
+          <h2>${schema.title || componentName}</h2>
+          <p>${schema.description || 'No description available.'}</p>
+        </div>
+        
+        <!-- Live Preview -->
+        <div class="sv-preview has-content" id="livePreview">
+          ${exampleHTML}
+        </div>
+        
+        <!-- Properties List -->
+        <div class="sv-props-title">
+          Properties <span class="sv-props-count">${propCount}</span>
+        </div>
+        
+        ${Object.keys(props).map(key => {
+          const prop = props[key];
+          const propType = prop.type || (prop.enum ? 'enum' : 'any');
+          
+          return `
+            <div class="sv-prop">
+              <div class="sv-prop-name">${key}</div>
+              <div class="sv-prop-desc">${prop.description || ''}</div>
+              <div class="sv-prop-meta">
+                <span>Type: ${propType}</span>
+                ${prop.default !== undefined ? `<span class="default">Default: ${JSON.stringify(prop.default)}</span>` : ''}
+                ${prop.enum ? `<span class="options">Options: ${prop.enum.join(', ')}</span>` : ''}
+              </div>
+            </div>
+          `;
+        }).join('')}
+        
+        <!-- Code Example -->
+        <div class="sv-code-section">
+          <div class="sv-props-title">Example Usage</div>
+          <div class="sv-preview has-content" id="codeExample">
+            <wb-mdhtml>\`\`\`html
+${exampleHTML}
+\`\`\`</wb-mdhtml>
+          </div>
+        </div>
+      `;
+
+      // Initialize WB behaviors in preview
+      setTimeout(() => {
+        if (window.WB) {
+          try {
+            window.WB.scan(document.getElementById('livePreview'));
+            window.WB.scan(document.getElementById('codeExample'));
+          } catch (e) {
+            console.error('WB.scan() error:', e);
+          }
+        }
+      }, 100);
+    }
+
+    // Update from JSON editor
+    function updateFromJSON() {
+      try {
+        schema = JSON.parse(document.getElementById('jsonEditor').value);
+        renderPreview();
+      } catch (e) {
+        console.error('JSON parse error:', e);
+      }
+    }
+
+    // Event listeners
+    document.getElementById('schemaSelector').addEventListener('change', (e) => {
+      loadSchema(e.target.value);
+    });
+
+    document.getElementById('formatBtn').addEventListener('click', () => {
+      updateFromJSON();
+      updateJSON();
+    });
+
+    document.getElementById('refreshBtn').addEventListener('click', () => {
+      renderPreview();
+    });
+
+    document.getElementById('jsonEditor').addEventListener('blur', updateFromJSON);
+
+    document.getElementById('saveBtn').addEventListener('click', () => {
+      if (!schema) return;
+      const blob = new Blob([JSON.stringify(schema, null, 2)], { type: 'application/json' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = currentSchemaPath.split('/').pop();
+      a.click();
+      URL.revokeObjectURL(url);
+    });
+
+    // Initialize
+    populateSelector();
+  </script>
+</body>
+</html>

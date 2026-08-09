@@ -1,0 +1,45 @@
+/* home.css - Styles migrated from inline in home.html */
+
+.preview-canvas {
+  padding: 1rem;
+}
+
+.preview-row {
+  background: var(--bg-tertiary);
+  padding: 1rem;
+  border-radius: 8px;
+  border: 1px solid var(--border-color);
+  cursor: move;
+}
+
+/* Add more selectors as needed for migrated styles */
+
+.draggable-preview {
+  padding: 1rem;
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+}
+
+.section-title--sub {
+  margin-top: .25rem;
+  font-size: 1.25rem;
+}
+
+.showcase-toolbar {
+  display: flex;
+  justify-content: flex-end;
+  gap: .5rem;
+  margin-bottom: 1rem;
+}
+
+.notification-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  width: 100%;
+}
+
+.cta-title-sub {
+  margin-top: .25rem;
+  font-size: 1.5rem;
+}

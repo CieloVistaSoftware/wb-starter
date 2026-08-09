@@ -1,0 +1,161 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "stagelight.schema.json",
+  "title": "Stage Light",
+  "description": "Versatile stage lighting effects including spotlights, beams, and fixtures.",
+  "schemaFor": "stagelight",
+  "compliance": {
+    "baseClass": "wb-stagelight",
+    "supportLevel": "experimental",
+    "accessibility": "presentation"
+  },
+  "baseClass": "wb-stagelight",
+  "semanticElement": {
+    "tagName": "div",
+    "implicitRole": "presentation"
+  },
+  "properties": {
+    "variant": {
+      "type": "string",
+      "description": "Type of light effect",
+      "enum": [
+        "beam",
+        "spotlight",
+        "fixture"
+      ],
+      "default": "beam",
+      "appliesClass": "wb-stagelight--{{value}}"
+    },
+    "color": {
+      "type": "string",
+      "description": "Color of the light (hex, rgb, or named)",
+      "default": "#ffffff"
+    },
+    "intensity": {
+      "type": "number",
+      "description": "Brightness/Opacity (0-1)",
+      "default": 0.5
+    },
+    "size": {
+      "type": "string",
+      "description": "Size of the light/beam",
+      "default": "300px"
+    },
+    "speed": {
+      "type": "string",
+      "description": "Animation speed (e.g., 3s)",
+      "default": "3s"
+    },
+    "target": {
+      "type": "string",
+      "description": "Selector for element to track (for spotlight/fixture)",
+      "default": "mouse"
+    },
+    "label": {
+      "type": "string",
+      "description": "Label for the fixture variant",
+      "default": ""
+    }
+  },
+  "$view": [
+    {
+      "name": "source",
+      "tag": "div",
+      "class": "wb-stagelight__source",
+      "createdWhen": "variant == 'fixture' OR variant == 'beam'"
+    },
+    {
+      "name": "beam",
+      "tag": "div",
+      "class": "wb-stagelight__beam",
+      "createdWhen": "variant == 'beam'"
+    },
+    {
+      "name": "spot",
+      "tag": "div",
+      "class": "wb-stagelight__spot",
+      "createdWhen": "variant == 'spotlight'"
+    },
+    {
+      "name": "housing",
+      "tag": "div",
+      "class": "wb-stagelight__housing",
+      "createdWhen": "variant == 'fixture'"
+    },
+    {
+      "name": "label",
+      "tag": "span",
+      "content": "{{label}}",
+      "createdWhen": "variant == 'fixture' AND label"
+    }
+  ],
+  "$methods": {},
+  "$cssAPI": {
+    "--wb-stagelight-color": {
+      "description": "Main color of the light",
+      "default": "inherit"
+    },
+    "--wb-stagelight-size": {
+      "description": "Size of the light beam or spot",
+      "default": "inherit"
+    },
+    "--wb-stagelight-intensity": {
+      "description": "Opacity of the light",
+      "default": "inherit"
+    }
+  },
+  "test": {
+    "setup": [
+      "<wb-stagelight>Basic stagelight content</wb-stagelight>",
+      "<wb-stagelight variant=\"beam\">variant=beam</wb-stagelight>",
+      "<wb-stagelight variant=\"spotlight\">variant=spotlight</wb-stagelight>",
+      "<wb-stagelight variant=\"fixture\">variant=fixture</wb-stagelight>",
+      "<wb-stagelight color=\"#ffffff\">color=\"#ffffff\"</wb-stagelight>",
+      "<wb-stagelight intensity=\"0.5\">intensity=0.5</wb-stagelight>",
+      "<wb-stagelight size=\"300px\">size=\"300px\"</wb-stagelight>",
+      "<wb-stagelight speed=\"3s\">speed=\"3s\"</wb-stagelight>"
+    ],
+    "matrix": {
+      "combinations": [
+        {
+          "variant": "beam",
+          "color": "#6366f1",
+          "intensity": 0.7
+        },
+        {
+          "variant": "spotlight",
+          "color": "#f59e0b",
+          "intensity": 0.5,
+          "size": "400px"
+        },
+        {
+          "variant": "fixture",
+          "color": "#ef4444",
+          "label": "Red Light"
+        },
+        {
+          "variant": "beam",
+          "color": "#22c55e",
+          "speed": "5s"
+        }
+      ]
+    },
+    "site": {
+      "page": "effects",
+      "tag": "wb-stagelight",
+      "renders": true,
+      "baseClass": "wb-stagelight",
+      "minInstances": 4,
+      "checkText": [
+        "Red Light"
+      ],
+      "checkClasses": [
+        "wb-stagelight--spotlight"
+      ],
+      "checkAttributes": [
+        "variant",
+        "color"
+      ]
+    }
+  }
+}

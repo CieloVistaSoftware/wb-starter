@@ -1,0 +1,296 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "audio.schema.json",
+  "title": "Audio",
+  "description": "Audio player with optional 15-band graphic equalizer",
+  "schemaFor": "audio",
+  "baseClass": "wb-audio",
+  "semanticElement": {
+    "tagName": "div"
+  },
+  "compliance": {
+    "baseClass": "wb-audio",
+    "supportLevel": "stable",
+    "accessibility": "high"
+  },
+  "properties": {
+    "src": {
+      "type": "string",
+      "description": "Audio source URL",
+      "default": "../audio.mp3",
+      "required": true
+    },
+    "volume": {
+      "type": "number",
+      "description": "Initial volume (0-1)",
+      "default": 0.8
+    },
+    "loop": {
+      "type": "boolean",
+      "description": "Loop playback",
+      "default": false
+    },
+    "autoplay": {
+      "type": "boolean",
+      "description": "Auto-play (requires muted)",
+      "default": false
+    },
+    "muted": {
+      "type": "boolean",
+      "description": "Start muted",
+      "default": false
+    },
+    "showEq": {
+      "type": "boolean",
+      "description": "Show 15-band equalizer",
+      "default": false
+    },
+    "showDisplay": {
+      "type": "boolean",
+      "description": "Show Marantz-style URL/track display with scrolling text",
+      "default": true
+    },
+    "showPlayButton": {
+      "type": "boolean",
+      "description": "Show a visible custom play/pause button",
+      "default": true
+    },
+    "bass": {
+      "type": "number",
+      "description": "Bass boost (-12 to 12 dB)",
+      "default": 0
+    },
+    "treble": {
+      "type": "number",
+      "description": "Treble boost (-12 to 12 dB)",
+      "default": 0
+    }
+  },
+  "$view": [
+    {
+      "name": "transport",
+      "tag": "div",
+      "public": true,
+      "required": true,
+      "description": "Transport bar with play button and Marantz-style display",
+      "children": ["play-button", "display", "volume-knob"]
+    },
+    {
+      "name": "play-button",
+      "tag": "button",
+      "parent": "transport",
+      "public": true,
+      "required": true,
+      "description": "Play/pause toggle button — always visible"
+    },
+    {
+      "name": "display",
+      "tag": "div",
+      "parent": "transport",
+      "public": true,
+      "required": true,
+      "description": "Marantz-style warm amber display showing track URL/name with scrolling marquee"
+    },
+    {
+      "name": "audio",
+      "tag": "audio",
+      "public": false,
+      "required": true,
+      "description": "Hidden native audio element"
+    },
+    {
+      "name": "eq-container",
+      "tag": "div",
+      "public": true,
+      "createdWhen": "showEq",
+      "description": "Equalizer panel"
+    },
+    {
+      "name": "eq-sliders",
+      "tag": "input",
+      "parent": "eq-container",
+      "public": true,
+      "description": "15 band sliders"
+    },
+    {
+      "name": "presets",
+      "tag": "div",
+      "parent": "eq-container",
+      "public": true,
+      "description": "EQ preset buttons"
+    },
+    {
+      "name": "master-vol",
+      "tag": "input",
+      "parent": "eq-container",
+      "public": true,
+      "description": "Master volume"
+    }
+  ],
+  "$methods": {
+    "play": {
+      "description": "Starts playback",
+      "params": [],
+      "returns": "Promise"
+    },
+    "pause": {
+      "description": "Pauses playback",
+      "params": []
+    },
+    "stop": {
+      "description": "Stops and resets",
+      "params": []
+    },
+    "toggle": {
+      "description": "Toggles play/pause",
+      "params": []
+    },
+    "setVolume": {
+      "description": "Sets volume",
+      "params": [
+        "volume"
+      ]
+    },
+    "getVolume": {
+      "description": "Gets volume",
+      "params": [],
+      "returns": "number"
+    },
+    "setBand": {
+      "description": "Sets EQ band gain",
+      "params": [
+        "band",
+        "gain"
+      ]
+    },
+    "applyPreset": {
+      "description": "Applies EQ preset",
+      "params": [
+        "presetName"
+      ]
+    },
+    "resetEq": {
+      "description": "Resets all EQ bands to 0",
+      "params": []
+    }
+  },
+  "$cssAPI": {
+    "--wb-audio-bg": {
+      "default": "linear-gradient(135deg, #1a1a2e, #16213e)",
+      "description": "Player background"
+    },
+    "--wb-audio-radius": {
+      "default": "16px",
+      "description": "Border radius"
+    },
+    "--wb-audio-padding": {
+      "default": "1rem",
+      "description": "Padding"
+    },
+    "--wb-audio-eq-slider-width": {
+      "default": "24px",
+      "description": "EQ slider width"
+    },
+    "--wb-audio-eq-slider-height": {
+      "default": "120px",
+      "description": "EQ slider height"
+    },
+    "--wb-audio-eq-slider-bg": {
+      "default": "#333",
+      "description": "Slider track background"
+    },
+    "--wb-audio-eq-slider-fill": {
+      "default": "#6366f1",
+      "description": "Slider fill color"
+    },
+    "--wb-audio-display-bg": {
+      "default": "linear-gradient(180deg, #1a1200 0%, #0d0900 100%)",
+      "description": "Marantz display background"
+    },
+    "--wb-audio-display-color": {
+      "default": "#e8a020",
+      "description": "Marantz display text color (warm amber)"
+    },
+    "--wb-audio-display-glow": {
+      "default": "0 0 8px rgba(232, 160, 32, 0.4)",
+      "description": "Marantz display text glow"
+    },
+    "--wb-audio-play-size": {
+      "default": "48px",
+      "description": "Play button size"
+    }
+  },
+  "events": {
+    "wb:audio:play": {
+      "description": "Playback started"
+    },
+    "wb:audio:pause": {
+      "description": "Playback paused"
+    },
+    "wb:audio:ended": {
+      "description": "Playback ended"
+    },
+    "wb:audio:volumechange": {
+      "description": "Volume changed",
+      "detail": {
+        "volume": "number"
+      }
+    },
+    "wb:audio:eqchange": {
+      "description": "EQ band changed",
+      "detail": {
+        "band": "number",
+        "gain": "number"
+      }
+    }
+  },
+  "test": {
+    "setup": [
+      "<wb-audio>Basic audio content</wb-audio>",
+      "<wb-audio loop>with loop</wb-audio>",
+      "<wb-audio autoplay>with autoplay</wb-audio>",
+      "<wb-audio muted>with muted</wb-audio>",
+      "<wb-audio show-eq>with showEq</wb-audio>",
+      "<wb-audio src=\"Sample src\">src=\"Sample src\"</wb-audio>",
+      "<wb-audio volume=\"0.8\">volume=0.8</wb-audio>",
+      "<wb-audio bass=\"0\">bass=0</wb-audio>"
+    ],
+    "matrix": {
+      "combinations": [
+        {
+          "src": "../audio.mp3"
+        },
+        {
+          "src": "../audio.mp3",
+          "showEq": true
+        },
+        {
+          "src": "../audio.mp3",
+          "volume": 0.5
+        },
+        {
+          "src": "../audio.mp3",
+          "loop": true
+        }
+      ]
+    },
+    "site": {
+      "page": "content",
+      "tag": "wb-audio",
+      "renders": true,
+      "baseClass": "wb-audio",
+      "minInstances": 4,
+      "checkText": [],
+      "checkClasses": [],
+      "checkAttributes": [
+        "src"
+      ]
+    }
+  },
+  "_metadata": {
+    "category": "media",
+    "icon": "🎵",
+    "since": "1.0.0",
+    "status": "stable"
+  }
+}

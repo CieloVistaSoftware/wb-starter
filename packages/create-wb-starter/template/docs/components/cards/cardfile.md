@@ -1,0 +1,88 @@
+# Card File - wb-starter v3.0
+
+File/document download card with file type icons.
+
+## Overview
+
+| Property | Value |
+|----------|-------|
+| Custom Tag | `<wb-cardfile>` |
+| Behavior | `cardfile` |
+| Semantic | `<article>` + `<figure>` |
+| Root CSS Class | `wb-card wb-card-file` |
+| Composes | card structure + CSS (no base class) |
+
+## Properties
+
+Supports every [card property](./card.md) — that shared structure and CSS are applied by the card behavior, not inherited from a base class — plus its own:
+
+| Property | Type | Default | Description |
+|----------|------|---------|-------------|
+| `filename` | string | `""` | File name |
+| `type` | string | `"file"` | Type: `pdf`, `doc`, `image`, `video`, `audio`, `zip`, `file` |
+| `size` | string | `""` | File size (e.g., "2.5 MB") |
+| `date` | string | `""` | Date modified |
+| `downloadable` | boolean | `true` | Show download button |
+| `href` | string | `""` | Download URL |
+
+Wrapped in `<wb-demo>`, so the live component renders below with its source shown underneath:
+
+<wb-demo>
+<wb-cardfile
+  filename="Annual Report.pdf"
+  type="pdf"
+  size="2.5 MB">
+</wb-cardfile>
+</wb-demo>
+
+## Usage
+
+### Basic File Card
+
+```html
+<wb-cardfile
+  filename="Annual Report.pdf"
+  type="pdf"
+  size="2.5 MB">
+</wb-cardfile>
+```
+
+### Downloadable File
+
+```html
+<wb-cardfile
+  filename="Project Assets.zip"
+  type="zip"
+  size="15.3 MB"
+  date="Jan 10, 2024"
+  href="/downloads/assets.zip"
+  downloadable>
+</wb-cardfile>
+```
+
+### Image File
+
+```html
+<wb-cardfile
+  filename="hero-banner.jpg"
+  type="image"
+  size="850 KB"
+  date="Dec 5, 2023">
+</wb-cardfile>
+```
+
+## File Type Icons
+
+| Type | Icon |
+|------|------|
+| pdf | 📄 |
+| doc | 📝 |
+| image | 🖼️ |
+| video | 🎬 |
+| audio | 🎵 |
+| zip | 📦 |
+| file | 📁 |
+
+## Schema
+
+Location: `src/wb-models/cardfile.schema.json`

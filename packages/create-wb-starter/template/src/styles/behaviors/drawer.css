@@ -1,0 +1,175 @@
+/**
+ * Drawer Behavior Styles
+ * -----------------------------------------------------------------------------
+ * Backs the DOM that drawer.schema.json's $view builds inside a <wb-drawer>
+ * host (backdrop/panel/header/title/close/body/footer, BEM-named
+ * wb-drawer__*) and the CSS custom properties its $cssAPI declares.
+ *
+ * Works with src/wb-viewmodels/overlay.js's drawer(): when the schema has
+ * already built this structure (element carries x-schema="drawer"), drawer()
+ * relocates the backdrop/panel pair out of the host and into document.body
+ * (so the host stays free to show its own trigger label) and toggles the
+ * `--open` modifier classes below on click. Position is driven by the
+ * wb-drawer--{left|right|top|bottom} class the schema (or drawer()) applies
+ * directly to `.wb-drawer__panel`.
+ * -----------------------------------------------------------------------------
+ */
+
+/* The host itself IS the trigger (overlay.js drawer(): element.classList.add
+   ('wb-drawer-trigger') runs unconditionally) -- layout.css/site.css only
+   ever gave it `visibility: visible` (undoing the base wb-drawer{visibility:
+   hidden} rule meant for a schema-built PANEL, not this use), leaving the
+   trigger's own label text completely unstyled: no background, border,
+   padding, or pointer cursor. Matches .wb-dialog-trigger's button-like
+   affordance (dialog.css) for the same "host text is a clickable trigger"
+   pattern. */
+.wb-drawer-trigger {
+  display: inline-block;
+  position: relative; /* anchors demo.js's top-right .wb-demo__card-doc-link badge */
+  padding: 1rem;
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-md, 6px);
+  cursor: pointer;
+  background: var(--bg-tertiary);
+  color: var(--text-primary);
+}
+
+.wb-drawer__backdrop {
+  position: fixed;
+  inset: 0;
+  background: var(--wb-drawer-backdrop-bg, rgba(0, 0, 0, 0.5));
+  z-index: var(--wb-drawer-z-index, 1000);
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.3s ease, visibility 0.3s ease;
+}
+
+.wb-drawer__backdrop--open {
+  opacity: 1;
+  visibility: visible;
+}
+
+.wb-drawer__panel {
+  position: fixed;
+  display: flex;
+  flex-direction: column;
+  /* --bg-surface never existed anywhere in themes.css (confirmed: 0 matches
+     project-wide) -- this fallback chain silently bottomed out at the
+     literal #ffffff every single time, in every theme including dark,
+     which is why the drawer panel always rendered solid white regardless
+     of theme. --bg-primary is the real, theme-defined variable every
+     other overlay panel (dialog, etc.) actually uses. */
+  background: var(--wb-drawer-bg, var(--bg-primary, #1f2937));
+  box-shadow: var(--wb-drawer-shadow, -4px 0 20px rgba(0, 0, 0, 0.15));
+  z-index: calc(var(--wb-drawer-z-index, 1000) + 1);
+  max-width: var(--wb-drawer-max-width, 100vw);
+  transition: var(--wb-drawer-transition, transform 0.3s ease);
+}
+
+.wb-drawer__panel.wb-drawer--left,
+.wb-drawer__panel.wb-drawer--right {
+  top: 0;
+  bottom: 0;
+  width: var(--wb-drawer-width, 320px);
+}
+
+.wb-drawer__panel.wb-drawer--left {
+  left: 0;
+  transform: translateX(-100%);
+}
+
+.wb-drawer__panel.wb-drawer--right {
+  right: 0;
+  transform: translateX(100%);
+}
+
+.wb-drawer__panel.wb-drawer--top,
+.wb-drawer__panel.wb-drawer--bottom {
+  left: 0;
+  right: 0;
+  height: var(--wb-drawer-height, auto);
+}
+
+.wb-drawer__panel.wb-drawer--top {
+  top: 0;
+  transform: translateY(-100%);
+}
+
+.wb-drawer__panel.wb-drawer--bottom {
+  bottom: 0;
+  transform: translateY(100%);
+}
+
+/* Specificity must match/beat .wb-drawer__panel.wb-drawer--{position} (two
+   classes) above, or the position variant's translateX/Y always wins
+   regardless of source order and the panel never visibly slides in. */
+.wb-drawer__panel.wb-drawer__panel--open {
+  transform: translate(0, 0);
+}
+
+.wb-drawer__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--wb-drawer-header-gap, 1rem);
+  padding: var(--wb-drawer-padding, 1.5rem);
+  border-bottom: 1px solid var(--border-color, #374151);
+}
+
+.wb-drawer__title {
+  margin: 0;
+  font-size: var(--wb-drawer-title-size, 1.125rem);
+  color: var(--text-primary, inherit);
+}
+
+.wb-drawer__close {
+  background: none;
+  border: none;
+  font-size: 1.5rem;
+  line-height: 1;
+  cursor: pointer;
+  color: var(--text-secondary, inherit);
+}
+
+.wb-drawer__body {
+  flex: 1;
+  overflow: auto;
+  padding: var(--wb-drawer-padding, 1.5rem);
+  color: var(--text-primary, inherit);
+}
+
+.wb-drawer__footer {
+  padding: var(--wb-drawer-padding, 1.5rem);
+  border-top: 1px solid var(--border-color, #374151);
+  display: flex;
+  justify-content: flex-end;
+  gap: 1rem;
+}
+
+/* variant="push" (drawer.schema.json's variant enum) -- shoves the page's
+   own content aside instead of dimming it with a `.wb-drawer__backdrop`
+   (Material Design's "push" navigation drawer is the reference pattern).
+   overlay.js's drawer() PATH B applies these classes to the page's
+   `body > .page` wrapper, never to document.body itself (see the comment
+   in overlay.js's show() for why: the panel is a position:fixed direct
+   child of body, so transforming body would break the panel's own
+   fixed-to-viewport positioning). --wb-drawer-push-x/-y are set per-open by
+   JS to the panel's actual measured width/height (signed by edge), not a
+   fixed value, so this works for any configured width/height/position. */
+.wb-drawer-push-target {
+  transition: transform 0.3s ease;
+}
+
+.wb-drawer-push-target.wb-drawer-push-target--open {
+  transform: translate(var(--wb-drawer-push-x, 0), var(--wb-drawer-push-y, 0));
+}
+
+/* variant="default" and variant="overlay" are intentionally identical
+   interactively (both use the dimming .wb-drawer__backdrop above) --
+   docs/components/drawer.md documents no distinct treatment for "default",
+   and drawer.schema.json's own declared property default IS "overlay", so
+   "default" is treated as an explicit alias rather than inventing a third
+   undocumented interaction. The wb-drawer--default/wb-drawer--overlay
+   classes are still applied to `.wb-drawer__panel` (see overlay.js) so
+   they're distinguishable in the DOM/by tests even though no CSS rule
+   currently styles them differently. */

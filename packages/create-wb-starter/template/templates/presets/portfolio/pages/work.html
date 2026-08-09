@@ -1,0 +1,75 @@
+<!-- 
+  WORK / PORTFOLIO PAGE STUB
+  ==========================
+  Edit this page to showcase your projects.
+  
+  Suggested sections:
+  - Filter by category
+  - Project grid
+  - Case study links
+-->
+
+<section class="page-header" style="text-align: center; padding: 3rem 2rem;">
+  <h1>Our Work</h1>
+  <p style="color: var(--text-secondary); max-width: 600px; margin: 0 auto;">
+    A collection of projects we're proud of.
+  </p>
+</section>
+
+<section class="filters" style="text-align: center; padding: 1rem 2rem;">
+  <div style="display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap;">
+    <wb-button variant="gradient" size="sm">All</wb-button>
+    <wb-button variant="ghost" size="sm">Branding</wb-button>
+    <wb-button variant="ghost" size="sm">Web Design</wb-button>
+    <wb-button variant="ghost" size="sm">Mobile</wb-button>
+    <wb-button variant="ghost" size="sm">Illustration</wb-button>
+  </div>
+</section>
+
+<section class="portfolio-grid" style="padding: 2rem; max-width: 1400px; margin: 0 auto;">
+  <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 2rem;">
+    
+    <wb-card variant="elevated" style="overflow: hidden; cursor: pointer;" x-ripple>
+      <div style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); height: 200px; margin: -1rem -1rem 1rem -1rem;"></div>
+      <wb-badge variant="info">Branding</wb-badge>
+      <h3 style="margin: 0.5rem 0 0.25rem;">Brand Refresh</h3>
+      <p style="color: var(--text-secondary); margin: 0; font-size: 0.9rem;">Complete identity redesign for tech startup</p>
+    </wb-card>
+    
+    <wb-card variant="elevated" style="overflow: hidden; cursor: pointer;" x-ripple>
+      <div style="background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%); height: 200px; margin: -1rem -1rem 1rem -1rem;"></div>
+      <wb-badge variant="success">Web Design</wb-badge>
+      <h3 style="margin: 0.5rem 0 0.25rem;">E-Commerce Platform</h3>
+      <p style="color: var(--text-secondary); margin: 0; font-size: 0.9rem;">Modern shopping experience redesign</p>
+    </wb-card>
+    
+    <wb-card variant="elevated" style="overflow: hidden; cursor: pointer;" x-ripple>
+      <div style="background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%); height: 200px; margin: -1rem -1rem 1rem -1rem;"></div>
+      <wb-badge variant="warning">Mobile</wb-badge>
+      <h3 style="margin: 0.5rem 0 0.25rem;">Fitness App</h3>
+      <p style="color: var(--text-secondary); margin: 0; font-size: 0.9rem;">iOS and Android app design</p>
+    </wb-card>
+    
+    <wb-card variant="elevated" style="overflow: hidden; cursor: pointer;" x-ripple>
+      <div style="background: linear-gradient(135deg, #fa709a 0%, #fee140 100%); height: 200px; margin: -1rem -1rem 1rem -1rem;"></div>
+      <wb-badge variant="info">Branding</wb-badge>
+      <h3 style="margin: 0.5rem 0 0.25rem;">Restaurant Identity</h3>
+      <p style="color: var(--text-secondary); margin: 0; font-size: 0.9rem;">Logo, menu, and packaging design</p>
+    </wb-card>
+    
+    <wb-card variant="elevated" style="overflow: hidden; cursor: pointer;" x-ripple>
+      <div style="background: linear-gradient(135deg, #a8edea 0%, #fed6e3 100%); height: 200px; margin: -1rem -1rem 1rem -1rem;"></div>
+      <wb-badge variant="success">Web Design</wb-badge>
+      <h3 style="margin: 0.5rem 0 0.25rem;">SaaS Dashboard</h3>
+      <p style="color: var(--text-secondary); margin: 0; font-size: 0.9rem;">Analytics platform interface</p>
+    </wb-card>
+    
+    <wb-card variant="elevated" style="overflow: hidden; cursor: pointer;" x-ripple>
+      <div style="background: linear-gradient(135deg, #d299c2 0%, #fef9d7 100%); height: 200px; margin: -1rem -1rem 1rem -1rem;"></div>
+      <wb-badge>Illustration</wb-badge>
+      <h3 style="margin: 0.5rem 0 0.25rem;">Brand Illustrations</h3>
+      <p style="color: var(--text-secondary); margin: 0; font-size: 0.9rem;">Custom illustration set</p>
+    </wb-card>
+    
+  </div>
+</section>

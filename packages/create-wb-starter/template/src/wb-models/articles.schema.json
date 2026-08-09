@@ -1,0 +1,119 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "articles.schema.json",
+  "title": "Articles List Component",
+  "description": "A wrapper component to display a list or grid of articles.",
+  "schemaFor": "articles",
+  "baseClass": "wb-articles",
+  "semanticElement": {
+    "tagName": "section",
+    "implicitRole": "feed"
+  },
+  "compliance": {
+    "baseClass": "wb-articles",
+    "supportLevel": "stable",
+    "accessibility": "high"
+  },
+  "properties": {
+    "layout": {
+      "type": "string",
+      "description": "Layout mode: grid, list, or masonry",
+      "enum": [
+        "grid",
+        "list",
+        "masonry"
+      ],
+      "default": "grid"
+    },
+    "columns": {
+      "type": "number",
+      "description": "Number of columns for grid layout",
+      "default": 3
+    },
+    "limit": {
+      "type": "number",
+      "description": "Maximum number of articles to show",
+      "default": 10
+    },
+    "source": {
+      "type": "string",
+      "description": "Data source URL for fetching articles dynamically",
+      "default": ""
+    },
+    "pagination": {
+      "type": "boolean",
+      "description": "Enable pagination",
+      "default": false
+    }
+  },
+  "$view": [
+    {
+      "name": "header",
+      "tag": "header",
+      "class": "wb-articles__header",
+      "createdWhen": "title"
+    },
+    {
+      "name": "title",
+      "tag": "h2",
+      "parent": "header",
+      "content": "{{title}}",
+      "createdWhen": "title"
+    },
+    {
+      "name": "list",
+      "tag": "div",
+      "class": "wb-articles__list wb-articles--{{layout}}",
+      "content": "{{slot}}"
+    }
+  ],
+  "$cssAPI": {},
+  "test": {
+    "setup": [
+      "<wb-articles>Basic articles content</wb-articles>",
+      "<wb-articles layout=\"grid\">layout=grid</wb-articles>",
+      "<wb-articles layout=\"list\">layout=list</wb-articles>",
+      "<wb-articles layout=\"masonry\">layout=masonry</wb-articles>",
+      "<wb-articles pagination>with pagination</wb-articles>",
+      "<wb-articles columns=\"3\">columns=3</wb-articles>",
+      "<wb-articles limit=\"10\">limit=10</wb-articles>",
+      "<wb-articles source=\"Sample source\">source=\"Sample source\"</wb-articles>",
+      "<wb-articles layout=\"grid\"><wb-article title=\"1\"></wb-article><wb-article title=\"2\"></wb-article></wb-articles>"
+    ],
+    "matrix": {
+      "combinations": [
+        {
+          "layout": "grid"
+        },
+        {
+          "layout": "list"
+        },
+        {
+          "layout": "grid",
+          "columns": 2
+        }
+      ]
+    },
+    "site": {
+      "page": "content",
+      "tag": "wb-articles",
+      "renders": true,
+      "baseClass": "wb-articles",
+      "minInstances": 3,
+      "checkText": [],
+      "checkClasses": [],
+      "checkAttributes": [
+        "layout"
+      ]
+    }
+  },
+  "_metadata": {
+    "category": "layout",
+    "icon": "📰",
+    "related": [
+      "article",
+      "grid"
+    ]
+  },
+  "$methods": {}
+}

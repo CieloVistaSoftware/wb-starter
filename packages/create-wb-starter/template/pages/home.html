@@ -1,0 +1,85 @@
+<!-- Home Page — generated from home-page.schema.json -->
+<!-- pageRules: noInlineStyles=true, noPageSpecificCSS=true, fragment=true, showcase=false -->
+<!-- $layout: 4 rows, gap=2rem, maxWidth=1200px -->
+
+<wb-demo full-width>
+  <div>
+    <h1>Build stunning UIs</h1>
+    <wb-cardhero variant="cosmic" pretitle="100 Components" title="Build stunning UIs" subtitle="just HTML — no build step" cta="Explore Components" cta-href="?page=components" cta-secondary="Documentation" cta-secondary-href="?page=docs"></wb-cardhero>
+  </div>
+</wb-demo>
+
+<h2>By the Numbers</h2>
+<wb-container max-width="900px" padding="2rem">
+  <wb-grid columns="4">
+    <wb-cardstats id="autogen-home-stat-0" value="100+" label="Behaviors" icon="🧩"></wb-cardstats>
+    <wb-cardstats id="autogen-home-stat-1" value="Light" label="DOM Only" icon="☀️"></wb-cardstats>
+    <wb-cardstats id="autogen-home-stat-2" value="&lt;1s" label="Build Time" icon="⚡"></wb-cardstats>
+    <wb-cardstats id="autogen-home-stat-3" value="100%" label="Standards" icon="✅"></wb-cardstats>
+  </wb-grid>
+  <div class="wb-divider"></div>
+  <wb-row id="home-preview-row-1" justify="center" gap="1rem">
+    <button x-ripple>✨ Ripple</button>
+    <button x-tooltip="I appear on hover!">💬 Tooltip</button>
+    <button x-confetti>🎉 Confetti</button>
+    <button x-copy>📋 Copy</button>
+  </wb-row>
+</wb-container>
+
+<h2>Features</h2>
+<p>Everything you need to build modern UIs</p>
+<wb-grid>
+  <a href="?page=components" class="feature-card-link" aria-label="Explore the Component Library">
+    <wb-card variant="float">
+      <h3>🧩 Component Library</h3>
+      <p>Over 40 ready-to-use UI components including Cards, Modals, Drawers, and Navigation.</p>
+    </wb-card>
+  </a>
+  <a href="?page=behaviors" class="feature-card-link" aria-label="Explore the Behaviors System">
+    <wb-card variant="float">
+      <h3>⚡ Behaviors System</h3>
+      <p>Compose interactions like Lego bricks. Add x-fade-in, x-sticky, or x-validate to any element.</p>
+    </wb-card>
+  </a>
+  <a href="?page=themes" class="feature-card-link" aria-label="Explore the Theme Engine">
+    <wb-card variant="float">
+      <h3>🎨 Theme Engine</h3>
+      <p>23 built-in themes with CSS Variable support. Dark mode, Light mode, and Auto detection out of the box.</p>
+    </wb-card>
+  </a>
+  <a href="?page=demos" class="feature-card-link" aria-label="See Data Viz demos">
+    <wb-card variant="float">
+      <h3>📊 Data Viz</h3>
+      <p>Built-in charts, stats cards, and audio visualizations powered by Web Standards.</p>
+    </wb-card>
+  </a>
+  <a href="?page=docs" class="feature-card-link" aria-label="Read about Accessibility">
+    <wb-card variant="float">
+      <h3>♿ Accessible</h3>
+      <p>ARIA attributes and keyboard navigation are baked into every component by default.</p>
+    </wb-card>
+  </a>
+  <a href="?page=docs" class="feature-card-link" aria-label="Read about Performance">
+    <wb-card variant="float">
+      <h3>🚀 Performance</h3>
+      <p>Zero-runtime compilation. Browsers are fast now. We let them do their job.</p>
+    </wb-card>
+  </a>
+</wb-grid>
+
+<h2>Notification Card Examples</h2>
+<wb-stack id="home-preview-canvas">
+  <wb-cardnotification variant="info" title="System Update" message="Downloading patch v3.1..."></wb-cardnotification>
+  <wb-cardnotification variant="success" title="Complete" message="Installation finished successfully."></wb-cardnotification>
+  <wb-cardnotification variant="warning" title="Attention" message="Check your settings."></wb-cardnotification>
+  <wb-cardnotification variant="error" title="Failure" message="Something went wrong."></wb-cardnotification>
+</wb-stack>
+<h2>Audio</h2>
+<wb-audio src="demos/sample.wav" show-eq volume="0.5" style="width: 40%;"></wb-audio>
+
+<h2>Ready to build something?</h2>
+<wb-card variant="glass">
+  <p>Grab the components or dive into the docs — no build step required.</p>
+  <a href="?page=components" variant="primary">Get Started</a>
+  <a href="https://github.com/CieloVistaSoftware/wb-starter" variant="secondary">GitHub</a>
+</wb-card>

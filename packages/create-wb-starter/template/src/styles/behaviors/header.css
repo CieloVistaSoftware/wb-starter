@@ -1,0 +1,110 @@
+/**
+ * Header Behavior Styles
+ */
+
+/* #448: `wb-header` TAG selector added alongside the `.wb-header` class --
+   header() skips adding `.wb-header` only for a literal <wb-header> host; a
+   native <header> host (autoInject) still gets the class, and still needs
+   it selected here. */
+wb-header,
+.wb-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 1.5rem;
+  /* min-height, not height: a fixed height silently clips a title/subtitle
+     that needs more than 60px (e.g. wraps to 2 lines) instead of growing to
+     fit -- confirmed live on pages/behaviors.html's hero <header>, which
+     picked up this class via tag-map's native auto-inject and overflowed
+     past its own box into the next element. That specific collision is
+     fixed at the source (x-ignore opts a plain, non-navbar <header> out of
+     this class entirely), but a real <wb-header> with a long title/subtitle
+     would hit the exact same clipping with a fixed height. */
+  min-height: 60px;
+  background: var(--bg-primary);
+  border-bottom: 1px solid var(--border-color);
+  gap: 1rem;
+  font-size: 0.8em; /* 20% smaller text */
+}
+
+/* Canvas header section - 20% smaller text */
+#canvas-header,
+.canvas-section[data-section="header"],
+[data-section="header"] {
+  font-size: 0.8em;
+}
+
+/* Ensure nested elements in header don't compound the reduction */
+#canvas-header *,
+.canvas-section[data-section="header"] *,
+[data-section="header"] * {
+  font-size: inherit;
+}
+
+.wb-header--sticky {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+
+.wb-header__left,
+.wb-header__right {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.wb-header__center {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.wb-header__logo {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  text-decoration: none;
+  color: var(--text-primary);
+  font-weight: 600;
+  font-size: 1.1rem;
+}
+
+.wb-header__logo:hover {
+  color: var(--primary);
+}
+
+.wb-header__icon {
+  font-size: 1.5rem;
+  line-height: 1;
+}
+
+.wb-header__title {
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+.wb-header__subtitle {
+  font-size: 0.875rem;
+  color: var(--text-muted);
+  margin-left: 0.5rem;
+}
+
+.wb-header__subtitle::before {
+  content: "·";
+  margin-right: 0.5rem;
+  color: var(--text-muted);
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  wb-header,
+  .wb-header {
+    padding: 0 1rem;
+  }
+  
+  .wb-header__subtitle {
+    display: none;
+  }
+}

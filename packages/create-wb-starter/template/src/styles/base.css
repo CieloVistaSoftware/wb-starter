@@ -1,0 +1,34 @@
+/**
+ * GenericWB Base Styles
+ * Minimal reset and defaults
+ */
+
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: var(--font-sans);
+  font-size: var(--font-size-base);
+  line-height: 1.5;
+  color: var(--color-text);
+  background: var(--color-bg);
+}
+
+/* Focus visible for accessibility */
+:focus-visible {
+  outline: 2px solid var(--color-primary);
+  outline-offset: 2px;
+}
+
+/* Remove default button styles */
+button {
+  font: inherit;
+  cursor: pointer;
+}
+
+/* Smooth transitions for theme changes */
+body, [data-theme] {
+  transition: background-color var(--transition-base), color var(--transition-base);
+}

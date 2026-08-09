@@ -1,0 +1,79 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "mdhtml.schema.json",
+  "title": "Markdown to HTML",
+  "description": "Renders Markdown content as HTML, either from inline content or external source",
+  "schemaFor": "mdhtml",
+  "baseClass": "wb-mdhtml",
+  "semanticElement": {
+    "tagName": "div",
+    "implicitRole": "generic"
+  },
+  "compliance": {
+    "baseClass": "wb-mdhtml",
+    "supportLevel": "stable",
+    "accessibility": "high"
+  },
+  "properties": {
+    "src": {
+      "type": "string",
+      "description": "Path to external markdown file",
+      "attribute": "src",
+      "default": ""
+    },
+    "sanitize": {
+      "type": "boolean",
+      "default": true,
+      "attribute": "data-sanitize"
+    },
+    "gfm": {
+      "type": "boolean",
+      "default": true,
+      "attribute": "data-gfm"
+    }
+  },
+  "_metadata": {
+    "category": "content",
+    "icon": "📝",
+    "since": "2.0.0",
+    "status": "stable"
+  },
+  "$view": [],
+  "$methods": {},
+  "$cssAPI": {},
+  "test": {
+    "setup": [
+      "<wb-mdhtml>Basic mdhtml content</wb-mdhtml>",
+      "<wb-mdhtml sanitize>with sanitize</wb-mdhtml>",
+      "<wb-mdhtml gfm>with gfm</wb-mdhtml>",
+      "<wb-mdhtml src=\"Sample src\">src=\"Sample src\"</wb-mdhtml>",
+      "<wb-mdhtml sanitize gfm>Combined: with sanitize, with gfm</wb-mdhtml>"
+    ],
+    "matrix": {
+      "combinations": [
+        {
+          "src": "../code.md"
+        },
+        {
+          "gfm": true
+        },
+        {
+          "sanitize": true,
+          "gfm": true
+        }
+      ]
+    },
+    "site": {
+      "page": "content",
+      "tag": "wb-mdhtml",
+      "renders": true,
+      "baseClass": "wb-mdhtml",
+      "minInstances": 3,
+      "checkText": [],
+      "checkClasses": [],
+      "checkAttributes": [
+        "src"
+      ]
+    }
+  }
+}

@@ -1,0 +1,154 @@
+/* Enhanced <pre> code block (x-behavior="pre", #285).
+ * Static/themeable styling lives here; pre.js only sets genuinely
+ * per-instance values it cannot know ahead of time — each control's `right`
+ * offset (depends on a sibling's actual rendered width) and each line
+ * number's `top` (depends on real text layout, esp. under wrapping). */
+
+.x-pre-wrapper {
+  position: relative;
+  display: block;
+  background-color: var(--bg-code, #1e1e1e);
+  border: 1px solid var(--border-color, #374151);
+  border-radius: var(--radius-md, 6px);
+  margin-bottom: 1rem;
+  min-height: 2.5rem;
+  overflow: hidden; /* Ensure rounded corners clip content */
+}
+
+.x-pre {
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+  font-size: 1rem; /* .x-pre--md default; overridden by size modifiers below */
+  padding: 0.75rem;
+  border-radius: 0; /* Wrapper handles radius */
+  background-color: transparent; /* Wrapper handles bg */
+  color: var(--text-code, #d4d4d4);
+  border: none; /* Wrapper handles border */
+  margin: 0;
+  width: 100%;
+  max-width: 100%;
+  box-sizing: border-box;
+  /* Default (no wrap modifier): editor style — long lines scroll, never break */
+  overflow-x: auto;
+  overflow-y: hidden;
+  white-space: pre;
+  word-break: normal;
+  overflow-wrap: normal;
+}
+
+.x-pre--xs { font-size: 0.875rem; }
+.x-pre--sm { font-size: 0.9375rem; }
+.x-pre--md { font-size: 1rem; }
+.x-pre--lg { font-size: 1.125rem; }
+.x-pre--xl { font-size: 1.25rem; }
+
+/* Space for the copy button / language badge / toggle header row */
+.x-pre--has-header {
+  padding: 1.5rem 0.75rem 0.75rem 0.75rem;
+}
+
+.x-pre--wrap {
+  overflow-x: hidden;
+  white-space: pre-wrap;
+  word-break: break-word;
+  overflow-wrap: break-word;
+}
+
+.x-pre--has-max-height {
+  overflow-y: auto;
+}
+
+.x-pre--has-line-numbers {
+  padding-left: 2.5rem; /* 2rem gutter width + 0.5rem padding */
+  line-height: 1.5; /* Must match .x-pre__line-numbers's line-height */
+}
+
+.x-pre__copy,
+.x-pre__toggle {
+  position: absolute;
+  top: 0.25rem;
+  background: var(--bg-secondary, #1f2937);
+  border: 1px solid var(--border-color, #374151);
+  color: var(--text-secondary, #9ca3af);
+  border-radius: var(--radius-sm, 3px);
+  cursor: pointer;
+  line-height: 1;
+  transition: all 0.2s ease;
+}
+
+/* Doubled selector (.x-pre-wrapper .x-pre__copy) raises specificity to 0,2,0.
+ * Both are real <button> elements, so WB's native-behavior auto-injection
+ * enhances them with a plain `.wb-button` class -- button.js injects that
+ * rule into <head> at runtime, giving it equal (0,1,0) specificity but LATER
+ * source position, so a single-class `.x-pre__copy`/`.x-pre__toggle` was
+ * being overridden by wb-button's default (md) padding/font-size. Same
+ * specificity war button.css documents fixing for its own size modifiers
+ * (#button-sizes) -- confirmed live: computed font-size was 1rem (wb-button's
+ * default) regardless of what was set here, until qualified like this. */
+.x-pre-wrapper .x-pre__copy {
+  padding: 0.1rem 0.25rem;
+  font-size: 0.5rem;
+  z-index: 10;
+  opacity: 0.6;
+}
+
+.x-pre__copy:hover {
+  background-color: var(--bg-tertiary, #374151);
+  opacity: 1;
+}
+
+.x-pre-wrapper .x-pre__toggle {
+  padding: 0.1rem 0.35rem;
+  font-size: 0.7rem;
+  z-index: 11;
+}
+
+.x-pre__language {
+  position: absolute;
+  top: 0.25rem;
+  background: transparent;
+  color: var(--text-tertiary, #9ca3af);
+  padding: 0.15rem 0.35rem;
+  border-radius: var(--radius-sm, 4px);
+  font-size: 0.55rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  font-family: system-ui, -apple-system, sans-serif;
+  z-index: 9;
+  pointer-events: none;
+  opacity: 0.5;
+}
+
+.x-pre__line-numbers {
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  padding-top: 1rem;
+  background: var(--bg-secondary, rgba(0, 0, 0, 0.2));
+  color: var(--text-tertiary, #6b7280);
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+  font-size: 1rem; /* .x-pre__line-numbers--md default; must track the code's own size */
+  line-height: 1.5; /* Must match .x-pre--has-line-numbers's line-height */
+  text-align: right;
+  user-select: none;
+  border-right: 1px solid var(--border-color, #374151);
+  width: 2rem;
+  min-width: 2rem;
+  box-sizing: border-box;
+  z-index: 1;
+}
+
+.x-pre__line-numbers--has-header {
+  padding-top: 2rem;
+}
+
+.x-pre__line-numbers--xs { font-size: 0.875rem; }
+.x-pre__line-numbers--sm { font-size: 0.9375rem; }
+.x-pre__line-numbers--md { font-size: 1rem; }
+.x-pre__line-numbers--lg { font-size: 1.125rem; }
+.x-pre__line-numbers--xl { font-size: 1.25rem; }
+
+.x-pre__line-numbers > div {
+  position: absolute;
+  right: 0.25rem;
+}

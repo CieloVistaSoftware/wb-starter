@@ -1,0 +1,330 @@
+/**
+ * Notes Behavior Styles v2.0
+ * ==========================
+ * Wide compact buttons, collapse arrows, clear at bottom
+ */
+
+/* #448: tag selectors -- notes() no longer adds a redundant classList.add
+   ('wb-notes') that just duplicated the <wb-notes> tag name. */
+wb-notes {
+  --notes-max-width: 50vw;
+  --notes-min-width: 200px;
+}
+
+/* Start hidden - only show when wb-notes--open class is added */
+wb-notes .wb-notes__drawer {
+  display: none !important;
+}
+
+wb-notes.wb-notes--open .wb-notes__drawer {
+  display: flex !important;
+}
+
+/* Backdrop */
+.wb-notes__backdrop {
+  position: fixed;
+  inset: 0;
+  background: var(--overlay-bg, rgba(0, 0, 0, 0.6));
+  z-index: 998;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s ease;
+}
+
+.wb-notes__backdrop.visible {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+/* Drawer */
+.wb-notes__drawer {
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  width: 320px;
+  min-width: var(--notes-min-width);
+  max-width: var(--notes-max-width);
+  background: var(--bg-primary);
+  border: 1px solid var(--border-color);
+  display: flex;
+  flex-direction: column;
+  z-index: 999;
+  transition: transform 0.3s ease, opacity 0.3s ease;
+  box-shadow: var(--shadow-xl, 0 0 30px rgba(0, 0, 0, 0.4));
+}
+
+/* Left position */
+.wb-notes--left .wb-notes__drawer {
+  left: 0;
+  transform: translateX(-100%);
+  border-radius: 0 8px 8px 0;
+}
+
+.wb-notes--left.wb-notes--open .wb-notes__drawer {
+  transform: translateX(0);
+}
+
+.wb-notes--left .wb-notes__resize-handle {
+  position: absolute;
+  right: 0;
+  top: 0;
+  width: 6px;
+  height: 100%;
+  cursor: ew-resize;
+}
+
+/* Right position */
+.wb-notes--right .wb-notes__drawer {
+  right: 0;
+  left: auto;
+  transform: translateX(100%);
+  border-radius: 8px 0 0 8px;
+}
+
+.wb-notes--right.wb-notes--open .wb-notes__drawer {
+  transform: translateX(0);
+}
+
+.wb-notes--right .wb-notes__resize-handle {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 6px;
+  height: 100%;
+  cursor: ew-resize;
+}
+
+/* Modal position */
+.wb-notes--modal .wb-notes__drawer {
+  top: 50%;
+  left: 50%;
+  bottom: auto;
+  right: auto;
+  transform: translate(-50%, -50%) scale(0.9);
+  opacity: 0;
+  pointer-events: none;
+  width: 500px;
+  max-width: 90vw;
+  max-height: 80vh;
+  border-radius: 12px;
+}
+
+.wb-notes--modal.wb-notes--open .wb-notes__drawer {
+  transform: translate(-50%, -50%) scale(1);
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.wb-notes--modal .wb-notes__resize-handle {
+  display: none;
+}
+
+/* Modal resize handle */
+.wb-notes__resize-handle-modal {
+  display: none;
+}
+
+.wb-notes--modal .wb-notes__resize-handle-modal {
+  display: block;
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  width: 16px;
+  height: 16px;
+  cursor: nwse-resize;
+  z-index: 10;
+}
+
+.wb-notes--modal .wb-notes__resize-handle-modal::before {
+  content: '';
+  position: absolute;
+  bottom: 4px;
+  right: 4px;
+  width: 8px;
+  height: 8px;
+  border-right: 2px solid var(--text-muted);
+  border-bottom: 2px solid var(--text-muted);
+}
+
+/* Resize handle */
+.wb-notes__resize-handle {
+  background: transparent;
+  transition: background 0.2s ease;
+  z-index: 10;
+}
+
+.wb-notes__resize-handle:hover,
+.wb-notes__resize-handle.dragging {
+  background: var(--primary);
+}
+
+/* Header */
+.wb-notes__header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.375rem 0.5rem;
+  border-bottom: 1px solid var(--border-color);
+  background: var(--bg-secondary);
+  flex-shrink: 0;
+  gap: 0.25rem;
+}
+
+.wb-notes--modal .wb-notes__header {
+  cursor: move;
+}
+
+.wb-notes--modal .wb-notes__header.dragging {
+  cursor: grabbing;
+  user-select: none;
+}
+
+.wb-notes__title {
+  font-weight: 600;
+  font-size: 0.9rem;
+  color: var(--text-primary);
+  white-space: nowrap;
+}
+
+.wb-notes__actions {
+  flex: 1;
+  min-width: 0;
+}
+
+/* Button row -- each button sizes to its own label instead of being forced
+   into a fixed-width box. The row used to assume single-glyph icon buttons
+   ("«", "📋") and capped every button at max-width:36px -- fine for one
+   character, but notes.js's actual buttons carry real text labels ("Left",
+   "Modal", "📋 Copy", "💾 Save", "👁️ View"), which overflowed/wrapped inside
+   that 36px cap and got clipped by the row's own overflow, rendering as
+   blank/missing buttons (reported live: "it needs a save button" -- the
+   button existed in the DOM the whole time, just visually unreadable). */
+.wb-notes__btn-row {
+  display: flex;
+  gap: 1px;
+  flex-wrap: wrap;
+}
+
+.wb-notes__wide-btn {
+  flex: 0 1 auto;
+  min-width: 22px;
+  height: 22px;
+  padding: 0 0.375rem;
+  white-space: nowrap;
+  background: var(--bg-tertiary);
+  border: 1px solid var(--border-color);
+  border-radius: 3px;
+  cursor: pointer;
+  font-size: 0.7rem;
+  color: var(--text-primary);
+  transition: all 0.15s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.wb-notes__wide-btn:hover {
+  background: var(--primary);
+  border-color: var(--primary);
+}
+
+.wb-notes__wide-btn.active {
+  background: var(--primary);
+  border-color: var(--primary);
+  color: white;
+}
+
+/* Save button green on hover */
+.wb-notes__wide-btn--save:hover {
+  background: var(--success-color);
+  border-color: var(--success-color);
+}
+
+/* New-note button in footer -- non-destructive (saves the outgoing note
+   first), so no confirm step and no danger color -- just a clear accent. */
+.wb-notes__wide-btn--new:hover {
+  background: var(--primary);
+  border-color: var(--primary);
+}
+
+/* Close button pinned to the header's own top-right corner, separate from
+   the toolbar rows below. */
+.wb-notes__close-corner {
+  flex-shrink: 0;
+  width: 24px;
+  height: 24px;
+  border: 1px solid transparent;
+  border-radius: 4px;
+  background: transparent;
+  color: var(--text-secondary);
+  cursor: pointer;
+  font-size: 0.9rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.wb-notes__close-corner:hover {
+  background: var(--danger-color);
+  border-color: var(--danger-color);
+  color: white;
+}
+
+/* Textarea */
+.wb-notes__textarea {
+  flex: 1;
+  width: 100%;
+  resize: none;
+  background: var(--bg-color);
+  border: none;
+  padding: 1rem;
+  font-size: 0.85rem;
+  color: var(--text-primary);
+  font-family: 'Consolas', 'Monaco', 'Menlo', monospace;
+  line-height: 1.6;
+}
+
+.wb-notes__textarea:focus {
+  outline: none;
+}
+
+.wb-notes__textarea::placeholder {
+  color: var(--text-muted);
+  opacity: 0.7;
+}
+
+/* Footer with status and clear button */
+.wb-notes__footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.375rem 0.5rem;
+  border-top: 1px solid var(--border-color);
+  background: var(--bg-secondary);
+  min-height: 32px;
+  flex-shrink: 0;
+  gap: 0.25rem;
+}
+
+.wb-notes__status {
+  flex: 1;
+  font-size: 0.7rem;
+  color: var(--text-muted);
+  transition: color 0.2s ease;
+}
+
+.wb-notes__status--success {
+  color: var(--success-color);
+}
+
+.wb-notes__status--error {
+  color: var(--danger-color);
+}
+
+.wb-notes__status--warning {
+  color: var(--warning-color);
+}
+
+.wb-notes__status--info {
+  color: var(--info-color);
+}

@@ -1,0 +1,260 @@
+/**
+ * Dropdown Behavior
+ * -----------------------------------------------------------------------------
+ * Click to show menu.
+ * 
+ * Custom Tag: <wb-dropdown>
+ * 
+ * Usage:
+ *   Option 1 - data-items attribute:
+ *     <wb-dropdown  data-items="Profile,Settings,Logout">Click me</div>
+ * 
+ *   Option 2 - data-label with child elements:
+ *     <wb-dropdown  data-label="Options">
+ *       <a href="#">Profile</a>
+ *       <a href="#">Settings</a>
+ *     </div>
+ * -----------------------------------------------------------------------------
+ */
+export function dropdown(element, options = {}) {
+  const config = {
+    items: (options.items || element.getAttribute('items') || '').split(',').filter(Boolean),
+    label: options.label || element.getAttribute('label') || '',
+    // dropdown.schema.json's actual enum is bottom-start/bottom-end/
+    // top-start/top-end (RTL-aware logical naming) -- the default here
+    // must match, or the posStyles lookup below always misses and every
+    // position value collapses to the same fallback.
+    position: options.position || element.getAttribute('position') || 'bottom-start',
+    closeOnSelect: options.closeOnSelect ?? (element.getAttribute('close-on-select') !== 'false'),
+    // dropdown.schema.json declares trigger: click|hover, but this was never
+    // actually read anywhere in this file -- only the unconditional click
+    // handler below existed, so `trigger="hover"` silently did nothing
+    // (confirmed live: hovering never opened the menu, only clicking did,
+    // identical to every other dropdown regardless of this attribute).
+    trigger: options.trigger || element.getAttribute('trigger') || 'click',
+    ...options
+  };
+
+  // #448: skip the class on a literal <wb-dropdown> host -- dropdown.css
+  // selects the `wb-dropdown` TAG directly for that case now. Still added
+  // for every OTHER host (x-dropdown on a <button>, per demos/site/
+  // interactive.html), since dropdown.css's `.wb-dropdown`/`.wb-dropdown.open`
+  // rules still select those by class.
+  if (element.tagName.toLowerCase() !== 'wb-dropdown') element.classList.add('wb-dropdown');
+  element.classList.add('wb-dropdown-trigger');
+  element.style.position = 'relative';
+  element.style.display = 'inline-block';
+
+  // Check if using child elements as menu items
+  const childElements = Array.from(element.children).filter(
+    child => child.tagName === 'A' || child.tagName === 'BUTTON' || child.tagName === 'DIV'
+  );
+  const hasChildItems = childElements.length > 0 && config.items.length === 0;
+
+  // Create trigger button if using label
+  let trigger;
+  if (config.label || hasChildItems) {
+    trigger = document.createElement('button');
+    trigger.className = 'wb-dropdown__trigger';
+    trigger.type = 'button';
+    trigger.innerHTML = `${config.label || 'Menu'} <span style="margin-left:0.5rem;font-size:0.7em;">▼</span>`;
+    trigger.style.cssText = `
+      background: var(--bg-secondary, #1f2937);
+      border: 1px solid var(--border-color, #374151);
+      border-radius: 6px;
+      padding: 0.5rem 1rem;
+      color: var(--text-primary, inherit);
+      cursor: pointer;
+      font-size: inherit;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.25rem;
+    `;
+  }
+
+  // Create menu
+  const menu = document.createElement('div');
+  menu.className = 'wb-dropdown__menu';
+  
+  // Position styles. Keys MUST match dropdown.schema.json's `position`
+  // enum (bottom-start/bottom-end/top-start/top-end) -- this used to be
+  // keyed left/right, which never matched any real attribute value, so
+  // every position silently fell through to the same default (confirmed
+  // live: all 4 position-variant demos rendered identically).
+  const posStyles = {
+    'bottom-start': 'top:100%;left:0;',
+    'bottom-end': 'top:100%;right:0;',
+    'top-start': 'bottom:100%;left:0;',
+    'top-end': 'bottom:100%;right:0;'
+  };
+
+  menu.style.cssText = `
+    position:absolute;${posStyles[config.position] || posStyles['bottom-start']}
+    background:var(--bg-secondary,#1f2937);
+    border:1px solid var(--border-color,#374151);
+    border-radius:8px;min-width:150px;
+    box-shadow:0 10px 25px rgba(0,0,0,0.2);
+    display:none;z-index:1000;overflow:hidden;
+    margin-top:4px;
+  `;
+
+  // Populate menu from items OR move child elements into menu
+  if (hasChildItems) {
+    // Move existing children into menu and style them
+    childElements.forEach(child => {
+      child.classList.add('wb-dropdown__item');
+      Object.assign(child.style, {
+        display: 'block',
+        padding: '0.5rem 0.75rem',
+        cursor: 'pointer',
+        transition: 'background 0.15s',
+        textDecoration: 'none',
+        color: 'inherit'
+      });
+      child.addEventListener('mouseenter', () => child.style.background = 'var(--bg-tertiary,#374151)');
+      child.addEventListener('mouseleave', () => child.style.background = '');
+      menu.appendChild(child);
+    });
+  } else if (config.items.length > 0) {
+    // Create menu items from data-items
+    menu.innerHTML = config.items.map(item => `
+      <div class="wb-dropdown__item" style="
+        padding:0.5rem 0.75rem;cursor:pointer;
+        transition:background 0.15s;
+      ">${item.trim()}</div>
+    `).join('');
+    
+    // Add hover events
+    menu.querySelectorAll('.wb-dropdown__item').forEach(item => {
+      item.addEventListener('mouseenter', () => item.style.background = 'var(--bg-tertiary,#374151)');
+      item.addEventListener('mouseleave', () => item.style.background = '');
+    });
+  }
+
+  // Assemble: if using label/children, add trigger first
+  if (trigger) {
+    element.innerHTML = '';
+    element.appendChild(trigger);
+  } else {
+    // No label, no child <a>/<button>/<div> items -- the host's own bare
+    // text content (e.g. <wb-dropdown position="...">click me</wb-dropdown>)
+    // IS the trigger (clickHandler below already handles `e.target ===
+    // element`), but it had zero visual styling: no background, border,
+    // padding, or pointer cursor -- confirmed live, it just looked like
+    // plain unstyled text with no clickable affordance. Style the host
+    // itself the same way .wb-dropdown__trigger styles a real button.
+  }
+  element.appendChild(menu);
+
+  let isOpen = false;
+
+  const toggle = () => {
+    if (config.trigger === 'hover' && isOpen) return;
+    isOpen = !isOpen;
+    menu.style.display = isOpen ? 'block' : 'none';
+    element.classList.toggle('open', isOpen);
+    if (trigger) {
+      trigger.setAttribute('aria-expanded', isOpen);
+    }
+    if (isOpen) {
+      menu.style.animation = 'wb-fade-in 0.15s ease';
+    }
+  };
+
+  const close = () => {
+    isOpen = false;
+    menu.style.display = 'none';
+    element.classList.remove('open');
+    if (trigger) {
+      trigger.setAttribute('aria-expanded', 'false');
+    }
+  };
+
+  // Click handler
+  const clickHandler = (e) => {
+    const item = e.target.closest('.wb-dropdown__item');
+    
+    if (item) {
+      // Item clicked
+      element.dispatchEvent(new CustomEvent('wb:dropdown:select', { 
+        bubbles: true, 
+        detail: { 
+          value: item.textContent.trim(),
+          href: item.href || null 
+        } 
+      }));
+      
+      if (config.closeOnSelect) {
+        close();
+      }
+      
+      // Don't prevent default for links
+      if (item.tagName !== 'A') {
+        e.preventDefault();
+      }
+    } else if (e.target.closest('.wb-dropdown__trigger') || e.target === element) {
+      // Trigger clicked
+      e.preventDefault();
+      toggle();
+    }
+  };
+
+  element.addEventListener('click', clickHandler);
+
+  // trigger="hover" was read into config but never actually used anywhere
+  // in this file (confirmed by grep before this fix) -- only the
+  // unconditional click handler above existed, so hovering never opened
+  // the menu regardless of the attribute. A short close delay lets the
+  // pointer travel from the trigger into the menu itself without closing
+  // it (standard hover-menu UX -- without it, any gap between trigger and
+  // menu edge closes the menu before the item underneath can be clicked).
+  let hoverCloseTimer = null;
+  if (config.trigger === 'hover') {
+    element.addEventListener('mouseenter', () => {
+      if (hoverCloseTimer) { clearTimeout(hoverCloseTimer); hoverCloseTimer = null; }
+      if (!isOpen) toggle();
+    });
+    element.addEventListener('mouseleave', () => {
+      hoverCloseTimer = setTimeout(() => {
+        if (isOpen) toggle();
+        hoverCloseTimer = null;
+      }, 150);
+    });
+  }
+
+  // Close on outside click
+  const outsideClickHandler = (e) => {
+    if (!element.contains(e.target)) close();
+  };
+  document.addEventListener('click', outsideClickHandler);
+
+  // Keyboard support
+  const keyHandler = (e) => {
+    if (e.key === 'Escape' && isOpen) {
+      close();
+      (trigger || element).focus();
+    }
+  };
+  element.addEventListener('keydown', keyHandler);
+
+  // ARIA
+  if (trigger) {
+    trigger.setAttribute('aria-haspopup', 'menu');
+    trigger.setAttribute('aria-expanded', 'false');
+  }
+  menu.setAttribute('role', 'menu');
+  menu.querySelectorAll('.wb-dropdown__item').forEach(item => {
+    item.setAttribute('role', 'menuitem');
+  });
+
+  return () => { 
+    element.removeEventListener('click', clickHandler);
+    document.removeEventListener('click', outsideClickHandler);
+    element.removeEventListener('keydown', keyHandler);
+    menu.remove();
+    if (trigger) trigger.remove();
+    element.classList.remove('wb-dropdown', 'wb-dropdown-trigger', 'open');
+  };
+}
+
+export default dropdown;

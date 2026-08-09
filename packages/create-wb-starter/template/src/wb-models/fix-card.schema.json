@@ -1,0 +1,25 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "fix-card.schema.json",
+  "title": "Fix Card",
+  "description": "Component for displaying fix/remediation details.",
+  "schemaFor": "fix-card",
+  "compliance": {
+    "baseClass": "wb-fix-card",
+    "supportLevel": "stable",
+    "accessibility": "high"
+  },
+  "properties": {},
+  "$view": [],
+  "$methods": {},
+  "$cssAPI": {},
+  "test": {
+    "setup": [
+      "<wb-fix-card>Basic fix-card content</wb-fix-card>",
+      "<wb-fix-card>Test permutation 2</wb-fix-card>",
+      "<wb-fix-card>Test permutation 3</wb-fix-card>",
+      "<wb-fix-card>Test permutation 4</wb-fix-card>",
+      "<wb-fix-card>Test permutation 5</wb-fix-card>"
+    ]
+  }
+}

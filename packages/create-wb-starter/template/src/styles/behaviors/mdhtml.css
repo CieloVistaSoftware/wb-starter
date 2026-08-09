@@ -1,0 +1,332 @@
+/**
+ * MDHTML (Markdown Rendering) Behavior Styles
+ * -----------------------------------------------------------------------------
+ * Extracted from demo.css (Phase 3 migration)
+ * Works with src/wb-viewmodels/semantics/mdhtml.js
+ *
+ * THIS IS THE SINGLE SOURCE for wb-mdhtml styling — every page that renders
+ * markdown (doc-viewer.html, autoinject.html, any other page using
+ * <wb-mdhtml>) loads this file via site.css. A duplicate/legacy copy of
+ * these rules previously lived inline in doc-viewer.html's own <style>
+ * block, fixed there (word-break/font-size/wrap fixes, #278/§6) but never
+ * propagated here — so every OTHER page kept the old broken behavior while
+ * doc-viewer.html alone looked fixed. That duplicate block has been removed;
+ * fix markdown rendering here, and it applies everywhere at once.
+ *
+ * #448: every selector below gets a `wb-mdhtml` TAG alternative alongside
+ * the original `.wb-mdhtml` class -- mdhtml() skips adding the redundant
+ * `.wb-mdhtml` class only for a literal <wb-mdhtml> host; the class stays
+ * load-bearing for every OTHER host (confirmed live:
+ * public/doc-viewer.html calls mdhtml() directly on a plain
+ * <div id="content">, not a <wb-mdhtml> tag). `.wb-mdhtml__table-wrap`/
+ * `.wb-mdhtml--*` BEM sub-parts/modifiers are untouched (real, distinct
+ * classes, not the redundant base token).
+ * -----------------------------------------------------------------------------
+ */
+
+wb-mdhtml,
+.wb-mdhtml {
+  line-height: 1.6;
+  font-size: var(--md-font-size, 1rem);
+  /* #295: never break mid-word at an ordinary point -- only real word
+     boundaries wrap. overflow-wrap is the fallback for a genuinely
+     unbreakable token (a long URL, etc.) that would otherwise force a
+     horizontal scrollbar; it only activates when normal wrapping can't
+     find anywhere to break, so it doesn't fight word-break above. */
+  word-break: normal;
+  overflow-wrap: break-word;
+  /* #295 hard backstop: "no horizontal PAGE scroll, ever" (the issue's own
+     acceptance criterion) must hold regardless of what any individual
+     descendant does -- a wide table/pre is expected to scroll WITHIN its
+     own bounded wrapper (see .wb-mdhtml__table-wrap and the pre rules
+     below), never the page. Confirmed live: an absolutely-positioned
+     <wb-demo> card doc-link badge (.wb-demo__card-doc-link, positioned
+     from demo.css/demo.js -- out of scope here) can sit a few px past the
+     card's right edge, which is enough on its own to add page-level
+     horizontal scroll at 375px even with tables/text otherwise fully
+     fixed. Clipping overflow at the wb-mdhtml boundary is a safe,
+     general backstop: every legitimate internal scroll case above already
+     manages its OWN overflow-x independently, so this only clips content
+     that has escaped its intended box. */
+  overflow-x: hidden;
+}
+
+wb-mdhtml h1,
+.wb-mdhtml h1 {
+  font-size: 2rem;
+  margin: 0 0 1.5rem;
+  color: var(--text-primary);
+  border-bottom: 1px solid var(--border-color);
+  padding-bottom: 0.5rem;
+}
+
+wb-mdhtml h2,
+.wb-mdhtml h2 {
+  font-size: 1.5rem;
+  margin: 2rem 0 1rem;
+  color: var(--text-primary);
+}
+
+wb-mdhtml h3,
+.wb-mdhtml h3 {
+  font-size: 1.25rem;
+  margin: 1.5rem 0 0.75rem;
+}
+
+wb-mdhtml p,
+.wb-mdhtml p {
+  margin: 0.75rem 0;
+  line-height: 1.6;
+  /* #471: explicitly enable text flow — source line breaks are soft (single
+     newlines treated as whitespace, not hard <br>). white-space:normal is the
+     CSS default, but marked is set to `breaks:false` by default (mdhtml.js),
+     so prose with hard-wrapped source lines should flow to container width.
+     overflow-wrap:break-word ensures long unbreakable tokens still fit. */
+  white-space: normal;
+  overflow-wrap: break-word;
+}
+
+wb-mdhtml code,
+.wb-mdhtml code {
+  background: var(--bg-tertiary);
+  padding: 0.15rem 0.4rem;
+  border-radius: 4px;
+  font-family: 'JetBrains Mono', 'Fira Code', Consolas, monospace;
+  /* Matches surrounding body text (was a hardcoded 0.85rem — shrank inline
+     code any time it sat next to normal text, e.g. a table's Example column). */
+  font-size: var(--md-font-size, 1rem);
+  color: var(--text-primary);
+  font-weight: 600;
+}
+
+/* Standard §6 (#248): code WRAPS — never a horizontal scrollbar. Was
+   overflow-x:auto (scroll) here — only doc-viewer.html's own inline
+   duplicate had ever been fixed to wrap; every other page using
+   <wb-mdhtml> (e.g. autoinject.html) kept code blocks scrolling/overflowing
+   their container.
+
+   :not(.x-pre) — once pre.js (x-behavior="pre") has enhanced a block, it
+   manages its own complete padding/background/wrap via .x-pre (pre.css),
+   including reserving extra padding-left for a line-number gutter
+   (.x-pre--has-line-numbers). This rule's flat padding:1rem has higher
+   specificity (wb-mdhtml pre vs a single .x-pre--has-line-numbers class)
+   and was winning regardless of load order, clobbering the gutter's
+   reserved space — the code text's first 1-2 characters rendered hidden
+   behind the line-number column on every <wb-demo>/```code block viewed
+   through the doc-viewer (any markdown page). */
+wb-mdhtml pre:not(.x-pre),
+.wb-mdhtml pre:not(.x-pre) {
+  background: var(--bg-tertiary);
+  padding: 1rem;
+  border-radius: 8px;
+  margin: 1rem 0;
+  max-width: 100%;
+  white-space: pre-wrap;
+  overflow-x: hidden;
+  overflow-wrap: anywhere;
+  word-break: normal;
+  /* #295: when a long attribute wraps onto a new visual line inside a code
+     sample, that continuation should read as a continuation -- indented,
+     not flush-left as if it were a new source line. `hanging each-line`
+     indents every wrapped line EXCEPT the first line after each real
+     newline in the source (each source line here is a forced break, since
+     white-space is pre-wrap) -- exactly "first line of each source line
+     flush, wrapped continuations indented", with no JS line-splitting
+     needed. text-indent is inherited, so the child <code> picks this up
+     without its own rule. */
+  text-indent: 2ch hanging each-line;
+}
+
+wb-mdhtml pre:not(.x-pre) code,
+.wb-mdhtml pre:not(.x-pre) code {
+  background: none;
+  padding: 0;
+  font-weight: normal;
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+  word-break: normal;
+}
+
+/* §6: pre.js (x-behavior="pre") defaults to editor-style no-wrap
+   (src/wb-viewmodels/semantics/pre.js, defaultWrap=false, #199) — the right
+   call for wb-demo's live code samples elsewhere, but wrong for prose docs
+   viewed through doc-viewer.html, where the project standard is now "no
+   horizontal scrollbars on code" (supersedes #195). Once pre.js enhances a
+   block it owns padding/line-number-gutter layout via .x-pre (pre.css), so
+   this only overrides whitespace/overflow, not the rules above. Selector
+   specificity (wb-mdhtml .x-pre = 0,1,1 / .wb-mdhtml .x-pre = 0,2,0) beats
+   plain .x-pre (0,1,0) regardless of stylesheet load order. */
+wb-mdhtml .x-pre,
+.wb-mdhtml .x-pre {
+  white-space: pre-wrap;
+  overflow-x: hidden;
+  word-break: break-word;
+  overflow-wrap: break-word;
+  /* #295: same hanging-indent rationale as the un-enhanced pre rule above
+     -- wrapped attribute continuations read as continuations, not new
+     lines. pre.js's line-number gutter positions each number by measuring
+     the real rendered rect of that line's text (pre.js, measureAndPosition)
+     rather than assuming a fixed offset, so it stays correct regardless of
+     this indent. */
+  text-indent: 2ch hanging each-line;
+}
+
+/* #295: the scroll/width containment lives on the WRAPPER div
+   (mdhtml.js's wrapTables), not the <table> itself. A <table> given
+   `display:block` still keeps table-layout sizing on its thead/tr/th
+   descendants internally -- confirmed live, at 375px a table's own
+   width:100%/max-width:100%/overflow-x:auto did NOT stop it rendering at
+   its min-content width (~655px, driven by non-wrapping columns),
+   overflowing the page. A plain block-level wrapper div is never subject
+   to table intrinsic-sizing quirks, so it reliably clips/scrolls instead. */
+.wb-mdhtml__table-wrap {
+  max-width: 100%;
+  overflow-x: auto;
+  margin: 1rem 0;
+}
+.wb-mdhtml__table-wrap table {
+  margin: 0;
+}
+
+/* Wide tables scroll horizontally (via the wrapper above) rather than
+   spilling past the page edge — distinct from code blocks, which must WRAP
+   instead (§6) since a table's column structure can't rewrap the way a
+   line of text can. */
+wb-mdhtml table,
+.wb-mdhtml table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 1rem 0;
+  /* Was a hardcoded 0.9rem — ignored the project's single --md-font-size
+     lever (themes.css) and read noticeably smaller than surrounding body
+     text. Table text should match body text size, not shrink on its own. */
+  font-size: var(--md-font-size, 1rem);
+}
+
+wb-mdhtml th,
+wb-mdhtml td,
+.wb-mdhtml th,
+.wb-mdhtml td {
+  padding: 0.5rem;
+  text-align: left;
+  border: 1px solid var(--border-color);
+  /* overflow-wrap:anywhere permits breaking ANYWHERE, including mid-word/
+     mid-character, whenever a column is narrower than its content --
+     exactly what broke "Part"/"Type"/"Category" headers into one letter
+     per line on narrow columns (#278, recurring). word-break:normal alone
+     was never enough -- overflow-wrap takes precedence over it. */
+  white-space: nowrap;
+  overflow-wrap: normal;
+  word-break: normal;
+}
+
+wb-mdhtml th,
+.wb-mdhtml th {
+  background: var(--bg-secondary);
+}
+
+/* The last column is conventionally the long-prose one (Description,
+   "What it is", etc.) -- only it wraps. Every other column holds short
+   identifiers/labels that must never break mid-word; the table's own
+   overflow-x:auto (above) provides horizontal scroll if a narrow viewport
+   still can't fit them (#278's own acceptance criteria). */
+wb-mdhtml th:last-child,
+wb-mdhtml td:last-child,
+.wb-mdhtml th:last-child,
+.wb-mdhtml td:last-child {
+  white-space: normal;
+  overflow-wrap: break-word;
+}
+
+/* Inline `code` (event names, identifiers) inherits td/th's
+   overflow-wrap:anywhere -- fine for prose (has natural word breaks), but
+   an unbroken identifier like "wb:details:toggle" gets split mid-word
+   ("togg" / "le") since there's nowhere sensible to break. Keep code
+   tokens intact; the table's own overflow-x:auto (above) scrolls instead. */
+wb-mdhtml td code,
+wb-mdhtml th code,
+.wb-mdhtml td code,
+.wb-mdhtml th code {
+  white-space: nowrap;
+}
+
+wb-mdhtml ul,
+wb-mdhtml ol,
+.wb-mdhtml ul,
+.wb-mdhtml ol {
+  margin: 0.75rem 0;
+  padding-left: 1.5rem;
+}
+
+wb-mdhtml li,
+.wb-mdhtml li {
+  margin: 0.25rem 0;
+}
+
+wb-mdhtml a,
+.wb-mdhtml a {
+  color: var(--primary-light);
+  text-decoration: underline;
+}
+
+wb-mdhtml blockquote,
+.wb-mdhtml blockquote {
+  border-left: 4px solid var(--primary);
+  margin: 0 0 1.5rem 0;
+  padding-left: 1rem;
+  color: var(--text-muted);
+  font-style: italic;
+}
+
+/* A live <wb-demo> embedded in a doc renders its own grid + source panel —
+   give it breathing room within the surrounding article text. */
+wb-mdhtml wb-demo,
+.wb-mdhtml wb-demo {
+  display: block;
+  margin: 0 0 1.5rem 0;
+}
+
+/* Single canonical source for .code-wrapper — src/styles/site.css and the
+   orphaned src/styles/code-captions.css (never actually <link>ed anywhere,
+   confirmed dead) both had their OWN unscoped `.code-wrapper` rule with
+   `width: fit-content; min-width: 50%; margin: 0 auto` — CENTERING every
+   code block horizontally instead of leaving it flush with the surrounding
+   prose (headings/paragraphs never had this centering). Consolidated here;
+   site.css's copy removed, code-captions.css deleted outright. */
+wb-mdhtml .code-wrapper,
+.wb-mdhtml .code-wrapper {
+  max-width: 100%;
+  overflow-x: hidden;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  margin: 0 0 1.5rem 0;
+}
+wb-mdhtml .code-wrapper pre,
+.wb-mdhtml .code-wrapper pre {
+  max-width: 100%;
+  margin: 0 !important;
+  width: 100%;
+}
+wb-mdhtml .code-caption,
+.wb-mdhtml .code-caption {
+  font-family: 'JetBrains Mono', 'Fira Code', Consolas, monospace;
+  font-size: 0.625rem;
+  color: var(--text-muted);
+  margin-top: 0.25rem;
+  align-self: flex-end;
+  opacity: 0.6;
+}
+
+.wb-mdhtml--loading {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 200px;
+  color: var(--text-muted);
+}
+
+.wb-mdhtml--error {
+  color: var(--danger-color);
+  padding: 1rem;
+}

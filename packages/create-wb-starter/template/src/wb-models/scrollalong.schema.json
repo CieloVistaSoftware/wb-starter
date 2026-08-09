@@ -1,0 +1,62 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "scrollalong.schema.json",
+  "title": "ScrollAlong",
+  "description": "CSS sticky positioning for sidebars that stay visible while scrolling",
+  "schemaFor": "scrollalong",
+  "baseClass": "wb-scrollalong",
+  "semanticElement": {
+    "tagName": "aside"
+  },
+  "compliance": {
+    "baseClass": "wb-scrollalong",
+    "supportLevel": "stable",
+    "accessibility": "high"
+  },
+  "properties": {
+    "offset": {
+      "type": "string",
+      "description": "Top offset",
+      "default": "0"
+    }
+  },
+  "$view": [],
+  "$methods": {},
+  "$cssAPI": {
+    "--wb-scrollalong-top": {
+      "default": "0",
+      "description": "Sticky top position"
+    }
+  },
+  "test": {
+    "setup": [
+      "<wb-scrollalong>Basic scrollalong content</wb-scrollalong>",
+      "<wb-scrollalong offset=\"0\">offset=\"0\"</wb-scrollalong>",
+      "<wb-scrollalong>Test permutation 3</wb-scrollalong>",
+      "<wb-scrollalong>Test permutation 4</wb-scrollalong>",
+      "<wb-scrollalong>Test permutation 5</wb-scrollalong>",
+      "<wb-scrollalong>Sidebar</wb-scrollalong>"
+    ],
+    "matrix": {
+      "combinations": [
+        {}
+      ]
+    },
+    "site": {
+      "page": "layout",
+      "tag": "wb-scrollalong",
+      "renders": true,
+      "baseClass": "wb-scrollalong",
+      "minInstances": 1,
+      "checkText": [],
+      "checkClasses": [],
+      "checkAttributes": []
+    }
+  },
+  "_metadata": {
+    "category": "layout",
+    "icon": "📜",
+    "since": "1.0.0",
+    "status": "stable"
+  }
+}

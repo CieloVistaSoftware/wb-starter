@@ -1,0 +1,19 @@
+<wb-header class="wb-header {{sticky ? 'wb-header--sticky' : ''}}"
+  <div class="wb-header__left">
+    <a href="{{logoHref || '#'}}" class="wb-header__logo">
+      <span wb-if="icon" class="wb-header__icon">{{icon}}</span>
+      <span wb-if="brand" class="wb-header__title">{{brand}}</span>
+    </a>
+  </div>
+  
+  <div class="wb-header__center">
+    <nav class="wb-header__nav">
+      <a wb-for="item in items" href="{{item.href || '#' + item.label}}" class="wb-header__link">{{item.label || item}}</a>
+    </nav>
+  </div>
+  
+  <div class="wb-header__right">
+    <span wb-if="badge" class="wb-tag-glass">{{badge}}</span>
+    <a wb-if="cta" href="{{ctaHref || '#'}}" class="wb-btn wb-btn--primary wb-btn--sm">{{cta}}</a>
+  </div>
+</nav>

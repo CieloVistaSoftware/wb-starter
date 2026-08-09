@@ -1,0 +1,61 @@
+{
+  "site": {
+    "name": "Store Name",
+    "tagline": "Quality Products",
+    "logo": "<span style='font-weight: bold; font-size: 1.5rem;'>🛍️ Store</span>",
+    "favicon": "images/favicon.png",
+    "theme": "dark",
+    "version": "1.0.0",
+    "autoInject": false
+  },
+  
+  "nav": [
+    { "id": "home", "label": "Home", "icon": "🏠", "page": "home" },
+    { "id": "shop", "label": "Shop", "icon": "🛒", "page": "shop" },
+    { "id": "categories", "label": "Categories", "icon": "📂", "page": "categories" },
+    { "id": "sale", "label": "Sale", "icon": "🏷️", "page": "sale" },
+    { "id": "about", "label": "About", "icon": "ℹ️", "page": "about" },
+    { "id": "contact", "label": "Contact", "icon": "📧", "page": "contact" }
+  ],
+  
+  "header": {
+    "showLogo": true,
+    "showThemeSwitcher": true,
+    "showSearch": true,
+    "sticky": true,
+    "cta": {
+      "label": "Cart (0)",
+      "href": "?page=cart",
+      "variant": "outline",
+      "icon": "🛒"
+    }
+  },
+  
+  "footer": {
+    "copyright": "© 2025 Store Name. All rights reserved.",
+    "showSocial": true,
+    "social": [
+      { "name": "Instagram", "icon": "📸", "url": "https://instagram.com" },
+      { "name": "Facebook", "icon": "📘", "url": "https://facebook.com" },
+      { "name": "Pinterest", "icon": "📌", "url": "https://pinterest.com" }
+    ],
+    "links": [
+      { "label": "Shipping", "page": "shipping" },
+      { "label": "Returns", "page": "returns" },
+      { "label": "Privacy Policy", "page": "privacy" }
+    ]
+  },
+  
+  "layout": {
+    "navPosition": "left",
+    "navWidth": "fit-content",
+    "navCollapsible": true,
+    "navDefaultCollapsed": false
+  },
+  
+  "seo": {
+    "title": "Store Name - Quality Products",
+    "description": "Shop our collection of quality products",
+    "keywords": ["shop", "store", "products", "ecommerce"]
+  }
+}
