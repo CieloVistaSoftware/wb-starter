@@ -392,6 +392,49 @@ export async function mdhtml(element, options = {}) {
     // scan() call (whenever WB does load) has something to find, and
     // (b) docHasWbContent()'s x-* check now sees the x-pre/x-code
     // attributes it just set and correctly decides the doc needs WB.
+    // 0. Auto-live-render eligible ```html fenced blocks. John: "all of
+    // these examples must use wb-demo" -- a doc's usage examples were
+    // read-only syntax-highlighted TEXT (the x-pre/x-code marking below
+    // makes them look nice but never actually renders the component), so
+    // a reader had to take the markup on faith instead of seeing it work.
+    // Only convert a block that's UNAMBIGUOUSLY real, renderable component
+    // markup -- language must be html, and it must contain at least one
+    // element that's either a <wb-*> tag or carries an x-* attribute (the
+    // two conventions WB.scan() actually dispatches on). A plain <div>/
+    // <table>/etc. structural example, or a non-html language block (js,
+    // bash, ...), is left as a normal read-only code sample -- converting
+    // those would either do nothing (no WB tag to enhance) or render
+    // unrelated markup as if it were a real demo.
+    //
+    // demo.js's own code-panel generation falls back to the live element's
+    // innerHTML when its page-source fetch can't find a match (expected
+    // here -- this markup only ever exists in the fetched markdown, never
+    // in doc-viewer.html's own static source), so the auto-generated code
+    // panel still shows the exact source correctly without any extra work.
+    element.querySelectorAll('pre > code').forEach(code => {
+        const pre = code.parentElement;
+        if (pre.closest('wb-demo')) return; // already inside a real wb-demo block
+        const isHtmlLang = /\blanguage-html\b/.test(code.className) || (!code.className && /^\s*</.test(code.textContent || ''));
+        if (!isHtmlLang) return;
+
+        const raw = code.textContent || '';
+        let tpl;
+        try {
+            tpl = document.createElement('template');
+            tpl.innerHTML = raw;
+        } catch (e) {
+            return; // never break the doc over a malformed example
+        }
+        const isRenderable = Array.from(tpl.content.querySelectorAll('*')).some(
+            (el) => el.tagName.toLowerCase().startsWith('wb-') || Array.from(el.attributes).some((a) => a.name.startsWith('x-'))
+        );
+        if (!isRenderable) return;
+
+        const wbDemo = document.createElement('wb-demo');
+        wbDemo.innerHTML = raw;
+        pre.replaceWith(wbDemo);
+    });
+
     // 1. Pre-process Pre blocks (configure them before scanning)
     element.querySelectorAll('pre').forEach(el => {
         // Check if it has a code block with language class

@@ -350,16 +350,47 @@ export async function demo(element, options = {}) {
     // applied and the measured width is the real final one, not a
     // pre-upgrade placeholder.
     if (cols === 1 && childCount === 1 && !element.classList.contains('wb-demo--full-width')) {
-        requestAnimationFrame(() => {
-            const only = grid.children[0];
-            if (!only) return;
-            const demoCs = getComputedStyle(element);
-            const hPad = (parseFloat(demoCs.paddingLeft) || 0) + (parseFloat(demoCs.paddingRight) || 0);
-            const shrinkWidth = only.getBoundingClientRect().width + hPad;
-            if (shrinkWidth > 0) {
-                element.style.setProperty('--wb-demo-shrink-width', shrinkWidth + 'px');
-            }
-        });
+        // A single rAF measures whatever width the child happens to have at
+        // that exact instant -- correct once its content is already fully
+        // loaded, but a single-item child with its OWN async content still
+        // loading (an image, an audio player building its equalizer UI,
+        // etc.) hasn't reached its real final width yet: it measures small
+        // (sometimes near-zero) and the whole demo -- including its code
+        // panel -- gets stuck collapsed to that tiny width forever, since
+        // nothing ever re-measures after. Confirmed live 3 separate times
+        // (cardhero, 9 more card-family async-image demos, and now every
+        // auto-live-rendered wb-audio example on doc-viewer.html pages) --
+        // each fixed one-by-one with the `full-width` escape hatch, but
+        // that only helps instances someone remembers to annotate by hand.
+        // Same poll-until-stable shape as site-engine.js's anchor-scroll
+        // fix: keep re-measuring until the width stops changing for two
+        // consecutive checks, capped at 5s so a genuinely-static child
+        // (the common case) still only costs one or two cheap re-checks.
+        const only = grid.children[0];
+        if (only) {
+            let lastWidth = null;
+            let stableCount = 0;
+            const POLL_MS = 200;
+            const MAX_MS = 5000;
+            const startedAt = Date.now();
+            const measure = () => {
+                const demoCs = getComputedStyle(element);
+                const hPad = (parseFloat(demoCs.paddingLeft) || 0) + (parseFloat(demoCs.paddingRight) || 0);
+                const shrinkWidth = only.getBoundingClientRect().width + hPad;
+                if (shrinkWidth > 0) {
+                    element.style.setProperty('--wb-demo-shrink-width', shrinkWidth + 'px');
+                }
+                if (shrinkWidth === lastWidth) {
+                    stableCount++;
+                } else {
+                    stableCount = 0;
+                    lastWidth = shrinkWidth;
+                }
+                if (stableCount >= 2 || Date.now() - startedAt > MAX_MS) return;
+                setTimeout(measure, POLL_MS);
+            };
+            requestAnimationFrame(measure);
+        }
     }
 
     // Add doc links. (#262: the old '?page=docs#wb-…' hrefs were
