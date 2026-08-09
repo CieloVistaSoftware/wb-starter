@@ -99,7 +99,40 @@ export default class WBSite {
             const target = document.querySelector(href);
             if (target) {
               e.preventDefault();
-              target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+              // #181's own fix (scrollIntoView instead of native anchor
+              // jump) still isn't enough on a page as long/image-heavy as
+              // components.html's: dozens of <wb-cardimage>/<wb-cardhero>
+              // external images ABOVE a lower target keep loading and
+              // growing the page's total height for SECONDS after this
+              // fires (confirmed live on a 47,500px-tall render: a fixed
+              // handful of re-scroll retries within ~2.5s still landed
+              // ~3,500px short of #audioDemo, because images were still
+              // loading well past that window). A fixed retry schedule
+              // can't know how long is enough on a page this variable, so
+              // poll instead: keep re-scrolling until the target's
+              // position stops moving between checks (layout has settled),
+              // capped at 8s so a genuinely-broken target can't loop
+              // forever.
+              let lastTop = null;
+              let stableCount = 0;
+              const POLL_MS = 250;
+              const MAX_MS = 8000;
+              const startedAt = Date.now();
+              const poll = () => {
+                target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                const top = Math.round(target.getBoundingClientRect().top);
+                if (top === lastTop) {
+                  stableCount++;
+                } else {
+                  stableCount = 0;
+                  lastTop = top;
+                }
+                // Two consecutive stable reads (500ms of no movement) means
+                // the layout above the target has settled.
+                if (stableCount >= 2 || Date.now() - startedAt > MAX_MS) return;
+                setTimeout(poll, POLL_MS);
+              };
+              poll();
               // pushState (not replaceState): a link like the component
               // index's "View demo" jumps from a scroll position way up the
               // page down to a specific component -- that jump must be a
