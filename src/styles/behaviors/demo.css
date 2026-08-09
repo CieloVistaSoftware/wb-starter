@@ -65,6 +65,29 @@ wb-demo:has(.wb-dropdown.open) {
 .wb-demo__code {
   width: 100%;
   max-width: var(--demo-code-max-width, 50vw);
+  /* A single-item demo shrinks the WHOLE wb-demo (control + code panel) to
+     the control's own natural width (#486, below) -- correct for a normal-
+     sized control, but a genuinely tiny one (a bare <wb-spinner>/
+     <wb-progress> with no dimensions of its own, measuring 30-70px) drags
+     the code panel down to that same width, wrapping the source one
+     CHARACTER per line instead of showing it as readable text. Standard
+     §27 already documents the intended behavior for long lines --
+     horizontal scroll, not vertical character-wrapping -- so give the code
+     panel a floor width regardless of how narrow the control measures.
+     min(320px, 90vw) so this never overflows a genuinely narrow (mobile)
+     viewport itself. Confirmed live: docs/V3-GUIDE.md's bare <wb-spinner>/
+     <wb-progress> examples rendered as unreadable single-character-wide
+     vertical strips.
+     --demo-code-min-width (not a hardcoded value): wb-demo[data-code-
+     width="50vw"] below needs to raise this floor past 320px, and a
+     hardcoded competing min-width there would lose to THIS rule's higher
+     specificity (:has() + descendant-class beats a plain attribute
+     selector) regardless of which pixel value is actually larger -- CSS
+     picks the higher-specificity rule's value outright, it doesn't take
+     the max of two min-width declarations. Routing both through the same
+     variable means there's only ever one rule that WINS the property,
+     just two different rules contributing to what value it resolves to. */
+  min-width: min(var(--demo-code-min-width, 320px), 90vw);
   overflow-x: auto;
 }
 
@@ -106,6 +129,7 @@ wb-demo[data-code-width="50vw"] .wb-demo__code {
    was rendering source at ~250px with a horizontal scrollbar cutting off
    every attribute value mid-word. */
 wb-demo[data-code-width="50vw"] {
+  --demo-code-min-width: 50vw;
   min-width: 50vw;
 }
 
@@ -197,6 +221,16 @@ wb-demo[data-code-width="50vw"] {
 wb-demo:has(> .wb-demo__grid--cols-1 > :only-child) {
   width: var(--wb-demo-shrink-width, fit-content);
   max-width: 100%;
+  /* Matches .wb-demo__code's own min-width floor above -- a `width` here
+     narrower than that floor would otherwise just clip/overflow the code
+     panel rather than let it dictate the demo's real box, since a child's
+     min-width can't grow an ancestor with an explicit `width` on its own.
+     Same --demo-code-min-width variable as .wb-demo__code, same reason:
+     this selector (:has() + descendant class) outranks the plain
+     `wb-demo[data-code-width="50vw"]` attribute selector below on
+     specificity, so a hardcoded competing min-width here would always
+     win regardless of which value is actually larger. */
+  min-width: min(var(--demo-code-min-width, 320px), 90vw);
 }
 
 /* Escape hatch for §7: a `full-width` demo (e.g. a page hero) is a single

@@ -418,6 +418,21 @@ export async function mdhtml(element, options = {}) {
         if (!isHtmlLang) return;
 
         const raw = code.textContent || '';
+        // Full-document boilerplate (a "here's how to set up your own
+        // index.html" illustration -- V3-GUIDE.md's own example, complete
+        // with <head><link href="src/styles/..."></head>) can contain a
+        // real <wb-*> tag deep inside without being a live-renderable
+        // SNIPPET itself. Setting that whole thing as innerHTML still
+        // parses and instantiates its <link>/<script> tags as real
+        // elements -- the browser fetches their href/src exactly as if
+        // they were genuine page resources, with paths that were only ever
+        // meant to be read as illustrative text now resolving (usually
+        // wrongly) against doc-viewer.html's own location. Confirmed live:
+        // V3-GUIDE.md's boilerplate <link href="src/styles/themes.css">
+        // 404'd at /public/src/styles/themes.css. Document-level tags are
+        // the unambiguous signal this is a whole-file illustration, not a
+        // component snippet.
+        if (/<\s*(!doctype|html|head|body)\b/i.test(raw)) return;
         let tpl;
         try {
             tpl = document.createElement('template');

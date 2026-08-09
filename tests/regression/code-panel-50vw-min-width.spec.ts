@@ -20,10 +20,10 @@ import { test, expect } from '@playwright/test';
 test.describe('wb-demo[data-code-width="50vw"] actually reaches 50vw', () => {
   test('components.html: the "This is the title" card demo code panel is not cramped', async ({ page }) => {
     await page.goto('/?page=components', { waitUntil: 'domcontentloaded' });
-    await page.waitForSelector('#component-card', { timeout: 20000 });
+    await page.waitForSelector('#cardComponentDemo', { timeout: 20000 });
     await page.waitForTimeout(1500); // shrink-width rAF measurement + settle
 
-    const demo = page.locator('#component-card');
+    const demo = page.locator('#cardComponentDemo');
     await expect(demo).toHaveAttribute('data-code-width', '50vw');
 
     const viewportWidth = page.viewportSize()!.width;
