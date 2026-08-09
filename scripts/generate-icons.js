@@ -58,16 +58,22 @@ async function generateIcons() {
     }
   }
 
-  // Generate favicon.ico (16x16 and 32x32)
+  // favicon.png -- rendered from the REAL favicon.svg (the project's actual
+  // blue star, linked by index.html's <link rel="icon">), not the ⚡ SVG_ICON
+  // above. These used to be two independent sources that had drifted apart:
+  // favicon.svg was updated to a blue star at some point, but this script
+  // still generated favicon.png from its own hardcoded lightning-bolt
+  // constant, so the two files silently disagreed (live report: favicon.png
+  // was still a purple lightning bolt). Reading favicon.svg directly makes
+  // this the single source of truth going forward -- can't drift again.
   try {
-    const favicon32 = await sharp(Buffer.from(SVG_ICON))
+    const faviconSvgPath = path.join(__dirname, '..', 'favicon.svg');
+    const faviconSvg = fs.readFileSync(faviconSvgPath, 'utf8');
+    await sharp(Buffer.from(faviconSvg))
       .resize(32, 32)
       .png()
-      .toBuffer();
-    
-    // Save as PNG favicons (browsers support PNG favicons)
-    await sharp(favicon32).toFile(path.join(OUTPUT_DIR, '..', '..', 'favicon.png'));
-    console.log('  ✓ Generated favicon.png');
+      .toFile(path.join(OUTPUT_DIR, '..', '..', 'favicon.png'));
+    console.log('  ✓ Generated favicon.png (from favicon.svg)');
   } catch (error) {
     console.error('  ✗ Failed to generate favicon:', error.message);
   }
