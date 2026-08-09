@@ -757,13 +757,13 @@ document.documentElement
 <div class="page__section" id="themes-code-colors">
   <h2 class="section-title">Code Colors</h2>
   <p class="section-subtitle">
-    None of the 51 themes above set <code>--bg-code</code>/<code>--text-code</code> --
-    every code panel site-wide falls back to the same dark colors regardless of
-    the active theme. Override them here.
+    49 highlight.js syntax themes, grouped by Dark/Light/Minimal/Special. Pick
+    "Default" to reset to highlight.js's own baseline.
   </p>
-  <wb-codecolorcontrol></wb-codecolorcontrol>
-  <pre><code>function wave(hue, saturation) {
-  return { h: hue, s: saturation, l: 50 };
+  <wb-codecontrol></wb-codecontrol>
+  <pre><code class="language-javascript">function wave(hue, saturation) {
+  const message = "harmonic";
+  return { h: hue, s: saturation, l: 50, label: message };
 }</code></pre>
 </div>
 
