@@ -8,15 +8,26 @@
  * #222 called out), and fails with the full list of offenders.
  *
  * Genuinely-legitimate data-* (not WB component conventions) are allowlisted:
- *  - data-theme  — the theme system attribute on <html>
- *  - data-page   — SPA route marker
+ *  - data-theme       — the theme system attribute on <html>
+ *  - data-page        — SPA route marker
+ *  - data-code-width  — <wb-demo>'s code-panel width preset. Verified (#553)
+ *    against src/styles/behaviors/demo.css and src/wb-viewmodels/demo.js:
+ *    it's a pure CSS attribute-selector hook
+ *    (`wb-demo[data-code-width="narrow"] .wb-demo__code { … }`), never read
+ *    by JS, and has no plain-attribute equivalent anywhere in the codebase
+ *    — migrate-legacy-attrs.mjs's verified data-*→plain map deliberately
+ *    excludes it for the same reason. Same category and same allowlist
+ *    precedent as `data-variant` in legacy-attr-compliance.spec.ts (#200).
+ *    Docs that use `data-code-width` are documenting the real, working
+ *    attribute; rewriting them to `code-width` would document one that
+ *    silently does nothing.
  */
 import { test, expect } from '@playwright/test';
 import fs from 'fs';
 import path from 'path';
 import { fileURLToPath } from 'url';
 
-const ALLOW = new Set(['data-theme', 'data-page']);
+const ALLOW = new Set(['data-theme', 'data-page', 'data-code-width']);
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '../..');
 
 function mdFiles(dir: string, acc: string[] = []): string[] {
