@@ -1,9 +1,7 @@
 import { test, expect } from '@playwright/test';
-import { waitForWB } from '../base';
-
 /**
- * #468: John reported the V3-GUIDE.md Quick Start wb-card example (title "Hello",
- * body "It just works.") reading as "too stubby" — audit against layout standards
+ * #468: John reported the V3-GUIDE.md Quick Start wb-card example reading as
+ * "too stubby" — audit the actual live demo against layout standards
  * (Standard §13).
  *
  * Standard §13: Every example has proper margins & padding
@@ -17,48 +15,37 @@ import { waitForWB } from '../base';
  * 2. Card has insufficient internal padding/spacing
  * 3. Content is cramped with no breathing room
  *
- * This test creates the Quick Start example card and validates:
+ * This test loads the Quick Start example from the guide and validates:
  * 1. Card has ≥ 1rem padding on all sides
  * 2. Card has a reasonable height-to-width ratio (not excessively wide)
  * 3. Internal content has visible spacing
- * 4. The card is sized proportionally (aspect ratio ~0.6-1.0 for typical card)
+ * 4. The live demo also exposes the matching source code
  */
 
 test.describe('V3-GUIDE Quick Start card proportions (#468)', () => {
   test.beforeEach(async ({ page }) => {
     // Use a standard desktop viewport for consistent measurements
     await page.setViewportSize({ width: 1280, height: 800 });
-    // Navigate to a blank page where we can inject the test HTML
-    await page.goto('/demos/index.html');
-    await waitForWB(page);
+    await page.goto('/public/doc-viewer.html?file=%2Fdocs%2FV3-GUIDE.md', {
+      waitUntil: 'domcontentloaded',
+    });
   });
 
   test('Quick Start card has adequate padding and proportions per Standard §13', async ({
     page,
   }) => {
-    // Inject the exact Quick Start example from V3-GUIDE.md
-    const cardSelector = '#quick-start-test-card';
-    await page.evaluate((selector) => {
-      const container = document.createElement('div');
-      container.style.cssText = 'padding: 2rem; background: var(--bg-primary);';
-      container.innerHTML = `
-        <wb-card
-          id="${selector.replace('#', '')}"
-          title="Hello"
-          variant="elevated">
-          <p>It just works.</p>
-        </wb-card>
-      `;
-      document.body.appendChild(container);
-    }, cardSelector);
+    const demo = page.locator('wb-demo').filter({
+      has: page.locator('wb-card[title="Build resilient interfaces"]'),
+    }).first();
+    await expect(demo.locator('.wb-demo__grid')).toBeVisible({ timeout: 20000 });
+    await expect(demo.locator('.wb-demo__code, pre').first()).toBeVisible();
 
-    // Scan for WB elements
-    if (await page.evaluate(() => (window as any).WB?.scan)) {
-      await page.evaluate(() => (window as any).WB.scan());
-    }
-
-    const card = page.locator(cardSelector).first();
-    await expect(card).toHaveCount(1);
+    const card = demo.locator('.wb-demo__grid wb-card').first();
+    await expect(card).toBeVisible();
+    await expect(card.locator('.wb-card__title')).toHaveText('Build resilient interfaces');
+    await expect(card.locator('.wb-card__subtitle')).toHaveText('Separate structure from behavior');
+    await expect(card.locator('.wb-card__main')).toContainText('Keep content readable and focused');
+    await expect(card.locator('.wb-card__main')).toContainText('applies behavior directly to the element');
 
     // Get detailed measurements
     const measurements = await card.evaluate((node: HTMLElement) => {
@@ -121,8 +108,6 @@ test.describe('V3-GUIDE Quick Start card proportions (#468)', () => {
       };
     });
 
-    console.log('Card measurements:', measurements);
-
     // Assertion 1: Card must have 1rem (16px) padding in header/main
     // Standard §13 requires ≥ 1rem padding inside containers
     expect(measurements.headerPaddingLeft).toBeGreaterThanOrEqual(15); // ~1rem tolerance
@@ -144,35 +129,17 @@ test.describe('V3-GUIDE Quick Start card proportions (#468)', () => {
     expect(measurements.width).toBeGreaterThan(200);
     expect(measurements.width).toBeLessThan(600);
 
-    // Assertion 4: Card height should be proportional (not too short)
-    // With padding + title + body text, minimum height should be ~120px
-    expect(measurements.height).toBeGreaterThan(100);
+    // Assertion 4: Card height should reflect its meaningful authored content.
+    expect(measurements.height).toBeGreaterThan(180);
   });
 
   test('Quick Start card content has visible spacing (not cramped)', async ({ page }) => {
-    // Inject the Quick Start example
-    const cardSelector = '#quick-start-content-test-card';
-    await page.evaluate((selector) => {
-      const container = document.createElement('div');
-      container.style.cssText = 'padding: 2rem;';
-      container.innerHTML = `
-        <wb-card
-          id="${selector.replace('#', '')}"
-          title="Hello"
-          variant="elevated">
-          <p>It just works.</p>
-        </wb-card>
-      `;
-      document.body.appendChild(container);
-    }, cardSelector);
-
-    // Scan for WB elements
-    if (await page.evaluate(() => (window as any).WB?.scan)) {
-      await page.evaluate(() => (window as any).WB.scan());
-    }
-
-    const card = page.locator(cardSelector).first();
-    await expect(card).toHaveCount(1);
+    const demo = page.locator('wb-demo').filter({
+      has: page.locator('wb-card[title="Build resilient interfaces"]'),
+    }).first();
+    await expect(demo.locator('.wb-demo__grid')).toBeVisible({ timeout: 20000 });
+    const card = demo.locator('.wb-demo__grid wb-card').first();
+    await expect(card).toBeVisible();
 
     // Check header/body spacing
     const spacingData = await card.evaluate((node: HTMLElement) => {
@@ -200,8 +167,6 @@ test.describe('V3-GUIDE Quick Start card proportions (#468)', () => {
       };
     });
 
-    console.log('Spacing data:', spacingData);
-
     expect(spacingData.headerExists).toBe(true);
     expect(spacingData.mainExists).toBe(true);
     expect(spacingData.titleExists).toBe(true);
@@ -213,5 +178,19 @@ test.describe('V3-GUIDE Quick Start card proportions (#468)', () => {
     // Vertical spacing between header and body should be visible
     // The gap includes header padding-bottom + main padding-top
     expect(spacingData.verticalSpacing).toBeGreaterThanOrEqual(8);
+
+    await expect(demo.locator('.wb-demo__code, pre').first()).toContainText('Build resilient interfaces');
+    await expect(demo.locator('.wb-demo__code, pre').first()).toContainText('Keep content readable and focused');
+  });
+
+  test('Quick Start card keeps one docs link when its Light DOM is built', async ({ page }) => {
+    const demo = page.locator('wb-demo').filter({
+      has: page.locator('wb-card[title="Build resilient interfaces"]'),
+    }).first();
+    await expect(demo.locator('.wb-demo__grid')).toBeVisible({ timeout: 20000 });
+
+    const card = demo.locator('.wb-demo__grid wb-card').first();
+    await expect(card.locator('.wb-card__main')).toContainText('Keep content readable and focused');
+    await expect(card.locator('.wb-demo__card-doc-link')).toHaveCount(1);
   });
 });

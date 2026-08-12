@@ -20,9 +20,9 @@ test.describe('wb-select builds a real <select>, not a fake widget', () => {
       page,
       `<wb-select label="Fruit" placeholder="Choose one" options='[{"value":"apple","label":"Apple"},{"value":"banana","label":"Banana"}]'></wb-select>`
     );
-    await expect(el).toHaveClass(/wb-select/);
     const select = el.locator('select');
     await expect(select).toHaveCount(1);
+    await expect(select).toHaveClass('wb-select__field');
     await expect(select.locator('option')).toHaveCount(3); // placeholder + 2
     await expect(select.locator('option[value="apple"]')).toHaveText('Apple');
 
@@ -37,5 +37,21 @@ test.describe('wb-select builds a real <select>, not a fake widget', () => {
       '<select clearable><option value="">Choose...</option><option value="1">One</option></select>'
     );
     await expect(el).toHaveClass('wb-select-clearable'); // the clearable wrapper div
+  });
+
+  test('reapplying clearable enhancement does not nest duplicate wrappers', async ({ page }) => {
+    const el = await setupTestContainer(
+      page,
+      '<wb-select clearable options="[{&quot;value&quot;:&quot;one&quot;,&quot;label&quot;:&quot;One&quot;}]\"></wb-select>'
+    );
+
+    await page.evaluate((host) => {
+      const field = host.querySelector('select');
+      (window as any).WB.behaviors.select(field, { clearable: true });
+    }, await el.elementHandle());
+
+    await expect(el.locator('.wb-select-clearable')).toHaveCount(1);
+    await expect(el.locator('.wb-select__clear')).toHaveCount(1);
+    await expect(el.locator('select')).toHaveCount(1);
   });
 });

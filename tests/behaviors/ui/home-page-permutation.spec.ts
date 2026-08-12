@@ -51,6 +51,11 @@ test.describe('Home Page — Schema Permutation Tests', () => {
     }
   });
 
+  test('Notifications: section heading identifies the examples', async ({ page }) => {
+    await expect(page.locator('h2').filter({ hasText: 'Notification Card Examples' })).toHaveCount(1);
+    await expect(page.locator('h2').filter({ hasText: 'Live Demos' })).toHaveCount(0);
+  });
+
   // ═══════════════════════════════════════════════════════════════
   // HERO — test.site.sections.hero
   // ═══════════════════════════════════════════════════════════════

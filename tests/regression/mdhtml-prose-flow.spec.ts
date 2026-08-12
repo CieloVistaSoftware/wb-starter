@@ -132,4 +132,25 @@ test.describe('mdhtml: prose flows to container width (#471)', () => {
     expect(result.softBrCount, 'default: a single source newline is soft — no <br>').toBe(0);
     expect(result.hardBrCount, 'breaks="true": a single source newline becomes a hard <br>').toBe(1);
   });
+
+  test('fenced code preserves source newlines independently of prose flow', async ({ page }) => {
+    await page.goto('/public/doc-viewer.html', { waitUntil: 'domcontentloaded' });
+
+    const result = await page.evaluate(async () => {
+      const { mdhtml } = await import('/src/wb-viewmodels/mdhtml.js');
+      const host = document.createElement('div');
+      host.textContent = '```js\nconst first = 1;\nconst second = 2;\n```';
+      document.body.appendChild(host);
+      await mdhtml(host, { captions: false });
+
+      const code = host.querySelector('pre code');
+      return {
+        text: code?.textContent || '',
+        brCount: code?.querySelectorAll('br').length || 0
+      };
+    });
+
+    expect(result.text).toBe('const first = 1;\nconst second = 2;\n');
+    expect(result.brCount, 'code newlines must remain text, not become HTML breaks').toBe(0);
+  });
 });

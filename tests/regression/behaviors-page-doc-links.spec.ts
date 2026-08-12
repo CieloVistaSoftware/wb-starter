@@ -15,6 +15,26 @@ import { test, expect } from '@playwright/test';
  * guards against the gap reopening.
  */
 test.describe('pages/behaviors.html: every x-* behavior demo shows a Docs: link (#475)', () => {
+  test('layout decoration forms are registered and link to their dedicated docs', async ({ page }) => {
+    await page.goto('/public/doc-viewer.html?file=' + encodeURIComponent('docs/behaviors-reference.md'));
+    await page.waitForSelector('wb-demo .wb-demo__grid', { timeout: 10000 });
+    await page.waitForTimeout(1000);
+
+    const registry = await page.evaluate(async () => {
+      const { extensionMap } = await import('/src/core/tag-map.js');
+      return { stack: extensionMap['x-stack'], cluster: extensionMap['x-cluster'] };
+    });
+    expect(registry).toEqual({ stack: 'stack', cluster: 'cluster' });
+
+    for (const [attribute, docName] of [['x-stack', 'wb-stack.md'], ['x-cluster', 'wb-cluster.md']]) {
+      const host = page.locator(`wb-demo:has([${attribute}])`).first();
+      await expect(host, `no <wb-demo> found containing [${attribute}]`).toHaveCount(1);
+      const badge = host.locator('.wb-demo__card-doc-link');
+      await expect(badge, `${attribute}'s wb-demo has no per-element docs link`).toHaveCount(1, { timeout: 5000 });
+      await expect(badge).toHaveAttribute('href', new RegExp(`docs%2Fbehaviors%2F${docName}$`));
+    }
+  });
+
   test('a representative sample of x-* decorated demos each render a working Docs: link', async ({ page }) => {
     await page.goto('/pages/behaviors.html');
     await page.waitForSelector('wb-demo .wb-demo__grid', { timeout: 10000 });

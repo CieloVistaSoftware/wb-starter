@@ -82,6 +82,23 @@ test.describe('Generated demo instances render visibly (interactive.html)', () =
     }
   });
 
+  test('overlay variant demos expose their configuration in the closed trigger', async ({ page }) => {
+    await page.goto('http://localhost:3000/demos/site/overlays.html');
+    await page.waitForSelector('wb-dialog, wb-drawer, wb-dropdown', { timeout: 10_000 });
+
+    const unlabeled: string[] = await page.locator('wb-dialog, wb-drawer, wb-dropdown').evaluateAll((els) => {
+      return els.flatMap((el) => {
+        const attribute = ['size', 'variant', 'position', 'trigger'].find((name) => el.hasAttribute(name));
+        if (!attribute) return [];
+        const value = el.getAttribute(attribute) ?? '';
+        const text = (el.textContent ?? '').trim();
+        return text.includes(value) ? [] : [`<${el.tagName.toLowerCase()} ${attribute}="${value}">: ${text}`];
+      });
+    });
+
+    expect(unlabeled, 'every overlay variant needs a meaningful closed-state preview').toEqual([]);
+  });
+
   test('<wb-dialog variant="fullscreen"> actually applies the fullscreen class and size', async ({ page }) => {
     // dialog.schema.json declares variant (default/centered/fullscreen,
     // appliesClass: wb-dialog--{{value}}), but dialog.js never read it at

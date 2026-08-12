@@ -13,12 +13,12 @@ import { test, expect } from '@playwright/test';
  */
 test('selecting the x-behaviors example set does not change the site theme', async ({ page }) => {
   await page.goto('/demos/playground.html', { waitUntil: 'networkidle' });
-  // wb-themecontrol initializes asynchronously (its own localStorage sync) —
-  // set the theme override AFTER that settles, or its own init can race and
-  // overwrite this value right back to its default.
+  // Wait for the behavior's public instance API and rendered select. The
+  // canonical custom-element selector is the tag itself; themecontrol no
+  // longer mirrors that name into a redundant class.
   await page.waitForFunction(() => {
     const tc = document.getElementById('pg-themecontrol');
-    return !!tc && tc.classList.contains('wb-themecontrol');
+    return !!tc && !!tc.wbThemeControl && !!tc.querySelector('select.wb-themecontrol__select');
   }, { timeout: 15000 });
   await page.evaluate(() => document.documentElement.setAttribute('data-theme', 'ocean'));
 
