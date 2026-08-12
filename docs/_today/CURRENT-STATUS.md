@@ -1,3 +1,36 @@
+# CURRENT HANDOFF — 2026-08-08
+
+## 🅿️ PARKING LOT
+
+**Task:** Reconciled 7 issues where a parallel Claude-agent batch and Copilot had independently produced different uncommitted fixes for the same bugs in the shared main checkout (#507, #510, #511, #512/#513, #514, #516), then fixed 2 more live-reported bugs (cardhero collapsing to a narrow sliver on `pages/components.html`; `pages/issues.html` markdown/filter/ripple gaps) plus a real `!important` cleanup in `code.css`. All 8 fixes committed and **pushed to `origin/main`** (commit `5c160ec`) — this deploys to `.io`.
+
+**Files touched (final, shipped state):**
+- `pages/home.html`, `docs/home-page.md`, `src/wb-models/home-page.schema.json` (#507)
+- `scripts/generate-site.mjs`, `demos/site/feedback.html`, `src/core/wb.js` (#510)
+- `src/core/site-engine.js`, `src/index.js` (#511)
+- `src/wb-viewmodels/index.js`, `src/core/wb-lazy.js` (#512/#513)
+- `docs/behaviors-reference.md` (#514)
+- `server.js` (#516, plus an unrelated `sendFile` dotfile-path bug found while verifying it — 404s from any `.claude/worktrees/*` checkout, fixed with explicit `root` options)
+- `pages/components.html` — `<wb-demo full-width>` on the standalone cardhero demo
+- `pages/issues.html` — wb-mdhtml rendering for expanded issue bodies, new "In Progress" filter tab, x-ripple on toolbar buttons
+- `src/styles/behaviors/code.css` — removed an unnecessary `!important` (was overriding a more-specific rule in `mdhtml.css` that already had the correct value)
+
+**Reverted, NOT shipped:** a deeper attempt to fix demo.js's single-item shrink-to-fit JS/CSS measurement race (circular-measurement bug fix, a `wb:injected` completion event on `wb-lazy.js`, extended retries/ResizeObserver). It genuinely improved things but also introduced new regressions under testing, and John's own direction ("that's why we said no inline css") was to not keep patching that fragile system — the declarative `full-width` escape hatch was the right fix instead. `src/wb-viewmodels/demo.js` and `src/core/wb-lazy.js` are back to their pre-session state; only the `wb:injected`-adjacent risk was reverted, nothing else.
+
+**Last action:** Pushed to `origin/main`. CI (`CI — Tests`, `CI — Full Compliance`, `Docs & Shell safety`) just started running at push time — **not yet confirmed green, check `gh run list --branch main` next session if not already watched**.
+
+**Verification before push:** Full compliance suite run twice in an isolated worktree (port 3997) — once on the 6-commit baseline (0 new failures vs. main), once with all 8 commits (~50 pre-existing failures reproduced identically on a stashed/baseline comparison run, confirming none were caused by this session's changes). `components-page-cardhero-full-width.spec.ts` passes.
+
+**Next step:**
+1. Confirm CI is green on `origin/main` (`gh run list --branch main --limit 3`; `gh run watch <id>` if still running).
+2. The main checkout (not a worktree) still has the **same ~190-file pile of Copilot's other uncommitted work** it had at the start of this session (#340, #387, #391, #410, #419, #423, #426, #438, #449, #450, #451, #452, #456, #460, #462, #463, #468, #469, #470, #471, #475, #486, #490, #491, #515, #517 — none of these were reviewed or touched this session). That's a separate, larger reconciliation task, same shape as the one just completed for the 7 issues above.
+3. `#519` was filed this session (3 more docs files with broken placeholder media, found while verifying #514, deliberately out of scope for that fix).
+4. Agent worktrees `.claude/worktrees/fix-506`, `agent-a55a43a9137ef0809` (#485), `agent-a1be485886983c599` (#294) still hold unfinished/unverified work from earlier in the session — not touched in this final push, still there if picked back up.
+
+**Open questions:** None blocking — the shipped fixes are self-contained and verified. The big open item is the ~190-file Copilot pile, which needs the same review-and-verify treatment as the 7 issues this session just closed out.
+
+---
+
 # 🅿️ PARKING LOT (2026-08-07 session — CRITICAL: UI standards audit + layout fixes)
 
 ## ⚡ LATEST (2026-08-07 03:45 UTC): Full-Width Demo Grid + Code Panel Width Fixes

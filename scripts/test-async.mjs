@@ -169,7 +169,7 @@ async function runStop() {
 }
 
 // ─── LAUNCHER ──────────────────────────────────────────────────────
-// Writes initial status/lock, spawns monitor detached, exits immediately.
+// Writes initial status and suite guard, spawns monitor detached, exits immediately.
 async function runLauncher(args) {
   await mkdir(DATA_DIR, { recursive: true });
   await mkdir(SINGLE_DIR, { recursive: true });

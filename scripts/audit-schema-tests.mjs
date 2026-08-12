@@ -1,7 +1,8 @@
 #!/usr/bin/env node
 /**
  * WB Framework - Schema Test Audit
- * Checks all schemas have at least 5 permutation tests using wb- prefix
+ * Checks component schemas have at least 5 setup tests using their declared
+ * wb-* or x-* surface.
  * 
  * Run: node scripts/audit-schema-tests.mjs
  */
@@ -14,15 +15,6 @@ const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const PROJECT_DIR = path.resolve(__dirname, '..');
 const SCHEMA_DIR = path.join(PROJECT_DIR, 'src/wb-models');
 const OUTPUT_FILE = path.join(PROJECT_DIR, 'data/schema-test-audit.json');
-
-// Schemas that are not components (behaviors/utilities)
-const NON_COMPONENT_SCHEMAS = [
-  'behavior.schema.json',
-  'views.schema.json', 
-  'search-index.schema.json',
-  'behaviors-showcase.schema.json',
-  'card.base.schema.json' // Base schema for card inheritance
-];
 
 // Minimum required permutation tests
 const MIN_PERMUTATION_TESTS = 5;
@@ -37,9 +29,26 @@ function loadSchema(filename) {
   }
 }
 
-function countWbPrefixTests(testSetup) {
-  if (!testSetup || !Array.isArray(testSetup)) return 0;
-  return testSetup.filter(html => html.includes('<wb-')).length;
+function listSchemaFiles(dir, files = []) {
+  for (const entry of fs.readdirSync(dir, { withFileTypes: true })) {
+    const fullPath = path.join(dir, entry.name);
+    if (entry.isDirectory()) listSchemaFiles(fullPath, files);
+    else if (entry.name.endsWith('.schema.json')) files.push(fullPath);
+  }
+  return files;
+}
+
+function getBehaviorSurface(schema) {
+  const behavior = schema.behavior || schema.schemaFor;
+  if (!behavior) return [];
+  const kebab = behavior.replace(/([a-z])([A-Z])/g, '$1-$2').toLowerCase();
+  return [`<wb-${kebab}`, `x-${kebab}`];
+}
+
+function countSurfaceTests(testSetup, schema) {
+  if (!Array.isArray(testSetup)) return 0;
+  const surface = getBehaviorSurface(schema);
+  return testSetup.filter(html => surface.some(marker => html.includes(marker))).length;
 }
 
 function getPropertyPermutations(schema) {
@@ -70,7 +79,7 @@ function getPropertyPermutations(schema) {
 }
 
 function generateWbPrefixTests(schema) {
-  const behavior = schema.behavior;
+  const behavior = schema.behavior || schema.schemaFor;
   const tests = [];
   
   // Basic test
@@ -120,10 +129,9 @@ function generateWbPrefixTests(schema) {
 
 function auditSchemas() {
   console.log('\n🔍 WB Framework - Schema Test Audit\n');
-  console.log(`Checking schemas for at least ${MIN_PERMUTATION_TESTS} tests using <wb-*> prefix...\n`);
+  console.log(`Checking schemas for at least ${MIN_PERMUTATION_TESTS} setup tests using their wb-* or x-* surface...\n`);
   
-  const files = fs.readdirSync(SCHEMA_DIR)
-    .filter(f => f.endsWith('.schema.json') && !NON_COMPONENT_SCHEMAS.includes(f));
+  const files = listSchemaFiles(SCHEMA_DIR);
   
   const results = {
     timestamp: new Date().toISOString(),
@@ -133,13 +141,15 @@ function auditSchemas() {
     details: {}
   };
   
-  for (const file of files) {
-    const schema = loadSchema(file);
-    if (!schema || !schema.behavior) continue;
+  for (const fullPath of files) {
+    const file = path.relative(SCHEMA_DIR, fullPath);
+    const schema = JSON.parse(fs.readFileSync(fullPath, 'utf8'));
+    if (!schema || (schema.schemaType || 'component') !== 'component' || file.includes('.base.')) continue;
     
-    const behavior = schema.behavior;
+    const behavior = schema.behavior || schema.schemaFor;
+    if (!behavior) continue;
     const testSetup = schema.test?.setup || [];
-    const wbPrefixCount = countWbPrefixTests(testSetup);
+    const wbPrefixCount = countSurfaceTests(testSetup, schema);
     const totalTests = testSetup.length;
     
     const detail = {

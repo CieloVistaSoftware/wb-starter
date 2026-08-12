@@ -32,8 +32,9 @@ function auditFile(filePath, relativePath) {
       if (!content.properties) issues.push('missing properties');
     }
 
-    // Component + Base: check property type + default
-    if (tier !== 'definition' && content.properties && typeof content.properties === 'object') {
+    // Component + Base: check property type + default. Behavior schemas are
+    // metadata for x-* modifiers, not component property contracts.
+    if ((tier === 'component' || tier === 'base') && content.properties && typeof content.properties === 'object') {
       for (const [propName, propDef] of Object.entries(content.properties)) {
         if (propName.startsWith('$') || propName.startsWith('_')) continue;
         if (typeof propDef !== 'object' || propDef === null) continue;
