@@ -2,7 +2,6 @@
 // scripts/sync-issue-fixed-field.mjs
 // - Ensures every issue in data/pending-issues.json has a `fixed` boolean (default: false)
 // - Optionally marks issues referenced in the most-recent commit as fixed
-// - Respects Lock/ — will abort if a lock exists for the target files
 
 import fs from "fs";
 import path from "path";
@@ -10,7 +9,6 @@ import {execSync} from "child_process";
 
 // Use the current working directory as the repository root (works on Windows and CI)
 const root = process.cwd();
-const lockDir = path.join(root, "Lock");
 // prefer canonical issue data file(s) used by the repo
 const pendingPathCandidates = [
   path.join(root, "data", "issues-todo.json"),
@@ -23,12 +21,6 @@ const mdPath = path.join(root, "WB-ISSUES-TODO.md");
 function die(msg){
   console.error("ERROR:", msg);
   process.exit(1);
-}
-
-function hasLockFor(filename){
-  if (!fs.existsSync(lockDir)) return false;
-  const files = fs.readdirSync(lockDir);
-  return files.some(f => f.toLowerCase().includes(path.basename(filename).toLowerCase()));
 }
 
 function readJSON(p){
@@ -104,11 +96,6 @@ function markFromLastCommit(){
 // ---- CLI ----
 const args = process.argv.slice(2);
 const markFromCommit = args.includes("--mark-from-commit") || args.includes("-m");
-
-// safety: respect locks
-if (hasLockFor(pendingPath) || hasLockFor(mdPath)){
-  die(`A lock exists for ${path.basename(pendingPath)} or ${path.basename(mdPath)} — aborting.`);
-}
 
 let anyChange = false;
 console.log("Syncing 'fixed' field into data/pending-issues.json (idempotent)...");

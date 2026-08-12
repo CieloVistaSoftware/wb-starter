@@ -183,7 +183,7 @@ Extract component styles from site.css, leaving only pure site layout (grid, sid
 3. **No `!important`** — fix specificity properly
 4. **Test after each extraction** — run compliance tests to catch regressions
 5. **One component at a time** — don't batch extract, verify each move
-6. **Lock files before editing** — follow `/Lock` protocol
+6. Coordinate shared-file edits through the active branch and ownership process.
 
 ---
 

@@ -84,7 +84,6 @@
     "hydration.spec.ts",
     "no-observer-referror.spec.ts",
     "no-duplicate-specs.spec.ts",
-    "stale-locks.spec.ts",
     "strict-mode-runtime.spec.ts",
     "es-modules.spec.ts",
     "universal-compliance.spec.ts",

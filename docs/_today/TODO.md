@@ -1,6 +1,6 @@
 ---
 # TODO — WB-Starter Project
-**Generated:** 2026-02-16 from test suite results (2443 passed, 262 failed, 25 skipped / 2730 total)
+Generated: 2026-02-16 from test suite results (2443 passed, 262 failed, 25 skipped / 2730 total)
 **Updated:** 2026-02-17 — Compliance run: 2475 passed, 22 failed, 5 skipped / 2502 compliance tests
 **Session fixes:** 93 failures resolved (wb-ready class removal, demo themes.css, card test rewrites, stale SPA routes, builder nav removal)
 
@@ -238,7 +238,6 @@
 - [x] Home page stat/preview IDs added
 - [x] Abbreviation definitions fixed
 - [x] POSIX-only commands rewritten as PowerShell-safe
-- [x] Stale Lock directory cleaned
 - [x] Forbidden product name terminology replaced in 9 source files
 - [x] Duplicate identifiers in builder files (archived, tests skip)
 - [x] Regression test file refs cleaned from bug registry

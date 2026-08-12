@@ -10,8 +10,7 @@
 1. **Never force-push main.** Always `git pull origin main` before pushing.
 2. **Never force-push any branch.** No rewriting shared history.
 3. **Never switch branches without stashing/committing first.**
-4. **Check `/Lock` folder before editing any file.**
-5. **Maximum 2 branches per day total.** Keep things manageable.
+4. **Maximum 2 branches per day total.** Keep things manageable.
 
 ## Git Ownership
 

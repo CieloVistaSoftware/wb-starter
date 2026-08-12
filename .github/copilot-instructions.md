@@ -4,8 +4,7 @@
 
 1. Read `docs/claude/TIER1-LAWS.md` — 10 non-negotiable rules that prevent regressions
 2. Read `docs/_today/CURRENT-STATUS.md` — current project state
-3. Check `/Lock` folder — don't edit locked files
-4. Identify your task → load relevant section from `docs/claude/TIER2-DOMAIN-GUIDES.md`
+3. Identify your task → load relevant section from `docs/claude/TIER2-DOMAIN-GUIDES.md`
 
 ## Documentation Tier System
 
@@ -43,7 +42,6 @@ docs/_today/CURRENT-STATUS.md      — Current work status
 - **Components:** `<wb-*>` custom element tags
 - **Behaviors:** `x-*` attributes on existing elements
 - **No build tools** — browser runs source code directly
-- **Check `/Lock` folder** before editing any file
 - **Never run tests synchronously** — use `npm run test:async` only
 
 ### Testing (Async Only)

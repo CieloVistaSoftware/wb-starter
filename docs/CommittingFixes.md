@@ -12,7 +12,6 @@ This document describes the standard process for fixing issues in the wb-starter
 - GitHub CLI (gh) installed and authenticated
 - npm-runner MCP server connected to project
 - All tests passing on main branch
-- Follow the repository file-locking protocol in `Lock/lock.md` for multi-agent edits: create `Lock/LOCKED-{filename}.md` before editing protected or high-risk files and remove it immediately after committing. AI agents **must** include agent identity and model in the lock file.
 
 ---
 
@@ -83,10 +82,3 @@ npx playwright test --project=behaviors --workers=8
 > Tip: `npm test` is fast-by-default for developer feedback; use `npm test -- --full` (or `CI=true npm test`) to run the ordered full pipeline. See `docs/testing-runbook.md` for the recommended developer workflow, CI examples, and how to gather Playwright traces for PR investigations.
 
 ### 6. Commit Changes
-
-Before you edit high-risk files create a lock (see `Lock/lock.md`) and include it in your local workspace; delete the lock immediately after you finish and before pushing. Example (AI/human):
-
-```bash
-# create a local lock file (human or CI may automate this)
-echo "Locked by: <you>\nTimestamp: $(date -u +%Y-%m-%dT%H:%M:%SZ)" > Lock/LOCKED-<filename>.md
-```

@@ -116,7 +116,6 @@ These folders/files can always be ignored:
 | `tmp/` | Temporary files, integration runs, playwright artifacts |
 | `archive/` | Archived old files |
 | `data/test-results/*/error-context.md` | Auto-generated test failure context (dozens of files) |
-| `Lock/*.md` | Lock files — Tier 1 says check the folder, but you don't need to read every lock file's contents |
 
 ---
 
