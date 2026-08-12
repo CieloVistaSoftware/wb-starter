@@ -80,6 +80,32 @@ test.describe('No element overlap (§22) — project-wide detection', () => {
         // them. Grepped from src/wb-viewmodels/tooltip.js, overlay.js and
         // src/styles/behaviors/{dropdown,modal,popover,toast,dialog,
         // drawer}.css + wb-signature.css.
+        //
+        // #540: wb-card__overlay (src/styles/behaviors/hero.css,
+        // wb-cardhero's "legibility scrim") wasn't in this list even though
+        // it's the exact same pattern -- a position:absolute, z-index:0
+        // decorative layer that ALWAYS renders behind its sibling
+        // .wb-card__hero-content (z-index:1, set two rules below it in
+        // hero.css). Confirmed live on demos/charity-food.html: the scrim's
+        // full-card box geometrically overlaps the hero title/subtitle
+        // bounding boxes, but the text renders cleanly on top per the
+        // z-index stacking -- not a visual defect, just a gap in this
+        // list's original grep (which covered tooltip/popover/modal/dialog/
+        // toast/drawer but never card.css/hero.css's own scrim).
+        //
+        // #540: wb-demo__card-doc-link (src/styles/behaviors/demo.css #388,
+        // src/wb-viewmodels/demo.js's attachCardDocLink) is demo.js's own
+        // per-card "📖" docs badge, attached to the top-right corner of
+        // EVERY wb-card* element inside a <wb-demo> grid site-wide --
+        // demo.css's own comment calls it out explicitly: "Sits at the
+        // card's own top-right corner, slightly overlapping the border, so
+        // it's clearly a separate 'meta/docs' affordance." Confirmed live
+        // on demos/site/cards.html: dozens of these badges geometrically
+        // overlap their card's header/image by design (position:absolute,
+        // top:-0.5rem, right:-0.5rem, z-index:5) -- this single class
+        // explains the bulk of this codebase's demo-page failures under
+        // §22, since nearly every demos/**/*.html and pages/**/*.html file
+        // renders at least one <wb-demo> grid of wb-card* examples.
         const OVERLAY_CLASS_RE = new RegExp(
           [
             'wb-tooltip', 'wb-tooltip__arrow', 'wb-tooltip__content', 'wb-tooltip-glass',
@@ -94,7 +120,17 @@ test.describe('No element overlap (§22) — project-wide detection', () => {
             'wb-sheet',
             'wb-notes__backdrop', 'wb-notes__drawer',
             'site__nav-backdrop',
+            'wb-demo__card-doc-link',
           ].map((c) => c.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')).join('|')
+          // wb-card__overlay needs an exact-token match (word-boundary
+          // anchored to whitespace/string edges), not a plain substring
+          // like every entry above -- unanchored, it would ALSO swallow
+          // the unrelated wb-card__overlay-content/-title/-subtitle classes
+          // from cardoverlay() (card.js's separate image-caption component,
+          // src/wb-viewmodels/card.js ~L2130-2168), whose text is real
+          // visible content sitting on an image, not a decorative layer
+          // behind other content -- those must stay checked.
+          + '|(?:^|\\s)wb-card__overlay(?:\\s|$)'
         );
 
         function isVisible(el: HTMLElement, cs: CSSStyleDeclaration): boolean {
@@ -118,8 +154,34 @@ test.describe('No element overlap (§22) — project-wide detection', () => {
           return true;
         }
 
+        // #540: CSS `position` is never inherited -- a plain, unstyled text
+        // <div> nested inside a position:fixed toast/panel (e.g. the site's
+        // own #wb-error-display error-log viewer, src/core/error-log*.js)
+        // computes as position:static on ITSELF, even though its fixed
+        // ancestor pins the whole panel to a screen corner regardless of
+        // document flow. The plain `cs.position === 'fixed'` check below
+        // only ever looked at the candidate element's own computed style,
+        // never its ancestor chain, so every such descendant slipped through
+        // as a normal candidate and got flagged as "overlapping" whatever
+        // page content happened to sit under that screen corner. Confirmed
+        // live on demos/site/cards.html: a deliberately-broken cardhero demo
+        // (background="hero.jpg", 404) throws into the global error handler
+        // by design (#534), and its error text -- correctly pinned in a
+        // fixed corner toast -- was reported as overlapping half the page.
+        // data-allow-overlap already walked the ancestor chain via
+        // closest() two lines below; fixed/sticky needed the same treatment.
+        function hasFixedOrStickyAncestor(el: HTMLElement): boolean {
+          let node = el.parentElement;
+          while (node) {
+            if (getComputedStyle(node).position === 'fixed' || getComputedStyle(node).position === 'sticky') return true;
+            node = node.parentElement;
+          }
+          return false;
+        }
+
         function isLayeringException(el: HTMLElement, cs: CSSStyleDeclaration): boolean {
           if (cs.position === 'fixed' || cs.position === 'sticky') return true;
+          if (hasFixedOrStickyAncestor(el)) return true;
           if (OVERLAY_CLASS_RE.test(el.className || '')) return true;
           if (el.hasAttribute('data-allow-overlap')) return true;
           if (el.closest('[data-allow-overlap]')) return true;

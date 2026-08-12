@@ -16,7 +16,12 @@
 <!-- ═══════════════════════════════════════════════════════════════════
      1. DEFAULT (Original)
      ═══════════════════════════════════════════════════════════════════ -->
-<div id="herovariants-div-6" class="wb-hero">
+<!-- #540: data-allow-overlap -- the two .wb-orb glow blobs are a decorative
+     absolute-positioned background layer that always paints BEHIND
+     .wb-hero__content (position:relative;z-index:1 in wb-signature.css vs.
+     the orbs' z-index:auto), same pattern as wb-cardhero's legibility
+     scrim. Verified live: text renders cleanly on top, not a real overlap. -->
+<div id="herovariants-div-6" class="wb-hero" data-allow-overlap>
   <div id="herovariants-div-7" class="wb-orb wb-orb--primary" style="width: 400px; height: 400px; top: -100px; right: -100px;"></div>
   <div id="herovariants-div-8" class="wb-orb wb-orb--ocean" style="width: 300px; height: 300px; bottom: -50px; left: -50px; animation-delay: -3s;"></div>
   <div id="herovariants-div-9" class="wb-hero__content">
@@ -46,7 +51,9 @@
 <!-- ═══════════════════════════════════════════════════════════════════
      3. SPLIT
      ═══════════════════════════════════════════════════════════════════ -->
-<div id="herovariants-div-25" class="wb-hero wb-hero--split">
+<!-- #540: data-allow-overlap -- decorative .wb-orb glow blob always paints
+     behind .wb-hero__content per z-index, same as the default variant above. -->
+<div id="herovariants-div-25" class="wb-hero wb-hero--split" data-allow-overlap>
   <div id="herovariants-div-26" class="wb-orb wb-orb--primary" style="width: 300px; height: 300px; top: 0; left: 20%;"></div>
   <div id="herovariants-div-27" class="wb-hero__content" style="display: flex !important; flex-direction: row !important; gap: 4rem; align-items: center; text-align: left !important; max-width: 1200px !important; margin: 0 auto;">
     <div id="herovariants-div-28" class="wb-hero__text" style="flex: 1;">
@@ -69,7 +76,11 @@
 <!-- ═══════════════════════════════════════════════════════════════════
      4. PARTICLES / STARS
      ═══════════════════════════════════════════════════════════════════ -->
-<div id="herovariants-div-40" class="wb-hero wb-hero--particles" style="position: relative; overflow: hidden; background: radial-gradient(ellipse at bottom, #1B2735 0%, #090A0F 100%);">
+<!-- #540: data-allow-overlap -- starfield divs (box-shadow "dots" far outside
+     their own 1-3px box, never real paint candidates) + a decorative .wb-orb
+     that paints behind the wb-glass content box (z-index:1 vs the content's
+     z-index:2). -->
+<div id="herovariants-div-40" class="wb-hero wb-hero--particles" style="position: relative; overflow: hidden; background: radial-gradient(ellipse at bottom, #1B2735 0%, #090A0F 100%);" data-allow-overlap>
   
   <!-- CSS-only Starfield -->
   <div id="stars" style="width: 1px; height: 1px; background: transparent; box-shadow: 1744px 122px #FFF , 134px 1321px #FFF , 92px 859px #FFF , 1678px 1333px #FFF , 666px 999px #FFF , 123px 456px #FFF , 789px 123px #FFF , 456px 789px #FFF , 321px 654px #FFF , 987px 321px #FFF , 147px 258px #FFF , 369px 147px #FFF , 258px 369px #FFF , 159px 753px #FFF , 753px 159px #FFF , 852px 963px #FFF , 963px 852px #FFF , 1234px 567px #FFF , 567px 1234px #FFF , 890px 123px #FFF; animation: animStar 50s linear infinite;"></div>
@@ -92,7 +103,9 @@
 <!-- ═══════════════════════════════════════════════════════════════════
      5. DIAGONAL
      ═══════════════════════════════════════════════════════════════════ -->
-<div id="herovariants-div-65" class="wb-hero wb-hero--diagonal" style="background: url('https://images.unsplash.com/photo-1478760329108-5c3ed9d495a0?auto=format&fit=crop&w=2000&q=80') center/cover no-repeat;">
+<!-- #540: data-allow-overlap -- decorative .wb-orb glow blob paints behind
+     .wb-hero__content (z-index:auto vs. content's z-index:1). -->
+<div id="herovariants-div-65" class="wb-hero wb-hero--diagonal" style="background: url('https://images.unsplash.com/photo-1478760329108-5c3ed9d495a0?auto=format&fit=crop&w=2000&q=80') center/cover no-repeat;" data-allow-overlap>
   <div id="herovariants-div-66" class="wb-orb wb-orb--primary" style="width: 350px; height: 350px; top: -50px; right: 10%; opacity: 0.6;"></div>
   <div id="herovariants-div-67" class="wb-hero__content" style="text-align: left; max-width: 1200px; padding-left: 4rem;">
     <span id="herovariants-span-68" class="wb-badge-gradient" style="margin-bottom: 1rem;">Diagonal</span>
@@ -107,7 +120,9 @@
 <!-- ═══════════════════════════════════════════════════════════════════
      6. WAVES
      ═══════════════════════════════════════════════════════════════════ -->
-<div id="herovariants-div-75" class="wb-hero wb-hero--waves" style="position: relative; overflow: hidden;">
+<!-- #540: data-allow-overlap -- the background <video> is position:absolute;
+     z-index:0, always behind the wb-glass content box's z-index:2. -->
+<div id="herovariants-div-75" class="wb-hero wb-hero--waves" style="position: relative; overflow: hidden;" data-allow-overlap>
   <video autoplay muted loop playsinline style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; z-index: 0;">
     <source src="https://cdn.pixabay.com/video/2024/02/09/199958-911694865_large.mp4" type="video/mp4">
   </video>
@@ -124,7 +139,10 @@
 <!-- ═══════════════════════════════════════════════════════════════════
      7. GRID / CYBERPUNK
      ═══════════════════════════════════════════════════════════════════ -->
-<div id="herovariants-div-89" class="wb-hero wb-hero--grid" style="background: #000; position: relative; overflow: hidden; perspective: 500px;">
+<!-- #540: data-allow-overlap -- the moving grid-floor div (z-index:auto) and
+     .wb-hero__grid-glow (z-index:1) are both decorative background layers
+     that paint behind the content box's z-index:2. -->
+<div id="herovariants-div-89" class="wb-hero wb-hero--grid" style="background: #000; position: relative; overflow: hidden; perspective: 500px;" data-allow-overlap>
   <!-- Moving Grid Floor -->
   <div style="
     position: absolute;
@@ -160,7 +178,10 @@
 <!-- ═══════════════════════════════════════════════════════════════════
      8. SPOTLIGHT
      ═══════════════════════════════════════════════════════════════════ -->
-<div id="herovariants-div-100" class="wb-hero wb-hero--spotlight" style="position: relative; background: #000;">
+<!-- #540: data-allow-overlap -- the darkened background image, spotlight
+     cone and spotlight beam divs are z-index:1 decorative layers that paint
+     behind the content box's z-index:2. -->
+<div id="herovariants-div-100" class="wb-hero wb-hero--spotlight" style="position: relative; background: #000;" data-allow-overlap>
   <!-- Background Image (Darkened) -->
   <div style="
     position: absolute; top: 0; left: 0; width: 100%; height: 100%;
@@ -200,7 +221,9 @@
 <!-- ═══════════════════════════════════════════════════════════════════
      9. AURORA
      ═══════════════════════════════════════════════════════════════════ -->
-<div id="herovariants-div-109" class="wb-hero wb-hero--aurora" style="position: relative; overflow: hidden;">
+<!-- #540: data-allow-overlap -- the background <video> is z-index:0, always
+     behind the wb-glass content box's z-index:2. -->
+<div id="herovariants-div-109" class="wb-hero wb-hero--aurora" style="position: relative; overflow: hidden;" data-allow-overlap>
   
   <video autoplay muted loop playsinline style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; z-index: 0; animation: aurora-expand 3s ease-in-out 5s forwards;">
     <source src="https://cdn.pixabay.com/video/2016/09/21/5397-183786499_large.mp4" type="video/mp4">
@@ -218,7 +241,9 @@
 <!-- ═══════════════════════════════════════════════════════════════════
      10. GRADIENT MESH
      ═══════════════════════════════════════════════════════════════════ -->
-<div id="herovariants-div-121" class="wb-hero wb-hero--mesh" style="
+<!-- #540: data-allow-overlap -- the blurred mesh-blob div (z-index:auto) is
+     a decorative background layer behind the content box's z-index:2. -->
+<div id="herovariants-div-121" class="wb-hero wb-hero--mesh" data-allow-overlap style="
   background: 
     radial-gradient(at 0% 0%, hsla(253,16%,7%,1) 0, transparent 50%), 
     radial-gradient(at 50% 0%, hsla(225,39%,30%,1) 0, transparent 50%), 
@@ -250,7 +275,9 @@
      11. CARD
      ═══════════════════════════════════════════════════════════════════ -->
 
-<div id="herovariants-div-130" class="wb-hero wb-hero--card" style="background: linear-gradient(-45deg, #ee7752, #e73c7e, #23a6d5, #23d5ab); background-size: 400% 400%; animation: gradient-bg 15s ease infinite;">
+<!-- #540: data-allow-overlap -- the two .wb-orb glow blobs (mix-blend-mode
+     overlay, z-index:auto) paint behind .wb-hero__content's z-index:1. -->
+<div id="herovariants-div-130" class="wb-hero wb-hero--card" style="background: linear-gradient(-45deg, #ee7752, #e73c7e, #23a6d5, #23d5ab); background-size: 400% 400%; animation: gradient-bg 15s ease infinite;" data-allow-overlap>
   <div id="herovariants-div-131" class="wb-orb wb-orb--primary" style="width: 400px; height: 400px; top: -100px; right: -100px; mix-blend-mode: overlay;"></div>
   <div id="herovariants-div-132" class="wb-orb wb-orb--sunset" style="width: 300px; height: 300px; bottom: -50px; left: -50px; mix-blend-mode: overlay;"></div>
   <div id="herovariants-div-133" class="wb-hero__content">
@@ -266,7 +293,10 @@
 <!-- ═══════════════════════════════════════════════════════════════════
      12. COSMIC
      ═══════════════════════════════════════════════════════════════════ -->
-<div id="herovariants-div-141" class="wb-hero wb-hero--cosmic" style="position: relative; overflow: hidden;">
+<!-- #540: data-allow-overlap -- zooming background images (z-index:0) and
+     two .wb-orb glow blobs (z-index:1) both paint behind the wb-glass
+     content box's z-index:2. -->
+<div id="herovariants-div-141" class="wb-hero wb-hero--cosmic" style="position: relative; overflow: hidden;" data-allow-overlap>
   <!-- Zooming Backgrounds -->
   <div style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 0;">
     <div class="wb-zoom-bg wb-zoom-bg--1" style="background-image: url('https://images.unsplash.com/photo-1502685104226-ee32379fefbe?auto=format&fit=crop&w=2000&q=80');"></div>
