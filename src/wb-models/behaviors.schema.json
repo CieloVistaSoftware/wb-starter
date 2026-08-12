@@ -299,6 +299,11 @@
       ],
       "feedback": [
         {
+          "name": "x-alert",
+          "type": "modifier",
+          "description": "Alert behavior with variants"
+        },
+        {
           "name": "wb-alert",
           "type": "element",
           "description": "Alert/notification component"

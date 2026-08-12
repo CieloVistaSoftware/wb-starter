@@ -362,8 +362,16 @@ function generateSelectionDemos(behaviors) {
 function generateFeedbackDemos(behaviors) {
   let html = '';
 
+  if (behaviors.some(b => b.name === 'x-alert')) {
+    html += '    <h3>Alerts</h3>\n';
+    html += '    <wb-demo><div x-alert variant="info">Info alert message</div></wb-demo>\n';
+    html += '    <wb-demo><div x-alert variant="success">Success alert message</div></wb-demo>\n';
+    html += '    <wb-demo><div x-alert variant="warning">Warning alert message</div></wb-demo>\n';
+    html += '    <wb-demo><div x-alert variant="error">Error alert message</div></wb-demo>\n';
+  }
+
   if (behaviors.some(b => b.name === 'x-toast')) {
-    html += '    <h3>Toast Notifications</h3>\n';
+    html += '\n    <h3>Toast Notifications</h3>\n';
     html += '    <wb-demo><button variant="primary" x-toast message="Info message" toast-variant="info">Info Toast</button></wb-demo>\n';
     html += '    <wb-demo><button variant="primary" x-toast message="Success!" toast-variant="success">Success Toast</button></wb-demo>\n';
     html += '    <wb-demo><button variant="primary" x-toast message="Warning!" toast-variant="warning">Warning Toast</button></wb-demo>\n';
