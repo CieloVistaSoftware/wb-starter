@@ -143,13 +143,21 @@ export function dialog(element, options = {}) {
       element.classList.add('wb-modal-trigger', 'wb-dialog-trigger');
       element.style.cursor = 'pointer';
       const open = () => createAndShowDialog(config.title, config.content, config.size, config.variant);
+      // .open() alongside .showModal(): the docs teach an external trigger
+      // calling document.getElementById(id).open() (matching the native
+      // <dialog>-adjacent naming this framework uses elsewhere), but only
+      // .showModal was ever assigned here -- that call always threw
+      // "open is not a function". Both names now resolve to the same
+      // function rather than picking one and leaving the other undocumented
+      // or unimplemented. (#531)
       element.showModal = open;
+      element.open = open;
       element.addEventListener('click', open);
       return () => element.removeEventListener('click', open);
     }
 
     // DEFINITION mode: no trigger attributes — the children are the modal content,
-    // the element is hidden, and a caller invokes element.showModal().
+    // the element is hidden, and a caller invokes element.open() (or .showModal()).
     element.style.display = 'none';
     const slots = {};
     const titleSlot = element.querySelector('[slot="title"]');
@@ -160,7 +168,9 @@ export function dialog(element, options = {}) {
       contentContainer.appendChild(node.cloneNode(true));
     });
     const slotsContent = contentContainer.innerHTML;
-    element.showModal = () => createAndShowDialog(slots.title, slotsContent, config.size, config.variant);
+    const openDefined = () => createAndShowDialog(slots.title, slotsContent, config.size, config.variant);
+    element.showModal = openDefined;
+    element.open = openDefined; // (#531) same rationale as the TRIGGER branch above
     return;
   }
 
@@ -190,9 +200,29 @@ export function dialog(element, options = {}) {
   element.classList.add('wb-modal');
   element.style.cursor = 'pointer';
 
+  // config.content only ever reads a `content`/`modal-content` attribute --
+  // this element's real content is its light-DOM children (e.g.
+  // <wb-dialog id="x"><p>...</p></wb-dialog>), same as DEFINITION mode
+  // above. Captured once, up front, before the element's markup is used
+  // for anything else, mirroring that branch's own approach. (#531)
+  const childContent = (() => {
+    const container = document.createElement('div');
+    Array.from(element.childNodes).forEach(node => container.appendChild(node.cloneNode(true)));
+    return container.innerHTML;
+  })();
+
   const showDialog = () => {
-    createAndShowDialog(config.title, config.content, config.size, config.variant);
+    createAndShowDialog(config.title, config.content || childContent, config.size, config.variant);
   };
+
+  // A bare <wb-dialog id="x"> with no trigger attributes previously only
+  // ever opened itself on click -- no method was assigned at all, so an
+  // external `document.getElementById('x').open()` (the pattern this
+  // component's own docs teach) threw "open is not a function". Both names
+  // are exposed for the same reason the other two branches expose them.
+  // (#531)
+  element.open = showDialog;
+  element.showModal = showDialog;
 
   element.addEventListener('click', showDialog);
   return () => element.removeEventListener('click', showDialog);

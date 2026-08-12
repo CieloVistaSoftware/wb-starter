@@ -31,9 +31,8 @@ Wrapped in `<wb-demo>`, so the live component renders below with its source show
 <wb-dialog
   title="Welcome"
   id="my-dialog">
-  <p>Dialog content goes here.</p>
+  <p>Click Me</p>
 </wb-dialog>
-<button onclick="document.getElementById('my-dialog').open()"> Open Dialog </button>
 </wb-demo>
 
 ## Usage

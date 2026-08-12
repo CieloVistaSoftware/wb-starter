@@ -535,17 +535,36 @@ export async function demo(element, options = {}) {
     // ended up listener-less ~90% of the time. The grid's children are
     // already covered by the global scan; only the new pre/code panel
     // needs one here.
-    if (window.WB) {
-        // eager:true -- WB.scan()'s default lazy path defers [x-behavior]
-        // elements to an IntersectionObserver instead of applying them
-        // synchronously, so the code panel could sit unstyled/unscanned for
-        // an indeterminate delay (confirmed live on public/doc-viewer.html:
-        // the nested <code x-behavior="code"> got hljs highlighting while
-        // the wrapping <pre x-behavior="pre"> sat with no x-pre class at
-        // the same snapshot). The panel is built and appended synchronously
-        // right above -- there's no perf reason to defer scanning it lazily.
-        window.WB.scan(pre, { eager: true });
-    }
+    // eager:true -- WB.scan()'s default lazy path defers [x-behavior]
+    // elements to an IntersectionObserver instead of applying them
+    // synchronously, so the code panel could sit unstyled/unscanned for
+    // an indeterminate delay (confirmed live on public/doc-viewer.html:
+    // the nested <code x-behavior="code"> got hljs highlighting while
+    // the wrapping <pre x-behavior="pre"> sat with no x-pre class at
+    // the same snapshot). The panel is built and appended synchronously
+    // right above -- there's no perf reason to defer scanning it lazily.
+    //
+    // window.WB can still be undefined at this exact instant even though
+    // it's always assigned during page load: <wb-demo>'s connectedCallback
+    // can fire (and this whole function run synchronously from it) before
+    // the deferred module script that sets window.WB has executed --
+    // timing that depends on network/parse speed, so it's rare on a fast
+    // local dev reload but real on a cold production load (confirmed:
+    // reproduced live on the deployed GitHub Pages build, code panels
+    // rendered with zero syntax highlighting -- `if (window.WB)` was
+    // simply false at connect time, and nothing ever retried). A handful
+    // of rAF retries covers this without needing a real "WB ready" event
+    // this codebase doesn't otherwise have; WB is a synchronous top-level
+    // module assignment, so it's available within a frame or two of any
+    // element's connectedCallback, never indefinitely delayed. (#535)
+    const scanWhenReady = (attemptsLeft = 20) => {
+        if (window.WB) {
+            window.WB.scan(pre, { eager: true });
+        } else if (attemptsLeft > 0) {
+            requestAnimationFrame(() => scanWhenReady(attemptsLeft - 1));
+        }
+    };
+    scanWhenReady();
 
     // #385: wb-demo showed HOW to wire up a control's markup but never HOW
     // to listen for the custom events it fires afterward. Optional `events`

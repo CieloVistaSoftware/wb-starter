@@ -992,12 +992,36 @@ export function cardhero(element, options = {}) {
   // rich theme gradient + all colors live in hero.css (wb-cardhero…), so there
   // are NO hardcoded colors here.
   if (config.background) {
-    element.style.backgroundImage =
-      (config.background.includes('gradient') || config.background.startsWith('var('))
-        ? config.background
-        : `url(${config.background})`;
+    const isCssValue = config.background.includes('gradient') || config.background.startsWith('var(');
+    element.style.backgroundImage = isCssValue ? config.background : `url(${config.background})`;
     element.style.backgroundSize = 'cover';
     element.style.backgroundPosition = 'center';
+
+    // A broken image src previously failed completely silently: CSS
+    // background-image has no failure signal of its own, hero.css's default
+    // gradient is gated on `:not([background])` (so it never applies while
+    // the attribute is still present, even if what it points to 404s), and
+    // config.overlay's legibility scrim (built to sit over a real photo)
+    // keeps rendering regardless -- the net result was a bare dark scrim
+    // that read as an unintentional "glass" effect, with nothing telling
+    // the author their image never loaded (confirmed live via cardhero.md's
+    // own "Basic Hero" example, which pointed at a non-existent asset).
+    // Preloading via a plain Image() gives the one load-failure signal CSS
+    // background-image lacks; on failure, clear the broken background so
+    // hero.css's themed gradient fallback can take over, and throw into the
+    // global error handler -- same convention audio.js already uses for a
+    // failed <audio> src -- so it surfaces in the app's own error viewer
+    // instead of silently rendering broken. (#534)
+    if (!isCssValue) {
+      const probe = new Image();
+      probe.addEventListener('error', () => {
+        if (!document.contains(element)) return;
+        element.removeAttribute('background');
+        element.style.removeProperty('background-image');
+        throw new Error(`wb-cardhero: failed to load background "${config.background}" -- the file is missing or unreachable. Falling back to the default gradient.`);
+      });
+      probe.src = config.background;
+    }
   }
 
   // Legibility scrim + content are styled by classes in hero.css.

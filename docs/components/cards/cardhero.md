@@ -30,12 +30,13 @@ Supports every [card property](./card.md) — that shared structure and CSS are 
 | `ctaHref` | string | `"#"` | Primary CTA URL |
 | `ctaSecondary` | string | `""` | Secondary CTA text |
 | `ctaSecondaryHref` | string | `"#"` | Secondary CTA URL |
+| `variant` | string | `"default"` | Visual style: `default`, `cosmic`, `split`, `minimal`, `gradient` |
 
 ### Attribute-only example
 
 Wrapped in `<wb-demo>`, so the live component renders below with its source shown underneath:
 
-<wb-demo>
+<wb-demo full-width>
 <wb-cardhero
   pretitle="100 Components"
   title='Build <span class="wb-gradient-text">stunning UIs</span>'
@@ -52,17 +53,21 @@ Wrapped in `<wb-demo>`, so the live component renders below with its source show
 
 ### Basic Hero
 
-<wb-demo>
+With no `background` supplied, the component renders its own themed
+gradient (`hero.css`'s `wb-cardhero:not([background])` rule) -- there is no
+`/images/hero-bg.jpg` asset in this repo, and pointing this example at one
+that doesn't exist just 404s silently (#534).
+
+<wb-demo full-width>
 <wb-cardhero
   title="Welcome to Our Site"
-  subtitle="Build something amazing"
-  background="/images/hero-bg.jpg">
+  subtitle="Build something amazing">
 </wb-cardhero>
 </wb-demo>
 
 ### With CTAs
 
-<wb-demo>
+<wb-demo full-width>
 <wb-cardhero
   title="Get Started Today"
   subtitle="Join thousands of happy users"
@@ -75,7 +80,7 @@ Wrapped in `<wb-demo>`, so the live component renders below with its source show
 
 ### Left Aligned
 
-<wb-demo>
+<wb-demo full-width>
 <wb-cardhero
   title="Left Aligned Hero"
   xalign="left"
@@ -85,7 +90,7 @@ Wrapped in `<wb-demo>`, so the live component renders below with its source show
 
 ### With Gradient Background
 
-<wb-demo>
+<wb-demo full-width>
 <wb-cardhero
   title="Gradient Hero"
   background="linear-gradient(135deg, #667eea 0%, #764ba2 100%)">
