@@ -41,19 +41,19 @@
   <h2>size variants</h2>
   <wb-demo columns="3">
     <wb-dialog size="sm" class="demo-open">
-      size=sm
+      Small dialog (size=sm)
     </wb-dialog>
     <wb-dialog size="md" class="demo-open">
-      size=md
+      Medium dialog (size=md)
     </wb-dialog>
     <wb-dialog size="lg" class="demo-open">
-      size=lg
+      Large dialog (size=lg)
     </wb-dialog>
     <wb-dialog size="xl" class="demo-open">
-      size=xl
+      Extra-large dialog (size=xl)
     </wb-dialog>
     <wb-dialog size="full" class="demo-open">
-      size=full
+      Fullscreen dialog (size=full)
     </wb-dialog>
   </wb-demo>
   </section>
@@ -63,13 +63,13 @@
   <h2>Variants</h2>
   <wb-demo columns="2">
     <wb-dialog variant="default" class="demo-open">
-      variant=default
+      Default dialog (variant=default)
     </wb-dialog>
     <wb-dialog variant="centered" class="demo-open">
-      variant=centered
+      Centered dialog (variant=centered)
     </wb-dialog>
     <wb-dialog variant="fullscreen" class="demo-open">
-      variant=fullscreen
+      Fullscreen dialog (variant=fullscreen)
     </wb-dialog>
   </wb-demo>
   </section>
@@ -95,16 +95,16 @@
   <h2>position variants</h2>
   <wb-demo columns="2">
     <wb-drawer position="left" class="demo-open">
-      <wb-badge variant="info">position=left</wb-badge>
+      <wb-badge variant="info">Left drawer (position=left)</wb-badge>
     </wb-drawer>
     <wb-drawer position="right" class="demo-open">
-      <wb-badge variant="info">position=right</wb-badge>
+      <wb-badge variant="info">Right drawer (position=right)</wb-badge>
     </wb-drawer>
     <wb-drawer position="top" class="demo-open">
-      <wb-badge variant="info">position=top</wb-badge>
+      <wb-badge variant="info">Top drawer (position=top)</wb-badge>
     </wb-drawer>
     <wb-drawer position="bottom" class="demo-open">
-      <wb-badge variant="info">position=bottom</wb-badge>
+      <wb-badge variant="info">Bottom drawer (position=bottom)</wb-badge>
     </wb-drawer>
   </wb-demo>
   </section>
@@ -114,13 +114,13 @@
   <h2>Variants</h2>
   <wb-demo columns="2">
     <wb-drawer variant="default" class="demo-open">
-      <wb-badge variant="info">variant=default</wb-badge>
+      <wb-badge variant="info">Default drawer (variant=default)</wb-badge>
     </wb-drawer>
     <wb-drawer variant="overlay" class="demo-open">
-      <wb-badge variant="info">variant=overlay</wb-badge>
+      <wb-badge variant="info">Overlay drawer (variant=overlay)</wb-badge>
     </wb-drawer>
     <wb-drawer variant="push" class="demo-open">
-      <wb-badge variant="info">variant=push</wb-badge>
+      <wb-badge variant="info">Push drawer (variant=push)</wb-badge>
     </wb-drawer>
   </wb-demo>
   </section>
@@ -130,13 +130,13 @@
   <h2>📋 Dropdown</h2>
   <wb-demo columns="2">
     <wb-dropdown items="Profile,Settings,Logout" position="bottom-start" label="position=bottom-start" class="demo-open">
-      position=bottom-start
+      Bottom-start menu (position=bottom-start)
     </wb-dropdown>
     <wb-dropdown items="Profile,Settings,Logout" position="bottom-end" label="position=bottom-end" class="demo-open">
-      position=bottom-end
+      Bottom-end menu (position=bottom-end)
     </wb-dropdown>
     <wb-dropdown items="Profile,Settings,Logout" trigger="hover" label="trigger=hover" class="demo-open">
-      trigger=hover
+      Hover menu (trigger=hover)
     </wb-dropdown>
   </wb-demo>
   </section>
@@ -146,10 +146,10 @@
   <h2>position variants</h2>
   <wb-demo columns="2">
     <wb-dropdown items="Profile,Settings,Logout" position="top-start" label="position=top-start" class="demo-open">
-      position=top-start
+      Top-start menu (position=top-start)
     </wb-dropdown>
     <wb-dropdown items="Profile,Settings,Logout" position="top-end" label="position=top-end" class="demo-open">
-      position=top-end
+      Top-end menu (position=top-end)
     </wb-dropdown>
   </wb-demo>
   </section>
@@ -159,10 +159,10 @@
   <h2>trigger variants</h2>
   <wb-demo columns="2">
     <wb-dropdown items="Profile,Settings,Logout" trigger="click" label="trigger=click" class="demo-open">
-      trigger=click
+      Click menu (trigger=click)
     </wb-dropdown>
     <wb-dropdown items="Profile,Settings,Logout" trigger="hover" label="trigger=hover" class="demo-open">
-      trigger=hover (hover to open)
+      Hover menu (trigger=hover)
     </wb-dropdown>
   </wb-demo>
   </section>
@@ -173,46 +173,8 @@
     await WB.init({ autoInject: true });
     await WB.scan(document.body, { eager: true });
 
-    // Auto-open demo overlays so variants are visually distinct
-    // (without this, closed drawers/dialogs/dropdowns all look identical)
-    const openDemos = () => {
-      document.querySelectorAll('.demo-open').forEach(el => {
-        setTimeout(() => {
-          // Drawer
-          if (el.wbDrawer) {
-            el.wbDrawer.show();
-            // Prevent backdrop click from closing the demo
-            const backdrop = document.querySelector('.wb-drawer__backdrop');
-            if (backdrop) {
-              backdrop.onclick = null;
-              backdrop.style.cursor = 'default';
-            }
-          }
-          // Dialog (uses similar pattern to drawer via overlay.js)
-          else if (el.wbDialog) {
-            el.wbDialog.show();
-            const backdrop = document.querySelector('.wb-dialog__backdrop');
-            if (backdrop) {
-              backdrop.onclick = null;
-              backdrop.style.cursor = 'default';
-            }
-          }
-          // Dropdown
-          else if (el.wbDropdown) {
-            if (el.wbDropdown.open) {
-              el.wbDropdown.open();
-            } else {
-              el.wbDropdown.toggle();
-            }
-          }
-        }, 100);
-      });
-    };
-
-    // Wait for WB.init to settle, then open demos
-    // Use a small delay to ensure all components are fully initialized
-    setTimeout(openDemos, 200);
-    console.log('Overlays & Popups initialized with demo variants open');
+    console.log('Overlays & Popups initialized with labeled demo variants');
+    window.__WB_DEMO_INITIALIZED__ = true;
   </script>
 </body>
 

@@ -219,6 +219,7 @@
     await WB.init({ autoInject: true });
     await WB.scan(document.body, { eager: true });
     console.log('Interactive & Utility initialized');
+    window.__WB_DEMO_INITIALIZED__ = true;
   </script>
 </body>
 

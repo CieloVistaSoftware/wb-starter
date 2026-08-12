@@ -167,7 +167,9 @@ export async function logError(message, details = {}) {
   errorContainer.style.display = 'block';
   
   // Save to file
-  await appendErrorToLog(error);
+  if (!document.documentElement.hasAttribute('data-wb-expected-errors')) {
+    await appendErrorToLog(error);
+  }
   
   // Also log to console
   console.error('[ErrorLogger]', message, details);

@@ -33,8 +33,8 @@
     <wb-article title="Web Performance Optimization" author="Sarah Chen" date="2026-09-15">
       Improve your website's speed with proven techniques: code splitting, lazy loading, image optimization, and caching strategies that significantly boost user experience.
     </wb-article>
-    <wb-article title="The Future of Web Standards" featured>
-      Explore upcoming web APIs and standards that will shape the next generation of web applications. Stay ahead of the curve with insights into HTML, CSS, and JavaScript evolution.
+    <wb-article title="The Future of Web Standards" subtitle="A field guide to the platform ahead" category="Web Platform" author="Maya Patel" date="2026-08-01" reading-time="8 min read" image="https://placehold.co/800x320/0f766e/ffffff?text=Web+Standards" featured>
+      Explore the web platform changes that will shape the next generation of applications. This featured story combines a strong visual, editorial metadata, and a longer introduction so its emphasis is obvious beside the standard articles.
     </wb-article>
   </wb-demo>
   </section>
@@ -43,8 +43,8 @@
   <section id="article-toggles">
   <h2>Toggles</h2>
   <wb-demo columns="1">
-    <wb-article featured>
-      <strong>Featured Article:</strong> Comprehensive guide to building scalable web applications with modern frameworks, best practices, and real-world examples from production systems.
+    <wb-article title="Designing for the platform ahead" subtitle="Featured story" category="Field Notes" author="Maya Patel" date="2026-08-01" reading-time="8 min read" image="https://placehold.co/800x320/0f766e/ffffff?text=Featured+Story" featured>
+      <strong>Featured Article:</strong> A comprehensive guide to building scalable web applications with modern frameworks, careful performance budgets, and real-world examples from production systems. The larger title, cover image, metadata, and padded treatment make the featured state visible at a glance.
     </wb-article>
   </wb-demo>
   </section>
@@ -53,17 +53,17 @@
   <section id="articles-articles-list-component">
   <h2>📰 Articles List Component</h2>
   <wb-demo columns="2">
-    <wb-articles layout="grid">
+    <wb-articles title="Grid layout" layout="grid">
       <wb-article title="TypeScript Mastery">TypeScript transforms JavaScript development with type safety. Learn advanced features: generics, unions, interfaces, and decorators for robust applications.</wb-article>
       <wb-article title="React Hooks Deep Dive">Master modern React with Hooks. Understand useState, useEffect, useContext, and custom hooks for cleaner, more maintainable component code.</wb-article>
       <wb-article title="Database Design Fundamentals">Design databases that scale. Learn normalization, indexing, relationships, and query optimization for high-performance applications.</wb-article>
     </wb-articles>
-    <wb-articles layout="list">
+    <wb-articles title="List layout" layout="list">
       <wb-article title="API Design Best Practices">Build RESTful APIs with proper versioning, pagination, error handling, and documentation for great developer experience.</wb-article>
       <wb-article title="Testing Strategies">Comprehensive testing approach: unit tests, integration tests, end-to-end tests, and performance testing for reliable software.</wb-article>
       <wb-article title="DevOps Essentials">Master deployment pipelines, containerization, CI/CD workflows, and infrastructure as code for modern development teams.</wb-article>
     </wb-articles>
-    <wb-articles layout="grid" columns="2">
+    <wb-articles title="Two-column grid" layout="grid" columns="2">
       <wb-article title="Security in Web Apps">Protect your applications from threats: authentication, authorization, CSRF prevention, and secure communication practices.</wb-article>
       <wb-article title="Accessibility Standards">Build inclusive web experiences for all users. Learn WCAG, ARIA, keyboard navigation, and semantic HTML for better accessibility.</wb-article>
     </wb-articles>
@@ -72,9 +72,9 @@
 
   <!-- 4. layout variants -->
   <section id="articles-layout-variants">
-  <h2>layout variants</h2>
+  <h2>Layout variants</h2>
   <wb-demo columns="1">
-    <wb-articles layout="masonry">
+    <wb-articles title="Masonry layout" layout="masonry" columns="3">
       <wb-article title="Microservices Architecture">
         Break monoliths into manageable services for scalability and independent deployment. Implement service discovery, distributed tracing, and circuit breakers for resilient microservice systems.
       </wb-article>
@@ -842,6 +842,7 @@
     await WB.init({ autoInject: true });
     await WB.scan(document.body, { eager: true });
     console.log('Content & Media initialized');
+    window.__WB_DEMO_INITIALIZED__ = true;
   </script>
 </body>
 
