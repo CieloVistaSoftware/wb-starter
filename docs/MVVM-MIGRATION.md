@@ -163,7 +163,7 @@ src/
 │   └── ...
 │
 └── styles/
-    ├── themes.css               # 23 theme definitions
+    ├── themes.css               # 50 theme definitions
     ├── site.css                 # Site-wide styles
     └── components/              # Per-component CSS (auto-loaded)
         ├── card.css
@@ -349,7 +349,7 @@ console.log(card.classList.contains("wb-ready")); // Lists applied behaviors
 
 - Builder Documentation - The heart of wb-starter
 - [Behaviors Reference](./behaviors-reference.md) - All 170+ behaviors
-- [Theme System](./themes.md) - 23 themes and customization
+- [Theme System](./themes.md) - 50 themes and customization
 - [Testing Strategy](./testing-strategy.md) - How to test components
 
 ## Changelog

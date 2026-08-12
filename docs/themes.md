@@ -1,7 +1,7 @@
 # Theme System Documentation
 
 The WB-Starter library uses a powerful, variable-based theming system that supports:
-- 25+ built-in themes
+- 50 built-in themes
 - Dark/Light mode switching
 - Nested themes (sections with different themes)
 - Forced themes (locking a section to a specific theme)
@@ -56,11 +56,13 @@ This ensures that if you have a global Dark theme (white text) and force a secti
 ## Available Themes
 
 - **Standard**: `dark`, `light`
-- **Vibrant**: `cyberpunk`, `neon-dreams`
-- **Natural**: `ocean`, `sunset`, `forest`, `desert`, `mint`
-- **Elegant**: `midnight`, `sakura`, `lavender`, `ruby`, `golden`, `emerald`
+- **Vibrant**: `cyberpunk`, `neon-dreams`, `retro-wave`
+- **Natural**: `ocean`, `sunset`, `forest`, `desert`, `mint`, `emerald`
+- **Elegant**: `midnight`, `sakura`, `lavender`, `ruby`, `golden`, `aurora`, `grape`
 - **Professional**: `slate`, `coffee`, `noir`
-- **Atmospheric**: `arctic`, `retro-wave`, `aurora`, `twilight`, `grape`
+- **Atmospheric**: `arctic`, `twilight`
+- **Dark variants**: `coral-dark`, `teal-dark`, `indigo-dark`, `plum-dark`, `sage-dark`, `amber-dark`, `sapphire-dark`, `turquoise-dark`, `tomato-dark`, `rose-dark`, `copper-dark`, `jade-dark`, `amethyst-dark`, `marigold-dark`
+- **Light variants**: `seafoam-light`, `peony-light`, `taupe-light`, `khaki-light`, `steel-light`, `moss-light`, `sand-light`, `blush-light`, `sage-light`, `mauve-light`, `celadon-light`, `linen-light`, `pistachio-light`
 
 ## Typography Scale (Golden Ratio)
 

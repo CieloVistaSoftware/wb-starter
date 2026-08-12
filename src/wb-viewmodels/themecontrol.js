@@ -7,7 +7,7 @@
  * -----------------------------------------------------------------------------
  */
 
-// Available themes - matches themes.css (51 total)
+// Available themes - matches themes.css (50 total)
 const THEMES = [
   // Original dark themes
   { id: 'dark', name: 'Dark', description: 'Standard dark theme' },
@@ -49,7 +49,6 @@ const THEMES = [
   { id: 'jade-dark', name: 'Jade Dark', description: 'Deep jade green with medium saturation' },
   { id: 'amethyst-dark', name: 'Amethyst Dark', description: 'Rich amethyst purple with medium saturation' },
   { id: 'marigold-dark', name: 'Marigold Dark', description: 'Bright marigold with high saturation' },
-  { id: 'charcoal-light-text', name: 'Charcoal', description: 'Very dark charcoal with light text' },
   // Third wave - new light themes
   { id: 'seafoam-light', name: 'Seafoam Light', description: 'Light seafoam with medium saturation' },
   { id: 'peony-light', name: 'Peony Light', description: 'Light peony pink with medium saturation' },

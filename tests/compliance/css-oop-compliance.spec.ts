@@ -184,10 +184,15 @@ test.describe('Single Source of Truth Compliance', () => {
     const htmlFiles = getHtmlFiles(ROOT);
     const violations: string[] = [];
     
-    const themeIds = ['dark', 'light', 'cyberpunk', 'ocean', 'sunset', 'forest', 'midnight', 
-                      'sakura', 'arctic', 'desert', 'neon-dreams', 'retro-wave', 'lavender',
-                      'emerald', 'ruby', 'golden', 'slate', 'coffee', 'mint', 'noir', 'aurora',
-                      'twilight', 'grape'];
+    const themeIds = ['dark', 'light', 'cyberpunk', 'ocean', 'sunset', 'forest', 'midnight',
+              'twilight', 'sakura', 'arctic', 'desert', 'neon-dreams', 'retro-wave',
+              'lavender', 'emerald', 'ruby', 'golden', 'slate', 'coffee', 'mint', 'noir',
+              'aurora', 'grape', 'coral-dark', 'teal-dark', 'indigo-dark', 'plum-dark',
+              'sage-dark', 'amber-dark', 'sapphire-dark', 'turquoise-dark', 'tomato-dark',
+              'rose-dark', 'copper-dark', 'jade-dark', 'amethyst-dark', 'marigold-dark',
+              'seafoam-light', 'peony-light', 'taupe-light', 'khaki-light', 'steel-light',
+              'moss-light', 'sand-light', 'blush-light', 'sage-light', 'mauve-light',
+              'celadon-light', 'linen-light', 'pistachio-light'];
     
     for (const file of htmlFiles) {
       const content = readFile(file);

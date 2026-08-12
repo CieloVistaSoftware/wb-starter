@@ -1602,44 +1602,6 @@
 }
 
 /* =============================================================================
-   CHARCOAL LIGHT TEXT THEME
-   Very dark neutral with high-contrast text
-   ============================================================================= */
-[data-theme="charcoal-light-text"] {
-  /* Foundation */
-  --hue-primary: 210;
-  --saturation-primary: 5;
-  --lightness-primary: 50;
-
-  /* Primary */
-  --primary: hsl(210, 5%, 50%);
-  --primary-dark: hsl(210, 5%, 35%);
-  --primary-light: hsl(210, 5%, 65%);
-  --primary-rgb: 123, 123, 123;
-
-  /* Secondary */
-  --secondary: hsl(0, 5%, 40%);
-  --secondary-dark: hsl(0, 5%, 25%);
-  --secondary-light: hsl(0, 5%, 55%);
-
-  /* Accent */
-  --accent: hsl(210, 15%, 60%);
-  --accent-dark: hsl(210, 15%, 45%);
-  --accent-light: hsl(210, 15%, 75%);
-
-  /* Backgrounds */
-  --bg-color: hsl(210, 5%, 4%);
-  --bg-primary: hsl(210, 5%, 7%);
-  --bg-secondary: hsl(210, 4%, 11%);
-  --bg-tertiary: hsl(210, 3%, 15%);
-
-  /* Text */
-  --text-primary: hsl(210, 5%, 92%);
-  --text-secondary: hsl(210, 4%, 77%);
-  --text-muted: hsl(210, 4%, 60%);
-}
-
-/* =============================================================================
    SEAFOAM LIGHT THEME
    Medium-saturation seafoam, light background
    ============================================================================= */

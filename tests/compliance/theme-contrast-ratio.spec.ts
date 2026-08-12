@@ -36,9 +36,17 @@ function extractVar(body, name) {
 const THEMES = extractThemeBlocks(THEMES_CSS);
 
 test('every theme defines --text-primary and --bg-color', () => {
-  expect(THEMES.length, 'themes.css should have parsed at least the known theme count').toBeGreaterThanOrEqual(20);
+  expect(THEMES.length, 'themes.css should define exactly 50 themes').toBe(50);
   const missing = THEMES.filter((t) => !extractVar(t.body, 'text-primary') || !extractVar(t.body, 'bg-color'));
   expect(missing.map((t) => t.id), 'every theme must define both --text-primary and --bg-color').toEqual([]);
+});
+
+test('every theme defines the core color variables', () => {
+  const required = ['primary', 'primary-dark', 'primary-light', 'secondary', 'accent'];
+  const missing = THEMES.flatMap((theme) =>
+    required.filter((variable) => !extractVar(theme.body, variable)).map((variable) => `${theme.id}: --${variable}`)
+  );
+  expect(missing, 'every theme must define the core color variables').toEqual([]);
 });
 
 test.describe(`every theme's body text meets WCAG AA (${MIN_CONTRAST_RATIO}:1) against its own background`, () => {

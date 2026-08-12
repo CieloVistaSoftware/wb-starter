@@ -67,7 +67,7 @@ test.describe('Cards Showcase Page', () => {
     test('theme dropdown contains all themes', async ({ page }) => {
       const options = page.locator('wb-themecontrol select option');
       const count = await options.count();
-      expect(count).toBeGreaterThanOrEqual(20); // 22 themes total
+      expect(count).toBe(50);
     });
 
     test('changing theme updates data-theme attribute', async ({ page }) => {
