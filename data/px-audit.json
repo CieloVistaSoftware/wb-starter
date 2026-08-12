@@ -1,9 +1,9 @@
 {
   "totals": {
-    "LIKELY_CONVERT": 748,
-    "LIKELY_OK": 545,
-    "UNCLASSIFIED": 172,
-    "mediaBreakpoints": 36
+    "LIKELY_CONVERT": 752,
+    "LIKELY_OK": 547,
+    "UNCLASSIFIED": 174,
+    "mediaBreakpoints": 41
   },
   "byBucket": {
     "LIKELY_CONVERT": {
@@ -29,7 +29,7 @@
       "src/styles/behaviors/code.css": 1,
       "src/styles/behaviors/collapse.css": 3,
       "src/styles/behaviors/copybutton.css": 1,
-      "src/styles/behaviors/demo.css": 4,
+      "src/styles/behaviors/demo.css": 6,
       "src/styles/behaviors/dialog.css": 3,
       "src/styles/behaviors/drawer.css": 2,
       "src/styles/behaviors/dropdown.css": 4,
@@ -65,7 +65,7 @@
       "src/styles/pages/about.css": 4,
       "src/styles/pages/ai-permutation-test.css": 57,
       "src/styles/pages/behaviors.css": 12,
-      "src/styles/pages/components.css": 5,
+      "src/styles/pages/components.css": 7,
       "src/styles/pages/contact.css": 5,
       "src/styles/pages/demos.css": 2,
       "src/styles/pages/docs.css": 1,
@@ -160,7 +160,7 @@
       "src/styles/normalize.css": 6,
       "src/styles/pages/about.css": 4,
       "src/styles/pages/ai-permutation-test.css": 36,
-      "src/styles/pages/components.css": 5,
+      "src/styles/pages/components.css": 7,
       "src/styles/pages/contact.css": 1,
       "src/styles/pages/demos.css": 2,
       "src/styles/pages/docs.css": 1,
@@ -214,7 +214,7 @@
       "src/styles/behaviors/badge.css": 2,
       "src/styles/behaviors/card.css": 14,
       "src/styles/behaviors/data.css": 1,
-      "src/styles/behaviors/demo.css": 3,
+      "src/styles/behaviors/demo.css": 4,
       "src/styles/behaviors/dialog.css": 1,
       "src/styles/behaviors/hero.css": 4,
       "src/styles/behaviors/layout.css": 2,
@@ -226,6 +226,7 @@
       "src/styles/components/search.css": 2,
       "src/styles/pages/ai-permutation-test.css": 9,
       "src/styles/pages/behaviors.css": 3,
+      "src/styles/pages/components.css": 1,
       "src/styles/pages/hero-variants.css": 2,
       "src/styles/pages/services.css": 1,
       "src/styles/pages/themes-showcase.css": 8,

@@ -1,0 +1,20 @@
+{
+  "state": "passed",
+  "mode": "single",
+  "specFile": "tests/behaviors/alerts-variants.spec.ts",
+  "startedAt": "2026-08-09T20:09:21.670Z",
+  "updatedAt": "2026-08-09T20:09:48.771Z",
+  "command": "npx playwright test --workers=8 tests/behaviors/alerts-variants.spec.ts tests/behaviors/alert-dismiss-button.spec.ts tests/regression/alert-variant-class.spec.ts",
+  "pid": 41068,
+  "passed": 2,
+  "failed": 0,
+  "skipped": 0,
+  "total": 2,
+  "currentFile": "tests\\behaviors\\alert-dismiss-button.spec.ts",
+  "output": "\nRunning 3 tests using 3 workers\n\n  ok 1 [regression] › tests\\regression\\alert-variant-class.spec.ts:15:3 › x-alert gets wb-alert + wb-alert--<variant> classes (#375) › warning and error alerts on the Behaviors showcase are visually distinct, not unstyled (4.8s)\n  ok 2 [behaviors] › tests\\behaviors\\alerts-variants.spec.ts:10:1 › #176 — alert type= maps to variant: four distinct colors (5.5s)\n  ok 3 [behaviors] › tests\\behaviors\\alert-dismiss-button.spec.ts:23:1 › dismissible alert close button removes the alert on click, on a fresh page load (5.1s)\n\n════════════════════════════════════════════════════════════\n  WB TEST RESULTS\n════════════════════════════════════════════════════════════\n  Total: 3 tests in 12.6s\n  ✓ Passed:  3\n  ✗ Failed:  0\n\n  By Project:\n    ✓ behaviors: 2/2 passed\n    ✓ regression: 1/1 passed\n════════════════════════════════════════════════════════════\n\n\n  3 passed (15.3s)\n",
+  "errors": "",
+  "failures": [],
+  "completedAt": "2026-08-09T20:09:48.771Z",
+  "duration": "27.10s",
+  "exitCode": 0
+}

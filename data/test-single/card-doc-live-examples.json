@@ -1,0 +1,20 @@
+{
+  "state": "passed",
+  "mode": "single",
+  "specFile": "tests/regression/card-doc-live-examples.spec.ts",
+  "startedAt": "2026-08-07T20:27:59.153Z",
+  "updatedAt": "2026-08-07T20:28:06.429Z",
+  "command": "npx playwright test --workers=8 tests/regression/card-doc-live-examples.spec.ts",
+  "pid": 43264,
+  "passed": 1,
+  "failed": 0,
+  "skipped": 0,
+  "total": 1,
+  "currentFile": null,
+  "output": "\nRunning 1 test using 1 worker\n\n  ✓  1 [regression] › tests\\regression\\card-doc-live-examples.spec.ts:8:3 › card component documentation examples (#419) › keeps executable examples live and generated structure explanatory (11ms)\n\n════════════════════════════════════════════════════════════\n  WB TEST RESULTS\n════════════════════════════════════════════════════════════\n  Total: 1 tests in 2.6s\n  ✓ Passed:  1\n  ✗ Failed:  0\n\n  By Project:\n    ✓ regression: 1/1 passed\n════════════════════════════════════════════════════════════\n\n\n  1 passed (4.1s)\n",
+  "errors": "",
+  "failures": [],
+  "completedAt": "2026-08-07T20:28:06.429Z",
+  "duration": "7.28s",
+  "exitCode": 0
+}

@@ -1,0 +1,20 @@
+{
+  "state": "failed",
+  "mode": "single",
+  "specFile": "tests/integration/playground-interactive-no-focus-steal.spec.ts",
+  "startedAt": "2026-08-07T20:19:02.180Z",
+  "updatedAt": "2026-08-07T20:22:08.914Z",
+  "command": "npx playwright test --workers=8 tests/integration/playground-interactive-no-focus-steal.spec.ts",
+  "pid": 36184,
+  "passed": 3,
+  "failed": 1,
+  "skipped": 0,
+  "total": 4,
+  "currentFile": null,
+  "output": "\nRunning 2 tests using 2 workers\n\n  ✓  1 [integration] › tests\\integration\\playground-interactive-no-focus-steal.spec.ts:16:3 › playground: interactive examples do not steal textarea focus › clicking an x-ripple button does not move the textarea selection (26.4s)\n  ✘  2 [integration] › tests\\integration\\playground-interactive-no-focus-steal.spec.ts:42:3 › playground: interactive examples do not steal textarea focus › clicking a plain (non-interactive) card example still jumps to its source (18.0s)\n  ✘  3 [integration] › tests\\integration\\playground-interactive-no-focus-steal.spec.ts:42:3 › playground: interactive examples do not steal textarea focus › clicking a plain (non-interactive) card example still jumps to its source (retry #1) (2.2s)\n\n════════════════════════════════════════════════════════════\n  WB TEST RESULTS\n════════════════════════════════════════════════════════════\n  Total: 3 tests in 122.6s\n  ✓ Passed:  1\n  ✗ Failed:  2\n\n  By Project:\n    ✗ integration: 1/3 passed\n\n  See failures: data/test-results/failures.json\n  Live log:    data/test-results/failures-live.log\n════════════════════════════════════════════════════════════\n\n\n\n  1) [integration] › tests\\integration\\playground-interactive-no-focus-steal.spec.ts:42:3 › playground: interactive examples do not steal textarea focus › clicking a plain (non-interactive) card example still jumps to its source \n\n    Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\n    Expected: \u001b[32mtrue\u001b[39m\n    Received: \u001b[31mfalse\u001b[39m\n\n      52 |     }));\n      53 |     expect(sel.hasSelection).toBe(true);\n    > 54 |     expect(sel.isFocused).toBe(true);\n         |                           ^\n      55 |   });\n      56 | });\n      57 |\n        at C:\\Users\\jwpmi\\Downloads\\AI\\wb-starter\\tests\\integration\\playground-interactive-no-focus-steal.spec.ts:54:27\n\n    Error Context: data\\test-results\\playground-interactive-no--945ed-e-still-jumps-to-its-source-integration\\error-context.md\n\n    Retry #1 ───────────────────────────────────────────────────────────────────────────────────────\n\n    Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\n    Expected: \u001b[32mtrue\u001b[39m\n    Received: \u001b[31mfalse\u001b[39m\n\n      52 |     }));\n      53 |     expect(sel.hasSelection).toBe(true);\n    > 54 |     expect(sel.isFocused).toBe(true);\n         |                           ^\n      55 |   });\n      56 | });\n      57 |\n        at C:\\Users\\jwpmi\\Downloads\\AI\\wb-starter\\tests\\integration\\playground-interactive-no-focus-steal.spec.ts:54:27\n\n    Error Context: data\\test-results\\playground-interactive-no--945ed-e-still-jumps-to-its-source-integration-retry1\\error-context.md\n\n  1 failed\n    [integration] › tests\\integration\\playground-interactive-no-focus-steal.spec.ts:42:3 › playground: interactive examples do not steal textarea focus › clicking a plain (non-interactive) card example still jumps to its source \n  1 passed (2.2m)\n",
+  "errors": "\n❌ FAILED: clicking a plain (non-interactive) card example still jumps to its source\n   Error: expect(received).toBe(expected) // Object.is equality\n\n❌ FAILED: clicking a plain (non-interactive) card example still jumps to its source\n   Error: expect(received).toBe(expected) // Object.is equality\n",
+  "failures": [],
+  "completedAt": "2026-08-07T20:22:08.914Z",
+  "duration": "186.73s",
+  "exitCode": 1
+}

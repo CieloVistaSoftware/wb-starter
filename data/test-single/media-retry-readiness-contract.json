@@ -1,0 +1,20 @@
+{
+  "state": "passed",
+  "mode": "single",
+  "specFile": "tests/regression/media-retry-readiness-contract.spec.ts",
+  "startedAt": "2026-08-07T20:43:04.944Z",
+  "updatedAt": "2026-08-07T20:43:17.097Z",
+  "command": "npx playwright test tests/regression/media-retry-readiness-contract.spec.ts --workers=1",
+  "pid": 44676,
+  "passed": 1,
+  "failed": 0,
+  "skipped": 0,
+  "total": 1,
+  "currentFile": null,
+  "output": "\nRunning 1 test using 1 worker\n\n  ✓  1 [regression] › tests\\regression\\media-retry-readiness-contract.spec.ts:3:1 › media retry keeps real failure reporting independent of demo readiness (2.2s)\n\n════════════════════════════════════════════════════════════\n  WB TEST RESULTS\n════════════════════════════════════════════════════════════\n  Total: 1 tests in 5.4s\n  ✓ Passed:  1\n  ✗ Failed:  0\n\n  By Project:\n    ✓ regression: 1/1 passed\n════════════════════════════════════════════════════════════\n\n\n  1 passed (7.5s)\n",
+  "errors": "",
+  "failures": [],
+  "completedAt": "2026-08-07T20:43:17.097Z",
+  "duration": "12.15s",
+  "exitCode": 0
+}

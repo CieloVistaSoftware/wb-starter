@@ -1,0 +1,20 @@
+{
+  "state": "passed",
+  "mode": "single",
+  "specFile": "tests/regression/module-loader-cache.spec.ts",
+  "startedAt": "2026-08-07T19:30:14.896Z",
+  "updatedAt": "2026-08-07T19:30:24.109Z",
+  "command": "npx playwright test --workers=8 tests/regression/module-loader-cache.spec.ts",
+  "pid": 32380,
+  "passed": 2,
+  "failed": 0,
+  "skipped": 0,
+  "total": 2,
+  "currentFile": null,
+  "output": "\nRunning 2 tests using 2 workers\n\n  ✓  1 [regression] › tests\\regression\\module-loader-cache.spec.ts:6:3 › module loader resolution and failure caching (#512, #513) › retries a transient semantic-module fetch and resolves the behavior (518ms)\n  ✓  2 [regression] › tests\\regression\\module-loader-cache.spec.ts:27:3 › module loader resolution and failure caching (#512, #513) › shares a permanent module failure across concurrent callers and logs it once (469ms)\n\n════════════════════════════════════════════════════════════\n  WB TEST RESULTS\n════════════════════════════════════════════════════════════\n  Total: 2 tests in 2.8s\n  ✓ Passed:  2\n  ✗ Failed:  0\n\n  By Project:\n    ✓ regression: 2/2 passed\n════════════════════════════════════════════════════════════\n\n\n  2 passed (4.0s)\n",
+  "errors": "",
+  "failures": [],
+  "completedAt": "2026-08-07T19:30:24.109Z",
+  "duration": "9.21s",
+  "exitCode": 0
+}

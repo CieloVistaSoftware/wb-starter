@@ -1,0 +1,20 @@
+{
+  "state": "passed",
+  "mode": "single",
+  "specFile": "tests/compliance/schema-behavior-completeness.spec.ts",
+  "startedAt": "2026-08-07T20:34:10.931Z",
+  "updatedAt": "2026-08-07T20:34:20.443Z",
+  "command": "npx playwright test --workers=8 tests/compliance/schema-behavior-completeness.spec.ts",
+  "pid": 31672,
+  "passed": 2,
+  "failed": 0,
+  "skipped": 0,
+  "total": 2,
+  "currentFile": null,
+  "output": "\nRunning 2 tests using 2 workers\n\n  ✓  1 [compliance] › tests\\compliance\\schema-behavior-completeness.spec.ts:75:3 › Schema/behavior completeness audit (#344) › component schemas resolve through the behavior registry and source exports (272ms)\n  ✓  2 [compliance] › tests\\compliance\\schema-behavior-completeness.spec.ts:94:3 › Schema/behavior completeness audit (#344) › component setup entries use their declared behavior surface (123ms)\n\n════════════════════════════════════════════════════════════\n  WB TEST RESULTS\n════════════════════════════════════════════════════════════\n  Total: 2 tests in 3.4s\n  ✓ Passed:  2\n  ✗ Failed:  0\n\n  By Project:\n    ✓ compliance: 2/2 passed\n════════════════════════════════════════════════════════════\n\n\n  2 passed (6.1s)\n",
+  "errors": "Schema coverage gaps (#344):\nsrc\\wb-models\\autocomplete.schema.json: 0/5 relevant setup entries\nsrc\\wb-models\\cardportfolio.schema.json: 3/5 relevant setup entries\nsrc\\wb-models\\colorpicker.schema.json: 0/5 relevant setup entries\nsrc\\wb-models\\counter.schema.json: 0/5 relevant setup entries\nsrc\\wb-models\\demo.schema.json: 3/5 relevant setup entries\nsrc\\wb-models\\error.schema.json: 0/5 relevant setup entries\nsrc\\wb-models\\fieldset.schema.json: 1/5 relevant setup entries\nsrc\\wb-models\\file.schema.json: 0/5 relevant setup entries\nsrc\\wb-models\\floatinglabel.schema.json: 0/5 relevant setup entries\nsrc\\wb-models\\form.schema.json: 1/5 relevant setup entries\nsrc\\wb-models\\formrow.schema.json: 0/5 relevant setup entries\nsrc\\wb-models\\help.schema.json: 0/5 relevant setup entries\nsrc\\wb-models\\inputgroup.schema.json: 0/5 relevant setup entries\nsrc\\wb-models\\label.schema.json: 1/5 relevant setup entries\nsrc\\wb-models\\masked.schema.json: 0/5 relevant setup entries\nsrc\\wb-models\\tags.schema.json: 0/5 relevant setup entries\nsrc\\wb-models\\timeline.schema.json: 1/5 relevant setup entries\n",
+  "failures": [],
+  "completedAt": "2026-08-07T20:34:20.443Z",
+  "duration": "9.51s",
+  "exitCode": 0
+}

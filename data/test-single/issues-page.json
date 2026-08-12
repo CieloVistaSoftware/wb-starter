@@ -1,0 +1,20 @@
+{
+  "state": "passed",
+  "mode": "single",
+  "specFile": "tests/pages/issues-page.spec.ts",
+  "startedAt": "2026-08-07T19:19:39.789Z",
+  "updatedAt": "2026-08-07T19:19:50.302Z",
+  "command": "npx playwright test --workers=8 tests/pages/issues-page.spec.ts",
+  "pid": 31624,
+  "passed": 2,
+  "failed": 0,
+  "skipped": 0,
+  "total": 2,
+  "currentFile": null,
+  "output": "\nRunning 1 test using 1 worker\n\n  ✘  1 [behaviors] › tests\\pages\\issues-page.spec.ts:4:3 › Issues page › shows the current active count from status:in-progress labels (1.0s)\n  ✓  2 [behaviors] › tests\\pages\\issues-page.spec.ts:4:3 › Issues page › shows the current active count from status:in-progress labels (retry #1) (900ms)\n\n════════════════════════════════════════════════════════════\n  WB TEST RESULTS\n════════════════════════════════════════════════════════════\n  Total: 2 tests in 6.6s\n  ✓ Passed:  1\n  ✗ Failed:  1\n\n  By Project:\n    ✗ behaviors: 1/2 passed\n\n  See failures: data/test-results/failures.json\n  Live log:    data/test-results/failures-live.log\n════════════════════════════════════════════════════════════\n\n\n\n  1) [behaviors] › tests\\pages\\issues-page.spec.ts:4:3 › Issues page › shows the current active count from status:in-progress labels \n\n    Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\n    Expected: \u001b[32m200\u001b[39m\n    Received: \u001b[31m403\u001b[39m\n\n      33 |     );\n      34 |     await page.goto('/?page=issues');\n    > 35 |     expect((await issuesResponse).status()).toBe(200);\n         |                                             ^\n      36 |\n      37 |     await expect(page.locator('#issues-active')).toHaveText('Current Active: 1');\n      38 |   });\n        at C:\\Users\\jwpmi\\Downloads\\AI\\wb-starter\\tests\\pages\\issues-page.spec.ts:35:45\n\n    Error Context: data\\test-results\\pages-issues-page-Issues-p-3c145-m-status-in-progress-labels-behaviors\\error-context.md\n\n  1 flaky\n    [behaviors] › tests\\pages\\issues-page.spec.ts:4:3 › Issues page › shows the current active count from status:in-progress labels \n",
+  "errors": "\n❌ FAILED: shows the current active count from status:in-progress labels\n   Error: expect(received).toBe(expected) // Object.is equality\n",
+  "failures": [],
+  "completedAt": "2026-08-07T19:19:50.302Z",
+  "duration": "10.51s",
+  "exitCode": 0
+}

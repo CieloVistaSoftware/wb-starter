@@ -1,5 +1,5 @@
 {
-  "schema": "C:\\Users\\jwpmi\\Downloads\\AI\\wb-starter\\src\\wb-models\\home-page.schema.json",
+  "schema": "src/wb-models/home-page.schema.json",
   "output": "pages/home.html",
   "dryRun": false,
   "errors": [],
@@ -11,5 +11,5 @@
     "notifications",
     "audio"
   ],
-  "generatedAt": "2026-08-05T19:57:11.112Z"
+  "generatedAt": "2026-08-07T20:18:12.058Z"
 }

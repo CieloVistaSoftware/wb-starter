@@ -1,6 +1,6 @@
 {
-  "timestamp": "2026-01-15T01:55:12.517Z",
-  "totalSchemas": 75,
+  "timestamp": "2026-08-07T20:34:41.842Z",
+  "totalSchemas": 126,
   "passing": [
     "alert",
     "article",
@@ -8,7 +8,6 @@
     "audio",
     "avatar",
     "badge",
-    "builder",
     "button",
     "card",
     "cardbutton",
@@ -22,7 +21,6 @@
     "cardminimizable",
     "cardnotification",
     "cardoverlay",
-    "cardportfolio",
     "cardpricing",
     "cardproduct",
     "cardprofile",
@@ -36,12 +34,11 @@
     "confetti",
     "copy",
     "darkmode",
-    "demo",
     "details",
     "dialog",
     "draggable",
     "drawer",
-    "drawerLayout",
+    "drawer-layout",
     "dropdown",
     "fireworks",
     "fix-card",
@@ -59,12 +56,14 @@
     "resizable",
     "ripple",
     "scrollalong",
+    "search",
     "select",
     "skeleton",
     "slider",
     "snow",
     "span",
     "spinner",
+    "stack",
     "stagelight",
     "sticky",
     "switch",
@@ -78,7 +77,25 @@
     "control",
     "repeater"
   ],
-  "failing": [],
+  "failing": [
+    "autocomplete",
+    "cardportfolio",
+    "colorpicker",
+    "counter",
+    "demo",
+    "error",
+    "fieldset",
+    "file",
+    "floatinglabel",
+    "form",
+    "formrow",
+    "help",
+    "inputgroup",
+    "label",
+    "masked",
+    "tags",
+    "timeline"
+  ],
   "details": {
     "alert": {
       "file": "alert.schema.json",
@@ -183,15 +200,26 @@
       ],
       "suggestedTests": [
         "<wb-audio>Basic content</wb-audio>",
-        "<wb-audio src=\"Test Value\">With src=Test Value</wb-audio>",
+        "<wb-audio src=\"../audio.mp3\">With src=../audio.mp3</wb-audio>",
         "<wb-audio volume=\"0.8\">With volume=0.8</wb-audio>",
         "<wb-audio volume=\"0\">With volume=0</wb-audio>",
         "<wb-audio loop>With loop</wb-audio>",
         "<wb-audio autoplay>With autoplay</wb-audio>",
         "<wb-audio muted>With muted</wb-audio>",
         "<wb-audio show-eq>With showEq</wb-audio>",
-        "<wb-audio bass=\"0\">With bass=0</wb-audio>",
-        "<wb-audio bass=\"0\">With bass=0</wb-audio>"
+        "<wb-audio show-display>With showDisplay</wb-audio>",
+        "<wb-audio show-play-button>With showPlayButton</wb-audio>"
+      ]
+    },
+    "autocomplete": {
+      "file": "autocomplete.schema.json",
+      "behavior": "autocomplete",
+      "totalTests": 0,
+      "wbPrefixTests": 0,
+      "passing": false,
+      "currentSetup": [],
+      "suggestedTests": [
+        "<wb-autocomplete>Basic content</wb-autocomplete>"
       ]
     },
     "avatar": {
@@ -220,14 +248,14 @@
         "<wb-avatar size=\"sm\">With size=sm</wb-avatar>",
         "<wb-avatar shape=\"circle\">With shape=circle</wb-avatar>",
         "<wb-avatar shape=\"square\">With shape=square</wb-avatar>",
-        "<wb-avatar status=\"online\">With status=online</wb-avatar>"
+        "<wb-avatar status=\"\">With status=</wb-avatar>"
       ]
     },
     "badge": {
       "file": "badge.schema.json",
       "behavior": "badge",
-      "totalTests": 8,
-      "wbPrefixTests": 8,
+      "totalTests": 40,
+      "wbPrefixTests": 40,
       "passing": true,
       "currentSetup": [
         "<wb-badge>Basic badge content</wb-badge>",
@@ -237,7 +265,39 @@
         "<wb-badge size=\"xs\">size=xs</wb-badge>",
         "<wb-badge size=\"sm\">size=sm</wb-badge>",
         "<wb-badge size=\"md\">size=md</wb-badge>",
-        "<wb-badge pill>with pill</wb-badge>"
+        "<wb-badge pill>with pill</wb-badge>",
+        "<wb-badge variant=\"default\" size=\"xs\" pill dot outline removable>Test</wb-badge>",
+        "<wb-badge variant=\"default\" size=\"sm\">Test</wb-badge>",
+        "<wb-badge variant=\"default\" size=\"md\" pill outline>Test</wb-badge>",
+        "<wb-badge variant=\"default\" size=\"lg\" dot removable>Test</wb-badge>",
+        "<wb-badge variant=\"primary\" size=\"xs\" outline removable>Test</wb-badge>",
+        "<wb-badge variant=\"primary\" size=\"sm\" pill dot>Test</wb-badge>",
+        "<wb-badge variant=\"primary\" size=\"md\" dot removable>Test</wb-badge>",
+        "<wb-badge variant=\"primary\" size=\"lg\" pill outline>Test</wb-badge>",
+        "<wb-badge variant=\"secondary\" size=\"xs\" pill dot>Test</wb-badge>",
+        "<wb-badge variant=\"secondary\" size=\"sm\" outline removable>Test</wb-badge>",
+        "<wb-badge variant=\"secondary\" size=\"md\" pill dot outline removable>Test</wb-badge>",
+        "<wb-badge variant=\"secondary\" size=\"lg\" pill dot outline removable>Test</wb-badge>",
+        "<wb-badge variant=\"success\" size=\"xs\" pill dot outline removable>Test</wb-badge>",
+        "<wb-badge variant=\"success\" size=\"sm\">Test</wb-badge>",
+        "<wb-badge variant=\"success\" size=\"md\" pill dot outline removable>Test</wb-badge>",
+        "<wb-badge variant=\"success\" size=\"lg\" pill dot outline removable>Test</wb-badge>",
+        "<wb-badge variant=\"warning\" size=\"xs\" pill dot outline removable>Test</wb-badge>",
+        "<wb-badge variant=\"warning\" size=\"sm\">Test</wb-badge>",
+        "<wb-badge variant=\"warning\" size=\"md\" pill dot outline removable>Test</wb-badge>",
+        "<wb-badge variant=\"warning\" size=\"lg\" pill dot outline removable>Test</wb-badge>",
+        "<wb-badge variant=\"error\" size=\"xs\" pill dot outline removable>Test</wb-badge>",
+        "<wb-badge variant=\"error\" size=\"sm\">Test</wb-badge>",
+        "<wb-badge variant=\"error\" size=\"md\" pill dot outline removable>Test</wb-badge>",
+        "<wb-badge variant=\"error\" size=\"lg\" pill dot outline removable>Test</wb-badge>",
+        "<wb-badge variant=\"info\" size=\"xs\" pill dot outline removable>Test</wb-badge>",
+        "<wb-badge variant=\"info\" size=\"sm\">Test</wb-badge>",
+        "<wb-badge variant=\"info\" size=\"md\" pill dot outline removable>Test</wb-badge>",
+        "<wb-badge variant=\"info\" size=\"lg\" pill dot outline removable>Test</wb-badge>",
+        "<wb-badge variant=\"glass\">variant=glass</wb-badge>",
+        "<wb-badge variant=\"gradient\">variant=gradient</wb-badge>",
+        "<wb-badge variant=\"primary\" glow>with glow</wb-badge>",
+        "<wb-badge variant=\"glass\" pill glow icon=\"✨\">glass+pill+glow+icon</wb-badge>"
       ],
       "suggestedTests": [
         "<wb-badge>Basic content</wb-badge>",
@@ -250,26 +310,6 @@
         "<wb-badge dot>With dot</wb-badge>",
         "<wb-badge outline>With outline</wb-badge>",
         "<wb-badge removable>With removable</wb-badge>"
-      ]
-    },
-    "builder": {
-      "file": "builder.schema.json",
-      "behavior": "builder",
-      "totalTests": 5,
-      "wbPrefixTests": 5,
-      "passing": true,
-      "currentSetup": [
-        "<wb-builder>Basic builder content</wb-builder>",
-        "<wb-builder label=\"Builder\">label=\"Builder\"</wb-builder>",
-        "<wb-builder icon=\"🎨\">icon=\"🎨\"</wb-builder>",
-        "<wb-builder label=\"Builder\" icon=\"🎨\">Combined: label=\"Builder\", icon=\"🎨\"</wb-builder>",
-        "<wb-builder>Test permutation 5</wb-builder>"
-      ],
-      "suggestedTests": [
-        "<wb-builder>Basic content</wb-builder>",
-        "<wb-builder label=\"Builder\">With label=Builder</wb-builder>",
-        "<wb-builder icon=\"🎨\">With icon=🎨</wb-builder>",
-        "<wb-builder label=\"Builder\" icon=\"🎨\">Combined test</wb-builder>"
       ]
     },
     "button": {
@@ -291,14 +331,14 @@
       "suggestedTests": [
         "<wb-button>Basic content</wb-button>",
         "<wb-button label=\"Test Value\">With label=Test Value</wb-button>",
-        "<wb-button icon=\"Test Value\">With icon=Test Value</wb-button>",
+        "<wb-button icon=\"star\">With icon=star</wb-button>",
+        "<wb-button icon=\"check\">With icon=check</wb-button>",
         "<wb-button icon-position=\"start\">With iconPosition=start</wb-button>",
         "<wb-button icon-position=\"end\">With iconPosition=end</wb-button>",
         "<wb-button variant=\"primary\">With variant=primary</wb-button>",
         "<wb-button variant=\"secondary\">With variant=secondary</wb-button>",
         "<wb-button size=\"xs\">With size=xs</wb-button>",
-        "<wb-button size=\"sm\">With size=sm</wb-button>",
-        "<wb-button disabled>With disabled</wb-button>"
+        "<wb-button size=\"sm\">With size=sm</wb-button>"
       ]
     },
     "card": {
@@ -325,14 +365,16 @@
         "<wb-card elevated>With elevated</wb-card>",
         "<wb-card clickable>With clickable</wb-card>",
         "<wb-card variant=\"default\">With variant=default</wb-card>",
-        "<wb-card variant=\"glass\">With variant=glass</wb-card>"
+        "<wb-card variant=\"glass\">With variant=glass</wb-card>",
+        "<wb-card size=\"xs\">With size=xs</wb-card>",
+        "<wb-card size=\"sm\">With size=sm</wb-card>"
       ]
     },
     "cardbutton": {
       "file": "cardbutton.schema.json",
       "behavior": "cardbutton",
       "totalTests": 9,
-      "wbPrefixTests": 9,
+      "wbPrefixTests": 8,
       "passing": true,
       "currentSetup": [
         "<wb-cardbutton>Basic cardbutton content</wb-cardbutton>",
@@ -361,7 +403,7 @@
       "file": "carddraggable.schema.json",
       "behavior": "carddraggable",
       "totalTests": 10,
-      "wbPrefixTests": 10,
+      "wbPrefixTests": 9,
       "passing": true,
       "currentSetup": [
         "<wb-carddraggable>Basic carddraggable content</wb-carddraggable>",
@@ -392,7 +434,7 @@
       "file": "cardexpandable.schema.json",
       "behavior": "cardexpandable",
       "totalTests": 9,
-      "wbPrefixTests": 9,
+      "wbPrefixTests": 8,
       "passing": true,
       "currentSetup": [
         "<wb-cardexpandable>Basic cardexpandable content</wb-cardexpandable>",
@@ -411,6 +453,8 @@
         "<wb-cardexpandable content=\"Test Value\">With content=Test Value</wb-cardexpandable>",
         "<wb-cardexpandable expanded>With expanded</wb-cardexpandable>",
         "<wb-cardexpandable max-height=\"100px\">With maxHeight=100px</wb-cardexpandable>",
+        "<wb-cardexpandable lines=\"0\">With lines=0</wb-cardexpandable>",
+        "<wb-cardexpandable lines=\"0\">With lines=0</wb-cardexpandable>",
         "<wb-cardexpandable variant=\"default\">With variant=default</wb-cardexpandable>",
         "<wb-cardexpandable variant=\"elevated\">With variant=elevated</wb-cardexpandable>"
       ]
@@ -419,7 +463,7 @@
       "file": "cardfile.schema.json",
       "behavior": "cardfile",
       "totalTests": 9,
-      "wbPrefixTests": 9,
+      "wbPrefixTests": 8,
       "passing": true,
       "currentSetup": [
         "<wb-cardfile>Basic cardfile content</wb-cardfile>",
@@ -448,8 +492,8 @@
     "cardhero": {
       "file": "cardhero.schema.json",
       "behavior": "cardhero",
-      "totalTests": 11,
-      "wbPrefixTests": 11,
+      "totalTests": 12,
+      "wbPrefixTests": 12,
       "passing": true,
       "currentSetup": [
         "<wb-cardhero>Basic cardhero content</wb-cardhero>",
@@ -461,27 +505,28 @@
         "<wb-cardhero xalign=\"right\">xalign=right</wb-cardhero>",
         "<wb-cardhero overlay>with overlay</wb-cardhero>",
         "<wb-cardhero title=\"Test Title\">With title attribute</wb-cardhero>",
-        "<wb-hero background=\"hero.jpg\" title=\"Welcome\"></wb-hero>",
-        "<wb-hero background=\"hero.jpg\" title=\"Explore\" subtitle=\"Your journey\" cta=\"Get Started\"></wb-hero>"
+        "<wb-cardhero pretitle='100 Components' title='Build <span class=\"wb-gradient-text\">stunning UIs</span>' subtitle='just HTML' cta='Explore Components'></wb-cardhero>",
+        "<wb-cardhero background=\"hero.jpg\" title=\"Welcome\"></wb-cardhero>",
+        "<wb-cardhero background=\"hero.jpg\" title=\"Explore\" subtitle=\"Your journey\" cta=\"Get Started\"></wb-cardhero>"
       ],
       "suggestedTests": [
         "<wb-cardhero>Basic content</wb-cardhero>",
         "<wb-cardhero background=\"Test Value\">With background=Test Value</wb-cardhero>",
         "<wb-cardhero title=\"Test Value\">With title=Test Value</wb-cardhero>",
+        "<wb-cardhero pretitle=\"Test Value\">With pretitle=Test Value</wb-cardhero>",
         "<wb-cardhero subtitle=\"Test Value\">With subtitle=Test Value</wb-cardhero>",
+        "<wb-cardhero content=\"Test Value\">With content=Test Value</wb-cardhero>",
         "<wb-cardhero cta=\"Test Value\">With cta=Test Value</wb-cardhero>",
         "<wb-cardhero cta-href=\"#\">With ctaHref=#</wb-cardhero>",
-        "<wb-cardhero variant=\"default\">With variant=default</wb-cardhero>",
-        "<wb-cardhero variant=\"cosmic\">With variant=cosmic</wb-cardhero>",
-        "<wb-cardhero xalign=\"left\">With xalign=left</wb-cardhero>",
-        "<wb-cardhero xalign=\"center\">With xalign=center</wb-cardhero>"
+        "<wb-cardhero cta-secondary=\"Test Value\">With ctaSecondary=Test Value</wb-cardhero>",
+        "<wb-cardhero cta-secondary-href=\"#\">With ctaSecondaryHref=#</wb-cardhero>"
       ]
     },
     "cardhorizontal": {
       "file": "cardhorizontal.schema.json",
       "behavior": "cardhorizontal",
       "totalTests": 10,
-      "wbPrefixTests": 10,
+      "wbPrefixTests": 9,
       "passing": true,
       "currentSetup": [
         "<wb-cardhorizontal>Basic cardhorizontal content</wb-cardhorizontal>",
@@ -512,7 +557,7 @@
       "file": "cardimage.schema.json",
       "behavior": "cardimage",
       "totalTests": 12,
-      "wbPrefixTests": 12,
+      "wbPrefixTests": 10,
       "passing": true,
       "currentSetup": [
         "<wb-cardimage>Basic cardimage content</wb-cardimage>",
@@ -530,7 +575,7 @@
       ],
       "suggestedTests": [
         "<wb-cardimage>Basic content</wb-cardimage>",
-        "<wb-cardimage src=\"Test Value\">With src=Test Value</wb-cardimage>",
+        "<wb-cardimage src=\"https://picsum.photos/seed/cardimage/600/400\">With src=https://picsum.photos/seed/cardimage/600/400</wb-cardimage>",
         "<wb-cardimage alt=\"Test Value\">With alt=Test Value</wb-cardimage>",
         "<wb-cardimage title=\"Test Value\">With title=Test Value</wb-cardimage>",
         "<wb-cardimage subtitle=\"Test Value\">With subtitle=Test Value</wb-cardimage>",
@@ -545,7 +590,7 @@
       "file": "cardlink.schema.json",
       "behavior": "cardlink",
       "totalTests": 9,
-      "wbPrefixTests": 9,
+      "wbPrefixTests": 8,
       "passing": true,
       "currentSetup": [
         "<wb-cardlink>Basic cardlink content</wb-cardlink>",
@@ -560,7 +605,7 @@
       ],
       "suggestedTests": [
         "<wb-cardlink>Basic content</wb-cardlink>",
-        "<wb-cardlink href=\"Test Value\">With href=Test Value</wb-cardlink>",
+        "<wb-cardlink href=\"https://example.com\">With href=https://example.com</wb-cardlink>",
         "<wb-cardlink title=\"Test Value\">With title=Test Value</wb-cardlink>",
         "<wb-cardlink description=\"Test Value\">With description=Test Value</wb-cardlink>",
         "<wb-cardlink icon=\"Test Value\">With icon=Test Value</wb-cardlink>",
@@ -575,7 +620,7 @@
       "file": "cardminimizable.schema.json",
       "behavior": "cardminimizable",
       "totalTests": 8,
-      "wbPrefixTests": 8,
+      "wbPrefixTests": 7,
       "passing": true,
       "currentSetup": [
         "<wb-cardminimizable>Basic cardminimizable content</wb-cardminimizable>",
@@ -611,8 +656,8 @@
         "<wb-cardnotification elevated>with elevated</wb-cardnotification>",
         "<wb-cardnotification title=\"Sample title\">title=\"Sample title\"</wb-cardnotification>",
         "<wb-cardnotification message=\"Sample message\">message=\"Sample message\"</wb-cardnotification>",
-        "<wb-notification message=\"Info message\"></wb-notification>",
-        "<wb-notification variant=\"success\" title=\"Success\" message=\"Done!\"></wb-notification>"
+        "<wb-cardnotification message=\"Info message\"></wb-cardnotification>",
+        "<wb-cardnotification variant=\"success\" title=\"Success\" message=\"Done!\"></wb-cardnotification>"
       ],
       "suggestedTests": [
         "<wb-cardnotification>Basic content</wb-cardnotification>",
@@ -629,7 +674,7 @@
       "file": "cardoverlay.schema.json",
       "behavior": "cardoverlay",
       "totalTests": 10,
-      "wbPrefixTests": 10,
+      "wbPrefixTests": 9,
       "passing": true,
       "currentSetup": [
         "<wb-cardoverlay>Basic cardoverlay content</wb-cardoverlay>",
@@ -659,20 +704,13 @@
     "cardportfolio": {
       "file": "cardportfolio.schema.json",
       "behavior": "cardportfolio",
-      "totalTests": 10,
-      "wbPrefixTests": 10,
-      "passing": true,
+      "totalTests": 3,
+      "wbPrefixTests": 3,
+      "passing": false,
       "currentSetup": [
-        "<wb-cardportfolio>Basic cardportfolio content</wb-cardportfolio>",
-        "<wb-cardportfolio variant=\"default\">variant=default</wb-cardportfolio>",
-        "<wb-cardportfolio variant=\"compact\">variant=compact</wb-cardportfolio>",
-        "<wb-cardportfolio variant=\"horizontal\">variant=horizontal</wb-cardportfolio>",
-        "<wb-cardportfolio name=\"Sample name\">name=\"Sample name\"</wb-cardportfolio>",
-        "<wb-cardportfolio title=\"Sample title\">title=\"Sample title\"</wb-cardportfolio>",
-        "<wb-cardportfolio company=\"Sample company\">company=\"Sample company\"</wb-cardportfolio>",
-        "<wb-cardportfolio location=\"Sample location\">location=\"Sample location\"</wb-cardportfolio>",
-        "<wb-portfolio name=\"John Doe\"></wb-portfolio>",
-        "<wb-portfolio name=\"Jane\" title=\"Designer\" avatar=\"avatar.jpg\"></wb-portfolio>"
+        "<wb-cardportfolio name=\"John Doe\"></wb-cardportfolio>",
+        "<wb-cardportfolio name=\"Jane Smith\" title=\"Designer\" skills=\"UI/UX,Figma,CSS\"></wb-cardportfolio>",
+        "<wb-cardportfolio name=\"Dev\" variant=\"full\" experience='[{\"company\":\"ACME\",\"role\":\"Engineer\"}]'></wb-cardportfolio>"
       ],
       "suggestedTests": [
         "<wb-cardportfolio>Basic content</wb-cardportfolio>",
@@ -683,8 +721,8 @@
         "<wb-cardportfolio cover=\"Test Value\">With cover=Test Value</wb-cardportfolio>",
         "<wb-cardportfolio avatar=\"Test Value\">With avatar=Test Value</wb-cardportfolio>",
         "<wb-cardportfolio bio=\"Test Value\">With bio=Test Value</wb-cardportfolio>",
-        "<wb-cardportfolio email=\"Test Value\">With email=Test Value</wb-cardportfolio>",
-        "<wb-cardportfolio phone=\"Test Value\">With phone=Test Value</wb-cardportfolio>"
+        "<wb-cardportfolio tagline=\"Test Value\">With tagline=Test Value</wb-cardportfolio>",
+        "<wb-cardportfolio availability=\"available\">With availability=available</wb-cardportfolio>"
       ]
     },
     "cardpricing": {
@@ -702,9 +740,9 @@
         "<wb-cardpricing plan=\"Sample plan\">plan=\"Sample plan\"</wb-cardpricing>",
         "<wb-cardpricing price=\"Sample price\">price=\"Sample price\"</wb-cardpricing>",
         "<wb-cardpricing period=\"/month\">period=\"/month\"</wb-cardpricing>",
-        "<wb-pricing plan=\"Basic\" price=\"$9\"></wb-pricing>",
-        "<wb-pricing plan=\"Pro\" price=\"$29\" featured></wb-pricing>",
-        "<wb-pricing plan=\"Pro\" price=\"$29\" features=\"Feature 1,Feature 2,Feature 3\"></wb-pricing>"
+        "<wb-cardpricing plan=\"Basic\" price=\"$9\"></wb-cardpricing>",
+        "<wb-cardpricing plan=\"Pro\" price=\"$29\" featured></wb-cardpricing>",
+        "<wb-cardpricing plan=\"Pro\" price=\"$29\" features=\"Feature 1,Feature 2,Feature 3\"></wb-cardpricing>"
       ],
       "suggestedTests": [
         "<wb-cardpricing>Basic content</wb-cardpricing>",
@@ -734,8 +772,8 @@
         "<wb-cardproduct image=\"Sample image\">image=\"Sample image\"</wb-cardproduct>",
         "<wb-cardproduct title=\"Sample title\">title=\"Sample title\"</wb-cardproduct>",
         "<wb-cardproduct description=\"Sample description\">description=\"Sample description\"</wb-cardproduct>",
-        "<wb-product title=\"Widget\" price=\"$29\"></wb-product>",
-        "<wb-product image=\"product.jpg\" title=\"Widget\" price=\"$19\" badge=\"Sale\"></wb-product>"
+        "<wb-cardproduct title=\"Widget\" price=\"$29\"></wb-cardproduct>",
+        "<wb-cardproduct image=\"product.jpg\" title=\"Widget\" price=\"$19\" badge=\"Sale\"></wb-cardproduct>"
       ],
       "suggestedTests": [
         "<wb-cardproduct>Basic content</wb-cardproduct>",
@@ -754,7 +792,7 @@
       "file": "cardprofile.schema.json",
       "behavior": "cardprofile",
       "totalTests": 9,
-      "wbPrefixTests": 9,
+      "wbPrefixTests": 8,
       "passing": true,
       "currentSetup": [
         "<wb-cardprofile>Basic cardprofile content</wb-cardprofile>",
@@ -795,16 +833,16 @@
         "<wb-cardstats variant=\"compact\">variant=compact</wb-cardstats>",
         "<wb-cardstats variant=\"large\">variant=large</wb-cardstats>",
         "<wb-cardstats value=\"Sample value\">value=\"Sample value\"</wb-cardstats>",
-        "<wb-stats value=\"1,234\" label=\"Users\"></wb-stats>",
-        "<wb-stats value=\"$50K\" label=\"Revenue\" icon=\"💰\" trend=\"up\" trend-value=\"+12%\"></wb-stats>"
+        "<wb-cardstats value=\"1,234\" label=\"Users\"></wb-cardstats>",
+        "<wb-cardstats value=\"$50K\" label=\"Revenue\" icon=\"💰\" trend=\"up\" trend-value=\"+12%\"></wb-cardstats>"
       ],
       "suggestedTests": [
         "<wb-cardstats>Basic content</wb-cardstats>",
         "<wb-cardstats value=\"Test Value\">With value=Test Value</wb-cardstats>",
         "<wb-cardstats label=\"Test Value\">With label=Test Value</wb-cardstats>",
         "<wb-cardstats icon=\"Test Value\">With icon=Test Value</wb-cardstats>",
+        "<wb-cardstats trend=\"\">With trend=</wb-cardstats>",
         "<wb-cardstats trend=\"up\">With trend=up</wb-cardstats>",
-        "<wb-cardstats trend=\"down\">With trend=down</wb-cardstats>",
         "<wb-cardstats trend-value=\"Test Value\">With trendValue=Test Value</wb-cardstats>",
         "<wb-cardstats variant=\"default\">With variant=default</wb-cardstats>",
         "<wb-cardstats variant=\"compact\">With variant=compact</wb-cardstats>",
@@ -826,8 +864,8 @@
         "<wb-cardtestimonial size=\"md\">size=md</wb-cardtestimonial>",
         "<wb-cardtestimonial size=\"lg\">size=lg</wb-cardtestimonial>",
         "<wb-cardtestimonial quote=\"Sample quote\">quote=\"Sample quote\"</wb-cardtestimonial>",
-        "<wb-testimonial quote=\"Great product!\" author=\"John Doe\"></wb-testimonial>",
-        "<wb-testimonial quote=\"Amazing!\" author=\"Jane\" role=\"CEO\" avatar=\"avatar.jpg\" rating=\"5\"></wb-testimonial>"
+        "<wb-cardtestimonial quote=\"Great product!\" author=\"John Doe\"></wb-cardtestimonial>",
+        "<wb-cardtestimonial quote=\"Amazing!\" author=\"Jane\" role=\"CEO\" avatar=\"avatar.jpg\" rating=\"5\"></wb-cardtestimonial>"
       ],
       "suggestedTests": [
         "<wb-cardtestimonial>Basic content</wb-cardtestimonial>",
@@ -846,7 +884,7 @@
       "file": "cardvideo.schema.json",
       "behavior": "cardvideo",
       "totalTests": 11,
-      "wbPrefixTests": 11,
+      "wbPrefixTests": 9,
       "passing": true,
       "currentSetup": [
         "<wb-cardvideo>Basic cardvideo content</wb-cardvideo>",
@@ -863,7 +901,7 @@
       ],
       "suggestedTests": [
         "<wb-cardvideo>Basic content</wb-cardvideo>",
-        "<wb-cardvideo src=\"Test Value\">With src=Test Value</wb-cardvideo>",
+        "<wb-cardvideo src=\"https://www.w3schools.com/html/mov_bbb.mp4\">With src=https://www.w3schools.com/html/mov_bbb.mp4</wb-cardvideo>",
         "<wb-cardvideo poster=\"Test Value\">With poster=Test Value</wb-cardvideo>",
         "<wb-cardvideo title=\"Test Value\">With title=Test Value</wb-cardvideo>",
         "<wb-cardvideo description=\"Test Value\">With description=Test Value</wb-cardvideo>",
@@ -964,7 +1002,21 @@
       ],
       "suggestedTests": [
         "<wb-collapse>Basic content</wb-collapse>",
-        "<wb-collapse expanded>With expanded</wb-collapse>"
+        "<wb-collapse heading=\"Toggle\">With heading=Toggle</wb-collapse>",
+        "<wb-collapse expanded>With expanded</wb-collapse>",
+        "<wb-collapse target=\"Test Value\">With target=Test Value</wb-collapse>",
+        "<wb-collapse heading=\"Toggle\" expanded>Combined test</wb-collapse>"
+      ]
+    },
+    "colorpicker": {
+      "file": "colorpicker.schema.json",
+      "behavior": "colorpicker",
+      "totalTests": 0,
+      "wbPrefixTests": 0,
+      "passing": false,
+      "currentSetup": [],
+      "suggestedTests": [
+        "<wb-colorpicker>Basic content</wb-colorpicker>"
       ]
     },
     "confetti": {
@@ -1015,6 +1067,17 @@
         "<wb-copy text=\"Test Value\" target=\"Test Value\">Combined test</wb-copy>"
       ]
     },
+    "counter": {
+      "file": "counter.schema.json",
+      "behavior": "counter",
+      "totalTests": 0,
+      "wbPrefixTests": 0,
+      "passing": false,
+      "currentSetup": [],
+      "suggestedTests": [
+        "<wb-counter>Basic content</wb-counter>"
+      ]
+    },
     "darkmode": {
       "file": "darkmode.schema.json",
       "behavior": "darkmode",
@@ -1035,22 +1098,16 @@
     "demo": {
       "file": "demo.schema.json",
       "behavior": "demo",
-      "totalTests": 5,
-      "wbPrefixTests": 5,
-      "passing": true,
+      "totalTests": 3,
+      "wbPrefixTests": 3,
+      "passing": false,
       "currentSetup": [
-        "<wb-demo>Basic demo content</wb-demo>",
-        "<wb-demo title=\"Demo\">title=\"Demo\"</wb-demo>",
-        "<wb-demo tag=\"UI\">tag=\"UI\"</wb-demo>",
-        "<wb-demo content-class=\"Sample contentClass\">contentClass=\"Sample contentClass\"</wb-demo>",
-        "<wb-demo title=\"Demo\" tag=\"UI\">Combined: title=\"Demo\", tag=\"UI\"</wb-demo>"
+        "<wb-demo><p>Simple content</p></wb-demo>",
+        "<wb-demo columns=\"2\"><p>A</p><p>B</p></wb-demo>",
+        "<wb-demo columns=\"3\"><wb-card title=\"One\"><p>Card 1</p></wb-card><wb-card title=\"Two\"><p>Card 2</p></wb-card><wb-card title=\"Three\"><p>Card 3</p></wb-card></wb-demo>"
       ],
       "suggestedTests": [
-        "<wb-demo>Basic content</wb-demo>",
-        "<wb-demo title=\"Demo\">With title=Demo</wb-demo>",
-        "<wb-demo tag=\"UI\">With tag=UI</wb-demo>",
-        "<wb-demo content-class=\"Test Value\">With contentClass=Test Value</wb-demo>",
-        "<wb-demo title=\"Demo\" tag=\"UI\">Combined test</wb-demo>"
+        "<wb-demo>Basic content</wb-demo>"
       ]
     },
     "details": {
@@ -1160,27 +1217,27 @@
         "<wb-drawer show-close>With showClose</wb-drawer>"
       ]
     },
-    "drawerLayout": {
+    "drawer-layout": {
       "file": "drawerLayout.schema.json",
-      "behavior": "drawerLayout",
+      "behavior": "drawer-layout",
       "totalTests": 6,
       "wbPrefixTests": 6,
       "passing": true,
       "currentSetup": [
-        "<wb-drawerLayout>Basic drawerLayout content</wb-drawerLayout>",
-        "<wb-drawerLayout position=\"left\">position=left</wb-drawerLayout>",
-        "<wb-drawerLayout position=\"right\">position=right</wb-drawerLayout>",
-        "<wb-drawerLayout collapsed>with collapsed</wb-drawerLayout>",
-        "<wb-drawerLayout width=\"250px\">width=\"250px\"</wb-drawerLayout>",
-        "<wb-drawerLayout min-width=\"48px\">minWidth=\"48px\"</wb-drawerLayout>"
+        "<wb-drawer-layout>Basic drawer-layout content</wb-drawer-layout>",
+        "<wb-drawer-layout position=\"left\">position=left</wb-drawer-layout>",
+        "<wb-drawer-layout position=\"right\">position=right</wb-drawer-layout>",
+        "<wb-drawer-layout collapsed>with collapsed</wb-drawer-layout>",
+        "<wb-drawer-layout width=\"250px\">width=\"250px\"</wb-drawer-layout>",
+        "<wb-drawer-layout min-width=\"48px\">minWidth=\"48px\"</wb-drawer-layout>"
       ],
       "suggestedTests": [
-        "<wb-drawerLayout>Basic content</wb-drawerLayout>",
-        "<wb-drawerLayout position=\"left\">With position=left</wb-drawerLayout>",
-        "<wb-drawerLayout position=\"right\">With position=right</wb-drawerLayout>",
-        "<wb-drawerLayout width=\"250px\">With width=250px</wb-drawerLayout>",
-        "<wb-drawerLayout min-width=\"48px\">With minWidth=48px</wb-drawerLayout>",
-        "<wb-drawerLayout collapsed>With collapsed</wb-drawerLayout>"
+        "<wb-drawer-layout>Basic content</wb-drawer-layout>",
+        "<wb-drawer-layout position=\"left\">With position=left</wb-drawer-layout>",
+        "<wb-drawer-layout position=\"right\">With position=right</wb-drawer-layout>",
+        "<wb-drawer-layout width=\"250px\">With width=250px</wb-drawer-layout>",
+        "<wb-drawer-layout min-width=\"48px\">With minWidth=48px</wb-drawer-layout>",
+        "<wb-drawer-layout collapsed>With collapsed</wb-drawer-layout>"
       ]
     },
     "dropdown": {
@@ -1209,6 +1266,44 @@
         "<wb-dropdown close-on-outside>With closeOnOutside</wb-dropdown>",
         "<wb-dropdown offset=\"4\">With offset=4</wb-dropdown>",
         "<wb-dropdown offset=\"0\">With offset=0</wb-dropdown>"
+      ]
+    },
+    "error": {
+      "file": "error.schema.json",
+      "behavior": "error",
+      "totalTests": 0,
+      "wbPrefixTests": 0,
+      "passing": false,
+      "currentSetup": [],
+      "suggestedTests": [
+        "<wb-error>Basic content</wb-error>"
+      ]
+    },
+    "fieldset": {
+      "file": "fieldset.schema.json",
+      "behavior": "fieldset",
+      "totalTests": 1,
+      "wbPrefixTests": 1,
+      "passing": false,
+      "currentSetup": [
+        "<fieldset x-fieldset id='test-fieldset'><legend>Legend</legend><input></fieldset>"
+      ],
+      "suggestedTests": [
+        "<wb-fieldset>Basic content</wb-fieldset>",
+        "<wb-fieldset collapsible>With collapsible</wb-fieldset>",
+        "<wb-fieldset collapsed>With collapsed</wb-fieldset>",
+        "<wb-fieldset collapsible collapsed>Combined test</wb-fieldset>"
+      ]
+    },
+    "file": {
+      "file": "file.schema.json",
+      "behavior": "file",
+      "totalTests": 0,
+      "wbPrefixTests": 0,
+      "passing": false,
+      "currentSetup": [],
+      "suggestedTests": [
+        "<wb-file>Basic content</wb-file>"
       ]
     },
     "fireworks": {
@@ -1256,6 +1351,17 @@
         "<wb-fix-card>Basic content</wb-fix-card>"
       ]
     },
+    "floatinglabel": {
+      "file": "floatinglabel.schema.json",
+      "behavior": "floatinglabel",
+      "totalTests": 0,
+      "wbPrefixTests": 0,
+      "passing": false,
+      "currentSetup": [],
+      "suggestedTests": [
+        "<wb-floatinglabel>Basic content</wb-floatinglabel>"
+      ]
+    },
     "footer": {
       "file": "footer.schema.json",
       "behavior": "footer",
@@ -1278,6 +1384,34 @@
         "<wb-footer links=\"Test Value\">With links=Test Value</wb-footer>",
         "<wb-footer social=\"Test Value\">With social=Test Value</wb-footer>",
         "<wb-footer sticky>With sticky</wb-footer>"
+      ]
+    },
+    "form": {
+      "file": "form.schema.json",
+      "behavior": "form",
+      "totalTests": 1,
+      "wbPrefixTests": 1,
+      "passing": false,
+      "currentSetup": [
+        "<form x-form id='test-form' action='/api/test' method='POST'><input name='a' value='1'><button type='submit'>Submit</button></form>"
+      ],
+      "suggestedTests": [
+        "<wb-form>Basic content</wb-form>",
+        "<wb-form ajax>With ajax</wb-form>",
+        "<wb-form validate>With validate</wb-form>",
+        "<wb-form ajax validate>Combined test</wb-form>"
+      ]
+    },
+    "formrow": {
+      "file": "formrow.schema.json",
+      "behavior": "formrow",
+      "totalTests": 0,
+      "wbPrefixTests": 0,
+      "passing": false,
+      "currentSetup": [],
+      "suggestedTests": [
+        "<wb-formrow>Basic content</wb-formrow>",
+        "<wb-formrow inline>With inline</wb-formrow>"
       ]
     },
     "globe": {
@@ -1323,6 +1457,17 @@
         "<wb-header sticky>With sticky</wb-header>"
       ]
     },
+    "help": {
+      "file": "help.schema.json",
+      "behavior": "help",
+      "totalTests": 0,
+      "wbPrefixTests": 0,
+      "passing": false,
+      "currentSetup": [],
+      "suggestedTests": [
+        "<wb-help>Basic content</wb-help>"
+      ]
+    },
     "hero": {
       "file": "hero.schema.json",
       "behavior": "hero",
@@ -1338,8 +1483,8 @@
       ],
       "suggestedTests": [
         "<wb-hero>Basic content</wb-hero>",
-        "<wb-hero variant=\"default\">With variant=default</wb-hero>",
-        "<wb-hero variant=\"cosmic\">With variant=cosmic</wb-hero>"
+        "<wb-hero variant=\"\">With variant=</wb-hero>",
+        "<wb-hero variant=\"default\">With variant=default</wb-hero>"
       ]
     },
     "input": {
@@ -1369,6 +1514,49 @@
         "<wb-input helper=\"Test Value\">With helper=Test Value</wb-input>",
         "<wb-input error=\"Test Value\">With error=Test Value</wb-input>",
         "<wb-input variant=\"default\">With variant=default</wb-input>"
+      ]
+    },
+    "inputgroup": {
+      "file": "inputgroup.schema.json",
+      "behavior": "inputgroup",
+      "totalTests": 0,
+      "wbPrefixTests": 0,
+      "passing": false,
+      "currentSetup": [],
+      "suggestedTests": [
+        "<wb-inputgroup>Basic content</wb-inputgroup>"
+      ]
+    },
+    "label": {
+      "file": "label.schema.json",
+      "behavior": "label",
+      "totalTests": 1,
+      "wbPrefixTests": 1,
+      "passing": false,
+      "currentSetup": [
+        "<input x-label='Label text' id='test-label' type='text'>"
+      ],
+      "suggestedTests": [
+        "<wb-label>Basic content</wb-label>",
+        "<wb-label x-label=\"Test Value\">With x-label=Test Value</wb-label>",
+        "<wb-label label-position=\"left\">With label-position=left</wb-label>",
+        "<wb-label label-position=\"right\">With label-position=right</wb-label>",
+        "<wb-label required>With required</wb-label>",
+        "<wb-label optional>With optional</wb-label>"
+      ]
+    },
+    "masked": {
+      "file": "masked.schema.json",
+      "behavior": "masked",
+      "totalTests": 0,
+      "wbPrefixTests": 0,
+      "passing": false,
+      "currentSetup": [],
+      "suggestedTests": [
+        "<wb-masked>Basic content</wb-masked>",
+        "<wb-masked mask=\"Test Value\">With mask=Test Value</wb-masked>",
+        "<wb-masked placeholder=\"Test Value\">With placeholder=Test Value</wb-masked>",
+        "<wb-masked mask=\"Test Value\" placeholder=\"Test Value\">Combined test</wb-masked>"
       ]
     },
     "mdhtml": {
@@ -1473,14 +1661,14 @@
       "wbPrefixTests": 8,
       "passing": true,
       "currentSetup": [
-        "<wb-progress>Basic progress content</wb-progress>",
-        "<wb-progress variant=\"default\">variant=default</wb-progress>",
-        "<wb-progress variant=\"primary\">variant=primary</wb-progress>",
-        "<wb-progress variant=\"success\">variant=success</wb-progress>",
-        "<wb-progress size=\"xs\">size=xs</wb-progress>",
-        "<wb-progress size=\"sm\">size=sm</wb-progress>",
-        "<wb-progress size=\"md\">size=md</wb-progress>",
-        "<wb-progress show-value>with showValue</wb-progress>"
+        "<wb-progress value=\"50\" max=\"100\"></wb-progress>",
+        "<wb-progress value=\"25\" max=\"100\" variant=\"default\"></wb-progress>",
+        "<wb-progress value=\"50\" max=\"100\" variant=\"primary\"></wb-progress>",
+        "<wb-progress value=\"75\" max=\"100\" variant=\"success\"></wb-progress>",
+        "<wb-progress value=\"30\" max=\"100\" size=\"xs\"></wb-progress>",
+        "<wb-progress value=\"40\" max=\"100\" size=\"sm\"></wb-progress>",
+        "<wb-progress value=\"60\" max=\"100\" size=\"md\"></wb-progress>",
+        "<wb-progress value=\"80\" max=\"100\" show-label></wb-progress>"
       ],
       "suggestedTests": [
         "<wb-progress>Basic content</wb-progress>",
@@ -1580,6 +1768,32 @@
       "suggestedTests": [
         "<wb-scrollalong>Basic content</wb-scrollalong>",
         "<wb-scrollalong offset=\"0\">With offset=0</wb-scrollalong>"
+      ]
+    },
+    "search": {
+      "file": "search.schema.json",
+      "behavior": "search",
+      "totalTests": 5,
+      "wbPrefixTests": 5,
+      "passing": true,
+      "currentSetup": [
+        "<wb-search>Basic search</wb-search>",
+        "<wb-search placeholder='Search docs...'>Custom placeholder</wb-search>",
+        "<wb-search size='lg'>Large search</wb-search>",
+        "<wb-search variant='glass'>Glass variant</wb-search>",
+        "<wb-search instant>Instant search</wb-search>"
+      ],
+      "suggestedTests": [
+        "<wb-search>Basic content</wb-search>",
+        "<wb-search placeholder=\"Search...\">With placeholder=Search...</wb-search>",
+        "<wb-search value=\"Test Value\">With value=Test Value</wb-search>",
+        "<wb-search name=\"Test Value\">With name=Test Value</wb-search>",
+        "<wb-search debounce=\"300\">With debounce=300</wb-search>",
+        "<wb-search debounce=\"0\">With debounce=0</wb-search>",
+        "<wb-search instant>With instant</wb-search>",
+        "<wb-search disabled>With disabled</wb-search>",
+        "<wb-search size=\"sm\">With size=sm</wb-search>",
+        "<wb-search size=\"md\">With size=md</wb-search>"
       ]
     },
     "select": {
@@ -1696,8 +1910,8 @@
       ],
       "suggestedTests": [
         "<wb-span>Basic content</wb-span>",
-        "<wb-span variant=\"red\">With variant=red</wb-span>",
-        "<wb-span variant=\"yellow\">With variant=yellow</wb-span>"
+        "<wb-span variant=\"default\">With variant=default</wb-span>",
+        "<wb-span variant=\"red\">With variant=red</wb-span>"
       ]
     },
     "spinner": {
@@ -1725,6 +1939,28 @@
         "<wb-spinner speed=\"slow\">With speed=slow</wb-spinner>",
         "<wb-spinner speed=\"medium\">With speed=medium</wb-spinner>",
         "<wb-spinner label=\"Loading\">With label=Loading</wb-spinner>"
+      ]
+    },
+    "stack": {
+      "file": "stack.schema.json",
+      "behavior": "stack",
+      "totalTests": 6,
+      "wbPrefixTests": 6,
+      "passing": true,
+      "currentSetup": [
+        "<wb-stack><span>A</span><span>B</span></wb-stack>",
+        "<wb-stack gap=\"0.5rem\"><span>A</span><span>B</span></wb-stack>",
+        "<wb-stack bg=\"#1a2f4e\"><span>A</span><span>B</span></wb-stack>",
+        "<wb-stack pad=\"1rem\"><span>A</span><span>B</span></wb-stack>",
+        "<wb-stack radius=\"8px\"><span>A</span><span>B</span></wb-stack>",
+        "<wb-stack gap=\"0.25rem\" bg=\"#2d4a1e\" pad=\"0 0 0.75rem\" radius=\"8px\"><span>Full card style</span></wb-stack>"
+      ],
+      "suggestedTests": [
+        "<wb-stack>Basic content</wb-stack>",
+        "<wb-stack gap=\"1rem\">With gap=1rem</wb-stack>",
+        "<wb-stack bg=\"Test Value\">With bg=Test Value</wb-stack>",
+        "<wb-stack pad=\"Test Value\">With pad=Test Value</wb-stack>",
+        "<wb-stack radius=\"Test Value\">With radius=Test Value</wb-stack>"
       ]
     },
     "stagelight": {
@@ -1868,6 +2104,17 @@
         "<wb-tabs vertical>With vertical</wb-tabs>"
       ]
     },
+    "tags": {
+      "file": "tags.schema.json",
+      "behavior": "tags",
+      "totalTests": 0,
+      "wbPrefixTests": 0,
+      "passing": false,
+      "currentSetup": [],
+      "suggestedTests": [
+        "<wb-tags>Basic content</wb-tags>"
+      ]
+    },
     "textarea": {
       "file": "textarea.schema.json",
       "behavior": "textarea",
@@ -1912,6 +2159,20 @@
       ],
       "suggestedTests": [
         "<wb-themecontrol>Basic content</wb-themecontrol>"
+      ]
+    },
+    "timeline": {
+      "file": "timeline.schema.json",
+      "behavior": "timeline",
+      "totalTests": 1,
+      "wbPrefixTests": 1,
+      "passing": false,
+      "currentSetup": [
+        "<wb-timeline items='Step 1,Step 2,Step 3'></wb-timeline>"
+      ],
+      "suggestedTests": [
+        "<wb-timeline>Basic content</wb-timeline>",
+        "<wb-timeline items=\"Test Value\">With items=Test Value</wb-timeline>"
       ]
     },
     "toast": {

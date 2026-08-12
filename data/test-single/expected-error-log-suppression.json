@@ -1,0 +1,20 @@
+{
+  "state": "passed",
+  "mode": "single",
+  "specFile": "tests/regression/expected-error-log-suppression.spec.ts",
+  "startedAt": "2026-08-07T19:18:33.141Z",
+  "updatedAt": "2026-08-07T19:18:41.659Z",
+  "command": "npx playwright test --workers=8 tests/regression/expected-error-log-suppression.spec.ts",
+  "pid": 12868,
+  "passed": 1,
+  "failed": 0,
+  "skipped": 0,
+  "total": 1,
+  "currentFile": null,
+  "output": "\nRunning 1 test using 1 worker\n\n  ✓  1 [regression] › tests\\regression\\expected-error-log-suppression.spec.ts:3:1 › expected fixture errors stay out of the persistent error log (1.9s)\n\n════════════════════════════════════════════════════════════\n  WB TEST RESULTS\n════════════════════════════════════════════════════════════\n  Total: 1 tests in 4.8s\n  ✓ Passed:  1\n  ✗ Failed:  0\n\n  By Project:\n    ✓ regression: 1/1 passed\n════════════════════════════════════════════════════════════\n\n\n  1 passed (5.1s)\n",
+  "errors": "",
+  "failures": [],
+  "completedAt": "2026-08-07T19:18:41.659Z",
+  "duration": "8.52s",
+  "exitCode": 0
+}

@@ -17,6 +17,10 @@
       "tier": "component"
     },
     {
+      "file": "autocomplete.schema.json",
+      "tier": "component"
+    },
+    {
       "file": "avatar.schema.json",
       "tier": "component"
     },
@@ -26,15 +30,11 @@
     },
     {
       "file": "behavior.schema.json",
-      "tier": "component"
-    },
-    {
-      "file": "behaviors-showcase.schema.json",
-      "tier": "component"
+      "tier": "behavior"
     },
     {
       "file": "behaviors.schema.json",
-      "tier": "component"
+      "tier": "definition"
     },
     {
       "file": "button.schema.json",
@@ -137,11 +137,19 @@
       "tier": "component"
     },
     {
+      "file": "colorpicker.schema.json",
+      "tier": "component"
+    },
+    {
       "file": "confetti.schema.json",
       "tier": "component"
     },
     {
       "file": "copy.schema.json",
+      "tier": "component"
+    },
+    {
+      "file": "counter.schema.json",
       "tier": "component"
     },
     {
@@ -151,6 +159,10 @@
     {
       "file": "demo.schema.json",
       "tier": "component"
+    },
+    {
+      "file": "demofile.schema.json",
+      "tier": "definition"
     },
     {
       "file": "details.schema.json",
@@ -177,6 +189,18 @@
       "tier": "component"
     },
     {
+      "file": "error.schema.json",
+      "tier": "component"
+    },
+    {
+      "file": "fieldset.schema.json",
+      "tier": "component"
+    },
+    {
+      "file": "file.schema.json",
+      "tier": "component"
+    },
+    {
       "file": "fireworks.schema.json",
       "tier": "component"
     },
@@ -185,7 +209,19 @@
       "tier": "component"
     },
     {
+      "file": "floatinglabel.schema.json",
+      "tier": "component"
+    },
+    {
       "file": "footer.schema.json",
+      "tier": "component"
+    },
+    {
+      "file": "form.schema.json",
+      "tier": "component"
+    },
+    {
+      "file": "formrow.schema.json",
       "tier": "component"
     },
     {
@@ -197,15 +233,35 @@
       "tier": "component"
     },
     {
+      "file": "help-demo.schema.json",
+      "tier": "definition"
+    },
+    {
+      "file": "help.schema.json",
+      "tier": "component"
+    },
+    {
       "file": "hero.schema.json",
       "tier": "component"
     },
     {
       "file": "home-page.schema.json",
-      "tier": "component"
+      "tier": "page"
     },
     {
       "file": "input.schema.json",
+      "tier": "component"
+    },
+    {
+      "file": "inputgroup.schema.json",
+      "tier": "component"
+    },
+    {
+      "file": "label.schema.json",
+      "tier": "component"
+    },
+    {
+      "file": "masked.schema.json",
       "tier": "component"
     },
     {
@@ -225,8 +281,12 @@
       "tier": "component"
     },
     {
-      "file": "page.schema.json",
-      "tier": "definition"
+      "file": "otp.schema.json",
+      "tier": "behavior"
+    },
+    {
+      "file": "password.schema.json",
+      "tier": "behavior"
     },
     {
       "file": "progress.schema.json",
@@ -250,7 +310,7 @@
     },
     {
       "file": "search-index.schema.json",
-      "tier": "component"
+      "tier": "definition"
     },
     {
       "file": "search.schema.json",
@@ -337,8 +397,16 @@
       "tier": "component"
     },
     {
+      "file": "stack.schema.json",
+      "tier": "component"
+    },
+    {
       "file": "stagelight.schema.json",
       "tier": "component"
+    },
+    {
+      "file": "stepper.schema.json",
+      "tier": "behavior"
     },
     {
       "file": "sticky.schema.json",
@@ -354,6 +422,10 @@
     },
     {
       "file": "tabs.schema.json",
+      "tier": "component"
+    },
+    {
+      "file": "tags.schema.json",
       "tier": "component"
     },
     {
@@ -377,12 +449,16 @@
       "tier": "component"
     },
     {
+      "file": "tooltip-demo.schema.json",
+      "tier": "definition"
+    },
+    {
       "file": "tooltip.schema.json",
       "tier": "component"
     },
     {
       "file": "views.schema.json",
-      "tier": "component"
+      "tier": "definition"
     },
     {
       "file": "wb-control.schema.json",
@@ -393,8 +469,28 @@
       "tier": "component"
     },
     {
-      "file": "wizard.schema.json",
-      "tier": "component"
+      "file": "x-behavior.schema.json",
+      "tier": "behavior"
+    },
+    {
+      "file": "x-collapse.schema.json",
+      "tier": "behavior"
+    },
+    {
+      "file": "x-copy.schema.json",
+      "tier": "behavior"
+    },
+    {
+      "file": "x-draggable.schema.json",
+      "tier": "behavior"
+    },
+    {
+      "file": "x-effects.schema.json",
+      "tier": "behavior"
+    },
+    {
+      "file": "x-enhancements.schema.json",
+      "tier": "behavior"
     },
     {
       "file": "_base\\html-element.schema.json",

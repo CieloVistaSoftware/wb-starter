@@ -1,0 +1,20 @@
+{
+  "state": "passed",
+  "mode": "single",
+  "specFile": "tests/regression/generated-demo-instances-not-empty.spec.ts",
+  "startedAt": "2026-08-07T19:28:15.888Z",
+  "updatedAt": "2026-08-07T19:29:36.353Z",
+  "command": "npx playwright test --workers=8 tests/regression/generated-demo-instances-not-empty.spec.ts",
+  "pid": 37700,
+  "passed": 5,
+  "failed": 0,
+  "skipped": 0,
+  "total": 5,
+  "currentFile": null,
+  "output": "\nRunning 5 tests using 5 workers\n\n  ✓  2 [regression] › tests\\regression\\generated-demo-instances-not-empty.spec.ts:70:3 › Generated demo instances render visibly (interactive.html) › sibling dialog demos on overlays.html have distinct, self-describing labels (9.2s)\n  ✓  3 [regression] › tests\\regression\\generated-demo-instances-not-empty.spec.ts:85:3 › Generated demo instances render visibly (interactive.html) › overlay variant demos expose their configuration in the closed trigger (9.6s)\n  ✓  1 [regression] › tests\\regression\\generated-demo-instances-not-empty.spec.ts:27:3 › Generated demo instances render visibly (interactive.html) › every <wb-draggable> instance has non-zero size and real content (11.8s)\n  ✓  4 [regression] › tests\\regression\\generated-demo-instances-not-empty.spec.ts:47:3 › Generated demo instances render visibly (interactive.html) › no generated custom element on interactive.html has zero size (9.7s)\n  ✓  5 [regression] › tests\\regression\\generated-demo-instances-not-empty.spec.ts:102:3 › Generated demo instances render visibly (interactive.html) › <wb-dialog variant=\"fullscreen\"> actually applies the fullscreen class and size (7.0s)\n\n════════════════════════════════════════════════════════════\n  WB TEST RESULTS\n════════════════════════════════════════════════════════════\n  Total: 5 tests in 51.8s\n  ✓ Passed:  5\n  ✗ Failed:  0\n\n  By Project:\n    ✓ regression: 5/5 passed\n════════════════════════════════════════════════════════════\n\n\n  5 passed (1.0m)\n",
+  "errors": "",
+  "failures": [],
+  "completedAt": "2026-08-07T19:29:36.353Z",
+  "duration": "80.47s",
+  "exitCode": 0
+}

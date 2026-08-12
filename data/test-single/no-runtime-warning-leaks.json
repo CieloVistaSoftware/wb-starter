@@ -1,0 +1,41 @@
+{
+  "state": "failed",
+  "mode": "single",
+  "specFile": "tests/compliance/no-runtime-warning-leaks.spec.ts",
+  "startedAt": "2026-08-09T21:14:53.905Z",
+  "updatedAt": "2026-08-09T21:15:03.130Z",
+  "command": "npx playwright test --workers=8 tests/compliance/no-runtime-warning-leaks.spec.ts",
+  "pid": 35640,
+  "passed": 0,
+  "failed": 5,
+  "skipped": 0,
+  "total": 5,
+  "currentFile": "tests\\compliance\\no-runtime-warning-leaks.spec.ts",
+  "output": "\nRunning 48 tests using 8 workers\n\n  x   1 [compliance] › tests\\compliance\\no-runtime-warning-leaks.spec.ts:36:5 › no component authoring-warning strings leak into shipped pages › demos\\legacy-syntax-check.html: no visible runtime-warning text (0ms)\n  x   2 [compliance] › tests\\compliance\\no-runtime-warning-leaks.spec.ts:36:5 › no component authoring-warning strings leak into shipped pages › demos\\layout-test.html: no visible runtime-warning text (0ms)\n  x   3 [compliance] › tests\\compliance\\no-runtime-warning-leaks.spec.ts:36:5 › no component authoring-warning strings leak into shipped pages › demos\\index.html: no visible runtime-warning text (0ms)\n  x   4 [compliance] › tests\\compliance\\no-runtime-warning-leaks.spec.ts:36:5 › no component authoring-warning strings leak into shipped pages › demos\\landing-page-showcase.html: no visible runtime-warning text (0ms)\n  x   5 [compliance] › tests\\compliance\\no-runtime-warning-leaks.spec.ts:36:5 › no component authoring-warning strings leak into shipped pages › demos\\intellisense-check.html: no visible runtime-warning text (0ms)\n",
+  "errors": "\n❌ FAILED: demos\\legacy-syntax-check.html: no visible runtime-warning text\n   Error: worker process exited unexpectedly (code=3221225786, signal=null)\n\n❌ FAILED: demos\\layout-test.html: no visible runtime-warning text\n   Error: worker process exited unexpectedly (code=3221225786, signal=null)\n\n❌ FAILED: demos\\index.html: no visible runtime-warning text\n   Error: worker process exited unexpectedly (code=3221225786, signal=null)\n\n❌ FAILED: demos\\landing-page-showcase.html: no visible runtime-warning text\n   Error: worker process exited unexpectedly (code=3221225786, signal=null)\n\n❌ FAILED: demos\\intellisense-check.html: no visible runtime-warning text\n   Error: worker process exited unexpectedly (code=3221225786, signal=null)\n",
+  "failures": [
+    {
+      "file": "tests\\compliance\\no-runtime-warning-leaks.spec.ts",
+      "name": "no component authoring-warning strings leak into shipped pages › demos\\legacy-syntax-check.html: no visible runtime-warning text"
+    },
+    {
+      "file": "tests\\compliance\\no-runtime-warning-leaks.spec.ts",
+      "name": "no component authoring-warning strings leak into shipped pages › demos\\layout-test.html: no visible runtime-warning text"
+    },
+    {
+      "file": "tests\\compliance\\no-runtime-warning-leaks.spec.ts",
+      "name": "no component authoring-warning strings leak into shipped pages › demos\\index.html: no visible runtime-warning text"
+    },
+    {
+      "file": "tests\\compliance\\no-runtime-warning-leaks.spec.ts",
+      "name": "no component authoring-warning strings leak into shipped pages › demos\\landing-page-showcase.html: no visible runtime-warning text"
+    },
+    {
+      "file": "tests\\compliance\\no-runtime-warning-leaks.spec.ts",
+      "name": "no component authoring-warning strings leak into shipped pages › demos\\intellisense-check.html: no visible runtime-warning text"
+    }
+  ],
+  "completedAt": "2026-08-09T21:15:03.130Z",
+  "duration": "9.22s",
+  "exitCode": 3221225786
+}

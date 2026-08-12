@@ -1,0 +1,20 @@
+{
+  "state": "passed",
+  "mode": "single",
+  "specFile": "tests/behaviors/toast-single.spec.ts",
+  "startedAt": "2026-08-07T20:32:45.155Z",
+  "updatedAt": "2026-08-07T20:33:08.520Z",
+  "command": "npx playwright test --workers=8 tests/behaviors/toast-single.spec.ts",
+  "pid": 38408,
+  "passed": 1,
+  "failed": 0,
+  "skipped": 0,
+  "total": 1,
+  "currentFile": null,
+  "output": "\nRunning 1 test using 1 worker\n\n  ✓  1 [behaviors] › tests\\behaviors\\toast-single.spec.ts:19:1 › clicking an x-toast button shows exactly one toast (5.7s)\n\n════════════════════════════════════════════════════════════\n  WB TEST RESULTS\n════════════════════════════════════════════════════════════\n  Total: 1 tests in 16.6s\n  ✓ Passed:  1\n  ✗ Failed:  0\n\n  By Project:\n    ✓ behaviors: 1/1 passed\n════════════════════════════════════════════════════════════\n\n\n  1 passed (17.5s)\n",
+  "errors": "",
+  "failures": [],
+  "completedAt": "2026-08-07T20:33:08.520Z",
+  "duration": "23.36s",
+  "exitCode": 0
+}

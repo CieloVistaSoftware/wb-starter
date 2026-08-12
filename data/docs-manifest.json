@@ -1,6 +1,6 @@
 {
-  "generated": "2026-08-06T18:18:58.400Z",
-  "totalFiles": 203,
+  "generated": "2026-08-09T21:54:37.693Z",
+  "totalFiles": 205,
   "categories": [
     "_today",
     "architecture",
@@ -307,8 +307,14 @@
       },
       {
         "path": "docs/architecture/proposals/proposed-custom-elements.md",
-        "title": "Proposed Custom HTML Tags for Layouts",
+        "title": "> **OBSOLETE — superseded by",
         "name": "proposed-custom-elements",
+        "category": "architecture"
+      },
+      {
+        "path": "docs/architecture/proposals/remove-wb-prefix-authoring-surface.md",
+        "title": "Proposal: Drop the `wb-` Tag Prefix from the Authoring Surface",
+        "name": "remove-wb-prefix-authoring-surface",
         "category": "architecture"
       },
       {
@@ -1155,7 +1161,7 @@
       },
       {
         "path": "docs/standards/V3-STANDARDS.md",
-        "title": "WB-Starter v3.0 Standards",
+        "title": "WB-Starter v3 Standards",
         "name": "V3-STANDARDS",
         "category": "standards"
       }
@@ -1180,6 +1186,12 @@
         "category": "_today"
       },
       {
+        "path": "docs/_today/audit-v3-guide-doc-viewer.md",
+        "title": "Audit: `docs/V3-GUIDE.md` on `/public/doc-viewer.html`",
+        "name": "audit-v3-guide-doc-viewer",
+        "category": "_today"
+      },
+      {
         "path": "docs/_today/CSS-OWNERSHIP-MIGRATION.PLAN.md",
         "title": "CSS Ownership Migration Plan",
         "name": "CSS-OWNERSHIP-MIGRATION.PLAN",
@@ -1187,7 +1199,7 @@
       },
       {
         "path": "docs/_today/CURRENT-STATUS.md",
-        "title": "🅿️ PARKING LOT (2026-08-04 session — pushing to `.io` at John's direct instruction)",
+        "title": "CURRENT HANDOFF — 2026-08-08",
         "name": "CURRENT-STATUS",
         "category": "_today"
       },
@@ -1273,6 +1285,12 @@
       "category": "_today"
     },
     {
+      "path": "docs/_today/audit-v3-guide-doc-viewer.md",
+      "title": "Audit: `docs/V3-GUIDE.md` on `/public/doc-viewer.html`",
+      "name": "audit-v3-guide-doc-viewer",
+      "category": "_today"
+    },
+    {
       "path": "docs/_today/CSS-OWNERSHIP-MIGRATION.PLAN.md",
       "title": "CSS Ownership Migration Plan",
       "name": "CSS-OWNERSHIP-MIGRATION.PLAN",
@@ -1280,7 +1298,7 @@
     },
     {
       "path": "docs/_today/CURRENT-STATUS.md",
-      "title": "🅿️ PARKING LOT (2026-08-04 session — pushing to `.io` at John's direct instruction)",
+      "title": "CURRENT HANDOFF — 2026-08-08",
       "name": "CURRENT-STATUS",
       "category": "_today"
     },
@@ -1364,8 +1382,14 @@
     },
     {
       "path": "docs/architecture/proposals/proposed-custom-elements.md",
-      "title": "Proposed Custom HTML Tags for Layouts",
+      "title": "> **OBSOLETE — superseded by",
       "name": "proposed-custom-elements",
+      "category": "architecture"
+    },
+    {
+      "path": "docs/architecture/proposals/remove-wb-prefix-authoring-surface.md",
+      "title": "Proposal: Drop the `wb-` Tag Prefix from the Authoring Surface",
+      "name": "remove-wb-prefix-authoring-surface",
       "category": "architecture"
     },
     {
@@ -2408,7 +2432,7 @@
     },
     {
       "path": "docs/standards/V3-STANDARDS.md",
-      "title": "WB-Starter v3.0 Standards",
+      "title": "WB-Starter v3 Standards",
       "name": "V3-STANDARDS",
       "category": "standards"
     },

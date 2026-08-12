@@ -1,0 +1,20 @@
+{
+  "state": "passed",
+  "mode": "single",
+  "specFile": "tests/regression/errors-viewer-route.spec.ts",
+  "startedAt": "2026-08-07T19:23:09.651Z",
+  "updatedAt": "2026-08-07T19:23:19.162Z",
+  "command": "npx playwright test --workers=8 tests/regression/errors-viewer-route.spec.ts",
+  "pid": 20920,
+  "passed": 3,
+  "failed": 0,
+  "skipped": 0,
+  "total": 3,
+  "currentFile": null,
+  "output": "\nRunning 3 tests using 3 workers\n\n  ✓  1 [regression] › tests\\regression\\errors-viewer-route.spec.ts:5:5 › Error viewer routes › /errors-viewer.html serves the error viewer (114ms)\n  ✓  2 [regression] › tests\\regression\\errors-viewer-route.spec.ts:5:5 › Error viewer routes › /public/errors-viewer.html serves the error viewer (120ms)\n  ✓  3 [regression] › tests\\regression\\errors-viewer-route.spec.ts:5:5 › Error viewer routes › /errors-viewer serves the error viewer (114ms)\n\n════════════════════════════════════════════════════════════\n  WB TEST RESULTS\n════════════════════════════════════════════════════════════\n  Total: 3 tests in 3.6s\n  ✓ Passed:  3\n  ✗ Failed:  0\n\n  By Project:\n    ✓ regression: 3/3 passed\n════════════════════════════════════════════════════════════\n\n\n  3 passed (6.3s)\n",
+  "errors": "",
+  "failures": [],
+  "completedAt": "2026-08-07T19:23:19.162Z",
+  "duration": "9.51s",
+  "exitCode": 0
+}

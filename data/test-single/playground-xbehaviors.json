@@ -1,0 +1,20 @@
+{
+  "state": "passed",
+  "mode": "single",
+  "specFile": "tests/integration/playground-xbehaviors.spec.ts",
+  "startedAt": "2026-08-07T20:19:27.621Z",
+  "updatedAt": "2026-08-07T20:22:01.224Z",
+  "command": "npx playwright test --workers=8 tests/integration/playground-xbehaviors.spec.ts",
+  "pid": 31048,
+  "passed": 8,
+  "failed": 0,
+  "skipped": 0,
+  "total": 8,
+  "currentFile": null,
+  "output": "\nRunning 8 tests using 8 workers\n\n  ✓  2 [integration] › tests\\integration\\playground-xbehaviors.spec.ts:48:3 › Playground: 50 x-* behaviors example set › overlay: x-confirm trigger actually opens a confirm dialog on click (19.3s)\n  ✓  7 [integration] › tests\\integration\\playground-xbehaviors.spec.ts:86:3 › Playground: 50 x-* behaviors example set › combination: x-confetti + x-tooltip trigger fires confetti on click (20.1s)\n  ✓  1 [integration] › tests\\integration\\playground-xbehaviors.spec.ts:92:3 › Playground: 50 x-* behaviors example set › all 50 examples parse as valid elements with zero x-error markers (22.2s)\n  ✓  5 [integration] › tests\\integration\\playground-xbehaviors.spec.ts:43:3 › Playground: 50 x-* behaviors example set › effect: x-glow actually applies the glow class + animation (19.6s)\n  ✓  6 [integration] › tests\\integration\\playground-xbehaviors.spec.ts:70:3 › Playground: 50 x-* behaviors example set › utility: x-clock actually renders a live time value, not empty (23.0s)\n  ✓  3 [integration] › tests\\integration\\playground-xbehaviors.spec.ts:79:3 › Playground: 50 x-* behaviors example set › combination: x-ripple + x-tooltip on the same element both attach (33.9s)\n  ✓  8 [integration] › tests\\integration\\playground-xbehaviors.spec.ts:57:3 › Playground: 50 x-* behaviors example set › feedback: x-toast trigger actually shows a toast on click (31.8s)\n  ✓  4 [integration] › tests\\integration\\playground-xbehaviors.spec.ts:63:3 › Playground: 50 x-* behaviors example set › utility: x-truncate actually clips the paragraph to one line (50.1s)\n\n════════════════════════════════════════════════════════════\n  WB TEST RESULTS\n════════════════════════════════════════════════════════════\n  Total: 8 tests in 113.9s\n  ✓ Passed:  8\n  ✗ Failed:  0\n\n  By Project:\n    ✓ integration: 8/8 passed\n════════════════════════════════════════════════════════════\n\n\n  8 passed (2.1m)\n",
+  "errors": "",
+  "failures": [],
+  "completedAt": "2026-08-07T20:22:01.224Z",
+  "duration": "153.60s",
+  "exitCode": 0
+}
