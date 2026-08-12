@@ -85,7 +85,7 @@ When enabled, plain semantic elements like `<dialog>` and `<img>` below get the
 </wb-demo>
 
 <wb-demo>
-<img src="photo.jpg" alt="Auto-decorated image">
+<img src="https://placehold.co/600x400/1e293b/e2e8f0?text=Photo" alt="Auto-decorated image">
 </wb-demo>
 
 ---
@@ -128,7 +128,7 @@ Enhances standard HTML elements with better styling and functionality.
 **`video`**
 
 <wb-demo>
-<wb-video src="movie.mp4"></wb-video>
+<wb-video src="https://interactive-examples.mdn.mozilla.net/media/cc0-videos/flower.mp4"></wb-video>
 </wb-demo>
 
 **`img` → `image`**
@@ -136,7 +136,7 @@ Enhances standard HTML elements with better styling and functionality.
 <wb-demo>
 <img
   x-image
-  src="photo.jpg"
+  src="https://placehold.co/600x400/1e293b/e2e8f0?text=Photo"
   alt="Photo">
 </wb-demo>
 
