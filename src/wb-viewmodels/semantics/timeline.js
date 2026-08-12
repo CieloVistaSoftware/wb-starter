@@ -15,7 +15,8 @@ export function timeline(element, options = {}) {
   // select those by class.
   if (element.tagName.toLowerCase() !== 'wb-timeline') element.classList.add('wb-timeline');
 
-  const itemsAttr = element.getAttribute('items') || '';
+  const authoredItems = (element._wbOriginalSlot || element.textContent || '').trim();
+  const itemsAttr = element.getAttribute('items') || authoredItems;
   const items = itemsAttr.split(',').map((s) => s.trim()).filter(Boolean);
   element.items = items;
 

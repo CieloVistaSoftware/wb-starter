@@ -11,7 +11,8 @@ export function progress(element, options = {}) {
   // gate widened from tagName==='WB-PROGRESS' so x-progress on any element
   // gets the same rich rendering, not just the <wb-progress> tag form — #279.)
   if (element.tagName !== 'PROGRESS') {
-    const value = parseFloat(options.value ?? element.getAttribute('value') ?? 0);
+    const authoredValue = (element._wbOriginalSlot || element.textContent || '').trim();
+    const value = parseFloat(options.value ?? element.getAttribute('value') ?? authoredValue ?? 0);
     const max = parseFloat(options.max ?? element.getAttribute('max') ?? 100);
     const variant = options.variant || element.getAttribute('variant') || 'primary';
     const size = options.size || element.getAttribute('size') || 'md';

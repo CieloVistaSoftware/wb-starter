@@ -24,7 +24,7 @@ export function select(element, options = {}) {
 
   const clearable = options.clearable ?? element.hasAttribute('clearable');
 
-  if (clearable) {
+  if (clearable && !element.parentElement?.classList.contains('wb-select-clearable')) {
     const wrapper = document.createElement('div');
     wrapper.className = 'wb-select-clearable';
     if (element.parentNode) {

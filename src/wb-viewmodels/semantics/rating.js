@@ -21,9 +21,10 @@ export function rating(element, options = {}) {
   // showcase markup `<wb-rating value="3" icon="❤️">` was ignored — stars never
   // filled on first paint and the custom icon was dropped. (#177)
   const attr = (name) => element.getAttribute(name);
+  const authoredValue = (element._wbOriginalSlot || element.textContent || '').trim();
   const config = {
     max: parseInt(options.max || attr('max') || element.dataset.max || '5', 10),
-    value: parseInt(options.value || attr('value') || element.dataset.value || '0', 10),
+    value: parseInt(options.value || attr('value') || element.dataset.value || authoredValue || '0', 10),
     readonly: options.readonly ?? (element.hasAttribute('readonly') || element.dataset.readonly === 'true'),
     icon: options.icon || attr('icon') || element.dataset.icon || '★',
     // Filled colour: theme's rating colour by default; override via color="…"

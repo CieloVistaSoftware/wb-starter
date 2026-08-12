@@ -23,9 +23,10 @@ export function input(element, options = {}) {
   if (element.tagName === 'WB-INPUT') {
     if (element.querySelector('input')) return () => {}; // already built (eager runtime already ran)
 
+    const authoredValue = (element._wbOriginalSlot || element.textContent || '').trim();
     const label = element.getAttribute('label') || '';
     const placeholder = element.getAttribute('placeholder') || '';
-    const value = element.getAttribute('value') || '';
+    const value = element.getAttribute('value') || authoredValue;
     const name = element.getAttribute('name') || '';
     const inputType = element.getAttribute('input-type') || element.getAttribute('inputType') || 'text';
     const helper = element.getAttribute('helper') || '';
