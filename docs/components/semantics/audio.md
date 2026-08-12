@@ -22,7 +22,7 @@ Audio player with optional 15-band graphic equalizer.
 | `loop` | boolean | `false` | Loop playback |
 | `autoplay` | boolean | `false` | Auto-play (requires muted) |
 | `muted` | boolean | `false` | Start muted |
-| `showEq` | boolean | `false` | Show 15-band equalizer |
+| `show-eq` | boolean | `false` | Show 15-band equalizer |
 | `bass` | number | `0` | Bass boost (-12 to 12 dB) |
 | `treble` | number | `0` | Treble boost (-12 to 12 dB) |
 
@@ -47,8 +47,9 @@ Wrapped in `<wb-demo>`, so the live component renders below with its source show
 ### Native Audio (Enhanced)
 
 ```html
+<!-- x-audio is auto-injected onto native <audio> tags when autoInject is
+     on -- no attribute needed. -->
 <audio
-  x-audio
   src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3"
   controls>
 </audio>
@@ -59,7 +60,7 @@ Wrapped in `<wb-demo>`, so the live component renders below with its source show
 ```html
 <wb-audio
   src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3"
-  showEq>
+  show-eq>
 </wb-audio>
 ```
 
@@ -93,7 +94,7 @@ Wrapped in `<wb-demo>`, so the live component renders below with its source show
     src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3"
     controls>
   </audio>
-  <!-- EQ Panel (when showEq is true) -->
+  <!-- EQ Panel (when show-eq is present) -->
   <div class="wb-audio__eq">
     <div class="wb-audio__eq-sliders">
       <!-- 15 band sliders -->
@@ -115,7 +116,7 @@ Wrapped in `<wb-demo>`, so the live component renders below with its source show
 | Class | Applied When | Description |
 |-------|--------------|-------------|
 | `.wb-audio` | Always | Base styling |
-| `.wb-audio--eq-visible` | `showEq` | EQ panel visible |
+| `.wb-audio--eq-visible` | `show-eq` | EQ panel visible |
 | `.wb-audio--playing` | Playing | Playback active |
 
 ## Methods
