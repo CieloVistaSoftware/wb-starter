@@ -1,473 +1,256 @@
-# WB-Starter v3.0 Standards
+# WB-Starter v3 Standards
 
-## Overview
+## Purpose
 
-WB v3.0 uses **custom elements** (`<wb-*>`) instead of the legacy `x-behavior` attribute pattern.
+WB-Starter v3 is a composition-only system. Behavior functions receive an existing
+DOM element and apply capability to it in Light DOM. There is no component base
+class, no component inheritance hierarchy, and no Shadow DOM.
 
-### Behaviors vs. Components
+The words **component** and **behavior** describe the contract of the markup and
+the responsibility of the function. They do not describe two different runtime
+mechanisms: both are resolved by the WB registry and invoked as functions.
 
-A **behavior** is just a plain JavaScript function — `(element, options) => cleanup` — that
-attaches capability to an element already on the page. A **component** is the same kind of
-function, except it also owns the element's DOM structure (it builds header/body/footer,
-not just decorates what's there). Both are exported from `src/wb-viewmodels/*.js` and run
-through the exact same dispatch path (`WB.inject()`); "component" and "behavior" describe
-what the function *does* to the element, not two different mechanisms.
+## Component vs. Behavior
 
-That function can attach to an element three different ways:
+### Component
 
-1. **`<wb-*>` custom element** — `<wb-card>`, `<wb-modal>`, `<wb-cardhero>`. The tag itself
-   names the component; the element owns its DOM structure.
-2. **`x-*` attribute** — `<button x-ripple>`, `<span x-tooltip="Hint">`. An explicit opt-in
-   that enhances an element you didn't have to create specially — any existing tag can carry
-   one.
-3. **Plain semantic HTML, no attribute at all** — `<input>`, `<table sortable>`,
-   `<details>`. WB.scan() recognizes the *tag itself* and attaches the matching behavior
-   automatically. See **Autoinject**, below.
-
-### Properties without an `x-` prefix
-
-Once a behavior is attached (by any of the three paths above), the *configuration*
-attributes it reads are plain, clean names — never `x-`-prefixed, never `data-`-prefixed
-(`data-*` is accepted as a fallback for back-compat, but the bare name is canonical). This
-trips people up on the semantic/autoinject elements especially, since there's no `x-`
-anywhere on the tag to signal "this attribute is special." The confirmed set, by element:
-
-| Element | Bare attributes |
-|---|---|
-| `<input>` | `variant`, `prefix`, `suffix`, `clearable` |
-| `<select>` | `clearable` |
-| `<textarea>` | `autosize`, `show-count`, `max-length`, `max-rows`, `min-rows`, `size` |
-| `<button>` | `variant`, `size`, `icon`, `icon-position`, `loading` |
-| `<table>` | `sortable`, `searchable`, `selectable`, `striped`, `hover`, `bordered`, `compact`, `copyable` |
-| `<details>` | `summary`, `open` |
-| `<dialog>` | `title`, `content`, `size`, `modal-title`, `modal-content`, `modal-size`, `slot` |
-| `<progress>` | `value`, `max`, `label`, `variant`, `size`, `indeterminate`, `show-value`, `show-label`, `striped`, `animated` |
-| `<img>` | `zoomable`, `lazy`, `aspect-ratio`, `fallback`, `placeholder` |
-| `<figure>` | `zoom`, `lightbox`, `caption`, `caption-position` |
-| `<video>` | `src`, `controls`, `poster`, `playsinline`, `autoplay`, `loop`, `muted` |
-| `<form>` | `ajax`, `validate` |
-| `<label>` (used as `x-label` on another element) | `label-position`, `required`, `optional` |
-| `<wb-*>` components generally | `title`, `subtitle`, `variant`, `xalign`, `yalign`, `hoverable`, `clickable`, `icon` (see Property Reference below) |
-
-### Autoinject
-
-Autoinject is what lets `<input>`, `<table sortable>`, and friends work with **zero** special
-attributes. `src/core/tag-map.js` exports a `nativeMap` — a lookup from plain tag name (or a
-more specific selector like `input[type="checkbox"]`) straight to a behavior name:
-
-```javascript
-export const nativeMap = {
-  'input[type="checkbox"]': 'checkbox',
-  'input[type="radio"]': 'radio',
-  'input[type="range"]': 'range',
-  'input': 'input',
-  'select': 'select',
-  'textarea': 'textarea',
-  'button': 'button',
-  'form': 'form',
-  'fieldset': 'fieldset',
-  'label': 'label',
-  'article': 'card',
-  'img': 'image',
-  'video': 'video',
-  'audio': 'audio',
-  'figure': 'figure',
-  'code': 'code',
-  'pre': 'pre',
-  'kbd': 'kbd',
-  'mark': 'mark',
-  'table': 'table',
-  'details': 'details',
-  'dialog': 'dialog',
-  'progress': 'progress',
-  'header': 'header',
-  'footer': 'footer'
-};
-```
-
-When `WB.scan()` walks the DOM (both `wb.js` and `wb-lazy.js` implement this), every element
-it finds is checked against `nativeMap` by tag name first. A match runs that behavior with no
-attribute required at all — `<input>` alone gets the `input()` behavior; `<table sortable>`
-gets `table()`. Two rules keep this from misfiring:
-
-- **Order matters.** `getNativeBehavior()` returns on the first selector match, so the
-  specific `input[type="checkbox"]`/`[type="radio"]`/`[type="range"]` entries are checked
-  *before* the generic `'input': 'input'` fallback — a checkbox still gets `checkbox()`, not
-  the generic input wrapper.
-- **Opt-in behaviors always win.** If an element already carries a *different*, more specific
-  `x-{behavior}` attribute (`x-password`, `x-search`, `x-autocomplete`, …), autoinject skips
-  its generic fallback entirely — you never get both the generic `input()` wrapper and the
-  explicit one double-applied to the same element.
-
-Autoinject only fires when `WB.init({ autoInject: true })` — the default — is used; passing
-`autoInject: false` disables it and every element needs an explicit `x-*` attribute or
-`wb-*` tag instead.
-
-Every demo and `.md` doc in this project follows
-[Demos & Documentation Standards](./DEMOS-AND-DOCS-STANDARDS.md) when showing any of the
-above in action — live `<wb-demo>` blocks (not static code fences), one code sample per
-rendered element, vertical/highlighted code with no horizontal scrollbars, themed Markdown,
-composition over inheritance, mobile-first.
-
----
-
-## Naming Conventions
-
-### Components: `<wb-componentname>`
-
-All components use the `wb-` prefix as custom element tags:
+Use a component when the markup needs a named WB-Starter boundary with a defined
+presentation or structure. Components use an autonomous `<wb-*>` tag. The mapped
+behavior may create or normalize the component's internal Light DOM, apply its
+classes, bind events, and expose its API.
 
 ```html
-<!-- v3.0 Syntax -->
-<wb-card title="Hello">Content</wb-card>
-<wb-modal id="my-modal">...</wb-modal>
-<wb-badge variant="success">New</wb-badge>
-<wb-cardhero
-  title="Welcome"
-  xalign="center">
-</wb-cardhero>
-```
-
-### Behaviors: `x-behaviorname`
-
-Behaviors (enhancements to existing elements) use the `x-` prefix as attributes:
-
-```html
-<!-- v3.0 Syntax -->
-<button x-ripple>Click me</button>
-<span x-tooltip="Helpful tip">Hover me</span>
-<div x-animate="fadeIn">Animated</div>
-<nav x-sticky>Sticky nav</nav>
-```
-
-### Properties: Clean Names (NO prefix)
-
-Properties on custom elements use **clean attribute names** - no `data-` or `x-` prefix:
-
-```html
-<!-- CORRECT: Clean property names -->
-<wb-card
-  title="Hello"
-  variant="glass"
-  hoverable>
-  <!-- WRONG: Don't use data- prefix -->
-  <wb-card
-    title="Hello"
-    variant="glass">
-```
-
----
-
-## Property Reference
-
-| Property | Type | Values | Description |
-|----------|------|--------|-------------|
-| `title` | string | any | Title text |
-| `subtitle` | string | any | Subtitle text |
-| `variant` | string | `default`, `glass`, `float`, etc. | Visual style variant |
-| `xalign` | string | `left`, `center`, `right` | Horizontal alignment |
-| `yalign` | string | `top`, `middle`, `bottom` | Vertical alignment |
-| `hoverable` | boolean | present/absent | Enable hover effect |
-| `clickable` | boolean | present/absent | Enable click behavior |
-| `icon` | string | emoji or icon class | Icon to display |
-
----
-
-## File Structure
-
-### 1. Schema Files: `src/wb-models/{name}.schema.json`
-
-Each component has a schema that defines its properties and DOM structure:
-
-```
-src/wb-models/
-├── card.schema.json        → <wb-card>
-├── cardhero.schema.json    → <wb-cardhero>
-├── cardimage.schema.json   → <wb-cardimage>
-├── modal.schema.json       → <wb-modal>
-├── badge.schema.json       → <wb-badge>
-└── index.json              → Schema registry
-```
-
-### 2. Behavior Files: `src/wb-viewmodels/{name}.js`
-
-JavaScript behavior functions that add interactivity:
-
-```
-src/wb-viewmodels/
-├── card.js       → exports: card, cardhero, cardimage, etc.
-├── modal.js      → exports: modal
-├── badge.js      → exports: badge
-└── index.js      → Behavior registry
-```
-
-### 3. Style Files: `src/styles/components/{name}.css`
-
-Component-specific CSS:
-
-```
-src/styles/components/
-├── card.css
-├── modal.css
-├── badge.css
-└── ...
-```
-
----
-
-## JavaScript API
-
-### Behavior Function Signature
-
-```javascript
-// src/wb-viewmodels/card.js
-
-/**
- * Card component behavior
- * @param {HTMLElement} element - The <wb-card> element
- * @param {Object} options - Configuration from attributes
- */
-export function card(element, options = {}) {
-  const config = {
-    title: element.getAttribute('title') || options.title || '',
-    variant: element.getAttribute('variant') || options.variant || 'default',
-    xalign: element.getAttribute('xalign') || options.xalign || 'left',
-    hoverable: element.hasAttribute('hoverable'),
-    clickable: element.hasAttribute('clickable'),
-    ...options
-  };
-  
-  // Apply the BEM block class
-  element.classList.add('wb-card');
-  
-  // Apply variant class
-  if (config.variant !== 'default') {
-    element.classList.add(`wb-card--${config.variant}`);
-  }
-  
-  // Apply alignment
-  if (config.xalign !== 'left') {
-    element.classList.add(`wb-card--xalign-${config.xalign}`);
-  }
-  
-  // Build DOM structure if needed
-  // ...
-  
-  // Return API
-  return {
-    show: () => element.hidden = false,
-    hide: () => element.hidden = true,
-    toggle: () => element.hidden = !element.hidden
-  };
-}
-```
-
-### Variant Functions
-
-Each variant is a separate exported function:
-
-```javascript
-// src/wb-viewmodels/card.js
-
-// default card
-export function card(element, options) {}
-
-// hero variant
-export function cardhero(element, options) {}
-
-// image variant
-export function cardimage(element, options) {}
-
-// glass variant
-export function cardglass(element, options) {}
-
-// profile variant
-export function cardprofile(element, options) {}
-```
-
-### Creating Components Programmatically
-
-```javascript
-// Method 1: Using document.createElement
-const card = document.createElement('wb-card');
-card.setAttribute('title', 'My Card');
-card.setAttribute('variant', 'glass');
-card.textContent = 'Card content';
-document.body.appendChild(card);
-
-// WB.scan() will automatically process it
-WB.scan();
-
-// Method 2: Using WB.create (if available)
-const card = WB.create('card', {
-  title: 'My Card',
-  variant: 'glass',
-  content: 'Card content'
-});
-document.body.appendChild(card);
-```
-
----
-
-## Schema Structure
-
-```json
-{
-  "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "$id": "card.schema.json",
-  "title": "Card",
-  "description": "A flexible card component",
-  
-  "behavior": "card",
-  "baseClass": "wb-card",
-  
-  "properties": {
-    "title": {
-      "type": "string",
-      "description": "Card title"
-    },
-    "variant": {
-      "type": "string",
-      "enum": ["default", "glass", "float"],
-      "default": "default",
-      "appliesClass": "wb-card--{{value}}"
-    },
-    "xalign": {
-      "type": "string",
-      "enum": ["left", "center", "right"],
-      "default": "left",
-      "appliesClass": "wb-card--xalign-{{value}}"
-    },
-    "hoverable": {
-      "type": "boolean",
-      "default": false,
-      "appliesClass": "wb-card--hoverable"
-    }
-  },
-  
-  "$view": [
-    { "name": "header", "tag": "header", "class": "wb-card__header" },
-    { "name": "title", "tag": "h3", "class": "wb-card__title", "parent": "header" },
-    { "name": "body", "tag": "div", "class": "wb-card__body" }
-  ],
-  
-  "$methods": {
-    "show": { "description": "Shows the card" },
-    "hide": { "description": "Hides the card" },
-    "toggle": { "description": "Toggles visibility" }
-  },
-  
-  "$cssAPI": {
-    "--wb-card-padding": { "default": "1rem", "description": "Card padding" },
-    "--wb-card-radius": { "default": "8px", "description": "Border radius" },
-    "--wb-card-shadow": { "default": "0 2px 8px rgba(0,0,0,0.1)", "description": "Box shadow" }
-  }
-}
-```
-
----
-
-## CSS Class Naming (BEM)
-
-| Component | Block | Modifier | Element |
-|-----------|-------|----------|---------|
-| `<wb-card>` | `.wb-card` | `.wb-card--glass` | `.wb-card__header` |
-| `<wb-modal>` | `.wb-modal` | `.wb-modal--lg` | `.wb-modal__title` |
-| `<wb-badge>` | `.wb-badge` | `.wb-badge--success` | `.wb-badge__icon` |
-
----
-
-## Migration Guide
-
-### Before (Legacy v2)
-```html
-<div
-  x-card
-  title="Hello"
-  variant="glass">
-  Content here
-</div>
-<button x-ripple>Click me</button>
-<div
-  x-cardhero
-  title="Welcome"
-  align="center"
-  background="url(bg.jpg)">
-</div>
-```
-
-### After (v3.0)
-```html
-<wb-card
-  title="Hello"
-  variant="glass">
-  Content here
+<wb-card title="Release notes" variant="glass">
+  <p>Changes in this release.</p>
 </wb-card>
-<button x-ripple>Click me</button>
-<wb-cardhero
-  title="Welcome"
-  xalign="center"
-  background="url(bg.jpg)">
-</wb-cardhero>
+
+<wb-dialog title="Confirm action">
+  <p>Continue?</p>
+</wb-dialog>
 ```
 
----
+The tag is the component's public boundary. It is not a class instance that must
+extend a shared base class. A `<wb-*>` tag is mapped to a behavior in
+`src/core/tag-map.js`; registration shims required by the Custom Elements API do
+not create an inheritance model or hold shared component logic.
+
+Component schemas live in `src/wb-models/{name}.schema.json`. Component behavior
+functions live in `src/wb-viewmodels/{name}.js`, and their styles live in the
+appropriate file under `src/styles/behaviors/`.
+
+### Behavior
+
+Use a behavior when an existing element already has the right semantic meaning and
+only needs an enhancement. An explicit behavior uses an `x-*` attribute:
+
+```html
+<button x-ripple type="button">Save</button>
+<a x-tooltip="Open the release notes" href="/release-notes">Release notes</a>
+<nav x-sticky aria-label="Primary">...</nav>
+```
+
+An `x-*` attribute is an opt-in declaration. It does not replace the host element,
+and it does not turn that element into a subclass. A behavior function must work
+with the element it receives and must preserve the element's native semantics.
+
+Effects, utilities, and enhancements generally belong here. A behavior can also
+be applied to a `<wb-*>` host when that combination is meaningful.
+
+### Semantic auto-injection
+
+Use native semantic HTML first when it expresses the meaning of the content or
+control. When auto-injection is enabled for the page, WB can map selected native
+elements to behaviors through `nativeMap`:
+
+```html
+<button variant="primary" type="button">Save</button>
+<details>
+  <summary>More information</summary>
+  <p>Additional details.</p>
+</details>
+<table sortable>
+  <caption>Recent releases</caption>
+  ...
+</table>
+```
+
+These elements remain native HTML elements. The behavior decorates them in place;
+it must not replace a meaningful native element with a generic `<div>` or require
+an unnecessary `x-*` marker. The supported mappings are maintained in
+`src/core/tag-map.js` (`nativeMap`). Auto-injection is a page configuration choice,
+so do not assume that a bare native element is enhanced on every page.
+
+The native element's own semantics remain authoritative. Use correct headings,
+labels, captions, landmarks, button types, form relationships, alternative text,
+and keyboard behavior before adding visual enhancements. Add ARIA only when native
+HTML cannot express the required state or relationship.
+
+## Choosing a Markup Form
+
+Use this order when authoring markup:
+
+1. Choose the correct native semantic element when it expresses the requirement.
+2. Add an `x-*` behavior when an existing element needs an explicit enhancement.
+3. Use a `<wb-*>` component when a named WB-Starter component boundary or owned
+   structure is required.
+
+Do not use a `<wb-*>` tag merely to style an element, and do not use a generic
+`<div>` when a native semantic element is available. Do not use both a generic
+native mapping and an explicit replacement behavior on the same host unless the
+combination is intentional and supported. More-specific mappings, such as
+`input[type="checkbox"]`, take precedence over generic mappings such as `input`.
+
+## Naming and Attributes
+
+### Tags and behavior attributes
+
+- Components use lowercase `<wb-component-name>` tags.
+- Explicit behaviors use lowercase `x-behavior-name` attributes.
+- Behavior attributes may be boolean or carry the behavior's configuration value.
+
+```html
+<wb-badge variant="success">Ready</wb-badge>
+<button x-tooltip="Save this record" type="button">Save</button>
+```
+
+### Configuration attributes
+
+Configuration attributes use clean names. Do not add `x-` or `data-` to a
+component or behavior property:
+
+```html
+<wb-card title="Hello" variant="glass" hoverable></wb-card>
+<input type="text" clearable>
+<table sortable searchable></table>
+```
+
+`data-*` is not the canonical configuration API for `<wb-*>` or `x-*` elements.
+Follow the component schema or behavior documentation for the accepted property
+names and values. Do not use `data-*` attributes as a substitute for declared
+properties.
+
+## Light DOM and Composition Rules
+
+- Never use `attachShadow()`, `this.shadowRoot`, or `ShadowRoot`.
+- Never create or extend `WBBaseComponent` or another shared component base class.
+- Behavior functions receive `(element, options)` and operate on that element.
+- Put reusable logic in exported helper functions, behaviors, schemas, and design
+  tokens rather than parent classes.
+- Preserve existing child content unless the component contract explicitly owns
+  and transforms it.
+- Generate per-instance IDs when ARIA relationships require them; never hardcode
+  an ID inside reusable component behavior.
+- Use ES modules (`import` and `export`) throughout the implementation.
+
+## File Layout
+
+| Concern | Location |
+| --- | --- |
+| Component schema | `src/wb-models/{name}.schema.json` |
+| Behavior function | `src/wb-viewmodels/{name}.js` |
+| Behavior registry/index | `src/wb-viewmodels/index.js` |
+| Tag and selector mappings | `src/core/tag-map.js` |
+| Behavior styles | `src/styles/behaviors/{name}.css` |
+
+Keep component and behavior CSS in the existing behavior style files. Do not add
+inline style blocks or page-local copies of component styles.
+
+## Runtime Dispatch
+
+The WB runtime discovers declarations through three maps:
+
+| Markup | Map | Meaning |
+| --- | --- | --- |
+| `<wb-card>` | `elementMap` | Named component boundary |
+| `<button x-ripple>` | `extensionMap` | Explicit enhancement |
+| `<button>`, `<details>`, `<table>` | `nativeMap` | Optional semantic auto-injection |
+
+`WB.init()` scans existing markup and can observe dynamically added markup.
+`WB.inject(element, name, options)` applies a resolved behavior once to the host
+element. The dispatch path is shared, but the markup contract determines whether
+the function is being used as a component or as an enhancement.
+
+## Examples
+
+### Component with semantic children
+
+```html
+<wb-article>
+  <header>
+    <h2>Article title</h2>
+    <p>Short summary.</p>
+  </header>
+  <p>Article content.</p>
+  <footer>
+    <time datetime="2026-08-07">August 7, 2026</time>
+  </footer>
+</wb-article>
+```
+
+The `<wb-article>` boundary identifies the component, while its internal
+`<header>`, heading, paragraph, footer, and `<time>` elements retain their native
+meaning.
+
+### Native element with an explicit enhancement
+
+```html
+<button x-ripple type="submit">Submit</button>
+```
+
+The button remains a button. The behavior adds the interaction without changing
+the control's native role, focus model, or form behavior.
+
+### Native element with configured auto-injection
+
+```html
+<form validate>
+  <label for="email">Email</label>
+  <input id="email" name="email" type="email" required>
+  <button type="submit">Continue</button>
+</form>
+```
+
+When the page enables the corresponding native mappings, WB enhances these
+elements in place. The markup remains valid and meaningful without WB.
+
+## Migration from Legacy Syntax
+
+Legacy v2 component declarations used behavior attributes for structures that are
+now named components. Convert the structure to a `<wb-*>` tag, while retaining
+`x-*` for genuine enhancements:
+
+```html
+<!-- Legacy v2 -->
+<div x-card title="Hello" variant="glass">Content</div>
+<button x-ripple type="button">Click me</button>
+
+<!-- v3 -->
+<wb-card title="Hello" variant="glass">Content</wb-card>
+<button x-ripple type="button">Click me</button>
+```
+
+Do not convert semantic HTML to a custom tag just to obtain styling. Prefer the
+native form and use `nativeMap` or an explicit `x-*` behavior as appropriate.
 
 ## Quick Reference
 
-```
-┌─────────────────────────────────────────────────────────┐
-│  WB v3.0 SYNTAX CHEAT SHEET                             │
-├─────────────────────────────────────────────────────────┤
-│                                                         │
-│  COMPONENTS (custom elements)                           │
-│  ─────────────────────────────                          │
-│  <wb-card title="..." variant="glass">                  │
-│  <wb-modal id="my-modal">                               │
-│  <wb-badge variant="success">                           │
-│  <wb-cardhero xalign="center">                          │
-│                                                         │
-│  BEHAVIORS (attribute on existing elements)             │
-│  ─────────────────────────────────────────              │
-│  <button x-ripple>                                      │
-│  <span x-tooltip="Tip text">                            │
-│  <div x-animate="fadeIn">                               │
-│  <header x-sticky>                                      │
-│                                                         │
-│  PROPERTIES (clean names, no prefix)                    │
-│  ─────────────────────────────────────                  │
-│  title="Hello"          ✓ CORRECT                       │
-│  variant="glass"        ✓ CORRECT                       │
-│  xalign="center"        ✓ CORRECT                       │
-│  title="Hello"     ✗ WRONG (legacy)                │
-│                                                         │
-│  ALIGNMENT                                              │
-│  ─────────                                              │
-│  xalign="left|center|right"  (horizontal ←→)           │
-│  yalign="top|middle|bottom"  (vertical ↑↓)             │
-│                                                         │
-│  FILE STRUCTURE                                         │
-│  ──────────────                                         │
-│  Schema:   src/wb-models/{name}.schema.json             │
-│  Behavior: src/wb-viewmodels/{name}.js                  │
-│  Style:    src/styles/components/{name}.css             │
-│                                                         │
-└─────────────────────────────────────────────────────────┘
-```
+```text
+COMPONENT BOUNDARY
+<wb-card title="..." variant="glass">...</wb-card>
 
----
+EXPLICIT ENHANCEMENT
+<button x-ripple type="button">Save</button>
 
-## Component vs Behavior Decision Tree
+SEMANTIC HTML WITH OPTIONAL AUTO-INJECTION
+<button type="button">Save</button>
+<details><summary>More</summary>...</details>
 
-```
-Is this creating new DOM structure?
-├── YES → Use <wb-*> custom element
-│         Examples: <wb-card>, <wb-modal>, <wb-badge>
-│
-└── NO → Is this enhancing an existing element?
-         ├── YES → Use x-* attribute
-         │         Examples: x-ripple, x-tooltip, x-sticky
-         │
-         └── NO → Use utility class
-                  Examples: .wb-glass, .wb-gradient-text
+CONFIGURATION
+title="..." variant="glass" sortable
+No x- prefix. No data- prefix.
+
+IMPLEMENTATION
+Schema:   src/wb-models/{name}.schema.json
+Behavior: src/wb-viewmodels/{name}.js
+Styles:   src/styles/behaviors/{name}.css
 ```

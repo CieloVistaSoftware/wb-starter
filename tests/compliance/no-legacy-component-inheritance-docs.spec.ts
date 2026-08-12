@@ -80,4 +80,11 @@ test.describe('docs must not teach legacy component inheritance', () => {
       `these docs teach legacy component inheritance (use composition instead):\n  ${offenders.join('\n  ')}`,
     ).toEqual([]);
   });
+
+  test('card composition has no obsolete base helper or gallery label', () => {
+    const cardSource = fs.readFileSync(path.join(ROOT, 'src/wb-viewmodels/card.js'), 'utf8');
+    const cardDemo = fs.readFileSync(path.join(ROOT, 'demos/site/cards.html'), 'utf8');
+    expect(cardSource).not.toContain('cardBase');
+    expect(cardDemo).not.toMatch(/Base Card|id="demo-base"/);
+  });
 });

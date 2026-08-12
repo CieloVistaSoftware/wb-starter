@@ -215,7 +215,7 @@ test.describe('Source-Schema: Required Children', () => {
 
 test.describe('Source-Schema: Card Border Compliance', () => {
   
-  test('cardBase sets border', () => {
+  test('shared card composition sets border', () => {
     const cardJsPath = path.join(PATHS.behaviorsJs, 'card.js');
     if (!fileExists(cardJsPath)) {
       test.skip();
@@ -224,7 +224,7 @@ test.describe('Source-Schema: Card Border Compliance', () => {
     
     const cardJs = readFile(cardJsPath);
     const hasBorder = cardJs.includes("element.style.border =") || cardJs.includes("element.style.border=");
-    expect(hasBorder, 'cardBase MUST set element.style.border').toBe(true);
+    expect(hasBorder, 'shared card composition MUST set element.style.border').toBe(true);
   });
 });
 

@@ -203,7 +203,7 @@ function positionPopover(trigger, popover, position) {
  * before.
  */
 export function drawer(element, options = {}) {
-  // v3.0: matches the schemaProcessed-aware pattern used by cardBase()/
+  // v3.0: matches the schemaProcessed-aware pattern used by composeCard()/
   // cardnotification() (card.js) -- options.schemaProcessed is set when
   // WB.inject() is called directly from schema-builder.js's own post-build
   // hook; the x-schema attribute fallback covers the (more common, for this

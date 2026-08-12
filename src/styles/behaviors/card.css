@@ -30,12 +30,12 @@
   border-radius: var(--radius-lg, 0.5rem);
   overflow: hidden;
   /* all 0.2s ease (not the narrower transform/box-shadow/border-color list) --
-     card.js used to set this inline via cardBase's baseStyles, which always
+    card.js used to set this inline via composeCard's shared styles, which always
      won over this rule regardless of the properties listed here. Matching it
      here (Law 9 migration, #370) keeps the exact same transition behavior
      now that the inline version is gone. */
   transition: all 0.2s ease;
-  /* contain/overflow-wrap: moved here from cardBase's inline baseStyles
+  /* contain/overflow-wrap: moved here from composeCard's inline styles
      (Law 9, #370) -- contain:layout paint is a perf optimization (isolates
      layout/paint), overflow-wrap:break-word stops long unbroken text (e.g. a
      hero title) from blowing out the card's width. */
@@ -83,7 +83,7 @@
 }
 
 .wb-card__footer {
-  /* padding:1rem (uniform), not 0.75rem 1rem -- cardBase's inline
+  /* padding:1rem (uniform), not 0.75rem 1rem -- composeCard's inline
      STYLE_FOOTER (card.js) always won over this rule's old 0.75rem-vertical
      value, so 1rem-all-sides was the actual live rendering for a
      freshly-built footer. Matched here (Law 9 migration, #370) rather than
@@ -205,7 +205,7 @@
 
 .wb-card__title {
   /* margin-bottom:0.5rem (not 0), font-size:1.1rem (not 1.125rem) -- these
-     used to come from cardBase's inline STYLE_TITLE (card.js), which always
+    used to come from composeCard's inline STYLE_TITLE (card.js), which always
      won over this rule's old values, so 1.1rem/0.5rem-bottom was the actual
      live rendering. Updated here to match (Law 9 migration, #370) rather
      than silently shrinking every card title by removing the inline. */
@@ -221,7 +221,7 @@
   color: var(--text-secondary);
 }
 
-/* Header badge -- moved here from cardBase's inline STYLE_BADGE (Law 9,
+/* Header badge -- moved here from composeCard's inline STYLE_BADGE (Law 9,
    #370). */
 .wb-card__badge {
   display: inline-block;
@@ -358,7 +358,7 @@
 /* Minimal (#457) — same gap as bordered/flat above: cardhorizontal,
    cardimage, cardlink, cardpricing, cardproduct, cardstats, cardtestimonial
    and cardvideo (see their .schema.json `variant` enums) all declare
-   "minimal", and cardBase() (card.js) applies the resulting `wb-card--minimal`
+  "minimal", and composeCard() (card.js) applies the resulting `wb-card--minimal`
    class generically for every one of them -- but until now the ONLY CSS rule
    for it was scoped to `.wb-testimonial.wb-card--minimal` below, so every
    other card type's "minimal" variant rendered pixel-identical to "default"
@@ -366,7 +366,7 @@
    surface — background var(--bg-secondary), 1px border, no visible change).
    Generic, unscoped rule (matching the bordered/flat convention) so ANY card
    type declaring "minimal" gets the same stripped-down treatment: transparent
-   background, no border, no shadow. cardBase() already special-cases
+  background, no border, no shadow. composeCard() already special-cases
    'minimal' in its `ownsOwnSurface` list (skips the inline default-surface
    override), so this class-based rule is free to take effect without an
    inline style fighting it. */
@@ -502,7 +502,7 @@
 /* Rack -- fallback values added (Law 9 migration, #370): --rack-bg/
    --rack-border/--rack-side/--rack-text are not defined anywhere in
    themes.css, so this rule alone previously resolved to nothing. card.js's
-   cardBase used to unconditionally re-apply these exact literal colors
+  composeCard used to unconditionally re-apply these exact literal colors
    inline (hardcoded, not theme-aware) on top of this rule, which is the
    only reason "rack" ever rendered correctly. Moving those literals here as
    var() fallbacks keeps the identical rendered result while letting a theme
@@ -1352,7 +1352,7 @@ wb-cardnotification,
    Schema: cardportfolio.schema.json  |  Behavior: card.js → cardportfolio()
 
    cardportfolio() adds `wb-portfolio--{variant}` (compact/horizontal/full)
-   and cardBase() adds the shared `wb-card--{size}` (xs/sm/md/lg/xl/full)
+  and composeCard() adds the shared `wb-card--{size}` (xs/sm/md/lg/xl/full)
    classes, but until now nothing here matched `.wb-portfolio--*` at all, so
    compact/horizontal rendered pixel-identical to default. `.wb-card--{size}`
    itself is real (SIZE VARIANTS section above), but its effect is *only*

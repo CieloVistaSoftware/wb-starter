@@ -91,7 +91,7 @@
 
   "implementationRequirements": {
     "javascript": {
-      "baseFunction": "cardBase() MUST render header if title/subtitle exist, footer if footer exists",
+      "baseFunction": "composeCard() MUST render header if title/subtitle exist, footer if footer exists",
       "variants": "Variants call base first, then add to main - NEVER skipStructure",
       "rendering": "Check each text property - if has value, render element and make editable"
     },

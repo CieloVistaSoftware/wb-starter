@@ -4,7 +4,7 @@
  * Custom Tag: <wb-card>
  * -----------------------------------------------------------------------------
  */
-import { cardBase } from './card.js';
+import { composeCard } from './card.js';
 
 export class WBCard extends HTMLElement {
   constructor() {
@@ -16,7 +16,7 @@ export class WBCard extends HTMLElement {
   connectedCallback() {
     // Initialize the card behavior
     // We pass 'this' as the element
-    this._base = cardBase(this, {
+    this._base = composeCard(this, {
       ...this.dataset,
       behavior: this.getAttribute('behavior') || 'card',
       variant: this.getAttribute('variant') || 'default',

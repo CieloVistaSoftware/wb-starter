@@ -429,10 +429,10 @@ test.describe('Schema Validation: Test Section Completeness', () => {
         const hasDataWb = html.includes(dataWbPattern);
         const hasXAttr = xAttrPattern.test(html);
 
-        const usesCardBase = schema.schemaFor.startsWith('card') &&
+        const usesSharedCardMarkup = schema.schemaFor.startsWith('card') &&
           (html.includes('data-wb="card"') || html.includes('<wb-card'));
 
-        if (!hasWbTag && !hasDataWb && !hasXAttr && !usesCardBase) {
+        if (!hasWbTag && !hasDataWb && !hasXAttr && !usesSharedCardMarkup) {
           issues.push(`${file}: setup[${i}] doesn't use <wb-${schema.schemaFor}>, x-${schema.schemaFor}, or data-wb="${schema.schemaFor}"`);
         }
       }

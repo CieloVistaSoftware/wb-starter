@@ -79,7 +79,7 @@ Every component example is a `<wb-demo>` — it renders the **live control** AND
 
 - Components compose via `<wb-*>` tags + `x-*` behaviors. There is **no** component
   base-class hierarchy. Do not write "is-a relationship", "variants inherit from
-  `cardBase`", or "Why Inheritance Matters" — reframe as composition.
+  "card base class", or "Why Inheritance Matters" — reframe as composition.
 - Say what actually happens: capability is **applied to** an element by a behavior
   function `(element, options)`; it is never **acquired by** subclassing. Shared
   structure comes from semantic HTML, exported helper functions, and design tokens.
