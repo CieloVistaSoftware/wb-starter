@@ -46,6 +46,22 @@ const CONTAINER_NAME_RE = /\.?(?:[\w-]*demo[\w-]*|[\w-]*example[\w-]*|component-
 const BASE_CONTAINER_RE = /^(?:wb-demo|wb-code-card|\.component-box|\.code-example)$/i;
 const MIN_REM = 1;
 
+// Standard §13 targets "example/demo containers" (the box), not every
+// selector whose name happens to contain "demo" -- a single row *inside*
+// a container is a list-item, not itself a container, and doesn't inherit
+// the >=1rem requirement. `.wb-demo__events-log-entry` is one dense line
+// of a live scrollable event log (`.wb-demo__events-log`, which DOES get
+// >=1rem padding as the actual container): 1rem top+bottom padding per
+// entry would roughly double each row's height and fit only ~3 entries in
+// the log's 10rem max-height before scrolling, defeating the point of a
+// live feed. Same rationale already established in
+// demo-layout-standards.spec.ts, which exempts compact atoms (badges,
+// pills, kbd keys, pagination digits) from the live-DOM version of this
+// same §13 check for the same reason -- 1rem would be a visual regression
+// there, not a fix. Add future exceptions here only with equally specific
+// justification, never as a default way to dodge the check.
+const SELECTOR_EXCEPTIONS = new Set<string>(['.wb-demo__events-log-entry']);
+
 function walk(dir: string, out: string[]): void {
   let ents: fs.Dirent[];
   try { ents = fs.readdirSync(dir, { withFileTypes: true }); } catch { return; }
@@ -94,6 +110,12 @@ test('demo/example container CSS rules have >= 1rem gap/padding (Standard §13, 
       const body = m[2];
       if (!CONTAINER_NAME_RE.test(selector)) continue;
 
+      // A selector can be a comma-separated list sharing one rule body
+      // (e.g. "wb-demo,\nwb-code-card { ... }") — used below both to skip
+      // SELECTOR_EXCEPTIONS and for the missing-padding base-container check.
+      const tokens = selector.split(',').map(s => s.trim());
+      if (tokens.every(t => SELECTOR_EXCEPTIONS.has(t))) continue;
+
       for (const prop of ['gap', 'row-gap', 'column-gap', 'padding']) {
         const propRe = new RegExp(`(?:^|;)\\s*${prop}\\s*:\\s*([^;]+);`, 'i');
         const pm = body.match(propRe);
@@ -106,9 +128,7 @@ test('demo/example container CSS rules have >= 1rem gap/padding (Standard §13, 
       }
 
       // Missing-padding check, scoped to base containers only (see header
-      // comment) — a selector can be a comma-separated list sharing one rule
-      // body (e.g. "wb-demo,\nwb-code-card { ... }").
-      const tokens = selector.split(',').map(s => s.trim());
+      // comment).
       const hasSufficientPadding = (() => {
         const pm = body.match(/(?:^|;)\s*padding\s*:\s*([^;]+);/i);
         if (!pm) return false;
