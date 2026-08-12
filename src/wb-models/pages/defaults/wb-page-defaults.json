@@ -7,7 +7,8 @@
     "theme": "dark",
     "stylesheets": [
       "../src/styles/themes.css",
-      "../src/styles/site.css"
+        "../src/styles/site.css",
+        "../src/styles/pages/showcase.css"
     ],
     "scripts": [
       {

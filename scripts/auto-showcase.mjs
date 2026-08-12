@@ -107,7 +107,7 @@ function generateSections(schema) {
     });
 
     // Group into rows of 3 max for readability
-    const columns = demos.length <= 2 ? demos.length : demos.length <= 4 ? 2 : 3;
+    const columns = 3;
     sections.push({
       heading: `${schema.schemaFor} — Combinations`,
       tag,
@@ -153,7 +153,7 @@ function generateSections(schema) {
       return { tag, attrs };
     });
 
-    const columns = demos.length <= 2 ? demos.length : demos.length <= 4 ? 2 : 3;
+    const columns = 3;
     sections.push({
       heading: enumSectionHeading(propName),
       tag,
@@ -179,7 +179,7 @@ function generateSections(schema) {
       return { tag, attrs };
     });
 
-    const columns = demos.length <= 2 ? demos.length : 3;
+    const columns = 3;
     sections.push({
       // #412: "Boolean toggles" was a placeholder the site owner disliked
       // with no replacement given. "Toggles" stays short and matches the
@@ -205,7 +205,7 @@ function generateSections(schema) {
       sections.push({
         heading: `${schema.schemaFor} — Defaults`,
         tag,
-        columns: 1,
+        columns: 3,
         demos: [{ tag, attrs: defaultAttrs }]
       });
     }
