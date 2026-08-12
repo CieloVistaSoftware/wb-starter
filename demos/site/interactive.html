@@ -7,6 +7,7 @@
   <title>Interactive & Utility</title>
   <link rel="stylesheet" href="../../src/styles/themes.css">
   <link rel="stylesheet" href="../../src/styles/site.css">
+  <link rel="stylesheet" href="../../src/styles/pages/showcase.css">
 
 </head>
 
@@ -20,17 +21,23 @@
   <!-- 1. 📦 Draggable -->
   <section id="draggable-draggable">
   <h2>📦 Draggable</h2>
-  <wb-demo columns="2">
-    <wb-draggable axis="both">
+  <div class="demo-section__grid demo-section__grid--cols-2">
+    <wb-demo columns="1">
+      <wb-draggable axis="both">
       This is example draggable content.
     </wb-draggable>
-    <wb-draggable axis="x">
+    </wb-demo>
+    <wb-demo columns="1">
+      <wb-draggable axis="x">
       This is example draggable content.
     </wb-draggable>
-    <wb-draggable axis="y">
+    </wb-demo>
+    <wb-demo columns="1">
+      <wb-draggable axis="y">
       This is example draggable content.
     </wb-draggable>
-  </wb-demo>
+    </wb-demo>
+  </div>
   </section>
 
   <!-- 2. 📦 Resizable -->
@@ -46,14 +53,18 @@
   <!-- 3. 📦 Copy -->
   <section id="copy-copy">
   <h2>📦 Copy</h2>
-  <wb-demo columns="2">
-    <wb-copy text="Hello World">
+  <div class="demo-section__grid demo-section__grid--cols-2">
+    <wb-demo columns="1">
+      <wb-copy text="Hello World">
       This is example copy content.
     </wb-copy>
-    <wb-copy text="npm install wb-starter">
+    </wb-demo>
+    <wb-demo columns="1">
+      <wb-copy text="npm install wb-starter">
       This is example copy content.
     </wb-copy>
-  </wb-demo>
+    </wb-demo>
+  </div>
   </section>
 
   <!-- 4. 📦 Dark Mode Toggle -->
@@ -79,27 +90,35 @@
   <!-- 6. 📦 Collapse -->
   <section id="collapse-collapse">
   <h2>📦 Collapse</h2>
-  <wb-demo columns="2">
-    <wb-collapse>
+  <div class="demo-section__grid demo-section__grid--cols-2">
+    <wb-demo columns="1">
+      <wb-collapse>
       This is example collapse content.
     </wb-collapse>
-    <wb-collapse expanded>
+    </wb-demo>
+    <wb-demo columns="1">
+      <wb-collapse expanded>
       This is example collapse content.
     </wb-collapse>
-  </wb-demo>
+    </wb-demo>
+  </div>
   </section>
 
   <!-- 7. 📦 Hero -->
   <section id="hero-hero">
   <h2>📦 Hero</h2>
-  <wb-demo columns="2">
-    <wb-hero variant="default">
+  <div class="demo-section__grid demo-section__grid--cols-2">
+    <wb-demo columns="1">
+      <wb-hero variant="default">
       This is example hero content.
     </wb-hero>
-    <wb-hero variant="cosmic">
+    </wb-demo>
+    <wb-demo columns="1">
+      <wb-hero variant="cosmic">
       This is example hero content.
     </wb-hero>
-  </wb-demo>
+    </wb-demo>
+  </div>
   </section>
 
   <!-- 8. Variants -->

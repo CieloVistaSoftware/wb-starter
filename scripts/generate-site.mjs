@@ -338,7 +338,8 @@ function buildMultiComponentPage(pageDef, defaults) {
       title: pageDef.title,
       stylesheets: [
         '../../src/styles/themes.css',
-        '../../src/styles/site.css'
+        '../../src/styles/site.css',
+        '../../src/styles/pages/showcase.css'
       ],
       scripts: [{
         type: 'module',
@@ -499,8 +500,8 @@ function generatePageHtml(pageSchema) {
         lines.push('');
         continue;
       }
-      lines.push(`  <wb-demo columns="${section.columns || 3}">`);
-      for (const demo of (section.demos || [])) {
+      const demos = section.demos || [];
+      const pushDemoTag = (demo, indent) => {
         const attrs = Object.entries(demo.attrs || {})
           .map(([k, v]) => {
             if (v === true) return ` ${k}`;
@@ -509,15 +510,39 @@ function generatePageHtml(pageSchema) {
           })
           .join('');
         if (demo.children) {
-          lines.push(`    <${demo.tag}${attrs}>`);
-          lines.push(`      ${demo.children}`);
-          lines.push(`    </${demo.tag}>`);
+          lines.push(`${indent}<${demo.tag}${attrs}>`);
+          lines.push(`${indent}  ${demo.children}`);
+          lines.push(`${indent}</${demo.tag}>`);
         } else {
-          lines.push(`    <${demo.tag}${attrs}>`);
-          lines.push(`    </${demo.tag}>`);
+          lines.push(`${indent}<${demo.tag}${attrs}>`);
+          lines.push(`${indent}</${demo.tag}>`);
         }
+      };
+      if (demos.length > 1) {
+        // §2 "one code sample per rendered element (strict 1:1)": a section
+        // sweeping several differently-configured instances of the same
+        // component (enum variants, boolean toggles, matrix combinations)
+        // must not bundle them all under one shared <wb-demo> code sample --
+        // that's the exact "permutation matrix" anti-pattern §2 forbids. One
+        // <wb-demo> per instance instead, each with its own code sample,
+        // wrapped in the same grid layout `.demo-section__grid` already
+        // provides for demos/multi-component-demo-generated.html (see
+        // generate-page.mjs) so the side-by-side comparison view is
+        // unchanged. Fixes #538.
+        lines.push(`  <div class="demo-section__grid demo-section__grid--cols-${section.columns || 3}">`);
+        for (const demo of demos) {
+          lines.push('    <wb-demo columns="1">');
+          pushDemoTag(demo, '      ');
+          lines.push('    </wb-demo>');
+        }
+        lines.push('  </div>');
+      } else {
+        lines.push(`  <wb-demo columns="${section.columns || 3}">`);
+        for (const demo of demos) {
+          pushDemoTag(demo, '    ');
+        }
+        lines.push('  </wb-demo>');
       }
-      lines.push('  </wb-demo>');
       lines.push('  </section>');
       lines.push('');
     }
