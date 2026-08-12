@@ -39,7 +39,11 @@ export function figure(element, options = {}) {
         right: '0',
         background: 'rgba(0,0,0,0.7)',
         color: '#fff',
-        padding: '0.5rem 1rem',
+        // #545: was '0.5rem 1rem' (8px vertical) -- below the site's 1rem
+        // content-panel-edge minimum once the overlay bar is wide/tall
+        // enough to read as a panel (confirmed live: a "Technology and
+        // Nature" overlay caption flagged at 8px on its tightest side).
+        padding: '1rem',
         margin: '0'
       });
     }

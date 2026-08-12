@@ -49,7 +49,12 @@ wb-table th,
 wb-table td,
 .wb-table th,
 .wb-table td {
-  padding: 0.75rem 1rem;
+  /* #545: was 0.75rem 1rem (12px vertical) -- th has its own distinct
+     background (see rule below), so it reads as a content panel and needs
+     the full 1rem to clear the site's content-panel-edge minimum (confirmed
+     live: a "Name" header cell flagged at 12px on its tightest side). td
+     stays matched to th so header/body row padding doesn't visibly split. */
+  padding: 1rem;
   text-align: left;
   border-bottom: 1px solid var(--border-color);
 }

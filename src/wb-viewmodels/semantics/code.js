@@ -108,6 +108,22 @@ export function code(element, options = {}) {
 
   const isInsidePre = element.parentElement && element.parentElement.tagName === 'PRE';
 
+  // #545: inline code inherits its font-size from the surrounding text
+  // (fontSize: 'normal' -> 1em, see sizeMap above). Inside a heading that
+  // inherited size can be 2x+ normal body text (e.g. an h2's 1.75rem), so
+  // the SAME em-relative padding below that reads correctly at 16px body
+  // text renders as only a few px at heading scale -- flagged by the
+  // content-panel-edge compliance test. Confirmed live: a <code> naming a
+  // tag inside "<h2>Audio <code>&lt;audio&gt;</code></h2>" (the pattern
+  // used throughout demos/site/content.html, forms.html, interactive.html)
+  // computed to 4.2px padding (0.15em * 28px). Scope the bigger, absolute
+  // padding to headings only -- switching ALL inline code to rem-based
+  // padding would recreate the "58x60px box for a 2-char snippet"
+  // regression code.css's own history already documents fixing (see that
+  // file's comment on the old project-wide `padding: 1rem !important`
+  // attempt).
+  const inHeading = !isInsidePre && !!element.closest('h1, h2, h3, h4, h5, h6');
+
   // Base styling
   if (isInsidePre) {
     Object.assign(element.style, {
@@ -139,7 +155,7 @@ export function code(element, options = {}) {
     Object.assign(element.style, {
       fontFamily: 'ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace',
       fontSize: fontSize,
-      padding: !isBlock ? '0.15em 0.3em' : '0.5rem 0.75rem',
+      padding: !isBlock ? (inHeading ? '1rem' : '0.15em 0.3em') : '0.5rem 0.75rem',
       borderRadius: 'var(--radius-sm, 4px)',
       backgroundColor: 'var(--bg-tertiary, rgba(255,255,255,0.1))',
       color: 'var(--text-primary, inherit)',
@@ -177,7 +193,10 @@ export function code(element, options = {}) {
         // Fix for inline code: hljs adds 'hljs' class which might set display: block and padding
         if (!isInsidePre && config.variant === 'inline') {
             element.style.display = 'inline';
-            element.style.padding = '0.2em 0.4em';
+            // #545: same heading-scale padding fix as the base styling above --
+            // hljs re-sets padding after highlighting, so it must repeat the
+            // inHeading check or a highlighted <code> in a heading would lose it.
+            element.style.padding = inHeading ? '1rem' : '0.2em 0.4em';
             element.style.backgroundColor = 'var(--bg-tertiary, rgba(255,255,255,0.1))'; // Keep our background for inline
         } else if (isInsidePre) {
              // Ensure background is transparent so pre's background shows
