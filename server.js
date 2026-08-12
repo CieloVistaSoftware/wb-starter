@@ -285,7 +285,17 @@ app.get('/pages/:page', (req, res, next) => {
       // this wrap (matching how themes.css/site.css above are already
       // loaded absolute) -- the source file on disk stays root-relative,
       // correct for its real production consumer.
-      const RESOURCE_REF = /(<(?:link|script|img|source|audio|video)\b[^>]*?\b(?:href|src)\s*=\s*")([^"]+)(")/gi;
+      //
+      // #542: the original #486 fix only listed native tag names, so
+      // <wb-audio src="demos/sample.wav"> (pages/home.html) never matched --
+      // <wb-audio isn't <audio -- and stayed unrewritten, 404ing under this
+      // standalone wrap (confirmed by dark-mode.spec.ts, which navigates
+      // directly here) while working fine via the real SPA-injection
+      // consumer. Added a generic wb-[a-z0-9-]+ alternative so every
+      // src/href-bearing <wb-*> component (wb-audio, wb-avatar, wb-cardimage,
+      // wb-cardvideo today, any future one) is covered, not just today's
+      // known offenders.
+      const RESOURCE_REF = /(<(?:link|script|img|source|audio|video|wb-[a-z0-9-]+)\b[^>]*?\b(?:href|src)\s*=\s*")([^"]+)(")/gi;
       const rewritten = content.replace(RESOURCE_REF, (full, pre, ref, post) => {
         if (/^(https?:|data:|mailto:|#|\/)/i.test(ref) || ref.startsWith('//')) return full;
         return pre + '/' + ref + post;
