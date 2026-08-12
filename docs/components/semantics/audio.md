@@ -17,7 +17,7 @@ Audio player with optional 15-band graphic equalizer.
 
 | Property | Type | Default | Description |
 |----------|------|---------|-------------|
-| `src` | string | Optional | Audio source URL (defaults to pleasant royalty-free demo) |
+| `src` | string | Required | Audio source URL -- no playback without one |
 | `volume` | number | `0.8` | Initial volume (0-1) |
 | `loop` | boolean | `false` | Loop playback |
 | `autoplay` | boolean | `false` | Auto-play (requires muted) |
@@ -29,7 +29,7 @@ Audio player with optional 15-band graphic equalizer.
 Wrapped in `<wb-demo>`, so the live component renders below with its source shown underneath:
 
 <wb-demo>
-<wb-audio></wb-audio>
+<wb-audio src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3"></wb-audio>
 </wb-demo>
 
 ## Usage
@@ -66,8 +66,8 @@ Wrapped in `<wb-demo>`, so the live component renders below with its source show
 ### Background Audio
 
 ```html
-<!-- No src = uses default demo, muted loop in background -->
 <wb-audio
+  src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3"
   autoplay
   muted
   loop>
