@@ -11,13 +11,25 @@ import * as path from 'path';
  * — the "code generation is all wrong" report. v3 uses plain attributes
  * (variant, size, tooltip, value-suffix, …) declared straight on the element.
  *
- * ALLOWED: `data-theme` only — that's the framework theme hook read by
- * src/core/theme.js via documentElement.dataset.theme, not component config.
+ * ALLOWED: framework-level hooks that are never WB behavior config --
+ *   - `data-theme` : read by src/core/theme.js via documentElement.dataset.theme.
+ *   - `data-code-width` : a CSS attribute-selector hook (src/styles/behaviors/demo.css,
+ *     Standard §28), same exception already codified for pages/components.html in
+ *     tests/compliance/legacy-attr-compliance.spec.ts (#200) -- controls the demo's
+ *     code-panel width preset via `wb-demo[data-code-width="…"]`, never read by JS.
+ *     content.html's demos also participate in tests/regression/code-panel-width-
+ *     compliance.spec.ts and code-panel-50vw-min-width.spec.ts, which assert this
+ *     exact attribute name -- renaming it would regress those (#550).
+ *   - `data-wb-expected-errors` : a framework/test-infra hook on `<html>`, read by
+ *     src/core/error-logger.js via `documentElement.hasAttribute(...)`, structurally
+ *     identical to `data-theme` (documentElement flag, not wb-*/x-* component config).
+ *     tests/regression/expected-error-log-suppression.spec.ts asserts this exact
+ *     attribute name -- renaming it would regress that test (#550).
  *
  * EXCLUDED: files whose whole purpose is exercising legacy syntax.
  */
 const ROOT = process.cwd();
-const ALLOWED = new Set<string>(['data-theme']);
+const ALLOWED = new Set<string>(['data-theme', 'data-code-width', 'data-wb-expected-errors']);
 // Demos that intentionally contain legacy syntax to verify it still works,
 // or whose data-* usage isn't WB behavior config at all (#321 follow-up):
 //   - wizard.html: marked obsolete (#337, wizard.spec.ts fully skipped) --
