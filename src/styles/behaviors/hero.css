@@ -184,26 +184,44 @@ wb-cardhero.wb-cardhero--fullbleed {
    the existing wb-cardhero:not([background]) default-gradient convention. */
 
 /* cosmic — a denser, multi-hue nebula: three overlapping radial glows
-   (vs. the default's two) plus a faint repeating-radial starfield.
-   #536: the 4 star layers previously tiled at 3px/4px/3px/5px -- at that
-   pitch a "repeating star" isn't a handful of scattered points, it's a
-   perfectly periodic dot grid, and 4 overlapping grids at nearly identical
-   close pitches produced a moiré/plaid weave across the whole card
-   (confirmed live, screenshotted on cardhero.md's own cosmic example).
-   Tile sizes now sit in the 40-100px range with mutually non-aligning,
-   non-square width/height per layer, so no periodicity is perceivable
-   within a typical hero's width -- reads as scattered stars, not a grid. */
+   (vs. the default's two) plus a starfield.
+   #536: the star layers previously used background-size to TILE a single
+   dot across the element (first 3px/4px/3px/5px, then a coarser 40-100px
+   pass that was still too regular). Any tiled radial-gradient is, by
+   definition, a perfectly periodic lattice -- the eye reads a repeat as a
+   grid at any spacing, coarse or fine (confirmed live via screenshot: the
+   "coarser" attempt still read as a plaid/dot-grid, not scattered stars).
+   Real stars need real scatter: each star below is its own single,
+   non-repeating radial-gradient layer at a hand-picked coordinate --
+   exactly the technique the 3 big color glows two layers down already use,
+   which is why those never looked gridded. No background-size/repeat
+   trickery needed; a plain 'cover'/'no-repeat' applies to every layer. */
 wb-cardhero.wb-cardhero--cosmic:not([background]) {
   background-image:
-    radial-gradient(circle at 20% 30%, hsl(var(--overlay-light-hsl) / 0.9) 0 1px, transparent 1px),
-    radial-gradient(circle at 65% 15%, hsl(var(--overlay-light-hsl) / 0.7) 0 1px, transparent 1px),
-    radial-gradient(circle at 85% 60%, hsl(var(--overlay-light-hsl) / 0.8) 0 1px, transparent 1px),
-    radial-gradient(circle at 40% 80%, hsl(var(--overlay-light-hsl) / 0.6) 0 1px, transparent 1px),
+    radial-gradient(circle at 6% 12%,  hsl(var(--overlay-light-hsl) / 0.55) 0 1px, transparent 1px),
+    radial-gradient(circle at 14% 55%, hsl(var(--overlay-light-hsl) / 0.85) 0 1px, transparent 1px),
+    radial-gradient(circle at 22% 82%, hsl(var(--overlay-light-hsl) / 0.4)  0 1px, transparent 1px),
+    radial-gradient(circle at 29% 24%, hsl(var(--overlay-light-hsl) / 0.7) 0 1px, transparent 1px),
+    radial-gradient(circle at 35% 68%, hsl(var(--overlay-light-hsl) / 0.5) 0 1px, transparent 1px),
+    radial-gradient(circle at 41% 8%,  hsl(var(--overlay-light-hsl) / 0.9) 0 1px, transparent 1px),
+    radial-gradient(circle at 48% 45%, hsl(var(--overlay-light-hsl) / 0.6) 0 1px, transparent 1px),
+    radial-gradient(circle at 54% 91%, hsl(var(--overlay-light-hsl) / 0.75) 0 1px, transparent 1px),
+    radial-gradient(circle at 61% 18%, hsl(var(--overlay-light-hsl) / 0.45) 0 1px, transparent 1px),
+    radial-gradient(circle at 67% 60%, hsl(var(--overlay-light-hsl) / 0.8) 0 1px, transparent 1px),
+    radial-gradient(circle at 73% 35%, hsl(var(--overlay-light-hsl) / 0.55) 0 1px, transparent 1px),
+    radial-gradient(circle at 79% 78%, hsl(var(--overlay-light-hsl) / 0.65) 0 1px, transparent 1px),
+    radial-gradient(circle at 85% 15%, hsl(var(--overlay-light-hsl) / 0.9) 0 1px, transparent 1px),
+    radial-gradient(circle at 91% 50%, hsl(var(--overlay-light-hsl) / 0.5) 0 1px, transparent 1px),
+    radial-gradient(circle at 96% 88%, hsl(var(--overlay-light-hsl) / 0.7) 0 1px, transparent 1px),
+    radial-gradient(circle at 12% 38%, hsl(var(--overlay-light-hsl) / 0.6) 0 1px, transparent 1px),
+    radial-gradient(circle at 58% 70%, hsl(var(--overlay-light-hsl) / 0.4) 0 1px, transparent 1px),
+    radial-gradient(circle at 88% 30%, hsl(var(--overlay-light-hsl) / 0.85) 0 1px, transparent 1px),
     radial-gradient(150% 150% at 10% 10%, hsl(var(--hue-primary, 240) 90% 55% / 0.9), transparent 50%),
     radial-gradient(150% 150% at 90% 30%, hsl(calc(var(--hue-primary, 240) + 90) 85% 50% / 0.85), transparent 55%),
     radial-gradient(150% 150% at 50% 100%, hsl(calc(var(--hue-primary, 240) + 200) 80% 45% / 0.8), transparent 60%),
     linear-gradient(180deg, hsl(var(--overlay-dark-hsl) / 0.95), hsl(var(--overlay-dark-hsl)));
-  background-size: 47px 83px, 61px 53px, 89px 71px, 43px 97px, cover, cover, cover, cover;
+  background-repeat: no-repeat;
+  background-size: cover;
 }
 
 /* split — content pinned to one half, background visible on the other,
