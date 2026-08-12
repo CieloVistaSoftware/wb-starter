@@ -297,11 +297,12 @@
     }
   },
   "events": {
-    "wb:product:addtocart": {
+    "wb:cardproduct:addtocart": {
       "description": "Fired when add to cart is clicked",
       "detail": {
         "title": "string",
-        "price": "string"
+        "price": "string",
+        "id": "string"
       }
     }
   },

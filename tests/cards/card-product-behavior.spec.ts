@@ -54,11 +54,39 @@ test.describe('Card Product Behavior', () => {
     // Click the CTA button
     const ctaBtn = card.locator('.wb-card__product-cta');
     await expect(ctaBtn).toBeVisible();
+    await expect(ctaBtn).toHaveAttribute('type', 'button');
     await ctaBtn.click();
 
     // Verify event detail
     const detail = await eventPromise;
     expect(detail).toEqual({
+      title: 'Test Product',
+      price: '$99.99',
+      id: 'test-product'
+    });
+
+    const keyboardDetail = page.evaluate(() => new Promise(resolve => {
+      document.querySelector('#test-product')?.addEventListener('wb:cardproduct:addtocart', (e) => {
+        resolve((e as CustomEvent).detail);
+      }, { once: true });
+    }));
+    await ctaBtn.press('Enter');
+    expect(await keyboardDetail).toEqual({
+      title: 'Test Product',
+      price: '$99.99',
+      id: 'test-product'
+    });
+
+    const apiDetail = page.evaluate(() => new Promise(resolve => {
+      const card = document.querySelector('#test-product') as HTMLElement & {
+        wbCardProduct?: { addToCart: () => unknown };
+      };
+      card.addEventListener('wb:cardproduct:addtocart', (e) => {
+        resolve((e as CustomEvent).detail);
+      }, { once: true });
+      card.wbCardProduct?.addToCart();
+    }));
+    expect(await apiDetail).toEqual({
       title: 'Test Product',
       price: '$99.99',
       id: 'test-product'

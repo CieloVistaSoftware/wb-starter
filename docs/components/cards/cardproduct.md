@@ -88,6 +88,16 @@ document.querySelector('wb-cardproduct').addEventListener('wb:cardproduct:addtoc
 });
 ```
 
+The same action is available programmatically through `wbCardProduct.addToCart()`:
+
+```javascript
+document.querySelector('wb-cardproduct').wbCardProduct.addToCart();
+```
+
+Both activation paths dispatch the bubbling `wb:cardproduct:addtocart` event with
+`detail: { title, price, id }`. The CTA is a native button, so mouse, keyboard,
+and assistive-technology activation use the same action.
+
 ## Schema
 
 Location: `src/wb-models/cardproduct.schema.json`
