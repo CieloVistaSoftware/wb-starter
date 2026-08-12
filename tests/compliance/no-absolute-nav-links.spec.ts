@@ -41,12 +41,19 @@ function walk(dir: string, exts: string[], out: string[]): void {
   }
 }
 
-// Strip comments so documentation/usage examples don't false-positive: HTML
-// `<!-- … -->`, JS block `/* … */`, and JS line `//…` (guarding `https://`).
+// Strip comments and illustrative code samples so documentation/usage
+// examples don't false-positive: HTML `<!-- … -->`, JS block `/* … */`, JS
+// line `//…` (guarding `https://`), and the text content of `<code>`/`<pre>`
+// elements. A path-looking string quoted inside `<code>`/`<pre>` (e.g. a
+// changelog entry illustrating a past bug with `<wb-mdhtml src="/docs/x.md">`)
+// is prose describing markup, not a real navigable `<a href>`/`<link>`/`src`
+// this scan is meant to catch — same class of false positive #540 fixed by
+// excluding decorative/non-interactive content from a structural check.
 function stripComments(src: string): string {
   let out = src.replace(/<!--[\s\S]*?-->/g, (m) => m.replace(/[^\n]/g, ' '));
   out = out.replace(/\/\*[\s\S]*?\*\//g, (m) => m.replace(/[^\n]/g, ' '));
   out = out.replace(/(^|[^:])\/\/[^\n]*/g, (_m, p1) => p1);
+  out = out.replace(/<(code|pre)\b[^>]*>[\s\S]*?<\/\1>/gi, (m) => m.replace(/[^\n]/g, ' '));
   return out;
 }
 
