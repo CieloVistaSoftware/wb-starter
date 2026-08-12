@@ -97,6 +97,71 @@ that doesn't exist just 404s silently (#534).
 </wb-cardhero>
 </wb-demo>
 
+### Property Combinations
+
+Each example below adds one more property on top of the last, so you can see
+exactly what each one changes in isolation:
+
+<wb-demo full-width>
+<wb-cardhero
+  title="Title only"
+  height="260px">
+</wb-cardhero>
+</wb-demo>
+
+<wb-demo full-width>
+<wb-cardhero
+  title="Title + subtitle"
+  subtitle="Adding a subtitle"
+  height="260px">
+</wb-cardhero>
+</wb-demo>
+
+<wb-demo full-width>
+<wb-cardhero
+  title="Title + subtitle + cta"
+  subtitle="Adding a primary CTA"
+  cta="Click Me"
+  cta-href="#"
+  height="260px">
+</wb-cardhero>
+</wb-demo>
+
+<wb-demo full-width>
+<wb-cardhero
+  title="Title + subtitle + cta + variant"
+  subtitle="Now with variant=cosmic"
+  cta="Click Me"
+  cta-href="#"
+  variant="cosmic"
+  height="260px">
+</wb-cardhero>
+</wb-demo>
+
+<wb-demo full-width>
+<wb-cardhero
+  title="Same, with overlay disabled"
+  subtitle="overlay=false removes the legibility scrim"
+  cta="Click Me"
+  cta-href="#"
+  variant="cosmic"
+  overlay="false"
+  height="260px">
+</wb-cardhero>
+</wb-demo>
+
+<wb-demo full-width>
+<wb-cardhero
+  title="Same, left aligned"
+  subtitle="xalign=left instead of the default center"
+  cta="Click Me"
+  cta-href="#"
+  variant="cosmic"
+  xalign="left"
+  height="260px">
+</wb-cardhero>
+</wb-demo>
+
 ### Rich HTML Title/Subtitle
 
 Not currently supported. `title`/`subtitle` are plain-string attributes only

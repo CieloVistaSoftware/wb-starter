@@ -135,6 +135,7 @@
             <option value="form">Sample form</option>
             <option value="cards">50 cards</option>
             <option value="heroes">20 card heroes</option>
+            <option value="hero-variants">5 hero variants</option>
             <option value="signature-heroes">20 signature heroes</option>
             <option value="xbehaviors">50 x-* behaviors</option>
             <option value="inputs">20 inputs with x-behaviors</option>
@@ -416,6 +417,7 @@
       form: [],
       cards: ['variant', 'size', 'title', 'tag', 'elevated'],
       heroes: ['title', 'tag'],
+      'hero-variants': ['variant', 'title', 'tag'],
       'signature-heroes': ['title', 'tag'],
       xbehaviors: ['tag'],
       badges: ['variant', 'size', 'title', 'tag', 'pill', 'outline', 'removable'],
@@ -661,6 +663,32 @@
       return out.join('\n');
     }
 
+    // All 5 wb-cardhero variant= values (cardhero.schema.json enum:
+    // default/cosmic/split/minimal/gradient, wired in hero.css's
+    // wb-cardhero--{{value}} rules per #383) side by side, each labeled with
+    // its own name -- documented in cardhero.md's Properties table, but
+    // nothing anywhere actually showed all 5 rendered together to compare.
+    function fiveHeroVariants() {
+      const variants = [
+        ['default', 'Default', 'Two radial glows over a diagonal brand gradient, with an animated sheen sweep.'],
+        ['cosmic', 'Cosmic', 'A denser multi-hue nebula with a faint starfield.'],
+        ['split', 'Split', 'Content pinned to one side; background stays visible on the other.'],
+        ['minimal', 'Minimal', 'Flat theme surface -- no sheen, no scrim, no CTA drama.'],
+        ['gradient', 'Gradient', 'A clean two-hue linear sweep, no radial glows or animation.'],
+      ];
+      const out = variants.map(([variant, title, sub]) => {
+        const attrs = [
+          `pretitle="variant=${variant}"`,
+          `title="${title}"`,
+          `subtitle="${sub}"`,
+          `height="320px"`,
+          `variant="${variant}"`,
+        ];
+        return `<wb-cardhero\n  ${attrs.join('\n  ')}>\n</wb-cardhero>`;
+      });
+      return out.join('\n');
+    }
+
     // 50 x-* behavior examples + attribute combinations. Every attribute name
     // below is verified against the actual behavior source (src/wb-viewmodels/
     // *.js) and confirmed wired to a real [x-*] selector in wb-lazy.js — not
@@ -887,6 +915,7 @@
       if (which === 'form') input.value = SAMPLE;
       else if (which === 'cards') input.value = fiftyCards();
       else if (which === 'heroes') input.value = twentyHeroes();
+      else if (which === 'hero-variants') input.value = fiveHeroVariants();
       else if (which === 'signature-heroes') input.value = twentySignatureHeroes();
       else if (which === 'xbehaviors') input.value = fiftyXBehaviors();
       else if (which === 'inputs') input.value = twentyInputs();
