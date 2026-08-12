@@ -184,7 +184,15 @@ wb-cardhero.wb-cardhero--fullbleed {
    the existing wb-cardhero:not([background]) default-gradient convention. */
 
 /* cosmic — a denser, multi-hue nebula: three overlapping radial glows
-   (vs. the default's two) plus a faint repeating-radial starfield. */
+   (vs. the default's two) plus a faint repeating-radial starfield.
+   #536: the 4 star layers previously tiled at 3px/4px/3px/5px -- at that
+   pitch a "repeating star" isn't a handful of scattered points, it's a
+   perfectly periodic dot grid, and 4 overlapping grids at nearly identical
+   close pitches produced a moiré/plaid weave across the whole card
+   (confirmed live, screenshotted on cardhero.md's own cosmic example).
+   Tile sizes now sit in the 40-100px range with mutually non-aligning,
+   non-square width/height per layer, so no periodicity is perceivable
+   within a typical hero's width -- reads as scattered stars, not a grid. */
 wb-cardhero.wb-cardhero--cosmic:not([background]) {
   background-image:
     radial-gradient(circle at 20% 30%, hsl(var(--overlay-light-hsl) / 0.9) 0 1px, transparent 1px),
@@ -195,7 +203,7 @@ wb-cardhero.wb-cardhero--cosmic:not([background]) {
     radial-gradient(150% 150% at 90% 30%, hsl(calc(var(--hue-primary, 240) + 90) 85% 50% / 0.85), transparent 55%),
     radial-gradient(150% 150% at 50% 100%, hsl(calc(var(--hue-primary, 240) + 200) 80% 45% / 0.8), transparent 60%),
     linear-gradient(180deg, hsl(var(--overlay-dark-hsl) / 0.95), hsl(var(--overlay-dark-hsl)));
-  background-size: 3px 3px, 4px 4px, 3px 3px, 5px 5px, cover, cover, cover, cover;
+  background-size: 47px 83px, 61px 53px, 89px 71px, 43px 97px, cover, cover, cover, cover;
 }
 
 /* split — content pinned to one half, background visible on the other,

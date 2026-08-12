@@ -162,15 +162,6 @@ exactly what each one changes in isolation:
 </wb-cardhero>
 </wb-demo>
 
-### Rich HTML Title/Subtitle
-
-Not currently supported. `title`/`subtitle` are plain-string attributes only
--- there is no `slot="..."` mechanism (wb-starter is light DOM only, per
-ATTRIBUTE-NAMING-STANDARD.md's Content/Children rules: never a `slot`
-attribute). A prior version of this doc showed a `slot="title"`/
-`slot="subtitle"` example that never actually worked; removed rather than
-left teaching a pattern the framework doesn't support. See #422.
-
 ## Generated Structure
 
 ```html

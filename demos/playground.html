@@ -134,9 +134,8 @@
             <option value="">🎴 Examples…</option>
             <option value="form">Sample form</option>
             <option value="cards">50 cards</option>
-            <option value="heroes">20 card heroes</option>
+            <option value="heroes-120">120 card heroes (all permutations)</option>
             <option value="hero-variants">5 hero variants</option>
-            <option value="signature-heroes">20 signature heroes</option>
             <option value="xbehaviors">50 x-* behaviors</option>
             <option value="inputs">20 inputs with x-behaviors</option>
             <option value="badges">50 badges</option>
@@ -416,9 +415,8 @@
     const EXAMPLE_SORT_MODES = {
       form: [],
       cards: ['variant', 'size', 'title', 'tag', 'elevated'],
-      heroes: ['title', 'tag'],
+      'heroes-120': ['variant', 'title', 'tag'],
       'hero-variants': ['variant', 'title', 'tag'],
-      'signature-heroes': ['title', 'tag'],
       xbehaviors: ['tag'],
       badges: ['variant', 'size', 'title', 'tag', 'pill', 'outline', 'removable'],
       selects: ['variant', 'size', 'title', 'tag'],
@@ -546,118 +544,83 @@
       return out.join('\n');
     }
 
-    function twentyHeroes() {
-      const heroes = [
+    // Combines the previous separate "20 card heroes" (plain wb-cardhero)
+    // and "20 signature heroes" (wb-cardhero + companion wb-modal + x-fadein)
+    // generators into one 120-instance set, and now also cycles variant=
+    // and overlay= -- properties neither original ever touched -- alongside
+    // xalign/height/background. Property arrays deliberately have different
+    // lengths and are each offset by a different multiple of `round` (how
+    // many times the 12-item content list has already looped), the same
+    // background-offset trick both originals already used, now applied to
+    // every axis so paired combinations keep shifting well past any single
+    // array's own wrap point instead of repeating in lockstep.
+    function oneTwentyHeroes() {
+      const CONTENT = [
         ['Launch', 'Build faster with wb-starter', 'Schema-first, zero-build web components.', 'Get Started', 'View Docs'],
         ['New', 'Compose, don\'t configure', 'Stack x-* behaviors on any element.', 'Try it', 'Learn more'],
         ['v3', 'Themeable to the core', 'Every color flows from one theme system.', 'Explore themes', null],
         ['Open Source', 'Own your components', 'Light DOM, no shadow boundaries.', 'Star on GitHub', 'Read the guide'],
         ['Fast', 'No build step. Ever.', 'Drop a script tag and go.', 'Get Started', null],
         ['Accessible', 'Semantics by default', 'Native elements, enhanced.', 'See a11y', 'Docs'],
+        ['Zero Build.', 'Infinite Possibility.', 'The web framework that doesn’t need a framework.', 'Try the Playground', 'Read the Guide'],
+        ['No Bundler.', 'No JSX. No Waiting.', 'Ship the way the browser already understands.', 'Try the Playground', 'Read the Guide'],
+        ['Light DOM.', 'Always.', 'Never fight a shadow boundary again.', 'Try the Playground', 'Read the Guide'],
+        ['Schema First.', 'Behavior Second.', 'Describe the shape. Let behaviors do the rest.', 'Try the Playground', 'Read the Guide'],
+        ['Compose,', 'Don’t Configure.', 'Stack x-* behaviors on any native element.', 'Try the Playground', 'Read the Guide'],
+        ['Themeable', 'To The Core.', 'Every color flows from one variable system.', 'Try the Playground', 'Read the Guide'],
       ];
-      const bgs = [
+      const VARIANTS = ['default', 'cosmic', 'split', 'minimal', 'gradient'];
+      const XALIGNS = ['center', 'left', 'right'];
+      const HEIGHTS = ['320px', '380px', '440px', '500px'];
+      const BGS = [
         null, null,
         'linear-gradient(135deg, var(--success-color), var(--info-color))',
         'linear-gradient(135deg, var(--danger-color), var(--warning-color))',
-        'https://picsum.photos/seed/hero/1200/500',
         'linear-gradient(135deg, var(--primary), var(--secondary))',
+        'linear-gradient(135deg, var(--primary), var(--info-color))',
+        'https://picsum.photos/seed/hero/1200/500',
       ];
-      const heights = ['320px', '380px', '440px'];
-      const aligns = ['center', 'left', 'right'];
       // Each CTA links to the doc it's talking about (opens in the doc-viewer).
       const DV = (file) => '../public/doc-viewer.html?file=' + encodeURIComponent(file);
       const CTA_HREF = {
         'Get Started': DV('docs/V3-GUIDE.md'), 'View Docs': DV('docs/V3-GUIDE.md'),
-        'Docs': DV('docs/V3-GUIDE.md'), 'Read the guide': DV('docs/V3-GUIDE.md'),
+        'Docs': DV('docs/V3-GUIDE.md'), 'Read the guide': DV('docs/V3-GUIDE.md'), 'Read the Guide': DV('docs/V3-GUIDE.md'),
         'Try it': DV('docs/V3-GUIDE.md'), 'Learn more': DV('docs/behaviors/wb-behaviors.md'),
         'Explore themes': DV('docs/themes.md'), 'See a11y': DV('docs/V3-GUIDE.md'),
         'Star on GitHub': 'https://github.com/CieloVistaSoftware/wb-starter',
+        'Try the Playground': 'playground.html',
       };
       const href = (c) => CTA_HREF[c] || DV('docs/V3-GUIDE.md');
       const out = [];
-      for (let i = 0; i < 20; i++) {
-        const [pre, title, sub, cta, cta2] = heroes[i % heroes.length];
-        // Offset the bg index by how many times we've already looped through
-        // heroes, so a repeated title always shows a DIFFERENT background
-        // (bgs.length === heroes.length, so without this offset every repeat
-        // of the same title would land on the exact same bg every time).
-        const round = Math.floor(i / heroes.length);
-        const bg = bgs[(i + round) % bgs.length];
+      for (let i = 0; i < 120; i++) {
+        const round = Math.floor(i / CONTENT.length);
+        const [pre, title, sub, cta, cta2] = CONTENT[i % CONTENT.length];
+        const variant = VARIANTS[(i + round) % VARIANTS.length];
+        const xalign = XALIGNS[(i + round * 2) % XALIGNS.length];
+        const height = HEIGHTS[(i + round * 3) % HEIGHTS.length];
+        const bg = BGS[(i + round * 5) % BGS.length];
+        const overlay = (i + round) % 5 !== 0; // on by default; off roughly 1-in-5 so it's exercised too
+        const signatureStyle = i % 2 === 1; // alternate the two original styles
         const attrs = [
           `pretitle="${pre} #${i + 1}"`,
           `title="${title}"`,
           `subtitle="${sub}"`,
-          `height="${heights[i % heights.length]}"`,
-          `xalign="${aligns[i % aligns.length]}"`,
+          `height="${height}"`,
+          `xalign="${xalign}"`,
+          variant !== 'default' ? `variant="${variant}"` : '',
+          overlay ? '' : `overlay="false"`,
           cta ? `cta="${cta}"` : '',
           cta ? `cta-href="${href(cta)}"` : '',
           cta2 ? `cta-secondary="${cta2}"` : '',
           cta2 ? `cta-secondary-href="${href(cta2)}"` : '',
           bg ? `background="${bg}"` : '',
+          signatureStyle ? 'x-fadein' : '',
         ].filter(Boolean);
-        out.push(`<wb-cardhero\n  ${attrs.join('\n  ')}>\n</wb-cardhero>`);
-      }
-      return out.join('\n');
-    }
-
-    // "Signature hero" style: a wb-cardhero (pretitle/title/subtitle/CTAs,
-    // x-fadein scroll-reveal, a tooltip on its primary CTA) paired with a real
-    // <wb-modal> trigger as its companion "live demo" beneath it. Built from
-    // a user-submitted template that also referenced x-parallax, a
-    // <wb-codepreview> tag, and Vue-style x-on:change directives — none of
-    // which exist in this codebase (verified against tag-map.js/wb-lazy.js);
-    // this version keeps only what's real: wb-cardhero's own attrs, x-fadein
-    // (wired in wb-lazy.js), x-tooltip (tooltip.js reads it directly, added
-    // to cardhero.js as an opt-in cta-tooltip/cta-secondary-tooltip attr),
-    // and wb-modal's actual self-contained trigger API (modal-title/
-    // modal-content on the trigger itself — not a separate <wb-modal id=…>
-    // referenced by a button).
-    function twentySignatureHeroes() {
-      const heroes = [
-        ['Zero Build.', 'Infinite Possibility.', 'The web framework that doesn’t need a framework.', 'Native elements. Schema-first behaviors. One script tag.'],
-        ['No Bundler.', 'No JSX. No Waiting.', 'Ship the way the browser already understands.', 'Drop a script tag and start composing components.'],
-        ['Light DOM.', 'Always.', 'Never fight a shadow boundary again.', 'Your CSS and devtools reach every component, always.'],
-        ['Schema First.', 'Behavior Second.', 'Describe the shape. Let behaviors do the rest.', 'One runtime scans the DOM and upgrades what it finds.'],
-        ['Compose,', 'Don’t Configure.', 'Stack x-* behaviors on any native element.', 'Small, focused functions — not a class to subclass.'],
-        ['Themeable', 'To The Core.', 'Every color flows from one variable system.', '25+ built-in themes, or define your own in minutes.'],
-      ];
-      const bgs = [
-        'linear-gradient(135deg, var(--primary), var(--secondary))',
-        'linear-gradient(135deg, var(--success-color), var(--info-color))',
-        'linear-gradient(135deg, var(--danger-color), var(--warning-color))',
-        'linear-gradient(135deg, var(--primary), var(--info-color))',
-      ];
-      const heights = ['420px', '480px', '520px'];
-      const aligns = ['left', 'center'];
-      const DV = (file) => '../public/doc-viewer.html?file=' + encodeURIComponent(file);
-      const out = [];
-      for (let i = 0; i < 20; i++) {
-        const [pre, title, sub, tip] = heroes[i % heroes.length];
-        const round = Math.floor(i / heroes.length);
-        const bg = bgs[(i + round) % bgs.length];
-        const attrs = [
-          `pretitle="${pre} #${i + 1}"`,
-          `title="${title}"`,
-          `subtitle="${sub}"`,
-          `height="${heights[i % heights.length]}"`,
-          `xalign="${aligns[i % aligns.length]}"`,
-          `cta="Try the Playground"`,
-          `cta-href="playground.html"`,
-          `cta-tooltip="${tip}"`,
-          `cta-secondary="Read the Guide"`,
-          `cta-secondary-href="${DV('docs/V3-GUIDE.md')}"`,
-          `background="${bg}"`,
-          `x-fadein`,
-        ];
+        const hero = `<wb-cardhero\n  ${attrs.join('\n  ')}>\n</wb-cardhero>`;
         out.push(
-          `<div class="pg-signature-hero">\n` +
-          `  <wb-cardhero\n    ${attrs.join('\n    ')}>\n  </wb-cardhero>\n` +
-          `  <wb-modal\n` +
-          `    modal-title="${title}"\n` +
-          `    modal-content="${sub}">\n` +
-          `    See it in action\n` +
-          `  </wb-modal>\n` +
-          `</div>`
+          signatureStyle
+            ? `<div class="pg-signature-hero">\n  ${hero.replace(/\n/g, '\n  ')}\n  <wb-modal\n    modal-title="${title}"\n    modal-content="${sub}">\n    See it in action\n  </wb-modal>\n</div>`
+            : hero
         );
       }
       return out.join('\n');
@@ -914,9 +877,8 @@
       if (!which) return;
       if (which === 'form') input.value = SAMPLE;
       else if (which === 'cards') input.value = fiftyCards();
-      else if (which === 'heroes') input.value = twentyHeroes();
+      else if (which === 'heroes-120') input.value = oneTwentyHeroes();
       else if (which === 'hero-variants') input.value = fiveHeroVariants();
-      else if (which === 'signature-heroes') input.value = twentySignatureHeroes();
       else if (which === 'xbehaviors') input.value = fiftyXBehaviors();
       else if (which === 'inputs') input.value = twentyInputs();
       else if (which === 'badges') input.value = fiftyBadges();
