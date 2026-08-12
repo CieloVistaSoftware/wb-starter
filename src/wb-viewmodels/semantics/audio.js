@@ -49,6 +49,17 @@ export function audio(element, options = {}) {
     ...options
   };
 
+  // A missing src never reaches the native 'error' listener below -- an
+  // <audio>/<wb-audio> with no src attribute simply has nothing to load,
+  // so the browser never fires 'error' on it. That let a src-less
+  // instance build a fully-dressed, silently non-functional player with
+  // no visible signal anything was wrong. Fail loud and immediately
+  // instead, matching how every other real load failure in this file
+  // already throws.
+  if (!config.src) {
+    throw new Error('wb-audio: no src provided -- nothing to play. Add a src attribute.');
+  }
+
   injectAudioStyles();
   // #448: skip the class on a literal <wb-audio> host -- audio.css selects
   // the `wb-audio` TAG directly for that case now. Still added for a
