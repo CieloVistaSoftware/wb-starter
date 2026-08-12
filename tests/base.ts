@@ -50,9 +50,23 @@ export const DATA_FILES = {
 // subject to this project's theming/OOP conventions. Confirmed live:
 // css-oop-compliance flagged its popup CSS for hardcoded colors that are
 // legitimate there (a browser-extension UI, not a themed component).
+//
+// packages/create-wb-starter/template (#543) is a machine-generated,
+// byte-for-byte copy of src/ (and pages/, demos/, etc.) produced by
+// packages/create-wb-starter/scripts/sync-template.mjs so the create-wb-starter
+// npm package ships a working scaffold -- it is not hand-authored CSS/HTML
+// subject to this project's own OOP conventions, same rationale as
+// wb-overlay-ext above. Confirmed live: because it duplicates every file
+// under src/styles/, every compliance scan (including this file's own
+// `!important` count) was silently counting each real violation TWICE the
+// moment the create-wb-starter package was added, thereby doubling the
+// css-oop-compliance "minimal !important usage" total from 129 (achieved and
+// verified green pre-#543) to 273+ with zero new CSS actually written.
+// 'template' (singular) only ever matches this one directory in the repo --
+// the unrelated top-level `templates/` dir is plural and untouched.
 export const EXCLUDE_DIRS = [
   'node_modules', '.git', '.claude', 'dist', 'build', 'coverage',
-  'test-results', '.playwright-artifacts', 'wb-overlay-ext'
+  'test-results', '.playwright-artifacts', 'wb-overlay-ext', 'template'
 ];
 
 // ═══════════════════════════════════════════════════════════════════════════

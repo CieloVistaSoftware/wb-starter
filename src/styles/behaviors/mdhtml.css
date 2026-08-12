@@ -302,10 +302,15 @@ wb-mdhtml .code-wrapper,
   align-items: stretch;
   margin: 0 0 1.5rem 0;
 }
+/* #543: !important was never needed here -- (.wb-mdhtml .code-wrapper pre)
+   already has specificity 0-2-1, matching or beating both selectors above
+   that also touch pre margin (wb-mdhtml pre:not(.x-pre) is 0-1-2;
+   .wb-mdhtml pre:not(.x-pre) is 0-2-1, tied but declared earlier in this
+   file), so plain cascade order already gives this rule the win. */
 wb-mdhtml .code-wrapper pre,
 .wb-mdhtml .code-wrapper pre {
   max-width: 100%;
-  margin: 0 !important;
+  margin: 0;
   width: 100%;
 }
 wb-mdhtml .code-caption,

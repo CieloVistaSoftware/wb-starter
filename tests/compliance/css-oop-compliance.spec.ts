@@ -156,7 +156,13 @@ test.describe('CSS OOP Compliance', () => {
     let total = 0;
 
     for (const file of cssFiles) {
-      const content = readFile(file);
+      // Blank out /* ... */ block comments first (same technique as the
+      // hardcoded-colors test above, #190) -- otherwise prose that documents
+      // a PAST !important removal (e.g. code.css's "!important was never
+      // actually needed..." writeup, #543) is misread as a live violation.
+      // Keeps length + newlines so line numbers stay valid if this is ever
+      // extended to report locations.
+      const content = readFile(file).replace(/\/\*[\s\S]*?\*\//g, (m) => m.replace(/[^\n]/g, ' '));
       const matches = content.match(FORBIDDEN_PATTERNS.importantUsage);
       if (matches) total += matches.length;
     }
