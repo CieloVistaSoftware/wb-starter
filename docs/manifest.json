@@ -818,6 +818,11 @@
           "description": "Proposed golden-ratio-derived spacing scale, adapted from a real prior document"
         },
         {
+          "file": "architecture/proposals/remove-wb-prefix-authoring-surface.md",
+          "title": "Proposal: Drop the wb- Tag Prefix from the Authoring Surface",
+          "description": "Proposal to author components as plain HTML plus an x-* attribute instead of wb-* custom tags, keeping the wb- prefix internal to CSS/registry naming"
+        },
+        {
           "file": "architecture/standards/ATTRIBUTE-NAMING-STANDARD.md",
           "title": "Attribute Naming Standard",
           "description": "Standards for attribute naming conventions"
