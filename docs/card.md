@@ -67,7 +67,7 @@ When using `<article>` or `<section>`, the component will automatically enhance 
 ---
 
 ## Usage Example
-```html
+<wb-demo>
 <wb-card
   variant="primary"
   hoverable
@@ -75,7 +75,7 @@ When using `<article>` or `<section>`, the component will automatically enhance 
   <h3>Card Title</h3>
   <p>Card content goes here.</p>
 </wb-card>
-```
+</wb-demo>
 
 > **Developer Tip:** In VS Code, type `<wb-card` to trigger IntelliSense and see available attributes.
 

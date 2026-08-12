@@ -11,11 +11,4 @@ Wrapped in `<wb-demo>`, so the live component renders below with its source show
 </div>
 </wb-demo>
 
-- **Usage:**
-  ```html
-  <div class="wb-row">
-    <div>Col 1</div>
-    <div>Col 2</div>
-  </div>
-  ```
 - [Source](../../src/wb-viewmodels/wb-row.js)

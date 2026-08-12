@@ -9,10 +9,6 @@ Wrapped in `<wb-demo>`, so the live component renders below with its source show
 </wb-demo>
 
 - **Type:** Modifier
-- **Usage:**
-  ```html
-  <button x-tooltip="Tooltip text">Hover me</button>
-  ```
 - **Note:** Use for contextual, hover-based help.
 
 - [Demo](../../demos/site/feedback.html#x-tooltip-on-a-real-trigger-element)

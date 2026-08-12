@@ -45,7 +45,7 @@ Wrapped in `<wb-demo>`, so the live component renders below with its source show
 |---------------|--------------------------------------------------|-----------|
 | `src`         | Path/URL to markdown file                        | (inline)  |
 | `sanitize`    | Enable XSS protection (true/false)               | true      |
-| `breaks`      | Enable GFM line breaks (true/false)              | true      |
+| `breaks`      | Enable GFM line breaks (true/false)              | false     |
 | `gfm`         | Enable GitHub Flavored Markdown (true/false)     | true      |
 | `header-ids`  | Add IDs to headings (true/false)                 | true      |
 | `highlight`   | Enable code highlighting (if supported)          |           |
@@ -64,6 +64,11 @@ Wrapped in `<wb-demo>`, so the live component renders below with its source show
   size="md">
 </wb-mdhtml>
 ```
+
+Single newlines inside a paragraph are treated as normal whitespace so prose
+flows to the container width. Set `breaks="true"` only when source line breaks
+should become explicit HTML line breaks. Fenced code blocks always preserve
+their own whitespace.
 
 ---
 

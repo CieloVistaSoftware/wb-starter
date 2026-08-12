@@ -47,12 +47,18 @@ Key principles:
 
 A standalone page needs the theme + base styles and one module script:
 
-<wb-demo full-width>
+<wb-demo>
 <wb-card
-  title="Hello"
-  variant="elevated">
-  <p>It just works.</p>
+  title="Build resilient interfaces"
+  subtitle="Separate structure from behavior"
+  variant="elevated"
+  footer="Start with semantic HTML, then compose focused behaviors.">
+  <p>Keep content readable and focused by giving each card one clear job.</p>
+  <p>WB-Starter applies behavior directly to the element, so the markup stays easy to inspect and reuse.</p>
 </wb-card>
+</wb-demo>
+
+<wb-demo>
 <button
   x-toast
   message="Saved!"
@@ -84,9 +90,12 @@ into the live example above:
 
   <body>
     <wb-card
-      title="Hello"
+      title="Build resilient interfaces"
+      subtitle="Separate structure from behavior"
       variant="elevated">
-      <p>It just works.</p>
+      <p>Keep content readable and focused by giving each card one clear job.</p>
+      <p>WB-Starter applies behavior directly to the element, so the markup stays easy to inspect and reuse.</p>
+      <p>Start with semantic HTML, then compose focused behaviors.</p>
     </wb-card>
     <button
       x-toast

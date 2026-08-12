@@ -18,6 +18,9 @@ This concise runbook explains how to run tests locally, gather artifacts, and ho
   - npm run test:compliance
   - npm run test:integrity
   - npx playwright test tests/issues/that-one.spec.ts --reporter=list
+- Parallel worktree:
+  - WB_TEST_PORT=3107 npm run test:async -- tests/that-one.spec.ts
+  - Use a different `WB_TEST_PORT` for each checkout so Playwright starts and tests that checkout's server.
 - Interactive/debug UI:
   - npm run test:ui
 

@@ -15,12 +15,12 @@ The `dl` component enhances the standard `<dl>` (Description List) element, whic
 ### Basic Usage
 Add `x-dl` to a `<dl>` element.
 
-```html
+<wb-demo>
 <dl x-dl>
   <dt>Name</dt>
   <dd>John Doe</dd>
 </dl>
-```
+</wb-demo>
 
 ### Configuration Options
 | Attribute | Type | Default | Description |
@@ -35,7 +35,7 @@ Add `x-dl` to a `<dl>` element.
 ### Example 1: Horizontal Grid
 Perfect for metadata or specs.
 
-```html
+<wb-demo>
 <dl
   x-dl
   variant="horizontal"
@@ -47,12 +47,12 @@ Perfect for metadata or specs.
   <dt>License</dt>
   <dd>MIT</dd>
 </dl>
-```
+</wb-demo>
 
 ### Example 2: Bordered Vertical List
 Good for sidebars or summaries.
 
-```html
+<wb-demo>
 <dl
   x-dl
   bordered="true">
@@ -61,7 +61,7 @@ Good for sidebars or summaries.
   <dt>Uptime</dt>
   <dd>99.9%</dd>
 </dl>
-```
+</wb-demo>
 
 ## 4. Why It Works
 For the `horizontal` variant, the component applies `display: grid` with a 2-column template (`auto 1fr`). This ensures terms align perfectly regardless of their length. The `striped` option uses JavaScript to iterate through the pairs and apply background colors to every other row.
