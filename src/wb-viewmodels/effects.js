@@ -242,14 +242,25 @@ export function typewriter(element, options = {}) {
     typeChar();
   };
   
-  if (element.tagName === 'BUTTON') {
-    element.onclick = type;
-  } else {
+  // A <button> starts blank until the first click (a deliberate reveal
+  // interaction); every other element auto-plays on load. Previously ONLY
+  // the button case ever got a click handler at all -- any other tag (e.g.
+  // <h3 x-typewriter>) typed once on load and then just sat there; clicking
+  // it did nothing, confirmed live via the Playground. Click-to-restart is
+  // a reasonable expectation for a typing effect regardless of host tag, so
+  // it's now wired for every element; only the "auto-play on load" part
+  // stays button-specific. (#537)
+  if (element.tagName !== 'BUTTON') {
     type();
   }
-  
+  element.style.cursor = 'pointer';
+  element.addEventListener('click', type);
+
   element.wbTypewriter = { type };
-  return () => element.classList.remove('wb-typewriter');
+  return () => {
+    element.classList.remove('wb-typewriter');
+    element.removeEventListener('click', type);
+  };
 }
 
 /**
