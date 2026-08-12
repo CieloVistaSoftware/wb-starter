@@ -98,6 +98,9 @@
     /* Signature hero example set: hero + its companion wb-modal trigger,
        grouped as one visual unit with a small gap between them. */
     .pg-signature-hero { display: flex; flex-direction: column; gap: 0.75rem; }
+    /* Video card example set: an x-youtube embed with its real title as a caption. */
+    .pg-video-card { display: flex; flex-direction: column; gap: 0.5rem; }
+    .pg-video-card figcaption { font-size: 0.9rem; color: var(--text-secondary); line-height: 1.4; }
     /* The preview is arbitrary pasted HTML — let long content wrap, never overflow.
        `anywhere` (not `break-word`) is wrong here: it lets the browser break a
        word mid-character even when the whole word would fit on the next line
@@ -142,6 +145,7 @@
             <option value="selects">25 selects</option>
             <option value="switches">25 switches (all different)</option>
             <option value="youtube">20 YouTube URL formats</option>
+            <option value="youtube-channel">20 video cards (@richardm23)</option>
           </select>
           <button id="pg-format" class="pg-btn" type="button"
             style="background:var(--bg-tertiary); color:var(--text-primary);"
@@ -872,6 +876,42 @@
       return urls.map((u) => `<div x-youtube url="${u}"></div>`).join('\n');
     }
 
+    // 20 real videos from a real channel (https://www.youtube.com/@richardm23),
+    // pulled live from the channel's own page data (lockupViewModel entries in
+    // window.ytInitialData) -- not guessed IDs. Each x-youtube embed is paired
+    // with the video's actual title as a caption, unlike twentyYouTubeFormats()
+    // above (which reuses ONE video across many different URL string shapes).
+    function twentyChannelVideos() {
+      const videos = [
+        ['9YEdVtc0odg', 'Do Christians Have the Same Power as Christ?'],
+        ['SCJZsmlvocY', 'Was Jim Jones a Faith Healer? The Latter Rain Connection to William Branham, Bethel, & N.A.R.'],
+        ['-CHaUE6hPDM', 'Did God Show Bob Jones Abortions?'],
+        ['5zJgNtzqxOY', 'What is a Corporate Anointing?'],
+        ['UDx2maxqre4', 'Ché Ahn Quotes The Passion Translation and Believes Apostles Can Impart Spiritual Gifts'],
+        ['eWtCrn4xxOs', 'Will This Be the Last Time We Ever See Kenneth Copeland Speak?'],
+        ['9O1MF3gyIxU', 'Bill Johnson is Engaged to a Much Younger Woman!'],
+        ['8eA-ef0SGt4', 'Can you Rob God of Glory?'],
+        ['lL1QODiWt0k', 'Kathryn Krick "Tries" to Heal Cerebral Palsy & Down Syndrome'],
+        ['EjizZrwlEug', 'Bob Jones Prophecies Judgement on America Because of Homosexuality'],
+        ['g9fYZy4P87o', 'Richard Reacts: First-Time Visitor John Christ & Shama Mrema Visit Creflo Dollar\'s Church'],
+        ['LxkOOn-Cv7A', 'Can We Reach the Full Maturity of the God Man?'],
+        ['R-M4VQ_wzaY', 'Bob Jones Prophecies Using Astrology'],
+        ['iDm7SrT9KSQ', 'Apostle Kathryn Krick has a New Posse'],
+        ['yUydO6Qj_h4', 'Pastor Loran Livingston Preaches "Repent! the Axe is at the Root of the Tree"'],
+        ['Fo4dLAzVHzQ', 'Bob Jones Had 50 to 100 Visions? Can That Be True?'],
+        ['4vUJ1aq7QZg', 'Bob Jones Admits he was a False Prophet'],
+        ['51Run8mV3h8', 'Bill Johnson Wants to Heal Down Syndrome'],
+        ['js_WYPK4Vvk', 'Apostle Ché Ahn Says, "I\'ve never Met Anyone In the NAR New Apostolic Reformation Network"'],
+        ['Y--lEcckiZ0', 'What Podcasters are Saying about Bethel'],
+      ];
+      return videos.map(([id, title]) =>
+        `<figure class="pg-video-card">\n` +
+        `  <div x-youtube url="https://www.youtube.com/watch?v=${id}"></div>\n` +
+        `  <figcaption>${title.replace(/&/g, '&amp;').replace(/</g, '&lt;')}</figcaption>\n` +
+        `</figure>`
+      ).join('\n');
+    }
+
     document.getElementById('pg-examples').addEventListener('change', async (e) => {
       const which = e.target.value;
       if (!which) return;
@@ -885,6 +925,7 @@
       else if (which === 'selects') input.value = twentyFiveSelects();
       else if (which === 'switches') input.value = twentyFiveSwitches();
       else if (which === 'youtube') input.value = twentyYouTubeFormats();
+      else if (which === 'youtube-channel') input.value = twentyChannelVideos();
       setSortModes(EXAMPLE_SORT_MODES[which] || []);
       e.target.value = ''; // reset to placeholder
       endpointPanel.hidden = true;
