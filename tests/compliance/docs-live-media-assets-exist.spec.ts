@@ -86,11 +86,15 @@ function mdFiles(dir: string, acc: string[] = []): string[] {
 // Known-broken, tracked separately (#519) -- found by this audit while
 // fixing #514, but their placeholder assets were never part of that fix's
 // scope. Remove an entry here only once #519 has actually fixed that file.
-const KNOWN_BROKEN_PENDING_519 = new Set([
-  'docs/behavior-cross-reference.md',
-  'docs/components/semantics/img.md',
-  'docs/components/semantics/video.md',
-]);
+//
+// #519 fixed all three: docs/behavior-cross-reference.md and
+// docs/components/semantics/img.md now point their live <wb-demo> media at
+// https://placehold.co / https://ui-avatars.com URLs (the same remote-asset
+// convention already proven in demos/site/cards.html);
+// docs/components/semantics/video.md points its live <wb-demo> at a real,
+// stable CC0 sample video (MDN's flower.mp4) rather than the dead 13-byte
+// demos/movie.mp4 placeholder.
+const KNOWN_BROKEN_PENDING_519 = new Set<string>([]);
 
 function docsToCheck(): string[] {
   const files = mdFiles(path.join(ROOT, 'docs'));

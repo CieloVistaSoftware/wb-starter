@@ -27,7 +27,7 @@ Enhanced HTML5 video player with configurable defaults.
 Wrapped in `<wb-demo>`, so the live component renders below with its source shown underneath:
 
 <wb-demo>
-<wb-video src="movie.mp4"></wb-video>
+<wb-video src="https://interactive-examples.mdn.mozilla.net/media/cc0-videos/flower.mp4"></wb-video>
 </wb-demo>
 
 ## Usage

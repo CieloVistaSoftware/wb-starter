@@ -567,9 +567,9 @@ Image lightbox dialog:
 <wb-demo>
 <wb-modal
   modal-title="Full Size Photo"
-  modal-content='<img src="large-photo.jpg" alt="Full size photo">'>
+  modal-content='<img src="https://placehold.co/1200x800/1e293b/e2e8f0?text=Full+Size+Photo" alt="Full size photo">'>
   <img
-    src="thumbnail.jpg"
+    src="https://placehold.co/200x150/1e293b/e2e8f0?text=Thumbnail"
     alt="Click to enlarge">
 </wb-modal>
 </wb-demo>
@@ -2276,7 +2276,7 @@ Card with image:
 <article>
   <figure>
     <img
-      src="product.jpg"
+      src="https://placehold.co/400x300/1f2937/f3f4f6?text=Premium+Widget"
       alt="Product photo">
   </figure>
   <header>
@@ -2337,7 +2337,7 @@ Profile card:
 <article>
   <figure style="text-align: center; padding: 2rem;">
     <img
-      src="avatar.jpg"
+      src="https://ui-avatars.com/api/?name=Jane+Smith&size=150&background=475569&color=fff"
       alt="User avatar"
       style="width: 80px; height: 80px; border-radius: 50%;">
   </figure>
@@ -2362,7 +2362,7 @@ Blog post card:
 <article>
   <figure>
     <img
-      src="blog-hero.jpg"
+      src="https://placehold.co/800x400/0f172a/e2e8f0?text=Blog+Hero"
       alt="Blog post hero image">
   </figure>
   <header>
@@ -2599,7 +2599,7 @@ Resource links:
   target="_blank">
   <figure>
     <img
-      src="video-thumbnail.jpg"
+      src="https://placehold.co/400x225/1e293b/e2e8f0?text=Video+Thumbnail"
       alt="Tutorial video">
   </figure>
   <header>
@@ -2667,7 +2667,7 @@ With logo image:
 <nav>
   <a href="/">
     <img
-      src="logo.svg"
+      src="https://placehold.co/120x32/1e293b/e2e8f0?text=Logo"
       alt="Company Logo"
       height="32">
   </a>
@@ -2740,7 +2740,7 @@ Full featured navbar:
       🔔
     </button>
     <img
-      src="avatar.jpg"
+      src="https://ui-avatars.com/api/?name=User&size=64&background=475569&color=fff"
       alt="Profile"
       style="width: 32px; height: 32px; border-radius: 50%;">
   </div>
@@ -3301,16 +3301,16 @@ Pinterest-style masonry:
   columns="3"
   gap="1rem">
   <img
-    src="tall.jpg"
+    src="https://placehold.co/300x500/1e293b/e2e8f0?text=Tall"
     alt="">
   <img
-    src="wide.jpg"
+    src="https://placehold.co/500x300/1e293b/e2e8f0?text=Wide"
     alt="">
   <img
-    src="square.jpg"
+    src="https://placehold.co/400x400/1e293b/e2e8f0?text=Square"
     alt="">
   <img
-    src="tall2.jpg"
+    src="https://placehold.co/300x450/1e293b/e2e8f0?text=Tall+2"
     alt="">
 </wb-masonry>
 </wb-demo>
@@ -3345,7 +3345,7 @@ Square avatar frame:
 <wb-demo>
 <wb-frame ratio="1/1">
   <img
-    src="avatar.jpg"
+    src="https://ui-avatars.com/api/?name=User&size=150&background=475569&color=fff"
     alt="User">
 </wb-frame>
 </wb-demo>
@@ -3411,7 +3411,7 @@ Profile card:
 
 <wb-demo>
 <card-profile
-  avatar="avatar.jpg"
+  avatar="https://ui-avatars.com/api/?name=Jane+Doe&size=150&background=475569&color=fff"
   name="Jane Doe"
   title="Senior Developer"
   bio="Full-stack developer with 10+ years experience.">

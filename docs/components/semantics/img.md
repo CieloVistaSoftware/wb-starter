@@ -29,7 +29,7 @@ Wrapped in `<wb-demo>`, so the live component renders below with its source show
 <wb-demo>
 <img
   x-image
-  src="photo.jpg"
+  src="https://placehold.co/600x400/1e293b/e2e8f0?text=Photo"
   alt="Photo">
 </wb-demo>
 
