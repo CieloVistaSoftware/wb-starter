@@ -37,9 +37,17 @@ export function article(element, options = {}) {
 
   const body = takeChildren(element);
 
-  // #448: no classList.add('wb-article') here -- article.css's .wb-article
-  // selector was converted to the `wb-article` TAG selector, so the tag
-  // itself is styled without a same-named class duplicating it.
+  // #448 dropped classList.add('wb-article') on the assumption article.css's
+  // bare `wb-article {}` tag selector covers every consumer -- true only for
+  // a REAL <wb-article> tag. #528: schema-builder.js's buildStructure() (and
+  // any other non-<wb-article>-tagged host wb-lazy.js's runtime hands this
+  // function) can't be reached by that tag selector at all, so those hosts
+  // never got styled. Same guard chip()'s #521 fix uses (feedback.js) and
+  // articles()'s #523-follow-up fix uses just below in this file: only a
+  // host whose tag ISN'T already wb-article needs the class -- adding it
+  // unconditionally would trip no-redundant-tag-name-class.spec.ts on real
+  // <wb-article> tags (demos/site/content.html).
+  if (element.tagName.toLowerCase() !== 'wb-article') element.classList.add('wb-article');
   element.classList.toggle('wb-article--featured', featured);
 
   const hasHeaderContent = image || category || date || readingTime || title || subtitle || author;
