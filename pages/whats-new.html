@@ -3,6 +3,25 @@
   <p>What's actually live on this site right now — every push to <code>main</code> deploys straight to <a href="https://cielovistasoftware.github.io/wb-starter/" target="_blank" rel="noopener">cielovistasoftware.github.io/wb-starter</a>, so this list is the real changelog, not a promise of a future release.</p>
 </div>
 
+<section id="whats-new-2026-08-12">
+  <h2>2026-08-12</h2>
+  <ul>
+    <li>Fixed the site failing to load at all in some contexts: <code>card.js</code>'s internal helper was renamed from <code>cardBase</code> to <code>composeCard</code> as part of the composition-over-inheritance cleanup, but <code>wb-card.js</code>'s import was never updated — a syntax error that broke module loading for every page pulling in the Fix Viewer. Also fixed <code>&lt;wb-audio&gt;</code> (and every other <code>&lt;wb-*&gt;</code> component with a media <code>src</code>) 404ing when a page under <code>pages/</code> is opened directly instead of through the site's normal navigation — the server's own path-rewriting for that case only recognized native <code>&lt;audio&gt;</code>/<code>&lt;video&gt;</code>/<code>&lt;img&gt;</code> tags, not this project's own custom elements (#542).</li>
+    <li>Increased the theme count from 23 to 50, removing one (<code>charcoal-light-text</code>) that failed contrast requirements (#470).</li>
+    <li><code>demos/frameworks.html</code> now has a real, live Angular demo — a standalone component JIT-bootstrapped straight from Angular's browser ESM packages, no build step, alongside the existing React/Vue/Svelte/SolidJS/HTMX examples (#460).</li>
+    <li>Fixed <code>wb-dialog</code>'s documented <code>.open()</code> method throwing (it only ever worked via <code>.showModal()</code>), a broken example image and undocumented <code>variant</code> property on the cardhero docs page, a race that could leave production code panels unhighlighted, and <code>wb-cardhero</code> showing a silent dark scrim instead of a real error when its background image fails to load (#531–#535).</li>
+    <li>Fixed the cosmic starfield hero background rendering as a tiled plaid/weave pattern instead of scattered stars (#536), and <code>x-typewriter</code>'s click-to-restart only working when the trigger happened to be a <code>&lt;button&gt;</code> (#537).</li>
+    <li>Extracted <code>demos/frameworks.html</code>'s inline styles and page-level <code>&lt;style&gt;</code> block into a proper stylesheet — no visual change, just brings the page in line with the rest of the site's styling convention.</li>
+    <li>Fixed 13 doc pages and demo galleries referencing images/video that never existed (fake placeholder filenames like <code>hero.jpg</code>, <code>avatar.jpg</code>, <code>movie.mp4</code>) — replaced with real working assets across <code>docs/behavior-cross-reference.md</code>, the img/video component docs, and <code>demos/site/cards.html</code>'s hero/overlay/product card galleries (#519, #529).</li>
+    <li>Fixed <code>&lt;wb-article&gt;</code> never getting its base CSS class when used as a bare tag, guarded the same way the sibling <code>wb-articles</code> case already is so a real <code>&lt;wb-article&gt;</code> tag doesn't end up with a redundant duplicate class (#528).</li>
+    <li>Split every "show N variants side by side" demo gallery across 8 pages (buttons, cards, badges, and more) into one example per configuration, per the site's own demo-authoring standard — was previously several unrelated component variants crammed into a single shared example block (#538).</li>
+    <li>Fixed most single-item component demos rendering in a fixed, often too-wide box instead of shrinking to fit their actual content — a width floor meant to rescue a few genuinely tiny controls (like a bare progress spinner) was accidentally being applied to every single-item demo on the site (#539).</li>
+    <li>Fixed a compliance check that was flagging normal, intentional layering (a hero card's background scrim sitting behind its own text, a demo's small "docs" badge sitting on a card's corner) as a visual bug — it was missing those patterns from its existing allowlist for exactly this kind of decorative layering.</li>
+    <li>Fixed a CSS audit that had drifted to counting comments describing past fixes as if they were live violations, and double-counting an auto-generated template copy of the whole stylesheet directory (#543).</li>
+    <li>Restored a demo container's padding to the site's minimum spacing standard after it regressed below the required 1rem (#544).</li>
+  </ul>
+</section>
+
 <section id="whats-new-2026-08-09">
   <h2>2026-08-09</h2>
   <ul>
