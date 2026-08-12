@@ -368,28 +368,96 @@ export async function demo(element, options = {}) {
         // (the common case) still only costs one or two cheap re-checks.
         const only = grid.children[0];
         if (only) {
-            let lastWidth = null;
-            let stableCount = 0;
-            const POLL_MS = 200;
-            const MAX_MS = 5000;
-            const startedAt = Date.now();
-            const measure = () => {
-                const demoCs = getComputedStyle(element);
-                const hPad = (parseFloat(demoCs.paddingLeft) || 0) + (parseFloat(demoCs.paddingRight) || 0);
-                const shrinkWidth = only.getBoundingClientRect().width + hPad;
-                if (shrinkWidth > 0) {
-                    element.style.setProperty('--wb-demo-shrink-width', shrinkWidth + 'px');
+            // #549: an <img>/<video> with an inline `width: 100%` (the
+            // figure/lightbox-image demos below, plus the direct-<img> and
+            // <video> demos elsewhere on this page) breaks the poll below in
+            // a way the async-content case above doesn't. That media
+            // element's OWN rendered width is a direct function of whatever
+            // width THIS code writes to --wb-demo-shrink-width on the very
+            // next layout pass -- and measure() writes the variable on
+            // EVERY tick, not just once at the end, so the "two consecutive
+            // equal readings" stability check can lock onto an arbitrary
+            // self-consistent fixed point instead of the media's real
+            // content size. Confirmed live: reloading the exact same
+            // <figure><img style="width:100%"></figure> demo repeatedly
+            // settled on wildly different "stable" widths from one load to
+            // the next (a collapsed ~60px sliver on one load, a plausible
+            // ~430px on another) -- pure timing noise in which transient
+            // layout the first rAF happened to catch, not a real
+            // measurement of anything. A plain getBoundingClientRect() can
+            // never break that loop because it's reading the very quantity
+            // this code is also writing.
+            //
+            // Route these through the media's natural/intrinsic size
+            // instead (img.naturalWidth / video.videoWidth) -- a fixed
+            // quantity the container's width can't feed back into. wb-demo's
+            // existing `max-width: 100%` (demo.css) still caps this down to
+            // the available page width for an image wider than the
+            // viewport, exactly like the plain shrink-to-fit path below.
+            const media = only.matches('img,video') ? only : only.querySelector('img,video');
+            const isFluidMedia = !!(media && /^\s*\d+(\.\d+)?%\s*$/.test(media.style.width || ''));
+
+            if (isFluidMedia) {
+                const applyNaturalWidth = () => {
+                    const naturalWidth = media.tagName === 'VIDEO' ? media.videoWidth : media.naturalWidth;
+                    if (!naturalWidth) return false;
+                    // media may be wrapped (e.g. <figure><img></figure>) --
+                    // the wrapper's own margin/border/padding is FIXED px
+                    // box model (not a percentage of the container), so
+                    // reading it via getComputedStyle can't feed back into
+                    // itself the way the media's own width:100% does.
+                    // Confirmed live: <figure> gets a UA-stylesheet default
+                    // `margin: 1em 40px` -- without adding that back in, the
+                    // shrink width came out 80px narrower than the image
+                    // actually needed, clipping it against the demo's own
+                    // max-width:100% edge.
+                    let extra = 0;
+                    for (let node = media; node && node !== only; node = node.parentElement) {
+                        const parentNode = node.parentElement;
+                        if (!parentNode) break;
+                        const pcs = getComputedStyle(parentNode);
+                        extra += (parseFloat(pcs.marginLeft) || 0) + (parseFloat(pcs.marginRight) || 0)
+                               + (parseFloat(pcs.borderLeftWidth) || 0) + (parseFloat(pcs.borderRightWidth) || 0)
+                               + (parseFloat(pcs.paddingLeft) || 0) + (parseFloat(pcs.paddingRight) || 0);
+                    }
+                    const demoCs = getComputedStyle(element);
+                    const hPad = (parseFloat(demoCs.paddingLeft) || 0) + (parseFloat(demoCs.paddingRight) || 0);
+                    element.style.setProperty('--wb-demo-shrink-width', (naturalWidth + extra + hPad) + 'px');
+                    return true;
+                };
+                if (!applyNaturalWidth()) {
+                    // Not decoded/metadata-loaded yet -- resolve once it is,
+                    // with a capped fallback so a broken/never-firing media
+                    // source can't leave the demo permanently collapsed
+                    // (same MAX_MS budget as the poll path below).
+                    const readyEvent = media.tagName === 'VIDEO' ? 'loadedmetadata' : 'load';
+                    media.addEventListener(readyEvent, applyNaturalWidth, { once: true });
+                    setTimeout(applyNaturalWidth, 5000);
                 }
-                if (shrinkWidth === lastWidth) {
-                    stableCount++;
-                } else {
-                    stableCount = 0;
-                    lastWidth = shrinkWidth;
-                }
-                if (stableCount >= 2 || Date.now() - startedAt > MAX_MS) return;
-                setTimeout(measure, POLL_MS);
-            };
-            requestAnimationFrame(measure);
+            } else {
+                let lastWidth = null;
+                let stableCount = 0;
+                const POLL_MS = 200;
+                const MAX_MS = 5000;
+                const startedAt = Date.now();
+                const measure = () => {
+                    const demoCs = getComputedStyle(element);
+                    const hPad = (parseFloat(demoCs.paddingLeft) || 0) + (parseFloat(demoCs.paddingRight) || 0);
+                    const shrinkWidth = only.getBoundingClientRect().width + hPad;
+                    if (shrinkWidth > 0) {
+                        element.style.setProperty('--wb-demo-shrink-width', shrinkWidth + 'px');
+                    }
+                    if (shrinkWidth === lastWidth) {
+                        stableCount++;
+                    } else {
+                        stableCount = 0;
+                        lastWidth = shrinkWidth;
+                    }
+                    if (stableCount >= 2 || Date.now() - startedAt > MAX_MS) return;
+                    setTimeout(measure, POLL_MS);
+                };
+                requestAnimationFrame(measure);
+            }
         }
     }
 

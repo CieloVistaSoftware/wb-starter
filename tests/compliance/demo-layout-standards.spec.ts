@@ -177,7 +177,21 @@ test.describe('Demo layout standards (§7) — single-item demos are not full wi
           const childWidth = child.getBoundingClientRect().width;
           const cs = getComputedStyle(demo as HTMLElement);
           const hPad = (parseFloat(cs.paddingLeft) || 0) + (parseFloat(cs.paddingRight) || 0);
-          const expectedWidth = childWidth + hPad;
+          // #549: getBoundingClientRect() is the child's BORDER box -- it never
+          // includes the child's own margin. A shrink-to-fit/fit-content
+          // container has to size around a child's MARGIN box to actually
+          // contain it (that's how the browser's own intrinsic-sizing
+          // algorithms work), so a child with real horizontal margin (e.g. a
+          // native <figure>, UA default `margin: 1em 40px`, used by the
+          // Figure demos below) makes wb-demo legitimately wider than
+          // childWidth + padding alone -- not a stretch-to-full-width bug.
+          // Confirmed live: demos/site/content.html's two <figure> image
+          // demos render correctly (image at its full natural width, no
+          // clipping/overflow) yet were flagged here because this check
+          // didn't count the figure's own 80px margin as "needed" width.
+          const childCs = getComputedStyle(child);
+          const childMargin = (parseFloat(childCs.marginLeft) || 0) + (parseFloat(childCs.marginRight) || 0);
+          const expectedWidth = childWidth + childMargin + hPad;
 
           if (demoWidth > expectedWidth + TOLERANCE_PX) {
             const label = (demo.textContent || '').trim().slice(0, 40);
