@@ -36,8 +36,7 @@ test.describe('demos/site/*.html: page-level padding wrapper', () => {
       page.on('pageerror', (err) => pageErrors.push(String(err)));
 
       await page.goto(`/demos/site/${file}.html`, { waitUntil: 'domcontentloaded' });
-      await page.waitForFunction(() => (window as any).WB, { timeout: 20000 });
-      await page.waitForTimeout(500);
+      await page.waitForFunction(() => (window as any).__WB_DEMO_INITIALIZED__ === true, { timeout: 20000 });
 
       expect(pageErrors, 'no uncaught page errors (guards against the </div>-inside-<script> regression)').toEqual([]);
       expect(consoleLogs.some((l) => l.includes(title)), `init script should have logged "${title}"`).toBe(true);
@@ -55,6 +54,7 @@ test.describe('demos/site/*.html: page-level padding wrapper', () => {
 
   test('index.html: .site-index wrapper has real padding', async ({ page }) => {
     await page.goto('/demos/site/index.html', { waitUntil: 'domcontentloaded' });
+    await page.waitForFunction(() => (window as any).__WB_DEMO_INITIALIZED__ === true, { timeout: 20000 });
     const wrapper = page.locator('.site-index').first();
     await expect(wrapper).toBeVisible();
     const padding = await wrapper.evaluate((el) => getComputedStyle(el).paddingLeft);

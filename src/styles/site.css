@@ -53,8 +53,9 @@ li:last-child { margin-bottom: 0; }
 /* #450's mobile pattern (body > .page, doc-viewer.html) applied here too --
    1.5rem side padding is ~36% of a 375px viewport's width. */
 @media (max-width: 640px) {
-  .demo-page {
-    padding: 0 1rem;
+  .demo-page,
+  body > .page {
+    padding: 0 var(--space-md, 1rem) !important;
   }
 }
 
