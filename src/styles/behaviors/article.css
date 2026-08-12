@@ -5,10 +5,12 @@
  * -----------------------------------------------------------------------------
  */
 
-/* #448: tag selector, not a class -- article() no longer adds a
-   classList.add('wb-article') that just duplicated the <wb-article> tag
-   name; select the tag directly instead (same fix pattern as #447's
-   wb-demo). */
+/* #448: tag selector, not a class -- styles a real <wb-article> tag
+   directly instead of requiring a same-named class (same fix pattern as
+   #447's wb-demo). #528: article() (article.js) still adds the
+   `wb-article` class, guarded, for hosts that AREN'T tagged <wb-article>
+   (e.g. a semantic <article> element schema-built via schema-builder.js) --
+   this tag selector doesn't reach those, only the class does. */
 wb-article {
   display: block;
   color: var(--text-primary, #f9fafb);

@@ -45,8 +45,13 @@ test.describe('Schema-driven tags resolve to a real, class-bearing element', () 
 
   test('wb-article builds a real structure from a bare tag', async ({ page }) => {
     const el = await setupTestContainer(page, '<wb-article title="Test Article" author="Jane">Body text.</wb-article>');
-    await expect(el).toHaveClass(/wb-article/);
+    // Not toHaveClass(/wb-article/) on el -- a real <wb-article> tag must NOT
+    // also carry a same-named class (no-redundant-tag-name-class.spec.ts);
+    // article.css's bare `wb-article {}` tag selector already styles it.
+    // The structural checks below prove article() actually ran instead.
     await expect(el.locator('.wb-article__title')).toHaveText('Test Article');
+    await expect(el.locator('.wb-article__byline')).toContainText('Jane');
+    await expect(el.locator('.wb-article__content')).toContainText('Body text.');
   });
 
   test('wb-articles builds a list wrapper around wb-article children', async ({ page }) => {
