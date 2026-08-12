@@ -74,6 +74,25 @@ const LEGACY_ZERO_DEMO_FILES = new Set([
   'wb-parts-spec.md',
   'wbservices.md',
   'WB_BEHAVIOR_SYSTEM.md',
+
+  // Issue #554 (#307): these two are a different bucket than the #423 migration
+  // debt above — not "not yet converted," but permanently exempt because their
+  // fences are not real component usage:
+  // - claude/TIER1-LAWS.md's Law 11 fence intentionally nests an unclosed
+  //   "WRONG" wb-alert/x-stepper/x-toast example against a "CORRECT" one to
+  //   teach AI agents the attribute-naming rule. Making a rule-violation
+  //   example "live" would render broken/invalid markup and defeats the
+  //   point — this is exactly the "intentionally-invalid markup demonstrating
+  //   what NOT to do" exception carved out by code-examples-standard.md Rule 4.
+  // - architecture/proposals/remove-wb-prefix-authoring-surface.md's "Today"
+  //   vs "Proposed" fence contrasts current `<wb-card>` markup (shown with
+  //   placeholder `...` content, not real attributes) against the `x-card`
+  //   attribute-detection form the proposal is arguing for — which the
+  //   proposal's own body confirms is NOT wired into schema-builder.js yet.
+  //   A live demo can't render a mechanism that doesn't exist; this is a
+  //   future-facing illustration, not current-state runnable markup.
+  'claude/TIER1-LAWS.md',
+  'architecture/proposals/remove-wb-prefix-authoring-surface.md',
 ]);
 
 test('audit: markdown code fences that should be live wb-demo blocks (Rule 4, #307)', () => {
