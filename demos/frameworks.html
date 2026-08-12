@@ -23,7 +23,7 @@
        (#241). It does now -- the global pre.js/pre.css system enhances them
        the same as every other code panel on the site (line numbers, copy
        button, language badge). Running BOTH systems on the same element
-       conflicted: this page's `pre[language] { padding: … 1rem; }` (an
+      conflicted: this page's old attribute-qualified padding rule (an
        attribute selector, specificity 0,1,1) outranked the global
        `.x-pre--has-line-numbers { padding-left: 2.5rem; }` (a single class,
        0,1,0) regardless of source order, leaving only 16px of left padding
@@ -118,7 +118,7 @@
 
     <div style="margin-top: 1.5rem;">
       <p style="margin-bottom: 0.5rem; font-size: 0.9rem; color: var(--text-secondary);">Code used in this demo:</p>
-      <pre language="javascript" show-copy><code class="language-javascript">import React, { useState, useEffect } from 'react';
+      <pre x-behavior="pre" x-eager language="javascript" show-copy><code x-behavior="code" x-eager class="language-javascript">import React, { useState, useEffect } from 'react';
 import ReactDOM from 'react-dom/client';
 import WB from 'wb-behaviors';
 
@@ -202,7 +202,7 @@ root.render(e(ReactApp));</code></pre>
 
     <div style="margin-top: 1.5rem;">
       <p style="margin-bottom: 0.5rem; font-size: 0.9rem; color: var(--text-secondary);">Code used in this demo:</p>
-      <pre language="html" show-copy><code class="language-html">&lt;div id="vue-app"&gt;
+      <pre x-behavior="pre" x-eager language="html" show-copy><code x-behavior="code" x-eager class="language-html">&lt;div id="vue-app"&gt;
   &lt;div style="padding: 1rem; border: 1px dashed #42b883; border-radius: 8px;"&gt;
     &lt;h3&gt;Vue Message: {{ message }}&lt;/h3&gt;
     &lt;input 
@@ -337,7 +337,7 @@ root.render(e(ReactApp));</code></pre>
 
     <div style="margin-top: 1.5rem;">
       <p style="margin-bottom: 0.5rem; font-size: 0.9rem; color: var(--text-secondary);">Code used in this demo:</p>
-      <pre language="html" show-copy><code class="language-html">&lt;script&gt;
+      <pre x-behavior="pre" x-eager language="html" show-copy><code x-behavior="code" x-eager class="language-html">&lt;script&gt;
   import WB from 'wb-behaviors';
   import { onMount } from 'svelte';
 
@@ -364,28 +364,59 @@ root.render(e(ReactApp));</code></pre>
     </div>
   </section>
 
-  <!-- Angular Example (Code Only) -->
-  <section>
+  <!-- Angular Demo -->
+  <section id="angular-demo">
     <span class="framework-badge badge-angular" style="background: #dd0031; color: #fff;">Angular</span>
     <h2>Angular Integration</h2>
     <p>In Angular, use standard attribute binding. WB behaviors initialize automatically.</p>
-    <!-- #460 / DEMOS-AND-DOCS-STANDARDS.md §25: unlike React, Vue, Svelte, and
-         SolidJS -- each of which still publishes a public API loadable via a
-         single CDN script/module (a UMD build, or, for Svelte/Solid, a
-         compiler that runs client-side) -- Angular has not shipped a
-         browser-ready UMD or JIT-compiler bundle for any version since the
-         Ivy renderer became default (~v9): current @angular/core publishes
-         ONLY deep esm2022/**/*.mjs internal modules meant to be resolved and
-         tree-shaken by a bundler (Angular CLI/esbuild), not consumed
-         directly. The old CLI-free "quickstart" (SystemJS + UMD bundles)
-         that worked through Angular 8 was retired for exactly this reason.
-         Reviving it would mean pinning to a years-obsolete, pre-Ivy Angular
-         version using deprecated APIs (ViewEngine, NgModule bootstrap) not
-         reflected in the code sample below -- a misleading, non-representative
-         demo, not an honest one. See #460 for the full investigation. -->
-    <p class="wb-text-secondary wb-demo-buildstep-note" style="font-size: 0.9rem; margin-bottom: 1rem;"><em>No live render: Angular has not published a browser-ready UMD or JIT bundle since its Ivy renderer became default (~v9) -- current Angular ships only bundler-oriented internal ES modules. This example requires a real Angular build step (Angular CLI/esbuild) (DEMOS-AND-DOCS-STANDARDS.md §25, #460).</em></p>
+    <!-- #460: Angular's current ESM packages can be JIT-bootstrapped directly
+         in a browser. This is the same standalone component API used by an
+         Angular application; the CDN only replaces the build tool that would
+         normally bundle these packages. -->
+    <div id="angular-root" style="padding: 1rem; border: 1px dashed #dd0031; border-radius: 8px; min-height: 2.5rem;"><angular-demo></angular-demo></div>
 
-    <pre language="typescript" show-copy><code class="language-typescript">import { Component, OnInit } from '@angular/core';
+    <script type="module">
+      import WB from '../src/core/wb-lazy.js';
+
+      const ANGULAR_VERSION = '17.3.12';
+      await import('https://esm.sh/zone.js@0.14.10');
+      await import(`https://esm.sh/@angular/compiler@${ANGULAR_VERSION}`);
+      const { Component } = await import(`https://esm.sh/@angular/core@${ANGULAR_VERSION}`);
+      const { bootstrapApplication } = await import(`https://esm.sh/@angular/platform-browser@${ANGULAR_VERSION}`);
+
+      const AngularDemo = Component({
+        selector: 'angular-demo',
+        standalone: true,
+        template: `
+          <div>
+            <h3>Angular Count: {{ count }}</h3>
+            <button
+              class="wb-btn-gradient"
+              x-ripple
+              x-tooltip
+              [attr.tooltip]="'Count: ' + count"
+              (click)="increment()">
+              Increment + WB Magic
+            </button>
+          </div>
+        `
+      })(class AngularDemo {
+        count = 0;
+
+        increment() {
+          this.count++;
+        }
+
+        ngOnInit() {
+          WB.init();
+        }
+      });
+
+      await bootstrapApplication(AngularDemo, { providers: [] });
+      await WB.scan(document.getElementById('angular-root'), { eager: true });
+    </script>
+
+    <pre x-behavior="pre" x-eager language="typescript" show-copy><code x-behavior="code" x-eager class="language-typescript">import { Component, OnInit } from '@angular/core';
 import WB from 'wb-behaviors';
 
 @Component({
@@ -506,7 +537,7 @@ export default Counter;`;
 
     <div style="margin-top: 1.5rem;">
       <p style="margin-bottom: 0.5rem; font-size: 0.9rem; color: var(--text-secondary);">Code used in this demo:</p>
-      <pre language="javascript" show-copy><code class="language-javascript">import { createSignal, onMount } from 'solid-js';
+      <pre x-behavior="pre" x-eager language="javascript" show-copy><code x-behavior="code" x-eager class="language-javascript">import { createSignal, onMount } from 'solid-js';
 import WB from 'wb-behaviors';
 
 function Counter() {
@@ -568,7 +599,6 @@ function Counter() {
 
   <script type="module">
     import WB from '../src/core/wb-lazy.js';
-    import hljs from '../src/lib/highlight.js';
 
     // Initialize WB (autoInject/MutationObserver handles the React/Vue mounts).
     await WB.init({ autoInject: true });
@@ -584,25 +614,6 @@ function Counter() {
     const soleDemo = document.querySelector('wb-demo');
     if (soleDemo) await WB.scan(soleDemo.parentElement, { eager: true });
 
-    // #449: `language="…"` <pre> blocks are now enhanced by the global
-    // pre.js/pre.css system (line numbers, copy button, language badge,
-    // highlighting) instead of the hand-rolled duplicate this replaced
-    // (#241) -- see the matching CSS comment above for the full incident.
-    // Same "laziness buys nothing here" reasoning as the wb-demo eager-scan
-    // right above: these 5 blocks are this whole page's actual instructional
-    // content, not optional below-the-fold extras, so WB.init()'s default
-    // IntersectionObserver-gated laziness leaves them plain/unhighlighted
-    // until a real scroll reaches them -- confirmed by
-    // tests/integration/frameworks-demo.spec.ts failing exactly this way
-    // right after the #241 rewrite (checks highlighting without scrolling,
-    // same as a reader who hasn't scrolled yet).
-    for (const codeBlock of document.querySelectorAll('pre[language]')) {
-      // WB.scan(root)'s native/auto-inject path only matches DESCENDANTS of
-      // root (same class of gap as the [x-behavior] one fixed in wb.js/
-      // wb-lazy.js this session) -- scan each block's own PARENT, not the
-      // block itself, so `pre` is found as a real descendant.
-      await WB.scan(codeBlock.parentElement, { eager: true });
-    }
   </script>
 </body>
 </html>

@@ -33,7 +33,7 @@ test.describe('frameworks demo: code examples highlighted + copyable (#241)', ()
     const codes = page.locator('pre[language] code');
     await expect(codes.first()).toHaveClass(/hljs/, { timeout: 15000 });
     for (let i = 0; i < n; i++) {
-      await expect(codes.nth(i), `code block ${i} must be highlighted`).toHaveClass(/hljs/);
+      await expect(codes.nth(i), `code block ${i} must be highlighted`).toHaveClass(/hljs/, { timeout: 15000 });
     }
 
     // Real tokens (colored spans), not one blob.
@@ -56,6 +56,18 @@ test.describe('frameworks demo: code examples highlighted + copyable (#241)', ()
     // -- this page is a documented §6 carve-out (scrolls, doesn't wrap), the
     // opposite of the site-wide default, so it doesn't belong duplicated here.
   });
+
+  test('framework code blocks use the shared pre behavior without legacy controls (#449)', async ({ page }) => {
+    await page.goto('/demos/frameworks.html', { waitUntil: 'domcontentloaded' });
+
+    const blocks = page.locator('pre[language]');
+    const count = await blocks.count();
+    expect(count).toBeGreaterThanOrEqual(5);
+
+    await expect(page.locator('pre[language][x-behavior="pre"][x-eager]')).toHaveCount(count);
+    await expect(page.locator('pre[language].x-pre')).toHaveCount(count, { timeout: 15000 });
+    await expect(page.locator('.code-copy-btn')).toHaveCount(0);
+  });
 });
 
 /**
@@ -68,15 +80,11 @@ test.describe('frameworks demo: code examples highlighted + copyable (#241)', ()
  * the hand-rolled highlighted <pre> pattern (already covered by the #241 test
  * above) instead of <wb-demo>'s paired live+source.
  *
- * #460 narrowed which of those actually have NO live render at all: React and Vue
- * already rendered live via CDN UMD builds. Investigation found Svelte's compiler
- * and SolidJS's real JSX transform (babel-plugin-jsx-dom-expressions) both run
- * fine client-side at runtime, with no server build step — so they now render live
- * too (compiled from the exact source shown in their code sample, at page-load
- * time). Angular is the only one left that genuinely can't: modern Angular ships
- * no browser-ready UMD/JIT bundle at all (see DEMOS-AND-DOCS-STANDARDS.md §25 and
- * #460 for the full investigation), so it keeps the explicit "no live render"
- * label rather than silently omitting one.
+ * #460 now covers all five framework sections: React and Vue use CDN UMD builds;
+ * Svelte and SolidJS compile client-side at runtime; Angular bootstraps a real
+ * standalone component from its pinned browser ESM packages. None needs a repo
+ * build dependency, and each keeps its author-facing source block below the live
+ * mount because compiled framework output is not 1:1 with that source.
  */
 test.describe('frameworks demo: wb-demo / build-step exception (§25, #324, #460)', () => {
   test('HTMX section renders as a real <wb-demo> (live control + matching source)', async ({ page }) => {
@@ -147,7 +155,7 @@ test.describe('frameworks demo: wb-demo / build-step exception (§25, #324, #460
     // hand-authored .svelte-equivalent source shown below it.
     expect(await page.locator('#svelte-demo wb-demo').count()).toBe(0);
 
-    expect(errs, 'no page errors while compiling/mounting the Svelte demo').toEqual([]);
+    expect(errs, `no page errors while compiling/mounting the Svelte demo: ${errs.join(' | ')}`).toEqual([]);
   });
 
   test('SolidJS section compiles client-side and renders live, interactively, with its real source shown (#460)', async ({ page }) => {
@@ -179,23 +187,32 @@ test.describe('frameworks demo: wb-demo / build-step exception (§25, #324, #460
     // hand-authored JSX source shown below it.
     expect(await page.locator('#solid-demo wb-demo').count()).toBe(0);
 
-    expect(errs, 'no page errors while compiling/mounting the SolidJS demo').toEqual([]);
+    expect(errs, `no page errors while compiling/mounting the SolidJS demo: ${errs.join(' | ')}`).toEqual([]);
   });
 
-  test('Angular section is the sole remaining "no live render" exception, with a specific reason (#460)', async ({ page }) => {
+  test('Angular section bootstraps a live standalone component from browser ESM packages (#460)', async ({ page }) => {
+    const errs: string[] = [];
+    page.on('pageerror', (e) => errs.push(String(e)));
+
     await page.goto('/demos/frameworks.html', { waitUntil: 'domcontentloaded' });
 
-    const notes = page.locator('.wb-demo-buildstep-note');
-    await expect(notes).toHaveCount(1);
-    await expect(notes.first()).toContainText('No live render');
-    await expect(notes.first()).toContainText('Angular');
-    // The label names the SPECIFIC reason (no browser-ready UMD/JIT bundle since
-    // Ivy) rather than a generic "requires a build step" -- §25 requires the
-    // exception's explanation to be accurate and specific, not just present.
-    await expect(notes.first()).toContainText('UMD');
+    const button = page.locator('#angular-root angular-demo button');
+    try {
+      await expect(button).toBeVisible({ timeout: 20000 });
+    } catch (error) {
+      throw new Error(`Angular must bootstrap and render a real component. ${error instanceof Error ? error.message : String(error)} Page errors: ${errs.join(' | ')}`);
+    }
+    await expect(button).toHaveText('Increment + WB Magic');
+    await expect(page.locator('#angular-root h3')).toHaveText('Angular Count: 0');
+    await expect(button).toHaveAttribute('tooltip', 'Count: 0');
+    await button.click();
+    await button.click();
+    await expect(page.locator('#angular-root h3')).toHaveText('Angular Count: 2');
+    await expect(button).toHaveAttribute('tooltip', 'Count: 2');
+    await expect(button).toHaveClass(/wb-ripple/);
+    await expect(page.locator('#angular-demo pre[language]')).toBeVisible();
 
-    // Angular's source is still there (still a defect under §16 if it weren't),
-    // just not live and not wrapped in <wb-demo>.
+    expect(errs, `no page errors while bootstrapping the Angular demo: ${errs.join(' | ')}`).toEqual([]);
     expect(await page.locator('wb-demo').count()).toBe(1); // HTMX only
   });
 });
