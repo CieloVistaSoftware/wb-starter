@@ -3,13 +3,14 @@
 The wb-starter card system is built on **composition, not a class hierarchy**. Card
 variants — `wb-cardimage`, `wb-cardhero`, `wb-cardprofile`, `wb-cardstats`,
 `wb-cardpricing`, and more — are **independent components**. They are NOT subclasses
-of a shared `cardBase` class (there is no such base class). Instead they share the
+of a shared base class (there is no such class). Instead they share the
 card's semantic structure through Light-DOM markup and add only what is unique to their
 purpose via `x-*` behaviors and extra content.
 
 <wb-demo>
 <wb-card title="Hello" variant="elevated">
-  <p>It just works.</p>
+  <p>Keep related information together in a clear, reusable surface.</p>
+  <p><strong>Status:</strong> Ready to review</p>
 </wb-card>
 </wb-demo>
 
@@ -62,8 +63,13 @@ A `<wb-card>` renders into these named parts. Here it is live, then the structur
 every element labeled:
 
 <wb-demo>
-<wb-card title="Title + Body" elevated>
-  <p>Simple card with title and hover effect.</p>
+<wb-card
+  title="Title + Body"
+  subtitle="A labeled content surface"
+  badge="LIVE"
+  footer="Updated just now"
+  elevated>
+  <p>The header, main content, and footer remain distinct in Light DOM.</p>
 </wb-card>
 </wb-demo>
 
@@ -112,7 +118,8 @@ every element labeled:
 <wb-card
   title="Card Title"
   subtitle="Subtitle text">
-  This is the card content.
+  <p>Use the custom element when the card is already part of your markup.</p>
+  <p><strong>Tip:</strong> Keep the title specific to the content it introduces.</p>
 </wb-card>
 </wb-demo>
 
@@ -121,8 +128,9 @@ every element labeled:
 <wb-demo>
 <article
   x-card
-  title="Card Title">
-  This is the card content.
+  title="Semantic Card"
+  subtitle="An article enhanced in place">
+  <p>Use <code>x-card</code> when semantic HTML already owns the element.</p>
 </article>
 </wb-demo>
 
@@ -136,7 +144,8 @@ every element labeled:
   elevated
   clickable
   variant="glass">
-  Main content goes here.
+  <p>Review the latest release notes and open the project workspace.</p>
+  <p><strong>Next step:</strong> Select the card to continue.</p>
 </wb-card>
 </wb-demo>
 
@@ -149,7 +158,7 @@ unstyled, slow, browser-inconsistent native `title` tooltip (#283):
 <wb-card
   title="Hover Me"
   tooltip="Extra detail shown on hover">
-  Main content goes here.
+  <p>Hover this card to reveal a themed tooltip with supporting context.</p>
 </wb-card>
 </wb-demo>
 
@@ -157,7 +166,9 @@ unstyled, slow, browser-inconsistent native `title` tooltip (#283):
 
 ### Default
 <wb-demo>
-<wb-card title="Default Card"> Standard card styling. </wb-card>
+<wb-card title="Default Card">
+  <p>Standard card styling keeps the content easy to scan.</p>
+</wb-card>
 </wb-demo>
 
 ### Glass
@@ -165,7 +176,7 @@ unstyled, slow, browser-inconsistent native `title` tooltip (#283):
 <wb-card
   title="Glass Card"
   variant="glass">
-  Frosted glass effect with blur.
+  <p>Frosted glass effect with blur for layered content.</p>
 </wb-card>
 </wb-demo>
 
@@ -174,7 +185,7 @@ unstyled, slow, browser-inconsistent native `title` tooltip (#283):
 <wb-card
   title="Elevated Card"
   elevated>
-  Card with drop shadow.
+  <p>Use elevation to separate a focused task from the surrounding page.</p>
 </wb-card>
 </wb-demo>
 
@@ -183,30 +194,9 @@ unstyled, slow, browser-inconsistent native `title` tooltip (#283):
 <wb-card
   title="Click Me"
   clickable>
-  Click anywhere on this card.
+  <p>Click anywhere on this card to activate its interactive state.</p>
 </wb-card>
 </wb-demo>
-
-## Generated Structure
-
-The card generates this semantic HTML:
-
-```html
-<article class="wb-card">
-  <!-- Header (when title/subtitle set) -->
-  <header class="wb-card__header">
-    <div class="wb-card__header-content">
-      <h3 class="wb-card__title">Title</h3>
-      <p class="wb-card__subtitle">Subtitle</p>
-    </div>
-    <span class="wb-card__badge">Badge</span>
-  </header>
-  <!-- Main (always present) -->
-  <main class="wb-card__main"> User content here... </main>
-  <!-- Footer (when footer set) -->
-  <footer class="wb-card__footer"> Footer text </footer>
-</article>
-```
 
 ## CSS Classes
 
