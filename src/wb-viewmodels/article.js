@@ -52,7 +52,18 @@ export function article(element, options = {}) {
 
   const hasHeaderContent = image || category || date || readingTime || title || subtitle || author;
   if (hasHeaderContent) {
-    const header = document.createElement('header');
+    // A semantic <header> tag here collides with the header() behavior's
+    // own autoInject nativeMap entry ('header' -> 'header', tag-map.js):
+    // WB.init({autoInject:true}) treats ANY native <header> element on the
+    // page as a site/page-header candidate and adds the 'wb-header' class,
+    // and behaviors/header.css's `wb-header, header { display: flex; ... }`
+    // rule (meant for the site's own nav header) then applies its row-flex
+    // layout here too -- cramming the media/meta/title/subtitle/byline
+    // that are meant to stack vertically into one horizontal row instead.
+    // A plain <div> sidesteps the collision entirely and matches every
+    // other internal wrapper in this file (.wb-article__meta/__byline are
+    // already <div>, not semantic tags, for the same reason).
+    const header = document.createElement('div');
     header.className = 'wb-article__header';
 
     if (image) {
@@ -152,7 +163,9 @@ export function articles(element, options = {}) {
   if (element.tagName.toLowerCase() !== 'wb-articles') element.classList.add('wb-articles');
 
   if (title) {
-    const header = document.createElement('header');
+    // Same native-<header>/header() autoInject collision as article()
+    // above (see its comment) -- a plain <div> avoids it.
+    const header = document.createElement('div');
     header.className = 'wb-articles__header';
     const titleEl = document.createElement('h2');
     titleEl.textContent = title;

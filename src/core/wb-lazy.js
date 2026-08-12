@@ -333,7 +333,7 @@ function getAutoInjectBehaviors(element) {
 const SCHEMA_SKIP_TAGS = new Set([
   'wb-demo', 'wb-details', 'wb-cluster', 'wb-stack', 'wb-row', 'wb-search',
   'wb-accordion', 'wb-article', 'wb-articles', 'wb-select', 'wb-skeleton',
-  'wb-dialog', 'wb-fix-card', 'wb-view',
+  'wb-dialog', 'wb-fix-card', 'wb-view', 'wb-audio',
 ]);
 
 // One fetch attempt per derived schema NAME (not per element) -- avoids
