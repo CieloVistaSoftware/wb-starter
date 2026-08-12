@@ -7,6 +7,7 @@
   <title>Content & Media</title>
   <link rel="stylesheet" href="../../src/styles/themes.css">
   <link rel="stylesheet" href="../../src/styles/site.css">
+  <link rel="stylesheet" href="../../src/styles/pages/showcase.css">
 
 </head>
 
@@ -20,23 +21,33 @@
   <!-- 1. 📄 Article Component -->
   <section id="article-article-component">
   <h2>📄 Article Component</h2>
-  <wb-demo columns="3">
-    <wb-article title="Getting Started with Web Components">
+  <div class="demo-section__grid demo-section__grid--cols-3">
+    <wb-demo columns="1">
+      <wb-article title="Getting Started with Web Components">
       Learn the fundamentals of building reusable web components using custom elements, shadow DOM, and HTML templates. This guide covers the essentials for modern web development.
     </wb-article>
-    <wb-article title="Advanced CSS Patterns" subtitle="Modern layout techniques">
+    </wb-demo>
+    <wb-demo columns="1">
+      <wb-article title="Advanced CSS Patterns" subtitle="Modern layout techniques">
       Discover cutting-edge CSS techniques including Grid, Flexbox, Container Queries, and more. These modern approaches simplify complex layouts and improve responsive design.
     </wb-article>
-    <wb-article title="JavaScript Best Practices" image="https://placehold.co/400x300/667eea/ffffff?text=JavaScript">
+    </wb-demo>
+    <wb-demo columns="1">
+      <wb-article title="JavaScript Best Practices" image="https://placehold.co/400x300/667eea/ffffff?text=JavaScript">
       Write maintainable, performant JavaScript code by following industry best practices. Topics include async patterns, error handling, and functional programming principles.
     </wb-article>
-    <wb-article title="Web Performance Optimization" author="Sarah Chen" date="2026-09-15">
+    </wb-demo>
+    <wb-demo columns="1">
+      <wb-article title="Web Performance Optimization" author="Sarah Chen" date="2026-09-15">
       Improve your website's speed with proven techniques: code splitting, lazy loading, image optimization, and caching strategies that significantly boost user experience.
     </wb-article>
-    <wb-article title="The Future of Web Standards" subtitle="A field guide to the platform ahead" category="Web Platform" author="Maya Patel" date="2026-08-01" reading-time="8 min read" image="https://placehold.co/800x320/0f766e/ffffff?text=Web+Standards" featured>
+    </wb-demo>
+    <wb-demo columns="1">
+      <wb-article title="The Future of Web Standards" subtitle="A field guide to the platform ahead" category="Web Platform" author="Maya Patel" date="2026-08-01" reading-time="8 min read" image="https://placehold.co/800x320/0f766e/ffffff?text=Web+Standards" featured>
       Explore the web platform changes that will shape the next generation of applications. This featured story combines a strong visual, editorial metadata, and a longer introduction so its emphasis is obvious beside the standard articles.
     </wb-article>
-  </wb-demo>
+    </wb-demo>
+  </div>
   </section>
 
   <!-- 2. Toggles -->
@@ -52,22 +63,28 @@
   <!-- 3. 📰 Articles List Component -->
   <section id="articles-articles-list-component">
   <h2>📰 Articles List Component</h2>
-  <wb-demo columns="2">
-    <wb-articles title="Grid layout" layout="grid">
+  <div class="demo-section__grid demo-section__grid--cols-2">
+    <wb-demo columns="1">
+      <wb-articles title="Grid layout" layout="grid">
       <wb-article title="TypeScript Mastery">TypeScript transforms JavaScript development with type safety. Learn advanced features: generics, unions, interfaces, and decorators for robust applications.</wb-article>
       <wb-article title="React Hooks Deep Dive">Master modern React with Hooks. Understand useState, useEffect, useContext, and custom hooks for cleaner, more maintainable component code.</wb-article>
       <wb-article title="Database Design Fundamentals">Design databases that scale. Learn normalization, indexing, relationships, and query optimization for high-performance applications.</wb-article>
     </wb-articles>
-    <wb-articles title="List layout" layout="list">
+    </wb-demo>
+    <wb-demo columns="1">
+      <wb-articles title="List layout" layout="list">
       <wb-article title="API Design Best Practices">Build RESTful APIs with proper versioning, pagination, error handling, and documentation for great developer experience.</wb-article>
       <wb-article title="Testing Strategies">Comprehensive testing approach: unit tests, integration tests, end-to-end tests, and performance testing for reliable software.</wb-article>
       <wb-article title="DevOps Essentials">Master deployment pipelines, containerization, CI/CD workflows, and infrastructure as code for modern development teams.</wb-article>
     </wb-articles>
-    <wb-articles title="Two-column grid" layout="grid" columns="2">
+    </wb-demo>
+    <wb-demo columns="1">
+      <wb-articles title="Two-column grid" layout="grid" columns="2">
       <wb-article title="Security in Web Apps">Protect your applications from threats: authentication, authorization, CSRF prevention, and secure communication practices.</wb-article>
       <wb-article title="Accessibility Standards">Build inclusive web experiences for all users. Learn WCAG, ARIA, keyboard navigation, and semantic HTML for better accessibility.</wb-article>
     </wb-articles>
-  </wb-demo>
+    </wb-demo>
+  </div>
   </section>
 
   <!-- 4. layout variants -->
@@ -135,63 +152,85 @@
   <!-- 6. 📝 Markdown to HTML -->
   <section id="mdhtml-markdown-to-html">
   <h2>📝 Markdown to HTML</h2>
-  <wb-demo columns="2" data-code-width="narrow">
-    <wb-mdhtml src="../code.md">
+  <div class="demo-section__grid demo-section__grid--cols-2">
+    <wb-demo columns="1">
+      <wb-mdhtml src="../code.md">
       # Markdown Example
       This renders **real** markdown with *proper* formatting.
     </wb-mdhtml>
-    <wb-mdhtml gfm>
+    </wb-demo>
+    <wb-demo columns="1">
+      <wb-mdhtml gfm>
       ## GitHub Flavored Markdown
       - Supports ~~strikethrough~~ text
       - Task lists: - [ ] Todo - [x] Done
       - Tables and code blocks
     </wb-mdhtml>
-    <wb-mdhtml sanitize gfm>
+    </wb-demo>
+    <wb-demo columns="1">
+      <wb-mdhtml sanitize gfm>
       ### Sanitized & Safe
       Removes dangerous HTML while keeping valid **markdown** rendering.
       ```javascript
       console.log('Code blocks render safely');
       ```
     </wb-mdhtml>
-  </wb-demo>
+    </wb-demo>
+  </div>
   </section>
 
   <!-- 7. 🎵 Audio -->
   <section id="audio-audio">
   <h2>🎵 Audio</h2>
-  <wb-demo columns="2" data-code-width="full">
-    <wb-audio src="../audio.mp3">
+  <div class="demo-section__grid demo-section__grid--cols-2">
+    <wb-demo columns="1">
+      <wb-audio src="../audio.mp3">
       This is example audio content.
     </wb-audio>
-    <wb-audio src="../audio.mp3" show-eq>
+    </wb-demo>
+    <wb-demo columns="1">
+      <wb-audio src="../audio.mp3" show-eq>
       This is example audio content.
     </wb-audio>
-    <wb-audio src="../audio.mp3" volume="0.5">
+    </wb-demo>
+    <wb-demo columns="1">
+      <wb-audio src="../audio.mp3" volume="0.5">
       This is example audio content.
     </wb-audio>
-    <wb-audio src="../audio.mp3" loop>
+    </wb-demo>
+    <wb-demo columns="1">
+      <wb-audio src="../audio.mp3" loop>
       This is example audio content.
     </wb-audio>
-  </wb-demo>
+    </wb-demo>
+  </div>
   </section>
 
   <!-- 8. Toggles -->
   <section id="audio-toggles">
   <h2>Toggles</h2>
-  <wb-demo columns="1">
-    <wb-audio loop src="../audio.mp3">
+  <div class="demo-section__grid demo-section__grid--cols-1">
+    <wb-demo columns="1">
+      <wb-audio loop src="../audio.mp3">
       This is example audio content.
     </wb-audio>
-    <wb-audio autoplay src="../audio.mp3">
+    </wb-demo>
+    <wb-demo columns="1">
+      <wb-audio autoplay src="../audio.mp3">
       This is example audio content.
     </wb-audio>
-    <wb-audio muted src="../audio.mp3">
+    </wb-demo>
+    <wb-demo columns="1">
+      <wb-audio muted src="../audio.mp3">
       This is example audio content.
     </wb-audio>
-    <wb-audio show-eq src="../audio.mp3">
+    </wb-demo>
+    <wb-demo columns="1">
+      <wb-audio show-eq src="../audio.mp3">
       This is example audio content.
     </wb-audio>
-  </wb-demo>
+    </wb-demo>
+  </div>
   </section>
 
   <!-- 9. 📊 Table -->
@@ -418,8 +457,9 @@
   <!-- 10. Toggles -->
   <section id="table-toggles">
   <h2>Toggles</h2>
-  <wb-demo columns="1">
-    <wb-table filterable striped>
+  <div class="demo-section__grid demo-section__grid--cols-1">
+    <wb-demo columns="1">
+      <wb-table filterable striped>
       <thead>
         <tr>
           <th>Bug Report</th>
@@ -455,7 +495,9 @@
         </tr>
       </tbody>
     </wb-table>
-    <wb-table paginated page-size="5" striped>
+    </wb-demo>
+    <wb-demo columns="1">
+      <wb-table paginated page-size="5" striped>
       <thead>
         <tr>
           <th>Invoice</th>
@@ -510,7 +552,9 @@
         </tr>
       </tbody>
     </wb-table>
-    <wb-table compact bordered>
+    </wb-demo>
+    <wb-demo columns="1">
+      <wb-table compact bordered>
       <thead>
         <tr>
           <th>Library</th>
@@ -546,7 +590,8 @@
         </tr>
       </tbody>
     </wb-table>
-  </wb-demo>
+    </wb-demo>
+  </div>
   </section>
 
   <!-- 11. 📝 Notes -->
@@ -702,20 +747,26 @@
   <!-- DETAILS -->
   <h2>Details <code>&lt;details&gt;</code></h2>
   <div class="demo-section">
-    <wb-demo columns="3">
+    <div class="demo-section__grid demo-section__grid--cols-3">
+    <wb-demo columns="1">
       <details>
         <summary>Detail Item 1</summary>
         <p>This is the content for item 1.</p>
       </details>
+    </wb-demo>
+    <wb-demo columns="1">
       <details open>
         <summary>Detail Item 2 (open by default)</summary>
         <p>This is the content for item 2.</p>
       </details>
+    </wb-demo>
+    <wb-demo columns="1">
       <details animated="false">
         <summary>Detail Item 3 (no animation)</summary>
         <p>This is the content for item 3.</p>
       </details>
     </wb-demo>
+  </div>
   </div>
 
   <!-- DIALOG -->
@@ -743,10 +794,14 @@
   <!-- PROGRESS -->
   <h2>Progress <code>&lt;wb-progress&gt;</code></h2>
   <div class="demo-section">
-    <wb-demo columns="2">
+    <div class="demo-section__grid demo-section__grid--cols-2">
+    <wb-demo columns="1">
       <wb-progress value="70" label="Loading..."></wb-progress>
+    </wb-demo>
+    <wb-demo columns="1">
       <wb-progress indeterminate label="Working..."></wb-progress>
     </wb-demo>
+  </div>
   </div>
 
   <!-- CODE & PRE -->
