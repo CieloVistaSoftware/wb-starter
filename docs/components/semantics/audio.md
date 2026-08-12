@@ -37,10 +37,6 @@ Wrapped in `<wb-demo>`, so the live component renders below with its source show
 ### Custom Element
 
 ```html
-<!-- Uses default pleasant royalty-free demo track -->
-<wb-audio></wb-audio>
-
-<!-- Or provide your own source -->
 <wb-audio src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3"></wb-audio>
 ```
 
