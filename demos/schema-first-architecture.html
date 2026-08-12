@@ -268,7 +268,10 @@
     .comparison-table th {
       background: #1e1e1e;
       color: white;
-      padding: 0.5rem;
+      /* #545: was 0.5rem (8px) -- th has its own dark background distinct
+         from the table, so it reads as a content panel and needs the full
+         1rem to clear the site's content-panel-edge minimum. */
+      padding: 1rem;
       text-align: left;
       font-family: var(--paper-font-sans);
       font-size: 8pt;
