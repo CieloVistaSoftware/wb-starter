@@ -269,6 +269,41 @@ test.describe('Layout standard: no text within 1rem of a content-panel edge', ()
         for (const el of all) {
           const rect = el.getBoundingClientRect();
           if (rect.width < minW || rect.height < minH) continue; // a UI atom, not a content panel
+          // #561: the SIZE-based atom exclusion above (width/height < 120px)
+          // doesn't catch wb-portfolio__avatar-placeholder (card.js's
+          // initials-fallback avatar circle) -- its default diameter is
+          // exactly 7.5rem/120px, and its lg/xl/full size variants exceed
+          // it, so this check treated it as a full content panel needing
+          // 1rem padding. But this element centers its initials via
+          // `display:flex; align-items:center; justify-content:center`, not
+          // via padding -- the real gap from "JS"/"SC" to the circle's edge
+          // is (diameter - content size) / 2, generous regardless of the
+          // padding value the CSS declares. A circular, flex-centered
+          // element is never "crowding" text the way a padding check can
+          // detect, at any size, so exclude by SHAPE here as a second,
+          // independent test -- the describe block's own intro comment
+          // already lists "avatars" among the intentionally-excluded
+          // compact atoms; this just makes that exclusion match the actual
+          // centering mechanism instead of only a width/height heuristic
+          // that happens to miss this element at its default size.
+          const shapeCs = getComputedStyle(el);
+          // Chromium's computed `border-*-radius` stays a PERCENTAGE string
+          // (e.g. "50%") rather than resolving to px, even though the USED
+          // value is resolved against the box -- so this must compare
+          // against the declared percentage (>=50 == fully round), never
+          // against rect.width/2 in px (a px comparison silently fails for
+          // every avatar, since parseFloat("50%") is 50 regardless of the
+          // element's actual size).
+          const isFullyRound = (side: string) => {
+            const v = (shapeCs as any)[`border${side}Radius`] as string;
+            return v.trim().endsWith('%') && parseFloat(v) >= 50;
+          };
+          const isCircular = isFullyRound('TopLeft') && isFullyRound('TopRight')
+            && isFullyRound('BottomLeft') && isFullyRound('BottomRight');
+          const isFlexCentered = shapeCs.display === 'flex'
+            && shapeCs.alignItems === 'center'
+            && shapeCs.justifyContent === 'center';
+          if (isCircular && isFlexCentered) continue;
           // Must have direct, non-whitespace text of its own (not just via
           // nested elements) -- otherwise the padding requirement belongs to
           // whichever descendant actually renders text.
