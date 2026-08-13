@@ -323,12 +323,20 @@
       const tag = key.includes('-') ? key : 'wb-' + key;
       const attrs = [];
       const attributes = view.attributes || {};
+      // Tracks what THIS row actually set/left unset for every declared
+      // attribute -- John: "when using variables, put a Where explanation
+      // ... this doesn't tell the user where {{behavior}} came from."
+      // Handed back alongside the markup so the caller can build a legend
+      // mapping each {{placeholder}} in the template to the real value (or
+      // explicit 'not set' / schema default) driving THIS row's render.
+      const resolved = {};
 
       for (const [attrName, details] of Object.entries(attributes)) {
-        if (!details || !details.required) continue;
+        if (!details || !details.required) { resolved[attrName] = { set: false, reason: 'optional, left unset for this example' }; continue; }
 
         if (details.type === 'boolean') {
           attrs.push(attrName); // bare boolean attribute (Standard §20)
+          resolved[attrName] = { set: true, value: true, source: 'required boolean attribute' };
           continue;
         }
 
@@ -341,12 +349,16 @@
           // valid, and JSON.parse (getViewData's array-attribute path)
           // tolerates the extra whitespace between tokens fine.
           value = JSON.stringify(override || ['Example', 'Sample'], null, 2);
+          resolved[attrName] = { set: true, value, source: override ? 'ARRAY_ATTR_OVERRIDES (this page)' : 'generic placeholder array (this page)' };
         } else if (Array.isArray(details.enum) && details.enum.length) {
           value = details.enum[0];
+          resolved[attrName] = { set: true, value, source: `first enum value (schema: ${JSON.stringify(details.enum)})` };
         } else if (details.default !== undefined) {
           value = String(details.default);
+          resolved[attrName] = { set: true, value, source: 'schema-declared default (views-registry.json)' };
         } else {
           value = placeholderText(attrName);
+          resolved[attrName] = { set: true, value, source: 'generic placeholder text (this page, no schema default)' };
         }
         attrs.push(`${attrName}="${escapeAttr(value)}"`);
       }
@@ -355,12 +367,33 @@
       if (extras) {
         for (const [attrName, value] of Object.entries(extras)) {
           attrs.push(`${attrName}="${escapeAttr(value)}"`);
+          resolved[attrName] = { set: true, value, source: 'EXTRA_ATTR_OVERRIDES (this page)' };
         }
       }
 
       const body = BODY_OVERRIDES[key] || '';
       const attrStr = attrs.length ? ' ' + attrs.join(' ') : '';
-      return `<${tag}${attrStr}>${body}</${tag}>`;
+      return { markup: `<${tag}${attrStr}>${body}</${tag}>`, resolved };
+    }
+
+    // Every {{name}} / {{name || 'default'}} / {{name ? a : b}} placeholder
+    // referenced in a template, matched against `resolved` (buildLiveViewMarkup's
+    // per-attribute trace) to explain where each one's value for THIS row
+    // actually comes from. John: "when using variables, put a Where
+    // explanation ... this doesn't tell the user where {{behavior}} came
+    // from."
+    function explainTemplateVariables(template, resolved) {
+      const names = [...new Set(
+        Array.from(template.matchAll(/\{\{\s*([a-zA-Z_][a-zA-Z0-9_]*)/g), m => m[1])
+      )];
+      if (!names.length) return '';
+      const lines = names.map(name => {
+        const r = resolved[name];
+        if (!r) return `Where {{${escapeAttr(name)}}} = (not a declared attribute -- check the template for a typo)`;
+        if (!r.set) return `Where {{${escapeAttr(name)}}} = unset for this example (${escapeAttr(r.reason)}) -- the template's own \`|| 'default'\`/\`wb-if\` fallback applies`;
+        return `Where {{${escapeAttr(name)}}} = ${escapeAttr(JSON.stringify(r.value))} (${escapeAttr(r.source)})`;
+      });
+      return lines.join('\n');
     }
 
     async function loadRegistry() {
@@ -421,15 +454,17 @@
             attributesHtml += '</div>';
           }
 
-          const liveMarkup = buildLiveViewMarkup(key, view);
+          const { markup: liveMarkup, resolved } = buildLiveViewMarkup(key, view);
           rowLiveMarkup.push(liveMarkup);
+          const tagName = key.includes('-') ? key : 'wb-' + key;
+          const whereExplanation = explainTemplateVariables(view.template, resolved);
 
           html += `
             <tr>
               <td data-label="View Name">
                 <div class="view-name">${key}</div>
                 <div style="margin-top:0.5rem; font-size: 0.75rem; color: var(--text-muted);">
-                   &lt;${key.includes('-') ? key : 'wb-' + key}&gt;
+                   &lt;${tagName}&gt;
                 </div>
               </td>
               <td data-label="Description &amp; Attributes">
@@ -438,10 +473,11 @@
               </td>
               <td data-label="Live Example">
                 <details style="margin-bottom:0.5rem;">
-                  <summary style="cursor:pointer; font-size:0.75rem; color: var(--text-muted);">① Template <span style="opacity:0.7;">(views-registry.json, as authored)</span></summary>
+                  <summary style="cursor:pointer; font-size:0.75rem; color: var(--text-muted);">① Template <span style="opacity:0.7;">(views-registry.json, as authored -- this is \`&lt;${tagName}&gt;\`'s one and only definition; every other section on this row is derived from it)</span></summary>
                   <pre style="margin-top:0.5rem; padding:0.75rem; font-size:0.75rem; overflow-x:auto; background: var(--bg-tertiary); border-radius:4px; border:1px solid var(--border-color);"><code>${escapeAttr(view.template)}</code></pre>
+                  ${whereExplanation ? `<pre style="margin-top:0.5rem; padding:0.75rem; font-size:0.75rem; overflow-x:auto; background: var(--bg-tertiary); border-radius:4px; border:1px dashed var(--border-color); color: var(--text-muted);"><code>${escapeAttr(whereExplanation)}</code></pre>` : ''}
                 </details>
-                <div style="font-size:0.75rem; color: var(--text-muted); margin-bottom:0.25rem;">② Usage <span style="opacity:0.7;">(this row's attributes applied)</span></div>
+                <div style="font-size:0.75rem; color: var(--text-muted); margin-bottom:0.25rem;">② Usage <span style="opacity:0.7;">(this row's attributes applied -- \`&lt;${tagName}&gt;\` itself is defined in step ① above, not here)</span></div>
                 <wb-demo columns="1">${liveMarkup}</wb-demo>
                 <details class="rendered-output-details" style="margin-top:0.5rem;">
                   <summary style="cursor:pointer; font-size:0.75rem; color: var(--text-muted);">③ Rendered Output <span style="opacity:0.7;">(final DOM, behaviors attached)</span></summary>
