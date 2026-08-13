@@ -29,29 +29,23 @@ Interactive data table with sorting and search.
 
 ### Custom Element
 
+Author real rows with the `headers`/`rows` attributes -- not slotted
+`<thead>`/`<tbody>` markup. table.js builds the actual `<tr>`/`<th>`/`<td>`
+elements from these two attributes; a `<wb-table>` with no `headers`/`rows`
+(or `data`/`columns`) attributes and no nested `<table>` renders empty.
+
 ```html
 <wb-table
   striped
-  hover>
-  <thead>
-    <tr>
-      <th>Name</th>
-      <th>Age</th>
-      <th>Role</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td>Alice</td>
-      <td>30</td>
-      <td>Developer</td>
-    </tr>
-    <tr>
-      <td>Bob</td>
-      <td>25</td>
-      <td>Designer</td>
-    </tr>
-  </tbody>
+  hover
+  headers="Name,Age,Role"
+  rows='[
+    ["Alice",30,"Developer"],
+    ["Bob",25,"Designer"],
+    ["Carol",28,"Product Manager"],
+    ["Dave",35,"QA Engineer"],
+    ["Eve",41,"Engineering Lead"]
+  ]'>
 </wb-table>
 ```
 
@@ -70,17 +64,15 @@ Interactive data table with sorting and search.
 ```html
 <wb-table
   searchable
-  striped>
-  <thead>
-    <tr>
-      <th>Product</th>
-      <th>Price</th>
-      <th>Stock</th>
-    </tr>
-  </thead>
-  <tbody>
-    <!-- rows -->
-  </tbody>
+  striped
+  headers="Product,Price,Stock"
+  rows='[
+    ["Wireless Mouse","$24.99",142],
+    ["Mechanical Keyboard","$89.99",57],
+    ["USB-C Hub","$34.99",203],
+    ["27in Monitor","$249.99",18],
+    ["Webcam 1080p","$44.99",76]
+  ]'>
 </wb-table>
 ```
 
@@ -89,7 +81,13 @@ Interactive data table with sorting and search.
 ```html
 <wb-table
   headers="ID,Name,Role"
-  rows='[[1,"John","Admin"],[2,"Jane","User"],[3,"Bob","Editor"]]'>
+  rows='[
+    [1,"John","Admin"],
+    [2,"Jane","User"],
+    [3,"Bob","Editor"],
+    [4,"Priya","Editor"],
+    [5,"Sam","Viewer"]
+  ]'>
 </wb-table>
 ```
 
@@ -97,17 +95,54 @@ Interactive data table with sorting and search.
 
 ```html
 <!-- Striped -->
-<wb-table striped>...</wb-table>
+<wb-table
+  striped
+  headers="Feature,Status"
+  rows='[
+    ["Dark mode","Enabled"],
+    ["Notifications","Enabled"],
+    ["Auto-save","Disabled"],
+    ["Two-factor auth","Enabled"],
+    ["Beta features","Disabled"]
+  ]'>
+</wb-table>
 <!-- Bordered -->
-<wb-table bordered>...</wb-table>
+<wb-table
+  bordered
+  headers="Feature,Status"
+  rows='[
+    ["Dark mode","Enabled"],
+    ["Notifications","Enabled"],
+    ["Auto-save","Disabled"],
+    ["Two-factor auth","Enabled"],
+    ["Beta features","Disabled"]
+  ]'>
+</wb-table>
 <!-- Compact -->
-<wb-table compact>...</wb-table>
+<wb-table
+  compact
+  headers="Feature,Status"
+  rows='[
+    ["Dark mode","Enabled"],
+    ["Notifications","Enabled"],
+    ["Auto-save","Disabled"],
+    ["Two-factor auth","Enabled"],
+    ["Beta features","Disabled"]
+  ]'>
+</wb-table>
 <!-- Combined -->
 <wb-table
   striped
   bordered
-  hover>
-  ...
+  hover
+  headers="Feature,Status"
+  rows='[
+    ["Dark mode","Enabled"],
+    ["Notifications","Enabled"],
+    ["Auto-save","Disabled"],
+    ["Two-factor auth","Enabled"],
+    ["Beta features","Disabled"]
+  ]'>
 </wb-table>
 ```
 
