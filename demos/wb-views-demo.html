@@ -219,17 +219,17 @@
         <example-block label="How It Works">
             <wb-mdhtml size="sm" highlight captions="true">
 ```html
-<!-- 1. Define a template ONCE -->
-<template wb-view="badge-tag">
-  <span class="badge-tag badge-tag--{{variant}}"><slot>{{text}}</slot></span>
-</template>
+&lt;!-- 1. Define a template ONCE --&gt;
+&lt;template wb-view="badge-tag"&gt;
+  &lt;span class="badge-tag badge-tag--{{variant}}"&gt;&lt;slot&gt;{{text}}&lt;/slot&gt;&lt;/span&gt;
+&lt;/template&gt;
 
-<!-- 2. Use it TWO ways: -->
-<wb-view badge-tag variant="primary">New</wb-view>   <!-- wrapper syntax -->
-<badge-tag variant="primary">New</badge-tag>          <!-- auto-registered tag -->
+&lt;!-- 2. Use it TWO ways: --&gt;
+&lt;wb-view badge-tag variant="primary"&gt;New&lt;/wb-view&gt;   &lt;!-- wrapper syntax --&gt;
+&lt;badge-tag variant="primary"&gt;New&lt;/badge-tag&gt;          &lt;!-- auto-registered tag --&gt;
 
-<!-- 3. Both produce: -->
-<span class="badge-tag badge-tag--primary">New</span>
+&lt;!-- 3. Both produce: --&gt;
+&lt;span class="badge-tag badge-tag--primary"&gt;New&lt;/span&gt;
 ```
             </wb-mdhtml>
         </example-block>
@@ -266,13 +266,13 @@
 &lt;/template&gt;</pre>
             <wb-mdhtml size="sm" highlight captions="true">
 ```html
-<template wb-view="component-tile">
-  <div class="tile">
-    <span class="tile__icon">{{icon}}</span>
-    <span class="tile__label"><slot>{{text}}</slot></span>
-    <span class="tile__badge" wb-if="badge">{{badge}}</span>
-  </div>
-</template>
+&lt;template wb-view="component-tile"&gt;
+  &lt;div class="tile"&gt;
+    &lt;span class="tile__icon"&gt;{{icon}}&lt;/span&gt;
+    &lt;span class="tile__label"&gt;&lt;slot&gt;{{text}}&lt;/slot&gt;&lt;/span&gt;
+    &lt;span class="tile__badge" wb-if="badge"&gt;{{badge}}&lt;/span&gt;
+  &lt;/div&gt;
+&lt;/template&gt;
 ```
             </wb-mdhtml>
         </example-block>
@@ -300,16 +300,16 @@
 &lt;/template&gt;</pre>
             <wb-mdhtml size="sm" highlight captions="true">
 ```html
-<template wb-view="alert-box">
-  <div class="alert alert--{{variant || 'info'}}">
-    <span class="alert__icon" wb-if="icon">{{icon}}</span>
-    <div class="alert__content">
-      <div class="alert__heading" wb-if="heading">{{heading}}</div>
-      <div class="alert__message">{{message}}</div>
-    </div>
-    <button class="alert__dismiss" wb-if="dismissible">✕</button>
-  </div>
-</template>
+&lt;template wb-view="alert-box"&gt;
+  &lt;div class="alert alert--{{variant || 'info'}}"&gt;
+    &lt;span class="alert__icon" wb-if="icon"&gt;{{icon}}&lt;/span&gt;
+    &lt;div class="alert__content"&gt;
+      &lt;div class="alert__heading" wb-if="heading"&gt;{{heading}}&lt;/div&gt;
+      &lt;div class="alert__message"&gt;{{message}}&lt;/div&gt;
+    &lt;/div&gt;
+    &lt;button class="alert__dismiss" wb-if="dismissible"&gt;✕&lt;/button&gt;
+  &lt;/div&gt;
+&lt;/template&gt;
 ```
             </wb-mdhtml>
         </example-block>
@@ -335,16 +335,16 @@
 &lt;/template&gt;</pre>
             <wb-mdhtml size="sm" highlight captions="true">
 ```html
-<template wb-view="stat-tile">
-  <div class="stat">
-    <span class="stat__icon" wb-if="icon">{{icon}}</span>
-    <div>
-      <div class="stat__value">{{value}}</div>
-      <div class="stat__label"><slot>{{text}}</slot></div>
-      <div class="stat__trend stat__trend--{{trend}}" wb-if="trendValue">{{trendValue}}</div>
-    </div>
-  </div>
-</template>
+&lt;template wb-view="stat-tile"&gt;
+  &lt;div class="stat"&gt;
+    &lt;span class="stat__icon" wb-if="icon"&gt;{{icon}}&lt;/span&gt;
+    &lt;div&gt;
+      &lt;div class="stat__value"&gt;{{value}}&lt;/div&gt;
+      &lt;div class="stat__label"&gt;&lt;slot&gt;{{text}}&lt;/slot&gt;&lt;/div&gt;
+      &lt;div class="stat__trend stat__trend--{{trend}}" wb-if="trendValue"&gt;{{trendValue}}&lt;/div&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+&lt;/template&gt;
 ```
             </wb-mdhtml>
         </example-block>
@@ -368,12 +368,12 @@
 &lt;/template&gt;</pre>
             <wb-mdhtml size="sm" highlight captions="true">
 ```html
-<template wb-view="badge-tag">
-  <span class="badge-tag badge-tag--{{variant || 'primary'}}">
-    <span wb-if="icon">{{icon}}</span>
-    <slot>{{text}}</slot>
-  </span>
-</template>
+&lt;template wb-view="badge-tag"&gt;
+  &lt;span class="badge-tag badge-tag--{{variant || 'primary'}}"&gt;
+    &lt;span wb-if="icon"&gt;{{icon}}&lt;/span&gt;
+    &lt;slot&gt;{{text}}&lt;/slot&gt;
+  &lt;/span&gt;
+&lt;/template&gt;
 ```
             </wb-mdhtml>
         </example-block>
@@ -401,11 +401,11 @@
 &lt;/template&gt;</pre>
             <wb-mdhtml size="sm" highlight captions="true">
 ```html
-<template wb-view="tag-list">
-  <div class="tags">
-    <span class="tag" wb-for="tag in tags">{{tag}}</span>
-  </div>
-</template>
+&lt;template wb-view="tag-list"&gt;
+  &lt;div class="tags"&gt;
+    &lt;span class="tag" wb-for="tag in tags"&gt;{{tag}}&lt;/span&gt;
+  &lt;/div&gt;
+&lt;/template&gt;
 ```
             </wb-mdhtml>
         </example-block>
@@ -429,16 +429,16 @@
 &lt;/template&gt;</pre>
             <wb-mdhtml size="sm" highlight captions="true">
 ```html
-<template wb-view="user-card">
-  <div class="user-card">
-    <wb-avatar initials="{{initials}}" size="lg" status="{{status}}"></wb-avatar>
-    <div class="user-card__info">
-      <div class="user-card__name">{{name}}</div>
-      <div class="user-card__role">{{role}}</div>
-    </div>
-    <slot></slot>
-  </div>
-</template>
+&lt;template wb-view="user-card"&gt;
+  &lt;div class="user-card"&gt;
+    &lt;wb-avatar initials="{{initials}}" size="lg" status="{{status}}"&gt;&lt;/wb-avatar&gt;
+    &lt;div class="user-card__info"&gt;
+      &lt;div class="user-card__name"&gt;{{name}}&lt;/div&gt;
+      &lt;div class="user-card__role"&gt;{{role}}&lt;/div&gt;
+    &lt;/div&gt;
+    &lt;slot&gt;&lt;/slot&gt;
+  &lt;/div&gt;
+&lt;/template&gt;
 ```
             </wb-mdhtml>
         </example-block>

@@ -94,11 +94,22 @@ test.describe('Template Rendering', () => {
     // Check first button (Primary)
     const btn = page.locator('wb-button').first();
     await expect(btn).toBeVisible();
-    
-    // Should render as a button with the variant class
-    const rendered = await btn.evaluate(el => el.innerHTML);
-    // Primary is default, so it should have btn--primary
-    expect(rendered).toContain('btn--primary');
+
+    // <wb-button> is a real MVVM component (src/wb-viewmodels/semantics/button.js),
+    // not a wb-views template -- its schema (button.schema.json) applies variant
+    // classes directly to the HOST tag via the generic schema-builder
+    // (applyVariantClasses, src/core/mvvm/schema-builder.js), never into innerHTML.
+    // button.js's own comment confirms: "No inner <button> created. No classes
+    // added [to innerHTML]." Live-confirmed render:
+    // <wb-button class="wb-button--start wb-button--primary wb-button--md"
+    //   x-schema="button">Primary</wb-button>
+    // Primary is the schema's default variant, so it should have wb-button--primary
+    // on the element itself. schema-builder applies it asynchronously (schema
+    // fetch, then buildStructure()) after the element is already visible, so
+    // this must be an auto-retrying assertion rather than a single evaluate()
+    // read -- a one-shot read can observe the button before its class lands
+    // (a real, if intermittent, source of the #577 flakiness).
+    await expect(btn).toHaveClass(/wb-button--primary/);
   });
 
   test('wb-if conditional shows element when truthy', async ({ page }) => {
@@ -134,20 +145,21 @@ test.describe('Template Rendering', () => {
   });
 
   test('default values work with || syntax', async ({ page }) => {
-    // btn without variant should get primary (default)
-    const rendered = await page.evaluate(() => {
-      const btn = document.querySelector('wb-button:not([variant])');
-      if (!btn) return null;
-      return btn.innerHTML;
-    });
-    
-    // Most buttons have variant, so this might be null
-    // But buttons with variant="primary" explicitly should work
-    const primaryBtn = page.locator('wb-button[variant="primary"]').first();
-    const hasPrimaryClass = await primaryBtn.evaluate(el => {
-      return el.innerHTML.includes('btn--primary');
-    });
-    expect(hasPrimaryClass).toBe(true);
+    // button.schema.json's `variant` default is "primary", but the schema
+    // builder only reflects a value onto the DOM as an attribute when the
+    // property declares `appliesAttribute` -- variant only has `appliesClass`,
+    // so a button that omits `variant` NEVER gets a literal variant="primary"
+    // HTML attribute. `wb-button[variant="primary"]` therefore matches zero
+    // elements and .first().evaluate() hung waiting for it (the 30s timeout
+    // reported in #577). The default is instead only observable via the
+    // wb-button--primary CLASS applied to the element that has no variant
+    // attribute at all.
+    const primaryBtn = page.locator('wb-button:not([variant])').first();
+    await expect(primaryBtn).toBeVisible();
+    // Auto-retrying assertion, not a one-shot evaluate() -- the class is
+    // applied asynchronously by the schema builder after the element is
+    // already visible (see comment above; this is what flaked in #577).
+    await expect(primaryBtn).toHaveClass(/wb-button--primary/);
   });
 
   test('default slot renders inner content', async ({ page }) => {
@@ -204,21 +216,35 @@ test.describe('Tag Naming Convention', () => {
   });
 
   test('custom elements are properly registered', async ({ page }) => {
-    const customElements = await page.evaluate(() => {
-      return {
-        'wb-button': customElements.get('wb-button') !== undefined,
-        'user-avatar': customElements.get('user-avatar') !== undefined,
-        'alert-box': customElements.get('alert-box') !== undefined,
-        'stat-tile': customElements.get('stat-tile') !== undefined,
-        'nav-link': customElements.get('nav-link') !== undefined,
-      };
+    // <wb-button> (and every other real MVVM component tag reachable from
+    // this page's runtime, e.g. <wb-card>) is NOT registered via
+    // customElements.define() here -- architecture v3
+    // (docs/claude/TIER1-LAWS.md #2) applies capability via behavior
+    // functions dispatched by the MVVM schema builder
+    // (src/core/mvvm/schema-builder.js) and, on this demo's wb-lazy.js
+    // runtime, 'card' resolves to card.js's composeCard() (a plain
+    // function, invoked via WB.inject) rather than wb-card.js's WBCard
+    // shim class -- wb-lazy.js's own comment confirms it dispatches
+    // <wb-card> "as an ordinary injected behavior" instead of registering
+    // it. wb-views.js's registerViewAsElement() also explicitly REFUSES to
+    // claim any tag already owned by a real component (elementMap in
+    // tag-map.js includes both 'wb-button' and 'wb-card') -- confirmed live
+    // via its console warning for <wb-card>. So no real (non-view)
+    // component tag is a genuine Custom Element on this page; only the
+    // wb-views system tags (user-avatar/alert-box/stat-tile/nav-link) are,
+    // via wb-views.js's own customElements.define() calls.
+    //
+    // beforeEach's waitForFunction(() => window.WB?.views) only confirms
+    // wb-views.js has been imported (it assigns window.WB.views synchronously
+    // at module load) -- NOT that initViews()'s async registry fetch
+    // (loadViewsFromURL) has reached registerViewAsElement() for these tags
+    // yet. A single page.evaluate() read right after that wait is a race,
+    // not a guarantee, so this polls (like Playwright's own auto-retrying
+    // assertions) instead of reading once.
+    await page.waitForFunction(() => {
+      return ['user-avatar', 'alert-box', 'stat-tile', 'nav-link']
+        .every(tag => customElements.get(tag) !== undefined);
     });
-    
-    expect(customElements['wb-button']).toBe(true);
-    expect(customElements['user-avatar']).toBe(true);
-    expect(customElements['alert-box']).toBe(true);
-    expect(customElements['stat-tile']).toBe(true);
-    expect(customElements['nav-link']).toBe(true);
   });
 });
 
@@ -233,23 +259,34 @@ test.describe('View Composition', () => {
     await page.waitForFunction(() => (window as any).WB?.views);
   });
 
-  test('user-card renders nested wb-avatar', async ({ page }) => {
+  test('user-card renders nested user-avatar', async ({ page }) => {
     const userCard = page.locator('user-card').first();
     await expect(userCard).toBeVisible();
-    
-    // user-card template uses <wb-avatar> internally
+
+    // user-card's template (views-registry.json) nests <user-avatar> -- the
+    // wb-views "user-avatar" VIEW -- not the real <wb-avatar> MVVM component
+    // (a same-named-but-different tag would collide with tag-map.js's
+    // elementMap and get refused by wb-views.js's registerViewAsElement()
+    // guard, same as the "card" view does for <wb-card>). user-avatar's own
+    // template renders a <div class="avatar avatar--{{size}}">.
     const hasAvatar = await userCard.evaluate(el => {
       return el.querySelector('.avatar') !== null;
     });
     expect(hasAvatar).toBe(true);
   });
 
-  test('button-group contains nested wb-btn elements', async ({ page }) => {
+  test('button-group contains nested wb-button elements', async ({ page }) => {
     const buttonGroup = page.locator('button-group').first();
     await expect(buttonGroup).toBeVisible();
-    
+
+    // <wb-button> never gets a ".btn"/".wb-button" CLASS -- button.js's own
+    // comment: "CSS targets the tag and attributes directly. No inner
+    // <button> created. No classes added." (verified: live render is
+    // <wb-button class="wb-button--start wb-button--primary wb-button--md">,
+    // classes only for schema-declared variant/size, never a base class).
+    // Nesting is checked via the tag itself, not a class.
     const btnCount = await buttonGroup.evaluate(el => {
-      return el.querySelectorAll('.btn').length;
+      return el.querySelectorAll('wb-button').length;
     });
     expect(btnCount).toBeGreaterThanOrEqual(2);
   });
@@ -257,10 +294,12 @@ test.describe('View Composition', () => {
   test('wb-card renders body slot with nested views', async ({ page }) => {
     const card = page.locator('wb-card').first();
     await expect(card).toBeVisible();
-    
-    // Card should contain nested buttons from body
+
+    // Card should contain nested buttons from body -- see button-group test
+    // above for why ".btn"/".wb-button" is never the right selector for
+    // <wb-button>.
     const hasNestedBtn = await card.evaluate(el => {
-      return el.querySelector('.btn') !== null;
+      return el.querySelector('wb-button') !== null;
     });
     expect(hasNestedBtn).toBe(true);
   });
@@ -310,10 +349,16 @@ test.describe('Attribute Handling', () => {
   });
 
   test('missing optional attributes handled gracefully', async ({ page }) => {
-    // stat-tile without trend should still render
-    const statWithoutTrend = page.locator('stat-tile:not([trendValue])').first();
+    // stat-tile without trend should still render. The HTML attribute the
+    // demo actually authors is kebab-case `trend-value` (matching
+    // views-registry.json's stat-tile schema); a CSS attribute selector is
+    // literal, so `[trendValue]` (camelCase) never matched any element --
+    // :not([trendValue]) was therefore true for EVERY stat-tile, including
+    // ones that DO set trend-value, and .first() picked one of those,
+    // failing the "should not have trend" assertion below.
+    const statWithoutTrend = page.locator('stat-tile:not([trend-value])').first();
     await expect(statWithoutTrend).toBeVisible();
-    
+
     // Should not have trend element
     const hasTrend = await statWithoutTrend.evaluate(el => {
       return el.querySelector('.stat__trend, .stat-tile__trend') !== null;
@@ -392,16 +437,22 @@ test.describe('Variant Classes', () => {
     }
   });
 
-  test('wb-avatar sizes apply correct classes', async ({ page }) => {
+  test('user-avatar sizes apply correct classes', async ({ page }) => {
+    // The demo's "👤 Avatars" section renders <user-avatar size="sm|md|lg">
+    // -- the wb-views "user-avatar" VIEW -- not the real <wb-avatar> MVVM
+    // component (no <wb-avatar> is ever actually used/rendered live on this
+    // page; the tag only appears as escaped documentation text inside the
+    // "Composition" example's code samples). user-avatar's own template
+    // renders a nested <div class="avatar avatar--{{size}}">.
     const sizes = ['sm', 'md', 'lg'];
-    
+
     for (const size of sizes) {
-      const avatar = page.locator(`wb-avatar[size="${size}"]`).first();
+      const avatar = page.locator(`user-avatar[size="${size}"]`).first();
       if (await avatar.count() > 0) {
         const hasClass = await avatar.evaluate((el, s) => {
           return el.querySelector(`.avatar--${s}`) !== null;
         }, size);
-        expect(hasClass, `wb-avatar size="${size}"`).toBe(true);
+        expect(hasClass, `user-avatar size="${size}"`).toBe(true);
       }
     }
   });
