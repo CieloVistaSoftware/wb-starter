@@ -356,6 +356,15 @@ function buildStructure(element, schema, data) {
   // (#drawer root cause). Purely additive: nothing reads this unless a
   // behavior explicitly opts in.
   element._wbOriginalSlot = data.slot || '';
+  // data.slot is TEXT only (extractData reads it for {{slot}} string
+  // interpolation) -- it can't round-trip real markup like a <thead>/
+  // <tbody> pair of table rows. table.js needs the actual pre-wipe HTML
+  // to restore <wb-table>'s original rows after $view rebuilds an empty
+  // thead/tbody shell (table.schema.json has no row-building logic of its
+  // own). Confirmed live: every <wb-table> authored with real <thead>/
+  // <tbody> markup rendered a genuinely empty table, 0 <tr> elements,
+  // because nothing could get the real rows back after this wipe.
+  element._wbOriginalHTML = element.innerHTML;
 
   // Clear existing content (we saved it as slot)
   element.innerHTML = '';

@@ -129,6 +129,7 @@ export function audio(element, options = {}) {
   // keeps the song playable; the EQ just won't have any visible effect on
   // this specific source (a strictly better trade than "nothing plays").
   let corsFallbackTried = false;
+  let genericRetryTried = false;
   audioEl.addEventListener('error', () => {
     if (!document.contains(audioEl)) return;
     if (!corsFallbackTried && audioEl.crossOrigin && config.src) {
@@ -136,6 +137,21 @@ export function audio(element, options = {}) {
       console.warn(`[WB Audio] "${config.src}" failed to load with crossOrigin="anonymous" (likely no CORS support on that server) -- retrying without it. The EQ will have no effect on this source, but playback will work.`);
       audioEl.crossOrigin = null;
       audioEl.removeAttribute('crossorigin');
+      audioEl.src = '';
+      audioEl.src = config.src;
+      return;
+    }
+    // A single transient network blip (confirmed live: a src whose URL
+    // resolves fine via a direct HTTP check -- correct content-type,
+    // correct byte length -- still occasionally throws MEDIA_ERR_SRC_NOT_
+    // SUPPORTED on first load, no crossOrigin involved) shouldn't
+    // permanently brand a genuinely intact source as broken. Same
+    // reasoning as the crossOrigin retry above, generalized: one plain
+    // reload before giving up, capped so a truly missing/corrupt file
+    // still throws instead of retrying forever.
+    if (!genericRetryTried && config.src) {
+      genericRetryTried = true;
+      console.warn(`[WB Audio] "${config.src}" failed to load (transient?) -- retrying once before reporting it broken.`);
       audioEl.src = '';
       audioEl.src = config.src;
       return;

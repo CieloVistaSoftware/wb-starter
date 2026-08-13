@@ -58,9 +58,9 @@ Interactive data table with sorting and search.
 ### Native Table (Enhanced)
 
 ```html
-<table
-  x-table
-  striped="true">
+<!-- x-table is auto-injected onto native <table> tags when autoInject is
+     on -- no attribute needed. -->
+<table striped="true">
   <!-- content -->
 </table>
 ```

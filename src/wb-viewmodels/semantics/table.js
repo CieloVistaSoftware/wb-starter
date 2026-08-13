@@ -18,14 +18,65 @@ export function table(element, options = {}) {
     ...options
   };
 
-  // Logic removed - structure is now handled by ui-table.html template
-  // We assume the table structure (thead, tbody) exists.
-  
   const tableEl = element.querySelector('table') || element;
   let searchInput = element.querySelector('.wb-table__search');
 
   // If searchable but no input found (and we are not the wrapper), we might need to look around or just skip
   // But since we are moving to templates, the template should have rendered the input.
+
+  // schema-builder.js's processSchema() unconditionally wipes a schema-built
+  // element's original content before rebuilding table.schema.json's $view
+  // (an empty <thead>/<tbody> pair -- the schema declares no row-building
+  // logic at all) -- the wiped content is stashed as element._wbOriginalSlot
+  // ("nothing reads this unless a behavior explicitly opts in", per
+  // schema-builder.js's own comment). table.js never opted in: the comment
+  // it used to have here ("Logic removed... assume the table structure
+  // exists") assumed something else would populate rows, but nothing ever
+  // did. Confirmed live: every <wb-table> on docs/components/semantics/
+  // table.md rendered a completely empty table (0 <tr> elements) regardless
+  // of whether rows were authored as slotted <thead>/<tbody> markup,
+  // headers/rows attributes, or the schema's own data/columns properties.
+  // Populate real rows here, trying each authoring method in turn --
+  // same "read back the pre-wipe original content" pattern overlay.js's
+  // drawer() already uses for its own title text.
+  const tableElForBuild = element.querySelector('table') || element;
+  const theadForBuild = tableElForBuild.querySelector('thead');
+  const tbodyForBuild = tableElForBuild.querySelector('tbody');
+  if (theadForBuild && tbodyForBuild && !tbodyForBuild.querySelector('tr')) {
+    const headersAttr = element.getAttribute('headers');
+    const rowsAttr = element.getAttribute('rows');
+    const dataAttr = element.getAttribute('data');
+    const columnsAttr = element.getAttribute('columns');
+
+    if (headersAttr && rowsAttr) {
+      try {
+        const headers = headersAttr.split(',').map(h => h.trim());
+        const rows = JSON.parse(rowsAttr);
+        populateTableRows(theadForBuild, tbodyForBuild, headers, rows);
+      } catch (e) {
+        console.warn(`[WB Table] failed to parse headers/rows attributes: ${e.message}`);
+      }
+    } else if (dataAttr && columnsAttr) {
+      try {
+        const data = JSON.parse(dataAttr);
+        const columns = JSON.parse(columnsAttr);
+        const headers = columns.map(c => c.label || c.key);
+        const rows = data.map(row => columns.map(c => row[c.key]));
+        populateTableRows(theadForBuild, tbodyForBuild, headers, rows);
+      } catch (e) {
+        console.warn(`[WB Table] failed to parse data/columns attributes: ${e.message}`);
+      }
+    } else if (element._wbOriginalHTML && element._wbOriginalHTML.trim()) {
+      // _wbOriginalSlot (schema-builder.js) is TEXT-only and can't carry
+      // real markup -- _wbOriginalHTML is the actual pre-wipe innerHTML.
+      const temp = document.createElement('div');
+      temp.innerHTML = element._wbOriginalHTML;
+      const originalThead = temp.querySelector('thead');
+      const originalTbody = temp.querySelector('tbody');
+      if (originalThead) theadForBuild.innerHTML = originalThead.innerHTML;
+      if (originalTbody) tbodyForBuild.innerHTML = originalTbody.innerHTML;
+    }
+  }
 
   let currentData = [];
   let filteredData = [];
@@ -35,7 +86,7 @@ export function table(element, options = {}) {
   // Initialize data from DOM
   const tbody = tableEl.querySelector('tbody');
   if (tbody) {
-    currentData = Array.from(tbody.querySelectorAll('tr')).map(tr => 
+    currentData = Array.from(tbody.querySelectorAll('tr')).map(tr =>
       Array.from(tr.querySelectorAll('td')).map(td => td.textContent) // Use textContent instead of innerHTML
     );
     filteredData = [...currentData];
@@ -149,6 +200,29 @@ export function table(element, options = {}) {
   return () => {
     tableEl.classList.remove('wb-table', 'wb-table--striped', 'wb-table--hover', 'wb-table--bordered', 'wb-table--compact');
   };
+}
+
+/** Builds real <tr>/<th>/<td> rows into an already-created (empty) thead/tbody pair. textContent, not innerHTML -- row data is untrusted string/JSON input, not markup. */
+function populateTableRows(thead, tbody, headers, rows) {
+  thead.innerHTML = '';
+  const headerRow = document.createElement('tr');
+  headers.forEach(h => {
+    const th = document.createElement('th');
+    th.textContent = h;
+    headerRow.appendChild(th);
+  });
+  thead.appendChild(headerRow);
+
+  tbody.innerHTML = '';
+  rows.forEach(row => {
+    const tr = document.createElement('tr');
+    row.forEach(cell => {
+      const td = document.createElement('td');
+      td.textContent = String(cell);
+      tr.appendChild(td);
+    });
+    tbody.appendChild(tr);
+  });
 }
 
 export default { table };
