@@ -1,5 +1,5 @@
 {
-  "generated": "2026-08-09T21:54:37.693Z",
+  "generated": "2026-08-13T23:15:28.921Z",
   "totalFiles": 205,
   "categories": [
     "_today",
@@ -743,7 +743,7 @@
       },
       {
         "path": "docs/components/feedback/alert.md",
-        "title": "Alert",
+        "title": "Alert - wb-starter v3.0",
         "name": "alert",
         "category": "components"
       },
@@ -755,7 +755,7 @@
       },
       {
         "path": "docs/components/feedback/badge.md",
-        "title": "Badge",
+        "title": "Badge - wb-starter v3.0",
         "name": "badge",
         "category": "components"
       },
@@ -767,31 +767,31 @@
       },
       {
         "path": "docs/components/feedback/progress.md",
-        "title": "Progress",
+        "title": "Progress - wb-starter v3.0",
         "name": "progress",
         "category": "components"
       },
       {
         "path": "docs/components/feedback/spinner.md",
-        "title": "Spinner",
+        "title": "Spinner - wb-starter v3.0",
         "name": "spinner",
         "category": "components"
       },
       {
         "path": "docs/components/forms/button.md",
-        "title": "Button",
+        "title": "Button - wb-starter v3.0",
         "name": "button",
         "category": "components"
       },
       {
         "path": "docs/components/forms/card.md",
-        "title": "Card",
+        "title": "Card - wb-starter v3.0",
         "name": "card",
         "category": "components"
       },
       {
         "path": "docs/components/forms/checkbox.md",
-        "title": "Checkbox",
+        "title": "Checkbox - wb-starter v3.0",
         "name": "checkbox",
         "category": "components"
       },
@@ -803,25 +803,25 @@
       },
       {
         "path": "docs/components/forms/input.md",
-        "title": "Input",
+        "title": "Input - wb-starter v3.0",
         "name": "input",
         "category": "components"
       },
       {
         "path": "docs/components/forms/select.md",
-        "title": "Select",
+        "title": "Select - wb-starter v3.0",
         "name": "select",
         "category": "components"
       },
       {
         "path": "docs/components/forms/switch.md",
-        "title": "Switch",
+        "title": "Switch - wb-starter v3.0",
         "name": "switch",
         "category": "components"
       },
       {
         "path": "docs/components/forms/textarea.md",
-        "title": "Textarea",
+        "title": "Textarea - wb-starter v3.0",
         "name": "textarea",
         "category": "components"
       },
@@ -833,13 +833,13 @@
       },
       {
         "path": "docs/components/layout/cluster.md",
-        "title": "Cluster",
+        "title": "Cluster - wb-starter v3.0",
         "name": "cluster",
         "category": "components"
       },
       {
         "path": "docs/components/layout/container.md",
-        "title": "Container",
+        "title": "Container - wb-starter v3.0",
         "name": "container",
         "category": "components"
       },
@@ -851,19 +851,19 @@
       },
       {
         "path": "docs/components/layout/flex.md",
-        "title": "Flex",
+        "title": "Flex - wb-starter v3.0",
         "name": "flex",
         "category": "components"
       },
       {
         "path": "docs/components/layout/grid.md",
-        "title": "Grid",
+        "title": "Grid - wb-starter v3.0",
         "name": "grid",
         "category": "components"
       },
       {
         "path": "docs/components/layout/header.md",
-        "title": "Header",
+        "title": "Header - wb-starter v3.0",
         "name": "header",
         "category": "components"
       },
@@ -1856,7 +1856,7 @@
     },
     {
       "path": "docs/components/feedback/alert.md",
-      "title": "Alert",
+      "title": "Alert - wb-starter v3.0",
       "name": "alert",
       "category": "components"
     },
@@ -1868,7 +1868,7 @@
     },
     {
       "path": "docs/components/feedback/badge.md",
-      "title": "Badge",
+      "title": "Badge - wb-starter v3.0",
       "name": "badge",
       "category": "components"
     },
@@ -1880,31 +1880,31 @@
     },
     {
       "path": "docs/components/feedback/progress.md",
-      "title": "Progress",
+      "title": "Progress - wb-starter v3.0",
       "name": "progress",
       "category": "components"
     },
     {
       "path": "docs/components/feedback/spinner.md",
-      "title": "Spinner",
+      "title": "Spinner - wb-starter v3.0",
       "name": "spinner",
       "category": "components"
     },
     {
       "path": "docs/components/forms/button.md",
-      "title": "Button",
+      "title": "Button - wb-starter v3.0",
       "name": "button",
       "category": "components"
     },
     {
       "path": "docs/components/forms/card.md",
-      "title": "Card",
+      "title": "Card - wb-starter v3.0",
       "name": "card",
       "category": "components"
     },
     {
       "path": "docs/components/forms/checkbox.md",
-      "title": "Checkbox",
+      "title": "Checkbox - wb-starter v3.0",
       "name": "checkbox",
       "category": "components"
     },
@@ -1916,25 +1916,25 @@
     },
     {
       "path": "docs/components/forms/input.md",
-      "title": "Input",
+      "title": "Input - wb-starter v3.0",
       "name": "input",
       "category": "components"
     },
     {
       "path": "docs/components/forms/select.md",
-      "title": "Select",
+      "title": "Select - wb-starter v3.0",
       "name": "select",
       "category": "components"
     },
     {
       "path": "docs/components/forms/switch.md",
-      "title": "Switch",
+      "title": "Switch - wb-starter v3.0",
       "name": "switch",
       "category": "components"
     },
     {
       "path": "docs/components/forms/textarea.md",
-      "title": "Textarea",
+      "title": "Textarea - wb-starter v3.0",
       "name": "textarea",
       "category": "components"
     },
@@ -1946,13 +1946,13 @@
     },
     {
       "path": "docs/components/layout/cluster.md",
-      "title": "Cluster",
+      "title": "Cluster - wb-starter v3.0",
       "name": "cluster",
       "category": "components"
     },
     {
       "path": "docs/components/layout/container.md",
-      "title": "Container",
+      "title": "Container - wb-starter v3.0",
       "name": "container",
       "category": "components"
     },
@@ -1964,19 +1964,19 @@
     },
     {
       "path": "docs/components/layout/flex.md",
-      "title": "Flex",
+      "title": "Flex - wb-starter v3.0",
       "name": "flex",
       "category": "components"
     },
     {
       "path": "docs/components/layout/grid.md",
-      "title": "Grid",
+      "title": "Grid - wb-starter v3.0",
       "name": "grid",
       "category": "components"
     },
     {
       "path": "docs/components/layout/header.md",
-      "title": "Header",
+      "title": "Header - wb-starter v3.0",
       "name": "header",
       "category": "components"
     },
