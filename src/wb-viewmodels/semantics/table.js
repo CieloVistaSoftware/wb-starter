@@ -19,10 +19,46 @@ export function table(element, options = {}) {
   };
 
   const tableEl = element.querySelector('table') || element;
-  let searchInput = element.querySelector('.wb-table__search');
+  // Detect an existing search input in either of the two places it can
+  // legitimately live: nested inside `element` (the <wb-table> host acting
+  // as its own table, or a wrapped native <table> child), OR as the bare
+  // native <table>'s own previous sibling (see the insertion logic below --
+  // an <input> can't be a valid child of a real <table>).
+  let searchInput = element.querySelector('.wb-table__search') ||
+    (tableEl.previousElementSibling && tableEl.previousElementSibling.classList &&
+      tableEl.previousElementSibling.classList.contains('wb-table__search')
+      ? tableEl.previousElementSibling : null);
 
-  // If searchable but no input found (and we are not the wrapper), we might need to look around or just skip
-  // But since we are moving to templates, the template should have rendered the input.
+  // #433: `searchable` was computed above but nothing ever created the
+  // input -- table.js only ever looked for one a schema/$view template was
+  // assumed to have already rendered, which was never actually true for
+  // either a bare <wb-table searchable> (table.schema.json's $view has no
+  // "search" part -- only an unrelated "filter" part gated on a different
+  // property, `filterable`, that this file doesn't read at all) or a native
+  // <table searchable> (no schema involvement for native tags at all).
+  // Confirmed live: `searchable` rendered no search box on every documented
+  // example. Build one here, the same self-sufficient pattern every other
+  // boolean attribute in this file already uses (striped/hover/bordered/
+  // compact all render their own effect with no author-supplied markup).
+  if (config.searchable && !searchInput) {
+    searchInput = document.createElement('input');
+    searchInput.type = 'search';
+    searchInput.className = 'wb-table__search';
+    searchInput.placeholder = 'Search...';
+    searchInput.setAttribute('aria-label', 'Search table');
+    if (tableEl.tagName.toLowerCase() === 'table' && tableEl.parentNode) {
+      // A real <table> only permits table-content children (thead/tbody/
+      // tr/...) -- an <input> placed inside it would be invalid content-
+      // model-wise. Insert as the table's own previous sibling instead,
+      // still directly above the rows it filters.
+      tableEl.parentNode.insertBefore(searchInput, tableEl);
+    } else {
+      // <wb-table> acting as its own table host (no nested <table> child)
+      // -- a custom element has no HTML content-model restriction, so the
+      // search box can be a real first child, ahead of its <thead>.
+      element.insertBefore(searchInput, element.firstChild);
+    }
+  }
 
   // schema-builder.js's processSchema() unconditionally wipes a schema-built
   // element's original content before rebuilding table.schema.json's $view
