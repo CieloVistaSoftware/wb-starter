@@ -160,6 +160,32 @@ export function checkbox(element, options = {}) {
     return checkbox(input, options);
   }
 
+  // Schema already built the real, hidden <input class="wb-checkbox__input">
+  // (checkbox.schema.json's $view) when window.WB.schema ran -- but
+  // schema-builder.js's generic $view builder only ever sets STATIC
+  // part.attributes (checkbox.schema.json's input view only declares
+  // `type: checkbox`) and its appliesClass mechanism only adds a class to
+  // the HOST element for a boolean property (e.g. wb-checkbox--checked) --
+  // neither actually sets the real input's checked/disabled/indeterminate
+  // DOM properties. checkbox.css's visual state depends entirely on the
+  // native `:checked` pseudo-class (`.wb-checkbox__input:checked ~
+  // .wb-checkbox__box`), so a <wb-checkbox checked> or <wb-checkbox
+  // disabled> always rendered as a plain unchecked, enabled box -- confirmed
+  // live (forms.html's "Checked"/"Disabled" demos). switch.js already does
+  // this same reflection for <wb-switch>'s schema-built input; checkbox.js
+  // just never had the equivalent step. Runs before the schema-built input's
+  // own `.wb-checkbox__input` early-return below, since it targets the HOST
+  // (wb-checkbox), not that input.
+  if (element.tagName.toLowerCase() === 'wb-checkbox' && window.WB?.schema) {
+    const input = element.querySelector('input[type="checkbox"]');
+    if (input) {
+      if (element.hasAttribute('checked')) input.checked = true;
+      if (element.hasAttribute('disabled')) input.disabled = true;
+      if (element.hasAttribute('required')) input.required = true;
+      if (element.hasAttribute('indeterminate')) input.indeterminate = true;
+    }
+  }
+
   if (element.tagName !== 'INPUT' || element.type !== 'checkbox') return () => {};
 
   // wb-switch's internal <input type="checkbox"> is a visually-hidden state

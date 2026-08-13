@@ -183,23 +183,25 @@ if (schema.sections) {
       // §2 "one code sample per rendered element": a section with several
       // differently-configured instances gets one <wb-demo> per instance
       // (each with its own code sample) instead of bundling them all under
-      // one shared <wb-demo>. The grid wrapper keeps the side-by-side
-      // comparison layout the `columns` setting originally implied.
-      lines.push(`    <div class="demo-section__grid demo-section__grid--cols-${cols}">`);
+      // one shared <wb-demo>. Stacked vertically, NOT grid-wrapped side by
+      // side -- §3 "demos are vertical, never side-by-side" forbids placing
+      // two rendered demos on the same row. An earlier version wrapped these
+      // in `.demo-section__grid--cols-N`, which violated §3 and was a likely
+      // root cause of recurring shrink-to-fit layout failures (mismatched
+      // natural widths forced into shared grid tracks). Fixes #563.
       for (const demo of section.demos) {
         const attrs = attrString(demo.attrs);
-        lines.push('      <wb-demo columns="1">');
+        lines.push('    <wb-demo columns="1">');
         if (demo.children) {
-          lines.push(`        <${demo.tag}${attrs}>`);
-          lines.push(`          ${demo.children}`);
-          lines.push(`        </${demo.tag}>`);
+          lines.push(`      <${demo.tag}${attrs}>`);
+          lines.push(`        ${demo.children}`);
+          lines.push(`      </${demo.tag}>`);
         } else {
-          lines.push(`        <${demo.tag}${attrs}>`);
-          lines.push(`        </${demo.tag}>`);
+          lines.push(`      <${demo.tag}${attrs}>`);
+          lines.push(`      </${demo.tag}>`);
         }
-        lines.push('      </wb-demo>');
+        lines.push('    </wb-demo>');
       }
-      lines.push('    </div>');
     } else {
       lines.push(`    <wb-demo columns="${cols}">`);
       for (const demo of section.demos) {

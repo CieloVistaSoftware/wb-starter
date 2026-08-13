@@ -169,6 +169,12 @@ test.describe('Demo layout standards (§7) — single-item demos are not full wi
         const problems: string[] = [];
         const TOLERANCE_PX = 24; // padding rounding + border slack
         document.querySelectorAll('wb-demo').forEach((demo, i) => {
+          // #563 follow-up: `full-width` is a deliberate, documented escape
+          // hatch (demo.css's `wb-demo.wb-demo--full-width`) for components
+          // that are meant to fill their container by design (page heroes,
+          // banner-style alerts) -- not a bug this check should ever flag.
+          if (demo.classList.contains('wb-demo--full-width')) return;
+
           const grid = demo.querySelector(':scope > .wb-demo__grid--cols-1');
           if (!grid || grid.children.length !== 1) return; // not a single-item demo
           const child = grid.children[0] as HTMLElement;
@@ -191,7 +197,20 @@ test.describe('Demo layout standards (§7) — single-item demos are not full wi
           // didn't count the figure's own 80px margin as "needed" width.
           const childCs = getComputedStyle(child);
           const childMargin = (parseFloat(childCs.marginLeft) || 0) + (parseFloat(childCs.marginRight) || 0);
-          const expectedWidth = childWidth + childMargin + hPad;
+          // #563 follow-up (John: "do not cut off code... show all the
+          // code"): the demo box is sized to whichever is WIDER, the control
+          // or its code sample (demo.js measure()/applyNaturalWidth(),
+          // Math.max(controlWidth, codeWidth)) -- a long unwrapped code line
+          // legitimately needs more width than a small control, and cutting
+          // it off to match the control was the exact bug John reported.
+          // Count every `.wb-demo__code` panel's own scrollWidth (a demo can
+          // carry more than one -- an HTML sample plus a JS interaction
+          // sample) as an alternate "needed width", not just the control.
+          const codeEls = demo.querySelectorAll(':scope > .wb-demo__code');
+          const codeWidth = codeEls.length
+            ? Math.max(...Array.from(codeEls, el => (el as HTMLElement).scrollWidth))
+            : 0;
+          const expectedWidth = Math.max(childWidth + childMargin, codeWidth) + hPad;
 
           if (demoWidth > expectedWidth + TOLERANCE_PX) {
             const label = (demo.textContent || '').trim().slice(0, 40);

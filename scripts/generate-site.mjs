@@ -524,18 +524,19 @@ function generatePageHtml(pageSchema) {
         // component (enum variants, boolean toggles, matrix combinations)
         // must not bundle them all under one shared <wb-demo> code sample --
         // that's the exact "permutation matrix" anti-pattern §2 forbids. One
-        // <wb-demo> per instance instead, each with its own code sample,
-        // wrapped in the same grid layout `.demo-section__grid` already
-        // provides for demos/multi-component-demo-generated.html (see
-        // generate-page.mjs) so the side-by-side comparison view is
-        // unchanged. Fixes #538.
-        lines.push(`  <div class="demo-section__grid demo-section__grid--cols-${section.columns || 3}">`);
+        // <wb-demo> per instance instead, each with its own code sample.
+        // Fixes #538. Stacked vertically, NOT grid-wrapped side by side --
+        // §3 "demos are vertical, never side-by-side" forbids placing two
+        // rendered demos on the same row. An earlier version of this fix
+        // wrapped the instances in `.demo-section__grid--cols-N`, which
+        // violated §3 and was a likely root cause of recurring shrink-to-fit
+        // layout failures (mismatched natural widths forced into shared grid
+        // tracks). Fixes #563.
         for (const demo of demos) {
-          lines.push('    <wb-demo columns="1">');
-          pushDemoTag(demo, '      ');
-          lines.push('    </wb-demo>');
+          lines.push('  <wb-demo columns="1">');
+          pushDemoTag(demo, '    ');
+          lines.push('  </wb-demo>');
         }
-        lines.push('  </div>');
       } else {
         lines.push(`  <wb-demo columns="${section.columns || 3}">`);
         for (const demo of demos) {

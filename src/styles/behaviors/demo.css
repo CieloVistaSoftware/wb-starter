@@ -64,11 +64,20 @@ wb-demo:has(.wb-dropdown.open) {
 
 .wb-demo__code {
   width: 100%;
-  max-width: var(--demo-code-max-width, 50vw);
+  /* John, live correction (screenshot): "do not cut off code when there is
+     only 1 card per row." Every demo on the site is single-column now (§3,
+     #563 -- demos stack vertically, never side by side), so the old 50vw
+     default -- sized to leave room for a sibling demo sharing the same row
+     -- no longer has a sibling to share with anywhere. Full width instead:
+     the code panel's own overflow-x:auto (pre.css) still kicks in for any
+     genuinely long unwrapped line, but normal-length code samples (the
+     common case) now render in full instead of being cut off by an
+     artificial cap that no longer serves its original purpose. */
+  max-width: var(--demo-code-max-width, 100%);
   /* #539: NO default floor here (was `320px`, see git history) -- that
-     unconditionally forced every single-item demo's code panel (and via
-     the paired wb-demo rule below, the WHOLE demo box) to at least 320px
-     wide, even when the rendered control was a normal small element (a
+     unconditionally forced every single-item demo's code panel to at
+     least 320px wide, even when the rendered control was a normal small
+     element (a
      button, badge, input, label -- the overwhelming common case, ~60-200px
      natural width). Standard §7's own test (demo-layout-standards.spec.ts,
      "single-item demos are not full width") requires the demo box to track
@@ -180,70 +189,23 @@ wb-demo[data-code-width="50vw"] {
   max-width: 100%;
 }
 
-/* Standard §7 (default / desktop): a single-item demo (demo.js clamps
-   columns to the actual child count) has nothing to fill extra columns
-   with, so the WHOLE demo -- rendered control AND its code panel below,
-   as one unit -- hugs its content instead of stretching to fill the
-   column track / page width. Kept as one unit here deliberately: on wide
-   viewports there's no vertical-scroll "window slop" problem to solve
-   (§26 below), and splitting the code panel out to full width while the
-   control stays narrow just orphans a small control in a wide empty gap
-   -- confirmed live, #390 code review: a single `<wb-card>` demo on a
-   1600px-wide page left the card floating alone at the far left with a
-   code panel a full page-width wider than it directly below. Worse than
-   the 3-column stretch bug this rule originally fixed.
-   This rule previously never matched anything: `:has(> .grid:not(:has(> :nth-child(2))))`
-   nests a `:has()` inside another `:has()`'s own argument, which the CSS
-   Selectors spec explicitly disallows (to bound worst-case matching
-   complexity) -- browsers treat the whole selector as invalid and silently
-   drop the rule, no console warning, so every single-item demo on the site
-   was stretching to full column width since this was written (confirmed
-   live via `CSS.supports('selector(...)')` returning false for the exact
-   selector below, true for everything except the nested :has()).
-   `> :only-child` on the grid -- exactly one child, not just one COLUMN --
-   gets the same "exactly one child" check without nesting :has(): a
-   --cols-1 grid legitimately holds several stacked rows too (e.g. a
-   size-comparison section, one card per row so each can reach its own real
-   max-width instead of being clamped by a shared column track). Without
-   this check, that stacked case would ALSO get width:fit-content,
-   collapsing the whole section down to whatever narrow max-content width
-   the grid sizing algorithm picked -- confirmed live (prior investigation):
-   7 differently-sized cards all rendered ~150-270px wide, none reaching
-   their own declared max-width.
-   #486: plain `width: fit-content` here ALSO measures wb-demo's OTHER
-   child -- the `.wb-demo__code` panel below the grid -- not just the
-   grid. `.x-pre` (pre.css) sets that panel to `width: 100%`, which is
-   circular under intrinsic sizing and resolves to the full available
-   width instead of the panel's own content width; a short one-line
-   control (e.g. a lone button) then measured wb-demo's fit-content as
-   the WIDE code panel's width, not the button's -- confirmed live: a
-   single "Primary" button demo rendered 315px wide (matching its code
-   panel's need: 2.5rem line-number gutter + the longest unwrapped code
-   line) when the button itself only needed 120px. CSS alone can't tell
-   fit-content "size to child A, ignore child B" when both are normal
-   in-flow children -- demo.js measures the GRID's own rendered width in
-   JS instead (same per-instance-measurement pattern this file already
-   uses elsewhere, e.g. pre.js's control right-offsets) and writes it to
-   this custom property; the code panel's existing width:100% then just
-   fills that fixed box and scrolls horizontally (pre.css's
-   overflow-x:auto) instead of dictating the whole unit's size. Falls
-   back to plain fit-content if JS hasn't set the variable yet (first
-   paint) or never runs (progressive enhancement, not a hard dependency). */
+/* Standard §7 (default / desktop): a single-item demo hugs its content as
+   ONE unit -- rendered control AND its code panel below -- instead of
+   stretching to fill the page. #563 follow-up, John's live correction ("do
+   not cut off code when there is only 1 card per row" / "show all the
+   code on single elements per row", not "make the code panel full width"):
+   the earlier version of this shrink-width only measured the CONTROL
+   (demo.js), so a small control (e.g. a plain card) still capped its code
+   panel down to the control's own narrow width, cutting long attribute
+   lines off with a horizontal scrollbar. demo.js now measures BOTH the
+   control's rendered width and the code panel's actual (unclipped)
+   content width via scrollWidth, and writes the LARGER of the two here --
+   so the box is exactly as wide as it needs to be to show every code line
+   in full, without ever going wider than that (still hugs content, never
+   stretches to the page). */
 wb-demo:has(> .wb-demo__grid--cols-1 > :only-child) {
   width: var(--wb-demo-shrink-width, fit-content);
   max-width: 100%;
-  /* Matches .wb-demo__code's own min-width rule above -- #539 removed
-     that rule's default 320px floor (see its comment for the full root
-     cause), so this one follows suit: no default floor here either,
-     otherwise wb-demo's own box would still get pinned wide even after
-     the code panel stopped demanding it. Kept as the SAME variable
-     (rather than deleted) for the same reason as above --
-     `wb-demo[data-code-width="50vw"]` below still explicitly opts into a
-     50vw floor on both rules together; this selector (:has() +
-     descendant class) outranks that plain attribute selector on
-     specificity, so a hardcoded competing min-width here would always
-     win regardless of which value is actually larger -- routing both
-     through one variable is what lets the opt-in actually take effect. */
   min-width: min(var(--demo-code-min-width, 0px), 90vw);
 }
 

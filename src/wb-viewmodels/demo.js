@@ -422,10 +422,28 @@ export async function demo(element, options = {}) {
                     }
                     const demoCs = getComputedStyle(element);
                     const hPad = (parseFloat(demoCs.paddingLeft) || 0) + (parseFloat(demoCs.paddingRight) || 0);
-                    element.style.setProperty('--wb-demo-shrink-width', (naturalWidth + extra + hPad) + 'px');
+                    // #563 follow-up: same "widest of control or code"
+                    // reasoning as the non-media measure() path below --
+                    // a media demo's code sample can need more width than
+                    // the media's own natural size (e.g. a long src URL).
+                    const codeEls = element.querySelectorAll('.wb-demo__code');
+                    const codeWidth = codeEls.length
+                        ? Math.max(...Array.from(codeEls, el => el.scrollWidth)) + hPad
+                        : 0;
+                    element.style.setProperty('--wb-demo-shrink-width', Math.max(naturalWidth + extra + hPad, codeWidth) + 'px');
                     return true;
                 };
-                if (!applyNaturalWidth()) {
+                if (applyNaturalWidth()) {
+                    // #563 follow-up: the very first call above can land
+                    // before this demo's own <pre class="wb-demo__code">
+                    // exists yet (it's created later in the same synchronous
+                    // render pass) even when the media is already
+                    // cached/decoded -- codeWidth reads as 0 that one time.
+                    // Re-run once on the next tick, after the code panel is
+                    // guaranteed to be in the DOM, so its width still gets
+                    // picked up for the cached-media case.
+                    setTimeout(applyNaturalWidth, 0);
+                } else {
                     // Not decoded/metadata-loaded yet -- resolve once it is,
                     // with a capped fallback so a broken/never-firing media
                     // source can't leave the demo permanently collapsed
@@ -435,7 +453,8 @@ export async function demo(element, options = {}) {
                     setTimeout(applyNaturalWidth, 5000);
                 }
             } else {
-                let lastWidth = null;
+                let lastControlWidth = null;
+                let lastCodeWidth = null;
                 let stableCount = 0;
                 const POLL_MS = 200;
                 const MAX_MS = 5000;
@@ -443,15 +462,61 @@ export async function demo(element, options = {}) {
                 const measure = () => {
                     const demoCs = getComputedStyle(element);
                     const hPad = (parseFloat(demoCs.paddingLeft) || 0) + (parseFloat(demoCs.paddingRight) || 0);
-                    const shrinkWidth = only.getBoundingClientRect().width + hPad;
+                    const controlWidth = only.getBoundingClientRect().width + hPad;
+                    // #563 follow-up, John: "show all the code on single
+                    // elements per row" -- measuring only the control left
+                    // the code panel (width:100% of wb-demo, see demo.css)
+                    // capped to the control's own width, cutting long
+                    // attribute lines off with a scrollbar even though the
+                    // demo box was meant to hug its content, not the
+                    // control specifically. `.wb-demo__code` is a `<pre>`
+                    // with `white-space: pre` (pre.css) -- it never wraps,
+                    // so its scrollWidth is the fixed width needed to show
+                    // every line in full, independent of whatever width the
+                    // container currently happens to have (no circularity,
+                    // unlike a would-be `width:fit-content` read directly on
+                    // a 100%-width child). Take the max of the two so the
+                    // demo is exactly as wide as its widest requirement --
+                    // control or code -- and never wider.
+                    // querySelectorAll, not querySelector: a demo can carry
+                    // MORE than one code panel (e.g. an HTML markup sample
+                    // plus a separate JS interaction-listener sample) --
+                    // querySelector only ever found the FIRST one, so a
+                    // longer second panel's width was silently ignored.
+                    // Confirmed live: cards.html's wb-cardproduct demos
+                    // (HTML + `el.addEventListener(...)` JS sample) still
+                    // cut the JS panel off because only the HTML panel's
+                    // width was ever measured.
+                    const codeEls = element.querySelectorAll('.wb-demo__code');
+                    const codeWidth = codeEls.length
+                        ? Math.max(...Array.from(codeEls, el => el.scrollWidth)) + hPad
+                        : 0;
+                    const shrinkWidth = Math.max(controlWidth, codeWidth);
                     if (shrinkWidth > 0) {
                         element.style.setProperty('--wb-demo-shrink-width', shrinkWidth + 'px');
                     }
-                    if (shrinkWidth === lastWidth) {
+                    // Track controlWidth and codeWidth for stability
+                    // SEPARATELY, not just the derived max(). pre.js's
+                    // syntax highlighting / line-number gutter populates
+                    // asynchronously after the bare <pre> first exists, so
+                    // codeWidth keeps climbing for a few ticks after
+                    // creation. Whenever controlWidth is the larger of the
+                    // two, the max() stays flat across those ticks purely
+                    // because controlWidth (already settled) dominates it --
+                    // "2 consecutive equal max() readings" then falsely
+                    // reads as stable and stops polling before codeWidth
+                    // ever reaches its real final size. Confirmed live:
+                    // cards.html's plain-text card demos locked their code
+                    // panel width in at the control's ~355px although the
+                    // code's own content needed 413px, cutting the last
+                    // line off. Requiring BOTH inputs to hold steady (not
+                    // just their max) catches this.
+                    if (controlWidth === lastControlWidth && codeWidth === lastCodeWidth) {
                         stableCount++;
                     } else {
                         stableCount = 0;
-                        lastWidth = shrinkWidth;
+                        lastControlWidth = controlWidth;
+                        lastCodeWidth = codeWidth;
                     }
                     if (stableCount >= 2 || Date.now() - startedAt > MAX_MS) return;
                     setTimeout(measure, POLL_MS);

@@ -1,38 +1,4 @@
 /* Shared layout for generated component showcase pages. */
-.demo-section__grid {
-  display: grid;
-  gap: 1.5rem;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-}
-
-/* #538: per-section column count -- a "Toggles" sweep (one attribute's real
-   effect per row) needs cols-1, an enum sweep with 2 values needs cols-2,
-   etc. Mirrors the `--cols-N` naming already used by demo.css's
-   `.wb-demo__grid--cols-N` for the same concept, one level up (grouping
-   several per-instance <wb-demo> blocks, not a single <wb-demo>'s own
-   children). Without a matching modifier the base 3-column rule above still
-   applies as a safe default. */
-.demo-section__grid--cols-1 { grid-template-columns: 1fr; }
-.demo-section__grid--cols-2 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-.demo-section__grid--cols-3 { grid-template-columns: repeat(3, minmax(0, 1fr)); }
-.demo-section__grid--cols-4 { grid-template-columns: repeat(4, minmax(0, 1fr)); }
-
-@media (max-width: 1024px) {
-  .demo-section__grid,
-  .demo-section__grid--cols-3,
-  .demo-section__grid--cols-4 {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-  }
-}
-
-@media (max-width: 700px) {
-  .demo-section__grid,
-  .demo-section__grid--cols-2,
-  .demo-section__grid--cols-3,
-  .demo-section__grid--cols-4 {
-    grid-template-columns: 1fr;
-  }
-}
 
 /* Feedback is a hand-authored consolidated showcase, so its wb-demo grids
    need the same tablet/mobile behavior as generated showcase wrappers. */

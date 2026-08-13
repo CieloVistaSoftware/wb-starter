@@ -2437,10 +2437,20 @@ export function cardminimizable(element, options = {}) {
  * Custom Tag: <card-draggable>
  */
 export function carddraggable(element, options = {}) {
+  // Same root cause as #455 (cardhorizontal): composeCard's own generic
+  // `content` resolution (card.js line ~155) only reads a `content="..."`
+  // ATTRIBUTE, never element.innerHTML -- so a demo relying on plain inner
+  // text as the body (every carddraggable example in cards.html: "This is
+  // example draggable card content.") silently lost it the instant
+  // `element.innerHTML = ''` ran a few lines down. Captured here, before
+  // that clear, same fix pattern as cardhorizontal.
+  const rawContent = element.innerHTML.trim();
+
   const config = {
     constrain: options.constrain || element.dataset.constrain || element.getAttribute('constrain') || 'none',
     axis: options.axis || element.dataset.axis || element.getAttribute('axis') || 'both',
     snapToGrid: parseInt(options.snapToGrid || element.dataset.snapToGrid || element.getAttribute('snap-to-grid') || 0),
+    content: options.content || element.dataset.content || rawContent,
     ...options
   };
 

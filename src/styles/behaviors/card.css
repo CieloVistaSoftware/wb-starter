@@ -236,40 +236,69 @@
 
 /* ═══════════════════════════════════════════════════════════════════════════
    SIZE VARIANTS
-   ═══════════════════════════════════════════════════════════════════════════ */
+   ═══════════════════════════════════════════════════════════════════════════
+   Compound selector, not a bare single class -- demo.css's
+   `.wb-demo__grid > *` reset (also 0,0,1,0, needed elsewhere to stop grid
+   items overflowing on their own min-content) ties a bare
+   `.wb-card--{size}` on specificity and wins on source order, forcing
+   min-width back to 0 for any size-variant card placed inside a demo grid.
+   Confirmed live: cards.html's "Size variants" section rendered md/lg/xl/
+   full/auto all at an identical ~323px (their shared min-content width)
+   instead of the intended progressively wider boxes -- getComputedStyle
+   showed min-width: 0px despite `.wb-card--lg { min-width: 420px }` being
+   the only rule that should apply. Same trap already fixed for
+   cardhero/cardpricing/overlay-card above (see wb-card.wb-card--overlay-card
+   below) -- this section just hadn't been migrated to the same pattern.
+   TWO forms needed, not just `.wb-card.wb-card--{size}`: composeCard()
+   skips adding the `wb-card` CLASS specifically when the host tag is
+   literally <wb-card> (redundant with the `wb-card` TAG selector already
+   matching it) -- `<wb-card size="lg">` (common in these exact demos)
+   carries only the `wb-card--lg` class, no `.wb-card` class, so a
+   class-only compound would silently fail to match it. The tag form
+   (`wb-card.wb-card--{size}`, specificity 0,0,1,1) covers that case;
+   the class form (`.wb-card.wb-card--{size}`, 0,0,2,0) covers every other
+   card variant tag (<wb-cardhorizontal> etc.), which DOES get the `wb-card`
+   class. Both still beat the grid reset's (0,0,1,0). */
 
-.wb-card--xs {
+wb-card.wb-card--xs,
+.wb-card.wb-card--xs {
   max-width: 200px;
   min-width: 160px;
 }
 
-.wb-card--sm {
+wb-card.wb-card--sm,
+.wb-card.wb-card--sm {
   max-width: 300px;
   min-width: 220px;
 }
 
-.wb-card--md {
+wb-card.wb-card--md,
+.wb-card.wb-card--md {
   max-width: 400px;
   min-width: 320px;
 }
 
-.wb-card--lg {
+wb-card.wb-card--lg,
+.wb-card.wb-card--lg {
   max-width: 520px;
   min-width: 420px;
 }
 
-.wb-card--xl {
+wb-card.wb-card--xl,
+.wb-card.wb-card--xl {
   max-width: 650px;
   min-width: 540px;
 }
 
-.wb-card--full {
+wb-card.wb-card--full,
+.wb-card.wb-card--full {
   max-width: 100%;
   min-width: 0;
 }
 
 /* Auto size - no constraints, fills container */
-.wb-card--auto {
+wb-card.wb-card--auto,
+.wb-card.wb-card--auto {
   max-width: none;
   min-width: 0;
 }
@@ -860,6 +889,30 @@
    cardhero/cardpricing above. */
 .wb-card.wb-card--overlay-card {
   height: var(--overlay-height, 300px);
+  /* John, live correction (cards.html screenshot): the title text baked
+     into the demo's placeholder background image ("City Lights") rendered
+     cropped and overlapping the real caption below it. Root cause: this
+     card has a fixed `height` (inline, from the `height` attribute) but no
+     width of its own -- cardoverlay.js never sets one -- so its layout
+     width was whatever an ancestor happened to leave it (confirmed live: a
+     single-item demo's shrink-to-fit measured it at 204px wide x 300px
+     tall, taller than it is wide). With background-size:cover, a landscape
+     background image scaled to cover a box that's actually PORTRAIT gets
+     cropped down to a narrow vertical sliver of its own width -- cutting
+     off most of any text baked into the image. A landscape aspect-ratio
+     (with a min-width floor for very small heights) gives this card a
+     sane natural width relative to whatever height it's given, regardless
+     of what an ancestor's shrink-to-fit math measures. 4:3 is a moderate
+     default -- not an exact match for every possible user image, but
+     enough to stop the box from ever collapsing narrower than it is tall.
+     3:2 (not the initially-tried 4:3) -- the demo's own images (800x500,
+     1.6:1) still showed real, visible cropping at 4:3 (confirmed live:
+     400x300 box against a 1.6:1 image cropped enough to cut off baked-in
+     text) -- 3:2 = 1.5 is close enough to leave only a sliver of crop
+     margin for that ratio while staying a widely-recognized "landscape
+     photo" default for arbitrary user images generally. */
+  aspect-ratio: 3 / 2;
+  min-width: 240px;
   position: relative;
   background-image: linear-gradient(135deg, var(--overlay-default-start, #667eea), var(--overlay-default-end, #764ba2)); /* default when no image supplied */
   background-size: cover;
