@@ -1,14 +1,5 @@
 # wb-demo
 
-A container that does two things:
-
-1. Renders its children normally (in a CSS grid)
-2. Shows the raw HTML as a syntax-highlighted, auto-formatted code sample below
-
-That's it.
-
-## Usage
-
 ```html
 <wb-demo columns="3">
   <wb-card
@@ -29,7 +20,20 @@ That's it.
 </wb-demo>
 ```
 
-This renders three cards in a row. Below them, the exact HTML above appears as a syntax-highlighted code sample — automatically. The code is auto-formatted with consistent 2-space indentation regardless of how the source is written.
+The panel above IS a live `<wb-demo>` — this page's own subject, rendering itself.
+It does two things:
+
+1. Renders its children normally (in a CSS grid)
+2. Shows the raw HTML you just saw as a syntax-highlighted, auto-formatted code
+   sample below the rendered output
+
+That's it. The code sample is auto-formatted with consistent 2-space indentation
+regardless of how the source above was written.
+
+## Usage
+
+Any content goes inside `<wb-demo>` — the example above is the complete pattern:
+wrap what you want rendered, get a live preview and a matching source panel for free.
 
 ## Attributes
 
