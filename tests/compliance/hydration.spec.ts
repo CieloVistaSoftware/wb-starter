@@ -1,8 +1,22 @@
 import { test, expect } from '@playwright/test';
 
+// #562: this used to `page.goto()` the bare fragment directly
+// (http://localhost:3000/pages/components.html) instead of through the SPA
+// shell (`/?page=components`, the pattern every other compliance spec uses --
+// see hero-no-nested-sections.spec.ts, footer-viewport-anchor.spec.ts,
+// stock-indicator-spacing.spec.ts). pages/components.html's own <wb-audio
+// src="demos/sample.wav"> is intentionally base-relative (#531/9b183bc --
+// absolute breaks under GitHub Pages' /wb-starter/ sub-path), which only
+// resolves correctly when the fragment is loaded at the site root. Navigated
+// to directly, "demos/sample.wav" resolved against /pages/ instead of /,
+// 404'd, and wb-audio logged a real runtime error to the SHARED
+// data/errors.json on every compliance run -- exactly the false-failure
+// source error-log-empty.spec.ts (#562) was tripping over. Going through the
+// SPA route renders the identical fragment from the correct base, with no
+// side-effect page-load error.
 test.describe('Runtime hydration markers', () => {
   test('wb-mdhtml sets hydration marker when present', async ({ page }) => {
-    await page.goto('http://localhost:3000/pages/components.html');
+    await page.goto('/?page=components', { waitUntil: 'networkidle' });
     const md = page.locator('wb-mdhtml').first();
     const count = await md.count();
     test.skip(count === 0, 'wb-mdhtml example not present');
@@ -16,7 +30,7 @@ test.describe('Runtime hydration markers', () => {
   });
 
   test('wb-cardstats marks hydrated when present', async ({ page }) => {
-    await page.goto('http://localhost:3000/pages/components.html');
+    await page.goto('/?page=components', { waitUntil: 'networkidle' });
     const stats = page.locator('wb-cardstats').first();
     const count = await stats.count();
     test.skip(count === 0, 'wb-cardstats example not present');

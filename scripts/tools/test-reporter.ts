@@ -107,16 +107,32 @@ class WBTestReporter implements Reporter {
 
   onBegin(config: FullConfig, suite: Suite) {
     this.startTime = Date.now();
-    
+
     // Ensure output directory exists
     mkdirSync(this.outDir, { recursive: true });
-    
+
     // Initialize live failure log (clear previous)
     this.failureLogPath = join(this.outDir, 'failures-live.log');
     if (existsSync(this.failureLogPath)) {
       unlinkSync(this.failureLogPath);
     }
     writeFileSync(this.failureLogPath, `=== Test Run Started: ${new Date().toISOString()} ===\n\n`);
+
+    // #562: data/errors.json (src/core/error-logger.js's shared, server-side
+    // runtime error log) used to carry over from whatever the PREVIOUS
+    // invocation -- or, worse, a stale git-committed snapshot -- left behind.
+    // error-log-empty.spec.ts (tests/compliance/) asserts that file is empty;
+    // with no reset, entries from an unrelated earlier run (or leftover
+    // manual/agent browsing, unconnected to this run's pages entirely) failed
+    // that gate for reasons no test in the CURRENT run caused. onBegin runs
+    // exactly once per `playwright test` invocation, before any project's
+    // tests start (including a single-file run of just error-log-empty.spec.ts
+    // itself), so resetting here gives every run a clean slate: only errors
+    // genuinely produced by pages loaded DURING this run can appear by the
+    // time that gate checks. Mirrors the failures-live.log reset immediately
+    // above -- same "clear stale run state at onBegin" pattern, applied to
+    // the other shared, cross-run log this test suite writes.
+    this.resetErrorLog();
     
     // Load previous failures for comparison
     const prevFailuresPath = join(this.outDir, 'failures.json');
@@ -197,6 +213,19 @@ class WBTestReporter implements Reporter {
 
     project.duration += result.duration;
     project.tests.push(entry);
+  }
+
+  private resetErrorLog() {
+    try {
+      writeFileSync(
+        join('data', 'errors.json'),
+        JSON.stringify({ lastUpdated: new Date().toISOString(), count: 0, errors: [] }, null, 2),
+        'utf8'
+      );
+    } catch (e) {
+      // Never let a reset failure abort the test run itself.
+      console.warn('[WBTestReporter] Could not reset data/errors.json:', e);
+    }
   }
 
   private logFailureImmediately(failure: FailureEntry, status: string) {
