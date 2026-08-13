@@ -437,10 +437,15 @@
                 ${attributesHtml}
               </td>
               <td data-label="Live Example">
-                <wb-demo columns="1">${liveMarkup}</wb-demo>
-                <details style="margin-top:0.5rem;">
-                  <summary style="cursor:pointer; font-size:0.75rem; color: var(--text-muted);">Definition</summary>
+                <details style="margin-bottom:0.5rem;">
+                  <summary style="cursor:pointer; font-size:0.75rem; color: var(--text-muted);">① Template <span style="opacity:0.7;">(views-registry.json, as authored)</span></summary>
                   <pre style="margin-top:0.5rem; padding:0.75rem; font-size:0.75rem; overflow-x:auto; background: var(--bg-tertiary); border-radius:4px; border:1px solid var(--border-color);"><code>${escapeAttr(view.template)}</code></pre>
+                </details>
+                <div style="font-size:0.75rem; color: var(--text-muted); margin-bottom:0.25rem;">② Usage <span style="opacity:0.7;">(this row's attributes applied)</span></div>
+                <wb-demo columns="1">${liveMarkup}</wb-demo>
+                <details class="rendered-output-details" style="margin-top:0.5rem;">
+                  <summary style="cursor:pointer; font-size:0.75rem; color: var(--text-muted);">③ Rendered Output <span style="opacity:0.7;">(final DOM, behaviors attached)</span></summary>
+                  <pre style="margin-top:0.5rem; padding:0.75rem; font-size:0.75rem; overflow-x:auto; background: var(--bg-tertiary); border-radius:4px; border:1px solid var(--border-color);"><code class="rendered-output-code">(rendering…)</code></pre>
                 </details>
               </td>
             </tr>
@@ -461,7 +466,28 @@
 
         // Scan for new behaviors
         await WB.scan(container);
-        
+
+        // Fill in step ③ "Rendered Output" -- the actual final DOM after
+        // template interpolation AND behavior attachment (x-ripple,
+        // x-draggable, schema-driven components, ...), not just the
+        // authored usage from step ②. John: "we must show compositional
+        // steps to get the elements we are using" -- template -> usage ->
+        // rendered result, the same 3-step shape this page's own static
+        // "How It Works" example already used for one hand-picked case,
+        // now per row. A short settle wait: wb-views' renderView() and
+        // several behaviors (schema-driven components, wb-demo's own grid
+        // build) finish asynchronously after WB.scan(container) itself
+        // already resolved.
+        await new Promise(resolve => setTimeout(resolve, 300));
+        container.querySelectorAll('.rendered-output-details').forEach(details => {
+          const demo = details.previousElementSibling;
+          const rendered = demo?.querySelector(':scope > .wb-demo__grid > *');
+          const codeEl = details.querySelector('.rendered-output-code');
+          if (rendered && codeEl) {
+            codeEl.textContent = rendered.outerHTML;
+          }
+        });
+
       } catch (err) {
         container.innerHTML = `<div class="alert alert--error">
           <span class="alert__icon">❌</span>
