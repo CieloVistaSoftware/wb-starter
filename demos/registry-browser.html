@@ -438,6 +438,10 @@
               </td>
               <td data-label="Live Example">
                 <wb-demo columns="1">${liveMarkup}</wb-demo>
+                <details style="margin-top:0.5rem;">
+                  <summary style="cursor:pointer; font-size:0.75rem; color: var(--text-muted);">Definition</summary>
+                  <pre style="margin-top:0.5rem; padding:0.75rem; font-size:0.75rem; overflow-x:auto; background: var(--bg-tertiary); border-radius:4px; border:1px solid var(--border-color);"><code>${escapeAttr(view.template)}</code></pre>
+                </details>
               </td>
             </tr>
           `;
