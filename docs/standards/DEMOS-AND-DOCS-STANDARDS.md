@@ -47,6 +47,10 @@ Every component example is a `<wb-demo>` — it renders the **live control** AND
   characters**, e.g. `<wb-badge label="New">`) stays on ONE line — one element per
   line. Don't split short tags pointlessly. There is **no "inline format" override**
   beyond this; vertical is the only format.
+- **Array-valued attributes must start each row on its own indented line** — e.g.
+  `rows='[...]'` on `<wb-table>` renders as pretty-printed JSON with one array entry
+  per line, never a single flattened line mixing headers and cell values together.
+  Applies to any attribute whose value is a JSON array shown in a code panel.
 
 ## 6. Code examples never show a horizontal scrollbar
 
