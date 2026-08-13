@@ -324,13 +324,34 @@ test.describe('Attribute Handling', () => {
   test('JSON attributes parse correctly', async ({ page }) => {
     const tagList = page.locator('tag-list').first();
     await expect(tagList).toBeVisible();
-    
+
     // tags='["JavaScript", "TypeScript", ...]' should parse and render
     const tags = await tagList.evaluate(el => {
       return Array.from(el.querySelectorAll('.tag')).map(t => t.textContent);
     });
     expect(tags).toContain('JavaScript');
     expect(tags).toContain('TypeScript');
+  });
+
+  test('an omitted attribute falls back to its schema-declared default, not undefined/falsy', async ({ page }) => {
+    // John, live report: <feature-item text="Custom integrations"> (no
+    // `included` attribute -- demos/wb-views-demo.html's own third example)
+    // rendered the "excluded" branch (struck-through, a ✗ icon) even though
+    // views-registry.json declares included's default as `true`.
+    // getViewData() only ever read the element's OWN attributes, never
+    // consulted the registry schema's `default` for an attribute the
+    // author left off entirely -- {{included ? ... : ...}} just saw
+    // `undefined` (falsy). Fixed by merging schema defaults into the
+    // render data for any key the element doesn't itself set.
+    const item = page.locator('feature-item:not([included])').first();
+    await expect(item).toBeVisible();
+
+    const included = await item.evaluate(el => el.classList.contains('feature-item--included')
+      || el.querySelector('.feature-item')?.classList.contains('feature-item--included'));
+    expect(included).toBe(true);
+
+    const icon = await item.evaluate(el => (el.querySelector('.feature-item__icon')?.textContent || '').trim());
+    expect(icon).toBe('✓');
   });
 });
 

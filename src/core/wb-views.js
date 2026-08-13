@@ -662,20 +662,20 @@ function getViewName(element) {
  */
 function getViewData(element, viewName) {
   const data = {};
-  
+
   for (const attr of element.attributes) {
     const name = attr.name;
-    
+
     // Skip the view name and special attributes
     if (name === viewName || name === 'src' || name === 'refresh' || name === 'use' || name === 'class' || name === 'style' || name === 'id') {
       continue;
     }
-    
+
     // Convert kebab-case to camelCase
     const key = name.replace(/-([a-z])/g, (_, c) => c.toUpperCase());
-    
+
     let value = attr.value;
-    
+
     // Boolean (no value or value equals name)
     if (value === '' || value === name) {
       value = true;
@@ -692,10 +692,27 @@ function getViewData(element, viewName) {
     else if (/^-?\d+\.?\d*$/.test(value)) {
       value = parseFloat(value);
     }
-    
+
     data[key] = value;
   }
-  
+
+  // Apply the view's own schema-declared defaults for any attribute the
+  // author left off entirely -- this only ever read the element's OWN
+  // attributes, so an omitted attribute stayed `undefined` (falsy)
+  // regardless of what the registry's schema declared as its default.
+  // Confirmed live: <feature-item text="Text"> (no `included` attribute)
+  // rendered the "excluded" branch (a struck-through "✗ Text") even though
+  // views-registry.json declares `included`'s default as `true` -- the
+  // template's `{{included ? ... : ...}}` ternary just saw `undefined`.
+  const schema = viewMeta.get(viewName)?.attributes;
+  if (schema) {
+    for (const [key, def] of Object.entries(schema)) {
+      if (data[key] === undefined && def && def.default !== undefined) {
+        data[key] = def.default;
+      }
+    }
+  }
+
   return data;
 }
 

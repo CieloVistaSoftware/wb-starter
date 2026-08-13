@@ -427,8 +427,11 @@ export async function demo(element, options = {}) {
                     // a media demo's code sample can need more width than
                     // the media's own natural size (e.g. a long src URL).
                     const codeEls = element.querySelectorAll('.wb-demo__code');
+                    // +4px safety margin -- see measure()'s CODE_WIDTH_SAFETY_PX
+                    // comment below for why (a header/copy-button code panel's
+                    // wrapper chrome isn't visible to a scrollWidth read).
                     const codeWidth = codeEls.length
-                        ? Math.max(...Array.from(codeEls, el => el.scrollWidth)) + hPad
+                        ? Math.max(...Array.from(codeEls, el => el.scrollWidth)) + hPad + 4
                         : 0;
                     element.style.setProperty('--wb-demo-shrink-width', Math.max(naturalWidth + extra + hPad, codeWidth) + 'px');
                     return true;
@@ -488,8 +491,19 @@ export async function demo(element, options = {}) {
                     // cut the JS panel off because only the HTML panel's
                     // width was ever measured.
                     const codeEls = element.querySelectorAll('.wb-demo__code');
+                    // +CODE_WIDTH_SAFETY_PX: a code panel with a header/copy-
+                    // button (pre.css's .x-pre--has-header) sits inside an
+                    // `.x-pre-wrapper` with its own border -- chrome between
+                    // the <pre> being measured and the demo's own edge that
+                    // this calculation has no way to see. Sizing to
+                    // scrollWidth exactly left the box 1-2px too narrow for
+                    // its own content, tripping overflow-x:auto's scrollbar
+                    // on code that's visibly not actually overflowing.
+                    // Confirmed live: demos/registry-browser.html's
+                    // icon-button/loading-skeleton examples (2px short).
+                    const CODE_WIDTH_SAFETY_PX = 4;
                     const codeWidth = codeEls.length
-                        ? Math.max(...Array.from(codeEls, el => el.scrollWidth)) + hPad
+                        ? Math.max(...Array.from(codeEls, el => el.scrollWidth)) + hPad + CODE_WIDTH_SAFETY_PX
                         : 0;
                     const shrinkWidth = Math.max(controlWidth, codeWidth);
                     if (shrinkWidth > 0) {
