@@ -3,6 +3,21 @@
   <p>What's actually live on this site right now — every push to <code>main</code> deploys straight to <a href="https://cielovistasoftware.github.io/wb-starter/" target="_blank" rel="noopener">cielovistasoftware.github.io/wb-starter</a>, so this list is the real changelog, not a promise of a future release.</p>
 </div>
 
+<section id="whats-new-2026-08-13">
+  <h2>2026-08-13</h2>
+  <ul>
+    <li>Enforced <code>DEMOS-AND-DOCS-STANDARDS.md</code> §3 ("demos are vertical — never side-by-side"): removed the <code>demo-section__grid</code> side-by-side wrapper across the site generators and 9 hand-authored demo files (187 instances) — every <code>&lt;wb-demo&gt;</code> now stacks vertically instead of sharing a grid row with its siblings (#563).</li>
+    <li>Fixed code samples getting cut off with a horizontal scrollbar on normal-length lines — the demo box's shrink-to-fit measurement only ever sized itself to the rendered CONTROL, capping the code panel to the control's own width even when the code needed more room. It now sizes to whichever is wider, control or code. A follow-up timing bug (locking in a stale width before syntax-highlighting/line-numbers finished rendering) and a second bug (only ever measuring the FIRST of a demo's code panels, missing a second JS-interaction sample) are both fixed too (#563, #569).</li>
+    <li>Fixed <code>&lt;wb-checkbox checked&gt;</code> and <code>&lt;wb-checkbox disabled&gt;</code> rendering as a plain unchecked, enabled box regardless of the attribute — the schema-built internal <code>&lt;input&gt;</code> never actually had those DOM properties reflected onto it. Now matches the same reflection <code>&lt;wb-switch&gt;</code> already had (#564).</li>
+    <li>Fixed <code>&lt;wb-cardhero&gt;</code> and <code>&lt;wb-alert&gt;</code> collapsing to a narrow, unreadable sliver in every demo except the first one on a page — both are full-bleed-by-design components missing the <code>full-width</code> demo opt-out (the same fix already applied once to a single Components-page hero card on 2026-08-08, this time across all 29 remaining instances) (#568, #572).</li>
+    <li>Fixed <code>&lt;wb-cardoverlay&gt;</code>'s background image cropping down to a narrow sliver and cutting off its own baked-in title text — the card had a fixed height but no width of its own, so it inherited whatever a shrink-to-fit ancestor happened to measure. Given a landscape aspect-ratio and a minimum width (#566, #571).</li>
+    <li>Fixed <code>&lt;wb-carddraggable&gt;</code> silently dropping plain inner text — same root cause as #455 (cardhorizontal): the shared <code>composeCard()</code> content resolution only ever reads a <code>content="..."</code> attribute, never <code>element.innerHTML</code> (#570).</li>
+    <li><code>&lt;wb-card size="lg"&gt;</code>/<code>size="xl"&gt;</code> rendered at the same width as every other size instead of their own declared minimum — a generic grid reset (<code>min-width: 0</code>, needed elsewhere to stop long content overflowing) tied the size classes on CSS specificity and won on source order. Fixed with the same compound-selector pattern already used for <code>wb-card--overlay-card</code> (#571).</li>
+    <li>Fixed <code>&lt;wb-cardexpandable&gt;</code>'s Show More/Show Less doing nothing visible on 7 of its 8 demo instances — their placeholder body text was short enough to never exceed the collapsed height at any reasonable box width, so there was nothing to reveal on expand regardless of whether the click handler ran correctly (#567).</li>
+    <li>Replaced <code>placehold.co</code>'s baked-in-text placeholder images with real photos across <code>demos/site/cards.html</code> (34 images) — text baked directly into a raster image has no way to respond to CSS layout, so any cropping (a narrow card, an odd aspect ratio) cut it off outright. A real photo just crops like a normal photo.</li>
+  </ul>
+</section>
+
 <section id="whats-new-2026-08-12">
   <h2>2026-08-12</h2>
   <ul>
