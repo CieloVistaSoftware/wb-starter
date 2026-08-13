@@ -887,7 +887,16 @@ export function cardbutton(element, options = {}) {
   if (config.primary || config.secondary) {
     const btnFooter = document.createElement('footer');
     btnFooter.className = 'wb-card__btn-footer';
-    btnFooter.style.cssText = 'padding:1rem;display:flex;gap:0.5rem;border-top:1px solid var(--border-color,#374151);';
+    // #561: this and the two button inline style.cssText assignments below
+    // duplicated card.css's `.wb-card__btn-footer` / `.wb-card__btn.wb-card__
+    // btn--secondary` / `.wb-card__btn.wb-card__btn--primary` rules property
+    // for property -- and being inline, silently overrode them, so bumping
+    // the CSS class alone (the button's own padding was 0.625rem/10px,
+    // below the §13 1rem/16px minimum) would never have changed what
+    // actually rendered. card.css's own comment on `.wb-card__btn-footer
+    // .wb-card__btn` already said "the buttons only ever appear inside
+    // .wb-card__btn-footer... so this costs nothing" -- that migration was
+    // written but never finished; these three inline styles were the reason.
     // Buttons with no *Href just sat inert -- no click handler at all, so
     // clicking e.g. "Confirm Delete" did visibly nothing. A component
     // library button can't know the app's confirm/save logic, but it must
@@ -898,7 +907,6 @@ export function cardbutton(element, options = {}) {
       const secBtn = document.createElement(config.secondaryHref ? 'a' : 'button');
       secBtn.className = 'wb-card__btn wb-card__btn--secondary';
       secBtn.textContent = config.secondary;
-      secBtn.style.cssText = 'flex:1;padding:0.625rem 1rem;border:1px solid var(--border-color,#4b5563);border-radius:6px;cursor:pointer;background:transparent;color:var(--text-primary,#f9fafb);text-align:center;text-decoration:none;font-size:0.875rem;';
       if (config.secondaryHref) {
         secBtn.href = config.secondaryHref;
       } else {
@@ -912,7 +920,6 @@ export function cardbutton(element, options = {}) {
       const priBtn = document.createElement(config.primaryHref ? 'a' : 'button');
       priBtn.className = 'wb-card__btn wb-card__btn--primary';
       priBtn.textContent = config.primary;
-      priBtn.style.cssText = 'flex:1;padding:0.625rem 1rem;border:none;border-radius:6px;cursor:pointer;background:var(--primary,#6366f1);color:white;text-align:center;text-decoration:none;font-size:0.875rem;font-weight:500;';
       if (config.primaryHref) {
         priBtn.href = config.primaryHref;
       } else {
@@ -1313,7 +1320,14 @@ export function cardpricing(element, options = {}) {
   const ctaBtn = document.createElement('a');
   ctaBtn.href = config.ctaHref;
   ctaBtn.className = 'wb-card__cta';
-  ctaBtn.style.cssText = 'display:block;padding:0.875rem;background:var(--primary,#6366f1);color:white;text-decoration:none;border-radius:8px;font-weight:600;transition:all 0.2s;text-align:center;';
+  // #561: #520 already removed this exact inline style.cssText (its
+  // padding:0.875rem/14px duplicated -- and silently overrode -- card.css's
+  // `.wb-card__cta` rule, which #520 also bumped to the compliant 1rem/16px).
+  // A later, unrelated commit (0005dbb0, same day) re-added it verbatim,
+  // regressing #520 without touching card.css at all -- confirmed via
+  // `git blame`, this line's inline cssText was reintroduced after #520's
+  // removal. No inline style needed here: card.css's `.wb-card__cta` already
+  // covers every property this used to set.
   ctaBtn.textContent = config.cta;
   footer.appendChild(ctaBtn);
   
@@ -1611,7 +1625,13 @@ export function cardproduct(element, options = {}) {
   const ctaBtn = document.createElement('button');
   ctaBtn.type = 'button';
   ctaBtn.className = 'wb-card__product-cta';
-  ctaBtn.style.cssText = 'width:100%;padding:0.75rem;background:var(--primary,#6366f1);color:white;border:none;border-radius:6px;font-weight:500;cursor:pointer;';
+  // #561: same regression as the cardpricing() CTA above -- #520 removed
+  // this inline style.cssText (padding:0.75rem/12px, below the §13 1rem/16px
+  // minimum, and redundant with card.css's already-compliant `.wb-product
+  // .wb-card__product-cta` rule at padding:1rem), and commit 0005dbb0
+  // (same day, unrelated fix) re-added it verbatim. No inline style needed:
+  // element.classList.add('wb-product') below already puts this button
+  // inside `.wb-product`, so the CSS rule applies on its own.
   ctaBtn.textContent = config.cta;
 
   const addToCart = () => {
@@ -3222,7 +3242,10 @@ export function cardportfolio(element, options = {}) {
     const ctaBtn = document.createElement('a');
     ctaBtn.href = config.ctaHref || '#';
     ctaBtn.className = 'wb-portfolio__cta';
-    ctaBtn.style.cssText = 'display:block;text-align:center;padding:0.875rem;background:var(--primary,#6366f1);color:white;text-decoration:none;border-radius:8px;font-weight:600;transition:all 0.2s;';
+    // #561: static layout/padding now lives in card.css's `.wb-portfolio__cta`
+    // rule (padding:1rem, was inline at 0.875rem/14px -- below the §13
+    // minimum). Only the genuinely dynamic hover-state background/transform
+    // stay inline, since those are set by JS pointer handlers, not CSS.
     ctaBtn.onmouseenter = () => { ctaBtn.style.background = 'var(--primary-hover,#4f46e5)'; ctaBtn.style.transform = 'translateY(-1px)'; };
     ctaBtn.onmouseleave = () => { ctaBtn.style.background = 'var(--primary,#6366f1)'; ctaBtn.style.transform = ''; };
     ctaBtn.textContent = config.cta;

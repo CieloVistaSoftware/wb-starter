@@ -1258,11 +1258,18 @@ wb-card.wb-card--auto,
    primary/secondary rules below; padding/border-radius/cursor all overlap
    with that global reset, and a bare single class loses the tie (confirmed
    live: padding rendered as the reset's 0.5rem 1rem, not this rule's
-   0.625rem 1rem, until scoped). The buttons only ever appear inside
-   `.wb-card__btn-footer` (cardbutton(), card.js), so this costs nothing. */
+   original 0.625rem 1rem, until scoped). The buttons only ever appear inside
+   `.wb-card__btn-footer` (cardbutton(), card.js), so this costs nothing.
+   #561: padding 0.625rem 1rem -> 1rem (10px -> 16px on the tight/vertical
+   side) -- below the DEMOS-AND-DOCS-STANDARDS.md §13 1rem/16px minimum.
+   Bumping this alone wasn't the whole fix: card.js's cardbutton() also set
+   this exact padding via an inline style.cssText (removed above, same
+   "inline beats CSS class" bug already fixed for the sibling .wb-card__cta/
+   .wb-card__product-cta buttons in #520) -- with that inline style still in
+   place this CSS change would never have reached the rendered button. */
 .wb-card__btn-footer .wb-card__btn {
   flex: 1;
-  padding: 0.625rem 1rem;
+  padding: 1rem;
   border-radius: 6px;
   cursor: pointer;
   text-align: center;
@@ -1499,6 +1506,28 @@ wb-cardnotification,
   font-size: 2rem;
   font-weight: 700;
   line-height: 1;
+}
+
+/* #561: cardportfolio()'s CTA footer button (card.js) had NO CSS rule of
+   its own at all -- unlike .wb-card__cta (same "pricing CTA" shape), it was
+   styled 100% via an inline style.cssText with padding:0.875rem (14px),
+   which is how "View Full Profile" on demos/site/cards.html fell under
+   the 1rem/16px minimum required by DEMOS-AND-DOCS-STANDARDS.md §13.
+   Added a real CSS class (mirroring .wb-card__cta below) so this follows
+   the same "no one-off inline styles" rule as the rest of this file --
+   card.js now only keeps the dynamic hover-state background/transform
+   inline (those genuinely can't be static CSS since they're JS-driven
+   pointer handlers), not the static padding/layout. */
+.wb-portfolio__cta {
+  display: block;
+  text-align: center;
+  padding: 1rem;
+  background: var(--primary);
+  color: white;
+  text-decoration: none;
+  border-radius: 8px;
+  font-weight: 600;
+  transition: all 0.2s;
 }
 
 /* ── Variant: Compact — denser header, smaller avatar/name, narrower card ──
