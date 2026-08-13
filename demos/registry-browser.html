@@ -335,7 +335,12 @@
         let value;
         if (details.type === 'array') {
           const override = ARRAY_ATTR_OVERRIDES[key] && ARRAY_ATTR_OVERRIDES[key][attrName];
-          value = JSON.stringify(override || ['Example', 'Sample']);
+          // Pretty-printed (2-space indent), not one long unbroken line --
+          // John: "start each row of an array on a new line indented
+          // properly." A newline inside a quoted HTML attribute value is
+          // valid, and JSON.parse (getViewData's array-attribute path)
+          // tolerates the extra whitespace between tokens fine.
+          value = JSON.stringify(override || ['Example', 'Sample'], null, 2);
         } else if (Array.isArray(details.enum) && details.enum.length) {
           value = details.enum[0];
         } else if (details.default !== undefined) {

@@ -217,16 +217,6 @@
     <demo-section title="📖 What is a wb-view Element?" description="A wb-view element is a custom element factory. It takes a template name and attributes, renders the template with those values, and automatically registers it as a standalone custom element tag.">
         
         <example-block label="How It Works">
-&lt;template wb-view="badge-tag"&gt;
-  &lt;span class="badge-tag badge-tag--{{variant}}"&gt;&lt;slot&gt;{{text}}&lt;/slot&gt;&lt;/span&gt;
-&lt;/template&gt;
-
-&lt;!-- 2. Use it TWO ways: --&gt;
-&lt;wb-view badge-tag variant="primary"&gt;New&lt;/wb-view&gt;   &lt;!-- wrapper syntax --&gt;
-&lt;badge-tag variant="primary"&gt;New&lt;/badge-tag&gt;          &lt;!-- auto-registered tag --&gt;
-
-&lt;!-- 3. Both produce: --&gt;
-&lt;span class="badge-tag badge-tag--primary"&gt;New&lt;/span&gt;</pre>
             <wb-mdhtml size="sm" highlight captions="true">
 ```html
 <!-- 1. Define a template ONCE -->
