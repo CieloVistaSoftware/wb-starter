@@ -52,20 +52,23 @@ Every component example is a `<wb-demo>` — it renders the **live control** AND
   per line, never a single flattened line mixing headers and cell values together.
   Applies to any attribute whose value is a JSON array shown in a code panel.
 
-## 6. Code examples never show a horizontal scrollbar
+## 6. Code text never wraps — ever
 
-- Long lines **wrap** (`white-space: pre-wrap`; `overflow-x: hidden`). There is **no**
-  horizontal scrolling of code, at any viewport width.
-- **Carve-out for `<wb-demo>`-generated code panels specifically (#390):** these use
-  horizontal scroll instead of wrapping (`demo.js` omits the `wrap` attribute, so
-  `pre.css`'s default editor-style scrolling applies). Explicit override from John. Every
-  other `<pre x-behavior="pre">` on the site still follows the no-scrollbar rule above.
-- **Carve-out for `demos/frameworks.html`'s 5 hand-written framework code samples
-  (#241, #449):** same reasoning and same mechanism (these `<pre language="…">` blocks
-  omit `wrap` too) — long import/JSX lines read worse wrapped mid-identifier than
-  scrolled. Explicit override from John (confirmed again after #449 briefly wrapped them
-  by mistake while fixing an unrelated padding bug). Test:
-  `tests/regression/frameworks-code-block-no-wrap.spec.ts`.
+- **Superseded (#583/#589 session):** this rule used to require wrapping (`white-space:
+  pre-wrap`) with a carve-out for `<wb-demo>` panels only. John's direct, repeated
+  instruction — "CODE TEXT CANNOT WRAP EVER" — reverses that: **no code text wraps,
+  anywhere, on any element that displays code** (`<pre x-behavior="pre">`, `<wb-demo>`
+  panels, `<wb-mdhtml>`-rendered fenced code blocks, hand-written `<pre language="…">`
+  samples). Long lines get horizontal scroll instead (`white-space: pre`; `overflow-x:
+  auto`) — this is `pre.css`'s own editor-style default (`pre.js`, `defaultWrap=false`,
+  #199); nothing needs to opt in anymore, since it's the universal baseline, not a
+  per-page carve-out.
+- A demo's own `wrap` attribute (if ever explicitly set) still overrides this baseline —
+  the point is the *default* is now no-wrap everywhere, not that wrapping is banned as a
+  deliberate, explicit per-element choice.
+- Test: `tests/regression/frameworks-code-block-no-wrap.spec.ts` (originally scoped to
+  `demos/frameworks.html`'s 5 framework samples under the old carve-out regime — still
+  valid, just no longer the only place this applies).
 
 ## 7. A demo is only as wide as what it renders
 
