@@ -98,6 +98,25 @@ wb-table tbody tr.active,
   padding: 0.5rem;
 }
 
+/* #433: search input created by table.js when `searchable` is set (no
+   markup authoring needed). Sits directly above the table it filters. */
+.wb-table__search {
+  display: block;
+  width: 100%;
+  padding: 0.5rem 0.75rem;
+  margin-bottom: 0.75rem;
+  border: 1px solid var(--border-color);
+  border-radius: 4px;
+  background-color: var(--bg-surface);
+  color: var(--text-primary);
+  font: inherit;
+}
+
+.wb-table__search:focus {
+  outline: 2px solid var(--primary);
+  outline-offset: 1px;
+}
+
 /* Sort indicators (from components.css) */
 .wb-table--sorted-asc::after {
   content: " ↑";

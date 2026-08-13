@@ -80,6 +80,35 @@ function parseEventNames(raw) {
         .filter(Boolean);
 }
 
+// John, live on docs/components/semantics/table.md's row-click example:
+// wb-table's `wb:table:select` event carries `{ row: <tr>, index }` --
+// `JSON.stringify(e.detail)` on that serializes the real DOM element to
+// `{}` (Element has no own enumerable properties), so the events-log entry
+// showed "wb:table:select {row:{},index:0}" -- technically real JSON, but
+// useless for seeing what row a reader actually clicked. Any future event
+// whose detail carries an Element (row/target references are a common
+// event-detail shape in this codebase) would hit the same problem. Replace
+// an Element value with something a reader can actually read: a table row
+// becomes its cell text (the same "what data was in it" a reader wants),
+// anything else becomes a plain `<tagname>` marker -- never a bare `{}`.
+function serializeEventDetailForLog(detail) {
+    if (detail == null || typeof detail !== 'object') return detail;
+    const out = {};
+    for (const key of Object.keys(detail)) {
+        const value = detail[key];
+        if (value instanceof Element) {
+            if (value.tagName === 'TR') {
+                out[key] = Array.from(value.children).map((cell) => cell.textContent.trim());
+            } else {
+                out[key] = `<${value.tagName.toLowerCase()}>`;
+            }
+        } else {
+            out[key] = value;
+        }
+    }
+    return out;
+}
+
 // #385: example addEventListener wiring shown in the demo's "Events"
 // section. Generic `el` target -- matches how a reader would actually grab
 // the element (via querySelector/getElementById in their own code), not
@@ -769,7 +798,7 @@ export async function demo(element, options = {}) {
                 let detailStr = '';
                 if (e.detail !== undefined) {
                     try {
-                        detailStr = JSON.stringify(e.detail);
+                        detailStr = JSON.stringify(serializeEventDetailForLog(e.detail));
                     } catch (err) {
                         detailStr = String(e.detail);
                     }

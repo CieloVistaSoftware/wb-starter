@@ -59,7 +59,6 @@ const LEGACY_ZERO_DEMO_FILES = new Set([
   'components/semantics/pre.md',
   'components/semantics/radio.md',
   'components/semantics/range.md',
-  'components/semantics/table.md',
   'components/semantics/ul.md',
   'escape-hatches.md',
   'guides/search-index.md',
