@@ -22,7 +22,7 @@ import * as path from 'path';
  *     exact attribute name -- renaming it would regress those (#550).
  *   - `data-wb-expected-errors` : a framework/test-infra hook on `<html>`, read by
  *     src/core/error-logger.js via `documentElement.hasAttribute(...)`, structurally
- *     identical to `data-theme` (documentElement flag, not wb-*/x-* component config).
+ *     identical to `data-theme` (documentElement flag, not wb-* / x-* component config).
  *     tests/regression/expected-error-log-suppression.spec.ts asserts this exact
  *     attribute name -- renaming it would regress that test (#550).
  *
