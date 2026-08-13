@@ -278,7 +278,7 @@ export async function mdhtml(element, options = {}) {
         const allMdHtml = document.querySelectorAll('wb-mdhtml');
         const idx = Array.from(allMdHtml).indexOf(element);
         const pageSource = await getPageSource();
-        const block = extractTagBlock(pageSource, 'wb-mdhtml', idx);
+        const block = extractTagBlock(pageSource, 'wb-mdhtml', idx, allMdHtml.length);
         if (block && block.trim()) raw = block;
       } catch (e) {
         // ignore — fall through to the live-DOM read below

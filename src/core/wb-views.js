@@ -391,9 +391,21 @@ function interpolate(template, data) {
     // Handle nested: {{prop.nested}}
     const value = getNestedValue(data, expr);
     if (value !== undefined && value !== null) {
-      if (typeof value === 'string' && value.includes('<')) {
-        return value; // Don't escape HTML
-      }
+      // #580: this used to skip escaping for ANY string containing '<' --
+      // meant for {{body}}-style raw-markup composition, but {{body}} is
+      // never actually referenced this way (it's only ever consumed via
+      // <slot>, handled separately above, before interpolate() ever runs).
+      // In practice the '<' heuristic instead caught ordinary CODE-SAMPLE
+      // text (e.g. demos/wb-views-demo.html's auto-generated `code`
+      // attribute, a markdown-fenced ```html snippet meant to be DISPLAYED
+      // as source) -- any such value necessarily contains '<', so it was
+      // inserted as raw, LIVE markup via target.innerHTML instead of shown
+      // as text. Confirmed live: "Standard Buttons (wb-button)"'s code
+      // panel silently real-rendered a second copy of the buttons (and lost
+      // the ```html fence markers to real DOM parsing) instead of showing
+      // its source. Escaping by default is what every other templating
+      // system does for plain interpolation -- there's no live caller left
+      // that needs the raw-HTML escape hatch.
       return escapeHtml(String(value));
     }
     

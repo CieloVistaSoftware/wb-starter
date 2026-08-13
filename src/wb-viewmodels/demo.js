@@ -287,7 +287,7 @@ export async function demo(element, options = {}) {
             const pageSource = await getPageSource();
             const allDemos = document.querySelectorAll('wb-demo');
             const idx = Array.from(allDemos).indexOf(element);
-            rawBlock = extractTagBlock(pageSource, 'wb-demo', idx);
+            rawBlock = extractTagBlock(pageSource, 'wb-demo', idx, allDemos.length);
         } catch (e) {
             // ignore fetch errors
         }

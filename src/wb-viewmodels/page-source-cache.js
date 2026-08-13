@@ -14,18 +14,71 @@
 let _pageSource = null;
 let _pageSourcePromise = null;
 
+// #580: <wb-demo>/<wb-mdhtml> callers below match themselves against this
+// source by ORDINAL POSITION -- "I'm the Nth <wb-mdhtml> in the live DOM, so
+// give me the Nth <wb-mdhtml>...</wb-mdhtml> block in the source text". That
+// only holds if "occurrences in the raw text" and "elements in the live DOM"
+// count the same tags. They don't when a <template wb-view="..."> holds one
+// of these tags as part of its OWN template markup (wb-views.js's DOM
+// templates commonly do -- e.g. demos/wb-views-demo.html's
+// `<template wb-view="example-block">` embeds a literal
+// `<wb-mdhtml>{{code}}</wb-mdhtml>` as the placeholder every rendered
+// instance is built from). A <template>'s content is inert: the browser
+// never parses it into the live document tree, so
+// `document.querySelectorAll('wb-mdhtml')` correctly never counts it -- but
+// the naive regex scan below has no concept of <template> boundaries and
+// counts it as occurrence #0 anyway. Every live element's index was off by
+// one as a result: the page's very first real <wb-mdhtml> got matched to
+// the template's own placeholder text and rendered the literal, un-
+// interpolated "{{code}}" string as its "source", and every element after
+// it displayed the PREVIOUS element's content instead of its own. Confirmed
+// live on demos/wb-views-demo.html's "Standard Buttons (wb-button)" example
+// -- stripping <template>...</template> blocks before the ordinal scan
+// restores parity between the two counts, matching what the live DOM
+// already does.
+function stripInertTemplates(html) {
+  return html.replace(/<template\b[^>]*>[\s\S]*?<\/template>/gi, '');
+}
+
 export function getPageSource() {
   if (_pageSource) return Promise.resolve(_pageSource);
   if (_pageSourcePromise) return _pageSourcePromise;
   _pageSourcePromise = fetch(location.href).then((r) => r.text()).then((text) => {
-    _pageSource = text;
-    return text;
+    _pageSource = stripInertTemplates(text);
+    return _pageSource;
   });
   return _pageSourcePromise;
 }
 
-/** Extract the idx-th <tagName>...</tagName> block's inner content from source. */
-export function extractTagBlock(source, tagName, idx) {
+/** Count how many <tagName>...</tagName> occurrences the (template-stripped) source contains. */
+function countTagOccurrences(source, tagName) {
+  const regex = new RegExp(`<${tagName}[^>]*>[\\s\\S]*?<\\/${tagName}>`, 'gi');
+  return (source.match(regex) || []).length;
+}
+
+/**
+ * Extract the idx-th <tagName>...</tagName> block's inner content from source.
+ *
+ * #580: ordinal matching only means anything if "occurrences in the raw
+ * source" and "elements in the live DOM" are counting the SAME set of tags.
+ * They don't on pages like demos/wb-views-demo.html, where most <wb-mdhtml>
+ * elements are entirely SYNTHESIZED at runtime (wb-views.js's `{{code}}`
+ * template interpolation) and have zero literal representation in the raw
+ * file at all -- only a handful of hand-authored ones (e.g. its "How It
+ * Works" example) exist as real source text. Stripping inert <template>
+ * blocks (stripInertTemplates, above) fixes the off-by-one when the counts
+ * are otherwise equal, but can't fix a page where they're fundamentally
+ * different sets. `liveCount`, when passed, is the caller's own
+ * `document.querySelectorAll(tagName).length` -- if it doesn't match what's
+ * actually in the source, ordinal position is meaningless for this page, so
+ * every call returns '' (empty) rather than confidently returning the WRONG
+ * element's content. Callers already fall back to the live element's own
+ * innerHTML when this returns falsy.
+ */
+export function extractTagBlock(source, tagName, idx, liveCount) {
+  if (liveCount !== undefined && countTagOccurrences(source, tagName) !== liveCount) {
+    return '';
+  }
   const regex = new RegExp(`<${tagName}[^>]*>([\\s\\S]*?)<\\/${tagName}>`, 'gi');
   let match;
   let i = 0;
