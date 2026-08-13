@@ -73,3 +73,86 @@ test('pre.js line-number gutter: line 1 accounts for padding-top, all lines even
     ).toBeLessThan(3);
   });
 });
+
+/**
+ * #559: a wrapped-mode code panel (`wrap="true"`, or the forced wrap doc-viewer
+ * pages apply via mdhtml.css) positions each line's gutter number by measuring
+ * the rendered position of the character immediately after that line's real
+ * `\n` (pre.js's measureAndPosition). When a line opens with indentation
+ * whitespace (e.g. "  src=...") and the row is narrow enough (a long wrapped
+ * attribute value, or an enlarged font-size), that leading whitespace run can
+ * itself soft-wrap onto its own visual row -- landing the number next to an
+ * empty-looking row while the line's real, visible content starts one row
+ * below with no number of its own. Reads live as a phantom blank line in the
+ * gutter, exactly matching the reported repro (docs/components/semantics/
+ * audio.md's "With Bass/Treble Boost" sample, a long `src="https://…"` value).
+ *
+ * Forces the exact split deterministically: a 2-space-indented second line in
+ * a `pre` clamped to a 2ch-wide content box, so " " + " " alone fills the
+ * first row and the line's real content is guaranteed to wrap to the next.
+ * The fix (skip leading whitespace when locating a line's measurement anchor)
+ * means the gutter number must land on the row where the visible content
+ * actually starts, not the blank whitespace-only row above it.
+ */
+test('pre.js line-number gutter: number tracks visible content, not leading whitespace that wraps onto its own row (#559)', async ({ page }) => {
+  await page.goto('/', { waitUntil: 'domcontentloaded' });
+
+  const result = await page.evaluate(async () => {
+    const { pre } = await import('/src/wb-viewmodels/semantics/pre.js');
+
+    const preEl = document.createElement('pre');
+    const codeEl = document.createElement('code');
+    // Line 2 opens with 2 leading spaces before its real content ("BBBB") --
+    // the exact "  attr=..." shape that triggered #559.
+    codeEl.textContent = 'AAAA\n  BBBB\nCCCC';
+    preEl.appendChild(codeEl);
+    document.body.appendChild(preEl);
+
+    pre(preEl, { showLineNumbers: true, wrap: true });
+
+    // Force the deterministic split described above: a monospace, 2-char-wide
+    // content box means the 2 leading spaces exactly fill line 2's first row,
+    // pushing "BBBB" onto the row below on its own.
+    Object.assign(preEl.style, {
+      fontFamily: 'monospace',
+      fontSize: '16px',
+      width: '2ch',
+      maxWidth: '2ch',
+    });
+
+    // Wait for pre.js's double-rAF deferred measurement (+ a possible
+    // ResizeObserver re-fire from the width override above) to settle.
+    await new Promise((resolve) => {
+      const gutter = preEl.parentElement.querySelector('.x-pre__line-numbers');
+      const settle = () => {
+        if (gutter.children[1] && gutter.children[1].style.top) {
+          requestAnimationFrame(() => requestAnimationFrame(resolve));
+        } else {
+          requestAnimationFrame(settle);
+        }
+      };
+      settle();
+    });
+
+    const gutter = preEl.parentElement.querySelector('.x-pre__line-numbers');
+    const line2Top = parseFloat(gutter.children[1].style.top);
+
+    // Real rendered position of "BBBB"'s first character ('B') -- the
+    // ground truth for where line 2's number SHOULD sit.
+    const codeTextNode = codeEl.firstChild;
+    const bIndex = codeTextNode.nodeValue.indexOf('BBBB');
+    const range = document.createRange();
+    range.setStart(codeTextNode, bIndex);
+    range.setEnd(codeTextNode, bIndex + 1);
+    const bRect = range.getClientRects()[0];
+    const containerTop = preEl.getBoundingClientRect().top;
+    const bTop = bRect.top - containerTop;
+
+    return { line2Top, bTop };
+  });
+
+  expect(
+    Math.abs(result.line2Top - result.bTop),
+    `line 2's gutter number (top: ${result.line2Top}px) should sit on the same row as its visible content ("BBBB", top: ${result.bTop}px), not a blank leading-whitespace row above it`
+  ).toBeLessThan(3);
+});

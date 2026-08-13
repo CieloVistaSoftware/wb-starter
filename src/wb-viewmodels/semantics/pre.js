@@ -287,8 +287,39 @@ export function pre(element, options = {}) {
         return null;
       };
 
+      // #559: a line's number must sit next to where its VISIBLE content
+      // starts, not necessarily its very first character. When wrapping is
+      // enabled (doc-viewer's forced pre-wrap, mdhtml.css) and a line opens
+      // with indentation whitespace (e.g. "  src=...") whose available row
+      // width is narrow (a long wrapped attribute value + enlarged
+      // font-size both shrink it), that leading run of spaces can itself
+      // soft-wrap onto its own visual row, landing the number next to an
+      // empty-looking row while the real text ("src=...") starts one row
+      // below with no number of its own -- reads as a phantom blank line.
+      // Skip past leading spaces/tabs (never past a real newline -- an
+      // all-whitespace/blank source line has nothing better to anchor to)
+      // so the measured position always lands on real content when there
+      // is any. Confirmed live: without this, docs/components/semantics/
+      // audio.md's "With Bass/Treble Boost" sample (long src="https://…"
+      // attribute) showed exactly this at a narrow effective row width.
+      const firstContentOffset = (nodeIndex, offset) => {
+        while (nodeIndex < textNodes.length) {
+          const text = textNodes[nodeIndex].nodeValue;
+          while (offset < text.length) {
+            const ch = text[offset];
+            if (ch === '\n') return { nodeIndex, offset }; // blank line
+            if (ch !== ' ' && ch !== '\t') return { nodeIndex, offset };
+            offset++;
+          }
+          nodeIndex++;
+          offset = 0;
+        }
+        return { nodeIndex, offset };
+      };
+
       if (textNodes[0] && lineNumEls[0]) {
-        const rect = measureFrom(0, 0);
+        const pos = firstContentOffset(0, 0);
+        const rect = measureFrom(pos.nodeIndex, pos.offset);
         if (rect) lineNumEls[0].style.top = (rect.top - containerTop) + 'px';
       }
 
@@ -300,7 +331,8 @@ export function pre(element, options = {}) {
         while ((nlAt = text.indexOf('\n', searchFrom)) !== -1) {
           lineIndex++;
           if (lineIndex < lineNumEls.length) {
-            const rect = measureFrom(i, nlAt + 1);
+            const pos = firstContentOffset(i, nlAt + 1);
+            const rect = measureFrom(pos.nodeIndex, pos.offset);
             if (rect) lineNumEls[lineIndex].style.top = (rect.top - containerTop) + 'px';
           }
           searchFrom = nlAt + 1;
