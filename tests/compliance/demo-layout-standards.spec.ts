@@ -206,7 +206,15 @@ test.describe('Demo layout standards (§7) — single-item demos are not full wi
           // Count every `.wb-demo__code` panel's own scrollWidth (a demo can
           // carry more than one -- an HTML sample plus a JS interaction
           // sample) as an alternate "needed width", not just the control.
-          const codeEls = demo.querySelectorAll(':scope > .wb-demo__code');
+          // NOT scoped to direct children (`:scope >`): a code panel with a
+          // header/copy-button (pre.css's `.x-pre--has-header`) is wrapped
+          // in an intermediate `.x-pre-wrapper` div, so it's a GRANDCHILD of
+          // wb-demo, not a direct child -- `:scope >` silently found zero
+          // panels there and flagged demos/registry-browser.html's
+          // correctly-sized boxes as false violations. demo.js's own
+          // measure()/applyNaturalWidth() never scoped this to direct
+          // children either; this now matches that exactly.
+          const codeEls = demo.querySelectorAll('.wb-demo__code');
           const codeWidth = codeEls.length
             ? Math.max(...Array.from(codeEls, el => (el as HTMLElement).scrollWidth))
             : 0;
