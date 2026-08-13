@@ -278,36 +278,6 @@ panel `<wb-demo>` generates automatically from the `events` attribute.
 </wb-table>
 </wb-demo>
 
-### Native Table (Enhanced)
-
-A plain semantic `<table>` gets the same `table` behavior as `<wb-table>`
-when it carries an explicit `x-table` attribute. (`autoInjectComponents`
-defaults to **off** — see `src/core/config.js` — so a bare `<table>` with
-no `x-table` attribute and no `variant` attribute gets no behavior at
-all; `x-table` opts it in explicitly regardless of that global setting.)
-
-Unlike `<wb-table>`, a native `<table>` has no schema building an empty
-row-container for it, so it needs an empty `<thead></thead><tbody></tbody>`
-pair in the markup as a structural target — `table.js` fills real rows
-into that shell from `headers`/`rows`, the same as it does for `<wb-table>`.
-
-<wb-demo>
-<table
-  x-table
-  striped
-  headers="Host,Region,CPU,Memory,Status"
-  rows='[
-    ["api-01","us-west","42%","61%","Healthy"],
-    ["api-02","us-west","38%","55%","Healthy"],
-    ["api-03","us-east","91%","88%","Degraded"],
-    ["worker-01","us-east","12%","30%","Healthy"],
-    ["worker-02","eu-central","67%","72%","Healthy"]
-  ]'>
-<thead></thead>
-<tbody></tbody>
-</table>
-</wb-demo>
-
 ## Generated Structure
 
 `<wb-table>` renders its search input (when `searchable`) and its
