@@ -598,7 +598,14 @@ function applyVariantClasses(element, schema, data) {
     }
     
     // Enum variants: variant="glass" → wb-card--glass
-    if (prop.enum && typeof value === 'string' && value !== 'default') {
+    // Some enum-typed properties (e.g. button's `icon`) list known presets
+    // for tooling/autocomplete but also accept arbitrary free text (emoji,
+    // custom names) per their own schema description -- generating a class
+    // from THAT would produce garbage like "wb-button--💾" for an
+    // emoji icon. Only emit the modifier class when the value is itself a
+    // valid CSS identifier segment; free-text values that fall outside the
+    // enum's known set are content, not a variant, and get no class.
+    if (prop.enum && typeof value === 'string' && value !== 'default' && /^[a-zA-Z0-9_-]+$/.test(value)) {
       element.classList.add(`${baseClass}--${value}`);
     }
   }
