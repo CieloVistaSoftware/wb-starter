@@ -263,3 +263,7 @@ violation of (a)/(b)/(c) on its own.
 - Related open issue: #559 (`pre.js line-number gutter shows a phantom blank line when a
   long attribute value word-wraps`) — this audit's (b) findings are a concrete, reproducible
   instance of that same symptom, on different content than #559's own example.
+- **Tracking issue filed for the fix:** #583 (`doc-viewer: all wb-demo code panels wrap
+  instead of scrolling (mdhtml.css overrides the #390 no-wrap carve-out)`) — this audit did
+  not fix anything; #583 exists so the finding above doesn't get lost before someone picks
+  it up.
