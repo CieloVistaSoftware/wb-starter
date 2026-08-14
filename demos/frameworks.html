@@ -248,6 +248,8 @@ root.render(e(ReactApp));</code></pre>
   }
 <\/script>
 
+<h3>Svelte Count: {count}</h3>
+
 <button
   class="wb-btn-gradient"
   x-ripple x-tooltip x-toast
@@ -314,6 +316,8 @@ root.render(e(ReactApp));</code></pre>
     count += 1;
   }
 &lt;/script&gt;
+
+&lt;h3&gt;Svelte Count: {count}&lt;/h3&gt;
 
 &lt;button
   class="wb-btn-gradient"
@@ -442,14 +446,17 @@ function Counter() {
   });
 
   return (
-    <button
-      class="wb-btn-gradient"
-      x-ripple x-tooltip
-      tooltip={\`Count: \${count()}\`}
-      onClick={() => setCount(c => c + 1)}
-    >
-      SolidJS Button
-    </button>
+    <div>
+      <h3>SolidJS Count: {count()}</h3>
+      <button
+        class="wb-btn-gradient"
+        x-ripple x-tooltip
+        tooltip={\`Count: \${count()}\`}
+        onClick={() => setCount(c => c + 1)}
+      >
+        SolidJS Button
+      </button>
+    </div>
   );
 }
 
@@ -512,14 +519,17 @@ function Counter() {
   });
 
   return (
-    &lt;button
-      class="wb-btn-gradient"
-      x-ripple x-tooltip
-      tooltip={`Count: ${count()}`}
-      onClick={() => setCount(c => c + 1)}
-    &gt;
-      SolidJS Button
-    &lt;/button&gt;
+    &lt;div&gt;
+      &lt;h3&gt;SolidJS Count: {count()}&lt;/h3&gt;
+      &lt;button
+        class="wb-btn-gradient"
+        x-ripple x-tooltip
+        tooltip={`Count: ${count()}`}
+        onClick={() => setCount(c => c + 1)}
+      &gt;
+        SolidJS Button
+      &lt;/button&gt;
+    &lt;/div&gt;
   );
 }</code></pre>
     </div>

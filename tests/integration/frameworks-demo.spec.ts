@@ -102,6 +102,12 @@ test.describe('frameworks demo: wb-demo / build-step exception (§25, #324, #460
     await expect(button).toBeVisible();
     await expect(button).toHaveAttribute('hx-post', '/clicked');
 
+    // #591: the server's real /clicked handler (server.js) swaps the button's
+    // outerHTML into a visible confirmation -- a reader can point at the
+    // "✓ Swapped!" text as the event listener's result, not just infer it.
+    await button.click();
+    await expect(demo.locator('.wb-demo__grid button')).toHaveText(/Swapped/, { timeout: 5000 });
+
     expect(errs, 'no page errors while rendering demos/frameworks.html').toEqual([]);
   });
 
@@ -111,6 +117,16 @@ test.describe('frameworks demo: wb-demo / build-step exception (§25, #324, #460
     // Live render: React mounts a real button into #react-root; Vue mounts its app.
     await expect(page.locator('#react-root button')).toBeVisible({ timeout: 15000 });
     await expect(page.locator('#vue-app button')).toBeVisible();
+
+    // #591: each section's event listener must produce a visible, persistent
+    // change to an on-page element a reader can point at as "the result".
+    await expect(page.locator('#react-root h3')).toHaveText('React Counter: 0');
+    await page.locator('#react-root button').click();
+    await expect(page.locator('#react-root h3')).toHaveText('React Counter: 1');
+
+    await expect(page.locator('#vue-app h3')).toHaveText('Vue Message: Hello Vue!');
+    await page.locator('#vue-app button').click();
+    await expect(page.locator('#vue-app h3')).toHaveText('Vue Message: !euV olleH');
 
     // Source: each section's own highlighted pre[language] block, still present.
     await expect(page.locator('#react-demo pre[language]')).toBeVisible();
@@ -131,12 +147,18 @@ test.describe('frameworks demo: wb-demo / build-step exception (§25, #324, #460
     await expect(button, 'svelte/compiler (loaded from esm.sh) must compile and mount a real component').toBeVisible({ timeout: 15000 });
     await expect(button).toHaveText('Svelte Button');
 
+    // #591: clicking the button must also update a persistent, visible
+    // on-page element -- not just an attribute a reader can't see -- so the
+    // result of the event listener is something they can point at.
+    await expect(page.locator('#svelte-root h3')).toHaveText('Svelte Count: 0');
+
     // Real Svelte reactivity: clicking increments `count`, re-rendering the
     // `tooltip="Count: {count}"` attribute — not a static/hand-written button.
     await expect(button).toHaveAttribute('tooltip', 'Count: 0');
     await button.click();
     await button.click();
     await expect(button).toHaveAttribute('tooltip', 'Count: 2');
+    await expect(page.locator('#svelte-root h3')).toHaveText('Svelte Count: 2');
 
     // WB's own x-ripple behavior must have wired up on the compiled-and-mounted
     // button just like any other WB-enhanced element (adds the wb-ripple class).
@@ -168,6 +190,11 @@ test.describe('frameworks demo: wb-demo / build-step exception (§25, #324, #460
     await expect(button, 'babel-plugin-jsx-dom-expressions (loaded from esm.sh via @babel/standalone) must compile and mount a real component').toBeVisible({ timeout: 15000 });
     await expect(button).toHaveText('SolidJS Button');
 
+    // #591: clicking the button must also update a persistent, visible
+    // on-page element -- not just an attribute a reader can't see -- so the
+    // result of the event listener is something they can point at.
+    await expect(page.locator('#solid-root h3')).toHaveText('SolidJS Count: 0');
+
     // Real Solid fine-grained reactivity: clicking increments the createSignal-
     // backed `count`, re-rendering the `tooltip` attribute.
     await expect(button).toHaveAttribute('tooltip', 'Count: 0');
@@ -175,6 +202,7 @@ test.describe('frameworks demo: wb-demo / build-step exception (§25, #324, #460
     await button.click();
     await button.click();
     await expect(button).toHaveAttribute('tooltip', 'Count: 3');
+    await expect(page.locator('#solid-root h3')).toHaveText('SolidJS Count: 3');
 
     // WB's own x-ripple behavior must have wired up on the compiled-and-mounted
     // button just like any other WB-enhanced element (adds the wb-ripple class).
