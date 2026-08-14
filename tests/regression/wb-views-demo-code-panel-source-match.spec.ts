@@ -30,33 +30,54 @@ import { test, expect } from '@playwright/test';
  */
 
 test.describe('demos/wb-views-demo.html: example-block code panels show real, correctly-matched content (#580)', () => {
-  // Hydration here involves a real network round-trip (getPageSource()
-  // fetching the page's own HTML, mdhtml.js's marked.js CDN load) -- give it
-  // more headroom than the 30s default under load.
-  test.describe.configure({ timeout: 60000 });
-
-  // The four example-blocks these tests actually assert against -- waiting
-  // on just these (rather than all ~22 on the page) keeps the wait fast and
+  // The example-blocks these tests actually assert against -- waiting on
+  // just these (rather than all ~20 on the page) keeps the wait fast and
   // avoids coupling to unrelated blocks further down the page.
+  //
+  // "Standard Buttons (wb-button)" was removed from this list along with
+  // its whole section: wb-button is a real premade component, not a
+  // wb-view, and John decided this wb-views-teaching page shouldn't show
+  // non-wb-view examples at all ("DON'T SHOW NON WB-VIEWS ON THE WB-VIEWS
+  // PAGE") -- previously it was kept as a labeled contrast example, now
+  // it's gone entirely. The remaining labels also picked up a "② Reuse — "
+  // prefix as part of the same pass (making explicit which step of
+  // define/reuse/render each example-block represents).
   const CHECKED_LABELS = [
-    'Standard Buttons (wb-button)',
-    'User Avatars (user-avatar)',
-    'Navigation Items (nav-link)',
-    'Pricing Components (price-tag, feature-item)',
+    '② Reuse — User Avatars (user-avatar)',
+    '② Reuse — Navigation Items (nav-link)',
+    '② Reuse — Pricing Components (price-tag, feature-item)',
   ];
 
   test.beforeEach(async ({ page }) => {
     await page.goto('/demos/wb-views-demo.html');
-    // Wait for each checked example-block's <wb-mdhtml> code panel to finish
-    // hydrating (mdhtml.js marks x-hydrated="1" once markdown parsing
-    // completes -- see src/wb-viewmodels/mdhtml.js).
+    // Wait for the wb-views {{code}} interpolation to land in each checked
+    // example-block's .example-codes panel -- NOT for mdhtml.js's own
+    // separate syntax-highlighting hydration (x-hydrated="1", set after
+    // marked.js parses + highlight.js tokenizes the text). This test only
+    // cares whether the RIGHT TEXT is there (#580's actual bug: the wrong
+    // text, or a literal "{{code}}"), and that text is already fully
+    // determined the moment example-block's own renderView() substitutes
+    // {{code}} -- a synchronous-ish wb-views template step that doesn't
+    // depend on mdhtml.js, marked.js, or any network fetch at all.
+    //
+    // An earlier version of this wait DID key off x-hydrated, and that
+    // turned out to be a bad idea independent of #580: mdhtml.js's
+    // hydration (real CDN fetch of marked.js, plus a self-fetch via
+    // getPageSource()) reliably hangs indefinitely for the 3rd+
+    // <wb-mdhtml> element on THIS page in this session's environment --
+    // confirmed on BOTH this branch and the pre-existing baseline before
+    // any of this pass's changes (same shape: the first couple hydrate,
+    // everything after never does, even after 90+ seconds of waiting) --
+    // a genuine, separate, pre-existing issue, not something a longer
+    // timeout fixes. Keying this wait off the plain text content instead
+    // sidesteps that hang entirely while still testing exactly what #580
+    // was about.
     await page.waitForFunction((labels) => {
       return labels.every((label) => {
         const block = document.querySelector(`example-block[label="${label}"]`);
-        const panel = block?.querySelector('.example-codes wb-mdhtml');
-        return !!panel?.hasAttribute('x-hydrated');
+        return !!block?.querySelector('.example-codes')?.textContent?.trim();
       });
-    }, CHECKED_LABELS, { timeout: 60000 });
+    }, CHECKED_LABELS, { timeout: 30000 });
   });
 
   test('no code panel ever shows the literal, un-interpolated "{{code}}" placeholder', async ({ page }) => {
@@ -78,24 +99,22 @@ test.describe('demos/wb-views-demo.html: example-block code panels show real, co
     expect(mustacheLeaks, `example-block(s) with an unresolved {{...}} token in their code panel: ${mustacheLeaks.join(', ')}`).toEqual([]);
   });
 
-  test('"Standard Buttons (wb-button)" shows its OWN real button markup as source', async ({ page }) => {
-    const buttonsBlock = page.locator('example-block[label="Standard Buttons (wb-button)"]');
-    await expect(buttonsBlock, 'the Buttons example-block should exist on the page').toHaveCount(1);
+  test('"User Avatars (user-avatar)" shows its OWN real avatar markup as source', async ({ page }) => {
+    const avatarsBlock = page.locator('example-block[label="② Reuse — User Avatars (user-avatar)"]');
+    await expect(avatarsBlock, 'the Avatars example-block should exist on the page').toHaveCount(1);
 
-    const codePanel = buttonsBlock.locator('.example-codes');
-    await expect(codePanel).toContainText('wb-button');
-    await expect(codePanel).toContainText('Primary');
-    await expect(codePanel).toContainText('Delete');
+    const codePanel = avatarsBlock.locator('.example-codes');
+    await expect(codePanel).toContainText('user-avatar');
+    await expect(codePanel).toContainText('John Doe');
   });
 
   test('each example-block\'s code panel matches its OWN section, not a shifted neighbor\'s', async ({ page }) => {
     // Regression guard for the off-by-one specifically: pair each block's
     // label with a substring that ONLY that block's real source contains.
     const expectations: Array<[label: string, mustContain: string]> = [
-      ['Standard Buttons (wb-button)', 'wb-button'],
-      ['User Avatars (user-avatar)', 'user-avatar'],
-      ['Navigation Items (nav-link)', 'nav-link'],
-      ['Pricing Components (price-tag, feature-item)', 'price-tag'],
+      ['② Reuse — User Avatars (user-avatar)', 'user-avatar'],
+      ['② Reuse — Navigation Items (nav-link)', 'nav-link'],
+      ['② Reuse — Pricing Components (price-tag, feature-item)', 'price-tag'],
     ];
 
     for (const [label, mustContain] of expectations) {

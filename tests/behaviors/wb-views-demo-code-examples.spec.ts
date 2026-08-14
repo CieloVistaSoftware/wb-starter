@@ -23,7 +23,18 @@ test.describe('wb-views-demo code examples (#242)', () => {
   test('captured source is vertically formatted, one element per line', async ({ page }) => {
     await page.goto('/demos/wb-views-demo.html', { waitUntil: 'domcontentloaded' });
     await page.waitForTimeout(1000);
-    const code = await page.locator('example-block').first().getAttribute('code');
+    // Not every example-block gets an auto-generated `code` attribute --
+    // ones that already show their own hand-authored code sample opt out
+    // via data-wbv-no-autocode (e.g. "How It Works", now the FIRST
+    // example-block on the page after the wb-view-vs-not-a-wb-view
+    // reorganization -- see the auto-generation script's skip check in
+    // wb-views-demo.html). .first() alone can no longer be assumed to have
+    // one; find the first block that actually does instead.
+    const code = await page.evaluate(() => {
+      const block = Array.from(document.querySelectorAll('example-block')).find((b) => b.hasAttribute('code'));
+      return block ? block.getAttribute('code') : null;
+    });
+    expect(code, 'expected at least one example-block with an auto-generated code attribute').not.toBeNull();
     expect(code, 'source should be multi-line, not a single blob').toContain('\n');
     const lines = (code || '').split('\n').filter((l) => l.trim());
     expect(lines.length).toBeGreaterThan(1);

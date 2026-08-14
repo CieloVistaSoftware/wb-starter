@@ -91,25 +91,23 @@ test.describe('Template Rendering', () => {
   });
 
   test('basic interpolation works', async ({ page }) => {
-    // Check first button (Primary)
-    const btn = page.locator('wb-button').first();
-    await expect(btn).toBeVisible();
-
-    // <wb-button> is a real MVVM component (src/wb-viewmodels/semantics/button.js),
-    // not a wb-views template -- its schema (button.schema.json) applies variant
-    // classes directly to the HOST tag via the generic schema-builder
-    // (applyVariantClasses, src/core/mvvm/schema-builder.js), never into innerHTML.
-    // button.js's own comment confirms: "No inner <button> created. No classes
-    // added [to innerHTML]." Live-confirmed render:
-    // <wb-button class="wb-button--start wb-button--primary wb-button--md"
-    //   x-schema="button">Primary</wb-button>
-    // Primary is the schema's default variant, so it should have wb-button--primary
-    // on the element itself. schema-builder applies it asynchronously (schema
-    // fetch, then buildStructure()) after the element is already visible, so
-    // this must be an auto-retrying assertion rather than a single evaluate()
-    // read -- a one-shot read can observe the button before its class lands
-    // (a real, if intermittent, source of the #577 flakiness).
-    await expect(btn).toHaveClass(/wb-button--primary/);
+    // Used to check <wb-button>'s wb-button--primary CLASS here -- but
+    // wb-button is a real MVVM component (src/wb-viewmodels/semantics/
+    // button.js), not a wb-views template, as this test's own comment
+    // already admitted; that was never actually exercising wb-views'
+    // {{...}} interpolation, just src/core/mvvm/schema-builder.js's
+    // separate, much slower, network-dependent default-variant-class
+    // pipeline (confirmed live: 15-20+ seconds to resolve under this
+    // session's load, EVEN for a top-level, non-nested button -- widening
+    // the timeout repeatedly never actually made this reliable). price-tag
+    // is a genuine wb-view (views-registry.json) with the simplest
+    // possible direct interpolation -- {{price}}, no default, no
+    // conditional, no loop -- and renders through wb-views' own
+    // synchronous-ish interpolate() step, with no external fetch in the
+    // critical path at all.
+    const tag = page.locator('price-tag').first();
+    await expect(tag).toBeVisible();
+    await expect(tag.locator('.price-tag__current')).toHaveText('$29');
   });
 
   test('wb-if conditional shows element when truthy', async ({ page }) => {
@@ -145,21 +143,30 @@ test.describe('Template Rendering', () => {
   });
 
   test('default values work with || syntax', async ({ page }) => {
-    // button.schema.json's `variant` default is "primary", but the schema
-    // builder only reflects a value onto the DOM as an attribute when the
-    // property declares `appliesAttribute` -- variant only has `appliesClass`,
-    // so a button that omits `variant` NEVER gets a literal variant="primary"
-    // HTML attribute. `wb-button[variant="primary"]` therefore matches zero
-    // elements and .first().evaluate() hung waiting for it (the 30s timeout
-    // reported in #577). The default is instead only observable via the
-    // wb-button--primary CLASS applied to the element that has no variant
-    // attribute at all.
-    const primaryBtn = page.locator('wb-button:not([variant])').first();
-    await expect(primaryBtn).toBeVisible();
-    // Auto-retrying assertion, not a one-shot evaluate() -- the class is
-    // applied asynchronously by the schema builder after the element is
-    // already visible (see comment above; this is what flaked in #577).
-    await expect(primaryBtn).toHaveClass(/wb-button--primary/);
+    // This is specifically about wb-views' own {{prop || 'default'}}
+    // syntax (interpolate(), src/core/wb-views.js) -- e.g. alert-box's
+    // template: class="alert alert--{{variant || 'info'}}" (views-
+    // registry.json). Used to check <wb-button>'s wb-button--primary class
+    // instead, which is a DIFFERENT mechanism entirely (schema.json
+    // `default`, applied by src/core/mvvm/schema-builder.js, not a
+    // {{...}} template at all) -- as this test's own prior comment already
+    // admitted, and which flaked/timed out repeatedly even at 30s under
+    // this session's load, independent of anything this test is actually
+    // supposed to verify.
+    //
+    // No live alert-box on this page happens to OMIT variant (every
+    // instance sets it explicitly), so create one fresh, directly -- same
+    // technique tests/views/views-permutations.spec.ts already uses,
+    // decoupled from page content and from wb-button's unrelated pipeline.
+    const hasDefaultClass = await page.evaluate(() => {
+      const el = document.createElement('alert-box');
+      el.setAttribute('message', 'test');
+      document.body.appendChild(el);
+      return new Promise((resolve) => {
+        setTimeout(() => resolve(el.querySelector('.alert--info') !== null), 200);
+      });
+    });
+    expect(hasDefaultClass, 'alert-box with no variant attribute should fall back to the || default (info)').toBe(true);
   });
 
   test('default slot renders inner content', async ({ page }) => {
@@ -184,13 +191,19 @@ test.describe('Tag Naming Convention', () => {
   });
 
   test('non-hyphenated views get wb- prefix', async ({ page }) => {
-    // button -> wb-button
-    const wbBtn = page.locator('wb-button');
-    expect(await wbBtn.count()).toBeGreaterThan(0);
-    
-    // card -> wb-card
-    const wbCard = page.locator('wb-card');
-    expect(await wbCard.count()).toBeGreaterThan(0);
+    // toolbar -> wb-toolbar (file-toolbar's own template composes a real
+    // <wb-toolbar> internally, rendered live as part of "Toolbar with
+    // Slots"). wb-button/wb-card used to stand in for this check, but
+    // neither is actually processed through wb-views' registration path --
+    // both are REAL premade components (tag-map.js's elementMap) that
+    // wb-views.js's registerViewAsElement() explicitly refuses to touch
+    // (confirmed live via its own console warning for <wb-card>) -- their
+    // presence never proved the wb- prefix rule, it just coincided with it
+    // by name. wb-toolbar is a genuine wb-view, and non-wb-view examples
+    // (wb-button's own section) were removed from this page entirely
+    // (John: "DON'T SHOW NON WB-VIEWS ON THE WB-VIEWS PAGE").
+    const wbToolbar = page.locator('wb-toolbar');
+    expect(await wbToolbar.count()).toBeGreaterThan(0);
   });
 
   test('hyphenated views keep original name', async ({ page }) => {
@@ -291,18 +304,16 @@ test.describe('View Composition', () => {
     expect(btnCount).toBeGreaterThanOrEqual(2);
   });
 
-  test('wb-card renders body slot with nested views', async ({ page }) => {
-    const card = page.locator('wb-card').first();
-    await expect(card).toBeVisible();
-
-    // Card should contain nested buttons from body -- see button-group test
-    // above for why ".btn"/".wb-button" is never the right selector for
-    // <wb-button>.
-    const hasNestedBtn = await card.evaluate(el => {
-      return el.querySelector('wb-button') !== null;
-    });
-    expect(hasNestedBtn).toBe(true);
-  });
+  // "wb-card renders body slot with nested views" used to live here,
+  // rendering a <wb-card> with nested <wb-button> children. Removed along
+  // with its subject: wb-card is a real premade component, not a wb-view
+  // (wb-views.js's registerViewAsElement() explicitly refuses to register
+  // it -- confirmed live via its own console warning), so demos/wb-views-
+  // demo.html no longer renders one anywhere (John: "DON'T SHOW NON
+  // WB-VIEWS ON THE WB-VIEWS PAGE"). Coverage for "a wb-view slots in real
+  // nested components/views" isn't lost -- it's exactly what the
+  // button-group test above (nested <wb-button>) and the user-card test
+  // above (nested <user-avatar>, itself another wb-view) already check.
 
   test('stat-row contains multiple stat-tiles', async ({ page }) => {
     const statRow = page.locator('stat-row').first();
