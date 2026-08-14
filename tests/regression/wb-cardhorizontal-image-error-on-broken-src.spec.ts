@@ -1,8 +1,8 @@
 import { test, expect } from '@playwright/test';
 
 /**
- * John, live report: "cardhorizontal is failing now on images. I want a
- * runtime error that says that, it should log and error" -- reproduced via
+ * #604. John, live report: "cardhorizontal is failing now on images. I
+ * want a runtime error that says that, it should log and error" -- reproduced via
  * docs/components/cards/cardhorizontal.md, whose examples pointed at
  * nonexistent /images/feature.jpg and /images/wide.jpg. The <img> created by
  * cardhorizontal() (src/wb-viewmodels/card.js) had NO 'error' listener at

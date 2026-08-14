@@ -5,42 +5,44 @@ import { test, expect, Page, Locator } from '@playwright/test';
  * every live demo rendered on this doc page
  * (public/doc-viewer.html?file=docs%2Fcomponents%2Fcards%2Fcardhorizontal.md).
  * mdhtml.js's auto-live-render promotes the doc's one hand-authored
- * <wb-demo> block plus its three ```html fenced examples ("Basic Horizontal
- * Card", "Image on Right", "Custom Image Width") into four live
- * <wb-cardhorizontal> instances (the doc's fourth fenced block, "Generated
- * Structure", stays plain text -- it's native-tag-only markup with no wb- or
- * x- attribute, so mdhtml's isRenderable check correctly leaves it alone).
+ * <wb-demo> block plus its four ```html fenced examples ("Basic Horizontal
+ * Card", "Image on Left (explicit)", "Image on Right", "Custom Image
+ * Width") into five live <wb-cardhorizontal> instances (the doc's final
+ * fenced block, "Generated Structure", stays plain text -- it's
+ * native-tag-only markup with no wb- or x- attribute, so mdhtml's
+ * isRenderable check correctly leaves it alone).
  *
- * Two real bugs found while writing these tests, confirmed live via
- * console/computed-style inspection on the actual doc-viewer page:
+ * Two real bugs were found and fixed while writing/running these tests
+ * (confirmed live via console/computed-style inspection on the actual
+ * doc-viewer page, and independently re-confirmed/fixed on `main`):
  *
- * 1. (#TBD-images) All four demos point at `/images/feature.jpg` or
- *    `/images/wide.jpg` -- neither file exists anywhere in the repo (only
- *    Jesusoffthecross.jpg, barneyFife.jpg, dachshund-puppy-image-960x540.jpg,
- *    wb.png live under images/). Every <img> 404s. Every other doc/demo in
- *    this codebase that needs a placeholder photo (demos/site/cards.html,
- *    docs/components/semantics/*.md) uses a real external placeholder
- *    (picsum.photos) instead of a dead local path.
+ * 1. (#601, fixed on main) All demos originally pointed at
+ *    `/images/feature.jpg` or `/images/wide.jpg` -- neither file exists
+ *    anywhere in the repo. Every <img> 404d. Replaced with real,
+ *    distinct picsum.photos URLs (matching demos/site/cards.html's own
+ *    convention), 1000x800 so the short edge stays >= 800px.
+ * 2. (#602, fixed on main) The "Image on Right" and "Custom Image Width"
+ *    examples wrote `imagePosition="right"` / `imageWidth="60%"` --
+ *    camelCase attributes. HTML lowercases attribute names on parse
+ *    (`imageposition`, no hyphen), which never matches cardhorizontal()'s
+ *    (src/wb-viewmodels/card.js) kebab-case
+ *    `element.getAttribute('image-position')` /
+ *    `('image-width')` lookups, so both properties were silently
+ *    ignored -- confirmed live: "Image on Right"'s computed flex-direction
+ *    stayed `row` (should be `row-reverse`), and "Custom Image Width"'s
+ *    figure measured ~40% (the default) instead of 60%. Fixed to
+ *    kebab-case (`image-position`, `image-width`) site-wide in this doc.
  *
- * 2. (#TBD-attrs) The "Image on Right" and "Custom Image Width" examples
- *    write `imagePosition="right"` / `imageWidth="60%"` -- camelCase
- *    attributes. docs/architecture/standards/ATTRIBUTE-NAMING-STANDARD.md
- *    §Naming Conventions is explicit: "Avoid camelCase -- Never in HTML
- *    attributes"; the correct form is kebab-case (`trend-value`, not
- *    `trendValue`). HTML's attribute-name parsing lowercases
- *    `imagePosition` to a single token `imageposition` with no hyphen --
- *    cardhorizontal() (src/wb-viewmodels/card.js) only ever reads
- *    `element.dataset.imagePosition` (i.e. a `data-image-position`
- *    attribute) or `element.getAttribute('image-position')` (kebab-case).
- *    Neither matches `imageposition`, so both properties are silently
- *    ignored -- confirmed live: the "Image on Right" card's computed
- *    flex-direction stayed `row` (should be `row-reverse`), and the
- *    "Custom Image Width" card's figure measured ~119px (~40% default) in
- *    a demo where 60% was requested.
+ * Separately (not a docs issue -- a real component gap): cardhorizontal()'s
+ * <img> had no 'error' handler at all, so a broken image src rendered as a
+ * silent broken-image icon with zero console/error-log signal. See
+ * tests/regression/wb-cardhorizontal-image-error-on-broken-src.spec.ts for
+ * the fix + dedicated regression coverage of that behavior.
  */
 
 const DOC_FILE = 'docs/components/cards/cardhorizontal.md';
 const DOC_URL = `/public/doc-viewer.html?file=${encodeURIComponent(DOC_FILE)}`;
+const EXPECTED_DEMO_COUNT = 5;
 
 async function gotoDoc(page: Page): Promise<void> {
   await page.goto(DOC_URL, { waitUntil: 'domcontentloaded' });
@@ -49,7 +51,7 @@ async function gotoDoc(page: Page): Promise<void> {
     return t.length > 200 && !t.includes('Loading documentation');
   }, { timeout: 15000 });
   const cards = page.locator('wb-cardhorizontal');
-  await expect(cards).toHaveCount(4, { timeout: 15000 });
+  await expect(cards).toHaveCount(EXPECTED_DEMO_COUNT, { timeout: 15000 });
   // Let shrink-to-fit's rAF-scheduled code-panel measurement settle (same
   // wait used by doc-viewer-code-panel-not-narrow.spec.ts for this exact
   // demo.js code path).
@@ -121,7 +123,7 @@ async function assertNoPageHorizontalScroll(page: Page, label: string): Promise<
 }
 
 test.describe('docs/components/cards/cardhorizontal.md live demos (doc-viewer)', () => {
-  test('demo 1 -- <wb-demo> block (lines 27-34): Basic Horizontal Card renders correctly', async ({ page }) => {
+  test('demo 1 -- <wb-demo> block (Overview): Basic Horizontal Card renders correctly', async ({ page }) => {
     await gotoDoc(page);
     const label = 'demo 1 (wb-demo block)';
     const card = page.locator('wb-cardhorizontal').nth(0);
@@ -135,9 +137,9 @@ test.describe('docs/components/cards/cardhorizontal.md live demos (doc-viewer)',
     await expect(img, `${label}: image element`).toHaveCount(1);
     expect(await isImageLoaded(img), `${label}: image must actually load, not 404/render broken`).toBe(true);
 
-    // Default imagePosition="left": figure precedes content in DOM/flex order.
+    // Default image-position="left": figure precedes content in DOM/flex order.
     const flexDirection = await card.evaluate((el) => getComputedStyle(el).flexDirection);
-    expect(flexDirection, `${label}: default imagePosition should render image on the left (row)`).toBe('row');
+    expect(flexDirection, `${label}: default image-position should render image on the left (row)`).toBe('row');
 
     await assertContentPadding(card, label);
     await assertCodePanelStandards(demo, label);
@@ -159,18 +161,41 @@ test.describe('docs/components/cards/cardhorizontal.md live demos (doc-viewer)',
     expect(await isImageLoaded(img), `${label}: image must actually load, not 404/render broken`).toBe(true);
 
     const flexDirection = await card.evaluate((el) => getComputedStyle(el).flexDirection);
-    expect(flexDirection, `${label}: default imagePosition should render image on the left (row)`).toBe('row');
+    expect(flexDirection, `${label}: default image-position should render image on the left (row)`).toBe('row');
 
     await assertContentPadding(card, label);
     await assertCodePanelStandards(demo, label);
     await assertNoPageHorizontalScroll(page, label);
   });
 
-  test('demo 3 -- "Image on Right" fenced example: image renders on the right', async ({ page }) => {
+  test('demo 3 -- "Image on Left (explicit)" fenced example: image renders on the left', async ({ page }) => {
     await gotoDoc(page);
-    const label = 'demo 3 (Image on Right)';
+    const label = 'demo 3 (Image on Left, explicit)';
     const card = page.locator('wb-cardhorizontal').nth(2);
     const demo = page.locator('wb-demo').nth(2);
+
+    await expect(card.locator('.wb-card__title'), `${label}: title`).toHaveText('Left Image');
+    await expect(card.locator('.wb-card__horiz-body'), `${label}: body`).toContainText('Content appears on the right.');
+
+    const img = card.locator('.wb-card__figure img');
+    await expect(img, `${label}: image element`).toHaveCount(1);
+    expect(await isImageLoaded(img), `${label}: image must actually load, not 404/render broken`).toBe(true);
+
+    // The doc's own attribute is image-position="left" (explicit, matching
+    // the default) -- must render exactly like the default: row, image first.
+    const flexDirection = await card.evaluate((el) => getComputedStyle(el).flexDirection);
+    expect(flexDirection, `${label}: image-position="left" must render the image on the left (row)`).toBe('row');
+
+    await assertContentPadding(card, label);
+    await assertCodePanelStandards(demo, label);
+    await assertNoPageHorizontalScroll(page, label);
+  });
+
+  test('demo 4 -- "Image on Right" fenced example: image renders on the right', async ({ page }) => {
+    await gotoDoc(page);
+    const label = 'demo 4 (Image on Right)';
+    const card = page.locator('wb-cardhorizontal').nth(3);
+    const demo = page.locator('wb-demo').nth(3);
 
     await expect(card.locator('.wb-card__title'), `${label}: title`).toHaveText('Right Image');
     await expect(card.locator('.wb-card__horiz-body'), `${label}: body`).toContainText('Content appears on the left.');
@@ -179,21 +204,21 @@ test.describe('docs/components/cards/cardhorizontal.md live demos (doc-viewer)',
     await expect(img, `${label}: image element`).toHaveCount(1);
     expect(await isImageLoaded(img), `${label}: image must actually load, not 404/render broken`).toBe(true);
 
-    // The doc's own attribute is imagePosition="right" -- the card must
+    // The doc's own attribute is image-position="right" -- the card must
     // actually reverse layout so the image renders on the right.
     const flexDirection = await card.evaluate((el) => getComputedStyle(el).flexDirection);
-    expect(flexDirection, `${label}: imagePosition="right" must render the image on the right (row-reverse)`).toBe('row-reverse');
+    expect(flexDirection, `${label}: image-position="right" must render the image on the right (row-reverse)`).toBe('row-reverse');
 
     await assertContentPadding(card, label);
     await assertCodePanelStandards(demo, label);
     await assertNoPageHorizontalScroll(page, label);
   });
 
-  test('demo 4 -- "Custom Image Width" fenced example: image width is 60%', async ({ page }) => {
+  test('demo 5 -- "Custom Image Width" fenced example: image width is 60%', async ({ page }) => {
     await gotoDoc(page);
-    const label = 'demo 4 (Custom Image Width)';
-    const card = page.locator('wb-cardhorizontal').nth(3);
-    const demo = page.locator('wb-demo').nth(3);
+    const label = 'demo 5 (Custom Image Width)';
+    const card = page.locator('wb-cardhorizontal').nth(4);
+    const demo = page.locator('wb-demo').nth(4);
 
     await expect(card.locator('.wb-card__title'), `${label}: title`).toHaveText('Large Image');
     await expect(card.locator('.wb-card__horiz-body'), `${label}: body`).toContainText('Narrower content area.');
@@ -202,7 +227,7 @@ test.describe('docs/components/cards/cardhorizontal.md live demos (doc-viewer)',
     await expect(img, `${label}: image element`).toHaveCount(1);
     expect(await isImageLoaded(img), `${label}: image must actually load, not 404/render broken`).toBe(true);
 
-    // The doc's own attribute is imageWidth="60%" -- the figure must
+    // The doc's own attribute is image-width="60%" -- the figure must
     // actually measure ~60% of the card's own width (small tolerance for
     // border/box-sizing rounding).
     const { figureWidth, cardWidth } = await card.evaluate((el) => {
@@ -210,8 +235,8 @@ test.describe('docs/components/cards/cardhorizontal.md live demos (doc-viewer)',
       return { figureWidth: figure.getBoundingClientRect().width, cardWidth: el.getBoundingClientRect().width };
     });
     const ratio = figureWidth / cardWidth;
-    expect(ratio, `${label}: imageWidth="60%" -- figure is ${Math.round(ratio * 100)}% of the card, expected ~60%`).toBeGreaterThan(0.55);
-    expect(ratio, `${label}: imageWidth="60%" -- figure is ${Math.round(ratio * 100)}% of the card, expected ~60%`).toBeLessThan(0.65);
+    expect(ratio, `${label}: image-width="60%" -- figure is ${Math.round(ratio * 100)}% of the card, expected ~60%`).toBeGreaterThan(0.55);
+    expect(ratio, `${label}: image-width="60%" -- figure is ${Math.round(ratio * 100)}% of the card, expected ~60%`).toBeLessThan(0.65);
 
     await assertContentPadding(card, label);
     await assertCodePanelStandards(demo, label);

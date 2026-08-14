@@ -2068,7 +2068,7 @@ export function cardhorizontal(element, options = {}) {
     img.src = config.image;
     img.alt = base.config.title || '';
     img.style.cssText = 'width:100%;height:100%;object-fit:cover;display:block;min-height:200px;';
-    // John: "cardhorizontal is failing now on images. I want a runtime
+    // #604. John: "cardhorizontal is failing now on images. I want a runtime
     // error that says that, it should log and error" -- a broken `image`
     // src previously failed completely silently: the <img>'s native
     // 'error' event had no listener at all, so a 404/unreachable image
