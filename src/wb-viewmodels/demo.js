@@ -272,6 +272,21 @@ function attachInstanceDocLink(hostEl, file, label, root) {
         link.setAttribute('aria-label', title);
         link.title = title;
         link.textContent = '📖';
+        // #593: for an x-behavior (popover/confirm/prompt/lightbox/drawer/...)
+        // hostEl IS the same element carrying the behavior's own raw
+        // `element.onclick = (e) => { e.preventDefault(); ... }` handler --
+        // this badge is appended as hostEl's DOM CHILD (never a sibling), so
+        // a click on it bubbles straight into that handler same as any other
+        // click on the button. Several of those handlers (overlay.js's
+        // confirm()/prompt()/lightbox()) don't check e.target before calling
+        // e.preventDefault() unconditionally, which silently kills the
+        // anchor's own navigation -- confirmed live: clicking the "Confirm
+        // Dialog" demo's 📖 badge opened the confirm overlay instead of the
+        // doc, no new tab, ever. Stopping propagation here (target phase,
+        // before it bubbles to hostEl) keeps the badge a fully independent
+        // control -- its own default action (navigate, target=_blank) still
+        // fires normally; it just never reaches hostEl's click handling.
+        link.addEventListener('click', (e) => e.stopPropagation());
         hostEl.appendChild(link);
     };
 
