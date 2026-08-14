@@ -2037,8 +2037,21 @@ export function cardlink(element, options = {}) {
 export function cardhorizontal(element, options = {}) {
   const config = {
     image: options.image || element.dataset.image || element.getAttribute('image'),
-    imagePosition: options.imagePosition || element.dataset.imagePosition || element.getAttribute('image-position') || 'left',
-    imageWidth: options.imageWidth || element.dataset.imageWidth || element.getAttribute('image-width') || '40%',
+    // #602: the schema's property name (imagePosition) is camelCase, but an
+    // author writing that same casing directly into HTML markup
+    // (imagePosition="right") gets it silently parsed down to "imageposition"
+    // (attribute names lowercase on parse -- no hyphen ever gets inserted),
+    // which doesn't match a getAttribute('image-position') lookup either.
+    // Confirmed live (John): even the "correctly" hyphenated docs example
+    // this session shipped still got typo'd to "imageposition" moments
+    // later -- dropping the hyphen from a camelCase mental model is the
+    // natural, expected mistake here, not a one-off. Accept both forms
+    // rather than expect every author to always get one exact spelling
+    // right.
+    imagePosition: options.imagePosition || element.dataset.imagePosition
+      || element.getAttribute('image-position') || element.getAttribute('imageposition') || 'left',
+    imageWidth: options.imageWidth || element.dataset.imageWidth
+      || element.getAttribute('image-width') || element.getAttribute('imagewidth') || '40%',
     // #455: unlike card()/cardimage()/cardvideo(), this never fell back to
     // element.innerHTML -- only a `content="..."` ATTRIBUTE worked (via
     // composeCard's own generic getAttribute('content') fallback below). Any
