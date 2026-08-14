@@ -122,7 +122,7 @@ Enhances standard HTML elements with better styling and functionality.
 **`audio`**
 
 <wb-demo>
-<wb-audio></wb-audio>
+<wb-audio src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3"></wb-audio>
 </wb-demo>
 
 **`video`**

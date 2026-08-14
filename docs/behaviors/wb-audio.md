@@ -1,11 +1,11 @@
 # wb-audio
 
-A premium custom audio player with a 15-band graphic equalizer, Web Audio API support, and advanced controls. Provides a pleasant royalty-free demo track by default.
+A premium custom audio player with a 15-band graphic equalizer, Web Audio API support, and advanced controls. Requires a `src` -- there is no default track (a src-less `<wb-audio>` throws, #433).
 
 Wrapped in `<wb-demo>`, so the live component renders below with its source shown underneath:
 
 <wb-demo>
-<wb-audio></wb-audio>
+<wb-audio src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3"></wb-audio>
 </wb-demo>
 
 ---
@@ -13,9 +13,9 @@ Wrapped in `<wb-demo>`, so the live component renders below with its source show
 ## Usage
 
 ```html
-<!-- Basic usage (uses default demo audio) -->
-<wb-audio></wb-audio>
-<!-- With custom audio source -->
+<!-- Basic usage -- src is required, there is no default track -->
+<wb-audio src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3"></wb-audio>
+<!-- With a different audio source -->
 <wb-audio src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3"></wb-audio>
 <!-- With equalizer and custom volume -->
 <wb-audio
