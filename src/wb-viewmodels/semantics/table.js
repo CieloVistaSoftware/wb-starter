@@ -173,8 +173,18 @@ export function table(element, options = {}) {
       tr.style.cursor = 'pointer';
       tr.onclick = (e) => {
         if (e.target.closest('a, button, input')) return;
-        tableRows.forEach(r => r.classList.remove('active'));
-        tr.classList.add('active');
+        // #592: the demo hint text ("Hold Ctrl/Cmd to multi-select") was
+        // never implemented -- this handler unconditionally cleared every
+        // other row's `active` class on every click. Only clear the rest
+        // when NEITHER modifier is held; when one is, toggle just the
+        // clicked row so a second Ctrl/Cmd-click ADDS to the selection
+        // instead of replacing it.
+        if (e.ctrlKey || e.metaKey) {
+          tr.classList.toggle('active');
+        } else {
+          tableRows.forEach(r => r.classList.remove('active'));
+          tr.classList.add('active');
+        }
         element.dispatchEvent(new CustomEvent('wb:table:select', {
           detail: { row: tr, index },
           bubbles: true

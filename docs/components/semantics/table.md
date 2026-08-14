@@ -22,6 +22,7 @@ Interactive data table with sorting and search.
 | `compact` | boolean | `false` | Reduce padding |
 | `sortable` | boolean | `true` | Enable column sorting |
 | `searchable` | boolean | `false` | Add search bar |
+| `selectable` | boolean | `false` | Click a row to select it (adds `.active`). Hold Ctrl (Windows/Linux) or Cmd (Mac) while clicking to multi-select |
 | `headers` | string | `""` | Column headers (comma-separated) |
 | `rows` | string | `""` | Row data as JSON array |
 
@@ -82,6 +83,43 @@ Interactive data table with sorting and search.
     <!-- rows -->
   </tbody>
 </wb-table>
+```
+
+### Selectable (Click and Ctrl/Cmd Multi-Select)
+
+```html
+<!-- Plain click selects exactly one row, replacing any prior selection.
+     Ctrl-click (Cmd-click on Mac) toggles that row's selection ON TOP OF
+     the existing one -- add a row, or remove one that's already selected
+     -- without clearing the rest. A plain click after a multi-select
+     collapses the selection back down to just the clicked row. -->
+<table selectable>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Role</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Alice</td>
+      <td>Developer</td>
+    </tr>
+    <tr>
+      <td>Bob</td>
+      <td>Designer</td>
+    </tr>
+  </tbody>
+</table>
+```
+
+Selected rows get the `.active` class:
+
+```html
+<tr class="active">
+  <td>Alice</td>
+  <td>Developer</td>
+</tr>
 ```
 
 ### From JSON Data
@@ -150,6 +188,7 @@ Interactive data table with sorting and search.
 | `.wb-table--hover` | `hover` | Row hover effect |
 | `.wb-table--bordered` | `bordered` | Cell borders |
 | `.wb-table--compact` | `compact` | Reduced padding |
+| `.active` | Row is selected (`selectable`) | Applied to the `<tr>`; multiple rows can carry it at once via Ctrl/Cmd-click |
 
 ## Methods
 
@@ -184,6 +223,7 @@ table.setData([
 | `wb:table:sort` | Column sorted | `{ column: number, direction: string }` |
 | `wb:table:search` | Search performed | `{ term: string, results: number }` |
 | `wb:table:rowclick` | Row clicked | `{ row: HTMLElement, data: array }` |
+| `wb:table:select` | Row selected/deselected (`selectable`) -- fires on every click, plain or Ctrl/Cmd-modified | `{ row: HTMLElement, index: number }` |
 
 ```javascript
 table.addEventListener('wb:table:sort', (e) => {
@@ -192,6 +232,11 @@ table.addEventListener('wb:table:sort', (e) => {
 
 table.addEventListener('wb:table:rowclick', (e) => {
   console.log('Clicked row:', e.detail.data);
+});
+
+table.addEventListener('wb:table:select', (e) => {
+  const selectedRows = table.querySelectorAll('tbody tr.active');
+  console.log(`${selectedRows.length} row(s) selected`);
 });
 ```
 
