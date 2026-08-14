@@ -36,7 +36,7 @@ Wrapped in `<wb-demo>`, so the live component renders below with its source show
 <wb-cardhorizontal
   title="Feature Title"
   subtitle="Feature description"
-  image="https://picsum.photos/800/600?random=cardhorizontal1">
+  image="https://picsum.photos/seed/cardhorizontal-feature/1000/800">
   Detailed content here.
 </wb-cardhorizontal>
 </wb-demo>
@@ -49,7 +49,7 @@ Wrapped in `<wb-demo>`, so the live component renders below with its source show
 <wb-cardhorizontal
   title="Feature Title"
   subtitle="Feature description"
-  image="https://picsum.photos/800/600?random=cardhorizontal2">
+  image="https://picsum.photos/seed/cardhorizontal-basic/1000/800">
   Detailed content here.
 </wb-cardhorizontal>
 ```
@@ -63,7 +63,7 @@ so rather than rely on the default.
 ```html
 <wb-cardhorizontal
   title="Left Image"
-  image="https://picsum.photos/800/600?random=cardhorizontal5"
+  image="https://picsum.photos/seed/cardhorizontal-left/1000/800"
   image-position="left">
   Content appears on the right.
 </wb-cardhorizontal>
@@ -74,7 +74,7 @@ so rather than rely on the default.
 ```html
 <wb-cardhorizontal
   title="Right Image"
-  image="https://picsum.photos/800/600?random=cardhorizontal3"
+  image="https://picsum.photos/seed/cardhorizontal-right/1000/800"
   image-position="right">
   Content appears on the left.
 </wb-cardhorizontal>
@@ -85,7 +85,7 @@ so rather than rely on the default.
 ```html
 <wb-cardhorizontal
   title="Large Image"
-  image="https://picsum.photos/1200/600?random=cardhorizontal4"
+  image="https://picsum.photos/seed/cardhorizontal-wide/1000/800"
   image-width="60%">
   Narrower content area.
 </wb-cardhorizontal>

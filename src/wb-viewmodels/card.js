@@ -2076,11 +2076,32 @@ export function cardhorizontal(element, options = {}) {
     figure.style.flexShrink = '0';
     figure.style.minHeight = '200px';
     figure.style.alignSelf = 'stretch';
-    
+
     const img = document.createElement('img');
     img.src = config.image;
     img.alt = base.config.title || '';
     img.style.cssText = 'width:100%;height:100%;object-fit:cover;display:block;min-height:200px;';
+    // #604. John: "cardhorizontal is failing now on images. I want a runtime
+    // error that says that, it should log and error" -- a broken `image`
+    // src previously failed completely silently: the <img>'s native
+    // 'error' event had no listener at all, so a 404/unreachable image
+    // rendered as nothing but the browser's own broken-image icon, with
+    // zero console/error-log signal (confirmed live:
+    // docs/components/cards/cardhorizontal.md's own examples pointed at
+    // nonexistent /images/feature.jpg and /images/wide.jpg). Same
+    // fail-loud pattern already used elsewhere in THIS file for a broken
+    // image-like resource -- cardhero's background-image probe just above
+    // (search "wb-cardhero: failed to load background") -- and the same
+    // "throw so the global error handler (error-logger.js's
+    // setupGlobalErrorHandler) catches and logs it" convention audio.js
+    // uses for its own broken src (#433). A real <img> already shows its
+    // own native broken-image icon on failure (unlike a CSS
+    // background-image, which fails invisibly), so there's no DOM
+    // fallback to apply here -- just the loud signal that was missing.
+    img.addEventListener('error', () => {
+      if (!document.contains(img)) return;
+      throw new Error(`wb-cardhorizontal: failed to load image "${config.image}" -- the file is missing or unreachable.`);
+    });
     figure.appendChild(img);
     element.appendChild(figure);
   }
