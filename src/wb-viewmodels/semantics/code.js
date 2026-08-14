@@ -7,7 +7,18 @@ if (!document.querySelector('link[data-highlight-theme]')) {
   const link = document.createElement('link');
   link.rel = 'stylesheet';
   // Check localStorage for saved preference from codecontrol
-  const savedTheme = localStorage.getItem('x-code-theme') || 'atom-one-dark-reasonable';
+  let savedTheme = localStorage.getItem('x-code-theme') || 'atom-one-dark-reasonable';
+  // A saved theme id can go stale if it's ever removed from CODE_THEMES
+  // (e.g. rose-pine/rose-pine-moon were removed after confirming they
+  // don't exist at cdnjs's pinned highlight.js 11.9.0, even though they
+  // were a valid, selectable option when a visitor's browser saved them)
+  // -- blindly building a cdnjs URL from an unrecognized id 404s forever
+  // for that visitor, since nothing here ever re-validates or clears it.
+  // Fall back to the default whenever the saved id isn't a CURRENT,
+  // recognized theme at all, not just when it lacks a local `.path`.
+  if (!CODE_THEMES.some((t) => t.id === savedTheme)) {
+    savedTheme = 'atom-one-dark-reasonable';
+  }
   // A handful of CODE_THEMES entries (e.g. wb-grayscale-dark) are WB's own
   // local themes, not real highlight.js CDN theme names -- blindly building
   // a cdnjs URL from ANY saved theme id 404'd for those (confirmed live:
