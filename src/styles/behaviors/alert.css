@@ -9,6 +9,7 @@
    <div x-alert> elements that get the .wb-alert class added by alert() */
 wb-alert,
 .wb-alert {
+  position: relative;
   display: flex;
   align-items: flex-start;
   gap: 0.5rem;
@@ -48,6 +49,13 @@ wb-alert,
   flex: 1;
 }
 
+/* Room for the close button, now pinned to the top-right corner via
+   position:absolute -- without this, longer titles/messages run
+   underneath it instead of wrapping clear of it. */
+.wb-alert:has(.wb-alert__close) .wb-alert__content {
+  padding-right: 1.5rem;
+}
+
 .wb-alert__title {
   font-weight: 600;
   margin-bottom: 0.25rem;
@@ -58,6 +66,9 @@ wb-alert,
 }
 
 .wb-alert__close {
+  position: absolute;
+  top: 0.5rem;
+  right: 0.5rem;
   background: none;
   border: none;
   cursor: pointer;
