@@ -1,27 +1,29 @@
 # wb-demo
 
 ```html
-<wb-demo columns="3">
-  <wb-card
-    title="Elevated Card"
-    elevated>
-    <p>This card has elevation shadow.</p>
-  </wb-card>
-  <wb-card
-    title="Clickable Card"
-    clickable>
-    <p>Click me! I'm interactive.</p>
-  </wb-card>
-  <wb-card
-    title="With Footer"
-    footer="Last updated: Today">
-    <p>This card has a footer section.</p>
-  </wb-card>
-</wb-demo>
+<wb-card
+  title="Elevated Card"
+  elevated>
+  <p>This card has elevation shadow.</p>
+</wb-card>
+<wb-card
+  title="Clickable Card"
+  clickable>
+  <p>Click me! I'm interactive.</p>
+</wb-card>
+<wb-card
+  title="With Footer"
+  footer="Last updated: Today">
+  <p>This card has a footer section.</p>
+</wb-card>
 ```
 
-The panel above IS a live `<wb-demo>` — this page's own subject, rendering itself.
-It does two things:
+The panel above IS a live `<wb-demo>` — the doc viewer auto-wraps any fenced
+`html` block containing WB markup in one, so this page demonstrates its own
+subject without writing `<wb-demo>` explicitly (writing it explicitly here
+would nest a second, real `<wb-demo>` inside the auto-generated wrapper,
+duplicating the code panel — don't do that; just write the content you want
+demonstrated). It does two things:
 
 1. Renders its children normally (in a CSS grid)
 2. Shows the raw HTML you just saw as a syntax-highlighted, auto-formatted code
