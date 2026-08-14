@@ -59,10 +59,11 @@ Wrapped in `<wb-demo>`, so the live component renders below with its source show
 <wb-cardexpandable
   title="Details"
   expanded>
-  All content visible by default.
+  <p>All content is visible by default because <code>expanded</code> is set — but there's still enough content here to collapse. Click Show Less below to see it happen: this paragraph and everything after it hides, leaving just the first couple of lines and the collapsed height.</p>
+  <p>This second paragraph exists specifically so the content is tall enough to actually demonstrate the collapse — a card with barely any content never visibly changes when toggled, which defeats the point of the example.</p>
   <figure>
     <img src="https://picsum.photos/800/600?random=cardexpandable3" alt="Example expanded content image" style="width: 100%; border-radius: 4px;">
-    <figcaption>Visible immediately since this card starts expanded.</figcaption>
+    <figcaption>Also hidden when collapsed, even though the card starts expanded.</figcaption>
   </figure>
 </wb-cardexpandable>
 ```
