@@ -3,6 +3,25 @@
   <p>What's actually live on this site right now — every push to <code>main</code> deploys straight to <a href="https://cielovistasoftware.github.io/wb-starter/" target="_blank" rel="noopener">cielovistasoftware.github.io/wb-starter</a>, so this list is the real changelog, not a promise of a future release.</p>
 </div>
 
+<section id="whats-new-2026-08-14">
+  <h2>2026-08-14</h2>
+  <ul>
+    <li>Rewrote <code>docs/components/semantics/table.md</code> to cover all 12 attribute permutations with real 5+ row examples, retired the old slotted <code>&lt;thead&gt;</code>/<code>&lt;tbody&gt;</code> authoring method entirely (it silently rendered 0 rows), and fixed <code>searchable</code> so it actually renders a working search input for the first time (#433, #588).</li>
+    <li>Added Ctrl/Cmd multi-select to <code>&lt;wb-table selectable&gt;</code> — clicking a row used to always clear every other selected row; holding Ctrl (Cmd on Mac) now adds/removes just that row instead (#592).</li>
+    <li>Wrote all 15 previously-unwritten stub component docs (alert, badge, progress, spinner, button, card, checkbox, input, select, switch, textarea, cluster, container, flex, grid, header) with real content sourced from their actual behavior code and schemas, plus a new test covering doc completeness across all 74 components (#581).</li>
+    <li>Fixed a literal, unrendered <code>{{code}}</code> placeholder and neighbor-swapped code panels on <code>wb-views-demo.html</code> — two compounding bugs in how a live element gets matched to its own source text in the raw page HTML (one involving inert <code>&lt;template&gt;</code> content, one an escaping bug that let code samples render as live markup instead of text) (#580).</li>
+    <li>Fixed the same source-matching bug's HTML-comment blind spot on <code>frameworks.html</code>: the HTMX demo's code panel was swallowing all of React/Vue/Svelte/Angular/Solid's markup because an explanatory comment elsewhere on the page happened to contain the literal text <code>&lt;wb-demo&gt;</code>.</li>
+    <li>Code text no longer wraps anywhere on the site — this reverses an earlier "wrap in prose docs" rule; every code panel now scrolls horizontally instead, matching what <code>&lt;wb-demo&gt;</code> panels already did.</li>
+    <li>Fixed <code>&lt;wb-audio&gt;</code> throwing "no src provided" for players using the standard <code>&lt;source src="..."&gt;</code> child pattern instead of a <code>src</code> attribute directly — valid markup that was being rejected. New compliance test catches any audio element with neither going forward.</li>
+    <li>Fixed <code>&lt;wb-alert&gt;</code>'s padding (was 4px under the 1rem minimum) and pinned its dismiss (×) button to the top-right corner instead of wherever content length happened to leave it.</li>
+    <li>Fixed a schema-builder bug that generated invalid CSS classes (e.g. <code>wb-button--💾</code>) from free-text attribute values like custom icon emoji.</li>
+    <li>Fixed the doc-link (📖) badge on <code>behaviors.html</code>'s Popover/Confirm/Prompt/Lightbox demos doing nothing on click — a click was bubbling into the demo's own overlay-opening handler and getting swallowed before the link could navigate (#593).</li>
+    <li>Reordered <code>&lt;wb-demo events="..."&gt;</code>'s live event log to appear directly under the source code panel, before the "how to wire it up" section — see the result first, then learn how it was built.</li>
+    <li><code>demos/site/forms.html</code> now leads with the <code>&lt;form&gt;</code> section instead of burying it near the bottom after every individual control.</li>
+    <li>Added a step-by-step "Define → Reuse → Render" walkthrough to every real wb-view example on <code>wb-views-demo.html</code>, with the actual template source, matching CSS rules, and inline explanatory comments — and removed two sections that weren't wb-views at all (a plain <code>wb-button</code> component, a nested-card example).</li>
+  </ul>
+</section>
+
 <section id="whats-new-2026-08-13">
   <h2>2026-08-13</h2>
   <ul>
