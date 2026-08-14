@@ -28,7 +28,7 @@ Wrapped in `<wb-demo>`, so the live component renders below with its source show
 <wb-cardhorizontal
   title="Feature Title"
   subtitle="Feature description"
-  image="/images/feature.jpg">
+  image="https://picsum.photos/seed/cardhorizontal-feature/1000/800">
   Detailed content here.
 </wb-cardhorizontal>
 </wb-demo>
@@ -41,7 +41,7 @@ Wrapped in `<wb-demo>`, so the live component renders below with its source show
 <wb-cardhorizontal
   title="Feature Title"
   subtitle="Feature description"
-  image="/images/feature.jpg">
+  image="https://picsum.photos/seed/cardhorizontal-basic/1000/800">
   Detailed content here.
 </wb-cardhorizontal>
 ```
@@ -51,8 +51,8 @@ Wrapped in `<wb-demo>`, so the live component renders below with its source show
 ```html
 <wb-cardhorizontal
   title="Right Image"
-  image="/images/feature.jpg"
-  imagePosition="right">
+  image="https://picsum.photos/seed/cardhorizontal-right/1000/800"
+  image-position="right">
   Content appears on the left.
 </wb-cardhorizontal>
 ```
@@ -62,8 +62,8 @@ Wrapped in `<wb-demo>`, so the live component renders below with its source show
 ```html
 <wb-cardhorizontal
   title="Large Image"
-  image="/images/wide.jpg"
-  imageWidth="60%">
+  image="https://picsum.photos/seed/cardhorizontal-wide/1000/800"
+  image-width="60%">
   Narrower content area.
 </wb-cardhorizontal>
 ```
