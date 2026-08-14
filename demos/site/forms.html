@@ -18,6 +18,24 @@
   <h1>📝 Form Controls</h1>
   <p>Buttons, inputs, selects, checkboxes, switches, textareas</p>
 
+  <!-- FORM -->
+  <section id="semanticsforms-form-first">
+  <h2 id="semanticsforms-h2-111">Form <code id="semanticsforms-code-112">&lt;form&gt;</code></h2>
+  <div id="semanticsforms-div-113" class="demo-section">
+    <p><code>x-form</code> has no <code>loading-text</code> option (that only exists in an unregistered alternate implementation).</p>
+    <wb-demo>
+      <form ajax action="#">
+        <div style="display: grid; gap: 1rem; max-width: 400px;">
+          <input name="name" placeholder="Name" required>
+          <input type="email" name="email" placeholder="Email" required>
+          <textarea name="message" placeholder="Message" required></textarea>
+          <button type="submit" variant="primary">Send Message</button>
+        </div>
+      </form>
+    </wb-demo>
+  </div>
+  </section>
+
   <!-- 1. 🔘 Button -->
   <section id="button-button">
   <h2>🔘 Button</h2>
@@ -1345,22 +1363,6 @@
         </wb-demo>
       </div>
     </div>
-  </div>
-
-  <!-- FORM -->
-  <h2 id="semanticsforms-h2-111">Form <code id="semanticsforms-code-112">&lt;form&gt;</code></h2>
-  <div id="semanticsforms-div-113" class="demo-section">
-    <p><code>x-form</code> has no <code>loading-text</code> option (that only exists in an unregistered alternate implementation).</p>
-    <wb-demo>
-      <form ajax action="#">
-        <div style="display: grid; gap: 1rem; max-width: 400px;">
-          <input name="name" placeholder="Name" required>
-          <input type="email" name="email" placeholder="Email" required>
-          <textarea name="message" placeholder="Message" required></textarea>
-          <button type="submit" variant="primary">Send Message</button>
-        </div>
-      </form>
-    </wb-demo>
   </div>
   </section>
 

@@ -752,6 +752,20 @@ export async function demo(element, options = {}) {
     // event happen instead of only reading about it.
     const eventNames = parseEventNames(options.events || element.getAttribute('events'));
     if (eventNames.length) {
+        // John: the live log should read right after the main source code --
+        // see the result fire, THEN learn how it was wired -- rather than
+        // after the "how to wire it up" section. Built in this order so a
+        // reader sees it first, but appended to `element` before the
+        // heading/example-code panel below so it lands directly under the
+        // main code panel in the DOM.
+        const log = document.createElement('div');
+        log.className = 'wb-demo__events-log';
+        const logEmpty = document.createElement('div');
+        logEmpty.className = 'wb-demo__events-log-empty';
+        logEmpty.textContent = 'Interact with the demo above to see these events fire, live:';
+        log.appendChild(logEmpty);
+        element.appendChild(log);
+
         const eventsHeading = document.createElement('div');
         eventsHeading.className = 'wb-demo__events-heading';
         eventsHeading.textContent = 'Listening for events';
@@ -775,19 +789,12 @@ export async function demo(element, options = {}) {
             window.WB.scan(eventsPre, { eager: true });
         }
 
-        // Live log panel. Listens on `grid` specifically -- not `element`
-        // (the whole wb-demo, which by this point also contains the source
-        // and events code panels themselves) -- so it only ever hears
-        // events from the rendered control(s), never accidentally from a
-        // click/copy interaction with the code panels above. Events bubble,
-        // so one listener per name here catches every descendant of grid.
-        const log = document.createElement('div');
-        log.className = 'wb-demo__events-log';
-        const logEmpty = document.createElement('div');
-        logEmpty.className = 'wb-demo__events-log-empty';
-        logEmpty.textContent = 'Interact with the demo above to see these events fire, live:';
-        log.appendChild(logEmpty);
-        element.appendChild(log);
+        // Live log listens on `grid` specifically -- not `element` (the
+        // whole wb-demo, which by this point also contains the source and
+        // events code panels themselves) -- so it only ever hears events
+        // from the rendered control(s), never accidentally from a
+        // click/copy interaction with the code panels. Events bubble, so
+        // one listener per name here catches every descendant of grid.
 
         // Cap the log so a chatty/repeating event (e.g. drag move) can't
         // grow the panel unbounded -- newest entry on top, oldest falls off.
