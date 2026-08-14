@@ -22,6 +22,14 @@ Supports every [card property](./card.md) — that shared structure and CSS are 
 | `imagePosition` | string | `"left"` | Position: `left`, `right` |
 | `imageWidth` | string | `"40%"` | Image width |
 
+**Attribute naming:** `card.js` reads these via `element.getAttribute('image-position')`/
+`element.getAttribute('image-width')` — the schema property names above are
+camelCase (JS-style), but the HTML attributes you actually write are
+kebab-case: `image-position="right"`, `image-width="60%"`. Writing the
+camelCase form in markup (e.g. <code>imagePosition="right"</code>) is
+silently ignored — it never matches, and the default applies instead with
+no error.
+
 Wrapped in `<wb-demo>`, so the live component renders below with its source shown underneath:
 
 <wb-demo>
@@ -46,13 +54,28 @@ Wrapped in `<wb-demo>`, so the live component renders below with its source show
 </wb-cardhorizontal>
 ```
 
+### Image on Left (explicit)
+
+`left` is the default (see the Basic Horizontal Card example above), but it's
+also a valid explicit value — set it directly when you want the markup to say
+so rather than rely on the default.
+
+```html
+<wb-cardhorizontal
+  title="Left Image"
+  image="https://picsum.photos/800/600?random=cardhorizontal5"
+  image-position="left">
+  Content appears on the right.
+</wb-cardhorizontal>
+```
+
 ### Image on Right
 
 ```html
 <wb-cardhorizontal
   title="Right Image"
   image="https://picsum.photos/800/600?random=cardhorizontal3"
-  imagePosition="right">
+  image-position="right">
   Content appears on the left.
 </wb-cardhorizontal>
 ```
@@ -63,7 +86,7 @@ Wrapped in `<wb-demo>`, so the live component renders below with its source show
 <wb-cardhorizontal
   title="Large Image"
   image="https://picsum.photos/1200/600?random=cardhorizontal4"
-  imageWidth="60%">
+  image-width="60%">
   Narrower content area.
 </wb-cardhorizontal>
 ```
