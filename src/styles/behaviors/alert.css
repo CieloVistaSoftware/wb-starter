@@ -12,7 +12,7 @@ wb-alert,
   display: flex;
   align-items: flex-start;
   gap: 0.5rem;
-  padding: 0.75rem 1rem;
+  padding: 1rem;
   border-radius: 4px;
   border-left: 4px solid;
   color: white;
