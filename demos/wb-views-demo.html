@@ -11,9 +11,12 @@
 <body>
 
   <div class="page">
-    <div class="page__hero">
-      <h1>🧩 WB Views System</h1>
-      <p><strong>Custom Element Factory:</strong> Define a template once → get a custom tag automatically. Change the template → ALL instances update.</p>
+    <div class="page__hero" style="display: flex; justify-content: space-between; align-items: flex-start; gap: 1rem; flex-wrap: wrap;">
+      <div>
+        <h1>🧩 WB Views System</h1>
+        <p><strong>Custom Element Factory:</strong> Define a template once → get a custom tag automatically. Change the template → ALL instances update.</p>
+      </div>
+      <wb-themecontrol id="wbv-themecontrol"></wb-themecontrol>
     </div>
 
     <!-- ============================================ -->
@@ -156,82 +159,47 @@
 
 
     <!-- ============================================ -->
-    <!-- PART 1: PREMADE MVVM CONTROLS                -->
+    <!-- PART 1: WHAT IS A WB-VIEW?                    -->
     <!-- ============================================ -->
-
-    <demo-section title="🔘 Buttons" badge="variants + icons">
-        <example-block label="Standard Buttons (wb-button)">
-            <div class="inline-row">
-              <wb-button>Primary</wb-button>
-              <wb-button variant="secondary">Secondary</wb-button>
-              <wb-button variant="success">Success</wb-button>
-              <wb-button icon="💾">Save</wb-button>
-              <wb-button icon="🗑️" variant="error">Delete</wb-button>
-            </div>
-        </example-block>
-    </demo-section>
-
-    <demo-section title="👤 Avatars" badge="sizes + status">
-        <example-block label="User Avatars (user-avatar)">
-            <div class="inline-row">
-              <user-avatar initials="SM" size="sm" name="User"></user-avatar>
-              <user-avatar initials="MD" size="md" name="User"></user-avatar>
-              <user-avatar initials="LG" size="lg" name="User"></user-avatar>
-              <user-avatar initials="JD" size="lg" status="online" name="John Doe"></user-avatar>
-              <user-avatar initials="AS" size="lg" status="busy" name="Alice Smith"></user-avatar>
-            </div>
-        </example-block>
-    </demo-section>
-
-    <demo-section title="🧭 Navigation Links" badge="sidebar nav">
-        <example-block label="Navigation Items (nav-link)">
-            <div style="max-width: 280px;">
-              <nav-link icon="🏠" href="#" active label="Dashboard"></nav-link>
-              <nav-link icon="📊" href="#" label="Analytics"></nav-link>
-              <nav-link icon="💬" href="#" badge="5" label="Messages"></nav-link>
-              <nav-link icon="⚙️" href="#" label="Settings"></nav-link>
-            </div>
-        </example-block>
-    </demo-section>
-
-    <demo-section title="💰 Pricing" badge="prices + features">
-        <example-block label="Pricing Components (price-tag, feature-item)">
-            <div class="inline-row" style="margin-bottom: 1.5rem;">
-              <price-tag price="$29" period="/month"></price-tag>
-              <price-tag price="$19" original="$29" period="/month"></price-tag>
-              <price-tag price="Free"></price-tag>
-            </div>
-            <div style="max-width: 300px;">
-              <feature-item text="Unlimited projects" included></feature-item>
-              <feature-item text="Priority support" included></feature-item>
-              <feature-item text="Custom integrations"></feature-item>
-            </div>
-        </example-block>
-    </demo-section>
-
-
-    <!-- ============================================ -->
-    <!-- PART 2: BUILDING CUSTOM VIEWS                -->
-    <!-- ============================================ -->
+    <!-- Moved to the TOP of the page (John: "I'M CONFUSED ... THE FIRST
+         EXAMPLE IS JUST PLAIN OLD HTML MARKUP USING OUR WB-BUTTON. HOW DOES
+         THAT FIT INTO A WB-VIEW" -- rightly so: this explanation used to sit
+         several sections BELOW four sections of examples, with no
+         indication of which examples were even wb-view-built. Read this
+         FIRST, then the examples below make sense. -->
 
     <demo-section title="📖 What is a wb-view Element?" description="A wb-view element is a custom element factory. It takes a template name and attributes, renders the template with those values, and automatically registers it as a standalone custom element tag.">
-        
-        <example-block label="How It Works">
-            <wb-mdhtml size="sm" highlight captions="true">
-```html
-&lt;!-- 1. Define a template ONCE --&gt;
-&lt;template wb-view="badge-tag"&gt;
-  &lt;span class="badge-tag badge-tag--{{variant}}"&gt;&lt;slot&gt;{{text}}&lt;/slot&gt;&lt;/span&gt;
-&lt;/template&gt;
 
-&lt;!-- 2. Use it TWO ways: --&gt;
-&lt;wb-view badge-tag variant="primary"&gt;New&lt;/wb-view&gt;   &lt;!-- wrapper syntax --&gt;
-&lt;badge-tag variant="primary"&gt;New&lt;/badge-tag&gt;          &lt;!-- auto-registered tag --&gt;
-
-&lt;!-- 3. Both produce: --&gt;
-&lt;span class="badge-tag badge-tag--primary"&gt;New&lt;/span&gt;
-```
-            </wb-mdhtml>
+        <example-block label="How It Works" data-wbv-no-autocode>
+            <!-- This walkthrough deliberately mixes an INERT <template>
+                 definition with plain-text usage lines that are NOT meant
+                 to execute -- exactly the shape mdhtml.js's marked-based
+                 rendering pipeline (and its autoLiveRender feature) can't
+                 tell apart from real, live component markup. Two
+                 compounding bugs confirmed live when this went through
+                 <wb-mdhtml>: (1) autoLiveRender saw the <wb-view ...> tag
+                 (name starts with "wb-") and wrapped the whole fenced block
+                 in a real <wb-demo>, actually RUNNING it -- the <template>
+                 rendered empty (expected: templates ARE inert) while the
+                 usage lines real-rendered as live badges; (2) even with
+                 autoLiveRender off, mdhtml.js's own source-fetch-and-decode
+                 step (element.innerHTML sourcing + a textarea entity
+                 decode, see mdhtml.js ~line 286-294) still handed marked
+                 literal, un-escaped '<' characters, and marked's own output
+                 similarly parsed as real DOM once assigned -- <wb-view> and
+                 <badge-tag> are BOTH already-registered custom tags
+                 page-wide, so the instant either one lands as real markup
+                 anywhere on the page it upgrades and renders. A plain,
+                 JS-populated <pre><code> (same mechanism as every other
+                 Step ①/③ panel on this page -- see fillCompositionalSteps
+                 in the bottom <script>) sidesteps both bugs entirely: no
+                 markdown parser, no innerHTML re-parse, just textContent
+                 set once rendering has fully settled. data-wbv-no-autocode
+                 opts this block out of the auto-generated-usage-code step
+                 too (it already contains its OWN code sample; see the auto-
+                 generation script's skip check for its "why"). -->
+            <p style="margin-bottom: 1rem; color: var(--text-muted);">One template definition, reused two equivalent ways, both producing the same output:</p>
+            <pre class="wbv-howitworks-code"><code id="how-it-works-code"></code></pre>
         </example-block>
 
         <example-block label="Tag Naming Convention">
@@ -246,7 +214,14 @@
               </thead>
               <tbody>
                 <tr><td style="padding: 0.5rem;"><code>toolbar</code></td><td style="padding: 0.5rem; color: var(--danger-color);">No</td><td style="padding: 0.5rem;"><code>&lt;wb-toolbar&gt;</code> (auto-prefixed)</td></tr>
-                <tr><td style="padding: 0.5rem;"><code>card</code></td><td style="padding: 0.5rem; color: var(--danger-color);">No</td><td style="padding: 0.5rem;"><code>&lt;wb-card&gt;</code> (auto-prefixed)</td></tr>
+                <!-- A "card -> <wb-card> (auto-prefixed)" row used to sit here.
+                     Removed -- wb-card is a real premade component that
+                     wb-views.js's own registerViewAsElement() refuses to
+                     register (elementMap collision, see fillCompositionalSteps
+                     above), so it's never actually an example of THIS rule in
+                     practice; toolbar -> wb-toolbar above already demonstrates
+                     the same auto-prefix rule with a tag that genuinely IS a
+                     working wb-view. -->
                 <tr><td style="padding: 0.5rem;"><code>alert-box</code></td><td style="padding: 0.5rem; color: var(--success-color);">Yes</td><td style="padding: 0.5rem;"><code>&lt;alert-box&gt;</code> (as-is)</td></tr>
                 <tr><td style="padding: 0.5rem;"><code>stat-tile</code></td><td style="padding: 0.5rem; color: var(--success-color);">Yes</td><td style="padding: 0.5rem;"><code>&lt;stat-tile&gt;</code> (as-is)</td></tr>
                 <tr><td style="padding: 0.5rem;"><code>nav-link</code></td><td style="padding: 0.5rem; color: var(--success-color);">Yes</td><td style="padding: 0.5rem;"><code>&lt;nav-link&gt;</code> (as-is)</td></tr>
@@ -256,28 +231,99 @@
         </example-block>
     </demo-section>
 
-    <demo-section title="📦 Component Tiles" badge="4 examples" description="Reusable tiles for sidebars, palettes, and toolbars.">
-        <example-block label="1. Define Template (ONE TIME)">
-  &lt;div class="tile"&gt;
-    &lt;span class="tile__icon"&gt;{{icon}}&lt;/span&gt;
-    &lt;span class="tile__label"&gt;&lt;slot&gt;{{text}}&lt;/slot&gt;&lt;/span&gt;
-    &lt;span class="tile__badge" wb-if="badge"&gt;{{badge}}&lt;/span&gt;
-  &lt;/div&gt;
-&lt;/template&gt;</pre>
-            <wb-mdhtml size="sm" highlight captions="true">
-```html
-&lt;template wb-view="component-tile"&gt;
-  &lt;div class="tile"&gt;
-    &lt;span class="tile__icon"&gt;{{icon}}&lt;/span&gt;
-    &lt;span class="tile__label"&gt;&lt;slot&gt;{{text}}&lt;/slot&gt;&lt;/span&gt;
-    &lt;span class="tile__badge" wb-if="badge"&gt;{{badge}}&lt;/span&gt;
-  &lt;/div&gt;
-&lt;/template&gt;
-```
-            </wb-mdhtml>
-        </example-block>
+    <!-- ============================================ -->
+    <!-- PART 2: PREMADE MVVM CONTROLS                -->
+    <!-- ============================================ -->
+    <!-- This page teaches the wb-views system specifically -- John:
+         "DON'T SHOW NON WB-VIEWS ON THE WB-VIEWS PAGE." A "Buttons"
+         (wb-button) section used to sit here as a deliberate NOT-a-wb-view
+         contrast example; removed entirely rather than kept-and-labeled --
+         wb-button is a core framework component (behavior-based, from
+         src/wb-viewmodels/, auto-applied via tag-map.js), unrelated to the
+         <template wb-view="..."> mechanism this page exists to teach, so it
+         has no place here at all, not even as contrast. Every section below
+         demonstrates a genuine wb-view -- user-avatar, nav-link, price-tag
+         and feature-item -- each one's real <template wb-view="..."> source
+         is one click away in its own "① Template" step. -->
 
-        <example-block label="2. Use It (MANY TIMES)">
+    <demo-section title="👤 Avatars" badge="wb-view: user-avatar">
+        <details class="wbv-step-define" data-wbv-template="user-avatar">
+          <summary>① Template <span class="wbv-step-hint">(this is `&lt;user-avatar&gt;`'s one and only definition)</span></summary>
+          <pre><code></code></pre>
+          <div class="wbv-step-css"></div>
+        </details>
+        <example-block id="ex-avatars" label="② Reuse — User Avatars (user-avatar)">
+            <div class="inline-row">
+              <user-avatar initials="SM" size="sm" name="User"></user-avatar>
+              <user-avatar initials="MD" size="md" name="User"></user-avatar>
+              <user-avatar initials="LG" size="lg" name="User"></user-avatar>
+              <user-avatar initials="JD" size="lg" status="online" name="John Doe"></user-avatar>
+              <user-avatar initials="AS" size="lg" status="busy" name="Alice Smith"></user-avatar>
+            </div>
+        </example-block>
+        <details class="wbv-step-output" data-wbv-for="ex-avatars">
+          <summary>③ Rendered Output <span class="wbv-step-hint">(final DOM, behaviors attached)</span></summary>
+          <pre><code></code></pre>
+        </details>
+    </demo-section>
+
+    <demo-section title="🧭 Navigation Links" badge="wb-view: nav-link">
+        <details class="wbv-step-define" data-wbv-template="nav-link">
+          <summary>① Template <span class="wbv-step-hint">(this is `&lt;nav-link&gt;`'s one and only definition)</span></summary>
+          <pre><code></code></pre>
+          <div class="wbv-step-css"></div>
+        </details>
+        <example-block id="ex-navlinks" label="② Reuse — Navigation Items (nav-link)">
+            <div style="max-width: 280px;">
+              <nav-link icon="🏠" href="#" active label="Dashboard"></nav-link>
+              <nav-link icon="📊" href="#" label="Analytics"></nav-link>
+              <nav-link icon="💬" href="#" badge="5" label="Messages"></nav-link>
+              <nav-link icon="⚙️" href="#" label="Settings"></nav-link>
+            </div>
+        </example-block>
+        <details class="wbv-step-output" data-wbv-for="ex-navlinks">
+          <summary>③ Rendered Output <span class="wbv-step-hint">(final DOM, behaviors attached)</span></summary>
+          <pre><code></code></pre>
+        </details>
+    </demo-section>
+
+    <demo-section title="💰 Pricing" badge="wb-view: price-tag, feature-item">
+        <details class="wbv-step-define" data-wbv-template="price-tag,feature-item">
+          <summary>① Templates <span class="wbv-step-hint">(this is `&lt;price-tag&gt;`'s and `&lt;feature-item&gt;`'s one and only definition)</span></summary>
+          <pre><code></code></pre>
+          <div class="wbv-step-css"></div>
+        </details>
+        <example-block id="ex-pricing" label="② Reuse — Pricing Components (price-tag, feature-item)">
+            <div class="inline-row" style="margin-bottom: 1.5rem;">
+              <price-tag price="$29" period="/month"></price-tag>
+              <price-tag price="$19" original="$29" period="/month"></price-tag>
+              <price-tag price="Free"></price-tag>
+            </div>
+            <div style="max-width: 300px;">
+              <feature-item text="Unlimited projects" included></feature-item>
+              <feature-item text="Priority support" included></feature-item>
+              <feature-item text="Custom integrations"></feature-item>
+            </div>
+        </example-block>
+        <details class="wbv-step-output" data-wbv-for="ex-pricing">
+          <summary>③ Rendered Output <span class="wbv-step-hint">(final DOM, behaviors attached)</span></summary>
+          <pre><code></code></pre>
+        </details>
+    </demo-section>
+
+
+    <!-- ============================================ -->
+    <!-- PART 3: BUILDING CUSTOM VIEWS                -->
+    <!-- ============================================ -->
+
+    <demo-section title="📦 Component Tiles" badge="4 examples" description="Reusable tiles for sidebars, palettes, and toolbars.">
+        <details class="wbv-step-define" data-wbv-template="component-tile">
+          <summary>① Template — Define Once <span class="wbv-step-hint">(this is `&lt;component-tile&gt;`'s one and only definition; every tile below comes from it)</span></summary>
+          <pre><code></code></pre>
+          <div class="wbv-step-css"></div>
+        </details>
+
+        <example-block id="ex-component-tile" label="② Reuse — Use It (Many Times)">
             <div class="grid-4">
               <component-tile icon="📝" text="Card"></component-tile>
               <component-tile icon="⚡" text="Hero"></component-tile>
@@ -285,71 +331,39 @@
               <component-tile icon="📊" text="Stats" badge="New"></component-tile>
             </div>
         </example-block>
+        <details class="wbv-step-output" data-wbv-for="ex-component-tile">
+          <summary>③ Rendered Output <span class="wbv-step-hint">(final DOM, behaviors attached)</span></summary>
+          <pre><code></code></pre>
+        </details>
     </demo-section>
 
     <demo-section title="🚨 Alert Boxes" badge="4 variants" description="Notification messages with different severity levels.">
-        <example-block label="1. Define Template (ONE TIME)">
-  &lt;div class="alert alert--{{variant || 'info'}}"&gt;
-    &lt;span class="alert__icon" wb-if="icon"&gt;{{icon}}&lt;/span&gt;
-    &lt;div class="alert__content"&gt;
-      &lt;div class="alert__heading" wb-if="heading"&gt;{{heading}}&lt;/div&gt;
-      &lt;div class="alert__message"&gt;{{message}}&lt;/div&gt;
-    &lt;/div&gt;
-    &lt;button class="alert__dismiss" wb-if="dismissible"&gt;✕&lt;/button&gt;
-  &lt;/div&gt;
-&lt;/template&gt;</pre>
-            <wb-mdhtml size="sm" highlight captions="true">
-```html
-&lt;template wb-view="alert-box"&gt;
-  &lt;div class="alert alert--{{variant || 'info'}}"&gt;
-    &lt;span class="alert__icon" wb-if="icon"&gt;{{icon}}&lt;/span&gt;
-    &lt;div class="alert__content"&gt;
-      &lt;div class="alert__heading" wb-if="heading"&gt;{{heading}}&lt;/div&gt;
-      &lt;div class="alert__message"&gt;{{message}}&lt;/div&gt;
-    &lt;/div&gt;
-    &lt;button class="alert__dismiss" wb-if="dismissible"&gt;✕&lt;/button&gt;
-  &lt;/div&gt;
-&lt;/template&gt;
-```
-            </wb-mdhtml>
-        </example-block>
+        <details class="wbv-step-define" data-wbv-template="alert-box">
+          <summary>① Template — Define Once <span class="wbv-step-hint">(this is `&lt;alert-box&gt;`'s one and only definition; every alert below comes from it)</span></summary>
+          <pre><code></code></pre>
+          <div class="wbv-step-css"></div>
+        </details>
 
-        <example-block label="2. Use It (MANY TIMES)">
+        <example-block id="ex-alert-box" label="② Reuse — Use It (Many Times)">
             <alert-box variant="info" icon="ℹ️" message="This is an informational message."></alert-box>
             <alert-box variant="success" icon="✅" heading="Success!" message="Your changes have been saved."></alert-box>
             <alert-box variant="warning" icon="⚠️" message="This action cannot be undone." dismissible></alert-box>
             <alert-box variant="error" icon="❌" heading="Error" message="Something went wrong."></alert-box>
         </example-block>
+        <details class="wbv-step-output" data-wbv-for="ex-alert-box">
+          <summary>③ Rendered Output <span class="wbv-step-hint">(final DOM, behaviors attached)</span></summary>
+          <pre><code></code></pre>
+        </details>
     </demo-section>
 
     <demo-section title="📈 Stat Tiles" badge="with trends">
-        <example-block label="1. Define Template (ONE TIME)">
-  &lt;div class="stat"&gt;
-    &lt;span class="stat__icon" wb-if="icon"&gt;{{icon}}&lt;/span&gt;
-    &lt;div&gt;
-      &lt;div class="stat__value"&gt;{{value}}&lt;/div&gt;
-      &lt;div class="stat__label"&gt;&lt;slot&gt;{{text}}&lt;/slot&gt;&lt;/div&gt;
-      &lt;div class="stat__trend stat__trend--{{trend}}" wb-if="trendValue"&gt;{{trendValue}}&lt;/div&gt;
-    &lt;/div&gt;
-  &lt;/div&gt;
-&lt;/template&gt;</pre>
-            <wb-mdhtml size="sm" highlight captions="true">
-```html
-&lt;template wb-view="stat-tile"&gt;
-  &lt;div class="stat"&gt;
-    &lt;span class="stat__icon" wb-if="icon"&gt;{{icon}}&lt;/span&gt;
-    &lt;div&gt;
-      &lt;div class="stat__value"&gt;{{value}}&lt;/div&gt;
-      &lt;div class="stat__label"&gt;&lt;slot&gt;{{text}}&lt;/slot&gt;&lt;/div&gt;
-      &lt;div class="stat__trend stat__trend--{{trend}}" wb-if="trendValue"&gt;{{trendValue}}&lt;/div&gt;
-    &lt;/div&gt;
-  &lt;/div&gt;
-&lt;/template&gt;
-```
-            </wb-mdhtml>
-        </example-block>
+        <details class="wbv-step-define" data-wbv-template="stat-tile">
+          <summary>① Template — Define Once <span class="wbv-step-hint">(this is `&lt;stat-tile&gt;`'s one and only definition; every tile below comes from it)</span></summary>
+          <pre><code></code></pre>
+          <div class="wbv-step-css"></div>
+        </details>
 
-        <example-block label="2. Use It (MANY TIMES)">
+        <example-block id="ex-stat-tile" label="② Reuse — Use It (Many Times)">
             <div class="grid-4">
               <stat-tile icon="👥" value="1,234" label="Active Users" trend="up" trend-value="+12.5%"></stat-tile>
               <stat-tile icon="💰" value="$52,000" label="Revenue" trend="up" trend-value="+8.2%"></stat-tile>
@@ -357,28 +371,20 @@
               <stat-tile icon="⭐" value="4.8" label="Avg Rating"></stat-tile>
             </div>
         </example-block>
+        <details class="wbv-step-output" data-wbv-for="ex-stat-tile">
+          <summary>③ Rendered Output <span class="wbv-step-hint">(final DOM, behaviors attached)</span></summary>
+          <pre><code></code></pre>
+        </details>
     </demo-section>
 
     <demo-section title="🏷️ Badges" badge="4 variants">
-        <example-block label="1. Define Template (ONE TIME)">
-  &lt;span class="badge-tag badge-tag--{{variant || 'primary'}}"&gt;
-    &lt;span wb-if="icon"&gt;{{icon}}&lt;/span&gt;
-    &lt;slot&gt;{{text}}&lt;/slot&gt;
-  &lt;/span&gt;
-&lt;/template&gt;</pre>
-            <wb-mdhtml size="sm" highlight captions="true">
-```html
-&lt;template wb-view="badge-tag"&gt;
-  &lt;span class="badge-tag badge-tag--{{variant || 'primary'}}"&gt;
-    &lt;span wb-if="icon"&gt;{{icon}}&lt;/span&gt;
-    &lt;slot&gt;{{text}}&lt;/slot&gt;
-  &lt;/span&gt;
-&lt;/template&gt;
-```
-            </wb-mdhtml>
-        </example-block>
+        <details class="wbv-step-define" data-wbv-template="badge-tag,badge-list">
+          <summary>① Templates — Define Once <span class="wbv-step-hint">(`&lt;badge-tag&gt;`'s definition, plus `&lt;badge-list&gt;` -- a second view that loops badge-tag with wb-for; see Loops below)</span></summary>
+          <pre><code></code></pre>
+          <div class="wbv-step-css"></div>
+        </details>
 
-        <example-block label="2. Use It (Optimized with Loop)">
+        <example-block id="ex-badge-list" label="② Reuse — Use It (Optimized with Loop)">
             <badge-list badges='[
               {"variant": "primary", "label": "Primary"},
               {"variant": "success", "label": "Success"},
@@ -386,64 +392,42 @@
               {"variant": "error", "label": "Hot", "icon": "🔥"}
             ]'></badge-list>
         </example-block>
+        <details class="wbv-step-output" data-wbv-for="ex-badge-list">
+          <summary>③ Rendered Output <span class="wbv-step-hint">(final DOM, behaviors attached)</span></summary>
+          <pre><code></code></pre>
+        </details>
     </demo-section>
 
 
     <!-- ============================================ -->
-    <!-- PART 3: ADVANCED FEATURES                    -->
+    <!-- PART 4: ADVANCED FEATURES                    -->
     <!-- ============================================ -->
 
     <demo-section title="🔄 Loops (wb-for)" badge="dynamic lists" description="Use wb-for to render lists from JSON arrays.">
-        <example-block label="1. Define Template with Loop (ONE TIME)">
-  &lt;div class="tags"&gt;
-    &lt;span class="tag" wb-for="tag in tags"&gt;{{tag}}&lt;/span&gt;
-  &lt;/div&gt;
-&lt;/template&gt;</pre>
-            <wb-mdhtml size="sm" highlight captions="true">
-```html
-&lt;template wb-view="tag-list"&gt;
-  &lt;div class="tags"&gt;
-    &lt;span class="tag" wb-for="tag in tags"&gt;{{tag}}&lt;/span&gt;
-  &lt;/div&gt;
-&lt;/template&gt;
-```
-            </wb-mdhtml>
-        </example-block>
+        <details class="wbv-step-define" data-wbv-template="tag-list">
+          <summary>① Template with Loop — Define Once <span class="wbv-step-hint">(this is `&lt;tag-list&gt;`'s one and only definition; wb-for repeats its child once per array item)</span></summary>
+          <pre><code></code></pre>
+          <div class="wbv-step-css"></div>
+        </details>
 
-        <example-block label="2. Use It with Data">
+        <example-block id="ex-tag-list" label="② Reuse — Use It with Data">
             <tag-list tags='["JavaScript", "TypeScript", "React", "Vue", "Node.js"]'></tag-list>
         </example-block>
+        <details class="wbv-step-output" data-wbv-for="ex-tag-list">
+          <summary>③ Rendered Output <span class="wbv-step-hint">(final DOM, behaviors attached)</span></summary>
+          <pre><code></code></pre>
+        </details>
     </demo-section>
 
     <demo-section title="🧱 Composition" badge="nested parts" description="Compose complex UIs by nesting views inside other views.">
-        
-        <example-block label="1. Define Composite Template (uses other views!)">
-  &lt;div class="user-card"&gt;
-    &lt;wb-avatar initials="{{initials}}" size="lg" status="{{status}}"&gt;&lt;/wb-avatar&gt;
-    &lt;div class="user-card__info"&gt;
-      &lt;div class="user-card__name"&gt;{{name}}&lt;/div&gt;
-      &lt;div class="user-card__role"&gt;{{role}}&lt;/div&gt;
-    &lt;/div&gt;
-    &lt;slot&gt;&lt;/slot&gt;
-  &lt;/div&gt;
-&lt;/template&gt;</pre>
-            <wb-mdhtml size="sm" highlight captions="true">
-```html
-&lt;template wb-view="user-card"&gt;
-  &lt;div class="user-card"&gt;
-    &lt;wb-avatar initials="{{initials}}" size="lg" status="{{status}}"&gt;&lt;/wb-avatar&gt;
-    &lt;div class="user-card__info"&gt;
-      &lt;div class="user-card__name"&gt;{{name}}&lt;/div&gt;
-      &lt;div class="user-card__role"&gt;{{role}}&lt;/div&gt;
-    &lt;/div&gt;
-    &lt;slot&gt;&lt;/slot&gt;
-  &lt;/div&gt;
-&lt;/template&gt;
-```
-            </wb-mdhtml>
-        </example-block>
-          
-        <example-block label="2. Use It (Views inside Views!)">
+
+        <details class="wbv-step-define" data-wbv-template="user-card">
+          <summary>① Define Composite Template <span class="wbv-step-hint">(this is `&lt;user-card&gt;`'s one and only definition -- it uses user-avatar, itself another view, plus a &lt;slot&gt; for whatever's nested inside)</span></summary>
+          <pre><code></code></pre>
+          <div class="wbv-step-css"></div>
+        </details>
+
+        <example-block id="ex-user-card" label="② Reuse — Use It (Views inside Views!)">
             <div class="grid-2">
               <user-card name="John Doe" initials="JD" role="Lead Developer" status="online">
                 <badge-tag variant="success">Pro</badge-tag>
@@ -453,45 +437,74 @@
               </user-card>
             </div>
         </example-block>
+        <details class="wbv-step-output" data-wbv-for="ex-user-card">
+          <summary>③ Rendered Output <span class="wbv-step-hint">(final DOM, behaviors attached)</span></summary>
+          <pre><code></code></pre>
+        </details>
 
-        <example-block label="Button Group (Container View)">
+        <details class="wbv-step-define" data-wbv-template="button-group">
+          <summary>① Template <span class="wbv-step-hint">(this is `&lt;button-group&gt;`'s one and only definition -- a plain &lt;slot&gt; container)</span></summary>
+          <pre><code></code></pre>
+          <div class="wbv-step-css"></div>
+        </details>
+        <example-block id="ex-button-group" label="② Reuse — Button Group (Container View)">
             <button-group>
               <wb-button>Left</wb-button>
               <wb-button>Center</wb-button>
               <wb-button>Right</wb-button>
             </button-group>
         </example-block>
+        <details class="wbv-step-output" data-wbv-for="ex-button-group">
+          <summary>③ Rendered Output <span class="wbv-step-hint">(final DOM, behaviors attached)</span></summary>
+          <pre><code></code></pre>
+        </details>
 
-        <example-block label="Card with Nested Views">
-            <wb-card title="User Settings" subtitle="Manage your preferences">
-              <p style="margin-bottom: 1rem; color: var(--text-muted);">Update your account settings and preferences below.</p>
-              <div class="inline-row">
-                <wb-button>Save Changes</wb-button>
-                <wb-button variant="secondary">Cancel</wb-button>
-              </div>
-            </wb-card>
-        </example-block>
+        <!-- A "Card with Nested Views" example (<wb-card>) used to sit here.
+             Removed -- wb-card is a real premade component (tag-map.js
+             refuses the wb-views system's own "card" view registration for
+             exactly this tag, see the console warning + elementMap check in
+             fillCompositionalSteps above), not a wb-view. John: "DON'T SHOW
+             NON WB-VIEWS ON THE WB-VIEWS PAGE" -- same reasoning as removing
+             the Buttons/wb-button section above. -->
 
-        <example-block label="Stat Row (Auto-Grid Container)">
+        <details class="wbv-step-define" data-wbv-template="stat-row">
+          <summary>① Template <span class="wbv-step-hint">(this is `&lt;stat-row&gt;`'s one and only definition -- an auto-grid &lt;slot&gt; container)</span></summary>
+          <pre><code></code></pre>
+          <div class="wbv-step-css"></div>
+        </details>
+        <example-block id="ex-stat-row" label="② Reuse — Stat Row (Auto-Grid Container)">
             <stat-row>
               <stat-tile icon="👥" value="2,451" label="Users"></stat-tile>
               <stat-tile icon="📦" value="184" label="Orders"></stat-tile>
               <stat-tile icon="💰" value="$12,500" label="Revenue"></stat-tile>
             </stat-row>
         </example-block>
+        <details class="wbv-step-output" data-wbv-for="ex-stat-row">
+          <summary>③ Rendered Output <span class="wbv-step-hint">(final DOM, behaviors attached)</span></summary>
+          <pre><code></code></pre>
+        </details>
 
-        <example-block label="Toolbar with Slots">
+        <details class="wbv-step-define" data-wbv-template="file-toolbar">
+          <summary>① Template <span class="wbv-step-hint">(this is `&lt;file-toolbar&gt;`'s one and only definition -- itself composed from wb-toolbar + wb-button via wb-for)</span></summary>
+          <pre><code></code></pre>
+          <div class="wbv-step-css"></div>
+        </details>
+        <example-block id="ex-file-toolbar" label="② Reuse — Toolbar with Slots">
             <file-toolbar items='[
               {"icon": "📄", "label": "New"},
               {"icon": "📂", "label": "Open"},
               {"icon": "💾", "label": "Save"}
             ]'></file-toolbar>
         </example-block>
+        <details class="wbv-step-output" data-wbv-for="ex-file-toolbar">
+          <summary>③ Rendered Output <span class="wbv-step-hint">(final DOM, behaviors attached)</span></summary>
+          <pre><code></code></pre>
+        </details>
 
     </demo-section>
 
     <!-- ============================================ -->
-    <!-- PART 4: DOCUMENTATION                        -->
+    <!-- PART 5: DOCUMENTATION                        -->
     <!-- ============================================ -->
 
     <demo-section title="📚 Documentation" badge="Read Me" description="Overview of the WB Views system features and usage.">
@@ -501,10 +514,337 @@
   </div>
 
   <script type="module">
+    // -------------------------------------------------------------------
+    // Compositional-steps: ① Template / ② Reuse / ③ Rendered Output
+    // -------------------------------------------------------------------
+    // John, viewing this page: "MUST SHOW HOW TO CREATE THE VIEW IN STEPS
+    // AND THEN HOW TO REUSE THEM." Same ①②③ convention already established
+    // this session in registry-browser.html (buildLiveViewMarkup /
+    // explainTemplateVariables), adapted to THIS page's own
+    // example-block-per-concept structure -- one <details class="wbv-step-
+    // define"> before each usage example and one <details class="wbv-step-
+    // output"> after it, instead of registry-browser's per-row table cells.
+    //
+    // Step ① reads from window.WB.views.registry -- the SAME Map
+    // wb-views.js actually renders from -- NOT from this page's own
+    // <template wb-view="..."> markup near the top of the file. Several of
+    // those top-of-file DOM templates share a name with an entry in
+    // views-registry.json, which initViews() loads SECOND (after the DOM
+    // templates) and unconditionally overwrites the registry Map entry
+    // (registerView() -> viewRegistry.set()) -- e.g. alert-box's DOM
+    // template here lacks the role="alert" and aria-label the registry
+    // version adds. Reading the DOM template for step ① would show
+    // something that ISN'T actually what rendered; the registry Map always
+    // holds whichever template really won, regardless of which file/block
+    // it came from -- exactly the "where does this actually come from"
+    // question this feature exists to answer.
+    // Walks a template's own source line by line and appends a trailing
+    // HTML comment explaining any WB Views syntax it recognizes on that
+    // line -- wb-view="name" registration, {{mustache}} interpolation
+    // (plain / || default / ?: ternary), <slot>, wb-if / wb-unless /
+    // wb-for. John: "ADD COMMENTS TO THE TEMPLATE CODE ... walk a reader
+    // through the template line by line." Best-effort pattern matching,
+    // not a real parser -- fine for the small, hand-written templates this
+    // page shows.
+    function annotateTemplate(fullTpl) {
+      return fullTpl.split('\n').map(line => {
+        const notes = [];
+
+        const tplOpen = line.match(/<template\s+wb-view="([^"]+)"/);
+        if (tplOpen) {
+          const t = tplOpen[1].includes('-') ? tplOpen[1] : 'wb-' + tplOpen[1];
+          notes.push(`registers this block as the view "${tplOpen[1]}" -- WB Views auto-creates the custom tag <${t}> from it`);
+        }
+
+        // <slot> here is WB Views' OWN light-DOM convention (renderView()'s
+        // "Process Slots (Emulation)" step, wb-views.js) -- it literally
+        // querySelectorAll('slot')s the rendered template and
+        // slot.replaceWith(...)s each match with real DOM nodes. There is
+        // no attachShadow() anywhere in this pipeline, so this is NOT the
+        // browser's native Shadow DOM <slot> distribution mechanism (this
+        // codebase is light-DOM only, composition over inheritance, no
+        // Shadow DOM, by explicit project convention) -- it only reuses the
+        // familiar word/tag name.
+        const namedSlot = line.match(/<slot\s+name="([^"]+)"/);
+        if (namedSlot) {
+          notes.push(`named slot (WB Views' own light-DOM emulation, not native Shadow DOM): content marked slot="${namedSlot[1]}" on the tag's usage is moved here verbatim`);
+        } else if (/<slot(\s|>|\/)/.test(line)) {
+          notes.push('<slot> (WB Views\' own light-DOM emulation, not native Shadow DOM): renderView() finds this element and REPLACES it wholesale with the tag\'s real child content; its own inner text/markup is used INSTEAD only when no child content was given');
+        }
+
+        const wbIf = line.match(/\bwb-if="([^"]+)"/);
+        if (wbIf) notes.push(`wb-if="${wbIf[1]}": element is REMOVED from the DOM entirely unless "${wbIf[1]}" is truthy`);
+
+        const wbUnless = line.match(/\bwb-unless="([^"]+)"/);
+        if (wbUnless) notes.push(`wb-unless="${wbUnless[1]}": element is REMOVED from the DOM entirely if "${wbUnless[1]}" is truthy`);
+
+        const wbFor = line.match(/\bwb-for="([^"]+)"/);
+        if (wbFor) notes.push(`wb-for="${wbFor[1]}": this element repeats once per array item, with each item bound as its loop variable`);
+
+        // {{...}} mustaches -- explain each DISTINCT expression once per line
+        const seen = new Set();
+        for (const m of line.matchAll(/\{\{\s*([^}]+?)\s*\}\}/g)) {
+          const expr = m[1];
+          if (seen.has(expr)) continue;
+          seen.add(expr);
+          if (expr.includes('||')) {
+            const [prop, def] = expr.split('||').map(s => s.trim());
+            notes.push(`{{${expr}}}: "${prop}"'s value, or ${def} if "${prop}" is empty/unset`);
+          } else if (expr.includes('?') && expr.includes(':')) {
+            notes.push(`{{${expr}}}: ternary -- "${expr.split('?')[0].trim()}" picks which side renders`);
+          } else {
+            notes.push(`{{${expr}}}: replaced with the "${expr}" attribute's value (HTML-escaped)`);
+          }
+        }
+
+        if (!notes.length) return line;
+        // Each note on its OWN comment line, indented to match the code
+        // line it explains, directly beneath it -- John: "MAKE THIS EASIER
+        // TO READ WITH NEW LINES" -- appending one long "code  <!-- note1 |
+        // note2 -->" suffix produced a wrapped, hard-to-scan mess. Same
+        // one-comment-per-line convention the hand-written "How It Works"
+        // walkthrough already used.
+        const indent = (line.match(/^\s*/) || [''])[0];
+        const commentLines = notes.map(n => `${indent}<!-- ${n} -->`);
+        return [line, ...commentLines].join('\n');
+      }).join('\n');
+    }
+
+    // Every class="..." token a template references, split into EXACT
+    // static classes (e.g. "tile__icon") and DYNAMIC prefixes -- a class
+    // fragment ending right before a {{...}} mustache (e.g. "badge-tag--"
+    // from class="badge-tag badge-tag--{{variant}}") whose real, rendered
+    // suffix depends on data WB Views only fills in at render time. John:
+    // "WHERE DO THE CLASS DEFS COME FROM? LIST THE CLASS DEFS AFTER THE
+    // CODE" -- same "Where {{x}} = ..." legend spirit already built in
+    // registry-browser.html this session, for CSS instead of template vars.
+    function extractClassTokens(tpl) {
+      const exact = new Set();
+      const prefixes = new Set();
+      for (const m of tpl.matchAll(/\bclass="([^"]*)"/g)) {
+        // A ternary mustache like {{included ? 'included' : 'excluded'}}
+        // has its OWN internal spaces -- naively splitting the whole class
+        // value on whitespace chopped it into bogus separate "class" tokens
+        // ('excluded'}}, 'included', :, ? -- all confirmed live). Pull every
+        // {{...}} span out into a numbered placeholder token FIRST (plain
+        // letters/digits, so it can never itself be split on whitespace),
+        // split on whitespace, then substitute the real mustache text back
+        // into whichever token it landed in.
+        const mustaches = [];
+        const placeholderValue = m[1].replace(/\{\{[^}]*\}\}/g, (mustache) => {
+          mustaches.push(mustache);
+          return 'MUSTACHEPLACEHOLDER' + (mustaches.length - 1) + 'END';
+        });
+        for (const rawToken of placeholderValue.split(/\s+/).filter(Boolean)) {
+          const token = rawToken.replace(/MUSTACHEPLACEHOLDER(\d+)END/, (_, i) => mustaches[Number(i)]);
+          if (token.includes('{{')) {
+            const staticPrefix = token.slice(0, token.indexOf('{{'));
+            if (staticPrefix) prefixes.add(staticPrefix);
+          } else {
+            exact.add(token);
+          }
+        }
+      }
+      return { exact: [...exact], prefixes: [...prefixes] };
+    }
+
+    // Searches every loaded stylesheet for rules whose selector references
+    // the given class (exact match, word-boundary safe -- so "tile" doesn't
+    // also match "tile__icon") or, for a dynamic prefix, any class token
+    // that STARTS WITH it (so "badge-tag--" surfaces every
+    // ".badge-tag--primary" / "--success" / ... variant actually styled).
+    // Real, current CSS text is read directly off the live CSSOM
+    // (rule.cssText) -- never a paraphrase, and it can never drift from
+    // whatever the stylesheet actually says.
+    function findCssRules(token, isPrefix) {
+      const found = [];
+      const esc = token.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+      const test = isPrefix
+        ? new RegExp('\\.' + esc + '[\\w-]*')
+        : new RegExp('\\.' + esc + '(?![\\w-])');
+      const walk = (rules) => {
+        for (const rule of rules) {
+          if (rule.selectorText && test.test(rule.selectorText)) {
+            found.push(rule.cssText);
+          } else if (rule.cssRules) {
+            walk(rule.cssRules);
+          }
+        }
+      };
+      for (const sheet of document.styleSheets) {
+        let rules;
+        try { rules = sheet.cssRules; } catch (e) { continue; } // cross-origin guard
+        if (rules) walk(rules);
+      }
+      return found;
+    }
+
+    function buildCssLegend(tpl) {
+      const { exact, prefixes } = extractClassTokens(tpl);
+      const lines = [];
+      exact.sort().forEach(cls => {
+        const rules = findCssRules(cls, false);
+        lines.push(`/* .${cls} */`);
+        if (rules.length) {
+          rules.forEach(r => lines.push(r));
+        } else {
+          lines.push(`/* NO CSS RULE FOUND for .${cls} anywhere in the loaded stylesheets -- dead/unstyled class. */`);
+        }
+        lines.push('');
+      });
+      prefixes.sort().forEach(prefix => {
+        const rules = findCssRules(prefix, true);
+        lines.push(`/* .${prefix}* -- dynamic suffix filled in by {{...}} at render time */`);
+        if (rules.length) {
+          rules.forEach(r => lines.push(r));
+        } else {
+          lines.push(`/* NO variant of .${prefix}* has a CSS rule anywhere -- dead/unstyled class. */`);
+        }
+        lines.push('');
+      });
+      return lines.join('\n').trim();
+    }
+
+    async function fillCompositionalSteps() {
+      const registry = window.WB?.views?.registry;
+      // wb-views.js refuses to register a custom element for any view name
+      // whose tag is already owned by a REAL component (its own guard
+      // against elementMap, tag-map.js) -- but it still calls registerView()
+      // for that name unconditionally first, so the registry Map can hold a
+      // template entry that never actually wins at render time (confirmed
+      // live: <wb-card> logs "Refusing to register <wb-card> -- that tag is
+      // already owned by a real component", yet views-registry Map still
+      // has a dead "card" entry). Cross-check against elementMap directly so
+      // step ① never shows that dead entry as if it were the real
+      // definition -- same "not a wb-view template" note as wb-button.
+      const { elementMap } = await import('../src/core/tag-map.js');
+
+      // A SECOND, separate divergence found live, worth its own guard:
+      // several view names are defined BOTH inline (a <template wb-view=
+      // "..."> near the top of this file) AND in views-registry.json.
+      // initViews() loads the registry SECOND and its registerView() call
+      // unconditionally overwrites the Map entry -- naively reading
+      // window.WB.views.registry.get(name) here (well after everything has
+      // settled) therefore always returns the REGISTRY text. But the ACTUAL
+      // RENDER doesn't wait for that: loadViewsFromDOM() defines each
+      // inline template's custom element SYNCHRONOUSLY, upgrading every
+      // matching element already in the DOM and queuing its render via
+      // setTimeout(fn, 0) almost immediately -- while the registry's
+      // loadViewsFromURL() is still awaiting a real fetch(). A local fetch
+      // reliably takes longer than a 0ms setTimeout, so in practice the
+      // INLINE template is what every element on THIS page actually
+      // rendered from; the registry's same-named entry silently overwrites
+      // the Map afterward but never gets used. Confirmed live: alert-box's
+      // rendered DOM has no role="alert"/aria-label (registry-only
+      // additions) -- it matches the inline template exactly, for 11 of
+      // this page's 14 inline/registry name collisions. Reading the
+      // registry here for those names would show a "definition" that isn't
+      // what step ③'s Rendered Output actually came from -- read the DOM's
+      // own <template wb-view="name"> first when one exists (that's the
+      // one that really won), falling back to the registry Map only for
+      // names with no inline template at all (user-avatar, nav-link,
+      // price-tag, feature-item -- genuinely registry-only, no race).
+      const inlineTemplates = new Map();
+      document.querySelectorAll('template[wb-view]').forEach(t => {
+        inlineTemplates.set(t.getAttribute('wb-view'), t.innerHTML.trim());
+      });
+
+      document.querySelectorAll('.wbv-step-define').forEach(details => {
+        const names = (details.dataset.wbvTemplate || '').split(',').map(s => s.trim()).filter(Boolean);
+        const code = details.querySelector('code');
+        const cssBox = details.querySelector('.wbv-step-css');
+        if (!code || !names.length) return;
+        const rawTemplates = [];
+        const parts = names.map(name => {
+          const tag = name.includes('-') ? name : 'wb-' + name;
+          const tpl = inlineTemplates.has(name) ? inlineTemplates.get(name) : registry?.get(name);
+          if (tpl === undefined || tag in elementMap) {
+            return `<!-- <${tag}> is not a wb-view template -- it's a real premade component (see src/core/tag-map.js), not a <template wb-view="..."> definition. -->`;
+          }
+          rawTemplates.push(tpl);
+          return annotateTemplate(`<template wb-view="${name}">\n${tpl}\n</template>`);
+        });
+        code.textContent = parts.join('\n\n');
+
+        if (cssBox && rawTemplates.length) {
+          const legend = buildCssLegend(rawTemplates.join('\n'));
+          if (legend) {
+            cssBox.innerHTML = '<div class="wbv-step2-label">CSS classes this template references</div><pre><code></code></pre>';
+            cssBox.querySelector('code').textContent = legend;
+          }
+        }
+      });
+
+      document.querySelectorAll('.wbv-step-output').forEach(details => {
+        const forId = details.dataset.wbvFor;
+        const code = details.querySelector('code');
+        const source = forId && document.getElementById(forId);
+        // .example-render is a GRANDCHILD (<example-block> -> div.example-block
+        // -> div.example-render), not a direct child -- example-block's own
+        // wb-view template wraps everything in its own div.example-block
+        // wrapper first (see the <template wb-view="example-block"> definition
+        // near the top of this file / views-registry.json's matching entry).
+        const rendered = source?.querySelector('.example-render');
+        if (!code || !rendered) return;
+        code.textContent = rendered.innerHTML.trim();
+      });
+
+      // "How It Works" walkthrough -- set via textContent, once, here,
+      // AFTER all wb-view rendering has already settled -- see the big
+      // comment on that example-block for why (mdhtml.js's marked-based
+      // pipeline and the wb-views ancestor-interpolate() pass both corrupt
+      // this content if it's authored as literal `{{...}}`-bearing HTML
+      // instead). Hand-annotated line by line, same spirit as
+      // annotateTemplate() above, for a walkthrough that isn't a single
+      // registry template.
+      const howItWorksCode = document.getElementById('how-it-works-code');
+      if (howItWorksCode) {
+        howItWorksCode.textContent =
+`<!-- STEP 1: define the template ONCE. wb-view="badge-tag" registers -->
+<!-- this HTML as the view named "badge-tag" -- WB Views auto-creates a -->
+<!-- matching <badge-tag> custom tag from the name (see "Tag Naming -->
+<!-- Convention" below for the hyphen rule). -->
+<template wb-view="badge-tag">
+  <span class="badge-tag badge-tag--{{variant}}">
+    <!-- {{variant}}: replaced with the variant="..." attribute's value --
+         wherever it's used -- here inside the class name, so
+         variant="primary" produces class="badge-tag badge-tag--primary". -->
+    <slot>{{text}}</slot>
+    <!-- <slot> here is WB Views' OWN light-DOM convention (renderView()'s
+         "Process Slots (Emulation)" step in wb-views.js), NOT the
+         browser's native Shadow DOM <slot> -- this project uses light DOM
+         only, no Shadow DOM, by explicit convention; nothing here ever
+         calls attachShadow(). renderView() literally finds this <slot>
+         element and REPLACES it wholesale with the tag's real child
+         content. {{text}} is used INSTEAD, only when no child content was
+         given. -->
+  </span>
+</template>
+
+<!-- STEP 2: reuse it -- TWO equivalent ways to invoke the same view -->
+<wb-view badge-tag variant="primary">New</wb-view>   <!-- explicit wrapper: <wb-view NAME attr=...> -->
+<badge-tag variant="primary">New</badge-tag>          <!-- auto-registered tag: shorter, same result -->
+
+<!-- STEP 3: both produce the SAME rendered output -- {{variant}} became -->
+<!-- "primary", <slot> was filled with "New" -->
+<span class="badge-tag badge-tag--primary">New</span>`;
+      }
+    }
+
     try {
       // 1. Auto-generate code snippets BEFORE views render
       // This captures the source code as written in the HTML file
       document.querySelectorAll('example-block').forEach(block => {
+        // Blocks that already contain their own hand-authored code sample
+        // (a <wb-mdhtml> child, or the explicit data-wbv-no-autocode opt-out
+        // used by "How It Works") are already self-documenting --
+        // auto-generating a SECOND `code` attribute from this block's raw
+        // innerHTML would just show the exact same content again, this time
+        // as raw, un-rendered, HTML-entity-escaped text (confirmed live:
+        // "How It Works" duplicated itself exactly this way -- same defect
+        // CLASS as #578/#579's dead hand-authored duplicate block, this
+        // time produced by this auto-code step instead of leftover markup).
+        if (block.querySelector('wb-mdhtml') || block.hasAttribute('data-wbv-no-autocode')) return;
         let html = block.innerHTML;
         const lines = html.split('\n');
         // Remove empty first/last lines
@@ -532,6 +872,16 @@
       const WB = await import('../src/core/wb-lazy.js').then(m => m.default);
       await WB.init();
       await WB.scan();
+
+      // 4. Fill in the ①③ compositional-steps panels added around each
+      // example-block. A settle wait: renderView()'s own WB.scan(target)
+      // call, plus further nested wb-view elements this page composes
+      // (user-card -> user-avatar, file-toolbar -> wb-toolbar -> wb-button
+      // via wb-for, ...), finish asynchronously after the WB.scan() above
+      // already resolved -- same rationale as registry-browser.html's own
+      // settle wait before it reads its "③ Rendered Output".
+      await new Promise(resolve => setTimeout(resolve, 500));
+      await fillCompositionalSteps();
 
       console.log('🧩 WB Views Demo loaded!');
 

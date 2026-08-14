@@ -107,6 +107,81 @@ body {
 }
 .code-panel.active { display: block; }
 
+/* Compositional-steps teaching blocks: "how do I CREATE a view, then how do
+   I REUSE it" (John, viewing this page). Same ①②③ Template/Reuse/Rendered-
+   Output convention already established this session in
+   registry-browser.html's buildLiveViewMarkup()/explainTemplateVariables()
+   row sections -- reused here as plain <details> wrappers instead of table
+   cells since this page walks one named example at a time, not a table of
+   rows. */
+.wbv-step-define,
+.wbv-step-output {
+  margin: 0 0 1rem;
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  background: var(--bg-primary);
+  overflow: hidden;
+}
+.wbv-step-define summary,
+.wbv-step-output summary {
+  cursor: pointer;
+  padding: 0.75rem 1rem;
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--text-muted);
+  background: var(--bg-tertiary);
+}
+.wbv-step-define[open] summary,
+.wbv-step-output[open] summary {
+  border-bottom: 1px solid var(--border-color);
+}
+.wbv-step-hint {
+  text-transform: none;
+  font-weight: 400;
+  opacity: 0.7;
+  letter-spacing: normal;
+}
+.wbv-step-define pre,
+.wbv-step-output pre {
+  margin: 0;
+  padding: 1rem;
+  font-family: 'Fira Code', 'Consolas', monospace;
+  font-size: 0.8rem;
+  overflow-x: auto;
+  white-space: pre-wrap;
+  word-break: break-word;
+  background: var(--bg-code, #0d0d14);
+  color: var(--text-code, #a5d6ff);
+}
+.wbv-step2-label {
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--text-muted);
+  margin-bottom: 0.5rem;
+}
+.wbv-howitworks-code {
+  margin: 0;
+  padding: 1rem;
+  font-family: 'Fira Code', 'Consolas', monospace;
+  font-size: 0.8rem;
+  overflow-x: auto;
+  white-space: pre-wrap;
+  word-break: break-word;
+  background: var(--bg-code, #0d0d14);
+  color: var(--text-code, #a5d6ff);
+  border-radius: 6px;
+}
+.wbv-step-css:empty { display: none; }
+.wbv-step-css {
+  border-top: 1px solid var(--border-color);
+  padding: 1rem;
+}
+.wbv-step-css pre { padding: 0.75rem; }
+
 .grid-2 { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1rem; }
 .grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; }
 .grid-4 { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1rem; }
