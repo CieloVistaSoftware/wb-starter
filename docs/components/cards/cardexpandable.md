@@ -29,6 +29,10 @@ Wrapped in `<wb-demo>`, so the live component renders below with its source show
   max-height="80px">
   <p>This is a long content that will be truncated when collapsed...</p>
   <p>More content here...</p>
+  <figure>
+    <img src="https://picsum.photos/800/600?random=cardexpandable1" alt="Example expanded content image" style="width: 100%; border-radius: 4px;">
+    <figcaption>Figures work like any other collapsed content — hidden until expanded.</figcaption>
+  </figure>
 </wb-cardexpandable>
 </wb-demo>
 
