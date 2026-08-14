@@ -29,7 +29,14 @@ export function audio(element, options = {}) {
     return element.getAttribute(name) ?? element.dataset[name.replace(/-([a-z])/g, (_, c) => c.toUpperCase())] ?? null;
   }
   const config = {
-    src: options.src || attr('src') || '',
+    // Standard HTML5 pattern: a src-less <audio> with one or more <source
+    // src="..."> children is valid markup the native browser plays fine --
+    // the src attribute is just the shorthand for a single source. Fall
+    // back to the first <source>'s src before concluding there's nothing
+    // to play (confirmed live: demos/autoinject.html's 4 audio players use
+    // exactly this <source>-child pattern and threw "no src provided"
+    // despite each having a real, working <source src="...">).
+    src: options.src || attr('src') || element.querySelector('source[src]')?.getAttribute('src') || '',
     controls: options.controls ?? attr('controls') !== 'false',
     autoplay: options.autoplay ?? (element.hasAttribute('autoplay') || element.hasAttribute('data-autoplay')),
     loop: options.loop ?? (element.hasAttribute('loop') || element.hasAttribute('data-loop')),
