@@ -125,6 +125,14 @@ every element labeled:
 
 ### Semantic Element
 
+<!-- x-card is required here, not redundant: autoInject defaults to OFF
+     site-wide (src/core/config.js), and tag-map.js only maps a bare
+     <article> to card behavior "when autoInject enabled" (see its own
+     comment). Unlike a <table>/<audio> tag (behavior-specific elements
+     that make sense with no explicit opt-in), <article> is a generic
+     semantic element WB can't safely enhance by default -- most <article>
+     tags on the web aren't meant to become cards. x-card is the explicit,
+     required opt-in for this specific case. -->
 <wb-demo>
 <article
   x-card
