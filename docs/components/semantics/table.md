@@ -22,6 +22,7 @@ Interactive data table with sorting and search.
 | `compact` | boolean | `false` | Reduce padding |
 | `sortable` | boolean | `true` | Enable column sorting (click a header to sort) |
 | `searchable` | boolean | `false` | Add a search input above the table that filters rows as you type |
+| `selectable` | boolean | `false` | Click a row to select it (adds `.active`). Hold Ctrl (Windows/Linux) or Cmd (Mac) while clicking to multi-select |
 | `headers` | string | `""` | Column headers, comma-separated (paired with `rows`) |
 | `rows` | string | `""` | Row data as a JSON array of arrays (paired with `headers`) |
 | `data` | string | `""` | Row data as a JSON array of objects (paired with `columns`) |
@@ -256,13 +257,18 @@ the six tickets below by typing.
 
 ### Row click
 
-`selectable` marks each row clickable: clicking highlights it (an `active`
-class) and dispatches the real `wb:table:select` event with
-`{ row: <tr>, index }` in its detail — this is the table's only real, wired
-event (see [Events](#events) below; the other three names once listed
-there were never actually dispatched by `table.js` and have been removed).
-Click any row below to see its data printed live, as JSON, in the log
-panel `<wb-demo>` generates automatically from the `events` attribute.
+`selectable` marks each row clickable: a plain click selects exactly one row
+(an `active` class), replacing any prior selection. Ctrl-click (Cmd-click on
+Mac) toggles that row's selection ON TOP OF the existing one instead —
+add a row, or remove one that's already selected — without clearing the
+rest. A plain click after a multi-select collapses the selection back down
+to just the clicked row. Every click, plain or modified, dispatches the
+real `wb:table:select` event with `{ row: <tr>, index }` in its detail —
+this is the table's only real, wired event (see [Events](#events) below;
+the other three names once listed there were never actually dispatched by
+`table.js` and have been removed). Click any row below to see its data
+printed live, as JSON, in the log panel `<wb-demo>` generates automatically
+from the `events` attribute.
 
 <wb-demo events="wb:table:select">
 <wb-table
@@ -328,6 +334,7 @@ live, authorable version of this same markup):
 | `.wb-table--hover` | `hover` (default `true`) | Row hover effect |
 | `.wb-table--bordered` | `bordered` | Cell borders |
 | `.wb-table--compact` | `compact` | Reduced padding |
+| `.active` | Row is selected (`selectable`) | Applied to the `<tr>`; multiple rows can carry it at once via Ctrl/Cmd-click |
 
 ## Methods
 
@@ -353,7 +360,7 @@ isn't in `$methods` at all — calling `table.search(...)` throws
 
 | Event | Description | Detail |
 |-------|-------------|--------|
-| `wb:table:select` | A row was clicked (`selectable` tables only — see [Row click](#row-click)) | `{ row: HTMLElement, index: number }` |
+| `wb:table:select` | A row was clicked, plain or Ctrl/Cmd-modified (`selectable` tables only — see [Row click](#row-click)) | `{ row: HTMLElement, index: number }` |
 
 ```javascript
 const table = document.querySelector('wb-table[selectable]');
@@ -361,6 +368,11 @@ const table = document.querySelector('wb-table[selectable]');
 table.addEventListener('wb:table:select', (e) => {
   const cells = Array.from(e.detail.row.children).map((td) => td.textContent);
   console.log(`Row ${e.detail.index}:`, cells);
+});
+
+table.addEventListener('wb:table:select', (e) => {
+  const selectedRows = table.querySelectorAll('tbody tr.active');
+  console.log(`${selectedRows.length} row(s) selected`);
 });
 ```
 
