@@ -353,11 +353,17 @@ wb-demo > .x-pre-wrapper {
    for large cards but covered a meaningful chunk of small elements (e.g.
    wb-badge, ~1.5-2rem tall) -- the icon and the thing it labels were
    nearly the same size. Moved fully above the element with real clearance
-   instead of overlapping it, on any size component. */
+   instead of overlapping it (later moved again, see below).
+
+   John: "move the link to the docs directly east of the top corner" --
+   above-with-clearance still read as loosely associated with whatever was
+   above it rather than clearly belonging to THIS element. Positioned
+   level with the top edge, offset to the right of the right edge instead
+   -- directly east of the top-right corner, not floating above it. */
 .wb-demo__card-doc-link {
   position: absolute !important;
-  top: -2.25rem;
-  right: 0;
+  top: 0;
+  right: -2rem;
   z-index: 5;
   display: flex;
   align-items: center;
