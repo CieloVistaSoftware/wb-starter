@@ -357,13 +357,21 @@ wb-demo > .x-pre-wrapper {
 
    John: "move the link to the docs directly east of the top corner" --
    above-with-clearance still read as loosely associated with whatever was
-   above it rather than clearly belonging to THIS element. Positioned
-   level with the top edge, offset to the right of the right edge instead
-   -- directly east of the top-right corner, not floating above it. */
+   above it rather than clearly belonging to THIS element. Tried level with
+   the top edge, offset OUTSIDE the right edge (top:0; right:-2rem) -- but
+   `.wb-card`'s own `overflow:hidden` (needed for its rounded corners)
+   clips anything positioned past its own bounds, making the badge
+   completely invisible on every wb-card* component (confirmed live on
+   demos/site/cards.html: 293 links existed in the DOM, Playwright reported
+   every sampled one "visible", but a real screenshot showed zero of them
+   -- clipped, not hidden by opacity/display). Settled on INSET instead --
+   still at the top, still toward the right, but never past either edge,
+   so no ancestor's overflow:hidden can ever clip it regardless of
+   component type. */
 .wb-demo__card-doc-link {
   position: absolute !important;
-  top: 0;
-  right: -2rem;
+  top: 0.5rem;
+  right: 0.5rem;
   z-index: 5;
   display: flex;
   align-items: center;
