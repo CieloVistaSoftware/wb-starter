@@ -166,7 +166,13 @@ export function code(element, options = {}) {
     Object.assign(element.style, {
       fontFamily: 'ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace',
       fontSize: fontSize,
-      padding: !isBlock ? (inHeading ? '1rem' : '0.15em 0.3em') : '0.5rem 0.75rem',
+      // John: "the code demos cannot take up more space than the line
+      // allows" -- 1rem on all 4 sides of an inline chip inside a heading
+      // (this branch's original fix for #545's too-small em-padding
+      // problem) overcorrected into the opposite problem: a wide enough
+      // box to overflow the heading's own line. 0.25rem/0.5rem reads fine
+      // at heading scale without doing that.
+      padding: !isBlock ? (inHeading ? '0.25rem 0.5rem' : '0.15em 0.3em') : '0.5rem 0.75rem',
       borderRadius: 'var(--radius-sm, 4px)',
       backgroundColor: 'var(--bg-tertiary, rgba(255,255,255,0.1))',
       color: 'var(--text-primary, inherit)',
@@ -204,10 +210,11 @@ export function code(element, options = {}) {
         // Fix for inline code: hljs adds 'hljs' class which might set display: block and padding
         if (!isInsidePre && config.variant === 'inline') {
             element.style.display = 'inline';
-            // #545: same heading-scale padding fix as the base styling above --
-            // hljs re-sets padding after highlighting, so it must repeat the
-            // inHeading check or a highlighted <code> in a heading would lose it.
-            element.style.padding = inHeading ? '1rem' : '0.2em 0.4em';
+            // #545/#612: same heading-scale padding fix as the base styling
+            // above -- hljs re-sets padding after highlighting, so it must
+            // repeat the inHeading check or a highlighted <code> in a
+            // heading would lose it.
+            element.style.padding = inHeading ? '0.25rem 0.5rem' : '0.2em 0.4em';
             element.style.backgroundColor = 'var(--bg-tertiary, rgba(255,255,255,0.1))'; // Keep our background for inline
         } else if (isInsidePre) {
              // Ensure background is transparent so pre's background shows
