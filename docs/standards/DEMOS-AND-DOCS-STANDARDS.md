@@ -360,6 +360,55 @@ Every component example is a `<wb-demo>` — it renders the **live control** AND
 
 ---
 
+## 29. No placeholder asset paths — ever
+
+- Every `src`/`image`/`background` in a live-rendered example (a `<wb-demo>`, or raw markup a doc
+  auto-promotes) must resolve to a real, working asset. `/images/feature.jpg`, `"Sample image"`,
+  `"Sample background"`, `music.mp3` — anything that *reads* like a path but was never actually placed in
+  the repo or a real remote URL — is not "illustrative," it's a broken control that ships (2026-08-15
+  retrospective: this exact mistake caused 9+ separate issues in one week, #610/#605/#601/#551/#548/#529/
+  #526/#519/#514).
+- Use real remote assets: `https://picsum.photos/{width}/{height}?random={n}` for images (distinct `n` per
+  example, ≥800px on the short edge so it doesn't look blurry when cropped into a card), a real hosted
+  sample for audio/video (this codebase's established convention is soundhelix.com for audio).
+- Never invent a local path unless the file is actually committed to the repo at that exact path — verify
+  with a file-existence check, not by eye.
+- Test: `tests/compliance/docs-live-media-assets-exist.spec.ts` (markdown docs),
+  `tests/compliance/wb-audio-has-resolvable-src.spec.ts` (audio specifically, all `.html`/`.md`).
+
+## 30. Broken media must throw + log — never fail silently
+
+- A `<wb-audio>`/`<img>`/background-image that fails to load must produce a real, loud signal — an `Error`
+  thrown so the global error handler (`src/core/error-logger.js`) catches and logs it — not a silent
+  broken-image icon or an invisible CSS background that just never appears. This is `audio.js`'s original
+  convention (#433); by 2026-08-15 the same fix had to be independently rediscovered and re-applied to
+  `cardhero` (#534), `cardhorizontal` (#604), and `cardoverlay` (#605) — three components, same missing
+  pattern, three separate issues.
+- **When building a new card/media component, wire this up from the start**: a plain `<img>` gets this for
+  free via its native `error` event (just add a listener that throws); a CSS `background-image` has no
+  native failure signal at all and needs a preload `new Image()` probe (see `cardhero`'s implementation in
+  `src/wb-viewmodels/card.js` for the reference pattern — preload, on error clear the broken background and
+  fall back to a themed default, then throw).
+- A working fallback (a themed gradient, a default image) must still render — the loud error is in addition
+  to graceful degradation, not instead of it.
+
+## 31. HTML attributes are kebab-case — never author a camelCase schema property name directly
+
+- A schema's declared property name (e.g. `imagePosition`) is a JS/schema-internal name. The HTML attribute
+  an author writes in markup is a *different, separate* thing and must be kebab-case: `image-position`, not
+  `imagePosition`. The browser lowercases attribute names on parse with **no hyphen insertion** —
+  `imagePosition="right"` in source becomes the DOM attribute `imageposition` (no hyphen), which matches
+  neither the camelCase name NOR the kebab-case one a behavior's `getAttribute()` call expects. The value is
+  silently dropped, the default applies, and nothing errors (2026-08-14/15: this exact mistake shipped in
+  `cardhorizontal.md`'s own docs — #602 — and was then re-typed as `imageposition` again immediately after
+  the fix — #603 — by two different authors in the same week).
+- When writing a behavior function, prefer accepting **both** the kebab-case attribute and its no-hyphen
+  fallback (`getAttribute('image-position') || getAttribute('imageposition')`) rather than assuming authors
+  will always get the exact spelling right — the mistake is common enough that the code should be tolerant
+  of it, not just the docs corrected once.
+- When writing docs/demos: always kebab-case. Check any multi-word attribute against the actual behavior's
+  `getAttribute()` calls in `src/wb-viewmodels/`, not against the schema's declared property name.
+
 ## Enforcement & references
 
 | Rule | Test / reference |
@@ -374,6 +423,9 @@ Every component example is a `<wb-demo>` — it renders the **live control** AND
 | 24 (no unintended overlap) | `tests/integration/overlap.spec.ts` (#274) |
 | 1, 16, 25 (wb-demo / build-step exception) | `tests/integration/frameworks-demo.spec.ts` (#324) |
 | 28 (code panel full width) | `src/styles/behaviors/demo.css` (`.wb-demo__code` rule) |
+| 29 (no placeholder assets) | `tests/compliance/docs-live-media-assets-exist.spec.ts`, `tests/compliance/wb-audio-has-resolvable-src.spec.ts` |
+| 30 (broken media throws) | `src/wb-viewmodels/card.js` (`cardhero`/`cardhorizontal`/`cardoverlay`/`cardimage` probe pattern), `src/wb-viewmodels/semantics/audio.js` |
+| 31 (kebab-case attributes) | `tests/regression/cardhorizontal-attribute-casing-tolerance.spec.ts` (reference pattern for tolerant reading) |
 
 Open work to bring existing surfaces to this standard: #246 (behaviors-showcase selects),
 #247 (behaviors-showcase mobile nav), #248 (no horizontal scrollbars), and the remaining
