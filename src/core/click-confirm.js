@@ -22,6 +22,31 @@ import { getConfig } from './config.js';
 
 const CLICKABLE_SELECTOR = 'button, wb-button, wb-switch, .wb-card--clickable, [clickable]';
 
+// John: "make the toast message same as variant" -- every click-confirm
+// toast used a flat, always-blue 'info' style regardless of what was
+// clicked, so a Warning/Error button's confirmation looked identical to a
+// Success one. toast.css only has real rules for these 7 -- anything else
+// (e.g. a button's 'ghost'/'outline' variant) has no matching toast style,
+// so fall back to 'info' rather than emit a toast with no CSS behind it.
+const TOAST_VARIANTS = new Set(['primary', 'secondary', 'success', 'warning', 'error', 'danger', 'info']);
+
+function toastVariantFor(el) {
+  // A `variant="warning"` attribute in SOURCE markup doesn't survive onto
+  // the live element -- schema-builder.js consumes it to build the
+  // wb-button--warning CLASS during processSchema(), but never reflects
+  // the attribute itself back (confirmed live: a rendered <wb-button>'s
+  // variant attribute is gone, only its class survives). Read the variant
+  // out of the wb-*--{variant} class instead of the (absent) attribute.
+  const withVariant = el.hasAttribute('variant') ? el : el.closest('[variant]');
+  const attrVariant = withVariant?.getAttribute('variant');
+  if (attrVariant && TOAST_VARIANTS.has(attrVariant)) return attrVariant;
+
+  const classed = el.closest('[class*="--"]');
+  const classMatch = classed?.className.match(/\bwb-\w+--(\w+)\b/);
+  const classVariant = classMatch?.[1];
+  return classVariant && TOAST_VARIANTS.has(classVariant) ? classVariant : 'info';
+}
+
 function labelFor(el) {
   // Some elements (e.g. a <wb-button class="wb-alert__close">, which has
   // position:relative) end up hosting an unrelated overlay as a real DOM
@@ -78,7 +103,7 @@ if (typeof document !== 'undefined') {
     const toastCountBefore = document.querySelectorAll('.wb-toast').length;
     setTimeout(() => {
       if (document.querySelectorAll('.wb-toast').length > toastCountBefore) return;
-      createToast(`Clicked: ${labelFor(target)}`, 'info', 2000);
+      createToast(`Clicked: ${labelFor(target)}`, toastVariantFor(target), 2000);
     }, 0);
   }, true);
 }
