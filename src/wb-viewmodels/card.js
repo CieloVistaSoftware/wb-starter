@@ -2169,6 +2169,24 @@ export function cardoverlay(element, options = {}) {
   element.style.backgroundImage = config.image ? `url(${config.image})` : 'linear-gradient(135deg, #667eea, #764ba2)';
   element.style.backgroundSize = 'cover';
   element.style.backgroundPosition = 'center';
+
+  // John: "Card Overlay have no images" -- a broken `image` src rendered as
+  // nothing (CSS background-image has no native failure signal the way an
+  // <img> does), same class of bug already fixed for cardhero's `background`
+  // (#534) and cardhorizontal's `image` (#604). Preload via a probe Image()
+  // to get the one load-failure signal CSS background-image lacks; on
+  // failure, fall back to the same gradient a missing image already uses,
+  // and throw so the global error handler (error-logger.js) catches and
+  // logs it -- same convention as audio.js/cardhero/cardhorizontal.
+  if (config.image) {
+    const probe = new Image();
+    probe.addEventListener('error', () => {
+      if (!document.contains(element)) return;
+      element.style.backgroundImage = 'linear-gradient(135deg, #667eea, #764ba2)';
+      throw new Error(`wb-cardoverlay: failed to load image "${config.image}" -- the file is missing or unreachable. Falling back to the default gradient.`);
+    });
+    probe.src = config.image;
+  }
   
   // Use row direction so align-items controls vertical position (as expected by tests)
   element.style.flexDirection = 'row';

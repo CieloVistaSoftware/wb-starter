@@ -29,7 +29,7 @@ Wrapped in `<wb-demo>`, so the live component renders below with its source show
 <wb-cardoverlay
   title="Featured Story"
   subtitle="Read more about this"
-  image="/images/background.jpg">
+  image="https://picsum.photos/seed/cardoverlay-basic/1000/800">
 </wb-cardoverlay>
 </wb-demo>
 
@@ -41,7 +41,7 @@ Wrapped in `<wb-demo>`, so the live component renders below with its source show
 <wb-cardoverlay
   title="Featured Story"
   subtitle="Read more about this"
-  image="/images/background.jpg">
+  image="https://picsum.photos/seed/cardoverlay-usage/1000/800">
 </wb-cardoverlay>
 ```
 
@@ -50,7 +50,7 @@ Wrapped in `<wb-demo>`, so the live component renders below with its source show
 ```html
 <wb-cardoverlay
   title="Top Overlay"
-  image="/images/bg.jpg"
+  image="https://picsum.photos/seed/cardoverlay-top/1000/800"
   position="top">
 </wb-cardoverlay>
 ```
@@ -61,7 +61,7 @@ Wrapped in `<wb-demo>`, so the live component renders below with its source show
 <wb-cardoverlay
   title="Centered"
   subtitle="Text in the middle"
-  image="/images/bg.jpg"
+  image="https://picsum.photos/seed/cardoverlay-center/1000/800"
   position="center">
 </wb-cardoverlay>
 ```
@@ -71,7 +71,7 @@ Wrapped in `<wb-demo>`, so the live component renders below with its source show
 ```html
 <wb-cardoverlay
   title="No Gradient"
-  image="/images/light-bg.jpg"
+  image="https://picsum.photos/seed/cardoverlay-nogradient/1000/800"
   gradient="false">
 </wb-cardoverlay>
 ```
@@ -81,7 +81,7 @@ Wrapped in `<wb-demo>`, so the live component renders below with its source show
 ```html
 <wb-cardoverlay
   title="Tall Card"
-  image="/images/bg.jpg"
+  image="https://picsum.photos/seed/cardoverlay-tall/1000/800"
   height="500px">
 </wb-cardoverlay>
 ```
