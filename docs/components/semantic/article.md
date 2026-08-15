@@ -68,6 +68,12 @@ All card components use the `<article>` semantic element:
 ## Usage Examples
 
 ### Standard Semantic Article
+
+This page's doc-viewer runs with `autoInject` **off** (the site-wide default —
+see `src/core/config.js`), so this plain `<article>` renders exactly as
+written, unenhanced. It's shown first specifically so you can see the
+difference against the enhanced version right below it.
+
 <wb-demo>
 <article>
   <header>
@@ -81,6 +87,16 @@ All card components use the `<article>` semantic element:
   </footer>
 </article>
 </wb-demo>
+
+**"Automatic" specifically means**: on a page that calls
+`WB.init({ autoInject: true })`, this exact same plain `<article>` markup —
+zero extra attributes — gets card behavior applied with no `x-card` needed at
+all. That mode can't be demonstrated live here (this viewer intentionally
+keeps autoInject off so *other* elements on the page aren't unexpectedly
+enhanced) — see it running for real on
+[demos/autoinject.html](../../../demos/autoinject.html). The `x-card` example
+below is the explicit, opt-in equivalent that works regardless of the page's
+autoInject setting.
 
 ### WB Card (Custom Element)
 <wb-demo>
