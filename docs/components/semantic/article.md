@@ -69,10 +69,11 @@ All card components use the `<article>` semantic element:
 
 ### Standard Semantic Article
 
-This page's doc-viewer runs with `autoInject` **off** (the site-wide default —
-see `src/core/config.js`), so this plain `<article>` renders exactly as
-written, unenhanced. It's shown first specifically so you can see the
-difference against the enhanced version right below it.
+**This is the actual selling point**: `autoInject` is **on by default**
+site-wide (`src/core/config.js`) — a plain `<article>`, zero extra attributes,
+zero `x-card`, gets real card behavior automatically. What you see rendered
+below is exactly the markup above it, enhanced with nothing but semantic
+HTML.
 
 <wb-demo>
 <article>
@@ -88,15 +89,10 @@ difference against the enhanced version right below it.
 </article>
 </wb-demo>
 
-**"Automatic" specifically means**: on a page that calls
-`WB.init({ autoInject: true })`, this exact same plain `<article>` markup —
-zero extra attributes — gets card behavior applied with no `x-card` needed at
-all. That mode can't be demonstrated live here (this viewer intentionally
-keeps autoInject off so *other* elements on the page aren't unexpectedly
-enhanced) — see it running for real on
-[demos/autoinject.html](../../../demos/autoinject.html). The `x-card` example
-below is the explicit, opt-in equivalent that works regardless of the page's
-autoInject setting.
+A page can still opt OUT via `WB.init({ autoInject: false })` if it genuinely
+needs unenhanced semantic HTML (rare) — the `x-card` example below is the
+explicit form, which works identically whether or not the page has opted
+out.
 
 ### WB Card (Custom Element)
 <wb-demo>

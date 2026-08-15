@@ -409,6 +409,29 @@ Every component example is a `<wb-demo>` — it renders the **live control** AND
 - When writing docs/demos: always kebab-case. Check any multi-word attribute against the actual behavior's
   `getAttribute()` calls in `src/wb-viewmodels/`, not against the schema's declared property name.
 
+## 32. Favor semantic HTML with autoInject on — this is the actual selling point
+
+- John (2026-08-15): "if we turn on autoinject which we will most of the time, then we don't need
+  anything but semantic html to show the added features... autoinject should be true for all our demos...
+  we should pull away from our wb tags favoring semantic html at all times."
+- `autoInject` now **defaults to `true`** (`src/core/config.js`) — a page only sees it off if it explicitly
+  calls `WB.init({ autoInject: false })`. This is a reversal of the previous default; the previous default
+  (off) is why so many docs/demos accumulated explicit `x-*` attributes that are now redundant.
+- **When writing a new example**: write plain semantic HTML first (`<table>`, `<article>`, `<button>`,
+  `<audio>`, ...) with no `x-*` attribute at all, and confirm live that it gets enhanced automatically. Only
+  reach for an explicit `<wb-*>` tag or `x-*` attribute when the semantic element genuinely doesn't exist
+  for what you're building (there's no native `<x-cardexpandable>` equivalent) or the page has deliberately
+  opted out of autoInject.
+- **When reviewing an existing example**: if it uses an explicit `x-*` attribute on a tag that has a native
+  semantic equivalent (`x-table` on `<table>`, `x-card`/`x-cardXxx` on `<article>`, `x-audio` on `<audio>`),
+  verify live whether it's now redundant post-flip, and remove it if so — matches the existing §
+  "no-redundant-x-attribute" compliance pattern, just with a much larger surface now that the default
+  changed.
+- This does **not** mean deleting the `<wb-*>` custom-tag form from docs entirely — both forms are
+  documented (see e.g. `table.md`'s "Custom Element" vs "Native Table" sections) since some authors prefer
+  the explicit tag. It means the semantic-HTML form should be presented as the *primary*, not an
+  afterthought, and should never need an `x-*` attribute to work.
+
 ## Enforcement & references
 
 | Rule | Test / reference |
@@ -426,6 +449,7 @@ Every component example is a `<wb-demo>` — it renders the **live control** AND
 | 29 (no placeholder assets) | `tests/compliance/docs-live-media-assets-exist.spec.ts`, `tests/compliance/wb-audio-has-resolvable-src.spec.ts` |
 | 30 (broken media throws) | `src/wb-viewmodels/card.js` (`cardhero`/`cardhorizontal`/`cardoverlay`/`cardimage` probe pattern), `src/wb-viewmodels/semantics/audio.js` |
 | 31 (kebab-case attributes) | `tests/regression/cardhorizontal-attribute-casing-tolerance.spec.ts` (reference pattern for tolerant reading) |
+| 32 (autoInject on, favor semantic HTML) | `src/core/config.js` (`autoInject: true` default), `tests/compliance/no-redundant-x-attribute-on-native-tag.spec.ts` |
 
 Open work to bring existing surfaces to this standard: #246 (behaviors-showcase selects),
 #247 (behaviors-showcase mobile nav), #248 (no horizontal scrollbars), and the remaining
