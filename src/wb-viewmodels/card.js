@@ -614,16 +614,28 @@ export function composeCard(element, options = {}) {
             element.appendChild(mainEl);
           }
         } else if (main) {
-          // Enhance existing main
-          main.classList.add('wb-card__main');
-          main.style.padding = main.style.padding || '1rem';
-          main.style.flex = main.style.flex || '1';
-          main.style.color = main.style.color || VAR_TEXT_PRIMARY;
-
           // If main is empty (e.g. created by SchemaBuilder with empty slot)
           // but we have config.content, inject it.
           if (!main.innerHTML.trim() && config.content) {
              main.innerHTML = config.content;
+          }
+          // #608: John -- "if there is no content, then don't show blank
+          // lines." A schema-built <main> shell with genuinely nothing to
+          // show (no config.content, no authored innerHTML) used to get
+          // enhanced anyway (padding/flex/color applied), leaving a
+          // styled-but-empty box that reads as a blank line -- the same
+          // "never inject placeholder, show nothing" rule the comment two
+          // lines up already states for the create-a-new-main branch, just
+          // not applied to the enhance-an-existing-one branch. Remove it
+          // instead of styling emptiness.
+          if (!main.innerHTML.trim()) {
+            main.remove();
+            main = null;
+          } else {
+            main.classList.add('wb-card__main');
+            main.style.padding = main.style.padding || '1rem';
+            main.style.flex = main.style.flex || '1';
+            main.style.color = main.style.color || VAR_TEXT_PRIMARY;
           }
         }
       }
@@ -749,7 +761,14 @@ export function cardimage(element, options = {}) {
     fit: getAttr(element, options, 'fit') || 'cover',
     title: getAttr(element, options, 'title'),
     subtitle: getAttr(element, options, 'subtitle'),
-    content: options.content || element.dataset.content || element.innerHTML,
+    // #608: was missing the getAttribute('content') check every other card
+    // variant's own content resolution already has (see composeCard/card()
+    // line ~155) -- a plain content="..." ATTRIBUTE (the form every
+    // cardimage.md example uses) was silently ignored, falling through to
+    // innerHTML, which is empty for a self-closing-style <wb-cardimage
+    // src="..." content="...">. Confirmed live: "Optional content below the
+    // image." never rendered, just an empty content area.
+    content: options.content || element.dataset.content || element.getAttribute('content') || element.innerHTML,
     ...options
   };
 
@@ -814,7 +833,8 @@ export function cardvideo(element, options = {}) {
     // deterministic regardless of load success/failure, instead of falling
     // back to the browser's intrinsic video default (~300x150) (#482).
     aspect: getAttr(element, options, 'aspect') || '16/9',
-    content: options.content || element.dataset.content || element.innerHTML,
+    // #608: same missing getAttribute('content') gap as cardimage() above.
+    content: options.content || element.dataset.content || element.getAttribute('content') || element.innerHTML,
     ...options
   };
 
