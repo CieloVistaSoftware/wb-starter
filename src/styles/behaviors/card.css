@@ -317,6 +317,18 @@ wb-card.wb-card--auto,
   border: 1px solid var(--card-glass-border);
   backdrop-filter: blur(16px);
   -webkit-backdrop-filter: blur(16px);
+  /* John: "the glass effect is not working on my cell phone." A handful of
+     mobile browsers (some mobile Safari/Chrome versions) report
+     backdrop-filter as SUPPORTED (so @supports below correctly leaves this
+     rule active) but still fail to actually render the blur unless the
+     element is forced onto its own GPU compositing layer first --
+     transform/will-change is the standard trigger for that. Harmless no-op
+     everywhere backdrop-filter already renders correctly; can't be
+     confirmed fixed without a real device (I don't have access to test on
+     one), so this is the well-known fix for the symptom, not a live-verified
+     one -- flag if it's still not showing after this. */
+  will-change: backdrop-filter;
+  transform: translateZ(0);
 }
 
 .wb-card--glass::before {
