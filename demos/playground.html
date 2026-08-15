@@ -184,6 +184,297 @@
       line-height: 1.6; overflow-x: auto;"></div>
   </div>
 
+  <!-- ═══════════════════════════════════════════════════════════════════
+       🧩 Component Gallery — 50 static <wb-demo> examples
+       Real components from src/wb-viewmodels/ + src/wb-models/*.schema.json,
+       showcasing genuine attribute permutations across many families
+       (feedback, forms, semantics/data, overlays, navigation, effects,
+       buttons, misc). Distinct from the interactive Examples dropdown
+       above (which loads generated markup into the live editor) — this
+       section is fixed, checked-in markup per docs/standards/
+       DEMOS-AND-DOCS-STANDARDS.md (every example in its own <wb-demo>,
+       vertical stacking, no code wrapping, real image/audio URLs).
+       ═══════════════════════════════════════════════════════════════════ -->
+  <section id="pg-gallery" style="margin-top: 2rem;">
+    <h2>🧩 Component Gallery</h2>
+    <p class="pg-sub">50 more <code>&lt;wb-demo&gt;</code> examples, covering feedback, forms,
+      semantics, overlays, navigation, effects, buttons, and misc components.</p>
+
+    <h3>Feedback</h3>
+
+    <wb-demo>
+      <wb-alert variant="warning" title="Session expiring" message="You will be signed out in 5 minutes." dismissible></wb-alert>
+    </wb-demo>
+
+    <wb-demo>
+      <wb-alert variant="error" icon="🔥" title="Build failed" message="Three tests did not pass."></wb-alert>
+    </wb-demo>
+
+    <wb-demo>
+      <wb-badge label="Featured" variant="purple" pill glow></wb-badge>
+    </wb-demo>
+
+    <wb-demo>
+      <wb-badge variant="success" dot></wb-badge>
+    </wb-demo>
+
+    <wb-demo>
+      <wb-avatar src="https://picsum.photos/seed/pg-avatar-1/150/150" name="Jordan Lee" status="online" shape="square"></wb-avatar>
+    </wb-demo>
+
+    <wb-demo>
+      <wb-avatar initials="RM" size="2xl" bordered></wb-avatar>
+    </wb-demo>
+
+    <wb-demo>
+      <wb-spinner size="lg" variant="success" speed="fast"></wb-spinner>
+    </wb-demo>
+
+    <wb-demo>
+      <wb-progress value="72" variant="info" striped label="Syncing" show-value></wb-progress>
+    </wb-demo>
+
+    <wb-demo>
+      <wb-progress indeterminate></wb-progress>
+    </wb-demo>
+
+    <wb-demo events="wb:chip:remove">
+      <wb-chip label="TypeScript" icon="🔷" variant="primary" dismissible></wb-chip>
+    </wb-demo>
+
+    <h3>Forms</h3>
+
+    <wb-demo>
+      <fieldset>
+        <legend>Notification channels</legend>
+        <label><input type="checkbox" variant="success" checked> Email</label>
+        <label><input type="checkbox" variant="success" checked> SMS</label>
+        <label><input type="checkbox" variant="success"> Push</label>
+      </fieldset>
+    </wb-demo>
+
+    <wb-demo>
+      <fieldset>
+        <legend>Billing cycle</legend>
+        <label><input type="radio" name="pg-billing" variant="info" checked> Monthly</label>
+        <label><input type="radio" name="pg-billing" variant="info"> Annual</label>
+        <label><input type="radio" name="pg-billing" variant="info"> Custom</label>
+      </fieldset>
+    </wb-demo>
+
+    <wb-demo events="wb:switch:change">
+      <wb-switch label="Auto-renew" variant="primary" size="lg" label-position="start" checked></wb-switch>
+    </wb-demo>
+
+    <wb-demo>
+      <wb-select label="Country" searchable clearable placeholder="Choose one…" options='[{"value":"us","label":"United States"},{"value":"ca","label":"Canada"},{"value":"mx","label":"Mexico"},{"value":"uk","label":"United Kingdom"}]'></wb-select>
+    </wb-demo>
+
+    <wb-demo>
+      <textarea variant="default" autosize show-count max-length="140" rows="2" placeholder="What's on your mind? (140 char limit)"></textarea>
+    </wb-demo>
+
+    <wb-demo>
+      <input x-masked mask="(999) 999-9999" x-label="Phone number" placeholder="(000) 000-0000">
+    </wb-demo>
+
+    <wb-demo events="wb:tags:add wb:tags:remove">
+      <input x-tags placeholder="Type a skill and press Enter…">
+    </wb-demo>
+
+    <wb-demo events="wb:colorpicker:change">
+      <input x-colorpicker value="#22c55e">
+    </wb-demo>
+
+    <wb-demo events="wb:otp:input">
+      <div x-otp length="4"></div>
+    </wb-demo>
+
+    <wb-demo events="wb:autocomplete:select">
+      <input x-autocomplete items="JavaScript,TypeScript,Python,Rust,Go,Swift" placeholder="Start typing a language…">
+    </wb-demo>
+
+    <h3>Semantics &amp; Data</h3>
+
+    <wb-demo>
+      <wb-table
+        bordered
+        compact
+        headers="Task,Owner,Sprint,Status"
+        rows='[
+          ["Refactor auth flow","P. Patel","24.3","In Progress"],
+          ["Write onboarding docs","M. Webb","24.3","Done"],
+          ["Fix Safari layout bug","D. Ramirez","24.4","Open"],
+          ["Add dark mode toggle","A. Osei","24.4","In Progress"]
+        ]'>
+      </wb-table>
+    </wb-demo>
+
+    <wb-demo events="wb:table:select">
+      <wb-table
+        selectable
+        headers="Server,Region,CPU,Status"
+        rows='[
+          ["web-01","us-east","34%","Healthy"],
+          ["web-02","us-east","78%","Healthy"],
+          ["db-01","us-west","12%","Healthy"],
+          ["cache-01","eu-west","91%","Degraded"]
+        ]'>
+      </wb-table>
+    </wb-demo>
+
+    <wb-demo>
+      <wb-details summary="What is a wb-* behavior?" variant="bordered">
+        <p>A behavior is a plain function <code>(element, options) =&gt; cleanup</code> applied to
+        an element — composition, never a class hierarchy.</p>
+      </wb-details>
+    </wb-demo>
+
+    <wb-demo>
+      <wb-timeline items="Kickoff,Design Review,Beta,GA Launch"></wb-timeline>
+    </wb-demo>
+
+    <wb-demo>
+      <video controls width="480" src="https://www.w3schools.com/html/mov_bbb.mp4"></video>
+    </wb-demo>
+
+    <wb-demo>
+      <wb-audio src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-3.mp3"></wb-audio>
+    </wb-demo>
+
+    <wb-demo events="wb:rating:change">
+      <wb-rating value="4" max="5" icon="⭐"></wb-rating>
+    </wb-demo>
+
+    <wb-demo>
+      <div x-countdown date="2027-01-01T00:00:00" format="auto"></div>
+    </wb-demo>
+
+    <h3>Overlays</h3>
+
+    <wb-demo>
+      <wb-modal modal-title="Component composition" modal-content="Every wb-* element is built from plain behavior functions applied to real HTML — no base classes, no shadow DOM.">See how it works</wb-modal>
+    </wb-demo>
+
+    <wb-demo>
+      <wb-drawer position="bottom" variant="push" title="Filters" content="Filter controls would live here.">Open filter panel</wb-drawer>
+    </wb-demo>
+
+    <wb-demo>
+      <wb-dialog title="Delete project?" size="lg" variant="centered" id="pg-gallery-dialog">
+        <p>This will permanently remove the project and all of its data.</p>
+      </wb-dialog>
+    </wb-demo>
+
+    <wb-demo>
+      <button x-popover popover-title="Keyboard shortcut" popover-content="Press Ctrl+K to open the command palette." position="right">What's this?</button>
+    </wb-demo>
+
+    <wb-demo events="wb:prompt:ok wb:prompt:cancel">
+      <button x-prompt prompt-title="Rename project" prompt-message="Enter a new name:" default-value="Untitled Project">Rename…</button>
+    </wb-demo>
+
+    <h3>Navigation &amp; Layout</h3>
+
+    <wb-demo full-width>
+      <wb-navbar brand="Acme Analytics" variant="dark">
+        <a href="#">Dashboard</a>
+        <a href="#">Reports</a>
+        <a href="#">Settings</a>
+      </wb-navbar>
+    </wb-demo>
+
+    <wb-demo full-width>
+      <wb-header icon="🚀" title="Playground" subtitle="wb-starter component gallery" badge="v3"></wb-header>
+    </wb-demo>
+
+    <wb-demo full-width>
+      <wb-footer brand="Acme Analytics" copyright="© 2026 Acme Analytics"></wb-footer>
+    </wb-demo>
+
+    <wb-demo events="wb:tabs:change">
+      <wb-tabs>
+        <div tab="Overview">High-level project summary and recent activity.</div>
+        <div tab="Activity">A chronological feed of every change made this week.</div>
+        <div tab="Settings">Project name, visibility, and danger-zone actions.</div>
+      </wb-tabs>
+    </wb-demo>
+
+    <h3>Effects</h3>
+
+    <wb-demo>
+      <button x-confetti count="60" label="🎉 Celebrate a launch"></button>
+    </wb-demo>
+
+    <wb-demo>
+      <div x-stagelight variant="spotlight" color="#f59e0b" intensity="0.6" size="360px">Spotlight effect behind this text</div>
+    </wb-demo>
+
+    <wb-demo>
+      <button x-ripple style="padding: 0.75rem 1.5rem;">Click for a ripple</button>
+    </wb-demo>
+
+    <wb-demo>
+      <img x-lightbox width="220" src="https://picsum.photos/seed/pg-lightbox/900/600" alt="Click to enlarge">
+    </wb-demo>
+
+    <h3>Buttons</h3>
+
+    <wb-demo>
+      <wb-button label="Create project" variant="primary" size="lg" icon="plus"></wb-button>
+    </wb-demo>
+
+    <wb-demo>
+      <wb-button label="Export data" variant="outline" size="sm" icon="download" icon-position="end"></wb-button>
+    </wb-demo>
+
+    <wb-demo>
+      <wb-button label="Saving…" variant="success" loading full-width></wb-button>
+    </wb-demo>
+
+    <h3>Misc</h3>
+
+    <wb-demo>
+      <wb-article
+        title="The Future of Web Standards"
+        subtitle="A field guide to the platform ahead"
+        category="Web Platform"
+        author="Maya Patel"
+        date="2026-08-01"
+        reading-time="8 min read"
+        image="https://picsum.photos/seed/pg-article/800/320"
+        featured>
+      </wb-article>
+    </wb-demo>
+
+    <wb-demo>
+      <wb-search placeholder="Search the docs…" variant="glass" instant></wb-search>
+    </wb-demo>
+
+    <wb-demo>
+      <wb-formrow data-inline>
+        <input type="text" placeholder="City">
+        <input type="text" placeholder="ZIP code">
+      </wb-formrow>
+    </wb-demo>
+
+    <wb-demo>
+      <nav x-breadcrumb items="Home,Projects,Acme Analytics,Settings"></nav>
+    </wb-demo>
+
+    <wb-demo>
+      <wb-fieldset data-collapsible>
+        <legend>Advanced options</legend>
+        <p>Retry attempts, timeout thresholds, and other rarely-changed settings live here.</p>
+      </wb-fieldset>
+    </wb-demo>
+
+    <wb-demo events="wb:stepper:change">
+      <div x-stepper data-value="2" data-min="0" data-max="10"></div>
+    </wb-demo>
+
+  </section>
+
   <script type="module">
     import WB from '../src/core/wb-lazy.js';
     import { formatHtml } from '../src/wb-viewmodels/demo.js';
@@ -526,6 +817,12 @@
     // hand-rolled select). It lives outside #pg-preview, so it isn't wiped by
     // render()'s innerHTML swap; scan it once, here, on load.
     ensureWB().then(() => WB.scan(document.getElementById('pg-themecontrol'), { eager: true }));
+
+    // Component Gallery (#pg-gallery) — 50 static <wb-demo> examples below
+    // the interactive playground. Lives outside #pg-preview too, so it must
+    // be scanned separately, once, on load (same reasoning as the theme
+    // control above).
+    ensureWB().then(() => WB.scan(document.getElementById('pg-gallery'), { eager: true }));
 
     // ── Example sets (loaded from the Examples dropdown) ──────────────────────
     const V = ['default', 'primary', 'success', 'danger', 'warning', 'info'];
