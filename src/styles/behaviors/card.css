@@ -450,7 +450,7 @@ wb-card.wb-card--auto,
 .wb-card--elevated {
   box-shadow: var(--shadow-elevated, 0 8px 24px rgba(0,0,0,0.4));
   border-color: transparent;
-  background: var(--bg-elevated) !important;
+  background: var(--bg-elevated);
 }
 
 /* #488: glass + elevated collide -- both `.wb-card--glass` (background:
