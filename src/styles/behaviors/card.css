@@ -435,11 +435,22 @@ wb-card.wb-card--auto,
    MODIFIERS
    ═══════════════════════════════════════════════════════════════════════════ */
 
-/* Elevated - lighter background to appear raised */
+/* Elevated - lighter background to appear raised.
+   John: "cards on darker themes do not show the elevate effect at all" --
+   card.js sets background as an INLINE style on every card (style="...
+   background: var(--bg-secondary...)"), which always beats this class
+   rule regardless of specificity -- .wb-card--elevated's own background
+   never actually applied, confirmed live (computed background was a
+   near-invisible 8%-opacity overlay, not --bg-elevated's real color).
+   !important is the only way a stylesheet rule can win against an inline
+   style. Also bumped the shadow's own opacity/spread -- a plain
+   rgba(0,0,0,0.15) drop shadow has almost no contrast sitting on an
+   already-dark page background; a stronger, larger shadow reads as
+   elevation even without much color contrast to work with. */
 .wb-card--elevated {
-  box-shadow: var(--shadow-elevated, 0 4px 12px rgba(0,0,0,0.15));
+  box-shadow: var(--shadow-elevated, 0 8px 24px rgba(0,0,0,0.4));
   border-color: transparent;
-  background: var(--bg-elevated);
+  background: var(--bg-elevated) !important;
 }
 
 /* #488: glass + elevated collide -- both `.wb-card--glass` (background:
