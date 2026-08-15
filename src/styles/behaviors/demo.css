@@ -337,20 +337,27 @@ wb-demo > .x-pre-wrapper {
 
 /* #388: per-card doc-link "badge" -- attached directly onto an individual
    wb-card* element (see demo.js's attachCardDocLink) instead of the shared
-   .wb-demo__links line above. Sits at the card's own top-right corner,
-   slightly overlapping the border, so it's clearly a separate "meta/docs"
-   affordance -- never inside the header content flow, never the same shape
+   .wb-demo__links line above. Sits ABOVE the element's own top-right
+   corner, never inside the header content flow, never the same shape
    or position as a card's own .wb-card__badge (card.js STYLE_BADGE), which
    sits inset within the header instead. position:absolute is !important
    because `.wb-card--glass > *` (card.css) sets position:relative on every
    direct child of a glass-variant card, which would otherwise outrank this
    single-class rule and break the corner placement. Every wb-card* element
    is `position: relative` (card.css `.wb-card`), so this anchors correctly
-   regardless of card type. */
+   regardless of card type.
+
+   John: "Make sure all help links are off the element by at least .5rem.
+   As they are now they are in the way." -- this used to sit AT the corner,
+   slightly overlapping the border (top/right: -0.5rem), which worked fine
+   for large cards but covered a meaningful chunk of small elements (e.g.
+   wb-badge, ~1.5-2rem tall) -- the icon and the thing it labels were
+   nearly the same size. Moved fully above the element with real clearance
+   instead of overlapping it, on any size component. */
 .wb-demo__card-doc-link {
   position: absolute !important;
-  top: -0.5rem;
-  right: -0.5rem;
+  top: -2.25rem;
+  right: 0;
   z-index: 5;
   display: flex;
   align-items: center;
