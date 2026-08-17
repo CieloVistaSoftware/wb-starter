@@ -375,7 +375,11 @@ function generateIndexHtml(siteSchema, pageResults) {
   lines.push('  <link rel="stylesheet" href="../../src/styles/themes.css">');
   lines.push('  <link rel="stylesheet" href="../../src/styles/site.css">');
   lines.push('  <style>');
-  lines.push('    .site-index { max-width: 960px; margin: 2rem auto; }');
+  // #628: padding was hand-added to the generated index.html (2f7076d) but
+  // never backfilled into this template, so the next regen (0e3f3b2) silently
+  // dropped it back to zero inner padding again. Baking it in here so a future
+  // regen can't repeat that regression.
+  lines.push('    .site-index { max-width: 960px; margin: 2rem auto; padding: var(--space-xl); }');
   lines.push('    .page-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 1.5rem; margin-top: 2rem; }');
   lines.push('    .page-card { background: var(--surface-color, #1e1e1e); border: 1px solid var(--border-color, #333); border-radius: 12px; padding: 1.5rem; transition: transform 0.2s, box-shadow 0.2s; }');
   lines.push('    .page-card:hover { transform: translateY(-2px); box-shadow: 0 8px 24px rgba(0,0,0,0.3); }');
@@ -562,6 +566,12 @@ function generatePageHtml(pageSchema) {
       // Same fix demos/playground.html already applies for the same reason.
       lines.push('    await WB.scan(document.body, { eager: true });');
       lines.push(`    console.log('${pageSchema.title} initialized');`);
+      // #628: hand-added to 7 of 8 demos/site/*.html pages by 5e57bc0 (missed
+      // feedback.html) but never backfilled here -- a regen from this template
+      // would silently drop it again, the same way 0e3f3b2's regen dropped
+      // .site-index's padding. tests/regression/demos-site-page-padding.spec.ts
+      // polls this flag to know the page is ready.
+      lines.push('    window.__WB_DEMO_INITIALIZED__ = true;');
       lines.push('  </script>');
     }
   }

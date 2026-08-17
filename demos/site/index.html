@@ -8,7 +8,13 @@
   <link rel="stylesheet" href="../../src/styles/themes.css">
   <link rel="stylesheet" href="../../src/styles/site.css">
   <style>
-    .site-index { max-width: 960px; margin: 2rem auto; }
+    /* #628: max-width/margin:auto centers the block but adds no INNER
+       padding -- on a narrow viewport the .page-card grid sits flush
+       against the viewport edge. Matches DEMOS-AND-DOCS-STANDARDS.md #13
+       (>=1rem spacing from any edge). This exact padding was added once
+       already in 2f7076d, then silently dropped by 0e3f3b2's unrelated
+       generator regen (the generator template never had it baked in). */
+    .site-index { max-width: 960px; margin: 2rem auto; padding: var(--space-xl); }
     .site-back-link { position: absolute; top: 1rem; left: 1rem; }
     .site-back-link a { color: var(--text-secondary, #aaa); text-decoration: none; font-size: 0.875rem; transition: color 0.2s; }
     .site-back-link a:hover { color: var(--text-primary, #fff); text-decoration: underline; }
