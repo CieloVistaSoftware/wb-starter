@@ -241,12 +241,32 @@ function findBehaviorDocFile(manifest, name) {
 // behavior, so watch for exactly that: if the link goes missing, put it
 // back. Idempotent (checks for an existing link first), so it settles after
 // at most one heal and stops mutating on its own re-insert.
-function attachInstanceDocLink(hostEl, file, label, root) {
+function attachInstanceDocLink(hostEl, file, label, root, anchorEl) {
     const href = root + 'public/doc-viewer.html?file=' + encodeURIComponent('docs/' + file);
     const title = `${label} docs`;
 
+    // #630: John, screenshot -- a single shrink-to-fit demo (Standard §7,
+    // e.g. a bare <wb-avatar initials="JD">, maybe 64px wide) anchored the
+    // badge to hostEl's OWN box, same as any other component -- but that box
+    // is exactly as small as the avatar itself, so the badge landed
+    // overlapping the avatar's own circle instead of sitting clear of it.
+    // "it should be in a element the same width or more than the code
+    // element ... but in the top right hand corner": the code panel below
+    // is only ever as narrow as hostEl for a MULTI-item grid (each item
+    // roughly fills its own track); for a single-item grid, demo.css's own
+    // shrink-to-fit sizes the OUTER <wb-demo> to the WIDER of (control,
+    // code panel) -- see wb-demo:has(> .wb-demo__grid--cols-1 > :only-child)
+    // -- while `.wb-demo__grid` (and hostEl within it) can still be much
+    // narrower. Anchoring to that outer element instead, when the caller
+    // identifies hostEl as the grid's sole child, puts the badge at the
+    // far corner of a box that's guaranteed at least as wide as the code
+    // panel, never on top of a small control. Multi-item grids are
+    // unaffected -- anchorEl defaults to hostEl, unchanged.
+    const anchor = anchorEl || hostEl;
+    const isOuterAnchor = anchor !== hostEl;
+
     // #295: the badge is positioned top-right via `position: absolute`
-    // (demo.css), which anchors to hostEl ONLY if hostEl itself is a
+    // (demo.css), which anchors to `anchor` ONLY if it's itself a
     // positioning context. wb-card already sets position:relative in its
     // own CSS, so this was invisible there -- but #390 generalized this
     // badge to EVERY wb-* grid child, and most (wb-spinner, wb-badge,
@@ -258,14 +278,15 @@ function attachInstanceDocLink(hostEl, file, label, root) {
     // 375px on docs/V3-GUIDE.md's embedded <wb-demo>. Force a positioning
     // context only when one doesn't already exist, so this is a no-op for
     // every component (like wb-card) that already provides one.
-    if (getComputedStyle(hostEl).position === 'static') {
-        hostEl.style.position = 'relative';
+    if (getComputedStyle(anchor).position === 'static') {
+        anchor.style.position = 'relative';
     }
 
     const build = () => {
-        if (hostEl.querySelector(':scope > .wb-demo__card-doc-link')) return;
+        if (anchor.querySelector(':scope > .wb-demo__card-doc-link')) return;
         const link = document.createElement('a');
         link.className = 'wb-demo__card-doc-link';
+        if (isOuterAnchor) link.classList.add('wb-demo__card-doc-link--outer');
         link.href = href;
         link.target = '_blank';
         link.rel = 'noopener';
@@ -275,31 +296,33 @@ function attachInstanceDocLink(hostEl, file, label, root) {
         // #593: for an x-behavior (popover/confirm/prompt/lightbox/drawer/...)
         // hostEl IS the same element carrying the behavior's own raw
         // `element.onclick = (e) => { e.preventDefault(); ... }` handler --
-        // this badge is appended as hostEl's DOM CHILD (never a sibling), so
+        // this badge is appended as anchor's DOM CHILD (never a sibling), so
         // a click on it bubbles straight into that handler same as any other
-        // click on the button. Several of those handlers (overlay.js's
-        // confirm()/prompt()/lightbox()) don't check e.target before calling
-        // e.preventDefault() unconditionally, which silently kills the
-        // anchor's own navigation -- confirmed live: clicking the "Confirm
-        // Dialog" demo's 📖 badge opened the confirm overlay instead of the
-        // doc, no new tab, ever. Stopping propagation here (target phase,
-        // before it bubbles to hostEl) keeps the badge a fully independent
-        // control -- its own default action (navigate, target=_blank) still
-        // fires normally; it just never reaches hostEl's click handling.
+        // click on the button, WHEN anchor === hostEl. Several of those
+        // handlers (overlay.js's confirm()/prompt()/lightbox()) don't check
+        // e.target before calling e.preventDefault() unconditionally, which
+        // silently kills the anchor's own navigation -- confirmed live:
+        // clicking the "Confirm Dialog" demo's 📖 badge opened the confirm
+        // overlay instead of the doc, no new tab, ever. Stopping propagation
+        // here (target phase, before it bubbles to hostEl) keeps the badge a
+        // fully independent control -- its own default action (navigate,
+        // target=_blank) still fires normally; it just never reaches
+        // hostEl's click handling. Harmless no-op when anchor !== hostEl
+        // (nothing to stop it from reaching).
         link.addEventListener('click', (e) => e.stopPropagation());
-        hostEl.appendChild(link);
+        anchor.appendChild(link);
     };
 
     build();
 
     const observer = new MutationObserver(() => {
-        if (!hostEl.isConnected) {
+        if (!anchor.isConnected) {
             observer.disconnect();
             return;
         }
         build();
     });
-    observer.observe(hostEl, { childList: true });
+    observer.observe(anchor, { childList: true });
     // Belt-and-suspenders: every lazy injection settles well within this —
     // never leave the observer running indefinitely.
     setTimeout(() => observer.disconnect(), 8000);
@@ -648,11 +671,18 @@ export async function demo(element, options = {}) {
         const manifest = await loadDocsManifest().catch(() => null);
         const root = siteRoot();
 
+        // #630: matches demo.css's own :only-child shrink-to-fit condition --
+        // when hostEl IS the grid's one and only direct child, anchor its
+        // doc-link to `element` (the outer <wb-demo>, sized to the WIDER of
+        // control/code panel) instead of to hostEl's own possibly-tiny box.
+        const soleGridChild = grid.children.length === 1 ? grid.children[0] : null;
+        const anchorFor = (hostEl) => (hostEl === soleGridChild ? element : hostEl);
+
         perInstanceChildren.forEach((hostEl) => {
             const comp = hostEl.tagName.slice(3).toLowerCase(); // WB-CARDHERO -> cardhero
             const file = findDocFile(manifest, comp);
             if (!file) return; // never a dead link
-            attachInstanceDocLink(hostEl, file, `wb-${comp}`, root);
+            attachInstanceDocLink(hostEl, file, `wb-${comp}`, root, anchorFor(hostEl));
         });
 
         // John (reported repeatedly): pages/behaviors.html's demos are
@@ -672,7 +702,7 @@ export async function demo(element, options = {}) {
             const hosts = grid.querySelectorAll(`[x-${name}], [x-as-${name}]`);
             if (!hosts.length) return; // name matched in source text but no live element carries it
             resolvedXBehaviorNames.add(name);
-            hosts.forEach((hostEl) => attachInstanceDocLink(hostEl, file, `x-${name}`, root));
+            hosts.forEach((hostEl) => attachInstanceDocLink(hostEl, file, `x-${name}`, root, anchorFor(hostEl)));
         });
 
         const linkedComponents = sharedComponents

@@ -108,17 +108,36 @@ export function badge(element, options = {}) {
   if (glow) element.classList.add('wb-badge--glow');
 
   if (dot) {
-    element.textContent = ''; // a dot badge has no text
+    element.textContent = ''; // clear first -- rebuilt below from scratch
     // #415: dot + removable are NOT mutually exclusive -- dot = a small
     // colored indicator instead of a text label, removable = has a
-    // close/remove affordance. When both are set, the whole-element 8px
-    // circle-collapse (badge.css `.wb-badge--dot`) is scoped off via
-    // `:not(.wb-badge--removable)` so there's room for the remove button
-    // built below; render the dot itself as a small inline indicator here.
-    if (removable && !element.querySelector('.wb-badge__dot')) {
-      const dotEl = document.createElement('span');
-      dotEl.className = 'wb-badge__dot';
-      element.appendChild(dotEl);
+    // close/remove affordance. When either is set, the whole-element 8px
+    // circle-collapse (badge.css `.wb-badge--dot`) is scoped off (via
+    // `:not(.wb-badge--removable):not(:has(.wb-badge__dot-label))`) so
+    // there's room for the indicator plus whatever else applies; render the
+    // dot itself as a small inline indicator here.
+    //
+    // #631: a bare `dot` unconditionally discarded any `label` too -- "a dot
+    // badge has no text" was true by design for a pure status indicator
+    // (docs' own properties table: "Renders as a small dot indicator
+    // instead of text"), but John: "Add text to the dot" -- a labeled dot
+    // ("● Live", "● 3 new") is a real, common pattern this behavior had no
+    // way to express. `dot` + `label` together now render both: a small
+    // colored dot indicator, then the label text next to it -- still
+    // compact, no longer silently textless.
+    const hasLabel = label != null && label !== '';
+    if (removable || hasLabel) {
+      if (!element.querySelector('.wb-badge__dot')) {
+        const dotEl = document.createElement('span');
+        dotEl.className = 'wb-badge__dot';
+        element.appendChild(dotEl);
+      }
+      if (hasLabel) {
+        const labelEl = document.createElement('span');
+        labelEl.className = 'wb-badge__dot-label';
+        labelEl.textContent = label;
+        element.appendChild(labelEl);
+      }
     }
   } else {
     // Render the `label` attribute as the badge text — but only if the author

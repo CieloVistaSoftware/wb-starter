@@ -95,11 +95,12 @@ wb-badge,
 .wb-badge--pill { border-radius: 9999px; }
 
 /* Dot — collapses the whole element into a small colored circle. Scoped off
-   of `.wb-badge--removable` (#415): a dot+removable badge needs room for the
-   × button built by feedback.js's badge(), so it can't collapse to 8px --
-   instead it keeps normal badge sizing/rounding (respects size/pill) and
-   renders the dot as the `.wb-badge__dot` inline indicator below. */
-.wb-badge--dot:not(.wb-badge--removable) {
+   of `.wb-badge--removable` (#415) and, since #631, off of any dot badge
+   that also got a `.wb-badge__dot-label` (dot + `label`) -- both need real
+   room (a remove button, or label text) so neither can collapse to 8px --
+   instead they keep normal badge sizing/rounding (respects size/pill) and
+   render the dot as the `.wb-badge__dot` inline indicator below. */
+.wb-badge--dot:not(.wb-badge--removable):not(:has(.wb-badge__dot-label)) {
   width: 8px;
   min-width: 8px; /* the base rule's 5rem min-width is for labeled badges;
     a dot is a status indicator, not a label, and min-width beats a smaller
@@ -111,8 +112,19 @@ wb-badge,
   font-size: 0;
 }
 
+/* #631: lay out the dot indicator + label text (when present) with real
+   gap between them -- without this, a labeled dot badge is inline-flex
+   only via the `.wb-badge--removable` rule below, which doesn't apply when
+   there's no remove button. Harmless on the collapsed (bare-dot, no label,
+   no removable) case above: empty, font-size:0, nothing to lay out. */
+.wb-badge--dot {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35em;
+}
+
 /* Dot indicator — used in place of the whole-element collapse above when
-   dot + removable are combined (#415). */
+   dot + removable and/or dot + label are combined (#415, #631). */
 .wb-badge__dot {
   display: inline-block;
   width: 8px;

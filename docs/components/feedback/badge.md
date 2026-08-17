@@ -21,7 +21,7 @@ Small label for status indicators, counts, or categories -- with color variants,
 | `variant` | string | `"default"` | Color: `default`, `primary`, `secondary`, `success`, `warning`, `error`, `info`, `glass`, `gradient` |
 | `size` | string | `"md"` | `xs`, `sm`, `md`, `lg` |
 | `pill` | boolean | `false` | Fully rounded shape |
-| `dot` | boolean | `false` | Renders as a small dot indicator instead of text |
+| `dot` | boolean | `false` | Renders as a small dot indicator. Bare `dot` alone has no text; `dot` + `label` shows both the dot and the label text together (e.g. "● Live") |
 | `outline` | boolean | `false` | Transparent background with a colored border/text |
 | `removable` | boolean | `false` | Adds a × button that removes the badge |
 | `glow` | boolean | `false` | Soft pulsing halo in the badge's own variant color |
@@ -49,9 +49,9 @@ Small label for status indicators, counts, or categories -- with color variants,
 ### Pill, Outline, Dot
 
 ```html
-<wb-badge label="5" variant="primary" pill></wb-badge>
+<wb-badge label="Pill" variant="primary" pill></wb-badge>
 <wb-badge label="Outline" variant="primary" outline></wb-badge>
-<wb-badge variant="success" dot></wb-badge>
+<wb-badge label="Live" variant="success" dot></wb-badge>
 ```
 
 ### Removable
@@ -106,8 +106,9 @@ Small label for status indicators, counts, or categories -- with color variants,
 | `.wb-badge--glass` | `variant="glass"` | Translucent, blurred, animated sheen |
 | `.wb-badge--{xs,sm,md,lg}` | `size` | Padding/font-size scale |
 | `.wb-badge--pill` | `pill` | Full border radius |
-| `.wb-badge--dot` | `dot` | Collapses to an 8px colored circle (unless also `removable`) |
-| `.wb-badge__dot` | `dot` + `removable` | Small inline dot indicator (when the whole-element collapse is skipped) |
+| `.wb-badge--dot` | `dot` | Collapses to an 8px colored circle (unless also `removable` or `label`) |
+| `.wb-badge__dot` | `dot` + (`removable` or `label`) | Small inline dot indicator (when the whole-element collapse is skipped) |
+| `.wb-badge__dot-label` | `dot` + `label` | The label text shown next to the dot indicator |
 | `.wb-badge--outline` | `outline` | Transparent background, colored border |
 | `.wb-badge--removable` | `removable` | Adds spacing for the remove button |
 | `.wb-badge--glow` | `glow` | Pulsing halo in the badge's own color |

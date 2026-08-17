@@ -420,6 +420,24 @@ wb-badge > .wb-demo__card-doc-link {
   transform: translateY(-50%);
 }
 
+/* #630: John, screenshot on a single shrink-to-fit demo (a small
+   <wb-avatar>) -- the badge, anchored to hostEl's own tiny box like any
+   other component, sat directly on top of the avatar's circle instead of
+   clear of it. "it should be in a element the same width or more than the
+   code element ... but in the top right hand corner" -- demo.js now
+   anchors a SOLE grid child's badge to the outer <wb-demo> instead of the
+   small control itself (see attachInstanceDocLink's anchorEl param and the
+   #630 comment there) -- <wb-demo> is sized to the WIDER of (control, code
+   panel) for single-item demos (see wb-demo:has(> .wb-demo__grid--cols-1 >
+   :only-child) above), so its own top-right corner is guaranteed at least
+   as wide as the code panel, never on top of a small control. wb-demo's
+   own 1rem padding (base rule, top of this file) keeps the badge inset
+   from the true outer edge without any extra offset needed here. */
+.wb-demo__card-doc-link--outer {
+  top: 0;
+  right: 0;
+}
+
 /* #385: "Events" section -- optional, only rendered when a demo declares
    `<wb-demo events="wb:switch:change">`. Heading + example addEventListener
    code sample (styled like the source panel above it) + a live log panel
