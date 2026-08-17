@@ -3,6 +3,27 @@
   <p>What's actually live on this site right now — every push to <code>main</code> deploys straight to <a href="https://cielovistasoftware.github.io/wb-starter/" target="_blank" rel="noopener">cielovistasoftware.github.io/wb-starter</a>, so this list is the real changelog, not a promise of a future release.</p>
 </div>
 
+<section id="whats-new-2026-08-16">
+  <h2>2026-08-16</h2>
+  <ul>
+    <li>Fixed <code>docs/components/feedback/badge.md</code>'s "Color Variants" section rendering as a single stacked column with a huge empty gap — an auto-promoted fenced code block with several children and no way to declare <code>columns</code> in markdown source always collapsed to <code>cols-1</code>, regardless of how many children it actually had (#617).</li>
+    <li>Fixed every badge shown inside a <code>&lt;wb-demo&gt;</code> losing its <code>label</code> text entirely, rendering only the 📖 doc-link icon — the "children win over label" check was fooled by the doc-link icon itself, appended as a DOM child before the badge behavior ran (#618).</li>
+    <li>Fixed the doc-link icon overlapping badge label text on short hosts like <code>&lt;wb-badge&gt;</code> — its inset top-right position works for a card-sized host with a free corner, but a badge is shorter than the icon's own footprint (#619).</li>
+    <li>All badges now have a 5rem minimum width.</li>
+    <li>Fixed <code>&lt;button icon="..." loading&gt;</code> silently rendering no icon and no spinner on a native <code>&lt;button&gt;</code> — that logic was previously exclusive to <code>&lt;wb-button&gt;</code> (#622). Rewrote <code>docs/components/forms/button.md</code> to use only semantic <code>&lt;button&gt;</code>, no <code>&lt;wb-button&gt;</code>, relying on <code>autoInject</code>.</li>
+    <li>Fixed <code>docs/components/drawer.md</code>'s "With Data Attributes" example using <code>x-drawerLayout</code> (camelCase) — HTML lowercases it to a form that matches neither the registered <code>x-drawer-layout</code> dispatch key nor the unrelated <code>x-drawer</code> behavior, so the div silently never got enhanced (#620). Also removed a redundant "Usage" section that duplicated the exact same live example shown just above it (#621).</li>
+    <li>Rewrote <code>docs/components/cards/card.md</code> entirely to use semantic <code>&lt;article x-behavior="card"&gt;</code> instead of <code>&lt;wb-card&gt;</code> — no wb-* custom tags remain on the page. Fixed a real regression this surfaced: the generic badge/tooltip attribute dispatcher (a separate, intentional feature for things like <code>&lt;span badge="success"&gt;</code>) only ever excluded <code>wb-card*</code> custom TAG names from double-applying to card elements — a semantic <code>&lt;article x-behavior="card"&gt;</code> wasn't covered, so it picked up stray badge classes on the card root until the exclusion was extended (#625).</li>
+  </ul>
+</section>
+
+<section id="whats-new-2026-08-15">
+  <h2>2026-08-15</h2>
+  <ul>
+    <li><strong><code>autoInject</code> now defaults to <code>true</code> site-wide</strong> — a plain semantic element (<code>&lt;article&gt;</code>, <code>&lt;button&gt;</code>, <code>&lt;table&gt;</code>, ...) gets real component behavior automatically, zero extra markup required. A page can still opt out via <code>WB.init({ autoInject: false })</code>. This is the core architectural shift behind moving away from <code>wb-*</code> custom tags toward semantic HTML across the docs.</li>
+    <li>Published a retrospective on the week's most common error patterns (layout/CSS violations, placeholder assets, compliance-test process gaps, wb-demo source-extraction bugs, attribute-reading gaps) and codified 4 new standards rules from it, including a ban on placeholder asset paths and a requirement that broken media throw a real, loggable error instead of failing silently.</li>
+  </ul>
+</section>
+
 <section id="whats-new-2026-08-14">
   <h2>2026-08-14</h2>
   <ul>
