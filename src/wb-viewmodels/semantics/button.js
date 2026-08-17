@@ -139,6 +139,60 @@ function resolveIcon(name) {
   return ICONS[name.toLowerCase()] || name;
 }
 
+// #620: icon/loading rendering, factored out of the `isCustom` branch below
+// so a native <button icon="..." loading> gets the exact same treatment as
+// <wb-button icon="..." loading> instead of silently doing nothing. Native
+// <button size="..." variant="..."> already worked identically to
+// <wb-button> (both map to the same classes/attribute-selectors above) --
+// icon/loading were the only two properties still exclusive to the custom
+// tag, confirmed live: a native `<button icon="download">` rendered no icon
+// at all, and `loading` added no spinner and didn't disable the button.
+function applyIconAndLoading(element, options) {
+  const icon = options.icon || element.getAttribute('icon') || '';
+  const iconPosition = options.iconPosition || element.getAttribute('icon-position') || 'start';
+  const loading = options.loading ?? element.hasAttribute('loading');
+
+  if (element.hasAttribute('icon') && !icon) {
+    throw new Error(
+      'wb-button: icon attribute was set but no icon name was given. See the full icon library at demos/site/forms.html#button-icon-variants.'
+    );
+  }
+
+  if (loading) {
+    const spinner = document.createElement('span');
+    spinner.className = 'wb-button__spinner';
+    spinner.textContent = '⏳';
+    if (iconPosition === 'start' || iconPosition === 'left') {
+      element.insertBefore(spinner, element.firstChild);
+    } else {
+      element.appendChild(spinner);
+    }
+    // Native <button> has no `loading` visual of its own (unlike <wb-button>,
+    // styled purely via the `[loading]` attribute selector) -- opacity/cursor
+    // for it lives on `.wb-button[loading]` in BUTTON_CSS above, which
+    // matches a native button fine since it already carries `.wb-button`;
+    // `disabled` additionally blocks activation the same way the `isCustom`
+    // branch's onActivate/onKeydown guards already do for <wb-button>.
+    if (element.tagName !== 'WB-BUTTON') element.disabled = true;
+  }
+
+  if (icon && !loading) {
+    const iconEl = document.createElement('span');
+    iconEl.className = 'wb-button__icon';
+    const resolved = resolveIcon(icon);
+    if (resolved.startsWith('<svg')) {
+      iconEl.innerHTML = resolved;
+    } else {
+      iconEl.textContent = resolved;
+    }
+    if (iconPosition === 'start' || iconPosition === 'left') {
+      element.insertBefore(iconEl, element.firstChild);
+    } else {
+      element.appendChild(iconEl);
+    }
+  }
+}
+
 // --- Main behavior ---
 export function button(element, options = {}) {
   ensureStyles(element.ownerDocument);
@@ -161,50 +215,7 @@ export function button(element, options = {}) {
   if (isCustom) {
     // <wb-button> — CSS targets the tag directly. No inner button, no classes.
     // JS only handles icon injection and loading state.
-    const icon = options.icon || element.getAttribute('icon') || '';
-    const iconPosition = options.iconPosition || element.getAttribute('icon-position') || 'start';
-    const loading = options.loading ?? element.hasAttribute('loading');
-
-    // Explicitly set (author wrote icon or icon="") but resolves empty --
-    // distinct from simply omitting the attribute (that's the normal
-    // no-icon default, not an error). "" used to be a listed enum value in
-    // button.schema.json, which is why an auto-generated showcase demo used
-    // to render exactly this broken state with no feedback at all.
-    if (element.hasAttribute('icon') && !icon) {
-      // #436: WB.scan()'s own try/catch now routes this through the real
-      // error overlay (logError, wb.js) instead of a console.warn nobody
-      // reliably saw -- a plain throw is enough.
-      throw new Error(
-        'wb-button: icon attribute was set but no icon name was given. See the full icon library at demos/site/forms.html#button-icon-variants.'
-      );
-    }
-
-    if (loading) {
-      const spinner = document.createElement('span');
-      spinner.className = 'wb-button__spinner';
-      spinner.textContent = '\u23f3';
-      if (iconPosition === 'start' || iconPosition === 'left') {
-        element.insertBefore(spinner, element.firstChild);
-      } else {
-        element.appendChild(spinner);
-      }
-    }
-
-    if (icon && !loading) {
-      const iconEl = document.createElement('span');
-      iconEl.className = 'wb-button__icon';
-      const resolved = resolveIcon(icon);
-      if (resolved.startsWith('<svg')) {
-        iconEl.innerHTML = resolved;
-      } else {
-        iconEl.textContent = resolved;
-      }
-      if (iconPosition === 'start' || iconPosition === 'left') {
-        element.insertBefore(iconEl, element.firstChild);
-      } else {
-        element.appendChild(iconEl);
-      }
-    }
+    applyIconAndLoading(element, options);
 
     // Make it focusable and clickable
     if (!element.hasAttribute('tabindex')) element.setAttribute('tabindex', '0');
@@ -275,6 +286,8 @@ export function button(element, options = {}) {
   if (size) { const c = `wb-button--${size}`; element.classList.add(c); applied.push(c); }
   const variant = element.getAttribute('variant');
   if (variant) { const c = `wb-button--${variant}`; element.classList.add(c); applied.push(c); }
+
+  applyIconAndLoading(element, options);
 
   element.addEventListener('click', onActivate);
 

@@ -17,7 +17,9 @@ wb-badge,
 .wb-badge {
   display: inline-flex;
   align-items: center;
+  justify-content: center;
   width: fit-content;
+  min-width: 5rem;
   vertical-align: middle;
   padding: 0.25rem 0.5rem;
   font-size: 0.875rem;
@@ -99,6 +101,10 @@ wb-badge,
    renders the dot as the `.wb-badge__dot` inline indicator below. */
 .wb-badge--dot:not(.wb-badge--removable) {
   width: 8px;
+  min-width: 8px; /* the base rule's 5rem min-width is for labeled badges;
+    a dot is a status indicator, not a label, and min-width beats a smaller
+    width when both apply -- without this override it would render as an
+    empty 5rem pill instead of the intended 8px dot. */
   height: 8px;
   padding: 0;
   border-radius: 50%;

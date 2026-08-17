@@ -396,6 +396,23 @@ wb-demo > .x-pre-wrapper {
   border-color: var(--primary);
 }
 
+/* #619: a card is big enough that an inset top-right icon lands in empty
+   space; wb-badge (and any other short, pill-shaped host) has no such spare
+   corner -- the icon was sitting directly on top of the label text, and its
+   own 1.5rem height + 0.5rem top offset is taller than the badge itself.
+   Reserve room for it with extra right padding, and re-center it to the
+   badge's own (shorter) height instead of pinning it to the top. :has()
+   scopes this to instances that actually carry a doc-link (wb-demo pages),
+   leaving a standalone <wb-badge> untouched. */
+wb-badge:has(> .wb-demo__card-doc-link) {
+  padding-right: 2.25rem;
+}
+
+wb-badge > .wb-demo__card-doc-link {
+  top: 50%;
+  transform: translateY(-50%);
+}
+
 /* #385: "Events" section -- optional, only rendered when a demo declares
    `<wb-demo events="wb:switch:change">`. Heading + example addEventListener
    code sample (styled like the source panel above it) + a live log panel

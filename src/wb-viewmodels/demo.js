@@ -340,7 +340,22 @@ export async function demo(element, options = {}) {
         }
     }
 
-    const configuredCols = parseInt(options.columns || element.getAttribute('columns') || '1', 10);
+    // #617: the '1' default below was written for §7's single-item
+    // shrink-to-fit case, but Math.min(configuredCols, childCount) below
+    // applies it UNCONDITIONALLY -- an auto-promoted fenced block with
+    // several small top-level elements (e.g. badge.md's "Color Variants":
+    // 6 <wb-badge> tags, plain markdown, no <wb-demo columns="..."> to set)
+    // has no way to ever declare columns at all, so it always got forced to
+    // 1 -- 6 badges stacked one per row, each row full container width even
+    // though a badge is tiny, reading as a broken vertical column with a
+    // huge empty gap. Only default to the strict '1' when there's genuinely
+    // one child (or the caller explicitly asked for it); an undeclared
+    // multi-child block gets a real default so it can flow more than one
+    // per row.
+    const declaredCols = options.columns || element.getAttribute('columns');
+    const configuredCols = declaredCols
+        ? parseInt(declaredCols, 10)
+        : (element.children.length > 1 ? 3 : 1);
     // Standard §7: a demo is only as wide as what it renders — a single
     // narrow card wrapped in the default 3-column grid still stretched the
     // whole wb-demo to fill 3 columns' worth of width even though only 1

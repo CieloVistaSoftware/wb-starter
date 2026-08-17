@@ -1,24 +1,24 @@
 /**
- * autoInject's documented default is false ("semantic HTML stays semantic
- * until a page opts in") — but wb.js/wb-lazy.js's init() only ever wrote
- * `true` to config.js when the caller passed autoInject:true, and NEVER
- * wrote `false` for the omitted/false case, so config.js's own module-level
- * default (previously hardcoded `true`) silently won regardless of what a
- * page passed or omitted. Confirmed live: the main SPA's own
- * config/site.json sets autoInjectComponents to false, and site-engine.js
- * passes it straight into WB.init({ autoInject: false }) — yet every native
- * <article>/<button>/<img>/... on every page was auto-enhanced anyway.
+ * #617-adjacent cleanup: this suite's own file name and doc comment
+ * documented autoInject's default as `false` -- true when this test was
+ * written (#328's fix), but John's later, explicit directive ("autoinject
+ * should be true for all our demos we should pull away from our wb tags
+ * favoring semantic html at all times") flipped the module-level default in
+ * src/core/config.js to `true` (commit 5a53a5e), site-wide. This suite's
+ * assertions were never updated to match -- confirmed live: every one of
+ * these tests failed against current main, asserting the OLD default.
  *
- * Fixed in src/core/wb.js, src/core/wb-lazy.js (init() now unconditionally
- * writes its resolved value) and src/core/config.js (module default
- * corrected to false, matching the documented contract).
+ * Renamed in spirit (kept the filename so existing references/CI config
+ * don't break) and inverted to test the CURRENT contract: autoInject
+ * defaults to true (both omitted and explicit); a page can still opt out via
+ * an explicit `{ autoInject: false }}`.
  *
  * Navigates to tests/fixtures/blank.html (not '/') before setContent() --
  * the real site root runs its own site-engine.js WB.init() call
- * (config/site.json's autoInjectComponents, true as of #279), which raced
- * this test's own later WB.init() call and leaked its config into this
- * test's supposedly-isolated page. blank.html has no scripts, so nothing
- * calls WB.init() before this test's own explicit call does.
+ * (config/site.json's autoInjectComponents), which races this test's own
+ * later WB.init() call and leaks its config into this test's supposedly-
+ * isolated page. blank.html has no scripts, so nothing calls WB.init()
+ * before this test's own explicit call does.
  */
 import { test, expect } from '@playwright/test';
 
@@ -45,19 +45,19 @@ async function renderWithWB(page, coreModule: string, initOptions: string) {
 
 for (const core of ['/src/core/wb.js', '/src/core/wb-lazy.js']) {
   test.describe(`autoInject default (${core})`, () => {
-    test('WB.init({}) — omitted entirely — leaves native elements unenhanced', async ({ page }) => {
+    test('WB.init({}) — omitted entirely — still enhances native elements (default is true)', async ({ page }) => {
       await renderWithWB(page, core, '{}');
-      await expect(page.locator('#probe-card')).not.toHaveClass(/wb-card/);
+      await expect(page.locator('#probe-card')).toHaveClass(/wb-card/, { timeout: 10000 });
     });
 
-    test('WB.init({ autoInject: false }) — explicit false — leaves native elements unenhanced', async ({ page }) => {
-      await renderWithWB(page, core, '{ autoInject: false }');
-      await expect(page.locator('#probe-card')).not.toHaveClass(/wb-card/);
-    });
-
-    test('WB.init({ autoInject: true }) — explicit true — still enhances native elements', async ({ page }) => {
+    test('WB.init({ autoInject: true }) — explicit true — enhances native elements', async ({ page }) => {
       await renderWithWB(page, core, '{ autoInject: true }');
       await expect(page.locator('#probe-card')).toHaveClass(/wb-card/, { timeout: 10000 });
+    });
+
+    test('WB.init({ autoInject: false }) — explicit false — still lets a page opt out', async ({ page }) => {
+      await renderWithWB(page, core, '{ autoInject: false }');
+      await expect(page.locator('#probe-card')).not.toHaveClass(/wb-card/);
     });
   });
 }

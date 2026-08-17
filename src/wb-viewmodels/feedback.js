@@ -123,7 +123,20 @@ export function badge(element, options = {}) {
   } else {
     // Render the `label` attribute as the badge text — but only if the author
     // didn't already put content inside the tag (children win over label).
-    if (label != null && label !== '' && !element.textContent.trim()) {
+    // #618: on a wb-demo page, demo.js's doc-link 📖 icon (.wb-demo__card-doc-link)
+    // is appended as hostEl's own DOM CHILD before this behavior ever runs
+    // (see demo.js's attachInstanceDocLink) -- a plain `element.textContent.trim()`
+    // check can't tell that apart from real author content, so it saw the icon,
+    // assumed the label had already been "handled," and silently dropped every
+    // label on every wb-demo'd badge. Only the doc-link icon renders text this
+    // early, so excluding it from the emptiness check is enough to tell the two
+    // apart.
+    const hasAuthorContent = Array.from(element.childNodes).some(
+      (n) => n.nodeType === Node.TEXT_NODE
+        ? n.textContent.trim()
+        : !n.classList?.contains('wb-demo__card-doc-link')
+    );
+    if (label != null && label !== '' && !hasAuthorContent) {
       element.textContent = label;
     }
     // icon → a small leading glyph/emoji before the label (e.g. "🟢 Live").
