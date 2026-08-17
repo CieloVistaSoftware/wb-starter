@@ -38,22 +38,11 @@ Wrapped in `<wb-demo>`, so the live component renders below with its source show
 </wb-drawer-layout>
 </wb-demo>
 
-### Usage
-
-```html
-<wb-drawer-layout
-  position="left"
-  width="300px">
-  <h3>Sidebar</h3>
-  <nav>Navigation content...</nav>
-</wb-drawer-layout>
-```
-
 ### With Data Attributes
 
 ```html
 <div
-  x-drawerLayout
+  x-drawer-layout
   position="left"
   width="300px">
   Drawer content...
