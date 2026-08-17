@@ -1229,6 +1229,12 @@
     await WB.init({ autoInject: true });
     await WB.scan(document.body, { eager: true });
     console.log('Feedback & Status initialized');
+    // #451/#628: this page was missed when __WB_DEMO_INITIALIZED__ sync
+    // markers were batch-added to the other 7 demos/site/*.html pages in
+    // 5e57bc0 -- without it, the regression test's waitForFunction() never
+    // resolves and always times out (30s), not the "intermittent" failure
+    // the rest of this test suite exhibited.
+    window.__WB_DEMO_INITIALIZED__ = true;
   </script>
 </body>
 
