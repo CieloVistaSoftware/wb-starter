@@ -364,14 +364,21 @@ wb-demo > .x-pre-wrapper {
    completely invisible on every wb-card* component (confirmed live on
    demos/site/cards.html: 293 links existed in the DOM, Playwright reported
    every sampled one "visible", but a real screenshot showed zero of them
-   -- clipped, not hidden by opacity/display). Settled on INSET instead --
-   still at the top, still toward the right, but never past either edge,
-   so no ancestor's overflow:hidden can ever clip it regardless of
-   component type. */
+   -- clipped, not hidden by opacity/display). Settled on an INSET
+   (top/right: 0.5rem) instead -- still at the top, still toward the right,
+   but never past either edge, so no ancestor's overflow:hidden could clip
+   it regardless of component type.
+
+   John: "move it to be all the way on the upper right side of that
+   element." -- flush with the corner (top:0; right:0), not inset by
+   0.5rem. This is still INSIDE the element's own box (unlike the earlier
+   -2rem attempt that went past it and got clipped) -- 0 is the boundary
+   itself, never past it, so the overflow:hidden clipping bug above still
+   can't happen here. */
 .wb-demo__card-doc-link {
   position: absolute !important;
-  top: 0.5rem;
-  right: 0.5rem;
+  top: 0;
+  right: 0;
   z-index: 5;
   display: flex;
   align-items: center;
