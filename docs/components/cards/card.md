@@ -4,14 +4,14 @@ The wb-starter card system is built on **composition, not a class hierarchy, and
 semantic HTML, not custom tags**. A card is a plain `<article>` decorated with the
 `card` behavior -- either automatically (`autoInject` is on by default site-wide,
 `src/core/config.js`, and maps `article` → `card`) or explicitly via
-`x-behavior="card"`. Card variants -- `cardimage`, `cardhero`, `cardprofile`,
+`x-card`. Card variants -- `cardimage`, `cardhero`, `cardprofile`,
 `cardstats`, `cardpricing`, and more -- are **independent behaviors**, not subclasses
 of a shared base class (there is no such class). Instead they share the card's
 semantic structure through Light-DOM markup and add only what is unique to their
 purpose via their own `x-behavior` value and extra content.
 
 <wb-demo>
-<article x-behavior="card" title="Hello" variant="elevated">
+<article x-card title="Hello" variant="elevated">
   <p>Keep related information together in a clear, reusable surface.</p>
   <p><strong>Status:</strong> Ready to review</p>
 </article>
@@ -65,7 +65,7 @@ This doc explains the core features, usage, and architectural choices behind the
 
 **This is the actual selling point**: `autoInject` is **on by default** site-wide
 (`src/core/config.js`) -- a plain `<article>`, zero extra attributes, already becomes
-a card automatically. Every example on this page adds `x-behavior="card"` explicitly
+a card automatically. Every example on this page adds `x-card` explicitly
 anyway, so the markup stays self-documenting and keeps working exactly the same even
 on a page that opts out via `WB.init({ autoInject: false })`.
 
@@ -76,7 +76,7 @@ structure with every element labeled:
 
 <wb-demo>
 <article
-  x-behavior="card"
+  x-card
   title="Title + Body"
   subtitle="A labeled content surface"
   badge="LIVE"
@@ -125,11 +125,11 @@ structure with every element labeled:
 
 ## Usage
 
-### Explicit x-behavior (Recommended)
+### Explicit x-card (Recommended)
 
 <wb-demo>
 <article
-  x-behavior="card"
+  x-card
   title="Card Title"
   subtitle="Subtitle text">
   <p>Explicit and self-documenting -- works whether or not the page has autoInject on.</p>
@@ -141,7 +141,7 @@ structure with every element labeled:
 
 With `autoInject` on (the site-wide default), the exact same markup works with zero
 attributes at all -- shown here for comparison, not as the primary recommendation,
-since dropping the explicit `x-behavior="card"` only works while the page hasn't
+since dropping the explicit `x-card` only works while the page hasn't
 opted out:
 
 <wb-demo>
@@ -156,7 +156,7 @@ opted out:
 
 <wb-demo>
 <article
-  x-behavior="card"
+  x-card
   title="Featured Card"
   subtitle="A brief description"
   footer="Last updated: Today"
@@ -175,7 +175,7 @@ unstyled, slow, browser-inconsistent native `title` tooltip (#283):
 
 <wb-demo>
 <article
-  x-behavior="card"
+  x-card
   title="Hover Me"
   tooltip="Extra detail shown on hover">
   <p>Hover this card to reveal a themed tooltip with supporting context.</p>
@@ -186,7 +186,7 @@ unstyled, slow, browser-inconsistent native `title` tooltip (#283):
 
 ### Default
 <wb-demo>
-<article x-behavior="card" title="Default Card">
+<article x-card title="Default Card">
   <p>Standard card styling keeps the content easy to scan.</p>
 </article>
 </wb-demo>
@@ -194,7 +194,7 @@ unstyled, slow, browser-inconsistent native `title` tooltip (#283):
 ### Glass
 <wb-demo>
 <article
-  x-behavior="card"
+  x-card
   title="Glass Card"
   variant="glass">
   <p>Frosted glass effect with blur for layered content.</p>
@@ -204,7 +204,7 @@ unstyled, slow, browser-inconsistent native `title` tooltip (#283):
 ### Elevated
 <wb-demo>
 <article
-  x-behavior="card"
+  x-card
   title="Elevated Card"
   elevated>
   <p>Use elevation to separate a focused task from the surrounding page.</p>
@@ -214,7 +214,7 @@ unstyled, slow, browser-inconsistent native `title` tooltip (#283):
 ### Clickable
 <wb-demo>
 <article
-  x-behavior="card"
+  x-card
   title="Click Me"
   clickable>
   <p>Click anywhere on this card to activate its interactive state.</p>

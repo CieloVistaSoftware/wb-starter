@@ -274,7 +274,18 @@ export const extensionMap = {
   // location (not wb-lazy.js's own WB_LAZY_ONLY_ATTRIBUTES table) so both
   // runtimes and any tooling reading getExtensionAttributes() pick it up.
   'x-stack': 'stack',
-  'x-cluster': 'cluster'
+  'x-cluster': 'cluster',
+
+  // #626: every other behavior in this table gets its own dedicated
+  // x-{name} attribute (x-drawer, x-popover, x-confirm, ...) -- 'card' never
+  // did, so docs/components/cards/card.md's semantic rewrite had to fall
+  // back to the lower-level generic x-behavior="card" attribute instead of
+  // the pattern every other doc uses. John: "shouldn't all of our behaviors
+  // be addressable via x-behaviorname vs x-behavior=''" -- yes. Adding the
+  // dedicated key for consistency; x-behavior="card" still works too (it's
+  // the always-available generic fallback every registered behavior name
+  // supports, not being removed here).
+  'x-card': 'card'
 };
 
 // ============================================================================
