@@ -285,7 +285,93 @@ export const extensionMap = {
   // dedicated key for consistency; x-behavior="card" still works too (it's
   // the always-available generic fallback every registered behavior name
   // supports, not being removed here).
-  'x-card': 'card'
+  'x-card': 'card',
+
+  // #631: an audit (John: "how many wb-tags do we have and whether or not
+  // they all have an equivalent x-attribute") found 65 of the 104 wb-* tags
+  // had NO dedicated x-{name} entry anywhere -- confirmed live that all 65
+  // already WORK today via wb.js's dynamic [x-{behaviorName}] dispatch
+  // (scan()'s "Semantic Shorthand" step builds that selector for every
+  // registered behavior name, no table needed), but wb-lazy.js has no such
+  // dynamic path -- ONLY this table drives its dispatch -- so every one of
+  // these silently never worked there, and none of them were discoverable
+  // via any x-attribute reference/IntelliSense since nothing declared them.
+  // John: "I want to get to the point we primarily support x-attributes and
+  // deprecate wb-* elements" -- registering all of them here is the
+  // prerequisite: wb-lazy.js parity, plus making every one of them a real,
+  // documented, discoverable attribute instead of an undocumented fallback.
+  // x-search already maps to the DIFFERENT 'search' behavior (searchfield's
+  // own wb-search tag is the CONTAINER-aware wrapper, see tag-map.js's own
+  // comment above) -- used x-searchfield here, not x-search, to avoid
+  // silently colliding the two.
+  'x-accordion': 'accordion',
+  'x-alert': 'alert',
+  'x-articles': 'articles',
+  'x-audio': 'audio',
+  'x-avatar': 'avatar',
+  'x-badge': 'badge',
+  'x-button': 'button',
+  'x-checkbox': 'checkbox',
+  'x-chip': 'chip',
+  'x-codecontrol': 'codecontrol',
+  'x-control': 'control',
+  'x-demo': 'demo',
+  'x-details': 'details',
+  'x-dialog': 'dialog',
+  'x-error': 'error',
+  'x-fieldset': 'fieldset',
+  'x-figure': 'figure',
+  'x-fix-card': 'fix-card',
+  'x-flex': 'flex',
+  'x-footer': 'footer',
+  'x-formrow': 'formrow',
+  'x-globe': 'globe',
+  'x-header': 'header',
+  'x-help': 'help',
+  'x-hero': 'hero',
+  'x-input': 'input',
+  'x-inputgroup': 'inputgroup',
+  'x-mdhtml': 'mdhtml',
+  'x-navbar': 'navbar',
+  'x-notes': 'notes',
+  'x-rating': 'rating',
+  'x-ratio': 'ratio',
+  'x-repeater': 'repeater',
+  'x-searchfield': 'searchfield',
+  'x-select': 'select',
+  'x-skeleton': 'skeleton',
+  'x-slider': 'slider',
+  'x-span': 'span',
+  'x-spinner': 'spinner',
+  'x-switch': 'switch',
+  'x-table': 'table',
+  'x-tabs': 'tabs',
+  'x-textarea': 'textarea',
+  'x-video': 'video',
+  'x-vimeo': 'vimeo',
+  // Card-variant family -- these have no native semantic element of their
+  // own (unlike button/table/dialog/etc, which also auto-apply via
+  // autoInject on a plain native tag) -- x-{name} on a semantic wrapper
+  // (e.g. <article x-cardhero>) is the ONLY non-tag way to reach any of
+  // these, making dedicated registration more important here, not less.
+  'x-cardbutton': 'cardbutton',
+  'x-carddraggable': 'carddraggable',
+  'x-cardexpandable': 'cardexpandable',
+  'x-cardfile': 'cardfile',
+  'x-cardhero': 'cardhero',
+  'x-cardhorizontal': 'cardhorizontal',
+  'x-cardimage': 'cardimage',
+  'x-cardlink': 'cardlink',
+  'x-cardminimizable': 'cardminimizable',
+  'x-cardnotification': 'cardnotification',
+  'x-cardoverlay': 'cardoverlay',
+  'x-cardportfolio': 'cardportfolio',
+  'x-cardpricing': 'cardpricing',
+  'x-cardproduct': 'cardproduct',
+  'x-cardprofile': 'cardprofile',
+  'x-cardstats': 'cardstats',
+  'x-cardtestimonial': 'cardtestimonial',
+  'x-cardvideo': 'cardvideo'
 };
 
 // ============================================================================
