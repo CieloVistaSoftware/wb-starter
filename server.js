@@ -871,16 +871,11 @@ app.post("/api/rename-page", (req, res) => {
 
 // Fallback - serve index.html for SPA routes
 app.use((req, res, next) => {
-  const staticExtensions = ['.js', '.css', '.json', '.png', '.jpg', '.jpeg', '.gif', '.svg', '.ico', '.woff', '.woff2', '.ttf', '.eot', '.map'];
   const ext = path.extname(req.path).toLowerCase();
 
   // Allow .json files from /src/wb-models/ to be served
   if (ext === '.json' && req.path.startsWith('/src/wb-models/')) {
     return res.sendFile(path.join(rootDir, req.path));
-  }
-
-  if (staticExtensions.includes(ext)) {
-    return res.status(404).send(`File not found: ${req.path}`);
   }
 
   // Explicit .html file requests must point at a real file. Falling back to the
@@ -892,6 +887,26 @@ app.use((req, res, next) => {
     if (fs.existsSync(filePath)) {
       return res.sendFile(filePath);
     }
+    return res.status(404).send(`File not found: ${req.path}`);
+  }
+
+  // #527: ANY request that names a specific file (has an extension) is not an
+  // SPA route -- a missing one must 404, never silently fall back to the SPA
+  // shell. This used to be gated behind a hardcoded `staticExtensions`
+  // whitelist that only covered common asset types (.js/.css/.png/...) and
+  // omitted .md -- a nonexistent docs/*.md path (e.g. an illustrative example
+  // path in documentation) fell through to this same `res.sendFile(index.html)`
+  // below, returning a 200 whose body was the FULL site shell HTML instead of
+  // a 404. wb-mdhtml (src/wb-viewmodels/mdhtml.js) only checks `response.ok`
+  // before treating the body as markdown -- it rendered that entire HTML
+  // document as content, and the browser then parsed and fetched every
+  // embedded <link>/<script> tag (normalize.css, themes.css, site.css,
+  // safari-fixes.css, transitions.css, wb.js, site-engine.js) as if they were
+  // real page resources, cascading one expected 404 into ~7 more. Checking
+  // for "has an extension" instead of a fixed whitelist closes this for every
+  // extension, not just .md, while still falling through to index.html for
+  // genuine extensionless SPA routes below.
+  if (ext) {
     return res.status(404).send(`File not found: ${req.path}`);
   }
 
