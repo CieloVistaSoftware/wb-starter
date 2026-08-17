@@ -54,15 +54,31 @@ const knownWarnings = [
 
 // Pages that redirect/navigate destroying execution context
 const SKIP_DARK_MODE = [
-  
+
   'pages/themes.html',                     // Heavy JS with page transitions
   'demos/card.html',                       // Redirects during init
   'demos/wb-views-demo.html',              // Missing module import
   'public/performance-dashboard.html',     // Fetches JSON that may not exist
 ];
 
+// #546: pages/issues.html (and its template copy) call the unauthenticated
+// GitHub REST API (60 requests/hour per source IP) to list live issues.
+// GitHub Actions runners share IP ranges with countless other unauthenticated
+// callers and can start a job already near/at that limit, well before this
+// page ever loads -- there's no way to attach a token client-side on a
+// static site. When that happens, the request comes back 403 and Chromium's
+// own network layer logs "Failed to load resource: the server responded
+// with a status of 403 ()" to the console regardless of how gracefully
+// issues.html's own try/catch handles the response (that message is emitted
+// by the browser for the failed resource load itself, not by application
+// code, so there is no app-level fix that suppresses it). That makes this an
+// inherent CI-environment limitation rather than a real bug -- scoped to
+// just the page(s) that make this call so a genuine 403 elsewhere still
+// fails the test.
+const GITHUB_API_PAGES = ['pages/issues.html'];
+
 test.describe('Dark Mode Compliance', () => {
-  
+
   for (const htmlFile of relativeHtmlFiles) {
     // Skip pages known to redirect/navigate and destroy context
     if (SKIP_DARK_MODE.some(skip => htmlFile.includes(skip))) continue;
@@ -70,15 +86,18 @@ test.describe('Dark Mode Compliance', () => {
     test(`${htmlFile} renders in dark mode without errors`, async ({ page }) => {
       // Set dark mode before navigation
       await page.emulateMedia({ colorScheme: 'dark' });
-      
+
       // Collect console errors
       const errors: string[] = [];
+      const isGithubApiPage = GITHUB_API_PAGES.some(p => htmlFile.endsWith(p));
       page.on('console', msg => {
         if (msg.type() === 'error') {
           const text = msg.text();
           // Skip known warnings that aren't dark-mode related
           const isKnownWarning = knownWarnings.some(w => text.includes(w));
-          if (!isKnownWarning) {
+          // Skip GitHub API rate-limit 403s on the pages that call it (#546)
+          const isGithubRateLimit = isGithubApiPage && text.includes('403');
+          if (!isKnownWarning && !isGithubRateLimit) {
             errors.push(text);
           }
         }
