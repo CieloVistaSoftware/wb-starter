@@ -157,7 +157,15 @@ export function composeCard(element, options = {}) {
     variant: options.variant || element.dataset.variant || element.getAttribute('variant') || 'default',
     badge: options.badge || element.dataset.badge || element.getAttribute('badge') || '',
     clickable: parseBoolean(options.clickable) ?? (element.dataset.clickable === 'true' || (element.hasAttribute('data-clickable') && element.dataset.clickable !== 'false') || element.hasAttribute('clickable')),
-    hoverable: parseBoolean(options.hoverable) ?? (element.dataset.hoverable !== 'false'),
+    // #627: card.md documents `hoverable` as a plain boolean attribute
+    // (`elevated`/`clickable`'s own pattern, both checked via
+    // element.hasAttribute() below) -- but this only ever read
+    // element.dataset.hoverable (i.e. data-hoverable), never a plain
+    // hoverable="false" attribute at all. Confirmed live: <article x-card
+    // hoverable="false"> kept its hover effect regardless, since nothing
+    // ever looked at that attribute. Also check the plain attribute now,
+    // same as data-hoverable, so either form can disable it.
+    hoverable: parseBoolean(options.hoverable) ?? (element.dataset.hoverable !== 'false' && element.getAttribute('hoverable') !== 'false'),
     elevated: parseBoolean(options.elevated) ?? (element.dataset.elevated === 'true' || (element.hasAttribute('data-elevated') && element.dataset.elevated !== 'false') || element.hasAttribute('elevated')),
     size: options.size || element.dataset.size || element.getAttribute('size') || 'auto',
     // #283: `tooltip` is the WB-standard attribute name for hover text

@@ -1,30 +1,43 @@
 # `<address>` Element
 
-The `<address>` element provides contact information for a person, organization, or entity. In WB-Starter, it's used in portfolio and contact cards.
+The `<address>` element provides contact information for a person, organization, or entity.
 
 ## Semantic Meaning
 
 - Contact information for the nearest `<article>` or `<body>` ancestor
 - NOT for arbitrary postal addresses (use `<p>` instead)
 - Typically includes: email, phone, social links, physical address
+- No dedicated WB behavior of its own -- `<address>` is plain semantic HTML,
+  styled like any other element, with no `x-*`/`autoInject` enhancement to
+  opt into.
 
-## WB Components Using `<address>`
-
-### Card Portfolio (`cardportfolio`)
-
-`x-cardportfolio` builds its own `<address>` block from `email`/`phone`/`website`
-attributes — it does not read hand-authored `<address>` markup as content
-(the element's children are replaced, not merged).
+## Basic Usage
 
 <wb-demo>
-<article
-  x-cardportfolio
-  name="John Doe"
-  title="Software Developer"
-  location="San Francisco, CA"
-  email="john@example.com"
-  phone="+15551234"
-  website="johndoe.com">
+<article>
+  <h3>Jane Smith</h3>
+  <p>Freelance illustrator based in Portland, OR.</p>
+  <address>
+    <a href="mailto:jane@example.com">jane@example.com</a><br>
+    <a href="tel:+15035551234">+1 (503) 555-1234</a>
+  </address>
+</article>
+</wb-demo>
+
+## With a Physical Location
+
+`<address>` can include a real place alongside contact links -- still scoped
+to the nearest `<article>`/`<body>` ancestor, still not a general-purpose
+postal-address container:
+
+<wb-demo>
+<article>
+  <h3>Acme Studio</h3>
+  <address>
+    123 Design Ave, Suite 400<br>
+    Portland, OR 97201<br>
+    <a href="mailto:hello@acmestudio.example">hello@acmestudio.example</a>
+  </address>
 </article>
 </wb-demo>
 
@@ -37,38 +50,20 @@ attributes — it does not read hand-authored `<address>` markup as content
 | Link text | Should describe the link purpose |
 | `aria-label` | For icon-only links |
 
-## Example: Full Portfolio Card
-
-Social links (`linkedin`, `twitter`, `github`, `dribbble`) render in a separate
-`<nav>` below the `<address>`, not inside it — LinkedIn/GitHub are profile
-links, not contact channels, so they're not semantically part of the address.
-
-<wb-demo>
-<article
-  x-cardportfolio
-  name="John Doe"
-  title="Senior Software Developer"
-  company="Acme Inc"
-  avatar="avatar.jpg"
-  bio="Passionate about creating great software and mentoring junior developers."
-  email="john@acme.com"
-  phone="+15551234567"
-  linkedin="https://linkedin.com/in/johndoe"
-  github="https://github.com/johndoe">
-</article>
-</wb-demo>
-
 ## CSS Styling
 
+`<address>` renders in italics by default in every browser -- almost always
+unwanted for contact info, so reset it explicitly:
+
 ```css
-address.wb-card__contact {
+address {
   font-style: normal; /* Override browser default italic */
   display: flex;
   flex-direction: column;
   gap: 0.5rem;
 }
 
-address.wb-card__contact a {
+address a {
   display: flex;
   align-items: center;
   gap: 0.5rem;
@@ -77,7 +72,7 @@ address.wb-card__contact a {
   transition: color 0.2s;
 }
 
-address.wb-card__contact a:hover {
+address a:hover {
   color: var(--primary);
 }
 ```
@@ -89,3 +84,13 @@ address.wb-card__contact a:hover {
 3. **Provide alternatives** - Text + clickable for accessibility
 4. **Reset italic** - Browser default is italic, often unwanted
 5. **Group logically** - Contact info should be visually grouped
+
+## Related
+
+Components that build their own `<address>` block internally from
+structured attributes (rather than hand-authored `<address>` markup, which
+they replace, not merge) document their own contact-info behavior on their
+own page, not here:
+
+- [cardportfolio](../cards/cardportfolio.md) -- builds `<address>` from `email`/`phone`/`website` attributes
+- [cardprofile](../cards/cardprofile.md) -- user profile card with contact/social links
