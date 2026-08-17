@@ -20,11 +20,24 @@
    table() (semantics/table.js) skips adding `.wb-table` only when the host
    IS the literal <wb-table> tag (used with no nested <table> child); a
    native <table> (autoInject, or the child a <wb-table> wraps) still gets
-   the class, since a `table` tag can never match a `wb-table` selector. */
+   the class, since a `table` tag can never match a `wb-table` selector.
+   #589: John, "TABLES CANNOT HAVE HORIZONTAL SCROLLBARS UNLESS NECESSARY" --
+   reported a small (~8px) horizontal scrollbar on every table.md example
+   even when content clearly fit. Setting ONLY `overflow-x` here left
+   `overflow-y` at its UA-default `visible` -- per the CSS Overflow spec,
+   a box with one axis non-visible and the other `visible` computes the
+   `visible` axis to `auto` too (confirmed live: getComputedStyle on a
+   <wb-table> reported `overflow-y: auto` despite this rule never setting
+   it), turning this into an unintended two-axis scroll container. This
+   wrapper is horizontal-only by design (vertical scrolling is the page's
+   job, never a table wrapper's) -- pin overflow-y explicitly so the box
+   can never pick up a spurious auto scrollbar/scroll-affordance on the
+   axis it was never meant to manage. */
 wb-table,
 .wb-table {
   display: block;
   overflow-x: auto;
+  overflow-y: hidden;
   -webkit-overflow-scrolling: touch;
 }
 
