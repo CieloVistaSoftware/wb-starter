@@ -85,7 +85,26 @@ self.addEventListener('fetch', event => {
       return response;
     }).catch(() =>
       caches.match(event.request)
-        .then(cached => cached || caches.match(BASE + 'index.html'))
+        // #530: the index.html fallback below exists for SPA client-side
+        // routing -- a real BROWSER NAVIGATION (typed URL, link click,
+        // reload) to a deep/unknown path should still boot the app shell
+        // offline. It must never apply to a request for a specific, named
+        // resource like `pages/home.html` that the app's own router fetches
+        // via JS -- that isn't a client route, it's a real file, and on a
+        // brand-new origin (first few seconds after registration, before
+        // this worker has settled and before pages/*.html has ever been
+        // cached) its network fetch can transiently fail. Falling back to
+        // index.html unconditionally there served the WRONG page's content
+        // with a 200 status, silently masquerading as the requested page
+        // instead of failing or genuinely retrying. `event.request.mode`
+        // is 'navigate' only for real navigations, never for fetch()/XHR --
+        // gate the index.html fallback on that so a non-navigation miss
+        // falls through to the "not cached" Response below instead.
+        .then(cached => {
+          if (cached) return cached;
+          if (event.request.mode === 'navigate') return caches.match(BASE + 'index.html');
+          return undefined;
+        })
         // Both the exact URL and the index.html fallback can miss (e.g. a
         // fresh install with nothing precached yet, or a base-path
         // mismatch) — respondWith() throws "Failed to convert value to
