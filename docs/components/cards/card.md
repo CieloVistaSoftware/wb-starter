@@ -1,17 +1,20 @@
 # Card Component Overview
 
-The wb-starter card system is built on **composition, not a class hierarchy**. Card
-variants — `wb-cardimage`, `wb-cardhero`, `wb-cardprofile`, `wb-cardstats`,
-`wb-cardpricing`, and more — are **independent components**. They are NOT subclasses
-of a shared base class (there is no such class). Instead they share the
-card's semantic structure through Light-DOM markup and add only what is unique to their
-purpose via `x-*` behaviors and extra content.
+The wb-starter card system is built on **composition, not a class hierarchy, and on
+semantic HTML, not custom tags**. A card is a plain `<article>` decorated with the
+`card` behavior -- either automatically (`autoInject` is on by default site-wide,
+`src/core/config.js`, and maps `article` → `card`) or explicitly via
+`x-behavior="card"`. Card variants -- `cardimage`, `cardhero`, `cardprofile`,
+`cardstats`, `cardpricing`, and more -- are **independent behaviors**, not subclasses
+of a shared base class (there is no such class). Instead they share the card's
+semantic structure through Light-DOM markup and add only what is unique to their
+purpose via their own `x-behavior` value and extra content.
 
 <wb-demo>
-<wb-card title="Hello" variant="elevated">
+<article x-behavior="card" title="Hello" variant="elevated">
   <p>Keep related information together in a clear, reusable surface.</p>
   <p><strong>Status:</strong> Ready to review</p>
-</wb-card>
+</article>
 </wb-demo>
 
 ## Card structure
@@ -26,55 +29,65 @@ Every card shares the same semantic regions:
 ## Composition for specialized functionality
 
 Each variant composes the shared card structure with the extra markup or behaviors it
-needs — nothing is inherited from a base class:
+needs -- nothing is inherited from a base class:
 
-- `wb-cardimage` composes an image section into the card layout.
-- `wb-cardhero` adds a hero banner region and optional call-to-action buttons.
-- `wb-cardprofile` composes avatar, user info, and social links.
-- `wb-cardstats` adds stat blocks or data visualizations.
+- `cardimage` composes an image section into the card layout.
+- `cardhero` adds a hero banner region and optional call-to-action buttons.
+- `cardprofile` composes avatar, user info, and social links.
+- `cardstats` adds stat blocks or data visualizations.
 
 Composition keeps variants flexible: new features are added to a specific card type
-without affecting any other. Capabilities come from composing behaviors and markup —
-the wb-starter way (Light DOM, `x-*` behaviors, schema-driven properties).
+without affecting any other. Capabilities come from composing behaviors and markup --
+the wb-starter way (Light DOM, `x-behavior`-driven, schema-driven properties).
 
-The `wb-card` is the foundational card component in the wb-starter library, designed for maximum flexibility, accessibility, and maintainability. Built on the Light DOM architecture and the WBServices pattern, it provides a robust foundation for dozens of card variants (image, hero, testimonial, product, etc.) while ensuring:
+The `card` behavior is the foundational card behavior in the wb-starter library,
+designed for maximum flexibility, accessibility, and maintainability. Built on the
+Light DOM architecture and the WBServices pattern, it provides a robust foundation for
+dozens of card variants (image, hero, testimonial, product, etc.) while ensuring:
 
 - **Consistent UI/UX:** All cards share a unified structure and behavior, making your app look and feel cohesive.
-- **Modern Web Standards:** Custom elements, ES Modules, and schema-driven properties.
-- **Easy Customization:** Compose new card types with minimal code — no base class to subclass.
+- **Modern Web Standards:** Semantic HTML, ES Modules, and schema-driven properties -- no custom element required.
+- **Easy Customization:** Compose new card types with minimal code -- no base class to subclass.
 - **Performance & Accessibility:** No Shadow DOM, so styles cascade naturally and accessibility is preserved.
 
-This doc explains the core features, usage, and architectural choices behind `wb-card` and its variants.
+This doc explains the core features, usage, and architectural choices behind the
+`card` behavior and its variants.
 
 ## Overview
 
 | Property | Value |
 |----------|-------|
-| Custom Tag | `<wb-card>` |
+| Semantic Tag | `<article>` |
 | Behavior | `card` |
-| Semantic | `<article>` |
-| Base Tag | `<wb-card>` |
+| Root CSS Class | `wb-card` |
 | Category | Cards |
 | Schema | `src/wb-models/card.schema.json` |
 
+**This is the actual selling point**: `autoInject` is **on by default** site-wide
+(`src/core/config.js`) -- a plain `<article>`, zero extra attributes, already becomes
+a card automatically. Every example on this page adds `x-behavior="card"` explicitly
+anyway, so the markup stays self-documenting and keeps working exactly the same even
+on a page that opts out via `WB.init({ autoInject: false })`.
+
 ## Card anatomy
 
-A `<wb-card>` renders into these named parts. Here it is live, then the structure with
-every element labeled:
+An enhanced `<article>` renders into these named parts. Here it is live, then the
+structure with every element labeled:
 
 <wb-demo>
-<wb-card
+<article
+  x-behavior="card"
   title="Title + Body"
   subtitle="A labeled content surface"
   badge="LIVE"
   footer="Updated just now"
   elevated>
   <p>The header, main content, and footer remain distinct in Light DOM.</p>
-</wb-card>
+</article>
 </wb-demo>
 
 ```text
-<wb-card>                          ← this is the CARD  (the root, an <article>)
+<article>                          ← this is the CARD  (the root)
   <header class="wb-card__header"> ← this is the HEADER
     <h3 class="wb-card__title">    ← this is the TITLE   (from the `title` attribute)
     <div class="wb-card__subtitle">← this is the SUBTITLE (optional)
@@ -82,12 +95,12 @@ every element labeled:
   <main class="wb-card__main">     ← this is MAIN — the BODY, where YOUR content goes
     <p>…</p>
   <footer class="wb-card__footer"> ← this is the FOOTER   (optional)
-</wb-card>
+</article>
 ```
 
 | Part | Element / class | What it is |
 |------|-----------------|-----------|
-| **Card** | `<wb-card>` → `<article>` | The root component |
+| **Card** | `<article>` | The root element |
 | **Header** | `<header class="wb-card__header">` | Holds the title, subtitle, and badge |
 | **Title** | `<h3 class="wb-card__title">` | The card heading — from the `title` attribute |
 | **Subtitle** | `.wb-card__subtitle` | Secondary heading — from `subtitle` (optional) |
@@ -112,35 +125,38 @@ every element labeled:
 
 ## Usage
 
-### Custom Element (Recommended)
+### Explicit x-behavior (Recommended)
 
 <wb-demo>
-<wb-card
+<article
+  x-behavior="card"
   title="Card Title"
   subtitle="Subtitle text">
-  <p>Use the custom element when the card is already part of your markup.</p>
+  <p>Explicit and self-documenting -- works whether or not the page has autoInject on.</p>
   <p><strong>Tip:</strong> Keep the title specific to the content it introduces.</p>
-</wb-card>
+</article>
 </wb-demo>
 
-### Semantic Element
+### Relying on autoInject
 
-<!-- 2026-08-15: autoInject now defaults to ON site-wide (src/core/
-     config.js) -- x-card is redundant here and has been removed. A bare
-     <article> with the right attributes already becomes a card with zero
-     extra markup; that's now the default, not a special case. -->
+With `autoInject` on (the site-wide default), the exact same markup works with zero
+attributes at all -- shown here for comparison, not as the primary recommendation,
+since dropping the explicit `x-behavior="card"` only works while the page hasn't
+opted out:
+
 <wb-demo>
 <article
   title="Semantic Card"
-  subtitle="An article enhanced in place">
-  <p>Use <code>x-card</code> when semantic HTML already owns the element.</p>
+  subtitle="Enhanced automatically, no attributes needed">
+  <p>autoInject maps a bare &lt;article&gt; to the card behavior by default.</p>
 </article>
 </wb-demo>
 
 ### With All Options
 
 <wb-demo>
-<wb-card
+<article
+  x-behavior="card"
   title="Featured Card"
   subtitle="A brief description"
   footer="Last updated: Today"
@@ -149,7 +165,7 @@ every element labeled:
   variant="glass">
   <p>Review the latest release notes and open the project workspace.</p>
   <p><strong>Next step:</strong> Select the card to continue.</p>
-</wb-card>
+</article>
 </wb-demo>
 
 ### With a Tooltip
@@ -158,47 +174,51 @@ every element labeled:
 unstyled, slow, browser-inconsistent native `title` tooltip (#283):
 
 <wb-demo>
-<wb-card
+<article
+  x-behavior="card"
   title="Hover Me"
   tooltip="Extra detail shown on hover">
   <p>Hover this card to reveal a themed tooltip with supporting context.</p>
-</wb-card>
+</article>
 </wb-demo>
 
 ## Variants
 
 ### Default
 <wb-demo>
-<wb-card title="Default Card">
+<article x-behavior="card" title="Default Card">
   <p>Standard card styling keeps the content easy to scan.</p>
-</wb-card>
+</article>
 </wb-demo>
 
 ### Glass
 <wb-demo>
-<wb-card
+<article
+  x-behavior="card"
   title="Glass Card"
   variant="glass">
   <p>Frosted glass effect with blur for layered content.</p>
-</wb-card>
+</article>
 </wb-demo>
 
 ### Elevated
 <wb-demo>
-<wb-card
+<article
+  x-behavior="card"
   title="Elevated Card"
   elevated>
   <p>Use elevation to separate a focused task from the surrounding page.</p>
-</wb-card>
+</article>
 </wb-demo>
 
 ### Clickable
 <wb-demo>
-<wb-card
+<article
+  x-behavior="card"
   title="Click Me"
   clickable>
   <p>Click anywhere on this card to activate its interactive state.</p>
-</wb-card>
+</article>
 </wb-demo>
 
 ## CSS Classes
@@ -228,7 +248,7 @@ unstyled, slow, browser-inconsistent native `title` tooltip (#283):
 Fired when a clickable card is clicked.
 
 ```javascript
-document.querySelector('wb-card').addEventListener('click', (e) => {
+document.querySelector('article.wb-card').addEventListener('click', (e) => {
   console.log('Card clicked');
 });
 ```
@@ -249,20 +269,20 @@ Keyboard support for clickable cards:
 Available via JavaScript:
 
 ```javascript
-const card = document.querySelector('wb-card');
+import { card } from './wb-viewmodels/card.js';
 
-// Show/hide
-card.show();
-card.hide();
-card.toggle();
+const el = document.querySelector('article.wb-card');
 
 // Update properties
-card.update({ title: 'New Title', elevated: true });
+card.update?.(el, { title: 'New Title', elevated: true });
 ```
 
 ## Card Variants
 
-Specialized variants build on the shared card structure:
+Specialized variants build on the shared card structure. Each one is documented
+separately and still uses its own custom tag today (`wb-cardimage`, etc.) -- only
+this base `card` behavior's own doc has been converted to semantic-only examples so
+far:
 
 | Variant | Purpose | Tag |
 |---------|---------|-----|

@@ -47,7 +47,19 @@ export const CARD_TAGS = [
   'wb-cardpricing', 'wb-cardproduct', 'wb-cardprofile', 'wb-cardstats',
   'wb-cardtestimonial', 'wb-cardvideo',
 ];
-const CARD_TAG_EXCLUSIONS = CARD_TAGS.map(tag => `:not(${tag})`).join('');
+// #625: the tag-based exclusion above only ever covered the wb-card* CUSTOM
+// TAGS -- it has no way to recognize a semantic <article x-behavior="card">
+// (the now-preferred, semantic-HTML-first way to author a card per John's
+// "pull away from our wb tags" directive). Confirmed live: docs/components/
+// cards/card.md's own "Card anatomy" example, rewritten to
+// <article x-behavior="card" badge="LIVE">, picked up wb-badge/wb-badge--live
+// classes on the ROOT element -- the exact double-application bug this file's
+// own CARD_TAGS comment already documents for the wb-card TAG case, just
+// re-surfaced for the x-behavior case, which the exclusion never accounted
+// for. Extend the same exclusion pattern to the attribute form.
+const CARD_BEHAVIOR_NAMES = ['card']; // extend as more card variants migrate to semantic HTML + x-behavior
+const CARD_TAG_EXCLUSIONS = CARD_TAGS.map(tag => `:not(${tag})`).join('')
+  + CARD_BEHAVIOR_NAMES.map(b => `:not([x-behavior~="${b}"])`).join('');
 
 /**
  * { selector, behavior } pairs, one per SEMANTIC_PROPERTY_ATTRIBUTES entry,
