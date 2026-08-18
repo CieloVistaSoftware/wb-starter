@@ -1,0 +1,106 @@
+# accordion
+
+Turns a set of titled child sections into independently expandable/collapsible items. Implemented by `accordion()` in [src/wb-viewmodels/collapse.js](../../src/wb-viewmodels/collapse.js) (registered under the `collapse` module).
+
+> ⚠️ **Deprecated.** `<wb-accordion>` / `x-accordion` still work and are documented
+> here for existing markup, but new pages should use the native
+> [`<details>`/`<summary>`](../components/semantics/details.md) element instead —
+> it needs no JavaScript, works out of the box with assistive tech, and doesn't
+> carry the quirks described below. Using `<wb-accordion>` specifically also logs
+> a one-time `console.warn` in the browser console.
+
+## Overview
+
+| Property | Value |
+|----------|-------|
+| Attribute | `x-accordion` |
+| Custom Tag (deprecated) | `<wb-accordion>` |
+| Behavior function | `accordion()` — module `collapse` (`src/wb-viewmodels/collapse.js`) |
+| Recommended replacement | `<details>`/`<summary>` — see [details](../components/semantics/details.md) |
+| Root CSS Class | `wb-accordion` (host), `.wb-accordion-item` (each item) |
+| Category | Interactive |
+| Schema | none (no `accordion.schema.json`) |
+
+## Properties
+
+`accordion()` only looks at plain attributes — no `data-*` equivalents beyond the
+back-compat ones listed below (Tier-1 Law 11: no `data-*` on `x-*`/`wb-*` elements).
+
+| Attribute | Applies to | Type | Description |
+|-----------|-----------|------|-------------|
+| `accordion-title` | each child element | string | Marks that child as its own accordion item; the value becomes the item's clickable heading. `data-accordion-title` / `data-title` are accepted as back-compat aliases |
+| `open` | a child with `accordion-title` | boolean | That specific item starts expanded |
+| `open` | the host element | boolean | When present, and no child already carries its own `open`, the **first** item starts expanded |
+| `title` | `<wb-accordion>` host only | string | Heading text for the single-item form — only read when the host tag is literally `<wb-accordion>` (not read for `x-accordion` on any other tag) |
+
+**Fallback behavior worth knowing:** `accordion()` only builds real accordion
+markup (`.wb-accordion-item` / `.wb-accordion-head` / `.wb-accordion-body`) when
+either (a) the host has children carrying `accordion-title`, or (b) the host tag
+is literally `<wb-accordion>`. Put `x-accordion` on any *other* element with no
+titled children (e.g. `<div x-accordion title="Q">A</div>`) and it silently falls
+back to the plain [`x-collapse`](x-collapse.md) behavior instead — a single
+toggle button + content panel styled with `.wb-collapse__trigger` /
+`.wb-collapse__content`, not accordion classes. Use the multi-item form below for
+a real accordion via `x-accordion` on semantic HTML.
+
+## Usage
+
+### Multi-item FAQ list
+
+<wb-demo>
+<div x-accordion>
+  <div accordion-title="What is wb-starter?">A schema-first, no-build website starter kit.</div>
+  <div accordion-title="Does it need a build step?">No — every behavior runs directly in the browser.</div>
+  <div accordion-title="Is x-accordion the recommended choice?">No, prefer the native details/summary element for new markup.</div>
+</div>
+</wb-demo>
+
+### One item pre-opened
+
+<wb-demo>
+<div x-accordion>
+  <div accordion-title="Closed by default">This item starts collapsed.</div>
+  <div accordion-title="Opened by default" open>This item starts expanded because it carries its own open attribute.</div>
+</div>
+</wb-demo>
+
+### Host-level `open` expands the first item
+
+<wb-demo>
+<div x-accordion open>
+  <div accordion-title="First item">Opens automatically — the host itself carries open, and no child overrides it.</div>
+  <div accordion-title="Second item">Stays collapsed.</div>
+</div>
+</wb-demo>
+
+## CSS Classes
+
+| Class | Applied to | Description |
+|-------|-----------|-------------|
+| `wb-accordion` | host element | Marker class added once the accordion is built |
+| `.wb-accordion-item` | each item wrapper | Bordered row; adjacent items share a collapsed border |
+| `.wb-accordion-item.open` | an expanded item | Reveals `.wb-accordion-body` |
+| `.wb-accordion-head` | each item's clickable row | `role="button"`, keyboard-focusable, flex row (title + icon) |
+| `.wb-accordion-title` | the heading text span | — |
+| `.wb-accordion-icon` | the ▸/▾ disclosure glyph | Text content flips between `▸` (closed) and `▾` (open); no CSS transition |
+| `.wb-accordion-body` | the content panel | `display: none` unless the parent `.wb-accordion-item` has `.open` |
+
+## Events
+
+| Event | Fires when | `detail` |
+|-------|-----------|----------|
+| `wb:accordion:ready` | the multi-item form finishes building | `{ items }` — number of items built |
+| `wb:accordion:toggle` | any item's head is clicked or activated via Enter/Space | `{ open, title }` |
+
+Both events bubble, so one listener on an ancestor (or `document`) catches every
+accordion on the page:
+
+```javascript
+document.addEventListener('wb:accordion:toggle', (e) => {
+  console.log(`"${e.detail.title}" is now ${e.detail.open ? 'open' : 'closed'}`);
+});
+```
+
+- [Schema/Test]: no dedicated schema or test file for `accordion`; see
+  [tests/behaviors/accordion.spec.ts](../../tests/behaviors/accordion.spec.ts) for
+  the disclosure-behavior coverage that does exist.

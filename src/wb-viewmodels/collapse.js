@@ -12,7 +12,14 @@
 export function collapse(element, options = {}) {
   const config = {
     heading: options.heading || element.getAttribute('heading') || element.getAttribute('title') || 'Toggle',
-    open: options.open ?? element.hasAttribute('expanded') ?? element.hasAttribute('open'),
+    // #chained-??-bug: `hasAttribute()` always returns a real boolean (never
+    // null/undefined), so a bare `A ?? B ?? C` chain never reaches C -- the
+    // middle term always "wins" once options.open is unset, and `open` alone
+    // (no `expanded`) silently did nothing. Confirmed live: <div x-collapse
+    // open> rendered collapsed while <div x-collapse expanded> rendered
+    // open. OR the two hasAttribute() checks together so either attribute
+    // opens it.
+    open: options.open ?? (element.hasAttribute('expanded') || element.hasAttribute('open')),
     target: options.target || element.getAttribute('target'),
     ...options
   };

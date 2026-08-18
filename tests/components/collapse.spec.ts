@@ -67,10 +67,10 @@ test.describe('collapse Behavior', () => {
   test('element is visible after scan', async ({ page }) => {
     const html = "<wb-collapse>Basic collapse content</wb-collapse>";
     await injectAndScan(page, html);
-    
+
     const el = page.locator('#test-container wb-collapse, #test-container wb-collapse').first();
     const isPresent = await el.count() > 0;
-    
+
     if (isPresent) {
       await expect(el).toBeVisible({ timeout: 5000 });
     } else {
@@ -79,6 +79,28 @@ test.describe('collapse Behavior', () => {
       const text = await container.textContent();
       expect(text?.length).toBeGreaterThan(0);
     }
+  });
+
+  // #640: `open: options.open ?? element.hasAttribute('expanded') ?? element.hasAttribute('open')`
+  // never reached the third term -- hasAttribute() always returns a real
+  // boolean, so `?? C` is unreachable once the middle term resolves. `open`
+  // alone (no `expanded`) silently failed to open the panel. This asserts
+  // both attribute spellings work, matching <details open>'s own attribute
+  // name (the behavior's documented native replacement).
+  test('both `open` and `expanded` attributes start the panel open', async ({ page }) => {
+    const html = [
+      '<div id="via-open" x-collapse open>content via open</div>',
+      '<div id="via-expanded" x-collapse expanded>content via expanded</div>',
+    ].join('\n');
+    await injectAndScan(page, html);
+
+    const viaOpen = page.locator('#via-open');
+    const viaExpanded = page.locator('#via-expanded');
+
+    await expect(viaOpen).toHaveClass(/wb-collapse--open/);
+    await expect(viaExpanded).toHaveClass(/wb-collapse--open/);
+    await expect(viaOpen.locator('.wb-collapse__trigger')).toHaveAttribute('aria-expanded', 'true');
+    await expect(viaExpanded.locator('.wb-collapse__trigger')).toHaveAttribute('aria-expanded', 'true');
   });
 
 });
