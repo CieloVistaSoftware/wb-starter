@@ -21,6 +21,7 @@ page is exactly the semantic HTML you'd write anyway.
 
 | Property | Type | Default | Description |
 |----------|------|---------|-------------|
+| `label` | string | `""` | Button text -- prefer real text content (`<button>Click Me</button>`) when authoring by hand; `label` exists for cases building the button from data/attributes only. Children win over `label` if the element already has content. |
 | `icon` | string | `""` | Name from the built-in icon library (`star`, `check`, `close`, `warning`, `info`, `error`, `heart`, `search`, `edit`, `trash`, `plus`, `minus`, `home`, `settings`, `download`, `upload`, `arrow_right`, `arrow_left`, `copy`, `save`), or any emoji/text |
 | `icon-position` | string | `"start"` | `start` or `end` |
 | `variant` | string | `"primary"` | `primary`, `secondary`, `success`, `warning`, `error`/`danger`, `ghost`, `link` |

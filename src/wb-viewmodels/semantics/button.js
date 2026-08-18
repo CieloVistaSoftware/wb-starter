@@ -139,6 +139,32 @@ function resolveIcon(name) {
   return ICONS[name.toLowerCase()] || name;
 }
 
+// #632: button.schema.json declares `label` as the button's primary text
+// property (a required one, per its own $required list), but nothing in
+// this file ever read it -- confirmed live: <wb-button label="Save"
+// icon="💾"> rendered ONLY the icon span, no "Save" text anywhere. John:
+// "shouldn't the label be on the button face?" -- yes. Same "children win
+// over label" pattern as feedback.js's badge() (#618): only fill in the
+// label when the author didn't already put real content between the tags,
+// and don't let demo.js's own doc-link icon (appended as a DOM child
+// before this behavior runs, on a wb-demo page) count as "already has
+// content" -- it isn't. Must run BEFORE applyIconAndLoading() below so the
+// label text becomes the "content" the icon inserts before/after, instead
+// of racing it (if this ran after, the icon span itself would look like
+// author content and block the label from ever being added).
+function applyLabel(element) {
+  const label = element.getAttribute('label');
+  if (label == null || label === '') return;
+  const hasAuthorContent = Array.from(element.childNodes).some(
+    (n) => n.nodeType === Node.TEXT_NODE
+      ? n.textContent.trim()
+      : !n.classList?.contains('wb-demo__card-doc-link')
+  );
+  if (!hasAuthorContent) {
+    element.textContent = label;
+  }
+}
+
 // #620: icon/loading rendering, factored out of the `isCustom` branch below
 // so a native <button icon="..." loading> gets the exact same treatment as
 // <wb-button icon="..." loading> instead of silently doing nothing. Native
@@ -149,7 +175,13 @@ function resolveIcon(name) {
 // at all, and `loading` added no spinner and didn't disable the button.
 function applyIconAndLoading(element, options) {
   const icon = options.icon || element.getAttribute('icon') || '';
-  const iconPosition = options.iconPosition || element.getAttribute('icon-position') || 'start';
+  // #632: HTML lowercases an authored camelCase attribute with NO hyphen
+  // inserted -- `iconPosition="end"` parses to the DOM attribute
+  // `iconposition` (no hyphen), which getAttribute('icon-position') alone
+  // never matches. Same recurring pattern already fixed for cardhorizontal's
+  // image-position (#601-603): check both the correct kebab-case form and
+  // the no-hyphen form a camelCase author would actually produce.
+  const iconPosition = options.iconPosition || element.getAttribute('icon-position') || element.getAttribute('iconposition') || 'start';
   const loading = options.loading ?? element.hasAttribute('loading');
 
   if (element.hasAttribute('icon') && !icon) {
@@ -214,7 +246,8 @@ export function button(element, options = {}) {
 
   if (isCustom) {
     // <wb-button> — CSS targets the tag directly. No inner button, no classes.
-    // JS only handles icon injection and loading state.
+    // JS only handles label text, icon injection, and loading state.
+    applyLabel(element);
     applyIconAndLoading(element, options);
 
     // Make it focusable and clickable
@@ -287,6 +320,7 @@ export function button(element, options = {}) {
   const variant = element.getAttribute('variant');
   if (variant) { const c = `wb-button--${variant}`; element.classList.add(c); applied.push(c); }
 
+  applyLabel(element);
   applyIconAndLoading(element, options);
 
   element.addEventListener('click', onActivate);
