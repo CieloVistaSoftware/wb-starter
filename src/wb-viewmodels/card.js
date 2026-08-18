@@ -2197,6 +2197,22 @@ export function cardoverlay(element, options = {}) {
   element.style.backgroundImage = config.image ? `url(${config.image})` : 'linear-gradient(135deg, #667eea, #764ba2)';
   element.style.backgroundSize = 'cover';
   element.style.backgroundPosition = 'center';
+  // #635: John, screenshot -- "Is this correct, the edges have a gap" (a
+  // thin sliver visible along the left/bottom edges). composeCard() (above,
+  // ~line 273) sets the SHORTHAND `element.style.background = 'var(--bg-
+  // secondary...)'` for any card that doesn't "own its own surface" -- a
+  // default-variant cardoverlay doesn't -- and a shorthand assignment
+  // implicitly resets every background-* sub-property NOT included in the
+  // shorthand value to its initial value, i.e. background-repeat: repeat.
+  // This function then only ever overrides backgroundImage/backgroundSize/
+  // backgroundPosition (longhand), leaving that repeat behind. With
+  // background-size:cover, a fractional/sub-pixel rounding gap at the
+  // scaled edge has nothing to fall back to but tiling a sliver of the
+  // image's own edge pixels into it -- confirmed live: the visible seam
+  // tracked the image's own content, not a solid color, exactly what
+  // repeat-into-a-rounding-gap produces. Force no-repeat explicitly rather
+  // than relying on whatever composeCard()'s shorthand happened to leave.
+  element.style.backgroundRepeat = 'no-repeat';
 
   // John: "Card Overlay have no images" -- a broken `image` src rendered as
   // nothing (CSS background-image has no native failure signal the way an
