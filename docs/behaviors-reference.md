@@ -248,18 +248,18 @@ Rich interactive components.
 | [`card*`](components/cards/cards.index.md) | `<article>` | - | Card variants (image, video, etc.) |
 | [`progressbar`](components/semantics/progress.md) | `<progress>` | Decorate | Progress bar styling |
 | `spinner` | `<div>` | - | Loading spinner |
-| `toast` | `<div>` | - | Toast notification |
+| [`toast`](behaviors/toast.md) | `<div>` | - | Toast notification |
 | `notify` | `<div>` | - | Cycling notification |
 | `badge` | `<span>` | - | Status badge |
-| `chip` | `<span>` | - | Interactive chip/tag |
+| [`chip`](behaviors/chip.md) | `<span>` | - | Interactive chip/tag |
 | `alert` | `<div>` | - | Alert message |
-| `skeleton` | `<div>` | - | Loading placeholder |
+| [`skeleton`](behaviors/skeleton.md) | `<div>` | - | Loading placeholder |
 | `divider` | `<hr>` | Decorate | Styled divider |
 | `breadcrumb` | `<nav>` | - | Breadcrumb navigation |
 | `avatar` | `<div>` | - | User avatar |
 | [`tooltip`](behaviors/tooltip.md) | any | - | Tooltip on hover |
-| `dropdown` | `<div>` | - | Dropdown menu |
-| `accordion` | `<div>` | - | Accordion list |
+| [`dropdown`](behaviors/dropdown.md) | `<div>` | - | Dropdown menu |
+| [`accordion`](behaviors/accordion.md) | `<div>` | - | Accordion list (deprecated — prefer `<details>`) |
 | [`tabs`](components/tabs.md) | `<div>` | - | Tabbed interface |
 | `navbar` | `<nav>` | - | Navigation bar |
 | `sidebar` | `<aside>` | - | Sidebar component |
@@ -309,10 +309,43 @@ Rich interactive components.
 </wb-tabs>
 </wb-demo>
 
-`hero`, `card*` variants, `spinner`, `toast`, `notify`, `badge`, `chip`, `alert`,
-`skeleton`, `divider`, `breadcrumb`, `avatar`, `dropdown`, `accordion`, `navbar`,
-`sidebar`, `menu`, `pagination`, and `steps` don't yet have a dedicated component doc
-with a live example to pull from — tracked as remaining work, not guessed here.
+**`toast`**
+
+<wb-demo>
+<button x-toast message="Saved!" toast-variant="success">Show toast</button>
+</wb-demo>
+
+**`chip`**
+
+<wb-demo>
+<span x-chip label="Removable" variant="info" dismissible></span>
+</wb-demo>
+
+**`skeleton`**
+
+<wb-demo>
+<wb-skeleton variant="text" lines="3"></wb-skeleton>
+</wb-demo>
+
+**`dropdown`**
+
+<wb-demo>
+<button x-dropdown items="Profile,Settings,Logout" label="Account"></button>
+</wb-demo>
+
+**`accordion`**
+
+<wb-demo>
+<div x-accordion>
+  <div accordion-title="What is wb-starter?">A schema-first, no-build website starter kit.</div>
+  <div accordion-title="Is x-accordion recommended?">No, prefer the native details/summary element for new markup.</div>
+</div>
+</wb-demo>
+
+`hero`, `card*` variants, `spinner`, `notify`, `badge`, `alert`, `divider`,
+`breadcrumb`, `avatar`, `navbar`, `sidebar`, `menu`, `pagination`, and `steps`
+don't yet have a dedicated component doc with a live example to pull from —
+tracked as remaining work, not guessed here.
 
 ### 3. Layout & Structure
 Tools for arranging content.
@@ -322,6 +355,7 @@ Tools for arranging content.
 | `grid` | `<wb-grid>` | - | CSS Grid layout |
 | `flex` | `<wb-flex>`, `<wb-row>` | - | Flexbox layout |
 | `container` | `<wb-container>` | - | Responsive container |
+| [`articles`](behaviors/articles.md) | `<wb-articles>`, `[x-articles]` | - | Grid/list/masonry wrapper for article-like children |
 | [`stack`](behaviors/wb-stack.md) | `<wb-stack>`, `<wb-column>`, `[x-stack]` | - | Vertical stack |
 | [`cluster`](behaviors/wb-cluster.md) | `<wb-cluster>`, `[x-cluster]` | - | Horizontal cluster |
 | `center` | `<wb-center>` | - | Centered content |
