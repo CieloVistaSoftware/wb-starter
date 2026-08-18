@@ -19,6 +19,20 @@ wb-alert,
   color: white;
 }
 
+/* #633: Standard §13 requires >=1rem between stacked sibling alerts too, not
+   just internal padding -- nothing declared this gap at all (confirmed live:
+   pages/behaviors.html/themes.html/about.html/ai-docs.html measured 12px
+   between consecutive alerts, whatever incidental spacing their parent
+   happened to provide, under the 1rem/16px minimum). Adjacent-sibling
+   margin, not a parent `gap`, so it's correct regardless of what container
+   (grid, flex, plain block flow) the alerts happen to be stacked in. */
+wb-alert + wb-alert,
+.wb-alert + .wb-alert,
+wb-alert + .wb-alert,
+.wb-alert + wb-alert {
+  margin-top: 1rem;
+}
+
 /* Variants */
 .wb-alert--info {
   background: var(--info-color, #3b82f6);

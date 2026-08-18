@@ -405,6 +405,18 @@ export function alert(element, options = {}) {
   // .wb-alert class selector to a tag selector) + .wb-alert--<variant> --
   // the variant attribute alone matches no selector, so every alert
   // rendered with zero styling regardless of variant (#375).
+  //
+  // #633: that tag-selector rule ONLY ever matches a literal <wb-alert>
+  // element -- for the attribute-decoration form (<div x-alert>, the form
+  // every doc/demo actually uses), nothing added the base `.wb-alert`
+  // class either, so the div got ZERO base styling (padding, gap,
+  // display:flex, border-radius) -- only the variant rule's background
+  // color, since `.wb-alert--{variant}` alone still matched. Confirmed
+  // live: <div x-alert type="info"> computed to padding:0/gap:normal on
+  // every side. Same pattern badge() already handles correctly (#448) --
+  // skip the redundant class on a literal <wb-alert> host (its own tag
+  // selector already covers it), add it for every other host.
+  if (element.tagName.toLowerCase() !== 'wb-alert') element.classList.add('wb-alert');
   element.classList.add(`wb-alert--${variant}`);
 
   const content = message || element.innerHTML || 'Alert message';
