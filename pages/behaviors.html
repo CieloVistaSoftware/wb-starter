@@ -13,6 +13,7 @@
     <input type="search" id="behaviors-search" placeholder="Search behaviors — e.g. x-tooltip, x-toast — or just x- to see everything" aria-label="Search behaviors">
     <span id="behaviors-search-count" aria-live="polite"></span>
   </div>
+  <ul id="behaviors-search-results" class="behaviors-search-results" hidden></ul>
 </div>
 <nav id="nav" class="nav-links"><a href="#buttons">🔘 Buttons</a>
 <a href="#inputs">📝 Inputs</a>
@@ -326,20 +327,59 @@
   (function () {
     const input = document.getElementById('behaviors-search');
     const countEl = document.getElementById('behaviors-search-count');
-    if (!input || !countEl) return;
+    const resultsEl = document.getElementById('behaviors-search-results');
+    if (!input || !countEl || !resultsEl) return;
 
     const demos = Array.from(document.querySelectorAll('wb-demo'));
     const total = demos.length;
 
+    // #642: John, "the search box says there are 69 items from
+    // that search but there is no content. I want an element that has 69
+    // rows of information for the end user." -- the count was always
+    // correct and scrollIntoView (the earlier #634 follow-up fix) does
+    // work, but "scroll a 13,000px page and hope you land near a
+    // highlighted item" isn't the same thing as SEEING the 69 results.
+    // This builds an actual results list, directly under the search box,
+    // no scrolling required to see it exists.
+    //
+    // Each row's label is every distinct x-*/wb-* token found in that
+    // demo's own raw source -- not just the query itself, which for a
+    // broad query like "x-" would otherwise put an identical, useless
+    // "x-" label on all 69 rows.
+    const TOKEN_RE = /(?:<|\s)((?:wb|x)-[a-z0-9-]+)/gi;
+    function tokensFor(source) {
+      const seen = new Set();
+      let m;
+      TOKEN_RE.lastIndex = 0;
+      while ((m = TOKEN_RE.exec(source))) seen.add(m[1].toLowerCase());
+      return Array.from(seen);
+    }
+
+    // The heading a demo visually sits under (its nearest preceding h3,
+    // falling back to h2) -- gives each row context beyond the bare
+    // attribute name, e.g. "x-ripple" under "Ripple Effect".
+    function headingFor(demo) {
+      let el = demo.previousElementSibling;
+      while (el) {
+        if (el.tagName === 'H3' || el.tagName === 'H2') return el.textContent.trim();
+        el = el.previousElementSibling;
+      }
+      return '';
+    }
+
     function applyFilter(rawQuery) {
       const q = rawQuery.trim().toLowerCase();
       let visible = 0;
+      const matchedDemos = [];
 
       demos.forEach((demo) => {
         const source = (demo._rawSource || demo.outerHTML || '').toLowerCase();
         const match = q === '' || source.includes(q);
         demo.toggleAttribute('data-behaviors-search-hidden', !match);
-        if (match) visible++;
+        if (match) {
+          visible++;
+          if (q !== '') matchedDemos.push({ demo, source });
+        }
       });
 
       // A heading's "owned" demos are its following siblings up to the next
@@ -364,20 +404,46 @@
 
       countEl.textContent = q === '' ? `${total} behaviors` : `Showing ${visible} of ${total}`;
 
-      // #634 follow-up: John, "Showing 69 of 88 they are not showing when i
-      // filter for x-" -- the count above was always correct, but nothing
-      // ever moved the viewport, so a match scattered anywhere past the
-      // fold (nearly all of them, in their original document position) was
-      // invisible unless you already happened to be scrolled to the right
-      // spot. Bringing the first surviving match into view on every
-      // non-empty query fixes that directly. `block: 'nearest'` is a no-op
-      // if it's already on-screen, so this doesn't yank the page around on
-      // every keystroke once the first match is in view.
-      if (q !== '' && visible > 0) {
-        const firstMatch = demos.find((d) => !d.hasAttribute('data-behaviors-search-hidden'));
-        firstMatch?.scrollIntoView({ block: 'nearest', behavior: 'auto' });
+      // #642: build the actual results rows -- one per matching
+      // demo, labeled by its distinct x-*/wb-* tokens (falling back to its
+      // section heading if a token extraction finds nothing, e.g. a match
+      // on plain description text). Clicking a row scrolls that SPECIFIC
+      // demo into view -- this replaces the earlier "always jump to the
+      // first match on every keystroke" behavior (#634 follow-up), which
+      // would have scrolled the page away from the search box/results list
+      // itself the moment a match existed, hiding the very control the
+      // reader is typing into.
+      resultsEl.innerHTML = '';
+      if (q === '' || matchedDemos.length === 0) {
+        resultsEl.hidden = true;
+      } else {
+        resultsEl.hidden = false;
+        const frag = document.createDocumentFragment();
+        matchedDemos.forEach(({ demo, source }, i) => {
+          const tokens = tokensFor(source).filter((t) => t.includes(q));
+          const label = (tokens.length ? tokens : tokensFor(source)).slice(0, 4).join(', ')
+            || headingFor(demo) || `Result ${i + 1}`;
+          const heading = headingFor(demo);
+          const li = document.createElement('li');
+          const btn = document.createElement('button');
+          btn.type = 'button';
+          btn.className = 'behaviors-search-results__row';
+          btn.dataset.demoIndex = String(demos.indexOf(demo));
+          btn.innerHTML = `<span class="behaviors-search-results__token">${label}</span>`
+            + (heading && heading !== label ? `<span class="behaviors-search-results__heading">${heading}</span>` : '');
+          li.appendChild(btn);
+          frag.appendChild(li);
+        });
+        resultsEl.appendChild(frag);
       }
     }
+
+    resultsEl.addEventListener('click', (e) => {
+      const btn = e.target.closest('.behaviors-search-results__row');
+      if (!btn) return;
+      const demo = demos[Number(btn.dataset.demoIndex)];
+      demo?.scrollIntoView({ block: 'start', behavior: 'auto' });
+    });
 
     input.addEventListener('input', () => applyFilter(input.value));
     applyFilter('');

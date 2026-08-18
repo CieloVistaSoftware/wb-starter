@@ -58,10 +58,71 @@
   display: none !important;
 }
 
+/* #642: John, "the search box says there are 69 items ... but
+   there is no content. I want an element that has 69 rows of information
+   for the end user." -- a real, immediately-visible results list, right
+   under the search box in the hero, so a match is provably real without
+   scrolling the 13,000px page at all. Internal scroll (not page scroll)
+   for the row list itself: bounded so a broad query like "x-" (69+ rows)
+   can't blow the hero out to page-length, same reasoning site.css already
+   applies to #siteBody. */
+.behaviors-search-results {
+  list-style: none;
+  margin: var(--space-md, 1rem) 0 0;
+  padding: 0;
+  max-width: 40rem;
+  max-height: 16rem;
+  overflow-y: auto;
+  border: 1px solid var(--border-color, #374151);
+  border-radius: var(--radius-md, 6px);
+  background: var(--bg-secondary, #1f2937);
+}
+
+.behaviors-search-results__row {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0.15rem;
+  width: 100%;
+  padding: 0.6rem 1rem;
+  background: none;
+  border: none;
+  border-bottom: 1px solid var(--border-color, #374151);
+  color: var(--text-primary, #e5e7eb);
+  font: inherit;
+  text-align: left;
+  cursor: pointer;
+}
+
+.behaviors-search-results__row:last-child {
+  border-bottom: none;
+}
+
+.behaviors-search-results__row:hover,
+.behaviors-search-results__row:focus-visible {
+  background: var(--bg-tertiary, #111827);
+  outline: none;
+}
+
+.behaviors-search-results__token {
+  font-family: var(--font-mono, monospace);
+  color: var(--primary, #6366f1);
+  font-size: 0.9rem;
+}
+
+.behaviors-search-results__heading {
+  color: var(--text-secondary, #9ca3af);
+  font-size: 0.8rem;
+}
+
 @media (max-width: 700px) {
   .behaviors-search {
     flex-direction: column;
     align-items: stretch;
+    max-width: 100%;
+  }
+
+  .behaviors-search-results {
     max-width: 100%;
   }
 }
