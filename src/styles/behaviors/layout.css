@@ -55,20 +55,17 @@ wb-drawer.wb-drawer-trigger {
   color: var(--text-secondary);
 }
 
-.site {
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  background: var(--bg-color);
-  color: var(--text-primary);
-}
-
-.site__body {
-  display: flex;
-  flex: 1;
-  overflow-y: auto;
-  height: calc(100vh - 60px);
-}
+/* #636: .site/.site__body's real, authoritative definitions live in
+   site.css (the shell stylesheet, loaded eagerly) -- these were a stale,
+   forgotten duplicate that had drifted out of sync, including a hardcoded
+   `height: calc(100vh - 60px)` on .site__body that site.css's own comment
+   says was deliberately removed as "dead, misleading code" once flex-basis
+   took over sizing. Since layout.css is lazily loaded (only when a page
+   uses a layout behavior) it can load AFTER site.css, letting this stale
+   copy win the cascade on same-specificity properties on any page that
+   happens to use wb-grid/wb-flex/wb-stack/etc. Removed entirely rather
+   than re-synced -- these selectors don't belong in a BEHAVIOR stylesheet
+   at all, only the shell's own site.css should ever define them. */
 
 .site__main {
   flex: 1;
