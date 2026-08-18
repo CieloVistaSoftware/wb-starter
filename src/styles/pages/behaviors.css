@@ -15,6 +15,58 @@
 }
 
 /* ═══════════════════════════════════════════════════════════════════
+   BEHAVIOR SEARCH
+   John, screenshot: "Add a search here that allows finding all of our
+   behaviors. e.g. x-tooltiop, x-this, x-that etc. typing in just x- will
+   show all of them" -- JS lives inline at the bottom of behaviors.html
+   (matches each wb-demo's captured _rawSource against the query).
+   ═══════════════════════════════════════════════════════════════════ */
+.behaviors-search {
+  display: flex;
+  align-items: center;
+  gap: var(--space-md, 1rem);
+  margin-top: var(--space-lg, 1.5rem);
+  max-width: 40rem;
+}
+
+.behaviors-search input[type="search"] {
+  flex: 1;
+  background: var(--bg-secondary, #1f2937);
+  border: 1px solid var(--border-color, #374151);
+  color: var(--text-primary, #e5e7eb);
+  border-radius: var(--radius-md, 6px);
+  padding: 0.65rem 1rem;
+  font-size: 1rem;
+}
+
+.behaviors-search input[type="search"]:focus-visible {
+  outline: 2px solid var(--primary, #6366f1);
+  outline-offset: 2px;
+}
+
+#behaviors-search-count {
+  color: var(--text-secondary, #9ca3af);
+  font-size: 0.875rem;
+  white-space: nowrap;
+  font-variant-numeric: tabular-nums;
+}
+
+/* A demo or heading hidden by the search filter -- toggled via JS, not a
+   static rule, but declared here so the behavior is co-located with the
+   rest of this feature's styling. */
+[data-behaviors-search-hidden] {
+  display: none !important;
+}
+
+@media (max-width: 700px) {
+  .behaviors-search {
+    flex-direction: column;
+    align-items: stretch;
+    max-width: 100%;
+  }
+}
+
+/* ═══════════════════════════════════════════════════════════════════
    HEADER ENHANCEMENTS
    ═══════════════════════════════════════════════════════════════════ */
 header {

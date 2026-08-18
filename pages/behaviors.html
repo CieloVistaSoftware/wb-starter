@@ -9,6 +9,10 @@
   <p class="header-subtitle">170+ behaviors • Interactive demos • Copy-ready code</p>
   </div>
   </header>
+  <div class="behaviors-search">
+    <input type="search" id="behaviors-search" placeholder="Search behaviors — e.g. x-tooltip, x-toast — or just x- to see everything" aria-label="Search behaviors">
+    <span id="behaviors-search-count" aria-live="polite"></span>
+  </div>
 </div>
 <nav id="nav" class="nav-links"><a href="#buttons">🔘 Buttons</a>
 <a href="#inputs">📝 Inputs</a>
@@ -309,3 +313,59 @@
     <p>wb-starter v{{WB_VERSION}} • 71 behaviors • 23 themes</p>
     <p><a href="?page=docs">Documentation</a> • <a href="?page=themes">Themes</a> • <a href="?page=home">Home</a></p>
   </footer>
+
+  <script>
+  // #635: John, screenshot on this page: "Add a search here that allows
+  // finding all of our behaviors. e.g. x-tooltiop, x-this, x-that etc.
+  // typing in just x- will show all of them". Matches each <wb-demo>'s own
+  // `_rawSource` (the exact authored markup, captured synchronously at
+  // connectedCallback -- see wb-demo.js -- available immediately, no need
+  // to wait for lazy behaviors to finish applying) against the query, then
+  // hides the h3/section around any group with nothing left visible so the
+  // filtered page never shows an orphaned empty heading.
+  (function () {
+    const input = document.getElementById('behaviors-search');
+    const countEl = document.getElementById('behaviors-search-count');
+    if (!input || !countEl) return;
+
+    const demos = Array.from(document.querySelectorAll('wb-demo'));
+    const total = demos.length;
+
+    function applyFilter(rawQuery) {
+      const q = rawQuery.trim().toLowerCase();
+      let visible = 0;
+
+      demos.forEach((demo) => {
+        const source = (demo._rawSource || demo.outerHTML || '').toLowerCase();
+        const match = q === '' || source.includes(q);
+        demo.toggleAttribute('data-behaviors-search-hidden', !match);
+        if (match) visible++;
+      });
+
+      // A heading's "owned" demos are its following siblings up to the next
+      // h2/h3 -- hide the heading itself when none of them are visible.
+      document.querySelectorAll('section h3').forEach((h3) => {
+        let el = h3.nextElementSibling;
+        let anyVisible = false;
+        while (el && el.tagName !== 'H3' && el.tagName !== 'H2') {
+          if (el.tagName === 'WB-DEMO' && !el.hasAttribute('data-behaviors-search-hidden')) anyVisible = true;
+          el = el.nextElementSibling;
+        }
+        h3.toggleAttribute('data-behaviors-search-hidden', !anyVisible);
+      });
+
+      // Same for whole top-level sections (and their own h2/section-note).
+      document.querySelectorAll('section[id]').forEach((section) => {
+        const anyVisible = Array.from(section.querySelectorAll('wb-demo')).some(
+          (d) => !d.hasAttribute('data-behaviors-search-hidden')
+        );
+        section.toggleAttribute('data-behaviors-search-hidden', !anyVisible);
+      });
+
+      countEl.textContent = q === '' ? `${total} behaviors` : `Showing ${visible} of ${total}`;
+    }
+
+    input.addEventListener('input', () => applyFilter(input.value));
+    applyFilter('');
+  })();
+  </script>
