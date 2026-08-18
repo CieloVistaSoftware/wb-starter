@@ -245,25 +245,21 @@ function attachInstanceDocLink(hostEl, file, label, root, anchorEl) {
     const href = root + 'public/doc-viewer.html?file=' + encodeURIComponent('docs/' + file);
     const title = `${label} docs`;
 
-    // #630: John, screenshot -- a single shrink-to-fit demo (Standard §7,
-    // e.g. a bare <wb-avatar initials="JD">, maybe 64px wide) anchored the
-    // badge to hostEl's OWN box, same as any other component -- but that box
-    // is exactly as small as the avatar itself, so the badge landed
-    // overlapping the avatar's own circle instead of sitting clear of it.
-    // "it should be in a element the same width or more than the code
-    // element ... but in the top right hand corner": the code panel below
-    // is only ever as narrow as hostEl for a MULTI-item grid (each item
-    // roughly fills its own track); for a single-item grid, demo.css's own
-    // shrink-to-fit sizes the OUTER <wb-demo> to the WIDER of (control,
-    // code panel) -- see wb-demo:has(> .wb-demo__grid--cols-1 > :only-child)
-    // -- while `.wb-demo__grid` (and hostEl within it) can still be much
-    // narrower. Anchoring to that outer element instead, when the caller
-    // identifies hostEl as the grid's sole child, puts the badge at the
-    // far corner of a box that's guaranteed at least as wide as the code
-    // panel, never on top of a small control. Multi-item grids are
-    // unaffected -- anchorEl defaults to hostEl, unchanged.
-    const anchor = anchorEl || hostEl;
-    const isOuterAnchor = anchor !== hostEl;
+    // #630/#641: was anchored to hostEl itself for multi-item grids, only
+    // falling back to the outer <wb-demo> for a single-child demo -- but
+    // "5rem off the element" (John) is impossible to guarantee against a
+    // tiny host like a single wb-badge pill without either colliding with
+    // the next badge over or getting clipped by wb-demo's own
+    // overflow:hidden the moment the icon is pushed outside hostEl's box.
+    // Always anchoring to the outer <wb-demo> instead sidesteps both: the
+    // reserved padding-top:5rem this earns it (demo.css, `wb-demo:has(>
+    // .wb-demo__card-doc-link)`) lives INSIDE wb-demo's own box (never
+    // clipped) and is shared page-wide instead of squeezed into every
+    // individual pill (never collides with a neighbor). Multiple same-file
+    // instances in one grid (e.g. six wb-badge variants) now collapse to
+    // ONE link per demo block instead of one per instance -- see the
+    // same-href guard in build() below.
+    const anchor = anchorEl;
 
     // #295: the badge is positioned top-right via `position: absolute`
     // (demo.css), which anchors to `anchor` ONLY if it's itself a
@@ -283,10 +279,17 @@ function attachInstanceDocLink(hostEl, file, label, root, anchorEl) {
     }
 
     const build = () => {
-        if (anchor.querySelector(':scope > .wb-demo__card-doc-link')) return;
+        // #641: dedup by href, not "any link at all" -- anchor is always the
+        // outer <wb-demo> now (see above), shared by every instance in the
+        // grid, so a same-file dedup is what collapses e.g. six wb-badge
+        // variants pointing at the same badge.md down to ONE icon. A grid
+        // mixing genuinely different components (rare) still gets one icon
+        // per distinct file -- see demo.css's `~` sibling offset for how a
+        // second, different-file icon avoids stacking on top of the first.
+        const existing = Array.from(anchor.querySelectorAll(':scope > a.wb-demo__card-doc-link'));
+        if (existing.some((a) => a.getAttribute('href') === href)) return;
         const link = document.createElement('a');
         link.className = 'wb-demo__card-doc-link';
-        if (isOuterAnchor) link.classList.add('wb-demo__card-doc-link--outer');
         link.href = href;
         link.target = '_blank';
         link.rel = 'noopener';
@@ -671,18 +674,11 @@ export async function demo(element, options = {}) {
         const manifest = await loadDocsManifest().catch(() => null);
         const root = siteRoot();
 
-        // #630: matches demo.css's own :only-child shrink-to-fit condition --
-        // when hostEl IS the grid's one and only direct child, anchor its
-        // doc-link to `element` (the outer <wb-demo>, sized to the WIDER of
-        // control/code panel) instead of to hostEl's own possibly-tiny box.
-        const soleGridChild = grid.children.length === 1 ? grid.children[0] : null;
-        const anchorFor = (hostEl) => (hostEl === soleGridChild ? element : hostEl);
-
         perInstanceChildren.forEach((hostEl) => {
             const comp = hostEl.tagName.slice(3).toLowerCase(); // WB-CARDHERO -> cardhero
             const file = findDocFile(manifest, comp);
             if (!file) return; // never a dead link
-            attachInstanceDocLink(hostEl, file, `wb-${comp}`, root, anchorFor(hostEl));
+            attachInstanceDocLink(hostEl, file, `wb-${comp}`, root, element);
         });
 
         // John (reported repeatedly): pages/behaviors.html's demos are
@@ -702,7 +698,7 @@ export async function demo(element, options = {}) {
             const hosts = grid.querySelectorAll(`[x-${name}], [x-as-${name}]`);
             if (!hosts.length) return; // name matched in source text but no live element carries it
             resolvedXBehaviorNames.add(name);
-            hosts.forEach((hostEl) => attachInstanceDocLink(hostEl, file, `x-${name}`, root, anchorFor(hostEl)));
+            hosts.forEach((hostEl) => attachInstanceDocLink(hostEl, file, `x-${name}`, root, element));
         });
 
         const linkedComponents = sharedComponents

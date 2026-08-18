@@ -403,39 +403,30 @@ wb-demo > .x-pre-wrapper {
   border-color: var(--primary);
 }
 
-/* #619: a card is big enough that an inset top-right icon lands in empty
-   space; wb-badge (and any other short, pill-shaped host) has no such spare
-   corner -- the icon was sitting directly on top of the label text, and its
-   own 1.5rem height + 0.5rem top offset is taller than the badge itself.
-   Reserve room for it with extra right padding, and re-center it to the
-   badge's own (shorter) height instead of pinning it to the top. :has()
-   scopes this to instances that actually carry a doc-link (wb-demo pages),
-   leaving a standalone <wb-badge> untouched. */
-wb-badge:has(> .wb-demo__card-doc-link) {
-  padding-right: 2.25rem;
+/* #641: John, badge.md -- doc-links were sitting flush against (~1-3px
+   gap, essentially touching) whatever small element they labeled. "all doc
+   links must be 5rem off of the element." demo.js now always anchors the
+   icon to the outer <wb-demo> (never a small per-instance host like a
+   single wb-badge pill -- see attachInstanceDocLink's anchor comment),
+   collapsing same-file instances in one grid down to a single icon per
+   demo block. Reserving the clearance as padding-top on wb-demo itself
+   (rather than pushing the icon UP/OUT past wb-demo's own edge) keeps it
+   inside wb-demo's box, where the #619/#630-era attempts already
+   established overflow:hidden can't clip it -- the grid content just
+   starts 5rem lower, leaving the icon a full 5rem of genuinely clear space
+   above every rendered example, regardless of how small any individual
+   instance is. */
+wb-demo:has(> .wb-demo__card-doc-link) {
+  padding-top: 5rem;
 }
 
-wb-badge > .wb-demo__card-doc-link {
-  top: 50%;
-  transform: translateY(-50%);
-}
-
-/* #630: John, screenshot on a single shrink-to-fit demo (a small
-   <wb-avatar>) -- the badge, anchored to hostEl's own tiny box like any
-   other component, sat directly on top of the avatar's circle instead of
-   clear of it. "it should be in a element the same width or more than the
-   code element ... but in the top right hand corner" -- demo.js now
-   anchors a SOLE grid child's badge to the outer <wb-demo> instead of the
-   small control itself (see attachInstanceDocLink's anchorEl param and the
-   #630 comment there) -- <wb-demo> is sized to the WIDER of (control, code
-   panel) for single-item demos (see wb-demo:has(> .wb-demo__grid--cols-1 >
-   :only-child) above), so its own top-right corner is guaranteed at least
-   as wide as the code panel, never on top of a small control. wb-demo's
-   own 1rem padding (base rule, top of this file) keeps the badge inset
-   from the true outer edge without any extra offset needed here. */
-.wb-demo__card-doc-link--outer {
-  top: 0;
-  right: 0;
+/* A grid mixing genuinely different components/behaviors (rare -- most
+   demo blocks are one file's own instances) gets one icon per distinct
+   doc file instead of silently dropping the second (see the href-based
+   dedup in attachInstanceDocLink). Offset a later icon left so it doesn't
+   stack directly on the first. */
+.wb-demo__card-doc-link ~ .wb-demo__card-doc-link {
+  right: 2.75rem;
 }
 
 /* #385: "Events" section -- optional, only rendered when a demo declares
