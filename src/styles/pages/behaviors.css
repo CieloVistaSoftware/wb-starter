@@ -106,7 +106,7 @@
 
 .behaviors-search-results__token {
   font-family: var(--font-mono, monospace);
-  color: var(--primary, #6366f1);
+  color: var(--warning-color);
   font-size: 0.9rem;
 }
 

@@ -333,6 +333,31 @@
     const demos = Array.from(document.querySelectorAll('wb-demo'));
     const total = demos.length;
 
+    // John: "prefill this dropdown box with all known x- attributes" --
+    // browsing before typing anything needs the CANONICAL list (every
+    // registered behavior, "x-" + name), not just whatever happens to
+    // appear in this page's own demo markup -- a behavior with zero demos
+    // on THIS page would otherwise never show up at all. Sourced from
+    // tag-map.js's elementMap (the same single source of truth the #631
+    // audit/registration work this session already established), via
+    // dynamic import() so this stays a classic <script> (matches every
+    // other inline script on this page) instead of needing type="module".
+    // siteRoot() mirrors demo.js's own helper -- this page can be loaded
+    // both through the SPA (root '/') and under a GitHub Pages sub-path
+    // ('/wb-starter/'), and a bare leading '/' import would 404 on the
+    // latter.
+    function siteRoot() {
+      const stripped = location.pathname.replace(/(?:public|demos|pages|articles|tests\/fixtures)\/.*$/, '');
+      return stripped.replace(/[^/]*$/, '');
+    }
+    let allXAttributes = [];
+    import(siteRoot() + 'src/core/tag-map.js')
+      .then((mod) => {
+        allXAttributes = Array.from(new Set(Object.values(mod.elementMap))).sort().map((name) => `x-${name}`);
+        if (input.value.trim() === '') renderBrowseAll();
+      })
+      .catch(() => {}); // browse-all list just stays empty; typed search still works
+
     // #642: John, "the search box says there are 69 items from
     // that search but there is no content. I want an element that has 69
     // rows of information for the end user." -- the count was always
@@ -365,6 +390,33 @@
         el = el.previousElementSibling;
       }
       return '';
+    }
+
+    // Empty-query "browse all" state: the canonical list fetched above,
+    // not scoped to this page's demos -- lets a reader discover a behavior
+    // that has no example here at all. Clicking a row fills the input with
+    // that exact token and runs the normal typed-search path (matchedDemos
+    // above), rather than trying to scroll anywhere itself -- a behavior
+    // with zero demos on this page has nothing to scroll to, and this way
+    // that's an honest "Showing 0 of 88", not a silent no-op click.
+    function renderBrowseAll() {
+      if (!allXAttributes.length) {
+        resultsEl.hidden = true;
+        return;
+      }
+      resultsEl.hidden = false;
+      const frag = document.createDocumentFragment();
+      allXAttributes.forEach((token) => {
+        const li = document.createElement('li');
+        const btn = document.createElement('button');
+        btn.type = 'button';
+        btn.className = 'behaviors-search-results__row';
+        btn.dataset.browseToken = token;
+        btn.innerHTML = `<span class="behaviors-search-results__token">${token}</span>`;
+        li.appendChild(btn);
+        frag.appendChild(li);
+      });
+      resultsEl.appendChild(frag);
     }
 
     function applyFilter(rawQuery) {
@@ -414,7 +466,10 @@
       // itself the moment a match existed, hiding the very control the
       // reader is typing into.
       resultsEl.innerHTML = '';
-      if (q === '' || matchedDemos.length === 0) {
+      if (q === '') {
+        renderBrowseAll();
+        return;
+      } else if (matchedDemos.length === 0) {
         resultsEl.hidden = true;
       } else {
         resultsEl.hidden = false;
@@ -441,6 +496,11 @@
     resultsEl.addEventListener('click', (e) => {
       const btn = e.target.closest('.behaviors-search-results__row');
       if (!btn) return;
+      if (btn.dataset.browseToken) {
+        input.value = btn.dataset.browseToken;
+        applyFilter(input.value);
+        return;
+      }
       const demo = demos[Number(btn.dataset.demoIndex)];
       demo?.scrollIntoView({ block: 'start', behavior: 'auto' });
     });
