@@ -30,7 +30,7 @@ Wrapped in `<wb-demo>`, so the live component renders below with its source show
 <wb-demo>
 <wb-cardvideo
   src="/videos/demo.mp4"
-  poster="/images/poster.jpg"
+  poster="https://picsum.photos/seed/poster/800/450"
   title="Demo Video"
   controls>
 </wb-cardvideo>
@@ -43,7 +43,7 @@ Wrapped in `<wb-demo>`, so the live component renders below with its source show
 ```html
 <wb-cardvideo
   src="/videos/demo.mp4"
-  poster="/images/poster.jpg"
+  poster="https://picsum.photos/seed/poster/800/450"
   title="Demo Video"
   controls>
 </wb-cardvideo>

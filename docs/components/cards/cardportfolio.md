@@ -39,7 +39,7 @@ Wrapped in `<wb-demo>`, so the live component renders below with its source show
   name="John Doe"
   title="Senior Developer"
   company="TechCorp"
-  avatar="/images/john.jpg">
+  avatar="https://picsum.photos/seed/john/200/200">
 </wb-cardportfolio>
 </wb-demo>
 
@@ -52,7 +52,7 @@ Wrapped in `<wb-demo>`, so the live component renders below with its source show
   name="John Doe"
   title="Senior Developer"
   company="TechCorp"
-  avatar="/images/john.jpg">
+  avatar="https://picsum.photos/seed/john/200/200">
 </wb-cardportfolio>
 ```
 
@@ -63,8 +63,8 @@ Wrapped in `<wb-demo>`, so the live component renders below with its source show
   name="Jane Smith"
   title="Product Designer"
   company="DesignCo"
-  avatar="/images/jane.jpg"
-  cover="/images/cover.jpg"
+  avatar="https://picsum.photos/seed/jane/200/200"
+  cover="https://picsum.photos/seed/cover/800/500"
   bio="Passionate about creating beautiful, user-friendly experiences."
   location="San Francisco, CA"
   email="jane@example.com"

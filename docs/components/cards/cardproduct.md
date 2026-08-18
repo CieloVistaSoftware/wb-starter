@@ -32,7 +32,7 @@ Wrapped in `<wb-demo>`, so the live component renders below with its source show
 <wb-demo>
 <wb-cardproduct
   title="Wireless Headphones"
-  image="/images/headphones.jpg"
+  image="https://picsum.photos/seed/headphones/600/400"
   price="$99.99">
 </wb-cardproduct>
 </wb-demo>
@@ -44,7 +44,7 @@ Wrapped in `<wb-demo>`, so the live component renders below with its source show
 ```html
 <wb-cardproduct
   title="Wireless Headphones"
-  image="/images/headphones.jpg"
+  image="https://picsum.photos/seed/headphones/600/400"
   price="$99.99">
 </wb-cardproduct>
 ```
@@ -54,7 +54,7 @@ Wrapped in `<wb-demo>`, so the live component renders below with its source show
 ```html
 <wb-cardproduct
   title="Premium Headphones"
-  image="/images/headphones.jpg"
+  image="https://picsum.photos/seed/headphones/600/400"
   price="$79.99"
   originalPrice="$99.99"
   badge="Sale">
@@ -66,7 +66,7 @@ Wrapped in `<wb-demo>`, so the live component renders below with its source show
 ```html
 <wb-cardproduct
   title="Bluetooth Speaker"
-  image="/images/speaker.jpg"
+  image="https://picsum.photos/seed/speaker/600/400"
   price="$49.99"
   rating="4.5"
   reviews="128"

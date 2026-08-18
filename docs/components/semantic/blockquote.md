@@ -54,7 +54,7 @@ The `<cite>` element identifies the source of a quotation:
   quote="This product changed my life. The support team is incredible and the features are exactly what I needed."
   author="Jane Smith"
   role="CEO, TechCorp"
-  avatar="avatar.jpg"
+  avatar="https://picsum.photos/seed/avatar/200/200"
   rating="5">
 </article>
 </wb-demo>

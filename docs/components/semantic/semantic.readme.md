@@ -93,7 +93,7 @@ Self-contained media with optional caption using `<figure>` and `<figcaption>` e
 <!-- Image with caption -->
 <wb-figure>
   <img
-    src="diagram.png"
+    src="https://picsum.photos/seed/diagram/600/400"
     alt="Process flow diagram">
   <wb-figcaption>Figure 1: Overview of the process flow</wb-figcaption>
 </wb-figure>

@@ -53,7 +53,7 @@ Wrapped in `<wb-demo>`, so the live component renders below with its source show
   quote="Absolutely incredible experience. Would recommend to everyone."
   author="John Smith"
   role="Product Manager"
-  avatar="/images/john.jpg"
+  avatar="https://picsum.photos/seed/john/200/200"
   rating="5">
 </wb-cardtestimonial>
 ```

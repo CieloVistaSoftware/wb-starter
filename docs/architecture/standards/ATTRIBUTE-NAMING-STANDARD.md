@@ -793,7 +793,7 @@ name         attribute with DIFFERENT meaning?
   trend-value="+12%">
 </wb-cardstats>
 <wb-cardimage
-  src="photo.jpg"
+  src="https://picsum.photos/seed/photo/600/400"
   alt="Description"
   heading="Photo Title"
   loading="lazy">
@@ -810,7 +810,7 @@ name         attribute with DIFFERENT meaning?
 </wb-alert>
 <wb-badge variant="success">Active</wb-badge>
 <wb-avatar
-  src="user.jpg"
+  src="https://picsum.photos/seed/user/600/400"
   alt="John Doe"
   size="lg"
   status="online">
@@ -870,7 +870,7 @@ name         attribute with DIFFERENT meaning?
 ```html
 <video
   src="movie.mp4"
-  poster="preview.jpg"
+  poster="https://picsum.photos/seed/preview/800/450"
   controls
   autoplay
   muted>
@@ -920,7 +920,7 @@ name         attribute with DIFFERENT meaning?
 </div>
 <!-- Lazy loading -->
 <img
-  src="large.jpg"
+  src="https://picsum.photos/seed/large/600/400"
   x-lazy
   x-placeholder="blur">
 <!-- Draggable + Resizable -->

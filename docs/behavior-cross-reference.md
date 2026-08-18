@@ -3401,7 +3401,7 @@ Image card:
 
 <wb-demo>
 <card-image
-  src="photo.jpg"
+  src="https://picsum.photos/seed/photo/600/400"
   title="Beautiful Sunset"
   alt="Sunset over mountains">
 </card-image>
@@ -3435,7 +3435,7 @@ Product card:
 
 <wb-demo>
 <card-product
-  image="product.jpg"
+  image="https://picsum.photos/seed/product/600/400"
   title="Widget Pro"
   price="$99.99"
   rating="4.5"
@@ -3461,7 +3461,7 @@ Testimonial card:
   quote="This product changed everything!"
   author="John Smith"
   role="CEO, TechCorp"
-  avatar="john.jpg">
+  avatar="https://picsum.photos/seed/john/200/200">
 </card-testimonial>
 </wb-demo>
 
@@ -3471,7 +3471,7 @@ Hero card:
 <card-hero
   title="Welcome"
   subtitle="Get started today"
-  image="hero-bg.jpg"
+  image="https://picsum.photos/seed/hero-bg/600/400"
   cta="Learn More"
   href="/start">
 </card-hero>
@@ -3482,7 +3482,7 @@ Video card:
 <wb-demo>
 <card-video
   src="demo.mp4"
-  poster="poster.jpg"
+  poster="https://picsum.photos/seed/poster/800/450"
   title="Product Demo">
 </card-video>
 </wb-demo>
@@ -3513,7 +3513,7 @@ Portfolio card:
 
 <wb-demo>
 <card-portfolio
-  image="project.jpg"
+  image="https://picsum.photos/seed/project/600/400"
   title="E-commerce Redesign"
   category="Web Design"
   href="/portfolio/ecommerce">
@@ -3535,7 +3535,7 @@ Horizontal card:
 
 <wb-demo>
 <card-horizontal
-  image="thumb.jpg"
+  image="https://picsum.photos/seed/thumb/600/400"
   title="Article Title"
   description="Brief description of the article...">
 </card-horizontal>
@@ -3545,7 +3545,7 @@ Overlay card:
 
 <wb-demo>
 <card-overlay
-  image="background.jpg"
+  image="https://picsum.photos/seed/background/600/400"
   title="Overlay Title"
   subtitle="Text appears over the image">
 </card-overlay>

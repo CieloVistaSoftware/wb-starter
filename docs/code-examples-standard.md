@@ -256,7 +256,7 @@ multi-attribute tag onto one line.
   controls
   width="300"
   src="video.mp4"
-  poster="thumbnail.jpg">
+  poster="https://picsum.photos/seed/thumbnail/800/450">
 </video>
 ```
 

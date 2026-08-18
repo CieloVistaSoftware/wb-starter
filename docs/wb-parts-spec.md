@@ -45,7 +45,7 @@ The system automatically registers a custom element for every part.
 ```html
 <user-card
   name="Alice"
-  avatar="alice.jpg"
+  avatar="https://picsum.photos/seed/alice/200/200"
   role="Admin">
 </user-card>
 ```
@@ -57,7 +57,7 @@ Use the generic `<wb-part>` element with the part name as a boolean attribute.
 <wb-part
   user-card
   name="Bob"
-  avatar="bob.jpg">
+  avatar="https://picsum.photos/seed/bob/200/200">
 </wb-part>
 ```
 

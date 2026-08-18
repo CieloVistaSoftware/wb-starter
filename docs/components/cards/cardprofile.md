@@ -30,7 +30,7 @@ Wrapped in `<wb-demo>`, so the live component renders below with its source show
 <wb-cardprofile
   name="John Doe"
   role="Software Engineer"
-  avatar="/images/avatar.jpg">
+  avatar="https://picsum.photos/seed/avatar/200/200">
 </wb-cardprofile>
 </wb-demo>
 
@@ -42,7 +42,7 @@ Wrapped in `<wb-demo>`, so the live component renders below with its source show
 <wb-cardprofile
   name="John Doe"
   role="Software Engineer"
-  avatar="/images/avatar.jpg">
+  avatar="https://picsum.photos/seed/avatar/200/200">
 </wb-cardprofile>
 ```
 
@@ -52,8 +52,8 @@ Wrapped in `<wb-demo>`, so the live component renders below with its source show
 <wb-cardprofile
   name="Jane Smith"
   role="Product Designer"
-  avatar="/images/jane.jpg"
-  cover="/images/cover.jpg"
+  avatar="https://picsum.photos/seed/jane/200/200"
+  cover="https://picsum.photos/seed/cover/800/500"
   bio="Passionate about creating beautiful, user-friendly interfaces.">
 </wb-cardprofile>
 ```

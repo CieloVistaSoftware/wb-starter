@@ -53,7 +53,7 @@ Wrapped in `<wb-demo>`, so the live component renders below with its source show
 ```html
 <wb-video
   src="movie.mp4"
-  poster="thumbnail.jpg">
+  poster="https://picsum.photos/seed/thumbnail/800/450">
 </wb-video>
 ```
 
@@ -76,7 +76,7 @@ Wrapped in `<wb-demo>`, so the live component renders below with its source show
   <video
     class="wb-video__player"
     src="movie.mp4"
-    poster="thumb.jpg"
+    poster="https://picsum.photos/seed/thumb/800/450"
     controls
     playsinline>
   </video>

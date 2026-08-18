@@ -139,7 +139,7 @@ Since the view name "card" is a single word, the system automatically adds the `
 <!-- You can now use this tag anywhere in your app -->
 <wb-card
   name="Alice"
-  avatar="alice.jpg">
+  avatar="https://picsum.photos/seed/alice/200/200">
 </wb-card>
 ```
 
@@ -820,7 +820,7 @@ registerView('product-badge', `
 </template>
 <!-- Usage: Has image -> Shows <img> -->
 <avatar-display
-  src="pic.jpg"
+  src="https://picsum.photos/seed/pic/600/400"
   name="Alice">
 </avatar-display>
 <!-- Usage: No image -> Shows <span> (Initials) -->
@@ -1176,7 +1176,7 @@ Avatar with status indicator.
 ```html
 <wb-view
   user-avatar
-  src="images/alice.jpg"
+  src="https://picsum.photos/seed/alice/600/400"
   name="Alice"
   size="lg"
   status="online">
@@ -1564,7 +1564,7 @@ Let's build a simple **user card** component in each approach:
 <!-- Use: Auto-registered custom element -->
 <user-card
   name="Alice"
-  avatar="alice.jpg"
+  avatar="https://picsum.photos/seed/alice/200/200"
   role="Developer"
   verified>
 </user-card>
@@ -1613,7 +1613,7 @@ https://enhance.dev
 <!-- Usage -->
 <user-card
   name="Alice"
-  avatar="alice.jpg"
+  avatar="https://picsum.photos/seed/alice/200/200"
   role="Developer"
   verified>
 </user-card>
@@ -1654,7 +1654,7 @@ https://www.11ty.dev/docs/languages/webc/
 <!-- Usage in .webc file -->
 <user-card
   name="Alice"
-  avatar="alice.jpg"
+  avatar="https://picsum.photos/seed/alice/200/200"
   role="Developer"
   verified>
 </user-card>
@@ -1761,7 +1761,7 @@ defineProps(['name', 'avatar', 'role', 'verified'])
 
 ```vue
 <!-- Usage -->
-<UserCard name="Alice" avatar="alice.jpg" role="Developer" verified />
+<UserCard name="Alice" avatar="https://picsum.photos/seed/alice/200/200" role="Developer" verified />
 ```
 
 **Pros:** Reactive, scoped styles, huge ecosystem, great DX  

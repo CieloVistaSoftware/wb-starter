@@ -39,7 +39,7 @@ Wrapped in `<wb-demo>`, so the live component renders below with its source show
 
 ```html
 <wb-img
-  src="photo.jpg"
+  src="https://picsum.photos/seed/photo/600/400"
   alt="Photo description">
 </wb-img>
 ```
@@ -49,7 +49,7 @@ Wrapped in `<wb-demo>`, so the live component renders below with its source show
 ```html
 <img
   x-image
-  src="photo.jpg"
+  src="https://picsum.photos/seed/photo/600/400"
   alt="Photo">
 ```
 
@@ -57,7 +57,7 @@ Wrapped in `<wb-demo>`, so the live component renders below with its source show
 
 ```html
 <wb-img
-  src="large-image.jpg"
+  src="https://picsum.photos/seed/large-image/600/400"
   lazy
   alt="Large photo">
 </wb-img>
@@ -67,7 +67,7 @@ Wrapped in `<wb-demo>`, so the live component renders below with its source show
 
 ```html
 <wb-img
-  src="banner.jpg"
+  src="https://picsum.photos/seed/banner/600/400"
   aspectRatio="16/9"
   alt="Banner">
 </wb-img>
@@ -77,7 +77,7 @@ Wrapped in `<wb-demo>`, so the live component renders below with its source show
 
 ```html
 <wb-img
-  src="artwork.jpg"
+  src="https://picsum.photos/seed/artwork/600/400"
   zoomable
   alt="Click to zoom">
 </wb-img>
@@ -87,8 +87,8 @@ Wrapped in `<wb-demo>`, so the live component renders below with its source show
 
 ```html
 <wb-img
-  src="user-avatar.jpg"
-  fallback="/assets/default-avatar.png"
+  src="https://picsum.photos/seed/user-avatar/600/400"
+  fallback="https://picsum.photos/seed/default-avatar/200/200"
   alt="User avatar">
 </wb-img>
 ```
@@ -97,12 +97,12 @@ Wrapped in `<wb-demo>`, so the live component renders below with its source show
 
 ```html
 <wb-img
-  src="photo.jpg"
+  src="https://picsum.photos/seed/photo/600/400"
   fit="contain"
   alt="Photo">
 </wb-img>
 <wb-img
-  src="photo.jpg"
+  src="https://picsum.photos/seed/photo/600/400"
   fit="cover"
   alt="Photo">
 </wb-img>
@@ -116,7 +116,7 @@ Wrapped in `<wb-demo>`, so the live component renders below with its source show
   style="aspect-ratio: 16/9">
   <img
     class="wb-img__image"
-    src="photo.jpg"
+    src="https://picsum.photos/seed/photo/600/400"
     alt="Description"
     loading="lazy">
 </div>
