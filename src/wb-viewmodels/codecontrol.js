@@ -2,11 +2,18 @@
  * Code Control Behavior
  * Custom Tag: <wb-codecontrol>
  * Dropdown to select from available highlight.js code themes - applies immediately.
- * 
- * Usage:
- *   <wb-codecontrol ></div>
- *   <wb-codecontrol  data-size="xs"></div>
- *   <wb-codecontrol  data-show-label="false" data-size="sm"></div>
+ *
+ * Usage (plain attributes are canonical per Law 11; data-* accepted for
+ * back-compat only):
+ *   <wb-codecontrol></wb-codecontrol>
+ *   <wb-codecontrol size="xs"></wb-codecontrol>
+ *   <wb-codecontrol show-label="false" size="sm"></wb-codecontrol>
+ *
+ * #638: every option here used to be read exclusively via element.dataset.*
+ * (data-default/data-show-label/data-show-category/data-persist/data-size),
+ * with no plain-attribute form at all -- unlike every other configurable
+ * behavior in this codebase. Fixed to read the plain attribute first,
+ * dataset as fallback, matching sticky.js/toggle.js.
  */
 
 // Curated list of highlight.js themes (organized by category)
@@ -79,11 +86,23 @@ const SYNC_EVENT = 'x:codetheme:sync';
 
 export function codecontrol(element, options = {}) {
   const config = {
-    default: options.default || element.dataset.default || 'atom-one-dark',
-    showLabel: options.showLabel ?? (element.dataset.showLabel !== 'false'),
-    showCategory: options.showCategory ?? (element.dataset.showCategory !== 'false'),
-    persist: options.persist ?? (element.dataset.persist !== 'false'),
-    size: options.size || element.dataset.size || 'md',
+    default: options.default || element.getAttribute('default') || element.dataset.default || 'atom-one-dark',
+    showLabel: options.showLabel ?? (
+      element.hasAttribute('show-label')
+        ? element.getAttribute('show-label') !== 'false'
+        : element.dataset.showLabel !== 'false'
+    ),
+    showCategory: options.showCategory ?? (
+      element.hasAttribute('show-category')
+        ? element.getAttribute('show-category') !== 'false'
+        : element.dataset.showCategory !== 'false'
+    ),
+    persist: options.persist ?? (
+      element.hasAttribute('persist')
+        ? element.getAttribute('persist') !== 'false'
+        : element.dataset.persist !== 'false'
+    ),
+    size: options.size || element.getAttribute('size') || element.dataset.size || 'md',
     ...options
   };
 
