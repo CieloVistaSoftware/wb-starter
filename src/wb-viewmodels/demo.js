@@ -413,214 +413,11 @@ export async function demo(element, options = {}) {
         window.WB.scan(grid);
     }
 
-    // #486: measure the GRID's own rendered width and hand it to demo.css as
-    // --wb-demo-shrink-width, for single-item demos only (desktop rule in
-    // demo.css falls back to plain `fit-content` otherwise). A pure-CSS
-    // `width: fit-content` on wb-demo sizes to its WIDEST in-flow child —
-    // including the `.wb-demo__code` panel below the grid, which pre.css
-    // sets to `width: 100%` (circular under intrinsic sizing, so it
-    // resolves to the full available width, not its own content width).
-    // That made every single-item demo measure fit-content against the
-    // code panel instead of the actual control, even a tiny button sitting
-    // above a wide, unwrapped code sample. CSS has no way to say "shrink to
-    // child A, ignore child B" between two normal in-flow siblings, so the
-    // grid's width is measured here instead — same per-instance-measurement
-    // pattern this codebase already uses for cross-sibling sizing (e.g.
-    // pre.js's control right-offsets). rAF: wait for the current script's
-    // layout/style pass (including a deferred eager WB.scan(document.body))
-    // to settle before measuring, so button/card classes are already
-    // applied and the measured width is the real final one, not a
-    // pre-upgrade placeholder.
-    if (cols === 1 && childCount === 1 && !element.classList.contains('wb-demo--full-width')) {
-        // A single rAF measures whatever width the child happens to have at
-        // that exact instant -- correct once its content is already fully
-        // loaded, but a single-item child with its OWN async content still
-        // loading (an image, an audio player building its equalizer UI,
-        // etc.) hasn't reached its real final width yet: it measures small
-        // (sometimes near-zero) and the whole demo -- including its code
-        // panel -- gets stuck collapsed to that tiny width forever, since
-        // nothing ever re-measures after. Confirmed live 3 separate times
-        // (cardhero, 9 more card-family async-image demos, and now every
-        // auto-live-rendered wb-audio example on doc-viewer.html pages) --
-        // each fixed one-by-one with the `full-width` escape hatch, but
-        // that only helps instances someone remembers to annotate by hand.
-        // Same poll-until-stable shape as site-engine.js's anchor-scroll
-        // fix: keep re-measuring until the width stops changing for two
-        // consecutive checks, capped at 5s so a genuinely-static child
-        // (the common case) still only costs one or two cheap re-checks.
-        const only = grid.children[0];
-        if (only) {
-            // #549: an <img>/<video> with an inline `width: 100%` (the
-            // figure/lightbox-image demos below, plus the direct-<img> and
-            // <video> demos elsewhere on this page) breaks the poll below in
-            // a way the async-content case above doesn't. That media
-            // element's OWN rendered width is a direct function of whatever
-            // width THIS code writes to --wb-demo-shrink-width on the very
-            // next layout pass -- and measure() writes the variable on
-            // EVERY tick, not just once at the end, so the "two consecutive
-            // equal readings" stability check can lock onto an arbitrary
-            // self-consistent fixed point instead of the media's real
-            // content size. Confirmed live: reloading the exact same
-            // <figure><img style="width:100%"></figure> demo repeatedly
-            // settled on wildly different "stable" widths from one load to
-            // the next (a collapsed ~60px sliver on one load, a plausible
-            // ~430px on another) -- pure timing noise in which transient
-            // layout the first rAF happened to catch, not a real
-            // measurement of anything. A plain getBoundingClientRect() can
-            // never break that loop because it's reading the very quantity
-            // this code is also writing.
-            //
-            // Route these through the media's natural/intrinsic size
-            // instead (img.naturalWidth / video.videoWidth) -- a fixed
-            // quantity the container's width can't feed back into. wb-demo's
-            // existing `max-width: 100%` (demo.css) still caps this down to
-            // the available page width for an image wider than the
-            // viewport, exactly like the plain shrink-to-fit path below.
-            const media = only.matches('img,video') ? only : only.querySelector('img,video');
-            const isFluidMedia = !!(media && /^\s*\d+(\.\d+)?%\s*$/.test(media.style.width || ''));
-
-            if (isFluidMedia) {
-                const applyNaturalWidth = () => {
-                    const naturalWidth = media.tagName === 'VIDEO' ? media.videoWidth : media.naturalWidth;
-                    if (!naturalWidth) return false;
-                    // media may be wrapped (e.g. <figure><img></figure>) --
-                    // the wrapper's own margin/border/padding is FIXED px
-                    // box model (not a percentage of the container), so
-                    // reading it via getComputedStyle can't feed back into
-                    // itself the way the media's own width:100% does.
-                    // Confirmed live: <figure> gets a UA-stylesheet default
-                    // `margin: 1em 40px` -- without adding that back in, the
-                    // shrink width came out 80px narrower than the image
-                    // actually needed, clipping it against the demo's own
-                    // max-width:100% edge.
-                    let extra = 0;
-                    for (let node = media; node && node !== only; node = node.parentElement) {
-                        const parentNode = node.parentElement;
-                        if (!parentNode) break;
-                        const pcs = getComputedStyle(parentNode);
-                        extra += (parseFloat(pcs.marginLeft) || 0) + (parseFloat(pcs.marginRight) || 0)
-                               + (parseFloat(pcs.borderLeftWidth) || 0) + (parseFloat(pcs.borderRightWidth) || 0)
-                               + (parseFloat(pcs.paddingLeft) || 0) + (parseFloat(pcs.paddingRight) || 0);
-                    }
-                    const demoCs = getComputedStyle(element);
-                    const hPad = (parseFloat(demoCs.paddingLeft) || 0) + (parseFloat(demoCs.paddingRight) || 0);
-                    // #563 follow-up: same "widest of control or code"
-                    // reasoning as the non-media measure() path below --
-                    // a media demo's code sample can need more width than
-                    // the media's own natural size (e.g. a long src URL).
-                    const codeEls = element.querySelectorAll('.wb-demo__code');
-                    // +4px safety margin -- see measure()'s CODE_WIDTH_SAFETY_PX
-                    // comment below for why (a header/copy-button code panel's
-                    // wrapper chrome isn't visible to a scrollWidth read).
-                    const codeWidth = codeEls.length
-                        ? Math.max(...Array.from(codeEls, el => el.scrollWidth)) + hPad + 4
-                        : 0;
-                    element.style.setProperty('--wb-demo-shrink-width', Math.max(naturalWidth + extra + hPad, codeWidth) + 'px');
-                    return true;
-                };
-                if (applyNaturalWidth()) {
-                    // #563 follow-up: the very first call above can land
-                    // before this demo's own <pre class="wb-demo__code">
-                    // exists yet (it's created later in the same synchronous
-                    // render pass) even when the media is already
-                    // cached/decoded -- codeWidth reads as 0 that one time.
-                    // Re-run once on the next tick, after the code panel is
-                    // guaranteed to be in the DOM, so its width still gets
-                    // picked up for the cached-media case.
-                    setTimeout(applyNaturalWidth, 0);
-                } else {
-                    // Not decoded/metadata-loaded yet -- resolve once it is,
-                    // with a capped fallback so a broken/never-firing media
-                    // source can't leave the demo permanently collapsed
-                    // (same MAX_MS budget as the poll path below).
-                    const readyEvent = media.tagName === 'VIDEO' ? 'loadedmetadata' : 'load';
-                    media.addEventListener(readyEvent, applyNaturalWidth, { once: true });
-                    setTimeout(applyNaturalWidth, 5000);
-                }
-            } else {
-                let lastControlWidth = null;
-                let lastCodeWidth = null;
-                let stableCount = 0;
-                const POLL_MS = 200;
-                const MAX_MS = 5000;
-                const startedAt = Date.now();
-                const measure = () => {
-                    const demoCs = getComputedStyle(element);
-                    const hPad = (parseFloat(demoCs.paddingLeft) || 0) + (parseFloat(demoCs.paddingRight) || 0);
-                    const controlWidth = only.getBoundingClientRect().width + hPad;
-                    // #563 follow-up, John: "show all the code on single
-                    // elements per row" -- measuring only the control left
-                    // the code panel (width:100% of wb-demo, see demo.css)
-                    // capped to the control's own width, cutting long
-                    // attribute lines off with a scrollbar even though the
-                    // demo box was meant to hug its content, not the
-                    // control specifically. `.wb-demo__code` is a `<pre>`
-                    // with `white-space: pre` (pre.css) -- it never wraps,
-                    // so its scrollWidth is the fixed width needed to show
-                    // every line in full, independent of whatever width the
-                    // container currently happens to have (no circularity,
-                    // unlike a would-be `width:fit-content` read directly on
-                    // a 100%-width child). Take the max of the two so the
-                    // demo is exactly as wide as its widest requirement --
-                    // control or code -- and never wider.
-                    // querySelectorAll, not querySelector: a demo can carry
-                    // MORE than one code panel (e.g. an HTML markup sample
-                    // plus a separate JS interaction-listener sample) --
-                    // querySelector only ever found the FIRST one, so a
-                    // longer second panel's width was silently ignored.
-                    // Confirmed live: cards.html's wb-cardproduct demos
-                    // (HTML + `el.addEventListener(...)` JS sample) still
-                    // cut the JS panel off because only the HTML panel's
-                    // width was ever measured.
-                    const codeEls = element.querySelectorAll('.wb-demo__code');
-                    // +CODE_WIDTH_SAFETY_PX: a code panel with a header/copy-
-                    // button (pre.css's .x-pre--has-header) sits inside an
-                    // `.x-pre-wrapper` with its own border -- chrome between
-                    // the <pre> being measured and the demo's own edge that
-                    // this calculation has no way to see. Sizing to
-                    // scrollWidth exactly left the box 1-2px too narrow for
-                    // its own content, tripping overflow-x:auto's scrollbar
-                    // on code that's visibly not actually overflowing.
-                    // Confirmed live: demos/registry-browser.html's
-                    // icon-button/loading-skeleton examples (2px short).
-                    const CODE_WIDTH_SAFETY_PX = 4;
-                    const codeWidth = codeEls.length
-                        ? Math.max(...Array.from(codeEls, el => el.scrollWidth)) + hPad + CODE_WIDTH_SAFETY_PX
-                        : 0;
-                    const shrinkWidth = Math.max(controlWidth, codeWidth);
-                    if (shrinkWidth > 0) {
-                        element.style.setProperty('--wb-demo-shrink-width', shrinkWidth + 'px');
-                    }
-                    // Track controlWidth and codeWidth for stability
-                    // SEPARATELY, not just the derived max(). pre.js's
-                    // syntax highlighting / line-number gutter populates
-                    // asynchronously after the bare <pre> first exists, so
-                    // codeWidth keeps climbing for a few ticks after
-                    // creation. Whenever controlWidth is the larger of the
-                    // two, the max() stays flat across those ticks purely
-                    // because controlWidth (already settled) dominates it --
-                    // "2 consecutive equal max() readings" then falsely
-                    // reads as stable and stops polling before codeWidth
-                    // ever reaches its real final size. Confirmed live:
-                    // cards.html's plain-text card demos locked their code
-                    // panel width in at the control's ~355px although the
-                    // code's own content needed 413px, cutting the last
-                    // line off. Requiring BOTH inputs to hold steady (not
-                    // just their max) catches this.
-                    if (controlWidth === lastControlWidth && codeWidth === lastCodeWidth) {
-                        stableCount++;
-                    } else {
-                        stableCount = 0;
-                        lastControlWidth = controlWidth;
-                        lastCodeWidth = codeWidth;
-                    }
-                    if (stableCount >= 2 || Date.now() - startedAt > MAX_MS) return;
-                    setTimeout(measure, POLL_MS);
-                };
-                requestAnimationFrame(measure);
-            }
-        }
-    }
+    // #486/#563/#586: the single-item shrink-to-fit width measurement
+    // (originally lived here, right after the grid) now runs further down,
+    // AFTER the `<pre class="wb-demo__code">` panel is actually created --
+    // see the comment above that block for why (#586: it used to run before
+    // `<pre>` existed, which could lock in a too-narrow width on cards.html).
 
     // Add doc links. (#262: the old '?page=docs#wb-…' hrefs were
     // dead on EVERY surface — page-relative, so inside the doc-viewer they hit
@@ -793,14 +590,264 @@ export async function demo(element, options = {}) {
     // this codebase doesn't otherwise have; WB is a synchronous top-level
     // module assignment, so it's available within a frame or two of any
     // element's connectedCallback, never indefinitely delayed. (#535)
-    const scanWhenReady = (attemptsLeft = 20) => {
-        if (window.WB) {
-            window.WB.scan(pre, { eager: true });
-        } else if (attemptsLeft > 0) {
-            requestAnimationFrame(() => scanWhenReady(attemptsLeft - 1));
+    //
+    // #586: returns a Promise now (resolving once WB.scan(pre) itself has
+    // resolved, or once retries are exhausted) instead of firing and
+    // forgetting -- the width-measurement block right below AWAITS this,
+    // so its very first poll runs against an already fully-styled,
+    // already-highlighted `<pre>` (real monospace font, real padding, real
+    // syntax-highlighting markup) instead of racing it. See that block's
+    // own comment for why this matters.
+    const scanWhenReady = (attemptsLeft = 20) => new Promise((resolve) => {
+        const attempt = (left) => {
+            if (window.WB) {
+                Promise.resolve(window.WB.scan(pre, { eager: true })).then(resolve, resolve);
+            } else if (left > 0) {
+                requestAnimationFrame(() => attempt(left - 1));
+            } else {
+                resolve();
+            }
+        };
+        attempt(attemptsLeft);
+    });
+    await scanWhenReady();
+
+    // #486: measure the GRID's own rendered width and hand it to demo.css as
+    // --wb-demo-shrink-width, for single-item demos only (desktop rule in
+    // demo.css falls back to plain `fit-content` otherwise). A pure-CSS
+    // `width: fit-content` on wb-demo sizes to its WIDEST in-flow child —
+    // including the `.wb-demo__code` panel below the grid, which pre.css
+    // sets to `width: 100%` (circular under intrinsic sizing, so it
+    // resolves to the full available width, not its own content width).
+    // That made every single-item demo measure fit-content against the
+    // code panel instead of the actual control, even a tiny button sitting
+    // above a wide, unwrapped code sample. CSS has no way to say "shrink to
+    // child A, ignore child B" between two normal in-flow siblings, so the
+    // grid's width is measured here instead — same per-instance-measurement
+    // pattern this codebase already uses for cross-sibling sizing (e.g.
+    // pre.js's control right-offsets). rAF: wait for the current script's
+    // layout/style pass (including a deferred eager WB.scan(document.body))
+    // to settle before measuring, so button/card classes are already
+    // applied and the measured width is the real final one, not a
+    // pre-upgrade placeholder.
+    //
+    // #586: this block used to run immediately after the grid was built,
+    // BEFORE `<pre class="wb-demo__code">` above even existed (pre creation
+    // was gated behind `await loadDocsManifest()`) -- and even after moving
+    // it below `<pre>`'s creation, a SECOND, deeper race remained: `<pre>`
+    // existing in the DOM is not the same as `<pre>` being STYLED.
+    // `WB.scan(pre, { eager: true })` (see `scanWhenReady` above) is itself
+    // async -- it applies the real `.x-pre` class (monospace font, real
+    // padding -- see pre.css) and syntax-highlighting markup on a LATER
+    // microtask/frame, not synchronously inside the call. measure()'s
+    // stability check (below) only requires codeWidth to read the SAME
+    // value twice in a row before locking in `--wb-demo-shrink-width` -- so
+    // if `<pre>`'s first poll or two land BEFORE that async styling lands,
+    // `scrollWidth` reads the bare/unstyled element's (smaller, wrong)
+    // width, and if that happens to read stable for 2 ticks before the real
+    // styled width ever appears, the box locks in too narrow. Confirmed
+    // live on demos/site/cards.html (#586): with 267 stacked <wb-demo>
+    // blocks on one page -- 5 of them (EAGER_BUILD_COUNT) built
+    // synchronously, concurrently, right at page load -- main-thread
+    // contention made this race easy to lose, intermittently, for whichever
+    // demos happened to poll first; reproduced on both the eager-built
+    // "Card Gallery" demos and the lazily-built wb-cardexpandable/
+    // wb-cardvideo sections further down the page. Now fixed at the actual
+    // source: this whole measurement block AWAITS `scanWhenReady()`
+    // (above) before its first poll ever runs, so `<pre>` is guaranteed
+    // fully styled and highlighted -- not just present -- by the time
+    // codeWidth is first read.
+    if (cols === 1 && childCount === 1 && !element.classList.contains('wb-demo--full-width')) {
+        // A single rAF measures whatever width the child happens to have at
+        // that exact instant -- correct once its content is already fully
+        // loaded, but a single-item child with its OWN async content still
+        // loading (an image, an audio player building its equalizer UI,
+        // etc.) hasn't reached its real final width yet: it measures small
+        // (sometimes near-zero) and the whole demo -- including its code
+        // panel -- gets stuck collapsed to that tiny width forever, since
+        // nothing ever re-measures after. Confirmed live 3 separate times
+        // (cardhero, 9 more card-family async-image demos, and now every
+        // auto-live-rendered wb-audio example on doc-viewer.html pages) --
+        // each fixed one-by-one with the `full-width` escape hatch, but
+        // that only helps instances someone remembers to annotate by hand.
+        // Same poll-until-stable shape as site-engine.js's anchor-scroll
+        // fix: keep re-measuring until the width stops changing for two
+        // consecutive checks, capped at 5s so a genuinely-static child
+        // (the common case) still only costs one or two cheap re-checks.
+        const only = grid.children[0];
+        if (only) {
+            // #549: an <img>/<video> with an inline `width: 100%` (the
+            // figure/lightbox-image demos below, plus the direct-<img> and
+            // <video> demos elsewhere on this page) breaks the poll below in
+            // a way the async-content case above doesn't. That media
+            // element's OWN rendered width is a direct function of whatever
+            // width THIS code writes to --wb-demo-shrink-width on the very
+            // next layout pass -- and measure() writes the variable on
+            // EVERY tick, not just once at the end, so the "two consecutive
+            // equal readings" stability check can lock onto an arbitrary
+            // self-consistent fixed point instead of the media's real
+            // content size. Confirmed live: reloading the exact same
+            // <figure><img style="width:100%"></figure> demo repeatedly
+            // settled on wildly different "stable" widths from one load to
+            // the next (a collapsed ~60px sliver on one load, a plausible
+            // ~430px on another) -- pure timing noise in which transient
+            // layout the first rAF happened to catch, not a real
+            // measurement of anything. A plain getBoundingClientRect() can
+            // never break that loop because it's reading the very quantity
+            // this code is also writing.
+            //
+            // Route these through the media's natural/intrinsic size
+            // instead (img.naturalWidth / video.videoWidth) -- a fixed
+            // quantity the container's width can't feed back into. wb-demo's
+            // existing `max-width: 100%` (demo.css) still caps this down to
+            // the available page width for an image wider than the
+            // viewport, exactly like the plain shrink-to-fit path below.
+            const media = only.matches('img,video') ? only : only.querySelector('img,video');
+            const isFluidMedia = !!(media && /^\s*\d+(\.\d+)?%\s*$/.test(media.style.width || ''));
+
+            if (isFluidMedia) {
+                const applyNaturalWidth = () => {
+                    const naturalWidth = media.tagName === 'VIDEO' ? media.videoWidth : media.naturalWidth;
+                    if (!naturalWidth) return false;
+                    // media may be wrapped (e.g. <figure><img></figure>) --
+                    // the wrapper's own margin/border/padding is FIXED px
+                    // box model (not a percentage of the container), so
+                    // reading it via getComputedStyle can't feed back into
+                    // itself the way the media's own width:100% does.
+                    // Confirmed live: <figure> gets a UA-stylesheet default
+                    // `margin: 1em 40px` -- without adding that back in, the
+                    // shrink width came out 80px narrower than the image
+                    // actually needed, clipping it against the demo's own
+                    // max-width:100% edge.
+                    let extra = 0;
+                    for (let node = media; node && node !== only; node = node.parentElement) {
+                        const parentNode = node.parentElement;
+                        if (!parentNode) break;
+                        const pcs = getComputedStyle(parentNode);
+                        extra += (parseFloat(pcs.marginLeft) || 0) + (parseFloat(pcs.marginRight) || 0)
+                               + (parseFloat(pcs.borderLeftWidth) || 0) + (parseFloat(pcs.borderRightWidth) || 0)
+                               + (parseFloat(pcs.paddingLeft) || 0) + (parseFloat(pcs.paddingRight) || 0);
+                    }
+                    const demoCs = getComputedStyle(element);
+                    const hPad = (parseFloat(demoCs.paddingLeft) || 0) + (parseFloat(demoCs.paddingRight) || 0);
+                    // #563 follow-up: same "widest of control or code"
+                    // reasoning as the non-media measure() path below --
+                    // a media demo's code sample can need more width than
+                    // the media's own natural size (e.g. a long src URL).
+                    const codeEls = element.querySelectorAll('.wb-demo__code');
+                    // +4px safety margin -- see measure()'s CODE_WIDTH_SAFETY_PX
+                    // comment below for why (a header/copy-button code panel's
+                    // wrapper chrome isn't visible to a scrollWidth read).
+                    const codeWidth = codeEls.length
+                        ? Math.max(...Array.from(codeEls, el => el.scrollWidth)) + hPad + 4
+                        : 0;
+                    element.style.setProperty('--wb-demo-shrink-width', Math.max(naturalWidth + extra + hPad, codeWidth) + 'px');
+                    return true;
+                };
+                if (applyNaturalWidth()) {
+                    // #586: `<pre class="wb-demo__code">` is now guaranteed
+                    // to already exist by the time this whole block runs
+                    // (see the relocation comment above) -- this re-run is
+                    // no longer covering a real race, just kept as a cheap
+                    // extra safety net for the cached-media case.
+                    setTimeout(applyNaturalWidth, 0);
+                } else {
+                    // Not decoded/metadata-loaded yet -- resolve once it is,
+                    // with a capped fallback so a broken/never-firing media
+                    // source can't leave the demo permanently collapsed
+                    // (same MAX_MS budget as the poll path below).
+                    const readyEvent = media.tagName === 'VIDEO' ? 'loadedmetadata' : 'load';
+                    media.addEventListener(readyEvent, applyNaturalWidth, { once: true });
+                    setTimeout(applyNaturalWidth, 5000);
+                }
+            } else {
+                let lastControlWidth = null;
+                let lastCodeWidth = null;
+                let stableCount = 0;
+                const POLL_MS = 200;
+                const MAX_MS = 5000;
+                const startedAt = Date.now();
+                const measure = () => {
+                    const demoCs = getComputedStyle(element);
+                    const hPad = (parseFloat(demoCs.paddingLeft) || 0) + (parseFloat(demoCs.paddingRight) || 0);
+                    const controlWidth = only.getBoundingClientRect().width + hPad;
+                    // #563 follow-up, John: "show all the code on single
+                    // elements per row" -- measuring only the control left
+                    // the code panel (width:100% of wb-demo, see demo.css)
+                    // capped to the control's own width, cutting long
+                    // attribute lines off with a scrollbar even though the
+                    // demo box was meant to hug its content, not the
+                    // control specifically. `.wb-demo__code` is a `<pre>`
+                    // with `white-space: pre` (pre.css) -- it never wraps,
+                    // so its scrollWidth is the fixed width needed to show
+                    // every line in full, independent of whatever width the
+                    // container currently happens to have (no circularity,
+                    // unlike a would-be `width:fit-content` read directly on
+                    // a 100%-width child). Take the max of the two so the
+                    // demo is exactly as wide as its widest requirement --
+                    // control or code -- and never wider.
+                    // querySelectorAll, not querySelector: a demo can carry
+                    // MORE than one code panel (e.g. an HTML markup sample
+                    // plus a separate JS interaction-listener sample) --
+                    // querySelector only ever found the FIRST one, so a
+                    // longer second panel's width was silently ignored.
+                    // Confirmed live: cards.html's wb-cardproduct demos
+                    // (HTML + `el.addEventListener(...)` JS sample) still
+                    // cut the JS panel off because only the HTML panel's
+                    // width was ever measured.
+                    const codeEls = element.querySelectorAll('.wb-demo__code');
+                    // +CODE_WIDTH_SAFETY_PX: a code panel with a header/copy-
+                    // button (pre.css's .x-pre--has-header) sits inside an
+                    // `.x-pre-wrapper` with its own border -- chrome between
+                    // the <pre> being measured and the demo's own edge that
+                    // this calculation has no way to see. Sizing to
+                    // scrollWidth exactly left the box 1-2px too narrow for
+                    // its own content, tripping overflow-x:auto's scrollbar
+                    // on code that's visibly not actually overflowing.
+                    // Confirmed live: demos/registry-browser.html's
+                    // icon-button/loading-skeleton examples (2px short).
+                    const CODE_WIDTH_SAFETY_PX = 4;
+                    const codeWidth = codeEls.length
+                        ? Math.max(...Array.from(codeEls, el => el.scrollWidth)) + hPad + CODE_WIDTH_SAFETY_PX
+                        : 0;
+                    const shrinkWidth = Math.max(controlWidth, codeWidth);
+                    if (shrinkWidth > 0) {
+                        element.style.setProperty('--wb-demo-shrink-width', shrinkWidth + 'px');
+                    }
+                    // Track controlWidth and codeWidth for stability
+                    // SEPARATELY, not just the derived max(). pre.js's
+                    // syntax highlighting / line-number gutter populates
+                    // asynchronously after the bare <pre> first exists, so
+                    // codeWidth keeps climbing for a few ticks after
+                    // creation. Whenever controlWidth is the larger of the
+                    // two, the max() stays flat across those ticks purely
+                    // because controlWidth (already settled) dominates it --
+                    // "2 consecutive equal max() readings" then falsely
+                    // reads as stable and stops polling before codeWidth
+                    // ever reaches its real final size. Confirmed live:
+                    // cards.html's plain-text card demos locked their code
+                    // panel width in at the control's ~355px although the
+                    // code's own content needed 413px, cutting the last
+                    // line off. Requiring BOTH inputs to hold steady (not
+                    // just their max) catches this.
+                    if (controlWidth === lastControlWidth && codeWidth === lastCodeWidth) {
+                        stableCount++;
+                    } else {
+                        stableCount = 0;
+                        lastControlWidth = controlWidth;
+                        lastCodeWidth = codeWidth;
+                    }
+                    if (stableCount >= 2 || Date.now() - startedAt > MAX_MS) return;
+                    setTimeout(measure, POLL_MS);
+                };
+                requestAnimationFrame(measure);
+            }
         }
-    };
-    scanWhenReady();
+    }
+
+    // Syntax highlighting is applied earlier now -- see the `await
+    // scanWhenReady()` call right after `<pre>` was created above, and the
+    // #586 comment on the width-measurement block below explaining why.
 
     // #385: wb-demo showed HOW to wire up a control's markup but never HOW
     // to listen for the custom events it fires afterward. Optional `events`
