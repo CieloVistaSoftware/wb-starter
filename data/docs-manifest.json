@@ -1,6 +1,6 @@
 {
-  "generated": "2026-08-13T23:15:28.921Z",
-  "totalFiles": 205,
+  "generated": "2026-08-18T03:32:36.716Z",
+  "totalFiles": 219,
   "categories": [
     "_today",
     "architecture",
@@ -370,9 +370,51 @@
     ],
     "behaviors": [
       {
+        "path": "docs/behaviors/autocomplete.md",
+        "title": "x-autocomplete Behavior",
+        "name": "autocomplete",
+        "category": "behaviors"
+      },
+      {
         "path": "docs/behaviors/autosize.md",
         "title": "x-autosize Behavior",
         "name": "autosize",
+        "category": "behaviors"
+      },
+      {
+        "path": "docs/behaviors/colorpicker.md",
+        "title": "x-colorpicker Behavior",
+        "name": "colorpicker",
+        "category": "behaviors"
+      },
+      {
+        "path": "docs/behaviors/counter.md",
+        "title": "x-counter Behavior",
+        "name": "counter",
+        "category": "behaviors"
+      },
+      {
+        "path": "docs/behaviors/fieldset.md",
+        "title": "x-fieldset Behavior",
+        "name": "fieldset",
+        "category": "behaviors"
+      },
+      {
+        "path": "docs/behaviors/file.md",
+        "title": "x-file Behavior",
+        "name": "file",
+        "category": "behaviors"
+      },
+      {
+        "path": "docs/behaviors/floatinglabel.md",
+        "title": "x-floatinglabel Behavior",
+        "name": "floatinglabel",
+        "category": "behaviors"
+      },
+      {
+        "path": "docs/behaviors/formrow.md",
+        "title": "x-formrow Behavior",
+        "name": "formrow",
         "category": "behaviors"
       },
       {
@@ -382,9 +424,33 @@
         "category": "behaviors"
       },
       {
+        "path": "docs/behaviors/inputgroup.md",
+        "title": "x-inputgroup Behavior",
+        "name": "inputgroup",
+        "category": "behaviors"
+      },
+      {
         "path": "docs/behaviors/label.md",
         "title": "x-label Behavior",
         "name": "label",
+        "category": "behaviors"
+      },
+      {
+        "path": "docs/behaviors/masked.md",
+        "title": "x-masked Behavior",
+        "name": "masked",
+        "category": "behaviors"
+      },
+      {
+        "path": "docs/behaviors/searchfield.md",
+        "title": "x-searchfield Behavior",
+        "name": "searchfield",
+        "category": "behaviors"
+      },
+      {
+        "path": "docs/behaviors/tags.md",
+        "title": "x-tags Behavior",
+        "name": "tags",
         "category": "behaviors"
       },
       {
@@ -1186,9 +1252,21 @@
         "category": "_today"
       },
       {
+        "path": "docs/_today/audit-code-panels-v3-standards.md",
+        "title": "Audit: `.wb-demo__code` panels on `docs/standards/V3-STANDARDS.md` via doc-viewer",
+        "name": "audit-code-panels-v3-standards",
+        "category": "_today"
+      },
+      {
         "path": "docs/_today/audit-v3-guide-doc-viewer.md",
         "title": "Audit: `docs/V3-GUIDE.md` on `/public/doc-viewer.html`",
         "name": "audit-v3-guide-doc-viewer",
+        "category": "_today"
+      },
+      {
+        "path": "docs/_today/common-errors-retrospective-2026-08-15.md",
+        "title": "Common Errors Retrospective — week of 2026-08-08 to 2026-08-15",
+        "name": "common-errors-retrospective-2026-08-15",
         "category": "_today"
       },
       {
@@ -1199,7 +1277,7 @@
       },
       {
         "path": "docs/_today/CURRENT-STATUS.md",
-        "title": "CURRENT HANDOFF — 2026-08-08",
+        "title": "CURRENT HANDOFF — 2026-08-16",
         "name": "CURRENT-STATUS",
         "category": "_today"
       },
@@ -1258,6 +1336,12 @@
         "category": "_today"
       },
       {
+        "path": "docs/_today/test-audit-2026-08-14.md",
+        "title": "Test audit: refs, examples, code panels, events — every .html and .md file",
+        "name": "test-audit-2026-08-14",
+        "category": "_today"
+      },
+      {
         "path": "docs/_today/TODO.md",
         "title": "---",
         "name": "TODO",
@@ -1285,9 +1369,21 @@
       "category": "_today"
     },
     {
+      "path": "docs/_today/audit-code-panels-v3-standards.md",
+      "title": "Audit: `.wb-demo__code` panels on `docs/standards/V3-STANDARDS.md` via doc-viewer",
+      "name": "audit-code-panels-v3-standards",
+      "category": "_today"
+    },
+    {
       "path": "docs/_today/audit-v3-guide-doc-viewer.md",
       "title": "Audit: `docs/V3-GUIDE.md` on `/public/doc-viewer.html`",
       "name": "audit-v3-guide-doc-viewer",
+      "category": "_today"
+    },
+    {
+      "path": "docs/_today/common-errors-retrospective-2026-08-15.md",
+      "title": "Common Errors Retrospective — week of 2026-08-08 to 2026-08-15",
+      "name": "common-errors-retrospective-2026-08-15",
       "category": "_today"
     },
     {
@@ -1298,7 +1394,7 @@
     },
     {
       "path": "docs/_today/CURRENT-STATUS.md",
-      "title": "CURRENT HANDOFF — 2026-08-08",
+      "title": "CURRENT HANDOFF — 2026-08-16",
       "name": "CURRENT-STATUS",
       "category": "_today"
     },
@@ -1354,6 +1450,12 @@
       "path": "docs/_today/slot-audit.md",
       "title": "\"slot\" Audit & Retirement Plan",
       "name": "slot-audit",
+      "category": "_today"
+    },
+    {
+      "path": "docs/_today/test-audit-2026-08-14.md",
+      "title": "Test audit: refs, examples, code panels, events — every .html and .md file",
+      "name": "test-audit-2026-08-14",
       "category": "_today"
     },
     {
@@ -1465,9 +1567,51 @@
       "category": "root"
     },
     {
+      "path": "docs/behaviors/autocomplete.md",
+      "title": "x-autocomplete Behavior",
+      "name": "autocomplete",
+      "category": "behaviors"
+    },
+    {
       "path": "docs/behaviors/autosize.md",
       "title": "x-autosize Behavior",
       "name": "autosize",
+      "category": "behaviors"
+    },
+    {
+      "path": "docs/behaviors/colorpicker.md",
+      "title": "x-colorpicker Behavior",
+      "name": "colorpicker",
+      "category": "behaviors"
+    },
+    {
+      "path": "docs/behaviors/counter.md",
+      "title": "x-counter Behavior",
+      "name": "counter",
+      "category": "behaviors"
+    },
+    {
+      "path": "docs/behaviors/fieldset.md",
+      "title": "x-fieldset Behavior",
+      "name": "fieldset",
+      "category": "behaviors"
+    },
+    {
+      "path": "docs/behaviors/file.md",
+      "title": "x-file Behavior",
+      "name": "file",
+      "category": "behaviors"
+    },
+    {
+      "path": "docs/behaviors/floatinglabel.md",
+      "title": "x-floatinglabel Behavior",
+      "name": "floatinglabel",
+      "category": "behaviors"
+    },
+    {
+      "path": "docs/behaviors/formrow.md",
+      "title": "x-formrow Behavior",
+      "name": "formrow",
       "category": "behaviors"
     },
     {
@@ -1477,9 +1621,33 @@
       "category": "behaviors"
     },
     {
+      "path": "docs/behaviors/inputgroup.md",
+      "title": "x-inputgroup Behavior",
+      "name": "inputgroup",
+      "category": "behaviors"
+    },
+    {
       "path": "docs/behaviors/label.md",
       "title": "x-label Behavior",
       "name": "label",
+      "category": "behaviors"
+    },
+    {
+      "path": "docs/behaviors/masked.md",
+      "title": "x-masked Behavior",
+      "name": "masked",
+      "category": "behaviors"
+    },
+    {
+      "path": "docs/behaviors/searchfield.md",
+      "title": "x-searchfield Behavior",
+      "name": "searchfield",
+      "category": "behaviors"
+    },
+    {
+      "path": "docs/behaviors/tags.md",
+      "title": "x-tags Behavior",
+      "name": "tags",
       "category": "behaviors"
     },
     {

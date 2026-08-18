@@ -1,0 +1,50 @@
+# x-counter Behavior
+
+Displays a live `length/max` character counter beneath a text field and
+enforces the limit via the native `maxlength`. See
+[src/wb-viewmodels/counter.js](../../src/wb-viewmodels/counter.js).
+
+- **Type:** Modifier
+- **Root CSS class:** `wb-counter`
+- **Schema:** [counter.schema.json](../../src/wb-models/counter.schema.json)
+
+## Usage
+
+```html
+<input type="text" x-counter max="50" placeholder="Type here — counts up to 50">
+```
+
+Wrapped in `<wb-demo>`, so the live component renders below with its source shown underneath:
+
+<wb-demo>
+<input type="text" x-counter max="50" placeholder="Type here — counts up to 50">
+</wb-demo>
+
+Add `warning` for a threshold that turns the counter into a warning state
+before the field is actually full:
+
+<wb-demo>
+<textarea x-counter max="120" warning="90" placeholder="Tell us about yourself" rows="3"></textarea>
+</wb-demo>
+
+## Properties
+
+| Attribute | Type | Default | Description |
+|---|---|---|---|
+| `max` | integer | the field's existing `maxlength`, or `0` (no limit) | Maximum character count. When set, the behavior also sets the element's native `maxLength` so the browser refuses further input past the limit. |
+| `warning` | integer | `0` (no warning state) | Character count at which `wb-counter--warning` is applied. |
+
+## CSS Classes
+
+| Class | Applies to | When |
+|---|---|---|
+| `wb-counter` | the generated `<span>` counter | always |
+| `wb-counter--warning` | the counter `<span>` | length ≥ `warning` |
+| `wb-counter--error` | the counter `<span>` | `max` is set and length ≥ `max` |
+
+## Events
+
+None — the counter re-renders on the field's native `input` event; it doesn't dispatch any of its own.
+
+- [Schema](../../src/wb-models/counter.schema.json)
+- [Source](../../src/wb-viewmodels/counter.js)
