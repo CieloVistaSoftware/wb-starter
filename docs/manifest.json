@@ -270,6 +270,11 @@
           "description": "Auto-resize textarea behavior"
         },
         {
+          "file": "behaviors/codecontrol.md",
+          "title": "Code Control",
+          "description": "Dropdown to switch the highlight.js code theme site-wide"
+        },
+        {
           "file": "behaviors/help.md",
           "title": "Help Behavior",
           "description": "Help text behavior"
@@ -278,6 +283,31 @@
           "file": "behaviors/label.md",
           "title": "Label Behavior",
           "description": "Label behavior"
+        },
+        {
+          "file": "behaviors/move.md",
+          "title": "Move",
+          "description": "Reorder grid/flex items with direction buttons"
+        },
+        {
+          "file": "behaviors/release.md",
+          "title": "Release",
+          "description": "Displays the site's build/release number"
+        },
+        {
+          "file": "behaviors/ripple.md",
+          "title": "Ripple",
+          "description": "Material-style ripple effect on click"
+        },
+        {
+          "file": "behaviors/scrollalong.md",
+          "title": "ScrollAlong",
+          "description": "Sticky-sidebar positioning via CSS sticky"
+        },
+        {
+          "file": "behaviors/stagelight.md",
+          "title": "Stage Light",
+          "description": "Beam, spotlight, and fixture lighting effects"
         },
         {
           "file": "behaviors/tooltip.md",
