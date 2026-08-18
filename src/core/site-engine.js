@@ -53,6 +53,7 @@ export default class WBSite {
       this.initResizableNav();
       this.initStickyHeader();
       this.initStickyFooter();
+      this.initWheelScrollFallback();
 
       // Initialize Views System
       await initViews({
@@ -448,6 +449,47 @@ export default class WBSite {
         footer.classList.remove('site__footer--hidden');
       }
     });
+  }
+
+  // #636: John, screenshot -- filtering pages/behaviors.html's search box
+  // correctly narrowed the result count ("Showing 69 of 88") but the matched
+  // <wb-demo> elements never appeared. Root cause: #siteBody IS the correct,
+  // genuinely-scrollable container (overflow-y:auto, scrollHeight >>
+  // clientHeight, confirmed live) and setting `.scrollTop` directly always
+  // worked -- but real/trusted wheel input landing on it did not advance
+  // scrollTop at all, on both the live .io site and this repo's own
+  // automation. No JS anywhere registers a `wheel` listener that could be
+  // preventing it (grepped the whole src/ tree), so this isn't application
+  // logic swallowing the event -- something in the browser's native
+  // wheel-to-scroll pipeline for this specific `height:100dvh; overflow:
+  // hidden` shell + `flex:1; overflow-y:auto` child layout just isn't
+  // reliably kicking in. Rather than keep chasing that platform-level cause,
+  // this makes wheel scrolling self-healing: after any wheel event, if
+  // scrollTop hasn't moved by the next frame (native handling silently did
+  // nothing), apply the delta manually. When native scrolling DOES work
+  // (the common case), this is a no-op every time -- scrollTop has already
+  // moved by the time the rAF fires, so the fallback branch never runs.
+  initWheelScrollFallback() {
+    const body = document.getElementById('siteBody');
+    if (!body) return;
+
+    body.addEventListener('wheel', (e) => {
+      const beforeTop = body.scrollTop;
+      const maxTop = body.scrollHeight - body.clientHeight;
+      if (maxTop <= 0) return; // nothing to scroll
+
+      // setTimeout, not requestAnimationFrame -- rAF is suspended on
+      // backgrounded/non-compositing tabs (confirmed while diagnosing this:
+      // a double-rAF await hung indefinitely in that state), which would
+      // silently disable this exact fallback in the situation it exists to
+      // cover. A short timeout still fires there.
+      setTimeout(() => {
+        if (body.scrollTop !== beforeTop) return; // native scroll handled it
+
+        const nextTop = beforeTop + e.deltaY;
+        body.scrollTop = Math.min(Math.max(nextTop, 0), maxTop);
+      }, 16);
+    }, { passive: true });
   }
 
   renderFooter() {

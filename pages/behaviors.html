@@ -363,6 +363,20 @@
       });
 
       countEl.textContent = q === '' ? `${total} behaviors` : `Showing ${visible} of ${total}`;
+
+      // #634 follow-up: John, "Showing 69 of 88 they are not showing when i
+      // filter for x-" -- the count above was always correct, but nothing
+      // ever moved the viewport, so a match scattered anywhere past the
+      // fold (nearly all of them, in their original document position) was
+      // invisible unless you already happened to be scrolled to the right
+      // spot. Bringing the first surviving match into view on every
+      // non-empty query fixes that directly. `block: 'nearest'` is a no-op
+      // if it's already on-screen, so this doesn't yank the page around on
+      // every keystroke once the first match is in view.
+      if (q !== '' && visible > 0) {
+        const firstMatch = demos.find((d) => !d.hasAttribute('data-behaviors-search-hidden'));
+        firstMatch?.scrollIntoView({ block: 'nearest', behavior: 'auto' });
+      }
     }
 
     input.addEventListener('input', () => applyFilter(input.value));
