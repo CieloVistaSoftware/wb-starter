@@ -316,62 +316,62 @@
         },
         {
           "file": "behaviors/wb-audio.md",
-          "title": "WB Audio",
+          "title": "X-Audio",
           "description": "Audio component behavior"
         },
         {
           "file": "behaviors/wb-card.md",
-          "title": "WB Card",
+          "title": "X-Card",
           "description": "Card component behavior"
         },
         {
           "file": "behaviors/wb-cluster.md",
-          "title": "WB Cluster",
+          "title": "X-Cluster",
           "description": "Cluster layout behavior"
         },
         {
           "file": "behaviors/wb-column.md",
-          "title": "WB Column",
+          "title": "X-Column",
           "description": "Column layout behavior"
         },
         {
           "file": "behaviors/wb-control.md",
-          "title": "WB Control",
+          "title": "X-Control",
           "description": "Control behavior"
         },
         {
           "file": "behaviors/wb-demo.md",
-          "title": "WB Demo",
+          "title": "X-Demo",
           "description": "Demo container behavior"
         },
         {
           "file": "behaviors/wb-grid.md",
-          "title": "WB Grid",
+          "title": "X-Grid",
           "description": "Grid layout behavior"
         },
         {
           "file": "behaviors/wb-repeater.md",
-          "title": "WB Repeater",
+          "title": "X-Repeater",
           "description": "Repeater behavior"
         },
         {
           "file": "behaviors/wb-row.md",
-          "title": "WB Row",
+          "title": "X-Row",
           "description": "Row layout behavior"
         },
         {
           "file": "behaviors/wb-search.md",
-          "title": "WB Search",
+          "title": "X-Searchfield",
           "description": "Search behavior"
         },
         {
           "file": "behaviors/wb-stack.md",
-          "title": "WB Stack",
+          "title": "X-Stack",
           "description": "Stack layout behavior"
         },
         {
           "file": "behaviors/wb-themecontrol.md",
-          "title": "WB Theme Control",
+          "title": "X-Themecontrol",
           "description": "Theme picker dropdown — applies and persists a data-theme choice"
         },
         {
