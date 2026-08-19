@@ -373,7 +373,19 @@
     let allXAttributes = [];
     import(siteRoot() + 'src/core/tag-map.js')
       .then((mod) => {
-        allXAttributes = Array.from(new Set(Object.values(mod.elementMap))).sort().map((name) => `x-${name}`);
+        // #665: extensionMap, NOT elementMap. elementMap maps wb-* COMPONENT
+        // TAGS to behavior names (wb-card, wb-button, wb-badge, ...), so
+        // prefixing its values with "x-" produced a list of components wearing
+        // behavior names -- x-card, x-button, x-cardbutton -- on a page titled
+        // "WB Behaviors Showcase", while the ~105 real behaviors never
+        // appeared at all. extensionMap is the actual x-* behavior registry:
+        // "Extensions are effects, utilities, and morphing behaviors".
+        //
+        // Its KEYS are already the authored attribute names (x-ripple), so
+        // they are used directly rather than rebuilt from the values -- several
+        // attributes share one behavior function, and mapping through the
+        // values would silently collapse them.
+        allXAttributes = Object.keys(mod.extensionMap).sort();
         if (input.value.trim() === '') renderBrowseAll();
       })
       .catch(() => {}); // browse-all list just stays empty; typed search still works
