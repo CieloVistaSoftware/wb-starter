@@ -51,7 +51,22 @@
       font-size: 0.9rem; line-height: 1.6; tab-size: 2; white-space: pre; }
     #pg-input:focus { outline: none; }
 
-    #pg-preview { padding: 1.25rem; min-height: 70vh; background: var(--bg-primary); }
+    /* John, screenshot: "Why does playground come up looking like this?" --
+       the default-loaded example uses x-stagelight variant="spotlight",
+       whose ::after overlay is `position: fixed` (stagelight.js, by design
+       -- elsewhere on the site it's meant to cover the whole viewport).
+       #pg-preview renders arbitrary example markup via plain innerHTML (no
+       iframe/shadow-root isolation), so that fixed overlay escaped this
+       small box entirely and painted over the ENTIRE page -- the dark
+       vignette and the example's own "Spotlight effect behind this text"
+       ghosting past the panel's left edge in the screenshot. `contain:
+       layout` makes #pg-preview a containing block for its own
+       position:fixed descendants (a standard, well-supported CSS
+       mechanism), so ANY example that uses fixed positioning -- stagelight,
+       a modal/dialog demo, etc. -- now sizes/positions relative to the
+       preview box instead of the viewport, which is also just the more
+       correct behavior for a component playground generally. */
+    #pg-preview { padding: 1.25rem; min-height: 70vh; background: var(--bg-primary); contain: layout; }
     /* Space stacked top-level previewed elements (e.g. the 50 cards) so they
        don't sit flush on top of each other. */
     #pg-preview > * + * { margin-top: 1rem; }
