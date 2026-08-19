@@ -467,18 +467,36 @@ footer a:hover {
 }
 
 .behaviors-live__code {
-  margin: 0;
-  padding: 0.75rem 1rem;
   border-top: 1px solid var(--border-color, #374151);
-  background: var(--bg-primary, #0b0f14);
-  color: var(--text-secondary, #9ca3af);
-  font-family: var(--font-mono, monospace);
-  font-size: 0.8rem;
-  line-height: 1.5;
-  /* Wrap rather than scroll: these snippets are short, and a panel that opens
-     already scrolled off to the right hides the very code it is showing.
-     Long unavoidable lines still get a scrollbar (Standard §27). */
-  overflow-x: auto;
+  max-height: 22rem;
+  overflow-y: auto;
+}
+
+/* The inner pre/code is produced by x-behavior="pre"/"code", so its font,
+   padding and syntax colours all come from pre.css / code.css and the theme --
+   nothing is restated here, and no colour literal is introduced. Only the
+   wrapping needs overriding: the source is pretty-printed VERTICAL (one
+   attribute per line, Standard §5), so lines are short and should wrap rather
+   than open the panel already scrolled off to the right. */
+.behaviors-live__code pre,
+.behaviors-live__code code {
+  /* Source is ALWAYS left-aligned -- this panel sits inside #behaviors-hero,
+     which centres its text, and the code was inheriting that and rendering
+     right-ragged. demo.css carries the same rule for its own view-source
+     panels, for the same reason (Standard §5). */
+  text-align: left;
+}
+
+.behaviors-live__code pre {
+  margin: 0;
+  border: none;
+  border-radius: 0;
   white-space: pre-wrap;
   overflow-wrap: anywhere;
+}
+
+/* The live example itself is markup the reader is meant to read, not hero
+   copy -- centring it misrepresents how the behavior actually renders. */
+.behaviors-live__stage {
+  text-align: left;
 }

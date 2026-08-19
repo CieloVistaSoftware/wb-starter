@@ -28,7 +28,10 @@
         <span id="behaviors-live-note" class="behaviors-live__note"></span>
       </header>
       <div id="behaviors-live-stage" class="behaviors-live__stage"></div>
-      <pre class="behaviors-live__code"><code id="behaviors-live-code"></code></pre>
+      <!-- Built at click time so it can carry x-behavior="pre"/"code", the
+           project's own syntax-highlighting pair (theme-driven colours from
+           code.css -- no literals, per the zero-hardcoded-colours rule). -->
+      <div id="behaviors-live-code" class="behaviors-live__code"></div>
     </div>
   </div>
 </div>
@@ -549,14 +552,39 @@
         // includes behaviors with no example on this page at all. Saying so
         // beats rendering an empty box that looks broken.
         liveStage.innerHTML = '';
-        liveCode.textContent = '';
+        liveCode.innerHTML = '';
         liveNote.textContent = 'no example on this page yet';
         return;
       }
 
       liveNote.textContent = 'running live';
-      liveCode.textContent = src;
       liveStage.innerHTML = src;
+
+      // Standard §5: source is pretty-printed VERTICAL, one attribute per line
+      // -- the same formatHtml() the wb-demo view-source panels and the
+      // Playground's Format button use, rather than a second formatter that
+      // would drift from them. Wrapped in the x-behavior="pre"/"code" pair so
+      // it picks up the project's existing hljs highlighting and its
+      // theme-driven colours.
+      let pretty = src;
+      try {
+        const demoMod = await import(siteRoot() + 'src/wb-viewmodels/demo.js');
+        if (demoMod.formatHtml) pretty = demoMod.formatHtml(src) || src;
+      } catch (err) {
+        // Formatting is a nicety; showing the raw source still beats showing
+        // nothing, so this must never block the preview.
+        console.warn('[behaviors] could not format source', err);
+      }
+
+      liveCode.innerHTML = '';
+      const pre = document.createElement('pre');
+      pre.setAttribute('x-behavior', 'pre');
+      const code = document.createElement('code');
+      code.setAttribute('x-behavior', 'code');
+      code.dataset.language = 'html';
+      code.textContent = pretty;
+      pre.appendChild(code);
+      liveCode.appendChild(pre);
 
       // Upgrade the injected markup. WB is already initialised by the page, so
       // this only needs to scan the new subtree -- eager, because the stage is
@@ -564,7 +592,14 @@
       try {
         const mod = await import(siteRoot() + 'src/core/wb-lazy.js');
         const WB = mod.default || mod.WB || window.WB;
-        if (WB && WB.scan) await WB.scan(liveStage, { eager: true });
+        if (WB && WB.scan) {
+          await WB.scan(liveStage, { eager: true });
+          // eager: the pre/code pair is built synchronously above, so there is
+          // no reason to defer its highlighting to an IntersectionObserver --
+          // that leaves the panel showing unstyled text for an indeterminate
+          // delay (the same trap demo.js documents for its own view-source).
+          await WB.scan(liveCode, { eager: true });
+        }
       } catch (err) {
         liveNote.textContent = 'could not run this example';
         console.warn('[behaviors] live preview failed for ' + token, err);
