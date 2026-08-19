@@ -581,3 +581,21 @@ footer a:hover {
   white-space: pre-wrap;
   overflow-wrap: anywhere;
 }
+
+
+/* #666 — John: "remove this space here", pointing at the gap above the title.
+   Measured: 112px of stacked top padding before the <h1> --
+   main.site__main (32px) + .page (32px) + .page__hero (48px).
+
+   Scoped to THIS page rather than editing .page__hero in site.css, which every
+   page's hero uses -- the Behaviors page leads with a search box and a list, so
+   it wants a tight top; a content page still wants its breathing room. */
+#mainPage-behaviors { padding-top: 0; }
+
+#behaviors-hero {
+  padding-top: 0;
+}
+
+/* The title/subtitle no longer need the hero's full vertical rhythm when the
+   interactive part of the page starts immediately below them. */
+#behaviors-hero h1 { margin-top: 0; }
