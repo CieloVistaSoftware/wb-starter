@@ -102,10 +102,34 @@
     // for each variant too... show the behavior name and all possible variants
     // (one per row so user can see them all)". A behavior with no declared
     // variant enum still gets exactly one row, with an empty variant cell.
+    // #666 — John: "isn't the language type a variant" / "so shouldn't we
+    // include those?". Yes. `variant` is not the only axis a control varies on:
+    // size, position, icon, aspect, inputType and others are declared the same
+    // way, and a reader wanting to see every option needs all of them. Every
+    // enum-valued property now produces rows, SUMMED per axis (not a cartesian
+    // product -- that would explode 143 entries into thousands).
+    //   variant-only: 272 rows.  all enum properties: 484.
     function variantsFor(attr) {
       const sc = schemaByName.get(extensionMap[attr]);
-      const en = sc && sc.properties && sc.properties.variant && sc.properties.variant.enum;
-      return Array.isArray(en) && en.length ? en : [''];
+      const props = (sc && sc.properties) || {};
+      const out = [];
+      for (const [name, def] of Object.entries(props)) {
+        if (!def || !Array.isArray(def.enum) || !def.enum.length) continue;
+        for (const value of def.enum) out.push({ prop: name, value });
+      }
+      // Sorted so `variant` leads -- it is the axis most readers look for --
+      // and the rest follow alphabetically rather than in schema-key order.
+      out.sort((a, b) =>
+        (a.prop === 'variant' ? -1 : b.prop === 'variant' ? 1 : a.prop.localeCompare(b.prop)) ||
+        0
+      );
+      return out.length ? out : [{ prop: '', value: '' }];
+    }
+
+    /** How an option reads in the variant column: bare for variant, prop=value otherwise. */
+    function optionLabel(opt) {
+      if (!opt || !opt.value) return '';
+      return opt.prop === 'variant' ? opt.value : `${opt.prop}=${opt.value}`;
     }
     import(siteRoot() + 'src/core/tag-map.js')
       .then(async (mod) => {
@@ -248,11 +272,13 @@
       const frag = document.createDocumentFragment();
       let rendered = 0;
       allEntries.forEach((entry) => {
-        variantsFor(entry.attr).forEach((variant) => {
+        variantsFor(entry.attr).forEach((opt) => {
+          const variant = opt.value;
+          const shownOption = optionLabel(opt);
           // Match on everything the reader can see or type: the displayed name,
           // the underlying x-* attribute (still searchable even when the row is
-          // labelled by its semantic element), and the variant.
-          if (q && ![entry.label, entry.attr, variant].join(' ').toLowerCase().includes(q)) return;
+          // labelled by its semantic element), and the option.
+          if (q && ![entry.label, entry.attr, shownOption].join(' ').toLowerCase().includes(q)) return;
           rendered++;
           const li = document.createElement('li');
           const btn = document.createElement('button');
@@ -261,7 +287,10 @@
           btn.dataset.browseToken = entry.attr;
           btn.dataset.label = entry.label;
           if (entry.native) btn.dataset.native = '1';
-          if (variant) btn.dataset.variant = variant;
+          if (variant) {
+            btn.dataset.variant = variant;
+            btn.dataset.prop = opt.prop;
+          }
 
           // John: "change the variant to be in col. two" -- name first, variant
           // second, matching the panel header (behavior · variant). The variant
@@ -272,7 +301,7 @@
           t.textContent = entry.label;
           const v = document.createElement('span');
           v.className = 'behaviors-search-results__variant';
-          v.textContent = variant || '';
+          v.textContent = shownOption;
           btn.append(t, v);
           li.appendChild(btn);
           frag.appendChild(li);
@@ -392,8 +421,8 @@
     // shows the ERROR alert rather than whatever variant the page's demo
     // happened to hardcode. Rewrites an existing variant=, or adds one to the
     // first tag when absent.
-    function withVariant(src, attr, variant) {
-      if (!variant) return src;
+    function withOption(src, attr, prop, value) {
+      if (!value) return src;
 
       // Rewrite whichever attribute the example actually used. Several schemas
       // declare ALIASES for variant -- alert's is `type` -- and the behavior
@@ -402,12 +431,17 @@
       // from the schema rather than a hardcoded list, so this stays correct as
       // schemas change.
       const sc = schemaByName.get(extensionMap[attr]);
-      const aliases = (sc && sc.properties && sc.properties.variant && sc.properties.variant.aliases) || [];
-      for (const name of ['variant', ...aliases]) {
+      const target = prop || 'variant';
+      // Aliases are declared per-property, so read them for whichever axis this
+      // row represents -- alert's variant aliases to `type`, and the same
+      // mechanism applies to any other property that declares one.
+      const propDef = (sc && sc.properties && sc.properties[target]) || {};
+      const aliases = propDef.aliases || [];
+      for (const name of [target, ...aliases]) {
         const re = new RegExp('\\s' + name + '\\s*=\\s*"[^"]*"', 'i');
-        if (re.test(src)) return src.replace(re, ` ${name}="${variant}"`);
+        if (re.test(src)) return src.replace(re, ` ${name}="${value}"`);
       }
-      return src.replace(/^(\s*<[a-zA-Z][\w-]*)/, `$1 variant="${variant}"`);
+      return src.replace(/^(\s*<[a-zA-Z][\w-]*)/, `$1 ${target}="${value}"`);
     }
 
     // Which element should host a generated example? An x-* behavior can sit on
@@ -461,10 +495,10 @@
       }
       return out.join('');
     }
-    function generatedExample(attr, variant, label) {
+    function generatedExample(attr, variant, label, prop) {
       const behavior = extensionMap[attr] || attr.replace(/^x-/, '');
       const host = semanticHostFor(behavior);
-      const v = variant ? ` variant="${variant}"` : '';
+      const v = variant ? ` ${prop || 'variant'}="${variant}"` : '';
 
       // Auto-injected behaviors need NO attribute -- writing the semantic
       // element is the whole authoring form (John: "<button variant='primary'>
@@ -592,14 +626,15 @@
       return 'no background or border — plain';
     }
 
-    async function showLive(token, variant, label) {
+    async function showLive(token, variant, label, prop) {
       const raw = sourceFor(token);
-      const src = raw ? withVariant(raw, token, variant) : raw;
+      const src = raw ? withOption(raw, token, prop, variant) : raw;
       liveEl.hidden = false;
       // John: "Switch these two, behaivor first, variant 2nd".
       const shown = label || token;
       showDoc(extensionMap[token] || token.replace(/^x-/, ''));
-      liveToken.textContent = variant ? `${shown} · ${variant}` : shown;
+      const optionText = variant ? (prop && prop !== 'variant' ? `${prop}=${variant}` : variant) : '';
+      liveToken.textContent = optionText ? `${shown} · ${optionText}` : shown;
 
       if (!src) {
         // John: "x-article shows nothing shouldn't it at least show a semantic
@@ -607,7 +642,7 @@
         // example and run it. The whole point of an x-* behavior is that ANY
         // element can carry it, so the only real question is which host to
         // demonstrate it on.
-        const generated = generatedExample(token, variant, label);
+        const generated = generatedExample(token, variant, label, prop);
         liveNote.textContent = 'generated example — no demo on this page';
         liveCode.innerHTML = '';
         liveStage.innerHTML = generated;
@@ -657,7 +692,7 @@
         resultsEl.scrollTop = rowBottom - resultsEl.clientHeight;
       }
       if (focus) row.focus({ preventScroll: true });
-      showLive(row.dataset.browseToken, row.dataset.variant || '', row.dataset.label || '');
+      showLive(row.dataset.browseToken, row.dataset.variant || '', row.dataset.label || '', row.dataset.prop || '');
     }
 
     function moveSelection(delta) {
