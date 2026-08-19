@@ -370,7 +370,7 @@
       const stripped = location.pathname.replace(/(?:public|demos|pages|articles|tests\/fixtures)\/.*$/, '');
       return stripped.replace(/[^/]*$/, '');
     }
-    let allXAttributes = [];
+    let allEntries = [];
     let extensionMap = {};
     let nativeMap = {};
     const schemaByName = new Map();
@@ -400,11 +400,37 @@
         // values would silently collapse them.
         extensionMap = mod.extensionMap;
         nativeMap = mod.nativeMap || {};
-        // John: "do not include any as- behaviors". x-as-{name} is the morphing
-        // form (x-as-card, x-as-article) -- it re-renders an element AS another
-        // component rather than adding a behavior to it, so it belongs with the
-        // components, not in a behaviors list.
-        allXAttributes = Object.keys(mod.extensionMap).filter((a) => !a.startsWith('x-as-')).sort();
+        // John: "do not include any as- behaviors" -- x-as-{name} is the
+        // MORPHING form (x-as-card), which re-renders an element AS another
+        // component rather than adding behavior to it.
+        //
+        // And: "in cases where we fully inject into a semantic element like
+        // audio we do not need to list the x-audio as it's autoinjected" --
+        // writing <audio> already applies the behavior, so x-audio is pure
+        // duplication. Those 19 entries are listed under their SEMANTIC
+        // ELEMENT instead of dropped outright, because the element is the
+        // real authoring form (<button variant="primary">) and its variants
+        // still need to be visible.
+        const autoHost = {};
+        for (const [selector, beh] of Object.entries(mod.nativeMap)) {
+          if (!autoHost[beh]) autoHost[beh] = selector;
+        }
+        const seen = new Set();
+        allEntries = [];
+        Object.keys(mod.extensionMap)
+          .filter((a) => !a.startsWith('x-as-'))
+          .forEach((attr) => {
+            const beh = mod.extensionMap[attr];
+            const host = autoHost[beh];
+            // Key on the BEHAVIOR for auto-injected ones, so x-progress and
+            // x-progressbar (same behavior) collapse to a single <progress> row
+            // instead of duplicating it.
+            const key = host ? 'native:' + beh : attr;
+            if (seen.has(key)) return;
+            seen.add(key);
+            allEntries.push({ label: host || attr, attr, behavior: beh, native: !!host });
+          });
+        allEntries.sort((a, b) => a.label.localeCompare(b.label));
         // Variants come from the schema index (one fetch, not 105). Failure is
         // non-fatal: the list still renders, just without variant rows.
         return fetch(siteRoot() + 'data/schema-index.json')
@@ -461,30 +487,34 @@
     // with zero demos on this page has nothing to scroll to, and this way
     // that's an honest "Showing 0 of 88", not a silent no-op click.
     function renderBrowseAll() {
-      if (!allXAttributes.length) {
+      if (!allEntries.length) {
         resultsEl.hidden = true;
         return;
       }
       resultsEl.hidden = false;
       const frag = document.createDocumentFragment();
-      allXAttributes.forEach((token) => {
-        variantsFor(token).forEach((variant) => {
+      allEntries.forEach((entry) => {
+        variantsFor(entry.attr).forEach((variant) => {
           const li = document.createElement('li');
           const btn = document.createElement('button');
           btn.type = 'button';
           btn.className = 'behaviors-search-results__row';
-          btn.dataset.browseToken = token;
+          btn.dataset.browseToken = entry.attr;
+          btn.dataset.label = entry.label;
+          if (entry.native) btn.dataset.native = '1';
           if (variant) btn.dataset.variant = variant;
-          // Variant FIRST -- John: "put in a column variant so we can see it
-          // first". Empty cell (not omitted) so the behavior names stay in one
-          // aligned column whether or not a row has a variant.
+
+          // John: "change the variant to be in col. two" -- name first, variant
+          // second, matching the panel header (behavior · variant). The variant
+          // cell is rendered even when empty so the two columns stay aligned
+          // down the list.
+          const t = document.createElement('span');
+          t.className = 'behaviors-search-results__token';
+          t.textContent = entry.label;
           const v = document.createElement('span');
           v.className = 'behaviors-search-results__variant';
           v.textContent = variant || '';
-          const t = document.createElement('span');
-          t.className = 'behaviors-search-results__token';
-          t.textContent = token;
-          btn.append(v, t);
+          btn.append(t, v);
           li.appendChild(btn);
           frag.appendChild(li);
         });
@@ -645,10 +675,28 @@
     }
 
     const VOID = new Set(['img', 'input', 'br', 'hr', 'source', 'track', 'embed', 'col']);
-    function generatedExample(attr, variant) {
+    function generatedExample(attr, variant, label) {
       const behavior = extensionMap[attr] || attr.replace(/^x-/, '');
       const host = semanticHostFor(behavior);
       const v = variant ? ` variant="${variant}"` : '';
+
+      // Auto-injected behaviors need NO attribute -- writing the semantic
+      // element is the whole authoring form (John: "<button variant='primary'>
+      // ... this is because we created a module for the semantic button").
+      // Emitting `<button x-button>` here would demonstrate exactly the
+      // duplication we are removing.
+      const isNative = label && label !== attr;
+      if (isNative) {
+        // Selector form: input[type="checkbox"] -> <input type="checkbox">
+        const sel = label.match(/^([a-z][a-z0-9-]*)(?:\[([^=]+)="([^"]+)"\])?$/i);
+        const tag = sel ? sel[1] : host;
+        const extra = sel && sel[2] ? ` ${sel[2]}="${sel[3]}"` : '';
+        if (VOID.has(tag)) return `<${tag}${extra}${v}>`;
+        return `<${tag}${extra}${v}>
+  Example ${tag} content
+</${tag}>`;
+      }
+
       if (VOID.has(host)) return `<${host} ${attr}${v}>`;
       return `<${host} ${attr}${v}>
   Example ${attr} content
@@ -756,12 +804,13 @@
       return 'no background or border — plain';
     }
 
-    async function showLive(token, variant) {
+    async function showLive(token, variant, label) {
       const raw = sourceFor(token);
       const src = raw ? withVariant(raw, token, variant) : raw;
       liveEl.hidden = false;
       // John: "Switch these two, behaivor first, variant 2nd".
-      liveToken.textContent = variant ? `${token} · ${variant}` : token;
+      const shown = label || token;
+      liveToken.textContent = variant ? `${shown} · ${variant}` : shown;
 
       if (!src) {
         // John: "x-article shows nothing shouldn't it at least show a semantic
@@ -769,7 +818,7 @@
         // example and run it. The whole point of an x-* behavior is that ANY
         // element can carry it, so the only real question is which host to
         // demonstrate it on.
-        const generated = generatedExample(token, variant);
+        const generated = generatedExample(token, variant, label);
         liveNote.textContent = 'generated example — no demo on this page';
         liveCode.innerHTML = '';
         liveStage.innerHTML = generated;
@@ -798,7 +847,7 @@
         // re-run applyFilter and collapse the browse list to just this one
         // behavior, so picking the next one meant clearing the box first --
         // the list has to stay browsable while the panel changes beside it.
-        showLive(btn.dataset.browseToken, btn.dataset.variant || '');
+        showLive(btn.dataset.browseToken, btn.dataset.variant || '', btn.dataset.label || '');
         return;
       }
       // #664: render it in the panel beside the list. Deliberately NO

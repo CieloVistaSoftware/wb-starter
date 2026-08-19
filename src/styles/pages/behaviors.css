@@ -508,7 +508,9 @@ footer a:hover {
 /* #666: two columns per row, variant FIRST so it reads down the left edge. */
 .behaviors-search-results__row {
   display: grid;
-  grid-template-columns: 7.5rem minmax(0, 1fr);
+  /* Name first, variant second (#666). The name column is the wider of the
+     two because tags like input[type="checkbox"] are long. */
+  grid-template-columns: minmax(0, 1fr) 7rem;
   gap: 0.5rem;
   align-items: baseline;
   /* #behaviors-hero centres its text; without this the variant and name
