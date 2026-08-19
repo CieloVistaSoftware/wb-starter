@@ -50,6 +50,18 @@ wb-demo:has(.wb-dropdown.open) {
      rendered" (Standard §1 requires every example to visibly render), so
      floor the height regardless of what a lone out-of-flow child does. */
   min-height: 2.5rem;
+
+  /* #647: a demo box must contain its own demo. `contain: layout` makes this
+     grid the containing block for any `position: fixed` example content, so a
+     demo of a full-viewport effect (x-stagelight's spotlight, a modal, a
+     toast) renders INSIDE its box instead of painting over the entire page.
+     Live symptom without this: loading demos/playground.html darkened the whole
+     document with a mouse-tracking vignette (mix-blend-mode: multiply,
+     z-index: 9999) sourced from a gallery demo far below the fold.
+     Only effective together with overlays sizing via `inset` rather than
+     viewport units -- see .wb-stagelight--spotlight in
+     wb-viewmodels/stagelight.js. */
+  contain: layout;
 }
 
 /* Source code is ALWAYS left-aligned — never inherit text-align:center from a

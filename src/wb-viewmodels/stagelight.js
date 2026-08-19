@@ -75,12 +75,43 @@ function injectStyles() {
     }
 
     /* === VARIANT: SPOTLIGHT === */
+    /* #647: the HOST element stays in normal flow and keeps its own text.
+       It used to BE the overlay (position: fixed, 100vw x 100vh), which meant
+       the author's text was dragged into a full-screen layer -- that is the
+       "Spotlight effect behind this text" ghost seen at the top-left of the
+       Playground. It also left the element contributing zero in-flow size, so
+       once contained its demo box collapsed to 0 width and rendered nothing.
+       Beam and fixture already build a child for their visuals; spotlight now
+       does the same (its old comment claimed an ::after did this -- there was
+       no ::after anywhere). */
     .wb-stagelight--spotlight {
+      position: relative;
+      /* A spotlight with zero area is meaningless. The host is often empty
+         (the component consumes its text), and inside a single-item demo grid
+         "width: fit-content" then resolves to 0 -- the effect had nothing to
+         paint on. It previously hid this by covering the whole viewport
+         instead, which is the bug. Give it a real canvas by default. */
+      min-width: 18rem;
+      min-height: 10rem;
+    }
+
+    /* The actual overlay. "inset: 0" sizes it to its CONTAINING BLOCK, where
+       "width: 100vw; height: 100vh" could not: viewport units are absolute and
+       ignore containment, so an ancestor with "contain: layout" could re-anchor
+       this layer's origin but never shrink it -- it kept blanketing the page
+       from wherever it landed. That is why the first attempt at this bug
+       (adding "contain: layout" to the Playground preview) could not have
+       worked, quite apart from targeting an element the spotlight was never
+       inside.
+       Standalone the containing block IS the viewport, so full-screen coverage
+       is unchanged; inside a demo box that establishes one, it stays in the box.
+       Pairs with ".wb-demo__grid { contain: layout }" in
+       styles/behaviors/demo.css -- BOTH are required, neither suffices.
+       NOTE: this block sits inside a JS template literal -- never use a
+       backtick here, it terminates the string. */
+    .wb-stagelight__spot {
       position: fixed;
-      top: 0;
-      left: 0;
-      width: 100vw;
-      height: 100vh;
+      inset: 0;
       z-index: 9999;
       pointer-events: none;
       mix-blend-mode: multiply; /* Darkens everything except the spot */
@@ -93,7 +124,7 @@ function injectStyles() {
     }
     
     /* Variant: Spotlight - Screen Mode (Light beam in dark room) */
-    .wb-stagelight--spotlight.mode-add {
+    .wb-stagelight--spotlight.mode-add .wb-stagelight__spot {
       mix-blend-mode: screen;
       background: radial-gradient(
         circle at var(--x, 50%) var(--y, 50%), 
@@ -193,7 +224,13 @@ export default function stagelight(element, options = {}) {
       element.appendChild(label);
     }
   }
-  // spotlight variant doesn't need child elements (uses ::after in CSS)
+  else if (config.variant === 'spotlight') {
+    // #647: the overlay is a CHILD, so the host keeps its own text in normal
+    // flow and still gives its demo box real dimensions.
+    const spot = document.createElement('div');
+    spot.className = 'wb-stagelight__spot';
+    element.appendChild(spot);
+  }
 
   // Apply CSS Variables
   element.style.setProperty('--wb-stagelight-color', config.color);
@@ -210,13 +247,18 @@ export default function stagelight(element, options = {}) {
 
   if (config.variant === 'spotlight') {
     // Mouse Tracking Logic
+    // #647: coordinates must be relative to the OVERLAY'S OWN BOX, not the
+    // viewport. The overlay is sized by "inset: 0" against its containing
+    // block, so once a demo box contains it, its origin is no longer 0,0 of the
+    // screen -- feeding raw clientX/clientY put the bright spot outside the box
+    // and left it rendering as a uniformly dark rectangle. When nothing
+    // contains it the box IS the viewport and rect.left/top are 0, so
+    // standalone behaviour is byte-identical to before.
+    const overlay = element.querySelector('.wb-stagelight__spot');
     const onMove = (e) => {
-      // Use CSS variables for coordinate tracking
-      // This is more performant than direct DOM manipulation for rects usually
-      const x = e.clientX;
-      const y = e.clientY;
-      element.style.setProperty('--x', `${x}px`);
-      element.style.setProperty('--y', `${y}px`);
+      const rect = overlay.getBoundingClientRect();
+      element.style.setProperty('--x', `${e.clientX - rect.left}px`);
+      element.style.setProperty('--y', `${e.clientY - rect.top}px`);
     };
 
     if (config.target === 'mouse') {
