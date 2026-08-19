@@ -41,7 +41,14 @@ test.describe('Fix Viewer Grouping', () => {
     });
 
     await page.goto('/public/fix-viewer.html');
-    await page.waitForSelector('.fix-card');
+    // #541: explicit 30000ms to match fix-viewer.spec.ts's beforeEach — this
+    // page's client-side render work (WB.init autoInject scan, wb-fix-card
+    // custom-element upgrade, mdhtml processing) measured 4-13s even under
+    // light contention locally, and the full 79-file compliance project's 8
+    // parallel workers pushed that past the previous (implicit, un-timed)
+    // wait on CI. See fix-viewer.spec.ts's beforeEach comment for the full
+    // rationale.
+    await page.waitForSelector('.fix-card', { timeout: 30000 });
   });
 
   test('should default to no grouping', async ({ page }) => {
