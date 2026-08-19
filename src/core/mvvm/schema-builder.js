@@ -915,7 +915,26 @@ const SCHEMA_EXCLUDED_TAGS = new Set([
   'wb-cardexpandable', 'wb-cardfile', 'wb-cardhero', 'wb-cardhorizontal',
   'wb-cardlink', 'wb-card-link', 'wb-cardminimizable', 'wb-cardnotification',
   'wb-cardoverlay', 'wb-cardportfolio', 'wb-cardpricing', 'wb-cardproduct',
-  'wb-cardprofile', 'wb-cardstats', 'wb-cardtestimonial', 'wb-fix-card'
+  'wb-cardprofile', 'wb-cardstats', 'wb-cardtestimonial', 'wb-fix-card',
+  // #654: wb-ripple's schema $view is a single `<span name="effect">` whose own
+  // description says "created on click" -- it documents a RUNTIME element, not
+  // view content. Running it destroyed the author's children (processSchema
+  // wipes before building) and replaced them with an empty, zero-size span, so
+  // `<wb-ripple>text</wb-ripple>` rendered nothing at all and had no box to
+  // click. ripple() builds its own `span.wb-ripple__wave` per click and never
+  // reads `.wb-ripple__effect`; it needs the host's content left alone.
+  'wb-ripple',
+  // #655: confetti() substitutes its default "Fire Confetti!" label only when
+  // the host is empty -- a correct guard that the schema wipe defeated, since
+  // textContent was always empty by the time it ran. Authored content was
+  // silently replaced on every <wb-confetti>.
+  'wb-confetti',
+  // #656: stagelight.schema.json's $view builds source/beam/spot/housing/label
+  // -- the SAME elements stagelight() builds unconditionally for every variant.
+  // That is precisely the schema-vs-behavior race this list exists for
+  // ("whichever finishes last wins via its own innerHTML = ''"), and it also
+  // destroyed the host's authored text on every <wb-stagelight>.
+  'wb-stagelight'
 ]);
 
 // x-{name} attribute matching a registered schema: <article x-card> resolves
