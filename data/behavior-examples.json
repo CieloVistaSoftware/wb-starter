@@ -1,0 +1,230 @@
+{
+  "generatedBy": "scripts/build-behavior-examples.mjs",
+  "source": "pages/behaviors.html",
+  "count": 48,
+  "demoBlocks": 88,
+  "examples": {
+    "x-ripple": {
+      "source": "<button variant=\"primary\" x-ripple>With Ripple</button>",
+      "alternates": [
+        "<button variant=\"primary\" x-ripple>Click for Ripple</button>",
+        "<div x-ripple class=\"ripple-box\">Ripple on any element</div>"
+      ]
+    },
+    "x-toast": {
+      "source": "<button variant=\"primary\" x-toast message=\"Action completed!\" toast-variant=\"success\">With Toast</button>",
+      "alternates": [
+        "<button variant=\"primary\" x-toast message=\"Info message\" toast-variant=\"info\">Info Toast</button>",
+        "<button variant=\"primary\" x-toast message=\"Success!\" toast-variant=\"success\">Success Toast</button>",
+        "<button variant=\"primary\" x-toast message=\"Warning!\" toast-variant=\"warning\">Warning Toast</button>",
+        "<button variant=\"primary\" x-toast message=\"Error!\" toast-variant=\"error\">Error Toast</button>"
+      ]
+    },
+    "x-tooltip": {
+      "source": "<button variant=\"primary\" x-tooltip=\"Helpful hint!\" position=\"top\">With Tooltip</button>",
+      "alternates": [
+        "<button variant=\"secondary\" x-tooltip=\"Top tooltip\" position=\"top\">Top</button>",
+        "<button variant=\"secondary\" x-tooltip=\"Bottom tooltip\" position=\"bottom\">Bottom</button>",
+        "<button variant=\"secondary\" x-tooltip=\"Left tooltip\" position=\"left\">Left</button>",
+        "<button variant=\"secondary\" x-tooltip=\"Right tooltip\" position=\"right\">Right</button>"
+      ]
+    },
+    "x-password": {
+      "source": "<input type=\"password\" x-password placeholder=\"Password with toggle\">",
+      "alternates": []
+    },
+    "x-search": {
+      "source": "<input type=\"text\" x-search placeholder=\"Search with icon\">",
+      "alternates": []
+    },
+    "x-colorpicker": {
+      "source": "<input type=\"text\" x-colorpicker value=\"#6366f1\">",
+      "alternates": []
+    },
+    "x-masked": {
+      "source": "<input x-masked mask=\"(999) 999-9999\" placeholder=\"Phone: (999) 999-9999\">",
+      "alternates": [
+        "<input x-masked mask=\"99/99/9999\" placeholder=\"Date: MM/DD/YYYY\">",
+        "<input x-masked mask=\"9999 9999 9999 9999\" placeholder=\"Credit Card\">"
+      ]
+    },
+    "x-stepper": {
+      "source": "<div x-stepper value=\"5\" min=\"0\" max=\"10\"></div>",
+      "alternates": []
+    },
+    "x-alert": {
+      "source": "<div x-alert type=\"info\" message=\"Info alert message\"></div>",
+      "alternates": [
+        "<div x-alert type=\"success\" message=\"Success alert message\"></div>",
+        "<div x-alert type=\"warning\" message=\"Warning alert message\"></div>",
+        "<div x-alert type=\"error\" message=\"Error alert message\"></div>",
+        "<div x-alert type=\"info\" title=\"Dismissible\" message=\"Click the × to dismiss this alert\" dismissible></div>"
+      ]
+    },
+    "x-popover": {
+      "source": "<button variant=\"primary\" x-popover popover-title=\"Popover Title\" popover-content=\"This is additional information displayed in a popover.\">Show Popover</button>",
+      "alternates": []
+    },
+    "x-confirm": {
+      "source": "<button variant=\"primary\" x-confirm confirm-title=\"Confirm Action\" confirm-message=\"Are you sure you want to proceed?\">Confirm Dialog</button>",
+      "alternates": []
+    },
+    "x-prompt": {
+      "source": "<button variant=\"primary\" x-prompt prompt-title=\"Enter Value\" prompt-message=\"Please enter your name:\">Prompt Dialog</button>",
+      "alternates": []
+    },
+    "x-lightbox": {
+      "source": "<button variant=\"primary\" x-lightbox src=\"https://picsum.photos/1200/800?r=lb1\">View Image 1</button>",
+      "alternates": [
+        "<button variant=\"primary\" x-lightbox src=\"https://picsum.photos/1200/800?r=lb2\">View Image 2</button>"
+      ]
+    },
+    "x-breadcrumb": {
+      "source": "<nav x-breadcrumb items=\"Home,Products,Electronics,Smartphones\"></nav>",
+      "alternates": []
+    },
+    "x-pagination": {
+      "source": "<nav x-pagination total=\"100\" per-page=\"10\" current=\"5\"></nav>",
+      "alternates": []
+    },
+    "x-steps": {
+      "source": "<div x-steps items=\"Cart,Shipping,Payment,Confirm\" current=\"2\"></div>",
+      "alternates": []
+    },
+    "x-timeline": {
+      "source": "<div x-timeline items=\"Project kickoff,Design phase,Development,Testing,Launch\"></div>",
+      "alternates": []
+    },
+    "x-kbd": {
+      "source": "<p>Press <span x-kbd>Ctrl</span> + <span x-kbd>S</span> to save, or <span x-kbd>⌘</span> + <span x-kbd>K</span> on Mac.</p>",
+      "alternates": []
+    },
+    "x-image": {
+      "source": "<img x-image src=\"https://picsum.photos/200/150?r=enh1\" alt=\"Lazy loaded\" lazy class=\"demo-image\">",
+      "alternates": [
+        "<img x-image src=\"https://picsum.photos/200/150?r=enh2\" alt=\"Zoomable\" zoomable class=\"demo-image\">"
+      ]
+    },
+    "x-gallery": {
+      "source": "<div x-gallery columns=\"4\">\r\n        <img src=\"https://picsum.photos/200/200?r=gal1\" alt=\"Gallery 1\">\r\n        <img src=\"https://picsum.photos/200/200?r=gal2\" alt=\"Gallery 2\">\r\n        <img src=\"https://picsum.photos/200/200?r=gal3\" alt=\"Gallery 3\">\r\n        <img src=\"https://picsum.photos/200/200?r=gal4\" alt=\"Gallery 4\">\r\n      </div>",
+      "alternates": []
+    },
+    "x-youtube": {
+      "source": "<div x-youtube id=\"dQw4w9WgXcQ\" ratio=\"16:9\"></div>",
+      "alternates": []
+    },
+    "x-bounce": {
+      "source": "<button class=\"effect-demo\" x-bounce>Bounce</button>",
+      "alternates": []
+    },
+    "x-shake": {
+      "source": "<button class=\"effect-demo\" x-shake>Shake</button>",
+      "alternates": []
+    },
+    "x-pulse": {
+      "source": "<button class=\"effect-demo\" x-pulse>Pulse</button>",
+      "alternates": []
+    },
+    "x-flash": {
+      "source": "<button class=\"effect-demo\" x-flash>Flash</button>",
+      "alternates": []
+    },
+    "x-tada": {
+      "source": "<button class=\"effect-demo\" x-tada>Tada</button>",
+      "alternates": []
+    },
+    "x-wobble": {
+      "source": "<button class=\"effect-demo\" x-wobble>Wobble</button>",
+      "alternates": []
+    },
+    "x-jello": {
+      "source": "<button class=\"effect-demo\" x-jello>Jello</button>",
+      "alternates": []
+    },
+    "x-heartbeat": {
+      "source": "<button class=\"effect-demo\" x-heartbeat>💓 Heartbeat</button>",
+      "alternates": []
+    },
+    "x-fadein": {
+      "source": "<button class=\"effect-demo\" x-fadein>Fadein</button>",
+      "alternates": []
+    },
+    "x-slidein": {
+      "source": "<button class=\"effect-demo\" x-slidein direction=\"left\">Slidein Left</button>",
+      "alternates": [
+        "<button class=\"effect-demo\" x-slidein direction=\"right\">Slidein Right</button>",
+        "<button class=\"effect-demo\" x-slidein direction=\"up\">Slidein Up</button>"
+      ]
+    },
+    "x-zoomin": {
+      "source": "<button class=\"effect-demo\" x-zoomin>Zoomin</button>",
+      "alternates": []
+    },
+    "x-flip": {
+      "source": "<button class=\"effect-demo\" x-flip>Flip</button>",
+      "alternates": []
+    },
+    "x-confetti": {
+      "source": "<button variant=\"primary\" x-confetti>🎊 Confetti</button>",
+      "alternates": []
+    },
+    "x-fireworks": {
+      "source": "<button variant=\"primary\" x-fireworks>🎆 Fireworks</button>",
+      "alternates": []
+    },
+    "x-snow": {
+      "source": "<button variant=\"primary\" x-snow>❄️ Snow</button>",
+      "alternates": []
+    },
+    "x-sparkle": {
+      "source": "<button variant=\"primary\" x-sparkle>✨ Sparkle</button>",
+      "alternates": []
+    },
+    "x-glow": {
+      "source": "<button variant=\"primary\" x-glow>💡 Glow</button>",
+      "alternates": []
+    },
+    "x-rainbow": {
+      "source": "<button variant=\"primary\" x-rainbow>🌈 Rainbow</button>",
+      "alternates": []
+    },
+    "x-copy": {
+      "source": "<button variant=\"primary\" x-copy copy-text=\"Text copied to clipboard!\">📋 Copy Text</button>",
+      "alternates": [
+        "<button variant=\"primary\" x-copy copy-text=\"npm install wb-framework\">📋 Copy Command</button>"
+      ]
+    },
+    "x-share": {
+      "source": "<button variant=\"secondary\" x-share share-title=\"wb-starter\" share-url=\"https://example.com\">📤 Share</button>",
+      "alternates": []
+    },
+    "x-print": {
+      "source": "<button variant=\"secondary\" x-print>🖨️ Print</button>",
+      "alternates": []
+    },
+    "x-fullscreen": {
+      "source": "<button variant=\"secondary\" x-fullscreen>⛶ Fullscreen</button>",
+      "alternates": []
+    },
+    "x-clock": {
+      "source": "<div x-clock class=\"time-display\"></div>",
+      "alternates": []
+    },
+    "x-countdown": {
+      "source": "<div x-countdown to=\"2027-12-31\" class=\"time-display\"></div>",
+      "alternates": []
+    },
+    "x-relativetime": {
+      "source": "<span x-relativetime date=\"2025-01-01\" class=\"time-display\">Jan 1, 2025</span>",
+      "alternates": []
+    },
+    "x-darkmode": {
+      "source": "<button variant=\"primary\" x-darkmode>🌙 Toggle Dark Mode</button>",
+      "alternates": []
+    },
+    "x-truncate": {
+      "source": "<p x-truncate lines=\"2\" class=\"truncate-box\">\r\n        This is a very long text that will be truncated after two lines. Lorem ipsum dolor sit amet, consectetur\r\n        adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.\r\n      </p>",
+      "alternates": []
+    }
+  }
+}

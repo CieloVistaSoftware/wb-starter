@@ -12,6 +12,7 @@
     "test:duplicates": "node scripts/test-duplicates.mjs",
     "test:lock-guards": "node scripts/test-lock-guards.mjs",
     "test:summary-parse": "node scripts/test-summary-parse.mjs",
+    "check:behavior-examples": "node scripts/build-behavior-examples.mjs --check",
     "test:wb-demo-integrity": "node scripts/test-wb-demo-integrity.mjs",
     "test": "npm run test:lock-guards && npm run test:summary-parse && npm run test:duplicates && npm run test:wb-demo-integrity && npx playwright test --project=compliance && npx playwright test --project=regression && npx playwright test --project=integration && npx playwright test --project=base && npx playwright test --project=behaviors",
     "test:fast": "npx playwright test --max-failures=1",
