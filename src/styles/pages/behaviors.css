@@ -411,7 +411,10 @@ footer a:hover {
    example. Collapses to stacked below the two-column breakpoint. */
 .behaviors-browse {
   display: grid;
-  grid-template-columns: minmax(0, 40rem) minmax(0, 1fr);
+  /* #666 — John: "just make the window about 50% less wide". The list was
+     40rem; halving it gives the live panel the room instead, which is the part
+     worth looking at. */
+  grid-template-columns: minmax(0, 20rem) minmax(0, 1fr);
   gap: var(--space-md, 1rem);
   align-items: start;
   margin-top: var(--space-md, 1rem);
@@ -499,4 +502,27 @@ footer a:hover {
    copy -- centring it misrepresents how the behavior actually renders. */
 .behaviors-live__stage {
   text-align: left;
+}
+
+
+/* #666: two columns per row, variant FIRST so it reads down the left edge. */
+.behaviors-search-results__row {
+  display: grid;
+  grid-template-columns: 7.5rem minmax(0, 1fr);
+  gap: 0.5rem;
+  align-items: baseline;
+  /* #behaviors-hero centres its text; without this the variant and name
+     columns render right-ragged and stop reading as columns at all. */
+  text-align: left;
+}
+
+.behaviors-search-results__row > * {
+  text-align: left;
+}
+
+.behaviors-search-results__variant {
+  font-family: var(--font-mono, monospace);
+  font-size: 0.8rem;
+  color: var(--text-secondary, #9ca3af);
+  overflow-wrap: anywhere;
 }

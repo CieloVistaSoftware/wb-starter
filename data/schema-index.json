@@ -1,6 +1,6 @@
 {
-  "generatedAt": "2026-02-13T01:09:05.190Z",
-  "count": 81,
+  "generatedAt": "2026-08-19T20:10:10.594Z",
+  "count": 106,
   "schemas": [
     {
       "file": "alert.schema.json",
@@ -13,6 +13,9 @@
         "variant": {
           "type": "string",
           "description": "Alert severity/style variant",
+          "aliases": [
+            "type"
+          ],
           "enum": [
             "info",
             "success",
@@ -24,12 +27,14 @@
         },
         "title": {
           "type": "string",
-          "description": "Alert title (optional heading)"
+          "description": "Alert title (optional heading)",
+          "default": ""
         },
         "message": {
           "type": "string",
           "description": "Alert message content",
-          "required": true
+          "required": true,
+          "default": ""
         },
         "icon": {
           "type": "string",
@@ -246,6 +251,7 @@
         "src": {
           "type": "string",
           "description": "Audio source URL",
+          "default": "../audio.mp3",
           "required": true
         },
         "volume": {
@@ -273,6 +279,16 @@
           "description": "Show 15-band equalizer",
           "default": false
         },
+        "showDisplay": {
+          "type": "boolean",
+          "description": "Show Marantz-style URL/track display with scrolling text",
+          "default": true
+        },
+        "showPlayButton": {
+          "type": "boolean",
+          "description": "Show a visible custom play/pause button",
+          "default": true
+        },
         "bass": {
           "type": "number",
           "description": "Bass boost (-12 to 12 dB)",
@@ -286,18 +302,18 @@
       },
       "matrix": [
         {
-          "src": "audio.mp3"
+          "src": "../audio.mp3"
         },
         {
-          "src": "audio.mp3",
+          "src": "../audio.mp3",
           "showEq": true
         },
         {
-          "src": "audio.mp3",
+          "src": "../audio.mp3",
           "volume": 0.5
         },
         {
-          "src": "audio.mp3",
+          "src": "../audio.mp3",
           "loop": true
         }
       ],
@@ -309,6 +325,26 @@
       }
     },
     {
+      "file": "autocomplete.schema.json",
+      "name": "autocomplete",
+      "title": "Autocomplete Behavior",
+      "description": "Schema for x-autocomplete behavior (autocomplete input)",
+      "tag": "wb-autocomplete",
+      "baseClass": "wb-autocomplete",
+      "properties": {
+        "items": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "Autocomplete options",
+          "default": []
+        }
+      },
+      "matrix": [],
+      "_metadata": {}
+    },
+    {
       "file": "avatar.schema.json",
       "name": "avatar",
       "title": "Avatar",
@@ -318,19 +354,23 @@
       "properties": {
         "src": {
           "type": "string",
-          "description": "Image source URL"
+          "description": "Image source URL",
+          "default": ""
         },
         "alt": {
           "type": "string",
-          "description": "Alt text for image"
+          "description": "Alt text for image",
+          "default": ""
         },
         "initials": {
           "type": "string",
-          "description": "Fallback initials (2 chars)"
+          "description": "Fallback initials (2 chars)",
+          "default": ""
         },
         "name": {
           "type": "string",
-          "description": "Full name (generates initials if not provided)"
+          "description": "Full name (generates initials if not provided)",
+          "default": ""
         },
         "size": {
           "type": "string",
@@ -358,12 +398,14 @@
         "status": {
           "type": "string",
           "enum": [
+            "",
             "online",
             "offline",
             "busy",
             "away"
           ],
-          "description": "Status indicator"
+          "description": "Status indicator (empty = no indicator)",
+          "default": ""
         },
         "bordered": {
           "type": "boolean",
@@ -377,7 +419,7 @@
           "initials": "JD"
         },
         {
-          "src": "avatar.jpg"
+          "src": "https://i.pravatar.cc/150?u=avatar1"
         },
         {
           "initials": "JD",
@@ -409,7 +451,8 @@
       "properties": {
         "label": {
           "type": "string",
-          "description": "Badge text content"
+          "description": "Badge text content",
+          "default": ""
         },
         "variant": {
           "type": "string",
@@ -421,7 +464,9 @@
             "success",
             "warning",
             "error",
-            "info"
+            "info",
+            "glass",
+            "gradient"
           ],
           "default": "default",
           "appliesClass": "wb-badge--{{value}}"
@@ -460,6 +505,17 @@
           "type": "boolean",
           "description": "Show remove/close button",
           "default": false
+        },
+        "glow": {
+          "type": "boolean",
+          "description": "Soft pulsing glow halo in the badge's own variant color, for drawing attention (e.g. NEW/LIVE badges)",
+          "default": false,
+          "appliesClass": "wb-badge--glow"
+        },
+        "icon": {
+          "type": "string",
+          "description": "Leading icon/emoji shown before the label",
+          "default": ""
         }
       },
       "matrix": [
@@ -496,6 +552,281 @@
           "label": "Outline",
           "variant": "primary",
           "outline": true
+        },
+        {
+          "label": "Glass",
+          "variant": "glass"
+        },
+        {
+          "label": "Premium",
+          "variant": "gradient",
+          "pill": true,
+          "icon": "⭐"
+        },
+        {
+          "label": "Live",
+          "variant": "success",
+          "pill": true,
+          "glow": true,
+          "icon": "🟢"
+        },
+        {
+          "label": "Glass Glow",
+          "variant": "glass",
+          "pill": true,
+          "glow": true
+        },
+        {
+          "label": "default-xs-pill-dot-outline-removable",
+          "variant": "default",
+          "size": "xs",
+          "pill": true,
+          "dot": true,
+          "outline": true,
+          "removable": true
+        },
+        {
+          "label": "default-sm-plain",
+          "variant": "default",
+          "size": "sm",
+          "pill": false,
+          "dot": false,
+          "outline": false,
+          "removable": false
+        },
+        {
+          "label": "default-md-pill-outline",
+          "variant": "default",
+          "size": "md",
+          "pill": true,
+          "dot": false,
+          "outline": true,
+          "removable": false
+        },
+        {
+          "label": "default-lg-dot-removable",
+          "variant": "default",
+          "size": "lg",
+          "pill": false,
+          "dot": true,
+          "outline": false,
+          "removable": true
+        },
+        {
+          "label": "primary-xs-outline-removable",
+          "variant": "primary",
+          "size": "xs",
+          "pill": false,
+          "dot": false,
+          "outline": true,
+          "removable": true
+        },
+        {
+          "label": "primary-sm-pill-dot",
+          "variant": "primary",
+          "size": "sm",
+          "pill": true,
+          "dot": true,
+          "outline": false,
+          "removable": false
+        },
+        {
+          "label": "primary-md-dot-removable",
+          "variant": "primary",
+          "size": "md",
+          "pill": false,
+          "dot": true,
+          "outline": false,
+          "removable": true
+        },
+        {
+          "label": "primary-lg-pill-outline",
+          "variant": "primary",
+          "size": "lg",
+          "pill": true,
+          "dot": false,
+          "outline": true,
+          "removable": false
+        },
+        {
+          "label": "secondary-xs-pill-dot",
+          "variant": "secondary",
+          "size": "xs",
+          "pill": true,
+          "dot": true,
+          "outline": false,
+          "removable": false
+        },
+        {
+          "label": "secondary-sm-outline-removable",
+          "variant": "secondary",
+          "size": "sm",
+          "pill": false,
+          "dot": false,
+          "outline": true,
+          "removable": true
+        },
+        {
+          "label": "secondary-md-pill-dot-outline-removable",
+          "variant": "secondary",
+          "size": "md",
+          "pill": true,
+          "dot": true,
+          "outline": true,
+          "removable": true
+        },
+        {
+          "label": "secondary-lg-pill-dot-outline-removable",
+          "variant": "secondary",
+          "size": "lg",
+          "pill": true,
+          "dot": true,
+          "outline": true,
+          "removable": true
+        },
+        {
+          "label": "success-xs-pill-dot-outline-removable",
+          "variant": "success",
+          "size": "xs",
+          "pill": true,
+          "dot": true,
+          "outline": true,
+          "removable": true
+        },
+        {
+          "label": "success-sm-plain",
+          "variant": "success",
+          "size": "sm",
+          "pill": false,
+          "dot": false,
+          "outline": false,
+          "removable": false
+        },
+        {
+          "label": "success-md-pill-dot-outline-removable",
+          "variant": "success",
+          "size": "md",
+          "pill": true,
+          "dot": true,
+          "outline": true,
+          "removable": true
+        },
+        {
+          "label": "success-lg-pill-dot-outline-removable",
+          "variant": "success",
+          "size": "lg",
+          "pill": true,
+          "dot": true,
+          "outline": true,
+          "removable": true
+        },
+        {
+          "label": "warning-xs-pill-dot-outline-removable",
+          "variant": "warning",
+          "size": "xs",
+          "pill": true,
+          "dot": true,
+          "outline": true,
+          "removable": true
+        },
+        {
+          "label": "warning-sm-plain",
+          "variant": "warning",
+          "size": "sm",
+          "pill": false,
+          "dot": false,
+          "outline": false,
+          "removable": false
+        },
+        {
+          "label": "warning-md-pill-dot-outline-removable",
+          "variant": "warning",
+          "size": "md",
+          "pill": true,
+          "dot": true,
+          "outline": true,
+          "removable": true
+        },
+        {
+          "label": "warning-lg-pill-dot-outline-removable",
+          "variant": "warning",
+          "size": "lg",
+          "pill": true,
+          "dot": true,
+          "outline": true,
+          "removable": true
+        },
+        {
+          "label": "error-xs-pill-dot-outline-removable",
+          "variant": "error",
+          "size": "xs",
+          "pill": true,
+          "dot": true,
+          "outline": true,
+          "removable": true
+        },
+        {
+          "label": "error-sm-plain",
+          "variant": "error",
+          "size": "sm",
+          "pill": false,
+          "dot": false,
+          "outline": false,
+          "removable": false
+        },
+        {
+          "label": "error-md-pill-dot-outline-removable",
+          "variant": "error",
+          "size": "md",
+          "pill": true,
+          "dot": true,
+          "outline": true,
+          "removable": true
+        },
+        {
+          "label": "error-lg-pill-dot-outline-removable",
+          "variant": "error",
+          "size": "lg",
+          "pill": true,
+          "dot": true,
+          "outline": true,
+          "removable": true
+        },
+        {
+          "label": "info-xs-pill-dot-outline-removable",
+          "variant": "info",
+          "size": "xs",
+          "pill": true,
+          "dot": true,
+          "outline": true,
+          "removable": true
+        },
+        {
+          "label": "info-sm-plain",
+          "variant": "info",
+          "size": "sm",
+          "pill": false,
+          "dot": false,
+          "outline": false,
+          "removable": false
+        },
+        {
+          "label": "info-md-pill-dot-outline-removable",
+          "variant": "info",
+          "size": "md",
+          "pill": true,
+          "dot": true,
+          "outline": true,
+          "removable": true
+        },
+        {
+          "label": "info-lg-pill-dot-outline-removable",
+          "variant": "info",
+          "size": "lg",
+          "pill": true,
+          "dot": true,
+          "outline": true,
+          "removable": true
         }
       ],
       "_metadata": {
@@ -504,94 +835,6 @@
         "since": "1.0.0",
         "status": "stable"
       }
-    },
-    {
-      "file": "builder.schema.json",
-      "name": "builder",
-      "title": "Builder Schema",
-      "description": "Unified schema for builder components and UI interactions.",
-      "tag": "wb-builder",
-      "baseClass": "wb-builder",
-      "properties": {
-        "label": {
-          "type": "string",
-          "default": "Builder",
-          "appliesAttribute": "label"
-        },
-        "icon": {
-          "type": "string",
-          "default": "🎨",
-          "appliesAttribute": "icon"
-        },
-        "components": {
-          "type": "array",
-          "description": "List of components in the builder.",
-          "items": {
-            "type": "object",
-            "properties": {
-              "type": {
-                "type": "string",
-                "description": "Component type (e.g., 'card', 'button', etc.)"
-              },
-              "id": {
-                "type": "string",
-                "description": "Unique component ID. Auto-generated as readable camelCase with counter (e.g., sidebarLeft-1, column2-1, hero-1)"
-              },
-              "props": {
-                "type": "object",
-                "description": "Component properties (see individual schemas)."
-              },
-              "children": {
-                "$ref": "#/properties/components"
-              }
-            },
-            "required": [
-              "type",
-              "id",
-              "props"
-            ],
-            "additionalProperties": false
-          }
-        },
-        "meta": {
-          "type": "object",
-          "description": "Builder-level metadata (optional)",
-          "properties": {
-            "version": {
-              "type": "string"
-            },
-            "created": {
-              "type": "string",
-              "format": "date-time"
-            },
-            "author": {
-              "type": "string"
-            }
-          },
-          "additionalProperties": true
-        }
-      },
-      "matrix": [
-        {
-          "components": [
-            {
-              "type": "card",
-              "id": "test1",
-              "props": {}
-            }
-          ]
-        },
-        {
-          "components": [
-            {
-              "type": "button",
-              "id": "test2",
-              "props": {}
-            }
-          ]
-        }
-      ],
-      "_metadata": {}
     },
     {
       "file": "button.schema.json",
@@ -603,7 +846,8 @@
       "properties": {
         "label": {
           "type": "string",
-          "description": "Button text"
+          "description": "Button text",
+          "default": ""
         },
         "icon": {
           "type": "string",
@@ -629,7 +873,8 @@
             "arrow_left",
             "copy",
             "save"
-          ]
+          ],
+          "default": ""
         },
         "iconPosition": {
           "type": "string",
@@ -760,28 +1005,34 @@
       "properties": {
         "title": {
           "type": "string",
-          "description": "Card title"
+          "description": "Card title",
+          "default": ""
         },
         "content": {
           "type": "string",
-          "description": "Card content/description"
+          "description": "Card content/description",
+          "default": ""
         },
         "primary": {
           "type": "string",
           "description": "Primary button text",
-          "required": true
+          "required": true,
+          "default": ""
         },
         "primaryHref": {
           "type": "string",
-          "description": "Primary button link URL"
+          "description": "Primary button link URL",
+          "default": ""
         },
         "secondary": {
           "type": "string",
-          "description": "Secondary button text"
+          "description": "Secondary button text",
+          "default": ""
         },
         "secondaryHref": {
           "type": "string",
-          "description": "Secondary button link URL"
+          "description": "Secondary button link URL",
+          "default": ""
         },
         "variant": {
           "type": "string",
@@ -821,7 +1072,7 @@
       "file": "card.schema.json",
       "name": "card",
       "title": "Card Component",
-      "description": "Base card component. IS-A article, HAS-A header, main, footer.",
+      "description": "Card component. IS-A article, HAS-A header, main, footer.",
       "tag": "wb-card",
       "baseClass": "wb-card",
       "properties": {
@@ -877,6 +1128,18 @@
           ],
           "default": "auto",
           "appliesClass": "wb-card--{value}"
+        },
+        "tooltip": {
+          "type": "string",
+          "description": "Hover text shown as a themed WB tooltip (x-tooltip / tooltip.js), not the native browser title tooltip. `hoverText`/`hover-text` is the pre-existing documented alias and wins only when `tooltip` is unset (#283).",
+          "default": "",
+          "appliesAttribute": "x-tooltip"
+        },
+        "hoverText": {
+          "type": "string",
+          "description": "Alias for `tooltip` -- hover text shown as a themed WB tooltip, not the native browser title tooltip.",
+          "default": "",
+          "appliesAttribute": "x-tooltip"
         }
       },
       "matrix": [
@@ -975,11 +1238,13 @@
         "bio": {
           "type": "string",
           "description": "Short biography",
-          "inputType": "textarea"
+          "inputType": "textarea",
+          "default": ""
         },
         "cover": {
           "type": "string",
-          "description": "Cover/banner image URL"
+          "description": "Cover/banner image URL",
+          "default": ""
         },
         "size": {
           "type": "string",
@@ -1004,9 +1269,9 @@
         },
         "hoverText": {
           "type": "string",
-          "description": "Tooltip text shown on hover",
+          "description": "Alias for `tooltip` -- hover text shown as a themed WB tooltip (x-tooltip / tooltip.js), not the native browser title tooltip (#283).",
           "default": "",
-          "appliesAttribute": "title"
+          "appliesAttribute": "x-tooltip"
         }
       },
       "matrix": [
@@ -1063,12 +1328,14 @@
       "properties": {
         "label": {
           "type": "string",
-          "description": "Label text"
+          "description": "Label text",
+          "default": ""
         },
         "checked": {
           "type": "boolean",
           "description": "Checked state",
-          "default": false
+          "default": false,
+          "appliesClass": "wb-checkbox--checked"
         },
         "disabled": {
           "type": "boolean",
@@ -1082,11 +1349,13 @@
         },
         "name": {
           "type": "string",
-          "description": "Form field name"
+          "description": "Form field name",
+          "default": ""
         },
         "value": {
           "type": "string",
-          "description": "Form field value"
+          "description": "Form field value",
+          "default": ""
         },
         "required": {
           "type": "boolean",
@@ -1148,7 +1417,7 @@
         "category": "forms",
         "icon": "☑️",
         "since": "1.0.0",
-        "status": "stable"
+        "status": "deprecated"
       }
     },
     {
@@ -1161,11 +1430,13 @@
       "properties": {
         "label": {
           "type": "string",
-          "description": "Chip text content"
+          "description": "Chip text content",
+          "default": ""
         },
         "icon": {
           "type": "string",
-          "description": "Leading icon"
+          "description": "Leading icon",
+          "default": ""
         },
         "dismissible": {
           "type": "boolean",
@@ -1252,10 +1523,20 @@
       "tag": "wb-collapse",
       "baseClass": "wb-collapse",
       "properties": {
+        "heading": {
+          "type": "string",
+          "default": "Toggle",
+          "description": "Text displayed on the clickable trigger button"
+        },
         "expanded": {
           "type": "boolean",
           "default": false,
-          "description": "Ideally open"
+          "description": "Whether the content is initially visible"
+        },
+        "target": {
+          "type": "string",
+          "default": "",
+          "description": "CSS selector of a remote element to toggle instead of wrapping content"
         }
       },
       "matrix": [
@@ -1266,6 +1547,17 @@
           "expanded": true
         }
       ],
+      "_metadata": {}
+    },
+    {
+      "file": "colorpicker.schema.json",
+      "name": "colorpicker",
+      "title": "Color Picker Behavior",
+      "description": "Schema for x-colorpicker behavior (color input)",
+      "tag": "wb-colorpicker",
+      "baseClass": "wb-colorpicker",
+      "properties": {},
+      "matrix": [],
       "_metadata": {}
     },
     {
@@ -1338,11 +1630,13 @@
       "properties": {
         "text": {
           "type": "string",
-          "description": "Text to copy"
+          "description": "Text to copy",
+          "default": ""
         },
         "target": {
           "type": "string",
-          "description": "Selector of element to copy from"
+          "description": "Selector of element to copy from",
+          "default": ""
         }
       },
       "matrix": [
@@ -1353,6 +1647,28 @@
           "text": "npm install wb-starter"
         }
       ],
+      "_metadata": {}
+    },
+    {
+      "file": "counter.schema.json",
+      "name": "counter",
+      "title": "Counter Behavior",
+      "description": "Schema for x-counter behavior (character counter)",
+      "tag": "wb-counter",
+      "baseClass": "wb-counter",
+      "properties": {
+        "max": {
+          "type": "integer",
+          "description": "Maximum character count",
+          "default": 0
+        },
+        "warning": {
+          "type": "integer",
+          "description": "Warning threshold for character count",
+          "default": 0
+        }
+      },
+      "matrix": [],
       "_metadata": {}
     },
     {
@@ -1379,11 +1695,21 @@
         "columns": {
           "type": "integer",
           "description": "Number of grid columns for children (1-6)",
-          "default": 3,
+          "default": 1,
           "minimum": 1,
           "maximum": 6
         }
       },
+      "matrix": [],
+      "_metadata": {}
+    },
+    {
+      "file": "demofile.schema.json",
+      "title": "Demo File Contract",
+      "description": "Defines the structural contract for HTML demo files in demos/. Demos are self-contained full HTML documents that run 100% on their own — no server wrapping, no fragment loading. This is the SINGLE SOURCE OF TRUTH for what a valid demo file looks like.",
+      "tag": "wb-undefined",
+      "baseClass": "wb-undefined",
+      "properties": {},
       "matrix": [],
       "_metadata": {}
     },
@@ -1398,7 +1724,8 @@
         "summary": {
           "type": "string",
           "description": "Clickable summary text",
-          "required": true
+          "required": true,
+          "default": ""
         },
         "open": {
           "type": "boolean",
@@ -1407,7 +1734,8 @@
         },
         "name": {
           "type": "string",
-          "description": "Accordion group name (native exclusive behavior)"
+          "description": "Accordion group name (native exclusive behavior)",
+          "default": ""
         },
         "animated": {
           "type": "boolean",
@@ -1455,11 +1783,13 @@
       "properties": {
         "title": {
           "type": "string",
-          "description": "Dialog title"
+          "description": "Dialog title",
+          "default": ""
         },
         "content": {
           "type": "string",
-          "description": "Dialog body content"
+          "description": "Dialog body content",
+          "default": ""
         },
         "size": {
           "type": "string",
@@ -1542,7 +1872,8 @@
         },
         "handle": {
           "type": "string",
-          "description": "Selector for drag handle"
+          "description": "Selector for drag handle",
+          "default": ""
         }
       },
       "matrix": [
@@ -1568,11 +1899,13 @@
       "properties": {
         "title": {
           "type": "string",
-          "description": "Card title"
+          "description": "Card title",
+          "default": ""
         },
         "content": {
           "type": "string",
-          "description": "Card content"
+          "description": "Card content",
+          "default": ""
         },
         "constrain": {
           "type": "string",
@@ -1642,11 +1975,13 @@
       "properties": {
         "title": {
           "type": "string",
-          "description": "Drawer title"
+          "description": "Drawer title",
+          "default": ""
         },
         "content": {
           "type": "string",
-          "description": "Drawer body content"
+          "description": "Drawer body content",
+          "default": ""
         },
         "position": {
           "type": "string",
@@ -1718,10 +2053,10 @@
     },
     {
       "file": "drawerLayout.schema.json",
-      "name": "drawerLayout",
+      "name": "drawer-layout",
       "title": "Drawer Layout",
       "description": "Collapsible sidebar layout with toggle",
-      "tag": "wb-drawerLayout",
+      "tag": "wb-drawer-layout",
       "baseClass": "wb-drawer-layout",
       "properties": {
         "position": {
@@ -1829,6 +2164,17 @@
       }
     },
     {
+      "file": "error.schema.json",
+      "name": "error",
+      "title": "Error Behavior",
+      "description": "Schema for x-error behavior (error message)",
+      "tag": "wb-error",
+      "baseClass": "wb-error",
+      "properties": {},
+      "matrix": [],
+      "_metadata": {}
+    },
+    {
       "file": "cardexpandable.schema.json",
       "name": "cardexpandable",
       "title": "Expandable Card",
@@ -1839,11 +2185,13 @@
         "title": {
           "type": "string",
           "description": "Card title",
-          "required": true
+          "required": true,
+          "default": ""
         },
         "content": {
           "type": "string",
-          "description": "Expandable content"
+          "description": "Expandable content",
+          "default": ""
         },
         "expanded": {
           "type": "boolean",
@@ -1853,8 +2201,13 @@
         },
         "maxHeight": {
           "type": "string",
-          "description": "Max height when collapsed",
+          "description": "Max height when collapsed (pixel/unit string). Ignored when `lines` is set -- use maxHeight for non-text/mixed content where line-clamp doesn't apply.",
           "default": "100px"
+        },
+        "lines": {
+          "type": "number",
+          "description": "Clamp collapsed text to exactly N full lines via CSS line-clamp, instead of an arbitrary pixel maxHeight. Takes priority over maxHeight when set.",
+          "default": null
         },
         "variant": {
           "type": "string",
@@ -1891,6 +2244,39 @@
       }
     },
     {
+      "file": "fieldset.schema.json",
+      "name": "fieldset",
+      "title": "Fieldset Behavior",
+      "description": "Schema for x-fieldset behavior (collapsible fieldset)",
+      "tag": "wb-fieldset",
+      "baseClass": "wb-fieldset",
+      "properties": {
+        "collapsible": {
+          "type": "boolean",
+          "description": "Allow fieldset to be collapsible",
+          "default": false
+        },
+        "collapsed": {
+          "type": "boolean",
+          "description": "Initial collapsed state",
+          "default": false
+        }
+      },
+      "matrix": [],
+      "_metadata": {}
+    },
+    {
+      "file": "file.schema.json",
+      "name": "file",
+      "title": "File Behavior",
+      "description": "Schema for x-file behavior (file input)",
+      "tag": "wb-file",
+      "baseClass": "wb-file",
+      "properties": {},
+      "matrix": [],
+      "_metadata": {}
+    },
+    {
       "file": "cardfile.schema.json",
       "name": "cardfile",
       "title": "File Card",
@@ -1901,7 +2287,8 @@
         "filename": {
           "type": "string",
           "description": "File name",
-          "required": true
+          "required": true,
+          "default": ""
         },
         "fileType": {
           "type": "string",
@@ -1919,15 +2306,18 @@
         },
         "size": {
           "type": "string",
-          "description": "File size (e.g., 2.4 MB)"
+          "description": "File size (e.g., 2.4 MB)",
+          "default": ""
         },
         "date": {
           "type": "string",
-          "description": "File date"
+          "description": "File date",
+          "default": ""
         },
         "href": {
           "type": "string",
-          "description": "Download URL"
+          "description": "Download URL",
+          "default": ""
         },
         "downloadable": {
           "type": "boolean",
@@ -1943,6 +2333,12 @@
           ],
           "default": "default",
           "appliesClass": "wb-card-file--{{value}}"
+        },
+        "hoverText": {
+          "type": "string",
+          "description": "Alias for `tooltip` -- hover text shown as a themed WB tooltip (x-tooltip / tooltip.js), not the native browser title tooltip (#283).",
+          "default": "",
+          "appliesAttribute": "x-tooltip"
         }
       },
       "matrix": [
@@ -2040,6 +2436,17 @@
       "_metadata": {}
     },
     {
+      "file": "floatinglabel.schema.json",
+      "name": "floatinglabel",
+      "title": "Floating Label Behavior",
+      "description": "Schema for x-floatinglabel behavior (floating label UI)",
+      "tag": "wb-floatinglabel",
+      "baseClass": "wb-floatinglabel",
+      "properties": {},
+      "matrix": [],
+      "_metadata": {}
+    },
+    {
       "file": "footer.schema.json",
       "name": "footer",
       "title": "Footer",
@@ -2049,19 +2456,23 @@
       "properties": {
         "copyright": {
           "type": "string",
-          "description": "Copyright text"
+          "description": "Copyright text",
+          "default": ""
         },
         "brand": {
           "type": "string",
-          "description": "Brand name"
+          "description": "Brand name",
+          "default": ""
         },
         "links": {
           "type": "string",
-          "description": "Navigation links as JSON [{label, href}]"
+          "description": "Navigation links as JSON [{label, href}]",
+          "default": ""
         },
         "social": {
           "type": "string",
-          "description": "Social links as JSON [{platform, href}]"
+          "description": "Social links as JSON [{platform, href}]",
+          "default": ""
         },
         "sticky": {
           "type": "boolean",
@@ -2091,6 +2502,45 @@
       }
     },
     {
+      "file": "form.schema.json",
+      "name": "form",
+      "title": "Form Behavior",
+      "description": "Schema for x-form behavior (form enhancement)",
+      "tag": "wb-form",
+      "baseClass": "wb-form",
+      "properties": {
+        "ajax": {
+          "type": "boolean",
+          "description": "Enable AJAX form submission",
+          "default": false
+        },
+        "validate": {
+          "type": "boolean",
+          "description": "Enable validation on submit",
+          "default": false
+        }
+      },
+      "matrix": [],
+      "_metadata": {}
+    },
+    {
+      "file": "formrow.schema.json",
+      "name": "formrow",
+      "title": "Form Row Behavior",
+      "description": "Schema for x-formrow behavior (form row layout)",
+      "tag": "wb-formrow",
+      "baseClass": "wb-formrow",
+      "properties": {
+        "inline": {
+          "type": "boolean",
+          "description": "Display row inline",
+          "default": false
+        }
+      },
+      "matrix": [],
+      "_metadata": {}
+    },
+    {
       "file": "globe.schema.json",
       "name": "globe",
       "title": "Globe",
@@ -2111,19 +2561,23 @@
       "properties": {
         "icon": {
           "type": "string",
-          "description": "Logo icon (emoji or text)"
+          "description": "Logo icon (emoji or text)",
+          "default": ""
         },
         "title": {
           "type": "string",
-          "description": "Header title"
+          "description": "Header title",
+          "default": ""
         },
         "subtitle": {
           "type": "string",
-          "description": "Subtitle text"
+          "description": "Subtitle text",
+          "default": ""
         },
         "badge": {
           "type": "string",
-          "description": "Badge text (e.g., version)"
+          "description": "Badge text (e.g., version)",
+          "default": ""
         },
         "logoHref": {
           "type": "string",
@@ -2163,6 +2617,17 @@
       }
     },
     {
+      "file": "help.schema.json",
+      "name": "help",
+      "title": "Help Behavior",
+      "description": "Schema for x-help behavior (help text)",
+      "tag": "wb-help",
+      "baseClass": "wb-help",
+      "properties": {},
+      "matrix": [],
+      "_metadata": {}
+    },
+    {
       "file": "hero.schema.json",
       "name": "hero",
       "title": "Hero",
@@ -2173,9 +2638,11 @@
         "variant": {
           "type": "string",
           "enum": [
+            "",
             "default",
             "cosmic"
-          ]
+          ],
+          "default": "default"
         }
       },
       "matrix": [
@@ -2199,12 +2666,14 @@
         "background": {
           "type": "string",
           "description": "Background image URL",
-          "required": true
+          "required": true,
+          "default": ""
         },
         "title": {
           "type": "string",
           "description": "Hero headline",
-          "required": true
+          "required": true,
+          "default": ""
         },
         "pretitle": {
           "type": "string",
@@ -2223,7 +2692,8 @@
         },
         "cta": {
           "type": "string",
-          "description": "Call-to-action button text"
+          "description": "Call-to-action button text",
+          "default": ""
         },
         "ctaHref": {
           "type": "string",
@@ -2326,48 +2796,50 @@
       "file": "home-page.schema.json",
       "name": "home-page",
       "title": "Home Page",
-      "description": "Schema for validating the home page structure, behaviors, and all permutations.",
+      "description": "Schema for the home page layout and component structure.",
       "tag": "wb-home-page",
       "baseClass": "wb-home-page",
       "properties": {
         "hero": {
           "type": "object",
-          "description": "Hero section with wb-cardhero.",
+          "description": "Hero section using wb-cardhero.",
           "required": true,
-          "permutations": {
-            "type": "EXPLICIT",
-            "values": [
-              {
-                "variant": "cosmic",
-                "background": "url",
-                "pretitle": "100 Components",
-                "title": "Build stunning UIs",
-                "subtitle": "just HTML — no build step",
-                "cta": "Explore Components",
-                "cta-secondary": "Documentation"
-              }
-            ],
-            "assertions": {
-              "variant": {
-                "selector": "wb-cardhero",
-                "checks": {
-                  "hasAttribute": "variant",
-                  "hasClass": "wb-cardhero--cosmic"
-                }
-              },
-              "cta": {
-                "selector": "wb-cardhero",
-                "checks": {
-                  "hasAttribute": "cta",
-                  "textContains": "Explore Components"
-                }
-              }
+          "properties": {
+            "variant": {
+              "type": "string",
+              "default": "cosmic"
+            },
+            "background": {
+              "type": "string"
+            },
+            "pretitle": {
+              "type": "string",
+              "default": "100 Components"
+            },
+            "title": {
+              "type": "string",
+              "default": "Build stunning UIs"
+            },
+            "subtitle": {
+              "type": "string",
+              "default": "just HTML — no build step"
+            },
+            "cta": {
+              "type": "string",
+              "default": "Explore Components"
+            },
+            "ctaSecondary": {
+              "type": "string",
+              "default": "Documentation"
             }
-          }
+          },
+          "default": {}
         },
         "stats": {
           "type": "array",
-          "description": "Stats banner with stat-item elements.",
+          "description": "Stats row using wb-cardstats inside wb-container.",
+          "minItems": 4,
+          "maxItems": 4,
           "items": {
             "type": "object",
             "properties": {
@@ -2376,186 +2848,251 @@
               },
               "label": {
                 "type": "string"
+              },
+              "icon": {
+                "type": "string"
               }
+            }
+          },
+          "default": [
+            {
+              "value": "100+",
+              "label": "Behaviors",
+              "icon": "🧩"
             },
-            "permutations": {
-              "type": "EXPLICIT",
-              "values": [
-                {
-                  "value": "100",
-                  "label": "Behaviors"
-                },
-                {
-                  "value": "Light",
-                  "label": "DOM Architecture"
-                },
-                {
-                  "value": "0s",
-                  "label": "Build Time"
-                },
-                {
-                  "value": "100%",
-                  "label": "Standards Compliant"
-                }
-              ],
-              "assertions": {
-                "value": {
-                  "selector": ".stat-value",
-                  "checks": {
-                    "textContains": "100"
-                  }
-                },
-                "label": {
-                  "selector": ".stat-label",
-                  "checks": {
-                    "textContains": "Behaviors"
-                  }
-                }
-              }
+            {
+              "value": "Light",
+              "label": "DOM Only",
+              "icon": "☀️"
+            },
+            {
+              "value": "<1s",
+              "label": "Build Time",
+              "icon": "⚡"
+            },
+            {
+              "value": "100%",
+              "label": "Standards",
+              "icon": "✅"
             }
-          }
+          ]
         },
-        "demo": {
-          "type": "object",
-          "description": "Every example/demo block must use wb-demo tag for compliance.",
-          "required": true,
-          "permutations": {
-            "type": "EXPLICIT",
-            "values": [
-              {
-                "tag": "wb-demo",
-                "button": "x-ripple",
-                "tooltip": "x-tooltip",
-                "draggable": "x-draggable",
-                "confetti": "x-confetti"
-              }
-            ],
-            "assertions": {
-              "tag": {
-                "selector": "wb-demo",
-                "checks": {
-                  "visible": true,
-                  "hasClass": "wb-demo"
-                }
-              },
-              "button": {
-                "selector": "wb-demo button[x-ripple]",
-                "checks": {
-                  "clickable": true,
-                  "event": "ripple"
-                }
-              },
-              "tooltip": {
-                "selector": "wb-demo button[x-tooltip]",
-                "checks": {
-                  "hoverable": true,
-                  "event": "tooltip"
-                }
-              },
-              "draggable": {
-                "selector": "wb-demo div[x-draggable]",
-                "checks": {
-                  "draggable": true
-                }
-              },
-              "confetti": {
-                "selector": "wb-demo button[x-confetti]",
-                "checks": {
-                  "clickable": true,
-                  "event": "confetti"
-                }
-              },
-              "codeSection": {
-                "selector": "wb-demo .demo-code",
-                "checks": {
-                  "visible": true
-                }
-              },
-              "copyTag": {
-                "selector": "wb-demo .copy-tag",
-                "checks": {
-                  "clickable": true,
-                  "textContains": "Copy"
-                }
-              }
-            }
-          }
-        },
-        "features": {
+        "actions": {
           "type": "array",
-          "description": "Feature cards grid.",
+          "description": "Interactive behavior demo buttons below the stats divider.",
           "items": {
             "type": "object",
             "properties": {
-              "icon": {
+              "label": {
                 "type": "string"
               },
+              "behavior": {
+                "type": "string"
+              }
+            }
+          },
+          "default": [
+            {
+              "label": "✨ Ripple",
+              "behavior": "x-ripple"
+            },
+            {
+              "label": "💬 Tooltip",
+              "behavior": "x-tooltip"
+            },
+            {
+              "label": "🎉 Confetti",
+              "behavior": "x-confetti"
+            },
+            {
+              "label": "📋 Copy",
+              "behavior": "x-copy"
+            }
+          ]
+        },
+        "features": {
+          "type": "array",
+          "description": "Feature cards in a wb-grid layout.",
+          "minItems": 6,
+          "items": {
+            "type": "object",
+            "properties": {
               "title": {
                 "type": "string"
               },
               "description": {
                 "type": "string"
               }
+            }
+          },
+          "default": [
+            {
+              "title": "🧩 Component Library",
+              "description": "Over 40 ready-to-use UI components including Cards, Modals, Drawers, and Navigation."
             },
-            "permutations": {
-              "type": "EXPLICIT",
-              "values": [
-                {
-                  "icon": "🧩",
-                  "title": "Component Library",
-                  "description": "Over 40 ready-to-use UI components including Cards, Modals, Drawers, and Navigation."
-                },
-                {
-                  "icon": "⚡",
-                  "title": "Behaviors System",
-                  "description": "Compose interactions like Lego bricks. Add x-fade-in, x-sticky, or x-validate to any element."
-                },
-                {
-                  "icon": "🎨",
-                  "title": "Theme Engine",
-                  "description": "23 built-in themes with CSS Variable support. Dark mode, Light mode, and Auto detection support out of the box."
-                },
-                {
-                  "icon": "📊",
-                  "title": "Data Viz",
-                  "description": "Built-in charts, stats cards, and audio visualizations powered by Web Standards."
-                },
-                {
-                  "icon": "♿",
-                  "title": "Accessible",
-                  "description": "ARIA attributes and keyboard navigation are baked into every component by default."
-                },
-                {
-                  "icon": "🚀",
-                  "title": "Performance",
-                  "description": "Zero-runtime compilation. Browsers are fast now. We let them do their job."
-                }
-              ],
-              "assertions": {
-                "icon": {
-                  "selector": ".feature-icon",
-                  "checks": {
-                    "textContains": "🧩"
-                  }
-                },
-                "title": {
-                  "selector": "h3",
-                  "checks": {
-                    "textContains": "Component Library"
-                  }
-                },
-                "description": {
-                  "selector": "p",
-                  "checks": {
-                    "textContains": "Over 40 ready-to-use UI components"
-                  }
-                }
+            {
+              "title": "⚡ Behaviors System",
+              "description": "Compose interactions like Lego bricks. Add x-fade-in, x-sticky, or x-validate to any element."
+            },
+            {
+              "title": "🎨 Theme Engine",
+              "description": "23 built-in themes with CSS Variable support. Dark mode, Light mode, and Auto detection out of the box."
+            },
+            {
+              "title": "📊 Data Viz",
+              "description": "Built-in charts, stats cards, and audio visualizations powered by Web Standards."
+            },
+            {
+              "title": "♿ Accessible",
+              "description": "ARIA attributes and keyboard navigation are baked into every component by default."
+            },
+            {
+              "title": "🚀 Performance",
+              "description": "Zero-runtime compilation. Browsers are fast now. We let them do their job."
+            }
+          ]
+        },
+        "notifications": {
+          "type": "array",
+          "description": "Notification cards showing all 4 variants.",
+          "minItems": 4,
+          "maxItems": 4,
+          "items": {
+            "type": "object",
+            "properties": {
+              "variant": {
+                "type": "string",
+                "enum": [
+                  "info",
+                  "success",
+                  "warning",
+                  "error"
+                ]
+              },
+              "title": {
+                "type": "string"
+              },
+              "message": {
+                "type": "string"
               }
             }
-          }
+          },
+          "default": [
+            {
+              "variant": "info",
+              "title": "System Update",
+              "message": "Downloading patch v3.1..."
+            },
+            {
+              "variant": "success",
+              "title": "Complete",
+              "message": "Installation finished successfully."
+            },
+            {
+              "variant": "warning",
+              "title": "Attention",
+              "message": "Check your settings."
+            },
+            {
+              "variant": "error",
+              "title": "Failure",
+              "message": "Something went wrong."
+            }
+          ]
+        },
+        "audio": {
+          "type": "object",
+          "description": "Audio player with EQ visualization.",
+          "properties": {
+            "src": {
+              "type": "string"
+            },
+            "showEq": {
+              "type": "boolean",
+              "default": true
+            },
+            "volume": {
+              "type": "number",
+              "default": 0.5
+            }
+          },
+          "default": {}
         }
       },
-      "matrix": [],
+      "matrix": [
+        {
+          "_section": "hero",
+          "variant": "cosmic",
+          "title": "Build stunning UIs",
+          "cta": "Explore Components"
+        },
+        {
+          "_section": "hero",
+          "variant": "cosmic",
+          "title": "Build stunning UIs",
+          "subtitle": "just HTML — no build step",
+          "cta": "Explore Components",
+          "cta-secondary": "Documentation"
+        },
+        {
+          "_section": "hero",
+          "variant": "cosmic",
+          "title": "Build stunning UIs",
+          "pretitle": "100 Components",
+          "background": "hero.jpg"
+        },
+        {
+          "_section": "stats",
+          "value": "100+",
+          "label": "Behaviors",
+          "icon": "🧩"
+        },
+        {
+          "_section": "stats",
+          "value": "Light",
+          "label": "DOM Only",
+          "icon": "☀️"
+        },
+        {
+          "_section": "stats",
+          "value": "<1s",
+          "label": "Build Time",
+          "icon": "⚡"
+        },
+        {
+          "_section": "stats",
+          "value": "100%",
+          "label": "Standards",
+          "icon": "✅"
+        },
+        {
+          "_section": "features",
+          "title": "🧩 Component Library",
+          "description": "Over 40 ready-to-use UI components."
+        },
+        {
+          "_section": "features",
+          "title": "⚡ Behaviors System",
+          "description": "Compose interactions like Lego bricks."
+        },
+        {
+          "_section": "notifications",
+          "variant": "info",
+          "title": "System Update",
+          "message": "Downloading patch v3.1..."
+        },
+        {
+          "_section": "notifications",
+          "variant": "error",
+          "title": "Failure",
+          "message": "Something went wrong."
+        },
+        {
+          "_section": "audio",
+          "show-eq": true,
+          "volume": 0.5
+        }
+      ],
       "_metadata": {}
     },
     {
@@ -2568,7 +3105,8 @@
       "properties": {
         "image": {
           "type": "string",
-          "description": "Image URL"
+          "description": "Image URL",
+          "default": ""
         },
         "imageAlt": {
           "type": "string",
@@ -2592,11 +3130,13 @@
         },
         "title": {
           "type": "string",
-          "description": "Card title"
+          "description": "Card title",
+          "default": ""
         },
         "subtitle": {
           "type": "string",
-          "description": "Card subtitle"
+          "description": "Card subtitle",
+          "default": ""
         },
         "variant": {
           "type": "string",
@@ -2613,21 +3153,21 @@
       },
       "matrix": [
         {
-          "image": "photo.jpg",
+          "image": "https://picsum.photos/seed/cardhorizontal/600/400",
           "title": "Title"
         },
         {
-          "image": "photo.jpg",
+          "image": "https://picsum.photos/seed/cardhorizontal/600/400",
           "title": "Title",
           "subtitle": "Subtitle"
         },
         {
-          "image": "photo.jpg",
+          "image": "https://picsum.photos/seed/cardhorizontal/600/400",
           "title": "Title",
           "imagePosition": "right"
         },
         {
-          "image": "photo.jpg",
+          "image": "https://picsum.photos/seed/cardhorizontal/600/400",
           "title": "Title",
           "variant": "elevated"
         }
@@ -2650,7 +3190,8 @@
         "src": {
           "type": "string",
           "description": "Image source URL",
-          "required": true
+          "required": true,
+          "default": "https://picsum.photos/seed/cardimage/600/400"
         },
         "alt": {
           "type": "string",
@@ -2659,19 +3200,23 @@
         },
         "title": {
           "type": "string",
-          "description": "Card title"
+          "description": "Card title",
+          "default": ""
         },
         "subtitle": {
           "type": "string",
-          "description": "Card subtitle"
+          "description": "Card subtitle",
+          "default": ""
         },
         "caption": {
           "type": "string",
-          "description": "Image caption (displayed below image)"
+          "description": "Image caption (displayed below image)",
+          "default": ""
         },
         "href": {
           "type": "string",
-          "description": "Link URL (makes card clickable)"
+          "description": "Link URL (makes card clickable)",
+          "default": ""
         },
         "aspect": {
           "type": "string",
@@ -2733,36 +3278,36 @@
       },
       "matrix": [
         {
-          "src": "photo.jpg"
+          "src": "https://picsum.photos/seed/cardimage/600/400"
         },
         {
-          "src": "photo.jpg",
+          "src": "https://picsum.photos/seed/cardimage/600/400",
           "alt": "Description"
         },
         {
-          "src": "photo.jpg",
+          "src": "https://picsum.photos/seed/cardimage/600/400",
           "title": "Title"
         },
         {
-          "src": "photo.jpg",
+          "src": "https://picsum.photos/seed/cardimage/600/400",
           "title": "Title",
           "subtitle": "Subtitle"
         },
         {
-          "src": "photo.jpg",
+          "src": "https://picsum.photos/seed/cardimage/600/400",
           "caption": "Photo by John"
         },
         {
-          "src": "photo.jpg",
+          "src": "https://picsum.photos/seed/cardimage/600/400",
           "aspect": "1/1"
         },
         {
-          "src": "photo.jpg",
+          "src": "https://picsum.photos/seed/cardimage/600/400",
           "position": "bottom",
           "title": "Title"
         },
         {
-          "src": "photo.jpg",
+          "src": "https://picsum.photos/seed/cardimage/600/400",
           "variant": "elevated"
         }
       ],
@@ -2783,19 +3328,23 @@
       "properties": {
         "label": {
           "type": "string",
-          "description": "Input label text"
+          "description": "Input label text",
+          "default": ""
         },
         "placeholder": {
           "type": "string",
-          "description": "Placeholder text"
+          "description": "Placeholder text",
+          "default": ""
         },
         "value": {
           "type": "string",
-          "description": "Input value"
+          "description": "Input value",
+          "default": ""
         },
         "name": {
           "type": "string",
-          "description": "Form field name"
+          "description": "Form field name",
+          "default": ""
         },
         "inputType": {
           "type": "string",
@@ -2816,11 +3365,13 @@
         },
         "helper": {
           "type": "string",
-          "description": "Helper text below input"
+          "description": "Helper text below input",
+          "default": ""
         },
         "error": {
           "type": "string",
-          "description": "Error message (shows error state)"
+          "description": "Error message (shows error state)",
+          "default": ""
         },
         "variant": {
           "type": "string",
@@ -2861,7 +3412,8 @@
         },
         "icon": {
           "type": "string",
-          "description": "Icon (emoji or icon name)"
+          "description": "Icon (emoji or icon name)",
+          "default": ""
         },
         "iconPosition": {
           "type": "string",
@@ -2939,6 +3491,53 @@
       }
     },
     {
+      "file": "inputgroup.schema.json",
+      "name": "inputgroup",
+      "title": "Input Group Behavior",
+      "description": "Schema for x-inputgroup behavior (input group wrappers)",
+      "tag": "wb-inputgroup",
+      "baseClass": "wb-inputgroup",
+      "properties": {},
+      "matrix": [],
+      "_metadata": {}
+    },
+    {
+      "file": "label.schema.json",
+      "name": "label",
+      "title": "Label Behavior",
+      "description": "Schema for x-label behavior. Goes directly on a form control (input, select, textarea); its value is the label text. Creates a real <label>, associates it via for/id, and inserts it right before the control (to its left) by default.",
+      "tag": "wb-label",
+      "baseClass": "wb-label",
+      "properties": {
+        "x-label": {
+          "type": "string",
+          "description": "The label text",
+          "default": ""
+        },
+        "label-position": {
+          "type": "string",
+          "enum": [
+            "left",
+            "right"
+          ],
+          "description": "Which side of the control the label renders on. \"right\" is for RTL layouts (Hebrew, Arabic).",
+          "default": "left"
+        },
+        "required": {
+          "type": "boolean",
+          "description": "Mark label as required",
+          "default": false
+        },
+        "optional": {
+          "type": "boolean",
+          "description": "Mark label as optional",
+          "default": false
+        }
+      },
+      "matrix": [],
+      "_metadata": {}
+    },
+    {
       "file": "cardlink.schema.json",
       "name": "cardlink",
       "title": "Link Card",
@@ -2949,23 +3548,28 @@
         "href": {
           "type": "string",
           "description": "Link destination URL",
-          "required": true
+          "required": true,
+          "default": "https://example.com"
         },
         "title": {
           "type": "string",
-          "description": "Card title"
+          "description": "Card title",
+          "default": ""
         },
         "description": {
           "type": "string",
-          "description": "Card description text"
+          "description": "Card description text",
+          "default": ""
         },
         "icon": {
           "type": "string",
-          "description": "Icon (emoji or icon name)"
+          "description": "Icon (emoji or icon name)",
+          "default": ""
         },
         "badge": {
           "type": "string",
-          "description": "Badge text"
+          "description": "Badge text",
+          "default": ""
         },
         "target": {
           "type": "string",
@@ -2992,27 +3596,27 @@
       },
       "matrix": [
         {
-          "href": "/page"
+          "href": "https://example.com"
         },
         {
-          "href": "/page",
+          "href": "https://example.com",
           "title": "Link Title"
         },
         {
-          "href": "/page",
+          "href": "https://example.com",
           "title": "Title",
           "description": "Description"
         },
         {
-          "href": "/page",
+          "href": "https://example.com",
           "icon": "🔗"
         },
         {
-          "href": "/page",
+          "href": "https://example.com",
           "badge": "NEW"
         },
         {
-          "href": "/page",
+          "href": "https://example.com",
           "target": "_blank"
         }
       ],
@@ -3034,7 +3638,8 @@
         "src": {
           "type": "string",
           "description": "Path to external markdown file",
-          "attribute": "src"
+          "attribute": "src",
+          "default": ""
         },
         "sanitize": {
           "type": "boolean",
@@ -3049,7 +3654,7 @@
       },
       "matrix": [
         {
-          "src": "../demos/code.md"
+          "src": "../code.md"
         },
         {
           "gfm": true
@@ -3067,6 +3672,28 @@
       }
     },
     {
+      "file": "masked.schema.json",
+      "name": "masked",
+      "title": "Masked Input Behavior",
+      "description": "Schema for x-masked behavior (input masking)",
+      "tag": "wb-masked",
+      "baseClass": "wb-masked",
+      "properties": {
+        "mask": {
+          "type": "string",
+          "description": "Input mask pattern (e.g. '999-99-9999')",
+          "default": ""
+        },
+        "placeholder": {
+          "type": "string",
+          "description": "Mask placeholder character",
+          "default": ""
+        }
+      },
+      "matrix": [],
+      "_metadata": {}
+    },
+    {
       "file": "cardminimizable.schema.json",
       "name": "cardminimizable",
       "title": "Minimizable Card",
@@ -3077,11 +3704,13 @@
         "title": {
           "type": "string",
           "description": "Card title (always visible)",
-          "required": true
+          "required": true,
+          "default": ""
         },
         "content": {
           "type": "string",
-          "description": "Minimizable content"
+          "description": "Minimizable content",
+          "default": ""
         },
         "minimized": {
           "type": "boolean",
@@ -3139,7 +3768,8 @@
       "properties": {
         "brand": {
           "type": "string",
-          "description": "Brand text"
+          "description": "Brand text",
+          "default": ""
         },
         "brandHref": {
           "type": "string",
@@ -3148,7 +3778,8 @@
         },
         "logo": {
           "type": "string",
-          "description": "Logo image URL"
+          "description": "Logo image URL",
+          "default": ""
         },
         "logoSize": {
           "type": "string",
@@ -3157,11 +3788,13 @@
         },
         "tagline": {
           "type": "string",
-          "description": "Brand tagline or subtitle"
+          "description": "Brand tagline or subtitle",
+          "default": ""
         },
         "items": {
           "type": "string",
-          "description": "Navigation items as JSON [{label, href}]"
+          "description": "Navigation items as JSON [{label, href}]",
+          "default": ""
         },
         "sticky": {
           "type": "boolean",
@@ -3285,16 +3918,19 @@
         },
         "title": {
           "type": "string",
-          "description": "Notification title"
+          "description": "Notification title",
+          "default": ""
         },
         "message": {
           "type": "string",
           "description": "Notification message",
-          "required": true
+          "required": true,
+          "default": ""
         },
         "icon": {
           "type": "string",
-          "description": "Custom icon (overrides variant-based icon)"
+          "description": "Custom icon (overrides variant-based icon)",
+          "default": ""
         },
         "dismissible": {
           "type": "boolean",
@@ -3341,6 +3977,21 @@
       }
     },
     {
+      "file": "otp.schema.json",
+      "title": "OTP Behavior",
+      "description": "Schema for x-otp behavior (one-time password input)",
+      "tag": "wb-undefined",
+      "baseClass": "wb-undefined",
+      "properties": {
+        "length": {
+          "type": "integer",
+          "description": "Number of OTP digits"
+        }
+      },
+      "matrix": [],
+      "_metadata": {}
+    },
+    {
       "file": "cardoverlay.schema.json",
       "name": "cardoverlay",
       "title": "Overlay Card",
@@ -3351,15 +4002,18 @@
         "image": {
           "type": "string",
           "description": "Background image URL",
-          "required": true
+          "required": true,
+          "default": ""
         },
         "title": {
           "type": "string",
-          "description": "Overlay title"
+          "description": "Overlay title",
+          "default": ""
         },
         "subtitle": {
           "type": "string",
-          "description": "Overlay subtitle"
+          "description": "Overlay subtitle",
+          "default": ""
         },
         "position": {
           "type": "string",
@@ -3446,56 +4100,23 @@
       }
     },
     {
-      "file": "page-builder.schema.json",
-      "name": "page-builder",
-      "title": "Page Builder",
-      "description": "Schema for WB Page Builder multi-page website creation system",
-      "tag": "wb-page-builder",
-      "baseClass": "wb-page-builder",
+      "file": "password.schema.json",
+      "title": "Password Behavior",
+      "description": "Schema for x-password behavior (password input enhancements)",
+      "tag": "wb-undefined",
+      "baseClass": "wb-undefined",
       "properties": {
-        "pages": {
-          "type": "array",
-          "items": {
-            "$ref": "#/definitions/Page"
-          },
-          "description": "All pages in the site"
+        "toggle": {
+          "type": "boolean",
+          "description": "Show/hide password toggle"
         },
-        "globalSections": {
-          "type": "object",
-          "properties": {
-            "header": {
-              "type": "array",
-              "items": {
-                "$ref": "#/definitions/Component"
-              },
-              "description": "Shared header components"
-            },
-            "footer": {
-              "type": "array",
-              "items": {
-                "$ref": "#/definitions/Component"
-              },
-              "description": "Shared footer components"
-            }
-          }
-        },
-        "currentPageId": {
-          "type": "string",
-          "description": "Currently active page ID"
-        },
-        "settings": {
-          "type": "object",
-          "$ref": "#/definitions/SiteSettings"
+        "strength": {
+          "type": "boolean",
+          "description": "Show password strength meter"
         }
       },
       "matrix": [],
-      "_metadata": {
-        "category": "builder",
-        "icon": "🏗️",
-        "since": "2.0.0",
-        "status": "stable",
-        "documentation": "docs/builder/pages.md"
-      }
+      "_metadata": {}
     },
     {
       "file": "cardportfolio.schema.json",
@@ -3508,35 +4129,43 @@
         "name": {
           "type": "string",
           "description": "Full name",
-          "required": true
+          "required": true,
+          "default": ""
         },
         "title": {
           "type": "string",
-          "description": "Job title / role"
+          "description": "Job title / role",
+          "default": ""
         },
         "company": {
           "type": "string",
-          "description": "Current company name"
+          "description": "Current company name",
+          "default": ""
         },
         "location": {
           "type": "string",
-          "description": "Location (city, country)"
+          "description": "Location (city, country)",
+          "default": ""
         },
         "cover": {
           "type": "string",
-          "description": "Cover/banner image URL"
+          "description": "Cover/banner image URL",
+          "default": ""
         },
         "avatar": {
           "type": "string",
-          "description": "Profile photo URL"
+          "description": "Profile photo URL",
+          "default": ""
         },
         "bio": {
           "type": "string",
-          "description": "Short biography / summary"
+          "description": "Short biography / summary",
+          "default": ""
         },
         "tagline": {
           "type": "string",
-          "description": "Professional tagline or motto"
+          "description": "Professional tagline or motto",
+          "default": ""
         },
         "availability": {
           "type": "string",
@@ -3551,71 +4180,88 @@
         },
         "email": {
           "type": "string",
-          "description": "Email address"
+          "description": "Email address",
+          "default": ""
         },
         "phone": {
           "type": "string",
-          "description": "Phone number"
+          "description": "Phone number",
+          "default": ""
         },
         "website": {
           "type": "string",
-          "description": "Personal website URL"
+          "description": "Personal website URL",
+          "default": ""
         },
         "linkedin": {
           "type": "string",
-          "description": "LinkedIn profile URL"
+          "description": "LinkedIn profile URL",
+          "default": ""
         },
         "twitter": {
           "type": "string",
-          "description": "Twitter/X profile URL"
+          "description": "Twitter/X profile URL",
+          "default": ""
         },
         "github": {
           "type": "string",
-          "description": "GitHub profile URL"
+          "description": "GitHub profile URL",
+          "default": ""
         },
         "dribbble": {
           "type": "string",
-          "description": "Dribbble profile URL"
+          "description": "Dribbble profile URL",
+          "default": ""
         },
         "skills": {
           "type": "string",
-          "description": "Comma-separated list of skills"
+          "description": "Comma-separated list of skills",
+          "default": ""
         },
         "skillLevels": {
           "type": "string",
-          "description": "JSON array of {name, level (0-100)} for skill bars"
+          "description": "JSON array of {name, level (0-100)} for skill bars",
+          "default": ""
         },
         "experience": {
           "type": "string",
-          "description": "JSON array of {company, role, period, description}"
+          "description": "JSON array of {company, role, period, description}",
+          "default": ""
         },
         "education": {
           "type": "string",
-          "description": "JSON array of {school, degree, year}"
+          "description": "JSON array of {school, degree, year}",
+          "default": ""
         },
         "projects": {
           "type": "string",
-          "description": "JSON array of {name, description, url, image}"
+          "description": "JSON array of {name, description, url, image}",
+          "default": ""
         },
         "certifications": {
           "type": "string",
-          "description": "Comma-separated list of certifications"
+          "description": "Comma-separated list of certifications",
+          "default": ""
         },
         "languages": {
           "type": "string",
-          "description": "Comma-separated list of languages (e.g. 'English (Native), Spanish (Fluent)')"
+          "description": "Comma-separated list of languages (e.g. 'English (Native), Spanish (Fluent)')",
+          "default": ""
         },
         "stats": {
           "type": "string",
-          "description": "JSON array of {label, value} for stats display"
+          "description": "JSON array of {label, value} for stats display",
+          "default": ""
         },
         "cta": {
           "type": "string",
-          "description": "Call-to-action button text"
+          "description": "Call-to-action button text",
+          "default": ""
         },
         "ctaHref": {
           "type": "string",
-          "description": "Call-to-action button link"
+          "description": "Call-to-action button link",
+          "default": ""
         },
         "variant": {
           "type": "string",
@@ -3693,12 +4339,14 @@
         "plan": {
           "type": "string",
           "description": "Plan name (e.g., Basic, Pro, Enterprise)",
-          "required": true
+          "required": true,
+          "default": ""
         },
         "price": {
           "type": "string",
           "description": "Price amount (e.g., $29)",
-          "required": true
+          "required": true,
+          "default": ""
         },
         "period": {
           "type": "string",
@@ -3707,11 +4355,13 @@
         },
         "description": {
           "type": "string",
-          "description": "Short plan description"
+          "description": "Short plan description",
+          "default": ""
         },
         "features": {
           "type": "string",
-          "description": "Comma-separated list of features"
+          "description": "Comma-separated list of features",
+          "default": ""
         },
         "cta": {
           "type": "string",
@@ -3791,37 +4441,45 @@
       "properties": {
         "image": {
           "type": "string",
-          "description": "Product image URL"
+          "description": "Product image URL",
+          "default": ""
         },
         "title": {
           "type": "string",
           "description": "Product name",
-          "required": true
+          "required": true,
+          "default": ""
         },
         "description": {
           "type": "string",
-          "description": "Product description"
+          "description": "Product description",
+          "default": ""
         },
         "price": {
           "type": "string",
           "description": "Current price",
-          "required": true
+          "required": true,
+          "default": ""
         },
         "originalPrice": {
           "type": "string",
-          "description": "Original price (shows discount)"
+          "description": "Original price (shows discount)",
+          "default": ""
         },
         "badge": {
           "type": "string",
-          "description": "Badge text (Sale, New, etc.)"
+          "description": "Badge text (Sale, New, etc.)",
+          "default": ""
         },
         "rating": {
           "type": "number",
-          "description": "Product rating (0-5)"
+          "description": "Product rating (0-5)",
+          "default": 0
         },
         "reviews": {
           "type": "number",
-          "description": "Number of reviews"
+          "description": "Number of reviews",
+          "default": 0
         },
         "cta": {
           "type": "string",
@@ -3904,7 +4562,8 @@
         },
         "label": {
           "type": "string",
-          "description": "Progress label text"
+          "description": "Progress label text",
+          "default": ""
         },
         "showValue": {
           "type": "boolean",
@@ -4094,11 +4753,11 @@
     },
     {
       "file": "wb-repeater.schema.json",
-      "name": "wb-repeater",
+      "name": "repeater",
       "title": "Repeater",
       "description": "Repeat content based on data.",
-      "tag": "wb-wb-repeater",
-      "baseClass": "wb-wb-repeater",
+      "tag": "wb-repeater",
+      "baseClass": "wb-repeater",
       "properties": {},
       "matrix": [],
       "_metadata": {}
@@ -4202,11 +4861,13 @@
         },
         "value": {
           "type": "string",
-          "description": "Search value"
+          "description": "Search value",
+          "default": ""
         },
         "name": {
           "type": "string",
-          "description": "Form field name"
+          "description": "Form field name",
+          "default": ""
         },
         "debounce": {
           "type": "number",
@@ -4305,7 +4966,8 @@
       "properties": {
         "label": {
           "type": "string",
-          "description": "Select label"
+          "description": "Select label",
+          "default": ""
         },
         "placeholder": {
           "type": "string",
@@ -4314,15 +4976,18 @@
         },
         "options": {
           "type": "string",
-          "description": "Options as JSON [{value, label}]"
+          "description": "Options as JSON [{value, label}]",
+          "default": ""
         },
         "value": {
           "type": "string",
-          "description": "Selected value"
+          "description": "Selected value",
+          "default": ""
         },
         "name": {
           "type": "string",
-          "description": "Form field name"
+          "description": "Form field name",
+          "default": ""
         },
         "searchable": {
           "type": "boolean",
@@ -4541,6 +5206,7 @@
           "type": "string",
           "description": "Visual style variant",
           "enum": [
+            "default",
             "red",
             "yellow",
             "green",
@@ -4636,6 +5302,46 @@
       }
     },
     {
+      "file": "stack.schema.json",
+      "name": "stack",
+      "title": "Stack Layout Component",
+      "description": "Vertical stack layout component. Renders children in a column with configurable gap, background color, padding, and border radius.",
+      "tag": "wb-stack",
+      "baseClass": "wb-stack",
+      "properties": {
+        "gap": {
+          "type": "string",
+          "description": "CSS gap between stacked children. Accepts any valid CSS length value.",
+          "default": "1rem",
+          "example": "0.25rem"
+        },
+        "bg": {
+          "type": "string",
+          "description": "Background color of the stack. Accepts any valid CSS color value including hex, rgb, and CSS variables.",
+          "default": "",
+          "example": "#1a2f4e"
+        },
+        "pad": {
+          "type": "string",
+          "description": "CSS padding shorthand applied to the stack element. Accepts any valid CSS padding value (1–4 values). Use '0 0 0.75rem' to pad bottom only (e.g. when image bleeds to top/side edges).",
+          "default": "",
+          "example": "0 0 0.75rem"
+        },
+        "radius": {
+          "type": "string",
+          "description": "CSS border-radius applied to the stack element. Accepts any valid CSS border-radius value.",
+          "default": "",
+          "example": "8px"
+        }
+      },
+      "matrix": [],
+      "_metadata": {
+        "category": "layout",
+        "icon": "📦",
+        "viewModel": "src/wb-viewmodels/wb-stack.js"
+      }
+    },
+    {
       "file": "stagelight.schema.json",
       "name": "stagelight",
       "title": "Stage Light",
@@ -4721,29 +5427,35 @@
         "value": {
           "type": "string",
           "description": "The main statistic value (e.g., 1,234 or $50K)",
-          "required": true
+          "required": true,
+          "default": ""
         },
         "label": {
           "type": "string",
-          "description": "Label describing what the value represents"
+          "description": "Label describing what the value represents",
+          "default": ""
         },
         "icon": {
           "type": "string",
-          "description": "Icon (emoji or icon name)"
+          "description": "Icon (emoji or icon name)",
+          "default": ""
         },
         "trend": {
           "type": "string",
           "description": "Trend direction",
           "enum": [
+            "",
             "up",
             "down",
             "neutral"
           ],
-          "appliesClass": "wb-stats--trend-{{value}}"
+          "appliesClass": "wb-stats--trend-{{value}}",
+          "default": ""
         },
         "trendValue": {
           "type": "string",
-          "description": "Trend amount (e.g., +12%, -5%)"
+          "description": "Trend amount (e.g., +12%, -5%)",
+          "default": ""
         },
         "variant": {
           "type": "string",
@@ -4759,7 +5471,8 @@
         },
         "color": {
           "type": "string",
-          "description": "Accent color (CSS color value)"
+          "description": "Accent color (CSS color value)",
+          "default": ""
         }
       },
       "matrix": [
@@ -4800,6 +5513,29 @@
       }
     },
     {
+      "file": "stepper.schema.json",
+      "title": "Stepper Behavior",
+      "description": "Schema for x-stepper behavior (numeric stepper)",
+      "tag": "wb-undefined",
+      "baseClass": "wb-undefined",
+      "properties": {
+        "min": {
+          "type": "number",
+          "description": "Minimum value"
+        },
+        "max": {
+          "type": "number",
+          "description": "Maximum value"
+        },
+        "step": {
+          "type": "number",
+          "description": "Step increment"
+        }
+      },
+      "matrix": [],
+      "_metadata": {}
+    },
+    {
       "file": "sticky.schema.json",
       "name": "sticky",
       "title": "Sticky",
@@ -4819,7 +5555,8 @@
         },
         "threshold": {
           "type": "number",
-          "description": "Scroll position to trigger sticky"
+          "description": "Scroll position to trigger sticky",
+          "default": 0
         },
         "stuckClass": {
           "type": "string",
@@ -4858,7 +5595,8 @@
       "properties": {
         "label": {
           "type": "string",
-          "description": "Switch label"
+          "description": "Switch label",
+          "default": ""
         },
         "checked": {
           "type": "boolean",
@@ -4872,11 +5610,13 @@
         },
         "name": {
           "type": "string",
-          "description": "Form field name"
+          "description": "Form field name",
+          "default": ""
         },
         "value": {
           "type": "string",
-          "description": "Form field value when checked"
+          "description": "Form field value when checked",
+          "default": ""
         },
         "labelPosition": {
           "type": "string",
@@ -4941,11 +5681,13 @@
       "properties": {
         "data": {
           "type": "string",
-          "description": "Table data as JSON array"
+          "description": "Table data as JSON array",
+          "default": ""
         },
         "columns": {
           "type": "string",
-          "description": "Column config as JSON [{key, label, sortable}]"
+          "description": "Column config as JSON [{key, label, sortable}]",
+          "default": ""
         },
         "sortable": {
           "type": "boolean",
@@ -5084,6 +5826,17 @@
       }
     },
     {
+      "file": "tags.schema.json",
+      "name": "tags",
+      "title": "Tags Behavior",
+      "description": "Schema for x-tags behavior (tag input)",
+      "tag": "wb-tags",
+      "baseClass": "wb-tags",
+      "properties": {},
+      "matrix": [],
+      "_metadata": {}
+    },
+    {
       "file": "cardtestimonial.schema.json",
       "name": "cardtestimonial",
       "title": "Testimonial Card",
@@ -5094,26 +5847,31 @@
         "quote": {
           "type": "string",
           "description": "Testimonial quote text",
-          "required": true
+          "required": true,
+          "default": ""
         },
         "author": {
           "type": "string",
           "description": "Author name",
-          "required": true
+          "required": true,
+          "default": ""
         },
         "role": {
           "type": "string",
-          "description": "Author role/title/company"
+          "description": "Author role/title/company",
+          "default": ""
         },
         "avatar": {
           "type": "string",
-          "description": "Author avatar image URL"
+          "description": "Author avatar image URL",
+          "default": ""
         },
         "rating": {
           "type": "number",
           "description": "Star rating (0-5)",
           "minimum": 0,
-          "maximum": 5
+          "maximum": 5,
+          "default": 0
         },
         "variant": {
           "type": "string",
@@ -5153,7 +5911,7 @@
         {
           "quote": "Great!",
           "author": "John",
-          "avatar": "avatar.jpg"
+          "avatar": "https://i.pravatar.cc/150?u=john"
         },
         {
           "quote": "Great!",
@@ -5169,7 +5927,7 @@
           "quote": "Excellent service!",
           "author": "Jane",
           "role": "CTO at Acme",
-          "avatar": "jane.jpg",
+          "avatar": "https://i.pravatar.cc/150?u=jane",
           "rating": 5
         },
         {
@@ -5200,19 +5958,23 @@
       "properties": {
         "label": {
           "type": "string",
-          "description": "Field label"
+          "description": "Field label",
+          "default": ""
         },
         "placeholder": {
           "type": "string",
-          "description": "Placeholder text"
+          "description": "Placeholder text",
+          "default": ""
         },
         "value": {
           "type": "string",
-          "description": "Text value"
+          "description": "Text value",
+          "default": ""
         },
         "name": {
           "type": "string",
-          "description": "Form field name"
+          "description": "Form field name",
+          "default": ""
         },
         "rows": {
           "type": "number",
@@ -5293,7 +6055,7 @@
         "category": "forms",
         "icon": "📝",
         "since": "1.0.0",
-        "status": "stable"
+        "status": "deprecated"
       }
     },
     {
@@ -5310,21 +6072,55 @@
       "_metadata": {}
     },
     {
+      "file": "timeline.schema.json",
+      "name": "timeline",
+      "title": "Timeline",
+      "description": "Vertical timeline component for displaying sequential events",
+      "tag": "wb-timeline",
+      "baseClass": "wb-timeline",
+      "properties": {
+        "items": {
+          "type": "string",
+          "description": "Comma-separated list of timeline items",
+          "default": ""
+        }
+      },
+      "matrix": [
+        {
+          "items": "Project Kickoff,Design Phase,Development,Testing,Launch"
+        },
+        {
+          "items": "Q1 Planning,Q2 Execution,Q3 Review,Q4 Delivery"
+        },
+        {
+          "items": "Research,Prototype,Build,Ship"
+        }
+      ],
+      "_metadata": {
+        "category": "layout",
+        "icon": "📅",
+        "since": "1.0.0",
+        "status": "stable"
+      }
+    },
+    {
       "file": "toast.schema.json",
       "name": "toast",
       "title": "Toast",
-      "description": "Toast notification system for temporary messages",
+      "description": "Toast notification system for temporary messages. Container (.wb-toast-container, feedback.js's createToast()) is fixed-positioned below the site header rather than the viewport top -- top: calc(var(--site-header-height) + 1rem), so toasts never cover the nav/logo. --site-header-height (site.css) defaults to 0 and is only set to 64px when the page actually has a .site__header, so standalone pages without one are unaffected.",
       "tag": "wb-toast",
-      "baseClass": "wb-toast-trigger",
+      "baseClass": "wb-toast",
       "properties": {
         "message": {
           "type": "string",
           "description": "Toast notification message",
-          "required": true
+          "required": true,
+          "default": ""
         },
         "title": {
           "type": "string",
-          "description": "Toast title (optional)"
+          "description": "Toast title (optional)",
+          "default": ""
         },
         "variant": {
           "type": "string",
@@ -5340,7 +6136,8 @@
         },
         "icon": {
           "type": "string",
-          "description": "Icon (emoji or icon name)"
+          "description": "Icon (emoji or icon name)",
+          "default": ""
         },
         "duration": {
           "type": "number",
@@ -5369,11 +6166,13 @@
         },
         "action": {
           "type": "string",
-          "description": "Action button text"
+          "description": "Action button text",
+          "default": ""
         },
         "actionHref": {
           "type": "string",
-          "description": "Action button link URL"
+          "description": "Action button link URL",
+          "default": ""
         }
       },
       "matrix": [
@@ -5430,7 +6229,8 @@
       "properties": {
         "target": {
           "type": "string",
-          "description": "Selector of target element"
+          "description": "Selector of target element",
+          "default": ""
         }
       },
       "matrix": [
@@ -5451,7 +6251,8 @@
         "content": {
           "type": "string",
           "description": "Tooltip text content",
-          "required": true
+          "required": true,
+          "default": ""
         },
         "position": {
           "type": "string",
@@ -5563,6 +6364,16 @@
       }
     },
     {
+      "file": "tooltip-demo.schema.json",
+      "title": "Tooltip Button Showcase",
+      "description": "Demo page for <wb-button> with x-tooltip in all positions.",
+      "tag": "wb-undefined",
+      "baseClass": "wb-undefined",
+      "properties": {},
+      "matrix": [],
+      "_metadata": {}
+    },
+    {
       "file": "cardvideo.schema.json",
       "name": "cardvideo",
       "title": "Video Card",
@@ -5573,19 +6384,23 @@
         "src": {
           "type": "string",
           "description": "Video source URL",
-          "required": true
+          "required": true,
+          "default": "https://www.w3schools.com/html/mov_bbb.mp4"
         },
         "poster": {
           "type": "string",
-          "description": "Poster image URL"
+          "description": "Poster image URL",
+          "default": ""
         },
         "title": {
           "type": "string",
-          "description": "Video title"
+          "description": "Video title",
+          "default": ""
         },
         "description": {
           "type": "string",
-          "description": "Video description"
+          "description": "Video description",
+          "default": ""
         },
         "autoplay": {
           "type": "boolean",
@@ -5634,31 +6449,31 @@
       },
       "matrix": [
         {
-          "src": "video.mp4"
+          "src": "https://www.w3schools.com/html/mov_bbb.mp4"
         },
         {
-          "src": "video.mp4",
+          "src": "https://www.w3schools.com/html/mov_bbb.mp4",
           "title": "Video Title"
         },
         {
-          "src": "video.mp4",
-          "poster": "poster.jpg"
+          "src": "https://www.w3schools.com/html/mov_bbb.mp4",
+          "poster": "https://picsum.photos/seed/videoposter/800/450"
         },
         {
-          "src": "video.mp4",
+          "src": "https://www.w3schools.com/html/mov_bbb.mp4",
           "autoplay": true,
           "muted": true
         },
         {
-          "src": "video.mp4",
+          "src": "https://www.w3schools.com/html/mov_bbb.mp4",
           "loop": true
         },
         {
-          "src": "video.mp4",
+          "src": "https://www.w3schools.com/html/mov_bbb.mp4",
           "controls": false
         },
         {
-          "src": "video.mp4",
+          "src": "https://www.w3schools.com/html/mov_bbb.mp4",
           "aspect": "4/3"
         }
       ],
@@ -5679,42 +6494,57 @@
       "properties": {
         "name": {
           "type": "string",
-          "description": "Unique identifier for the behavior"
+          "description": "Unique identifier for the behavior",
+          "default": ""
+        },
+        "src": {
+          "type": "string",
+          "default": "",
+          "description": "Path to the JavaScript file implementing this behavior (e.g. 'src/wb-viewmodels/ripple.js')"
         },
         "type": {
-          "$ref": "#/definitions/behaviorType"
+          "$ref": "#/definitions/behaviorType",
+          "type": "string",
+          "default": ""
         },
         "category": {
-          "$ref": "#/definitions/behaviorCategory"
+          "$ref": "#/definitions/behaviorCategory",
+          "type": "string",
+          "default": ""
         },
         "description": {
           "type": "string",
-          "description": "Human-readable description of what the behavior does"
+          "description": "Human-readable description of what the behavior does",
+          "default": ""
         },
         "selector": {
           "type": "string",
-          "description": "CSS selector that identifies elements this behavior applies to"
+          "description": "CSS selector that identifies elements this behavior applies to",
+          "default": ""
         },
         "attributes": {
           "type": "object",
           "description": "Configuration attributes for the behavior",
           "additionalProperties": {
             "type": "string"
-          }
+          },
+          "default": {}
         },
         "events": {
           "type": "array",
           "description": "Events this behavior responds to",
           "items": {
             "type": "string"
-          }
+          },
+          "default": []
         },
         "dependencies": {
           "type": "array",
           "description": "Other behaviors or components this behavior depends on",
           "items": {
             "type": "string"
-          }
+          },
+          "default": []
         },
         "accessibility": {
           "type": "object",
@@ -5732,7 +6562,8 @@
             "keyboardSupport": {
               "type": "boolean"
             }
-          }
+          },
+          "default": {}
         },
         "testCases": {
           "type": "array",
@@ -5753,6 +6584,199 @@
                 "type": "string"
               }
             }
+          },
+          "default": []
+        }
+      },
+      "matrix": [],
+      "_metadata": {}
+    },
+    {
+      "file": "schema.schema.json",
+      "title": "WB Component Schema Meta-Schema",
+      "description": "Validates WB schema files across 3 tiers. Component schemas (default) require all fields. Base schemas (inherited from, never instantiated) relax $view/$methods/behavior. Definition schemas (pure reference docs) require only title + description. Enforces v3.0 rules: every property must have type + default, enums must be arrays, $view items need name + tag.",
+      "tag": "wb-undefined",
+      "baseClass": "wb-undefined",
+      "properties": {
+        "src": {
+          "type": "string",
+          "description": "Path to the JavaScript file implementing this behavior (e.g. 'src/wb-viewmodels/ripple.js')"
+        },
+        "category": {
+          "type": "string",
+          "description": "Behavior category (e.g. 'inputs', 'buttons', etc.)"
+        },
+        "name": {
+          "type": "string",
+          "description": "Unique identifier for the behavior"
+        },
+        "schemaType": {
+          "type": "string",
+          "enum": [
+            "component",
+            "base",
+            "definition",
+            "page"
+          ],
+          "default": "component",
+          "description": "Schema tier. 'component' (default) = full rules. 'base' = abstract/inherited, $view/$methods optional. 'definition' = reference doc, only title+description required."
+        },
+        "$schema": {
+          "type": "string",
+          "description": "JSON Schema draft reference"
+        },
+        "$id": {
+          "type": "string",
+          "description": "Schema identifier (filename)",
+          "pattern": "^[a-z][a-z0-9-]*\\.schema\\.json$"
+        },
+        "title": {
+          "type": "string",
+          "minLength": 1,
+          "description": "Human-readable component name"
+        },
+        "description": {
+          "type": "string",
+          "minLength": 1,
+          "description": "What this component does"
+        },
+        "behavior": {
+          "type": "string",
+          "pattern": "^[a-z][a-z0-9-]*$",
+          "description": "Behavior name in kebab-case"
+        },
+        "schemaFor": {
+          "type": "string",
+          "pattern": "^[a-z][a-z0-9-]*$",
+          "description": "Legacy behavior identifier (prefer 'behavior')"
+        },
+        "baseClass": {
+          "type": "string",
+          "pattern": "^wb-[a-z][a-z0-9-]*$",
+          "description": "Base CSS class (BEM block). Must start with wb-"
+        },
+        "semanticElement": {
+          "type": "object",
+          "properties": {
+            "tagName": {
+              "type": "string",
+              "pattern": "^[a-z][a-z0-9-]*$",
+              "description": "Default HTML element (lowercase)"
+            },
+            "implicitRole": {
+              "type": "string",
+              "description": "WAI-ARIA implicit role"
+            }
+          },
+          "required": [
+            "tagName"
+          ]
+        },
+        "compliance": {
+          "type": "object",
+          "description": "Legacy compliance section (retained for backward compat)",
+          "properties": {
+            "baseClass": {
+              "type": "string"
+            },
+            "supportLevel": {
+              "type": "string",
+              "enum": [
+                "stable",
+                "experimental",
+                "deprecated"
+              ]
+            },
+            "accessibility": {
+              "type": "string",
+              "enum": [
+                "high",
+                "medium",
+                "low",
+                "none"
+              ]
+            }
+          }
+        },
+        "properties": {
+          "type": "object",
+          "description": "Model — data inputs (attributes). Every property MUST have type + default.",
+          "additionalProperties": {
+            "$ref": "#/$defs/componentProperty"
+          }
+        },
+        "$view": {
+          "type": "array",
+          "description": "View — DOM structure. Array of view items (can be empty).",
+          "items": {
+            "$ref": "#/$defs/viewItem"
+          }
+        },
+        "$methods": {
+          "type": "object",
+          "description": "ViewModel — callable functions bound to the element.",
+          "additionalProperties": {
+            "$ref": "#/$defs/methodItem"
+          }
+        },
+        "$cssAPI": {
+          "type": "object",
+          "description": "Public CSS custom properties for theming.",
+          "additionalProperties": {
+            "$ref": "#/$defs/cssApiItem"
+          }
+        },
+        "accessibility": {
+          "type": "object",
+          "description": "Accessibility configuration",
+          "properties": {
+            "role": {
+              "type": "string"
+            },
+            "ariaValueMin": {
+              "type": "string"
+            },
+            "ariaValueMax": {
+              "type": "string"
+            },
+            "ariaValueNow": {
+              "type": "string"
+            },
+            "ariaLabel": {
+              "type": "string"
+            }
+          }
+        },
+        "pageRules": {
+          "$ref": "#/$defs/pageRules"
+        },
+        "$layout": {
+          "$ref": "#/$defs/pageLayout"
+        },
+        "test": {
+          "$ref": "#/$defs/testConfig"
+        },
+        "_metadata": {
+          "type": "object",
+          "description": "Categorization, icons, versioning",
+          "properties": {
+            "category": {
+              "type": "string"
+            },
+            "icon": {
+              "type": "string"
+            },
+            "since": {
+              "type": "string"
+            },
+            "status": {
+              "type": "string",
+              "enum": [
+                "stable",
+                "experimental",
+                "deprecated"
+              ]
+            }
           }
         }
       },
@@ -5761,97 +6785,135 @@
     },
     {
       "file": "wb-control.schema.json",
-      "name": "wb-control",
+      "name": "control",
       "title": "WB Control",
       "description": "Base control interaction behavior.",
-      "tag": "wb-wb-control",
-      "baseClass": "wb-wb-control",
+      "tag": "wb-control",
+      "baseClass": "wb-control",
       "properties": {},
       "matrix": [],
       "_metadata": {}
     },
     {
-      "file": "builder-pages.schema.json",
-      "name": "builder-pages",
-      "title": "WB Page Builder - Pages Schema",
-      "description": "Schema for the WB Page Builder pages system including navigation, breadcrumbs, and component management",
-      "tag": "wb-builder-pages",
-      "baseClass": "wb-builder-pages",
+      "file": "x-behavior.schema.json",
+      "title": "x-behavior Attribute",
+      "description": "Schema for x-behavior attribute. Used for generic behavior attachment.",
+      "tag": "wb-undefined",
+      "baseClass": "wb-undefined",
       "properties": {
-        "pages": {
-          "type": "array",
-          "description": "All pages in the site",
-          "minItems": 1,
-          "items": {
-            "$ref": "#/definitions/Page"
-          }
-        },
-        "globalSections": {
-          "type": "object",
-          "description": "Shared header and footer components",
-          "properties": {
-            "header": {
-              "type": "array",
-              "items": {
-                "$ref": "#/definitions/Component"
-              }
-            },
-            "footer": {
-              "type": "array",
-              "items": {
-                "$ref": "#/definitions/Component"
-              }
-            }
-          }
-        },
-        "currentPageId": {
+        "x-behavior": {
           "type": "string",
-          "description": "Currently active page ID"
-        },
-        "settings": {
-          "type": "object",
-          "$ref": "#/definitions/SiteSettings"
+          "description": "Name of the behavior to attach."
         }
       },
       "matrix": [],
-      "_metadata": {
-        "category": "builder",
-        "icon": "📄",
-        "since": "2.0.0",
-        "status": "stable",
-        "author": "wb-starter",
-        "lastUpdated": "2026-01-16"
-      }
+      "_metadata": {}
     },
     {
-      "file": "timeline.schema.json",
-      "name": "timeline",
-      "title": "WB Timeline Schema",
-      "description": "Schema for validating WB Timeline component",
-      "tag": "wb-timeline",
-      "baseClass": "wb-timeline",
+      "file": "x-collapse.schema.json",
+      "title": "x-collapse Attribute",
+      "description": "Schema for x-collapse attribute. Enables collapsible UI sections.",
+      "tag": "wb-undefined",
+      "baseClass": "wb-undefined",
       "properties": {
-        "$schema": {
-          "type": "string",
-          "description": "Reference to this schema file"
-        },
-        "items": {
-          "type": "string",
-          "description": "Comma-separated list of timeline items",
-          "minLength": 1
+        "x-collapse": {
+          "type": "boolean",
+          "description": "Whether the element is collapsible."
         }
       },
-      "matrix": [
-        {
-          "items": "Project Kickoff,Design Phase,Development,Testing,Launch"
-        },
-        {
-          "items": "Q1 Planning,Q2 Execution,Q3 Review,Q4 Delivery"
-        },
-        {
-          "items": "Research,Prototype,Build,Ship"
+      "matrix": [],
+      "_metadata": {}
+    },
+    {
+      "file": "x-copy.schema.json",
+      "title": "x-copy Attribute",
+      "description": "Schema for x-copy attribute. Enables copy-to-clipboard functionality.",
+      "tag": "wb-undefined",
+      "baseClass": "wb-undefined",
+      "properties": {
+        "x-copy": {
+          "type": "boolean",
+          "description": "Whether the element supports copy-to-clipboard."
         }
-      ],
+      },
+      "matrix": [],
+      "_metadata": {}
+    },
+    {
+      "file": "x-draggable.schema.json",
+      "title": "x-draggable Attribute",
+      "description": "Schema for x-draggable attribute. Enables drag-and-drop functionality.",
+      "tag": "wb-undefined",
+      "baseClass": "wb-undefined",
+      "properties": {
+        "x-draggable": {
+          "type": "boolean",
+          "description": "Whether the element is draggable."
+        }
+      },
+      "matrix": [],
+      "_metadata": {}
+    },
+    {
+      "file": "x-effects.schema.json",
+      "title": "x-effects Attributes",
+      "description": "Schema for x-effects attributes (x-animate, x-fadein, x-fadeout, x-slidein, x-confetti, x-typewriter).",
+      "tag": "wb-undefined",
+      "baseClass": "wb-undefined",
+      "properties": {
+        "x-animate": {
+          "type": "boolean"
+        },
+        "x-fadein": {
+          "type": "boolean"
+        },
+        "x-fadeout": {
+          "type": "boolean"
+        },
+        "x-slidein": {
+          "type": "boolean"
+        },
+        "x-confetti": {
+          "type": "boolean"
+        },
+        "x-typewriter": {
+          "type": "boolean"
+        }
+      },
+      "matrix": [],
+      "_metadata": {}
+    },
+    {
+      "file": "x-enhancements.schema.json",
+      "title": "x-enhancements Attributes",
+      "description": "Schema for x-enhancements attributes (x-form, x-password, x-tags, x-file).",
+      "tag": "wb-undefined",
+      "baseClass": "wb-undefined",
+      "properties": {
+        "x-form": {
+          "type": "boolean"
+        },
+        "x-password": {
+          "type": "boolean"
+        },
+        "x-tags": {
+          "type": "boolean"
+        },
+        "x-file": {
+          "type": "boolean"
+        }
+      },
+      "matrix": [],
+      "_metadata": {}
+    },
+    {
+      "file": "help-demo.schema.json",
+      "title": "x-help Demo",
+      "description": "Demo page for x-help behavior.",
+      "tag": "wb-undefined",
+      "baseClass": "wb-undefined",
+      "properties": {},
+      "matrix": [],
       "_metadata": {}
     }
   ]

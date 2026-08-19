@@ -371,6 +371,18 @@
       return stripped.replace(/[^/]*$/, '');
     }
     let allXAttributes = [];
+    let extensionMap = {};
+    const schemaByName = new Map();
+
+    // #666: one row per VARIANT, not one per behavior -- John: "add one entry
+    // for each variant too... show the behavior name and all possible variants
+    // (one per row so user can see them all)". A behavior with no declared
+    // variant enum still gets exactly one row, with an empty variant cell.
+    function variantsFor(attr) {
+      const sc = schemaByName.get(extensionMap[attr]);
+      const en = sc && sc.properties && sc.properties.variant && sc.properties.variant.enum;
+      return Array.isArray(en) && en.length ? en : [''];
+    }
     import(siteRoot() + 'src/core/tag-map.js')
       .then((mod) => {
         // #665: extensionMap, NOT elementMap. elementMap maps wb-* COMPONENT
@@ -385,8 +397,19 @@
         // they are used directly rather than rebuilt from the values -- several
         // attributes share one behavior function, and mapping through the
         // values would silently collapse them.
+        extensionMap = mod.extensionMap;
         allXAttributes = Object.keys(mod.extensionMap).sort();
-        if (input.value.trim() === '') renderBrowseAll();
+        // Variants come from the schema index (one fetch, not 105). Failure is
+        // non-fatal: the list still renders, just without variant rows.
+        return fetch(siteRoot() + 'data/schema-index.json')
+          .then((r) => (r.ok ? r.json() : null))
+          .then((idx) => {
+            if (idx && Array.isArray(idx.schemas)) {
+              idx.schemas.forEach((sc) => schemaByName.set(sc.name, sc));
+            }
+          })
+          .catch(() => {})
+          .then(() => { if (input.value.trim() === '') renderBrowseAll(); });
       })
       .catch(() => {}); // browse-all list just stays empty; typed search still works
 
@@ -439,14 +462,26 @@
       resultsEl.hidden = false;
       const frag = document.createDocumentFragment();
       allXAttributes.forEach((token) => {
-        const li = document.createElement('li');
-        const btn = document.createElement('button');
-        btn.type = 'button';
-        btn.className = 'behaviors-search-results__row';
-        btn.dataset.browseToken = token;
-        btn.innerHTML = `<span class="behaviors-search-results__token">${token}</span>`;
-        li.appendChild(btn);
-        frag.appendChild(li);
+        variantsFor(token).forEach((variant) => {
+          const li = document.createElement('li');
+          const btn = document.createElement('button');
+          btn.type = 'button';
+          btn.className = 'behaviors-search-results__row';
+          btn.dataset.browseToken = token;
+          if (variant) btn.dataset.variant = variant;
+          // Variant FIRST -- John: "put in a column variant so we can see it
+          // first". Empty cell (not omitted) so the behavior names stay in one
+          // aligned column whether or not a row has a variant.
+          const v = document.createElement('span');
+          v.className = 'behaviors-search-results__variant';
+          v.textContent = variant || '';
+          const t = document.createElement('span');
+          t.className = 'behaviors-search-results__token';
+          t.textContent = token;
+          btn.append(v, t);
+          li.appendChild(btn);
+          frag.appendChild(li);
+        });
       });
       resultsEl.appendChild(frag);
     }
@@ -554,10 +589,33 @@
       return null;
     }
 
-    async function showLive(token) {
-      const src = sourceFor(token);
+    // Apply the row's variant to the example, so clicking "error / x-alert"
+    // shows the ERROR alert rather than whatever variant the page's demo
+    // happened to hardcode. Rewrites an existing variant=, or adds one to the
+    // first tag when absent.
+    function withVariant(src, attr, variant) {
+      if (!variant) return src;
+
+      // Rewrite whichever attribute the example actually used. Several schemas
+      // declare ALIASES for variant -- alert's is `type` -- and the behavior
+      // reads the alias, so blindly adding `variant=` left the demo's own
+      // `type="warning"` winning and the wrong variant rendering. Aliases come
+      // from the schema rather than a hardcoded list, so this stays correct as
+      // schemas change.
+      const sc = schemaByName.get(extensionMap[attr]);
+      const aliases = (sc && sc.properties && sc.properties.variant && sc.properties.variant.aliases) || [];
+      for (const name of ['variant', ...aliases]) {
+        const re = new RegExp('\\s' + name + '\\s*=\\s*"[^"]*"', 'i');
+        if (re.test(src)) return src.replace(re, ` ${name}="${variant}"`);
+      }
+      return src.replace(/^(\s*<[a-zA-Z][\w-]*)/, `$1 variant="${variant}"`);
+    }
+
+    async function showLive(token, variant) {
+      const raw = sourceFor(token);
+      const src = raw ? withVariant(raw, token, variant) : raw;
       liveEl.hidden = false;
-      liveToken.textContent = token;
+      liveToken.textContent = variant ? `${variant} · ${token}` : token;
 
       if (!src) {
         // An honest empty state: the canonical list comes from tag-map.js and
@@ -626,7 +684,7 @@
         // re-run applyFilter and collapse the browse list to just this one
         // behavior, so picking the next one meant clearing the box first --
         // the list has to stay browsable while the panel changes beside it.
-        showLive(btn.dataset.browseToken);
+        showLive(btn.dataset.browseToken, btn.dataset.variant || '');
         return;
       }
       // #664: render it in the panel beside the list. Deliberately NO
@@ -634,7 +692,7 @@
       // show the code render in element next to dropdown". Jumping the page
       // away from the search box is the behaviour this panel replaces.
       const rowToken = btn.querySelector('.behaviors-search-results__token');
-      if (rowToken) showLive(rowToken.textContent.trim().split(/\s+/)[0]);
+      if (rowToken) showLive(rowToken.textContent.trim().split(/\s+/)[0], btn.dataset.variant || '');
     });
 
     input.addEventListener('input', () => applyFilter(input.value));
