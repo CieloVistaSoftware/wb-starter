@@ -227,7 +227,11 @@
       "alternates": []
     },
     "x-table": {
-      "source": "<wb-table\n  headers=\"Component,Behavior,Variants,Docs\"\n  rows='[[\"wb-alert\",\"alert\",\"4\",\"yes\"],[\"wb-badge\",\"badge\",\"9\",\"yes\"],[\"wb-button\",\"button\",\"8\",\"yes\"],[\"wb-card\",\"card\",\"4\",\"yes\"],[\"wb-table\",\"table\",\"0\",\"yes\"]]'>\n</wb-table>",
+      "source": "<wb-table\n  headers=\"Component,Behavior,Variants\"\n  rows=\"[[&quot;wb-alert&quot;,&quot;alert&quot;,&quot;4&quot;],[&quot;wb-badge&quot;,&quot;badge&quot;,&quot;9&quot;],[&quot;wb-button&quot;,&quot;button&quot;,&quot;8&quot;],[&quot;wb-card&quot;,&quot;card&quot;,&quot;4&quot;],[&quot;wb-table&quot;,&quot;table&quot;,&quot;0&quot;]]\">\n</wb-table>",
+      "alternates": []
+    },
+    "x-details": {
+      "source": "<details summary=\"Trail conditions\" animated>\n  <img src=\"https://picsum.photos/seed/details/480/200\" alt=\"Trail through autumn woodland\" width=\"480\" height=\"200\">\n  <p>Open to show the summary text is authored via the <code>summary</code>\n     attribute \u2014 it reads \"Details\" only when none is set.</p>\n</details>",
       "alternates": []
     }
   }

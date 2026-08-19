@@ -28,6 +28,24 @@
         <span id="behaviors-live-note" class="behaviors-live__note"></span>
       </header>
       <div id="behaviors-live-stage" class="behaviors-live__stage"></div>
+      <!-- #666 — John: "add another element which shows the click event being
+           handled" / "Show how to set up the event handler and then show the
+           events in action right under this element". Sits directly beneath the
+           live example: first HOW to listen, then what actually fires. A
+           behavior's observable output is often an event rather than a visual
+           change (x-copy, x-confirm, x-toast). -->
+      <div id="behaviors-live-events" class="behaviors-live__events">
+        <div class="behaviors-live__events-head">
+          <span>Event handler</span>
+          <span id="behaviors-live-events-hint" class="behaviors-live__events-hint">interact with the example above</span>
+        </div>
+        <div id="behaviors-live-events-snippet" class="behaviors-live__events-code"></div>
+        <ol id="behaviors-live-events-log" class="behaviors-live__events-log"></ol>
+        <p id="behaviors-live-events-empty" class="behaviors-live__events-empty">
+          No events yet — click the example above and they appear here.
+        </p>
+      </div>
+
       <!-- Built at click time so it can carry x-behavior="pre"/"code", the
            project's own syntax-highlighting pair (theme-driven colours from
            code.css -- no literals, per the zero-hardcoded-colours rule). -->
@@ -36,7 +54,12 @@
            html". docs/behaviors/{name}.md rendered inline, so every option a
            behavior supports is visible next to the running example rather than
            a page away. -->
-      <details id="behaviors-live-doc" class="behaviors-live__doc" open hidden>
+      <!-- x-ignore: this <details> is page chrome, not a demo. Without it WB
+           auto-injects the `details` behavior (nativeMap maps details ->
+           details), which sets inline border/radius styles and restructures the
+           summary -- that is the "edge" John spotted, and no stylesheet rule
+           could win against an inline style. -->
+      <details id="behaviors-live-doc" class="behaviors-live__doc" x-ignore open hidden>
         <summary class="behaviors-live__doc-summary">Documentation</summary>
         <div id="behaviors-live-doc-body" class="behaviors-live__doc-body"></div>
       </details>
@@ -558,6 +581,30 @@
         console.warn('[behaviors] could not format source', err);
       }
       liveCode.innerHTML = '';
+
+      // Copy button. It copies `pretty` -- the exact source we just formatted --
+      // rather than reading text back out of the rendered <pre>, which carries
+      // x-pre's line-number gutter and would paste "1 <button" instead of
+      // "<button".
+      const copy = document.createElement('button');
+      copy.type = 'button';
+      copy.className = 'behaviors-live__copy';
+      copy.textContent = 'Copy';
+      copy.title = 'Copy this example to the clipboard';
+      copy.addEventListener('click', async () => {
+        try {
+          await navigator.clipboard.writeText(pretty);
+          copy.textContent = 'Copied';
+        } catch (err) {
+          // Clipboard access can be denied (permissions, insecure origin).
+          // Say so rather than silently appearing to succeed.
+          copy.textContent = 'Press Ctrl+C';
+          console.warn('[behaviors] clipboard write failed', err);
+        }
+        setTimeout(() => { copy.textContent = 'Copy'; }, 1600);
+      });
+      liveCode.appendChild(copy);
+
       const pre = document.createElement('pre');
       pre.setAttribute('x-behavior', 'pre');
       const code = document.createElement('code');
@@ -632,6 +679,14 @@
       const p = m[1].split(',').map((n) => parseFloat(n));
       return { r: p[0], g: p[1], b: p[2], a: p.length > 3 ? p[3] : 1 };
     }
+    /** The schema's own description of this option -- what to expect to see. */
+    function optionDescription(attr, prop) {
+      if (!prop) return '';
+      const sc = schemaByName.get(extensionMap[attr]);
+      const def = sc && sc.properties && sc.properties[prop];
+      return (def && def.description) ? def.description : '';
+    }
+
     function summarise(el) {
       if (!el) return '';
       const cs = getComputedStyle(el);
@@ -646,6 +701,94 @@
       }
       if (cs.boxShadow && cs.boxShadow !== 'none') return 'shows a raised shadow';
       return 'no background or border — plain';
+    }
+
+    const eventsLog = document.getElementById('behaviors-live-events-log');
+    const eventsHint = document.getElementById('behaviors-live-events-hint');
+
+    // Events a behavior is likely to dispatch, plus the raw interaction that
+    // triggered it. Captured on the STAGE so a listener is never attached to
+    // the example itself -- attaching to the element could change what the
+    // behavior sees (stopPropagation, once-handlers) and the panel must observe,
+    // not participate.
+    const WATCHED = ['click', 'change', 'input', 'submit', 'toggle'];
+    let eventCount = 0;
+
+    function logEvent(e) {
+      const target = e.target instanceof Element ? e.target : null;
+      const name = target ? target.tagName.toLowerCase() : '?';
+      const cls = target && target.className && typeof target.className === 'string'
+        ? '.' + target.className.trim().split(/\s+/)[0] : '';
+      const li = document.createElement('li');
+      li.className = 'behaviors-live__events-item';
+      li.innerHTML =
+        `<code class="behaviors-live__events-type">${e.type}</code>` +
+        `<span class="behaviors-live__events-target">${name}${cls}</span>`;
+      eventsLog.prepend(li);
+      eventsEmpty.hidden = true;
+      eventCount++;
+      eventsHint.textContent = `${eventCount} event${eventCount === 1 ? '' : 's'}`;
+      // Keep the last 12: a drag or a repeated toggle would otherwise grow the
+      // panel without bound.
+      while (eventsLog.children.length > 12) eventsLog.lastElementChild.remove();
+    }
+
+    // Attached ONCE, in the capture phase, on the stage container -- never on
+    // the example itself. A listener on the element could change what the
+    // behavior observes (a stopPropagation or a once-handler), and this panel
+    // must watch without participating. Capture also means it still sees events
+    // a behavior stops from bubbling.
+    WATCHED.forEach((type) => liveStage.addEventListener(type, logEvent, true));
+
+    let eventsSnippet = document.getElementById('behaviors-live-events-snippet');
+
+    /** The wiring a reader would copy to handle this example's events. */
+    function handlerSnippet(hostTag, token) {
+      const sel = hostTag ? hostTag : '[' + token + ']';
+      return [
+        `const el = document.querySelector('${sel}');`,
+        ``,
+        `el.addEventListener('click', (e) => {`,
+        `  console.log('clicked', e.target);`,
+        `});`,
+      ].join('\n');
+    }
+
+    const eventsEmpty = document.getElementById('behaviors-live-events-empty');
+
+    async function resetEvents(hostTag, token) {
+      eventsLog.innerHTML = '';
+      eventCount = 0;
+      eventsHint.textContent = 'interact with the example above';
+      eventsEmpty.hidden = false;
+
+      // Highlighted like the source panel, via the same x-behavior pre/code
+      // pair -- a plain <pre> rendered the handler as unstyled text, and it
+      // overflowed its box rather than wrapping. A FRESH host each time:
+      // WB.inject() will not re-apply a behavior to an element that already
+      // carries it (the same trap the doc panel hit).
+      const fresh = document.createElement('div');
+      fresh.id = 'behaviors-live-events-snippet';
+      fresh.className = 'behaviors-live__events-code';
+      eventsSnippet.replaceWith(fresh);
+      eventsSnippet = fresh;
+
+      const pre = document.createElement('pre');
+      pre.setAttribute('x-behavior', 'pre');
+      const code = document.createElement('code');
+      code.setAttribute('x-behavior', 'code');
+      code.dataset.language = 'javascript';
+      code.textContent = handlerSnippet(hostTag, token);
+      pre.appendChild(code);
+      eventsSnippet.appendChild(pre);
+
+      try {
+        const mod = await import(siteRoot() + 'src/core/wb-lazy.js');
+        const WB = mod.default || mod.WB || window.WB;
+        if (WB && WB.scan) await WB.scan(eventsSnippet, { eager: true });
+      } catch (err) {
+        console.warn('[behaviors] could not highlight the handler snippet', err);
+      }
     }
 
     async function showLive(token, variant, label, prop, isBool) {
@@ -670,20 +813,29 @@
         liveNote.textContent = 'generated example — no demo on this page';
         liveCode.innerHTML = '';
         liveStage.innerHTML = generated;
+        resetEvents(liveStage.firstElementChild && liveStage.firstElementChild.tagName.toLowerCase(), token);
         await renderSource(generated);
-        const genSummary = summarise(liveStage.firstElementChild);
+        const genDescribed = optionDescription(token, prop);
+        const genSummary = genDescribed || summarise(liveStage.firstElementChild);
         liveNote.textContent = genSummary
           ? `generated — ${genSummary}`
           : 'generated example — no demo on this page';
         return;
       }
 
-      liveNote.textContent = 'running live';
+      liveNote.textContent = optionDescription(token, prop) || 'running live';
       liveStage.innerHTML = src;
+      resetEvents(liveStage.firstElementChild && liveStage.firstElementChild.tagName.toLowerCase(), token);
       await renderSource(src);
       // After the upgrade, so the summary describes the UPGRADED element rather
       // than the bare markup it was built from.
-      const summary = summarise(liveStage.firstElementChild);
+      // Prefer the AUTHORED description of the option over a derived visual
+      // guess -- John: "add description on what to expect to see". The schema
+      // already says exactly that ("Show 15-band equalizer", "Start muted"),
+      // and it is accurate for options with no visible surface change, where
+      // summarise() can only ever report the host's background.
+      const described = optionDescription(token, prop);
+      const summary = described || summarise(liveStage.firstElementChild);
       if (summary) liveNote.textContent = summary;
     }
 

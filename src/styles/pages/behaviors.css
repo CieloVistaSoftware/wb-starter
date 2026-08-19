@@ -599,3 +599,136 @@ footer a:hover {
 /* The title/subtitle no longer need the hero's full vertical rhythm when the
    interactive part of the page starts immediately below them. */
 #behaviors-hero h1 { margin-top: 0; }
+
+
+/* #666 — John: "get rid of this edge". The doc panel is a <details>, and a
+   generic details rule gives it a full border plus a 6px radius, so it rendered
+   as a nested rounded box inside the already-bordered live panel. Flush it:
+   only the divider between sections should be visible. */
+/* Id selector, not the class: a more specific rule elsewhere styles <details>
+   with a full border and a 6px radius, and the class rule lost to it (measured:
+   rule present with border-radius:0, computed still 6px). */
+#behaviors-live-doc.behaviors-live__doc {
+  border: none;
+  border-top: 1px solid var(--border-color, #374151);
+  border-radius: 0;
+}
+
+/* #666: copy the example to the clipboard. Positioned over the code panel's
+   top-right, clear of x-pre's line-number gutter on the left. */
+.behaviors-live__code { position: relative; }
+
+.behaviors-live__copy {
+  /* x-pre styles buttons inside its panel (it ships its own copy control), so
+     the box has to be pinned explicitly or this inherits that sizing and
+     renders as a large floating block over the code. */
+  all: unset;
+  box-sizing: border-box;
+  position: absolute;
+  top: 0.4rem;
+  right: 2.75rem;   /* clear of the HTML language badge x-pre renders */
+  z-index: 1;
+  padding: 0.2rem 0.55rem;
+  font: inherit;
+  font-size: 0.7rem;
+  line-height: 1.4;
+  color: var(--text-secondary, #9ca3af);
+  background: var(--bg-tertiary, #111827);
+  border: 1px solid var(--border-color, #374151);
+  border-radius: var(--radius-sm, 4px);
+  cursor: pointer;
+  /* Explicit box: inside x-pre's panel the button was being stretched to 55px
+     tall by the surrounding layout even after `all: unset`. */
+  height: 1.5rem;
+  display: inline-flex;
+  align-items: center;
+}
+
+.behaviors-live__copy:hover,
+.behaviors-live__copy:focus-visible {
+  color: var(--text-primary, #e5e7eb);
+  border-color: var(--primary-color, #6366f1);
+}
+
+
+/* #666: what the example DISPATCHES. A behavior's observable output is often an
+   event rather than a visual change, so this sits between the running example
+   and its source. */
+.behaviors-live__events {
+  border-top: 1px solid var(--border-color, #374151);
+  background: var(--bg-secondary, #1f2937);
+  text-align: left;
+}
+
+.behaviors-live__events-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 0.75rem;
+  padding: 0.45rem 1rem;
+  font-size: 0.75rem;
+  color: var(--text-secondary, #9ca3af);
+}
+
+.behaviors-live__events-hint { font-size: 0.7rem; opacity: 0.8; }
+
+.behaviors-live__events-log {
+  list-style: none;
+  margin: 0;
+  padding: 0 1rem 0.6rem;
+  max-height: 7rem;
+  overflow-y: auto;
+}
+
+.behaviors-live__events-log:empty { padding-bottom: 0; }
+
+.behaviors-live__events-item {
+  display: flex;
+  gap: 0.6rem;
+  align-items: baseline;
+  padding: 0.15rem 0;
+  font-size: 0.75rem;
+}
+
+.behaviors-live__events-type {
+  font-family: var(--font-mono, monospace);
+  color: var(--warning-color);
+}
+
+.behaviors-live__events-target {
+  font-family: var(--font-mono, monospace);
+  color: var(--text-secondary, #9ca3af);
+  overflow-wrap: anywhere;
+}
+
+
+/* #666: the handler snippet -- how to LISTEN, shown above what actually fires. */
+/* The snippet is rendered by the x-pre/x-code pair, so font, colour and padding
+   come from pre.css/code.css. Only wrapping needs overriding -- it overflowed
+   its box and clipped the first characters of every line. */
+.behaviors-live__events-code { padding: 0 1rem 0.5rem; }
+
+.behaviors-live__events-code pre {
+  margin: 0;
+  border: none;
+  border-radius: 0;
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+  text-align: left;
+}
+
+.behaviors-live__events-code pre,
+.behaviors-live__events-code code { text-align: left; }
+
+/* Always an element showing click results -- an empty <ol> renders nothing, so
+   there was no affordance telling the reader events would appear at all. */
+.behaviors-live__events-empty {
+  margin: 0;
+  padding: 0 1rem 0.7rem;
+  font-size: 0.72rem;
+  color: var(--text-secondary, #9ca3af);
+  opacity: 0.75;
+  text-align: left;
+}
+
+.behaviors-live__events-empty[hidden] { display: none; }
