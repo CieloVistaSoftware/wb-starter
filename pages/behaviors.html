@@ -13,7 +13,24 @@
     <input type="search" id="behaviors-search" placeholder="Search behaviors — e.g. x-tooltip, x-toast — or just x- to see everything" aria-label="Search behaviors">
     <span id="behaviors-search-count" aria-live="polite"></span>
   </div>
-  <ul id="behaviors-search-results" class="behaviors-search-results" hidden></ul>
+  <!-- #664: the results list and a LIVE preview sit side by side, so clicking a
+       behavior runs it immediately instead of scrolling a 13,000px page to find
+       its example. -->
+  <div class="behaviors-browse">
+    <ul id="behaviors-search-results" class="behaviors-search-results" hidden></ul>
+    <!-- A <div>, deliberately not a <section id>: applyFilter() hides every
+         `section[id]` that contains no visible <wb-demo>, which would sweep up
+         this panel (it holds injected markup, never a wb-demo) and leave it
+         display:none no matter what was clicked. -->
+    <div id="behaviors-live" class="behaviors-live" hidden aria-live="polite">
+      <header class="behaviors-live__head">
+        <span id="behaviors-live-token" class="behaviors-live__token"></span>
+        <span id="behaviors-live-note" class="behaviors-live__note"></span>
+      </header>
+      <div id="behaviors-live-stage" class="behaviors-live__stage"></div>
+      <pre class="behaviors-live__code"><code id="behaviors-live-code"></code></pre>
+    </div>
+  </div>
 </div>
 <nav id="nav" class="nav-links"><a href="#buttons">🔘 Buttons</a>
 <a href="#inputs">📝 Inputs</a>
@@ -493,15 +510,83 @@
       }
     }
 
+    // ─── #664: live preview ────────────────────────────────────────────
+    // John: "Make [the list] do the same thing playground does, inject code and
+    // immediately show the run time of each. put the demo window right next to
+    // this dropdown." Clicking a behavior injects its markup into the panel
+    // beside the list and upgrades it in place -- no scrolling a 13,000px page
+    // to find the example.
+    const liveEl = document.getElementById('behaviors-live');
+    const liveToken = document.getElementById('behaviors-live-token');
+    const liveNote = document.getElementById('behaviors-live-note');
+    const liveStage = document.getElementById('behaviors-live-stage');
+    const liveCode = document.getElementById('behaviors-live-code');
+
+    // The markup for most behaviors is already on this page, inside the
+    // <wb-demo> blocks. Prefer a demo whose source ACTUALLY uses the token as
+    // an attribute/tag rather than merely mentioning it in prose, so clicking
+    // "x-card" does not land on a demo that happens to say "x-card" in a
+    // sentence.
+    function sourceFor(token) {
+      const bare = token.replace(/^x-/, '');
+      // Doubled backslashes: inside a template literal a lone `\s` collapses
+      // to a bare "s", silently producing a regex that matches the wrong thing.
+      const asAttr = new RegExp(`[<\\s](?:${token}|wb-${bare})(?=[\\s>=/])`, 'i');
+      for (const demo of demos) {
+        const src = demo._rawSource || demo.innerHTML || '';
+        if (asAttr.test(src)) return src.trim();
+      }
+      return null;
+    }
+
+    async function showLive(token) {
+      const src = sourceFor(token);
+      liveEl.hidden = false;
+      liveToken.textContent = token;
+
+      if (!src) {
+        // An honest empty state: the canonical list comes from tag-map.js and
+        // includes behaviors with no example on this page at all. Saying so
+        // beats rendering an empty box that looks broken.
+        liveStage.innerHTML = '';
+        liveCode.textContent = '';
+        liveNote.textContent = 'no example on this page yet';
+        return;
+      }
+
+      liveNote.textContent = 'running live';
+      liveCode.textContent = src;
+      liveStage.innerHTML = src;
+
+      // Upgrade the injected markup. WB is already initialised by the page, so
+      // this only needs to scan the new subtree -- eager, because the stage is
+      // small and lazy registration would leave it blank until scrolled.
+      try {
+        const mod = await import(siteRoot() + 'src/core/wb-lazy.js');
+        const WB = mod.default || mod.WB || window.WB;
+        if (WB && WB.scan) await WB.scan(liveStage, { eager: true });
+      } catch (err) {
+        liveNote.textContent = 'could not run this example';
+        console.warn('[behaviors] live preview failed for ' + token, err);
+      }
+    }
+
     resultsEl.addEventListener('click', (e) => {
       const btn = e.target.closest('.behaviors-search-results__row');
       if (!btn) return;
       if (btn.dataset.browseToken) {
+        // #664: run it right here instead of only filtering. The input is still
+        // filled so the typed-search path and the count stay consistent.
         input.value = btn.dataset.browseToken;
         applyFilter(input.value);
+        showLive(btn.dataset.browseToken);
         return;
       }
       const demo = demos[Number(btn.dataset.demoIndex)];
+      // #664: a matched row shows its own demo live, and still scrolls the real
+      // one into view for readers who want the surrounding context.
+      const rowToken = btn.querySelector('.behaviors-search-results__token');
+      if (rowToken) showLive(rowToken.textContent.trim().split(/\s+/)[0]);
       demo?.scrollIntoView({ block: 'start', behavior: 'auto' });
     });
 

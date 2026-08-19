@@ -403,3 +403,78 @@ footer a:hover {
     font-size: 1.25rem;
   }
 }
+
+
+/* #664 — John: "put the demo window right next to this dropdown".
+   The results list and the live preview share one row, so clicking a behavior
+   shows it running immediately instead of scrolling the page to find its
+   example. Collapses to stacked below the two-column breakpoint. */
+.behaviors-browse {
+  display: grid;
+  grid-template-columns: minmax(0, 40rem) minmax(0, 1fr);
+  gap: var(--space-md, 1rem);
+  align-items: start;
+  margin-top: var(--space-md, 1rem);
+}
+
+@media (max-width: 60rem) {
+  .behaviors-browse { grid-template-columns: minmax(0, 1fr); }
+}
+
+/* The list already sets its own margin-top; inside the grid the grid gap owns
+   the spacing, so drop it to keep the two columns top-aligned. */
+.behaviors-browse .behaviors-search-results {
+  margin-top: 0;
+  max-width: none;
+}
+
+.behaviors-live {
+  border: 1px solid var(--border-color, #374151);
+  border-radius: var(--radius-md, 6px);
+  background: var(--bg-secondary, #1f2937);
+  overflow: hidden;
+}
+
+.behaviors-live[hidden] { display: none; }
+
+.behaviors-live__head {
+  display: flex;
+  align-items: baseline;
+  gap: 0.75rem;
+  padding: 0.6rem 1rem;
+  border-bottom: 1px solid var(--border-color, #374151);
+  background: var(--bg-tertiary, #111827);
+}
+
+.behaviors-live__token {
+  font-family: var(--font-mono, monospace);
+  color: var(--warning-color);
+  font-size: 0.9rem;
+}
+
+.behaviors-live__note {
+  color: var(--text-secondary, #9ca3af);
+  font-size: 0.8rem;
+}
+
+/* The running example. contain: layout keeps a position:fixed demo (a toast, a
+   spotlight) inside this box instead of painting over the page — the same rule
+   .wb-demo__grid needs, and for the same reason (#647). */
+.behaviors-live__stage {
+  padding: 1.25rem;
+  min-height: 6rem;
+  contain: layout;
+}
+
+.behaviors-live__code {
+  margin: 0;
+  padding: 0.75rem 1rem;
+  border-top: 1px solid var(--border-color, #374151);
+  background: var(--bg-primary, #0b0f14);
+  color: var(--text-secondary, #9ca3af);
+  font-family: var(--font-mono, monospace);
+  font-size: 0.8rem;
+  line-height: 1.5;
+  overflow-x: auto;
+  white-space: pre;
+}
