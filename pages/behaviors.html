@@ -36,7 +36,7 @@
            html". docs/behaviors/{name}.md rendered inline, so every option a
            behavior supports is visible next to the running example rather than
            a page away. -->
-      <details id="behaviors-live-doc" class="behaviors-live__doc" hidden>
+      <details id="behaviors-live-doc" class="behaviors-live__doc" open hidden>
         <summary class="behaviors-live__doc-summary">Documentation</summary>
         <div id="behaviors-live-doc-body" class="behaviors-live__doc-body"></div>
       </details>
@@ -344,6 +344,10 @@
       if (!md) return; // no doc for this behavior -- show nothing rather than an empty panel
 
       liveDoc.hidden = false;
+      // Open by default: John asked for an element that SHOWS the doc, and a
+      // collapsed 40px strip below the fold reads as "there is no doc". Still a
+      // <details> so it can be folded away once read.
+      liveDoc.open = true;
       // textContent, not innerHTML: mdhtml.js decodes-then-parses and expects
       // the browser to have HTML-escaped the raw markdown first. Assigning raw
       // markdown via innerHTML double-escapes it (the pattern pages/issues.html
