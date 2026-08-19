@@ -161,10 +161,14 @@
             <option value="switches">25 switches (all different)</option>
             <option value="youtube">20 YouTube URL formats</option>
             <option value="youtube-channel">20 Richard Moore Videos</option>
+            <option value="hero-fullwidth">Full-width hero (500px)</option>
           </select>
           <button id="pg-format" class="pg-btn" type="button"
             style="background:var(--bg-tertiary); color:var(--text-primary);"
             title="Format vertically (one attribute per line)">⭹ Format</button>
+          <button id="pg-standalone" class="pg-btn" type="button"
+            style="background:var(--bg-tertiary); color:var(--text-primary);"
+            title="Open this markup on its own page at full browser width (#659)">&#x29C9; Standalone</button>
           <button id="pg-copy" class="pg-btn" type="button"
             style="background:var(--bg-tertiary); color:var(--text-primary);" title="Copy the HTML (or right-click a preview element)">📋 Copy</button>
         </span>
@@ -722,6 +726,30 @@
       { value: 'removable', label: 'Removable first' },
       { value: 'elevated', label: 'Elevated first' },
     ];
+    // A single full-bleed hero at a fixed 500px. `height` is applied by
+    // card.js as min-height, so it is a floor -- the inline height pins the
+    // box to exactly 500px, and width:100% lets it fill the preview panel
+    // rather than the viewport (the preview is the "page" here).
+    function fullWidthHero() {
+      return [
+        '<wb-cardhero',
+        '  pretitle="Open Source #4"',
+        '  title="WB-Starter, the last wave needed!"',
+        '  subtitle="Light DOM, no shadow boundaries. No class heirarchy. Bullet-proof."',
+        '  height="500px"',
+        '  xalign="center"',
+        '  variant="minimal"',
+        '  cta="Star on GitHub"',
+        '  cta-href="https://github.com/CieloVistaSoftware/wb-starter"',
+        '  cta-secondary="Read the guide"',
+        '  cta-secondary-href="../public/doc-viewer.html?file=docs%2FV3-GUIDE.md"',
+        '  background="linear-gradient(135deg, var(--danger-color), var(--warning-color))"',
+        '  style="display:block; width:100%;"',
+        '  x-fadein>',
+        '</wb-cardhero>',
+      ].join('\n');
+    }
+
     const EXAMPLE_SORT_MODES = {
       form: [],
       cards: ['variant', 'size', 'title', 'tag', 'elevated'],
@@ -1238,6 +1266,7 @@
       else if (which === 'switches') input.value = twentyFiveSwitches();
       else if (which === 'youtube') input.value = twentyYouTubeFormats();
       else if (which === 'youtube-channel') input.value = twentyChannelVideos();
+      else if (which === 'hero-fullwidth') input.value = fullWidthHero();
       setSortModes(EXAMPLE_SORT_MODES[which] || []);
       e.target.value = ''; // reset to placeholder
       endpointPanel.hidden = true;
@@ -1247,6 +1276,37 @@
       // whether the preview pane itself had scrolled or the whole page had.
       preview.scrollTop = 0;
       preview.closest('.pg-panel').scrollIntoView({ behavior: 'smooth', block: 'start' });
+    });
+
+    // #659: the preview pane is ~41% of the browser (563px of 1280 measured),
+    // so a full-bleed component can never be seen at real width here, and
+    // resizing the window resizes the LAYOUT rather than the element. Hand the
+    // current markup to a bare full-bleed page in a new tab instead.
+    // localStorage rather than the URL: no length limit, no server round-trip.
+    document.getElementById('pg-standalone').addEventListener('click', () => {
+      const markup = (input.value || '').trim();
+      if (!markup) return;
+
+      // The markup travels in the URL hash, so the resulting link is
+      // SELF-CONTAINED: it can be pasted into any browser, shared, or
+      // bookmarked. An earlier version handed it over via localStorage, which
+      // is per-browser-profile -- the URL then rendered the empty state for
+      // anyone but the tab that created it, which is indistinguishable from
+      // "the page is broken". The hash never reaches the server, so there is no
+      // request-size limit; localStorage stays as a fallback for markup large
+      // enough to bump the browser's own URL ceiling.
+      const encoded = encodeURIComponent(markup);
+      let url = './standalone.html#' + encoded;
+      if (url.length > 30000) {
+        try {
+          localStorage.setItem('wb-standalone-markup', markup);
+          url = './standalone.html';
+        } catch (err) {
+          console.warn('[playground] markup too large to hand off', err);
+          return;
+        }
+      }
+      window.open(url, '_blank', 'noopener');
     });
 
     const copyBtn = document.getElementById('pg-copy');
