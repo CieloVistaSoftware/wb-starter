@@ -42,6 +42,26 @@ element by behavior functions; it is never **acquired by** subclassing.
 - If 3+ failures: STOP fixing, diagnose root cause, report to John
 - Only John runs sync tests at the console
 
+### The cap is machine-wide, and a refusal is an answer
+
+Test concurrency is coordinated in `~/.wb-starter/`, **shared by every worktree
+and clone** — not per-worktree (#651). Concretely:
+
+- **One suite run at a time, machine-wide.** If another agent's suite is running,
+  yours is refused and the error names the holding worktree.
+- **At most `WB_MAX_PARALLEL_SINGLE` (default 2) single-spec runs**, machine-wide.
+- **Launches are refused below `WB_MIN_FREE_MB` (default 800) of free memory.**
+
+A refusal is not an error to route around. **Wait and retry.** Do not raise the
+env overrides, do not call `npx playwright test` directly, and do not delete the
+lock file to get past it.
+
+Why this is a law: one 8-worker suite alone takes this box from ~1.4 GB free to
+~120 MB. Before the fix each worktree had its own private lock, so five agents
+each launched a full suite believing they were alone — and the whole machine
+froze. Self-reported pass/fail numbers from those runs were also meaningless,
+because the agents silently shared one dev server port (#643).
+
 ## 5. Verify The Test Before Fixing The Code
 
 **This is the #1 source of regressions.** Old tests enforce old specs (v1/v2 patterns). When AI makes an old test pass, it reverts code to deprecated patterns and breaks current functionality.
