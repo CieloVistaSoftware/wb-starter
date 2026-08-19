@@ -675,6 +675,29 @@
     }
 
     const VOID = new Set(['img', 'input', 'br', 'hr', 'source', 'track', 'embed', 'col']);
+
+    // A generated example must satisfy what the behavior actually requires.
+    // audio.js throws outright ("wb-audio: no src provided -- nothing to play")
+    // and logs to the error viewer, so an <audio> with no src is not a harmless
+    // stub, it is a real error on every page load. Seeded from the schema's own
+    // default where there is one, falling back to a checked-in asset so the
+    // example never depends on the network.
+    const LOCAL_MEDIA = { audio: 'demos/sample.wav' };
+    function seedAttributes(behavior) {
+      const sc = schemaByName.get(behavior);
+      const props = (sc && sc.properties) || {};
+      const out = [];
+      if (props.src) {
+        const fallback = LOCAL_MEDIA[behavior];
+        let src = typeof props.src.default === 'string' ? props.src.default : '';
+        // A schema default like "../audio.mp3" is written relative to a demo
+        // page, not to this one -- prefer the known-good asset when we have it.
+        if (fallback) src = fallback;
+        if (src && !/^(https?:)?\/\//.test(src)) src = siteRoot() + src.replace(/^\.{1,2}\//, '');
+        if (src) out.push(` src="${src}"`);
+      }
+      return out.join('');
+    }
     function generatedExample(attr, variant, label) {
       const behavior = extensionMap[attr] || attr.replace(/^x-/, '');
       const host = semanticHostFor(behavior);
@@ -691,14 +714,16 @@
         const sel = label.match(/^([a-z][a-z0-9-]*)(?:\[([^=]+)="([^"]+)"\])?$/i);
         const tag = sel ? sel[1] : host;
         const extra = sel && sel[2] ? ` ${sel[2]}="${sel[3]}"` : '';
-        if (VOID.has(tag)) return `<${tag}${extra}${v}>`;
-        return `<${tag}${extra}${v}>
+        const seed = seedAttributes(behavior);
+        if (VOID.has(tag)) return `<${tag}${extra}${seed}${v}>`;
+        return `<${tag}${extra}${seed}${v}>
   Example ${tag} content
 </${tag}>`;
       }
 
-      if (VOID.has(host)) return `<${host} ${attr}${v}>`;
-      return `<${host} ${attr}${v}>
+      const seed = seedAttributes(behavior);
+      if (VOID.has(host)) return `<${host} ${attr}${seed}${v}>`;
+      return `<${host} ${attr}${seed}${v}>
   Example ${attr} content
 </${host}>`;
     }
