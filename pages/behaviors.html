@@ -575,19 +575,19 @@
       const btn = e.target.closest('.behaviors-search-results__row');
       if (!btn) return;
       if (btn.dataset.browseToken) {
-        // #664: run it right here instead of only filtering. The input is still
-        // filled so the typed-search path and the count stay consistent.
-        input.value = btn.dataset.browseToken;
-        applyFilter(input.value);
+        // #664: render it, and LEAVE THE LIST ALONE. Filling the input would
+        // re-run applyFilter and collapse the browse list to just this one
+        // behavior, so picking the next one meant clearing the box first --
+        // the list has to stay browsable while the panel changes beside it.
         showLive(btn.dataset.browseToken);
         return;
       }
-      const demo = demos[Number(btn.dataset.demoIndex)];
-      // #664: a matched row shows its own demo live, and still scrolls the real
-      // one into view for readers who want the surrounding context.
+      // #664: render it in the panel beside the list. Deliberately NO
+      // scrollIntoView -- John: "don't scroll down to existing samples, just
+      // show the code render in element next to dropdown". Jumping the page
+      // away from the search box is the behaviour this panel replaces.
       const rowToken = btn.querySelector('.behaviors-search-results__token');
       if (rowToken) showLive(rowToken.textContent.trim().split(/\s+/)[0]);
-      demo?.scrollIntoView({ block: 'start', behavior: 'auto' });
     });
 
     input.addEventListener('input', () => applyFilter(input.value));

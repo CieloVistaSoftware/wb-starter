@@ -475,6 +475,10 @@ footer a:hover {
   font-family: var(--font-mono, monospace);
   font-size: 0.8rem;
   line-height: 1.5;
+  /* Wrap rather than scroll: these snippets are short, and a panel that opens
+     already scrolled off to the right hides the very code it is showing.
+     Long unavoidable lines still get a scrollbar (Standard §27). */
   overflow-x: auto;
-  white-space: pre;
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
 }
