@@ -688,11 +688,80 @@
       }
     }
 
+    // #666 — John: 'then add a summary. In this case "shows a red background"'.
+    // Derived from what actually rendered, not hand-authored: 42 schemas x their
+    // variants is ~200 strings that would rot the moment a theme or variant
+    // changed, and a summary that disagrees with the pixels is worse than none.
+    // Reads the real computed style of the upgraded element and names the
+    // dominant visual difference.
+    const HUES = [
+      ['red', 0], ['orange', 30], ['yellow', 55], ['green', 100], ['teal', 165],
+      ['blue', 210], ['indigo', 250], ['purple', 280], ['pink', 320], ['red', 350],
+    ];
+    function colourName(r, g, b) {
+      const max = Math.max(r, g, b), min = Math.min(r, g, b);
+      const l = (max + min) / 2 / 255;
+      // Lightness first: a near-black surface with a slight blue cast is "dark"
+      // to a reader, not "blue". rgb(41,48,61) -- the default card background --
+      // has just enough spread to compute a blue hue, and calling that blue is
+      // simply wrong to anyone looking at it.
+      if (l < 0.22) return 'dark';
+      if (l > 0.9) return 'near-white';
+      if (max - min < 18) return l > 0.75 ? 'light grey' : 'grey';
+      let h = 0;
+      const d = max - min;
+      if (max === r) h = 60 * (((g - b) / d) % 6);
+      else if (max === g) h = 60 * ((b - r) / d + 2);
+      else h = 60 * ((r - g) / d + 4);
+      if (h < 0) h += 360;
+      let best = HUES[0];
+      for (const entry of HUES) {
+        if (Math.abs(h - entry[1]) < Math.abs(h - best[1])) best = entry;
+      }
+      return best[0];
+    }
+    function parseRgb(v) {
+      const str = String(v);
+      // Modern syntax: color(srgb 0.94 0.94 0.95 / 0.08). Chrome returns this
+      // for theme colours defined with color-mix/relative colour, so an
+      // rgba()-only parser silently returned null and every translucent
+      // surface (glass) fell through to the border branch.
+      const c = str.match(/color\(srgb\s+([^)]+)\)/i);
+      if (c) {
+        const parts = c[1].split('/');
+        const rgb = parts[0].trim().split(/\s+/).map(Number);
+        return {
+          r: rgb[0] * 255, g: rgb[1] * 255, b: rgb[2] * 255,
+          a: parts[1] === undefined ? 1 : parseFloat(parts[1]),
+        };
+      }
+      const m = str.match(/rgba?\(([^)]+)\)/);
+      if (!m) return null;
+      const p = m[1].split(',').map((n) => parseFloat(n));
+      return { r: p[0], g: p[1], b: p[2], a: p.length > 3 ? p[3] : 1 };
+    }
+    function summarise(el) {
+      if (!el) return '';
+      const cs = getComputedStyle(el);
+      const bg = parseRgb(cs.backgroundColor);
+      if (cs.backgroundImage && cs.backgroundImage !== 'none') return 'shows a gradient background';
+      if (bg && bg.a > 0.85) return `shows a ${colourName(bg.r, bg.g, bg.b)} background`;
+      if (bg && bg.a > 0.05) return `shows a translucent ${colourName(bg.r, bg.g, bg.b)} background`;
+      const bw = parseFloat(cs.borderTopWidth) || 0;
+      if (bw > 0) {
+        const bc = parseRgb(cs.borderTopColor);
+        return bc ? `shows a ${colourName(bc.r, bc.g, bc.b)} border` : 'shows a border';
+      }
+      if (cs.boxShadow && cs.boxShadow !== 'none') return 'shows a raised shadow';
+      return 'no background or border — plain';
+    }
+
     async function showLive(token, variant) {
       const raw = sourceFor(token);
       const src = raw ? withVariant(raw, token, variant) : raw;
       liveEl.hidden = false;
-      liveToken.textContent = variant ? `${variant} · ${token}` : token;
+      // John: "Switch these two, behaivor first, variant 2nd".
+      liveToken.textContent = variant ? `${token} · ${variant}` : token;
 
       if (!src) {
         // John: "x-article shows nothing shouldn't it at least show a semantic
@@ -705,12 +774,20 @@
         liveCode.innerHTML = '';
         liveStage.innerHTML = generated;
         await renderSource(generated);
+        const genSummary = summarise(liveStage.firstElementChild);
+        liveNote.textContent = genSummary
+          ? `generated — ${genSummary}`
+          : 'generated example — no demo on this page';
         return;
       }
 
       liveNote.textContent = 'running live';
       liveStage.innerHTML = src;
       await renderSource(src);
+      // After the upgrade, so the summary describes the UPGRADED element rather
+      // than the bare markup it was built from.
+      const summary = summarise(liveStage.firstElementChild);
+      if (summary) liveNote.textContent = summary;
     }
 
     resultsEl.addEventListener('click', (e) => {
