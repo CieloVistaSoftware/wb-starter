@@ -897,9 +897,20 @@ function bindSchemaMethodsToElement(element, schema, data) {
 // card family below (its schema's $view is empty anyway, but excluding it
 // here documents the same "never race the class" intent explicitly rather
 // than relying on the empty $view being a no-op forever).
+// wb-drawer-layout (#556): drawerLayout() (layouts.js) unconditionally
+// builds its own complete toggle <button class="wb-drawer-toggle"> --
+// same self-sufficient pattern as the rest of this list, no
+// options.schemaProcessed cooperation anywhere in that function. Left off
+// this list, schema-builder ALSO ran drawerLayout.schema.json's own $view
+// (a "toggle" part -- getPartClass() above turns baseClass "wb-drawer-layout"
+// + part name "toggle" into literally "wb-drawer-layout__toggle"), building
+// a SECOND, empty placeholder button on top of the first. Confirmed live via
+// no-element-overlap.spec.ts on demos/site/layout.html: the two buttons sit
+// at the exact same position, an empty "wb-drawer-layout__toggle" painted
+// over the real "wb-drawer-toggle" arrow.
 const SCHEMA_EXCLUDED_TAGS = new Set([
   'wb-demo', 'wb-details', 'wb-stack', 'wb-search', 'wb-skeleton', 'wb-select',
-  'wb-article', 'wb-articles', 'wb-dialog',
+  'wb-article', 'wb-articles', 'wb-dialog', 'wb-drawer-layout',
   'wb-card', 'wb-cardimage', 'wb-cardvideo', 'wb-cardbutton', 'wb-carddraggable',
   'wb-cardexpandable', 'wb-cardfile', 'wb-cardhero', 'wb-cardhorizontal',
   'wb-cardlink', 'wb-card-link', 'wb-cardminimizable', 'wb-cardnotification',

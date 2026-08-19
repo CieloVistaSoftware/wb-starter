@@ -294,7 +294,12 @@ export function switcher(element, options = {}) {
     ...options
   };
 
-  element.classList.add('wb-switcher');
+  // #557: only a host whose tag ISN'T already wb-switcher needs the class --
+  // the tag selector already covers styling for real <wb-switcher> elements,
+  // so adding it unconditionally trips no-redundant-tag-name-class.spec.ts
+  // (demos/layout-test.html). Same guard pattern as article()/articles()
+  // (src/wb-viewmodels/article.js, #523/#528) and chip() (feedback.js, #521).
+  if (element.tagName.toLowerCase() !== 'wb-switcher') element.classList.add('wb-switcher');
   element.style.display = 'flex';
   element.style.flexWrap = 'wrap';
   element.style.gap = config.gap;

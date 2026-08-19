@@ -1,6 +1,6 @@
 {
-  "generated": "2026-08-18T03:32:36.716Z",
-  "totalFiles": 219,
+  "generated": "2026-08-19T03:30:37.053Z",
+  "totalFiles": 231,
   "categories": [
     "_today",
     "architecture",
@@ -370,6 +370,18 @@
     ],
     "behaviors": [
       {
+        "path": "docs/behaviors/accordion.md",
+        "title": "accordion",
+        "name": "accordion",
+        "category": "behaviors"
+      },
+      {
+        "path": "docs/behaviors/articles.md",
+        "title": "articles",
+        "name": "articles",
+        "category": "behaviors"
+      },
+      {
         "path": "docs/behaviors/autocomplete.md",
         "title": "x-autocomplete Behavior",
         "name": "autocomplete",
@@ -382,6 +394,18 @@
         "category": "behaviors"
       },
       {
+        "path": "docs/behaviors/chip.md",
+        "title": "chip",
+        "name": "chip",
+        "category": "behaviors"
+      },
+      {
+        "path": "docs/behaviors/codecontrol.md",
+        "title": "Code Control - wb-starter v3.0",
+        "name": "codecontrol",
+        "category": "behaviors"
+      },
+      {
         "path": "docs/behaviors/colorpicker.md",
         "title": "x-colorpicker Behavior",
         "name": "colorpicker",
@@ -391,6 +415,12 @@
         "path": "docs/behaviors/counter.md",
         "title": "x-counter Behavior",
         "name": "counter",
+        "category": "behaviors"
+      },
+      {
+        "path": "docs/behaviors/dropdown.md",
+        "title": "dropdown",
+        "name": "dropdown",
         "category": "behaviors"
       },
       {
@@ -442,15 +472,57 @@
         "category": "behaviors"
       },
       {
+        "path": "docs/behaviors/move.md",
+        "title": "Move - wb-starter v3.0",
+        "name": "move",
+        "category": "behaviors"
+      },
+      {
+        "path": "docs/behaviors/release.md",
+        "title": "Release - wb-starter v3.0",
+        "name": "release",
+        "category": "behaviors"
+      },
+      {
+        "path": "docs/behaviors/ripple.md",
+        "title": "Ripple - wb-starter v3.0",
+        "name": "ripple",
+        "category": "behaviors"
+      },
+      {
+        "path": "docs/behaviors/scrollalong.md",
+        "title": "ScrollAlong - wb-starter v3.0",
+        "name": "scrollalong",
+        "category": "behaviors"
+      },
+      {
         "path": "docs/behaviors/searchfield.md",
         "title": "x-searchfield Behavior",
         "name": "searchfield",
         "category": "behaviors"
       },
       {
+        "path": "docs/behaviors/skeleton.md",
+        "title": "skeleton",
+        "name": "skeleton",
+        "category": "behaviors"
+      },
+      {
+        "path": "docs/behaviors/stagelight.md",
+        "title": "Stage Light - wb-starter v3.0",
+        "name": "stagelight",
+        "category": "behaviors"
+      },
+      {
         "path": "docs/behaviors/tags.md",
         "title": "x-tags Behavior",
         "name": "tags",
+        "category": "behaviors"
+      },
+      {
+        "path": "docs/behaviors/toast.md",
+        "title": "toast",
+        "name": "toast",
         "category": "behaviors"
       },
       {
@@ -1567,6 +1639,18 @@
       "category": "root"
     },
     {
+      "path": "docs/behaviors/accordion.md",
+      "title": "accordion",
+      "name": "accordion",
+      "category": "behaviors"
+    },
+    {
+      "path": "docs/behaviors/articles.md",
+      "title": "articles",
+      "name": "articles",
+      "category": "behaviors"
+    },
+    {
       "path": "docs/behaviors/autocomplete.md",
       "title": "x-autocomplete Behavior",
       "name": "autocomplete",
@@ -1579,6 +1663,18 @@
       "category": "behaviors"
     },
     {
+      "path": "docs/behaviors/chip.md",
+      "title": "chip",
+      "name": "chip",
+      "category": "behaviors"
+    },
+    {
+      "path": "docs/behaviors/codecontrol.md",
+      "title": "Code Control - wb-starter v3.0",
+      "name": "codecontrol",
+      "category": "behaviors"
+    },
+    {
       "path": "docs/behaviors/colorpicker.md",
       "title": "x-colorpicker Behavior",
       "name": "colorpicker",
@@ -1588,6 +1684,12 @@
       "path": "docs/behaviors/counter.md",
       "title": "x-counter Behavior",
       "name": "counter",
+      "category": "behaviors"
+    },
+    {
+      "path": "docs/behaviors/dropdown.md",
+      "title": "dropdown",
+      "name": "dropdown",
       "category": "behaviors"
     },
     {
@@ -1639,15 +1741,57 @@
       "category": "behaviors"
     },
     {
+      "path": "docs/behaviors/move.md",
+      "title": "Move - wb-starter v3.0",
+      "name": "move",
+      "category": "behaviors"
+    },
+    {
+      "path": "docs/behaviors/release.md",
+      "title": "Release - wb-starter v3.0",
+      "name": "release",
+      "category": "behaviors"
+    },
+    {
+      "path": "docs/behaviors/ripple.md",
+      "title": "Ripple - wb-starter v3.0",
+      "name": "ripple",
+      "category": "behaviors"
+    },
+    {
+      "path": "docs/behaviors/scrollalong.md",
+      "title": "ScrollAlong - wb-starter v3.0",
+      "name": "scrollalong",
+      "category": "behaviors"
+    },
+    {
       "path": "docs/behaviors/searchfield.md",
       "title": "x-searchfield Behavior",
       "name": "searchfield",
       "category": "behaviors"
     },
     {
+      "path": "docs/behaviors/skeleton.md",
+      "title": "skeleton",
+      "name": "skeleton",
+      "category": "behaviors"
+    },
+    {
+      "path": "docs/behaviors/stagelight.md",
+      "title": "Stage Light - wb-starter v3.0",
+      "name": "stagelight",
+      "category": "behaviors"
+    },
+    {
       "path": "docs/behaviors/tags.md",
       "title": "x-tags Behavior",
       "name": "tags",
+      "category": "behaviors"
+    },
+    {
+      "path": "docs/behaviors/toast.md",
+      "title": "toast",
+      "name": "toast",
       "category": "behaviors"
     },
     {

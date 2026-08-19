@@ -121,6 +121,36 @@ test.describe('No element overlap (§22) — project-wide detection', () => {
             'wb-notes__backdrop', 'wb-notes__drawer',
             'site__nav-backdrop',
             'wb-demo__card-doc-link',
+            // #556: the native <input> that drives a <wb-switch>'s :checked
+            // state (switch.css's own comment: "visually-hidden native
+            // checkbox (state driver)") -- position:absolute, opacity:0,
+            // deliberately sized/positioned to sit exactly under the visible
+            // .wb-switch__thumb/.wb-switch__track it controls, same
+            // "invisible input behind a styled visual" pattern countless
+            // custom checkbox/switch/radio components use. Confirmed live on
+            // demos/site/forms.html: isVisible()'s opacity===0 check misses
+            // this element for its `disabled` demo instance specifically
+            // (Chromium's own disabled-control rendering reports a non-zero
+            // effective opacity there, no author CSS involved), so it still
+            // reached the candidate set and got flagged as "overlapping"
+            // its own thumb -- the same element pair, on the SAME component,
+            // that opacity:0 already correctly excludes for every OTHER
+            // (non-disabled) switch on the page.
+            'wb-switch__input',
+            // #556: wb-stagelight's "beam" variant (stagelight.js) is a
+            // decorative lighting-effect demo -- position:absolute,
+            // height:100vh (deliberately spans the full viewport height,
+            // "Long beam" per its own comment), pointer-events:none
+            // (explicitly click-through), mix-blend-mode:screen (a blend
+            // mode that exists specifically to LAYER light over content
+            // without fully obscuring it). Confirmed live on
+            // demos/site/effects.html: the beam swings/rotates across
+            // whatever content happens to sit below its demo card,
+            // including that same card's own <pre>/<code> "here's the
+            // markup" sample -- by design, same category as this list's
+            // tooltip/popover/modal/toast entries, just a lighting effect
+            // instead of a UI overlay.
+            'wb-stagelight__beam',
           ].map((c) => c.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')).join('|')
           // wb-card__overlay needs an exact-token match (word-boundary
           // anchored to whitespace/string edges), not a plain substring
@@ -179,12 +209,42 @@ test.describe('No element overlap (§22) — project-wide detection', () => {
           return false;
         }
 
+        // #556: a CSS multi-column ancestor (`column-count`/`columns`, e.g.
+        // demos/schema-first-architecture.html's academic-paper-style
+        // `.paper-body { column-count: 2 }`) fragments a paragraph's paint
+        // across two disjoint boxes -- one per column -- but
+        // getBoundingClientRect() (and the Range-based text rect above) only
+        // ever reports the smallest SINGLE rect containing every fragment,
+        // which spans horizontally across BOTH columns including the gap
+        // between them. That inflated union box can numerically "overlap"
+        // an unrelated paragraph sitting in the other column at a similar
+        // vertical position, even though nothing is actually painted in the
+        // gap -- confirmed live: two <p> tags with no shared ancestor
+        // closer than <body> and no other positioning involved were flagged
+        // purely because of this column fragmentation. Properly comparing
+        // per-fragment rects (getClientRects()) is a bigger lift than this
+        // fix warrants for what's currently a single one-off demo page, so
+        // (same tradeoff as the fixed/sticky-ancestor carve-out above) any
+        // content inside a real multi-column flow is excluded from
+        // detection entirely rather than risk this same false positive
+        // reappearing wherever multi-column text is used next.
+        function hasMultiColumnAncestor(el: HTMLElement): boolean {
+          let node: HTMLElement | null = el;
+          while (node) {
+            const ncs = getComputedStyle(node);
+            if (ncs.columnCount !== 'auto' || (ncs.columnWidth !== 'auto' && ncs.columnWidth !== '0px')) return true;
+            node = node.parentElement;
+          }
+          return false;
+        }
+
         function isLayeringException(el: HTMLElement, cs: CSSStyleDeclaration): boolean {
           if (cs.position === 'fixed' || cs.position === 'sticky') return true;
           if (hasFixedOrStickyAncestor(el)) return true;
           if (OVERLAY_CLASS_RE.test(el.className || '')) return true;
           if (el.hasAttribute('data-allow-overlap')) return true;
           if (el.closest('[data-allow-overlap]')) return true;
+          if (hasMultiColumnAncestor(el)) return true;
           return false;
         }
 
@@ -230,7 +290,8 @@ test.describe('No element overlap (§22) — project-wide detection', () => {
 
         type Rect = { left: number; right: number; top: number; bottom: number; width: number; height: number };
 
-        // Clip a rect against every `overflow: hidden`/`clip` ancestor.
+        // Clip a rect against every `overflow: hidden`/`clip`/`auto`/`scroll`
+        // ancestor.
         // Found live on pages/home.html: <wb-demo> starts as a collapsed
         // `height: 32px; overflow: hidden` skeleton until its lazy-build
         // (IntersectionObserver-driven grid construction) runs; the demo's
@@ -243,13 +304,29 @@ test.describe('No element overlap (§22) — project-wide detection', () => {
         // returned true for content clipped this way). Without this,
         // every element inside a not-yet-expanded collapsed container was
         // flagged as "overlapping" whatever renders after it.
+        //
+        // #556: `auto`/`scroll` clip exactly like `hidden` for THIS purpose
+        // -- content past the scrollport is just as invisible on initial
+        // paint, only reachable by scrolling. Found live on pages/behaviors.html:
+        // #behaviors-search-results is a real, intentional always-populated
+        // list (#642 -- "I want an element that has 69 rows of information"),
+        // deliberately bounded with `max-height: 16rem; overflow-y: auto`
+        // (behaviors.css) so a broad query's 80+ rows scroll internally
+        // instead of blowing out the hero. Rows past the 16rem scrollport
+        // still get a real laid-out rect from getBoundingClientRect() (flow
+        // layout doesn't stop at the scroll boundary), so without clipping
+        // here, a row scrolled out of view was flagged as "overlapping"
+        // <nav> content sitting after the hero in the document -- geometry
+        // that's true on paper but never actually painted on top of
+        // anything, exactly the same false positive already fixed for
+        // overflow:hidden above, just via scroll instead of clip.
         function getClippedRect(el: HTMLElement, rect: DOMRect | Rect): Rect | null {
           let r: Rect = { left: rect.left, right: rect.right, top: rect.top, bottom: rect.bottom, width: 0, height: 0 };
           let node = el.parentElement;
           while (node && node !== document.documentElement) {
             const ncs = getComputedStyle(node);
-            const clipsX = ncs.overflowX === 'hidden' || ncs.overflowX === 'clip';
-            const clipsY = ncs.overflowY === 'hidden' || ncs.overflowY === 'clip';
+            const clipsX = ncs.overflowX === 'hidden' || ncs.overflowX === 'clip' || ncs.overflowX === 'auto' || ncs.overflowX === 'scroll';
+            const clipsY = ncs.overflowY === 'hidden' || ncs.overflowY === 'clip' || ncs.overflowY === 'auto' || ncs.overflowY === 'scroll';
             if (clipsX || clipsY) {
               const nRect = node.getBoundingClientRect();
               const left = clipsX ? Math.max(r.left, nRect.left) : r.left;

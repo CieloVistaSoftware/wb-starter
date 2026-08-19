@@ -2906,6 +2906,16 @@ export function cardportfolio(element, options = {}) {
       // card.css's `.wb-portfolio__avatar` base rule -- see the comment on
       // avatarWrap above; same reason (lets compact/full/size-scaling CSS
       // resize the avatar without !important).
+      // #556: deliberately overlaps .wb-portfolio__cover -- the `header`
+      // above gets `margin-top:-60px` exactly when config.cover is set,
+      // pulling this avatar up to straddle the cover photo's bottom edge
+      // (the standard social-profile "avatar over cover" layout, same
+      // pattern LinkedIn/Twitter/Facebook headers use). no-element-overlap
+      // .spec.ts (#540) already flagged this pair on demos/site/cards.html
+      // as "probable-but-unconfirmed intentional" without a source read to
+      // confirm it; the -60px margin above confirms it's deliberate, not a
+      // layout bug.
+      if (config.cover) avatarImg.setAttribute('data-allow-overlap', '');
       avatarWrap.appendChild(avatarImg);
     } else {
       // No avatar image supplied — render initials (or a generic mark) in a

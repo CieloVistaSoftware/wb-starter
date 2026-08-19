@@ -46,6 +46,18 @@ export function figure(element, options = {}) {
         padding: '1rem',
         margin: '0'
       });
+      // #556: caption-position="overlay" means EXACTLY what it says -- the
+      // caption is deliberately painted on top of the image's bottom edge
+      // (a photo-caption bar, not a layout bug). no-element-overlap.spec.ts
+      // (§22) has no way to know that from geometry alone, so it correctly
+      // flagged demos/site/content.html's own "Overlay Caption" demo
+      // (<img class="wb-img"> vs its <figcaption>) as a violation. Marking
+      // the deliberately-overlapping element is this codebase's own
+      // established escape hatch for exactly this case (see that spec's
+      // "data-allow-overlap" doc comment) -- same category as
+      // wb-card__overlay's scrim, just per-instance instead of a shared
+      // class since only THIS caption-position value overlays.
+      caption.setAttribute('data-allow-overlap', '');
     }
   }
 

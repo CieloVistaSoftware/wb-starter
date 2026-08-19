@@ -114,7 +114,7 @@ export default defineConfig({
     command: 'npm start',
     port: TEST_PORT,
     reuseExistingServer: TEST_PORT === 3000,
-    timeout: 10000,
+    timeout: 60000,
     // Never pop a browser when Playwright starts the dev server for tests.
     env: { WB_NO_OPEN: '1', PORT: String(TEST_PORT) },
   },

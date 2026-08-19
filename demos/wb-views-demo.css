@@ -164,8 +164,21 @@ body {
   margin-bottom: 0.5rem;
 }
 .wbv-howitworks-code {
+  /* #556: no `padding` here -- this <pre> is auto-enhanced by pre.js
+     (native <pre> tag-map entry), which adds its own `.x-pre`/
+     `.x-pre--has-line-numbers` classes carrying the padding-left needed to
+     reserve the line-numbers gutter (src/styles/behaviors/pre.css). This
+     page rule and that shared behavior rule are equal specificity (one
+     class each) on the SAME element, so whichever stylesheet loads later
+     wins the cascade outright -- this file's plain `padding: 1rem` was
+     overriding the gutter's 2.5rem padding-left down to 1rem, letting the
+     code text render UNDER the line-number digits instead of beside them.
+     Confirmed live via no-element-overlap.spec.ts: every numbered line
+     overlapped the code text at the same x-coordinate. font/color/wrap
+     styling below stays page-specific (the shared behavior's own defaults
+     differ -- no wrap, 1rem monospace, dark editor palette from theme
+     vars) since none of those properties conflict with the gutter. */
   margin: 0;
-  padding: 1rem;
   font-family: 'Fira Code', 'Consolas', monospace;
   font-size: 0.8rem;
   overflow-x: auto;
