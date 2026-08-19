@@ -2,10 +2,16 @@
 
 A zero-build website starter. Write HTML, the browser does the work.
 
-**Light DOM only. No Shadow DOM. No class hierarchy.** Components are composed,
-not inherited — there is no base class to extend and no shadow boundary to fight.
-Your CSS reaches every element, your scripts see every node, and DevTools shows
-you the real DOM.
+**Composition only. Light DOM only. No Shadow DOM.**
+
+Components compose; they do not inherit. There is no base class to extend and
+no IS-A hierarchy to reason about — a component is assembled from behaviors, and
+a behavior is a plain function applied to an element. Want card behaviour on your
+`<article>`? Apply it. You are never asked to subclass anything.
+
+And because everything renders into the light DOM, your CSS reaches every
+element, your scripts see every node, and DevTools shows you the real thing —
+no shadow boundary to fight.
 
 No bundler, no JSX, no build step. 50 themes included.
 
@@ -51,6 +57,28 @@ Two authoring surfaces, both first-class and neither deprecated:
 ```
 
 Both resolve through `src/core/tag-map.js` to the same behavior.
+
+### Composition, concretely
+
+Behaviour is shared by applying it, never by subclassing it:
+
+```html
+<!-- these get identical card behaviour; neither "is a" the other -->
+<wb-card title="Hello">Body</wb-card>
+<article x-card title="Hello">Body</article>
+```
+
+Most classes in `src/` that use `extends` write `extends HTMLElement`, which the
+Custom Elements spec **requires** in order to register a tag. That is a platform
+obligation, not a hierarchy.
+
+Two holdovers from the earlier OOP design are still being retired, and both are
+tracked:
+
+| Holdover | Extent | Issue |
+|---|---|---|
+| `WBFixCard extends WBCard` | 1 class — the only component that inherits from another | #660 |
+| `$extends` / `$inheritance` schema metadata, `card.base.schema.json` | 1 schema of 110 | #465, #462, #418 |
 
 ### Who builds the DOM
 
