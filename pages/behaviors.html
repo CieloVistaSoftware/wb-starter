@@ -76,7 +76,14 @@
 
   <!-- FOOTER -->
   <footer id="footer">
-    <p>wb-starter v{{WB_VERSION}} • 71 behaviors • 23 themes</p>
+    <!-- x-release, not {{WB_VERSION}}: that token is substituted only by
+         site-engine.js for SPA page fragments, so a direct visit to
+         /pages/behaviors.html rendered the literal "v{{WB_VERSION}}".
+         release.js exists to replace exactly that -- it "works identically
+         everywhere -- SPA fragment or standalone page". The behavior count is
+         filled in from the same registry the selector uses, so it cannot drift
+         the way the hardcoded 71 did. -->
+    <p>wb-starter <span x-release></span> • <span id="footer-behavior-count">…</span> behaviors • 50 themes</p>
     <p><a href="?page=docs">Documentation</a> • <a href="?page=themes">Themes</a> • <a href="?page=home">Home</a></p>
   </footer>
 
@@ -250,6 +257,8 @@
             // resolves. Calling the renderer alone left "0 behaviors" on screen
             // next to a full list.
             applyFilter(input.value);
+            const footerCount = document.getElementById('footer-behavior-count');
+            if (footerCount) footerCount.textContent = String(allEntries.length);
           });
       })
       .catch(() => {}); // browse-all list just stays empty; typed search still works
@@ -457,6 +466,43 @@
     // shows the ERROR alert rather than whatever variant the page's demo
     // happened to hardcode. Rewrites an existing variant=, or adds one to the
     // first tag when absent.
+    // Some options are only observable in the presence of ANOTHER property.
+    // John: `<button iconposition="end">` "doesn't show an icon to use" -- of
+    // course it does not, there is no icon to position. Rather than hardcode
+    // pairs, the companion is taken from the schema itself: iconPosition needs
+    // `icon`, so seed `icon` with its first enum value.
+    const COMPANIONS = { iconPosition: 'icon', iconposition: 'icon' };
+
+    // TRIGGER-mode behaviors. dialog() decides its mode by ATTRIBUTE PRESENCE,
+    // not tag: with modal-title/modal-content it becomes a visible button that
+    // opens a dialog on click; WITHOUT them it takes DEFINITION mode and sets
+    // element.style.display = 'none'. So a generated `<dialog variant="...">`
+    // is not broken -- it is deliberately invisible, and there is nothing to
+    // click. John: "What triggers a dialog?" / "<dialog variant='fullscreen'>
+    // doesn't work". Emit the trigger form instead.
+    const TRIGGERS = {
+      dialog: {
+        tag: 'button',
+        label: 'Open dialog',
+        attrs: { 'modal-title': 'Dialog title', 'modal-content': 'Dialog content goes here.' },
+      },
+      modal: {
+        tag: 'button',
+        label: 'Open modal',
+        attrs: { 'modal-title': 'Modal title', 'modal-content': 'Modal content goes here.' },
+      },
+    };
+
+    function companionFor(attr, prop) {
+      const partner = COMPANIONS[prop];
+      if (!partner) return '';
+      const sc = schemaByName.get(extensionMap[attr]);
+      const def = sc && sc.properties && sc.properties[partner];
+      if (!def) return '';
+      const value = Array.isArray(def.enum) && def.enum.length ? def.enum[0] : def.default;
+      return value ? ` ${partner}="${value}"` : '';
+    }
+
     function withOption(src, attr, prop, value, isBoolean) {
       if (!value) return src;
 
@@ -482,6 +528,13 @@
       // mechanism applies to any other property that declares one.
       const propDef = (sc && sc.properties && sc.properties[target]) || {};
       const aliases = propDef.aliases || [];
+      // Ensure the companion is present on a curated example too.
+      const partner = COMPANIONS[prop];
+      if (partner && !new RegExp('\s' + partner + '\s*=').test(src)) {
+        const add = companionFor(attr, prop);
+        if (add) src = src.replace(/^(\s*<[a-zA-Z][\w-]*)/, `$1${add}`);
+      }
+
       for (const name of [target, ...aliases]) {
         const re = new RegExp('\\s' + name + '\\s*=\\s*"[^"]*"', 'i');
         if (re.test(src)) return src.replace(re, ` ${name}="${value}"`);
@@ -542,8 +595,22 @@
     }
     function generatedExample(attr, variant, label, prop, isBool) {
       const behavior = extensionMap[attr] || attr.replace(/^x-/, '');
+
+      const trigger = TRIGGERS[behavior];
+      if (trigger) {
+        const opt = variant ? (isBool ? ` ${prop}` : ` ${prop || 'variant'}="${variant}"`) : '';
+        const seeded = Object.entries(trigger.attrs)
+          .map(([k, v]) => ` ${k}="${v}"`)
+          .join('');
+        // The behavior is named explicitly here: on a <button> host the
+        // auto-injected behavior is `button`, not `dialog`.
+        return `<${trigger.tag} ${attr}${seeded}${opt}>
+  ${trigger.label}
+</${trigger.tag}>`;
+      }
       const host = semanticHostFor(behavior);
       const v = variant ? (isBool ? ` ${prop}` : ` ${prop || 'variant'}="${variant}"`) : '';
+      const companion = companionFor(attr, prop);
 
       // Auto-injected behaviors need NO attribute -- writing the semantic
       // element is the whole authoring form (John: "<button variant='primary'>
@@ -557,15 +624,15 @@
         const tag = sel ? sel[1] : host;
         const extra = sel && sel[2] ? ` ${sel[2]}="${sel[3]}"` : '';
         const seed = seedAttributes(behavior);
-        if (VOID.has(tag)) return `<${tag}${extra}${seed}${v}>`;
-        return `<${tag}${extra}${seed}${v}>
+        if (VOID.has(tag)) return `<${tag}${extra}${seed}${companion}${v}>`;
+        return `<${tag}${extra}${seed}${companion}${v}>
   Example ${tag} content
 </${tag}>`;
       }
 
       const seed = seedAttributes(behavior);
-      if (VOID.has(host)) return `<${host} ${attr}${seed}${v}>`;
-      return `<${host} ${attr}${seed}${v}>
+      if (VOID.has(host)) return `<${host} ${attr}${seed}${companion}${v}>`;
+      return `<${host} ${attr}${seed}${companion}${v}>
   Example ${attr} content
 </${host}>`;
     }

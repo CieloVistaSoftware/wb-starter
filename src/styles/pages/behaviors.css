@@ -564,7 +564,10 @@ footer a:hover {
 }
 
 .behaviors-live__doc-body {
-  padding: 0 1rem 1rem;
+  /* Standard: no text within 1rem of a content-panel edge. Expanded <details>
+     content is a content panel like any other -- the top was 0 and the first
+     heading sat flush against the summary divider. */
+  padding: 1rem;
   max-height: 24rem;
   overflow-y: auto;
   text-align: left;
@@ -675,7 +678,7 @@ footer a:hover {
 .behaviors-live__events-log {
   list-style: none;
   margin: 0;
-  padding: 0 1rem 0.6rem;
+  padding: 0 1rem 1rem;
   max-height: 7rem;
   overflow-y: auto;
 }
@@ -706,7 +709,7 @@ footer a:hover {
 /* The snippet is rendered by the x-pre/x-code pair, so font, colour and padding
    come from pre.css/code.css. Only wrapping needs overriding -- it overflowed
    its box and clipped the first characters of every line. */
-.behaviors-live__events-code { padding: 0 1rem 0.5rem; }
+.behaviors-live__events-code { padding: 0 1rem 1rem; }
 
 .behaviors-live__events-code pre {
   margin: 0;
@@ -724,7 +727,7 @@ footer a:hover {
    there was no affordance telling the reader events would appear at all. */
 .behaviors-live__events-empty {
   margin: 0;
-  padding: 0 1rem 0.7rem;
+  padding: 0 1rem 1rem;
   font-size: 0.72rem;
   color: var(--text-secondary, #9ca3af);
   opacity: 0.75;
