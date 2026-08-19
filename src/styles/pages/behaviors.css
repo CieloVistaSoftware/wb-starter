@@ -528,3 +528,12 @@ footer a:hover {
   color: var(--text-secondary, #9ca3af);
   overflow-wrap: anywhere;
 }
+
+
+/* #666: the row whose example is currently rendered. Arrow keys walk the list,
+   so the reader needs to see where they are without relying on focus ring
+   alone (focus can be lost to the preview panel). */
+.behaviors-search-results__row[aria-current="true"] {
+  background: var(--bg-tertiary, #111827);
+  box-shadow: inset 0.1875rem 0 0 var(--primary-color, #6366f1);
+}

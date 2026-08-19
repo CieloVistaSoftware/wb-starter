@@ -864,6 +864,66 @@
       if (summary) liveNote.textContent = summary;
     }
 
+    // #666 — John: "allow the user to use the down arrow for each item shown in
+    // list to render". Arrow keys walk the list and render each row as it is
+    // reached, so a reader can hold Down and watch every variant in turn
+    // without reaching for the mouse.
+    //
+    // aria-current marks the rendered row: clicking now SELECTS rather than
+    // navigates, and without it a screen-reader user has no way to tell which
+    // of 228 rows the panel is showing.
+    function rowsInOrder() {
+      return [...resultsEl.querySelectorAll('.behaviors-search-results__row')];
+    }
+
+    function selectRow(row, { focus = true } = {}) {
+      if (!row) return;
+      rowsInOrder().forEach((r) => r.removeAttribute('aria-current'));
+      row.setAttribute('aria-current', 'true');
+      // Scroll the LIST only, by hand. scrollIntoView({block:'nearest'}) still
+      // scrolls ancestor scrollers when the row is off-screen at page level --
+      // measured moving the page from 5541 to 341 while arrowing. The panel
+      // exists so the page does not move (John: "don't scroll down"), so the
+      // list's own scrollTop is adjusted directly and nothing else is touched.
+      const listTop = resultsEl.scrollTop;
+      const rowTop = row.offsetTop - resultsEl.offsetTop;
+      const rowBottom = rowTop + row.offsetHeight;
+      if (rowTop < listTop) resultsEl.scrollTop = rowTop;
+      else if (rowBottom > listTop + resultsEl.clientHeight) {
+        resultsEl.scrollTop = rowBottom - resultsEl.clientHeight;
+      }
+      if (focus) row.focus({ preventScroll: true });
+      showLive(row.dataset.browseToken, row.dataset.variant || '', row.dataset.label || '');
+    }
+
+    function moveSelection(delta) {
+      const rows = rowsInOrder();
+      if (!rows.length) return;
+      const current = resultsEl.querySelector('[aria-current="true"]');
+      let i = current ? rows.indexOf(current) : -1;
+      i = i < 0 ? (delta > 0 ? 0 : rows.length - 1) : i + delta;
+      if (i < 0) i = 0;
+      if (i > rows.length - 1) i = rows.length - 1;
+      selectRow(rows[i]);
+    }
+
+    resultsEl.addEventListener('keydown', (e) => {
+      if (e.key === 'ArrowDown') { e.preventDefault(); moveSelection(1); }
+      else if (e.key === 'ArrowUp') { e.preventDefault(); moveSelection(-1); }
+      else if (e.key === 'Home') { e.preventDefault(); selectRow(rowsInOrder()[0]); }
+      else if (e.key === 'End') { e.preventDefault(); const r = rowsInOrder(); selectRow(r[r.length - 1]); }
+    });
+
+    // Down from the search box drops into the list, so the keyboard path works
+    // straight from typing without an intervening Tab.
+    input.addEventListener('keydown', (e) => {
+      if (e.key === 'ArrowDown') {
+        e.preventDefault();
+        const rows = rowsInOrder();
+        if (rows.length) selectRow(rows[0]);
+      }
+    });
+
     resultsEl.addEventListener('click', (e) => {
       const btn = e.target.closest('.behaviors-search-results__row');
       if (!btn) return;
@@ -872,7 +932,7 @@
         // re-run applyFilter and collapse the browse list to just this one
         // behavior, so picking the next one meant clearing the box first --
         // the list has to stay browsable while the panel changes beside it.
-        showLive(btn.dataset.browseToken, btn.dataset.variant || '', btn.dataset.label || '');
+        selectRow(btn, { focus: false });
         return;
       }
       // #664: render it in the panel beside the list. Deliberately NO
