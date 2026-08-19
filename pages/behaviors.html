@@ -385,7 +385,7 @@
       return Array.isArray(en) && en.length ? en : [''];
     }
     import(siteRoot() + 'src/core/tag-map.js')
-      .then((mod) => {
+      .then(async (mod) => {
         // #665: extensionMap, NOT elementMap. elementMap maps wb-* COMPONENT
         // TAGS to behavior names (wb-card, wb-button, wb-badge, ...), so
         // prefixing its values with "x-" produced a list of components wearing
@@ -415,12 +415,26 @@
         for (const [selector, beh] of Object.entries(mod.nativeMap)) {
           if (!autoHost[beh]) autoHost[beh] = selector;
         }
+        // #666: the x-* surface is split across TWO registries -- tag-map's
+        // extensionMap and wb-lazy's WB_LAZY_ONLY_ATTRIBUTES. 34 attributes
+        // used by real demos on this very page (x-fadein, x-lightbox,
+        // x-confirm, x-bounce, ...) live ONLY in the second one, so reading
+        // tag-map alone under-reported the behavior list by a third.
+        let lazyOnly = {};
+        try {
+          const lazy = await import(siteRoot() + 'src/core/wb-lazy.js');
+          lazyOnly = lazy.WB_LAZY_ONLY_ATTRIBUTES || {};
+        } catch (err) {
+          console.warn('[behaviors] could not read wb-lazy attribute table', err);
+        }
+        extensionMap = { ...lazyOnly, ...mod.extensionMap };
+
         const seen = new Set();
         allEntries = [];
-        Object.keys(mod.extensionMap)
+        Object.keys(extensionMap)
           .filter((a) => !a.startsWith('x-as-'))
           .forEach((attr) => {
-            const beh = mod.extensionMap[attr];
+            const beh = extensionMap[attr];
             const host = autoHost[beh];
             // Key on the BEHAVIOR for auto-injected ones, so x-progress and
             // x-progressbar (same behavior) collapse to a single <progress> row

@@ -142,7 +142,13 @@ const WB_LAZY_ONLY_ELEMENTS = {
 // is selector-table-driven, so it still needs these listed explicitly.
 // Porting wb.js's dynamic approach here would remove the need for this list
 // entirely -- a larger follow-up, not done as part of this consolidation.
-const WB_LAZY_ONLY_ATTRIBUTES = {
+// Exported (#666) so tooling can enumerate the FULL x-* surface. This table is
+// a second registry alongside tag-map.js's extensionMap, and the two diverge:
+// 34 x-* attributes used by real demos on pages/behaviors.html live only here,
+// so anything reading tag-map alone reports an incomplete behavior list.
+// Consolidating the two is tracked separately; exporting is the read-only step
+// that stops consumers silently under-reporting in the meantime.
+export const WB_LAZY_ONLY_ATTRIBUTES = {
   // mdhtml.js marks rendered code blocks with bare `x-pre`/`x-code` presence
   // attributes (src/wb-viewmodels/mdhtml.js) and relies on WB.scan() to pick
   // them up -- on wb.js that "just works" via its dynamic x-{name} shorthand
