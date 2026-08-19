@@ -92,7 +92,7 @@ function injectStyles() {
          paint on. It previously hid this by covering the whole viewport
          instead, which is the bug. Give it a real canvas by default. */
       min-width: 18rem;
-      min-height: 10rem;
+      min-height: 14rem;
     }
 
     /* The actual overlay. "inset: 0" sizes it to its CONTAINING BLOCK, where
@@ -115,10 +115,16 @@ function injectStyles() {
       z-index: 9999;
       pointer-events: none;
       mix-blend-mode: multiply; /* Darkens everything except the spot */
+      /* --wb-stagelight-radius is the EFFECTIVE radius: the author's size
+         capped to what the box can actually show (set in JS below). A circle
+         gradient's radius must be a length -- CSS cannot express "40% of the
+         box" here -- so the cap is computed rather than declared. Without it a
+         size larger than the box clips the falloff through a single edge and
+         only part of the effect is visible. Falls back to the raw size. */
       background: radial-gradient(
         circle at var(--x, 50%) var(--y, 50%), 
-        transparent var(--wb-stagelight-size), 
-        rgba(0,0,0,0.85) calc(var(--wb-stagelight-size) + 50px)
+        transparent var(--wb-stagelight-radius, var(--wb-stagelight-size)), 
+        rgba(0,0,0,0.85) calc(var(--wb-stagelight-radius, var(--wb-stagelight-size)) + 50px)
       );
       transition: background 0.1s ease-out; /* Smooth follow */
     }
@@ -255,6 +261,27 @@ export default function stagelight(element, options = {}) {
     // contains it the box IS the viewport and rect.left/top are 0, so
     // standalone behaviour is byte-identical to before.
     const overlay = element.querySelector('.wb-stagelight__spot');
+
+    // Cap the radius to the box so the WHOLE effect is visible. A spotlight
+    // configured at 400px inside a 288x160 demo box could only ever clip
+    // through one edge -- the falloff ring fell outside the box entirely.
+    // 0.35 of the smaller side leaves room for the ~50px falloff plus margin.
+    // Standalone the box is the viewport, where the author's size is almost
+    // always the smaller value and therefore wins unchanged.
+    const configuredPx = parseFloat(config.size) || 300;
+    const syncRadius = () => {
+      const r = overlay.getBoundingClientRect();
+      const limit = Math.min(r.width, r.height) * 0.35;
+      const effective = limit > 0 ? Math.min(configuredPx, limit) : configuredPx;
+      element.style.setProperty('--wb-stagelight-radius', `${Math.round(effective)}px`);
+    };
+    syncRadius();
+    let ro = null;
+    if (typeof ResizeObserver !== 'undefined') {
+      ro = new ResizeObserver(syncRadius);
+      ro.observe(overlay);
+    }
+
     const onMove = (e) => {
       const rect = overlay.getBoundingClientRect();
       element.style.setProperty('--x', `${e.clientX - rect.left}px`);
@@ -263,8 +290,11 @@ export default function stagelight(element, options = {}) {
 
     if (config.target === 'mouse') {
       window.addEventListener('mousemove', onMove);
-      cleanup = () => window.removeEventListener('mousemove', onMove);
     }
+    cleanup = () => {
+      window.removeEventListener('mousemove', onMove);
+      if (ro) ro.disconnect();
+    };
   } 
   else if (config.variant === 'fixture') {
     // Fixture Logic - Click to toggle

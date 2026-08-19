@@ -111,7 +111,22 @@ export function confetti(element, options = {}) {
   const config = {
     count: parseInt(options.count || element.getAttribute('count') || '50'),
     label: options.label || element.getAttribute('label') || 'Fire Confetti!',
+    // #655: `repeat` is declared in confetti.schema.json and shipped as an
+    // official example (`<wb-confetti repeat>with repeat</wb-confetti>`), but
+    // nothing ever read it -- the attribute was silently inert.
+    repeat: options.repeat ?? element.hasAttribute('repeat'),
+    // Schema calls these strings ("3s"); accept a bare number of ms too.
+    duration: options.duration || element.getAttribute('duration') || '3s',
+    delay: options.delay || element.getAttribute('delay') || '0s',
     ...options
+  };
+
+  // "3s" / "250ms" / "3" -> milliseconds
+  const toMs = (v) => {
+    if (typeof v === 'number') return v;
+    const m = String(v).trim().match(/^([\d.]+)\s*(ms|s)?$/);
+    if (!m) return 0;
+    return m[2] === 'ms' ? parseFloat(m[1]) : parseFloat(m[1]) * 1000;
   };
   
   element.classList.add('wb-confetti-trigger');
@@ -210,8 +225,32 @@ export function confetti(element, options = {}) {
   };
   
   element.onclick = fire;
-  element.wbConfetti = { fire };
-  return () => element.classList.remove('wb-confetti-trigger');
+
+  // #655: `repeat` loops the burst unattended after an optional `delay`.
+  // Held in a variable and cleared by the returned teardown so the interval
+  // cannot outlive the element -- a leaked timer here would keep appending
+  // fixed-position containers to <body> forever.
+  let repeatTimer = null;
+  let startTimer = null;
+  const stopRepeat = () => {
+    if (repeatTimer !== null) { clearInterval(repeatTimer); repeatTimer = null; }
+    if (startTimer !== null) { clearTimeout(startTimer); startTimer = null; }
+  };
+  const startRepeat = () => {
+    stopRepeat();
+    const every = Math.max(toMs(config.duration) || 3000, 500);
+    startTimer = setTimeout(() => {
+      fire();
+      repeatTimer = setInterval(fire, every);
+    }, toMs(config.delay));
+  };
+  if (config.repeat) startRepeat();
+
+  element.wbConfetti = { fire, startRepeat, stopRepeat };
+  return () => {
+    stopRepeat();
+    element.classList.remove('wb-confetti-trigger');
+  };
 }
 
 /**
