@@ -109,6 +109,17 @@ function injectStyles() {
        styles/behaviors/demo.css -- BOTH are required, neither suffices.
        NOTE: this block sits inside a JS template literal -- never use a
        backtick here, it terminates the string. */
+    /* #658: off state. Only the OVERLAY is hidden -- the host and its content
+       stay visible, which is the whole point of being able to switch the
+       effect off and read what is underneath. */
+    .wb-stagelight--spotlight[data-wb-stagelight-off] .wb-stagelight__spot {
+      display: none;
+    }
+
+    .wb-stagelight--spotlight {
+      cursor: pointer;
+    }
+
     .wb-stagelight__spot {
       position: fixed;
       inset: 0;
@@ -250,6 +261,7 @@ export default function stagelight(element, options = {}) {
   // === BEHAVIOR LOGIC ===
   
   let cleanup = () => {};
+  let spotlightApi = null;
 
   if (config.variant === 'spotlight') {
     // Mouse Tracking Logic
@@ -291,8 +303,47 @@ export default function stagelight(element, options = {}) {
     if (config.target === 'mouse') {
       window.addEventListener('mousemove', onMove);
     }
+
+    // #658: let a viewer switch the effect off and read the content plainly.
+    // The fixture variant already toggles (click its housing); spotlight had no
+    // way to stop, which is an inconsistency between variants of one component.
+    let isOn = !element.hasAttribute('off');
+    const applyState = () => {
+      if (isOn) element.removeAttribute('data-wb-stagelight-off');
+      else element.setAttribute('data-wb-stagelight-off', '');
+      element.setAttribute('aria-pressed', String(isOn));
+    };
+    const toggle = () => { isOn = !isOn; applyState(); };
+
+    // It is an interactive control now, not decoration, so make it reachable
+    // and announced rather than mouse-only.
+    if (!element.hasAttribute('tabindex')) element.setAttribute('tabindex', '0');
+    if (!element.hasAttribute('role')) element.setAttribute('role', 'switch');
+    if (!element.hasAttribute('aria-label')) {
+      element.setAttribute('aria-label', 'Toggle spotlight effect');
+    }
+    applyState();
+
+    const onKey = (e) => {
+      if (e.key === 'Enter' || e.key === ' ' || e.key === 'Spacebar') {
+        e.preventDefault();
+        toggle();
+      }
+    };
+    element.addEventListener('click', toggle);
+    element.addEventListener('keydown', onKey);
+
+    spotlightApi = {
+      toggle,
+      on: () => { isOn = true; applyState(); },
+      off: () => { isOn = false; applyState(); },
+      get isOn() { return isOn; },
+    };
+
     cleanup = () => {
       window.removeEventListener('mousemove', onMove);
+      element.removeEventListener('click', toggle);
+      element.removeEventListener('keydown', onKey);
       if (ro) ro.disconnect();
     };
   } 
@@ -319,6 +370,19 @@ export default function stagelight(element, options = {}) {
     setIntensity: (i) => element.style.setProperty('--wb-stagelight-intensity', i),
     setSize: (s) => element.style.setProperty('--wb-stagelight-size', s)
   };
+
+  // #658: spotlight-only controls. Assigned explicitly rather than spread --
+  // object spread would copy `isOn`'s CURRENT value and freeze it, where the
+  // caller needs a live read of the toggle state.
+  if (spotlightApi) {
+    element.wbStageLight.toggle = spotlightApi.toggle;
+    element.wbStageLight.on = spotlightApi.on;
+    element.wbStageLight.off = spotlightApi.off;
+    Object.defineProperty(element.wbStageLight, 'isOn', {
+      get: () => spotlightApi.isOn,
+      enumerable: true,
+    });
+  }
 
   // Return cleanup function
   return () => {

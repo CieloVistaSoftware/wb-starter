@@ -928,7 +928,13 @@ const SCHEMA_EXCLUDED_TAGS = new Set([
   // the host is empty -- a correct guard that the schema wipe defeated, since
   // textContent was always empty by the time it ran. Authored content was
   // silently replaced on every <wb-confetti>.
-  'wb-confetti'
+  'wb-confetti',
+  // #656: stagelight.schema.json's $view builds source/beam/spot/housing/label
+  // -- the SAME elements stagelight() builds unconditionally for every variant.
+  // That is precisely the schema-vs-behavior race this list exists for
+  // ("whichever finishes last wins via its own innerHTML = ''"), and it also
+  // destroyed the host's authored text on every <wb-stagelight>.
+  'wb-stagelight'
 ]);
 
 // x-{name} attribute matching a registered schema: <article x-card> resolves
