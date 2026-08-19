@@ -36,6 +36,7 @@ import { writeFile, readFile, mkdir } from "fs/promises";
 import { join, dirname, basename } from "path";
 import { fileURLToPath } from "url";
 import { createGuards, isProcessRunning } from "./lib/test-lock.mjs";
+import { parsePlaywrightSummary } from "./lib/playwright-summary.mjs";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
@@ -405,15 +406,14 @@ async function runMonitor(args) {
     status.output = stdout.length > 50000 ? stdout.slice(-50000) : stdout;
     status.errors = stderr.length > 10000 ? stderr.slice(-10000) : stderr;
 
-    // Final counts — prefer Playwright summary if available, else use our tracked counts
-    const combined = stdout + stderr;
-    const passMatch = combined.match(/(\d+) passed/);
-    const failMatch = combined.match(/(\d+) failed/);
-    const skipMatch = combined.match(/(\d+) skipped/);
-    if (passMatch) status.passed = parseInt(passMatch[1]);
-    if (failMatch) status.failed = parseInt(failMatch[1]);
-    if (skipMatch) status.skipped = parseInt(skipMatch[1]);
-    status.total = status.passed + status.failed + status.skipped;
+    // Final counts (#652) — parsed by scripts/lib/playwright-summary.mjs, which
+    // documents why the previous inline regexes reported unstable numbers.
+    const summary = parsePlaywrightSummary(stdout + stderr);
+    if (summary.passed !== null) status.passed = summary.passed;
+    if (summary.failed !== null) status.failed = summary.failed;
+    if (summary.skipped !== null) status.skipped = summary.skipped;
+    status.flaky = summary.flaky || 0;
+    status.total = status.passed + status.failed + status.skipped + status.flaky;
     status.failures = testResults.filter(t => t.status === "failed").map(t => ({
       file: t.file,
       name: t.name,
