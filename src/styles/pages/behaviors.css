@@ -538,3 +538,46 @@ footer a:hover {
   background: var(--bg-tertiary, #111827);
   box-shadow: inset 0.1875rem 0 0 var(--primary-color, #6366f1);
 }
+
+
+/* #666: the behavior's own docs/behaviors/{name}.md, rendered inline under the
+   example and its source. Collapsed by default -- a full doc is often longer
+   than the example, and the running component is what the reader came for. */
+.behaviors-live__doc {
+  border-top: 1px solid var(--border-color, #374151);
+  background: var(--bg-secondary, #1f2937);
+}
+
+.behaviors-live__doc[hidden] { display: none; }
+
+.behaviors-live__doc-summary {
+  padding: 0.6rem 1rem;
+  cursor: pointer;
+  color: var(--text-secondary, #9ca3af);
+  font-size: 0.8rem;
+  text-align: left;
+  user-select: none;
+}
+
+.behaviors-live__doc-summary:hover {
+  color: var(--text-primary, #e5e7eb);
+}
+
+.behaviors-live__doc-body {
+  padding: 0 1rem 1rem;
+  max-height: 24rem;
+  overflow-y: auto;
+  text-align: left;
+  font-size: 0.85rem;
+  line-height: 1.6;
+}
+
+/* Rendered markdown needs normal flow, and must not inherit the hero's
+   centring (same fix demo.css carries for its own panels). */
+.behaviors-live__doc-body * { text-align: left; }
+
+.behaviors-live__doc-body pre {
+  overflow-x: auto;
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+}

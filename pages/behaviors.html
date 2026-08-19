@@ -32,6 +32,14 @@
            project's own syntax-highlighting pair (theme-driven colours from
            code.css -- no literals, per the zero-hardcoded-colours rule). -->
       <div id="behaviors-live-code" class="behaviors-live__code"></div>
+      <!-- #666 — John: "add a new element under this that shows the .md doc in
+           html". docs/behaviors/{name}.md rendered inline, so every option a
+           behavior supports is visible next to the running example rather than
+           a page away. -->
+      <details id="behaviors-live-doc" class="behaviors-live__doc" hidden>
+        <summary class="behaviors-live__doc-summary">Documentation</summary>
+        <div id="behaviors-live-doc-body" class="behaviors-live__doc-body"></div>
+      </details>
     </div>
   </div>
 </div>
@@ -300,6 +308,58 @@
     const liveNote = document.getElementById('behaviors-live-note');
     const liveStage = document.getElementById('behaviors-live-stage');
     const liveCode = document.getElementById('behaviors-live-code');
+    const liveDoc = document.getElementById('behaviors-live-doc');
+    let liveDocBody = document.getElementById('behaviors-live-doc-body');
+
+    // Cache: the same doc is re-requested every time a reader arrows back over
+    // a behavior, and a 404 is worth remembering too (49 docs, 143 entries --
+    // most misses are permanent).
+    const docCache = new Map();
+
+    async function showDoc(behavior) {
+      liveDoc.hidden = true;
+      if (!behavior) return;
+
+      // A FRESH host element per behavior. WB.inject() will not re-apply a
+      // behavior to an element that already carries it, so reusing one div
+      // rendered the first doc and then left every subsequent one as raw
+      // markdown text (confirmed: x-accordion rendered, x-chip and x-ripple
+      // did not). Replacing the node sidesteps that entirely.
+      const fresh = document.createElement('div');
+      fresh.id = 'behaviors-live-doc-body';
+      fresh.className = 'behaviors-live__doc-body';
+      liveDocBody.replaceWith(fresh);
+      liveDocBody = fresh;
+
+      let md = docCache.get(behavior);
+      if (md === undefined) {
+        try {
+          const res = await fetch(`${siteRoot()}docs/behaviors/${behavior}.md`);
+          md = res.ok ? await res.text() : null;
+        } catch (err) {
+          md = null;
+        }
+        docCache.set(behavior, md);
+      }
+      if (!md) return; // no doc for this behavior -- show nothing rather than an empty panel
+
+      liveDoc.hidden = false;
+      // textContent, not innerHTML: mdhtml.js decodes-then-parses and expects
+      // the browser to have HTML-escaped the raw markdown first. Assigning raw
+      // markdown via innerHTML double-escapes it (the pattern pages/issues.html
+      // documents for the same reason).
+      liveDocBody.textContent = md;
+      try {
+        const mod = await import(siteRoot() + 'src/core/wb-lazy.js');
+        const WB = mod.default || mod.WB || window.WB;
+        // autoLiveRender:false -- a doc that ILLUSTRATES a <wb-*> example must
+        // not have that example promoted into a live, fetching element inside
+        // this panel; the running example above is the live one.
+        if (WB && WB.inject) await WB.inject(liveDocBody, 'mdhtml', { autoLiveRender: false });
+      } catch (err) {
+        console.warn('[behaviors] could not render doc for ' + behavior, err);
+      }
+    }
 
     // The markup for most behaviors is already on this page, inside the
     // <wb-demo> blocks. Prefer a demo whose source ACTUALLY uses the token as
@@ -534,6 +594,7 @@
       liveEl.hidden = false;
       // John: "Switch these two, behaivor first, variant 2nd".
       const shown = label || token;
+      showDoc(extensionMap[token] || token.replace(/^x-/, ''));
       liveToken.textContent = variant ? `${shown} · ${variant}` : shown;
 
       if (!src) {
