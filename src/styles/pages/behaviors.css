@@ -735,3 +735,12 @@ footer a:hover {
 }
 
 .behaviors-live__events-empty[hidden] { display: none; }
+
+
+/* #666: the handler block now sits last, below the live events. Same surface as
+   the events panel so the two read as one "how it behaves" section. */
+.behaviors-live__handler {
+  border-top: 1px solid var(--border-color, #374151);
+  background: var(--bg-secondary, #1f2937);
+  text-align: left;
+}

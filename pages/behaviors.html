@@ -28,32 +28,33 @@
         <span id="behaviors-live-note" class="behaviors-live__note"></span>
       </header>
       <div id="behaviors-live-stage" class="behaviors-live__stage"></div>
-      <!-- #666 — John: "add another element which shows the click event being
-           handled" / "Show how to set up the event handler and then show the
-           events in action right under this element". Sits directly beneath the
-           live example: first HOW to listen, then what actually fires. A
-           behavior's observable output is often an event rather than a visual
-           change (x-copy, x-confirm, x-toast). -->
+
+      <!-- #666 — John: "switch the html to be right under the rendered thing,
+           then put the event hook up last, but show the events right under the
+           rendered element". Order is deliberate:
+             1. the rendered element
+             2. its HTML, immediately beneath it
+             3. the events it fires, as you interact
+             4. the handler you would write, last -- it is reference material,
+                not something to watch. -->
+      <div id="behaviors-live-code" class="behaviors-live__code"></div>
+
       <div id="behaviors-live-events" class="behaviors-live__events">
         <div class="behaviors-live__events-head">
-          <span>Event handler</span>
+          <span>Events</span>
           <span id="behaviors-live-events-hint" class="behaviors-live__events-hint">interact with the example above</span>
         </div>
-        <div id="behaviors-live-events-snippet" class="behaviors-live__events-code"></div>
         <ol id="behaviors-live-events-log" class="behaviors-live__events-log"></ol>
         <p id="behaviors-live-events-empty" class="behaviors-live__events-empty">
           No events yet — click the example above and they appear here.
         </p>
       </div>
 
-      <!-- Built at click time so it can carry x-behavior="pre"/"code", the
-           project's own syntax-highlighting pair (theme-driven colours from
-           code.css -- no literals, per the zero-hardcoded-colours rule). -->
-      <div id="behaviors-live-code" class="behaviors-live__code"></div>
-      <!-- #666 — John: "add a new element under this that shows the .md doc in
-           html". docs/behaviors/{name}.md rendered inline, so every option a
-           behavior supports is visible next to the running example rather than
-           a page away. -->
+      <div id="behaviors-live-handler" class="behaviors-live__handler">
+        <div class="behaviors-live__events-head"><span>Event handler</span></div>
+        <div id="behaviors-live-events-snippet" class="behaviors-live__events-code"></div>
+      </div>
+
       <!-- x-ignore: this <details> is page chrome, not a demo. Without it WB
            auto-injects the `details` behavior (nativeMap maps details ->
            details), which sets inline border/radius styles and restructures the
