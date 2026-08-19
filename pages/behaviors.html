@@ -114,8 +114,19 @@
       const props = (sc && sc.properties) || {};
       const out = [];
       for (const [name, def] of Object.entries(props)) {
-        if (!def || !Array.isArray(def.enum) || !def.enum.length) continue;
-        for (const value of def.enum) out.push({ prop: name, value });
+        if (!def) continue;
+        if (Array.isArray(def.enum) && def.enum.length) {
+          for (const value of def.enum) out.push({ prop: name, value });
+        } else if (def.type === 'boolean') {
+          // #666 — John: "we need many permutations of table". table declares
+          // NO enums; every axis it has is a boolean (sortable, filterable,
+          // paginated, striped, hoverable, compact, bordered), so it showed a
+          // single blank row while having seven real options. A boolean flag is
+          // an axis like any other -- one row per flag, showing it enabled.
+          // 114 flags across 50 entries; NOT combined, since 7 booleans would
+          // be 128 permutations for table alone.
+          out.push({ prop: name, value: 'true', boolean: true });
+        }
       }
       // Sorted so `variant` leads -- it is the axis most readers look for --
       // and the rest follow alphabetically rather than in schema-key order.
@@ -129,6 +140,7 @@
     /** How an option reads in the variant column: bare for variant, prop=value otherwise. */
     function optionLabel(opt) {
       if (!opt || !opt.value) return '';
+      if (opt.boolean) return opt.prop;              // `striped`, not `striped=true`
       return opt.prop === 'variant' ? opt.value : `${opt.prop}=${opt.value}`;
     }
     import(siteRoot() + 'src/core/tag-map.js')
@@ -290,6 +302,7 @@
           if (variant) {
             btn.dataset.variant = variant;
             btn.dataset.prop = opt.prop;
+            if (opt.boolean) btn.dataset.boolean = '1';
           }
 
           // John: "change the variant to be in col. two" -- name first, variant
@@ -421,8 +434,17 @@
     // shows the ERROR alert rather than whatever variant the page's demo
     // happened to hardcode. Rewrites an existing variant=, or adds one to the
     // first tag when absent.
-    function withOption(src, attr, prop, value) {
+    function withOption(src, attr, prop, value, isBoolean) {
       if (!value) return src;
+
+      // Standard §20: booleans are authored as BARE attributes. Writing
+      // striped="true" would both misrepresent the API and, for flags the
+      // behavior reads with `!== 'false'`, be indistinguishable from default.
+      if (isBoolean) {
+        const bare = new RegExp('\s' + prop + '(?=[\s>=/])', 'i');
+        if (bare.test(src)) return src;
+        return src.replace(/^(\s*<[a-zA-Z][\w-]*)/, `$1 ${prop}`);
+      }
 
       // Rewrite whichever attribute the example actually used. Several schemas
       // declare ALIASES for variant -- alert's is `type` -- and the behavior
@@ -495,10 +517,10 @@
       }
       return out.join('');
     }
-    function generatedExample(attr, variant, label, prop) {
+    function generatedExample(attr, variant, label, prop, isBool) {
       const behavior = extensionMap[attr] || attr.replace(/^x-/, '');
       const host = semanticHostFor(behavior);
-      const v = variant ? ` ${prop || 'variant'}="${variant}"` : '';
+      const v = variant ? (isBool ? ` ${prop}` : ` ${prop || 'variant'}="${variant}"`) : '';
 
       // Auto-injected behaviors need NO attribute -- writing the semantic
       // element is the whole authoring form (John: "<button variant='primary'>
@@ -626,14 +648,16 @@
       return 'no background or border — plain';
     }
 
-    async function showLive(token, variant, label, prop) {
+    async function showLive(token, variant, label, prop, isBool) {
       const raw = sourceFor(token);
-      const src = raw ? withOption(raw, token, prop, variant) : raw;
+      const src = raw ? withOption(raw, token, prop, variant, isBool) : raw;
       liveEl.hidden = false;
       // John: "Switch these two, behaivor first, variant 2nd".
       const shown = label || token;
       showDoc(extensionMap[token] || token.replace(/^x-/, ''));
-      const optionText = variant ? (prop && prop !== 'variant' ? `${prop}=${variant}` : variant) : '';
+      const optionText = variant
+        ? (isBool ? prop : (prop && prop !== 'variant' ? `${prop}=${variant}` : variant))
+        : '';
       liveToken.textContent = optionText ? `${shown} · ${optionText}` : shown;
 
       if (!src) {
@@ -642,7 +666,7 @@
         // example and run it. The whole point of an x-* behavior is that ANY
         // element can carry it, so the only real question is which host to
         // demonstrate it on.
-        const generated = generatedExample(token, variant, label, prop);
+        const generated = generatedExample(token, variant, label, prop, isBool);
         liveNote.textContent = 'generated example — no demo on this page';
         liveCode.innerHTML = '';
         liveStage.innerHTML = generated;
@@ -692,7 +716,8 @@
         resultsEl.scrollTop = rowBottom - resultsEl.clientHeight;
       }
       if (focus) row.focus({ preventScroll: true });
-      showLive(row.dataset.browseToken, row.dataset.variant || '', row.dataset.label || '', row.dataset.prop || '');
+      showLive(row.dataset.browseToken, row.dataset.variant || '', row.dataset.label || '',
+               row.dataset.prop || '', row.dataset.boolean === '1');
     }
 
     function moveSelection(delta) {

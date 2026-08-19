@@ -1,7 +1,7 @@
 {
   "generatedBy": "scripts/build-behavior-examples.mjs",
   "source": "pages/behaviors.html",
-  "count": 48,
+  "count": 49,
   "demoBlocks": 88,
   "examples": {
     "x-ripple": {
@@ -58,7 +58,7 @@
         "<div x-alert type=\"success\" message=\"Success alert message\"></div>",
         "<div x-alert type=\"warning\" message=\"Warning alert message\"></div>",
         "<div x-alert type=\"error\" message=\"Error alert message\"></div>",
-        "<div x-alert type=\"info\" title=\"Dismissible\" message=\"Click the × to dismiss this alert\" dismissible></div>"
+        "<div x-alert type=\"info\" title=\"Dismissible\" message=\"Click the \u00d7 to dismiss this alert\" dismissible></div>"
       ]
     },
     "x-popover": {
@@ -96,7 +96,7 @@
       "alternates": []
     },
     "x-kbd": {
-      "source": "<p>Press <span x-kbd>Ctrl</span> + <span x-kbd>S</span> to save, or <span x-kbd>⌘</span> + <span x-kbd>K</span> on Mac.</p>",
+      "source": "<p>Press <span x-kbd>Ctrl</span> + <span x-kbd>S</span> to save, or <span x-kbd>\u2318</span> + <span x-kbd>K</span> on Mac.</p>",
       "alternates": []
     },
     "x-image": {
@@ -142,7 +142,7 @@
       "alternates": []
     },
     "x-heartbeat": {
-      "source": "<button class=\"effect-demo\" x-heartbeat>💓 Heartbeat</button>",
+      "source": "<button class=\"effect-demo\" x-heartbeat>\ud83d\udc93 Heartbeat</button>",
       "alternates": []
     },
     "x-fadein": {
@@ -165,45 +165,45 @@
       "alternates": []
     },
     "x-confetti": {
-      "source": "<button variant=\"primary\" x-confetti>🎊 Confetti</button>",
+      "source": "<button variant=\"primary\" x-confetti>\ud83c\udf8a Confetti</button>",
       "alternates": []
     },
     "x-fireworks": {
-      "source": "<button variant=\"primary\" x-fireworks>🎆 Fireworks</button>",
+      "source": "<button variant=\"primary\" x-fireworks>\ud83c\udf86 Fireworks</button>",
       "alternates": []
     },
     "x-snow": {
-      "source": "<button variant=\"primary\" x-snow>❄️ Snow</button>",
+      "source": "<button variant=\"primary\" x-snow>\u2744\ufe0f Snow</button>",
       "alternates": []
     },
     "x-sparkle": {
-      "source": "<button variant=\"primary\" x-sparkle>✨ Sparkle</button>",
+      "source": "<button variant=\"primary\" x-sparkle>\u2728 Sparkle</button>",
       "alternates": []
     },
     "x-glow": {
-      "source": "<button variant=\"primary\" x-glow>💡 Glow</button>",
+      "source": "<button variant=\"primary\" x-glow>\ud83d\udca1 Glow</button>",
       "alternates": []
     },
     "x-rainbow": {
-      "source": "<button variant=\"primary\" x-rainbow>🌈 Rainbow</button>",
+      "source": "<button variant=\"primary\" x-rainbow>\ud83c\udf08 Rainbow</button>",
       "alternates": []
     },
     "x-copy": {
-      "source": "<button variant=\"primary\" x-copy copy-text=\"Text copied to clipboard!\">📋 Copy Text</button>",
+      "source": "<button variant=\"primary\" x-copy copy-text=\"Text copied to clipboard!\">\ud83d\udccb Copy Text</button>",
       "alternates": [
-        "<button variant=\"primary\" x-copy copy-text=\"npm install wb-framework\">📋 Copy Command</button>"
+        "<button variant=\"primary\" x-copy copy-text=\"npm install wb-framework\">\ud83d\udccb Copy Command</button>"
       ]
     },
     "x-share": {
-      "source": "<button variant=\"secondary\" x-share share-title=\"wb-starter\" share-url=\"https://example.com\">📤 Share</button>",
+      "source": "<button variant=\"secondary\" x-share share-title=\"wb-starter\" share-url=\"https://example.com\">\ud83d\udce4 Share</button>",
       "alternates": []
     },
     "x-print": {
-      "source": "<button variant=\"secondary\" x-print>🖨️ Print</button>",
+      "source": "<button variant=\"secondary\" x-print>\ud83d\udda8\ufe0f Print</button>",
       "alternates": []
     },
     "x-fullscreen": {
-      "source": "<button variant=\"secondary\" x-fullscreen>⛶ Fullscreen</button>",
+      "source": "<button variant=\"secondary\" x-fullscreen>\u26f6 Fullscreen</button>",
       "alternates": []
     },
     "x-clock": {
@@ -219,11 +219,15 @@
       "alternates": []
     },
     "x-darkmode": {
-      "source": "<button variant=\"primary\" x-darkmode>🌙 Toggle Dark Mode</button>",
+      "source": "<button variant=\"primary\" x-darkmode>\ud83c\udf19 Toggle Dark Mode</button>",
       "alternates": []
     },
     "x-truncate": {
       "source": "<p x-truncate lines=\"2\" class=\"truncate-box\">\r\n        This is a very long text that will be truncated after two lines. Lorem ipsum dolor sit amet, consectetur\r\n        adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.\r\n      </p>",
+      "alternates": []
+    },
+    "x-table": {
+      "source": "<wb-table\n  headers=\"Component,Behavior,Variants,Docs\"\n  rows='[[\"wb-alert\",\"alert\",\"4\",\"yes\"],[\"wb-badge\",\"badge\",\"9\",\"yes\"],[\"wb-button\",\"button\",\"8\",\"yes\"],[\"wb-card\",\"card\",\"4\",\"yes\"],[\"wb-table\",\"table\",\"0\",\"yes\"]]'>\n</wb-table>",
       "alternates": []
     }
   }
