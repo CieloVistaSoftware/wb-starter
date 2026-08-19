@@ -372,6 +372,7 @@
     }
     let allXAttributes = [];
     let extensionMap = {};
+    let nativeMap = {};
     const schemaByName = new Map();
 
     // #666: one row per VARIANT, not one per behavior -- John: "add one entry
@@ -398,7 +399,12 @@
         // attributes share one behavior function, and mapping through the
         // values would silently collapse them.
         extensionMap = mod.extensionMap;
-        allXAttributes = Object.keys(mod.extensionMap).sort();
+        nativeMap = mod.nativeMap || {};
+        // John: "do not include any as- behaviors". x-as-{name} is the morphing
+        // form (x-as-card, x-as-article) -- it re-renders an element AS another
+        // component rather than adding a behavior to it, so it belongs with the
+        // components, not in a behaviors list.
+        allXAttributes = Object.keys(mod.extensionMap).filter((a) => !a.startsWith('x-as-')).sort();
         // Variants come from the schema index (one fetch, not 105). Failure is
         // non-fatal: the list still renders, just without variant rows.
         return fetch(siteRoot() + 'data/schema-index.json')
@@ -611,41 +617,54 @@
       return src.replace(/^(\s*<[a-zA-Z][\w-]*)/, `$1 variant="${variant}"`);
     }
 
-    async function showLive(token, variant) {
-      const raw = sourceFor(token);
-      const src = raw ? withVariant(raw, token, variant) : raw;
-      liveEl.hidden = false;
-      liveToken.textContent = variant ? `${variant} · ${token}` : token;
-
-      if (!src) {
-        // An honest empty state: the canonical list comes from tag-map.js and
-        // includes behaviors with no example on this page at all. Saying so
-        // beats rendering an empty box that looks broken.
-        liveStage.innerHTML = '';
-        liveCode.innerHTML = '';
-        liveNote.textContent = 'no example on this page yet';
-        return;
+    // Which element should host a generated example? An x-* behavior can sit on
+    // ANY element, so the honest choice is the most semantic host available:
+    //   1. the native element the framework already injects this behavior into
+    //      (tag-map's nativeMap -- e.g. button -> button, article -> card)
+    //   2. failing that, the behavior's own name IF it is a real HTML element,
+    //      which is what makes x-article render a real <article>
+    //   3. otherwise <div>, the neutral fallback
+    let nativeByBehavior = null;
+    function semanticHostFor(behavior) {
+      if (!nativeByBehavior) {
+        nativeByBehavior = {};
+        for (const [selector, beh] of Object.entries(nativeMap || {})) {
+          // nativeMap keys are selectors ('input[type="checkbox"]'); only the
+          // bare-tag ones are usable as a host element name.
+          if (/^[a-z][a-z0-9-]*$/.test(selector) && !nativeByBehavior[beh]) {
+            nativeByBehavior[beh] = selector;
+          }
+        }
       }
+      if (nativeByBehavior[behavior]) return nativeByBehavior[behavior];
+      // A real HTML element with this name? createElement returns
+      // HTMLUnknownElement for anything the parser does not recognise.
+      const probe = document.createElement(behavior);
+      const known = !(probe instanceof HTMLUnknownElement) && behavior.indexOf('-') === -1;
+      return known ? behavior : 'div';
+    }
 
-      liveNote.textContent = 'running live';
-      liveStage.innerHTML = src;
+    const VOID = new Set(['img', 'input', 'br', 'hr', 'source', 'track', 'embed', 'col']);
+    function generatedExample(attr, variant) {
+      const behavior = extensionMap[attr] || attr.replace(/^x-/, '');
+      const host = semanticHostFor(behavior);
+      const v = variant ? ` variant="${variant}"` : '';
+      if (VOID.has(host)) return `<${host} ${attr}${v}>`;
+      return `<${host} ${attr}${v}>
+  Example ${attr} content
+</${host}>`;
+    }
 
-      // Standard §5: source is pretty-printed VERTICAL, one attribute per line
-      // -- the same formatHtml() the wb-demo view-source panels and the
-      // Playground's Format button use, rather than a second formatter that
-      // would drift from them. Wrapped in the x-behavior="pre"/"code" pair so
-      // it picks up the project's existing hljs highlighting and its
-      // theme-driven colours.
+    // Shared by the real-demo and generated-example paths: pretty-print the
+    // source and hand it to the project's own pre/code highlighting pair.
+    async function renderSource(src) {
       let pretty = src;
       try {
         const demoMod = await import(siteRoot() + 'src/wb-viewmodels/demo.js');
         if (demoMod.formatHtml) pretty = demoMod.formatHtml(src) || src;
       } catch (err) {
-        // Formatting is a nicety; showing the raw source still beats showing
-        // nothing, so this must never block the preview.
         console.warn('[behaviors] could not format source', err);
       }
-
       liveCode.innerHTML = '';
       const pre = document.createElement('pre');
       pre.setAttribute('x-behavior', 'pre');
@@ -656,24 +675,42 @@
       pre.appendChild(code);
       liveCode.appendChild(pre);
 
-      // Upgrade the injected markup. WB is already initialised by the page, so
-      // this only needs to scan the new subtree -- eager, because the stage is
-      // small and lazy registration would leave it blank until scrolled.
       try {
         const mod = await import(siteRoot() + 'src/core/wb-lazy.js');
         const WB = mod.default || mod.WB || window.WB;
         if (WB && WB.scan) {
           await WB.scan(liveStage, { eager: true });
-          // eager: the pre/code pair is built synchronously above, so there is
-          // no reason to defer its highlighting to an IntersectionObserver --
-          // that leaves the panel showing unstyled text for an indeterminate
-          // delay (the same trap demo.js documents for its own view-source).
           await WB.scan(liveCode, { eager: true });
         }
       } catch (err) {
         liveNote.textContent = 'could not run this example';
-        console.warn('[behaviors] live preview failed for ' + token, err);
+        console.warn('[behaviors] live preview failed', err);
       }
+    }
+
+    async function showLive(token, variant) {
+      const raw = sourceFor(token);
+      const src = raw ? withVariant(raw, token, variant) : raw;
+      liveEl.hidden = false;
+      liveToken.textContent = variant ? `${variant} · ${token}` : token;
+
+      if (!src) {
+        // John: "x-article shows nothing shouldn't it at least show a semantic
+        // article?" -- yes. Rather than an empty box, synthesise a minimal
+        // example and run it. The whole point of an x-* behavior is that ANY
+        // element can carry it, so the only real question is which host to
+        // demonstrate it on.
+        const generated = generatedExample(token, variant);
+        liveNote.textContent = 'generated example — no demo on this page';
+        liveCode.innerHTML = '';
+        liveStage.innerHTML = generated;
+        await renderSource(generated);
+        return;
+      }
+
+      liveNote.textContent = 'running live';
+      liveStage.innerHTML = src;
+      await renderSource(src);
     }
 
     resultsEl.addEventListener('click', (e) => {
