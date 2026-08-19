@@ -31,7 +31,11 @@ server.setRequestHandler(ListToolsRequestSchema, async () => {
         name: "npm_test_async",
         description:
           "Launch tests ASYNCHRONOUSLY via npm run test:async. Returns immediately. " +
-          "Only ONE test run at a time (enforced by lock file). " +
+          "Only ONE suite run at a time MACHINE-WIDE (enforced by a lock in " +
+          "~/.wb-starter, shared across every worktree and clone), and at most " +
+          "WB_MAX_PARALLEL_SINGLE single-spec runs. A launch is REJECTED rather " +
+          "than queued when the cap is hit or the machine is low on memory - " +
+          "read the error, wait, and retry; do not work around it. " +
           "Poll data/test-status.json to monitor. Final results in data/test-results.json.",
         inputSchema: {
           type: "object",
@@ -95,14 +99,19 @@ async function launchTestsAsync(filter) {
   try {
     const result = await runCommand("npm", parts, PROJECT_DIR);
 
-    // The script returns immediately, so this should be fast.
-    // Check if it was blocked by the lock.
-    if (result.exitCode === 1 && result.stderr.includes("already running")) {
+    // The script returns immediately, so this should be fast. A non-zero exit
+    // means the launch was refused - suite lock held elsewhere, single-run slots
+    // full, or the machine is low on memory. Surface the reason verbatim instead
+    // of swallowing it behind empty stdout (#651).
+    if (result.exitCode !== 0) {
+      const reason = (result.stderr || result.stdout || "").trim() ||
+        `test:async exited with code ${result.exitCode}`;
       return {
         content: [
           {
             type: "text",
-            text: `\u274c ${result.stderr.trim()}\n\nPoll \`data/test-status.json\` to monitor the active run.`,
+            text: `${reason}\n\nThis is a machine-wide cap, not a per-worktree one. ` +
+              `Wait for the active run to finish and retry - do not bypass it.`,
           },
         ],
         isError: true,
