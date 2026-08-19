@@ -156,18 +156,17 @@ const WB_LAZY_ONLY_ATTRIBUTES = {
   'x-pre': 'pre',
   'x-code': 'code',
   'x-breadcrumb': 'breadcrumb',
-  'x-toast': 'toast',
   'x-notify': 'notify',
   'x-typewriter': 'typewriter',
   'x-bounce': 'bounce',
   'x-pulse': 'pulse',
   'x-rainbow': 'rainbow',
-  'x-copy': 'copy',
+  // x-copy (#645): moved to tag-map.js's extensionMap (shared with wb.js) --
+  // see the comment there for the x-copybutton distinction.
   // x-copybutton (#291) — overlays a separate positioned copy button on ANY
   // element (distinct from x-copy, which makes the element itself the
   // trigger). See src/wb-viewmodels/copy.js's copyButton().
   'x-copybutton': 'copybutton',
-  'x-collapse': 'collapse',
   'x-fadein': 'fadein',
   'x-shake': 'shake',
   // Entrance / attention-seeker animations + relative time — behaviors exist in
@@ -183,46 +182,33 @@ const WB_LAZY_ONLY_ATTRIBUTES = {
   'x-flip': 'flip',
   'x-flash': 'flash',
   'x-relativetime': 'relativetime',
-  'x-form': 'form',
   'x-password': 'password',
-  'x-tags': 'tags',
-  'x-file': 'file',
-  'x-masked': 'masked',
   'x-stepper': 'stepper',
-  'x-counter': 'counter',
-  'x-autocomplete': 'autocomplete',
   'x-otp': 'otp',
-  'x-colorpicker': 'colorpicker',
   'x-search': 'search',
-  'x-floatinglabel': 'floatinglabel',
-  'x-label': 'label', // x-label="text" on any form control (input, select, ...) — see src/wb-viewmodels/label.js
   'x-clock': 'clock',
   'x-countdown': 'countdown',
-  'x-youtube': 'youtube',
   'x-pagination': 'pagination',
   'x-steps': 'steps',
-  'x-timeline': 'timeline',
   'x-kbd': 'kbd',
-  'x-gallery': 'gallery',
   'x-image': 'image',
   'x-popover': 'popover',
   'x-confirm': 'confirm',
   'x-prompt': 'prompt',
-  // drawer() (overlay.js) — a slide-out panel + backdrop triggered by a plain
-  // click. x-drawer-layout (below) maps to a DIFFERENT behavior
-  // (drawerLayout, a page-shell layout primitive) — easy to conflate, but
-  // not the same thing.
-  'x-drawer': 'drawer',
   'x-lightbox': 'lightbox',
   'x-share': 'share',
   'x-print': 'print',
   'x-fullscreen': 'fullscreen',
   'x-truncate': 'truncate',
   'x-masonry': 'masonry',
-  'x-dropdown': 'dropdown',
-  'x-toggle': 'toggle',
-  'x-drawer-layout': 'drawerLayout',
   'x-autosize': 'autosize',
+  // #645: x-form, x-tags, x-file, x-masked, x-counter, x-autocomplete,
+  // x-colorpicker, x-floatinglabel, x-label, x-youtube, x-timeline,
+  // x-gallery, x-drawer, x-dropdown, x-toggle, x-drawer-layout, x-copy,
+  // x-toast, x-collapse, and x-article (new) all moved to/added in
+  // tag-map.js's extensionMap (shared with wb.js) -- see the comment block
+  // there for the drawer/drawer-layout and article/articles/as-article
+  // disambiguation notes.
 };
 
 // Auto-injection mappings

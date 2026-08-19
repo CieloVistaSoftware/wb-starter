@@ -371,7 +371,62 @@ export const extensionMap = {
   'x-cardprofile': 'cardprofile',
   'x-cardstats': 'cardstats',
   'x-cardtestimonial': 'cardtestimonial',
-  'x-cardvideo': 'cardvideo'
+  'x-cardvideo': 'cardvideo',
+
+  // #645: consolidation of x-attributes that were only ever registered in
+  // wb-lazy.js's own local WB_LAZY_ONLY_ATTRIBUTES table (duplicated
+  // per-runtime instead of shared here) -- wb.js never needed a table entry
+  // for these at all (its dynamic x-{name} dispatch, see #631 comment
+  // above, already covered them), but wb-lazy.js's dispatch is
+  // table-driven, so each only ever worked on the eager (wb.js) runtime.
+  // Moving them here gives both runtimes the same source of truth and lets
+  // the matching lines in wb-lazy.js be deleted instead of drifting.
+  //
+  // x-article is the one genuine addition, not a relocation -- it had ZERO
+  // x-attribute coverage anywhere (absent from both this table and
+  // wb-lazy.js's), unlike the other 19 below, which were already fully
+  // functional via wb-lazy.js's table. Routes to the 'article' behavior
+  // (src/wb-viewmodels/article.js, already reachable via the <wb-article>
+  // tag in elementMap above). Distinct from 'x-articles' just above (plural
+  // LIST view, a different behavior) and from 'x-as-article' in the
+  // Morphing section above (morph-only form that rewrites an existing
+  // element's semantics) -- three different names for three different
+  // behaviors, not aliases of each other.
+  'x-article': 'article',
+  'x-autocomplete': 'autocomplete',
+  'x-colorpicker': 'colorpicker',
+  'x-counter': 'counter',
+  'x-file': 'file',
+  'x-floatinglabel': 'floatinglabel',
+  'x-masked': 'masked',
+  'x-tags': 'tags',
+  'x-collapse': 'collapse',
+  // x-copy makes the element itself the copy trigger -- distinct from the
+  // sibling 'x-copybutton' attribute (still wb-lazy.js-only, unmoved),
+  // which overlays a separate positioned copy button on any element. See
+  // src/wb-viewmodels/copy.js.
+  'x-copy': 'copy',
+  'x-drawer': 'drawer',
+  // Hyphenated to match #363's tag-name convention (wb-drawer-layout, not
+  // wb-drawerLayout) -- a page-shell layout primitive, a DIFFERENT behavior
+  // from plain 'x-drawer' above (slide-out panel + backdrop triggered by a
+  // click). Easy to conflate by name, not the same thing.
+  'x-drawer-layout': 'drawerLayout',
+  'x-dropdown': 'dropdown',
+  'x-gallery': 'gallery',
+  'x-toast': 'toast',
+  'x-toggle': 'toggle',
+  // x-timeline renders a real timeline component -- adjacent to, but not a
+  // collision with, 'x-as-timeline' in the Morphing section above (a
+  // morph-only form that rewrites an existing element's semantics).
+  'x-timeline': 'timeline',
+  'x-youtube': 'youtube',
+  // Lowest priority of this batch -- 'form'/'label' already auto-inject
+  // natively via nativeMap's 'form'/'label' selectors (autoInject only).
+  // These add the same explicit, opt-in x-{name} form every other behavior
+  // in this table gets.
+  'x-form': 'form',
+  'x-label': 'label'
 };
 
 // ============================================================================
