@@ -551,15 +551,27 @@
       },
     };
 
-    function companionFor(attr, prop) {
+    // Some COMBINATIONS need a companion, not just some properties.
+    // variant="link" is the case John caught: the control is styled as a link
+    // while having nothing to link to, so the example has to carry an href for
+    // the variant to mean anything.
+    const VALUE_COMPANIONS = {
+      'button:variant:link': ' href="/pages/docs.html"',
+    };
+
+    function companionFor(attr, prop, value) {
+      const behavior = extensionMap[attr] || attr.replace(/^x-/, '');
+      const byValue = VALUE_COMPANIONS[`${behavior}:${prop}:${value}`];
+      if (byValue) return byValue;
+
       const partner = COMPANIONS[prop];
       if (!partner) return '';
-      if (BARE_COMPANIONS.has(partner)) return ` ${partner}`;
+      if (BARE_COMPANIONS.has(partner)) return ` ${partner}="true"`;
       const sc = schemaByName.get(extensionMap[attr]);
       const def = sc && sc.properties && sc.properties[partner];
       if (!def) return '';
-      const value = Array.isArray(def.enum) && def.enum.length ? def.enum[0] : def.default;
-      return value ? ` ${partner}="${value}"` : '';
+      const seedValue = Array.isArray(def.enum) && def.enum.length ? def.enum[0] : def.default;
+      return seedValue ? ` ${partner}="${seedValue}"` : '';
     }
 
     function withOption(src, attr, prop, value, isBoolean) {
@@ -597,9 +609,10 @@
       const propDef = (sc && sc.properties && sc.properties[target]) || {};
       const aliases = propDef.aliases || [];
       // Ensure the companion is present on a curated example too.
-      const partner = COMPANIONS[prop];
+      const partner = COMPANIONS[prop] ||
+        (VALUE_COMPANIONS[`${extensionMap[attr] || attr.replace(/^x-/, '')}:${prop}:${value}`] ? 'href' : null);
       if (partner && !new RegExp('\s' + partner + '\s*=').test(src)) {
-        const add = companionFor(attr, prop);
+        const add = companionFor(attr, prop, value);
         if (add) src = src.replace(/^(\s*<[a-zA-Z][\w-]*)/, `$1${add}`);
       }
 
@@ -689,12 +702,14 @@
 </${trigger.tag}>`;
       }
       const host = semanticHostFor(behavior);
+      // Booleans are written with an EXPLICIT value, both true and false. A bare
+      // attribute is true in HTML, but the row says showDisplay=true and the
+      // source must say the same thing -- reading `showdisplay` and having to
+      // know that means true is exactly the ambiguity to remove.
       const v = variant
-        ? (isBool
-            ? (variant === 'false' ? ` ${prop}="false"` : ` ${prop}`)
-            : ` ${prop || 'variant'}="${variant}"`)
+        ? (isBool ? ` ${prop}="${variant}"` : ` ${prop || 'variant'}="${variant}"`)
         : '';
-      const companion = companionFor(attr, prop);
+      const companion = companionFor(attr, prop, variant);
 
       // Auto-injected behaviors need NO attribute -- writing the semantic
       // element is the whole authoring form (John: "<button variant='primary'>
