@@ -470,6 +470,40 @@
     liveStage.addEventListener('mouseover', fitStageToOverlays);
     liveStage.addEventListener('focusin', fitStageToOverlays);
 
+    // #710 -- John: "Make the height of the left element same as right element."
+    // CSS alone cannot express it: with align-items:stretch the LIST's own 585
+    // rows also feed the row's intrinsic height, so lifting its max-height grew
+    // both columns to 32,787px (measured) -- the 13,000px page #664 removed.
+    // So the panel is measured and the list is capped to it; the list keeps
+    // scrolling inside itself. Stacked, the cap is dropped and behaviors.css's
+    // fixed max-height applies again -- there is no second column to match.
+    const TWO_COL = matchMedia('(min-width: 60.0625rem)');
+    let syncQueued = false;
+    function syncListHeight() {
+      // Write on the next frame, never inside the observer callback: mutating
+      // layout during delivery is what produces "ResizeObserver loop completed
+      // with undelivered notifications".
+      if (syncQueued) return;
+      syncQueued = true;
+      requestAnimationFrame(() => {
+        syncQueued = false;
+        if (!TWO_COL.matches) {
+          if (resultsEl.style.maxHeight) resultsEl.style.maxHeight = '';
+          return;
+        }
+        const h = liveEl.getBoundingClientRect().height;
+        // Panel hidden (nothing picked yet) -> fall back to the stylesheet.
+        const next = h > 0 ? Math.round(h) + 'px' : '';
+        // Only write on a real change -- an unconditional write re-triggers the
+        // observer every frame for no reason.
+        if (resultsEl.style.maxHeight !== next) resultsEl.style.maxHeight = next;
+      });
+    }
+    // The panel's height drives the list's; the list never drives the panel's,
+    // so this cannot feed back on itself.
+    new ResizeObserver(syncListHeight).observe(liveEl);
+    TWO_COL.addEventListener('change', syncListHeight);
+
     // Cache: the same doc is re-requested every time a reader arrows back over
     // a behavior, and a 404 is worth remembering too (49 docs, 143 entries --
     // most misses are permanent).

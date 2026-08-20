@@ -221,3 +221,80 @@ test.describe('#699 — the token column never wraps and never crosses the varia
     expect(geo.truncated, 'the overflow is absorbed by the ellipsis, not by spilling').toBe(true);
   });
 });
+
+test.describe('#710 — the list matches the panel height', () => {
+  test.use({ viewport: { width: 1280, height: 900 } });
+
+  test('both columns are the same height, and the list still scrolls itself', async ({ page }) => {
+    await loadBrowse(page, 'x-');           // all 585 rows — the case that blew up
+    await page.locator('.behaviors-search-results__row').first().click();
+    await page.waitForTimeout(500);
+
+    const geo = await page.evaluate(() => {
+      const list = document.getElementById('behaviors-search-results')!;
+      const panel = document.getElementById('behaviors-live')!;
+      return {
+        listH: Math.round(list.getBoundingClientRect().height),
+        panelH: Math.round(panel.getBoundingClientRect().height),
+        rows: list.querySelectorAll('.behaviors-search-results__row').length,
+        scrollsInternally: list.scrollHeight > list.clientHeight + 1,
+      };
+    });
+
+    expect(geo.rows, 'expected the full list').toBeGreaterThan(100);
+    expect(Math.abs(geo.listH - geo.panelH), 'the two columns must be the same height')
+      .toBeLessThanOrEqual(2);
+    expect(geo.scrollsInternally, 'the list must scroll inside itself, not stretch the page')
+      .toBe(true);
+    expect(geo.listH, 'a column taller than a few thousand px means the cap was lost')
+      .toBeLessThan(3000);
+  });
+
+  test('stacked, the list keeps its own cap', async ({ page }) => {
+    await page.setViewportSize({ width: 375, height: 812 });
+    await loadBrowse(page, 'x-');
+    const maxH = await page.evaluate(
+      () => document.getElementById('behaviors-search-results')!.style.maxHeight,
+    );
+    expect(maxH, 'no inline cap is applied when there is no second column to match').toBe('');
+  });
+});
+
+test.describe('#711 — the example is centred in the stage', () => {
+  test.use({ viewport: { width: 1280, height: 900 } });
+
+  for (const [name, token, variant] of [
+    ['a block example', 'x-card', 'glass'],
+    ['an inline example', 'x-button', ''],
+  ] as const) {
+    test(`${name} sits with equal space above and below`, async ({ page }) => {
+      await loadBrowse(page, 'x-');
+
+      const geo = await page.evaluate(async ([tok, want]) => {
+        const sleep = (ms: number) => new Promise((r) => setTimeout(r, ms));
+        const rows = [...document.querySelectorAll('.behaviors-search-results__row')] as HTMLElement[];
+        const row = rows.find((r) => r.getAttribute('data-browse-token') === tok
+          && (!want || r.getAttribute('data-variant') === want)) || rows[0];
+        row.click();
+        await sleep(500);
+        const stage = document.getElementById('behaviors-live-stage')!;
+        const el = stage.firstElementChild as HTMLElement;
+        const sb = stage.getBoundingClientRect(), eb = el.getBoundingClientRect();
+        return {
+          tag: el.tagName.toLowerCase(),
+          above: Math.round(eb.top - sb.top),
+          below: Math.round(sb.bottom - eb.bottom),
+          elWidth: Math.round(eb.width),
+          stageWidth: Math.round(sb.width),
+        };
+      }, [token, variant] as const);
+
+      expect(Math.abs(geo.above - geo.below), `${geo.tag}: ${geo.above}px above vs ${geo.below}px below`)
+        .toBeLessThanOrEqual(2);
+      if (geo.tag === 'button') {
+        expect(geo.elWidth, 'an inline example must keep its intrinsic width')
+          .toBeLessThan(geo.stageWidth * 0.9);
+      }
+    });
+  }
+});
