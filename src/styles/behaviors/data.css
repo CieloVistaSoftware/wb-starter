@@ -191,3 +191,12 @@ wb-table tbody tr.active,
   opacity: 0.45;
   cursor: default;
 }
+
+/* §13, content-panel edge minimum: a plain <table> that never received the
+   `wb-table` class (a raw table in a doc or an autoInject demo) still renders
+   real content panels, and its cells were inheriting the browser's ~8px.
+   :where() keeps this at zero specificity so every component rule above --
+   and .wb-table--compact's deliberate 0.5rem -- still wins. */
+:where(th, td) {
+  padding: 1rem;
+}

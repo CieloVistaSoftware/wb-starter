@@ -185,7 +185,7 @@ export function code(element, options = {}) {
       // problem) overcorrected into the opposite problem: a wide enough
       // box to overflow the heading's own line. 0.25rem/0.5rem reads fine
       // at heading scale without doing that.
-      padding: !isBlock ? (inHeading ? '0.25rem 0.5rem' : '0.15em 0.3em') : '0.5rem 0.75rem',
+      padding: !isBlock ? (inHeading ? '0.25rem 0.5rem' : '0.15em 0.3em') : '1rem',
       borderRadius: 'var(--radius-sm, 4px)',
       backgroundColor: 'var(--bg-tertiary, rgba(255,255,255,0.1))',
       color: 'var(--text-primary, inherit)',

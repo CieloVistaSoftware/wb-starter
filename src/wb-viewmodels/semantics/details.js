@@ -60,7 +60,7 @@ export function details(element, options = {}) {
       display: 'flex',
       alignItems: 'center',
       justifyContent: 'space-between',
-      padding: '0.75rem 1rem',
+      padding: '1rem',
       background: 'var(--bg-secondary, #1f2937)',
       cursor: 'pointer',
       fontWeight: '500',
@@ -82,7 +82,7 @@ export function details(element, options = {}) {
   if (content) {
     content.classList.add('wb-details__content');
     Object.assign(content.style, {
-      padding: '0.75rem 1rem',
+      padding: '1rem',
       background: 'var(--bg-primary, #111827)'
     });
   }
