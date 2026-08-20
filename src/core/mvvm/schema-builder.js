@@ -954,6 +954,18 @@ function detectXAttributeSchema(element) {
   for (const attr of element.attributes) {
     if (!attr.name.startsWith('x-') || META_X_ATTRIBUTES.has(attr.name)) continue;
     const name = attr.name.slice(2);
+    // #678: SCHEMA_EXCLUDED_TAGS was consulted ONLY by the wb-* tag branch of
+    // detectSchema(), so every entry on it -- 34 behaviors confirmed to build
+    // their own DOM and to be destroyed by the schema wipe -- was bypassed
+    // entirely by the equivalent x-* attribute form. `<wb-ripple>text</wb-ripple>`
+    // was protected; `<div x-ripple>text</div>` was not, and the two forms are
+    // documented as equivalent authoring surfaces.
+    //
+    // That asymmetry is why <div x-cardstats>text</div> still lost its content
+    // after the card behaviors were fixed to preserve it: processSchema() wiped
+    // the element before cardstats() ever ran, so there was nothing left to
+    // preserve. The exclusion list is keyed by tag name, hence the wb- prefix.
+    if (SCHEMA_EXCLUDED_TAGS.has('wb-' + name)) continue;
     if (schemaRegistry.has(name)) return name;
   }
   return null;

@@ -147,12 +147,40 @@ export function composeCard(element, options = {}) {
   // When true, DOM structure is already built from $view - we only add interactivity
   const schemaProcessed = options.schemaProcessed || element.getAttribute('x-schema');
   
+  // #678 -- John, on `<div x-cardbutton variant="elevated">Example x-cardbutton
+  // content</div>`: "shouldn't all of this context be shown on the card".
+  //
+  // It was not shown, it was DESTROYED. Each card behavior runs
+  // `element.innerHTML = ''` right after composing, so anything the author
+  // wrote between the tags was gone before the body was built. card(),
+  // cardimage(), cardvideo(), cardhorizontal() and three others already each
+  // carried their own `|| element.innerHTML` fallback -- the #455 fix, applied
+  // one function at a time -- while ELEVEN others never got it: cardbutton,
+  // cardhero, cardprofile, cardpricing, cardstats, cardtestimonial,
+  // cardproduct, cardnotification, cardfile, cardlink, cardoverlay,
+  // cardportfolio.
+  //
+  // Capturing it here instead fixes all of them at once and stops the next
+  // card behavior from being written without it. composeCard() always runs
+  // BEFORE the wipe, so the authored markup is still intact at this point.
+  //
+  // Three guards, each for a real re-entry case:
+  //   - schemaProcessed: the structure came from $view, so innerHTML is the
+  //     BUILT markup, not the author's -- re-injecting it would nest the card
+  //     inside itself.
+  //   - an existing .wb-card__main/__header: a MutationObserver re-visit of an
+  //     already-built card, same nesting hazard.
+  //   - trim(): whitespace-only innerHTML is truthy, and would otherwise
+  //     manufacture an empty <main> -- the blank-line problem #608 removed.
+  const alreadyBuilt = !!element.querySelector(':scope > .wb-card__main, :scope > .wb-card__header, :scope > .wb-card__body');
+  const authoredContent = (schemaProcessed || alreadyBuilt) ? '' : (element.innerHTML || '').trim();
+
   const config = {
     ...options, // Spread first to allow overrides, but specific logic below takes precedence
     behavior: options.behavior || 'card',
     title: options.title || element.dataset.title || element.getAttribute('title') || '',
     subtitle: options.subtitle || element.dataset.subtitle || element.getAttribute('subtitle') || '',
-    content: options.content || element.dataset.content || element.getAttribute('content') || '',
+    content: options.content || element.dataset.content || element.getAttribute('content') || authoredContent,
     footer: options.footer || element.dataset.footer || element.getAttribute('footer') || '',
     variant: options.variant || element.dataset.variant || element.getAttribute('variant') || 'default',
     badge: options.badge || element.dataset.badge || element.getAttribute('badge') || '',
@@ -419,6 +447,43 @@ export function composeCard(element, options = {}) {
     main,
     footer,
     CARD_PADDING,
+
+    /**
+     * #678: render the author's own content into the card.
+     *
+     * Capturing it in config.content is only half the job. Eight behaviors --
+     * cardhero, cardprofile, cardstats, cardproduct, cardfile, cardlink,
+     * cardoverlay, cardportfolio -- never call buildStructure() and never read
+     * config.content; they hand-build their DOM, so the captured text had
+     * nowhere to go and stayed destroyed.
+     *
+     * Each of them calls this once after building, rather than growing eight
+     * copies of the same six lines.
+     *
+     * No-ops when there is nothing authored, or when a <main> already carries
+     * it -- appending an empty box is the blank-line problem #608 removed.
+     */
+    renderAuthoredContent: () => {
+      if (!config.content) return null;
+      // An existing <main> is filled rather than skipped. cardstats builds its
+      // own EMPTY .wb-card__main, so bailing out on "a main already exists"
+      // left the content homeless AND left a styled empty box on screen -- the
+      // blank-line problem of #608 with the content loss of #678 on top.
+      // Only fill it when it is empty: a main with real content in it is
+      // somebody else's, and overwriting it would be a different bug.
+      const existing = element.querySelector(':scope > .wb-card__main');
+      if (existing) {
+        if (existing.innerHTML.trim()) return null;
+        existing.innerHTML = config.content;
+        return existing;
+      }
+      const body = document.createElement('main');
+      body.className = 'wb-card__main';
+      body.style.cssText = STYLE_MAIN;
+      body.innerHTML = config.content;
+      element.appendChild(body);
+      return body;
+    },
     
     // =========================================
     // UTILITY METHODS FOR BUILDING CARD PARTS
@@ -1132,6 +1197,8 @@ export function cardhero(element, options = {}) {
 
   element.appendChild(content);
 
+  // #678: show the author's own content -- see renderAuthoredContent().
+  base.renderAuthoredContent();
   return base.cleanup;
 }
 
@@ -1247,6 +1314,8 @@ export function cardprofile(element, options = {}) {
     element.appendChild(base.createFooter());
   }
 
+  // #678: show the author's own content -- see renderAuthoredContent().
+  base.renderAuthoredContent();
   return base.cleanup;
 }
 
@@ -1446,6 +1515,8 @@ export function cardstats(element, options = {}) {
   // Runtime/test hook: mark cardstats as hydrated so tests can wait on it
   try { element.setAttribute('x-hydrated', '1'); element.dispatchEvent(new CustomEvent('wb:cardstats:hydrated', { bubbles: true })); } catch (e) { /* best-effort */ }
 
+  // #678: show the author's own content -- see renderAuthoredContent().
+  base.renderAuthoredContent();
   return base.cleanup;
   } catch (err) {
     // Prevent unhandled errors from closing the test page; surface diagnostics instead.
@@ -1688,6 +1759,8 @@ export function cardproduct(element, options = {}) {
 
   element.appendChild(info);
 
+  // #678: show the author's own content -- see renderAuthoredContent().
+  base.renderAuthoredContent();
   return base.cleanup;
 }
 
@@ -1939,6 +2012,8 @@ export function cardfile(element, options = {}) {
     element.appendChild(warning);
   }
 
+  // #678: show the author's own content -- see renderAuthoredContent().
+  base.renderAuthoredContent();
   return base.cleanup;
 }
 
@@ -2052,6 +2127,8 @@ export function cardlink(element, options = {}) {
     element.appendChild(stretchedLink);
   }
 
+  // #678: show the author's own content -- see renderAuthoredContent().
+  base.renderAuthoredContent();
   return () => {
     base.cleanup();
     if (stretchedLink) stretchedLink.remove();
@@ -2285,6 +2362,8 @@ export function cardoverlay(element, options = {}) {
 
   element.appendChild(content);
 
+  // #678: show the author's own content -- see renderAuthoredContent().
+  base.renderAuthoredContent();
   return base.cleanup;
 }
 
@@ -3371,6 +3450,8 @@ export function cardportfolio(element, options = {}) {
     }
   };
 
+  // #678: show the author's own content -- see renderAuthoredContent().
+  base.renderAuthoredContent();
   return base.cleanup;
 }
 
