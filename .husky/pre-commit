@@ -2,6 +2,10 @@
 # WB Starter Pre-commit Hook
 # Runs project-integrity tests before allowing commit
 
+echo "🏷  Bumping version..."
+npm version patch --no-git-tag-version --allow-same-version >/dev/null
+git add package.json package-lock.json
+
 echo "🏷  Stamping version..."
 node scripts/stamp-version.js
 # stamp-version.js also bumps every ?v= cache-busting query string in
