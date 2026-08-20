@@ -40,7 +40,13 @@ const ALLOWED = new Set<string>(['data-theme', 'data-code-width', 'data-wb-expec
 //     table label (`content: attr(data-label)`), never read by any WB
 //     behavior -- unrelated to the deprecated-config-syntax this gate
 //     exists to catch.
-const EXCLUDE = new Set<string>(['legacy-syntax-check.html', 'wizard.html', 'registry-browser.html']);
+//   - wb-views-demo.html: data-wbv-for / data-wbv-template / data-wbv-no-autocode
+//     are read by that page's OWN vanilla script (details.dataset.wbvTemplate,
+//     details.dataset.wbvFor, hasAttribute('data-wbv-no-autocode')) on plain
+//     <details> / <example-block> elements. No WB behavior reads them, so they
+//     teach nobody deprecated WB config syntax -- same category as wizard.html's
+//     data-tab and registry-browser.html's data-label (#697).
+const EXCLUDE = new Set<string>(['legacy-syntax-check.html', 'wizard.html', 'registry-browser.html', 'wb-views-demo.html']);
 const SKIP_DIRS = new Set(['node_modules', '.git', 'data', 'test-results', '.playwright-artifacts', 'coverage', 'dist', 'out']);
 
 function walk(dir: string, out: string[]): void {
