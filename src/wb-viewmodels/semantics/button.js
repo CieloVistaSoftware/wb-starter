@@ -94,6 +94,11 @@ wb-button .wb-button__spinner { display: inline-block; animation: wb-btn-spin 1s
   background: var(--bg-secondary, #2a2a2a); padding: 1rem 1rem;
 }
 .wb-button:focus-visible { outline: 2px solid var(--primary, #6366f1); outline-offset: 2px; }
+/* #669: icon-only collapses to a square around its icon; full-width spans its
+   container. Both were declared in the schema with no implementation. */
+.wb-button--icon-only { padding: 1rem; aspect-ratio: 1; }
+.wb-button--icon-only > *:not(svg):not(.wb-button__icon) { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); }
+.wb-button--full-width { width: 100%; display: flex; }
 .wb-button:disabled { opacity: 0.6; cursor: not-allowed; pointer-events: none; }
 
 /* Native <button size="…" variant="…">: button() (below) maps these
@@ -320,14 +325,58 @@ export function button(element, options = {}) {
   const variant = element.getAttribute('variant');
   if (variant) { const c = `wb-button--${variant}`; element.classList.add(c); applied.push(c); }
 
+  // #669 -- John: '<button variant="link"> this link is missing a target'.
+  // variant="link" styled the control as a link while being structurally
+  // incapable of linking anywhere: neither the schema nor this file had any
+  // notion of href. A <button> cannot navigate, so an href turns it into a
+  // real link -- role and keyboard semantics follow the destination, which is
+  // what a screen-reader user needs to know before activating it.
+  // #669 -- John: "<button icononly> no icon". iconOnly and fullWidth were
+  // declared in button.schema.json and read NOWHERE. Both map to the same
+  // modifier-class mechanism `variant`/`size` already use.
+  if (element.hasAttribute('icononly') || element.hasAttribute('icon-only')) {
+    element.classList.add('wb-button--icon-only');
+    applied.push('wb-button--icon-only');
+    // An icon-only button has no visible label, so it needs an accessible one.
+    if (!element.getAttribute('aria-label')) {
+      const text = (element.textContent || '').trim();
+      if (text) element.setAttribute('aria-label', text);
+    }
+  }
+  if (element.hasAttribute('fullwidth') || element.hasAttribute('full-width')) {
+    element.classList.add('wb-button--full-width');
+    applied.push('wb-button--full-width');
+  }
+
+  const href = element.getAttribute('href');
+  if (href && element.tagName === 'BUTTON') {
+    element.setAttribute('role', 'link');
+    const navigate = (e) => {
+      if (element.hasAttribute('disabled') || element.getAttribute('aria-disabled') === 'true') return;
+      const target = element.getAttribute('target');
+      if (target === '_blank') window.open(href, '_blank', 'noopener');
+      else window.location.href = href;
+    };
+    element.addEventListener('click', navigate);
+    applied.push('__href');
+    // Enter already activates a native <button>; nothing extra is needed.
+    const cleanupHref = () => element.removeEventListener('click', navigate);
+    element.__wbButtonHrefCleanup = cleanupHref;
+  }
+
   applyLabel(element);
   applyIconAndLoading(element, options);
 
   element.addEventListener('click', onActivate);
 
   return () => {
-    element.classList.remove('wb-button', ...applied);
+    element.classList.remove('wb-button', ...applied.filter((c) => c !== '__href'));
     element.removeEventListener('click', onActivate);
+    if (element.__wbButtonHrefCleanup) {
+      element.__wbButtonHrefCleanup();
+      delete element.__wbButtonHrefCleanup;
+      element.removeAttribute('role');
+    }
   };
 }
 

@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-08-19T20:10:10.594Z",
+  "generatedAt": "2026-08-20T00:33:16.638Z",
   "count": 106,
   "schemas": [
     {
@@ -936,6 +936,20 @@
           "description": "Icon-only button (square)",
           "default": false,
           "appliesClass": "wb-button--icon-only"
+        },
+        "href": {
+          "type": "string",
+          "description": "Destination URL. Turns the control into a real link — required for variant=\"link\" to mean anything.",
+          "default": ""
+        },
+        "target": {
+          "type": "string",
+          "description": "Where to open href",
+          "enum": [
+            "_self",
+            "_blank"
+          ],
+          "default": "_self"
         }
       },
       "matrix": [

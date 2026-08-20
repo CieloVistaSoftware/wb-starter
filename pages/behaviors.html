@@ -149,14 +149,19 @@
         if (Array.isArray(def.enum) && def.enum.length) {
           for (const value of def.enum) out.push({ prop: name, value });
         } else if (def.type === 'boolean') {
-          // #666 — John: "we need many permutations of table". table declares
-          // NO enums; every axis it has is a boolean (sortable, filterable,
-          // paginated, striped, hoverable, compact, bordered), so it showed a
-          // single blank row while having seven real options. A boolean flag is
-          // an axis like any other -- one row per flag, showing it enabled.
-          // 114 flags across 50 entries; NOT combined, since 7 booleans would
-          // be 128 permutations for table alone.
-          out.push({ prop: name, value: 'true', boolean: true });
+          // #666 — John: "<audio showplaybutton> no different than when not
+          // used". Correct: showDisplay and showPlayButton both DEFAULT to
+          // true, so setting them true is a guaranteed no-op. Demonstrate the
+          // value that actually differs from the default -- for a default-true
+          // flag that means emitting flag="false".
+          // John asked for showDisplay specifically to demo as "true" -- seeing
+          // the display present is the useful demonstration there, whereas for
+          // showPlayButton seeing it ABSENT is what shows the flag working.
+          // Explicit override beats a blanket rule for either.
+          const DEMO_AS_TRUE = new Set(['showDisplay']);
+          const demoValue = (def.default === true && !DEMO_AS_TRUE.has(name)) ? 'false' : 'true';
+          out.push({ prop: name, value: demoValue, boolean: true, defaultsTo: def.default === true });
+          continue;
         }
       }
       // Sorted so `variant` leads -- it is the axis most readers look for --
@@ -171,7 +176,9 @@
     /** How an option reads in the variant column: bare for variant, prop=value otherwise. */
     function optionLabel(opt) {
       if (!opt || !opt.value) return '';
-      if (opt.boolean) return opt.prop;              // `striped`, not `striped=true`
+      // A default-true flag is demonstrated by switching it OFF, so the label
+      // has to say so -- a bare `showPlayButton` would imply the opposite.
+      if (opt.boolean) return `${opt.prop}=${opt.value}`;
       return opt.prop === 'variant' ? opt.value : `${opt.prop}=${opt.value}`;
     }
     import(siteRoot() + 'src/core/tag-map.js')
@@ -357,6 +364,29 @@
       resultsEl.appendChild(frag);
     }
 
+    // Which hit does the reader actually mean? Typing "button" matched
+    // `audio · showPlayButton` first -- "showPlayButton" contains "button", and
+    // audio sorts earlier. A match on the BEHAVIOR NAME beats a match buried in
+    // an option name, and an exact name beats a prefix.
+    function bestMatch(rows, q) {
+      const score = (row) => {
+        const label = (row.dataset.label || '').toLowerCase();
+        const attr = (row.dataset.browseToken || '').toLowerCase();
+        if (label === q || attr === q) return 0;
+        if (label.startsWith(q) || attr.startsWith(q)) return 1;
+        if (label.includes(q) || attr.includes(q)) return 2;
+        return 3;                       // matched only on the option name
+      };
+      let best = rows[0];
+      let bestScore = score(rows[0]);
+      for (const row of rows) {
+        const sc = score(row);
+        if (sc < bestScore) { best = row; bestScore = sc; }
+        if (bestScore === 0) break;
+      }
+      return best;
+    }
+
     function applyFilter(rawQuery) {
       // #666: filters the SELECTOR, not on-page demos. The per-category demo
       // sections are gone -- their examples live in data/behavior-examples.json
@@ -366,10 +396,21 @@
       const q = rawQuery.trim().toLowerCase();
       renderBrowseAll(q);
 
-      const shown = resultsEl.querySelectorAll('.behaviors-search-results__row').length;
+      const rows = resultsEl.querySelectorAll('.behaviors-search-results__row');
+      const shown = rows.length;
       countEl.textContent = q === ''
         ? `${allEntries.length} behaviors`
         : `Showing ${shown} of ${totalRowCount}`;
+
+      // #666 — John: "why does search not fill the first thing it finds with
+      // the search item e.g. button". Typing narrowed the list but rendered
+      // nothing, so a search told you a match EXISTS without showing it. Select
+      // the first hit as you type.
+      //
+      // focus:false is essential -- selectRow() focuses the row so arrow keys
+      // work after a click, but stealing focus mid-keystroke would eject the
+      // reader from the input they are still typing into.
+      if (q !== '' && shown) selectRow(bestMatch(rows, q), { focus: false });
     }
 
     // ─── #664: live preview ────────────────────────────────────────────
@@ -472,7 +513,23 @@
     // course it does not, there is no icon to position. Rather than hardcode
     // pairs, the companion is taken from the schema itself: iconPosition needs
     // `icon`, so seed `icon` with its first enum value.
-    const COMPANIONS = { iconPosition: 'icon', iconposition: 'icon' };
+    // An option is only observable alongside whatever creates the surface it
+    // acts on. iconPosition needs an icon to position. audio's showDisplay and
+    // showPlayButton are demonstrated by switching them OFF (both default to
+    // true) -- but "off" alone means the custom transport never builds at all,
+    // so there is nothing to see them absent FROM. Pair each with a flag that
+    // does build it.
+    const COMPANIONS = {
+      iconPosition: 'icon',
+      iconposition: 'icon',
+      iconOnly: 'icon',
+      icononly: 'icon',
+      showDisplay: 'showplaybutton',
+      showPlayButton: 'showdisplay',
+    };
+
+    /** Companions that are bare boolean attributes, not prop="value". */
+    const BARE_COMPANIONS = new Set(['showplaybutton', 'showdisplay']);
 
     // TRIGGER-mode behaviors. dialog() decides its mode by ATTRIBUTE PRESENCE,
     // not tag: with modal-title/modal-content it becomes a visible button that
@@ -497,6 +554,7 @@
     function companionFor(attr, prop) {
       const partner = COMPANIONS[prop];
       if (!partner) return '';
+      if (BARE_COMPANIONS.has(partner)) return ` ${partner}`;
       const sc = schemaByName.get(extensionMap[attr]);
       const def = sc && sc.properties && sc.properties[partner];
       if (!def) return '';
@@ -511,9 +569,18 @@
       // striped="true" would both misrepresent the API and, for flags the
       // behavior reads with `!== 'false'`, be indistinguishable from default.
       if (isBoolean) {
-        const bare = new RegExp('\s' + prop + '(?=[\s>=/])', 'i');
-        if (bare.test(src)) return src;
-        return src.replace(/^(\s*<[a-zA-Z][\w-]*)/, `$1 ${prop}`);
+        // "false" must be written explicitly -- a bare attribute is TRUE in
+        // HTML, so omitting it could never express "off".
+        if (value === 'false') {
+          const existing = new RegExp('\s' + prop + '(="[^"]*")?', 'i');
+          const cleaned = src.replace(existing, '');
+          return cleaned.replace(/^(\s*<[a-zA-Z][\w-]*)/, `$1 ${prop}="false"`);
+        }
+        // Explicit ="true" rather than a bare attribute: the row says
+        // showDisplay=true, and the source should say the same thing.
+        const bare = new RegExp('\s' + prop + '(="[^"]*")?', 'i');
+        const cleaned = src.replace(bare, '');
+        return cleaned.replace(/^(\s*<[a-zA-Z][\w-]*)/, `$1 ${prop}="true"`);
       }
 
       // Rewrite whichever attribute the example actually used. Several schemas
@@ -597,6 +664,18 @@
     function generatedExample(attr, variant, label, prop, isBool) {
       const behavior = extensionMap[attr] || attr.replace(/^x-/, '');
 
+      // #666 — John: "button with icon upload should also have everything
+      // required to upload a file". An upload ICON on its own uploads nothing;
+      // a real control needs the file input and the wiring. Emit all of it, so
+      // the example is complete rather than decorative.
+      if (behavior === 'button' && prop === 'icon' && variant === 'upload') {
+        return [
+          '<button icon="upload" aria-controls="wb-demo-file">Upload a file</button>',
+          '<input id="wb-demo-file" type="file" hidden>',
+          '<p class="wb-demo-file-name" aria-live="polite">No file chosen</p>',
+        ].join('\n');
+      }
+
       const trigger = TRIGGERS[behavior];
       if (trigger) {
         const opt = variant ? (isBool ? ` ${prop}` : ` ${prop || 'variant'}="${variant}"`) : '';
@@ -610,7 +689,11 @@
 </${trigger.tag}>`;
       }
       const host = semanticHostFor(behavior);
-      const v = variant ? (isBool ? ` ${prop}` : ` ${prop || 'variant'}="${variant}"`) : '';
+      const v = variant
+        ? (isBool
+            ? (variant === 'false' ? ` ${prop}="false"` : ` ${prop}`)
+            : ` ${prop || 'variant'}="${variant}"`)
+        : '';
       const companion = companionFor(attr, prop);
 
       // Auto-injected behaviors need NO attribute -- writing the semantic
@@ -636,6 +719,22 @@
       return `<${host} ${attr}${seed}${companion}${v}>
   Example ${attr} content
 </${host}>`;
+    }
+
+    // Examples that need behaviour beyond what a behavior provides are wired
+    // here, AFTER injection. The upload control is the case John raised: the
+    // markup alone is inert, and a demo that cannot actually pick a file is not
+    // demonstrating uploading.
+    function wireExample() {
+      const btn = liveStage.querySelector('button[aria-controls="wb-demo-file"]');
+      const input = liveStage.querySelector('#wb-demo-file');
+      const out = liveStage.querySelector('.wb-demo-file-name');
+      if (!btn || !input) return;
+      btn.addEventListener('click', () => input.click());
+      input.addEventListener('change', () => {
+        const f = input.files && input.files[0];
+        if (out) out.textContent = f ? `${f.name} (${Math.ceil(f.size / 1024)} KB)` : 'No file chosen';
+      });
     }
 
     // Shared by the real-demo and generated-example paths: pretty-print the
@@ -688,6 +787,7 @@
         if (WB && WB.scan) {
           await WB.scan(liveStage, { eager: true });
           await WB.scan(liveCode, { eager: true });
+          wireExample();
         }
       } catch (err) {
         liveNote.textContent = 'could not run this example';
@@ -812,6 +912,19 @@
 
     /** The wiring a reader would copy to handle this example's events. */
     function handlerSnippet(hostTag, token) {
+      if (liveStage.querySelector('#wb-demo-file')) {
+        return [
+          `const btn = document.querySelector('button[aria-controls="wb-demo-file"]');`,
+          `const input = document.querySelector('#wb-demo-file');`,
+          ``,
+          `btn.addEventListener('click', () => input.click());`,
+          ``,
+          `input.addEventListener('change', () => {`,
+          `  const file = input.files[0];`,
+          `  if (file) console.log(file.name, file.size, file.type);`,
+          `});`,
+        ].join('\n');
+      }
       const sel = hostTag ? hostTag : '[' + token + ']';
       return [
         `const el = document.querySelector('${sel}');`,

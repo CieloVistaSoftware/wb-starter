@@ -28,6 +28,20 @@ export function audio(element, options = {}) {
   function attr(name) {
     return element.getAttribute(name) ?? element.dataset[name.replace(/-([a-z])/g, (_, c) => c.toUpperCase())] ?? null;
   }
+  // Three-state read: TRUE when present, FALSE when explicitly ="false",
+  // undefined when absent (#669). hasAttribute() alone is not enough -- a bare
+  // attribute and one set to "false" are both "present", so
+  // showplaybutton="false" read as TRUE and the flag could never turn anything
+  // off, which is exactly what John saw.
+  const triState = (names) => {
+    for (const n of names) {
+      if (!element.hasAttribute(n)) continue;
+      const v = (element.getAttribute(n) || '').trim().toLowerCase();
+      return v === 'false' ? false : true;
+    }
+    return undefined;
+  };
+
   const config = {
     // Standard HTML5 pattern: a src-less <audio> with one or more <source
     // src="..."> children is valid markup the native browser plays fine --
@@ -41,7 +55,21 @@ export function audio(element, options = {}) {
     autoplay: options.autoplay ?? (element.hasAttribute('autoplay') || element.hasAttribute('data-autoplay')),
     loop: options.loop ?? (element.hasAttribute('loop') || element.hasAttribute('data-loop')),
     volume: parseFloat(options.volume || attr('volume') || '0.8'),
-    showEq: options.showEq ?? (element.hasAttribute('show-eq') || element.hasAttribute('data-show-eq') || attr('show-eq') === 'true' || element.dataset.showEq === 'true'),
+    // #669 -- accept BOTH spellings. audio.schema.json publishes `showEq`,
+    // this code only ever read `show-eq`, so the documented name silently did
+    // nothing. Plain-first, data- fallback, matching the established pattern.
+    showEq: options.showEq ?? (
+      element.hasAttribute('show-eq') || element.hasAttribute('showeq') ||
+      element.hasAttribute('data-show-eq') ||
+      attr('show-eq') === 'true' || element.dataset.showEq === 'true'
+    ),
+    // #669 -- showDisplay and showPlayButton were declared in the schema and
+    // read NOWHERE, so <audio showdisplay> did nothing at all (John reported
+    // exactly that). They default to TRUE so every existing custom-UI player
+    // keeps its display and play button unchanged; setting either explicitly
+    // is what now also opts a plain <audio> into the custom transport below.
+    showDisplay: options.showDisplay ?? triState(['show-display', 'showdisplay', 'data-show-display']),
+    showPlayButton: options.showPlayButton ?? triState(['show-play-button', 'showplaybutton', 'data-show-play-button']),
     // Optional track picker: playlist="url1|Title 1,url2|Title 2,..." (same
     // comma-separated-values convention as x-breadcrumb/x-timeline's `items`).
     // Falls back to the current single static track-name display when absent.
@@ -174,7 +202,11 @@ export function audio(element, options = {}) {
   // the slider controls). A plain native <audio controls> with neither of
   // those was getting unconditionally hidden and replaced here, silently
   // discarding its native controls for demos that wanted to show them.
-  const needsCustomUI = element.tagName !== 'AUDIO' || config.showEq;
+  // #669: an explicitly requested display or play button is a request for the
+  // custom transport. Without this a plain <audio showdisplay> fell straight
+  // through to native controls and the flag was inert.
+  const needsCustomUI = element.tagName !== 'AUDIO' || config.showEq ||
+    config.showDisplay === true || config.showPlayButton === true;
   if (needsCustomUI && audioEl.tagName === 'AUDIO') {
     audioEl.style.display = 'none';
   }
@@ -271,6 +303,30 @@ export function audio(element, options = {}) {
   };
 }
 
+/**
+ * Where the custom UI may be appended.
+ *
+ * #669: a native <audio> element's children are FALLBACK CONTENT -- the browser
+ * never renders them. Appending the transport/EQ into `element` therefore built
+ * a complete, correct UI that was invisible: present in the DOM, computed
+ * display:none via its parent, 0x0 on screen. It worked on <wb-audio> (a custom
+ * element, whose children do render), which is exactly why DOM-presence checks
+ * passed while nothing appeared.
+ *
+ * For a native <audio>, wrap it once and mount the UI as a SIBLING inside that
+ * wrapper. Idempotent: repeated calls reuse the wrapper rather than nesting.
+ */
+function uiHost(element) {
+  if (element.tagName !== 'AUDIO') return element;
+  const existing = element.parentElement;
+  if (existing && existing.classList.contains('wb-audio-host')) return existing;
+  const wrapper = element.ownerDocument.createElement('div');
+  wrapper.className = 'wb-audio-host wb-audio';
+  element.replaceWith(wrapper);
+  wrapper.appendChild(element);
+  return wrapper;
+}
+
 function buildTransportUI(element, audioEl, config) {
   const transport = document.createElement('div');
   transport.className = 'wb-audio__transport';
@@ -306,7 +362,9 @@ function buildTransportUI(element, audioEl, config) {
     playBtn.classList.remove('wb-audio__play-btn--playing');
   });
 
-  transport.appendChild(playBtn);
+  // #669: showPlayButton === false hides it. Undefined means "not specified",
+  // which keeps the long-standing default of showing it.
+  if (config.showPlayButton !== false) transport.appendChild(playBtn);
 
   // Marantz-style display
   const display = document.createElement('div');
@@ -366,7 +424,8 @@ function buildTransportUI(element, audioEl, config) {
     timeDisplay.textContent = '0:00 / ' + formatTime(audioEl.duration);
   });
 
-  transport.appendChild(display);
+  // #669: same for the Marantz-style display.
+  if (config.showDisplay !== false) transport.appendChild(display);
 
   // Volume knob area
   const volArea = document.createElement('div');
@@ -377,7 +436,7 @@ function buildTransportUI(element, audioEl, config) {
   volArea.appendChild(volIcon);
   transport.appendChild(volArea);
 
-  element.appendChild(transport);
+  uiHost(element).appendChild(transport);
 }
 
 function buildEqUI(element, audioEl, config, initAudioContext, filters) {
@@ -475,7 +534,7 @@ function buildEqUI(element, audioEl, config, initAudioContext, filters) {
   // Volume control
   const volumeRow = createVolumeRow(audioEl, config);
   eqContainer.appendChild(volumeRow);
-  element.appendChild(eqContainer);
+  uiHost(element).appendChild(eqContainer);
 }
 
 function createPresetButton(text) {

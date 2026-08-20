@@ -107,9 +107,23 @@
       "description": "Icon-only button (square)",
       "default": false,
       "appliesClass": "wb-button--icon-only"
+    },
+    "href": {
+      "type": "string",
+      "description": "Destination URL. Turns the control into a real link \u2014 required for variant=\"link\" to mean anything.",
+      "default": ""
+    },
+    "target": {
+      "type": "string",
+      "description": "Where to open href",
+      "enum": [
+        "_self",
+        "_blank"
+      ],
+      "default": "_self"
     }
   },
-  "_view_note": "The button BEHAVIOR (src/wb-viewmodels/semantics/button.js) is the SOLE renderer of <wb-button> — its own comment: 'CSS targets the tag and attributes directly. No inner <button> created. No classes added.' This $view rebuilt content via buildStructure() (element.innerHTML = '' then rebuild from $view/slot) whenever schema processing reached a <wb-button> — including ones created and populated by OTHER behaviors at runtime (e.g. feedback.js's alert() dismiss button, plain textContent = '×'), silently replacing that content with a span-wrapped version and contributing to the alert dismiss-button bug (see alert.schema.json). Emptied, same fix already applied to 'card' (#202) and 'alert'.",
+  "_view_note": "The button BEHAVIOR (src/wb-viewmodels/semantics/button.js) is the SOLE renderer of <wb-button> \u2014 its own comment: 'CSS targets the tag and attributes directly. No inner <button> created. No classes added.' This $view rebuilt content via buildStructure() (element.innerHTML = '' then rebuild from $view/slot) whenever schema processing reached a <wb-button> \u2014 including ones created and populated by OTHER behaviors at runtime (e.g. feedback.js's alert() dismiss button, plain textContent = '\u00d7'), silently replacing that content with a span-wrapped version and contributing to the alert dismiss-button bug (see alert.schema.json). Emptied, same fix already applied to 'card' (#202) and 'alert'.",
   "$view": [],
   "$methods": {
     "enable": {
@@ -383,9 +397,9 @@
           "loading": true
         },
         {
-          "label": "🚀 With Icon",
+          "label": "\ud83d\ude80 With Icon",
           "variant": "primary",
-          "icon": "🚀"
+          "icon": "\ud83d\ude80"
         }
       ]
     },
@@ -413,7 +427,7 @@
   },
   "_metadata": {
     "category": "forms",
-    "icon": "🔘",
+    "icon": "\ud83d\udd18",
     "since": "1.0.0",
     "status": "stable"
   }

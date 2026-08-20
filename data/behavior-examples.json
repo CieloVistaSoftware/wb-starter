@@ -1,7 +1,7 @@
 {
   "generatedBy": "scripts/build-behavior-examples.mjs",
   "source": "pages/behaviors.html",
-  "count": 49,
+  "count": 51,
   "demoBlocks": 88,
   "examples": {
     "x-ripple": {
@@ -232,6 +232,10 @@
     },
     "x-details": {
       "source": "<details summary=\"Trail conditions\" animated>\n  <img src=\"https://picsum.photos/seed/details/480/200\" alt=\"Trail through autumn woodland\" width=\"480\" height=\"200\">\n  <p>Open to show the summary text is authored via the <code>summary</code>\n     attribute \u2014 it reads \"Details\" only when none is set.</p>\n</details>",
+      "alternates": []
+    },
+    "x-code": {
+      "source": "<code language=\"javascript\">\n// Debounce \u2014 delay a call until the caller stops firing.\nexport function debounce(fn, wait = 200) {\n  let timer = null;\n  return function debounced(...args) {\n    clearTimeout(timer);\n    timer = setTimeout(() =&gt; fn.apply(this, args), wait);\n  };\n}\n\n// Throttle \u2014 run at most once per interval.\nexport function throttle(fn, interval = 100) {\n  let last = 0;\n  return function throttled(...args) {\n    const now = Date.now();\n    if (now - last &lt; interval) return;\n    last = now;\n    return fn.apply(this, args);\n  };\n}\n\nconst onResize = debounce(() =&gt; {\n  const { innerWidth: w, innerHeight: h } = window;\n  console.log(`viewport ${w}x${h}`);\n}, 250);\n\nwindow.addEventListener('resize', onResize);\n</code>",
       "alternates": []
     }
   }
