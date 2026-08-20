@@ -98,7 +98,11 @@ const DEMO_CATEGORY = {
   'playground.html': 'architecture',
   'registry-browser.html': 'architecture',
   'schema-first-architecture.html': 'architecture',
+  'standalone.html': 'architecture', // #659 preview stage — a tool, not a component demo
   'wb-views-demo.html': 'architecture',
+
+  // Cards & Layout
+  'hero.html': 'cards', // full-bleed <wb-cardhero>
 };
 
 // A few real, small <wb-demo>-wrapped examples per category, shown ABOVE that
