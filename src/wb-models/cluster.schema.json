@@ -1,0 +1,29 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "cluster.schema.json",
+  "title": "Cluster",
+  "description": "Behavior applied with x-cluster.",
+  "schemaFor": "x-cluster",
+  "properties": {
+    "gap": {
+      "type": "string",
+      "description": "Read by cluster().",
+      "default": "1rem"
+    },
+    "justify": {
+      "type": "string",
+      "description": "Read by cluster().",
+      "default": "flex-start"
+    },
+    "align": {
+      "type": "string",
+      "description": "Read by cluster().",
+      "default": "center"
+    }
+  },
+  "_metadata": {
+    "generatedBy": "scripts/generate-behavior-schemas.mjs (#716)",
+    "derivedFrom": "the behavior implementation — every property here is one the code actually reads",
+    "note": "Expand by hand: enums, richer descriptions and accessibility notes cannot be read from source."
+  }
+}

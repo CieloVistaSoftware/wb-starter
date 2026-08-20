@@ -139,13 +139,19 @@ test.describe('#687 — arrow keys align the selection to the top of the list', 
       const cb = cur.getBoundingClientRect(), lb = list.getBoundingClientRect();
       return {
         isLast: rows.indexOf(cur) === rows.length - 1,
-        atBottom: Math.abs((list.scrollHeight - list.clientHeight) - list.scrollTop) <= 2,
+        // #717 replaced "scrolled to the very bottom" as the measure of End.
+        // With trailing room below the last row, End puts that row at the TOP,
+        // which is deliberately NOT max scroll any more -- asserting atBottom
+        // would now be asserting the bug John reported ("the current selection
+        // must be the first one").
+        offsetFromTop: Math.round((cur.offsetTop - list.offsetTop) - list.scrollTop),
         fullyVisible: cb.top >= lb.top - 2 && cb.bottom <= lb.bottom + 2,
       };
     });
 
     expect(end.isLast, 'End must select the last row').toBe(true);
-    expect(end.atBottom, 'the list must page all the way to the end').toBe(true);
+    expect(Math.abs(end.offsetFromTop), 'End must put the last row at the TOP of the list (#717)')
+      .toBeLessThanOrEqual(2);
     expect(end.fullyVisible, 'the last row must be fully in the list viewport').toBe(true);
   });
 

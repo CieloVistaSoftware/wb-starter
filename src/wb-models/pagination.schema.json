@@ -1,0 +1,49 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "pagination.schema.json",
+  "title": "Pagination",
+  "description": "Behavior applied with x-pagination.",
+  "schemaFor": "x-pagination",
+  "properties": {
+    "total": {
+      "type": "string",
+      "description": "Read by pagination().",
+      "default": "0"
+    },
+    "per-page": {
+      "type": "string",
+      "description": "Read by pagination().",
+      "default": "10"
+    },
+    "pages": {
+      "type": "string",
+      "description": "Read by pagination().",
+      "default": "0"
+    },
+    "current": {
+      "type": "string",
+      "description": "Read by pagination().",
+      "default": "1"
+    },
+    "aria-disabled": {
+      "type": "string",
+      "description": "Read by pagination()."
+    },
+    "action": {
+      "type": "string",
+      "description": "Read by pagination()."
+    },
+    "page": {
+      "type": "string",
+      "description": "Read by pagination()."
+    }
+  },
+  "events": {
+    "wb:pagination:change": "Fired by pagination()."
+  },
+  "_metadata": {
+    "generatedBy": "scripts/generate-behavior-schemas.mjs (#716)",
+    "derivedFrom": "the behavior implementation — every property here is one the code actually reads",
+    "note": "Expand by hand: enums, richer descriptions and accessibility notes cannot be read from source."
+  }
+}

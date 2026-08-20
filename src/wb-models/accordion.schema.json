@@ -1,0 +1,37 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "accordion.schema.json",
+  "title": "Accordion",
+  "description": "Behavior applied with x-accordion.",
+  "schemaFor": "x-accordion",
+  "properties": {
+    "data-title": {
+      "type": "boolean",
+      "description": "Read by accordion(). Bare attribute.",
+      "default": false
+    },
+    "accordion-title": {
+      "type": "boolean",
+      "description": "Read by accordion(). Bare attribute.",
+      "default": false
+    },
+    "data-accordion-title": {
+      "type": "boolean",
+      "description": "Read by accordion(). Bare attribute.",
+      "default": false
+    },
+    "open": {
+      "type": "boolean",
+      "description": "Read by accordion(). Bare attribute.",
+      "default": false
+    }
+  },
+  "events": {
+    "wb:accordion:ready": "Fired by accordion()."
+  },
+  "_metadata": {
+    "generatedBy": "scripts/generate-behavior-schemas.mjs (#716)",
+    "derivedFrom": "the behavior implementation — every property here is one the code actually reads",
+    "note": "Expand by hand: enums, richer descriptions and accessibility notes cannot be read from source."
+  }
+}
