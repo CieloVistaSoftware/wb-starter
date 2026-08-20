@@ -1,0 +1,28 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "clock.schema.json",
+  "title": "Clock",
+  "description": "Behavior applied with x-clock.",
+  "schemaFor": "x-clock",
+  "properties": {
+    "variant": {
+      "type": "string",
+      "description": "Read by clock().",
+      "default": "digital"
+    },
+    "format": {
+      "type": "string",
+      "description": "Read by clock().",
+      "default": "24"
+    },
+    "show-seconds": {
+      "type": "string",
+      "description": "Read by clock()."
+    }
+  },
+  "_metadata": {
+    "generatedBy": "scripts/generate-behavior-schemas.mjs (#716)",
+    "derivedFrom": "the behavior implementation — every property here is one the code actually reads",
+    "note": "Expand by hand: enums, richer descriptions and accessibility notes cannot be read from source."
+  }
+}

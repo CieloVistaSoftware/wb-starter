@@ -1,0 +1,28 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "relativetime.schema.json",
+  "title": "Relativetime",
+  "description": "Behavior applied with x-relativetime.",
+  "schemaFor": "x-relativetime",
+  "properties": {
+    "datetime": {
+      "type": "string",
+      "description": "Read by relativetime().",
+      "default": ""
+    },
+    "refresh": {
+      "type": "string",
+      "description": "Read by relativetime().",
+      "default": "60000"
+    },
+    "date": {
+      "type": "string",
+      "description": "Read by relativetime()."
+    }
+  },
+  "_metadata": {
+    "generatedBy": "scripts/generate-behavior-schemas.mjs (#716)",
+    "derivedFrom": "the behavior implementation — every property here is one the code actually reads",
+    "note": "Expand by hand: enums, richer descriptions and accessibility notes cannot be read from source."
+  }
+}

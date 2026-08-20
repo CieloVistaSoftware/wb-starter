@@ -1,0 +1,48 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "vimeo.schema.json",
+  "title": "Vimeo",
+  "description": "Behavior applied with x-vimeo.",
+  "schemaFor": "x-vimeo",
+  "properties": {
+    "video-id": {
+      "type": "string",
+      "description": "Read by vimeo()."
+    },
+    "autoplay": {
+      "type": "boolean",
+      "description": "Read by vimeo(). Bare attribute.",
+      "default": false
+    },
+    "data-autoplay": {
+      "type": "boolean",
+      "description": "Read by vimeo(). Bare attribute.",
+      "default": false
+    },
+    "muted": {
+      "type": "boolean",
+      "description": "Read by vimeo(). Bare attribute.",
+      "default": false
+    },
+    "data-muted": {
+      "type": "boolean",
+      "description": "Read by vimeo(). Bare attribute.",
+      "default": false
+    },
+    "loop": {
+      "type": "boolean",
+      "description": "Read by vimeo(). Bare attribute.",
+      "default": false
+    },
+    "data-loop": {
+      "type": "boolean",
+      "description": "Read by vimeo(). Bare attribute.",
+      "default": false
+    }
+  },
+  "_metadata": {
+    "generatedBy": "scripts/generate-behavior-schemas.mjs (#716)",
+    "derivedFrom": "the behavior implementation — every property here is one the code actually reads",
+    "note": "Expand by hand: enums, richer descriptions and accessibility notes cannot be read from source."
+  }
+}

@@ -1,0 +1,19 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "glow.schema.json",
+  "title": "Glow",
+  "description": "Behavior applied with x-glow.",
+  "schemaFor": "x-glow",
+  "properties": {
+    "color": {
+      "type": "string",
+      "description": "Read by glow().",
+      "default": "var(--primary, #6366f1)"
+    }
+  },
+  "_metadata": {
+    "generatedBy": "scripts/generate-behavior-schemas.mjs (#716)",
+    "derivedFrom": "the behavior implementation — every property here is one the code actually reads",
+    "note": "Expand by hand: enums, richer descriptions and accessibility notes cannot be read from source."
+  }
+}

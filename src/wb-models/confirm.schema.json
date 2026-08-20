@@ -1,0 +1,46 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "confirm.schema.json",
+  "title": "Confirm",
+  "description": "Behavior applied with x-confirm.",
+  "schemaFor": "x-confirm",
+  "properties": {
+    "heading": {
+      "type": "string",
+      "description": "Read by confirm().",
+      "default": "Confirm"
+    },
+    "message": {
+      "type": "string",
+      "description": "Read by confirm().",
+      "default": "Are you sure?"
+    },
+    "confirm-text": {
+      "type": "string",
+      "description": "Read by confirm().",
+      "default": "OK"
+    },
+    "cancel-text": {
+      "type": "string",
+      "description": "Read by confirm().",
+      "default": "Cancel"
+    },
+    "confirm-title": {
+      "type": "string",
+      "description": "Read by confirm()."
+    },
+    "confirm-message": {
+      "type": "string",
+      "description": "Read by confirm()."
+    }
+  },
+  "events": {
+    "wb:confirm:cancel": "Fired by confirm().",
+    "wb:confirm:ok": "Fired by confirm()."
+  },
+  "_metadata": {
+    "generatedBy": "scripts/generate-behavior-schemas.mjs (#716)",
+    "derivedFrom": "the behavior implementation — every property here is one the code actually reads",
+    "note": "Expand by hand: enums, richer descriptions and accessibility notes cannot be read from source."
+  }
+}
