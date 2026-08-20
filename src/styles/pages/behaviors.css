@@ -505,6 +505,26 @@ footer a:hover {
   text-align: left;
 }
 
+/* #690 -- the panel lives inside #behaviors-hero.page__hero, so site.css's hero
+   rules were styling whatever a DEMO renders: h1 at 3rem, and every <p> at
+   1.25rem, --text-muted, capped at 600px and auto-centred (measured 600px wide
+   with 32.5px side margins inside a 697px box -- the uneven gap in John's
+   screenshot). These restore site.css's OWN base values, so a demo renders the
+   way it would on any other page. The text-align above already stops the
+   inherited centring, and it stops at the stage root so a demo that centres its
+   own content still does. */
+.behaviors-live__stage h1 {
+  font-size: 2.5rem;
+  margin: 0 0 0.5rem;
+}
+
+.behaviors-live__stage p {
+  font-size: 1rem;
+  color: var(--text-secondary);
+  max-width: none;
+  margin: 0 0 1rem;
+}
+
 
 /* #666: two columns per row, variant FIRST so it reads down the left edge. */
 .behaviors-search-results__row {
