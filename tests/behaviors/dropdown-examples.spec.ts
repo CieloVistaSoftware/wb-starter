@@ -21,8 +21,13 @@ async function openShowcase(page: Page) {
   await page.goto('/?page=behaviors');
   await page.waitForSelector('#behaviors-search', { timeout: 30000 });
   await page.fill('#behaviors-search', 'dropdown');
+  // Wait for the x-dropdown rows specifically. The list renders as soon as ANY
+  // match exists, but the browse entries are built after the catalogue fetch
+  // resolves -- waiting on "some row" raced that and left .find() undefined.
   await page.waitForFunction(
-    () => document.querySelectorAll('.behaviors-search-results__row').length > 0,
+    () => [...document.querySelectorAll('.behaviors-search-results__row')]
+      .some((r) => r.getAttribute('data-browse-token') === 'x-dropdown'
+                && r.getAttribute('data-variant') === 'click'),
     { timeout: 30000 },
   );
 }
@@ -170,7 +175,8 @@ test.describe('#703 — an opened menu stays inside the stage', () => {
 
         const closedHeight = Math.round(stage.getBoundingClientRect().height);
         trigger.click();
-        await sleep(400);
+        for (let i = 0; i < 30 && getComputedStyle(menu).display === 'none'; i++) await sleep(50);
+        await sleep(200);   // let the stage's rAF fit run
 
         const sb = stage.getBoundingClientRect();
         const mb = menu.getBoundingClientRect();
@@ -205,8 +211,10 @@ test.describe('#703 — an opened menu stays inside the stage', () => {
       rows[0].click();
       await sleep(400);
       const root = stage.querySelector('.wb-dropdown') as HTMLElement;
+      const menu = root.querySelector('.wb-dropdown__menu') as HTMLElement;
       (root.querySelector('.wb-dropdown__trigger') as HTMLElement).click();
-      await sleep(400);
+      for (let i = 0; i < 30 && getComputedStyle(menu).display === 'none'; i++) await sleep(50);
+      await sleep(200);
       const opened = Math.round(stage.getBoundingClientRect().height);
 
       rows[1].click();          // a different example
@@ -288,5 +296,109 @@ test.describe('#705 — selecting leaves the example alone and gets logged', () 
     expect(result.stillRendered, 'the example must still be there after a selection').toBe(true);
     expect(result.logged, "the behavior's own event must reach the panel")
       .toContain('wb:dropdown:select');
+  });
+});
+
+test.describe('#707 — the menu is sized to what it shows', () => {
+  test.use({ viewport: { width: 1280, height: 900 } });
+
+  test('no option label wraps, and the menu stays inside the stage', async ({ page }) => {
+    await openShowcase(page);
+
+    const geo = await page.evaluate(async () => {
+      const sleep = (ms: number) => new Promise((r) => setTimeout(r, ms));
+      const row = [...document.querySelectorAll('.behaviors-search-results__row')]
+        .find((r) => r.getAttribute('data-browse-token') === 'x-dropdown'
+                  && r.getAttribute('data-variant') === 'click') as HTMLElement;
+      row.click();
+      await sleep(400);
+      const stage = document.getElementById('behaviors-live-stage')!;
+      const root = stage.querySelector('.wb-dropdown') as HTMLElement;
+      const menu = root.querySelector('.wb-dropdown__menu') as HTMLElement;
+      (root.querySelector('.wb-dropdown__trigger') as HTMLElement).click();
+      await sleep(350);
+
+      // Count the LINE BOXES the text actually occupies -- an item's height is
+      // no use here, a 28px avatar makes every row look like two lines.
+      const lineCount = (el: Element) => {
+        let n = 0;
+        const walker = document.createTreeWalker(el, NodeFilter.SHOW_TEXT);
+        let node: Node | null;
+        while ((node = walker.nextNode())) {
+          if (!node.nodeValue || !node.nodeValue.trim()) continue;
+          const range = document.createRange();
+          range.selectNodeContents(node);
+          n = Math.max(n, range.getClientRects().length);
+        }
+        return n;
+      };
+
+      const items = [...menu.querySelectorAll('.wb-dropdown__item')];
+      return {
+        wrapped: items.filter((i) => lineCount(i) > 1).map((i) => (i.textContent || '').trim()),
+        menuWidth: Math.round(menu.getBoundingClientRect().width),
+        stageWidth: Math.round(stage.getBoundingClientRect().width),
+        itemCount: items.length,
+      };
+    });
+
+    expect(geo.itemCount, 'expected the options to be there to measure').toBeGreaterThan(0);
+    expect(geo.wrapped, 'no option label may wrap — the menu sizes to its content').toEqual([]);
+    expect(geo.menuWidth, 'the menu must not overflow the stage').toBeLessThanOrEqual(geo.stageWidth);
+  });
+});
+
+test.describe('#708 — the select event says WHICH option', () => {
+  test.use({ viewport: { width: 1280, height: 900 } });
+
+  test('every option reports its own index, id and value', async ({ page }) => {
+    await openShowcase(page);
+
+    const picks = await page.evaluate(async () => {
+      const sleep = (ms: number) => new Promise((r) => setTimeout(r, ms));
+      const row = [...document.querySelectorAll('.behaviors-search-results__row')]
+        .find((r) => r.getAttribute('data-browse-token') === 'x-dropdown'
+                  && r.getAttribute('data-variant') === 'click') as HTMLElement;
+
+      const seen: any[] = [];
+      for (const index of [0, 2, 4]) {
+        row.click();                       // re-render, so each pick starts clean
+        await sleep(400);
+        const root = document.querySelector('#behaviors-live-stage .wb-dropdown') as HTMLElement;
+        const menu = root.querySelector('.wb-dropdown__menu') as HTMLElement;
+        (root.querySelector('.wb-dropdown__trigger') as HTMLElement).click();
+        await sleep(250);
+
+        let detail: any = null;
+        root.addEventListener('wb:dropdown:select', (e: any) => { detail = e.detail; }, { once: true });
+        const items = [...menu.querySelectorAll('.wb-dropdown__item')] as HTMLElement[];
+        const expectedText = (items[index].textContent || '').trim();
+        items[index].click();
+        await sleep(250);
+        seen.push({ index, expectedText, detail });
+      }
+      return seen;
+    });
+
+    for (const pick of picks) {
+      expect(pick.detail, `option ${pick.index} fired no wb:dropdown:select`).not.toBeNull();
+      expect(pick.detail.index, `option ${pick.index} reported the wrong index`).toBe(pick.index);
+      expect(pick.detail.value, `option ${pick.index} reported the wrong value`).toBe(pick.expectedText);
+      expect(pick.detail, 'the payload must carry an id field').toHaveProperty('id');
+      expect(pick.detail, 'the payload must keep href').toHaveProperty('href');
+    }
+
+    // The last option is the one an off-by-one would miss.
+    expect(picks[picks.length - 1].detail.index, 'the last option must report its real index').toBe(4);
+  });
+
+  test('the handler snippet teaches that event, not a generic click', async ({ page }) => {
+    await openShowcase(page);
+    await renderNth(page, 0);
+    const snippet = await page.evaluate(
+      () => document.getElementById('behaviors-live-events-snippet')?.textContent || '',
+    );
+    expect(snippet, 'Standard 27 — teach the event the control actually fires').toContain('wb:dropdown:select');
+    expect(snippet, 'and the payload a reader needs').toContain('index');
   });
 });
