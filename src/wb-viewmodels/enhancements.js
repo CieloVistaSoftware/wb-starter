@@ -59,7 +59,10 @@ export function form(element, options = {}) {
  */
 export function fieldset(element, options = {}) {
   const config = {
-    collapsible: options.collapsible ?? element.hasAttribute('data-collapsible'),
+    // #697: the plain attribute is the v3 form (TIER1-LAWS 11). data-collapsible
+    // is kept as a fallback so markup already authored against it keeps working.
+    collapsible: options.collapsible
+      ?? (element.hasAttribute('collapsible') || element.hasAttribute('data-collapsible')),
     collapsed: options.collapsed ?? element.hasAttribute('data-collapsed'),
     ...options
   };
@@ -135,7 +138,9 @@ export function inputgroup(element, options = {}) {
  */
 export function formrow(element, options = {}) {
   const config = {
-    inline: options.inline ?? element.hasAttribute('data-inline'),
+    // #697: plain attribute first, data-inline kept as a fallback.
+    inline: options.inline
+      ?? (element.hasAttribute('inline') || element.hasAttribute('data-inline')),
     ...options
   };
 
