@@ -155,7 +155,20 @@ export function code(element, options = {}) {
     });
   } else {
     // Standalone code block (not inline, not in pre)
-    const isBlock = config.variant !== 'inline';
+    // John: "not formatted right" -- a 27-line JavaScript listing rendered as
+    // one wrapped paragraph with every newline collapsed.
+    //
+    // `variant` defaults to "inline" in code.schema.json, which is right for
+    // the common case (a `<code>wb-card</code>` chip amid prose) and wrong for
+    // a standalone listing: an inline box gets `white-space: normal`, so every
+    // newline in the source collapsed to a space.
+    //
+    // Content that CONTAINS a newline is a block listing whatever the variant
+    // default says. Keyed on the content rather than on the attribute so the
+    // many single-line inline chips across the docs are untouched -- they have
+    // no newline and keep their existing inline treatment.
+    const isMultiline = /\n/.test((element.textContent || '').trim());
+    const isBlock = config.variant !== 'inline' || isMultiline;
     // Only single-token content (no whitespace, e.g. a tag-name chip like
     // "wb-card") should be forced onto one line. Multi-word inline code
     // (e.g. a formula like "Colors = Primary + 0°, 120°, 240°") must still

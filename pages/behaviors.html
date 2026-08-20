@@ -838,26 +838,58 @@
      * already (#wb-demo-file, which its own wiring and snippet both reference).
      */
     function assignExampleIds(token, optionText) {
-      const base = ['wb-ex', slug(token), slug(optionText)].filter(Boolean).join('-');
-      let n = 0;
+      // John: "i didn't mean to make them all super long nonsense they need to
+      // be short describing the element they came from and where they are
+      // going the target".
+      //
+      // So: drop the `wb-ex-` prefix and the authoring-surface `x-` prefix,
+      // which said nothing about the element, and name each element after what
+      // it IS. `wb-ex-x-button-icon-check-1` becomes `button-check`, and its
+      // icon span becomes `button-check-icon` -- readable in the handler
+      // snippet a reader copies.
+      const root = [slug(token).replace(/^x-/, ''), slug(optionText)].filter(Boolean).join('-');
+
+      /**
+       * The short name for one element: what it points AT if it points at
+       * anything (aria-controls / for / href target), otherwise what it is
+       * (its BEM element suffix, else its tag).
+       */
+      const describe = (el) => {
+        const target = el.getAttribute('aria-controls') || el.getAttribute('for');
+        if (target) return slug(target.replace(/^wb-demo-/, ''));
+        // getAttribute('class'), never el.className: on an SVG element
+        // className is an SVGAnimatedString, and stringifying it yields
+        // "[object SVGAnimatedString]" -- which slugged to a literal
+        // `-object` suffix on every <svg> and <path> in an icon.
+        const classAttr = el.getAttribute('class') || '';
+        const bem = classAttr.match(/[\w-]+__([\w-]+)/);
+        if (bem) return slug(bem[1]);
+        // A plain class still says more than the tag does: `-p` is short but
+        // meaningless, `-file-name` tells the reader what the element is for.
+        const cls = classAttr.trim().split(/\s+/)[0];
+        if (cls) return slug(cls.replace(/^(wb-demo-|wb-|x-)/, ''));
+        return slug(el.tagName.toLowerCase().replace(/^wb-/, ''));
+      };
+
       liveStage.querySelectorAll('*').forEach((el) => {
         if (el.id) return;
-        // The bare base belongs to the root -- but only if nothing holds it
-        // yet. Some behaviors WRAP their element after the fact (audio.js
-        // builds a .wb-audio-host around the <audio>), so on the second pass
-        // the new wrapper is firstElementChild while the original element
-        // already carries `base`. Handing it out twice would put a duplicate
+        // The bare root belongs to the example root -- but only if nothing
+        // holds it yet. Some behaviors WRAP their element after the fact
+        // (audio.js builds a .wb-audio-host around the <audio>), so on the
+        // second pass the new wrapper is firstElementChild while the original
+        // already carries `root`. Handing it out twice would put a duplicate
         // id in the document and break the very selector the snippet teaches.
-        if (el === liveStage.firstElementChild && !document.getElementById(base)) {
-          el.id = base;
+        if (el === liveStage.firstElementChild && !document.getElementById(root)) {
+          el.id = root;
           return;
         }
-        // Skip any suffix already taken. This runs a SECOND time after the
-        // behaviors have injected their own DOM (see the call sites) -- a
-        // naive counter would restart at 1 on that pass and collide with the
-        // ids handed out on the first one.
-        do { n += 1; } while (document.getElementById(`${base}-${n}`));
-        el.id = `${base}-${n}`;
+        // A descriptive suffix, numbered only when the same description
+        // repeats (three `.wb-audio__band` sliders, say).
+        const name = `${root}-${describe(el)}`;
+        let candidate = name;
+        let n = 1;
+        while (document.getElementById(candidate)) candidate = `${name}-${++n}`;
+        el.id = candidate;
       });
       return liveStage.firstElementChild ? liveStage.firstElementChild.id : null;
     }

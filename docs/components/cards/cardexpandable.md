@@ -47,7 +47,10 @@ Wrapped in `<wb-demo>`, so the live component renders below with its source show
   <p>This is a long content that will be truncated when collapsed...</p>
   <p>More content here...</p>
   <figure>
-    <img src="https://picsum.photos/800/600?random=cardexpandable2" alt="Example expanded content image" style="width: 100%; border-radius: 4px;">
+    <img
+      src="https://picsum.photos/800/600?random=cardexpandable2"
+      alt="Example expanded content image"
+      style="width: 100%; border-radius: 4px;">
     <figcaption>Hidden until expanded.</figcaption>
   </figure>
 </wb-cardexpandable>
@@ -59,11 +62,20 @@ Wrapped in `<wb-demo>`, so the live component renders below with its source show
 <wb-cardexpandable
   title="Details"
   expanded>
-  <p>All content is visible by default because <code>expanded</code> is set — but there's still enough content here to collapse. Click Show Less below to see it happen: this paragraph and everything after it hides, leaving just the first couple of lines and the collapsed height.</p>
-  <p>This second paragraph exists specifically so the content is tall enough to actually demonstrate the collapse — a card with barely any content never visibly changes when toggled, which defeats the point of the example.</p>
+  <p> All content is visible by default because <code> expanded</code> is set —
+  but there's still enough content here to collapse. Click Show Less below to
+  see it happen: this paragraph and everything after it hides, leaving just the
+  first couple of lines and the collapsed height.</p>
+  <p> This second paragraph exists specifically so the content is tall enough to
+  actually demonstrate the collapse — a card with barely any content never
+  visibly changes when toggled, which defeats the point of the example.</p>
   <figure>
-    <img src="https://picsum.photos/800/600?random=cardexpandable3" alt="Example expanded content image" style="width: 100%; border-radius: 4px;">
-    <figcaption>Also hidden when collapsed, even though the card starts expanded.</figcaption>
+    <img
+      src="https://picsum.photos/800/600?random=cardexpandable3"
+      alt="Example expanded content image"
+      style="width: 100%; border-radius: 4px;">
+    <figcaption> Also hidden when collapsed, even though the card starts
+    expanded.</figcaption>
   </figure>
 </wb-cardexpandable>
 ```

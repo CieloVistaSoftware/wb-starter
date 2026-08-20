@@ -216,17 +216,27 @@
        ═══════════════════════════════════════════════════════════════════ -->
   <section id="pg-gallery" style="margin-top: 2rem;">
     <h2>🧩 Component Gallery</h2>
-    <p class="pg-sub">50 more <code>&lt;wb-demo&gt;</code> examples, covering feedback, forms,
-      semantics, overlays, navigation, effects, buttons, and misc components.</p>
+    <p
+      class="pg-sub">50 more <code>&lt;wb-demo&gt;</code> examples, covering feedback, forms,
+      semantics, overlays, navigation, effects, buttons, and misc
+      components.</p>
 
     <h3>Feedback</h3>
 
     <wb-demo>
-      <wb-alert variant="warning" title="Session expiring" message="You will be signed out in 5 minutes." dismissible></wb-alert>
+      <wb-alert
+        variant="warning"
+        title="Session expiring"
+        message="You will be signed out in 5 minutes."
+        dismissible></wb-alert>
     </wb-demo>
 
     <wb-demo>
-      <wb-alert variant="error" icon="🔥" title="Build failed" message="Three tests did not pass."></wb-alert>
+      <wb-alert
+        variant="error"
+        icon="🔥"
+        title="Build failed"
+        message="Three tests did not pass."></wb-alert>
     </wb-demo>
 
     <wb-demo>
@@ -238,7 +248,11 @@
     </wb-demo>
 
     <wb-demo>
-      <wb-avatar src="https://picsum.photos/seed/pg-avatar-1/150/150" name="Jordan Lee" status="online" shape="square"></wb-avatar>
+      <wb-avatar
+        src="https://picsum.photos/seed/pg-avatar-1/150/150"
+        name="Jordan Lee"
+        status="online"
+        shape="square"></wb-avatar>
     </wb-demo>
 
     <wb-demo>
@@ -250,7 +264,12 @@
     </wb-demo>
 
     <wb-demo>
-      <wb-progress value="72" variant="info" striped label="Syncing" show-value></wb-progress>
+      <wb-progress
+        value="72"
+        variant="info"
+        striped
+        label="Syncing"
+        show-value></wb-progress>
     </wb-demo>
 
     <wb-demo>
@@ -258,7 +277,11 @@
     </wb-demo>
 
     <wb-demo events="wb:chip:remove">
-      <wb-chip label="TypeScript" icon="🔷" variant="primary" dismissible></wb-chip>
+      <wb-chip
+        label="TypeScript"
+        icon="🔷"
+        variant="primary"
+        dismissible></wb-chip>
     </wb-demo>
 
     <h3>Forms</h3>
@@ -275,26 +298,51 @@
     <wb-demo>
       <fieldset>
         <legend>Billing cycle</legend>
-        <label><input type="radio" name="pg-billing" variant="info" checked> Monthly</label>
-        <label><input type="radio" name="pg-billing" variant="info"> Annual</label>
-        <label><input type="radio" name="pg-billing" variant="info"> Custom</label>
+        <label> <input type="radio" name="pg-billing" variant="info" checked>
+        Monthly</label>
+        <label> <input type="radio" name="pg-billing" variant="info">
+        Annual</label>
+        <label> <input type="radio" name="pg-billing" variant="info">
+        Custom</label>
       </fieldset>
     </wb-demo>
 
     <wb-demo events="wb:switch:change">
-      <wb-switch label="Auto-renew" variant="primary" size="lg" label-position="start" checked></wb-switch>
+      <wb-switch
+        label="Auto-renew"
+        variant="primary"
+        size="lg"
+        label-position="start"
+        checked></wb-switch>
     </wb-demo>
 
     <wb-demo>
-      <wb-select label="Country" searchable clearable placeholder="Choose one…" options='[{"value":"us","label":"United States"},{"value":"ca","label":"Canada"},{"value":"mx","label":"Mexico"},{"value":"uk","label":"United Kingdom"}]'></wb-select>
+      <wb-select
+        label="Country"
+        searchable
+        clearable
+        placeholder="Choose one…"
+        options='[{"value":"us","label":"United
+                 States"},{"value":"ca","label":"Canada"},{"value":"mx","label":"Mexico"},{"value":"uk","label":"United
+                 Kingdom"}]'></wb-select>
     </wb-demo>
 
     <wb-demo>
-      <textarea variant="default" autosize show-count max-length="140" rows="2" placeholder="What's on your mind? (140 char limit)"></textarea>
+      <textarea
+        variant="default"
+        autosize
+        show-count
+        max-length="140"
+        rows="2"
+        placeholder="What's on your mind? (140 char limit)"></textarea>
     </wb-demo>
 
     <wb-demo>
-      <input x-masked mask="(999) 999-9999" x-label="Phone number" placeholder="(000) 000-0000">
+      <input
+        x-masked
+        mask="(999) 999-9999"
+        x-label="Phone number"
+        placeholder="(000) 000-0000">
     </wb-demo>
 
     <wb-demo events="wb:tags:add wb:tags:remove">
@@ -310,7 +358,10 @@
     </wb-demo>
 
     <wb-demo events="wb:autocomplete:select">
-      <input x-autocomplete items="JavaScript,TypeScript,Python,Rust,Go,Swift" placeholder="Start typing a language…">
+      <input
+        x-autocomplete
+        items="JavaScript,TypeScript,Python,Rust,Go,Swift"
+        placeholder="Start typing a language…">
     </wb-demo>
 
     <h3>Semantics &amp; Data</h3>
@@ -344,7 +395,8 @@
 
     <wb-demo>
       <wb-details summary="What is a wb-* behavior?" variant="bordered">
-        <p>A behavior is a plain function <code>(element, options) =&gt; cleanup</code> applied to
+        <p> A behavior is a plain function <code> (element, options) =&gt;
+        cleanup</code> applied to
         an element — composition, never a class hierarchy.</p>
       </wb-details>
     </wb-demo>
@@ -354,11 +406,15 @@
     </wb-demo>
 
     <wb-demo>
-      <video controls width="480" src="https://www.w3schools.com/html/mov_bbb.mp4"></video>
+      <video
+        controls
+        width="480"
+        src="https://www.w3schools.com/html/mov_bbb.mp4"></video>
     </wb-demo>
 
     <wb-demo>
-      <wb-audio src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-3.mp3"></wb-audio>
+      <wb-audio
+        src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-3.mp3"></wb-audio>
     </wb-demo>
 
     <wb-demo events="wb:rating:change">
@@ -372,25 +428,44 @@
     <h3>Overlays</h3>
 
     <wb-demo>
-      <wb-modal modal-title="Component composition" modal-content="Every wb-* element is built from plain behavior functions applied to real HTML — no base classes, no shadow DOM.">See how it works</wb-modal>
+      <wb-modal
+        modal-title="Component composition"
+        modal-content="Every wb-* element is built from plain behavior functions
+                       applied to real HTML — no base classes, no shadow DOM.">See how it works</wb-modal>
     </wb-demo>
 
     <wb-demo>
-      <wb-drawer position="bottom" variant="push" title="Filters" content="Filter controls would live here.">Open filter panel</wb-drawer>
+      <wb-drawer
+        position="bottom"
+        variant="push"
+        title="Filters"
+        content="Filter controls would live here.">Open filter panel</wb-drawer>
     </wb-demo>
 
     <wb-demo>
-      <wb-dialog title="Delete project?" size="lg" variant="centered" id="pg-gallery-dialog">
+      <wb-dialog
+        title="Delete project?"
+        size="lg"
+        variant="centered"
+        id="pg-gallery-dialog">
         <p>This will permanently remove the project and all of its data.</p>
       </wb-dialog>
     </wb-demo>
 
     <wb-demo>
-      <button x-popover popover-title="Keyboard shortcut" popover-content="Press Ctrl+K to open the command palette." position="right">What's this?</button>
+      <button
+        x-popover
+        popover-title="Keyboard shortcut"
+        popover-content="Press Ctrl+K to open the command palette."
+        position="right">What's this?</button>
     </wb-demo>
 
     <wb-demo events="wb:prompt:ok wb:prompt:cancel">
-      <button x-prompt prompt-title="Rename project" prompt-message="Enter a new name:" default-value="Untitled Project">Rename…</button>
+      <button
+        x-prompt
+        prompt-title="Rename project"
+        prompt-message="Enter a new name:"
+        default-value="Untitled Project">Rename…</button>
     </wb-demo>
 
     <h3>Navigation &amp; Layout</h3>
@@ -404,18 +479,27 @@
     </wb-demo>
 
     <wb-demo full-width>
-      <wb-header icon="🚀" title="Playground" subtitle="wb-starter component gallery" badge="v3"></wb-header>
+      <wb-header
+        icon="🚀"
+        title="Playground"
+        subtitle="wb-starter component gallery"
+        badge="v3"></wb-header>
     </wb-demo>
 
     <wb-demo full-width>
-      <wb-footer brand="Acme Analytics" copyright="© 2026 Acme Analytics"></wb-footer>
+      <wb-footer
+        brand="Acme Analytics"
+        copyright="© 2026 Acme Analytics"></wb-footer>
     </wb-demo>
 
     <wb-demo events="wb:tabs:change">
       <wb-tabs>
-        <div tab="Overview">High-level project summary and recent activity.</div>
-        <div tab="Activity">A chronological feed of every change made this week.</div>
-        <div tab="Settings">Project name, visibility, and danger-zone actions.</div>
+        <div
+          tab="Overview">High-level project summary and recent activity.</div>
+        <div
+          tab="Activity">A chronological feed of every change made this week.</div>
+        <div
+          tab="Settings">Project name, visibility, and danger-zone actions.</div>
       </wb-tabs>
     </wb-demo>
 
@@ -426,29 +510,53 @@
     </wb-demo>
 
     <wb-demo>
-      <div x-stagelight variant="spotlight" color="#f59e0b" intensity="0.6" size="360px">Spotlight effect behind this text</div>
+      <div
+        x-stagelight
+        variant="spotlight"
+        color="#f59e0b"
+        intensity="0.6"
+        size="360px">Spotlight effect behind this text</div>
     </wb-demo>
 
     <wb-demo>
-      <button x-ripple style="padding: 0.75rem 1.5rem;">Click for a ripple</button>
+      <button
+        x-ripple
+        style="padding: 0.75rem 1.5rem;">Click for a ripple</button>
     </wb-demo>
 
     <wb-demo>
-      <img x-lightbox width="220" src="https://picsum.photos/seed/pg-lightbox/900/600" alt="Click to enlarge">
+      <img
+        x-lightbox
+        width="220"
+        src="https://picsum.photos/seed/pg-lightbox/900/600"
+        alt="Click to enlarge">
     </wb-demo>
 
     <h3>Buttons</h3>
 
     <wb-demo>
-      <wb-button label="Create project" variant="primary" size="lg" icon="plus"></wb-button>
+      <wb-button
+        label="Create project"
+        variant="primary"
+        size="lg"
+        icon="plus"></wb-button>
     </wb-demo>
 
     <wb-demo>
-      <wb-button label="Export data" variant="outline" size="sm" icon="download" icon-position="end"></wb-button>
+      <wb-button
+        label="Export data"
+        variant="outline"
+        size="sm"
+        icon="download"
+        icon-position="end"></wb-button>
     </wb-demo>
 
     <wb-demo>
-      <wb-button label="Saving…" variant="success" loading full-width></wb-button>
+      <wb-button
+        label="Saving…"
+        variant="success"
+        loading
+        full-width></wb-button>
     </wb-demo>
 
     <h3>Misc</h3>
@@ -467,7 +575,10 @@
     </wb-demo>
 
     <wb-demo>
-      <wb-search placeholder="Search the docs…" variant="glass" instant></wb-search>
+      <wb-search
+        placeholder="Search the docs…"
+        variant="glass"
+        instant></wb-search>
     </wb-demo>
 
     <wb-demo>
@@ -484,7 +595,8 @@
     <wb-demo>
       <wb-fieldset data-collapsible>
         <legend>Advanced options</legend>
-        <p>Retry attempts, timeout thresholds, and other rarely-changed settings live here.</p>
+        <p> Retry attempts, timeout thresholds, and other rarely-changed
+        settings live here.</p>
       </wb-fieldset>
     </wb-demo>
 
@@ -865,26 +977,39 @@
     // the interactive playground. Lives outside #pg-preview too, so it must
     // be scanned separately, once, on load (same reasoning as the theme
     // control above).
-    ensureWB().then(() => WB.scan(document.getElementById('pg-gallery'), { eager: true }));
+    ensureWB().then(() => WB.scan(document.getElementById('pg-gallery'), {
+    eager: true }));
 
-    // ── Example sets (loaded from the Examples dropdown) ──────────────────────
+    // ── Example sets (loaded from the Examples dropdown)
+    ──────────────────────
     const V = ['default', 'primary', 'success', 'danger', 'warning', 'info'];
     const S = ['xs', 'sm', 'md', 'lg', 'xl'];
-    const LOREM = 'A short description that spans a line or two so wrapping and spacing are visible.';
+    const LOREM = 'A short description that spans a line or two so wrapping and
+    spacing are visible.';
 
     function fiftyCards() {
       const T = [
-        (i, v, s) => `<wb-card title="#${i} ${v} · ${s}" variant="${v}" size="${s}" footer="Footer ${i}">Body ${i}</wb-card>`,
-        (i, v, s) => `<wb-card title="#${i} ${v}" variant="${v}" subtitle="With subtitle + badge" badge="New">${LOREM}</wb-card>`,
-        (i, v, s) => `<wb-card title="#${i} elevated" variant="${v}" elevated footer="Elevated">Body ${i}</wb-card>`,
-        (i, v, s) => `<wb-card title="#${i} hoverable" variant="${v}" hoverable tooltip="Hover text for #${i}">Hover me — ${LOREM}</wb-card>`,
-        (i, v, s) => `<wb-card title="#${i} ${v}" variant="${v}">Title + body only, no footer. ${i}</wb-card>`,
-        (i, v, s) => `<wb-cardimage title="#${i} image card" subtitle="cardimage" src="https://picsum.photos/seed/${i}/320/120">Image card body ${i}</wb-cardimage>`,
-        (i, v, s) => `<wb-cardpricing title="Plan #${i}" price="$${i}9" variant="${v}">Feature A · Feature B · Feature C</wb-cardpricing>`,
-        (i, v, s) => `<wb-cardprofile title="Person #${i}" subtitle="Role ${s}" variant="${v}">${LOREM}</wb-cardprofile>`,
+        (i, v, s) => `<wb-card title="#${i} ${v} · ${s}" variant="${v}"
+        size="${s}" footer="Footer ${i}">Body ${i}</wb-card>`,
+        (i, v, s) => `<wb-card title="#${i} ${v}" variant="${v}" subtitle="With
+        subtitle + badge" badge="New">${LOREM}</wb-card>`,
+        (i, v, s) => `<wb-card title="#${i} elevated" variant="${v}" elevated
+        footer="Elevated">Body ${i}</wb-card>`,
+        (i, v, s) => `<wb-card title="#${i} hoverable" variant="${v}" hoverable
+        tooltip="Hover text for #${i}">Hover me — ${LOREM}</wb-card>`,
+        (i, v, s) => `<wb-card title="#${i} ${v}" variant="${v}">Title + body
+        only, no footer. ${i}</wb-card>`,
+        (i, v, s) => `<wb-cardimage title="#${i} image card"
+        subtitle="cardimage" src="https://picsum.photos/seed/${i}/320/120">Image
+        card body ${i}</wb-cardimage>`,
+        (i, v, s) => `<wb-cardpricing title="Plan #${i}" price="$${i}9"
+        variant="${v}">Feature A · Feature B · Feature C</wb-cardpricing>`,
+        (i, v, s) => `<wb-cardprofile title="Person #${i}" subtitle="Role ${s}"
+        variant="${v}">${LOREM}</wb-cardprofile>`,
       ];
       const out = [];
-      for (let i = 0; i < 50; i++) out.push(T[i % T.length](i + 1, V[i % V.length], S[i % S.length]));
+      for (let i = 0; i < 50; i++) out.push(T[i % T.length](i + 1, V[i %
+      V.length], S[i % S.length]));
       return out.join('\n');
     }
 
@@ -900,18 +1025,30 @@
     // array's own wrap point instead of repeating in lockstep.
     function oneTwentyHeroes() {
       const CONTENT = [
-        ['Launch', 'Build faster with wb-starter', 'Schema-first, zero-build web components.', 'Get Started', 'View Docs'],
-        ['New', 'Compose, don\'t configure', 'Stack x-* behaviors on any element.', 'Try it', 'Learn more'],
-        ['v3', 'Themeable to the core', 'Every color flows from one theme system.', 'Explore themes', null],
-        ['Open Source', 'Own your components', 'Light DOM, no shadow boundaries.', 'Star on GitHub', 'Read the guide'],
-        ['Fast', 'No build step. Ever.', 'Drop a script tag and go.', 'Get Started', null],
-        ['Accessible', 'Semantics by default', 'Native elements, enhanced.', 'See a11y', 'Docs'],
-        ['Zero Build.', 'Infinite Possibility.', 'The web framework that doesn’t need a framework.', 'Try the Playground', 'Read the Guide'],
-        ['No Bundler.', 'No JSX. No Waiting.', 'Ship the way the browser already understands.', 'Try the Playground', 'Read the Guide'],
-        ['Light DOM.', 'Always.', 'Never fight a shadow boundary again.', 'Try the Playground', 'Read the Guide'],
-        ['Schema First.', 'Behavior Second.', 'Describe the shape. Let behaviors do the rest.', 'Try the Playground', 'Read the Guide'],
-        ['Compose,', 'Don’t Configure.', 'Stack x-* behaviors on any native element.', 'Try the Playground', 'Read the Guide'],
-        ['Themeable', 'To The Core.', 'Every color flows from one variable system.', 'Try the Playground', 'Read the Guide'],
+        ['Launch', 'Build faster with wb-starter', 'Schema-first, zero-build web
+        components.', 'Get Started', 'View Docs'],
+        ['New', 'Compose, don\'t configure', 'Stack x-* behaviors on any
+        element.', 'Try it', 'Learn more'],
+        ['v3', 'Themeable to the core', 'Every color flows from one theme
+        system.', 'Explore themes', null],
+        ['Open Source', 'Own your components', 'Light DOM, no shadow
+        boundaries.', 'Star on GitHub', 'Read the guide'],
+        ['Fast', 'No build step. Ever.', 'Drop a script tag and go.', 'Get
+        Started', null],
+        ['Accessible', 'Semantics by default', 'Native elements, enhanced.',
+        'See a11y', 'Docs'],
+        ['Zero Build.', 'Infinite Possibility.', 'The web framework that doesn’t
+        need a framework.', 'Try the Playground', 'Read the Guide'],
+        ['No Bundler.', 'No JSX. No Waiting.', 'Ship the way the browser already
+        understands.', 'Try the Playground', 'Read the Guide'],
+        ['Light DOM.', 'Always.', 'Never fight a shadow boundary again.', 'Try
+        the Playground', 'Read the Guide'],
+        ['Schema First.', 'Behavior Second.', 'Describe the shape. Let behaviors
+        do the rest.', 'Try the Playground', 'Read the Guide'],
+        ['Compose,', 'Don’t Configure.', 'Stack x-* behaviors on any native
+        element.', 'Try the Playground', 'Read the Guide'],
+        ['Themeable', 'To The Core.', 'Every color flows from one variable
+        system.', 'Try the Playground', 'Read the Guide'],
       ];
       const VARIANTS = ['default', 'cosmic', 'split', 'minimal', 'gradient'];
       const XALIGNS = ['center', 'left', 'right'];
@@ -925,12 +1062,17 @@
         'https://picsum.photos/seed/hero/1200/500',
       ];
       // Each CTA links to the doc it's talking about (opens in the doc-viewer).
-      const DV = (file) => '../public/doc-viewer.html?file=' + encodeURIComponent(file);
+      const DV = (file) => '../public/doc-viewer.html?file=' +
+      encodeURIComponent(file);
       const CTA_HREF = {
-        'Get Started': DV('docs/V3-GUIDE.md'), 'View Docs': DV('docs/V3-GUIDE.md'),
-        'Docs': DV('docs/V3-GUIDE.md'), 'Read the guide': DV('docs/V3-GUIDE.md'), 'Read the Guide': DV('docs/V3-GUIDE.md'),
-        'Try it': DV('docs/V3-GUIDE.md'), 'Learn more': DV('docs/behaviors/wb-behaviors.md'),
-        'Explore themes': DV('docs/themes.md'), 'See a11y': DV('docs/V3-GUIDE.md'),
+        'Get Started': DV('docs/V3-GUIDE.md'), 'View Docs':
+        DV('docs/V3-GUIDE.md'),
+        'Docs': DV('docs/V3-GUIDE.md'), 'Read the guide':
+        DV('docs/V3-GUIDE.md'), 'Read the Guide': DV('docs/V3-GUIDE.md'),
+        'Try it': DV('docs/V3-GUIDE.md'), 'Learn more':
+        DV('docs/behaviors/wb-behaviors.md'),
+        'Explore themes': DV('docs/themes.md'), 'See a11y':
+        DV('docs/V3-GUIDE.md'),
         'Star on GitHub': 'https://github.com/CieloVistaSoftware/wb-starter',
         'Try the Playground': 'playground.html',
       };
@@ -943,7 +1085,8 @@
         const xalign = XALIGNS[(i + round * 2) % XALIGNS.length];
         const height = HEIGHTS[(i + round * 3) % HEIGHTS.length];
         const bg = BGS[(i + round * 5) % BGS.length];
-        const overlay = (i + round) % 5 !== 0; // on by default; off roughly 1-in-5 so it's exercised too
+        const overlay = (i + round) % 5 !== 0; // on by default; off roughly
+        1-in-5 so it's exercised too
         const signatureStyle = i % 2 === 1; // alternate the two original styles
         const attrs = [
           `pretitle="${pre} #${i + 1}"`,
@@ -963,7 +1106,9 @@
         const hero = `<wb-cardhero\n  ${attrs.join('\n  ')}>\n</wb-cardhero>`;
         out.push(
           signatureStyle
-            ? `<div class="pg-signature-hero">\n  ${hero.replace(/\n/g, '\n  ')}\n  <wb-modal\n    modal-title="${title}"\n    modal-content="${sub}">\n    See it in action\n  </wb-modal>\n</div>`
+            ? `<div class="pg-signature-hero">\n ${hero.replace(/\n/g, '\n ')}\n
+            <wb-modal\n    modal-title="${title}"\n    modal-content="${sub}">
+            \n See it in action\n </wb-modal> \n</div>`
             : hero
         );
       }
@@ -977,11 +1122,16 @@
     // nothing anywhere actually showed all 5 rendered together to compare.
     function fiveHeroVariants() {
       const variants = [
-        ['default', 'Default', 'Two radial glows over a diagonal brand gradient, with an animated sheen sweep.'],
-        ['cosmic', 'Cosmic', 'A denser multi-hue nebula with a faint starfield.'],
-        ['split', 'Split', 'Content pinned to one side; background stays visible on the other.'],
-        ['minimal', 'Minimal', 'Flat theme surface -- no sheen, no scrim, no CTA drama.'],
-        ['gradient', 'Gradient', 'A clean two-hue linear sweep, no radial glows or animation.'],
+        ['default', 'Default', 'Two radial glows over a diagonal brand gradient,
+        with an animated sheen sweep.'],
+        ['cosmic', 'Cosmic', 'A denser multi-hue nebula with a faint
+        starfield.'],
+        ['split', 'Split', 'Content pinned to one side; background stays visible
+        on the other.'],
+        ['minimal', 'Minimal', 'Flat theme surface -- no sheen, no scrim, no CTA
+        drama.'],
+        ['gradient', 'Gradient', 'A clean two-hue linear sweep, no radial glows
+        or animation.'],
       ];
       const out = variants.map(([variant, title, sub]) => {
         const attrs = [
@@ -1005,7 +1155,8 @@
     // x-rubberband) are intentionally left out rather than shown not-working.
     function fiftyXBehaviors() {
       return [
-        // Attention/animation effects (button — most of these are click-triggered)
+        // Attention/animation effects (button — most of these are
+        click-triggered)
         '<button x-ripple>Ripple</button>',
         '<button x-glow color="var(--success-color)">Glow</button>',
         '<button x-pulse>Click to Pulse</button>',
@@ -1027,43 +1178,66 @@
         '<button x-fireworks count="40">Fireworks</button>',
         '<button x-snow count="40">Let it Snow</button>',
 
-        // Overlays (all self-contained triggers — no separate target element needed)
-        '<button x-confirm confirm-title="Delete item?" confirm-message="This cannot be undone.">Delete</button>',
-        '<button x-prompt prompt-title="Your name" prompt-message="What should we call you?">Ask</button>',
-        '<button x-popover popover-title="Info" popover-content="Extra detail shown on click." position="top">Popover</button>',
-        '<button x-drawer drawer-title="Settings" drawer-content="Drawer content goes here." position="right">Open Drawer</button>',
-        '<img x-lightbox width="200" src="https://picsum.photos/seed/xb/800/500" alt="Click to enlarge">',
-        '<button x-tooltip="Shown on hover, not on click" position="top">Hover me</button>',
+        // Overlays (all self-contained triggers — no separate target element
+        needed)
+        '<button x-confirm confirm-title="Delete item?" confirm-message="This
+        cannot be undone.">Delete</button>',
+        '<button x-prompt prompt-title="Your name" prompt-message="What should
+        we call you?">Ask</button>',
+        '<button x-popover popover-title="Info" popover-content="Extra detail
+        shown on click." position="top">Popover</button>',
+        '<button x-drawer drawer-title="Settings" drawer-content="Drawer content
+        goes here." position="right">Open Drawer</button>',
+        '<img x-lightbox width="200" src="https://picsum.photos/seed/xb/800/500"
+        alt="Click to enlarge">',
+        '<button x-tooltip="Shown on hover, not on click" position="top">Hover
+        me</button>',
 
         // Feedback
-        '<button x-toast message="Saved successfully!" toast-variant="success">Show Toast</button>',
-        '<button x-notify message="Heads up — something happened." duration="4000">Notify</button>',
+        '<button x-toast message="Saved successfully!"
+        toast-variant="success">Show Toast</button>',
+        '<button x-notify message="Heads up — something happened."
+        duration="4000">Notify</button>',
 
         // Utilities
-        '<button x-copy copy-text="npm install wb-starter">Copy Install Command</button>',
-        '<button x-share share-title="wb-starter" share-text="Zero-build web components" share-url="https://cielovistasoftware.github.io/wb-starter/">Share</button>',
+        '<button x-copy copy-text="npm install wb-starter">Copy Install
+        Command</button>',
+        '<button x-share share-title="wb-starter" share-text="Zero-build web
+        components"
+        share-url="https://cielovistasoftware.github.io/wb-starter/">Share</button>',
         '<button x-print label="🖨️ Print this page"></button>',
         '<button x-fullscreen label="⛶ Go Fullscreen"></button>',
-        '<p x-truncate lines="1">This paragraph is much longer than the space allows and gets truncated to a single line with an ellipsis at the end so the layout never breaks.</p>',
-        '<button x-toggle toggle-class="active" toggle-self="true">Toggle My Own "active" Class</button>',
+        '<p x-truncate lines="1">This paragraph is much longer than the space
+        allows and gets truncated to a single line with an ellipsis at the end
+        so the layout never breaks.</p>',
+        '<button x-toggle toggle-class="active" toggle-self="true">Toggle My Own
+        "active" Class</button>',
         '<input x-counter max="50" placeholder="Type here — counts up to 50">',
-        '<button x-dropdown items="Edit,Duplicate,Archive,Delete" label="Actions"></button>',
+        '<button x-dropdown items="Edit,Duplicate,Archive,Delete"
+        label="Actions"></button>',
         '<div x-countdown date="2027-01-01T00:00:00" format="auto"></div>',
         '<div x-clock variant="digital" format="24" show-seconds="true"></div>',
         '<span x-relativetime datetime="2026-01-01T00:00:00"></span>',
         '<nav x-breadcrumb items="Home,Docs,Behaviors"></nav>',
         '<input x-search placeholder="Search…">',
-        '<textarea x-autosize placeholder="Grows as you type…" rows="2"></textarea>',
+        '<textarea x-autosize placeholder="Grows as you type…"
+        rows="2"></textarea>',
         '<input x-colorpicker value="#6366f1">',
         '<input x-tags placeholder="Type and press Enter to add a tag">',
-        '<input x-autocomplete items="Apple,Banana,Cherry,Date,Elderberry" placeholder="Start typing a fruit…">',
+        '<input x-autocomplete items="Apple,Banana,Cherry,Date,Elderberry"
+        placeholder="Start typing a fruit…">',
 
         // Combinations — multiple x-* attributes stacked on one element
-        '<button x-ripple x-tooltip="Ripples on click, tooltip on hover">Ripple + Tooltip</button>',
-        '<button x-ripple x-toast message="Ripple fired the toast too" toast-variant="info">Ripple + Toast</button>',
-        '<div x-fadein x-glow color="var(--primary)">Fades in, then glows</div>',
-        '<button x-confetti x-tooltip="Click for confetti" count="60" label="🎊 Party"></button>',
-        '<button x-ripple x-confirm confirm-title="Really?" confirm-message="Ripple + confirm together.">Ripple + Confirm</button>',
+        '<button x-ripple x-tooltip="Ripples on click, tooltip on hover">Ripple
+        + Tooltip</button>',
+        '<button x-ripple x-toast message="Ripple fired the toast too"
+        toast-variant="info">Ripple + Toast</button>',
+        '<div x-fadein x-glow color="var(--primary)">Fades in, then
+        glows</div>',
+        '<button x-confetti x-tooltip="Click for confetti" count="60" label="🎊
+        Party"></button>',
+        '<button x-ripple x-confirm confirm-title="Really?"
+        confirm-message="Ripple + confirm together.">Ripple + Confirm</button>',
       ].join('\n');
     }
 
@@ -1080,35 +1254,46 @@
         '<input x-search placeholder="Search…">',
         '<div x-colorpicker value="#6366f1"></div>',
         '<input x-tags placeholder="Type and press Enter to add a tag">',
-        '<input x-autocomplete items="Apple,Banana,Cherry,Date,Elderberry" placeholder="Start typing a fruit…">',
-        '<input x-password type="password" placeholder="Password with show/hide toggle">',
+        '<input x-autocomplete items="Apple,Banana,Cherry,Date,Elderberry"
+        placeholder="Start typing a fruit…">',
+        '<input x-password type="password" placeholder="Password with show/hide
+        toggle">',
         '<input x-masked mask="(999) 999-9999" placeholder="Phone number">',
         '<input x-stepper value="5" min="0" max="10">',
         '<div x-otp length="6"></div>',
         '<input x-floatinglabel label="Email address" type="email">',
         '<input x-label="Full name" placeholder="Jane Doe">',
-        '<input x-label="Email" required type="email" placeholder="you@example.com">',
-        '<input x-tooltip="This field is required" placeholder="Hover for hint">',
-        '<input x-ripple placeholder="Ripples on click (works on any element, not just buttons)">',
+        '<input x-label="Email" required type="email"
+        placeholder="you@example.com">',
+        '<input x-tooltip="This field is required" placeholder="Hover for
+        hint">',
+        '<input x-ripple placeholder="Ripples on click (works on any element,
+        not just buttons)">',
 
         // Combinations — x-label paired with another input behavior
         '<input x-label="Search" x-search placeholder="Type to search…">',
         '<input x-label="Tags" x-tags placeholder="Press Enter to add">',
-        '<input x-counter max="100" x-label="Bio" placeholder="Tell us about yourself">',
-        '<input x-label="Password" x-password type="password" placeholder="Enter password">',
-        '<input x-label="Phone" x-masked mask="999-999-9999" placeholder="000-000-0000">',
-        '<input x-masked mask="AA-9999" x-label="License plate" label-position="right" placeholder="XX-0000">',
+        '<input x-counter max="100" x-label="Bio" placeholder="Tell us about
+        yourself">',
+        '<input x-label="Password" x-password type="password" placeholder="Enter
+        password">',
+        '<input x-label="Phone" x-masked mask="999-999-9999"
+        placeholder="000-000-0000">',
+        '<input x-masked mask="AA-9999" x-label="License plate"
+        label-position="right" placeholder="XX-0000">',
       ].join('\n');
     }
 
     function fiftyBadges() {
-      const V = ['default', 'primary', 'secondary', 'success', 'warning', 'error', 'info', 'purple', 'pink', 'teal', 'orange'];
+      const V = ['default', 'primary', 'secondary', 'success', 'warning',
+      'error', 'info', 'purple', 'pink', 'teal', 'orange'];
       const S = ['xs', 'sm', 'md', 'lg'];
       const MOD = ['', ' pill', ' outline', ' removable', ' pill removable'];
       const out = [];
       for (let i = 0; i < 50; i++) {
         const v = V[i % V.length], s = S[i % S.length], m = MOD[i % MOD.length];
-        out.push(`<wb-badge label="#${i + 1} ${v}" variant="${v}" size="${s}"${m}></wb-badge>`);
+        out.push(`<wb-badge label="#${i + 1} ${v}" variant="${v}"
+        size="${s}"${m}></wb-badge>`);
       }
       // a couple of dot badges at the end
       out.push('<wb-badge variant="success" dot></wb-badge>');
@@ -1120,23 +1305,36 @@
       const V = ['default', 'success', 'error'];
       const S = ['sm', 'md', 'lg'];
       const OPTION_SETS = [
-        [{ value: 'apple', label: 'Apple' }, { value: 'banana', label: 'Banana' }, { value: 'cherry', label: 'Cherry' }],
-        [{ value: 'us', label: 'United States' }, { value: 'ca', label: 'Canada' }, { value: 'mx', label: 'Mexico' }, { value: 'uk', label: 'United Kingdom' }],
-        [{ value: 'red', label: 'Red' }, { value: 'green', label: 'Green' }, { value: 'blue', label: 'Blue' }],
-        [{ value: 'eng', label: 'Engineering' }, { value: 'design', label: 'Design' }, { value: 'sales', label: 'Sales' }, { value: 'support', label: 'Support' }],
+        [{ value: 'apple', label: 'Apple' }, { value: 'banana', label: 'Banana'
+        }, { value: 'cherry', label: 'Cherry' }],
+        [{ value: 'us', label: 'United States' }, { value: 'ca', label: 'Canada'
+        }, { value: 'mx', label: 'Mexico' }, { value: 'uk', label: 'United
+        Kingdom' }],
+        [{ value: 'red', label: 'Red' }, { value: 'green', label: 'Green' }, {
+        value: 'blue', label: 'Blue' }],
+        [{ value: 'eng', label: 'Engineering' }, { value: 'design', label:
+        'Design' }, { value: 'sales', label: 'Sales' }, { value: 'support',
+        label: 'Support' }],
       ];
       const out = [];
       for (let i = 0; i < 20; i++) {
         const v = V[i % V.length], s = S[i % S.length];
         const options = OPTION_SETS[i % OPTION_SETS.length];
-        out.push(`<wb-select label="#${i + 1} ${v}/${s}" placeholder="Choose one…" variant="${v}" size="${s}" options='${JSON.stringify(options)}'></wb-select>`);
+        out.push(`<wb-select label="#${i + 1} ${v}/${s}" placeholder="Choose
+        one…" variant="${v}" size="${s}"
+        options='${JSON.stringify(options)}'></wb-select>`);
       }
       // Explicit flag combinations, one per notable behavior
-      out.push(`<wb-select label="Searchable" searchable placeholder="Type to filter…" options='${JSON.stringify(OPTION_SETS[0])}'></wb-select>`);
-      out.push(`<wb-select label="Clearable" clearable value="banana" options='${JSON.stringify(OPTION_SETS[0])}'></wb-select>`);
-      out.push(`<wb-select label="Multiple" multiple options='${JSON.stringify(OPTION_SETS[1])}'></wb-select>`);
-      out.push(`<wb-select label="Disabled" disabled value="us" options='${JSON.stringify(OPTION_SETS[1])}'></wb-select>`);
-      out.push(`<wb-select label="Required" required placeholder="This one is required" options='${JSON.stringify(OPTION_SETS[2])}'></wb-select>`);
+      out.push(`<wb-select label="Searchable" searchable placeholder="Type to
+      filter…" options='${JSON.stringify(OPTION_SETS[0])}'></wb-select>`);
+      out.push(`<wb-select label="Clearable" clearable value="banana"
+      options='${JSON.stringify(OPTION_SETS[0])}'></wb-select>`);
+      out.push(`<wb-select label="Multiple" multiple
+      options='${JSON.stringify(OPTION_SETS[1])}'></wb-select>`);
+      out.push(`<wb-select label="Disabled" disabled value="us"
+      options='${JSON.stringify(OPTION_SETS[1])}'></wb-select>`);
+      out.push(`<wb-select label="Required" required placeholder="This one is
+      required" options='${JSON.stringify(OPTION_SETS[2])}'></wb-select>`);
       return out.join('\n');
     }
 
@@ -1165,7 +1363,8 @@
           return v;
         });
         const [variant, size, checked, disabled, labelPosition] = picked;
-        const label = `#${i + 1} ${variant}/${size}${checked ? ' checked' : ''}${disabled ? ' disabled' : ''} (label-${labelPosition})`;
+        const label = `#${i + 1} ${variant}/${size}${checked ? ' checked' :
+        ''}${disabled ? ' disabled' : ''} (label-${labelPosition})`;
         const attrs = [
           `label="${label}"`,
           `variant="${variant}"`,
@@ -1224,35 +1423,46 @@
     function twentyChannelVideos() {
       const videos = [
         ['9YEdVtc0odg', 'Do Christians Have the Same Power as Christ?'],
-        ['SCJZsmlvocY', 'Was Jim Jones a Faith Healer? The Latter Rain Connection to William Branham, Bethel, & N.A.R.'],
+        ['SCJZsmlvocY', 'Was Jim Jones a Faith Healer? The Latter Rain
+        Connection to William Branham, Bethel, & N.A.R.'],
         ['-CHaUE6hPDM', 'Did God Show Bob Jones Abortions?'],
         ['5zJgNtzqxOY', 'What is a Corporate Anointing?'],
-        ['UDx2maxqre4', 'Ché Ahn Quotes The Passion Translation and Believes Apostles Can Impart Spiritual Gifts'],
-        ['eWtCrn4xxOs', 'Will This Be the Last Time We Ever See Kenneth Copeland Speak?'],
+        ['UDx2maxqre4', 'Ché Ahn Quotes The Passion Translation and Believes
+        Apostles Can Impart Spiritual Gifts'],
+        ['eWtCrn4xxOs', 'Will This Be the Last Time We Ever See Kenneth Copeland
+        Speak?'],
         ['9O1MF3gyIxU', 'Bill Johnson is Engaged to a Much Younger Woman!'],
         ['8eA-ef0SGt4', 'Can you Rob God of Glory?'],
-        ['lL1QODiWt0k', 'Kathryn Krick "Tries" to Heal Cerebral Palsy & Down Syndrome'],
-        ['EjizZrwlEug', 'Bob Jones Prophecies Judgement on America Because of Homosexuality'],
-        ['g9fYZy4P87o', 'Richard Reacts: First-Time Visitor John Christ & Shama Mrema Visit Creflo Dollar\'s Church'],
+        ['lL1QODiWt0k', 'Kathryn Krick "Tries" to Heal Cerebral Palsy & Down
+        Syndrome'],
+        ['EjizZrwlEug', 'Bob Jones Prophecies Judgement on America Because of
+        Homosexuality'],
+        ['g9fYZy4P87o', 'Richard Reacts: First-Time Visitor John Christ & Shama
+        Mrema Visit Creflo Dollar\'s Church'],
         ['LxkOOn-Cv7A', 'Can We Reach the Full Maturity of the God Man?'],
         ['R-M4VQ_wzaY', 'Bob Jones Prophecies Using Astrology'],
         ['iDm7SrT9KSQ', 'Apostle Kathryn Krick has a New Posse'],
-        ['yUydO6Qj_h4', 'Pastor Loran Livingston Preaches "Repent! the Axe is at the Root of the Tree"'],
+        ['yUydO6Qj_h4', 'Pastor Loran Livingston Preaches "Repent! the Axe is at
+        the Root of the Tree"'],
         ['Fo4dLAzVHzQ', 'Bob Jones Had 50 to 100 Visions? Can That Be True?'],
         ['4vUJ1aq7QZg', 'Bob Jones Admits he was a False Prophet'],
         ['51Run8mV3h8', 'Bill Johnson Wants to Heal Down Syndrome'],
-        ['js_WYPK4Vvk', 'Apostle Ché Ahn Says, "I\'ve never Met Anyone In the NAR New Apostolic Reformation Network"'],
+        ['js_WYPK4Vvk', 'Apostle Ché Ahn Says, "I\'ve never Met Anyone In the
+        NAR New Apostolic Reformation Network"'],
         ['Y--lEcckiZ0', 'What Podcasters are Saying about Bethel'],
       ];
       return videos.map(([id, title]) =>
         `<figure class="pg-video-card">\n` +
-        `  <div x-youtube url="https://www.youtube.com/watch?v=${id}"></div>\n` +
-        `  <figcaption>${title.replace(/&/g, '&amp;').replace(/</g, '&lt;')}</figcaption>\n` +
+        ` <div x-youtube url="https://www.youtube.com/watch?v=${id}"> </div> \n`
+        +
+        ` <figcaption> ${title.replace(/&/g, '&amp;').replace(/</g,
+        '&lt;')}</figcaption>\n` +
         `</figure>`
       ).join('\n');
     }
 
-    document.getElementById('pg-examples').addEventListener('change', async (e) => {
+    document.getElementById('pg-examples').addEventListener('change', async (e)
+    => {
       const which = e.target.value;
       if (!which) return;
       if (which === 'form') input.value = SAMPLE;
@@ -1275,7 +1485,8 @@
       // A freshly loaded example should always start scrolled to its top,
       // whether the preview pane itself had scrolled or the whole page had.
       preview.scrollTop = 0;
-      preview.closest('.pg-panel').scrollIntoView({ behavior: 'smooth', block: 'start' });
+      preview.closest('.pg-panel').scrollIntoView({ behavior: 'smooth', block:
+      'start' });
     });
 
     // #659: the preview pane is ~41% of the browser (563px of 1280 measured),
@@ -1358,7 +1569,8 @@
 
     fitEditor();
     render();
-    // WB's initial pass may re-shrink the textarea after load — re-fit once settled.
+    // WB's initial pass may re-shrink the textarea after load — re-fit once
+    settled.
     setTimeout(fitEditor, 600);
   </script>
 </body>

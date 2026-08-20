@@ -79,7 +79,14 @@ A simple, direct Flexbox layout primitive -- direction, wrap, justify, align, an
 `flex()` does not add or remove elements -- it adds one class and applies inline styles directly to the host, leaving children untouched:
 
 ```html
-<wb-flex class="wb-flex" style="display:flex;flex-direction:row;flex-wrap:wrap;justify-content:flex-start;align-items:stretch;gap:1rem;">
+<wb-flex
+  class="wb-flex"
+  style="display:flex;
+         flex-direction:row;
+         flex-wrap:wrap;
+         justify-content:flex-start;
+         align-items:stretch;
+         gap:1rem;">
   <!-- original children, unmodified -->
 </wb-flex>
 ```

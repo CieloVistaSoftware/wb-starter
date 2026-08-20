@@ -77,7 +77,8 @@ Progress bar with determinate and indeterminate states, size/color variants, a b
 ### Native `<progress>` (Enhanced)
 
 ```html
-<!-- x-progress is auto-injected onto native <progress> tags when autoInject is on -->
+<!-- x-progress is auto-injected onto native <progress> tags when autoInject is
+on -->
 <progress value="50" max="100"></progress>
 ```
 
@@ -85,7 +86,8 @@ Progress bar with determinate and indeterminate states, size/color variants, a b
 
 ```html
 <wb-progress
-  class="wb-progress wb-progress--md wb-progress--primary wb-progress--labeled wb-progress--animated"
+  class="wb-progress wb-progress--md wb-progress--primary wb-progress--labeled
+  wb-progress--animated"
   role="progressbar"
   aria-valuenow="60"
   aria-valuemin="0"

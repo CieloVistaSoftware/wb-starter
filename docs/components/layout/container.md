@@ -80,7 +80,13 @@ Full-featured layout container that switches between a flex stack/row (1 column)
 
 ```html
 <!-- columns > 1: grid mode -->
-<wb-container style="display:grid;grid-template-columns:repeat(auto-fit, minmax(min(250px, 100%), 1fr));align-items:stretch;justify-content:flex-start;gap:1rem;padding:1rem;">
+<wb-container
+  style="display:grid;
+         grid-template-columns:repeat(auto-fit, minmax(min(250px, 100%), 1fr));
+         align-items:stretch;
+         justify-content:flex-start;
+         gap:1rem;
+         padding:1rem;">
   <!-- original children, unmodified -->
 </wb-container>
 ```

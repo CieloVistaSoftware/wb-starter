@@ -93,8 +93,10 @@ into the live example above:
       title="Build resilient interfaces"
       subtitle="Separate structure from behavior"
       variant="elevated">
-      <p>Keep content readable and focused by giving each card one clear job.</p>
-      <p>WB-Starter applies behavior directly to the element, so the markup stays easy to inspect and reuse.</p>
+      <p> Keep content readable and focused by giving each card one clear
+      job.</p>
+      <p> WB-Starter applies behavior directly to the element, so the markup
+      stays easy to inspect and reuse.</p>
       <p>Start with semantic HTML, then compose focused behaviors.</p>
     </wb-card>
     <button

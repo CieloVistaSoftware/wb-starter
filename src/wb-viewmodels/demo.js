@@ -833,6 +833,33 @@ export async function demo(element, options = {}) {
                         lastControlWidth = controlWidth;
                         lastCodeWidth = codeWidth;
                     }
+                    // Two equal readings are not enough on their own. pre.js
+                    // builds the line-number gutter AFTER the bare <pre>
+                    // exists, and building it raises the panel's own
+                    // padding-left from 12px to 40px to make room. A width
+                    // measured before that lands ~14-28px short, and because
+                    // the pre-gutter width is itself steady for several ticks
+                    // it reads as "stable" and gets locked in -- the panel
+                    // then reports scrollWidth > clientWidth forever after.
+                    // Confirmed live: docs/components/semantic/address.md,
+                    // scrollWidth=474 against clientWidth=460 on a sample
+                    // whose longest line is only 48 characters.
+                    //
+                    // So hold stability open until every panel's gutter is
+                    // fully built -- the same precondition
+                    // doc-viewer-code-panel-audit.spec.ts waits for before it
+                    // measures anything.
+                    const guttersReady = Array.from(codeEls).every((panel) => {
+                        const wrapper = panel.closest('.x-pre-wrapper');
+                        if (!wrapper) return false;
+                        const code = panel.querySelector('code');
+                        const lines = ((code || panel).textContent || '').split('\n');
+                        if (lines.length && lines[lines.length - 1] === '') lines.pop();
+                        const nums = wrapper.querySelectorAll('.x-pre__line-numbers > div');
+                        if (nums.length !== lines.length) return false;
+                        return Array.from(nums).every((n) => n.style.top !== '');
+                    });
+                    if (!guttersReady) stableCount = 0;
                     if (stableCount >= 2 || Date.now() - startedAt > MAX_MS) return;
                     setTimeout(measure, POLL_MS);
                 };

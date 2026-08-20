@@ -68,7 +68,12 @@ Horizontal, wrapping flex layout for groups of items that don't need to align to
 `cluster()` does not add or remove any elements -- it applies inline styles directly to the host and leaves its children untouched:
 
 ```html
-<wb-cluster style="display:flex;flex-wrap:wrap;gap:1rem;justify-content:flex-start;align-items:center;">
+<wb-cluster
+  style="display:flex;
+         flex-wrap:wrap;
+         gap:1rem;
+         justify-content:flex-start;
+         align-items:center;">
   <!-- original children, unmodified -->
 </wb-cluster>
 ```

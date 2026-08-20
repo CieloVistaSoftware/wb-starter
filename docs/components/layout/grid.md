@@ -109,7 +109,10 @@ CSS Grid layout with a mobile-first auto-fit default, optional fixed rows, alter
 ## Generated Structure
 
 ```html
-<wb-grid style="display:grid;gap:1rem;grid-template-columns:repeat(auto-fit, minmax(min(250px, 100%), 1fr));">
+<wb-grid
+  style="display:grid;
+         gap:1rem;
+         grid-template-columns:repeat(auto-fit, minmax(min(250px, 100%), 1fr));">
   <!-- headers, when provided -->
   <div class="wb-grid__header">Name</div>
   <div class="wb-grid__header">Role</div>
