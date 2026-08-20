@@ -22,6 +22,24 @@
 export function select(element, options = {}) {
   if (element.tagName !== 'SELECT') return buildWbSelect(element, options);
 
+  // #681 -- John: "I didn't see any colors". This branch handled `clearable`
+  // and an API object and nothing else, so a native <select variant="error">
+  // came out with className === "" -- the CSS rule was correct and nothing
+  // ever applied the class. variant/size are declared in select.schema.json
+  // and were read only by buildWbSelect(), which a native <select> never
+  // reaches. Same #669 family as audio showDisplay and table paginated.
+  const nativeVariant = options.variant || element.getAttribute('variant') || 'default';
+  const nativeSize = options.size || element.getAttribute('size') || 'md';
+  const appliedClasses = [];
+  if (nativeVariant !== 'default') appliedClasses.push(`wb-select--${nativeVariant}`);
+  // `size` on a native <select> is ALSO a real HTML attribute meaning "how many
+  // rows to show", and it is numeric. Only treat it as a style token when it is
+  // not a number, so <select size="4"> keeps its native meaning.
+  if (nativeSize !== 'md' && !/^\d+$/.test(String(nativeSize))) {
+    appliedClasses.push(`wb-select--${nativeSize}`);
+  }
+  if (appliedClasses.length) element.classList.add(...appliedClasses);
+
   const clearable = options.clearable ?? element.hasAttribute('clearable');
 
   if (clearable && !element.parentElement?.classList.contains('wb-select-clearable')) {

@@ -666,6 +666,45 @@
 
     const VOID = new Set(['img', 'input', 'br', 'hr', 'source', 'track', 'embed', 'col']);
 
+    // #681 -- John: "we need better samples of the select/option examples ...
+    // I didn't see any colors".
+    //
+    // The generator puts `Example {tag} content` inside every element, but some
+    // elements have a CONTENT MODEL: bare text in a <select> is not selectable,
+    // so the sample rendered an empty 21x17 control with nothing to pick. These
+    // elements get real children instead of a text node.
+    const CONTENT_MODEL = {
+      select: `
+  <option value="alpha">Alpha</option>
+  <option value="beta">Beta</option>
+  <option value="gamma">Gamma</option>`,
+      optgroup: `
+  <option value="alpha">Alpha</option>`,
+      ul: `
+  <li>First item</li>
+  <li>Second item</li>`,
+      ol: `
+  <li>First item</li>
+  <li>Second item</li>`,
+      dl: `
+  <dt>Term</dt>
+  <dd>Definition</dd>`,
+      table: `
+  <thead><tr><th>Column</th></tr></thead>
+  <tbody><tr><td>Cell</td></tr></tbody>`,
+      tr: `
+  <td>Cell</td>`,
+      figure: `
+  <img src="/demos/sample.jpg" alt="Sample">
+  <figcaption>Example caption</figcaption>`,
+      details: `
+  <summary>Example summary</summary>
+  Example details content`,
+      fieldset: `
+  <legend>Example legend</legend>
+  <input type="text" value="Example field">`,
+    };
+
     // A generated example must satisfy what the behavior actually requires.
     // audio.js throws outright ("wb-audio: no src provided -- nothing to play")
     // and logs to the error viewer, so an <audio> with no src is not a harmless
@@ -764,15 +803,17 @@
         const extra = sel && sel[2] ? ` ${sel[2]}="${sel[3]}"` : '';
         const seed = seedAttributes(behavior);
         if (VOID.has(tag)) return `<${tag}${extra}${seed}${companion}${v}>`;
-        return `<${tag}${extra}${seed}${companion}${v}>
-  Example ${tag} content
+        const tagBody = CONTENT_MODEL[tag] || `
+  Example ${tag} content`;
+        return `<${tag}${extra}${seed}${companion}${v}>${tagBody}
 </${tag}>`;
       }
 
       const seed = seedAttributes(behavior);
       if (VOID.has(host)) return `<${host} ${attr}${seed}${companion}${v}>`;
-      return `<${host} ${attr}${seed}${companion}${v}>
-  Example ${attr} content
+      const hostBody = CONTENT_MODEL[host] || `
+  Example ${attr} content`;
+      return `<${host} ${attr}${seed}${companion}${v}>${hostBody}
 </${host}>`;
     }
 
