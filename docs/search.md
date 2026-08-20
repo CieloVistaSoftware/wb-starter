@@ -187,7 +187,7 @@ wb-search {
 ---
 
 ## Implementation
-- **Custom Element**: [src/wb-viewmodels/wb-search.js](../src/wb-viewmodels/wb-search.js)
+- **Custom Element**: [src/wb-viewmodels/wb-search.js](../src/wb-viewmodels/search.js)
 - **Behavior**: [src/wb-viewmodels/search.js](../src/wb-viewmodels/search.js)
 - **Styles**: [src/styles/components/search.css](../src/styles/components/search.css)
 - **Tests**: Component tests located in `tests/behaviors/ui/search.spec.ts`
@@ -195,7 +195,7 @@ wb-search {
 ---
 
 ## Demo
-See the interactive demo: [demo-search.html](../demo-search.html)
+See the interactive demo: demo-search.html
 
 This demo showcases:
 - Real-time search with sample data

@@ -16,6 +16,6 @@ choice across page loads (via `localStorage`) unless disabled.
   - `persist` — set `"false"` to skip saving the choice to `localStorage`.
 - **Themes:** all 50 themes documented in [themes.md](../themes.md) are available in the dropdown — this component is the UI for that system, not a separate one. See themes.md for the full list, the underlying `data-theme`/CSS-variable architecture, and how to add a new theme.
 
-- [Demo](../../demos/semantics-theme.html)
+- [Demo](../../pages/themes.html)
 - [Schema](../../src/wb-models/themecontrol.schema.json)
 - [Theme system](../themes.md)

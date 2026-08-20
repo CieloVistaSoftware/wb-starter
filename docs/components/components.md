@@ -354,5 +354,5 @@ After initialization, all <wb-*> tags are fully functional custom elements, and 
 - [Card](./cards/card.md)
 - [Search Component](../search.md)
 - [Semantic Elements](./semantic/semantic.index.md)
-- [Effects](./effects/)
+- [Effects](./effects/README.md)
 - [Semantic Elements](./semantic/semantic.index.md)

@@ -248,4 +248,4 @@ All components use CSS variables for theming:
 - [Card](./cards/card.md)
 - [Search Component](../search.md)
 - [Semantic Elements](./semantic/semantic.index.md)
-- [Effects](./effects/)
+- [Effects](./effects/README.md)

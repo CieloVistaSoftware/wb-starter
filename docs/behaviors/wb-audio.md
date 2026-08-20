@@ -68,7 +68,7 @@ Wrapped in `<wb-demo>`, so the live component renders below with its source show
 ---
 
 ## Schema & Tests
-- [Schema](../../src/wb-models/wb-audio.schema.json) (if present)
+- [Schema](../../src/wb-models/audio.schema.json) (if present)
 - [Tests](../../tests/behaviors/behaviors-showcase.spec.ts) (integration)
 
 ---

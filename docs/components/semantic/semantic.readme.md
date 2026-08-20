@@ -465,6 +465,6 @@ Semantic components use CSS custom properties for theming:
 
 ## Implementation
 - **Components**: Located in `src/wb-viewmodels/` (article.js, aside.js, figure.js, etc.)
-- **Styles**: [src/styles/components/semantic.css](../../src/styles/components/semantic.css)
+- **Styles**: [src/styles/components/semantic.css](../../../src/styles/behaviors/article.css)
 - **Schemas**: Semantic component schemas in `src/wb-models/`
 - **Tests**: Semantic tests in `tests/behaviors/ui/semantic.spec.ts`

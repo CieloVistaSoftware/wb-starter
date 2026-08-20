@@ -221,13 +221,13 @@ wb-tabs {
 ---
 
 ## Schema
-- See: [src/wb-models/tabs.schema.json](../src/wb-models/tabs.schema.json)
+- See: [src/wb-models/tabs.schema.json](../../src/wb-models/tabs.schema.json)
 - Defines component properties, accessibility features, and test scenarios
 
 ---
 
 ## Implementation
-- **Custom Element**: [src/wb-viewmodels/wb-tabs.js](../src/wb-viewmodels/wb-tabs.js)
-- **Behavior**: [src/wb-viewmodels/tabs.js](../src/wb-viewmodels/tabs.js)
-- **Styles**: [src/styles/components/tabs.css](../src/styles/components/tabs.css)
+- **Custom Element**: [src/wb-viewmodels/wb-tabs.js](../../src/wb-viewmodels/tabs.js)
+- **Behavior**: [src/wb-viewmodels/tabs.js](../../src/wb-viewmodels/tabs.js)
+- **Styles**: src/styles/components/tabs.css
 - **Tests**: Component tests located in `tests/behaviors/ui/tabs.spec.ts`

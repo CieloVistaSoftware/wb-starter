@@ -90,14 +90,14 @@ All card variants share the `card` behavior and compose additional functionality
 ---
 
 ## Schema
-- See: [src/wb-models/card.schema.json](../../src/wb-models/card.schema.json)
+- See: [src/wb-models/card.schema.json](../../../src/wb-models/card.schema.json)
 - Defines common properties shared by all card variants
 
 ---
 
 ## Implementation
-- **Shared Behavior**: [src/wb-viewmodels/card.js](../../src/wb-viewmodels/card.js)
-- **Styles**: [src/styles/components/card.css](../../src/styles/components/card.css)
+- **Shared Behavior**: [src/wb-viewmodels/card.js](../../../src/wb-viewmodels/card.js)
+- **Styles**: [src/styles/components/card.css](../../../src/styles/behaviors/card.css)
 - **Tests**: Component tests in `tests/behaviors/ui/card.spec.ts`
 
 ---

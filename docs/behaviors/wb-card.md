@@ -57,7 +57,7 @@ The WB Card System includes a wide range of card types, each with its own tag an
 ---
 
 ## Schema & Tests
-- [Schema](../../src/wb-models/wb-card.schema.json) (if present)
+- [Schema](../../src/wb-models/card.schema.json) (if present)
 - [Tests](../../tests/behaviors/auto-injection-compliance.spec.ts), [behavior-verification.spec.ts], [behaviors-showcase-definitive.spec.ts] (integration)
 
 ---
@@ -124,7 +124,7 @@ The WB Card System includes a wide range of card types, each with its own tag an
 ---
 
 ## Schema & Tests
-- [Schema](../../src/wb-models/wb-card.schema.json) (if present)
+- [Schema](../../src/wb-models/card.schema.json) (if present)
 - [Tests](../../tests/behaviors/auto-injection-compliance.spec.ts), [behavior-verification.spec.ts], [behaviors-showcase-definitive.spec.ts] (integration)
 
 ---
@@ -182,7 +182,7 @@ The WB Card System includes a wide range of card types, each with its own tag an
 ---
 
 ## Schema & Tests
-- [Schema](../../src/wb-models/wb-card.schema.json) (if present)
+- [Schema](../../src/wb-models/card.schema.json) (if present)
 - [Tests](../../tests/behaviors/auto-injection-compliance.spec.ts), [behavior-verification.spec.ts], [behaviors-showcase-definitive.spec.ts] (integration)
 
 ---

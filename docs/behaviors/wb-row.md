@@ -11,4 +11,4 @@ Wrapped in `<wb-demo>`, so the live component renders below with its source show
 </div>
 </wb-demo>
 
-- [Source](../../src/wb-viewmodels/wb-row.js)
+- [Source](../../src/wb-viewmodels/layouts.js)

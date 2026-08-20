@@ -36,4 +36,4 @@ For plain markup, the same column layout is available as a utility class:
 </div>
 ```
 
-- [Source](../../src/wb-viewmodels/wb-column.js)
+- [Source](../../src/wb-viewmodels/layouts.js)

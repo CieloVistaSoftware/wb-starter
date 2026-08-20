@@ -3,6 +3,23 @@
   <p>What's actually live on this site right now — every push to <code>main</code> deploys straight to <a href="https://cielovistasoftware.github.io/wb-starter/" target="_blank" rel="noopener">cielovistasoftware.github.io/wb-starter</a>, so this list is the real changelog, not a promise of a future release.</p>
 </div>
 
+<section id="whats-new-2026-08-19">
+  <h2>2026-08-19</h2>
+  <ul>
+    <li><strong>Behaviors showcase rebuilt around a live selector.</strong> Pick any behavior or variant from the list and it renders immediately beside the list, with its formatted source, its live events, the handler you would copy, and its docs — replacing the 88 hand-written demo sections that used to run down the page (#664, #666).</li>
+    <li><strong><code>&lt;wb-table paginated&gt;</code> now paginates.</strong> <code>paginated</code> and <code>pageSize</code> were declared in the schema and read nowhere, so the attribute rendered every row and no controls. Rows are hidden rather than removed, so sorting, searching and row listeners keep working on the same nodes. <code>hoverable</code> and <code>filterable</code> — the documented spellings — did nothing either, because the behavior only ever read <code>hover</code> and <code>searchable</code>; both are accepted now (#669).</li>
+    <li><strong>Form control variants are visible again.</strong> <code>&lt;textarea variant="error"&gt;</code> applied the right class and the CSS rule was correct, yet every variant looked identical to plain. Two causes, both fixed: the behaviors set <code>border</code>/<code>background</code>/<code>color</code> <em>inline</em>, which beats any stylesheet rule, so each one overrode its own variant classes; and the bare-native rules in <code>input.css</code> stacked up to nine <code>:not([type=…])</code> selectors, outranking a modifier class on specificity. <code>wb-input--warning</code> was applied by the behavior but no rule ever defined it (#671).</li>
+    <li><strong>Native <code>&lt;select&gt;</code> honours <code>variant</code> and <code>size</code>.</strong> The behavior early-returned for a native <code>&lt;select&gt;</code>, handling only <code>clearable</code>, so <code>&lt;select variant="error"&gt;</code> came out with no class at all. A numeric <code>size="4"</code> deliberately keeps its native "show 4 rows" meaning instead of becoming a style class (#681).</li>
+    <li><strong>Behaviors no longer destroy your content.</strong> <code>&lt;div x-cardbutton&gt;Example content&lt;/div&gt;</code> rendered an empty card — the text was wiped before the body was built. A sweep of all 105 <code>x-*</code> behaviors found 21 doing this; it is now 10, and all 19 card behaviors keep their content in both the <code>&lt;wb-*&gt;</code> tag and <code>x-*</code> attribute forms. Also closed a broader gap: the schema exclusion list that protects behaviors from being wiped was consulted only for <code>&lt;wb-*&gt;</code> tags, so every entry on it was bypassed by the equivalent <code>x-*</code> attribute (#678).</li>
+    <li><strong>The upload demo actually uploads.</strong> Nothing in the codebase could send a file — the "Upload a file" control was a picker. It now does a real round trip with progress and reports what the server received. Uploads are accepted and discarded, never stored (#676).</li>
+    <li>The documentation panel no longer vanishes for the 116 of 143 behaviors that have no <code>.md</code> — it says so instead of disappearing (#673).</li>
+    <li>Every element in the showcase carries a stable id, and the event log names the element an event actually came from, so two events from different elements are no longer identical lines (#675, #677).</li>
+    <li>Striped table rows have real contrast — only the odd rows were painted, leaving the even ones transparent, so the stripe depended on whatever surface the table happened to sit on rather than on the theme (#672).</li>
+    <li>Generated samples emit real children for elements that require them — <code>&lt;select&gt;</code> was being handed bare text, which is not selectable, so it rendered an empty control (#681).</li>
+    <li>Fixed 24 dead documentation links: wrong directory depth, behaviors referenced under names they never had (<code>column</code>/<code>row</code>/<code>stack</code> all live in <code>layouts.js</code>), and paths still pointing at the retired <code>src/styles/components/</code> tree.</li>
+  </ul>
+</section>
+
 <section id="whats-new-2026-08-16">
   <h2>2026-08-16</h2>
   <ul>

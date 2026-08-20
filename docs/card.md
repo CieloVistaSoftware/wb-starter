@@ -50,7 +50,7 @@ Supported attributes:
 
 ## Implementation
 - Source: [src/wb-viewmodels/card.js](../src/wb-viewmodels/card.js)
-- Playwright tests: [tests/behaviors/ui/card.spec.ts](../tests/behaviors/ui/card.spec.ts)
+- Playwright tests: [tests/behaviors/ui/card.spec.ts](../tests/cards/card-examples-demo.spec.ts)
 - The card behavior is automatically applied to `<wb-card>` elements or `<article>` elements (if auto-inject is enabled).
 - Always adds the `wb-card` class.
 - Always adds the `wb-card--default` class if no variant is specified.

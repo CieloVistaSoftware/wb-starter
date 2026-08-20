@@ -326,6 +326,6 @@ Feedback components use CSS custom properties for theming:
 
 ## Implementation
 - **Components**: Located in `src/wb-viewmodels/` (alert.js, toast.js, spinner.js, etc.)
-- **Styles**: [src/styles/components/feedback.css](../../src/styles/components/feedback.css)
+- **Styles**: [src/styles/components/feedback.css](../../../src/styles/behaviors/alert.css)
 - **Schemas**: Feedback component schemas in `src/wb-models/`
 - **Tests**: Feedback tests in `tests/behaviors/ui/feedback.spec.ts`

@@ -441,6 +441,6 @@ Navigation components use CSS custom properties for theming:
 
 ## Implementation
 - **Components**: Located in `src/wb-viewmodels/` (tabs.js, accordion.js, menu.js, etc.)
-- **Styles**: [src/styles/components/navigation.css](../../src/styles/components/navigation.css)
+- **Styles**: [src/styles/components/navigation.css](../../../src/styles/behaviors/navbar.css)
 - **Schemas**: Navigation component schemas in `src/wb-models/`
 - **Tests**: Navigation tests in `tests/behaviors/ui/navigation.spec.ts`

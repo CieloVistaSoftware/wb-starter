@@ -344,6 +344,6 @@ Form components use CSS custom properties for consistent theming:
 
 ## Implementation
 - **Components**: Located in `src/wb-viewmodels/` (input.js, textarea.js, etc.)
-- **Styles**: [src/styles/components/forms.css](../../src/styles/components/forms.css)
+- **Styles**: [src/styles/components/forms.css](../../../src/styles/behaviors/input.css)
 - **Schemas**: Form component schemas in `src/wb-models/`
 - **Tests**: Form tests in `tests/behaviors/ui/forms.spec.ts`

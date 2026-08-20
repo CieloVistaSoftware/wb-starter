@@ -459,6 +459,6 @@ Layout components use CSS custom properties for theming:
 
 ## Implementation
 - **Components**: Located in `src/wb-viewmodels/` (container.js, grid.js, flex.js, etc.)
-- **Styles**: [src/styles/components/layout.css](../../src/styles/components/layout.css)
+- **Styles**: [src/styles/components/layout.css](../../../src/styles/behaviors/layout.css)
 - **Schemas**: Layout component schemas in `src/wb-models/`
 - **Tests**: Layout tests in `tests/behaviors/ui/layout.spec.ts`

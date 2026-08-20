@@ -6,4 +6,4 @@ A search component for filtering or finding content.
   ```html
   <wb-search></wb-search>
   ```
-- [Source](../../src/wb-viewmodels/wb-search.js)
+- [Source](../../src/wb-viewmodels/search.js)
