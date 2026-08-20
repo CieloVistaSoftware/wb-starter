@@ -24,7 +24,9 @@
       "index.html": {},
       "registry-browser.html": {},
       "wb-views-demo.html": {},
-      "landing-page-showcase.html": {}
+      "landing-page-showcase.html": {},
+      "hero.html": {},
+      "standalone.html": {}
     }
   },
   "debug_allowlist": {

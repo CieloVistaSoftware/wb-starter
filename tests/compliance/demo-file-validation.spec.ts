@@ -51,6 +51,16 @@ const demoFiles = loadDemoFiles();
 const fullDemos = demoFiles.filter(d => d.name !== 'index.html' && /<!doctype\s+html>/i.test(d.html));
 const partialDemos = demoFiles.filter(d => !/<!doctype\s+html>/i.test(d.html));
 
+// #695: full-bleed stages must NOT load site.css -- its page gutters and
+// max-width are exactly what stops a component from reaching the browser
+// edges, which is the one thing these two demos exist to show. Each says so
+// in its own source. Named per file, with the reason, so a NEW demo that
+// drops site.css by accident still fails.
+const NO_SITE_CSS: Record<string, string> = {
+  'hero.html':       'full-bleed <wb-cardhero> stage — site.css gutters would cap it',
+  'standalone.html': '#659 standalone preview — the element under test gets the whole viewport',
+};
+
 
 // ============================================================
 // Full Document Structure (demofile.schema.json → required)
@@ -114,7 +124,15 @@ test.describe('Demo Files — Stylesheet Loading', () => {
       expect(html).toMatch(/href=["'][^"']*themes\.css["']/i);
     });
 
-    test(`${relPath} — loads site.css`, () => {
+    const siteCssExempt = Object.entries(NO_SITE_CSS).find(([f]) => relPath.endsWith(f))?.[1];
+    test(`${relPath} — loads site.css${siteCssExempt ? ' (exempt)' : ''}`, () => {
+      if (siteCssExempt) {
+        // Assert the exemption is real, not a silent skip: the file must still
+        // load themes.css and must genuinely have no site.css link.
+        expect(html, `${relPath} is exempt (${siteCssExempt}) but does load site.css — remove it from NO_SITE_CSS`)
+          .not.toMatch(/href=["'][^"']*site\.css["']/i);
+        return;
+      }
       expect(html).toMatch(/href=["'][^"']*site\.css["']/i);
     });
   }
