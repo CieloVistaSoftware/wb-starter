@@ -435,6 +435,41 @@
     const liveDoc = document.getElementById('behaviors-live-doc');
     let liveDocBody = document.getElementById('behaviors-live-doc-body');
 
+    // #703 -- John: "Make sure when dropped down the height is right." An
+    // example that opens a floating layer (dropdown menu, tooltip, popover)
+    // positions it ABSOLUTELY, so it adds nothing to the stage's layout height:
+    // measured at 375x812 the open x-dropdown menu ran to 549px while the stage
+    // ended at 321px and the code panel started there, so the menu rendered
+    // straight over the code. Standard 15: an overlay must not overflow its
+    // parent. Grow the stage to whatever the example actually put on screen.
+    const STAGE_MIN_PX = 96;   // 6rem, matching .behaviors-live__stage in behaviors.css
+    let fitQueued = false;
+    function fitStageToOverlays() {
+      if (fitQueued) return;
+      fitQueued = true;
+      requestAnimationFrame(() => {
+        fitQueued = false;
+        const stageTop = liveStage.getBoundingClientRect().top;
+        let deepest = 0;
+        for (const el of liveStage.querySelectorAll('*')) {
+          const r = el.getBoundingClientRect();
+          if (r.width === 0 && r.height === 0) continue;   // display:none, not open
+          deepest = Math.max(deepest, r.bottom - stageTop);
+        }
+        const padding = parseFloat(getComputedStyle(liveStage).paddingBottom) || 0;
+        const wanted = Math.max(STAGE_MIN_PX, Math.ceil(deepest + padding));
+        // Only ever grow while one example is shown -- shrinking mid-interaction
+        // makes the panel jump under the reader's cursor. showLive() resets it.
+        const current = parseFloat(liveStage.style.minHeight) || 0;
+        if (wanted > current) liveStage.style.minHeight = wanted + 'px';
+      });
+    }
+
+    // A menu opens on click and, for trigger="hover", on pointer entry.
+    liveStage.addEventListener('click', fitStageToOverlays);
+    liveStage.addEventListener('mouseover', fitStageToOverlays);
+    liveStage.addEventListener('focusin', fitStageToOverlays);
+
     // Cache: the same doc is re-requested every time a reader arrows back over
     // a behavior, and a 404 is worth remembering too (49 docs, 143 entries --
     // most misses are permanent).
@@ -1142,6 +1177,30 @@
     // a behavior stops from bubbling.
     WATCHED.forEach((type) => liveStage.addEventListener(type, logEvent, true));
 
+    // #705 -- John: "leave it there but log the event via handler". WATCHED only
+    // covers native types, so a behavior's OWN event -- wb:dropdown:select,
+    // wb:autocomplete:select, wb:cardexpandable:toggle, dozens more -- bubbled
+    // out unlogged, and the panel showed nothing for the one interaction the
+    // example exists to demonstrate (while the handler snippet below it told the
+    // reader to listen for exactly that event).
+    //
+    // There is no registry of behavior event names to subscribe to, and
+    // addEventListener has no wildcard. Wrapping dispatchEvent is the one place
+    // every custom event must pass through. The wrapper only OBSERVES: it always
+    // calls through, never swallows, and it ignores anything dispatched outside
+    // the stage, so nothing about how the page or the behaviors run changes.
+    const CUSTOM_EVENT_RE = /^(wb|x):/;
+    const nativeDispatch = EventTarget.prototype.dispatchEvent;
+    EventTarget.prototype.dispatchEvent = function (event) {
+      const result = nativeDispatch.call(this, event);
+      try {
+        if (event && CUSTOM_EVENT_RE.test(event.type) && this instanceof Node && liveStage.contains(this)) {
+          logEvent({ type: event.type, target: this });
+        }
+      } catch { /* logging must never break the event it is watching */ }
+      return result;
+    };
+
     let eventsSnippet = document.getElementById('behaviors-live-events-snippet');
 
     /** The wiring a reader would copy to handle this example's events. */
@@ -1257,6 +1316,8 @@
       }
 
       liveNote.textContent = optionDescription(token, prop) || 'running live';
+      // #703: drop the previous example's grown height before measuring this one.
+      liveStage.style.minHeight = '';
       liveStage.innerHTML = src;
       const rootId = assignExampleIds(token, optionText);
       resetEvents(liveStage.firstElementChild && liveStage.firstElementChild.tagName.toLowerCase(), token, rootId);
@@ -1272,6 +1333,9 @@
       const described = optionDescription(token, prop);
       const summary = described || summarise(liveStage.firstElementChild);
       if (summary) liveNote.textContent = summary;
+      // #703: an example can render something taller than the stage's 6rem
+      // floor even before anything is opened.
+      fitStageToOverlays();
     }
 
     // #666 — John: "allow the user to use the down arrow for each item shown in

@@ -104,7 +104,12 @@ export function dropdown(element, options = {}) {
     childElements.forEach(child => {
       child.classList.add('wb-dropdown__item');
       Object.assign(child.style, {
-        display: 'block',
+        // #701: flex, not block -- an item can carry an avatar or icon next to
+        // its label (the showcase example does), and block left the image and
+        // the text sitting on different baselines.
+        display: 'flex',
+        alignItems: 'center',
+        gap: '0.5rem',
         padding: '0.5rem 0.75rem',
         cursor: 'pointer',
         transition: 'background 0.15s',
@@ -216,7 +221,10 @@ export function dropdown(element, options = {}) {
     });
     element.addEventListener('mouseleave', () => {
       hoverCloseTimer = setTimeout(() => {
-        if (isOpen) toggle();
+        // #704: close(), NOT toggle(). toggle() early-returns while a hover menu
+        // is open -- that guard exists to stop a CLICK closing it -- so routing
+        // the leave through toggle() meant a hover dropdown never closed at all.
+        close();
         hoverCloseTimer = null;
       }, 150);
     });

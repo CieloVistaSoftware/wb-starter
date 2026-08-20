@@ -1,7 +1,7 @@
 {
   "generatedBy": "scripts/build-behavior-examples.mjs",
   "source": "pages/behaviors.html",
-  "count": 51,
+  "count": 52,
   "demoBlocks": 88,
   "examples": {
     "x-ripple": {
@@ -58,7 +58,7 @@
         "<div x-alert type=\"success\" message=\"Success alert message\"></div>",
         "<div x-alert type=\"warning\" message=\"Warning alert message\"></div>",
         "<div x-alert type=\"error\" message=\"Error alert message\"></div>",
-        "<div x-alert type=\"info\" title=\"Dismissible\" message=\"Click the \u00d7 to dismiss this alert\" dismissible></div>"
+        "<div x-alert type=\"info\" title=\"Dismissible\" message=\"Click the × to dismiss this alert\" dismissible></div>"
       ]
     },
     "x-popover": {
@@ -96,7 +96,7 @@
       "alternates": []
     },
     "x-kbd": {
-      "source": "<p>Press <span x-kbd>Ctrl</span> + <span x-kbd>S</span> to save, or <span x-kbd>\u2318</span> + <span x-kbd>K</span> on Mac.</p>",
+      "source": "<p>Press <span x-kbd>Ctrl</span> + <span x-kbd>S</span> to save, or <span x-kbd>⌘</span> + <span x-kbd>K</span> on Mac.</p>",
       "alternates": []
     },
     "x-image": {
@@ -142,7 +142,7 @@
       "alternates": []
     },
     "x-heartbeat": {
-      "source": "<button class=\"effect-demo\" x-heartbeat>\ud83d\udc93 Heartbeat</button>",
+      "source": "<button class=\"effect-demo\" x-heartbeat>💓 Heartbeat</button>",
       "alternates": []
     },
     "x-fadein": {
@@ -165,45 +165,45 @@
       "alternates": []
     },
     "x-confetti": {
-      "source": "<button variant=\"primary\" x-confetti>\ud83c\udf8a Confetti</button>",
+      "source": "<button variant=\"primary\" x-confetti>🎊 Confetti</button>",
       "alternates": []
     },
     "x-fireworks": {
-      "source": "<button variant=\"primary\" x-fireworks>\ud83c\udf86 Fireworks</button>",
+      "source": "<button variant=\"primary\" x-fireworks>🎆 Fireworks</button>",
       "alternates": []
     },
     "x-snow": {
-      "source": "<button variant=\"primary\" x-snow>\u2744\ufe0f Snow</button>",
+      "source": "<button variant=\"primary\" x-snow>❄️ Snow</button>",
       "alternates": []
     },
     "x-sparkle": {
-      "source": "<button variant=\"primary\" x-sparkle>\u2728 Sparkle</button>",
+      "source": "<button variant=\"primary\" x-sparkle>✨ Sparkle</button>",
       "alternates": []
     },
     "x-glow": {
-      "source": "<button variant=\"primary\" x-glow>\ud83d\udca1 Glow</button>",
+      "source": "<button variant=\"primary\" x-glow>💡 Glow</button>",
       "alternates": []
     },
     "x-rainbow": {
-      "source": "<button variant=\"primary\" x-rainbow>\ud83c\udf08 Rainbow</button>",
+      "source": "<button variant=\"primary\" x-rainbow>🌈 Rainbow</button>",
       "alternates": []
     },
     "x-copy": {
-      "source": "<button variant=\"primary\" x-copy copy-text=\"Text copied to clipboard!\">\ud83d\udccb Copy Text</button>",
+      "source": "<button variant=\"primary\" x-copy copy-text=\"Text copied to clipboard!\">📋 Copy Text</button>",
       "alternates": [
-        "<button variant=\"primary\" x-copy copy-text=\"npm install wb-framework\">\ud83d\udccb Copy Command</button>"
+        "<button variant=\"primary\" x-copy copy-text=\"npm install wb-framework\">📋 Copy Command</button>"
       ]
     },
     "x-share": {
-      "source": "<button variant=\"secondary\" x-share share-title=\"wb-starter\" share-url=\"https://example.com\">\ud83d\udce4 Share</button>",
+      "source": "<button variant=\"secondary\" x-share share-title=\"wb-starter\" share-url=\"https://example.com\">📤 Share</button>",
       "alternates": []
     },
     "x-print": {
-      "source": "<button variant=\"secondary\" x-print>\ud83d\udda8\ufe0f Print</button>",
+      "source": "<button variant=\"secondary\" x-print>🖨️ Print</button>",
       "alternates": []
     },
     "x-fullscreen": {
-      "source": "<button variant=\"secondary\" x-fullscreen>\u26f6 Fullscreen</button>",
+      "source": "<button variant=\"secondary\" x-fullscreen>⛶ Fullscreen</button>",
       "alternates": []
     },
     "x-clock": {
@@ -219,7 +219,7 @@
       "alternates": []
     },
     "x-darkmode": {
-      "source": "<button variant=\"primary\" x-darkmode>\ud83c\udf19 Toggle Dark Mode</button>",
+      "source": "<button variant=\"primary\" x-darkmode>🌙 Toggle Dark Mode</button>",
       "alternates": []
     },
     "x-truncate": {
@@ -231,12 +231,19 @@
       "alternates": []
     },
     "x-details": {
-      "source": "<details summary=\"Trail conditions\" animated>\n  <img src=\"https://picsum.photos/seed/details/480/200\" alt=\"Trail through autumn woodland\" width=\"480\" height=\"200\">\n  <p>Open to show the summary text is authored via the <code>summary</code>\n     attribute \u2014 it reads \"Details\" only when none is set.</p>\n</details>",
+      "source": "<details summary=\"Trail conditions\" animated>\n  <img src=\"https://picsum.photos/seed/details/480/200\" alt=\"Trail through autumn woodland\" width=\"480\" height=\"200\">\n  <p>Open to show the summary text is authored via the <code>summary</code>\n     attribute — it reads \"Details\" only when none is set.</p>\n</details>",
       "alternates": []
     },
     "x-code": {
-      "source": "<code language=\"javascript\">\n// Debounce \u2014 delay a call until the caller stops firing.\nexport function debounce(fn, wait = 200) {\n  let timer = null;\n  return function debounced(...args) {\n    clearTimeout(timer);\n    timer = setTimeout(() =&gt; fn.apply(this, args), wait);\n  };\n}\n\n// Throttle \u2014 run at most once per interval.\nexport function throttle(fn, interval = 100) {\n  let last = 0;\n  return function throttled(...args) {\n    const now = Date.now();\n    if (now - last &lt; interval) return;\n    last = now;\n    return fn.apply(this, args);\n  };\n}\n\nconst onResize = debounce(() =&gt; {\n  const { innerWidth: w, innerHeight: h } = window;\n  console.log(`viewport ${w}x${h}`);\n}, 250);\n\nwindow.addEventListener('resize', onResize);\n</code>",
+      "source": "<code language=\"javascript\">\n// Debounce — delay a call until the caller stops firing.\nexport function debounce(fn, wait = 200) {\n  let timer = null;\n  return function debounced(...args) {\n    clearTimeout(timer);\n    timer = setTimeout(() =&gt; fn.apply(this, args), wait);\n  };\n}\n\n// Throttle — run at most once per interval.\nexport function throttle(fn, interval = 100) {\n  let last = 0;\n  return function throttled(...args) {\n    const now = Date.now();\n    if (now - last &lt; interval) return;\n    last = now;\n    return fn.apply(this, args);\n  };\n}\n\nconst onResize = debounce(() =&gt; {\n  const { innerWidth: w, innerHeight: h } = window;\n  console.log(`viewport ${w}x${h}`);\n}, 250);\n\nwindow.addEventListener('resize', onResize);\n</code>",
       "alternates": []
+    },
+    "x-dropdown": {
+      "source": "<div x-dropdown label=\"Assign to\">\n  <button type=\"button\"><img src=\"https://picsum.photos/seed/ada/28/28\" alt=\"\" width=\"28\" height=\"28\"> Ada Lovelace</button>\n  <button type=\"button\"><img src=\"https://picsum.photos/seed/grace/28/28\" alt=\"\" width=\"28\" height=\"28\"> Grace Hopper</button>\n  <button type=\"button\"><img src=\"https://picsum.photos/seed/alan/28/28\" alt=\"\" width=\"28\" height=\"28\"> Alan Turing</button>\n  <button type=\"button\"><img src=\"https://picsum.photos/seed/katherine/28/28\" alt=\"\" width=\"28\" height=\"28\"> Katherine Johnson</button>\n  <button type=\"button\">Invite someone…</button>\n</div>",
+      "alternates": [
+        "<div x-dropdown items=\"Profile,Settings,Billing,Team,Sign out\" label=\"Account\"></div>",
+        "<div x-dropdown label=\"Opens upward\" position=\"top-start\">\n  <button type=\"button\"><img src=\"https://picsum.photos/seed/ada/28/28\" alt=\"\" width=\"28\" height=\"28\"> Ada Lovelace</button>\n  <button type=\"button\"><img src=\"https://picsum.photos/seed/grace/28/28\" alt=\"\" width=\"28\" height=\"28\"> Grace Hopper</button>\n  <button type=\"button\"><img src=\"https://picsum.photos/seed/alan/28/28\" alt=\"\" width=\"28\" height=\"28\"> Alan Turing</button>\n  <button type=\"button\">Invite someone…</button>\n</div>"
+      ]
     }
   }
 }
