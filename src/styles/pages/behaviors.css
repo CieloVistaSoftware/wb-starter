@@ -434,6 +434,31 @@ footer a:hover {
   .behaviors-browse { grid-template-columns: minmax(0, 1fr); }
 }
 
+/* #710 -- John: "Make the height of the left element same as right element."
+   The list was pinned to a fixed max-height (24rem, from #666) while the panel
+   beside it is as tall as its content -- stage + code + events + handler + doc
+   -- so align-items:start left the short column stranded at the top and the two
+   stopped reading as one browse surface. Side by side, the row stretches and the
+   list fills it, still scrolling inside itself. Stacked, there is no second
+   column to match, so the media query above keeps the fixed cap. */
+@media (min-width: 60.0625rem) {
+  /* Deliberately NOT align-items: stretch. Stretching BOTH columns makes the
+     panel's height the row's height, while the row's height depends on the
+     list's cap, which is measured FROM the panel -- a real circle, and the
+     browser said so: "ResizeObserver loop completed with undelivered
+     notifications" x3. With the panel left at `start` its height is its own
+     content, the measurement is stable, and only the list stretches to it. */
+  .behaviors-browse .behaviors-search-results { align-self: stretch; }
+
+  .behaviors-browse .behaviors-search-results {
+    /* The CAP stays -- and is overridden inline with the panel's measured
+       height (see #710 in pages/behaviors.html). max-height:none here made the
+       list's own 585 rows feed the stretched row's intrinsic height, so BOTH
+       columns grew to 32,787px: the 13,000px page #664 removed, back again. */
+    min-height: 0;
+  }
+}
+
 /* The list already sets its own margin-top; inside the grid the grid gap owns
    the spacing, so drop it to keep the two columns top-aligned. */
 .behaviors-browse .behaviors-search-results {
@@ -477,6 +502,14 @@ footer a:hover {
   padding: 1.25rem;
   min-height: 6rem;
   contain: layout;
+  /* #711 -- John: "This element should center vertically. Too much space up
+     here." A block child sits at the top, so every pixel the stage has beyond
+     the example's own height piled up underneath it. align-content centres the
+     content of a BLOCK container without touching horizontal layout, which
+     matters here: switching to flex or grid would stretch a <button> example to
+     full width (align/justify-items: stretch) or shrink an <article> one
+     (start). This changes the one axis that is wrong. */
+  align-content: center;
 }
 
 .behaviors-live__code {
