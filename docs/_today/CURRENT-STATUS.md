@@ -1,39 +1,85 @@
-# CURRENT HANDOFF — 2026-08-16
+# CURRENT HANDOFF — 2026-08-19
 
-## 🅿️ PARKING LOT
+## PARKING LOT
 
-**Task:** Continued the semantic-HTML migration (autoInject:true flip landed 2026-08-15). Fixed a chain of live-reported bugs on badge.md/button.md/drawer.md/card.md, rewrote button.md and card.md to drop `wb-*` custom tags entirely in favor of semantic elements + `x-*` decoration, registered `x-card` as a proper dedicated dispatch attribute, updated `pages/whats-new.html`, and started bumping `package.json`'s version on every push (John: "every push to .io requires a new release value"). Pushed 6 times this session, now at **v3.0.14** (commit `63658bd`). Also dispatched **5 background agents** (worktree-isolated) to fix the ~91 remaining pre-existing compliance-suite failures John declared must ALL be fixed, no exceptions ("i don't care about pre-existing test failures, they are all fails and must be fixed") — **not yet merged, still running or awaiting merge as of parking**.
+**Task:** Rebuilt the Behaviors showcase around a live selector, then fixed the
+long chain of defects John found by using it. Ended the session pushing to .io
+at his direct instruction, with compliance NOT at zero (see Open questions).
 
-**Issues filed + fixed this session:** #617 (demo.js columns-default bug), #618 (badge label lost to doc-link icon), #619 (doc-link icon overlap on short hosts), #620 (drawer.md x-drawerLayout wrong attribute name), #621 (drawer.md duplicate Usage block), #622 (button.js icon/loading missing on native `<button>`, retroactive), #625 (semantic-attributes.js badge/tooltip double-application on `<article x-behavior="card">`), #626 (added `x-card` dedicated dispatch key).
+**Shipped to origin/main (`d7fface..07ff6c8`), live on
+cielovistasoftware.github.io/wb-starter:**
 
-**Files touched (final, shipped state):**
-- `src/wb-viewmodels/demo.js` — auto-promoted multi-child fenced blocks no longer force `cols-1` (#617)
-- `src/wb-viewmodels/feedback.js` — badge() label/doc-link-icon empty-check fix (#618)
-- `src/styles/behaviors/demo.css` — doc-link icon repositioned for short hosts (#619)
-- `src/styles/behaviors/badge.css` — 5rem min-width on all badges (dot indicator exempted)
-- `src/wb-viewmodels/semantics/button.js` — `applyIconAndLoading()` extracted, now shared by both `<wb-button>` and native `<button>` (#622)
-- `docs/components/forms/button.md` — rewritten to semantic `<button>` only, no `<wb-button>`
-- `docs/components/drawer.md` — `x-drawerLayout` → `x-drawer-layout`; removed redundant Usage section (#620, #621)
-- `docs/components/cards/card.md` — rewritten entirely to `<article x-card>`, no `<wb-card>` (#625, #626)
-- `src/core/semantic-attributes.js` — CARD_TAGS exclusion extended to cover `[x-behavior~="card"]` and `[x-card]`, not just the `wb-card*` tag names (#625, #626)
-- `src/core/tag-map.js` — added `'x-card': 'card'` to extensionMap (#626)
-- `tests/regression/badge-demo-columns-and-label-with-doclink.spec.ts` (new, 5 tests, all pass)
-- `tests/regression/drawer-md-examples.spec.ts` (new, 6 tests, all pass)
-- `tests/compliance/autoinject-default-false.spec.ts`, `tests/compliance/variant-triggers-native-behavior.spec.ts` — updated to assert the NEW `autoInject:true` default (were still asserting the old `false` default from before the 2026-08-15 flip, 4 failures found in a full compliance run)
-- `pages/whats-new.html` — added 2026-08-15 (autoInject flip + retrospective) and 2026-08-16 (this session's fixes) entries
-- `package.json` — version bumped 3.0.10 → 3.0.14 across 4 pushes
+| Issue | Defect | Root cause |
+|---|---|---|
+| #669 | `<wb-table paginated>` did nothing | `paginated`/`pageSize` declared in the schema, read nowhere. `hoverable`/`filterable` likewise — the behavior only read `hover`/`searchable`. |
+| #671 | `<textarea variant="error">` looked like plain | textarea.js/input.js set border/background/color INLINE, beating their own variant classes; and input.css's bare-native rules stacked up to nine `:not([type=…])` selectors (0-9-1) against a modifier class (0-1-0). `:where()` fixed the second. |
+| #672 | Striped rows had no contrast | Only odd rows were painted; even rows were transparent, so the stripe depended on the surface behind the table. |
+| #673 | Docs panel vanished | It `return`ed while still hidden for the 116 of 143 behaviors with no `.md`. |
+| #674 | `variant="link"` sample broke off-root | Hardcoded root-absolute `/pages/docs.html` while the whole page routes through `siteRoot()`. |
+| #675 | No ids, then nonsense ids | Added stable ids; John: "super long nonsense" — renamed to short, element-descriptive form. |
+| #676 | "Upload a file" never uploaded | NOTHING in the codebase could send a file; file.js is also only a picker. Added an accept-and-report endpoint (never persists) + real XHR with progress. |
+| #677 | Event log entries identical | Only tag + first class were shown. |
+| #678 | Behaviors destroyed authored content | 21 of 105 x-behaviors wiped it. Three causes: composeCard never fell back to innerHTML; eight behaviors never rendered what was captured; cardstats built its own empty `<main>`. Plus: `detectXAttributeSchema()` never consulted SCHEMA_EXCLUDED_TAGS, so all 34 entries were bypassed by the `x-*` form. |
+| #681 | `<select variant>` inert, sample empty | select.js early-returns for native `<select>`, handling only `clearable`. And the generator gave `<select>` bare text — not selectable — so it rendered an empty 21x17 control. |
+| — | Multi-line `<code>` collapsed to a paragraph | `variant` defaults to `inline`; an inline box gets `white-space: normal`, so CSS discarded every newline. Keyed the fix on content, not the attribute. |
+| — | 24 dead documentation links | Wrong depth, names that never existed (`column`/`row`/`stack` all live in layouts.js), and paths into the retired `src/styles/components/` tree. |
 
-**Last action:** Pushed commit `63658bd` (what's-new correction, v3.0.14) to `origin/main`. 5 background agents dispatched just before parking, each in an isolated worktree, targeting: (1) `doc-viewer-code-panel-audit.spec.ts` (28 failures), (2) `refs-resolve.spec.ts` (20 failures), (3) `live-examples-render.spec.ts` + `demo-layout-standards.spec.ts` (22 combined), (4) `no-element-overlap.spec.ts` (9 failures), (5) grab-bag of 9 smaller spec files (~10 failures: wb-alert-spacing, no-redundant-tag-name-class, demos-no-legacy-data-attrs, wb-demo-events-fire, wb-alert-attribute-correctness, px-no-new-creep, hero-no-nested-sections, error-log-empty, dark-mode). Each was instructed to root-cause, fix, file a GitHub issue naming the test that found it, retest to 0 failures, and commit WITHOUT pushing (worktree-isolated, human merges).
+**New tests (all green):** table-pagination-renders (9), form-variants-and-striping (5),
+select-options-and-variants (7), cards-keep-authored-content (5),
+code-multiline-keeps-its-lines (4), audio-flags-render-visibly (9).
+Every one asserts RENDERED geometry or computed style, never DOM presence —
+the invisible-EQ lesson: a node in the DOM at 0x0 is the same defect in disguise.
+
+**Issues filed, NOT yet fixed:** #679 (API panel — reader cannot see a behavior's
+schema), #680 (no written striped-contrast rule — needs John's number),
+#682 (no rule for `<select>` vs `<wb-select>` vs `x-dropdown`; `<wb-select>` is the
+real deprecation candidate, not x-dropdown), #683 (content-vs-children precedence
+disagrees between composeCard and card; contentless card still emits an empty `<main>`).
+
+**Last action:** Merged `feat/664-behaviors-live-preview` into `main` and pushed
+`07ff6c8`. GitHub Pages serves `main` at path `/`.
 
 **Next step:**
-1. Check agent completion (SendMessage to each agentId, or just watch for task-notifications) — none had reported back as of parking.
-2. For each completed agent: review its worktree branch/commits, merge into main using the established pattern (conflicts land on `index.html`, `project-index.html`, `src/core/version.js` — resolve via `git checkout --ours <files> && git add <files>` then `git commit --no-edit`), bump `package.json` version, push.
-3. Re-run `npm run test:compliance` in full afterward to confirm the 91 failures are actually down to 0 (not just the 5 targeted files individually) — some agents may have found shared root causes across files that could reveal new interactions.
-4. `data/test-single/live-examples-render.json`, `data/test-single/no-redundant-tag-name-class.json`, `data/test-single/wb-alert-spacing.json` are new untracked files from ad-hoc single-test runs this session — harmless generated artifacts, fine to leave untracked or `git add` alongside the next real commit, not urgent.
-5. Broader, not-yet-started: the user's "pull away from wb tags" directive still applies to every OTHER card variant doc (cardimage.md, cardhero.md, cardprofile.md, etc. — currently untouched, still all `<wb-card*>`) and to every other component doc site-wide. card.md and button.md are the only two fully converted so far.
+1. **~70 compliance failures remain and are now live.** `refs-resolve` is closed
+   (20 -> 0). Remaining: `doc-viewer-code-panel-audit` (~20),
+   `demo-layout-standards` (12), `live-examples-render` (10),
+   `no-element-overlap` (6), 19 single-test specs (~21), plus 3
+   `behaviors-live-selector` permutation failures.
+2. Measure each group for STABILITY before writing fixes. Done for the audit
+   group: two identical runs gave 21 vs 21 with 20 files the same, so it is ~95%
+   deterministic — real work, not flakiness. The other groups are unmeasured.
+3. For the audit group specifically: 109 of 130 violations overflow by >100px
+   (genuinely long sample lines); only 5 are the small-overflow measurement kind.
+   `scripts` for this are in the session scratchpad (wrap3.mjs) — it reformats
+   over-long tags/text vertically and verifies non-whitespace content is
+   byte-identical before/after.
+4. #678 leftovers: 10 behaviors still replace content (spinner, progress,
+   progressbar, avatar, rating, video, select, chip, notes, release). Each renders
+   a generated graphic with no natural place for child text — needs a DECISION
+   from John, not a silent change.
 
-**Open questions:** None blocking. Worth flagging: `semantic-attributes.js`'s badge/tooltip exclusion still has a known latent gap (documented in #625) — a bare `<article badge="...">` relying purely on autoInject's default (no explicit `x-card`/`x-behavior="card"`) has no static-selector way to be excluded. Not hit by any current doc example; would need a runtime-guard fix (check if card behavior already claimed the element) if it ever surfaces.
+**Open questions:**
+- **Compliance was not at zero when pushed.** John said "get them all fixed" and
+  later "hurry up ... you must push to .io first". The push happened on the second
+  instruction; the first is unfinished. CI on `main` will likely report failure —
+  its recent runs were already failing or timing out at 1h30m before this session.
+- #680 and #683 need John's decisions (a contrast number; a precedence rule).
 
+**Traps that cost real time this session — worth remembering:**
+- The docs are **CRLF**, and JavaScript's `.` does not match ``. A regex ending
+  `(.*)$` silently matches NOTHING on a real line while passing on hand-typed test
+  input, and reports "0 changes" rather than erroring.
+- Writing `\n` through a Python heredoc collapses to a literal newline inside the
+  emitted JS string — hit repeatedly; verify with `node --check` every time.
+- `el.className` on an **SVG** element is an `SVGAnimatedString`; stringifying it
+  yields `[object SVGAnimatedString]`. Use `getAttribute('class')`.
+- Bulk text rewrites must be verified by comparing **non-whitespace character
+  counts** before/after. That check caught two silent corruptions here: a dropped
+  `<` from `i < 50` in a JS sample, and an added trailing `;` in a style attribute.
+
+---
+
+## Previous handoff (2026-08-16)
 ---
 
 # CURRENT HANDOFF — 2026-08-08
