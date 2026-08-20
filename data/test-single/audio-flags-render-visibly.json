@@ -1,0 +1,21 @@
+{
+  "state": "passed",
+  "mode": "single",
+  "specFile": "tests/regression/audio-flags-render-visibly.spec.ts",
+  "startedAt": "2026-08-20T01:01:36.191Z",
+  "updatedAt": "2026-08-20T01:01:44.890Z",
+  "command": "npx playwright test --workers=8 tests/regression/audio-flags-render-visibly.spec.ts",
+  "pid": 26212,
+  "passed": 9,
+  "failed": 0,
+  "skipped": 0,
+  "total": 9,
+  "currentFile": "tests\\regression\\audio-flags-render-visibly.spec.ts",
+  "output": "\nRunning 9 tests using 8 workers\n\n  ok 3 [regression] › tests\\regression\\audio-flags-render-visibly.spec.ts:134:3 › audio: the custom UI renders outside the native element (#669) › a bare <audio src> stays native — no custom UI is imposed (1.8s)\n  ok 7 [regression] › tests\\regression\\audio-flags-render-visibly.spec.ts:156:3 › audio: the custom UI renders outside the native element (#669) › native passthrough flags reach the media element (1.5s)\n  ok 8 [regression] › tests\\regression\\audio-flags-render-visibly.spec.ts:148:3 › audio: the custom UI renders outside the native element (#669) › <wb-audio> renders its custom UI visibly too (1.6s)\n  ok 5 [regression] › tests\\regression\\audio-flags-render-visibly.spec.ts:84:3 › audio: the custom UI renders outside the native element (#669) › the custom UI is NOT a child of the native <audio> (1.8s)\n  ok 4 [regression] › tests\\regression\\audio-flags-render-visibly.spec.ts:69:3 › audio: the custom UI renders outside the native element (#669) › showEq renders a real, sized equalizer with its band sliders (1.8s)\n  ok 2 [regression] › tests\\regression\\audio-flags-render-visibly.spec.ts:115:3 › audio: the custom UI renders outside the native element (#669) › showPlayButton=true shows the button; =false hides it, display intact (2.1s)\n  ok 6 [regression] › tests\\regression\\audio-flags-render-visibly.spec.ts:124:3 › audio: the custom UI renders outside the native element (#669) › both attribute spellings work (schema publishes showEq, code read show-eq) (2.0s)\n  ok 1 [regression] › tests\\regression\\audio-flags-render-visibly.spec.ts:103:3 › audio: the custom UI renders outside the native element (#669) › showDisplay=true shows the display; =false hides it, transport intact (2.2s)\n  ok 9 [regression] › tests\\regression\\audio-flags-render-visibly.spec.ts:170:3 › audio: the custom UI renders outside the native element (#669) › a src that exists does not log an error (574ms)\n\n════════════════════════════════════════════════════════════\n  WB TEST RESULTS\n════════════════════════════════════════════════════════════\n  Total: 9 tests in 5.5s\n  ✓ Passed:  9\n  ✗ Failed:  0\n\n  By Project:\n    ✓ regression: 9/9 passed\n════════════════════════════════════════════════════════════\n\n\n  9 passed (5.8s)\n",
+  "errors": "",
+  "failures": [],
+  "completedAt": "2026-08-20T01:01:44.890Z",
+  "duration": "8.70s",
+  "exitCode": 0,
+  "flaky": 0
+}

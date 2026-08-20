@@ -140,3 +140,43 @@ wb-table tbody tr.active,
   content: " ↓";
   opacity: 0.5;
 }
+
+/* --- Pagination (#669) ---------------------------------------------------- */
+/* `paginated` and `pageSize` were declared in table.schema.json but read
+   nowhere, so <wb-table paginated> rendered every row and no controls. */
+
+.wb-table__pager {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 0.75rem;
+  padding: 0.75rem 1rem;
+  border: 1px solid var(--border-color);
+  border-top: none;
+  background-color: var(--bg-surface);
+}
+
+.wb-table__pager-status {
+  color: var(--text-primary);
+  font-size: 0.875rem;
+  margin-right: auto;
+}
+
+.wb-table__pager-btn {
+  padding: 0.375rem 0.875rem;
+  border: 1px solid var(--border-color);
+  border-radius: 0.25rem;
+  background-color: var(--bg-tertiary);
+  color: var(--text-primary);
+  font-size: 0.875rem;
+  cursor: pointer;
+}
+
+.wb-table__pager-btn:hover:not(:disabled) {
+  border-color: var(--primary);
+}
+
+.wb-table__pager-btn:disabled {
+  opacity: 0.45;
+  cursor: default;
+}

@@ -68,6 +68,31 @@
       "description": "Cell borders",
       "default": false,
       "appliesClass": "wb-table--bordered"
+    },
+    "headers": {
+      "type": "string",
+      "default": "",
+      "description": "Comma-separated column headings."
+    },
+    "rows": {
+      "type": "string",
+      "default": "",
+      "description": "JSON array-of-arrays of row data."
+    },
+    "searchable": {
+      "type": "boolean",
+      "default": false,
+      "description": "Show a filter input above the table. Alias of filterable."
+    },
+    "copyable": {
+      "type": "boolean",
+      "default": false,
+      "description": "Add a control that copies the table as text."
+    },
+    "selectable": {
+      "type": "boolean",
+      "default": false,
+      "description": "Let a row be clicked to become the active row."
     }
   },
   "$view": [
@@ -234,7 +259,7 @@
   },
   "_metadata": {
     "category": "data",
-    "icon": "📊",
+    "icon": "\ud83d\udcca",
     "since": "1.0.0",
     "status": "stable"
   }

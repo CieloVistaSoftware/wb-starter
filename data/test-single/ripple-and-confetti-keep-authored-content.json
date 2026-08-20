@@ -1,0 +1,20 @@
+{
+  "state": "passed",
+  "mode": "single",
+  "specFile": "tests/regression/ripple-and-confetti-keep-authored-content.spec.ts",
+  "startedAt": "2026-08-19T18:17:00.615Z",
+  "updatedAt": "2026-08-19T18:17:11.305Z",
+  "command": "npx playwright test --workers=8 tests/regression/ripple-and-confetti-keep-authored-content.spec.ts",
+  "pid": 336,
+  "passed": 2,
+  "failed": 0,
+  "skipped": 0,
+  "total": 2,
+  "currentFile": "tests\\regression\\ripple-and-confetti-keep-authored-content.spec.ts",
+  "output": "\nRunning 2 tests using 2 workers\n\n  ok 2 [regression] › tests\\regression\\ripple-and-confetti-keep-authored-content.spec.ts:29:3 › wb-ripple keeps its authored content and ripples (#654) › <wb-ripple> renders its text, has a real box, and produces a wave (2.4s)\n  ok 1 [regression] › tests\\regression\\ripple-and-confetti-keep-authored-content.spec.ts:67:3 › wb-confetti honours repeat and keeps authored content (#655) › <wb-confetti repeat> fires more than once unattended, and stops cleanly (5.2s)\n\n════════════════════════════════════════════════════════════\n  WB TEST RESULTS\n════════════════════════════════════════════════════════════\n  Total: 2 tests in 7.2s\n  ✓ Passed:  2\n  ✗ Failed:  0\n\n  By Project:\n    ✓ regression: 2/2 passed\n════════════════════════════════════════════════════════════\n\n\n  2 passed (7.5s)\n",
+  "errors": "",
+  "failures": [],
+  "completedAt": "2026-08-19T18:17:11.305Z",
+  "duration": "10.69s",
+  "exitCode": 0
+}

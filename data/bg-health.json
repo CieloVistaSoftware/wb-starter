@@ -1,6 +1,6 @@
 {
-  "lastRun": "2026-08-12T17:49:29.796Z",
-  "totalChecks": 42873,
+  "lastRun": "2026-08-20T01:32:54.767Z",
+  "totalChecks": 43858,
   "bugs": [
     {
       "id": "bug-regression-tests",
@@ -15,11 +15,17 @@
         "✗ REG-005: No duplicate command IDs in catalog.ts",
         "✗ REG-006: package.json contributes.commands covers all catalog IDs",
         "✗ REG-007: extension.ts activates all feature modules",
-        "✗ REG-008: No bare console.log in extension host (warning)"
+        "✗ REG-008: No bare console.log in extension host (warning)",
+        "root=c:\\Users\\jwpmi\\.vscode-insiders\\extensions\\cielovistasoftware.cielovista-tools-1.0.3",
+        "cwd=C:\\Users\\jwpmi\\AppData\\Local\\Programs\\Microsoft VS Code Insiders",
+        "wt=false",
+        "built=true",
+        "attempt=2/2",
+        "exit=1"
       ],
       "priority": "high",
       "category": "Quality",
-      "recommendation": "Run node scripts/run-regression-tests.js and fix the failing tests.",
+      "recommendation": "Run the suite; if clean, check diagnostics before concluding transient.",
       "detectedAt": "2026-06-23T02:48:37.339Z",
       "fixed": false
     },
@@ -53,5 +59,5 @@
       "fixed": true
     }
   ],
-  "checkIndex": 1
+  "checkIndex": 2
 }

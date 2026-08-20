@@ -129,9 +129,13 @@ test.describe('Behaviors selector — permutations render with their option appl
           // Wait for THIS row's render rather than a fixed delay -- the panel
           // renders through a dynamic import, and a fixed wait produced false
           // mismatches while developing this page.
+          // Mirrors optionLabel() in the page: a boolean reads as a BARE flag
+          // name when demonstrated ON, and `prop=false` when demonstrated OFF.
           const want = row.dataset.prop === 'variant'
             ? row.dataset.variant
-            : (row.dataset.boolean === '1' ? row.dataset.prop : `${row.dataset.prop}=${row.dataset.variant}`);
+            : (row.dataset.boolean === '1'
+                ? (row.dataset.variant === 'false' ? `${row.dataset.prop}=false` : row.dataset.prop)
+                : `${row.dataset.prop}=${row.dataset.variant}`);
           const deadline = Date.now() + 8000;
           let header = '';
           while (Date.now() < deadline) {
@@ -147,8 +151,14 @@ test.describe('Behaviors selector — permutations render with their option appl
             headerMatches: header.includes(want as string),
             rendered: stage.children.length > 0,
             // A boolean is authored BARE (Standard §20); an enum as prop="value".
+            // A boolean demonstrated ON must appear BARE; demonstrated OFF it
+            // must appear as prop="false". A bare attribute cannot express
+            // "off", and elevated/clickable are authored bare by this
+            // project's own convention (card.js:159, #627).
             applied: row.dataset.boolean === '1'
-              ? new RegExp(`\\s${row.dataset.prop}(?![=\\w])`).test(code)
+              ? (row.dataset.variant === 'false'
+                  ? new RegExp(`\\s${row.dataset.prop}="false"`).test(code)
+                  : new RegExp(`\\s${row.dataset.prop}(?![=\\w])`).test(code))
               : new RegExp(`${row.dataset.prop}="${row.dataset.variant}"`).test(code),
           });
         }

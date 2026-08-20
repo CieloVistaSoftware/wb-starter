@@ -1,0 +1,20 @@
+{
+  "state": "passed",
+  "mode": "single",
+  "specFile": "tests/regression/stagelight-spotlight-stays-in-its-demo-box.spec.ts",
+  "startedAt": "2026-08-19T18:07:46.967Z",
+  "updatedAt": "2026-08-19T18:07:56.220Z",
+  "command": "npx playwright test --workers=8 tests/regression/stagelight-spotlight-stays-in-its-demo-box.spec.ts",
+  "pid": 1960,
+  "passed": 4,
+  "failed": 0,
+  "skipped": 0,
+  "total": 4,
+  "currentFile": "tests\\regression\\stagelight-spotlight-stays-in-its-demo-box.spec.ts",
+  "output": "\nRunning 4 tests using 4 workers\n\n  ok 4 [regression] › tests\\regression\\stagelight-spotlight-stays-in-its-demo-box.spec.ts:34:5 › x-stagelight spotlight stays inside its demo box — effects page (#647) › /demos/site/effects.html: no spotlight overlay covers the viewport (1.8s)\n  ok 2 [regression] › tests\\regression\\stagelight-spotlight-stays-in-its-demo-box.spec.ts:88:5 › x-stagelight spotlight stays inside its demo box — effects page (#647) › /demos/site/effects.html: spotlight tracks the mouse relative to its own box (2.0s)\n  ok 1 [regression] › tests\\regression\\stagelight-spotlight-stays-in-its-demo-box.spec.ts:88:5 › x-stagelight spotlight stays inside its demo box — playground gallery (#647) › /demos/playground.html: spotlight tracks the mouse relative to its own box (2.7s)\n  ok 3 [regression] › tests\\regression\\stagelight-spotlight-stays-in-its-demo-box.spec.ts:34:5 › x-stagelight spotlight stays inside its demo box — playground gallery (#647) › /demos/playground.html: no spotlight overlay covers the viewport (2.8s)\n\n════════════════════════════════════════════════════════════\n  WB TEST RESULTS\n════════════════════════════════════════════════════════════\n  Total: 4 tests in 5.3s\n  ✓ Passed:  4\n  ✗ Failed:  0\n\n  By Project:\n    ✓ regression: 4/4 passed\n════════════════════════════════════════════════════════════\n\n\n  4 passed (5.7s)\n",
+  "errors": "",
+  "failures": [],
+  "completedAt": "2026-08-19T18:07:56.220Z",
+  "duration": "9.25s",
+  "exitCode": 0
+}

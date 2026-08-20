@@ -8,11 +8,29 @@ import { createToast } from '../feedback.js';
 export function table(element, options = {}) {
   const config = {
     striped: options.striped ?? (element.hasAttribute('striped') || element.hasAttribute('data-striped')),
-    hover: options.hover ?? (element.getAttribute('hover') !== 'false'),
+    // #669: the schema publishes `hoverable`, this only ever read `hover`, so
+    // the documented name silently did nothing. Accept both.
+    hover: options.hover ?? (
+      element.getAttribute('hover') !== 'false' &&
+      element.getAttribute('hoverable') !== 'false'
+    ),
+    // #669: paginated and pageSize were declared and read NOWHERE, so
+    // <wb-table paginated> produced no pagination at all -- exactly what John
+    // reported. pageSize accepts the schema spelling and the hyphenated one.
+    paginated: options.paginated ?? (
+      element.hasAttribute('paginated') && element.getAttribute('paginated') !== 'false'
+    ),
+    pageSize: Number(
+      options.pageSize ?? element.getAttribute('page-size') ?? element.getAttribute('pagesize') ?? 10
+    ) || 10,
     bordered: options.bordered ?? element.hasAttribute('bordered'),
     compact: options.compact ?? element.hasAttribute('compact'),
     sortable: options.sortable ?? (element.getAttribute('sortable') !== 'false'),
-    searchable: options.searchable ?? element.hasAttribute('searchable'),
+    // #669: the schema publishes `filterable`; this only read `searchable`.
+    searchable: options.searchable ?? (
+      element.hasAttribute('searchable') ||
+      (element.hasAttribute('filterable') && element.getAttribute('filterable') !== 'false')
+    ),
     copyable: options.copyable ?? element.hasAttribute('copyable'),
     selectable: options.selectable ?? element.hasAttribute('selectable'),
     ...options
@@ -243,8 +261,75 @@ export function table(element, options = {}) {
     tableEl.style.cursor = 'pointer';
   }
 
+  // #669: pagination. Built after sorting and search wiring so it sees the final row
+  // set, and re-derived from the live <tbody> each time rather than a cached
+  // array -- sorting reorders those same nodes in place.
+  let pagerCleanup = null;
+  if (config.paginated) pagerCleanup = buildPager(element, tableEl, config.pageSize);
+
   return () => {
+    if (pagerCleanup) pagerCleanup();
     tableEl.classList.remove('wb-table', 'wb-table--striped', 'wb-table--hover', 'wb-table--bordered', 'wb-table--compact');
+  };
+}
+
+/**
+ * Shows one page of rows at a time with Prev/Next controls (#669).
+ *
+ * Rows are hidden with `hidden` rather than removed: sorting, searching and any
+ * row-level listeners keep working on the same nodes, and nothing has to be
+ * rebuilt when the page changes.
+ */
+function buildPager(element, tableEl, pageSize) {
+  const tbody = tableEl.querySelector('tbody');
+  if (!tbody) return null;
+
+  const pager = document.createElement('nav');
+  pager.className = 'wb-table__pager';
+  pager.setAttribute('aria-label', 'Table pagination');
+
+  const prev = document.createElement('button');
+  prev.type = 'button';
+  prev.className = 'wb-table__pager-btn';
+  prev.textContent = 'Previous';
+
+  const status = document.createElement('span');
+  status.className = 'wb-table__pager-status';
+  status.setAttribute('aria-live', 'polite');
+
+  const next = document.createElement('button');
+  next.type = 'button';
+  next.className = 'wb-table__pager-btn';
+  next.textContent = 'Next';
+
+  pager.append(prev, status, next);
+  // A <nav> is not valid inside <table>, so mount it after the table.
+  (tableEl.parentElement || element).insertBefore(pager, tableEl.nextSibling);
+
+  let page = 0;
+  const render = () => {
+    const rows = [...tbody.querySelectorAll('tr')];
+    const pages = Math.max(1, Math.ceil(rows.length / pageSize));
+    if (page > pages - 1) page = pages - 1;
+    rows.forEach((tr, i) => {
+      tr.hidden = i < page * pageSize || i >= (page + 1) * pageSize;
+    });
+    status.textContent = `Page ${page + 1} of ${pages} — ${rows.length} rows`;
+    prev.disabled = page === 0;
+    next.disabled = page >= pages - 1;
+  };
+
+  const onPrev = () => { if (page > 0) { page--; render(); } };
+  const onNext = () => { page++; render(); };
+  prev.addEventListener('click', onPrev);
+  next.addEventListener('click', onNext);
+  render();
+
+  return () => {
+    prev.removeEventListener('click', onPrev);
+    next.removeEventListener('click', onNext);
+    [...tbody.querySelectorAll('tr')].forEach((tr) => { tr.hidden = false; });
+    pager.remove();
   };
 }
 

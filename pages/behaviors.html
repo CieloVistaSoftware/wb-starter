@@ -679,6 +679,28 @@
       // required to upload a file". An upload ICON on its own uploads nothing;
       // a real control needs the file input and the wiring. Emit all of it, so
       // the example is complete rather than decorative.
+      // #670: the download half of the pair that replaces wb-cardfile. Unlike
+      // upload, this needs no JavaScript at all -- <a download> is the platform
+      // feature, and a button styled as one would be strictly worse: it would
+      // lose middle-click, "save link as", and the real URL on hover.
+      if (behavior === 'button' && prop === 'icon' && variant === 'download') {
+        // No icon= here: the button behavior only decorates <button>, so the
+        // attribute is inert on an anchor -- verified live, it produced no
+        // class and no icon. Shipping it would be exactly the
+        // declared-but-does-nothing pattern of #669. .wb-button is a plain CSS
+        // class, so the anchor still gets the button LOOK.
+        return [
+          // wb-button--primary, not the bare .wb-button: the default button
+          // background is rgb(41,48,61), which is also the panel surface, so a
+          // plain .wb-button anchor rendered as flat text. Modifier CLASSES work
+          // without the behavior; a variant= ATTRIBUTE would not, since button()
+          // only decorates <button>.
+          '<a href="/demos/sample.wav" download="sample.wav" class="wb-button wb-button--primary">',
+          '  ↓ Download the sample',
+          '</a>',
+        ].join('\n');
+      }
+
       if (behavior === 'button' && prop === 'icon' && variant === 'upload') {
         return [
           '<button icon="upload" aria-controls="wb-demo-file">Upload a file</button>',
