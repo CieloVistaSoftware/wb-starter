@@ -138,7 +138,7 @@ Generated: 2026-02-16 from test suite results (2443 passed, 262 failed, 25 skipp
 - `schema-validation.spec.ts` — missing $view, $methods, schemaFor, defaults
 - `v3-syntax-compliance.spec.ts` — missing $view, $methods, $cssAPI
 
-**Schemas needing completion:** autocomplete, colorpicker, counter, error, fieldset, file, floatinglabel, form, formrow, help-demo, help, inputgroup, label, masked, otp, password, stepper, tags, tooltip-demo, x-behavior, x-collapse, x-copy, x-draggable, x-effects, x-enhancements
+**Schemas needing completion:** autocomplete, colorpicker, counter, error, fieldset, file, floatinglabel, form, formrow, help, inputgroup, label, masked, otp, password, stepper, tags, x-behavior, x-collapse, x-copy, x-draggable, x-effects, x-enhancements
 
 - [ ] Add `schemaFor` field to all 25 schemas
 - [ ] Add `$view` section to all 25 schemas

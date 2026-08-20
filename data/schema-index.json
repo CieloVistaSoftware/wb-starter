@@ -1,6 +1,6 @@
 {
-  "generatedAt": "2026-08-20T00:33:16.638Z",
-  "count": 106,
+  "generatedAt": "2026-08-20T00:54:20.377Z",
+  "count": 104,
   "schemas": [
     {
       "file": "alert.schema.json",
@@ -6378,16 +6378,6 @@
       }
     },
     {
-      "file": "tooltip-demo.schema.json",
-      "title": "Tooltip Button Showcase",
-      "description": "Demo page for <wb-button> with x-tooltip in all positions.",
-      "tag": "wb-undefined",
-      "baseClass": "wb-undefined",
-      "properties": {},
-      "matrix": [],
-      "_metadata": {}
-    },
-    {
       "file": "cardvideo.schema.json",
       "name": "cardvideo",
       "title": "Video Card",
@@ -6917,16 +6907,6 @@
           "type": "boolean"
         }
       },
-      "matrix": [],
-      "_metadata": {}
-    },
-    {
-      "file": "help-demo.schema.json",
-      "title": "x-help Demo",
-      "description": "Demo page for x-help behavior.",
-      "tag": "wb-undefined",
-      "baseClass": "wb-undefined",
-      "properties": {},
       "matrix": [],
       "_metadata": {}
     }
