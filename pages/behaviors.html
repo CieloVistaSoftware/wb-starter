@@ -420,6 +420,11 @@
     // beside the list and upgrades it in place -- no scrolling a 13,000px page
     // to find the example.
     const liveEl = document.getElementById('behaviors-live');
+    // #686 -- must stay in sync with the `@media (max-width: 60rem)` rule in
+    // src/styles/pages/behaviors.css that collapses .behaviors-browse to one
+    // column. Below that width the panel stacks BELOW the results list rather
+    // than beside it, which is the only case where revealing it is correct.
+    const STACKED = matchMedia('(max-width: 60rem)');
     const liveToken = document.getElementById('behaviors-live-token');
     const liveNote = document.getElementById('behaviors-live-note');
     const liveStage = document.getElementById('behaviors-live-stage');
@@ -1278,7 +1283,7 @@
       return [...resultsEl.querySelectorAll('.behaviors-search-results__row')];
     }
 
-    function selectRow(row, { focus = true } = {}) {
+    function selectRow(row, { focus = true, reveal = false, align = false } = {}) {
       if (!row) return;
       rowsInOrder().forEach((r) => r.removeAttribute('aria-current'));
       row.setAttribute('aria-current', 'true');
@@ -1290,13 +1295,37 @@
       const listTop = resultsEl.scrollTop;
       const rowTop = row.offsetTop - resultsEl.offsetTop;
       const rowBottom = rowTop + row.offsetHeight;
-      if (rowTop < listTop) resultsEl.scrollTop = rowTop;
+      if (align) {
+        // #687 -- John: "I would like all down arrow activity to align with the
+        // top every time it's pressed". Minimal scrolling left the selection
+        // pinned to the BOTTOM edge once it got there, so arrowing read as "the
+        // list is stuck" even though the panel kept changing. Pinning the row to
+        // the top moves the list one row per press, and the browser clamps
+        // scrollTop at the end -- which is the "page to the next set of choices"
+        // John asked for as the last rows come into range.
+        resultsEl.scrollTop = rowTop;
+      } else if (rowTop < listTop) resultsEl.scrollTop = rowTop;
       else if (rowBottom > listTop + resultsEl.clientHeight) {
         resultsEl.scrollTop = rowBottom - resultsEl.clientHeight;
       }
       if (focus) row.focus({ preventScroll: true });
       showLive(row.dataset.browseToken, row.dataset.variant || '', row.dataset.label || '',
                row.dataset.prop || '', row.dataset.boolean === '1');
+      // #686 -- John, on a phone: "doesn't show the sample code and result".
+      // Stacked, the panel starts ~300px past the bottom of #siteBody (measured
+      // at 375x812: list ends at 841, panel stage at 920, scroller is 627 tall),
+      // so a tap rendered the demo somewhere the reader could not see with no
+      // cue anything had happened. Two columns keep the no-scroll rule above --
+      // there the panel is already beside the list. `reveal` is opt-in per call
+      // so the best-match selectRow() that applyFilter() runs on EVERY keystroke
+      // never yanks the page away from the search box.
+      // Instant, not smooth: showLive() injects the demo, fetches its doc and
+      // re-lays out the panel while the animation would still be running, and
+      // the browser cancels a smooth scroll on that churn -- measured landing
+      // back at scrollTop 0 every time.
+      if (reveal && STACKED.matches) {
+        liveEl.scrollIntoView({ block: 'start' });
+      }
     }
 
     function moveSelection(delta) {
@@ -1307,14 +1336,14 @@
       i = i < 0 ? (delta > 0 ? 0 : rows.length - 1) : i + delta;
       if (i < 0) i = 0;
       if (i > rows.length - 1) i = rows.length - 1;
-      selectRow(rows[i]);
+      selectRow(rows[i], { align: true });
     }
 
     resultsEl.addEventListener('keydown', (e) => {
       if (e.key === 'ArrowDown') { e.preventDefault(); moveSelection(1); }
       else if (e.key === 'ArrowUp') { e.preventDefault(); moveSelection(-1); }
-      else if (e.key === 'Home') { e.preventDefault(); selectRow(rowsInOrder()[0]); }
-      else if (e.key === 'End') { e.preventDefault(); const r = rowsInOrder(); selectRow(r[r.length - 1]); }
+      else if (e.key === 'Home') { e.preventDefault(); selectRow(rowsInOrder()[0], { align: true }); }
+      else if (e.key === 'End') { e.preventDefault(); const r = rowsInOrder(); selectRow(r[r.length - 1], { align: true }); }
     });
 
     // Down from the search box drops into the list, so the keyboard path works
@@ -1323,7 +1352,7 @@
       if (e.key === 'ArrowDown') {
         e.preventDefault();
         const rows = rowsInOrder();
-        if (rows.length) selectRow(rows[0]);
+        if (rows.length) selectRow(rows[0], { align: true });
       }
     });
 
@@ -1335,7 +1364,7 @@
         // re-run applyFilter and collapse the browse list to just this one
         // behavior, so picking the next one meant clearing the box first --
         // the list has to stay browsable while the panel changes beside it.
-        selectRow(btn, { focus: false });
+        selectRow(btn, { focus: false, reveal: true });
         return;
       }
       // #664: render it in the panel beside the list. Deliberately NO
@@ -1343,7 +1372,12 @@
       // show the code render in element next to dropdown". Jumping the page
       // away from the search box is the behaviour this panel replaces.
       const rowToken = btn.querySelector('.behaviors-search-results__token');
-      if (rowToken) showLive(rowToken.textContent.trim().split(/\s+/)[0], btn.dataset.variant || '');
+      if (rowToken) {
+        showLive(rowToken.textContent.trim().split(/\s+/)[0], btn.dataset.variant || '');
+        // #686: same reveal as the branch above -- stacked, the panel is below
+        // the fold and the render is invisible without it.
+        if (STACKED.matches) liveEl.scrollIntoView({ block: 'start' });
+      }
     });
 
     input.addEventListener('input', () => applyFilter(input.value));
