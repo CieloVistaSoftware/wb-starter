@@ -43,6 +43,30 @@ export function details(element, options = {}) {
   } else {
     element.classList.add('wb-details');
     if (config.open) element.open = true;
+
+    // #689 -- John: "the gaps here are not right". A native <details> authored
+    // with the summary as an ATTRIBUTE (<details summary="Trail conditions">)
+    // got neither a <summary> element nor a .wb-details__content wrapper, so
+    // the styling below -- which is what applies the 1rem to each half -- had
+    // nothing to find. The browser fell back to its own unpadded "Details"
+    // label (dropping the authored text entirely), the <img> sat flush against
+    // the 1px border, and a centred <p> kept its 48px auto margins: three
+    // different insets in one box. Build the same structure the wrap path
+    // above builds, so both paths end up styled identically.
+    const ownSummary = [...element.children].find((c) => c.tagName === 'SUMMARY');
+    if (!ownSummary) {
+      const content = document.createElement('div');
+      content.className = 'wb-details__content';
+      while (element.firstChild) content.appendChild(element.firstChild);
+
+      const summaryEl = document.createElement('summary');
+      summaryEl.className = 'wb-details__summary';
+      // textContent, not innerHTML: the attribute is author input and the
+      // label is plain text -- there is nothing here that needs markup.
+      summaryEl.textContent = element.getAttribute('summary') || 'Details';
+
+      element.append(summaryEl, content);
+    }
   }
 
   // Style the native element
