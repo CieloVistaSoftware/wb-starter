@@ -109,6 +109,15 @@
   font-family: var(--font-mono, monospace);
   color: var(--warning-color);
   font-size: 0.9rem;
+  /* #699 -- John: "these columns are not properly spaced", then on the wrapped
+     version: "don't wrap this text." A token like input[type="checkbox"] is one
+     unbroken string, so with nothing to stop it it painted across the gap into
+     the variant column. It is code (Standard 6: code never wraps), so it stays
+     on ONE line and truncates with an ellipsis when the column cannot hold it.
+     The full value is on the row's title attribute and in the panel header. */
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .behaviors-search-results__heading {

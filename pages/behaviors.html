@@ -352,6 +352,9 @@
           const t = document.createElement('span');
           t.className = 'behaviors-search-results__token';
           t.textContent = entry.label;
+          // #699: the token never wraps, so a long one (input[type="checkbox"])
+          // truncates with an ellipsis. Keep the full value reachable.
+          t.title = entry.label;
           const v = document.createElement('span');
           v.className = 'behaviors-search-results__variant';
           v.textContent = shownOption;

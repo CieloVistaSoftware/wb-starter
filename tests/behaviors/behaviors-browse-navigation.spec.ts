@@ -162,3 +162,62 @@ test.describe('#687 — arrow keys align the selection to the top of the list', 
     expect(Math.round(after), 'a click must not yank the list').toBe(500);
   });
 });
+
+test.describe('#699 — the token column never wraps and never crosses the variant column', () => {
+  test.use({ viewport: { width: 1280, height: 900 } });
+
+  test('a long token stays on one line and stops before the variant', async ({ page }) => {
+    await loadBrowse(page, 'checkbox');
+
+    // input[type="checkbox"] is the longest token in the registry and is one
+    // unbroken string -- the exact case that painted over the variant column.
+    const geo = await page.evaluate(() => {
+      const tokens = [...document.querySelectorAll('.behaviors-search-results__token')] as HTMLElement[];
+      const t = tokens[0];
+      const v = t.parentElement!.querySelector('.behaviors-search-results__variant') as HTMLElement;
+      const cs = getComputedStyle(t);
+      const lh = parseFloat(cs.lineHeight) || 16;
+      const tb = t.getBoundingClientRect(), vb = v.getBoundingClientRect();
+      return {
+        text: t.textContent || '',
+        whiteSpace: cs.whiteSpace,
+        lines: Math.round(tb.height / lh),
+        gapToVariant: Math.round(vb.left - tb.right),
+        title: t.title,
+      };
+    });
+
+    expect(geo.text, 'expected the checkbox token').toContain('checkbox');
+    expect(geo.whiteSpace, 'the token is code — it must not wrap (Standard §6)').toBe('nowrap');
+    expect(geo.lines, 'the token must render on exactly one line').toBe(1);
+    expect(geo.gapToVariant, 'the token must stop before the variant column, not paint into it')
+      .toBeGreaterThanOrEqual(0);
+    expect(geo.title, 'a truncated token must still be readable via its title').toContain('checkbox');
+  });
+
+  test('forced past its column width it truncates — it does not wrap or overlap', async ({ page }) => {
+    await loadBrowse(page, 'checkbox');
+
+    const geo = await page.evaluate(async () => {
+      const tokens = [...document.querySelectorAll('.behaviors-search-results__token')] as HTMLElement[];
+      // Force the overflow condition a zoomed-in browser produces.
+      tokens.forEach((e) => { e.style.fontSize = '2.4rem'; });
+      await new Promise((r) => setTimeout(r, 150));
+      const t = tokens[0];
+      const v = t.parentElement!.querySelector('.behaviors-search-results__variant') as HTMLElement;
+      const lh = parseFloat(getComputedStyle(t).lineHeight) || 16;
+      const tb = t.getBoundingClientRect(), vb = v.getBoundingClientRect();
+      const out = {
+        lines: Math.round(tb.height / lh),
+        gapToVariant: Math.round(vb.left - tb.right),
+        truncated: t.scrollWidth > t.clientWidth + 1,
+      };
+      tokens.forEach((e) => { e.style.fontSize = ''; });
+      return out;
+    });
+
+    expect(geo.lines, 'still one line when the text no longer fits').toBe(1);
+    expect(geo.gapToVariant, 'still no overlap with the variant column').toBeGreaterThanOrEqual(0);
+    expect(geo.truncated, 'the overflow is absorbed by the ellipsis, not by spilling').toBe(true);
+  });
+});
