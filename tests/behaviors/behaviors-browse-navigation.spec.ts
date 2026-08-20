@@ -362,3 +362,77 @@ test.describe('#717 — the selection is the first row anywhere in the list', ()
     expect(state.padding, 'nothing to scroll — no padding needed').toBe('');
   });
 });
+
+test.describe('#720 — the stage can go fullscreen and come back unchanged', () => {
+  test.use({ viewport: { width: 1280, height: 900 } });
+
+  test('the control is wired to the STAGE, not the page', async ({ page }) => {
+    await loadBrowse(page, 'table');
+    await page.locator('.behaviors-search-results__row').first().click();
+    await page.waitForTimeout(400);
+
+    const wiring = await page.evaluate(() => {
+      const btn = document.getElementById('behaviors-live-fullscreen') as HTMLElement;
+      return {
+        exists: !!btn,
+        label: (btn?.textContent || '').trim(),
+        upgraded: btn?.classList.contains('wb-fullscreen'),
+        target: btn?.getAttribute('target'),
+      };
+    });
+
+    expect(wiring.exists, 'the panel needs a fullscreen control').toBe(true);
+    expect(wiring.upgraded, "it must be the framework's own x-fullscreen behavior").toBe(true);
+    expect(wiring.target, 'it must target the stage, not the document').toBe('#behaviors-live-stage');
+    expect(wiring.label.length, 'the control must be labelled').toBeGreaterThan(0);
+  });
+
+  test('a fullscreen round trip leaves the stage exactly where it was', async ({ page }) => {
+    await loadBrowse(page, 'table');
+    await page.locator('.behaviors-search-results__row').first().click();
+    await page.waitForTimeout(400);
+
+    const trip = await page.evaluate(async () => {
+      const sleep = (ms: number) => new Promise((r) => setTimeout(r, ms));
+      const stage = document.getElementById('behaviors-live-stage')!;
+      const btn = document.getElementById('behaviors-live-fullscreen') as HTMLElement;
+      const before = stage.getBoundingClientRect();
+
+      // requestFullscreen needs a user gesture, which a scripted click has not
+      // got — so spy on it to prove WHERE it was requested, then drive the
+      // restore path the behavior listens for.
+      let requestedOn: string | null = null;
+      const original = Element.prototype.requestFullscreen;
+      Element.prototype.requestFullscreen = function (this: Element) {
+        requestedOn = this.id || this.tagName;
+        return Promise.resolve();
+      };
+      btn.click();
+      await sleep(200);
+      Element.prototype.requestFullscreen = original;
+
+      const during = { height: stage.style.height, overflow: stage.style.overflow };
+      document.dispatchEvent(new Event('fullscreenchange'));   // fullscreenElement is null → exit path
+      await sleep(300);
+      const after = stage.getBoundingClientRect();
+
+      const same = (a: DOMRect, b: DOMRect) =>
+        Math.round(a.width) === Math.round(b.width) && Math.round(a.height) === Math.round(b.height)
+        && Math.round(a.top) === Math.round(b.top) && Math.round(a.left) === Math.round(b.left);
+
+      return {
+        requestedOn,
+        during,
+        cleared: !stage.style.height && !stage.style.overflow,
+        sameRect: same(before, after),
+        example: !!stage.firstElementChild,
+      };
+    });
+
+    expect(trip.requestedOn, 'fullscreen must be requested on the stage').toBe('behaviors-live-stage');
+    expect(trip.during.height, 'the stage fills the viewport while fullscreen').toBe('100vh');
+    expect(trip.cleared, 'the inline styles must be cleared on the way out').toBe(true);
+    expect(trip.sameRect, 'the stage must return to the same position and size').toBe(true);
+    expect(trip.example, 'the example must survive the round trip').toBe(true);
+  });
+});
