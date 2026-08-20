@@ -36,8 +36,13 @@ schema), #680 (no written striped-contrast rule — needs John's number),
 real deprecation candidate, not x-dropdown), #683 (content-vs-children precedence
 disagrees between composeCard and card; contentless card still emits an empty `<main>`).
 
-**Last action:** Merged `feat/664-behaviors-live-preview` into `main` and pushed
-`07ff6c8`. GitHub Pages serves `main` at path `/`.
+**Last action:** Merged `feat/664-behaviors-live-preview` into `main`, pushed, then
+bumped the release to **v3.0.36** (`c9496b9`). GitHub Pages serves `main` at path `/`.
+
+NOTE for next session: the version was left at 3.0.35 for all 32 commits pushed
+this session and only bumped when John asked. `stamp-version.js` regenerates
+`src/core/version.js` on every commit but stamps whatever `package.json` already
+holds -- it does NOT increment. Bump `package.json` BEFORE pushing to .io.
 
 **Next step:**
 1. **~70 compliance failures remain and are now live.** `refs-resolve` is closed
@@ -66,7 +71,8 @@ disagrees between composeCard and card; contentless card still emits an empty `<
 - #680 and #683 need John's decisions (a contrast number; a precedence rule).
 
 **Traps that cost real time this session — worth remembering:**
-- The docs are **CRLF**, and JavaScript's `.` does not match ``. A regex ending
+- The docs are **CRLF**, and JavaScript's `.` does not match `
+`. A regex ending
   `(.*)$` silently matches NOTHING on a real line while passing on hand-typed test
   input, and reports "0 changes" rather than erroring.
 - Writing `\n` through a Python heredoc collapses to a literal newline inside the
