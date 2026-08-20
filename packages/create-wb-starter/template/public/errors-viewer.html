@@ -230,8 +230,19 @@
     async function loadErrors() {
       try {
         const response = await fetch('/data/errors.json?t=' + Date.now());
-        if (!response.ok) throw new Error('Failed to load errors');
-        
+
+        // data/errors.json is gitignored -- it only exists once something has
+        // actually been logged. A missing file therefore means "nothing has
+        // gone wrong yet", which is the GOOD state, not a failure. Treating it
+        // as an error made this page throw and console.error on every clean
+        // checkout, so the error viewer became a source of errors and failed
+        // the JS-errors compliance check in CI, where the file never exists.
+        if (response.status === 404) {
+          renderErrors({ errors: [] });
+          return;
+        }
+        if (!response.ok) throw new Error(`Failed to load errors (HTTP ${response.status})`);
+
         const data = await response.json();
         renderErrors(data);
       } catch (err) {
