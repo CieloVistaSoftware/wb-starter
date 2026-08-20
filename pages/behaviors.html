@@ -1235,6 +1235,24 @@
       // #675: an id beats a tag selector -- `document.querySelector('button')`
       // grabs the first button on the READER's page, not this example.
       const sel = rootId ? '#' + rootId : (hostTag ? hostTag : '[' + token + ']');
+
+      // #708 / Standard 27 -- a control that fires its own event should teach
+      // THAT event and the payload it actually carries, not a generic click.
+      // A generic click handler tells a reader nothing about how to know WHICH
+      // option was picked. Same precedent as the file-upload snippet above.
+      const CUSTOM_EVENT_SNIPPETS = {
+        'x-dropdown': [
+          `el.addEventListener('wb:dropdown:select', (e) => {`,
+          `  const { id, index, value, href } = e.detail;`,
+          `  console.log('picked', { id, index, value, href });`,
+          `});`,
+        ],
+      };
+      const custom = CUSTOM_EVENT_SNIPPETS[token];
+      if (custom) {
+        return [`const el = document.querySelector('${sel}');`, ``, ...custom].join('\n');
+      }
+
       return [
         `const el = document.querySelector('${sel}');`,
         ``,

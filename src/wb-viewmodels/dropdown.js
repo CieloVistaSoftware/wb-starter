@@ -93,6 +93,12 @@ export function dropdown(element, options = {}) {
     background:var(--bg-secondary,#1f2937);
     border:1px solid var(--border-color,#374151);
     border-radius:8px;min-width:150px;
+    /* #707 -- John: "the rendered element must be fluid to what it's showing".
+       min-width alone let the menu take its width from the containing block, so
+       a two-word option ("Grace Hopper") wrapped onto two lines with room to
+       spare beside it. max-content sizes it to its widest item; max-width keeps
+       it from ever running past the viewport. */
+    width:max-content;max-width:min(90vw,32rem);
     box-shadow:0 10px 25px rgba(0,0,0,0.2);
     display:none;z-index:1000;overflow:hidden;
     margin-top:4px;
@@ -104,6 +110,9 @@ export function dropdown(element, options = {}) {
     childElements.forEach(child => {
       child.classList.add('wb-dropdown__item');
       Object.assign(child.style, {
+        // #707: the menu is sized to its content, so an option never needs to
+        // wrap -- and a wrapped label misrepresents the component.
+        whiteSpace: 'nowrap',
         // #701: flex, not block -- an item can carry an avatar or icon next to
         // its label (the showcase example does), and block left the image and
         // the text sitting on different baselines.
@@ -125,7 +134,7 @@ export function dropdown(element, options = {}) {
     menu.innerHTML = config.items.map(item => `
       <div class="wb-dropdown__item" style="
         padding:0.5rem 0.75rem;cursor:pointer;
-        transition:background 0.15s;
+        transition:background 0.15s;white-space:nowrap;
       ">${item.trim()}</div>
     `).join('');
     
@@ -181,12 +190,21 @@ export function dropdown(element, options = {}) {
     
     if (item) {
       // Item clicked
-      element.dispatchEvent(new CustomEvent('wb:dropdown:select', { 
-        bubbles: true, 
-        detail: { 
+      // #708 -- John: "when any option is clicked the event must give the option
+      // id or index and the value". Text alone is ambiguous the moment two
+      // options share a label, and it changes whenever the label is reworded, so
+      // a handler had nothing stable to switch on. id when the item has one,
+      // index always; value keeps its old meaning so existing handlers still work.
+      const index = Array.prototype.indexOf.call(
+        menu.querySelectorAll('.wb-dropdown__item'), item);
+      element.dispatchEvent(new CustomEvent('wb:dropdown:select', {
+        bubbles: true,
+        detail: {
+          id: item.id || null,
+          index,
           value: item.textContent.trim(),
-          href: item.href || null 
-        } 
+          href: item.href || null
+        }
       }));
       
       if (config.closeOnSelect) {
