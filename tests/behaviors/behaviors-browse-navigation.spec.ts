@@ -298,3 +298,61 @@ test.describe('#711 — the example is centred in the stage', () => {
     });
   }
 });
+
+test.describe('#717 — the selection is the first row anywhere in the list', () => {
+  test.use({ viewport: { width: 1280, height: 900 } });
+
+  for (const filter of ['button', 'x-'] as const) {
+    test(`"${filter}": Down, End and Up all leave the selection at the top`, async ({ page }) => {
+      test.setTimeout(120_000);
+      await loadBrowse(page, filter);
+
+      const worst = await page.evaluate(async () => {
+        const sleep = (ms: number) => new Promise((r) => setTimeout(r, ms));
+        const list = document.getElementById('behaviors-search-results')!;
+        const rows = [...list.querySelectorAll('.behaviors-search-results__row')] as HTMLElement[];
+        const press = (key: string) =>
+          list.dispatchEvent(new KeyboardEvent('keydown', { key, bubbles: true }));
+        const offset = () => {
+          const cur = list.querySelector('[aria-current="true"]') as HTMLElement;
+          return Math.round((cur.offsetTop - list.offsetTop) - list.scrollTop);
+        };
+
+        rows[0].focus();
+        let down = 0;
+        for (let i = 0; i < 6; i++) { press('ArrowDown'); await sleep(160); down = Math.max(down, Math.abs(offset())); }
+
+        // End is the case that used to fail worst: scrollTop clamps at
+        // scrollHeight - clientHeight, so the last screenful could never reach
+        // the top -- measured 1134px down before the trailing room was added.
+        press('End');
+        await sleep(400);
+        const end = Math.abs(offset());
+
+        let up = 0;
+        for (let i = 0; i < 6; i++) { press('ArrowUp'); await sleep(160); up = Math.max(up, Math.abs(offset())); }
+
+        return { rows: rows.length, down, end, up };
+      });
+
+      expect(worst.rows, 'expected rows to walk').toBeGreaterThan(5);
+      expect(worst.down, 'ArrowDown must pin the selection to the top').toBeLessThanOrEqual(2);
+      expect(worst.end, 'End must put the LAST row at the top').toBeLessThanOrEqual(2);
+      expect(worst.up, 'ArrowUp must pin the selection to the top').toBeLessThanOrEqual(2);
+    });
+  }
+
+  test('a list too short to scroll gains no trailing padding', async ({ page }) => {
+    await loadBrowse(page, 'x-globe');   // a single behavior
+    await page.waitForTimeout(500);
+    const state = await page.evaluate(() => {
+      const list = document.getElementById('behaviors-search-results')!;
+      return {
+        rows: list.querySelectorAll('.behaviors-search-results__row').length,
+        padding: list.style.paddingBottom,
+      };
+    });
+    expect(state.rows, 'expected a short list').toBeLessThan(5);
+    expect(state.padding, 'nothing to scroll — no padding needed').toBe('');
+  });
+});
