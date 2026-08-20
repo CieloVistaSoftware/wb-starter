@@ -39,10 +39,11 @@ disagrees between composeCard and card; contentless card still emits an empty `<
 **Last action:** Merged `feat/664-behaviors-live-preview` into `main`, pushed, then
 bumped the release to **v3.0.36** (`c9496b9`). GitHub Pages serves `main` at path `/`.
 
-NOTE for next session: the version was left at 3.0.35 for all 32 commits pushed
-this session and only bumped when John asked. `stamp-version.js` regenerates
-`src/core/version.js` on every commit but stamps whatever `package.json` already
-holds -- it does NOT increment. Bump `package.json` BEFORE pushing to .io.
+**Versioning is now automatic — nothing to remember.** `.husky/pre-commit` runs
+`npm version patch --no-git-tag-version` and stages it, so every commit (and so
+every push) carries a new release value. Before this, `stamp-version.js` only
+propagated whatever `package.json` already held, so all 32 commits pushed this
+session shipped as 3.0.35 until John spotted it. `.io` is on **v3.0.37**.
 
 **Next step:**
 1. **~70 compliance failures remain and are now live.** `refs-resolve` is closed
