@@ -181,15 +181,21 @@ export function input(element, options = {}) {
   wrapper.appendChild(element);
   element.classList.add('wb-input__field');
   
-  // Default styles for compliance
+  // #671: border/borderRadius/background/color were set inline here too, with
+  // the same consequence as textarea.js -- inline wins over every stylesheet
+  // rule, so `wb-input--error` and `wb-input--success` were dead on arrival.
+  // input.css already applies all four from theme tokens (both via `.wb-input`
+  // and via the bare-native `input:not(...)` rule that covers an unclassed
+  // field), so removing them changes nothing visually except letting the
+  // variant classes through.
+  //
+  // The three that remain are layout, tied to the flex wrapper created just
+  // above -- they describe this element's role inside that wrapper, not its
+  // appearance.
   Object.assign(element.style, {
     width: 'auto', // Let flex handle width
     flex: '1',     // Take remaining space
     minWidth: '0', // Prevent overflow
-    border: '1px solid var(--border-color, #374151)',
-    borderRadius: '6px',
-    background: 'var(--bg-primary, #1f2937)',
-    color: 'var(--text-primary, #f9fafb)',
     outline: 'none'
   });
 

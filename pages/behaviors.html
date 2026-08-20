@@ -457,9 +457,19 @@
         }
         docCache.set(behavior, md);
       }
-      if (!md) return; // no doc for this behavior -- show nothing rather than an empty panel
-
       liveDoc.hidden = false;
+      if (!md) {
+        // #673 -- John, on `article`: "Where is the docs element below this?"
+        // This used to `return` while the panel was still hidden, so for the
+        // 116 of 143 behaviors with no .md the whole panel silently vanished --
+        // indistinguishable from the feature being broken. Say so instead,
+        // matching how the Events panel states its own empty case.
+        liveDoc.open = true;
+        liveDocBody.className = 'behaviors-live__doc-body behaviors-live__doc-body--empty';
+        liveDocBody.textContent = 'No doc yet for ' + behavior + '.';
+        return;
+      }
+
       // Open by default: John asked for an element that SHOWS the doc, and a
       // collapsed 40px strip below the fold reads as "there is no doc". Still a
       // <details> so it can be folded away once read.
@@ -556,7 +566,13 @@
     // while having nothing to link to, so the example has to carry an href for
     // the variant to mean anything.
     const VALUE_COMPANIONS = {
-      'button:variant:link': ' href="/pages/docs.html"',
+      // #674: this was a root-absolute "/pages/docs.html". Every other URL on
+      // this page goes through siteRoot() precisely because the page can be
+      // served from a subpath, so this one sample was the only link that broke
+      // off-root. target="_blank" keeps the reader's place in the gallery --
+      // a component demo that ejects you from the gallery reads as broken even
+      // when the navigation itself succeeds.
+      'button:variant:link': ` href="${siteRoot()}pages/docs.html" target="_blank"`,
     };
 
     function companionFor(attr, prop, value) {
@@ -760,6 +776,51 @@
 </${host}>`;
     }
 
+    // #675 -- John: "all elements must have an id in the showcase".
+    //
+    // A rendered example had no stable handle: nothing for the event-handler
+    // snippet to point at, nothing for a test to target, and nothing a reader
+    // could copy into their own page and wire up. Ids are derived from the
+    // behavior + option so the same example always gets the same id.
+    //
+    // Runs BEFORE resetEvents() so the handler snippet can name the root id.
+    function slug(value) {
+      return String(value || '')
+        .toLowerCase()
+        .replace(/[^a-z0-9]+/g, '-')
+        .replace(/^-+|-+$/g, '');
+    }
+
+    /**
+     * Give every element in the stage an id, and return the root's.
+     * Existing ids are left alone -- some examples carry a meaningful one
+     * already (#wb-demo-file, which its own wiring and snippet both reference).
+     */
+    function assignExampleIds(token, optionText) {
+      const base = ['wb-ex', slug(token), slug(optionText)].filter(Boolean).join('-');
+      let n = 0;
+      liveStage.querySelectorAll('*').forEach((el) => {
+        if (el.id) return;
+        // The bare base belongs to the root -- but only if nothing holds it
+        // yet. Some behaviors WRAP their element after the fact (audio.js
+        // builds a .wb-audio-host around the <audio>), so on the second pass
+        // the new wrapper is firstElementChild while the original element
+        // already carries `base`. Handing it out twice would put a duplicate
+        // id in the document and break the very selector the snippet teaches.
+        if (el === liveStage.firstElementChild && !document.getElementById(base)) {
+          el.id = base;
+          return;
+        }
+        // Skip any suffix already taken. This runs a SECOND time after the
+        // behaviors have injected their own DOM (see the call sites) -- a
+        // naive counter would restart at 1 on that pass and collide with the
+        // ids handed out on the first one.
+        do { n += 1; } while (document.getElementById(`${base}-${n}`));
+        el.id = `${base}-${n}`;
+      });
+      return liveStage.firstElementChild ? liveStage.firstElementChild.id : null;
+    }
+
     // Examples that need behaviour beyond what a behavior provides are wired
     // here, AFTER injection. The upload control is the case John raised: the
     // markup alone is inert, and a demo that cannot actually pick a file is not
@@ -772,7 +833,44 @@
       btn.addEventListener('click', () => input.click());
       input.addEventListener('change', () => {
         const f = input.files && input.files[0];
-        if (out) out.textContent = f ? `${f.name} (${Math.ceil(f.size / 1024)} KB)` : 'No file chosen';
+        if (!f) {
+          if (out) out.textContent = 'No file chosen';
+          return;
+        }
+        // #676 -- John: "doesn't upload...". This used to print the filename
+        // and stop, so a control labelled "Upload a file" was a picker. Now it
+        // actually sends the bytes and reports what the server received.
+        //
+        // XHR rather than fetch(): fetch still has no upload-progress event,
+        // and progress is the part of an upload a reader needs to see.
+        const kb = Math.ceil(f.size / 1024);
+        const xhr = new XMLHttpRequest();
+        xhr.open('POST', siteRoot() + 'api/upload');
+        xhr.setRequestHeader('Content-Type', f.type || 'application/octet-stream');
+        xhr.setRequestHeader('X-File-Name', f.name);
+        xhr.upload.addEventListener('progress', (e) => {
+          if (!out || !e.lengthComputable) return;
+          out.textContent = `${f.name} (${kb} KB) — uploading ${Math.round((e.loaded / e.total) * 100)}%`;
+        });
+        xhr.addEventListener('load', () => {
+          if (!out) return;
+          if (xhr.status < 200 || xhr.status >= 300) {
+            out.textContent = `${f.name} (${kb} KB) — upload failed (HTTP ${xhr.status})`;
+            return;
+          }
+          let body = null;
+          try { body = JSON.parse(xhr.responseText); } catch (err) { body = null; }
+          out.textContent = body && body.ok
+            // The server's OWN count, not the local one -- that is what makes
+            // this evidence of a completed round trip rather than a claim.
+            ? `${body.name} — server received ${Math.ceil(body.bytes / 1024)} KB (${body.type}), not stored`
+            : `${f.name} (${kb} KB) — upload failed (bad response)`;
+        });
+        xhr.addEventListener('error', () => {
+          if (out) out.textContent = `${f.name} (${kb} KB) — upload failed (network error)`;
+        });
+        if (out) out.textContent = `${f.name} (${kb} KB) — uploading…`;
+        xhr.send(f);
       });
     }
 
@@ -921,16 +1019,32 @@
     const WATCHED = ['click', 'change', 'input', 'submit', 'toggle'];
     let eventCount = 0;
 
+    // #677 -- John: "this is an ambiguous event handler, don't we need a from
+    // location?". Entries used to read `button.wb-button` for every element
+    // sharing a tag and a class, which is most of them, so two events from two
+    // different elements were indistinguishable. #675 gave every element in the
+    // stage a stable id, so an entry can now name its actual source.
+    /** `button#wb-ex-button-icon-check.wb-button` — tag, id, first class. */
+    function describeElement(el) {
+      if (!(el instanceof Element)) return '?';
+      const cls = typeof el.className === 'string' && el.className.trim()
+        ? '.' + el.className.trim().split(/\s+/)[0] : '';
+      return el.tagName.toLowerCase() + (el.id ? '#' + el.id : '') + cls;
+    }
+
     function logEvent(e) {
       const target = e.target instanceof Element ? e.target : null;
-      const name = target ? target.tagName.toLowerCase() : '?';
-      const cls = target && target.className && typeof target.className === 'string'
-        ? '.' + target.className.trim().split(/\s+/)[0] : '';
+      const from = describeElement(target);
+      // An event that started on a descendant is a different story from one on
+      // the example root, and that difference is exactly what was missing.
+      const root = liveStage.firstElementChild;
+      const origin = target && root && target !== root && root.contains(target)
+        ? ` <span class="behaviors-live__events-from">from ${describeElement(root)}</span>` : '';
       const li = document.createElement('li');
       li.className = 'behaviors-live__events-item';
       li.innerHTML =
         `<code class="behaviors-live__events-type">${e.type}</code>` +
-        `<span class="behaviors-live__events-target">${name}${cls}</span>`;
+        `<span class="behaviors-live__events-target">${from}</span>${origin}`;
       eventsLog.prepend(li);
       eventsEmpty.hidden = true;
       eventCount++;
@@ -950,7 +1064,7 @@
     let eventsSnippet = document.getElementById('behaviors-live-events-snippet');
 
     /** The wiring a reader would copy to handle this example's events. */
-    function handlerSnippet(hostTag, token) {
+    function handlerSnippet(hostTag, token, rootId) {
       if (liveStage.querySelector('#wb-demo-file')) {
         return [
           `const btn = document.querySelector('button[aria-controls="wb-demo-file"]');`,
@@ -960,11 +1074,27 @@
           ``,
           `input.addEventListener('change', () => {`,
           `  const file = input.files[0];`,
-          `  if (file) console.log(file.name, file.size, file.type);`,
+          `  if (!file) return;`,
+          ``,
+          `  const xhr = new XMLHttpRequest();`,
+          `  xhr.open('POST', '/api/upload');`,
+          `  xhr.setRequestHeader('Content-Type', file.type);`,
+          `  xhr.setRequestHeader('X-File-Name', file.name);`,
+          ``,
+          `  // fetch() has no upload-progress event; XHR does.`,
+          `  xhr.upload.addEventListener('progress', (e) => {`,
+          `    if (e.lengthComputable) console.log(Math.round(e.loaded / e.total * 100) + '%');`,
+          `  });`,
+          `  xhr.addEventListener('load', () => console.log(xhr.responseText));`,
+          `  xhr.addEventListener('error', () => console.error('upload failed'));`,
+          ``,
+          `  xhr.send(file);`,
           `});`,
         ].join('\n');
       }
-      const sel = hostTag ? hostTag : '[' + token + ']';
+      // #675: an id beats a tag selector -- `document.querySelector('button')`
+      // grabs the first button on the READER's page, not this example.
+      const sel = rootId ? '#' + rootId : (hostTag ? hostTag : '[' + token + ']');
       return [
         `const el = document.querySelector('${sel}');`,
         ``,
@@ -976,7 +1106,7 @@
 
     const eventsEmpty = document.getElementById('behaviors-live-events-empty');
 
-    async function resetEvents(hostTag, token) {
+    async function resetEvents(hostTag, token, rootId) {
       eventsLog.innerHTML = '';
       eventCount = 0;
       eventsHint.textContent = 'interact with the example above';
@@ -998,7 +1128,7 @@
       const code = document.createElement('code');
       code.setAttribute('x-behavior', 'code');
       code.dataset.language = 'javascript';
-      code.textContent = handlerSnippet(hostTag, token);
+      code.textContent = handlerSnippet(hostTag, token, rootId);
       pre.appendChild(code);
       eventsSnippet.appendChild(pre);
 
@@ -1033,8 +1163,10 @@
         liveNote.textContent = 'generated example — no demo on this page';
         liveCode.innerHTML = '';
         liveStage.innerHTML = generated;
-        resetEvents(liveStage.firstElementChild && liveStage.firstElementChild.tagName.toLowerCase(), token);
+        const genRootId = assignExampleIds(token, optionText);
+        resetEvents(liveStage.firstElementChild && liveStage.firstElementChild.tagName.toLowerCase(), token, genRootId);
         await renderSource(generated);
+        assignExampleIds(token, optionText); // #675: catch behavior-injected children
         const genDescribed = optionDescription(token, prop);
         const genSummary = genDescribed || summarise(liveStage.firstElementChild);
         liveNote.textContent = genSummary
@@ -1045,8 +1177,10 @@
 
       liveNote.textContent = optionDescription(token, prop) || 'running live';
       liveStage.innerHTML = src;
-      resetEvents(liveStage.firstElementChild && liveStage.firstElementChild.tagName.toLowerCase(), token);
+      const rootId = assignExampleIds(token, optionText);
+      resetEvents(liveStage.firstElementChild && liveStage.firstElementChild.tagName.toLowerCase(), token, rootId);
       await renderSource(src);
+      assignExampleIds(token, optionText); // #675: catch behavior-injected children
       // After the upgrade, so the summary describes the UPGRADED element rather
       // than the bare markup it was built from.
       // Prefer the AUTHORED description of the option over a derived visual

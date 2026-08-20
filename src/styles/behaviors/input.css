@@ -32,7 +32,7 @@ wb-select {
 /* Theme bare native form controls so <input>/<select>/<textarea> without a
    .wb-input class aren't rendered browser-white in dark themes (#191). Excludes
    controls with their own rendering (checkbox/radio/range/color/file/buttons). */
-input:not([type="checkbox"]):not([type="radio"]):not([type="range"]):not([type="color"]):not([type="file"]):not([type="submit"]):not([type="button"]):not([type="reset"]):not([type="image"]),
+input:where(:not([type="checkbox"]):not([type="radio"]):not([type="range"]):not([type="color"]):not([type="file"]):not([type="submit"]):not([type="button"]):not([type="reset"]):not([type="image"])),
 select,
 textarea {
   color: var(--text-primary);
@@ -111,6 +111,12 @@ wb-select:disabled {
   box-shadow: 0 0 0 3px hsla(142, 76%, 45%, 0.2);
 }
 
+.wb-input--warning,
+.wb-textarea--warning,
+.wb-select--warning {
+  border-color: var(--warning-color);
+}
+
 .wb-input--error,
 .wb-textarea--error,
 .wb-select--error {
@@ -154,7 +160,7 @@ select[data-variant="error"] { border: 1px solid var(--danger-color); }
  * range/checkbox/radio/color (they have their own theming via accent-color).
  * Low specificity so .wb-input and component-specific rules still win.
  * --------------------------------------------------------------------------- */
-input:not([type="range"]):not([type="checkbox"]):not([type="radio"]):not([type="color"]):not([type="file"]),
+input:where(:not([type="range"]):not([type="checkbox"]):not([type="radio"]):not([type="color"]):not([type="file"])),
 textarea,
 select {
   background-color: var(--bg-primary);
@@ -162,7 +168,7 @@ select {
   border: 1px solid var(--border-color);
   border-radius: var(--radius-md, 6px);
 }
-input:not([type="range"]):not([type="checkbox"]):not([type="radio"])::placeholder,
+input:where(:not([type="range"]):not([type="checkbox"]):not([type="radio"]))::placeholder,
 textarea::placeholder {
   color: var(--text-muted);
 }

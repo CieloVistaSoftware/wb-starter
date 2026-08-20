@@ -96,12 +96,21 @@ export function textarea(element, options = {}) {
 
   element.classList.add('wb-textarea');
   
-  // Basic styling
+  // #671 -- John: "variants not being followed". This used to also set
+  // borderRadius/border/background/color inline. Inline styles beat every
+  // stylesheet rule regardless of specificity, so the behavior was overriding
+  // its OWN variant classes: `wb-textarea--error` was applied correctly and
+  // input.css's `border-color: var(--danger-color)` could never win, making
+  // every variant look identical to plain.
+  //
+  // input.css's `.wb-input, .wb-textarea` rule already sets all four to the
+  // same theme tokens, so nothing is lost by dropping them here -- and the
+  // hardcoded #374151/#1f2937/#f9fafb fallbacks go with them, which had no
+  // business living outside themes.css.
+  //
+  // What stays inline is what genuinely cannot be a static rule: both depend
+  // on runtime config.
   Object.assign(element.style, {
-    borderRadius: '6px',
-    border: '1px solid var(--border-color, #374151)',
-    background: 'var(--bg-secondary, #1f2937)',
-    color: 'var(--text-primary, #f9fafb)',
     resize: config.autosize ? 'none' : 'vertical',
     minHeight: `${config.minRows * 1.5}rem`
   });

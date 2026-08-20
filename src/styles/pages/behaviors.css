@@ -744,3 +744,20 @@ footer a:hover {
   background: var(--bg-secondary, #1f2937);
   text-align: left;
 }
+
+
+/* #673: the empty state for a behavior with no .md. Matches the Events panel's
+   own empty treatment so "nothing here yet" reads the same way in both. */
+.behaviors-live__doc-body--empty {
+  color: var(--text-muted);
+  font-style: italic;
+  padding: 1rem;
+}
+
+/* #677: the "from" trail on an event that originated on a descendant. Muted —
+   the source element is the headline, its container is context. */
+.behaviors-live__events-from {
+  color: var(--text-muted);
+  font-size: 0.68rem;
+  opacity: 0.8;
+}

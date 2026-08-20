@@ -82,8 +82,19 @@ wb-table th,
 
 /* --- Variants ------------------------------------------------------------ */
 
+/* #672 -- John: "not enough contrast on striped rows".
+   Only the odd rows used to get a colour; the even rows were transparent, so
+   the stripe was "--bg-secondary vs whatever surface the table sits on". On the
+   Behaviors showcase that surface is itself close to --bg-secondary, so the
+   striping nearly vanished. Both parities are painted explicitly now, which
+   makes the delta a property of the theme rather than of the backdrop, and the
+   pair is one step further apart than --bg-primary/--bg-secondary was. */
+.wb-table--striped tbody tr:nth-of-type(even) {
+  background-color: var(--bg-primary);
+}
+
 .wb-table--striped tbody tr:nth-of-type(odd) {
-  background-color: var(--bg-secondary);
+  background-color: var(--bg-tertiary);
 }
 
 .wb-table--hover tbody tr:hover {
@@ -120,7 +131,7 @@ wb-table tbody tr.active,
   margin-bottom: 0.75rem;
   border: 1px solid var(--border-color);
   border-radius: 4px;
-  background-color: var(--bg-surface);
+  background-color: var(--bg-primary);
   color: var(--text-primary);
   font: inherit;
 }
@@ -153,7 +164,7 @@ wb-table tbody tr.active,
   padding: 0.75rem 1rem;
   border: 1px solid var(--border-color);
   border-top: none;
-  background-color: var(--bg-surface);
+  background-color: var(--bg-primary);
 }
 
 .wb-table__pager-status {

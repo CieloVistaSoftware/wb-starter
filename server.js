@@ -464,6 +464,34 @@ app.post('/api/markdown', express.text({ type: '*/*' }), (req, res) => {
   }
 });
 
+// ============================================
+// UPLOAD API - POST /api/upload  (#676)
+// ============================================
+// John, on the Behaviors showcase: "doesn't upload...". The demo was a file
+// PICKER wearing an upload label -- nothing in the codebase could send a file
+// anywhere. This gives it a real round trip to complete.
+//
+// Deliberately accept-and-report, never persist: a component showcase has no
+// business writing a reader's files into the repo, and a discarded upload
+// still exercises the whole path (pick -> POST -> progress -> response).
+// express.raw() so the bytes arrive untouched and the reported size is the
+// real one, not a re-encoded approximation.
+app.post('/api/upload', express.raw({ type: '*/*', limit: '25mb' }), (req, res) => {
+  const bytes = Buffer.isBuffer(req.body) ? req.body.length : 0;
+  if (!bytes) {
+    return res.status(400).json({ ok: false, error: 'No file content received.' });
+  }
+  res.json({
+    ok: true,
+    name: req.get('X-File-Name') || 'upload',
+    type: req.get('Content-Type') || 'application/octet-stream',
+    bytes,
+    // Stated plainly so nobody mistakes this for storage.
+    stored: false,
+    note: 'Received and discarded — the showcase does not persist uploads.'
+  });
+});
+
 app.use(express.static(rootDir, cacheConfig));
 app.use(express.json({ limit: '10mb' }));
 app.use(express.text({ limit: '10mb' }));
