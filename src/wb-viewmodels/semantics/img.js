@@ -39,7 +39,39 @@ export function img(element, options = {}) {
     // An explicit fallback image is a deliberate, more specific choice than
     // a blind retry -- swap immediately rather than racing retry attempts
     // against it.
-    element.onerror = () => { element.src = config.fallback; };
+    // John: "put in runtime errors on image fails." The swap is silent by
+    // design -- that is the point of a fallback -- but if the FALLBACK itself
+    // is missing too, the old handler just re-assigned the same failing src
+    // and said nothing, so a doubly-broken image left no trace anywhere.
+    let usedFallback = false;
+    // Captured BEFORE any swap: by the time the fallback fails, element.src is
+    // the FALLBACK's url, so reading it then named the same file twice and
+    // told you nothing about what was originally requested.
+    const originalSrc = config.src || element.getAttribute('src') || '';
+    element.onerror = () => {
+      if (!usedFallback) {
+        usedFallback = true;
+        element.src = config.fallback;
+        return;
+      }
+      // Async so it reaches window.onerror (error-logger.js) rather than being
+      // swallowed inside this event handler.
+      setTimeout(() => {
+        throw new Error(
+          `wb-img: both the image and its fallback failed to load ` +
+          `(src="${originalSrc}", fallback="${config.fallback}") -- both are missing or unreachable.`
+        );
+      }, 0);
+    };
+
+    // The browser starts loading an <img> the instant its markup is inserted,
+    // so for injected content the 'error' event has usually already fired and
+    // gone by the time this behavior attaches a handler -- the fallback never
+    // swapped in and nothing was ever reported. `complete` with a zero
+    // naturalWidth is the standard way to spot an image that already failed.
+    if (element.complete && element.naturalWidth === 0 && element.getAttribute('src')) {
+      element.onerror(new Event('error'));
+    }
   } else {
     retryCleanup = attachImageLoadRetry(element);
   }

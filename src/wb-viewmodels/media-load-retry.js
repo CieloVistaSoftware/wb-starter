@@ -81,6 +81,27 @@ function attachLoadRetry(el, config) {
       bubbles: true,
       detail: { src: config.currentSrc(el), attempts: attempt }
     }));
+
+    // John: "put in runtime errors on image fails."
+    //
+    // Everything above is a console.warn plus a class and an event -- none of
+    // which error-logger.js captures, so an image that never loaded left no
+    // entry in the error log and never showed up in CI's JS-errors check. A
+    // media file that is missing or unreachable after every retry is a real
+    // defect in the page, not a warning.
+    //
+    // Thrown asynchronously so it reaches window.onerror (which error-logger
+    // listens on) WITHOUT unwinding this function -- the fallback UI above has
+    // already been applied, and throwing inline would skip the cleanup that
+    // callers depend on. Same convention cardoverlay/cardhero/audio already
+    // use for their own load failures.
+    const failedSrc = config.currentSrc(el);
+    setTimeout(() => {
+      throw new Error(
+        `${config.label}: failed to load ${failedSrc || '(no src)'} after ${attempt} attempt(s) -- ` +
+        `the file is missing or unreachable. Showing the "unavailable" fallback.`
+      );
+    }, 0);
   }
 
   function retry() {
