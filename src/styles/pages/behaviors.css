@@ -498,6 +498,27 @@ footer a:hover {
 /* The running example. contain: layout keeps a position:fixed demo (a toast, a
    spotlight) inside this box instead of painting over the page — the same rule
    .wb-demo__grid needs, and for the same reason (#647). */
+/* #720 -- the stage can go fullscreen so an example bigger than the panel (the
+   table family, masonry, gallery, cardhero) can actually be read. A fullscreen
+   element paints on black unless it brings its own background, and `contain:
+   layout` plus the 6rem floor are panel-sized rules that make no sense at
+   viewport scale, so both are lifted for the duration. x-fullscreen restores
+   the inline height/overflow it set when the reader comes back out. */
+.behaviors-live__stage:fullscreen {
+  background: var(--bg-secondary, #1f2937);
+  contain: none;
+  min-height: 100vh;
+  padding: 2rem;
+  overflow: auto;
+}
+
+/* Sits at the end of the panel header, after the note. */
+.behaviors-live__fullscreen {
+  margin-left: auto;
+  font-size: 0.75rem;
+  white-space: nowrap;
+}
+
 .behaviors-live__stage {
   padding: 1.25rem;
   min-height: 6rem;

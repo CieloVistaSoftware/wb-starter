@@ -26,6 +26,22 @@
       <header class="behaviors-live__head">
         <span id="behaviors-live-token" class="behaviors-live__token"></span>
         <span id="behaviors-live-note" class="behaviors-live__note"></span>
+        <!-- #720 -- John, on `table . bordered`: "put this element into a parent
+             container that will show this content when the fullscreen button is
+             pressed... otherwise it will keep this same location and size".
+             Some examples are simply bigger than a panel that shares its width
+             with the results list -- the table family, masonry, gallery,
+             cardhero. This uses the framework's OWN x-fullscreen behavior
+             (helpers.js), which already saves and restores the target's
+             height/overflow across the round trip, rather than hand-rolling a
+             second implementation in page chrome. -->
+        <button
+          id="behaviors-live-fullscreen"
+          class="behaviors-live__fullscreen"
+          type="button"
+          x-fullscreen
+          target="#behaviors-live-stage"
+          label="&#9974; Fullscreen"></button>
       </header>
       <div id="behaviors-live-stage" class="behaviors-live__stage"></div>
 
