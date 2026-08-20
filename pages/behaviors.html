@@ -365,6 +365,9 @@
       });
       if (!q) totalRowCount = rendered;
       resultsEl.appendChild(frag);
+      // #717: a new filter is a new set of rows -- the trailing room has to be
+      // recomputed for THIS list, not the one it replaced.
+      if (typeof syncTailRoom === 'function') syncTailRoom();
     }
 
     // Which hit does the reader actually mean? Typing "button" matched
@@ -497,8 +500,60 @@
         // Only write on a real change -- an unconditional write re-triggers the
         // observer every frame for no reason.
         if (resultsEl.style.maxHeight !== next) resultsEl.style.maxHeight = next;
+        syncTailRoom();
       });
     }
+    // #717 -- John: "When using the down or up button the current selection must
+    // be the first one." selectRow() sets scrollTop = rowTop and the browser
+    // clamps at scrollHeight - clientHeight, so for the LAST screenful of rows
+    // there is nothing below them to scroll into view: measured, row 48 of 49
+    // sat 1134px down instead of 0, drifting further the closer to the end.
+    // Trailing space equal to (viewport - last row) puts every row within reach
+    // of the top. Only while the list actually scrolls -- a short list gains
+    // nothing from it and would just grow a scrollbar.
+    // The row the keyboard last pinned to the top. Padding changes move the
+    // scroll range under it, so the alignment has to be re-applied afterwards.
+    let alignedRow = null;
+
+    function realignAligned() {
+      if (!alignedRow || !alignedRow.isConnected) return;
+      const top = alignedRow.offsetTop - resultsEl.offsetTop;
+      if (Math.round(resultsEl.scrollTop) !== Math.round(top)) resultsEl.scrollTop = top;
+    }
+
+    function syncTailRoom() {
+      const rows = resultsEl.querySelectorAll('.behaviors-search-results__row');
+      const last = rows[rows.length - 1];
+      if (!last) { resultsEl.style.paddingBottom = ''; return; }
+      const current = parseFloat(resultsEl.style.paddingBottom) || 0;
+      const contentHeight = resultsEl.scrollHeight - current;
+      if (contentHeight <= resultsEl.clientHeight + 1) {
+        if (current) resultsEl.style.paddingBottom = '';
+        return;
+      }
+      const room = Math.max(0, Math.round(resultsEl.clientHeight - last.offsetHeight));
+      const next = room + 'px';
+      if (resultsEl.style.paddingBottom !== next) resultsEl.style.paddingBottom = next;
+
+      // Then CHECK it, rather than trusting the arithmetic: rows differ in
+      // height (a long token wraps), and the list's own border and row gaps are
+      // not in that subtraction. Measured with the estimate alone, the last row
+      // still landed 4px short and row 47 18px short. Top up by exactly the
+      // shortfall -- once the last row can reach the top, so can every row
+      // above it, since each one needs less scroll than the last.
+      const lastTop = last.offsetTop - resultsEl.offsetTop;
+      const maxScroll = resultsEl.scrollHeight - resultsEl.clientHeight;
+      if (maxScroll < lastTop) {
+        resultsEl.style.paddingBottom = (room + Math.ceil(lastTop - maxScroll)) + 'px';
+      }
+
+      // #717: every arrow press renders a different example, which resizes the
+      // panel, which resizes the list, which lands here -- AFTER selectRow()
+      // already set scrollTop. Measured: ArrowUp drifted 18px on a 49-row list
+      // and 99px on the full 585. Re-pin the row the keyboard aligned.
+      realignAligned();
+    }
+
     // The panel's height drives the list's; the list never drives the panel's,
     // so this cannot feed back on itself.
     new ResizeObserver(syncListHeight).observe(liveEl);
@@ -1415,6 +1470,7 @@
       const rowTop = row.offsetTop - resultsEl.offsetTop;
       const rowBottom = rowTop + row.offsetHeight;
       if (align) {
+        alignedRow = row;
         // #687 -- John: "I would like all down arrow activity to align with the
         // top every time it's pressed". Minimal scrolling left the selection
         // pinned to the BOTTOM edge once it got there, so arrowing read as "the

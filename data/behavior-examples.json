@@ -1,7 +1,7 @@
 {
   "generatedBy": "scripts/build-behavior-examples.mjs",
   "source": "pages/behaviors.html",
-  "count": 52,
+  "count": 146,
   "demoBlocks": 88,
   "examples": {
     "x-ripple": {
@@ -244,6 +244,382 @@
         "<div x-dropdown items=\"Profile,Settings,Billing,Team,Sign out\" label=\"Account\"></div>",
         "<div x-dropdown label=\"Opens upward\" position=\"top-start\">\n  <button type=\"button\"><img src=\"https://picsum.photos/seed/ada/28/28\" alt=\"\" width=\"28\" height=\"28\"> Ada Lovelace</button>\n  <button type=\"button\"><img src=\"https://picsum.photos/seed/grace/28/28\" alt=\"\" width=\"28\" height=\"28\"> Grace Hopper</button>\n  <button type=\"button\"><img src=\"https://picsum.photos/seed/alan/28/28\" alt=\"\" width=\"28\" height=\"28\"> Alan Turing</button>\n  <button type=\"button\">Invite someone…</button>\n</div>"
       ]
+    },
+    "x-card": {
+      "source": "<article x-card title=\"Trailhead access\" subtitle=\"Updated this morning\" elevated>\n  The north gate is open. Parking fills by 9am on weekends — the overflow lot adds\n  about ten minutes on foot.\n</article>",
+      "alternates": []
+    },
+    "x-cardbutton": {
+      "source": "<article x-cardbutton\n  title=\"Upgrade to Team\"\n  content=\"Shared workspaces, audit history and SSO.\"\n  primary=\"Start free trial\"\n  secondary=\"Compare plans\"></article>",
+      "alternates": []
+    },
+    "x-carddraggable": {
+      "source": "<article x-carddraggable title=\"Drag me\" content=\"Pick this card up and move it — the position sticks.\" constrain axis=\"both\"></article>",
+      "alternates": []
+    },
+    "x-cardexpandable": {
+      "source": "<article x-cardexpandable\n  title=\"What changed in 3.0\"\n  content=\"Composition replaced inheritance: a tag maps to a behavior function that decorates the element in place, in light DOM. There is no component base class any more, and no shadow boundary to reach through.\"\n  lines=\"2\"></article>",
+      "alternates": []
+    },
+    "x-cardfile": {
+      "source": "<article x-cardfile filename=\"quarterly-report.pdf\" file-type=\"pdf\" size=\"2.4 MB\" date=\"2026-08-14\" href=\"#\"></article>",
+      "alternates": []
+    },
+    "x-cardhero": {
+      "source": "<section x-cardhero\n  pretitle=\"Release 3.0\"\n  title=\"Zero build. Real components.\"\n  subtitle=\"Light DOM, no shadow boundaries, no class hierarchy.\"\n  cta=\"Read the guide\"\n  cta-href=\"#\"\n  height=\"320px\"></section>",
+      "alternates": []
+    },
+    "x-cardhorizontal": {
+      "source": "<article x-cardhorizontal\n  image=\"https://picsum.photos/seed/trail/320/240\"\n  image-alt=\"Pine trail at dawn\"\n  image-position=\"start\"\n  title=\"Ridge loop, 8km\"\n  subtitle=\"Moderate · 3h\"></article>",
+      "alternates": []
+    },
+    "x-cardimage": {
+      "source": "<article x-cardimage\n  src=\"https://picsum.photos/seed/harbour/480/300\"\n  alt=\"Fishing boats at the harbour wall\"\n  title=\"Harbour at first light\"\n  caption=\"Shot on the 6am walk-around.\"></article>",
+      "alternates": []
+    },
+    "x-cardlink": {
+      "source": "<article x-cardlink\n  href=\"#\"\n  title=\"Attribute naming standard\"\n  description=\"Why every attribute is kebab-case, and what breaks when it is not.\"\n  badge=\"Standard\"></article>",
+      "alternates": []
+    },
+    "x-cardminimizable": {
+      "source": "<article x-cardminimizable\n  title=\"Build log\"\n  content=\"tsc --noEmit clean. 141 regression tests passed. Packaged in 4.2s.\"></article>",
+      "alternates": []
+    },
+    "x-cardnotification": {
+      "source": "<aside x-cardnotification\n  variant=\"warning\"\n  title=\"Certificate expires in 6 days\"\n  message=\"Renew before 26 Aug or the staging domain will start failing TLS.\"\n  dismissible></aside>",
+      "alternates": []
+    },
+    "x-cardoverlay": {
+      "source": "<article x-cardoverlay\n  image=\"https://picsum.photos/seed/city/480/320\"\n  title=\"Night shift\"\n  subtitle=\"City desk, 02:00\"\n  position=\"bottom\"></article>",
+      "alternates": []
+    },
+    "x-cardportfolio": {
+      "source": "<article x-cardportfolio\n  name=\"Ada Lovelace\"\n  title=\"Principal engineer\"\n  company=\"Analytical Engines\"\n  location=\"London\"\n  cover=\"https://picsum.photos/seed/ada-cover/480/200\"></article>",
+      "alternates": []
+    },
+    "x-cardpricing": {
+      "source": "<article x-cardpricing\n  plan=\"Team\"\n  price=\"$18\"\n  period=\"per user / month\"\n  description=\"For teams that need shared history and SSO.\"\n  features=\"Unlimited projects,Audit log,SSO,Priority support\"></article>",
+      "alternates": []
+    },
+    "x-cardproduct": {
+      "source": "<article x-cardproduct\n  image=\"https://picsum.photos/seed/headphones/400/400\"\n  title=\"Field headphones\"\n  description=\"Closed-back, 32Ω, folds flat.\"\n  price=\"$149\"\n  original-price=\"$189\"></article>",
+      "alternates": []
+    },
+    "x-cardprofile": {
+      "source": "<article x-cardprofile\n  name=\"Grace Hopper\"\n  role=\"Compiler pioneer\"\n  avatar=\"https://picsum.photos/seed/grace/96/96\"\n  bio=\"Wrote the first compiler, then spent a career arguing that people should not have to write machine code.\"></article>",
+      "alternates": []
+    },
+    "x-cardstats": {
+      "source": "<article x-cardstats value=\"1,284\" label=\"Builds this month\" trend=\"up\" trend-value=\"12%\"></article>",
+      "alternates": []
+    },
+    "x-cardtestimonial": {
+      "source": "<article x-cardtestimonial\n  quote=\"We deleted the build step and shipped faster the same week.\"\n  author=\"Katherine Johnson\"\n  role=\"Platform lead\"\n  avatar=\"https://picsum.photos/seed/katherine/96/96\"\n  rating=\"5\"></article>",
+      "alternates": []
+    },
+    "x-cardvideo": {
+      "source": "<article x-cardvideo\n  src=\"/demos/sample.mp4\"\n  poster=\"https://picsum.photos/seed/screening/480/270\"\n  title=\"Behaviors in 90 seconds\"\n  description=\"What replaced the component base class, and why.\"></article>",
+      "alternates": []
+    },
+    "x-fix-card": {
+      "source": "<article x-fix-card title=\"Pinned note\" content=\"This card keeps its place while the rest of the page scrolls.\"></article>",
+      "alternates": []
+    },
+    "x-button": {
+      "source": "<button x-button variant=\"primary\" icon=\"download\" size=\"md\">Download report</button>",
+      "alternates": []
+    },
+    "x-badge": {
+      "source": "<span x-badge label=\"Beta\" variant=\"warning\" pill></span>",
+      "alternates": []
+    },
+    "x-chip": {
+      "source": "<span x-chip label=\"typescript\" icon=\"check\" dismissible></span>",
+      "alternates": []
+    },
+    "x-avatar": {
+      "source": "<div x-avatar src=\"https://picsum.photos/seed/ada/64/64\" alt=\"Ada Lovelace\" name=\"Ada Lovelace\" size=\"lg\"></div>",
+      "alternates": []
+    },
+    "x-spinner": {
+      "source": "<div x-spinner size=\"md\" variant=\"primary\" label=\"Loading results…\"></div>",
+      "alternates": []
+    },
+    "x-skeleton": {
+      "source": "<div x-skeleton variant=\"text\" lines=\"3\" animated></div>",
+      "alternates": []
+    },
+    "x-progress": {
+      "source": "<progress x-progress value=\"72\" max=\"100\" label=\"Uploading footage\" show-value></progress>",
+      "alternates": []
+    },
+    "x-progressbar": {
+      "source": "<progress x-progressbar value=\"72\" max=\"100\" label=\"Uploading footage\" show-value></progress>",
+      "alternates": []
+    },
+    "x-rating": {
+      "source": "<div x-rating value=\"4\" max=\"5\" half></div>",
+      "alternates": []
+    },
+    "x-tabs": {
+      "source": "<div x-tabs active-tab=\"0\" variant=\"underline\">\n  <section title=\"Overview\">Composition over inheritance, in light DOM.</section>\n  <section title=\"Attributes\">Every attribute is kebab-case (§31).</section>\n  <section title=\"Events\">Behaviors fire wb:&lt;name&gt;:&lt;action&gt;.</section>\n</div>",
+      "alternates": []
+    },
+    "x-header": {
+      "source": "<header x-header title=\"Field notes\" subtitle=\"Everything that happened this week\" badge=\"New\"></header>",
+      "alternates": []
+    },
+    "x-footer": {
+      "source": "<footer x-footer brand=\"Cielo Vista Software\" copyright=\"2026\" links=\"Privacy,Terms,Status\"></footer>",
+      "alternates": []
+    },
+    "x-navbar": {
+      "source": "<nav x-navbar brand=\"wb-starter\" brand-href=\"#\" tagline=\"Zero build\"></nav>",
+      "alternates": []
+    },
+    "x-hero": {
+      "source": "<div x-hero variant=\"centered\">\n  <h1>Ship the markup, not the toolchain</h1>\n  <p>Behaviors decorate real elements in light DOM — no build, no shadow roots.</p>\n</div>",
+      "alternates": []
+    },
+    "x-dialog": {
+      "source": "<button x-dialog title=\"Delete branch?\" content=\"fix/706-dropdown will be removed. This cannot be undone.\" size=\"md\">Delete branch…</button>",
+      "alternates": []
+    },
+    "x-drawer": {
+      "source": "<button x-drawer title=\"Filters\" content=\"Status, owner, label and date range live here.\" position=\"end\" width=\"320px\">Open filters</button>",
+      "alternates": []
+    },
+    "x-accordion": {
+      "source": "<div x-accordion>\n  <details summary=\"How do behaviors attach?\"><p>WB scans for x-* attributes and calls the matching behavior function on the element, in place.</p></details>\n  <details summary=\"Is there a shadow root?\"><p>No. Light DOM only — you can style and query everything.</p></details>\n  <details summary=\"What about a build step?\"><p>There isn't one. The browser loads the modules directly.</p></details>\n</div>",
+      "alternates": []
+    },
+    "x-input": {
+      "source": "<div x-input label=\"Repository\" placeholder=\"owner/name\" name=\"repo\" input-type=\"text\"></div>",
+      "alternates": []
+    },
+    "x-textarea": {
+      "source": "<div x-textarea label=\"Release notes\" placeholder=\"What changed?\" name=\"notes\" rows=\"4\"></div>",
+      "alternates": []
+    },
+    "x-select": {
+      "source": "<div x-select label=\"Branch\" name=\"branch\" options=\"main,develop,fix/706-dropdown\" value=\"main\"></div>",
+      "alternates": []
+    },
+    "x-checkbox": {
+      "source": "<div x-checkbox label=\"Run the full suite before pushing\" name=\"full-suite\" checked></div>",
+      "alternates": []
+    },
+    "x-switch": {
+      "source": "<div x-switch label=\"Publish to staging on merge\" name=\"auto-deploy\" checked></div>",
+      "alternates": []
+    },
+    "x-otp": {
+      "source": "<div x-otp length=\"6\"></div>",
+      "alternates": []
+    },
+    "x-counter": {
+      "source": "<textarea x-counter max=\"280\" warning=\"40\" placeholder=\"What are you shipping?\"></textarea>",
+      "alternates": []
+    },
+    "x-form": {
+      "source": "<form x-form validate ajax>\n  <label>Email <input type=\"email\" name=\"email\" required placeholder=\"you@example.com\"></label>\n  <label>Message <textarea name=\"message\" rows=\"3\" required></textarea></label>\n  <button type=\"submit\">Send</button>\n</form>",
+      "alternates": []
+    },
+    "x-formrow": {
+      "source": "<div x-formrow inline>\n  <input type=\"text\" placeholder=\"City\">\n  <input type=\"text\" placeholder=\"ZIP code\">\n</div>",
+      "alternates": []
+    },
+    "x-fieldset": {
+      "source": "<fieldset x-fieldset collapsible>\n  <legend>Notification settings</legend>\n  <label><input type=\"checkbox\" checked> Build finished</label>\n  <label><input type=\"checkbox\"> Nightly audit</label>\n</fieldset>",
+      "alternates": []
+    },
+    "x-inputgroup": {
+      "source": "<div x-inputgroup>\n  <span>https://</span>\n  <input type=\"text\" placeholder=\"your-site.io\">\n  <button type=\"button\">Check</button>\n</div>",
+      "alternates": []
+    },
+    "x-floatinglabel": {
+      "source": "<div x-floatinglabel>\n  <input type=\"text\" id=\"wb-ex-floating\" placeholder=\" \">\n  <label for=\"wb-ex-floating\">Project name</label>\n</div>",
+      "alternates": []
+    },
+    "x-searchfield": {
+      "source": "<input x-searchfield type=\"search\" placeholder=\"Search 143 behaviors…\">",
+      "alternates": []
+    },
+    "x-slider": {
+      "source": "<input x-slider type=\"range\" min=\"0\" max=\"100\" value=\"35\">",
+      "alternates": []
+    },
+    "x-file": {
+      "source": "<input x-file type=\"file\" accept=\"image/*\">",
+      "alternates": []
+    },
+    "x-label": {
+      "source": "<label x-label required label-position=\"top\">Deploy key</label>",
+      "alternates": []
+    },
+    "x-autocomplete": {
+      "source": "<input x-autocomplete items=\"main,develop,release/3.0,fix/706-dropdown,docs/behaviors\" placeholder=\"Find a branch…\">",
+      "alternates": []
+    },
+    "x-autosize": {
+      "source": "<textarea x-autosize rows=\"1\" placeholder=\"This grows as you type — try three or four lines.\"></textarea>",
+      "alternates": []
+    },
+    "x-control": {
+      "source": "<div x-control label=\"Threshold\">\n  <input type=\"range\" min=\"0\" max=\"100\" value=\"60\">\n</div>",
+      "alternates": []
+    },
+    "x-flex": {
+      "source": "<div x-flex gap=\"1rem\">\n  <div>First</div><div>Second</div><div>Third</div>\n</div>",
+      "alternates": []
+    },
+    "x-stack": {
+      "source": "<div x-stack gap=\"0.75rem\" pad=\"1rem\" radius=\"8px\">\n  <div>Queued</div><div>Running</div><div>Passed</div>\n</div>",
+      "alternates": []
+    },
+    "x-cluster": {
+      "source": "<div x-cluster gap=\"0.5rem\">\n  <span>typescript</span><span>playwright</span><span>light-dom</span><span>no-build</span>\n</div>",
+      "alternates": []
+    },
+    "x-masonry": {
+      "source": "<div x-masonry columns=\"3\" gap=\"0.75rem\">\n  <img src=\"https://picsum.photos/seed/m1/300/220\" alt=\"\">\n  <img src=\"https://picsum.photos/seed/m2/300/320\" alt=\"\">\n  <img src=\"https://picsum.photos/seed/m3/300/180\" alt=\"\">\n  <img src=\"https://picsum.photos/seed/m4/300/260\" alt=\"\">\n</div>",
+      "alternates": []
+    },
+    "x-ratio": {
+      "source": "<div x-ratio ratio=\"16:9\">\n  <img src=\"https://picsum.photos/seed/wide/640/360\" alt=\"Coastline from the air\">\n</div>",
+      "alternates": []
+    },
+    "x-span": {
+      "source": "<span x-span variant=\"muted\">Last run 4 minutes ago</span>",
+      "alternates": []
+    },
+    "x-repeater": {
+      "source": "<div x-repeater>\n  <div>Row template — add and remove copies of this block.</div>\n</div>",
+      "alternates": []
+    },
+    "x-demo": {
+      "source": "<div x-demo columns=\"2\">\n  <button>One</button>\n  <button>Two</button>\n</div>",
+      "alternates": []
+    },
+    "x-audio": {
+      "source": "<div x-audio src=\"/demos/sample.wav\" volume=\"0.8\"></div>",
+      "alternates": []
+    },
+    "x-video": {
+      "source": "<video x-video src=\"/demos/sample.mp4\" poster=\"https://picsum.photos/seed/screening/640/360\" controls></video>",
+      "alternates": []
+    },
+    "x-img": {
+      "source": "<img x-img src=\"https://picsum.photos/seed/lens/480/320\" alt=\"Prime lens on a wooden desk\">",
+      "alternates": []
+    },
+    "x-figure": {
+      "source": "<figure x-figure>\n  <img src=\"https://picsum.photos/seed/bridge/480/300\" alt=\"Suspension bridge in fog\">\n  <figcaption>The 6am crossing, before the fog lifted.</figcaption>\n</figure>",
+      "alternates": []
+    },
+    "x-vimeo": {
+      "source": "<div x-vimeo video-id=\"76979871\"></div>",
+      "alternates": []
+    },
+    "x-pre": {
+      "source": "<pre x-pre>npm run test:compliance\n  7591 passed\n     82 failed</pre>",
+      "alternates": []
+    },
+    "x-mark": {
+      "source": "<p>Search matched <mark x-mark>light DOM</mark> in 12 documents.</p>",
+      "alternates": []
+    },
+    "x-typewriter": {
+      "source": "<p x-typewriter speed=\"45\">Zero build. Real components. Light DOM only.</p>",
+      "alternates": []
+    },
+    "x-mdhtml": {
+      "source": "<div x-mdhtml src=\"/docs/behaviors/dropdown.md\"></div>",
+      "alternates": []
+    },
+    "x-notes": {
+      "source": "<aside x-notes position=\"end\" default-width=\"280px\">\n  <p>Notes stay pinned beside the content while you scroll.</p>\n</aside>",
+      "alternates": []
+    },
+    "x-error": {
+      "source": "<div x-error>Build failed: 2 of 13 catalog-integrity checks.</div>",
+      "alternates": []
+    },
+    "x-help": {
+      "source": "<span x-help>Deploy key</span>",
+      "alternates": []
+    },
+    "x-collapse": {
+      "source": "<div x-collapse heading=\"Environment\" expanded>\n  <p>Node 24.13, Chrome 139, Windows 11.</p>\n</div>",
+      "alternates": []
+    },
+    "x-copybutton": {
+      "source": "<button x-copybutton copy-target=\"#wb-ex-copy-source\">Copy command</button>\n<code id=\"wb-ex-copy-source\">npm run test:compliance</code>",
+      "alternates": []
+    },
+    "x-notify": {
+      "source": "<button x-notify message=\"Deploy finished — staging is live.\" variant=\"success\">Notify me</button>",
+      "alternates": []
+    },
+    "x-toggle": {
+      "source": "<button x-toggle target=\"#wb-ex-toggle-panel\">Show details</button>\n<div id=\"wb-ex-toggle-panel\">The panel this button toggles.</div>",
+      "alternates": []
+    },
+    "x-globe": {
+      "source": "<div x-globe></div>",
+      "alternates": []
+    },
+    "x-themecontrol": {
+      "source": "<div x-themecontrol></div>",
+      "alternates": []
+    },
+    "x-codecontrol": {
+      "source": "<div x-codecontrol></div>",
+      "alternates": []
+    },
+    "x-tags": {
+      "source": "<input x-tags value=\"light-dom,no-build,playwright\" placeholder=\"Add a tag…\">",
+      "alternates": []
+    },
+    "x-article": {
+      "source": "<article x-article title=\"Ridge loop, 8km\" subtitle=\"Moderate · 3h\" author=\"Ada Lovelace\" date=\"2026-08-20\" category=\"Trails\">\n  The north gate is open and the creek crossing is dry. Parking fills by 9am on\n  weekends — the overflow lot adds about ten minutes on foot.\n</article>",
+      "alternates": []
+    },
+    "x-articles": {
+      "source": "<section x-articles layout=\"grid\" columns=\"2\" limit=\"4\">\n  <article title=\"Ridge loop, 8km\">Moderate, three hours, dry crossing.</article>\n  <article title=\"Harbour wall at dawn\">Flat, two hours, best before the fog lifts.</article>\n  <article title=\"Pine gap traverse\">Hard, six hours, carry water.</article>\n  <article title=\"Old quarry circuit\">Easy, ninety minutes, good in rain.</article>\n</section>",
+      "alternates": []
+    },
+    "x-draggable": {
+      "source": "<div x-draggable axis=\"both\">Drag me anywhere in the stage.</div>",
+      "alternates": []
+    },
+    "x-drawer-layout": {
+      "source": "<aside x-drawer-layout position=\"start\" width=\"220px\" min-width=\"64px\">\n  <nav><a href=\"#\">Overview</a><a href=\"#\">Runs</a><a href=\"#\">Settings</a></nav>\n</aside>",
+      "alternates": []
+    },
+    "x-move": {
+      "source": "<button x-move distance=\"120px\" duration=\"0.6s\">Move me</button>",
+      "alternates": []
+    },
+    "x-release": {
+      "source": "<div x-release version=\"3.0.48\" date=\"2026-08-20\">\n  143 behavior docs, curated showcase examples, dropdown fixes.\n</div>",
+      "alternates": []
+    },
+    "x-resizable": {
+      "source": "<div x-resizable handles=\"se\">\n  Grab the corner and resize this panel.\n</div>",
+      "alternates": []
+    },
+    "x-scrollalong": {
+      "source": "<aside x-scrollalong offset=\"16\">\n  Keeps pace with the page as you scroll.\n</aside>",
+      "alternates": []
+    },
+    "x-stagelight": {
+      "source": "<div x-stagelight variant=\"spotlight\" color=\"#f59e0b\" intensity=\"0.5\" size=\"360px\">\n  The spotlight follows the pointer across this panel.\n</div>",
+      "alternates": []
+    },
+    "x-sticky": {
+      "source": "<div x-sticky offset=\"0\" stuck-class=\"is-stuck\">\n  Sticks to the top of its scroll container once you pass it.\n</div>",
+      "alternates": []
     }
   }
 }
