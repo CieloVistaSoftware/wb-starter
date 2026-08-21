@@ -3,6 +3,15 @@
   <p>What's actually live on this site right now — every push to <code>main</code> deploys straight to <a href="https://cielovistasoftware.github.io/wb-starter/" target="_blank" rel="noopener">cielovistasoftware.github.io/wb-starter</a>, so this list is the real changelog, not a promise of a future release.</p>
 </div>
 
+<section id="whats-new-3-0-76">
+  <h2><a href="https://github.com/CieloVistaSoftware/wb-starter/releases/tag/v3.0.76" target="_blank" rel="noopener" title="release v3.0.76">3.0.76</a> — 2026-08-21</h2>
+  <p><strong>This is what is live at 3.0.76.</strong></p>
+  <ul>
+    <li class="wn-item wn-bug"><span class="wn-tag">Bug</span> <strong><code>package.json</code> and <code>package-lock.json</code> were empty on <code>main</code> for four releases.</strong> A version-bump script opened each file for writing before reading it — which truncates — so it wrote an empty string back. 3.0.71 through 3.0.75 shipped with both files blank, breaking every npm command against the repo. Restored from the last good copy and re-versioned; both parse.</li>
+    <li class="wn-item wn-new"><span class="wn-tag">New</span> <strong>A test that finds every <code>x-*</code> attribute and rejects the improper ones.</strong> <code>&lt;figure x-figure&gt;</code> is redundant — a <code>&lt;figure&gt;</code> auto-injects the behavior from its tag — and #746 showed the redundant form can silently suppress the behavior entirely. The test sweeps authored pages, demos, docs and the seeded example data, <em>and</em> drives the showcase to check every generated example, which is the path that produced <code>&lt;figure x-figure&gt;</code> in the first place. Tag-to-behavior pairs are read from the map itself, so new mappings are covered without touching the test (<a href="https://github.com/CieloVistaSoftware/wb-starter/issues/754" target="_blank" rel="noopener">#754</a>).</li>
+  </ul>
+</section>
+
 <section id="whats-new-3-0-75">
   <h2><a href="https://github.com/CieloVistaSoftware/wb-starter/releases/tag/v3.0.75" target="_blank" rel="noopener" title="release v3.0.75">3.0.75</a> — 2026-08-21</h2>
   <p><strong>This is what is live at 3.0.75.</strong></p>
