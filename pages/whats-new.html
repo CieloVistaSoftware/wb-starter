@@ -3,6 +3,14 @@
   <p>What's actually live on this site right now — every push to <code>main</code> deploys straight to <a href="https://cielovistasoftware.github.io/wb-starter/" target="_blank" rel="noopener">cielovistasoftware.github.io/wb-starter</a>, so this list is the real changelog, not a promise of a future release.</p>
 </div>
 
+<section id="whats-new-3-0-83">
+  <h2><a href="https://github.com/CieloVistaSoftware/wb-starter/releases/tag/v3.0.83" target="_blank" rel="noopener" title="release v3.0.83">3.0.83</a> — 2026-08-21</h2>
+  <p><strong>This is what is live at 3.0.83.</strong></p>
+  <ul>
+    <li class="wn-item wn-bug"><span class="wn-tag">Bug</span> <strong>The Filter radios did nothing.</strong> The list logic was right, but the change listener was bound with <code>querySelectorAll</code> while the page was still being wired, so it captured an empty list and never attached. Clicking Semantic left the list on Both — a filter that does not filter. Delegated now, so timing cannot break it.</li>
+  </ul>
+</section>
+
 <section id="whats-new-3-0-82">
   <h2><a href="https://github.com/CieloVistaSoftware/wb-starter/releases/tag/v3.0.82" target="_blank" rel="noopener" title="release v3.0.82">3.0.82</a> — 2026-08-21</h2>
   <p><strong>This is what is live at 3.0.82.</strong></p>

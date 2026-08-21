@@ -1845,10 +1845,17 @@
 
     input.addEventListener('input', () => applyFilter(input.value));
 
-    // #764: changing the authoring form re-runs the same filter, so the search
-    // text and the form choice compose instead of overriding each other.
-    document.querySelectorAll('input[name="authoring-form"]').forEach((radio) => {
-      radio.addEventListener('change', () => applyFilter(input.value));
+    // #766: changing the filter re-runs the same query, so the search text and
+    // the form choice compose instead of overriding each other.
+    //
+    // DELEGATED, not bound per radio. Binding with querySelectorAll at setup
+    // captured whatever existed at that instant -- and this script runs while
+    // the fragment is still being wired, so the NodeList came back empty and
+    // clicking a radio did nothing at all. The list simply stayed on "Both",
+    // which reads exactly like a filter that does not filter.
+    document.addEventListener('change', (e) => {
+      const t = e.target;
+      if (t && t.name === 'authoring-form') applyFilter(input ? input.value : '');
     });
     applyFilter('');
   })();
