@@ -1,0 +1,57 @@
+/* ─────────────────────────────────────────────────────────────────────────
+   fieldset — collapsible groups (#774)
+
+   John: "still doesn't say what collapsible does … and there's no obvious way
+   to test it."
+
+   There was no way to test it because it did nothing visible. fieldset.js adds
+   `wb-fieldset__legend--collapsible` to the legend and toggles
+   `wb-fieldset--collapsed` on the fieldset — and NEITHER class existed in any
+   stylesheet. Clicking the legend toggled a class that styled nothing.
+
+   This file is that missing half: the legend looks clickable, and collapsing
+   actually hides the contents.
+   ───────────────────────────────────────────────────────────────────────── */
+
+/* The legend is the control. Without a cursor and a marker there is nothing
+   telling the reader it can be clicked at all. */
+.wb-fieldset__legend--collapsible {
+  cursor: pointer;
+  user-select: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+}
+
+.wb-fieldset__legend--collapsible::before {
+  content: '▾';
+  display: inline-block;
+  font-size: 0.8em;
+  line-height: 1;
+  transition: transform 0.15s ease;
+}
+
+/* Rotate rather than swap the glyph: the marker keeps its box, so the legend
+   does not shift sideways as it toggles. */
+.wb-fieldset--collapsed .wb-fieldset__legend--collapsible::before {
+  transform: rotate(-90deg);
+}
+
+.wb-fieldset__legend--collapsible:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+  border-radius: 0.2rem;
+}
+
+/* Hide everything except the legend — that has to stay, it is the way back.
+   `display: none` rather than height:0: a collapsed field must not be
+   focusable, and a tabbable control inside a zero-height box still is. */
+.wb-fieldset--collapsed > *:not(legend) {
+  display: none;
+}
+
+/* A collapsed fieldset keeps its border but should not reserve the padding of
+   a full one, or it reads as an empty box rather than a closed one. */
+.wb-fieldset--collapsed {
+  padding-block-end: 0.5rem;
+}

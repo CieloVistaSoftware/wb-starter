@@ -191,9 +191,19 @@ export function input(element, options = {}) {
   // path cannot produce any of them. Silently returning is what made
   // `<div x-input label="Repository">` look like a broken component instead
   // of an unsupported host, and cost a bug report to discover.
+  // #777: a native <input> IS the field. It has nothing to build, so telling
+  // the author it "cannot build a field" is wrong -- and `input-type` on one
+  // is not ignored either, it maps to the element's own `type`. The warning
+  // fired on valid markup and put a red entry in the error log.
+  if (element.tagName === 'INPUT') {
+    const wanted = readAttr(element, 'input-type');
+    if (wanted && element.getAttribute('type') !== wanted) element.setAttribute('type', wanted);
+  }
+
   const BUILDER_ONLY = ['label', 'helper', 'error', 'input-type', 'inputtype'];
   const asked = BUILDER_ONLY.filter((a) => element.hasAttribute(a));
-  if (asked.length && !element.querySelector('input')) {
+  const isFormControl = ['INPUT', 'SELECT', 'TEXTAREA'].includes(element.tagName);
+  if (asked.length && !isFormControl && !element.querySelector('input')) {
     logError(
       `[WB:input] <${element.tagName.toLowerCase()}> asked for ${asked.join(', ')} ` +
       `but this host cannot build a field, so ${asked.length === 1 ? 'it was' : 'they were'} ignored.`,

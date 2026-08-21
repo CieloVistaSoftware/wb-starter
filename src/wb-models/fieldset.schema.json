@@ -4,8 +4,16 @@
   "type": "object",
   "description": "Schema for x-fieldset behavior (collapsible fieldset)",
   "properties": {
-    "collapsible": { "type": "boolean", "description": "Allow fieldset to be collapsible", "default": false },
-    "collapsed": { "type": "boolean", "description": "Initial collapsed state", "default": false }
+    "collapsible": {
+      "type": "boolean",
+      "description": "Turns the <legend> into a toggle: clicking it hides and shows the fieldset's contents. The legend stays visible when collapsed, and collapsed contents are removed from the tab order.",
+      "default": false
+    },
+    "collapsed": {
+      "type": "boolean",
+      "description": "Start collapsed. Requires collapsible — on its own it does nothing, because nothing would be able to reopen it.",
+      "default": false
+    }
   },
   "required": [],
   "schemaFor": "fieldset",
@@ -24,28 +32,47 @@
       "<fieldset x-fieldset id='test-fieldset'><legend>Legend</legend><input></fieldset>"
     ],
     "permutations": [
-      { "collapsible": true, "collapsed": false },
-      { "collapsible": true, "collapsed": true },
-      { "collapsible": false, "collapsed": false }
+      {
+        "collapsible": true,
+        "collapsed": false
+      },
+      {
+        "collapsible": true,
+        "collapsed": true
+      },
+      {
+        "collapsible": false,
+        "collapsed": false
+      }
     ],
     "assertions": [
       {
         "description": "Fieldset initializes with wb-fieldset class",
         "selector": "#test-fieldset",
-        "checks": { "hasClass": "wb-fieldset" }
+        "checks": {
+          "hasClass": "wb-fieldset"
+        }
       },
       {
         "description": "Legend is clickable when collapsible",
         "selector": "#test-fieldset legend",
         "action": "click",
-        "checks": { "hasClass": "wb-fieldset__legend--collapsible" },
-        "when": { "collapsible": true }
+        "checks": {
+          "hasClass": "wb-fieldset__legend--collapsible"
+        },
+        "when": {
+          "collapsible": true
+        }
       },
       {
         "description": "Collapsed state applies wb-fieldset--collapsed class",
         "selector": "#test-fieldset",
-        "checks": { "hasClass": "wb-fieldset--collapsed" },
-        "when": { "collapsed": true }
+        "checks": {
+          "hasClass": "wb-fieldset--collapsed"
+        },
+        "when": {
+          "collapsed": true
+        }
       }
     ]
   }

@@ -1333,15 +1333,44 @@
       copy.textContent = 'Copy';
       copy.title = 'Copy this example to the clipboard';
       copy.addEventListener('click', async () => {
+        // #776 -- John: "Copy code in this example does not work."
+        //
+        // navigator.clipboard.writeText() throws for reasons that have nothing
+        // to do with the page being wrong: the document not being focused, a
+        // permissions policy, an embedded context. Verified live -- secure
+        // context, API present, and it still threw, so the button reported
+        // "Press Ctrl+C".
+        //
+        // Which was worse than failing: there is no selection, so Ctrl+C
+        // copies nothing. The advice was impossible to follow.
+        //
+        // execCommand('copy') is deprecated but works where the async API is
+        // refused, so it is the FALLBACK, not the primary. Only if both fail
+        // does the reader get told -- and then told something true.
+        const viaExecCommand = (text) => {
+          const ta = document.createElement('textarea');
+          ta.value = text;
+          // Off-screen but focusable: display:none or visibility:hidden cannot
+          // be selected, and the copy silently does nothing.
+          ta.setAttribute('readonly', '');
+          ta.style.cssText = 'position:fixed;top:0;left:-9999px;opacity:0';
+          document.body.appendChild(ta);
+          ta.select();
+          let ok = false;
+          try { ok = document.execCommand('copy'); } catch { ok = false; }
+          ta.remove();
+          return ok;
+        };
+
+        let ok = false;
         try {
           await navigator.clipboard.writeText(pretty);
-          copy.textContent = 'Copied';
+          ok = true;
         } catch (err) {
-          // Clipboard access can be denied (permissions, insecure origin).
-          // Say so rather than silently appearing to succeed.
-          copy.textContent = 'Press Ctrl+C';
-          console.warn('[behaviors] clipboard write failed', err);
+          console.warn('[behaviors] clipboard API refused, falling back', err);
+          ok = viaExecCommand(pretty);
         }
+        copy.textContent = ok ? 'Copied' : 'Copy failed';
         setTimeout(() => { copy.textContent = 'Copy'; }, 1600);
       });
       liveCode.appendChild(copy);

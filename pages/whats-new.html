@@ -3,6 +3,18 @@
   <p>What's actually live on this site right now — every push to <code>main</code> deploys straight to <a href="https://cielovistasoftware.github.io/wb-starter/" target="_blank" rel="noopener">cielovistasoftware.github.io/wb-starter</a>, so this list is the real changelog, not a promise of a future release.</p>
 </div>
 
+<section id="whats-new-3-0-88">
+  <h2><a href="https://github.com/CieloVistaSoftware/wb-starter/releases/tag/v3.0.88" target="_blank" rel="noopener" title="release v3.0.88">3.0.88</a> — 2026-08-21</h2>
+  <p><strong>This is what is live at 3.0.88.</strong></p>
+  <ul>
+    <li class="wn-item wn-bug"><span class="wn-tag">Bug</span> <strong>A false error on every native input.</strong> A warning added days ago told authors that <code>&lt;input input-type="text"&gt;</code> "cannot build a field" — but an <code>&lt;input&gt;</code> IS the field, and <code>input-type</code> maps to its <code>type</code>. It fired on correct markup and filled the error log. The warning now only fires where a host genuinely cannot build one, and <code>input-type</code> is applied.</li>
+    <li class="wn-item wn-bug"><span class="wn-tag">Bug</span> <strong>Copy did not copy.</strong> The clipboard API is refused for reasons unrelated to the page, and the fallback said "Press Ctrl+C" — impossible advice, since nothing was selected. It now falls back to a real copy and only reports failure when both paths fail.</li>
+    <li class="wn-item wn-bug"><span class="wn-tag">Bug</span> <strong><code>collapsible</code> did nothing you could see.</strong> The behavior toggled two classes that existed in no stylesheet. The legend now looks clickable, collapsing hides the contents, and collapsed fields leave the tab order.</li>
+    <li class="wn-item wn-request"><span class="wn-tag">Request</span> <strong>A layout rule for ordinary media.</strong> The standards covered floating layers and padding but never said an image has to fit the box it renders in, so nothing was being violated — there was no rule. Added as §15a, with the constraint that also prevents upscaling.</li>
+    <li class="wn-item wn-new"><span class="wn-tag">New</span> <strong>Three tests.</strong> Every element in a rendered example carries a unique id; no example logs an error while rendering; and the stage leaves no dead space after a tall example.</li>
+  </ul>
+</section>
+
 <section id="whats-new-3-0-87">
   <h2><a href="https://github.com/CieloVistaSoftware/wb-starter/releases/tag/v3.0.87" target="_blank" rel="noopener" title="release v3.0.87">3.0.87</a> — 2026-08-21</h2>
   <p><strong>This is what is live at 3.0.87.</strong></p>

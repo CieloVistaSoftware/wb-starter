@@ -1036,3 +1036,28 @@ footer a:hover {
     margin-top: 0.5rem;
   }
 }
+
+/* #775 — media in a live example fits its container.
+   John: "What are our rules on layout? this isn't following them."
+   The standards covered overlays (§15) and padding (§13) but never said a
+   normal-flow image has to fit the box it is rendered in, so nothing stopped
+   a 480px image filling the panel. Two constraints, not one:
+     max-width  — never wider than the container
+     width:auto — never UPSCALED past its natural size, which is the part that
+                  makes an example look blurry and wrong rather than merely big
+*/
+#behaviors-live-example img,
+#behaviors-live-example video,
+#behaviors-live-example iframe,
+#behaviors-live-example svg {
+  max-width: 100%;
+  width: auto;
+  height: auto;
+}
+
+/* A figure caption belongs to its image, so the figure should be no wider
+   than the media it captions. */
+#behaviors-live-example figure {
+  max-width: 100%;
+  margin-inline: 0;
+}

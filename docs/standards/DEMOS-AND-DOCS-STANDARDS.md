@@ -143,6 +143,17 @@ Every component example is a `<wb-demo>` — it renders the **live control** AND
   to that doc (via the doc-viewer's path-linking or an explicit Markdown link). A section
   that names a doc but gives no way to open it is a defect.
 
+## 15a. Normal-flow media fits its container
+
+- An `<img>`, `<video>`, `<iframe>` or `<svg>` in a rendered example must never be wider
+  than the container it renders in, and must never be **upscaled past its natural size**.
+  A 480px image stretched across a 900px panel is blurry and misrepresents the component.
+- `max-width: 100%` alone is not enough — it caps the width but still allows an upscale
+  when a rule sets `width: 100%`. Both constraints are required.
+- §15 covers floating layers (popovers, tooltips, menus). This rule covers ordinary
+  content, which had no rule at all until an example rendered an image far larger than
+  itself. (#775)
+
 ## 15. Overlays and popups stay within bounds
 
 - A popover, tooltip, dropdown, menu, or any floating layer must **not overflow** its
