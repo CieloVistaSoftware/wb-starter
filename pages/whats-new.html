@@ -3,6 +3,14 @@
   <p>What's actually live on this site right now — every push to <code>main</code> deploys straight to <a href="https://cielovistasoftware.github.io/wb-starter/" target="_blank" rel="noopener">cielovistasoftware.github.io/wb-starter</a>, so this list is the real changelog, not a promise of a future release.</p>
 </div>
 
+<section id="whats-new-3-0-84">
+  <h2><a href="https://github.com/CieloVistaSoftware/wb-starter/releases/tag/v3.0.84" target="_blank" rel="noopener" title="release v3.0.84">3.0.84</a> — 2026-08-21</h2>
+  <p><strong>This is what is live at 3.0.84.</strong></p>
+  <ul>
+    <li class="wn-item wn-bug"><span class="wn-tag">Bug</span> <strong>Semantic listed <code>x-</code> tokens instead of element names.</strong> The check for "does this example use its semantic tag" built a word boundary as <code>''</code> inside a string — which is the backspace character, not a boundary — so it matched nothing and every row was relabelled to its <code>x-</code> token. Semantic now lists <code>article</code>, <code>button</code>, <code>dialog</code>, <code>progress</code>.</li>
+  </ul>
+</section>
+
 <section id="whats-new-3-0-83">
   <h2><a href="https://github.com/CieloVistaSoftware/wb-starter/releases/tag/v3.0.83" target="_blank" rel="noopener" title="release v3.0.83">3.0.83</a> — 2026-08-21</h2>
   <p><strong>This is what is live at 3.0.83.</strong></p>

@@ -318,7 +318,21 @@
             if (!e.host) return;
             const src = exampleCatalogue && exampleCatalogue[e.attr] && exampleCatalogue[e.attr].source;
             if (!src) return;
-            const usesHost = new RegExp('<' + e.host + '\b', 'i').test(src);
+            // #767: this built the boundary as '\b' inside a STRING, which is
+            // the backspace character, not a word boundary. The pattern was
+            // `<audio<backspace>` and matched nothing, ever -- so every entry
+            // failed the "uses its host" test and was relabelled to its x-
+            // token. That is why Semantic listed x-audio, x-button, x-card
+            // instead of audio, button, article.
+            //
+            // A prefix test says the same thing with no escape to get wrong:
+            // in real markup the tag is followed by whitespace, '>' or '/'.
+            // Only the SEMANTIC row may be relabelled; the attribute row is
+            // supposed to read x-{behavior}.
+            if (e.form === 'attribute') return;
+            const at = src.indexOf('<' + e.host);
+            const after = at === -1 ? '' : src.charAt(at + e.host.length + 1);
+            const usesHost = at !== -1 && (after === '' || /[\s>/]/.test(after));
             if (!usesHost) { e.label = e.attr; e.native = false; }
           });
           allEntries.sort((a, b) => a.label.localeCompare(b.label));
