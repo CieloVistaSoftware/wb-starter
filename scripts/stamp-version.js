@@ -49,7 +49,15 @@ for (const file of ENTRY_HTML) {
   } catch {
     continue; // entry point doesn't exist in this checkout
   }
-  const stamped = html.replace(ATTR_RE, (_match, pre, url, post) => `${pre}${url}?v=${commit}${post}`);
+  // Cache-bust on the VERSION, not the commit hash. `git rev-parse HEAD` here
+  // reads the PARENT commit — this runs before the commit being made exists —
+  // so the token was always one commit behind the change it exists to bust.
+  // A CSS-only release therefore shipped with an unchanged ?v= and never
+  // reached any browser holding the old file (measured: 3.0.63 deployed with
+  // ?v=80d6768, the 3.0.62 commit). pkg.version is known before the commit,
+  // changes exactly when a release ships, and is what the release is named
+  // after. See #743.
+  const stamped = html.replace(ATTR_RE, (_match, pre, url, post) => `${pre}${url}?v=${pkg.version}${post}`);
   if (stamped !== html) {
     writeFileSync(filePath, stamped);
     console.log(`[stamp-version] cache-busted ${file}`);

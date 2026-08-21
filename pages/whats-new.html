@@ -3,6 +3,15 @@
   <p>What's actually live on this site right now — every push to <code>main</code> deploys straight to <a href="https://cielovistasoftware.github.io/wb-starter/" target="_blank" rel="noopener">cielovistasoftware.github.io/wb-starter</a>, so this list is the real changelog, not a promise of a future release.</p>
 </div>
 
+<section id="whats-new-3-0-64">
+  <h2><a href="https://github.com/CieloVistaSoftware/wb-starter/releases/tag/v3.0.64" target="_blank" rel="noopener" title="release v3.0.64">3.0.64</a> — 2026-08-21</h2>
+  <p><strong>This is what is live at 3.0.64.</strong> Both items are why recent releases looked like they had not shipped.</p>
+  <ul>
+    <li class="wn-item wn-bug"><span class="wn-tag">Bug</span> <strong>The cache-bust token was always one commit behind the change it existed to bust.</strong> <code>stamp-version.js</code> read <code>git rev-parse --short HEAD</code>, which during a pre-commit run is the <em>parent</em> commit — the commit being made does not exist yet. So a release that changed only CSS shipped with an unchanged <code>?v=</code> and never reached any browser holding the old file. Measured: 3.0.63 deployed with <code>?v=80d6768</code>, which is the 3.0.62 commit. The token is now the release version (<code>?v=3.0.64</code>): known before the commit, changed exactly when a release ships, and named the same as the release it belongs to.</li>
+    <li class="wn-item wn-bug"><span class="wn-tag">Bug</span> <strong>Page content was served from cache after every deploy.</strong> The site fetched <code>pages/&lt;id&gt;.html</code> with no cache-bust at all, so the browser re-served its stored copy while the raw URL served the new file. Measured on this page: the server had the 3.0.63 content and the site rendered 3.0.61. Fragment fetches now carry the release version too — which is why this entry is visible to you at all.</li>
+  </ul>
+</section>
+
 <section id="whats-new-3-0-63">
   <h2><a href="https://github.com/CieloVistaSoftware/wb-starter/releases/tag/v3.0.63" target="_blank" rel="noopener" title="release v3.0.63">3.0.63</a> — 2026-08-21</h2>
   <p><strong>This is what is live at 3.0.63.</strong></p>

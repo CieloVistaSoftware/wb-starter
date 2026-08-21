@@ -3,6 +3,7 @@
 import WB from './wb.js';  // v3.0: Use main wb.js with schema support
 import { initViews } from './wb-views.js';
 import { preloadCssForHtml } from './style-loader.js';
+import { VERSION } from './version.js';
 
 export default class WBSite {
   constructor() {
@@ -594,7 +595,11 @@ export default class WBSite {
       loadingTimerId = window.WBLoadingManager.startMonitoring(loadingEl, `Page: ${pageId}`);
     }
     try {
-      const res = await fetch(`pages/${pageId}.html`);
+      // Cache-bust the fragment on the release version. Without this the SPA
+      // re-served whatever copy the browser had, so a page edit stayed
+      // invisible after deploy while the raw URL served the new file — the
+      // reason What's New kept looking unchanged after a release. See #743.
+      const res = await fetch(`pages/${pageId}.html?v=${VERSION.version}`);
       if (loadingTimerId && window.WBLoadingManager) {
         window.WBLoadingManager.stopMonitoring(loadingTimerId);
       }
