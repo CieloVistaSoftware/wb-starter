@@ -8,7 +8,10 @@ test.describe('Hero Variants Page', () => {
   });
 
   test('page loads successfully', async ({ page }) => {
-    const hero = page.locator('.page__hero, #herovariants-section-1');
+    // #725: the page renders now (it used to silently show home), and it has
+    // BOTH a .page__hero and #herovariants-section-1 -- an unqualified locator
+    // matching two elements is a strict-mode violation, not a page defect.
+    const hero = page.locator('.page__hero, #herovariants-section-1').first();
     await expect(hero).toBeVisible();
     await expect(page.locator('h1').first()).toContainText('Hero Variants');
   });
