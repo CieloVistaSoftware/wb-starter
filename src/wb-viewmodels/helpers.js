@@ -229,22 +229,56 @@ export function fullscreen(element, options = {}) {
   element.onclick = () => {
     if (document.fullscreenElement) {
       document.exitFullscreen();
-    } else {
-      // Store original styles
-      originalStyles = {
-        overflow: targetEl.style.overflow,
-        overflowY: targetEl.style.overflowY,
-        height: targetEl.style.height
-      };
-      
-      // Set styles for scrolling in fullscreen
-      targetEl.style.overflow = 'auto';
-      targetEl.style.overflowY = 'auto';
-      targetEl.style.height = '100vh';
-      
-      targetEl.requestFullscreen();
-      element.textContent = '✕ Exit Fullscreen';
+      return;
     }
+    if (!targetEl) {
+      console.error('[WB:fullscreen] no element matches target', JSON.stringify(config.target));
+      return;
+    }
+
+    // #733 -- John: "fullscreen is not working". Every side effect used to be
+    // committed BEFORE requestFullscreen() settled, and its promise was thrown
+    // away. Measured on a real click: document.fullscreenElement stayed null
+    // while the target had already been stretched to height:100vh and the button
+    // already read "Exit Fullscreen" -- a panel blown up to viewport height, a
+    // control lying about the state, and no error to explain either. The restore
+    // path only runs on `fullscreenchange`, which never fires for a request that
+    // was rejected.
+    //
+    // Request first. Apply the styles and the label only once it resolves.
+    const saved = {
+      overflow: targetEl.style.overflow,
+      overflowY: targetEl.style.overflowY,
+      height: targetEl.style.height
+    };
+
+    let request;
+    try {
+      request = targetEl.requestFullscreen();
+    } catch (err) {
+      console.error(`[WB:fullscreen] request threw: ${err.name}: ${err.message}`);
+      return;
+    }
+
+    Promise.resolve(request)
+      .then(() => {
+        originalStyles = saved;
+        targetEl.style.overflow = 'auto';
+        targetEl.style.overflowY = 'auto';
+        targetEl.style.height = '100vh';
+        element.textContent = '✕ Exit Fullscreen';
+      })
+      .catch((err) => {
+        // Nothing was changed, so there is nothing to undo -- but SAY why.
+        // The reason is the difference between "no user gesture", "blocked by
+        // permissions policy" and "this element cannot be fullscreened", and
+        // swallowing it left the reader with no way to tell them apart.
+        console.error(`[WB:fullscreen] request rejected: ${err && err.name}: ${err && err.message}`);
+        targetEl.style.overflow = saved.overflow;
+        targetEl.style.overflowY = saved.overflowY;
+        targetEl.style.height = saved.height;
+        element.textContent = config.label;
+      });
   };
 
   return () => {
