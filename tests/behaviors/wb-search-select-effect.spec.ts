@@ -19,7 +19,10 @@ import { test, expect, Page } from '@playwright/test';
 async function setup(page: Page, html: string): Promise<void> {
   await page.goto('/demos/test-harness.html');
   await page.waitForFunction(() => (window as any).WB && (window as any).WB.behaviors, { timeout: 15000 });
-  await page.waitForFunction(() => (window as any).WBSite && (window as any).WBSite.currentPage, { timeout: 20000 });
+  // #735: NOT WBSite. This page is a standalone harness, not an SPA route, so
+  // window.WBSite is never created here -- the wait burned its full timeout and
+  // failed before a single assertion ran. WB.behaviors is the readiness signal
+  // that applies, and this setup scans the DOM itself below.
   await page.evaluate((h: string) => {
     const c = document.createElement('div');
     c.id = 'test-area';
