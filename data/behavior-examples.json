@@ -422,7 +422,7 @@
       "alternates": []
     },
     "x-form": {
-      "source": "<form validate ajax>\n  <label>Email <input type=\"email\" name=\"email\" required placeholder=\"you@example.com\"></label>\n  <label>Message <textarea name=\"message\" rows=\"3\" required></textarea></label>\n  <button type=\"submit\">Button example of x-form</button>\n</form>",
+      "source": "<form validate ajax action=\"/api/demo-form\" successMessage=\"Sent — check the events panel below.\">\n  <label>Email <input type=\"email\" name=\"email\" required placeholder=\"you@example.com\"></label>\n  <label>Message <textarea name=\"message\" rows=\"3\" required></textarea></label>\n  <button type=\"submit\">Button example of x-form</button>\n</form>",
       "alternates": []
     },
     "x-formrow": {

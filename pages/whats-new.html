@@ -3,6 +3,15 @@
   <p>What's actually live on this site right now — every push to <code>main</code> deploys straight to <a href="https://cielovistasoftware.github.io/wb-starter/" target="_blank" rel="noopener">cielovistasoftware.github.io/wb-starter</a>, so this list is the real changelog, not a promise of a future release.</p>
 </div>
 
+<section id="whats-new-3-0-71">
+  <h2><a href="https://github.com/CieloVistaSoftware/wb-starter/releases/tag/v3.0.71" target="_blank" rel="noopener" title="release v3.0.71">3.0.71</a> — 2026-08-21</h2>
+  <p><strong>This is what is live at 3.0.71.</strong></p>
+  <ul>
+    <li class="wn-item wn-bug"><span class="wn-tag">Bug</span> <strong>The form behavior never turned AJAX on.</strong> <code>&lt;form validate ajax&gt;</code> — the documented spelling — did nothing, because the behavior read only <code>data-ajax</code>. Submitting fell through to a plain form post, which is why nothing appeared to happen. Plain attributes are now read alongside their <code>data-*</code> equivalents for <code>ajax</code>, <code>validate</code>, <code>auto-save</code> and the three message strings, closing the same gap <a href="https://github.com/CieloVistaSoftware/wb-starter/issues/697" target="_blank" rel="noopener">#697</a> closed for fieldset and formrow. <code>ajax="false"</code> is also honoured as OFF: a bare presence check reads the string "false" as ON, the opposite of what the markup says (<a href="https://github.com/CieloVistaSoftware/wb-starter/issues/751" target="_blank" rel="noopener">#751</a>, <a href="https://github.com/CieloVistaSoftware/wb-starter/issues/747" target="_blank" rel="noopener">#747</a>).</li>
+    <li class="wn-item wn-request"><span class="wn-tag">Request</span> <strong>The form demo has a destination that answers.</strong> The example declared no <code>action</code>, so it posted to the page itself and the already-implemented success path was unreachable. It now targets a demo endpoint that accepts and discards, so the success message and the <code>wb:form:success</code> event actually fire. It deliberately sends no mail — a public endpoint that emails a user-supplied recipient is an open relay (<a href="https://github.com/CieloVistaSoftware/wb-starter/issues/751" target="_blank" rel="noopener">#751</a>).</li>
+  </ul>
+</section>
+
 <section id="whats-new-3-0-70">
   <h2><a href="https://github.com/CieloVistaSoftware/wb-starter/releases/tag/v3.0.70" target="_blank" rel="noopener" title="release v3.0.70">3.0.70</a> — 2026-08-21</h2>
   <p><strong>This is what is live at 3.0.70.</strong></p>

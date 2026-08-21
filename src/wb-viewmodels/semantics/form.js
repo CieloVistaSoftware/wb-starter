@@ -4,13 +4,35 @@
  * Helper Attribute: [x-behavior="form"]
  */
 export function form(element, options = {}) {
+  // #751: read the PLAIN attribute as well as the data-* form. The showcase
+  // example writes `<form validate ajax>` -- the documented spelling -- while
+  // this only ever read `data-ajax`, so ajax was never enabled and submitting
+  // did nothing visible. Same gap #697 closed for wb-fieldset/wb-formrow.
+  //
+  // `"false"` is honoured as false (#747): a string attribute value is truthy
+  // in JS, so `ajax="false"` read as a bare presence check means ON, which is
+  // the opposite of what the markup says.
+  const flag = (plain, dataKey) => {
+    for (const name of [plain, dataKey]) {
+      if (!element.hasAttribute(name)) continue;
+      const v = element.getAttribute(name);
+      if (v === 'false' || v === '0') return false;
+      return true;
+    }
+    return false;
+  };
+  const str = (plain, dataProp) =>
+    element.getAttribute(plain) || element.dataset[dataProp] || '';
+
   const config = {
-    ajax: options.ajax ?? element.hasAttribute('data-ajax'),
-    validate: options.validate ?? element.dataset.validate !== 'false',
-    autoSave: options.autoSave ?? element.hasAttribute('data-auto-save'),
-    loadingText: options.loadingText || element.dataset.loadingText || 'Submitting...',
-    successMessage: options.successMessage || element.dataset.successMessage || 'Success!',
-    errorMessage: options.errorMessage || element.dataset.errorMessage || 'Error. Please try again.',
+    ajax: options.ajax ?? flag('ajax', 'data-ajax'),
+    validate: options.validate ?? (element.hasAttribute('validate')
+      ? flag('validate', 'data-validate')
+      : element.dataset.validate !== 'false'),
+    autoSave: options.autoSave ?? flag('auto-save', 'data-auto-save'),
+    loadingText: options.loadingText || str('loadingmessage', 'loadingText') || 'Submitting...',
+    successMessage: options.successMessage || str('successmessage', 'successMessage') || 'Success!',
+    errorMessage: options.errorMessage || str('errormessage', 'errorMessage') || 'Error. Please try again.',
     ...options
   };
 

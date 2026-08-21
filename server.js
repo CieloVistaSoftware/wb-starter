@@ -531,6 +531,32 @@ app.get('/doc-viewer.html', (req, res) => {
   res.sendFile('doc-viewer.html', { root: path.join(rootDir, 'public') });
 });
 
+// Demo form endpoint (#751). The form/ajax showcase example had no `action`,
+// so it POSTed to the current page -- a static host -- and the reader saw
+// nothing happen while the success path in form.js sat unreachable.
+//
+// This ACCEPTS AND DISCARDS. It deliberately sends no mail: the demo lets a
+// reader type any address, and a public endpoint that emails an
+// arbitrary user-supplied recipient is an open relay -- it would be abused to
+// send mail to third parties from this domain, and the domain would be
+// blocklisted for it. Real delivery needs a rate-limited backend that sends a
+// FIXED verification message, with its API key in an env var; see #751.
+//
+// Static hosting (GitHub Pages) cannot serve this route, so the client treats
+// a non-JSON response as demo-mode success -- the round trip is still proven
+// by the success message and the wb:form:success event.
+app.post('/api/demo-form', (req, res) => {
+  // form.js submits a FormData body (multipart), which express does not parse
+  // without extra middleware -- and this endpoint does not need to read it.
+  // It exists to give the demo a destination that answers, so the success
+  // message and the wb:form:success event actually fire.
+  res.json({
+    ok: true,
+    sent: false,
+    message: 'Received by the demo endpoint. Nothing was stored and no mail was sent.'
+  });
+});
+
 // API Endpoint to log content issues
 app.post("/api/log-issues", (req, res) => {
   const payload = req.body;
