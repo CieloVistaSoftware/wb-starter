@@ -861,3 +861,52 @@ footer a:hover {
   font-size: 0.68rem;
   opacity: 0.8;
 }
+
+/* ─────────────────────────────────────────────────────────────────────────
+   #744 — John: "when full screen show both navigator and the rendered side
+   plus the search elements."
+
+   #720 put the stage in fullscreen; #722 narrowed it to the rendered example
+   alone, which removed the empty space AND the navigation with it — one
+   element on a black screen with no way to reach another. The target is now
+   the workspace: search on top, navigator and rendered side side by side,
+   all three filling the screen.
+
+   x-fullscreen (helpers.js) sets inline height:100vh and overflow:auto on the
+   target across the round trip and restores them on exit, so these rules only
+   have to describe the LAYOUT inside that box, not own the sizing.
+   ───────────────────────────────────────────────────────────────────────── */
+#behaviors-workspace:fullscreen {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-md, 1rem);
+  padding: var(--space-md, 1rem);
+  /* A fullscreen element is painted over the UA's black backdrop and inherits
+     no page background, so the theme surface has to be stated explicitly or
+     the panels float on black. */
+  background: var(--bg-primary);
+}
+
+#behaviors-workspace:fullscreen .behaviors-search {
+  flex: 0 0 auto;
+}
+
+#behaviors-workspace:fullscreen .behaviors-browse {
+  flex: 1 1 auto;
+  /* min-height:0 is what allows the two columns to scroll instead of the grid
+     growing past the viewport — a flex/grid child defaults to min-height:auto,
+     which refuses to shrink below its content. */
+  min-height: 0;
+  margin-top: 0;
+  align-items: stretch;
+}
+
+/* Each column scrolls on its own: a 170-entry navigator and a tall example
+   are both usable at once, which is the point of showing them together. */
+#behaviors-workspace:fullscreen .behaviors-search-results,
+#behaviors-workspace:fullscreen .behaviors-live {
+  min-height: 0;
+  max-height: none;
+  height: 100%;
+  overflow-y: auto;
+}

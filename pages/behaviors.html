@@ -9,6 +9,12 @@
   <p class="header-subtitle">170+ behaviors • Interactive demos • Copy-ready code</p>
   </div>
   </header>
+  <!-- #744 -- John: "when full screen show both navigator and the rendered side
+       plus the search elements." The workspace is the fullscreen target: search,
+       navigator and rendered side together. It deliberately starts BELOW the
+       hero title, so going fullscreen spends the screen on the three things
+       being used rather than on the page heading. -->
+  <div id="behaviors-workspace" class="behaviors-workspace">
   <div class="behaviors-search">
     <input type="search" id="behaviors-search" placeholder="Search behaviors — e.g. x-tooltip, x-toast — or just x- to see everything" aria-label="Search behaviors">
     <span id="behaviors-search-count" aria-live="polite"></span>
@@ -40,7 +46,7 @@
           class="behaviors-live__fullscreen"
           type="button"
           x-fullscreen
-          target="#behaviors-live-example"
+          target="#behaviors-workspace"
           label="&#9974; Fullscreen"></button>
       </header>
       <!-- #722 -- John: "When clicking fullscreen all of these elements go
@@ -89,6 +95,7 @@
       </details>
     </div>
   </div>
+  </div><!-- /#behaviors-workspace (#744) -->
 </div>
 <!-- #666: the per-category demo sections and their jump-nav were removed here.
      Every one of those 88 <wb-demo> blocks now lives in
