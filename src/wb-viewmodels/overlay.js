@@ -1,3 +1,4 @@
+import { readAttr } from '../core/read-attr.js';
 /**
  * Overlay Behaviors
  * -----------------------------------------------------------------------------
@@ -475,7 +476,7 @@ export function lightbox(element, options = {}) {
     // ('src')/element.src to fall back to, so config.src silently resolved
     // to '' and the lightbox <img> rendered with an empty src (#374). Same
     // class of bug as BUG-2024-12-19-001 in data/bug-registry.json.
-    src: options.src || element.dataset.src || element.getAttribute('src') || element.src || element.href || '',
+    src: options.src || readAttr(element, 'src') || element.getAttribute('src') || element.src || element.href || '',
     ...options
   };
 

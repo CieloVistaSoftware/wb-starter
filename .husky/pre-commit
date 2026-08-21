@@ -2,11 +2,21 @@
 # WB Starter Pre-commit Hook
 # Runs project-integrity tests before allowing commit
 
-echo "🏷  Bumping version..."
-npm version patch --no-git-tag-version --allow-same-version >/dev/null
-git add package.json package-lock.json
+# #743: the `npm version patch` that used to run here is GONE.
+#
+# It bumped on EVERY commit, which drove 3.0.36 -> 3.0.60 in two days with
+# nothing describing any of them, and stopped a release number identifying a
+# build at all: 3.0.55 named two different commits, 3.0.35 named forty, and
+# 3.0.56/58/59/60 never reached main. Worse, it turned this hook into
+# something to get around — 16 commits in one day used --no-verify purely to
+# dodge the bump, and every one of those skipped the checks below with it.
+# A hook people must bypass is not a gate.
+#
+# The version moves only when a release is cut, deliberately, with a What's
+# New entry naming it. Cache-busting keys off the version now, so it no longer
+# needs a per-commit token.
 
-echo "🏷  Stamping version..."
+echo "🏷  Stamping version (no bump — a release cuts the version)..."
 node scripts/stamp-version.js
 # stamp-version.js also bumps every ?v= cache-busting query string in
 # index.html/project-index.html to match — only version.js was ever
@@ -17,6 +27,48 @@ node scripts/stamp-version.js
 git add src/core/version.js index.html project-index.html
 
 echo "🔍 Running pre-commit checks..."
+
+# ── Full validation every 10th commit ────────────────────────────────────────
+# John: "after 10 fixes run the whole set of tests."
+#
+# Running the ~1hr matrix on every commit is a gate people disable; running it
+# never is how sticky.spec.ts sat failing since January while 20 releases
+# shipped over a red build. Ten is the compromise: fast checks every time, the
+# whole suite often enough that a regression cannot travel far.
+#
+# The counter lives in .git/ deliberately — a tracked file would change on
+# every commit, churn every diff, and conflict on every merge.
+COUNT_FILE="$(git rev-parse --git-dir)/wb-fix-count"
+COUNT=$(cat "$COUNT_FILE" 2>/dev/null || echo 0)
+COUNT=$((COUNT + 1))
+
+if [ "$COUNT" -ge 10 ]; then
+  echo ""
+  echo "🔁 $COUNT commits since the last full run — running the WHOLE suite"
+  echo "   (compliance + regression + behaviors)"
+  echo ""
+  FULL_FAILED=0
+  npx playwright test --project=compliance --reporter=line || FULL_FAILED=1
+  npx playwright test --project=regression --reporter=line || FULL_FAILED=1
+  npx playwright test --project=behaviors  --reporter=line || FULL_FAILED=1
+
+  if [ "$FULL_FAILED" -ne 0 ]; then
+    echo ""
+    echo "❌ FULL SUITE RED — commit blocked."
+    echo "   The counter is NOT reset, so the next commit runs it again."
+    echo "   Fixing it is the only way forward that does not hide it."
+    echo ""
+    exit 1
+  fi
+
+  echo ""
+  echo "✅ Full suite green — counter reset."
+  echo 0 > "$COUNT_FILE"
+else
+  echo "   ($COUNT/10 commits since the last full run)"
+  echo "$COUNT" > "$COUNT_FILE"
+fi
+
 
 # Run project integrity tests only — NOT `npm test` (the full multi-tier
 # matrix: compliance/regression/integration/base/behaviors, ~1hr). `npm test

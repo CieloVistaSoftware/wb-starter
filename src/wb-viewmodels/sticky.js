@@ -1,3 +1,4 @@
+import { readAttr } from '../core/read-attr.js';
 /**
  * Sticky Behavior
  * -----------------------------------------------------------------------------
@@ -31,9 +32,9 @@ export function sticky(element, options = {}) {
   // Config: plain attributes are canonical (Law 11); data-* kept as a
   // back-compat fallback only.
   const config = {
-    offset: parseInt(options.offset ?? element.getAttribute('offset') ?? element.dataset.offset ?? '0', 10),
-    zIndex: parseInt(options.zIndex ?? element.getAttribute('z-index') ?? element.dataset.zIndex ?? '100', 10),
-    threshold: options.threshold ?? element.getAttribute('threshold') ?? element.dataset.threshold ?? null,
+    offset: parseInt(options.offset ?? element.getAttribute('offset') ?? readAttr(element, 'offset') ?? '0', 10),
+    zIndex: parseInt(options.zIndex ?? element.getAttribute('z-index') ?? readAttr(element, 'zIndex') ?? '100', 10),
+    threshold: options.threshold ?? element.getAttribute('threshold') ?? readAttr(element, 'threshold') ?? null,
     stuckClass: options.class ?? element.getAttribute('class-name') ?? element.dataset.class ?? 'is-stuck',
     animate: options.animate !== false && (element.getAttribute('animate') !== 'false') && (element.dataset.animate !== 'false')
   };

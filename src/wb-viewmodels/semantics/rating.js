@@ -1,3 +1,4 @@
+import { readAttr } from '../../core/read-attr.js';
 /**
  * Rating Behavior
  * ===============
@@ -23,13 +24,13 @@ export function rating(element, options = {}) {
   const attr = (name) => element.getAttribute(name);
   const authoredValue = (element._wbOriginalSlot || element.textContent || '').trim();
   const config = {
-    max: parseInt(options.max || attr('max') || element.dataset.max || '5', 10),
-    value: parseInt(options.value || attr('value') || element.dataset.value || authoredValue || '0', 10),
-    readonly: options.readonly ?? (element.hasAttribute('readonly') || element.dataset.readonly === 'true'),
-    icon: options.icon || attr('icon') || element.dataset.icon || '★',
+    max: parseInt(options.max || attr('max') || readAttr(element, 'max') || '5', 10),
+    value: parseInt(options.value || attr('value') || readAttr(element, 'value') || authoredValue || '0', 10),
+    readonly: options.readonly ?? (element.hasAttribute('readonly') || readAttr(element, 'readonly') === 'true'),
+    icon: options.icon || attr('icon') || readAttr(element, 'icon') || '★',
     // Filled colour: theme's rating colour by default; override via color="…"
     // (e.g. color="var(--primary)" for blue). Empty colour from the theme too.
-    color: options.color || attr('color') || element.dataset.color || 'var(--rating-active-color, #fbbf24)',
+    color: options.color || attr('color') || readAttr(element, 'color') || 'var(--rating-active-color, #fbbf24)',
     emptyColor: options.emptyColor || attr('empty-color') || 'var(--border-color, #e5e7eb)',
     // rating.schema.json declares size (sm/md/lg, appliesClass:
     // "wb-rating--{{value}}"), but that's schema-builder's mechanism (never
@@ -37,7 +38,7 @@ export function rating(element, options = {}) {
     // attribute at all -- star font-size was unconditionally hardcoded
     // inline below regardless of size (confirmed live: size="sm"/"lg" both
     // rendered identical 1.5rem stars).
-    size: options.size || attr('size') || element.dataset.size || 'md',
+    size: options.size || attr('size') || readAttr(element, 'size') || 'md',
     ...options
   };
 

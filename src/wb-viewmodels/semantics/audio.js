@@ -1,3 +1,4 @@
+import { readFlag, readAttr } from '../../core/read-attr.js';
 /**
  * Audio - Enhanced <audio> element with 15-Band Graphic Equalizer
  * Premium audio player with Web Audio API EQ, presets, and master volume
@@ -52,16 +53,16 @@ export function audio(element, options = {}) {
     // despite each having a real, working <source src="...">).
     src: options.src || attr('src') || element.querySelector('source[src]')?.getAttribute('src') || '',
     controls: options.controls ?? attr('controls') !== 'false',
-    autoplay: options.autoplay ?? (element.hasAttribute('autoplay') || element.hasAttribute('data-autoplay')),
-    loop: options.loop ?? (element.hasAttribute('loop') || element.hasAttribute('data-loop')),
+    autoplay: options.autoplay ?? (element.hasAttribute('autoplay') || readFlag(element, 'autoplay')),
+    loop: options.loop ?? (element.hasAttribute('loop') || readFlag(element, 'loop')),
     volume: parseFloat(options.volume || attr('volume') || '0.8'),
     // #669 -- accept BOTH spellings. audio.schema.json publishes `showEq`,
     // this code only ever read `show-eq`, so the documented name silently did
     // nothing. Plain-first, data- fallback, matching the established pattern.
     showEq: options.showEq ?? (
       element.hasAttribute('show-eq') || element.hasAttribute('showeq') ||
-      element.hasAttribute('data-show-eq') ||
-      attr('show-eq') === 'true' || element.dataset.showEq === 'true'
+      readFlag(element, 'show-eq') ||
+      attr('show-eq') === 'true' || readAttr(element, 'showEq') === 'true'
     ),
     // #669 -- showDisplay and showPlayButton were declared in the schema and
     // read NOWHERE, so <audio showdisplay> did nothing at all (John reported

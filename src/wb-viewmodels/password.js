@@ -1,8 +1,9 @@
+import { readFlag } from '../core/read-attr.js';
 // Standalone password behavior extracted from enhancements.js
 export function password(element, options = {}) {
   const config = {
     toggle: options.toggle ?? element.getAttribute('toggle') !== 'false',
-    strength: options.strength ?? element.hasAttribute('data-strength'),
+    strength: options.strength ?? readFlag(element, 'strength'),
     ...options
   };
   if (!element.parentNode) {

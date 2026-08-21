@@ -1,3 +1,4 @@
+import { readAttr } from '../core/read-attr.js';
 /**
  * Progress Bar Behavior (DEPRECATED)
  * -----------------------------------------------------------------------------
@@ -15,12 +16,12 @@
  */
 export default function progressbar(element, options = {}) {
   const config = {
-    value: parseFloat(options.value || element.dataset.value || 0),
-    max: parseFloat(options.max || element.dataset.max || 100),
-    label: options.label || element.dataset.label || '',
-    variant: options.variant || element.dataset.variant || 'primary',
-    striped: options.striped ?? element.dataset.striped === 'true',
-    animated: options.animated ?? element.dataset.animated === 'true',
+    value: parseFloat(options.value || readAttr(element, 'value') || 0),
+    max: parseFloat(options.max || readAttr(element, 'max') || 100),
+    label: options.label || readAttr(element, 'label') || '',
+    variant: options.variant || readAttr(element, 'variant') || 'primary',
+    striped: options.striped ?? readAttr(element, 'striped') === 'true',
+    animated: options.animated ?? readAttr(element, 'animated') === 'true',
     ...options
   };
 

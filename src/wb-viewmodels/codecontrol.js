@@ -1,3 +1,4 @@
+import { readAttr } from '../core/read-attr.js';
 /**
  * Code Control Behavior
  * Custom Tag: <wb-codecontrol>
@@ -102,7 +103,7 @@ export function codecontrol(element, options = {}) {
         ? element.getAttribute('persist') !== 'false'
         : element.dataset.persist !== 'false'
     ),
-    size: options.size || element.getAttribute('size') || element.dataset.size || 'md',
+    size: options.size || element.getAttribute('size') || readAttr(element, 'size') || 'md',
     ...options
   };
 

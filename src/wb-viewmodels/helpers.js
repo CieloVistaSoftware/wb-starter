@@ -1,3 +1,4 @@
+import { readFlag, readAttr } from '../core/read-attr.js';
 /**
  * Utility Behaviors - Extended
  * -----------------------------------------------------------------------------
@@ -562,7 +563,7 @@ export function countdown(element, options = {}) {
     // and neither ever matched this function's `date` -- a three-way name
     // mismatch that always left config.date '' and silently fell through to
     // the unconditional 60s default below (#376).
-    date: options.date || element.getAttribute('date') || element.getAttribute('to') || element.dataset.to || '',
+    date: options.date || element.getAttribute('date') || element.getAttribute('to') || readAttr(element, 'to') || '',
     seconds: parseInt(options.seconds || element.getAttribute('seconds') || '0') || 0,
     format: options.format || element.getAttribute('format') || 'auto',
     ...options
@@ -819,7 +820,7 @@ export function debug(element, options = {}) {
   const config = {
     showErrors: options.showErrors ?? element.getAttribute('show-errors') !== 'false',
     showWarnings: options.showWarnings ?? element.getAttribute('show-warnings') !== 'false',
-    showLogs: options.showLogs ?? element.hasAttribute('data-show-logs'),
+    showLogs: options.showLogs ?? readFlag(element, 'show-logs'),
     maxMessages: parseInt(options.maxMessages || element.getAttribute('max-messages') || '50'),
     position: options.position || element.getAttribute('position') || 'bottom-right',
     ...options

@@ -1,3 +1,4 @@
+import { readFlag } from '../core/read-attr.js';
 /**
  * Collapse Behavior
  * -----------------------------------------------------------------------------
@@ -200,7 +201,7 @@ export function accordion(element, options = {}) {
     // v3: plain `accordion-title` is canonical; data-* accepted for back-compat.
     const sections = Array.from(element.children).filter(
       child => child.hasAttribute('accordion-title') ||
-        child.hasAttribute('data-accordion-title') || child.hasAttribute('data-title')
+        readFlag(child, 'accordion-title') || readFlag(child, 'title')
     );
 
     if (sections.length > 0) {

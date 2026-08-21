@@ -5,28 +5,28 @@
   "demoBlocks": 88,
   "examples": {
     "x-ripple": {
-      "source": "<button variant=\"primary\" x-ripple>Button example of a primary x-ripple</button>",
+      "source": "<button variant=\"primary\" x-ripple>\n  x-ripple · variant: primary\n</button>",
       "alternates": [
-        "<button variant=\"primary\" x-ripple>Click for Ripple</button>",
+        "<button variant=\"primary\" x-ripple>\n  x-ripple · variant: primary\n</button>",
         "<div x-ripple class=\"ripple-box\">Ripple on any element</div>"
       ]
     },
     "x-toast": {
-      "source": "<button variant=\"primary\" x-toast message=\"Action completed!\" toast-variant=\"success\">Button example of a primary x-toast</button>",
+      "source": "<button variant=\"primary\" x-toast message=\"Action completed!\" toast-variant=\"success\">\n  x-toast · variant: primary · message: Action completed! · toast-variant: success\n</button>",
       "alternates": [
-        "<button variant=\"primary\" x-toast message=\"Info message\" toast-variant=\"info\">Info Toast</button>",
-        "<button variant=\"primary\" x-toast message=\"Success!\" toast-variant=\"success\">Success Toast</button>",
-        "<button variant=\"primary\" x-toast message=\"Warning!\" toast-variant=\"warning\">Warning Toast</button>",
-        "<button variant=\"primary\" x-toast message=\"Error!\" toast-variant=\"error\">Error Toast</button>"
+        "<button variant=\"primary\" x-toast message=\"Info message\" toast-variant=\"info\">\n  x-toast · variant: primary · message: Info message · toast-variant: info\n</button>",
+        "<button variant=\"primary\" x-toast message=\"Success!\" toast-variant=\"success\">\n  x-toast · variant: primary · message: Success! · toast-variant: success\n</button>",
+        "<button variant=\"primary\" x-toast message=\"Warning!\" toast-variant=\"warning\">\n  x-toast · variant: primary · message: Warning! · toast-variant: warning\n</button>",
+        "<button variant=\"primary\" x-toast message=\"Error!\" toast-variant=\"error\">\n  x-toast · variant: primary · message: Error! · toast-variant: error\n</button>"
       ]
     },
     "x-tooltip": {
-      "source": "<button variant=\"primary\" x-tooltip=\"Helpful hint!\" position=\"top\">Button example of a primary x-tooltip</button>",
+      "source": "<button variant=\"primary\" x-tooltip=\"Helpful hint!\" position=\"top\">\n  x-tooltip · variant: primary · position: top\n</button>",
       "alternates": [
-        "<button variant=\"secondary\" x-tooltip=\"Top tooltip\" position=\"top\">Top</button>",
-        "<button variant=\"secondary\" x-tooltip=\"Bottom tooltip\" position=\"bottom\">Bottom</button>",
-        "<button variant=\"secondary\" x-tooltip=\"Left tooltip\" position=\"left\">Left</button>",
-        "<button variant=\"secondary\" x-tooltip=\"Right tooltip\" position=\"right\">Right</button>"
+        "<button variant=\"secondary\" x-tooltip=\"Top tooltip\" position=\"top\">\n  x-tooltip · variant: secondary · position: top\n</button>",
+        "<button variant=\"secondary\" x-tooltip=\"Bottom tooltip\" position=\"bottom\">\n  x-tooltip · variant: secondary · position: bottom\n</button>",
+        "<button variant=\"secondary\" x-tooltip=\"Left tooltip\" position=\"left\">\n  x-tooltip · variant: secondary · position: left\n</button>",
+        "<button variant=\"secondary\" x-tooltip=\"Right tooltip\" position=\"right\">\n  x-tooltip · variant: secondary · position: right\n</button>"
       ]
     },
     "x-password": {
@@ -62,21 +62,21 @@
       ]
     },
     "x-popover": {
-      "source": "<button variant=\"primary\" x-popover popover-title=\"Popover Title\" popover-content=\"This is additional information displayed in a popover.\">Button example of a primary x-popover</button>",
+      "source": "<button variant=\"primary\" x-popover popover-title=\"Popover Title\" popover-content=\"This is additional information displayed in a popover.\">\n  x-popover · variant: primary · popover-title: Popover Title · popover-content: This is additional information displayed in a popover.\n</button>",
       "alternates": []
     },
     "x-confirm": {
-      "source": "<button variant=\"primary\" x-confirm confirm-title=\"Confirm Action\" confirm-message=\"Are you sure you want to proceed?\">Button example of a primary x-confirm</button>",
+      "source": "<button variant=\"primary\" x-confirm confirm-title=\"Confirm Action\" confirm-message=\"Are you sure you want to proceed?\">\n  x-confirm · variant: primary · confirm-title: Confirm Action · confirm-message: Are you sure you want to proceed?\n</button>",
       "alternates": []
     },
     "x-prompt": {
-      "source": "<button variant=\"primary\" x-prompt prompt-title=\"Enter Value\" prompt-message=\"Please enter your name:\">Button example of a primary x-prompt</button>",
+      "source": "<button variant=\"primary\" x-prompt prompt-title=\"Enter Value\" prompt-message=\"Please enter your name:\">\n  x-prompt · variant: primary · prompt-title: Enter Value · prompt-message: Please enter your name:\n</button>",
       "alternates": []
     },
     "x-lightbox": {
-      "source": "<button variant=\"primary\" x-lightbox src=\"https://picsum.photos/1200/800?r=lb1\">Button example of a primary x-lightbox</button>",
+      "source": "<button variant=\"primary\" x-lightbox src=\"https://picsum.photos/1200/800?r=lb1\">\n  x-lightbox · variant: primary · src: https://picsum.photos/1200/800?r=lb1\n</button>",
       "alternates": [
-        "<button variant=\"primary\" x-lightbox src=\"https://picsum.photos/1200/800?r=lb2\">View Image 2</button>"
+        "<button variant=\"primary\" x-lightbox src=\"https://picsum.photos/1200/800?r=lb2\">\n  x-lightbox · variant: primary · src: https://picsum.photos/1200/800?r=lb2\n</button>"
       ]
     },
     "x-breadcrumb": {
@@ -96,13 +96,16 @@
       "alternates": []
     },
     "x-kbd": {
-      "source": "<p>Press <span x-kbd>Ctrl</span> + <span x-kbd>S</span> to save, or <span x-kbd>⌘</span> + <span x-kbd>K</span> on Mac.</p>",
-      "alternates": []
+      "source": "<p>Press <kbd>Ctrl</kbd> + <kbd>S</kbd> to save.</p>",
+      "alternates": [
+        "<p>Press <span x-kbd>Ctrl</span> + <span x-kbd>S</span> to save, or <span x-kbd>⌘</span> + <span x-kbd>K</span> on Mac.</p>"
+      ]
     },
     "x-image": {
       "source": "<img src=\"https://picsum.photos/200/150?r=enh1\" alt=\"Lazy loaded\" lazy class=\"demo-image\">",
       "alternates": [
-        "<img src=\"https://picsum.photos/200/150?r=enh2\" alt=\"Zoomable\" zoomable class=\"demo-image\">"
+        "<img src=\"https://picsum.photos/200/150?r=enh2\" alt=\"Zoomable\" zoomable class=\"demo-image\">",
+        "<div x-image src=\"https://picsum.photos/200/150?r=enh1\" alt=\"Lazy loaded\" lazy class=\"demo-image\"></div>"
       ]
     },
     "x-gallery": {
@@ -114,96 +117,96 @@
       "alternates": []
     },
     "x-bounce": {
-      "source": "<button class=\"effect-demo\" x-bounce>Button example of x-bounce</button>",
+      "source": "<button class=\"effect-demo\" x-bounce>\n  x-bounce\n</button>",
       "alternates": []
     },
     "x-shake": {
-      "source": "<button class=\"effect-demo\" x-shake>Button example of x-shake</button>",
+      "source": "<button class=\"effect-demo\" x-shake>\n  x-shake\n</button>",
       "alternates": []
     },
     "x-pulse": {
-      "source": "<button class=\"effect-demo\" x-pulse>Button example of x-pulse</button>",
+      "source": "<button class=\"effect-demo\" x-pulse>\n  x-pulse\n</button>",
       "alternates": []
     },
     "x-flash": {
-      "source": "<button class=\"effect-demo\" x-flash>Button example of x-flash</button>",
+      "source": "<button class=\"effect-demo\" x-flash>\n  x-flash\n</button>",
       "alternates": []
     },
     "x-tada": {
-      "source": "<button class=\"effect-demo\" x-tada>Button example of x-tada</button>",
+      "source": "<button class=\"effect-demo\" x-tada>\n  x-tada\n</button>",
       "alternates": []
     },
     "x-wobble": {
-      "source": "<button class=\"effect-demo\" x-wobble>Button example of x-wobble</button>",
+      "source": "<button class=\"effect-demo\" x-wobble>\n  x-wobble\n</button>",
       "alternates": []
     },
     "x-jello": {
-      "source": "<button class=\"effect-demo\" x-jello>Button example of x-jello</button>",
+      "source": "<button class=\"effect-demo\" x-jello>\n  x-jello\n</button>",
       "alternates": []
     },
     "x-heartbeat": {
-      "source": "<button class=\"effect-demo\" x-heartbeat>Button example of x-heartbeat</button>",
+      "source": "<button class=\"effect-demo\" x-heartbeat>\n  x-heartbeat\n</button>",
       "alternates": []
     },
     "x-fadein": {
-      "source": "<button class=\"effect-demo\" x-fadein>Button example of x-fadein</button>",
+      "source": "<button class=\"effect-demo\" x-fadein>\n  x-fadein\n</button>",
       "alternates": []
     },
     "x-slidein": {
-      "source": "<button class=\"effect-demo\" x-slidein direction=\"left\">Button example of x-slidein</button>",
+      "source": "<button class=\"effect-demo\" x-slidein direction=\"left\">\n  x-slidein · direction: left\n</button>",
       "alternates": [
-        "<button class=\"effect-demo\" x-slidein direction=\"right\">Slidein Right</button>",
-        "<button class=\"effect-demo\" x-slidein direction=\"up\">Slidein Up</button>"
+        "<button class=\"effect-demo\" x-slidein direction=\"right\">\n  x-slidein · direction: right\n</button>",
+        "<button class=\"effect-demo\" x-slidein direction=\"up\">\n  x-slidein · direction: up\n</button>"
       ]
     },
     "x-zoomin": {
-      "source": "<button class=\"effect-demo\" x-zoomin>Button example of x-zoomin</button>",
+      "source": "<button class=\"effect-demo\" x-zoomin>\n  x-zoomin\n</button>",
       "alternates": []
     },
     "x-flip": {
-      "source": "<button class=\"effect-demo\" x-flip>Button example of x-flip</button>",
+      "source": "<button class=\"effect-demo\" x-flip>\n  x-flip\n</button>",
       "alternates": []
     },
     "x-confetti": {
-      "source": "<button variant=\"primary\" x-confetti>Button example of a primary x-confetti</button>",
+      "source": "<button variant=\"primary\" x-confetti>\n  x-confetti · variant: primary\n</button>",
       "alternates": []
     },
     "x-fireworks": {
-      "source": "<button variant=\"primary\" x-fireworks>Button example of a primary x-fireworks</button>",
+      "source": "<button variant=\"primary\" x-fireworks>\n  x-fireworks · variant: primary\n</button>",
       "alternates": []
     },
     "x-snow": {
-      "source": "<button variant=\"primary\" x-snow>Button example of a primary x-snow</button>",
+      "source": "<button variant=\"primary\" x-snow>\n  x-snow · variant: primary\n</button>",
       "alternates": []
     },
     "x-sparkle": {
-      "source": "<button variant=\"primary\" x-sparkle>Button example of a primary x-sparkle</button>",
+      "source": "<button variant=\"primary\" x-sparkle>\n  x-sparkle · variant: primary\n</button>",
       "alternates": []
     },
     "x-glow": {
-      "source": "<button variant=\"primary\" x-glow>Button example of a primary x-glow</button>",
+      "source": "<button variant=\"primary\" x-glow>\n  x-glow · variant: primary\n</button>",
       "alternates": []
     },
     "x-rainbow": {
-      "source": "<button variant=\"primary\" x-rainbow>Button example of a primary x-rainbow</button>",
+      "source": "<button variant=\"primary\" x-rainbow>\n  x-rainbow · variant: primary\n</button>",
       "alternates": []
     },
     "x-copy": {
-      "source": "<button variant=\"primary\" x-copy copy-text=\"Text copied to clipboard!\">Button example of a primary x-copy</button>",
+      "source": "<button variant=\"primary\" x-copy copy-text=\"Text copied to clipboard!\">\n  x-copy · variant: primary · copy-text: Text copied to clipboard!\n</button>",
       "alternates": [
-        "<button variant=\"primary\" x-copy copy-text=\"npm install wb-framework\">📋 Copy Command</button>"
+        "<button variant=\"primary\" x-copy copy-text=\"npm install wb-framework\">\n  x-copy · variant: primary · copy-text: npm install wb-framework\n</button>"
       ]
     },
     "x-share": {
-      "source": "<button variant=\"secondary\" x-share share-title=\"wb-starter\" share-url=\"https://example.com\">Button example of a secondary x-share</button>",
+      "source": "<button variant=\"secondary\" x-share share-title=\"wb-starter\" share-url=\"https://example.com\">\n  x-share · variant: secondary · share-title: wb-starter · share-url: https://example.com\n</button>",
       "alternates": []
     },
     "x-print": {
-      "source": "<button variant=\"secondary\" x-print>Button example of a secondary x-print</button>",
+      "source": "<button variant=\"secondary\" x-print>\n  x-print · variant: secondary\n</button>",
       "alternates": []
     },
     "x-fullscreen": {
-      "source": "<button variant=\"secondary\" x-fullscreen>Button example of a secondary x-fullscreen</button>",
+      "source": "<button variant=\"secondary\" x-fullscreen>\n  x-fullscreen · variant: secondary\n</button>",
       "alternates": []
     },
     "x-clock": {
@@ -219,7 +222,7 @@
       "alternates": []
     },
     "x-darkmode": {
-      "source": "<button variant=\"primary\" x-darkmode>Button example of a primary x-darkmode</button>",
+      "source": "<button variant=\"primary\" x-darkmode>\n  x-darkmode · variant: primary\n</button>",
       "alternates": []
     },
     "x-truncate": {
@@ -228,26 +231,34 @@
     },
     "x-table": {
       "source": "<table\n  headers=\"Component,Behavior,Variants\"\n  rows=\"[[&quot;alert&quot;,&quot;alert&quot;,&quot;4&quot;],[&quot;badge&quot;,&quot;badge&quot;,&quot;9&quot;],[&quot;button&quot;,&quot;button&quot;,&quot;8&quot;],[&quot;card&quot;,&quot;card&quot;,&quot;4&quot;],[&quot;code&quot;,&quot;code&quot;,&quot;12&quot;],[&quot;dialog&quot;,&quot;dialog&quot;,&quot;3&quot;],[&quot;details&quot;,&quot;details&quot;,&quot;2&quot;],[&quot;audio&quot;,&quot;audio&quot;,&quot;6&quot;],[&quot;table&quot;,&quot;table&quot;,&quot;5&quot;],[&quot;tabs&quot;,&quot;tabs&quot;,&quot;3&quot;],[&quot;toast&quot;,&quot;toast&quot;,&quot;4&quot;],[&quot;tooltip&quot;,&quot;tooltip&quot;,&quot;4&quot;]]\">\n</table>",
-      "alternates": []
+      "alternates": [
+        "<div x-table\n  headers=\"Component,Behavior,Variants\"\n  rows=\"[[&quot;alert&quot;,&quot;alert&quot;,&quot;4&quot;],[&quot;badge&quot;,&quot;badge&quot;,&quot;9&quot;],[&quot;button&quot;,&quot;button&quot;,&quot;8&quot;],[&quot;card&quot;,&quot;card&quot;,&quot;4&quot;],[&quot;code&quot;,&quot;code&quot;,&quot;12&quot;],[&quot;dialog&quot;,&quot;dialog&quot;,&quot;3&quot;],[&quot;details&quot;,&quot;details&quot;,&quot;2&quot;],[&quot;audio&quot;,&quot;audio&quot;,&quot;6&quot;],[&quot;table&quot;,&quot;table&quot;,&quot;5&quot;],[&quot;tabs&quot;,&quot;tabs&quot;,&quot;3&quot;],[&quot;toast&quot;,&quot;toast&quot;,&quot;4&quot;],[&quot;tooltip&quot;,&quot;tooltip&quot;,&quot;4&quot;]]\">\n</div>"
+      ]
     },
     "x-details": {
       "source": "<details summary=\"Details sample of Trail conditions\" animated>\n  <img src=\"https://picsum.photos/seed/details/480/200\" alt=\"Trail through autumn woodland\" width=\"480\" height=\"200\">\n  <p>Open to show the summary text is authored via the <code>summary</code>\n     attribute — it reads \"Details\" only when none is set.</p>\n</details>",
-      "alternates": []
+      "alternates": [
+        "<div x-details summary=\"Details sample of Trail conditions\" animated>\n  <img src=\"https://picsum.photos/seed/details/480/200\" alt=\"Trail through autumn woodland\" width=\"480\" height=\"200\">\n  <p>Open to show the summary text is authored via the <code>summary</code>\n     attribute — it reads \"Details\" only when none is set.</p>\n</div>"
+      ]
     },
     "x-code": {
       "source": "<code language=\"javascript\">\n// Debounce — delay a call until the caller stops firing.\nexport function debounce(fn, wait = 200) {\n  let timer = null;\n  return function debounced(...args) {\n    clearTimeout(timer);\n    timer = setTimeout(() =&gt; fn.apply(this, args), wait);\n  };\n}\n\n// Throttle — run at most once per interval.\nexport function throttle(fn, interval = 100) {\n  let last = 0;\n  return function throttled(...args) {\n    const now = Date.now();\n    if (now - last &lt; interval) return;\n    last = now;\n    return fn.apply(this, args);\n  };\n}\n\nconst onResize = debounce(() =&gt; {\n  const { innerWidth: w, innerHeight: h } = window;\n  console.log(`viewport ${w}x${h}`);\n}, 250);\n\nwindow.addEventListener('resize', onResize);\n</code>",
-      "alternates": []
+      "alternates": [
+        "<div x-code language=\"javascript\">\n// Debounce — delay a call until the caller stops firing.\nexport function debounce(fn, wait = 200) {\n  let timer = null;\n  return function debounced(...args) {\n    clearTimeout(timer);\n    timer = setTimeout(() =&gt; fn.apply(this, args), wait);\n  };\n}\n\n// Throttle — run at most once per interval.\nexport function throttle(fn, interval = 100) {\n  let last = 0;\n  return function throttled(...args) {\n    const now = Date.now();\n    if (now - last &lt; interval) return;\n    last = now;\n    return fn.apply(this, args);\n  };\n}\n\nconst onResize = debounce(() =&gt; {\n  const { innerWidth: w, innerHeight: h } = window;\n  console.log(`viewport ${w}x${h}`);\n}, 250);\n\nwindow.addEventListener('resize', onResize);\n</div>"
+      ]
     },
     "x-dropdown": {
-      "source": "<div x-dropdown label=\"Assign to\">\n  <button type=\"button\"><img src=\"https://picsum.photos/seed/ada/28/28\" alt=\"\" width=\"28\" height=\"28\"> Button example of x-dropdown</button>\n  <button type=\"button\"><img src=\"https://picsum.photos/seed/grace/28/28\" alt=\"\" width=\"28\" height=\"28\"> Grace Hopper</button>\n  <button type=\"button\"><img src=\"https://picsum.photos/seed/alan/28/28\" alt=\"\" width=\"28\" height=\"28\"> Alan Turing</button>\n  <button type=\"button\"><img src=\"https://picsum.photos/seed/katherine/28/28\" alt=\"\" width=\"28\" height=\"28\"> Katherine Johnson</button>\n  <button type=\"button\">Invite someone…</button>\n</div>",
+      "source": "<div x-dropdown label=\"Assign to\">\n  <button type=\"button\"><img src=\"https://picsum.photos/seed/ada/28/28\" alt=\"\" width=\"28\" height=\"28\"> Button example of x-dropdown</button>\n  <button type=\"button\"><img src=\"https://picsum.photos/seed/grace/28/28\" alt=\"\" width=\"28\" height=\"28\"> Grace Hopper</button>\n  <button type=\"button\"><img src=\"https://picsum.photos/seed/alan/28/28\" alt=\"\" width=\"28\" height=\"28\"> Alan Turing</button>\n  <button type=\"button\"><img src=\"https://picsum.photos/seed/katherine/28/28\" alt=\"\" width=\"28\" height=\"28\"> Katherine Johnson</button>\n  <button type=\"button\">\n  type: button\n</button>\n</div>",
       "alternates": [
         "<div x-dropdown items=\"Profile,Settings,Billing,Team,Sign out\" label=\"Account\"></div>",
-        "<div x-dropdown label=\"Opens upward\" position=\"top-start\">\n  <button type=\"button\"><img src=\"https://picsum.photos/seed/ada/28/28\" alt=\"\" width=\"28\" height=\"28\"> Ada Lovelace</button>\n  <button type=\"button\"><img src=\"https://picsum.photos/seed/grace/28/28\" alt=\"\" width=\"28\" height=\"28\"> Grace Hopper</button>\n  <button type=\"button\"><img src=\"https://picsum.photos/seed/alan/28/28\" alt=\"\" width=\"28\" height=\"28\"> Alan Turing</button>\n  <button type=\"button\">Invite someone…</button>\n</div>"
+        "<div x-dropdown label=\"Opens upward\" position=\"top-start\">\n  <button type=\"button\"><img src=\"https://picsum.photos/seed/ada/28/28\" alt=\"\" width=\"28\" height=\"28\"> Ada Lovelace</button>\n  <button type=\"button\"><img src=\"https://picsum.photos/seed/grace/28/28\" alt=\"\" width=\"28\" height=\"28\"> Grace Hopper</button>\n  <button type=\"button\"><img src=\"https://picsum.photos/seed/alan/28/28\" alt=\"\" width=\"28\" height=\"28\"> Alan Turing</button>\n  <button type=\"button\">\n  type: button\n</button>\n</div>"
       ]
     },
     "x-card": {
       "source": "<article title=\"Trailhead access\" subtitle=\"Updated this morning\" elevated>\n  The north gate is open. Parking fills by 9am on weekends — the overflow lot adds\n  about ten minutes on foot.\n</article>",
-      "alternates": []
+      "alternates": [
+        "<div x-card title=\"Trailhead access\" subtitle=\"Updated this morning\" elevated>\n  The north gate is open. Parking fills by 9am on weekends — the overflow lot adds\n  about ten minutes on foot.\n</div>"
+      ]
     },
     "x-cardbutton": {
       "source": "<article x-cardbutton\n  title=\"Upgrade to Team\"\n  content=\"Shared workspaces, audit history and SSO.\"\n  primary=\"Start free trial\"\n  secondary=\"Compare plans\"></article>",
@@ -326,8 +337,10 @@
       "alternates": []
     },
     "x-button": {
-      "source": "<button variant=\"primary\" icon=\"download\" size=\"md\">\n  Button example of a primary button</button>",
-      "alternates": []
+      "source": "<button variant=\"primary\" icon=\"download\" size=\"md\">\n  variant: primary · icon: download · size: md\n</button>",
+      "alternates": [
+        "<div x-button variant=\"primary\" icon=\"download\" size=\"md\">\n  variant: primary · icon: download · size: md\n</div>"
+      ]
     },
     "x-badge": {
       "source": "<span x-badge label=\"Beta\" variant=\"warning\" pill></span>",
@@ -351,7 +364,9 @@
     },
     "x-progress": {
       "source": "<progress value=\"72\" max=\"100\" label=\"Uploading footage\" show-value></progress>",
-      "alternates": []
+      "alternates": [
+        "<div x-progress value=\"72\" max=\"100\" label=\"Uploading footage\" show-value></div>"
+      ]
     },
     "x-progressbar": {
       "source": "<progress x-progressbar value=\"72\" max=\"100\" label=\"Uploading footage\" show-value></progress>",
@@ -367,11 +382,15 @@
     },
     "x-header": {
       "source": "<header title=\"Field notes\" subtitle=\"Everything that happened this week\" badge=\"New\"></header>",
-      "alternates": []
+      "alternates": [
+        "<div x-header title=\"Field notes\" subtitle=\"Everything that happened this week\" badge=\"New\"></div>"
+      ]
     },
     "x-footer": {
       "source": "<footer brand=\"Cielo Vista Software\" copyright=\"2026\" links=\"Privacy,Terms,Status\"></footer>",
-      "alternates": []
+      "alternates": [
+        "<div x-footer brand=\"Cielo Vista Software\" copyright=\"2026\" links=\"Privacy,Terms,Status\"></div>"
+      ]
     },
     "x-navbar": {
       "source": "<nav x-navbar brand=\"wb-starter\" brand-href=\"#\" tagline=\"Zero build\"></nav>",
@@ -382,11 +401,13 @@
       "alternates": []
     },
     "x-dialog": {
-      "source": "<button x-dialog title=\"Delete branch?\" content=\"fix/706-dropdown will be removed. This cannot be undone.\" size=\"md\">Button example of x-dialog</button>",
-      "alternates": []
+      "source": "<dialog open\n  title=\"Delete branch?\"\n  content=\"fix/706-dropdown will be removed. This cannot be undone.\"\n  size=\"md\"></dialog>",
+      "alternates": [
+        "<button x-dialog title=\"Delete branch?\" content=\"fix/706-dropdown will be removed. This cannot be undone.\" size=\"md\">\n  x-dialog · title: Delete branch? · content: fix/706-dropdown will be removed. This cannot be undone. · size: md\n</button>"
+      ]
     },
     "x-drawer": {
-      "source": "<button x-drawer title=\"Filters\" content=\"Status, owner, label and date range live here.\" position=\"end\" width=\"320px\">Button example of x-drawer</button>",
+      "source": "<button x-drawer title=\"Filters\" content=\"Status, owner, label and date range live here.\" position=\"end\" width=\"320px\">\n  x-drawer · title: Filters · content: Status, owner, label and date range live here. · position: end · width: 320px\n</button>",
       "alternates": []
     },
     "x-accordion": {
@@ -394,16 +415,22 @@
       "alternates": []
     },
     "x-input": {
-      "source": "<div x-input label=\"Repository\" placeholder=\"owner/name\" name=\"repo\" input-type=\"text\"></div>",
-      "alternates": []
+      "source": "<input\n  variant=\"error\"\n  placeholder=\"owner/name\"\n  name=\"repo\"\n  type=\"text\">",
+      "alternates": [
+        "<div x-input label=\"Repository\" placeholder=\"owner/name\" name=\"repo\" input-type=\"text\"></div>"
+      ]
     },
     "x-textarea": {
-      "source": "<div x-textarea label=\"Release notes\" placeholder=\"What changed?\" name=\"notes\" rows=\"4\"></div>",
-      "alternates": []
+      "source": "<textarea\n  placeholder=\"What changed in this release?\"\n  name=\"notes\"\n  rows=\"3\"></textarea>",
+      "alternates": [
+        "<div x-textarea label=\"Release notes\" placeholder=\"What changed?\" name=\"notes\" rows=\"4\"></div>"
+      ]
     },
     "x-select": {
-      "source": "<div x-select label=\"Branch\" name=\"branch\" options=\"main,develop,fix/706-dropdown\" value=\"main\"></div>",
-      "alternates": []
+      "source": "<select name=\"branch\">\n  <option value=\"main\">main</option>\n  <option value=\"develop\">develop</option>\n  <option value=\"fix/706-dropdown\">fix/706-dropdown</option>\n</select>",
+      "alternates": [
+        "<div x-select label=\"Branch\" name=\"branch\" options=\"main,develop,fix/706-dropdown\" value=\"main\"></div>"
+      ]
     },
     "x-checkbox": {
       "source": "<div x-checkbox label=\"Run the full suite before pushing\" name=\"full-suite\" checked></div>",
@@ -422,8 +449,10 @@
       "alternates": []
     },
     "x-form": {
-      "source": "<form validate ajax action=\"/api/demo-form\" successMessage=\"Sent — check the events panel below.\">\n  <label>Email <input type=\"email\" name=\"email\" required placeholder=\"you@example.com\"></label>\n  <label>Message <textarea name=\"message\" rows=\"3\" required></textarea></label>\n  <button type=\"submit\">Button example of x-form</button>\n</form>",
-      "alternates": []
+      "source": "<form validate ajax action=\"/api/demo-form\" successMessage=\"Sent — check the events panel below.\">\n  <label>Email <input type=\"email\" name=\"email\" required placeholder=\"you@example.com\"></label>\n  <label>Message <textarea name=\"message\" rows=\"3\" required></textarea></label>\n  <button type=\"submit\">\n  type: submit\n</button>\n</form>",
+      "alternates": [
+        "<div x-form validate ajax action=\"/api/demo-form\" successMessage=\"Sent — check the events panel below.\">\n  <label>Email <input type=\"email\" name=\"email\" required placeholder=\"you@example.com\"></label>\n  <label>Message <textarea name=\"message\" rows=\"3\" required></textarea></label>\n  <button type=\"submit\">\n  type: submit\n</button>\n</div>"
+      ]
     },
     "x-formrow": {
       "source": "<div x-formrow inline>\n  <input type=\"text\" placeholder=\"City\">\n  <input type=\"text\" placeholder=\"ZIP code\">\n</div>",
@@ -431,10 +460,12 @@
     },
     "x-fieldset": {
       "source": "<fieldset collapsible>\n  <legend>Notification settings</legend>\n  <label><input type=\"checkbox\" checked> Build finished</label>\n  <label><input type=\"checkbox\"> Nightly audit</label>\n</fieldset>",
-      "alternates": []
+      "alternates": [
+        "<div x-fieldset collapsible>\n  <legend>Notification settings</legend>\n  <label><input type=\"checkbox\" checked> Build finished</label>\n  <label><input type=\"checkbox\"> Nightly audit</label>\n</div>"
+      ]
     },
     "x-inputgroup": {
-      "source": "<div x-inputgroup>\n  <span>https://</span>\n  <input type=\"text\" placeholder=\"your-site.io\">\n  <button type=\"button\">Button example of x-inputgroup</button>\n</div>",
+      "source": "<div x-inputgroup>\n  <span>https://</span>\n  <input type=\"text\" placeholder=\"your-site.io\">\n  <button type=\"button\">\n  type: button\n</button>\n</div>",
       "alternates": []
     },
     "x-floatinglabel": {
@@ -455,7 +486,9 @@
     },
     "x-label": {
       "source": "<label required label-position=\"top\">Deploy key</label>",
-      "alternates": []
+      "alternates": [
+        "<div x-label required label-position=\"top\">Deploy key</div>"
+      ]
     },
     "x-autocomplete": {
       "source": "<input x-autocomplete items=\"main,develop,release/3.0,fix/706-dropdown,docs/behaviors\" placeholder=\"Find a branch…\">",
@@ -498,16 +531,20 @@
       "alternates": []
     },
     "x-demo": {
-      "source": "<div x-demo columns=\"2\">\n  <button>Button example of x-demo</button>\n  <button>Two</button>\n</div>",
+      "source": "<div x-demo columns=\"2\">\n  <button>\n  no attributes\n</button>\n  <button>\n  no attributes\n</button>\n</div>",
       "alternates": []
     },
     "x-audio": {
-      "source": "<div x-audio src=\"/demos/sample.wav\" volume=\"0.8\"></div>",
-      "alternates": []
+      "source": "<audio src=\"/demos/sample.wav\" controls></audio>",
+      "alternates": [
+        "<div x-audio src=\"/demos/sample.wav\" volume=\"0.8\"></div>"
+      ]
     },
     "x-video": {
       "source": "<video src=\"/demos/sample.mp4\" poster=\"https://picsum.photos/seed/screening/640/360\" controls></video>",
-      "alternates": []
+      "alternates": [
+        "<div x-video src=\"/demos/sample.mp4\" poster=\"https://picsum.photos/seed/screening/640/360\" controls></div>"
+      ]
     },
     "x-img": {
       "source": "<img x-img src=\"https://picsum.photos/seed/lens/480/320\" alt=\"Prime lens on a wooden desk\">",
@@ -515,7 +552,9 @@
     },
     "x-figure": {
       "source": "<figure>\n  <img src=\"https://picsum.photos/seed/bridge/480/300\" alt=\"Suspension bridge in fog\">\n  <figcaption>The 6am crossing, before the fog lifted.</figcaption>\n</figure>",
-      "alternates": []
+      "alternates": [
+        "<div x-figure>\n  <img src=\"https://picsum.photos/seed/bridge/480/300\" alt=\"Suspension bridge in fog\">\n  <figcaption>The 6am crossing, before the fog lifted.</figcaption>\n</div>"
+      ]
     },
     "x-vimeo": {
       "source": "<div x-vimeo video-id=\"76979871\"></div>",
@@ -523,11 +562,15 @@
     },
     "x-pre": {
       "source": "<pre>npm run test:compliance\n  7591 passed\n     82 failed</pre>",
-      "alternates": []
+      "alternates": [
+        "<div x-pre>npm run test:compliance\n  7591 passed\n     82 failed</div>"
+      ]
     },
     "x-mark": {
       "source": "<p>Search matched <mark>light DOM</mark> in 12 documents.</p>",
-      "alternates": []
+      "alternates": [
+        "<div x-mark>light DOM</div>"
+      ]
     },
     "x-typewriter": {
       "source": "<p x-typewriter speed=\"45\">Zero build. Real components. Light DOM only.</p>",
@@ -554,15 +597,15 @@
       "alternates": []
     },
     "x-copybutton": {
-      "source": "<button x-copybutton copy-target=\"#wb-ex-copy-source\">Button example of x-copybutton</button>\n<code id=\"wb-ex-copy-source\">npm run test:compliance</code>",
+      "source": "<button x-copybutton copy-target=\"#wb-ex-copy-source\">\n  x-copybutton · copy-target: #wb-ex-copy-source\n</button>\n<code id=\"wb-ex-copy-source\">npm run test:compliance</code>",
       "alternates": []
     },
     "x-notify": {
-      "source": "<button x-notify message=\"Deploy finished — staging is live.\" variant=\"success\">Button example of a success x-notify</button>",
+      "source": "<button x-notify message=\"Deploy finished — staging is live.\" variant=\"success\">\n  x-notify · message: Deploy finished — staging is live. · variant: success\n</button>",
       "alternates": []
     },
     "x-toggle": {
-      "source": "<button x-toggle target=\"#wb-ex-toggle-panel\">Button example of x-toggle</button>\n<div id=\"wb-ex-toggle-panel\">The panel this button toggles.</div>",
+      "source": "<button x-toggle target=\"#wb-ex-toggle-panel\">\n  x-toggle · target: #wb-ex-toggle-panel\n</button>\n<div id=\"wb-ex-toggle-panel\">The panel this button toggles.</div>",
       "alternates": []
     },
     "x-globe": {
@@ -598,7 +641,7 @@
       "alternates": []
     },
     "x-move": {
-      "source": "<button x-move distance=\"120px\" duration=\"0.6s\">Button example of x-move</button>",
+      "source": "<button x-move distance=\"120px\" duration=\"0.6s\">\n  x-move · distance: 120px · duration: 0.6s\n</button>",
       "alternates": []
     },
     "x-release": {

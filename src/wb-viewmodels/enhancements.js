@@ -1,3 +1,4 @@
+import { readFlag } from '../core/read-attr.js';
 /**
  * Form Enhancement Behaviors
  * -----------------------------------------------------------------------------
@@ -18,7 +19,7 @@
  */
 export function form(element, options = {}) {
   const config = {
-    ajax: options.ajax ?? element.hasAttribute('data-ajax'),
+    ajax: options.ajax ?? readFlag(element, 'ajax'),
     validate: options.validate ?? element.getAttribute('validate') !== 'false',
     ...options
   };
@@ -62,8 +63,8 @@ export function fieldset(element, options = {}) {
     // #697: the plain attribute is the v3 form (TIER1-LAWS 11). data-collapsible
     // is kept as a fallback so markup already authored against it keeps working.
     collapsible: options.collapsible
-      ?? (element.hasAttribute('collapsible') || element.hasAttribute('data-collapsible')),
-    collapsed: options.collapsed ?? element.hasAttribute('data-collapsed'),
+      ?? (element.hasAttribute('collapsible') || readFlag(element, 'collapsible')),
+    collapsed: options.collapsed ?? readFlag(element, 'collapsed'),
     ...options
   };
 
@@ -88,8 +89,8 @@ export function fieldset(element, options = {}) {
  */
 export function label(element, options = {}) {
   const config = {
-    required: options.required ?? element.hasAttribute('data-required'),
-    optional: options.optional ?? element.hasAttribute('data-optional'),
+    required: options.required ?? readFlag(element, 'required'),
+    optional: options.optional ?? readFlag(element, 'optional'),
     ...options
   };
 
@@ -140,7 +141,7 @@ export function formrow(element, options = {}) {
   const config = {
     // #697: plain attribute first, data-inline kept as a fallback.
     inline: options.inline
-      ?? (element.hasAttribute('inline') || element.hasAttribute('data-inline')),
+      ?? (element.hasAttribute('inline') || readFlag(element, 'inline')),
     ...options
   };
 
@@ -202,8 +203,8 @@ export function stepper(element, options = {}) {
  */
 export function search(element, options = {}) {
   const config = {
-    expandable: options.expandable ?? element.hasAttribute('data-expandable'),
-    instant: options.instant ?? element.hasAttribute('data-instant'),
+    expandable: options.expandable ?? readFlag(element, 'expandable'),
+    instant: options.instant ?? readFlag(element, 'instant'),
     debounce: parseInt(options.debounce || element.getAttribute('debounce') || '300'),
     ...options
   };
@@ -248,7 +249,7 @@ export function search(element, options = {}) {
 export function password(element, options = {}) {
   const config = {
     toggle: options.toggle ?? element.getAttribute('toggle') !== 'false',
-    strength: options.strength ?? element.hasAttribute('data-strength'),
+    strength: options.strength ?? readFlag(element, 'strength'),
     ...options
   };
 
@@ -613,7 +614,7 @@ export function colorpicker(element, options = {}) {
 export function tags(element, options = {}) {
   const config = {
     items: (options.items || element.getAttribute('items') || '').split(',').filter(Boolean),
-    editable: options.editable ?? element.hasAttribute('data-editable'),
+    editable: options.editable ?? readFlag(element, 'editable'),
     placeholder: options.placeholder || 'Add tag...',
     ...options
   };
@@ -712,7 +713,7 @@ export function autocomplete(element, options = {}) {
  */
 export function file(element, options = {}) {
   const config = {
-    multiple: options.multiple ?? element.hasAttribute('data-multiple'),
+    multiple: options.multiple ?? readFlag(element, 'multiple'),
     accept: options.accept || element.getAttribute('accept') || '',
     ...options
   };

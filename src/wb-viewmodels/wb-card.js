@@ -1,3 +1,4 @@
+import { readAttr } from '../core/read-attr.js';
 /**
  * WBCard Component
  * -----------------------------------------------------------------------------
@@ -20,9 +21,9 @@ export class WBCard extends HTMLElement {
       ...this.dataset,
       behavior: this.getAttribute('behavior') || 'card',
       variant: this.getAttribute('variant') || 'default',
-      title: this.getAttribute('title') || this.dataset.title,
-      subtitle: this.getAttribute('subtitle') || this.dataset.subtitle,
-      footer: this.getAttribute('footer') || this.dataset.footer,
+      title: this.getAttribute('title') || readAttr(this, 'title'),
+      subtitle: this.getAttribute('subtitle') || readAttr(this, 'subtitle'),
+      footer: this.getAttribute('footer') || readAttr(this, 'footer'),
     });
 
     // If the subclass hasn't already built the structure, we can do it here

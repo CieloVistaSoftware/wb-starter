@@ -1,3 +1,4 @@
+import { readAttr } from '../core/read-attr.js';
 /**
  * Search Component
  * Complete search input with icon, clear button, and debounced events
@@ -17,7 +18,7 @@ export function search(element, options = {}) {
     placeholder: options.placeholder || element.getAttribute('placeholder') || 'Search...',
     value: options.value || element.getAttribute('value') || '',
     name: options.name || element.getAttribute('name') || '',
-    debounce: parseInt(options.debounce || element.dataset.debounce || '300'),
+    debounce: parseInt(options.debounce || readAttr(element, 'debounce') || '300'),
     instant: options.instant ?? element.hasAttribute('instant'),
     disabled: options.disabled ?? element.hasAttribute('disabled'),
     size: options.size || element.getAttribute('size') || 'md',

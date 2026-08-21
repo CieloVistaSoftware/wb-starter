@@ -1,3 +1,4 @@
+import { readFlag, readAttr } from '../../core/read-attr.js';
 /**
  * UL - Enhanced <ul> element (Unordered List)
  * Adds styling variants, custom markers, spacing
@@ -10,9 +11,9 @@ export function ul(element, options = {}) {
   }
 
   const config = {
-    variant: options.variant || element.dataset.variant || 'default',
+    variant: options.variant || readAttr(element, 'variant') || 'default',
     marker: options.marker || element.dataset.marker || 'disc',
-    gap: options.gap || element.dataset.gap || '0.5rem',
+    gap: options.gap || readAttr(element, 'gap') || '0.5rem',
     indentSize: options.indentSize || element.dataset.indentSize || '1.5rem',
     ...options
   };
@@ -47,8 +48,8 @@ export function ul(element, options = {}) {
 
       const checkbox = document.createElement('span');
       checkbox.className = 'wb-ul__checkbox';
-      checkbox.textContent = li.hasAttribute('data-checked') ? '✓' : '○';
-      checkbox.style.color = li.hasAttribute('data-checked')
+      checkbox.textContent = readFlag(li, 'checked') ? '✓' : '○';
+      checkbox.style.color = readFlag(li, 'checked')
         ? 'var(--success, #22c55e)'
         : 'var(--text-secondary, #9ca3af)';
       checkbox.style.fontWeight = '700';
@@ -67,7 +68,7 @@ export function ul(element, options = {}) {
 
       const icon = document.createElement('span');
       icon.className = 'wb-ul__icon';
-      icon.textContent = li.dataset.icon || '▸';
+      icon.textContent = readAttr(li, 'icon') || '▸';
       icon.style.color = 'var(--primary, #6366f1)';
       icon.style.minWidth = '1rem';
 

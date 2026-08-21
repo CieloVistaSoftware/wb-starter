@@ -1,3 +1,4 @@
+import { readFlag, readAttr } from '../../core/read-attr.js';
 /**
  * Description List Behavior
  * Populates a dl from data-items JSON
@@ -6,9 +7,9 @@
 export function desclist(element, options = {}) {
   // Plain attributes are canonical (Law 11); data-* accepted for back-compat only.
   const config = {
-    items: options.items || element.getAttribute('items') || element.dataset.items || '[]',
+    items: options.items || element.getAttribute('items') || readAttr(element, 'items') || '[]',
     horizontal: options.horizontal !== undefined ? options.horizontal :
-      (element.hasAttribute('horizontal') || element.hasAttribute('data-horizontal')),
+      (element.hasAttribute('horizontal') || readFlag(element, 'horizontal')),
     ...options
   };
 

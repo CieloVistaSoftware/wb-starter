@@ -1,3 +1,4 @@
+import { readFlag } from '../../core/read-attr.js';
 /**
  * Vimeo - Vimeo embed
  * Custom Tag: <wb-vimeo>
@@ -15,9 +16,9 @@
 export function vimeo(element, options = {}) {
   const config = {
     id: options.id || element.getAttribute('video-id'),
-    autoplay: options.autoplay ?? (element.hasAttribute('autoplay') || element.hasAttribute('data-autoplay')),
-    muted: options.muted ?? (element.hasAttribute('muted') || element.hasAttribute('data-muted')),
-    loop: options.loop ?? (element.hasAttribute('loop') || element.hasAttribute('data-loop')),
+    autoplay: options.autoplay ?? (element.hasAttribute('autoplay') || readFlag(element, 'autoplay')),
+    muted: options.muted ?? (element.hasAttribute('muted') || readFlag(element, 'muted')),
+    loop: options.loop ?? (element.hasAttribute('loop') || readFlag(element, 'loop')),
     ...options
   };
 

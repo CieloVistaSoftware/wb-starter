@@ -1,3 +1,4 @@
+import { readFlag } from '../../core/read-attr.js';
 /**
  * WB Dialog Behavior - Semantic dialog modal
  * 
@@ -133,7 +134,7 @@ export function dialog(element, options = {}) {
   // matching audio.js/lightbox.js's established plain-first/data-fallback
   // pattern rather than silently hiding the element).
   const hasTriggerAttrs = element.hasAttribute('modal-content') || element.hasAttribute('modal-title') ||
-    element.hasAttribute('data-modal-content') || element.hasAttribute('data-modal-title');
+    readFlag(element, 'modal-content') || readFlag(element, 'modal-title');
   if (element.tagName === 'WB-MODAL' || hasTriggerAttrs) {
     // TRIGGER mode: <wb-modal modal-title="…" modal-content="…">Open Modal</wb-modal>
     // is a visible button — its text is the label and clicking it opens a dialog

@@ -1,3 +1,4 @@
+import { readAttr } from '../../core/read-attr.js';
 /**
  * Form - Enhanced <form> element
  * Adds AJAX submit, validation UI, loading states, auto-save
@@ -28,7 +29,7 @@ export function form(element, options = {}) {
     ajax: options.ajax ?? flag('ajax', 'data-ajax'),
     validate: options.validate ?? (element.hasAttribute('validate')
       ? flag('validate', 'data-validate')
-      : element.dataset.validate !== 'false'),
+      : readAttr(element, 'validate') !== 'false'),
     autoSave: options.autoSave ?? flag('auto-save', 'data-auto-save'),
     loadingText: options.loadingText || str('loadingmessage', 'loadingText') || 'Submitting...',
     successMessage: options.successMessage || str('successmessage', 'successMessage') || 'Success!',

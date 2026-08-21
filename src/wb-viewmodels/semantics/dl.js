@@ -1,3 +1,4 @@
+import { readFlag, readAttr } from '../../core/read-attr.js';
 /**
  * DL - Enhanced <dl> element (Description List)
  * Adds styling variants, term/definition formatting
@@ -10,10 +11,10 @@ export function dl(element, options = {}) {
   }
 
   const config = {
-    variant: options.variant || element.dataset.variant || 'vertical',
-    gap: options.gap || element.dataset.gap || '0.5rem',
-    bordered: options.bordered ?? element.hasAttribute('data-bordered'),
-    striped: options.striped ?? element.hasAttribute('data-striped'),
+    variant: options.variant || readAttr(element, 'variant') || 'vertical',
+    gap: options.gap || readAttr(element, 'gap') || '0.5rem',
+    bordered: options.bordered ?? readFlag(element, 'bordered'),
+    striped: options.striped ?? readFlag(element, 'striped'),
     ...options
   };
 

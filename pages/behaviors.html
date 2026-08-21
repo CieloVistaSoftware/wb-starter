@@ -18,6 +18,17 @@
   <div class="behaviors-search">
     <input type="search" id="behaviors-search" placeholder="Search behaviors — e.g. x-tooltip, x-toast — or just x- to see everything" aria-label="Search behaviors">
     <span id="behaviors-search-count" aria-live="polite"></span>
+    <!-- #764 -- John: "add radio buttons for filtering x-behaviors and semantic
+         or both". A behavior can be reached two ways: its semantic tag carries
+         it via autoInject, or any host carries it via x-. 22 behaviors offer
+         both. This narrows the list to the authoring form you are actually
+         looking for. -->
+    <fieldset id="behaviors-form-filter" class="behaviors-form-filter">
+      <legend class="behaviors-form-filter__legend">Filter</legend>
+      <label><input type="radio" name="authoring-form" value="both" checked> Both</label>
+      <label><input type="radio" name="authoring-form" value="semantic"> Semantic</label>
+      <label><input type="radio" name="authoring-form" value="attribute"> x-attribute</label>
+    </fieldset>
   </div>
   <!-- #664: the results list and a LIVE preview sit side by side, so clicking a
        behavior runs it immediately instead of scrolling a 13,000px page to find
@@ -269,8 +280,60 @@
             const key = host ? 'native:' + beh : attr;
             if (seen.has(key)) return;
             seen.add(key);
-            allEntries.push({ label: host || attr, attr, behavior: beh, native: !!host });
+            // #761 -- John: "Shouldn't this be listed as an x-dialog?"
+            //
+            // An auto-injected behavior is labelled by its semantic host, so
+            // `dialog` reads as `dialog` -- correct when the example IS a bare
+            // <dialog>, and the whole point of not teaching <dialog x-dialog>.
+            //
+            // But some behaviors cannot be demonstrated on their own host: a
+            // bare <dialog> is invisible until something opens it, so its
+            // example is `<button x-dialog>`. The row then claimed `dialog`
+            // while the code beside it said `x-dialog` -- the list and the
+            // source disagreeing about what the reader should type.
+            //
+            // So label by what the example ACTUALLY writes. The host label is
+            // kept only when the example uses that host; otherwise the row
+            // says the attribute, because that is what the reader would copy.
+            // #764: one row PER AUTHORING FORM, not per behavior. A single row
+            // labelled by its host made "Both" and "Semantic" render the same
+            // list, so the filter could not show what it claimed to filter.
+            //
+            // A behavior with a native host offers two genuinely different
+            // things to write, and each gets its own row:
+            //   semantic   <progress value="72">        — the tag carries it
+            //   attribute  <div x-progress value="72">  — any host carries it
+            // Behaviors with no native host only ever offer the attribute form.
+            if (host) {
+              allEntries.push({ label: host, attr, behavior: beh, native: true, host, form: 'semantic' });
+            }
+            allEntries.push({ label: attr, attr, behavior: beh, native: false, host, form: 'attribute' });
           });
+        // Re-label any entry whose curated example does not use its semantic
+        // host. Runs after the catalogue fetch resolves; entries without a
+        // curated example keep the host label, since the generated example
+        // uses the host by construction (#753).
+        function relabelByExample() {
+          allEntries.forEach((e) => {
+            if (!e.host) return;
+            const src = exampleCatalogue && exampleCatalogue[e.attr] && exampleCatalogue[e.attr].source;
+            if (!src) return;
+            const usesHost = new RegExp('<' + e.host + '\b', 'i').test(src);
+            if (!usesHost) { e.label = e.attr; e.native = false; }
+          });
+          allEntries.sort((a, b) => a.label.localeCompare(b.label));
+          // The catalogue fetch can resolve AFTER the list has rendered, in
+          // which case relabelling the data alone changes nothing on screen.
+          // Re-run the filter so the rows reflect it. Guarded: on the first
+          // load this runs before any render, and applyFilter is happy to be
+          // called with the current query either way.
+          try {
+            if (typeof applyFilter === 'function' && resultsEl && resultsEl.children.length) {
+              applyFilter(input ? input.value : '');
+            }
+          } catch { /* the list is already correct or not yet built */ }
+        }
+
         allEntries.sort((a, b) => a.label.localeCompare(b.label));
         // Variants come from the schema index (one fetch, not 105). Failure is
         // non-fatal: the list still renders, just without variant rows.
@@ -278,7 +341,7 @@
         // sections no longer have to stay on the page purely as a data source.
         fetch(siteRoot() + 'data/behavior-examples.json')
           .then((r) => (r.ok ? r.json() : null))
-          .then((cat) => { if (cat && cat.examples) exampleCatalogue = cat.examples; })
+          .then((cat) => { if (cat && cat.examples) { exampleCatalogue = cat.examples; try { relabelByExample(); } catch { /* list still renders */ } } })
           .catch(() => {});
 
         return fetch(siteRoot() + 'data/schema-index.json')
@@ -343,8 +406,29 @@
     // with zero demos on this page has nothing to scroll to, and this way
     // that's an honest "Showing 0 of 88", not a silent no-op click.
     let totalRowCount = 0;
+    // #764: which authoring form the reader wants to see.
+    function authoringForm() {
+      const picked = document.querySelector('input[name="authoring-form"]:checked');
+      return picked ? picked.value : 'both';
+    }
+
+    /**
+     * Does this behavior offer the given form?
+     *
+     * semantic  — the behavior has a native host tag, so the tag alone carries
+     *             it (autoInject). entry.host is set from tag-map's nativeMap.
+     * attribute — x-{behavior} on any host. Every entry offers this: that is
+     *             what the x- namespace IS. So "attribute" never hides a row,
+     *             it is the "semantic" filter that narrows.
+     */
+    function offersForm(entry, form) {
+      if (form === 'both') return true;
+      return entry.form === form;
+    }
+
     function renderBrowseAll(query) {
       const q = (query || '').trim().toLowerCase();
+      const form = authoringForm();
       if (!allEntries.length) {
         resultsEl.hidden = true;
         return;
@@ -360,6 +444,7 @@
           // Match on everything the reader can see or type: the displayed name,
           // the underlying x-* attribute (still searchable even when the row is
           // labelled by its semantic element), and the option.
+          if (!offersForm(entry, form)) return;
           if (q && ![entry.label, entry.attr, shownOption].join(' ').toLowerCase().includes(q)) return;
           rendered++;
           const li = document.createElement('li');
@@ -368,6 +453,7 @@
           btn.className = 'behaviors-search-results__row';
           btn.dataset.browseToken = entry.attr;
           btn.dataset.label = entry.label;
+          btn.dataset.form = entry.form || 'attribute';
           if (entry.native) btn.dataset.native = '1';
           if (variant) {
             btn.dataset.variant = variant;
@@ -464,6 +550,65 @@
     const liveExample = document.getElementById('behaviors-live-example');
     const liveCode = document.getElementById('behaviors-live-code');
     const liveDoc = document.getElementById('behaviors-live-doc');
+
+    // #762 -- John: "Allow the document element to be dragged all the way to
+    // the top."
+    //
+    // The doc sits last, below the example, its source, the events log and the
+    // handler snippet. Reading the docs while looking at the example means
+    // scrolling past all of it, every time. Let the reader put it where they
+    // want it -- including first.
+    //
+    // The <summary> is the handle, not the whole <details>: making the entire
+    // panel draggable swallows text selection inside the docs, which is most
+    // of what the panel is for. draggable is switched on only while the
+    // pointer is down on the summary, and off again immediately after.
+    (function enableDocReorder() {
+      if (!liveDoc || !liveEl) return;
+      const handle = liveDoc.querySelector('.behaviors-live__doc-summary');
+      if (!handle) return;
+
+      handle.style.cursor = 'grab';
+      handle.title = 'Drag to reorder — drop above any section';
+
+      handle.addEventListener('mousedown', () => { liveDoc.draggable = true; });
+      document.addEventListener('mouseup', () => { liveDoc.draggable = false; });
+
+      liveDoc.addEventListener('dragstart', (e) => {
+        liveDoc.classList.add('is-dragging');
+        // Firefox refuses to start a drag without payload.
+        try { e.dataTransfer.setData('text/plain', 'behaviors-live-doc'); } catch { /* not required */ }
+        e.dataTransfer.effectAllowed = 'move';
+      });
+
+      liveDoc.addEventListener('dragend', () => {
+        liveDoc.classList.remove('is-dragging');
+        liveDoc.draggable = false;
+      });
+
+      liveEl.addEventListener('dragover', (e) => {
+        if (!liveDoc.draggable) return;
+        e.preventDefault();               // without this, drop never fires
+        e.dataTransfer.dropEffect = 'move';
+      });
+
+      liveEl.addEventListener('drop', (e) => {
+        if (!liveDoc.draggable) return;
+        e.preventDefault();
+        // Insert before the first sibling whose midpoint is below the pointer;
+        // dropping past everything puts it last. The header stays put -- it
+        // names what is being shown, so it is not part of the ordering.
+        const head = liveEl.querySelector('.behaviors-live__head');
+        const siblings = [...liveEl.children]
+          .filter((c) => c !== liveDoc && c !== head);
+        const target = siblings.find((c) => {
+          const r = c.getBoundingClientRect();
+          return e.clientY < r.top + r.height / 2;
+        });
+        if (target) liveEl.insertBefore(liveDoc, target);
+        else liveEl.appendChild(liveDoc);
+      });
+    })();
     let liveDocBody = document.getElementById('behaviors-live-doc-body');
 
     // #703 -- John: "Make sure when dropped down the height is right." An
@@ -489,10 +634,28 @@
         }
         const padding = parseFloat(getComputedStyle(liveStage).paddingBottom) || 0;
         const wanted = Math.max(STAGE_MIN_PX, Math.ceil(deepest + padding));
-        // Only ever grow while one example is shown -- shrinking mid-interaction
-        // makes the panel jump under the reader's cursor. showLive() resets it.
+        // #760 -- John, on a collapsed <details>: "Why blank space?"
+        //
+        // This used to only ever GROW. Opening the details grew the stage to
+        // fit it; collapsing it left the height behind, so the example sat in
+        // a screen of nothing it no longer needed.
+        //
+        // The no-shrink rule was right for the case it was written for -- a
+        // dropdown or popover opens on hover, and pulling the floor up while
+        // the pointer is over it makes the panel jump. But that only applies
+        // to OVERLAYS. Content that collapses in place should give the space
+        // back; that is what collapsing means.
+        //
+        // So: if anything in the stage is taken out of flow, keep the grown
+        // box (the overlay needs somewhere to live). Otherwise track the
+        // content, up or down.
+        const hasOverlay = [...liveStage.querySelectorAll('*')].some((el) => {
+          const pos = getComputedStyle(el).position;
+          return pos === 'absolute' || pos === 'fixed';
+        });
         const current = parseFloat(liveStage.style.minHeight) || 0;
         if (wanted > current) liveStage.style.minHeight = wanted + 'px';
+        else if (!hasOverlay && wanted < current) liveStage.style.minHeight = wanted + 'px';
       });
     }
 
@@ -647,12 +810,28 @@
     // an attribute/tag rather than merely mentioning it in prose, so clicking
     // "x-card" does not land on a demo that happens to say "x-card" in a
     // sentence.
-    function sourceFor(token) {
+    function sourceFor(token, form) {
       // Catalogue first (data/behavior-examples.json), DOM second. The DOM path
       // is kept so the panel still works on a page that has its own demos --
       // and so removing the sections from this one changes nothing here.
       const fromCatalogue = exampleCatalogue[token];
-      if (fromCatalogue && fromCatalogue.source) return fromCatalogue.source;
+      if (fromCatalogue && fromCatalogue.source) {
+        // #764: a semantic row must render the semantic example and an
+        // attribute row the x- one. `source` leads with the semantic form
+        // where a native host exists, and the x- counterpart lives in
+        // alternates -- so an attribute row picks the alternate that actually
+        // carries x-{behavior}. Falling back to source keeps behaviors with
+        // only one form working unchanged.
+        if (form === 'attribute') {
+          const bare = token.replace(/^x-/, '');
+          const carries = new RegExp(`\sx-${bare}(?=[\s/>=]|$)`, 'i');
+          if (!carries.test(fromCatalogue.source)) {
+            const alt = (fromCatalogue.alternates || []).find((a) => carries.test(a));
+            if (alt) return alt;
+          }
+        }
+        return fromCatalogue.source;
+      }
 
       const bare = token.replace(/^x-/, '');
       // Doubled backslashes: inside a template literal a lone `\s` collapses
@@ -1441,8 +1620,8 @@
       }
     }
 
-    async function showLive(token, variant, label, prop, isBool) {
-      const raw = sourceFor(token);
+    async function showLive(token, variant, label, prop, isBool, form) {
+      const raw = sourceFor(token, form);
       const src = raw ? withOption(raw, token, prop, variant, isBool) : raw;
       liveEl.hidden = false;
       // John: "Switch these two, behaivor first, variant 2nd".
@@ -1564,7 +1743,7 @@
       }
       if (focus) row.focus({ preventScroll: true });
       showLive(row.dataset.browseToken, row.dataset.variant || '', row.dataset.label || '',
-               row.dataset.prop || '', row.dataset.boolean === '1');
+               row.dataset.prop || '', row.dataset.boolean === '1', row.dataset.form || 'attribute');
       // #686 -- John, on a phone: "doesn't show the sample code and result".
       // Stacked, the panel starts ~300px past the bottom of #siteBody (measured
       // at 375x812: list ends at 841, panel stage at 920, scroller is 627 tall),
@@ -1612,6 +1791,33 @@
       }
     });
 
+    // #759 -- John: "When clicking the button resync the left side to show
+    // which one it was (at the top)."
+    //
+    // The list is browsable while the panel stays put (#664), so scrolling it
+    // away from the current selection is normal and expected. The cost is that
+    // the panel then shows `button . iconOnly` while the list shows `article`
+    // rows, and nothing on screen connects the two.
+    //
+    // Clicking the rendered example resyncs: the row that produced it goes to
+    // the TOP of the list, which is where John asked for it. Aligning to top
+    // here does NOT conflict with #728 -- that was about arrow keys, where
+    // always-to-top was disorienting because the selection moves one row at a
+    // time. This is a deliberate "where am I?" gesture, and the answer is only
+    // useful if you can see it without hunting.
+    // Capture phase, and on the STAGE rather than the example: a behavior that
+    // calls stopPropagation on its own click -- dropdown, dialog, drawer,
+    // popover all do -- would otherwise never let this run, so the resync would
+    // work for a plain button and silently not for the examples most likely to
+    // leave you lost. Capture also means it fires before the example handles
+    // the click, so the behavior still does everything it normally does; this
+    // only reads the list and scrolls it.
+    liveStage.addEventListener('click', () => {
+      const current = resultsEl.querySelector('[aria-current="true"]');
+      if (!current) return;
+      resultsEl.scrollTop = current.offsetTop - resultsEl.offsetTop;
+    }, true);
+
     resultsEl.addEventListener('click', (e) => {
       const btn = e.target.closest('.behaviors-search-results__row');
       if (!btn) return;
@@ -1638,6 +1844,12 @@
     });
 
     input.addEventListener('input', () => applyFilter(input.value));
+
+    // #764: changing the authoring form re-runs the same filter, so the search
+    // text and the form choice compose instead of overriding each other.
+    document.querySelectorAll('input[name="authoring-form"]').forEach((radio) => {
+      radio.addEventListener('change', () => applyFilter(input.value));
+    });
     applyFilter('');
   })();
   </script>

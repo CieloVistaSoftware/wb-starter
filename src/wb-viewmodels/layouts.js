@@ -1,3 +1,4 @@
+import { readFlag, readAttr } from '../core/read-attr.js';
 /**
  * Layout Behaviors - Extended
  * -----------------------------------------------------------------------------
@@ -18,10 +19,10 @@
  */
 export function grid(element, options = {}) {
   const config = {
-    columns: options.columns || element.dataset.columns || element.getAttribute('columns') || '3',
-    rows: options.rows || element.dataset.rows || element.getAttribute('rows') || '',
-    gap: options.gap || element.dataset.gap || element.getAttribute('gap') || '1rem',
-    minWidth: options.minWidth || element.dataset.minWidth || element.getAttribute('min-width') || '',
+    columns: options.columns || readAttr(element, 'columns') || element.getAttribute('columns') || '3',
+    rows: options.rows || readAttr(element, 'rows') || element.getAttribute('rows') || '',
+    gap: options.gap || readAttr(element, 'gap') || element.getAttribute('gap') || '1rem',
+    minWidth: options.minWidth || readAttr(element, 'minWidth') || element.getAttribute('min-width') || '',
     align: options.align || element.getAttribute('align') || '',
     justify: options.justify || element.getAttribute('justify') || '',
     center: options.center ?? element.hasAttribute('center'),
@@ -90,11 +91,11 @@ export function grid(element, options = {}) {
  */
 export function flex(element, options = {}) {
   const config = {
-    direction: options.direction || element.dataset.direction || element.getAttribute('direction') || 'row',
-    wrap: options.wrap || element.dataset.wrap || element.getAttribute('wrap') || 'wrap',
-    justify: options.justify || element.dataset.justify || element.getAttribute('justify') || 'flex-start',
-    align: options.align || element.dataset.align || element.getAttribute('align') || 'stretch',
-    gap: options.gap || element.dataset.gap || element.getAttribute('gap') || '1rem',
+    direction: options.direction || readAttr(element, 'direction') || element.getAttribute('direction') || 'row',
+    wrap: options.wrap || readAttr(element, 'wrap') || element.getAttribute('wrap') || 'wrap',
+    justify: options.justify || readAttr(element, 'justify') || element.getAttribute('justify') || 'flex-start',
+    align: options.align || readAttr(element, 'align') || element.getAttribute('align') || 'stretch',
+    gap: options.gap || readAttr(element, 'gap') || element.getAttribute('gap') || '1rem',
     ...options
   };
 
@@ -117,14 +118,14 @@ export function flex(element, options = {}) {
  */
 export function container(element, options = {}) {
   const config = {
-    direction: options.direction || element.dataset.direction || element.getAttribute('direction') || 'column',
-    columns: parseInt(options.columns || element.dataset.columns || element.getAttribute('columns') || '1'),
-    gap: options.gap || element.dataset.gap || element.getAttribute('gap') || '1rem',
-    align: options.align || element.dataset.align || element.getAttribute('align') || 'stretch',
-    justify: options.justify || element.dataset.justify || element.getAttribute('justify') || 'start',
-    wrap: (options.wrap ?? element.dataset.wrap ?? element.getAttribute('wrap')) !== 'false',
+    direction: options.direction || readAttr(element, 'direction') || element.getAttribute('direction') || 'column',
+    columns: parseInt(options.columns || readAttr(element, 'columns') || element.getAttribute('columns') || '1'),
+    gap: options.gap || readAttr(element, 'gap') || element.getAttribute('gap') || '1rem',
+    align: options.align || readAttr(element, 'align') || element.getAttribute('align') || 'stretch',
+    justify: options.justify || readAttr(element, 'justify') || element.getAttribute('justify') || 'start',
+    wrap: (options.wrap ?? readAttr(element, 'wrap') ?? element.getAttribute('wrap')) !== 'false',
     padding: options.padding || element.dataset.padding || element.getAttribute('padding') || '1rem',
-    maxWidth: options.maxWidth || element.dataset.maxWidth || element.getAttribute('max-width') || '',
+    maxWidth: options.maxWidth || readAttr(element, 'maxWidth') || element.getAttribute('max-width') || '',
     ...options
   };
 
@@ -176,7 +177,7 @@ export function container(element, options = {}) {
  */
 export function stack(element, options = {}) {
   const config = {
-    gap: options.gap || element.dataset.gap || element.getAttribute('gap') || '1rem',
+    gap: options.gap || readAttr(element, 'gap') || element.getAttribute('gap') || '1rem',
     // Parity with the retired <wb-column> custom element (v3: behavior, not a
     // class that `extends HTMLElement`). These are optional.
     justify: options.justify || element.getAttribute('justify') || '',
@@ -203,9 +204,9 @@ export function stack(element, options = {}) {
  */
 export function cluster(element, options = {}) {
   const config = {
-    gap: options.gap || element.dataset.gap || element.getAttribute('gap') || '1rem',
-    justify: options.justify || element.dataset.justify || element.getAttribute('justify') || 'flex-start',
-    align: options.align || element.dataset.align || element.getAttribute('align') || 'center',
+    gap: options.gap || readAttr(element, 'gap') || element.getAttribute('gap') || '1rem',
+    justify: options.justify || readAttr(element, 'justify') || element.getAttribute('justify') || 'flex-start',
+    align: options.align || readAttr(element, 'align') || element.getAttribute('align') || 'center',
     ...options
   };
 
@@ -226,9 +227,9 @@ export function cluster(element, options = {}) {
  */
 export function center(element, options = {}) {
   const config = {
-    maxWidth: options.maxWidth || element.dataset.maxWidth || element.getAttribute('max-width') || '',
+    maxWidth: options.maxWidth || readAttr(element, 'maxWidth') || element.getAttribute('max-width') || '',
     gutters: options.gutters || element.dataset.gutters || element.getAttribute('gutters') || '1rem',
-    intrinsic: options.intrinsic ?? (element.hasAttribute('data-intrinsic') || element.hasAttribute('intrinsic')),
+    intrinsic: options.intrinsic ?? (readFlag(element, 'intrinsic') || element.hasAttribute('intrinsic')),
     ...options
   };
 
@@ -259,7 +260,7 @@ export function sidebarlayout(element, options = {}) {
     side: options.side || element.dataset.side || element.getAttribute('side') || 'left',
     sideWidth: options.sideWidth || element.dataset.sideWidth || element.getAttribute('side-width') || '300px',
     contentMin: options.contentMin || element.dataset.contentMin || element.getAttribute('content-min') || '50%',
-    gap: options.gap || element.dataset.gap || element.getAttribute('gap') || '1rem',
+    gap: options.gap || readAttr(element, 'gap') || element.getAttribute('gap') || '1rem',
     ...options
   };
 
@@ -288,9 +289,9 @@ export function sidebarlayout(element, options = {}) {
  */
 export function switcher(element, options = {}) {
   const config = {
-    threshold: options.threshold || element.dataset.threshold || element.getAttribute('threshold') || '30rem',
-    gap: options.gap || element.dataset.gap || element.getAttribute('gap') || '1rem',
-    limit: parseInt(options.limit || element.dataset.limit || element.getAttribute('limit') || '4'),
+    threshold: options.threshold || readAttr(element, 'threshold') || element.getAttribute('threshold') || '30rem',
+    gap: options.gap || readAttr(element, 'gap') || element.getAttribute('gap') || '1rem',
+    limit: parseInt(options.limit || readAttr(element, 'limit') || element.getAttribute('limit') || '4'),
     ...options
   };
 
@@ -319,8 +320,8 @@ export function switcher(element, options = {}) {
  */
 export function masonry(element, options = {}) {
   const config = {
-    columns: parseInt(options.columns || element.dataset.columns || element.getAttribute('columns') || '3'),
-    gap: options.gap || element.dataset.gap || element.getAttribute('gap') || '1rem',
+    columns: parseInt(options.columns || readAttr(element, 'columns') || element.getAttribute('columns') || '3'),
+    gap: options.gap || readAttr(element, 'gap') || element.getAttribute('gap') || '1rem',
     ...options
   };
 
@@ -345,7 +346,7 @@ export function sticky(element, options = {}) {
   const config = {
     top: options.top || element.dataset.top || element.getAttribute('top') || '0',
     bottom: options.bottom || element.dataset.bottom || element.getAttribute('bottom') || '',
-    zIndex: options.zIndex || element.dataset.zIndex || element.getAttribute('z-index') || '100',
+    zIndex: options.zIndex || readAttr(element, 'zIndex') || element.getAttribute('z-index') || '100',
     ...options
   };
 
@@ -363,9 +364,9 @@ export function sticky(element, options = {}) {
  */
 export function fixed(element, options = {}) {
   const config = {
-    position: options.position || element.dataset.position || element.getAttribute('position') || 'bottom-right',
-    offset: options.offset || element.dataset.offset || element.getAttribute('offset') || '1rem',
-    zIndex: options.zIndex || element.dataset.zIndex || element.getAttribute('z-index') || '1000',
+    position: options.position || readAttr(element, 'position') || element.getAttribute('position') || 'bottom-right',
+    offset: options.offset || readAttr(element, 'offset') || element.getAttribute('offset') || '1rem',
+    zIndex: options.zIndex || readAttr(element, 'zIndex') || element.getAttribute('z-index') || '1000',
     ...options
   };
 
@@ -393,9 +394,9 @@ export function fixed(element, options = {}) {
  */
 export function scrollable(element, options = {}) {
   const config = {
-    direction: options.direction || element.dataset.direction || element.getAttribute('direction') || 'both',
-    maxHeight: options.maxHeight || element.dataset.maxHeight || element.getAttribute('max-height') || '',
-    maxWidth: options.maxWidth || element.dataset.maxWidth || element.getAttribute('max-width') || '',
+    direction: options.direction || readAttr(element, 'direction') || element.getAttribute('direction') || 'both',
+    maxHeight: options.maxHeight || readAttr(element, 'maxHeight') || element.getAttribute('max-height') || '',
+    maxWidth: options.maxWidth || readAttr(element, 'maxWidth') || element.getAttribute('max-width') || '',
     ...options
   };
 
@@ -445,7 +446,7 @@ export function cover(element, options = {}) {
  */
 export function frame(element, options = {}) {
   const config = {
-    ratio: options.ratio || element.dataset.ratio || element.getAttribute('ratio') || '16/9',
+    ratio: options.ratio || readAttr(element, 'ratio') || element.getAttribute('ratio') || '16/9',
     ...options
   };
 
@@ -470,7 +471,7 @@ export function frame(element, options = {}) {
 export function reel(element, options = {}) {
   const config = {
     itemWidth: options.itemWidth || element.dataset.itemWidth || element.getAttribute('item-width') || 'auto',
-    gap: options.gap || element.dataset.gap || element.getAttribute('gap') || '1rem',
+    gap: options.gap || readAttr(element, 'gap') || element.getAttribute('gap') || '1rem',
     ...options
   };
 
@@ -495,7 +496,7 @@ export function reel(element, options = {}) {
  */
 export function imposter(element, options = {}) {
   const config = {
-    breakout: options.breakout ?? (element.hasAttribute('data-breakout') || element.hasAttribute('breakout')),
+    breakout: options.breakout ?? (readFlag(element, 'breakout') || element.hasAttribute('breakout')),
     margin: options.margin || element.dataset.margin || element.getAttribute('margin') || '0',
     ...options
   };
@@ -520,7 +521,7 @@ export function imposter(element, options = {}) {
  */
 export function icon(element, options = {}) {
   const config = {
-    size: options.size || element.dataset.size || element.getAttribute('size') || '1em',
+    size: options.size || readAttr(element, 'size') || element.getAttribute('size') || '1em',
     space: options.space || element.dataset.space || element.getAttribute('space') || '0.5em',
     ...options
   };
@@ -545,13 +546,13 @@ export function icon(element, options = {}) {
  */
 export function drawerLayout(element, options = {}) {
   const config = {
-    position: options.position || element.dataset.position || element.getAttribute('position') || 'left',
-    width: options.width || element.dataset.width || element.getAttribute('width') || '250px',
-    height: options.height || element.dataset.height || element.getAttribute('height') || '250px',
-    minWidth: options.minWidth || element.dataset.minWidth || element.getAttribute('min-width') || '1.5rem',
+    position: options.position || readAttr(element, 'position') || element.getAttribute('position') || 'left',
+    width: options.width || readAttr(element, 'width') || element.getAttribute('width') || '250px',
+    height: options.height || readAttr(element, 'height') || element.getAttribute('height') || '250px',
+    minWidth: options.minWidth || readAttr(element, 'minWidth') || element.getAttribute('min-width') || '1.5rem',
     minHeight: options.minHeight || element.dataset.minHeight || element.getAttribute('min-height') || '1.5rem',
-    maxWidth: options.maxWidth || element.dataset.maxWidth || element.getAttribute('max-width') || '50vw',
-    maxHeight: options.maxHeight || element.dataset.maxHeight || element.getAttribute('max-height') || '50vh',
+    maxWidth: options.maxWidth || readAttr(element, 'maxWidth') || element.getAttribute('max-width') || '50vw',
+    maxHeight: options.maxHeight || readAttr(element, 'maxHeight') || element.getAttribute('max-height') || '50vh',
     resizable: options.resizable ?? (element.dataset.resizable === 'true' || element.getAttribute('resizable') === 'true'),
     saveState: options.saveState ?? (element.dataset.saveState === 'true' || element.getAttribute('save-state') === 'true'),
     id: options.id || element.id || 'drawer',

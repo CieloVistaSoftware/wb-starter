@@ -1,3 +1,4 @@
+import { readFlag } from '../../core/read-attr.js';
 /**
  * Image - Enhanced <img> element
  * Adds lazy loading, zoom/lightbox, fallback, aspect ratio
@@ -15,8 +16,8 @@ import { attachImageLoadRetry } from '../media-load-retry.js';
 
 export function img(element, options = {}) {
   const config = {
-    lazy: options.lazy ?? (element.hasAttribute('lazy') || element.hasAttribute('data-lazy')),
-    zoomable: options.zoomable ?? (element.hasAttribute('zoomable') || element.hasAttribute('data-zoomable')),
+    lazy: options.lazy ?? (element.hasAttribute('lazy') || readFlag(element, 'lazy')),
+    zoomable: options.zoomable ?? (element.hasAttribute('zoomable') || readFlag(element, 'zoomable')),
     placeholder: options.placeholder || element.getAttribute('placeholder') || '',
     fallback: options.fallback || element.getAttribute('fallback') || '',
     aspectRatio: options.aspectRatio || element.getAttribute('aspect-ratio') || '',

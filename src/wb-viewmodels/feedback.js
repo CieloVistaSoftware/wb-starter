@@ -1,3 +1,4 @@
+import { readFlag } from '../core/read-attr.js';
 /**
  * Feedback Behaviors
  * -----------------------------------------------------------------------------
@@ -323,9 +324,9 @@ export function chip(element, options = {}) {
   // opt in -- consistent with cardBase()'s clickable/elevated dual-check
   // (card.js) elsewhere in this project; a caller shouldn't need to know
   // which convention a given behavior happens to check.
-  const dismissible = options.dismissible ?? (element.hasAttribute('dismissible') || element.hasAttribute('data-dismissible'));
-  const disabled = options.disabled ?? (element.hasAttribute('disabled') || element.hasAttribute('data-disabled'));
-  const outlined = options.outlined ?? (element.hasAttribute('outlined') || element.hasAttribute('data-outlined'));
+  const dismissible = options.dismissible ?? (element.hasAttribute('dismissible') || readFlag(element, 'dismissible'));
+  const disabled = options.disabled ?? (element.hasAttribute('disabled') || readFlag(element, 'disabled'));
+  const outlined = options.outlined ?? (element.hasAttribute('outlined') || readFlag(element, 'outlined'));
   const variant = options.variant || element.getAttribute('variant') || 'default';
   const size = options.size || element.getAttribute('size') || 'md';
 

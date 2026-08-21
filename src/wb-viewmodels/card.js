@@ -1,3 +1,4 @@
+import { readFlag, readAttr } from '../core/read-attr.js';
 /**
  * Card Behavior + Variants
  * -----------------------------------------------------------------------------
@@ -82,7 +83,7 @@ const parseBoolean = (val) => {
 };
 
 // Helper to get attribute from options, dataset, or direct attribute
-// Supports: options.src, element.dataset.src (data-src), element.getAttribute('src')
+// Supports: options.src, readAttr(element, 'src') (data-src), element.getAttribute('src')
 const getAttr = (element, options, name) => {
   return options[name] || element.dataset[name] || element.getAttribute(name) || '';
 };
@@ -178,24 +179,24 @@ export function composeCard(element, options = {}) {
   const config = {
     ...options, // Spread first to allow overrides, but specific logic below takes precedence
     behavior: options.behavior || 'card',
-    title: options.title || element.dataset.title || element.getAttribute('title') || '',
-    subtitle: options.subtitle || element.dataset.subtitle || element.getAttribute('subtitle') || '',
-    content: options.content || element.dataset.content || element.getAttribute('content') || authoredContent,
-    footer: options.footer || element.dataset.footer || element.getAttribute('footer') || '',
-    variant: options.variant || element.dataset.variant || element.getAttribute('variant') || 'default',
-    badge: options.badge || element.dataset.badge || element.getAttribute('badge') || '',
-    clickable: parseBoolean(options.clickable) ?? (element.dataset.clickable === 'true' || (element.hasAttribute('data-clickable') && element.dataset.clickable !== 'false') || element.hasAttribute('clickable')),
+    title: options.title || readAttr(element, 'title') || element.getAttribute('title') || '',
+    subtitle: options.subtitle || readAttr(element, 'subtitle') || element.getAttribute('subtitle') || '',
+    content: options.content || readAttr(element, 'content') || element.getAttribute('content') || authoredContent,
+    footer: options.footer || readAttr(element, 'footer') || element.getAttribute('footer') || '',
+    variant: options.variant || readAttr(element, 'variant') || element.getAttribute('variant') || 'default',
+    badge: options.badge || readAttr(element, 'badge') || element.getAttribute('badge') || '',
+    clickable: parseBoolean(options.clickable) ?? (readAttr(element, 'clickable') === 'true' || (readFlag(element, 'clickable') && readAttr(element, 'clickable') !== 'false') || element.hasAttribute('clickable')),
     // #627: card.md documents `hoverable` as a plain boolean attribute
     // (`elevated`/`clickable`'s own pattern, both checked via
     // element.hasAttribute() below) -- but this only ever read
-    // element.dataset.hoverable (i.e. data-hoverable), never a plain
+    // readAttr(element, 'hoverable') (i.e. data-hoverable), never a plain
     // hoverable="false" attribute at all. Confirmed live: <article x-card
     // hoverable="false"> kept its hover effect regardless, since nothing
     // ever looked at that attribute. Also check the plain attribute now,
     // same as data-hoverable, so either form can disable it.
-    hoverable: parseBoolean(options.hoverable) ?? (element.dataset.hoverable !== 'false' && element.getAttribute('hoverable') !== 'false'),
-    elevated: parseBoolean(options.elevated) ?? (element.dataset.elevated === 'true' || (element.hasAttribute('data-elevated') && element.dataset.elevated !== 'false') || element.hasAttribute('elevated')),
-    size: options.size || element.dataset.size || element.getAttribute('size') || 'auto',
+    hoverable: parseBoolean(options.hoverable) ?? (readAttr(element, 'hoverable') !== 'false' && element.getAttribute('hoverable') !== 'false'),
+    elevated: parseBoolean(options.elevated) ?? (readAttr(element, 'elevated') === 'true' || (readFlag(element, 'elevated') && readAttr(element, 'elevated') !== 'false') || element.hasAttribute('elevated')),
+    size: options.size || readAttr(element, 'size') || element.getAttribute('size') || 'auto',
     // #283: `tooltip` is the WB-standard attribute name for hover text
     // (ATTRIBUTE-NAMING-STANDARD.md's cheat sheet: "Set tooltip -> `tooltip`
     // or native `title`"). `hoverText` / `hover-text` stays supported as the
@@ -203,7 +204,7 @@ export function composeCard(element, options = {}) {
     // cardprofile.schema.json) -- both resolve to the same themed tooltip
     // below, `tooltip` taking priority if a card author sets both.
     tooltip: options.tooltip || element.getAttribute('tooltip') || '',
-    hoverText: options.hoverText || element.dataset.hoverText || element.getAttribute('hoverText') || element.getAttribute('hover-text') || '',
+    hoverText: options.hoverText || readAttr(element, 'hoverText') || element.getAttribute('hoverText') || element.getAttribute('hover-text') || '',
     onClick: options.onClick || element.dataset.onClick || '',
     dataContext: options.dataContext || element.dataset.dataContext || '{}',
     // v3.0: Skip structure building if schema already did it
@@ -791,7 +792,7 @@ export function card(element, options = {}) {
   
   // Determine if we are upgrading raw content
   const isSemantic = hasHeader || hasMain || hasFooter;
-  const hasContent = options.content || element.dataset.content;
+  const hasContent = options.content || readAttr(element, 'content');
   
   // Capture content:
   // 1. If semantic structure exists, we don't capture innerHTML (it's already in the structure)
@@ -841,7 +842,7 @@ export function cardimage(element, options = {}) {
     // innerHTML, which is empty for a self-closing-style <wb-cardimage
     // src="..." content="...">. Confirmed live: "Optional content below the
     // image." never rendered, just an empty content area.
-    content: options.content || element.dataset.content || element.getAttribute('content') || element.innerHTML,
+    content: options.content || readAttr(element, 'content') || element.getAttribute('content') || element.innerHTML,
     ...options
   };
 
@@ -898,16 +899,16 @@ export function cardvideo(element, options = {}) {
     title: getAttr(element, options, 'title'),
     subtitle: getAttr(element, options, 'subtitle'),
     // Same bare-boolean-attribute gap as cardexpandable/cardminimizable above.
-    autoplay: parseBoolean(options.autoplay) ?? (element.dataset.autoplay === 'true' || element.getAttribute('autoplay') === 'true' || (element.hasAttribute('data-autoplay') && element.dataset.autoplay !== 'false') || element.hasAttribute('autoplay')),
-    muted: parseBoolean(options.muted) ?? (element.dataset.muted === 'true' || element.getAttribute('muted') === 'true' || (element.hasAttribute('data-muted') && element.dataset.muted !== 'false') || element.hasAttribute('muted')),
-    loop: parseBoolean(options.loop) ?? (element.dataset.loop === 'true' || element.getAttribute('loop') === 'true' || (element.hasAttribute('data-loop') && element.dataset.loop !== 'false') || element.hasAttribute('loop')),
-    controls: parseBoolean(options.controls) ?? (element.dataset.controls !== 'false' && element.getAttribute('controls') !== 'false'),
+    autoplay: parseBoolean(options.autoplay) ?? (readAttr(element, 'autoplay') === 'true' || element.getAttribute('autoplay') === 'true' || (readFlag(element, 'autoplay') && readAttr(element, 'autoplay') !== 'false') || element.hasAttribute('autoplay')),
+    muted: parseBoolean(options.muted) ?? (readAttr(element, 'muted') === 'true' || element.getAttribute('muted') === 'true' || (readFlag(element, 'muted') && readAttr(element, 'muted') !== 'false') || element.hasAttribute('muted')),
+    loop: parseBoolean(options.loop) ?? (readAttr(element, 'loop') === 'true' || element.getAttribute('loop') === 'true' || (readFlag(element, 'loop') && readAttr(element, 'loop') !== 'false') || element.hasAttribute('loop')),
+    controls: parseBoolean(options.controls) ?? (readAttr(element, 'controls') !== 'false' && element.getAttribute('controls') !== 'false'),
     // Same aspect-ratio pattern as cardimage() above: a fixed box size,
     // deterministic regardless of load success/failure, instead of falling
     // back to the browser's intrinsic video default (~300x150) (#482).
     aspect: getAttr(element, options, 'aspect') || '16/9',
     // #608: same missing getAttribute('content') gap as cardimage() above.
-    content: options.content || element.dataset.content || element.getAttribute('content') || element.innerHTML,
+    content: options.content || readAttr(element, 'content') || element.getAttribute('content') || element.innerHTML,
     ...options
   };
 
@@ -964,10 +965,10 @@ export function cardbutton(element, options = {}) {
   const config = {
     ...element.dataset,
     ...options,
-    primary: options.primary || element.dataset.primary || element.getAttribute('primary'),
-    secondary: options.secondary || element.dataset.secondary || element.getAttribute('secondary'),
-    primaryHref: options.primaryHref || element.dataset.primaryHref || element.getAttribute('primary-href'),
-    secondaryHref: options.secondaryHref || element.dataset.secondaryHref || element.getAttribute('secondary-href'),
+    primary: options.primary || readAttr(element, 'primary') || element.getAttribute('primary'),
+    secondary: options.secondary || readAttr(element, 'secondary') || element.getAttribute('secondary'),
+    primaryHref: options.primaryHref || readAttr(element, 'primaryHref') || element.getAttribute('primary-href'),
+    secondaryHref: options.secondaryHref || readAttr(element, 'secondaryHref') || element.getAttribute('secondary-href'),
     behavior: 'cardbutton'
   };
 
@@ -1033,22 +1034,22 @@ export function cardbutton(element, options = {}) {
  */
 export function cardhero(element, options = {}) {
   const config = {
-    background: options.background || element.dataset.background || element.getAttribute('background'),
-    overlay: parseBoolean(options.overlay) ?? (element.dataset.overlay !== 'false' && element.getAttribute('overlay') !== 'false'),
-    xalign: options.xalign || element.dataset.xalign || element.getAttribute('xalign') || 'center',
-    height: options.height || element.dataset.height || element.getAttribute('height') || '400px',
-    cta: options.cta || element.dataset.cta || element.getAttribute('cta'),
-    ctaHref: options.ctaHref || element.dataset.ctaHref || element.getAttribute('cta-href'),
+    background: options.background || readAttr(element, 'background') || element.getAttribute('background'),
+    overlay: parseBoolean(options.overlay) ?? (readAttr(element, 'overlay') !== 'false' && element.getAttribute('overlay') !== 'false'),
+    xalign: options.xalign || readAttr(element, 'xalign') || element.getAttribute('xalign') || 'center',
+    height: options.height || readAttr(element, 'height') || element.getAttribute('height') || '400px',
+    cta: options.cta || readAttr(element, 'cta') || element.getAttribute('cta'),
+    ctaHref: options.ctaHref || readAttr(element, 'ctaHref') || element.getAttribute('cta-href'),
     ctaTooltip: options.ctaTooltip || element.dataset.ctaTooltip || element.getAttribute('cta-tooltip'),
-    ctaSecondary: options.ctaSecondary || element.dataset.ctaSecondary || element.getAttribute('cta-secondary'),
-    ctaSecondaryHref: options.ctaSecondaryHref || element.dataset.ctaSecondaryHref || element.getAttribute('cta-secondary-href'),
+    ctaSecondary: options.ctaSecondary || readAttr(element, 'ctaSecondary') || element.getAttribute('cta-secondary'),
+    ctaSecondaryHref: options.ctaSecondaryHref || readAttr(element, 'ctaSecondaryHref') || element.getAttribute('cta-secondary-href'),
     ctaSecondaryTooltip: options.ctaSecondaryTooltip || element.dataset.ctaSecondaryTooltip || element.getAttribute('cta-secondary-tooltip'),
-    pretitle: options.pretitle || element.dataset.pretitle || element.getAttribute('pretitle'),
+    pretitle: options.pretitle || readAttr(element, 'pretitle') || element.getAttribute('pretitle'),
     // Documented in cardhero.schema.json (enum: default/cosmic/split/
     // minimal/gradient) but never actually read here -- CSS never got a
     // corresponding .wb-cardhero--<variant> rule either, so every variant
     // rendered pixel-identical (#383).
-    variant: options.variant || element.dataset.variant || element.getAttribute('variant') || 'default',
+    variant: options.variant || readAttr(element, 'variant') || element.getAttribute('variant') || 'default',
     ...options
   };
 
@@ -1208,16 +1209,16 @@ export function cardhero(element, options = {}) {
  */
 export function cardprofile(element, options = {}) {
   const config = {
-    avatar: options.avatar || element.dataset.avatar || element.getAttribute('avatar'),
-    name: options.name || element.dataset.name || element.getAttribute('name'),
-    role: options.role || element.dataset.role || element.getAttribute('role'),
-    bio: options.bio || element.dataset.bio || element.getAttribute('bio'),
-    cover: options.cover || element.dataset.cover || element.getAttribute('cover'),
+    avatar: options.avatar || readAttr(element, 'avatar') || element.getAttribute('avatar'),
+    name: options.name || readAttr(element, 'name') || element.getAttribute('name'),
+    role: options.role || readAttr(element, 'role') || element.getAttribute('role'),
+    bio: options.bio || readAttr(element, 'bio') || element.getAttribute('bio'),
+    cover: options.cover || readAttr(element, 'cover') || element.getAttribute('cover'),
     // schema-declared but previously never read -- size/align had zero
     // effect (#19: every declared attribute must produce a real effect).
-    size: options.size || element.dataset.size || element.getAttribute('size') || 'md',
-    align: options.align || element.dataset.align || element.getAttribute('align') || 'center',
-    hoverText: options.hoverText || element.dataset.hoverText || element.getAttribute('hoverText') || element.getAttribute('hover-text'),
+    size: options.size || readAttr(element, 'size') || element.getAttribute('size') || 'md',
+    align: options.align || readAttr(element, 'align') || element.getAttribute('align') || 'center',
+    hoverText: options.hoverText || readAttr(element, 'hoverText') || element.getAttribute('hoverText') || element.getAttribute('hover-text'),
     ...options
   };
 
@@ -1325,15 +1326,15 @@ export function cardprofile(element, options = {}) {
  */
 export function cardpricing(element, options = {}) {
   const config = {
-    plan: options.plan || element.dataset.plan || element.getAttribute('plan') || 'Basic Plan',
-    price: options.price || element.dataset.price || element.getAttribute('price') || '$0',
-    period: options.period || element.dataset.period || element.getAttribute('period') || '/month',
-    features: options.features || element.dataset.features?.split(',') || element.getAttribute('features')?.split(',') || ['Feature 1', 'Feature 2'],
-    cta: options.cta || element.dataset.cta || element.getAttribute('cta') || 'Get Started',
-    ctaHref: options.ctaHref || element.dataset.ctaHref || element.getAttribute('cta-href') || '#',
+    plan: options.plan || readAttr(element, 'plan') || element.getAttribute('plan') || 'Basic Plan',
+    price: options.price || readAttr(element, 'price') || element.getAttribute('price') || '$0',
+    period: options.period || readAttr(element, 'period') || element.getAttribute('period') || '/month',
+    features: options.features || readAttr(element, 'features')?.split(',') || element.getAttribute('features')?.split(',') || ['Feature 1', 'Feature 2'],
+    cta: options.cta || readAttr(element, 'cta') || element.getAttribute('cta') || 'Get Started',
+    ctaHref: options.ctaHref || readAttr(element, 'ctaHref') || element.getAttribute('cta-href') || '#',
     // Same bare-boolean-attribute gap as cardexpandable/cardminimizable above.
-    featured: parseBoolean(options.featured) ?? (element.dataset.featured === 'true' || element.getAttribute('featured') === 'true' || (element.hasAttribute('data-featured') && element.dataset.featured !== 'false') || element.hasAttribute('featured')),
-    background: options.background || element.dataset.background || element.getAttribute('background'),
+    featured: parseBoolean(options.featured) ?? (readAttr(element, 'featured') === 'true' || element.getAttribute('featured') === 'true' || (readFlag(element, 'featured') && readAttr(element, 'featured') !== 'false') || element.hasAttribute('featured')),
+    background: options.background || readAttr(element, 'background') || element.getAttribute('background'),
     ...options
   };
 
@@ -1439,11 +1440,11 @@ export function cardpricing(element, options = {}) {
  */
 export function cardstats(element, options = {}) {
   const config = {
-    value: options.value || element.dataset.value || element.getAttribute('value'),
-    label: options.label || element.dataset.label || element.getAttribute('label'),
-    icon: options.icon || element.dataset.icon || element.getAttribute('icon'),
-    trend: options.trend || element.dataset.trend || element.getAttribute('trend'),
-    trendValue: options.trendValue || element.getAttribute('trend-value') || element.dataset.trendValue,
+    value: options.value || readAttr(element, 'value') || element.getAttribute('value'),
+    label: options.label || readAttr(element, 'label') || element.getAttribute('label'),
+    icon: options.icon || readAttr(element, 'icon') || element.getAttribute('icon'),
+    trend: options.trend || readAttr(element, 'trend') || element.getAttribute('trend'),
+    trendValue: options.trendValue || element.getAttribute('trend-value') || readAttr(element, 'trendValue'),
     ...options
   };
 
@@ -1531,11 +1532,11 @@ export function cardstats(element, options = {}) {
  */
 export function cardtestimonial(element, options = {}) {
   const config = {
-    quote: options.quote || element.dataset.quote || element.getAttribute('quote') || element.textContent,
-    author: options.author || element.dataset.author || element.getAttribute('author'),
-    role: options.role || element.dataset.role || element.getAttribute('role'),
-    avatar: options.avatar || element.dataset.avatar || element.getAttribute('avatar'),
-    rating: options.rating || element.dataset.rating || element.getAttribute('rating'),
+    quote: options.quote || readAttr(element, 'quote') || element.getAttribute('quote') || element.textContent,
+    author: options.author || readAttr(element, 'author') || element.getAttribute('author'),
+    role: options.role || readAttr(element, 'role') || element.getAttribute('role'),
+    avatar: options.avatar || readAttr(element, 'avatar') || element.getAttribute('avatar'),
+    rating: options.rating || readAttr(element, 'rating') || element.getAttribute('rating'),
     ...options
   };
 
@@ -1611,14 +1612,14 @@ export function cardtestimonial(element, options = {}) {
  */
 export function cardproduct(element, options = {}) {
   const config = {
-    image: options.image || element.dataset.image || element.getAttribute('image'),
-    price: options.price || element.dataset.price || element.getAttribute('price'),
-    originalPrice: options.originalPrice || element.getAttribute('original-price') || element.dataset.originalPrice,
-    badge: options.badge || element.dataset.badge || element.getAttribute('badge'),
-    rating: options.rating || element.dataset.rating || element.getAttribute('rating'),
-    reviews: options.reviews || element.dataset.reviews || element.getAttribute('reviews'),
-    cta: options.cta || element.dataset.cta || element.getAttribute('cta') || 'Add to Cart',
-    description: options.description || element.dataset.description || element.getAttribute('description'),
+    image: options.image || readAttr(element, 'image') || element.getAttribute('image'),
+    price: options.price || readAttr(element, 'price') || element.getAttribute('price'),
+    originalPrice: options.originalPrice || element.getAttribute('original-price') || readAttr(element, 'originalPrice'),
+    badge: options.badge || readAttr(element, 'badge') || element.getAttribute('badge'),
+    rating: options.rating || readAttr(element, 'rating') || element.getAttribute('rating'),
+    reviews: options.reviews || readAttr(element, 'reviews') || element.getAttribute('reviews'),
+    cta: options.cta || readAttr(element, 'cta') || element.getAttribute('cta') || 'Add to Cart',
+    description: options.description || readAttr(element, 'description') || element.getAttribute('description'),
     ...options
   };
 
@@ -1779,14 +1780,14 @@ export function cardnotification(element, options = {}) {
 
   // Read variant (primary) with fallback to type (legacy).
   // Check dataset (data-*) first to match the framework's attribute convention.
-  const variant = options.variant || element.dataset.variant || element.getAttribute('variant')
-    || options.type || element.dataset.type || element.getAttribute('type') || 'info';
-  const title = options.title || element.dataset.title || element.getAttribute('title') || '';
-  const message = options.message || element.dataset.message || element.getAttribute('message') || element.textContent || '';
+  const variant = options.variant || readAttr(element, 'variant') || element.getAttribute('variant')
+    || options.type || readAttr(element, 'type') || element.getAttribute('type') || 'info';
+  const title = options.title || readAttr(element, 'title') || element.getAttribute('title') || '';
+  const message = options.message || readAttr(element, 'message') || element.getAttribute('message') || element.textContent || '';
   const dismissible = parseBoolean(
-    options.dismissible ?? element.dataset.dismissible ?? element.getAttribute('dismissible')
+    options.dismissible ?? readAttr(element, 'dismissible') ?? element.getAttribute('dismissible')
   ) !== false;
-  const customIcon = options.icon || element.dataset.icon || element.getAttribute('icon');
+  const customIcon = options.icon || readAttr(element, 'icon') || element.getAttribute('icon');
 
   // Default icon letters per variant
   const defaultIcons = { info: 'i', success: 's', warning: 'w', error: 'e' };
@@ -1903,18 +1904,18 @@ export function cardnotification(element, options = {}) {
  */
 export function cardfile(element, options = {}) {
   const config = {
-    filename: options.filename || element.dataset.filename || element.getAttribute('filename'),
+    filename: options.filename || readAttr(element, 'filename') || element.getAttribute('filename'),
     // cardfile.schema.json declares this property as `fileType` (HTML
     // attribute `file-type`, per project convention) -- reading the bare
     // `type` attribute never matched any real markup (every demo/doc author
     // used file-type=), so every card silently fell back to the generic
     // 'file' icon regardless of its declared type. `type` kept as a
     // fallback in case something out there authored it that way already.
-    type: options.type || element.dataset.fileType || element.getAttribute('file-type') || element.dataset.type || element.getAttribute('type') || 'file',
-    size: options.size || element.dataset.size || element.getAttribute('size'),
-    date: options.date || element.dataset.date || element.getAttribute('date'),
-    downloadable: parseBoolean(options.downloadable) ?? (element.dataset.downloadable !== 'false' && element.getAttribute('downloadable') !== 'false'),
-    href: options.href || element.dataset.href || element.getAttribute('href'),
+    type: options.type || readAttr(element, 'fileType') || element.getAttribute('file-type') || readAttr(element, 'type') || element.getAttribute('type') || 'file',
+    size: options.size || readAttr(element, 'size') || element.getAttribute('size'),
+    date: options.date || readAttr(element, 'date') || element.getAttribute('date'),
+    downloadable: parseBoolean(options.downloadable) ?? (readAttr(element, 'downloadable') !== 'false' && element.getAttribute('downloadable') !== 'false'),
+    href: options.href || readAttr(element, 'href') || element.getAttribute('href'),
     ...options
   };
 
@@ -2023,11 +2024,11 @@ export function cardfile(element, options = {}) {
  */
 export function cardlink(element, options = {}) {
   const config = {
-    href: options.href || element.dataset.href || element.getAttribute('href') || '#',
-    target: options.target || element.dataset.target || element.getAttribute('target') || '_self',
-    icon: options.icon || element.dataset.icon || element.getAttribute('icon'),
-    description: options.description || element.dataset.description || element.getAttribute('description') || '',
-    badge: options.badge || element.dataset.badge || element.getAttribute('badge') || '',
+    href: options.href || readAttr(element, 'href') || element.getAttribute('href') || '#',
+    target: options.target || readAttr(element, 'target') || element.getAttribute('target') || '_self',
+    icon: options.icon || readAttr(element, 'icon') || element.getAttribute('icon'),
+    description: options.description || readAttr(element, 'description') || element.getAttribute('description') || '',
+    badge: options.badge || readAttr(element, 'badge') || element.getAttribute('badge') || '',
     badgeVariant: options.badgeVariant || element.dataset.badgeVariant || element.getAttribute('badge-variant') || 'glass', // glass, gradient
     ...options
   };
@@ -2141,7 +2142,7 @@ export function cardlink(element, options = {}) {
  */
 export function cardhorizontal(element, options = {}) {
   const config = {
-    image: options.image || element.dataset.image || element.getAttribute('image'),
+    image: options.image || readAttr(element, 'image') || element.getAttribute('image'),
     // #602: the schema's property name (imagePosition) is camelCase, but an
     // author writing that same casing directly into HTML markup
     // (imagePosition="right") gets it silently parsed down to "imageposition"
@@ -2153,9 +2154,9 @@ export function cardhorizontal(element, options = {}) {
     // natural, expected mistake here, not a one-off. Accept both forms
     // rather than expect every author to always get one exact spelling
     // right.
-    imagePosition: options.imagePosition || element.dataset.imagePosition
+    imagePosition: options.imagePosition || readAttr(element, 'imagePosition')
       || element.getAttribute('image-position') || element.getAttribute('imageposition') || 'left',
-    imageWidth: options.imageWidth || element.dataset.imageWidth
+    imageWidth: options.imageWidth || readAttr(element, 'imageWidth')
       || element.getAttribute('image-width') || element.getAttribute('imagewidth') || '40%',
     // #455: unlike card()/cardimage()/cardvideo(), this never fell back to
     // element.innerHTML -- only a `content="..."` ATTRIBUTE worked (via
@@ -2165,7 +2166,7 @@ export function cardhorizontal(element, options = {}) {
     // sections, tests/fixtures/cards-permutation-matrix.html) silently lost
     // that text the instant `element.innerHTML = ''` ran a few lines down --
     // confirmed live, zero .wb-card__horiz-body elements ever got created.
-    content: options.content || element.dataset.content || element.innerHTML,
+    content: options.content || readAttr(element, 'content') || element.innerHTML,
     ...options
   };
 
@@ -2251,15 +2252,15 @@ export function cardhorizontal(element, options = {}) {
  */
 export function cardoverlay(element, options = {}) {
   const config = {
-    image: options.image || element.dataset.image || element.getAttribute('image'),
-    position: options.position || element.dataset.position || element.getAttribute('position') || 'bottom',
-    gradient: parseBoolean(options.gradient) ?? (element.dataset.gradient !== 'false' && element.getAttribute('gradient') !== 'false'),
-    height: options.height || element.dataset.height || element.getAttribute('height') || '300px',
+    image: options.image || readAttr(element, 'image') || element.getAttribute('image'),
+    position: options.position || readAttr(element, 'position') || element.getAttribute('position') || 'bottom',
+    gradient: parseBoolean(options.gradient) ?? (readAttr(element, 'gradient') !== 'false' && element.getAttribute('gradient') !== 'false'),
+    height: options.height || readAttr(element, 'height') || element.getAttribute('height') || '300px',
     // Neither was ever read here before -- xalign only existed on cardhero
     // (a different function), and variant only got composeCard's generic
     // wb-card--{variant} class with no matching CSS for dark/light/blur.
-    xalign: options.xalign || element.dataset.xalign || element.getAttribute('xalign') || 'left',
-    variant: options.variant || element.dataset.variant || element.getAttribute('variant') || 'default',
+    xalign: options.xalign || readAttr(element, 'xalign') || element.getAttribute('xalign') || 'left',
+    variant: options.variant || readAttr(element, 'variant') || element.getAttribute('variant') || 'default',
     ...options
   };
 
@@ -2380,15 +2381,15 @@ export function cardexpandable(element, options = {}) {
     // (see clickable/elevated above) -- this only checked expanded="true",
     // so <wb-cardexpandable expanded> (what every demo actually writes) was
     // silently ignored and always rendered collapsed.
-    expanded: parseBoolean(options.expanded) ?? (element.dataset.expanded === 'true' || element.getAttribute('expanded') === 'true' || (element.hasAttribute('data-expanded') && element.dataset.expanded !== 'false') || element.hasAttribute('expanded')),
-    maxHeight: options.maxHeight || element.dataset.maxHeight || element.getAttribute('max-height') || '100px',
+    expanded: parseBoolean(options.expanded) ?? (readAttr(element, 'expanded') === 'true' || element.getAttribute('expanded') === 'true' || (readFlag(element, 'expanded') && readAttr(element, 'expanded') !== 'false') || element.hasAttribute('expanded')),
+    maxHeight: options.maxHeight || readAttr(element, 'maxHeight') || element.getAttribute('max-height') || '100px',
     // #435: a pixel maxHeight truncates text mid-line, which looks broken
     // for arbitrary content -- `lines` clamps to exactly N full lines via
     // CSS line-clamp instead. An alternative to maxHeight, not a
     // replacement: maxHeight still applies as-is for non-text/mixed content
     // where line-clamp doesn't make sense (images, nested cards, ...). When
     // both are set, `lines` wins for the collapsed state.
-    lines: options.lines || element.dataset.lines || element.getAttribute('lines') || null,
+    lines: options.lines || readAttr(element, 'lines') || element.getAttribute('lines') || null,
     ...options
   };
 
@@ -2520,7 +2521,7 @@ export function cardminimizable(element, options = {}) {
     // Same bare-boolean-attribute gap as cardexpandable's `expanded` had --
     // <wb-cardminimizable minimized> (the only form any demo writes) was
     // never detected without this hasAttribute check.
-    minimized: parseBoolean(options.minimized) ?? (element.dataset.minimized === 'true' || element.getAttribute('minimized') === 'true' || (element.hasAttribute('data-minimized') && element.dataset.minimized !== 'false') || element.hasAttribute('minimized')),
+    minimized: parseBoolean(options.minimized) ?? (readAttr(element, 'minimized') === 'true' || element.getAttribute('minimized') === 'true' || (readFlag(element, 'minimized') && readAttr(element, 'minimized') !== 'false') || element.hasAttribute('minimized')),
     ...options
   };
 
@@ -2642,10 +2643,10 @@ export function carddraggable(element, options = {}) {
   const rawContent = element.innerHTML.trim();
 
   const config = {
-    constrain: options.constrain || element.dataset.constrain || element.getAttribute('constrain') || 'none',
-    axis: options.axis || element.dataset.axis || element.getAttribute('axis') || 'both',
-    snapToGrid: parseInt(options.snapToGrid || element.dataset.snapToGrid || element.getAttribute('snap-to-grid') || 0),
-    content: options.content || element.dataset.content || rawContent,
+    constrain: options.constrain || readAttr(element, 'constrain') || element.getAttribute('constrain') || 'none',
+    axis: options.axis || readAttr(element, 'axis') || element.getAttribute('axis') || 'both',
+    snapToGrid: parseInt(options.snapToGrid || readAttr(element, 'snapToGrid') || element.getAttribute('snap-to-grid') || 0),
+    content: options.content || readAttr(element, 'content') || rawContent,
     ...options
   };
 
@@ -2866,46 +2867,46 @@ export function cardportfolio(element, options = {}) {
 
   const config = {
     // Identity
-    name: options.name || element.dataset.name || element.getAttribute('name'),
-    title: options.title || element.dataset.title || element.getAttribute('title'),
-    company: options.company || element.dataset.company || element.getAttribute('company'),
-    location: options.location || element.dataset.location || element.getAttribute('location'),
-    tagline: options.tagline || element.dataset.tagline || element.getAttribute('tagline'),
-    availability: options.availability || element.dataset.availability || element.getAttribute('availability') || 'available',
+    name: options.name || readAttr(element, 'name') || element.getAttribute('name'),
+    title: options.title || readAttr(element, 'title') || element.getAttribute('title'),
+    company: options.company || readAttr(element, 'company') || element.getAttribute('company'),
+    location: options.location || readAttr(element, 'location') || element.getAttribute('location'),
+    tagline: options.tagline || readAttr(element, 'tagline') || element.getAttribute('tagline'),
+    availability: options.availability || readAttr(element, 'availability') || element.getAttribute('availability') || 'available',
     
     // Media
-    avatar: options.avatar || element.dataset.avatar || element.getAttribute('avatar'),
-    cover: options.cover || element.dataset.cover || element.getAttribute('cover'),
-    bio: options.bio || element.dataset.bio || element.getAttribute('bio'),
+    avatar: options.avatar || readAttr(element, 'avatar') || element.getAttribute('avatar'),
+    cover: options.cover || readAttr(element, 'cover') || element.getAttribute('cover'),
+    bio: options.bio || readAttr(element, 'bio') || element.getAttribute('bio'),
     
     // Contact
-    email: options.email || element.dataset.email || element.getAttribute('email'),
-    phone: options.phone || element.dataset.phone || element.getAttribute('phone'),
-    website: options.website || element.dataset.website || element.getAttribute('website'),
+    email: options.email || readAttr(element, 'email') || element.getAttribute('email'),
+    phone: options.phone || readAttr(element, 'phone') || element.getAttribute('phone'),
+    website: options.website || readAttr(element, 'website') || element.getAttribute('website'),
     
     // Social
-    linkedin: options.linkedin || element.dataset.linkedin || element.getAttribute('linkedin'),
-    twitter: options.twitter || element.dataset.twitter || element.getAttribute('twitter'),
-    github: options.github || element.dataset.github || element.getAttribute('github'),
-    dribbble: options.dribbble || element.dataset.dribbble || element.getAttribute('dribbble'),
+    linkedin: options.linkedin || readAttr(element, 'linkedin') || element.getAttribute('linkedin'),
+    twitter: options.twitter || readAttr(element, 'twitter') || element.getAttribute('twitter'),
+    github: options.github || readAttr(element, 'github') || element.getAttribute('github'),
+    dribbble: options.dribbble || readAttr(element, 'dribbble') || element.getAttribute('dribbble'),
     
     // Skills & Experience
-    skills: options.skills || element.dataset.skills || element.getAttribute('skills'),
-    skillLevels: parseJSON(options.skillLevels || element.dataset.skillLevels || element.getAttribute('skill-levels')),
-    experience: parseJSON(options.experience || element.dataset.experience || element.getAttribute('experience')),
-    education: parseJSON(options.education || element.dataset.education || element.getAttribute('education')),
-    projects: parseJSON(options.projects || element.dataset.projects || element.getAttribute('projects')),
-    certifications: options.certifications || element.dataset.certifications || element.getAttribute('certifications'),
-    languages: options.languages || element.dataset.languages || element.getAttribute('languages'),
-    stats: parseJSON(options.stats || element.dataset.stats || element.getAttribute('stats')),
+    skills: options.skills || readAttr(element, 'skills') || element.getAttribute('skills'),
+    skillLevels: parseJSON(options.skillLevels || readAttr(element, 'skillLevels') || element.getAttribute('skill-levels')),
+    experience: parseJSON(options.experience || readAttr(element, 'experience') || element.getAttribute('experience')),
+    education: parseJSON(options.education || readAttr(element, 'education') || element.getAttribute('education')),
+    projects: parseJSON(options.projects || readAttr(element, 'projects') || element.getAttribute('projects')),
+    certifications: options.certifications || readAttr(element, 'certifications') || element.getAttribute('certifications'),
+    languages: options.languages || readAttr(element, 'languages') || element.getAttribute('languages'),
+    stats: parseJSON(options.stats || readAttr(element, 'stats') || element.getAttribute('stats')),
     
     // CTA
-    cta: options.cta || element.dataset.cta || element.getAttribute('cta'),
-    ctaHref: options.ctaHref || element.dataset.ctaHref || element.getAttribute('cta-href'),
+    cta: options.cta || readAttr(element, 'cta') || element.getAttribute('cta'),
+    ctaHref: options.ctaHref || readAttr(element, 'ctaHref') || element.getAttribute('cta-href'),
     
     // Variant
-    variant: options.variant || element.dataset.variant || element.getAttribute('variant') || 'default',
-    size: options.size || element.dataset.size || element.getAttribute('size') || 'auto',
+    variant: options.variant || readAttr(element, 'variant') || element.getAttribute('variant') || 'default',
+    size: options.size || readAttr(element, 'size') || element.getAttribute('size') || 'auto',
     ...options
   };
 

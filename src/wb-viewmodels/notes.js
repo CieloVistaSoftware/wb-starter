@@ -1,3 +1,4 @@
+import { readAttr } from '../core/read-attr.js';
 /**
  * Notes Behavior
  * -----------------------------------------------------------------------------
@@ -36,13 +37,13 @@ const NOTES_FILE_PATH = '/data/notes.json';
 export function notes(element, options = {}) {
   // Plain attributes are canonical (Law 11); data-* accepted for back-compat only.
   const config = {
-    position: options.position || element.getAttribute('position') || element.dataset.position || 'left',
-    maxWidth: options.maxWidth || element.getAttribute('max-width') || element.dataset.maxWidth || '50vw',
-    minWidth: options.minWidth || element.getAttribute('min-width') || element.dataset.minWidth || '200px',
-    defaultWidth: options.defaultWidth || element.getAttribute('default-width') || element.dataset.defaultWidth || '320px',
-    autoSave: options.autoSave ?? (element.getAttribute('auto-save') !== 'false' && element.dataset.autoSave !== 'false'),
+    position: options.position || element.getAttribute('position') || readAttr(element, 'position') || 'left',
+    maxWidth: options.maxWidth || element.getAttribute('max-width') || readAttr(element, 'maxWidth') || '50vw',
+    minWidth: options.minWidth || element.getAttribute('min-width') || readAttr(element, 'minWidth') || '200px',
+    defaultWidth: options.defaultWidth || element.getAttribute('default-width') || readAttr(element, 'defaultWidth') || '320px',
+    autoSave: options.autoSave ?? (element.getAttribute('auto-save') !== 'false' && readAttr(element, 'autoSave') !== 'false'),
     savePath: options.savePath || element.getAttribute('save-path') || element.dataset.savePath || NOTES_FILE_PATH,
-    placeholder: options.placeholder || element.getAttribute('placeholder') || element.dataset.placeholder || 'Add your notes here...',
+    placeholder: options.placeholder || element.getAttribute('placeholder') || readAttr(element, 'placeholder') || 'Add your notes here...',
     restoreState: false,
     ...options
   };
@@ -572,7 +573,7 @@ export function notes(element, options = {}) {
     const btn = e.target.closest('.wb-notes__wide-btn, .wb-notes__close-corner');
     if (!btn) return;
 
-    const action = btn.dataset.action;
+    const action = readAttr(btn, 'action');
     const pos = btn.dataset.pos;
 
     if (action === 'collapse-left') collapseToSide('left');

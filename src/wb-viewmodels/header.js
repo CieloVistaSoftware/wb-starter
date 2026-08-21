@@ -1,3 +1,4 @@
+import { readFlag } from '../core/read-attr.js';
 /**
  * Header Behavior
  * -----------------------------------------------------------------------------
@@ -27,7 +28,7 @@ export function header(element) {
   
   // Get attributes. Plain `sticky` is canonical (schema property, Law 11);
   // `data-sticky` accepted for back-compat only.
-  const sticky = element.hasAttribute('sticky') || element.hasAttribute('data-sticky');
+  const sticky = element.hasAttribute('sticky') || readFlag(element, 'sticky');
   
   // Apply sticky if requested
   if (sticky) {

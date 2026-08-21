@@ -1,10 +1,12 @@
 {
   "name": "wb-starter",
-  "version": "3.0.80",
+  "version": "3.0.81",
   "type": "module",
   "description": "Modern website starter kit powered by WB Behaviors",
   "main": "index.html",
   "scripts": {
+    "release": "node scripts/release.mjs",
+    "release:check": "node scripts/release.mjs --check",
     "start": "node scripts/update-docs-manifest.js && node server.js",
     "start:mcp": "node scripts/start-mcp.js",
     "mcp:healthcheck": "node scripts/mcp-healthcheck.js",

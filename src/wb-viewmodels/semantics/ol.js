@@ -1,3 +1,4 @@
+import { readAttr } from '../../core/read-attr.js';
 /**
  * OL - Enhanced <ol> element (Ordered List)
  * Adds numbering styles, custom start, variants
@@ -10,9 +11,9 @@ export function ol(element, options = {}) {
   }
 
   const config = {
-    variant: options.variant || element.dataset.variant || 'default',
+    variant: options.variant || readAttr(element, 'variant') || 'default',
     numberType: options.numberType || element.dataset.numberType || 'decimal',
-    gap: options.gap || element.dataset.gap || '0.5rem',
+    gap: options.gap || readAttr(element, 'gap') || '0.5rem',
     indentSize: options.indentSize || element.dataset.indentSize || '1.5rem',
     start: options.start || element.dataset.start || element.start || 1,
     ...options

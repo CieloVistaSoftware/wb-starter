@@ -1,3 +1,4 @@
+import { readFlag } from '../core/read-attr.js';
 /**
  * Move Behaviors
  * -----------------------------------------------------------------------------
@@ -29,8 +30,8 @@ function findMoveableParent(element) {
   let parent = element.parentElement;
   while (parent) {
     // Check for grid item markers
-    if (parent.hasAttribute('data-grid-item') || 
-        parent.hasAttribute('data-moveable') ||
+    if (readFlag(parent, 'grid-item') || 
+        readFlag(parent, 'moveable') ||
         parent.classList.contains('grid-item') ||
         parent.classList.contains('moveable')) {
       return parent;
@@ -55,7 +56,7 @@ function getGridInfo(container) {
   const style = getComputedStyle(container);
   const columns = style.gridTemplateColumns.split(' ').length;
   const items = Array.from(container.children).filter(el => 
-    el.hasAttribute('data-grid-item') || !el.matches('style, script, template')
+    readFlag(el, 'grid-item') || !el.matches('style, script, template')
   );
   return { columns, items, total: items.length };
 }

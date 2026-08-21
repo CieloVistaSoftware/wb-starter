@@ -1,3 +1,4 @@
+import { readFlag, readAttr } from '../core/read-attr.js';
 /**
  * Validator Behavior
  * -----------------------------------------------------------------------------
@@ -44,7 +45,7 @@ export function validator(element, options = {}) {
 
   // Parse validation rules from data attribute
   const parseRules = (input) => {
-    const ruleStr = input.dataset.validate || '';
+    const ruleStr = readAttr(input, 'validate') || '';
     return ruleStr.split(/\s+/).filter(Boolean).map(rule => {
       const [name, param] = rule.split(':');
       return { name, param };
@@ -129,7 +130,7 @@ export function validator(element, options = {}) {
   // Event handler for individual inputs
   const onInputEvent = (e) => {
     const input = e.target;
-    if (input.hasAttribute('data-validate')) {
+    if (readFlag(input, 'validate')) {
       const inputErrorsEvt = validateInput(input);
       showError(input, inputErrorsEvt);
     }

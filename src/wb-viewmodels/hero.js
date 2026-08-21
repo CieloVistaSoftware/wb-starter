@@ -1,3 +1,4 @@
+import { readAttr } from '../core/read-attr.js';
 /**
  * Hero Behavior
  * -----------------------------------------------------------------------------
@@ -18,7 +19,7 @@
 export function hero(element, options = {}) {
   // Merge options and data attributes
   const config = {
-    variant: options.variant || element.dataset.variant || 'default',
+    variant: options.variant || readAttr(element, 'variant') || 'default',
     // Other config is handled by the template engine
   };
 

@@ -1,3 +1,4 @@
+import { readFlag } from '../core/read-attr.js';
 /**
  * Footer Behavior
  * -----------------------------------------------------------------------------
@@ -25,7 +26,7 @@ export function footer(element) {
   if (element.tagName.toLowerCase() !== 'wb-footer') element.classList.add('wb-footer');
   
   // Get attributes
-  const sticky = element.hasAttribute('data-sticky');
+  const sticky = readFlag(element, 'sticky');
   
   // Apply sticky if requested
   if (sticky) {

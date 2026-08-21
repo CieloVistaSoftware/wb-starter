@@ -1,3 +1,4 @@
+import { readFlag } from '../../core/read-attr.js';
 import { createToast } from '../feedback.js';
 
 /**
@@ -7,7 +8,7 @@ import { createToast } from '../feedback.js';
  */
 export function table(element, options = {}) {
   const config = {
-    striped: options.striped ?? (element.hasAttribute('striped') || element.hasAttribute('data-striped')),
+    striped: options.striped ?? (element.hasAttribute('striped') || readFlag(element, 'striped')),
     // #669: the schema publishes `hoverable`, this only ever read `hover`, so
     // the documented name silently did nothing. Accept both.
     hover: options.hover ?? (

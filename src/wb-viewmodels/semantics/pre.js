@@ -1,3 +1,4 @@
+import { readFlag, readAttr } from '../../core/read-attr.js';
 import { writeToClipboard } from '../copy.js';
 
 /**
@@ -28,10 +29,10 @@ export function pre(element, options = {}) {
 
   // Try to infer language from child code element if not set on pre
   const codeChild = element.querySelector('code');
-  const childLanguage = codeChild ? (codeChild.getAttribute('language') || codeChild.dataset.language || '') : '';
+  const childLanguage = codeChild ? (codeChild.getAttribute('language') || readAttr(codeChild, 'language') || '') : '';
 
   // v3: plain `scrollable` attribute is canonical; data-scrollable accepted for back-compat.
-  const scrollable = options.scrollable ?? (element.getAttribute('scrollable') === 'true' || element.dataset.scrollable === 'true');
+  const scrollable = options.scrollable ?? (element.getAttribute('scrollable') === 'true' || readAttr(element, 'scrollable') === 'true');
   // Code blocks should read like a code editor: DO NOT wrap by default (wrapping
   // breaks tokens mid-word, e.g. "wb-btn--" / "sm"). Long lines scroll
   // horizontally instead. Opt into wrapping explicitly with wrap="true". (#199)
@@ -39,19 +40,19 @@ export function pre(element, options = {}) {
 
   const config = {
     // v3: plain `language` attribute is canonical; data-language accepted for back-compat.
-    language: options.language || element.getAttribute('language') || element.dataset.language || childLanguage || '',
+    language: options.language || element.getAttribute('language') || readAttr(element, 'language') || childLanguage || '',
     // v3 default: ON, matching an actual code editor (VS Code shows line
     // numbers by default) — explicit show-line-numbers="false" opts out.
     showLineNumbers: options.showLineNumbers ?? (element.getAttribute('show-line-numbers') !== 'false'),
-    showCopy: options.showCopy ?? (element.hasAttribute('show-copy') || element.hasAttribute('data-show-copy') || element.hasAttribute('data-copy')),
-    maxHeight: options.maxHeight || element.getAttribute('max-height') || element.dataset.maxHeight || '',
+    showCopy: options.showCopy ?? (element.hasAttribute('show-copy') || readFlag(element, 'show-copy') || readFlag(element, 'copy')),
+    maxHeight: options.maxHeight || element.getAttribute('max-height') || readAttr(element, 'maxHeight') || '',
     // v3: plain `wrap` attribute is canonical; data-wrap accepted for back-compat.
     wrap: options.wrap ?? (element.hasAttribute('wrap')
       ? element.getAttribute('wrap') !== 'false'
-      : (element.hasAttribute('data-wrap') ? element.dataset.wrap !== 'false' : defaultWrap)),
+      : (readFlag(element, 'wrap') ? readAttr(element, 'wrap') !== 'false' : defaultWrap)),
     scrollable: scrollable,
     // v3: plain `size` attribute is canonical; data-size accepted for back-compat.
-    size: options.size || element.getAttribute('size') || element.dataset.size || 'md',
+    size: options.size || element.getAttribute('size') || readAttr(element, 'size') || 'md',
     ...options
   };
 

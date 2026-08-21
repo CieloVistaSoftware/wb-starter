@@ -1,3 +1,4 @@
+import { readAttr } from '../core/read-attr.js';
 /**
  * Span/Badge Behavior
  * -----------------------------------------------------------------------------
@@ -12,7 +13,7 @@
  */
 export function span(element, options = {}) {
   element.classList.add('wb-span');
-  const variant = options.variant || element.dataset.variant;
+  const variant = options.variant || readAttr(element, 'variant');
   
   if (variant) {
     // Map simplified variants to full class names if needed

@@ -1,3 +1,4 @@
+import { readFlag } from '../core/read-attr.js';
 /**
  * WBAudio Component
  * =================
@@ -91,7 +92,7 @@ export class WBAudio extends HTMLElement {
    * API: Check if using default demo
    */
   isUsingDefault() {
-    return this.hasAttribute('data-using-default');
+    return readFlag(this, 'using-default');
   }
 }
 

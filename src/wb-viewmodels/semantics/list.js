@@ -1,3 +1,4 @@
+import { readFlag, readAttr } from '../../core/read-attr.js';
 /**
  * List Behavior
  * Populates a list from data-items attribute
@@ -6,9 +7,9 @@
 export function list(element, options = {}) {
   // Plain attributes are canonical (Law 11); data-* accepted for back-compat only.
   const config = {
-    items: options.items || element.getAttribute('items') || element.dataset.items || '',
+    items: options.items || element.getAttribute('items') || readAttr(element, 'items') || '',
     dividers: options.dividers !== undefined ? options.dividers :
-      (element.hasAttribute('dividers') || element.hasAttribute('data-dividers')),
+      (element.hasAttribute('dividers') || readFlag(element, 'dividers')),
     ...options
   };
 

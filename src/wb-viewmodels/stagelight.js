@@ -1,3 +1,4 @@
+import { readAttr } from '../core/read-attr.js';
 /**
  * Stage Light Component
  * -----------------------------------------------------------------------------
@@ -202,13 +203,13 @@ export default function stagelight(element, options = {}) {
   injectStyles();
 
   const config = {
-    variant: options.variant || element.getAttribute('variant') || element.dataset.variant || 'beam',
-    color: options.color || element.getAttribute('color') || element.dataset.color || '#ffffff',
-    size: options.size || element.getAttribute('size') || element.dataset.size || '300px',
-    intensity: options.intensity || element.getAttribute('intensity') || element.dataset.intensity || '0.5',
-    speed: options.speed || element.getAttribute('speed') || element.dataset.speed || '3s',
-    target: options.target || element.getAttribute('target') || element.dataset.target || 'mouse',
-    label: options.label || element.getAttribute('label') || element.dataset.label,
+    variant: options.variant || element.getAttribute('variant') || readAttr(element, 'variant') || 'beam',
+    color: options.color || element.getAttribute('color') || readAttr(element, 'color') || '#ffffff',
+    size: options.size || element.getAttribute('size') || readAttr(element, 'size') || '300px',
+    intensity: options.intensity || element.getAttribute('intensity') || readAttr(element, 'intensity') || '0.5',
+    speed: options.speed || element.getAttribute('speed') || readAttr(element, 'speed') || '3s',
+    target: options.target || element.getAttribute('target') || readAttr(element, 'target') || 'mouse',
+    label: options.label || element.getAttribute('label') || readAttr(element, 'label'),
     ...options
   };
 

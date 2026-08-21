@@ -1,3 +1,4 @@
+import { readFlag, readAttr } from '../../core/read-attr.js';
 /**
  * Progress - Enhanced <progress> element
  * Adds animations, colors, labels, indeterminate state
@@ -79,13 +80,13 @@ export function progress(element, options = {}) {
   }
 
   const config = {
-    value: parseFloat(options.value || element.value || element.dataset.value || 0),
-    max: parseFloat(options.max || element.max || element.dataset.max || 100),
-    showLabel: options.showLabel ?? element.hasAttribute('data-show-label'),
-    animated: options.animated ?? element.dataset.animated !== 'false',
-    variant: options.variant || element.dataset.variant || 'primary',
-    size: options.size || element.dataset.size || 'md',
-    indeterminate: options.indeterminate ?? element.hasAttribute('data-indeterminate'),
+    value: parseFloat(options.value || element.value || readAttr(element, 'value') || 0),
+    max: parseFloat(options.max || element.max || readAttr(element, 'max') || 100),
+    showLabel: options.showLabel ?? readFlag(element, 'show-label'),
+    animated: options.animated ?? readAttr(element, 'animated') !== 'false',
+    variant: options.variant || readAttr(element, 'variant') || 'primary',
+    size: options.size || readAttr(element, 'size') || 'md',
+    indeterminate: options.indeterminate ?? readFlag(element, 'indeterminate'),
     ...options
   };
 

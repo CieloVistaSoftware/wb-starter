@@ -1,3 +1,4 @@
+import { readFlag } from '../core/read-attr.js';
 // Standalone form behavior extracted from enhancements.js
 export function form(element, options = {}) {
   // <wb-form> is a custom tag, not a real <form> — FormData/.action/.method/
@@ -14,7 +15,7 @@ export function form(element, options = {}) {
   }
 
   const config = {
-    ajax: options.ajax ?? (host.hasAttribute('ajax') || host.hasAttribute('data-ajax')),
+    ajax: options.ajax ?? (host.hasAttribute('ajax') || readFlag(host, 'ajax')),
     validate: options.validate ?? host.getAttribute('validate') !== 'false',
     ...options
   };

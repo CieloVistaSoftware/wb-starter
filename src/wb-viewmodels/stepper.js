@@ -1,3 +1,4 @@
+import { readAttr } from '../core/read-attr.js';
 // Standalone stepper behavior extracted from enhancements.js
 //
 // Supports two markup forms:
@@ -12,11 +13,11 @@ export function stepper(element, options = {}) {
     return Number.isFinite(n) ? n : d;
   };
   const config = {
-    min: num(options.min ?? element.getAttribute('min') ?? element.dataset.min, -Infinity),
-    max: num(options.max ?? element.getAttribute('max') ?? element.dataset.max, Infinity),
-    step: num(options.step ?? element.getAttribute('step') ?? element.dataset.step, 1),
+    min: num(options.min ?? element.getAttribute('min') ?? readAttr(element, 'min'), -Infinity),
+    max: num(options.max ?? element.getAttribute('max') ?? readAttr(element, 'max'), Infinity),
+    step: num(options.step ?? element.getAttribute('step') ?? readAttr(element, 'step'), 1),
     value: num(
-      options.value ?? element.getAttribute('value') ?? element.dataset.value ?? (isInput ? element.value : '0'),
+      options.value ?? element.getAttribute('value') ?? readAttr(element, 'value') ?? (isInput ? element.value : '0'),
       0
     ),
     ...options,

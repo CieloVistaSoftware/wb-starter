@@ -249,11 +249,27 @@ function getAutoInjectBehavior(element) {
   // additive with genuinely independent modifiers (x-ripple on an
   // <article>, say) but not with another IS-A-ish behavior for the same
   // element.
+  // #763: this used to require `behaviors[other]` — i.e. the OTHER behavior had
+  // to be registered at this exact moment. Under the lazy runtime it usually is
+  // not, so the guard missed and BOTH ran: `<article x-cardportfolio>` got
+  // cardportfolio() from the attribute AND card() from autoInject, building two
+  // complete cards into one element. Reported as "showing two examples of the
+  // same thing"; input.js already documented the same race for x-search /
+  // x-password ("concentric rings") and worked around it locally.
+  //
+  // x- IS the behavior namespace, so an x- attribute that is not one of the
+  // framework's own directives names a behavior whether it has loaded yet or
+  // not. Deciding on the attribute rather than the registry makes this
+  // independent of load order, which is the only way the race actually closes.
+  const DIRECTIVES = new Set(['behavior', 'eager', 'hydrated', 'ignore', 'cloak']);
   const prefixAttr = `${prefix}-`;
   for (const attr of element.attributes) {
     if (!attr.name.startsWith(prefixAttr)) continue;
     const other = attr.name.slice(prefixAttr.length);
-    if (other !== candidate && behaviors[other]) return null;
+    if (other === candidate) continue;                 // its own attribute (#746)
+    if (DIRECTIVES.has(other) || other.endsWith('-init')) continue;
+    if (other.startsWith('as-')) continue;             // morph alias, handled elsewhere
+    return null;
   }
 
   return candidate;

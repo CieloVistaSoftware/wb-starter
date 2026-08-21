@@ -1,3 +1,4 @@
+import { readFlag } from '../core/read-attr.js';
 /**
  * Ripple Behavior
  * -----------------------------------------------------------------------------
@@ -10,7 +11,7 @@ export function ripple(element, options = {}) {
   const config = {
     color: options.color || element.getAttribute('ripple-color') || element.getAttribute('ripple-color') || 'rgba(255, 255, 255, 0.4)',
     duration: parseInt(options.duration || element.getAttribute('ripple-duration') || element.getAttribute('ripple-duration') || '600', 10),
-    centered: options.centered ?? (element.hasAttribute('data-ripple-centered') || element.hasAttribute('ripple-centered')),
+    centered: options.centered ?? (readFlag(element, 'ripple-centered') || element.hasAttribute('ripple-centered')),
     ...options
   };
 

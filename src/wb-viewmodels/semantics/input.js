@@ -1,3 +1,4 @@
+import { readAttr } from '../../core/read-attr.js';
 import { logError } from '../../core/error-logger.js';
 /**
  * Input - Enhanced <input> element
@@ -201,14 +202,14 @@ export function input(element, options = {}) {
   }
 
   const config = {
-    type: options.type || element.dataset.type || element.type || 'text',
-    variant: options.variant || element.getAttribute('variant') || element.dataset.variant || '',
+    type: options.type || readAttr(element, 'type') || element.type || 'text',
+    variant: options.variant || element.getAttribute('variant') || readAttr(element, 'variant') || '',
     // #754: the plain `size` attribute -- the documented spelling, and the one
     // every example writes -- was never read here; only data-size was. Same
     // gap as #752.
-    size: options.size || element.getAttribute('size') || element.dataset.size || 'md',
+    size: options.size || element.getAttribute('size') || readAttr(element, 'size') || 'md',
     clearable: options.clearable ?? element.hasAttribute('clearable'),
-    prefix: options.prefix || element.getAttribute('prefix') || element.dataset.prefix || element.dataset.icon || '',
+    prefix: options.prefix || element.getAttribute('prefix') || element.dataset.prefix || readAttr(element, 'icon') || '',
     suffix: options.suffix || element.getAttribute('suffix') || element.dataset.suffix || '',
     ...options
   };

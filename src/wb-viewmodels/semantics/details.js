@@ -1,3 +1,4 @@
+import { readFlag, readAttr } from '../../core/read-attr.js';
 /**
  * Details - Enhanced <details> element
  * Helper Attribute: [x-behavior="details"]
@@ -12,14 +13,14 @@
  */
 export function details(element, options = {}) {
   const config = {
-    open: options.open ?? (element.hasAttribute('open') || element.hasAttribute('data-open')),
-    animated: options.animated ?? element.dataset.animated !== 'false',
+    open: options.open ?? (element.hasAttribute('open') || readFlag(element, 'open')),
+    animated: options.animated ?? readAttr(element, 'animated') !== 'false',
     ...options
   };
 
   // If not already a <details>, wrap content
   if (element.tagName !== 'DETAILS') {
-    const summaryText = element.getAttribute('summary') || element.dataset.summary || element.dataset.title || 'Details';
+    const summaryText = element.getAttribute('summary') || readAttr(element, 'summary') || readAttr(element, 'title') || 'Details';
     const contentHtml = element.innerHTML;
     
     const detailsEl = document.createElement('details');

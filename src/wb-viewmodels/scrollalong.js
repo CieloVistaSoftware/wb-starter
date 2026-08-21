@@ -1,3 +1,4 @@
+import { readAttr } from '../core/read-attr.js';
 /**
  * ScrollAlong Behavior (Sticky Sidebar / Tag Along Menu)
  * -----------------------------------------------------------------------------
@@ -26,7 +27,7 @@ export function scrollalong(element, options = {}) {
   // tag name.
 
   const offset = parseInt(
-    options.offset ?? element.getAttribute('offset') ?? element.dataset.offset ?? '0',
+    options.offset ?? element.getAttribute('offset') ?? readAttr(element, 'offset') ?? '0',
     10
   );
 

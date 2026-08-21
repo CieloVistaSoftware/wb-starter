@@ -1,3 +1,4 @@
+import { readFlag } from '../core/read-attr.js';
 /**
  * Navigation Behaviors
  * -----------------------------------------------------------------------------
@@ -38,7 +39,7 @@ export function navbar(element, options = {}) {
     logoSize: options.logoSize || element.getAttribute('logo-size') || '32',
     tagline: options.tagline || element.getAttribute('tagline') || '',
     items: (options.items || element.getAttribute('items') || '').split(',').filter(Boolean),
-    sticky: options.sticky ?? element.hasAttribute('data-sticky'),
+    sticky: options.sticky ?? readFlag(element, 'sticky'),
     ...options
   };
 
@@ -248,7 +249,7 @@ export function sidebar(element, options = {}) {
   let config = {
     items: (options.items || element.getAttribute('items') || '').split(',').filter(Boolean),
     active: options.active || element.getAttribute('active') || '',
-    collapsed: options.collapsed ?? element.hasAttribute('data-collapsed'),
+    collapsed: options.collapsed ?? readFlag(element, 'collapsed'),
     ...options
   };
 
@@ -312,7 +313,7 @@ export function sidebar(element, options = {}) {
     let shouldRender = false;
     for (const mutation of mutations) {
       if (mutation.attributeName === 'data-collapsed') {
-        config.collapsed = element.hasAttribute('data-collapsed');
+        config.collapsed = readFlag(element, 'collapsed');
         shouldRender = true;
       } else if (mutation.attributeName === 'data-items') {
         config.items = (element.getAttribute('items') || '').split(',').filter(Boolean);
