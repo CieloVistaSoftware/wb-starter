@@ -3,6 +3,14 @@
   <p>What's actually live on this site right now — every push to <code>main</code> deploys straight to <a href="https://cielovistasoftware.github.io/wb-starter/" target="_blank" rel="noopener">cielovistasoftware.github.io/wb-starter</a>, so this list is the real changelog, not a promise of a future release.</p>
 </div>
 
+<section id="whats-new-3-0-70">
+  <h2><a href="https://github.com/CieloVistaSoftware/wb-starter/releases/tag/v3.0.70" target="_blank" rel="noopener" title="release v3.0.70">3.0.70</a> — 2026-08-21</h2>
+  <p><strong>This is what is live at 3.0.70.</strong></p>
+  <ul>
+    <li class="wn-item wn-request"><span class="wn-tag">Request</span> <strong>Examples no longer write an attribute autoInject makes unnecessary.</strong> <code>&lt;fieldset x-fieldset&gt;</code> and <code>&lt;figure x-figure&gt;</code> taught a duplication the framework exists to remove — a semantic host gets its behavior from the tag alone. 13 redundant attributes removed across the examples. An <code>x-</code> naming a <em>different</em> behavior stays, because <code>&lt;button x-dialog&gt;</code> is the point of that example, not duplication. A compliance test now reads the tag-to-behavior map from its own source and fails the build if a redundant attribute reappears — the same class of defect that let <code>x-button</code> silently suppress the button behavior for three releases (<a href="https://github.com/CieloVistaSoftware/wb-starter/issues/749" target="_blank" rel="noopener">#749</a>, <a href="https://github.com/CieloVistaSoftware/wb-starter/issues/746" target="_blank" rel="noopener">#746</a>).</li>
+  </ul>
+</section>
+
 <section id="whats-new-3-0-69">
   <h2><a href="https://github.com/CieloVistaSoftware/wb-starter/releases/tag/v3.0.69" target="_blank" rel="noopener" title="release v3.0.69">3.0.69</a> — 2026-08-21</h2>
   <p><strong>This is what is live at 3.0.69.</strong></p>

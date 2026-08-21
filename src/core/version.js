@@ -3,7 +3,7 @@
  * Regenerated on every commit via .husky/pre-commit.
  */
 export const VERSION = {
-  "version": "3.0.69",
-  "commit": "c6b5fbb",
-  "builtAt": "2026-08-21T19:00:12.791Z"
+  "version": "3.0.70",
+  "commit": "197f50d",
+  "builtAt": "2026-08-21T19:02:57.448Z"
 };

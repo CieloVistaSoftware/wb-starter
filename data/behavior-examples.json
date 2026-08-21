@@ -100,7 +100,7 @@
       "alternates": []
     },
     "x-image": {
-      "source": "<img x-image src=\"https://picsum.photos/200/150?r=enh1\" alt=\"Lazy loaded\" lazy class=\"demo-image\">",
+      "source": "<img src=\"https://picsum.photos/200/150?r=enh1\" alt=\"Lazy loaded\" lazy class=\"demo-image\">",
       "alternates": [
         "<img x-image src=\"https://picsum.photos/200/150?r=enh2\" alt=\"Zoomable\" zoomable class=\"demo-image\">"
       ]
@@ -246,7 +246,7 @@
       ]
     },
     "x-card": {
-      "source": "<article x-card title=\"Trailhead access\" subtitle=\"Updated this morning\" elevated>\n  The north gate is open. Parking fills by 9am on weekends — the overflow lot adds\n  about ten minutes on foot.\n</article>",
+      "source": "<article title=\"Trailhead access\" subtitle=\"Updated this morning\" elevated>\n  The north gate is open. Parking fills by 9am on weekends — the overflow lot adds\n  about ten minutes on foot.\n</article>",
       "alternates": []
     },
     "x-cardbutton": {
@@ -326,7 +326,7 @@
       "alternates": []
     },
     "x-button": {
-      "source": "<button x-button variant=\"primary\" icon=\"download\" size=\"md\">Download report</button>",
+      "source": "<button variant=\"primary\" icon=\"download\" size=\"md\">Download report</button>",
       "alternates": []
     },
     "x-badge": {
@@ -350,7 +350,7 @@
       "alternates": []
     },
     "x-progress": {
-      "source": "<progress x-progress value=\"72\" max=\"100\" label=\"Uploading footage\" show-value></progress>",
+      "source": "<progress value=\"72\" max=\"100\" label=\"Uploading footage\" show-value></progress>",
       "alternates": []
     },
     "x-progressbar": {
@@ -366,11 +366,11 @@
       "alternates": []
     },
     "x-header": {
-      "source": "<header x-header title=\"Field notes\" subtitle=\"Everything that happened this week\" badge=\"New\"></header>",
+      "source": "<header title=\"Field notes\" subtitle=\"Everything that happened this week\" badge=\"New\"></header>",
       "alternates": []
     },
     "x-footer": {
-      "source": "<footer x-footer brand=\"Cielo Vista Software\" copyright=\"2026\" links=\"Privacy,Terms,Status\"></footer>",
+      "source": "<footer brand=\"Cielo Vista Software\" copyright=\"2026\" links=\"Privacy,Terms,Status\"></footer>",
       "alternates": []
     },
     "x-navbar": {
@@ -422,7 +422,7 @@
       "alternates": []
     },
     "x-form": {
-      "source": "<form x-form validate ajax>\n  <label>Email <input type=\"email\" name=\"email\" required placeholder=\"you@example.com\"></label>\n  <label>Message <textarea name=\"message\" rows=\"3\" required></textarea></label>\n  <button type=\"submit\">Button example of x-form</button>\n</form>",
+      "source": "<form validate ajax>\n  <label>Email <input type=\"email\" name=\"email\" required placeholder=\"you@example.com\"></label>\n  <label>Message <textarea name=\"message\" rows=\"3\" required></textarea></label>\n  <button type=\"submit\">Button example of x-form</button>\n</form>",
       "alternates": []
     },
     "x-formrow": {
@@ -430,7 +430,7 @@
       "alternates": []
     },
     "x-fieldset": {
-      "source": "<fieldset x-fieldset collapsible>\n  <legend>Notification settings</legend>\n  <label><input type=\"checkbox\" checked> Build finished</label>\n  <label><input type=\"checkbox\"> Nightly audit</label>\n</fieldset>",
+      "source": "<fieldset collapsible>\n  <legend>Notification settings</legend>\n  <label><input type=\"checkbox\" checked> Build finished</label>\n  <label><input type=\"checkbox\"> Nightly audit</label>\n</fieldset>",
       "alternates": []
     },
     "x-inputgroup": {
@@ -454,7 +454,7 @@
       "alternates": []
     },
     "x-label": {
-      "source": "<label x-label required label-position=\"top\">Deploy key</label>",
+      "source": "<label required label-position=\"top\">Deploy key</label>",
       "alternates": []
     },
     "x-autocomplete": {
@@ -506,7 +506,7 @@
       "alternates": []
     },
     "x-video": {
-      "source": "<video x-video src=\"/demos/sample.mp4\" poster=\"https://picsum.photos/seed/screening/640/360\" controls></video>",
+      "source": "<video src=\"/demos/sample.mp4\" poster=\"https://picsum.photos/seed/screening/640/360\" controls></video>",
       "alternates": []
     },
     "x-img": {
@@ -514,7 +514,7 @@
       "alternates": []
     },
     "x-figure": {
-      "source": "<figure x-figure>\n  <img src=\"https://picsum.photos/seed/bridge/480/300\" alt=\"Suspension bridge in fog\">\n  <figcaption>The 6am crossing, before the fog lifted.</figcaption>\n</figure>",
+      "source": "<figure>\n  <img src=\"https://picsum.photos/seed/bridge/480/300\" alt=\"Suspension bridge in fog\">\n  <figcaption>The 6am crossing, before the fog lifted.</figcaption>\n</figure>",
       "alternates": []
     },
     "x-vimeo": {
@@ -522,11 +522,11 @@
       "alternates": []
     },
     "x-pre": {
-      "source": "<pre x-pre>npm run test:compliance\n  7591 passed\n     82 failed</pre>",
+      "source": "<pre>npm run test:compliance\n  7591 passed\n     82 failed</pre>",
       "alternates": []
     },
     "x-mark": {
-      "source": "<p>Search matched <mark x-mark>light DOM</mark> in 12 documents.</p>",
+      "source": "<p>Search matched <mark>light DOM</mark> in 12 documents.</p>",
       "alternates": []
     },
     "x-typewriter": {
