@@ -3,6 +3,14 @@
   <p>What's actually live on this site right now — every push to <code>main</code> deploys straight to <a href="https://cielovistasoftware.github.io/wb-starter/" target="_blank" rel="noopener">cielovistasoftware.github.io/wb-starter</a>, so this list is the real changelog, not a promise of a future release.</p>
 </div>
 
+<section id="whats-new-3-0-75">
+  <h2><a href="https://github.com/CieloVistaSoftware/wb-starter/releases/tag/v3.0.75" target="_blank" rel="noopener" title="release v3.0.75">3.0.75</a> — 2026-08-21</h2>
+  <p><strong>This is what is live at 3.0.75.</strong></p>
+  <ul>
+    <li class="wn-item wn-bug"><span class="wn-tag">Bug</span> <strong>Generated examples stopped writing <code>&lt;figure x-figure&gt;</code>.</strong> 3.0.70 removed the redundant attributes from the seeded examples, but examples the showcase <em>generates</em> took a different decision: they asked whether a display label existed, and several behaviors have none — so <code>&lt;figure&gt;</code> fell through and got the attribute anyway. Whether a tag auto-injects a behavior is a fact about the tag-to-behavior map, not about whether someone wrote a label, so the generator now asks the map (<a href="https://github.com/CieloVistaSoftware/wb-starter/issues/754" target="_blank" rel="noopener">#754</a>).</li>
+  </ul>
+</section>
+
 <section id="whats-new-3-0-74">
   <h2><a href="https://github.com/CieloVistaSoftware/wb-starter/releases/tag/v3.0.74" target="_blank" rel="noopener" title="release v3.0.74">3.0.74</a> — 2026-08-21</h2>
   <p><strong>This is what is live at 3.0.74.</strong></p>

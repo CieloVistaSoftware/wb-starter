@@ -946,10 +946,20 @@
       // ... this is because we created a module for the semantic button").
       // Emitting `<button x-button>` here would demonstrate exactly the
       // duplication we are removing.
-      const isNative = label && label !== attr;
+      // #754 -- John: "don't use x-figure in a figure tag."
+      //
+      // `label` is a DISPLAY string and is empty for several behaviors, so a
+      // falsy label sent <figure> down the attribute branch and emitted
+      // `<figure x-figure>` -- the duplication the comment above says must not
+      // be emitted. Whether the host auto-injects is a fact about the tag->
+      // behavior map, not about whether someone wrote a label, so ask the map:
+      // nativeByBehavior is already built from tag-map's nativeMap by
+      // semanticHostFor(), which ran above to pick this very host.
+      const autoInjected = !!(nativeByBehavior && nativeByBehavior[behavior] === host);
+      const isNative = (label && label !== attr) || autoInjected;
       if (isNative) {
         // Selector form: input[type="checkbox"] -> <input type="checkbox">
-        const sel = label.match(/^([a-z][a-z0-9-]*)(?:\[([^=]+)="([^"]+)"\])?$/i);
+        const sel = label ? label.match(/^([a-z][a-z0-9-]*)(?:\[([^=]+)="([^"]+)"\])?$/i) : null;
         const tag = sel ? sel[1] : host;
         const extra = sel && sel[2] ? ` ${sel[2]}="${sel[3]}"` : '';
         const seed = seedAttributes(behavior);
