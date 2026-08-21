@@ -3,6 +3,14 @@
   <p>What's actually live on this site right now — every push to <code>main</code> deploys straight to <a href="https://cielovistasoftware.github.io/wb-starter/" target="_blank" rel="noopener">cielovistasoftware.github.io/wb-starter</a>, so this list is the real changelog, not a promise of a future release.</p>
 </div>
 
+<section id="whats-new-3-0-87">
+  <h2><a href="https://github.com/CieloVistaSoftware/wb-starter/releases/tag/v3.0.87" target="_blank" rel="noopener" title="release v3.0.87">3.0.87</a> — 2026-08-21</h2>
+  <p><strong>This is what is live at 3.0.87.</strong></p>
+  <ul>
+    <li class="wn-item wn-bug"><span class="wn-tag">Bug</span> <strong>The dialog example had no way to open it.</strong> It put <code>title</code> and <code>content</code> on the <code>&lt;dialog&gt;</code> itself — but in this framework an element carrying those IS the trigger, so the dialog had no trigger and nothing could reopen it once closed. The example now shows the pattern the behavior documents: a <code>&lt;dialog&gt;</code> whose children are its content, and a button that calls <code>.open()</code> on it.</li>
+  </ul>
+</section>
+
 <section id="whats-new-3-0-86">
   <h2><a href="https://github.com/CieloVistaSoftware/wb-starter/releases/tag/v3.0.86" target="_blank" rel="noopener" title="release v3.0.86">3.0.86</a> — 2026-08-21</h2>
   <p><strong>This is what is live at 3.0.86.</strong></p>

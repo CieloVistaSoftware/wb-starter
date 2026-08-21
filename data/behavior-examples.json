@@ -401,7 +401,7 @@
       "alternates": []
     },
     "x-dialog": {
-      "source": "<dialog open\n  title=\"Delete branch?\"\n  content=\"fix/706-dropdown will be removed. This cannot be undone.\"\n  size=\"md\"></dialog>",
+      "source": "<button onclick=\"document.getElementById('delete-branch').open()\">\n  Open the dialog\n</button>\n<dialog id=\"delete-branch\" size=\"md\">\n  <h2>Delete branch?</h2>\n  <p>fix/706-dropdown will be removed. This cannot be undone.</p>\n</dialog>",
       "alternates": [
         "<button x-dialog title=\"Delete branch?\" content=\"fix/706-dropdown will be removed. This cannot be undone.\" size=\"md\">\n  x-dialog · title: Delete branch? · content: fix/706-dropdown will be removed. This cannot be undone. · size: md\n</button>"
       ]
