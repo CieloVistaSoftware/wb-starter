@@ -609,6 +609,17 @@ export default class WBSite {
           // Small delay to ensure DOM is fully updated
           setTimeout(() => window.WB.scan(main), 10);
         }
+
+        // #730 -- John: "if all elements on the page have an id then duplicate
+        // work would have a run time error." Checked AFTER the old page has been
+        // replaced and the new one scanned, so a normal navigation never trips
+        // it -- only genuine duplication does. Dynamic import so a page render
+        // never waits on the detector, and never fails because of it.
+        setTimeout(() => {
+          import('./duplicate-ids.js')
+            .then((m) => m.reportDuplicateIds(`after navigating to ${pageId}`))
+            .catch(() => { /* the detector is never allowed to break a render */ });
+        }, 400);
       } else {
         main.innerHTML = this.render404(pageId);
       }
