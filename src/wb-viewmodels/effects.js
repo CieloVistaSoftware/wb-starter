@@ -481,6 +481,63 @@ export function sparkle(element, options = {}) {
 }
 
 /**
+ * #786 -- John: "glowing buttons must emulate a click when pressed this means
+ * the user has to be fooled the button went down and then returned."
+ *
+ * The continuous effects -- glow, rainbow, particle -- run an infinite
+ * animation and bind no click handler. On a <button> that reads as broken:
+ * something that looks pressable, pressed, and did not move.
+ *
+ * This gives the press back. It is deliberately NOT a click handler -- the
+ * behavior still does not DO anything on click, and pretending otherwise
+ * would be the same lie as a button labelled "Download report" that downloads
+ * nothing. What it restores is the physical feedback: down on press, back on
+ * release.
+ *
+ * Held for a minimum duration because a real click is faster than the eye:
+ * pointerdown and pointerup can land in the same frame, the class goes on and
+ * off before a single paint, and nothing is seen. 120ms is long enough to
+ * register and short enough not to feel laggy.
+ */
+function addPressFeedback(element) {
+  const PRESS_MS = 120;
+  let pressedAt = 0;
+  let releaseTimer = null;
+
+  const down = () => {
+    pressedAt = Date.now();
+    clearTimeout(releaseTimer);
+    element.classList.add('wb-pressed');
+  };
+
+  const up = () => {
+    const held = Date.now() - pressedAt;
+    const wait = Math.max(0, PRESS_MS - held);
+    clearTimeout(releaseTimer);
+    releaseTimer = setTimeout(() => element.classList.remove('wb-pressed'), wait);
+  };
+
+  element.addEventListener('pointerdown', down);
+  element.addEventListener('pointerup', up);
+  // Releasing outside the element, or losing the pointer entirely, must still
+  // let it come back up -- otherwise it stays visually held down for good.
+  element.addEventListener('pointerleave', up);
+  element.addEventListener('pointercancel', up);
+  // Keyboard activation is a press too: Space/Enter on a focused button.
+  element.addEventListener('keydown', (e) => { if (e.key === ' ' || e.key === 'Enter') down(); });
+  element.addEventListener('keyup', (e) => { if (e.key === ' ' || e.key === 'Enter') up(); });
+
+  return () => {
+    clearTimeout(releaseTimer);
+    element.classList.remove('wb-pressed');
+    element.removeEventListener('pointerdown', down);
+    element.removeEventListener('pointerup', up);
+    element.removeEventListener('pointerleave', up);
+    element.removeEventListener('pointercancel', up);
+  };
+}
+
+/**
  * Glow - Pulsing glow effect
  */
 export function glow(element, options = {}) {
@@ -489,8 +546,10 @@ export function glow(element, options = {}) {
   element.style.setProperty('--glow-color', color);
   element.style.animation = 'wb-glow 1.5s ease-in-out infinite';
   element.style.boxShadow = `0 0 10px ${color}, 0 0 20px ${color}, 0 0 30px ${color}`;
-  
-  return () => element.classList.remove('wb-glow');
+
+  const releasePress = addPressFeedback(element);
+
+  return () => { releasePress(); element.classList.remove('wb-glow'); };
 }
 
 /**
@@ -521,7 +580,12 @@ export function rainbow(element, options = {}) {
   element.style.color = 'transparent';
   element.style.animation = `wb-rainbow ${duration} linear infinite`;
   
-  return () => element.classList.remove('wb-rainbow');
+
+  const releasePress = addPressFeedback(element);
+  return () => {
+    releasePress();
+    element.classList.remove('wb-rainbow');
+  };
 }
 
 /**
@@ -693,7 +757,10 @@ export function particle(element, options = {}) {
     particles.push(p);
   }
   
+
+  const releasePress = addPressFeedback(element);
   return () => {
+    releasePress();
     particles.forEach(p => p.remove());
     element.classList.remove('wb-particle');
   };

@@ -296,3 +296,45 @@ wb-sticky.is-stuck,
   pointer-events: none;
   visibility: hidden;
 }
+
+/* ─────────────────────────────────────────────────────────────────────────
+   #786 — press feedback for continuous effects
+
+   John: "glowing buttons must emulate a click when pressed this means the
+   user has to be fooled the button went down and then returned."
+
+   glow / rainbow / particle run an infinite animation and bind no click
+   handler, so a <button> carrying one looked pressable, got pressed, and did
+   not move — which reads as broken.
+
+   This restores the physical response only. The behavior still does nothing
+   on click, and pretending otherwise would be the same lie as a button
+   labelled "Download report" that downloads nothing.
+   ───────────────────────────────────────────────────────────────────────── */
+.wb-pressed {
+  /* translate + scale, not a box-shadow change: these elements already own
+     their box-shadow (that IS the glow), and overriding it would fight the
+     effect rather than sit on top of it. */
+  transform: translateY(1px) scale(0.98);
+  filter: brightness(0.92);
+}
+
+/* Fast down, slower back up — a real button gives way immediately and
+   returns under spring. Equal timings both ways feel mechanical. */
+.wb-glow,
+.wb-rainbow,
+.wb-particle {
+  transition: transform 140ms ease-out, filter 140ms ease-out;
+}
+
+.wb-pressed {
+  transition: transform 40ms ease-in, filter 40ms ease-in;
+}
+
+/* Respect a reader who has asked for less motion: keep the brightness cue,
+   drop the movement. */
+@media (prefers-reduced-motion: reduce) {
+  .wb-pressed {
+    transform: none;
+  }
+}
