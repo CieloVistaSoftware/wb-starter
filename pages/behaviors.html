@@ -599,6 +599,16 @@
         docCache.set(behavior, md);
       }
       liveDoc.hidden = false;
+      // #746 -- John: "Don't just say Documentation say Button Documentation."
+      // The panel sits under a rendered example that changes with the
+      // selection; an unqualified "Documentation" gives the reader nothing to
+      // tie it to. There is one <summary> reused across every behavior, so it
+      // is set here rather than in the static markup.
+      const docSummary = liveDoc.querySelector('.behaviors-live__doc-summary');
+      if (docSummary) {
+        docSummary.textContent =
+          behavior.charAt(0).toUpperCase() + behavior.slice(1) + ' Documentation';
+      }
       if (!md) {
         // #673 -- John, on `article`: "Where is the docs element below this?"
         // This used to `return` while the panel was still hidden, so for the

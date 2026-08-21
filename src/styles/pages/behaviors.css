@@ -521,12 +521,32 @@ footer a:hover {
   align-content: center;
 }
 
+/* #746 -- dead since #744 moved the fullscreen target from the stage to
+   #behaviors-workspace, so this never matches. Kept only as a fallback for a
+   direct stage fullscreen; the hardcoded #1f2937 it used to carry is gone,
+   the theme token stands on its own. */
 .behaviors-live__stage:fullscreen {
-  background: var(--bg-secondary, #1f2937);
+  background: var(--bg-secondary);
   contain: none;
-  min-height: 100vh;
   padding: 2rem;
   overflow: auto;
+}
+
+/* #746 -- John, on the fullscreen example: "No empty space."
+   #711 gave the stage `align-content: center` so a short example would not
+   pile all its slack underneath itself in a panel-height box. At full screen
+   that same rule centres one <details> in a 100vh box and produces screens of
+   nothing above and below it. Fullscreen has the opposite problem to the
+   panel: there is more than enough room, so content starts at the top and the
+   example takes the width it is given. */
+#behaviors-workspace:fullscreen .behaviors-live__stage {
+  align-content: start;
+  min-height: 0;
+  padding: 1.25rem;
+}
+
+#behaviors-workspace:fullscreen .behaviors-live__example {
+  width: 100%;
 }
 
 /* Sits at the end of the panel header, after the note. */
@@ -909,4 +929,37 @@ footer a:hover {
   max-height: none;
   height: 100%;
   overflow-y: auto;
+}
+
+/* #746 — John, on the attribute table's Values column: "These must break at
+   the end of the vw into next row."
+
+   An enum with 17 values (icon: star · check · close · warning · …) rendered
+   as one unbroken line that ran past the right edge of the viewport, so the
+   last values were unreachable — the row simply extended off-screen rather
+   than wrapping. Each value is an inline <code>, and the surrounding table
+   defaults to sizing columns to content, so the row grew instead of the text
+   flowing.
+
+   table-layout:fixed makes the columns honour the container width rather than
+   the content, which is what lets the cell wrap at all; the cell then wraps
+   normally and long unbroken tokens (input[type="checkbox"]) break rather
+   than push the column open. */
+.behaviors-live__doc-body table {
+  table-layout: fixed;
+  width: 100%;
+}
+
+.behaviors-live__doc-body td,
+.behaviors-live__doc-body th {
+  white-space: normal;
+  overflow-wrap: anywhere;
+  vertical-align: top;
+}
+
+/* The individual value chips stay intact on their own line-box; wrapping
+   happens BETWEEN them, so a value is never split down the middle. */
+.behaviors-live__doc-body td code {
+  white-space: nowrap;
+  display: inline-block;
 }

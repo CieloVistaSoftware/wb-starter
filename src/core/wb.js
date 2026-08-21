@@ -222,11 +222,22 @@ function getAutoInjectBehavior(element) {
   // variant showed the identical unstyled background.
   if (!getConfig('autoInject') && !element.hasAttribute('variant')) return null;
 
-  // Check if candidate is already explicitly applied
-  // We don't need to check here because inject() handles duplicates.
-  // But we might want to avoid the call if we know it's there.
+  // #745: `x-{candidate}` naming the SAME behavior must NOT disqualify the
+  // element. This used to `return null` on it, on the assumption that the
+  // explicit attribute path would apply the behavior instead — it does not,
+  // so writing the attribute the docs teach turned the behavior OFF. Measured
+  // live, side by side, at 3.0.66:
+  //
+  //   <button x-button variant="outline" icon size>  -> class "", no icon
+  //   <button         variant="outline" icon size>  -> "wb-button
+  //                                       wb-button--md wb-button--outline",
+  //                                       icon rendered
+  //
+  // Duplicate application is already impossible: inject() dedupes via the
+  // `applied`/`pending` maps, which is what the original comment here relied
+  // on. A DIFFERENT x-{behavior} still disqualifies — that check is the loop
+  // below, which correctly tests `other !== candidate`.
   const prefix = getConfig('prefix') || 'x';
-  if (element.hasAttribute(`${prefix}-${candidate}`)) return null;
   if (element.hasAttribute(candidate) && !RESERVED_ATTRIBUTES.has(candidate)) return null;
   if (element.hasAttribute(`x-${candidate}-init`)) return null;
 

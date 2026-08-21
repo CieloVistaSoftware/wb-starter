@@ -231,7 +231,7 @@
       "alternates": []
     },
     "x-details": {
-      "source": "<details summary=\"Trail conditions\" animated>\n  <img src=\"https://picsum.photos/seed/details/480/200\" alt=\"Trail through autumn woodland\" width=\"480\" height=\"200\">\n  <p>Open to show the summary text is authored via the <code>summary</code>\n     attribute — it reads \"Details\" only when none is set.</p>\n</details>",
+      "source": "<details summary=\"Details sample of Trail conditions\" animated>\n  <img src=\"https://picsum.photos/seed/details/480/200\" alt=\"Trail through autumn woodland\" width=\"480\" height=\"200\">\n  <p>Open to show the summary text is authored via the <code>summary</code>\n     attribute — it reads \"Details\" only when none is set.</p>\n</details>",
       "alternates": []
     },
     "x-code": {
@@ -390,7 +390,7 @@
       "alternates": []
     },
     "x-accordion": {
-      "source": "<div x-accordion>\n  <details summary=\"How do behaviors attach?\"><p>WB scans for x-* attributes and calls the matching behavior function on the element, in place.</p></details>\n  <details summary=\"Is there a shadow root?\"><p>No. Light DOM only — you can style and query everything.</p></details>\n  <details summary=\"What about a build step?\"><p>There isn't one. The browser loads the modules directly.</p></details>\n</div>",
+      "source": "<div x-accordion>\n  <details summary=\"Details sample of How do behaviors attach?\"><p>WB scans for x-* attributes and calls the matching behavior function on the element, in place.</p></details>\n  <details summary=\"Details sample of Is there a shadow root?\"><p>No. Light DOM only — you can style and query everything.</p></details>\n  <details summary=\"Details sample of What about a build step?\"><p>There isn't one. The browser loads the modules directly.</p></details>\n</div>",
       "alternates": []
     },
     "x-input": {
