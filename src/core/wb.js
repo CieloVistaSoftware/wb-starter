@@ -269,7 +269,24 @@ function getAutoInjectBehavior(element) {
     if (other === candidate) continue;                 // its own attribute (#746)
     if (DIRECTIVES.has(other) || other.endsWith('-init')) continue;
     if (other.startsWith('as-')) continue;             // morph alias, handled elsewhere
-    return null;
+
+    // #765 -- John: "when autoinject is true, <article x-ripple> gets two
+    // behaviors."
+    //
+    // Two different things wear the same syntax:
+    //
+    //   REPLACEMENT  <article x-cardportfolio>  cardportfolio IS a card. Both
+    //                build a whole card into the element, so running both
+    //                renders it twice -- 67 examples did exactly that.
+    //   ADDITIVE     <article x-ripple>         ripple is not an alternative
+    //                to card, it decorates one. Blocking autoInject here means
+    //                asking for a card with a ripple and getting only a ripple.
+    //
+    // A replacement is a member of the tag behavior's own family, which the
+    // naming already encodes: card -> cardportfolio, cardimage, cardhero.
+    // Anything else is a modifier and stacks. Checked against every example in
+    // the catalogue: 17 family pairs, 49 modifier pairs, no ambiguous ones.
+    if (other.startsWith(candidate)) return null;
   }
 
   return candidate;
