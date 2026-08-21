@@ -1635,6 +1635,20 @@
     }
 
     async function showLive(token, variant, label, prop, isBool, form) {
+      // #769 -- John, 4th report: "get rid of all this dead space!"
+      //
+      // fitStageToOverlays() grows the stage so an open dropdown or a
+      // fullscreen dialog has somewhere to live. That growth has to be dropped
+      // when a DIFFERENT example is shown, or the next one inherits a box
+      // sized for the last one -- a two-line <details> centred in 400px of
+      // nothing.
+      //
+      // The reset existed, on ONE of the two render paths. Generated examples
+      // took the other one and kept the previous height. Same shape as the
+      // dev-server notice in 3.0.73: a fix applied to one branch of a two-
+      // branch render. Reset here instead, before either branch runs, so a
+      // path cannot be missed again.
+      liveStage.style.minHeight = '';
       const raw = sourceFor(token, form);
       const src = raw ? withOption(raw, token, prop, variant, isBool) : raw;
       liveEl.hidden = false;
