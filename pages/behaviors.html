@@ -40,10 +40,17 @@
           class="behaviors-live__fullscreen"
           type="button"
           x-fullscreen
-          target="#behaviors-live-stage"
+          target="#behaviors-live-example"
           label="&#9974; Fullscreen"></button>
       </header>
-      <div id="behaviors-live-stage" class="behaviors-live__stage"></div>
+      <!-- #722 -- John: "When clicking fullscreen all of these elements go
+           fullscreen." The STAGE is the panel-sized surface the example is
+           centred in (#710/#711), so expanding it expanded the empty space too.
+           This wrapper is the parent container the original ask asked for: it
+           hugs the rendered example, and it is what goes fullscreen. -->
+      <div id="behaviors-live-stage" class="behaviors-live__stage">
+        <div id="behaviors-live-example" class="behaviors-live__example"></div>
+      </div>
 
       <!-- #666 — John: "switch the html to be right under the rendered thing,
            then put the event hook up last, but show the events right under the
@@ -447,6 +454,7 @@
     const liveToken = document.getElementById('behaviors-live-token');
     const liveNote = document.getElementById('behaviors-live-note');
     const liveStage = document.getElementById('behaviors-live-stage');
+    const liveExample = document.getElementById('behaviors-live-example');
     const liveCode = document.getElementById('behaviors-live-code');
     const liveDoc = document.getElementById('behaviors-live-doc');
     let liveDocBody = document.getElementById('behaviors-live-doc-body');
@@ -1005,7 +1013,7 @@
         // second pass the new wrapper is firstElementChild while the original
         // already carries `root`. Handing it out twice would put a duplicate
         // id in the document and break the very selector the snippet teaches.
-        if (el === liveStage.firstElementChild && !document.getElementById(root)) {
+        if (el === liveExample.firstElementChild && !document.getElementById(root)) {
           el.id = root;
           return;
         }
@@ -1017,7 +1025,7 @@
         while (document.getElementById(candidate)) candidate = `${name}-${++n}`;
         el.id = candidate;
       });
-      return liveStage.firstElementChild ? liveStage.firstElementChild.id : null;
+      return liveExample.firstElementChild ? liveExample.firstElementChild.id : null;
     }
 
     // Examples that need behaviour beyond what a behavior provides are wired
@@ -1236,7 +1244,7 @@
       const from = describeElement(target);
       // An event that started on a descendant is a different story from one on
       // the example root, and that difference is exactly what was missing.
-      const root = liveStage.firstElementChild;
+      const root = liveExample.firstElementChild;
       const origin = target && root && target !== root && root.contains(target)
         ? ` <span class="behaviors-live__events-from">from ${describeElement(root)}</span>` : '';
       const li = document.createElement('li');
@@ -1403,13 +1411,13 @@
         const generated = generatedExample(token, variant, label, prop, isBool);
         liveNote.textContent = 'generated example — no demo on this page';
         liveCode.innerHTML = '';
-        liveStage.innerHTML = generated;
+        liveExample.innerHTML = generated;
         const genRootId = assignExampleIds(token, optionText);
-        resetEvents(liveStage.firstElementChild && liveStage.firstElementChild.tagName.toLowerCase(), token, genRootId);
+        resetEvents(liveExample.firstElementChild && liveExample.firstElementChild.tagName.toLowerCase(), token, genRootId);
         await renderSource(generated);
         assignExampleIds(token, optionText); // #675: catch behavior-injected children
         const genDescribed = optionDescription(token, prop);
-        const genSummary = genDescribed || summarise(liveStage.firstElementChild);
+        const genSummary = genDescribed || summarise(liveExample.firstElementChild);
         liveNote.textContent = genSummary
           ? `generated — ${genSummary}`
           : 'generated example — no demo on this page';
@@ -1419,9 +1427,9 @@
       liveNote.textContent = optionDescription(token, prop) || 'running live';
       // #703: drop the previous example's grown height before measuring this one.
       liveStage.style.minHeight = '';
-      liveStage.innerHTML = src;
+      liveExample.innerHTML = src;
       const rootId = assignExampleIds(token, optionText);
-      resetEvents(liveStage.firstElementChild && liveStage.firstElementChild.tagName.toLowerCase(), token, rootId);
+      resetEvents(liveExample.firstElementChild && liveExample.firstElementChild.tagName.toLowerCase(), token, rootId);
       await renderSource(src);
       assignExampleIds(token, optionText); // #675: catch behavior-injected children
       // After the upgrade, so the summary describes the UPGRADED element rather
@@ -1432,7 +1440,7 @@
       // and it is accurate for options with no visible surface change, where
       // summarise() can only ever report the host's background.
       const described = optionDescription(token, prop);
-      const summary = described || summarise(liveStage.firstElementChild);
+      const summary = described || summarise(liveExample.firstElementChild);
       if (summary) liveNote.textContent = summary;
       // #703: an example can render something taller than the stage's 6rem
       // floor even before anything is opened.
