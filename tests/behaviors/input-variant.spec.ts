@@ -6,7 +6,11 @@ import { test, expect, Page } from '@playwright/test';
 async function setup(page: Page, html: string): Promise<void> {
   await page.goto('/demos/test-harness.html');
   await page.waitForFunction(() => (window as any).WB && (window as any).WB.behaviors, { timeout: 15000 });
-  await page.waitForFunction(() => (window as any).WBSite && (window as any).WBSite.currentPage, { timeout: 20000 });
+  // #727/#691: NOT WBSite. /demos/test-harness.html is a standalone page, not
+  // an SPA route, so window.WBSite is never created there -- this waited the
+  // full 20s and then failed before a single assertion ran. Same bug as
+  // details-summary.spec.ts had. WB.behaviors is the signal that applies, and
+  // setup() calls WB.scan() itself below.
   await page.evaluate((h: string) => {
     const c = document.createElement('div');
     c.id = 'input-test-area';
