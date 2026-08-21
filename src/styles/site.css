@@ -2004,3 +2004,52 @@ img { max-width: 100%; height: auto; }
 .site__nav.site__nav--mobile-open {
   display: flex !important;
 }
+
+/* ─────────────────────────────────────────────────────────────────────────
+   What's New — change-type colour coding
+
+   Three things a reader needs to tell apart before deciding what to test:
+   a capability that did not exist (New), a change John asked for (Request),
+   and something that was broken (Bug). The left rule plus the tag makes the
+   type readable at a glance without parsing the sentence.
+
+   Colours come from the semantic state tokens in themes.css — no literals
+   here, so the coding follows the theme (light/dark) like everything else.
+   pages/*.css does not load in the SPA (see the note at line ~1844), which
+   is why these live in site.css.
+   ───────────────────────────────────────────────────────────────────────── */
+.wn-item {
+  border-left: 3px solid transparent;
+  padding-left: 0.75rem;
+  margin-block: 0.4rem;
+  list-style-position: outside;
+}
+
+.wn-tag {
+  display: inline-block;
+  padding: 0.1rem 0.5rem;
+  margin-right: 0.4rem;
+  border-radius: 0.75rem;
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  vertical-align: 0.05em;
+  white-space: nowrap;
+}
+
+.wn-new       { border-left-color: var(--info-color); }
+.wn-request   { border-left-color: var(--success-color); }
+.wn-bug       { border-left-color: var(--danger-color); }
+
+.wn-new  > .wn-tag,  .wn-tag.wn-new     { background: var(--alert-info-bg);    color: var(--info-color); }
+.wn-request > .wn-tag, .wn-tag.wn-request { background: var(--alert-success-bg); color: var(--success-color); }
+.wn-bug  > .wn-tag,  .wn-tag.wn-bug     { background: var(--alert-danger-bg);  color: var(--danger-color); }
+
+/* Legend row: the tags carry their own colour class, so they are not inside
+   a .wn-item and need no left rule. */
+.wn-legend {
+  margin-block: 0.5rem 1rem;
+  font-size: 0.875rem;
+  opacity: 0.9;
+}
+.wn-legend .wn-tag { border-left: 0; }
