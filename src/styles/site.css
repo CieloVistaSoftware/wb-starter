@@ -2053,3 +2053,28 @@ img { max-width: 100%; height: auto; }
   opacity: 0.9;
 }
 .wn-legend .wn-tag { border-left: 0; }
+
+/* References inside What's New must READ as links.
+   Site links inherit the body colour, so an issue ref rendered at
+   rgb(240,243,244) on a rgb(240,243,244) paragraph was distinguishable only
+   by its underline — measured live at 3.0.62 and reported as "these are not
+   links". --accent is redefined by every theme block in themes.css (dark,
+   light, cyberpunk, ocean, sunset, forest, midnight, twilight), so this
+   follows the active theme instead of pinning one colour. */
+[id^="whats-new-"] a {
+  color: var(--accent);
+  text-decoration: underline;
+  text-underline-offset: 0.15em;
+}
+
+[id^="whats-new-"] a:hover,
+[id^="whats-new-"] a:focus-visible {
+  text-decoration-thickness: 2px;
+}
+
+/* The release heading is a link to its tag; keep it heading-coloured so the
+   version still reads as a title, with the underline carrying the affordance. */
+[id^="whats-new-"] h2 a {
+  color: inherit;
+  text-decoration-color: var(--accent);
+}
