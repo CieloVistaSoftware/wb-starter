@@ -1,6 +1,6 @@
 {
-  "generated": "2026-08-19T03:30:37.053Z",
-  "totalFiles": 231,
+  "generated": "2026-08-21T17:51:08.258Z",
+  "totalFiles": 350,
   "categories": [
     "_today",
     "architecture",
@@ -376,9 +376,27 @@
         "category": "behaviors"
       },
       {
+        "path": "docs/behaviors/alert.md",
+        "title": "Alert",
+        "name": "alert",
+        "category": "behaviors"
+      },
+      {
+        "path": "docs/behaviors/article.md",
+        "title": "Article Component",
+        "name": "article",
+        "category": "behaviors"
+      },
+      {
         "path": "docs/behaviors/articles.md",
         "title": "articles",
         "name": "articles",
+        "category": "behaviors"
+      },
+      {
+        "path": "docs/behaviors/audio.md",
+        "title": "Audio",
+        "name": "audio",
         "category": "behaviors"
       },
       {
@@ -394,9 +412,177 @@
         "category": "behaviors"
       },
       {
+        "path": "docs/behaviors/avatar.md",
+        "title": "Avatar",
+        "name": "avatar",
+        "category": "behaviors"
+      },
+      {
+        "path": "docs/behaviors/badge.md",
+        "title": "Badge",
+        "name": "badge",
+        "category": "behaviors"
+      },
+      {
+        "path": "docs/behaviors/bounce.md",
+        "title": "Bounce",
+        "name": "bounce",
+        "category": "behaviors"
+      },
+      {
+        "path": "docs/behaviors/breadcrumb.md",
+        "title": "Breadcrumb",
+        "name": "breadcrumb",
+        "category": "behaviors"
+      },
+      {
+        "path": "docs/behaviors/button.md",
+        "title": "Button",
+        "name": "button",
+        "category": "behaviors"
+      },
+      {
+        "path": "docs/behaviors/card.md",
+        "title": "Card Component",
+        "name": "card",
+        "category": "behaviors"
+      },
+      {
+        "path": "docs/behaviors/cardbutton.md",
+        "title": "Button Card",
+        "name": "cardbutton",
+        "category": "behaviors"
+      },
+      {
+        "path": "docs/behaviors/carddraggable.md",
+        "title": "Draggable Card",
+        "name": "carddraggable",
+        "category": "behaviors"
+      },
+      {
+        "path": "docs/behaviors/cardexpandable.md",
+        "title": "Expandable Card",
+        "name": "cardexpandable",
+        "category": "behaviors"
+      },
+      {
+        "path": "docs/behaviors/cardfile.md",
+        "title": "File Card",
+        "name": "cardfile",
+        "category": "behaviors"
+      },
+      {
+        "path": "docs/behaviors/cardhero.md",
+        "title": "Hero Card",
+        "name": "cardhero",
+        "category": "behaviors"
+      },
+      {
+        "path": "docs/behaviors/cardhorizontal.md",
+        "title": "Horizontal Card",
+        "name": "cardhorizontal",
+        "category": "behaviors"
+      },
+      {
+        "path": "docs/behaviors/cardimage.md",
+        "title": "Image Card",
+        "name": "cardimage",
+        "category": "behaviors"
+      },
+      {
+        "path": "docs/behaviors/cardlink.md",
+        "title": "Link Card",
+        "name": "cardlink",
+        "category": "behaviors"
+      },
+      {
+        "path": "docs/behaviors/cardminimizable.md",
+        "title": "Minimizable Card",
+        "name": "cardminimizable",
+        "category": "behaviors"
+      },
+      {
+        "path": "docs/behaviors/cardnotification.md",
+        "title": "Notification Card",
+        "name": "cardnotification",
+        "category": "behaviors"
+      },
+      {
+        "path": "docs/behaviors/cardoverlay.md",
+        "title": "Overlay Card",
+        "name": "cardoverlay",
+        "category": "behaviors"
+      },
+      {
+        "path": "docs/behaviors/cardportfolio.md",
+        "title": "Portfolio Card",
+        "name": "cardportfolio",
+        "category": "behaviors"
+      },
+      {
+        "path": "docs/behaviors/cardpricing.md",
+        "title": "Pricing Card",
+        "name": "cardpricing",
+        "category": "behaviors"
+      },
+      {
+        "path": "docs/behaviors/cardproduct.md",
+        "title": "Product Card",
+        "name": "cardproduct",
+        "category": "behaviors"
+      },
+      {
+        "path": "docs/behaviors/cardprofile.md",
+        "title": "Card Profile",
+        "name": "cardprofile",
+        "category": "behaviors"
+      },
+      {
+        "path": "docs/behaviors/cardstats.md",
+        "title": "Stats Card",
+        "name": "cardstats",
+        "category": "behaviors"
+      },
+      {
+        "path": "docs/behaviors/cardtestimonial.md",
+        "title": "Testimonial Card",
+        "name": "cardtestimonial",
+        "category": "behaviors"
+      },
+      {
+        "path": "docs/behaviors/cardvideo.md",
+        "title": "Video Card",
+        "name": "cardvideo",
+        "category": "behaviors"
+      },
+      {
+        "path": "docs/behaviors/checkbox.md",
+        "title": "Checkbox",
+        "name": "checkbox",
+        "category": "behaviors"
+      },
+      {
         "path": "docs/behaviors/chip.md",
         "title": "chip",
         "name": "chip",
+        "category": "behaviors"
+      },
+      {
+        "path": "docs/behaviors/clock.md",
+        "title": "Clock",
+        "name": "clock",
+        "category": "behaviors"
+      },
+      {
+        "path": "docs/behaviors/cluster.md",
+        "title": "Cluster",
+        "name": "cluster",
+        "category": "behaviors"
+      },
+      {
+        "path": "docs/behaviors/code.md",
+        "title": "Code",
+        "name": "code",
         "category": "behaviors"
       },
       {
@@ -406,9 +592,51 @@
         "category": "behaviors"
       },
       {
+        "path": "docs/behaviors/collapse.md",
+        "title": "Collapse",
+        "name": "collapse",
+        "category": "behaviors"
+      },
+      {
         "path": "docs/behaviors/colorpicker.md",
         "title": "x-colorpicker Behavior",
         "name": "colorpicker",
+        "category": "behaviors"
+      },
+      {
+        "path": "docs/behaviors/confetti.md",
+        "title": "Confetti",
+        "name": "confetti",
+        "category": "behaviors"
+      },
+      {
+        "path": "docs/behaviors/confirm.md",
+        "title": "Confirm",
+        "name": "confirm",
+        "category": "behaviors"
+      },
+      {
+        "path": "docs/behaviors/control.md",
+        "title": "Control",
+        "name": "control",
+        "category": "behaviors"
+      },
+      {
+        "path": "docs/behaviors/copy.md",
+        "title": "Copy",
+        "name": "copy",
+        "category": "behaviors"
+      },
+      {
+        "path": "docs/behaviors/copybutton.md",
+        "title": "Copybutton",
+        "name": "copybutton",
+        "category": "behaviors"
+      },
+      {
+        "path": "docs/behaviors/countdown.md",
+        "title": "Countdown",
+        "name": "countdown",
         "category": "behaviors"
       },
       {
@@ -418,9 +646,63 @@
         "category": "behaviors"
       },
       {
+        "path": "docs/behaviors/darkmode.md",
+        "title": "Dark Mode Toggle",
+        "name": "darkmode",
+        "category": "behaviors"
+      },
+      {
+        "path": "docs/behaviors/demo.md",
+        "title": "Demo Container",
+        "name": "demo",
+        "category": "behaviors"
+      },
+      {
+        "path": "docs/behaviors/details.md",
+        "title": "Details",
+        "name": "details",
+        "category": "behaviors"
+      },
+      {
+        "path": "docs/behaviors/dialog.md",
+        "title": "Dialog",
+        "name": "dialog",
+        "category": "behaviors"
+      },
+      {
+        "path": "docs/behaviors/draggable.md",
+        "title": "Draggable",
+        "name": "draggable",
+        "category": "behaviors"
+      },
+      {
+        "path": "docs/behaviors/drawer.md",
+        "title": "Drawer",
+        "name": "drawer",
+        "category": "behaviors"
+      },
+      {
+        "path": "docs/behaviors/drawerLayout.md",
+        "title": "Drawer Layout",
+        "name": "drawerLayout",
+        "category": "behaviors"
+      },
+      {
         "path": "docs/behaviors/dropdown.md",
         "title": "dropdown",
         "name": "dropdown",
+        "category": "behaviors"
+      },
+      {
+        "path": "docs/behaviors/error.md",
+        "title": "Error Behavior",
+        "name": "error",
+        "category": "behaviors"
+      },
+      {
+        "path": "docs/behaviors/fadein.md",
+        "title": "Fadein",
+        "name": "fadein",
         "category": "behaviors"
       },
       {
@@ -430,9 +712,45 @@
         "category": "behaviors"
       },
       {
+        "path": "docs/behaviors/figure.md",
+        "title": "Figure",
+        "name": "figure",
+        "category": "behaviors"
+      },
+      {
         "path": "docs/behaviors/file.md",
         "title": "x-file Behavior",
         "name": "file",
+        "category": "behaviors"
+      },
+      {
+        "path": "docs/behaviors/fireworks.md",
+        "title": "Fireworks",
+        "name": "fireworks",
+        "category": "behaviors"
+      },
+      {
+        "path": "docs/behaviors/fix-card.md",
+        "title": "Fix Card",
+        "name": "fix-card",
+        "category": "behaviors"
+      },
+      {
+        "path": "docs/behaviors/flash.md",
+        "title": "Flash",
+        "name": "flash",
+        "category": "behaviors"
+      },
+      {
+        "path": "docs/behaviors/flex.md",
+        "title": "Flex",
+        "name": "flex",
+        "category": "behaviors"
+      },
+      {
+        "path": "docs/behaviors/flip.md",
+        "title": "Flip",
+        "name": "flip",
         "category": "behaviors"
       },
       {
@@ -442,9 +760,57 @@
         "category": "behaviors"
       },
       {
+        "path": "docs/behaviors/footer.md",
+        "title": "Footer",
+        "name": "footer",
+        "category": "behaviors"
+      },
+      {
+        "path": "docs/behaviors/form.md",
+        "title": "Form Behavior",
+        "name": "form",
+        "category": "behaviors"
+      },
+      {
         "path": "docs/behaviors/formrow.md",
         "title": "x-formrow Behavior",
         "name": "formrow",
+        "category": "behaviors"
+      },
+      {
+        "path": "docs/behaviors/fullscreen.md",
+        "title": "Fullscreen",
+        "name": "fullscreen",
+        "category": "behaviors"
+      },
+      {
+        "path": "docs/behaviors/gallery.md",
+        "title": "Gallery",
+        "name": "gallery",
+        "category": "behaviors"
+      },
+      {
+        "path": "docs/behaviors/globe.md",
+        "title": "Globe",
+        "name": "globe",
+        "category": "behaviors"
+      },
+      {
+        "path": "docs/behaviors/glow.md",
+        "title": "Glow",
+        "name": "glow",
+        "category": "behaviors"
+      },
+      {
+        "path": "docs/behaviors/header.md",
+        "title": "Header",
+        "name": "header",
+        "category": "behaviors"
+      },
+      {
+        "path": "docs/behaviors/heartbeat.md",
+        "title": "Heartbeat",
+        "name": "heartbeat",
         "category": "behaviors"
       },
       {
@@ -454,9 +820,45 @@
         "category": "behaviors"
       },
       {
+        "path": "docs/behaviors/hero.md",
+        "title": "Hero",
+        "name": "hero",
+        "category": "behaviors"
+      },
+      {
+        "path": "docs/behaviors/image.md",
+        "title": "Image",
+        "name": "image",
+        "category": "behaviors"
+      },
+      {
+        "path": "docs/behaviors/img.md",
+        "title": "Img",
+        "name": "img",
+        "category": "behaviors"
+      },
+      {
+        "path": "docs/behaviors/input.md",
+        "title": "Input",
+        "name": "input",
+        "category": "behaviors"
+      },
+      {
         "path": "docs/behaviors/inputgroup.md",
         "title": "x-inputgroup Behavior",
         "name": "inputgroup",
+        "category": "behaviors"
+      },
+      {
+        "path": "docs/behaviors/jello.md",
+        "title": "Jello",
+        "name": "jello",
+        "category": "behaviors"
+      },
+      {
+        "path": "docs/behaviors/kbd.md",
+        "title": "Kbd",
+        "name": "kbd",
         "category": "behaviors"
       },
       {
@@ -466,9 +868,33 @@
         "category": "behaviors"
       },
       {
+        "path": "docs/behaviors/lightbox.md",
+        "title": "Lightbox",
+        "name": "lightbox",
+        "category": "behaviors"
+      },
+      {
+        "path": "docs/behaviors/mark.md",
+        "title": "Mark",
+        "name": "mark",
+        "category": "behaviors"
+      },
+      {
         "path": "docs/behaviors/masked.md",
         "title": "x-masked Behavior",
         "name": "masked",
+        "category": "behaviors"
+      },
+      {
+        "path": "docs/behaviors/masonry.md",
+        "title": "Masonry",
+        "name": "masonry",
+        "category": "behaviors"
+      },
+      {
+        "path": "docs/behaviors/mdhtml.md",
+        "title": "Markdown to HTML",
+        "name": "mdhtml",
         "category": "behaviors"
       },
       {
@@ -478,9 +904,117 @@
         "category": "behaviors"
       },
       {
+        "path": "docs/behaviors/navbar.md",
+        "title": "Navbar",
+        "name": "navbar",
+        "category": "behaviors"
+      },
+      {
+        "path": "docs/behaviors/notes.md",
+        "title": "Notes",
+        "name": "notes",
+        "category": "behaviors"
+      },
+      {
+        "path": "docs/behaviors/notify.md",
+        "title": "Notify",
+        "name": "notify",
+        "category": "behaviors"
+      },
+      {
+        "path": "docs/behaviors/otp.md",
+        "title": "OTP Behavior",
+        "name": "otp",
+        "category": "behaviors"
+      },
+      {
+        "path": "docs/behaviors/pagination.md",
+        "title": "Pagination",
+        "name": "pagination",
+        "category": "behaviors"
+      },
+      {
+        "path": "docs/behaviors/password.md",
+        "title": "Password Behavior",
+        "name": "password",
+        "category": "behaviors"
+      },
+      {
+        "path": "docs/behaviors/popover.md",
+        "title": "Popover",
+        "name": "popover",
+        "category": "behaviors"
+      },
+      {
+        "path": "docs/behaviors/pre.md",
+        "title": "Pre",
+        "name": "pre",
+        "category": "behaviors"
+      },
+      {
+        "path": "docs/behaviors/print.md",
+        "title": "Print",
+        "name": "print",
+        "category": "behaviors"
+      },
+      {
+        "path": "docs/behaviors/progress.md",
+        "title": "Progress",
+        "name": "progress",
+        "category": "behaviors"
+      },
+      {
+        "path": "docs/behaviors/prompt.md",
+        "title": "Prompt",
+        "name": "prompt",
+        "category": "behaviors"
+      },
+      {
+        "path": "docs/behaviors/pulse.md",
+        "title": "Pulse",
+        "name": "pulse",
+        "category": "behaviors"
+      },
+      {
+        "path": "docs/behaviors/rainbow.md",
+        "title": "Rainbow",
+        "name": "rainbow",
+        "category": "behaviors"
+      },
+      {
+        "path": "docs/behaviors/rating.md",
+        "title": "Rating",
+        "name": "rating",
+        "category": "behaviors"
+      },
+      {
+        "path": "docs/behaviors/ratio.md",
+        "title": "Ratio",
+        "name": "ratio",
+        "category": "behaviors"
+      },
+      {
+        "path": "docs/behaviors/relativetime.md",
+        "title": "Relativetime",
+        "name": "relativetime",
+        "category": "behaviors"
+      },
+      {
         "path": "docs/behaviors/release.md",
         "title": "Release - wb-starter v3.0",
         "name": "release",
+        "category": "behaviors"
+      },
+      {
+        "path": "docs/behaviors/repeater.md",
+        "title": "Repeater",
+        "name": "repeater",
+        "category": "behaviors"
+      },
+      {
+        "path": "docs/behaviors/resizable.md",
+        "title": "Resizable",
+        "name": "resizable",
         "category": "behaviors"
       },
       {
@@ -496,9 +1030,33 @@
         "category": "behaviors"
       },
       {
+        "path": "docs/behaviors/search.md",
+        "title": "Search",
+        "name": "search",
+        "category": "behaviors"
+      },
+      {
         "path": "docs/behaviors/searchfield.md",
         "title": "x-searchfield Behavior",
         "name": "searchfield",
+        "category": "behaviors"
+      },
+      {
+        "path": "docs/behaviors/select.md",
+        "title": "Select",
+        "name": "select",
+        "category": "behaviors"
+      },
+      {
+        "path": "docs/behaviors/shake.md",
+        "title": "Shake",
+        "name": "shake",
+        "category": "behaviors"
+      },
+      {
+        "path": "docs/behaviors/share.md",
+        "title": "Share",
+        "name": "share",
         "category": "behaviors"
       },
       {
@@ -508,9 +1066,93 @@
         "category": "behaviors"
       },
       {
+        "path": "docs/behaviors/slidein.md",
+        "title": "Slidein",
+        "name": "slidein",
+        "category": "behaviors"
+      },
+      {
+        "path": "docs/behaviors/slider.md",
+        "title": "Slider",
+        "name": "slider",
+        "category": "behaviors"
+      },
+      {
+        "path": "docs/behaviors/snow.md",
+        "title": "Snow",
+        "name": "snow",
+        "category": "behaviors"
+      },
+      {
+        "path": "docs/behaviors/span.md",
+        "title": "Span",
+        "name": "span",
+        "category": "behaviors"
+      },
+      {
+        "path": "docs/behaviors/sparkle.md",
+        "title": "Sparkle",
+        "name": "sparkle",
+        "category": "behaviors"
+      },
+      {
+        "path": "docs/behaviors/spinner.md",
+        "title": "Spinner",
+        "name": "spinner",
+        "category": "behaviors"
+      },
+      {
+        "path": "docs/behaviors/stack.md",
+        "title": "Stack Layout Component",
+        "name": "stack",
+        "category": "behaviors"
+      },
+      {
         "path": "docs/behaviors/stagelight.md",
         "title": "Stage Light - wb-starter v3.0",
         "name": "stagelight",
+        "category": "behaviors"
+      },
+      {
+        "path": "docs/behaviors/stepper.md",
+        "title": "Stepper Behavior",
+        "name": "stepper",
+        "category": "behaviors"
+      },
+      {
+        "path": "docs/behaviors/steps.md",
+        "title": "Steps",
+        "name": "steps",
+        "category": "behaviors"
+      },
+      {
+        "path": "docs/behaviors/sticky.md",
+        "title": "Sticky",
+        "name": "sticky",
+        "category": "behaviors"
+      },
+      {
+        "path": "docs/behaviors/switch.md",
+        "title": "Switch",
+        "name": "switch",
+        "category": "behaviors"
+      },
+      {
+        "path": "docs/behaviors/table.md",
+        "title": "Table",
+        "name": "table",
+        "category": "behaviors"
+      },
+      {
+        "path": "docs/behaviors/tabs.md",
+        "title": "Tabs",
+        "name": "tabs",
+        "category": "behaviors"
+      },
+      {
+        "path": "docs/behaviors/tada.md",
+        "title": "Tada",
+        "name": "tada",
         "category": "behaviors"
       },
       {
@@ -520,15 +1162,63 @@
         "category": "behaviors"
       },
       {
+        "path": "docs/behaviors/textarea.md",
+        "title": "Textarea",
+        "name": "textarea",
+        "category": "behaviors"
+      },
+      {
+        "path": "docs/behaviors/themecontrol.md",
+        "title": "Theme Control",
+        "name": "themecontrol",
+        "category": "behaviors"
+      },
+      {
+        "path": "docs/behaviors/timeline.md",
+        "title": "Timeline",
+        "name": "timeline",
+        "category": "behaviors"
+      },
+      {
         "path": "docs/behaviors/toast.md",
         "title": "toast",
         "name": "toast",
         "category": "behaviors"
       },
       {
+        "path": "docs/behaviors/toggle.md",
+        "title": "Toggle",
+        "name": "toggle",
+        "category": "behaviors"
+      },
+      {
         "path": "docs/behaviors/tooltip.md",
         "title": "x-tooltip Behavior",
         "name": "tooltip",
+        "category": "behaviors"
+      },
+      {
+        "path": "docs/behaviors/truncate.md",
+        "title": "Truncate",
+        "name": "truncate",
+        "category": "behaviors"
+      },
+      {
+        "path": "docs/behaviors/typewriter.md",
+        "title": "Typewriter",
+        "name": "typewriter",
+        "category": "behaviors"
+      },
+      {
+        "path": "docs/behaviors/video.md",
+        "title": "Video",
+        "name": "video",
+        "category": "behaviors"
+      },
+      {
+        "path": "docs/behaviors/vimeo.md",
+        "title": "Vimeo",
+        "name": "vimeo",
         "category": "behaviors"
       },
       {
@@ -604,6 +1294,12 @@
         "category": "behaviors"
       },
       {
+        "path": "docs/behaviors/wobble.md",
+        "title": "Wobble",
+        "name": "wobble",
+        "category": "behaviors"
+      },
+      {
         "path": "docs/behaviors/x-behavior.md",
         "title": "x-behavior",
         "name": "x-behavior",
@@ -661,6 +1357,18 @@
         "path": "docs/behaviors/x-toggle.md",
         "title": "x-toggle",
         "name": "x-toggle",
+        "category": "behaviors"
+      },
+      {
+        "path": "docs/behaviors/youtube.md",
+        "title": "Youtube",
+        "name": "youtube",
+        "category": "behaviors"
+      },
+      {
+        "path": "docs/behaviors/zoomin.md",
+        "title": "Zoomin",
+        "name": "zoomin",
         "category": "behaviors"
       }
     ],
@@ -871,6 +1579,12 @@
         "path": "docs/components/effects/fireworks.md",
         "title": "Fireworks - wb-starter v3.0",
         "name": "fireworks",
+        "category": "components"
+      },
+      {
+        "path": "docs/components/effects/README.md",
+        "title": "wb-starter v3.0 - Effects",
+        "name": "README",
         "category": "components"
       },
       {
@@ -1349,7 +2063,7 @@
       },
       {
         "path": "docs/_today/CURRENT-STATUS.md",
-        "title": "CURRENT HANDOFF — 2026-08-16",
+        "title": "CURRENT HANDOFF — 2026-08-19",
         "name": "CURRENT-STATUS",
         "category": "_today"
       },
@@ -1466,7 +2180,7 @@
     },
     {
       "path": "docs/_today/CURRENT-STATUS.md",
-      "title": "CURRENT HANDOFF — 2026-08-16",
+      "title": "CURRENT HANDOFF — 2026-08-19",
       "name": "CURRENT-STATUS",
       "category": "_today"
     },
@@ -1645,9 +2359,27 @@
       "category": "behaviors"
     },
     {
+      "path": "docs/behaviors/alert.md",
+      "title": "Alert",
+      "name": "alert",
+      "category": "behaviors"
+    },
+    {
+      "path": "docs/behaviors/article.md",
+      "title": "Article Component",
+      "name": "article",
+      "category": "behaviors"
+    },
+    {
       "path": "docs/behaviors/articles.md",
       "title": "articles",
       "name": "articles",
+      "category": "behaviors"
+    },
+    {
+      "path": "docs/behaviors/audio.md",
+      "title": "Audio",
+      "name": "audio",
       "category": "behaviors"
     },
     {
@@ -1663,9 +2395,177 @@
       "category": "behaviors"
     },
     {
+      "path": "docs/behaviors/avatar.md",
+      "title": "Avatar",
+      "name": "avatar",
+      "category": "behaviors"
+    },
+    {
+      "path": "docs/behaviors/badge.md",
+      "title": "Badge",
+      "name": "badge",
+      "category": "behaviors"
+    },
+    {
+      "path": "docs/behaviors/bounce.md",
+      "title": "Bounce",
+      "name": "bounce",
+      "category": "behaviors"
+    },
+    {
+      "path": "docs/behaviors/breadcrumb.md",
+      "title": "Breadcrumb",
+      "name": "breadcrumb",
+      "category": "behaviors"
+    },
+    {
+      "path": "docs/behaviors/button.md",
+      "title": "Button",
+      "name": "button",
+      "category": "behaviors"
+    },
+    {
+      "path": "docs/behaviors/card.md",
+      "title": "Card Component",
+      "name": "card",
+      "category": "behaviors"
+    },
+    {
+      "path": "docs/behaviors/cardbutton.md",
+      "title": "Button Card",
+      "name": "cardbutton",
+      "category": "behaviors"
+    },
+    {
+      "path": "docs/behaviors/carddraggable.md",
+      "title": "Draggable Card",
+      "name": "carddraggable",
+      "category": "behaviors"
+    },
+    {
+      "path": "docs/behaviors/cardexpandable.md",
+      "title": "Expandable Card",
+      "name": "cardexpandable",
+      "category": "behaviors"
+    },
+    {
+      "path": "docs/behaviors/cardfile.md",
+      "title": "File Card",
+      "name": "cardfile",
+      "category": "behaviors"
+    },
+    {
+      "path": "docs/behaviors/cardhero.md",
+      "title": "Hero Card",
+      "name": "cardhero",
+      "category": "behaviors"
+    },
+    {
+      "path": "docs/behaviors/cardhorizontal.md",
+      "title": "Horizontal Card",
+      "name": "cardhorizontal",
+      "category": "behaviors"
+    },
+    {
+      "path": "docs/behaviors/cardimage.md",
+      "title": "Image Card",
+      "name": "cardimage",
+      "category": "behaviors"
+    },
+    {
+      "path": "docs/behaviors/cardlink.md",
+      "title": "Link Card",
+      "name": "cardlink",
+      "category": "behaviors"
+    },
+    {
+      "path": "docs/behaviors/cardminimizable.md",
+      "title": "Minimizable Card",
+      "name": "cardminimizable",
+      "category": "behaviors"
+    },
+    {
+      "path": "docs/behaviors/cardnotification.md",
+      "title": "Notification Card",
+      "name": "cardnotification",
+      "category": "behaviors"
+    },
+    {
+      "path": "docs/behaviors/cardoverlay.md",
+      "title": "Overlay Card",
+      "name": "cardoverlay",
+      "category": "behaviors"
+    },
+    {
+      "path": "docs/behaviors/cardportfolio.md",
+      "title": "Portfolio Card",
+      "name": "cardportfolio",
+      "category": "behaviors"
+    },
+    {
+      "path": "docs/behaviors/cardpricing.md",
+      "title": "Pricing Card",
+      "name": "cardpricing",
+      "category": "behaviors"
+    },
+    {
+      "path": "docs/behaviors/cardproduct.md",
+      "title": "Product Card",
+      "name": "cardproduct",
+      "category": "behaviors"
+    },
+    {
+      "path": "docs/behaviors/cardprofile.md",
+      "title": "Card Profile",
+      "name": "cardprofile",
+      "category": "behaviors"
+    },
+    {
+      "path": "docs/behaviors/cardstats.md",
+      "title": "Stats Card",
+      "name": "cardstats",
+      "category": "behaviors"
+    },
+    {
+      "path": "docs/behaviors/cardtestimonial.md",
+      "title": "Testimonial Card",
+      "name": "cardtestimonial",
+      "category": "behaviors"
+    },
+    {
+      "path": "docs/behaviors/cardvideo.md",
+      "title": "Video Card",
+      "name": "cardvideo",
+      "category": "behaviors"
+    },
+    {
+      "path": "docs/behaviors/checkbox.md",
+      "title": "Checkbox",
+      "name": "checkbox",
+      "category": "behaviors"
+    },
+    {
       "path": "docs/behaviors/chip.md",
       "title": "chip",
       "name": "chip",
+      "category": "behaviors"
+    },
+    {
+      "path": "docs/behaviors/clock.md",
+      "title": "Clock",
+      "name": "clock",
+      "category": "behaviors"
+    },
+    {
+      "path": "docs/behaviors/cluster.md",
+      "title": "Cluster",
+      "name": "cluster",
+      "category": "behaviors"
+    },
+    {
+      "path": "docs/behaviors/code.md",
+      "title": "Code",
+      "name": "code",
       "category": "behaviors"
     },
     {
@@ -1675,9 +2575,51 @@
       "category": "behaviors"
     },
     {
+      "path": "docs/behaviors/collapse.md",
+      "title": "Collapse",
+      "name": "collapse",
+      "category": "behaviors"
+    },
+    {
       "path": "docs/behaviors/colorpicker.md",
       "title": "x-colorpicker Behavior",
       "name": "colorpicker",
+      "category": "behaviors"
+    },
+    {
+      "path": "docs/behaviors/confetti.md",
+      "title": "Confetti",
+      "name": "confetti",
+      "category": "behaviors"
+    },
+    {
+      "path": "docs/behaviors/confirm.md",
+      "title": "Confirm",
+      "name": "confirm",
+      "category": "behaviors"
+    },
+    {
+      "path": "docs/behaviors/control.md",
+      "title": "Control",
+      "name": "control",
+      "category": "behaviors"
+    },
+    {
+      "path": "docs/behaviors/copy.md",
+      "title": "Copy",
+      "name": "copy",
+      "category": "behaviors"
+    },
+    {
+      "path": "docs/behaviors/copybutton.md",
+      "title": "Copybutton",
+      "name": "copybutton",
+      "category": "behaviors"
+    },
+    {
+      "path": "docs/behaviors/countdown.md",
+      "title": "Countdown",
+      "name": "countdown",
       "category": "behaviors"
     },
     {
@@ -1687,9 +2629,63 @@
       "category": "behaviors"
     },
     {
+      "path": "docs/behaviors/darkmode.md",
+      "title": "Dark Mode Toggle",
+      "name": "darkmode",
+      "category": "behaviors"
+    },
+    {
+      "path": "docs/behaviors/demo.md",
+      "title": "Demo Container",
+      "name": "demo",
+      "category": "behaviors"
+    },
+    {
+      "path": "docs/behaviors/details.md",
+      "title": "Details",
+      "name": "details",
+      "category": "behaviors"
+    },
+    {
+      "path": "docs/behaviors/dialog.md",
+      "title": "Dialog",
+      "name": "dialog",
+      "category": "behaviors"
+    },
+    {
+      "path": "docs/behaviors/draggable.md",
+      "title": "Draggable",
+      "name": "draggable",
+      "category": "behaviors"
+    },
+    {
+      "path": "docs/behaviors/drawer.md",
+      "title": "Drawer",
+      "name": "drawer",
+      "category": "behaviors"
+    },
+    {
+      "path": "docs/behaviors/drawerLayout.md",
+      "title": "Drawer Layout",
+      "name": "drawerLayout",
+      "category": "behaviors"
+    },
+    {
       "path": "docs/behaviors/dropdown.md",
       "title": "dropdown",
       "name": "dropdown",
+      "category": "behaviors"
+    },
+    {
+      "path": "docs/behaviors/error.md",
+      "title": "Error Behavior",
+      "name": "error",
+      "category": "behaviors"
+    },
+    {
+      "path": "docs/behaviors/fadein.md",
+      "title": "Fadein",
+      "name": "fadein",
       "category": "behaviors"
     },
     {
@@ -1699,9 +2695,45 @@
       "category": "behaviors"
     },
     {
+      "path": "docs/behaviors/figure.md",
+      "title": "Figure",
+      "name": "figure",
+      "category": "behaviors"
+    },
+    {
       "path": "docs/behaviors/file.md",
       "title": "x-file Behavior",
       "name": "file",
+      "category": "behaviors"
+    },
+    {
+      "path": "docs/behaviors/fireworks.md",
+      "title": "Fireworks",
+      "name": "fireworks",
+      "category": "behaviors"
+    },
+    {
+      "path": "docs/behaviors/fix-card.md",
+      "title": "Fix Card",
+      "name": "fix-card",
+      "category": "behaviors"
+    },
+    {
+      "path": "docs/behaviors/flash.md",
+      "title": "Flash",
+      "name": "flash",
+      "category": "behaviors"
+    },
+    {
+      "path": "docs/behaviors/flex.md",
+      "title": "Flex",
+      "name": "flex",
+      "category": "behaviors"
+    },
+    {
+      "path": "docs/behaviors/flip.md",
+      "title": "Flip",
+      "name": "flip",
       "category": "behaviors"
     },
     {
@@ -1711,9 +2743,57 @@
       "category": "behaviors"
     },
     {
+      "path": "docs/behaviors/footer.md",
+      "title": "Footer",
+      "name": "footer",
+      "category": "behaviors"
+    },
+    {
+      "path": "docs/behaviors/form.md",
+      "title": "Form Behavior",
+      "name": "form",
+      "category": "behaviors"
+    },
+    {
       "path": "docs/behaviors/formrow.md",
       "title": "x-formrow Behavior",
       "name": "formrow",
+      "category": "behaviors"
+    },
+    {
+      "path": "docs/behaviors/fullscreen.md",
+      "title": "Fullscreen",
+      "name": "fullscreen",
+      "category": "behaviors"
+    },
+    {
+      "path": "docs/behaviors/gallery.md",
+      "title": "Gallery",
+      "name": "gallery",
+      "category": "behaviors"
+    },
+    {
+      "path": "docs/behaviors/globe.md",
+      "title": "Globe",
+      "name": "globe",
+      "category": "behaviors"
+    },
+    {
+      "path": "docs/behaviors/glow.md",
+      "title": "Glow",
+      "name": "glow",
+      "category": "behaviors"
+    },
+    {
+      "path": "docs/behaviors/header.md",
+      "title": "Header",
+      "name": "header",
+      "category": "behaviors"
+    },
+    {
+      "path": "docs/behaviors/heartbeat.md",
+      "title": "Heartbeat",
+      "name": "heartbeat",
       "category": "behaviors"
     },
     {
@@ -1723,9 +2803,45 @@
       "category": "behaviors"
     },
     {
+      "path": "docs/behaviors/hero.md",
+      "title": "Hero",
+      "name": "hero",
+      "category": "behaviors"
+    },
+    {
+      "path": "docs/behaviors/image.md",
+      "title": "Image",
+      "name": "image",
+      "category": "behaviors"
+    },
+    {
+      "path": "docs/behaviors/img.md",
+      "title": "Img",
+      "name": "img",
+      "category": "behaviors"
+    },
+    {
+      "path": "docs/behaviors/input.md",
+      "title": "Input",
+      "name": "input",
+      "category": "behaviors"
+    },
+    {
       "path": "docs/behaviors/inputgroup.md",
       "title": "x-inputgroup Behavior",
       "name": "inputgroup",
+      "category": "behaviors"
+    },
+    {
+      "path": "docs/behaviors/jello.md",
+      "title": "Jello",
+      "name": "jello",
+      "category": "behaviors"
+    },
+    {
+      "path": "docs/behaviors/kbd.md",
+      "title": "Kbd",
+      "name": "kbd",
       "category": "behaviors"
     },
     {
@@ -1735,9 +2851,33 @@
       "category": "behaviors"
     },
     {
+      "path": "docs/behaviors/lightbox.md",
+      "title": "Lightbox",
+      "name": "lightbox",
+      "category": "behaviors"
+    },
+    {
+      "path": "docs/behaviors/mark.md",
+      "title": "Mark",
+      "name": "mark",
+      "category": "behaviors"
+    },
+    {
       "path": "docs/behaviors/masked.md",
       "title": "x-masked Behavior",
       "name": "masked",
+      "category": "behaviors"
+    },
+    {
+      "path": "docs/behaviors/masonry.md",
+      "title": "Masonry",
+      "name": "masonry",
+      "category": "behaviors"
+    },
+    {
+      "path": "docs/behaviors/mdhtml.md",
+      "title": "Markdown to HTML",
+      "name": "mdhtml",
       "category": "behaviors"
     },
     {
@@ -1747,9 +2887,117 @@
       "category": "behaviors"
     },
     {
+      "path": "docs/behaviors/navbar.md",
+      "title": "Navbar",
+      "name": "navbar",
+      "category": "behaviors"
+    },
+    {
+      "path": "docs/behaviors/notes.md",
+      "title": "Notes",
+      "name": "notes",
+      "category": "behaviors"
+    },
+    {
+      "path": "docs/behaviors/notify.md",
+      "title": "Notify",
+      "name": "notify",
+      "category": "behaviors"
+    },
+    {
+      "path": "docs/behaviors/otp.md",
+      "title": "OTP Behavior",
+      "name": "otp",
+      "category": "behaviors"
+    },
+    {
+      "path": "docs/behaviors/pagination.md",
+      "title": "Pagination",
+      "name": "pagination",
+      "category": "behaviors"
+    },
+    {
+      "path": "docs/behaviors/password.md",
+      "title": "Password Behavior",
+      "name": "password",
+      "category": "behaviors"
+    },
+    {
+      "path": "docs/behaviors/popover.md",
+      "title": "Popover",
+      "name": "popover",
+      "category": "behaviors"
+    },
+    {
+      "path": "docs/behaviors/pre.md",
+      "title": "Pre",
+      "name": "pre",
+      "category": "behaviors"
+    },
+    {
+      "path": "docs/behaviors/print.md",
+      "title": "Print",
+      "name": "print",
+      "category": "behaviors"
+    },
+    {
+      "path": "docs/behaviors/progress.md",
+      "title": "Progress",
+      "name": "progress",
+      "category": "behaviors"
+    },
+    {
+      "path": "docs/behaviors/prompt.md",
+      "title": "Prompt",
+      "name": "prompt",
+      "category": "behaviors"
+    },
+    {
+      "path": "docs/behaviors/pulse.md",
+      "title": "Pulse",
+      "name": "pulse",
+      "category": "behaviors"
+    },
+    {
+      "path": "docs/behaviors/rainbow.md",
+      "title": "Rainbow",
+      "name": "rainbow",
+      "category": "behaviors"
+    },
+    {
+      "path": "docs/behaviors/rating.md",
+      "title": "Rating",
+      "name": "rating",
+      "category": "behaviors"
+    },
+    {
+      "path": "docs/behaviors/ratio.md",
+      "title": "Ratio",
+      "name": "ratio",
+      "category": "behaviors"
+    },
+    {
+      "path": "docs/behaviors/relativetime.md",
+      "title": "Relativetime",
+      "name": "relativetime",
+      "category": "behaviors"
+    },
+    {
       "path": "docs/behaviors/release.md",
       "title": "Release - wb-starter v3.0",
       "name": "release",
+      "category": "behaviors"
+    },
+    {
+      "path": "docs/behaviors/repeater.md",
+      "title": "Repeater",
+      "name": "repeater",
+      "category": "behaviors"
+    },
+    {
+      "path": "docs/behaviors/resizable.md",
+      "title": "Resizable",
+      "name": "resizable",
       "category": "behaviors"
     },
     {
@@ -1765,9 +3013,33 @@
       "category": "behaviors"
     },
     {
+      "path": "docs/behaviors/search.md",
+      "title": "Search",
+      "name": "search",
+      "category": "behaviors"
+    },
+    {
       "path": "docs/behaviors/searchfield.md",
       "title": "x-searchfield Behavior",
       "name": "searchfield",
+      "category": "behaviors"
+    },
+    {
+      "path": "docs/behaviors/select.md",
+      "title": "Select",
+      "name": "select",
+      "category": "behaviors"
+    },
+    {
+      "path": "docs/behaviors/shake.md",
+      "title": "Shake",
+      "name": "shake",
+      "category": "behaviors"
+    },
+    {
+      "path": "docs/behaviors/share.md",
+      "title": "Share",
+      "name": "share",
       "category": "behaviors"
     },
     {
@@ -1777,9 +3049,93 @@
       "category": "behaviors"
     },
     {
+      "path": "docs/behaviors/slidein.md",
+      "title": "Slidein",
+      "name": "slidein",
+      "category": "behaviors"
+    },
+    {
+      "path": "docs/behaviors/slider.md",
+      "title": "Slider",
+      "name": "slider",
+      "category": "behaviors"
+    },
+    {
+      "path": "docs/behaviors/snow.md",
+      "title": "Snow",
+      "name": "snow",
+      "category": "behaviors"
+    },
+    {
+      "path": "docs/behaviors/span.md",
+      "title": "Span",
+      "name": "span",
+      "category": "behaviors"
+    },
+    {
+      "path": "docs/behaviors/sparkle.md",
+      "title": "Sparkle",
+      "name": "sparkle",
+      "category": "behaviors"
+    },
+    {
+      "path": "docs/behaviors/spinner.md",
+      "title": "Spinner",
+      "name": "spinner",
+      "category": "behaviors"
+    },
+    {
+      "path": "docs/behaviors/stack.md",
+      "title": "Stack Layout Component",
+      "name": "stack",
+      "category": "behaviors"
+    },
+    {
       "path": "docs/behaviors/stagelight.md",
       "title": "Stage Light - wb-starter v3.0",
       "name": "stagelight",
+      "category": "behaviors"
+    },
+    {
+      "path": "docs/behaviors/stepper.md",
+      "title": "Stepper Behavior",
+      "name": "stepper",
+      "category": "behaviors"
+    },
+    {
+      "path": "docs/behaviors/steps.md",
+      "title": "Steps",
+      "name": "steps",
+      "category": "behaviors"
+    },
+    {
+      "path": "docs/behaviors/sticky.md",
+      "title": "Sticky",
+      "name": "sticky",
+      "category": "behaviors"
+    },
+    {
+      "path": "docs/behaviors/switch.md",
+      "title": "Switch",
+      "name": "switch",
+      "category": "behaviors"
+    },
+    {
+      "path": "docs/behaviors/table.md",
+      "title": "Table",
+      "name": "table",
+      "category": "behaviors"
+    },
+    {
+      "path": "docs/behaviors/tabs.md",
+      "title": "Tabs",
+      "name": "tabs",
+      "category": "behaviors"
+    },
+    {
+      "path": "docs/behaviors/tada.md",
+      "title": "Tada",
+      "name": "tada",
       "category": "behaviors"
     },
     {
@@ -1789,15 +3145,63 @@
       "category": "behaviors"
     },
     {
+      "path": "docs/behaviors/textarea.md",
+      "title": "Textarea",
+      "name": "textarea",
+      "category": "behaviors"
+    },
+    {
+      "path": "docs/behaviors/themecontrol.md",
+      "title": "Theme Control",
+      "name": "themecontrol",
+      "category": "behaviors"
+    },
+    {
+      "path": "docs/behaviors/timeline.md",
+      "title": "Timeline",
+      "name": "timeline",
+      "category": "behaviors"
+    },
+    {
       "path": "docs/behaviors/toast.md",
       "title": "toast",
       "name": "toast",
       "category": "behaviors"
     },
     {
+      "path": "docs/behaviors/toggle.md",
+      "title": "Toggle",
+      "name": "toggle",
+      "category": "behaviors"
+    },
+    {
       "path": "docs/behaviors/tooltip.md",
       "title": "x-tooltip Behavior",
       "name": "tooltip",
+      "category": "behaviors"
+    },
+    {
+      "path": "docs/behaviors/truncate.md",
+      "title": "Truncate",
+      "name": "truncate",
+      "category": "behaviors"
+    },
+    {
+      "path": "docs/behaviors/typewriter.md",
+      "title": "Typewriter",
+      "name": "typewriter",
+      "category": "behaviors"
+    },
+    {
+      "path": "docs/behaviors/video.md",
+      "title": "Video",
+      "name": "video",
+      "category": "behaviors"
+    },
+    {
+      "path": "docs/behaviors/vimeo.md",
+      "title": "Vimeo",
+      "name": "vimeo",
       "category": "behaviors"
     },
     {
@@ -1873,6 +3277,12 @@
       "category": "behaviors"
     },
     {
+      "path": "docs/behaviors/wobble.md",
+      "title": "Wobble",
+      "name": "wobble",
+      "category": "behaviors"
+    },
+    {
       "path": "docs/behaviors/x-behavior.md",
       "title": "x-behavior",
       "name": "x-behavior",
@@ -1930,6 +3340,18 @@
       "path": "docs/behaviors/x-toggle.md",
       "title": "x-toggle",
       "name": "x-toggle",
+      "category": "behaviors"
+    },
+    {
+      "path": "docs/behaviors/youtube.md",
+      "title": "Youtube",
+      "name": "youtube",
+      "category": "behaviors"
+    },
+    {
+      "path": "docs/behaviors/zoomin.md",
+      "title": "Zoomin",
+      "name": "zoomin",
       "category": "behaviors"
     },
     {
@@ -2158,6 +3580,12 @@
       "path": "docs/components/effects/fireworks.md",
       "title": "Fireworks - wb-starter v3.0",
       "name": "fireworks",
+      "category": "components"
+    },
+    {
+      "path": "docs/components/effects/README.md",
+      "title": "wb-starter v3.0 - Effects",
+      "name": "README",
       "category": "components"
     },
     {

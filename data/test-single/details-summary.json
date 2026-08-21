@@ -1,0 +1,38 @@
+{
+  "state": "failed",
+  "mode": "single",
+  "specFile": "details-summary.spec.ts",
+  "startedAt": "2026-08-20T20:12:03.603Z",
+  "updatedAt": "2026-08-20T20:13:13.583Z",
+  "command": "npx playwright test --workers=8 details-summary.spec.ts",
+  "pid": 27656,
+  "passed": 1,
+  "failed": 2,
+  "skipped": 0,
+  "total": 3,
+  "currentFile": "tests\\behaviors\\details-summary.spec.ts",
+  "output": "\nRunning 3 tests using 3 workers\n\n  ok 3 [behaviors] › tests\\behaviors\\details-summary.spec.ts:57:3 › wb-details › does not get double-processed by schema + native behavior (no nested summary, no duplicate class) (2.1s)\n  x  1 [behaviors] › tests\\behaviors\\details-summary.spec.ts:28:3 › wb-details › answer content lives in the body, not the summary (30.1s)\n  x  2 [behaviors] › tests\\behaviors\\details-summary.spec.ts:22:3 › wb-details › header shows the summary attribute, not the literal \"Details\" (30.1s)\n  x  4 [behaviors] › tests\\behaviors\\details-summary.spec.ts:22:3 › wb-details › header shows the summary attribute, not the literal \"Details\" (retry #1) (30.1s)\n  x  5 [behaviors] › tests\\behaviors\\details-summary.spec.ts:28:3 › wb-details › answer content lives in the body, not the summary (retry #1) (30.1s)\n\n════════════════════════════════════════════════════════════\n  WB TEST RESULTS\n════════════════════════════════════════════════════════════\n  Total: 5 tests in 66.5s\n  ✓ Passed:  1\n  ✗ Failed:  4\n\n  By Project:\n    ✗ behaviors: 1/5 passed\n\n  See failures: data/test-results/failures.json\n  Live log:    data/test-results/failures-live.log\n════════════════════════════════════════════════════════════\n\n\n\n  1) [behaviors] › tests\\behaviors\\details-summary.spec.ts:22:3 › wb-details › header shows the summary attribute, not the literal \"Details\" \n\n    \u001b[31mTest timeout of 30000ms exceeded.\u001b[39m\n\n    Error: page.waitForFunction: Test timeout of 30000ms exceeded.\n\n       7 |   await page.goto('/demos/test-harness.html');\n       8 |   await page.waitForFunction(() => (window as any).WB && (window as any).WB.behaviors, { timeout: 15000 });\n    >  9 |   await page.waitForFunction(() => (window as any).WBSite && (window as any).WBSite.currentPage, { timeout: 20000 });\n         |              ^\n      10 |   await page.evaluate((h: string) => {\n      11 |     const c = document.createElement('div');\n      12 |     c.id = 'details-test-area';\n        at setup (C:\\Users\\jwpmi\\Downloads\\AI\\wb-starter\\tests\\behaviors\\details-summary.spec.ts:9:14)\n        at C:\\Users\\jwpmi\\Downloads\\AI\\wb-starter\\tests\\behaviors\\details-summary.spec.ts:23:5\n\n    Error Context: data\\test-results\\behaviors-details-summary--10c99-te-not-the-literal-Details--behaviors\\error-context.md\n\n    Retry #1 ───────────────────────────────────────────────────────────────────────────────────────\n\n    \u001b[31mTest timeout of 30000ms exceeded.\u001b[39m\n\n    Error: page.waitForFunction: Test timeout of 30000ms exceeded.\n\n       7 |   await page.goto('/demos/test-harness.html');\n       8 |   await page.waitForFunction(() => (window as any).WB && (window as any).WB.behaviors, { timeout: 15000 });\n    >  9 |   await page.waitForFunction(() => (window as any).WBSite && (window as any).WBSite.currentPage, { timeout: 20000 });\n         |              ^\n      10 |   await page.evaluate((h: string) => {\n      11 |     const c = document.createElement('div');\n      12 |     c.id = 'details-test-area';\n        at setup (C:\\Users\\jwpmi\\Downloads\\AI\\wb-starter\\tests\\behaviors\\details-summary.spec.ts:9:14)\n        at C:\\Users\\jwpmi\\Downloads\\AI\\wb-starter\\tests\\behaviors\\details-summary.spec.ts:23:5\n\n    Error Context: data\\test-results\\behaviors-details-summary--10c99-te-not-the-literal-Details--behaviors-retry1\\error-context.md\n\n  2) [behaviors] › tests\\behaviors\\details-summary.spec.ts:28:3 › wb-details › answer content lives in the body, not the summary \n\n    \u001b[31mTest timeout of 30000ms exceeded.\u001b[39m\n\n    Error: page.waitForFunction: Test timeout of 30000ms exceeded.\n\n       7 |   await page.goto('/demos/test-harness.html');\n       8 |   await page.waitForFunction(() => (window as any).WB && (window as any).WB.behaviors, { timeout: 15000 });\n    >  9 |   await page.waitForFunction(() => (window as any).WBSite && (window as any).WBSite.currentPage, { timeout: 20000 });\n         |              ^\n      10 |   await page.evaluate((h: string) => {\n      11 |     const c = document.createElement('div');\n      12 |     c.id = 'details-test-area';\n        at setup (C:\\Users\\jwpmi\\Downloads\\AI\\wb-starter\\tests\\behaviors\\details-summary.spec.ts:9:14)\n        at C:\\Users\\jwpmi\\Downloads\\AI\\wb-starter\\tests\\behaviors\\details-summary.spec.ts:29:5\n\n    Error Context: data\\test-results\\behaviors-details-summary--b2ffa-in-the-body-not-the-summary-behaviors\\error-context.md\n\n    Retry #1 ───────────────────────────────────────────────────────────────────────────────────────\n\n    \u001b[31mTest timeout of 30000ms exceeded.\u001b[39m\n\n    Error: page.waitForFunction: Test timeout of 30000ms exceeded.\n\n       7 |   await page.goto('/demos/test-harness.html');\n       8 |   await page.waitForFunction(() => (window as any).WB && (window as any).WB.behaviors, { timeout: 15000 });\n    >  9 |   await page.waitForFunction(() => (window as any).WBSite && (window as any).WBSite.currentPage, { timeout: 20000 });\n         |              ^\n      10 |   await page.evaluate((h: string) => {\n      11 |     const c = document.createElement('div');\n      12 |     c.id = 'details-test-area';\n        at setup (C:\\Users\\jwpmi\\Downloads\\AI\\wb-starter\\tests\\behaviors\\details-summary.spec.ts:9:14)\n        at C:\\Users\\jwpmi\\Downloads\\AI\\wb-starter\\tests\\behaviors\\details-summary.spec.ts:29:5\n\n    Error Context: data\\test-results\\behaviors-details-summary--b2ffa-in-the-body-not-the-summary-behaviors-retry1\\error-context.md\n\n  2 failed\n    [behaviors] › tests\\behaviors\\details-summary.spec.ts:22:3 › wb-details › header shows the summary attribute, not the literal \"Details\" \n    [behaviors] › tests\\behaviors\\details-summary.spec.ts:28:3 › wb-details › answer content lives in the body, not the summary \n  1 passed (1.1m)\n",
+  "errors": "\n⏱️ FAILED: answer content lives in the body, not the summary\n   Test timeout of 30000ms exceeded.\n\n⏱️ FAILED: header shows the summary attribute, not the literal \"Details\"\n   Test timeout of 30000ms exceeded.\n\n⏱️ FAILED: header shows the summary attribute, not the literal \"Details\"\n   Test timeout of 30000ms exceeded.\n\n⏱️ FAILED: answer content lives in the body, not the summary\n   Test timeout of 30000ms exceeded.\n",
+  "failures": [
+    {
+      "file": "tests\\behaviors\\details-summary.spec.ts",
+      "name": "wb-details › answer content lives in the body, not the summary"
+    },
+    {
+      "file": "tests\\behaviors\\details-summary.spec.ts",
+      "name": "wb-details › header shows the summary attribute, not the literal \"Details\""
+    },
+    {
+      "file": "tests\\behaviors\\details-summary.spec.ts",
+      "name": "wb-details › header shows the summary attribute, not the literal \"Details\" (retry #1)"
+    },
+    {
+      "file": "tests\\behaviors\\details-summary.spec.ts",
+      "name": "wb-details › answer content lives in the body, not the summary (retry #1)"
+    }
+  ],
+  "completedAt": "2026-08-20T20:13:13.583Z",
+  "duration": "69.98s",
+  "exitCode": 1,
+  "flaky": 0
+}

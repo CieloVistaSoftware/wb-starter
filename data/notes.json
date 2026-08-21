@@ -75,7 +75,43 @@
       "createdAt": "2026-08-09T00:23:24.994Z",
       "updatedAt": "2026-08-09T00:23:24.994Z",
       "issueUrl": "https://github.com/CieloVistaSoftware/wb-starter/issues/524"
+    },
+    {
+      "id": "note-1787349075383",
+      "page": null,
+      "content": "Test note content 1787349075108",
+      "selectedElement": null,
+      "createdAt": "2026-08-21T21:51:15.383Z",
+      "updatedAt": "2026-08-21T21:51:15.383Z",
+      "issueUrl": null
+    },
+    {
+      "id": "note-1787349091155",
+      "page": null,
+      "content": "Duplicate test 1787349090659",
+      "selectedElement": null,
+      "createdAt": "2026-08-21T21:51:31.155Z",
+      "updatedAt": "2026-08-21T21:51:31.155Z",
+      "issueUrl": null
+    },
+    {
+      "id": "note-1787349099365",
+      "page": null,
+      "content": "Outgoing note 1787349098844",
+      "selectedElement": null,
+      "createdAt": "2026-08-21T21:51:39.365Z",
+      "updatedAt": "2026-08-21T21:51:39.366Z",
+      "issueUrl": null
+    },
+    {
+      "id": "note-1787349100246",
+      "page": null,
+      "content": "Test note content 1787349099814",
+      "selectedElement": null,
+      "createdAt": "2026-08-21T21:51:40.246Z",
+      "updatedAt": "2026-08-21T21:51:40.246Z",
+      "issueUrl": null
     }
   ],
-  "lastUpdated": "2026-08-09T00:23:26.201Z"
+  "lastUpdated": "2026-08-21T21:51:40.302Z"
 }

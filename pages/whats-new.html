@@ -3,6 +3,17 @@
   <p>What's actually live on this site right now — every push to <code>main</code> deploys straight to <a href="https://cielovistasoftware.github.io/wb-starter/" target="_blank" rel="noopener">cielovistasoftware.github.io/wb-starter</a>, so this list is the real changelog, not a promise of a future release.</p>
 </div>
 
+<section id="whats-new-3-0-89">
+  <h2><a href="https://github.com/CieloVistaSoftware/wb-starter/releases/tag/v3.0.89" target="_blank" rel="noopener" title="release v3.0.89">3.0.89</a> — 2026-08-21</h2>
+  <p><strong>This is what is live at 3.0.89.</strong></p>
+  <ul>
+    <li class="wn-item wn-bug"><span class="wn-tag">Bug</span> <strong>The playground was never cache-busted, so fixes to it looked like they never shipped.</strong> Only the two SPA shells were stamped, and the pattern matched <code>src/…</code> and <code>./src/…</code> but not <code>../src/…</code> — which is how every page under <code>demos/</code> and <code>pages/</code> reaches its CSS and modules. 18 files are stamped now, where it was 2.</li>
+    <li class="wn-item wn-request"><span class="wn-tag">Request</span> <strong>The playground no longer hosts a component gallery.</strong> 289 lines and 53 examples in retired <code>wb-</code> tags, sitting under an editor meant for your own markup.</li>
+    <li class="wn-item wn-bug"><span class="wn-tag">Bug</span> <strong>The x-behaviors example had no card behaviors at all</strong> — 19 of them, the largest family, absent from a set that claims to show the behaviors. They are pulled from the same data the showcase renders, so they cannot drift. The count in the label is generated now instead of written by hand.</li>
+    <li class="wn-item wn-bug"><span class="wn-tag">Bug</span> <strong>A button labelled "Glow" invited a click and did nothing.</strong> It is a continuous effect, not a click-triggered one; the label now says so.</li>
+  </ul>
+</section>
+
 <section id="whats-new-3-0-88">
   <h2><a href="https://github.com/CieloVistaSoftware/wb-starter/releases/tag/v3.0.88" target="_blank" rel="noopener" title="release v3.0.88">3.0.88</a> — 2026-08-21</h2>
   <p><strong>This is what is live at 3.0.88.</strong></p>

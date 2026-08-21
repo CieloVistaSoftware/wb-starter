@@ -4,8 +4,8 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Playground — WB</title>
-  <link rel="stylesheet" href="../src/styles/themes.css">
-  <link rel="stylesheet" href="../src/styles/site.css">
+  <link rel="stylesheet" href="../src/styles/themes.css?v=3.0.89">
+  <link rel="stylesheet" href="../src/styles/site.css?v=3.0.89">
   <style>
     body { max-width: 1200px; margin: 0 auto; padding: 1.5rem; background: var(--bg-color);
       color: var(--text-primary); line-height: 1.6; }
@@ -66,7 +66,15 @@
        a modal/dialog demo, etc. -- now sizes/positions relative to the
        preview box instead of the viewport, which is also just the more
        correct behavior for a component playground generally. */
-    #pg-preview { padding: 1.25rem; min-height: 70vh; background: var(--bg-primary); contain: layout; }
+    /* #778 -- John: "the search light shit is flashing at start up."
+       `contain: layout` makes this a containing block for fixed descendants,
+       which stops the spotlight overlay from being POSITIONED against the
+       viewport -- but layout containment does not CLIP. Between first paint
+       and the behavior's own stylesheet arriving (style-loader fetches it per
+       behavior), the overlay still painted outside this box: the flash.
+       Adding `paint` clips descendants to the box, so nothing can show
+       outside it at any point, regardless of when CSS lands. */
+    #pg-preview { padding: 1.25rem; min-height: 70vh; background: var(--bg-primary); contain: layout paint; }
     /* Space stacked top-level previewed elements (e.g. the 50 cards) so they
        don't sit flush on top of each other. */
     #pg-preview > * + * { margin-top: 1rem; }
@@ -154,7 +162,7 @@
             <option value="cards">50 cards</option>
             <option value="heroes-120">120 card heroes (all permutations)</option>
             <option value="hero-variants">5 hero variants</option>
-            <option value="xbehaviors">50 x-* behaviors</option>
+            <option value="xbehaviors" id="pg-opt-xbehaviors">x-* behaviors</option>
             <option value="inputs">20 inputs with x-behaviors</option>
             <option value="badges">50 badges</option>
             <option value="selects">25 selects</option>
@@ -203,296 +211,13 @@
       line-height: 1.6; overflow-x: auto;"></div>
   </div>
 
-  <!-- ═══════════════════════════════════════════════════════════════════
-       🧩 Component Gallery — 50 static <wb-demo> examples
-       Real components from src/wb-viewmodels/ + src/wb-models/*.schema.json,
-       showcasing genuine attribute permutations across many families
-       (feedback, forms, semantics/data, overlays, navigation, effects,
-       buttons, misc). Distinct from the interactive Examples dropdown
-       above (which loads generated markup into the live editor) — this
-       section is fixed, checked-in markup per docs/standards/
-       DEMOS-AND-DOCS-STANDARDS.md (every example in its own <wb-demo>,
-       vertical stacking, no code wrapping, real image/audio URLs).
-       ═══════════════════════════════════════════════════════════════════ -->
-  <section id="pg-gallery" style="margin-top: 2rem;">
-    <h2>🧩 Component Gallery</h2>
-    <p class="pg-sub">50 more <code>&lt;wb-demo&gt;</code> examples, covering feedback, forms,
-      semantics, overlays, navigation, effects, buttons, and misc components.</p>
+  <!-- #780 -- John: "Playground shouldn't show component gallery."
+       A 290-line static gallery of 53 <wb-demo> blocks used to live here,
+       below the editor. It is a different thing from a playground -- the
+       playground is for pasting your own markup and seeing it render -- and
+       it was written entirely in the retired wb-* tags. The behaviors
+       showcase is where a catalogue of examples belongs. -->
 
-    <h3>Feedback</h3>
-
-    <wb-demo>
-      <wb-alert variant="warning" title="Session expiring" message="You will be signed out in 5 minutes." dismissible></wb-alert>
-    </wb-demo>
-
-    <wb-demo>
-      <wb-alert variant="error" icon="🔥" title="Build failed" message="Three tests did not pass."></wb-alert>
-    </wb-demo>
-
-    <wb-demo>
-      <wb-badge label="Featured" variant="purple" pill glow></wb-badge>
-    </wb-demo>
-
-    <wb-demo>
-      <wb-badge variant="success" dot></wb-badge>
-    </wb-demo>
-
-    <wb-demo>
-      <wb-avatar src="https://picsum.photos/seed/pg-avatar-1/150/150" name="Jordan Lee" status="online" shape="square"></wb-avatar>
-    </wb-demo>
-
-    <wb-demo>
-      <wb-avatar initials="RM" size="2xl" bordered></wb-avatar>
-    </wb-demo>
-
-    <wb-demo>
-      <wb-spinner size="lg" variant="success" speed="fast"></wb-spinner>
-    </wb-demo>
-
-    <wb-demo>
-      <wb-progress value="72" variant="info" striped label="Syncing" show-value></wb-progress>
-    </wb-demo>
-
-    <wb-demo>
-      <wb-progress indeterminate></wb-progress>
-    </wb-demo>
-
-    <wb-demo events="wb:chip:remove">
-      <wb-chip label="TypeScript" icon="🔷" variant="primary" dismissible></wb-chip>
-    </wb-demo>
-
-    <h3>Forms</h3>
-
-    <wb-demo>
-      <fieldset>
-        <legend>Notification channels</legend>
-        <label><input type="checkbox" variant="success" checked> Email</label>
-        <label><input type="checkbox" variant="success" checked> SMS</label>
-        <label><input type="checkbox" variant="success"> Push</label>
-      </fieldset>
-    </wb-demo>
-
-    <wb-demo>
-      <fieldset>
-        <legend>Billing cycle</legend>
-        <label><input type="radio" name="pg-billing" variant="info" checked> Monthly</label>
-        <label><input type="radio" name="pg-billing" variant="info"> Annual</label>
-        <label><input type="radio" name="pg-billing" variant="info"> Custom</label>
-      </fieldset>
-    </wb-demo>
-
-    <wb-demo events="wb:switch:change">
-      <wb-switch label="Auto-renew" variant="primary" size="lg" label-position="start" checked></wb-switch>
-    </wb-demo>
-
-    <wb-demo>
-      <wb-select label="Country" searchable clearable placeholder="Choose one…" options='[{"value":"us","label":"United States"},{"value":"ca","label":"Canada"},{"value":"mx","label":"Mexico"},{"value":"uk","label":"United Kingdom"}]'></wb-select>
-    </wb-demo>
-
-    <wb-demo>
-      <textarea variant="default" autosize show-count max-length="140" rows="2" placeholder="What's on your mind? (140 char limit)"></textarea>
-    </wb-demo>
-
-    <wb-demo>
-      <input x-masked mask="(999) 999-9999" x-label="Phone number" placeholder="(000) 000-0000">
-    </wb-demo>
-
-    <wb-demo events="wb:tags:add wb:tags:remove">
-      <input x-tags placeholder="Type a skill and press Enter…">
-    </wb-demo>
-
-    <wb-demo events="wb:colorpicker:change">
-      <input x-colorpicker value="#22c55e">
-    </wb-demo>
-
-    <wb-demo events="wb:otp:input">
-      <div x-otp length="4"></div>
-    </wb-demo>
-
-    <wb-demo events="wb:autocomplete:select">
-      <input x-autocomplete items="JavaScript,TypeScript,Python,Rust,Go,Swift" placeholder="Start typing a language…">
-    </wb-demo>
-
-    <h3>Semantics &amp; Data</h3>
-
-    <wb-demo>
-      <wb-table
-        bordered
-        compact
-        headers="Task,Owner,Sprint,Status"
-        rows='[
-          ["Refactor auth flow","P. Patel","24.3","In Progress"],
-          ["Write onboarding docs","M. Webb","24.3","Done"],
-          ["Fix Safari layout bug","D. Ramirez","24.4","Open"],
-          ["Add dark mode toggle","A. Osei","24.4","In Progress"]
-        ]'>
-      </wb-table>
-    </wb-demo>
-
-    <wb-demo events="wb:table:select">
-      <wb-table
-        selectable
-        headers="Server,Region,CPU,Status"
-        rows='[
-          ["web-01","us-east","34%","Healthy"],
-          ["web-02","us-east","78%","Healthy"],
-          ["db-01","us-west","12%","Healthy"],
-          ["cache-01","eu-west","91%","Degraded"]
-        ]'>
-      </wb-table>
-    </wb-demo>
-
-    <wb-demo>
-      <wb-details summary="What is a wb-* behavior?" variant="bordered">
-        <p>A behavior is a plain function <code>(element, options) =&gt; cleanup</code> applied to
-        an element — composition, never a class hierarchy.</p>
-      </wb-details>
-    </wb-demo>
-
-    <wb-demo>
-      <wb-timeline items="Kickoff,Design Review,Beta,GA Launch"></wb-timeline>
-    </wb-demo>
-
-    <wb-demo>
-      <video controls width="480" src="https://www.w3schools.com/html/mov_bbb.mp4"></video>
-    </wb-demo>
-
-    <wb-demo>
-      <wb-audio src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-3.mp3"></wb-audio>
-    </wb-demo>
-
-    <wb-demo events="wb:rating:change">
-      <wb-rating value="4" max="5" icon="⭐"></wb-rating>
-    </wb-demo>
-
-    <wb-demo>
-      <div x-countdown date="2027-01-01T00:00:00" format="auto"></div>
-    </wb-demo>
-
-    <h3>Overlays</h3>
-
-    <wb-demo>
-      <wb-modal modal-title="Component composition" modal-content="Every wb-* element is built from plain behavior functions applied to real HTML — no base classes, no shadow DOM.">See how it works</wb-modal>
-    </wb-demo>
-
-    <wb-demo>
-      <wb-drawer position="bottom" variant="push" title="Filters" content="Filter controls would live here.">Open filter panel</wb-drawer>
-    </wb-demo>
-
-    <wb-demo>
-      <wb-dialog title="Delete project?" size="lg" variant="centered" id="pg-gallery-dialog">
-        <p>This will permanently remove the project and all of its data.</p>
-      </wb-dialog>
-    </wb-demo>
-
-    <wb-demo>
-      <button x-popover popover-title="Keyboard shortcut" popover-content="Press Ctrl+K to open the command palette." position="right">What's this?</button>
-    </wb-demo>
-
-    <wb-demo events="wb:prompt:ok wb:prompt:cancel">
-      <button x-prompt prompt-title="Rename project" prompt-message="Enter a new name:" default-value="Untitled Project">Rename…</button>
-    </wb-demo>
-
-    <h3>Navigation &amp; Layout</h3>
-
-    <wb-demo full-width>
-      <wb-navbar brand="Acme Analytics" variant="dark">
-        <a href="#">Dashboard</a>
-        <a href="#">Reports</a>
-        <a href="#">Settings</a>
-      </wb-navbar>
-    </wb-demo>
-
-    <wb-demo full-width>
-      <wb-header icon="🚀" title="Playground" subtitle="wb-starter component gallery" badge="v3"></wb-header>
-    </wb-demo>
-
-    <wb-demo full-width>
-      <wb-footer brand="Acme Analytics" copyright="© 2026 Acme Analytics"></wb-footer>
-    </wb-demo>
-
-    <wb-demo events="wb:tabs:change">
-      <wb-tabs>
-        <div tab="Overview">High-level project summary and recent activity.</div>
-        <div tab="Activity">A chronological feed of every change made this week.</div>
-        <div tab="Settings">Project name, visibility, and danger-zone actions.</div>
-      </wb-tabs>
-    </wb-demo>
-
-    <h3>Effects</h3>
-
-    <wb-demo>
-      <button x-confetti count="60" label="🎉 Celebrate a launch"></button>
-    </wb-demo>
-
-    <wb-demo>
-      <div x-stagelight variant="spotlight" color="#f59e0b" intensity="0.6" size="360px">Spotlight effect behind this text</div>
-    </wb-demo>
-
-    <wb-demo>
-      <button x-ripple style="padding: 0.75rem 1.5rem;">Click for a ripple</button>
-    </wb-demo>
-
-    <wb-demo>
-      <img x-lightbox width="220" src="https://picsum.photos/seed/pg-lightbox/900/600" alt="Click to enlarge">
-    </wb-demo>
-
-    <h3>Buttons</h3>
-
-    <wb-demo>
-      <wb-button label="Create project" variant="primary" size="lg" icon="plus"></wb-button>
-    </wb-demo>
-
-    <wb-demo>
-      <wb-button label="Export data" variant="outline" size="sm" icon="download" icon-position="end"></wb-button>
-    </wb-demo>
-
-    <wb-demo>
-      <wb-button label="Saving…" variant="success" loading full-width></wb-button>
-    </wb-demo>
-
-    <h3>Misc</h3>
-
-    <wb-demo>
-      <wb-article
-        title="The Future of Web Standards"
-        subtitle="A field guide to the platform ahead"
-        category="Web Platform"
-        author="Maya Patel"
-        date="2026-08-01"
-        reading-time="8 min read"
-        image="https://picsum.photos/seed/pg-article/800/320"
-        featured>
-      </wb-article>
-    </wb-demo>
-
-    <wb-demo>
-      <wb-search placeholder="Search the docs…" variant="glass" instant></wb-search>
-    </wb-demo>
-
-    <wb-demo>
-      <wb-formrow inline>
-        <input type="text" placeholder="City">
-        <input type="text" placeholder="ZIP code">
-      </wb-formrow>
-    </wb-demo>
-
-    <wb-demo>
-      <nav x-breadcrumb items="Home,Projects,Acme Analytics,Settings"></nav>
-    </wb-demo>
-
-    <wb-demo>
-      <wb-fieldset collapsible>
-        <legend>Advanced options</legend>
-        <p>Retry attempts, timeout thresholds, and other rarely-changed settings live here.</p>
-      </wb-fieldset>
-    </wb-demo>
-
-    <wb-demo events="wb:stepper:change">
-      <div x-stepper value="2" min="0" max="10"></div>
-    </wb-demo>
-
-  </section>
 
   <script type="module">
     import WB from '../src/core/wb-lazy.js';
@@ -861,11 +586,6 @@
     // render()'s innerHTML swap; scan it once, here, on load.
     ensureWB().then(() => WB.scan(document.getElementById('pg-themecontrol'), { eager: true }));
 
-    // Component Gallery (#pg-gallery) — 50 static <wb-demo> examples below
-    // the interactive playground. Lives outside #pg-preview too, so it must
-    // be scanned separately, once, on load (same reasoning as the theme
-    // control above).
-    ensureWB().then(() => WB.scan(document.getElementById('pg-gallery'), { eager: true }));
 
     // ── Example sets (loaded from the Examples dropdown) ──────────────────────
     const V = ['default', 'primary', 'success', 'danger', 'warning', 'info'];
@@ -1005,9 +725,35 @@
     // x-rubberband) are intentionally left out rather than shown not-working.
     function fiftyXBehaviors() {
       return [
+        // #779 -- John: "we don't have any cardheros showing on this one."
+        // This set claimed to show the x-* behaviors and contained NO card
+        // behaviors at all -- 19 of them, the largest family in the library,
+        // entirely absent. Taken from data/behavior-examples.json rather than
+        // hand-written here, so they are the same markup the showcase renders
+        // and cannot drift from it.
+        "<div x-card title=\"Trailhead access\" subtitle=\"Updated this morning\" elevated>\n  The north gate is open. Parking fills by 9am on weekends \u2014 the overflow lot adds\n  about ten minutes on foot.\n</div>",
+        "<article x-cardbutton\n  title=\"Upgrade to Team\"\n  content=\"Shared workspaces, audit history and SSO.\"\n  primary=\"Start free trial\"\n  secondary=\"Compare plans\"></article>",
+        "<article x-carddraggable title=\"Drag me\" content=\"Pick this card up and move it \u2014 the position sticks.\" constrain axis=\"both\"></article>",
+        "<article x-cardexpandable\n  title=\"What changed in 3.0\"\n  content=\"Composition replaced inheritance: a tag maps to a behavior function that decorates the element in place, in light DOM. There is no component base class any more, and no shadow boundary to reach through.\"\n  lines=\"2\"></article>",
+        "<article x-cardfile filename=\"quarterly-report.pdf\" file-type=\"pdf\" size=\"2.4 MB\" date=\"2026-08-14\" href=\"#\"></article>",
+        "<section x-cardhero\n  pretitle=\"Release 3.0\"\n  title=\"Zero build. Real components.\"\n  subtitle=\"Light DOM, no shadow boundaries, no class hierarchy.\"\n  cta=\"Read the guide\"\n  cta-href=\"#\"\n  height=\"320px\"></section>",
+        "<article x-cardhorizontal\n  image=\"https://picsum.photos/seed/trail/320/240\"\n  image-alt=\"Pine trail at dawn\"\n  image-position=\"start\"\n  title=\"Ridge loop, 8km\"\n  subtitle=\"Moderate \u00b7 3h\"></article>",
+        "<article x-cardimage\n  src=\"https://picsum.photos/seed/harbour/480/300\"\n  alt=\"Fishing boats at the harbour wall\"\n  title=\"Harbour at first light\"\n  caption=\"Shot on the 6am walk-around.\"></article>",
+        "<article x-cardlink\n  href=\"#\"\n  title=\"Attribute naming standard\"\n  description=\"Why every attribute is kebab-case, and what breaks when it is not.\"\n  badge=\"Standard\"></article>",
+        "<article x-cardminimizable\n  title=\"Build log\"\n  content=\"tsc --noEmit clean. 141 regression tests passed. Packaged in 4.2s.\"></article>",
+        "<aside x-cardnotification\n  variant=\"warning\"\n  title=\"Certificate expires in 6 days\"\n  message=\"Renew before 26 Aug or the staging domain will start failing TLS.\"\n  dismissible></aside>",
+        "<article x-cardoverlay\n  image=\"https://picsum.photos/seed/city/480/320\"\n  title=\"Night shift\"\n  subtitle=\"City desk, 02:00\"\n  position=\"bottom\"></article>",
+        "<article x-cardportfolio\n  name=\"Ada Lovelace\"\n  title=\"Principal engineer\"\n  company=\"Analytical Engines\"\n  location=\"London\"\n  cover=\"https://picsum.photos/seed/ada-cover/480/200\"></article>",
+        "<article x-cardpricing\n  plan=\"Team\"\n  price=\"$18\"\n  period=\"per user / month\"\n  description=\"For teams that need shared history and SSO.\"\n  features=\"Unlimited projects,Audit log,SSO,Priority support\"></article>",
+        "<article x-cardproduct\n  image=\"https://picsum.photos/seed/headphones/400/400\"\n  title=\"Field headphones\"\n  description=\"Closed-back, 32\u03a9, folds flat.\"\n  price=\"$149\"\n  original-price=\"$189\"></article>",
+        "<article x-cardprofile\n  name=\"Grace Hopper\"\n  role=\"Compiler pioneer\"\n  avatar=\"https://picsum.photos/seed/grace/96/96\"\n  bio=\"Wrote the first compiler, then spent a career arguing that people should not have to write machine code.\"></article>",
+        "<article x-cardstats value=\"1,284\" label=\"Builds this month\" trend=\"up\" trend-value=\"12%\"></article>",
+        "<article x-cardtestimonial\n  quote=\"We deleted the build step and shipped faster the same week.\"\n  author=\"Katherine Johnson\"\n  role=\"Platform lead\"\n  avatar=\"https://picsum.photos/seed/katherine/96/96\"\n  rating=\"5\"></article>",
+        "<article x-cardvideo\n  src=\"/demos/sample.mp4\"\n  poster=\"https://picsum.photos/seed/screening/480/270\"\n  title=\"Behaviors in 90 seconds\"\n  description=\"What replaced the component base class, and why.\"></article>",
+
         // Attention/animation effects (button — most of these are click-triggered)
         '<button x-ripple>Ripple</button>',
-        '<button x-glow color="var(--success-color)">Glow</button>',
+        '<button x-glow color="var(--success-color)">Glowing (always on, no click)</button>',
         '<button x-pulse>Click to Pulse</button>',
         '<button x-shake>Click to Shake</button>',
         '<button x-bounce>Click to Bounce</button>',
@@ -1021,7 +767,7 @@
         '<div x-slidein>Slides in as it scrolls into view</div>',
         '<div x-zoomin>Zooms in as it scrolls into view</div>',
         '<h3 x-typewriter text="Typed out letter by letter" speed="40"></h3>',
-        '<div x-rainbow duration="3s">Cycles through rainbow colors</div>',
+        '<div x-rainbow duration="3s">Cycling through rainbow colors (always on, no click)</div>',
         '<button x-confetti count="80" label="🎉 Celebrate"></button>',
         '<button x-sparkle count="20">Sparkle Button</button>',
         '<button x-fireworks count="40">Fireworks</button>',
@@ -1355,6 +1101,19 @@
       clearTimeout(debounce); debounce = setTimeout(render, 400);
     });
     window.addEventListener('resize', fitEditor);
+
+    // #781 -- John: "i dont see the x-behaviors count it's not 50 any more."
+    // The label said 50 because someone counted once. It is generated, so the
+    // count is generated too -- adding the 19 card behaviors made it 69, and a
+    // hardcoded number is wrong the moment the set changes again.
+    (function labelXBehaviourCount() {
+      const opt = document.getElementById('pg-opt-xbehaviors');
+      if (!opt) return;
+      try {
+        const n = (fiftyXBehaviors().match(/^\s*</gm) || []).length;
+        opt.textContent = `${n} x-* behaviors`;
+      } catch { /* leave the plain label */ }
+    })();
 
     fitEditor();
     render();
