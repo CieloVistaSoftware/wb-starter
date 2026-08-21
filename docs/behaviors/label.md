@@ -32,7 +32,7 @@ form control — no separate `<label for="...">` to write by hand.
   just adds the `wb-label` styling classes to that label directly — for when
   you already have your own `<label for="...">` markup:
   ```html
-  <label x-label required for="input1">Label</label>
+  <label required for="input1">Label</label>
   ```
 - [Demo](../../demos/site/forms.html#x-label-including-rtl-layouts)
 - [Schema](../../src/wb-models/label.schema.json)

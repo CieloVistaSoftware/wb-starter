@@ -7,7 +7,7 @@ Apply `x-image` to any element.
 ## Usage
 
 ```html
-<img x-image src="https://picsum.photos/200/150?r=enh1" alt="Lazy loaded" lazy class="demo-image">
+<img src="https://picsum.photos/200/150?r=enh1" alt="Lazy loaded" lazy class="demo-image">
 ```
 
 ## Attributes

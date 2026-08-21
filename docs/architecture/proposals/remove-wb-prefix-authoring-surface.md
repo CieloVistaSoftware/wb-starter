@@ -6,7 +6,7 @@
 
 ## TL;DR
 
-Today, writing a card means `<wb-card>`. This proposal makes it `<article x-card>` (or any
+Today, writing a card means `<wb-card>`. This proposal makes it `<article>` (or any
 semantic tag the author already reached for) — plain HTML plus one attribute, no invented
 tag names to memorize. The `wb-` prefix survives internally (schema registry keys, generated
 BEM classes) but disappears from what an author types. Opt-out reuses an attribute
@@ -89,7 +89,7 @@ authoring mental model.
 <wb-card elevated title="...">...</wb-card>
 
 <!-- Proposed -->
-<article x-card elevated title="...">...</article>
+<article elevated title="...">...</article>
 ```
 
 Consistent with the existing native-tag philosophy (`wb.js`'s own comment: *"a plain
@@ -171,7 +171,7 @@ questionable.
 3. **Add attribute detection alongside tag detection (dual maintenance — decided)** —
    `detectSchema()`, `scan()`, and `startObserver()`'s tag test in `schema-builder.js` each
    gain an `x-{name}` attribute check as an *additional* match, not a replacement. `<wb-card>`
-   and `<article x-card>` both resolve to the same schema from this point on. Nothing else in
+   and `<article>` both resolve to the same schema from this point on. Nothing else in
    the repo has to change for this step to ship — it's the safest possible way to make the new
    authoring form real without breaking a single existing page, demo, or test. This is the
    concrete next chunk of work; see below.
@@ -195,7 +195,7 @@ questionable.
 ## Decisions
 
 - **Transition strategy: dual maintenance, indefinitely.** Both `<wb-card>` and
-  `<article x-card>` resolve to the same schema for as long as this stays useful — no flag
+  `<article>` resolve to the same schema for as long as this stays useful — no flag
   day, no forced migration deadline, no target date to "finish." This directly changes step 3
   above from "risky, needs a window" to "purely additive, safe to ship alone."
 - **Opt-out: `x-ignore`, no new attribute.** One opt-out, not two — covers both "skip native

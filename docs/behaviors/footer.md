@@ -7,7 +7,7 @@ Applies to `<footer>`, and to any element carrying `x-footer`.
 ## Usage
 
 ```html
-<footer x-footer>
+<footer>
   …
 </footer>
 ```

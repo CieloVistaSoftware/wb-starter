@@ -7,7 +7,7 @@ Applies to `<dialog>`, and to any element carrying `x-dialog`.
 ## Usage
 
 ```html
-<dialog x-dialog>
+<dialog>
   …
 </dialog>
 ```

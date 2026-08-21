@@ -7,7 +7,7 @@ Apply `x-video` to any element.
 ## Usage
 
 ```html
-<video x-video src="/demos/sample.mp4" poster="https://picsum.photos/seed/screening/640/360" controls></video>
+<video src="/demos/sample.mp4" poster="https://picsum.photos/seed/screening/640/360" controls></video>
 ```
 
 ## Attributes

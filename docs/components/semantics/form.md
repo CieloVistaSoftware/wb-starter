@@ -58,7 +58,6 @@ Wrapped in `<wb-demo>`, so the live component renders below with its source show
 
 ```html
 <form
-  x-form
   ajax
   action="/api/submit">
   <input

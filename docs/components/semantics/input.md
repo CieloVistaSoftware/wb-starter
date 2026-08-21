@@ -60,7 +60,6 @@ Wrapped in `<wb-demo>`, so the live component renders below with its source show
 ```html
 <input
   type="text"
-  x-input
   placeholder="Search...">
 ```
 

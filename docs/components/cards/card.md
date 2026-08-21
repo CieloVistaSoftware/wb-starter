@@ -11,7 +11,7 @@ semantic structure through Light-DOM markup and add only what is unique to their
 purpose via their own `x-behavior` value and extra content.
 
 <wb-demo>
-<article x-card title="Hello" variant="elevated">
+<article title="Hello" variant="elevated">
   <p>Keep related information together in a clear, reusable surface.</p>
   <p><strong>Status:</strong> Ready to review</p>
 </article>
@@ -76,7 +76,6 @@ structure with every element labeled:
 
 <wb-demo>
 <article
-  x-card
   title="Title + Body"
   subtitle="A labeled content surface"
   badge="LIVE"
@@ -129,7 +128,6 @@ structure with every element labeled:
 
 <wb-demo>
 <article
-  x-card
   title="Card Title"
   subtitle="Subtitle text">
   <p>Explicit and self-documenting -- works whether or not the page has autoInject on.</p>
@@ -156,7 +154,6 @@ opted out:
 
 <wb-demo>
 <article
-  x-card
   title="Featured Card"
   subtitle="A brief description"
   footer="Last updated: Today"
@@ -175,7 +172,6 @@ unstyled, slow, browser-inconsistent native `title` tooltip (#283):
 
 <wb-demo>
 <article
-  x-card
   title="Hover Me"
   tooltip="Extra detail shown on hover">
   <p>Hover this card to reveal a themed tooltip with supporting context.</p>
@@ -186,7 +182,7 @@ unstyled, slow, browser-inconsistent native `title` tooltip (#283):
 
 ### Default
 <wb-demo>
-<article x-card title="Default Card">
+<article title="Default Card">
   <p>Standard card styling keeps the content easy to scan.</p>
 </article>
 </wb-demo>
@@ -194,7 +190,6 @@ unstyled, slow, browser-inconsistent native `title` tooltip (#283):
 ### Glass
 <wb-demo>
 <article
-  x-card
   title="Glass Card"
   variant="glass">
   <p>Frosted glass effect with blur for layered content.</p>
@@ -204,7 +199,6 @@ unstyled, slow, browser-inconsistent native `title` tooltip (#283):
 ### Elevated
 <wb-demo>
 <article
-  x-card
   title="Elevated Card"
   elevated>
   <p>Use elevation to separate a focused task from the surrounding page.</p>
@@ -214,7 +208,6 @@ unstyled, slow, browser-inconsistent native `title` tooltip (#283):
 ### Clickable
 <wb-demo>
 <article
-  x-card
   title="Click Me"
   clickable>
   <p>Click anywhere on this card to activate its interactive state.</p>

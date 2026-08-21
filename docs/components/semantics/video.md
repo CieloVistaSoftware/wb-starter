@@ -42,7 +42,6 @@ Wrapped in `<wb-demo>`, so the live component renders below with its source show
 
 ```html
 <video
-  x-video
   src="clip.mp4"
   controls>
 </video>

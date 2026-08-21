@@ -55,7 +55,6 @@ Wrapped in `<wb-demo>`, so the live component renders below with its source show
 
 ```html
 <textarea
-  x-textarea
   placeholder="Write something...">
 </textarea>
 ```

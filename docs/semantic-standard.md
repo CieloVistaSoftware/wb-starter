@@ -79,7 +79,7 @@
 
 ```html
 <!-- CORRECT -->
-<article x-card>
+<article>
   <header class="wb-card__header">
     <h3>Title</h3>
   </header>
@@ -239,7 +239,6 @@ automatically, no `x-form` attribute needed.
     <label> Name
       <input
         type="text"
-        x-input
         required>
     </label>
   </fieldset>
@@ -274,8 +273,7 @@ Only use `<div>` for:
 </div>
 <!-- OK - styling wrapper with ID -->
 <article
-  id="card-4"
-  x-card>
+  id="card-4">
   <header id="card-header-4">
     <div
       id="header-content-4"

@@ -136,7 +136,6 @@ When you need to override auto-injection or apply behaviors to non-semantic elem
 </div>
 <!-- Combining multiple behaviors -->
 <button
-  x-button
   x-ripple
   x-toast
   variant="primary"
@@ -168,7 +167,7 @@ When you need to override auto-injection or apply behaviors to non-semantic elem
 | `video` | `<video>` | `<div x-video>` |
 | `figure` | `<figure>` | `<div x-figure>` |
 | `table` | `<table>` | `<div x-table>` |
-| `input` | — (not auto-injected; bare `<input>` needs `x-input`) | `<input x-input>` |
+| `input` | — (not auto-injected; bare `<input>` needs `x-input`) | `<input>` |
 | `textarea` | `<textarea>` | — (auto-injects, `x-textarea` is redundant) |
 | `select` | `<select>` | — (auto-injects, `x-select` is redundant) |
 | `progress` | `<progress>` | `<div x-progressbar>` |
@@ -237,7 +236,6 @@ multi-attribute tag onto one line.
 
 ```html
 <article
-  x-card
   title="Card Title"
   subtitle="Subtitle"
   elevated="true"

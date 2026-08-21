@@ -53,8 +53,26 @@ function nativeMap(): Record<string, string> {
 
 const MAP = nativeMap();
 
+/**
+ * Comments are not markup. A comment that DOCUMENTS the anti-pattern — and
+ * several in pages/behaviors.html quote `<button x-button>` and
+ * `<figure x-figure>` precisely to say they must never be emitted — is not an
+ * instance of it. Scanning raw text made writing about the rule a violation
+ * of the rule.
+ *
+ * `//` is only treated as a comment when preceded by start-of-line or
+ * whitespace, so the `//` in `https://…` inside a real attribute survives.
+ */
+function stripComments(text: string): string {
+  return text
+    .replace(/<!--[\s\S]*?-->/g, '')
+    .replace(/\/\*[\s\S]*?\*\//g, '')
+    .replace(/(^|\s)\/\/.*$/gm, '$1');
+}
+
 /** Every `<tag …>` in `html` whose own tag already auto-injects the x- attr it carries. */
 function offendersIn(html: string): string[] {
+  html = stripComments(html);
   const bad: string[] = [];
   for (const m of html.matchAll(/<([a-zA-Z][a-zA-Z0-9]*)((?:\s[^<>]*?)?)(\/?>)/gs)) {
     const behavior = MAP[m[1].toLowerCase()];
@@ -123,19 +141,21 @@ test.describe('No redundant x-{behavior} attribute', () => {
     await page.goto('/pages/behaviors.html');
     await page.waitForFunction(() => (window as any).WB?.behaviors, { timeout: 15000 });
 
-    const rendered: string[] = await page.evaluate(async () => {
+    const rendered: string[] = await page.evaluate(() => {
+      // Call the generator directly rather than clicking every row: rows
+      // contain links, and a stray navigation destroyed the page context
+      // mid-sweep. A flaky test guarding a real rule is worse than no test.
+      const gen = (window as any).__wbGeneratedExample;
+      if (typeof gen !== 'function') return [];
+      const names = Object.keys((window as any).WB?.behaviors ?? {});
       const out: string[] = [];
-      const search = document.getElementById('behaviors-search') as HTMLInputElement;
-      if (!search) return out;
-      search.value = 'x-';
-      search.dispatchEvent(new Event('input', { bubbles: true }));
-      await new Promise(r => setTimeout(r, 1200));
-      const rows = Array.from(document.querySelectorAll('#behaviors-search-results li'));
-      const stage = document.getElementById('behaviors-live-example');
-      for (const row of rows) {
-        (row.querySelector('button,a') as HTMLElement || (row as HTMLElement)).click();
-        await new Promise(r => setTimeout(r, 60));
-        if (stage) out.push(stage.innerHTML);
+      for (const name of names) {
+        try {
+          out.push(String(gen('x-' + name, '', '', '', false)));
+        } catch {
+          // A generator throw is a different defect; this test is about the
+          // markup it produces when it does produce some.
+        }
       }
       return out;
     });

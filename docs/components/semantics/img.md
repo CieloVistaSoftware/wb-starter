@@ -28,7 +28,6 @@ Wrapped in `<wb-demo>`, so the live component renders below with its source show
 
 <wb-demo>
 <img
-  x-image
   src="https://placehold.co/600x400/1e293b/e2e8f0?text=Photo"
   alt="Photo">
 </wb-demo>
@@ -48,7 +47,6 @@ Wrapped in `<wb-demo>`, so the live component renders below with its source show
 
 ```html
 <img
-  x-image
   src="https://picsum.photos/seed/photo/600/400"
   alt="Photo">
 ```

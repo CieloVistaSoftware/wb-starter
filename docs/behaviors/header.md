@@ -7,7 +7,7 @@ Applies to `<header>`, and to any element carrying `x-header`.
 ## Usage
 
 ```html
-<header x-header>
+<header>
   …
 </header>
 ```

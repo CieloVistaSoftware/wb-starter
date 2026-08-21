@@ -17,14 +17,14 @@ The collapsible flags read `data-collapsible` / `data-collapsed` (plain
 `data-*` attributes, not `x-*`):
 
 ```html
-<fieldset x-fieldset data-collapsible>
+<fieldset data-collapsible>
   <legend>Shipping details</legend>
   <input type="text" placeholder="Address line 1">
 </fieldset>
 ```
 
 <wb-demo>
-<fieldset x-fieldset data-collapsible>
+<fieldset data-collapsible>
   <legend>Shipping details</legend>
   <input type="text" placeholder="Address line 1">
 </fieldset>
@@ -33,7 +33,7 @@ The collapsible flags read `data-collapsible` / `data-collapsed` (plain
 Add `data-collapsed` to start collapsed:
 
 <wb-demo>
-<fieldset x-fieldset data-collapsible data-collapsed>
+<fieldset data-collapsible data-collapsed>
   <legend>Advanced options</legend>
   <input type="text" placeholder="Coupon code">
 </fieldset>

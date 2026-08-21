@@ -7,7 +7,7 @@ Applies to `<button>`, and to any element carrying `x-button`.
 ## Usage
 
 ```html
-<button x-button>
+<button>
   …
 </button>
 ```

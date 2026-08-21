@@ -25,7 +25,6 @@ Wrapped in `<wb-demo>`, so the live component renders below with its source show
 
 <wb-demo>
 <code
-  x-code
   language="Python">
   print("Hello")
 </code>
@@ -54,7 +53,6 @@ Wrapped in `<wb-demo>`, so the live component renders below with its source show
 
 ```html
 <code
-  x-code
   language="Python">
   print("Hello")
 </code>

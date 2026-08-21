@@ -95,7 +95,6 @@ which works identically whether or not the page has opted out.
 
 <wb-demo>
 <article
-  x-card
   title="Card Title">
   Content here...
 </article>
@@ -113,7 +112,6 @@ full property reference; every one of them is demonstrated here directly on
 
 <wb-demo>
 <article
-  x-card
   title="Quarterly Report"
   subtitle="Q3 2026 summary"
   footer="Last updated: Today">
@@ -125,7 +123,6 @@ full property reference; every one of them is demonstrated here directly on
 
 <wb-demo>
 <article
-  x-card
   title="New Feature"
   badge="NEW">
   <p>Badge text renders in the card header, next to the title.</p>
@@ -136,7 +133,6 @@ full property reference; every one of them is demonstrated here directly on
 
 <wb-demo>
 <article
-  x-card
   title="Elevated Article"
   elevated>
   <p>Adds a drop shadow to separate this from surrounding content.</p>
@@ -147,7 +143,6 @@ full property reference; every one of them is demonstrated here directly on
 
 <wb-demo>
 <article
-  x-card
   title="Click Me"
   clickable>
   <p>The whole article becomes a keyboard-focusable, clickable surface.</p>
@@ -158,7 +153,6 @@ full property reference; every one of them is demonstrated here directly on
 
 <wb-demo>
 <article
-  x-card
   title="Glass Variant"
   variant="glass">
   <p>Frosted glass effect with blur for layered content.</p>
@@ -172,7 +166,6 @@ default hover effect:
 
 <wb-demo>
 <article
-  x-card
   title="No Hover Effect"
   hoverable="false">
   <p>This article doesn't respond to hover.</p>
@@ -183,7 +176,6 @@ default hover effect:
 
 <wb-demo>
 <article
-  x-card
   title="Hover for Detail"
   tooltip="Extra context shown on hover, themed, not the native title tooltip">
   <p>Hover this article to see a themed WB tooltip.</p>
@@ -194,7 +186,6 @@ default hover effect:
 
 <wb-demo>
 <article
-  x-card
   title="Featured Article"
   subtitle="A brief description"
   badge="FEATURED"

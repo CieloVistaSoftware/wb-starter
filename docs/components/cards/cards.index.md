@@ -42,7 +42,6 @@ All card variants compose the shared `card` behavior and Light-DOM markup:
 
 <wb-demo>
 <article
-  x-card
   title="Card Title">
   Card content here
 </article>

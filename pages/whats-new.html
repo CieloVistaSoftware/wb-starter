@@ -3,6 +3,18 @@
   <p>What's actually live on this site right now — every push to <code>main</code> deploys straight to <a href="https://cielovistasoftware.github.io/wb-starter/" target="_blank" rel="noopener">cielovistasoftware.github.io/wb-starter</a>, so this list is the real changelog, not a promise of a future release.</p>
 </div>
 
+<section id="whats-new-3-0-77">
+  <h2><a href="https://github.com/CieloVistaSoftware/wb-starter/releases/tag/v3.0.77" target="_blank" rel="noopener" title="release v3.0.77">3.0.77</a> — 2026-08-21</h2>
+  <p><strong>This is what is live at 3.0.77.</strong></p>
+  <ul>
+    <li class="wn-item wn-bug"><span class="wn-tag">Bug</span> <strong>Input variants and sizes were dead on every host.</strong> Three causes, found by a permutation suite rather than one at a time: the container host built a field and applied neither, the native host read only <code>data-size</code> and never the plain <code>size</code>, and <code>size="md"</code> / <code>variant="default"</code> were skipped on purpose — leaving the schema's own defaults with no trace, indistinguishable from being ignored (<a href="https://github.com/CieloVistaSoftware/wb-starter/issues/755" target="_blank" rel="noopener">#755</a>).</li>
+    <li class="wn-item wn-bug"><span class="wn-tag">Bug</span> <strong><code>&lt;div x-input&gt;</code> rendered nothing at all.</strong> The field builder was gated on the host being <code>&lt;wb-input&gt;</code>, so the documented authoring form produced no label, no field and no variant. It now builds on any container host; a host that IS a form control keeps the wrap path, where the element already is the input (<a href="https://github.com/CieloVistaSoftware/wb-starter/issues/755" target="_blank" rel="noopener">#755</a>).</li>
+    <li class="wn-item wn-request"><span class="wn-tag">Request</span> <strong>A behavior that cannot honour your attributes now says so.</strong> Asking for <code>label</code>, <code>helper</code>, <code>error</code> or <code>input-type</code> on a host that cannot build a field raises a real runtime error naming the ignored attributes, instead of rendering nothing and looking broken (<a href="https://github.com/CieloVistaSoftware/wb-starter/issues/755" target="_blank" rel="noopener">#755</a>).</li>
+    <li class="wn-item wn-request"><span class="wn-tag">Request</span> <strong>The events panel reports the element id, and only the id.</strong> It printed <code>tag#id.class</code>, burying the one token worth reading — and because the listener sits on the stage, a click on the stage's own padding was logged as if the example had fired it. Events outside the example are no longer reported at all (<a href="https://github.com/CieloVistaSoftware/wb-starter/issues/756" target="_blank" rel="noopener">#756</a>).</li>
+    <li class="wn-item wn-new"><span class="wn-tag">New</span> <strong>Permutation suites for input, and every <code>x-*</code> checked for impropriety.</strong> Both read their value lists from the schema and the tag-to-behavior map, so new values are covered without touching the tests. The <code>x-*</code> test swept 29 doc files still teaching <code>&lt;figure x-figure&gt;</code>, <code>&lt;img x-image&gt;</code>, <code>&lt;pre x-pre&gt;</code> and the rest, and the generator that would have put them all back (<a href="https://github.com/CieloVistaSoftware/wb-starter/issues/754" target="_blank" rel="noopener">#754</a>).</li>
+  </ul>
+</section>
+
 <section id="whats-new-3-0-76">
   <h2><a href="https://github.com/CieloVistaSoftware/wb-starter/releases/tag/v3.0.76" target="_blank" rel="noopener" title="release v3.0.76">3.0.76</a> — 2026-08-21</h2>
   <p><strong>This is what is live at 3.0.76.</strong></p>

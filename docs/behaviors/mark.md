@@ -7,7 +7,7 @@ Apply `x-mark` to any element.
 ## Usage
 
 ```html
-<p>Search matched <mark x-mark>light DOM</mark> in 12 documents.</p>
+<p>Search matched <mark>light DOM</mark> in 12 documents.</p>
 ```
 
 ## Attributes

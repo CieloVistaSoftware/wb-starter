@@ -603,7 +603,6 @@ Stack multiple behaviors on a single element:
 
 ```html
 <button
-  x-button
   x-ripple
   x-tooltip
   variant="primary"

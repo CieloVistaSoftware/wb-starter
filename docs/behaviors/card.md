@@ -7,7 +7,7 @@ Applies to `<article>`, and to any element carrying `x-card`.
 ## Usage
 
 ```html
-<article x-card>
+<article>
   …
 </article>
 ```

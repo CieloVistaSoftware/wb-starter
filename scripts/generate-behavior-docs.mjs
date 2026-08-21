@@ -167,11 +167,27 @@ function semanticTag(schema) {
   return typeof el === 'string' ? el : (el.tagName || null);
 }
 
+/**
+ * #754: does `tag` already auto-inject the behavior `token` names? If so the
+ * attribute must NOT appear in the usage block — `<figure x-figure>` is the
+ * duplication autoInject exists to remove, and #746 showed the redundant form
+ * can suppress the behavior outright. nativeMap is the authority; its keys are
+ * selectors, so only bare-tag entries can be compared against a host tag.
+ */
+function autoInjects(tag, token) {
+  return nativeMap[tag] === token.replace(/^x-/, '');
+}
+
 function usage(token, schema) {
   const fromCatalogue = examples[token]?.source;
   if (fromCatalogue) return fromCatalogue;
   const el = semanticTag(schema);
-  if (el) return `<${el} ${token}>\n  …\n</${el}>`;
+  if (el) {
+    return autoInjects(el, token)
+      ? `<${el}>\n  …\n</${el}>`
+      : `<${el} ${token}>\n  …\n</${el}>`;
+  }
+  // A <div> auto-injects nothing, so the attribute is load-bearing here.
   return `<div ${token}>\n  …\n</div>`;
 }
 

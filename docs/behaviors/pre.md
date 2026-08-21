@@ -7,7 +7,7 @@ Apply `x-pre` to any element.
 ## Usage
 
 ```html
-<pre x-pre>npm run test:compliance
+<pre>npm run test:compliance
   7591 passed
      82 failed</pre>
 ```

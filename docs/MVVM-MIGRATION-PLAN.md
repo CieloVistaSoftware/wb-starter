@@ -17,7 +17,7 @@
 >   `component | base | definition | behavior | page`.
 > - Recognized `page` as a valid tier (`home-page.schema.json`).
 > - `getComponentSchemas()` is now tier-aware (component-only).
-> - Setup-example validation accepts the v3 `x-*` attribute syntax (e.g. `<form x-form>`).
+> - Setup-example validation accepts the v3 `x-*` attribute syntax (e.g. `<form>`).
 > - Added missing `default`s (`collapse.target`, `behaviors.src`); purged the untracked
 >   `tmp/` tree and fixed the `.gitignore` pattern that never matched it.
 > - Compliance suite: the 10 schema/v3-syntax failures + the `tmp/` `html-ids` failure are
@@ -109,7 +109,7 @@ Users provide simple attribute values. The schema defines how those values becom
 | Trigger | Example | Status |
 |---------|---------|--------|
 | Web Component tag | `<wb-card>` | ✅ Keep |
-| Data attribute | `<article x-card>` | ✅ Keep |
+| Data attribute | `<article>` | ✅ Keep |
 | ~~Class name~~ | ~~`<article class="wb-card">`~~ | ❌ Drop (CSS-only) |
 
 ## Schema Sections Explained

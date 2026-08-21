@@ -135,7 +135,6 @@ Enhances standard HTML elements with better styling and functionality.
 
 <wb-demo>
 <img
-  x-image
   src="https://placehold.co/600x400/1e293b/e2e8f0?text=Photo"
   alt="Photo">
 </wb-demo>
@@ -144,7 +143,6 @@ Enhances standard HTML elements with better styling and functionality.
 
 <wb-demo>
 <code
-  x-code
   language="Python">
   print("Hello")
 </code>
@@ -639,7 +637,7 @@ schema, styling) — this table is the cross-behavior index.
 **Forms** — `wb:form:submit` / `wb:form:success` / `wb:form:error` fire from **two**
 independent implementations, so the exact `detail` shape depends on which one enhanced
 your form: the `<wb-form ajax>` component (`form.js`: `{ formData }` / `{ data }` /
-`{ error }`) and native `<form x-form>` auto-enhancement (`semantics/form.js` /
+`{ error }`) and native `<form>` auto-enhancement (`semantics/form.js` /
 `enhancements.js`: `{ response }` / `{ error }`). See
 [components/semantics/form.md](components/semantics/form.md) for the authoritative,
 per-implementation breakdown.

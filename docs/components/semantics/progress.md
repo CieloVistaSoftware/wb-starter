@@ -121,7 +121,7 @@ automatically, no `x-progress` attribute needed.
 
 ## Known gap — no JS API on `<wb-progress>`
 
-`progress.js` exposes a `wbProgress` object (`setValue`/`getValue`/`setMax`/`getPercent`/`setIndeterminate`) — but only for the **native `<progress x-progress>`** enhancement path. The `<wb-progress>` custom tag (every example on this page) re-renders from its attributes on each scan and does not currently expose any JS API — there is no `increment()`/`decrement()`/`reset()`/`complete()` method, on either path. To change a `<wb-progress>`'s value programmatically today, set the `value` attribute and re-scan the element.
+`progress.js` exposes a `wbProgress` object (`setValue`/`getValue`/`setMax`/`getPercent`/`setIndeterminate`) — but only for the **native `<progress>`** enhancement path. The `<wb-progress>` custom tag (every example on this page) re-renders from its attributes on each scan and does not currently expose any JS API — there is no `increment()`/`decrement()`/`reset()`/`complete()` method, on either path. To change a `<wb-progress>`'s value programmatically today, set the `value` attribute and re-scan the element.
 
 ## CSS API
 

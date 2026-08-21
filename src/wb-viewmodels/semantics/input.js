@@ -1,3 +1,4 @@
+import { logError } from '../../core/error-logger.js';
 /**
  * Input - Enhanced <input> element
  * Adds clearable, prefix/suffix, validation variants
@@ -20,7 +21,22 @@ export function input(element, options = {}) {
   // by hand in JS rather than depending on $view interpretation at
   // runtime; mirror that here instead of the schema-builder path, whose
   // behavior under the lazy runtime is unverified.
-  if (element.tagName === 'WB-INPUT') {
+  // #755: this used to require tagName === 'WB-INPUT', so the documented
+  // authoring form
+  //
+  //   <div x-input label="Repository" placeholder="owner/name" input-type="text">
+  //
+  // produced NOTHING -- no label, no field, no error variant. It fell past
+  // this block to the generic wrap below, which assumes the host already IS a
+  // form control and has nothing to wrap on a <div>.
+  //
+  // The whole premise of an x-* behavior is that any element can carry it, so
+  // build the field on any CONTAINER host. A host that is itself a form
+  // control keeps the old path: there the element is the input, and wrapping
+  // is the correct treatment rather than building a second one inside it.
+  const FORM_CONTROLS = ['INPUT', 'SELECT', 'TEXTAREA'];
+  const isContainerHost = !FORM_CONTROLS.includes(element.tagName);
+  if (isContainerHost) {
     if (element.querySelector('input')) return () => {}; // already built (eager runtime already ran)
 
     const authoredValue = (element._wbOriginalSlot || element.textContent || '').trim();
@@ -37,6 +53,16 @@ export function input(element, options = {}) {
     const disabled = element.hasAttribute('disabled');
     const readonly = element.hasAttribute('readonly');
     const required = element.hasAttribute('required');
+
+    // #755: variant and size were declared in input.schema.json, documented,
+    // and read NOWHERE on this path -- `<div x-input variant="error">` built a
+    // field with no error styling at all. Map them to modifier classes, the
+    // same mechanism button uses, so the CSS that already exists applies.
+    const variant = element.getAttribute('variant') || '';
+    const size = element.getAttribute('size') || '';
+    element.classList.add('wb-input');
+    if (variant) element.classList.add(`wb-input--${variant}`);
+    if (size) element.classList.add(`wb-input--${size}`);
 
     element.innerHTML = '';
     // NOT .wb-input on the host -- that class is input.css's styling for a
@@ -155,10 +181,32 @@ export function input(element, options = {}) {
     return () => {};
   }
 
+  // #755 -- John: "doesn't work but should at least show a runtime error."
+  //
+  // Everything above this point is a DELIBERATE hand-off: another behavior
+  // owns the element, or the browser renders the type natively. Reaching here
+  // with attributes that only the field builder can honour is different --
+  // it means the author asked for a label/helper/error/input-type and this
+  // path cannot produce any of them. Silently returning is what made
+  // `<div x-input label="Repository">` look like a broken component instead
+  // of an unsupported host, and cost a bug report to discover.
+  const BUILDER_ONLY = ['label', 'helper', 'error', 'input-type', 'inputtype'];
+  const asked = BUILDER_ONLY.filter((a) => element.hasAttribute(a));
+  if (asked.length && !element.querySelector('input')) {
+    logError(
+      `[WB:input] <${element.tagName.toLowerCase()}> asked for ${asked.join(', ')} ` +
+      `but this host cannot build a field, so ${asked.length === 1 ? 'it was' : 'they were'} ignored.`,
+      { element: element.outerHTML.slice(0, 200), attributes: asked }
+    );
+  }
+
   const config = {
     type: options.type || element.dataset.type || element.type || 'text',
     variant: options.variant || element.getAttribute('variant') || element.dataset.variant || '',
-    size: options.size || element.dataset.size || 'md',
+    // #755: the plain `size` attribute -- the documented spelling, and the one
+    // every example writes -- was never read here; only data-size was. Same
+    // gap as #752.
+    size: options.size || element.getAttribute('size') || element.dataset.size || 'md',
     clearable: options.clearable ?? element.hasAttribute('clearable'),
     prefix: options.prefix || element.getAttribute('prefix') || element.dataset.prefix || element.dataset.icon || '',
     suffix: options.suffix || element.getAttribute('suffix') || element.dataset.suffix || '',
@@ -214,8 +262,20 @@ export function input(element, options = {}) {
   // .wb-input--{variant} adds border-color, all of which belong to the
   // field itself. On the wrapper they padded/colored the structural div,
   // contributing to the doubled-up ring/spacing.
-  if (config.size !== 'md') {
+  // #755: this used to skip 'md', so `size="md"` left NO trace on the element
+  // -- indistinguishable from the attribute being ignored, which is exactly
+  // the failure being hunted here. State every size explicitly; the default
+  // carrying its own class costs nothing and makes the rendered element say
+  // what it is.
+  if (config.size) {
     element.classList.add(`wb-input--${config.size}`);
+  }
+
+  // #755: `variant="default"` is a declared enum value that landed nowhere,
+  // so the schema's own default was silently unrepresented. Every variant now
+  // carries its class; the specific ones below keep their border treatment.
+  if (config.variant) {
+    element.classList.add(`wb-input--${config.variant}`);
   }
 
   if (config.variant === 'success') {
