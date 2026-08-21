@@ -410,8 +410,28 @@ test.describe('Component Compliance', () => {
       const element = await setupTestContainer(page, baseHtml);
       
       if (schema.compliance?.baseClass) {
-        const hasBaseClass = await element.evaluate((el, cls) => el.classList.contains(cls), schema.compliance.baseClass);
-        if (!hasBaseClass) {
+        // #736 -- this generates its markup as the CUSTOM TAG (<wb-alert ...>),
+        // and behaviors deliberately skip the redundant base class on a literal
+        // custom-tag host because the stylesheet targets the tag directly -- the
+        // #448 pattern, written down in the source:
+        //
+        //   // skip the redundant class on a literal <wb-alert> host (its own
+        //   // tag selector already covers it), add it for every other host.
+        //   if (element.tagName.toLowerCase() !== 'wb-alert') element.classList.add('wb-alert');
+        //
+        // Measured: <div x-alert variant="warning"> -> "wb-alert wb-alert--warning",
+        // <wb-alert variant="warning"> -> "wb-alert--warning", and alert.css line
+        // 10 is `wb-alert,`. Both are styled. Asserting the literal class failed
+        // 50 behaviors for doing the right thing.
+        //
+        // What matters is that the element is COVERED by its base style, so the
+        // tag counts. An attribute host missing the class is still a failure --
+        // that is the #375 bug this check exists to catch.
+        const covered = await element.evaluate(
+          (el, cls) => el.classList.contains(cls) || el.tagName.toLowerCase() === cls,
+          schema.compliance.baseClass,
+        );
+        if (!covered) {
           allErrors.push(`[BASE CLASS] Missing: "${schema.compliance.baseClass}"`);
         }
       }
@@ -642,8 +662,16 @@ test.describe('Component Compliance', () => {
               if (visTest.expect.hasClass) {
                 const classes = Array.isArray(visTest.expect.hasClass) ? visTest.expect.hasClass : [visTest.expect.hasClass];
                 for (const cls of classes) {
-                  const hasClass = await target.evaluate((el, c) => el.classList.contains(c), cls);
-                  if (!hasClass) {
+                  // #736, same rule as CHECK 1: a custom-tag host is styled by
+                  // its TAG selector, so behaviors skip the redundant base class
+                  // there (card.js:230 for this exact case). card.schema.json's
+                  // "Basic Card" sets up a <wb-card> and expects "wb-card" --
+                  // covered by the tag, absent as a class, and correct either way.
+                  const covered = await target.evaluate(
+                    (el, c) => el.classList.contains(c) || el.tagName.toLowerCase() === c,
+                    cls,
+                  );
+                  if (!covered) {
                     allErrors.push(`[VISUAL] ${visTest.name}: Missing class "${cls}"`);
                   }
                 }
