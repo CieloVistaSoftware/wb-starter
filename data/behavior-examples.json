@@ -326,7 +326,7 @@
       "alternates": []
     },
     "x-button": {
-      "source": "<button variant=\"primary\" icon=\"download\" size=\"md\">Download report</button>",
+      "source": "<button variant=\"primary\" icon=\"download\" size=\"md\">\n  Button example of a primary button</button>",
       "alternates": []
     },
     "x-badge": {
