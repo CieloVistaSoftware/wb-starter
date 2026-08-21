@@ -5,14 +5,14 @@
   "demoBlocks": 88,
   "examples": {
     "x-ripple": {
-      "source": "<button variant=\"primary\" x-ripple>Button example of x-ripple</button>",
+      "source": "<button variant=\"primary\" x-ripple>Button example of a primary x-ripple</button>",
       "alternates": [
         "<button variant=\"primary\" x-ripple>Click for Ripple</button>",
         "<div x-ripple class=\"ripple-box\">Ripple on any element</div>"
       ]
     },
     "x-toast": {
-      "source": "<button variant=\"primary\" x-toast message=\"Action completed!\" toast-variant=\"success\">Button example of x-toast</button>",
+      "source": "<button variant=\"primary\" x-toast message=\"Action completed!\" toast-variant=\"success\">Button example of a primary x-toast</button>",
       "alternates": [
         "<button variant=\"primary\" x-toast message=\"Info message\" toast-variant=\"info\">Info Toast</button>",
         "<button variant=\"primary\" x-toast message=\"Success!\" toast-variant=\"success\">Success Toast</button>",
@@ -21,7 +21,7 @@
       ]
     },
     "x-tooltip": {
-      "source": "<button variant=\"primary\" x-tooltip=\"Helpful hint!\" position=\"top\">Button example of x-tooltip</button>",
+      "source": "<button variant=\"primary\" x-tooltip=\"Helpful hint!\" position=\"top\">Button example of a primary x-tooltip</button>",
       "alternates": [
         "<button variant=\"secondary\" x-tooltip=\"Top tooltip\" position=\"top\">Top</button>",
         "<button variant=\"secondary\" x-tooltip=\"Bottom tooltip\" position=\"bottom\">Bottom</button>",
@@ -62,19 +62,19 @@
       ]
     },
     "x-popover": {
-      "source": "<button variant=\"primary\" x-popover popover-title=\"Popover Title\" popover-content=\"This is additional information displayed in a popover.\">Button example of x-popover</button>",
+      "source": "<button variant=\"primary\" x-popover popover-title=\"Popover Title\" popover-content=\"This is additional information displayed in a popover.\">Button example of a primary x-popover</button>",
       "alternates": []
     },
     "x-confirm": {
-      "source": "<button variant=\"primary\" x-confirm confirm-title=\"Confirm Action\" confirm-message=\"Are you sure you want to proceed?\">Button example of x-confirm</button>",
+      "source": "<button variant=\"primary\" x-confirm confirm-title=\"Confirm Action\" confirm-message=\"Are you sure you want to proceed?\">Button example of a primary x-confirm</button>",
       "alternates": []
     },
     "x-prompt": {
-      "source": "<button variant=\"primary\" x-prompt prompt-title=\"Enter Value\" prompt-message=\"Please enter your name:\">Button example of x-prompt</button>",
+      "source": "<button variant=\"primary\" x-prompt prompt-title=\"Enter Value\" prompt-message=\"Please enter your name:\">Button example of a primary x-prompt</button>",
       "alternates": []
     },
     "x-lightbox": {
-      "source": "<button variant=\"primary\" x-lightbox src=\"https://picsum.photos/1200/800?r=lb1\">Button example of x-lightbox</button>",
+      "source": "<button variant=\"primary\" x-lightbox src=\"https://picsum.photos/1200/800?r=lb1\">Button example of a primary x-lightbox</button>",
       "alternates": [
         "<button variant=\"primary\" x-lightbox src=\"https://picsum.photos/1200/800?r=lb2\">View Image 2</button>"
       ]
@@ -165,45 +165,45 @@
       "alternates": []
     },
     "x-confetti": {
-      "source": "<button variant=\"primary\" x-confetti>Button example of x-confetti</button>",
+      "source": "<button variant=\"primary\" x-confetti>Button example of a primary x-confetti</button>",
       "alternates": []
     },
     "x-fireworks": {
-      "source": "<button variant=\"primary\" x-fireworks>Button example of x-fireworks</button>",
+      "source": "<button variant=\"primary\" x-fireworks>Button example of a primary x-fireworks</button>",
       "alternates": []
     },
     "x-snow": {
-      "source": "<button variant=\"primary\" x-snow>Button example of x-snow</button>",
+      "source": "<button variant=\"primary\" x-snow>Button example of a primary x-snow</button>",
       "alternates": []
     },
     "x-sparkle": {
-      "source": "<button variant=\"primary\" x-sparkle>Button example of x-sparkle</button>",
+      "source": "<button variant=\"primary\" x-sparkle>Button example of a primary x-sparkle</button>",
       "alternates": []
     },
     "x-glow": {
-      "source": "<button variant=\"primary\" x-glow>Button example of x-glow</button>",
+      "source": "<button variant=\"primary\" x-glow>Button example of a primary x-glow</button>",
       "alternates": []
     },
     "x-rainbow": {
-      "source": "<button variant=\"primary\" x-rainbow>Button example of x-rainbow</button>",
+      "source": "<button variant=\"primary\" x-rainbow>Button example of a primary x-rainbow</button>",
       "alternates": []
     },
     "x-copy": {
-      "source": "<button variant=\"primary\" x-copy copy-text=\"Text copied to clipboard!\">Button example of x-copy</button>",
+      "source": "<button variant=\"primary\" x-copy copy-text=\"Text copied to clipboard!\">Button example of a primary x-copy</button>",
       "alternates": [
         "<button variant=\"primary\" x-copy copy-text=\"npm install wb-framework\">📋 Copy Command</button>"
       ]
     },
     "x-share": {
-      "source": "<button variant=\"secondary\" x-share share-title=\"wb-starter\" share-url=\"https://example.com\">Button example of x-share</button>",
+      "source": "<button variant=\"secondary\" x-share share-title=\"wb-starter\" share-url=\"https://example.com\">Button example of a secondary x-share</button>",
       "alternates": []
     },
     "x-print": {
-      "source": "<button variant=\"secondary\" x-print>Button example of x-print</button>",
+      "source": "<button variant=\"secondary\" x-print>Button example of a secondary x-print</button>",
       "alternates": []
     },
     "x-fullscreen": {
-      "source": "<button variant=\"secondary\" x-fullscreen>Button example of x-fullscreen</button>",
+      "source": "<button variant=\"secondary\" x-fullscreen>Button example of a secondary x-fullscreen</button>",
       "alternates": []
     },
     "x-clock": {
@@ -219,7 +219,7 @@
       "alternates": []
     },
     "x-darkmode": {
-      "source": "<button variant=\"primary\" x-darkmode>Button example of x-darkmode</button>",
+      "source": "<button variant=\"primary\" x-darkmode>Button example of a primary x-darkmode</button>",
       "alternates": []
     },
     "x-truncate": {
@@ -558,7 +558,7 @@
       "alternates": []
     },
     "x-notify": {
-      "source": "<button x-notify message=\"Deploy finished — staging is live.\" variant=\"success\">Button example of x-notify</button>",
+      "source": "<button x-notify message=\"Deploy finished — staging is live.\" variant=\"success\">Button example of a success x-notify</button>",
       "alternates": []
     },
     "x-toggle": {

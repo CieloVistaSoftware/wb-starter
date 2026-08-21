@@ -3,6 +3,16 @@
   <p>What's actually live on this site right now — every push to <code>main</code> deploys straight to <a href="https://cielovistasoftware.github.io/wb-starter/" target="_blank" rel="noopener">cielovistasoftware.github.io/wb-starter</a>, so this list is the real changelog, not a promise of a future release.</p>
 </div>
 
+<section id="whats-new-3-0-69">
+  <h2><a href="https://github.com/CieloVistaSoftware/wb-starter/releases/tag/v3.0.69" target="_blank" rel="noopener" title="release v3.0.69">3.0.69</a> — 2026-08-21</h2>
+  <p><strong>This is what is live at 3.0.69.</strong></p>
+  <ul>
+    <li class="wn-item wn-bug"><span class="wn-tag">Bug</span> <strong>The button behavior was bailing on its own attribute.</strong> 3.0.67 fixed one of two gates; this fixes the one that actually mattered. The behavior treated any <code>x-</code> attribute as proof that a different behavior owned the element — including <code>x-button</code> itself — so it returned without adding a single class. Variants, sizes, icons and <code>href</code> are now live in both authoring forms (<a href="https://github.com/CieloVistaSoftware/wb-starter/issues/746" target="_blank" rel="noopener">#746</a>).</li>
+    <li class="wn-item wn-new"><span class="wn-tag">New</span> <strong>A permutation test suite for every button parameter.</strong> 26 tests reading their value lists from <code>button.schema.json</code> at runtime, so a value added to the schema is covered automatically: all 8 variants, all 5 sizes, all 40 variant×size pairs, all 20 icons, both icon positions, four booleans, <code>disabled</code> actually blocking activation, <code>href</code> with both targets, and an equivalence test asserting the bare and <code>x-button</code> forms produce identical classes. It caught the first fix being wrong before it could be called done (<a href="https://github.com/CieloVistaSoftware/wb-starter/issues/746" target="_blank" rel="noopener">#746</a>).</li>
+    <li class="wn-item wn-request"><span class="wn-tag">Request</span> <strong>Example labels name the variant too.</strong> "Button example of a centered x-dialog" rather than just the behavior — the variant is what distinguishes one row of the list from the next (<a href="https://github.com/CieloVistaSoftware/wb-starter/issues/746" target="_blank" rel="noopener">#746</a>).</li>
+  </ul>
+</section>
+
 <section id="whats-new-3-0-68">
   <h2><a href="https://github.com/CieloVistaSoftware/wb-starter/releases/tag/v3.0.68" target="_blank" rel="noopener" title="release v3.0.68">3.0.68</a> — 2026-08-21</h2>
   <p><strong>This is what is live at 3.0.68.</strong></p>

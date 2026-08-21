@@ -305,8 +305,16 @@ export function button(element, options = {}) {
   // Native <button> — add .wb-button class for styling
   // Skip if already styled by another system
   const hasExistingStyle = element.className.match(/wb-btn--|wb-button--/);
+  // #746: `x-button` is this behavior's OWN dispatch attribute, not evidence
+  // that something else owns the element — counting it here made the button
+  // bail on itself, so `<button x-button variant="outline" icon="download">`
+  // rendered with no class and no icon while the identical button WITHOUT the
+  // attribute rendered fully. Measured live at 3.0.68, and now pinned by
+  // tests/behaviors/button-permutations.spec.ts, which asserts both authoring
+  // forms produce identical classes across all variant x size pairs.
+  const OWN_ATTRS = new Set(['x-behavior', 'x-eager', 'x-hydrated', 'x-button']);
   const hasOtherBehaviors = Array.from(element.attributes).some(
-    a => a.name.startsWith('x-') && a.name !== 'x-behavior' && a.name !== 'x-eager' && a.name !== 'x-hydrated'
+    a => a.name.startsWith('x-') && !OWN_ATTRS.has(a.name)
   );
 
   if (hasExistingStyle || hasOtherBehaviors) {
