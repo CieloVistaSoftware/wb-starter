@@ -226,6 +226,67 @@ export function accordion(element, options = {}) {
       return () => element.classList.remove('wb-accordion');
     }
 
+    // #772 -- John: "Doesn't work write a unit test to prove that make fix add
+    // to regression."
+    //
+    // The showcase example is the SEMANTIC form:
+    //
+    //   <div x-accordion>
+    //     <details summary="How do behaviors attach?">…</details>
+    //     <details summary="Is there a shadow root?">…</details>
+    //   </div>
+    //
+    // Sections are collected by looking for `accordion-title`, which a
+    // <details> does not carry, so the list came back empty, nothing was
+    // built, and three unrelated <details> rendered. Proven by
+    // tests/regression/accordion-details-children.spec.ts: opening the second
+    // panel left [true, true, false] -- both open, no accordion.
+    //
+    // <details> already opens and closes on its own. What makes a set of them
+    // an ACCORDION is exclusivity, so that is all this adds -- no rebuilding,
+    // no innerHTML rewrite, and the native disclosure semantics (keyboard,
+    // screen-reader, find-in-page) are kept exactly as the browser provides
+    // them.
+    const detailsChildren = Array.from(element.children).filter(
+      (child) => child.tagName === 'DETAILS'
+    );
+    if (detailsChildren.length > 0) {
+      element.classList.add('wb-accordion');
+
+      const onToggle = (e) => {
+        const opened = e.target;
+        if (!opened.open) return;                 // closing needs no coordination
+        for (const other of detailsChildren) {
+          if (other !== opened) other.open = false;
+        }
+        element.dispatchEvent(new CustomEvent('wb:accordion:toggle', {
+          bubbles: true,
+          detail: { open: opened, index: detailsChildren.indexOf(opened) }
+        }));
+      };
+
+      // 'toggle' rather than a click handler on <summary>: <details> also opens
+      // via keyboard, via find-in-page, and by a script setting .open. A click
+      // handler would miss all three and leave two panels open.
+      for (const d of detailsChildren) d.addEventListener('toggle', onToggle);
+
+      // More than one already open in the markup is not an accordion state:
+      // keep the first and close the rest, so it starts consistent with how it
+      // will behave from the first click.
+      const preOpened = detailsChildren.filter((d) => d.open);
+      for (const d of preOpened.slice(1)) d.open = false;
+
+      element.dataset.wbHydrated = '1';
+      element.dispatchEvent(new CustomEvent('wb:accordion:ready', {
+        bubbles: true,
+        detail: { items: detailsChildren.length }
+      }));
+      return () => {
+        for (const d of detailsChildren) d.removeEventListener('toggle', onToggle);
+        element.classList.remove('wb-accordion');
+      };
+    }
+
     // <wb-accordion> with no titled children — single form:
     // <wb-accordion title="Q">answer</wb-accordion>
     if (element.tagName === 'WB-ACCORDION') {

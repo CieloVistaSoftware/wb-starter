@@ -292,6 +292,80 @@ function getAutoInjectBehavior(element) {
   return candidate;
 }
 
+/**
+ * #770: the declared-attribute applier.
+ *
+ * The schema index (data/schema-index.json) already lists every behavior's
+ * properties and its baseClass. Enum and boolean properties render as a
+ * modifier class -- exactly what button(), input() and select() write by hand
+ * -- so do it once, for every behavior, instead of 101 times or not at all.
+ *
+ * Loaded lazily and cached. If it has not arrived yet the call is a no-op and
+ * the next scan applies it: a missing modifier class is a cosmetic delay, and
+ * blocking every injection on a fetch is not worth that.
+ */
+let schemaIndex = null;
+let schemaIndexPending = null;
+
+function loadSchemaIndex() {
+  if (schemaIndex || schemaIndexPending) return schemaIndexPending;
+  if (typeof fetch !== 'function') return null;
+  // schemaPath points at src/wb-models; the index sits at the site root in
+  // data/. Resolving relative to the DOCUMENT is what works under both the
+  // site root and /wb-starter/ on Pages, and cannot throw the way an
+  // unvalidated base can.
+  let url;
+  try {
+    url = new URL('data/schema-index.json', document.baseURI).href;
+  } catch {
+    schemaIndex = {};
+    return null;
+  }
+  schemaIndexPending = fetch(url)
+    .then((r) => (r.ok ? r.json() : null))
+    .then((idx) => {
+      schemaIndex = {};
+      for (const sc of (idx && idx.schemas) || []) {
+        if (sc && sc.name) schemaIndex[sc.name] = sc;
+      }
+      return schemaIndex;
+    })
+    .catch(() => { schemaIndex = {}; return schemaIndex; });
+  return schemaIndexPending;
+}
+
+/** `iconPosition` -> `icon-position`, which is what the DOM carries. */
+function attrNameFor(prop) {
+  return prop.replace(/[A-Z]/g, (c) => '-' + c.toLowerCase());
+}
+
+function applyDeclaredModifiers(element, behaviorName) {
+  if (!schemaIndex) { loadSchemaIndex(); return; }
+  const schema = schemaIndex[behaviorName];
+  const props = schema && schema.properties;
+  if (!props) return;
+
+  const base = schema.baseClass || `wb-${behaviorName}`;
+  for (const [prop, def] of Object.entries(props)) {
+    if (!def || typeof def !== 'object') continue;
+    const attr = attrNameFor(prop);
+    const raw = element.getAttribute(attr) ?? element.getAttribute(prop);
+    if (raw === null) continue;
+
+    if (Array.isArray(def.enum) && def.enum.length) {
+      // Only a declared value becomes a class. A typo must not mint a class
+      // that silently matches no CSS and looks like it worked.
+      if (!def.enum.includes(raw)) continue;
+      element.classList.add(`${base}--${raw}`);
+    } else if (def.type === 'boolean') {
+      // "false"/"0" mean OFF (#747): a bare presence check reads the string
+      // "false" as true, which is the opposite of what the markup says.
+      if (raw === 'false' || raw === '0') continue;
+      element.classList.add(`${base}--${attr}`);
+    }
+  }
+}
+
 // Track applied behaviors for cleanup
 const applied = new WeakMap();
 // Track pending injections to prevent re-entry
@@ -395,6 +469,29 @@ const WB = {
       if (result instanceof Promise) {
         cleanup = await result;
       }
+
+      // #770: apply the attributes the schema DECLARES, generically.
+      //
+      // 386 of 633 declared attributes across 101 behaviors did nothing: they
+      // were in the schema, generated into the docs, written in the examples,
+      // and read by no one. Every fix so far was one behavior at a time
+      // (#697 fieldset, #751 form, #754 input) because each was reported one
+      // at a time.
+      //
+      // Enum and boolean properties have a mechanical rendering -- the
+      // modifier class -- which button/input/select already hand-roll
+      // identically. Doing it here means a behavior only writes code for what
+      // is genuinely bespoke, and `size`/`variant`/`position` work everywhere
+      // by default.
+      //
+      // Deliberately NOT applied: string and number properties. Those are
+      // content or configuration (title="Trail conditions"), and turning them
+      // into class names produces garbage. They still need real handling.
+      // Wrapped: this is a convenience layer, not the behavior. If it throws
+      // -- a bad schema, a URL that will not resolve -- injection must still
+      // complete. Left unguarded it took the whole behavior down with it, and
+      // the sweep went from 104 failures to 127.
+      try { applyDeclaredModifiers(element, behaviorName); } catch { /* never break inject */ }
 
       // Track for cleanup
       elementBehaviors.push({ name: behaviorName, cleanup });

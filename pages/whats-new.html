@@ -3,6 +3,16 @@
   <p>What's actually live on this site right now — every push to <code>main</code> deploys straight to <a href="https://cielovistasoftware.github.io/wb-starter/" target="_blank" rel="noopener">cielovistasoftware.github.io/wb-starter</a>, so this list is the real changelog, not a promise of a future release.</p>
 </div>
 
+<section id="whats-new-3-0-86">
+  <h2><a href="https://github.com/CieloVistaSoftware/wb-starter/releases/tag/v3.0.86" target="_blank" rel="noopener" title="release v3.0.86">3.0.86</a> — 2026-08-21</h2>
+  <p><strong>This is what is live at 3.0.86.</strong></p>
+  <ul>
+    <li class="wn-item wn-bug"><span class="wn-tag">Bug</span> <strong><code>x-accordion</code> did nothing with <code>&lt;details&gt;</code> children.</strong> It collected its panels by looking for an <code>accordion-title</code> attribute, which a <code>&lt;details&gt;</code> does not carry — so it found none, built nothing, and three unrelated disclosures rendered. It now recognises them and adds the one thing that makes a set of disclosures an accordion: opening one closes the others. Native keyboard, screen-reader and find-in-page behaviour is untouched.</li>
+    <li class="wn-item wn-request"><span class="wn-tag">Request</span> <strong>The first behavior is selected on arrival.</strong> The panel used to open empty, so the page arrived showing a list and a blank space.</li>
+    <li class="wn-item wn-new"><span class="wn-tag">New</span> <strong>Two tests that should have existed already.</strong> One measures the stage after a tall example then a short one — the sequence that produced four separate reports of dead space and survived three fixes because nobody measured the box. The other proves an accordion is exclusive, which "does it open" would not have caught.</li>
+  </ul>
+</section>
+
 <section id="whats-new-3-0-85">
   <h2><a href="https://github.com/CieloVistaSoftware/wb-starter/releases/tag/v3.0.85" target="_blank" rel="noopener" title="release v3.0.85">3.0.85</a> — 2026-08-21</h2>
   <p><strong>This is what is live at 3.0.85.</strong></p>

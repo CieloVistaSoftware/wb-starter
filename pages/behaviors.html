@@ -1886,5 +1886,31 @@
       if (t && t.name === 'authoring-form') applyFilter(input ? input.value : '');
     });
     applyFilter('');
+
+    // #771 -- John: "always pick the first element on the left when this page
+    // is shown for the first time."
+    //
+    // The panel opened empty, so the first thing a reader saw was a list and a
+    // blank space with nothing explaining what to do. Select the first row so
+    // the page arrives showing something running.
+    //
+    // Deferred until the list has rows: allEntries is filled by two fetches
+    // (tag-map, then the schema index), so applyFilter('') above can render
+    // nothing on the first pass and fill in a tick later.
+    (function selectFirstOnLoad() {
+      let tries = 0;
+      const pick = () => {
+        if (resultsEl.querySelector('[aria-current="true"]')) return;   // reader got there first
+        const first = resultsEl.querySelector('.behaviors-search-results__row');
+        if (first) {
+          // focus:false -- stealing focus on load would move the caret out of
+          // the search box before the reader has typed anything.
+          selectRow(first, { focus: false, reveal: false });
+          return;
+        }
+        if (++tries < 40) setTimeout(pick, 100);
+      };
+      pick();
+    })();
   })();
   </script>
