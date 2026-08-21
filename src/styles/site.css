@@ -2062,7 +2062,13 @@ img { max-width: 100%; height: auto; }
    light, cyberpunk, ocean, sunset, forest, midnight, twilight), so this
    follows the active theme instead of pinning one colour. */
 [id^="whats-new-"] a {
-  color: var(--accent);
+  /* --accent on its own is too dark to read on the dark themes: measured
+     rgb(51,51,204) against a near-black panel at 3.0.64. Blending it toward
+     the theme's OWN text colour keeps the accent hue while guaranteeing the
+     link stays legible against whatever background that theme paints — one
+     rule that holds for all eight themes, instead of a per-theme override
+     list that goes stale the next time a theme is added. */
+  color: color-mix(in srgb, var(--accent) 55%, var(--text-primary));
   text-decoration: underline;
   text-underline-offset: 0.15em;
 }
