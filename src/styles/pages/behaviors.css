@@ -504,6 +504,23 @@ footer a:hover {
    layout` plus the 6rem floor are panel-sized rules that make no sense at
    viewport scale, so both are lifted for the duration. x-fullscreen restores
    the inline height/overflow it set when the reader comes back out. */
+/* #722 -- the wrapper the example renders into, and the thing that goes
+   fullscreen. Full width normally so a block example (<article>, <table>) fills
+   the stage exactly as it did when it rendered straight into it; in fullscreen
+   it brings its own background and centres, because a fullscreen element with
+   none paints on black. */
+.behaviors-live__example {
+  width: 100%;
+}
+
+.behaviors-live__example:fullscreen {
+  background: var(--bg-secondary, #1f2937);
+  padding: 2rem;
+  overflow: auto;
+  display: grid;
+  align-content: center;
+}
+
 .behaviors-live__stage:fullscreen {
   background: var(--bg-secondary, #1f2937);
   contain: none;

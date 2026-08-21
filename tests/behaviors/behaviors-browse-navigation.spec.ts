@@ -244,7 +244,12 @@ test.describe('#720 — the stage can go fullscreen and come back unchanged', ()
 
     expect(wiring.exists, 'the panel needs a fullscreen control').toBe(true);
     expect(wiring.upgraded, "it must be the framework's own x-fullscreen behavior").toBe(true);
-    expect(wiring.target, 'it must target the stage, not the document').toBe('#behaviors-live-stage');
+    // #722 -- John: "When clicking fullscreen all of these elements go
+    // fullscreen." The stage is the panel-sized surface the example is centred
+    // in, so expanding it expanded the empty space too. The target is the
+    // wrapper that hugs the example.
+    expect(wiring.target, 'it must target the example wrapper, not the stage or the document')
+      .toBe('#behaviors-live-example');
     expect(wiring.label.length, 'the control must be labelled').toBeGreaterThan(0);
   });
 
@@ -256,8 +261,10 @@ test.describe('#720 — the stage can go fullscreen and come back unchanged', ()
     const trip = await page.evaluate(async () => {
       const sleep = (ms: number) => new Promise((r) => setTimeout(r, ms));
       const stage = document.getElementById('behaviors-live-stage')!;
+      const wrapper = document.getElementById('behaviors-live-example')!;
       const btn = document.getElementById('behaviors-live-fullscreen') as HTMLElement;
-      const before = stage.getBoundingClientRect();
+      const before = wrapper.getBoundingClientRect();
+      const stageBefore = stage.getBoundingClientRect();
 
       // requestFullscreen needs a user gesture, which a scripted click has not
       // got — so spy on it to prove WHERE it was requested, then drive the
@@ -272,10 +279,11 @@ test.describe('#720 — the stage can go fullscreen and come back unchanged', ()
       await sleep(200);
       Element.prototype.requestFullscreen = original;
 
-      const during = { height: stage.style.height, overflow: stage.style.overflow };
+      const during = { height: wrapper.style.height, overflow: wrapper.style.overflow };
       document.dispatchEvent(new Event('fullscreenchange'));   // fullscreenElement is null → exit path
       await sleep(300);
-      const after = stage.getBoundingClientRect();
+      const after = wrapper.getBoundingClientRect();
+      const stageAfter = stage.getBoundingClientRect();
 
       const same = (a: DOMRect, b: DOMRect) =>
         Math.round(a.width) === Math.round(b.width) && Math.round(a.height) === Math.round(b.height)
@@ -284,16 +292,18 @@ test.describe('#720 — the stage can go fullscreen and come back unchanged', ()
       return {
         requestedOn,
         during,
-        cleared: !stage.style.height && !stage.style.overflow,
+        cleared: !wrapper.style.height && !wrapper.style.overflow,
         sameRect: same(before, after),
-        example: !!stage.firstElementChild,
+        stageSameRect: same(stageBefore, stageAfter),
+        example: !!wrapper.firstElementChild,
       };
     });
 
-    expect(trip.requestedOn, 'fullscreen must be requested on the stage').toBe('behaviors-live-stage');
-    expect(trip.during.height, 'the stage fills the viewport while fullscreen').toBe('100vh');
+    expect(trip.requestedOn, 'fullscreen must be requested on the example wrapper').toBe('behaviors-live-example');
+    expect(trip.during.height, 'the example fills the viewport while fullscreen').toBe('100vh');
     expect(trip.cleared, 'the inline styles must be cleared on the way out').toBe(true);
-    expect(trip.sameRect, 'the stage must return to the same position and size').toBe(true);
+    expect(trip.sameRect, 'the example must return to the same position and size').toBe(true);
+    expect(trip.stageSameRect, 'and the stage around it must not move either').toBe(true);
     expect(trip.example, 'the example must survive the round trip').toBe(true);
   });
 });
