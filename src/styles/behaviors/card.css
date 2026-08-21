@@ -934,6 +934,18 @@ wb-card.wb-card--auto,
      text) -- 3:2 = 1.5 is close enough to leave only a sliver of crop
      margin for that ratio while staying a widely-recognized "landscape
      photo" default for arbitrary user images generally. */
+  /* #785 -- John: "all overlays must fill 100vw this has gaps on both sides."
+     With aspect-ratio and no width, this box sized itself from its HEIGHT and
+     left the rest of the row empty, so an overlay card floated in the middle
+     of its container with dark gaps either side.
+     width:100% makes the width come from the container and the height follow
+     from the ratio -- the other way round -- so it fills whatever it is placed
+     in: a grid cell, the playground preview, a full-bleed section.
+     100% rather than 100vw deliberately: 100vw ignores the container and,
+     inside any padded parent, overflows the page horizontally, which
+     DEMOS-AND-DOCS-STANDARDS.md forbids (§15, no horizontal overflow at any
+     width). Filling the container is what "no gaps" actually needs. */
+  width: 100%;
   aspect-ratio: 3 / 2;
   min-width: 240px;
   position: relative;

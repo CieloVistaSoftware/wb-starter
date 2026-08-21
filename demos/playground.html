@@ -1,11 +1,17 @@
 <!DOCTYPE html>
 <html lang="en" data-theme="dark">
 <head>
+  <!-- #784: this page is edited constantly and a held copy is indistinguishable
+       from a fix that did not work. The dev server already sends no-store; this
+       covers the browser regardless of what any server says. -->
+  <meta http-equiv="Cache-Control" content="no-store, no-cache, must-revalidate">
+  <meta http-equiv="Pragma" content="no-cache">
+  <meta http-equiv="Expires" content="0">
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Playground — WB</title>
-  <link rel="stylesheet" href="../src/styles/themes.css?v=3.0.89">
-  <link rel="stylesheet" href="../src/styles/site.css?v=3.0.89">
+  <link rel="stylesheet" href="../src/styles/themes.css?v=3.0.90">
+  <link rel="stylesheet" href="../src/styles/site.css?v=3.0.90">
   <style>
     body { max-width: 1200px; margin: 0 auto; padding: 1.5rem; background: var(--bg-color);
       color: var(--text-primary); line-height: 1.6; }
