@@ -963,3 +963,22 @@ footer a:hover {
   white-space: nowrap;
   display: inline-block;
 }
+
+/* #752 — the "this example needs the local dev server" notice.
+   Warning tone, not error: nothing is broken, the host simply cannot serve
+   the route. Colours come from the theme's warning tokens so it follows all
+   eight themes rather than pinning one. */
+.behaviors-live__server-note {
+  margin: 0.75rem 1.25rem 0;
+  padding: 0.75rem 1rem;
+  border-left: 3px solid var(--warning-color);
+  border-radius: 0.25rem;
+  background: var(--alert-warning-bg);
+  font-size: 0.875rem;
+  line-height: 1.5;
+  text-align: left;
+}
+
+.behaviors-live__server-note code {
+  white-space: nowrap;
+}

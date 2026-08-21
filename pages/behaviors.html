@@ -1441,10 +1441,40 @@
         return;
       }
 
+      // #752 -- John: "this warning should be shown to the user using the
+      // static site reminding them to download this repo first."
+      //
+      // Some examples post to /api/... which only server.js serves. On the
+      // published static site that route cannot exist, so the demo fails and
+      // the reader has no way to know the example is fine and the HOST is the
+      // limitation. Say so, where they are looking, and tell them what to do.
+      function maybeWarnServerRequired(source) {
+        const prev = liveExample.parentNode.querySelector('.behaviors-live__server-note');
+        if (prev) prev.remove();
+        if (!/action=("|')\/api\//.test(source)) return;
+        // A static host serves files, not routes. Probing would cost a request
+        // per example and still race the render, so key off the one thing that
+        // is knowable synchronously: server.js is what serves this page during
+        // development, and it always runs on localhost.
+        const isLocal = ['localhost', '127.0.0.1', '::1'].includes(location.hostname);
+        if (isLocal) return;
+        const note = document.createElement('p');
+        note.className = 'behaviors-live__server-note';
+        note.innerHTML =
+          '⚠️ <strong>This example needs the local dev server.</strong> ' +
+          'It posts to <code>/api/…</code>, a route this static site cannot serve, ' +
+          'so submitting it here will fail. Clone the repo and run ' +
+          '<code>npm start</code> to see it work: ' +
+          '<a href="https://github.com/CieloVistaSoftware/wb-starter" target="_blank" rel="noopener">' +
+          'github.com/CieloVistaSoftware/wb-starter</a>';
+        liveExample.parentNode.insertBefore(note, liveExample.nextSibling);
+      }
+
       liveNote.textContent = optionDescription(token, prop) || 'running live';
       // #703: drop the previous example's grown height before measuring this one.
       liveStage.style.minHeight = '';
       liveExample.innerHTML = src;
+      maybeWarnServerRequired(src);
       const rootId = assignExampleIds(token, optionText);
       resetEvents(liveExample.firstElementChild && liveExample.firstElementChild.tagName.toLowerCase(), token, rootId);
       await renderSource(src);
