@@ -3,6 +3,15 @@
   <p>What's actually live on this site right now — every push to <code>main</code> deploys straight to <a href="https://cielovistasoftware.github.io/wb-starter/" target="_blank" rel="noopener">cielovistasoftware.github.io/wb-starter</a>, so this list is the real changelog, not a promise of a future release.</p>
 </div>
 
+<section id="whats-new-3-0-74">
+  <h2><a href="https://github.com/CieloVistaSoftware/wb-starter/releases/tag/v3.0.74" target="_blank" rel="noopener" title="release v3.0.74">3.0.74</a> — 2026-08-21</h2>
+  <p><strong>This is what is live at 3.0.74.</strong></p>
+  <ul>
+    <li class="wn-item wn-bug"><span class="wn-tag">Bug</span> <strong><code>&lt;fieldset collapsible&gt;</code> did not collapse.</strong> The behavior read only <code>data-collapsible</code>, so the documented spelling was ignored and the demo rendered a plain fieldset — nothing told the reader the attribute was being dropped rather than broken. Plain attributes are now read alongside <code>data-*</code>, and <code>collapsible="false"</code> counts as OFF (<a href="https://github.com/CieloVistaSoftware/wb-starter/issues/752" target="_blank" rel="noopener">#752</a>).</li>
+    <li class="wn-item wn-bug"><span class="wn-tag">Bug</span> <strong>The same defect is in 32 more places.</strong> Auditing it turned up <strong>69 attribute reads across 32 behavior files</strong> that only check <code>data-*</code> while every schema, doc and example teaches the plain form. Three separate reports this week were the same bug fixed one site at a time. Catalogued with the full file list and a proposed shared reader plus per-behavior tests, so the class gets closed instead of the next instance (<a href="https://github.com/CieloVistaSoftware/wb-starter/issues/752" target="_blank" rel="noopener">#752</a>).</li>
+  </ul>
+</section>
+
 <section id="whats-new-3-0-73">
   <h2><a href="https://github.com/CieloVistaSoftware/wb-starter/releases/tag/v3.0.73" target="_blank" rel="noopener" title="release v3.0.73">3.0.73</a> — 2026-08-21</h2>
   <p><strong>This is what is live at 3.0.73.</strong></p>
