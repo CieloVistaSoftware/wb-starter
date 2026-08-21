@@ -1,3 +1,4 @@
+import { logError } from '../../core/error-logger.js';
 /**
  * Select - Enhanced <select> element
  * CSS targets `select` tag directly — no classes, no inline styles.
@@ -50,8 +51,19 @@ export function select(element, options = {}) {
     }
     wrapper.appendChild(element);
 
-    const clearBtn = document.createElement('wb-button');
+    // #758 -- John: "way too large". This was a <wb-button>, so the button
+    // behavior styled it as a full button (wb-button--md is padding:1rem) and
+    // the clear affordance rendered as a blue square larger than the select it
+    // belonged to. There was also no CSS for .wb-select__clear anywhere, so
+    // nothing reined it back in.
+    //
+    // A plain <button> -- the same choice input.js already makes for the same
+    // job -- takes the compact .wb-select__clear rule added in input.css
+    // instead of the full button treatment.
+    const clearBtn = document.createElement('button');
+    clearBtn.type = 'button';
     clearBtn.className = 'wb-select__clear';
+    clearBtn.setAttribute('aria-label', 'Clear selection');
     clearBtn.textContent = '\u00d7';
     clearBtn.addEventListener('click', (e) => {
       e.stopPropagation();
@@ -98,9 +110,39 @@ function buildWbSelect(element, options) {
   }));
   let optionList = childOptions;
   if (optionList.length === 0) {
-    try {
-      optionList = JSON.parse(options.options || element.getAttribute('options') || '[]');
-    } catch (e) { /* malformed options= — render with none, not a thrown error */ }
+    // #757: only JSON was accepted, and a parse failure was swallowed whole.
+    // `options="main,develop,fix/706-dropdown"` -- the comma-separated form
+    // the examples and docs use -- threw, was caught, and rendered an EMPTY
+    // dropdown with nothing anywhere to explain why.
+    //
+    // Accept both spellings: a JSON array when it looks like one, otherwise a
+    // comma-separated list. A value containing a comma can only be expressed
+    // in the JSON form, which is what it is for.
+    const raw = options.options ?? element.getAttribute('options') ?? '';
+    if (Array.isArray(raw)) {
+      optionList = raw;
+    } else {
+      const text = String(raw).trim();
+      if (text.startsWith('[')) {
+        try {
+          optionList = JSON.parse(text);
+        } catch (e) {
+          // Report it: a malformed options= is an authoring mistake, and
+          // silently rendering nothing is how it stayed invisible.
+          logError(
+            `[WB:select] options= is not valid JSON, so no options were rendered: ${e.message}`,
+            { element: element.outerHTML.slice(0, 200), options: text.slice(0, 200) }
+          );
+          optionList = [];
+        }
+      } else if (text) {
+        optionList = text
+          .split(',')
+          .map((s) => s.trim())
+          .filter(Boolean)
+          .map((s) => ({ value: s, label: s }));
+      }
+    }
   }
   const value = options.value || element.getAttribute('value') || '';
   const name = options.name || element.getAttribute('name') || '';

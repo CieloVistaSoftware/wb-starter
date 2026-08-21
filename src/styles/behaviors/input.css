@@ -179,3 +179,51 @@ input[type="radio"] {
   accent-color: var(--primary);
   cursor: pointer;
 }
+
+/* ─────────────────────────────────────────────────────────────────────────
+   #758 — <select clearable> clear affordance
+
+   John: "way too large". The clear control was built as a <wb-button>, so it
+   picked up the full button treatment (wb-button--md is padding:1rem) and
+   rendered as a square larger than the select beside it — and no rule for
+   .wb-select__clear existed anywhere to constrain it.
+
+   It is now a plain <button>. These rules make it what it always should have
+   been: a small glyph sitting at the end of the field, sized from the text
+   around it rather than a fixed pixel value, so it tracks the select's own
+   size variant.
+   ───────────────────────────────────────────────────────────────────────── */
+.wb-select-clearable {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+}
+
+.wb-select__clear {
+  /* Reset the inherited button box rather than fight it with overrides. */
+  all: unset;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 1.5em;
+  height: 1.5em;
+  border-radius: 50%;
+  font-size: 1rem;
+  line-height: 1;
+  color: var(--text-secondary, var(--text-primary));
+  opacity: 0.7;
+  flex: 0 0 auto;
+}
+
+.wb-select__clear:hover,
+.wb-select__clear:focus-visible {
+  opacity: 1;
+  background: color-mix(in srgb, var(--text-primary) 12%, transparent);
+}
+
+/* Keyboard users must be able to see it. `all: unset` drops the UA outline. */
+.wb-select__clear:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 1px;
+}

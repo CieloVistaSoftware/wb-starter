@@ -227,7 +227,7 @@
       "alternates": []
     },
     "x-table": {
-      "source": "<wb-table\n  headers=\"Component,Behavior,Variants\"\n  rows=\"[[&quot;wb-alert&quot;,&quot;alert&quot;,&quot;4&quot;],[&quot;wb-badge&quot;,&quot;badge&quot;,&quot;9&quot;],[&quot;wb-button&quot;,&quot;button&quot;,&quot;8&quot;],[&quot;wb-card&quot;,&quot;card&quot;,&quot;4&quot;],[&quot;wb-code&quot;,&quot;code&quot;,&quot;12&quot;],[&quot;wb-dialog&quot;,&quot;dialog&quot;,&quot;3&quot;],[&quot;wb-details&quot;,&quot;details&quot;,&quot;2&quot;],[&quot;wb-audio&quot;,&quot;audio&quot;,&quot;6&quot;],[&quot;wb-table&quot;,&quot;table&quot;,&quot;5&quot;],[&quot;wb-tabs&quot;,&quot;tabs&quot;,&quot;3&quot;],[&quot;wb-toast&quot;,&quot;toast&quot;,&quot;4&quot;],[&quot;wb-tooltip&quot;,&quot;tooltip&quot;,&quot;4&quot;]]\">\n</wb-table>",
+      "source": "<table\n  headers=\"Component,Behavior,Variants\"\n  rows=\"[[&quot;alert&quot;,&quot;alert&quot;,&quot;4&quot;],[&quot;badge&quot;,&quot;badge&quot;,&quot;9&quot;],[&quot;button&quot;,&quot;button&quot;,&quot;8&quot;],[&quot;card&quot;,&quot;card&quot;,&quot;4&quot;],[&quot;code&quot;,&quot;code&quot;,&quot;12&quot;],[&quot;dialog&quot;,&quot;dialog&quot;,&quot;3&quot;],[&quot;details&quot;,&quot;details&quot;,&quot;2&quot;],[&quot;audio&quot;,&quot;audio&quot;,&quot;6&quot;],[&quot;table&quot;,&quot;table&quot;,&quot;5&quot;],[&quot;tabs&quot;,&quot;tabs&quot;,&quot;3&quot;],[&quot;toast&quot;,&quot;toast&quot;,&quot;4&quot;],[&quot;tooltip&quot;,&quot;tooltip&quot;,&quot;4&quot;]]\">\n</table>",
       "alternates": []
     },
     "x-details": {

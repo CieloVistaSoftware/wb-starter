@@ -3,6 +3,16 @@
   <p>What's actually live on this site right now — every push to <code>main</code> deploys straight to <a href="https://cielovistasoftware.github.io/wb-starter/" target="_blank" rel="noopener">cielovistasoftware.github.io/wb-starter</a>, so this list is the real changelog, not a promise of a future release.</p>
 </div>
 
+<section id="whats-new-3-0-78">
+  <h2><a href="https://github.com/CieloVistaSoftware/wb-starter/releases/tag/v3.0.78" target="_blank" rel="noopener" title="release v3.0.78">3.0.78</a> — 2026-08-21</h2>
+  <p><strong>This is what is live at 3.0.78.</strong></p>
+  <ul>
+    <li class="wn-item wn-bug"><span class="wn-tag">Bug</span> <strong>A select's options never rendered.</strong> <code>options="main,develop,fix/706-dropdown"</code> — the comma-separated form the examples use — was passed to <code>JSON.parse</code>, threw, and the error was swallowed, leaving an empty dropdown and nothing to explain it. Both spellings work now, and malformed JSON raises a real error instead of rendering nothing (<a href="https://github.com/CieloVistaSoftware/wb-starter/issues/757" target="_blank" rel="noopener">#757</a>).</li>
+    <li class="wn-item wn-bug"><span class="wn-tag">Bug</span> <strong>The clear button dwarfed the select it belonged to.</strong> It was built as a full button component, so it took a button's padding, and no rule for it existed anywhere to constrain the size. It is now a plain compact control sized in <code>em</code>, so it tracks the select's own size, with an accessible name and a visible focus ring (<a href="https://github.com/CieloVistaSoftware/wb-starter/issues/758" target="_blank" rel="noopener">#758</a>).</li>
+    <li class="wn-item wn-request"><span class="wn-tag">Request</span> <strong>No retired <code>wb-</code> tags left in the behavior demos.</strong> One example still rendered a <code>wb-</code> table, and its own row data taught <code>wb-</code> component names. It is plain <code>&lt;table&gt;</code> now, which auto-injects, and the data names behaviors instead.</li>
+  </ul>
+</section>
+
 <section id="whats-new-3-0-77">
   <h2><a href="https://github.com/CieloVistaSoftware/wb-starter/releases/tag/v3.0.77" target="_blank" rel="noopener" title="release v3.0.77">3.0.77</a> — 2026-08-21</h2>
   <p><strong>This is what is live at 3.0.77.</strong></p>
