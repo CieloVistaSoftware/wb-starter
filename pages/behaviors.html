@@ -1429,6 +1429,7 @@
         liveNote.textContent = 'generated example — no demo on this page';
         liveCode.innerHTML = '';
         liveExample.innerHTML = generated;
+        maybeWarnServerRequired(generated);
         const genRootId = assignExampleIds(token, optionText);
         resetEvents(liveExample.firstElementChild && liveExample.firstElementChild.tagName.toLowerCase(), token, genRootId);
         await renderSource(generated);
