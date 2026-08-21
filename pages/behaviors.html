@@ -381,9 +381,6 @@
       });
       if (!q) totalRowCount = rendered;
       resultsEl.appendChild(frag);
-      // #717: a new filter is a new set of rows -- the trailing room has to be
-      // recomputed for THIS list, not the one it replaced.
-      if (typeof syncTailRoom === 'function') syncTailRoom();
     }
 
     // Which hit does the reader actually mean? Typing "button" matched
@@ -516,7 +513,7 @@
         // Only write on a real change -- an unconditional write re-triggers the
         // observer every frame for no reason.
         if (resultsEl.style.maxHeight !== next) resultsEl.style.maxHeight = next;
-        syncTailRoom();
+        keepSelectionVisible();
       });
     }
     // #717 -- John: "When using the down or up button the current selection must
@@ -527,47 +524,28 @@
     // Trailing space equal to (viewport - last row) puts every row within reach
     // of the top. Only while the list actually scrolls -- a short list gains
     // nothing from it and would just grow a scrollbar.
-    // The row the keyboard last pinned to the top. Padding changes move the
-    // scroll range under it, so the alignment has to be re-applied afterwards.
-    let alignedRow = null;
+    // #728 -- every arrow press renders a different example, which resizes the
+    // panel, which resizes the list (#710) -- AFTER selectRow() has already
+    // scrolled. Measured: End selected the last row and then the resize left it
+    // out of view. This re-asserts VISIBILITY only, by the same minimum-scroll
+    // rule; it does not pin the row anywhere, which is what John asked to be
+    // rid of.
+    // Keyboard only. #664's contract is that a CLICK leaves the list exactly
+    // where the reader put it -- re-asserting visibility after a click broke
+    // that, because the panel resize that follows every render would drag the
+    // list to a row the reader had deliberately scrolled away from.
+    let selectedByKeyboard = false;
 
-    function realignAligned() {
-      if (!alignedRow || !alignedRow.isConnected) return;
-      const top = alignedRow.offsetTop - resultsEl.offsetTop;
-      if (Math.round(resultsEl.scrollTop) !== Math.round(top)) resultsEl.scrollTop = top;
-    }
-
-    function syncTailRoom() {
-      const rows = resultsEl.querySelectorAll('.behaviors-search-results__row');
-      const last = rows[rows.length - 1];
-      if (!last) { resultsEl.style.paddingBottom = ''; return; }
-      const current = parseFloat(resultsEl.style.paddingBottom) || 0;
-      const contentHeight = resultsEl.scrollHeight - current;
-      if (contentHeight <= resultsEl.clientHeight + 1) {
-        if (current) resultsEl.style.paddingBottom = '';
-        return;
+    function keepSelectionVisible() {
+      if (!selectedByKeyboard) return;
+      const cur = resultsEl.querySelector('[aria-current="true"]');
+      if (!cur) return;
+      const top = cur.offsetTop - resultsEl.offsetTop;
+      const bottom = top + cur.offsetHeight;
+      if (top < resultsEl.scrollTop) resultsEl.scrollTop = top;
+      else if (bottom > resultsEl.scrollTop + resultsEl.clientHeight) {
+        resultsEl.scrollTop = bottom - resultsEl.clientHeight;
       }
-      const room = Math.max(0, Math.round(resultsEl.clientHeight - last.offsetHeight));
-      const next = room + 'px';
-      if (resultsEl.style.paddingBottom !== next) resultsEl.style.paddingBottom = next;
-
-      // Then CHECK it, rather than trusting the arithmetic: rows differ in
-      // height (a long token wraps), and the list's own border and row gaps are
-      // not in that subtraction. Measured with the estimate alone, the last row
-      // still landed 4px short and row 47 18px short. Top up by exactly the
-      // shortfall -- once the last row can reach the top, so can every row
-      // above it, since each one needs less scroll than the last.
-      const lastTop = last.offsetTop - resultsEl.offsetTop;
-      const maxScroll = resultsEl.scrollHeight - resultsEl.clientHeight;
-      if (maxScroll < lastTop) {
-        resultsEl.style.paddingBottom = (room + Math.ceil(lastTop - maxScroll)) + 'px';
-      }
-
-      // #717: every arrow press renders a different example, which resizes the
-      // panel, which resizes the list, which lands here -- AFTER selectRow()
-      // already set scrollTop. Measured: ArrowUp drifted 18px on a 49-row list
-      // and 99px on the full 585. Re-pin the row the keyboard aligned.
-      realignAligned();
     }
 
     // The panel's height drives the list's; the list never drives the panel's,
@@ -1473,7 +1451,7 @@
       return [...resultsEl.querySelectorAll('.behaviors-search-results__row')];
     }
 
-    function selectRow(row, { focus = true, reveal = false, align = false } = {}) {
+    function selectRow(row, { focus = true, reveal = false } = {}) {
       if (!row) return;
       rowsInOrder().forEach((r) => r.removeAttribute('aria-current'));
       row.setAttribute('aria-current', 'true');
@@ -1482,20 +1460,15 @@
       // measured moving the page from 5541 to 341 while arrowing. The panel
       // exists so the page does not move (John: "don't scroll down"), so the
       // list's own scrollTop is adjusted directly and nothing else is touched.
+      // #728 -- John, having used the align-to-top version: "set it to normal
+      // action on key up and or down. I don't like the always at top stuff."
+      // So: move the selection, and scroll ONLY when the row would otherwise be
+      // out of view, by the minimum needed. A row already on screen leaves the
+      // list where it is. This replaces #687/#717.
       const listTop = resultsEl.scrollTop;
       const rowTop = row.offsetTop - resultsEl.offsetTop;
       const rowBottom = rowTop + row.offsetHeight;
-      if (align) {
-        alignedRow = row;
-        // #687 -- John: "I would like all down arrow activity to align with the
-        // top every time it's pressed". Minimal scrolling left the selection
-        // pinned to the BOTTOM edge once it got there, so arrowing read as "the
-        // list is stuck" even though the panel kept changing. Pinning the row to
-        // the top moves the list one row per press, and the browser clamps
-        // scrollTop at the end -- which is the "page to the next set of choices"
-        // John asked for as the last rows come into range.
-        resultsEl.scrollTop = rowTop;
-      } else if (rowTop < listTop) resultsEl.scrollTop = rowTop;
+      if (rowTop < listTop) resultsEl.scrollTop = rowTop;
       else if (rowBottom > listTop + resultsEl.clientHeight) {
         resultsEl.scrollTop = rowBottom - resultsEl.clientHeight;
       }
@@ -1527,29 +1500,32 @@
       i = i < 0 ? (delta > 0 ? 0 : rows.length - 1) : i + delta;
       if (i < 0) i = 0;
       if (i > rows.length - 1) i = rows.length - 1;
-      selectRow(rows[i], { align: true });
+      selectRow(rows[i]);
     }
 
     resultsEl.addEventListener('keydown', (e) => {
+      if (['ArrowDown', 'ArrowUp', 'Home', 'End'].includes(e.key)) selectedByKeyboard = true;
       if (e.key === 'ArrowDown') { e.preventDefault(); moveSelection(1); }
       else if (e.key === 'ArrowUp') { e.preventDefault(); moveSelection(-1); }
-      else if (e.key === 'Home') { e.preventDefault(); selectRow(rowsInOrder()[0], { align: true }); }
-      else if (e.key === 'End') { e.preventDefault(); const r = rowsInOrder(); selectRow(r[r.length - 1], { align: true }); }
+      else if (e.key === 'Home') { e.preventDefault(); selectRow(rowsInOrder()[0]); }
+      else if (e.key === 'End') { e.preventDefault(); const r = rowsInOrder(); selectRow(r[r.length - 1]); }
     });
 
     // Down from the search box drops into the list, so the keyboard path works
     // straight from typing without an intervening Tab.
     input.addEventListener('keydown', (e) => {
       if (e.key === 'ArrowDown') {
+        selectedByKeyboard = true;
         e.preventDefault();
         const rows = rowsInOrder();
-        if (rows.length) selectRow(rows[0], { align: true });
+        if (rows.length) selectRow(rows[0]);
       }
     });
 
     resultsEl.addEventListener('click', (e) => {
       const btn = e.target.closest('.behaviors-search-results__row');
       if (!btn) return;
+      selectedByKeyboard = false;
       if (btn.dataset.browseToken) {
         // #664: render it, and LEAVE THE LIST ALONE. Filling the input would
         // re-run applyFilter and collapse the browse list to just this one

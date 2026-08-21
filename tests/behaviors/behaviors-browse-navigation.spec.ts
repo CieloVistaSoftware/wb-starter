@@ -86,88 +86,6 @@ test.describe('#686 — two-column layout still does not scroll', () => {
   });
 });
 
-test.describe('#687 — arrow keys align the selection to the top of the list', () => {
-  test.use({ viewport: { width: 1280, height: 900 } });
-
-  test('each ArrowDown puts the selected row at the top of the list viewport', async ({ page }) => {
-    await loadBrowse(page, 'x-');
-
-    await page.locator('.behaviors-search-results__row').first().focus();
-
-    const offsets: number[] = [];
-    for (let i = 0; i < 5; i++) {
-      await page.keyboard.press('ArrowDown');
-      await page.waitForTimeout(120);
-      offsets.push(await page.evaluate(() => {
-        const list = document.getElementById('behaviors-search-results')!;
-        const cur = list.querySelector('[aria-current="true"]') as HTMLElement;
-        return Math.round((cur.offsetTop - list.offsetTop) - list.scrollTop);
-      }));
-    }
-
-    for (const [i, delta] of offsets.entries()) {
-      expect(Math.abs(delta), `press ${i + 1}: selected row sat ${delta}px from the top`).toBeLessThanOrEqual(2);
-    }
-  });
-
-  test('ArrowUp aligns to the top as well', async ({ page }) => {
-    await loadBrowse(page, 'x-');
-    await page.locator('.behaviors-search-results__row').first().focus();
-    for (let i = 0; i < 6; i++) { await page.keyboard.press('ArrowDown'); }
-    await page.waitForTimeout(150);
-    await page.keyboard.press('ArrowUp');
-    await page.waitForTimeout(150);
-
-    const delta = await page.evaluate(() => {
-      const list = document.getElementById('behaviors-search-results')!;
-      const cur = list.querySelector('[aria-current="true"]') as HTMLElement;
-      return Math.round((cur.offsetTop - list.offsetTop) - list.scrollTop);
-    });
-    expect(Math.abs(delta)).toBeLessThanOrEqual(2);
-  });
-
-  test('End reaches the last row and leaves it fully visible', async ({ page }) => {
-    await loadBrowse(page, 'x-');
-    await page.locator('.behaviors-search-results__row').first().focus();
-    await page.keyboard.press('End');
-    await page.waitForTimeout(250);
-
-    const end = await page.evaluate(() => {
-      const list = document.getElementById('behaviors-search-results')!;
-      const rows = [...list.querySelectorAll('.behaviors-search-results__row')];
-      const cur = list.querySelector('[aria-current="true"]') as HTMLElement;
-      const cb = cur.getBoundingClientRect(), lb = list.getBoundingClientRect();
-      return {
-        isLast: rows.indexOf(cur) === rows.length - 1,
-        // #717 replaced "scrolled to the very bottom" as the measure of End.
-        // With trailing room below the last row, End puts that row at the TOP,
-        // which is deliberately NOT max scroll any more -- asserting atBottom
-        // would now be asserting the bug John reported ("the current selection
-        // must be the first one").
-        offsetFromTop: Math.round((cur.offsetTop - list.offsetTop) - list.scrollTop),
-        fullyVisible: cb.top >= lb.top - 2 && cb.bottom <= lb.bottom + 2,
-      };
-    });
-
-    expect(end.isLast, 'End must select the last row').toBe(true);
-    expect(Math.abs(end.offsetFromTop), 'End must put the last row at the TOP of the list (#717)')
-      .toBeLessThanOrEqual(2);
-    expect(end.fullyVisible, 'the last row must be fully in the list viewport').toBe(true);
-  });
-
-  test('clicking a row leaves the list scroll exactly where the reader put it', async ({ page }) => {
-    await loadBrowse(page, 'x-');
-    await page.evaluate(() => { document.getElementById('behaviors-search-results')!.scrollTop = 500; });
-    await page.waitForTimeout(80);
-
-    const rows = page.locator('.behaviors-search-results__row');
-    await rows.nth(12).click();
-    await page.waitForTimeout(300);
-
-    const after = await page.evaluate(() => document.getElementById('behaviors-search-results')!.scrollTop);
-    expect(Math.round(after), 'a click must not yank the list').toBe(500);
-  });
-});
 
 test.describe('#699 — the token column never wraps and never crosses the variant column', () => {
   test.use({ viewport: { width: 1280, height: 900 } });
@@ -305,63 +223,6 @@ test.describe('#711 — the example is centred in the stage', () => {
   }
 });
 
-test.describe('#717 — the selection is the first row anywhere in the list', () => {
-  test.use({ viewport: { width: 1280, height: 900 } });
-
-  for (const filter of ['button', 'x-'] as const) {
-    test(`"${filter}": Down, End and Up all leave the selection at the top`, async ({ page }) => {
-      test.setTimeout(120_000);
-      await loadBrowse(page, filter);
-
-      const worst = await page.evaluate(async () => {
-        const sleep = (ms: number) => new Promise((r) => setTimeout(r, ms));
-        const list = document.getElementById('behaviors-search-results')!;
-        const rows = [...list.querySelectorAll('.behaviors-search-results__row')] as HTMLElement[];
-        const press = (key: string) =>
-          list.dispatchEvent(new KeyboardEvent('keydown', { key, bubbles: true }));
-        const offset = () => {
-          const cur = list.querySelector('[aria-current="true"]') as HTMLElement;
-          return Math.round((cur.offsetTop - list.offsetTop) - list.scrollTop);
-        };
-
-        rows[0].focus();
-        let down = 0;
-        for (let i = 0; i < 6; i++) { press('ArrowDown'); await sleep(160); down = Math.max(down, Math.abs(offset())); }
-
-        // End is the case that used to fail worst: scrollTop clamps at
-        // scrollHeight - clientHeight, so the last screenful could never reach
-        // the top -- measured 1134px down before the trailing room was added.
-        press('End');
-        await sleep(400);
-        const end = Math.abs(offset());
-
-        let up = 0;
-        for (let i = 0; i < 6; i++) { press('ArrowUp'); await sleep(160); up = Math.max(up, Math.abs(offset())); }
-
-        return { rows: rows.length, down, end, up };
-      });
-
-      expect(worst.rows, 'expected rows to walk').toBeGreaterThan(5);
-      expect(worst.down, 'ArrowDown must pin the selection to the top').toBeLessThanOrEqual(2);
-      expect(worst.end, 'End must put the LAST row at the top').toBeLessThanOrEqual(2);
-      expect(worst.up, 'ArrowUp must pin the selection to the top').toBeLessThanOrEqual(2);
-    });
-  }
-
-  test('a list too short to scroll gains no trailing padding', async ({ page }) => {
-    await loadBrowse(page, 'x-globe');   // a single behavior
-    await page.waitForTimeout(500);
-    const state = await page.evaluate(() => {
-      const list = document.getElementById('behaviors-search-results')!;
-      return {
-        rows: list.querySelectorAll('.behaviors-search-results__row').length,
-        padding: list.style.paddingBottom,
-      };
-    });
-    expect(state.rows, 'expected a short list').toBeLessThan(5);
-    expect(state.padding, 'nothing to scroll — no padding needed').toBe('');
-  });
-});
 
 test.describe('#720 — the stage can go fullscreen and come back unchanged', () => {
   test.use({ viewport: { width: 1280, height: 900 } });
@@ -436,3 +297,97 @@ test.describe('#720 — the stage can go fullscreen and come back unchanged', ()
     expect(trip.example, 'the example must survive the round trip').toBe(true);
   });
 });
+
+test.describe('#728 — arrow keys move the selection, the list stays put', () => {
+  test.use({ viewport: { width: 1280, height: 900 } });
+
+  test('a selection already on screen does not scroll the list', async ({ page }) => {
+    await loadBrowse(page, 'x-');
+
+    const walk = await page.evaluate(async () => {
+      const sleep = (ms: number) => new Promise((r) => setTimeout(r, ms));
+      const list = document.getElementById('behaviors-search-results')!;
+      const rows = [...list.querySelectorAll('.behaviors-search-results__row')] as HTMLElement[];
+      const press = (key: string) => list.dispatchEvent(new KeyboardEvent('keydown', { key, bubbles: true }));
+      const state = () => {
+        const cur = list.querySelector('[aria-current="true"]') as HTMLElement;
+        const rb = cur.getBoundingClientRect(), lb = list.getBoundingClientRect();
+        return {
+          scrollTop: Math.round(list.scrollTop),
+          visible: rb.top >= lb.top - 1 && rb.bottom <= lb.bottom + 1,
+        };
+      };
+      rows[0].focus();
+      const out = [];
+      for (let i = 0; i < 8; i++) { press('ArrowDown'); await sleep(120); out.push(state()); }
+      return { out, padding: list.style.paddingBottom };
+    });
+
+    expect(walk.out.every((s) => s.visible), 'the selected row must stay visible').toBe(true);
+    expect(walk.out.every((s) => s.scrollTop === 0),
+      'the list must not move while the selection is already on screen (#728 replaced #687 align-to-top)').toBe(true);
+    expect(walk.padding, 'no trailing padding — that existed only for align-to-top (#717)').toBe('');
+  });
+
+  test('it scrolls by the minimum once the selection would leave the viewport', async ({ page }) => {
+    test.setTimeout(120_000);
+    await loadBrowse(page, 'x-');
+
+    const result = await page.evaluate(async () => {
+      const sleep = (ms: number) => new Promise((r) => setTimeout(r, ms));
+      const list = document.getElementById('behaviors-search-results')!;
+      const rows = [...list.querySelectorAll('.behaviors-search-results__row')] as HTMLElement[];
+      const press = (key: string) => list.dispatchEvent(new KeyboardEvent('keydown', { key, bubbles: true }));
+      const state = () => {
+        const cur = list.querySelector('[aria-current="true"]') as HTMLElement;
+        const rb = cur.getBoundingClientRect(), lb = list.getBoundingClientRect();
+        return {
+          scrollTop: Math.round(list.scrollTop),
+          visible: rb.top >= lb.top - 1 && rb.bottom <= lb.bottom + 1,
+          fromTop: Math.round(rb.top - lb.top),
+        };
+      };
+      rows[0].focus();
+      const scrolls = [];
+      for (let i = 0; i < 40 && scrolls.length < 4; i++) {
+        press('ArrowDown');
+        await sleep(80);
+        const s = state();
+        if (s.scrollTop > 0) scrolls.push(s);
+      }
+      press('End');
+      await sleep(400);
+      // PITCH, not height: rows sit 5px apart, so one row of scroll is
+      // offsetHeight + gap. Measuring height alone made the assertion fail at
+      // 55px for a 50px row -- the behavior was right, the tolerance was wrong.
+      const pitch = rows.length > 1
+        ? Math.round(rows[1].offsetTop - rows[0].offsetTop)
+        : Math.round(rows[0].offsetHeight);
+      return { scrolls, end: state(), rowPitch: pitch };
+    });
+
+    expect(result.scrolls.length, 'expected the list to start scrolling eventually').toBeGreaterThan(2);
+    expect(result.scrolls.every((s) => s.visible), 'the selection stays visible while scrolling').toBe(true);
+
+    // Minimum scroll = about one row per press, and the row sits at the BOTTOM
+    // edge — not pulled to the top.
+    const steps = result.scrolls.slice(1).map((s, i) => s.scrollTop - result.scrolls[i].scrollTop);
+    for (const step of steps) {
+      expect(step, `scrolled ${step}px for one row pitch of ${result.rowPitch}px`)
+        .toBeLessThanOrEqual(result.rowPitch + 2);
+    }
+
+    expect(result.end.visible, 'End must leave the last row visible').toBe(true);
+  });
+
+  test('clicking a row still leaves the list scroll where the reader put it', async ({ page }) => {
+    await loadBrowse(page, 'x-');
+    await page.evaluate(() => { document.getElementById('behaviors-search-results')!.scrollTop = 500; });
+    await page.waitForTimeout(80);
+    await page.locator('.behaviors-search-results__row').nth(12).click();
+    await page.waitForTimeout(300);
+    const after = await page.evaluate(() => document.getElementById('behaviors-search-results')!.scrollTop);
+    expect(Math.round(after), 'a click must not move the list').toBe(500);
+  });
+});
+
