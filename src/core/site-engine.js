@@ -45,7 +45,14 @@ export default class WBSite {
       
       const params = new URLSearchParams(window.location.search);
       const pageParam = params.get('page');
-      if (pageParam && this.config.navigationMenu.find(n => n.menuItemId === pageParam)) {
+      // #725 -- the SECOND copy of the same wrong rule. This one dropped the
+      // ?page= parameter on the floor whenever it was not a nav menu item, so
+      // currentPage stayed 'home' and navigateTo() never even saw the request.
+      // Fixing only the gate inside navigateTo() changed nothing: ?page=privacy
+      // still rendered home, because it never got that far. Same test as there:
+      // a plausible page id is accepted, and whether the page EXISTS is decided
+      // by the fetch, which already has a 404 path.
+      if (pageParam && /^[a-z0-9][a-z0-9-]*$/i.test(pageParam)) {
         this.currentPage = pageParam;
       }
 
@@ -543,9 +550,24 @@ export default class WBSite {
     if (window.innerWidth <= 768) {
       this.closeMobileNav();
     }
+
+    let main_notFound = false;
     
-    if (!this.config.navigationMenu.find(n => n.menuItemId === pageId)) {
-      pageId = 'home';
+    // #725 -- John's own footer links were broken by this. The gate used to be
+    //   if (!navigationMenu.find(n => n.menuItemId === pageId)) pageId = 'home';
+    // so ANY page that is not a nav menu item silently became home: 10 of the
+    // 20 files in pages/ were unreachable by URL, including ?page=privacy and
+    // ?page=terms, which the footer links to on every page of the site. No
+    // error, no 404, the URL still saying privacy while home rendered.
+    //
+    // The fetch below already handles a missing page properly -- render404() --
+    // so the nav list is the wrong authority for "does this page exist". What
+    // the gate WAS doing accidentally was keeping junk out of the fetch path,
+    // since pageId is interpolated straight into `pages/${pageId}.html`. That
+    // job is now done deliberately, and only that job.
+    if (!/^[a-z0-9][a-z0-9-]*$/i.test(pageId)) {
+      console.warn(`[WBSite] refusing to navigate to an invalid page id: ${JSON.stringify(pageId)}`);
+      main_notFound = true;
     }
     if (pageId === 'schema-viewer') {
       window.open('schema-viewer.html', '_blank');
@@ -558,6 +580,10 @@ export default class WBSite {
     this.currentPage = pageId;
     this.updateActiveNav();
     const main = document.getElementById('main');
+    if (main_notFound) {
+      main.innerHTML = this.render404(pageId);
+      return;
+    }
     main.innerHTML = `<div class="page__loading" id="mainPageLoading"><wb-spinner  id="mainSpinner"></div><p id="mainLoadingText">Loading...</p></div>`;
     // Optimization: Don't await scan here to start fetch immediately. MutationObserver handles injection.
     // WB.scan(main); 
