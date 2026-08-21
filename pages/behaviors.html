@@ -946,7 +946,7 @@
       // ... this is because we created a module for the semantic button").
       // Emitting `<button x-button>` here would demonstrate exactly the
       // duplication we are removing.
-      // #754 -- John: "don't use x-figure in a figure tag."
+      // #753 -- John: "don't use x-figure in a figure tag."
       //
       // `label` is a DISPLAY string and is empty for several behaviors, so a
       // falsy label sent <figure> down the attribute branch and emitted
@@ -978,7 +978,7 @@
 </${host}>`;
     }
 
-    // #754 -- exposed for tests/compliance/no-redundant-x-attribute.spec.ts.
+    // #753 -- exposed for tests/compliance/no-redundant-x-attribute.spec.ts.
     // That test used to drive the UI, clicking every row to read what got
     // rendered; rows contain links, so a click occasionally navigated and
     // destroyed the page context mid-sweep -- a flaky test guarding a real
@@ -1269,7 +1269,7 @@
     // different elements were indistinguishable. #675 gave every element in the
     // stage a stable id, so an entry can now name its actual source.
     /**
-     * #756 -- John: "where's the element id ... all we need is the id not all
+     * #755 -- John: "where's the element id ... all we need is the id not all
      * that bullshit."
      *
      * Every element in the stage carries a stable id (#675), so the id alone
@@ -1287,7 +1287,7 @@
 
     function logEvent(e) {
       const target = e.target instanceof Element ? e.target : null;
-      // #756: the listener is on the STAGE, so a click on the stage's own
+      // #755: the listener is on the STAGE, so a click on the stage's own
       // padding logged `div#behaviors-live-stage` -- page chrome reported as
       // if the example had fired it. The panel documents the EXAMPLE; an
       // event that never reached it is not the example's event.

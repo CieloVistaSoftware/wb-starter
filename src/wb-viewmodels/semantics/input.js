@@ -21,7 +21,7 @@ export function input(element, options = {}) {
   // by hand in JS rather than depending on $view interpretation at
   // runtime; mirror that here instead of the schema-builder path, whose
   // behavior under the lazy runtime is unverified.
-  // #755: this used to require tagName === 'WB-INPUT', so the documented
+  // #754: this used to require tagName === 'WB-INPUT', so the documented
   // authoring form
   //
   //   <div x-input label="Repository" placeholder="owner/name" input-type="text">
@@ -54,7 +54,7 @@ export function input(element, options = {}) {
     const readonly = element.hasAttribute('readonly');
     const required = element.hasAttribute('required');
 
-    // #755: variant and size were declared in input.schema.json, documented,
+    // #754: variant and size were declared in input.schema.json, documented,
     // and read NOWHERE on this path -- `<div x-input variant="error">` built a
     // field with no error styling at all. Map them to modifier classes, the
     // same mechanism button uses, so the CSS that already exists applies.
@@ -181,7 +181,7 @@ export function input(element, options = {}) {
     return () => {};
   }
 
-  // #755 -- John: "doesn't work but should at least show a runtime error."
+  // #754 -- John: "doesn't work but should at least show a runtime error."
   //
   // Everything above this point is a DELIBERATE hand-off: another behavior
   // owns the element, or the browser renders the type natively. Reaching here
@@ -203,7 +203,7 @@ export function input(element, options = {}) {
   const config = {
     type: options.type || element.dataset.type || element.type || 'text',
     variant: options.variant || element.getAttribute('variant') || element.dataset.variant || '',
-    // #755: the plain `size` attribute -- the documented spelling, and the one
+    // #754: the plain `size` attribute -- the documented spelling, and the one
     // every example writes -- was never read here; only data-size was. Same
     // gap as #752.
     size: options.size || element.getAttribute('size') || element.dataset.size || 'md',
@@ -262,7 +262,7 @@ export function input(element, options = {}) {
   // .wb-input--{variant} adds border-color, all of which belong to the
   // field itself. On the wrapper they padded/colored the structural div,
   // contributing to the doubled-up ring/spacing.
-  // #755: this used to skip 'md', so `size="md"` left NO trace on the element
+  // #754: this used to skip 'md', so `size="md"` left NO trace on the element
   // -- indistinguishable from the attribute being ignored, which is exactly
   // the failure being hunted here. State every size explicitly; the default
   // carrying its own class costs nothing and makes the rendered element say
@@ -271,7 +271,7 @@ export function input(element, options = {}) {
     element.classList.add(`wb-input--${config.size}`);
   }
 
-  // #755: `variant="default"` is a declared enum value that landed nowhere,
+  // #754: `variant="default"` is a declared enum value that landed nowhere,
   // so the schema's own default was silently unrepresented. Every variant now
   // carries its class; the specific ones below keep their border treatment.
   if (config.variant) {

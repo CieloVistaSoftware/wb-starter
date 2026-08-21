@@ -168,7 +168,7 @@ function semanticTag(schema) {
 }
 
 /**
- * #754: does `tag` already auto-inject the behavior `token` names? If so the
+ * #753: does `tag` already auto-inject the behavior `token` names? If so the
  * attribute must NOT appear in the usage block — `<figure x-figure>` is the
  * duplication autoInject exists to remove, and #746 showed the redundant form
  * can suppress the behavior outright. nativeMap is the authority; its keys are

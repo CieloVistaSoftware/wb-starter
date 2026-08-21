@@ -51,7 +51,7 @@ export function select(element, options = {}) {
     }
     wrapper.appendChild(element);
 
-    // #758 -- John: "way too large". This was a <wb-button>, so the button
+    // #757 -- John: "way too large". This was a <wb-button>, so the button
     // behavior styled it as a full button (wb-button--md is padding:1rem) and
     // the clear affordance rendered as a blue square larger than the select it
     // belonged to. There was also no CSS for .wb-select__clear anywhere, so
@@ -110,7 +110,7 @@ function buildWbSelect(element, options) {
   }));
   let optionList = childOptions;
   if (optionList.length === 0) {
-    // #757: only JSON was accepted, and a parse failure was swallowed whole.
+    // #756: only JSON was accepted, and a parse failure was swallowed whole.
     // `options="main,develop,fix/706-dropdown"` -- the comma-separated form
     // the examples and docs use -- threw, was caught, and rendered an EMPTY
     // dropdown with nothing anywhere to explain why.

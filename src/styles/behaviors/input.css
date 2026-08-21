@@ -181,7 +181,7 @@ input[type="radio"] {
 }
 
 /* ─────────────────────────────────────────────────────────────────────────
-   #758 — <select clearable> clear affordance
+   #757 — <select clearable> clear affordance
 
    John: "way too large". The clear control was built as a <wb-button>, so it
    picked up the full button treatment (wb-button--md is padding:1rem) and

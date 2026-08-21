@@ -1,6 +1,6 @@
 /**
  * ═══════════════════════════════════════════════════════════════════════════
- * INPUT — Parameter Permutation Suite (#755)
+ * INPUT — Parameter Permutation Suite (#754)
  * ═══════════════════════════════════════════════════════════════════════════
  *
  * John: "run tests on all input examples we have ensure the variants are all
@@ -17,7 +17,7 @@
  * Every parameter is checked on BOTH hosts the framework claims to support:
  *   - `<input>`      — the native control, wrapped by the behavior
  *   - `<div x-input>` — a container the behavior builds a field inside
- * A parameter that works on one and not the other is the #755 bug class.
+ * A parameter that works on one and not the other is the #754 bug class.
  *
  * @version 3.0.0
  */
@@ -157,7 +157,7 @@ for (const host of HOSTS) {
   });
 }
 
-test.describe('Input — the two hosts agree (#755)', () => {
+test.describe('Input — the two hosts agree (#754)', () => {
   test('variant x size land on both hosts, or on neither', async ({ page }) => {
     const pairs = VARIANTS.flatMap(v => SIZES.map(s => ({ v, s })));
     const html = pairs.map((p, i) =>

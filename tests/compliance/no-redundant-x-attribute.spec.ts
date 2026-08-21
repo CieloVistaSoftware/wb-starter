@@ -1,6 +1,6 @@
 /**
  * ═══════════════════════════════════════════════════════════════════════════
- * No x-{behavior} on an element that already auto-injects it (#754)
+ * No x-{behavior} on an element that already auto-injects it (#753)
  * ═══════════════════════════════════════════════════════════════════════════
  *
  * John: "write a unit test that finds all x-* then it must ensure it is not
@@ -137,7 +137,7 @@ test.describe('No redundant x-{behavior} attribute', () => {
   test('no GENERATED example writes x-{behavior} on that behavior\'s own element', async ({ page }) => {
     // The file-reading test above is structurally blind to this: the showcase
     // builds these in the browser at render time. That is exactly how
-    // <figure x-figure> survived 3.0.70 and reached John (#754).
+    // <figure x-figure> survived 3.0.70 and reached John (#753).
     await page.goto('/pages/behaviors.html');
     await page.waitForFunction(() => (window as any).WB?.behaviors, { timeout: 15000 });
 
