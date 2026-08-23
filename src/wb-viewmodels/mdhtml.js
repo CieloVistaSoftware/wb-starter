@@ -530,7 +530,7 @@ export async function mdhtml(element, options = {}) {
   // Mark as ready
   // Expose reload method
   element.wbMdhtml = {
-    reload: () => mdhtml(element, options),
+    refresh: () => mdhtml(element, options),
     load: async (src) => {
       element.setAttribute('src', src);
       return mdhtml(element, { ...options, src });

@@ -246,8 +246,8 @@
       "<wb-cardvideo variant=\"bordered\">variant=bordered</wb-cardvideo>",
       "<wb-cardvideo autoplay>with autoplay</wb-cardvideo>",
       "<wb-cardvideo title=\"Test Title\">With title attribute</wb-cardvideo>",
-      "<wb-card-video src=\"video.mp4\"></wb-card-video>",
-      "<wb-card-video src=\"video.mp4\" title=\"My Video\" poster=\"poster.jpg\"></wb-card-video>"
+      "<wb-card-video src=\"https://www.w3schools.com/html/mov_bbb.mp4\"></wb-card-video>",
+      "<wb-card-video src=\"https://www.w3schools.com/html/mov_bbb.mp4\" title=\"My Video\" poster=\"https://picsum.photos/seed/screening/640/360\"></wb-card-video>"
     ],
     "matrix": {
       "combinations": [

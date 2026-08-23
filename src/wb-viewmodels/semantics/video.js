@@ -57,9 +57,12 @@ export function video(element, options = {}) {
     getDuration: () => videoEl.duration,
     setVolume: (v) => { videoEl.volume = Math.max(0, Math.min(1, v)); },
     getVolume: () => videoEl.volume,
-    mute: () => { videoEl.muted = true; },
-    unmute: () => { videoEl.muted = false; },
-    toggleMute: () => { videoEl.muted = !videoEl.muted; }
+    // #782: mute() / unmute() / toggleMute() were three members for one
+    // boolean. The canonical verb set has no `mute`, and a typed setter says
+    // the same thing once: setMuted(true), setMuted(false), or
+    // setMuted(!getMuted()) for the toggle.
+    setMuted: (muted) => { videoEl.muted = !!muted; },
+    getMuted: () => videoEl.muted
   };
 
   return () => { element.classList.remove('wb-video'); if (retryCleanup) retryCleanup(); };

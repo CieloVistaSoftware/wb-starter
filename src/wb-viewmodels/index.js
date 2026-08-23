@@ -84,6 +84,7 @@ const behaviorModules = {
   dropdown: 'dropdown',
   accordion: 'collapse',
   collapse: 'collapse',
+  fill: 'fill',
   tabs: 'tabs',
   details: 'semantics/details',
   mdhtml: 'mdhtml',

@@ -226,7 +226,7 @@ export function progress(element, options = {}) {
       if (b) b.style.width = `${(v / max) * 100}%`;
       element.setAttribute('aria-valuenow', v);
     },
-    reanimate: () => {
+    refresh: () => {
       const b = element.querySelector('div');
       if (b) {
         b.style.width = '0%';

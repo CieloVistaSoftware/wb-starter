@@ -25,6 +25,8 @@
 // John asked for: no ack in the console previously meant no way to tell
 // "still retrying" from "silently broken" without instrumenting by hand
 // each time. [WB:media-retry] is a fixed, greppable prefix.
+import { logError } from '../core/error-logger.js';
+
 function traceLabel(el) {
   const tag = el.tagName.toLowerCase();
   return el.id ? `<${tag} id="${el.id}">` : `<${tag}>`;
@@ -96,6 +98,29 @@ function attachLoadRetry(el, config) {
     // callers depend on. Same convention cardoverlay/cardhero/audio already
     // use for their own load failures.
     const failedSrc = config.currentSrc(el);
+
+    // #763 -- John, at a "Video unavailable" placeholder: "Where's the runtime
+    // error?"
+    //
+    // It was thrown, and it still reached nobody. The throw below is caught by
+    // window.onerror, and error-logger only listens there once
+    // setupGlobalErrorHandler() has run -- which happens inside WB.init(). Any
+    // page that calls WB.scan() without init() (demos/playground.html does
+    // exactly that: `WB.init` is deferred behind ensureWB()) installs no
+    // handler, so the throw hit the default handler, printed to devtools, and
+    // left no entry anywhere the user can see.
+    //
+    // logError() is the framework's own channel and is what the Error Log page
+    // reads. Calling it directly makes the report unconditional instead of
+    // contingent on another subsystem having been initialised first. The throw
+    // is kept as well: it carries a stack to devtools, which the log entry
+    // does not.
+    logError(
+      `${config.label} failed to load after ${attempt} attempt(s): ` +
+      `${failedSrc || '(no src)'} -- the file is missing or unreachable.`,
+      { source: 'media-load-retry', element: traceLabel(el), src: failedSrc, attempts: attempt }
+    );
+
     setTimeout(() => {
       throw new Error(
         `${config.label}: failed to load ${failedSrc || '(no src)'} after ${attempt} attempt(s) -- ` +

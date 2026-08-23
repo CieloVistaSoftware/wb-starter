@@ -94,8 +94,8 @@ export function collapse(element, options = {}) {
 
   element.wbCollapse = {
     toggle: () => trigger.click(),
-    open: () => { if (!isOpen) trigger.click(); },
-    close: () => { if (isOpen) trigger.click(); },
+    show: () => { if (!isOpen) trigger.click(); },
+    hide: () => { if (isOpen) trigger.click(); },
     get isOpen() { return isOpen; }
   };
 

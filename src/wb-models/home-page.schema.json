@@ -247,7 +247,7 @@
       "<wb-container max-width='900px' padding='2rem'><wb-row><wb-cardstats value='100+' label='Behaviors' icon='🧩'></wb-cardstats></wb-row></wb-container>",
       "<wb-grid><wb-card variant='float'><h3>🧩 Title</h3><p>Description</p></wb-card></wb-grid>",
       "<wb-stack><wb-cardnotification variant='info' title='Test' message='Message'></wb-cardnotification></wb-stack>",
-      "<wb-audio src='test.mp3' show-eq volume='0.5'></wb-audio>"
+      "<wb-audio src='https://archive.org/download/nineinchnails_ghosts_I_IV/01_Ghosts_I.mp3' show-eq volume='0.5'></wb-audio>"
     ],
     "matrix": {
       "combinations": [

@@ -12,9 +12,9 @@ import { readFlag } from '../core/read-attr.js';
  * 
  * Usage:
  *   <wb-audio></wb-audio>  (uses default pleasant demo: "Carefree" by Kevin MacLeod)
- *   <wb-audio src="audio.mp3"></wb-audio>
- *   <wb-audio src="music.mp3" show-eq volume="0.8"></wb-audio>
- *   <wb-audio src="podcast.mp3" controls loop></wb-audio>
+ *   <wb-audio src="https://archive.org/download/nineinchnails_ghosts_I_IV/01_Ghosts_I.mp3"></wb-audio>
+ *   <wb-audio src="https://archive.org/download/nineinchnails_ghosts_I_IV/01_Ghosts_I.mp3" show-eq volume="0.8"></wb-audio>
+ *   <wb-audio src="https://archive.org/download/nineinchnails_ghosts_I_IV/01_Ghosts_I.mp3" controls loop></wb-audio>
  */
 
 import { audio as audioBehavior } from './semantics/audio.js';

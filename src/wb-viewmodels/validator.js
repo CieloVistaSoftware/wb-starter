@@ -163,8 +163,8 @@ export function validator(element, options = {}) {
   // Expose methods
   element.wbValidator = {
     validate: validateAll,
-    validateInput: (input) => showError(input, validateInput(input)),
-    clearErrors: () => getInputs().forEach(clearError),
+    validate: (input) => showError(input, validateInput(input)),
+    reset: () => getInputs().forEach(clearError),
     addRule: (name, fn) => { rules[name] = fn; }
   };
 

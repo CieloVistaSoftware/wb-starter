@@ -77,7 +77,7 @@ export function select(element, options = {}) {
     getValue: () => element.value,
     setValue: (v) => { element.value = v; },
     getSelectedOptions: () => Array.from(element.selectedOptions),
-    clear: () => { element.selectedIndex = -1; }
+    reset: () => { element.selectedIndex = -1; }
   };
 
   return () => {};

@@ -481,7 +481,7 @@ export function sparkle(element, options = {}) {
 }
 
 /**
- * #786 -- John: "glowing buttons must emulate a click when pressed this means
+ * #760 -- John: "glowing buttons must emulate a click when pressed this means
  * the user has to be fooled the button went down and then returned."
  *
  * The continuous effects -- glow, rainbow, particle -- run an infinite

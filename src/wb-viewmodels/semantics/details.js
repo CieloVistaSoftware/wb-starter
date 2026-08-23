@@ -37,12 +37,10 @@ export function details(element, options = {}) {
     });
     
     // Add class to original element in case tests are checking it
-    element.classList.add('wb-details');
     
     element.replaceWith(detailsEl);
     element = detailsEl;
   } else {
-    element.classList.add('wb-details');
     if (config.open) element.open = true;
 
     // #689 -- John: "the gaps here are not right". A native <details> authored
@@ -70,34 +68,28 @@ export function details(element, options = {}) {
     }
   }
 
-  // Style the native element
-  Object.assign(element.style, {
-    border: '1px solid var(--border-color, #374151)',
-    borderRadius: '6px',
-    overflow: 'hidden',
-    background: 'var(--bg-primary, #111827)'
-  });
+  // #775 -- these were inline styles (Object.assign(element.style, ...)).
+  //
+  // Inline wins over every stylesheet rule, so a page could not restyle a
+  // panel it owns: pages/behaviors.html had to x-ignore this behavior
+  // outright just to put its own border on its own chrome (the "#746 edge").
+  // A behavior should decorate with classes and let CSS decide the looks.
+  //
+  // The declarations moved verbatim into src/styles/behaviors/details.css,
+  // so the default appearance is unchanged for anyone not overriding it.
+  element.classList.add('wb-details');
 
   const summary = element.querySelector('summary');
   if (summary) {
     summary.classList.add('wb-details__summary');
-    Object.assign(summary.style, {
-      display: 'flex',
-      alignItems: 'center',
-      justifyContent: 'space-between',
-      padding: '1rem',
-      background: 'var(--bg-secondary, #1f2937)',
-      cursor: 'pointer',
-      fontWeight: '500',
-      listStyle: 'none'
-    });
+    // #775: layout and colour live in details.css now, same reason.
     
     // Custom icon (guard against re-wrapping on a second scan — issue #131)
     if (!summary.querySelector(".wb-details__label")) {
       const labelText = summary.textContent.trim();
       summary.innerHTML = `
         <span class="wb-details__label">${labelText}</span>
-        <span class="wb-details__icon" style="transition: transform 0.2s;">▼</span>
+        <span class="wb-details__icon">▼</span>
       `;
     }
   }
@@ -106,17 +98,24 @@ export function details(element, options = {}) {
   const content = element.querySelector('.wb-details__content') || element.querySelector('summary + *');
   if (content) {
     content.classList.add('wb-details__content');
-    Object.assign(content.style, {
-      padding: '1rem',
-      background: 'var(--bg-primary, #111827)'
-    });
+    // #775: padding and background live in details.css now.
   }
 
   // Animation
   const icon = element.querySelector('.wb-details__icon');
   element.addEventListener('toggle', () => {
     if (icon) {
-      icon.style.transform = element.open ? 'rotate(180deg)' : '';
+      // #775 -- John: "show the arrows - 90 degress to indicate collapsed.
+      // then downward for expansion."
+      //
+      // This used to rotate 180deg when open, so CLOSED pointed down and OPEN
+      // pointed up: the arrow read as a direction to travel rather than as a
+      // state, and a stack of collapsed panels all pointed down as though they
+      // were already open.
+      //
+      // The glyph is a down-pointing triangle, so open is its natural 0deg and
+      // closed turns it -90deg to point right.
+      icon.style.transform = element.open ? '' : 'rotate(-90deg)';
     }
     element.dispatchEvent(new CustomEvent('wb:details:toggle', {
       bubbles: true,
@@ -127,8 +126,8 @@ export function details(element, options = {}) {
   // API
   element.wbDetails = {
     toggle: () => { element.open = !element.open; },
-    open: () => { element.open = true; },
-    close: () => { element.open = false; },
+    show: () => { element.open = true; },
+    hide: () => { element.open = false; },
     get isOpen() { return element.open; }
   };
 

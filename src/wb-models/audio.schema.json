@@ -17,7 +17,7 @@
     "src": {
       "type": "string",
       "description": "Audio source URL",
-      "default": "../audio.mp3",
+      "default": "https://archive.org/download/nineinchnails_ghosts_I_IV/01_Ghosts_I.mp3",
       "required": true
     },
     "volume": {
@@ -258,18 +258,18 @@
     "matrix": {
       "combinations": [
         {
-          "src": "../audio.mp3"
+          "src": "https://archive.org/download/nineinchnails_ghosts_I_IV/01_Ghosts_I.mp3"
         },
         {
-          "src": "../audio.mp3",
+          "src": "https://archive.org/download/nineinchnails_ghosts_I_IV/01_Ghosts_I.mp3",
           "showEq": true
         },
         {
-          "src": "../audio.mp3",
+          "src": "https://archive.org/download/nineinchnails_ghosts_I_IV/01_Ghosts_I.mp3",
           "volume": 0.5
         },
         {
-          "src": "../audio.mp3",
+          "src": "https://archive.org/download/nineinchnails_ghosts_I_IV/01_Ghosts_I.mp3",
           "loop": true
         }
       ]

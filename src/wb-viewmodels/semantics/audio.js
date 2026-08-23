@@ -102,17 +102,18 @@ export function audio(element, options = {}) {
   // native <audio> host (autoInject's native.audio entry, tag 'audio' !==
   // 'wb-audio'), since audio.css's `.wb-audio` rules still select it by
   // class.
-  if (element.tagName.toLowerCase() !== 'wb-audio') element.classList.add('wb-audio');
+  // #775: unconditional. The tag form used to skip this, so a stylesheet
+  // could reach <div x-audio> but not <wb-audio> -- the two rendered from
+  // different sources and only one was restyleable.
+  element.classList.add('wb-audio');
   
-  // Dark studio look
-  Object.assign(element.style, {
-    background: 'linear-gradient(145deg, #0a0a12 0%, #12121c 50%, #0a0a10 100%)',
-    borderRadius: '16px',
-    padding: '1.25rem',
-    boxShadow: '0 10px 40px rgba(0,0,0,0.6), inset 0 1px 0 rgba(255,255,255,0.03)',
-    border: '1px solid rgba(255,255,255,0.05)',
-    minWidth: '320px'
-  });
+  // #775 -- the "dark studio" look was written here as inline styles, which
+  // beat every stylesheet rule: a page could not resize or restyle a player
+  // it owned. Setting height on it did nothing, because 1.25rem of inline
+  // padding kept the box tall regardless.
+  //
+  // Moved verbatim to src/styles/behaviors/audio.css, so the default look is
+  // unchanged and a consumer can now override any part of it.
 
   // Create audio element if needed
   let audioEl = element;
@@ -496,7 +497,7 @@ function buildEqUI(element, audioEl, config, initAudioContext, filters) {
 
   // 'Zero All' removed — identical to the 'Flat' preset below (all-zero gains),
   // just a redundant second button for the same action.
-  // 'Demo Track' removed — swapped in demos/sample.wav regardless of the
+  // 'Demo Track' removed — swapped in https://archive.org/download/nineinchnails_ghosts_I_IV/01_Ghosts_I.mp3 regardless of the
   // author's chosen src, and that file has had its own load reliability
   // issues; a preset button silently changing the loaded track is also
   // surprising UX.
