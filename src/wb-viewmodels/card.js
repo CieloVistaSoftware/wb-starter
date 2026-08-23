@@ -258,65 +258,48 @@ export function composeCard(element, options = {}) {
     tooltipCleanup = () => { cleanupPromise.then((fn) => { if (typeof fn === 'function') fn(); }); };
   }
   
-  // Apply base styles
-  const baseStyles = {
-    transition: 'all 0.2s ease',
-    borderRadius: 'var(--radius-lg, 8px)',
-    overflow: 'hidden',
-    display: 'flex',
-    // flexDirection intentionally NOT set here -- `.wb-card { flex-direction:
-    // column }` (card.css) already provides the default, and setting it
-    // inline would (same "inline always beats class" bug fixed elsewhere in
-    // this file for background/border/padding) permanently block any typed
-    // variant's own CSS from switching direction, e.g.
-    // `.wb-product.wb-card--horizontal { flex-direction: row }` (#cardproduct
-    // horizontal variant test).
-    contain: 'layout paint', // Performance optimization
-    // break-word (not anywhere/break-word together) only breaks a word as a
-    // last resort when it can't fit a line alone — `word-break: break-word`
-    // forces the same over-eager mid-word breaking as `anywhere` even when
-    // the whole word would fit by wrapping normally (e.g. a hero title
-    // splitting "configure" into "configur" + "e").
-    overflowWrap: 'break-word'
-  };
+  // #779/#790 -- these used to be written INLINE, and card.css already
+  // declared every one of them:
+  //
+  //   transition, border-radius, overflow, display, contain, overflow-wrap
+  //     -> `.wb-card` (card.css:24)
+  //   the default background + border
+  //     -> `.wb-card { background: var(--card-bg-override, var(--bg-secondary));
+  //                    border: 1px solid var(--border-color) }`
+  //   the rack treatment
+  //     -> `.wb-card--rack`, which uses --rack-bg / --rack-border / --rack-side
+  //        TOKENS where this code hardcoded #0f172a / #334155 / #1e293b
+  //
+  // An inline declaration beats every one of those rules regardless of
+  // specificity, so the stylesheet has been dead here since #370 migrated it
+  // (its comments say "now that the inline version is gone" -- it was not).
+  //
+  // The `ownsOwnSurface` allowlist that stood here existed ONLY to work around
+  // that: glass, bordered, flat, rack, minimal and elevated were each added to
+  // it after someone noticed the variant rendering pixel-identical to default.
+  // Every future variant would have been born broken the same way. Removing
+  // the inline write fixes all of them at once, retires the allowlist, and
+  // lets rack be themed instead of hardcoded.
+  //
+  // flex-direction was already left out for exactly this reason -- the comment
+  // that used to sit here explained that setting it inline would block
+  // `.wb-product.wb-card--horizontal { flex-direction: row }`. That reasoning
+  // applies to every property in the object, not just that one.
+  const baseStyles = {};
 
-  // Every non-`default` variant class (glass/bordered/flat/rack, card.css)
-  // owns its own background/border -- but Object.assign below applies these
-  // as INLINE styles, which always beat a class selector regardless of CSS
-  // specificity. Setting the default surface unconditionally silently
-  // overrode every one of those classes (confirmed live: bordered/flat
-  // rendered pixel-identical to default despite having real CSS rules).
-  // Only apply the generic inline surface for the actual default variant.
-  // 'minimal' added: cardtestimonial's minimal variant (background:transparent
-  // in card.css) hit this exact same inline-override bug -- it rendered
-  // pixel-identical to default until added here.
-  // 'elevated' added: variant="elevated" (a string variant value, distinct
-  // from the boolean `elevated` attribute handled separately below) got its
-  // .wb-card--elevated class added, so its box-shadow came through, but its
-  // CSS-declared background:var(--bg-elevated) and border-color:transparent
-  // were silently overridden by this same generic inline background/border
-  // -- confirmed live: elevated and default shared the identical background
-  // and border color, only the shadow differed.
-  const ownsOwnSurface = ['glass', 'bordered', 'flat', 'rack', 'minimal', 'elevated'].includes(config.variant);
-  if (!ownsOwnSurface) {
-    baseStyles.background = config.background || element.style.background || 'var(--bg-secondary, #1f2937)';
-    baseStyles.border = '1px solid var(--border-color, #374151)';
-  } else if (config.background) {
-    // An explicit background always wins regardless of variant.
+  // The single value no stylesheet can know: a background the AUTHOR passed in.
+  // Still an inline write and still counted by no-inline-styles.spec.ts -- it
+  // wants a generated rule rather than the element, which is a separate change.
+  if (config.background) {
     baseStyles.background = config.background;
   }
 
-  // Rack variant overrides
-  if (config.variant === 'rack') {
-    baseStyles.background = '#0f172a'; // Dark slate
-    baseStyles.border = '1px solid #334155';
-    baseStyles.borderLeft = '12px solid #1e293b'; // Rack ears
-    baseStyles.borderRight = '12px solid #1e293b';
-    baseStyles.borderRadius = '2px';
-    baseStyles.boxShadow = 'inset 0 0 20px rgba(0,0,0,0.5)';
-    baseStyles.fontFamily = 'ui-monospace, monospace';
-  }
-  
+  // The default surface and the rack treatment were written here inline and
+  // are both already in card.css (`.wb-card`, `.wb-card--rack`). The variant
+  // classes are applied a few lines below, so each variant's own rules now
+  // reach the element instead of losing to an inline declaration. Nothing to
+  // set here for any of them.
+
   Object.assign(element.style, baseStyles);
   
   // Variant class
@@ -332,49 +315,30 @@ export function composeCard(element, options = {}) {
     element.classList.add(`wb-card--${config.size}`);
   }
   
-  // Elevated - lighter background to appear raised
+  // Elevated -- `.wb-card--elevated` (card.css) already declares the shadow,
+  // the border-color and `background: var(--bg-elevated)`. That rule carries
+  // !important solely because it had to beat the inline write that used to be
+  // here; its own comment says so ("!important is the only way a stylesheet
+  // rule can win against an inline style"). With the inline gone the class is
+  // enough, and the !important can be dropped separately. (#779)
   if (config.elevated) {
     element.classList.add('wb-card--elevated');
-    element.style.boxShadow = 'var(--shadow-elevated, 0 4px 12px rgba(0,0,0,0.15))';
-    // #488: only set the generic elevated background inline when the card
-    // doesn't already own its own surface (glass/bordered/flat/rack/minimal).
-    // This boolean `elevated` attribute is independent of `config.variant`,
-    // so a `variant="glass" elevated` card used to hit this unconditionally
-    // -- the inline style always wins over ANY class selector (including the
-    // .wb-card--glass.wb-card--elevated compound rule added in card.css for
-    // this same issue), silently replacing glass's translucent background
-    // with an opaque one regardless of CSS specificity. Same
-    // inline-beats-class guard already applied to the base surface above
-    // (ownsOwnSurface, ~line 263) and to hoverLeave's border-color below.
-    if (!ownsOwnSurface) {
-      element.style.background = 'var(--bg-elevated, var(--bg-secondary))'; // LIGHTER than base; theme-aware (#198)
-    }
   }
-  
-  // Hoverable
-  const hoverEnter = () => {
-    element.style.transform = 'translateY(-2px)';
-    element.style.boxShadow = 'var(--shadow-hover, 0 8px 24px rgba(0,0,0,0.2))';
-    element.style.borderColor = 'var(--primary, #6366f1)';
-  };
-  const hoverLeave = () => {
-    element.style.transform = '';
-    element.style.boxShadow = config.elevated ? 'var(--shadow-elevated, 0 4px 12px rgba(0,0,0,0.15))' : '';
-    // Same inline-beats-class issue as the base surface above: forcing the
-    // generic border color back on every mouseleave overrode `flat`'s
-    // border:none and `glass`'s theme-driven border on the very first
-    // hover. Let the owning variant's CSS class control its own color.
-    if (!ownsOwnSurface) {
-      element.style.borderColor = 'var(--border-color, #374151)';
-    } else {
-      element.style.removeProperty('border-color');
-    }
-  };
-  
+
+  // Hoverable -- `.wb-card--hoverable:hover` (card.css:520) declares exactly
+  // the three properties the old JS handlers wrote inline (transform,
+  // box-shadow, border-color). A :hover rule also does it without listeners,
+  // without a mouseleave that had to guess what to restore, and it works for
+  // keyboard focus and touch the way CSS decides rather than the way two
+  // mouse events happened to fire.
+  //
+  // The `ownsOwnSurface` guards that stood in both handlers were the same
+  // workaround as the base surface: mouseleave forcing the generic border
+  // colour back overrode `flat`'s border:none and `glass`'s themed border on
+  // the first hover. With no inline write there is nothing to override and
+  // nothing to guard.
   if (config.hoverable) {
     element.classList.add('wb-card--hoverable');
-    element.addEventListener('mouseenter', hoverEnter);
-    element.addEventListener('mouseleave', hoverLeave);
   }
   
   if (config.clickable) {
@@ -480,7 +444,6 @@ export function composeCard(element, options = {}) {
       }
       const body = document.createElement('main');
       body.className = 'wb-card__main';
-      body.style.cssText = STYLE_MAIN;
       body.innerHTML = config.content;
       element.appendChild(body);
       return body;
@@ -497,7 +460,6 @@ export function composeCard(element, options = {}) {
     createHeader: (extraContent = '') => {
       const h = document.createElement('header');
       h.className = 'wb-card__header';
-      h.style.cssText = STYLE_HEADER;
       
       const contentDiv = document.createElement('div');
       contentDiv.className = 'wb-card__header-content';
@@ -506,7 +468,6 @@ export function composeCard(element, options = {}) {
       if (config.title) {
         const titleEl = document.createElement('h3');
         titleEl.className = 'wb-card__title';
-        titleEl.style.cssText = STYLE_TITLE;
         titleEl.textContent = config.title;
         contentDiv.appendChild(titleEl);
       }
@@ -514,7 +475,6 @@ export function composeCard(element, options = {}) {
       if (config.subtitle) {
         const subtitleEl = document.createElement('div');
         subtitleEl.className = 'wb-card__subtitle';
-        subtitleEl.style.cssText = STYLE_SUBTITLE;
         subtitleEl.textContent = config.subtitle;
         contentDiv.appendChild(subtitleEl);
       }
@@ -530,7 +490,6 @@ export function composeCard(element, options = {}) {
       if (config.badge) {
         const badgeEl = document.createElement('span');
         badgeEl.className = 'wb-card__badge';
-        badgeEl.style.cssText = STYLE_BADGE;
         badgeEl.textContent = config.badge;
         h.appendChild(badgeEl);
       }
@@ -544,7 +503,6 @@ export function composeCard(element, options = {}) {
     createMain: (content = '') => {
       const m = document.createElement('main');
       m.className = 'wb-card__main';
-      m.style.cssText = STYLE_MAIN;
       
       // Use config.content if no content passed
       const finalContent = content || config.content;
@@ -562,7 +520,6 @@ export function composeCard(element, options = {}) {
     createFooter: (content = '') => {
       const footEl = document.createElement('footer');
       footEl.className = 'wb-card__footer';
-      footEl.style.cssText = STYLE_FOOTER;
       
       const footerText = content || config.footer;
       if (footerText) {
@@ -608,7 +565,6 @@ export function composeCard(element, options = {}) {
         if (!header) {
           const headerEl = document.createElement('header');
           headerEl.className = 'wb-card__header';
-          headerEl.style.cssText = STYLE_HEADER;
           
           const headerContentWrap = document.createElement('div');
           headerContentWrap.className = 'wb-card__header-content';
@@ -617,7 +573,6 @@ export function composeCard(element, options = {}) {
           if (config.title) {
             const titleElem = document.createElement('h3');
             titleElem.className = 'wb-card__title';
-            titleElem.style.cssText = STYLE_TITLE;
             titleElem.textContent = config.title;
             headerContentWrap.appendChild(titleElem);
           }
@@ -625,7 +580,6 @@ export function composeCard(element, options = {}) {
           if (config.subtitle) {
             const subtitleElem = document.createElement('div');
             subtitleElem.className = 'wb-card__subtitle';
-            subtitleElem.style.cssText = STYLE_SUBTITLE;
             subtitleElem.textContent = config.subtitle;
             headerContentWrap.appendChild(subtitleElem);
           }
@@ -642,7 +596,6 @@ export function composeCard(element, options = {}) {
           if (config.badge) {
             const headerBadge = document.createElement('span');
             headerBadge.className = 'wb-card__badge';
-            headerBadge.style.cssText = STYLE_BADGE;
             headerBadge.textContent = config.badge;
             headerEl.appendChild(headerBadge);
           }
@@ -664,7 +617,6 @@ export function composeCard(element, options = {}) {
           if (config.badge && !header.querySelector('.wb-card__badge')) {
             const existingHeaderBadge = document.createElement('span');
             existingHeaderBadge.className = 'wb-card__badge';
-            existingHeaderBadge.style.cssText = STYLE_BADGE;
             existingHeaderBadge.textContent = config.badge;
             header.appendChild(existingHeaderBadge);
           }
@@ -679,7 +631,6 @@ export function composeCard(element, options = {}) {
         if (!main && mainText) {
           const mainEl = document.createElement('main');
           mainEl.className = 'wb-card__main';
-          mainEl.style.cssText = STYLE_MAIN;
           mainEl.innerHTML = mainText;
           main = mainEl;
           if (footer) {
@@ -720,7 +671,6 @@ export function composeCard(element, options = {}) {
         if (!footer) {
           const footerEl = document.createElement('footer');
           footerEl.className = 'wb-card__footer';
-          footerEl.style.cssText = STYLE_FOOTER;
           footerEl.textContent = footerContent || config.footer;
           
           footer = footerEl;
@@ -742,10 +692,8 @@ export function composeCard(element, options = {}) {
       element.classList.remove('wb-card', `wb-card--${config.behavior.replace('card', '')}`,
         `wb-card--${config.variant}`, `wb-card--${config.size}`, 'wb-card--hoverable', 'wb-card--elevated', 
         'wb-card--clickable', 'wb-card--active');
-      if (config.hoverable) {
-        element.removeEventListener('mouseenter', hoverEnter);
-        element.removeEventListener('mouseleave', hoverLeave);
-      }
+      // No hover listeners to remove: hover is `.wb-card--hoverable:hover` in
+      // card.css now, and the class is removed above. (#779)
       if (clickHandler) {
         element.removeEventListener('click', clickHandler);
       }
@@ -2066,7 +2014,6 @@ export function cardlink(element, options = {}) {
     if (base.config.title) {
       const titleEl = document.createElement('h3');
       titleEl.className = 'wb-card__title';
-      titleEl.style.cssText = STYLE_TITLE;
       titleEl.textContent = base.config.title;
       titleRow.appendChild(titleEl);
     }
@@ -2500,8 +2447,8 @@ export function cardexpandable(element, options = {}) {
 
   // API
   element.wbCardExpandable = {
-    expand: () => { if (!isExpanded) toggle(); },
-    collapse: () => { if (isExpanded) toggle(); },
+    show: () => { if (!isExpanded) toggle(); },
+    hide: () => { if (isExpanded) toggle(); },
     toggle: toggle,
     get expanded() { return isExpanded; }
   };
@@ -2620,8 +2567,8 @@ export function cardminimizable(element, options = {}) {
   // API
   element.wbCardMinimizable = {
     toggle,
-    minimize: () => { if (!isMinimized) toggle(); },
-    expand: () => { if (isMinimized) toggle(); },
+    hide: () => { if (!isMinimized) toggle(); },
+    show: () => { if (isMinimized) toggle(); },
     get minimized() { return isMinimized; }
   };
 
