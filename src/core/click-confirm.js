@@ -53,6 +53,12 @@ function labelFor(el) {
   // CHILD rather than a sibling (a wb-demo "Docs:" badge, in the confirmed
   // live case) -- el.textContent would fold that in too ("×📖" instead of
   // "×"). Strip known overlay/badge children before reading text.
+  // #788 -- John: the toast should say WHICH element was clicked. #755 made
+  // the Events panel print the id alone for the same reason: every element in
+  // the stage carries a stable id (#675), so the id identifies the source
+  // exactly, and the text of a card is a paragraph, not a label.
+  if (el.id) return el.id;
+
   const clone = el.cloneNode(true);
   clone.querySelectorAll('.wb-demo__card-doc-link, .wb-demo__links').forEach((n) => n.remove());
   const text = (clone.textContent || '').trim().replace(/\s+/g, ' ');

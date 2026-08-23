@@ -30,11 +30,11 @@ test.describe('site-wide click confirmation (#456)', () => {
 
     await page.locator('#click-confirm-button').click();
     await expect(page.locator('.wb-toast')).toHaveCount(1);
-    await expect(page.locator('.wb-toast')).toContainText('Clicked: Save');
+    await expect(page.locator('.wb-toast')).toContainText('Clicked: click-confirm-button');
 
     await page.locator('#click-confirm-card').click();
     await expect(page.locator('.wb-toast')).toHaveCount(2);
-    await expect(page.locator('.wb-toast').last()).toContainText('Clicked: Open card');
+    await expect(page.locator('.wb-toast').last()).toContainText('Clicked: click-confirm-card');
 
     await page.locator('#click-confirm-link').click();
     await expect(page.locator('.wb-toast')).toHaveCount(2);
