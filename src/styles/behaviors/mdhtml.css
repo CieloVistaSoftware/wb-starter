@@ -24,7 +24,7 @@
  * -----------------------------------------------------------------------------
  */
 
-wb-mdhtml,
+wb-mdhtml, [x-mdhtml],
 .wb-mdhtml {
   line-height: 1.6;
   font-size: var(--md-font-size, 1rem);
@@ -51,7 +51,7 @@ wb-mdhtml,
   overflow-x: hidden;
 }
 
-wb-mdhtml h1,
+wb-mdhtml h1, [x-mdhtml] h1,
 .wb-mdhtml h1 {
   font-size: 2rem;
   margin: 0 0 1.5rem;
@@ -60,20 +60,20 @@ wb-mdhtml h1,
   padding-bottom: 0.5rem;
 }
 
-wb-mdhtml h2,
+wb-mdhtml h2, [x-mdhtml] h2,
 .wb-mdhtml h2 {
   font-size: 1.5rem;
   margin: 2rem 0 1rem;
   color: var(--text-primary);
 }
 
-wb-mdhtml h3,
+wb-mdhtml h3, [x-mdhtml] h3,
 .wb-mdhtml h3 {
   font-size: 1.25rem;
   margin: 1.5rem 0 0.75rem;
 }
 
-wb-mdhtml p,
+wb-mdhtml p, [x-mdhtml] p,
 .wb-mdhtml p {
   margin: 0.75rem 0;
   line-height: 1.6;
@@ -86,7 +86,7 @@ wb-mdhtml p,
   overflow-wrap: break-word;
 }
 
-wb-mdhtml code,
+wb-mdhtml code, [x-mdhtml] code,
 .wb-mdhtml code {
   background: var(--bg-tertiary);
   padding: 0.15rem 0.4rem;
@@ -116,7 +116,7 @@ wb-mdhtml code,
    reserved space — the code text's first 1-2 characters rendered hidden
    behind the line-number column on every <wb-demo>/```code block viewed
    through the doc-viewer (any markdown page). */
-wb-mdhtml pre:not(.x-pre),
+wb-mdhtml pre:not(.x-pre), [x-mdhtml] pre:not(.x-pre),
 .wb-mdhtml pre:not(.x-pre) {
   background: var(--bg-tertiary);
   padding: 1rem;
@@ -129,7 +129,7 @@ wb-mdhtml pre:not(.x-pre),
   overflow-wrap: normal;
 }
 
-wb-mdhtml pre:not(.x-pre) code,
+wb-mdhtml pre:not(.x-pre) code, [x-mdhtml] pre:not(.x-pre) code,
 .wb-mdhtml pre:not(.x-pre) code {
   background: none;
   padding: 0;
@@ -150,7 +150,7 @@ wb-mdhtml pre:not(.x-pre) code,
    just restores that same default explicitly, so the panel's OWN wrap
    attribute (if a specific demo ever opts into wrapping) still wins over
    this rule via normal specificity/source order. */
-wb-mdhtml .x-pre,
+wb-mdhtml .x-pre, [x-mdhtml] .x-pre,
 .wb-mdhtml .x-pre {
   white-space: pre;
   overflow-x: auto;
@@ -179,7 +179,7 @@ wb-mdhtml .x-pre,
    spilling past the page edge — distinct from code blocks, which must WRAP
    instead (§6) since a table's column structure can't rewrap the way a
    line of text can. */
-wb-mdhtml table,
+wb-mdhtml table, [x-mdhtml] table,
 .wb-mdhtml table {
   width: 100%;
   border-collapse: collapse;
@@ -190,8 +190,8 @@ wb-mdhtml table,
   font-size: var(--md-font-size, 1rem);
 }
 
-wb-mdhtml th,
-wb-mdhtml td,
+wb-mdhtml th, [x-mdhtml] th,
+wb-mdhtml td, [x-mdhtml] td,
 .wb-mdhtml th,
 .wb-mdhtml td {
   padding: 0.5rem;
@@ -207,7 +207,7 @@ wb-mdhtml td,
   word-break: normal;
 }
 
-wb-mdhtml th,
+wb-mdhtml th, [x-mdhtml] th,
 .wb-mdhtml th {
   background: var(--bg-secondary);
 }
@@ -217,8 +217,8 @@ wb-mdhtml th,
    identifiers/labels that must never break mid-word; the table's own
    overflow-x:auto (above) provides horizontal scroll if a narrow viewport
    still can't fit them (#278's own acceptance criteria). */
-wb-mdhtml th:last-child,
-wb-mdhtml td:last-child,
+wb-mdhtml th:last-child, [x-mdhtml] th:last-child,
+wb-mdhtml td:last-child, [x-mdhtml] td:last-child,
 .wb-mdhtml th:last-child,
 .wb-mdhtml td:last-child {
   white-space: normal;
@@ -230,33 +230,33 @@ wb-mdhtml td:last-child,
    an unbroken identifier like "wb:details:toggle" gets split mid-word
    ("togg" / "le") since there's nowhere sensible to break. Keep code
    tokens intact; the table's own overflow-x:auto (above) scrolls instead. */
-wb-mdhtml td code,
-wb-mdhtml th code,
+wb-mdhtml td code, [x-mdhtml] td code,
+wb-mdhtml th code, [x-mdhtml] th code,
 .wb-mdhtml td code,
 .wb-mdhtml th code {
   white-space: nowrap;
 }
 
-wb-mdhtml ul,
-wb-mdhtml ol,
+wb-mdhtml ul, [x-mdhtml] ul,
+wb-mdhtml ol, [x-mdhtml] ol,
 .wb-mdhtml ul,
 .wb-mdhtml ol {
   margin: 0.75rem 0;
   padding-left: 1.5rem;
 }
 
-wb-mdhtml li,
+wb-mdhtml li, [x-mdhtml] li,
 .wb-mdhtml li {
   margin: 0.25rem 0;
 }
 
-wb-mdhtml a,
+wb-mdhtml a, [x-mdhtml] a,
 .wb-mdhtml a {
   color: var(--primary-light);
   text-decoration: underline;
 }
 
-wb-mdhtml blockquote,
+wb-mdhtml blockquote, [x-mdhtml] blockquote,
 .wb-mdhtml blockquote {
   border-left: 4px solid var(--primary);
   margin: 0 0 1.5rem 0;
@@ -267,7 +267,7 @@ wb-mdhtml blockquote,
 
 /* A live <wb-demo> embedded in a doc renders its own grid + source panel —
    give it breathing room within the surrounding article text. */
-wb-mdhtml wb-demo,
+wb-mdhtml wb-demo, [x-mdhtml] wb-demo,
 .wb-mdhtml wb-demo {
   display: block;
   margin: 0 0 1.5rem 0;
@@ -280,7 +280,7 @@ wb-mdhtml wb-demo,
    code block horizontally instead of leaving it flush with the surrounding
    prose (headings/paragraphs never had this centering). Consolidated here;
    site.css's copy removed, code-captions.css deleted outright. */
-wb-mdhtml .code-wrapper,
+wb-mdhtml .code-wrapper, [x-mdhtml] .code-wrapper,
 .wb-mdhtml .code-wrapper {
   max-width: 100%;
   overflow-x: hidden;
@@ -294,13 +294,13 @@ wb-mdhtml .code-wrapper,
    that also touch pre margin (wb-mdhtml pre:not(.x-pre) is 0-1-2;
    .wb-mdhtml pre:not(.x-pre) is 0-2-1, tied but declared earlier in this
    file), so plain cascade order already gives this rule the win. */
-wb-mdhtml .code-wrapper pre,
+wb-mdhtml .code-wrapper pre, [x-mdhtml] .code-wrapper pre,
 .wb-mdhtml .code-wrapper pre {
   max-width: 100%;
   margin: 0;
   width: 100%;
 }
-wb-mdhtml .code-caption,
+wb-mdhtml .code-caption, [x-mdhtml] .code-caption,
 .wb-mdhtml .code-caption {
   font-family: 'JetBrains Mono', 'Fira Code', Consolas, monospace;
   font-size: 0.625rem;

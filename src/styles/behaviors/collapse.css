@@ -8,7 +8,7 @@
 
 /* #448: tag selector -- collapse() no longer adds a redundant classList.add
    ('wb-collapse') that just duplicated the <wb-collapse> tag name. */
-wb-collapse {
+wb-collapse, [x-collapse]{
   display: block;
 }
 
@@ -42,7 +42,7 @@ wb-collapse {
 }
 
 .wb-collapse--open .wb-collapse__icon {
-  transform: rotate(180deg);
+  transform: rotate(0deg);
 }
 
 .wb-collapse__content {
@@ -57,3 +57,18 @@ wb-collapse {
 .wb-collapse--open .wb-collapse__content {
   display: block;
 }
+
+
+/* #775 -- John: "show the arrows - 90 degress to indicate collapsed. then
+   downward for expansion."
+
+   This used to rotate 180deg when open, so CLOSED pointed down and OPEN
+   pointed up: the arrow read as a direction to travel rather than as a state,
+   and a stack of collapsed panels all pointed down as though already open.
+
+   The glyph is a down-pointing triangle, so OPEN is its natural 0deg and
+   CLOSED turns it -90deg to point right. */
+.wb-collapse__icon {
+  transform: rotate(-90deg);
+}
+

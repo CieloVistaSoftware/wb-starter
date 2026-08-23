@@ -4,8 +4,8 @@
  * Colored code sample below via <wb-mdhtml>.
  */
 
-wb-demo,
-wb-code-card {
+wb-demo, [x-demo],
+wb-code-card, [x-code-card]{
   display: block;
   margin-bottom: 1rem;
   max-width: 100vw;
@@ -33,8 +33,8 @@ wb-code-card {
    to that specific host, only to non-<wb-dropdown> hosts (e.g. x-dropdown
    on a <button>), which the `.wb-dropdown.open` half of this selector still
    covers. */
-wb-demo:has(wb-dropdown.open),
-wb-demo:has(.wb-dropdown.open) {
+wb-demo:has(wb-dropdown.open), [x-demo]:has(wb-dropdown.open),
+wb-demo:has(.wb-dropdown.open), [x-demo]:has(.wb-dropdown.open){
   overflow: visible;
 }
 
@@ -115,7 +115,7 @@ wb-demo:has(.wb-dropdown.open) {
      labels measure under 100px, well inside "genuinely tiny" territory
      too).
      --demo-code-min-width stays a variable (not now-unused) because
-     wb-demo[data-code-width="50vw"] below still explicitly OPTS IN to a
+     wb-demo[data-code-width="50vw"] below still explicitly OPTS IN to a, [x-demo][data-code-width="50vw"] below still explicitly OPTS IN to a
      50vw floor for pages that want a wider code panel on purpose --
      unaffected by this change, since it sets the variable itself rather
      than relying on the fallback. */
@@ -126,23 +126,23 @@ wb-demo:has(.wb-dropdown.open) {
 /* Per-demo code width control: use data-code-width or --demo-code-max-width
    Example: <wb-demo style="--demo-code-max-width: 600px;">
    Presets: narrow (400px), normal (600px), wide (800px), full (100%) */
-wb-demo[data-code-width="narrow"] .wb-demo__code {
+wb-demo[data-code-width="narrow"] .wb-demo__code, [x-demo][data-code-width="narrow"] .wb-demo__code{
   max-width: 400px;
 }
 
-wb-demo[data-code-width="normal"] .wb-demo__code {
+wb-demo[data-code-width="normal"] .wb-demo__code, [x-demo][data-code-width="normal"] .wb-demo__code{
   max-width: 600px;
 }
 
-wb-demo[data-code-width="wide"] .wb-demo__code {
+wb-demo[data-code-width="wide"] .wb-demo__code, [x-demo][data-code-width="wide"] .wb-demo__code{
   max-width: 800px;
 }
 
-wb-demo[data-code-width="full"] .wb-demo__code {
+wb-demo[data-code-width="full"] .wb-demo__code, [x-demo][data-code-width="full"] .wb-demo__code{
   max-width: 100%;
 }
 
-wb-demo[data-code-width="50vw"] .wb-demo__code {
+wb-demo[data-code-width="50vw"] .wb-demo__code, [x-demo][data-code-width="50vw"] .wb-demo__code{
   max-width: 50vw;
 }
 
@@ -160,7 +160,7 @@ wb-demo[data-code-width="50vw"] .wb-demo__code {
    Confirmed live: pages/components.html's "This is the title" card demo
    was rendering source at ~250px with a horizontal scrollbar cutting off
    every attribute value mid-word. */
-wb-demo[data-code-width="50vw"] {
+wb-demo[data-code-width="50vw"], [x-demo][data-code-width="50vw"]{
   --demo-code-min-width: 50vw;
   min-width: 50vw;
 }
@@ -215,7 +215,7 @@ wb-demo[data-code-width="50vw"] {
    so the box is exactly as wide as it needs to be to show every code line
    in full, without ever going wider than that (still hugs content, never
    stretches to the page). */
-wb-demo:has(> .wb-demo__grid--cols-1 > :only-child) {
+wb-demo:has(> .wb-demo__grid--cols-1 > :only-child), [x-demo]:has(> .wb-demo__grid--cols-1 > :only-child){
   width: var(--wb-demo-shrink-width, fit-content);
   max-width: 100%;
   min-width: min(var(--demo-code-min-width, 0px), 90vw);
@@ -228,7 +228,7 @@ wb-demo:has(> .wb-demo__grid--cols-1 > :only-child) {
    source order alone can't win this -- !important is the deliberate,
    intended override for this specific opt-out, not a specificity workaround
    for something accidental. */
-wb-demo.wb-demo--full-width {
+wb-demo.wb-demo--full-width, [x-demo].wb-demo--full-width{
   width: 100% !important;
   max-width: 100% !important;
 }
@@ -244,7 +244,7 @@ wb-demo.wb-demo--full-width {
    content's intrinsic width, creating the 11.44x height:width problem --
    confirmed live: cardhero in full-width single-item demo collapsed to 33px
    wide with 487px height = 14.7x aspect ratio). */
-wb-demo.wb-demo--full-width .wb-demo__grid {
+wb-demo.wb-demo--full-width .wb-demo__grid, [x-demo].wb-demo--full-width .wb-demo__grid{
   width: 100% !important;
   max-width: 100% !important;
   justify-items: stretch;
@@ -267,13 +267,13 @@ wb-demo.wb-demo--full-width .wb-demo__grid {
      base rule's 1rem vertical spacing (between stacked demos) stays, this
      just narrows the horizontal breathing room to match mobile's tighter
      available width. */
-  wb-demo,
-  wb-code-card {
+  wb-demo, [x-demo],
+  wb-code-card, [x-code-card]{
     padding-left: 0.5rem;
     padding-right: 0.5rem;
   }
 
-  wb-demo:has(> .wb-demo__grid--cols-1 > :only-child) {
+  wb-demo:has(> .wb-demo__grid--cols-1 > :only-child), [x-demo]:has(> .wb-demo__grid--cols-1 > :only-child){
     width: 100%;
     max-width: 100%;
   }
@@ -283,7 +283,7 @@ wb-demo.wb-demo--full-width .wb-demo__grid {
     max-width: 100%;
   }
 
-  wb-demo.wb-demo--full-width .wb-demo__grid {
+  wb-demo.wb-demo--full-width .wb-demo__grid, [x-demo].wb-demo--full-width .wb-demo__grid{
     width: 100% !important;
     max-width: 100% !important;
   }
@@ -303,9 +303,9 @@ wb-demo.wb-demo--full-width .wb-demo__grid {
   min-width: 0;
 }
 
-wb-demo > wb-mdhtml,
-wb-code-card > wb-mdhtml,
-wb-demo > .x-pre-wrapper {
+wb-demo > wb-mdhtml, [x-demo] > wb-mdhtml,
+wb-code-card > wb-mdhtml, [x-code-card] > wb-mdhtml,
+wb-demo > .x-pre-wrapper, [x-demo] > .x-pre-wrapper{
   display: block;
   margin-top: 0.5rem;
 }
@@ -363,7 +363,7 @@ wb-demo > .x-pre-wrapper {
    As they are now they are in the way." -- this used to sit AT the corner,
    slightly overlapping the border (top/right: -0.5rem), which worked fine
    for large cards but covered a meaningful chunk of small elements (e.g.
-   wb-badge, ~1.5-2rem tall) -- the icon and the thing it labels were
+   wb-badge, [x-badge], ~1.5-2rem tall) -- the icon and the thing it labels were
    nearly the same size. Moved fully above the element with real clearance
    instead of overlapping it (later moved again, see below).
 
@@ -428,7 +428,7 @@ wb-demo > .x-pre-wrapper {
    starts 5rem lower, leaving the icon a full 5rem of genuinely clear space
    above every rendered example, regardless of how small any individual
    instance is. */
-wb-demo:has(> .wb-demo__card-doc-link) {
+wb-demo:has(> .wb-demo__card-doc-link), [x-demo]:has(> .wb-demo__card-doc-link){
   padding-top: 5rem;
 }
 

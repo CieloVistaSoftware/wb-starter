@@ -6,7 +6,7 @@
    footer() skips adding `.wb-footer` only for a literal <wb-footer> host; a
    native <footer> host (autoInject) still gets the class, and still needs
    it selected here. */
-wb-footer,
+wb-footer, [x-footer],
 .wb-footer {
   display: flex;
   align-items: center;
@@ -80,7 +80,7 @@ wb-footer,
 
 /* Responsive */
 @media (max-width: 768px) {
-  wb-footer,
+  wb-footer, [x-footer],
   .wb-footer {
     flex-direction: column;
     text-align: center;

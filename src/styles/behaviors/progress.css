@@ -14,7 +14,7 @@
    class -- progress() skips the bare 'wb-progress' token only for a literal
    <wb-progress> host; a native <progress> (autoInject) or a plain
    <div x-progress> still gets the class, and still needs it selected here. */
-wb-progress,
+wb-progress, [x-progress],
 .wb-progress {
   position: relative;
   height: 6px;
@@ -236,5 +236,5 @@ wb-progress,
 }
 
 /* Custom <wb-progress> must be block to honor height (issue #127) */
-wb-progress,
+wb-progress, [x-progress],
 .wb-progress { display: block; width: 100%; }

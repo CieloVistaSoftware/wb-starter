@@ -33,7 +33,7 @@
    job, never a table wrapper's) -- pin overflow-y explicitly so the box
    can never pick up a spurious auto scrollbar/scroll-affordance on the
    axis it was never meant to manage. */
-wb-table,
+wb-table, [x-table],
 .wb-table {
   display: block;
   overflow-x: auto;
@@ -58,8 +58,8 @@ table.wb-table {
   color: var(--text-primary);
 }
 
-wb-table th,
-wb-table td,
+wb-table th, [x-table] th,
+wb-table td, [x-table] td,
 .wb-table th,
 .wb-table td {
   /* #545: was 0.75rem 1rem (12px vertical) -- th has its own distinct
@@ -72,7 +72,7 @@ wb-table td,
   border-bottom: 1px solid var(--border-color);
 }
 
-wb-table th,
+wb-table th, [x-table] th,
 .wb-table th {
   font-weight: 600;
   background-color: var(--bg-tertiary);
@@ -102,7 +102,7 @@ wb-table th,
 }
 
 /* Active row (from components.css) */
-wb-table tbody tr.active,
+wb-table tbody tr.active, [x-table] tbody tr.active,
 .wb-table tbody tr.active {
   background-color: var(--bg-tertiary);
   border-left: 3px solid var(--primary);

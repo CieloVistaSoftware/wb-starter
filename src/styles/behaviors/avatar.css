@@ -6,7 +6,7 @@
  * -----------------------------------------------------------------------------
  */
 
-wb-avatar {
+wb-avatar, [x-avatar]{
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -22,27 +22,27 @@ wb-avatar {
 }
 
 /* Sizes — attribute selectors (schema: xs, sm, md, lg, xl, 2xl) */
-wb-avatar[size="xs"]  { width: 24px; height: 24px; font-size: 0.6rem; }
-wb-avatar[size="sm"]  { width: 32px; height: 32px; font-size: 0.7rem; }
-wb-avatar[size="md"]  { width: 40px; height: 40px; font-size: 0.85rem; }
-wb-avatar[size="lg"]  { width: 56px; height: 56px; font-size: 1.1rem; }
-wb-avatar[size="xl"]  { width: 80px; height: 80px; font-size: 1.6rem; }
-wb-avatar[size="2xl"] { width: 112px; height: 112px; font-size: 2.2rem; }
+wb-avatar[size="xs"]  { width: 24px; height: 24px; font-size: 0.6rem; }, [x-avatar][size="xs"]  { width: 24px; height: 24px; font-size: 0.6rem; }
+wb-avatar[size="sm"]  { width: 32px; height: 32px; font-size: 0.7rem; }, [x-avatar][size="sm"]  { width: 32px; height: 32px; font-size: 0.7rem; }
+wb-avatar[size="md"]  { width: 40px; height: 40px; font-size: 0.85rem; }, [x-avatar][size="md"]  { width: 40px; height: 40px; font-size: 0.85rem; }
+wb-avatar[size="lg"]  { width: 56px; height: 56px; font-size: 1.1rem; }, [x-avatar][size="lg"]  { width: 56px; height: 56px; font-size: 1.1rem; }
+wb-avatar[size="xl"]  { width: 80px; height: 80px; font-size: 1.6rem; }, [x-avatar][size="xl"]  { width: 80px; height: 80px; font-size: 1.6rem; }
+wb-avatar[size="2xl"] { width: 112px; height: 112px; font-size: 2.2rem; }, [x-avatar][size="2xl"] { width: 112px; height: 112px; font-size: 2.2rem; }
 
 /* Shapes — attribute selectors (schema: circle [default], square, rounded) */
-wb-avatar[shape="circle"] { border-radius: 50%; }
-wb-avatar[shape="square"] { border-radius: 0; }
-wb-avatar[shape="rounded"] { border-radius: 20%; }
+wb-avatar[shape="circle"] { border-radius: 50%; }, [x-avatar][shape="circle"] { border-radius: 50%; }
+wb-avatar[shape="square"] { border-radius: 0; }, [x-avatar][shape="square"] { border-radius: 0; }
+wb-avatar[shape="rounded"] { border-radius: 20%; }, [x-avatar][shape="rounded"] { border-radius: 20%; }
 
 /* Image child */
-wb-avatar img {
+wb-avatar img, [x-avatar] img{
   width: 100%;
   height: 100%;
   object-fit: cover;
 }
 
 /* Status dot — shared base via attribute substring selector */
-wb-avatar span[class*="wb-avatar__status"] {
+wb-avatar span[class*="wb-avatar__status"], [x-avatar] span[class*="wb-avatar__status"]{
   position: absolute;
   bottom: 0;
   right: 0;

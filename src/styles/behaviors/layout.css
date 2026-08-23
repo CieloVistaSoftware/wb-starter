@@ -1,15 +1,15 @@
 /* Layout custom elements extracted from site.css */
-wb-flex, wb-stack, wb-cluster, wb-container,
-wb-row, wb-column,
-wb-sidebar, wb-center, wb-cover, wb-masonry, wb-switcher,
-wb-reel, wb-frame, wb-sticky, wb-drawer, wb-icon {
+wb-flex, [x-flex], wb-stack, [x-stack], wb-cluster, [x-cluster], wb-container, [x-container],
+wb-row, [x-row], wb-column, [x-column],
+wb-sidebar, [x-sidebar], wb-center, [x-center], wb-cover, [x-cover], wb-masonry, [x-masonry], wb-switcher, [x-switcher],
+wb-reel, [x-reel], wb-frame, [x-frame], wb-sticky, [x-sticky], wb-drawer, [x-drawer], wb-icon, [x-icon]{
   display: block;
 }
 
 /* wb-grid gets its own grid-shaped default here (not lumped in with the
    block-display group above) matching layouts.js's grid() 3-column
    default (defaultMins['3'] = '250px'). grid() itself only runs once
-   wb-grid.js's module has loaded/executed and the custom element upgrades
+   wb-grid.js's module has loaded/executed and the custom element upgrades, [x-grid].js's module has loaded/executed and the custom element upgrades
    -- setting display:grid/grid-template-columns purely via JS inline
    styles left a real gap: this tag painted as block (single column) on
    first paint, then reflowed into a multi-column grid once JS caught up.
@@ -21,13 +21,13 @@ wb-reel, wb-frame, wb-sticky, wb-drawer, wb-icon {
    rule, so custom columns/gap/minWidth configs still apply correctly --
    for the common default case they now just match what's already
    painted, so there's nothing left to shift. */
-wb-grid {
+wb-grid, [x-grid]{
   display: grid;
   gap: 1rem;
   grid-template-columns: repeat(auto-fit, minmax(min(250px, 100%), 1fr));
 }
 
-wb-drawer {
+wb-drawer, [x-drawer]{
   visibility: hidden;
 }
 /* .wb-drawer-layout: enhanced by drawerLayout() (layouts.js) as a page-shell
@@ -38,8 +38,8 @@ wb-drawer {
    because this base rule hides every <wb-drawer> that isn't a
    .wb-drawer-layout). Same specificity as the rule above by design -- this
    just extends its selector list, not a new override. */
-wb-drawer.wb-drawer-layout,
-wb-drawer.wb-drawer-trigger {
+wb-drawer.wb-drawer-layout, [x-drawer].wb-drawer-layout,
+wb-drawer.wb-drawer-trigger, [x-drawer].wb-drawer-trigger{
   visibility: visible;
 }
 

@@ -260,44 +260,44 @@
    card variant tag (<wb-cardhorizontal> etc.), which DOES get the `wb-card`
    class. Both still beat the grid reset's (0,0,1,0). */
 
-wb-card.wb-card--xs,
+wb-card.wb-card--xs, [x-card].wb-card--xs,
 .wb-card.wb-card--xs {
   max-width: 200px;
   min-width: 160px;
 }
 
-wb-card.wb-card--sm,
+wb-card.wb-card--sm, [x-card].wb-card--sm,
 .wb-card.wb-card--sm {
   max-width: 300px;
   min-width: 220px;
 }
 
-wb-card.wb-card--md,
+wb-card.wb-card--md, [x-card].wb-card--md,
 .wb-card.wb-card--md {
   max-width: 400px;
   min-width: 320px;
 }
 
-wb-card.wb-card--lg,
+wb-card.wb-card--lg, [x-card].wb-card--lg,
 .wb-card.wb-card--lg {
   max-width: 520px;
   min-width: 420px;
 }
 
-wb-card.wb-card--xl,
+wb-card.wb-card--xl, [x-card].wb-card--xl,
 .wb-card.wb-card--xl {
   max-width: 650px;
   min-width: 540px;
 }
 
-wb-card.wb-card--full,
+wb-card.wb-card--full, [x-card].wb-card--full,
 .wb-card.wb-card--full {
   max-width: 100%;
   min-width: 0;
 }
 
 /* Auto size - no constraints, fills container */
-wb-card.wb-card--auto,
+wb-card.wb-card--auto, [x-card].wb-card--auto,
 .wb-card.wb-card--auto {
   max-width: none;
   min-width: 0;
@@ -934,17 +934,27 @@ wb-card.wb-card--auto,
      text) -- 3:2 = 1.5 is close enough to leave only a sliver of crop
      margin for that ratio while staying a widely-recognized "landscape
      photo" default for arbitrary user images generally. */
-  /* #785 -- John: "all overlays must fill 100vw this has gaps on both sides."
-     With aspect-ratio and no width, this box sized itself from its HEIGHT and
-     left the rest of the row empty, so an overlay card floated in the middle
-     of its container with dark gaps either side.
-     width:100% makes the width come from the container and the height follow
-     from the ratio -- the other way round -- so it fills whatever it is placed
-     in: a grid cell, the playground preview, a full-bleed section.
-     100% rather than 100vw deliberately: 100vw ignores the container and,
-     inside any padded parent, overflows the page horizontally, which
-     DEMOS-AND-DOCS-STANDARDS.md forbids (§15, no horizontal overflow at any
-     width). Filling the container is what "no gaps" actually needs. */
+  /* #761 -- John, twice: "all overlays must fill 100vw this has gaps on both
+     sides."
+
+     width:100% is correct and is NOT the whole fix. With aspect-ratio and no
+     width this box sized itself from its HEIGHT and left the rest of the row
+     empty; width:100% makes the width come from the container and the height
+     follow from the ratio instead.
+
+     The first attempt stopped here and John reported the same gap again. 100%
+     of WHAT: a child fills its parent's CONTENT box, and the gap he was
+     pointing at is the parent's own horizontal padding
+     (#pg-preview { padding: 1.25rem }). No width on the child can reach past
+     padding it cannot see, so the card was already flush and the gap was
+     never its to close. That fix belongs on the container -- see
+     "full-bleed hosts" at the bottom of this file.
+
+     Not 100vw here: 100vw ignores the container, and the breakout idiom it
+     needs (margin-inline: calc(50% - 50vw)) resolves 50% against whatever the
+     parent happens to be -- inside a grid cell that is a large negative margin
+     and the card overlaps its neighbours. hero.css:18 already records that
+     exact breakage, which is why .wb-cardhero--fullbleed is opt-in. */
   width: 100%;
   aspect-ratio: 3 / 2;
   min-width: 240px;
@@ -1341,7 +1351,7 @@ wb-card.wb-card--auto,
    Schema: cardnotification.schema.json  |  Behavior: card.js → cardnotification()
    ═══════════════════════════════════════════════════════════════════════════ */
 
-wb-cardnotification,
+wb-cardnotification, [x-cardnotification],
 .wb-notification {
   display: flex;
   flex-direction: row;
@@ -1670,11 +1680,11 @@ wb-cardnotification,
    This catches any card that doesn't have internal structure
    ═══════════════════════════════════════════════════════════════════════════ */
 
-wb-card:not(:has(header)):not(:has(main)),
-wb-cardstats,
-wb-cardtestimonial,
-wb-cardnotification,
-wb-cardfile {
+wb-card:not(:has(header)):not(:has(main)), [x-card]:not(:has(header)):not(:has(main)),
+wb-cardstats, [x-cardstats],
+wb-cardtestimonial, [x-cardtestimonial],
+wb-cardnotification, [x-cardnotification],
+wb-cardfile, [x-cardfile]{
   padding: 1rem;
 }
 
@@ -1744,7 +1754,7 @@ wb-cardfile {
 }
 
 .wb-card__expand-icon--expanded {
-  transform: rotate(180deg);
+  transform: rotate(0deg);
 }
 
 /* ═══════════════════════════════════════════════════════════════════════════
@@ -1843,3 +1853,55 @@ wb-cardfile {
 .wb-card--dragging .wb-card__drag-handle {
   cursor: grabbing;
 }
+
+
+/* =============================================================================
+   FULL-BLEED HOSTS (#761)
+   =============================================================================
+   John: "all overlays must fill 100vw this has gaps on both sides."
+
+   An overlay card is edge-to-edge by nature -- the image IS the card, and a
+   strip of container background either side reads as a rendering fault rather
+   than as spacing. But the card cannot fix this itself (see the note on
+   width:100% above): the gap is its host's padding.
+
+   So the host gives it up, and only when the overlay is the ONLY thing in
+   there. Scoped that way on purpose:
+
+     - a lone overlay in a preview/stage is the case John is looking at, and
+       dropping the inline padding puts it flush against both edges;
+     - an overlay sitting among other content keeps the padding, because
+       stripping it would drag every sibling to the edge too.
+
+   Padding-inline only. The vertical padding still separates the card from
+   whatever is above and below it, which is spacing doing its actual job.
+
+   This is a container rule rather than a breakout on the card because a
+   breakout cannot know its host: `margin-inline: calc(50% - 50vw)` is fine in
+   a full-width panel and is an overlapping mess in a grid cell. Nothing here
+   can produce horizontal overflow -- DEMOS-AND-DOCS-STANDARDS.md §15.
+
+   Only two hosts listed because only two of them pad. .behaviors-live__example
+   pads solely in :fullscreen (2rem); at normal size it is width:100% with no
+   padding, so the card was already flush there and needs no rule. A
+   .wb-demo__preview selector was written here first and silently matched
+   nothing -- no such class exists; demo.js builds .wb-demo__grid. */
+#pg-preview:has(> .wb-card--overlay-card:only-child),
+.behaviors-live__example:fullscreen:has(> .wb-card--overlay-card:only-child) {
+  padding-inline: 0;
+}
+
+
+/* #775 -- John: "show the arrows - 90 degress to indicate collapsed. then
+   downward for expansion."
+
+   This used to rotate 180deg when open, so CLOSED pointed down and OPEN
+   pointed up: the arrow read as a direction to travel rather than as a state,
+   and a stack of collapsed panels all pointed down as though already open.
+
+   The glyph is a down-pointing triangle, so OPEN is its natural 0deg and
+   CLOSED turns it -90deg to point right. */
+.wb-card__expand-icon {
+  transform: rotate(-90deg);
+}
+

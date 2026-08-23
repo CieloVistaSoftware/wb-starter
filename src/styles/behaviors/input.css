@@ -15,7 +15,7 @@
 
 .wb-input,
 .wb-textarea,
-wb-select {
+wb-select, [x-select]{
   display: block;
   width: 100%;
   padding: 0.5rem 0.75rem;
@@ -58,7 +58,7 @@ input[type="month"]::-webkit-calendar-picker-indicator {
 
 .wb-input:focus,
 .wb-textarea:focus,
-wb-select:focus {
+wb-select:focus, [x-select]:focus{
   border-color: var(--primary);
   outline: 0;
   box-shadow: 0 0 0 3px hsla(var(--hue-primary), var(--saturation-primary), var(--lightness-primary), 0.2);
@@ -72,7 +72,7 @@ wb-select:focus {
 
 .wb-input:disabled,
 .wb-textarea:disabled,
-wb-select:disabled {
+wb-select:disabled, [x-select]:disabled{
   background-color: var(--bg-secondary);
   opacity: 1;
   cursor: not-allowed;

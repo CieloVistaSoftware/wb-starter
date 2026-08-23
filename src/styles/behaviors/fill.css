@@ -1,0 +1,51 @@
+/* =============================================================================
+   fill (#764) — an element as wide as its container allows
+   =============================================================================
+   John: "I would like a behavior that makes the element always as wide as
+   possible given it's container."
+
+   fill.js picks ONE of the modifiers below from the parent's computed display,
+   because the property that governs width is different in each layout. See the
+   header comment in fill.js for why width:100% alone is wrong in three of the
+   four cases.
+   ========================================================================== */
+
+.wb-fill {
+  /* Border-box everywhere: without it, padding and border are ADDED to the
+     width below and the element overflows the very container it is filling. */
+  box-sizing: border-box;
+  /* Own margins eat into the space the element is trying to fill. A centring
+     `margin: 0 auto` is the common case and reads as "there is still a gap". */
+  margin-inline: 0;
+}
+
+/* Block formatting context. display:block is what makes width apply at all to
+   an inline element (<a>, <span>, <button>) -- the case where width:100% on its
+   own silently does nothing. */
+.wb-fill--block {
+  display: block;
+  width: 100%;
+}
+
+/* Flex item. flex-basis:0 before grow, so siblings with different content
+   lengths still come out the same width rather than content-weighted. */
+.wb-fill--flex {
+  flex: 1 1 0%;
+  /* min-width:auto is the flexbox default and refuses to shrink below content
+     size, which makes a long word push the item wider than its container. */
+  min-width: 0;
+}
+
+/* Grid item. justify-self fills the track; spanning every column fills the row,
+   which is what "as wide as the container" looks like to a reader. */
+.wb-fill--grid {
+  justify-self: stretch;
+  grid-column: 1 / -1;
+  min-width: 0;
+}
+
+/* Opt-in escape from an inherited cap. Not the default: a max-width is usually
+   a deliberate constraint, and "as wide as possible" still respects it. */
+.wb-fill--ignore-max {
+  max-width: none;
+}

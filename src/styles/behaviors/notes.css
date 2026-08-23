@@ -6,17 +6,17 @@
 
 /* #448: tag selectors -- notes() no longer adds a redundant classList.add
    ('wb-notes') that just duplicated the <wb-notes> tag name. */
-wb-notes {
+wb-notes, [x-notes]{
   --notes-max-width: 50vw;
   --notes-min-width: 200px;
 }
 
 /* Start hidden - only show when wb-notes--open class is added */
-wb-notes .wb-notes__drawer {
+wb-notes .wb-notes__drawer, [x-notes] .wb-notes__drawer{
   display: none !important;
 }
 
-wb-notes.wb-notes--open .wb-notes__drawer {
+wb-notes.wb-notes--open .wb-notes__drawer, [x-notes].wb-notes--open .wb-notes__drawer{
   display: flex !important;
 }
 

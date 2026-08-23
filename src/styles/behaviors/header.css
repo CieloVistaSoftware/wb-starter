@@ -6,7 +6,7 @@
    header() skips adding `.wb-header` only for a literal <wb-header> host; a
    native <header> host (autoInject) still gets the class, and still needs
    it selected here. */
-wb-header,
+wb-header, [x-header],
 .wb-header {
   display: flex;
   align-items: center;
@@ -99,7 +99,7 @@ wb-header,
 
 /* Responsive */
 @media (max-width: 768px) {
-  wb-header,
+  wb-header, [x-header],
   .wb-header {
     padding: 0 1rem;
   }

@@ -7,7 +7,7 @@
  * -----------------------------------------------------------------------------
  */
 
-wb-skeleton {
+wb-skeleton, [x-skeleton]{
   display: block;
   height: 1rem;
   border-radius: 4px;
@@ -22,7 +22,7 @@ wb-skeleton {
 }
 
 /* Lines — each child line */
-wb-skeleton > span {
+wb-skeleton > span, [x-skeleton] > span{
   display: block;
   height: 1rem;
   border-radius: 4px;
@@ -36,17 +36,17 @@ wb-skeleton > span {
   animation: wb-skeleton-shimmer 1.5s ease-in-out infinite;
 }
 
-wb-skeleton > span + span {
+wb-skeleton > span + span, [x-skeleton] > span + span{
   margin-top: 0.5rem;
 }
 
 /* Last line is shorter for visual realism */
-wb-skeleton > span:last-child:not(:first-child) {
+wb-skeleton > span:last-child:not(:first-child), [x-skeleton] > span:last-child:not(:first-child){
   width: 60%;
 }
 
 /* When skeleton has children (lines), hide own background */
-wb-skeleton:has(> span) {
+wb-skeleton:has(> span), [x-skeleton]:has(> span){
   background: none;
   animation: none;
   height: auto;
@@ -58,11 +58,11 @@ wb-skeleton:has(> span) {
 }
 
 /* Variants (issue #129) */
-wb-skeleton[variant="circle"] {
+wb-skeleton[variant="circle"], [x-skeleton][variant="circle"]{
   border-radius: 50%;
   aspect-ratio: 1 / 1;
   height: auto;
 }
-wb-skeleton[variant="rect"] {
+wb-skeleton[variant="rect"], [x-skeleton][variant="rect"]{
   border-radius: 4px;
 }

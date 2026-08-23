@@ -10,7 +10,7 @@
    native <audio> host (autoInject) still gets the class, and still needs it
    selected here (a `audio` tag can never match a `wb-audio` selector).
    ============================================================================= */
-wb-audio,
+wb-audio, [x-audio],
 .wb-audio {
   background: linear-gradient(145deg, var(--bg-primary) 0%, var(--bg-secondary) 50%, var(--bg-tertiary) 100%);
   border-radius: 16px;
@@ -23,7 +23,7 @@ wb-audio,
 }
 
 /* Native audio element styling */
-wb-audio audio,
+wb-audio audio, [x-audio] audio,
 .wb-audio audio {
   width: 100%;
   height: 48px;
@@ -33,21 +33,21 @@ wb-audio audio,
 }
 
 /* Chrome/Safari audio styling */
-wb-audio audio::-webkit-media-controls-panel,
+wb-audio audio::-webkit-media-controls-panel, [x-audio] audio::-webkit-media-controls-panel,
 .wb-audio audio::-webkit-media-controls-panel {
   background: linear-gradient(180deg, var(--bg-secondary) 0%, var(--bg-primary) 100%);
   border-radius: 8px;
 }
 
-wb-audio audio::-webkit-media-controls-play-button,
+wb-audio audio::-webkit-media-controls-play-button, [x-audio] audio::-webkit-media-controls-play-button,
 .wb-audio audio::-webkit-media-controls-play-button {
   background-color: var(--primary);
   border-radius: 50%;
   transform: scale(1.2);
 }
 
-wb-audio audio::-webkit-media-controls-current-time-display,
-wb-audio audio::-webkit-media-controls-time-remaining-display,
+wb-audio audio::-webkit-media-controls-current-time-display, [x-audio] audio::-webkit-media-controls-current-time-display,
+wb-audio audio::-webkit-media-controls-time-remaining-display, [x-audio] audio::-webkit-media-controls-time-remaining-display,
 .wb-audio audio::-webkit-media-controls-current-time-display,
 .wb-audio audio::-webkit-media-controls-time-remaining-display {
   color: var(--text-primary);
@@ -542,4 +542,28 @@ wb-audio audio::-webkit-media-controls-time-remaining-display,
   box-shadow: 
     inset 0 2px 4px rgba(0, 0, 0, 0.15),
     0 1px 0 rgba(255, 255, 255, 0.8);
+}
+
+/* =============================================================================
+   #775 — the "dark studio" look, moved out of semantics/audio.js
+   =============================================================================
+   These were written as inline styles by the behavior. Inline beats every
+   stylesheet rule, so a page could not resize or restyle a player it owned:
+   setting `height` on the element did nothing, because 1.25rem of inline
+   padding kept the box tall regardless of the height.
+
+   Copied verbatim, so the default appearance is unchanged — the difference is
+   that a consumer can now override any of it with an ordinary rule.
+   ========================================================================== */
+
+.wb-audio {
+  background: linear-gradient(145deg, #0a0a12 0%, #12121c 50%, #0a0a10 100%);
+  border-radius: 16px;
+  padding: 1.25rem;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.6), inset 0 1px 0 rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  min-width: 320px;
+  /* Padding is part of the declared size now, so a height set by a consumer
+     means the height they asked for rather than height + 2.5rem. */
+  box-sizing: border-box;
 }

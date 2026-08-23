@@ -10,7 +10,7 @@
    class -- timeline() still adds `.wb-timeline` for the x-timeline-on-any-
    element case (e.g. demos/playground.html's `<div x-timeline>`), but skips
    it for a literal <wb-timeline> host, which now matches via tag instead. */
-wb-timeline,
+wb-timeline, [x-timeline],
 .wb-timeline {
   /* <wb-timeline> is a custom element with no built-in display -- the
      browser default for an unknown tag is `inline`, which breaks the
@@ -23,7 +23,7 @@ wb-timeline,
   padding-left: 1.5rem;
 }
 
-wb-timeline::before,
+wb-timeline::before, [x-timeline]::before,
 .wb-timeline::before {
   content: '';
   position: absolute;

@@ -11,7 +11,7 @@
    x-dropdown-on-any-element case (e.g. demos/site/interactive.html's
    `<button x-dropdown>`), but skips it for a literal <wb-dropdown> host,
    which now matches via tag instead. */
-wb-dropdown,
+wb-dropdown, [x-dropdown],
 .wb-dropdown {
   position: relative;
   display: inline-block;
@@ -46,7 +46,7 @@ wb-dropdown,
   margin-top: 4px;
 }
 
-wb-dropdown.open .wb-dropdown-menu,
+wb-dropdown.open .wb-dropdown-menu, [x-dropdown].open .wb-dropdown-menu,
 .wb-dropdown.open .wb-dropdown-menu {
   display: block;
 }

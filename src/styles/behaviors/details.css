@@ -38,7 +38,7 @@
 /* Use class-based toggle for icon rotation to support JS-less fallback if needed, 
    but primarily driven by [open] attribute */
 .wb-details[open] .wb-details__icon {
-  transform: rotate(180deg);
+  transform: rotate(0deg);
 }
 
 /* ============================================
@@ -60,3 +60,63 @@
     }
   }
 }
+
+/* =============================================================================
+   #775 — declarations moved out of semantics/details.js
+   =============================================================================
+   These were written as inline styles by the behavior. Inline beats every
+   stylesheet rule, so a page could not restyle a panel it owned —
+   pages/behaviors.html had to x-ignore the behavior outright just to put its
+   own border on its own chrome (the "#746 edge").
+
+   Copied verbatim so the default look is unchanged; the difference is that a
+   consumer can now override any of it with an ordinary rule.
+   ========================================================================== */
+
+.wb-details {
+  border: 1px solid var(--border-color, #374151);
+  border-radius: 6px;
+  overflow: hidden;
+  background: var(--bg-primary, #111827);
+}
+
+.wb-details > .wb-details__summary {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1rem;
+  background: var(--bg-secondary, #1f2937);
+  cursor: pointer;
+  font-weight: 500;
+  list-style: none;
+}
+
+.wb-details > .wb-details__content {
+  padding: 1rem;
+  background: var(--bg-primary, #111827);
+}
+
+/* The arrow: sideways when closed, down when open (#775). The transition was
+   an inline style on the span; it belongs here with the rest. */
+.wb-details__icon {
+  transition: transform 200ms ease-out;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .wb-details__icon { transition: none; }
+}
+
+
+/* #775 -- John: "show the arrows - 90 degress to indicate collapsed. then
+   downward for expansion."
+
+   This used to rotate 180deg when open, so CLOSED pointed down and OPEN
+   pointed up: the arrow read as a direction to travel rather than as a state,
+   and a stack of collapsed panels all pointed down as though already open.
+
+   The glyph is a down-pointing triangle, so OPEN is its natural 0deg and
+   CLOSED turns it -90deg to point right. */
+.wb-details__icon {
+  transform: rotate(-90deg);
+}
+
