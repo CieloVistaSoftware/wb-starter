@@ -30,13 +30,37 @@ import { test, expect, Page } from '@playwright/test';
 /** Noise that is about the test environment, not the example. */
 const IGNORE = [
   /favicon/i,
-  /net::ERR_/i,                    // blocked/offline assets, not a render fault
-  /Failed to load resource/i,
   /clipboard/i,                    // permission-dependent, exercised elsewhere
   /requestFullscreen/i,            // embedder cannot grant it
 ];
 
-const isNoise = (text: string) => IGNORE.some((re) => re.test(text));
+/**
+ * #763 -- John, at a "Video unavailable" placeholder: "Where's the runtime
+ * error?"
+ *
+ * Part of the answer was here. This list used to carry /net::ERR_/ and
+ * /Failed to load resource/ as "blocked/offline assets, not a render fault",
+ * which is exactly the shape a 404 on our own media takes. The example that
+ * produced his screenshot shipped src="/demos/sample.mp4" -- a file that has
+ * never existed -- and this test was written in a way that could not have
+ * reported it.
+ *
+ * A missing asset under our own origin IS a render fault: it is our file, our
+ * path, and our example. A third-party host being slow or blocked is not, and
+ * failing on that would make the suite flaky for reasons no commit caused --
+ * so origin, not the phrase, decides.
+ */
+const isForeignHost = (text: string, origin: string) => {
+  const url = text.match(/https?:\/\/[^\s"')]+/)?.[0];
+  return !!url && !url.startsWith(origin);
+};
+
+const isNoise = (text: string, origin = '') => {
+  if (IGNORE.some((re) => re.test(text))) return true;
+  // Resource failures: ours is a defect, someone else's is weather.
+  if (/net::ERR_|Failed to load resource/i.test(text)) return isForeignHost(text, origin);
+  return false;
+};
 
 async function openPanel(page: Page) {
   await page.goto('/?page=behaviors');
@@ -55,10 +79,10 @@ test.describe('Examples render clean', () => {
     page.on('console', (msg) => {
       if (msg.type() !== 'error') return;
       const text = msg.text();
-      if (!isNoise(text)) errors.push(text);
+      if (!isNoise(text, new URL(page.url()).origin)) errors.push(text);
     });
     page.on('pageerror', (err) => {
-      if (!isNoise(String(err))) errors.push(`uncaught: ${err}`);
+      if (!isNoise(String(err), new URL(page.url()).origin)) errors.push(`uncaught: ${err}`);
     });
 
     await openPanel(page);
@@ -120,7 +144,7 @@ test.describe('Examples render clean', () => {
       return found;
     });
 
-    const real = entries.filter((e) => !isNoise(e));
+    const real = entries.filter((e) => !isNoise(e, new URL(page.url()).origin));
     expect(
       [...new Set(real)],
       `the framework logged ${real.length} error(s) while rendering examples:\n  ` +

@@ -75,7 +75,50 @@ const complianceCategories: Record<string, string[]> = JSON.parse(
 // ALWAYS gets its own fresh server, since reusing a foreign server on a
 // non-default port would silently defeat the whole point of asking for
 // isolation in the first place.
-const TEST_PORT = Number(process.env.WB_TEST_PORT) || 3000;
+//
+// DEFAULT FLIPPED (John: "i'm using 3000 today ... you will need to open other
+// ports for wb-starter work").
+//
+// Everything above describes the 3000 hazard correctly, but the default was
+// still 3000, so it only protected a run that REMEMBERED to set WB_TEST_PORT.
+// It bit again today from the other direction: a suite left running on 3000
+// adopted — and would have tested — the owner's own server instead of its own
+// checkout, and killing anything on 3000 takes the whole suite down mid-run.
+//
+// So isolation is now the default and 3000 is the opt-in:
+//
+//   local  -> 3310, always its own fresh server, never adopts a stranger
+//   CI     -> 3000 + reuse, exactly as before (ci-tests.yml starts the server
+//             itself and server-smoke.yml curls localhost:3000/health)
+//
+// reuseExistingServer is gated on CI rather than on the port number. Port 3000
+// alone was never evidence that the server there is OURS — which is precisely
+// how the owner's dev server got adopted in the first place.
+//
+// A FIXED default is still a port someone else can be using — 3310 is no more
+// ours than 3000 was. So when nobody names a port, ask the OS for one that is
+// genuinely free instead of guessing.
+//
+// Bind to port 0 and the kernel hands back an unused port; we read it, close
+// the socket, and use it. Done in a child process because this config is
+// evaluated synchronously and net.listen is not.
+//
+// If that ever fails, fall back to a fixed port rather than crashing the run —
+// a suite on a possibly-busy port is still better than no suite.
+function findFreePort(): number {
+  try {
+    const out = require('child_process').execFileSync(process.execPath, ['-e',
+      "const s=require('net').createServer();s.listen(0,'127.0.0.1',()=>{" +
+      "process.stdout.write(String(s.address().port));s.close()});"
+    ], { encoding: 'utf8', timeout: 5000 });
+    const port = Number(out.trim());
+    if (port > 0) return port;
+  } catch { /* fall through */ }
+  return 3310;
+}
+
+const TEST_PORT = Number(process.env.WB_TEST_PORT)
+  || (process.env.CI ? 3000 : findFreePort());
 
 export default defineConfig({
   testDir: './tests',
@@ -113,7 +156,10 @@ export default defineConfig({
   webServer: {
     command: 'npm start',
     port: TEST_PORT,
-    reuseExistingServer: TEST_PORT === 3000,
+    // Only CI may adopt an already-running server, because only there do we
+    // know who started it. Locally this is always false, so a run can neither
+    // test someone else's code nor be killed by someone else's cleanup.
+    reuseExistingServer: !!process.env.CI && TEST_PORT === 3000,
     timeout: 60000,
     // Never pop a browser when Playwright starts the dev server for tests.
     env: { WB_NO_OPEN: '1', PORT: String(TEST_PORT) },

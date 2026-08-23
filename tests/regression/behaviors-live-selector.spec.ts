@@ -74,6 +74,9 @@ test.describe('Behaviors selector — structure (#664/#666)', () => {
     });
 
     expect(report.malformed, 'every row needs a label, a token, and two columns').toBe(0);
+    // #783 removed morphing entirely. This assertion is kept deliberately:
+    // it now guards against the feature being reintroduced rather than
+    // against it leaking into the list.
     expect(report.asForms, 'x-as-* morphing forms must not be listed').toEqual([]);
     expect(report.lazyOnlyPresent, 'wb-lazy-only attributes must be listed (#667)')
       .toEqual(['x-fadein', 'x-lightbox', 'x-confirm', 'x-bounce']);
