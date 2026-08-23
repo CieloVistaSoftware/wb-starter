@@ -45,7 +45,7 @@ Wrapped in `<wb-demo>`, so the live component renders below with its source show
   id="my-dialog">
   <p>Dialog content goes here.</p>
 </wb-dialog>
-<button onclick="document.getElementById('my-dialog').open()"> Open Dialog </button>
+<button onclick="document.getElementById('my-dialog').showModal()"> Open Dialog </button>
 ```
 
 ### Trigger Button
@@ -116,7 +116,7 @@ Wrapped in `<wb-demo>`, so the live component renders below with its source show
     <main class="wb-dialog__body"> Content here </main>
     <footer class="wb-dialog__footer"> Footer content </footer>
   </div>
-</dialog>
+</wb-dialog>
 ```
 
 ## CSS Classes

@@ -122,13 +122,13 @@ Enhances standard HTML elements with better styling and functionality.
 **`audio`**
 
 <wb-demo>
-<wb-audio src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3"></wb-audio>
+<wb-audio src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3"></audio>
 </wb-demo>
 
 **`video`**
 
 <wb-demo>
-<wb-video src="https://interactive-examples.mdn.mozilla.net/media/cc0-videos/flower.mp4"></wb-video>
+<wb-video src="https://interactive-examples.mdn.mozilla.net/media/cc0-videos/flower.mp4"></video>
 </wb-demo>
 
 **`img` → `image`**
@@ -155,7 +155,7 @@ Enhances standard HTML elements with better styling and functionality.
   label="Email"
   input-type="email"
   placeholder="Enter your email">
-</wb-input>
+</input>
 </wb-demo>
 
 **`textarea`**
@@ -164,7 +164,7 @@ Enhances standard HTML elements with better styling and functionality.
 <wb-textarea
   label="Message"
   placeholder="Enter your message...">
-</wb-textarea>
+</textarea>
 </wb-demo>
 
 **`select`**
@@ -173,25 +173,25 @@ Enhances standard HTML elements with better styling and functionality.
 <wb-select
   label="Country"
   options='[{"value":"us","label":"United States"},{"value":"uk","label":"United Kingdom"}]'>
-</wb-select>
+</select>
 </wb-demo>
 
 **`checkbox`**
 
 <wb-demo>
-<wb-checkbox label="I agree to the terms"></wb-checkbox>
+<wb-checkbox label="I agree to the terms"></input>
 </wb-demo>
 
 **`switch`**
 
 <wb-demo events="wb:switch:change">
-<wb-switch label="Dark mode"></wb-switch>
+<wb-switch label="Dark mode"></div>
 </wb-demo>
 
 **`rating`**
 
 <wb-demo>
-<wb-rating value="3"></wb-rating>
+<wb-rating value="3"></div>
 </wb-demo>
 
 **`form`**
@@ -202,9 +202,9 @@ Enhances standard HTML elements with better styling and functionality.
     name="email"
     label="Email"
     required>
-  </wb-input>
-  <wb-button type="submit">Submit</wb-button>
-</wb-form>
+  </input>
+  <wb-button type="submit">Submit</button>
+</form>
 </wb-demo>
 
 **`details`**
@@ -212,7 +212,7 @@ Enhances standard HTML elements with better styling and functionality.
 <wb-demo>
 <wb-details summary="More Information">
   <p>Hidden content revealed when expanded.</p>
-</wb-details>
+</details>
 </wb-demo>
 
 **`dialog`**
@@ -223,13 +223,13 @@ Enhances standard HTML elements with better styling and functionality.
   id="behaviors-ref-dialog">
   <p>Dialog content goes here.</p>
 </wb-dialog>
-<button onclick="document.getElementById('behaviors-ref-dialog').open()">Open Dialog</button>
+<button onclick="document.getElementById('behaviors-ref-dialog').showModal()">Open Dialog</button>
 </wb-demo>
 
 **`button`**
 
 <wb-demo>
-<wb-button>Click Me</wb-button>
+<button>Click Me</button>
 </wb-demo>
 
 `figure`, `table`, `pre`, `radio`, and `range` don't yet have a dedicated component doc
@@ -272,7 +272,7 @@ Rich interactive components.
 <wb-demo>
 <wb-card title="Hello" variant="elevated">
   <p>It just works.</p>
-</wb-card>
+</article>
 </wb-demo>
 
 **`cardlink`**
@@ -282,13 +282,13 @@ Rich interactive components.
   title="Documentation"
   href="/docs"
   icon="📚">
-</wb-cardlink>
+</div>
 </wb-demo>
 
 **`progressbar`**
 
 <wb-demo>
-<wb-progress value="50"></wb-progress>
+<wb-progress value="50"></progress>
 </wb-demo>
 
 **`tooltip`**
@@ -300,11 +300,11 @@ Rich interactive components.
 **`tabs`**
 
 <wb-demo events="wb:tabs:change">
-<wb-tabs>
+<nav x-tabs>
   <div tab="Tab 1">Content 1</div>
   <div tab="Tab 2">Content 2</div>
   <div tab="Tab 3">Content 3</div>
-</wb-tabs>
+</nav>
 </wb-demo>
 
 **`toast`**
@@ -322,7 +322,7 @@ Rich interactive components.
 **`skeleton`**
 
 <wb-demo>
-<wb-skeleton variant="text" lines="3"></wb-skeleton>
+<wb-skeleton variant="text" lines="3"></div>
 </wb-demo>
 
 **`dropdown`**
@@ -351,16 +351,17 @@ Tools for arranging content.
 | Behavior | Element | Type | Description |
 |----------|---------|------|-------------|
 | `grid` | `<wb-grid>` | - | CSS Grid layout |
-| `flex` | `<wb-flex>`, `<wb-row>` | - | Flexbox layout |
+| `flex` | `<wb-flex>`, `<div x-flex>` | - | Flexbox layout |
 | `container` | `<wb-container>` | - | Responsive container |
-| [`articles`](behaviors/articles.md) | `<wb-articles>`, `[x-articles]` | - | Grid/list/masonry wrapper for article-like children |
-| [`stack`](behaviors/wb-stack.md) | `<wb-stack>`, `<wb-column>`, `[x-stack]` | - | Vertical stack |
-| [`cluster`](behaviors/wb-cluster.md) | `<wb-cluster>`, `[x-cluster]` | - | Horizontal cluster |
+| [`articles`](behaviors/articles.md) | `<div x-as-articles>`, `[x-articles]` | - | Grid/list/masonry wrapper for article-like children |
+| [`stack`](behaviors/wb-stack.md) | `<div x-stack>`, `<div x-stack>`, `[x-stack]` | - | Vertical stack |
+| [`cluster`](behaviors/wb-cluster.md) | `<div x-cluster>`, `[x-cluster]` | - | Horizontal cluster |
 | `center` | `<wb-center>` | - | Centered content |
 | `masonry` | `<wb-masonry>` | - | Masonry grid layout |
-| `sticky` | `<wb-sticky>` | - | Sticky positioning |
+| `sticky` | `<div x-sticky>` | - | Sticky positioning |
 | `scrollable` | `<div>` | - | Scrollable area |
-| [`drawerLayout`](components/drawer.md) | `<wb-drawer>` | - | App layout with drawer |
+| [`fill`](behaviors/fill.md) | `[x-fill]` | - | As wide as the container allows — picks flex/grid/block sizing from the parent |
+| [`drawerLayout`](components/drawer.md) | `<div x-drawer>` | - | App layout with drawer |
 | `sidebarlayout` | `<wb-sidebar>` | - | Sidebar layout |
 | `switcher` | `<wb-switcher>` | - | Responsive switcher |
 | `cover` | `<wb-cover>` | - | Full-screen cover |
@@ -380,13 +381,13 @@ Tools for arranging content.
   width="300px">
   <h3>Sidebar</h3>
   <nav>Navigation content...</nav>
-</wb-drawer-layout>
+</div>
 </wb-demo>
 
 **`draggable`**
 
 <wb-demo>
-<wb-carddraggable title="Drag Me">Drag this card around.</wb-carddraggable>
+<wb-carddraggable title="Drag Me">Drag this card around.</div>
 </wb-demo>
 
 **`stack`**
@@ -395,7 +396,7 @@ Tools for arranging content.
 <wb-stack gap="1rem">
   <div>Item 1</div>
   <div>Item 2</div>
-</wb-stack>
+</div>
 </wb-demo>
 
 <wb-demo>
@@ -411,7 +412,7 @@ Tools for arranging content.
 <wb-cluster gap="1rem">
   <div>Item 1</div>
   <div>Item 2</div>
-</wb-cluster>
+</div>
 </wb-demo>
 
 <wb-demo>
@@ -489,13 +490,13 @@ Functional utilities.
 **`themecontrol`**
 
 <wb-demo>
-<wb-themecontrol></wb-themecontrol>
+<div x-themecontrol></div>
 </wb-demo>
 
 **`mdhtml`**
 
 <wb-demo>
-<wb-mdhtml> # Hello World This is **bold** and *italic*. </wb-mdhtml>
+<div x-mdhtml> # Hello World This is **bold** and *italic*. </div>
 </wb-demo>
 
 `copy`, `toggle`, `ripple`, `darkmode`, `lazy`, `print`, `share`, `fullscreen`,
@@ -532,7 +533,7 @@ Apply animations to elements.
 <wb-confetti
   count="100"
   label="Celebrate!">
-</wb-confetti>
+</div>
 </wb-demo>
 
 `animate`, `fadein`, `slidein`, `zoomin`, `bounce`, `shake`, `pulse`, `flip`,
@@ -542,7 +543,7 @@ not guessed here.
 
 ## Events
 
-Wiring up a control (`x-toast`, `x-search`, `<wb-tabs>`, …) is only half the story — most
+Wiring up a control (`x-toast`, `x-search`, `<nav x-tabs>`, …) is only half the story — most
 behaviors also **fire a real, bubbling `CustomEvent`** the moment something happens
 (a click, a debounced keystroke, a drag ending). Every event below was verified against
 the current source in `src/wb-viewmodels/` — the name, what triggers it, and its
@@ -577,8 +578,8 @@ schema, styling) — this table is the cross-behavior index.
 | Event | Fires from | Fires when | `detail` |
 |-------|-----------|------------|----------|
 | `wb:toggle` | `toggle.js` (`x-toggle`) | mousedown/touch/Enter/Space on the toggle | `{ active, targets, class }` |
-| `wb:switch:change` | `semantics/switch.js` (`<wb-switch>`) | the switch is flipped | `{ checked }` |
-| `wb:rating:change` | `semantics/rating.js` (`<wb-rating>`) | a star/icon is clicked | `{ value }` |
+| `wb:switch:change` | `semantics/switch.js` (`<div x-switch>`) | the switch is flipped | `{ checked }` |
+| `wb:rating:change` | `semantics/rating.js` (`<div x-rating>`) | a star/icon is clicked | `{ value }` |
 | `wb:stepper:change` | `stepper.js` (`x-stepper`) | the `+`/`-` buttons change the value | `{ value }` |
 | `wb:colorpicker:change` | `colorpicker.js` (`x-colorpicker`) | a color is picked | `{ value }` |
 | `wb:autocomplete:select` | `autocomplete.js` (`x-autocomplete`) | a suggestion is chosen | `{ value }` |
@@ -614,7 +615,7 @@ schema, styling) — this table is the cross-behavior index.
 
 | Event | Fires from | Fires when | `detail` |
 |-------|-----------|------------|----------|
-| `wb:tabs:change` | `tabs.js` (`<wb-tabs>`) | a tab is clicked | `{ index, title }` |
+| `wb:tabs:change` | `tabs.js` (`<nav x-tabs>`) | a tab is clicked | `{ index, title }` |
 | `wb:menu:select` | `navigation.js` (`x-menu`) | a menu item is clicked | `{ index, label, value }` |
 | `wb:pagination:change` | `navigation.js` (`x-pagination`) | a page control is clicked | `{ page }` |
 | `wb:dropdown:select` | `dropdown.js` (`x-dropdown`) | a dropdown item is chosen | `{ value, href }` |
@@ -648,12 +649,12 @@ per-implementation breakdown.
 |-------|-----------|------------|----------|
 | `wb:cardbutton:primary` | `card.js` | a card's primary footer button is clicked | `{ label }` |
 | `wb:cardbutton:secondary` | `card.js` | a card's secondary footer button is clicked | `{ label }` |
-| `wb:cardproduct:addtocart` | `card.js` (`wb-cardproduct`) | "Add to Cart" is clicked | `{ title, ... }` |
-| `wb:cardnotification:dismiss` | `card.js` (`wb-cardnotification`) | a notification card is dismissed | `{ variant, title }` |
-| `wb:cardexpandable:toggle` | `card.js` (`wb-cardexpandable`) | the card expands/collapses | `{ expanded }` |
-| `wb:cardminimizable:toggle` | `card.js` (`wb-cardminimizable`) | the card minimizes/restores | `{ minimized }` |
-| `wb:carddraggable:dragstart/drag/dragend` | `card.js` (`wb-carddraggable`) | a draggable card starts/moves/finishes dragging | `{ x, y }` |
-| `wb:cardstats:hydrated` | `card.js` (`wb-cardstats`) | stats card finishes initializing (test hook) | `—` |
+| `wb:cardproduct:addtocart` | `card.js` (`<div x-cardproduct>`) | "Add to Cart" is clicked | `{ title, ... }` |
+| `wb:cardnotification:dismiss` | `card.js` (`<div x-cardnotification>`) | a notification card is dismissed | `{ variant, title }` |
+| `wb:cardexpandable:toggle` | `card.js` (`<div x-cardexpandable>`) | the card expands/collapses | `{ expanded }` |
+| `wb:cardminimizable:toggle` | `card.js` (`<div x-cardminimizable>`) | the card minimizes/restores | `{ minimized }` |
+| `wb:carddraggable:dragstart/drag/dragend` | `card.js` (`<div x-carddraggable>`) | a draggable card starts/moves/finishes dragging | `{ x, y }` |
+| `wb:cardstats:hydrated` | `card.js` (`<div x-cardstats>`) | stats card finishes initializing (test hook) | `—` |
 
 **Media, layout & effects**
 
@@ -668,7 +669,7 @@ per-implementation breakdown.
 | `wb:reorder` | `move.js` | drag-reordering a list drops a new order | `{ items }` |
 | `wb:darkmode:toggle` | `darkmode.js` (`x-darkmode`) | the dark-mode button is clicked | `{ theme }` |
 | `wb:darkmode:applied` | `darkmode.js` | a theme is applied (incl. on page load) | `{ theme }` |
-| `wb:theme:change` | `themecontrol.js` (`<wb-themecontrol>`) | a theme is selected | `{ theme, name }` |
+| `wb:theme:change` | `themecontrol.js` (`<div x-themecontrol>`) | a theme is selected | `{ theme, name }` |
 | `wb:tags:add` / `wb:tags:remove` | `tags.js` (`x-tags`) | a tag is added/removed | `{ tag }` |
 | `wb:table:select` | `semantics/table.js` (`<table>`) | a row is clicked | `{ row, index }` |
 | `wb:code:copy` | `semantics/code.js` (`<pre>`/`<code>`) | the code block's copy button is clicked | `{ text }` |
@@ -704,7 +705,7 @@ document.querySelectorAll('[x-copy]').forEach((button) => {
 });
 ```
 
-**Tabs** — `<wb-tabs>` fires on every tab change, including the initial selection:
+**Tabs** — `<nav x-tabs>` fires on every tab change, including the initial selection:
 
 ```javascript
 document.querySelector('wb-tabs').addEventListener('wb:tabs:change', (e) => {

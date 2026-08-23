@@ -329,7 +329,7 @@
       "alternates": []
     },
     "x-cardvideo": {
-      "source": "<article x-cardvideo\n  src=\"/demos/sample.mp4\"\n  poster=\"https://picsum.photos/seed/screening/480/270\"\n  title=\"Behaviors in 90 seconds\"\n  description=\"What replaced the component base class, and why.\"></article>",
+      "source": "<article x-cardvideo\n  src=\"https://www.w3schools.com/html/mov_bbb.mp4\"\n  poster=\"https://picsum.photos/seed/screening/480/270\"\n  title=\"Behaviors in 90 seconds\"\n  description=\"What replaced the component base class, and why.\"></article>",
       "alternates": []
     },
     "x-fix-card": {
@@ -401,7 +401,7 @@
       "alternates": []
     },
     "x-dialog": {
-      "source": "<button onclick=\"document.getElementById('delete-branch').open()\">\n  Open the dialog\n</button>\n<dialog id=\"delete-branch\" size=\"md\">\n  <h2>Delete branch?</h2>\n  <p>fix/706-dropdown will be removed. This cannot be undone.</p>\n</dialog>",
+      "source": "<button onclick=\"document.getElementById('delete-branch').showModal()\">\n  Open the dialog\n</button>\n<dialog id=\"delete-branch\" size=\"md\">\n  <h2>Delete branch?</h2>\n  <p>fix/706-dropdown will be removed. This cannot be undone.</p>\n</dialog>",
       "alternates": [
         "<button x-dialog title=\"Delete branch?\" content=\"fix/706-dropdown will be removed. This cannot be undone.\" size=\"md\">\n  x-dialog · title: Delete branch? · content: fix/706-dropdown will be removed. This cannot be undone. · size: md\n</button>"
       ]
@@ -535,15 +535,15 @@
       "alternates": []
     },
     "x-audio": {
-      "source": "<audio src=\"/demos/sample.wav\" controls></audio>",
+      "source": "<audio src=\"https://archive.org/download/nineinchnails_ghosts_I_IV/01_Ghosts_I.mp3\" controls></audio>",
       "alternates": [
-        "<div x-audio src=\"/demos/sample.wav\" volume=\"0.8\"></div>"
+        "<div x-audio src=\"https://archive.org/download/nineinchnails_ghosts_I_IV/01_Ghosts_I.mp3\" volume=\"0.8\"></div>"
       ]
     },
     "x-video": {
-      "source": "<video src=\"/demos/sample.mp4\" poster=\"https://picsum.photos/seed/screening/640/360\" controls></video>",
+      "source": "<video src=\"https://www.w3schools.com/html/mov_bbb.mp4\" poster=\"https://picsum.photos/seed/screening/640/360\" controls></video>",
       "alternates": [
-        "<div x-video src=\"/demos/sample.mp4\" poster=\"https://picsum.photos/seed/screening/640/360\" controls></div>"
+        "<div x-video src=\"https://www.w3schools.com/html/mov_bbb.mp4\" poster=\"https://picsum.photos/seed/screening/640/360\" controls></div>"
       ]
     },
     "x-img": {
