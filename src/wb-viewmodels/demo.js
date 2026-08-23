@@ -183,13 +183,13 @@ function findWbComponents(html) {
 // "Feedback" sections) never produced ANY doc link -- sharedComponents
 // stayed empty and the whole "Docs:" line was skipped. Matches both
 // documented behavior syntaxes from docs/behaviors-reference.md: decoration
-// (`x-ripple`) and morphing (`x-as-card`) -- the (?:as-)? group strips the
-// morph prefix so `x-as-card` still resolves to doc lookup name "card".
+// (`x-ripple`). Morphing (`x-as-card`) was removed in #783, so there is no
+// longer a prefix to strip -- the attribute name IS the behavior name.
 // Requires a preceding whitespace (not `<`) so it never matches a leading
 // slice of an `<x-foo>` CUSTOM ELEMENT TAG name, same anchoring approach as
 // no-redundant-x-attribute-on-native-tag.spec.ts's `(^|\s)x-${tag}` check.
 function findXBehaviors(html) {
-    const regex = /(?:^|\s)x-(?:as-)?([a-z][a-z0-9]*)(?=[\s=/>]|$)/gi;
+    const regex = /(?:^|\s)x-([a-z][a-z0-9]*)(?=[\s=/>]|$)/gi;
     const matches = [];
     let match;
     while ((match = regex.exec(html)) !== null) {
@@ -486,13 +486,13 @@ export async function demo(element, options = {}) {
         // "Docs: x-toast" text line below the whole grid instead. Give each
         // ELEMENT THAT ACTUALLY CARRIES the attribute its own corner badge,
         // the same as a wb-* component gets, instead of a second, different
-        // treatment for behaviors vs. components. `x-as-{name}` (morphing
+        // treatment for behaviors vs. components. (Morphing removed, #783.)
         // syntax) needs its own selector -- `[x-${name}]` alone won't match it.
         const resolvedXBehaviorNames = new Set();
         xBehaviors.forEach((name) => {
             const file = findBehaviorDocFile(manifest, name);
             if (!file) return; // never a dead link
-            const hosts = grid.querySelectorAll(`[x-${name}], [x-as-${name}]`);
+            const hosts = grid.querySelectorAll(`[x-${name}]`);
             if (!hosts.length) return; // name matched in source text but no live element carries it
             resolvedXBehaviorNames.add(name);
             hosts.forEach((hostEl) => attachInstanceDocLink(hostEl, file, `x-${name}`, root, element));

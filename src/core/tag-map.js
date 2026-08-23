@@ -238,6 +238,9 @@ export const extensionMap = {
   'x-darkmode': 'darkmode',
   'x-themecontrol': 'themecontrol',
   'x-move': 'move',
+  // #764 -- as wide as the container allows. No semantic tag maps to this:
+  // width is a layout decision, not something an element IS.
+  'x-fill': 'fill',
   'x-release': 'release',
   // docs/behaviors/*.md documents x-progressbar ("attribute-based progress
   // bar... apply directly to any element, no custom tag required") and
@@ -260,10 +263,10 @@ export const extensionMap = {
   'x-snow': 'snow',
   'x-stagelight': 'stagelight',
 
-  // Morphing (x-as-{name})
-  'x-as-card': 'card',
-  'x-as-timeline': 'timeline',
-  'x-as-article': 'article',
+  // #783 -- morphing (x-as-card / x-as-timeline / x-as-article) removed.
+  // It never ran under the lazy runtime: wb-lazy.js filtered x-as-* out of
+  // its dispatch table, and index.html loads that runtime -- so every
+  // documented morph example did nothing on a normal page.
 
   // John, screenshot on docs/behaviors-reference.md's cluster example:
   // "don't use class names when an x-cluster behavior works better...
@@ -388,7 +391,7 @@ export const extensionMap = {
   // functional via wb-lazy.js's table. Routes to the 'article' behavior
   // (src/wb-viewmodels/article.js, already reachable via the <wb-article>
   // tag in elementMap above). Distinct from 'x-articles' just above (plural
-  // LIST view, a different behavior) and from 'x-as-article' in the
+  // LIST view, a different behavior) and from the former 'x-as-article' in the
   // Morphing section above (morph-only form that rewrites an existing
   // element's semantics) -- three different names for three different
   // behaviors, not aliases of each other.
@@ -417,7 +420,7 @@ export const extensionMap = {
   'x-toast': 'toast',
   'x-toggle': 'toggle',
   // x-timeline renders a real timeline component -- adjacent to, but not a
-  // collision with, 'x-as-timeline' in the Morphing section above (a
+  // collision with, the former 'x-as-timeline' morph attribute (removed #783) (a
   // morph-only form that rewrites an existing element's semantics).
   'x-timeline': 'timeline',
   'x-youtube': 'youtube',

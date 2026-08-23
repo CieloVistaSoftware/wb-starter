@@ -268,7 +268,6 @@ function getAutoInjectBehavior(element) {
     const other = attr.name.slice(prefixAttr.length);
     if (other === candidate) continue;                 // its own attribute (#746)
     if (DIRECTIVES.has(other) || other.endsWith('-init')) continue;
-    if (other.startsWith('as-')) continue;             // morph alias, handled elsewhere
 
     // #765 -- John: "when autoinject is true, <article x-ripple> gets two
     // behaviors."
@@ -928,13 +927,12 @@ const WB = {
         element.setAttribute('x-error', 'legacy');
       });
 
-    // 2. Semantic Shorthand: {prefix}-{name} (Decoration) and {prefix}-as-{name} (Morph/Layout)
+    // 2. Semantic Shorthand: {prefix}-{name} (Decoration)
     if (behaviorNames.length > 0) {
       // Construct efficient selector for all behaviors
       const selectors = [];
       behaviorNames.forEach(name => {
         selectors.push(`[${prefix}-${name}]`);     // Decoration: x-ripple
-        selectors.push(`[${prefix}-as-${name}]`);  // Morph: x-as-card
       });
       
       // Query all potential matches once
@@ -949,17 +947,9 @@ const WB = {
           if (attr.name.startsWith(`${prefix}-`)) {
             const rawName = attr.name.substring(prefix.length + 1); // remove prefix + '-'
             
-            if (rawName.startsWith('as-')) {
-              // Handle {prefix}-as-{name}
-              const morphName = rawName.substring(3);
-              if (knownBehaviors.has(morphName)) {
-                behaviorName = morphName;
-              }
-            } else {
-              // Handle {prefix}-{name}
-              if (knownBehaviors.has(rawName)) {
-                behaviorName = rawName;
-              }
+            // Handle {prefix}-{name}
+            if (knownBehaviors.has(rawName)) {
+              behaviorName = rawName;
             }
           }
 
@@ -1037,7 +1027,6 @@ const WB = {
     const attributeFilter = ['x-behavior'];
     behaviorNames.forEach(name => {
       attributeFilter.push(`${prefix}-${name}`);
-      attributeFilter.push(`${prefix}-as-${name}`);
     });
 
     const observer = new MutationObserver(mutations => {
@@ -1097,16 +1086,13 @@ const WB = {
             });
           });
 
-          // Shorthand ({prefix}-* and {prefix}-as-*)
+          // Shorthand ({prefix}-*)
           Array.from(el.attributes).forEach(attr => {
             if (attr.name.startsWith(`${prefix}-`)) {
               const rawName = attr.name.substring(prefix.length + 1);
               let behaviorName = null;
                 
-              if (rawName.startsWith('as-')) {
-                const morphName = rawName.substring(3);
-                if (knownBehaviors.has(morphName)) behaviorName = morphName;
-              } else if (knownBehaviors.has(rawName)) {
+              if (knownBehaviors.has(rawName)) {
                 behaviorName = rawName;
               }
 
@@ -1148,7 +1134,6 @@ const WB = {
           const selectors = [];
           behaviorNames.forEach(name => {
             selectors.push(`[${prefix}-${name}]`);
-            selectors.push(`[${prefix}-as-${name}]`);
           });
             
           if (selectors.length > 0) {
@@ -1158,10 +1143,7 @@ const WB = {
                 if (attr.name.startsWith(`${prefix}-`)) {
                   const rawName = attr.name.substring(prefix.length + 1);
                   let behaviorName = null;
-                  if (rawName.startsWith('as-')) {
-                    const morphName = rawName.substring(3);
-                    if (knownBehaviors.has(morphName)) behaviorName = morphName;
-                  } else if (knownBehaviors.has(rawName)) {
+                  if (knownBehaviors.has(rawName)) {
                     behaviorName = rawName;
                   }
                   if (behaviorName) {
@@ -1201,7 +1183,7 @@ const WB = {
             const current = applied.get(element) || [];
             current.forEach(({ name, cleanup }) => {
               if (!behaviorList.includes(name)) {
-                const hasShorthand = element.hasAttribute(`${prefix}-${name}`) || element.hasAttribute(`${prefix}-as-${name}`);
+                const hasShorthand = element.hasAttribute(`${prefix}-${name}`);
                 if (!hasShorthand) {
                   if (typeof cleanup === 'function') cleanup();
                 }
@@ -1212,10 +1194,7 @@ const WB = {
             // Handle shorthand add/remove
             const rawName = mutation.attributeName.substring(prefix.length + 1);
             let behaviorName = null;
-            if (rawName.startsWith('as-')) {
-              const morphName = rawName.substring(3);
-              if (knownBehaviors.has(morphName)) behaviorName = morphName;
-            } else if (knownBehaviors.has(rawName)) {
+            if (knownBehaviors.has(rawName)) {
               behaviorName = rawName;
             }
 

@@ -223,7 +223,6 @@ const customElementMappings = [
     .filter(([selector]) => !ELEMENT_MAP_OVERRIDES.has(selector))
     .map(([selector, behavior]) => ({ selector, behavior })),
   ...Object.entries(extensionMap)
-    .filter(([attr]) => !attr.startsWith('x-as-')) // morphing -- not supported by this runtime's dispatch
     .map(([attr, behavior]) => ({ selector: `[${attr}]`, behavior })),
   ...Object.entries(WB_LAZY_ONLY_ELEMENTS).map(([selector, behavior]) => ({ selector, behavior })),
   ...Object.entries(WB_LAZY_ONLY_ATTRIBUTES).map(([attr, behavior]) => ({ selector: `[${attr}]`, behavior })),

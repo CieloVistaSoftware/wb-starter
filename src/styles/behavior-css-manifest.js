@@ -11,7 +11,7 @@
  * Keyed by behaviorName (the same canonical name used throughout
  * src/core/tag-map.js and src/wb-viewmodels/index.js's `behaviors` object —
  * NOT the raw tag/attribute string), because behaviorName is the one thing
- * every dispatch path (wb-* tag, native auto-inject, x-* attribute, x-as-*
+ * every dispatch path (wb-* tag, native auto-inject, x-* attribute
  * morph) already funnels down to before calling the behavior function.
  *
  * A behavior can map to more than one file — e.g. `cardhero` needs both
@@ -70,6 +70,7 @@ export const BEHAVIOR_CSS_MAP = {
   chip: ['chip.css'],
   code: ['code.css'],
   collapse: ['collapse.css'],
+  fill: ['fill.css'],
   // x-copybutton (#291) — copy() itself (x-copy) is pure JS with nothing to
   // style, but copyButton() injects a real positioned button, so it needs
   // its own CSS file loaded.
