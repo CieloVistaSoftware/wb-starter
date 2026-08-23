@@ -6,10 +6,10 @@ Colorful confetti explosion effect.
 
 | Property | Value |
 |----------|-------|
-| Custom Tag | `<wb-confetti>` |
+| Custom Tag | `<div x-confetti>` |
 | Behavior | `confetti` |
 | Semantic | `<div>` |
-| Root CSS Class | `wb-confetti` |
+| Root CSS Class | `<div x-confetti>` |
 | Category | Effects |
 | Schema | `src/wb-models/confetti.schema.json` |
 
@@ -31,7 +31,7 @@ Wrapped in `<wb-demo>`, so the live component renders below with its source show
 <wb-confetti
   count="100"
   label="Celebrate!">
-</wb-confetti>
+</div>
 </wb-demo>
 
 ## Usage
@@ -42,7 +42,7 @@ Wrapped in `<wb-demo>`, so the live component renders below with its source show
 <wb-confetti
   count="100"
   label="Celebrate!">
-</wb-confetti>
+</div>
 ```
 
 ### Data Attribute
@@ -62,7 +62,7 @@ Wrapped in `<wb-demo>`, so the live component renders below with its source show
   count="75"
   showButton="false"
   delay="1s">
-</wb-confetti>
+</div>
 ```
 
 ### Looping Animation
@@ -71,7 +71,7 @@ Wrapped in `<wb-demo>`, so the live component renders below with its source show
 <wb-confetti
   count="30"
   repeat>
-</wb-confetti>
+</div>
 ```
 
 ## Generated Structure

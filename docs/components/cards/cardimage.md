@@ -6,7 +6,7 @@ Card with a featured image. Uses `<figure>` for semantic image containment.
 
 | Property | Value |
 |----------|-------|
-| Custom Tag | `<wb-cardimage>` |
+| Custom Tag | `<article x-cardimage>` |
 | Behavior | `cardimage` |
 | Semantic | `<article>` + `<figure>` |
 | Root CSS Class | `wb-card wb-card-image` |
@@ -34,7 +34,7 @@ Supports every [card property](./card.md) — that shared structure and CSS are 
   alt="Hero image"
   title="Featured Image"
   content="Optional content below the image.">
-</wb-cardimage>
+</article>
 </wb-demo>
 
 ### With Custom Aspect Ratio
@@ -45,7 +45,7 @@ Supports every [card property](./card.md) — that shared structure and CSS are 
   alt="Square image"
   aspect="1/1"
   title="Square Image Card">
-</wb-cardimage>
+</article>
 </wb-demo>
 
 ### Image at Bottom
@@ -56,7 +56,7 @@ Supports every [card property](./card.md) — that shared structure and CSS are 
   position="bottom"
   title="Image Below Content"
   content="Content appears above the image.">
-</wb-cardimage>
+</article>
 </wb-demo>
 
 ## Generated Structure

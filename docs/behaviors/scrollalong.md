@@ -10,13 +10,13 @@ or `<nav>`) stick to the top of the viewport as the page scrolls past it, via CS
 |----------|-------|
 | Behavior | `scrollalong` |
 | Attribute | `x-scrollalong` |
-| Custom Tag | `<wb-scrollalong>` |
+| Custom Tag | `<div x-scrollalong>` |
 | Applies to | any element, typically inside a flex/grid layout |
 | Category | Layout |
 | Schema | `src/wb-models/scrollalong.schema.json` |
 | Source | `src/wb-viewmodels/scrollalong.js` |
 
-Both forms run the same behavior: `<aside x-scrollalong>` and `<wb-scrollalong>` are
+Both forms run the same behavior: `<aside x-scrollalong>` and `<div x-scrollalong>` are
 equivalent — the tag form is registered in the tag map
 ([`src/core/tag-map.js`](../../src/core/tag-map.js)) and dispatches to the identical
 `scrollalong()` function. `autoInject` is on by default site-wide
@@ -56,7 +56,7 @@ by its container, it does not add any wrapper or placeholder.
 <wb-demo>
 <wb-scrollalong style="padding: 1rem; border: 1px solid var(--border-color); display: block;">
   Same behavior via the &lt;wb-scrollalong&gt; custom tag.
-</wb-scrollalong>
+</div>
 </wb-demo>
 
 ## CSS Classes

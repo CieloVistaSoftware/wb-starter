@@ -32,7 +32,7 @@ the invisible-EQ lesson: a node in the DOM at 0x0 is the same defect in disguise
 
 **Issues filed, NOT yet fixed:** #679 (API panel — reader cannot see a behavior's
 schema), #680 (no written striped-contrast rule — needs John's number),
-#682 (no rule for `<select>` vs `<wb-select>` vs `x-dropdown`; `<wb-select>` is the
+#682 (no rule for `<select>` vs `<select>` vs `x-dropdown`; `<select>` is the
 real deprecation candidate, not x-dropdown), #683 (content-vs-children precedence
 disagrees between composeCard and card; contentless card still emits an empty `<main>`).
 
@@ -308,11 +308,11 @@ Regression tests running (all 4 test files + new demo-page test).
 - **wb-notes drawer resurrected and redesigned**: now saves to a real file (`data/notes.json` + `data/note-images/`) via a new `/api/save-image` server endpoint, not just localStorage; supports pasting a screenshot directly into a note; supports picking/attaching a reference to any element on the page; redesigned layout (Save/New in the footer, Close pinned to the header corner, searchable Lookup, 0.5rem header padding, button-sizing fix so labels don't get clipped).
 - Fixed `content.html`'s searchable table — the search input was never actually created (#433).
 - `cardproduct` images now get the same load-retry/failure handling as image/video cards (#476).
-- Systemic fix for the "redundant tag-name class" pattern (`<wb-card>` carrying `class="wb-card"`, etc.) — root-caused to `schema-builder.js`'s generic class-adding path having no guard; fixed there plus card.js/checkbox.js and their CSS (#478).
-- "Forced Dark/Light/Cyberpunk Mode" demo cards now render as real styled `<wb-card>`s instead of a bare unstyled div (#430).
+- Systemic fix for the "redundant tag-name class" pattern (`<article>` carrying `class="wb-card"`, etc.) — root-caused to `schema-builder.js`'s generic class-adding path having no guard; fixed there plus card.js/checkbox.js and their CSS (#478).
+- "Forced Dark/Light/Cyberpunk Mode" demo cards now render as real styled `<article>`s instead of a bare unstyled div (#430).
 - `cardstats` compact/large and `cardproduct` horizontal variants now have real CSS backing them — root cause was a CSS specificity loss against a fallback rule (#479).
 - `cardexpandable` gained a `lines` property (CSS line-clamp) as an alternative to pixel `maxHeight` (#435).
-- Fixed `wb-copy` reading the wrong attribute name (schema says `text`, code read `copy-text`) and `wb-darkmode`'s click-to-toggle only ever attaching to literal `<button>` tags (#429).
+- Fixed `<div x-copy>` reading the wrong attribute name (schema says `text`, code read `copy-text`) and `<div x-darkmode>`'s click-to-toggle only ever attaching to literal `<button>` tags (#429).
 - Restored `pages/behaviors.html` after `scripts/generate-behaviors-page.js` (confirmed stale/unmaintained) silently regressed it back to pre-#304/#390 state when run for an unrelated docs fix — **do not run that script**, it needs a rewrite first (#484, filed).
 - Footer now auto-collapses on mobile-landscape scroll, mirroring the header (#393).
 - `<wb-demo>`'s default `columns` changed from 3 to 1 (#392).
@@ -324,7 +324,7 @@ Regression tests running (all 4 test files + new demo-page test).
 **⚠️ Known environment issue (recurring — also hit in the 2026-08-03 session, see below):** running multiple background agents in parallel against this same checkout caused at least one stale read-then-full-file-rewrite that silently discarded concurrent edits to `card.js`/`card.css`/`copy.js`/`schema-builder.js` (#478, #479, #435, #429's copy.js half). Caught via a targeted grep-based integrity sweep after the fact and re-applied every lost fix (re-verified against the regression/compliance tests afterward — all green). **If dispatching parallel agents again, do a post-hoc integrity check on any file more than one agent might plausibly touch, don't assume "closed the issue" means the code is still there.**
 
 **🔴 Filed but NOT fixed (deliberately out of scope for the agent/task that found them):**
-- **#482** — `wb-cardvideo` has no `aspect-ratio` unlike `wb-cardimage` (inconsistent box height on load failure).
+- **#482** — `<article x-cardvideo>` has no `aspect-ratio` unlike `<article x-cardimage>` (inconsistent box height on load failure).
 - **#486** — 4 pre-existing `pages/behaviors.html` compliance failures (shrink-to-fit, text padding, 2 absolute-path links).
 - **#488** — `variant="glass"` + `elevated` together lose the glass background (specificity conflict), found incidentally while re-verifying #351.
 - A cards.html `auto-showcase.mjs` regeneration risk flagged by the #403/404/407 agent (same class of bug as #484 — a generator script that can silently undo hand-fixes) — John started this as its own background task (`task_a64b83db`, "Guard auto-showcase.mjs against clobbering hand-edited demo content") in a separate session; check its outcome next session.

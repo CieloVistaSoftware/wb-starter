@@ -6,10 +6,10 @@ Loading spinner (animated ring) with size, color, and speed variants.
 
 | Property | Value |
 |----------|-------|
-| Custom Tag | `<wb-spinner>` |
+| Custom Tag | `<div x-spinner>` |
 | Behavior | `spinner` |
 | Semantic | `<div role="status">` |
-| Root CSS Class | `wb-spinner` |
+| Root CSS Class | `<div x-spinner>` |
 | Category | Feedback |
 | Schema | `src/wb-models/spinner.schema.json` |
 
@@ -29,40 +29,40 @@ Loading spinner (animated ring) with size, color, and speed variants.
 ### Custom Element
 
 <wb-demo>
-<wb-spinner></wb-spinner>
+<div x-spinner></div>
 </wb-demo>
 
 ### Sizes
 
 ```html
-<wb-spinner size="xs"></wb-spinner>
-<wb-spinner size="sm"></wb-spinner>
-<wb-spinner size="md"></wb-spinner>
-<wb-spinner size="lg"></wb-spinner>
-<wb-spinner size="xl"></wb-spinner>
+<wb-spinner size="xs"></div>
+<wb-spinner size="sm"></div>
+<wb-spinner size="md"></div>
+<wb-spinner size="lg"></div>
+<wb-spinner size="xl"></div>
 ```
 
 ### Color Variants
 
 ```html
-<wb-spinner variant="primary"></wb-spinner>
-<wb-spinner variant="success"></wb-spinner>
-<wb-spinner variant="warning"></wb-spinner>
-<wb-spinner variant="error"></wb-spinner>
+<wb-spinner variant="primary"></div>
+<wb-spinner variant="success"></div>
+<wb-spinner variant="warning"></div>
+<wb-spinner variant="error"></div>
 ```
 
 ### Speeds
 
 ```html
-<wb-spinner speed="slow"></wb-spinner>
-<wb-spinner speed="medium"></wb-spinner>
-<wb-spinner speed="fast"></wb-spinner>
+<wb-spinner speed="slow"></div>
+<wb-spinner speed="medium"></div>
+<wb-spinner speed="fast"></div>
 ```
 
 ### Combined
 
 ```html
-<wb-spinner size="lg" variant="success" speed="fast"></wb-spinner>
+<wb-spinner size="lg" variant="success" speed="fast"></div>
 ```
 
 ## Generated Structure
@@ -70,14 +70,14 @@ Loading spinner (animated ring) with size, color, and speed variants.
 ```html
 <wb-spinner class="wb-spinner--md wb-spinner--primary" role="status" aria-label="Loading">
   <div></div>
-</wb-spinner>
+</div>
 ```
 
 ## CSS Classes
 
 | Class | Applied When | Description |
 |-------|--------------|-------------|
-| `wb-spinner` (tag selector) | Always | Neutralizes the legacy element-level ring so only the inner `<div>` ring renders |
+| `<div x-spinner>` (tag selector) | Always | Neutralizes the legacy element-level ring so only the inner `<div>` ring renders |
 | `.wb-spinner--{xs,sm,md,lg,xl}` | `size` | Ring diameter + border width |
 | `.wb-spinner--{slow,medium,fast}` | `speed` | Animation duration (2s / 1.2s / 0.6s) |
 | `.wb-spinner--{default,primary,success,warning,error,info}` | `variant`/`color` | Ring accent (`border-top-color`) |

@@ -6,10 +6,10 @@ Falling snow animation effect.
 
 | Property | Value |
 |----------|-------|
-| Custom Tag | `<wb-snow>` |
+| Custom Tag | `<div x-snow>` |
 | Behavior | `snow` |
 | Semantic | `<div>` |
-| Root CSS Class | `wb-snow` |
+| Root CSS Class | `<div x-snow>` |
 | Category | Effects |
 | Schema | `src/wb-models/snow.schema.json` |
 
@@ -30,7 +30,7 @@ Wrapped in `<wb-demo>`, so the live component renders below with its source show
 <wb-snow
   count="100"
   label="Snow!">
-</wb-snow>
+</div>
 </wb-demo>
 
 ## Usage
@@ -41,7 +41,7 @@ Wrapped in `<wb-demo>`, so the live component renders below with its source show
 <wb-snow
   count="100"
   label="Snow!">
-</wb-snow>
+</div>
 ```
 
 ### Data Attribute
@@ -60,7 +60,7 @@ Wrapped in `<wb-demo>`, so the live component renders below with its source show
   count="100"
   showButton="false"
   repeat>
-</wb-snow>
+</div>
 ```
 
 ### Single Pass (No Loop)
@@ -69,7 +69,7 @@ Wrapped in `<wb-demo>`, so the live component renders below with its source show
 <wb-snow
   count="50"
   repeat="false">
-</wb-snow>
+</div>
 ```
 
 ## Generated Structure

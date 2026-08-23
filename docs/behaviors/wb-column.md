@@ -3,17 +3,17 @@
 A layout utility for columnar (vertical) alignment. Use it as a **tag** or as a
 **class** — the tag is the idiomatic wb-starter way.
 
-## As a tag — `<wb-column>`
+## As a tag — `<div x-stack>`
 
 The custom element stacks its children in a column with configurable spacing and
 alignment. Rendered live below, with its source underneath:
 
 <wb-demo>
 <wb-column gap="1rem" align="stretch">
-  <wb-button variant="primary">Item 1</wb-button>
-  <wb-button variant="secondary">Item 2</wb-button>
-  <wb-button variant="success">Item 3</wb-button>
-</wb-column>
+  <wb-button variant="primary">Item 1</button>
+  <wb-button variant="secondary">Item 2</button>
+  <wb-button variant="success">Item 3</button>
+</div>
 </wb-demo>
 
 ### Attributes

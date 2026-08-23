@@ -11,12 +11,12 @@ renders the version. Reads a single source of truth
 |----------|-------|
 | Behavior | `release` |
 | Attribute | `x-release` |
-| Custom Tag | `<wb-release>` |
+| Custom Tag | `<div x-release>` |
 | Applies to | any element (typically a `<span>` or `<a>`) |
 | Category | Content |
 | Source | `src/wb-viewmodels/release.js` |
 
-Both forms run the same behavior: `<span x-release>` and `<wb-release>` are
+Both forms run the same behavior: `<span x-release>` and `<div x-release>` are
 equivalent — the tag form is registered in the tag map
 ([`src/core/tag-map.js`](../../src/core/tag-map.js)) and dispatches to the identical
 `release()` function. `autoInject` is on by default site-wide
@@ -53,7 +53,7 @@ without any manual `WB.scan()` call.
 ### Custom Tag
 
 <wb-demo>
-<wb-release></wb-release>
+<div x-release></div>
 </wb-demo>
 
 ## CSS Classes

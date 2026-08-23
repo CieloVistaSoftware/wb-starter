@@ -7,11 +7,11 @@ The Tabs component provides a flexible tabbed interface for organizing content i
 Wrapped in `<wb-demo>`, so the live component renders below with its source shown underneath:
 
 <wb-demo>
-<wb-tabs>
+<nav x-tabs>
   <div tab="Tab 1">Content 1</div>
   <div tab="Tab 2">Content 2</div>
   <div tab="Tab 3">Content 3</div>
-</wb-tabs>
+</nav>
 </wb-demo>
 
 ---
@@ -20,16 +20,16 @@ Wrapped in `<wb-demo>`, so the live component renders below with its source show
 
 ### Simple Tabs
 ```html
-<wb-tabs>
+<nav x-tabs>
   <div tab="Tab 1">Content 1</div>
   <div tab="Tab 2">Content 2</div>
   <div tab="Tab 3">Content 3</div>
-</wb-tabs>
+</nav>
 ```
 
 ### Basic Usage
 ```html
-<wb-tabs>
+<nav x-tabs>
   <div tab="Overview">
     <h3>Overview Content</h3>
     <p>Overview details...</p>
@@ -42,7 +42,7 @@ Wrapped in `<wb-demo>`, so the live component renders below with its source show
     <h3>Settings</h3>
     <p>Configuration options...</p>
   </div>
-</wb-tabs>
+</nav>
 ```
 
 ### With Active Tab
@@ -51,7 +51,7 @@ Wrapped in `<wb-demo>`, so the live component renders below with its source show
   <div tab="Home">Welcome content</div>
   <div tab="About">About us</div>
   <div tab="Contact">Contact info</div>
-</wb-tabs>
+</nav>
 ```
 
 ---

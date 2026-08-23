@@ -6,7 +6,7 @@ Statistics/metric display card using semantic `<data>` element.
 
 | Property | Value |
 |----------|-------|
-| Custom Tag | `<wb-cardstats>` |
+| Custom Tag | `<articlestats>` |
 | Behavior | `cardstats` |
 | Semantic | `<article>` + `<data>` |
 | Root CSS Class | `wb-card wb-stats` |
@@ -27,11 +27,11 @@ Supports every [card property](./card.md) — that shared structure and CSS are 
 Wrapped in `<wb-demo>`, so the live component renders below with its source shown underneath:
 
 <wb-demo>
-<wb-cardstats
+<articlestats
   value="1,234"
   label="Total Users"
   icon="👥">
-</wb-cardstats>
+</div>
 </wb-demo>
 
 ## Usage
@@ -39,35 +39,35 @@ Wrapped in `<wb-demo>`, so the live component renders below with its source show
 ### Basic Stats Card
 
 ```html
-<wb-cardstats
+<articlestats
   value="1,234"
   label="Total Users"
   icon="👥">
-</wb-cardstats>
+</div>
 ```
 
 ### With Trend
 
 <wb-demo>
-<wb-cardstats
+<articlestats
   value="$45,678"
   label="Revenue"
   icon="💰"
   trend="up"
   trendValue="+12.5%">
-</wb-cardstats>
+</div>
 </wb-demo>
 
 ### Negative Trend
 
 <wb-demo>
-<wb-cardstats
+<articlestats
   value="23"
   label="Open Issues"
   icon="🐛"
   trend="down"
   trendValue="-5">
-</wb-cardstats>
+</div>
 </wb-demo>
 
 ## Generated Structure

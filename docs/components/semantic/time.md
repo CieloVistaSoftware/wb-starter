@@ -55,7 +55,7 @@ Shown here as illustrative markup only; it will render without a timestamp.
 
 ### 3. Timeline Component
 
-`x-timeline` only adds a `wb-timeline` class hook — it doesn't rebuild
+`x-timeline` only adds a `<div x-as-timeline>` class hook — it doesn't rebuild
 children, so hand-authored markup (including real `<time>` elements) renders
 as-is.
 

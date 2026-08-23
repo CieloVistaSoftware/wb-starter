@@ -41,7 +41,7 @@ These behaviors enhance the element while preserving its identity.
 **Element:** `<button>`
 
 **What it adds:**
-- Class: `wb-button`, `wb-button--{variant}`, `wb-button--{size}`
+- Class: `<button>`, `wb-button--{variant}`, `wb-button--{size}`
 - Styles: padding, border-radius, cursor, font-weight, transitions
 - Variants: primary, secondary, success, danger, warning, ghost, link, outline
 - Sizes: xs, sm, md, lg, xl
@@ -157,7 +157,7 @@ Combined (variant + size + icon together):
   <button variant="outline">Cancel</button>
   <button variant="primary">Save Draft</button>
   <button variant="success">Publish</button>
-</wb-row>
+</div>
 </wb-demo>
 
 ---
@@ -167,7 +167,7 @@ Combined (variant + size + icon together):
 **Element:** `<input>`
 
 **What it adds:**
-- Wrapper div: `wb-input`
+- Wrapper div: `<input>`
 - Class on input: `wb-input__field`
 - Styles: border, border-radius, background, color, padding
 - Sizes: xs, sm, md, lg, xl
@@ -379,7 +379,7 @@ Search with icon:
 **Element:** `<details>`
 
 **What it adds:**
-- Class: `wb-details`
+- Class: `<details>`
 - Styles: border, border-radius, overflow, background
 - Summary styling: flex layout, padding, background, cursor
 - Custom toggle icon (▼) with rotation animation
@@ -504,7 +504,7 @@ Settings panel:
     <summary>Step 3: Complete Profile</summary>
     <p>Add your name, photo, and preferences.</p>
   </details>
-</wb-stack>
+</div>
 </wb-demo>
 
 ---
@@ -514,7 +514,7 @@ Settings panel:
 **Element:** `<dialog>`
 
 **What it adds:**
-- Class: `wb-dialog`
+- Class: `<dialog>`
 - Backdrop styling
 - Close button styling
 - Open/close animations
@@ -527,10 +527,10 @@ Settings panel:
 The `dialog` behavior only decorates a **real, already-open** `<dialog open>` in
 place (see the Auto-Injection demo above) — it does not wire up a show/hide
 trigger. For a self-contained trigger button that builds and opens a dialog on
-click with no JavaScript, use the `<wb-modal>` custom tag (`semantics/dialog.js`,
+click with no JavaScript, use the `<dialog>` custom tag (`semantics/dialog.js`,
 exported as `modal`): `modal-title`/`modal-content` attributes supply the
 dialog's contents, and the element's own text becomes the trigger label. Every
-`<wb-modal>` dialog gets the same auto-generated Cancel/OK footer.
+`<dialog>` dialog gets the same auto-generated Cancel/OK footer.
 
 Basic modal:
 
@@ -539,7 +539,7 @@ Basic modal:
   modal-title="Welcome!"
   modal-content="<p>Thanks for visiting our site.</p>">
   Show Welcome
-</wb-modal>
+</dialog>
 </wb-demo>
 
 Confirmation dialog:
@@ -549,7 +549,7 @@ Confirmation dialog:
   modal-title="Delete Item?"
   modal-content="<p>This action cannot be undone. Are you sure?</p>">
   🗑️ Delete
-</wb-modal>
+</dialog>
 </wb-demo>
 
 Form in dialog:
@@ -559,7 +559,7 @@ Form in dialog:
   modal-title="Sign In"
   modal-content='<label>Email <input type="email" placeholder="you@example.com"></label><label>Password <input type="password" placeholder="••••••••"></label>'>
   Sign In
-</wb-modal>
+</dialog>
 </wb-demo>
 
 Image lightbox dialog:
@@ -571,7 +571,7 @@ Image lightbox dialog:
   <img
     src="https://placehold.co/200x150/1e293b/e2e8f0?text=Thumbnail"
     alt="Click to enlarge">
-</wb-modal>
+</dialog>
 </wb-demo>
 
 Terms and conditions:
@@ -581,7 +581,7 @@ Terms and conditions:
   modal-title="Terms of Service"
   modal-content='<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit...</p><p>Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua...</p><label><input type="checkbox"> I agree to the terms and conditions</label>'>
   📜 View Terms
-</wb-modal>
+</dialog>
 </wb-demo>
 
 Settings dialog:
@@ -591,7 +591,7 @@ Settings dialog:
   modal-title="Settings"
   modal-content='<fieldset><legend>Notifications</legend><label><input type="checkbox" checked> Email notifications</label><label><input type="checkbox"> Push notifications</label><label><input type="checkbox" checked> Weekly digest</label></fieldset><fieldset><legend>Privacy</legend><label><input type="checkbox"> Show online status</label><label><input type="checkbox" checked> Allow search engines</label></fieldset>'>
   ⚙️ Settings
-</wb-modal>
+</dialog>
 </wb-demo>
 
 ---
@@ -601,7 +601,7 @@ Settings dialog:
 **Element:** `<table>`
 
 **What it adds:**
-- Class: `wb-table`
+- Class: `<table>`
 - Sortable column headers (click to sort)
 - Striped rows
 - Hover states
@@ -824,7 +824,7 @@ Status table with badges:
 **Element:** `<form>`
 
 **What it adds:**
-- Class: `wb-form`
+- Class: `<form>`
 - Validation UI
 - Loading states
 - Error display styling
@@ -1026,7 +1026,7 @@ Search form:
       icon="🔍">
       Search
     </button>
-  </wb-row>
+  </div>
 </form>
 </wb-demo>
 
@@ -1119,7 +1119,7 @@ Filter form:
 **Element:** `<select>`
 
 **What it adds:**
-- Class: `wb-select`
+- Class: `<select>`
 - Custom dropdown styling
 - Focus states
 
@@ -1222,7 +1222,7 @@ Date selectors:
     <option value="2025">2025</option>
     <option value="2024">2024</option>
   </select>
-</wb-row>
+</div>
 </wb-demo>
 
 ---
@@ -1232,7 +1232,7 @@ Date selectors:
 **Element:** `<textarea>`
 
 **What it adds:**
-- Class: `wb-textarea`
+- Class: `<textarea>`
 - Auto-resize on input
 - Character counter (optional)
 - Focus styling
@@ -1329,7 +1329,7 @@ Various use cases:
 **Element:** `<input type="checkbox">`
 
 **What it adds:**
-- Class: `wb-checkbox`
+- Class: `<input type="checkbox">`
 - Custom visual styling
 - Animated checkmark
 
@@ -1506,7 +1506,7 @@ one-line JS API left to your own code):
       class="item">
       Item 3
   </label>
-</wb-stack>
+</div>
 </wb-demo>
 
 ---
@@ -1904,7 +1904,7 @@ Color hue picker:
 **Element:** `<progress>`
 
 **What it adds:**
-- Class: `wb-progress`
+- Class: `<progress>`
 - Custom bar styling
 - Animated fill
 - Percentage label (optional)
@@ -2234,7 +2234,7 @@ These behaviors transform the element into a component.
 **Element:** `<article>` morphs into card component
 
 **What it adds:**
-- Class: `wb-card`
+- Class: `<article>`
 - Styles: flex column, border, border-radius (8px), background, box-shadow, overflow hidden
 - Hover effects: translateY(-2px), increased box-shadow, border color change
 - Styles existing `<header>`, `<main>`, `<footer>` children with card structure
@@ -2619,7 +2619,7 @@ Resource links:
 **Element:** `<nav>` morphs into navigation bar
 
 **What it adds:**
-- Class: `wb-navbar`
+- Class: `<nav x-navbar>`
 - Styles: flex layout, space-between, padding, background, border-radius, gap
 - Brand area styling (font-weight, no-shrink)
 - Menu area styling (flex, gap, flex-wrap)
@@ -2996,10 +2996,10 @@ Admin sidebar with icons:
 |------------|----------|-------------|
 | `<wb-grid>` | grid | CSS Grid layout |
 | `<wb-flex>` | flex | Flexbox layout |
-| `<wb-row>` | flex | Horizontal flex (alias) |
-| `<wb-column>` | stack | Vertical stack (alias) |
-| `<wb-stack>` | stack | Vertical stack |
-| `<wb-cluster>` | cluster | Horizontal cluster |
+| `<div x-flex>` | flex | Horizontal flex (alias) |
+| `<div x-stack>` | stack | Vertical stack (alias) |
+| `<div x-stack>` | stack | Vertical stack |
+| `<div x-cluster>` | cluster | Horizontal cluster |
 | `<wb-container>` | container | Full-featured container |
 | `<wb-center>` | center | Centered content |
 | `<wb-cover>` | cover | Full-screen cover |
@@ -3008,8 +3008,9 @@ Admin sidebar with icons:
 | `<wb-switcher>` | switcher | Responsive switcher |
 | `<wb-reel>` | reel | Horizontal scroll |
 | `<wb-frame>` | frame | Aspect ratio frame |
-| `<wb-sticky>` | sticky | Sticky positioning |
-| `<wb-drawer>` | drawerLayout | Collapsible drawer |
+| `<div x-sticky>` | sticky | Sticky positioning |
+| `[x-fill]` | fill | As wide as the container allows (attribute-only — width is a layout choice, not a kind of element) |
+| `<div x-drawer>` | drawerLayout | Collapsible drawer |
 | `<wb-icon>` | icon | Icon + text alignment |
 | `<card-basic>` | card | Generic card |
 | `<card-image>` | cardimage | Card with image |
@@ -3189,7 +3190,7 @@ Button row (wb-row is alias for flex):
   justify="flex-end">
   <button variant="ghost">Cancel</button>
   <button variant="primary">Save</button>
-</wb-row>
+</div>
 </wb-demo>
 
 ### wb-stack / wb-column
@@ -3205,7 +3206,7 @@ Vertical stack:
     type="email"
     placeholder="Email">
   <button>Submit</button>
-</wb-stack>
+</div>
 </wb-demo>
 
 wb-column is alias for stack:
@@ -3214,7 +3215,7 @@ wb-column is alias for stack:
 <wb-column gap="1rem">
   <h3>Title</h3>
   <p>Content</p>
-</wb-column>
+</div>
 </wb-demo>
 
 ### wb-container
@@ -3359,18 +3360,18 @@ Sticky header:
   top="0"
   z-index="100">
   <header>This stays at top when scrolling</header>
-</wb-sticky>
+</div>
 </wb-demo>
 
 ### wb-drawer
 
-`<wb-drawer>` (`drawer` behavior, `semantics`/`overlay.js`) is itself the
+`<div x-drawer>` (`drawer` behavior, `semantics`/`overlay.js`) is itself the
 clickable trigger — its own text is the visible label, `title`/`width`/
 `position` configure the slide-in panel, and clicking it opens an overlay
 panel built from those attributes. (An earlier version of this doc showed
-`<wb-drawer>` as a static, always-visible sidebar with `resizable`/
+`<div x-drawer>` as a static, always-visible sidebar with `resizable`/
 `save-state` attributes that don't exist on this behavior — that pattern is
-`<wb-drawer-layout>`, a different tag/behavior; see
+`<div x-drawer-layout>`, a different tag/behavior; see
 [Drawer Components](components/drawer.md).)
 
 <wb-demo>
@@ -3379,7 +3380,7 @@ panel built from those attributes. (An earlier version of this doc showed
   width="250px"
   title="Menu">
   Click to open the navigation drawer
-</wb-drawer>
+</div>
 </wb-demo>
 
 ---

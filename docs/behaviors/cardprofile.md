@@ -1,6 +1,10 @@
 # Card Profile
 
-Simple profile card. INHERITS from card.base (IS-A card), CONTAINS profile elements (HAS-A avatar, name, role, bio, cover).
+A card for presenting a person: avatar, name, role, short bio, and an
+optional cover image across the top.
+
+It builds on the same structure as `card`, so the layout, variants and sizing
+behave the same way — this one just arranges those regions for a profile.
 
 Apply `x-cardprofile` to any element.
 

@@ -102,12 +102,12 @@ Every session, before doing anything:
 
 ## 9. No One-Off Styles — Use Existing CSS or Extend It
 
-**Never create inline styles, new CSS classes, or duplicate existing styles.** This is how `wb-btn` ended up duplicating `wb-button` across two files, and dark mode broke because styles didn't match.
+**Never create inline styles, new CSS classes, or duplicate existing styles.** This is how `wb-btn` ended up duplicating `<button>` across two files, and dark mode broke because styles didn't match.
 
 Before writing ANY CSS or class name:
 1. Search `src/styles/behaviors/` — does a style file already exist for this component?
 2. Search `site.css` imports — is it already loaded?
-3. If the class exists, USE IT. Don't invent a new name (`wb-btn` vs `wb-button`).
+3. If the class exists, USE IT. Don't invent a new name (`wb-btn` vs `<button>`).
 4. If new styles are genuinely needed, add them to the existing behavior CSS file.
 5. Page-specific layout goes in `src/styles/pages/{pagename}.css` — but ONLY layout, never component styles.
 6. Never put `<link rel="stylesheet">` in page fragments — the server injects `site.css`.

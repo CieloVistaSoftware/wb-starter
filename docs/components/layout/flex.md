@@ -6,7 +6,7 @@ A simple, direct Flexbox layout primitive -- direction, wrap, justify, align, an
 
 | Property | Value |
 |----------|-------|
-| Custom Tag | `<wb-flex>` (also `<wb-row>`) |
+| Custom Tag | `<wb-flex>` (also `<div x-flex>`) |
 | Behavior | `flex` |
 | Semantic | `<div>` (structural/CSS-only -- no schema, no `$methods`/`$view`) |
 | Root CSS Class | `wb-flex` |
@@ -30,9 +30,9 @@ A simple, direct Flexbox layout primitive -- direction, wrap, justify, align, an
 
 <wb-demo>
 <wb-flex>
-  <wb-badge label="One"></wb-badge>
-  <wb-badge label="Two"></wb-badge>
-  <wb-badge label="Three"></wb-badge>
+  <wb-badge label="One"></div>
+  <wb-badge label="Two"></div>
+  <wb-badge label="Three"></div>
 </wb-flex>
 </wb-demo>
 
@@ -40,8 +40,8 @@ A simple, direct Flexbox layout primitive -- direction, wrap, justify, align, an
 
 ```html
 <wb-flex direction="column" gap="0.5rem">
-  <wb-button variant="primary">Top</wb-button>
-  <wb-button variant="ghost">Bottom</wb-button>
+  <wb-button variant="primary">Top</button>
+  <wb-button variant="ghost">Bottom</button>
 </wb-flex>
 ```
 
@@ -58,9 +58,9 @@ A simple, direct Flexbox layout primitive -- direction, wrap, justify, align, an
 
 ```html
 <wb-flex wrap="nowrap" gap="0.5rem">
-  <wb-badge label="Stays"></wb-badge>
-  <wb-badge label="On"></wb-badge>
-  <wb-badge label="One Line"></wb-badge>
+  <wb-badge label="Stays"></div>
+  <wb-badge label="On"></div>
+  <wb-badge label="One Line"></div>
 </wb-flex>
 ```
 
@@ -69,8 +69,8 @@ A simple, direct Flexbox layout primitive -- direction, wrap, justify, align, an
 ```html
 <!-- x-flex works on any element -->
 <div x-flex direction="row" gap="0.75rem">
-  <wb-badge label="A"></wb-badge>
-  <wb-badge label="B"></wb-badge>
+  <wb-badge label="A"></div>
+  <wb-badge label="B"></div>
 </div>
 ```
 

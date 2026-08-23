@@ -162,7 +162,7 @@ const results = search('card component');
   placeholder="Search docs..."
   src="/data/search.json"
   limit="10">
-</wb-search>
+</div>
 ```
 
 ## Document Types

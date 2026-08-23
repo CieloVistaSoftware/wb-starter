@@ -5,7 +5,7 @@ enforces the limit via the native `maxlength`. See
 [src/wb-viewmodels/counter.js](../../src/wb-viewmodels/counter.js).
 
 - **Type:** Modifier
-- **Root CSS class:** `wb-counter`
+- **Root CSS class:** `<div x-counter>`
 - **Schema:** [counter.schema.json](../../src/wb-models/counter.schema.json)
 
 ## Usage
@@ -38,7 +38,7 @@ before the field is actually full:
 
 | Class | Applies to | When |
 |---|---|---|
-| `wb-counter` | the generated `<span>` counter | always |
+| `<div x-counter>` | the generated `<span>` counter | always |
 | `wb-counter--warning` | the counter `<span>` | length ≥ `warning` |
 | `wb-counter--error` | the counter `<span>` | `max` is set and length ≥ `max` |
 

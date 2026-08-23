@@ -1,4 +1,7 @@
-<link rel="stylesheet" href="src/styles/pages/docs.css?v=3.0.91">
+<!-- #766 -- this stylesheet used to be a plain relative href, which resolves
+     against /pages/ when the fragment is opened directly and 404s. Injected
+     from siteRoot() below instead, so one helper decides every path on this
+     page rather than three of them agreeing by luck. -->
 
 <div id="docs-hero" class="page__hero">
   <h1>📖 Documentation</h1>
@@ -17,6 +20,35 @@
 </div>
 
 <script>
+  /**
+   * #766 -- John, opening /pages/docs.html directly: "Could not load
+   * documentation index. Error: Failed to fetch manifest".
+   *
+   * This file is a FRAGMENT. Loaded through the SPA shell (/?page=docs) its
+   * relative paths resolve against / and everything works, which is why this
+   * went unnoticed. Opened on its own they resolve against /pages/ and all
+   * four break -- the manifest fetch loudly, the stylesheet and every
+   * generated link silently.
+   *
+   * Same helper pages/behaviors.html and pages/components.html already use.
+   * A bare /docs/... would fix localhost and break GitHub Pages, where the
+   * site lives under /wb-starter/ -- this strips the fragment directory
+   * instead of assuming the site sits at the domain root.
+   */
+  function siteRoot() {
+    const stripped = location.pathname.replace(/(?:public|demos|pages|articles|tests\/fixtures)\/.*$/, '');
+    return stripped.replace(/[^/]*$/, '');
+  }
+
+  (function loadDocsStylesheet() {
+    const base = siteRoot() + 'src/styles/pages/docs.css';
+    if (document.querySelector('link[href^="' + base + '"]')) return;
+    const link = document.createElement('link');
+    link.rel = 'stylesheet';
+    link.href = base + '?v=3.0.91';
+    document.head.appendChild(link);
+  })();
+
   // Self-executing function (no module needed)
   (async function loadDocs() {
     const container = document.getElementById('docs-container');
@@ -60,7 +92,7 @@
               filePath = filePath.replace(/^\/+/, '');
               if (!/^docs\//.test(filePath)) filePath = 'docs/' + filePath;
             }
-            html += '<a href="public/doc-viewer.html?file=' + encodeURIComponent(filePath) + '" ';
+            html += '<a href="' + siteRoot() + 'public/doc-viewer.html?file=' + encodeURIComponent(filePath) + '" ';
             html += 'class="docs-card" target="_blank" ';
             html += 'style="display: block; padding: 1.25rem; background: var(--bg-secondary); border: 1px solid var(--border-color); border-radius: 10px; text-decoration: none; color: inherit; transition: all 0.2s;">';
             html += '<h3 style="margin: 0 0 0.5rem; color: var(--primary); font-size: 1rem;">' + doc.title + '</h3>';
@@ -72,7 +104,7 @@
         // Handle page links (like research papers)
         if (category.pages) {
           for (const page of category.pages) {
-            html += '<a href="pages/' + page.page + '.html" ';
+            html += '<a href="' + siteRoot() + 'pages/' + page.page + '.html" ';
             html += 'class="docs-card" target="_blank" ';
             html += 'style="display: block; padding: 1.25rem; background: var(--bg-secondary); border: 1px solid var(--border-color); border-radius: 10px; text-decoration: none; color: inherit; transition: all 0.2s;">';
             html += '<h3 style="margin: 0 0 0.5rem; color: var(--primary); font-size: 1rem;">' + page.title + '</h3>';
@@ -137,7 +169,7 @@
     }
     
     try {
-      const res = await fetch('docs/manifest.json');
+      const res = await fetch(siteRoot() + 'docs/manifest.json');
       if (!res.ok) throw new Error('Failed to fetch manifest');
       fullManifest = await res.json();
       

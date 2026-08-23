@@ -29,7 +29,7 @@ form control — no separate `<label for="...">` to write by hand.
     label-position="right">
   ```
 - **Legacy form:** a bare `x-label` (no value) on an actual `<label>` element
-  just adds the `wb-label` styling classes to that label directly — for when
+  just adds the `<label>` styling classes to that label directly — for when
   you already have your own `<label for="...">` markup:
   ```html
   <label required for="input1">Label</label>

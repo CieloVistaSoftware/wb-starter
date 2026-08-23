@@ -6,7 +6,7 @@ Clickable navigation link card.
 
 | Property | Value |
 |----------|-------|
-| Custom Tag | `<wb-cardlink>` |
+| Custom Tag | `<div x-cardlink>` |
 | Behavior | `cardlink` |
 | Semantic | `<article>` with `role="link"` |
 | Root CSS Class | `wb-card wb-card-link` |
@@ -32,7 +32,7 @@ Wrapped in `<wb-demo>`, so the live component renders below with its source show
   title="Documentation"
   href="/docs"
   icon="📚">
-</wb-cardlink>
+</div>
 </wb-demo>
 
 ## Usage
@@ -44,7 +44,7 @@ Wrapped in `<wb-demo>`, so the live component renders below with its source show
   title="Documentation"
   href="/docs"
   icon="📚">
-</wb-cardlink>
+</div>
 ```
 
 ### External Link
@@ -56,7 +56,7 @@ Wrapped in `<wb-demo>`, so the live component renders below with its source show
   href="https://github.com/example"
   target="_blank"
   icon="🐙">
-</wb-cardlink>
+</div>
 ```
 
 ### With Badge
@@ -68,7 +68,7 @@ Wrapped in `<wb-demo>`, so the live component renders below with its source show
   href="/features"
   badge="New"
   badgeVariant="gradient">
-</wb-cardlink>
+</div>
 ```
 
 ## External Link Indicator

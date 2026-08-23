@@ -46,66 +46,66 @@ All card variants are independent components that share structure via semantic H
 
 | Component | Custom Tag | Description |
 |-----------|------------|-------------|
-| card | `<wb-card>` | Card component |
-| cardimage | `<wb-cardimage>` | Card with featured image |
-| cardvideo | `<wb-cardvideo>` | Card with video player |
-| cardbutton | `<wb-cardbutton>` | Card with action buttons |
-| cardhero | `<wb-cardhero>` | Hero banner card |
-| cardprofile | `<wb-cardprofile>` | User profile card |
-| cardpricing | `<wb-cardpricing>` | Pricing plan card |
-| cardstats | `<wb-cardstats>` | Statistics display |
-| cardtestimonial | `<wb-cardtestimonial>` | Quote/testimonial |
-| cardproduct | `<wb-cardproduct>` | E-commerce product |
-| cardnotification | `<wb-cardnotification>` | Alert/notification |
-| cardfile | `<wb-cardfile>` | File download card |
-| cardlink | `<wb-cardlink>` | Clickable link card |
-| cardhorizontal | `<wb-cardhorizontal>` | Horizontal layout |
-| cardoverlay | `<wb-cardoverlay>` | Image with overlay |
-| cardexpandable | `<wb-cardexpandable>` | Expandable content |
-| cardminimizable | `<wb-cardminimizable>` | Minimizable window |
-| carddraggable | `<wb-carddraggable>` | Draggable card |
-| cardportfolio | `<wb-cardportfolio>` | Portfolio/contact |
+| card | `<article>` | Card component |
+| cardimage | `<article x-cardimage>` | Card with featured image |
+| cardvideo | `<article x-cardvideo>` | Card with video player |
+| cardbutton | `<div x-cardbutton>` | Card with action buttons |
+| cardhero | `<article x-cardhero>` | Hero banner card |
+| cardprofile | `<div x-cardprofile>` | User profile card |
+| cardpricing | `<div x-cardpricing>` | Pricing plan card |
+| cardstats | `<articlestats>` | Statistics display |
+| cardtestimonial | `<div x-cardtestimonial>` | Quote/testimonial |
+| cardproduct | `<div x-cardproduct>` | E-commerce product |
+| cardnotification | `<div x-cardnotification>` | Alert/notification |
+| cardfile | `<div x-cardfile>` | File download card |
+| cardlink | `<div x-cardlink>` | Clickable link card |
+| cardhorizontal | `<div x-cardhorizontal>` | Horizontal layout |
+| cardoverlay | `<div x-cardoverlay>` | Image with overlay |
+| cardexpandable | `<div x-cardexpandable>` | Expandable content |
+| cardminimizable | `<div x-cardminimizable>` | Minimizable window |
+| carddraggable | `<div x-carddraggable>` | Draggable card |
+| cardportfolio | `<div x-cardportfolio>` | Portfolio/contact |
 
 ### Form Components
 | Component | Custom Tag | Description |
 |-----------|------------|-------------|
-| input | `<wb-input>` | Text input field |
-| textarea | `<wb-textarea>` | Multi-line text |
-| checkbox | `<wb-checkbox>` | Checkbox input |
-| switch | `<wb-switch>` | Toggle switch |
-| select | `<wb-select>` | Dropdown select |
-| search | `<wb-search>` | Search input with results |
-| rating | `<wb-rating>` | Star rating |
+| input | `<input>` | Text input field |
+| textarea | `<textarea>` | Multi-line text |
+| checkbox | `<input type="checkbox">` | Checkbox input |
+| switch | `<div x-switch>` | Toggle switch |
+| select | `<select>` | Dropdown select |
+| search | `<div x-searchfield>` | Search input with results |
+| rating | `<div x-rating>` | Star rating |
 
 ### Navigation Components
 | Component | Custom Tag | Description |
 |-----------|------------|-------------|
-| tabs | `<wb-tabs>` | Tabbed interface |
-| drawer | `<wb-drawer>` | Slide-in drawer |
-| navbar | `<wb-navbar>` | Navigation bar |
+| tabs | `<nav x-tabs>` | Tabbed interface |
+| drawer | `<div x-drawer>` | Slide-in drawer |
+| navbar | `<nav x-navbar>` | Navigation bar |
 
 ### Feedback Components
 | Component | Custom Tag | Description |
 |-----------|------------|-------------|
-| alert | `<wb-alert>` | Alert message |
-| toast | `<wb-toast>` | Toast notification |
-| spinner | `<wb-spinner>` | Loading spinner |
-| skeleton | `<wb-skeleton>` | Loading skeleton |
-| progress | `<wb-progress>` | Progress bar |
+| alert | `<div x-alert>` | Alert message |
+| toast | `<div x-toast>` | Toast notification |
+| spinner | `<div x-spinner>` | Loading spinner |
+| skeleton | `<div x-skeleton>` | Loading skeleton |
+| progress | `<progress>` | Progress bar |
 
 ### Effects
 | Component | Custom Tag | Description |
 |-----------|------------|-------------|
-| confetti | `<wb-confetti>` | Confetti animation |
-| fireworks | `<wb-fireworks>` | Fireworks effect |
-| snow | `<wb-snow>` | Snow animation |
+| confetti | `<div x-confetti>` | Confetti animation |
+| fireworks | `<div x-fireworks>` | Fireworks effect |
+| snow | `<div x-snow>` | Snow animation |
 
 ### Overlay Components
 | Component | Custom Tag | Description |
 |-----------|------------|-------------|
-| dialog | `<wb-dialog>` | Modal dialog |
-| tooltip | `<wb-tooltip>` | Tooltip popup |
-| dropdown | `<wb-dropdown>` | Dropdown menu |
+| dialog | `<dialog>` | Modal dialog |
+| tooltip | `<div x-tooltip>` | Tooltip popup |
+| dropdown | `<div x-dropdown>` | Dropdown menu |
 
 ## Usage Patterns
 
@@ -116,12 +116,12 @@ All card variants are independent components that share structure via semantic H
   title="My Card"
   subtitle="Description">
   Card content goes here
-</wb-card>
+</article>
 <wb-search
   placeholder="Search for content..."
   variant="glass"
   size="large">
-</wb-search>
+</div>
 ```
 
 ### Attribute-Based (Shortest)
@@ -132,12 +132,12 @@ All card variants are independent components that share structure via semantic H
   elevated
   clickable>
   Content here
-</wb-card>
+</article>
 <wb-search
   placeholder="Search..."
   debounce="300">
   <!-- Search results will appear here -->
-</wb-search>
+</div>
 ```
 
 ## File Structure (v3.0)

@@ -6,7 +6,7 @@ Full-width hero banner card with background image/gradient and CTAs.
 
 | Property | Value |
 |----------|-------|
-| Custom Tag | `<wb-cardhero>` |
+| Custom Tag | `<article x-cardhero>` |
 | Behavior | `cardhero` |
 | Semantic | `<article>` |
 | Root CSS Class | `wb-card wb-hero` |
@@ -44,7 +44,7 @@ Wrapped in `<wb-demo>`, so the live component renders below with its source show
   cta="Explore Components"
   cta-href="#components"
   variant="cosmic">
-</wb-cardhero>
+</article>
 </wb-demo>
 
 > Tip: `title` accepts HTML (so `wb-gradient-text` can be used) — you do not need to use slots.
@@ -62,7 +62,7 @@ that doesn't exist just 404s silently (#534).
 <wb-cardhero
   title="Welcome to Our Site"
   subtitle="Build something amazing">
-</wb-cardhero>
+</article>
 </wb-demo>
 
 ### With CTAs
@@ -75,7 +75,7 @@ that doesn't exist just 404s silently (#534).
   cta-href="/signup"
   cta-secondary="Learn More"
   cta-secondary-href="/about">
-</wb-cardhero>
+</article>
 </wb-demo>
 
 ### Left Aligned
@@ -85,7 +85,7 @@ that doesn't exist just 404s silently (#534).
   title="Left Aligned Hero"
   xalign="left"
   height="500px">
-</wb-cardhero>
+</article>
 </wb-demo>
 
 ### With Gradient Background
@@ -94,7 +94,7 @@ that doesn't exist just 404s silently (#534).
 <wb-cardhero
   title="Gradient Hero"
   background="linear-gradient(135deg, #667eea 0%, #764ba2 100%)">
-</wb-cardhero>
+</article>
 </wb-demo>
 
 ### Property Combinations
@@ -106,7 +106,7 @@ exactly what each one changes in isolation:
 <wb-cardhero
   title="Title only"
   height="260px">
-</wb-cardhero>
+</article>
 </wb-demo>
 
 <wb-demo full-width>
@@ -114,7 +114,7 @@ exactly what each one changes in isolation:
   title="Title + subtitle"
   subtitle="Adding a subtitle"
   height="260px">
-</wb-cardhero>
+</article>
 </wb-demo>
 
 <wb-demo full-width>
@@ -124,7 +124,7 @@ exactly what each one changes in isolation:
   cta="Click Me"
   cta-href="#"
   height="260px">
-</wb-cardhero>
+</article>
 </wb-demo>
 
 <wb-demo full-width>
@@ -135,7 +135,7 @@ exactly what each one changes in isolation:
   cta-href="#"
   variant="cosmic"
   height="260px">
-</wb-cardhero>
+</article>
 </wb-demo>
 
 <wb-demo full-width>
@@ -147,7 +147,7 @@ exactly what each one changes in isolation:
   variant="cosmic"
   overlay="false"
   height="260px">
-</wb-cardhero>
+</article>
 </wb-demo>
 
 <wb-demo full-width>
@@ -159,7 +159,7 @@ exactly what each one changes in isolation:
   variant="cosmic"
   xalign="left"
   height="260px">
-</wb-cardhero>
+</article>
 </wb-demo>
 
 ## Generated Structure

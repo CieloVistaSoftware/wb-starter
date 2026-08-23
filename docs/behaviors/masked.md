@@ -4,7 +4,7 @@ Formats input as the user types against a mask pattern (phone numbers, SSNs,
 license plates, etc). See [src/wb-viewmodels/masked.js](../../src/wb-viewmodels/masked.js).
 
 - **Type:** Modifier
-- **Root CSS class:** `wb-masked`
+- **Root CSS class:** `<div x-masked>`
 - **Schema:** [masked.schema.json](../../src/wb-models/masked.schema.json)
 
 ## Usage
@@ -35,7 +35,7 @@ literal separator inserted automatically as the user fills in slots:
 
 | Class | Applies to | When |
 |---|---|---|
-| `wb-masked` | the `<input>` | always |
+| `<div x-masked>` | the `<input>` | always |
 
 ## Events
 

@@ -33,14 +33,14 @@ Text input field with various types and validation.
   label="Full Name"
   placeholder="Enter your name"
   required>
-</wb-input>
+</input>
 <!-- Email input with validation -->
 <wb-input
   type="email"
   label="Email Address"
   placeholder="you@example.com"
   required>
-</wb-input>
+</input>
 <!-- Password input -->
 <wb-input
   type="password"
@@ -48,7 +48,7 @@ Text input field with various types and validation.
   placeholder="Enter password"
   minlength="8"
   required>
-</wb-input>
+</input>
 ```
 
 ---
@@ -76,14 +76,14 @@ Multi-line text input with auto-resize capability.
   label="Message"
   placeholder="Enter your message"
   rows="6">
-</wb-textarea>
+</textarea>
 <!-- Auto-sizing textarea -->
 <wb-textarea
   label="Comments"
   placeholder="Share your thoughts..."
   autosize
   maxlength="500">
-</wb-textarea>
+</textarea>
 ```
 
 ---
@@ -109,17 +109,17 @@ Checkbox input with custom styling and indeterminate state support.
 <wb-checkbox
   label="I agree to the terms"
   required>
-</wb-checkbox>
+</input>
 <!-- Pre-checked checkbox -->
 <wb-checkbox
   label="Subscribe to newsletter"
   checked>
-</wb-checkbox>
+</input>
 <!-- Indeterminate checkbox -->
 <wb-checkbox
   label="Select all"
   indeterminate>
-</wb-checkbox>
+</input>
 ```
 
 ---
@@ -142,13 +142,13 @@ Toggle switch component (styled checkbox alternative).
 
 ```html
 <!-- Basic switch -->
-<wb-switch label="Enable notifications"></wb-switch>
+<wb-switch label="Enable notifications"></div>
 <!-- Large switch -->
 <wb-switch
   label="Dark mode"
   size="large"
   checked>
-</wb-switch>
+</div>
 ```
 
 ---
@@ -176,7 +176,7 @@ Dropdown select with search and multi-select support.
   <option value="us">United States</option>
   <option value="ca">Canada</option>
   <option value="uk">United Kingdom</option>
-</wb-select>
+</select>
 <!-- Multi-select -->
 <wb-select
   label="Skills"
@@ -185,7 +185,7 @@ Dropdown select with search and multi-select support.
   <option value="js">JavaScript</option>
   <option value="py">Python</option>
   <option value="java">Java</option>
-</wb-select>
+</select>
 ```
 
 ---
@@ -208,14 +208,14 @@ Star rating input component.
 
 ```html
 <!-- Basic rating -->
-<wb-rating label="Rate this product"></wb-rating>
+<wb-rating label="Rate this product"></div>
 <!-- Half-star rating -->
 <wb-rating
   max="10"
   half
   value="7.5"
   readonly>
-</wb-rating>
+</div>
 ```
 
 ---
@@ -244,7 +244,7 @@ All form components support HTML5 validation with custom error messages.
   required
   error-required="Email is required"
   error-type="Please enter a valid email address">
-</wb-input>
+</input>
 ```
 
 ### Validation States
@@ -286,12 +286,12 @@ All form components emit standard events plus WB-specific events:
   <wb-input
     label="Name"
     required>
-  </wb-input>
+  </input>
   <wb-input
     label="Email"
     type="email"
     required>
-  </wb-input>
+  </input>
   <button type="submit">Submit</button>
 </form>
 ```

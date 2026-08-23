@@ -53,12 +53,12 @@ Pass options via `data-*` attributes:
   size="lg"
   highlight="false"
   breaks="false">
-</wb-mdhtml>
+</div>
 <!-- Override card variant -->
 <wb-card
   variant="outline"
   size="sm">
-</wb-card>
+</article>
 <!-- Override toast duration -->
 <button
   x-behavior="toast"
@@ -109,10 +109,10 @@ Just don't use WB attributes/tags:
   <p>Content</p>
 </div>
 <!-- vs WB-enhanced -->
-<wb-card>
+<article>
   <h3>Title</h3>
   <p>Content</p>
-</wb-card>
+</article>
 ```
 
 ## Override Theme Variables

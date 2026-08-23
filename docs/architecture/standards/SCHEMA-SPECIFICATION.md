@@ -209,12 +209,12 @@ Users provide simple attribute values. The schema defines how those values becom
   title="Explore"
   subtitle="Your journey"
   cta="Launch">
-</wb-hero>
+</div>
 <!-- ❌ UGLY: User must know internal slots -->
-<wb-hero>
+<div x-hero>
   <h1 slot="title">Explore</h1>
   <p slot="subtitle">Your journey</p>
-</wb-hero>
+</div>
 ```
 
 | Content Type | Use | Example |
@@ -222,7 +222,7 @@ Users provide simple attribute values. The schema defines how those values becom
 | Simple text | **Attributes** | `title="Hello"` |
 | Enum choices | **Attributes** | `variant="cosmic"` |
 | Boolean flags | **Attributes** | `elevated` |
-| Arbitrary rich content | **Body only** | `<wb-card>Any HTML</wb-card>` |
+| Arbitrary rich content | **Body only** | `<article>Any HTML</article>` |
 
 ---
 
@@ -418,9 +418,9 @@ The `$view` section defines **DOM structure** - what gets rendered.
 
 | `name` | `baseClass` | Generated Class |
 |--------|-------------|-----------------|
-| `header` | `wb-card` | `wb-card__header` |
-| `title` | `wb-card` | `wb-card__title` |
-| `wrapper` (private) | `wb-card` | `wb-card__-wrapper` |
+| `header` | `<article>` | `wb-card__header` |
+| `title` | `<article>` | `wb-card__title` |
+| `wrapper` (private) | `<article>` | `wb-card__-wrapper` |
 
 ---
 
@@ -583,12 +583,12 @@ Private: .wb-{component}__-{name}   ← Note the dash prefix
 
 **Rendered:**
 ```html
-<wb-card>
+<article>
   <header class="wb-card__header"> <!-- Public: stable -->
     <h3 class="wb-card__title">Hello</h3> <!-- Public: stable -->
   </header>
   <div class="wb-card__-layout"> <!-- Private: may change --> ... </div>
-</wb-card>
+</article>
 ```
 
 ### Documentation Impact
@@ -748,7 +748,7 @@ Private: .wb-{component}__-{name}   ← Note the dash prefix
   
   "test": {
     "setup": [
-      "<wb-alert message=\"Test alert\"></wb-alert>",
+      "<wb-alert message=\"Test alert\"></div>",
       "<div x-behavior=\"alert\" message=\"Test\"></div>"
     ],
     "matrix": {
@@ -779,7 +779,7 @@ The `test` section defines how the component is tested, including setup HTML and
 {
   "test": {
     "setup": [
-      "<wb-alert message=\"Test alert\"></wb-alert>"
+      "<wb-alert message=\"Test alert\"></div>"
     ],
     "matrix": {
       "combinations": [

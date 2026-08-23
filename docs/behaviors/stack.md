@@ -1,4 +1,4 @@
-# Stack Layout Component
+# stack
 
 Vertical stack layout component. Renders children in a column with configurable gap, background color, padding, and border radius.
 

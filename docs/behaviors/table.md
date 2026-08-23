@@ -10,7 +10,7 @@ Applies to `<table>`, and to any element carrying `x-table`.
 <wb-table
   headers="Component,Behavior,Variants"
   rows="[[&quot;wb-alert&quot;,&quot;alert&quot;,&quot;4&quot;],[&quot;wb-badge&quot;,&quot;badge&quot;,&quot;9&quot;],[&quot;wb-button&quot;,&quot;button&quot;,&quot;8&quot;],[&quot;wb-card&quot;,&quot;card&quot;,&quot;4&quot;],[&quot;wb-code&quot;,&quot;code&quot;,&quot;12&quot;],[&quot;wb-dialog&quot;,&quot;dialog&quot;,&quot;3&quot;],[&quot;wb-details&quot;,&quot;details&quot;,&quot;2&quot;],[&quot;wb-audio&quot;,&quot;audio&quot;,&quot;6&quot;],[&quot;wb-table&quot;,&quot;table&quot;,&quot;5&quot;],[&quot;wb-tabs&quot;,&quot;tabs&quot;,&quot;3&quot;],[&quot;wb-toast&quot;,&quot;toast&quot;,&quot;4&quot;],[&quot;wb-tooltip&quot;,&quot;tooltip&quot;,&quot;4&quot;]]">
-</wb-table>
+</table>
 ```
 
 ## Attributes

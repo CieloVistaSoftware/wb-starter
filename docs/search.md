@@ -26,7 +26,7 @@ The search component supports multiple visual variants and sizes for different u
 
 ### Basic Usage
 ```html
-<wb-search placeholder="Search for content..."></wb-search>
+<wb-search placeholder="Search for content..."></div>
 ```
 
 ### With Variants and Sizes
@@ -36,7 +36,7 @@ The search component supports multiple visual variants and sizes for different u
   variant="glass"
   size="large"
   debounce="300">
-</wb-search>
+</div>
 ```
 
 ### Listening for Search Events

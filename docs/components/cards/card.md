@@ -59,7 +59,7 @@ This doc explains the core features, usage, and architectural choices behind the
 |----------|-------|
 | Semantic Tag | `<article>` |
 | Behavior | `card` |
-| Root CSS Class | `wb-card` |
+| Root CSS Class | `<article>` |
 | Category | Cards |
 | Schema | `src/wb-models/card.schema.json` |
 
@@ -273,19 +273,19 @@ card.update?.(el, { title: 'New Title', elevated: true });
 ## Card Variants
 
 Specialized variants build on the shared card structure. Each one is documented
-separately and still uses its own custom tag today (`wb-cardimage`, etc.) -- only
+separately and still uses its own custom tag today (`<article x-cardimage>`, etc.) -- only
 this base `card` behavior's own doc has been converted to semantic-only examples so
 far:
 
 | Variant | Purpose | Tag |
 |---------|---------|-----|
-| [cardimage](./cardimage.md) | Featured image | `<wb-cardimage>` |
-| [cardhero](./cardhero.md) | Hero banner | `<wb-cardhero>` |
-| [cardprofile](./cardprofile.md) | User profile | `<wb-cardprofile>` |
-| [cardstats](./cardstats.md) | Statistics | `<wb-cardstats>` |
-| [cardpricing](./cardpricing.md) | Pricing tier | `<wb-cardpricing>` |
-| [cardbutton](./cardbutton.md) | Action buttons | `<wb-cardbutton>` |
-| [cardlink](./cardlink.md) | Navigation link | `<wb-cardlink>` |
+| [cardimage](./cardimage.md) | Featured image | `<article x-cardimage>` |
+| [cardhero](./cardhero.md) | Hero banner | `<article x-cardhero>` |
+| [cardprofile](./cardprofile.md) | User profile | `<div x-cardprofile>` |
+| [cardstats](./cardstats.md) | Statistics | `<articlestats>` |
+| [cardpricing](./cardpricing.md) | Pricing tier | `<div x-cardpricing>` |
+| [cardbutton](./cardbutton.md) | Action buttons | `<div x-cardbutton>` |
+| [cardlink](./cardlink.md) | Navigation link | `<div x-cardlink>` |
 
 ## Schema
 

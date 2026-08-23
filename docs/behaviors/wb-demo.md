@@ -7,7 +7,7 @@ page — no build step.
 ## Live example
 
 <wb-demo>
-  <wb-button variant="primary">Button</wb-button>
+  <wb-button variant="primary">Button</button>
 </wb-demo>
 
 The block above is a real `<wb-demo>` embedded in this Markdown — the button you see
@@ -17,7 +17,7 @@ is live, and its source is rendered beneath it.
 
 ```html
 <wb-demo>
-  <wb-button variant="primary">Button</wb-button>
+  <wb-button variant="primary">Button</button>
 </wb-demo>
 ```
 

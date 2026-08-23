@@ -167,8 +167,8 @@ Vertical stack layout (shorthand for flex column).
 <wb-stack gap="1.5rem">
   <h1>Title</h1>
   <p>Description paragraph</p>
-  <wb-button>Action Button</wb-button>
-</wb-stack>
+  <button>Action Button</button>
+</div>
 ```
 
 ---
@@ -193,20 +193,20 @@ Center content both horizontally and vertically.
 </wb-center>
 <!-- Centered card -->
 <wb-center max-width="400px">
-  <wb-card>
+  <article>
     <h2>Login</h2>
-    <wb-form>
+    <form>
       <wb-input
         label="Email"
         type="email">
-      </wb-input>
+      </input>
       <wb-input
         label="Password"
         type="password">
-      </wb-input>
-      <wb-button type="submit">Sign In</wb-button>
-    </wb-form>
-  </wb-card>
+      </input>
+      <wb-button type="submit">Sign In</button>
+    </form>
+  </article>
 </wb-center>
 ```
 
@@ -279,7 +279,7 @@ Semantic sidebar container with optional collapse functionality.
       <a href="#dashboard">Dashboard</a>
       <a href="#users">Users</a>
       <a href="#settings">Settings</a>
-    </wb-stack>
+    </div>
   </nav>
 </wb-sidebar>
 ```
@@ -305,23 +305,23 @@ Semantic form grouping container.
   <wb-input
     label="First Name"
     required>
-  </wb-input>
+  </input>
   <wb-input
     label="Last Name"
     required>
-  </wb-input>
+  </input>
   <wb-input
     label="Email"
     type="email"
     required>
-  </wb-input>
-</wb-fieldset>
+  </input>
+</fieldset>
 <wb-fieldset
   legend="Preferences"
   disabled>
-  <wb-checkbox label="Subscribe to newsletter"></wb-checkbox>
-  <wb-checkbox label="Receive updates"></wb-checkbox>
-</wb-fieldset>
+  <wb-checkbox label="Subscribe to newsletter"></input>
+  <wb-checkbox label="Receive updates"></input>
+</fieldset>
 ```
 
 ---

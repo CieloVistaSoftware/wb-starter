@@ -6,14 +6,14 @@ Custom-styled `<input type="checkbox">` -- appearance-driven, no wrapper element
 
 | Property | Value |
 |----------|-------|
-| Custom Tag | `<wb-checkbox>` (deprecated -- see below) |
+| Custom Tag | `<input type="checkbox">` (deprecated -- see below) |
 | Behavior | `checkbox` |
 | Semantic | `<input type="checkbox">` |
 | Root CSS Class | *(none -- styles target `input[type="checkbox"]` directly)* |
 | Category | Forms |
 | Schema | `src/wb-models/checkbox.schema.json` |
 
-> **`<wb-checkbox>` is deprecated.** Prefer a bare `<input type="checkbox">` directly -- `checkbox()` (`src/wb-viewmodels/semantics/checkbox.js`) already enhances it fully via `appearance: none`, with no wrapper element needed. `<wb-checkbox>` still works (it self-builds a real `<input type="checkbox">` inside a `<label>`) and is documented below for back-compat.
+> **`<input type="checkbox">` is deprecated.** Prefer a bare `<input type="checkbox">` directly -- `checkbox()` (`src/wb-viewmodels/semantics/checkbox.js`) already enhances it fully via `appearance: none`, with no wrapper element needed. `<input type="checkbox">` still works (it self-builds a real `<input type="checkbox">` inside a `<label>`) and is documented below for back-compat.
 
 ## Properties
 
@@ -27,7 +27,7 @@ Custom-styled `<input type="checkbox">` -- appearance-driven, no wrapper element
 | `required` | boolean | `false` | Required field |
 | `size` | string | `"md"`* | `xs`, `sm`, `lg` via attribute (native input CSS) |
 | `variant` | string | `"default"` | `success`, `warning`, `danger` via attribute (checked/indeterminate accent color) |
-| `label` | string | `""` | Label text (`<wb-checkbox>` form only) |
+| `label` | string | `""` | Label text (`<input type="checkbox">` form only) |
 
 \* Native-input sizing is driven by the `size="…"` attribute directly in `checkbox.js`'s injected CSS (`xs`/`sm`/`lg`; omit the attribute for the default size).
 
@@ -62,10 +62,10 @@ Custom-styled `<input type="checkbox">` -- appearance-driven, no wrapper element
 <label><input type="checkbox" size="lg"> Large</label>
 ```
 
-### `<wb-checkbox>` (Deprecated Form)
+### `<input type="checkbox">` (Deprecated Form)
 
 ```html
-<wb-checkbox label="Accept terms" variant="success"></wb-checkbox>
+<wb-checkbox label="Accept terms" variant="success"></input>
 ```
 
 ## Generated Structure
@@ -77,13 +77,13 @@ Custom-styled `<input type="checkbox">` -- appearance-driven, no wrapper element
   Success
 </label>
 
-<!-- <wb-checkbox> form: self-builds the real input -->
+<!-- <input type="checkbox"> form: self-builds the real input -->
 <wb-checkbox class="wb-checkbox">
   <label>
     <input type="checkbox">
     Accept terms
   </label>
-</wb-checkbox>
+</input>
 ```
 
 ## CSS Classes
@@ -99,11 +99,11 @@ Custom-styled `<input type="checkbox">` -- appearance-driven, no wrapper element
 | `input[type="checkbox"]:disabled` | `disabled` | Reduced opacity, no pointer |
 | `input[type="checkbox"][size="xs\|sm\|lg"]` | `size` attribute | Box dimensions |
 | `input[type="checkbox"][variant="success\|warning\|danger"]` | `variant` attribute | Checked/indeterminate accent color |
-| `.wb-checkbox` | `<wb-checkbox>` host | Applied to the deprecated custom-tag wrapper only |
+| `.wb-checkbox` | `<input type="checkbox">` host | Applied to the deprecated custom-tag wrapper only |
 
 ## Methods
 
-`checkbox()` itself performs only one JS action: setting `element.indeterminate = true` when requested. The methods below come from `checkbox.schema.json`'s `$methods`, bound generically by the schema builder (`src/core/mvvm/schema-builder.js`) onto a `<wb-checkbox>` host. `toggle()` resolves to the schema builder's real generic implementation (toggles `element.hidden`, **not** the checked state); the rest have no matching generic implementation and are stubs that dispatch `wb:{method}`.
+`checkbox()` itself performs only one JS action: setting `element.indeterminate = true` when requested. The methods below come from `checkbox.schema.json`'s `$methods`, bound generically by the schema builder (`src/core/mvvm/schema-builder.js`) onto a `<input type="checkbox">` host. `toggle()` resolves to the schema builder's real generic implementation (toggles `element.hidden`, **not** the checked state); the rest have no matching generic implementation and are stubs that dispatch `wb:{method}`.
 
 | Method | Description |
 |--------|-------------|

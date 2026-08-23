@@ -10,7 +10,7 @@ mdhtml.js auto-live-render feature this page exercises for the first time site-w
 ### 1. Full-document boilerplate example live-rendered its own `<link>` tags → 404s
 **Where:** `docs/V3-GUIDE.md:74-100` — a "here's how to wire up your own `index.html`"
 illustration (`<!DOCTYPE html><html><head><link href="src/styles/themes.css">...`)
-that happens to contain a real `<wb-card>` tag nested inside.
+that happens to contain a real `<article>` tag nested inside.
 
 **Cause:** the newly-shipped auto-live-render conversion (mdhtml.js) matched the block
 because it contains a `<wb-*>` tag, and wrapped the *entire* boilerplate — `<link>` tags
@@ -28,8 +28,8 @@ regardless of what's nested inside it. (`src/wb-viewmodels/mdhtml.js`)
 real request)
 
 ### 2. Bare small-control examples (Spinner, Progress) collapsed to unreadable vertical strips
-**Where:** `docs/V3-GUIDE.md`'s `<wb-spinner></wb-spinner>` and `<wb-progress value="75"
-striped></wb-progress>` examples — no size-driving content of their own.
+**Where:** `docs/V3-GUIDE.md`'s `<div x-spinner></div>` and `<wb-progress value="75"
+striped></progress>` examples — no size-driving content of their own.
 
 **Cause:** the single-item shrink-to-fit rule (`#486`,
 `wb-demo:has(> .wb-demo__grid--cols-1 > :only-child)`) sizes the *whole* demo — code
@@ -70,13 +70,13 @@ were previously inert text and are now live enough to actually attempt a fetch:
 |---|---|---|
 | Placeholder image paths in card examples | `cardhero.md`, `cardhorizontal.md`, `cardoverlay.md`, `cardportfolio.md`, `cardproduct.md`, `cardprofile.md`, `cardtestimonial.md`, `cardvideo.md` (8 files) | `images/hero-bg.jpg`, `images/john.jpg`, etc. — illustrative filenames that were never real files |
 | Placeholder media paths, semantic components | `semantics/img.md`, `semantics/video.md` | `photo.jpg`, `thumbnail.jpg`, plus `src/wb-models/video.schema.json` (this one may be a genuinely missing schema file, not just a placeholder path — worth its own look) |
-| Nested `<wb-mdhtml>` recursion | `mdhtml.md` | `<wb-mdhtml src="/docs/guide.md">` — the doc's own example of the markdown-renderer, live-rendering ANOTHER (fake) markdown file; on that fetch's 404, mdhtml's error path appears to cascade into fetching several site-shell assets (`wb.js`, `site-engine.js`, `themes.css`, etc.) that also don't resolve correctly from this context |
+| Nested `<div x-mdhtml>` recursion | `mdhtml.md` | `<wb-mdhtml src="/docs/guide.md">` — the doc's own example of the markdown-renderer, live-rendering ANOTHER (fake) markdown file; on that fetch's 404, mdhtml's error path appears to cascade into fetching several site-shell assets (`wb.js`, `site-engine.js`, `themes.css`, etc.) that also don't resolve correctly from this context |
 
 None of these produce broken *layout* (browsers/wb components handle a missing image
 gracefully) — they're console/network noise, not the character-wrapping or fetch-storm
 severity of findings #1-2. Filed as follow-up issues rather than fixed inline here, since
 fixing them means either replacing placeholder paths with real demo assets (content
-work, not a code bug) or auditing `wb-mdhtml`'s own nested-fetch error handling (a
+work, not a code bug) or auditing `<div x-mdhtml>`'s own nested-fetch error handling (a
 separate, deeper investigation).
 
 ## Fixes shipped this session (commits, most recent first)
@@ -101,5 +101,5 @@ separate, deeper investigation).
   actually 404 (harmless but noisy)
 - `src/wb-models/video.schema.json` may not exist — worth confirming independently of
   the placeholder-path issue
-- `mdhtml.md`'s nested `<wb-mdhtml>` example cascades into ~7 additional 404s on fetch
-  failure — `wb-mdhtml`'s own error-handling path needs its own investigation
+- `mdhtml.md`'s nested `<div x-mdhtml>` example cascades into ~7 additional 404s on fetch
+  failure — `<div x-mdhtml>`'s own error-handling path needs its own investigation

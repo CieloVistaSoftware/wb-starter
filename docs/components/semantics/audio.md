@@ -6,10 +6,10 @@ Audio player with optional 15-band graphic equalizer.
 
 | Property | Value |
 |----------|-------|
-| Custom Tag | `<wb-audio>` |
+| Custom Tag | `<audio>` |
 | Behavior | `audio` |
 | Semantic | `<div>` |
-| Root CSS Class | `wb-audio` |
+| Root CSS Class | `<audio>` |
 | Category | Media |
 | Schema | `src/wb-models/audio.schema.json` |
 
@@ -29,7 +29,7 @@ Audio player with optional 15-band graphic equalizer.
 Wrapped in `<wb-demo>`, so the live component renders below with its source shown underneath:
 
 <wb-demo>
-<wb-audio src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3"></wb-audio>
+<wb-audio src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3"></audio>
 </wb-demo>
 
 ## Usage
@@ -37,7 +37,7 @@ Wrapped in `<wb-demo>`, so the live component renders below with its source show
 ### Custom Element
 
 ```html
-<wb-audio src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3"></wb-audio>
+<wb-audio src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3"></audio>
 ```
 
 ### Native Audio (Enhanced)
@@ -57,7 +57,7 @@ Wrapped in `<wb-demo>`, so the live component renders below with its source show
 <wb-audio
   src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3"
   show-eq>
-</wb-audio>
+</audio>
 ```
 
 ### Background Audio
@@ -68,7 +68,7 @@ Wrapped in `<wb-demo>`, so the live component renders below with its source show
   autoplay
   muted
   loop>
-</wb-audio>
+</audio>
 ```
 
 ### With Bass/Treble Boost
@@ -78,7 +78,7 @@ Wrapped in `<wb-demo>`, so the live component renders below with its source show
   src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3"
   bass="6"
   treble="3">
-</wb-audio>
+</audio>
 ```
 
 ## Generated Structure

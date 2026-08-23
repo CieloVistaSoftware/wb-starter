@@ -51,7 +51,7 @@ in 1 spot — needs full conversion, not zero), retire `pce-test.html`.**
   looks like an early/scratch version
 - `button-variants-tags-demo.html` — "Button Variants (wb-* tags)", **most complete**
   (8 variants incl. `link`, which the others lack), 10 `<wb-demo>` blocks already
-- `button-composition-demo.html` — **NOT a duplicate**: demonstrates `wb-button` +
+- `button-composition-demo.html` — **NOT a duplicate**: demonstrates `<button>` +
   `x-*` behavior composition, a different subject entirely.
 
 **Recommendation: keep `button-variants-tags-demo.html` as canonical for plain variant

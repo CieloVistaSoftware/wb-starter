@@ -6,10 +6,10 @@ Multi-line text input with autosize and character count.
 
 | Property | Value |
 |----------|-------|
-| Custom Tag | `<wb-textarea>` |
+| Custom Tag | `<textarea>` |
 | Behavior | `textarea` |
 | Semantic | `<div>` (role="textbox") |
-| Root CSS Class | `wb-textarea` |
+| Root CSS Class | `<textarea>` |
 | Category | Forms |
 | Schema | `src/wb-models/textarea.schema.json` |
 
@@ -37,7 +37,7 @@ Wrapped in `<wb-demo>`, so the live component renders below with its source show
 <wb-textarea
   label="Message"
   placeholder="Enter your message...">
-</wb-textarea>
+</textarea>
 </wb-demo>
 
 ## Usage
@@ -48,7 +48,7 @@ Wrapped in `<wb-demo>`, so the live component renders below with its source show
 <wb-textarea
   label="Message"
   placeholder="Enter your message...">
-</wb-textarea>
+</textarea>
 ```
 
 ### Native Textarea (Enhanced)
@@ -65,7 +65,7 @@ Wrapped in `<wb-demo>`, so the live component renders below with its source show
 <wb-textarea
   label="Description"
   placeholder="Enter description...">
-</wb-textarea>
+</textarea>
 ```
 
 ### Character Count
@@ -76,7 +76,7 @@ Wrapped in `<wb-demo>`, so the live component renders below with its source show
   placeholder="Tell us about yourself..."
   maxLength="200"
   showCount>
-</wb-textarea>
+</textarea>
 ```
 
 ### Autosize
@@ -86,7 +86,7 @@ Wrapped in `<wb-demo>`, so the live component renders below with its source show
   label="Comment"
   placeholder="Write a comment..."
   autosize>
-</wb-textarea>
+</textarea>
 ```
 
 ### Custom Rows
@@ -95,11 +95,11 @@ Wrapped in `<wb-demo>`, so the live component renders below with its source show
 <wb-textarea
   label="Notes"
   rows="5">
-</wb-textarea>
+</textarea>
 <wb-textarea
   label="Content"
   rows="10">
-</wb-textarea>
+</textarea>
 ```
 
 ### Resize Options
@@ -108,15 +108,15 @@ Wrapped in `<wb-demo>`, so the live component renders below with its source show
 <wb-textarea
   label="No resize"
   resize="none">
-</wb-textarea>
+</textarea>
 <wb-textarea
   label="Vertical only"
   resize="vertical">
-</wb-textarea>
+</textarea>
 <wb-textarea
   label="Both directions"
   resize="both">
-</wb-textarea>
+</textarea>
 ```
 
 ### Validation States
@@ -125,11 +125,11 @@ Wrapped in `<wb-demo>`, so the live component renders below with its source show
 <wb-textarea
   label="Valid"
   variant="success">
-</wb-textarea>
+</textarea>
 <wb-textarea
   label="Error"
   variant="error">
-</wb-textarea>
+</textarea>
 ```
 
 ### Disabled/Readonly
@@ -138,12 +138,12 @@ Wrapped in `<wb-demo>`, so the live component renders below with its source show
 <wb-textarea
   label="Disabled"
   disabled>
-</wb-textarea>
+</textarea>
 <wb-textarea
   label="Readonly"
   readonly
   value="Can't edit this">
-</wb-textarea>
+</textarea>
 ```
 
 ## Generated Structure

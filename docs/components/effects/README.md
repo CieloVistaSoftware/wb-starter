@@ -10,9 +10,9 @@ This folder contains documentation for the decorative effect behaviors.
 
 | Component | Tag | Purpose |
 |-----------|-----|---------|
-| [confetti](./confetti.md) | `<wb-confetti>` | Burst of confetti on click |
-| [fireworks](./fireworks.md) | `<wb-fireworks>` | Firework bursts |
-| [snow](./snow.md) | `<wb-snow>` | Falling snow overlay |
+| [confetti](./confetti.md) | `<div x-confetti>` | Burst of confetti on click |
+| [fireworks](./fireworks.md) | `<div x-fireworks>` | Firework bursts |
+| [snow](./snow.md) | `<div x-snow>` | Falling snow overlay |
 
 ## Authoring
 
@@ -20,7 +20,7 @@ Each of these works as a `<wb-*>` tag or as an `x-*` attribute on any element â€
 the two surfaces are equivalent:
 
 ```html
-<wb-confetti>Celebrate</wb-confetti>
+<div x-confetti>Celebrate</div>
 <button x-confetti>Celebrate</button>
 ```
 

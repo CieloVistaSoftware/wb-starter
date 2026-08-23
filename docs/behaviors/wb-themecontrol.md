@@ -7,7 +7,7 @@ choice across page loads (via `localStorage`) unless disabled.
 - **Type:** Component (custom tag)
 - **Usage:**
   <wb-demo>
-  <wb-themecontrol></wb-themecontrol>
+  <div x-themecontrol></div>
   </wb-demo>
 - **Attributes:**
   - `target` — CSS selector (or `"html"`, the default) for the element `data-theme` is applied to.

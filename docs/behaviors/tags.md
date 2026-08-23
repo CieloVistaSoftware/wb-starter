@@ -4,7 +4,7 @@ Lets a user type and press Enter to build a list of removable tags/chips next
 to a text input. See [src/wb-viewmodels/tags.js](../../src/wb-viewmodels/tags.js).
 
 - **Type:** Modifier
-- **Root CSS class:** `wb-tags`
+- **Root CSS class:** `<div x-tags>`
 - **Schema:** [tags.schema.json](../../src/wb-models/tags.schema.json)
 
 ## Usage
@@ -32,7 +32,7 @@ interactively (there's no attribute for pre-populating an initial tag list).
 
 | Class | Applies to | When |
 |---|---|---|
-| `wb-tags` | wrapper `<div>` | always |
+| `<div x-tags>` | wrapper `<div>` | always |
 | `wb-tags__input` | the `<input>` | always |
 | `wb-tags__list` | the generated tag list `<div>` | always |
 | `wb-tags__tag` | each generated tag `<span>` | one per added tag |

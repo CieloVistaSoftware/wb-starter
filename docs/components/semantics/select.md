@@ -6,10 +6,10 @@ Enhanced select dropdown with search, clear, and multi-select.
 
 | Property | Value |
 |----------|-------|
-| Custom Tag | `<wb-select>` |
+| Custom Tag | `<select>` |
 | Behavior | `select` |
 | Semantic | `<div>` (role="combobox") |
-| Root CSS Class | `wb-select` |
+| Root CSS Class | `<select>` |
 | Category | Forms |
 | Schema | `src/wb-models/select.schema.json` |
 
@@ -36,7 +36,7 @@ Wrapped in `<wb-demo>`, so the live component renders below with its source show
 <wb-select
   label="Country"
   options='[{"value":"us","label":"United States"},{"value":"uk","label":"United Kingdom"}]'>
-</wb-select>
+</select>
 </wb-demo>
 
 ## Usage
@@ -47,7 +47,7 @@ Wrapped in `<wb-demo>`, so the live component renders below with its source show
 <wb-select
   label="Country"
   options='[{"value":"us","label":"United States"},{"value":"uk","label":"United Kingdom"}]'>
-</wb-select>
+</select>
 </wb-demo>
 
 ### Native Select (Enhanced)
@@ -70,7 +70,7 @@ automatically, no `x-select` attribute needed.
   label="Choose a language"
   placeholder="Select language..."
   options='[{"value":"en","label":"English"},{"value":"es","label":"Spanish"},{"value":"fr","label":"French"}]'>
-</wb-select>
+</select>
 </wb-demo>
 
 ### Searchable
@@ -80,7 +80,7 @@ automatically, no `x-select` attribute needed.
   label="Country"
   searchable
   options='[{"value":"us","label":"United States"},{"value":"uk","label":"United Kingdom"},{"value":"ca","label":"Canada"}]'>
-</wb-select>
+</select>
 </wb-demo>
 
 ### Clearable
@@ -90,7 +90,7 @@ automatically, no `x-select` attribute needed.
   label="Priority"
   clearable
   options='[{"value":"low","label":"Low"},{"value":"medium","label":"Medium"},{"value":"high","label":"High"}]'>
-</wb-select>
+</select>
 </wb-demo>
 
 ### Multi-Select
@@ -100,7 +100,7 @@ automatically, no `x-select` attribute needed.
   label="Tags"
   multiple
   options='[{"value":"bug","label":"Bug"},{"value":"feature","label":"Feature"},{"value":"docs","label":"Documentation"}]'>
-</wb-select>
+</select>
 </wb-demo>
 
 ### Sizes
@@ -110,17 +110,17 @@ automatically, no `x-select` attribute needed.
   label="Small"
   size="sm"
   options='[{"value":"a","label":"Alpha"},{"value":"b","label":"Beta"}]'>
-</wb-select>
+</select>
 <wb-select
   label="Medium"
   size="md"
   options='[{"value":"a","label":"Alpha"},{"value":"b","label":"Beta"}]'>
-</wb-select>
+</select>
 <wb-select
   label="Large"
   size="lg"
   options='[{"value":"a","label":"Alpha"},{"value":"b","label":"Beta"}]'>
-</wb-select>
+</select>
 </wb-demo>
 
 ### Validation States
@@ -130,12 +130,12 @@ automatically, no `x-select` attribute needed.
   label="Valid"
   variant="success"
   options='[{"value":"a","label":"Alpha"},{"value":"b","label":"Beta"}]'>
-</wb-select>
+</select>
 <wb-select
   label="Error"
   variant="error"
   options='[{"value":"a","label":"Alpha"},{"value":"b","label":"Beta"}]'>
-</wb-select>
+</select>
 </wb-demo>
 
 ## Generated Structure

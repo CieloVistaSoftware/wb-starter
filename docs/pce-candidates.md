@@ -11,9 +11,9 @@ PCE (Pseudo-Custom Elements) allows you to use **semantic tag names** instead of
 
 ### 1. WB Namespace (Recommended)
 ```html
-<wb-cardprofile name="Sarah"></wb-cardprofile>
-<wb-cardhero title="Welcome"></wb-cardhero>
-<wb-cardstats value="1,234"></wb-cardstats>
+<wb-cardprofile name="Sarah"></div>
+<wb-cardhero title="Welcome"></article>
+<articlestats value="1,234"></div>
 ```
 
 ### 2. Noun-First Aliases (Also Supported)
@@ -53,23 +53,23 @@ All three are equivalent and produce the same result.
 
 | Tag (wb-*) | Tag (noun-first) | Behavior | Description |
 |------------|------------------|----------|-------------|
-| `<wb-card>` | `<basic-card>` | `card` | Basic card container |
-| `<wb-cardprofile>` | `<profile-card>` | `cardprofile` | User profiles with avatar, bio |
-| `<wb-cardhero>` | `<hero-card>` | `cardhero` | Large banner/hero sections |
-| `<wb-cardstats>` | `<stats-card>` | `cardstats` | Dashboard statistics |
-| `<wb-cardtestimonial>` | `<testimonial-card>` | `cardtestimonial` | User quotes with ratings |
-| `<wb-cardvideo>` | `<video-card>` | `cardvideo` | Video content with controls |
-| `<wb-cardfile>` | `<file-card>` | `cardfile` | File download/preview |
-| `<wb-cardnotification>` | `<notification-card>` | `cardnotification` | Alert/Notice blocks |
-| `<wb-cardimage>` | `<image-card>` | `cardimage` | Image with title/caption |
-| `<wb-cardoverlay>` | `<overlay-card>` | `cardoverlay` | Image with text overlay |
-| `<wb-cardportfolio>` | `<portfolio-card>` | `cardportfolio` | Portfolio/contact card |
-| `<wb-cardlink>` | `<link-card>` | `cardlink` | Clickable link card |
-| `<wb-cardhorizontal>` | `<horizontal-card>` | `cardhorizontal` | Side-by-side layout |
-| `<wb-cardbutton>` | - | `cardbutton` | Card with button actions |
-| `<wb-cardexpandable>` | - | `cardexpandable` | Expandable/collapsible |
-| `<wb-cardminimizable>` | - | `cardminimizable` | Minimizable to title bar |
-| `<wb-carddraggable>` | - | `carddraggable` | Draggable card |
+| `<article>` | `<basic-card>` | `card` | Basic card container |
+| `<div x-cardprofile>` | `<profile-card>` | `cardprofile` | User profiles with avatar, bio |
+| `<article x-cardhero>` | `<hero-card>` | `cardhero` | Large banner/hero sections |
+| `<articlestats>` | `<stats-card>` | `cardstats` | Dashboard statistics |
+| `<div x-cardtestimonial>` | `<testimonial-card>` | `cardtestimonial` | User quotes with ratings |
+| `<article x-cardvideo>` | `<video-card>` | `cardvideo` | Video content with controls |
+| `<div x-cardfile>` | `<file-card>` | `cardfile` | File download/preview |
+| `<div x-cardnotification>` | `<notification-card>` | `cardnotification` | Alert/Notice blocks |
+| `<article x-cardimage>` | `<image-card>` | `cardimage` | Image with title/caption |
+| `<div x-cardoverlay>` | `<overlay-card>` | `cardoverlay` | Image with text overlay |
+| `<div x-cardportfolio>` | `<portfolio-card>` | `cardportfolio` | Portfolio/contact card |
+| `<div x-cardlink>` | `<link-card>` | `cardlink` | Clickable link card |
+| `<div x-cardhorizontal>` | `<horizontal-card>` | `cardhorizontal` | Side-by-side layout |
+| `<div x-cardbutton>` | - | `cardbutton` | Card with button actions |
+| `<div x-cardexpandable>` | - | `cardexpandable` | Expandable/collapsible |
+| `<div x-cardminimizable>` | - | `cardminimizable` | Minimizable to title bar |
+| `<div x-carddraggable>` | - | `carddraggable` | Draggable card |
 
 ### Layout Components
 
@@ -77,8 +77,8 @@ All three are equivalent and produce the same result.
 |-----|----------|-------------|
 | `<wb-grid>` | `grid` | CSS Grid layout system |
 | `<wb-flex>` | `flex` | Flexbox layout wrapper |
-| `<wb-stack>` | `stack` | Vertical stacking layout |
-| `<wb-cluster>` | `cluster` | Horizontal cluster with wrapping |
+| `<div x-stack>` | `stack` | Vertical stacking layout |
+| `<div x-cluster>` | `cluster` | Horizontal cluster with wrapping |
 | `<wb-container>` | `container` | Centered content wrapper |
 | `<wb-sidebar>` | `sidebarlayout` | Sidebar + main content |
 | `<wb-center>` | `center` | Center content vertically/horizontally |
@@ -87,38 +87,38 @@ All three are equivalent and produce the same result.
 | `<wb-switcher>` | `switcher` | Responsive row/column switch |
 | `<wb-reel>` | `reel` | Horizontal scrolling |
 | `<wb-frame>` | `frame` | Aspect ratio container |
-| `<wb-sticky>` | `sticky` | Sticky positioning |
-| `<wb-drawer>` | `drawerLayout` | Drawer/off-canvas |
+| `<div x-sticky>` | `sticky` | Sticky positioning |
+| `<div x-drawer>` | `drawerLayout` | Drawer/off-canvas |
 
 ### Feedback Components
 
 | Tag | Behavior | Description |
 |-----|----------|-------------|
-| `<wb-spinner>` | `spinner` | Loading spinner |
-| `<wb-avatar>` | `avatar` | User avatar |
-| `<wb-badge>` | `badge` | Status badge |
-| `<wb-alert>` | `alert` | Alert/feedback message |
-| `<wb-progress>` | `progress` | Progress bar |
-| `<wb-rating>` | `rating` | Star rating |
-| `<wb-tabs>` | `tabs` | Tabbed interface |
-| `<wb-switch>` | `switch` | Toggle switch |
+| `<div x-spinner>` | `spinner` | Loading spinner |
+| `<div x-avatar>` | `avatar` | User avatar |
+| `<div x-badge>` | `badge` | Status badge |
+| `<div x-alert>` | `alert` | Alert/feedback message |
+| `<progress>` | `progress` | Progress bar |
+| `<div x-rating>` | `rating` | Star rating |
+| `<nav x-tabs>` | `tabs` | Tabbed interface |
+| `<div x-switch>` | `switch` | Toggle switch |
 
 ### Other Components
 
 | Tag | Behavior | Description |
 |-----|----------|-------------|
 | `<wb-icon>` | `icon` | Icon display |
-| `<wb-mdhtml>` | `mdhtml` | Markdown to HTML |
-| `<wb-codecontrol>` | `codecontrol` | Code theme selector |
-| `<wb-collapse>` | `collapse` | Collapsible content |
-| `<wb-darkmode>` | `darkmode` | Dark mode toggle |
-| `<wb-dropdown>` | `dropdown` | Dropdown menu |
-| `<wb-header>` | `header` | Page header |
-| `<wb-footer>` | `footer` | Page footer |
-| `<wb-globe>` | `globe` | 3D globe visualization |
-| `<wb-stagelight>` | `stagelight` | Spotlight effect |
-| `<wb-repeater>` | `repeater` | Data repeater |
-| `<wb-control>` | `control` | Form control wrapper |
+| `<div x-mdhtml>` | `mdhtml` | Markdown to HTML |
+| `<div x-codecontrol>` | `codecontrol` | Code theme selector |
+| `<div x-collapse>` | `collapse` | Collapsible content |
+| `<div x-darkmode>` | `darkmode` | Dark mode toggle |
+| `<div x-dropdown>` | `dropdown` | Dropdown menu |
+| `<header>` | `header` | Page header |
+| `<footer>` | `footer` | Page footer |
+| `<div x-globe>` | `globe` | 3D globe visualization |
+| `<div x-stagelight>` | `stagelight` | Spotlight effect |
+| `<div x-repeater>` | `repeater` | Data repeater |
+| `<div x-control>` | `control` | Form control wrapper |
 
 ---
 
@@ -126,7 +126,7 @@ All three are equivalent and produce the same result.
 
 ```
 1. Detection
-   └── IntersectionObserver sees <wb-cardprofile> in viewport
+   └── IntersectionObserver sees <div x-cardprofile> in viewport
    
 2. Lookup
    └── customElementMappings finds: { selector: 'wb-cardprofile', behavior: 'cardprofile' }
@@ -236,7 +236,7 @@ npx playwright test tests/behaviors/pce-demo.spec.ts
 
 ### After (v3.0)
 ```html
-<wb-card title="Hello">Content</wb-card>
+<wb-card title="Hello">Content</article>
 ```
 
 Or with behavior attribute:

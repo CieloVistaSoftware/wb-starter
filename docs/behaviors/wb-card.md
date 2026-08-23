@@ -5,7 +5,7 @@
 A card is a flexible, modular container for grouping related information, actions, or media in a visually distinct block. Cards are a universal UI pattern used in dashboards, galleries, product listings, notifications, and more. They help organize content, improve readability, and provide a consistent user experience.
 
 The WB Card System provides a comprehensive set of custom elements for building all types of cards in modern web applications. It includes:
-- 19+ card variants (e.g., `<wb-card>`, `<card-hero>`, `<card-profile>`, etc.)
+- 19+ card variants (e.g., `<article>`, `<card-hero>`, `<card-profile>`, etc.)
 - Semantic HTML for accessibility and SEO
 - Light DOM only (no Shadow DOM)
 - Customizable via attributes, slots, and CSS variables
@@ -20,7 +20,7 @@ The WB Card System provides a comprehensive set of custom elements for building 
 Cards are a universal UI pattern for grouping related information, actions, and media. The WB Card System provides a unified API and consistent styling for all card types, while allowing each variant to specialize for its use case (e.g., hero, profile, product, notification, etc.).
 
 **Key Features:**
-- 19+ card variants, each as a custom element (e.g., `<wb-card>`, `<card-hero>`, `<card-profile>`, etc.)
+- 19+ card variants, each as a custom element (e.g., `<article>`, `<card-hero>`, `<card-profile>`, etc.)
 - Semantic HTML structure for accessibility and SEO
 - Light DOM only (no Shadow DOM)
 - Fully customizable via attributes, slots, and CSS variables
@@ -87,7 +87,7 @@ The WB Card System is a comprehensive, flexible, and accessible set of custom el
 Cards are a universal UI pattern for grouping related information, actions, and media. The WB Card System provides a unified API and consistent styling for all card types, while allowing each variant to specialize for its use case (e.g., hero, profile, product, notification, etc.).
 
 **Key Features:**
-- 19+ card variants, each as a custom element (e.g., `<wb-card>`, `<card-hero>`, `<card-profile>`, etc.)
+- 19+ card variants, each as a custom element (e.g., `<article>`, `<card-hero>`, `<card-profile>`, etc.)
 - Semantic HTML structure for accessibility and SEO
 - Light DOM only (no Shadow DOM)
 - Fully customizable via attributes, slots, and CSS variables
@@ -145,7 +145,7 @@ The WB Card System is a comprehensive, flexible, and accessible set of custom el
 Cards are a universal UI pattern for grouping related information, actions, and media. The WB Card System provides a unified API and consistent styling for all card types, while allowing each variant to specialize for its use case (e.g., hero, profile, product, notification, etc.).
 
 **Key Features:**
-- 19+ card variants, each as a custom element (e.g., `<wb-card>`, `<card-hero>`, `<card-profile>`, etc.)
+- 19+ card variants, each as a custom element (e.g., `<article>`, `<card-hero>`, `<card-profile>`, etc.)
 - Semantic HTML structure for accessibility and SEO
 - Light DOM only (no Shadow DOM)
 - Fully customizable via attributes, slots, and CSS variables
@@ -206,5 +206,5 @@ The WB Card System includes a wide range of card types, each with its own tag an
   size="md"
   footer="Footer text here.">
   <p>All features enabled.</p>
-</wb-card>
+</article>
 ```

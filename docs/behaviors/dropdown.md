@@ -9,10 +9,10 @@ real child `<a>`/`<button>`/`<div>` elements. Implemented by `dropdown()` in
 | Property | Value |
 |----------|-------|
 | Attribute | `x-dropdown` |
-| Custom Tag | `<wb-dropdown>` |
+| Custom Tag | `<div x-dropdown>` |
 | Behavior function | `dropdown()` — `src/wb-viewmodels/dropdown.js` |
 | Semantic element | `<div implicitRole="menu">` |
-| Root CSS Class | `wb-dropdown` (plus `wb-dropdown-trigger` on the host itself) |
+| Root CSS Class | `<div x-dropdown>` (plus `wb-dropdown-trigger` on the host itself) |
 | Category | Overlay |
 | Schema | [dropdown.schema.json](../../src/wb-models/dropdown.schema.json) — declares `closeOnOutside`/`offset` properties the JS never reads; outside-click-to-close is always on unconditionally, it isn't configurable |
 
@@ -67,7 +67,7 @@ The classes below are the ones genuinely applied and meaningfully stylable.
 
 | Class | Applied to | Description |
 |-------|-----------|-------------|
-| `wb-dropdown` | host isn't already a `<wb-dropdown>` tag | Marker class (`wb-dropdown.css`'s tag selector covers real `<wb-dropdown>` hosts) |
+| `<div x-dropdown>` | host isn't already a `<div x-dropdown>` tag | Marker class (`wb-dropdown.css`'s tag selector covers real `<div x-dropdown>` hosts) |
 | `.wb-dropdown-trigger` | host, always | Button-like affordance (background/border/padding/cursor) for when the host's own text is the trigger |
 | `.wb-dropdown__trigger` | the generated trigger `<button>` | Only exists when `label` is set or there are real child items |
 | `.wb-dropdown__menu` | the generated menu `<div>` | Positioned via inline styles; visibility toggled via inline `display` |

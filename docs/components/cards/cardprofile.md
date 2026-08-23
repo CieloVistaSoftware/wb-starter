@@ -6,7 +6,7 @@ User profile card with avatar, name, role, and bio.
 
 | Property | Value |
 |----------|-------|
-| Custom Tag | `<wb-cardprofile>` |
+| Custom Tag | `<div x-cardprofile>` |
 | Behavior | `cardprofile` |
 | Semantic | `<article>` |
 | Root CSS Class | `wb-card wb-card--profile` |
@@ -31,7 +31,7 @@ Wrapped in `<wb-demo>`, so the live component renders below with its source show
   name="John Doe"
   role="Software Engineer"
   avatar="https://picsum.photos/seed/avatar/200/200">
-</wb-cardprofile>
+</div>
 </wb-demo>
 
 ## Usage
@@ -43,7 +43,7 @@ Wrapped in `<wb-demo>`, so the live component renders below with its source show
   name="John Doe"
   role="Software Engineer"
   avatar="https://picsum.photos/seed/avatar/200/200">
-</wb-cardprofile>
+</div>
 ```
 
 ### With Bio and Cover
@@ -55,7 +55,7 @@ Wrapped in `<wb-demo>`, so the live component renders below with its source show
   avatar="https://picsum.photos/seed/jane/200/200"
   cover="https://picsum.photos/seed/cover/800/500"
   bio="Passionate about creating beautiful, user-friendly interfaces.">
-</wb-cardprofile>
+</div>
 ```
 
 ## Generated Structure

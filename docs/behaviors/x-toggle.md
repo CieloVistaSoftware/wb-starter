@@ -6,7 +6,7 @@ Toggles a CSS class on a target element (or itself). See [src/wb-viewmodels/togg
 - **Usage:** `[x-toggle]`
 
 ## Description
-Distinct from the `switch`/`wb-switch` form component under Form Controls — `x-toggle` toggles an arbitrary CSS class on any element, not a form value. Triggers on **mousedown** (not `click`), for immediate visual feedback before the click completes; also responds to Enter/Space when focused.
+Distinct from the `switch`/`<div x-switch>` form component under Form Controls — `x-toggle` toggles an arbitrary CSS class on any element, not a form value. Triggers on **mousedown** (not `click`), for immediate visual feedback before the click completes; also responds to Enter/Space when focused.
 
 ## Attributes
 | Attribute | Default | Description |

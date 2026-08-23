@@ -35,7 +35,7 @@ All card variants compose the shared `card` behavior and Light-DOM markup:
   title="Card Title"
   subtitle="Subtitle">
   Card content here
-</wb-card>
+</article>
 </wb-demo>
 
 ### Semantic Element + Data Attributes
@@ -77,7 +77,7 @@ All card variants compose the shared `card` behavior and Light-DOM markup:
 
 ### Basic Card
 <wb-demo>
-<wb-card title="Hello World"> This is a simple card with content. </wb-card>
+<wb-card title="Hello World"> This is a simple card with content. </article>
 </wb-demo>
 
 ### Elevated Card with Footer
@@ -87,7 +87,7 @@ All card variants compose the shared `card` behavior and Light-DOM markup:
   footer="Last updated: Today"
   elevated>
   Card content with elevation shadow.
-</wb-card>
+</article>
 </wb-demo>
 
 ### Glass Variant
@@ -96,7 +96,7 @@ All card variants compose the shared `card` behavior and Light-DOM markup:
   title="Glass Card"
   variant="glass">
   Frosted glass effect card.
-</wb-card>
+</article>
 </wb-demo>
 
 ### Image Card
@@ -106,7 +106,7 @@ All card variants compose the shared `card` behavior and Light-DOM markup:
   alt="Hero image"
   title="Featured Image"
   subtitle="Image description">
-</wb-cardimage>
+</article>
 </wb-demo>
 
 ### Profile Card
@@ -116,7 +116,7 @@ All card variants compose the shared `card` behavior and Light-DOM markup:
   role="Software Engineer"
   avatar="https://picsum.photos/seed/johndoe/100/100"
   bio="Building great software.">
-</wb-cardprofile>
+</div>
 </wb-demo>
 
 ### Pricing Card
@@ -127,7 +127,7 @@ All card variants compose the shared `card` behavior and Light-DOM markup:
   period="/month"
   features="Unlimited projects, Priority support, API access"
   cta="Get Started">
-</wb-cardpricing>
+</div>
 </wb-demo>
 
 ## File Structure

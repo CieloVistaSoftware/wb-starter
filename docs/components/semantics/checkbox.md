@@ -6,10 +6,10 @@ Checkbox input with label and custom styling.
 
 | Property | Value |
 |----------|-------|
-| Custom Tag | `<wb-checkbox>` |
+| Custom Tag | `<input type="checkbox">` |
 | Behavior | `checkbox` |
 | Semantic | `<div>` (role="checkbox") |
-| Root CSS Class | `wb-checkbox` |
+| Root CSS Class | `<input type="checkbox">` |
 | Category | Forms |
 | Schema | `src/wb-models/checkbox.schema.json` |
 
@@ -30,7 +30,7 @@ Checkbox input with label and custom styling.
 Wrapped in `<wb-demo>`, so the live component renders below with its source shown underneath:
 
 <wb-demo>
-<wb-checkbox label="I agree to the terms"></wb-checkbox>
+<wb-checkbox label="I agree to the terms"></input>
 </wb-demo>
 
 ## Usage
@@ -38,7 +38,7 @@ Wrapped in `<wb-demo>`, so the live component renders below with its source show
 ### Custom Element
 
 ```html
-<wb-checkbox label="I agree to the terms"></wb-checkbox>
+<wb-checkbox label="I agree to the terms"></input>
 ```
 
 ### Native Input (Enhanced)
@@ -56,7 +56,7 @@ Wrapped in `<wb-demo>`, so the live component renders below with its source show
 <wb-checkbox
   label="Remember me"
   checked>
-</wb-checkbox>
+</input>
 ```
 
 ### Indeterminate State
@@ -65,7 +65,7 @@ Wrapped in `<wb-demo>`, so the live component renders below with its source show
 <wb-checkbox
   label="Select All"
   indeterminate>
-</wb-checkbox>
+</input>
 ```
 
 ### Disabled
@@ -74,7 +74,7 @@ Wrapped in `<wb-demo>`, so the live component renders below with its source show
 <wb-checkbox
   label="Unavailable option"
   disabled>
-</wb-checkbox>
+</input>
 ```
 
 ### Sizes
@@ -83,15 +83,15 @@ Wrapped in `<wb-demo>`, so the live component renders below with its source show
 <wb-checkbox
   label="Small"
   size="sm">
-</wb-checkbox>
+</input>
 <wb-checkbox
   label="Medium"
   size="md">
-</wb-checkbox>
+</input>
 <wb-checkbox
   label="Large"
   size="lg">
-</wb-checkbox>
+</input>
 ```
 
 ### In Forms
@@ -102,7 +102,7 @@ Wrapped in `<wb-demo>`, so the live component renders below with its source show
   name="subscribe"
   value="yes"
   required>
-</wb-checkbox>
+</input>
 ```
 
 ## Generated Structure

@@ -6,7 +6,7 @@ Card that can be minimized like a window.
 
 | Property | Value |
 |----------|-------|
-| Custom Tag | `<wb-cardminimizable>` |
+| Custom Tag | `<div x-cardminimizable>` |
 | Behavior | `cardminimizable` |
 | Semantic | `<article>` |
 | Root CSS Class | `wb-card wb-card-minimizable wb-card--minimizable` |
@@ -23,7 +23,7 @@ Supports every [card property](./card.md) — that shared structure and CSS are 
 Wrapped in `<wb-demo>`, so the live component renders below with its source shown underneath:
 
 <wb-demo>
-<wb-cardminimizable title="Dashboard Widget"> Widget content here. </wb-cardminimizable>
+<wb-cardminimizable title="Dashboard Widget"> Widget content here. </div>
 </wb-demo>
 
 ## Usage
@@ -31,7 +31,7 @@ Wrapped in `<wb-demo>`, so the live component renders below with its source show
 ### Basic Minimizable
 
 ```html
-<wb-cardminimizable title="Dashboard Widget"> Widget content here. </wb-cardminimizable>
+<wb-cardminimizable title="Dashboard Widget"> Widget content here. </div>
 ```
 
 ### Initially Minimized
@@ -41,7 +41,7 @@ Wrapped in `<wb-demo>`, so the live component renders below with its source show
   title="Collapsed Widget"
   minimized>
   This content is hidden initially.
-</wb-cardminimizable>
+</div>
 ```
 
 ## Events
@@ -60,8 +60,8 @@ document.querySelector('wb-cardminimizable').addEventListener('wb:cardminimizabl
 const card = document.querySelector('wb-cardminimizable');
 
 // Control minimization
-card.wbCardMinimizable.minimize();
-card.wbCardMinimizable.expand();
+card.wbCardMinimizable.hide();
+card.wbCardMinimizable.show();
 card.wbCardMinimizable.toggle();
 
 // Get state

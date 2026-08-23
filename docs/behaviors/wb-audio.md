@@ -1,11 +1,11 @@
 # wb-audio
 
-A premium custom audio player with a 15-band graphic equalizer, Web Audio API support, and advanced controls. Requires a `src` -- there is no default track (a src-less `<wb-audio>` throws, #433).
+A premium custom audio player with a 15-band graphic equalizer, Web Audio API support, and advanced controls. Requires a `src` -- there is no default track (a src-less `<audio>` throws, #433).
 
 Wrapped in `<wb-demo>`, so the live component renders below with its source shown underneath:
 
 <wb-demo>
-<wb-audio src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3"></wb-audio>
+<wb-audio src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3"></audio>
 </wb-demo>
 
 ---
@@ -14,21 +14,21 @@ Wrapped in `<wb-demo>`, so the live component renders below with its source show
 
 ```html
 <!-- Basic usage -- src is required, there is no default track -->
-<wb-audio src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3"></wb-audio>
+<wb-audio src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3"></audio>
 <!-- With a different audio source -->
-<wb-audio src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3"></wb-audio>
+<wb-audio src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3"></audio>
 <!-- With equalizer and custom volume -->
 <wb-audio
   src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3"
   show-eq
   volume="0.8">
-</wb-audio>
+</audio>
 <!-- With controls, looping, and podcast -->
 <wb-audio
   src="https://archive.org/download/nineinchnails_ghosts_I_IV/01_Ghosts_I.mp3"
   controls
   loop>
-</wb-audio>
+</audio>
 ```
 
 ---
@@ -90,5 +90,5 @@ Wrapped in `<wb-demo>`, so the live component renders below with its source show
   volume="1"
   bass="2"
   treble="-1">
-</wb-audio>
+</audio>
 ```

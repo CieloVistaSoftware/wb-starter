@@ -14,7 +14,7 @@ Self-contained, independently distributable content using the `<article>` elemen
 
 ```html
 <!-- Basic article -->
-<wb-article>
+<div x-as-article>
   <header>
     <h2>Article Title</h2>
     <p>Article subtitle or excerpt</p>
@@ -23,7 +23,7 @@ Self-contained, independently distributable content using the `<article>` elemen
   <footer>
     <time datetime="2024-12-15">December 15, 2024</time>
   </footer>
-</wb-article>
+</div>
 <!-- Card as article -->
 <wb-card variant="article">
   <wb-card-header>
@@ -33,7 +33,7 @@ Self-contained, independently distributable content using the `<article>` elemen
   <wb-card-content>
     <p>Article content...</p>
   </wb-card-content>
-</wb-card>
+</article>
 ```
 
 ### Accessibility Features
@@ -70,7 +70,7 @@ Tangentially related content and supplementary information using the `<aside>` e
     type="info"
     title="Important Notice">
     This information is supplementary to the main content.
-  </wb-alert>
+  </div>
 </wb-aside>
 ```
 
@@ -91,20 +91,20 @@ Self-contained media with optional caption using `<figure>` and `<figcaption>` e
 
 ```html
 <!-- Image with caption -->
-<wb-figure>
+<figure>
   <img
     src="https://picsum.photos/seed/diagram/600/400"
     alt="Process flow diagram">
   <wb-figcaption>Figure 1: Overview of the process flow</wb-figcaption>
-</wb-figure>
+</figure>
 <!-- Code block figure -->
-<wb-figure>
+<figure>
   <pre><code>// Example code
 function hello() {
   console.log('Hello, World!');
 }</code></pre>
   <wb-figcaption>Listing 1: Basic JavaScript function</wb-figcaption>
-</wb-figure>
+</figure>
 ```
 
 ### Best Practices
@@ -199,7 +199,7 @@ Machine-readable value linked to human-readable content using the `<data>` eleme
 <wb-progress
   value="75"
   max="100">
-  <wb-data value="75">75%</wb-data> complete </wb-progress>
+  <wb-data value="75">75%</wb-data> complete </progress>
 ```
 
 ### Accessibility Features
@@ -286,16 +286,16 @@ Task completion indicator using the native `<progress>` element.
   max="100"
   label="Uploading file...">
   70% complete
-</wb-progress>
+</progress>
 <!-- Task completion -->
 <wb-progress
   value="3"
   max="5"
   label="Setup progress">
   Step 3 of 5
-</wb-progress>
+</progress>
 <!-- Indeterminate progress -->
-<wb-progress label="Loading..."> Please wait... </wb-progress>
+<wb-progress label="Loading..."> Please wait... </progress>
 ```
 
 ### Accessibility Features
@@ -322,7 +322,7 @@ Interactive dialog box/modal using the `<dialog>` element.
       variant="ghost"
       onclick="this.closest('wb-dialog').close()">
       ✕
-    </wb-button>
+    </button>
   </wb-dialog-header>
   <wb-dialog-body>
     <p>Are you sure you want to delete this item?</p>
@@ -332,14 +332,14 @@ Interactive dialog box/modal using the `<dialog>` element.
       variant="outline"
       onclick="this.closest('wb-dialog').close()">
       Cancel
-    </wb-button>
+    </button>
     <wb-button
       variant="primary"
       onclick="confirmDelete()">
       Delete
-    </wb-button>
+    </button>
   </wb-dialog-footer>
-</wb-dialog>
+</dialog>
 ```
 
 ### Programmatic API

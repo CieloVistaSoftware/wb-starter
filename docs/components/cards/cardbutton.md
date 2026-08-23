@@ -6,7 +6,7 @@ Card with action buttons in the footer.
 
 | Property | Value |
 |----------|-------|
-| Custom Tag | `<wb-cardbutton>` |
+| Custom Tag | `<div x-cardbutton>` |
 | Behavior | `cardbutton` |
 | Semantic | `<article>` |
 | Root CSS Class | `wb-card wb-card-button` |
@@ -32,7 +32,7 @@ Wrapped in `<wb-demo>`, so the live component renders below with its source show
   primary="Submit"
   secondary="Cancel">
   Card content here.
-</wb-cardbutton>
+</div>
 </wb-demo>
 
 ## Usage
@@ -46,7 +46,7 @@ Wrapped in `<wb-demo>`, so the live component renders below with its source show
   primary="Submit"
   secondary="Cancel">
   Card content here.
-</wb-cardbutton>
+</div>
 ```
 
 ### With Links
@@ -58,7 +58,7 @@ Wrapped in `<wb-demo>`, so the live component renders below with its source show
   primaryHref="/details"
   secondary="Go Back"
   secondaryHref="/">
-</wb-cardbutton>
+</div>
 ```
 
 ## Generated Structure

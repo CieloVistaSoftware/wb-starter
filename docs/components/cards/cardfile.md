@@ -6,7 +6,7 @@ File/document download card with file type icons.
 
 | Property | Value |
 |----------|-------|
-| Custom Tag | `<wb-cardfile>` |
+| Custom Tag | `<div x-cardfile>` |
 | Behavior | `cardfile` |
 | Semantic | `<article>` + `<figure>` |
 | Root CSS Class | `wb-card wb-card-file` |
@@ -32,7 +32,7 @@ Wrapped in `<wb-demo>`, so the live component renders below with its source show
   filename="Annual Report.pdf"
   type="pdf"
   size="2.5 MB">
-</wb-cardfile>
+</div>
 </wb-demo>
 
 ## Usage
@@ -44,7 +44,7 @@ Wrapped in `<wb-demo>`, so the live component renders below with its source show
   filename="Annual Report.pdf"
   type="pdf"
   size="2.5 MB">
-</wb-cardfile>
+</div>
 ```
 
 ### Downloadable File
@@ -57,7 +57,7 @@ Wrapped in `<wb-demo>`, so the live component renders below with its source show
   date="Jan 10, 2024"
   href="/downloads/assets.zip"
   downloadable>
-</wb-cardfile>
+</div>
 ```
 
 ### Image File
@@ -68,7 +68,7 @@ Wrapped in `<wb-demo>`, so the live component renders below with its source show
   type="image"
   size="850 KB"
   date="Dec 5, 2023">
-</wb-cardfile>
+</div>
 ```
 
 ## File Type Icons

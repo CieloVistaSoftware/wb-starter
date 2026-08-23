@@ -35,9 +35,9 @@ CSS Grid layout with a mobile-first auto-fit default, optional fixed rows, alter
 
 <wb-demo>
 <wb-grid>
-  <wb-card title="A">Card A</wb-card>
-  <wb-card title="B">Card B</wb-card>
-  <wb-card title="C">Card C</wb-card>
+  <wb-card title="A">Card A</article>
+  <wb-card title="B">Card B</article>
+  <wb-card title="C">Card C</article>
 </wb-grid>
 </wb-demo>
 
@@ -47,10 +47,10 @@ CSS Grid layout with a mobile-first auto-fit default, optional fixed rows, alter
 <wb-grid
   columns="4"
   gap="0.75rem">
-  <wb-badge label="1"></wb-badge>
-  <wb-badge label="2"></wb-badge>
-  <wb-badge label="3"></wb-badge>
-  <wb-badge label="4"></wb-badge>
+  <wb-badge label="1"></div>
+  <wb-badge label="2"></div>
+  <wb-badge label="3"></div>
+  <wb-badge label="4"></div>
 </wb-grid>
 ```
 
@@ -88,9 +88,9 @@ CSS Grid layout with a mobile-first auto-fit default, optional fixed rows, alter
 <wb-grid
   columns="3"
   center>
-  <wb-badge label="One"></wb-badge>
-  <wb-badge label="Two"></wb-badge>
-  <wb-badge label="Three"></wb-badge>
+  <wb-badge label="One"></div>
+  <wb-badge label="Two"></div>
+  <wb-badge label="Three"></div>
 </wb-grid>
 ```
 
@@ -101,8 +101,8 @@ CSS Grid layout with a mobile-first auto-fit default, optional fixed rows, alter
 <div
   x-grid
   columns="2">
-  <wb-badge label="A"></wb-badge>
-  <wb-badge label="B"></wb-badge>
+  <wb-badge label="A"></div>
+  <wb-badge label="B"></div>
 </div>
 ```
 

@@ -55,7 +55,7 @@ A standalone page needs the theme + base styles and one module script:
   footer="Start with semantic HTML, then compose focused behaviors.">
   <p>Keep content readable and focused by giving each card one clear job.</p>
   <p>WB-Starter applies behavior directly to the element, so the markup stays easy to inspect and reuse.</p>
-</wb-card>
+</article>
 </wb-demo>
 
 <wb-demo>
@@ -98,7 +98,7 @@ into the live example above:
       <p> WB-Starter applies behavior directly to the element, so the markup
       stays easy to inspect and reuse.</p>
       <p>Start with semantic HTML, then compose focused behaviors.</p>
-    </wb-card>
+    </article>
     <button
       x-toast
       message="Saved!"
@@ -132,63 +132,63 @@ into the live example above:
 
 Custom `wb-*` tags map to behaviors. Pass **plain attributes**; children are slotted as content.
 
-**Card** — `<wb-card>`:
+**Card** — `<article>`:
 
 <wb-demo>
 <wb-card
   title="Pro"
   variant="glass">
   <p>Card body.</p>
-</wb-card>
+</article>
 </wb-demo>
 
-**Spinner** — `<wb-spinner>`:
+**Spinner** — `<div x-spinner>`:
 
 <wb-demo>
 <wb-spinner
   size="lg"
   color="success">
-</wb-spinner>
+</div>
 </wb-demo>
 
-**Progress bar** — `<wb-progress>`:
+**Progress bar** — `<progress>`:
 
 <wb-demo>
 <wb-progress
   value="75"
   striped>
-</wb-progress>
+</progress>
 </wb-demo>
 
-**Badge** — `<wb-badge>`:
+**Badge** — `<div x-badge>`:
 
 <wb-demo>
 <wb-badge
   variant="success"
   pill>
   New
-</wb-badge>
+</div>
 </wb-demo>
 
-**Tabs** — `<wb-tabs>`:
+**Tabs** — `<nav x-tabs>`:
 
 <wb-demo>
-<wb-tabs>
+<nav x-tabs>
   <div tab-title="Overview">
     <p>…</p>
   </div>
   <div tab-title="Install">
     <p>…</p>
   </div>
-</wb-tabs>
+</nav>
 </wb-demo>
 
-**Accordion** — `<wb-accordion>`:
+**Accordion** — `<div x-accordion>`:
 
 <wb-demo>
 <wb-accordion title="What is wb-starter?">
   <p>A zero-build component library.</p>
-</wb-accordion>
+</div>
 </wb-demo>
 
 Card variants come from the schema (`default`, `glass`, `elevated`, `float`, …).
@@ -259,7 +259,7 @@ Themes are pure CSS variables in `src/styles/themes.css`, selected by the
 ```
 
 Switch at runtime with the `Theme` API (`src/core/theme.js`) or drop in a
-`<wb-themecontrol>` for a ready-made selector. **Never hardcode colors** — only
+`<div x-themecontrol>` for a ready-made selector. **Never hardcode colors** — only
 `themes.css` holds literals; everything else references `var(--…)` tokens.
 
 ---
@@ -283,7 +283,7 @@ WB.render(json, container)    // build DOM from a JSON component definition
 ### The lifecycle of one element
 
 1. **Map.** `scan()` matches each element against `customElementMappings`
-   (`wb-card` → `card`, `[x-toast]` → `toast`, …) and, if `autoInject`, against
+   (`<article>` → `card`, `[x-toast]` → `toast`, …) and, if `autoInject`, against
    the native map.
 2. **Schedule.** Matches are handed to `lazyInject()`, which observes the element
    with an `IntersectionObserver` (200px root margin) — behaviors load only when
@@ -326,7 +326,7 @@ Components can be **schema-driven**: a `*.schema.json` declares the component's
 `$view` (DOM structure), attributes, variants, and `test.setup` examples. The
 **schema builder** (`src/core/mvvm/schema-builder.js`) loads them (listed in
 `src/wb-models/index.json`) and builds the component's DOM before behaviors run.
-This is how a `<wb-card>` knows its header/body/footer structure declaratively.
+This is how a `<article>` knows its header/body/footer structure declaratively.
 Processed elements are marked `x-schema="<name>"`; legacy `x-behavior=` usage is
 rejected with a console error in strict mode.
 

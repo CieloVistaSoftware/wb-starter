@@ -6,10 +6,10 @@ Progress bar with determinate and indeterminate states, size/color variants, a b
 
 | Property | Value |
 |----------|-------|
-| Custom Tag | `<wb-progress>` |
+| Custom Tag | `<progress>` |
 | Behavior | `progress` |
 | Semantic | `<progress role="progressbar">` |
-| Root CSS Class | `wb-progress` |
+| Root CSS Class | `<progress>` |
 | Category | Feedback |
 | Schema | `src/wb-models/progress.schema.json` |
 
@@ -33,45 +33,45 @@ Progress bar with determinate and indeterminate states, size/color variants, a b
 ### Custom Element
 
 <wb-demo>
-<wb-progress value="60" max="100"></wb-progress>
+<wb-progress value="60" max="100"></progress>
 </wb-demo>
 
 ### Color Variants
 
 ```html
-<wb-progress value="50" variant="primary"></wb-progress>
-<wb-progress value="75" variant="success"></wb-progress>
-<wb-progress value="40" variant="warning"></wb-progress>
-<wb-progress value="20" variant="error"></wb-progress>
-<wb-progress value="65" variant="info"></wb-progress>
+<wb-progress value="50" variant="primary"></progress>
+<wb-progress value="75" variant="success"></progress>
+<wb-progress value="40" variant="warning"></progress>
+<wb-progress value="20" variant="error"></progress>
+<wb-progress value="65" variant="info"></progress>
 ```
 
 ### Sizes
 
 ```html
-<wb-progress value="50" size="xs"></wb-progress>
-<wb-progress value="50" size="sm"></wb-progress>
-<wb-progress value="50" size="lg"></wb-progress>
-<wb-progress value="50" size="xl"></wb-progress>
+<wb-progress value="50" size="xs"></progress>
+<wb-progress value="50" size="sm"></progress>
+<wb-progress value="50" size="lg"></progress>
+<wb-progress value="50" size="xl"></progress>
 ```
 
 ### Custom Label
 
 ```html
-<wb-progress value="80" label="Uploading..."></wb-progress>
-<wb-progress value="80" label="Uploading..." show-value></wb-progress>
+<wb-progress value="80" label="Uploading..."></progress>
+<wb-progress value="80" label="Uploading..." show-value></progress>
 ```
 
 ### Striped
 
 ```html
-<wb-progress value="55" variant="success" striped></wb-progress>
+<wb-progress value="55" variant="success" striped></progress>
 ```
 
 ### Indeterminate
 
 ```html
-<wb-progress indeterminate></wb-progress>
+<wb-progress indeterminate></progress>
 ```
 
 ### Native `<progress>` (Enhanced)
@@ -94,14 +94,14 @@ on -->
   aria-valuemax="100">
   <div class="wb-progress__bar"></div>
   <span class="wb-progress__label">60%</span>
-</wb-progress>
+</progress>
 ```
 
 ## CSS Classes
 
 | Class | Applied When | Description |
 |-------|--------------|-------------|
-| `.wb-progress` | Always (also a tag selector: `wb-progress`) | Track background + rounded clip |
+| `.wb-progress` | Always (also a tag selector: `<progress>`) | Track background + rounded clip |
 | `.wb-progress--{xs,sm,md,lg,xl}` | `size` | Track/bar height |
 | `.wb-progress--{default,primary,success,warning,error,info}` | `variant` | Fill color |
 | `.wb-progress--labeled` | `show-label` (default true) | Extra height reserved for the label text |
@@ -113,7 +113,7 @@ on -->
 
 ## Methods
 
-`progress()` (`src/wb-viewmodels/semantics/progress.js`) builds the fill/label directly. The methods below come from `progress.schema.json`'s `$methods`, bound generically by the schema builder. None of `getValue`/`setValue`/`increment`/`decrement`/`reset`/`complete`/`setIndeterminate` have a matching generic implementation in the schema builder's common viewModel, so each is bound as a stub that warns to the console and dispatches a `wb:{method}` event -- to actually read or change a progress bar's value from your own code, update the `value` attribute (or use the demo's `<wb-progress>` markup) rather than calling these directly.
+`progress()` (`src/wb-viewmodels/semantics/progress.js`) builds the fill/label directly. The methods below come from `progress.schema.json`'s `$methods`, bound generically by the schema builder. None of `getValue`/`setValue`/`increment`/`decrement`/`reset`/`complete`/`setIndeterminate` have a matching generic implementation in the schema builder's common viewModel, so each is bound as a stub that warns to the console and dispatches a `wb:{method}` event -- to actually read or change a progress bar's value from your own code, update the `value` attribute (or use the demo's `<progress>` markup) rather than calling these directly.
 
 | Method | Description |
 |--------|-------------|

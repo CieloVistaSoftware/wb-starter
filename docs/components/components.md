@@ -26,7 +26,7 @@ wb-starter uses **composition** instead. A component is a plain `<wb-*>` element
 you add capabilities by stacking `x-*` behaviors:
 
 <wb-demo>
-<wb-button variant="primary" x-ripple x-tooltip="Saved to your account" x-toast message="Saved!" type="success">Save</wb-button>
+<wb-button variant="primary" x-ripple x-tooltip="Saved to your account" x-toast message="Saved!" type="success">Save</button>
 </wb-demo>
 
 Each `x-` attribute adds one capability. They **compose** — stack as many as you want,
@@ -169,66 +169,66 @@ All card variants are independent components that share structure via semantic H
 
 | Component | Custom Tag | Description | Doc Link |
 |-----------|------------|-------------|---------|
-| card | `<wb-card>` | Card component | [card.md](./cards/card.md) |
-| cardimage | `<wb-cardimage>` | Card with featured image | [cardimage.md](./cards/cardimage.md) |
-| cardvideo | `<wb-cardvideo>` | Card with video player | [cardvideo.md](./cards/cardvideo.md) |
-| cardbutton | `<wb-cardbutton>` | Card with action buttons | [cardbutton.md](./cards/cardbutton.md) |
-| cardhero | `<wb-cardhero>` | Hero banner card | [cardhero.md](./cards/cardhero.md) |
-| cardprofile | `<wb-cardprofile>` | User profile card | [cardprofile.md](./cards/cardprofile.md) |
-| cardpricing | `<wb-cardpricing>` | Pricing plan card | [cardpricing.md](./cards/cardpricing.md) |
-| cardstats | `<wb-cardstats>` | Statistics display | [cardstats.md](./cards/cardstats.md) |
-| cardtestimonial | `<wb-cardtestimonial>` | Quote/testimonial | [cardtestimonial.md](./cards/cardtestimonial.md) |
-| cardproduct | `<wb-cardproduct>` | E-commerce product | [cardproduct.md](./cards/cardproduct.md) |
-| cardnotification | `<wb-cardnotification>` | Alert/notification | [cardnotification.md](./cards/cardnotification.md) |
-| cardfile | `<wb-cardfile>` | File download card | [cardfile.md](./cards/cardfile.md) |
-| cardlink | `<wb-cardlink>` | Clickable link card | [cardlink.md](./cards/cardlink.md) |
-| cardhorizontal | `<wb-cardhorizontal>` | Horizontal layout | [cardhorizontal.md](./cards/cardhorizontal.md) |
-| cardoverlay | `<wb-cardoverlay>` | Image with overlay | [cardoverlay.md](./cards/cardoverlay.md) |
-| cardexpandable | `<wb-cardexpandable>` | Expandable content | [cardexpandable.md](./cards/cardexpandable.md) |
-| cardminimizable | `<wb-cardminimizable>` | Minimizable window | [cardminimizable.md](./cards/cardminimizable.md) |
-| carddraggable | `<wb-carddraggable>` | Draggable card | [carddraggable.md](./cards/carddraggable.md) |
-| cardportfolio | `<wb-cardportfolio>` | Portfolio/contact | [cardportfolio.md](./cards/cardportfolio.md) |
+| card | `<article>` | Card component | [card.md](./cards/card.md) |
+| cardimage | `<article x-cardimage>` | Card with featured image | [cardimage.md](./cards/cardimage.md) |
+| cardvideo | `<article x-cardvideo>` | Card with video player | [cardvideo.md](./cards/cardvideo.md) |
+| cardbutton | `<div x-cardbutton>` | Card with action buttons | [cardbutton.md](./cards/cardbutton.md) |
+| cardhero | `<article x-cardhero>` | Hero banner card | [cardhero.md](./cards/cardhero.md) |
+| cardprofile | `<div x-cardprofile>` | User profile card | [cardprofile.md](./cards/cardprofile.md) |
+| cardpricing | `<div x-cardpricing>` | Pricing plan card | [cardpricing.md](./cards/cardpricing.md) |
+| cardstats | `<articlestats>` | Statistics display | [cardstats.md](./cards/cardstats.md) |
+| cardtestimonial | `<div x-cardtestimonial>` | Quote/testimonial | [cardtestimonial.md](./cards/cardtestimonial.md) |
+| cardproduct | `<div x-cardproduct>` | E-commerce product | [cardproduct.md](./cards/cardproduct.md) |
+| cardnotification | `<div x-cardnotification>` | Alert/notification | [cardnotification.md](./cards/cardnotification.md) |
+| cardfile | `<div x-cardfile>` | File download card | [cardfile.md](./cards/cardfile.md) |
+| cardlink | `<div x-cardlink>` | Clickable link card | [cardlink.md](./cards/cardlink.md) |
+| cardhorizontal | `<div x-cardhorizontal>` | Horizontal layout | [cardhorizontal.md](./cards/cardhorizontal.md) |
+| cardoverlay | `<div x-cardoverlay>` | Image with overlay | [cardoverlay.md](./cards/cardoverlay.md) |
+| cardexpandable | `<div x-cardexpandable>` | Expandable content | [cardexpandable.md](./cards/cardexpandable.md) |
+| cardminimizable | `<div x-cardminimizable>` | Minimizable window | [cardminimizable.md](./cards/cardminimizable.md) |
+| carddraggable | `<div x-carddraggable>` | Draggable card | [carddraggable.md](./cards/carddraggable.md) |
+| cardportfolio | `<div x-cardportfolio>` | Portfolio/contact | [cardportfolio.md](./cards/cardportfolio.md) |
 
 ### Form Components
 | Component | Custom Tag | Description |
 |-----------|------------|-------------|
-| input | `<wb-input>` | Text input field |
-| textarea | `<wb-textarea>` | Multi-line text |
-| checkbox | `<wb-checkbox>` | Checkbox input |
-| switch | `<wb-switch>` | Toggle switch |
-| select | `<wb-select>` | Dropdown select |
-| search | `<wb-search>` | Search input with results |
-| rating | `<wb-rating>` | Star rating |
+| input | `<input>` | Text input field |
+| textarea | `<textarea>` | Multi-line text |
+| checkbox | `<input type="checkbox">` | Checkbox input |
+| switch | `<div x-switch>` | Toggle switch |
+| select | `<select>` | Dropdown select |
+| search | `<div x-searchfield>` | Search input with results |
+| rating | `<div x-rating>` | Star rating |
 
 ### Navigation Components
 | Component | Custom Tag | Description |
 |-----------|------------|-------------|
-| tabs | `<wb-tabs>` | Tabbed interface |
-| drawer | `<wb-drawer>` | Slide-in drawer |
-| navbar | `<wb-navbar>` | Navigation bar |
+| tabs | `<nav x-tabs>` | Tabbed interface |
+| drawer | `<div x-drawer>` | Slide-in drawer |
+| navbar | `<nav x-navbar>` | Navigation bar |
 
 ### Feedback Components
 | Component | Custom Tag | Description |
 |-----------|------------|-------------|
-| alert | `<wb-alert>` | Alert message |
-| toast | `<wb-toast>` | Toast notification |
-| spinner | `<wb-spinner>` | Loading spinner |
-| skeleton | `<wb-skeleton>` | Loading skeleton |
-| progress | `<wb-progress>` | Progress bar |
+| alert | `<div x-alert>` | Alert message |
+| toast | `<div x-toast>` | Toast notification |
+| spinner | `<div x-spinner>` | Loading spinner |
+| skeleton | `<div x-skeleton>` | Loading skeleton |
+| progress | `<progress>` | Progress bar |
 
 ### Effects
 | Component | Custom Tag | Description |
 |-----------|------------|-------------|
-| confetti | `<wb-confetti>` | Confetti animation |
-| fireworks | `<wb-fireworks>` | Fireworks effect |
-| snow | `<wb-snow>` | Snow animation |
+| confetti | `<div x-confetti>` | Confetti animation |
+| fireworks | `<div x-fireworks>` | Fireworks effect |
+| snow | `<div x-snow>` | Snow animation |
 
 ### Overlay Components
 | Component | Custom Tag | Description |
 |-----------|------------|-------------|
-| dialog | `<wb-dialog>` | Modal dialog |
-| tooltip | `<wb-tooltip>` | Tooltip popup |
-| dropdown | `<wb-dropdown>` | Dropdown menu |
+| dialog | `<dialog>` | Modal dialog |
+| tooltip | `<div x-tooltip>` | Tooltip popup |
+| dropdown | `<div x-dropdown>` | Dropdown menu |
 
 ## Usage Patterns
 
@@ -239,12 +239,12 @@ All card variants are independent components that share structure via semantic H
   title="My Card"
   subtitle="Description">
   Card content goes here
-</wb-card>
+</article>
 <wb-search
   placeholder="Search for content..."
   variant="glass"
   size="large">
-</wb-search>
+</div>
 ```
 
 ### Attribute-Based (Shortest)
@@ -255,12 +255,12 @@ All card variants are independent components that share structure via semantic H
   elevated
   clickable>
   Content here
-</wb-card>
+</article>
 <wb-search
   placeholder="Search..."
   debounce="300">
   <!-- Search results will appear here -->
-</wb-search>
+</div>
 ```
 
 ## Component Creation & Initialization: Step-by-Step
@@ -278,7 +278,7 @@ Write your component in HTML using the <wb-*> tag:
   title="Welcome"
   subtitle="This is a card.">
   Card content goes here.
-</wb-card>
+</article>
 ```
 
 ### 2. Include the Bootstrap Script
@@ -309,7 +309,7 @@ You can enhance any element (including <wb-*> components) with x-* behaviors:
   x-tooltip="Card info"
   title="With Behaviors">
   Card with ripple and tooltip.
-</wb-card>
+</article>
 ```
 
 The scanner finds all x-* attributes and injects the corresponding behavior logic from the behaviors registry.
@@ -340,7 +340,7 @@ After initialization, all <wb-*> tags are fully functional custom elements, and 
       x-ripple
       title="Demo Card">
       Hello, world!
-    </wb-card>
+    </article>
   </body>
 
 </html>

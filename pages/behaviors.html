@@ -5,10 +5,14 @@
 <link rel="stylesheet" href="src/styles/pages/behaviors.css?v=3.0.91">
 
 <div id="behaviors-hero" class="page__hero">
-  <header id="header" x-ignore><div id="autogen-behaviors-html-0"><h1>⚡ WB Behaviors Showcase</h1>
-  <p class="header-subtitle">170+ behaviors • Interactive demos • Copy-ready code</p>
-  </div>
-  </header>
+  <!-- #774 -- John: "remove these ... We already know where we are."
+       The page title and its "170+ behaviors" strapline used to sit here. The
+       left nav already highlights Behaviors, so the heading only repeated it
+       and pushed the search box and the results list further down every
+       screen. The strapline was also wrong: the list counts 167.
+
+       #behaviors-hero is kept as the wrapper -- it is what the fullscreen
+       target (#744) positions against, and the search row lives inside it. -->
   <!-- #744 -- John: "when full screen show both navigator and the rendered side
        plus the search elements." The workspace is the fullscreen target: search,
        navigator and rendered side together. It deliberately starts BELOW the
@@ -43,6 +47,44 @@
       <header class="behaviors-live__head">
         <span id="behaviors-live-token" class="behaviors-live__token"></span>
         <span id="behaviors-live-note" class="behaviors-live__note"></span>
+        <!-- #774 -- John: "not here, up here...", pointing at the header row.
+             First pass put these under the header; they belong IN it, beside
+             Fullscreen, so the whole control row reads as one strip and the
+             running example starts immediately below it.
+
+             Collapsed they are two chips in the row. Open, flex-wrap gives
+             the panel the full header width and its content drops below the
+             chips -- the header grows rather than the example being pushed
+             off screen. -->
+        <div class="behaviors-live__panels">
+          <details id="behaviors-live-api" class="behaviors-live__api" x-details summary="API">
+            <summary class="behaviors-live__api-summary">API</summary>
+            <div id="behaviors-live-api-body" class="behaviors-live__api-body"></div>
+          </details>
+  
+          <details id="behaviors-live-doc" class="behaviors-live__doc" x-details summary="Documentation">
+            <summary class="behaviors-live__doc-summary">Documentation</summary>
+            <div id="behaviors-live-doc-body" class="behaviors-live__doc-body"></div>
+          </details>
+        </div>
+        <!-- #776 -- John: "Add theme control here." A behavior is being judged
+             on how it LOOKS, and how it looks is a function of the theme. The
+             site header has a theme switcher, but it is at the top of the page
+             and scrolls away -- so comparing a variant across themes meant
+             scrolling up, switching, and scrolling back to find your place.
+
+             show-label="false": the strip is already tight enough to wrap
+             Fullscreen onto a second row on a narrow pane, and the control is
+             self-evident beside the example it recolours.
+
+             This is the framework's own themecontrol behavior, in attribute
+             form -- not a hand-rolled <select>, which would drift from the
+             real theme list the moment a theme was added. -->
+        <div
+          id="behaviors-live-theme"
+          class="behaviors-live__theme"
+          x-themecontrol
+          show-label="false"></div>
         <!-- #720 -- John, on `table . bordered`: "put this element into a parent
              container that will show this content when the fullscreen button is
              pressed... otherwise it will keep this same location and size".
@@ -60,6 +102,8 @@
           target="#behaviors-workspace"
           label="&#9974; Fullscreen"></button>
       </header>
+
+
       <!-- #722 -- John: "When clicking fullscreen all of these elements go
            fullscreen." The STAGE is the panel-sized surface the example is
            centred in (#710/#711), so expanding it expanded the empty space too.
@@ -95,15 +139,6 @@
         <div id="behaviors-live-events-snippet" class="behaviors-live__events-code"></div>
       </div>
 
-      <!-- x-ignore: this <details> is page chrome, not a demo. Without it WB
-           auto-injects the `details` behavior (nativeMap maps details ->
-           details), which sets inline border/radius styles and restructures the
-           summary -- that is the "edge" John spotted, and no stylesheet rule
-           could win against an inline style. -->
-      <details id="behaviors-live-doc" class="behaviors-live__doc" x-ignore open hidden>
-        <summary class="behaviors-live__doc-summary">Documentation</summary>
-        <div id="behaviors-live-doc-body" class="behaviors-live__doc-body"></div>
-      </details>
     </div>
   </div>
   </div><!-- /#behaviors-workspace (#744) -->
@@ -238,17 +273,11 @@
         // values would silently collapse them.
         extensionMap = mod.extensionMap;
         nativeMap = mod.nativeMap || {};
-        // John: "do not include any as- behaviors" -- x-as-{name} is the
-        // MORPHING form (x-as-card), which re-renders an element AS another
-        // component rather than adding behavior to it.
-        //
-        // And: "in cases where we fully inject into a semantic element like
-        // audio we do not need to list the x-audio as it's autoinjected" --
-        // writing <audio> already applies the behavior, so x-audio is pure
-        // duplication. Those 19 entries are listed under their SEMANTIC
-        // ELEMENT instead of dropped outright, because the element is the
-        // real authoring form (<button variant="primary">) and its variants
-        // still need to be visible.
+        // #783: morphing (x-as-{name}) was removed from the framework, so
+        // there is nothing left to filter out here. The guard that kept it
+        // off this list lives on as a regression test —
+        // tests/regression/behaviors-live-selector.spec.ts asserts no x-as-*
+        // form ever appears again.
         const autoHost = {};
         for (const [selector, beh] of Object.entries(mod.nativeMap)) {
           if (!autoHost[beh]) autoHost[beh] = selector;
@@ -270,7 +299,6 @@
         const seen = new Set();
         allEntries = [];
         Object.keys(extensionMap)
-          .filter((a) => !a.startsWith('x-as-'))
           .forEach((attr) => {
             const beh = extensionMap[attr];
             const host = autoHost[beh];
@@ -564,6 +592,34 @@
     const liveExample = document.getElementById('behaviors-live-example');
     const liveCode = document.getElementById('behaviors-live-code');
     const liveDoc = document.getElementById('behaviors-live-doc');
+    const liveApi = document.getElementById('behaviors-live-api');
+    let liveApiBody = document.getElementById('behaviors-live-api-body');
+
+    /**
+     * #774 -- John: "Should be toggles, show/hide only one at a time."
+     *
+     * Both panels open at once pushed the running example far down the panel,
+     * which is the problem that moved them into the header in the first place.
+     * Opening one now closes the other.
+     *
+     * Driven by the 'toggle' event rather than by a click handler, so it holds
+     * however the panel was opened -- keyboard, find-in-page revealing a closed
+     * <details>, or code setting .open directly.
+     *
+     * The guard matters: closing the sibling fires ITS toggle event, which
+     * would re-enter this handler. Without `panel.open` gating the work, the
+     * two would ping-pong.
+     */
+    function exclusivePanels(panels) {
+      panels.forEach((panel) => {
+        if (!panel) return;
+        panel.addEventListener('toggle', () => {
+          if (!panel.open) return;
+          panels.forEach((other) => { if (other && other !== panel) other.open = false; });
+        });
+      });
+    }
+    exclusivePanels([liveApi, liveDoc]);
 
     // #762 -- John: "Allow the document element to be dragged all the way to
     // the top."
@@ -750,6 +806,139 @@
     // most misses are permanent).
     const docCache = new Map();
 
+    /**
+     * #679 -- render a behavior's attributes: type, allowed values, default.
+     *
+     * The data was already here. The page loads data/schema-index.json to build
+     * its variant rows, so every property, enum and default was in memory and
+     * simply never shown: a reader could see THAT variant=primary exists,
+     * because it is a row in the list, but not that variant is a string with a
+     * fixed set of values, or that pageSize is a number defaulting to 10.
+     *
+     * Not async and not fetched -- schemaByName is populated at load.
+     */
+    /**
+     * #679 -- John: "each attribute should be shown to help users."
+     *
+     * The doc pages carry a Usage block, but most show the bare element
+     * (`<article> ... </article>`) with none of its attributes -- and only 27
+     * of 143 behaviors have a doc page at all. A reader could see a table of
+     * attributes and still have nothing to copy.
+     *
+     * This builds the snippet from the schema instead, so it exists for every
+     * behavior and cannot drift from the attribute list directly above it.
+     *
+     * Values are REPRESENTATIVE, not invented: the declared default where
+     * there is one, otherwise the first allowed enum value, otherwise a
+     * type-named placeholder. Nothing here implies a value the schema does
+     * not actually permit.
+     */
+    function buildUsageSnippet(behavior, props) {
+      const names = Object.keys(props);
+
+      // Prefer the semantic host: <article> auto-injects card, so that is what
+      // a reader should copy. Only fall back to the x- attribute form when no
+      // tag carries the behavior on its own.
+      let host = null;
+      for (const [selector, beh] of Object.entries(nativeMap || {})) {
+        if (beh === behavior && !selector.includes('[')) { host = selector; break; }
+      }
+      const tag = host || 'div';
+      const marker = host ? '' : ' x-' + behavior;
+
+      const attrs = names.map((n) => {
+        const d = props[n] || {};
+        // Booleans FIRST. A boolean with `default: false` was being caught by
+        // the default branch below and printed as elevated="false" — which in
+        // HTML is TRUE, because a boolean attribute is true by its presence.
+        // The snippet was teaching the exact opposite of what it said.
+        //
+        // Shown bare, which is the form a reader would actually copy; the
+        // table underneath states the default.
+        let value;
+        if (d.type === 'boolean') value = null;
+        else if (d.default !== undefined && d.default !== '') value = d.default;
+        else if (Array.isArray(d.enum) && d.enum.length) value = d.enum[0];
+        else if (d.type === 'number') value = '0';
+        else value = d.type || 'value';
+        // A boolean attribute is written bare; `muted="true"` is not how HTML
+        // booleans work and would teach the wrong thing.
+        return value === null ? '  ' + n : '  ' + n + '="' + value + '"';
+      });
+
+      const open = attrs.length
+        ? '<' + tag + marker + '\n' + attrs.join('\n') + '>'
+        : '<' + tag + marker + '>';
+      return open + '\n  ...' + '\n</' + tag + '>';
+    }
+
+    function showApi(behavior) {
+      liveApi.hidden = false;
+      const summary = liveApi.querySelector('.behaviors-live__api-summary');
+      if (summary) {
+        summary.textContent =
+          'API';
+      }
+
+      const sc = schemaByName.get(behavior);
+      const props = (sc && sc.properties) || {};
+      const names = Object.keys(props);
+
+      if (!names.length) {
+        // Same reasoning as the doc panel (#673): say the thing is absent
+        // rather than vanishing, so "no schema" cannot be mistaken for
+        // "the panel is broken".
+        liveApiBody.className = 'behaviors-live__api-body behaviors-live__api-body--empty';
+        liveApiBody.textContent = 'No schema for ' + behavior + ' yet.';
+        return;
+      }
+
+      liveApiBody.className = 'behaviors-live__api-body';
+
+      const esc = (v) => String(v).replace(/[&<>"']/g, (c) => (
+        { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]
+      ));
+
+      const rows = names.map((name) => {
+        const d = props[name] || {};
+        // An enum IS the allowed-values list; without one, the type is all we
+        // can honestly say. Long enums are shown in full rather than truncated
+        // -- a cut-off list of allowed values is worse than none, because the
+        // reader cannot tell it is cut off.
+        const values = Array.isArray(d.enum) && d.enum.length
+          ? d.enum.map((v) => '<code>' + esc(v) + '</code>').join(' ')
+          : '<span class="behaviors-live__api-any">any ' + esc(d.type || 'value') + '</span>';
+        // Distinguish "defaults to empty string" from "has no default": both
+        // would otherwise render as an empty cell and mean different things.
+        const dflt = d.default === undefined
+          ? '<span class="behaviors-live__api-none">—</span>'
+          : '<code>' + esc(d.default === '' ? '""' : d.default) + '</code>';
+        const req = d.required ? ' <span class="behaviors-live__api-req">required</span>' : '';
+        return '<tr id="behaviors-api-row-' + esc(name) + '">' +
+          '<td class="behaviors-live__api-name"><code>' + esc(name) + '</code>' + req + '</td>' +
+          '<td class="behaviors-live__api-type">' + esc(d.type || '') + '</td>' +
+          '<td class="behaviors-live__api-values">' + values + '</td>' +
+          '<td class="behaviors-live__api-default">' + dflt + '</td>' +
+          '<td class="behaviors-live__api-desc">' + esc(d.description || '') + '</td>' +
+        '</tr>';
+      }).join('');
+
+      const usage = buildUsageSnippet(behavior, props);
+
+      liveApiBody.innerHTML =
+        '<pre class="behaviors-live__api-usage"><code>' + esc(usage) + '</code></pre>' +
+        '<div class="behaviors-live__api-scroll">' +
+        '<table id="behaviors-live-api-table" class="behaviors-live__api-table">' +
+        '<thead><tr>' +
+          '<th scope="col">Attribute</th><th scope="col">Type</th>' +
+          '<th scope="col">Values</th><th scope="col">Default</th>' +
+          '<th scope="col">Description</th>' +
+        '</tr></thead><tbody>' + rows + '</tbody></table></div>' +
+        '<p class="behaviors-live__api-note">' + names.length +
+        ' attribute' + (names.length === 1 ? '' : 's') +
+        ' · from <code>src/wb-models/' + esc(behavior) + '.schema.json</code></p>';
+    }
+
     async function showDoc(behavior) {
       liveDoc.hidden = true;
       if (!behavior) return;
@@ -776,6 +965,12 @@
         docCache.set(behavior, md);
       }
       liveDoc.hidden = false;
+      // #774: the qualified label ("Button Documentation") was right when
+      // this panel sat alone at the BOTTOM of the column, far from anything
+      // naming the behavior. It now sits in the header, immediately beside
+      // the token that already says `x-accordion` -- so the long form only
+      // repeated it, and at that width the control row overflowed and wrapped
+      // Fullscreen onto a second line. Short label, same information.
       // #746 -- John: "Don't just say Documentation say Button Documentation."
       // The panel sits under a rendered example that changes with the
       // selection; an unqualified "Documentation" gives the reader nothing to
@@ -784,7 +979,7 @@
       const docSummary = liveDoc.querySelector('.behaviors-live__doc-summary');
       if (docSummary) {
         docSummary.textContent =
-          behavior.charAt(0).toUpperCase() + behavior.slice(1) + ' Documentation';
+          'Docs';
       }
       if (!md) {
         // #673 -- John, on `article`: "Where is the docs element below this?"
@@ -792,7 +987,6 @@
         // 116 of 143 behaviors with no .md the whole panel silently vanished --
         // indistinguishable from the feature being broken. Say so instead,
         // matching how the Events panel states its own empty case.
-        liveDoc.open = true;
         liveDocBody.className = 'behaviors-live__doc-body behaviors-live__doc-body--empty';
         liveDocBody.textContent = 'No doc yet for ' + behavior + '.';
         return;
@@ -801,7 +995,6 @@
       // Open by default: John asked for an element that SHOWS the doc, and a
       // collapsed 40px strip below the fold reads as "there is no doc". Still a
       // <details> so it can be folded away once read.
-      liveDoc.open = true;
       // textContent, not innerHTML: mdhtml.js decodes-then-parses and expects
       // the browser to have HTML-escaped the raw markdown first. Assigning raw
       // markdown via innerHTML double-escapes it (the pattern pages/issues.html
@@ -934,6 +1127,89 @@
       return seedValue ? ` ${partner}="${seedValue}"` : '';
     }
 
+
+    /**
+     * #675 -- put the id into the SOURCE, not just the rendered DOM.
+     *
+     * John, for the fifth time: "all elements must have an id".
+     *
+     * assignExampleIds() has been giving the rendered elements ids for a while,
+     * and the event-handler panel below already writes
+     * `document.querySelector('#card-clickable')`. But the source panel showed
+     * the raw catalogue markup, which carries no id at all -- so the snippet
+     * pointed at something that existed only in this page's live DOM, and
+     * anyone copying the example got markup the handler could not find.
+     *
+     * The id belongs in the thing the reader copies.
+     *
+     * Only the ROOT element is given one here. Behavior-injected children get
+     * theirs from assignExampleIds() after the upgrade, and they are not in the
+     * authored source -- writing them in would show the reader markup they did
+     * not write and do not need to.
+     */
+    function withRootId(src, rootId) {
+      if (!src || !rootId) return src;
+      // Already carries an id (a curated example may set its own) -- leave it.
+      if (/^\s*<[a-zA-Z][\w-]*[^>]*\sid=/.test(src)) return src;
+      return src.replace(/^(\s*<[a-zA-Z][\w-]*)/, '$1 id="' + rootId + '"');
+    }
+
+
+    /**
+     * #777 -- keep an example's own label honest.
+     *
+     * John, on `button · icon=heart`: "What? Icon is not download it's heart."
+     *
+     * The catalogue stores ONE canned example per behavior, and 39 of those
+     * examples restate their attributes as body text:
+     *
+     *     <button variant="primary" icon="download" size="md">
+     *       variant: primary · icon: download · size: md
+     *     </button>
+     *
+     * withOption() rewrites the ATTRIBUTE for the selected variant and leaves
+     * the text alone, so every variant showed the canned example's label -- a
+     * line contradicting the markup three lines above it.
+     *
+     * Rebuilding the line from the element's FINAL attributes fixes all 39 at
+     * once and cannot drift again. Editing the data instead would have been
+     * undone the next time the catalogue generator ran.
+     *
+     * Only a line that IS such a descriptor is touched: it must be the whole
+     * line and made entirely of `key: value` pairs (optionally prefixed with
+     * the x- token). Real content -- a toast message, a card body -- never
+     * matches, so nothing else is rewritten.
+     */
+    function refreshDescriptorLine(src) {
+      const open = src.match(/^\s*<[a-zA-Z][\w-]*([^>]*)>/);
+      if (!open) return src;
+
+      // Attributes as authored on the (already substituted) opening tag.
+      const pairs = [];
+      for (const m of open[1].matchAll(/([a-zA-Z-]+)="([^"]*)"/g)) {
+        // Plumbing, not settings worth restating back to the reader.
+        if (/^(id|class|style)$/i.test(m[1])) continue;
+        if (/^x-/i.test(m[1])) continue;
+        pairs.push(m[1] + ': ' + m[2]);
+      }
+      if (!pairs.length) return src;
+
+      const token = (open[1].match(/\s(x-[a-z0-9-]+)/) || [])[1];
+      const SEP = ' · ';
+      const rebuilt = (token ? token + SEP : '') + pairs.join(SEP);
+
+      return src.split('\n').map((line) => {
+        const t = line.trim();
+        if (!t || t.startsWith('<')) return line;
+        const body = t.replace(/^x-[a-z0-9-]+\s*·\s*/, '');
+        const looksLikeDescriptor = body.split('·')
+          .every((part) => /^\s*[a-zA-Z-]+:\s*\S/.test(part));
+        if (!looksLikeDescriptor) return line;
+        return line.match(/^\s*/)[0] + rebuilt;
+      }).join('\n');
+    }
+
+
     function withOption(src, attr, prop, value, isBoolean) {
       if (!value) return src;
 
@@ -1053,18 +1329,25 @@
     // audio.js throws outright ("wb-audio: no src provided -- nothing to play")
     // and logs to the error viewer, so an <audio> with no src is not a harmless
     // stub, it is a real error on every page load. Seeded from the schema's own
-    // default where there is one, falling back to a checked-in asset so the
-    // example never depends on the network.
-    const LOCAL_MEDIA = { audio: 'demos/sample.wav' };
+    // default where there is one, falling back to the known-good source below.
+    //
+    // #762 -- this used to fall back to a checked-in asset "so the example never
+    // depends on the network". John: "all audio and video must be from out there
+    // not local", so it depends on the network now and that is the point.
+    // archive.org rather than a nearer-looking host because it sends
+    // Access-Control-Allow-Origin: * -- show-eq feeds the element through the Web
+    // Audio analyser, and a source without CORS headers analyses as silence
+    // (soundhelix.com, the obvious pick, sends none: checked).
+    const FALLBACK_MEDIA = { audio: 'https://archive.org/download/nineinchnails_ghosts_I_IV/01_Ghosts_I.mp3' };
     function seedAttributes(behavior) {
       const sc = schemaByName.get(behavior);
       const props = (sc && sc.properties) || {};
       const out = [];
       if (props.src) {
-        const fallback = LOCAL_MEDIA[behavior];
+        const fallback = FALLBACK_MEDIA[behavior];
         let src = typeof props.src.default === 'string' ? props.src.default : '';
-        // A schema default like "../audio.mp3" is written relative to a demo
-        // page, not to this one -- prefer the known-good asset when we have it.
+        // A schema default may be written relative to a demo page rather than
+        // to this one -- prefer the known-good absolute source when we have it.
         if (fallback) src = fallback;
         if (src && !/^(https?:)?\/\//.test(src)) src = siteRoot() + src.replace(/^\.{1,2}\//, '');
         if (src) out.push(` src="${src}"`);
@@ -1094,7 +1377,7 @@
           // plain .wb-button anchor rendered as flat text. Modifier CLASSES work
           // without the behavior; a variant= ATTRIBUTE would not, since button()
           // only decorates <button>.
-          '<a href="/demos/sample.wav" download="sample.wav" class="wb-button wb-button--primary">',
+          '<a href="https://archive.org/download/nineinchnails_ghosts_I_IV/01_Ghosts_I.mp3" download="ghosts-i-01.mp3" class="wb-button wb-button--primary">',
           '  ↓ Download the sample',
           '</a>',
         ].join('\n');
@@ -1683,7 +1966,9 @@
       liveEl.hidden = false;
       // John: "Switch these two, behaivor first, variant 2nd".
       const shown = label || token;
-      showDoc(extensionMap[token] || token.replace(/^x-/, ''));
+      const behaviorName = extensionMap[token] || token.replace(/^x-/, '');
+      showApi(behaviorName);
+      showDoc(behaviorName);
       const optionText = variant
         ? (isBool ? prop : (prop && prop !== 'variant' ? `${prop}=${variant}` : variant))
         : '';
@@ -1698,11 +1983,16 @@
         const generated = generatedExample(token, variant, label, prop, isBool);
         liveNote.textContent = 'generated example — no demo on this page';
         liveCode.innerHTML = '';
-        liveExample.innerHTML = generated;
+        // #777: the DOM is built from the REFRESHED markup, not the raw
+        // catalogue string. Refreshing only the displayed source left the
+        // rendered element still carrying the canned example's label, so the
+        // button read "icon: download" while its own source said heart.
+        const generatedShown = refreshDescriptorLine(generated);
+        liveExample.innerHTML = generatedShown;
         maybeWarnServerRequired(generated);
         const genRootId = assignExampleIds(token, optionText);
         resetEvents(liveExample.firstElementChild && liveExample.firstElementChild.tagName.toLowerCase(), token, genRootId);
-        await renderSource(generated);
+        await renderSource(withRootId(generatedShown, genRootId));
         assignExampleIds(token, optionText); // #675: catch behavior-injected children
         const genDescribed = optionDescription(token, prop);
         const genSummary = genDescribed || summarise(liveExample.firstElementChild);
@@ -1744,11 +2034,13 @@
       liveNote.textContent = optionDescription(token, prop) || 'running live';
       // #703: drop the previous example's grown height before measuring this one.
       liveStage.style.minHeight = '';
-      liveExample.innerHTML = src;
+      // #777: DOM built from the refreshed markup — see the generated path.
+      const srcShown = refreshDescriptorLine(src);
+      liveExample.innerHTML = srcShown;
       maybeWarnServerRequired(src);
       const rootId = assignExampleIds(token, optionText);
       resetEvents(liveExample.firstElementChild && liveExample.firstElementChild.tagName.toLowerCase(), token, rootId);
-      await renderSource(src);
+      await renderSource(withRootId(srcShown, rootId));
       assignExampleIds(token, optionText); // #675: catch behavior-injected children
       // After the upgrade, so the summary describes the UPGRADED element rather
       // than the bare markup it was built from.

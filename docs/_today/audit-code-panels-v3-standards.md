@@ -68,7 +68,7 @@ opposite case:
 > `pre.css`'s default editor-style scrolling applies). Explicit override from John.
 
 Because `.wb-demo__code` panels ARE `.x-pre` elements, and doc-viewer.html renders
-markdown content inside `<wb-mdhtml>`, this later/more-specific mdhtml.css rule wins over
+markdown content inside `<div x-mdhtml>`, this later/more-specific mdhtml.css rule wins over
 pre.css's own `.x-pre { white-space: pre; }` default (higher specificity: two selectors
 vs. one class) **on every `<wb-demo>` viewed through the doc-viewer** — silently
 overriding the #390 carve-out that §6 documents as John's explicit, still-standing
@@ -103,7 +103,7 @@ the required `pre`:
 | 5 | Naming and Attributes → Tags and behavior attributes | `<wb-badge variant="success">` | `pre-wrap` |
 | 6 | Naming and Attributes → Tags and behavior attributes | `<button` (x-tooltip) | `pre-wrap` |
 | 7 | Naming and Attributes → Configuration attributes | `<wb-card title="Hello" variant="glass" hoverable>` | `pre-wrap` |
-| 8 | Examples → Component with semantic children | `<wb-article>` | `pre-wrap` |
+| 8 | Examples → Component with semantic children | `<div x-as-article>` | `pre-wrap` |
 | 9 | Examples → Native element with an explicit enhancement | `<button` (x-ripple, submit) | `pre-wrap` |
 | 10 | Migration from Legacy Syntax (see incidental finding) | `<div` (x-card legacy example) | `pre-wrap` |
 
@@ -125,7 +125,7 @@ line-height (24px at the default font-size/line-height for these panels); any ga
 isn't ~1x line-height means the gutter numbers don't read as "one line each" the way an
 un-wrapped panel would.
 
-**demo 0 (`<wb-card>`, Component vs. Behavior → Component)** — 7 logical lines, 3 gaps
+**demo 0 (`<article>`, Component vs. Behavior → Component)** — 7 logical lines, 3 gaps
 irregular:
 - line 2→3 gap 72.0px (expected 24.0px) — line 3 is `variant="glass">`
 - line 3→4 gap 72.0px — line 4 is `<p>`
@@ -136,7 +136,7 @@ gaps irregular:
 - line 1→2 gap 288.0px (12x expected) — line 2 is `<p>`
 - line 2→3 gap 48.0px — line 3 is `Continue?`
 - line 3→4 gap 96.0px — line 4 is `</p>`
-- line 4→5 gap 72.0px — line 5 is `</wb-dialog>`
+- line 4→5 gap 72.0px — line 5 is `</dialog>`
 
 **demo 2 (`<button x-ripple type="button">Save</button>`, Component vs. Behavior →
 Behavior)** — 4 gaps irregular:
@@ -184,11 +184,11 @@ illustrating legacy-vs-v3 syntax —
 <button x-ripple type="button">Click me</button>
 
 <!-- v3 -->
-<wb-card title="Hello" variant="glass">Content</wb-card>
+<wb-card title="Hello" variant="glass">Content</article>
 <button x-ripple type="button">Click me</button>
 ```
 
-— gets converted into a real, live `<wb-demo>` because it contains a genuine `<wb-card>`
+— gets converted into a real, live `<wb-demo>` because it contains a genuine `<article>`
 tag. This is the same category of issue flagged in
 `docs/_today/audit-v3-guide-doc-viewer.md` finding #1 (whole-file boilerplate examples
 being live-rendered when they shouldn't be) — here it's a smaller, narrower case (an

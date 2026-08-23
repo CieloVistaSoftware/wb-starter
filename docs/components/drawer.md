@@ -2,7 +2,7 @@
 
 Two distinct drawer types with different purposes.
 
-## 1. Drawer Layout (`<wb-drawer-layout>`)
+## 1. Drawer Layout (`<div x-drawer-layout>`)
 
 A structural sidebar container that pushes content or sits alongside it.
 
@@ -10,9 +10,9 @@ A structural sidebar container that pushes content or sits alongside it.
 
 | Property | Value |
 |----------|-------|
-| Custom Tag | `<wb-drawer-layout>` |
+| Custom Tag | `<div x-drawer-layout>` |
 | Behavior | `drawerLayout` |
-| Root CSS Class | `wb-drawer-layout` |
+| Root CSS Class | `<div x-drawer-layout>` |
 | Schema | `src/wb-models/drawerLayout.schema.json` |
 
 ### Properties
@@ -35,7 +35,7 @@ Wrapped in `<wb-demo>`, so the live component renders below with its source show
   width="300px">
   <h3>Sidebar</h3>
   <nav>Navigation content...</nav>
-</wb-drawer-layout>
+</div>
 </wb-demo>
 
 ### With Data Attributes
@@ -51,7 +51,7 @@ Wrapped in `<wb-demo>`, so the live component renders below with its source show
 
 ---
 
-## 2. Drawer Overlay (`<wb-drawer>`)
+## 2. Drawer Overlay (`<div x-drawer>`)
 
 A modal panel that slides in over page content.
 
@@ -59,9 +59,9 @@ A modal panel that slides in over page content.
 
 | Property | Value |
 |----------|-------|
-| Custom Tag | `<wb-drawer>` |
+| Custom Tag | `<div x-drawer>` |
 | Behavior | `drawer` |
-| Root CSS Class | `wb-drawer` |
+| Root CSS Class | `<div x-drawer>` |
 | Schema | `src/wb-models/drawer.schema.json` |
 
 ### Properties

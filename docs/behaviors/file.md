@@ -3,7 +3,7 @@
 Adds a styled file input. See [src/wb-viewmodels/file.js](../../src/wb-viewmodels/file.js).
 
 - **Type:** Modifier
-- **Root CSS class:** `wb-file`
+- **Root CSS class:** `<div x-file>`
 - **Schema:** [file.schema.json](../../src/wb-models/file.schema.json)
 
 ## Usage
@@ -29,7 +29,7 @@ None — `file()` takes no configurable attributes.
 
 | Class | Applies to | When |
 |---|---|---|
-| `wb-file` | the host element | always |
+| `<div x-file>` | the host element | always |
 | `wb-file__input` | the generated `<input type="file">` | always |
 
 ## Events

@@ -39,14 +39,14 @@ actually renders.
 ```html
 <wb-card title="Hello" variant="elevated">
   <p>It just works.</p>
-</wb-card>
+</article>
 ```
 
 <!-- ✅ CORRECT — live, rendered, code sample auto-generated from the real markup -->
 <wb-demo>
 <wb-card title="Hello" variant="elevated">
   <p>It just works.</p>
-</wb-card>
+</article>
 </wb-demo>
 ```
 
@@ -211,8 +211,8 @@ multi-attribute tag onto one line.
 
 ```html
 <!-- Short tags: one element per line -->
-<wb-badge label="New"></wb-badge>
-<wb-badge label="Done" variant="success"></wb-badge>
+<wb-badge label="New"></div>
+<wb-badge label="Done" variant="success"></div>
 
 <!-- Long tags: one attribute per line -->
 <button

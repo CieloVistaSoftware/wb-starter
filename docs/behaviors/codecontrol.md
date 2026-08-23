@@ -10,13 +10,13 @@ code block on the page — applies immediately on selection, and keeps every
 |----------|-------|
 | Behavior | `codecontrol` |
 | Attribute | `x-codecontrol` |
-| Custom Tag | `<wb-codecontrol>` |
+| Custom Tag | `<div x-codecontrol>` |
 | Applies to | any container element |
 | Category | Content |
 | Schema | `src/wb-models/codecontrol.schema.json` |
 | Source | `src/wb-viewmodels/codecontrol.js` |
 
-Both forms run the same behavior: `<div x-codecontrol>` and `<wb-codecontrol>` are
+Both forms run the same behavior: `<div x-codecontrol>` and `<div x-codecontrol>` are
 equivalent — the tag form is registered in the tag map
 ([`src/core/tag-map.js`](../../src/core/tag-map.js)) and dispatches to the identical
 `codecontrol()` function. `autoInject` is on by default site-wide
@@ -56,7 +56,7 @@ without any manual `WB.scan()` call.
 ### Custom Tag
 
 <wb-demo>
-<wb-codecontrol size="lg"></wb-codecontrol>
+<wb-codecontrol size="lg"></div>
 </wb-demo>
 
 ## CSS Classes

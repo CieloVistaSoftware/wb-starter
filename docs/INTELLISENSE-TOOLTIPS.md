@@ -29,7 +29,7 @@ Attributes:
 
 ---
 
-## `<wb-alert>`
+## `<div x-alert>`
 
 **Tooltip Output:**
 ```text
@@ -61,7 +61,7 @@ CSS Rules:
 
 ---
 
-## `<wb-audio>`
+## `<audio>`
 
 **Tooltip Output:**
 ```text
@@ -87,7 +87,7 @@ Audio player with optional 15-band graphic equalizer
 
 ---
 
-## `<wb-avatar>`
+## `<div x-avatar>`
 
 **Tooltip Output:**
 ```text
@@ -113,7 +113,7 @@ User avatar with image, initials fallback, and status indicator
 
 ---
 
-## `<wb-badge>`
+## `<div x-badge>`
 
 **Tooltip Output:**
 ```text
@@ -194,7 +194,7 @@ Unified schema for builder components and UI interactions.
 
 ---
 
-## `<wb-button>`
+## `<button>`
 
 **Tooltip Output:**
 ```text
@@ -234,7 +234,7 @@ CSS Rules:
 
 ---
 
-## `<wb-card>`
+## `<article>`
 
 **Tooltip Output:**
 ```text
@@ -340,7 +340,7 @@ Image-focused card.
 
 ---
 
-## `<wb-card-link>`
+## `<div x-cardlink>`
 
 **Tooltip Output:**
 ```text
@@ -547,7 +547,7 @@ Video player card.
 
 ---
 
-## `<wb-cardbutton>`
+## `<div x-cardbutton>`
 
 **Tooltip Output:**
 ```text
@@ -580,7 +580,7 @@ CSS Rules:
 
 ---
 
-## `<wb-carddraggable>`
+## `<div x-carddraggable>`
 
 **Tooltip Output:**
 ```text
@@ -611,7 +611,7 @@ CSS Rules:
 
 ---
 
-## `<wb-cardexpandable>`
+## `<div x-cardexpandable>`
 
 **Tooltip Output:**
 ```text
@@ -642,7 +642,7 @@ CSS Rules:
 
 ---
 
-## `<wb-cardfile>`
+## `<div x-cardfile>`
 
 **Tooltip Output:**
 ```text
@@ -675,7 +675,7 @@ CSS Rules:
 
 ---
 
-## `<wb-cardhero>`
+## `<article x-cardhero>`
 
 **Tooltip Output:**
 ```text
@@ -712,7 +712,7 @@ CSS Rules:
 
 ---
 
-## `<wb-cardhorizontal>`
+## `<div x-cardhorizontal>`
 
 **Tooltip Output:**
 ```text
@@ -746,7 +746,7 @@ CSS Rules:
 
 ---
 
-## `<wb-cardimage>`
+## `<article x-cardimage>`
 
 **Tooltip Output:**
 ```text
@@ -784,7 +784,7 @@ CSS Rules:
 
 ---
 
-## `<wb-cardlink>`
+## `<div x-cardlink>`
 
 **Tooltip Output:**
 ```text
@@ -819,7 +819,7 @@ CSS Rules:
 
 ---
 
-## `<wb-cardminimizable>`
+## `<div x-cardminimizable>`
 
 **Tooltip Output:**
 ```text
@@ -849,7 +849,7 @@ CSS Rules:
 
 ---
 
-## `<wb-cardnotification>`
+## `<div x-cardnotification>`
 
 **Tooltip Output:**
 ```text
@@ -882,7 +882,7 @@ CSS Rules:
 
 ---
 
-## `<wb-cardoverlay>`
+## `<div x-cardoverlay>`
 
 **Tooltip Output:**
 ```text
@@ -917,7 +917,7 @@ CSS Rules:
 
 ---
 
-## `<wb-cardportfolio>`
+## `<div x-cardportfolio>`
 
 **Tooltip Output:**
 ```text
@@ -955,7 +955,7 @@ CSS Rules:
 
 ---
 
-## `<wb-cardpricing>`
+## `<div x-cardpricing>`
 
 **Tooltip Output:**
 ```text
@@ -991,7 +991,7 @@ CSS Rules:
 
 ---
 
-## `<wb-cardproduct>`
+## `<div x-cardproduct>`
 
 **Tooltip Output:**
 ```text
@@ -1029,7 +1029,7 @@ CSS Rules:
 
 ---
 
-## `<wb-cardprofile>`
+## `<div x-cardprofile>`
 
 **Tooltip Output:**
 ```text
@@ -1055,7 +1055,7 @@ Profile card. Composes the shared card structure with profile elements (avatar, 
 
 ---
 
-## `<wb-cardstats>`
+## `<articlestats>`
 
 **Tooltip Output:**
 ```text
@@ -1089,7 +1089,7 @@ CSS Rules:
 
 ---
 
-## `<wb-cardtestimonial>`
+## `<div x-cardtestimonial>`
 
 **Tooltip Output:**
 ```text
@@ -1124,7 +1124,7 @@ CSS Rules:
 
 ---
 
-## `<wb-cardvideo>`
+## `<article x-cardvideo>`
 
 **Tooltip Output:**
 ```text
@@ -1185,7 +1185,7 @@ Attributes:
 
 ---
 
-## `<wb-checkbox>`
+## `<input type="checkbox">`
 
 **Tooltip Output:**
 ```text
@@ -1220,7 +1220,7 @@ CSS Rules:
 
 ---
 
-## `<wb-chip>`
+## `<div x-chip>`
 
 **Tooltip Output:**
 ```text
@@ -1256,7 +1256,7 @@ CSS Rules:
 
 ---
 
-## `<wb-cluster>`
+## `<div x-cluster>`
 
 **Tooltip Output:**
 ```text
@@ -1284,7 +1284,7 @@ Attributes:
 
 ---
 
-## `<wb-column>`
+## `<div x-stack>`
 
 **Tooltip Output:**
 ```text
@@ -1300,7 +1300,7 @@ Example:
 <wb-column gap="sm">
   <h3>Title</h3>
   <p>Content</p>
-</wb-column>
+</div>
 ```
 
 <details><summary>View 4 Attribute Tooltips</summary>
@@ -1316,7 +1316,7 @@ Example:
 
 ---
 
-## `<wb-confetti>`
+## `<div x-confetti>`
 
 **Tooltip Output:**
 ```text
@@ -1417,7 +1417,7 @@ A component to display a live demo and its source code.
 
 ---
 
-## `<wb-details>`
+## `<details>`
 
 **Tooltip Output:**
 ```text
@@ -1448,7 +1448,7 @@ CSS Rules:
 
 ---
 
-## `<wb-dialog>`
+## `<dialog>`
 
 **Tooltip Output:**
 ```text
@@ -1481,7 +1481,7 @@ CSS Rules:
 
 ---
 
-## `<wb-drawer>`
+## `<div x-drawer>`
 
 **Tooltip Output:**
 ```text
@@ -1503,7 +1503,7 @@ Attributes:
 
 ---
 
-## `<wb-drawer-layout>`
+## `<div x-drawer-layout>`
 
 **Tooltip Output:**
 ```text
@@ -1525,7 +1525,7 @@ Collapsible sidebar layout with toggle
 
 ---
 
-## `<wb-dropdown>`
+## `<div x-dropdown>`
 
 **Tooltip Output:**
 ```text
@@ -1548,7 +1548,7 @@ Toggleable dropdown menu
 
 ---
 
-## `<wb-fireworks>`
+## `<div x-fireworks>`
 
 **Tooltip Output:**
 ```text
@@ -1601,7 +1601,7 @@ Attributes:
 
 ---
 
-## `<wb-footer>`
+## `<footer>`
 
 **Tooltip Output:**
 ```text
@@ -1672,7 +1672,7 @@ Example:
 
 ---
 
-## `<wb-header>`
+## `<header>`
 
 **Tooltip Output:**
 ```text
@@ -1720,7 +1720,7 @@ Attributes:
 
 ---
 
-## `<wb-input>`
+## `<input>`
 
 **Tooltip Output:**
 ```text
@@ -1783,7 +1783,7 @@ Attributes:
 
 ---
 
-## `<wb-navbar>`
+## `<nav x-navbar>`
 
 **Tooltip Output:**
 ```text
@@ -1814,7 +1814,7 @@ CSS Rules:
 
 ---
 
-## `<wb-notes>`
+## `<div x-notes>`
 
 **Tooltip Output:**
 ```text
@@ -1895,7 +1895,7 @@ WB Part - Reusable HTML template. First boolean attribute specifies the part nam
 
 ---
 
-## `<wb-progress>`
+## `<progress>`
 
 **Tooltip Output:**
 ```text
@@ -1933,7 +1933,7 @@ CSS Rules:
 
 ---
 
-## `<wb-rating>`
+## `<div x-rating>`
 
 **Tooltip Output:**
 ```text
@@ -1982,7 +1982,7 @@ Attributes:
 
 ---
 
-## `<wb-ripple>`
+## `<div x-ripple>`
 
 **Tooltip Output:**
 ```text
@@ -2003,7 +2003,7 @@ Material Design ripple effect on click
 
 ---
 
-## `<wb-row>`
+## `<div x-flex>`
 
 **Tooltip Output:**
 ```text
@@ -2021,7 +2021,7 @@ Example:
 <wb-row gap="md" align="center">
   <button>OK</button>
   <button>Cancel</button>
-</wb-row>
+</div>
 ```
 
 <details><summary>View 4 Attribute Tooltips</summary>
@@ -2037,7 +2037,7 @@ Example:
 
 ---
 
-## `<wb-scrollalong>`
+## `<div x-scrollalong>`
 
 **Tooltip Output:**
 ```text
@@ -2079,7 +2079,7 @@ Client-side search index for WB Behaviors sites. Generated by scripts/generate-s
 
 ---
 
-## `<wb-select>`
+## `<select>`
 
 **Tooltip Output:**
 ```text
@@ -2141,7 +2141,7 @@ Attributes:
 
 ---
 
-## `<wb-skeleton>`
+## `<div x-skeleton>`
 
 **Tooltip Output:**
 ```text
@@ -2173,7 +2173,7 @@ CSS Rules:
 
 ---
 
-## `<wb-snow>`
+## `<div x-snow>`
 
 **Tooltip Output:**
 ```text
@@ -2197,7 +2197,7 @@ Falling snowflake animation effect
 
 ---
 
-## `<wb-spinner>`
+## `<div x-spinner>`
 
 **Tooltip Output:**
 ```text
@@ -2229,7 +2229,7 @@ CSS Rules:
 
 ---
 
-## `<wb-stack>`
+## `<div x-stack>`
 
 **Tooltip Output:**
 ```text
@@ -2253,7 +2253,7 @@ Attributes:
 
 ---
 
-## `<wb-sticky>`
+## `<div x-sticky>`
 
 **Tooltip Output:**
 ```text
@@ -2277,7 +2277,7 @@ Attributes:
 
 ---
 
-## `<wb-switch>`
+## `<div x-switch>`
 
 **Tooltip Output:**
 ```text
@@ -2335,7 +2335,7 @@ Attributes:
 
 ---
 
-## `<wb-table>`
+## `<table>`
 
 **Tooltip Output:**
 ```text
@@ -2363,7 +2363,7 @@ Data table with sorting, filtering, and pagination
 
 ---
 
-## `<wb-tabs>`
+## `<nav x-tabs>`
 
 **Tooltip Output:**
 ```text
@@ -2395,7 +2395,7 @@ CSS Rules:
 
 ---
 
-## `<wb-textarea>`
+## `<textarea>`
 
 **Tooltip Output:**
 ```text
@@ -2434,7 +2434,7 @@ CSS Rules:
 
 ---
 
-## `<wb-toast>`
+## `<div x-toast>`
 
 **Tooltip Output:**
 ```text
@@ -2470,7 +2470,7 @@ CSS Rules:
 
 ---
 
-## `<wb-tooltip>`
+## `<div x-tooltip>`
 
 **Tooltip Output:**
 ```text

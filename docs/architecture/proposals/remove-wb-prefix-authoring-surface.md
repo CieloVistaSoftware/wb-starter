@@ -6,7 +6,7 @@
 
 ## TL;DR
 
-Today, writing a card means `<wb-card>`. This proposal makes it `<article>` (or any
+Today, writing a card means `<article>`. This proposal makes it `<article>` (or any
 semantic tag the author already reached for) — plain HTML plus one attribute, no invented
 tag names to memorize. The `wb-` prefix survives internally (schema registry keys, generated
 BEM classes) but disappears from what an author types. Opt-out reuses an attribute
@@ -34,7 +34,7 @@ detail, not a design requirement.
 ## Relationship to `proposed-custom-elements.md`
 
 **This proposal is a reversal of [`proposed-custom-elements.md`](proposed-custom-elements.md)**,
-which asks for *more* `wb-*` tags (`wb-grid`, `wb-flex`, `wb-stack`, …) under the "Pseudo-Custom
+which asks for *more* `wb-*` tags (`wb-grid`, `wb-flex`, `<div x-stack>`, …) under the "Pseudo-Custom
 Elements (PCE)" architecture. Both documents can't be the target state. If this proposal moves
 forward, `proposed-custom-elements.md` should be either withdrawn or reframed as "attribute
 names to add to the schema registry" (`x-grid`, `x-flex`, `x-stack`, …) rather than new tags —
@@ -52,18 +52,18 @@ wb-starter runs **two parallel detection systems** today:
 | Gate | Requires `getConfig('autoInject')` **or** a `variant` attribute (`src/core/wb.js:223`) | Unconditional — no gate at all |
 | Opt-out | `x-ignore` attribute (`src/core/wb.js:204`, mirrored in `wb-lazy.js:285,700`) | **None.** `x-ignore` is never checked in `schema-builder.js` — confirmed by reading `detectSchema()`, `scan()`, `processElement()`, and `WB.inject()`. `<wb-card x-ignore>` is fully built and injected today; the attribute is silently ignored. |
 | Registration | `nativeMap` (`tag-map.js`) | `registerSchema()`, `src/core/mvvm/schema-builder.js:118-130` — derives `` `wb-${name}` `` as the tag key (line 126) |
-| Count | 32 of 84 catalogued components | 52 of 84 (81 distinct tags total; `wb-card` appears twice in the catalog under two categories) |
+| Count | 32 of 84 catalogued components | 52 of 84 (81 distinct tags total; `<article>` appears twice in the catalog under two categories) |
 
-Of the 52 `wb-*` tags, **only 3 are real registered Custom Elements**: `wb-card`
+Of the 52 `wb-*` tags, **only 3 are real registered Custom Elements**: `<article>`
 (`src/wb-viewmodels/wb-card.js:51`), `wb-demo` (`wb-demo.js:137`), `wb-grid` (`wb-grid.js:36`).
 The other ~48 are plain elements the schema builder detects and constructs purely by string
 prefix — nothing in the platform's Custom Elements registry knows they exist. Three more real
-Custom Elements (`wb-audio`, `wb-control`, `wb-fix-card`) exist in the codebase but sit outside
-the 52-tag catalog scope (`wb-audio` is the enhanced-EQ wrapper around the native
+Custom Elements (`<audio>`, `<div x-control>`, `<div x-fix-card>`) exist in the codebase but sit outside
+the 52-tag catalog scope (`<audio>` is the enhanced-EQ wrapper around the native
 `<audio x-behavior="audio">` component, not a catalog entry itself).
 
 `SCHEMA_EXCLUDED_TAGS` (`schema-builder.js:872-880`, 22 entries, all of `wb-card*`'s 13-tag
-family plus `wb-demo`, `wb-dialog`, `wb-search`, others) is hand-maintained tribal knowledge —
+family plus `wb-demo`, `<dialog>`, `<div x-searchfield>`, others) is hand-maintained tribal knowledge —
 its own comment (lines 801-871) warns *"do not widen this to 'every tag with a behavior'
 again."* This set exists to stop the schema builder racing a component's own DOM-building code;
 its job survives this proposal unchanged, it just gets rekeyed by behavior name instead of tag
@@ -86,7 +86,7 @@ authoring mental model.
 
 ```html
 <!-- Today -->
-<wb-card elevated title="...">...</wb-card>
+<wb-card elevated title="...">...</article>
 
 <!-- Proposed -->
 <article elevated title="...">...</article>
@@ -112,7 +112,7 @@ proposal.
 
 **Decided (see Migration plan): dual maintenance, not a flag day.** `registerSchema()` keeps
 deriving the `wb-${name}` tag key (`schema-builder.js:126`) and `tagToSchema` stays exactly as
-it is — old `<wb-card>` markup keeps resolving through the existing path, untouched.
+it is — old `<article>` markup keeps resolving through the existing path, untouched.
 `detectSchema()` gains a *second*, independent check: does the element carry an `x-{name}`
 attribute matching a registered schema? If either check matches, build it. No existing
 call site's behavior changes; a new one is added alongside. This is what makes step 3 in the
@@ -126,14 +126,14 @@ in the repo (or, more importantly, nothing in a consumer's project) still depend
 dual-selects both). ~69 bare-tag selector lines across ~29 files in
 `src/styles/behaviors/` need the same treatment: `wb-foo {` → `wb-foo, .wb-foo {`. Since
 `schema-builder.js`'s `getBaseClass()`/`getPartClass()` already generate `wb-`-prefixed BEM
-classes (`wb-card`, `wb-card__header`, …) regardless of tag identity, **every schema-built
+classes (`<article>`, `wb-card__header`, …) regardless of tag identity, **every schema-built
 element already gets its `.wb-*` class today** — the CSS augmentation is pure addition (a
 class selector that will already match), never a removal, so this step is low-risk and can
 happen incrementally, file by file, without waiting on the detection change.
 
 ### 5. The 6 real Custom Elements — separate track, not phase 1
 
-`wb-card`, `wb-demo`, `wb-grid`, `wb-audio`, `wb-control`, `wb-fix-card` have actual
+`<article>`, `wb-demo`, `wb-grid`, `<audio>`, `<div x-control>`, `<div x-fix-card>` have actual
 `customElements.define()`-registered classes with their own lifecycle. You can't rename their
 tag without either (a) keeping the class registered under its current tag name and having a
 plain-tag wrapper delegate to it, or (b) reworking each one to attach its behavior to
@@ -170,7 +170,7 @@ questionable.
    `src/styles/behaviors/`. No behavior change, purely additive.
 3. **Add attribute detection alongside tag detection (dual maintenance — decided)** —
    `detectSchema()`, `scan()`, and `startObserver()`'s tag test in `schema-builder.js` each
-   gain an `x-{name}` attribute check as an *additional* match, not a replacement. `<wb-card>`
+   gain an `x-{name}` attribute check as an *additional* match, not a replacement. `<article>`
    and `<article>` both resolve to the same schema from this point on. Nothing else in
    the repo has to change for this step to ship — it's the safest possible way to make the new
    authoring form real without breaking a single existing page, demo, or test. This is the
@@ -194,7 +194,7 @@ questionable.
 
 ## Decisions
 
-- **Transition strategy: dual maintenance, indefinitely.** Both `<wb-card>` and
+- **Transition strategy: dual maintenance, indefinitely.** Both `<article>` and
   `<article>` resolve to the same schema for as long as this stays useful — no flag
   day, no forced migration deadline, no target date to "finish." This directly changes step 3
   above from "risky, needs a window" to "purely additive, safe to ship alone."

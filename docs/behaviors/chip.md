@@ -9,10 +9,10 @@ button. Implemented by `chip()` in
 | Property | Value |
 |----------|-------|
 | Attribute | `x-chip` |
-| Custom Tag | `<wb-chip>` |
+| Custom Tag | `<div x-chip>` |
 | Behavior function | `chip()` — `src/wb-viewmodels/feedback.js` |
 | Semantic element | `<span role="status">` |
-| Root CSS Class | `wb-chip` |
+| Root CSS Class | `<div x-chip>` |
 | Category | Feedback |
 | Schema | [chip.schema.json](../../src/wb-models/chip.schema.json) |
 
@@ -61,14 +61,14 @@ attributes, so any hand-written inner content is discarded in favor of `label`.
 
 | Class | Applied when | Description |
 |-------|--------------|-------------|
-| `wb-chip` | host isn't already a `<wb-chip>` tag | Base pill shape, padding, background |
+| `<div x-chip>` | host isn't already a `<div x-chip>` tag | Base pill shape, padding, background |
 | `.wb-chip--{variant}` | `variant` is not `default` | `primary`/`success`/`warning`/`error`/`info` background+text color |
 | `.wb-chip--{sm,lg}` | `size` is not `md` | Padding/font-size/min-height scale |
 | `.wb-chip--outlined` | `outlined` | Transparent background, colored border |
 | `.wb-chip--disabled` | `disabled` | 50% opacity, `pointer-events: none`, and sets `aria-disabled="true"` |
 | `.wb-chip__icon` | `icon` set | Leading icon wrapper |
 | `.wb-chip__label` | Always | Wraps the label text |
-| `.wb-chip__remove` | `dismissible` and not `disabled` | The × remove button (a `<wb-button>`) |
+| `.wb-chip__remove` | `dismissible` and not `disabled` | The × remove button (a `<button>`) |
 
 ## Events
 

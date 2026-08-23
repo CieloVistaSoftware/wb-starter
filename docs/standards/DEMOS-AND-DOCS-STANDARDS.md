@@ -48,7 +48,7 @@ Every component example is a `<wb-demo>` — it renders the **live control** AND
   line. Don't split short tags pointlessly. There is **no "inline format" override**
   beyond this; vertical is the only format.
 - **Array-valued attributes must start each row on its own indented line** — e.g.
-  `rows='[...]'` on `<wb-table>` renders as pretty-printed JSON with one array entry
+  `rows='[...]'` on `<table>` renders as pretty-printed JSON with one array entry
   per line, never a single flattened line mixing headers and cell values together.
   Applies to any attribute whose value is a JSON array shown in a code panel.
 
@@ -58,7 +58,7 @@ Every component example is a `<wb-demo>` — it renders the **live control** AND
   pre-wrap`) with a carve-out for `<wb-demo>` panels only. John's direct, repeated
   instruction — "CODE TEXT CANNOT WRAP EVER" — reverses that: **no code text wraps,
   anywhere, on any element that displays code** (`<pre x-behavior="pre">`, `<wb-demo>`
-  panels, `<wb-mdhtml>`-rendered fenced code blocks, hand-written `<pre language="…">`
+  panels, `<div x-mdhtml>`-rendered fenced code blocks, hand-written `<pre language="…">`
   samples). Long lines get horizontal scroll instead (`white-space: pre`; `overflow-x:
   auto`) — this is `pre.css`'s own editor-style default (`pre.js`, `defaultWrap=false`,
   #199); nothing needs to opt in anymore, since it's the universal baseline, not a
@@ -197,7 +197,7 @@ Every component example is a `<wb-demo>` — it renders the **live control** AND
   `<button size="xl">` must have **different computed sizes**; `variant="primary"` vs
   `variant="danger"` must differ visibly. A demo that shows `size="xs"` while the button
   renders at default size is a defect the test must catch. Cover BOTH the custom element
-  (`<wb-button>`) and the native element (`<button>`) paths.
+  (`<button>`) and the native element (`<button>`) paths.
 
 ## 21. Watch CI after every push — local-green is not done
 
@@ -343,7 +343,7 @@ Every component example is a `<wb-demo>` — it renders the **live control** AND
   2. A **live** log that shows the event actually firing in real time as the reader
      interacts with the rendered control above it — proof, not just claims.
 - Not every demo needs this — a control with no interesting event (e.g. a static
-  `<wb-badge>`) doesn't gain anything from an empty events section, so the attribute is
+  `<div x-badge>`) doesn't gain anything from an empty events section, so the attribute is
   opt-in, not mandatory on every `<wb-demo>`. Add it where a reader would plausibly want
   to hook into the control's behavior in their own code (form controls, toggles, tabs,
   search, anything with a meaningful `detail` payload). Tracked: #385.
@@ -389,7 +389,7 @@ Every component example is a `<wb-demo>` — it renders the **live control** AND
 
 ## 30. Broken media must throw + log — never fail silently
 
-- A `<wb-audio>`/`<img>`/background-image that fails to load must produce a real, loud signal — an `Error`
+- A `<audio>`/`<img>`/background-image that fails to load must produce a real, loud signal — an `Error`
   thrown so the global error handler (`src/core/error-logger.js`) catches and logs it — not a silent
   broken-image icon or an invisible CSS background that just never appears. This is `audio.js`'s original
   convention (#433); by 2026-08-15 the same fix had to be independently rediscovered and re-applied to

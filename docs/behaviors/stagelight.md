@@ -10,14 +10,14 @@ on the host element.
 |----------|-------|
 | Behavior | `stagelight` |
 | Attribute | `x-stagelight` |
-| Custom Tag | `<wb-stagelight>` |
+| Custom Tag | `<div x-stagelight>` |
 | Applies to | any element |
 | Category | Effects |
 | Support level | Experimental |
 | Schema | `src/wb-models/stagelight.schema.json` |
 | Source | `src/wb-viewmodels/stagelight.js` |
 
-Both forms run the same behavior: `<div x-stagelight>` and `<wb-stagelight>` are
+Both forms run the same behavior: `<div x-stagelight>` and `<div x-stagelight>` are
 equivalent — the tag form is registered in the tag map
 ([`src/core/tag-map.js`](../../src/core/tag-map.js)) and dispatches to the identical
 `stagelight()` function. `autoInject` is on by default site-wide

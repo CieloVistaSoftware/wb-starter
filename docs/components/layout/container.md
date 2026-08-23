@@ -33,8 +33,8 @@ Full-featured layout container that switches between a flex stack/row (1 column)
 
 <wb-demo>
 <wb-container>
-  <wb-card title="One">Content</wb-card>
-  <wb-card title="Two">Content</wb-card>
+  <wb-card title="One">Content</article>
+  <wb-card title="Two">Content</article>
 </wb-container>
 </wb-demo>
 
@@ -42,8 +42,8 @@ Full-featured layout container that switches between a flex stack/row (1 column)
 
 ```html
 <wb-container direction="row" gap="0.75rem">
-  <wb-button variant="primary">Save</wb-button>
-  <wb-button variant="ghost">Cancel</wb-button>
+  <wb-button variant="primary">Save</button>
+  <wb-button variant="ghost">Cancel</button>
 </wb-container>
 ```
 
@@ -51,9 +51,9 @@ Full-featured layout container that switches between a flex stack/row (1 column)
 
 ```html
 <wb-container columns="3" gap="1rem">
-  <wb-card title="A">Card A</wb-card>
-  <wb-card title="B">Card B</wb-card>
-  <wb-card title="C">Card C</wb-card>
+  <wb-card title="A">Card A</article>
+  <wb-card title="B">Card B</article>
+  <wb-card title="C">Card C</article>
 </wb-container>
 ```
 

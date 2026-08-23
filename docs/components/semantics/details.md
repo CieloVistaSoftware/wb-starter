@@ -6,10 +6,10 @@ Enhanced accordion/disclosure component with smooth animations.
 
 | Property | Value |
 |----------|-------|
-| Custom Tag | `<wb-details>` |
+| Custom Tag | `<details>` |
 | Behavior | `details` |
 | Semantic | `<details>` |
-| Root CSS Class | `wb-details` |
+| Root CSS Class | `<details>` |
 | Category | Content |
 
 ## Properties
@@ -25,7 +25,7 @@ Wrapped in `<wb-demo>`, so the live component renders below with its source show
 <wb-demo>
 <wb-details summary="More Information">
   <p>Hidden content revealed when expanded.</p>
-</wb-details>
+</details>
 </wb-demo>
 
 ## Usage
@@ -35,7 +35,7 @@ Wrapped in `<wb-demo>`, so the live component renders below with its source show
 ```html
 <wb-details summary="More Information">
   <p>Hidden content revealed when expanded.</p>
-</wb-details>
+</details>
 ```
 
 ### Native Details (Enhanced)
@@ -57,15 +57,15 @@ automatically, no `x-details` attribute needed.
   summary="Expanded Section"
   open>
   <p>This section starts open.</p>
-</wb-details>
+</details>
 ```
 
 ### Multiple Accordion Items
 
 ```html
-<wb-details summary="Section 1">Content 1</wb-details>
-<wb-details summary="Section 2">Content 2</wb-details>
-<wb-details summary="Section 3">Content 3</wb-details>
+<wb-details summary="Section 1">Content 1</details>
+<wb-details summary="Section 2">Content 2</details>
+<wb-details summary="Section 3">Content 3</details>
 ```
 
 ### Without Animation
@@ -75,7 +75,7 @@ automatically, no `x-details` attribute needed.
   summary="Quick Toggle"
   animated="false">
   <p>No animation on open/close.</p>
-</wb-details>
+</details>
 ```
 
 ## Generated Structure

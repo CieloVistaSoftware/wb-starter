@@ -6,7 +6,7 @@ Portfolio/contact card using semantic `<address>` element.
 
 | Property | Value |
 |----------|-------|
-| Custom Tag | `<wb-cardportfolio>` |
+| Custom Tag | `<div x-cardportfolio>` |
 | Behavior | `cardportfolio` |
 | Semantic | `<article>` + `<address>` |
 | Root CSS Class | `wb-card wb-portfolio` |
@@ -40,7 +40,7 @@ Wrapped in `<wb-demo>`, so the live component renders below with its source show
   title="Senior Developer"
   company="TechCorp"
   avatar="https://picsum.photos/seed/john/200/200">
-</wb-cardportfolio>
+</div>
 </wb-demo>
 
 ## Usage
@@ -53,7 +53,7 @@ Wrapped in `<wb-demo>`, so the live component renders below with its source show
   title="Senior Developer"
   company="TechCorp"
   avatar="https://picsum.photos/seed/john/200/200">
-</wb-cardportfolio>
+</div>
 ```
 
 ### Full Profile
@@ -73,7 +73,7 @@ Wrapped in `<wb-demo>`, so the live component renders below with its source show
   linkedin="https://linkedin.com/in/janesmith"
   twitter="https://twitter.com/janesmith"
   github="https://github.com/janesmith">
-</wb-cardportfolio>
+</div>
 ```
 
 ### Minimal Contact
@@ -83,7 +83,7 @@ Wrapped in `<wb-demo>`, so the live component renders below with its source show
   name="Alex Johnson"
   email="alex@example.com"
   phone="+1 555-987-6543">
-</wb-cardportfolio>
+</div>
 ```
 
 ## Generated Structure

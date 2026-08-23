@@ -6,7 +6,7 @@ Card with expandable/collapsible content.
 
 | Property | Value |
 |----------|-------|
-| Custom Tag | `<wb-cardexpandable>` |
+| Custom Tag | `<div x-cardexpandable>` |
 | Behavior | `cardexpandable` |
 | Semantic | `<article>` |
 | Root CSS Class | `wb-card wb-card-expandable` |
@@ -33,7 +33,7 @@ Wrapped in `<wb-demo>`, so the live component renders below with its source show
     <img src="https://picsum.photos/800/600?random=cardexpandable1" alt="Example expanded content image" style="width: 100%; border-radius: 4px;">
     <figcaption>Figures work like any other collapsed content — hidden until expanded.</figcaption>
   </figure>
-</wb-cardexpandable>
+</div>
 </wb-demo>
 
 ## Usage
@@ -53,7 +53,7 @@ Wrapped in `<wb-demo>`, so the live component renders below with its source show
       style="width: 100%; border-radius: 4px;">
     <figcaption>Hidden until expanded.</figcaption>
   </figure>
-</wb-cardexpandable>
+</div>
 ```
 
 ### Initially Expanded
@@ -77,7 +77,7 @@ Wrapped in `<wb-demo>`, so the live component renders below with its source show
     <figcaption> Also hidden when collapsed, even though the card starts
     expanded.</figcaption>
   </figure>
-</wb-cardexpandable>
+</div>
 ```
 
 ## Events
@@ -97,7 +97,7 @@ panel `<wb-demo>` generates automatically from the `events` attribute.
     <img src="https://picsum.photos/800/600?random=cardexpandable4" alt="Example expanded content image" style="width: 100%; border-radius: 4px;">
     <figcaption>Hidden until expanded.</figcaption>
   </figure>
-</wb-cardexpandable>
+</div>
 </wb-demo>
 
 ## JavaScript API
@@ -106,8 +106,8 @@ panel `<wb-demo>` generates automatically from the `events` attribute.
 const card = document.querySelector('wb-cardexpandable');
 
 // Control expansion
-card.wbCardExpandable.expand();
-card.wbCardExpandable.collapse();
+card.wbCardExpandable.show();
+card.wbCardExpandable.hide();
 card.wbCardExpandable.toggle();
 
 // Get state

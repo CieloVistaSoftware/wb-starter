@@ -1,4 +1,4 @@
-# Article Component
+# article
 
 Semantic article component for blog posts, news, and documentation pages.
 

@@ -33,7 +33,7 @@
 
 **wb-views** is the high-level **HTML API**, a feature found in the WB-Starter Behaviors Library. It allows for the creation of reusable UI components using only HTML. For example, defining a `<wb-user-card>` once and using it everywhere.
 
-While **Behaviors** (`x-ripple`, `x-draggable`) allow you to add functionality to *existing* elements, **wb-views** allow you to define *new* elements (`<wb-card>`, `<wb-btn>`) with encapsulated structure, style, and behavior.
+While **Behaviors** (`x-ripple`, `x-draggable`) allow you to add functionality to *existing* elements, **wb-views** allow you to define *new* elements (`<article>`, `<wb-btn>`) with encapsulated structure, style, and behavior.
 
 ### The "Missing Link"
 
@@ -67,13 +67,13 @@ Users provide simple attribute values. The template defines how those values bec
   title="Explore"
   subtitle="Your journey"
   cta="Launch">
-</wb-hero>
+</div>
 <!-- ❌ UGLY: User must know internal slots -->
-<wb-hero>
+<div x-hero>
   <h1 slot="title">Explore</h1>
   <p slot="subtitle">Your journey</p>
   <button slot="cta">Launch</button>
-</wb-hero>
+</div>
 ```
 
 | Content Type | Use | Example |
@@ -81,7 +81,7 @@ Users provide simple attribute values. The template defines how those values bec
 | Simple text | **Attributes** | `title="Hello"` |
 | Enum choices | **Attributes** | `variant="cosmic"` |
 | Boolean flags | **Attributes** | `elevated` |
-| Arbitrary rich content | **Body only** | `<wb-card>Any HTML</wb-card>` |
+| Arbitrary rich content | **Body only** | `<article>Any HTML</article>` |
 
 **The body (`{{body}}`) is reserved for arbitrary/rich content that can't be expressed as a simple attribute.**
 
@@ -132,7 +132,7 @@ The line `<template wb-view="card">` defines the blueprint for the component. Th
 The following code shows how to use the newly created custom element. The attributes `name` and `avatar` are automatically passed to the template.
 
 **Where does `wb-` come from?**
-Since the view name "card" is a single word, the system automatically adds the `wb-` prefix to create `<wb-card>`. This is because valid HTML custom elements **must** contain a dash (hyphen).
+Since the view name "card" is a single word, the system automatically adds the `wb-` prefix to create `<article>`. This is because valid HTML custom elements **must** contain a dash (hyphen).
 
 ```html
 <!-- 2. The System Automatically Creates a Custom Element -->
@@ -140,7 +140,7 @@ Since the view name "card" is a single word, the system automatically adds the `
 <wb-card
   name="Alice"
   avatar="https://picsum.photos/seed/alice/200/200">
-</wb-card>
+</article>
 ```
 
 **Key Insight:** You don't write a JavaScript class for `UserCard`. You just write HTML. The `wb-views` system handles the Custom Element registration, attribute observation, and rendering lifecycle for you.
@@ -637,7 +637,7 @@ Custom elements require a hyphen in the tag name (Web Components spec). wb-views
 | View Name | Has Hyphen? | Custom Element Tag |
 |-----------|-------------|-------------------|
 | `btn` | No | `<wb-btn>` |
-| `avatar` | No | `<wb-avatar>` |
+| `avatar` | No | `<div x-avatar>` |
 | `icon` | No | `<wb-icon>` |
 | `card-tile` | Yes | `<card-tile>` |
 | `alert-box` | Yes | `<alert-box>` |
@@ -653,7 +653,7 @@ Custom elements require a hyphen in the tag name (Web Components spec). wb-views
 <wb-avatar
   initials="JD"
   size="md">
-</wb-avatar>
+</div>
 <wb-icon name="star"></wb-icon>
 <!-- Descriptive names stay as-is -->
 <card-tile
@@ -1010,7 +1010,6 @@ Templates can include behavior attributes. After rendering, `WB.scan()` applies 
 ```html
 <template wb-view="pricing-tier">
   <section
-    x-as-card
     elevated
     hoverable>
     <h3>{{plan}}</h3>
@@ -1364,7 +1363,6 @@ Then restart VS Code.
 <template wb-view="pricing-card">
   <article
     class="pricing-card"
-    x-as-card
     elevated>
     <h3>{{plan}}</h3>
     <price-tag

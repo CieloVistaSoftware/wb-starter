@@ -6,7 +6,7 @@ Draggable/moveable card with mouse drag support.
 
 | Property | Value |
 |----------|-------|
-| Custom Tag | `<wb-carddraggable>` |
+| Custom Tag | `<div x-carddraggable>` |
 | Behavior | `carddraggable` |
 | Semantic | `<article>` |
 | CSS Classes | `wb-card wb-card-draggable wb-card--draggable` |
@@ -29,11 +29,11 @@ Includes all [card properties](./card.md), plus:
 Rendered live below — drag it with your mouse. The source is shown underneath:
 
 <wb-demo>
-<wb-carddraggable title="Drag Me">Drag this card around.</wb-carddraggable>
+<wb-carddraggable title="Drag Me">Drag this card around.</div>
 </wb-demo>
 
 ```html
-<wb-carddraggable title="Drag Me"> Drag this card around. </wb-carddraggable>
+<wb-carddraggable title="Drag Me"> Drag this card around. </div>
 ```
 
 ### Constrained to Parent
@@ -44,7 +44,7 @@ Rendered live below — drag it with your mouse. The source is shown underneath:
     title="Bounded Card"
     constrain="parent">
     Cannot drag outside parent.
-  </wb-carddraggable>
+  </div>
 </div>
 ```
 
@@ -55,7 +55,7 @@ Rendered live below — drag it with your mouse. The source is shown underneath:
   title="Horizontal"
   axis="x">
   Only moves left/right.
-</wb-carddraggable>
+</div>
 ```
 
 ### Snap to Grid
@@ -65,7 +65,7 @@ Rendered live below — drag it with your mouse. The source is shown underneath:
   title="Grid Snap"
   snapToGrid="20">
   Snaps to 20px grid.
-</wb-carddraggable>
+</div>
 ```
 
 ## Events

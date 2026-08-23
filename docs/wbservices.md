@@ -168,7 +168,7 @@ This means:
    - Add an x-* attribute to any element:
      ```html
      <button x-ripple x-tooltip="Save">Save</button>
-     <wb-card x-badge="New">Card</wb-card>
+     <wb-card x-badge="New">Card</article>
      ```
 2. **Scanning:**
    - On page load, the bootstrapper scans the DOM for all x-* attributes.

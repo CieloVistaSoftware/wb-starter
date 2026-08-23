@@ -6,10 +6,10 @@ Enhanced form with AJAX submission, validation, and auto-save.
 
 | Property | Value |
 |----------|-------|
-| Custom Tag | `<wb-form>` |
+| Custom Tag | `<form>` |
 | Behavior | `form` |
 | Semantic | `<form>` |
-| Root CSS Class | `wb-form` |
+| Root CSS Class | `<form>` |
 | Category | Forms |
 
 ## Properties
@@ -32,9 +32,9 @@ Wrapped in `<wb-demo>`, so the live component renders below with its source show
     name="email"
     label="Email"
     required>
-  </wb-input>
-  <wb-button type="submit">Submit</wb-button>
-</wb-form>
+  </input>
+  <wb-button type="submit">Submit</button>
+</form>
 </wb-demo>
 
 ## Usage
@@ -47,9 +47,9 @@ Wrapped in `<wb-demo>`, so the live component renders below with its source show
     name="email"
     label="Email"
     required>
-  </wb-input>
-  <wb-button type="submit">Submit</wb-button>
-</wb-form>
+  </input>
+  <wb-button type="submit">Submit</button>
+</form>
 ```
 
 ### Native Form (Enhanced)
@@ -78,17 +78,17 @@ Wrapped in `<wb-demo>`, so the live component renders below with its source show
     label="Email"
     inputType="email"
     required>
-  </wb-input>
+  </input>
   <wb-textarea
     name="message"
     label="Message"
     required>
-  </wb-textarea>
+  </textarea>
   <wb-button
     label="Send Message"
     type="submit">
-  </wb-button>
-</wb-form>
+  </button>
+</form>
 ```
 
 ### With Auto-Save
@@ -101,16 +101,16 @@ Wrapped in `<wb-demo>`, so the live component renders below with its source show
   <wb-input
     name="name"
     label="Full Name">
-  </wb-input>
+  </input>
   <wb-textarea
     name="bio"
     label="Biography">
-  </wb-textarea>
+  </textarea>
   <wb-button
     label="Submit"
     type="submit">
-  </wb-button>
-</wb-form>
+  </button>
+</form>
 ```
 
 ### Custom Success Message
@@ -124,12 +124,12 @@ Wrapped in `<wb-demo>`, so the live component renders below with its source show
     name="email"
     label="Email"
     inputType="email">
-  </wb-input>
+  </input>
   <wb-button
     label="Subscribe"
     type="submit">
-  </wb-button>
-</wb-form>
+  </button>
+</form>
 ```
 
 ## Generated Structure

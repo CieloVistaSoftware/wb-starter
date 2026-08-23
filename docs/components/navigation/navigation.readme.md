@@ -23,23 +23,23 @@ Tabbed content interface with keyboard navigation and ARIA support.
 
 ```html
 <!-- Basic tabs -->
-<wb-tabs>
+<nav x-tabs>
   <wb-tab label="Home">Welcome to our site</wb-tab>
   <wb-tab label="About">Learn more about us</wb-tab>
   <wb-tab label="Contact">Get in touch</wb-tab>
-</wb-tabs>
+</nav>
 <!-- Pills variant -->
 <wb-tabs
   variant="pills"
   active="1">
   <wb-tab label="Tab 1">Content 1</wb-tab>
   <wb-tab label="Tab 2">Content 2</wb-tab>
-</wb-tabs>
+</nav>
 <!-- Vertical tabs -->
 <wb-tabs vertical>
   <wb-tab label="Section A">Section A content</wb-tab>
   <wb-tab label="Section B">Section B content</wb-tab>
-</wb-tabs>
+</nav>
 ```
 
 ### Programmatic API
@@ -74,20 +74,20 @@ Collapsible content sections with smooth animations.
 
 ```html
 <!-- Single accordion -->
-<wb-accordion>
+<div x-accordion>
   <wb-accordion-item label="Section 1">
     <p>Content for section 1</p>
   </wb-accordion-item>
   <wb-accordion-item label="Section 2">
     <p>Content for section 2</p>
   </wb-accordion-item>
-</wb-accordion>
+</div>
 <!-- Multiple sections open -->
 <wb-accordion multiple>
   <wb-accordion-item label="FAQ 1">Answer 1</wb-accordion-item>
   <wb-accordion-item label="FAQ 2">Answer 2</wb-accordion-item>
   <wb-accordion-item label="FAQ 3">Answer 3</wb-accordion-item>
-</wb-accordion>
+</div>
 ```
 
 ---

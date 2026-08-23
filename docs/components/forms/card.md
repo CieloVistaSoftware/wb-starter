@@ -1,15 +1,15 @@
 # Card - wb-starter v3.0
 
-Content container composing a header (title/subtitle/badge), main body, and footer -- with variant, size, elevation, hover, and clickable styles. Base for the whole card family (`wb-cardimage`, `wb-cardhero`, `wb-cardprofile`, `wb-cardpricing`, and more).
+Content container composing a header (title/subtitle/badge), main body, and footer -- with variant, size, elevation, hover, and clickable styles. Base for the whole card family (`<article x-cardimage>`, `<article x-cardhero>`, `<div x-cardprofile>`, `<div x-cardpricing>`, and more).
 
 ## Overview
 
 | Property | Value |
 |----------|-------|
-| Custom Tag | `<wb-card>` |
+| Custom Tag | `<article>` |
 | Behavior | `card` (`composeCard()`) |
 | Semantic | `<article>` |
-| Root CSS Class | `wb-card` |
+| Root CSS Class | `<article>` |
 | Category | Forms / Cards |
 | Schema | `src/wb-models/card.schema.json` |
 
@@ -35,16 +35,16 @@ Content container composing a header (title/subtitle/badge), main body, and foot
 <wb-demo>
 <wb-card title="Card Title" subtitle="A short subtitle">
   Card body content goes here.
-</wb-card>
+</article>
 </wb-demo>
 
 ### Variants
 
 ```html
-<wb-card variant="default" title="Default">Standard surface</wb-card>
-<wb-card variant="glass" title="Glass">Translucent, blurred surface</wb-card>
-<wb-card variant="bordered" title="Bordered">Border-forward, flat surface</wb-card>
-<wb-card variant="flat" title="Flat">No border, no shadow</wb-card>
+<wb-card variant="default" title="Default">Standard surface</article>
+<wb-card variant="glass" title="Glass">Translucent, blurred surface</article>
+<wb-card variant="bordered" title="Bordered">Border-forward, flat surface</article>
+<wb-card variant="flat" title="Flat">No border, no shadow</article>
 ```
 
 ### With Footer and Badge
@@ -52,32 +52,32 @@ Content container composing a header (title/subtitle/badge), main body, and foot
 ```html
 <wb-card title="Release Notes" subtitle="v3.0" badge="New" footer="Updated today">
   Composition over inheritance, everywhere.
-</wb-card>
+</article>
 ```
 
 ### Elevated and Clickable
 
 ```html
-<wb-card title="Elevated" elevated>Lifted with a stronger shadow.</wb-card>
-<wb-card title="Clickable" clickable>Click or press Enter/Space to activate.</wb-card>
+<wb-card title="Elevated" elevated>Lifted with a stronger shadow.</article>
+<wb-card title="Clickable" clickable>Click or press Enter/Space to activate.</article>
 ```
 
 ### Sizes
 
 ```html
-<wb-card title="Small" size="sm">Compact width</wb-card>
-<wb-card title="Large" size="lg">Wider layout</wb-card>
+<wb-card title="Small" size="sm">Compact width</article>
+<wb-card title="Large" size="lg">Wider layout</article>
 ```
 
 ### Semantic Structure (Enhanced)
 
 ```html
 <!-- header/main/footer children are enhanced in place, not rebuilt -->
-<wb-card>
+<article>
   <header><h3>Explicit Header</h3></header>
   <main>Explicit main content.</main>
   <footer>Explicit footer.</footer>
-</wb-card>
+</article>
 ```
 
 ## Generated Structure
@@ -93,14 +93,14 @@ Content container composing a header (title/subtitle/badge), main body, and foot
   </header>
   <main class="wb-card__main">Card body content goes here.</main>
   <footer class="wb-card__footer">Updated today</footer>
-</wb-card>
+</article>
 ```
 
 ## CSS Classes
 
 | Class | Applied When | Description |
 |-------|--------------|-------------|
-| `wb-card` (tag selector) / `.wb-card` | Always | Base surface, border-radius, flex column layout |
+| `<article>` (tag selector) / `.wb-card` | Always | Base surface, border-radius, flex column layout |
 | `.wb-card--{glass,bordered,flat,minimal,elevated,rack}` | `variant` (non-`default`) | Variant surface treatment |
 | `.wb-card--{xs,sm,md,lg,xl,full,auto}` | `size` | Width scale |
 | `.wb-card--elevated` | `elevated` | Drop shadow + lighter background |

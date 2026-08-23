@@ -6,7 +6,7 @@ Image card with text overlay.
 
 | Property | Value |
 |----------|-------|
-| Custom Tag | `<wb-cardoverlay>` |
+| Custom Tag | `<div x-cardoverlay>` |
 | Behavior | `cardoverlay` |
 | Semantic | `<article>` |
 | Root CSS Class | `wb-card wb-card-overlay` |
@@ -30,7 +30,7 @@ Wrapped in `<wb-demo>`, so the live component renders below with its source show
   title="Featured Story"
   subtitle="Read more about this"
   image="https://picsum.photos/seed/cardoverlay-basic/1000/800">
-</wb-cardoverlay>
+</div>
 </wb-demo>
 
 ## Usage
@@ -42,7 +42,7 @@ Wrapped in `<wb-demo>`, so the live component renders below with its source show
   title="Featured Story"
   subtitle="Read more about this"
   image="https://picsum.photos/seed/cardoverlay-usage/1000/800">
-</wb-cardoverlay>
+</div>
 ```
 
 ### Top Position
@@ -52,7 +52,7 @@ Wrapped in `<wb-demo>`, so the live component renders below with its source show
   title="Top Overlay"
   image="https://picsum.photos/seed/cardoverlay-top/1000/800"
   position="top">
-</wb-cardoverlay>
+</div>
 ```
 
 ### Center Position
@@ -63,7 +63,7 @@ Wrapped in `<wb-demo>`, so the live component renders below with its source show
   subtitle="Text in the middle"
   image="https://picsum.photos/seed/cardoverlay-center/1000/800"
   position="center">
-</wb-cardoverlay>
+</div>
 ```
 
 ### No Gradient
@@ -73,7 +73,7 @@ Wrapped in `<wb-demo>`, so the live component renders below with its source show
   title="No Gradient"
   image="https://picsum.photos/seed/cardoverlay-nogradient/1000/800"
   gradient="false">
-</wb-cardoverlay>
+</div>
 ```
 
 ### Custom Height
@@ -83,7 +83,7 @@ Wrapped in `<wb-demo>`, so the live component renders below with its source show
   title="Tall Card"
   image="https://picsum.photos/seed/cardoverlay-tall/1000/800"
   height="500px">
-</wb-cardoverlay>
+</div>
 ```
 
 ## CSS Classes

@@ -7,11 +7,11 @@ container-aware wrapper around the lower-level `search()`/`x-search`
 behavior in the same file.
 
 - **Type:** Modifier
-- **Root CSS class:** `wb-search`
+- **Root CSS class:** `<div x-searchfield>`
 - **Schema:** none dedicated (the plain `x-search` behavior it wraps has
   [search.schema.json](../../src/wb-models/search.schema.json); `searchfield`
   itself has no separate schema file)
-- **Tag form:** `<wb-search>` (see `elementMap` in
+- **Tag form:** `<div x-searchfield>` (see `elementMap` in
   [src/core/tag-map.js](../../src/core/tag-map.js)) — a **container** tag,
   not an input itself.
 
@@ -28,11 +28,11 @@ and wires the full search UI around it:
 <div x-searchfield placeholder="Search docs..." variant="glass"></div>
 </wb-demo>
 
-The `<wb-search>` custom tag is the same behavior, applied via the element
+The `<div x-searchfield>` custom tag is the same behavior, applied via the element
 map instead of the attribute:
 
 <wb-demo>
-<wb-search placeholder="Search..." size="lg"></wb-search>
+<wb-search placeholder="Search..." size="lg"></div>
 </wb-demo>
 
 Applied directly to a real `<input>`, it delegates straight to the plain
@@ -62,7 +62,7 @@ Applied directly to a real `<input>`, it delegates straight to the plain
 
 | Class | Applies to | When |
 |---|---|---|
-| `wb-search` | host element (and the inner `<input>`) | always |
+| `<div x-searchfield>` | host element (and the inner `<input>`) | always |
 | `wb-search--{size}` | host element | `size` ≠ `md` |
 | `wb-search--{variant}` | host element | `variant` ≠ `default` |
 | `wb-search--disabled` | host element | `disabled` present |

@@ -6,7 +6,7 @@ Quote/testimonial card using semantic `<blockquote>` and `<cite>` elements.
 
 | Property | Value |
 |----------|-------|
-| Custom Tag | `<wb-cardtestimonial>` |
+| Custom Tag | `<div x-cardtestimonial>` |
 | Behavior | `cardtestimonial` |
 | Semantic | `<article>` + `<blockquote>` + `<cite>` |
 | Root CSS Class | `wb-card wb-testimonial` |
@@ -31,7 +31,7 @@ Wrapped in `<wb-demo>`, so the live component renders below with its source show
   quote="This product changed my life!"
   author="Jane Doe"
   role="CEO, TechCorp">
-</wb-cardtestimonial>
+</div>
 </wb-demo>
 
 ## Usage
@@ -43,7 +43,7 @@ Wrapped in `<wb-demo>`, so the live component renders below with its source show
   quote="This product changed my life!"
   author="Jane Doe"
   role="CEO, TechCorp">
-</wb-cardtestimonial>
+</div>
 ```
 
 ### With Avatar and Rating
@@ -55,7 +55,7 @@ Wrapped in `<wb-demo>`, so the live component renders below with its source show
   role="Product Manager"
   avatar="https://picsum.photos/seed/john/200/200"
   rating="5">
-</wb-cardtestimonial>
+</div>
 ```
 
 ## Generated Structure

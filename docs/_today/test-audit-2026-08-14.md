@@ -112,8 +112,8 @@ child, and the page must produce zero uncaught page errors. **Zero page errors w
 found anywhere** — all 8 failures are the "renders something, but it's invisible"
 failure mode, not a crash.
 
-### Confirmed root cause: `<wb-progress>` renders at 0 width (not a maybe — verified live)
-Manually confirmed by inspecting computed style directly: a `<wb-progress>` upgrades
+### Confirmed root cause: `<progress>` renders at 0 width (not a maybe — verified live)
+Manually confirmed by inspecting computed style directly: a `<progress>` upgrades
 correctly (builds its 3 expected internal children — bar/label/etc., correct
 `role="progressbar"`, correct HEIGHT matching its `size` variant — 12px/`xs` through
 32px/`xl`) but **`width: 0`** on every single instance checked. This single bug
@@ -121,9 +121,9 @@ explains the large majority of the 62 flagged instances:
 
 | File | Flagged instances | Pattern |
 |---|---|---|
-| `demos/site/feedback.html` | 29 | Every `<wb-progress>` variant/size permutation on the page |
-| `demos/multi-component-demo-generated.html` | 11 | Every `<wb-progress>` variant/size permutation on the page |
-| `pages/components.html` | 4 | `<wb-progress>` at 25%/50%/75%/100% |
+| `demos/site/feedback.html` | 29 | Every `<progress>` variant/size permutation on the page |
+| `demos/multi-component-demo-generated.html` | 11 | Every `<progress>` variant/size permutation on the page |
+| `pages/components.html` | 4 | `<progress>` at 25%/50%/75%/100% |
 
 That's 44 of the 62 flagged instances (71%) explained by one component's CSS. Worth
 filing as its own high-priority fix — a progress bar that's invisible (0 width but
@@ -136,17 +136,17 @@ skeleton) are plausibly meant to have no visible footprint until triggered/loade
 
 | File | Flagged instances | Components involved |
 |---|---|---|
-| `demos/site/effects.html` | 7 | `<wb-ripple>` (4 variants), `<wb-stagelight>` (3) |
+| `demos/site/effects.html` | 7 | `<div x-ripple>` (4 variants), `<div x-stagelight>` (3) |
 | `pages/behaviors.html` | 5 | plain `<div>` (x-behavior demo targets) |
 | `demos/site/layout.html` | 3 | (see raw failure output) |
 | `demos/site/content.html` | 2 | (see raw failure output) |
 | `demos/registry-browser.html` | 1 | `<loading-skeleton>` |
 
-`<wb-ripple>` in particular is plausibly a zero-footprint effect wrapper by design (a
+`<div x-ripple>` in particular is plausibly a zero-footprint effect wrapper by design (a
 ripple only becomes visible on click, from inside its target) — this test's "every
 child must have non-zero rendered size" rule may be too strict for effect-only
 components like this. Recommend a human (or a follow-up pass) check each of these
-individually before filing bugs on all of them; only `<wb-progress>` above is
+individually before filing bugs on all of them; only `<progress>` above is
 confirmed.
 
 ---
@@ -216,7 +216,7 @@ actually work, which is new, real coverage where there was none before.
 
 ## Recommended next steps (not done as part of this audit — file follow-up issues)
 
-1. **`<wb-progress>` renders at 0 width** — highest-confidence, highest-visibility bug
+1. **`<progress>` renders at 0 width** — highest-confidence, highest-visibility bug
    found (Dimension 2). Affects 44+ confirmed instances across 3 files. Should be its
    own issue, separate from this audit's tracking issue, given how confirmed and
    high-impact it is.
@@ -260,6 +260,6 @@ same mistakes:
   demo" as vacuously satisfied instead of waiting forever for a panel that will never
   exist).
 - **Dimension 2:** confirmed the "no visible child" check finds REAL bugs, not test
-  noise, by manually inspecting `<wb-progress>`'s computed style directly (separate
+  noise, by manually inspecting `<progress>`'s computed style directly (separate
   throwaway Playwright script, not committed) before trusting the pattern across the
   other 7 flagged files.

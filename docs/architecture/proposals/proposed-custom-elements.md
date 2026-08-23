@@ -18,8 +18,8 @@ These tags handle the arrangement of child elements.
 | :--- | :--- | :--- | :--- |
 | `<wb-grid>` | `grid` | Standard CSS Grid layout. Supports `columns`, `gap`, `min-width`. | `{ selector: 'wb-grid', behavior: 'grid' }` |
 | `<wb-flex>` | `flex` | Flexbox layout. Supports `direction`, `wrap`, `justify`, `align`. | `{ selector: 'wb-flex', behavior: 'flex' }` |
-| `<wb-stack>` | `stack` | Vertical stack of items with consistent spacing. | `{ selector: 'wb-stack', behavior: 'stack' }` |
-| `<wb-cluster>` | `cluster` | Horizontal group of items (buttons, tags) that wrap automatically. | `{ selector: 'wb-cluster', behavior: 'cluster' }` |
+| `<div x-stack>` | `stack` | Vertical stack of items with consistent spacing. | `{ selector: 'wb-stack', behavior: 'stack' }` |
+| `<div x-cluster>` | `cluster` | Horizontal group of items (buttons, tags) that wrap automatically. | `{ selector: 'wb-cluster', behavior: 'cluster' }` |
 | `<wb-container>` | `container` | Versatile container. Can be a stack, row, or grid depending on configuration. | `{ selector: 'wb-container', behavior: 'container' }` |
 
 ## 2. Page Layouts
@@ -42,8 +42,8 @@ Specialized layout patterns for specific UI needs.
 | :--- | :--- | :--- | :--- |
 | `<wb-reel>` | `reel` | Horizontal scrolling carousel (like Instagram stories). | `{ selector: 'wb-reel', behavior: 'reel' }` |
 | `<wb-frame>` | `frame` | Enforces a specific aspect ratio (16:9, 4:3) for media content. | `{ selector: 'wb-frame', behavior: 'frame' }` |
-| `<wb-sticky>` | `sticky` | Sticks an element to the top/bottom of the viewport while scrolling. | `{ selector: 'wb-sticky', behavior: 'sticky' }` |
-| `<wb-drawer>` | `drawerLayout` | Collapsible side drawer (off-canvas menu). | `{ selector: 'wb-drawer', behavior: 'drawerLayout' }` |
+| `<div x-sticky>` | `sticky` | Sticks an element to the top/bottom of the viewport while scrolling. | `{ selector: 'wb-sticky', behavior: 'sticky' }` |
+| `<div x-drawer>` | `drawerLayout` | Collapsible side drawer (off-canvas menu). | `{ selector: 'wb-drawer', behavior: 'drawerLayout' }` |
 | `<wb-icon>` | `icon` | Inline-flex layout for aligning SVG icons with text. | `{ selector: 'wb-icon', behavior: 'icon' }` |
 
 ---

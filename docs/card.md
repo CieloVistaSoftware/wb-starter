@@ -51,8 +51,8 @@ Supported attributes:
 ## Implementation
 - Source: [src/wb-viewmodels/card.js](../src/wb-viewmodels/card.js)
 - Playwright tests: [tests/behaviors/ui/card.spec.ts](../tests/cards/card-examples-demo.spec.ts)
-- The card behavior is automatically applied to `<wb-card>` elements or `<article>` elements (if auto-inject is enabled).
-- Always adds the `wb-card` class.
+- The card behavior is automatically applied to `<article>` elements or `<article>` elements (if auto-inject is enabled).
+- Always adds the `<article>` class.
 - Always adds the `wb-card--default` class if no variant is specified.
 - Supports additional classes for hoverable, clickable, elevated, and custom variants.
 
@@ -74,7 +74,7 @@ When using `<article>` or `<section>`, the component will automatically enhance 
   clickable>
   <h3>Card Title</h3>
   <p>Card content goes here.</p>
-</wb-card>
+</article>
 </wb-demo>
 
 > **Developer Tip:** In VS Code, type `<wb-card` to trigger IntelliSense and see available attributes.
@@ -98,7 +98,7 @@ When using `<article>` or `<section>`, the component will automatically enhance 
 ---
 
 ## Styles
-- Root class: `wb-card` (applied by the card behavior, not inherited)
+- Root class: `<article>` (applied by the card behavior, not inherited)
 - Default variant: `wb-card--default`
 - Other variants: `wb-card--[variant]`
 - Additional: `wb-card--hoverable`, `wb-card--clickable`, `wb-card--elevated`

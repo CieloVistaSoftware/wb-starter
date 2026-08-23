@@ -6,10 +6,10 @@ Enhanced HTML5 video player with configurable defaults.
 
 | Property | Value |
 |----------|-------|
-| Custom Tag | `<wb-video>` |
+| Custom Tag | `<video>` |
 | Behavior | `video` |
 | Semantic | `<video>` |
-| Root CSS Class | `wb-video` |
+| Root CSS Class | `<video>` |
 | Category | Media |
 
 ## Properties
@@ -27,7 +27,7 @@ Enhanced HTML5 video player with configurable defaults.
 Wrapped in `<wb-demo>`, so the live component renders below with its source shown underneath:
 
 <wb-demo>
-<wb-video src="https://interactive-examples.mdn.mozilla.net/media/cc0-videos/flower.mp4"></wb-video>
+<wb-video src="https://interactive-examples.mdn.mozilla.net/media/cc0-videos/flower.mp4"></video>
 </wb-demo>
 
 ## Usage
@@ -35,7 +35,7 @@ Wrapped in `<wb-demo>`, so the live component renders below with its source show
 ### Custom Element
 
 ```html
-<wb-video src="movie.mp4"></wb-video>
+<wb-video src="movie.mp4"></video>
 ```
 
 ### Native Video (Enhanced)
@@ -53,7 +53,7 @@ Wrapped in `<wb-demo>`, so the live component renders below with its source show
 <wb-video
   src="movie.mp4"
   poster="https://picsum.photos/seed/thumbnail/800/450">
-</wb-video>
+</video>
 ```
 
 ### Background Video
@@ -65,7 +65,7 @@ Wrapped in `<wb-demo>`, so the live component renders below with its source show
   muted
   loop
   controls="false">
-</wb-video>
+</video>
 ```
 
 ## Generated Structure
@@ -150,5 +150,5 @@ The native video element provides built-in accessibility:
     src="captions.vtt"
     srclang="en"
     label="English">
-</wb-video>
+</video>
 ```

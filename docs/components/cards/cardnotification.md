@@ -6,7 +6,7 @@ Alert/notification card using semantic `<aside>` element.
 
 | Property | Value |
 |----------|-------|
-| Custom Tag | `<wb-cardnotification>` |
+| Custom Tag | `<div x-cardnotification>` |
 | Behavior | `cardnotification` |
 | Semantic | `<aside>` with `role="alert"` |
 | Root CSS Class | `wb-notification` |
@@ -41,7 +41,7 @@ Wrapped in `<wb-demo>`, so the live component renders below with its source show
   variant="info"
   title="Information"
   message="This is an informational message.">
-</wb-cardnotification>
+</div>
 </wb-demo>
 
 ## Usage
@@ -53,7 +53,7 @@ Wrapped in `<wb-demo>`, so the live component renders below with its source show
   variant="info"
   title="Information"
   message="This is an informational message.">
-</wb-cardnotification>
+</div>
 ```
 
 ### Success Notification
@@ -63,7 +63,7 @@ Wrapped in `<wb-demo>`, so the live component renders below with its source show
   variant="success"
   title="Success!"
   message="Your changes have been saved.">
-</wb-cardnotification>
+</div>
 ```
 
 ### Warning Notification
@@ -73,7 +73,7 @@ Wrapped in `<wb-demo>`, so the live component renders below with its source show
   variant="warning"
   title="Warning"
   message="Please review your input.">
-</wb-cardnotification>
+</div>
 ```
 
 ### Error Notification
@@ -83,7 +83,7 @@ Wrapped in `<wb-demo>`, so the live component renders below with its source show
   variant="error"
   title="Error"
   message="Something went wrong. Please try again.">
-</wb-cardnotification>
+</div>
 ```
 
 ### Non-Dismissible
@@ -93,7 +93,7 @@ Wrapped in `<wb-demo>`, so the live component renders below with its source show
   variant="info"
   message="This notification cannot be dismissed."
   dismissible="false">
-</wb-cardnotification>
+</div>
 ```
 
 ## CSS Classes

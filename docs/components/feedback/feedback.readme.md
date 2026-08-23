@@ -27,26 +27,26 @@ Static alert message for displaying important information to users.
   type="info"
   title="Information">
   This is an informational message.
-</wb-alert>
+</div>
 <!-- Success alert with dismiss -->
 <wb-alert
   type="success"
   title="Success!"
   dismissible>
   Your changes have been saved successfully.
-</wb-alert>
+</div>
 <!-- Warning alert -->
 <wb-alert
   type="warning"
   title="Warning">
   Please review your input before continuing.
-</wb-alert>
+</div>
 <!-- Error alert -->
 <wb-alert
   type="error"
   title="Error">
   An error occurred while processing your request.
-</wb-alert>
+</div>
 ```
 
 ### Alert Types
@@ -81,14 +81,14 @@ Temporary notification popup that appears and disappears automatically.
 <wb-toast
   message="Item saved successfully"
   type="success">
-</wb-toast>
+</div>
 <!-- Toast with custom duration -->
 <wb-toast
   message="Please check your email"
   type="info"
   duration="5000"
   position="top-center">
-</wb-toast>
+</div>
 ```
 
 ### Toast Positions
@@ -129,14 +129,14 @@ Native HTML progress bar for showing task completion.
   value="75"
   max="100"
   label="Upload progress">
-</wb-progress>
+</progress>
 <!-- Progress with percentage display -->
 <wb-progress
   value="45"
   max="100"
   show-value
   label="Loading...">
-</wb-progress>
+</progress>
 ```
 
 ---
@@ -158,18 +158,18 @@ Loading indicator with multiple animation styles.
 
 ```html
 <!-- Basic spinner -->
-<wb-spinner label="Loading..."></wb-spinner>
+<wb-spinner label="Loading..."></div>
 <!-- Large border spinner -->
 <wb-spinner
   size="large"
   variant="border"
   label="Processing...">
-</wb-spinner>
+</div>
 <!-- Dots spinner -->
 <wb-spinner
   variant="dots"
   size="small">
-</wb-spinner>
+</div>
 ```
 
 ### Spinner Variants
@@ -203,23 +203,23 @@ Loading placeholder that mimics the structure of content being loaded.
 <wb-skeleton
   variant="text"
   lines="3">
-</wb-skeleton>
+</div>
 <!-- Circular avatar skeleton -->
 <wb-skeleton
   variant="circle"
   width="48px"
   height="48px">
-</wb-skeleton>
+</div>
 <!-- Image placeholder -->
 <wb-skeleton
   variant="rectangle"
   height="200px">
-</wb-skeleton>
+</div>
 <!-- Card skeleton -->
 <wb-skeleton
   variant="card"
   animation="wave">
-</wb-skeleton>
+</div>
 ```
 
 ---
@@ -245,23 +245,23 @@ Small status indicator for displaying counts, labels, or status.
 <wb-badge
   text="New"
   variant="primary">
-</wb-badge>
+</div>
 <!-- Pill badge -->
 <wb-badge
   text="Beta"
   pill
   variant="warning">
-</wb-badge>
+</div>
 <!-- Dot indicator -->
 <wb-badge
   dot
   variant="success">
-</wb-badge>
+</div>
 <!-- Count badge -->
 <wb-badge
   text="5"
   size="small">
-</wb-badge>
+</div>
 ```
 
 ---

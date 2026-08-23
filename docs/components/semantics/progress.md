@@ -6,10 +6,10 @@ Progress bar with determinate and indeterminate states.
 
 | Property | Value |
 |----------|-------|
-| Custom Tag | `<wb-progress>` |
+| Custom Tag | `<progress>` |
 | Behavior | `progress` |
 | Semantic | `<div>` (role="progressbar") |
-| Root CSS Class | `wb-progress` |
+| Root CSS Class | `<progress>` |
 | Category | Feedback |
 | Schema | `src/wb-models/progress.schema.json` |
 
@@ -32,7 +32,7 @@ Progress bar with determinate and indeterminate states.
 ### Custom Element
 
 <wb-demo>
-  <wb-progress value="50"></wb-progress>
+  <wb-progress value="50"></progress>
 </wb-demo>
 
 ### Native Progress (Enhanced)
@@ -49,27 +49,27 @@ automatically, no `x-progress` attribute needed.
 `show-value` appends the percentage after a custom `label` — without it, a custom label replaces the percent entirely.
 
 <wb-demo>
-  <wb-progress value="75" label="Downloading..." show-value></wb-progress>
+  <wb-progress value="75" label="Downloading..." show-value></progress>
 </wb-demo>
 
 ### Variants
 
 <wb-demo columns="3">
-  <wb-progress value="50" variant="primary"></wb-progress>
-  <wb-progress value="50" variant="success"></wb-progress>
-  <wb-progress value="50" variant="warning"></wb-progress>
-  <wb-progress value="50" variant="error"></wb-progress>
-  <wb-progress value="50" variant="info"></wb-progress>
+  <wb-progress value="50" variant="primary"></progress>
+  <wb-progress value="50" variant="success"></progress>
+  <wb-progress value="50" variant="warning"></progress>
+  <wb-progress value="50" variant="error"></progress>
+  <wb-progress value="50" variant="info"></progress>
 </wb-demo>
 
 ### Sizes
 
 <wb-demo columns="3">
-  <wb-progress value="50" size="xs"></wb-progress>
-  <wb-progress value="50" size="sm"></wb-progress>
-  <wb-progress value="50" size="md"></wb-progress>
-  <wb-progress value="50" size="lg"></wb-progress>
-  <wb-progress value="50" size="xl"></wb-progress>
+  <wb-progress value="50" size="xs"></progress>
+  <wb-progress value="50" size="sm"></progress>
+  <wb-progress value="50" size="md"></progress>
+  <wb-progress value="50" size="lg"></progress>
+  <wb-progress value="50" size="xl"></progress>
 </wb-demo>
 
 ### Animated (default)
@@ -77,27 +77,27 @@ automatically, no `x-progress` attribute needed.
 `animated` defaults to `true` — the fill has a moving diagonal stripe. Set `animated="false"` for a plain static fill.
 
 <wb-demo columns="2">
-  <wb-progress value="50" label="animated (default)"></wb-progress>
-  <wb-progress value="50" animated="false" label="animated=&quot;false&quot;"></wb-progress>
+  <wb-progress value="50" label="animated (default)"></progress>
+  <wb-progress value="50" animated="false" label="animated=&quot;false&quot;"></progress>
 </wb-demo>
 
 ### Striped
 
 <wb-demo>
-  <wb-progress value="60" striped></wb-progress>
+  <wb-progress value="60" striped></progress>
 </wb-demo>
 
 ### Indeterminate
 
 <wb-demo>
-  <wb-progress indeterminate label="Loading..."></wb-progress>
+  <wb-progress indeterminate label="Loading..."></progress>
 </wb-demo>
 
 ## CSS Classes
 
 | Class | Applied When | Description |
 |-------|--------------|-------------|
-| `.wb-progress` | Always | Base styling, on the `<wb-progress>` host |
+| `.wb-progress` | Always | Base styling, on the `<progress>` host |
 | `.wb-progress--primary` / `--success` / `--warning` / `--error` / `--info` / `--default` | matching `variant` | Fill color (via `.wb-progress__bar`'s `background`) |
 | `.wb-progress--xs` / `--sm` / `--md` / `--lg` / `--xl` | matching `size` | Bar height |
 | `.wb-progress--labeled` | `show-label` not `"false"` (default on) | Adds height for the overlaid `.wb-progress__label` |
@@ -116,12 +116,12 @@ automatically, no `x-progress` attribute needed.
   aria-valuemax="100">
   <div class="wb-progress__bar" style="width: 75%;"></div>
   <span class="wb-progress__label">75%</span>
-</wb-progress>
+</progress>
 ```
 
-## Known gap — no JS API on `<wb-progress>`
+## Known gap — no JS API on `<progress>`
 
-`progress.js` exposes a `wbProgress` object (`setValue`/`getValue`/`setMax`/`getPercent`/`setIndeterminate`) — but only for the **native `<progress>`** enhancement path. The `<wb-progress>` custom tag (every example on this page) re-renders from its attributes on each scan and does not currently expose any JS API — there is no `increment()`/`decrement()`/`reset()`/`complete()` method, on either path. To change a `<wb-progress>`'s value programmatically today, set the `value` attribute and re-scan the element.
+`progress.js` exposes a `wbProgress` object (`setValue`/`getValue`/`setMax`/`getPercent`/`setIndeterminate`) — but only for the **native `<progress>`** enhancement path. The `<progress>` custom tag (every example on this page) re-renders from its attributes on each scan and does not currently expose any JS API — there is no `increment()`/`decrement()`/`reset()`/`complete()` method, on either path. To change a `<progress>`'s value programmatically today, set the `value` attribute and re-scan the element.
 
 ## CSS API
 

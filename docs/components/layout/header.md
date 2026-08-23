@@ -6,10 +6,10 @@ Site/page header with a logo (icon + title + subtitle), center slot, and a right
 
 | Property | Value |
 |----------|-------|
-| Custom Tag | `<wb-header>` |
+| Custom Tag | `<header>` |
 | Behavior | `header` |
 | Semantic | `<header role="banner">` |
-| Root CSS Class | `wb-header` |
+| Root CSS Class | `<header>` |
 | Category | Layout |
 | Schema | `src/wb-models/header.schema.json` |
 
@@ -33,7 +33,7 @@ Site/page header with a logo (icon + title + subtitle), center slot, and a right
   icon="📂"
   title="Project Index"
   badge="v1.0">
-</wb-header>
+</header>
 </wb-demo>
 
 ### With Subtitle
@@ -43,7 +43,7 @@ Site/page header with a logo (icon + title + subtitle), center slot, and a right
   icon="🚀"
   title="My App"
   subtitle="Dashboard">
-</wb-header>
+</header>
 ```
 
 ### Sticky
@@ -53,13 +53,13 @@ Site/page header with a logo (icon + title + subtitle), center slot, and a right
   icon="🌐"
   title="Docs Site"
   sticky>
-</wb-header>
+</header>
 ```
 
 ### Title Only
 
 ```html
-<wb-header title="Simple Header"></wb-header>
+<wb-header title="Simple Header"></header>
 ```
 
 ### Native `<header>` (Enhanced)
@@ -95,14 +95,14 @@ Site/page header with a logo (icon + title + subtitle), center slot, and a right
   <div class="wb-header__right">
     <span class="wb-tag-glass">v1.0</span>
   </div>
-</wb-header>
+</header>
 ```
 
 ## CSS Classes
 
 | Class | Applied When | Description |
 |-------|--------------|--------------|
-| `wb-header` (tag selector) / `.wb-header` | Always | Base flex layout (`.wb-header` still applies on an auto-injected native `<header>`) |
+| `<header>` (tag selector) / `.wb-header` | Always | Base flex layout (`.wb-header` still applies on an auto-injected native `<header>`) |
 | `.wb-header--sticky` | `sticky` (or legacy `data-sticky`) | `position: sticky` at the top of the viewport |
 | `.wb-header__left` / `.wb-header__right` | Structural | Left (logo) and right (badge/actions) sections |
 | `.wb-header__center` | Structural | Center slot for custom content |

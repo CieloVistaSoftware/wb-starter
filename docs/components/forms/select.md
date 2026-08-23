@@ -1,15 +1,15 @@
 # Select - wb-starter v3.0
 
-A real `<select>` (native keyboard nav, mobile picker, form submission, screen-reader semantics) with an optional clearable button. `<wb-select>` is a superset that builds a real `<select>`/`<option>` tree from its attributes or child `<option>` elements, then enhances that.
+A real `<select>` (native keyboard nav, mobile picker, form submission, screen-reader semantics) with an optional clearable button. `<select>` is a superset that builds a real `<select>`/`<option>` tree from its attributes or child `<option>` elements, then enhances that.
 
 ## Overview
 
 | Property | Value |
 |----------|-------|
-| Custom Tag | `<wb-select>` |
+| Custom Tag | `<select>` |
 | Behavior | `select` |
 | Semantic | `<select>` |
-| Root CSS Class | *(none on `<select>` itself -- styled via the `wb-select`/`select` tag directly; `<wb-select>` host gets `wb-select--{size,variant}` only)* |
+| Root CSS Class | *(none on `<select>` itself -- styled via the `<select>`/`select` tag directly; `<select>` host gets `wb-select--{size,variant}` only)* |
 | Category | Forms |
 | Schema | `src/wb-models/select.schema.json` |
 
@@ -17,7 +17,7 @@ A real `<select>` (native keyboard nav, mobile picker, form submission, screen-r
 
 | Property | Type | Default | Description |
 |----------|------|---------|-------------|
-| `label` | string | `""` | Label shown above the field (`<wb-select>` form) |
+| `label` | string | `""` | Label shown above the field (`<select>` form) |
 | `placeholder` | string | `"Select..."` | Disabled placeholder `<option>` (single-select only) |
 | `options` | string (JSON) | `""` | `[{value, label}]` -- used only if no child `<option>` elements exist |
 | `value` | string | `""` | Selected value |
@@ -41,20 +41,20 @@ A real `<select>` (native keyboard nav, mobile picker, form submission, screen-r
 </select>
 </wb-demo>
 
-### `<wb-select>` with `<option>` Children
+### `<select>` with `<option>` Children
 
 ```html
 <wb-select label="Role">
   <option value="admin">Admin</option>
   <option value="editor">Editor</option>
   <option value="viewer">Viewer</option>
-</wb-select>
+</select>
 ```
 
-### `<wb-select>` from JSON `options`
+### `<select>` from JSON `options`
 
 ```html
-<wb-select label="Country" options='[{"value":"us","label":"United States"},{"value":"ca","label":"Canada"}]'></wb-select>
+<wb-select label="Country" options='[{"value":"us","label":"United States"},{"value":"ca","label":"Canada"}]'></select>
 ```
 
 ### Clearable
@@ -71,10 +71,10 @@ A real `<select>` (native keyboard nav, mobile picker, form submission, screen-r
 ```html
 <wb-select label="Status" variant="success">
   <option value="ok">OK</option>
-</wb-select>
+</select>
 <wb-select label="Small" size="sm">
   <option value="a">A</option>
-</wb-select>
+</select>
 ```
 
 ### Multiple
@@ -84,7 +84,7 @@ A real `<select>` (native keyboard nav, mobile picker, form submission, screen-r
   <option value="a">A</option>
   <option value="b">B</option>
   <option value="c">C</option>
-</wb-select>
+</select>
 ```
 
 ## Generated Structure
@@ -98,7 +98,7 @@ A real `<select>` (native keyboard nav, mobile picker, form submission, screen-r
     <option value="editor">Editor</option>
     <option value="viewer">Viewer</option>
   </select>
-</wb-select>
+</select>
 ```
 
 ## CSS Classes
@@ -106,7 +106,7 @@ A real `<select>` (native keyboard nav, mobile picker, form submission, screen-r
 | Class | Applied When | Description |
 |-------|--------------|-------------|
 | `select` (tag selector) | Always | Native `<select>` field styling |
-| `.wb-select__field` | `<wb-select>` form | The real `<select>` built inside the host |
+| `.wb-select__field` | `<select>` form | The real `<select>` built inside the host |
 | `.wb-select__label` | `label` set | Label above the field |
 | `.wb-select--{sm,lg}` | `size` (non-`md`) | Field padding/font-size (also `.wb-input--*`/`.wb-textarea--*` share this scale) |
 | `.wb-select--success` / `.wb-select--error` | `variant` | Field border/focus color |
@@ -122,7 +122,7 @@ A real `<select>` (native keyboard nav, mobile picker, form submission, screen-r
 | `element.wbSelect.getValue()` | Returns `element.value` |
 | `element.wbSelect.setValue(v)` | Sets `element.value = v` |
 | `element.wbSelect.getSelectedOptions()` | Returns `Array.from(element.selectedOptions)` |
-| `element.wbSelect.clear()` | Sets `element.selectedIndex = -1` |
+| `element.wbSelect.reset()` | Sets `element.selectedIndex = -1` |
 
 ```javascript
 const select = document.querySelector('select');
@@ -158,7 +158,7 @@ select.addEventListener('change', (e) => console.log('Selected:', e.target.value
 | Attribute | Purpose |
 |-----------|---------|
 | Native `<select>` semantics | Full native combobox role, keyboard nav, and mobile picker with zero ARIA needed |
-| `aria-labelledby` | Set on the real `<select>`, pointing at the generated `<wb-select>` label id |
+| `aria-labelledby` | Set on the real `<select>`, pointing at the generated `<select>` label id |
 
 Keyboard support:
 - Arrow keys, type-ahead, and `Enter`/`Space` all come from the native `<select>` element -- no custom keyboard handling is added.

@@ -47,12 +47,12 @@ Users provide simple attribute values. The schema defines how those values becom
   title="Explore"
   subtitle="Your journey"
   cta="Launch">
-</wb-hero>
+</div>
 <!-- ❌ UGLY: User must know internal slots -->
-<wb-hero>
+<div x-hero>
   <h1 slot="title">Explore</h1>
   <p slot="subtitle">Your journey</p>
-</wb-hero>
+</div>
 ```
 
 | Content Type | Use |
@@ -108,7 +108,7 @@ Users provide simple attribute values. The schema defines how those values becom
 
 | Trigger | Example | Status |
 |---------|---------|--------|
-| Web Component tag | `<wb-card>` | ✅ Keep |
+| Web Component tag | `<article>` | ✅ Keep |
 | Data attribute | `<article>` | ✅ Keep |
 | ~~Class name~~ | ~~`<article class="wb-card">`~~ | ❌ Drop (CSS-only) |
 
@@ -272,7 +272,7 @@ Since props, view, and methods are defined in schema, tests auto-generate:
 
 | Test Type | Input | Expected |
 |-----------|-------|----------|
-| No props | `<wb-card>` | main only |
+| No props | `<article>` | main only |
 | Title | `title="X"` | header + main |
 | Subtitle | `subtitle="X"` | header + main |
 | Footer | `footer="X"` | main + footer |

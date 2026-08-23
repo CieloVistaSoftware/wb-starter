@@ -36,13 +36,13 @@ Generated: 2026-02-16 from test suite results (2443 passed, 262 failed, 25 skipp
 ## Priority 2 — Sticky Behavior (18 failures)
 
 **File:** `sticky.spec.ts` — Tests go to `/demos/autoinject.html`, inject `x-sticky` HTML, call `WB.scan()`
-**Root cause:** WB engine not processing `x-sticky` attribute on scan — `wb-sticky` class never applied, API never attached
+**Root cause:** WB engine not processing `x-sticky` attribute on scan — `<div x-sticky>` class never applied, API never attached
 
 - [ ] Verify `sticky` is registered in `wb-viewmodels/index.js` behavior registry (confirmed: `sticky: 'sticky'`)
 	[~claimed copilot 2026-02-16T00:00Z]
 - [ ] Debug WB.scan() → does it find and invoke `sticky()` for `x-sticky` elements?
 - [ ] Fix sticky behavior initialization via WB.scan
-- [ ] Verify `wb-sticky` class applied on init
+- [ ] Verify `<div x-sticky>` class applied on init
 - [ ] Verify `is-stuck` class applied on scroll past trigger
 - [ ] Verify `wbSticky.isStuck()`, `.stick()`, `.unstick()` API works
 - [ ] Verify `offset` and `class` attributes respected
@@ -57,7 +57,7 @@ Generated: 2026-02-16 from test suite results (2443 passed, 262 failed, 25 skipp
 
 - [ ] Create standalone test page: `demos/scrollalong-test.html` with a nav element using `x-scrollalong`
 - [ ] Update `scrollalong.spec.ts` to use the standalone test page instead of `#siteNav`
-- [ ] Verify `wb-scrollalong` class applied on init
+- [ ] Verify `<div x-scrollalong>` class applied on init
 - [ ] Verify `position: sticky` applied
 - [ ] Verify element stays visible on scroll
 - [ ] Verify element remains clickable after scroll
@@ -103,7 +103,7 @@ Generated: 2026-02-16 from test suite results (2443 passed, 262 failed, 25 skipp
 
 - [ ] `cards-comprehensive.spec.ts` — card base, cardlink, cardbutton, cardprofile, cardtestimonial, cardimage, cardfile, cardvideo rendering
 - [ ] `card-styling.spec.ts` — elevated cards missing shadow/lighter background
-- [ ] `cardprogressbar.spec.ts` — progress bar not rendering with `wb-progress` class, height, fill, animation
+- [ ] `cardprogressbar.spec.ts` — progress bar not rendering with `<progress>` class, height, fill, animation
 - [ ] `cardportfolio.spec.ts` — portfolio fields, cover image not rendering
 - [ ] `cardproduct.spec.ts` — product properties not rendering
 - [ ] `cardhero.spec.ts` — background image, text alignment
@@ -187,10 +187,10 @@ Generated: 2026-02-16 from test suite results (2443 passed, 262 failed, 25 skipp
 - [ ] Drawer position — left/right drawer opens correctly (4 tests)
 
 ### Badge (2 failures)
-- [ ] `wb-badge` renders as inline-level display check failing
+- [ ] `<div x-badge>` renders as inline-level display check failing
 
 ### PCE (4 failures)
-- [ ] `wb-cardprofile` PCE recognition — TypeError: Cannot read properties of undefined
+- [ ] `<div x-cardprofile>` PCE recognition — TypeError: Cannot read properties of undefined
 - [ ] `pce-test.html` rendering failures
 
 ### Autosize (2 failures)

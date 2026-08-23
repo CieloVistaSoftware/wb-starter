@@ -4,7 +4,7 @@ Turns a field into a native color picker. See
 [src/wb-viewmodels/colorpicker.js](../../src/wb-viewmodels/colorpicker.js).
 
 - **Type:** Modifier
-- **Root CSS class:** `wb-colorpicker`
+- **Root CSS class:** `<div x-colorpicker>`
 - **Schema:** [colorpicker.schema.json](../../src/wb-models/colorpicker.schema.json)
 
 ## Usage
@@ -43,7 +43,7 @@ Applied to a non-input container instead, it builds its own child
 
 | Class | Applies to | When |
 |---|---|---|
-| `wb-colorpicker` | the target element | always |
+| `<div x-colorpicker>` | the target element | always |
 | `wb-colorpicker__input` | the `<input type="color">` (the target itself when it's an `<input>`, otherwise the generated child) | always |
 
 ## Events

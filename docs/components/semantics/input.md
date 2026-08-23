@@ -6,10 +6,10 @@ Text input field with label, helper text, and validation states.
 
 | Property | Value |
 |----------|-------|
-| Custom Tag | `<wb-input>` |
+| Custom Tag | `<input>` |
 | Behavior | `input` |
 | Semantic | `<div>` (role="textbox") |
-| Root CSS Class | `wb-input` |
+| Root CSS Class | `<input>` |
 | Category | Forms |
 | Schema | `src/wb-models/input.schema.json` |
 
@@ -40,7 +40,7 @@ Wrapped in `<wb-demo>`, so the live component renders below with its source show
   label="Email"
   input-type="email"
   placeholder="Enter your email">
-</wb-input>
+</input>
 </wb-demo>
 
 ## Usage
@@ -52,7 +52,7 @@ Wrapped in `<wb-demo>`, so the live component renders below with its source show
   label="Email"
   input-type="email"
   placeholder="Enter your email">
-</wb-input>
+</input>
 ```
 
 ### Native Input (Enhanced)
@@ -70,7 +70,7 @@ Wrapped in `<wb-demo>`, so the live component renders below with its source show
   label="Username"
   placeholder="Enter username"
   helper="Must be 3-20 characters">
-</wb-input>
+</input>
 ```
 
 ### With Icon
@@ -80,13 +80,13 @@ Wrapped in `<wb-demo>`, so the live component renders below with its source show
   label="Search"
   icon="🔍"
   placeholder="Search...">
-</wb-input>
+</input>
 <wb-input
   label="Email"
   icon="📧"
   iconPosition="end"
   inputType="email">
-</wb-input>
+</input>
 ```
 
 ### Clearable
@@ -96,7 +96,7 @@ Wrapped in `<wb-demo>`, so the live component renders below with its source show
   label="Search"
   placeholder="Type to search..."
   clearable>
-</wb-input>
+</input>
 ```
 
 ### Validation States
@@ -106,12 +106,12 @@ Wrapped in `<wb-demo>`, so the live component renders below with its source show
   label="Valid Field"
   variant="success"
   value="Correct!">
-</wb-input>
+</input>
 <wb-input
   label="Invalid Field"
   variant="error"
   error="This field is required">
-</wb-input>
+</input>
 ```
 
 ### Sizes
@@ -120,15 +120,15 @@ Wrapped in `<wb-demo>`, so the live component renders below with its source show
 <wb-input
   label="Small"
   size="sm">
-</wb-input>
+</input>
 <wb-input
   label="Medium"
   size="md">
-</wb-input>
+</input>
 <wb-input
   label="Large"
   size="lg">
-</wb-input>
+</input>
 ```
 
 ### Input Types
@@ -137,19 +137,19 @@ Wrapped in `<wb-demo>`, so the live component renders below with its source show
 <wb-input
   label="Email"
   inputType="email">
-</wb-input>
+</input>
 <wb-input
   label="Password"
   inputType="password">
-</wb-input>
+</input>
 <wb-input
   label="Number"
   inputType="number">
-</wb-input>
+</input>
 <wb-input
   label="Date"
   inputType="date">
-</wb-input>
+</input>
 ```
 
 ## Generated Structure

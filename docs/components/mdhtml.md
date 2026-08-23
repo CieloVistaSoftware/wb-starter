@@ -3,12 +3,12 @@
 > **Updated:** 2026-02-13
 
 ## Overview
-`mdhtml` is a WB-Starter component that converts Markdown to HTML in the browser. It is used via the `<wb-mdhtml>` custom element and supports both inline markdown and external markdown files.
+`mdhtml` is a WB-Starter component that converts Markdown to HTML in the browser. It is used via the `<div x-mdhtml>` custom element and supports both inline markdown and external markdown files.
 
 Wrapped in `<wb-demo>`, so the live component renders below with its source shown underneath:
 
 <wb-demo>
-<wb-mdhtml> # Hello World This is **bold** and *italic*. </wb-mdhtml>
+<div x-mdhtml> # Hello World This is **bold** and *italic*. </div>
 </wb-demo>
 
 ---
@@ -17,12 +17,12 @@ Wrapped in `<wb-demo>`, so the live component renders below with its source show
 
 ### 1. Inline Markdown
 ```html
-<wb-mdhtml> # Hello World This is **bold** and *italic*. </wb-mdhtml>
+<div x-mdhtml> # Hello World This is **bold** and *italic*. </div>
 ```
 
 ### 2. Load Markdown from File
 ```html
-<wb-mdhtml src="./docs/readme.md"></wb-mdhtml>
+<wb-mdhtml src="./docs/readme.md"></div>
 ```
 - `src` can be a relative or absolute path, or a full URL.
 
@@ -62,7 +62,7 @@ Wrapped in `<wb-demo>`, so the live component renders below with its source show
   gfm="true"
   header-ids="true"
   size="md">
-</wb-mdhtml>
+</div>
 ```
 
 Single newlines inside a paragraph are treated as normal whitespace so prose
@@ -92,7 +92,7 @@ their own whitespace.
 ---
 
 ## Advanced
-- You can use the `wbMdhtml.reload()` and `wbMdhtml.load(src)` methods on the element for manual reloads
+- You can use the `wbMdhtml.refresh()` and `wbMdhtml.load(src)` methods on the element for manual reloads
 - All code/pre blocks are auto-enhanced for WB code behaviors
 
 ---

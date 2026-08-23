@@ -11,20 +11,20 @@ an `x-move` container swap their item with the adjacent one when clicked.
 | Behavior | `move` |
 | Container attribute | `x-move` |
 | Direction attributes | `x-moveup`, `x-movedown`, `x-moveleft`, `x-moveright` |
-| Custom Tag | `<wb-move>` |
+| Custom Tag | `<div x-move>` |
 | Applies to | a grid/flex container (`x-move`) with descendant buttons (`x-move{direction}`) |
 | Category | Interactive |
 | Schema | `src/wb-models/move.schema.json` |
 | Source | `src/wb-viewmodels/move.js` |
 
-Both forms run the same behavior: `<div x-move>` and `<wb-move>` are equivalent —
+Both forms run the same behavior: `<div x-move>` and `<div x-move>` are equivalent —
 the tag form is registered in the tag map
 ([`src/core/tag-map.js`](../../src/core/tag-map.js)) and dispatches to the identical
 `move()` function. `autoInject` is on by default site-wide
 ([`src/core/config.js`](../../src/core/config.js)), so `x-move` activates without
 any manual `WB.scan()` call.
 
-`move()` is the **container** entry point: it adds the `wb-move` marker class and
+`move()` is the **container** entry point: it adds the `<div x-move>` marker class and
 wires up any descendant element carrying one of the four direction attributes below.
 Each direction attribute works stand-alone too (a button anywhere with `x-moveup`
 etc. wires itself), but needs an ancestor whose own parent is `display: grid` or
@@ -76,7 +76,7 @@ non-grid (flex/list) container is treated as a single column, so `x-moveup`/
   <div style="padding: 1rem; border: 1px solid var(--border-color);">
     B <button x-moveleft>←</button>
   </div>
-</wb-move>
+</div>
 </wb-demo>
 
 ## CSS Classes

@@ -6,10 +6,10 @@ Interactive data table with sorting and search.
 
 | Property | Value |
 |----------|-------|
-| Custom Tag | `<wb-table>` |
+| Custom Tag | `<table>` |
 | Behavior | `table` |
 | Semantic | `<table>` |
-| Root CSS Class | `wb-table` |
+| Root CSS Class | `<table>` |
 | Category | Data |
 
 ## Properties
@@ -28,8 +28,8 @@ Interactive data table with sorting and search.
 | `data` | string | `""` | Row data as a JSON array of objects (paired with `columns`) |
 | `columns` | string | `""` | Column config as JSON `[{key, label}]` (paired with `data`) |
 
-**Authoring note:** `<wb-table>` no longer supports authoring rows as slotted
-`<thead>`/`<tbody>` markup — that path is retired. Populate a `<wb-table>`
+**Authoring note:** `<table>` no longer supports authoring rows as slotted
+`<thead>`/`<tbody>` markup — that path is retired. Populate a `<table>`
 with either the `headers`/`rows` attribute pair or the `data`/`columns`
 attribute pair, shown below. Both are read by `table.js` and build real
 `<tr>`/`<th>`/`<td>` rows at render time.
@@ -38,7 +38,7 @@ attribute pair, shown below. Both are read by `table.js` and build real
 
 ### Custom Element (headers/rows)
 
-The most direct way to author a `<wb-table>`: a comma-separated `headers`
+The most direct way to author a `<table>`: a comma-separated `headers`
 list paired with a `rows` JSON array of arrays. Default styling — `hover`
 and `sortable` are both on by default, nothing else is.
 
@@ -52,7 +52,7 @@ and `sortable` are both on by default, nothing else is.
     [4,"Diego Ramirez","Support Specialist","Customer Success","Denver"],
     [5,"Aisha Osei","Marketing Manager","Growth","Chicago"]
   ]'>
-</wb-table>
+</table>
 </wb-demo>
 
 ### From data/columns
@@ -78,7 +78,7 @@ exists as objects (e.g. an API response) instead of positional arrays.
     {"key":"stock","label":"In Stock"},
     {"key":"category","label":"Category"}
   ]'>
-</wb-table>
+</table>
 </wb-demo>
 
 ### Striped
@@ -99,7 +99,7 @@ screen at once, so this example uses six.
     [105,"Aluminum Sheet","WH-East","310","In Stock"],
     [106,"Nylon Strap","WH-East","2,005","In Stock"]
   ]'>
-</wb-table>
+</table>
 </wb-demo>
 
 ### Bordered
@@ -119,7 +119,7 @@ where one cell ends and the next begins.
     [4,"Training Session","3","$400.00","$1,200.00"],
     [5,"Priority Support Add-on","1","$300.00","$300.00"]
   ]'>
-</wb-table>
+</table>
 </wb-demo>
 
 ### Compact
@@ -141,7 +141,7 @@ density visible against the roomier tables above.
     ["13:00","Panel: Accessibility","Hall A"],
     ["14:00","Closing Remarks","Hall A"]
   ]'>
-</wb-table>
+</table>
 </wb-demo>
 
 ### Hover disabled
@@ -163,7 +163,7 @@ rows are interactive.
     ["2026-08-10 14:47","system","Cert rotation","Success"],
     ["2026-08-10 22:00","system","Nightly backup","Success"]
   ]'>
-</wb-table>
+</table>
 </wb-demo>
 
 ### Sortable disabled
@@ -185,7 +185,7 @@ they're meant to run in.
     [4,"Deploy to staging","Release manager","3 min"],
     [5,"Promote staging to production","Release manager","2 min"]
   ]'>
-</wb-table>
+</table>
 </wb-demo>
 
 ### Searchable
@@ -208,7 +208,7 @@ tracked this: the input previously never rendered at all — fixed in
     [5,"Aisha Osei","Marketing Manager","Growth","aisha@example.com"],
     [6,"Jordan Lee","Backend Engineer","Platform","jordan@example.com"]
   ]'>
-</wb-table>
+</table>
 </wb-demo>
 
 ### Combined: striped + bordered + hover
@@ -229,7 +229,7 @@ Style attributes compose freely. This pricing comparison combines
     ["Business Plus","$149","50","1 TB","Priority"],
     ["Enterprise","Custom","Unlimited","Custom","Dedicated"]
   ]'>
-</wb-table>
+</table>
 </wb-demo>
 
 ### Combined: compact + striped + searchable
@@ -252,7 +252,7 @@ the six tickets below by typing.
     ["T-1046","API timeout on large export","High","In Progress","P. Patel"],
     ["T-1047","Typo in confirmation email","Low","Closed","A. Chen"]
   ]'>
-</wb-table>
+</table>
 </wb-demo>
 
 ### Row click
@@ -281,13 +281,13 @@ from the `events` attribute.
     [4,"Diego Ramirez","Support Specialist","Customer Success","Denver"],
     [5,"Aisha Osei","Marketing Manager","Growth","Chicago"]
   ]'>
-</wb-table>
+</table>
 </wb-demo>
 
 ## Generated Structure
 
-`<wb-table>` renders its search input (when `searchable`) and its
-`<thead>`/`<tbody>` as direct children of the `<wb-table>` element itself
+`<table>` renders its search input (when `searchable`) and its
+`<thead>`/`<tbody>` as direct children of the `<table>` element itself
 — there is no extra wrapping container. Confirmed live from the examples
 above (a `searchable striped` table). This is reference output only (not
 a live demo — see the [Searchable](#searchable) example above for the
@@ -322,14 +322,14 @@ live, authorable version of this same markup):
       <td>4</td>
     </tr>
   </tbody>
-</wb-table>
+</table>
 ```
 
 ## CSS Classes
 
 | Class | Applied When | Description |
 |-------|--------------|--------------|
-| `.wb-table` | Always (native `<table>` host only — a `<wb-table>` host is targeted by its own tag) | Base styling |
+| `.wb-table` | Always (native `<table>` host only — a `<table>` host is targeted by its own tag) | Base styling |
 | `.wb-table--striped` | `striped` | Zebra striping |
 | `.wb-table--hover` | `hover` (default `true`) | Row hover effect |
 | `.wb-table--bordered` | `bordered` | Cell borders |
@@ -338,7 +338,7 @@ live, authorable version of this same markup):
 
 ## Methods
 
-**Accuracy note:** `<wb-table>` binds these names from `table.schema.json`'s
+**Accuracy note:** `<table>` binds these names from `table.schema.json`'s
 `$methods`, but only as generic stubs — calling one warns
 `Method "…" called but not implemented for table` and dispatches a matching
 `wb:{method}` event; it does **not** perform the named action. The only

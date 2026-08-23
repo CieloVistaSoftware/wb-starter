@@ -6,10 +6,10 @@ Star rating component for displaying or collecting ratings.
 
 | Property | Value |
 |----------|-------|
-| Custom Tag | `<wb-rating>` |
+| Custom Tag | `<div x-rating>` |
 | Behavior | `rating` |
 | Semantic | `<div>` (role="slider") |
-| Root CSS Class | `wb-rating` |
+| Root CSS Class | `<div x-rating>` |
 | Category | Feedback |
 | Schema | `src/wb-models/rating.schema.json` |
 
@@ -28,7 +28,7 @@ Star rating component for displaying or collecting ratings.
 Wrapped in `<wb-demo>`, so the live component renders below with its source shown underneath:
 
 <wb-demo>
-<wb-rating value="3"></wb-rating>
+<wb-rating value="3"></div>
 </wb-demo>
 
 ## Usage
@@ -36,7 +36,7 @@ Wrapped in `<wb-demo>`, so the live component renders below with its source show
 ### Custom Element
 
 ```html
-<wb-rating value="3"></wb-rating>
+<wb-rating value="3"></div>
 ```
 
 ### Data Attribute
@@ -55,7 +55,7 @@ Wrapped in `<wb-demo>`, so the live component renders below with its source show
   value="4.5"
   half
   readonly>
-</wb-rating>
+</div>
 ```
 
 ### Interactive Input
@@ -64,7 +64,7 @@ Wrapped in `<wb-demo>`, so the live component renders below with its source show
 <wb-rating
   value="0"
   max="5">
-</wb-rating>
+</div>
 ```
 
 ### Half Stars
@@ -73,7 +73,7 @@ Wrapped in `<wb-demo>`, so the live component renders below with its source show
 <wb-rating
   value="3.5"
   half>
-</wb-rating>
+</div>
 ```
 
 ### Custom Max
@@ -82,7 +82,7 @@ Wrapped in `<wb-demo>`, so the live component renders below with its source show
 <wb-rating
   value="7"
   max="10">
-</wb-rating>
+</div>
 ```
 
 ### Sizes
@@ -91,15 +91,15 @@ Wrapped in `<wb-demo>`, so the live component renders below with its source show
 <wb-rating
   value="3"
   size="sm">
-</wb-rating>
+</div>
 <wb-rating
   value="3"
   size="md">
-</wb-rating>
+</div>
 <wb-rating
   value="3"
   size="lg">
-</wb-rating>
+</div>
 ```
 
 ### Custom Icons
@@ -108,15 +108,15 @@ Wrapped in `<wb-demo>`, so the live component renders below with its source show
 <wb-rating
   value="3"
   icon="❤️">
-</wb-rating>
+</div>
 <wb-rating
   value="4"
   icon="👍">
-</wb-rating>
+</div>
 <wb-rating
   value="2"
   icon="🔥">
-</wb-rating>
+</div>
 ```
 
 ### Disabled
@@ -125,7 +125,7 @@ Wrapped in `<wb-demo>`, so the live component renders below with its source show
 <wb-rating
   value="4"
   disabled>
-</wb-rating>
+</div>
 ```
 
 ## Generated Structure

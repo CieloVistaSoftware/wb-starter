@@ -4,7 +4,7 @@ Adds a filterable suggestion list under a text input as the user types. See
 [src/wb-viewmodels/autocomplete.js](../../src/wb-viewmodels/autocomplete.js).
 
 - **Type:** Modifier
-- **Root CSS class:** `wb-autocomplete`
+- **Root CSS class:** `<div x-autocomplete>`
 - **Schema:** [autocomplete.schema.json](../../src/wb-models/autocomplete.schema.json)
 
 ## Usage
@@ -45,7 +45,7 @@ Wrapped in `<wb-demo>`, so the live component renders below with its source show
 
 | Class | Applies to | When |
 |---|---|---|
-| `wb-autocomplete` | wrapper `<div>` | always |
+| `<div x-autocomplete>` | wrapper `<div>` | always |
 | `wb-autocomplete__input` | the `<input>` | always |
 | `wb-autocomplete__list` | the suggestion `<ul>` | always |
 | `wb-autocomplete--loading` | wrapper `<div>` | while a `src`/`href` fetch is in flight |

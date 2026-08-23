@@ -6,10 +6,10 @@ Enhanced text input -- label, prefix/suffix or icon, clearable button, and valid
 
 | Property | Value |
 |----------|-------|
-| Custom Tag | `<wb-input>` |
+| Custom Tag | `<input>` |
 | Behavior | `input` |
 | Semantic | `<input>` |
-| Root CSS Class | `wb-input` |
+| Root CSS Class | `<input>` |
 | Category | Forms |
 | Schema | `src/wb-models/input.schema.json` |
 
@@ -17,7 +17,7 @@ Enhanced text input -- label, prefix/suffix or icon, clearable button, and valid
 
 | Property | Type | Default | Description |
 |----------|------|---------|-------------|
-| `label` | string | `""` | Label text shown above the field (`<wb-input>` form) |
+| `label` | string | `""` | Label text shown above the field (`<input>` form) |
 | `placeholder` | string | `""` | Placeholder text |
 | `value` | string | `""` | Initial value |
 | `name` | string | `""` | Form field name |
@@ -38,34 +38,34 @@ Enhanced text input -- label, prefix/suffix or icon, clearable button, and valid
 ### Custom Element
 
 <wb-demo>
-<wb-input label="Full name" placeholder="Jane Doe"></wb-input>
+<wb-input label="Full name" placeholder="Jane Doe"></input>
 </wb-demo>
 
 ### Input Types
 
 ```html
-<wb-input label="Email" input-type="email" placeholder="you@example.com"></wb-input>
-<wb-input label="Password" input-type="password" placeholder="••••••••"></wb-input>
+<wb-input label="Email" input-type="email" placeholder="you@example.com"></input>
+<wb-input label="Password" input-type="password" placeholder="••••••••"></input>
 ```
 
 ### Helper and Error Text
 
 ```html
-<wb-input label="Username" helper="Must be at least 3 characters"></wb-input>
-<wb-input label="Username" error="This field is required" variant="error"></wb-input>
+<wb-input label="Username" helper="Must be at least 3 characters"></input>
+<wb-input label="Username" error="This field is required" variant="error"></input>
 ```
 
 ### With Icon and Clearable
 
 ```html
-<wb-input label="Search" icon="🔍" placeholder="Search…" clearable></wb-input>
+<wb-input label="Search" icon="🔍" placeholder="Search…" clearable></input>
 ```
 
 ### Sizes
 
 ```html
-<wb-input label="Small" size="sm"></wb-input>
-<wb-input label="Large" size="lg"></wb-input>
+<wb-input label="Small" size="sm"></input>
+<wb-input label="Large" size="lg"></input>
 ```
 
 ### Native `<input>` (Enhanced)
@@ -78,7 +78,7 @@ Enhanced text input -- label, prefix/suffix or icon, clearable button, and valid
 ## Generated Structure
 
 ```html
-<wb-input>
+<input>
   <label>Search<span>*</span></label>
   <div class="wb-input__wrapper">
     <span>🔍</span>
@@ -86,7 +86,7 @@ Enhanced text input -- label, prefix/suffix or icon, clearable button, and valid
     <button type="button">✕</button>
   </div>
   <span class="wb-input__helper">Press Enter to search</span>
-</wb-input>
+</input>
 ```
 
 ## CSS Classes

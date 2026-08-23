@@ -46,24 +46,24 @@ All card components use the `<article>` semantic element:
 
 | Component | Custom Tag | Usage |
 |-----------|------------|-------|
-| card | `<wb-card>` | Default card |
-| cardimage | `<wb-cardimage>` | Image card |
-| cardvideo | `<wb-cardvideo>` | Video card |
-| cardbutton | `<wb-cardbutton>` | Action buttons |
-| cardhero | `<wb-cardhero>` | Hero banner |
-| cardprofile | `<wb-cardprofile>` | User profile |
-| cardtestimonial | `<wb-cardtestimonial>` | Testimonials |
-| cardportfolio | `<wb-cardportfolio>` | Portfolio |
-| cardpricing | `<wb-cardpricing>` | Pricing |
-| cardproduct | `<wb-cardproduct>` | Products |
-| cardfile | `<wb-cardfile>` | File downloads |
-| cardlink | `<wb-cardlink>` | Link cards |
-| cardhorizontal | `<wb-cardhorizontal>` | Horizontal layout |
-| cardoverlay | `<wb-cardoverlay>` | Image overlays |
-| carddraggable | `<wb-carddraggable>` | Draggable |
-| cardexpandable | `<wb-cardexpandable>` | Expandable |
-| cardminimizable | `<wb-cardminimizable>` | Minimizable |
-| cardstats | `<wb-cardstats>` | Statistics |
+| card | `<article>` | Default card |
+| cardimage | `<article x-cardimage>` | Image card |
+| cardvideo | `<article x-cardvideo>` | Video card |
+| cardbutton | `<div x-cardbutton>` | Action buttons |
+| cardhero | `<article x-cardhero>` | Hero banner |
+| cardprofile | `<div x-cardprofile>` | User profile |
+| cardtestimonial | `<div x-cardtestimonial>` | Testimonials |
+| cardportfolio | `<div x-cardportfolio>` | Portfolio |
+| cardpricing | `<div x-cardpricing>` | Pricing |
+| cardproduct | `<div x-cardproduct>` | Products |
+| cardfile | `<div x-cardfile>` | File downloads |
+| cardlink | `<div x-cardlink>` | Link cards |
+| cardhorizontal | `<div x-cardhorizontal>` | Horizontal layout |
+| cardoverlay | `<div x-cardoverlay>` | Image overlays |
+| carddraggable | `<div x-carddraggable>` | Draggable |
+| cardexpandable | `<div x-cardexpandable>` | Expandable |
+| cardminimizable | `<div x-cardminimizable>` | Minimizable |
+| cardstats | `<articlestats>` | Statistics |
 
 ## Usage Examples
 

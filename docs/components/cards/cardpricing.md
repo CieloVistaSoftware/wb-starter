@@ -6,7 +6,7 @@ Pricing plan card for SaaS/subscription services.
 
 | Property | Value |
 |----------|-------|
-| Custom Tag | `<wb-cardpricing>` |
+| Custom Tag | `<div x-cardpricing>` |
 | Behavior | `cardpricing` |
 | Semantic | `<article>` |
 | Root CSS Class | `wb-card wb-pricing` |
@@ -36,7 +36,7 @@ Wrapped in `<wb-demo>`, so the live component renders below with its source show
   period="/month"
   features="5 projects, Email support, 1GB storage"
   cta="Start Free Trial">
-</wb-cardpricing>
+</div>
 </wb-demo>
 
 ## Usage
@@ -50,7 +50,7 @@ Wrapped in `<wb-demo>`, so the live component renders below with its source show
   period="/month"
   features="5 projects, Email support, 1GB storage"
   cta="Start Free Trial">
-</wb-cardpricing>
+</div>
 ```
 
 ### Featured Plan
@@ -63,7 +63,7 @@ Wrapped in `<wb-demo>`, so the live component renders below with its source show
   features="Unlimited projects, Priority support, 100GB storage, API access"
   cta="Get Started"
   featured>
-</wb-cardpricing>
+</div>
 ```
 
 ### Annual Pricing
@@ -76,7 +76,7 @@ Wrapped in `<wb-demo>`, so the live component renders below with its source show
   features="Everything in Pro, Custom integrations, Dedicated support, SLA"
   cta="Contact Sales"
   ctaHref="/contact">
-</wb-cardpricing>
+</div>
 ```
 
 ## Generated Structure

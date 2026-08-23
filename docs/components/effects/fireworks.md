@@ -6,10 +6,10 @@ Fireworks burst explosion effect.
 
 | Property | Value |
 |----------|-------|
-| Custom Tag | `<wb-fireworks>` |
+| Custom Tag | `<div x-fireworks>` |
 | Behavior | `fireworks` |
 | Semantic | `<div>` |
-| Root CSS Class | `wb-fireworks` |
+| Root CSS Class | `<div x-fireworks>` |
 | Category | Effects |
 | Schema | `src/wb-models/fireworks.schema.json` |
 
@@ -31,7 +31,7 @@ Wrapped in `<wb-demo>`, so the live component renders below with its source show
 <wb-fireworks
   count="50"
   label="Celebrate!">
-</wb-fireworks>
+</div>
 </wb-demo>
 
 ## Usage
@@ -42,7 +42,7 @@ Wrapped in `<wb-demo>`, so the live component renders below with its source show
 <wb-fireworks
   count="50"
   label="Celebrate!">
-</wb-fireworks>
+</div>
 ```
 
 ### Data Attribute
@@ -61,7 +61,7 @@ Wrapped in `<wb-demo>`, so the live component renders below with its source show
   count="40"
   showButton="false"
   delay="1s">
-</wb-fireworks>
+</div>
 ```
 
 ### Looping Animation
@@ -70,7 +70,7 @@ Wrapped in `<wb-demo>`, so the live component renders below with its source show
 <wb-fireworks
   count="20"
   repeat>
-</wb-fireworks>
+</div>
 ```
 
 ## Generated Structure

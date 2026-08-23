@@ -6,7 +6,7 @@ Card with an embedded video player. Uses `<video>` element with accessibility co
 
 | Property | Value |
 |----------|-------|
-| Custom Tag | `<wb-cardvideo>` |
+| Custom Tag | `<article x-cardvideo>` |
 | Behavior | `cardvideo` |
 | Semantic | `<article>` + `<figure>` + `<video>` |
 | Root CSS Class | `wb-card wb-card-video` |
@@ -33,7 +33,7 @@ Wrapped in `<wb-demo>`, so the live component renders below with its source show
   poster="https://picsum.photos/seed/poster/800/450"
   title="Demo Video"
   controls>
-</wb-cardvideo>
+</article>
 </wb-demo>
 
 ## Usage
@@ -46,7 +46,7 @@ Wrapped in `<wb-demo>`, so the live component renders below with its source show
   poster="https://picsum.photos/seed/poster/800/450"
   title="Demo Video"
   controls>
-</wb-cardvideo>
+</article>
 ```
 
 ### Autoplay (Muted)
@@ -58,7 +58,7 @@ Wrapped in `<wb-demo>`, so the live component renders below with its source show
   muted
   loop
   title="Background Video">
-</wb-cardvideo>
+</article>
 ```
 
 ## Accessibility
@@ -74,7 +74,7 @@ Videos without captions will display a warning indicator. Add `<track>` elements
     src="/captions.vtt"
     srclang="en"
     label="English">
-</wb-cardvideo>
+</article>
 ```
 
 ## Schema

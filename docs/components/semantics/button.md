@@ -6,10 +6,10 @@ Interactive button with variants, sizes, and optional icon.
 
 | Property | Value |
 |----------|-------|
-| Custom Tag | `<wb-button>` |
+| Custom Tag | `<button>` |
 | Behavior | `button` |
 | Semantic | `<button>` |
-| Root CSS Class | `wb-button` |
+| Root CSS Class | `<button>` |
 | Category | Forms |
 | Schema | `src/wb-models/button.schema.json` |
 
@@ -31,7 +31,7 @@ Button text is set via the element's content (children), not an attribute.
 Wrapped in `<wb-demo>`, so the live component renders below with its source shown underneath:
 
 <wb-demo>
-<wb-button>Click Me</wb-button>
+<button>Click Me</button>
 </wb-demo>
 
 ## Usage
@@ -39,7 +39,7 @@ Wrapped in `<wb-demo>`, so the live component renders below with its source show
 ### Custom Element
 
 <wb-demo>
-<wb-button>Click Me</wb-button>
+<button>Click Me</button>
 </wb-demo>
 
 ### Native Button (Enhanced)
@@ -57,12 +57,12 @@ automatically, no `x-button` attribute needed.
 <wb-button
   label="Save"
   icon="💾">
-</wb-button>
+</button>
 <wb-button
   label="Next"
   icon="→"
   iconPosition="end">
-</wb-button>
+</button>
 </wb-demo>
 
 ### Variants
@@ -71,35 +71,35 @@ automatically, no `x-button` attribute needed.
 <wb-button
   label="Primary"
   variant="primary">
-</wb-button>
+</button>
 <wb-button
   label="Secondary"
   variant="secondary">
-</wb-button>
+</button>
 <wb-button
   label="Success"
   variant="success">
-</wb-button>
+</button>
 <wb-button
   label="Warning"
   variant="warning">
-</wb-button>
+</button>
 <wb-button
   label="Error"
   variant="error">
-</wb-button>
+</button>
 <wb-button
   label="Ghost"
   variant="ghost">
-</wb-button>
+</button>
 <wb-button
   label="Outline"
   variant="outline">
-</wb-button>
+</button>
 <wb-button
   label="Link"
   variant="link">
-</wb-button>
+</button>
 </wb-demo>
 
 ### Sizes
@@ -108,23 +108,23 @@ automatically, no `x-button` attribute needed.
 <wb-button
   label="XS"
   size="xs">
-</wb-button>
+</button>
 <wb-button
   label="SM"
   size="sm">
-</wb-button>
+</button>
 <wb-button
   label="MD"
   size="md">
-</wb-button>
+</button>
 <wb-button
   label="LG"
   size="lg">
-</wb-button>
+</button>
 <wb-button
   label="XL"
   size="xl">
-</wb-button>
+</button>
 </wb-demo>
 
 ### States
@@ -133,15 +133,15 @@ automatically, no `x-button` attribute needed.
 <wb-button
   label="Disabled"
   disabled>
-</wb-button>
+</button>
 <wb-button
   label="Loading..."
   loading>
-</wb-button>
+</button>
 <wb-button
   label="Full Width"
   fullWidth>
-</wb-button>
+</button>
 </wb-demo>
 
 ## Generated Structure

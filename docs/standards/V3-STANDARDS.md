@@ -22,13 +22,13 @@ classes, bind events, and expose its API.
 <wb-demo>
 <wb-card title="Release notes" variant="glass">
   <p>Changes in this release.</p>
-</wb-card>
+</article>
 </wb-demo>
 
 <wb-demo>
 <wb-dialog title="Confirm action">
   <p>Continue?</p>
-</wb-dialog>
+</dialog>
 </wb-demo>
 
 The tag is the component's public boundary. It is not a class instance that must
@@ -120,7 +120,7 @@ combination is intentional and supported. More-specific mappings, such as
 - Behavior attributes may be boolean or carry the behavior's configuration value.
 
 <wb-demo>
-<wb-badge variant="success">Ready</wb-badge>
+<wb-badge variant="success">Ready</div>
 </wb-demo>
 
 <wb-demo>
@@ -133,7 +133,7 @@ Configuration attributes use clean names. Do not add `x-` or `data-` to a
 component or behavior property:
 
 <wb-demo>
-<wb-card title="Hello" variant="glass" hoverable></wb-card>
+<wb-card title="Hello" variant="glass" hoverable></article>
 </wb-demo>
 
 ```html
@@ -178,7 +178,7 @@ The WB runtime discovers declarations through three maps:
 
 | Markup | Map | Meaning |
 | --- | --- | --- |
-| `<wb-card>` | `elementMap` | Named component boundary |
+| `<article>` | `elementMap` | Named component boundary |
 | `<button x-ripple>` | `extensionMap` | Explicit enhancement |
 | `<button>`, `<details>`, `<table>` | `nativeMap` | Optional semantic auto-injection |
 
@@ -192,7 +192,7 @@ the function is being used as a component or as an enhancement.
 ### Component with semantic children
 
 <wb-demo>
-<wb-article>
+<div x-as-article>
   <header>
     <h2>Article title</h2>
     <p>Short summary.</p>
@@ -201,10 +201,10 @@ the function is being used as a component or as an enhancement.
   <footer>
     <time datetime="2026-08-07">August 7, 2026</time>
   </footer>
-</wb-article>
+</div>
 </wb-demo>
 
-The `<wb-article>` boundary identifies the component, while its internal
+The `<div x-as-article>` boundary identifies the component, while its internal
 `<header>`, heading, paragraph, footer, and `<time>` elements retain their native
 meaning.
 
@@ -242,7 +242,7 @@ now named components. Convert the structure to a `<wb-*>` tag, while retaining
 <button x-ripple type="button">Click me</button>
 
 <!-- v3 -->
-<wb-card title="Hello" variant="glass">Content</wb-card>
+<wb-card title="Hello" variant="glass">Content</article>
 <button x-ripple type="button">Click me</button>
 ```
 
@@ -253,7 +253,7 @@ native form and use `nativeMap` or an explicit `x-*` behavior as appropriate.
 
 ```text
 COMPONENT BOUNDARY
-<wb-card title="..." variant="glass">...</wb-card>
+<wb-card title="..." variant="glass">...</article>
 
 EXPLICIT ENHANCEMENT
 <button x-ripple type="button">Save</button>

@@ -8,7 +8,7 @@ Interactive button with variants, sizes, an optional built-in icon library, and 
 |----------|-------|
 | Semantic Tag | `<button>` |
 | Behavior | `button` |
-| Root CSS Class | `wb-button` |
+| Root CSS Class | `<button>` |
 | Category | Forms |
 | Schema | `src/wb-models/button.schema.json` |
 

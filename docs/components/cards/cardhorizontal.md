@@ -6,7 +6,7 @@ Card with side-by-side image and content layout.
 
 | Property | Value |
 |----------|-------|
-| Custom Tag | `<wb-cardhorizontal>` |
+| Custom Tag | `<div x-cardhorizontal>` |
 | Behavior | `cardhorizontal` |
 | Semantic | `<article>` + `<figure>` |
 | Root CSS Class | `wb-card wb-card-horizontal` |
@@ -38,7 +38,7 @@ Wrapped in `<wb-demo>`, so the live component renders below with its source show
   subtitle="Feature description"
   image="https://picsum.photos/seed/cardhorizontal-feature/1000/800">
   Detailed content here.
-</wb-cardhorizontal>
+</div>
 </wb-demo>
 
 ## Usage
@@ -51,7 +51,7 @@ Wrapped in `<wb-demo>`, so the live component renders below with its source show
   subtitle="Feature description"
   image="https://picsum.photos/seed/cardhorizontal-basic/1000/800">
   Detailed content here.
-</wb-cardhorizontal>
+</div>
 ```
 
 ### Image on Left (explicit)
@@ -66,7 +66,7 @@ so rather than rely on the default.
   image="https://picsum.photos/seed/cardhorizontal-left/1000/800"
   image-position="left">
   Content appears on the right.
-</wb-cardhorizontal>
+</div>
 ```
 
 ### Image on Right
@@ -77,7 +77,7 @@ so rather than rely on the default.
   image="https://picsum.photos/seed/cardhorizontal-right/1000/800"
   image-position="right">
   Content appears on the left.
-</wb-cardhorizontal>
+</div>
 ```
 
 ### Custom Image Width
@@ -88,7 +88,7 @@ so rather than rely on the default.
   image="https://picsum.photos/seed/cardhorizontal-wide/1000/800"
   image-width="60%">
   Narrower content area.
-</wb-cardhorizontal>
+</div>
 ```
 
 ## Generated Structure

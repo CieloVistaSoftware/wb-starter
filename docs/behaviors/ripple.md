@@ -9,13 +9,13 @@ element's center) on `mousedown`, then fades out.
 |----------|-------|
 | Behavior | `ripple` |
 | Attribute | `x-ripple` |
-| Custom Tag | `<wb-ripple>` |
+| Custom Tag | `<div x-ripple>` |
 | Applies to | any element (buttons, cards, list items, ...) |
 | Category | Effects |
 | Schema | `src/wb-models/ripple.schema.json` |
 | Source | `src/wb-viewmodels/ripple.js` |
 
-Both forms run the same behavior: `<button x-ripple>` and `<wb-ripple>` are
+Both forms run the same behavior: `<button x-ripple>` and `<div x-ripple>` are
 equivalent — the tag form is registered in the tag map
 ([`src/core/tag-map.js`](../../src/core/tag-map.js)) and dispatches to the identical
 `ripple()` function. `autoInject` is on by default site-wide
@@ -56,14 +56,14 @@ there's no `="true"`/`="false"` value to set.
 ### Custom Tag
 
 <wb-demo>
-<wb-ripple>Same behavior via the &lt;wb-ripple&gt; custom tag</wb-ripple>
+<div x-ripple>Same behavior via the &lt;wb-ripple&gt; custom tag</div>
 </wb-demo>
 
 ## CSS Classes
 
 | Class | Applied When | Description |
 |-------|--------------|-------------|
-| `.wb-ripple` | Always, except on a literal `<wb-ripple>` host (matched by its tag selector instead in `effects.css`) | Adds `position: relative; overflow: hidden` so the wave stays contained |
+| `.wb-ripple` | Always, except on a literal `<div x-ripple>` host (matched by its tag selector instead in `effects.css`) | Adds `position: relative; overflow: hidden` so the wave stays contained |
 | `.wb-ripple__wave` | On each press | The expanding circle itself (a `<span>` appended and removed per click) |
 
 ## Accessibility

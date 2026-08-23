@@ -5,17 +5,17 @@
   title="Elevated Card"
   elevated>
   <p>This card has elevation shadow.</p>
-</wb-card>
+</article>
 <wb-card
   title="Clickable Card"
   clickable>
   <p>Click me! I'm interactive.</p>
-</wb-card>
+</article>
 <wb-card
   title="With Footer"
   footer="Last updated: Today">
   <p>This card has a footer section.</p>
-</wb-card>
+</article>
 ```
 
 The panel above IS a live `<wb-demo>` — the doc viewer auto-wraps any fenced
@@ -56,9 +56,9 @@ wrap what you want rendered, get a live preview and a matching source panel for 
 
 Two problems had to be solved:
 
-**Problem 1: innerHTML is inflated.** Child custom elements like `wb-card` inflate via `connectedCallback` before `wb-demo`'s behavior runs. By the time `demo()` reads `innerHTML`, cards already have injected headers, footers, inline styles, and classes. Solution: fetch the raw HTML file from the server before the browser touches it.
+**Problem 1: innerHTML is inflated.** Child custom elements like `<article>` inflate via `connectedCallback` before `wb-demo`'s behavior runs. By the time `demo()` reads `innerHTML`, cards already have injected headers, footers, inline styles, and classes. Solution: fetch the raw HTML file from the server before the browser touches it.
 
-**Problem 2: innerHTML creates real elements.** Setting `mdEl.innerHTML = rawBlock` makes the browser parse the raw HTML into real `<wb-card>` elements. The MutationObserver picks them up and inflates them. By the time anything reads the content back, it's bloated. Solution: use `textContent` on a `<code>` element — the browser treats it as plain text, no parsing, no custom elements, no inflation.
+**Problem 2: innerHTML creates real elements.** Setting `mdEl.innerHTML = rawBlock` makes the browser parse the raw HTML into real `<article>` elements. The MutationObserver picks them up and inflates them. By the time anything reads the content back, it's bloated. Solution: use `textContent` on a `<code>` element — the browser treats it as plain text, no parsing, no custom elements, no inflation.
 
 ## Auto-Formatting
 

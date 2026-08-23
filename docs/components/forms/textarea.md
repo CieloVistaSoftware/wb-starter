@@ -6,14 +6,14 @@ Enhanced multi-line text input -- autosize, character counter, and size/variant 
 
 | Property | Value |
 |----------|-------|
-| Custom Tag | `<wb-textarea>` (deprecated -- see below) |
+| Custom Tag | `<textarea>` (deprecated -- see below) |
 | Behavior | `textarea` |
 | Semantic | `<textarea>` |
-| Root CSS Class | `wb-textarea` |
+| Root CSS Class | `<textarea>` |
 | Category | Forms |
 | Schema | `src/wb-models/textarea.schema.json` |
 
-> **`<wb-textarea>` is deprecated.** Prefer a bare `<textarea>` directly -- `textarea()` (`src/wb-viewmodels/semantics/textarea.js`) already enhances it fully with no wrapper element needed. `<wb-textarea>` still works (it self-builds a real `<textarea>`) and is documented below for back-compat.
+> **`<textarea>` is deprecated.** Prefer a bare `<textarea>` directly -- `textarea()` (`src/wb-viewmodels/semantics/textarea.js`) already enhances it fully with no wrapper element needed. `<textarea>` still works (it self-builds a real `<textarea>`) and is documented below for back-compat.
 
 ## Properties
 
@@ -26,8 +26,8 @@ Enhanced multi-line text input -- autosize, character counter, and size/variant 
 | `min-rows` | number | `2` | Minimum height, in rows (used for `min-height` when `autosize`) |
 | `max-rows` | number | `10` | Maximum height, in rows, before scrolling (when `autosize`) |
 | `size` | string | `"md"` | `xs`, `sm`, `md`, `lg`, `xl` |
-| `placeholder` | string | `""` | Placeholder text (`<wb-textarea>` form) |
-| `rows` | number | `3` | Visible rows (`<wb-textarea>` form) |
+| `placeholder` | string | `""` | Placeholder text (`<textarea>` form) |
+| `rows` | number | `3` | Visible rows (`<textarea>` form) |
 | `disabled` | boolean | `false` | Disabled state |
 | `required` | boolean | `false` | Required field |
 
@@ -65,10 +65,10 @@ Enhanced multi-line text input -- autosize, character counter, and size/variant 
 <textarea placeholder="Large" size="lg"></textarea>
 ```
 
-### `<wb-textarea>` (Deprecated Form)
+### `<textarea>` (Deprecated Form)
 
 ```html
-<wb-textarea placeholder="Deprecated form" rows="4"></wb-textarea>
+<wb-textarea placeholder="Deprecated form" rows="4"></textarea>
 ```
 
 ## Generated Structure

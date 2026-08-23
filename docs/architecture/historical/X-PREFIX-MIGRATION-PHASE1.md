@@ -285,7 +285,7 @@ export function getExtensionBehavior(attrName) {
  */
 
 // === CUSTOM ELEMENT MAPPINGS ===
-// <wb-card> → card behavior + card.schema.json
+// <article> → card behavior + card.schema.json
 export const elementMap = {
   'wb-card': 'card',
   'wb-card-stats': 'cardstats',
@@ -526,7 +526,7 @@ Phase 1 is complete when:
 
 1. **Compound naming:** Should `cardhero.schema.json` map to:
    - `wb-card-hero` (kebab-case, matches HTML convention)?
-   - `wb-cardhero` (single tag)?
+   - `<article x-cardhero>` (single tag)?
 
 2. **Extension validation:** Should invalid `x-*` attributes:
    - Fail silently (current behavior)?

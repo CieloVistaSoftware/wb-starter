@@ -6,10 +6,10 @@ Alert message with severity variants, optional title/icon, and a dismiss button.
 
 | Property | Value |
 |----------|-------|
-| Custom Tag | `<wb-alert>` |
+| Custom Tag | `<div x-alert>` |
 | Behavior | `alert` |
 | Semantic | `<div role="alert">` |
-| Root CSS Class | `wb-alert` |
+| Root CSS Class | `<div x-alert>` |
 | Category | Feedback |
 | Schema | `src/wb-models/alert.schema.json` |
 
@@ -28,16 +28,16 @@ Alert message with severity variants, optional title/icon, and a dismiss button.
 ### Custom Element
 
 <wb-demo>
-<wb-alert variant="info" message="A new update is available."></wb-alert>
+<wb-alert variant="info" message="A new update is available."></div>
 </wb-demo>
 
 ### Severity Variants
 
 ```html
-<wb-alert variant="info" title="Heads up" message="This is an informational alert."></wb-alert>
-<wb-alert variant="success" title="Success" message="Your changes have been saved."></wb-alert>
-<wb-alert variant="warning" title="Warning" message="Please double-check this value."></wb-alert>
-<wb-alert variant="error" title="Error" message="Something went wrong."></wb-alert>
+<wb-alert variant="info" title="Heads up" message="This is an informational alert."></div>
+<wb-alert variant="success" title="Success" message="Your changes have been saved."></div>
+<wb-alert variant="warning" title="Warning" message="Please double-check this value."></div>
+<wb-alert variant="error" title="Error" message="Something went wrong."></div>
 ```
 
 ### Dismissible
@@ -48,7 +48,7 @@ Alert message with severity variants, optional title/icon, and a dismiss button.
   title="Session expiring"
   message="You will be signed out in 5 minutes."
   dismissible>
-</wb-alert>
+</div>
 ```
 
 ### Custom Icon
@@ -59,7 +59,7 @@ Alert message with severity variants, optional title/icon, and a dismiss button.
   icon="🎉"
   title="All set"
   message="Your account is ready to go.">
-</wb-alert>
+</div>
 ```
 
 `alert()` also accepts `type="…"` as a fallback for `variant` at the schema/property level (`alert.schema.json` declares `variant.aliases: ["type"]`) -- but `variant="…"` is the canonical, documented spelling; write new markup with `variant`, not `type`.
@@ -74,7 +74,7 @@ Alert message with severity variants, optional title/icon, and a dismiss button.
     <div class="wb-alert__message">A new update is available.</div>
   </div>
   <!-- only when dismissible -->
-  <wb-button class="wb-alert__close">×</wb-button>
+  <wb-button class="wb-alert__close">×</button>
 </div>
 ```
 
@@ -82,7 +82,7 @@ Alert message with severity variants, optional title/icon, and a dismiss button.
 
 | Class | Applied When | Description |
 |-------|--------------|-------------|
-| `.wb-alert` | Always (also a tag selector: `wb-alert`) | Base layout -- flex row, left accent border |
+| `.wb-alert` | Always (also a tag selector: `<div x-alert>`) | Base layout -- flex row, left accent border |
 | `.wb-alert--info` | `variant="info"` (default) | Blue background/border |
 | `.wb-alert--success` | `variant="success"` | Green background/border |
 | `.wb-alert--warning` | `variant="warning"` | Amber background/border |
@@ -139,4 +139,4 @@ Alert colors and structure come from real theme tokens read directly in `src/sty
 | `variant="…"` | Reflects the current severity as a plain attribute |
 
 Keyboard support:
-- The dismiss button is a `<wb-button>` and is reachable/activatable via Tab + Enter/Space like any other button.
+- The dismiss button is a `<button>` and is reachable/activatable via Tab + Enter/Space like any other button.

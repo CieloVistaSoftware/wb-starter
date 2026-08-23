@@ -1,7 +1,7 @@
 # Inline Styles Audit — Tier-1 Law 9 violation
 
 **Date:** 2026-07-18
-**Trigger:** John reviewing live-rendered `<wb-cardbutton>`/`<wb-card x-slidein>` markup,
+**Trigger:** John reviewing live-rendered `<div x-cardbutton>`/`<wb-card x-slidein>` markup,
 flagging the sheer volume of inline `style="..."` attributes as "really noisy," then
 identifying it as a standards violation.
 **Standard violated:** `docs/claude/TIER1-LAWS.md`, Law 9 — "No One-Off Styles — Use
@@ -58,7 +58,7 @@ an element that never got the class-only treatment to begin with.
   correct CSS rule).
 - **DOM bloat**: every rendered card/audio-player/dropdown/etc. serializes a full
   style dump per element instead of a short class list — visible directly in the
-  `<wb-cardbutton>`/`<wb-card>` markup John pasted.
+  `<div x-cardbutton>`/`<article>` markup John pasted.
 - **No single source of truth**: the "same" visual property (e.g. subtitle margin)
   can be defined in up to N different places (once per variant's inline string) 
   instead of once in `card.css`, which is exactly how they drifted out of sync.

@@ -6,7 +6,7 @@ Horizontal, wrapping flex layout for groups of items that don't need to align to
 
 | Property | Value |
 |----------|-------|
-| Custom Tag | `<wb-cluster>` |
+| Custom Tag | `<div x-cluster>` |
 | Behavior | `cluster` |
 | Semantic | `<div>` (structural/CSS-only -- no schema, no `$methods`/`$view`) |
 | Root CSS Class | *(none -- purely inline-style driven; see below)* |
@@ -27,30 +27,30 @@ Horizontal, wrapping flex layout for groups of items that don't need to align to
 ### Custom Element
 
 <wb-demo>
-<wb-cluster>
-  <wb-badge label="JavaScript"></wb-badge>
-  <wb-badge label="CSS"></wb-badge>
-  <wb-badge label="HTML"></wb-badge>
-</wb-cluster>
+<div x-cluster>
+  <wb-badge label="JavaScript"></div>
+  <wb-badge label="CSS"></div>
+  <wb-badge label="HTML"></div>
+</div>
 </wb-demo>
 
 ### Custom Gap
 
 ```html
 <wb-cluster gap="0.5rem">
-  <wb-button size="sm" variant="ghost">Filter A</wb-button>
-  <wb-button size="sm" variant="ghost">Filter B</wb-button>
-  <wb-button size="sm" variant="ghost">Filter C</wb-button>
-</wb-cluster>
+  <wb-button size="sm" variant="ghost">Filter A</button>
+  <wb-button size="sm" variant="ghost">Filter B</button>
+  <wb-button size="sm" variant="ghost">Filter C</button>
+</div>
 ```
 
 ### Justify Content
 
 ```html
 <wb-cluster justify="space-between">
-  <wb-badge label="Left"></wb-badge>
-  <wb-badge label="Right"></wb-badge>
-</wb-cluster>
+  <wb-badge label="Left"></div>
+  <wb-badge label="Right"></div>
+</div>
 ```
 
 ### Native `<div>` (Enhanced)
@@ -58,8 +58,8 @@ Horizontal, wrapping flex layout for groups of items that don't need to align to
 ```html
 <!-- x-cluster works on any element -->
 <div x-cluster gap="0.75rem" justify="center">
-  <wb-badge label="One"></wb-badge>
-  <wb-badge label="Two"></wb-badge>
+  <wb-badge label="One"></div>
+  <wb-badge label="Two"></div>
 </div>
 ```
 
@@ -75,7 +75,7 @@ Horizontal, wrapping flex layout for groups of items that don't need to align to
          justify-content:flex-start;
          align-items:center;">
   <!-- original children, unmodified -->
-</wb-cluster>
+</div>
 ```
 
 ## CSS Classes
@@ -88,7 +88,7 @@ None. `cluster()` returns a no-op cleanup function and attaches no API to the el
 
 ## Events
 
-None. `<wb-cluster>` dispatches no custom events.
+None. `<div x-cluster>` dispatches no custom events.
 
 ## CSS API
 
@@ -96,4 +96,4 @@ None. `<wb-cluster>` dispatches no custom events.
 
 ## Accessibility
 
-`<wb-cluster>` is a purely presentational grouping container -- it sets no ARIA role or attributes and does not affect the accessibility tree beyond the visual layout of its children. Give individual cluster items their own accessible names/roles as appropriate for what they are (buttons, badges, links, etc.).
+`<div x-cluster>` is a purely presentational grouping container -- it sets no ARIA role or attributes and does not affect the accessibility tree beyond the visual layout of its children. Give individual cluster items their own accessible names/roles as appropriate for what they are (buttons, badges, links, etc.).

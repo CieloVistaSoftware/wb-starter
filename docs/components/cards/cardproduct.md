@@ -6,7 +6,7 @@ E-commerce product card with image, pricing, and add-to-cart functionality.
 
 | Property | Value |
 |----------|-------|
-| Custom Tag | `<wb-cardproduct>` |
+| Custom Tag | `<div x-cardproduct>` |
 | Behavior | `cardproduct` |
 | Semantic | `<article>` + `<figure>` + `<data>` |
 | Root CSS Class | `wb-card wb-product` |
@@ -34,7 +34,7 @@ Wrapped in `<wb-demo>`, so the live component renders below with its source show
   title="Wireless Headphones"
   image="https://picsum.photos/seed/headphones/600/400"
   price="$99.99">
-</wb-cardproduct>
+</div>
 </wb-demo>
 
 ## Usage
@@ -46,7 +46,7 @@ Wrapped in `<wb-demo>`, so the live component renders below with its source show
   title="Wireless Headphones"
   image="https://picsum.photos/seed/headphones/600/400"
   price="$99.99">
-</wb-cardproduct>
+</div>
 ```
 
 ### With Sale Price
@@ -58,7 +58,7 @@ Wrapped in `<wb-demo>`, so the live component renders below with its source show
   price="$79.99"
   originalPrice="$99.99"
   badge="Sale">
-</wb-cardproduct>
+</div>
 ```
 
 ### With Rating
@@ -71,7 +71,7 @@ Wrapped in `<wb-demo>`, so the live component renders below with its source show
   rating="4.5"
   reviews="128"
   description="Portable wireless speaker with 24-hour battery">
-</wb-cardproduct>
+</div>
 ```
 
 ## Events

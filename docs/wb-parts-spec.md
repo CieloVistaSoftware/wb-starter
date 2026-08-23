@@ -110,7 +110,7 @@ Use the standard HTML `<slot>` element to project inner content passed to the co
 
 **Usage:**
 ```html
-<wb-alert title="Warning"> This is the <em>body</em> content. </wb-alert>
+<wb-alert title="Warning"> This is the <em>body</em> content. </div>
 ```
 
 You can also use named slots:
@@ -123,10 +123,10 @@ You can also use named slots:
     <slot></slot>
   </main>
 </template>
-<wb-card>
+<article>
   <h1 slot="header">My Title</h1>
   <p>Body content</p>
-</wb-card>
+</article>
 ```
 
 ---

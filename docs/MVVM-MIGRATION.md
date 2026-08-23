@@ -10,7 +10,7 @@ WB-Starter v3.0 implements a **Schema-Driven MVVM Architecture** that eliminates
 ┌─────────────────────────────────────────────────────────────┐
 │                     USER WRITES HTML                        │
 ├─────────────────────────────────────────────────────────────┤
-│  <wb-card title="Hello">Content</wb-card>                  │
+│  <wb-card title="Hello">Content</article>                  │
 │                        OR                                   │
 │  <button x-ripple>Click</button>  (behaviors)              │
 └─────────────────────────────────────────────────────────────┘
@@ -59,7 +59,7 @@ WB v3.0 uses **Light DOM exclusively**. No Shadow DOM.
 
 ```html
 <!-- User writes this -->
-<wb-card title="Hello">Content</wb-card>
+<wb-card title="Hello">Content</article>
 <!-- DOM becomes (Light DOM) -->
 <wb-card
   title="Hello"
@@ -68,7 +68,7 @@ WB v3.0 uses **Light DOM exclusively**. No Shadow DOM.
     <h3 class="wb-card__title">Hello</h3>
   </header>
   <main class="wb-card__body">Content</main>
-</wb-card>
+</article>
 ```
 
 ### 2. Schema-First Development
@@ -118,13 +118,13 @@ Every component is defined by a JSON schema that serves as the single source of 
   subtitle="World"
   elevated>
   <p>Content here</p>
-</wb-card>
+</article>
 <!-- ❌ DON'T: Force users to know internals -->
-<wb-card>
+<article>
   <h3 slot="title">Hello</h3>
   <p slot="subtitle">World</p>
   <p>Content here</p>
-</wb-card>
+</article>
 ```
 
 ### 4. Behaviors vs Components
@@ -255,7 +255,7 @@ Documents CSS custom properties for theming:
   title="Hello World"
   elevated>
   <p>Card content goes here.</p>
-</wb-card>
+</article>
 ```
 
 ### With Behaviors
@@ -266,7 +266,7 @@ Documents CSS custom properties for theming:
   x-draggable
   x-ripple>
   <p>This card is draggable with ripple effect.</p>
-</wb-card>
+</article>
 ```
 
 ### Behavior Only (No Component)

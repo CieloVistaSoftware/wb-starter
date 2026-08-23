@@ -34,17 +34,17 @@ wb-starter uses semantic HTML elements as the foundation for all components, ens
 
 | Component | Custom Tag | Primary Element | Secondary Elements |
 |-----------|------------|----------------|-------------------|
-| card | `<wb-card>` | `<article>` | header, main, footer |
-| cardtestimonial | `<wb-cardtestimonial>` | `<article>` | blockquote, cite, figure |
-| cardnotification | `<wb-cardnotification>` | `<aside>` | - |
-| cardportfolio | `<wb-cardportfolio>` | `<article>` | address, figure |
-| cardstats | `<wb-cardstats>` | `<article>` | data |
-| cardfile | `<wb-cardfile>` | `<article>` | figure, figcaption |
-| cardproduct | `<wb-cardproduct>` | `<article>` | figure, data |
-| alert | `<wb-alert>` | `<aside>` | - |
-| tabs | `<wb-tabs>` | `<section>` | nav |
-| dialog | `<wb-dialog>` | `<dialog>` | - |
-| progress | `<wb-progress>` | `<progress>` | - |
+| card | `<article>` | `<article>` | header, main, footer |
+| cardtestimonial | `<div x-cardtestimonial>` | `<article>` | blockquote, cite, figure |
+| cardnotification | `<div x-cardnotification>` | `<aside>` | - |
+| cardportfolio | `<div x-cardportfolio>` | `<article>` | address, figure |
+| cardstats | `<articlestats>` | `<article>` | data |
+| cardfile | `<div x-cardfile>` | `<article>` | figure, figcaption |
+| cardproduct | `<div x-cardproduct>` | `<article>` | figure, data |
+| alert | `<div x-alert>` | `<aside>` | - |
+| tabs | `<nav x-tabs>` | `<section>` | nav |
+| dialog | `<dialog>` | `<dialog>` | - |
+| progress | `<progress>` | `<progress>` | - |
 
 ## Why Semantic HTML?
 

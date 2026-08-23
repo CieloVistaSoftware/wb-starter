@@ -9,11 +9,11 @@ optional heading and static pagination controls. Implemented by `articles()` in
 | Property | Value |
 |----------|-------|
 | Attribute | `x-articles` |
-| Custom Tag | `<wb-articles>` |
+| Custom Tag | `<div x-as-articles>` |
 | Behavior function | `articles()` — `src/wb-viewmodels/article.js` |
 | Pairs with | [`article`](../components/semantic/article.md) / `x-article` for each child |
 | Semantic element | `<section role="feed">` (schema default; the behavior itself doesn't add a role) |
-| Root CSS Class | `wb-articles` |
+| Root CSS Class | `<section x-articles>` |
 | Category | Layout |
 | Schema | [articles.schema.json](../../src/wb-models/articles.schema.json) — declares extra `limit`/`source` properties the JS never reads; only the attributes below actually do anything |
 
@@ -33,7 +33,7 @@ optional heading and static pagination controls. Implemented by `articles()` in
 > whenever autoInject is on — the default), and that auto-inject currently
 > doesn't check whether the element already opted into a different, explicit
 > `x-article` behavior — confirmed live, a `<article x-article>` renders with
-> both `wb-article` AND `wb-card`/`wb-card--auto`/`wb-card--hoverable` classes
+> both `<div x-as-article>` AND `<article>`/`wb-card--auto`/`wb-card--hoverable` classes
 > at once. Filed as
 > [#639](https://github.com/CieloVistaSoftware/wb-starter/issues/639); until
 > it's fixed, pair `x-article` with a non-`<article>` element to get clean,
@@ -80,7 +80,7 @@ optional heading and static pagination controls. Implemented by `articles()` in
 
 | Class | Applied when | Description |
 |-------|--------------|-------------|
-| `wb-articles` | host isn't already a `<wb-articles>` tag | Base marker class |
+| `<section x-articles>` | host isn't already a `<div x-as-articles>` tag | Base marker class |
 | `.wb-articles__header` | `title` set | Wraps the `<h2>` heading |
 | `.wb-articles__list` | Always | The container that actually holds the (moved) children |
 | `.wb-articles--{grid,list,masonry}` | Always, per `layout` | Sets the actual layout mode (CSS grid columns / flex column / CSS columns) |

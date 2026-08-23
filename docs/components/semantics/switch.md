@@ -6,10 +6,10 @@ Toggle switch for boolean settings.
 
 | Property | Value |
 |----------|-------|
-| Custom Tag | `<wb-switch>` |
+| Custom Tag | `<div x-switch>` |
 | Behavior | `switch` |
 | Semantic | `<div>` (role="switch") |
-| Root CSS Class | `wb-switch` |
+| Root CSS Class | `<div x-switch>` |
 | Category | Forms |
 | Schema | `src/wb-models/switch.schema.json` |
 
@@ -29,7 +29,7 @@ Toggle switch for boolean settings.
 Wrapped in `<wb-demo>`, so the live component renders below with its source shown underneath:
 
 <wb-demo>
-<wb-switch label="Dark mode"></wb-switch>
+<wb-switch label="Dark mode"></div>
 </wb-demo>
 
 ## Usage
@@ -37,7 +37,7 @@ Wrapped in `<wb-demo>`, so the live component renders below with its source show
 ### Custom Element
 
 ```html
-<wb-switch label="Dark mode"></wb-switch>
+<wb-switch label="Dark mode"></div>
 ```
 
 ### Native Checkbox (Enhanced)
@@ -55,7 +55,7 @@ Wrapped in `<wb-demo>`, so the live component renders below with its source show
 <wb-switch
   label="Enable notifications"
   checked>
-</wb-switch>
+</div>
 ```
 
 ### Label Position
@@ -64,11 +64,11 @@ Wrapped in `<wb-demo>`, so the live component renders below with its source show
 <wb-switch
   label="Left label"
   labelPosition="start">
-</wb-switch>
+</div>
 <wb-switch
   label="Right label"
   labelPosition="end">
-</wb-switch>
+</div>
 ```
 
 ### Sizes
@@ -77,15 +77,15 @@ Wrapped in `<wb-demo>`, so the live component renders below with its source show
 <wb-switch
   label="Small"
   size="sm">
-</wb-switch>
+</div>
 <wb-switch
   label="Medium"
   size="md">
-</wb-switch>
+</div>
 <wb-switch
   label="Large"
   size="lg">
-</wb-switch>
+</div>
 ```
 
 ### Variants
@@ -94,15 +94,15 @@ Wrapped in `<wb-demo>`, so the live component renders below with its source show
 <wb-switch
   label="Default"
   variant="default">
-</wb-switch>
+</div>
 <wb-switch
   label="Primary"
   variant="primary">
-</wb-switch>
+</div>
 <wb-switch
   label="Success"
   variant="success">
-</wb-switch>
+</div>
 ```
 
 ### Disabled
@@ -111,7 +111,7 @@ Wrapped in `<wb-demo>`, so the live component renders below with its source show
 <wb-switch
   label="Unavailable"
   disabled>
-</wb-switch>
+</div>
 ```
 
 ### In Forms
@@ -121,7 +121,7 @@ Wrapped in `<wb-demo>`, so the live component renders below with its source show
   label="Subscribe to newsletter"
   name="subscribe"
   value="yes">
-</wb-switch>
+</div>
 ```
 
 ## Generated Structure

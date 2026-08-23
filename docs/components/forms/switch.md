@@ -6,10 +6,10 @@ Toggle switch for boolean settings -- a real hidden checkbox driving a themed tr
 
 | Property | Value |
 |----------|-------|
-| Custom Tag | `<wb-switch>` |
+| Custom Tag | `<div x-switch>` |
 | Behavior | `switchInput` (registered as `switch`) |
 | Semantic | `<input type="checkbox" role="switch">` |
-| Root CSS Class | `wb-switch` |
+| Root CSS Class | `<div x-switch>` |
 | Category | Forms |
 | Schema | `src/wb-models/switch.schema.json` |
 
@@ -33,42 +33,42 @@ Toggle switch for boolean settings -- a real hidden checkbox driving a themed tr
 ### Custom Element
 
 ```html
-<wb-switch label="Enable notifications"></wb-switch>
+<wb-switch label="Enable notifications"></div>
 ```
 
 ### Checked / Disabled
 
 ```html
-<wb-switch label="Checked" checked></wb-switch>
-<wb-switch label="Disabled" disabled></wb-switch>
+<wb-switch label="Checked" checked></div>
+<wb-switch label="Disabled" disabled></div>
 ```
 
 ### Label Position
 
 ```html
-<wb-switch label="Label before" label-position="start"></wb-switch>
-<wb-switch label="Label after" label-position="end"></wb-switch>
+<wb-switch label="Label before" label-position="start"></div>
+<wb-switch label="Label after" label-position="end"></div>
 ```
 
 ### Sizes and Variants
 
 ```html
-<wb-switch label="Small" size="sm"></wb-switch>
-<wb-switch label="Large" size="lg"></wb-switch>
-<wb-switch label="Primary" variant="primary" checked></wb-switch>
-<wb-switch label="Success" variant="success" checked></wb-switch>
+<wb-switch label="Small" size="sm"></div>
+<wb-switch label="Large" size="lg"></div>
+<wb-switch label="Primary" variant="primary" checked></div>
+<wb-switch label="Success" variant="success" checked></div>
 ```
 
 ### Theme Control
 
 ```html
-<wb-switch label="Dark mode" theme-control></wb-switch>
+<wb-switch label="Dark mode" theme-control></div>
 ```
 
 ### Notify Control (demonstrates a real effect on activation)
 
 ```html
-<wb-switch label="Notifications" notify-control></wb-switch>
+<wb-switch label="Notifications" notify-control></div>
 ```
 
 ### Native Checkbox (Legacy Form)
@@ -86,14 +86,14 @@ Toggle switch for boolean settings -- a real hidden checkbox driving a themed tr
     <span class="wb-switch__thumb"></span>
   </span>
   <span class="wb-switch__label-end">Success</span>
-</wb-switch>
+</div>
 ```
 
 ## CSS Classes
 
 | Class | Applied When | Description |
 |-------|--------------|-------------|
-| `wb-switch` (tag selector) / `.wb-switch` | Always | Base layout |
+| `<div x-switch>` (tag selector) / `.wb-switch` | Always | Base layout |
 | `.wb-switch--{sm,lg}` | `size` (non-`md`) | Track/thumb size |
 | `.wb-switch--{primary,success}` | `variant` (non-`default`) | Track "on" color |
 | `.wb-switch__input` | Always | Visually-hidden real checkbox that drives state |
@@ -124,7 +124,7 @@ For real on/off control, click the switch or drive the underlying checkbox direc
 
 ```html
 <wb-demo events="wb:switch:change">
-<wb-switch label="Notify me"></wb-switch>
+<wb-switch label="Notify me"></div>
 </wb-demo>
 ```
 

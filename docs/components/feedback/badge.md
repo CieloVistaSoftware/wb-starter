@@ -6,10 +6,10 @@ Small label for status indicators, counts, or categories -- with color variants,
 
 | Property | Value |
 |----------|-------|
-| Custom Tag | `<wb-badge>` |
+| Custom Tag | `<div x-badge>` |
 | Behavior | `badge` |
 | Semantic | `<span role="status">` |
-| Root CSS Class | `wb-badge` |
+| Root CSS Class | `<div x-badge>` |
 | Category | Feedback |
 | Schema | `src/wb-models/badge.schema.json` |
 
@@ -32,54 +32,54 @@ Small label for status indicators, counts, or categories -- with color variants,
 ### Custom Element
 
 <wb-demo>
-<wb-badge label="New"></wb-badge>
+<wb-badge label="New"></div>
 </wb-demo>
 
 ### Color Variants
 
 ```html
-<wb-badge label="Default" variant="default"></wb-badge>
-<wb-badge label="Primary" variant="primary"></wb-badge>
-<wb-badge label="Success" variant="success"></wb-badge>
-<wb-badge label="Warning" variant="warning"></wb-badge>
-<wb-badge label="Error" variant="error"></wb-badge>
-<wb-badge label="Info" variant="info"></wb-badge>
+<wb-badge label="Default" variant="default"></div>
+<wb-badge label="Primary" variant="primary"></div>
+<wb-badge label="Success" variant="success"></div>
+<wb-badge label="Warning" variant="warning"></div>
+<wb-badge label="Error" variant="error"></div>
+<wb-badge label="Info" variant="info"></div>
 ```
 
 ### Pill, Outline, Dot
 
 ```html
-<wb-badge label="Pill" variant="primary" pill></wb-badge>
-<wb-badge label="Outline" variant="primary" outline></wb-badge>
-<wb-badge label="Live" variant="success" dot></wb-badge>
+<wb-badge label="Pill" variant="primary" pill></div>
+<wb-badge label="Outline" variant="primary" outline></div>
+<wb-badge label="Live" variant="success" dot></div>
 ```
 
 ### Removable
 
 ```html
-<wb-badge label="Tag" variant="info" removable></wb-badge>
+<wb-badge label="Tag" variant="info" removable></div>
 ```
 
 ### Glass and Gradient
 
 ```html
-<wb-badge label="Glass" variant="glass"></wb-badge>
-<wb-badge label="Premium" variant="gradient" pill icon="⭐"></wb-badge>
+<wb-badge label="Glass" variant="glass"></div>
+<wb-badge label="Premium" variant="gradient" pill icon="⭐"></div>
 ```
 
 ### Glow (draws attention)
 
 ```html
-<wb-badge label="Live" variant="success" pill glow icon="🟢"></wb-badge>
+<wb-badge label="Live" variant="success" pill glow icon="🟢"></div>
 ```
 
 ### Sizes
 
 ```html
-<wb-badge label="xs" size="xs"></wb-badge>
-<wb-badge label="sm" size="sm"></wb-badge>
-<wb-badge label="md" size="md"></wb-badge>
-<wb-badge label="lg" size="lg"></wb-badge>
+<wb-badge label="xs" size="xs"></div>
+<wb-badge label="sm" size="sm"></div>
+<wb-badge label="md" size="md"></div>
+<wb-badge label="lg" size="lg"></div>
 ```
 
 ## Generated Structure
@@ -90,17 +90,17 @@ Small label for status indicators, counts, or categories -- with color variants,
   <span class="wb-badge__icon">⭐</span>
   5
   <button class="wb-badge__remove" aria-label="Remove">×</button>
-</wb-badge>
+</div>
 
 <!-- dot badge -->
-<wb-badge class="wb-badge--success"></wb-badge>
+<wb-badge class="wb-badge--success"></div>
 ```
 
 ## CSS Classes
 
 | Class | Applied When | Description |
 |-------|--------------|-------------|
-| `.wb-badge` | Always (also a tag selector: `wb-badge`) | Base inline-flex chip styling |
+| `.wb-badge` | Always (also a tag selector: `<div x-badge>`) | Base inline-flex chip styling |
 | `.wb-badge--{variant}` | Any `variant` | `gray`/`primary`/`secondary`/`success`/`warning`/`error`/`info`/`purple`/`pink`/`teal`/`orange` background+text color |
 | `.wb-badge--gradient` | `variant="gradient"` | Two-color gradient background |
 | `.wb-badge--glass` | `variant="glass"` | Translucent, blurred, animated sheen |

@@ -86,7 +86,7 @@ Row-based system. Each row stacks vertically. Columns collapse to 1 on mobile (m
 - Component Library, Behaviors System, Theme Engine, Data Viz, Accessible, Performance
 
 ### Notifications (wb-stack > wb-cardnotification ×4)
-- Tag is `wb-cardnotification` (NOT notification-card — that tag does not exist)
+- Tag is `<div x-cardnotification>` (NOT notification-card — that tag does not exist)
 - Attribute is `variant` (NOT type — variant is the v3.0 standard)
 - All 4 variants: info, success, warning, error
 - Each has title and message attributes
@@ -132,5 +132,5 @@ All 19 card types are defined in `src/wb-viewmodels/card.js` (~1900 lines). The 
 
 ## RETIRED
 - `page.schema.json` with `requiredZones` (.page__hero, .page__section) — archived to `archive/page.schema.json`
-- `notification-card` tag — does not exist. Use `wb-cardnotification`
+- `notification-card` tag — does not exist. Use `<div x-cardnotification>`
 - `type` attribute on notifications — use `variant` (v3.0 standard)

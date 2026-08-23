@@ -1,8 +1,15 @@
-# Card Component
+# card
 
-Card component. IS-A article, HAS-A header, main, footer.
+Turns an element into a card: a titled block with an optional subtitle, a
+body, and an optional footer. Use it to group related content into a unit a
+reader can scan — a result in a list, a summary, a preview of something
+bigger.
 
-Applies to `<article>`, and to any element carrying `x-card`.
+The behavior builds the header, body and footer regions for you from the
+attributes below; you supply the content.
+
+A behavior, not a component: it decorates an element you already wrote.
+Auto-injected on `<article>`, and applied to any element carrying `x-card`.
 
 ## Usage
 

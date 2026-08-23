@@ -11,13 +11,13 @@ when the stuck state changes.
 |----------|-------|
 | Behavior | `sticky` |
 | Attribute | `x-sticky` |
-| Custom Tag | `<wb-sticky>` |
+| Custom Tag | `<div x-sticky>` |
 | Applies to | any element |
 | Category | Layout |
 | Schema | `src/wb-models/sticky.schema.json` |
 | Source | `src/wb-viewmodels/sticky.js` |
 
-Both forms run the same behavior: `<nav x-sticky>` and `<wb-sticky>` are
+Both forms run the same behavior: `<nav x-sticky>` and `<div x-sticky>` are
 equivalent — the tag form is registered in the tag map ([`src/core/tag-map.js`](../../../src/core/tag-map.js)) and dispatches to the identical `sticky()` function.
 
 ## Properties
@@ -55,9 +55,9 @@ shift.
 ### Custom Tag
 
 <wb-demo>
-<wb-sticky>
+<div x-sticky>
   <p>Same behavior via the &lt;wb-sticky&gt; custom tag.</p>
-</wb-sticky>
+</div>
 </wb-demo>
 
 ### Disabled animation
@@ -72,7 +72,7 @@ shift.
 
 | Class | Applied When | Description |
 |-------|--------------|-------------|
-| `.wb-sticky` | Always (except on a literal `<wb-sticky>` host, which is matched by its tag selector instead) | Base styling hook |
+| `.wb-sticky` | Always (except on a literal `<div x-sticky>` host, which is matched by its tag selector instead) | Base styling hook |
 | `.is-stuck` (or the `class-name` override) | While stuck | Adds a drop shadow (`box-shadow: 0 2px 10px rgba(0,0,0,0.15)`) |
 
 ## Events
