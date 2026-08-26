@@ -97,6 +97,19 @@
       "description": "Make hero full viewport height",
       "default": false,
       "appliesClass": "x-hero--full"
+    },
+    "headingLevel": {
+      "type": "string",
+      "description": "Heading level for the hero title (1-6). A page hero is usually the page's h1; a hero inside a section is not. Default 3.",
+      "default": "3",
+      "enum": [
+        "1",
+        "2",
+        "3",
+        "4",
+        "5",
+        "6"
+      ]
     }
   },
   "$view": [
@@ -341,7 +354,7 @@
   },
   "_metadata": {
     "category": "cards",
-    "icon": "🦸",
+    "icon": "\ud83e\uddb8",
     "since": "1.0.0",
     "status": "stable"
   }

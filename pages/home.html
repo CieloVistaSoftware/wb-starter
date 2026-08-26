@@ -10,15 +10,16 @@
      `full-width` attribute that used to sit on the wrapper was only x-demo's
      single-item shrink-to-fit opt-out (#568/#572); with no wrapper there is
      nothing to opt out of. -->
-<!-- The headline is written ONCE, as the hero's title slot.
-     It used to appear twice: a bare <h1> AND cardhero's own title="..."
-     attribute, which cardhero renders as a second heading of its own. Two
-     markup elements stating the same sentence is the same "declared twice"
-     problem as a duplicate schema key -- edit one and the page quietly
-     disagrees with itself. The slot keeps a real <h1> (the page needs one;
-     cardhero emits an h3) while leaving exactly one place the words live. -->
+<!-- The headline is written ONCE, in the hero's title attribute.
+     It used to appear twice: a bare <h1> AND cardhero's own title="...", which
+     cardhero renders as a heading of its own. Two markup elements stating the
+     same sentence is the "declared twice" problem again -- edit one and the
+     page quietly disagrees with itself.
+     heading-level="1" because this hero IS the page's main heading. Removing
+     the duplicate <h1> without it left the page with no h1 at all and an
+     outline that ran backwards (h3 hero, then h2 "By the Numbers"). -->
 <div>
-  <div x-cardhero variant="cosmic" pretitle="167 Behaviors" title="Build stunning UIs" subtitle="just HTML — no build step" cta="Explore Behaviors" cta-href="?page=behaviors" cta-secondary="Documentation" cta-secondary-href="?page=docs"></div>
+  <div x-cardhero heading-level="1" variant="cosmic" pretitle="167 Behaviors" title="Build stunning UIs" subtitle="just HTML — no build step" cta="Explore Behaviors" cta-href="?page=behaviors" cta-secondary="Documentation" cta-secondary-href="?page=docs"></div>
 </div>
 
 <h2>By the Numbers</h2>

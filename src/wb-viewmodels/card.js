@@ -1104,7 +1104,16 @@ export function cardhero(element, options = {}) {
     slots.title.classList.add('x-card__title', 'x-card__hero-title');
     content.appendChild(slots.title);
   } else if (base.config.title) {
-    const titleEl = document.createElement('h3');
+    // A page hero is usually the page's main heading, but a hero can also sit
+    // inside a section where h1 would be wrong. Hardcoding h3 left the home
+    // page with NO h1 at all and a backwards outline (h3 "Build stunning UIs"
+    // followed by h2 "By the Numbers"), so the level is now the author's
+    // choice with h3 as the unchanged default.
+    const level = String(
+      options.headingLevel ?? element.getAttribute('heading-level') ?? '3',
+    ).replace(/^h/i, '');
+    const tag = /^[1-6]$/.test(level) ? `h${level}` : 'h3';
+    const titleEl = document.createElement(tag);
     titleEl.className = 'x-card__title x-card__hero-title';
     titleEl.innerHTML = base.config.title;
     content.appendChild(titleEl);
