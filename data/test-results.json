@@ -1,21 +1,28 @@
 {
-  "timestamp": "2026-08-26T19:49:33.050Z",
-  "duration": "15.07s",
+  "timestamp": "2026-08-26T20:32:40.327Z",
+  "duration": "9.44s",
   "exitCode": 0,
-  "passed": 1,
+  "passed": 2,
   "failed": 0,
   "skipped": 0,
-  "total": 1,
+  "total": 2,
   "results": [
     {
       "status": "passed",
-      "project": "regression",
-      "file": "tests\\regression\\home-headline-declared-once.spec.ts",
-      "name": "home headline › the headline appears exactly once, in a real h1",
-      "duration": "2.2s"
+      "project": "compliance",
+      "file": "tests\\compliance\\docs-html-is-parseable.spec.ts",
+      "name": "docs: live HTML is parseable › the sweep actually found docs",
+      "duration": "5ms"
+    },
+    {
+      "status": "passed",
+      "project": "compliance",
+      "file": "tests\\compliance\\docs-html-is-parseable.spec.ts",
+      "name": "docs: live HTML is parseable › no doc closes a void element",
+      "duration": "51ms"
     }
   ],
   "failures": [],
-  "stdout": "\nRunning 1 test using 1 worker\n\n  ok 1 [regression] › tests\\regression\\home-headline-declared-once.spec.ts:15:3 › home headline › the headline appears exactly once, in a real h1 (2.2s)\n\n════════════════════════════════════════════════════════════\n  WB TEST RESULTS\n════════════════════════════════════════════════════════════\n  Total: 1 tests in 6.2s\n  ✓ Passed:  1\n  ✗ Failed:  0\n\n  By Project:\n    ✓ regression: 1/1 passed\n════════════════════════════════════════════════════════════\n\n\n  1 passed (8.8s)\n",
+  "stdout": "\nRunning 2 tests using 2 workers\n\n  ok 1 [compliance] › tests\\compliance\\docs-html-is-parseable.spec.ts:51:3 › docs: live HTML is parseable › the sweep actually found docs (5ms)\n  ok 2 [compliance] › tests\\compliance\\docs-html-is-parseable.spec.ts:56:3 › docs: live HTML is parseable › no doc closes a void element (51ms)\n\n════════════════════════════════════════════════════════════\n  WB TEST RESULTS\n════════════════════════════════════════════════════════════\n  Total: 2 tests in 2.5s\n  ✓ Passed:  2\n  ✗ Failed:  0\n\n  By Project:\n    ✓ compliance: 2/2 passed\n════════════════════════════════════════════════════════════\n\n\n  2 passed (5.0s)\n",
   "stderr": ""
 }

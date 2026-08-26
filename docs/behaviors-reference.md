@@ -170,7 +170,7 @@ Enhances standard HTML elements with better styling and functionality.
   label="Email"
   input-type="email"
   placeholder="Enter your email">
-</input>
+</div>
 </div>
 
 **`textarea`**
@@ -194,7 +194,7 @@ Enhances standard HTML elements with better styling and functionality.
 **`checkbox`**
 
 <div x-demo>
-<div x-checkbox label="I agree to the terms"></input>
+<div x-checkbox label="I agree to the terms"></div>
 </div>
 
 **`switch`**
@@ -217,7 +217,7 @@ Enhances standard HTML elements with better styling and functionality.
     name="email"
     label="Email"
     required>
-  </input>
+  </div>
   <button type="submit">Submit</button>
 </form>
 </div>
