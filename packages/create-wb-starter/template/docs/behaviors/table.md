@@ -9,7 +9,7 @@ Applies to `<table>`, and to any element carrying `x-table`.
 ```html
 <table
   headers="Component,Behavior,Variants"
-  rows="[[&quot;x-alert&quot;,&quot;alert&quot;,&quot;4&quot;],[&quot;x-badge&quot;,&quot;badge&quot;,&quot;9&quot;],[&quot;x-button&quot;,&quot;button&quot;,&quot;8&quot;],[&quot;x-card&quot;,&quot;card&quot;,&quot;4&quot;],[&quot;x-code&quot;,&quot;code&quot;,&quot;12&quot;],[&quot;x-dialog&quot;,&quot;dialog&quot;,&quot;3&quot;],[&quot;x-details&quot;,&quot;details&quot;,&quot;2&quot;],[&quot;x-audio&quot;,&quot;audio&quot;,&quot;6&quot;],[&quot;x-table&quot;,&quot;table&quot;,&quot;5&quot;],[&quot;x-tabs&quot;,&quot;tabs&quot;,&quot;3&quot;],[&quot;x-toast&quot;,&quot;toast&quot;,&quot;4&quot;],[&quot;x-tooltip&quot;,&quot;tooltip&quot;,&quot;4&quot;]]">
+  rows='[["x-alert","alert","4"],["x-badge","badge","9"],["x-button","button","8"],["x-card","card","4"],["x-code","code","12"],["x-dialog","dialog","3"],["x-details","details","2"],["x-audio","audio","6"],["x-table","table","5"],["x-tabs","tabs","3"],["x-toast","toast","4"],["x-tooltip","tooltip","4"]]'>
 </table>
 ```
 

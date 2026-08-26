@@ -1,28 +1,1086 @@
 {
-  "timestamp": "2026-08-26T20:32:40.327Z",
-  "duration": "9.44s",
-  "exitCode": 0,
-  "passed": 2,
-  "failed": 0,
+  "timestamp": "2026-08-26T20:41:31.216Z",
+  "duration": "91.04s",
+  "exitCode": 1,
+  "passed": 83,
+  "failed": 35,
   "skipped": 0,
-  "total": 2,
+  "total": 118,
   "results": [
     {
       "status": "passed",
-      "project": "compliance",
-      "file": "tests\\compliance\\docs-html-is-parseable.spec.ts",
-      "name": "docs: live HTML is parseable › the sweep actually found docs",
-      "duration": "5ms"
+      "project": "behaviors",
+      "file": "tests\\behaviors\\every-declared-attribute.spec.ts",
+      "name": "Every declared attribute reaches the element › the schema surface is non-empty — the sweep cannot pass vacuously",
+      "duration": "12ms"
     },
     {
       "status": "passed",
-      "project": "compliance",
-      "file": "tests\\compliance\\docs-html-is-parseable.spec.ts",
-      "name": "docs: live HTML is parseable › no doc closes a void element",
-      "duration": "51ms"
+      "project": "behaviors",
+      "file": "tests\\behaviors\\every-declared-attribute.spec.ts",
+      "name": "Every declared attribute reaches the element › x-article: all 9 declared attributes take effect",
+      "duration": "6.9s"
+    },
+    {
+      "status": "passed",
+      "project": "behaviors",
+      "file": "tests\\behaviors\\every-declared-attribute.spec.ts",
+      "name": "Every declared attribute reaches the element › x-avatar: all 8 declared attributes take effect",
+      "duration": "6.6s"
+    },
+    {
+      "status": "passed",
+      "project": "behaviors",
+      "file": "tests\\behaviors\\every-declared-attribute.spec.ts",
+      "name": "Every declared attribute reaches the element › x-autocomplete: all 1 declared attributes take effect",
+      "duration": "7.0s"
+    },
+    {
+      "status": "passed",
+      "project": "behaviors",
+      "file": "tests\\behaviors\\every-declared-attribute.spec.ts",
+      "name": "Every declared attribute reaches the element › x-badge: all 9 declared attributes take effect",
+      "duration": "7.1s"
+    },
+    {
+      "status": "passed",
+      "project": "behaviors",
+      "file": "tests\\behaviors\\every-declared-attribute.spec.ts",
+      "name": "Every declared attribute reaches the element › x-articles: all 5 declared attributes take effect",
+      "duration": "6.9s"
+    },
+    {
+      "status": "passed",
+      "project": "behaviors",
+      "file": "tests\\behaviors\\every-declared-attribute.spec.ts",
+      "name": "Every declared attribute reaches the element › x-alert: all 5 declared attributes take effect",
+      "duration": "6.8s"
+    },
+    {
+      "status": "passed",
+      "project": "behaviors",
+      "file": "tests\\behaviors\\every-declared-attribute.spec.ts",
+      "name": "Every declared attribute reaches the element › x-cardexpandable: all 6 declared attributes take effect",
+      "duration": "1.5s"
+    },
+    {
+      "status": "passed",
+      "project": "behaviors",
+      "file": "tests\\behaviors\\every-declared-attribute.spec.ts",
+      "name": "Every declared attribute reaches the element › x-cardbutton: all 7 declared attributes take effect",
+      "duration": "1.6s"
+    },
+    {
+      "status": "passed",
+      "project": "behaviors",
+      "file": "tests\\behaviors\\every-declared-attribute.spec.ts",
+      "name": "Every declared attribute reaches the element › x-breadcrumb: all 2 declared attributes take effect",
+      "duration": "1.9s"
+    },
+    {
+      "status": "passed",
+      "project": "behaviors",
+      "file": "tests\\behaviors\\every-declared-attribute.spec.ts",
+      "name": "Every declared attribute reaches the element › x-carddraggable: all 6 declared attributes take effect",
+      "duration": "2.0s"
+    },
+    {
+      "status": "passed",
+      "project": "behaviors",
+      "file": "tests\\behaviors\\every-declared-attribute.spec.ts",
+      "name": "Every declared attribute reaches the element › x-cardhorizontal: all 7 declared attributes take effect",
+      "duration": "604ms"
+    },
+    {
+      "status": "passed",
+      "project": "behaviors",
+      "file": "tests\\behaviors\\every-declared-attribute.spec.ts",
+      "name": "Every declared attribute reaches the element › x-cardfile: all 8 declared attributes take effect",
+      "duration": "842ms"
+    },
+    {
+      "status": "failed",
+      "project": "behaviors",
+      "file": "tests\\behaviors\\every-declared-attribute.spec.ts",
+      "name": "Every declared attribute reaches the element › x-accordion: all 3 declared attributes take effect",
+      "duration": "7.0s"
+    },
+    {
+      "status": "failed",
+      "project": "behaviors",
+      "file": "tests\\behaviors\\every-declared-attribute.spec.ts",
+      "name": "Every declared attribute reaches the element › x-button: all 11 declared attributes take effect",
+      "duration": "2.1s"
+    },
+    {
+      "status": "failed",
+      "project": "behaviors",
+      "file": "tests\\behaviors\\every-declared-attribute.spec.ts",
+      "name": "Every declared attribute reaches the element › x-card: all 9 declared attributes take effect",
+      "duration": "1.5s"
+    },
+    {
+      "status": "failed",
+      "project": "behaviors",
+      "file": "tests\\behaviors\\every-declared-attribute.spec.ts",
+      "name": "Every declared attribute reaches the element › x-audio: all 10 declared attributes take effect",
+      "duration": "7.4s"
+    },
+    {
+      "status": "passed",
+      "project": "behaviors",
+      "file": "tests\\behaviors\\every-declared-attribute.spec.ts",
+      "name": "Every declared attribute reaches the element › x-cardminimizable: all 4 declared attributes take effect",
+      "duration": "1.3s"
+    },
+    {
+      "status": "passed",
+      "project": "behaviors",
+      "file": "tests\\behaviors\\every-declared-attribute.spec.ts",
+      "name": "Every declared attribute reaches the element › x-cardlink: all 7 declared attributes take effect",
+      "duration": "1.8s"
+    },
+    {
+      "status": "passed",
+      "project": "behaviors",
+      "file": "tests\\behaviors\\every-declared-attribute.spec.ts",
+      "name": "Every declared attribute reaches the element › x-cardprofile: all 8 declared attributes take effect",
+      "duration": "810ms"
+    },
+    {
+      "status": "passed",
+      "project": "behaviors",
+      "file": "tests\\behaviors\\every-declared-attribute.spec.ts",
+      "name": "Every declared attribute reaches the element › x-cardproduct: all 11 declared attributes take effect",
+      "duration": "1.9s"
+    },
+    {
+      "status": "failed",
+      "project": "behaviors",
+      "file": "tests\\behaviors\\every-declared-attribute.spec.ts",
+      "name": "Every declared attribute reaches the element › x-cardhero: all 14 declared attributes take effect",
+      "duration": "911ms"
+    },
+    {
+      "status": "passed",
+      "project": "behaviors",
+      "file": "tests\\behaviors\\every-declared-attribute.spec.ts",
+      "name": "Every declared attribute reaches the element › x-cardoverlay: all 8 declared attributes take effect",
+      "duration": "1.6s"
+    },
+    {
+      "status": "failed",
+      "project": "behaviors",
+      "file": "tests\\behaviors\\every-declared-attribute.spec.ts",
+      "name": "Every declared attribute reaches the element › x-cardimage: all 11 declared attributes take effect",
+      "duration": "755ms"
+    },
+    {
+      "status": "passed",
+      "project": "behaviors",
+      "file": "tests\\behaviors\\every-declared-attribute.spec.ts",
+      "name": "Every declared attribute reaches the element › x-cardportfolio: all 28 declared attributes take effect",
+      "duration": "2.4s"
+    },
+    {
+      "status": "passed",
+      "project": "behaviors",
+      "file": "tests\\behaviors\\every-declared-attribute.spec.ts",
+      "name": "Every declared attribute reaches the element › x-cardtestimonial: all 7 declared attributes take effect",
+      "duration": "4.8s"
+    },
+    {
+      "status": "passed",
+      "project": "behaviors",
+      "file": "tests\\behaviors\\every-declared-attribute.spec.ts",
+      "name": "Every declared attribute reaches the element › x-clock: all 3 declared attributes take effect",
+      "duration": "793ms"
+    },
+    {
+      "status": "failed",
+      "project": "behaviors",
+      "file": "tests\\behaviors\\every-declared-attribute.spec.ts",
+      "name": "Every declared attribute reaches the element › x-cardnotification: all 6 declared attributes take effect",
+      "duration": "973ms"
+    },
+    {
+      "status": "passed",
+      "project": "behaviors",
+      "file": "tests\\behaviors\\every-declared-attribute.spec.ts",
+      "name": "Every declared attribute reaches the element › x-cluster: all 3 declared attributes take effect",
+      "duration": "1.2s"
+    },
+    {
+      "status": "failed",
+      "project": "behaviors",
+      "file": "tests\\behaviors\\every-declared-attribute.spec.ts",
+      "name": "Every declared attribute reaches the element › x-cardpricing: all 9 declared attributes take effect",
+      "duration": "2.3s"
+    },
+    {
+      "status": "passed",
+      "project": "behaviors",
+      "file": "tests\\behaviors\\every-declared-attribute.spec.ts",
+      "name": "Every declared attribute reaches the element › x-chip: all 7 declared attributes take effect",
+      "duration": "663ms"
+    },
+    {
+      "status": "failed",
+      "project": "behaviors",
+      "file": "tests\\behaviors\\every-declared-attribute.spec.ts",
+      "name": "Every declared attribute reaches the element › x-checkbox: all 9 declared attributes take effect",
+      "duration": "1.9s"
+    },
+    {
+      "status": "passed",
+      "project": "behaviors",
+      "file": "tests\\behaviors\\every-declared-attribute.spec.ts",
+      "name": "Every declared attribute reaches the element › x-copy: all 2 declared attributes take effect",
+      "duration": "572ms"
+    },
+    {
+      "status": "failed",
+      "project": "behaviors",
+      "file": "tests\\behaviors\\every-declared-attribute.spec.ts",
+      "name": "Every declared attribute reaches the element › x-cardstats: all 7 declared attributes take effect",
+      "duration": "4.7s"
+    },
+    {
+      "status": "passed",
+      "project": "behaviors",
+      "file": "tests\\behaviors\\every-declared-attribute.spec.ts",
+      "name": "Every declared attribute reaches the element › x-countdown: all 4 declared attributes take effect",
+      "duration": "1.2s"
+    },
+    {
+      "status": "passed",
+      "project": "behaviors",
+      "file": "tests\\behaviors\\every-declared-attribute.spec.ts",
+      "name": "Every declared attribute reaches the element › x-collapse: all 3 declared attributes take effect",
+      "duration": "970ms"
+    },
+    {
+      "status": "passed",
+      "project": "behaviors",
+      "file": "tests\\behaviors\\every-declared-attribute.spec.ts",
+      "name": "Every declared attribute reaches the element › x-confirm: all 6 declared attributes take effect",
+      "duration": "720ms"
+    },
+    {
+      "status": "passed",
+      "project": "behaviors",
+      "file": "tests\\behaviors\\every-declared-attribute.spec.ts",
+      "name": "Every declared attribute reaches the element › x-copybutton: all 5 declared attributes take effect",
+      "duration": "732ms"
+    },
+    {
+      "status": "passed",
+      "project": "behaviors",
+      "file": "tests\\behaviors\\every-declared-attribute.spec.ts",
+      "name": "Every declared attribute reaches the element › x-demo: all 1 declared attributes take effect",
+      "duration": "3.5s"
+    },
+    {
+      "status": "passed",
+      "project": "behaviors",
+      "file": "tests\\behaviors\\every-declared-attribute.spec.ts",
+      "name": "Every declared attribute reaches the element › x-counter: all 2 declared attributes take effect",
+      "duration": "616ms"
+    },
+    {
+      "status": "passed",
+      "project": "behaviors",
+      "file": "tests\\behaviors\\every-declared-attribute.spec.ts",
+      "name": "Every declared attribute reaches the element › x-drawer-layout: all 4 declared attributes take effect",
+      "duration": "866ms"
+    },
+    {
+      "status": "passed",
+      "project": "behaviors",
+      "file": "tests\\behaviors\\every-declared-attribute.spec.ts",
+      "name": "Every declared attribute reaches the element › x-draggable: all 2 declared attributes take effect",
+      "duration": "1.6s"
+    },
+    {
+      "status": "failed",
+      "project": "behaviors",
+      "file": "tests\\behaviors\\every-declared-attribute.spec.ts",
+      "name": "Every declared attribute reaches the element › x-code: all 6 declared attributes take effect",
+      "duration": "1.1s"
+    },
+    {
+      "status": "failed",
+      "project": "behaviors",
+      "file": "tests\\behaviors\\every-declared-attribute.spec.ts",
+      "name": "Every declared attribute reaches the element › x-confetti: all 7 declared attributes take effect",
+      "duration": "800ms"
+    },
+    {
+      "status": "passed",
+      "project": "behaviors",
+      "file": "tests\\behaviors\\every-declared-attribute.spec.ts",
+      "name": "Every declared attribute reaches the element › x-fieldset: all 2 declared attributes take effect",
+      "duration": "1.0s"
+    },
+    {
+      "status": "failed",
+      "project": "behaviors",
+      "file": "tests\\behaviors\\every-declared-attribute.spec.ts",
+      "name": "Every declared attribute reaches the element › x-cardvideo: all 10 declared attributes take effect",
+      "duration": "989ms"
+    },
+    {
+      "status": "failed",
+      "project": "behaviors",
+      "file": "tests\\behaviors\\every-declared-attribute.spec.ts",
+      "name": "Every declared attribute reaches the element › x-dialog: all 7 declared attributes take effect",
+      "duration": "1.4s"
+    },
+    {
+      "status": "passed",
+      "project": "behaviors",
+      "file": "tests\\behaviors\\every-declared-attribute.spec.ts",
+      "name": "Every declared attribute reaches the element › x-figure: all 4 declared attributes take effect",
+      "duration": "718ms"
+    },
+    {
+      "status": "passed",
+      "project": "behaviors",
+      "file": "tests\\behaviors\\every-declared-attribute.spec.ts",
+      "name": "Every declared attribute reaches the element › x-fill: all 1 declared attributes take effect",
+      "duration": "797ms"
+    },
+    {
+      "status": "passed",
+      "project": "behaviors",
+      "file": "tests\\behaviors\\every-declared-attribute.spec.ts",
+      "name": "Every declared attribute reaches the element › x-flex: all 5 declared attributes take effect",
+      "duration": "862ms"
+    },
+    {
+      "status": "failed",
+      "project": "behaviors",
+      "file": "tests\\behaviors\\every-declared-attribute.spec.ts",
+      "name": "Every declared attribute reaches the element › x-details: all 5 declared attributes take effect",
+      "duration": "3.4s"
+    },
+    {
+      "status": "passed",
+      "project": "behaviors",
+      "file": "tests\\behaviors\\every-declared-attribute.spec.ts",
+      "name": "Every declared attribute reaches the element › x-formrow: all 1 declared attributes take effect",
+      "duration": "978ms"
+    },
+    {
+      "status": "passed",
+      "project": "behaviors",
+      "file": "tests\\behaviors\\every-declared-attribute.spec.ts",
+      "name": "Every declared attribute reaches the element › x-fullscreen: all 2 declared attributes take effect",
+      "duration": "849ms"
+    },
+    {
+      "status": "failed",
+      "project": "behaviors",
+      "file": "tests\\behaviors\\every-declared-attribute.spec.ts",
+      "name": "Every declared attribute reaches the element › x-drawer: all 9 declared attributes take effect",
+      "duration": "1.1s"
+    },
+    {
+      "status": "passed",
+      "project": "behaviors",
+      "file": "tests\\behaviors\\every-declared-attribute.spec.ts",
+      "name": "Every declared attribute reaches the element › x-form: all 2 declared attributes take effect",
+      "duration": "2.4s"
+    },
+    {
+      "status": "passed",
+      "project": "behaviors",
+      "file": "tests\\behaviors\\every-declared-attribute.spec.ts",
+      "name": "Every declared attribute reaches the element › x-glow: all 1 declared attributes take effect",
+      "duration": "1.6s"
+    },
+    {
+      "status": "passed",
+      "project": "behaviors",
+      "file": "tests\\behaviors\\every-declared-attribute.spec.ts",
+      "name": "Every declared attribute reaches the element › x-footer: all 5 declared attributes take effect",
+      "duration": "598ms"
+    },
+    {
+      "status": "failed",
+      "project": "behaviors",
+      "file": "tests\\behaviors\\every-declared-attribute.spec.ts",
+      "name": "Every declared attribute reaches the element › x-dropdown: all 5 declared attributes take effect",
+      "duration": "623ms"
+    },
+    {
+      "status": "passed",
+      "project": "behaviors",
+      "file": "tests\\behaviors\\every-declared-attribute.spec.ts",
+      "name": "Every declared attribute reaches the element › x-img: all 5 declared attributes take effect",
+      "duration": "2.0s"
+    },
+    {
+      "status": "passed",
+      "project": "behaviors",
+      "file": "tests\\behaviors\\every-declared-attribute.spec.ts",
+      "name": "Every declared attribute reaches the element › x-gallery: all 4 declared attributes take effect",
+      "duration": "1.0s"
+    },
+    {
+      "status": "passed",
+      "project": "behaviors",
+      "file": "tests\\behaviors\\every-declared-attribute.spec.ts",
+      "name": "Every declared attribute reaches the element › x-hero: all 1 declared attributes take effect",
+      "duration": "653ms"
+    },
+    {
+      "status": "failed",
+      "project": "behaviors",
+      "file": "tests\\behaviors\\every-declared-attribute.spec.ts",
+      "name": "Every declared attribute reaches the element › x-fireworks: all 7 declared attributes take effect",
+      "duration": "2.4s"
+    },
+    {
+      "status": "failed",
+      "project": "behaviors",
+      "file": "tests\\behaviors\\every-declared-attribute.spec.ts",
+      "name": "Every declared attribute reaches the element › x-header: all 6 declared attributes take effect",
+      "duration": "1.5s"
+    },
+    {
+      "status": "passed",
+      "project": "behaviors",
+      "file": "tests\\behaviors\\every-declared-attribute.spec.ts",
+      "name": "Every declared attribute reaches the element › x-mark: all 2 declared attributes take effect",
+      "duration": "3.7s"
+    },
+    {
+      "status": "passed",
+      "project": "behaviors",
+      "file": "tests\\behaviors\\every-declared-attribute.spec.ts",
+      "name": "Every declared attribute reaches the element › x-label: all 3 declared attributes take effect",
+      "duration": "702ms"
+    },
+    {
+      "status": "passed",
+      "project": "behaviors",
+      "file": "tests\\behaviors\\every-declared-attribute.spec.ts",
+      "name": "Every declared attribute reaches the element › x-notify: all 2 declared attributes take effect",
+      "duration": "1.5s"
+    },
+    {
+      "status": "passed",
+      "project": "behaviors",
+      "file": "tests\\behaviors\\every-declared-attribute.spec.ts",
+      "name": "Every declared attribute reaches the element › x-masonry: all 2 declared attributes take effect",
+      "duration": "3.4s"
+    },
+    {
+      "status": "failed",
+      "project": "behaviors",
+      "file": "tests\\behaviors\\every-declared-attribute.spec.ts",
+      "name": "Every declared attribute reaches the element › x-input: all 15 declared attributes take effect",
+      "duration": "609ms"
+    },
+    {
+      "status": "passed",
+      "project": "behaviors",
+      "file": "tests\\behaviors\\every-declared-attribute.spec.ts",
+      "name": "Every declared attribute reaches the element › x-notes: all 6 declared attributes take effect",
+      "duration": "3.5s"
+    },
+    {
+      "status": "passed",
+      "project": "behaviors",
+      "file": "tests\\behaviors\\every-declared-attribute.spec.ts",
+      "name": "Every declared attribute reaches the element › x-mdhtml: all 3 declared attributes take effect",
+      "duration": "1.1s"
+    },
+    {
+      "status": "passed",
+      "project": "behaviors",
+      "file": "tests\\behaviors\\every-declared-attribute.spec.ts",
+      "name": "Every declared attribute reaches the element › x-navbar: all 8 declared attributes take effect",
+      "duration": "536ms"
+    },
+    {
+      "status": "failed",
+      "project": "behaviors",
+      "file": "tests\\behaviors\\every-declared-attribute.spec.ts",
+      "name": "Every declared attribute reaches the element › x-image: all 5 declared attributes take effect",
+      "duration": "4.2s"
+    },
+    {
+      "status": "passed",
+      "project": "behaviors",
+      "file": "tests\\behaviors\\every-declared-attribute.spec.ts",
+      "name": "Every declared attribute reaches the element › x-popover: all 6 declared attributes take effect",
+      "duration": "1.5s"
+    },
+    {
+      "status": "passed",
+      "project": "behaviors",
+      "file": "tests\\behaviors\\every-declared-attribute.spec.ts",
+      "name": "Every declared attribute reaches the element › x-print: all 2 declared attributes take effect",
+      "duration": "951ms"
+    },
+    {
+      "status": "passed",
+      "project": "behaviors",
+      "file": "tests\\behaviors\\every-declared-attribute.spec.ts",
+      "name": "Every declared attribute reaches the element › x-otp: all 1 declared attributes take effect",
+      "duration": "3.8s"
+    },
+    {
+      "status": "failed",
+      "project": "behaviors",
+      "file": "tests\\behaviors\\every-declared-attribute.spec.ts",
+      "name": "Every declared attribute reaches the element › x-masked: all 2 declared attributes take effect",
+      "duration": "1.8s"
+    },
+    {
+      "status": "passed",
+      "project": "behaviors",
+      "file": "tests\\behaviors\\every-declared-attribute.spec.ts",
+      "name": "Every declared attribute reaches the element › x-rainbow: all 1 declared attributes take effect",
+      "duration": "779ms"
+    },
+    {
+      "status": "passed",
+      "project": "behaviors",
+      "file": "tests\\behaviors\\every-declared-attribute.spec.ts",
+      "name": "Every declared attribute reaches the element › x-prompt: all 6 declared attributes take effect",
+      "duration": "2.0s"
+    },
+    {
+      "status": "passed",
+      "project": "behaviors",
+      "file": "tests\\behaviors\\every-declared-attribute.spec.ts",
+      "name": "Every declared attribute reaches the element › x-release: all 2 declared attributes take effect",
+      "duration": "1.1s"
+    },
+    {
+      "status": "passed",
+      "project": "behaviors",
+      "file": "tests\\behaviors\\every-declared-attribute.spec.ts",
+      "name": "Every declared attribute reaches the element › x-password: all 2 declared attributes take effect",
+      "duration": "770ms"
+    },
+    {
+      "status": "passed",
+      "project": "behaviors",
+      "file": "tests\\behaviors\\every-declared-attribute.spec.ts",
+      "name": "Every declared attribute reaches the element › x-repeater: all 1 declared attributes take effect",
+      "duration": "596ms"
+    },
+    {
+      "status": "passed",
+      "project": "behaviors",
+      "file": "tests\\behaviors\\every-declared-attribute.spec.ts",
+      "name": "Every declared attribute reaches the element › x-relativetime: all 3 declared attributes take effect",
+      "duration": "2.3s"
+    },
+    {
+      "status": "passed",
+      "project": "behaviors",
+      "file": "tests\\behaviors\\every-declared-attribute.spec.ts",
+      "name": "Every declared attribute reaches the element › x-resizable: all 1 declared attributes take effect",
+      "duration": "1.2s"
+    },
+    {
+      "status": "passed",
+      "project": "behaviors",
+      "file": "tests\\behaviors\\every-declared-attribute.spec.ts",
+      "name": "Every declared attribute reaches the element › x-scrollalong: all 1 declared attributes take effect",
+      "duration": "874ms"
+    },
+    {
+      "status": "failed",
+      "project": "behaviors",
+      "file": "tests\\behaviors\\every-declared-attribute.spec.ts",
+      "name": "Every declared attribute reaches the element › x-pagination: all 7 declared attributes take effect",
+      "duration": "3.1s"
+    },
+    {
+      "status": "passed",
+      "project": "behaviors",
+      "file": "tests\\behaviors\\every-declared-attribute.spec.ts",
+      "name": "Every declared attribute reaches the element › x-search: all 11 declared attributes take effect",
+      "duration": "1.7s"
+    },
+    {
+      "status": "passed",
+      "project": "behaviors",
+      "file": "tests\\behaviors\\every-declared-attribute.spec.ts",
+      "name": "Every declared attribute reaches the element › x-ratio: all 1 declared attributes take effect",
+      "duration": "816ms"
+    },
+    {
+      "status": "passed",
+      "project": "behaviors",
+      "file": "tests\\behaviors\\every-declared-attribute.spec.ts",
+      "name": "Every declared attribute reaches the element › x-share: all 6 declared attributes take effect",
+      "duration": "1.6s"
+    },
+    {
+      "status": "passed",
+      "project": "behaviors",
+      "file": "tests\\behaviors\\every-declared-attribute.spec.ts",
+      "name": "Every declared attribute reaches the element › x-searchfield: all 9 declared attributes take effect",
+      "duration": "3.5s"
+    },
+    {
+      "status": "passed",
+      "project": "behaviors",
+      "file": "tests\\behaviors\\every-declared-attribute.spec.ts",
+      "name": "Every declared attribute reaches the element › x-slidein: all 1 declared attributes take effect",
+      "duration": "459ms"
+    },
+    {
+      "status": "failed",
+      "project": "behaviors",
+      "file": "tests\\behaviors\\every-declared-attribute.spec.ts",
+      "name": "Every declared attribute reaches the element › x-pre: all 8 declared attributes take effect",
+      "duration": "985ms"
+    },
+    {
+      "status": "passed",
+      "project": "behaviors",
+      "file": "tests\\behaviors\\every-declared-attribute.spec.ts",
+      "name": "Every declared attribute reaches the element › x-span: all 1 declared attributes take effect",
+      "duration": "1.6s"
+    },
+    {
+      "status": "failed",
+      "project": "behaviors",
+      "file": "tests\\behaviors\\every-declared-attribute.spec.ts",
+      "name": "Every declared attribute reaches the element › x-progress: all 9 declared attributes take effect",
+      "duration": "847ms"
+    },
+    {
+      "status": "failed",
+      "project": "behaviors",
+      "file": "tests\\behaviors\\every-declared-attribute.spec.ts",
+      "name": "Every declared attribute reaches the element › x-select: all 12 declared attributes take effect",
+      "duration": "702ms"
+    },
+    {
+      "status": "passed",
+      "project": "behaviors",
+      "file": "tests\\behaviors\\every-declared-attribute.spec.ts",
+      "name": "Every declared attribute reaches the element › x-sparkle: all 1 declared attributes take effect",
+      "duration": "592ms"
+    },
+    {
+      "status": "passed",
+      "project": "behaviors",
+      "file": "tests\\behaviors\\every-declared-attribute.spec.ts",
+      "name": "Every declared attribute reaches the element › x-stepper: all 3 declared attributes take effect",
+      "duration": "1.4s"
+    },
+    {
+      "status": "failed",
+      "project": "behaviors",
+      "file": "tests\\behaviors\\every-declared-attribute.spec.ts",
+      "name": "Every declared attribute reaches the element › x-ripple: all 3 declared attributes take effect",
+      "duration": "2.4s"
+    },
+    {
+      "status": "passed",
+      "project": "behaviors",
+      "file": "tests\\behaviors\\every-declared-attribute.spec.ts",
+      "name": "Every declared attribute reaches the element › x-stack: all 4 declared attributes take effect",
+      "duration": "1.0s"
+    },
+    {
+      "status": "passed",
+      "project": "behaviors",
+      "file": "tests\\behaviors\\every-declared-attribute.spec.ts",
+      "name": "Every declared attribute reaches the element › x-stagelight: all 7 declared attributes take effect",
+      "duration": "953ms"
+    },
+    {
+      "status": "failed",
+      "project": "behaviors",
+      "file": "tests\\behaviors\\every-declared-attribute.spec.ts",
+      "name": "Every declared attribute reaches the element › x-rating: all 7 declared attributes take effect",
+      "duration": "2.9s"
+    },
+    {
+      "status": "failed",
+      "project": "behaviors",
+      "file": "tests\\behaviors\\every-declared-attribute.spec.ts",
+      "name": "Every declared attribute reaches the element › x-skeleton: all 5 declared attributes take effect",
+      "duration": "1.4s"
+    },
+    {
+      "status": "passed",
+      "project": "behaviors",
+      "file": "tests\\behaviors\\every-declared-attribute.spec.ts",
+      "name": "Every declared attribute reaches the element › x-switch: all 8 declared attributes take effect",
+      "duration": "1.1s"
+    },
+    {
+      "status": "passed",
+      "project": "behaviors",
+      "file": "tests\\behaviors\\every-declared-attribute.spec.ts",
+      "name": "Every declared attribute reaches the element › x-table: all 15 declared attributes take effect",
+      "duration": "1.0s"
+    },
+    {
+      "status": "passed",
+      "project": "behaviors",
+      "file": "tests\\behaviors\\every-declared-attribute.spec.ts",
+      "name": "Every declared attribute reaches the element › x-steps: all 2 declared attributes take effect",
+      "duration": "3.5s"
+    },
+    {
+      "status": "passed",
+      "project": "behaviors",
+      "file": "tests\\behaviors\\every-declared-attribute.spec.ts",
+      "name": "Every declared attribute reaches the element › x-toggle: all 1 declared attributes take effect",
+      "duration": "3.0s"
+    },
+    {
+      "status": "passed",
+      "project": "behaviors",
+      "file": "tests\\behaviors\\every-declared-attribute.spec.ts",
+      "name": "Every declared attribute reaches the element › x-tooltip: all 9 declared attributes take effect",
+      "duration": "2.9s"
+    },
+    {
+      "status": "failed",
+      "project": "behaviors",
+      "file": "tests\\behaviors\\every-declared-attribute.spec.ts",
+      "name": "Every declared attribute reaches the element › x-snow: all 6 declared attributes take effect",
+      "duration": "3.7s"
+    },
+    {
+      "status": "passed",
+      "project": "behaviors",
+      "file": "tests\\behaviors\\every-declared-attribute.spec.ts",
+      "name": "Every declared attribute reaches the element › x-truncate: all 2 declared attributes take effect",
+      "duration": "571ms"
+    },
+    {
+      "status": "passed",
+      "project": "behaviors",
+      "file": "tests\\behaviors\\every-declared-attribute.spec.ts",
+      "name": "Every declared attribute reaches the element › x-timeline: all 1 declared attributes take effect",
+      "duration": "7.3s"
+    },
+    {
+      "status": "failed",
+      "project": "behaviors",
+      "file": "tests\\behaviors\\every-declared-attribute.spec.ts",
+      "name": "Every declared attribute reaches the element › x-sticky: all 5 declared attributes take effect",
+      "duration": "1.3s"
+    },
+    {
+      "status": "passed",
+      "project": "behaviors",
+      "file": "tests\\behaviors\\every-declared-attribute.spec.ts",
+      "name": "Every declared attribute reaches the element › x-vimeo: all 4 declared attributes take effect",
+      "duration": "1.1s"
+    },
+    {
+      "status": "failed",
+      "project": "behaviors",
+      "file": "tests\\behaviors\\every-declared-attribute.spec.ts",
+      "name": "Every declared attribute reaches the element › x-tabs: all 5 declared attributes take effect",
+      "duration": "858ms"
+    },
+    {
+      "status": "failed",
+      "project": "behaviors",
+      "file": "tests\\behaviors\\every-declared-attribute.spec.ts",
+      "name": "Every declared attribute reaches the element › x-spinner: all 4 declared attributes take effect",
+      "duration": "1.2s"
+    },
+    {
+      "status": "passed",
+      "project": "behaviors",
+      "file": "tests\\behaviors\\every-declared-attribute.spec.ts",
+      "name": "Every declared attribute reaches the element › x-video: all 6 declared attributes take effect",
+      "duration": "2.8s"
+    },
+    {
+      "status": "passed",
+      "project": "behaviors",
+      "file": "tests\\behaviors\\every-declared-attribute.spec.ts",
+      "name": "Every declared attribute reaches the element › x-typewriter: all 3 declared attributes take effect",
+      "duration": "769ms"
+    },
+    {
+      "status": "failed",
+      "project": "behaviors",
+      "file": "tests\\behaviors\\every-declared-attribute.spec.ts",
+      "name": "Every declared attribute reaches the element › x-toast: all 9 declared attributes take effect",
+      "duration": "8.2s"
+    },
+    {
+      "status": "failed",
+      "project": "behaviors",
+      "file": "tests\\behaviors\\every-declared-attribute.spec.ts",
+      "name": "Every declared attribute reaches the element › x-textarea: all 13 declared attributes take effect",
+      "duration": "1.3s"
+    },
+    {
+      "status": "passed",
+      "project": "behaviors",
+      "file": "tests\\behaviors\\every-declared-attribute.spec.ts",
+      "name": "Every declared attribute reaches the element › x-youtube: all 6 declared attributes take effect",
+      "duration": "801ms"
     }
   ],
-  "failures": [],
-  "stdout": "\nRunning 2 tests using 2 workers\n\n  ok 1 [compliance] › tests\\compliance\\docs-html-is-parseable.spec.ts:51:3 › docs: live HTML is parseable › the sweep actually found docs (5ms)\n  ok 2 [compliance] › tests\\compliance\\docs-html-is-parseable.spec.ts:56:3 › docs: live HTML is parseable › no doc closes a void element (51ms)\n\n════════════════════════════════════════════════════════════\n  WB TEST RESULTS\n════════════════════════════════════════════════════════════\n  Total: 2 tests in 2.5s\n  ✓ Passed:  2\n  ✗ Failed:  0\n\n  By Project:\n    ✓ compliance: 2/2 passed\n════════════════════════════════════════════════════════════\n\n\n  2 passed (5.0s)\n",
-  "stderr": ""
+  "failures": [
+    {
+      "status": "failed",
+      "project": "behaviors",
+      "file": "tests\\behaviors\\every-declared-attribute.spec.ts",
+      "name": "Every declared attribute reaches the element › x-accordion: all 3 declared attributes take effect",
+      "duration": "7.0s"
+    },
+    {
+      "status": "failed",
+      "project": "behaviors",
+      "file": "tests\\behaviors\\every-declared-attribute.spec.ts",
+      "name": "Every declared attribute reaches the element › x-button: all 11 declared attributes take effect",
+      "duration": "2.1s"
+    },
+    {
+      "status": "failed",
+      "project": "behaviors",
+      "file": "tests\\behaviors\\every-declared-attribute.spec.ts",
+      "name": "Every declared attribute reaches the element › x-card: all 9 declared attributes take effect",
+      "duration": "1.5s"
+    },
+    {
+      "status": "failed",
+      "project": "behaviors",
+      "file": "tests\\behaviors\\every-declared-attribute.spec.ts",
+      "name": "Every declared attribute reaches the element › x-audio: all 10 declared attributes take effect",
+      "duration": "7.4s"
+    },
+    {
+      "status": "failed",
+      "project": "behaviors",
+      "file": "tests\\behaviors\\every-declared-attribute.spec.ts",
+      "name": "Every declared attribute reaches the element › x-cardhero: all 14 declared attributes take effect",
+      "duration": "911ms"
+    },
+    {
+      "status": "failed",
+      "project": "behaviors",
+      "file": "tests\\behaviors\\every-declared-attribute.spec.ts",
+      "name": "Every declared attribute reaches the element › x-cardimage: all 11 declared attributes take effect",
+      "duration": "755ms"
+    },
+    {
+      "status": "failed",
+      "project": "behaviors",
+      "file": "tests\\behaviors\\every-declared-attribute.spec.ts",
+      "name": "Every declared attribute reaches the element › x-cardnotification: all 6 declared attributes take effect",
+      "duration": "973ms"
+    },
+    {
+      "status": "failed",
+      "project": "behaviors",
+      "file": "tests\\behaviors\\every-declared-attribute.spec.ts",
+      "name": "Every declared attribute reaches the element › x-cardpricing: all 9 declared attributes take effect",
+      "duration": "2.3s"
+    },
+    {
+      "status": "failed",
+      "project": "behaviors",
+      "file": "tests\\behaviors\\every-declared-attribute.spec.ts",
+      "name": "Every declared attribute reaches the element › x-checkbox: all 9 declared attributes take effect",
+      "duration": "1.9s"
+    },
+    {
+      "status": "failed",
+      "project": "behaviors",
+      "file": "tests\\behaviors\\every-declared-attribute.spec.ts",
+      "name": "Every declared attribute reaches the element › x-cardstats: all 7 declared attributes take effect",
+      "duration": "4.7s"
+    },
+    {
+      "status": "failed",
+      "project": "behaviors",
+      "file": "tests\\behaviors\\every-declared-attribute.spec.ts",
+      "name": "Every declared attribute reaches the element › x-code: all 6 declared attributes take effect",
+      "duration": "1.1s"
+    },
+    {
+      "status": "failed",
+      "project": "behaviors",
+      "file": "tests\\behaviors\\every-declared-attribute.spec.ts",
+      "name": "Every declared attribute reaches the element › x-confetti: all 7 declared attributes take effect",
+      "duration": "800ms"
+    },
+    {
+      "status": "failed",
+      "project": "behaviors",
+      "file": "tests\\behaviors\\every-declared-attribute.spec.ts",
+      "name": "Every declared attribute reaches the element › x-cardvideo: all 10 declared attributes take effect",
+      "duration": "989ms"
+    },
+    {
+      "status": "failed",
+      "project": "behaviors",
+      "file": "tests\\behaviors\\every-declared-attribute.spec.ts",
+      "name": "Every declared attribute reaches the element › x-dialog: all 7 declared attributes take effect",
+      "duration": "1.4s"
+    },
+    {
+      "status": "failed",
+      "project": "behaviors",
+      "file": "tests\\behaviors\\every-declared-attribute.spec.ts",
+      "name": "Every declared attribute reaches the element › x-details: all 5 declared attributes take effect",
+      "duration": "3.4s"
+    },
+    {
+      "status": "failed",
+      "project": "behaviors",
+      "file": "tests\\behaviors\\every-declared-attribute.spec.ts",
+      "name": "Every declared attribute reaches the element › x-drawer: all 9 declared attributes take effect",
+      "duration": "1.1s"
+    },
+    {
+      "status": "failed",
+      "project": "behaviors",
+      "file": "tests\\behaviors\\every-declared-attribute.spec.ts",
+      "name": "Every declared attribute reaches the element › x-dropdown: all 5 declared attributes take effect",
+      "duration": "623ms"
+    },
+    {
+      "status": "failed",
+      "project": "behaviors",
+      "file": "tests\\behaviors\\every-declared-attribute.spec.ts",
+      "name": "Every declared attribute reaches the element › x-fireworks: all 7 declared attributes take effect",
+      "duration": "2.4s"
+    },
+    {
+      "status": "failed",
+      "project": "behaviors",
+      "file": "tests\\behaviors\\every-declared-attribute.spec.ts",
+      "name": "Every declared attribute reaches the element › x-header: all 6 declared attributes take effect",
+      "duration": "1.5s"
+    },
+    {
+      "status": "failed",
+      "project": "behaviors",
+      "file": "tests\\behaviors\\every-declared-attribute.spec.ts",
+      "name": "Every declared attribute reaches the element › x-input: all 15 declared attributes take effect",
+      "duration": "609ms"
+    },
+    {
+      "status": "failed",
+      "project": "behaviors",
+      "file": "tests\\behaviors\\every-declared-attribute.spec.ts",
+      "name": "Every declared attribute reaches the element › x-image: all 5 declared attributes take effect",
+      "duration": "4.2s"
+    },
+    {
+      "status": "failed",
+      "project": "behaviors",
+      "file": "tests\\behaviors\\every-declared-attribute.spec.ts",
+      "name": "Every declared attribute reaches the element › x-masked: all 2 declared attributes take effect",
+      "duration": "1.8s"
+    },
+    {
+      "status": "failed",
+      "project": "behaviors",
+      "file": "tests\\behaviors\\every-declared-attribute.spec.ts",
+      "name": "Every declared attribute reaches the element › x-pagination: all 7 declared attributes take effect",
+      "duration": "3.1s"
+    },
+    {
+      "status": "failed",
+      "project": "behaviors",
+      "file": "tests\\behaviors\\every-declared-attribute.spec.ts",
+      "name": "Every declared attribute reaches the element › x-pre: all 8 declared attributes take effect",
+      "duration": "985ms"
+    },
+    {
+      "status": "failed",
+      "project": "behaviors",
+      "file": "tests\\behaviors\\every-declared-attribute.spec.ts",
+      "name": "Every declared attribute reaches the element › x-progress: all 9 declared attributes take effect",
+      "duration": "847ms"
+    },
+    {
+      "status": "failed",
+      "project": "behaviors",
+      "file": "tests\\behaviors\\every-declared-attribute.spec.ts",
+      "name": "Every declared attribute reaches the element › x-select: all 12 declared attributes take effect",
+      "duration": "702ms"
+    },
+    {
+      "status": "failed",
+      "project": "behaviors",
+      "file": "tests\\behaviors\\every-declared-attribute.spec.ts",
+      "name": "Every declared attribute reaches the element › x-ripple: all 3 declared attributes take effect",
+      "duration": "2.4s"
+    },
+    {
+      "status": "failed",
+      "project": "behaviors",
+      "file": "tests\\behaviors\\every-declared-attribute.spec.ts",
+      "name": "Every declared attribute reaches the element › x-rating: all 7 declared attributes take effect",
+      "duration": "2.9s"
+    },
+    {
+      "status": "failed",
+      "project": "behaviors",
+      "file": "tests\\behaviors\\every-declared-attribute.spec.ts",
+      "name": "Every declared attribute reaches the element › x-skeleton: all 5 declared attributes take effect",
+      "duration": "1.4s"
+    },
+    {
+      "status": "failed",
+      "project": "behaviors",
+      "file": "tests\\behaviors\\every-declared-attribute.spec.ts",
+      "name": "Every declared attribute reaches the element › x-snow: all 6 declared attributes take effect",
+      "duration": "3.7s"
+    },
+    {
+      "status": "failed",
+      "project": "behaviors",
+      "file": "tests\\behaviors\\every-declared-attribute.spec.ts",
+      "name": "Every declared attribute reaches the element › x-sticky: all 5 declared attributes take effect",
+      "duration": "1.3s"
+    },
+    {
+      "status": "failed",
+      "project": "behaviors",
+      "file": "tests\\behaviors\\every-declared-attribute.spec.ts",
+      "name": "Every declared attribute reaches the element › x-tabs: all 5 declared attributes take effect",
+      "duration": "858ms"
+    },
+    {
+      "status": "failed",
+      "project": "behaviors",
+      "file": "tests\\behaviors\\every-declared-attribute.spec.ts",
+      "name": "Every declared attribute reaches the element › x-spinner: all 4 declared attributes take effect",
+      "duration": "1.2s"
+    },
+    {
+      "status": "failed",
+      "project": "behaviors",
+      "file": "tests\\behaviors\\every-declared-attribute.spec.ts",
+      "name": "Every declared attribute reaches the element › x-toast: all 9 declared attributes take effect",
+      "duration": "8.2s"
+    },
+    {
+      "status": "failed",
+      "project": "behaviors",
+      "file": "tests\\behaviors\\every-declared-attribute.spec.ts",
+      "name": "Every declared attribute reaches the element › x-textarea: all 13 declared attributes take effect",
+      "duration": "1.3s"
+    }
+  ],
+  "stdout": "\nRunning 118 tests using 8 workers\n\n  ok   2 [behaviors] › tests\\behaviors\\every-declared-attribute.spec.ts:252:3 › Every declared attribute reaches the element › the schema surface is non-empty — the sweep cannot pass vacuously (12ms)\n  ok   3 [behaviors] › tests\\behaviors\\every-declared-attribute.spec.ts:259:5 › Every declared attribute reaches the element › x-article: all 9 declared attributes take effect (6.9s)\n  ok   8 [behaviors] › tests\\behaviors\\every-declared-attribute.spec.ts:259:5 › Every declared attribute reaches the element › x-avatar: all 8 declared attributes take effect (6.6s)\n  ok   1 [behaviors] › tests\\behaviors\\every-declared-attribute.spec.ts:259:5 › Every declared attribute reaches the element › x-autocomplete: all 1 declared attributes take effect (7.0s)\n  ok   7 [behaviors] › tests\\behaviors\\every-declared-attribute.spec.ts:259:5 › Every declared attribute reaches the element › x-badge: all 9 declared attributes take effect (7.1s)\n  ok   4 [behaviors] › tests\\behaviors\\every-declared-attribute.spec.ts:259:5 › Every declared attribute reaches the element › x-articles: all 5 declared attributes take effect (6.9s)\n  ok   6 [behaviors] › tests\\behaviors\\every-declared-attribute.spec.ts:259:5 › Every declared attribute reaches the element › x-alert: all 5 declared attributes take effect (6.8s)\n  ok  15 [behaviors] › tests\\behaviors\\every-declared-attribute.spec.ts:259:5 › Every declared attribute reaches the element › x-cardexpandable: all 6 declared attributes take effect (1.5s)\n  ok  13 [behaviors] › tests\\behaviors\\every-declared-attribute.spec.ts:259:5 › Every declared attribute reaches the element › x-cardbutton: all 7 declared attributes take effect (1.6s)\n  ok  10 [behaviors] › tests\\behaviors\\every-declared-attribute.spec.ts:259:5 › Every declared attribute reaches the element › x-breadcrumb: all 2 declared attributes take effect (1.9s)\n  ok  14 [behaviors] › tests\\behaviors\\every-declared-attribute.spec.ts:259:5 › Every declared attribute reaches the element › x-carddraggable: all 6 declared attributes take effect (2.0s)\n  ok  18 [behaviors] › tests\\behaviors\\every-declared-attribute.spec.ts:259:5 › Every declared attribute reaches the element › x-cardhorizontal: all 7 declared attributes take effect (604ms)\n  ok  16 [behaviors] › tests\\behaviors\\every-declared-attribute.spec.ts:259:5 › Every declared attribute reaches the element › x-cardfile: all 8 declared attributes take effect (842ms)\n  x    5 [behaviors] › tests\\behaviors\\every-declared-attribute.spec.ts:259:5 › Every declared attribute reaches the element › x-accordion: all 3 declared attributes take effect (7.0s)\n  x   11 [behaviors] › tests\\behaviors\\every-declared-attribute.spec.ts:259:5 › Every declared attribute reaches the element › x-button: all 11 declared attributes take effect (2.1s)\n  x   12 [behaviors] › tests\\behaviors\\every-declared-attribute.spec.ts:259:5 › Every declared attribute reaches the element › x-card: all 9 declared attributes take effect (1.5s)\n  x    9 [behaviors] › tests\\behaviors\\every-declared-attribute.spec.ts:259:5 › Every declared attribute reaches the element › x-audio: all 10 declared attributes take effect (7.4s)\n  ok  21 [behaviors] › tests\\behaviors\\every-declared-attribute.spec.ts:259:5 › Every declared attribute reaches the element › x-cardminimizable: all 4 declared attributes take effect (1.3s)\n  ok  20 [behaviors] › tests\\behaviors\\every-declared-attribute.spec.ts:259:5 › Every declared attribute reaches the element › x-cardlink: all 7 declared attributes take effect (1.8s)\n  ok  23 [behaviors] › tests\\behaviors\\every-declared-attribute.spec.ts:259:5 › Every declared attribute reaches the element › x-cardprofile: all 8 declared attributes take effect (810ms)\n  ok  22 [behaviors] › tests\\behaviors\\every-declared-attribute.spec.ts:259:5 › Every declared attribute reaches the element › x-cardproduct: all 11 declared attributes take effect (1.9s)\n  x   17 [behaviors] › tests\\behaviors\\every-declared-attribute.spec.ts:259:5 › Every declared attribute reaches the element › x-cardhero: all 14 declared attributes take effect (911ms)\n  ok  26 [behaviors] › tests\\behaviors\\every-declared-attribute.spec.ts:259:5 › Every declared attribute reaches the element › x-cardoverlay: all 8 declared attributes take effect (1.6s)\n  x   19 [behaviors] › tests\\behaviors\\every-declared-attribute.spec.ts:259:5 › Every declared attribute reaches the element › x-cardimage: all 11 declared attributes take effect (755ms)\n  ok  28 [behaviors] › tests\\behaviors\\every-declared-attribute.spec.ts:259:5 › Every declared attribute reaches the element › x-cardportfolio: all 28 declared attributes take effect (2.4s)\n  ok  25 [behaviors] › tests\\behaviors\\every-declared-attribute.spec.ts:259:5 › Every declared attribute reaches the element › x-cardtestimonial: all 7 declared attributes take effect (4.8s)\n  ok  32 [behaviors] › tests\\behaviors\\every-declared-attribute.spec.ts:259:5 › Every declared attribute reaches the element › x-clock: all 3 declared attributes take effect (793ms)\n  x   27 [behaviors] › tests\\behaviors\\every-declared-attribute.spec.ts:259:5 › Every declared attribute reaches the element › x-cardnotification: all 6 declared attributes take effect (973ms)\n  ok  33 [behaviors] › tests\\behaviors\\every-declared-attribute.spec.ts:259:5 › Every declared attribute reaches the element › x-cluster: all 3 declared attributes take effect (1.2s)\n  x   29 [behaviors] › tests\\behaviors\\every-declared-attribute.spec.ts:259:5 › Every declared attribute reaches the element › x-cardpricing: all 9 declared attributes take effect (2.3s)\n  ok  35 [behaviors] › tests\\behaviors\\every-declared-attribute.spec.ts:259:5 › Every declared attribute reaches the element › x-chip: all 7 declared attributes take effect (663ms)\n  x   30 [behaviors] › tests\\behaviors\\every-declared-attribute.spec.ts:259:5 › Every declared attribute reaches the element › x-checkbox: all 9 declared attributes take effect (1.9s)\n  ok  37 [behaviors] › tests\\behaviors\\every-declared-attribute.spec.ts:259:5 › Every declared attribute reaches the element › x-copy: all 2 declared attributes take effect (572ms)\n  x   24 [behaviors] › tests\\behaviors\\every-declared-attribute.spec.ts:259:5 › Every declared attribute reaches the element › x-cardstats: all 7 declared attributes take effect (4.7s)\n  ok  38 [behaviors] › tests\\behaviors\\every-declared-attribute.spec.ts:259:5 › Every declared attribute reaches the element › x-countdown: all 4 declared attributes take effect (1.2s)\n  ok  40 [behaviors] › tests\\behaviors\\every-declared-attribute.spec.ts:259:5 › Every declared attribute reaches the element › x-collapse: all 3 declared attributes take effect (970ms)\n  ok  42 [behaviors] › tests\\behaviors\\every-declared-attribute.spec.ts:259:5 › Every declared attribute reaches the element › x-confirm: all 6 declared attributes take effect (720ms)\n  ok  43 [behaviors] › tests\\behaviors\\every-declared-attribute.spec.ts:259:5 › Every declared attribute reaches the element › x-copybutton: all 5 declared attributes take effect (732ms)\n  ok  39 [behaviors] › tests\\behaviors\\every-declared-attribute.spec.ts:259:5 › Every declared attribute reaches the element › x-demo: all 1 declared attributes take effect (3.5s)\n  ok  44 [behaviors] › tests\\behaviors\\every-declared-attribute.spec.ts:259:5 › Every declared attribute reaches the element › x-counter: all 2 declared attributes take effect (616ms)\n  ok  48 [behaviors] › tests\\behaviors\\every-declared-attribute.spec.ts:259:5 › Every declared attribute reaches the element › x-drawer-layout: all 4 declared attributes take effect (866ms)\n  ok  46 [behaviors] › tests\\behaviors\\every-declared-attribute.spec.ts:259:5 › Every declared attribute reaches the element › x-draggable: all 2 declared attributes take effect (1.6s)\n  x   34 [behaviors] › tests\\behaviors\\every-declared-attribute.spec.ts:259:5 › Every declared attribute reaches the element › x-code: all 6 declared attributes take effect (1.1s)\n  x   36 [behaviors] › tests\\behaviors\\every-declared-attribute.spec.ts:259:5 › Every declared attribute reaches the element › x-confetti: all 7 declared attributes take effect (800ms)\n  ok  50 [behaviors] › tests\\behaviors\\every-declared-attribute.spec.ts:259:5 › Every declared attribute reaches the element › x-fieldset: all 2 declared attributes take effect (1.0s)\n  x   31 [behaviors] › tests\\behaviors\\every-declared-attribute.spec.ts:259:5 › Every declared attribute reaches the element › x-cardvideo: all 10 declared attributes take effect (989ms)\n  x   45 [behaviors] › tests\\behaviors\\every-declared-attribute.spec.ts:259:5 › Every declared attribute reaches the element › x-dialog: all 7 declared attributes take effect (1.4s)\n  ok  52 [behaviors] › tests\\behaviors\\every-declared-attribute.spec.ts:259:5 › Every declared attribute reaches the element › x-figure: all 4 declared attributes take effect (718ms)\n  ok  53 [behaviors] › tests\\behaviors\\every-declared-attribute.spec.ts:259:5 › Every declared attribute reaches the element › x-fill: all 1 declared attributes take effect (797ms)\n  ok  54 [behaviors] › tests\\behaviors\\every-declared-attribute.spec.ts:259:5 › Every declared attribute reaches the element › x-flex: all 5 declared attributes take effect (862ms)\n  x   41 [behaviors] › tests\\behaviors\\every-declared-attribute.spec.ts:259:5 › Every declared attribute reaches the element › x-details: all 5 declared attributes take effect (3.4s)\n  ok  56 [behaviors] › tests\\behaviors\\every-declared-attribute.spec.ts:259:5 › Every declared attribute reaches the element › x-formrow: all 1 declared attributes take effect (978ms)\n  ok  57 [behaviors] › tests\\behaviors\\every-declared-attribute.spec.ts:259:5 › Every declared attribute reaches the element › x-fullscreen: all 2 declared attributes take effect (849ms)\n  x   47 [behaviors] › tests\\behaviors\\every-declared-attribute.spec.ts:259:5 › Every declared attribute reaches the element › x-drawer: all 9 declared attributes take effect (1.1s)\n  ok  55 [behaviors] › tests\\behaviors\\every-declared-attribute.spec.ts:259:5 › Every declared attribute reaches the element › x-form: all 2 declared attributes take effect (2.4s)\n  ok  58 [behaviors] › tests\\behaviors\\every-declared-attribute.spec.ts:259:5 › Every declared attribute reaches the element › x-glow: all 1 declared attributes take effect (1.6s)\n  ok  61 [behaviors] › tests\\behaviors\\every-declared-attribute.spec.ts:259:5 › Every declared attribute reaches the element › x-footer: all 5 declared attributes take effect (598ms)\n  x   49 [behaviors] › tests\\behaviors\\every-declared-attribute.spec.ts:259:5 › Every declared attribute reaches the element › x-dropdown: all 5 declared attributes take effect (623ms)\n  ok  62 [behaviors] › tests\\behaviors\\every-declared-attribute.spec.ts:259:5 › Every declared attribute reaches the element › x-img: all 5 declared attributes take effect (2.0s)\n  ok  65 [behaviors] › tests\\behaviors\\every-declared-attribute.spec.ts:259:5 › Every declared attribute reaches the element › x-gallery: all 4 declared attributes take effect (1.0s)\n  ok  67 [behaviors] › tests\\behaviors\\every-declared-attribute.spec.ts:259:5 › Every declared attribute reaches the element › x-hero: all 1 declared attributes take effect (653ms)\n  x   51 [behaviors] › tests\\behaviors\\every-declared-attribute.spec.ts:259:5 › Every declared attribute reaches the element › x-fireworks: all 7 declared attributes take effect (2.4s)\n  x   59 [behaviors] › tests\\behaviors\\every-declared-attribute.spec.ts:259:5 › Every declared attribute reaches the element › x-header: all 6 declared attributes take effect (1.5s)\n  ok  64 [behaviors] › tests\\behaviors\\every-declared-attribute.spec.ts:259:5 › Every declared attribute reaches the element › x-mark: all 2 declared attributes take effect (3.7s)\n  ok  69 [behaviors] › tests\\behaviors\\every-declared-attribute.spec.ts:259:5 › Every declared attribute reaches the element › x-label: all 3 declared attributes take effect (702ms)\n  ok  71 [behaviors] › tests\\behaviors\\every-declared-attribute.spec.ts:259:5 › Every declared attribute reaches the element › x-notify: all 2 declared attributes take effect (1.5s)\n  ok  68 [behaviors] › tests\\behaviors\\every-declared-attribute.spec.ts:259:5 › Every declared attribute reaches the element › x-masonry: all 2 declared attributes take effect (3.4s)\n  x   63 [behaviors] › tests\\behaviors\\every-declared-attribute.spec.ts:259:5 › Every declared attribute reaches the element › x-input: all 15 declared attributes take effect (609ms)\n  ok  70 [behaviors] › tests\\behaviors\\every-declared-attribute.spec.ts:259:5 › Every declared attribute reaches the element › x-notes: all 6 declared attributes take effect (3.5s)\n  ok  74 [behaviors] › tests\\behaviors\\every-declared-attribute.spec.ts:259:5 › Every declared attribute reaches the element › x-mdhtml: all 3 declared attributes take effect (1.1s)\n  ok  76 [behaviors] › tests\\behaviors\\every-declared-attribute.spec.ts:259:5 › Every declared attribute reaches the element › x-navbar: all 8 declared attributes take effect (536ms)\n  x   60 [behaviors] › tests\\behaviors\\every-declared-attribute.spec.ts:259:5 › Every declared attribute reaches the element › x-image: all 5 declared attributes take effect (4.2s)\n  ok  75 [behaviors] › tests\\behaviors\\every-declared-attribute.spec.ts:259:5 › Every declared attribute reaches the element › x-popover: all 6 declared attributes take effect (1.5s)\n  ok  78 [behaviors] › tests\\behaviors\\every-declared-attribute.spec.ts:259:5 › Every declared attribute reaches the element › x-print: all 2 declared attributes take effect (951ms)\n  ok  72 [behaviors] › tests\\behaviors\\every-declared-attribute.spec.ts:259:5 › Every declared attribute reaches the element › x-otp: all 1 declared attributes take effect (3.8s)\n  x   66 [behaviors] › tests\\behaviors\\every-declared-attribute.spec.ts:259:5 › Every declared attribute reaches the element › x-masked: all 2 declared attributes take effect (1.8s)\n  ok  80 [behaviors] › tests\\behaviors\\every-declared-attribute.spec.ts:259:5 › Every declared attribute reaches the element › x-rainbow: all 1 declared attributes take effect (779ms)\n  ok  79 [behaviors] › tests\\behaviors\\every-declared-attribute.spec.ts:259:5 › Every declared attribute reaches the element › x-prompt: all 6 declared attributes take effect (2.0s)\n  ok  83 [behaviors] › tests\\behaviors\\every-declared-attribute.spec.ts:259:5 › Every declared attribute reaches the element › x-release: all 2 declared attributes take effect (1.1s)\n  ok  84 [behaviors] › tests\\behaviors\\every-declared-attribute.spec.ts:259:5 › Every declared attribute reaches the element › x-password: all 2 declared attributes take effect (770ms)\n  ok  85 [behaviors] › tests\\behaviors\\every-declared-attribute.spec.ts:259:5 › Every declared attribute reaches the element › x-repeater: all 1 declared attributes take effect (596ms)\n  ok  82 [behaviors] › tests\\behaviors\\every-declared-attribute.spec.ts:259:5 › Every declared attribute reaches the element › x-relativetime: all 3 declared attributes take effect (2.3s)\n  ok  86 [behaviors] › tests\\behaviors\\every-declared-attribute.spec.ts:259:5 › Every declared attribute reaches the element › x-resizable: all 1 declared attributes take effect (1.2s)\n  ok  88 [behaviors] › tests\\behaviors\\every-declared-attribute.spec.ts:259:5 › Every declared attribute reaches the element › x-scrollalong: all 1 declared attributes take effect (874ms)\n  x   73 [behaviors] › tests\\behaviors\\every-declared-attribute.spec.ts:259:5 › Every declared attribute reaches the element › x-pagination: all 7 declared attributes take effect (3.1s)\n  ok  90 [behaviors] › tests\\behaviors\\every-declared-attribute.spec.ts:259:5 › Every declared attribute reaches the element › x-search: all 11 declared attributes take effect (1.7s)\n  ok  92 [behaviors] › tests\\behaviors\\every-declared-attribute.spec.ts:259:5 › Every declared attribute reaches the element › x-ratio: all 1 declared attributes take effect (816ms)\n  ok  93 [behaviors] › tests\\behaviors\\every-declared-attribute.spec.ts:259:5 › Every declared attribute reaches the element › x-share: all 6 declared attributes take effect (1.6s)\n  ok  91 [behaviors] › tests\\behaviors\\every-declared-attribute.spec.ts:259:5 › Every declared attribute reaches the element › x-searchfield: all 9 declared attributes take effect (3.5s)\n  ok  95 [behaviors] › tests\\behaviors\\every-declared-attribute.spec.ts:259:5 › Every declared attribute reaches the element › x-slidein: all 1 declared attributes take effect (459ms)\n  x   77 [behaviors] › tests\\behaviors\\every-declared-attribute.spec.ts:259:5 › Every declared attribute reaches the element › x-pre: all 8 declared attributes take effect (985ms)\n  ok  97 [behaviors] › tests\\behaviors\\every-declared-attribute.spec.ts:259:5 › Every declared attribute reaches the element › x-span: all 1 declared attributes take effect (1.6s)\n  x   89 [behaviors] › tests\\behaviors\\every-declared-attribute.spec.ts:259:5 › Every declared attribute reaches the element › x-progress: all 9 declared attributes take effect (847ms)\n  x   98 [behaviors] › tests\\behaviors\\every-declared-attribute.spec.ts:259:5 › Every declared attribute reaches the element › x-select: all 12 declared attributes take effect (702ms)\n  ok 100 [behaviors] › tests\\behaviors\\every-declared-attribute.spec.ts:259:5 › Every declared attribute reaches the element › x-sparkle: all 1 declared attributes take effect (592ms)\n  ok 101 [behaviors] › tests\\behaviors\\every-declared-attribute.spec.ts:259:5 › Every declared attribute reaches the element › x-stepper: all 3 declared attributes take effect (1.4s)\n  x   87 [behaviors] › tests\\behaviors\\every-declared-attribute.spec.ts:259:5 › Every declared attribute reaches the element › x-ripple: all 3 declared attributes take effect (2.4s)\n  ok 103 [behaviors] › tests\\behaviors\\every-declared-attribute.spec.ts:259:5 › Every declared attribute reaches the element › x-stack: all 4 declared attributes take effect (1.0s)\n  ok 104 [behaviors] › tests\\behaviors\\every-declared-attribute.spec.ts:259:5 › Every declared attribute reaches the element › x-stagelight: all 7 declared attributes take effect (953ms)\n  x   81 [behaviors] › tests\\behaviors\\every-declared-attribute.spec.ts:259:5 › Every declared attribute reaches the element › x-rating: all 7 declared attributes take effect (2.9s)\n  x   94 [behaviors] › tests\\behaviors\\every-declared-attribute.spec.ts:259:5 › Every declared attribute reaches the element › x-skeleton: all 5 declared attributes take effect (1.4s)\n  ok 105 [behaviors] › tests\\behaviors\\every-declared-attribute.spec.ts:259:5 › Every declared attribute reaches the element › x-switch: all 8 declared attributes take effect (1.1s)\n  ok 106 [behaviors] › tests\\behaviors\\every-declared-attribute.spec.ts:259:5 › Every declared attribute reaches the element › x-table: all 15 declared attributes take effect (1.0s)\n  ok 102 [behaviors] › tests\\behaviors\\every-declared-attribute.spec.ts:259:5 › Every declared attribute reaches the element › x-steps: all 2 declared attributes take effect (3.5s)\n  ok 109 [behaviors] › tests\\behaviors\\every-declared-attribute.spec.ts:259:5 › Every declared attribute reaches the element › x-toggle: all 1 declared attributes take effect (3.0s)\n  ok 111 [behaviors] › tests\\behaviors\\every-declared-attribute.spec.ts:259:5 › Every declared attribute reaches the element › x-tooltip: all 9 declared attributes take effect (2.9s)\n  x   96 [behaviors] › tests\\behaviors\\every-declared-attribute.spec.ts:259:5 › Every declared attribute reaches the element › x-snow: all 6 declared attributes take effect (3.7s)\n  ok 114 [behaviors] › tests\\behaviors\\every-declared-attribute.spec.ts:259:5 › Every declared attribute reaches the element › x-truncate: all 2 declared attributes take effect (571ms)\n  ok 107 [behaviors] › tests\\behaviors\\every-declared-attribute.spec.ts:259:5 › Every declared attribute reaches the element › x-timeline: all 1 declared attributes take effect (7.3s)\n  x  110 [behaviors] › tests\\behaviors\\every-declared-attribute.spec.ts:259:5 › Every declared attribute reaches the element › x-sticky: all 5 declared attributes take effect (1.3s)\n  ok 116 [behaviors] › tests\\behaviors\\every-declared-attribute.spec.ts:259:5 › Every declared attribute reaches the element › x-vimeo: all 4 declared attributes take effect (1.1s)\n  x  113 [behaviors] › tests\\behaviors\\every-declared-attribute.spec.ts:259:5 › Every declared attribute reaches the element › x-tabs: all 5 declared attributes take effect (858ms)\n  x   99 [behaviors] › tests\\behaviors\\every-declared-attribute.spec.ts:259:5 › Every declared attribute reaches the element › x-spinner: all 4 declared attributes take effect (1.2s)\n  ok 115 [behaviors] › tests\\behaviors\\every-declared-attribute.spec.ts:259:5 › Every declared attribute reaches the element › x-video: all 6 declared attributes take effect (2.8s)\n  ok 117 [behaviors] › tests\\behaviors\\every-declared-attribute.spec.ts:259:5 › Every declared attribute reaches the element › x-typewriter: all 3 declared attributes take effect (769ms)\n  x  108 [behaviors] › tests\\behaviors\\every-declared-attribute.spec.ts:259:5 › Every declared attribute reaches the element › x-toast: all 9 declared attributes take effect (8.2s)\n  x  112 [behaviors] › tests\\behaviors\\every-declared-attribute.spec.ts:259:5 › Every declared attribute reaches the element › x-textarea: all 13 declared attributes take effect (1.3s)\n  ok 118 [behaviors] › tests\\behaviors\\every-declared-attribute.spec.ts:259:5 › Every declared attribute reaches the element › x-youtube: all 6 declared attributes take effect (801ms)\n\n════════════════════════════════════════════════════════════\n  WB TEST RESULTS\n════════════════════════════════════════════════════════════\n  Total: 118 tests in 83.9s\n  ✓ Passed:  83\n  ✗ Failed:  35\n\n  By Project:\n    ✗ behaviors: 83/118 passed\n\n  See failures: data/test-results/failures.json\n  Live log:    data/test-results/failures-live.log\n════════════════════════════════════════════════════════════\n\n\n\n  1) [behaviors] › tests\\behaviors\\every-declared-attribute.spec.ts:259:5 › Every declared attribute reaches the element › x-accordion: all 3 declared attributes take effect \n\n    Error: x-accordion ignores 2/3 declared attributes: data-title, accordion-title\n    Each is declared in accordion.schema.json, documented from it, and written in examples — setting it on <div x-accordion> changed no markup, changed no computed style, and was never read off the host.\n\n    \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // deep equality\u001b[22m\n\n    \u001b[32m- Expected  - 1\u001b[39m\n    \u001b[31m+ Received  + 4\u001b[39m\n\n    \u001b[32m- Array []\u001b[39m\n    \u001b[31m+ Array [\u001b[39m\n    \u001b[31m+   \"data-title\",\u001b[39m\n    \u001b[31m+   \"accordion-title\",\u001b[39m\n    \u001b[31m+ ]\u001b[39m\n\n      266 |         `setting it on <${b.tag} ${b.token}> changed no markup, changed no computed style, and was ` +\n      267 |         `never read off the host.`,\n    > 268 |       ).toEqual([]);\n          |         ^\n      269 |     });\n      270 |   }\n      271 | });\n        at C:\\Users\\jwpmi\\Downloads\\AI\\wb-starter\\tests\\behaviors\\every-declared-attribute.spec.ts:268:9\n\n    Error Context: data\\test-results\\behaviors-every-declared-a-9b7e4-ared-attributes-take-effect-behaviors\\error-context.md\n\n  2) [behaviors] › tests\\behaviors\\every-declared-attribute.spec.ts:259:5 › Every declared attribute reaches the element › x-audio: all 10 declared attributes take effect \n\n    Error: x-audio ignores 3/10 declared attributes: muted, bass, treble\n    Each is declared in audio.schema.json, documented from it, and written in examples — setting it on <div x-audio> changed no markup, changed no computed style, and was never read off the host.\n\n    \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // deep equality\u001b[22m\n\n    \u001b[32m- Expected  - 1\u001b[39m\n    \u001b[31m+ Received  + 5\u001b[39m\n\n    \u001b[32m- Array []\u001b[39m\n    \u001b[31m+ Array [\u001b[39m\n    \u001b[31m+   \"muted\",\u001b[39m\n    \u001b[31m+   \"bass\",\u001b[39m\n    \u001b[31m+   \"treble\",\u001b[39m\n    \u001b[31m+ ]\u001b[39m\n\n      266 |         `setting it on <${b.tag} ${b.token}> changed no markup, changed no computed style, and was ` +\n      267 |         `never read off the host.`,\n    > 268 |       ).toEqual([]);\n          |         ^\n      269 |     });\n      270 |   }\n      271 | });\n        at C:\\Users\\jwpmi\\Downloads\\AI\\wb-starter\\tests\\behaviors\\every-declared-attribute.spec.ts:268:9\n\n    Error Context: data\\test-results\\behaviors-every-declared-a-678f0-ared-attributes-take-effect-behaviors\\error-context.md\n\n  3) [behaviors] › tests\\behaviors\\every-declared-attribute.spec.ts:259:5 › Every declared attribute reaches the element › x-button: all 11 declared attributes take effect \n\n    Error: x-button ignores 2/11 declared attributes: label, href\n    Each is declared in button.schema.json, documented from it, and written in examples — setting it on <button x-button> changed no markup, changed no computed style, and was never read off the host.\n\n    \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // deep equality\u001b[22m\n\n    \u001b[32m- Expected  - 1\u001b[39m\n    \u001b[31m+ Received  + 4\u001b[39m\n\n    \u001b[32m- Array []\u001b[39m\n    \u001b[31m+ Array [\u001b[39m\n    \u001b[31m+   \"label\",\u001b[39m\n    \u001b[31m+   \"href\",\u001b[39m\n    \u001b[31m+ ]\u001b[39m\n\n      266 |         `setting it on <${b.tag} ${b.token}> changed no markup, changed no computed style, and was ` +\n      267 |         `never read off the host.`,\n    > 268 |       ).toEqual([]);\n          |         ^\n      269 |     });\n      270 |   }\n      271 | });\n        at C:\\Users\\jwpmi\\Downloads\\AI\\wb-starter\\tests\\behaviors\\every-declared-attribute.spec.ts:268:9\n\n    Error Context: data\\test-results\\behaviors-every-declared-a-d1cb5-ared-attributes-take-effect-behaviors\\error-context.md\n\n  4) [behaviors] › tests\\behaviors\\every-declared-attribute.spec.ts:259:5 › Every declared attribute reaches the element › x-card: all 9 declared attributes take effect \n\n    Error: x-card ignores 6/9 declared attributes: elevated, clickable, variant, size, tooltip, hover-text\n    Each is declared in card.schema.json, documented from it, and written in examples — setting it on <article x-card> changed no markup, changed no computed style, and was never read off the host.\n\n    \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // deep equality\u001b[22m\n\n    \u001b[32m- Expected  - 1\u001b[39m\n    \u001b[31m+ Received  + 8\u001b[39m\n\n    \u001b[32m- Array []\u001b[39m\n    \u001b[31m+ Array [\u001b[39m\n    \u001b[31m+   \"elevated\",\u001b[39m\n    \u001b[31m+   \"clickable\",\u001b[39m\n    \u001b[31m+   \"variant\",\u001b[39m\n    \u001b[31m+   \"size\",\u001b[39m\n    \u001b[31m+   \"tooltip\",\u001b[39m\n    \u001b[31m+   \"hover-text\",\u001b[39m\n    \u001b[31m+ ]\u001b[39m\n\n      266 |         `setting it on <${b.tag} ${b.token}> changed no markup, changed no computed style, and was ` +\n      267 |         `never read off the host.`,\n    > 268 |       ).toEqual([]);\n          |         ^\n      269 |     });\n      270 |   }\n      271 | });\n        at C:\\Users\\jwpmi\\Downloads\\AI\\wb-starter\\tests\\behaviors\\every-declared-attribute.spec.ts:268:9\n\n    Error Context: data\\test-results\\behaviors-every-declared-a-20618-ared-attributes-take-effect-behaviors\\error-context.md\n\n  5) [behaviors] › tests\\behaviors\\every-declared-attribute.spec.ts:259:5 › Every declared attribute reaches the element › x-cardhero: all 14 declared attributes take effect \n\n    Error: x-cardhero ignores 2/14 declared attributes: full-height, heading-level\n    Each is declared in cardhero.schema.json, documented from it, and written in examples — setting it on <section x-cardhero> changed no markup, changed no computed style, and was never read off the host.\n\n    \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // deep equality\u001b[22m\n\n    \u001b[32m- Expected  - 1\u001b[39m\n    \u001b[31m+ Received  + 4\u001b[39m\n\n    \u001b[32m- Array []\u001b[39m\n    \u001b[31m+ Array [\u001b[39m\n    \u001b[31m+   \"full-height\",\u001b[39m\n    \u001b[31m+   \"heading-level\",\u001b[39m\n    \u001b[31m+ ]\u001b[39m\n\n      266 |         `setting it on <${b.tag} ${b.token}> changed no markup, changed no computed style, and was ` +\n      267 |         `never read off the host.`,\n    > 268 |       ).toEqual([]);\n          |         ^\n      269 |     });\n      270 |   }\n      271 | });\n        at C:\\Users\\jwpmi\\Downloads\\AI\\wb-starter\\tests\\behaviors\\every-declared-attribute.spec.ts:268:9\n\n    Error Context: data\\test-results\\behaviors-every-declared-a-74d05-ared-attributes-take-effect-behaviors\\error-context.md\n\n  6) [behaviors] › tests\\behaviors\\every-declared-attribute.spec.ts:259:5 › Every declared attribute reaches the element › x-cardimage: all 11 declared attributes take effect \n\n    Error: x-cardimage ignores 3/11 declared attributes: caption, href, loading\n    Each is declared in cardimage.schema.json, documented from it, and written in examples — setting it on <article x-cardimage> changed no markup, changed no computed style, and was never read off the host.\n\n    \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // deep equality\u001b[22m\n\n    \u001b[32m- Expected  - 1\u001b[39m\n    \u001b[31m+ Received  + 5\u001b[39m\n\n    \u001b[32m- Array []\u001b[39m\n    \u001b[31m+ Array [\u001b[39m\n    \u001b[31m+   \"caption\",\u001b[39m\n    \u001b[31m+   \"href\",\u001b[39m\n    \u001b[31m+   \"loading\",\u001b[39m\n    \u001b[31m+ ]\u001b[39m\n\n      266 |         `setting it on <${b.tag} ${b.token}> changed no markup, changed no computed style, and was ` +\n      267 |         `never read off the host.`,\n    > 268 |       ).toEqual([]);\n          |         ^\n      269 |     });\n      270 |   }\n      271 | });\n        at C:\\Users\\jwpmi\\Downloads\\AI\\wb-starter\\tests\\behaviors\\every-declared-attribute.spec.ts:268:9\n\n    Error Context: data\\test-results\\behaviors-every-declared-a-5bade-ared-attributes-take-effect-behaviors\\error-context.md\n\n  7) [behaviors] › tests\\behaviors\\every-declared-attribute.spec.ts:259:5 › Every declared attribute reaches the element › x-cardnotification: all 6 declared attributes take effect \n\n    Error: x-cardnotification ignores 1/6 declared attributes: elevated\n    Each is declared in cardnotification.schema.json, documented from it, and written in examples — setting it on <aside x-cardnotification> changed no markup, changed no computed style, and was never read off the host.\n\n    \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // deep equality\u001b[22m\n\n    \u001b[32m- Expected  - 1\u001b[39m\n    \u001b[31m+ Received  + 3\u001b[39m\n\n    \u001b[32m- Array []\u001b[39m\n    \u001b[31m+ Array [\u001b[39m\n    \u001b[31m+   \"elevated\",\u001b[39m\n    \u001b[31m+ ]\u001b[39m\n\n      266 |         `setting it on <${b.tag} ${b.token}> changed no markup, changed no computed style, and was ` +\n      267 |         `never read off the host.`,\n    > 268 |       ).toEqual([]);\n          |         ^\n      269 |     });\n      270 |   }\n      271 | });\n        at C:\\Users\\jwpmi\\Downloads\\AI\\wb-starter\\tests\\behaviors\\every-declared-attribute.spec.ts:268:9\n\n    Error Context: data\\test-results\\behaviors-every-declared-a-c8f81-ared-attributes-take-effect-behaviors\\error-context.md\n\n  8) [behaviors] › tests\\behaviors\\every-declared-attribute.spec.ts:259:5 › Every declared attribute reaches the element › x-cardpricing: all 9 declared attributes take effect \n\n    Error: x-cardpricing ignores 1/9 declared attributes: description\n    Each is declared in cardpricing.schema.json, documented from it, and written in examples — setting it on <article x-cardpricing> changed no markup, changed no computed style, and was never read off the host.\n\n    \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // deep equality\u001b[22m\n\n    \u001b[32m- Expected  - 1\u001b[39m\n    \u001b[31m+ Received  + 3\u001b[39m\n\n    \u001b[32m- Array []\u001b[39m\n    \u001b[31m+ Array [\u001b[39m\n    \u001b[31m+   \"description\",\u001b[39m\n    \u001b[31m+ ]\u001b[39m\n\n      266 |         `setting it on <${b.tag} ${b.token}> changed no markup, changed no computed style, and was ` +\n      267 |         `never read off the host.`,\n    > 268 |       ).toEqual([]);\n          |         ^\n      269 |     });\n      270 |   }\n      271 | });\n        at C:\\Users\\jwpmi\\Downloads\\AI\\wb-starter\\tests\\behaviors\\every-declared-attribute.spec.ts:268:9\n\n    Error Context: data\\test-results\\behaviors-every-declared-a-9df63-ared-attributes-take-effect-behaviors\\error-context.md\n\n  9) [behaviors] › tests\\behaviors\\every-declared-attribute.spec.ts:259:5 › Every declared attribute reaches the element › x-cardstats: all 7 declared attributes take effect \n\n    Error: x-cardstats ignores 1/7 declared attributes: color\n    Each is declared in cardstats.schema.json, documented from it, and written in examples — setting it on <article x-cardstats> changed no markup, changed no computed style, and was never read off the host.\n\n    \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // deep equality\u001b[22m\n\n    \u001b[32m- Expected  - 1\u001b[39m\n    \u001b[31m+ Received  + 3\u001b[39m\n\n    \u001b[32m- Array []\u001b[39m\n    \u001b[31m+ Array [\u001b[39m\n    \u001b[31m+   \"color\",\u001b[39m\n    \u001b[31m+ ]\u001b[39m\n\n      266 |         `setting it on <${b.tag} ${b.token}> changed no markup, changed no computed style, and was ` +\n      267 |         `never read off the host.`,\n    > 268 |       ).toEqual([]);\n          |         ^\n      269 |     });\n      270 |   }\n      271 | });\n        at C:\\Users\\jwpmi\\Downloads\\AI\\wb-starter\\tests\\behaviors\\every-declared-attribute.spec.ts:268:9\n\n    Error Context: data\\test-results\\behaviors-every-declared-a-91cda-ared-attributes-take-effect-behaviors\\error-context.md\n\n  10) [behaviors] › tests\\behaviors\\every-declared-attribute.spec.ts:259:5 › Every declared attribute reaches the element › x-cardvideo: all 10 declared attributes take effect \n\n    Error: x-cardvideo ignores 1/10 declared attributes: description\n    Each is declared in cardvideo.schema.json, documented from it, and written in examples — setting it on <article x-cardvideo> changed no markup, changed no computed style, and was never read off the host.\n\n    \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // deep equality\u001b[22m\n\n    \u001b[32m- Expected  - 1\u001b[39m\n    \u001b[31m+ Received  + 3\u001b[39m\n\n    \u001b[32m- Array []\u001b[39m\n    \u001b[31m+ Array [\u001b[39m\n    \u001b[31m+   \"description\",\u001b[39m\n    \u001b[31m+ ]\u001b[39m\n\n      266 |         `setting it on <${b.tag} ${b.token}> changed no markup, changed no computed style, and was ` +\n      267 |         `never read off the host.`,\n    > 268 |       ).toEqual([]);\n          |         ^\n      269 |     });\n      270 |   }\n      271 | });\n        at C:\\Users\\jwpmi\\Downloads\\AI\\wb-starter\\tests\\behaviors\\every-declared-attribute.spec.ts:268:9\n\n    Error Context: data\\test-results\\behaviors-every-declared-a-222a5-ared-attributes-take-effect-behaviors\\error-context.md\n\n  11) [behaviors] › tests\\behaviors\\every-declared-attribute.spec.ts:259:5 › Every declared attribute reaches the element › x-checkbox: all 9 declared attributes take effect \n\n    Error: x-checkbox ignores 5/9 declared attributes: disabled, indeterminate, name, value, required\n    Each is declared in checkbox.schema.json, documented from it, and written in examples — setting it on <div x-checkbox> changed no markup, changed no computed style, and was never read off the host.\n\n    \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // deep equality\u001b[22m\n\n    \u001b[32m- Expected  - 1\u001b[39m\n    \u001b[31m+ Received  + 7\u001b[39m\n\n    \u001b[32m- Array []\u001b[39m\n    \u001b[31m+ Array [\u001b[39m\n    \u001b[31m+   \"disabled\",\u001b[39m\n    \u001b[31m+   \"indeterminate\",\u001b[39m\n    \u001b[31m+   \"name\",\u001b[39m\n    \u001b[31m+   \"value\",\u001b[39m\n    \u001b[31m+   \"required\",\u001b[39m\n    \u001b[31m+ ]\u001b[39m\n\n      266 |         `setting it on <${b.tag} ${b.token}> changed no markup, changed no computed style, and was ` +\n      267 |         `never read off the host.`,\n    > 268 |       ).toEqual([]);\n          |         ^\n      269 |     });\n      270 |   }\n      271 | });\n        at C:\\Users\\jwpmi\\Downloads\\AI\\wb-starter\\tests\\behaviors\\every-declared-attribute.spec.ts:268:9\n\n    Error Context: data\\test-results\\behaviors-every-declared-a-e26fe-ared-attributes-take-effect-behaviors\\error-context.md\n\n  12) [behaviors] › tests\\behaviors\\every-declared-attribute.spec.ts:259:5 › Every declared attribute reaches the element › x-code: all 6 declared attributes take effect \n\n    Error: x-code ignores 6/6 declared attributes: language, variant, scrollable, size, show-copy, data-copy\n    Each is declared in code.schema.json, documented from it, and written in examples — setting it on <div x-code> changed no markup, changed no computed style, and was never read off the host.\n\n    \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // deep equality\u001b[22m\n\n    \u001b[32m- Expected  - 1\u001b[39m\n    \u001b[31m+ Received  + 8\u001b[39m\n\n    \u001b[32m- Array []\u001b[39m\n    \u001b[31m+ Array [\u001b[39m\n    \u001b[31m+   \"language\",\u001b[39m\n    \u001b[31m+   \"variant\",\u001b[39m\n    \u001b[31m+   \"scrollable\",\u001b[39m\n    \u001b[31m+   \"size\",\u001b[39m\n    \u001b[31m+   \"show-copy\",\u001b[39m\n    \u001b[31m+   \"data-copy\",\u001b[39m\n    \u001b[31m+ ]\u001b[39m\n\n      266 |         `setting it on <${b.tag} ${b.token}> changed no markup, changed no computed style, and was ` +\n      267 |         `never read off the host.`,\n    > 268 |       ).toEqual([]);\n          |         ^\n      269 |     });\n      270 |   }\n      271 | });\n        at C:\\Users\\jwpmi\\Downloads\\AI\\wb-starter\\tests\\behaviors\\every-declared-attribute.spec.ts:268:9\n\n    Error Context: data\\test-results\\behaviors-every-declared-a-f2f40-ared-attributes-take-effect-behaviors\\error-context.md\n\n  13) [behaviors] › tests\\behaviors\\every-declared-attribute.spec.ts:259:5 › Every declared attribute reaches the element › x-confetti: all 7 declared attributes take effect \n\n    Error: x-confetti ignores 1/7 declared attributes: show-button\n    Each is declared in confetti.schema.json, documented from it, and written in examples — setting it on <div x-confetti> changed no markup, changed no computed style, and was never read off the host.\n\n    \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // deep equality\u001b[22m\n\n    \u001b[32m- Expected  - 1\u001b[39m\n    \u001b[31m+ Received  + 3\u001b[39m\n\n    \u001b[32m- Array []\u001b[39m\n    \u001b[31m+ Array [\u001b[39m\n    \u001b[31m+   \"show-button\",\u001b[39m\n    \u001b[31m+ ]\u001b[39m\n\n      266 |         `setting it on <${b.tag} ${b.token}> changed no markup, changed no computed style, and was ` +\n      267 |         `never read off the host.`,\n    > 268 |       ).toEqual([]);\n          |         ^\n      269 |     });\n      270 |   }\n      271 | });\n        at C:\\Users\\jwpmi\\Downloads\\AI\\wb-starter\\tests\\behaviors\\every-declared-attribute.spec.ts:268:9\n\n    Error Context: data\\test-results\\behaviors-every-declared-a-6d953-ared-attributes-take-effect-behaviors\\error-context.md\n\n  14) [behaviors] › tests\\behaviors\\every-declared-attribute.spec.ts:259:5 › Every declared attribute reaches the element › x-details: all 5 declared attributes take effect \n\n    Error: x-details ignores 2/5 declared attributes: name, variant\n    Each is declared in details.schema.json, documented from it, and written in examples — setting it on <details x-details> changed no markup, changed no computed style, and was never read off the host.\n\n    \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // deep equality\u001b[22m\n\n    \u001b[32m- Expected  - 1\u001b[39m\n    \u001b[31m+ Received  + 4\u001b[39m\n\n    \u001b[32m- Array []\u001b[39m\n    \u001b[31m+ Array [\u001b[39m\n    \u001b[31m+   \"name\",\u001b[39m\n    \u001b[31m+   \"variant\",\u001b[39m\n    \u001b[31m+ ]\u001b[39m\n\n      266 |         `setting it on <${b.tag} ${b.token}> changed no markup, changed no computed style, and was ` +\n      267 |         `never read off the host.`,\n    > 268 |       ).toEqual([]);\n          |         ^\n      269 |     });\n      270 |   }\n      271 | });\n        at C:\\Users\\jwpmi\\Downloads\\AI\\wb-starter\\tests\\behaviors\\every-declared-attribute.spec.ts:268:9\n\n    Error Context: data\\test-results\\behaviors-every-declared-a-0c471-ared-attributes-take-effect-behaviors\\error-context.md\n\n  15) [behaviors] › tests\\behaviors\\every-declared-attribute.spec.ts:259:5 › Every declared attribute reaches the element › x-dialog: all 7 declared attributes take effect \n\n    Error: x-dialog ignores 3/7 declared attributes: close-on-backdrop, close-on-escape, show-close\n    Each is declared in dialog.schema.json, documented from it, and written in examples — setting it on <dialog x-dialog> changed no markup, changed no computed style, and was never read off the host.\n\n    \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // deep equality\u001b[22m\n\n    \u001b[32m- Expected  - 1\u001b[39m\n    \u001b[31m+ Received  + 5\u001b[39m\n\n    \u001b[32m- Array []\u001b[39m\n    \u001b[31m+ Array [\u001b[39m\n    \u001b[31m+   \"close-on-backdrop\",\u001b[39m\n    \u001b[31m+   \"close-on-escape\",\u001b[39m\n    \u001b[31m+   \"show-close\",\u001b[39m\n    \u001b[31m+ ]\u001b[39m\n\n      266 |         `setting it on <${b.tag} ${b.token}> changed no markup, changed no computed style, and was ` +\n      267 |         `never read off the host.`,\n    > 268 |       ).toEqual([]);\n          |         ^\n      269 |     });\n      270 |   }\n      271 | });\n        at C:\\Users\\jwpmi\\Downloads\\AI\\wb-starter\\tests\\behaviors\\every-declared-attribute.spec.ts:268:9\n\n    Error Context: data\\test-results\\behaviors-every-declared-a-fb15e-ared-attributes-take-effect-behaviors\\error-context.md\n\n  16) [behaviors] › tests\\behaviors\\every-declared-attribute.spec.ts:259:5 › Every declared attribute reaches the element › x-drawer: all 9 declared attributes take effect \n\n    Error: x-drawer ignores 3/9 declared attributes: close-on-backdrop, close-on-escape, show-close\n    Each is declared in drawer.schema.json, documented from it, and written in examples — setting it on <aside x-drawer> changed no markup, changed no computed style, and was never read off the host.\n\n    \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // deep equality\u001b[22m\n\n    \u001b[32m- Expected  - 1\u001b[39m\n    \u001b[31m+ Received  + 5\u001b[39m\n\n    \u001b[32m- Array []\u001b[39m\n    \u001b[31m+ Array [\u001b[39m\n    \u001b[31m+   \"close-on-backdrop\",\u001b[39m\n    \u001b[31m+   \"close-on-escape\",\u001b[39m\n    \u001b[31m+   \"show-close\",\u001b[39m\n    \u001b[31m+ ]\u001b[39m\n\n      266 |         `setting it on <${b.tag} ${b.token}> changed no markup, changed no computed style, and was ` +\n      267 |         `never read off the host.`,\n    > 268 |       ).toEqual([]);\n          |         ^\n      269 |     });\n      270 |   }\n      271 | });\n        at C:\\Users\\jwpmi\\Downloads\\AI\\wb-starter\\tests\\behaviors\\every-declared-attribute.spec.ts:268:9\n\n    Error Context: data\\test-results\\behaviors-every-declared-a-30b96-ared-attributes-take-effect-behaviors\\error-context.md\n\n  17) [behaviors] › tests\\behaviors\\every-declared-attribute.spec.ts:259:5 › Every declared attribute reaches the element › x-dropdown: all 5 declared attributes take effect \n\n    Error: x-dropdown ignores 2/5 declared attributes: close-on-outside, offset\n    Each is declared in dropdown.schema.json, documented from it, and written in examples — setting it on <div x-dropdown> changed no markup, changed no computed style, and was never read off the host.\n\n    \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // deep equality\u001b[22m\n\n    \u001b[32m- Expected  - 1\u001b[39m\n    \u001b[31m+ Received  + 4\u001b[39m\n\n    \u001b[32m- Array []\u001b[39m\n    \u001b[31m+ Array [\u001b[39m\n    \u001b[31m+   \"close-on-outside\",\u001b[39m\n    \u001b[31m+   \"offset\",\u001b[39m\n    \u001b[31m+ ]\u001b[39m\n\n      266 |         `setting it on <${b.tag} ${b.token}> changed no markup, changed no computed style, and was ` +\n      267 |         `never read off the host.`,\n    > 268 |       ).toEqual([]);\n          |         ^\n      269 |     });\n      270 |   }\n      271 | });\n        at C:\\Users\\jwpmi\\Downloads\\AI\\wb-starter\\tests\\behaviors\\every-declared-attribute.spec.ts:268:9\n\n    Error Context: data\\test-results\\behaviors-every-declared-a-25931-ared-attributes-take-effect-behaviors\\error-context.md\n\n  18) [behaviors] › tests\\behaviors\\every-declared-attribute.spec.ts:259:5 › Every declared attribute reaches the element › x-fireworks: all 7 declared attributes take effect \n\n    Error: x-fireworks ignores 4/7 declared attributes: show-button, repeat, delay, duration\n    Each is declared in fireworks.schema.json, documented from it, and written in examples — setting it on <div x-fireworks> changed no markup, changed no computed style, and was never read off the host.\n\n    \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // deep equality\u001b[22m\n\n    \u001b[32m- Expected  - 1\u001b[39m\n    \u001b[31m+ Received  + 6\u001b[39m\n\n    \u001b[32m- Array []\u001b[39m\n    \u001b[31m+ Array [\u001b[39m\n    \u001b[31m+   \"show-button\",\u001b[39m\n    \u001b[31m+   \"repeat\",\u001b[39m\n    \u001b[31m+   \"delay\",\u001b[39m\n    \u001b[31m+   \"duration\",\u001b[39m\n    \u001b[31m+ ]\u001b[39m\n\n      266 |         `setting it on <${b.tag} ${b.token}> changed no markup, changed no computed style, and was ` +\n      267 |         `never read off the host.`,\n    > 268 |       ).toEqual([]);\n          |         ^\n      269 |     });\n      270 |   }\n      271 | });\n        at C:\\Users\\jwpmi\\Downloads\\AI\\wb-starter\\tests\\behaviors\\every-declared-attribute.spec.ts:268:9\n\n    Error Context: data\\test-results\\behaviors-every-declared-a-d5179-ared-attributes-take-effect-behaviors\\error-context.md\n\n  19) [behaviors] › tests\\behaviors\\every-declared-attribute.spec.ts:259:5 › Every declared attribute reaches the element › x-header: all 6 declared attributes take effect \n\n    Error: x-header ignores 1/6 declared attributes: logo-href\n    Each is declared in header.schema.json, documented from it, and written in examples — setting it on <header x-header> changed no markup, changed no computed style, and was never read off the host.\n\n    \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // deep equality\u001b[22m\n\n    \u001b[32m- Expected  - 1\u001b[39m\n    \u001b[31m+ Received  + 3\u001b[39m\n\n    \u001b[32m- Array []\u001b[39m\n    \u001b[31m+ Array [\u001b[39m\n    \u001b[31m+   \"logo-href\",\u001b[39m\n    \u001b[31m+ ]\u001b[39m\n\n      266 |         `setting it on <${b.tag} ${b.token}> changed no markup, changed no computed style, and was ` +\n      267 |         `never read off the host.`,\n    > 268 |       ).toEqual([]);\n          |         ^\n      269 |     });\n      270 |   }\n      271 | });\n        at C:\\Users\\jwpmi\\Downloads\\AI\\wb-starter\\tests\\behaviors\\every-declared-attribute.spec.ts:268:9\n\n    Error Context: data\\test-results\\behaviors-every-declared-a-eda70-ared-attributes-take-effect-behaviors\\error-context.md\n\n  20) [behaviors] › tests\\behaviors\\every-declared-attribute.spec.ts:259:5 › Every declared attribute reaches the element › x-image: all 5 declared attributes take effect \n\n    Error: x-image ignores 5/5 declared attributes: placeholder, fallback, aspect-ratio, lazy, zoomable\n    Each is declared in image.schema.json, documented from it, and written in examples — setting it on <div x-image> changed no markup, changed no computed style, and was never read off the host.\n\n    \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // deep equality\u001b[22m\n\n    \u001b[32m- Expected  - 1\u001b[39m\n    \u001b[31m+ Received  + 7\u001b[39m\n\n    \u001b[32m- Array []\u001b[39m\n    \u001b[31m+ Array [\u001b[39m\n    \u001b[31m+   \"placeholder\",\u001b[39m\n    \u001b[31m+   \"fallback\",\u001b[39m\n    \u001b[31m+   \"aspect-ratio\",\u001b[39m\n    \u001b[31m+   \"lazy\",\u001b[39m\n    \u001b[31m+   \"zoomable\",\u001b[39m\n    \u001b[31m+ ]\u001b[39m\n\n      266 |         `setting it on <${b.tag} ${b.token}> changed no markup, changed no computed style, and was ` +\n      267 |         `never read off the host.`,\n    > 268 |       ).toEqual([]);\n          |         ^\n      269 |     });\n      270 |   }\n      271 | });\n        at C:\\Users\\jwpmi\\Downloads\\AI\\wb-starter\\tests\\behaviors\\every-declared-attribute.spec.ts:268:9\n\n    Error Context: data\\test-results\\behaviors-every-declared-a-d604f-ared-attributes-take-effect-behaviors\\error-context.md\n\n  21) [behaviors] › tests\\behaviors\\every-declared-attribute.spec.ts:259:5 › Every declared attribute reaches the element › x-input: all 15 declared attributes take effect \n\n    Error: x-input ignores 4/15 declared attributes: disabled, readonly, required, icon\n    Each is declared in input.schema.json, documented from it, and written in examples — setting it on <div x-input> changed no markup, changed no computed style, and was never read off the host.\n\n    \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // deep equality\u001b[22m\n\n    \u001b[32m- Expected  - 1\u001b[39m\n    \u001b[31m+ Received  + 6\u001b[39m\n\n    \u001b[32m- Array []\u001b[39m\n    \u001b[31m+ Array [\u001b[39m\n    \u001b[31m+   \"disabled\",\u001b[39m\n    \u001b[31m+   \"readonly\",\u001b[39m\n    \u001b[31m+   \"required\",\u001b[39m\n    \u001b[31m+   \"icon\",\u001b[39m\n    \u001b[31m+ ]\u001b[39m\n\n      266 |         `setting it on <${b.tag} ${b.token}> changed no markup, changed no computed style, and was ` +\n      267 |         `never read off the host.`,\n    > 268 |       ).toEqual([]);\n          |         ^\n      269 |     });\n      270 |   }\n      271 | });\n        at C:\\Users\\jwpmi\\Downloads\\AI\\wb-starter\\tests\\behaviors\\every-declared-attribute.spec.ts:268:9\n\n    Error Context: data\\test-results\\behaviors-every-declared-a-a1ebe-ared-attributes-take-effect-behaviors\\error-context.md\n\n  22) [behaviors] › tests\\behaviors\\every-declared-attribute.spec.ts:259:5 › Every declared attribute reaches the element › x-masked: all 2 declared attributes take effect \n\n    Error: x-masked ignores 1/2 declared attributes: placeholder\n    Each is declared in masked.schema.json, documented from it, and written in examples — setting it on <div x-masked> changed no markup, changed no computed style, and was never read off the host.\n\n    \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // deep equality\u001b[22m\n\n    \u001b[32m- Expected  - 1\u001b[39m\n    \u001b[31m+ Received  + 3\u001b[39m\n\n    \u001b[32m- Array []\u001b[39m\n    \u001b[31m+ Array [\u001b[39m\n    \u001b[31m+   \"placeholder\",\u001b[39m\n    \u001b[31m+ ]\u001b[39m\n\n      266 |         `setting it on <${b.tag} ${b.token}> changed no markup, changed no computed style, and was ` +\n      267 |         `never read off the host.`,\n    > 268 |       ).toEqual([]);\n          |         ^\n      269 |     });\n      270 |   }\n      271 | });\n        at C:\\Users\\jwpmi\\Downloads\\AI\\wb-starter\\tests\\behaviors\\every-declared-attribute.spec.ts:268:9\n\n    Error Context: data\\test-results\\behaviors-every-declared-a-c8620-ared-attributes-take-effect-behaviors\\error-context.md\n\n  23) [behaviors] › tests\\behaviors\\every-declared-attribute.spec.ts:259:5 › Every declared attribute reaches the element › x-pagination: all 7 declared attributes take effect \n\n    Error: x-pagination ignores 3/7 declared attributes: aria-disabled, action, page\n    Each is declared in pagination.schema.json, documented from it, and written in examples — setting it on <div x-pagination> changed no markup, changed no computed style, and was never read off the host.\n\n    \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // deep equality\u001b[22m\n\n    \u001b[32m- Expected  - 1\u001b[39m\n    \u001b[31m+ Received  + 5\u001b[39m\n\n    \u001b[32m- Array []\u001b[39m\n    \u001b[31m+ Array [\u001b[39m\n    \u001b[31m+   \"aria-disabled\",\u001b[39m\n    \u001b[31m+   \"action\",\u001b[39m\n    \u001b[31m+   \"page\",\u001b[39m\n    \u001b[31m+ ]\u001b[39m\n\n      266 |         `setting it on <${b.tag} ${b.token}> changed no markup, changed no computed style, and was ` +\n      267 |         `never read off the host.`,\n    > 268 |       ).toEqual([]);\n          |         ^\n      269 |     });\n      270 |   }\n      271 | });\n        at C:\\Users\\jwpmi\\Downloads\\AI\\wb-starter\\tests\\behaviors\\every-declared-attribute.spec.ts:268:9\n\n    Error Context: data\\test-results\\behaviors-every-declared-a-33ebf-ared-attributes-take-effect-behaviors\\error-context.md\n\n  24) [behaviors] › tests\\behaviors\\every-declared-attribute.spec.ts:259:5 › Every declared attribute reaches the element › x-pre: all 8 declared attributes take effect \n\n    Error: x-pre ignores 8/8 declared attributes: language, scrollable, show-line-numbers, max-height, wrap, size, show-copy, data-copy\n    Each is declared in pre.schema.json, documented from it, and written in examples — setting it on <div x-pre> changed no markup, changed no computed style, and was never read off the host.\n\n    \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // deep equality\u001b[22m\n\n    \u001b[32m- Expected  -  1\u001b[39m\n    \u001b[31m+ Received  + 10\u001b[39m\n\n    \u001b[32m- Array []\u001b[39m\n    \u001b[31m+ Array [\u001b[39m\n    \u001b[31m+   \"language\",\u001b[39m\n    \u001b[31m+   \"scrollable\",\u001b[39m\n    \u001b[31m+   \"show-line-numbers\",\u001b[39m\n    \u001b[31m+   \"max-height\",\u001b[39m\n    \u001b[31m+   \"wrap\",\u001b[39m\n    \u001b[31m+   \"size\",\u001b[39m\n    \u001b[31m+   \"show-copy\",\u001b[39m\n    \u001b[31m+   \"data-copy\",\u001b[39m\n    \u001b[31m+ ]\u001b[39m\n\n      266 |         `setting it on <${b.tag} ${b.token}> changed no markup, changed no computed style, and was ` +\n      267 |         `never read off the host.`,\n    > 268 |       ).toEqual([]);\n          |         ^\n      269 |     });\n      270 |   }\n      271 | });\n        at C:\\Users\\jwpmi\\Downloads\\AI\\wb-starter\\tests\\behaviors\\every-declared-attribute.spec.ts:268:9\n\n    Error Context: data\\test-results\\behaviors-every-declared-a-4bc2b-ared-attributes-take-effect-behaviors\\error-context.md\n\n  25) [behaviors] › tests\\behaviors\\every-declared-attribute.spec.ts:259:5 › Every declared attribute reaches the element › x-progress: all 9 declared attributes take effect \n\n    Error: x-progress ignores 2/9 declared attributes: show-value, animated\n    Each is declared in progress.schema.json, documented from it, and written in examples — setting it on <progress x-progress> changed no markup, changed no computed style, and was never read off the host.\n\n    \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // deep equality\u001b[22m\n\n    \u001b[32m- Expected  - 1\u001b[39m\n    \u001b[31m+ Received  + 4\u001b[39m\n\n    \u001b[32m- Array []\u001b[39m\n    \u001b[31m+ Array [\u001b[39m\n    \u001b[31m+   \"show-value\",\u001b[39m\n    \u001b[31m+   \"animated\",\u001b[39m\n    \u001b[31m+ ]\u001b[39m\n\n      266 |         `setting it on <${b.tag} ${b.token}> changed no markup, changed no computed style, and was ` +\n      267 |         `never read off the host.`,\n    > 268 |       ).toEqual([]);\n          |         ^\n      269 |     });\n      270 |   }\n      271 | });\n        at C:\\Users\\jwpmi\\Downloads\\AI\\wb-starter\\tests\\behaviors\\every-declared-attribute.spec.ts:268:9\n\n    Error Context: data\\test-results\\behaviors-every-declared-a-d9c87-ared-attributes-take-effect-behaviors\\error-context.md\n\n  26) [behaviors] › tests\\behaviors\\every-declared-attribute.spec.ts:259:5 › Every declared attribute reaches the element › x-rating: all 7 declared attributes take effect \n\n    Error: x-rating ignores 2/7 declared attributes: disabled, half\n    Each is declared in rating.schema.json, documented from it, and written in examples — setting it on <div x-rating> changed no markup, changed no computed style, and was never read off the host.\n\n    \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // deep equality\u001b[22m\n\n    \u001b[32m- Expected  - 1\u001b[39m\n    \u001b[31m+ Received  + 4\u001b[39m\n\n    \u001b[32m- Array []\u001b[39m\n    \u001b[31m+ Array [\u001b[39m\n    \u001b[31m+   \"disabled\",\u001b[39m\n    \u001b[31m+   \"half\",\u001b[39m\n    \u001b[31m+ ]\u001b[39m\n\n      266 |         `setting it on <${b.tag} ${b.token}> changed no markup, changed no computed style, and was ` +\n      267 |         `never read off the host.`,\n    > 268 |       ).toEqual([]);\n          |         ^\n      269 |     });\n      270 |   }\n      271 | });\n        at C:\\Users\\jwpmi\\Downloads\\AI\\wb-starter\\tests\\behaviors\\every-declared-attribute.spec.ts:268:9\n\n    Error Context: data\\test-results\\behaviors-every-declared-a-c22ed-ared-attributes-take-effect-behaviors\\error-context.md\n\n  27) [behaviors] › tests\\behaviors\\every-declared-attribute.spec.ts:259:5 › Every declared attribute reaches the element › x-ripple: all 3 declared attributes take effect \n\n    Error: x-ripple ignores 3/3 declared attributes: color, duration, centered\n    Each is declared in ripple.schema.json, documented from it, and written in examples — setting it on <div x-ripple> changed no markup, changed no computed style, and was never read off the host.\n\n    \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // deep equality\u001b[22m\n\n    \u001b[32m- Expected  - 1\u001b[39m\n    \u001b[31m+ Received  + 5\u001b[39m\n\n    \u001b[32m- Array []\u001b[39m\n    \u001b[31m+ Array [\u001b[39m\n    \u001b[31m+   \"color\",\u001b[39m\n    \u001b[31m+   \"duration\",\u001b[39m\n    \u001b[31m+   \"centered\",\u001b[39m\n    \u001b[31m+ ]\u001b[39m\n\n      266 |         `setting it on <${b.tag} ${b.token}> changed no markup, changed no computed style, and was ` +\n      267 |         `never read off the host.`,\n    > 268 |       ).toEqual([]);\n          |         ^\n      269 |     });\n      270 |   }\n      271 | });\n        at C:\\Users\\jwpmi\\Downloads\\AI\\wb-starter\\tests\\behaviors\\every-declared-attribute.spec.ts:268:9\n\n    Error Context: data\\test-results\\behaviors-every-declared-a-43592-ared-attributes-take-effect-behaviors\\error-context.md\n\n  28) [behaviors] › tests\\behaviors\\every-declared-attribute.spec.ts:259:5 › Every declared attribute reaches the element › x-select: all 12 declared attributes take effect \n\n    Error: x-select ignores 1/12 declared attributes: searchable\n    Each is declared in select.schema.json, documented from it, and written in examples — setting it on <div x-select> changed no markup, changed no computed style, and was never read off the host.\n\n    \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // deep equality\u001b[22m\n\n    \u001b[32m- Expected  - 1\u001b[39m\n    \u001b[31m+ Received  + 3\u001b[39m\n\n    \u001b[32m- Array []\u001b[39m\n    \u001b[31m+ Array [\u001b[39m\n    \u001b[31m+   \"searchable\",\u001b[39m\n    \u001b[31m+ ]\u001b[39m\n\n      266 |         `setting it on <${b.tag} ${b.token}> changed no markup, changed no computed style, and was ` +\n      267 |         `never read off the host.`,\n    > 268 |       ).toEqual([]);\n          |         ^\n      269 |     });\n      270 |   }\n      271 | });\n        at C:\\Users\\jwpmi\\Downloads\\AI\\wb-starter\\tests\\behaviors\\every-declared-attribute.spec.ts:268:9\n\n    Error Context: data\\test-results\\behaviors-every-declared-a-ccc0d-ared-attributes-take-effect-behaviors\\error-context.md\n\n  29) [behaviors] › tests\\behaviors\\every-declared-attribute.spec.ts:259:5 › Every declared attribute reaches the element › x-skeleton: all 5 declared attributes take effect \n\n    Error: x-skeleton ignores 1/5 declared attributes: animated\n    Each is declared in skeleton.schema.json, documented from it, and written in examples — setting it on <div x-skeleton> changed no markup, changed no computed style, and was never read off the host.\n\n    \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // deep equality\u001b[22m\n\n    \u001b[32m- Expected  - 1\u001b[39m\n    \u001b[31m+ Received  + 3\u001b[39m\n\n    \u001b[32m- Array []\u001b[39m\n    \u001b[31m+ Array [\u001b[39m\n    \u001b[31m+   \"animated\",\u001b[39m\n    \u001b[31m+ ]\u001b[39m\n\n      266 |         `setting it on <${b.tag} ${b.token}> changed no markup, changed no computed style, and was ` +\n      267 |         `never read off the host.`,\n    > 268 |       ).toEqual([]);\n          |         ^\n      269 |     });\n      270 |   }\n      271 | });\n        at C:\\Users\\jwpmi\\Downloads\\AI\\wb-starter\\tests\\behaviors\\every-declared-attribute.spec.ts:268:9\n\n    Error Context: data\\test-results\\behaviors-every-declared-a-2e084-ared-attributes-take-effect-behaviors\\error-context.md\n\n  30) [behaviors] › tests\\behaviors\\every-declared-attribute.spec.ts:259:5 › Every declared attribute reaches the element › x-snow: all 6 declared attributes take effect \n\n    Error: x-snow ignores 4/6 declared attributes: show-button, repeat, delay, duration\n    Each is declared in snow.schema.json, documented from it, and written in examples — setting it on <div x-snow> changed no markup, changed no computed style, and was never read off the host.\n\n    \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // deep equality\u001b[22m\n\n    \u001b[32m- Expected  - 1\u001b[39m\n    \u001b[31m+ Received  + 6\u001b[39m\n\n    \u001b[32m- Array []\u001b[39m\n    \u001b[31m+ Array [\u001b[39m\n    \u001b[31m+   \"show-button\",\u001b[39m\n    \u001b[31m+   \"repeat\",\u001b[39m\n    \u001b[31m+   \"delay\",\u001b[39m\n    \u001b[31m+   \"duration\",\u001b[39m\n    \u001b[31m+ ]\u001b[39m\n\n      266 |         `setting it on <${b.tag} ${b.token}> changed no markup, changed no computed style, and was ` +\n      267 |         `never read off the host.`,\n    > 268 |       ).toEqual([]);\n          |         ^\n      269 |     });\n      270 |   }\n      271 | });\n        at C:\\Users\\jwpmi\\Downloads\\AI\\wb-starter\\tests\\behaviors\\every-declared-attribute.spec.ts:268:9\n\n    Error Context: data\\test-results\\behaviors-every-declared-a-62d60-ared-attributes-take-effect-behaviors\\error-context.md\n\n  31) [behaviors] › tests\\behaviors\\every-declared-attribute.spec.ts:259:5 › Every declared attribute reaches the element › x-spinner: all 4 declared attributes take effect \n\n    Error: x-spinner ignores 1/4 declared attributes: label\n    Each is declared in spinner.schema.json, documented from it, and written in examples — setting it on <div x-spinner> changed no markup, changed no computed style, and was never read off the host.\n\n    \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // deep equality\u001b[22m\n\n    \u001b[32m- Expected  - 1\u001b[39m\n    \u001b[31m+ Received  + 3\u001b[39m\n\n    \u001b[32m- Array []\u001b[39m\n    \u001b[31m+ Array [\u001b[39m\n    \u001b[31m+   \"label\",\u001b[39m\n    \u001b[31m+ ]\u001b[39m\n\n      266 |         `setting it on <${b.tag} ${b.token}> changed no markup, changed no computed style, and was ` +\n      267 |         `never read off the host.`,\n    > 268 |       ).toEqual([]);\n          |         ^\n      269 |     });\n      270 |   }\n      271 | });\n        at C:\\Users\\jwpmi\\Downloads\\AI\\wb-starter\\tests\\behaviors\\every-declared-attribute.spec.ts:268:9\n\n    Error Context: data\\test-results\\behaviors-every-declared-a-7e4f5-ared-attributes-take-effect-behaviors\\error-context.md\n\n  32) [behaviors] › tests\\behaviors\\every-declared-attribute.spec.ts:259:5 › Every declared attribute reaches the element › x-sticky: all 5 declared attributes take effect \n\n    Error: x-sticky ignores 1/5 declared attributes: animated\n    Each is declared in sticky.schema.json, documented from it, and written in examples — setting it on <div x-sticky> changed no markup, changed no computed style, and was never read off the host.\n\n    \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // deep equality\u001b[22m\n\n    \u001b[32m- Expected  - 1\u001b[39m\n    \u001b[31m+ Received  + 3\u001b[39m\n\n    \u001b[32m- Array []\u001b[39m\n    \u001b[31m+ Array [\u001b[39m\n    \u001b[31m+   \"animated\",\u001b[39m\n    \u001b[31m+ ]\u001b[39m\n\n      266 |         `setting it on <${b.tag} ${b.token}> changed no markup, changed no computed style, and was ` +\n      267 |         `never read off the host.`,\n    > 268 |       ).toEqual([]);\n          |         ^\n      269 |     });\n      270 |   }\n      271 | });\n        at C:\\Users\\jwpmi\\Downloads\\AI\\wb-starter\\tests\\behaviors\\every-declared-attribute.spec.ts:268:9\n\n    Error Context: data\\test-results\\behaviors-every-declared-a-bcaba-ared-attributes-take-effect-behaviors\\error-context.md\n\n  33) [behaviors] › tests\\behaviors\\every-declared-attribute.spec.ts:259:5 › Every declared attribute reaches the element › x-tabs: all 5 declared attributes take effect \n\n    Error: x-tabs ignores 1/5 declared attributes: active-tab\n    Each is declared in tabs.schema.json, documented from it, and written in examples — setting it on <div x-tabs> changed no markup, changed no computed style, and was never read off the host.\n\n    \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // deep equality\u001b[22m\n\n    \u001b[32m- Expected  - 1\u001b[39m\n    \u001b[31m+ Received  + 3\u001b[39m\n\n    \u001b[32m- Array []\u001b[39m\n    \u001b[31m+ Array [\u001b[39m\n    \u001b[31m+   \"active-tab\",\u001b[39m\n    \u001b[31m+ ]\u001b[39m\n\n      266 |         `setting it on <${b.tag} ${b.token}> changed no markup, changed no computed style, and was ` +\n      267 |         `never read off the host.`,\n    > 268 |       ).toEqual([]);\n          |         ^\n      269 |     });\n      270 |   }\n      271 | });\n        at C:\\Users\\jwpmi\\Downloads\\AI\\wb-starter\\tests\\behaviors\\every-declared-attribute.spec.ts:268:9\n\n    Error Context: data\\test-results\\behaviors-every-declared-a-e00e1-ared-attributes-take-effect-behaviors\\error-context.md\n\n  34) [behaviors] › tests\\behaviors\\every-declared-attribute.spec.ts:259:5 › Every declared attribute reaches the element › x-textarea: all 13 declared attributes take effect \n\n    Error: x-textarea ignores 5/13 declared attributes: value, rows, disabled, readonly, required\n    Each is declared in textarea.schema.json, documented from it, and written in examples — setting it on <div x-textarea> changed no markup, changed no computed style, and was never read off the host.\n\n    \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // deep equality\u001b[22m\n\n    \u001b[32m- Expected  - 1\u001b[39m\n    \u001b[31m+ Received  + 7\u001b[39m\n\n    \u001b[32m- Array []\u001b[39m\n    \u001b[31m+ Array [\u001b[39m\n    \u001b[31m+   \"value\",\u001b[39m\n    \u001b[31m+   \"rows\",\u001b[39m\n    \u001b[31m+   \"disabled\",\u001b[39m\n    \u001b[31m+   \"readonly\",\u001b[39m\n    \u001b[31m+   \"required\",\u001b[39m\n    \u001b[31m+ ]\u001b[39m\n\n      266 |         `setting it on <${b.tag} ${b.token}> changed no markup, changed no computed style, and was ` +\n      267 |         `never read off the host.`,\n    > 268 |       ).toEqual([]);\n          |         ^\n      269 |     });\n      270 |   }\n      271 | });\n        at C:\\Users\\jwpmi\\Downloads\\AI\\wb-starter\\tests\\behaviors\\every-declared-attribute.spec.ts:268:9\n\n    Error Context: data\\test-results\\behaviors-every-declared-a-c2293-ared-attributes-take-effect-behaviors\\error-context.md\n\n  35) [behaviors] › tests\\behaviors\\every-declared-attribute.spec.ts:259:5 › Every declared attribute reaches the element › x-toast: all 9 declared attributes take effect \n\n    Error: x-toast ignores 3/9 declared attributes: duration, dismissible, action-href\n    Each is declared in toast.schema.json, documented from it, and written in examples — setting it on <div x-toast> changed no markup, changed no computed style, and was never read off the host.\n\n    \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // deep equality\u001b[22m\n\n    \u001b[32m- Expected  - 1\u001b[39m\n    \u001b[31m+ Received  + 5\u001b[39m\n\n    \u001b[32m- Array []\u001b[39m\n    \u001b[31m+ Array [\u001b[39m\n    \u001b[31m+   \"duration\",\u001b[39m\n    \u001b[31m+   \"dismissible\",\u001b[39m\n    \u001b[31m+   \"action-href\",\u001b[39m\n    \u001b[31m+ ]\u001b[39m\n\n      266 |         `setting it on <${b.tag} ${b.token}> changed no markup, changed no computed style, and was ` +\n      267 |         `never read off the host.`,\n    > 268 |       ).toEqual([]);\n          |         ^\n      269 |     });\n      270 |   }\n      271 | });\n        at C:\\Users\\jwpmi\\Downloads\\AI\\wb-starter\\tests\\behaviors\\every-declared-attribute.spec.ts:268:9\n\n    Error Context: data\\test-results\\behaviors-every-declared-a-a2808-ared-attributes-take-effect-behaviors\\error-context.md\n\n  35 failed\n    [behaviors] › tests\\behaviors\\every-declared-attribute.spec.ts:259:5 › Every declared attribute reaches the element › x-accordion: all 3 declared attributes take effect \n    [behaviors] › tests\\behaviors\\every-declared-attribute.spec.ts:259:5 › Every declared attribute reaches the element › x-audio: all 10 declared attributes take effect \n    [behaviors] › tests\\behaviors\\every-declared-attribute.spec.ts:259:5 › Every declared attribute reaches the element › x-button: all 11 declared attributes take effect \n    [behaviors] › tests\\behaviors\\every-declared-attribute.spec.ts:259:5 › Every declared attribute reaches the element › x-card: all 9 declared attributes take effect \n    [behaviors] › tests\\behaviors\\every-declared-attribute.spec.ts:259:5 › Every declared attribute reaches the element › x-cardhero: all 14 declared attributes take effect \n    [behaviors] › tests\\behaviors\\every-declared-attribute.spec.ts:259:5 › Every declared attribute reaches the element › x-cardimage: all 11 declared attributes take effect \n    [behaviors] › tests\\behaviors\\every-declared-attribute.spec.ts:259:5 › Every declared attribute reaches the element › x-cardnotification: all 6 declared attributes take effect \n    [behaviors] › tests\\behaviors\\every-declared-attribute.spec.ts:259:5 › Every declared attribute reaches the element › x-cardpricing: all 9 declared attributes take effect \n    [behaviors] › tests\\behaviors\\every-declared-attribute.spec.ts:259:5 › Every declared attribute reaches the element › x-cardstats: all 7 declared attributes take effect \n    [behaviors] › tests\\behaviors\\every-declared-attribute.spec.ts:259:5 › Every declared attribute reaches the element › x-cardvideo: all 10 declared attributes take effect \n    [behaviors] › tests\\behaviors\\every-declared-attribute.spec.ts:259:5 › Every declared attribute reaches the element › x-checkbox: all 9 declared attributes take effect \n    [behaviors] › tests\\behaviors\\every-declared-attribute.spec.ts:259:5 › Every declared attribute reaches the element › x-code: all 6 declared attributes take effect \n    [behaviors] › tests\\behaviors\\every-declared-attribute.spec.ts:259:5 › Every declared attribute reaches the element › x-confetti: all 7 declared attributes take effect \n    [behaviors] › tests\\behaviors\\every-declared-attribute.spec.ts:259:5 › Every declared attribute reaches the element › x-details: all 5 declared attributes take effect \n    [behaviors] › tests\\behaviors\\every-declared-attribute.spec.ts:259:5 › Every declared attribute reaches the element › x-dialog: all 7 declared attributes take effect \n    [behaviors] › tests\\behaviors\\every-declared-attribute.spec.ts:259:5 › Every declared attribute reaches the element › x-drawer: all 9 declared attributes take effect \n    [behaviors] › tests\\behaviors\\every-declared-attribute.spec.ts:259:5 › Every declared attribute reaches the element › x-dropdown: all 5 declared attributes take effect \n    [behaviors] › tests\\behaviors\\every-declared-attribute.spec.ts:259:5 › Every declared attribute reaches the element › x-fireworks: all 7 declared attributes take effect \n    [behaviors] › tests\\behaviors\\every-declared-attribute.spec.ts:259:5 › Every declared attribute reaches the element › x-header: all 6 declared attributes take effect \n    [behaviors] › tests\\behaviors\\every-declared-attribute.spec.ts:259:5 › Every declared attribute reaches the element › x-image: all 5 declared attributes take effect \n    [behaviors] › tests\\behaviors\\every-declared-attribute.spec.ts:259:5 › Every declared attribute reaches the element › x-input: all 15 declared attributes take effect \n    [behaviors] › tests\\behaviors\\every-declared-attribute.spec.ts:259:5 › Every declared attribute reaches the element › x-masked: all 2 declared attributes take effect \n    [behaviors] › tests\\behaviors\\every-declared-attribute.spec.ts:259:5 › Every declared attribute reaches the element › x-pagination: all 7 declared attributes take effect \n    [behaviors] › tests\\behaviors\\every-declared-attribute.spec.ts:259:5 › Every declared attribute reaches the element › x-pre: all 8 declared attributes take effect \n    [behaviors] › tests\\behaviors\\every-declared-attribute.spec.ts:259:5 › Every declared attribute reaches the element › x-progress: all 9 declared attributes take effect \n    [behaviors] › tests\\behaviors\\every-declared-attribute.spec.ts:259:5 › Every declared attribute reaches the element › x-rating: all 7 declared attributes take effect \n    [behaviors] › tests\\behaviors\\every-declared-attribute.spec.ts:259:5 › Every declared attribute reaches the element › x-ripple: all 3 declared attributes take effect \n    [behaviors] › tests\\behaviors\\every-declared-attribute.spec.ts:259:5 › Every declared attribute reaches the element › x-select: all 12 declared attributes take effect \n    [behaviors] › tests\\behaviors\\every-declared-attribute.spec.ts:259:5 › Every declared attribute reaches the element › x-skeleton: all 5 declared attributes take effect \n    [behaviors] › tests\\behaviors\\every-declared-attribute.spec.ts:259:5 › Every declared attribute reaches the element › x-snow: all 6 declared attributes take effect \n    [behaviors] › tests\\behaviors\\every-declared-attribute.spec.ts:259:5 › Every declared attribute reaches the element › x-spinner: all 4 declared attributes take effect \n    [behaviors] › tests\\behaviors\\every-declared-attribute.spec.ts:259:5 › Every declared attribute reaches the element › x-sticky: all 5 declared attributes take effect \n    [behaviors] › tests\\behaviors\\every-declared-attribute.spec.ts:259:5 › Every declared attribute reaches the element › x-tabs: all 5 declared attributes take effect \n    [behaviors] › tests\\behaviors\\every-declared-attribute.spec.ts:259:5 › Every declared attribute reaches the element › x-textarea: all 13 declared attributes take effect \n    [behaviors] › tests\\behaviors\\every-declared-attribute.spec.ts:259:5 › Every declared attribute reaches the element › x-toast: all 9 declared attributes take effect \n  83 passed (1.4m)\n",
+  "stderr": "\n❌ FAILED: x-accordion: all 3 declared attributes take effect\n   Error: x-accordion ignores 2/3 declared attributes: data-title, accordion-title\nEach is declared in accordion.schema.json, documented from it, and written in examples — setting it on <div x-accordion> changed no markup, changed no computed style, and was never read off the host.\nexpect(received).toEqual(expected) // deep equality\n- Expected  - 1\n+ Received  + 4\n- Array []\n+ Array [\n+   \"data-title\",\n+   \"accordion-title\",\n+ ]\n\n❌ FAILED: x-button: all 11 declared attributes take effect\n   Error: x-button ignores 2/11 declared attributes: label, href\nEach is declared in button.schema.json, documented from it, and written in examples — setting it on <button x-button> changed no markup, changed no computed style, and was never read off the host.\nexpect(received).toEqual(expected) // deep equality\n- Expected  - 1\n+ Received  + 4\n- Array []\n+ Array [\n+   \"label\",\n+   \"href\",\n+ ]\n\n❌ FAILED: x-card: all 9 declared attributes take effect\n   Error: x-card ignores 6/9 declared attributes: elevated, clickable, variant, size, tooltip, hover-text\nEach is declared in card.schema.json, documented from it, and written in examples — setting it on <article x-card> changed no markup, changed no computed style, and was never read off the host.\nexpect(received).toEqual(expected) // deep equality\n- Expected  - 1\n+ Received  + 8\n- Array []\n+ Array [\n+   \"elevated\",\n+   \"clickable\",\n+   \"variant\",\n+   \"size\",\n+   \"tooltip\",\n+   \"hover-text\",\n+ ]\n\n❌ FAILED: x-audio: all 10 declared attributes take effect\n   Error: x-audio ignores 3/10 declared attributes: muted, bass, treble\nEach is declared in audio.schema.json, documented from it, and written in examples — setting it on <div x-audio> changed no markup, changed no computed style, and was never read off the host.\nexpect(received).toEqual(expected) // deep equality\n- Expected  - 1\n+ Received  + 5\n- Array []\n+ Array [\n+   \"muted\",\n+   \"bass\",\n+   \"treble\",\n+ ]\n\n❌ FAILED: x-cardhero: all 14 declared attributes take effect\n   Error: x-cardhero ignores 2/14 declared attributes: full-height, heading-level\nEach is declared in cardhero.schema.json, documented from it, and written in examples — setting it on <section x-cardhero> changed no markup, changed no computed style, and was never read off the host.\nexpect(received).toEqual(expected) // deep equality\n- Expected  - 1\n+ Received  + 4\n- Array []\n+ Array [\n+   \"full-height\",\n+   \"heading-level\",\n+ ]\n\n❌ FAILED: x-cardimage: all 11 declared attributes take effect\n   Error: x-cardimage ignores 3/11 declared attributes: caption, href, loading\nEach is declared in cardimage.schema.json, documented from it, and written in examples — setting it on <article x-cardimage> changed no markup, changed no computed style, and was never read off the host.\nexpect(received).toEqual(expected) // deep equality\n- Expected  - 1\n+ Received  + 5\n- Array []\n+ Array [\n+   \"caption\",\n+   \"href\",\n+   \"loading\",\n+ ]\n\n❌ FAILED: x-cardnotification: all 6 declared attributes take effect\n   Error: x-cardnotification ignores 1/6 declared attributes: elevated\nEach is declared in cardnotification.schema.json, documented from it, and written in examples — setting it on <aside x-cardnotification> changed no markup, changed no computed style, and was never read off the host.\nexpect(received).toEqual(expected) // deep equality\n- Expected  - 1\n+ Received  + 3\n- Array []\n+ Array [\n+   \"elevated\",\n+ ]\n\n❌ FAILED: x-cardpricing: all 9 declared attributes take effect\n   Error: x-cardpricing ignores 1/9 declared attributes: description\nEach is declared in cardpricing.schema.json, documented from it, and written in examples — setting it on <article x-cardpricing> changed no markup, changed no computed style, and was never read off the host.\nexpect(received).toEqual(expected) // deep equality\n- Expected  - 1\n+ Received  + 3\n- Array []\n+ Array [\n+   \"description\",\n+ ]\n\n❌ FAILED: x-checkbox: all 9 declared attributes take effect\n   Error: x-checkbox ignores 5/9 declared attributes: disabled, indeterminate, name, value, required\nEach is declared in checkbox.schema.json, documented from it, and written in examples — setting it on <div x-checkbox> changed no markup, changed no computed style, and was never read off the host.\nexpect(received).toEqual(expected) // deep equality\n- Expected  - 1\n+ Received  + 7\n- Array []\n+ Array [\n+   \"disabled\",\n+   \"indeterminate\",\n+   \"name\",\n+   \"value\",\n+   \"required\",\n+ ]\n\n❌ FAILED: x-cardstats: all 7 declared attributes take effect\n   Error: x-cardstats ignores 1/7 declared attributes: color\nEach is declared in cardstats.schema.json, documented from it, and written in examples — setting it on <article x-cardstats> changed no markup, changed no computed style, and was never read off the host.\nexpect(received).toEqual(expected) // deep equality\n- Expected  - 1\n+ Received  + 3\n- Array []\n+ Array [\n+   \"color\",\n+ ]\n\n❌ FAILED: x-code: all 6 declared attributes take effect\n   Error: x-code ignores 6/6 declared attributes: language, variant, scrollable, size, show-copy, data-copy\nEach is declared in code.schema.json, documented from it, and written in examples — setting it on <div x-code> changed no markup, changed no computed style, and was never read off the host.\nexpect(received).toEqual(expected) // deep equality\n- Expected  - 1\n+ Received  + 8\n- Array []\n+ Array [\n+   \"language\",\n+   \"variant\",\n+   \"scrollable\",\n+   \"size\",\n+   \"show-copy\",\n+   \"data-copy\",\n+ ]\n\n❌ FAILED: x-confetti: all 7 declared attributes take effect\n   Error: x-confetti ignores 1/7 declared attributes: show-button\nEach is declared in confetti.schema.json, documented from it, and written in examples — setting it on <div x-confetti> changed no markup, changed no computed style, and was never read off the host.\nexpect(received).toEqual(expected) // deep equality\n- Expected  - 1\n+ Received  + 3\n- Array []\n+ Array [\n+   \"show-button\",\n+ ]\n\n❌ FAILED: x-cardvideo: all 10 declared attributes take effect\n   Error: x-cardvideo ignores 1/10 declared attributes: description\nEach is declared in cardvideo.schema.json, documented from it, and written in examples — setting it on <article x-cardvideo> changed no markup, changed no computed style, and was never read off the host.\nexpect(received).toEqual(expected) // deep equality\n- Expected  - 1\n+ Received  + 3\n- Array []\n+ Array [\n+   \"description\",\n+ ]\n\n❌ FAILED: x-dialog: all 7 declared attributes take effect\n   Error: x-dialog ignores 3/7 declared attributes: close-on-backdrop, close-on-escape, show-close\nEach is declared in dialog.schema.json, documented from it, and written in examples — setting it on <dialog x-dialog> changed no markup, changed no computed style, and was never read off the host.\nexpect(received).toEqual(expected) // deep equality\n- Expected  - 1\n+ Received  + 5\n- Array []\n+ Array [\n+   \"close-on-backdrop\",\n+   \"close-on-escape\",\n+   \"show-close\",\n+ ]\n\n❌ FAILED: x-details: all 5 declared attributes take effect\n   Error: x-details ignores 2/5 declared attributes: name, variant\nEach is declared in details.schema.json, documented from it, and written in examples — setting it on <details x-details> changed no markup, changed no computed style, and was never read off the host.\nexpect(received).toEqual(expected) // deep equality\n- Expected  - 1\n+ Received  + 4\n- Array []\n+ Array [\n+   \"name\",\n+   \"variant\",\n+ ]\n\n❌ FAILED: x-drawer: all 9 declared attributes take effect\n   Error: x-drawer ignores 3/9 declared attributes: close-on-backdrop, close-on-escape, show-close\nEach is declared in drawer.schema.json, documented from it, and written in examples — setting it on <aside x-drawer> changed no markup, changed no computed style, and was never read off the host.\nexpect(received).toEqual(expected) // deep equality\n- Expected  - 1\n+ Received  + 5\n- Array []\n+ Array [\n+   \"close-on-backdrop\",\n+   \"close-on-escape\",\n+   \"show-close\",\n+ ]\n\n❌ FAILED: x-dropdown: all 5 declared attributes take effect\n   Error: x-dropdown ignores 2/5 declared attributes: close-on-outside, offset\nEach is declared in dropdown.schema.json, documented from it, and written in examples — setting it on <div x-dropdown> changed no markup, changed no computed style, and was never read off the host.\nexpect(received).toEqual(expected) // deep equality\n- Expected  - 1\n+ Received  + 4\n- Array []\n+ Array [\n+   \"close-on-outside\",\n+   \"offset\",\n+ ]\n\n❌ FAILED: x-fireworks: all 7 declared attributes take effect\n   Error: x-fireworks ignores 4/7 declared attributes: show-button, repeat, delay, duration\nEach is declared in fireworks.schema.json, documented from it, and written in examples — setting it on <div x-fireworks> changed no markup, changed no computed style, and was never read off the host.\nexpect(received).toEqual(expected) // deep equality\n- Expected  - 1\n+ Received  + 6\n- Array []\n+ Array [\n+   \"show-button\",\n+   \"repeat\",\n+   \"delay\",\n+   \"duration\",\n+ ]\n\n❌ FAILED: x-header: all 6 declared attributes take effect\n   Error: x-header ignores 1/6 declared attributes: logo-href\nEach is declared in header.schema.json, documented from it, and written in examples — setting it on <header x-header> changed no markup, changed no computed style, and was never read off the host.\nexpect(received).toEqual(expected) // deep equality\n- Expected  - 1\n+ Received  + 3\n- Array []\n+ Array [\n+   \"logo-href\",\n+ ]\n\n❌ FAILED: x-input: all 15 declared attributes take effect\n   Error: x-input ignores 4/15 declared attributes: disabled, readonly, required, icon\nEach is declared in input.schema.json, documented from it, and written in examples — setting it on <div x-input> changed no markup, changed no computed style, and was never read off the host.\nexpect(received).toEqual(expected) // deep equality\n- Expected  - 1\n+ Received  + 6\n- Array []\n+ Array [\n+   \"disabled\",\n+   \"readonly\",\n+   \"required\",\n+   \"icon\",\n+ ]\n\n❌ FAILED: x-image: all 5 declared attributes take effect\n   Error: x-image ignores 5/5 declared attributes: placeholder, fallback, aspect-ratio, lazy, zoomable\nEach is declared in image.schema.json, documented from it, and written in examples — setting it on <div x-image> changed no markup, changed no computed style, and was never read off the host.\nexpect(received).toEqual(expected) // deep equality\n- Expected  - 1\n+ Received  + 7\n- Array []\n+ Array [\n+   \"placeholder\",\n+   \"fallback\",\n+   \"aspect-ratio\",\n+   \"lazy\",\n+   \"zoomable\",\n+ ]\n\n❌ FAILED: x-masked: all 2 declared attributes take effect\n   Error: x-masked ignores 1/2 declared attributes: placeholder\nEach is declared in masked.schema.json, documented from it, and written in examples — setting it on <div x-masked> changed no markup, changed no computed style, and was never read off the host.\nexpect(received).toEqual(expected) // deep equality\n- Expected  - 1\n+ Received  + 3\n- Array []\n+ Array [\n+   \"placeholder\",\n+ ]\n\n❌ FAILED: x-pagination: all 7 declared attributes take effect\n   Error: x-pagination ignores 3/7 declared attributes: aria-disabled, action, page\nEach is declared in pagination.schema.json, documented from it, and written in examples — setting it on <div x-pagination> changed no markup, changed no computed style, and was never read off the host.\nexpect(received).toEqual(expected) // deep equality\n- Expected  - 1\n+ Received  + 5\n- Array []\n+ Array [\n+   \"aria-disabled\",\n+   \"action\",\n+   \"page\",\n+ ]\n\n❌ FAILED: x-pre: all 8 declared attributes take effect\n   Error: x-pre ignores 8/8 declared attributes: language, scrollable, show-line-numbers, max-height, wrap, size, show-copy, data-copy\nEach is declared in pre.schema.json, documented from it, and written in examples — setting it on <div x-pre> changed no markup, changed no computed style, and was never read off the host.\nexpect(received).toEqual(expected) // deep equality\n- Expected  -  1\n+ Received  + 10\n- Array []\n+ Array [\n+   \"language\",\n+   \"scrollable\",\n+   \"show-line-numbers\",\n+   \"max-height\",\n+   \"wrap\",\n+   \"size\",\n+   \"show-copy\",\n+   \"data-copy\",\n… 1 more line(s)\n\n❌ FAILED: x-progress: all 9 declared attributes take effect\n   Error: x-progress ignores 2/9 declared attributes: show-value, animated\nEach is declared in progress.schema.json, documented from it, and written in examples — setting it on <progress x-progress> changed no markup, changed no computed style, and was never read off the host.\nexpect(received).toEqual(expected) // deep equality\n- Expected  - 1\n+ Received  + 4\n- Array []\n+ Array [\n+   \"show-value\",\n+   \"animated\",\n+ ]\n\n❌ FAILED: x-select: all 12 declared attributes take effect\n   Error: x-select ignores 1/12 declared attributes: searchable\nEach is declared in select.schema.json, documented from it, and written in examples — setting it on <div x-select> changed no markup, changed no computed style, and was never read off the host.\nexpect(received).toEqual(expected) // deep equality\n- Expected  - 1\n+ Received  + 3\n- Array []\n+ Array [\n+   \"searchable\",\n+ ]\n\n❌ FAILED: x-ripple: all 3 declared attributes take effect\n   Error: x-ripple ignores 3/3 declared attributes: color, duration, centered\nEach is declared in ripple.schema.json, documented from it, and written in examples — setting it on <div x-ripple> changed no markup, changed no computed style, and was never read off the host.\nexpect(received).toEqual(expected) // deep equality\n- Expected  - 1\n+ Received  + 5\n- Array []\n+ Array [\n+   \"color\",\n+   \"duration\",\n+   \"centered\",\n+ ]\n\n❌ FAILED: x-rating: all 7 declared attributes take effect\n   Error: x-rating ignores 2/7 declared attributes: disabled, half\nEach is declared in rating.schema.json, documented from it, and written in examples — setting it on <div x-rating> changed no markup, changed no computed style, and was never read off the host.\nexpect(received).toEqual(expected) // deep equality\n- Expected  - 1\n+ Received  + 4\n- Array []\n+ Array [\n+   \"disabled\",\n+   \"half\",\n+ ]\n\n❌ FAILED: x-skeleton: all 5 declared attributes take effect\n   Error: x-skeleton ignores 1/5 declared attributes: animated\nEach is declared in skeleton.schema.json, documented from it, and written in examples — setting it on <div x-skeleton> changed no markup, changed no computed style, and was never read off the host.\nexpect(received).toEqual(expected) // deep equality\n- Expected  - 1\n+ Received  + 3\n- Array []\n+ Array [\n+   \"animated\",\n+ ]\n\n❌ FAILED: x-snow: all 6 declared attributes take effect\n   Error: x-snow ignores 4/6 declared attributes: show-button, repeat, delay, duration\nEach is declared in snow.schema.json, documented from it, and written in examples — setting it on <div x-snow> changed no markup, changed no computed style, and was never read off the host.\nexpect(received).toEqual(expected) // deep equality\n- Expected  - 1\n+ Received  + 6\n- Array []\n+ Array [\n+   \"show-button\",\n+   \"repeat\",\n+   \"delay\",\n+   \"duration\",\n+ ]\n\n❌ FAILED: x-sticky: all 5 declared attributes take effect\n   Error: x-sticky ignores 1/5 declared attributes: animated\nEach is declared in sticky.schema.json, documented from it, and written in examples — setting it on <div x-sticky> changed no markup, changed no computed style, and was never read off the host.\nexpect(received).toEqual(expected) // deep equality\n- Expected  - 1\n+ Received  + 3\n- Array []\n+ Array [\n+   \"animated\",\n+ ]\n\n❌ FAILED: x-tabs: all 5 declared attributes take effect\n   Error: x-tabs ignores 1/5 declared attributes: active-tab\nEach is declared in tabs.schema.json, documented from it, and written in examples — setting it on <div x-tabs> changed no markup, changed no computed style, and was never read off the host.\nexpect(received).toEqual(expected) // deep equality\n- Expected  - 1\n+ Received  + 3\n- Array []\n+ Array [\n+   \"active-tab\",\n+ ]\n\n❌ FAILED: x-spinner: all 4 declared attributes take effect\n   Error: x-spinner ignores 1/4 declared attributes: label\nEach is declared in spinner.schema.json, documented from it, and written in examples — setting it on <div x-spinner> changed no markup, changed no computed style, and was never read off the host.\nexpect(received).toEqual(expected) // deep equality\n- Expected  - 1\n+ Received  + 3\n- Array []\n+ Array [\n+   \"label\",\n+ ]\n\n❌ FAILED: x-toast: all 9 declared attributes take effect\n   Error: x-toast ignores 3/9 declared attributes: duration, dismissible, action-href\nEach is declared in toast.schema.json, documented from it, and written in examples — setting it on <div x-toast> changed no markup, changed no computed style, and was never read off the host.\nexpect(received).toEqual(expected) // deep equality\n- Expected  - 1\n+ Received  + 5\n- Array []\n+ Array [\n+   \"duration\",\n+   \"dismissible\",\n+   \"action-href\",\n+ ]\n\n❌ FAILED: x-textarea: all 13 declared attributes take effect\n   Error: x-textarea ignores 5/13 declared attributes: value, rows, disabled, readonly, required\nEach is declared in textarea.schema.json, documented from it, and written in examples — setting it on <div x-textarea> changed no markup, changed no computed style, and was never read off the host.\nexpect(received).toEqual(expected) // deep equality\n- Expected  - 1\n+ Received  + 7\n- Array []\n+ Array [\n+   \"value\",\n+   \"rows\",\n+   \"disabled\",\n+   \"readonly\",\n+   \"required\",\n+ ]\n"
 }

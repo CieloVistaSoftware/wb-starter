@@ -95,8 +95,32 @@ export function table(element, options = {}) {
   // same "read back the pre-wipe original content" pattern overlay.js's
   // drawer() already uses for its own title text.
   const tableElForBuild = element.querySelector('table') || element;
-  const theadForBuild = tableElForBuild.querySelector('thead');
-  const tbodyForBuild = tableElForBuild.querySelector('tbody');
+  let theadForBuild = tableElForBuild.querySelector('thead');
+  let tbodyForBuild = tableElForBuild.querySelector('tbody');
+
+  // Create the sections when they are missing.
+  //
+  // This used to REQUIRE thead and tbody to already exist, so it only ever
+  // filled a table someone had half-built by hand. The form every doc shows --
+  //
+  //     <table headers="A,B" rows='[["1","2"]]'></table>
+  //
+  // has neither, so the block below was skipped entirely and the table
+  // rendered empty: behavior attached, classed x-table--striped, containing
+  // nothing at all. Requiring the author to hand-write the sections that the
+  // attributes exist to fill defeats the point of the attributes.
+  const wantsAttributeBuild =
+    (element.getAttribute('headers') && element.getAttribute('rows')) ||
+    (element.getAttribute('data') && element.getAttribute('columns'));
+  if (wantsAttributeBuild && !theadForBuild) {
+    theadForBuild = document.createElement('thead');
+    tableElForBuild.appendChild(theadForBuild);
+  }
+  if (wantsAttributeBuild && !tbodyForBuild) {
+    tbodyForBuild = document.createElement('tbody');
+    tableElForBuild.appendChild(tbodyForBuild);
+  }
+
   if (theadForBuild && tbodyForBuild && !tbodyForBuild.querySelector('tr')) {
     const headersAttr = element.getAttribute('headers');
     const rowsAttr = element.getAttribute('rows');

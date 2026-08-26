@@ -1103,11 +1103,34 @@ footer a:hover {
   overflow-x: auto;
 }
 
+/* John: "When clicking api or docs the element that appears must fill in it's
+   parent."
+
+   `width: 100%` alone did NOT do that. Under the default `table-layout: auto`
+   a percentage width acts only as a minimum -- the browser still grows the
+   table to its min-content width, and here the nowrap headers plus the enum
+   chips in the Values column forced 833px inside a 743px panel. The result was
+   a horizontal scrollbar and a Description column cut off mid-sentence.
+
+   `table-layout: fixed` makes the declared width authoritative: columns are
+   sized from the table box rather than from the content, so the table fills
+   its parent exactly and long values wrap instead of pushing sideways. */
 .behaviors-live__api-table {
   width: 100%;
+  max-width: 100%;
+  table-layout: fixed;
   border-collapse: collapse;
   font-size: 0.8125rem;
 }
+
+/* With a fixed layout the column widths come from the first row, so they are
+   stated once here instead of being decided by whichever attribute happens to
+   have the longest name or the most enum values. */
+.behaviors-live__api-table th:nth-child(1) { width: 18%; }
+.behaviors-live__api-table th:nth-child(2) { width: 10%; }
+.behaviors-live__api-table th:nth-child(3) { width: 24%; }
+.behaviors-live__api-table th:nth-child(4) { width: 12%; }
+.behaviors-live__api-table th:nth-child(5) { width: 36%; }
 
 .behaviors-live__api-table th {
   text-align: left;
@@ -1118,13 +1141,17 @@ footer a:hover {
   font-weight: 600;
   padding: 0.4rem 0.6rem;
   border-bottom: 1px solid var(--border-color);
-  white-space: nowrap;
+  /* Was nowrap -- one of the two things pushing the table past its container. */
+  white-space: normal;
 }
 
 .behaviors-live__api-table td {
   padding: 0.5rem 0.6rem;
   border-bottom: 1px solid var(--border-color);
   vertical-align: top;
+  /* A long default or a hyphenless token has no wrap opportunity of its own
+     and would otherwise overflow its now-fixed column. */
+  overflow-wrap: anywhere;
 }
 
 .behaviors-live__api-name code {

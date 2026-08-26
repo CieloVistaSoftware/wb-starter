@@ -13,7 +13,7 @@ Data table with sorting, filtering, and pagination
 <!-- because the element itself implies it. No attribute needed. -->
 <table
   headers="Component,Behavior,Variants"
-  rows="[[&quot;alert&quot;,&quot;alert&quot;,&quot;4&quot;],[&quot;badge&quot;,&quot;badge&quot;,&quot;9&quot;],[&quot;button&quot;,&quot;button&quot;,&quot;8&quot;],[&quot;card&quot;,&quot;card&quot;,&quot;4&quot;],[&quot;code&quot;,&quot;code&quot;,&quot;12&quot;],[&quot;dialog&quot;,&quot;dialog&quot;,&quot;3&quot;],[&quot;details&quot;,&quot;details&quot;,&quot;2&quot;],[&quot;audio&quot;,&quot;audio&quot;,&quot;6&quot;],[&quot;table&quot;,&quot;table&quot;,&quot;5&quot;],[&quot;tabs&quot;,&quot;tabs&quot;,&quot;3&quot;],[&quot;toast&quot;,&quot;toast&quot;,&quot;4&quot;],[&quot;tooltip&quot;,&quot;tooltip&quot;,&quot;4&quot;]]">
+  rows='[["alert","alert","4"],["badge","badge","9"],["button","button","8"],["card","card","4"],["code","code","12"],["dialog","dialog","3"],["details","details","2"],["audio","audio","6"],["table","table","5"],["tabs","tabs","3"],["toast","toast","4"],["tooltip","tooltip","4"]]'>
 </table>
 ```
 
