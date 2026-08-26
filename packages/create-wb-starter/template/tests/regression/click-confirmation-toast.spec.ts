@@ -3,7 +3,7 @@ import { test, expect, Page } from '@playwright/test';
 async function loadPage(page: Page) {
   await page.goto('/?page=behaviors');
   await page.waitForFunction(() => Boolean((window as any).WB));
-  await page.evaluate(() => document.querySelector('.wb-toast-container')?.remove());
+  await page.evaluate(() => document.querySelector('.x-toast-container')?.remove());
 }
 
 test.describe('site-wide click confirmation (#456)', () => {
@@ -17,7 +17,7 @@ test.describe('site-wide click confirmation (#456)', () => {
 
       const card = document.createElement('div');
       card.id = 'click-confirm-card';
-      card.className = 'wb-card--clickable';
+      card.className = 'x-card--clickable';
       card.textContent = 'Open card';
 
       const link = document.createElement('a');
@@ -29,15 +29,15 @@ test.describe('site-wide click confirmation (#456)', () => {
     });
 
     await page.locator('#click-confirm-button').click();
-    await expect(page.locator('.wb-toast')).toHaveCount(1);
-    await expect(page.locator('.wb-toast')).toContainText('Clicked: Save');
+    await expect(page.locator('.x-toast')).toHaveCount(1);
+    await expect(page.locator('.x-toast')).toContainText('Clicked: Save');
 
     await page.locator('#click-confirm-card').click();
-    await expect(page.locator('.wb-toast')).toHaveCount(2);
-    await expect(page.locator('.wb-toast').last()).toContainText('Clicked: Open card');
+    await expect(page.locator('.x-toast')).toHaveCount(2);
+    await expect(page.locator('.x-toast').last()).toContainText('Clicked: Open card');
 
     await page.locator('#click-confirm-link').click();
-    await expect(page.locator('.wb-toast')).toHaveCount(2);
+    await expect(page.locator('.x-toast')).toHaveCount(2);
     await expect(page).toHaveURL(/#click-confirm-target$/);
   });
 
@@ -45,7 +45,7 @@ test.describe('site-wide click confirmation (#456)', () => {
     await loadPage(page);
     const button = page.locator('[x-toast][toast-variant="success"]').first();
     await button.click();
-    await expect(page.locator('.wb-toast--success')).toHaveCount(1);
-    await expect(page.locator('.wb-toast')).toHaveCount(1);
+    await expect(page.locator('.x-toast--success')).toHaveCount(1);
+    await expect(page.locator('.x-toast')).toHaveCount(1);
   });
 });

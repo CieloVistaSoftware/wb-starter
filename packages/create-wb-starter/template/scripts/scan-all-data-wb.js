@@ -54,5 +54,5 @@ Object.keys(byFile).sort().forEach(file => {
   console.log('  ' + file + ': ' + byFile[file].length);
 });
 
-fs.writeFileSync('data/data-wb-sources.json', JSON.stringify({ total: results.length, files: Object.keys(byFile).sort(), byFile }, null, 2));
-console.log('\nSaved to: data/data-wb-sources.json');
+fs.writeFileSync('data/data-x-sources.json', JSON.stringify({ total: results.length, files: Object.keys(byFile).sort(), byFile }, null, 2));
+console.log('\nSaved to: data/data-x-sources.json');

@@ -4,13 +4,13 @@
   "title": "Textarea",
   "description": "Multi-line text input with autosize and character count",
   "schemaFor": "textarea",
-  "baseClass": "wb-textarea",
+  "baseClass": "x-textarea",
   "semanticElement": {
     "tagName": "div",
     "implicitRole": "textbox"
   },
   "compliance": {
-    "baseClass": "wb-textarea",
+    "baseClass": "x-textarea",
     "supportLevel": "deprecated",
     "accessibility": "high"
   },
@@ -55,7 +55,7 @@
       "type": "boolean",
       "description": "Auto-resize to content",
       "default": false,
-      "appliesClass": "wb-textarea--autosize"
+      "appliesClass": "x-textarea--autosize"
     },
     "disabled": {
       "type": "boolean",
@@ -90,7 +90,7 @@
         "error"
       ],
       "default": "default",
-      "appliesClass": "wb-textarea--{{value}}"
+      "appliesClass": "x-textarea--{{value}}"
     }
   },
   "$view": [
@@ -161,47 +161,47 @@
     }
   },
   "$cssAPI": {
-    "--wb-textarea-padding": {
+    "--x-textarea-padding": {
       "default": "0.75rem",
       "description": "Textarea padding"
     },
-    "--wb-textarea-radius": {
+    "--x-textarea-radius": {
       "default": "4px",
       "description": "Border radius"
     },
-    "--wb-textarea-bg": {
+    "--x-textarea-bg": {
       "default": "var(--bg-surface, #ffffff)",
       "description": "Background"
     },
-    "--wb-textarea-border": {
+    "--x-textarea-border": {
       "default": "1px solid var(--border-color, #d1d5db)",
       "description": "Border"
     },
-    "--wb-textarea-font-size": {
+    "--x-textarea-font-size": {
       "default": "0.875rem",
       "description": "Font size"
     },
-    "--wb-textarea-line-height": {
+    "--x-textarea-line-height": {
       "default": "1.5",
       "description": "Line height"
     },
-    "--wb-textarea-focus-border": {
+    "--x-textarea-focus-border": {
       "default": "var(--primary, #6366f1)",
       "description": "Focus border"
     },
-    "--wb-textarea-focus-ring": {
+    "--x-textarea-focus-ring": {
       "default": "0 0 0 3px rgba(99, 102, 241, 0.2)",
       "description": "Focus ring"
     },
-    "--wb-textarea-disabled-bg": {
+    "--x-textarea-disabled-bg": {
       "default": "var(--bg-disabled, #f3f4f6)",
       "description": "Disabled background"
     },
-    "--wb-textarea-counter-size": {
+    "--x-textarea-counter-size": {
       "default": "0.75rem",
       "description": "Counter font size"
     },
-    "--wb-textarea-counter-color": {
+    "--x-textarea-counter-color": {
       "default": "var(--text-secondary, #6b7280)",
       "description": "Counter color"
     }
@@ -223,14 +223,14 @@
   "test": {
     "functional": true,
     "setup": [
-      "<wb-textarea>Basic textarea content</wb-textarea>",
-      "<wb-textarea resize=\"none\">resize=none</wb-textarea>",
-      "<wb-textarea resize=\"vertical\">resize=vertical</wb-textarea>",
-      "<wb-textarea resize=\"horizontal\">resize=horizontal</wb-textarea>",
-      "<wb-textarea variant=\"default\">variant=default</wb-textarea>",
-      "<wb-textarea variant=\"success\">variant=success</wb-textarea>",
-      "<wb-textarea variant=\"error\">variant=error</wb-textarea>",
-      "<wb-textarea show-count>with showCount</wb-textarea>"
+      "<textarea>Basic textarea content</textarea>",
+      "<textarea resize=\"none\">resize=none</textarea>",
+      "<textarea resize=\"vertical\">resize=vertical</textarea>",
+      "<textarea resize=\"horizontal\">resize=horizontal</textarea>",
+      "<textarea variant=\"default\">variant=default</textarea>",
+      "<textarea variant=\"success\">variant=success</textarea>",
+      "<textarea variant=\"error\">variant=error</textarea>",
+      "<textarea show-count>with showCount</textarea>"
     ],
     "matrix": {
       "combinations": [
@@ -254,15 +254,15 @@
     },
     "site": {
       "page": "forms",
-      "tag": "wb-textarea",
+      "tag": "x-textarea",
       "renders": true,
-      "baseClass": "wb-textarea",
+      "baseClass": "x-textarea",
       "minInstances": 5,
       "checkText": [
         "Enter text..."
       ],
       "checkClasses": [
-        "wb-textarea--success"
+        "x-textarea--success"
       ],
       "checkAttributes": [
         "placeholder"

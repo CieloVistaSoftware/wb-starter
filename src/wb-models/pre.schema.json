@@ -35,17 +35,7 @@
       "description": "Read by pre(). Bare attribute.",
       "default": false
     },
-    "data-show-copy": {
-      "type": "boolean",
-      "description": "Read by pre(). Bare attribute.",
-      "default": false
-    },
     "data-copy": {
-      "type": "boolean",
-      "description": "Read by pre(). Bare attribute.",
-      "default": false
-    },
-    "data-wrap": {
       "type": "boolean",
       "description": "Read by pre(). Bare attribute.",
       "default": false

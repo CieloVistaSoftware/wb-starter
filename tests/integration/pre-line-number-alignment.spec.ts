@@ -84,7 +84,7 @@ test('pre.js line-number gutter: line 1 accounts for padding-top, all lines even
  * itself soft-wrap onto its own visual row -- landing the number next to an
  * empty-looking row while the line's real, visible content starts one row
  * below with no number of its own. Reads live as a phantom blank line in the
- * gutter, exactly matching the reported repro (docs/components/semantics/
+ * gutter, exactly matching the reported repro (docs/behaviors/
  * audio.md's "With Bass/Treble Boost" sample, a long `src="https://…"` value).
  *
  * Forces the exact split deterministically: a 2-space-indented second line in

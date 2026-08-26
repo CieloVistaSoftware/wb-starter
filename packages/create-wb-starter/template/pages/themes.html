@@ -1,5 +1,5 @@
 <!-- Page styles: src/styles/pages/themes-showcase.css -->
-<link rel="stylesheet" href="src/styles/pages/themes-showcase.css">
+<link rel="stylesheet" href="src/styles/pages/themes-showcase.css?v=3.0.91">
 
 <div id="themes-hero" class="page__hero">
   <h1>🎨 Themes Showcase</h1>
@@ -8,10 +8,10 @@
 
 <!-- QUICK STATS -->
 <div id="themes-stats" class="themes-stats">
-  <wb-cardstats id="themes-stats-total" value="23" label="Total Themes" icon="🎨"></wb-cardstats>
-  <wb-cardstats id="themes-stats-dark" value="12" label="Dark Themes" icon="🌙"></wb-cardstats>
-  <wb-cardstats id="themes-stats-light" value="11" label="Light Themes" icon="☀️"></wb-cardstats>
-  <wb-cardstats id="themes-stats-vars" value="∞" label="CSS Variables" icon="🎯"></wb-cardstats>
+  <div x-cardstats id="themes-stats-total" value="23" label="Total Themes" icon="🎨"></div>
+  <div x-cardstats id="themes-stats-dark" value="12" label="Dark Themes" icon="🌙"></div>
+  <div x-cardstats id="themes-stats-light" value="11" label="Light Themes" icon="☀️"></div>
+  <div x-cardstats id="themes-stats-vars" value="∞" label="CSS Variables" icon="🎯"></div>
 </div>
 
 <!-- HARMONIC COLOR SYSTEM DEMO -->
@@ -156,7 +156,7 @@
   <!-- Code Example -->
   <h3 style="text-align: center; margin: 2rem 0 1rem; color: var(--text-secondary);">Implementation Example</h3>
   
-  <wb-mdhtml>
+  <div x-mdhtml>
 ```javascript
 // Harmonic Color System - Theme Generation
 function generateHarmonicPalette(primaryHue, harmonyType = 'complementary') {
@@ -188,7 +188,7 @@ function generateHarmonicPalette(primaryHue, harmonyType = 'complementary') {
 const oceanPalette = generateHarmonicPalette(200, 'analogous');
 // Result: { primary: 200, secondary: 230, accent: 170 }
 ```
-  </wb-mdhtml>
+  </div>
 </div>
 
 <!-- THEME GRID -->
@@ -646,11 +646,11 @@ const oceanPalette = generateHarmonicPalette(200, 'analogous');
   <div id="themes-preview-container" class="preview-container">
     <!-- Cards -->
     <div id="themes-preview-row-1" class="preview-row">
-      <basic-card title="Card Title" hoverable>
+      <article title="Card Title" hoverable>
         <p>This card adapts to the current theme colors and styling.</p>
-      </basic-card>
-      <stats-card value="1,234" label="Total Users" icon="👥" trend="up" trend-value="+12%"></stats-card>
-      <price-card plan="Pro" price="$29" period="/mo" features="Feature 1,Feature 2,Feature 3" cta="Get Started" featured></price-card>
+      </article>
+      <div x-cardstats value="1,234" label="Total Users" icon="👥" trend="up" trend-value="+12%"></div>
+      <div x-cardpricing plan="Pro" price="$29" period="/mo" features="Feature 1,Feature 2,Feature 3" cta="Get Started" featured></div>
     </div>
     
     <!-- Buttons -->
@@ -665,22 +665,22 @@ const oceanPalette = generateHarmonicPalette(200, 'analogous');
     <!-- Badges & Chips -->
     <h3 class="preview-label">Badges &amp; Status</h3>
     <div class="preview-row-inline">
-      <wb-badge label="Default"></wb-badge>
-      <wb-badge label="Primary" variant="primary"></wb-badge>
-      <wb-badge label="Success" variant="success"></wb-badge>
-      <wb-badge label="Warning" variant="warning"></wb-badge>
-      <wb-badge label="Error" variant="error"></wb-badge>
-      <wb-badge label="Info" variant="info"></wb-badge>
-      <wb-spinner></wb-spinner>
+      <span x-badge label="Default"></span>
+      <span x-badge label="Primary" variant="primary"></span>
+      <span x-badge label="Success" variant="success"></span>
+      <span x-badge label="Warning" variant="warning"></span>
+      <span x-badge label="Error" variant="error"></span>
+      <span x-badge label="Info" variant="info"></span>
+      <span x-spinner></span>
     </div>
     
     <!-- Alerts - All 4 Variants -->
     <h3 class="preview-label">Alerts (All Variants)</h3>
-    <div style="display: flex; flex-direction: column; gap: 0.75rem;">
-      <wb-alert variant="info" title="Info Alert" message="This is an informational message using theme colors." dismissible></wb-alert>
-      <wb-alert variant="success" title="Success Alert" message="Operation completed successfully!" dismissible></wb-alert>
-      <wb-alert variant="warning" title="Warning Alert" message="Please review before proceeding." dismissible></wb-alert>
-      <wb-alert variant="error" title="Error Alert" message="Something went wrong. Please try again." dismissible></wb-alert>
+    <div style="display: flex; flex-direction: column; gap: 1rem;">
+      <div x-alert variant="info" title="Info Alert" message="This is an informational message using theme colors." dismissible></div>
+      <div x-alert variant="success" title="Success Alert" message="Operation completed successfully!" dismissible></div>
+      <div x-alert variant="warning" title="Warning Alert" message="Please review before proceeding." dismissible></div>
+      <div x-alert variant="error" title="Error Alert" message="Something went wrong. Please try again." dismissible></div>
     </div>
     
     <!-- Progress Bars - All Variants -->
@@ -688,23 +688,23 @@ const oceanPalette = generateHarmonicPalette(200, 'analogous');
     <div style="display: flex; flex-direction: column; gap: 0.75rem;">
       <div class="progress-demo-row">
         <span class="progress-label">Default (25%)</span>
-        <wb-progress value="25" variant="primary"></wb-progress>
+        <progress value="25" variant="primary"></progress>
       </div>
       <div class="progress-demo-row">
         <span class="progress-label">Success (50%)</span>
-        <wb-progress value="50" variant="success"></wb-progress>
+        <progress value="50" variant="success"></progress>
       </div>
       <div class="progress-demo-row">
         <span class="progress-label">Warning (75%)</span>
-        <wb-progress value="75" variant="warning"></wb-progress>
+        <progress value="75" variant="warning"></progress>
       </div>
       <div class="progress-demo-row">
         <span class="progress-label">Error (90%)</span>
-        <wb-progress value="90" variant="error"></wb-progress>
+        <progress value="90" variant="error"></progress>
       </div>
       <div class="progress-demo-row">
         <span class="progress-label">Striped</span>
-        <wb-progress value="60" striped></wb-progress>
+        <progress value="60" striped></progress>
       </div>
     </div>
     
@@ -717,7 +717,7 @@ const oceanPalette = generateHarmonicPalette(200, 'analogous');
         <option>Option 1</option>
         <option>Option 2</option>
       </select>
-      <wb-switch label="Toggle"></wb-switch>
+      <div x-switch label="Toggle"></div>
     </div>
   </div>
 </div>
@@ -730,25 +730,25 @@ const oceanPalette = generateHarmonicPalette(200, 'analogous');
   <div class="page__grid">
     <div class="usage-card">
       <h3>1. Set Theme Attribute</h3>
-      <wb-code language="html"><code>&lt;html data-theme="ocean"&gt;
+      <code language="html"><code>&lt;html data-theme="ocean"&gt;
   ...
-&lt;/html&gt;</code></wb-code>
+&lt;/html&gt;</code></code>
     </div>
     
     <div class="usage-card">
       <h3>2. Switch via JavaScript</h3>
-      <wb-code language="javascript"><code>// Switch theme programmatically
+      <code language="javascript"><code>// Switch theme programmatically
 document.documentElement
-  .setAttribute('data-theme', 'cyberpunk');</code></wb-code>
+  .setAttribute('data-theme', 'cyberpunk');</code></code>
     </div>
     
     <div class="usage-card">
       <h3>3. Use CSS Variables</h3>
-      <wb-code language="css"><code>.my-component {
+      <code language="css"><code>.my-component {
   background: var(--bg-secondary);
   color: var(--text-primary);
   border: 1px solid var(--border-color);
-}</code></wb-code>
+}</code></code>
     </div>
   </div>
 </div>
@@ -760,7 +760,7 @@ document.documentElement
     49 highlight.js syntax themes, grouped by Dark/Light/Minimal/Special. Pick
     "Default" to reset to highlight.js's own baseline.
   </p>
-  <wb-codecontrol></wb-codecontrol>
+  <div x-codecontrol></div>
   <pre><code class="language-javascript">function wave(hue, saturation) {
   const message = "harmonic";
   return { h: hue, s: saturation, l: 50, label: message };

@@ -19,7 +19,7 @@ import { readAttr } from '../../core/read-attr.js';
 export function rating(element, options = {}) {
   // Read PLAIN attributes (v3 standard: value/max/icon/color) as well as the
   // legacy data-* form. Previously only data-*/options were read, so the
-  // showcase markup `<wb-rating value="3" icon="❤️">` was ignored — stars never
+  // showcase markup `<span x-rating value="3" icon="❤️">` was ignored — stars never
   // filled on first paint and the custom icon was dropped. (#177)
   const attr = (name) => element.getAttribute(name);
   const authoredValue = (element._wbOriginalSlot || element.textContent || '').trim();
@@ -33,7 +33,7 @@ export function rating(element, options = {}) {
     color: options.color || attr('color') || readAttr(element, 'color') || 'var(--rating-active-color, #fbbf24)',
     emptyColor: options.emptyColor || attr('empty-color') || 'var(--border-color, #e5e7eb)',
     // rating.schema.json declares size (sm/md/lg, appliesClass:
-    // "wb-rating--{{value}}"), but that's schema-builder's mechanism (never
+    // "x-rating--{{value}}"), but that's schema-builder's mechanism (never
     // runs on a wb-lazy.js-only page) AND this function never read the
     // attribute at all -- star font-size was unconditionally hardcoded
     // inline below regardless of size (confirmed live: size="sm"/"lg" both
@@ -48,11 +48,11 @@ export function rating(element, options = {}) {
 
   // Clear element
   element.innerHTML = '';
-  // #448: no bare 'wb-rating' token -- it just duplicated <wb-rating>'s own
-  // tag name (no CSS selector depends on it; rating.css's `.wb-rating span`
+  // #448: no bare '[x-rating]' token -- it just duplicated <span x-rating>'s own
+  // tag name (no CSS selector depends on it; rating.css's `.x-rating span`
   // rule is already dead/unmatched per its own comment). The size modifier
   // class is real and stays.
-  element.classList.add(`wb-rating--${config.size}`);
+  element.classList.add(`x-rating--${config.size}`);
   element.style.display = 'inline-flex';
   element.style.gap = '0.25rem';
   element.style.cursor = config.readonly ? 'default' : 'pointer';
@@ -61,10 +61,10 @@ export function rating(element, options = {}) {
   const stars = [];
   for (let i = 1; i <= config.max; i++) {
     const star = document.createElement('span');
-    star.className = 'wb-rating__star';
+    star.className = 'x-rating__star';
     star.dataset.value = i;
     star.innerHTML = config.icon; // honour custom icon (★ default, ❤️/👍/…)
-    // font-size now comes from CSS (.wb-rating__star / .wb-rating--{size} .wb-rating__star,
+    // font-size now comes from CSS (.x-rating__star / .x-rating--{size} .x-rating__star,
     // rating.css) so the size attribute actually has an effect -- not hardcoded here.
     star.style.lineHeight = '1';
     star.style.transition = 'color 0.2s ease, transform 0.1s ease';
@@ -115,10 +115,10 @@ export function rating(element, options = {}) {
       const isFull = value <= targetValue;
       
       if (isFull) {
-        star.classList.add('wb-rating__star--full');
+        star.classList.add('x-rating__star--full');
         star.style.color = config.color;
       } else {
-        star.classList.remove('wb-rating__star--full');
+        star.classList.remove('x-rating__star--full');
         star.style.color = config.emptyColor;
       }
     });

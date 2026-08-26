@@ -38,7 +38,7 @@ const FORBIDDEN_OVERLAY_ATTRS = [
 const ROOT  = process.cwd();
 const PAGES = ['pages/components.html', 'pages/behaviors.html', 'pages/newbehaviors.html'];
 
-// Extract opening tags of overlay triggers (wb-modal — legacy custom-element
+// Extract opening tags of overlay triggers (x-modal — legacy custom-element
 // tag form, still checked for any remaining archived pages — or any element
 // carrying an x-modal/x-drawer/x-confirm/x-prompt/x-popover behavior
 // attribute). Code samples in the page are HTML-escaped (&lt;…&gt;), so
@@ -49,7 +49,7 @@ function overlayTriggerTags(html: string): string[] {
     .replace(/&gt;/g, '>')
     .replace(/&quot;/g, '"')
     .replace(/&amp;/g, '&');
-  const re = /<(?:wb-modal\b[^>]*|[a-zA-Z][\w-]*\b[^>]*?\b(?:x-modal|x-drawer|x-confirm|x-prompt|x-popover)\b[^>]*)>/g;
+  const re = /<(?:x-modal\b[^>]*|[a-zA-Z][\w-]*\b[^>]*?\b(?:x-modal|x-drawer|x-confirm|x-prompt|x-popover)\b[^>]*)>/g;
   return unescaped.match(re) ?? [];
 }
 

@@ -4,13 +4,13 @@
   "title": "Table",
   "description": "Data table with sorting, filtering, and pagination",
   "schemaFor": "table",
-  "baseClass": "wb-table",
+  "baseClass": "x-table",
   "semanticElement": {
     "tagName": "table",
     "implicitRole": "table"
   },
   "compliance": {
-    "baseClass": "wb-table",
+    "baseClass": "x-table",
     "supportLevel": "stable",
     "accessibility": "high"
   },
@@ -49,25 +49,25 @@
       "type": "boolean",
       "description": "Striped rows",
       "default": false,
-      "appliesClass": "wb-table--striped"
+      "appliesClass": "x-table--striped"
     },
     "hoverable": {
       "type": "boolean",
       "description": "Hover effect on rows",
       "default": true,
-      "appliesClass": "wb-table--hoverable"
+      "appliesClass": "x-table--hoverable"
     },
     "compact": {
       "type": "boolean",
       "description": "Compact row spacing",
       "default": false,
-      "appliesClass": "wb-table--compact"
+      "appliesClass": "x-table--compact"
     },
     "bordered": {
       "type": "boolean",
       "description": "Cell borders",
       "default": false,
-      "appliesClass": "wb-table--bordered"
+      "appliesClass": "x-table--bordered"
     },
     "headers": {
       "type": "string",
@@ -162,35 +162,35 @@
     }
   },
   "$cssAPI": {
-    "--wb-table-border": {
+    "--x-table-border": {
       "default": "1px solid var(--border-color, #e0e0e0)",
       "description": "Table border"
     },
-    "--wb-table-radius": {
+    "--x-table-radius": {
       "default": "4px",
       "description": "Border radius"
     },
-    "--wb-table-header-bg": {
+    "--x-table-header-bg": {
       "default": "var(--bg-secondary, #f3f4f6)",
       "description": "Header background"
     },
-    "--wb-table-header-color": {
+    "--x-table-header-color": {
       "default": "var(--text-primary, #1a1a1a)",
       "description": "Header text color"
     },
-    "--wb-table-row-bg": {
+    "--x-table-row-bg": {
       "default": "var(--bg-surface, #ffffff)",
       "description": "Row background"
     },
-    "--wb-table-row-hover-bg": {
+    "--x-table-row-hover-bg": {
       "default": "var(--bg-secondary, #f3f4f6)",
       "description": "Row hover background"
     },
-    "--wb-table-row-stripe-bg": {
+    "--x-table-row-stripe-bg": {
       "default": "var(--bg-tertiary, #f9fafb)",
       "description": "Striped row background"
     },
-    "--wb-table-cell-padding": {
+    "--x-table-cell-padding": {
       "default": "0.75rem 1rem",
       "description": "Cell padding"
     }
@@ -222,14 +222,14 @@
   },
   "test": {
     "setup": [
-      "<wb-table>Basic table content</wb-table>",
-      "<wb-table sortable>with sortable</wb-table>",
-      "<wb-table filterable>with filterable</wb-table>",
-      "<wb-table paginated>with paginated</wb-table>",
-      "<wb-table striped>with striped</wb-table>",
-      "<wb-table hoverable>with hoverable</wb-table>",
-      "<wb-table compact>with compact</wb-table>",
-      "<wb-table bordered>with bordered</wb-table>"
+      "<table>Basic table content</table>",
+      "<table sortable>with sortable</table>",
+      "<table filterable>with filterable</table>",
+      "<table paginated>with paginated</table>",
+      "<table striped>with striped</table>",
+      "<table hoverable>with hoverable</table>",
+      "<table compact>with compact</table>",
+      "<table bordered>with bordered</table>"
     ],
     "matrix": {
       "combinations": [
@@ -248,9 +248,9 @@
     },
     "site": {
       "page": "content",
-      "tag": "wb-table",
+      "tag": "x-table",
       "renders": true,
-      "baseClass": "wb-table",
+      "baseClass": "x-table",
       "minInstances": 4,
       "checkText": [],
       "checkClasses": [],

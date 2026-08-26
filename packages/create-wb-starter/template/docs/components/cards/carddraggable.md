@@ -6,10 +6,10 @@ Draggable/moveable card with mouse drag support.
 
 | Property | Value |
 |----------|-------|
-| Custom Tag | `<wb-carddraggable>` |
+| Custom Tag | `<div x-carddraggable>` |
 | Behavior | `carddraggable` |
 | Semantic | `<article>` |
-| CSS Classes | `wb-card wb-card-draggable wb-card--draggable` |
+| CSS Classes | `x-card x-card-draggable x-card--draggable` |
 | Composes | `card` behavior + `draggable` |
 
 ## Properties
@@ -28,44 +28,44 @@ Includes all [card properties](./card.md), plus:
 
 Rendered live below — drag it with your mouse. The source is shown underneath:
 
-<wb-demo>
-<wb-carddraggable title="Drag Me">Drag this card around.</wb-carddraggable>
-</wb-demo>
+<div x-demo>
+<div x-carddraggable title="Drag Me">Drag this card around.</div>
+</div>
 
 ```html
-<wb-carddraggable title="Drag Me"> Drag this card around. </wb-carddraggable>
+<div x-carddraggable title="Drag Me"> Drag this card around. </div>
 ```
 
 ### Constrained to Parent
 
 ```html
 <div style="position: relative; width: 500px; height: 400px;">
-  <wb-carddraggable
+  <div x-carddraggable
     title="Bounded Card"
     constrain="parent">
     Cannot drag outside parent.
-  </wb-carddraggable>
+  </div>
 </div>
 ```
 
 ### Horizontal Only
 
 ```html
-<wb-carddraggable
+<div x-carddraggable
   title="Horizontal"
   axis="x">
   Only moves left/right.
-</wb-carddraggable>
+</div>
 ```
 
 ### Snap to Grid
 
 ```html
-<wb-carddraggable
+<div x-carddraggable
   title="Grid Snap"
   snapToGrid="20">
   Snaps to 20px grid.
-</wb-carddraggable>
+</div>
 ```
 
 ## Events
@@ -95,7 +95,7 @@ card.addEventListener('wb:carddraggable:dragend', (e) => {
 ## JavaScript API
 
 ```javascript
-const card = document.querySelector('wb-carddraggable');
+const card = document.querySelector('x-carddraggable');
 
 // Set position
 card.wbCardDraggable.setPosition(100, 50);
@@ -112,8 +112,8 @@ card.wbCardDraggable.reset();
 
 | Class | Applied When |
 |-------|--------------|
-| `.wb-card--draggable` | Always |
-| `.wb-card--dragging` | While dragging |
+| `.x-card--draggable` | Always |
+| `.x-card--dragging` | While dragging |
 
 ## Schema
 

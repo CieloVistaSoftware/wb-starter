@@ -5,9 +5,9 @@ import * as path from 'path';
 /**
  * #255: docs/architecture/standards/ATTRIBUTE-NAMING-STANDARD.md illustrated
  * its own naming conventions with invented, non-wb-prefixed custom-element
- * tags (`<price-card>`, `<alert-box>`, `<basic-card>`, `<card-el>`, ...) and
+ * tags (`<price-card>`, `<alert-box>`, `<article>`, `<card-el>`, ...) and
  * a "Migration from x-behavior" section whose "New Standard" examples
- * (`<basic-card heading="…">`) don't match actual v3 syntax (`<wb-card
+ * (`<article heading="…">`) don't match actual v3 syntax (`<article
  * title="…">`, verified against src/wb-models/card.schema.json). Rewrote
  * every example to use real `<wb-*>` tags (or the real `x-*` behavior
  * attribute / native element, verified against src/core/tag-map.js and
@@ -19,7 +19,7 @@ const DOC_PATH = path.join(process.cwd(), 'docs/architecture/standards/ATTRIBUTE
 const NATIVE_HYPHENATED_TAGS = new Set(['x-behavior']); // not a real tag, appears only in prose/code as an attribute name
 
 test.describe('ATTRIBUTE-NAMING-STANDARD.md uses only wb-* custom tags (#255)', () => {
-  test('every hyphenated custom-element tag in the doc is wb-prefixed', () => {
+  test('every hyphenated custom-element tag in the doc is x-prefixed', () => {
     const md = fs.readFileSync(DOC_PATH, 'utf8');
     const tagPattern = /<([a-z][a-z0-9]*-[a-z0-9-]+)(?=[\s>/])/g;
     const found = new Set<string>();
@@ -54,6 +54,6 @@ test.describe('ATTRIBUTE-NAMING-STANDARD.md uses only wb-* custom tags (#255)', 
     });
     await expect(page.locator('#content')).toContainText('WB-Starter Attribute Naming Standard');
     await expect(page.locator('#content')).not.toContainText('404');
-    await expect(page.locator('#content')).toContainText('wb-cardpricing');
+    await expect(page.locator('#content')).toContainText('[x-cardpricing]');
   });
 });

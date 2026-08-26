@@ -7,7 +7,7 @@
   "schemaType": "definition",
   "type": "object",
   "compliance": {
-    "baseClass": "wb-search-index",
+    "baseClass": "x-search-index",
     "supportLevel": "stable",
     "accessibility": "high"
   },

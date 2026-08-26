@@ -25,14 +25,14 @@ async function injectAndScan(page: Page, html: string) {
     container.innerHTML = h;
     
     // Force eager loading
-    const elements = container.querySelectorAll('.wb-ready');
+    const elements = container.querySelectorAll('.x-ready');
     elements.forEach(el => el.setAttribute('', ''));
     
     document.body.appendChild(container);
   }, html);
   
-  await page.evaluate(() => {
-    (window as any).WB.scan(document.getElementById('test-container'));
+  await page.evaluate(async () => {
+    await (window as any).WB.scan(document.getElementById('test-container'));
   });
   
   await page.waitForTimeout(500);
@@ -45,11 +45,11 @@ test.describe('ripple Behavior', () => {
     page.on('pageerror', (err) => errors.push(err.message));
     
     const setupHtml = [
-      "<wb-ripple>Basic ripple content</wb-ripple>",
-      "<wb-ripple centered>with centered</wb-ripple>",
-      "<wb-ripple color=\"rgba(255,255,255,0.3)\">color=\"rgba(255,255,255,0.3)\"</wb-ripple>",
-      "<wb-ripple duration=\"600\">duration=600</wb-ripple>",
-      "<wb-ripple centered color=\"rgba(255,255,255,0.3)\">Combined: with centered, color=\"rgba(255,255,255,0.3)\"</wb-ripple>"
+      "<div x-ripple>Basic ripple content</div>",
+      "<div x-ripple centered>with centered</div>",
+      "<div x-ripple color=\"rgba(255,255,255,0.3)\">color=\"rgba(255,255,255,0.3)\"</div>",
+      "<div x-ripple duration=\"600\">duration=600</div>",
+      "<div x-ripple centered color=\"rgba(255,255,255,0.3)\">Combined: with centered, color=\"rgba(255,255,255,0.3)\"</div>"
     ];
     
     await injectAndScan(page, setupHtml.join('\n'));
@@ -65,10 +65,10 @@ test.describe('ripple Behavior', () => {
   });
 
   test('element is visible after scan', async ({ page }) => {
-    const html = "<wb-ripple>Basic ripple content</wb-ripple>";
+    const html = "<div x-ripple>Basic ripple content</div>";
     await injectAndScan(page, html);
     
-    const el = page.locator('#test-container wb-ripple, #test-container [x-ripple]').first();
+    const el = page.locator('#test-container [x-ripple], #test-container [x-ripple]').first();
     const isPresent = await el.count() > 0;
     
     if (isPresent) {
@@ -82,20 +82,20 @@ test.describe('ripple Behavior', () => {
   });
 
   test('matrix combo 1: ', async ({ page }) => {
-    await injectAndScan(page, "<wb-ripple>Test</wb-ripple>");
-    const el = page.locator('#test-container wb-ripple, #test-container [x-ripple]').first();
+    await injectAndScan(page, "<div x-ripple>Test</div>");
+    const el = page.locator('#test-container [x-ripple], #test-container [x-ripple]').first();
     await expect(el).toBeVisible({ timeout: 5000 });
   });
 
   test('matrix combo 2: color=rgba(0,0,0,0.2)', async ({ page }) => {
-    await injectAndScan(page, "<wb-ripple color=\"rgba(0,0,0,0.2)\">Test</wb-ripple>");
-    const el = page.locator('#test-container wb-ripple, #test-container [x-ripple]').first();
+    await injectAndScan(page, "<div x-ripple color=\"rgba(0,0,0,0.2)\">Test</div>");
+    const el = page.locator('#test-container [x-ripple], #test-container [x-ripple]').first();
     await expect(el).toBeVisible({ timeout: 5000 });
   });
 
   test('matrix combo 3: duration=300', async ({ page }) => {
-    await injectAndScan(page, "<wb-ripple duration=\"300\">Test</wb-ripple>");
-    const el = page.locator('#test-container wb-ripple, #test-container [x-ripple]').first();
+    await injectAndScan(page, "<div x-ripple duration=\"300\">Test</div>");
+    const el = page.locator('#test-container [x-ripple], #test-container [x-ripple]').first();
     await expect(el).toBeVisible({ timeout: 5000 });
   });
 });

@@ -10,8 +10,8 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Playground — WB</title>
-  <link rel="stylesheet" href="../src/styles/themes.css?v=3.0.91">
-  <link rel="stylesheet" href="../src/styles/site.css?v=3.0.91">
+  <link rel="stylesheet" href="../src/styles/themes.css?v=4.0.0">
+  <link rel="stylesheet" href="../src/styles/site.css?v=4.0.0">
   <style>
     body { max-width: 1200px; margin: 0 auto; padding: 1.5rem; background: var(--bg-color);
       color: var(--text-primary); line-height: 1.6; }
@@ -84,7 +84,7 @@
     /* Space stacked top-level previewed elements (e.g. the 50 cards) so they
        don't sit flush on top of each other. */
     #pg-preview > * + * { margin-top: 1rem; }
-    #pg-preview > wb-card, #pg-preview > [class*="wb-card"] { display: block; }
+    #pg-preview > x-card, #pg-preview > [class*="x-card"] { display: block; }
     /* Sample form example (SAMPLE, below): a bare <label>Text <input></label>
        with no wrapper div stayed on one line -- <label> is inline by default
        and neither its text node nor an <input>/<select>/<textarea> child
@@ -124,7 +124,7 @@
         grid-template-columns: 1fr;
       }
     }
-    /* Signature hero example set: hero + its companion wb-modal trigger,
+    /* Signature hero example set: hero + its companion x-modal trigger,
        grouped as one visual unit with a small gap between them. */
     .pg-signature-hero { display: flex; flex-direction: column; gap: 0.75rem; }
     /* Video card example set: an x-youtube embed with its real title as a caption. */
@@ -136,7 +136,7 @@
        (e.g. a hero title wrapping "config" + "ure" instead of just moving
        "configure" down) — `break-word` only breaks as a last resort. */
     /* :where() keeps this selector's specificity at ZERO despite the #id, so it
-       never outranks a real component class like .wb-card--xs's own max-width —
+       never outranks a real component class like .x-card--xs's own max-width —
        otherwise this safety net silently defeats legitimate size styling and
        misrepresents real behavior to anyone testing sizes in the playground. */
     #pg-preview { max-width: 100%; overflow-wrap: break-word; }
@@ -174,7 +174,6 @@
             <option value="selects">25 selects</option>
             <option value="switches">25 switches (all different)</option>
             <option value="youtube">20 YouTube URL formats</option>
-            <option value="youtube-channel">20 Richard Moore Videos</option>
             <option value="hero-fullwidth">Full-width hero (500px)</option>
           </select>
           <button id="pg-format" class="pg-btn" type="button"
@@ -193,7 +192,7 @@
       <div class="pg-panel__head">
         <span class="pg-panel__label">Preview</span>
         <span class="pg-toolbar">
-          <wb-themecontrol id="pg-themecontrol" show-label="false"></wb-themecontrol>
+          <div x-themecontrol id="pg-themecontrol" show-label="false"></div>
           <select id="pg-sort" class="pg-btn" title="Sort the previewed elements"
             style="background:var(--bg-tertiary); color:var(--text-primary); appearance:auto;">
             <option value="">↕ Sort by…</option>
@@ -218,7 +217,7 @@
   </div>
 
   <!-- #780 -- John: "Playground shouldn't show component gallery."
-       A 290-line static gallery of 53 <wb-demo> blocks used to live here,
+       A 290-line static gallery of 53 <div x-demo> blocks used to live here,
        below the editor. It is a different thing from a playground -- the
        playground is for pasting your own markup and seeing it render -- and
        it was written entirely in the retired wb-* tags. The behaviors
@@ -463,7 +462,7 @@
     // rather than the viewport (the preview is the "page" here).
     function fullWidthHero() {
       return [
-        '<wb-cardhero',
+        '<div x-cardhero',
         '  pretitle="Open Source #4"',
         '  title="WB-Starter, the last wave needed!"',
         '  subtitle="Light DOM, no shadow boundaries. No class heirarchy. Bullet-proof."',
@@ -477,7 +476,7 @@
         '  background="linear-gradient(135deg, var(--danger-color), var(--warning-color))"',
         '  style="display:block; width:100%;"',
         '  x-fadein>',
-        '</wb-cardhero>',
+        '</div>',
       ].join('\n');
     }
 
@@ -587,7 +586,7 @@
       });
     });
 
-    // Theme control — the real <wb-themecontrol> component (never a one-off
+    // Theme control — the real <div x-themecontrol> component (never a one-off
     // hand-rolled select). It lives outside #pg-preview, so it isn't wiped by
     // render()'s innerHTML swap; scan it once, here, on load.
     ensureWB().then(() => WB.scan(document.getElementById('pg-themecontrol'), { eager: true }));
@@ -600,22 +599,22 @@
 
     function fiftyCards() {
       const T = [
-        (i, v, s) => `<wb-card title="#${i} ${v} · ${s}" variant="${v}" size="${s}" footer="Footer ${i}">Body ${i}</wb-card>`,
-        (i, v, s) => `<wb-card title="#${i} ${v}" variant="${v}" subtitle="With subtitle + badge" badge="New">${LOREM}</wb-card>`,
-        (i, v, s) => `<wb-card title="#${i} elevated" variant="${v}" elevated footer="Elevated">Body ${i}</wb-card>`,
-        (i, v, s) => `<wb-card title="#${i} hoverable" variant="${v}" hoverable tooltip="Hover text for #${i}">Hover me — ${LOREM}</wb-card>`,
-        (i, v, s) => `<wb-card title="#${i} ${v}" variant="${v}">Title + body only, no footer. ${i}</wb-card>`,
-        (i, v, s) => `<wb-cardimage title="#${i} image card" subtitle="cardimage" src="https://picsum.photos/seed/${i}/320/120">Image card body ${i}</wb-cardimage>`,
-        (i, v, s) => `<wb-cardpricing title="Plan #${i}" price="$${i}9" variant="${v}">Feature A · Feature B · Feature C</wb-cardpricing>`,
-        (i, v, s) => `<wb-cardprofile title="Person #${i}" subtitle="Role ${s}" variant="${v}">${LOREM}</wb-cardprofile>`,
+        (i, v, s) => `<article title="#${i} ${v} · ${s}" variant="${v}" size="${s}" footer="Footer ${i}">Body ${i}</article>`,
+        (i, v, s) => `<article title="#${i} ${v}" variant="${v}" subtitle="With subtitle + badge" badge="New">${LOREM}</article>`,
+        (i, v, s) => `<article title="#${i} elevated" variant="${v}" elevated footer="Elevated">Body ${i}</article>`,
+        (i, v, s) => `<article title="#${i} hoverable" variant="${v}" hoverable tooltip="Hover text for #${i}">Hover me — ${LOREM}</article>`,
+        (i, v, s) => `<article title="#${i} ${v}" variant="${v}">Title + body only, no footer. ${i}</article>`,
+        (i, v, s) => `<div x-cardimage title="#${i} image card" subtitle="cardimage" src="https://picsum.photos/seed/${i}/320/120">Image card body ${i}</div>`,
+        (i, v, s) => `<div x-cardpricing title="Plan #${i}" price="$${i}9" variant="${v}">Feature A · Feature B · Feature C</div>`,
+        (i, v, s) => `<div x-cardprofile title="Person #${i}" subtitle="Role ${s}" variant="${v}">${LOREM}</div>`,
       ];
       const out = [];
       for (let i = 0; i < 50; i++) out.push(T[i % T.length](i + 1, V[i % V.length], S[i % S.length]));
       return out.join('\n');
     }
 
-    // Combines the previous separate "20 card heroes" (plain wb-cardhero)
-    // and "20 signature heroes" (wb-cardhero + companion wb-modal + x-fadein)
+    // Combines the previous separate "20 card heroes" (plain x-cardhero)
+    // and "20 signature heroes" (x-cardhero + companion x-modal + x-fadein)
     // generators into one 120-instance set, and now also cycles variant=
     // and overlay= -- properties neither original ever touched -- alongside
     // xalign/height/background. Property arrays deliberately have different
@@ -655,7 +654,7 @@
       const CTA_HREF = {
         'Get Started': DV('docs/V3-GUIDE.md'), 'View Docs': DV('docs/V3-GUIDE.md'),
         'Docs': DV('docs/V3-GUIDE.md'), 'Read the guide': DV('docs/V3-GUIDE.md'), 'Read the Guide': DV('docs/V3-GUIDE.md'),
-        'Try it': DV('docs/V3-GUIDE.md'), 'Learn more': DV('docs/behaviors/wb-behaviors.md'),
+        'Try it': DV('docs/V3-GUIDE.md'), 'Learn more': DV('docs/behaviors/x-behaviors.md'),
         'Explore themes': DV('docs/themes.md'), 'See a11y': DV('docs/V3-GUIDE.md'),
         'Star on GitHub': 'https://github.com/CieloVistaSoftware/wb-starter',
         'Try the Playground': 'playground.html',
@@ -686,19 +685,19 @@
           bg ? `background="${bg}"` : '',
           signatureStyle ? 'x-fadein' : '',
         ].filter(Boolean);
-        const hero = `<wb-cardhero\n  ${attrs.join('\n  ')}>\n</wb-cardhero>`;
+        const hero = `<div x-cardhero\n  ${attrs.join('\n  ')}>\n</div>`;
         out.push(
           signatureStyle
-            ? `<div class="pg-signature-hero">\n  ${hero.replace(/\n/g, '\n  ')}\n  <wb-modal\n    modal-title="${title}"\n    modal-content="${sub}">\n    See it in action\n  </wb-modal>\n</div>`
+            ? `<div class="pg-signature-hero">\n  ${hero.replace(/\n/g, '\n  ')}\n  <dialog\n    modal-title="${title}"\n    modal-content="${sub}">\n    See it in action\n  </dialog>\n</div>`
             : hero
         );
       }
       return out.join('\n');
     }
 
-    // All 5 wb-cardhero variant= values (cardhero.schema.json enum:
+    // All 5 x-cardhero variant= values (cardhero.schema.json enum:
     // default/cosmic/split/minimal/gradient, wired in hero.css's
-    // wb-cardhero--{{value}} rules per #383) side by side, each labeled with
+    // x-cardhero--{{value}} rules per #383) side by side, each labeled with
     // its own name -- documented in cardhero.md's Properties table, but
     // nothing anywhere actually showed all 5 rendered together to compare.
     function fiveHeroVariants() {
@@ -717,7 +716,7 @@
           `height="320px"`,
           `variant="${variant}"`,
         ];
-        return `<wb-cardhero\n  ${attrs.join('\n  ')}>\n</wb-cardhero>`;
+        return `<div x-cardhero\n  ${attrs.join('\n  ')}>\n</div>`;
       });
       return out.join('\n');
     }
@@ -755,7 +754,7 @@
         "<article x-cardprofile\n  name=\"Grace Hopper\"\n  role=\"Compiler pioneer\"\n  avatar=\"https://picsum.photos/seed/grace/96/96\"\n  bio=\"Wrote the first compiler, then spent a career arguing that people should not have to write machine code.\"></article>",
         "<article x-cardstats value=\"1,284\" label=\"Builds this month\" trend=\"up\" trend-value=\"12%\"></article>",
         "<article x-cardtestimonial\n  quote=\"We deleted the build step and shipped faster the same week.\"\n  author=\"Katherine Johnson\"\n  role=\"Platform lead\"\n  avatar=\"https://picsum.photos/seed/katherine/96/96\"\n  rating=\"5\"></article>",
-        "<article x-cardvideo\n  src=\"/demos/sample.mp4\"\n  poster=\"https://picsum.photos/seed/screening/480/270\"\n  title=\"Behaviors in 90 seconds\"\n  description=\"What replaced the component base class, and why.\"></article>",
+        "<article x-cardvideo\n  src=\"https://www.w3schools.com/html/mov_bbb.mp4\"\n  poster=\"https://picsum.photos/seed/screening/480/270\"\n  title=\"Behaviors in 90 seconds\"\n  description=\"What replaced the component base class, and why.\"></article>",
 
         // Attention/animation effects (button — most of these are click-triggered)
         '<button x-ripple>Ripple</button>',
@@ -860,11 +859,11 @@
       const out = [];
       for (let i = 0; i < 50; i++) {
         const v = V[i % V.length], s = S[i % S.length], m = MOD[i % MOD.length];
-        out.push(`<wb-badge label="#${i + 1} ${v}" variant="${v}" size="${s}"${m}></wb-badge>`);
+        out.push(`<span x-badge label="#${i + 1} ${v}" variant="${v}" size="${s}"${m}></span>`);
       }
       // a couple of dot badges at the end
-      out.push('<wb-badge variant="success" dot></wb-badge>');
-      out.push('<wb-badge variant="error" dot></wb-badge>');
+      out.push('<span x-badge variant="success" dot></span>');
+      out.push('<span x-badge variant="error" dot></span>');
       return out.join('\n');
     }
 
@@ -881,14 +880,14 @@
       for (let i = 0; i < 20; i++) {
         const v = V[i % V.length], s = S[i % S.length];
         const options = OPTION_SETS[i % OPTION_SETS.length];
-        out.push(`<wb-select label="#${i + 1} ${v}/${s}" placeholder="Choose one…" variant="${v}" size="${s}" options='${JSON.stringify(options)}'></wb-select>`);
+        out.push(`<div x-select label="#${i + 1} ${v}/${s}" placeholder="Choose one…" variant="${v}" size="${s}" options='${JSON.stringify(options)}'></div>`);
       }
       // Explicit flag combinations, one per notable behavior
-      out.push(`<wb-select label="Searchable" searchable placeholder="Type to filter…" options='${JSON.stringify(OPTION_SETS[0])}'></wb-select>`);
-      out.push(`<wb-select label="Clearable" clearable value="banana" options='${JSON.stringify(OPTION_SETS[0])}'></wb-select>`);
-      out.push(`<wb-select label="Multiple" multiple options='${JSON.stringify(OPTION_SETS[1])}'></wb-select>`);
-      out.push(`<wb-select label="Disabled" disabled value="us" options='${JSON.stringify(OPTION_SETS[1])}'></wb-select>`);
-      out.push(`<wb-select label="Required" required placeholder="This one is required" options='${JSON.stringify(OPTION_SETS[2])}'></wb-select>`);
+      out.push(`<div x-select label="Searchable" searchable placeholder="Type to filter…" options='${JSON.stringify(OPTION_SETS[0])}'></div>`);
+      out.push(`<div x-select label="Clearable" clearable value="banana" options='${JSON.stringify(OPTION_SETS[0])}'></div>`);
+      out.push(`<div x-select label="Multiple" multiple options='${JSON.stringify(OPTION_SETS[1])}'></div>`);
+      out.push(`<div x-select label="Disabled" disabled value="us" options='${JSON.stringify(OPTION_SETS[1])}'></div>`);
+      out.push(`<div x-select label="Required" required placeholder="This one is required" options='${JSON.stringify(OPTION_SETS[2])}'></div>`);
       return out.join('\n');
     }
 
@@ -926,7 +925,7 @@
           checked ? 'checked' : '',
           disabled ? 'disabled' : '',
         ].filter(Boolean).join(' ');
-        out.push(`<wb-switch ${attrs}></wb-switch>`);
+        out.push(`<div x-switch ${attrs}></div>`);
       }
       return out.join('\n');
     }
@@ -968,42 +967,6 @@
       return urls.map((u) => `<div x-youtube url="${u}"></div>`).join('\n');
     }
 
-    // 20 real videos from a real channel (https://www.youtube.com/@richardm23),
-    // pulled live from the channel's own page data (lockupViewModel entries in
-    // window.ytInitialData) -- not guessed IDs. Each x-youtube embed is paired
-    // with the video's actual title as a caption, unlike twentyYouTubeFormats()
-    // above (which reuses ONE video across many different URL string shapes).
-    function twentyChannelVideos() {
-      const videos = [
-        ['9YEdVtc0odg', 'Do Christians Have the Same Power as Christ?'],
-        ['SCJZsmlvocY', 'Was Jim Jones a Faith Healer? The Latter Rain Connection to William Branham, Bethel, & N.A.R.'],
-        ['-CHaUE6hPDM', 'Did God Show Bob Jones Abortions?'],
-        ['5zJgNtzqxOY', 'What is a Corporate Anointing?'],
-        ['UDx2maxqre4', 'Ché Ahn Quotes The Passion Translation and Believes Apostles Can Impart Spiritual Gifts'],
-        ['eWtCrn4xxOs', 'Will This Be the Last Time We Ever See Kenneth Copeland Speak?'],
-        ['9O1MF3gyIxU', 'Bill Johnson is Engaged to a Much Younger Woman!'],
-        ['8eA-ef0SGt4', 'Can you Rob God of Glory?'],
-        ['lL1QODiWt0k', 'Kathryn Krick "Tries" to Heal Cerebral Palsy & Down Syndrome'],
-        ['EjizZrwlEug', 'Bob Jones Prophecies Judgement on America Because of Homosexuality'],
-        ['g9fYZy4P87o', 'Richard Reacts: First-Time Visitor John Christ & Shama Mrema Visit Creflo Dollar\'s Church'],
-        ['LxkOOn-Cv7A', 'Can We Reach the Full Maturity of the God Man?'],
-        ['R-M4VQ_wzaY', 'Bob Jones Prophecies Using Astrology'],
-        ['iDm7SrT9KSQ', 'Apostle Kathryn Krick has a New Posse'],
-        ['yUydO6Qj_h4', 'Pastor Loran Livingston Preaches "Repent! the Axe is at the Root of the Tree"'],
-        ['Fo4dLAzVHzQ', 'Bob Jones Had 50 to 100 Visions? Can That Be True?'],
-        ['4vUJ1aq7QZg', 'Bob Jones Admits he was a False Prophet'],
-        ['51Run8mV3h8', 'Bill Johnson Wants to Heal Down Syndrome'],
-        ['js_WYPK4Vvk', 'Apostle Ché Ahn Says, "I\'ve never Met Anyone In the NAR New Apostolic Reformation Network"'],
-        ['Y--lEcckiZ0', 'What Podcasters are Saying about Bethel'],
-      ];
-      return videos.map(([id, title]) =>
-        `<figure class="pg-video-card">\n` +
-        `  <div x-youtube url="https://www.youtube.com/watch?v=${id}"></div>\n` +
-        `  <figcaption>${title.replace(/&/g, '&amp;').replace(/</g, '&lt;')}</figcaption>\n` +
-        `</figure>`
-      ).join('\n');
-    }
-
     document.getElementById('pg-examples').addEventListener('change', async (e) => {
       const which = e.target.value;
       if (!which) return;
@@ -1017,7 +980,6 @@
       else if (which === 'selects') input.value = twentyFiveSelects();
       else if (which === 'switches') input.value = twentyFiveSwitches();
       else if (which === 'youtube') input.value = twentyYouTubeFormats();
-      else if (which === 'youtube-channel') input.value = twentyChannelVideos();
       else if (which === 'hero-fullwidth') input.value = fullWidthHero();
       setSortModes(EXAMPLE_SORT_MODES[which] || []);
       e.target.value = ''; // reset to placeholder
@@ -1051,7 +1013,7 @@
       let url = './standalone.html#' + encoded;
       if (url.length > 30000) {
         try {
-          localStorage.setItem('wb-standalone-markup', markup);
+          localStorage.setItem('x-standalone-markup', markup);
           url = './standalone.html';
         } catch (err) {
           console.warn('[playground] markup too large to hand off', err);
@@ -1080,7 +1042,7 @@
     });
     // Enter should behave like a code editor: carry the current line's
     // indentation onto the new line, and indent one level deeper when the
-    // line so far hasn't closed its tag yet (e.g. `<wb-cardhero` opening a
+    // line so far hasn't closed its tag yet (e.g. `<div x-cardhero` opening a
     // multi-line attribute list — this project's own §5 markup style).
     input.addEventListener('keydown', (e) => {
       if (e.key !== 'Enter') return;

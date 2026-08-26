@@ -28,6 +28,27 @@ git add src/core/version.js index.html project-index.html
 
 echo "🔍 Running pre-commit checks..."
 
+# ── Lint ratchet — EVERY commit (#840) ───────────────────────────────────────
+# `npm run lint` has existed for a long time and this hook never called it. That
+# is how 149 unawaited `WB.scan()` calls accumulated against 66 correct ones:
+# nothing was looking. Playwright hands .ts to Babel, which strips types and
+# runs — transpiling is not type-checking — and jsconfig.json only ever included
+# **/*.js, so the .spec.ts suite sat outside every check the project had.
+#
+# This runs on EVERY commit, deliberately NOT inside the 10-commit block below.
+# A check that runs one commit in ten lets nine commits of breakage through and
+# then blames the tenth author for all of it. It lints only STAGED files, which
+# keeps it to ~20-35s instead of the ~37s full-repo sweep.
+#
+# It is a RATCHET, not a pass/fail gate: it fails only when a file you touched
+# has MORE problems than the baseline recorded for it — never merely because
+# problems exist. Full rationale in .husky/lint-ratchet.mjs. Short version: a
+# gate too strict to pass gets bypassed, and the --no-verify habit takes every
+# other check down with it. This repo has already lived that once — see the #743
+# note above, where 16 commits in one day used --no-verify to dodge the version
+# bump and skipped all of these checks in the process.
+node .husky/lint-ratchet.mjs --staged || exit 1
+
 # ── Full validation every 10th commit ────────────────────────────────────────
 # John: "after 10 fixes run the whole set of tests."
 #
@@ -47,10 +68,50 @@ if [ "$COUNT" -ge 10 ]; then
   echo "🔁 $COUNT commits since the last full run — running the WHOLE suite"
   echo "   (compliance + regression + behaviors)"
   echo ""
+  # A stale server on the test port makes every project exit non-zero having
+  # run ZERO tests, and that used to be reported as "FULL SUITE RED" -- a
+  # 50-minute gate that failed in one second and looked like a code failure.
+  #
+  # The first fix here killed whatever held the port. That is wrong: the
+  # holder is just as likely to be the developer's own dev server, and a
+  # commit hook has no business killing it. Take a free port instead. Nothing
+  # to collide with, nothing to kill.
+  FREE_PORT=$(node -e "
+    const net=require('net');
+    const s=net.createServer();
+    s.listen(0,'127.0.0.1',()=>{const p=s.address().port;s.close(()=>console.log(p));});
+  " 2>/dev/null)
+  if [ -n "$FREE_PORT" ]; then
+    export WB_TEST_PORT="$FREE_PORT"
+    echo "   (running on port $FREE_PORT so it cannot collide with a dev server)"
+  fi
+
   FULL_FAILED=0
-  npx playwright test --project=compliance --reporter=line || FULL_FAILED=1
-  npx playwright test --project=regression --reporter=line || FULL_FAILED=1
-  npx playwright test --project=behaviors  --reporter=line || FULL_FAILED=1
+  SUITE_LOG="$(git rev-parse --git-dir)/wb-suite.log"
+  : > "$SUITE_LOG"
+
+  for PROJECT in compliance regression behaviors; do
+    npx playwright test --project="$PROJECT" --reporter=line 2>&1 | tee -a "$SUITE_LOG"
+    # ${PIPESTATUS[0]} is bash-only; this hook runs under sh. Detect the
+    # failure from the log instead, which also gives us the reason.
+    if ! grep -qE "^ +[0-9]+ (passed|failed)" "$SUITE_LOG"; then
+      FULL_FAILED=2   # never started
+    elif grep -qE "^ +[0-9]+ failed" "$SUITE_LOG"; then
+      FULL_FAILED=1   # genuinely red
+    fi
+  done
+
+  if [ "$FULL_FAILED" -eq 2 ]; then
+    echo ""
+    echo "🛑 THE SUITE NEVER RAN — this is not a code failure."
+    echo "   Playwright could not start. Common causes:"
+    echo "     • the dev server port is still held by an orphaned run"
+    echo "     • node_modules is missing or incomplete (run: npm install)"
+    echo "   Nothing was verified, so nothing is known. Commit blocked."
+    echo ""
+    tail -20 "$SUITE_LOG"
+    exit 1
+  fi
 
   if [ "$FULL_FAILED" -ne 0 ]; then
     echo ""

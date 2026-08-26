@@ -123,7 +123,7 @@ export async function bootstrap(options = {}) {
         });
 
         // 3. Initialize Views if registry provided or DOM templates exist
-        if (config.registry || document.querySelector('template[wb-view]')) {
+        if (config.registry || document.querySelector('template[x-view]')) {
             await initViews({
                 registry: config.registry
             });

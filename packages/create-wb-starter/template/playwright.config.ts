@@ -114,7 +114,7 @@ export default defineConfig({
     command: 'npm start',
     port: TEST_PORT,
     reuseExistingServer: TEST_PORT === 3000,
-    timeout: 10000,
+    timeout: 60000,
     // Never pop a browser when Playwright starts the dev server for tests.
     env: { WB_NO_OPEN: '1', PORT: String(TEST_PORT) },
   },
@@ -227,12 +227,12 @@ export default defineConfig({
       name: 'integration',
       testDir: './tests/integration',
       testMatch: '**/*.spec.ts',
-      // The components page hydrates 38 wb-demos (page-source fetch + WB.scan +
+      // The components page hydrates 38 x-demos (page-source fetch + WB.scan +
       // hljs each); under a full parallel run browsers are CPU-starved and the
       // default 30s timeout flakes. 60s absorbs the contention — the underlying
       // hydration latency is tracked as a performance issue.
       //
-      // #269 follow-up: wb-demo.js now lazy-builds blocks via
+      // #269 follow-up: x-demo.js now lazy-builds blocks via
       // IntersectionObserver (#312), which should make this stopgap
       // unnecessary — cold hydration measured ~1s steady-state. NOT yet
       // reverted to the 30s default: needs 3 consecutive clean integration

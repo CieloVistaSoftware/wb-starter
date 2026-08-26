@@ -2,12 +2,16 @@
 
 Behavior applied with x-lightbox.
 
-Apply `x-lightbox` to any element.
+## Type — new capability
 
-## Usage
+`x-lightbox` adds behavior that no HTML element implies. Nothing about a tag says "ripple" or "tooltip", so this is always opted into by attribute, on whatever element you already chose.
+
+### How to write it
 
 ```html
-<button variant="primary" x-lightbox src="https://picsum.photos/1200/800?r=lb1">View Image 1</button>
+<button variant="primary" x-lightbox src="https://picsum.photos/1200/800?r=lb1">
+  x-lightbox · variant: primary · src: https://picsum.photos/1200/800?r=lb1
+</button>
 ```
 
 ## Live example

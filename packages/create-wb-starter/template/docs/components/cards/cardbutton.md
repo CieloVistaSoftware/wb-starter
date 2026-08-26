@@ -6,10 +6,10 @@ Card with action buttons in the footer.
 
 | Property | Value |
 |----------|-------|
-| Custom Tag | `<wb-cardbutton>` |
+| Custom Tag | `<div x-cardbutton>` |
 | Behavior | `cardbutton` |
 | Semantic | `<article>` |
-| Root CSS Class | `wb-card wb-card-button` |
+| Root CSS Class | `x-card x-card-button` |
 | Composes | card structure + CSS (no base class) |
 
 ## Properties
@@ -23,53 +23,53 @@ Supports every [card property](./card.md) — that shared structure and CSS are 
 | `primaryHref` | string | `""` | Primary button URL |
 | `secondaryHref` | string | `""` | Secondary button URL |
 
-Wrapped in `<wb-demo>`, so the live component renders below with its source shown underneath:
+Wrapped in `<div x-demo>`, so the live component renders below with its source shown underneath:
 
-<wb-demo>
-<wb-cardbutton
+<div x-demo>
+<div x-cardbutton
   title="Action Card"
   subtitle="Choose an action"
   primary="Submit"
   secondary="Cancel">
   Card content here.
-</wb-cardbutton>
-</wb-demo>
+</div>
+</div>
 
 ## Usage
 
 ### Basic Button Card
 
 ```html
-<wb-cardbutton
+<div x-cardbutton
   title="Action Card"
   subtitle="Choose an action"
   primary="Submit"
   secondary="Cancel">
   Card content here.
-</wb-cardbutton>
+</div>
 ```
 
 ### With Links
 
 ```html
-<wb-cardbutton
+<div x-cardbutton
   title="Learn More"
   primary="View Details"
   primaryHref="/details"
   secondary="Go Back"
   secondaryHref="/">
-</wb-cardbutton>
+</div>
 ```
 
 ## Generated Structure
 
 ```html
-<article class="wb-card wb-card-button">
-  <header class="wb-card__header">...</header>
-  <main class="wb-card__main">...</main>
-  <footer class="wb-card__btn-footer">
-    <button class="wb-card__btn wb-card__btn--secondary">Cancel</button>
-    <button class="wb-card__btn wb-card__btn--primary">Submit</button>
+<article class="x-card x-card-button">
+  <header class="x-card__header">...</header>
+  <main class="x-card__main">...</main>
+  <footer class="x-card__btn-footer">
+    <button class="x-card__btn x-card__btn--secondary">Cancel</button>
+    <button class="x-card__btn x-card__btn--primary">Submit</button>
   </footer>
 </article>
 ```

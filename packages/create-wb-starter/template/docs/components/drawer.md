@@ -2,7 +2,7 @@
 
 Two distinct drawer types with different purposes.
 
-## 1. Drawer Layout (`<wb-drawer-layout>`)
+## 1. Drawer Layout (`<div x-drawer-layout>`)
 
 A structural sidebar container that pushes content or sits alongside it.
 
@@ -10,9 +10,9 @@ A structural sidebar container that pushes content or sits alongside it.
 
 | Property | Value |
 |----------|-------|
-| Custom Tag | `<wb-drawer-layout>` |
+| Custom Tag | `<div x-drawer-layout>` |
 | Behavior | `drawerLayout` |
-| Root CSS Class | `wb-drawer-layout` |
+| Root CSS Class | `x-drawer-layout` |
 | Schema | `src/wb-models/drawerLayout.schema.json` |
 
 ### Properties
@@ -27,33 +27,22 @@ A structural sidebar container that pushes content or sits alongside it.
 | `maxWidth` | string | `"50vw"` | Maximum width |
 | `maxHeight` | string | `"50vh"` | Maximum height |
 
-Wrapped in `<wb-demo>`, so the live component renders below with its source shown underneath:
+Wrapped in `<div x-demo>`, so the live component renders below with its source shown underneath:
 
-<wb-demo>
-<wb-drawer-layout
+<div x-demo>
+<div x-drawer-layout
   position="left"
   width="300px">
   <h3>Sidebar</h3>
   <nav>Navigation content...</nav>
-</wb-drawer-layout>
-</wb-demo>
-
-### Usage
-
-```html
-<wb-drawer-layout
-  position="left"
-  width="300px">
-  <h3>Sidebar</h3>
-  <nav>Navigation content...</nav>
-</wb-drawer-layout>
-```
+</div>
+</div>
 
 ### With Data Attributes
 
 ```html
 <div
-  x-drawerLayout
+  x-drawer-layout
   position="left"
   width="300px">
   Drawer content...
@@ -62,7 +51,7 @@ Wrapped in `<wb-demo>`, so the live component renders below with its source show
 
 ---
 
-## 2. Drawer Overlay (`<wb-drawer>`)
+## 2. Drawer Overlay (`<div x-drawer>`)
 
 A modal panel that slides in over page content.
 
@@ -70,9 +59,9 @@ A modal panel that slides in over page content.
 
 | Property | Value |
 |----------|-------|
-| Custom Tag | `<wb-drawer>` |
+| Custom Tag | `<div x-drawer>` |
 | Behavior | `drawer` |
-| Root CSS Class | `wb-drawer` |
+| Root CSS Class | `x-drawer` |
 | Schema | `src/wb-models/drawer.schema.json` |
 
 ### Properties

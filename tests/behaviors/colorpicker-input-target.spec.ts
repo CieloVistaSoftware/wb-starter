@@ -42,8 +42,8 @@ test.describe('x-colorpicker on a real <input> (its actual demoed usage)', () =>
     expect(childCount).toBe(0);
   });
 
-  test('the wb-colorpicker class is applied', async ({ page }) => {
+  test('the [x-colorpicker] class is applied', async ({ page }) => {
     await setup(page, '<input id="cp3" type="text" x-colorpicker value="#f59e0b">');
-    await expect(page.locator('#cp3')).toHaveClass(/wb-colorpicker/);
+    await expect(page.locator('#cp3')).toHaveClass(/x-colorpicker/);
   });
 });

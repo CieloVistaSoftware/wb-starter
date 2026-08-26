@@ -1,3 +1,4 @@
+import { readAttr } from '../core/read-attr.js';
 /**
  * Docs Viewer
  * -----------------------------------------------------------------------------
@@ -13,7 +14,7 @@ export function docsviewer(element) {
 
   links.forEach(btn => {
     btn.onclick = () => {
-      const src = btn.dataset.src;
+      const src = readAttr(btn, 'src');
       
       // Update active state
       links.forEach(b => {

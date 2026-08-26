@@ -19,7 +19,7 @@
             gap: 0.5rem;
         }
 
-        wb-code-card, .demo-block {
+        x-code-card, .demo-block {
             margin-bottom: 2rem;
             display: block; /* Ensure custom element is block */
         }
@@ -39,7 +39,7 @@
         }
 
         /* Target pre inside footer */
-        wb-code-card footer pre, .demo-block footer pre {
+        x-code-card footer pre, .demo-block footer pre {
             background: var(--code-bg);
             padding: 1rem;
             overflow-x: auto;
@@ -48,7 +48,7 @@
             margin: 0;
         }
         
-        wb-code-card footer pre.visible, .demo-block footer pre.visible { display: block; }
+        x-code-card footer pre.visible, .demo-block footer pre.visible { display: block; }
 
         code { font-family: "Fira Code", monospace; font-size: 0.9rem; color: var(--code-text); }
 

@@ -1,9 +1,9 @@
 /**
- * wb-audio regression tests
+ * x-audio regression tests
  * Covers bug-registry entries:
  *   BUG-2024-12-19-001 — Audio src set on a div instead of the <audio> element
  *   BUG-2025-12-26-002 — Audio EQ panel missing controls when show-eq
- * Source: src/wb-viewmodels/semantics/audio.js (+ wb-audio.js)
+ * Source: src/wb-viewmodels/semantics/audio.js (+ x-audio.js)
  */
 import { test, expect, Page } from '@playwright/test';
 
@@ -21,14 +21,14 @@ async function setup(page: Page, html: string): Promise<void> {
     c.innerHTML = h;
     document.body.appendChild(c);
   }, html);
-  await page.evaluate(() => (window as any).WB.scan(document.getElementById('audio-test')));
+  await page.evaluate(async () => await (window as any).WB.scan(document.getElementById('audio-test')));
   await page.waitForTimeout(600);
 }
 
-test.describe('wb-audio', () => {
+test.describe('.x-audio', () => {
   // BUG-2024-12-19-001
   test('src is applied to the inner <audio> element (not a div)', async ({ page }) => {
-    await setup(page, '<wb-audio id="a-src" src="/demos/audio.mp3"></wb-audio>');
+    await setup(page, '<audio id="a-src" src="/demos/audio.mp3"></audio>');
     const host = page.locator('#a-src');
     const audio = host.locator('audio');
     await expect(audio).toHaveCount(1);
@@ -39,8 +39,8 @@ test.describe('wb-audio', () => {
   // BUG-2025-12-26-002
   test('show-eq renders the equalizer band controls', async ({ page }) => {
     await setup(page, `
-      <wb-audio id="a-plain" src="/demos/audio.mp3"></wb-audio>
-      <wb-audio id="a-eq" src="/demos/audio.mp3" show-eq></wb-audio>
+      <audio id="a-plain" src="/demos/audio.mp3"></audio>
+      <audio id="a-eq" src="/demos/audio.mp3" show-eq></audio>
     `);
     // EQ panel renders shortly after scan — wait for the band sliders to appear
     await page.locator('#a-eq input[type="range"]').first().waitFor({ state: 'attached', timeout: 6000 });

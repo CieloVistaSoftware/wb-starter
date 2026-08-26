@@ -38,7 +38,7 @@
   .issue-row__labels { display: flex; gap: 0.35rem; flex-wrap: wrap; }
   .issue-row__label { font-size: 0.7rem; padding: 0.1em 0.5em; border-radius: 999px; background: var(--bg-tertiary); color: var(--text-secondary); }
   .issue-row__body { display: none; padding: 0 1rem 1rem; border-top: 1px solid var(--border-color); color: var(--text-secondary); font-size: 0.9rem; line-height: 1.6; }
-  /* Rendered markdown (wb-mdhtml) needs normal HTML flow, not the raw-text
+  /* Rendered markdown (x-mdhtml) needs normal HTML flow, not the raw-text
      pre-wrap this div used before -- headings/lists/code blocks would
      otherwise inherit literal whitespace preservation meant for plain text. */
   .issue-row__body .issue-row__mdhtml { display: block; }
@@ -142,14 +142,14 @@
         </li>`;
     }).join('');
 
-    // A plain div, not a real <wb-mdhtml> tag -- tag-map.js registers
-    // wb-mdhtml for WB's own generic auto-scan/lazy-load, which would call
+    // A plain div, not a real <div x-mdhtml> tag -- tag-map.js registers
+    // x-mdhtml for WB's own generic auto-scan/lazy-load, which would call
     // mdhtml() on it with DEFAULT options (autoLiveRender left at its true
     // default) the moment it lands in the DOM, racing ahead of the explicit
     // { autoLiveRender: false } call below and re-introducing the exact bug
     // that option exists to prevent (confirmed live: it did, even before any
     // row was ever clicked open). mdhtml() itself supports this -- it only
-    // needs the wb-mdhtml TAG for CSS tag-selectors, and adds the .wb-mdhtml
+    // needs the x-mdhtml TAG for CSS tag-selectors, and adds the .x-mdhtml
     // CLASS itself on any other host (same pattern public/doc-viewer.html's
     // own plain <div id="content"> already relies on).
     //

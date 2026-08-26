@@ -3,7 +3,7 @@ import { VERSION } from '../core/version.js';
 /**
  * Release — the ONE place any element displays the site's release/build
  * number. Single canonical read of src/core/version.js's VERSION export;
- * every consumer (wb-release custom tag, x-release attribute on any
+ * every consumer (x-release custom tag, x-release attribute on any
  * element) renders through this one function, never a hardcoded literal.
  *
  * Replaces two separate ad-hoc mechanisms that grew up independently:
@@ -11,10 +11,10 @@ import { VERSION } from '../core/version.js';
  * page fragments, and a direct VERSION import + manual DOM patch in
  * demos/landing-page-showcase.html for standalone (non-SPA) pages. Both
  * worked, but "add a new page that shows the version" meant picking
- * which of two mechanisms to use. x-release/wb-release works identically
+ * which of two mechanisms to use. x-release/x-release works identically
  * everywhere -- SPA fragment or standalone page -- with no special-casing.
  *
- * Custom Tag: <wb-release></wb-release>
+ * Custom Tag: <div x-release></div>
  * Attribute:  <span x-release></span>
  *
  * Attributes:
@@ -66,7 +66,7 @@ export function release(element, options = {}) {
     ...options,
   };
 
-  element.classList.add('wb-release');
+  element.classList.add('x-release');
   element.textContent = config.format
     .replace('{version}', VERSION.version)
     .replace('{commit}', VERSION.commit)
@@ -76,7 +76,7 @@ export function release(element, options = {}) {
 
   let onClick = null;
   if (config.reload) {
-    element.classList.add('wb-release--clickable');
+    element.classList.add('x-release--clickable');
     onClick = async (e) => {
       e.preventDefault();
       element.textContent = '⏳';

@@ -10,7 +10,7 @@ or `<nav>`) stick to the top of the viewport as the page scrolls past it, via CS
 |----------|-------|
 | Behavior | `scrollalong` |
 | Attribute | `x-scrollalong` |
-| Custom Tag | `<div x-scrollalong>` |
+| Attribute form | `<div x-scrollalong>` |
 | Applies to | any element, typically inside a flex/grid layout |
 | Category | Layout |
 | Schema | `src/wb-models/scrollalong.schema.json` |
@@ -37,27 +37,27 @@ by its container, it does not add any wrapper or placeholder.
 
 ### Default
 
-<wb-demo>
+<div x-demo>
 <aside x-scrollalong style="padding: 1rem; border: 1px solid var(--border-color);">
   This element sticks to the top of the viewport as you scroll past it.
 </aside>
-</wb-demo>
+</div>
 
 ### With an offset
 
-<wb-demo>
+<div x-demo>
 <aside x-scrollalong offset="20" style="padding: 1rem; border: 1px solid var(--border-color);">
   Sticks 20px from the top instead of flush against it.
 </aside>
-</wb-demo>
-
-### Custom Tag
-
-<wb-demo>
-<wb-scrollalong style="padding: 1rem; border: 1px solid var(--border-color); display: block;">
-  Same behavior via the &lt;wb-scrollalong&gt; custom tag.
 </div>
-</wb-demo>
+
+### Attribute form
+
+<div x-demo>
+<div x-scrollalong style="padding: 1rem; border: 1px solid var(--border-color); display: block;">
+  Same behavior via the &lt;x-scrollalong&gt; custom tag.
+</div>
+</div>
 
 ## CSS Classes
 

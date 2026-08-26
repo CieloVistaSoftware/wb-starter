@@ -81,7 +81,7 @@ structural tokens already work today.
   content-panel padding gate before adopting — no new failures vs. the
   pre-existing baseline.
 - Still open: is `--nav-width`/`--content-padding` actually needed given wb-starter's
-  existing layout behaviors (`wb-sidebar`, `wb-container`, etc. — see
+  existing layout behaviors (`x-sidebar`, `x-container`, etc. — see
   `docs/architecture/proposals/proposed-custom-elements.md`), or is this
   solving a problem that doesn't exist in wb-starter's actual layout system?
 

@@ -35,7 +35,7 @@ import { globSync } from 'glob';
  *     document.body-appended overlays).
  *   - Known overlay/decoration classes (grepped from src/wb-viewmodels/
  *     tooltip.js, overlay.js and src/styles/behaviors/{dropdown,modal,
- *     popover,toast,dialog,drawer}.css, plus wb-signature.css's glass
+ *     popover,toast,dialog,drawer}.css, plus x-signature.css's glass
  *     variants) — these are position:absolute (not fixed), so the
  *     position check alone wouldn't catch them.
  *   - The `data-allow-overlap` escape hatch (on either element in the
@@ -65,11 +65,24 @@ test.describe('No element overlap (§22) — project-wide detection', () => {
       // networkidle (not domcontentloaded) -- under concurrent-worker load
       // (many tests hitting the shared dev server at once), slow image
       // fetches finish AFTER the fixed settle timeout below, so an overlay
-      // positioned against an image (e.g. wb-card__overlay on a still-
+      // positioned against an image (e.g. x-card__overlay on a still-
       // loading card image) gets measured mid-layout-shift. Confirmed via
       // repeated runs: flaked only under full-suite concurrency, passed
       // every time in isolation -- a load-timing race, not a real defect.
-      await page.goto(urlPath, { waitUntil: 'networkidle' });
+      const response = await page.goto(urlPath, { waitUntil: 'networkidle' });
+
+      // #863: the overlap sweep below can only report what it finds, and a page
+      // that 404s has nothing to find -- page.goto() does NOT throw on a 404, so
+      // a renamed or deleted file here produced an empty `violations` array and
+      // a green test forever. Assert the page actually loaded before trusting a
+      // clean sweep.
+      expect(
+        response?.status(),
+        `${urlPath} did not load (status ${response?.status()}) -- a 404 makes `
+        + 'the overlap sweep below pass vacuously, since there is nothing on the '
+        + 'page to overlap.',
+      ).toBeLessThan(400);
+
       await page.waitForTimeout(800); // settle lazy/eager scan + layout
 
       const violations = await page.evaluate((minOverlapDim) => {
@@ -79,13 +92,13 @@ test.describe('No element overlap (§22) — project-wide detection', () => {
         // (not fixed/sticky), so the position check alone won't exclude
         // them. Grepped from src/wb-viewmodels/tooltip.js, overlay.js and
         // src/styles/behaviors/{dropdown,modal,popover,toast,dialog,
-        // drawer}.css + wb-signature.css.
+        // drawer}.css + x-signature.css.
         //
-        // #540: wb-card__overlay (src/styles/behaviors/hero.css,
-        // wb-cardhero's "legibility scrim") wasn't in this list even though
+        // #540: x-card__overlay (src/styles/behaviors/hero.css,
+        // x-cardhero's "legibility scrim") wasn't in this list even though
         // it's the exact same pattern -- a position:absolute, z-index:0
         // decorative layer that ALWAYS renders behind its sibling
-        // .wb-card__hero-content (z-index:1, set two rules below it in
+        // .x-card__hero-content (z-index:1, set two rules below it in
         // hero.css). Confirmed live on demos/charity-food.html: the scrim's
         // full-card box geometrically overlaps the hero title/subtitle
         // bounding boxes, but the text renders cleanly on top per the
@@ -93,10 +106,10 @@ test.describe('No element overlap (§22) — project-wide detection', () => {
         // list's original grep (which covered tooltip/popover/modal/dialog/
         // toast/drawer but never card.css/hero.css's own scrim).
         //
-        // #540: wb-demo__card-doc-link (src/styles/behaviors/demo.css #388,
+        // #540: x-demo__card-doc-link (src/styles/behaviors/demo.css #388,
         // src/wb-viewmodels/demo.js's attachCardDocLink) is demo.js's own
         // per-card "📖" docs badge, attached to the top-right corner of
-        // EVERY wb-card* element inside a <wb-demo> grid site-wide --
+        // EVERY x-card* element inside a <div x-demo> grid site-wide --
         // demo.css's own comment calls it out explicitly: "Sits at the
         // card's own top-right corner, slightly overlapping the border, so
         // it's clearly a separate 'meta/docs' affordance." Confirmed live
@@ -105,27 +118,27 @@ test.describe('No element overlap (§22) — project-wide detection', () => {
         // top:-0.5rem, right:-0.5rem, z-index:5) -- this single class
         // explains the bulk of this codebase's demo-page failures under
         // §22, since nearly every demos/**/*.html and pages/**/*.html file
-        // renders at least one <wb-demo> grid of wb-card* examples.
+        // renders at least one <div x-demo> grid of x-card* examples.
         const OVERLAY_CLASS_RE = new RegExp(
           [
-            'wb-tooltip', 'wb-tooltip__arrow', 'wb-tooltip__content', 'wb-tooltip-glass',
-            'wb-popover', 'wb-popover-trigger',
-            'wb-dropdown-menu',
-            'wb-modal', 'wb-modal-content', 'wb-modal-glass-overlay', 'wb-modal-glass-content',
-            'wb-dialog', 'wb-dialog-trigger',
-            'wb-toast', 'wb-toast-container',
-            'wb-lightbox',
-            'wb-drawer__panel', 'wb-drawer__backdrop',
-            'wb-offcanvas',
-            'wb-sheet',
-            'wb-notes__backdrop', 'wb-notes__drawer',
+            '[x-tooltip]', '[x-tooltip]__arrow', '[x-tooltip]__content', 'x-tooltip-glass',
+            'x-popover', 'x-popover-trigger',
+            'x-dropdown-menu',
+            '[x-modal]', 'x-modal-content', 'x-modal-glass-overlay', 'x-modal-glass-content',
+            '.x-dialog', 'x-dialog-trigger',
+            '[x-toast]', 'x-toast-container',
+            'x-lightbox',
+            '[x-drawer]__panel', '[x-drawer]__backdrop',
+            'x-offcanvas',
+            'x-sheet',
+            '[x-notes]__backdrop', '[x-notes]__drawer',
             'site__nav-backdrop',
-            'wb-demo__card-doc-link',
-            // #556: the native <input> that drives a <wb-switch>'s :checked
+            '[x-demo]__card-doc-link',
+            // #556: the native <input> that drives a <div x-switch>'s :checked
             // state (switch.css's own comment: "visually-hidden native
             // checkbox (state driver)") -- position:absolute, opacity:0,
             // deliberately sized/positioned to sit exactly under the visible
-            // .wb-switch__thumb/.wb-switch__track it controls, same
+            // .x-switch__thumb/.x-switch__track it controls, same
             // "invisible input behind a styled visual" pattern countless
             // custom checkbox/switch/radio components use. Confirmed live on
             // demos/site/forms.html: isVisible()'s opacity===0 check misses
@@ -136,8 +149,8 @@ test.describe('No element overlap (§22) — project-wide detection', () => {
             // its own thumb -- the same element pair, on the SAME component,
             // that opacity:0 already correctly excludes for every OTHER
             // (non-disabled) switch on the page.
-            'wb-switch__input',
-            // #556: wb-stagelight's "beam" variant (stagelight.js) is a
+            '[x-switch]__input',
+            // #556: x-stagelight's "beam" variant (stagelight.js) is a
             // decorative lighting-effect demo -- position:absolute,
             // height:100vh (deliberately spans the full viewport height,
             // "Long beam" per its own comment), pointer-events:none
@@ -150,17 +163,17 @@ test.describe('No element overlap (§22) — project-wide detection', () => {
             // markup" sample -- by design, same category as this list's
             // tooltip/popover/modal/toast entries, just a lighting effect
             // instead of a UI overlay.
-            'wb-stagelight__beam',
+            '[x-stagelight]__beam',
           ].map((c) => c.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')).join('|')
-          // wb-card__overlay needs an exact-token match (word-boundary
+          // x-card__overlay needs an exact-token match (word-boundary
           // anchored to whitespace/string edges), not a plain substring
           // like every entry above -- unanchored, it would ALSO swallow
-          // the unrelated wb-card__overlay-content/-title/-subtitle classes
+          // the unrelated x-card__overlay-content/-title/-subtitle classes
           // from cardoverlay() (card.js's separate image-caption component,
           // src/wb-viewmodels/card.js ~L2130-2168), whose text is real
           // visible content sitting on an image, not a decorative layer
           // behind other content -- those must stay checked.
-          + '|(?:^|\\s)wb-card__overlay(?:\\s|$)'
+          + '|(?:^|\\s)x-card__overlay(?:\\s|$)'
         );
 
         function isVisible(el: HTMLElement, cs: CSSStyleDeclaration): boolean {
@@ -186,7 +199,7 @@ test.describe('No element overlap (§22) — project-wide detection', () => {
 
         // #540: CSS `position` is never inherited -- a plain, unstyled text
         // <div> nested inside a position:fixed toast/panel (e.g. the site's
-        // own #wb-error-display error-log viewer, src/core/error-log*.js)
+        // own #x-error-display error-log viewer, src/core/error-log*.js)
         // computes as position:static on ITSELF, even though its fixed
         // ancestor pins the whole panel to a screen corner regardless of
         // document flow. The plain `cs.position === 'fixed'` check below
@@ -292,10 +305,10 @@ test.describe('No element overlap (§22) — project-wide detection', () => {
 
         // Clip a rect against every `overflow: hidden`/`clip`/`auto`/`scroll`
         // ancestor.
-        // Found live on pages/home.html: <wb-demo> starts as a collapsed
+        // Found live on pages/home.html: <div x-demo> starts as a collapsed
         // `height: 32px; overflow: hidden` skeleton until its lazy-build
         // (IntersectionObserver-driven grid construction) runs; the demo's
-        // real content -- a <wb-cardhero> -- is already fully laid out
+        // real content -- a <div x-cardhero> -- is already fully laid out
         // *inside* it with its true ~400px height, so getBoundingClientRect()
         // reports geometry hundreds of pixels below the collapsed parent's
         // own clipped box. checkVisibility() does NOT catch this (clipping

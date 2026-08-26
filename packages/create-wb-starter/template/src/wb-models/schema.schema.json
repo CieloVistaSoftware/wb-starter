@@ -399,7 +399,7 @@
       "properties": {
         "showcase": {
           "type": "boolean",
-          "description": "If true, all sections are wrapped in wb-demo (shows source code). False for production pages."
+          "description": "If true, all sections are wrapped in x-demo (shows source code). False for production pages."
         },
         "fragment": {
           "type": "boolean",

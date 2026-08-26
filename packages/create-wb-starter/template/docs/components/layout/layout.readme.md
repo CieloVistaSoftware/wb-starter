@@ -22,15 +22,15 @@ Flexible container with max-width and padding for content centering.
 
 ```html
 <!-- Basic container -->
-<wb-container size="lg">
+<div x-container size="lg">
   <p>Main content goes here</p>
-</wb-container>
+</div>
 <!-- Full-width container -->
-<wb-container
+<div x-container
   size="full"
   padding="2rem">
   <div>Full width content</div>
-</wb-container>
+</div>
 ```
 
 ### Container Sizes
@@ -64,15 +64,15 @@ CSS Grid layout with responsive columns and flexible item placement.
 
 ```html
 <!-- Basic 3-column grid -->
-<wb-grid
+<div x-grid
   cols="3"
   gap="1.5rem">
   <div>Column 1</div>
   <div>Column 2</div>
   <div>Column 3</div>
-</wb-grid>
+</div>
 <!-- Responsive grid -->
-<wb-grid
+<div x-grid
   cols="4"
   cols-md="2"
   cols-sm="1"
@@ -81,7 +81,7 @@ CSS Grid layout with responsive columns and flexible item placement.
   <div>Item 2</div>
   <div>Item 3</div>
   <div>Item 4</div>
-</wb-grid>
+</div>
 ```
 
 ### Grid Item Attributes
@@ -94,11 +94,11 @@ CSS Grid layout with responsive columns and flexible item placement.
 | `row-span` | number | Row span |
 
 ```html
-<wb-grid cols="4">
+<div x-grid cols="4">
   <div span="2">Spans 2 columns</div>
   <div>Column 3</div>
   <div>Column 4</div>
-</wb-grid>
+</div>
 ```
 
 ---
@@ -121,21 +121,21 @@ Flexbox layout container for flexible item arrangement.
 
 ```html
 <!-- Horizontal flex with space between -->
-<wb-flex
+<div x-flex
   justify="between"
   align="center">
   <div>Left item</div>
   <div>Center item</div>
   <div>Right item</div>
-</wb-flex>
+</div>
 <!-- Vertical flex stack -->
-<wb-flex
+<div x-flex
   direction="column"
   gap="1.5rem">
   <header>Header</header>
   <main>Main content</main>
   <footer>Footer</footer>
-</wb-flex>
+</div>
 ```
 
 ### Flex Item Attributes
@@ -164,11 +164,11 @@ Vertical stack layout (shorthand for flex column).
 
 ```html
 <!-- Basic vertical stack -->
-<wb-stack gap="1.5rem">
+<div x-stack gap="1.5rem">
   <h1>Title</h1>
   <p>Description paragraph</p>
-  <wb-button>Action Button</wb-button>
-</wb-stack>
+  <button>Action Button</button>
+</div>
 ```
 
 ---
@@ -188,26 +188,26 @@ Center content both horizontally and vertically.
 
 ```html
 <!-- Full viewport center -->
-<wb-center>
+<div x-center>
   <div>Centered content</div>
-</wb-center>
+</div>
 <!-- Centered card -->
-<wb-center max-width="400px">
-  <wb-card>
+<div x-center max-width="400px">
+  <article>
     <h2>Login</h2>
-    <wb-form>
-      <wb-input
+    <form>
+      <div x-input
         label="Email"
         type="email">
-      </wb-input>
-      <wb-input
+      </div>
+      <div x-input
         label="Password"
         type="password">
-      </wb-input>
-      <wb-button type="submit">Sign In</wb-button>
-    </wb-form>
-  </wb-card>
-</wb-center>
+      </div>
+      <button type="submit">Sign In</button>
+    </form>
+  </article>
+</div>
 ```
 
 ---
@@ -229,7 +229,7 @@ Two-column layout with sidebar and main content area.
 
 ```html
 <!-- Left sidebar layout -->
-<wb-sidebar-layout sidebar-width="300px">
+<div x-sidebarlayout sidebar-width="300px">
   <aside>
     <nav>
       <ul>
@@ -249,7 +249,7 @@ Two-column layout with sidebar and main content area.
     <h1>Main Content</h1>
     <p>Page content goes here</p>
   </main>
-</wb-sidebar-layout>
+</div>
 ```
 
 ---
@@ -271,17 +271,17 @@ Semantic sidebar container with optional collapse functionality.
 
 ```html
 <!-- Collapsible sidebar -->
-<wb-sidebar
+<div x-sidebarlayout
   width="280px"
   collapsible>
   <nav>
-    <wb-stack gap="0.5rem">
+    <div x-stack gap="0.5rem">
       <a href="#dashboard">Dashboard</a>
       <a href="#users">Users</a>
       <a href="#settings">Settings</a>
-    </wb-stack>
+    </div>
   </nav>
-</wb-sidebar>
+</div>
 ```
 
 ---
@@ -301,27 +301,27 @@ Semantic form grouping container.
 
 ```html
 <!-- Form section grouping -->
-<wb-fieldset legend="Personal Information">
-  <wb-input
+<fieldset legend="Personal Information">
+  <div x-input
     label="First Name"
     required>
-  </wb-input>
-  <wb-input
+  </div>
+  <div x-input
     label="Last Name"
     required>
-  </wb-input>
-  <wb-input
+  </div>
+  <div x-input
     label="Email"
     type="email"
     required>
-  </wb-input>
-</wb-fieldset>
-<wb-fieldset
+  </div>
+</fieldset>
+<fieldset
   legend="Preferences"
   disabled>
-  <wb-checkbox label="Subscribe to newsletter"></wb-checkbox>
-  <wb-checkbox label="Receive updates"></wb-checkbox>
-</wb-fieldset>
+  <div x-checkbox label="Subscribe to newsletter"></div>
+  <div x-checkbox label="Receive updates"></div>
+</fieldset>
 ```
 
 ---
@@ -342,12 +342,12 @@ Horizontal or vertical divider line with optional text.
 
 ```html
 <!-- Horizontal divider with text -->
-<wb-divider
+<div
   text="OR"
   spacing="2rem">
-</wb-divider>
+</div>
 <!-- Vertical divider -->
-<wb-divider direction="vertical"></wb-divider>
+<div direction="vertical"></div>
 ```
 
 ---
@@ -367,12 +367,12 @@ Flexible spacing element for layout control.
 
 ```html
 <!-- Vertical spacing -->
-<wb-spacer size="2rem"></wb-spacer>
+<div size="2rem"></div>
 <!-- Horizontal spacing -->
-<wb-spacer
+<div
   size="1rem"
   direction="horizontal">
-</wb-spacer>
+</div>
 ```
 
 ---
@@ -389,7 +389,7 @@ All layout components support responsive attributes:
 
 ```html
 <!-- Responsive grid example -->
-<wb-grid
+<div x-grid
   cols="4"
   cols-md="2"
   cols-sm="1"
@@ -398,7 +398,7 @@ All layout components support responsive attributes:
   <div>Responsive item</div>
   <div>Responsive item</div>
   <div>Responsive item</div>
-</wb-grid>
+</div>
 ```
 
 ---
@@ -459,6 +459,6 @@ Layout components use CSS custom properties for theming:
 
 ## Implementation
 - **Components**: Located in `src/wb-viewmodels/` (container.js, grid.js, flex.js, etc.)
-- **Styles**: [src/styles/components/layout.css](../../src/styles/components/layout.css)
+- **Styles**: [src/styles/components/layout.css](../../../src/styles/behaviors/layout.css)
 - **Schemas**: Layout component schemas in `src/wb-models/`
 - **Tests**: Layout tests in `tests/behaviors/ui/layout.spec.ts`

@@ -2,14 +2,24 @@
 
 Navigation bar with brand, links, and responsive menu
 
-Applies to `<nav>`, and to any element carrying `x-navbar`.
+## Type — decorates a semantic element
 
-## Usage
+`x-navbar` is the **nav behavior**. It attaches to `<nav>`, the element you would have reached for anyway — there is no new tag to learn.
+
+### How to write it
 
 ```html
-<nav x-navbar>
+<nav x-navbar brand="wb-starter" brand-href="#" tagline="Zero build"></nav>
+```
+
+### On a different element
+
+Use `x-navbar` when the host is not a `<nav>` and you want the same behavior:
+
+```html
+<div x-navbar>
   …
-</nav>
+</div>
 ```
 
 ## Attributes

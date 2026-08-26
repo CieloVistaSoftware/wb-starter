@@ -4,13 +4,13 @@
   "title": "Dialog",
   "description": "Modal dialog using native HTML5 dialog element",
   "schemaFor": "dialog",
-  "baseClass": "wb-dialog",
+  "baseClass": "x-dialog",
   "semanticElement": {
     "tagName": "dialog",
     "implicitRole": "dialog"
   },
   "compliance": {
-    "baseClass": "wb-dialog",
+    "baseClass": "x-dialog",
     "supportLevel": "stable",
     "accessibility": "high"
   },
@@ -35,7 +35,7 @@
         "full"
       ],
       "default": "md",
-      "appliesClass": "wb-dialog--{{value}}"
+      "appliesClass": "x-dialog--{{value}}"
     },
     "closeOnBackdrop": {
       "type": "boolean",
@@ -60,7 +60,7 @@
         "fullscreen"
       ],
       "default": "default",
-      "appliesClass": "wb-dialog--{{value}}"
+      "appliesClass": "x-dialog--{{value}}"
     }
   },
   "$view": [
@@ -151,63 +151,63 @@
     }
   },
   "$cssAPI": {
-    "--wb-dialog-width": {
+    "--x-dialog-width": {
       "default": "500px",
       "description": "Dialog width"
     },
-    "--wb-dialog-max-width": {
+    "--x-dialog-max-width": {
       "default": "90vw",
       "description": "Max dialog width"
     },
-    "--wb-dialog-max-height": {
+    "--x-dialog-max-height": {
       "default": "85vh",
       "description": "Max dialog height"
     },
-    "--wb-dialog-radius": {
+    "--x-dialog-radius": {
       "default": "8px",
       "description": "Border radius"
     },
-    "--wb-dialog-bg": {
+    "--x-dialog-bg": {
       "default": "var(--bg-surface, #ffffff)",
       "description": "Background"
     },
-    "--wb-dialog-shadow": {
+    "--x-dialog-shadow": {
       "default": "0 20px 60px rgba(0,0,0,0.3)",
       "description": "Box shadow"
     },
-    "--wb-dialog-padding": {
+    "--x-dialog-padding": {
       "default": "1.5rem",
       "description": "Content padding"
     },
-    "--wb-dialog-header-gap": {
+    "--x-dialog-header-gap": {
       "default": "1rem",
       "description": "Header gap"
     },
-    "--wb-dialog-title-size": {
+    "--x-dialog-title-size": {
       "default": "1.25rem",
       "description": "Title font size"
     },
-    "--wb-dialog-title-weight": {
+    "--x-dialog-title-weight": {
       "default": "600",
       "description": "Title font weight"
     },
-    "--wb-dialog-backdrop-bg": {
+    "--x-dialog-backdrop-bg": {
       "default": "rgba(0,0,0,0.5)",
       "description": "Backdrop background"
     },
-    "--wb-dialog-backdrop-blur": {
+    "--x-dialog-backdrop-blur": {
       "default": "0",
       "description": "Backdrop blur"
     },
-    "--wb-dialog-enter-animation": {
+    "--x-dialog-enter-animation": {
       "default": "dialogFadeIn 0.2s ease",
       "description": "Enter animation"
     },
-    "--wb-dialog-exit-animation": {
+    "--x-dialog-exit-animation": {
       "default": "dialogFadeOut 0.15s ease",
       "description": "Exit animation"
     },
-    "--wb-dialog-z-index": {
+    "--x-dialog-z-index": {
       "default": "1000",
       "description": "Z-index"
     }
@@ -236,15 +236,15 @@
   "test": {
     "functional": true,
     "setup": [
-      "<wb-dialog>Basic dialog content</wb-dialog>",
-      "<wb-dialog size=\"sm\">size=sm</wb-dialog>",
-      "<wb-dialog size=\"md\">size=md</wb-dialog>",
-      "<wb-dialog size=\"lg\">size=lg</wb-dialog>",
-      "<wb-dialog variant=\"default\">variant=default</wb-dialog>",
-      "<wb-dialog variant=\"centered\">variant=centered</wb-dialog>",
-      "<wb-dialog variant=\"fullscreen\">variant=fullscreen</wb-dialog>",
-      "<wb-dialog close-on-backdrop>with closeOnBackdrop</wb-dialog>",
-      "<wb-dialog title=\"Test Title\">With title attribute</wb-dialog>"
+      "<dialog>Basic dialog content</dialog>",
+      "<dialog size=\"sm\">size=sm</dialog>",
+      "<dialog size=\"md\">size=md</dialog>",
+      "<dialog size=\"lg\">size=lg</dialog>",
+      "<dialog variant=\"default\">variant=default</dialog>",
+      "<dialog variant=\"centered\">variant=centered</dialog>",
+      "<dialog variant=\"fullscreen\">variant=fullscreen</dialog>",
+      "<dialog close-on-backdrop>with closeOnBackdrop</dialog>",
+      "<dialog title=\"Test Title\">With title attribute</dialog>"
     ],
     "matrix": {
       "combinations": [
@@ -267,9 +267,9 @@
     },
     "site": {
       "page": "overlays",
-      "tag": "wb-dialog",
+      "tag": "x-dialog",
       "renders": true,
-      "baseClass": "wb-dialog",
+      "baseClass": "x-dialog",
       "minInstances": 4,
       "checkText": [
         "Basic Dialog",
@@ -278,8 +278,8 @@
         "Centered"
       ],
       "checkClasses": [
-        "wb-dialog--sm",
-        "wb-dialog--centered"
+        "x-dialog--sm",
+        "x-dialog--centered"
       ],
       "checkAttributes": [
         "title"

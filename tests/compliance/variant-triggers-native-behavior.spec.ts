@@ -48,12 +48,12 @@ for (const core of ['/src/core/wb.js', '/src/core/wb-lazy.js']) {
   test.describe(`variant triggers native behavior regardless of autoInject (${core})`, () => {
     test('a plain <button variant="primary"> gets its variant class even with autoInject explicitly off', async ({ page }) => {
       await renderWithWB(page, core, '{ autoInject: false }');
-      await expect(page.locator('#probe-button')).toHaveClass(/wb-button--primary/);
+      await expect(page.locator('#probe-button')).toHaveClass(/x-button--primary/);
     });
 
     test('a plain <article> (no variant) is still NOT auto-carded with autoInject off -- no #328 regression', async ({ page }) => {
       await renderWithWB(page, core, '{ autoInject: false }');
-      await expect(page.locator('#probe-article')).not.toHaveClass(/wb-card/);
+      await expect(page.locator('#probe-article')).not.toHaveClass(/x-card/);
     });
   });
 }

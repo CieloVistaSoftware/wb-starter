@@ -194,7 +194,7 @@
     "x-copy": {
       "source": "<button variant=\"primary\" x-copy copy-text=\"Text copied to clipboard!\">\n  x-copy · variant: primary · copy-text: Text copied to clipboard!\n</button>",
       "alternates": [
-        "<button variant=\"primary\" x-copy copy-text=\"npm install wb-framework\">\n  x-copy · variant: primary · copy-text: npm install wb-framework\n</button>"
+        "<button variant=\"primary\" x-copy copy-text=\"npm install x-framework\">\n  x-copy · variant: primary · copy-text: npm install x-framework\n</button>"
       ]
     },
     "x-share": {
@@ -469,7 +469,7 @@
       "alternates": []
     },
     "x-floatinglabel": {
-      "source": "<div x-floatinglabel>\n  <input type=\"text\" id=\"wb-ex-floating\" placeholder=\" \">\n  <label for=\"wb-ex-floating\">Project name</label>\n</div>",
+      "source": "<div x-floatinglabel>\n  <input type=\"text\" id=\"x-ex-floating\" placeholder=\" \">\n  <label for=\"x-ex-floating\">Project name</label>\n</div>",
       "alternates": []
     },
     "x-searchfield": {
@@ -597,7 +597,7 @@
       "alternates": []
     },
     "x-copybutton": {
-      "source": "<button x-copybutton copy-target=\"#wb-ex-copy-source\">\n  x-copybutton · copy-target: #wb-ex-copy-source\n</button>\n<code id=\"wb-ex-copy-source\">npm run test:compliance</code>",
+      "source": "<button x-copybutton copy-target=\"#x-ex-copy-source\">\n  x-copybutton · copy-target: #x-ex-copy-source\n</button>\n<code id=\"x-ex-copy-source\">npm run test:compliance</code>",
       "alternates": []
     },
     "x-notify": {
@@ -605,7 +605,7 @@
       "alternates": []
     },
     "x-toggle": {
-      "source": "<button x-toggle target=\"#wb-ex-toggle-panel\">\n  x-toggle · target: #wb-ex-toggle-panel\n</button>\n<div id=\"wb-ex-toggle-panel\">The panel this button toggles.</div>",
+      "source": "<button x-toggle target=\"#x-ex-toggle-panel\">\n  x-toggle · target: #x-ex-toggle-panel\n</button>\n<div id=\"x-ex-toggle-panel\">The panel this button toggles.</div>",
       "alternates": []
     },
     "x-globe": {
@@ -662,6 +662,10 @@
     },
     "x-sticky": {
       "source": "<div x-sticky offset=\"0\" stuck-class=\"is-stuck\">\n  Sticks to the top of its scroll container once you pass it.\n</div>",
+      "alternates": []
+    },
+    "x-fill": {
+      "source": "<div id=\"fill-demo-row\" x-cluster gap=\"0.5rem\">\n  <button id=\"fill-demo-target\" x-fill>Fills the rest of the row</button>\n  <button id=\"fill-demo-sibling\">Natural width</button>\n</div>",
       "alternates": []
     }
   }

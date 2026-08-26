@@ -25,7 +25,7 @@ async function injectAndScan(page: Page, html: string) {
     container.innerHTML = h;
     
     // Force eager loading
-    const elements = container.querySelectorAll('.wb-ready');
+    const elements = container.querySelectorAll('.x-ready');
     elements.forEach(el => el.setAttribute('', ''));
     
     document.body.appendChild(container);
@@ -45,11 +45,11 @@ test.describe('move Behavior', () => {
     page.on('pageerror', (err) => errors.push(err.message));
     
     const setupHtml = [
-      "<wb-move>Basic move content</wb-move>",
-      "<wb-move>Test permutation 2</wb-move>",
-      "<wb-move>Test permutation 3</wb-move>",
-      "<wb-move>Test permutation 4</wb-move>",
-      "<wb-move>Test permutation 5</wb-move>"
+      "<div x-move>Basic move content</div>",
+      "<div x-move>Test permutation 2</div>",
+      "<div x-move>Test permutation 3</div>",
+      "<div x-move>Test permutation 4</div>",
+      "<div x-move>Test permutation 5</div>"
     ];
     
     await injectAndScan(page, setupHtml.join('\n'));
@@ -65,10 +65,10 @@ test.describe('move Behavior', () => {
   });
 
   test('element is visible after scan', async ({ page }) => {
-    const html = "<wb-move>Basic move content</wb-move>";
+    const html = "<div x-move>Basic move content</div>";
     await injectAndScan(page, html);
     
-    const el = page.locator('#test-container wb-move, #test-container [x-move]').first();
+    const el = page.locator('#test-container x-move, #test-container [x-move]').first();
     const isPresent = await el.count() > 0;
     
     if (isPresent) {

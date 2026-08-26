@@ -1,5 +1,19 @@
+<script>
+  /* A page fragment opened on its own resolves its CSS and modules relative to
+     /pages/ instead of the site root, so it renders unstyled and never
+     finishes loading. These files are fetched and injected by index.html;
+     opened directly they are simply the wrong URL. Redirect to the route that
+     works. server.js wraps them automatically, so this only fires on a static
+     host. */
+  (function () {
+    var m = location.pathname.match(/\/pages\/([a-z0-9-]+)\.html$/i);
+    if (!m) return;                       // injected by the SPA: nothing to do
+    var root = location.pathname.slice(0, m.index + 1);
+    location.replace(root + '?page=' + m[1] + location.search.replace(/^\?/, '&') + location.hash);
+  })();
+</script>
 <header id="page-hero" class="page__hero pt-hero--tight">
-  <h1 class="wb-gradient-text">AI Permutation Testing</h1>
+  <h1 class="x-gradient-text">AI Permutation Testing</h1>
   <p>Find &amp; test missing attribute combos in WB components.</p>
 </header>
 
@@ -132,7 +146,7 @@
           <div>
             <strong>Run All Tests Live</strong>
             <p>Click <strong>▶ Run All Tests Live</strong> to inject every missing permutation as a real DOM element right here in the browser. The runner creates each <code>&lt;wb-*&gt;</code> element, sets the attributes from the combo, waits for WB to initialize the behavior, then verifies 5 things:</p>
-            <p>① Element exists in DOM &mdash; ② Root CSS class is present (e.g., <code>wb-badge</code>) &mdash; ③ Each <code>appliesClass</code> from the schema is applied (e.g., <code>wb-badge--primary</code>) &mdash; ④ Element has visible dimensions (not 0×0) &mdash; ⑤ Element is not hidden via CSS.</p>
+            <p>① Element exists in DOM &mdash; ② Root CSS class is present (e.g., <code>x-badge</code>) &mdash; ③ Each <code>appliesClass</code> from the schema is applied (e.g., <code>x-badge--primary</code>) &mdash; ④ Element has visible dimensions (not 0×0) &mdash; ⑤ Element is not hidden via CSS.</p>
             <p>Failures show the expected vs. actual value and a suggested fix pointing to the specific ViewModel or CSS file to update.</p>
           </div>
         </div>
@@ -194,4 +208,4 @@
 </div>
 
 
-<link rel="stylesheet" href="src/styles/pages/ai-permutation-test.css?v=3.0.91">
+<link rel="stylesheet" href="src/styles/pages/ai-permutation-test.css?v=4.0.0">

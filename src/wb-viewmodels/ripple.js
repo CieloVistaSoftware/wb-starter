@@ -15,14 +15,14 @@ export function ripple(element, options = {}) {
     ...options
   };
 
-  // .wb-ripple in effects.css supplies position:relative + overflow:hidden —
+  // .x-ripple in effects.css supplies position:relative + overflow:hidden —
   // no need to set them inline here.
-  // #448: skip the class on a literal <wb-ripple> host -- effects.css
-  // selects the `wb-ripple` TAG directly for that case now. Still added for
-  // every OTHER host (x-ripple on <wb-button>/<button>/<input>/<div>, the
+  // #448: skip the class on a literal <span x-ripple> host -- effects.css
+  // selects the `x-ripple` TAG directly for that case now. Still added for
+  // every OTHER host (x-ripple on <button>/<button>/<input>/<div>, the
   // overwhelmingly common usage across every demo page), since effects.css's
-  // `.wb-ripple` rule still selects those by class.
-  if (element.tagName.toLowerCase() !== 'wb-ripple') element.classList.add('wb-ripple');
+  // `.x-ripple` rule still selects those by class.
+  if (element.tagName.toLowerCase() !== 'x-ripple') element.classList.add('x-ripple');
 
   const createRipple = (e) => {
     const rect = element.getBoundingClientRect();
@@ -42,14 +42,14 @@ export function ripple(element, options = {}) {
 
     // Create ripple element
     const rippleEl = document.createElement('span');
-    rippleEl.className = 'wb-ripple__wave';
+    rippleEl.className = 'x-ripple__wave';
     rippleEl.style.cssText = `
       position: absolute;
       border-radius: 50%;
       background: ${config.color};
       pointer-events: none;
       transform: scale(0);
-      animation: wb-ripple-animation ${config.duration}ms ease-out forwards;
+      animation: x-ripple-animation ${config.duration}ms ease-out forwards;
       width: ${size}px;
       height: ${size}px;
       left: ${x - size / 2}px;
@@ -65,11 +65,11 @@ export function ripple(element, options = {}) {
   };
 
   // Add keyframes if not already present
-  if (!document.getElementById('wb-ripple-styles')) {
+  if (!document.getElementById('x-ripple-styles')) {
     const style = document.createElement('style');
-    style.id = 'wb-ripple-styles';
+    style.id = 'x-ripple-styles';
     style.textContent = `
-      @keyframes wb-ripple-animation {
+      @keyframes x-ripple-animation {
         to {
           transform: scale(1);
           opacity: 0;
@@ -83,17 +83,17 @@ export function ripple(element, options = {}) {
   // pressed, not wait for the full click (press+release) to complete.
   // Both listeners used to be attached here, firing createRipple TWICE per
   // click and stacking two overlapping ripple spans (confirmed live and via
-  // Playwright strict-mode locator violation: ".wb-ripple__wave resolved to
+  // Playwright strict-mode locator violation: ".x-ripple__wave resolved to
   // 2 elements" after a single click) (#354).
   element.addEventListener('mousedown', createRipple);
 
   // Mark as ready
   // Cleanup
   return () => {
-    element.classList.remove('wb-ripple');
+    element.classList.remove('x-ripple');
     element.removeEventListener('mousedown', createRipple);
     // Remove any existing ripples
-    element.querySelectorAll('.wb-ripple__wave').forEach(r => r.remove());
+    element.querySelectorAll('.x-ripple__wave').forEach(r => r.remove());
   };
 }
 

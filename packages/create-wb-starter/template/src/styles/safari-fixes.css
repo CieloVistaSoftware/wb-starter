@@ -14,8 +14,8 @@
 
 /* Safari Grid Bug: Items don't respect min-width: 0 by default */
 @supports (-webkit-touch-callout: none) {
-  .wb-grid > *,
-  wb-grid > * {
+  .x-grid > *,
+  x-grid > * {
     min-width: 0;
     min-height: 0;
   }

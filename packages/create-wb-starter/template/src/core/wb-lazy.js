@@ -20,7 +20,7 @@ import { ensureBehaviorCss } from './style-loader.js';
 import { makeDlog, traceStatusLabel } from './debug-trace.js';
 import SchemaBuilder from './mvvm/schema-builder.js';
 
-// Debug logging — silent unless localStorage['wb-debug'] names a category
+// Debug logging — silent unless localStorage['x-debug'] names a category
 // (or is '1' for everything). Was forced true|| for a while; reverted per
 // "filter out all tracing except the blank video get and subsequent paint"
 // (see wb.js's matching comment). #338 generalized the flag into a
@@ -30,7 +30,7 @@ import SchemaBuilder from './mvvm/schema-builder.js';
 const dlog = makeDlog();
 // Always announce the tracing state — first thing in the console, every
 // load, regardless of whether it's on or off.
-console.log(`[WB-lazy] debug tracing: ${traceStatusLabel()} (localStorage.setItem('wb-debug', '1') for everything, or a comma-separated category list, then reload)`);
+console.log(`[WB-lazy] debug tracing: ${traceStatusLabel()} (localStorage.setItem('x-debug', '1') for everything, or a comma-separated category list, then reload)`);
 
 // #333: this table used to hand-duplicate tag-map.js's elementMap/nativeMap/
 // extensionMap (wb.js's own single source of truth) and had drifted --
@@ -42,41 +42,41 @@ console.log(`[WB-lazy] debug tracing: ${traceStatusLabel()} (localStorage.setIte
 // tag-map.js going forward is picked up here automatically instead of
 // silently working on only one runtime.
 
-// wb-modal: tag-map.js's elementMap says 'dialog', this runtime's own table
+// x-modal: tag-map.js's elementMap says 'dialog', this runtime's own table
 // (below) says 'modal' -- both names resolve to the exact same function
 // (dialog.js does `export { dialog as modal }`), so this is a benign naming
 // difference, not a behavior difference. Kept as an explicit override so
 // it's not silently swept up if tag-map.js's mapping ever changes.
 //
-// wb-drawer used to be a SECOND, genuinely broken override here (mapped to
+// x-drawer used to be a SECOND, genuinely broken override here (mapped to
 // 'drawerLayout' -- an unrelated collapsible-sidebar behavior -- instead of
-// 'drawer', the actual trigger+overlay behavior every <wb-drawer> demo
-// markup expects). Confirmed live: every <wb-drawer> on a wb-lazy.js-only
+// 'drawer', the actual trigger+overlay behavior every <div x-drawer> demo
+// markup expects). Confirmed live: every <div x-drawer> on a wb-lazy.js-only
 // page (e.g. demos/site/overlays.html) rendered as an inert, wrongly-styled
 // sidebar fragment with its own attribute text as visible content, never as
 // a working "click to open a drawer" trigger. #333 already unified the rest
 // of this table against tag-map.js's elementMap; this specific entry was
 // carved out "pending investigation" and never revisited. Now that
 // overlay.js's drawer() is schema-aware (this session), removed the
-// override so wb-drawer agrees with tag-map.js's 'drawer' on both runtimes.
-const ELEMENT_MAP_OVERRIDES = new Set(['wb-modal']);
+// override so x-drawer agrees with tag-map.js's 'drawer' on both runtimes.
+const ELEMENT_MAP_OVERRIDES = new Set(['x-modal']);
 
-// wb-grid is still a REAL custom element (wb-grid.js, eagerly imported by
+// x-grid is still a REAL custom element (x-grid.js, eagerly imported by
 // wb.js) whose own connectedCallback calls the layout function directly.
-// wb-lazy.js has no such registration (only wb-card.js, separately, for
-// <wb-card>), so it needs dispatching as an ordinary injected behavior here.
-// wb-cluster/wb-stack/wb-row/wb-accordion USED to be real custom elements
+// wb-lazy.js has no such registration (only x-card.js, separately, for
+// <article>), so it needs dispatching as an ordinary injected behavior here.
+// x-cluster/x-stack/x-row/x-accordion USED to be real custom elements
 // too, but those `extends HTMLElement` wrappers were removed (#279) in favor
 // of tag-map.js's elementMap (cluster/stack/flex/accordion) -- now picked up
 // automatically via the elementMap spread above, no longer needed here.
 // The rest of this table covers the legacy card-*/noun-first tag aliases and
-// a few tags tag-map.js genuinely doesn't know about at all (wb-inputgroup,
-// wb-formrow, wb-stat, wb-code-card) -- none of these are duplicated anywhere
+// a few tags tag-map.js genuinely doesn't know about at all (x-inputgroup,
+// x-formrow, x-stat, x-code-card) -- none of these are duplicated anywhere
 // else.
 const WB_LAZY_ONLY_ELEMENTS = {
   'card-basic': 'card',
-  'wb-inputgroup': 'inputgroup',
-  'wb-formrow': 'formrow',
+  'x-inputgroup': 'inputgroup',
+  'x-formrow': 'formrow',
   'card-image': 'cardimage',
   'card-video': 'cardvideo',
   'card-profile': 'cardprofile',
@@ -108,30 +108,30 @@ const WB_LAZY_ONLY_ELEMENTS = {
   'portfolio-card': 'cardportfolio',
   'link-card': 'cardlink',
   'horizontal-card': 'cardhorizontal',
-  'wb-code-card': 'demo',
-  'wb-grid': 'grid',
-  'wb-flex': 'flex',
-  'wb-container': 'container',
-  'wb-sidebar': 'sidebarlayout',
-  'wb-center': 'center',
-  'wb-cover': 'cover',
-  'wb-masonry': 'masonry',
-  'wb-switcher': 'switcher',
-  'wb-reel': 'reel',
-  'wb-frame': 'frame',
-  // 'wb-drawer' removed -- this ALSO independently mapped to 'drawerLayout'
+  'x-code-card': 'demo',
+  'x-grid': 'grid',
+  'x-flex': 'flex',
+  'x-container': 'container',
+  'x-sidebar': 'sidebarlayout',
+  'x-center': 'center',
+  'x-cover': 'cover',
+  'x-masonry': 'masonry',
+  'x-switcher': 'switcher',
+  'x-reel': 'reel',
+  'x-frame': 'frame',
+  // 'x-drawer' removed -- this ALSO independently mapped to 'drawerLayout'
   // here (customElementMappings concatenates this table's entries with
   // elementMap's rather than overriding it, so both matched and BOTH
   // behaviors ran on the same element, confirmed live via duplicate
-  // wb-drawer-trigger + wb-drawer-layout classes). Removing the override Set
+  // x-drawer-trigger + x-drawer-layout classes). Removing the override Set
   // entry above was necessary but not sufficient -- this table needed the
-  // actual wrong mapping deleted too. 'wb-drawer' now resolves only via
-  // elementMap's correct 'wb-drawer': 'drawer' entry (tag-map.js).
-  'wb-icon': 'icon',
-  'wb-control': 'control',
-  'wb-repeater': 'repeater',
-  'wb-modal': 'modal', // conflicts with elementMap's 'dialog' -- see ELEMENT_MAP_OVERRIDES above
-  'wb-stat': 'stat',
+  // actual wrong mapping deleted too. 'x-drawer' now resolves only via
+  // elementMap's correct 'x-drawer': 'drawer' entry (tag-map.js).
+  'x-icon': 'icon',
+  'x-control': 'control',
+  'x-repeater': 'repeater',
+  'x-modal': 'modal', // conflicts with elementMap's 'dialog' -- see ELEMENT_MAP_OVERRIDES above
+  'x-stat': 'stat',
 };
 
 // Extension attributes tag-map.js's extensionMap doesn't cover. wb.js doesn't
@@ -142,7 +142,13 @@ const WB_LAZY_ONLY_ELEMENTS = {
 // is selector-table-driven, so it still needs these listed explicitly.
 // Porting wb.js's dynamic approach here would remove the need for this list
 // entirely -- a larger follow-up, not done as part of this consolidation.
-const WB_LAZY_ONLY_ATTRIBUTES = {
+// Exported (#666) so tooling can enumerate the FULL x-* surface. This table is
+// a second registry alongside tag-map.js's extensionMap, and the two diverge:
+// 34 x-* attributes used by real demos on pages/behaviors.html live only here,
+// so anything reading tag-map alone reports an incomplete behavior list.
+// Consolidating the two is tracked separately; exporting is the read-only step
+// that stops consumers silently under-reporting in the meantime.
+export const WB_LAZY_ONLY_ATTRIBUTES = {
   // mdhtml.js marks rendered code blocks with bare `x-pre`/`x-code` presence
   // attributes (src/wb-viewmodels/mdhtml.js) and relies on WB.scan() to pick
   // them up -- on wb.js that "just works" via its dynamic x-{name} shorthand
@@ -156,18 +162,17 @@ const WB_LAZY_ONLY_ATTRIBUTES = {
   'x-pre': 'pre',
   'x-code': 'code',
   'x-breadcrumb': 'breadcrumb',
-  'x-toast': 'toast',
   'x-notify': 'notify',
   'x-typewriter': 'typewriter',
   'x-bounce': 'bounce',
   'x-pulse': 'pulse',
   'x-rainbow': 'rainbow',
-  'x-copy': 'copy',
+  // x-copy (#645): moved to tag-map.js's extensionMap (shared with wb.js) --
+  // see the comment there for the x-copybutton distinction.
   // x-copybutton (#291) — overlays a separate positioned copy button on ANY
   // element (distinct from x-copy, which makes the element itself the
   // trigger). See src/wb-viewmodels/copy.js's copyButton().
   'x-copybutton': 'copybutton',
-  'x-collapse': 'collapse',
   'x-fadein': 'fadein',
   'x-shake': 'shake',
   // Entrance / attention-seeker animations + relative time — behaviors exist in
@@ -183,46 +188,33 @@ const WB_LAZY_ONLY_ATTRIBUTES = {
   'x-flip': 'flip',
   'x-flash': 'flash',
   'x-relativetime': 'relativetime',
-  'x-form': 'form',
   'x-password': 'password',
-  'x-tags': 'tags',
-  'x-file': 'file',
-  'x-masked': 'masked',
   'x-stepper': 'stepper',
-  'x-counter': 'counter',
-  'x-autocomplete': 'autocomplete',
   'x-otp': 'otp',
-  'x-colorpicker': 'colorpicker',
   'x-search': 'search',
-  'x-floatinglabel': 'floatinglabel',
-  'x-label': 'label', // x-label="text" on any form control (input, select, ...) — see src/wb-viewmodels/label.js
   'x-clock': 'clock',
   'x-countdown': 'countdown',
-  'x-youtube': 'youtube',
   'x-pagination': 'pagination',
   'x-steps': 'steps',
-  'x-timeline': 'timeline',
   'x-kbd': 'kbd',
-  'x-gallery': 'gallery',
   'x-image': 'image',
   'x-popover': 'popover',
   'x-confirm': 'confirm',
   'x-prompt': 'prompt',
-  // drawer() (overlay.js) — a slide-out panel + backdrop triggered by a plain
-  // click. x-drawer-layout (below) maps to a DIFFERENT behavior
-  // (drawerLayout, a page-shell layout primitive) — easy to conflate, but
-  // not the same thing.
-  'x-drawer': 'drawer',
   'x-lightbox': 'lightbox',
   'x-share': 'share',
   'x-print': 'print',
   'x-fullscreen': 'fullscreen',
   'x-truncate': 'truncate',
   'x-masonry': 'masonry',
-  'x-dropdown': 'dropdown',
-  'x-toggle': 'toggle',
-  'x-drawer-layout': 'drawerLayout',
   'x-autosize': 'autosize',
+  // #645: x-form, x-tags, x-file, x-masked, x-counter, x-autocomplete,
+  // x-colorpicker, x-floatinglabel, x-label, x-youtube, x-timeline,
+  // x-gallery, x-drawer, x-dropdown, x-toggle, x-drawer-layout, x-copy,
+  // x-toast, x-collapse, and x-article (new) all moved to/added in
+  // tag-map.js's extensionMap (shared with wb.js) -- see the comment block
+  // there for the drawer/drawer-layout and article/articles/as-article
+  // disambiguation notes.
 };
 
 // Auto-injection mappings
@@ -279,7 +271,7 @@ function getAutoInjectBehaviors(element) {
   // autoInjectMappings loop already honors x-ignore this way (see its
   // "Only skip if explicitly ignored" comment) -- this engine lacked the
   // same check, so a plain <header>/<footer>/etc. used for page content
-  // (not the generic wb-header/wb-footer navbar treatment) had no working
+  // (not the generic x-header/x-footer navbar treatment) had no working
   // escape hatch on this engine, silently getting hijacked by the native
   // behavior's classes/layout regardless of x-ignore.
   if (element.hasAttribute('x-ignore')) return behaviors;
@@ -326,27 +318,27 @@ function getAutoInjectBehaviors(element) {
 // see wb.js's WB.processSchema for the full per-tag incident history) to
 // build their own complete DOM unconditionally, so letting schema ALSO run
 // on them would be a pure async race that silently wipes whichever of the
-// two finishes second (the wb-card* family, wb-demo, wb-details,
-// wb-skeleton, wb-dialog, wb-select, wb-article/wb-articles, wb-fix-card),
-// or -- for wb-cluster/wb-stack/wb-row/wb-search/wb-accordion, which have no
+// two finishes second (the x-card* family, x-demo, x-details,
+// x-skeleton, x-dialog, x-select, x-article/x-articles, x-fix-card),
+// or -- for x-cluster/x-stack/x-row/x-search/x-accordion, which have no
 // schema.json of their own at all -- a dead fetch that just 404s.
 const SCHEMA_SKIP_TAGS = new Set([
-  'wb-demo', 'wb-details', 'wb-cluster', 'wb-stack', 'wb-row', 'wb-search',
-  'wb-accordion', 'wb-article', 'wb-articles', 'wb-select', 'wb-skeleton',
-  'wb-dialog', 'wb-fix-card', 'wb-view',
+  'x-demo', 'x-details', 'x-cluster', 'x-stack', 'x-row', 'x-search',
+  'x-accordion', 'x-article', 'x-articles', 'x-select', 'x-skeleton',
+  'x-dialog', 'x-fix-card', 'x-view', 'x-audio',
 ]);
 
 // One fetch attempt per derived schema NAME (not per element) -- avoids
 // re-hammering the server with repeated 404s for a wb-* tag that genuinely
-// has no matching schema.json (e.g. wb-grid, wb-modal). Keyed by the
+// has no matching schema.json (e.g. x-grid, x-modal). Keyed by the
 // in-flight Promise (not a plain boolean): a page with several instances of
-// the same tag (e.g. multiple <wb-switch>) fires several concurrent
+// the same tag (e.g. multiple <div x-switch>) fires several concurrent
 // WB.inject() calls in the same synchronous scan() pass, all reaching this
 // point before the first one's fetch has resolved -- a boolean flag set
 // eagerly (as this used to do) would make every caller AFTER the first
 // think loading was already "handled" and immediately call processElement()
 // against a still-unregistered schema, silently skipping every instance but
-// the very first (confirmed live: 1 of 17 <wb-switch> on forms.html got
+// the very first (confirmed live: 1 of 17 <div x-switch> on forms.html got
 // x-schema, the other 16 didn't). Awaiting the SAME shared promise -- the
 // same pattern loadSchemaFile()'s own inFlightSchemaFetches map already uses
 // for concurrent identical-filename fetches -- fixes that race.
@@ -374,17 +366,17 @@ async function ensureSchemaRegistered(name) {
  */
 async function buildSchemaIfNeeded(element) {
   const tag = element.tagName.toLowerCase();
-  if (!tag.startsWith('wb-') || tag.startsWith('wb-card') || SCHEMA_SKIP_TAGS.has(tag)) return;
-  // wb-modal only self-builds a trigger when used with modal-title/
+  if (!tag.startsWith('wb-') || tag.startsWith('x-card') || SCHEMA_SKIP_TAGS.has(tag)) return;
+  // x-modal only self-builds a trigger when used with modal-title/
   // modal-content (dialog.js's TRIGGER mode) -- matches wb.js's
   // WB.processSchema exactly.
-  if (tag === 'wb-modal' && (element.hasAttribute('modal-title') || element.hasAttribute('modal-content'))) return;
+  if (tag === 'x-modal' && (element.hasAttribute('modal-title') || element.hasAttribute('modal-content'))) return;
   if (element.hasAttribute('x-schema')) return; // already schema-built
 
   // tag-map.js's elementMap is the same source of truth wb.js's own
   // _detectSchemaName() reads from -- NOT a name derived straight off the
   // tag string. That distinction matters: a real registered custom element
-  // like wb-grid (wb-viewmodels/wb-grid.js, whose own connectedCallback
+  // like x-grid (wb-viewmodels/x-grid.js, whose own connectedCallback
   // builds its DOM directly) has no elementMap entry at all, so it's
   // correctly never even attempted here, exactly as on wb.js -- deriving
   // the name from the tag instead (`grid`) would 404 against a schema file
@@ -431,7 +423,7 @@ function getLazyObserver() {
       // scrolling to it doesn't show a visible pop-in. 200px wasn't enough
       // head start — a slight but visible delay was noticeable live when
       // scrolling lazy elements into view (#491). 1200px matches the value
-      // wb-demo.js's lazy observer already settled on for the same class of
+      // x-demo.js's lazy observer already settled on for the same class of
       // pop-in (#390: 400px still lost to fast scrolls/nav jumps).
       rootMargin: '1200px'
     });
@@ -472,8 +464,8 @@ const WB = {
   *
   * 3. Select the injection method:
   *    a) Inject by URL:
-  *       WB.inject('#myElem', 'card', { url: 'https://example.com/wb-card.js' });
-  *       // WBCard can inject into elements like <wb-card>, <card-basic>, <wb-cardimage>, <wb-cardvideo>, etc.
+  *       WB.inject('#myElem', 'card', { url: 'https://example.com/x-card.js' });
+  *       // WBCard can inject into elements like <article>, <article>, <div x-cardimage>, <div x-cardvideo>, etc.
   *
   *    b) Inject by function/class:
   *       WB.inject('#myElem', 'stack', { factory: WBStack });
@@ -557,11 +549,14 @@ const WB = {
       return cleanup;
     } catch (error) {
       // Pass full Error object for stack trace extraction
-      Events.error(`WB: ${behaviorName}`, error, {
-        element: element.tagName,
-        id: element.id,
-        behavior: behaviorName
-      });
+      if (!error?.wbModuleLoadReported) {
+        if (error?.wbModuleLoadFailure) error.wbModuleLoadReported = true;
+        Events.error(`WB: ${behaviorName}`, error, {
+          element: element.tagName,
+          id: element.id,
+          behavior: behaviorName
+        });
+      }
       
       // Mark element as having an error
       element.setAttribute('x-error', 'true');
@@ -667,7 +662,12 @@ const WB = {
 
     // Custom elements scan (always active)
     customElementMappings.forEach(({ selector, behavior }) => {
-      const customElements = root.querySelectorAll(selector);
+      // querySelectorAll() excludes root itself. Include it when callers scan
+      // one custom element directly (as the playground does for its theme
+      // control), otherwise the registration silently never runs.
+      const customElements = root.matches?.(selector)
+        ? [root, ...root.querySelectorAll(selector)]
+        : root.querySelectorAll(selector);
       customElements.forEach(element => {
         if (eager) {
           injections.push(WB.inject(element, behavior));

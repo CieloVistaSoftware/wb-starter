@@ -1,11 +1,11 @@
 /**
- * Button - Semantic enhancement for <button> and <wb-button>
+ * Button - Semantic enhancement for <button> and <button>
  * 
- * For <wb-button>: CSS targets the tag and attributes directly.
+ * For <button>: CSS targets the tag and attributes directly.
  *   No inner <button> created. No classes added.
- *   <wb-button variant="primary" size="lg">Click</wb-button>
+ *   <button variant="primary" size="lg">Click</button>
  *
- * For native <button>: Adds .wb-button class for opt-in styling.
+ * For native <button>: Adds .x-button class for opt-in styling.
  *   Only when auto-injected on plain buttons without existing styles.
  *
  * Predefined icon library via SVG.
@@ -36,10 +36,10 @@ const ICONS = {
 };
 
 // --- Self-contained CSS (injected once per document) ---
-const STYLE_ID = 'wb-button-styles';
+const STYLE_ID = 'x-button-styles';
 const BUTTON_CSS = `
-/* wb-button: tag + attribute selectors — no JS classes needed */
-wb-button {
+/* x-button: tag + attribute selectors — no JS classes needed */
+x-button {
   display: inline-flex; align-items: center; justify-content: center;
   gap: 0.5rem; border: 1px solid transparent; border-radius: var(--radius-md, 6px);
   font-weight: 500; cursor: pointer; transition: all 0.2s ease;
@@ -47,45 +47,45 @@ wb-button {
   font-family: inherit; font-size: inherit; color: inherit;
   background: var(--bg-secondary, #2a2a2a); padding: 1rem 1rem;
 }
-wb-button:focus-visible { outline: 2px solid var(--primary, #6366f1); outline-offset: 2px; }
-wb-button[disabled] { opacity: 0.6; cursor: not-allowed; pointer-events: none; }
+x-button:focus-visible { outline: 2px solid var(--primary, #6366f1); outline-offset: 2px; }
+x-button[disabled] { opacity: 0.6; cursor: not-allowed; pointer-events: none; }
 
 /* Sizes */
-wb-button[size="xs"] { padding: 1rem 0.5rem; font-size: 0.75rem; }
-wb-button[size="sm"] { padding: 1rem 0.75rem; font-size: 0.875rem; }
-wb-button[size="md"] { padding: 1rem 1rem; font-size: 1rem; }
-wb-button[size="lg"] { padding: 1.125rem 1.5rem; font-size: 1.125rem; }
-wb-button[size="xl"] { padding: 1.25rem 2rem; font-size: 1.25rem; }
+x-button[size="xs"] { padding: 1rem 0.5rem; font-size: 0.75rem; }
+x-button[size="sm"] { padding: 1rem 0.75rem; font-size: 0.875rem; }
+x-button[size="md"] { padding: 1rem 1rem; font-size: 1rem; }
+x-button[size="lg"] { padding: 1.125rem 1.5rem; font-size: 1.125rem; }
+x-button[size="xl"] { padding: 1.25rem 2rem; font-size: 1.25rem; }
 
 /* Variants */
-wb-button[variant="primary"] { background: var(--primary, #6366f1); color: #fff; }
-wb-button[variant="primary"]:hover { filter: brightness(0.85); }
-wb-button[variant="secondary"] { background: var(--secondary, #64748b); color: #fff; }
-wb-button[variant="secondary"]:hover { filter: brightness(0.85); }
-wb-button[variant="success"] { background: var(--success-color, #22c55e); color: #fff; }
-wb-button[variant="success"]:hover { filter: brightness(0.85); }
-wb-button[variant="danger"], wb-button[variant="error"] { background: var(--danger-color, #ef4444); color: #fff; }
-wb-button[variant="danger"]:hover, wb-button[variant="error"]:hover { filter: brightness(0.85); }
-wb-button[variant="warning"] { background: var(--warning-color, #f59e0b); color: #fff; }
-wb-button[variant="warning"]:hover { filter: brightness(0.85); }
-wb-button[variant="info"] { background: var(--info-color, #3b82f6); color: #fff; }
-wb-button[variant="info"]:hover { filter: brightness(0.85); }
-wb-button[variant="ghost"] { background: transparent; color: var(--text-primary, #e5e5e5); border-color: var(--border-color, #404040); }
-wb-button[variant="ghost"]:hover { background: var(--bg-tertiary, #333); border-color: var(--text-secondary, #aaa); }
-wb-button[variant="link"] { background: transparent; color: var(--primary, #6366f1); padding: 0; border: none; }
-wb-button[variant="link"]:hover { text-decoration: underline; }
+x-button[variant="primary"] { background: var(--primary, #6366f1); color: #fff; }
+x-button[variant="primary"]:hover { filter: brightness(0.85); }
+x-button[variant="secondary"] { background: var(--secondary, #64748b); color: #fff; }
+x-button[variant="secondary"]:hover { filter: brightness(0.85); }
+x-button[variant="success"] { background: var(--success-color, #22c55e); color: #fff; }
+x-button[variant="success"]:hover { filter: brightness(0.85); }
+x-button[variant="danger"], x-button[variant="error"] { background: var(--danger-color, #ef4444); color: #fff; }
+x-button[variant="danger"]:hover, x-button[variant="error"]:hover { filter: brightness(0.85); }
+x-button[variant="warning"] { background: var(--warning-color, #f59e0b); color: #fff; }
+x-button[variant="warning"]:hover { filter: brightness(0.85); }
+x-button[variant="info"] { background: var(--info-color, #3b82f6); color: #fff; }
+x-button[variant="info"]:hover { filter: brightness(0.85); }
+x-button[variant="ghost"] { background: transparent; color: var(--text-primary, #e5e5e5); border-color: var(--border-color, #404040); }
+x-button[variant="ghost"]:hover { background: var(--bg-tertiary, #333); border-color: var(--text-secondary, #aaa); }
+x-button[variant="link"] { background: transparent; color: var(--primary, #6366f1); padding: 0; border: none; }
+x-button[variant="link"]:hover { text-decoration: underline; }
 
 /* Loading state */
-wb-button[loading] { cursor: not-allowed; opacity: 0.7; }
+x-button[loading] { cursor: not-allowed; opacity: 0.7; }
 
 /* Icon inside button */
-wb-button .wb-button__icon { display: inline-flex; align-items: center; flex-shrink: 0; }
-wb-button .wb-button__icon svg { width: 1em; height: 1em; }
-wb-button .wb-button__spinner { display: inline-block; animation: wb-btn-spin 1s linear infinite; }
-@keyframes wb-btn-spin { to { transform: rotate(360deg); } }
+x-button .x-button__icon { display: inline-flex; align-items: center; flex-shrink: 0; }
+x-button .x-button__icon svg { width: 1em; height: 1em; }
+x-button .x-button__spinner { display: inline-block; animation: x-btn-spin 1s linear infinite; }
+@keyframes x-btn-spin { to { transform: rotate(360deg); } }
 
 /* Native <button> opt-in styling (for auto-injected plain buttons) */
-.wb-button {
+.x-button {
   display: inline-flex; align-items: center; justify-content: center;
   gap: 0.5rem; border: 1px solid transparent; border-radius: var(--radius-md, 6px);
   font-weight: 500; cursor: pointer; transition: all 0.2s ease;
@@ -93,42 +93,42 @@ wb-button .wb-button__spinner { display: inline-block; animation: wb-btn-spin 1s
   font-family: inherit; font-size: inherit; color: inherit;
   background: var(--bg-secondary, #2a2a2a); padding: 1rem 1rem;
 }
-.wb-button:focus-visible { outline: 2px solid var(--primary, #6366f1); outline-offset: 2px; }
+.x-button:focus-visible { outline: 2px solid var(--primary, #6366f1); outline-offset: 2px; }
 /* #669: icon-only collapses to a square around its icon; full-width spans its
    container. Both were declared in the schema with no implementation. */
-.wb-button--icon-only { padding: 1rem; aspect-ratio: 1; }
-.wb-button--icon-only > *:not(svg):not(.wb-button__icon) { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); }
-.wb-button--full-width { width: 100%; display: flex; }
-.wb-button:disabled { opacity: 0.6; cursor: not-allowed; pointer-events: none; }
+.x-button--icon-only { padding: 1rem; aspect-ratio: 1; }
+.x-button--icon-only > *:not(svg):not(.x-button__icon) { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); }
+.x-button--full-width { width: 100%; display: flex; }
+.x-button:disabled { opacity: 0.6; cursor: not-allowed; pointer-events: none; }
 
 /* Native <button size="…" variant="…">: button() (below) maps these
-   attributes to .wb-button--{value} modifier CLASSES -- attribute-selector
-   CSS like wb-button[size="sm"] above only ever matches the <wb-button>
+   attributes to .x-button--{value} modifier CLASSES -- attribute-selector
+   CSS like x-button[size="sm"] above only ever matches the <button>
    TAG, never a native <button size="sm">, so those classes had zero
    matching CSS and every size/variant rendered identically (confirmed
    live: "Small"/"Medium"/"Large" demo buttons were all the same size). */
-.wb-button--xs { padding: 1rem 0.5rem; font-size: 0.75rem; }
-.wb-button--sm { padding: 1rem 0.75rem; font-size: 0.875rem; }
-.wb-button--md { padding: 1rem 1rem; font-size: 1rem; }
-.wb-button--lg { padding: 1.125rem 1.5rem; font-size: 1.125rem; }
-.wb-button--xl { padding: 1.25rem 2rem; font-size: 1.25rem; }
+.x-button--xs { padding: 1rem 0.5rem; font-size: 0.75rem; }
+.x-button--sm { padding: 1rem 0.75rem; font-size: 0.875rem; }
+.x-button--md { padding: 1rem 1rem; font-size: 1rem; }
+.x-button--lg { padding: 1.125rem 1.5rem; font-size: 1.125rem; }
+.x-button--xl { padding: 1.25rem 2rem; font-size: 1.25rem; }
 
-.wb-button--primary { background: var(--primary, #6366f1); color: #fff; }
-.wb-button--primary:hover { filter: brightness(0.85); }
-.wb-button--secondary { background: var(--secondary, #64748b); color: #fff; }
-.wb-button--secondary:hover { filter: brightness(0.85); }
-.wb-button--success { background: var(--success-color, #22c55e); color: #fff; }
-.wb-button--success:hover { filter: brightness(0.85); }
-.wb-button--danger, .wb-button--error { background: var(--danger-color, #ef4444); color: #fff; }
-.wb-button--danger:hover, .wb-button--error:hover { filter: brightness(0.85); }
-.wb-button--warning { background: var(--warning-color, #f59e0b); color: #fff; }
-.wb-button--warning:hover { filter: brightness(0.85); }
-.wb-button--info { background: var(--info-color, #3b82f6); color: #fff; }
-.wb-button--info:hover { filter: brightness(0.85); }
-.wb-button--ghost { background: transparent; color: var(--text-primary, #e5e5e5); border-color: var(--border-color, #404040); }
-.wb-button--ghost:hover { background: var(--bg-tertiary, #333); border-color: var(--text-secondary, #aaa); }
-.wb-button--link { background: transparent; color: var(--primary, #6366f1); padding: 0; border: none; }
-.wb-button--link:hover { text-decoration: underline; }
+.x-button--primary { background: var(--primary, #6366f1); color: #fff; }
+.x-button--primary:hover { filter: brightness(0.85); }
+.x-button--secondary { background: var(--secondary, #64748b); color: #fff; }
+.x-button--secondary:hover { filter: brightness(0.85); }
+.x-button--success { background: var(--success-color, #22c55e); color: #fff; }
+.x-button--success:hover { filter: brightness(0.85); }
+.x-button--danger, .x-button--error { background: var(--danger-color, #ef4444); color: #fff; }
+.x-button--danger:hover, .x-button--error:hover { filter: brightness(0.85); }
+.x-button--warning { background: var(--warning-color, #f59e0b); color: #fff; }
+.x-button--warning:hover { filter: brightness(0.85); }
+.x-button--info { background: var(--info-color, #3b82f6); color: #fff; }
+.x-button--info:hover { filter: brightness(0.85); }
+.x-button--ghost { background: transparent; color: var(--text-primary, #e5e5e5); border-color: var(--border-color, #404040); }
+.x-button--ghost:hover { background: var(--bg-tertiary, #333); border-color: var(--text-secondary, #aaa); }
+.x-button--link { background: transparent; color: var(--primary, #6366f1); padding: 0; border: none; }
+.x-button--link:hover { text-decoration: underline; }
 `;
 
 function ensureStyles(doc) {
@@ -146,13 +146,13 @@ function resolveIcon(name) {
 
 // #632: button.schema.json declares `label` as the button's primary text
 // property (a required one, per its own $required list), but nothing in
-// this file ever read it -- confirmed live: <wb-button label="Save"
+// this file ever read it -- confirmed live: <button label="Save"
 // icon="💾"> rendered ONLY the icon span, no "Save" text anywhere. John:
 // "shouldn't the label be on the button face?" -- yes. Same "children win
 // over label" pattern as feedback.js's badge() (#618): only fill in the
 // label when the author didn't already put real content between the tags,
 // and don't let demo.js's own doc-link icon (appended as a DOM child
-// before this behavior runs, on a wb-demo page) count as "already has
+// before this behavior runs, on a x-demo page) count as "already has
 // content" -- it isn't. Must run BEFORE applyIconAndLoading() below so the
 // label text becomes the "content" the icon inserts before/after, instead
 // of racing it (if this ran after, the icon span itself would look like
@@ -163,7 +163,7 @@ function applyLabel(element) {
   const hasAuthorContent = Array.from(element.childNodes).some(
     (n) => n.nodeType === Node.TEXT_NODE
       ? n.textContent.trim()
-      : !n.classList?.contains('wb-demo__card-doc-link')
+      : !n.classList?.contains('x-demo__card-doc-link')
   );
   if (!hasAuthorContent) {
     element.textContent = label;
@@ -172,9 +172,9 @@ function applyLabel(element) {
 
 // #620: icon/loading rendering, factored out of the `isCustom` branch below
 // so a native <button icon="..." loading> gets the exact same treatment as
-// <wb-button icon="..." loading> instead of silently doing nothing. Native
+// <button icon="..." loading> instead of silently doing nothing. Native
 // <button size="..." variant="..."> already worked identically to
-// <wb-button> (both map to the same classes/attribute-selectors above) --
+// <button> (both map to the same classes/attribute-selectors above) --
 // icon/loading were the only two properties still exclusive to the custom
 // tag, confirmed live: a native `<button icon="download">` rendered no icon
 // at all, and `loading` added no spinner and didn't disable the button.
@@ -191,31 +191,31 @@ function applyIconAndLoading(element, options) {
 
   if (element.hasAttribute('icon') && !icon) {
     throw new Error(
-      'wb-button: icon attribute was set but no icon name was given. See the full icon library at demos/site/forms.html#button-icon-variants.'
+      'x-button: icon attribute was set but no icon name was given. See the full icon library at demos/site/forms.html#button-icon-variants.'
     );
   }
 
   if (loading) {
     const spinner = document.createElement('span');
-    spinner.className = 'wb-button__spinner';
+    spinner.className = 'x-button__spinner';
     spinner.textContent = '⏳';
     if (iconPosition === 'start' || iconPosition === 'left') {
       element.insertBefore(spinner, element.firstChild);
     } else {
       element.appendChild(spinner);
     }
-    // Native <button> has no `loading` visual of its own (unlike <wb-button>,
+    // Native <button> has no `loading` visual of its own (unlike <button>,
     // styled purely via the `[loading]` attribute selector) -- opacity/cursor
-    // for it lives on `.wb-button[loading]` in BUTTON_CSS above, which
-    // matches a native button fine since it already carries `.wb-button`;
+    // for it lives on `.x-button[loading]` in BUTTON_CSS above, which
+    // matches a native button fine since it already carries `.x-button`;
     // `disabled` additionally blocks activation the same way the `isCustom`
-    // branch's onActivate/onKeydown guards already do for <wb-button>.
+    // branch's onActivate/onKeydown guards already do for <button>.
     if (element.tagName !== 'WB-BUTTON') element.disabled = true;
   }
 
   if (icon && !loading) {
     const iconEl = document.createElement('span');
-    iconEl.className = 'wb-button__icon';
+    iconEl.className = 'x-button__icon';
     const resolved = resolveIcon(icon);
     if (resolved.startsWith('<svg')) {
       iconEl.innerHTML = resolved;
@@ -250,7 +250,7 @@ export function button(element, options = {}) {
   };
 
   if (isCustom) {
-    // <wb-button> — CSS targets the tag directly. No inner button, no classes.
+    // <button> — CSS targets the tag directly. No inner button, no classes.
     // JS only handles label text, icon injection, and loading state.
     applyLabel(element);
     applyIconAndLoading(element, options);
@@ -265,10 +265,10 @@ export function button(element, options = {}) {
     // (matching native <button>) so it doesn't scroll the page.
     //
     // Uses dispatchEvent(MouseEvent) rather than element.click(): confirmed
-    // live that <wb-button>'s customElements.define() is unexpectedly owned
+    // live that <button>'s customElements.define() is unexpectedly owned
     // by the unrelated "WB Views" system (src/wb-views/views-registry.json
     // has its own view literally named "button", and wb-views.js's
-    // registerViewAsElement() auto-claims the wb-button tag for it --
+    // registerViewAsElement() auto-claims the x-button tag for it --
     // see docs/audits/HOST-CHILD-DISPATCH-AUDIT.md). That class's own
     // element.click() silently no-ops; dispatchEvent() does not go through
     // whatever click() does internally, so it isn't affected.
@@ -302,9 +302,9 @@ export function button(element, options = {}) {
     };
   }
 
-  // Native <button> — add .wb-button class for styling
+  // Native <button> — add .x-button class for styling
   // Skip if already styled by another system
-  const hasExistingStyle = element.className.match(/wb-btn--|wb-button--/);
+  const hasExistingStyle = element.className.match(/x-btn--|x-button--/);
   // #746: `x-button` is this behavior's OWN dispatch attribute, not evidence
   // that something else owns the element — counting it here made the button
   // bail on itself, so `<button x-button variant="outline" icon="download">`
@@ -321,17 +321,17 @@ export function button(element, options = {}) {
     return () => {};
   }
 
-  element.classList.add('wb-button');
+  element.classList.add('x-button');
 
   // A native <button size="…" variant="…"> must actually apply the styling. Only
-  // the `.wb-button--*` classes are styled (the size/variant ATTRIBUTE alone does
-  // nothing on a native <button> — the attribute-selector CSS targets <wb-button>).
+  // the `.x-button--*` classes are styled (the size/variant ATTRIBUTE alone does
+  // nothing on a native <button> — the attribute-selector CSS targets <button>).
   // Map size/variant attributes to their modifier classes so both work.
   const applied = [];
   const size = element.getAttribute('size');
-  if (size) { const c = `wb-button--${size}`; element.classList.add(c); applied.push(c); }
+  if (size) { const c = `x-button--${size}`; element.classList.add(c); applied.push(c); }
   const variant = element.getAttribute('variant');
-  if (variant) { const c = `wb-button--${variant}`; element.classList.add(c); applied.push(c); }
+  if (variant) { const c = `x-button--${variant}`; element.classList.add(c); applied.push(c); }
 
   // #669 -- John: '<button variant="link"> this link is missing a target'.
   // variant="link" styled the control as a link while being structurally
@@ -343,8 +343,8 @@ export function button(element, options = {}) {
   // declared in button.schema.json and read NOWHERE. Both map to the same
   // modifier-class mechanism `variant`/`size` already use.
   if (element.hasAttribute('icononly') || element.hasAttribute('icon-only')) {
-    element.classList.add('wb-button--icon-only');
-    applied.push('wb-button--icon-only');
+    element.classList.add('x-button--icon-only');
+    applied.push('x-button--icon-only');
     // An icon-only button has no visible label, so it needs an accessible one.
     if (!element.getAttribute('aria-label')) {
       const text = (element.textContent || '').trim();
@@ -352,12 +352,25 @@ export function button(element, options = {}) {
     }
   }
   if (element.hasAttribute('fullwidth') || element.hasAttribute('full-width')) {
-    element.classList.add('wb-button--full-width');
-    applied.push('wb-button--full-width');
+    element.classList.add('x-button--full-width');
+    applied.push('x-button--full-width');
   }
 
   const href = element.getAttribute('href');
-  if (href && element.tagName === 'BUTTON') {
+  // Any host, not just <button>. This guard read `element.tagName === 'BUTTON'`,
+  // which was correct when a native <button> was the only host — the #669 note
+  // above reasons entirely about <button>, and a <button> genuinely cannot
+  // navigate on its own.
+  //
+  // 4.0.0 made `<div x-button>` a first-class host, and every other feature in
+  // this file (variant, size, icon-only, full-width) already applies to both
+  // forms. href alone still checked the tag, so it silently stopped working on
+  // the form the behaviors page and docs now show: styled exactly like a link,
+  // does nothing when clicked. John: "does not navigate when clicked".
+  //
+  // A native <a> is excluded on purpose — it already navigates, and adding a
+  // handler would double-fire.
+  if (href && element.tagName !== 'A') {
     element.setAttribute('role', 'link');
     const navigate = (e) => {
       if (element.hasAttribute('disabled') || element.getAttribute('aria-disabled') === 'true') return;
@@ -367,8 +380,33 @@ export function button(element, options = {}) {
     };
     element.addEventListener('click', navigate);
     applied.push('__href');
-    // Enter already activates a native <button>; nothing extra is needed.
-    const cleanupHref = () => element.removeEventListener('click', navigate);
+
+    // Enter activates a native <button> for free. A <div role="link"> gets
+    // neither focus nor key activation, so the attribute form needs both or it
+    // is mouse-only — a control that announces itself as a link to a screen
+    // reader and then cannot be operated from the keyboard is worse than one
+    // that never claimed to be a link at all.
+    let onKey = null;
+    if (element.tagName !== 'BUTTON') {
+      if (!element.hasAttribute('tabindex')) {
+        element.setAttribute('tabindex', '0');
+        applied.push('__tabindex');
+      }
+      onKey = (e) => {
+        // Enter follows a link; Space does not. Matching <a> rather than
+        // <button> here, because role="link" is what this element claims.
+        if (e.key !== 'Enter') return;
+        e.preventDefault();
+        navigate(e);
+      };
+      element.addEventListener('keydown', onKey);
+    }
+
+    const cleanupHref = () => {
+      element.removeEventListener('click', navigate);
+      if (onKey) element.removeEventListener('keydown', onKey);
+      if (applied.includes('__tabindex')) element.removeAttribute('tabindex');
+    };
     element.__wbButtonHrefCleanup = cleanupHref;
   }
 
@@ -378,7 +416,7 @@ export function button(element, options = {}) {
   element.addEventListener('click', onActivate);
 
   return () => {
-    element.classList.remove('wb-button', ...applied.filter((c) => c !== '__href'));
+    element.classList.remove('x-button', ...applied.filter((c) => c !== '__href'));
     element.removeEventListener('click', onActivate);
     if (element.__wbButtonHrefCleanup) {
       element.__wbButtonHrefCleanup();

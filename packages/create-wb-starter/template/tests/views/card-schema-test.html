@@ -10,7 +10,7 @@
 <body>
 
   <!-- 1. Semantic Card (Pre-rendered) -->
-  <wb-card class="card" id="semantic-card">
+  <article class="card" id="semantic-card">
     <header class="card__header">
       <div class="card__header-content">
         <h3 class="card__title">Semantic Title</h3>
@@ -19,20 +19,20 @@
     </header>
     <main class="card__body">Semantic Body</main>
     <footer class="card__footer">Semantic Footer</footer>
-  </wb-card>
+  </article>
 
   <!-- 2. Empty Card (Builder Fallback) -->
-  <wb-card class="card" id="empty-card" title="Builder Title" content="Builder Body"></wb-card>
+  <article class="card" id="empty-card" title="Builder Title" content="Builder Body"></article>
 
   <!-- 3. Semantic Card with Badge Attribute -->
-  <wb-card class="card" id="semantic-card-badge" badge="Verified">
+  <article class="card" id="semantic-card-badge" badge="Verified">
     <header class="card__header">
       <div class="card__header-content">
         <h3 class="card__title">Title</h3>
       </div>
     </header>
     <main class="card__body">Body</main>
-  </wb-card>
+  </article>
 
   <script type="module">
     import WB from '/src/core/wb.js';

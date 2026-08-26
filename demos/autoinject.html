@@ -4,8 +4,8 @@
   <meta id="autoinject-meta-3" charset="UTF-8">
   <meta id="autoinject-meta-4" name="viewport" content="width=device-width, initial-scale=1.0">
   <title id="autoinject-title-5">WB Auto-Inject Demo</title>
-  <link id="autoinject-link-6" rel="stylesheet" href="../src/styles/themes.css?v=3.0.91">
-  <link id="autoinject-link-7" rel="stylesheet" href="../src/styles/site.css?v=3.0.91">
+  <link id="autoinject-link-6" rel="stylesheet" href="../src/styles/themes.css?v=4.0.0">
+  <link id="autoinject-link-7" rel="stylesheet" href="../src/styles/site.css?v=4.0.0">
   <style id="autoinject-style-9">
     body {
       padding: 2rem;
@@ -135,7 +135,7 @@
       <strong id="autoinject-strong-17">Status:</strong> <span id="status">Initializing...</span>
     </div>
     <div id="autoinject-div-18" style="display: flex; gap: 1rem; align-items: center;">
-      <wb-themecontrol id="autoinject-div-19"></wb-themecontrol>
+      <div x-themecontrol id="autoinject-div-19"></div>
       <div id="autoinject-div-20" style="font-size: 0.9rem; opacity: 0.8;">
         Enabled via <code id="autoinject-code-21">WB.init({ autoInject: true })</code>
       </div>
@@ -265,7 +265,7 @@
       
       <div id="autoinject-div-74" style="margin-top: 1rem;">
         <h4 id="autoinject-h4-75">The Code (Default Form):</h4>
-        <wb-mdhtml id="autoinject-mdhtml-code1">
+        <div x-mdhtml id="autoinject-mdhtml-code1">
 ```html
 &lt;form&gt;
   &lt;label&gt;
@@ -345,7 +345,7 @@
   &lt;/button&gt;
 &lt;/form&gt;
 ```
-        </wb-mdhtml>
+        </div>
       </div>
     </div>
   </section>
@@ -464,7 +464,7 @@
 
     <div id="autoinject-div-cb-code" style="margin-top: 1rem;">
       <h4 id="autoinject-h4-cb-code" style="margin-bottom: 0.5rem; color: var(--text-secondary);">Code:</h4>
-      <wb-mdhtml id="autoinject-mdhtml-cb">
+      <div x-mdhtml id="autoinject-mdhtml-cb">
 ```html
 &lt;!-- Standard --&gt;
 &lt;label&gt;&lt;input type="checkbox"&gt; Standard Checkbox&lt;/label&gt;
@@ -550,7 +550,7 @@
   Extra Large
 &lt;/label&gt;
 ```
-      </wb-mdhtml>
+      </div>
     </div>
   </section>
 
@@ -582,7 +582,7 @@
     </div>
     <div id="autoinject-div-radio-code" style="margin-top: 1rem;">
       <h4 id="autoinject-h4-radio-code" style="margin-bottom: 0.5rem; color: var(--text-secondary);">Code:</h4>
-      <wb-mdhtml id="autoinject-mdhtml-radio">
+      <div x-mdhtml id="autoinject-mdhtml-radio">
 ```html
 &lt;label&gt;
   &lt;input
@@ -607,7 +607,7 @@
   Option 3
 &lt;/label&gt;
 ```
-      </wb-mdhtml>
+      </div>
     </div>
   </section>
 
@@ -685,7 +685,7 @@
     </div>
     <div id="autoinject-div-select-code" style="margin-top: 1rem;">
       <h4 id="autoinject-h4-select-code" style="margin-bottom: 0.5rem; color: var(--text-secondary);">Code:</h4>
-      <wb-mdhtml id="autoinject-mdhtml-select">
+      <div x-mdhtml id="autoinject-mdhtml-select">
 ```html
 &lt;!-- Standard --&gt;
 &lt;select&gt;
@@ -718,7 +718,7 @@
 &lt;select size="sm"&gt;...&lt;/select&gt;
 &lt;select size="lg"&gt;...&lt;/select&gt;
 ```
-      </wb-mdhtml>
+      </div>
     </div>
   </section>
 
@@ -758,7 +758,7 @@
     </div>
     <div id="autoinject-div-textarea-code" style="margin-top: 1rem;">
       <h4 id="autoinject-h4-textarea-code" style="margin-bottom: 0.5rem; color: var(--text-secondary);">Code:</h4>
-      <wb-mdhtml id="autoinject-mdhtml-textarea">
+      <div x-mdhtml id="autoinject-mdhtml-textarea">
 ```html
 &lt;!-- Standard --&gt;
 &lt;textarea placeholder="Type something..."&gt;&lt;/textarea&gt;
@@ -770,7 +770,7 @@
   max-length="100"&gt;
 &lt;/textarea&gt;
 ```
-      </wb-mdhtml>
+      </div>
     </div>
   </section>
 
@@ -818,7 +818,7 @@
     </div>
     <div id="autoinject-div-range-code" style="margin-top: 1rem;">
       <h4 id="autoinject-h4-range-code" style="margin-bottom: 0.5rem; color: var(--text-secondary);">Code:</h4>
-      <wb-mdhtml id="autoinject-mdhtml-range">
+      <div x-mdhtml id="autoinject-mdhtml-range">
 ```html
 &lt;!-- Standard --&gt;
 &lt;input
@@ -848,7 +848,7 @@
   &lt;div style="width: 30px; height: 30px; background: red"&gt;&lt;/div&gt;
 &lt;/div&gt;
 ```
-      </wb-mdhtml>
+      </div>
     </div>
   </section>
 
@@ -893,7 +893,7 @@
     </div>
     <div id="autoinject-div-btn-code" style="margin-top: 1rem;">
       <h4 id="autoinject-h4-btn-code" style="margin-bottom: 0.5rem; color: var(--text-secondary);">Code:</h4>
-      <wb-mdhtml id="autoinject-mdhtml-btn">
+      <div x-mdhtml id="autoinject-mdhtml-btn">
 ```html
 &lt;!-- Standard --&gt;
 &lt;button&gt;Standard Button&lt;/button&gt;
@@ -910,7 +910,7 @@
 &lt;button variant="danger"&gt;Danger&lt;/button&gt;
 &lt;button variant="outline"&gt;Outline&lt;/button&gt;
 ```
-      </wb-mdhtml>
+      </div>
     </div>
   </section>
 
@@ -981,7 +981,7 @@
 
     <div id="autoinject-div-media-code" style="margin-top: 1rem;">
       <h4 id="autoinject-h4-media-code" style="margin-bottom: 0.5rem; color: var(--text-secondary);">Code:</h4>
-      <wb-mdhtml id="autoinject-mdhtml-media">
+      <div x-mdhtml id="autoinject-mdhtml-media">
 ```html
 &lt;!-- Image (Lazy loaded by default) --&gt;
 &lt;img
@@ -991,14 +991,14 @@
 &lt;!-- Video --&gt;
 &lt;video controls&gt;
   &lt;source
-    src="movie.mp4"
+    src="https://www.w3schools.com/html/mov_bbb.mp4"
     type="video/mp4"&gt;
 &lt;/video&gt;
 
 &lt;!-- Audio with Theme Colors --&gt;
 &lt;audio controls&gt;
   &lt;source
-    src="audio.mp3"
+    src="https://archive.org/download/nineinchnails_ghosts_I_IV/01_Ghosts_I.mp3"
     type="audio/mpeg"&gt;
 &lt;/audio&gt;
 
@@ -1007,7 +1007,7 @@
   variant="success"
   style="accent-color: var(--success-color);"&gt;
   &lt;source
-    src="success.mp3"
+    src="https://archive.org/download/nineinchnails_ghosts_I_IV/01_Ghosts_I.mp3"
     type="audio/mpeg"&gt;
 &lt;/audio&gt;
 
@@ -1016,7 +1016,7 @@
   variant="warning"
   style="accent-color: var(--warning-color);"&gt;
   &lt;source
-    src="warning.mp3"
+    src="https://archive.org/download/nineinchnails_ghosts_I_IV/01_Ghosts_I.mp3"
     type="audio/mpeg"&gt;
 &lt;/audio&gt;
 
@@ -1025,11 +1025,11 @@
   variant="danger"
   style="accent-color: var(--danger-color);"&gt;
   &lt;source
-    src="danger.mp3"
+    src="https://archive.org/download/nineinchnails_ghosts_I_IV/01_Ghosts_I.mp3"
     type="audio/mpeg"&gt;
 &lt;/audio&gt;
 ```
-      </wb-mdhtml>
+      </div>
     </div>
   </section>
 
@@ -1057,13 +1057,13 @@
       </div>
       <div id="autoinject-div-283">
         <h3 id="autoinject-h3-284">Code Block</h3>
-        <wb-mdhtml id="autoinject-mdhtml-js">
+        <div x-mdhtml id="autoinject-mdhtml-js">
 ```javascript
 function hello() {
   console.log("Hello World");
 }
 ```
-        </wb-mdhtml>
+        </div>
       </div>
     </div>
     <div id="autoinject-div-typo-code" style="margin-top: 1rem;">
@@ -1074,7 +1074,7 @@ function hello() {
            inner ```javascript block's own closing fence, truncating this
            block and leaving `</div>` + the real closing ``` as orphaned
            trailing text outside the rendered code block. -->
-      <wb-mdhtml id="autoinject-mdhtml-typo">
+      <div x-mdhtml id="autoinject-mdhtml-typo">
 ````html
 &lt;!-- Keyboard Keys --&gt;
 &lt;p&gt;Press &lt;kbd&gt;Ctrl&lt;/kbd&gt; + &lt;kbd&gt;C&lt;/kbd&gt; to copy.&lt;/p&gt;
@@ -1098,7 +1098,7 @@ function hello() {
   ```
 &lt;/div&gt;
 ````
-      </wb-mdhtml>
+      </div>
     </div>
   </section>
 
@@ -1130,7 +1130,7 @@ function hello() {
         <h3 id="autoinject-h3-310">Table (Multi-Select)</h3>
         
         <div id="autoinject-div-table-theme" style="margin-bottom: 1rem;">
-          <wb-themecontrol id="autoinject-themecontrol-table" target="#table-container" show-label="true"></wb-themecontrol>
+          <div x-themecontrol id="autoinject-themecontrol-table" target="#table-container" show-label="true"></div>
         </div>
 
         <div id="table-container" style="padding: 1rem; border-radius: 8px; border: 1px solid var(--border-color);">
@@ -1178,7 +1178,7 @@ function hello() {
     </div>
     <div id="autoinject-div-struct-code" style="margin-top: 1rem;">
       <h4 id="autoinject-h4-struct-code" style="margin-bottom: 0.5rem; color: var(--text-secondary);">Code:</h4>
-      <wb-mdhtml id="autoinject-mdhtml-struct">
+      <div x-mdhtml id="autoinject-mdhtml-struct">
 ```html
 &lt;!-- Details --&gt;
 &lt;details&gt;
@@ -1208,7 +1208,7 @@ function hello() {
 &lt;/dialog&gt;
 &lt;button onclick="document.getElementById('d1').showModal()"&gt;Open&lt;/button&gt;
 ```
-      </wb-mdhtml>
+      </div>
     </div>
   </section>
 
@@ -1246,7 +1246,7 @@ function hello() {
     </div>
     <div id="autoinject-div-card-code" style="margin-top: 1rem;">
       <h4 id="autoinject-h4-card-code" style="margin-bottom: 0.5rem; color: var(--text-secondary);">Code:</h4>
-      <wb-mdhtml id="autoinject-mdhtml-card">
+      <div x-mdhtml id="autoinject-mdhtml-card">
 ```html
 &lt;!-- Basic Card --&gt;
 &lt;article
@@ -1273,7 +1273,7 @@ document.getElementById('interactive-card').addEventListener('click', () =&gt; {
 });
 &lt;/script&gt;
 ```
-      </wb-mdhtml>
+      </div>
     </div>
 
     <div id="autoinject-div-card-decorators" style="margin-top: 2rem; border-top: 1px solid var(--border-color); padding-top: 1.5rem;">
@@ -1341,7 +1341,7 @@ document.getElementById('interactive-card').addEventListener('click', () =&gt; {
     <div id="dynamic-area" style="margin-top: 1rem; display: flex; flex-direction: column; gap: 0.5rem;"></div>
     <div id="autoinject-div-dynamic-code" style="margin-top: 1rem;">
       <h4 id="autoinject-h4-dynamic-code" style="margin-bottom: 0.5rem; color: var(--text-secondary);">Code:</h4>
-      <wb-mdhtml id="autoinject-mdhtml-dynamic">
+      <div x-mdhtml id="autoinject-mdhtml-dynamic">
 ```javascript
 // Just add elements to the DOM
 // WB's MutationObserver handles the rest automatically
@@ -1354,30 +1354,30 @@ div.innerHTML = `
 `;
 document.body.appendChild(div);
 ```
-      </wb-mdhtml>
+      </div>
     </div>
   </section>
 
   <!-- Status Bar Demo -->
-  <wb-statusbar id="autoinject-statusbar-1" position="bottom" x-eager
+  <div id="autoinject-statusbar-1" position="bottom" x-eager
     <span id="autoinject-statusbar-ready" priority="low">Ready</span>
     <span id="autoinject-statusbar-encoding" priority="high">UTF-8</span>
   </div>
 
   <!-- Submission Modal -->
-  <dialog id="submission-modal" class="wb-dialog" style="padding: 0; min-width: 300px; max-width: 500px;">
-    <div id="autoinject-modal-header" class="wb-dialog__header">
-      <h3 id="autoinject-modal-title" class="wb-dialog__title">Application Data</h3>
+  <dialog id="submission-modal" class="x-dialog" style="padding: 0; min-width: 300px; max-width: 500px;">
+    <div id="autoinject-modal-header" class="x-dialog__header">
+      <h3 id="autoinject-modal-title" class="x-dialog__title">Application Data</h3>
       <form id="autoinject-modal-close-form" method="dialog">
-        <button id="autoinject-modal-close-btn" class="wb-dialog__close">×</button>
+        <button id="autoinject-modal-close-btn" class="x-dialog__close">×</button>
       </form>
     </div>
-    <div id="autoinject-modal-body" class="wb-dialog__body">
+    <div id="autoinject-modal-body" class="x-dialog__body">
       <pre id="autoinject-modal-pre" style="background: var(--bg-tertiary); padding: 1rem; border-radius: 4px; overflow: auto; margin: 0; font-family: monospace; font-size: 0.9rem;"></pre>
     </div>
-    <div id="autoinject-modal-footer" class="wb-dialog__footer">
+    <div id="autoinject-modal-footer" class="x-dialog__footer">
       <form id="autoinject-modal-footer-form" method="dialog">
-        <button id="autoinject-modal-submit-btn" class="wb-button wb-button--primary">Close</button>
+        <button id="autoinject-modal-submit-btn" class="x-button x-button--primary">Close</button>
       </form>
     </div>
   </dialog>
@@ -1399,7 +1399,7 @@ document.body.appendChild(div);
       
       // Debug check
       setTimeout(() => {
-        const checkboxes = document.querySelectorAll('.wb-checkbox');
+        const checkboxes = document.querySelectorAll('.x-checkbox');
         if (checkboxes.length === 0) {
           console.warn('No checkboxes enhanced yet. Checking auto-inject...');
           // Force re-scan if needed
@@ -1419,7 +1419,7 @@ document.body.appendChild(div);
     // Global click handler for demo purposes
     document.addEventListener('click', (e) => {
       // Ignore if clicking on the toast itself or its container
-      if (e.target.closest('.wb-toast-container')) return;
+      if (e.target.closest('.x-toast-container')) return;
 
       const target = e.target.closest('button, a, input, select, textarea, summary');
       

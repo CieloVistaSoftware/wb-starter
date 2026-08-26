@@ -10,25 +10,25 @@ The Cards component library provides 19 specialized card variants for displaying
 
 | Component | Custom Tag | Description |
 |-----------|------------|-------------|
-| [card](./card.md) | `<wb-card>` | Card component |
-| [cardimage](./cardimage.md) | `<wb-cardimage>` | Card with featured image |
-| [cardvideo](./cardvideo.md) | `<wb-cardvideo>` | Card with video player |
-| [cardbutton](./cardbutton.md) | `<wb-cardbutton>` | Card with action buttons |
-| [cardhero](./cardhero.md) | `<wb-cardhero>` | Hero banner card |
-| [cardprofile](./cardprofile.md) | `<wb-cardprofile>` | User profile card |
-| [cardpricing](./cardpricing.md) | `<wb-cardpricing>` | Pricing plan card |
-| [cardstats](./cardstats.md) | `<wb-cardstats>` | Statistics display |
-| [cardtestimonial](./cardtestimonial.md) | `<wb-cardtestimonial>` | Quote/testimonial |
-| [cardproduct](./cardproduct.md) | `<wb-cardproduct>` | E-commerce product |
-| [cardnotification](./cardnotification.md) | `<wb-cardnotification>` | Alert/notification |
-| [cardfile](./cardfile.md) | `<wb-cardfile>` | File download card |
-| [cardlink](./cardlink.md) | `<wb-cardlink>` | Clickable link card |
-| [cardhorizontal](./cardhorizontal.md) | `<wb-cardhorizontal>` | Horizontal layout |
-| [cardoverlay](./cardoverlay.md) | `<wb-cardoverlay>` | Image with overlay |
-| [cardexpandable](./cardexpandable.md) | `<wb-cardexpandable>` | Expandable content |
-| [cardminimizable](./cardminimizable.md) | `<wb-cardminimizable>` | Minimizable window |
-| [carddraggable](./carddraggable.md) | `<wb-carddraggable>` | Draggable card |
-| [cardportfolio](./cardportfolio.md) | `<wb-cardportfolio>` | Portfolio/contact |
+| [card](./card.md) | `<article>` | Card component |
+| [cardimage](./cardimage.md) | `<div x-cardimage>` | Card with featured image |
+| [cardvideo](./cardvideo.md) | `<div x-cardvideo>` | Card with video player |
+| [cardbutton](./cardbutton.md) | `<div x-cardbutton>` | Card with action buttons |
+| [cardhero](./cardhero.md) | `<div x-cardhero>` | Hero banner card |
+| [cardprofile](./cardprofile.md) | `<div x-cardprofile>` | User profile card |
+| [cardpricing](./cardpricing.md) | `<div x-cardpricing>` | Pricing plan card |
+| [cardstats](./cardstats.md) | `<div x-cardstats>` | Statistics display |
+| [cardtestimonial](./cardtestimonial.md) | `<div x-cardtestimonial>` | Quote/testimonial |
+| [cardproduct](./cardproduct.md) | `<div x-cardproduct>` | E-commerce product |
+| [cardnotification](./cardnotification.md) | `<div x-cardnotification>` | Alert/notification |
+| [cardfile](./cardfile.md) | `<div x-cardfile>` | File download card |
+| [cardlink](./cardlink.md) | `<div x-cardlink>` | Clickable link card |
+| [cardhorizontal](./cardhorizontal.md) | `<div x-cardhorizontal>` | Horizontal layout |
+| [cardoverlay](./cardoverlay.md) | `<div x-cardoverlay>` | Image with overlay |
+| [cardexpandable](./cardexpandable.md) | `<div x-cardexpandable>` | Expandable content |
+| [cardminimizable](./cardminimizable.md) | `<div x-cardminimizable>` | Minimizable window |
+| [carddraggable](./carddraggable.md) | `<div x-carddraggable>` | Draggable card |
+| [cardportfolio](./cardportfolio.md) | `<div x-cardportfolio>` | Portfolio/contact |
 
 ---
 
@@ -51,29 +51,29 @@ All card components support these common attributes:
 
 ### Basic Card
 ```html
-<wb-card
+<article
   title="Card Title"
   subtitle="Card subtitle">
   <p>Card content goes here.</p>
-</wb-card>
+</article>
 ```
 
 ### Elevated Card
 ```html
-<wb-card
+<article
   title="Elevated Card"
   elevated>
   <p>This card has shadow elevation.</p>
-</wb-card>
+</article>
 ```
 
 ### Clickable Card
 ```html
-<wb-card
+<article
   title="Clickable Card"
   clickable>
   <p>This card responds to clicks.</p>
-</wb-card>
+</article>
 ```
 
 ---
@@ -90,14 +90,14 @@ All card variants share the `card` behavior and compose additional functionality
 ---
 
 ## Schema
-- See: [src/wb-models/card.schema.json](../../src/wb-models/card.schema.json)
+- See: [src/wb-models/card.schema.json](../../../src/wb-models/card.schema.json)
 - Defines common properties shared by all card variants
 
 ---
 
 ## Implementation
-- **Shared Behavior**: [src/wb-viewmodels/card.js](../../src/wb-viewmodels/card.js)
-- **Styles**: [src/styles/components/card.css](../../src/styles/components/card.css)
+- **Shared Behavior**: [src/wb-viewmodels/card.js](../../../src/wb-viewmodels/card.js)
+- **Styles**: [src/styles/components/card.css](../../../src/styles/behaviors/card.css)
 - **Tests**: Component tests in `tests/behaviors/ui/card.spec.ts`
 
 ---

@@ -1,22 +1,22 @@
 /**
  * Card Image Rendering Test
- * Tests that wb-cardimage actually displays images
+ * Tests that x-cardimage actually displays images
  */
 import { test, expect } from '@playwright/test';
 
 test.describe('Card Image Rendering', () => {
-  test('wb-cardimage should display images on cards-showcase', async ({ page }) => {
-    await page.goto('/demos/cards-showcase.html');
+  test('[x-cardimage] should display images on cards-showcase', async ({ page }) => {
+    await page.goto('/demos/site/cards.html');
     await page.waitForTimeout(2000);
     
     // Find the cardimage section
-    const cardimageSection = page.locator('#cardimage');
+    const cardimageSection = page.locator('#demo-image');
     await expect(cardimageSection).toBeVisible();
     
-    // Find all wb-cardimage elements
-    const cardImages = page.locator('wb-cardimage');
+    // Find all x-cardimage elements
+    const cardImages = page.locator('[x-cardimage]');
     const count = await cardImages.count();
-    console.log(`Found ${count} wb-cardimage elements`);
+    console.log(`Found ${count} [x-cardimage] elements`);
     
     expect(count).toBeGreaterThan(0);
     
@@ -35,20 +35,20 @@ test.describe('Card Image Rendering', () => {
         console.log(`Card ${i} innerHTML:`, html.substring(0, 500));
       }
       
-      expect(imgCount, `wb-cardimage ${i} should contain an <img> element`).toBeGreaterThan(0);
+      expect(imgCount, `[x-cardimage] ${i} should contain an <img> element`).toBeGreaterThan(0);
       
       // Check img has a src
       const src = await img.first().getAttribute('src');
       console.log(`Card ${i} img src:`, src);
-      expect(src, `wb-cardimage ${i} img should have a src`).toBeTruthy();
+      expect(src, `[x-cardimage] ${i} img should have a src`).toBeTruthy();
     }
   });
 
-  test('wb-cardimage should have 1rem padding', async ({ page }) => {
-    await page.goto('/demos/cards-showcase.html');
+  test('[x-cardimage] should have 1rem padding', async ({ page }) => {
+    await page.goto('/demos/site/cards.html');
     await page.waitForTimeout(2000);
     
-    const cardImages = page.locator('wb-cardimage');
+    const cardImages = page.locator('[x-cardimage]');
     const count = await cardImages.count();
     
     for (let i = 0; i < Math.min(count, 3); i++) {
@@ -63,14 +63,14 @@ test.describe('Card Image Rendering', () => {
         if (cardPadding >= 16) return true;
         
         // Check main content area
-        const main = el.querySelector('.wb-card__main, main');
+        const main = el.querySelector('.x-card__main, main');
         if (main) {
           const mainPadding = parseFloat(getComputedStyle(main).paddingLeft);
           if (mainPadding >= 16) return true;
         }
         
         // Check header
-        const header = el.querySelector('.wb-card__header, header');
+        const header = el.querySelector('.x-card__header, header');
         if (header) {
           const headerPadding = parseFloat(getComputedStyle(header).paddingLeft);
           if (headerPadding >= 16) return true;
@@ -79,7 +79,7 @@ test.describe('Card Image Rendering', () => {
         return false;
       });
       
-      expect(hasPadding, `wb-cardimage ${i} should have proper padding`).toBe(true);
+      expect(hasPadding, `[x-cardimage] ${i} should have proper padding`).toBe(true);
     }
   });
 });

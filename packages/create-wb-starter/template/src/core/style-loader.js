@@ -13,11 +13,11 @@
  * content into document.body at runtime, so their CSS can only be found
  * this way — a static-markup scan would miss them entirely).
  *
- * <wb-grid> and <wb-demo> are real custom elements (never migrated to the
+ * <div x-grid> and <div x-demo> are real custom elements (never migrated to the
  * WB.inject() behavior-dispatch path — see wb.js's own comment on why) so
- * they never pass through the hook this feeds. wb-demo.js calls
+ * they never pass through the hook this feeds. x-demo.js calls
  * ensureBehaviorCss('demo') directly from its own connectedCallback for
- * that reason. wb-grid's own CSS (layout.css) stays an unconditional
+ * that reason. x-grid's own CSS (layout.css) stays an unconditional
  * import in site.css instead — it's under 1.5KB, cheaper than special-
  * casing a hook for one file.
  */
@@ -39,7 +39,7 @@ function loadCssFile(fileName) {
       resolve();
       return;
     }
-    const existing = document.querySelector(`link[data-wb-behavior-css="${fileName}"]`);
+    const existing = document.querySelector(`link[data-x-behavior-css="${fileName}"]`);
     if (existing) {
       resolve();
       return;
@@ -58,7 +58,7 @@ function loadCssFile(fileName) {
     // Cascade order matters: these files used to load via @import at the
     // very top of site.css, which resolves before ANY of site.css's own
     // rules — including the ones that deliberately override a behavior
-    // file's legacy/duplicate selectors (e.g. site.css's own .wb-spinner
+    // file's legacy/duplicate selectors (e.g. site.css's own .x-spinner
     // rule exists specifically to neutralize a duplicate ring effects.css
     // also defines, #182). A plain appendChild() lands after site.css's
     // <link> in document order, flipping same-specificity cascade fights

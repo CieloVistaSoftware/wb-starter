@@ -1,3 +1,4 @@
+import { readFlag } from '../../core/read-attr.js';
 /**
  * Image - Enhanced <img> element
  * Adds lazy loading, zoom/lightbox, fallback, aspect ratio
@@ -15,15 +16,15 @@ import { attachImageLoadRetry } from '../media-load-retry.js';
 
 export function img(element, options = {}) {
   const config = {
-    lazy: options.lazy ?? (element.hasAttribute('lazy') || element.hasAttribute('data-lazy')),
-    zoomable: options.zoomable ?? (element.hasAttribute('zoomable') || element.hasAttribute('data-zoomable')),
+    lazy: options.lazy ?? (element.hasAttribute('lazy') || readFlag(element, 'lazy')),
+    zoomable: options.zoomable ?? (element.hasAttribute('zoomable') || readFlag(element, 'zoomable')),
     placeholder: options.placeholder || element.getAttribute('placeholder') || '',
     fallback: options.fallback || element.getAttribute('fallback') || '',
     aspectRatio: options.aspectRatio || element.getAttribute('aspect-ratio') || '',
     ...options
   };
 
-  element.classList.add('wb-img');
+  element.classList.add('x-img');
 
   if (config.lazy) {
     element.loading = 'lazy';
@@ -39,23 +40,55 @@ export function img(element, options = {}) {
     // An explicit fallback image is a deliberate, more specific choice than
     // a blind retry -- swap immediately rather than racing retry attempts
     // against it.
-    element.onerror = () => { element.src = config.fallback; };
+    // John: "put in runtime errors on image fails." The swap is silent by
+    // design -- that is the point of a fallback -- but if the FALLBACK itself
+    // is missing too, the old handler just re-assigned the same failing src
+    // and said nothing, so a doubly-broken image left no trace anywhere.
+    let usedFallback = false;
+    // Captured BEFORE any swap: by the time the fallback fails, element.src is
+    // the FALLBACK's url, so reading it then named the same file twice and
+    // told you nothing about what was originally requested.
+    const originalSrc = config.src || element.getAttribute('src') || '';
+    element.onerror = () => {
+      if (!usedFallback) {
+        usedFallback = true;
+        element.src = config.fallback;
+        return;
+      }
+      // Async so it reaches window.onerror (error-logger.js) rather than being
+      // swallowed inside this event handler.
+      setTimeout(() => {
+        throw new Error(
+          `x-img: both the image and its fallback failed to load ` +
+          `(src="${originalSrc}", fallback="${config.fallback}") -- both are missing or unreachable.`
+        );
+      }, 0);
+    };
+
+    // The browser starts loading an <img> the instant its markup is inserted,
+    // so for injected content the 'error' event has usually already fired and
+    // gone by the time this behavior attaches a handler -- the fallback never
+    // swapped in and nothing was ever reported. `complete` with a zero
+    // naturalWidth is the standard way to spot an image that already failed.
+    if (element.complete && element.naturalWidth === 0 && element.getAttribute('src')) {
+      element.onerror(new Event('error'));
+    }
   } else {
     retryCleanup = attachImageLoadRetry(element);
   }
 
   if (config.zoomable) {
-    element.classList.add('wb-img--zoomable');
+    element.classList.add('x-img--zoomable');
     element.style.cursor = 'zoom-in';
     element.onclick = () => openLightbox(element.src, element.alt);
   }
 
-  return () => { element.classList.remove('wb-img', 'wb-img--zoomable'); if (retryCleanup) retryCleanup(); };
+  return () => { element.classList.remove('x-img', 'x-img--zoomable'); if (retryCleanup) retryCleanup(); };
 }
 
 export function openLightbox(src, alt = '') {
   const overlay = document.createElement('div');
-  overlay.className = 'wb-lightbox';
+  overlay.className = 'x-lightbox';
   Object.assign(overlay.style, {
     position: 'fixed',
     inset: '0',
@@ -71,7 +104,7 @@ export function openLightbox(src, alt = '') {
   const img = document.createElement('img');
   img.src = src;
   img.alt = alt;
-  img.className = 'wb-lightbox__img';
+  img.className = 'x-lightbox__img';
   Object.assign(img.style, {
     maxWidth: '90vw',
     maxHeight: '90vh',

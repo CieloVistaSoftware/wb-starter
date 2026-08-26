@@ -75,7 +75,7 @@ replacements.forEach(([pattern, replacement]) => {
   html = html.replace(pattern, replacement);
 });
 
-// Also fix the code examples inside <wb-mdhtml> blocks - they show data- in example code
+// Also fix the code examples inside <div x-mdhtml> blocks - they show data- in example code
 // These are display-only but should reflect the correct API
 
 fs.writeFileSync('demos/behaviors-showcase.html', html);

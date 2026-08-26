@@ -120,7 +120,7 @@ test.describe('Modal Spacing Compliance', () => {
   test('all dialog elements respect minimum spacing values', async ({ page }) => {
     const spacingErrors: string[] = [];
 
-    // Check any wb-dialog or modal elements on the page
+    // Check any x-dialog or modal elements on the page
     const modals = await page.locator('dialog, .modal, [role="dialog"]').count();
 
     for (let i = 0; i < modals; i++) {

@@ -1,7 +1,7 @@
 import { readFlag } from '../core/read-attr.js';
 // Standalone form behavior extracted from enhancements.js
 export function form(element, options = {}) {
-  // <wb-form> is a custom tag, not a real <form> — FormData/.action/.method/
+  // <form> is a custom tag, not a real <form> — FormData/.action/.method/
   // .reset()/.requestSubmit() all require a genuine HTMLFormElement. Replace
   // it with a real <form> carrying the same attributes and children, same
   // approach as details.js wrapping non-<details> elements.
@@ -19,7 +19,7 @@ export function form(element, options = {}) {
     validate: options.validate ?? host.getAttribute('validate') !== 'false',
     ...options
   };
-  host.classList.add('wb-form');
+  host.classList.add('x-form');
   if (config.ajax) {
     host.onsubmit = async (e) => {
       e.preventDefault();
@@ -42,5 +42,5 @@ export function form(element, options = {}) {
     reset: () => host.reset(),
     submit: () => host.requestSubmit()
   };
-  return () => host.classList.remove('wb-form');
+  return () => host.classList.remove('x-form');
 }

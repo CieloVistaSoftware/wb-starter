@@ -24,7 +24,7 @@ export function img(element, options = {}) {
     ...options
   };
 
-  element.classList.add('wb-img');
+  element.classList.add('x-img');
 
   if (config.lazy) {
     element.loading = 'lazy';
@@ -59,7 +59,7 @@ export function img(element, options = {}) {
       // swallowed inside this event handler.
       setTimeout(() => {
         throw new Error(
-          `wb-img: both the image and its fallback failed to load ` +
+          `x-img: both the image and its fallback failed to load ` +
           `(src="${originalSrc}", fallback="${config.fallback}") -- both are missing or unreachable.`
         );
       }, 0);
@@ -78,17 +78,17 @@ export function img(element, options = {}) {
   }
 
   if (config.zoomable) {
-    element.classList.add('wb-img--zoomable');
+    element.classList.add('x-img--zoomable');
     element.style.cursor = 'zoom-in';
     element.onclick = () => openLightbox(element.src, element.alt);
   }
 
-  return () => { element.classList.remove('wb-img', 'wb-img--zoomable'); if (retryCleanup) retryCleanup(); };
+  return () => { element.classList.remove('x-img', 'x-img--zoomable'); if (retryCleanup) retryCleanup(); };
 }
 
 export function openLightbox(src, alt = '') {
   const overlay = document.createElement('div');
-  overlay.className = 'wb-lightbox';
+  overlay.className = 'x-lightbox';
   Object.assign(overlay.style, {
     position: 'fixed',
     inset: '0',
@@ -104,7 +104,7 @@ export function openLightbox(src, alt = '') {
   const img = document.createElement('img');
   img.src = src;
   img.alt = alt;
-  img.className = 'wb-lightbox__img';
+  img.className = 'x-lightbox__img';
   Object.assign(img.style, {
     maxWidth: '90vw',
     maxHeight: '90vh',

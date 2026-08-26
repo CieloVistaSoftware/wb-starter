@@ -38,7 +38,7 @@ function processFile(filePath) {
       content = content.replace(new RegExp(`x-legacy=["']${b}["']`, 'gi'), `x-${b}`);
     });
     
-    // 2. All on div/etc -> <wb-component>
+    // 2. All on div/etc -> <div>
     const components = [
       'card', 'badge', 'button', 'modal', 'alert', 'avatar', 'chip', 'progress',
       'spinner', 'skeleton', 'rating', 'switch', 'tabs', 'accordion', 'drawer',
@@ -54,7 +54,7 @@ function processFile(filePath) {
     ];
     
     components.forEach(c => {
-      // <wb-card  -> <wb-card
+      // <article  -> <article
       content = content.replace(
         new RegExp(`<(div|section|article|span|nav|aside|main|header|footer|details|pre|ul|ol|dl|button|a|p|figure)([^>]*)\\bx-legacy=["']${c}["']`, 'gi'),
         `<wb-${c}$2`

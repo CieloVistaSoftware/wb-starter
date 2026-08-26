@@ -1,3 +1,4 @@
+import { readFlag } from '../core/read-attr.js';
 /**
  * Feedback Behaviors
  * -----------------------------------------------------------------------------
@@ -14,15 +15,15 @@
  * CSS: src/styles/behaviors/toast.css
  */
 export function createToast(message, variant = 'info', duration = 3000) {
-  let container = document.querySelector('.wb-toast-container');
+  let container = document.querySelector('.x-toast-container');
   if (!container) {
     container = document.createElement('div');
-    container.className = 'wb-toast-container';
+    container.className = 'x-toast-container';
     document.body.appendChild(container);
   }
 
   const toast = document.createElement('div');
-  toast.className = `wb-toast wb-toast--${variant}`;
+  toast.className = `x-toast x-toast--${variant}`;
   toast.setAttribute('role', 'status');
   toast.textContent = message;
 
@@ -31,7 +32,7 @@ export function createToast(message, variant = 'info', duration = 3000) {
   // Auto-dismiss — no close button needed
   if (duration > 0) {
     setTimeout(() => {
-      toast.classList.add('wb-toast--exiting');
+      toast.classList.add('x-toast--exiting');
       setTimeout(() => toast.remove(), 300);
     }, duration);
   }
@@ -78,7 +79,7 @@ export function toast(element, options = {}) {
 /**
  * Badge - Status badges
  * CSS: src/styles/behaviors/badge.css
- * CSS targets wb-badge tag and attributes.
+ * CSS targets x-badge tag and attributes.
  */
 export function badge(element, options = {}) {
   const variant = (options.variant || element.getAttribute('variant') || element.getAttribute('badge') || 'default')
@@ -94,44 +95,76 @@ export function badge(element, options = {}) {
   // attention to a "NEW"/"LIVE" badge. Composes with any variant/pill/outline.
   const glow = options.glow ?? element.hasAttribute('glow');
 
-  // #448: skip the bare 'wb-badge' token on a literal <wb-badge> host --
-  // badge.css already has a dedicated `wb-badge` tag rule for that case.
+  // #448: skip the bare 'x-badge' token on a literal <span x-badge> host --
+  // badge.css already has a dedicated `x-badge` tag rule for that case.
   // Still added for every OTHER host (the `badge="..."` semantic attribute
   // on a plain element, per semantic-attributes.js), since badge.css's
-  // `.wb-badge` class rule still selects those.
-  if (element.tagName.toLowerCase() !== 'wb-badge') element.classList.add('wb-badge');
-  element.classList.add(`wb-badge--${variant}`);
-  if (size && ['xs', 'sm', 'md', 'lg'].includes(size)) element.classList.add(`wb-badge--${size}`);
-  if (pill) element.classList.add('wb-badge--pill');
-  if (dot) element.classList.add('wb-badge--dot');
-  if (outline) element.classList.add('wb-badge--outline');
-  if (glow) element.classList.add('wb-badge--glow');
+  // `.x-badge` class rule still selects those.
+  if (element.tagName.toLowerCase() !== 'x-badge') element.classList.add('x-badge');
+  element.classList.add(`x-badge--${variant}`);
+  if (size && ['xs', 'sm', 'md', 'lg'].includes(size)) element.classList.add(`x-badge--${size}`);
+  if (pill) element.classList.add('x-badge--pill');
+  if (dot) element.classList.add('x-badge--dot');
+  if (outline) element.classList.add('x-badge--outline');
+  if (glow) element.classList.add('x-badge--glow');
 
   if (dot) {
-    element.textContent = ''; // a dot badge has no text
+    element.textContent = ''; // clear first -- rebuilt below from scratch
     // #415: dot + removable are NOT mutually exclusive -- dot = a small
     // colored indicator instead of a text label, removable = has a
-    // close/remove affordance. When both are set, the whole-element 8px
-    // circle-collapse (badge.css `.wb-badge--dot`) is scoped off via
-    // `:not(.wb-badge--removable)` so there's room for the remove button
-    // built below; render the dot itself as a small inline indicator here.
-    if (removable && !element.querySelector('.wb-badge__dot')) {
-      const dotEl = document.createElement('span');
-      dotEl.className = 'wb-badge__dot';
-      element.appendChild(dotEl);
+    // close/remove affordance. When either is set, the whole-element 8px
+    // circle-collapse (badge.css `.x-badge--dot`) is scoped off (via
+    // `:not(.x-badge--removable):not(:has(.x-badge__dot-label))`) so
+    // there's room for the indicator plus whatever else applies; render the
+    // dot itself as a small inline indicator here.
+    //
+    // #631: a bare `dot` unconditionally discarded any `label` too -- "a dot
+    // badge has no text" was true by design for a pure status indicator
+    // (docs' own properties table: "Renders as a small dot indicator
+    // instead of text"), but John: "Add text to the dot" -- a labeled dot
+    // ("● Live", "● 3 new") is a real, common pattern this behavior had no
+    // way to express. `dot` + `label` together now render both: a small
+    // colored dot indicator, then the label text next to it -- still
+    // compact, no longer silently textless.
+    const hasLabel = label != null && label !== '';
+    if (removable || hasLabel) {
+      if (!element.querySelector('.x-badge__dot')) {
+        const dotEl = document.createElement('span');
+        dotEl.className = 'x-badge__dot';
+        element.appendChild(dotEl);
+      }
+      if (hasLabel) {
+        const labelEl = document.createElement('span');
+        labelEl.className = 'x-badge__dot-label';
+        labelEl.textContent = label;
+        element.appendChild(labelEl);
+      }
     }
   } else {
     // Render the `label` attribute as the badge text — but only if the author
     // didn't already put content inside the tag (children win over label).
-    if (label != null && label !== '' && !element.textContent.trim()) {
+    // #618: on a x-demo page, demo.js's doc-link 📖 icon (.x-demo__card-doc-link)
+    // is appended as hostEl's own DOM CHILD before this behavior ever runs
+    // (see demo.js's attachInstanceDocLink) -- a plain `element.textContent.trim()`
+    // check can't tell that apart from real author content, so it saw the icon,
+    // assumed the label had already been "handled," and silently dropped every
+    // label on every x-demo'd badge. Only the doc-link icon renders text this
+    // early, so excluding it from the emptiness check is enough to tell the two
+    // apart.
+    const hasAuthorContent = Array.from(element.childNodes).some(
+      (n) => n.nodeType === Node.TEXT_NODE
+        ? n.textContent.trim()
+        : !n.classList?.contains('x-demo__card-doc-link')
+    );
+    if (label != null && label !== '' && !hasAuthorContent) {
       element.textContent = label;
     }
     // icon → a small leading glyph/emoji before the label (e.g. "🟢 Live").
     // Inserted as a real element (not baked into the text node) so it can be
     // targeted independently by CSS.
-    if (icon && !element.querySelector('.wb-badge__icon')) {
+    if (icon && !element.querySelector('.x-badge__icon')) {
       const iconEl = document.createElement('span');
-      iconEl.className = 'wb-badge__icon';
+      iconEl.className = 'x-badge__icon';
       iconEl.textContent = icon;
       element.insertBefore(iconEl, element.firstChild);
     }
@@ -142,11 +175,11 @@ export function badge(element, options = {}) {
   // working remove button; it was previously nested inside the `else`
   // above, so `dot` silently swallowed `removable` entirely (neither the
   // dot visual nor the remove button rendered together).
-  if (removable && !element.querySelector('.wb-badge__remove')) {
-    element.classList.add('wb-badge--removable');
+  if (removable && !element.querySelector('.x-badge__remove')) {
+    element.classList.add('x-badge--removable');
     const btn = document.createElement('button');
     btn.type = 'button';
-    btn.className = 'wb-badge__remove';
+    btn.className = 'x-badge__remove';
     btn.setAttribute('aria-label', 'Remove');
     btn.textContent = '×';
     btn.addEventListener('click', (e) => { e.stopPropagation(); element.remove(); });
@@ -154,7 +187,7 @@ export function badge(element, options = {}) {
   }
 
   return () => {
-    element.classList.remove('wb-badge', `wb-badge--${variant}`, 'wb-badge--pill', 'wb-badge--dot', 'wb-badge--outline', 'wb-badge--glow', 'wb-badge--removable');
+    element.classList.remove('x-badge', `x-badge--${variant}`, 'x-badge--pill', 'x-badge--dot', 'x-badge--outline', 'x-badge--glow', 'x-badge--removable');
   };
 }
 
@@ -193,7 +226,7 @@ export function progress(element, options = {}) {
       if (b) b.style.width = `${(v / max) * 100}%`;
       element.setAttribute('aria-valuenow', v);
     },
-    reanimate: () => {
+    refresh: () => {
       const b = element.querySelector('div');
       if (b) {
         b.style.width = '0%';
@@ -207,8 +240,8 @@ export function progress(element, options = {}) {
 
 /**
  * Spinner - Loading spinner
- * CSS: already in site.css — targets .wb-spinner div with sizes/colors/speeds.
- * CSS uses wb-spinner[size="lg"], wb-spinner[color="success"], wb-spinner[speed="fast"]
+ * CSS: already in site.css — targets .x-spinner div with sizes/colors/speeds.
+ * CSS uses x-spinner[size="lg"], x-spinner[color="success"], x-spinner[speed="fast"]
  */
 export function spinner(element, options = {}) {
   if (element._wbSpinnerInit) return () => {};
@@ -219,23 +252,23 @@ export function spinner(element, options = {}) {
   element.innerHTML = '';
 
   // spinner.schema.json declares size default:"md" -- that default used to
-  // apply via schema property processing for the <wb-spinner> tag form, but
+  // apply via schema property processing for the <span x-spinner> tag form, but
   // x-spinner (or any non-schema dispatch path) never went through schema
-  // at all, so the class never got added. .wb-spinner div (no size
+  // at all, so the class never got added. .x-spinner div (no size
   // modifier) has no width/height of its own -- the ring collapsed to
   // basically nothing. Confirmed live: <div x-spinner> rendered ~4x too
-  // small vs <wb-spinner>. Default here so the behavior itself, not schema,
+  // small vs <span x-spinner>. Default here so the behavior itself, not schema,
   // is the single source of truth for this default (#279).
   const size = options.size || element.getAttribute('size') || 'md';
   const variant = options.variant || options.color || element.getAttribute('variant') || element.getAttribute('color');
   const speed = options.speed || element.getAttribute('speed');
-  // #448: no classList.add('wb-spinner') -- effects.css/site.css's
-  // .wb-spinner selectors were converted to the `wb-spinner` TAG (no live
-  // demo/page usage of x-spinner on a non-<wb-spinner> element was found,
+  // #448: no classList.add('x-spinner') -- effects.css/site.css's
+  // .x-spinner selectors were converted to the `x-spinner` TAG (no live
+  // demo/page usage of x-spinner on a non-<span x-spinner> element was found,
   // so there's nothing else the bare class needs to keep matching).
-  if (size) element.classList.add(`wb-spinner--${size}`);
-  if (variant) element.classList.add(`wb-spinner--${variant}`);
-  if (speed) element.classList.add(`wb-spinner--${speed}`);
+  if (size) element.classList.add(`x-spinner--${size}`);
+  if (variant) element.classList.add(`x-spinner--${variant}`);
+  if (speed) element.classList.add(`x-spinner--${speed}`);
 
   const ring = document.createElement('div');
   element.appendChild(ring);
@@ -249,7 +282,7 @@ export function spinner(element, options = {}) {
 /**
  * Avatar - User avatars
  * CSS: src/styles/behaviors/avatar.css
- * CSS targets <wb-avatar> tag and attributes directly.
+ * CSS targets <span x-avatar> tag and attributes directly.
  * JS only creates child elements.
  */
 export function avatar(element, options = {}) {
@@ -273,7 +306,7 @@ export function avatar(element, options = {}) {
 
   if (status) {
     const dot = document.createElement('span');
-    dot.className = `wb-avatar__status--${status}`;
+    dot.className = `x-avatar__status--${status}`;
     element.appendChild(dot);
   }
 
@@ -291,44 +324,44 @@ export function chip(element, options = {}) {
   // opt in -- consistent with cardBase()'s clickable/elevated dual-check
   // (card.js) elsewhere in this project; a caller shouldn't need to know
   // which convention a given behavior happens to check.
-  const dismissible = options.dismissible ?? (element.hasAttribute('dismissible') || element.hasAttribute('data-dismissible'));
-  const disabled = options.disabled ?? (element.hasAttribute('disabled') || element.hasAttribute('data-disabled'));
-  const outlined = options.outlined ?? (element.hasAttribute('outlined') || element.hasAttribute('data-outlined'));
+  const dismissible = options.dismissible ?? (element.hasAttribute('dismissible') || readFlag(element, 'dismissible'));
+  const disabled = options.disabled ?? (element.hasAttribute('disabled') || readFlag(element, 'disabled'));
+  const outlined = options.outlined ?? (element.hasAttribute('outlined') || readFlag(element, 'outlined'));
   const variant = options.variant || element.getAttribute('variant') || 'default';
   const size = options.size || element.getAttribute('size') || 'md';
 
-  // #448 made this tag-only ("chip.css selects the wb-chip TAG directly
-  // now") on the assumption chip() only ever runs on a real <wb-chip>. #521
+  // #448 made this tag-only ("chip.css selects the x-chip TAG directly
+  // now") on the assumption chip() only ever runs on a real <span x-chip>. #521
   // adds a second authoring form -- <span x-chip> -- where the tag ISN'T
-  // wb-chip, so chip.css's bare `wb-chip {}` selector can't reach it at
+  // x-chip, so chip.css's bare `x-chip {}` selector can't reach it at
   // all without the class. Same guard buildStructure() already uses
   // (schema-builder.js) for the identical reason: skip only when the tag
   // itself already IS the base class, to avoid #478's redundant-class
-  // violation on real <wb-chip> elements.
-  if (element.tagName.toLowerCase() !== 'wb-chip') element.classList.add('wb-chip');
-  element.classList.toggle(`wb-chip--${variant}`, variant !== 'default');
-  element.classList.toggle(`wb-chip--${size}`, size !== 'md');
-  element.classList.toggle('wb-chip--outlined', outlined);
-  element.classList.toggle('wb-chip--disabled', disabled);
+  // violation on real <span x-chip> elements.
+  if (element.tagName.toLowerCase() !== 'x-chip') element.classList.add('x-chip');
+  element.classList.toggle(`x-chip--${variant}`, variant !== 'default');
+  element.classList.toggle(`x-chip--${size}`, size !== 'md');
+  element.classList.toggle('x-chip--outlined', outlined);
+  element.classList.toggle('x-chip--disabled', disabled);
   if (disabled) element.setAttribute('aria-disabled', 'true');
 
   element.innerHTML = '';
 
   if (icon) {
     const iconEl = document.createElement('span');
-    iconEl.className = 'wb-chip__icon';
+    iconEl.className = 'x-chip__icon';
     iconEl.textContent = icon;
     element.appendChild(iconEl);
   }
 
   const labelEl = document.createElement('span');
-  labelEl.className = 'wb-chip__label';
+  labelEl.className = 'x-chip__label';
   labelEl.textContent = label;
   element.appendChild(labelEl);
 
   if (dismissible && !disabled) {
-    const btn = document.createElement('wb-button');
-    btn.className = 'wb-chip__remove';
+    const btn = document.createElement('x-button');
+    btn.className = 'x-chip__remove';
     btn.textContent = '\u00d7';
     btn.setAttribute('aria-label', 'Remove');
     btn.addEventListener('click', () => {
@@ -339,7 +372,7 @@ export function chip(element, options = {}) {
   }
 
   return () => {
-    element.classList.remove('wb-chip', `wb-chip--${variant}`, `wb-chip--${size}`, 'wb-chip--outlined', 'wb-chip--disabled');
+    element.classList.remove('x-chip', `x-chip--${variant}`, `x-chip--${size}`, 'x-chip--outlined', 'x-chip--disabled');
     element.innerHTML = '';
   };
 }
@@ -356,7 +389,7 @@ export function alert(element, options = {}) {
   // loop) with no options -- that path only ever read the literal
   // `variant` attribute, so a `<div x-alert type="warning">` still fell
   // through to the 'info' default here despite the schema class already
-  // being resolved to wb-alert--warning, leaving two conflicting variant
+  // being resolved to x-alert--warning, leaving two conflicting variant
   // classes on the same element. Reading `type` as a fallback keeps this
   // direct path consistent with the schema's own alias contract.
   const variant = options.variant || element.getAttribute('variant') || element.getAttribute('type') || 'info';
@@ -369,11 +402,23 @@ export function alert(element, options = {}) {
 
   element.setAttribute('role', 'alert');
   element.setAttribute('variant', variant);
-  // alert.css styles the `wb-alert` TAG (#448 converted the old bare
-  // .wb-alert class selector to a tag selector) + .wb-alert--<variant> --
+  // alert.css styles the `x-alert` TAG (#448 converted the old bare
+  // .x-alert class selector to a tag selector) + .x-alert--<variant> --
   // the variant attribute alone matches no selector, so every alert
   // rendered with zero styling regardless of variant (#375).
-  element.classList.add(`wb-alert--${variant}`);
+  //
+  // #633: that tag-selector rule ONLY ever matches a literal <div x-alert>
+  // element -- for the attribute-decoration form (<div x-alert>, the form
+  // every doc/demo actually uses), nothing added the base `.x-alert`
+  // class either, so the div got ZERO base styling (padding, gap,
+  // display:flex, border-radius) -- only the variant rule's background
+  // color, since `.x-alert--{variant}` alone still matched. Confirmed
+  // live: <div x-alert type="info"> computed to padding:0/gap:normal on
+  // every side. Same pattern badge() already handles correctly (#448) --
+  // skip the redundant class on a literal <div x-alert> host (its own tag
+  // selector already covers it), add it for every other host.
+  if (element.tagName.toLowerCase() !== 'x-alert') element.classList.add('x-alert');
+  element.classList.add(`x-alert--${variant}`);
 
   const content = message || element.innerHTML || 'Alert message';
   const titleText = title || 'Alert';
@@ -381,25 +426,25 @@ export function alert(element, options = {}) {
   element.innerHTML = '';
 
   const iconEl = document.createElement('span');
-  iconEl.className = 'wb-alert__icon';
+  iconEl.className = 'x-alert__icon';
   iconEl.textContent = icon;
   element.appendChild(iconEl);
 
   const contentEl = document.createElement('div');
-  contentEl.className = 'wb-alert__content';
+  contentEl.className = 'x-alert__content';
   const titleEl = document.createElement('div');
-  titleEl.className = 'wb-alert__title';
+  titleEl.className = 'x-alert__title';
   titleEl.textContent = titleText;
   const msgEl = document.createElement('div');
-  msgEl.className = 'wb-alert__message';
+  msgEl.className = 'x-alert__message';
   msgEl.textContent = content;
   contentEl.appendChild(titleEl);
   contentEl.appendChild(msgEl);
   element.appendChild(contentEl);
 
   if (dismissible) {
-    const closeEl = document.createElement('wb-button');
-    closeEl.className = 'wb-alert__close';
+    const closeEl = document.createElement('x-button');
+    closeEl.className = 'x-alert__close';
     closeEl.textContent = '\u00d7';
     closeEl.addEventListener('click', () => element.remove());
     element.appendChild(closeEl);
@@ -413,8 +458,8 @@ export function alert(element, options = {}) {
  * CSS: src/styles/behaviors/skeleton.css
  *
  * Usage:
- *   <wb-skeleton></wb-skeleton>              \u2014 single line
- *   <wb-skeleton lines="3"></wb-skeleton>     \u2014 multiple lines
+ *   <div x-skeleton></div>              \u2014 single line
+ *   <div x-skeleton lines="3"></div>     \u2014 multiple lines
  */
 export function skeleton(element) {
   const variant = element.getAttribute('variant') || 'text';
@@ -422,13 +467,13 @@ export function skeleton(element) {
   const width = element.getAttribute('width');
   const height = element.getAttribute('height');
 
-  // wb-skeleton is in schema-builder.js's SCHEMA_EXCLUDED_TAGS (self-
+  // x-skeleton is in schema-builder.js's SCHEMA_EXCLUDED_TAGS (self-
   // sufficient behavior, same as card/search) -- so schema-builder never
-  // runs for it. skeleton.css selects the `wb-skeleton` TAG directly
-  // (never a bare `.wb-skeleton` class), so only the variant modifier class
+  // runs for it. skeleton.css selects the `x-skeleton` TAG directly
+  // (never a bare `.x-skeleton` class), so only the variant modifier class
   // is needed here -- #448 removed the redundant base token, which just
   // duplicated the tag name and was never itself selected by any rule.
-  element.classList.add(`wb-skeleton--${variant}`);
+  element.classList.add(`x-skeleton--${variant}`);
 
   element.setAttribute('variant', variant);
   if (width) element.style.width = width;
@@ -477,7 +522,7 @@ export function breadcrumb(element, options = {}) {
   const items = (options.items || element.getAttribute('items') || '').split(',').filter(Boolean);
   const separator = options.separator || element.getAttribute('separator') || '/';
 
-  element.classList.add('wb-breadcrumb');
+  element.classList.add('x-breadcrumb');
   element.setAttribute('aria-label', 'Breadcrumb');
 
   if (items.length > 0) {
@@ -485,7 +530,7 @@ export function breadcrumb(element, options = {}) {
     items.forEach((item, i) => {
       if (i > 0) {
         const sep = document.createElement('span');
-        sep.className = 'wb-breadcrumb__separator';
+        sep.className = 'x-breadcrumb__separator';
         sep.textContent = separator;
         element.appendChild(sep);
       }

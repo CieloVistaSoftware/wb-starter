@@ -6,10 +6,10 @@ Toggle switch for boolean settings.
 
 | Property | Value |
 |----------|-------|
-| Custom Tag | `<wb-switch>` |
+| Custom Tag | `<div x-switch>` |
 | Behavior | `switch` |
 | Semantic | `<div>` (role="switch") |
-| Root CSS Class | `wb-switch` |
+| Root CSS Class | `x-switch` |
 | Category | Forms |
 | Schema | `src/wb-models/switch.schema.json` |
 
@@ -26,18 +26,18 @@ Toggle switch for boolean settings.
 | `size` | string | `"md"` | Size: `sm`, `md`, `lg` |
 | `variant` | string | `"default"` | Variant: `default`, `primary`, `success` |
 
-Wrapped in `<wb-demo>`, so the live component renders below with its source shown underneath:
+Wrapped in `<div x-demo>`, so the live component renders below with its source shown underneath:
 
-<wb-demo>
-<wb-switch label="Dark mode"></wb-switch>
-</wb-demo>
+<div x-demo>
+<div x-switch label="Dark mode"></div>
+</div>
 
 ## Usage
 
 ### Custom Element
 
 ```html
-<wb-switch label="Dark mode"></wb-switch>
+<div x-switch label="Dark mode"></div>
 ```
 
 ### Native Checkbox (Enhanced)
@@ -52,88 +52,88 @@ Wrapped in `<wb-demo>`, so the live component renders below with its source show
 ### Pre-Checked
 
 ```html
-<wb-switch
+<div x-switch
   label="Enable notifications"
   checked>
-</wb-switch>
+</div>
 ```
 
 ### Label Position
 
 ```html
-<wb-switch
+<div x-switch
   label="Left label"
   labelPosition="start">
-</wb-switch>
-<wb-switch
+</div>
+<div x-switch
   label="Right label"
   labelPosition="end">
-</wb-switch>
+</div>
 ```
 
 ### Sizes
 
 ```html
-<wb-switch
+<div x-switch
   label="Small"
   size="sm">
-</wb-switch>
-<wb-switch
+</div>
+<div x-switch
   label="Medium"
   size="md">
-</wb-switch>
-<wb-switch
+</div>
+<div x-switch
   label="Large"
   size="lg">
-</wb-switch>
+</div>
 ```
 
 ### Variants
 
 ```html
-<wb-switch
+<div x-switch
   label="Default"
   variant="default">
-</wb-switch>
-<wb-switch
+</div>
+<div x-switch
   label="Primary"
   variant="primary">
-</wb-switch>
-<wb-switch
+</div>
+<div x-switch
   label="Success"
   variant="success">
-</wb-switch>
+</div>
 ```
 
 ### Disabled
 
 ```html
-<wb-switch
+<div x-switch
   label="Unavailable"
   disabled>
-</wb-switch>
+</div>
 ```
 
 ### In Forms
 
 ```html
-<wb-switch
+<div x-switch
   label="Subscribe to newsletter"
   name="subscribe"
   value="yes">
-</wb-switch>
+</div>
 ```
 
 ## Generated Structure
 
 ```html
-<div class="wb-switch">
-  <span class="wb-switch__label">Dark mode</span>
+<div class="x-switch">
+  <span class="x-switch__label">Dark mode</span>
   <input
     type="checkbox"
-    class="wb-switch__input">
-  <span class="wb-switch__track">
-    <span class="wb-switch__thumb"></span>
+    class="x-switch__input">
+  <span class="x-switch__track">
+    <span class="x-switch__thumb"></span>
   </span>
 </div>
 ```
@@ -142,14 +142,14 @@ Wrapped in `<wb-demo>`, so the live component renders below with its source show
 
 | Class | Applied When | Description |
 |-------|--------------|-------------|
-| `.wb-switch` | Always | Base styling |
-| `.wb-switch--checked` | `checked` | Checked state |
-| `.wb-switch--disabled` | `disabled` | Disabled state |
-| `.wb-switch--sm` | `size="sm"` | Small size |
-| `.wb-switch--md` | `size="md"` | Medium size |
-| `.wb-switch--lg` | `size="lg"` | Large size |
-| `.wb-switch--primary` | `variant="primary"` | Primary variant |
-| `.wb-switch--success` | `variant="success"` | Success variant |
+| `.x-switch` | Always | Base styling |
+| `.x-switch--checked` | `checked` | Checked state |
+| `.x-switch--disabled` | `disabled` | Disabled state |
+| `.x-switch--sm` | `size="sm"` | Small size |
+| `.x-switch--md` | `size="md"` | Medium size |
+| `.x-switch--lg` | `size="lg"` | Large size |
+| `.x-switch--primary` | `variant="primary"` | Primary variant |
+| `.x-switch--success` | `variant="success"` | Success variant |
 
 ## Methods
 
@@ -163,7 +163,7 @@ Wrapped in `<wb-demo>`, so the live component renders below with its source show
 | `disable()` | Disables the switch | - |
 
 ```javascript
-const toggle = document.querySelector('wb-switch');
+const toggle = document.querySelector('x-switch');
 
 // On/off
 toggle.on();
@@ -196,18 +196,18 @@ toggle.addEventListener('wb:switch:change', (e) => {
 
 | Variable | Default | Description |
 |----------|---------|-------------|
-| `--wb-switch-width` | `44px` | Track width |
-| `--wb-switch-height` | `24px` | Track height |
-| `--wb-switch-radius` | `9999px` | Track border radius |
-| `--wb-switch-track-bg` | `var(--bg-tertiary, #d1d5db)` | Track background (off) |
-| `--wb-switch-track-bg-on` | `var(--primary, #6366f1)` | Track background (on) |
-| `--wb-switch-thumb-size` | `20px` | Thumb size |
-| `--wb-switch-thumb-bg` | `#ffffff` | Thumb background |
-| `--wb-switch-thumb-shadow` | `0 1px 3px rgba(0,0,0,0.2)` | Thumb shadow |
-| `--wb-switch-transition` | `all 0.2s ease` | Toggle transition |
-| `--wb-switch-disabled-opacity` | `0.5` | Disabled opacity |
-| `--wb-switch-label-gap` | `0.5rem` | Gap between switch and label |
-| `--wb-switch-focus-ring` | `0 0 0 3px rgba(99, 102, 241, 0.2)` | Focus ring |
+| `--x-switch-width` | `44px` | Track width |
+| `--x-switch-height` | `24px` | Track height |
+| `--x-switch-radius` | `9999px` | Track border radius |
+| `--x-switch-track-bg` | `var(--bg-tertiary, #d1d5db)` | Track background (off) |
+| `--x-switch-track-bg-on` | `var(--primary, #6366f1)` | Track background (on) |
+| `--x-switch-thumb-size` | `20px` | Thumb size |
+| `--x-switch-thumb-bg` | `#ffffff` | Thumb background |
+| `--x-switch-thumb-shadow` | `0 1px 3px rgba(0,0,0,0.2)` | Thumb shadow |
+| `--x-switch-transition` | `all 0.2s ease` | Toggle transition |
+| `--x-switch-disabled-opacity` | `0.5` | Disabled opacity |
+| `--x-switch-label-gap` | `0.5rem` | Gap between switch and label |
+| `--x-switch-focus-ring` | `0 0 0 3px rgba(99, 102, 241, 0.2)` | Focus ring |
 
 ## Accessibility
 

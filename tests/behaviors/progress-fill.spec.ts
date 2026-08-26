@@ -1,5 +1,5 @@
 /**
- * wb-progress — value renders a proportional fill (issue #127)
+ * x-progress — value renders a proportional fill (issue #127)
  */
 import { test, expect, Page } from '@playwright/test';
 
@@ -21,16 +21,29 @@ async function setup(page: Page, html: string): Promise<void> {
   await page.waitForTimeout(400);
 }
 
-test.describe('wb-progress — fill from value', () => {
+test.describe('progress — fill from value', () => {
   for (const v of [25, 50, 100]) {
     test(`value="${v}" fills ~${v}%`, async ({ page }) => {
-      await setup(page, `<wb-progress id="p${v}" value="${v}"></wb-progress>`);
+      await setup(page, `<progress id="p${v}" value="${v}"></progress>`);
       const host = page.locator(`#p${v}`);
       await expect(host).toBeVisible();
-      const bar = host.locator('.wb-progress__bar');
+      const bar = host.locator('.x-progress__bar');
       await expect(bar).toHaveCount(1);
+      // #848: `animated` defaults to true, and .x-progress--animated grows the
+      // fill in from width:0 over 0.6s (x-progress-grow-in, progress.css). The
+      // setup's fixed 400ms wait ends INSIDE that window, so the width read
+      // here was whatever frame the run happened to land on -- measured live at
+      // 0.84 for value="100", which is exactly why `value="100" fills ~100%`
+      // was already red at HEAD while 25/50 squeaked through on tolerance.
+      // Wait for the growth to settle instead of racing it. Infinite animations
+      // (striped+animated) are filtered out -- their .finished never resolves.
+      await bar.evaluate((el) => Promise.all(
+        el.getAnimations()
+          .filter((a) => (a.effect as KeyframeEffect)?.getTiming().iterations !== Infinity)
+          .map((a) => a.finished)
+      ));
       const ratio = await host.evaluate((el) => {
-        const b = el.querySelector('.wb-progress__bar') as HTMLElement;
+        const b = el.querySelector('.x-progress__bar') as HTMLElement;
         return b.getBoundingClientRect().width / el.getBoundingClientRect().width;
       });
       expect(ratio).toBeGreaterThan(v / 100 - 0.08);
@@ -39,7 +52,7 @@ test.describe('wb-progress — fill from value', () => {
   }
 
   test('striped adds striped modifier', async ({ page }) => {
-    await setup(page, '<wb-progress id="ps" value="75" striped></wb-progress>');
-    await expect(page.locator('#ps .wb-progress__bar')).toHaveClass(/wb-progress__bar--striped/);
+    await setup(page, '<progress id="ps" value="75" striped></progress>');
+    await expect(page.locator('#ps .x-progress__bar')).toHaveClass(/x-progress__bar--striped/);
   });
 });

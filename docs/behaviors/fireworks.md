@@ -2,12 +2,16 @@
 
 Fireworks particle burst animation effect
 
-Applies to `<div>`, and to any element carrying `x-fireworks`.
+## Type — new capability
 
-## Usage
+`x-fireworks` adds behavior that no HTML element implies. Nothing about a tag says "ripple" or "tooltip", so this is always opted into by attribute, on whatever element you already chose.
+
+### How to write it
 
 ```html
-<button variant="primary" x-fireworks>🎆 Fireworks</button>
+<button variant="primary" x-fireworks>
+  x-fireworks · variant: primary
+</button>
 ```
 
 ## Attributes

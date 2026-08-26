@@ -4,15 +4,15 @@
 ## Overview
 The Tabs component provides a flexible tabbed interface for organizing content into switchable panels. It uses semantic HTML with proper accessibility features and keyboard navigation.
 
-Wrapped in `<wb-demo>`, so the live component renders below with its source shown underneath:
+Wrapped in `<div x-demo>`, so the live component renders below with its source shown underneath:
 
-<wb-demo>
-<wb-tabs>
+<div x-demo>
+<div x-tabs>
   <div tab="Tab 1">Content 1</div>
   <div tab="Tab 2">Content 2</div>
   <div tab="Tab 3">Content 3</div>
-</wb-tabs>
-</wb-demo>
+</div>
+</div>
 
 ---
 
@@ -20,16 +20,16 @@ Wrapped in `<wb-demo>`, so the live component renders below with its source show
 
 ### Simple Tabs
 ```html
-<wb-tabs>
+<div x-tabs>
   <div tab="Tab 1">Content 1</div>
   <div tab="Tab 2">Content 2</div>
   <div tab="Tab 3">Content 3</div>
-</wb-tabs>
+</div>
 ```
 
 ### Basic Usage
 ```html
-<wb-tabs>
+<div x-tabs>
   <div tab="Overview">
     <h3>Overview Content</h3>
     <p>Overview details...</p>
@@ -42,16 +42,16 @@ Wrapped in `<wb-demo>`, so the live component renders below with its source show
     <h3>Settings</h3>
     <p>Configuration options...</p>
   </div>
-</wb-tabs>
+</div>
 ```
 
 ### With Active Tab
 ```html
-<wb-tabs active-tab="1">
+<div x-tabs active-tab="1">
   <div tab="Home">Welcome content</div>
   <div tab="About">About us</div>
   <div tab="Contact">Contact info</div>
-</wb-tabs>
+</div>
 ```
 
 ---
@@ -87,7 +87,7 @@ document.addEventListener('wb:tabs:change', (e) => {
 
 ### Public API
 ```javascript
-const tabs = document.querySelector('wb-tabs');
+const tabs = document.querySelector('x-tabs');
 
 // Switch to tab by index (0-based)
 tabs.setActiveTab(2);
@@ -129,43 +129,43 @@ The component automatically provides:
 ## Semantic Structure
 
 ```html
-<section class="wb-tabs">
+<section class="x-tabs">
   <!-- Tab Navigation -->
   <nav
-    class="wb-tabs__nav"
+    class="x-tabs__nav"
     role="tablist"
     aria-orientation="horizontal">
     <button
-      class="wb-tabs__tab wb-tabs__tab--active"
+      class="x-tabs__tab x-tabs__tab--active"
       role="tab"
       aria-selected="true"
-      aria-controls="wb-tabs-panel-0"
-      id="wb-tabs-tab-0">
+      aria-controls="x-tabs-panel-0"
+      id="x-tabs-tab-0">
       Tab 1
     </button>
     <button
-      class="wb-tabs__tab"
+      class="x-tabs__tab"
       role="tab"
       aria-selected="false"
-      aria-controls="wb-tabs-panel-1"
-      id="wb-tabs-tab-1">
+      aria-controls="x-tabs-panel-1"
+      id="x-tabs-tab-1">
       Tab 2
     </button>
   </nav>
   <!-- Tab Panels -->
-  <div class="wb-tabs__panels">
+  <div class="x-tabs__panels">
     <section
-      class="wb-tabs__panel wb-tabs__panel--active"
+      class="x-tabs__panel x-tabs__panel--active"
       role="tabpanel"
-      aria-labelledby="wb-tabs-tab-0"
-      id="wb-tabs-panel-0">
+      aria-labelledby="x-tabs-tab-0"
+      id="x-tabs-panel-0">
       Content for Tab 1
     </section>
     <section
-      class="wb-tabs__panel"
+      class="x-tabs__panel"
       role="tabpanel"
-      aria-labelledby="wb-tabs-tab-1"
-      id="wb-tabs-panel-1"
+      aria-labelledby="x-tabs-tab-1"
+      id="x-tabs-panel-1"
       hidden>
       Content for Tab 2
     </section>
@@ -179,7 +179,7 @@ The component automatically provides:
 
 ### CSS Custom Properties
 ```css
-wb-tabs {
+x-tabs {
   /* Layout */
   --tabs-orientation: horizontal;
   --tabs-gap: var(--space-md);
@@ -208,26 +208,26 @@ wb-tabs {
 
 | Class | Description |
 |-------|-------------|
-| `.wb-tabs` | Main container |
-| `.wb-tabs__nav` | Tab navigation container |
-| `.wb-tabs__tab` | Individual tab button |
-| `.wb-tabs__tab--active` | Currently active tab |
-| `.wb-tabs__tab--disabled` | Disabled tab |
-| `.wb-tabs__panels` | Panels container |
-| `.wb-tabs__panel` | Individual panel |
-| `.wb-tabs__panel--active` | Currently active panel |
-| `.wb-tabs--vertical` | Vertical orientation modifier |
+| `.x-tabs` | Main container |
+| `.x-tabs__nav` | Tab navigation container |
+| `.x-tabs__tab` | Individual tab button |
+| `.x-tabs__tab--active` | Currently active tab |
+| `.x-tabs__tab--disabled` | Disabled tab |
+| `.x-tabs__panels` | Panels container |
+| `.x-tabs__panel` | Individual panel |
+| `.x-tabs__panel--active` | Currently active panel |
+| `.x-tabs--vertical` | Vertical orientation modifier |
 
 ---
 
 ## Schema
-- See: [src/wb-models/tabs.schema.json](../src/wb-models/tabs.schema.json)
+- See: [src/wb-models/tabs.schema.json](../../src/wb-models/tabs.schema.json)
 - Defines component properties, accessibility features, and test scenarios
 
 ---
 
 ## Implementation
-- **Custom Element**: [src/wb-viewmodels/wb-tabs.js](../src/wb-viewmodels/wb-tabs.js)
-- **Behavior**: [src/wb-viewmodels/tabs.js](../src/wb-viewmodels/tabs.js)
-- **Styles**: [src/styles/components/tabs.css](../src/styles/components/tabs.css)
+- **Custom Element**: [src/wb-viewmodels/x-tabs.js](../../src/wb-viewmodels/tabs.js)
+- **Behavior**: [src/wb-viewmodels/tabs.js](../../src/wb-viewmodels/tabs.js)
+- **Styles**: src/styles/components/tabs.css
 - **Tests**: Component tests located in `tests/behaviors/ui/tabs.spec.ts`

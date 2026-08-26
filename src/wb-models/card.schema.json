@@ -4,13 +4,13 @@
   "title": "Card Component",
   "description": "Card component. IS-A article, HAS-A header, main, footer.",
   "schemaFor": "card",
-  "baseClass": "wb-card",
+  "baseClass": "x-card",
   "semanticElement": {
     "tagName": "article",
     "implicitRole": "article"
   },
   "compliance": {
-    "baseClass": "wb-card",
+    "baseClass": "x-card",
     "supportLevel": "stable",
     "accessibility": "high"
   },
@@ -34,13 +34,13 @@
       "type": "boolean",
       "description": "Add drop shadow",
       "default": false,
-      "appliesClass": "wb-card--elevated"
+      "appliesClass": "x-card--elevated"
     },
     "clickable": {
       "type": "boolean",
       "description": "Make card clickable",
       "default": false,
-      "appliesClass": "wb-card--clickable"
+      "appliesClass": "x-card--clickable"
     },
     "variant": {
       "type": "string",
@@ -66,7 +66,7 @@
         "auto"
       ],
       "default": "auto",
-      "appliesClass": "wb-card--{value}"
+      "appliesClass": "x-card--{value}"
     },
     "tooltip": {
       "type": "string",
@@ -82,7 +82,7 @@
     }
   },
   "$view": [],
-  "_$viewNote": "#202: EMPTY on purpose. The card BEHAVIOR (src/wb-viewmodels/card.js) is the SOLE renderer of the card DOM (.wb-card__*). A schema $view here ALSO built a competing .card__* structure, and the two nested → duplicate title/footer (rendered 4× on schema-processed pages). An empty $view makes the schema builder restore the slot content and build nothing; card.js owns the structure.",
+  "_$viewNote": "#202: EMPTY on purpose. The card BEHAVIOR (src/wb-viewmodels/card.js) is the SOLE renderer of the card DOM (.x-card__*). A schema $view here ALSO built a competing .card__* structure, and the two nested → duplicate title/footer (rendered 4× on schema-processed pages). An empty $view makes the schema builder restore the slot content and build nothing; card.js owns the structure.",
   "$methods": {
     "show": {
       "description": "Shows the card",
@@ -127,28 +127,28 @@
   },
   "test": {
     "setup": [
-      "<wb-card>Basic card content</wb-card>",
-      "<wb-card variant=\"default\">variant=default</wb-card>",
-      "<wb-card variant=\"glass\">variant=glass</wb-card>",
-      "<wb-card variant=\"bordered\">variant=bordered</wb-card>",
-      "<wb-card elevated>with elevated</wb-card>",
-      "<wb-card clickable>with clickable</wb-card>",
-      "<wb-card title=\"Sample title\">title=\"Sample title\"</wb-card>",
-      "<wb-card subtitle=\"Sample subtitle\">subtitle=\"Sample subtitle\"</wb-card>"
+      "<article>Basic card content</article>",
+      "<article variant=\"default\">variant=default</article>",
+      "<article variant=\"glass\">variant=glass</article>",
+      "<article variant=\"bordered\">variant=bordered</article>",
+      "<article elevated>with elevated</article>",
+      "<article clickable>with clickable</article>",
+      "<article title=\"Sample title\">title=\"Sample title\"</article>",
+      "<article subtitle=\"Sample subtitle\">subtitle=\"Sample subtitle\"</article>"
     ],
     "functional": {
       "visual": [
         {
           "name": "Basic Card",
-          "setup": "<wb-card>Content</wb-card>",
+          "setup": "<article>Content</article>",
           "expect": {
             "visible": true,
-            "hasClass": "wb-card"
+            "hasClass": "x-card"
           }
         },
         {
           "name": "Card with Header/Footer",
-          "setup": "<wb-card title='Title' footer='Footer'>Content</wb-card>",
+          "setup": "<article title='Title' footer='Footer'>Content</article>",
           "expect": {
             "textContains": "Title"
           },
@@ -168,11 +168,11 @@
       "interactions": [
         {
           "name": "Clickable Card",
-          "setup": "<wb-card clickable>Click Me</wb-card>",
+          "setup": "<article clickable>Click Me</article>",
           "action": "click",
           "expect": {
             "event": "click",
-            "hasClass": "wb-card--clickable"
+            "hasClass": "x-card--clickable"
           }
         }
       ]
@@ -225,9 +225,9 @@
     },
     "site": {
       "page": "cards",
-      "tag": "wb-card",
+      "tag": "x-card",
       "renders": true,
-      "baseClass": "wb-card",
+      "baseClass": "x-card",
       "minInstances": 8,
       "checkText": [
         "Default Card",
@@ -238,7 +238,7 @@
         "Bordered Card"
       ],
       "checkClasses": [
-        "wb-card--xs"
+        "x-card--xs"
       ],
       "checkAttributes": [
         "title",

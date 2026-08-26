@@ -20,15 +20,15 @@ const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 
 // data-*  ->  verified plain attribute the behavior reads
 const MAP = {
-  'data-value': 'value',        // wb-progress (feedback.js), x-stepper (stepper.js)
-  'data-max': 'max',            // wb-progress, x-stepper
+  'data-value': 'value',        // x-progress (feedback.js), x-stepper (stepper.js)
+  'data-max': 'max',            // x-progress, x-stepper
   'data-min': 'min',            // x-stepper
-  'data-size': 'size',          // wb-spinner (feedback.js:154 reads data-size||size)
-  'data-color': 'color',        // wb-spinner (feedback.js:155)
+  'data-size': 'size',          // x-spinner (feedback.js:154 reads data-size||size)
+  'data-color': 'color',        // x-spinner (feedback.js:155)
   'data-columns': 'columns',    // x-gallery (media.js:66)
   'data-items': 'items',        // x-breadcrumb (feedback.js:339), x-steps (navigation.js)
   'data-separator': 'separator',// x-breadcrumb
-  'data-src': 'src',            // x-lightbox (overlay.js), wb-audio/media (media.js:117/185)
+  'data-src': 'src',            // x-lightbox (overlay.js), x-audio/media (media.js:117/185)
   'data-mask': 'mask',          // x-masked (masked.js reads mask||data-mask)
   'data-copy': 'copy-text',     // x-copy (copy.js:10)
   'data-share-title': 'share-title', // x-share (helpers.js:140)
@@ -39,9 +39,9 @@ const MAP = {
   'data-to': 'date',            // x-countdown reads `date` (helpers.js:501), NOT `to`
   'data-ratio': 'aspect-ratio', // x-youtube (media.js:25)
   'data-video-id': 'video-id',  // x-youtube (media.js:889)
-  'data-original-price': 'original-price', // wb-cardproduct (live demo uses original-price)
-  'data-show-eq': 'show-eq',    // wb-audio (live demo uses show-eq)
-  'data-volume': 'volume',      // wb-audio (live demo uses volume)
+  'data-original-price': 'original-price', // x-cardproduct (live demo uses original-price)
+  'data-show-eq': 'show-eq',    // x-audio (live demo uses show-eq)
+  'data-volume': 'volume',      // x-audio (live demo uses volume)
 };
 
 const files = process.argv.slice(2);

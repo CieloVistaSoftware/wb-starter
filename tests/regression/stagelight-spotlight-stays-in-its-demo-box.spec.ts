@@ -19,7 +19,7 @@ import { test, expect } from '@playwright/test';
  *
  * The fix needs BOTH halves, so this spec asserts both independently -- either
  * one regressing alone brings the bug back:
- *   - `.wb-demo__grid { contain: layout }` establishes a containing block, and
+ *   - `.x-demo__grid { contain: layout }` establishes a containing block, and
  *   - the overlay sizes with `inset: 0` (a child element, so the host stays in
  *     normal flow and the demo box keeps real dimensions).
  */
@@ -36,19 +36,19 @@ for (const { url, label } of PAGES) {
 
       // The gallery demos upgrade lazily; scroll them into view and wait.
       await page.evaluate(() => {
-        document.querySelectorAll('[x-stagelight], wb-stagelight').forEach((e) => e.scrollIntoView());
+        document.querySelectorAll('[x-stagelight], [x-stagelight]').forEach((e) => e.scrollIntoView());
       });
-      await page.waitForFunction(() => !!document.querySelector('.wb-stagelight__spot'), null, {
+      await page.waitForFunction(() => !!document.querySelector('.x-stagelight__spot'), null, {
         timeout: 30000,
       });
 
       const report = await page.evaluate(() => {
-        const spots = [...document.querySelectorAll('.wb-stagelight__spot')];
+        const spots = [...document.querySelectorAll('.x-stagelight__spot')];
         return {
           viewport: { w: window.innerWidth, h: window.innerHeight },
           spots: spots.map((s) => {
             const r = s.getBoundingClientRect();
-            const grid = s.closest('.wb-demo__grid');
+            const grid = s.closest('.x-demo__grid');
             const gr = grid ? grid.getBoundingClientRect() : null;
             return {
               hasGrid: !!grid,
@@ -66,8 +66,8 @@ for (const { url, label } of PAGES) {
 
       for (const s of report.spots) {
         // (1) the demo box must establish a containing block
-        expect(s.hasGrid, 'spotlight overlay should sit inside a .wb-demo__grid').toBe(true);
-        expect(s.gridContain, '.wb-demo__grid must establish a containing block').toContain('layout');
+        expect(s.hasGrid, 'spotlight overlay should sit inside a .x-demo__grid').toBe(true);
+        expect(s.gridContain, '.x-demo__grid must establish a containing block').toContain('layout');
 
         // (2) the overlay must be sized BY that box, not by the viewport --
         //     this is the assertion that 100vw/100vh would fail
@@ -88,9 +88,9 @@ for (const { url, label } of PAGES) {
     test(`${url}: spotlight tracks the mouse relative to its own box`, async ({ page }) => {
       await page.goto(url, { waitUntil: 'domcontentloaded' });
       await page.evaluate(() => {
-        document.querySelectorAll('[x-stagelight], wb-stagelight').forEach((e) => e.scrollIntoView());
+        document.querySelectorAll('[x-stagelight], [x-stagelight]').forEach((e) => e.scrollIntoView());
       });
-      await page.waitForFunction(() => !!document.querySelector('.wb-stagelight__spot'), null, {
+      await page.waitForFunction(() => !!document.querySelector('.x-stagelight__spot'), null, {
         timeout: 30000,
       });
 
@@ -98,7 +98,7 @@ for (const { url, label } of PAGES) {
       // Feeding raw clientX/clientY put the bright spot outside the box and
       // left it rendering as a uniformly dark rectangle.
       const result = await page.evaluate(async () => {
-        const spot = document.querySelector('.wb-stagelight__spot') as HTMLElement;
+        const spot = document.querySelector('.x-stagelight__spot') as HTMLElement;
         const host = spot.parentElement as HTMLElement;
         const r = spot.getBoundingClientRect();
         window.dispatchEvent(

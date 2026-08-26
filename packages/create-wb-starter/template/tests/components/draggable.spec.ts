@@ -25,7 +25,7 @@ async function injectAndScan(page: Page, html: string) {
     container.innerHTML = h;
     
     // Force eager loading
-    const elements = container.querySelectorAll('.wb-ready');
+    const elements = container.querySelectorAll('.x-ready');
     elements.forEach(el => el.setAttribute('', ''));
     
     document.body.appendChild(container);
@@ -45,11 +45,11 @@ test.describe('draggable Behavior', () => {
     page.on('pageerror', (err) => errors.push(err.message));
     
     const setupHtml = [
-      "<wb-draggable>Basic draggable content</wb-draggable>",
-      "<wb-draggable axis=\"x\">axis=x</wb-draggable>",
-      "<wb-draggable axis=\"y\">axis=y</wb-draggable>",
-      "<wb-draggable axis=\"both\">axis=both</wb-draggable>",
-      "<wb-draggable handle=\"Sample handle\">handle=\"Sample handle\"</wb-draggable>"
+      "<div x-draggable>Basic draggable content</div>",
+      "<div x-draggable axis=\"x\">axis=x</div>",
+      "<div x-draggable axis=\"y\">axis=y</div>",
+      "<div x-draggable axis=\"both\">axis=both</div>",
+      "<div x-draggable handle=\"Sample handle\">handle=\"Sample handle\"</div>"
     ];
     
     await injectAndScan(page, setupHtml.join('\n'));
@@ -65,10 +65,10 @@ test.describe('draggable Behavior', () => {
   });
 
   test('element is visible after scan', async ({ page }) => {
-    const html = "<wb-draggable>Basic draggable content</wb-draggable>";
+    const html = "<div x-draggable>Basic draggable content</div>";
     await injectAndScan(page, html);
     
-    const el = page.locator('#test-container wb-draggable, #test-container [x-draggable]').first();
+    const el = page.locator('#test-container x-draggable, #test-container [x-draggable]').first();
     const isPresent = await el.count() > 0;
     
     if (isPresent) {

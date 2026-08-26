@@ -2,9 +2,9 @@ import { test, expect } from '@playwright/test';
 
 /**
  * pages/behaviors.html's hero `<header id="header">` (H1 + subtitle +
- * theme control) is a plain semantic tag, not a `<wb-header>` component --
+ * theme control) is a plain semantic tag, not a `<header>` component --
  * but tag-map.js's nativeMap auto-injects the generic header() behavior
- * onto EVERY bare <header> site-wide, adding class="wb-header"
+ * onto EVERY bare <header> site-wide, adding class="x-header"
  * (src/styles/behaviors/header.css: fixed height:60px, padding:0 1.5rem).
  * That fixed 60px box is shorter than the hero's actual H1+subtitle
  * content, so the content silently overflowed past the header's own
@@ -66,7 +66,7 @@ test.describe('behaviors.html hero header: sized to its content, no overlap with
       `header content and nav must not overlap (found ${overlapY}px of vertical overlap) -- these are two separate elements and must not occupy the same space`
     ).toBeLessThanOrEqual(0);
 
-    // The generic native auto-inject header() behavior (wb-header navbar
+    // The generic native auto-inject header() behavior (x-header navbar
     // class, fixed 60px height) must not have been applied to this
     // content hero -- it opts out via x-ignore.
     await expect(header).not.toHaveClass(/\bwb-header\b/);

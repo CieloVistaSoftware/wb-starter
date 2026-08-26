@@ -2,14 +2,14 @@
 
 Image comparison slider or carousel.
 
-Apply `x-slider` to any element.
+## Type — new capability
 
-## Usage
+`x-slider` adds behavior that no HTML element implies. Nothing about a tag says "ripple" or "tooltip", so this is always opted into by attribute, on whatever element you already chose.
+
+### How to write it
 
 ```html
-<div x-slider>
-  …
-</div>
+<input x-slider type="range" min="0" max="100" value="35">
 ```
 
 ## Live example

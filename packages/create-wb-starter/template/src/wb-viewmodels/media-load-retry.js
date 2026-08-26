@@ -25,6 +25,8 @@
 // John asked for: no ack in the console previously meant no way to tell
 // "still retrying" from "silently broken" without instrumenting by hand
 // each time. [WB:media-retry] is a fixed, greppable prefix.
+import { logError } from '../core/error-logger.js';
+
 function traceLabel(el) {
   const tag = el.tagName.toLowerCase();
   return el.id ? `<${tag} id="${el.id}">` : `<${tag}>`;
@@ -71,9 +73,9 @@ function attachLoadRetry(el, config) {
     // "broken" chrome (video controls with nothing to play, browken-image
     // icon) doesn't sit next to the message looking doubly broken.
     el.style.display = 'none';
-    if (!el.nextElementSibling || !el.nextElementSibling.classList.contains('wb-media-load-failed')) {
+    if (!el.nextElementSibling || !el.nextElementSibling.classList.contains('x-media-load-failed')) {
       const msg = document.createElement('div');
-      msg.className = 'wb-media-load-failed';
+      msg.className = 'x-media-load-failed';
       msg.textContent = `⚠ ${config.label} unavailable`;
       el.insertAdjacentElement('afterend', msg);
     }
@@ -81,6 +83,50 @@ function attachLoadRetry(el, config) {
       bubbles: true,
       detail: { src: config.currentSrc(el), attempts: attempt }
     }));
+
+    // John: "put in runtime errors on image fails."
+    //
+    // Everything above is a console.warn plus a class and an event -- none of
+    // which error-logger.js captures, so an image that never loaded left no
+    // entry in the error log and never showed up in CI's JS-errors check. A
+    // media file that is missing or unreachable after every retry is a real
+    // defect in the page, not a warning.
+    //
+    // Thrown asynchronously so it reaches window.onerror (which error-logger
+    // listens on) WITHOUT unwinding this function -- the fallback UI above has
+    // already been applied, and throwing inline would skip the cleanup that
+    // callers depend on. Same convention cardoverlay/cardhero/audio already
+    // use for their own load failures.
+    const failedSrc = config.currentSrc(el);
+
+    // #763 -- John, at a "Video unavailable" placeholder: "Where's the runtime
+    // error?"
+    //
+    // It was thrown, and it still reached nobody. The throw below is caught by
+    // window.onerror, and error-logger only listens there once
+    // setupGlobalErrorHandler() has run -- which happens inside WB.init(). Any
+    // page that calls WB.scan() without init() (demos/playground.html does
+    // exactly that: `WB.init` is deferred behind ensureWB()) installs no
+    // handler, so the throw hit the default handler, printed to devtools, and
+    // left no entry anywhere the user can see.
+    //
+    // logError() is the framework's own channel and is what the Error Log page
+    // reads. Calling it directly makes the report unconditional instead of
+    // contingent on another subsystem having been initialised first. The throw
+    // is kept as well: it carries a stack to devtools, which the log entry
+    // does not.
+    logError(
+      `${config.label} failed to load after ${attempt} attempt(s): ` +
+      `${failedSrc || '(no src)'} -- the file is missing or unreachable.`,
+      { source: 'media-load-retry', element: traceLabel(el), src: failedSrc, attempts: attempt }
+    );
+
+    setTimeout(() => {
+      throw new Error(
+        `${config.label}: failed to load ${failedSrc || '(no src)'} after ${attempt} attempt(s) -- ` +
+        `the file is missing or unreachable. Showing the "unavailable" fallback.`
+      );
+    }, 0);
   }
 
   function retry() {
@@ -150,7 +196,7 @@ export function attachVideoLoadRetry(videoEl, options = {}) {
     options,
     label: 'Video',
     successEvents: ['loadeddata', 'canplay'],
-    failedClass: 'wb-video--load-failed',
+    failedClass: 'x-video--load-failed',
     failedEvent: 'wb:video:load-failed',
     currentSrc: (el) => el.currentSrc || el.src,
     // HAVE_CURRENT_DATA (2) or higher means a real frame is available.
@@ -165,7 +211,7 @@ export function attachImageLoadRetry(imgEl, options = {}) {
     options,
     label: 'Image',
     successEvents: ['load'],
-    failedClass: 'wb-img--load-failed',
+    failedClass: 'x-img--load-failed',
     failedEvent: 'wb:image:load-failed',
     currentSrc: (el) => el.currentSrc || el.src,
     isReady: (el) => el.complete && el.naturalWidth > 0,

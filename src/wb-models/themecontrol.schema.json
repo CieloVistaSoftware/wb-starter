@@ -5,7 +5,7 @@
   "description": "Theme switcher control.",
   "schemaFor": "themecontrol",
   "compliance": {
-    "baseClass": "wb-themecontrol",
+    "baseClass": "x-themecontrol",
     "supportLevel": "stable",
     "accessibility": "high"
   },
@@ -15,11 +15,11 @@
   "$cssAPI": {},
   "test": {
     "setup": [
-      "<wb-themecontrol>Basic themecontrol content</wb-themecontrol>",
-      "<wb-themecontrol>Test permutation 2</wb-themecontrol>",
-      "<wb-themecontrol>Test permutation 3</wb-themecontrol>",
-      "<wb-themecontrol>Test permutation 4</wb-themecontrol>",
-      "<wb-themecontrol>Test permutation 5</wb-themecontrol>"
+      "<div x-themecontrol>Basic themecontrol content</div>",
+      "<div x-themecontrol>Test permutation 2</div>",
+      "<div x-themecontrol>Test permutation 3</div>",
+      "<div x-themecontrol>Test permutation 4</div>",
+      "<div x-themecontrol>Test permutation 5</div>"
     ],
     "matrix": {
       "combinations": [
@@ -28,9 +28,9 @@
     },
     "site": {
       "page": "interactive",
-      "tag": "wb-themecontrol",
+      "tag": "x-themecontrol",
       "renders": true,
-      "baseClass": "wb-themecontrol",
+      "baseClass": "x-themecontrol",
       "minInstances": 1,
       "checkText": [],
       "checkClasses": [],

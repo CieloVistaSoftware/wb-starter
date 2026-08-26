@@ -12,7 +12,7 @@ import { test, expect } from '@playwright/test';
  *
  * A batch fix attempt briefly broke effects/feedback/forms/interactive/
  * layout.html by inserting `</div>` INSIDE their <script type="module">
- * block (a JS syntax error that silently killed WB.init()/WB.scan() on
+ * block (a JS syntax error that silently killed WB.init()/await WB.scan() on
  * those pages) -- this spec also guards against that regressing again by
  * asserting the init console.log actually fires.
  */

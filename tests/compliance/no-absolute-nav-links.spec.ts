@@ -45,7 +45,7 @@ function walk(dir: string, exts: string[], out: string[]): void {
 // examples don't false-positive: HTML `<!-- … -->`, JS block `/* … */`, JS
 // line `//…` (guarding `https://`), and the text content of `<code>`/`<pre>`
 // elements. A path-looking string quoted inside `<code>`/`<pre>` (e.g. a
-// changelog entry illustrating a past bug with `<wb-mdhtml src="/docs/x.md">`)
+// changelog entry illustrating a past bug with `<div x-mdhtml src="/docs/x.md">`)
 // is prose describing markup, not a real navigable `<a href>`/`<link>`/`src`
 // this scan is meant to catch — same class of false positive #540 fixed by
 // excluding decorative/non-interactive content from a structural check.

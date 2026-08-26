@@ -36,9 +36,16 @@ const FORBIDDEN_OVERLAY_ATTRS = [
 // process.cwd() (not __dirname, unavailable in ESM) — matches tests/base.ts's
 // own PATHS convention; Playwright always runs from the project root.
 const ROOT  = process.cwd();
-const PAGES = ['pages/components.html', 'pages/behaviors.html', 'pages/newbehaviors.html'];
+// Only pages that exist. At HEAD this read
+//   ['pages/components.html', 'pages/behaviors.html', 'pages/newbehaviors.html']
+// The 4.0.0 sweep rewrote the deleted components.html into behaviors.html,
+// producing the SAME title twice -- and Playwright rejects duplicate test
+// titles by aborting collection for the whole project. The regression suite
+// reported 'Total: 0 tests in 0 files' as a result, so none of it ran.
+// newbehaviors.html does not exist either and would throw on readFileSync.
+const PAGES = ['pages/behaviors.html'];
 
-// Extract opening tags of overlay triggers (wb-modal — legacy custom-element
+// Extract opening tags of overlay triggers (x-modal — legacy custom-element
 // tag form, still checked for any remaining archived pages — or any element
 // carrying an x-modal/x-drawer/x-confirm/x-prompt/x-popover behavior
 // attribute). Code samples in the page are HTML-escaped (&lt;…&gt;), so
@@ -49,7 +56,7 @@ function overlayTriggerTags(html: string): string[] {
     .replace(/&gt;/g, '>')
     .replace(/&quot;/g, '"')
     .replace(/&amp;/g, '&');
-  const re = /<(?:wb-modal\b[^>]*|[a-zA-Z][\w-]*\b[^>]*?\b(?:x-modal|x-drawer|x-confirm|x-prompt|x-popover)\b[^>]*)>/g;
+  const re = /<(?:x-modal\b[^>]*|[a-zA-Z][\w-]*\b[^>]*?\b(?:x-modal|x-drawer|x-confirm|x-prompt|x-popover)\b[^>]*)>/g;
   return unescaped.match(re) ?? [];
 }
 

@@ -3,7 +3,7 @@
  * Adds autosize, character count, max length indicator
  * Helper Attribute: [x-behavior="textarea"]
  *
- * ⚠️ <wb-textarea> is DEPRECATED — prefer a bare <textarea> directly (see
+ * ⚠️ <textarea> is DEPRECATED — prefer a bare <textarea> directly (see
  * Helper Attribute usage above); this behavior already enhances one fully,
  * no wrapper element ever needed. Retained for back-compat (self-builds
  * the real textarea now, see below); emits a one-time console warning.
@@ -16,12 +16,12 @@ export function textarea(element, options = {}) {
     return () => {};
   }
 
-  if (element.tagName.toLowerCase() === 'wb-textarea' && !_textareaHostDeprecationWarned) {
+  if (element.tagName.toLowerCase() === 'x-textarea' && !_textareaHostDeprecationWarned) {
     _textareaHostDeprecationWarned = true;
-    console.warn('[wb-textarea] is deprecated — use a bare <textarea> instead, it already gets this same enhancement with no wrapper element needed.');
+    console.warn('[x-textarea] is deprecated — use a bare <textarea> instead, it already gets this same enhancement with no wrapper element needed.');
   }
 
-  // <wb-textarea> host with no real <textarea> child yet -- schema $view
+  // <textarea> host with no real <textarea> child yet -- schema $view
   // never ran (e.g. wb-lazy.js pages, which have no schema-processing
   // support at all). Self-build a real, semantic <textarea>, the same way
   // switch.js/checkbox.js already do for their own hosts, instead of
@@ -33,7 +33,7 @@ export function textarea(element, options = {}) {
   // self-build here clobbers whichever one finishes last (confirmed live:
   // pre-filled text content lost when both paths ran). Only self-build when
   // schema support genuinely doesn't exist at all.
-  if (element.tagName.toLowerCase() === 'wb-textarea' && !window.WB?.schema) {
+  if (element.tagName.toLowerCase() === 'x-textarea' && !window.WB?.schema) {
     const existing = element.querySelector(':scope > textarea');
     if (existing) return textarea(existing, options);
     const host = element;
@@ -55,10 +55,10 @@ export function textarea(element, options = {}) {
     return textarea(built, options);
   }
 
-  // <wb-textarea> is a schema-driven host whose $view builds a real
-  // <textarea> child (schemaFor: "textarea", baseClass: "wb-textarea").
+  // <textarea> is a schema-driven host whose $view builds a real
+  // <textarea> child (schemaFor: "textarea", baseClass: ".x-textarea").
   // tag-map.js dispatches the 'textarea' behavior on BOTH the host (via
-  // elementMap['wb-textarea']) and that real child (via nativeMap['textarea']
+  // elementMap['.x-textarea']) and that real child (via nativeMap['textarea']
   // once it exists) -- but the host's own dispatch can race the schema
   // build that creates the child: WB.observe()'s added-node handler calls
   // WB.processSchema(el) WITHOUT awaiting it, then dispatches auto-inject
@@ -76,13 +76,13 @@ export function textarea(element, options = {}) {
   // <textarea> the instant schema-builder constructs it -- no dependency on
   // a later, separately-timed behavior dispatch at all. This function no
   // longer needs a host branch; it only ever meaningfully runs on the real
-  // <textarea> (whether that's wb-textarea's schema-built child, or a bare
+  // <textarea> (whether that's .x-textarea's schema-built child, or a bare
   // <textarea x-behavior="textarea">). If dispatched on the WB-TEXTAREA
   // host itself, host.classList/host.style writes below are harmless no-ops
   // visually (nothing targets them), consistent with how switch.js/select.js
   // handle their own host-vs-child split. (#362)
   const variant = options.variant || element.getAttribute('variant') || 'default';
-  if (variant !== 'default') element.classList.add(`wb-textarea--${variant}`);
+  if (variant !== 'default') element.classList.add(`x-textarea--${variant}`);
 
   const config = {
     autosize: options.autosize ?? element.hasAttribute('autosize'),
@@ -94,16 +94,16 @@ export function textarea(element, options = {}) {
     ...options
   };
 
-  element.classList.add('wb-textarea');
+  element.classList.add('x-textarea');
   
   // #671 -- John: "variants not being followed". This used to also set
   // borderRadius/border/background/color inline. Inline styles beat every
   // stylesheet rule regardless of specificity, so the behavior was overriding
-  // its OWN variant classes: `wb-textarea--error` was applied correctly and
+  // its OWN variant classes: `x-textarea--error` was applied correctly and
   // input.css's `border-color: var(--danger-color)` could never win, making
   // every variant look identical to plain.
   //
-  // input.css's `.wb-input, .wb-textarea` rule already sets all four to the
+  // input.css's `.x-input, .x-textarea` rule already sets all four to the
   // same theme tokens, so nothing is lost by dropping them here -- and the
   // hardcoded #374151/#1f2937/#f9fafb fallbacks go with them, which had no
   // business living outside themes.css.
@@ -126,11 +126,11 @@ export function textarea(element, options = {}) {
   element.style.padding = paddings[config.size] || paddings.md;
 
   if (config.size !== 'md') {
-    element.classList.add(`wb-textarea--${config.size}`);
+    element.classList.add(`x-textarea--${config.size}`);
   }
 
   if (config.autosize) {
-    element.classList.add('wb-textarea--autosize');
+    element.classList.add('x-textarea--autosize');
     const resize = () => {
       element.style.height = 'auto';
       const lineHeight = parseFloat(getComputedStyle(element).lineHeight) || 24;
@@ -145,11 +145,11 @@ export function textarea(element, options = {}) {
 
   let counter = null;
   if (config.showCount) {
-    element.classList.add('wb-textarea--has-counter');
+    element.classList.add('x-textarea--has-counter');
     
     // Create wrapper to hold counter
     const counterWrapper = document.createElement('div');
-    counterWrapper.className = 'wb-textarea-wrapper';
+    counterWrapper.className = 'x-textarea-wrapper';
     counterWrapper.style.cssText = 'position:relative;width:100%;';
     
     if (element.parentNode) {
@@ -158,7 +158,7 @@ export function textarea(element, options = {}) {
     counterWrapper.appendChild(element);
 
     counter = document.createElement('div');
-    counter.className = 'wb-textarea__counter';
+    counter.className = 'x-textarea__counter';
     Object.assign(counter.style, {
       fontSize: '0.75rem',
       color: 'var(--text-secondary, #9ca3af)',
@@ -182,9 +182,9 @@ export function textarea(element, options = {}) {
   }
 
   return () => {
-    element.classList.remove('wb-textarea');
+    element.classList.remove('x-textarea');
     if (config.size !== 'md') {
-      element.classList.remove(`wb-textarea--${config.size}`);
+      element.classList.remove(`x-textarea--${config.size}`);
     }
     if (counter && counter.parentNode) {
       // Unwrap

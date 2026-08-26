@@ -4,13 +4,13 @@
   "title": "Checkbox",
   "description": "Checkbox input with label and custom styling",
   "schemaFor": "checkbox",
-  "baseClass": "wb-checkbox",
+  "baseClass": "x-checkbox",
   "semanticElement": {
     "tagName": "div",
     "implicitRole": "checkbox"
   },
   "compliance": {
-    "baseClass": "wb-checkbox",
+    "baseClass": "x-checkbox",
     "supportLevel": "deprecated",
     "accessibility": "high"
   },
@@ -25,7 +25,7 @@
       "type": "boolean",
       "description": "Checked state",
       "default": false,
-      "appliesClass": "wb-checkbox--checked"
+      "appliesClass": "x-checkbox--checked"
     },
     "disabled": {
       "type": "boolean",
@@ -60,7 +60,7 @@
         "lg"
       ],
       "default": "md",
-      "appliesClass": "wb-checkbox--{{value}}"
+      "appliesClass": "x-checkbox--{{value}}"
     },
     "variant": {
       "type": "string",
@@ -70,7 +70,7 @@
         "success"
       ],
       "default": "default",
-      "appliesClass": "wb-checkbox--{{value}}"
+      "appliesClass": "x-checkbox--{{value}}"
     }
   },
   "$view": [
@@ -133,47 +133,47 @@
     }
   },
   "$cssAPI": {
-    "--wb-checkbox-size": {
+    "--x-checkbox-size": {
       "default": "18px",
       "description": "Checkbox size"
     },
-    "--wb-checkbox-radius": {
+    "--x-checkbox-radius": {
       "default": "4px",
       "description": "Border radius"
     },
-    "--wb-checkbox-border": {
+    "--x-checkbox-border": {
       "default": "2px solid var(--border-color, #d1d5db)",
       "description": "Border style"
     },
-    "--wb-checkbox-bg": {
+    "--x-checkbox-bg": {
       "default": "var(--bg-surface, #ffffff)",
       "description": "Background"
     },
-    "--wb-checkbox-checked-bg": {
+    "--x-checkbox-checked-bg": {
       "default": "var(--primary, #6366f1)",
       "description": "Checked background"
     },
-    "--wb-checkbox-checked-border": {
+    "--x-checkbox-checked-border": {
       "default": "var(--primary, #6366f1)",
       "description": "Checked border"
     },
-    "--wb-checkbox-check-color": {
+    "--x-checkbox-check-color": {
       "default": "#ffffff",
       "description": "Checkmark color"
     },
-    "--wb-checkbox-disabled-opacity": {
+    "--x-checkbox-disabled-opacity": {
       "default": "0.5",
       "description": "Disabled opacity"
     },
-    "--wb-checkbox-label-gap": {
+    "--x-checkbox-label-gap": {
       "default": "0.5rem",
       "description": "Gap between box and label"
     },
-    "--wb-checkbox-label-size": {
+    "--x-checkbox-label-size": {
       "default": "0.875rem",
       "description": "Label font size"
     },
-    "--wb-checkbox-focus-ring": {
+    "--x-checkbox-focus-ring": {
       "default": "0 0 0 3px rgba(99, 102, 241, 0.2)",
       "description": "Focus ring"
     }
@@ -188,42 +188,42 @@
   },
   "test": {
     "setup": [
-      "<wb-checkbox>Basic checkbox content</wb-checkbox>",
-      "<wb-checkbox size=\"sm\">size=sm</wb-checkbox>",
-      "<wb-checkbox size=\"md\">size=md</wb-checkbox>",
-      "<wb-checkbox size=\"lg\">size=lg</wb-checkbox>",
-      "<wb-checkbox variant=\"default\">variant=default</wb-checkbox>",
-      "<wb-checkbox variant=\"primary\">variant=primary</wb-checkbox>",
-      "<wb-checkbox variant=\"success\">variant=success</wb-checkbox>",
-      "<wb-checkbox checked>with checked</wb-checkbox>"
+      "<div x-checkbox>Basic checkbox content</div>",
+      "<div x-checkbox size=\"sm\">size=sm</div>",
+      "<div x-checkbox size=\"md\">size=md</div>",
+      "<div x-checkbox size=\"lg\">size=lg</div>",
+      "<div x-checkbox variant=\"default\">variant=default</div>",
+      "<div x-checkbox variant=\"primary\">variant=primary</div>",
+      "<div x-checkbox variant=\"success\">variant=success</div>",
+      "<div x-checkbox checked>with checked</div>"
     ],
     "functional": {
       "interactions": [
         {
           "name": "Toggle Checkbox",
-          "setup": "<wb-checkbox label='Toggle'></wb-checkbox>",
+          "setup": "<div x-checkbox label='Toggle'></div>",
           "action": "click",
           "expect": {
             "event": "wb:checkbox:change",
             "checked": true,
-            "hasClass": "wb-checkbox--checked"
+            "hasClass": "x-checkbox--checked"
           }
         }
       ],
       "visual": [
         {
           "name": "Checked State",
-          "setup": "<wb-checkbox label='Checked' checked></wb-checkbox>",
+          "setup": "<div x-checkbox label='Checked' checked></div>",
           "expect": {
             "checked": true,
-            "hasClass": "wb-checkbox--checked"
+            "hasClass": "x-checkbox--checked"
           }
         }
       ],
       "disabled": [
         {
           "name": "Disabled State",
-          "setup": "<wb-checkbox label='Disabled' disabled></wb-checkbox>",
+          "setup": "<div x-checkbox label='Disabled' disabled></div>",
           "action": "click",
           "expect": {
             "event": null,
@@ -234,7 +234,7 @@
       "focus": [
         {
           "name": "Focus Handling",
-          "setup": "<wb-checkbox label='Focus'></wb-checkbox>",
+          "setup": "<div x-checkbox label='Focus'></div>",
           "action": "click",
           "expect": {
             "focused": "input"
@@ -244,7 +244,7 @@
       "keyboard": [
         {
           "name": "Space to Toggle",
-          "setup": "<wb-checkbox label='Keyboard'></wb-checkbox>",
+          "setup": "<div x-checkbox label='Keyboard'></div>",
           "key": "Space",
           "expect": {
             "event": "wb:checkbox:change",
@@ -287,9 +287,9 @@
     },
     "site": {
       "page": "forms",
-      "tag": "wb-checkbox",
+      "tag": "x-checkbox",
       "renders": true,
-      "baseClass": "wb-checkbox",
+      "baseClass": "x-checkbox",
       "minInstances": 7,
       "checkText": [
         "Default checkbox",
@@ -298,8 +298,8 @@
         "Primary"
       ],
       "checkClasses": [
-        "wb-checkbox--sm",
-        "wb-checkbox--primary"
+        "x-checkbox--sm",
+        "x-checkbox--primary"
       ],
       "checkAttributes": [
         "label"

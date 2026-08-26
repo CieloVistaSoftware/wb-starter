@@ -2,14 +2,17 @@
 
 Multi-line text input with autosize and character count
 
-Applies to `<div>`, and to any element carrying `x-textarea`.
+## Type — new capability
 
-## Usage
+`x-textarea` adds behavior that no HTML element implies. Nothing about a tag says "ripple" or "tooltip", so this is always opted into by attribute, on whatever element you already chose.
+
+### How to write it
 
 ```html
-<div x-textarea>
-  …
-</div>
+<textarea
+  placeholder="What changed in this release?"
+  name="notes"
+  rows="3"></textarea>
 ```
 
 ## Attributes

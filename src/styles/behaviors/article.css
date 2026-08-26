@@ -5,26 +5,26 @@
  * -----------------------------------------------------------------------------
  */
 
-/* #448: tag selector, not a class -- styles a real <wb-article> tag
+/* #448: tag selector, not a class -- styles a real <article> tag
    directly instead of requiring a same-named class (same fix pattern as
-   #447's wb-demo). #528: article() (article.js) still adds the
-   `wb-article` class, guarded, for hosts that AREN'T tagged <wb-article>
+   #447's x-demo). #528: article() (article.js) still adds the
+   `x-article` class, guarded, for hosts that AREN'T tagged <article>
    (e.g. a semantic <article> element schema-built via schema-builder.js) --
    this tag selector doesn't reach those, only the class does. */
-wb-article, [x-article]{
+x-article, [x-article]{
   display: block;
   color: var(--text-primary, #f9fafb);
 }
 
-.wb-article__header {
+.x-article__header {
   margin-bottom: 1rem;
 }
 
-.wb-article__media {
+.x-article__media {
   margin: 0 0 1rem;
 }
 
-.wb-article__media img {
+.x-article__media img {
   display: block;
   width: 100%;
   max-height: 20rem;
@@ -32,7 +32,7 @@ wb-article, [x-article]{
   border-radius: var(--radius-lg, 8px);
 }
 
-.wb-article__meta {
+.x-article__meta {
   display: flex;
   align-items: center;
   gap: 0.75rem;
@@ -41,7 +41,7 @@ wb-article, [x-article]{
   color: var(--text-secondary, #9ca3af);
 }
 
-.wb-article__category {
+.x-article__category {
   padding: 0.125rem 0.625rem;
   border-radius: 999px;
   background: var(--primary, #6366f1);
@@ -52,29 +52,29 @@ wb-article, [x-article]{
   letter-spacing: 0.03em;
 }
 
-.wb-article__title {
+.x-article__title {
   margin: 0 0 0.5rem;
   font-size: 1.75rem;
   font-weight: 700;
   line-height: 1.2;
 }
 
-.wb-article__subtitle {
+.x-article__subtitle {
   margin: 0 0 0.75rem;
   font-size: 1.125rem;
   color: var(--text-secondary, #9ca3af);
 }
 
-.wb-article__byline {
+.x-article__byline {
   font-size: 0.875rem;
   color: var(--text-secondary, #9ca3af);
 }
 
-.wb-article__content {
+.x-article__content {
   line-height: 1.6;
 }
 
-.wb-article__footer {
+.x-article__footer {
   margin-top: 1rem;
   padding-top: 1rem;
   border-top: 1px solid var(--border-color, #374151);
@@ -82,67 +82,67 @@ wb-article, [x-article]{
   color: var(--text-secondary, #9ca3af);
 }
 
-.wb-article--featured {
+.x-article--featured {
   padding: 1.5rem;
   border: 1px solid var(--border-color, #374151);
   border-radius: var(--radius-lg, 8px);
   background: var(--bg-secondary, #1f2937);
 }
 
-.wb-article--featured .wb-article__title {
+.x-article--featured .x-article__title {
   font-size: 2rem;
 }
 
 /* Articles list wrapper */
-.wb-articles__header {
+.x-articles__header {
   margin-bottom: 1rem;
 }
 
-.wb-articles__header h2 {
+.x-articles__header h2 {
   margin: 0;
   font-size: 1.5rem;
   color: var(--text-primary, #f9fafb);
 }
 
-.wb-articles__list {
-  --wb-articles-columns: 3;
+.x-articles__list {
+  --x-articles-columns: 3;
 }
 
-.wb-articles--grid {
+.x-articles--grid {
   display: grid;
-  grid-template-columns: repeat(var(--wb-articles-columns), 1fr);
+  grid-template-columns: repeat(var(--x-articles-columns), 1fr);
   gap: 1.5rem;
 }
 
-.wb-articles--grid > wb-article {
+.x-articles--grid > x-article {
   border: 1px solid var(--border-color, #374151);
   border-radius: var(--radius-lg, 8px);
   padding: 1rem;
   background: var(--bg-secondary, #1f2937);
 }
 
-.wb-articles--list {
+.x-articles--list {
   display: flex;
   flex-direction: column;
   gap: 1.5rem;
 }
 
-.wb-articles--list > wb-article {
+.x-articles--list > x-article {
   padding-bottom: 1.5rem;
   border-bottom: 1px solid var(--border-color, #374151);
 }
 
-.wb-articles--masonry {
-  columns: var(--wb-articles-columns);
+.x-articles--masonry {
+  columns: var(--x-articles-columns);
   column-gap: 1.5rem;
 }
 
-.wb-articles--masonry > wb-article {
+.x-articles--masonry > x-article {
   break-inside: avoid;
   margin-bottom: 1.5rem;
 }
 
-.wb-articles__pagination {
+.x-articles__pagination {
   display: flex;
   align-items: center;
   justify-content: center;
@@ -150,13 +150,13 @@ wb-article, [x-article]{
   margin-top: 1.5rem;
 }
 
-.wb-articles__page-label {
+.x-articles__page-label {
   color: var(--text-secondary, #9ca3af);
   font-size: 0.875rem;
 }
 
 @media (max-width: 640px) {
-  .wb-articles--grid {
+  .x-articles--grid {
     grid-template-columns: 1fr;
   }
 }

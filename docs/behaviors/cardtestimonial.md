@@ -2,14 +2,29 @@
 
 Customer testimonial/review card with quote, author, avatar, and rating
 
-Applies to `<article>`, and to any element carrying `x-cardtestimonial`.
+## Type — decorates a semantic element
 
-## Usage
+`x-cardtestimonial` is the **article behavior**. It attaches to `<article>`, the element you would have reached for anyway — there is no new tag to learn.
+
+### How to write it
 
 ```html
-<article x-cardtestimonial>
+<article x-cardtestimonial
+  quote="We deleted the build step and shipped faster the same week."
+  author="Katherine Johnson"
+  role="Platform lead"
+  avatar="https://picsum.photos/seed/katherine/96/96"
+  rating="5"></article>
+```
+
+### On a different element
+
+Use `x-cardtestimonial` when the host is not a `<article>` and you want the same behavior:
+
+```html
+<div x-cardtestimonial>
   …
-</article>
+</div>
 ```
 
 ## Attributes

@@ -3,7 +3,7 @@
  *
  * "put a global configurable contrast ratio that affects every control...
  * tied into our theme generator automatically" -- the concrete bug that
- * prompted this (wb-cardhero's title rendering in --text-primary instead
+ * prompted this (x-cardhero's title rendering in --text-primary instead
  * of the scrim's --text-on-accent, illegible over a busy photo) was fixed
  * directly in hero.css. This is the systemic half: a single place that
  * defines what "readable" means, so any theme -- the 23 that exist today

@@ -19,10 +19,10 @@ const files = [
   'src/wb-models/pages/behaviors-card-code.page.json',
   'src/wb-models/pages/cardnotification-showcase.page.json',
   'src/wb-models/pages/cardportfolio-showcase.page.json',
-  'src/wb-models/pages/defaults/wb-page-defaults.json',
+  'src/wb-models/pages/defaults/x-page-defaults.json',
   'src/wb-models/pages/multi-component-demo.page.json',
   'src/wb-models/pages/progress-showcase.page.json',
-  'src/wb-models/sites/wb-library.site.json',
+  'src/wb-models/sites/x-library.site.json',
 ];
 
 // Matches the stale ref but NOT .../styles/pages/components.css

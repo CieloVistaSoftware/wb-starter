@@ -2,7 +2,7 @@ import { test, expect } from '@playwright/test';
 
 /**
  * Card Product Behavior
- * Tests wb-cardproduct CTA click dispatches event.
+ * Tests x-cardproduct CTA click dispatches event.
  */
 
 test.describe('Card Product Behavior', () => {
@@ -17,11 +17,11 @@ test.describe('Card Product Behavior', () => {
         <link rel="stylesheet" href="/src/styles/site.css">
       </head>
       <body>
-        <wb-cardproduct id="test-product"
+        <div x-cardproduct id="test-product"
           title="Test Product"
           price="$99.99"
           cta="Add to Cart">
-        </wb-cardproduct>
+        </div>
         <script type="module">
           import WB from '/src/core/wb-lazy.js';
           window.WB = WB;
@@ -37,7 +37,7 @@ test.describe('Card Product Behavior', () => {
 
     const card = page.locator('#test-product');
     await expect(card).toBeVisible();
-    await expect(card).toHaveClass(/wb-card/);
+    await expect(card).toHaveClass(/x-card/);
 
     // Setup event listener
     const eventPromise = page.evaluate(() => {
@@ -52,7 +52,7 @@ test.describe('Card Product Behavior', () => {
     });
 
     // Click the CTA button
-    const ctaBtn = card.locator('.wb-card__product-cta');
+    const ctaBtn = card.locator('.x-card__product-cta');
     await expect(ctaBtn).toBeVisible();
     await expect(ctaBtn).toHaveAttribute('type', 'button');
     await ctaBtn.click();

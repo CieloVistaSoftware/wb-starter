@@ -4,13 +4,13 @@
   "title": "Pricing Card",
   "description": "Pricing tier card with plan name, price, features list, and CTA",
   "schemaFor": "cardpricing",
-  "baseClass": "wb-pricing",
+  "baseClass": "x-pricing",
   "semanticElement": {
     "tagName": "article",
     "implicitRole": "article"
   },
   "compliance": {
-    "baseClass": "wb-pricing",
+    "baseClass": "x-pricing",
     "supportLevel": "stable",
     "accessibility": "high"
   },
@@ -56,7 +56,7 @@
       "type": "boolean",
       "description": "Highlight as featured/recommended plan",
       "default": false,
-      "appliesClass": "wb-pricing--featured"
+      "appliesClass": "x-pricing--featured"
     },
     "variant": {
       "type": "string",
@@ -68,7 +68,7 @@
         "minimal"
       ],
       "default": "default",
-      "appliesClass": "wb-pricing--{{value}}"
+      "appliesClass": "x-pricing--{{value}}"
     }
   },
   "$view": [
@@ -182,112 +182,112 @@
     }
   },
   "$cssAPI": {
-    "--wb-pricing-padding": {
+    "--x-pricing-padding": {
       "default": "1.5rem",
       "description": "Card padding"
     },
-    "--wb-pricing-radius": {
+    "--x-pricing-radius": {
       "default": "8px",
       "description": "Border radius"
     },
-    "--wb-pricing-gap": {
+    "--x-pricing-gap": {
       "default": "1.5rem",
       "description": "Gap between sections"
     },
-    "--wb-pricing-bg": {
+    "--x-pricing-bg": {
       "default": "var(--bg-surface, #ffffff)",
       "description": "Card background"
     },
-    "--wb-pricing-border": {
+    "--x-pricing-border": {
       "default": "1px solid var(--border-color, #e0e0e0)",
       "description": "Card border"
     },
-    "--wb-pricing-plan-size": {
+    "--x-pricing-plan-size": {
       "default": "1.25rem",
       "description": "Plan name font size"
     },
-    "--wb-pricing-plan-weight": {
+    "--x-pricing-plan-weight": {
       "default": "600",
       "description": "Plan name font weight"
     },
-    "--wb-pricing-price-size": {
+    "--x-pricing-price-size": {
       "default": "2.5rem",
       "description": "Price font size"
     },
-    "--wb-pricing-price-weight": {
+    "--x-pricing-price-weight": {
       "default": "700",
       "description": "Price font weight"
     },
-    "--wb-pricing-price-color": {
+    "--x-pricing-price-color": {
       "default": "var(--text-primary, #1a1a1a)",
       "description": "Price text color"
     },
-    "--wb-pricing-period-size": {
+    "--x-pricing-period-size": {
       "default": "0.875rem",
       "description": "Period font size"
     },
-    "--wb-pricing-period-color": {
+    "--x-pricing-period-color": {
       "default": "var(--text-secondary, #666)",
       "description": "Period text color"
     },
-    "--wb-pricing-feature-gap": {
+    "--x-pricing-feature-gap": {
       "default": "0.5rem",
       "description": "Gap between feature items"
     },
-    "--wb-pricing-feature-icon": {
+    "--x-pricing-feature-icon": {
       "default": "'✓'",
       "description": "Feature list icon (CSS content)"
     },
-    "--wb-pricing-feature-icon-color": {
+    "--x-pricing-feature-icon-color": {
       "default": "var(--success, #4caf50)",
       "description": "Feature icon color"
     },
-    "--wb-pricing-cta-bg": {
+    "--x-pricing-cta-bg": {
       "default": "var(--primary, #6366f1)",
       "description": "CTA button background"
     },
-    "--wb-pricing-cta-color": {
+    "--x-pricing-cta-color": {
       "default": "#ffffff",
       "description": "CTA button text color"
     },
-    "--wb-pricing-cta-padding": {
+    "--x-pricing-cta-padding": {
       "default": "0.75rem 1.5rem",
       "description": "CTA button padding"
     },
-    "--wb-pricing-cta-radius": {
+    "--x-pricing-cta-radius": {
       "default": "4px",
       "description": "CTA button border radius"
     },
-    "--wb-pricing-featured-border": {
+    "--x-pricing-featured-border": {
       "default": "2px solid var(--primary, #6366f1)",
       "description": "Featured card border"
     },
-    "--wb-pricing-featured-shadow": {
+    "--x-pricing-featured-shadow": {
       "default": "0 8px 24px rgba(99, 102, 241, 0.2)",
       "description": "Featured card shadow"
     },
-    "--wb-pricing-badge-bg": {
+    "--x-pricing-badge-bg": {
       "default": "var(--primary, #6366f1)",
       "description": "Featured badge background"
     },
-    "--wb-pricing-badge-color": {
+    "--x-pricing-badge-color": {
       "default": "#ffffff",
       "description": "Featured badge text color"
     }
   },
   "test": {
     "setup": [
-      "<wb-cardpricing>Basic cardpricing content</wb-cardpricing>",
-      "<wb-cardpricing variant=\"default\">variant=default</wb-cardpricing>",
-      "<wb-cardpricing variant=\"bordered\">variant=bordered</wb-cardpricing>",
-      "<wb-cardpricing variant=\"elevated\">variant=elevated</wb-cardpricing>",
-      "<wb-cardpricing featured>with featured</wb-cardpricing>",
-      "<wb-cardpricing plan=\"Sample plan\">plan=\"Sample plan\"</wb-cardpricing>",
-      "<wb-cardpricing price=\"Sample price\">price=\"Sample price\"</wb-cardpricing>",
-      "<wb-cardpricing period=\"/month\">period=\"/month\"</wb-cardpricing>",
-      "<wb-cardpricing plan=\"Basic\" price=\"$9\"></wb-cardpricing>",
-      "<wb-cardpricing plan=\"Pro\" price=\"$29\" featured></wb-cardpricing>",
-      "<wb-cardpricing plan=\"Pro\" price=\"$29\" features=\"Feature 1,Feature 2,Feature 3\"></wb-cardpricing>"
+      "<div x-cardpricing>Basic cardpricing content</div>",
+      "<div x-cardpricing variant=\"default\">variant=default</div>",
+      "<div x-cardpricing variant=\"bordered\">variant=bordered</div>",
+      "<div x-cardpricing variant=\"elevated\">variant=elevated</div>",
+      "<div x-cardpricing featured>with featured</div>",
+      "<div x-cardpricing plan=\"Sample plan\">plan=\"Sample plan\"</div>",
+      "<div x-cardpricing price=\"Sample price\">price=\"Sample price\"</div>",
+      "<div x-cardpricing period=\"/month\">period=\"/month\"</div>",
+      "<div x-cardpricing plan=\"Basic\" price=\"$9\"></div>",
+      "<div x-cardpricing plan=\"Pro\" price=\"$29\" featured></div>",
+      "<div x-cardpricing plan=\"Pro\" price=\"$29\" features=\"Feature 1,Feature 2,Feature 3\"></div>"
     ],
     "matrix": {
       "combinations": [
@@ -325,13 +325,13 @@
     },
     "site": {
       "page": "cards",
-      "tag": "wb-cardpricing",
+      "tag": "x-cardpricing",
       "renders": true,
-      "baseClass": "wb-pricing",
+      "baseClass": "x-pricing",
       "minInstances": 6,
       "checkText": [],
       "checkClasses": [
-        "wb-pricing--bordered"
+        "x-pricing--bordered"
       ],
       "checkAttributes": [
         "plan",

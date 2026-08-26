@@ -35,20 +35,20 @@
       Complete reference for the REST API.
     </p>
     
-    <wb-card variant="elevated" style="margin: 1.5rem 0;">
+    <article variant="elevated" style="margin: 1.5rem 0;">
       <p style="margin: 0;"><strong>Base URL:</strong></p>
       <code>https://api.yourproject.com/v1</code>
-    </wb-card>
+    </article>
     
     <hr style="border: none; border-top: 1px solid var(--border); margin: 3rem 0;">
     
     <section id="authentication">
       <h2>Authentication</h2>
       <p>All API requests require authentication via API key:</p>
-      <wb-card variant="elevated" style="margin: 1rem 0;">
+      <article variant="elevated" style="margin: 1rem 0;">
         <code style="display: block; white-space: pre;">curl -H "Authorization: Bearer YOUR_API_KEY" \
   https://api.yourproject.com/v1/users</code>
-      </wb-card>
+      </article>
     </section>
     
     <hr style="border: none; border-top: 1px solid var(--border); margin: 3rem 0;">
@@ -56,9 +56,9 @@
     <section id="users">
       <h2>Users</h2>
       
-      <wb-card variant="elevated" style="margin: 1.5rem 0;">
+      <article variant="elevated" style="margin: 1.5rem 0;">
         <div style="display: flex; align-items: center; gap: 1rem; margin-bottom: 1rem;">
-          <wb-badge variant="success">GET</wb-badge>
+          <span x-badge variant="success">GET</span>
           <code>/users</code>
         </div>
         <p>List all users in your organization.</p>
@@ -84,11 +84,11 @@
   ],
   "total": 1
 }</code>
-      </wb-card>
+      </article>
       
-      <wb-card variant="elevated" style="margin: 1.5rem 0;">
+      <article variant="elevated" style="margin: 1.5rem 0;">
         <div style="display: flex; align-items: center; gap: 1rem; margin-bottom: 1rem;">
-          <wb-badge variant="info">POST</wb-badge>
+          <span x-badge variant="info">POST</span>
           <code>/users</code>
         </div>
         <p>Create a new user.</p>
@@ -98,7 +98,7 @@
   "name": "Jane Doe",
   "email": "jane@example.com"
 }</code>
-      </wb-card>
+      </article>
       
     </section>
     

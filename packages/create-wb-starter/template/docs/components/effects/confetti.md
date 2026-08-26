@@ -6,10 +6,10 @@ Colorful confetti explosion effect.
 
 | Property | Value |
 |----------|-------|
-| Custom Tag | `<wb-confetti>` |
+| Custom Tag | `<div x-confetti>` |
 | Behavior | `confetti` |
 | Semantic | `<div>` |
-| Root CSS Class | `wb-confetti` |
+| Root CSS Class | `x-confetti` |
 | Category | Effects |
 | Schema | `src/wb-models/confetti.schema.json` |
 
@@ -25,24 +25,24 @@ Colorful confetti explosion effect.
 | `duration` | string | `"3s"` | Animation duration |
 | `colors` | string | `'["#ff0","#f0f","#0ff","#0f0","#f00"]'` | Particle colors as JSON array |
 
-Wrapped in `<wb-demo>`, so the live component renders below with its source shown underneath:
+Wrapped in `<div x-demo>`, so the live component renders below with its source shown underneath:
 
-<wb-demo>
-<wb-confetti
+<div x-demo>
+<div x-confetti
   count="100"
   label="Celebrate!">
-</wb-confetti>
-</wb-demo>
+</div>
+</div>
 
 ## Usage
 
 ### Custom Element
 
 ```html
-<wb-confetti
+<div x-confetti
   count="100"
   label="Celebrate!">
-</wb-confetti>
+</div>
 ```
 
 ### Data Attribute
@@ -58,30 +58,30 @@ Wrapped in `<wb-demo>`, so the live component renders below with its source show
 ### Auto-Trigger (No Button)
 
 ```html
-<wb-confetti
+<div x-confetti
   count="75"
   showButton="false"
   delay="1s">
-</wb-confetti>
+</div>
 ```
 
 ### Looping Animation
 
 ```html
-<wb-confetti
+<div x-confetti
   count="30"
   repeat>
-</wb-confetti>
+</div>
 ```
 
 ## Generated Structure
 
 ```html
-<div class="wb-confetti">
+<div class="x-confetti">
   <!-- Button (when showButton is true) -->
-  <button class="wb-confetti__button">Fire Confetti!</button>
+  <button class="x-confetti__button">Fire Confetti!</button>
   <!-- Particle container -->
-  <div class="wb-confetti__container">
+  <div class="x-confetti__container">
     <!-- Particles are dynamically created -->
   </div>
 </div>
@@ -95,7 +95,7 @@ Wrapped in `<wb-demo>`, so the live component renders below with its source show
 | `stop()` | Stops the animation |
 
 ```javascript
-const confetti = document.querySelector('wb-confetti');
+const confetti = document.querySelector('x-confetti');
 
 // Trigger confetti
 confetti.fire();
@@ -125,7 +125,7 @@ confetti.addEventListener('wb:confetti:end', () => {
 
 | Variable | Default | Description |
 |----------|---------|-------------|
-| `--wb-confetti-z-index` | `9999` | Z-index for overlay |
+| `--x-confetti-z-index` | `9999` | Z-index for overlay |
 
 ## Schema
 

@@ -25,14 +25,14 @@ async function injectAndScan(page: Page, html: string) {
     container.innerHTML = h;
     
     // Force eager loading
-    const elements = container.querySelectorAll('.wb-ready');
+    const elements = container.querySelectorAll('.x-ready');
     elements.forEach(el => el.setAttribute('', ''));
     
     document.body.appendChild(container);
   }, html);
   
-  await page.evaluate(() => {
-    (window as any).WB.scan(document.getElementById('test-container'));
+  await page.evaluate(async () => {
+    await (window as any).WB.scan(document.getElementById('test-container'));
   });
   
   await page.waitForTimeout(500);
@@ -45,14 +45,14 @@ test.describe('dropdown Behavior', () => {
     page.on('pageerror', (err) => errors.push(err.message));
     
     const setupHtml = [
-      "<wb-dropdown>Basic dropdown content</wb-dropdown>",
-      "<wb-dropdown position=\"bottom-start\">position=bottom-start</wb-dropdown>",
-      "<wb-dropdown position=\"bottom-end\">position=bottom-end</wb-dropdown>",
-      "<wb-dropdown position=\"top-start\">position=top-start</wb-dropdown>",
-      "<wb-dropdown trigger=\"click\">trigger=click</wb-dropdown>",
-      "<wb-dropdown trigger=\"hover\">trigger=hover</wb-dropdown>",
-      "<wb-dropdown close-on-select>with closeOnSelect</wb-dropdown>",
-      "<wb-dropdown close-on-outside>with closeOnOutside</wb-dropdown>"
+      "<div x-dropdown>Basic dropdown content</div>",
+      "<div x-dropdown position=\"bottom-start\">position=bottom-start</div>",
+      "<div x-dropdown position=\"bottom-end\">position=bottom-end</div>",
+      "<div x-dropdown position=\"top-start\">position=top-start</div>",
+      "<div x-dropdown trigger=\"click\">trigger=click</div>",
+      "<div x-dropdown trigger=\"hover\">trigger=hover</div>",
+      "<div x-dropdown close-on-select>with closeOnSelect</div>",
+      "<div x-dropdown close-on-outside>with closeOnOutside</div>"
     ];
     
     await injectAndScan(page, setupHtml.join('\n'));
@@ -68,10 +68,10 @@ test.describe('dropdown Behavior', () => {
   });
 
   test('element is visible after scan', async ({ page }) => {
-    const html = "<wb-dropdown>Basic dropdown content</wb-dropdown>";
+    const html = "<div x-dropdown>Basic dropdown content</div>";
     await injectAndScan(page, html);
     
-    const el = page.locator('#test-container wb-dropdown, #test-container wb-dropdown').first();
+    const el = page.locator('#test-container [x-dropdown], #test-container [x-dropdown]').first();
     const isPresent = await el.count() > 0;
     
     if (isPresent) {
@@ -85,20 +85,20 @@ test.describe('dropdown Behavior', () => {
   });
 
   test('matrix combo 1: position=bottom-start', async ({ page }) => {
-    await injectAndScan(page, "<wb-dropdown position=\"bottom-start\">Test</wb-dropdown>");
-    const el = page.locator('#test-container wb-dropdown, #test-container wb-dropdown').first();
+    await injectAndScan(page, "<div x-dropdown position=\"bottom-start\">Test</div>");
+    const el = page.locator('#test-container [x-dropdown], #test-container [x-dropdown]').first();
     await expect(el).toBeVisible({ timeout: 5000 });
   });
 
   test('matrix combo 2: position=bottom-end', async ({ page }) => {
-    await injectAndScan(page, "<wb-dropdown position=\"bottom-end\">Test</wb-dropdown>");
-    const el = page.locator('#test-container wb-dropdown, #test-container wb-dropdown').first();
+    await injectAndScan(page, "<div x-dropdown position=\"bottom-end\">Test</div>");
+    const el = page.locator('#test-container [x-dropdown], #test-container [x-dropdown]').first();
     await expect(el).toBeVisible({ timeout: 5000 });
   });
 
   test('matrix combo 3: trigger=hover', async ({ page }) => {
-    await injectAndScan(page, "<wb-dropdown trigger=\"hover\">Test</wb-dropdown>");
-    const el = page.locator('#test-container wb-dropdown, #test-container wb-dropdown').first();
+    await injectAndScan(page, "<div x-dropdown trigger=\"hover\">Test</div>");
+    const el = page.locator('#test-container [x-dropdown], #test-container [x-dropdown]').first();
     await expect(el).toBeVisible({ timeout: 5000 });
   });
 });

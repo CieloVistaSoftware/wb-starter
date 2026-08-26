@@ -5,7 +5,7 @@ export function formrow(element, options = {}) {
     inline: options.inline ?? readFlag(element, 'inline'),
     ...options
   };
-  element.classList.add('wb-form-row');
-  if (config.inline) element.classList.add('wb-form-row--inline');
-  return () => element.classList.remove('wb-form-row');
+  element.classList.add('x-form-row');
+  if (config.inline) element.classList.add('x-form-row--inline');
+  return () => element.classList.remove('x-form-row');
 }

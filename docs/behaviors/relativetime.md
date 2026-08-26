@@ -2,9 +2,11 @@
 
 Behavior applied with x-relativetime.
 
-Apply `x-relativetime` to any element.
+## Type — new capability
 
-## Usage
+`x-relativetime` adds behavior that no HTML element implies. Nothing about a tag says "ripple" or "tooltip", so this is always opted into by attribute, on whatever element you already chose.
+
+### How to write it
 
 ```html
 <span x-relativetime date="2025-01-01" class="time-display">Jan 1, 2025</span>

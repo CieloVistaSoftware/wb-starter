@@ -33,11 +33,11 @@ export function button(element, options = {}) {
   // element is already an HTMLButtonElement
   // We just enhance it with additional features
 
-  element.classList.add('wb-button');
+  element.classList.add('x-button');
   element.style.padding = '0.5rem 1rem';
 
   // Return cleanup function
-  return () => element.classList.remove('wb-button');
+  return () => element.classList.remove('x-button');
 }
 ```
 
@@ -68,7 +68,7 @@ const myButton = document.querySelector('button');
 
 // Enhance it with the button behavior
 button(myButton, { variant: 'primary' });
-// Now it ALSO has: wb-button classes, custom styling, loading states, etc.
+// Now it ALSO has: x-button classes, custom styling, loading states, etc.
 ```
 
 ### Semantic Behaviors Map to Native Elements
@@ -112,7 +112,7 @@ Use standard semantic HTML elements (Auto-Inject):
 <img
   lazy
   zoomable
-  src="photo.jpg"
+  src="https://picsum.photos/seed/photo/600/400"
   alt="Photo">
 <form
   ajax
@@ -443,7 +443,7 @@ export function img(element, options = {}) {
   };
 
   // 2. Add identifying class
-  element.classList.add('wb-img');
+  element.classList.add('x-img');
 
   // 3. Apply lazy loading
   if (config.lazy) {
@@ -463,16 +463,16 @@ export function img(element, options = {}) {
 
   // 6. Add zoom/lightbox feature
   if (config.zoomable) {
-    element.classList.add('wb-img--zoomable');
+    element.classList.add('x-img--zoomable');
     element.style.cursor = 'zoom-in';
     element.onclick = () => openLightbox(element.src, element.alt);
   }
 
   // 7. Mark as ready
-  element.classList.add("wb-ready");
+  element.classList.add("x-ready");
 
   // 8. Return cleanup function
-  return () => element.classList.remove('wb-img', 'wb-img--zoomable');
+  return () => element.classList.remove('x-img', 'x-img--zoomable');
 }
 
 export default { img };
@@ -483,7 +483,7 @@ export default { img };
 1. **Config Merging** - Combine options + data attributes
 2. **Element Enhancement** - Add classes, styles, listeners
 3. **Feature Implementation** - Core behavior logic
-4. **Ready Marker** - `element.classList.add("wb-ready")`
+4. **Ready Marker** - `element.classList.add("x-ready")`
 5. **Cleanup Function** - Remove all changes when behavior removed
 
 ---
@@ -603,7 +603,6 @@ Stack multiple behaviors on a single element:
 
 ```html
 <button
-  x-button
   x-ripple
   x-tooltip
   variant="primary"
@@ -697,7 +696,7 @@ export function mycustom(element, options = {}) {
   };
 
   // 2. Add identifying class
-  element.classList.add('wb-mycustom');
+  element.classList.add('x-mycustom');
 
   // 3. Apply styles
   element.style.color = config.color;
@@ -715,11 +714,11 @@ export function mycustom(element, options = {}) {
   };
 
   // 6. Mark as ready
-  element.classList.add("wb-ready");
+  element.classList.add("x-ready");
 
   // 7. Return cleanup function
   return () => {
-    element.classList.remove('wb-mycustom');
+    element.classList.remove('x-mycustom');
     element.style.color = '';
     element.removeEventListener('click', handleClick);
     delete element.wbMyCustom;
@@ -768,20 +767,20 @@ Create `src/behaviors/schema/mycustom.schema.json` for testing and documentation
 ```javascript
 // ✅ Good
 export function mybehavior(element, options = {}) {
-  element.classList.add('wb-mybehavior');
+  element.classList.add('x-mybehavior');
 
   const handleClick = () => console.log('clicked');
   element.addEventListener('click', handleClick);
 
   return () => {
-    element.classList.remove('wb-mybehavior');
+    element.classList.remove('x-mybehavior');
     element.removeEventListener('click', handleClick);
   };
 }
 
 // ❌ Bad - No cleanup
 export function mybehavior(element, options = {}) {
-  element.classList.add('wb-mybehavior');
+  element.classList.add('x-mybehavior');
   element.addEventListener('click', () => console.log('clicked'));
   // No return statement = memory leaks!
 }
@@ -791,9 +790,9 @@ export function mybehavior(element, options = {}) {
 
 ```javascript
 // ✅ Good - Clear hierarchy
-element.classList.add('wb-button');
-element.classList.add('wb-button--primary');
-element.classList.add('wb-button--loading');
+element.classList.add('x-button');
+element.classList.add('x-button--primary');
+element.classList.add('x-button--loading');
 
 // ❌ Bad - Unclear naming
 element.classList.add('btn');
@@ -837,10 +836,10 @@ export function button(element, options = {}) {
 
 ```javascript
 // ✅ Good - Mark when done
-element.classList.add("wb-ready");
+element.classList.add("x-ready");
 
 // Can check if already initialized
-if (element.classList.contains("wb-ready")) {
+if (element.classList.contains("x-ready")) {
   console.log('Already initialized');
 }
 ```

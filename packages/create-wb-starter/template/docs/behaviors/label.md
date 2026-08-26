@@ -14,7 +14,7 @@ form control — no separate `<label for="...">` to write by hand.
   The value is the label text. The behavior creates the `<label>`, wires up
   `for`/`id` (assigning an id to the control if it doesn't have one), and
   inserts it right before the control (so it renders to its left). Add `required` / `optional` for the
-  matching `wb-label--required` / `wb-label--optional` style:
+  matching `x-label--required` / `x-label--optional` style:
   ```html
   <input
     x-label="Email"
@@ -29,10 +29,10 @@ form control — no separate `<label for="...">` to write by hand.
     label-position="right">
   ```
 - **Legacy form:** a bare `x-label` (no value) on an actual `<label>` element
-  just adds the `wb-label` styling classes to that label directly — for when
+  just adds the `x-label` styling classes to that label directly — for when
   you already have your own `<label for="...">` markup:
   ```html
-  <label x-label required for="input1">Label</label>
+  <label required for="input1">Label</label>
   ```
 - [Demo](../../demos/site/forms.html#x-label-including-rtl-layouts)
 - [Schema](../../src/wb-models/label.schema.json)

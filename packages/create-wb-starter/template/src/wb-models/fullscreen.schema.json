@@ -1,0 +1,24 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "fullscreen.schema.json",
+  "title": "Fullscreen",
+  "description": "Behavior applied with x-fullscreen.",
+  "schemaFor": "x-fullscreen",
+  "properties": {
+    "target": {
+      "type": "string",
+      "description": "Read by fullscreen().",
+      "default": ""
+    },
+    "label": {
+      "type": "string",
+      "description": "Read by fullscreen().",
+      "default": "⛶ Fullscreen"
+    }
+  },
+  "_metadata": {
+    "generatedBy": "scripts/generate-behavior-schemas.mjs (#716)",
+    "derivedFrom": "the behavior implementation — every property here is one the code actually reads",
+    "note": "Expand by hand: enums, richer descriptions and accessibility notes cannot be read from source."
+  }
+}

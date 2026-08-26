@@ -39,10 +39,19 @@ const BENIGN = [
 ];
 
 for (const file of demoFiles()) {
-  test(`demo loads clean: ${file}`, async ({ page }) => {
+  test(`demo loads clean: ${file}`, async ({ page, baseURL }) => {
     const pageErrors: string[] = [];
     const consoleErrors: string[] = [];
     const badRequests: string[] = [];
+
+    // The dev server's origin, taken from the run rather than hardcoded. Both
+    // filters below used to test `url.includes('localhost:3000')`, which held
+    // only while the suite happened to own port 3000. playwright.config.ts now
+    // asks the OS for a free port, so that string matched nothing and this
+    // smoke test silently stopped reporting ANY bad request -- passing because
+    // it checked nothing, which is worse than failing.
+    const origin = baseURL ? new URL(baseURL).origin : '';
+    const sameOrigin = (url: string) => Boolean(origin) && url.startsWith(origin);
 
     page.on('pageerror', (e) => pageErrors.push(e.message));
     page.on('console', (msg) => {
@@ -54,16 +63,16 @@ for (const file of demoFiles()) {
     page.on('response', (res) => {
       const url = res.url();
       // Only same-origin (dev server) assets — external CDNs/images/audio are ignored.
-      if (url.includes('localhost:3000') && res.status() >= 400) {
-        badRequests.push(`${res.status()} ${url.replace('http://localhost:3000', '')}`);
+      if (sameOrigin(url) && res.status() >= 400) {
+        badRequests.push(`${res.status()} ${url.replace(origin, '')}`);
       }
     });
     page.on('requestfailed', (req) => {
       const url = req.url();
       // Same-origin requests that never get a response (ERR_CONNECTION_CLOSED,
       // aborted module fetch, etc.). External resource flakiness is ignored.
-      if (url.includes('localhost:3000')) {
-        badRequests.push(`FAILED ${req.failure()?.errorText ?? ''} ${url.replace('http://localhost:3000', '')}`.trim());
+      if (sameOrigin(url)) {
+        badRequests.push(`FAILED ${req.failure()?.errorText ?? ''} ${url.replace(origin, '')}`.trim());
       }
     });
 

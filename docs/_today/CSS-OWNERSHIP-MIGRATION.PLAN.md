@@ -28,7 +28,7 @@ Per `docs/css-standards.md`, the OOP CSS layer hierarchy is:
 Layer 1: Foundation     → themes.css + site.css (layout only, no components)
 Layer 2: Behaviors      → src/styles/behaviors/*.css (one file per behavior group)
 Layer 3: Page-specific  → builder.css, etc. (standalone pages only)
-Layer 4: Premium        → wb-signature.css (optional effects)
+Layer 4: Premium        → x-signature.css (optional effects)
 ```
 
 **Goal:** Extract all component styles out of site.css, components.css, and demo.css into Layer 2 behavior CSS files. Eventually delete components.css and demo.css; slim site.css down to pure layout.
@@ -61,12 +61,12 @@ Components with CSS in **multiple** source files (must pick one source of truth)
 
 | Component | site.css | components.css | demo.css | behaviors/ | Action |
 |---|---|---|---|---|---|
-| **wb-dialog** | ✅ (full) | ✅ (full) | — | — | Consolidate → `behaviors/overlay.css` |
-| **wb-button** | ✅ (variants) | ✅ (base+states) | — | — | Consolidate → `behaviors/inputs.css` |
-| **wb-table** | ✅ (variants) | ✅ (base) | ✅ (base) | — | Consolidate → `behaviors/data.css` |
-| **wb-progress** | ✅ (gradient/striped) | ✅ (stripes anim) | ✅ (base) | — | Consolidate → `behaviors/feedback.css` |
-| **wb-switch** | — | ✅ (full) | ✅ (different impl) | — | Consolidate → `behaviors/inputs.css` |
-| **wb-fade-in** | ✅ (keyframe) | ✅ (keyframe) | — | `effects.css`? | Dedupe → `behaviors/effects.css` |
+| **x-dialog** | ✅ (full) | ✅ (full) | — | — | Consolidate → `behaviors/overlay.css` |
+| **x-button** | ✅ (variants) | ✅ (base+states) | — | — | Consolidate → `behaviors/inputs.css` |
+| **x-table** | ✅ (variants) | ✅ (base) | ✅ (base) | — | Consolidate → `behaviors/data.css` |
+| **x-progress** | ✅ (gradient/striped) | ✅ (stripes anim) | ✅ (base) | — | Consolidate → `behaviors/feedback.css` |
+| **x-switch** | — | ✅ (full) | ✅ (different impl) | — | Consolidate → `behaviors/inputs.css` |
+| **x-fade-in** | ✅ (keyframe) | ✅ (keyframe) | — | `effects.css`? | Dedupe → `behaviors/effects.css` |
 
 ---
 
@@ -74,8 +74,8 @@ Components with CSS in **multiple** source files (must pick one source of truth)
 
 Resolve components that have **conflicting** styles across files.
 
-- [ ] **wb-card** — `behaviors/card.css` exists (8.2 KB) but `demo.css` has competing card styles (lines 209-230). Audit and remove demo.css card rules that conflict.
-- [ ] **wb-table** — TRIPLE defined. Consolidate into new `behaviors/data.css`.
+- [ ] **x-card** — `behaviors/card.css` exists (8.2 KB) but `demo.css` has competing card styles (lines 209-230). Audit and remove demo.css card rules that conflict.
+- [ ] **x-table** — TRIPLE defined. Consolidate into new `behaviors/data.css`.
   - `site.css`: variants (striped, hover, bordered, compact)
   - `components.css`: base table + variants (duplicated)
   - `demo.css`: base table styles (line 357)
@@ -86,11 +86,11 @@ Resolve components that have **conflicting** styles across files.
 
 Resolve components duplicated across exactly 2 files.
 
-- [ ] **wb-dialog** — `site.css` + `components.css` both define full dialog styles. Consolidate → new `behaviors/overlay.css`.
-- [ ] **wb-button** — `site.css` (glass/gradient variants) + `components.css` (base+primary+secondary). Consolidate → new `behaviors/inputs.css`.
-- [ ] **wb-switch** — `components.css` + `demo.css` have different implementations. Pick winner → `behaviors/inputs.css`.
-- [ ] **wb-progress** — All 3 files. Consolidate → new `behaviors/feedback.css`.
-- [ ] **wb-fade-in** / **wb-progress-stripes** — Keyframe duplicates. Dedupe → `behaviors/effects.css`.
+- [ ] **x-dialog** — `site.css` + `components.css` both define full dialog styles. Consolidate → new `behaviors/overlay.css`.
+- [ ] **x-button** — `site.css` (glass/gradient variants) + `components.css` (base+primary+secondary). Consolidate → new `behaviors/inputs.css`.
+- [ ] **x-switch** — `components.css` + `demo.css` have different implementations. Pick winner → `behaviors/inputs.css`.
+- [ ] **x-progress** — All 3 files. Consolidate → new `behaviors/feedback.css`.
+- [ ] **x-fade-in** / **x-progress-stripes** — Keyframe duplicates. Dedupe → `behaviors/effects.css`.
 
 ---
 
@@ -102,34 +102,34 @@ Move remaining demo.css component styles into behavior group files. demo.css sho
 
 | Component | Target Behavior File |
 |---|---|
-| wb-accordion | `behaviors/data.css` |
-| wb-alert | `behaviors/feedback.css` |
-| wb-avatar | `behaviors/feedback.css` |
-| wb-badge | `behaviors/feedback.css` |
-| wb-breadcrumb | `behaviors/navigation.css` |
-| wb-card (base) | Already in `behaviors/card.css` — remove from demo.css |
-| wb-chip | `behaviors/feedback.css` |
-| wb-divider | `behaviors/layouts.css` |
-| wb-dropdown | `behaviors/overlay.css` |
-| wb-empty | `behaviors/feedback.css` |
-| wb-gallery | `behaviors/data.css` |
-| wb-kbd | `behaviors/feedback.css` |
-| wb-mdhtml | `behaviors/data.css` |
-| wb-modal | `behaviors/overlay.css` |
-| wb-otp | `behaviors/inputs.css` |
-| wb-pagination | `behaviors/navigation.css` |
-| wb-popover | `behaviors/overlay.css` |
-| wb-progress | `behaviors/feedback.css` |
-| wb-rating | `behaviors/inputs.css` |
-| wb-skeleton | `behaviors/feedback.css` |
-| wb-spinner | `behaviors/feedback.css` |
-| wb-stat | `behaviors/data.css` |
-| wb-steps | `behaviors/navigation.css` |
-| wb-switch | `behaviors/inputs.css` |
-| wb-table | `behaviors/data.css` |
-| wb-tags | `behaviors/feedback.css` |
-| wb-timeline | `behaviors/data.css` |
-| wb-toast | `behaviors/feedback.css` |
+| x-accordion | `behaviors/data.css` |
+| x-alert | `behaviors/feedback.css` |
+| x-avatar | `behaviors/feedback.css` |
+| x-badge | `behaviors/feedback.css` |
+| x-breadcrumb | `behaviors/navigation.css` |
+| x-card (base) | Already in `behaviors/card.css` — remove from demo.css |
+| x-chip | `behaviors/feedback.css` |
+| x-divider | `behaviors/layouts.css` |
+| x-dropdown | `behaviors/overlay.css` |
+| x-empty | `behaviors/feedback.css` |
+| x-gallery | `behaviors/data.css` |
+| x-kbd | `behaviors/feedback.css` |
+| x-mdhtml | `behaviors/data.css` |
+| x-modal | `behaviors/overlay.css` |
+| x-otp | `behaviors/inputs.css` |
+| x-pagination | `behaviors/navigation.css` |
+| x-popover | `behaviors/overlay.css` |
+| x-progress | `behaviors/feedback.css` |
+| x-rating | `behaviors/inputs.css` |
+| x-skeleton | `behaviors/feedback.css` |
+| x-spinner | `behaviors/feedback.css` |
+| x-stat | `behaviors/data.css` |
+| x-steps | `behaviors/navigation.css` |
+| x-switch | `behaviors/inputs.css` |
+| x-table | `behaviors/data.css` |
+| x-tags | `behaviors/feedback.css` |
+| x-timeline | `behaviors/data.css` |
+| x-toast | `behaviors/feedback.css` |
 
 ---
 
@@ -141,15 +141,15 @@ Extract component styles from site.css, leaving only pure site layout (grid, sid
 
 | Behavior Group | Components |
 |---|---|
-| `feedback.css` | wb-spinner, wb-badge-gradient, wb-dot-pulse, wb-pulse-dot |
-| `card.css` | wb-card, wb-card-float (merge with existing) |
-| `overlay.css` | wb-drawer (component styles, not layout) |
-| `inputs.css` | wb-button, wb-btn-glass, wb-btn-gradient, wb-btn-rack, wb-input-glass |
-| `effects.css` | wb-animate, wb-bounce, wb-fade-in/out, wb-flash, wb-flip, wb-heartbeat, wb-jello, wb-marquee, wb-pulse, wb-rotate, wb-rubberband, wb-shake, wb-slide-in-*, wb-spin, wb-swing, wb-tada, wb-wobble, wb-zoom-in/out |
-| `layouts.css` | wb-divider-gradient, wb-glass, wb-gradient-shift, wb-gradient-text, wb-orb, wb-orb-float |
-| `data.css` | wb-table (merge with Phase 1 consolidation) |
+| `feedback.css` | x-spinner, x-badge-gradient, x-dot-pulse, x-pulse-dot |
+| `card.css` | x-card, x-card-float (merge with existing) |
+| `overlay.css` | x-drawer (component styles, not layout) |
+| `inputs.css` | x-button, x-btn-glass, x-btn-gradient, x-btn-rack, x-input-glass |
+| `effects.css` | x-animate, x-bounce, x-fade-in/out, x-flash, x-flip, x-heartbeat, x-jello, x-marquee, x-pulse, x-rotate, x-rubberband, x-shake, x-slide-in-*, x-spin, x-swing, x-tada, x-wobble, x-zoom-in/out |
+| `layouts.css` | x-divider-gradient, x-glass, x-gradient-shift, x-gradient-text, x-orb, x-orb-float |
+| `data.css` | x-table (merge with Phase 1 consolidation) |
 | `navigation.css` | (already in navbar.css, header.css, footer.css) |
-| Keep in site.css | wb-grid, wb-row, wb-sidebar, wb-reel, wb-scroll-lock, wb-resizing, wb-content-auto |
+| Keep in site.css | x-grid, x-row, x-sidebar, x-reel, x-scroll-lock, x-resizing, x-content-auto |
 
 ---
 

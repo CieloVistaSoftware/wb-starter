@@ -1,3 +1,4 @@
+import { readFlag } from '../../core/read-attr.js';
 /**
  * WB Dialog Behavior - Semantic dialog modal
  * 
@@ -16,7 +17,7 @@ export function dialog(element, options = {}) {
     content: options.content || element.getAttribute('content') || element.getAttribute('modal-content') || element.dataset.dialogContent || element.dataset.modalContent || '',
     size: options.size || element.getAttribute('size') || element.getAttribute('modal-size') || element.dataset.dialogSize || element.dataset.modalSize || 'md',
     // Schema declares variant: default/centered/fullscreen (appliesClass:
-    // wb-dialog--{{value}}), but this was never read anywhere -- every
+    // x-dialog--{{value}}), but this was never read anywhere -- every
     // variant produced an identical dialog (confirmed live: "Centered" and
     // "Fullscreen" demo triggers opened the exact same default-positioned,
     // default-sized dialog).
@@ -28,14 +29,14 @@ export function dialog(element, options = {}) {
   const createAndShowDialog = (titleText, contentHtml, sizeVal, variantVal = 'default') => {
     // Create semantic <dialog> element
     const dialogEl = document.createElement('dialog');
-    dialogEl.className = 'wb-dialog';
+    dialogEl.className = 'x-dialog';
     if (variantVal && variantVal !== 'default') {
-      dialogEl.classList.add(`wb-dialog--${variantVal}`);
+      dialogEl.classList.add(`x-dialog--${variantVal}`);
     }
     // Unique per instance — a hardcoded id here would collide the moment two
     // dialogs exist in the DOM at once, leaving aria-labelledby pointing at
     // whichever dialog's title happens to come first for every OTHER instance.
-    const titleId = `wb-dialog-title-${Math.random().toString(36).slice(2, 9)}`;
+    const titleId = `x-dialog-title-${Math.random().toString(36).slice(2, 9)}`;
     dialogEl.setAttribute('aria-labelledby', titleId);
     dialogEl.setAttribute('aria-modal', 'true');
 
@@ -45,16 +46,16 @@ export function dialog(element, options = {}) {
 
     // HEADER (<header>)
     const header = document.createElement('header');
-    header.className = 'wb-dialog__header';
+    header.className = 'x-dialog__header';
 
     const title = document.createElement('h2');
     title.id = titleId;
-    title.className = 'wb-dialog__title';
+    title.className = 'x-dialog__title';
     title.textContent = titleText;
     header.appendChild(title);
     
     const closeBtn = document.createElement('button');
-    closeBtn.className = 'wb-dialog__close';
+    closeBtn.className = 'x-dialog__close';
     closeBtn.type = 'button';
     closeBtn.setAttribute('aria-label', 'Close dialog');
     closeBtn.innerHTML = '&times;';
@@ -64,22 +65,22 @@ export function dialog(element, options = {}) {
 
     // MAIN (<main>) - body content
     const main = document.createElement('main');
-    main.className = 'wb-dialog__body';
+    main.className = 'x-dialog__body';
     main.innerHTML = contentHtml;
     dialogEl.appendChild(main);
 
     // FOOTER (<footer>)
     const footer = document.createElement('footer');
-    footer.className = 'wb-dialog__footer';
+    footer.className = 'x-dialog__footer';
     
     const cancelBtn = document.createElement('button');
-    cancelBtn.className = 'wb-dialog__cancel wb-button wb-button--secondary wb-button--sm';
+    cancelBtn.className = 'x-dialog__cancel x-button x-button--secondary x-button--sm';
     cancelBtn.type = 'button';
     cancelBtn.textContent = 'Cancel';
     footer.appendChild(cancelBtn);
     
     const okBtn = document.createElement('button');
-    okBtn.className = 'wb-dialog__ok wb-button wb-button--primary wb-button--sm';
+    okBtn.className = 'x-dialog__ok x-button x-button--primary x-button--sm';
     okBtn.type = 'button';
     okBtn.textContent = 'OK';
     footer.appendChild(okBtn);
@@ -123,7 +124,7 @@ export function dialog(element, options = {}) {
   // through both branches with no click handler attached at all. (#279)
   //
   // hasTriggerAttrs also checks the data-modal-* spelling: this used to be
-  // JUST the plain names, so a <wb-modal data-modal-title="…"> matched the
+  // JUST the plain names, so a <dialog data-modal-title="…"> matched the
   // OUTER gate via tagName (entering this if) but failed THIS check, silently
   // falling into DEFINITION mode -- element.style.display='none', hiding the
   // visible trigger button entirely with no error. config.title/content
@@ -133,23 +134,31 @@ export function dialog(element, options = {}) {
   // matching audio.js/lightbox.js's established plain-first/data-fallback
   // pattern rather than silently hiding the element).
   const hasTriggerAttrs = element.hasAttribute('modal-content') || element.hasAttribute('modal-title') ||
-    element.hasAttribute('data-modal-content') || element.hasAttribute('data-modal-title');
+    readFlag(element, 'modal-content') || readFlag(element, 'modal-title');
   if (element.tagName === 'WB-MODAL' || hasTriggerAttrs) {
-    // TRIGGER mode: <wb-modal modal-title="…" modal-content="…">Open Modal</wb-modal>
+    // TRIGGER mode: <dialog modal-title="…" modal-content="…">Open Modal</dialog>
     // is a visible button — its text is the label and clicking it opens a dialog
-    // built from the attributes. (Previously wb-modal was always hidden with only a
+    // built from the attributes. (Previously x-modal was always hidden with only a
     // showModal() method and no click handler, so "Open Modal" did nothing. #251)
     if (hasTriggerAttrs) {
-      element.classList.add('wb-modal-trigger', 'wb-dialog-trigger');
+      element.classList.add('x-modal-trigger', 'x-dialog-trigger');
       element.style.cursor = 'pointer';
       const open = () => createAndShowDialog(config.title, config.content, config.size, config.variant);
+      // .open() alongside .showModal(): the docs teach an external trigger
+      // calling document.getElementById(id).open() (matching the native
+      // <dialog>-adjacent naming this framework uses elsewhere), but only
+      // .showModal was ever assigned here -- that call always threw
+      // "open is not a function". Both names now resolve to the same
+      // function rather than picking one and leaving the other undocumented
+      // or unimplemented. (#531)
       element.showModal = open;
+      element.open = open;
       element.addEventListener('click', open);
       return () => element.removeEventListener('click', open);
     }
 
     // DEFINITION mode: no trigger attributes — the children are the modal content,
-    // the element is hidden, and a caller invokes element.showModal().
+    // the element is hidden, and a caller invokes element.open() (or .showModal()).
     element.style.display = 'none';
     const slots = {};
     const titleSlot = element.querySelector('[slot="title"]');
@@ -160,39 +169,61 @@ export function dialog(element, options = {}) {
       contentContainer.appendChild(node.cloneNode(true));
     });
     const slotsContent = contentContainer.innerHTML;
-    element.showModal = () => createAndShowDialog(slots.title, slotsContent, config.size, config.variant);
+    const openDefined = () => createAndShowDialog(slots.title, slotsContent, config.size, config.variant);
+    element.showModal = openDefined;
+    element.open = openDefined; // (#531) same rationale as the TRIGGER branch above
     return;
   }
 
   // If element is already a <dialog>, just enhance it with classes
   if (element.tagName === 'DIALOG') {
-    element.classList.add('wb-dialog');
-    element.classList.add('wb-modal');
+    element.classList.add('x-dialog');
+    element.classList.add('x-modal');
     
     // Optional: Add size class if needed, or handle via CSS
     // The existing logic creates a new dialog, but for auto-injection on <dialog>,
     // we just want to style the existing one.
     
     return () => {
-      element.classList.remove('wb-dialog', 'wb-modal');
+      element.classList.remove('x-dialog', 'x-modal');
     };
   }
 
-  element.classList.add('wb-dialog-trigger');
-  // #448: no classList.add('wb-dialog') here -- it just duplicated this
-  // element's own <wb-dialog> tag name (the "Marker for test compliance"
+  element.classList.add('x-dialog-trigger');
+  // #448: no classList.add('x-dialog') here -- it just duplicated this
+  // element's own <dialog> tag name (the "Marker for test compliance"
   // comment predates #448's compliance test, which now flags exactly this
-  // pattern). dialog.css's `wb-dialog`/`::backdrop`/`[open]` rules select
+  // pattern). dialog.css's `x-dialog`/`::backdrop`/`[open]` rules select
   // the tag directly; the class stays load-bearing for the OTHER two
   // branches above (a dynamically-created native <dialog> popup, and an
   // in-place-enhanced pre-existing native <dialog>), neither of which is
-  // this <wb-dialog>-as-its-own-trigger case.
-  element.classList.add('wb-modal');
+  // this <dialog>-as-its-own-trigger case.
+  element.classList.add('x-modal');
   element.style.cursor = 'pointer';
 
+  // config.content only ever reads a `content`/`modal-content` attribute --
+  // this element's real content is its light-DOM children (e.g.
+  // <dialog id="x"><p>...</p></dialog>), same as DEFINITION mode
+  // above. Captured once, up front, before the element's markup is used
+  // for anything else, mirroring that branch's own approach. (#531)
+  const childContent = (() => {
+    const container = document.createElement('div');
+    Array.from(element.childNodes).forEach(node => container.appendChild(node.cloneNode(true)));
+    return container.innerHTML;
+  })();
+
   const showDialog = () => {
-    createAndShowDialog(config.title, config.content, config.size, config.variant);
+    createAndShowDialog(config.title, config.content || childContent, config.size, config.variant);
   };
+
+  // A bare <dialog id="x"> with no trigger attributes previously only
+  // ever opened itself on click -- no method was assigned at all, so an
+  // external `document.getElementById('x').open()` (the pattern this
+  // component's own docs teach) threw "open is not a function". Both names
+  // are exposed for the same reason the other two branches expose them.
+  // (#531)
+  element.open = showDialog;
+  element.showModal = showDialog;
 
   element.addEventListener('click', showDialog);
   return () => element.removeEventListener('click', showDialog);

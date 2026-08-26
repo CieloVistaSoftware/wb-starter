@@ -2,12 +2,16 @@
 
 On click, plays the fade-in animation for 0.5s.
 
-Apply `x-fadein` to any element.
+## Type — new capability
 
-## Usage
+`x-fadein` adds behavior that no HTML element implies. Nothing about a tag says "ripple" or "tooltip", so this is always opted into by attribute, on whatever element you already chose.
+
+### How to write it
 
 ```html
-<button class="effect-demo" x-fadein>Fadein</button>
+<button class="effect-demo" x-fadein>
+  x-fadein
+</button>
 ```
 
 ## Live example

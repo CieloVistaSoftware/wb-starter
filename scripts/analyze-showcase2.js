@@ -36,7 +36,7 @@ console.log('\n=== behaviors.html check ===');
 try {
   const bhtml = fs.readFileSync('demos/behaviors.html', 'utf8');
   console.log('behaviors.html exists, length:', bhtml.length);
-  const bhMissing = ['x-masonry', 'x-dropdown', 'x-toggle', 'x-drawer-layout', 'x-tabs', 'wb-tabs'];
+  const bhMissing = ['x-masonry', 'x-dropdown', 'x-toggle', 'x-drawer-layout', 'x-tabs', 'x-tabs'];
   bhMissing.forEach(m => {
     const re = new RegExp(m, 'gi');
     const count = (bhtml.match(re) || []).length;

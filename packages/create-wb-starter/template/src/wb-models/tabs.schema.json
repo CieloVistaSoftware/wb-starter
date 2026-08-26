@@ -4,13 +4,13 @@
   "title": "Tabs",
   "description": "Tab navigation for switching between content panels",
   "schemaFor": "tabs",
-  "baseClass": "wb-tabs",
+  "baseClass": "x-tabs",
   "semanticElement": {
     "tagName": "div",
     "implicitRole": "tablist"
   },
   "compliance": {
-    "baseClass": "wb-tabs",
+    "baseClass": "x-tabs",
     "supportLevel": "stable",
     "accessibility": "high"
   },
@@ -29,7 +29,7 @@
         "bordered"
       ],
       "default": "default",
-      "appliesClass": "wb-tabs--{{value}}"
+      "appliesClass": "x-tabs--{{value}}"
     },
     "size": {
       "type": "string",
@@ -39,19 +39,19 @@
         "lg"
       ],
       "default": "md",
-      "appliesClass": "wb-tabs--{{value}}"
+      "appliesClass": "x-tabs--{{value}}"
     },
     "fullWidth": {
       "type": "boolean",
       "description": "Tabs fill container width",
       "default": false,
-      "appliesClass": "wb-tabs--full-width"
+      "appliesClass": "x-tabs--full-width"
     },
     "vertical": {
       "type": "boolean",
       "description": "Vertical tab layout",
       "default": false,
-      "appliesClass": "wb-tabs--vertical"
+      "appliesClass": "x-tabs--vertical"
     }
   },
   "$view": [],
@@ -85,47 +85,47 @@
     }
   },
   "$cssAPI": {
-    "--wb-tabs-gap": {
+    "--x-tabs-gap": {
       "default": "0",
       "description": "Gap between tabs"
     },
-    "--wb-tabs-border": {
+    "--x-tabs-border": {
       "default": "1px solid var(--border-color, #e0e0e0)",
       "description": "Tab list border"
     },
-    "--wb-tabs-tab-padding": {
+    "--x-tabs-tab-padding": {
       "default": "0.75rem 1rem",
       "description": "Tab padding"
     },
-    "--wb-tabs-tab-color": {
+    "--x-tabs-tab-color": {
       "default": "var(--text-secondary, #666)",
       "description": "Tab text color"
     },
-    "--wb-tabs-tab-bg": {
+    "--x-tabs-tab-bg": {
       "default": "transparent",
       "description": "Tab background"
     },
-    "--wb-tabs-tab-active-color": {
+    "--x-tabs-tab-active-color": {
       "default": "var(--primary, #6366f1)",
       "description": "Active tab color"
     },
-    "--wb-tabs-tab-active-bg": {
+    "--x-tabs-tab-active-bg": {
       "default": "transparent",
       "description": "Active tab background"
     },
-    "--wb-tabs-tab-hover-color": {
+    "--x-tabs-tab-hover-color": {
       "default": "var(--text-primary, #1a1a1a)",
       "description": "Tab hover color"
     },
-    "--wb-tabs-indicator-color": {
+    "--x-tabs-indicator-color": {
       "default": "var(--primary, #6366f1)",
       "description": "Active indicator color"
     },
-    "--wb-tabs-indicator-height": {
+    "--x-tabs-indicator-height": {
       "default": "2px",
       "description": "Active indicator height"
     },
-    "--wb-tabs-panel-padding": {
+    "--x-tabs-panel-padding": {
       "default": "1rem 0",
       "description": "Panel padding"
     }
@@ -156,14 +156,14 @@
   "test": {
     "functional": true,
     "setup": [
-      "<wb-tabs>Basic tabs content</wb-tabs>",
-      "<wb-tabs variant=\"default\">variant=default</wb-tabs>",
-      "<wb-tabs variant=\"pills\">variant=pills</wb-tabs>",
-      "<wb-tabs variant=\"underline\">variant=underline</wb-tabs>",
-      "<wb-tabs size=\"sm\">size=sm</wb-tabs>",
-      "<wb-tabs size=\"md\">size=md</wb-tabs>",
-      "<wb-tabs size=\"lg\">size=lg</wb-tabs>",
-      "<wb-tabs full-width>with fullWidth</wb-tabs>"
+      "<div x-tabs>Basic tabs content</div>",
+      "<div x-tabs variant=\"default\">variant=default</div>",
+      "<div x-tabs variant=\"pills\">variant=pills</div>",
+      "<div x-tabs variant=\"underline\">variant=underline</div>",
+      "<div x-tabs size=\"sm\">size=sm</div>",
+      "<div x-tabs size=\"md\">size=md</div>",
+      "<div x-tabs size=\"lg\">size=lg</div>",
+      "<div x-tabs full-width>with fullWidth</div>"
     ],
     "matrix": {
       "combinations": [
@@ -186,14 +186,14 @@
     },
     "site": {
       "page": "layout",
-      "tag": "wb-tabs",
+      "tag": "x-tabs",
       "renders": true,
-      "baseClass": "wb-tabs",
+      "baseClass": "x-tabs",
       "minInstances": 5,
       "checkText": [],
       "checkClasses": [
-        "wb-tabs--pills",
-        "wb-tabs--sm"
+        "x-tabs--pills",
+        "x-tabs--sm"
       ],
       "checkAttributes": []
     }

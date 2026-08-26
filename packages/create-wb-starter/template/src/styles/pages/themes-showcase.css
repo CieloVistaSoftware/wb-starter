@@ -534,13 +534,13 @@
   flex-shrink: 0;
 }
 
-.progress-demo-row wb-progress {
+.progress-demo-row x-progress {
   flex: 1;
   min-width: 0;
 }
 
 /* Ensure badges display properly */
-wb-badge {
+x-badge {
   display: inline-flex;
   align-items: center;
   white-space: nowrap;
@@ -560,7 +560,7 @@ wb-badge {
 }
 
 /* Button styles */
-.wb-btn {
+.x-btn {
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -576,22 +576,22 @@ wb-badge {
   font-family: inherit;
 }
 
-.wb-btn--primary {
+.x-btn--primary {
   background: var(--primary);
   color: var(--text-primary);
 }
 
-.wb-btn--primary:hover {
+.x-btn--primary:hover {
   opacity: 0.9;
 }
 
-.wb-btn--secondary {
+.x-btn--secondary {
   background: var(--bg-tertiary);
   color: var(--text-primary);
   border: 1px solid var(--border-color);
 }
 
-.wb-btn--ghost {
+.x-btn--ghost {
   background: transparent;
   color: var(--text-secondary);
   border: 1px solid var(--border-color);

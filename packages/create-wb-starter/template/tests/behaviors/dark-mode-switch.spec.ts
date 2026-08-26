@@ -1,5 +1,5 @@
 /**
- * The Dark Mode switch (<wb-switch theme-control>) must drive the page theme:
+ * The Dark Mode switch (<div x-switch theme-control>) must drive the page theme:
  * ON = dark, OFF = light. (#210)
  */
 import { test, expect } from '@playwright/test';

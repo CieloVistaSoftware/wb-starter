@@ -1,5 +1,17 @@
 # WB-Starter Reference
 
+> **This is the cross-behavior INDEX, not the per-behavior documentation.**
+> Every behavior now has its own page, generated from its schema, at
+> `docs/behaviors/<name>.md` — e.g. [button](behaviors/button.md),
+> [ripple](behaviors/ripple.md), [tooltip](behaviors/tooltip.md). Each of those
+> pages opens by stating which of the two behavior types it is (decorates a
+> semantic element vs. adds a new capability) and how to write it. Go there for
+> attributes, events and examples; this page is for *browsing what exists* and
+> for the shared syntax/auto-injection/event rules below.
+>
+> Reach this page from an `x-demo` 📖 badge? That means the behavior has no
+> page of its own yet — find its row in the tables below (#842).
+
 This document lists all available behaviors in the WB Starter kit, categorized by function.
 
 ---
@@ -24,13 +36,13 @@ Behaviors are applied using attributes with a configurable prefix (default: `x-`
 ### 1. Decoration (`x-{behavior}`)
 Enhances an element without changing its fundamental structure.
 
-<wb-demo>
+<div x-demo>
 <button x-ripple>Click Me</button>
-</wb-demo>
+</div>
 
-<wb-demo>
+<div x-demo>
 <div x-tooltip="Hello World">Hover Me</div>
-</wb-demo>
+</div>
 
 | Element | Behavior | Result |
 |---------|----------|--------|
@@ -40,23 +52,26 @@ Enhances an element without changing its fundamental structure.
 | `<dialog>` | `dialog` | Dialog with backdrop, animations |
 | `<img>` | `image` | Lazy loading, fade-in, lightbox |
 
-### 2. Morphing (`x-as-{behavior}`)
-Transforms an element into a complex component. The `-as-` infix is required for morphing behaviors to make the transformation explicit.
+### 2. Morphing (`x-as-{behavior}`) — REMOVED (#783)
 
-<wb-demo>
-<article x-as-card>
+There is no `-as-` infix any more. A behavior that builds out a component's
+internals is applied exactly like any other: the attribute name **is** the
+behavior name, and on a semantic element it is injected for you.
+
+<div x-demo>
+<article x-card>
   <header>
     <h3>Title</h3>
   </header>
   <main>Content</main>
 </article>
-</wb-demo>
+</div>
 
-| Element | Behavior | Result |
-|---------|----------|--------|
-| `<article>` | `card` | Morphs into card component |
-| `<nav>` | `navbar` | Morphs into navigation bar |
-| `<aside>` | `sidebar` | Morphs into sidebar component |
+| Element | Behavior | Written as |
+|---------|----------|------------|
+| `<article>` | `card` | `<article>` (auto-injected) or `<div x-card>` |
+| `<nav>` | `navbar` | `<nav>` (auto-injected) or `<div x-navbar>` |
+| `<aside>` | `sidebar` | `<aside>` (auto-injected) or `<div x-sidebar>` |
 
 ### 3. Configuration (Optional)
 If the `x-` prefix conflicts with other libraries (like Alpine.js), you can change it globally.
@@ -64,7 +79,7 @@ If the `x-` prefix conflicts with other libraries (like Alpine.js), you can chan
 ```javascript
 // In your main entry point
 WB.init({
-  prefix: 'b' // Changes syntax to b-ripple, b-as-card, etc.
+  prefix: 'b' // Changes syntax to b-ripple, b-card, etc.
 });
 ```
 
@@ -79,14 +94,14 @@ To enable, set `"autoInject": true` in your `config/site.json` or pass it to `WB
 When enabled, plain semantic elements like `<dialog>` and `<img>` below get the
 `dialog`/`image` behaviors attached automatically, with no `x-` attribute needed:
 
-<wb-demo columns="1">
+<div x-demo columns="1">
 <p>Auto-decorated dialog (zero <code>x-</code> attributes):</p>
 <dialog open>Auto-decorated dialog content.</dialog>
-</wb-demo>
+</div>
 
-<wb-demo>
+<div x-demo>
 <img src="https://placehold.co/600x400/1e293b/e2e8f0?text=Photo" alt="Auto-decorated image">
-</wb-demo>
+</div>
 
 ---
 
@@ -97,140 +112,140 @@ Enhances standard HTML elements with better styling and functionality.
 
 | Behavior | Element | Type | Description |
 |----------|---------|------|-------------|
-| [`audio`](components/semantics/audio.md) | `<audio>` | Decorate | Enhanced audio player styling |
-| [`video`](components/semantics/video.md) | `<video>` | Decorate | Enhanced video player styling |
-| [`img`](components/semantics/img.md) | `<img>` | **Morph** → `image` | Lazy loading, fade-in, lightbox |
-| [`figure`](components/semantics/figure.md) | `<figure>` | Decorate | Figure with caption styling |
-| [`table`](components/semantics/table.md) | `<table>` | Decorate | Sortable headers, striped rows |
-| [`code`](components/semantics/code.md) | `<code>` | Decorate | Inline code styling |
-| [`pre`](components/semantics/pre.md) | `<pre>` | Decorate | Code block with copy button |
-| [`input`](components/semantics/input.md) | `<input>` | Decorate | Styled input with variants |
-| [`textarea`](components/semantics/textarea.md) | `<textarea>` | Decorate | Auto-resize, counter |
-| [`select`](components/semantics/select.md) | `<select>` | Decorate | Custom dropdown styling |
-| [`checkbox`](components/semantics/checkbox.md) | `<input type="checkbox">` | Decorate | Custom checkbox styling |
-| [`radio`](components/semantics/radio.md) | `<input type="radio">` | Decorate | Custom radio styling |
-| [`button`](components/semantics/button.md) | `<button>` | Decorate | Variants, sizes, loading state |
-| [`switch`](components/semantics/switch.md) | `<input type="checkbox">` | Decorate | Toggle switch UI |
-| [`range`](components/semantics/range.md) | `<input type="range">` | Decorate | Custom track/thumb styling |
-| [`rating`](components/semantics/rating.md) | `<div>` | - | Star rating input |
-| [`form`](components/semantics/form.md) | `<form>` | Decorate | Validation UI, loading states |
-| [`details`](components/semantics/details.md) | `<details>` | Decorate | Smooth expand/collapse animation |
-| [`dialog`](components/semantics/dialog.md) | `<dialog>` | Decorate | Backdrop, close button, animations |
+| [`audio`](behaviors/audio.md) | `<audio>` | Decorate | Enhanced audio player styling |
+| [`video`](behaviors/video.md) | `<video>` | Decorate | Enhanced video player styling |
+| [`img`](behaviors/img.md) | `<img>` | **Morph** → `image` | Lazy loading, fade-in, lightbox |
+| [`figure`](behaviors/figure.md) | `<figure>` | Decorate | Figure with caption styling |
+| [`table`](behaviors/table.md) | `<table>` | Decorate | Sortable headers, striped rows |
+| [`code`](behaviors/code.md) | `<code>` | Decorate | Inline code styling |
+| [`pre`](behaviors/pre.md) | `<pre>` | Decorate | Code block with copy button |
+| [`input`](behaviors/input.md) | `<input>` | Decorate | Styled input with variants |
+| [`textarea`](behaviors/textarea.md) | `<textarea>` | Decorate | Auto-resize, counter |
+| [`select`](behaviors/select.md) | `<select>` | Decorate | Custom dropdown styling |
+| [`checkbox`](behaviors/checkbox.md) | `<input type="checkbox">` | Decorate | Custom checkbox styling |
+| [`radio`](behaviors/radio.md) | `<input type="radio">` | Decorate | Custom radio styling |
+| [`button`](behaviors/button.md) | `<button>` | Decorate | Variants, sizes, loading state |
+| [`switch`](behaviors/switch.md) | `<input type="checkbox">` | Decorate | Toggle switch UI |
+| [`range`](behaviors/range.md) | `<input type="range">` | Decorate | Custom track/thumb styling |
+| [`rating`](behaviors/rating.md) | `<div>` | - | Star rating input |
+| [`form`](behaviors/form.md) | `<form>` | Decorate | Validation UI, loading states |
+| [`details`](behaviors/details.md) | `<details>` | Decorate | Smooth expand/collapse animation |
+| [`dialog`](behaviors/dialog.md) | `<dialog>` | Decorate | Backdrop, close button, animations |
 
 #### Live Examples
 
 **`audio`**
 
-<wb-demo>
-<wb-audio src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3"></audio>
-</wb-demo>
+<div x-demo>
+<audio src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3"></audio>
+</div>
 
 **`video`**
 
-<wb-demo>
-<wb-video src="https://interactive-examples.mdn.mozilla.net/media/cc0-videos/flower.mp4"></video>
-</wb-demo>
+<div x-demo>
+<video src="https://interactive-examples.mdn.mozilla.net/media/cc0-videos/flower.mp4"></video>
+</div>
 
 **`img` → `image`**
 
-<wb-demo>
+<div x-demo>
 <img
   src="https://placehold.co/600x400/1e293b/e2e8f0?text=Photo"
   alt="Photo">
-</wb-demo>
+</div>
 
 **`code`**
 
-<wb-demo>
+<div x-demo>
 <code
   language="Python">
   print("Hello")
 </code>
-</wb-demo>
+</div>
 
 **`input`**
 
-<wb-demo>
-<wb-input
+<div x-demo>
+<div x-input
   label="Email"
   input-type="email"
   placeholder="Enter your email">
 </input>
-</wb-demo>
+</div>
 
 **`textarea`**
 
-<wb-demo>
-<wb-textarea
+<div x-demo>
+<textarea
   label="Message"
   placeholder="Enter your message...">
 </textarea>
-</wb-demo>
+</div>
 
 **`select`**
 
-<wb-demo>
-<wb-select
+<div x-demo>
+<select
   label="Country"
   options='[{"value":"us","label":"United States"},{"value":"uk","label":"United Kingdom"}]'>
 </select>
-</wb-demo>
+</div>
 
 **`checkbox`**
 
-<wb-demo>
-<wb-checkbox label="I agree to the terms"></input>
-</wb-demo>
+<div x-demo>
+<div x-checkbox label="I agree to the terms"></input>
+</div>
 
 **`switch`**
 
-<wb-demo events="wb:switch:change">
-<wb-switch label="Dark mode"></div>
-</wb-demo>
+<div x-demo events="wb:switch:change">
+<div x-switch label="Dark mode"></div>
+</div>
 
 **`rating`**
 
-<wb-demo>
-<wb-rating value="3"></div>
-</wb-demo>
+<div x-demo>
+<span x-rating value="3"></div>
+</div>
 
 **`form`**
 
-<wb-demo>
-<wb-form action="/api/submit">
-  <wb-input
+<div x-demo>
+<form action="/api/submit">
+  <div x-input
     name="email"
     label="Email"
     required>
   </input>
-  <wb-button type="submit">Submit</button>
+  <button type="submit">Submit</button>
 </form>
-</wb-demo>
+</div>
 
 **`details`**
 
-<wb-demo>
-<wb-details summary="More Information">
+<div x-demo>
+<details summary="More Information">
   <p>Hidden content revealed when expanded.</p>
 </details>
-</wb-demo>
+</div>
 
 **`dialog`**
 
-<wb-demo>
-<wb-dialog
+<div x-demo>
+<dialog
   title="Welcome"
   id="behaviors-ref-dialog">
   <p>Dialog content goes here.</p>
-</wb-dialog>
+</dialog>
 <button onclick="document.getElementById('behaviors-ref-dialog').showModal()">Open Dialog</button>
-</wb-demo>
+</div>
 
 **`button`**
 
-<wb-demo>
+<div x-demo>
 <button>Click Me</button>
-</wb-demo>
+</div>
 
 `figure`, `table`, `pre`, `radio`, and `range` don't yet have a dedicated component doc
 with a live example to pull from — tracked as remaining work, not guessed here.
@@ -241,10 +256,10 @@ Rich interactive components.
 | Behavior | Element | Type | Description |
 |----------|---------|------|-------------|
 | `hero` | `<section>` | - | Hero section component |
-| [`card`](components/cards/card.md) | `<article>` | - | Card component |
+| [`card`](card.md) | `<article>` | - | Card component |
 | `cardlink` | `<article href>` | - | Clickable card |
-| [`card*`](components/cards/cards.index.md) | `<article>` | - | Card variants (image, video, etc.) |
-| [`progressbar`](components/semantics/progress.md) | `<progress>` | Decorate | Progress bar styling |
+| `card*` | `<article>` | - | Card variants — [cardimage](behaviors/cardimage.md), [cardvideo](behaviors/cardvideo.md), [cardpricing](behaviors/cardpricing.md), [cardprofile](behaviors/cardprofile.md), … one page each under `docs/behaviors/` |
+| [`progressbar`](behaviors/progress.md) | `<progress>` | Decorate | Progress bar styling |
 | `spinner` | `<div>` | - | Loading spinner |
 | [`toast`](behaviors/toast.md) | `<div>` | - | Toast notification |
 | `notify` | `<div>` | - | Cycling notification |
@@ -258,7 +273,7 @@ Rich interactive components.
 | [`tooltip`](behaviors/tooltip.md) | any | - | Tooltip on hover |
 | [`dropdown`](behaviors/dropdown.md) | `<div>` | - | Dropdown menu |
 | [`accordion`](behaviors/accordion.md) | `<div>` | - | Accordion list (deprecated — prefer `<details>`) |
-| [`tabs`](components/tabs.md) | `<div>` | - | Tabbed interface |
+| [`tabs`](behaviors/tabs.md) | `<div>` | - | Tabbed interface |
 | `navbar` | `<nav>` | - | Navigation bar |
 | `sidebar` | `<aside>` | - | Sidebar component |
 | `menu` | `<menu>` | Decorate | Menu list styling |
@@ -269,76 +284,76 @@ Rich interactive components.
 
 **`card`**
 
-<wb-demo>
-<wb-card title="Hello" variant="elevated">
+<div x-demo>
+<article title="Hello" variant="elevated">
   <p>It just works.</p>
 </article>
-</wb-demo>
+</div>
 
 **`cardlink`**
 
-<wb-demo>
-<wb-cardlink
+<div x-demo>
+<div x-cardlink
   title="Documentation"
   href="/docs"
   icon="📚">
 </div>
-</wb-demo>
+</div>
 
 **`progressbar`**
 
-<wb-demo>
-<wb-progress value="50"></progress>
-</wb-demo>
+<div x-demo>
+<progress value="50"></progress>
+</div>
 
 **`tooltip`**
 
-<wb-demo>
+<div x-demo>
 <button x-tooltip="Tooltip text">Hover me</button>
-</wb-demo>
+</div>
 
 **`tabs`**
 
-<wb-demo events="wb:tabs:change">
+<div x-demo events="wb:tabs:change">
 <nav x-tabs>
   <div tab="Tab 1">Content 1</div>
   <div tab="Tab 2">Content 2</div>
   <div tab="Tab 3">Content 3</div>
 </nav>
-</wb-demo>
+</div>
 
 **`toast`**
 
-<wb-demo>
+<div x-demo>
 <button x-toast message="Saved!" toast-variant="success">Show toast</button>
-</wb-demo>
+</div>
 
 **`chip`**
 
-<wb-demo>
+<div x-demo>
 <span x-chip label="Removable" variant="info" dismissible></span>
-</wb-demo>
+</div>
 
 **`skeleton`**
 
-<wb-demo>
-<wb-skeleton variant="text" lines="3"></div>
-</wb-demo>
+<div x-demo>
+<div x-skeleton variant="text" lines="3"></div>
+</div>
 
 **`dropdown`**
 
-<wb-demo>
+<div x-demo>
 <button x-dropdown items="Profile,Settings,Logout" label="Account"></button>
-</wb-demo>
+</div>
 
 **`accordion`**
 
-<wb-demo>
+<div x-demo>
 <div x-accordion>
   <div accordion-title="What is wb-starter?">A schema-first, no-build website starter kit.</div>
   <div accordion-title="Is x-accordion recommended?">No, prefer the native details/summary element for new markup.</div>
 </div>
-</wb-demo>
+</div>
 
 `hero`, `card*` variants, `spinner`, `notify`, `badge`, `alert`, `divider`,
 `breadcrumb`, `avatar`, `navbar`, `sidebar`, `menu`, `pagination`, and `steps`
@@ -350,77 +365,77 @@ Tools for arranging content.
 
 | Behavior | Element | Type | Description |
 |----------|---------|------|-------------|
-| `grid` | `<wb-grid>` | - | CSS Grid layout |
-| `flex` | `<wb-flex>`, `<div x-flex>` | - | Flexbox layout |
-| `container` | `<wb-container>` | - | Responsive container |
-| [`articles`](behaviors/articles.md) | `<div x-as-articles>`, `[x-articles]` | - | Grid/list/masonry wrapper for article-like children |
-| [`stack`](behaviors/wb-stack.md) | `<div x-stack>`, `<div x-stack>`, `[x-stack]` | - | Vertical stack |
-| [`cluster`](behaviors/wb-cluster.md) | `<div x-cluster>`, `[x-cluster]` | - | Horizontal cluster |
-| `center` | `<wb-center>` | - | Centered content |
-| `masonry` | `<wb-masonry>` | - | Masonry grid layout |
+| `grid` | `<div x-grid>` | - | CSS Grid layout |
+| `flex` | `<div x-flex>`, `<div x-flex>` | - | Flexbox layout |
+| `container` | `<div x-container>` | - | Responsive container |
+| [`articles`](behaviors/articles.md) | `<div x-articles>`, `[x-articles]` | - | Grid/list/masonry wrapper for article-like children |
+| [`stack`](behaviors/stack.md) | `<div x-stack>`, `<div x-stack>`, `[x-stack]` | - | Vertical stack |
+| [`cluster`](behaviors/cluster.md) | `<div x-cluster>`, `[x-cluster]` | - | Horizontal cluster |
+| `center` | `<div x-center>` | - | Centered content |
+| `masonry` | `<div x-masonry>` | - | Masonry grid layout |
 | `sticky` | `<div x-sticky>` | - | Sticky positioning |
 | `scrollable` | `<div>` | - | Scrollable area |
 | [`fill`](behaviors/fill.md) | `[x-fill]` | - | As wide as the container allows — picks flex/grid/block sizing from the parent |
-| [`drawerLayout`](components/drawer.md) | `<div x-drawer>` | - | App layout with drawer |
-| `sidebarlayout` | `<wb-sidebar>` | - | Sidebar layout |
-| `switcher` | `<wb-switcher>` | - | Responsive switcher |
-| `cover` | `<wb-cover>` | - | Full-screen cover |
-| `frame` | `<wb-frame>` | - | Aspect ratio frame |
-| `reel` | `<wb-reel>` | - | Horizontal reel |
-| `icon` | `<wb-icon>` | - | Icon wrapper |
-| [`draggable`](components/cards/carddraggable.md) | any | - | Draggable element |
+| [`drawerLayout`](behaviors/drawer.md) | `<div x-drawer>` | - | App layout with drawer |
+| `sidebarlayout` | `<div x-sidebarlayout>` | - | Sidebar layout |
+| `switcher` | `<div x-switcher>` | - | Responsive switcher |
+| `cover` | `<div x-cover>` | - | Full-screen cover |
+| `frame` | `<div x-frame>` | - | Aspect ratio frame |
+| `reel` | `<div x-reel>` | - | Horizontal reel |
+| `icon` | `<span x-icon>` | - | Icon wrapper |
+| [`draggable`](behaviors/carddraggable.md) | any | - | Draggable element |
 | `resizable` | any | - | Resizable element |
 
 #### Live Examples
 
 **`drawerLayout`**
 
-<wb-demo>
-<wb-drawer-layout
+<div x-demo>
+<div x-drawer-layout
   position="left"
   width="300px">
   <h3>Sidebar</h3>
   <nav>Navigation content...</nav>
 </div>
-</wb-demo>
+</div>
 
 **`draggable`**
 
-<wb-demo>
-<wb-carddraggable title="Drag Me">Drag this card around.</div>
-</wb-demo>
+<div x-demo>
+<div x-carddraggable title="Drag Me">Drag this card around.</div>
+</div>
 
 **`stack`**
 
-<wb-demo>
-<wb-stack gap="1rem">
-  <div>Item 1</div>
-  <div>Item 2</div>
-</div>
-</wb-demo>
-
-<wb-demo>
+<div x-demo>
 <div x-stack gap="1rem">
   <div>Item 1</div>
   <div>Item 2</div>
 </div>
-</wb-demo>
+</div>
 
-**`cluster`**
-
-<wb-demo>
-<wb-cluster gap="1rem">
+<div x-demo>
+<div x-stack gap="1rem">
   <div>Item 1</div>
   <div>Item 2</div>
 </div>
-</wb-demo>
+</div>
 
-<wb-demo>
+**`cluster`**
+
+<div x-demo>
 <div x-cluster gap="1rem">
   <div>Item 1</div>
   <div>Item 2</div>
 </div>
-</wb-demo>
+</div>
+
+<div x-demo>
+<div x-cluster gap="1rem">
+  <div>Item 1</div>
+  <div>Item 2</div>
+</div>
+</div>
 
 `grid`, `flex`, `container`, `center`, `masonry`, `sticky`, `scrollable`,
 `sidebarlayout`, `switcher`, `cover`, `frame`, `reel`, `icon`, and `resizable` don't yet
@@ -437,7 +452,7 @@ Handling media content and overlaying views.
 | `vimeo` | `<div>` | - | Vimeo embed |
 | `carousel` | `<div>` | - | Image/Content carousel |
 | `popover` | any | - | Popover content |
-| [`drawer`](components/drawer.md) | `<div>` | - | Slide-out drawer |
+| [`drawer`](behaviors/drawer.md) | `<div>` | - | Slide-out drawer |
 | `lightbox` | `<img>` | - | Image lightbox |
 | `offcanvas` | `<div>` | - | Off-canvas sidebar |
 | `sheet` | `<div>` | - | Bottom sheet |
@@ -446,14 +461,14 @@ Handling media content and overlaying views.
 
 **`drawer`**
 
-<wb-demo>
+<div x-demo>
 <button
   x-drawer
   title="Settings"
   content="Settings content...">
   Open Settings
 </button>
-</wb-demo>
+</div>
 
 `gallery`, `youtube`, `vimeo`, `carousel`, `popover`, `lightbox`, `offcanvas`, and
 `sheet` don't yet have a dedicated component doc with a live example to pull from —
@@ -468,7 +483,7 @@ Functional utilities.
 | `toggle` | any | - | Toggle visibility/state |
 | `ripple` | any | - | Material ripple effect |
 | `darkmode` | `<button>` | - | Dark mode toggle |
-| [`themecontrol`](behaviors/wb-themecontrol.md) | `<div>` | - | Theme switcher |
+| [`themecontrol`](behaviors/themecontrol.md) | `<div>` | - | Theme switcher |
 | `lazy` | any | - | Lazy loading content |
 | `print` | `<button>` | - | Print button |
 | `share` | `<button>` | - | Share button |
@@ -482,22 +497,22 @@ Functional utilities.
 | `visible` | any | - | Visibility observer |
 | `validator` | `<input>` | - | Input validator |
 | `notes` | `<div>` | - | Notes system |
-| [`mdhtml`](components/mdhtml.md) | `<div>` | - | Markdown renderer |
+| [`mdhtml`](behaviors/mdhtml.md) | `<div>` | - | Markdown renderer |
 | `builder` | `<div>` | - | Page builder container |
 
 #### Live Examples
 
 **`themecontrol`**
 
-<wb-demo>
+<div x-demo>
 <div x-themecontrol></div>
-</wb-demo>
+</div>
 
 **`mdhtml`**
 
-<wb-demo>
+<div x-demo>
 <div x-mdhtml> # Hello World This is **bold** and *italic*. </div>
-</wb-demo>
+</div>
 
 `copy`, `toggle`, `ripple`, `darkmode`, `lazy`, `print`, `share`, `fullscreen`,
 `scroll`, `truncate`, `highlight`, `countdown`, `clock`, `relativetime`, `visible`,
@@ -517,7 +532,7 @@ Apply animations to elements.
 | `shake` | any | - | Shake effect |
 | `pulse` | any | - | Pulse effect |
 | `flip` | any | - | Flip effect |
-| [`confetti`](components/effects/confetti.md) | any | - | Confetti explosion |
+| [`confetti`](behaviors/confetti.md) | any | - | Confetti explosion |
 | `sparkle` | any | - | Sparkle effect |
 | `glow` | any | - | Glow effect |
 | `rainbow` | any | - | Rainbow text/bg |
@@ -529,12 +544,12 @@ Apply animations to elements.
 
 **`confetti`**
 
-<wb-demo>
-<wb-confetti
+<div x-demo>
+<div x-confetti
   count="100"
   label="Celebrate!">
 </div>
-</wb-demo>
+</div>
 
 `animate`, `fadein`, `slidein`, `zoomin`, `bounce`, `shake`, `pulse`, `flip`,
 `sparkle`, `glow`, `rainbow`, `typewriter`, `parallax`, and `reveal` don't yet have a
@@ -637,10 +652,10 @@ schema, styling) — this table is the cross-behavior index.
 
 **Forms** — `wb:form:submit` / `wb:form:success` / `wb:form:error` fire from **two**
 independent implementations, so the exact `detail` shape depends on which one enhanced
-your form: the `<wb-form ajax>` component (`form.js`: `{ formData }` / `{ data }` /
+your form: the `<form ajax>` component (`form.js`: `{ formData }` / `{ data }` /
 `{ error }`) and native `<form>` auto-enhancement (`semantics/form.js` /
 `enhancements.js`: `{ response }` / `{ error }`). See
-[components/semantics/form.md](components/semantics/form.md) for the authoritative,
+[components/semantics/form.md](behaviors/form.md) for the authoritative,
 per-implementation breakdown.
 
 **Cards**
@@ -708,7 +723,7 @@ document.querySelectorAll('[x-copy]').forEach((button) => {
 **Tabs** — `<nav x-tabs>` fires on every tab change, including the initial selection:
 
 ```javascript
-document.querySelector('wb-tabs').addEventListener('wb:tabs:change', (e) => {
+document.querySelector('x-tabs').addEventListener('wb:tabs:change', (e) => {
   console.log(`Switched to tab ${e.detail.index}: "${e.detail.title}"`);
 });
 ```
@@ -744,7 +759,7 @@ document.querySelector('[x-prompt]').addEventListener('wb:prompt:ok', (e) => {
 label, so one listener can distinguish which card and which button fired:
 
 ```javascript
-document.querySelectorAll('wb-card, wb-cardproduct, wb-cardnotification').forEach((card) => {
+document.querySelectorAll('x-card, x-cardproduct, x-cardnotification').forEach((card) => {
   card.addEventListener('wb:cardbutton:primary', (e) => {
     console.log('Primary button clicked:', e.detail.label);
   });
@@ -756,9 +771,9 @@ document.querySelectorAll('wb-card, wb-cardproduct, wb-cardnotification').forEac
 
 Every component's own doc under `components/` also documents its events in an "Events"
 section with the full attribute/schema context — e.g.
-[components/semantics/details.md](components/semantics/details.md),
-[components/cards/cardproduct.md](components/cards/cardproduct.md),
-[components/tabs.md](components/tabs.md), and [search.md](search.md). This section exists
+[components/semantics/details.md](behaviors/details.md),
+[components/cards/cardproduct.md](behaviors/cardproduct.md),
+[components/tabs.md](behaviors/tabs.md), and [search.md](search.md). This section exists
 so you don't have to open a dozen files to see what's available across the whole library.
 
 ---
@@ -767,20 +782,20 @@ so you don't have to open a dozen files to see what's available across the whole
 
 | Element | Behavior | Type |
 |---------|----------|------|
-| `<img>` | [`image`](components/semantics/img.md) | Decorate |
-| `<audio>` | [`audio`](components/semantics/audio.md) | Decorate |
-| `<video>` | [`video`](components/semantics/video.md) | Decorate |
-| `<figure>` | [`figure`](components/semantics/figure.md) | Decorate |
-| `<table>` | [`table`](components/semantics/table.md) | Decorate |
-| `<code>` | [`code`](components/semantics/code.md) | Decorate |
-| `<pre>` | [`pre`](components/semantics/pre.md) | Decorate |
-| `<input>` | [`input`](components/semantics/input.md) | Decorate |
-| `<textarea>` | [`textarea`](components/semantics/textarea.md) | Decorate |
-| `<select>` | [`select`](components/semantics/select.md) | Decorate |
-| `<button>` | [`button`](components/semantics/button.md) | Decorate |
-| `<form>` | [`form`](components/semantics/form.md) | Decorate |
-| `<details>` | [`details`](components/semantics/details.md) | Decorate |
-| `<dialog>` | [`dialog`](components/semantics/dialog.md) | Decorate |
+| `<img>` | [`image`](behaviors/img.md) | Decorate |
+| `<audio>` | [`audio`](behaviors/audio.md) | Decorate |
+| `<video>` | [`video`](behaviors/video.md) | Decorate |
+| `<figure>` | [`figure`](behaviors/figure.md) | Decorate |
+| `<table>` | [`table`](behaviors/table.md) | Decorate |
+| `<code>` | [`code`](behaviors/code.md) | Decorate |
+| `<pre>` | [`pre`](behaviors/pre.md) | Decorate |
+| `<input>` | [`input`](behaviors/input.md) | Decorate |
+| `<textarea>` | [`textarea`](behaviors/textarea.md) | Decorate |
+| `<select>` | [`select`](behaviors/select.md) | Decorate |
+| `<button>` | [`button`](behaviors/button.md) | Decorate |
+| `<form>` | [`form`](behaviors/form.md) | Decorate |
+| `<details>` | [`details`](behaviors/details.md) | Decorate |
+| `<dialog>` | [`dialog`](behaviors/dialog.md) | Decorate |
 
 ---
 

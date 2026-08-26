@@ -5,13 +5,13 @@ import { setupBehaviorTest, setupTestContainer } from '../base';
  * schema-builder.js's detectSchema() derives a lookup key by stripping
  * "wb-" and ALL hyphens from the tag name. Several schemas registered under
  * a DIFFERENT key than that derivation produces, so they were never found:
- * wb-control/wb-repeater's schemaFor still carried the "wb-" prefix
- * (registered as "wb-control" instead of "control"), and a migration script
- * doubled their baseClass to "wb-wb-control"/"wb-wb-repeater". Separately,
- * wb-drawerLayout's elementMap key was mixed-case ("wb-drawerLayout"), which
+ * x-control/x-repeater's schemaFor still carried the "wb-" prefix
+ * (registered as "[x-control]" instead of "control"), and a migration script
+ * doubled their baseClass to "x-wb-control"/"x-wb-repeater". Separately,
+ * x-drawerLayout's elementMap key was mixed-case ("[x-drawer]Layout"), which
  * getElementBehavior() (always .toLowerCase()s the tag) could never match
  * against the real lowercase-hyphenated tag actually authored anywhere
- * (<wb-drawer-layout>). wb-article/wb-articles had schema+tag-map entries
+ * (<div x-drawer-layout>). x-article/x-articles had schema+tag-map entries
  * but no behavior implementation at all (#363).
  */
 test.describe('Schema-driven tags resolve to a real, class-bearing element', () => {
@@ -19,18 +19,18 @@ test.describe('Schema-driven tags resolve to a real, class-bearing element', () 
     await setupBehaviorTest(page);
   });
 
-  test('wb-control gets a real class, not empty', async ({ page }) => {
-    const el = await setupTestContainer(page, '<wb-control></wb-control>');
+  test('[x-control] gets a real class, not empty', async ({ page }) => {
+    const el = await setupTestContainer(page, '<div x-control></div>');
     await expect(el).not.toHaveClass('');
   });
 
-  test('wb-repeater behavior runs (display:contents wrapper, by design no class)', async ({ page }) => {
-    // repeater() (wb-repeater.js) intentionally sets no class -- it uses
+  test('[x-repeater] behavior runs (display:contents wrapper, by design no class)', async ({ page }) => {
+    // repeater() (x-repeater.js) intentionally sets no class -- it uses
     // display:contents so its repeated children lay out as if direct
     // children of the parent. Repeats a <template> N times via count=.
     const el = await setupTestContainer(
       page,
-      '<wb-repeater count="3"><template>Item {{index}}</template></wb-repeater>'
+      '<div x-repeater count="3"><template>Item {{index}}</template></div>'
     );
     await expect(el).toHaveCSS('display', 'contents');
     await expect(el.locator('template')).toHaveCount(0);
@@ -38,31 +38,31 @@ test.describe('Schema-driven tags resolve to a real, class-bearing element', () 
     await expect(el).toContainText('Item 3');
   });
 
-  test('wb-drawer-layout resolves via the lowercase-hyphenated tag', async ({ page }) => {
-    const el = await setupTestContainer(page, '<wb-drawer-layout position="left">side</wb-drawer-layout>');
-    await expect(el).toHaveClass(/wb-drawer/);
+  test('[x-drawer-layout] resolves via the lowercase-hyphenated tag', async ({ page }) => {
+    const el = await setupTestContainer(page, '<div x-drawer-layout position="left">side</div>');
+    await expect(el).toHaveClass(/x-drawer/);
   });
 
-  test('wb-article builds a real structure from a bare tag', async ({ page }) => {
-    const el = await setupTestContainer(page, '<wb-article title="Test Article" author="Jane">Body text.</wb-article>');
-    // Not toHaveClass(/wb-article/) on el -- a real <wb-article> tag must NOT
+  test('[x-article] builds a real structure from a bare tag', async ({ page }) => {
+    const el = await setupTestContainer(page, '<div x-article title="Test Article" author="Jane">Body text.</div>');
+    // Not toHaveClass(/x-article/) on el -- a real <div x-article> tag must NOT
     // also carry a same-named class (no-redundant-tag-name-class.spec.ts);
-    // article.css's bare `wb-article {}` tag selector already styles it.
+    // article.css's bare `[x-article] {}` tag selector already styles it.
     // The structural checks below prove article() actually ran instead.
-    await expect(el.locator('.wb-article__title')).toHaveText('Test Article');
-    await expect(el.locator('.wb-article__byline')).toContainText('Jane');
-    await expect(el.locator('.wb-article__content')).toContainText('Body text.');
+    await expect(el.locator('.x-article__title')).toHaveText('Test Article');
+    await expect(el.locator('.x-article__byline')).toContainText('Jane');
+    await expect(el.locator('.x-article__content')).toContainText('Body text.');
   });
 
-  test('wb-articles builds a list wrapper around wb-article children', async ({ page }) => {
+  test('[x-articles] builds a list wrapper around [x-article] children', async ({ page }) => {
     const el = await setupTestContainer(
       page,
-      '<wb-articles title="Recent"><wb-article title="One">A</wb-article><wb-article title="Two">B</wb-article></wb-articles>'
+      '<div x-articles title="Recent"><div x-article title="One">A</div><div x-article title="Two">B</div></div>'
     );
-    // Not toHaveClass(/wb-articles/) on el -- a real <wb-articles> tag must NOT
+    // Not toHaveClass(/x-articles/) on el -- a real <div x-articles> tag must NOT
     // also carry a same-named class (no-redundant-tag-name-class.spec.ts).
     // The structural check below proves articles() actually ran instead.
-    await expect(el.locator('.wb-articles__list')).toBeVisible();
-    await expect(el.locator('wb-article')).toHaveCount(2);
+    await expect(el.locator('.x-articles__list')).toBeVisible();
+    await expect(el.locator('[x-article]')).toHaveCount(2);
   });
 });

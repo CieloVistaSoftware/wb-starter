@@ -6,9 +6,9 @@ export class NotesModal {
     // Inject modal markup if not present
     if (!document.getElementById('notesModal')) {
       const modalHtml = `
-        <div id="notesModal" class="wb-notes__modal" tabindex="-1" style="display:none;position:fixed;top:10%;left:50%;transform:translateX(-50%);background:#222;color:#fff;z-index:10000;padding:2rem;border-radius:12px;min-width:340px;max-width:90vw;box-shadow:0 8px 32px #000a;">
+        <div id="notesModal" class="x-notes__modal" tabindex="-1" style="display:none;position:fixed;top:10%;left:50%;transform:translateX(-50%);background:#222;color:#fff;z-index:10000;padding:2rem;border-radius:12px;min-width:340px;max-width:90vw;box-shadow:0 8px 32px #000a;">
           <button id="closeNotesModal" style="position:absolute;top:1rem;right:1rem;background:#ef4444;color:#fff;border:none;border-radius:4px;padding:0.5rem 1rem;cursor:pointer;font-size:1rem;">Close</button>
-          <div class="wb-notes__resize-handle-modal" style="position:absolute;bottom:0;right:0;width:24px;height:24px;cursor:nwse-resize;"></div>
+          <div class="x-notes__resize-handle-modal" style="position:absolute;bottom:0;right:0;width:24px;height:24px;cursor:nwse-resize;"></div>
           <h2 style="margin-top:0;margin-bottom:1rem;">Notes</h2>
           <form id="addNoteForm" style="display:flex;gap:0.5rem;margin-bottom:1rem;align-items:flex-start;">
             <textarea id="newNoteInput" placeholder="Add a note..." style="flex:1;padding:0.75rem;border-radius:4px;border:none;background:#333;color:#fff;min-height:72px;resize:vertical;font-family:inherit;font-size:1rem;"></textarea>
@@ -31,7 +31,7 @@ export class NotesModal {
     }
     this.notesModal = document.getElementById('notesModal');
     this.closeNotesModal = document.getElementById('closeNotesModal');
-    this.resizeHandle = document.querySelector('.wb-notes__resize-handle-modal');
+    this.resizeHandle = document.querySelector('.x-notes__resize-handle-modal');
     this.addNoteForm = document.getElementById('addNoteForm');
     this.newNoteInput = document.getElementById('newNoteInput');
     this.notesList = document.getElementById('notesList');

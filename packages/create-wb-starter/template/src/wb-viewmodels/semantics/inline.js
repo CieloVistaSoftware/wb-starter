@@ -9,10 +9,10 @@
  * Helper Attribute: [x-behavior="kbd"]
  */
 export function kbd(element, options = {}) {
-  element.classList.add('wb-kbd');
+  element.classList.add('x-kbd');
   
   // Basic styling if not in CSS
-  if (!getComputedStyle(element).getPropertyValue('--wb-kbd-styled')) {
+  if (!getComputedStyle(element).getPropertyValue('--x-kbd-styled')) {
     Object.assign(element.style, {
       display: 'inline-block',
       padding: '0.15em 0.4em',
@@ -28,7 +28,7 @@ export function kbd(element, options = {}) {
     });
   }
 
-  return () => element.classList.remove('wb-kbd');
+  return () => element.classList.remove('x-kbd');
 }
 
 /**
@@ -59,8 +59,8 @@ export function mark(element, options = {}) {
   const variant = options.variant || element.getAttribute('variant');
   const color = options.color || element.getAttribute('color');
 
-  element.classList.add('wb-mark');
-  MARK_VARIANTS.forEach((v) => element.classList.remove(`wb-mark--${v}`));
+  element.classList.add('x-mark');
+  MARK_VARIANTS.forEach((v) => element.classList.remove(`x-mark--${v}`));
 
   if (color) {
     element.style.backgroundColor = color;
@@ -68,11 +68,11 @@ export function mark(element, options = {}) {
   } else {
     element.style.backgroundColor = '';
     element.style.color = '';
-    if (variant && MARK_VARIANTS.includes(variant)) element.classList.add(`wb-mark--${variant}`);
+    if (variant && MARK_VARIANTS.includes(variant)) element.classList.add(`x-mark--${variant}`);
   }
 
   return () => {
-    element.classList.remove('wb-mark', ...MARK_VARIANTS.map((v) => `wb-mark--${v}`));
+    element.classList.remove('x-mark', ...MARK_VARIANTS.map((v) => `x-mark--${v}`));
     element.style.backgroundColor = '';
     element.style.color = '';
   };

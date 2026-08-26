@@ -7,7 +7,7 @@ The original implementation of the Web Behavior (WB) system relied heavily on `d
 3.  **Lack of Semantics**: Generic divs provided no semantic meaning to the developer about the component's purpose.
 
 ## The Request
-The goal was to simplify the usage of complex components like Pricing Cards and Product Cards by allowing custom tag names, such as `<price-card>` and `<product-card>`, while retaining the underlying behavior logic.
+The goal was to simplify the usage of complex components like Pricing Cards and Product Cards by allowing custom tag names, such as `<div x-cardpricing>` and `<div x-cardproduct>`, while retaining the underlying behavior logic.
 
 ## The Solution: Pseudo-Custom Elements (PCE)
 
@@ -50,15 +50,15 @@ We pruned the `.vscode/html-custom-data.json` file. Instead of listing every spe
 
 **After (Custom Tag):**
 ```html
-<price-card
+<div x-cardpricing
   plan="Pro"
   price="$29"
   period="/mo"
   features="Feature 1, Feature 2">
-</price-card>
+</div>
 ```
 
 ## Supported Tags
 Currently supported custom tags:
-- `<price-card>` → `cardpricing`
-- `<product-card>` → `cardproduct`
+- `<div x-cardpricing>` → `cardpricing`
+- `<div x-cardproduct>` → `cardproduct`

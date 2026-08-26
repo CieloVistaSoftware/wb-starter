@@ -134,7 +134,7 @@ Level 1: _base/sectioning.schema.json          ← Sectioning elements
 ▼
 Level 2: card.base.schema.json                 ← Shared card base
 │  properties: title, subtitle, footer, variant, clickable, hoverable, elevated, size
-│  compliance: baseClass "wb-card", required/optional children
+│  compliance: baseClass "x-card", required/optional children
 │  interactions: click, hover, keyboard (Enter/Space)
 │  events: wb:card:click
 │
@@ -157,8 +157,8 @@ Level 3: cardbutton.schema.json                ← Specific variants OVERRIDE pa
 ```json
 "compliance": {
   "$inherits": "card.base.schema.json#compliance",
-  "additionalClasses": ["wb-card--stats"],
-  "baseClass": "wb-card-stats"
+  "additionalClasses": ["x-card--stats"],
+  "baseClass": "x-card-stats"
 }
 ```
 
@@ -344,7 +344,7 @@ Schema changes can break other tests. After schema edits, also run:
 
 5. **Not running schema validation after changes.** ALWAYS run `tests/compliance/schema-validation.spec.ts` after any schema edit.
 
-6. **Using native HTML tags in setup instead of `<wb-*>` tags.** Setup examples like `<progress value="50">` fail validation — use `<wb-progress value="50">`.
+6. **Using native HTML tags in setup instead of `<wb-*>` tags.** Setup examples like `<progress value="50">` fail validation — use `<progress value="50">`.
 
 ---
 

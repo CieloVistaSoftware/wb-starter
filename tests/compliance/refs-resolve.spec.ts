@@ -10,7 +10,7 @@ import { fileURLToPath } from 'url';
  * href="...">` links (.md docs) — every OTHER src/href class already has
  * its own dedicated gate and is intentionally OUT of scope here:
  *   - `<img>`/`<audio>`/`<video>`/`<source>` src: docs-live-media-assets-
- *     exist.spec.ts (docs) and wb-audio-has-resolvable-src.spec.ts (audio
+ *     exist.spec.ts (docs) and x-audio-has-resolvable-src.spec.ts (audio
  *     specifically, demos+pages+docs).
  *   - `<script src>`: es-modules.spec.ts / critical-scripts.spec.ts.
  *   - domain-absolute asset paths: no-absolute-asset-paths.spec.ts,
@@ -219,7 +219,7 @@ test.describe('Links resolve to real files (#refs-render-properly audit)', () =>
           continue;
         }
 
-        // Query strings on a relative path (e.g. "components.html?tab=x")
+        // Query strings on a relative path (e.g. "behaviors.html?tab=x")
         // don't change which FILE it targets -- strip before resolving.
         const pathOnly = pathPart.split('?')[0];
         if (!pathOnly) continue;

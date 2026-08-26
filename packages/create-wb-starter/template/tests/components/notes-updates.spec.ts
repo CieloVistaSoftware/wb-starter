@@ -19,20 +19,20 @@ async function injectNotes(page: Page) {
     if (existing) existing.remove();
     const container = document.createElement('div');
     container.id = 'test-container';
-    container.innerHTML = '<wb-notes></wb-notes>';
+    container.innerHTML = '<div x-notes></div>';
     document.body.appendChild(container);
   });
   await page.evaluate(() => (window as any).WB.scan(document.getElementById('test-container'), { eager: true }));
   await page.waitForTimeout(50);
   await page.evaluate(() => {
-    (document.querySelector('#test-container wb-notes') as any).wbNotes.open();
+    (document.querySelector('#test-container x-notes') as any).wbNotes.open();
   });
 }
 
 test.describe('Notes Behavior Updates', () => {
   test('Notes should show current URL on open', async ({ page }) => {
     await injectNotes(page);
-    const textarea = page.locator('#test-container .wb-notes__textarea');
+    const textarea = page.locator('#test-container .x-notes__textarea');
     await expect(textarea).toBeVisible();
     const value = await textarea.inputValue();
     expect(value).toContain(page.url());
@@ -41,18 +41,18 @@ test.describe('Notes Behavior Updates', () => {
   test('Saving a note should show a success status, and Lookup should find it', async ({ page }) => {
     await injectNotes(page);
 
-    const textarea = page.locator('#test-container .wb-notes__textarea');
+    const textarea = page.locator('#test-container .x-notes__textarea');
     await textarea.fill('Test note content ' + Date.now());
 
     await page.click('#test-container button[data-action="save"]');
-    const status = page.locator('#test-container .wb-notes__status');
+    const status = page.locator('#test-container .x-notes__status');
     await expect(status).toContainText('Saved');
 
     await page.click('#test-container button[data-action="view"]');
     const viewerHeading = page.locator('h3:has-text("Saved Notes")');
     await expect(viewerHeading).toBeVisible();
 
-    const searchInput = page.locator('.wb-notes__lookup-search');
+    const searchInput = page.locator('.x-notes__lookup-search');
     await expect(searchInput).toBeVisible();
     // The heading's own container (viewerContent) holds both the header and
     // the note-list body -- walk up to it rather than relying on a fragile

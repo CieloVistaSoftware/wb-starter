@@ -1,24 +1,25 @@
+import { readAttr } from '../core/read-attr.js';
 /**
  * Hero Behavior
  * -----------------------------------------------------------------------------
  * Enhances hero sections with dynamic background effects like particles 
  * or cosmic orbs.
  * 
- * Custom Tag: <wb-hero>
+ * Custom Tag: <div x-hero>
  * -----------------------------------------------------------------------------
  * 
  * Usage:
- *   <wb-hero  data-variant="particles">...</div>
+ *   <div x-hero  data-variant="particles">...</div>
  */
 
 /**
  * Hero Component
- * Custom Tag: <wb-hero>
+ * Custom Tag: <div x-hero>
  */
 export function hero(element, options = {}) {
   // Merge options and data attributes
   const config = {
-    variant: options.variant || element.dataset.variant || 'default',
+    variant: options.variant || readAttr(element, 'variant') || 'default',
     // Other config is handled by the template engine
   };
 
@@ -27,7 +28,7 @@ export function hero(element, options = {}) {
   // ---------------------------------------------------------
   
   if (config.variant === 'particles') {
-    let stars = element.querySelector('.wb-hero__stars');
+    let stars = element.querySelector('.x-hero__stars');
     
     // Only proceed if the container exists (provided by template or user)
     if (stars) {
@@ -37,7 +38,7 @@ export function hero(element, options = {}) {
             // Create 50 stars
             for (let i = 0; i < 50; i++) {
                 const star = document.createElement('div');
-                star.className = 'wb-hero__star';
+                star.className = 'x-hero__star';
                 star.style.left = `${Math.random() * 100}%`;
                 star.style.top = `${Math.random() * 100}%`;
                 star.style.animationDelay = `${Math.random() * 3}s`;

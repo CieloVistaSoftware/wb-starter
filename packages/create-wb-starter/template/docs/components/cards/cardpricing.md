@@ -6,10 +6,10 @@ Pricing plan card for SaaS/subscription services.
 
 | Property | Value |
 |----------|-------|
-| Custom Tag | `<wb-cardpricing>` |
+| Custom Tag | `<div x-cardpricing>` |
 | Behavior | `cardpricing` |
 | Semantic | `<article>` |
-| Root CSS Class | `wb-card wb-pricing` |
+| Root CSS Class | `x-card x-pricing` |
 | Composes | card structure + CSS (no base class) |
 
 ## Properties
@@ -27,78 +27,78 @@ Supports every [card property](./card.md) — that shared structure and CSS are 
 | `featured` | boolean | `false` | Highlight as featured |
 | `background` | string | `""` | Background image URL |
 
-Wrapped in `<wb-demo>`, so the live component renders below with its source shown underneath:
+Wrapped in `<div x-demo>`, so the live component renders below with its source shown underneath:
 
-<wb-demo>
-<wb-cardpricing
+<div x-demo>
+<div x-cardpricing
   plan="Starter"
   price="$9"
   period="/month"
   features="5 projects, Email support, 1GB storage"
   cta="Start Free Trial">
-</wb-cardpricing>
-</wb-demo>
+</div>
+</div>
 
 ## Usage
 
 ### Basic Pricing Card
 
 ```html
-<wb-cardpricing
+<div x-cardpricing
   plan="Starter"
   price="$9"
   period="/month"
   features="5 projects, Email support, 1GB storage"
   cta="Start Free Trial">
-</wb-cardpricing>
+</div>
 ```
 
 ### Featured Plan
 
 ```html
-<wb-cardpricing
+<div x-cardpricing
   plan="Professional"
   price="$29"
   period="/month"
   features="Unlimited projects, Priority support, 100GB storage, API access"
   cta="Get Started"
   featured>
-</wb-cardpricing>
+</div>
 ```
 
 ### Annual Pricing
 
 ```html
-<wb-cardpricing
+<div x-cardpricing
   plan="Enterprise"
   price="$299"
   period="/year"
   features="Everything in Pro, Custom integrations, Dedicated support, SLA"
   cta="Contact Sales"
   ctaHref="/contact">
-</wb-cardpricing>
+</div>
 ```
 
 ## Generated Structure
 
 ```html
-<article class="wb-card wb-pricing">
-  <header class="wb-card__header">
-    <h3 class="wb-card__title wb-card__plan">Plan Name</h3>
+<article class="x-card x-pricing">
+  <header class="x-card__header">
+    <h3 class="x-card__title x-card__plan">Plan Name</h3>
   </header>
-  <main class="wb-card__main">
-    <div class="wb-card__price-wrap">
-      <span class="wb-card__amount">$29</span>
-      <span class="wb-card__period">/month</span>
+  <main class="x-card__main">
+    <div class="x-card__price-wrap">
+      <span class="x-card__amount">$29</span>
+      <span class="x-card__period">/month</span>
     </div>
-    <ul class="wb-card__features">
-      <li class="wb-card__feature">✓ Feature 1</li>
-      <li class="wb-card__feature">✓ Feature 2</li>
+    <ul class="x-card__features">
+      <li class="x-card__feature">✓ Feature 1</li>
+      <li class="x-card__feature">✓ Feature 2</li>
     </ul>
   </main>
-  <footer class="wb-card__footer">
+  <footer class="x-card__footer">
     <a
-      class="wb-card__cta"
+      class="x-card__cta"
       href="#">
       Get Started
     </a>

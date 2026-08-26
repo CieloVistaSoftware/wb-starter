@@ -1,20 +1,20 @@
 /**
  * Release Behavior Styles
- * <wb-release>/[x-release] — the release/build number, wherever it's shown.
+ * <div x-release>/[x-release] — the release/build number, wherever it's shown.
  */
 
-.wb-release {
+.x-release {
   font-size: 0.7em;
   font-weight: 500;
   color: var(--text-muted);
 }
 
-.wb-release--clickable {
+.x-release--clickable {
   text-decoration: none;
   cursor: pointer;
 }
 
-.wb-release--clickable:hover {
+.x-release--clickable:hover {
   color: var(--primary);
   text-decoration: underline;
 }

@@ -4,13 +4,13 @@
   "title": "Portfolio Card",
   "description": "Full-featured professional portfolio card with skills, experience, projects, and more",
   "schemaFor": "cardportfolio",
-  "baseClass": "wb-portfolio",
+  "baseClass": "x-portfolio",
   "semanticElement": {
     "tagName": "article",
     "implicitRole": "article"
   },
   "compliance": {
-    "baseClass": "wb-portfolio",
+    "baseClass": "x-portfolio",
     "supportLevel": "stable",
     "accessibility": "high"
   },
@@ -161,7 +161,7 @@
         "full"
       ],
       "default": "default",
-      "appliesClass": "wb-portfolio--{{value}}"
+      "appliesClass": "x-portfolio--{{value}}"
     },
     "size": {
       "type": "string",
@@ -295,36 +295,36 @@
     }
   },
   "$cssAPI": {
-    "--wb-portfolio-radius": {
+    "--x-portfolio-radius": {
       "default": "12px",
       "description": "Card border radius"
     },
-    "--wb-portfolio-bg": {
+    "--x-portfolio-bg": {
       "default": "var(--bg-secondary)",
       "description": "Card background"
     },
-    "--wb-portfolio-cover-height": {
+    "--x-portfolio-cover-height": {
       "default": "150px",
       "description": "Cover image height"
     },
-    "--wb-portfolio-avatar-size": {
+    "--x-portfolio-avatar-size": {
       "default": "120px",
       "description": "Avatar size"
     },
-    "--wb-portfolio-avatar-border": {
+    "--x-portfolio-avatar-border": {
       "default": "4px solid var(--bg-secondary)",
       "description": "Avatar border"
     },
-    "--wb-portfolio-section-gap": {
+    "--x-portfolio-section-gap": {
       "default": "1.5rem",
       "description": "Gap between sections"
     }
   },
   "test": {
     "setup": [
-      "<wb-cardportfolio name=\"John Doe\"></wb-cardportfolio>",
-      "<wb-cardportfolio name=\"Jane Smith\" title=\"Designer\" skills=\"UI/UX,Figma,CSS\"></wb-cardportfolio>",
-      "<wb-cardportfolio name=\"Dev\" variant=\"full\" experience='[{\"company\":\"ACME\",\"role\":\"Engineer\"}]'></wb-cardportfolio>"
+      "<div x-cardportfolio name=\"John Doe\"></div>",
+      "<div x-cardportfolio name=\"Jane Smith\" title=\"Designer\" skills=\"UI/UX,Figma,CSS\"></div>",
+      "<div x-cardportfolio name=\"Dev\" variant=\"full\" experience='[{\"company\":\"ACME\",\"role\":\"Engineer\"}]'></div>"
     ],
     "matrix": {
       "combinations": [
@@ -364,9 +364,9 @@
     },
     "site": {
       "page": "cards",
-      "tag": "wb-cardportfolio",
+      "tag": "x-cardportfolio",
       "renders": true,
-      "baseClass": "wb-portfolio",
+      "baseClass": "x-portfolio",
       "minInstances": 4,
       "checkText": [
         "UX Designer",
@@ -377,7 +377,7 @@
         "Product Manager"
       ],
       "checkClasses": [
-        "wb-portfolio--compact"
+        "x-portfolio--compact"
       ],
       "checkAttributes": [
         "name",

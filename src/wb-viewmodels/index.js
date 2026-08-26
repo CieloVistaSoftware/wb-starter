@@ -7,8 +7,8 @@
  * @version 2.1.1 (2025-12-21) - Fixed semantic module paths
  */
 
-// Debug logging — silent unless localStorage['wb-debug'] === '1'.
-const WB_DEBUG = (() => { try { return localStorage.getItem('wb-debug') === '1'; } catch (e) { return false; } })();
+// Debug logging — silent unless localStorage['x-debug'] === '1'.
+const WB_DEBUG = (() => { try { return localStorage.getItem('x-debug') === '1'; } catch (e) { return false; } })();
 const _wbClog = console.log.bind(console);
 const dlog = (...args) => { if (WB_DEBUG) _wbClog(...args); };
 
@@ -34,12 +34,12 @@ const moduleImportRetries = 2;
  */
 const exportAliases = {
   switch: 'switchInput',
-  image: 'img',
+  img: 'img',
   figure: 'figure',
   ratio: 'ratio',
   'drawer-layout': 'drawerLayout',
   'sidebar-layout': 'sidebarlayout',
-  // <wb-search> is a container tag, not an input — searchField() (search.js)
+  // <div x-searchfield> is a container tag, not an input — searchField() (search.js)
   // wraps/creates the child <input> and delegates to search(). See #279.
   searchfield: 'searchField',
   // x-copybutton (#291) — copy.js exports the function as `copyButton`
@@ -59,6 +59,14 @@ const behaviorModules = {
   hero: 'hero',
   
   // Cards (19) → card.js
+  //
+  // `article` is deliberately NOT in this list. It used to be, re-declared as
+  // `article: 'card'` AFTER `article: 'article'` above — and the later key in
+  // an object literal wins, so x-article loaded card.js, which exports no
+  // `article` function at all. The behavior silently never ran. That is why
+  // article's own attributes (author, date, category, image, image-alt,
+  // reading-time, featured) all measured as "declared but ignored" in #861.
+  // One behavior, one mapping (#880).
   card: 'card', cardimage: 'card', cardvideo: 'card', cardbutton: 'card',
   cardhero: 'card', cardprofile: 'card', cardpricing: 'card', cardstats: 'card',
   cardtestimonial: 'card', cardproduct: 'card', cardnotification: 'card',
@@ -68,9 +76,9 @@ const behaviorModules = {
   // Fix Card (#365) → fix-card.js. Own file, not part of card.js's
   // family -- a hand-rolled WBCard subclass that self-registers via
   // customElements.define(). Was never wired into this lazy-load registry
-  // (nor tag-map.js's elementMap), so <wb-fix-card> never upgraded to the
+  // (nor tag-map.js's elementMap), so <div x-fix-card> never upgraded to the
   // real class and .data= silently did nothing. This entry + the matching
-  // 'wb-fix-card' elementMap entry (tag-map.js) makes WB.scan() actually
+  // '[x-fix-card]' elementMap entry (tag-map.js) makes WB.scan() actually
   // import fix-card.js on first encounter, which is what runs the
   // customElements.define() side effect.
   'fix-card': 'fix-card',
@@ -122,7 +130,7 @@ const behaviorModules = {
   diff: 'semantics/diff',
   
   // Media — each in its own semantics/*.js file (media.js grab-bag retired)
-  image: 'semantics/img', gallery: 'semantics/gallery', video: 'semantics/video',
+  img: 'semantics/img', gallery: 'semantics/gallery', video: 'semantics/video',
   audio: 'semantics/audio', youtube: 'semantics/youtube', vimeo: 'semantics/vimeo',
   figure: 'semantics/figure', ratio: 'semantics/ratio',
   // embed/carousel deliberately NOT carried over — media.js never had a real
@@ -203,15 +211,20 @@ const behaviorModules = {
   // Utility → helpers.js + standalone
   stagelight: 'stagelight',
   span: 'span',
-  control: 'wb-control',
-  repeater: 'wb-repeater',
+  // These two are the only behaviors whose module file is x-prefixed. The
+  // values carried literal square brackets, so loadModule()'s
+  // `./${moduleName}.js` asked for "./[x-control].js" -- a path that cannot
+  // exist. Both behaviors failed every load, and the module-failure cooldown
+  // re-armed forever, so each retry was a fresh 404 (#882).
+  control: 'x-control',
+  repeater: 'x-repeater',
   copy: 'copy',
   // x-copybutton (#291) — overlays a positioned copy button on ANY element;
   // reuses copy.js's core clipboard-write logic (writeToClipboard()).
   copybutton: 'copy',
-  // #344: 'move' itself (the <wb-move>/[x-move] container entry point) was
+  // #344: 'move' itself (the <div x-move>/[x-move] container entry point) was
   // missing here entirely -- tag-map.js's elementMap/extensionMap already
-  // mapped 'wb-move'/'x-move' to behavior name 'move', but with no key in
+  // mapped '[x-move]'/'x-move' to behavior name 'move', but with no key in
   // this table, getBehavior('move') threw "Unknown behavior: move" the
   // moment anything actually used the tag/attribute.
   move: 'move', moveup: 'move', movedown: 'move', moveleft: 'move', moveright: 'move', moveall: 'move',
@@ -270,7 +283,7 @@ async function loadModule(moduleName) {
         // attempt counter) keeps the URL unique across separate post-cooldown
         // retries too, so it can't collide with a query string the browser
         // already has cached as failed.
-        if (attempt > 0 || priorFailure) attemptUrl.searchParams.set('wb-retry', String(Date.now()));
+        if (attempt > 0 || priorFailure) attemptUrl.searchParams.set('x-retry', String(Date.now()));
         return await import(attemptUrl.href);
       } catch (error) {
         lastError = error;

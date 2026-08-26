@@ -285,7 +285,17 @@ app.get('/pages/:page', (req, res, next) => {
       // this wrap (matching how themes.css/site.css above are already
       // loaded absolute) -- the source file on disk stays root-relative,
       // correct for its real production consumer.
-      const RESOURCE_REF = /(<(?:link|script|img|source|audio|video)\b[^>]*?\b(?:href|src)\s*=\s*")([^"]+)(")/gi;
+      //
+      // #542: the original #486 fix only listed native tag names, so
+      // <audio src="demos/sample.wav"> (pages/home.html) never matched --
+      // <audio isn't <audio -- and stayed unrewritten, 404ing under this
+      // standalone wrap (confirmed by dark-mode.spec.ts, which navigates
+      // directly here) while working fine via the real SPA-injection
+      // consumer. Added a generic wb-[a-z0-9-]+ alternative so every
+      // src/href-bearing <wb-*> component (x-audio, x-avatar, x-cardimage,
+      // x-cardvideo today, any future one) is covered, not just today's
+      // known offenders.
+      const RESOURCE_REF = /(<(?:link|script|img|source|audio|video|wb-[a-z0-9-]+)\b[^>]*?\b(?:href|src)\s*=\s*")([^"]+)(")/gi;
       const rewritten = content.replace(RESOURCE_REF, (full, pre, ref, post) => {
         if (/^(https?:|data:|mailto:|#|\/)/i.test(ref) || ref.startsWith('//')) return full;
         return pre + '/' + ref + post;
@@ -371,7 +381,7 @@ app.use((req, res, next) => {
     // The server never formats markdown itself — mdhtml (the doc-viewer) does all
     // of it. A DIRECT browser navigation to /docs/x.md (Sec-Fetch-Dest: document)
     // is redirected to the doc-viewer, which renders it themed, highlighted,
-    // path-linked, with live <wb-demo>s. Everything else (the doc-viewer's
+    // path-linked, with live <div x-demo>s. Everything else (the doc-viewer's
     // fetch(), tooling, curl) gets the RAW MARKDOWN. Server-side pre-rendering
     // caused a double-parse — mdhtml re-rendered the HTML and collapsed multi-line
     // code blocks (the V3-GUIDE quick-start bug).
@@ -454,6 +464,34 @@ app.post('/api/markdown', express.text({ type: '*/*' }), (req, res) => {
   }
 });
 
+// ============================================
+// UPLOAD API - POST /api/upload  (#676)
+// ============================================
+// John, on the Behaviors showcase: "doesn't upload...". The demo was a file
+// PICKER wearing an upload label -- nothing in the codebase could send a file
+// anywhere. This gives it a real round trip to complete.
+//
+// Deliberately accept-and-report, never persist: a component showcase has no
+// business writing a reader's files into the repo, and a discarded upload
+// still exercises the whole path (pick -> POST -> progress -> response).
+// express.raw() so the bytes arrive untouched and the reported size is the
+// real one, not a re-encoded approximation.
+app.post('/api/upload', express.raw({ type: '*/*', limit: '25mb' }), (req, res) => {
+  const bytes = Buffer.isBuffer(req.body) ? req.body.length : 0;
+  if (!bytes) {
+    return res.status(400).json({ ok: false, error: 'No file content received.' });
+  }
+  res.json({
+    ok: true,
+    name: req.get('X-File-Name') || 'upload',
+    type: req.get('Content-Type') || 'application/octet-stream',
+    bytes,
+    // Stated plainly so nobody mistakes this for storage.
+    stored: false,
+    note: 'Received and discarded — the showcase does not persist uploads.'
+  });
+});
+
 app.use(express.static(rootDir, cacheConfig));
 app.use(express.json({ limit: '10mb' }));
 app.use(express.text({ limit: '10mb' }));
@@ -493,6 +531,32 @@ app.get('/doc-viewer.html', (req, res) => {
   res.sendFile('doc-viewer.html', { root: path.join(rootDir, 'public') });
 });
 
+// Demo form endpoint (#751). The form/ajax showcase example had no `action`,
+// so it POSTed to the current page -- a static host -- and the reader saw
+// nothing happen while the success path in form.js sat unreachable.
+//
+// This ACCEPTS AND DISCARDS. It deliberately sends no mail: the demo lets a
+// reader type any address, and a public endpoint that emails an
+// arbitrary user-supplied recipient is an open relay -- it would be abused to
+// send mail to third parties from this domain, and the domain would be
+// blocklisted for it. Real delivery needs a rate-limited backend that sends a
+// FIXED verification message, with its API key in an env var; see #751.
+//
+// Static hosting (GitHub Pages) cannot serve this route, so the client treats
+// a non-JSON response as demo-mode success -- the round trip is still proven
+// by the success message and the wb:form:success event.
+app.post('/api/demo-form', (req, res) => {
+  // form.js submits a FormData body (multipart), which express does not parse
+  // without extra middleware -- and this endpoint does not need to read it.
+  // It exists to give the demo a destination that answers, so the success
+  // message and the wb:form:success event actually fire.
+  res.json({
+    ok: true,
+    sent: false,
+    message: 'Received by the demo endpoint. Nothing was stored and no mail was sent.'
+  });
+});
+
 // API Endpoint to log content issues
 app.post("/api/log-issues", (req, res) => {
   const payload = req.body;
@@ -529,7 +593,7 @@ app.post("/api/log-issues", (req, res) => {
 app.post("/clicked", (req, res) => {
   setTimeout(() => {
     res.send(`
-      <button class="wb-btn-gradient" data-tooltip="I was fetched from the server!" style="background: linear-gradient(135deg, #10b981 0%, #059669 100%);">
+      <button class="x-btn-gradient" data-tooltip="I was fetched from the server!" style="background: linear-gradient(135deg, #10b981 0%, #059669 100%);">
         ✓ Swapped!
       </button>
     `);
@@ -887,7 +951,7 @@ app.use((req, res, next) => {
   // omitted .md -- a nonexistent docs/*.md path (e.g. an illustrative example
   // path in documentation) fell through to this same `res.sendFile(index.html)`
   // below, returning a 200 whose body was the FULL site shell HTML instead of
-  // a 404. wb-mdhtml (src/wb-viewmodels/mdhtml.js) only checks `response.ok`
+  // a 404. x-mdhtml (src/wb-viewmodels/mdhtml.js) only checks `response.ok`
   // before treating the body as markdown -- it rendered that entire HTML
   // document as content, and the browser then parsed and fetched every
   // embedded <link>/<script> tag (normalize.css, themes.css, site.css,

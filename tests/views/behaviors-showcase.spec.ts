@@ -79,16 +79,16 @@ test.describe('Buttons Section', () => {
 
   test('button variants render (primary, secondary, ghost, disabled)', async ({ page }) => {
     const section = page.locator('#buttons');
-    await expect(section.locator('.wb-btn--primary').first()).toBeVisible();
-    await expect(section.locator('.wb-btn--secondary').first()).toBeVisible();
-    await expect(section.locator('.wb-btn--ghost').first()).toBeVisible();
+    await expect(section.locator('.x-btn--primary').first()).toBeVisible();
+    await expect(section.locator('.x-btn--secondary').first()).toBeVisible();
+    await expect(section.locator('.x-btn--ghost').first()).toBeVisible();
     await expect(section.locator('button[disabled]').first()).toBeVisible();
   });
 
   test('button sizes render (sm, md, lg)', async ({ page }) => {
     const section = page.locator('#buttons');
-    await expect(section.locator('.wb-btn--sm').first()).toBeVisible();
-    await expect(section.locator('.wb-btn--lg').first()).toBeVisible();
+    await expect(section.locator('.x-btn--sm').first()).toBeVisible();
+    await expect(section.locator('.x-btn--lg').first()).toBeVisible();
   });
 
   test('ripple button has x-ripple attribute', async ({ page }) => {
@@ -110,7 +110,7 @@ test.describe('Buttons Section', () => {
 
   test('buttons section has code examples', async ({ page }) => {
     const section = page.locator('#buttons');
-    const codeBlocks = section.locator('wb-mdhtml');
+    const codeBlocks = section.locator('[x-mdhtml]');
     expect(await codeBlocks.count()).toBeGreaterThanOrEqual(3);
   });
 });
@@ -157,7 +157,7 @@ test.describe('Inputs Section', () => {
 
   test('inputs section has code examples', async ({ page }) => {
     const section = page.locator('#inputs');
-    const codeBlocks = section.locator('wb-mdhtml');
+    const codeBlocks = section.locator('[x-mdhtml]');
     expect(await codeBlocks.count()).toBeGreaterThanOrEqual(4);
   });
 });
@@ -209,7 +209,7 @@ test.describe('Selection Section', () => {
 
   test('selection section has code examples', async ({ page }) => {
     const section = page.locator('#selection');
-    const codeBlocks = section.locator('wb-mdhtml');
+    const codeBlocks = section.locator('[x-mdhtml]');
     expect(await codeBlocks.count()).toBeGreaterThanOrEqual(5);
   });
 });
@@ -245,12 +245,12 @@ test.describe('Feedback Section', () => {
     for (let i = 0; i < count; i++) {
       const alert = alerts.nth(i);
       // Check for title element
-      const title = alert.locator('.wb-alert__title, strong');
+      const title = alert.locator('.x-alert__title, strong');
       const titleCount = await title.count();
       expect(titleCount, `Alert ${i} should have title`).toBeGreaterThanOrEqual(1);
       
       // Check for message element
-      const message = alert.locator('.wb-alert__message, p');
+      const message = alert.locator('.x-alert__message, p');
       const messageCount = await message.count();
       expect(messageCount, `Alert ${i} should have message`).toBeGreaterThanOrEqual(1);
     }
@@ -279,7 +279,7 @@ test.describe('Feedback Section', () => {
       await expect(progress, `Progress bar ${i} should be visible`).toBeVisible();
       
       // Check progress bar has internal bar element
-      const bar = progress.locator('.wb-progress__bar, div');
+      const bar = progress.locator('.x-progress__bar, div');
       const barCount = await bar.count();
       expect(barCount, `Progress bar ${i} should have fill element`).toBeGreaterThanOrEqual(1);
       
@@ -300,7 +300,7 @@ test.describe('Feedback Section', () => {
     const spinner = spinners.first();
     await expect(spinner).toBeVisible();
     
-    const ring = spinner.locator('.wb-spinner__ring, div').first();
+    const ring = spinner.locator('.x-spinner__ring, div').first();
     const animation = await ring.evaluate(el => {
       return window.getComputedStyle(el).animation;
     });
@@ -324,7 +324,7 @@ test.describe('Feedback Section', () => {
 
   test('feedback section has code examples', async ({ page }) => {
     const section = page.locator('#feedback');
-    const codeBlocks = section.locator('wb-mdhtml');
+    const codeBlocks = section.locator('[x-mdhtml]');
     expect(await codeBlocks.count()).toBeGreaterThanOrEqual(4);
   });
 });
@@ -376,7 +376,7 @@ test.describe('Overlays Section', () => {
 
   test('overlays section has code examples', async ({ page }) => {
     const section = page.locator('#overlays');
-    const codeBlocks = section.locator('wb-mdhtml');
+    const codeBlocks = section.locator('[x-mdhtml]');
     expect(await codeBlocks.count()).toBeGreaterThanOrEqual(5);
   });
 });
@@ -396,23 +396,23 @@ test.describe('Navigation Section', () => {
     await expect(tabs).toBeVisible();
     
     // Should have tab panels. tabs.js hydrates each [tab-title] child into a
-    // rendered `.wb-tabs__panel` section and discards the original attribute
+    // rendered `.x-tabs__panel` section and discards the original attribute
     // (see src/wb-viewmodels/tabs.js), so the post-hydration DOM must be
     // queried by the rendered class, not the pre-hydration attribute.
-    const panels = tabs.locator('.wb-tabs__panel');
+    const panels = tabs.locator('.x-tabs__panel');
     expect(await panels.count()).toBeGreaterThanOrEqual(2);
   });
 
   test('accordion component renders with sections', async ({ page }) => {
-    const accordion = page.locator('#navigation wb-accordion').first();
+    const accordion = page.locator('#navigation [x-accordion]').first();
     await expect(accordion).toBeVisible();
     
     // Should have accordion items. collapse.js's accordion() hydrates each
-    // [accordion-title] child into a rendered `.wb-accordion-item` and
+    // [accordion-title] child into a rendered `.x-accordion-item` and
     // discards the original attribute (see src/wb-viewmodels/collapse.js),
     // so the post-hydration DOM must be queried by the rendered class, not
     // the pre-hydration attribute.
-    const items = accordion.locator('.wb-accordion-item');
+    const items = accordion.locator('.x-accordion-item');
     expect(await items.count()).toBeGreaterThanOrEqual(2);
   });
 
@@ -433,7 +433,7 @@ test.describe('Navigation Section', () => {
 
   test('navigation section has code examples', async ({ page }) => {
     const section = page.locator('#navigation');
-    const codeBlocks = section.locator('wb-mdhtml');
+    const codeBlocks = section.locator('[x-mdhtml]');
     expect(await codeBlocks.count()).toBeGreaterThanOrEqual(4);
   });
 });
@@ -449,12 +449,12 @@ test.describe('Data Section', () => {
   });
 
   test('avatars render', async ({ page }) => {
-    const avatars = page.locator('#data wb-avatar');
+    const avatars = page.locator('#data [x-avatar]');
     expect(await avatars.count()).toBeGreaterThanOrEqual(4);
   });
 
   test('skeleton loaders render', async ({ page }) => {
-    const skeletons = page.locator('#data wb-skeleton');
+    const skeletons = page.locator('#data [x-skeleton]');
     expect(await skeletons.count()).toBeGreaterThanOrEqual(3);
   });
 
@@ -470,7 +470,7 @@ test.describe('Data Section', () => {
 
   test('data section has code examples', async ({ page }) => {
     const section = page.locator('#data');
-    const codeBlocks = section.locator('wb-mdhtml');
+    const codeBlocks = section.locator('[x-mdhtml]');
     expect(await codeBlocks.count()).toBeGreaterThanOrEqual(3);
   });
 });
@@ -510,7 +510,7 @@ test.describe('Media Section', () => {
 
   test('media section has code examples', async ({ page }) => {
     const section = page.locator('#media');
-    const codeBlocks = section.locator('wb-mdhtml');
+    const codeBlocks = section.locator('[x-mdhtml]');
     expect(await codeBlocks.count()).toBeGreaterThanOrEqual(3);
   });
 });
@@ -556,7 +556,7 @@ test.describe('Effects Section', () => {
 
   test('effects section has code examples', async ({ page }) => {
     const section = page.locator('#effects');
-    const codeBlocks = section.locator('wb-mdhtml');
+    const codeBlocks = section.locator('[x-mdhtml]');
     expect(await codeBlocks.count()).toBeGreaterThanOrEqual(3);
   });
 });
@@ -613,13 +613,13 @@ test.describe('Utilities Section', () => {
 
   test('utilities section has code examples', async ({ page }) => {
     const section = page.locator('#utilities');
-    const codeBlocks = section.locator('wb-mdhtml');
+    const codeBlocks = section.locator('[x-mdhtml]');
     expect(await codeBlocks.count()).toBeGreaterThanOrEqual(4);
   });
 });
 
 // ═══════════════════════════════════════════════════════════════════════════
-// CODE EXAMPLES (wb-mdhtml)
+// CODE EXAMPLES (x-mdhtml)
 // ═══════════════════════════════════════════════════════════════════════════
 
 test.describe('Code Examples', () => {
@@ -633,14 +633,14 @@ test.describe('Code Examples', () => {
     
     for (const sectionId of sections) {
       const section = page.locator(`#${sectionId}`);
-      const codeBlocks = section.locator('wb-mdhtml');
+      const codeBlocks = section.locator('[x-mdhtml]');
       const count = await codeBlocks.count();
       expect(count, `Section #${sectionId} should have at least 3 code examples`).toBeGreaterThanOrEqual(3);
     }
   });
 
   test('code examples render with syntax highlighting or code content', async ({ page }) => {
-    const codeBlocks = page.locator('wb-mdhtml');
+    const codeBlocks = page.locator('[x-mdhtml]');
     const count = await codeBlocks.count();
     expect(count).toBeGreaterThan(0);
     
@@ -690,7 +690,7 @@ test.describe('Interactive Behaviors', () => {
     // Wait for toast to appear
     await page.waitForTimeout(500);
     
-    const toast = page.locator('.wb-toast-container div, .wb-toast');
+    const toast = page.locator('.x-toast-container div, .x-toast');
     expect(await toast.count()).toBeGreaterThan(0);
   });
 });

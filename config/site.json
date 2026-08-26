@@ -8,26 +8,18 @@
     "autoInjectComponents": true,
     "adminEditMode": true
   },
-
   "headerSettings": {
     "displayHeaderLogo": true,
     "displayThemeSwitcher": true,
     "displaySearchBar": false,
     "keepHeaderAtTop": true
   },
-
   "navigationMenu": [
     {
       "menuItemId": "home",
       "menuItemText": "Home",
       "menuItemEmoji": "🏠",
       "pageToLoad": "home"
-    },
-    {
-      "menuItemId": "components",
-      "menuItemText": "Components",
-      "menuItemEmoji": "🧩",
-      "pageToLoad": "components"
     },
     {
       "menuItemId": "behaviors",
@@ -84,19 +76,16 @@
       "href": "errors-viewer.html"
     }
   ],
-
   "navigationLayout": {
     "navigationPosition": "left",
     "navigationWidth": "fit-content",
     "navigationCanCollapse": true,
     "navigationStartCollapsed": false
   },
-
   "footerSettings": {
     "footerCopyrightText": "© 2025 Cielo Vista Software",
     "displaySocialMediaLinks": true
   },
-
   "socialMediaLinks": [
     {
       "platform": "GitHub",
@@ -114,7 +103,6 @@
       "profileUrl": "https://linkedin.com"
     }
   ],
-
   "additionalFooterLinks": [
     {
       "linkText": "Privacy Policy",
@@ -125,21 +113,18 @@
       "pageToLoad": "terms"
     }
   ],
-
   "companyInfo": {
     "businessName": "Cielo Vista Software",
     "businessTagline": "Zero-build web components",
     "businessDescription": "Cielo Vista Software builds wb-starter, a zero-build, schema-first web-component framework. Compose UIs from wb-* tags and x-* behaviors in plain HTML — no bundler, no build step, no lock-in.",
     "valueProposition": "Zero build, composition over inheritance, Light DOM, schema-first, fully themeable"
   },
-
   "contactInfo": {
     "businessEmail": "hello@acmeco.com",
     "phoneNumber": "+1 (234) 567-890",
     "businessAddress": "123 Business Street, Suite 100, City, State 12345",
     "businessHours": "Monday - Friday: 9am - 6pm EST"
   },
-
   "servicesList": [
     {
       "serviceIcon": "🎨",
@@ -162,7 +147,6 @@
       "serviceDescription": "Comprehensive support and maintenance to keep your platform running smoothly."
     }
   ],
-
   "teamMembers": [
     {
       "memberAvatar": "👩‍💼",
@@ -177,7 +161,6 @@
       "memberBio": "Full-stack expert and architecture wizard building tomorrow's solutions."
     }
   ],
-
   "customerTestimonials": [
     {
       "testimonialQuote": "Working with this team has been a game-changer for our business. Highly professional and results-driven.",
@@ -190,7 +173,6 @@
       "authorCompany": "Director, Digital First Co"
     }
   ],
-
   "frequentlyAskedQuestions": [
     {
       "questionText": "What is your pricing?",
@@ -205,10 +187,15 @@
       "answerText": "Yes! We provide 24/7 support to all our clients. Your success is our success, and we're here to help whenever you need us."
     }
   ],
-
   "searchEngineOptimization": {
     "pageTitle": "wb-starter v3.0 - Zero Build Web Components",
     "pageDescription": "170+ behaviors, 50 themes, zero build process. The professional web component library.",
-    "seoKeywords": ["web components", "framework", "behaviors", "themes", "no-build"]
+    "seoKeywords": [
+      "web components",
+      "framework",
+      "behaviors",
+      "themes",
+      "no-build"
+    ]
   }
 }

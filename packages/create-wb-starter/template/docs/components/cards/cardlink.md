@@ -6,10 +6,10 @@ Clickable navigation link card.
 
 | Property | Value |
 |----------|-------|
-| Custom Tag | `<wb-cardlink>` |
+| Custom Tag | `<div x-cardlink>` |
 | Behavior | `cardlink` |
 | Semantic | `<article>` with `role="link"` |
-| Root CSS Class | `wb-card wb-card-link` |
+| Root CSS Class | `x-card x-card-link` |
 | Composes | card structure + CSS (no base class) |
 
 ## Properties
@@ -25,50 +25,50 @@ Supports every [card property](./card.md) — that shared structure and CSS are 
 | `badge` | string | `""` | Badge text |
 | `badgeVariant` | string | `"glass"` | Badge style: `glass`, `gradient` |
 
-Wrapped in `<wb-demo>`, so the live component renders below with its source shown underneath:
+Wrapped in `<div x-demo>`, so the live component renders below with its source shown underneath:
 
-<wb-demo>
-<wb-cardlink
+<div x-demo>
+<div x-cardlink
   title="Documentation"
   href="/docs"
   icon="📚">
-</wb-cardlink>
-</wb-demo>
+</div>
+</div>
 
 ## Usage
 
 ### Basic Link Card
 
 ```html
-<wb-cardlink
+<div x-cardlink
   title="Documentation"
   href="/docs"
   icon="📚">
-</wb-cardlink>
+</div>
 ```
 
 ### External Link
 
 ```html
-<wb-cardlink
+<div x-cardlink
   title="GitHub"
   description="View source code"
   href="https://github.com/example"
   target="_blank"
   icon="🐙">
-</wb-cardlink>
+</div>
 ```
 
 ### With Badge
 
 ```html
-<wb-cardlink
+<div x-cardlink
   title="New Feature"
   description="Check out our latest update"
   href="/features"
   badge="New"
   badgeVariant="gradient">
-</wb-cardlink>
+</div>
 ```
 
 ## External Link Indicator

@@ -1,0 +1,464 @@
+tests\behaviors\accordion-render.spec.ts › three sibling accordions, each with its distinct answer (not the title)
+tests\behaviors\accordion.spec.ts › Accordion — disclosure behavior › clicking the head expands, clicking again collapses
+tests\behaviors\accordion.spec.ts › Accordion — disclosure behavior › keyboard: Enter on a focused head toggles it
+tests\behaviors\accordion.spec.ts › Accordion — disclosure behavior › renders the title as a clickable head and a hidden body
+tests\behaviors\alert-dismiss-button.spec.ts › dismissible alert close button removes the alert on click, on a fresh page load
+tests\behaviors\autoinject.spec.ts › Auto-Inject Demo › Form Elements › Article is auto-injected as a card (wb-card class)
+tests\behaviors\autoinject.spec.ts › Auto-Inject Demo › Form Elements › Checkbox is auto-injected and styled in place (no wrapper)
+tests\behaviors\autoinject.spec.ts › Auto-Inject Demo › Form Elements › Select is auto-injected and exposes a real wbSelect API (no wrapper class)
+tests\behaviors\autoinject.spec.ts › Auto-Inject Demo › Page status indicates initialization
+tests\behaviors\badge.spec.ts › Badge — Basic Rendering › wb-badge renders as inline-level display
+tests\behaviors\badge.spec.ts › Badge — CSS Properties › badge text color is white by default
+tests\behaviors\badge.spec.ts › Badge — Edge Cases › badge next to heading renders inline
+tests\behaviors\behaviors-audit.spec.ts › Behaviors page — STRICT audit (dark theme) › AUDIT: switches actually toggle state on click
+tests\behaviors\behaviors-browse-navigation.spec.ts › #711 — the example is centred in the stage › an inline example sits with equal space above and below
+tests\behaviors\behaviors-browse-navigation.spec.ts › #720 — the stage can go fullscreen and come back unchanged › a fullscreen round trip leaves the stage exactly where it was
+tests\behaviors\behaviors-browse-navigation.spec.ts › #720 — the stage can go fullscreen and come back unchanged › the control is wired to the STAGE, not the page
+tests\behaviors\behaviors-page-full.spec.ts › Behaviors page — full coverage › accordion: clicking a header expands/collapses
+tests\behaviors\behaviors-page-full.spec.ts › Behaviors page — full coverage › alerts: 4 variants render distinct backgrounds
+tests\behaviors\behaviors-page-full.spec.ts › Behaviors page — full coverage › avatars: render an image or initials
+tests\behaviors\behaviors-page-full.spec.ts › Behaviors page — full coverage › badges: variants render distinct backgrounds
+tests\behaviors\behaviors-page-full.spec.ts › Behaviors page — full coverage › buttons: variants render distinct backgrounds
+tests\behaviors\behaviors-page-full.spec.ts › Behaviors page — full coverage › code blocks: highlighted like an editor
+tests\behaviors\behaviors-page-full.spec.ts › Behaviors page — full coverage › modal: a trigger opens it and it can close
+tests\behaviors\behaviors-page-full.spec.ts › Behaviors page — full coverage › notifications: render with content
+tests\behaviors\behaviors-page-full.spec.ts › Behaviors page — full coverage › page structure: all expected sections present
+tests\behaviors\behaviors-page-full.spec.ts › Behaviors page — full coverage › progress: bar fill width reflects value
+tests\behaviors\behaviors-page-full.spec.ts › Behaviors page — full coverage › rating: custom icon honored + value painted
+tests\behaviors\behaviors-page-full.spec.ts › Behaviors page — full coverage › skeletons: render with shimmer animation
+tests\behaviors\behaviors-page-full.spec.ts › Behaviors page — full coverage › spinners: visible and animated
+tests\behaviors\behaviors-page-full.spec.ts › Behaviors page — full coverage › switches: render as toggles and flip on click
+tests\behaviors\behaviors-page-full.spec.ts › Behaviors page — full coverage › tabs: clicking a tab switches the active panel
+tests\behaviors\behaviors-page.spec.ts › Behaviors page — Data & Selection › avatars render content
+tests\behaviors\behaviors-page.spec.ts › Behaviors page — Data & Selection › rating upgrades
+tests\behaviors\behaviors-page.spec.ts › Behaviors page — Data & Selection › switch toggles upgrade
+tests\behaviors\behaviors-page.spec.ts › Behaviors page — Feedback › alerts upgrade with role=alert
+tests\behaviors\behaviors-page.spec.ts › Behaviors page — Feedback › badges upgrade
+tests\behaviors\behaviors-page.spec.ts › Behaviors page — Feedback › progress bars render a fill child
+tests\behaviors\behaviors-page.spec.ts › Behaviors page — Feedback › skeletons render
+tests\behaviors\behaviors-page.spec.ts › Behaviors page — Feedback › spinners animate
+tests\behaviors\behaviors-page.spec.ts › Behaviors page — Feedback › toast fires with the correct type
+tests\behaviors\behaviors-page.spec.ts › Behaviors page — Navigation › accordion upgrades (correct tag)
+tests\behaviors\behaviors-page.spec.ts › Behaviors page — Navigation › breadcrumb renders items
+tests\behaviors\behaviors-page.spec.ts › Behaviors page — Navigation › steps wizard renders items
+tests\behaviors\behaviors-page.spec.ts › Behaviors page — Navigation › tabs show real labels (not "Tab 1")
+tests\behaviors\behaviors-page.spec.ts › Behaviors page — health › loads with no page/console errors
+tests\behaviors\behaviors-page.spec.ts › Behaviors page — health › no behavior throws (no [x-error] elements)
+tests\behaviors\behaviors-showcase-visual.spec.ts › Behaviors Showcase Visual Tests › Code Examples › code example HTML should be parseable
+tests\behaviors\behaviors-showcase-visual.spec.ts › Behaviors Showcase Visual Tests › Dropdown › dropdown should create a menu container
+tests\behaviors\behaviors-showcase-visual.spec.ts › Behaviors Showcase Visual Tests › Global Page Tests › all behavior elements should be initialized
+tests\behaviors\behaviors-showcase.spec.ts › Behaviors Showcase Page › Page Structure › all behavior sections have a demo area
+tests\behaviors\behaviors-showcase.spec.ts › Behaviors Showcase Page › Tabs Behavior › clicking tab shows corresponding panel
+tests\behaviors\behaviors-showcase.spec.ts › Behaviors Showcase Page › Visual Regression Checks › spinners are animating
+tests\behaviors\button-permutations.spec.ts › Button — <button x-button> › href navigates, and every target is honoured (2)
+tests\behaviors\button-permutations.spec.ts › Button — bare <button> (autoInject) › href navigates, and every target is honoured (2)
+tests\behaviors\button-sizes.spec.ts › Button sizes — the demo labels must match reality › Small < Medium < Large in rendered size
+tests\behaviors\button-sizes.spec.ts › Button sizes — the demo labels must match reality › each size button carries an effective size class
+tests\behaviors\cards-demarcated.spec.ts › #180 — cards are demarcated › card border is rendered (not dropped by undefined --border-color)
+tests\behaviors\cards-demarcated.spec.ts › #180 — cards are demarcated › float variant has real elevation (box-shadow)
+tests\behaviors\code-format.spec.ts › NO demo code block wraps/breaks tokens (editor style, horizontal scroll)
+tests\behaviors\code-highlight.spec.ts › #183 — code blocks highlight › demo code blocks carry the hljs class and token spans
+tests\behaviors\dark-mode-switch.spec.ts › Dark Mode switch toggles data-theme between dark and light
+tests\behaviors\darkmode-target-self.spec.ts › x-darkmode target="self" › applies the theme attribute to the element itself
+tests\behaviors\effects-actions.spec.ts › Behaviors page — Effects › bounce injects and animates on click
+tests\behaviors\effects-actions.spec.ts › Behaviors page — Effects › fadein injects and animates on click
+tests\behaviors\effects-actions.spec.ts › Behaviors page — Effects › flash injects and animates on click
+tests\behaviors\effects-actions.spec.ts › Behaviors page — Effects › flip injects and animates on click
+tests\behaviors\effects-actions.spec.ts › Behaviors page — Effects › heartbeat injects and animates on click
+tests\behaviors\effects-actions.spec.ts › Behaviors page — Effects › jello injects and animates on click
+tests\behaviors\effects-actions.spec.ts › Behaviors page — Effects › no Effects behavior throws (no [x-error])
+tests\behaviors\effects-actions.spec.ts › Behaviors page — Effects › particle effects (confetti/rainbow/glow/sparkle/snow/fireworks) inject without error
+tests\behaviors\effects-actions.spec.ts › Behaviors page — Effects › pulse injects and animates on click
+tests\behaviors\effects-actions.spec.ts › Behaviors page — Effects › relative-time renders a formatted string
+tests\behaviors\effects-actions.spec.ts › Behaviors page — Effects › shake injects and animates on click
+tests\behaviors\effects-actions.spec.ts › Behaviors page — Effects › slidein-left injects and animates on click
+tests\behaviors\effects-actions.spec.ts › Behaviors page — Effects › slidein-right injects and animates on click
+tests\behaviors\effects-actions.spec.ts › Behaviors page — Effects › slidein-up injects and animates on click
+tests\behaviors\effects-actions.spec.ts › Behaviors page — Effects › tada injects and animates on click
+tests\behaviors\effects-actions.spec.ts › Behaviors page — Effects › wobble injects and animates on click
+tests\behaviors\effects-actions.spec.ts › Behaviors page — Effects › zoomin injects and animates on click
+tests\behaviors\every-declared-attribute.spec.ts › Every declared attribute reaches the element › x-accordion: all 4 declared attributes take effect
+tests\behaviors\every-declared-attribute.spec.ts › Every declared attribute reaches the element › x-alert: all 5 declared attributes take effect
+tests\behaviors\every-declared-attribute.spec.ts › Every declared attribute reaches the element › x-article: all 9 declared attributes take effect
+tests\behaviors\every-declared-attribute.spec.ts › Every declared attribute reaches the element › x-articles: all 5 declared attributes take effect
+tests\behaviors\every-declared-attribute.spec.ts › Every declared attribute reaches the element › x-audio: all 10 declared attributes take effect
+tests\behaviors\every-declared-attribute.spec.ts › Every declared attribute reaches the element › x-autocomplete: all 1 declared attributes take effect
+tests\behaviors\every-declared-attribute.spec.ts › Every declared attribute reaches the element › x-avatar: all 8 declared attributes take effect
+tests\behaviors\every-declared-attribute.spec.ts › Every declared attribute reaches the element › x-badge: all 9 declared attributes take effect
+tests\behaviors\every-declared-attribute.spec.ts › Every declared attribute reaches the element › x-behaviors: all 11 declared attributes take effect
+tests\behaviors\every-declared-attribute.spec.ts › Every declared attribute reaches the element › x-breadcrumb: all 2 declared attributes take effect
+tests\behaviors\every-declared-attribute.spec.ts › Every declared attribute reaches the element › x-button: all 11 declared attributes take effect
+tests\behaviors\every-declared-attribute.spec.ts › Every declared attribute reaches the element › x-card.base: all 10 declared attributes take effect
+tests\behaviors\every-declared-attribute.spec.ts › Every declared attribute reaches the element › x-cardbutton: all 7 declared attributes take effect
+tests\behaviors\every-declared-attribute.spec.ts › Every declared attribute reaches the element › x-carddraggable: all 6 declared attributes take effect
+tests\behaviors\every-declared-attribute.spec.ts › Every declared attribute reaches the element › x-cardfile: all 8 declared attributes take effect
+tests\behaviors\every-declared-attribute.spec.ts › Every declared attribute reaches the element › x-cardhero: all 13 declared attributes take effect
+tests\behaviors\every-declared-attribute.spec.ts › Every declared attribute reaches the element › x-cardhorizontal: all 7 declared attributes take effect
+tests\behaviors\every-declared-attribute.spec.ts › Every declared attribute reaches the element › x-cardimage: all 11 declared attributes take effect
+tests\behaviors\every-declared-attribute.spec.ts › Every declared attribute reaches the element › x-cardnotification: all 6 declared attributes take effect
+tests\behaviors\every-declared-attribute.spec.ts › Every declared attribute reaches the element › x-cardoverlay: all 8 declared attributes take effect
+tests\behaviors\every-declared-attribute.spec.ts › Every declared attribute reaches the element › x-cardportfolio: all 28 declared attributes take effect
+tests\behaviors\every-declared-attribute.spec.ts › Every declared attribute reaches the element › x-cardpricing: all 9 declared attributes take effect
+tests\behaviors\every-declared-attribute.spec.ts › Every declared attribute reaches the element › x-cardproduct: all 11 declared attributes take effect
+tests\behaviors\every-declared-attribute.spec.ts › Every declared attribute reaches the element › x-cardstats: all 7 declared attributes take effect
+tests\behaviors\every-declared-attribute.spec.ts › Every declared attribute reaches the element › x-cardvideo: all 10 declared attributes take effect
+tests\behaviors\every-declared-attribute.spec.ts › Every declared attribute reaches the element › x-checkbox: all 9 declared attributes take effect
+tests\behaviors\every-declared-attribute.spec.ts › Every declared attribute reaches the element › x-clock: all 3 declared attributes take effect
+tests\behaviors\every-declared-attribute.spec.ts › Every declared attribute reaches the element › x-code: all 7 declared attributes take effect
+tests\behaviors\every-declared-attribute.spec.ts › Every declared attribute reaches the element › x-collapse: all 3 declared attributes take effect
+tests\behaviors\every-declared-attribute.spec.ts › Every declared attribute reaches the element › x-confetti: all 7 declared attributes take effect
+tests\behaviors\every-declared-attribute.spec.ts › Every declared attribute reaches the element › x-confirm: all 6 declared attributes take effect
+tests\behaviors\every-declared-attribute.spec.ts › Every declared attribute reaches the element › x-copy: all 2 declared attributes take effect
+tests\behaviors\every-declared-attribute.spec.ts › Every declared attribute reaches the element › x-copybutton: all 6 declared attributes take effect
+tests\behaviors\every-declared-attribute.spec.ts › Every declared attribute reaches the element › x-countdown: all 4 declared attributes take effect
+tests\behaviors\every-declared-attribute.spec.ts › Every declared attribute reaches the element › x-counter: all 2 declared attributes take effect
+tests\behaviors\every-declared-attribute.spec.ts › Every declared attribute reaches the element › x-details: all 5 declared attributes take effect
+tests\behaviors\every-declared-attribute.spec.ts › Every declared attribute reaches the element › x-dialog: all 7 declared attributes take effect
+tests\behaviors\every-declared-attribute.spec.ts › Every declared attribute reaches the element › x-draggable: all 2 declared attributes take effect
+tests\behaviors\every-declared-attribute.spec.ts › Every declared attribute reaches the element › x-drawer: all 9 declared attributes take effect
+tests\behaviors\every-declared-attribute.spec.ts › Every declared attribute reaches the element › x-drawerLayout: all 4 declared attributes take effect
+tests\behaviors\every-declared-attribute.spec.ts › Every declared attribute reaches the element › x-dropdown: all 5 declared attributes take effect
+tests\behaviors\every-declared-attribute.spec.ts › Every declared attribute reaches the element › x-fieldset: all 2 declared attributes take effect
+tests\behaviors\every-declared-attribute.spec.ts › Every declared attribute reaches the element › x-figure: all 4 declared attributes take effect
+tests\behaviors\every-declared-attribute.spec.ts › Every declared attribute reaches the element › x-fireworks: all 7 declared attributes take effect
+tests\behaviors\every-declared-attribute.spec.ts › Every declared attribute reaches the element › x-footer: all 5 declared attributes take effect
+tests\behaviors\every-declared-attribute.spec.ts › Every declared attribute reaches the element › x-form: all 2 declared attributes take effect
+tests\behaviors\every-declared-attribute.spec.ts › Every declared attribute reaches the element › x-fullscreen: all 2 declared attributes take effect
+tests\behaviors\every-declared-attribute.spec.ts › Every declared attribute reaches the element › x-gallery: all 4 declared attributes take effect
+tests\behaviors\every-declared-attribute.spec.ts › Every declared attribute reaches the element › x-header: all 6 declared attributes take effect
+tests\behaviors\every-declared-attribute.spec.ts › Every declared attribute reaches the element › x-hero: all 1 declared attributes take effect
+tests\behaviors\every-declared-attribute.spec.ts › Every declared attribute reaches the element › x-home-page: all 6 declared attributes take effect
+tests\behaviors\every-declared-attribute.spec.ts › Every declared attribute reaches the element › x-image: all 7 declared attributes take effect
+tests\behaviors\every-declared-attribute.spec.ts › Every declared attribute reaches the element › x-img: all 7 declared attributes take effect
+tests\behaviors\every-declared-attribute.spec.ts › Every declared attribute reaches the element › x-input: all 15 declared attributes take effect
+tests\behaviors\every-declared-attribute.spec.ts › Every declared attribute reaches the element › x-label: all 4 declared attributes take effect
+tests\behaviors\every-declared-attribute.spec.ts › Every declared attribute reaches the element › x-mark: all 2 declared attributes take effect
+tests\behaviors\every-declared-attribute.spec.ts › Every declared attribute reaches the element › x-masked: all 2 declared attributes take effect
+tests\behaviors\every-declared-attribute.spec.ts › Every declared attribute reaches the element › x-mdhtml: all 3 declared attributes take effect
+tests\behaviors\every-declared-attribute.spec.ts › Every declared attribute reaches the element › x-navbar: all 8 declared attributes take effect
+tests\behaviors\every-declared-attribute.spec.ts › Every declared attribute reaches the element › x-notes: all 6 declared attributes take effect
+tests\behaviors\every-declared-attribute.spec.ts › Every declared attribute reaches the element › x-notify: all 2 declared attributes take effect
+tests\behaviors\every-declared-attribute.spec.ts › Every declared attribute reaches the element › x-pagination: all 7 declared attributes take effect
+tests\behaviors\every-declared-attribute.spec.ts › Every declared attribute reaches the element › x-password: all 2 declared attributes take effect
+tests\behaviors\every-declared-attribute.spec.ts › Every declared attribute reaches the element › x-popover: all 6 declared attributes take effect
+tests\behaviors\every-declared-attribute.spec.ts › Every declared attribute reaches the element › x-pre: all 10 declared attributes take effect
+tests\behaviors\every-declared-attribute.spec.ts › Every declared attribute reaches the element › x-print: all 2 declared attributes take effect
+tests\behaviors\every-declared-attribute.spec.ts › Every declared attribute reaches the element › x-progress: all 9 declared attributes take effect
+tests\behaviors\every-declared-attribute.spec.ts › Every declared attribute reaches the element › x-prompt: all 6 declared attributes take effect
+tests\behaviors\every-declared-attribute.spec.ts › Every declared attribute reaches the element › x-rating: all 7 declared attributes take effect
+tests\behaviors\every-declared-attribute.spec.ts › Every declared attribute reaches the element › x-relativetime: all 3 declared attributes take effect
+tests\behaviors\every-declared-attribute.spec.ts › Every declared attribute reaches the element › x-release: all 2 declared attributes take effect
+tests\behaviors\every-declared-attribute.spec.ts › Every declared attribute reaches the element › x-repeater: all 1 declared attributes take effect
+tests\behaviors\every-declared-attribute.spec.ts › Every declared attribute reaches the element › x-resizable: all 1 declared attributes take effect
+tests\behaviors\every-declared-attribute.spec.ts › Every declared attribute reaches the element › x-ripple: all 3 declared attributes take effect
+tests\behaviors\every-declared-attribute.spec.ts › Every declared attribute reaches the element › x-schema: all 22 declared attributes take effect
+tests\behaviors\every-declared-attribute.spec.ts › Every declared attribute reaches the element › x-scrollalong: all 1 declared attributes take effect
+tests\behaviors\every-declared-attribute.spec.ts › Every declared attribute reaches the element › x-search-index: all 5 declared attributes take effect
+tests\behaviors\every-declared-attribute.spec.ts › Every declared attribute reaches the element › x-search: all 11 declared attributes take effect
+tests\behaviors\every-declared-attribute.spec.ts › Every declared attribute reaches the element › x-searchfield: all 9 declared attributes take effect
+tests\behaviors\every-declared-attribute.spec.ts › Every declared attribute reaches the element › x-select: all 12 declared attributes take effect
+tests\behaviors\every-declared-attribute.spec.ts › Every declared attribute reaches the element › x-share: all 6 declared attributes take effect
+tests\behaviors\every-declared-attribute.spec.ts › Every declared attribute reaches the element › x-skeleton: all 5 declared attributes take effect
+tests\behaviors\every-declared-attribute.spec.ts › Every declared attribute reaches the element › x-snow: all 6 declared attributes take effect
+tests\behaviors\every-declared-attribute.spec.ts › Every declared attribute reaches the element › x-sparkle: all 1 declared attributes take effect
+tests\behaviors\every-declared-attribute.spec.ts › Every declared attribute reaches the element › x-spinner: all 4 declared attributes take effect
+tests\behaviors\every-declared-attribute.spec.ts › Every declared attribute reaches the element › x-stack: all 4 declared attributes take effect
+tests\behaviors\every-declared-attribute.spec.ts › Every declared attribute reaches the element › x-stagelight: all 7 declared attributes take effect
+tests\behaviors\every-declared-attribute.spec.ts › Every declared attribute reaches the element › x-steps: all 2 declared attributes take effect
+tests\behaviors\every-declared-attribute.spec.ts › Every declared attribute reaches the element › x-sticky: all 5 declared attributes take effect
+tests\behaviors\every-declared-attribute.spec.ts › Every declared attribute reaches the element › x-switch: all 8 declared attributes take effect
+tests\behaviors\every-declared-attribute.spec.ts › Every declared attribute reaches the element › x-table: all 15 declared attributes take effect
+tests\behaviors\every-declared-attribute.spec.ts › Every declared attribute reaches the element › x-tabs: all 5 declared attributes take effect
+tests\behaviors\every-declared-attribute.spec.ts › Every declared attribute reaches the element › x-textarea: all 13 declared attributes take effect
+tests\behaviors\every-declared-attribute.spec.ts › Every declared attribute reaches the element › x-toast: all 9 declared attributes take effect
+tests\behaviors\every-declared-attribute.spec.ts › Every declared attribute reaches the element › x-toggle: all 1 declared attributes take effect
+tests\behaviors\every-declared-attribute.spec.ts › Every declared attribute reaches the element › x-tooltip: all 9 declared attributes take effect
+tests\behaviors\every-declared-attribute.spec.ts › Every declared attribute reaches the element › x-truncate: all 3 declared attributes take effect
+tests\behaviors\every-declared-attribute.spec.ts › Every declared attribute reaches the element › x-typewriter: all 3 declared attributes take effect
+tests\behaviors\every-declared-attribute.spec.ts › Every declared attribute reaches the element › x-video: all 9 declared attributes take effect
+tests\behaviors\every-declared-attribute.spec.ts › Every declared attribute reaches the element › x-views: all 4 declared attributes take effect
+tests\behaviors\every-declared-attribute.spec.ts › Every declared attribute reaches the element › x-vimeo: all 7 declared attributes take effect
+tests\behaviors\every-declared-attribute.spec.ts › Every declared attribute reaches the element › x-x-behavior: all 1 declared attributes take effect
+tests\behaviors\every-declared-attribute.spec.ts › Every declared attribute reaches the element › x-x-effects: all 6 declared attributes take effect
+tests\behaviors\every-declared-attribute.spec.ts › Every declared attribute reaches the element › x-x-enhancements: all 4 declared attributes take effect
+tests\behaviors\functional-runner.spec.ts › Functional Test Runner › schema discovery
+tests\behaviors\functional-runner.spec.ts › Functional Test Summary › coverage report
+tests\behaviors\input-theming.spec.ts › Input theming follows the active theme › input background actually changes between dark and light themes
+tests\behaviors\input-theming.spec.ts › Input theming follows the active theme › inputs are DARK in the "cyberpunk" theme (not native white)
+tests\behaviors\input-theming.spec.ts › Input theming follows the active theme › inputs are DARK in the "dark" theme (not native white)
+tests\behaviors\input-theming.spec.ts › Input theming follows the active theme › inputs are DARK in the "midnight" theme (not native white)
+tests\behaviors\input-theming.spec.ts › Input theming follows the active theme › inputs are DARK in the "ocean" theme (not native white)
+tests\behaviors\input-theming.spec.ts › Input theming follows the active theme › inputs are LIGHT in the "arctic" theme
+tests\behaviors\input-theming.spec.ts › Input theming follows the active theme › inputs are LIGHT in the "light" theme
+tests\behaviors\input-theming.spec.ts › Input theming follows the active theme › inputs are LIGHT in the "sakura" theme
+tests\behaviors\notify-control-switch.spec.ts › Notifications switch fires a real toast when turned ON, not when turned OFF
+tests\behaviors\pce.spec.ts › Pseudo-Custom Elements (PCE) v3.0 › PCE elements respond to lazy loading
+tests\behaviors\pce.spec.ts › Pseudo-Custom Elements (PCE) v3.0 › multiple PCE elements on same page
+tests\behaviors\pce.spec.ts › Pseudo-Custom Elements (PCE) v3.0 › wb-cardprofile is recognized as PCE
+tests\behaviors\pre-controls-spacing.spec.ts › pre.js header controls stay >=1rem apart › copy button, language badge, and toggle never overlap and keep >=1rem gaps
+tests\behaviors\pre-no-inline-styles.spec.ts › pre.js code blocks have no static inline styles (#285) › .x-pre and .x-pre-wrapper have no style attribute at all
+tests\behaviors\pre-no-inline-styles.spec.ts › pre.js code blocks have no static inline styles (#285) › header controls only carry the genuinely-dynamic `right` offset inline
+tests\behaviors\pre-no-inline-styles.spec.ts › pre.js code blocks have no static inline styles (#285) › line-number gutter divs only carry the genuinely-dynamic `top` offset inline
+tests\behaviors\pre-toggle.spec.ts › #299 — pre.js collapse/expand toggle › clicking the toggle hides the code and restores it on a second click
+tests\behaviors\pre-toggle.spec.ts › #299 — pre.js collapse/expand toggle › toggle button never leaves the DOM/visible area in either state
+tests\behaviors\progress-fill.spec.ts › wb-progress — fill from value › value="100" fills ~100%
+tests\behaviors\rating-icon-value.spec.ts › #177 — rating icon + value + color › custom icon= is honored (hearts / thumbs, not stars)
+tests\behaviors\rating-icon-value.spec.ts › #177 — rating icon + value + color › filled stars use the theme rating color, not a hardcoded gray
+tests\behaviors\rating-icon-value.spec.ts › #177 — rating icon + value + color › value is painted on first render (filled count == value)
+tests\behaviors\registry-browser.spec.ts › registry-browser.html (#263) › usage example renders a real, working registered view
+tests\behaviors\remaining-coverage.spec.ts › Behaviors page — key interactions › checkbox toggles
+tests\behaviors\remaining-coverage.spec.ts › Behaviors page — key interactions › kbd renders key caps
+tests\behaviors\remaining-coverage.spec.ts › Behaviors page — key interactions › modal opens from its trigger
+tests\behaviors\remaining-coverage.spec.ts › Behaviors page — key interactions › tooltip appears on hover
+tests\behaviors\remaining-coverage.spec.ts › Behaviors page — remaining sections (sweep) › [x-audio] is present and upgrades without error
+tests\behaviors\remaining-coverage.spec.ts › Behaviors page — remaining sections (sweep) › [x-confirm] is present and upgrades without error
+tests\behaviors\remaining-coverage.spec.ts › Behaviors page — remaining sections (sweep) › [x-drawer] is present and upgrades without error
+tests\behaviors\remaining-coverage.spec.ts › Behaviors page — remaining sections (sweep) › [x-gallery] is present and upgrades without error
+tests\behaviors\remaining-coverage.spec.ts › Behaviors page — remaining sections (sweep) › [x-image] is present and upgrades without error
+tests\behaviors\remaining-coverage.spec.ts › Behaviors page — remaining sections (sweep) › [x-kbd] is present and upgrades without error
+tests\behaviors\remaining-coverage.spec.ts › Behaviors page — remaining sections (sweep) › [x-lightbox] is present and upgrades without error
+tests\behaviors\remaining-coverage.spec.ts › Behaviors page — remaining sections (sweep) › [x-masked] is present and upgrades without error
+tests\behaviors\remaining-coverage.spec.ts › Behaviors page — remaining sections (sweep) › [x-modal] is present and upgrades without error
+tests\behaviors\remaining-coverage.spec.ts › Behaviors page — remaining sections (sweep) › [x-password] is present and upgrades without error
+tests\behaviors\remaining-coverage.spec.ts › Behaviors page — remaining sections (sweep) › [x-popover] is present and upgrades without error
+tests\behaviors\remaining-coverage.spec.ts › Behaviors page — remaining sections (sweep) › [x-print] is present and upgrades without error
+tests\behaviors\remaining-coverage.spec.ts › Behaviors page — remaining sections (sweep) › [x-prompt] is present and upgrades without error
+tests\behaviors\remaining-coverage.spec.ts › Behaviors page — remaining sections (sweep) › [x-share] is present and upgrades without error
+tests\behaviors\remaining-coverage.spec.ts › Behaviors page — remaining sections (sweep) › [x-stepper] is present and upgrades without error
+tests\behaviors\remaining-coverage.spec.ts › Behaviors page — remaining sections (sweep) › [x-timeline] is present and upgrades without error
+tests\behaviors\remaining-coverage.spec.ts › Behaviors page — remaining sections (sweep) › [x-tooltip] is present and upgrades without error
+tests\behaviors\remaining-coverage.spec.ts › Behaviors page — remaining sections (sweep) › [x-truncate] is present and upgrades without error
+tests\behaviors\remaining-coverage.spec.ts › Behaviors page — remaining sections (sweep) › [x-youtube] is present and upgrades without error
+tests\behaviors\remaining-coverage.spec.ts › Behaviors page — remaining sections (sweep) › input[type="checkbox"] is present and upgrades without error
+tests\behaviors\remaining-coverage.spec.ts › Behaviors page — remaining sections (sweep) › input[type="range"] is present and upgrades without error
+tests\behaviors\scrollalong.spec.ts › ScrollAlong Behavior - Standalone Test Page › nav has sticky positioning applied
+tests\behaviors\scrollalong.spec.ts › ScrollAlong Behavior - Standalone Test Page › nav has wb-scrollalong class applied
+tests\behaviors\section-nav.spec.ts › #181 — section nav links › clicking a section link scrolls it into view below the header
+tests\behaviors\section-nav.spec.ts › #181 — section nav links › every section link resolves to an existing target
+tests\behaviors\section-nav.spec.ts › #181 — section nav links › nav pills are visible chips (have a background, not crowded text)
+tests\behaviors\section-nav.spec.ts › #181 — section nav links › sections have scroll-margin to clear the sticky header
+tests\behaviors\spinners-visible.spec.ts › #182 — spinners visible + animated › every spinner ring has a visible border and is animated
+tests\behaviors\spinners-visible.spec.ts › #182 — spinners visible + animated › spinner color= variants render distinct colors
+tests\behaviors\stepper-range.spec.ts › #178 — stepper + range › range slider is present, themed, and accepts input
+tests\behaviors\stepper-range.spec.ts › #178 — stepper + range › stepper + increments and clamps to data-max
+tests\behaviors\stepper-range.spec.ts › #178 — stepper + range › stepper renders [-][value][+] with its data-value
+tests\behaviors\sticky.spec.ts › Sticky Behavior › API: isStuck() returns correct state
+tests\behaviors\sticky.spec.ts › Sticky Behavior › API: unstick() forces element to unstick
+tests\behaviors\sticky.spec.ts › Sticky Behavior › becomes fixed when scrolled past trigger point
+tests\behaviors\sticky.spec.ts › Sticky Behavior › creates placeholder to prevent layout shift
+tests\behaviors\sticky.spec.ts › Sticky Behavior › respects custom stuck class via data-class
+tests\behaviors\sticky.spec.ts › Sticky Behavior › unsticks when scrolled back up
+tests\behaviors\switch.spec.ts › Switch — real toggle › ON state is visually distinct (track color changes)
+tests\behaviors\switch.spec.ts › Switch — real toggle › checked attribute is reflected on first paint
+tests\behaviors\switch.spec.ts › Switch — real toggle › clicking toggles the state
+tests\behaviors\switch.spec.ts › Switch — real toggle › inner input is a checkbox (not text)
+tests\behaviors\switch.spec.ts › Switch — real toggle › label text renders
+tests\behaviors\table-searchable.spec.ts › <table searchable> creates and wires a real search input (#433) › the search input is inserted directly before the table, not inside its content model
+tests\behaviors\toast-single.spec.ts › clicking an x-toast button shows exactly one toast
+tests\behaviors\tooltip-demo.spec.ts › Tooltip Button Showcase › shows tooltip on hover (bottom)
+tests\behaviors\tooltip-demo.spec.ts › Tooltip Button Showcase › shows tooltip on hover (left)
+tests\behaviors\tooltip-demo.spec.ts › Tooltip Button Showcase › shows tooltip on hover (right)
+tests\behaviors\tooltip-demo.spec.ts › Tooltip Button Showcase › shows tooltip on hover (top)
+tests\behaviors\ui\home-page-permutation.spec.ts › Home Page — Schema Permutation Tests › Actions: buttons contain expected text
+tests\behaviors\ui\home-page-permutation.spec.ts › Home Page — Schema Permutation Tests › Audio: has required attributes (src, show-eq, volume)
+tests\behaviors\ui\home-page-permutation.spec.ts › Home Page — Schema Permutation Tests › Audio: renders audio element and EQ
+tests\behaviors\ui\home-page-permutation.spec.ts › Home Page — Schema Permutation Tests › Audio: wb-audio renders (minInstances=1)
+tests\behaviors\ui\home-page-permutation.spec.ts › Home Page — Schema Permutation Tests › Container: wb-container has max-width and padding
+tests\behaviors\ui\home-page-permutation.spec.ts › Home Page — Schema Permutation Tests › Desktop: feature cards show multiple columns at 1280px
+tests\behaviors\ui\home-page-permutation.spec.ts › Home Page — Schema Permutation Tests › Features: cards contain expected text
+tests\behaviors\ui\home-page-permutation.spec.ts › Home Page — Schema Permutation Tests › Features: cards have wb-card--float class after hydration
+tests\behaviors\ui\home-page-permutation.spec.ts › Home Page — Schema Permutation Tests › Features: wb-card[variant=float] renders 6 instances
+tests\behaviors\ui\home-page-permutation.spec.ts › Home Page — Schema Permutation Tests › Fluent: stats cards are compact (height < 300px each)
+tests\behaviors\ui\home-page-permutation.spec.ts › Home Page — Schema Permutation Tests › Fluent: wb-container has no builder background
+tests\behaviors\ui\home-page-permutation.spec.ts › Home Page — Schema Permutation Tests › Fluent: wb-container has no dashed border
+tests\behaviors\ui\home-page-permutation.spec.ts › Home Page — Schema Permutation Tests › Fluent: wb-container has no forced min-height
+tests\behaviors\ui\home-page-permutation.spec.ts › Home Page — Schema Permutation Tests › Grid: 2 wb-grid instances (stats + features)
+tests\behaviors\ui\home-page-permutation.spec.ts › Home Page — Schema Permutation Tests › Hero: has required attributes (variant, title, cta)
+tests\behaviors\ui\home-page-permutation.spec.ts › Home Page — Schema Permutation Tests › Hero: has wb-hero class after hydration
+tests\behaviors\ui\home-page-permutation.spec.ts › Home Page — Schema Permutation Tests › Hero: renders expected text
+tests\behaviors\ui\home-page-permutation.spec.ts › Home Page — Schema Permutation Tests › Hero: wb-cardhero renders (minInstances=1)
+tests\behaviors\ui\home-page-permutation.spec.ts › Home Page — Schema Permutation Tests › Layout: page is a fragment (no doctype/html/head)
+tests\behaviors\ui\home-page-permutation.spec.ts › Home Page — Schema Permutation Tests › Layout: sections appear in correct order
+tests\behaviors\ui\home-page-permutation.spec.ts › Home Page — Schema Permutation Tests › Mobile-first: feature cards stack single-column at 375px
+tests\behaviors\ui\home-page-permutation.spec.ts › Home Page — Schema Permutation Tests › Mobile-first: no element overflows viewport at 375px
+tests\behaviors\ui\home-page-permutation.spec.ts › Home Page — Schema Permutation Tests › Notifications: 4 wb-cardnotification instances
+tests\behaviors\ui\home-page-permutation.spec.ts › Home Page — Schema Permutation Tests › Notifications: all have required attributes (variant, title, message)
+tests\behaviors\ui\home-page-permutation.spec.ts › Home Page — Schema Permutation Tests › Notifications: renders expected text
+tests\behaviors\ui\home-page-permutation.spec.ts › Home Page — Schema Permutation Tests › Stats: all have required attributes (value, label, icon)
+tests\behaviors\ui\home-page-permutation.spec.ts › Home Page — Schema Permutation Tests › Stats: has wb-stats class after hydration
+tests\behaviors\ui\home-page-permutation.spec.ts › Home Page — Schema Permutation Tests › Stats: renders expected text values
+tests\behaviors\ui\home-page-permutation.spec.ts › Home Page — Schema Permutation Tests › Stats: uses wb-grid with columns=4 (not wb-row)
+tests\behaviors\ui\home-page-permutation.spec.ts › Home Page — Schema Permutation Tests › Stats: wb-cardstats renders 4 instances
+tests\behaviors\wb-demo-lazy-render.spec.ts › #312 follow-up — <wb-demo> blocks build lazily, not all at once › only a handful of demo blocks are built on initial load, not all of them
+tests\behaviors\wb-demo-width-and-toggle.spec.ts › <wb-demo> single-item shrink works for stretchy content, not just plain elements (#390) › a real <wb-card class="wb-card--auto"> still hugs its content, not the grid track
+tests\behaviors\wb-search-select-effect.spec.ts › <wb-search> effect-based attribute coverage › size sm vs lg produce a real computed height difference
+tests\behaviors\wb-search-select-effect.spec.ts › <wb-search> effect-based attribute coverage › variant produces real computed style differences (glass backdrop-filter, minimal border)
+tests\behaviors\wb-slider-rating-range-effect.spec.ts › <wb-slider> is currently a minimal stub (src/wb-viewmodels/slider.js) › adds the wb-slider class but does not build a range control or alter content
+tests\behaviors\wb-switch-textarea-effect.spec.ts › <wb-switch> — real effects (self-build path, #279) › SUSPECTED BUG: size produces no computed style difference
+tests\behaviors\wb-switch-textarea-effect.spec.ts › Native <textarea> section (bare attributes + autoInject, matching forms.html's own WB.init config) › native <textarea autosize>: same real height-growth behavior as the x-behavior path
+tests\behaviors\wb-switch-textarea-effect.spec.ts › Native <textarea> section (bare attributes + autoInject, matching forms.html's own WB.init config) › native <textarea show-count max-length="100">: counter reflects the real current/max count as you type
+tests\behaviors\wb-switch-textarea-effect.spec.ts › wb-textarea's textarea() behavior — real effects (native <textarea x-behavior="textarea"> path; see file header re: <wb-textarea> gap) › SUSPECTED BUG: variant produces no real visual (border-color) difference
+tests\behaviors\wb-switch-textarea-effect.spec.ts › wb-textarea's textarea() behavior — real effects (native <textarea x-behavior="textarea"> path; see file header re: <wb-textarea> gap) › disabled: typing has no effect on value
+tests\behaviors\wb-views-demo-code-examples.spec.ts › wb-views-demo code examples (#242) › rendered code block never overflows horizontally
+tests\cards\card-examples-demo.spec.ts › Card Rendering › portfolio card renders name, skills, social links
+tests\cards\card-examples-demo.spec.ts › Mobile Responsive › cards do not overflow viewport on mobile
+tests\cards\card-examples-demo.spec.ts › Mobile Responsive › portfolio card fits mobile viewport
+tests\cards\card-examples-demo.spec.ts › Page Fundamentals › every wb-demo has an id
+tests\cards\card-image-render.spec.ts › Card Image Rendering › wb-cardimage should display images on cards-showcase
+tests\cards\card-product-behavior.spec.ts › Card Product Behavior › should dispatch wb:cardproduct:addtocart event on CTA click
+tests\cards\card-styling.spec.ts › Card Styling Standards › all cards have at least 1rem (16px) content padding
+tests\cards\card-styling.spec.ts › Card Styling Standards › elevated cards have LIGHTER background than base cards
+tests\cards\card-styling.spec.ts › Card Styling Standards › elevated cards have box-shadow
+tests\cards\card-styling.spec.ts › Card Styling Standards › wb-cardstats has proper internal padding
+tests\cards\cardhero.spec.ts › Card Hero (integration) › should support text alignment
+tests\cards\cardimage-render.spec.ts › wb-cardimage Rendering › wb-cardimage should have img elements
+tests\cards\cardimage-render.spec.ts › wb-cardimage Rendering › wb-cardimage should have title rendered
+tests\cards\cardimage-render.spec.ts › wb-cardimage Rendering › wb-cardvideo should have video elements
+tests\cards\cardoverlay.spec.ts › Card Overlay (integration) › should support background image
+tests\cards\cardportfolio.spec.ts › Portfolio Card - Business Card (integration) › should render all portfolio fields
+tests\cards\cardportfolio.spec.ts › Portfolio Card - Business Card (integration) › should render with cover image
+tests\cards\cardprogressbar.spec.ts › Progress Bar (integration) › should animate progress bar fill
+tests\cards\cardprogressbar.spec.ts › Progress Bar (integration) › should show progress bar fill
+tests\cards\cards-comprehensive.spec.ts › Base Cards › cardlink › renders with href and navigates
+tests\cards\cards-showcase.spec.ts › Cards Showcase Page › Card (Base) › basic card renders with title
+tests\cards\cards-showcase.spec.ts › Cards Showcase Page › Card (Base) › clickable card has role button
+tests\cards\cards-showcase.spec.ts › Cards Showcase Page › Card (Base) › clickable card shows cursor pointer
+tests\cards\cards-showcase.spec.ts › Cards Showcase Page › Card (Base) › elevated card has shadow
+tests\cards\cards-showcase.spec.ts › Cards Showcase Page › Card Pricing › pricing card has CTA button
+tests\cards\cards-showcase.spec.ts › Cards Showcase Page › Card Pricing › pricing card renders plan name
+tests\cards\cards-showcase.spec.ts › Cards Showcase Page › Card Pricing › pricing card shows features list
+tests\cards\cards-showcase.spec.ts › Cards Showcase Page › Card Pricing › pricing card shows price
+tests\cards\cards-showcase.spec.ts › Cards Showcase Page › Card Profile › profile card renders avatar
+tests\cards\cards-showcase.spec.ts › Cards Showcase Page › Card Profile › profile card shows bio
+tests\cards\cards-showcase.spec.ts › Cards Showcase Page › Card Profile › profile card shows name
+tests\cards\cards-showcase.spec.ts › Cards Showcase Page › Card Profile › profile card shows role
+tests\cards\cards-showcase.spec.ts › Cards Showcase Page › Card Stats › stats card renders value
+tests\cards\cards-showcase.spec.ts › Cards Showcase Page › Card Stats › stats card shows icon
+tests\cards\cards-showcase.spec.ts › Cards Showcase Page › Card Stats › stats card shows label
+tests\cards\cards-showcase.spec.ts › Cards Showcase Page › Card Stats › stats card with trend down shows down arrow
+tests\cards\cards-showcase.spec.ts › Cards Showcase Page › Card Stats › stats card with trend up shows up arrow
+tests\cards\cards-showcase.spec.ts › Cards Showcase Page › Code Examples › code blocks are present after card demos
+tests\cards\cards-showcase.spec.ts › Cards Showcase Page › Page Structure › navigation links are present
+tests\cards\cards-showcase.spec.ts › Cards Showcase Page › Page Structure › page has header with title
+tests\cards\cards-showcase.spec.ts › Cards Showcase Page › Page Structure › theme control is present and visible
+tests\cards\cards-showcase.spec.ts › Cards Showcase Page › Theme Control › changing theme updates card colors
+tests\cards\cards-showcase.spec.ts › Cards Showcase Page › Theme Control › changing theme updates data-theme attribute
+tests\cards\cards-showcase.spec.ts › Cards Showcase Page › Theme Control › theme control has dropdown select
+tests\cards\cards-showcase.spec.ts › Cards Showcase Page › Theme Control › theme dropdown contains all themes
+tests\cards\cards-showcase.spec.ts › Cards Showcase Page › Theme Control › theme persists after selection
+tests\cards\cardspinner.spec.ts › Spinner (integration) › should have border-radius for circular spinner
+tests\cards\cardspinner.spec.ts › Spinner (integration) › should have spinning border (border-top different color)
+tests\cards\cardspinner.spec.ts › Spinner (integration) › should render a spinner with animation
+tests\cards\clickable-card.spec.ts › Clickable Card Fix › Clickable card in components page should trigger toast
+tests\components\button-toasts.spec.ts › Button Toast Notifications › Drawer button should trigger toast
+tests\components\button-toasts.spec.ts › Button Toast Notifications › Modal button should trigger toast
+tests\components\button-toasts.spec.ts › Button Toast Notifications › Reanimate button should trigger toast
+tests\components\button-toasts.spec.ts › Button Toast Notifications › Toast trigger button should show updated message
+tests\components\datepicker.spec.ts › datepicker registers and marks element
+tests\components\diff.spec.ts › diff behavior attaches and does not error
+tests\components\feedback-visual.spec.ts › Skeleton Loaders › should have shimmer animation
+tests\components\feedback-visual.spec.ts › Skeleton Loaders › text variant creates multiple lines
+tests\components\feedback-visual.spec.ts › Spinners › should render with spinning animation
+tests\components\input-switch.spec.ts › Input and Switch Behaviors › Input should have correct styling classes
+tests\components\input-switch.spec.ts › Input and Switch Behaviors › Switch should transform checkbox
+tests\components\notes.spec.ts › Notes Behavior › Buttons › header should have a 0.5rem top gap above the title
+tests\components\pill-shortcut.spec.ts › Pill Behavior Shortcut › x-pill="" creates a badge with pill style
+tests\components\primary-value-attribute-text.spec.ts › wb-* primary values › supports chip label attributes and authored text
+tests\components\primary-value-attribute-text.spec.ts › wb-* primary values › supports input value attributes and authored text
+tests\components\stagelight.spec.ts › stagelight Behavior › element is visible after scan
+tests\components\timepicker.spec.ts › timepicker registers and marks element
+tests\demos\card-examples-demo.spec.ts › Card Examples Demo › All card demos render live and show code
+tests\pages\ai-permutation-run.spec.ts › ai-permutation-test: find schema with gaps, run all tests live, verify results
+tests\pages\all-components.spec.ts › WB Components & Behaviors › Data Display › Rating renders
+tests\pages\all-components.spec.ts › WB Components & Behaviors › Effects › Effect demos exist
+tests\pages\all-components.spec.ts › WB Components & Behaviors › Feedback Components › Alert renders
+tests\pages\all-components.spec.ts › WB Components & Behaviors › Feedback Components › Avatar renders
+tests\pages\all-components.spec.ts › WB Components & Behaviors › Feedback Components › Badge renders
+tests\pages\all-components.spec.ts › WB Components & Behaviors › Feedback Components › Spinner renders
+tests\pages\all-components.spec.ts › WB Components & Behaviors › Feedback Components › Toast trigger exists
+tests\pages\all-components.spec.ts › WB Components & Behaviors › Layout Components › Cluster behaviour works
+tests\pages\all-components.spec.ts › WB Components & Behaviors › Layout Components › Grid component works
+tests\pages\all-components.spec.ts › WB Components & Behaviors › Layout Components › Stack behaviour works
+tests\pages\all-components.spec.ts › WB Components & Behaviors › Navigation Components › Breadcrumb renders
+tests\pages\all-components.spec.ts › WB Components & Behaviors › Navigation Components › Dropdown renders
+tests\pages\all-components.spec.ts › WB Components & Behaviors › Navigation Components › Tabs render
+tests\pages\components-page.spec.ts › Components Page › Cards Section › basic cards render correctly
+tests\pages\components-page.spec.ts › Components Page › Cards Section › card with header and footer renders
+tests\pages\components-page.spec.ts › Components Page › Cards Section › file-card renders
+tests\pages\components-page.spec.ts › Components Page › Cards Section › image-card renders
+tests\pages\components-page.spec.ts › Components Page › Cards Section › notification-card renders all types
+tests\pages\components-page.spec.ts › Components Page › Cards Section › overlay-card renders correctly
+tests\pages\components-page.spec.ts › Components Page › Cards Section › portfolio-card (business cards) render
+tests\pages\components-page.spec.ts › Components Page › Cards Section › price-card renders with features
+tests\pages\components-page.spec.ts › Components Page › Cards Section › product-card renders
+tests\pages\components-page.spec.ts › Components Page › Cards Section › stats-card (stock indicators) render
+tests\pages\components-page.spec.ts › Components Page › Cards Section › testimonial-card renders
+tests\pages\components-page.spec.ts › Components Page › Data Display Section › JSON viewer renders
+tests\pages\components-page.spec.ts › Components Page › Data Display Section › keyboard key components render
+tests\pages\components-page.spec.ts › Components Page › Data Display Section › timeline renders
+tests\pages\components-page.spec.ts › Components Page › Feedback Section › alerts render all types
+tests\pages\components-page.spec.ts › Components Page › Feedback Section › avatars render
+tests\pages\components-page.spec.ts › Components Page › Feedback Section › badges render with variants
+tests\pages\components-page.spec.ts › Components Page › Feedback Section › progress bars render
+tests\pages\components-page.spec.ts › Components Page › Feedback Section › skeleton loaders render
+tests\pages\components-page.spec.ts › Components Page › Feedback Section › spinners render with colors
+tests\pages\components-page.spec.ts › Components Page › Feedback Section › toast buttons exist
+tests\pages\components-page.spec.ts › Components Page › Forms Section › password input with toggle exists
+tests\pages\components-page.spec.ts › Components Page › Forms Section › rating component exists
+tests\pages\components-page.spec.ts › Components Page › Forms Section › stepper component exists
+tests\pages\components-page.spec.ts › Components Page › Forms Section › switch component exists
+tests\pages\components-page.spec.ts › Components Page › Forms Section › text inputs render
+tests\pages\components-page.spec.ts › Components Page › Interactive Behavior › clicking toast button shows toast
+tests\pages\components-page.spec.ts › Components Page › Media Section › audio player exists
+tests\pages\components-page.spec.ts › Components Page › Media Section › gallery component renders
+tests\pages\components-page.spec.ts › Components Page › Media Section › youtube embed exists
+tests\pages\components-page.spec.ts › Components Page › Navigation Section › breadcrumb renders
+tests\pages\components-page.spec.ts › Components Page › Navigation Section › pagination renders
+tests\pages\components-page.spec.ts › Components Page › Navigation Section › steps component renders
+tests\pages\components-page.spec.ts › Components Page › Navigation Section › tabs component renders
+tests\pages\components-page.spec.ts › Components Page › Overlays Section › confirm dialog trigger exists
+tests\pages\components-page.spec.ts › Components Page › Overlays Section › drawer trigger buttons exist
+tests\pages\components-page.spec.ts › Components Page › Overlays Section › lightbox trigger exists
+tests\pages\components-page.spec.ts › Components Page › Overlays Section › modal trigger button exists
+tests\pages\components-page.spec.ts › Components Page › Overlays Section › popover trigger exists
+tests\pages\components-page.spec.ts › Components Page › Page Structure › has all major sections
+tests\pages\components-page.spec.ts › Components Page › Page Structure › has hero section with title
+tests\pages\components-page.spec.ts › Components Page › Page Structure › page loads successfully
+tests\pages\components-page.spec.ts › Components Page › Utility Section › clock component renders
+tests\pages\components-page.spec.ts › Components Page › Utility Section › copy button exists
+tests\pages\components-page.spec.ts › Components Page › Utility Section › countdown component renders
+tests\pages\components-page.spec.ts › Components Page › Utility Section › dark mode toggle exists
+tests\pages\components-page.spec.ts › Components Page › Utility Section › print button exists
+tests\pages\components-page.spec.ts › Components Page › Utility Section › share button exists
+tests\pages\components-page.spec.ts › Components Page › Utility Section › theme control exists
+tests\pages\components-page.spec.ts › Components Page › Utility Section › tooltip buttons exist
+tests\pages\docs-page.spec.ts › Docs Page › selecting a theme in the control updates the page theme
+tests\pages\docs-page.spec.ts › Docs Page › theme control renders in the hero
+tests\pages\header.spec.ts › Header Behavior › API: setBadge updates badge
+tests\pages\header.spec.ts › Header Behavior › API: setTitle updates title
+tests\pages\header.spec.ts › Header Behavior › applies sticky class when sticky present
+tests\pages\header.spec.ts › Header Behavior › logo links when logoHref provided
+tests\pages\header.spec.ts › Header Behavior › renders badge on right side
+tests\pages\header.spec.ts › Header Behavior › renders subtitle
+tests\pages\header.spec.ts › Header Behavior › renders with icon and title
+tests\pages\home-links.spec.ts › Home page — link integrity › hero CTAs point to real routes and navigate
+tests\pages\issues-page.spec.ts › Issues page › shows the current active count from status:in-progress labels
+tests\pages\page-fragment-compliance.spec.ts › Page Fragment: behaviors.html › must have <h1> tag
+tests\pages\page-fragment-compliance.spec.ts › Page Fragment: behaviors.html › must have at least one <h2> tag
+tests\pages\page-fragment-compliance.spec.ts › Page Fragment: issues.html › must have at least one <h2> tag
+tests\pages\page-fragment-compliance.spec.ts › Page Fragment: issues.html › must not contain <style> blocks
+tests\pages\page-fragment-compliance.spec.ts › Page Fragment: whats-new.html › must not contain WB.init()
+tests\pages\site-generation.spec.ts › Site Generation — Phase 4 › Index Page › has a card for each generated page
+tests\pages\site-generation.spec.ts › Site Generation — Phase 4 › Index Page › shows correct stats
+tests\semantics\semantics-code-scroll.spec.ts › Code Behavior Scroll Options › Default behavior (scrollable=false) wraps text and expands
+tests\semantics\semantics-code-scroll.spec.ts › Code Behavior Scroll Options › Scrollable behavior (scrollable=true) does not wrap and scrolls
+tests\semantics\semantics-code-scroll.spec.ts › Code Behavior Scroll Options › Standalone code block default behavior
+tests\semantics\semantics-code-scroll.spec.ts › Code Behavior Scroll Options › Standalone code block scrollable behavior
+tests\semantics\semantics-new.spec.ts › New Semantic Behaviors › Code behavior works on PRE tag
+tests\semantics\semantics-new.spec.ts › New Semantic Behaviors › Description List behavior renders items correctly
+tests\semantics\semantics-new.spec.ts › New Semantic Behaviors › Empty state behavior renders correctly
+tests\semantics\semantics-new.spec.ts › New Semantic Behaviors › JSON behavior renders correctly
+tests\semantics\semantics-new.spec.ts › New Semantic Behaviors › List behavior handles JSON items
+tests\semantics\semantics-new.spec.ts › New Semantic Behaviors › List behavior renders items correctly
+tests\semantics\semantics-new.spec.ts › New Semantic Behaviors › Stat behavior renders correctly
+tests\semantics\semantics-new.spec.ts › New Semantic Behaviors › Timeline behavior renders correctly

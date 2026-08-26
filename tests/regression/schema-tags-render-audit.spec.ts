@@ -2,19 +2,19 @@ import { test, expect, Page } from '@playwright/test';
 
 /**
  * Issue #365: an audit created a bare `<wb-{tag}></wb-{tag}>` for each of 96
- * component schemas, ran `WB.scan()`, and flagged 20 as completely inert
- * (empty className + zero children after a settle delay). wb-skeleton was
+ * component schemas, ran `await WB.scan()`, and flagged 20 as completely inert
+ * (empty className + zero children after a settle delay). x-skeleton was
  * confirmed a false positive (its CSS is intentionally tag-selector-only).
  * The other 19 were assumed dead/unused as a batch and deprioritized without
  * per-tag verification -- this session re-verified each one individually.
  *
- * wb-fix-card was the one genuine, previously-unreported live bug found in
+ * x-fix-card was the one genuine, previously-unreported live bug found in
  * that follow-up: it IS used (tests/behaviors/_misc/fix-card-layout.html),
  * but was inert for two stacked reasons:
  *   1. fix-card.js (the WBFixCard custom-element class, which self-registers
- *      via customElements.define('wb-fix-card', ...)) was never imported by
- *      anything in the live app -- not eagerly (unlike wb-grid.js/
- *      wb-demo.js), not via tag-map.js's elementMap, not via
+ *      via customElements.define('[x-fix-card]', ...)) was never imported by
+ *      anything in the live app -- not eagerly (unlike x-grid.js/
+ *      x-demo.js), not via tag-map.js's elementMap, not via
  *      wb-viewmodels/index.js's lazy-load behaviorModules registry. So the
  *      tag never upgraded to the real class, and its `.data =` setter
  *      (the only thing that triggers render()) silently did nothing on a
@@ -25,27 +25,27 @@ import { test, expect, Page } from '@playwright/test';
  *      that doesn't exist (the real file is src/wb-viewmodels/fix-card.js)
  *      -- a second, independent reason the class never loaded there either.
  *
- * Fix: registered 'wb-fix-card' -> 'fix-card' in tag-map.js's elementMap and
- * wb-viewmodels/index.js's behaviorModules (mirroring wb-control.js's
+ * Fix: registered '[x-fix-card]' -> 'fix-card' in tag-map.js's elementMap and
+ * wb-viewmodels/index.js's behaviorModules (mirroring [x-control].js's
  * established pattern of a self-registering custom-element class that also
  * exports a default behavior function for the lazy-loader to resolve),
- * corrected the stale fixture path, and added wb-fix-card to both
+ * corrected the stale fixture path, and added x-fix-card to both
  * SCHEMA_EXCLUDED_TAGS lists (schema-builder.js + wb.js's processSchema) --
  * WBFixCard extends WBCard and rebuilds its own DOM unconditionally exactly
- * like the rest of the wb-card* family, but its literal tag name doesn't
+ * like the rest of the x-card* family, but its literal tag name doesn't
  * start with "WB-CARD" so the existing tagName.startsWith('WB-CARD') check
  * silently missed it.
  *
- * The other 18 (wb-autocomplete, wb-behavior, wb-behaviors, wb-colorpicker,
- * wb-counter, wb-error, wb-fieldset, wb-file, wb-floatinglabel, wb-formrow,
- * wb-help, wb-inputgroup, wb-label, wb-masked, wb-tags, wb-views, wb-wizard,
- * wb-search-index) were re-confirmed to have zero real-world usage as their
+ * The other 18 (x-autocomplete, x-behavior, x-behaviors, x-colorpicker,
+ * x-counter, x-error, x-fieldset, x-file, x-floatinglabel, x-formrow,
+ * x-help, x-inputgroup, x-label, x-masked, x-tags, wb-views, x-wizard,
+ * x-search-index) were re-confirmed to have zero real-world usage as their
  * own bare custom tag anywhere in pages/demos/docs/tests, AND (for the 13
  * form-enhancement tags) are declared `"wbBehavior": {"type": "modifier"}`
  * with an intentionally empty `$view: []` -- they were designed to attach to
  * a native element via an x-* attribute, never to exist as a standalone
  * <wb-X> tag, so "renders nothing as a bare tag" is the same class of
- * false positive as wb-skeleton, not a bug. See the #365 issue comment
+ * false positive as x-skeleton, not a bug. See the #365 issue comment
  * (posted this session) for the full per-tag table.
  */
 
@@ -64,7 +64,7 @@ async function inject(page: Page, html: string) {
     container.id = 'test-container';
     container.innerHTML = h;
     document.body.appendChild(container);
-    // Same non-eager WB.scan() path as card-typed-variants-no-op.spec.ts --
+    // Same non-eager await WB.scan() path as card-typed-variants-no-op.spec.ts --
     // custom elements are deferred to an IntersectionObserver and scan()
     // does not await that, so callers must poll afterward rather than
     // trusting a fixed-instant check.
@@ -74,12 +74,12 @@ async function inject(page: Page, html: string) {
   return ids;
 }
 
-test.describe('wb-fix-card actually upgrades and renders (#365)', () => {
-  test('bare <wb-fix-card> upgrades to the real custom element class', async ({ page }) => {
-    await inject(page, `<wb-fix-card id="fc-upgrade"></wb-fix-card>`);
+test.describe('[x-fix-card] actually upgrades and renders (#365)', () => {
+  test('bare <div x-fix-card> upgrades to the real custom element class', async ({ page }) => {
+    await inject(page, `<div x-fix-card id="fc-upgrade"></div>`);
 
     // 'fix-card' is only added by WBFixCard.connectedCallback -- it only
-    // fires if customElements.define('wb-fix-card', WBFixCard) actually ran
+    // fires if customElements.define('[x-fix-card]', WBFixCard) actually ran
     // and the browser upgraded the element. Before the fix, this class
     // never appeared because fix-card.js was never imported.
     await page.waitForFunction(
@@ -96,11 +96,11 @@ test.describe('wb-fix-card actually upgrades and renders (#365)', () => {
       const desc = Object.getOwnPropertyDescriptor(proto, 'data');
       return typeof desc?.set === 'function';
     });
-    expect(hasUpgraded, 'wb-fix-card must upgrade to WBFixCard (data must be a real accessor)').toBe(true);
+    expect(hasUpgraded, '[x-fix-card] must upgrade to WBFixCard (data must be a real accessor)').toBe(true);
   });
 
-  test('setting .data on an upgraded <wb-fix-card> actually renders content', async ({ page }) => {
-    await inject(page, `<wb-fix-card id="fc-render"></wb-fix-card>`);
+  test('setting .data on an upgraded <div x-fix-card> actually renders content', async ({ page }) => {
+    await inject(page, `<div x-fix-card id="fc-render"></div>`);
     await page.waitForFunction(
       () => document.getElementById('fc-render')?.classList.contains('fix-card'),
       { timeout: 5000 }
@@ -127,6 +127,6 @@ test.describe('wb-fix-card actually upgrades and renders (#365)', () => {
     await expect(page.locator('#fc-render .fix-title')).toHaveText('Regression check');
     await expect(page.locator('#fc-render .fix-status')).toHaveText('FIXED');
     const childCount = await page.locator('#fc-render').evaluate((el) => el.children.length);
-    expect(childCount, 'wb-fix-card must produce real child content once .data is set').toBeGreaterThan(0);
+    expect(childCount, '[x-fix-card] must produce real child content once .data is set').toBeGreaterThan(0);
   });
 });

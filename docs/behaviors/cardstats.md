@@ -2,14 +2,24 @@
 
 Statistics display card with value, label, icon, and trend indicator
 
-Applies to `<article>`, and to any element carrying `x-cardstats`.
+## Type — decorates a semantic element
 
-## Usage
+`x-cardstats` is the **article behavior**. It attaches to `<article>`, the element you would have reached for anyway — there is no new tag to learn.
+
+### How to write it
 
 ```html
-<article x-cardstats>
+<article x-cardstats value="1,284" label="Builds this month" trend="up" trend-value="12%"></article>
+```
+
+### On a different element
+
+Use `x-cardstats` when the host is not a `<article>` and you want the same behavior:
+
+```html
+<div x-cardstats>
   …
-</article>
+</div>
 ```
 
 ## Attributes

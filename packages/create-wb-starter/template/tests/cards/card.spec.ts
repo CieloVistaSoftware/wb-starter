@@ -37,77 +37,77 @@ test.describe('Card Behavior (integration)', () => {
 
   // BORDER TESTS - All cards must have a border
   test('should have a border on basic card', async ({ page }) => {
-    await injectCard(page, '<wb-card>Card with border</wb-card>');
-    const card = page.locator('#test-container wb-card');
+    await injectCard(page, '<article>Card with border</article>');
+    const card = page.locator('#test-container x-card');
     await expect(card).toHaveCSS('border-style', 'solid');
     await expect(card).toHaveCSS('border-width', '1px');
   });
 
   test('should have a border on cardimage', async ({ page }) => {
-    await injectCard(page, '<wb-cardimage src="test.jpg" title="Test">Content</wb-cardimage>');
-    const card = page.locator('#test-container wb-cardimage');
+    await injectCard(page, '<div x-cardimage src="test.jpg" title="Test">Content</div>');
+    const card = page.locator('#test-container x-cardimage');
     await expect(card).toHaveCSS('border-style', 'solid');
   });
 
   test('should have a border on cardbutton', async ({ page }) => {
-    await injectCard(page, '<wb-cardbutton title="Test" primary="Click">Content</wb-cardbutton>');
-    const card = page.locator('#test-container wb-cardbutton');
+    await injectCard(page, '<div x-cardbutton title="Test" primary="Click">Content</div>');
+    const card = page.locator('#test-container x-cardbutton');
     await expect(card).toHaveCSS('border-style', 'solid');
   });
 
   test('should have a border on cardfile', async ({ page }) => {
-    await injectCard(page, '<wb-cardfile filename="test.pdf" type="pdf">Content</wb-cardfile>');
-    const card = page.locator('#test-container wb-cardfile');
+    await injectCard(page, '<div x-cardfile filename="test.pdf" type="pdf">Content</div>');
+    const card = page.locator('#test-container x-cardfile');
     await expect(card).toHaveCSS('border-style', 'solid');
   });
 
   test('should have a border on cardhorizontal', async ({ page }) => {
-    await injectCard(page, '<wb-cardhorizontal title="Test">Content</wb-cardhorizontal>');
-    const card = page.locator('#test-container wb-cardhorizontal');
+    await injectCard(page, '<div x-cardhorizontal title="Test">Content</div>');
+    const card = page.locator('#test-container x-cardhorizontal');
     await expect(card).toHaveCSS('border-style', 'solid');
   });
 
   // CLASS TESTS
-  test('should render a basic card with wb-card class', async ({ page }) => {
-    await injectCard(page, '<wb-card>Basic card</wb-card>');
-    const card = page.locator('#test-container wb-card');
-    await expect(card).toHaveClass(/wb-card/);
+  test('should render a basic card with x-card class', async ({ page }) => {
+    await injectCard(page, '<article>Basic card</article>');
+    const card = page.locator('#test-container x-card');
+    await expect(card).toHaveClass(/x-card/);
   });
 
-  test('should apply wb-card--hoverable when hoverable attribute present', async ({ page }) => {
-    await injectCard(page, '<wb-card hoverable>Hoverable card</wb-card>');
-    const card = page.locator('#test-container wb-card');
-    await expect(card).toHaveClass(/wb-card--hoverable/);
+  test('should apply x-card--hoverable when hoverable attribute present', async ({ page }) => {
+    await injectCard(page, '<article hoverable>Hoverable card</article>');
+    const card = page.locator('#test-container x-card');
+    await expect(card).toHaveClass(/x-card--hoverable/);
   });
 
-  test('should apply wb-card--clickable when clickable attribute present', async ({ page }) => {
-    await injectCard(page, '<wb-card clickable>Clickable card</wb-card>');
-    const card = page.locator('#test-container wb-card');
-    await expect(card).toHaveClass(/wb-card--clickable/);
+  test('should apply x-card--clickable when clickable attribute present', async ({ page }) => {
+    await injectCard(page, '<article clickable>Clickable card</article>');
+    const card = page.locator('#test-container x-card');
+    await expect(card).toHaveClass(/x-card--clickable/);
   });
 
-  test('should apply wb-card--elevated when elevated attribute present', async ({ page }) => {
-    await injectCard(page, '<wb-card elevated>Elevated card</wb-card>');
-    const card = page.locator('#test-container wb-card');
-    await expect(card).toHaveClass(/wb-card--elevated/);
+  test('should apply x-card--elevated when elevated attribute present', async ({ page }) => {
+    await injectCard(page, '<article elevated>Elevated card</article>');
+    const card = page.locator('#test-container x-card');
+    await expect(card).toHaveClass(/x-card--elevated/);
   });
 
-  test('should have base wb-card class without variant modifier when no variant specified', async ({ page }) => {
-    await injectCard(page, '<wb-card>Default variant card</wb-card>');
-    const card = page.locator('#test-container wb-card');
+  test('should have base x-card class without variant modifier when no variant specified', async ({ page }) => {
+    await injectCard(page, '<article>Default variant card</article>');
+    const card = page.locator('#test-container x-card');
     await expect(card).toHaveClass(/\bwb-card\b/);
-    await expect(card).not.toHaveClass(/wb-card--info/);
+    await expect(card).not.toHaveClass(/x-card--info/);
   });
 
   test('should apply variant class when variant attribute specified', async ({ page }) => {
-    await injectCard(page, '<wb-card variant="glass">Glass variant card</wb-card>');
-    const card = page.locator('#test-container wb-card');
-    await expect(card).toHaveClass(/wb-card--glass/);
+    await injectCard(page, '<article variant="glass">Glass variant card</article>');
+    const card = page.locator('#test-container x-card');
+    await expect(card).toHaveClass(/x-card--glass/);
   });
 
   test('should render header when title attribute present', async ({ page }) => {
-    await injectCard(page, '<wb-card title="Test Title">Content</wb-card>');
-    const card = page.locator('#test-container wb-card');
+    await injectCard(page, '<article title="Test Title">Content</article>');
+    const card = page.locator('#test-container x-card');
     const header = card.locator('header');
     await expect(header).toBeVisible();
     const title = card.locator('h3');
@@ -115,26 +115,26 @@ test.describe('Card Behavior (integration)', () => {
   });
 
   test('should render subtitle when subtitle attribute present', async ({ page }) => {
-    await injectCard(page, '<wb-card title="Title" subtitle="Sub">Content</wb-card>');
-    const card = page.locator('#test-container wb-card');
-    // card.js renders subtitle as <div class="wb-card__subtitle"> inside
+    await injectCard(page, '<article title="Title" subtitle="Sub">Content</article>');
+    const card = page.locator('#test-container x-card');
+    // card.js renders subtitle as <div class="x-card__subtitle"> inside
     // <header> (src/wb-viewmodels/card.js createHeader()), not a <p> —
     // the old selector never matched anything (#317).
-    const subtitle = card.locator('header .wb-card__subtitle');
+    const subtitle = card.locator('header .x-card__subtitle');
     await expect(subtitle).toContainText('Sub');
   });
 
   test('should render footer when footer attribute present', async ({ page }) => {
-    await injectCard(page, '<wb-card footer="Footer text">Content</wb-card>');
-    const card = page.locator('#test-container wb-card');
+    await injectCard(page, '<article footer="Footer text">Content</article>');
+    const card = page.locator('#test-container x-card');
     const footer = card.locator('footer');
     await expect(footer).toBeVisible();
     await expect(footer).toContainText('Footer text');
   });
 
   test('should wrap content in main element', async ({ page }) => {
-    await injectCard(page, '<wb-card>Inner content</wb-card>');
-    const card = page.locator('#test-container wb-card');
+    await injectCard(page, '<article>Inner content</article>');
+    const card = page.locator('#test-container x-card');
     const main = card.locator('main');
     await expect(main).toBeVisible();
     await expect(main).toContainText('Inner content');

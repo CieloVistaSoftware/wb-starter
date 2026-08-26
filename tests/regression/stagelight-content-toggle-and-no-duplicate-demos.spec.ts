@@ -1,45 +1,45 @@
 import { test, expect } from '@playwright/test';
 
 /**
- * #656 — <wb-stagelight>text</wb-stagelight> discarded its authored content,
+ * #656 — <div x-stagelight>text</div> discarded its authored content,
  *        and stagelight.schema.json's $view raced stagelight() to build
- *        .wb-stagelight__spot (both create it; last writer wins via its own
- *        innerHTML = ''). Fixed by adding wb-stagelight to SCHEMA_EXCLUDED_TAGS.
- * #657 — demos/site/effects.html rendered the identical <wb-snow> demo twice.
+ *        .x-stagelight__spot (both create it; last writer wins via its own
+ *        innerHTML = ''). Fixed by adding x-stagelight to SCHEMA_EXCLUDED_TAGS.
+ * #657 — demos/site/effects.html rendered the identical <div x-snow> demo twice.
  * #658 — the spotlight had no off switch, though the fixture variant of the
  *        same component has toggled since it shipped.
  */
 
-test.describe('wb-stagelight renders content, builds one overlay, and toggles (#656/#658)', () => {
-  test('every <wb-stagelight> keeps its authored text', async ({ page }) => {
+test.describe('[x-stagelight] renders content, builds one overlay, and toggles (#656/#658)', () => {
+  test('every <div x-stagelight> keeps its authored text', async ({ page }) => {
     await page.goto('/demos/site/effects.html', { waitUntil: 'domcontentloaded' });
-    await page.waitForFunction(() => document.querySelectorAll('wb-stagelight').length > 0, null, {
+    await page.waitForFunction(() => document.querySelectorAll('[x-stagelight]').length > 0, null, {
       timeout: 30000,
     });
     await page.waitForTimeout(2000);
 
     const texts = await page.evaluate(() =>
-      [...document.querySelectorAll('wb-stagelight')].map((e) => (e.textContent ?? '').trim())
+      [...document.querySelectorAll('[x-stagelight]')].map((e) => (e.textContent ?? '').trim())
     );
 
     expect(texts.length, 'expected stagelight demos on the page').toBeGreaterThan(0);
     for (const t of texts) {
       // Standard §1: every example must visibly render. Before the fix the
       // schema pass wiped this to "".
-      expect(t.length, 'a <wb-stagelight> rendered with no content').toBeGreaterThan(0);
+      expect(t.length, 'a <div x-stagelight> rendered with no content').toBeGreaterThan(0);
     }
   });
 
-  test('exactly one .wb-stagelight__spot per spotlight host (no schema/behavior race)', async ({ page }) => {
+  test('exactly one .x-stagelight__spot per spotlight host (no schema/behavior race)', async ({ page }) => {
     await page.goto('/demos/site/effects.html', { waitUntil: 'domcontentloaded' });
-    await page.waitForFunction(() => !!document.querySelector('.wb-stagelight__spot'), null, {
+    await page.waitForFunction(() => !!document.querySelector('.x-stagelight__spot'), null, {
       timeout: 30000,
     });
     await page.waitForTimeout(1500);
 
     const counts = await page.evaluate(() => ({
-      hosts: document.querySelectorAll('.wb-stagelight--spotlight').length,
-      spots: document.querySelectorAll('.wb-stagelight__spot').length,
+      hosts: document.querySelectorAll('.x-stagelight--spotlight').length,
+      spots: document.querySelectorAll('.x-stagelight__spot').length,
     }));
 
     expect(counts.hosts).toBeGreaterThan(0);
@@ -48,17 +48,17 @@ test.describe('wb-stagelight renders content, builds one overlay, and toggles (#
 
   test('the spotlight can be switched off, and its content stays readable', async ({ page }) => {
     await page.goto('/demos/site/effects.html', { waitUntil: 'domcontentloaded' });
-    await page.waitForFunction(() => !!document.querySelector('.wb-stagelight--spotlight'), null, {
+    await page.waitForFunction(() => !!document.querySelector('.x-stagelight--spotlight'), null, {
       timeout: 30000,
     });
     await page.waitForTimeout(1500);
 
     const result = await page.evaluate(async () => {
-      const host = document.querySelector('.wb-stagelight--spotlight') as HTMLElement & {
+      const host = document.querySelector('.x-stagelight--spotlight') as HTMLElement & {
         wbStageLight?: any;
       };
       const overlay = () =>
-        getComputedStyle(host.querySelector('.wb-stagelight__spot') as HTMLElement).display;
+        getComputedStyle(host.querySelector('.x-stagelight__spot') as HTMLElement).display;
 
       const onDisplay = overlay();
       const onState = host.wbStageLight.isOn;
@@ -100,9 +100,9 @@ test.describe('wb-stagelight renders content, builds one overlay, and toggles (#
 });
 
 test.describe('effects.html has no duplicate demos (#657)', () => {
-  test('no two <wb-demo> blocks contain byte-identical live markup', async ({ page }) => {
+  test('no two <div x-demo> blocks contain byte-identical live markup', async ({ page }) => {
     await page.goto('/demos/site/effects.html', { waitUntil: 'domcontentloaded' });
-    await page.waitForFunction(() => document.querySelectorAll('wb-demo').length > 0, null, {
+    await page.waitForFunction(() => document.querySelectorAll('[x-demo]').length > 0, null, {
       timeout: 30000,
     });
 
@@ -112,7 +112,7 @@ test.describe('effects.html has no duplicate demos (#657)', () => {
       const html = await (await fetch(location.pathname)).text();
       const doc = new DOMParser().parseFromString(html, 'text/html');
       const seen = new Map<string, number>();
-      for (const d of [...doc.querySelectorAll('wb-demo')]) {
+      for (const d of [...doc.querySelectorAll('[x-demo]')]) {
         const key = d.innerHTML.replace(/\s+/g, ' ').trim();
         seen.set(key, (seen.get(key) ?? 0) + 1);
       }

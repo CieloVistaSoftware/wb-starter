@@ -5,11 +5,11 @@ const html = fs.readFileSync('demos/behaviors-showcase.html', 'utf8');
 // Check exact selectors the failing tests use
 const checks = [
   { name: 'x-stepper in #selection', selector: '#selection', attr: 'x-stepper' },
-  { name: 'wb-alert[type="info"] in #feedback', selector: '#feedback', check: 'wb-alert' },
+  { name: 'x-alert[type="info"] in #feedback', selector: '#feedback', check: 'x-alert' },
   { name: 'x-breadcrumb in #navigation', selector: '#navigation', attr: 'x-breadcrumb' },
   { name: 'x-pagination in #navigation', selector: '#navigation', attr: 'x-pagination' },
   { name: 'x-steps in #navigation', selector: '#navigation', attr: 'x-steps' },
-  { name: 'wb-audio in #media', selector: '#media', check: 'wb-audio' },
+  { name: 'x-audio in #media', selector: '#media', check: 'x-audio' },
   { name: 'x-youtube in #media', selector: '#media', attr: 'x-youtube' },
   { name: 'x-clock in #utilities', selector: '#utilities', attr: 'x-clock' },
   { name: 'x-countdown in #utilities', selector: '#utilities', attr: 'x-countdown' },
@@ -45,12 +45,12 @@ checks.forEach(c => {
   }
 });
 
-// Also check wb-spinner for animation
-const spinners = (html.match(/<wb-spinner/gi) || []).length;
+// Also check x-spinner for animation
+const spinners = (html.match(/<span x-spinner/gi) || []).length;
 console.log(`\nwb-spinner total: ${spinners}`);
 
 // Check if alerts have type attribute
-const alertTypes = [...html.matchAll(/<wb-alert[^>]*type="([^"]+)"/gi)].map(m => m[1]);
+const alertTypes = [...html.matchAll(/<div[^>]*x-alert[^>]*type="([^"]+)"/gi)].map(m => m[1]);
 console.log('Alert types found:', alertTypes.join(', '));
 
 // Check toast button attributes 

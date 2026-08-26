@@ -1,10 +1,10 @@
 /**
- * Strip all wb-ready class additions from behavior JS files.
+ * Strip all x-ready class additions from behavior JS files.
  * Removes:
- *   element.classList.add('wb-ready')
- *   element.classList.add("wb-ready")
- *   btnEl.classList.add("wb-ready")
- *   and variations with wb-ready in a multi-class add
+ *   element.classList.add('x-ready')
+ *   element.classList.add("x-ready")
+ *   btnEl.classList.add("x-ready")
+ *   and variations with x-ready in a multi-class add
  */
 import fs from 'fs';
 import path from 'path';
@@ -29,29 +29,29 @@ function processFile(filePath) {
   let content = original;
   let removed = 0;
 
-  // Pattern 1: standalone wb-ready add — entire line
-  // e.g. element.classList.add('wb-ready');
-  //      btnEl.classList.add("wb-ready");
-  //      if (isCustom) element.classList.add("wb-ready");
-  content = content.replace(/^[ \t]*(?:if\s*\([^)]*\)\s*)?[\w.]+\.classList\.add\(\s*['"]wb-ready['"]\s*\);?\s*\n/gm, (match) => {
+  // Pattern 1: standalone x-ready add — entire line
+  // e.g. element.classList.add('x-ready');
+  //      btnEl.classList.add("x-ready");
+  //      if (isCustom) element.classList.add("x-ready");
+  content = content.replace(/^[ \t]*(?:if\s*\([^)]*\)\s*)?[\w.]+\.classList\.add\(\s*['"]x-ready['"]\s*\);?\s*\n/gm, (match) => {
     removed++;
     return '';
   });
 
-  // Pattern 2: wb-ready as part of multi-class add
-  // e.g. element.classList.add('wb-spinner', 'wb-ready')
-  //      element.classList.add("wb-button", "wb-ready")
-  content = content.replace(/(\.classList\.add\([^)]*),\s*['"]wb-ready['"]/g, (match, before) => {
+  // Pattern 2: x-ready as part of multi-class add
+  // e.g. element.classList.add('x-spinner', 'x-ready')
+  //      element.classList.add("x-button", "x-ready")
+  content = content.replace(/(\.classList\.add\([^)]*),\s*['"]x-ready['"]/g, (match, before) => {
     removed++;
     return before;
   });
-  content = content.replace(/(\.classList\.add\(\s*)['"]wb-ready['"]\s*,\s*/g, (match, before) => {
+  content = content.replace(/(\.classList\.add\(\s*)['"]x-ready['"]\s*,\s*/g, (match, before) => {
     removed++;
     return before;
   });
 
-  // Pattern 3: wb-ready in classList.remove cleanup
-  content = content.replace(/,\s*['"]wb-ready['"]/g, (match, offset) => {
+  // Pattern 3: x-ready in classList.remove cleanup
+  content = content.replace(/,\s*['"]x-ready['"]/g, (match, offset) => {
     const context = content.substring(Math.max(0, offset - 50), offset + match.length);
     if (context.includes('classList.remove')) {
       removed++;
@@ -68,6 +68,6 @@ function processFile(filePath) {
   }
 }
 
-console.log('Stripping wb-ready from all behavior JS files...\n');
+console.log('Stripping x-ready from all behavior JS files...\n');
 processDir(SRC_DIR);
 console.log(`\nDone: ${totalRemoved} removals across ${filesChanged} files`);

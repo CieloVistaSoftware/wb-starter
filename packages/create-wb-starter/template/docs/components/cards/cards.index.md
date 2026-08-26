@@ -30,23 +30,22 @@ All card variants compose the shared `card` behavior and Light-DOM markup:
 
 ### Custom Element (Recommended)
 
-<wb-demo>
-<wb-card
+<div x-demo>
+<article
   title="Card Title"
   subtitle="Subtitle">
   Card content here
-</wb-card>
-</wb-demo>
+</article>
+</div>
 
 ### Semantic Element + Data Attributes
 
-<wb-demo>
+<div x-demo>
 <article
-  x-card
   title="Card Title">
   Card content here
 </article>
-</wb-demo>
+</div>
 
 ## Common Card Properties
 
@@ -77,59 +76,59 @@ All card variants compose the shared `card` behavior and Light-DOM markup:
 ## Quick Examples
 
 ### Basic Card
-<wb-demo>
-<wb-card title="Hello World"> This is a simple card with content. </wb-card>
-</wb-demo>
+<div x-demo>
+<article title="Hello World"> This is a simple card with content. </article>
+</div>
 
 ### Elevated Card with Footer
-<wb-demo>
-<wb-card
+<div x-demo>
+<article
   title="Elevated Card"
   footer="Last updated: Today"
   elevated>
   Card content with elevation shadow.
-</wb-card>
-</wb-demo>
+</article>
+</div>
 
 ### Glass Variant
-<wb-demo>
-<wb-card
+<div x-demo>
+<article
   title="Glass Card"
   variant="glass">
   Frosted glass effect card.
-</wb-card>
-</wb-demo>
+</article>
+</div>
 
 ### Image Card
-<wb-demo>
-<wb-cardimage
+<div x-demo>
+<div x-cardimage
   src="https://picsum.photos/seed/cardsindex/400/225"
   alt="Hero image"
   title="Featured Image"
   subtitle="Image description">
-</wb-cardimage>
-</wb-demo>
+</div>
+</div>
 
 ### Profile Card
-<wb-demo>
-<wb-cardprofile
+<div x-demo>
+<div x-cardprofile
   name="John Doe"
   role="Software Engineer"
   avatar="https://picsum.photos/seed/johndoe/100/100"
   bio="Building great software.">
-</wb-cardprofile>
-</wb-demo>
+</div>
+</div>
 
 ### Pricing Card
-<wb-demo>
-<wb-cardpricing
+<div x-demo>
+<div x-cardpricing
   plan="Pro Plan"
   price="$29"
   period="/month"
   features="Unlimited projects, Priority support, API access"
   cta="Get Started">
-</wb-cardpricing>
-</wb-demo>
+</div>
+</div>
 
 ## File Structure
 

@@ -1,7 +1,7 @@
 /**
  * triage-data-wb.mjs
  * Scans all test files for data-wb references, categorizes each hit,
- * and writes a migration report to data/data-wb-triage.json
+ * and writes a migration report to data/data-x-triage.json
  */
 import { readFileSync, readdirSync, statSync, writeFileSync } from 'fs';
 import { join, relative } from 'path';
@@ -129,7 +129,7 @@ const report = {
   hits
 };
 
-writeFileSync('data/data-wb-triage.json', JSON.stringify(report, null, 2));
+writeFileSync('data/data-x-triage.json', JSON.stringify(report, null, 2));
 
 console.log(`\nTriage complete: ${hits.length} hits\n`);
 console.log('By Category:');
@@ -144,4 +144,4 @@ console.log('\nBy Confidence:');
 for (const [k, v] of Object.entries(summary.byConfidence).sort((a, b) => b[1] - a[1])) {
   console.log(`  ${k}: ${v}`);
 }
-console.log('\nFull report: data/data-wb-triage.json');
+console.log('\nFull report: data/data-x-triage.json');

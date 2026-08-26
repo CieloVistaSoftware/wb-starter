@@ -5,59 +5,84 @@
  * -----------------------------------------------------------------------------
  */
 
-/* #448: tag selector + class selector for both <wb-alert> tags and
-   <div x-alert> elements that get the .wb-alert class added by alert() */
-wb-alert,
-.wb-alert {
+/* #448: tag selector + class selector for both <div x-alert> tags and
+   <div x-alert> elements that get the .x-alert class added by alert() */
+x-alert,
+.x-alert {
+  position: relative;
   display: flex;
   align-items: flex-start;
   gap: 0.5rem;
-  padding: 0.75rem 1rem;
+  padding: 1rem;
   border-radius: 4px;
   border-left: 4px solid;
   color: white;
 }
 
+/* #633: Standard §13 requires >=1rem between stacked sibling alerts too, not
+   just internal padding -- nothing declared this gap at all (confirmed live:
+   pages/behaviors.html/themes.html/about.html/ai-docs.html measured 12px
+   between consecutive alerts, whatever incidental spacing their parent
+   happened to provide, under the 1rem/16px minimum). Adjacent-sibling
+   margin, not a parent `gap`, so it's correct regardless of what container
+   (grid, flex, plain block flow) the alerts happen to be stacked in. */
+x-alert + x-alert,
+.x-alert + .x-alert,
+x-alert + .x-alert,
+.x-alert + x-alert {
+  margin-top: 1rem;
+}
+
 /* Variants */
-.wb-alert--info {
+.x-alert--info {
   background: var(--info-color, #3b82f6);
   border-color: var(--info-dark, #1e40af);
 }
 
-.wb-alert--success {
+.x-alert--success {
   background: var(--success-color, #22c55e);
   border-color: var(--success-dark, #166534);
 }
 
-.wb-alert--warning {
+.x-alert--warning {
   background: var(--warning-color, #f59e0b);
   border-color: var(--warning-dark, #92400e);
 }
 
-.wb-alert--error {
+.x-alert--error {
   background: var(--danger-color, #ef4444);
   border-color: var(--danger-dark, #991b1b);
 }
 
 /* Internal structure */
-.wb-alert__icon {
+.x-alert__icon {
   flex-shrink: 0;
 }
 
-.wb-alert__content {
+.x-alert__content {
   flex: 1;
 }
 
-.wb-alert__title {
+/* Room for the close button, now pinned to the top-right corner via
+   position:absolute -- without this, longer titles/messages run
+   underneath it instead of wrapping clear of it. */
+.x-alert:has(.x-alert__close) .x-alert__content {
+  padding-right: 1.5rem;
+}
+
+.x-alert__title {
   font-weight: 600;
   margin-bottom: 0.25rem;
 }
 
-.wb-alert__message {
+.x-alert__message {
   margin: 0;
 }
 
-.wb-alert__close {
+.x-alert__close {
+  position: absolute;
+  top: 0.5rem;
+  right: 0.5rem;
   background: none;
   border: none;
   cursor: pointer;
@@ -68,6 +93,6 @@ wb-alert,
   padding: 0;
 }
 
-.wb-alert__close:hover {
+.x-alert__close:hover {
   opacity: 1;
 }

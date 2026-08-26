@@ -25,14 +25,14 @@ async function injectAndScan(page: Page, html: string) {
     container.innerHTML = h;
     
     // Force eager loading
-    const elements = container.querySelectorAll('.wb-ready');
+    const elements = container.querySelectorAll('.x-ready');
     elements.forEach(el => el.setAttribute('', ''));
     
     document.body.appendChild(container);
   }, html);
   
-  await page.evaluate(() => {
-    (window as any).WB.scan(document.getElementById('test-container'));
+  await page.evaluate(async () => {
+    await (window as any).WB.scan(document.getElementById('test-container'));
   });
   
   await page.waitForTimeout(500);
@@ -45,7 +45,7 @@ test.describe('effects Behavior', () => {
     page.on('pageerror', (err) => errors.push(err.message));
     
     const setupHtml = [
-      '<wb-effects>Test content</wb-effects>'
+      '<div>Test content</div>'
     ];
     
     await injectAndScan(page, setupHtml.join('\n'));
@@ -61,10 +61,10 @@ test.describe('effects Behavior', () => {
   });
 
   test('element is visible after scan', async ({ page }) => {
-    const html = '<wb-effects>Test content</wb-effects>';
+    const html = '<div>Test content</div>';
     await injectAndScan(page, html);
     
-    const el = page.locator('#test-container wb-effects, #test-container [x-effects]').first();
+    const el = page.locator('#test-container x-effects, #test-container [x-effects]').first();
     const isPresent = await el.count() > 0;
     
     if (isPresent) {

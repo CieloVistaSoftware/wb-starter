@@ -3,12 +3,12 @@
  * -----------------------------------------------------------------------------
  * A slider component for selecting a value from a range.
  * 
- * Custom Tag: <wb-slider>
+ * Custom Tag: <div x-slider>
  * -----------------------------------------------------------------------------
  */
 export function slider(element, options = {}) {
-  // #448: no classList.add('wb-slider') -- no CSS selector anywhere depends
-  // on the bare class; it just duplicated <wb-slider>'s own tag name.
+  // #448: no classList.add('x-slider') -- no CSS selector anywhere depends
+  // on the bare class; it just duplicated <div x-slider>'s own tag name.
   return () => {};
 }
 export default slider;

@@ -7,7 +7,7 @@
 // in-memory `errors` array and its OWN independent POST to
 // /api/error-log/append, so anything routed through Events.error() (e.g.
 // wb.js's WB:LegacySyntax detection) never showed up in error-logger.js's
-// on-screen panel (#wb-error-display) or its getErrors(), even though both
+// on-screen panel (#x-error-display) or its getErrors(), even though both
 // systems happened to write the same on-disk data/errors.json. Delegating
 // storage to logError() here keeps this file's real value -- the richer
 // stack-trace parsing and toast-style presentation below -- as an
@@ -117,26 +117,26 @@ function getErrorContainer() {
   if (errorContainer) return errorContainer;
   
   // Add CSS animations if not present
-  if (!document.getElementById('wb-events-styles')) {
+  if (!document.getElementById('x-events-styles')) {
     const style = document.createElement('style');
-    style.id = 'wb-events-styles';
+    style.id = 'x-events-styles';
     style.textContent = `
-      @keyframes wb-slide-in {
+      @keyframes x-slide-in {
         from { opacity: 0; transform: translateX(100%); }
         to { opacity: 1; transform: translateX(0); }
       }
-      @keyframes wb-fade-out {
+      @keyframes x-fade-out {
         from { opacity: 1; }
         to { opacity: 0; }
       }
-      .wb-error-toast {
+      .x-error-toast {
         font-family: system-ui, -apple-system, sans-serif;
-        animation: wb-slide-in 0.3s ease;
+        animation: x-slide-in 0.3s ease;
       }
-      .wb-error-toast.closing {
-        animation: wb-fade-out 0.3s ease;
+      .x-error-toast.closing {
+        animation: x-fade-out 0.3s ease;
       }
-      .wb-stack-frame {
+      .x-stack-frame {
         font-family: 'JetBrains Mono', 'Fira Code', Consolas, monospace;
         font-size: 0.6875rem;
         line-height: 1.6;
@@ -146,14 +146,14 @@ function getErrorContainer() {
            minimum). */
         padding: 1rem;
       }
-      .wb-error-toast details summary {
+      .x-error-toast details summary {
         cursor: pointer;
         padding: 4px 0;
       }
-      .wb-error-toast details summary:hover {
+      .x-error-toast details summary:hover {
         color: white;
       }
-      .wb-error-module {
+      .x-error-module {
         background: rgba(255,255,255,0.15);
         padding: 2px 6px;
         border-radius: 3px;
@@ -165,7 +165,7 @@ function getErrorContainer() {
   }
   
   errorContainer = document.createElement('div');
-  errorContainer.id = 'wb-events-container';
+  errorContainer.id = 'x-events-container';
   errorContainer.style.cssText = `
     position: fixed;
     bottom: 1rem;
@@ -198,7 +198,7 @@ function showToast(level, message, data = {}) {
   const stackInfo = parseStack(data.stack);
   
   const toast = document.createElement('div');
-  toast.className = 'wb-error-toast';
+  toast.className = 'x-error-toast';
   toast.style.cssText = `
     background: ${c.bg};
     border-left: 4px solid ${c.border};
@@ -220,7 +220,7 @@ function showToast(level, message, data = {}) {
   // Add module badge
   if (data.module || stackInfo.module !== 'unknown') {
     const moduleName = data.module || stackInfo.module;
-    headerHTML += `<span class="wb-error-module">${escapeHtml(moduleName)}</span>`;
+    headerHTML += `<span class="x-error-module">${escapeHtml(moduleName)}</span>`;
   }
   
   // Add line number
@@ -230,11 +230,11 @@ function showToast(level, message, data = {}) {
   }
   
   headerHTML += `
-      <button class="wb-error-copy-btn" 
+      <button class="x-error-copy-btn" 
               style="margin-left:auto;margin-right:8px;background:rgba(255,255,255,0.2);border:1px solid rgba(255,255,255,0.4);color:white;cursor:pointer;font-size:0.6875rem;padding:2px 8px;border-radius:4px;">
         📋 Copy
       </button>
-      <button onclick="this.closest('.wb-error-toast').remove()" 
+      <button onclick="this.closest('.x-error-toast').remove()" 
               style="background:none;border:none;color:white;cursor:pointer;opacity:0.7;font-size:1.2rem;padding:0;">×</button>
     </div>
   `;
@@ -283,7 +283,7 @@ function showToast(level, message, data = {}) {
         <summary style="cursor:pointer;font-size:0.6875rem;opacity:0.8;user-select:none;">
           Stack Trace (${stackInfo.frames.length} frames)
         </summary>
-        <div class="wb-stack-frame" style="
+        <div class="x-stack-frame" style="
           margin-top:0.5rem;
           background:rgba(0,0,0,0.2);
           border-radius:4px;
@@ -302,7 +302,7 @@ function showToast(level, message, data = {}) {
         <summary style="cursor:pointer;font-size:0.6875rem;opacity:0.8;user-select:none;">
           Stack Trace
         </summary>
-        <div class="wb-stack-frame" style="
+        <div class="x-stack-frame" style="
           margin-top:0.5rem;
           background:rgba(0,0,0,0.2);
           border-radius:4px;
@@ -319,7 +319,7 @@ function showToast(level, message, data = {}) {
   container.appendChild(toast);
   
   // Attach copy handler
-  const copyBtn = toast.querySelector('.wb-error-copy-btn');
+  const copyBtn = toast.querySelector('.x-error-copy-btn');
   if (copyBtn) {
     copyBtn.onclick = (e) => {
       e.stopPropagation();

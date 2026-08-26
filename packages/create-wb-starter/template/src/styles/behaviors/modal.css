@@ -6,7 +6,7 @@
  * -----------------------------------------------------------------------------
  */
 
-.wb-modal {
+.x-modal {
   display: none;
   position: fixed;
   top: 0;
@@ -19,11 +19,11 @@
   justify-content: center;
 }
 
-.wb-modal.open {
+.x-modal.open {
   display: flex;
 }
 
-.wb-modal-content {
+.x-modal-content {
   background: var(--bg-primary);
   border-radius: 8px;
   padding: 1.5rem;

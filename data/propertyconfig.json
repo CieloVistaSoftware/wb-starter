@@ -113,7 +113,7 @@
       "description": "URL to media file (image, audio, video)",
       "category": "media",
       "componentOverrides": {
-        "audio": { "ui": "audio", "default": "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3" },
+        "audio": { "ui": "audio", "default": "https://archive.org/download/nineinchnails_ghosts_I_IV/01_Ghosts_I.mp3" },
         "video": { "ui": "video", "default": "" },
         "cardvideo": { "ui": "video", "default": "https://www.w3schools.com/html/mov_bbb.mp4" },
         "image": { "ui": "image", "default": "https://picsum.photos/400/300" },
@@ -1194,7 +1194,7 @@
       "message": "This is an alert message."
     },
     "audio": {
-      "src": "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3",
+      "src": "https://archive.org/download/nineinchnails_ghosts_I_IV/01_Ghosts_I.mp3",
       "volume": "0.8",
       "bass": "0",
       "treble": "0",

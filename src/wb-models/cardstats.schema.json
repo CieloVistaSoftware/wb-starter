@@ -4,13 +4,13 @@
   "title": "Stats Card",
   "description": "Statistics display card with value, label, icon, and trend indicator",
   "schemaFor": "cardstats",
-  "baseClass": "wb-stats",
+  "baseClass": "x-stats",
   "semanticElement": {
     "tagName": "article",
     "implicitRole": "article"
   },
   "compliance": {
-    "baseClass": "wb-stats",
+    "baseClass": "x-stats",
     "supportLevel": "stable",
     "accessibility": "high"
   },
@@ -40,7 +40,7 @@
         "down",
         "neutral"
       ],
-      "appliesClass": "wb-stats--trend-{{value}}",
+      "appliesClass": "x-stats--trend-{{value}}",
       "default": ""
     },
     "trendValue": {
@@ -58,7 +58,7 @@
         "minimal"
       ],
       "default": "default",
-      "appliesClass": "wb-stats--{{value}}"
+      "appliesClass": "x-stats--{{value}}"
     },
     "color": {
       "type": "string",
@@ -162,87 +162,87 @@
     }
   },
   "$cssAPI": {
-    "--wb-stats-padding": {
+    "--x-stats-padding": {
       "default": "1rem",
       "description": "Card padding"
     },
-    "--wb-stats-radius": {
+    "--x-stats-radius": {
       "default": "8px",
       "description": "Border radius"
     },
-    "--wb-stats-bg": {
+    "--x-stats-bg": {
       "default": "var(--bg-surface, #ffffff)",
       "description": "Card background"
     },
-    "--wb-stats-border": {
+    "--x-stats-border": {
       "default": "1px solid var(--border-color, #e0e0e0)",
       "description": "Card border"
     },
-    "--wb-stats-gap": {
+    "--x-stats-gap": {
       "default": "0.5rem",
       "description": "Gap between elements"
     },
-    "--wb-stats-icon-size": {
+    "--x-stats-icon-size": {
       "default": "1.5rem",
       "description": "Icon font size"
     },
-    "--wb-stats-icon-color": {
+    "--x-stats-icon-color": {
       "default": "var(--text-secondary, #666)",
       "description": "Icon color"
     },
-    "--wb-stats-label-size": {
+    "--x-stats-label-size": {
       "default": "0.875rem",
       "description": "Label font size"
     },
-    "--wb-stats-label-color": {
+    "--x-stats-label-color": {
       "default": "var(--text-secondary, #666)",
       "description": "Label text color"
     },
-    "--wb-stats-value-size": {
+    "--x-stats-value-size": {
       "default": "2rem",
       "description": "Value font size"
     },
-    "--wb-stats-value-weight": {
+    "--x-stats-value-weight": {
       "default": "700",
       "description": "Value font weight"
     },
-    "--wb-stats-value-color": {
+    "--x-stats-value-color": {
       "default": "var(--text-primary, #1a1a1a)",
       "description": "Value text color"
     },
-    "--wb-stats-trend-size": {
+    "--x-stats-trend-size": {
       "default": "0.875rem",
       "description": "Trend font size"
     },
-    "--wb-stats-trend-up-color": {
+    "--x-stats-trend-up-color": {
       "default": "var(--success, #4caf50)",
       "description": "Trend up color"
     },
-    "--wb-stats-trend-down-color": {
+    "--x-stats-trend-down-color": {
       "default": "var(--error, #f44336)",
       "description": "Trend down color"
     },
-    "--wb-stats-trend-neutral-color": {
+    "--x-stats-trend-neutral-color": {
       "default": "var(--text-secondary, #666)",
       "description": "Trend neutral color"
     },
-    "--wb-stats-accent": {
+    "--x-stats-accent": {
       "default": "var(--primary, #6366f1)",
       "description": "Accent color (used for highlights)"
     }
   },
   "test": {
     "setup": [
-      "<wb-cardstats>Basic cardstats content</wb-cardstats>",
-      "<wb-cardstats trend=\"up\">trend=up</wb-cardstats>",
-      "<wb-cardstats trend=\"down\">trend=down</wb-cardstats>",
-      "<wb-cardstats trend=\"neutral\">trend=neutral</wb-cardstats>",
-      "<wb-cardstats variant=\"default\">variant=default</wb-cardstats>",
-      "<wb-cardstats variant=\"compact\">variant=compact</wb-cardstats>",
-      "<wb-cardstats variant=\"large\">variant=large</wb-cardstats>",
-      "<wb-cardstats value=\"Sample value\">value=\"Sample value\"</wb-cardstats>",
-      "<wb-cardstats value=\"1,234\" label=\"Users\"></wb-cardstats>",
-      "<wb-cardstats value=\"$50K\" label=\"Revenue\" icon=\"💰\" trend=\"up\" trend-value=\"+12%\"></wb-cardstats>"
+      "<div x-cardstats>Basic cardstats content</div>",
+      "<div x-cardstats trend=\"up\">trend=up</div>",
+      "<div x-cardstats trend=\"down\">trend=down</div>",
+      "<div x-cardstats trend=\"neutral\">trend=neutral</div>",
+      "<div x-cardstats variant=\"default\">variant=default</div>",
+      "<div x-cardstats variant=\"compact\">variant=compact</div>",
+      "<div x-cardstats variant=\"large\">variant=large</div>",
+      "<div x-cardstats value=\"Sample value\">value=\"Sample value\"</div>",
+      "<div x-cardstats value=\"1,234\" label=\"Users\"></div>",
+      "<div x-cardstats value=\"$50K\" label=\"Revenue\" icon=\"💰\" trend=\"up\" trend-value=\"+12%\"></div>"
     ],
     "matrix": {
       "combinations": [
@@ -278,16 +278,16 @@
     },
     "site": {
       "page": "cards",
-      "tag": "wb-cardstats",
+      "tag": "x-cardstats",
       "renders": true,
-      "baseClass": "wb-stats",
+      "baseClass": "x-stats",
       "minInstances": 6,
       "checkText": [
         "Users"
       ],
       "checkClasses": [
-        "wb-stats--trend-up",
-        "wb-stats--compact"
+        "x-stats--trend-up",
+        "x-stats--compact"
       ],
       "checkAttributes": [
         "value"

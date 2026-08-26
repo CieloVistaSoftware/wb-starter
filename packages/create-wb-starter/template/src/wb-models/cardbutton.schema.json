@@ -4,13 +4,13 @@
   "title": "Button Card",
   "description": "Card with action buttons in footer",
   "schemaFor": "cardbutton",
-  "baseClass": "wb-card-button",
+  "baseClass": "x-card-button",
   "semanticElement": {
     "tagName": "article",
     "implicitRole": "article"
   },
   "compliance": {
-    "baseClass": "wb-card-button",
+    "baseClass": "x-card-button",
     "supportLevel": "stable",
     "accessibility": "high"
   },
@@ -54,7 +54,7 @@
         "bordered"
       ],
       "default": "default",
-      "appliesClass": "wb-card-button--{{value}}"
+      "appliesClass": "x-card-button--{{value}}"
     }
   },
   "$view": [
@@ -129,35 +129,35 @@
     }
   },
   "$cssAPI": {
-    "--wb-card-button-padding": {
+    "--x-card-button-padding": {
       "default": "1.5rem",
       "description": "Card padding"
     },
-    "--wb-card-button-radius": {
+    "--x-card-button-radius": {
       "default": "8px",
       "description": "Border radius"
     },
-    "--wb-card-button-gap": {
+    "--x-card-button-gap": {
       "default": "1rem",
       "description": "Gap between elements"
     },
-    "--wb-card-button-footer-gap": {
+    "--x-card-button-footer-gap": {
       "default": "0.75rem",
       "description": "Gap between buttons"
     },
-    "--wb-card-button-primary-bg": {
+    "--x-card-button-primary-bg": {
       "default": "var(--primary, #6366f1)",
       "description": "Primary button background"
     },
-    "--wb-card-button-primary-color": {
+    "--x-card-button-primary-color": {
       "default": "#ffffff",
       "description": "Primary button text"
     },
-    "--wb-card-button-secondary-bg": {
+    "--x-card-button-secondary-bg": {
       "default": "transparent",
       "description": "Secondary button background"
     },
-    "--wb-card-button-secondary-color": {
+    "--x-card-button-secondary-color": {
       "default": "var(--text-primary, #1a1a1a)",
       "description": "Secondary button text"
     }
@@ -178,15 +178,15 @@
   },
   "test": {
     "setup": [
-      "<wb-cardbutton>Basic cardbutton content</wb-cardbutton>",
-      "<wb-cardbutton variant=\"default\">variant=default</wb-cardbutton>",
-      "<wb-cardbutton variant=\"elevated\">variant=elevated</wb-cardbutton>",
-      "<wb-cardbutton variant=\"bordered\">variant=bordered</wb-cardbutton>",
-      "<wb-cardbutton title=\"Sample title\">title=\"Sample title\"</wb-cardbutton>",
-      "<wb-cardbutton content=\"Sample content\">content=\"Sample content\"</wb-cardbutton>",
-      "<wb-cardbutton primary=\"Sample primary\">primary=\"Sample primary\"</wb-cardbutton>",
-      "<wb-cardbutton primary-href=\"Sample primaryHref\">primaryHref=\"Sample primaryHref\"</wb-cardbutton>",
-      "<wb-card-button title=\"Confirm\" primary=\"Yes\" secondary=\"No\"></wb-card-button>"
+      "<div x-cardbutton>Basic cardbutton content</div>",
+      "<div x-cardbutton variant=\"default\">variant=default</div>",
+      "<div x-cardbutton variant=\"elevated\">variant=elevated</div>",
+      "<div x-cardbutton variant=\"bordered\">variant=bordered</div>",
+      "<div x-cardbutton title=\"Sample title\">title=\"Sample title\"</div>",
+      "<div x-cardbutton content=\"Sample content\">content=\"Sample content\"</div>",
+      "<div x-cardbutton primary=\"Sample primary\">primary=\"Sample primary\"</div>",
+      "<div x-cardbutton primary-href=\"Sample primaryHref\">primaryHref=\"Sample primaryHref\"</div>",
+      "<div x-cardbutton title=\"Confirm\" primary=\"Yes\" secondary=\"No\"></div>"
     ],
     "matrix": {
       "combinations": [
@@ -208,15 +208,15 @@
     },
     "site": {
       "page": "cards",
-      "tag": "wb-cardbutton",
+      "tag": "x-cardbutton",
       "renders": true,
-      "baseClass": "wb-card-button",
+      "baseClass": "x-card-button",
       "minInstances": 3,
       "checkText": [
         "Card"
       ],
       "checkClasses": [
-        "wb-card-button--elevated"
+        "x-card-button--elevated"
       ],
       "checkAttributes": [
         "title",

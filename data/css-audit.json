@@ -3,737 +3,737 @@
   "behaviorsCss": [],
   "demoCss": [],
   "siteCss": {
-    "wb-scroll-lock": {
+    "x-scroll-lock": {
       "firstLine": 19,
       "count": 1
     },
-    "wb-resizing": {
+    "x-resizing": {
       "firstLine": 23,
       "count": 1
     },
-    "wb-grid": {
+    "x-grid": {
       "firstLine": 56,
       "count": 1
     },
-    "wb-row": {
+    "x-row": {
       "firstLine": 57,
       "count": 1
     },
-    "wb-sidebar": {
+    "x-sidebar": {
       "firstLine": 58,
       "count": 1
     },
-    "wb-reel": {
+    "x-reel": {
       "firstLine": 59,
       "count": 1
     },
-    "wb-drawer": {
+    "x-drawer": {
       "firstLine": 63,
       "count": 2
     },
-    "wb-spinner": {
+    "x-spinner": {
       "firstLine": 121,
       "count": 2
     },
-    "wb-spin": {
+    "x-spin": {
       "firstLine": 131,
       "count": 2
     },
-    "wb-spinner--xs": {
+    "x-spinner--xs": {
       "firstLine": 135,
       "count": 1
     },
-    "wb-spinner--sm": {
+    "x-spinner--sm": {
       "firstLine": 136,
       "count": 1
     },
-    "wb-spinner--md": {
+    "x-spinner--md": {
       "firstLine": 137,
       "count": 1
     },
-    "wb-spinner--lg": {
+    "x-spinner--lg": {
       "firstLine": 138,
       "count": 1
     },
-    "wb-spinner--xl": {
+    "x-spinner--xl": {
       "firstLine": 139,
       "count": 1
     },
-    "wb-spinner--slow": {
+    "x-spinner--slow": {
       "firstLine": 142,
       "count": 1
     },
-    "wb-spinner--medium": {
+    "x-spinner--medium": {
       "firstLine": 143,
       "count": 1
     },
-    "wb-spinner--fast": {
+    "x-spinner--fast": {
       "firstLine": 144,
       "count": 1
     },
-    "wb-spinner--primary": {
+    "x-spinner--primary": {
       "firstLine": 147,
       "count": 1
     },
-    "wb-spinner--secondary": {
+    "x-spinner--secondary": {
       "firstLine": 148,
       "count": 1
     },
-    "wb-spinner--success": {
+    "x-spinner--success": {
       "firstLine": 149,
       "count": 1
     },
-    "wb-spinner--warning": {
+    "x-spinner--warning": {
       "firstLine": 150,
       "count": 1
     },
-    "wb-spinner--error": {
+    "x-spinner--error": {
       "firstLine": 151,
       "count": 1
     },
-    "wb-spinner--info": {
+    "x-spinner--info": {
       "firstLine": 152,
       "count": 1
     },
-    "wb-dialog": {
+    "x-dialog": {
       "firstLine": 159,
       "count": 2
     },
-    "wb-dialog__header": {
+    "x-dialog__header": {
       "firstLine": 173,
       "count": 1
     },
-    "wb-dialog__title": {
+    "x-dialog__title": {
       "firstLine": 182,
       "count": 1
     },
-    "wb-dialog__close": {
+    "x-dialog__close": {
       "firstLine": 189,
       "count": 2
     },
-    "wb-dialog__body": {
+    "x-dialog__body": {
       "firstLine": 203,
       "count": 1
     },
-    "wb-dialog__footer": {
+    "x-dialog__footer": {
       "firstLine": 208,
       "count": 1
     },
-    "wb-button": {
+    "x-button": {
       "firstLine": 217,
       "count": 1
     },
-    "wb-button--primary": {
+    "x-button--primary": {
       "firstLine": 226,
       "count": 2
     },
-    "wb-button--secondary": {
+    "x-button--secondary": {
       "firstLine": 235,
       "count": 2
     },
-    "wb-table": {
+    "x-table": {
       "firstLine": 683,
       "count": 5
     },
-    "wb-btn-gradient": {
+    "x-btn-gradient": {
       "firstLine": 755,
       "count": 4
     },
-    "wb-slide-in": {
+    "x-slide-in": {
       "firstLine": 885,
       "count": 1
     },
-    "wb-fade-out": {
+    "x-fade-out": {
       "firstLine": 896,
       "count": 1
     },
-    "wb-animate": {
+    "x-animate": {
       "firstLine": 920,
       "count": 1
     },
-    "wb-fade-in": {
+    "x-fade-in": {
       "firstLine": 924,
       "count": 1
     },
-    "wb-slide-in-left": {
+    "x-slide-in-left": {
       "firstLine": 926,
       "count": 1
     },
-    "wb-slide-in-right": {
+    "x-slide-in-right": {
       "firstLine": 927,
       "count": 1
     },
-    "wb-slide-in-up": {
+    "x-slide-in-up": {
       "firstLine": 928,
       "count": 1
     },
-    "wb-slide-in-down": {
+    "x-slide-in-down": {
       "firstLine": 929,
       "count": 1
     },
-    "wb-zoom-in": {
+    "x-zoom-in": {
       "firstLine": 930,
       "count": 1
     },
-    "wb-zoom-out": {
+    "x-zoom-out": {
       "firstLine": 931,
       "count": 1
     },
-    "wb-flip": {
+    "x-flip": {
       "firstLine": 932,
       "count": 1
     },
-    "wb-rotate": {
+    "x-rotate": {
       "firstLine": 933,
       "count": 1
     },
-    "wb-bounce": {
+    "x-bounce": {
       "firstLine": 934,
       "count": 1
     },
-    "wb-shake": {
+    "x-shake": {
       "firstLine": 935,
       "count": 1
     },
-    "wb-pulse": {
+    "x-pulse": {
       "firstLine": 936,
       "count": 1
     },
-    "wb-flash": {
+    "x-flash": {
       "firstLine": 937,
       "count": 1
     },
-    "wb-tada": {
+    "x-tada": {
       "firstLine": 938,
       "count": 1
     },
-    "wb-wobble": {
+    "x-wobble": {
       "firstLine": 939,
       "count": 1
     },
-    "wb-jello": {
+    "x-jello": {
       "firstLine": 940,
       "count": 1
     },
-    "wb-swing": {
+    "x-swing": {
       "firstLine": 941,
       "count": 1
     },
-    "wb-rubberband": {
+    "x-rubberband": {
       "firstLine": 942,
       "count": 1
     },
-    "wb-heartbeat": {
+    "x-heartbeat": {
       "firstLine": 943,
       "count": 1
     },
-    "wb-marquee": {
+    "x-marquee": {
       "firstLine": 944,
       "count": 1
     },
-    "wb-resizable__handle": {
+    "x-resizable__handle": {
       "firstLine": 949,
       "count": 2
     },
-    "wb-table--striped": {
+    "x-table--striped": {
       "firstLine": 1025,
       "count": 1
     },
-    "wb-table--hover": {
+    "x-table--hover": {
       "firstLine": 1029,
       "count": 1
     },
-    "wb-table--bordered": {
+    "x-table--bordered": {
       "firstLine": 1033,
       "count": 2
     },
-    "wb-table--compact": {
+    "x-table--compact": {
       "firstLine": 1038,
       "count": 2
     },
-    "wb-hero": {
+    "x-hero": {
       "firstLine": 1048,
       "count": 1
     },
-    "wb-hero__content": {
+    "x-hero__content": {
       "firstLine": 1058,
       "count": 1
     },
-    "wb-hero__subtitle": {
+    "x-hero__subtitle": {
       "firstLine": 1066,
       "count": 1
     },
-    "wb-gradient-text": {
+    "x-gradient-text": {
       "firstLine": 1075,
       "count": 1
     },
-    "wb-orb": {
+    "x-orb": {
       "firstLine": 1085,
       "count": 1
     },
-    "wb-orb-float": {
+    "x-orb-float": {
       "firstLine": 1090,
       "count": 2
     },
-    "wb-orb--primary": {
+    "x-orb--primary": {
       "firstLine": 1094,
       "count": 1
     },
-    "wb-orb--ocean": {
+    "x-orb--ocean": {
       "firstLine": 1098,
       "count": 1
     },
-    "wb-orb--sunset": {
+    "x-orb--sunset": {
       "firstLine": 1102,
       "count": 1
     },
-    "wb-orb--cosmic": {
+    "x-orb--cosmic": {
       "firstLine": 1106,
       "count": 1
     },
-    "wb-gradient-shift": {
+    "x-gradient-shift": {
       "firstLine": 1135,
       "count": 2
     },
-    "wb-btn-glass": {
+    "x-btn-glass": {
       "firstLine": 1156,
       "count": 2
     },
-    "wb-glass": {
+    "x-glass": {
       "firstLine": 1179,
       "count": 1
     },
-    "wb-input-glass": {
+    "x-input-glass": {
       "firstLine": 1186,
       "count": 3
     },
-    "wb-badge-gradient": {
+    "x-badge-gradient": {
       "firstLine": 1210,
       "count": 1
     },
-    "wb-tag-glass": {
+    "x-tag-glass": {
       "firstLine": 1222,
       "count": 1
     },
-    "wb-dot-pulse": {
+    "x-dot-pulse": {
       "firstLine": 1235,
       "count": 1
     },
-    "wb-pulse-dot": {
+    "x-pulse-dot": {
       "firstLine": 1241,
       "count": 2
     },
-    "wb-card-float": {
+    "x-card-float": {
       "firstLine": 1252,
       "count": 4
     },
-    "wb-card--float": {
+    "x-card--float": {
       "firstLine": 1253,
       "count": 4
     },
-    "wb-window-controls": {
+    "x-window-controls": {
       "firstLine": 1283,
       "count": 1
     },
-    "wb-window-dot": {
+    "x-window-dot": {
       "firstLine": 1289,
       "count": 1
     },
-    "wb-window-dot--red": {
+    "x-window-dot--red": {
       "firstLine": 1295,
       "count": 1
     },
-    "wb-window-dot--yellow": {
+    "x-window-dot--yellow": {
       "firstLine": 1296,
       "count": 1
     },
-    "wb-window-dot--green": {
+    "x-window-dot--green": {
       "firstLine": 1297,
       "count": 1
     },
-    "wb-badge-group": {
+    "x-badge-group": {
       "firstLine": 1302,
       "count": 1
     },
-    "wb-progress-gradient": {
+    "x-progress-gradient": {
       "firstLine": 1313,
       "count": 1
     },
-    "wb-progress-gradient__bar": {
+    "x-progress-gradient__bar": {
       "firstLine": 1321,
       "count": 1
     },
-    "wb-progress-shimmer": {
+    "x-progress-shimmer": {
       "firstLine": 1326,
       "count": 2
     },
-    "wb-avatar-gradient": {
+    "x-avatar-gradient": {
       "firstLine": 1337,
       "count": 2
     },
-    "wb-divider-gradient": {
+    "x-divider-gradient": {
       "firstLine": 1357,
       "count": 1
     },
-    "wb-notes": {
+    "x-notes": {
       "firstLine": 1367,
       "count": 1
     },
-    "wb-notes__backdrop": {
+    "x-notes__backdrop": {
       "firstLine": 1374,
       "count": 2
     },
-    "wb-notes__drawer": {
+    "x-notes__drawer": {
       "firstLine": 1388,
       "count": 1
     },
-    "wb-notes--left": {
+    "x-notes--left": {
       "firstLine": 1402,
       "count": 2
     },
-    "wb-notes--right": {
+    "x-notes--right": {
       "firstLine": 1410,
       "count": 2
     },
-    "wb-notes--modal": {
+    "x-notes--modal": {
       "firstLine": 1418,
       "count": 2
     },
-    "wb-notes--open": {
+    "x-notes--open": {
       "firstLine": 1430,
       "count": 3
     },
-    "wb-notes__header": {
+    "x-notes__header": {
       "firstLine": 1444,
       "count": 2
     },
-    "wb-notes__title": {
+    "x-notes__title": {
       "firstLine": 1461,
       "count": 1
     },
-    "wb-notes__actions": {
+    "x-notes__actions": {
       "firstLine": 1467,
       "count": 1
     },
-    "wb-notes__btn-row": {
+    "x-notes__btn-row": {
       "firstLine": 1473,
       "count": 1
     },
-    "wb-notes__wide-btn": {
+    "x-notes__wide-btn": {
       "firstLine": 1478,
       "count": 4
     },
-    "wb-notes__textarea": {
+    "x-notes__textarea": {
       "firstLine": 1506,
       "count": 2
     },
-    "wb-notes__footer": {
+    "x-notes__footer": {
       "firstLine": 1524,
       "count": 1
     },
-    "wb-notes__status": {
+    "x-notes__status": {
       "firstLine": 1534,
       "count": 1
     },
-    "wb-notes__status--success": {
+    "x-notes__status--success": {
       "firstLine": 1538,
       "count": 1
     },
-    "wb-notes__status--error": {
+    "x-notes__status--error": {
       "firstLine": 1539,
       "count": 1
     },
-    "wb-notes__status--warning": {
+    "x-notes__status--warning": {
       "firstLine": 1540,
       "count": 1
     },
-    "wb-notes__resize-handle": {
+    "x-notes__resize-handle": {
       "firstLine": 1543,
       "count": 3
     },
-    "wb-notes__resize-handle-modal": {
+    "x-notes__resize-handle-modal": {
       "firstLine": 1565,
       "count": 1
     },
-    "wb-notes__wide-btn--confirm": {
+    "x-notes__wide-btn--confirm": {
       "firstLine": 1587,
       "count": 1
     },
-    "wb-content-auto": {
+    "x-content-auto": {
       "firstLine": 1596,
       "count": 1
     },
-    "wb-progress-striped": {
+    "x-progress-striped": {
       "firstLine": 1618,
       "count": 1
     },
-    "wb-progress-striped__bar": {
+    "x-progress-striped__bar": {
       "firstLine": 1628,
       "count": 1
     },
-    "wb-progress-stripes": {
+    "x-progress-stripes": {
       "firstLine": 1643,
       "count": 2
     },
-    "wb-progress-grow": {
+    "x-progress-grow": {
       "firstLine": 1652,
       "count": 1
     },
-    "wb-progress-striped__bar--primary": {
+    "x-progress-striped__bar--primary": {
       "firstLine": 1658,
       "count": 1
     },
-    "wb-progress-striped__bar--success": {
+    "x-progress-striped__bar--success": {
       "firstLine": 1659,
       "count": 1
     },
-    "wb-progress-striped__bar--warning": {
+    "x-progress-striped__bar--warning": {
       "firstLine": 1660,
       "count": 1
     },
-    "wb-progress-striped__bar--danger": {
+    "x-progress-striped__bar--danger": {
       "firstLine": 1661,
       "count": 1
     },
-    "wb-progress-striped__bar--info": {
+    "x-progress-striped__bar--info": {
       "firstLine": 1662,
       "count": 1
     },
-    "wb-progress-striped__bar--gradient": {
+    "x-progress-striped__bar--gradient": {
       "firstLine": 1664,
       "count": 1
     },
-    "wb-rackmount": {
+    "x-rackmount": {
       "firstLine": 1682,
       "count": 5
     },
-    "wb-rackmount-screws": {
+    "x-rackmount-screws": {
       "firstLine": 1715,
       "count": 5
     },
-    "wb-rackmount-screws-right": {
+    "x-rackmount-screws-right": {
       "firstLine": 1716,
       "count": 5
     },
-    "wb-rackmount__content": {
+    "x-rackmount__content": {
       "firstLine": 1747,
       "count": 1
     },
-    "wb-rackmount__header": {
+    "x-rackmount__header": {
       "firstLine": 1754,
       "count": 1
     },
-    "wb-rackmount__title": {
+    "x-rackmount__title": {
       "firstLine": 1763,
       "count": 1
     },
-    "wb-rackmount__status": {
+    "x-rackmount__status": {
       "firstLine": 1771,
       "count": 3
     },
-    "wb-btn-rack": {
+    "x-btn-rack": {
       "firstLine": 1783,
       "count": 3
     }
   },
   "componentsCss": {
-    "wb-button": {
+    "x-button": {
       "firstLine": 9,
       "count": 3
     },
-    "wb-button--xs": {
+    "x-button--xs": {
       "firstLine": 39,
       "count": 1
     },
-    "wb-button--sm": {
+    "x-button--sm": {
       "firstLine": 44,
       "count": 1
     },
-    "wb-button--md": {
+    "x-button--md": {
       "firstLine": 49,
       "count": 1
     },
-    "wb-button--lg": {
+    "x-button--lg": {
       "firstLine": 54,
       "count": 1
     },
-    "wb-button--xl": {
+    "x-button--xl": {
       "firstLine": 59,
       "count": 1
     },
-    "wb-button--primary": {
+    "x-button--primary": {
       "firstLine": 65,
       "count": 2
     },
-    "wb-button--secondary": {
+    "x-button--secondary": {
       "firstLine": 74,
       "count": 2
     },
-    "wb-button--success": {
+    "x-button--success": {
       "firstLine": 83,
       "count": 2
     },
-    "wb-button--danger": {
+    "x-button--danger": {
       "firstLine": 92,
       "count": 2
     },
-    "wb-button--warning": {
+    "x-button--warning": {
       "firstLine": 101,
       "count": 2
     },
-    "wb-button--ghost": {
+    "x-button--ghost": {
       "firstLine": 110,
       "count": 2
     },
-    "wb-button--link": {
+    "x-button--link": {
       "firstLine": 120,
       "count": 2
     },
-    "wb-button__spinner": {
+    "x-button__spinner": {
       "firstLine": 132,
       "count": 1
     },
-    "wb-input": {
+    "x-input": {
       "firstLine": 145,
       "count": 4
     },
-    "wb-textarea": {
+    "x-textarea": {
       "firstLine": 146,
       "count": 4
     },
-    "wb-select": {
+    "x-select": {
       "firstLine": 147,
       "count": 3
     },
-    "wb-input--xs": {
+    "x-input--xs": {
       "firstLine": 184,
       "count": 1
     },
-    "wb-input--sm": {
+    "x-input--sm": {
       "firstLine": 189,
       "count": 1
     },
-    "wb-input--lg": {
+    "x-input--lg": {
       "firstLine": 194,
       "count": 1
     },
-    "wb-input--xl": {
+    "x-input--xl": {
       "firstLine": 199,
       "count": 1
     },
-    "wb-input--success": {
+    "x-input--success": {
       "firstLine": 205,
       "count": 2
     },
-    "wb-textarea--success": {
+    "x-textarea--success": {
       "firstLine": 206,
       "count": 2
     },
-    "wb-select--success": {
+    "x-select--success": {
       "firstLine": 207,
       "count": 2
     },
-    "wb-input--error": {
+    "x-input--error": {
       "firstLine": 216,
       "count": 2
     },
-    "wb-textarea--error": {
+    "x-textarea--error": {
       "firstLine": 217,
       "count": 2
     },
-    "wb-select--error": {
+    "x-select--error": {
       "firstLine": 218,
       "count": 2
     },
-    "wb-checkbox": {
+    "x-checkbox": {
       "firstLine": 230,
       "count": 1
     },
-    "wb-radio": {
+    "x-radio": {
       "firstLine": 231,
       "count": 1
     },
-    "wb-range": {
+    "x-range": {
       "firstLine": 241,
       "count": 1
     },
-    "wb-switch": {
+    "x-switch": {
       "firstLine": 250,
       "count": 2
     },
-    "wb-switch__slider": {
+    "x-switch__slider": {
       "firstLine": 263,
       "count": 6
     },
-    "wb-table": {
+    "x-table": {
       "firstLine": 307,
       "count": 6
     },
-    "wb-table--striped": {
+    "x-table--striped": {
       "firstLine": 328,
       "count": 1
     },
-    "wb-table--hover": {
+    "x-table--hover": {
       "firstLine": 332,
       "count": 1
     },
-    "wb-table--bordered": {
+    "x-table--bordered": {
       "firstLine": 345,
       "count": 3
     },
-    "wb-table--compact": {
+    "x-table--compact": {
       "firstLine": 354,
       "count": 2
     },
-    "wb-table--sorted-asc": {
+    "x-table--sorted-asc": {
       "firstLine": 359,
       "count": 1
     },
-    "wb-table--sorted-desc": {
+    "x-table--sorted-desc": {
       "firstLine": 364,
       "count": 1
     },
-    "wb-themecontrol": {
+    "x-themecontrol": {
       "firstLine": 372,
       "count": 1
     },
-    "wb-dialog": {
+    "x-dialog": {
       "firstLine": 379,
       "count": 3
     },
-    "wb-fade-in": {
+    "x-fade-in": {
       "firstLine": 394,
       "count": 2
     },
-    "wb-scale-in": {
+    "x-scale-in": {
       "firstLine": 398,
       "count": 2
     },
-    "wb-dialog__header": {
+    "x-dialog__header": {
       "firstLine": 401,
       "count": 1
     },
-    "wb-dialog__title": {
+    "x-dialog__title": {
       "firstLine": 410,
       "count": 1
     },
-    "wb-dialog__close": {
+    "x-dialog__close": {
       "firstLine": 417,
       "count": 2
     },
-    "wb-dialog__body": {
+    "x-dialog__body": {
       "firstLine": 434,
       "count": 1
     },
-    "wb-dialog__footer": {
+    "x-dialog__footer": {
       "firstLine": 440,
       "count": 1
     },
-    "wb-progress--animated": {
+    "x-progress--animated": {
       "firstLine": 462,
       "count": 1
     },
-    "wb-progress-stripes": {
+    "x-progress-stripes": {
       "firstLine": 474,
       "count": 2
     }
@@ -744,587 +744,587 @@
   "siteCssLines": 1999,
   "componentsCssLines": 481,
   "duplicates": {
-    "wb-dialog": [
+    "x-dialog": [
       "src/styles/site.css",
       "src/styles/components.css"
     ],
-    "wb-dialog__header": [
+    "x-dialog__header": [
       "src/styles/site.css",
       "src/styles/components.css"
     ],
-    "wb-dialog__title": [
+    "x-dialog__title": [
       "src/styles/site.css",
       "src/styles/components.css"
     ],
-    "wb-dialog__close": [
+    "x-dialog__close": [
       "src/styles/site.css",
       "src/styles/components.css"
     ],
-    "wb-dialog__body": [
+    "x-dialog__body": [
       "src/styles/site.css",
       "src/styles/components.css"
     ],
-    "wb-dialog__footer": [
+    "x-dialog__footer": [
       "src/styles/site.css",
       "src/styles/components.css"
     ],
-    "wb-button": [
+    "x-button": [
       "src/styles/site.css",
       "src/styles/components.css"
     ],
-    "wb-button--primary": [
+    "x-button--primary": [
       "src/styles/site.css",
       "src/styles/components.css"
     ],
-    "wb-button--secondary": [
+    "x-button--secondary": [
       "src/styles/site.css",
       "src/styles/components.css"
     ],
-    "wb-table": [
+    "x-table": [
       "src/styles/site.css",
       "src/styles/components.css"
     ],
-    "wb-fade-in": [
+    "x-fade-in": [
       "src/styles/site.css",
       "src/styles/components.css"
     ],
-    "wb-table--striped": [
+    "x-table--striped": [
       "src/styles/site.css",
       "src/styles/components.css"
     ],
-    "wb-table--hover": [
+    "x-table--hover": [
       "src/styles/site.css",
       "src/styles/components.css"
     ],
-    "wb-table--bordered": [
+    "x-table--bordered": [
       "src/styles/site.css",
       "src/styles/components.css"
     ],
-    "wb-table--compact": [
+    "x-table--compact": [
       "src/styles/site.css",
       "src/styles/components.css"
     ],
-    "wb-progress-stripes": [
+    "x-progress-stripes": [
       "src/styles/site.css",
       "src/styles/components.css"
     ]
   },
   "allComponents": {
-    "wb-scroll-lock": [
+    "x-scroll-lock": [
       "src/styles/site.css"
     ],
-    "wb-resizing": [
+    "x-resizing": [
       "src/styles/site.css"
     ],
-    "wb-grid": [
+    "x-grid": [
       "src/styles/site.css"
     ],
-    "wb-row": [
+    "x-row": [
       "src/styles/site.css"
     ],
-    "wb-sidebar": [
+    "x-sidebar": [
       "src/styles/site.css"
     ],
-    "wb-reel": [
+    "x-reel": [
       "src/styles/site.css"
     ],
-    "wb-drawer": [
+    "x-drawer": [
       "src/styles/site.css"
     ],
-    "wb-spinner": [
+    "x-spinner": [
       "src/styles/site.css"
     ],
-    "wb-spin": [
+    "x-spin": [
       "src/styles/site.css"
     ],
-    "wb-spinner--xs": [
+    "x-spinner--xs": [
       "src/styles/site.css"
     ],
-    "wb-spinner--sm": [
+    "x-spinner--sm": [
       "src/styles/site.css"
     ],
-    "wb-spinner--md": [
+    "x-spinner--md": [
       "src/styles/site.css"
     ],
-    "wb-spinner--lg": [
+    "x-spinner--lg": [
       "src/styles/site.css"
     ],
-    "wb-spinner--xl": [
+    "x-spinner--xl": [
       "src/styles/site.css"
     ],
-    "wb-spinner--slow": [
+    "x-spinner--slow": [
       "src/styles/site.css"
     ],
-    "wb-spinner--medium": [
+    "x-spinner--medium": [
       "src/styles/site.css"
     ],
-    "wb-spinner--fast": [
+    "x-spinner--fast": [
       "src/styles/site.css"
     ],
-    "wb-spinner--primary": [
+    "x-spinner--primary": [
       "src/styles/site.css"
     ],
-    "wb-spinner--secondary": [
+    "x-spinner--secondary": [
       "src/styles/site.css"
     ],
-    "wb-spinner--success": [
+    "x-spinner--success": [
       "src/styles/site.css"
     ],
-    "wb-spinner--warning": [
+    "x-spinner--warning": [
       "src/styles/site.css"
     ],
-    "wb-spinner--error": [
+    "x-spinner--error": [
       "src/styles/site.css"
     ],
-    "wb-spinner--info": [
+    "x-spinner--info": [
       "src/styles/site.css"
     ],
-    "wb-dialog": [
+    "x-dialog": [
       "src/styles/site.css",
       "src/styles/components.css"
     ],
-    "wb-dialog__header": [
+    "x-dialog__header": [
       "src/styles/site.css",
       "src/styles/components.css"
     ],
-    "wb-dialog__title": [
+    "x-dialog__title": [
       "src/styles/site.css",
       "src/styles/components.css"
     ],
-    "wb-dialog__close": [
+    "x-dialog__close": [
       "src/styles/site.css",
       "src/styles/components.css"
     ],
-    "wb-dialog__body": [
+    "x-dialog__body": [
       "src/styles/site.css",
       "src/styles/components.css"
     ],
-    "wb-dialog__footer": [
+    "x-dialog__footer": [
       "src/styles/site.css",
       "src/styles/components.css"
     ],
-    "wb-button": [
+    "x-button": [
       "src/styles/site.css",
       "src/styles/components.css"
     ],
-    "wb-button--primary": [
+    "x-button--primary": [
       "src/styles/site.css",
       "src/styles/components.css"
     ],
-    "wb-button--secondary": [
+    "x-button--secondary": [
       "src/styles/site.css",
       "src/styles/components.css"
     ],
-    "wb-table": [
+    "x-table": [
       "src/styles/site.css",
       "src/styles/components.css"
     ],
-    "wb-btn-gradient": [
+    "x-btn-gradient": [
       "src/styles/site.css"
     ],
-    "wb-slide-in": [
+    "x-slide-in": [
       "src/styles/site.css"
     ],
-    "wb-fade-out": [
+    "x-fade-out": [
       "src/styles/site.css"
     ],
-    "wb-animate": [
+    "x-animate": [
       "src/styles/site.css"
     ],
-    "wb-fade-in": [
+    "x-fade-in": [
       "src/styles/site.css",
       "src/styles/components.css"
     ],
-    "wb-slide-in-left": [
+    "x-slide-in-left": [
       "src/styles/site.css"
     ],
-    "wb-slide-in-right": [
+    "x-slide-in-right": [
       "src/styles/site.css"
     ],
-    "wb-slide-in-up": [
+    "x-slide-in-up": [
       "src/styles/site.css"
     ],
-    "wb-slide-in-down": [
+    "x-slide-in-down": [
       "src/styles/site.css"
     ],
-    "wb-zoom-in": [
+    "x-zoom-in": [
       "src/styles/site.css"
     ],
-    "wb-zoom-out": [
+    "x-zoom-out": [
       "src/styles/site.css"
     ],
-    "wb-flip": [
+    "x-flip": [
       "src/styles/site.css"
     ],
-    "wb-rotate": [
+    "x-rotate": [
       "src/styles/site.css"
     ],
-    "wb-bounce": [
+    "x-bounce": [
       "src/styles/site.css"
     ],
-    "wb-shake": [
+    "x-shake": [
       "src/styles/site.css"
     ],
-    "wb-pulse": [
+    "x-pulse": [
       "src/styles/site.css"
     ],
-    "wb-flash": [
+    "x-flash": [
       "src/styles/site.css"
     ],
-    "wb-tada": [
+    "x-tada": [
       "src/styles/site.css"
     ],
-    "wb-wobble": [
+    "x-wobble": [
       "src/styles/site.css"
     ],
-    "wb-jello": [
+    "x-jello": [
       "src/styles/site.css"
     ],
-    "wb-swing": [
+    "x-swing": [
       "src/styles/site.css"
     ],
-    "wb-rubberband": [
+    "x-rubberband": [
       "src/styles/site.css"
     ],
-    "wb-heartbeat": [
+    "x-heartbeat": [
       "src/styles/site.css"
     ],
-    "wb-marquee": [
+    "x-marquee": [
       "src/styles/site.css"
     ],
-    "wb-resizable__handle": [
+    "x-resizable__handle": [
       "src/styles/site.css"
     ],
-    "wb-table--striped": [
+    "x-table--striped": [
       "src/styles/site.css",
       "src/styles/components.css"
     ],
-    "wb-table--hover": [
+    "x-table--hover": [
       "src/styles/site.css",
       "src/styles/components.css"
     ],
-    "wb-table--bordered": [
+    "x-table--bordered": [
       "src/styles/site.css",
       "src/styles/components.css"
     ],
-    "wb-table--compact": [
+    "x-table--compact": [
       "src/styles/site.css",
       "src/styles/components.css"
     ],
-    "wb-hero": [
+    "x-hero": [
       "src/styles/site.css"
     ],
-    "wb-hero__content": [
+    "x-hero__content": [
       "src/styles/site.css"
     ],
-    "wb-hero__subtitle": [
+    "x-hero__subtitle": [
       "src/styles/site.css"
     ],
-    "wb-gradient-text": [
+    "x-gradient-text": [
       "src/styles/site.css"
     ],
-    "wb-orb": [
+    "x-orb": [
       "src/styles/site.css"
     ],
-    "wb-orb-float": [
+    "x-orb-float": [
       "src/styles/site.css"
     ],
-    "wb-orb--primary": [
+    "x-orb--primary": [
       "src/styles/site.css"
     ],
-    "wb-orb--ocean": [
+    "x-orb--ocean": [
       "src/styles/site.css"
     ],
-    "wb-orb--sunset": [
+    "x-orb--sunset": [
       "src/styles/site.css"
     ],
-    "wb-orb--cosmic": [
+    "x-orb--cosmic": [
       "src/styles/site.css"
     ],
-    "wb-gradient-shift": [
+    "x-gradient-shift": [
       "src/styles/site.css"
     ],
-    "wb-btn-glass": [
+    "x-btn-glass": [
       "src/styles/site.css"
     ],
-    "wb-glass": [
+    "x-glass": [
       "src/styles/site.css"
     ],
-    "wb-input-glass": [
+    "x-input-glass": [
       "src/styles/site.css"
     ],
-    "wb-badge-gradient": [
+    "x-badge-gradient": [
       "src/styles/site.css"
     ],
-    "wb-tag-glass": [
+    "x-tag-glass": [
       "src/styles/site.css"
     ],
-    "wb-dot-pulse": [
+    "x-dot-pulse": [
       "src/styles/site.css"
     ],
-    "wb-pulse-dot": [
+    "x-pulse-dot": [
       "src/styles/site.css"
     ],
-    "wb-card-float": [
+    "x-card-float": [
       "src/styles/site.css"
     ],
-    "wb-card--float": [
+    "x-card--float": [
       "src/styles/site.css"
     ],
-    "wb-window-controls": [
+    "x-window-controls": [
       "src/styles/site.css"
     ],
-    "wb-window-dot": [
+    "x-window-dot": [
       "src/styles/site.css"
     ],
-    "wb-window-dot--red": [
+    "x-window-dot--red": [
       "src/styles/site.css"
     ],
-    "wb-window-dot--yellow": [
+    "x-window-dot--yellow": [
       "src/styles/site.css"
     ],
-    "wb-window-dot--green": [
+    "x-window-dot--green": [
       "src/styles/site.css"
     ],
-    "wb-badge-group": [
+    "x-badge-group": [
       "src/styles/site.css"
     ],
-    "wb-progress-gradient": [
+    "x-progress-gradient": [
       "src/styles/site.css"
     ],
-    "wb-progress-gradient__bar": [
+    "x-progress-gradient__bar": [
       "src/styles/site.css"
     ],
-    "wb-progress-shimmer": [
+    "x-progress-shimmer": [
       "src/styles/site.css"
     ],
-    "wb-avatar-gradient": [
+    "x-avatar-gradient": [
       "src/styles/site.css"
     ],
-    "wb-divider-gradient": [
+    "x-divider-gradient": [
       "src/styles/site.css"
     ],
-    "wb-notes": [
+    "x-notes": [
       "src/styles/site.css"
     ],
-    "wb-notes__backdrop": [
+    "x-notes__backdrop": [
       "src/styles/site.css"
     ],
-    "wb-notes__drawer": [
+    "x-notes__drawer": [
       "src/styles/site.css"
     ],
-    "wb-notes--left": [
+    "x-notes--left": [
       "src/styles/site.css"
     ],
-    "wb-notes--right": [
+    "x-notes--right": [
       "src/styles/site.css"
     ],
-    "wb-notes--modal": [
+    "x-notes--modal": [
       "src/styles/site.css"
     ],
-    "wb-notes--open": [
+    "x-notes--open": [
       "src/styles/site.css"
     ],
-    "wb-notes__header": [
+    "x-notes__header": [
       "src/styles/site.css"
     ],
-    "wb-notes__title": [
+    "x-notes__title": [
       "src/styles/site.css"
     ],
-    "wb-notes__actions": [
+    "x-notes__actions": [
       "src/styles/site.css"
     ],
-    "wb-notes__btn-row": [
+    "x-notes__btn-row": [
       "src/styles/site.css"
     ],
-    "wb-notes__wide-btn": [
+    "x-notes__wide-btn": [
       "src/styles/site.css"
     ],
-    "wb-notes__textarea": [
+    "x-notes__textarea": [
       "src/styles/site.css"
     ],
-    "wb-notes__footer": [
+    "x-notes__footer": [
       "src/styles/site.css"
     ],
-    "wb-notes__status": [
+    "x-notes__status": [
       "src/styles/site.css"
     ],
-    "wb-notes__status--success": [
+    "x-notes__status--success": [
       "src/styles/site.css"
     ],
-    "wb-notes__status--error": [
+    "x-notes__status--error": [
       "src/styles/site.css"
     ],
-    "wb-notes__status--warning": [
+    "x-notes__status--warning": [
       "src/styles/site.css"
     ],
-    "wb-notes__resize-handle": [
+    "x-notes__resize-handle": [
       "src/styles/site.css"
     ],
-    "wb-notes__resize-handle-modal": [
+    "x-notes__resize-handle-modal": [
       "src/styles/site.css"
     ],
-    "wb-notes__wide-btn--confirm": [
+    "x-notes__wide-btn--confirm": [
       "src/styles/site.css"
     ],
-    "wb-content-auto": [
+    "x-content-auto": [
       "src/styles/site.css"
     ],
-    "wb-progress-striped": [
+    "x-progress-striped": [
       "src/styles/site.css"
     ],
-    "wb-progress-striped__bar": [
+    "x-progress-striped__bar": [
       "src/styles/site.css"
     ],
-    "wb-progress-stripes": [
+    "x-progress-stripes": [
       "src/styles/site.css",
       "src/styles/components.css"
     ],
-    "wb-progress-grow": [
+    "x-progress-grow": [
       "src/styles/site.css"
     ],
-    "wb-progress-striped__bar--primary": [
+    "x-progress-striped__bar--primary": [
       "src/styles/site.css"
     ],
-    "wb-progress-striped__bar--success": [
+    "x-progress-striped__bar--success": [
       "src/styles/site.css"
     ],
-    "wb-progress-striped__bar--warning": [
+    "x-progress-striped__bar--warning": [
       "src/styles/site.css"
     ],
-    "wb-progress-striped__bar--danger": [
+    "x-progress-striped__bar--danger": [
       "src/styles/site.css"
     ],
-    "wb-progress-striped__bar--info": [
+    "x-progress-striped__bar--info": [
       "src/styles/site.css"
     ],
-    "wb-progress-striped__bar--gradient": [
+    "x-progress-striped__bar--gradient": [
       "src/styles/site.css"
     ],
-    "wb-rackmount": [
+    "x-rackmount": [
       "src/styles/site.css"
     ],
-    "wb-rackmount-screws": [
+    "x-rackmount-screws": [
       "src/styles/site.css"
     ],
-    "wb-rackmount-screws-right": [
+    "x-rackmount-screws-right": [
       "src/styles/site.css"
     ],
-    "wb-rackmount__content": [
+    "x-rackmount__content": [
       "src/styles/site.css"
     ],
-    "wb-rackmount__header": [
+    "x-rackmount__header": [
       "src/styles/site.css"
     ],
-    "wb-rackmount__title": [
+    "x-rackmount__title": [
       "src/styles/site.css"
     ],
-    "wb-rackmount__status": [
+    "x-rackmount__status": [
       "src/styles/site.css"
     ],
-    "wb-btn-rack": [
+    "x-btn-rack": [
       "src/styles/site.css"
     ],
-    "wb-button--xs": [
+    "x-button--xs": [
       "src/styles/components.css"
     ],
-    "wb-button--sm": [
+    "x-button--sm": [
       "src/styles/components.css"
     ],
-    "wb-button--md": [
+    "x-button--md": [
       "src/styles/components.css"
     ],
-    "wb-button--lg": [
+    "x-button--lg": [
       "src/styles/components.css"
     ],
-    "wb-button--xl": [
+    "x-button--xl": [
       "src/styles/components.css"
     ],
-    "wb-button--success": [
+    "x-button--success": [
       "src/styles/components.css"
     ],
-    "wb-button--danger": [
+    "x-button--danger": [
       "src/styles/components.css"
     ],
-    "wb-button--warning": [
+    "x-button--warning": [
       "src/styles/components.css"
     ],
-    "wb-button--ghost": [
+    "x-button--ghost": [
       "src/styles/components.css"
     ],
-    "wb-button--link": [
+    "x-button--link": [
       "src/styles/components.css"
     ],
-    "wb-button__spinner": [
+    "x-button__spinner": [
       "src/styles/components.css"
     ],
-    "wb-input": [
+    "x-input": [
       "src/styles/components.css"
     ],
-    "wb-textarea": [
+    "x-textarea": [
       "src/styles/components.css"
     ],
-    "wb-select": [
+    "x-select": [
       "src/styles/components.css"
     ],
-    "wb-input--xs": [
+    "x-input--xs": [
       "src/styles/components.css"
     ],
-    "wb-input--sm": [
+    "x-input--sm": [
       "src/styles/components.css"
     ],
-    "wb-input--lg": [
+    "x-input--lg": [
       "src/styles/components.css"
     ],
-    "wb-input--xl": [
+    "x-input--xl": [
       "src/styles/components.css"
     ],
-    "wb-input--success": [
+    "x-input--success": [
       "src/styles/components.css"
     ],
-    "wb-textarea--success": [
+    "x-textarea--success": [
       "src/styles/components.css"
     ],
-    "wb-select--success": [
+    "x-select--success": [
       "src/styles/components.css"
     ],
-    "wb-input--error": [
+    "x-input--error": [
       "src/styles/components.css"
     ],
-    "wb-textarea--error": [
+    "x-textarea--error": [
       "src/styles/components.css"
     ],
-    "wb-select--error": [
+    "x-select--error": [
       "src/styles/components.css"
     ],
-    "wb-checkbox": [
+    "x-checkbox": [
       "src/styles/components.css"
     ],
-    "wb-radio": [
+    "x-radio": [
       "src/styles/components.css"
     ],
-    "wb-range": [
+    "x-range": [
       "src/styles/components.css"
     ],
-    "wb-switch": [
+    "x-switch": [
       "src/styles/components.css"
     ],
-    "wb-switch__slider": [
+    "x-switch__slider": [
       "src/styles/components.css"
     ],
-    "wb-table--sorted-asc": [
+    "x-table--sorted-asc": [
       "src/styles/components.css"
     ],
-    "wb-table--sorted-desc": [
+    "x-table--sorted-desc": [
       "src/styles/components.css"
     ],
-    "wb-themecontrol": [
+    "x-themecontrol": [
       "src/styles/components.css"
     ],
-    "wb-scale-in": [
+    "x-scale-in": [
       "src/styles/components.css"
     ],
-    "wb-progress--animated": [
+    "x-progress--animated": [
       "src/styles/components.css"
     ]
   }

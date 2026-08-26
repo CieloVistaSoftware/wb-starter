@@ -16,9 +16,9 @@ async function ready(page) {
   await page.waitForFunction(() => (window as any).WB && (window as any).WB.behaviors, { timeout: 20000 });
 }
 
-test('wb-demo code panel is fully styled immediately, not lazily', async ({ page }) => {
+test('x-demo code panel is fully styled immediately, not lazily', async ({ page }) => {
   await ready(page);
-  const pre = page.locator('.wb-demo__code').first();
+  const pre = page.locator('.x-demo__code').first();
   await expect(pre).toBeVisible({ timeout: 5000 });
   // Both the pre AND its nested code must be processed within a short,
   // deterministic window -- not "eventually, whenever the observer fires".

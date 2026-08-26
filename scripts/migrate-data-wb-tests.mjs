@@ -7,7 +7,7 @@
  * 3. [data-wb="value"] CSS selectors → [x-{value}]
  * 4. Comments/docs → update text
  * 5. SKIP: Files that intentionally test legacy behavior
- * 6. SKIP: data-wb-* attributes (these are NOT the same as data-wb)
+ * 6. SKIP: data-x-* attributes (these are NOT the same as data-wb)
  */
 
 import { readFileSync, writeFileSync, readdirSync, statSync } from 'fs';
@@ -101,12 +101,12 @@ walk(BASE, (filepath) => {
   
   // ─── Pattern 4: querySelectorAll('[data-wb]') — generic selector for any data-wb ───
   // This finds ALL elements with any data-wb. In v3.0, elements use x-* attributes.
-  // Replace with a scan for [class*="wb-ready"] or similar v3.0 indicator
+  // Replace with a scan for [class*="x-ready"] or similar v3.0 indicator
   content = content.replace(
     /querySelectorAll\(\s*'\[data-wb\]'\s*\)/g,
     (match) => {
       fileChanges++;
-      return `querySelectorAll('.wb-ready')`;
+      return `querySelectorAll('.x-ready')`;
     }
   );
   

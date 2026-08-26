@@ -2,14 +2,28 @@
 
 Card with action buttons in footer
 
-Applies to `<article>`, and to any element carrying `x-cardbutton`.
+## Type — decorates a semantic element
 
-## Usage
+`x-cardbutton` is the **article behavior**. It attaches to `<article>`, the element you would have reached for anyway — there is no new tag to learn.
+
+### How to write it
 
 ```html
-<article x-cardbutton>
+<article x-cardbutton
+  title="Upgrade to Team"
+  content="Shared workspaces, audit history and SSO."
+  primary="Start free trial"
+  secondary="Compare plans"></article>
+```
+
+### On a different element
+
+Use `x-cardbutton` when the host is not a `<article>` and you want the same behavior:
+
+```html
+<div x-cardbutton>
   …
-</article>
+</div>
 ```
 
 ## Attributes

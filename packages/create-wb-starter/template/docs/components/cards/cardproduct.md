@@ -6,10 +6,10 @@ E-commerce product card with image, pricing, and add-to-cart functionality.
 
 | Property | Value |
 |----------|-------|
-| Custom Tag | `<wb-cardproduct>` |
+| Custom Tag | `<div x-cardproduct>` |
 | Behavior | `cardproduct` |
 | Semantic | `<article>` + `<figure>` + `<data>` |
-| Root CSS Class | `wb-card wb-product` |
+| Root CSS Class | `x-card x-product` |
 | Composes | card structure + CSS (no base class) |
 
 ## Properties
@@ -27,51 +27,51 @@ Supports every [card property](./card.md) — that shared structure and CSS are 
 | `cta` | string | `"Add to Cart"` | CTA button text |
 | `description` | string | `""` | Product description |
 
-Wrapped in `<wb-demo>`, so the live component renders below with its source shown underneath:
+Wrapped in `<div x-demo>`, so the live component renders below with its source shown underneath:
 
-<wb-demo>
-<wb-cardproduct
+<div x-demo>
+<div x-cardproduct
   title="Wireless Headphones"
-  image="/images/headphones.jpg"
+  image="https://picsum.photos/seed/headphones/600/400"
   price="$99.99">
-</wb-cardproduct>
-</wb-demo>
+</div>
+</div>
 
 ## Usage
 
 ### Basic Product
 
 ```html
-<wb-cardproduct
+<div x-cardproduct
   title="Wireless Headphones"
-  image="/images/headphones.jpg"
+  image="https://picsum.photos/seed/headphones/600/400"
   price="$99.99">
-</wb-cardproduct>
+</div>
 ```
 
 ### With Sale Price
 
 ```html
-<wb-cardproduct
+<div x-cardproduct
   title="Premium Headphones"
-  image="/images/headphones.jpg"
+  image="https://picsum.photos/seed/headphones/600/400"
   price="$79.99"
   originalPrice="$99.99"
   badge="Sale">
-</wb-cardproduct>
+</div>
 ```
 
 ### With Rating
 
 ```html
-<wb-cardproduct
+<div x-cardproduct
   title="Bluetooth Speaker"
-  image="/images/speaker.jpg"
+  image="https://picsum.photos/seed/speaker/600/400"
   price="$49.99"
   rating="4.5"
   reviews="128"
   description="Portable wireless speaker with 24-hour battery">
-</wb-cardproduct>
+</div>
 ```
 
 ## Events
@@ -81,7 +81,7 @@ Wrapped in `<wb-demo>`, so the live component renders below with its source show
 Fired when CTA button is clicked:
 
 ```javascript
-document.querySelector('wb-cardproduct').addEventListener('wb:cardproduct:addtocart', (e) => {
+document.querySelector('x-cardproduct').addEventListener('wb:cardproduct:addtocart', (e) => {
   console.log('Product:', e.detail.title);
   console.log('Price:', e.detail.price);
   console.log('ID:', e.detail.id);
@@ -91,7 +91,7 @@ document.querySelector('wb-cardproduct').addEventListener('wb:cardproduct:addtoc
 The same action is available programmatically through `wbCardProduct.addToCart()`:
 
 ```javascript
-document.querySelector('wb-cardproduct').wbCardProduct.addToCart();
+document.querySelector('x-cardproduct').wbCardProduct.addToCart();
 ```
 
 Both activation paths dispatch the bubbling `wb:cardproduct:addtocart` event with

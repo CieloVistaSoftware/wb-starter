@@ -22,9 +22,15 @@ import { readAttr } from '../core/read-attr.js';
  */
 
 export function scrollalong(element, options = {}) {
-  // #448: no classList.add('wb-scrollalong') -- no CSS selector anywhere
-  // depends on the bare class; it just duplicated <wb-scrollalong>'s own
+  // #448: no classList.add('x-scrollalong') -- no CSS selector anywhere
+  // depends on the bare class; it just duplicated <div x-scrollalong>'s own
   // tag name.
+  // #448 removed this class outright; restored WITH the tag-name guard.
+  // permutation-compliance requires compliance.baseClass to cover the host
+  // (classList.contains(cls) || tagName === cls), and on an attribute host
+  // like <div x-scrollalong> the tag is "div" -- so without the class nothing covers
+  // it. Guarded so a literal <x-scrollalong> tag does not get a redundant class.
+  if (element.tagName.toLowerCase() !== 'x-scrollalong') element.classList.add('x-scrollalong');
 
   const offset = parseInt(
     options.offset ?? element.getAttribute('offset') ?? readAttr(element, 'offset') ?? '0',

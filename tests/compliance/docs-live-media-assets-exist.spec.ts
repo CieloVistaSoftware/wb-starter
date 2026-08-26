@@ -3,23 +3,23 @@
  * real asset.
  *
  * Raw HTML in a `.md` file is not a code sample -- the doc-viewer renders it
- * LIVE (DEMOS-AND-DOCS-STANDARDS.md §1: docs embed raw `<wb-demo>` blocks, the
+ * LIVE (DEMOS-AND-DOCS-STANDARDS.md §1: docs embed raw `<div x-demo>` blocks, the
  * viewer upgrades the `<wb-*>` / `x-*` markup inside them). So a placeholder
  * `src` like `music.mp3` is not illustrative text, it is a broken control that
  * ships:
  *
- *   - `<wb-audio>` / `<audio>` THROW. `src/wb-viewmodels/semantics/audio.js`
+ *   - `<audio>` / `<audio>` THROW. `src/wb-viewmodels/semantics/audio.js`
  *     turns the native media `error` event into a real `Error` (added by #433,
  *     deliberately, so broken audio can't ship undetected). Every single view of
  *     `docs/behaviors-reference.md` wrote a fresh entry to `data/errors.json`
  *     -- which is itself gated by `error-log-empty.spec.ts`, so one placeholder
  *     filename in a doc could redden the compliance suite.
- *   - `<wb-video>` / `<video>` / `<img>` fail SILENTLY -- no error, just a demo
+ *   - `<video>` / `<video>` / `<img>` fail SILENTLY -- no error, just a demo
  *     that renders nothing (or a broken-image glyph), violating §16 ("every demo
  *     shows a WORKING live demo AND its code").
  *
- * #500 fixed this by hand for `docs/behaviors/wb-audio.md` and
- * `docs/components/semantics/audio.md`, but missed `docs/behaviors-reference.md`
+ * #500 fixed this by hand for `docs/behaviors/x-audio.md` and
+ * `docs/behaviors/audio.md`, but missed `docs/behaviors-reference.md`
  * -- the same defect was refiled 2 days later as #514. Hand-auditing doc srcs
  * does not scale; this gate is the systemic fix.
  *
@@ -55,7 +55,7 @@ const SKIP_DIRS = new Set([
 ]);
 
 /** Elements that fetch their `src` as soon as the doc-viewer renders them. */
-const MEDIA_TAGS = ['wb-audio', 'wb-video', 'audio', 'video', 'source', 'img'];
+const MEDIA_TAGS = ['.x-audio', '.x-video', 'audio', 'video', 'source', 'img'];
 const MEDIA_SRC = new RegExp(
   `<(${MEDIA_TAGS.join('|')})(\\s[^>]*?)?\\ssrc\\s*=\\s*["']([^"']+)["']`,
   'gi'
@@ -88,10 +88,10 @@ function mdFiles(dir: string, acc: string[] = []): string[] {
 // scope. Remove an entry here only once #519 has actually fixed that file.
 //
 // #519 fixed all three: docs/behavior-cross-reference.md and
-// docs/components/semantics/img.md now point their live <wb-demo> media at
+// docs/behaviors/img.md now point their live <div x-demo> media at
 // https://placehold.co / https://ui-avatars.com URLs (the same remote-asset
 // convention already proven in demos/site/cards.html);
-// docs/components/semantics/video.md points its live <wb-demo> at a real,
+// docs/behaviors/video.md points its live <div x-demo> at a real,
 // stable CC0 sample video (MDN's flower.mp4) rather than the dead 13-byte
 // demos/movie.mp4 placeholder.
 const KNOWN_BROKEN_PENDING_519 = new Set<string>([]);
@@ -148,8 +148,8 @@ test.describe('Live media examples in docs point at real assets (#514)', () => {
         offenders,
         `${rel} renders LIVE media pointing at asset(s) that aren't there.\n  ` +
         offenders.join('\n  ') +
-        `\n\nA raw <wb-audio>/<img>/... in markdown is rendered live by the doc-viewer, ` +
-        `so a placeholder filename ships a broken control (and <wb-audio> throws into ` +
+        `\n\nA raw <audio>/<img>/... in markdown is rendered live by the doc-viewer, ` +
+        `so a placeholder filename ships a broken control (and <audio> throws into ` +
         `data/errors.json on every page view -- see #514).\n` +
         `Fix: point it at a real committed asset with a path relative to THIS doc ` +
         `(e.g. "../demos/audio.mp3"), or move the snippet into a \`\`\`html fence if it ` +

@@ -7,7 +7,7 @@ test.describe('Card Button (integration)', () => {
     await page.waitForFunction(() => (window as any).WBSite && (window as any).WBSite.currentPage);
     await page.waitForTimeout(100);
     
-    await page.evaluate(() => {
+    await page.evaluate(async () => {
       const el = document.createElement('div');
       el.id = 'test-cardbutton';
       el.setAttribute('x-cardbutton', '');
@@ -15,15 +15,15 @@ test.describe('Card Button (integration)', () => {
       el.setAttribute('data-primary', 'Click Me');
       el.textContent = 'Card content here';
       document.body.appendChild(el);
-      (window as any).WB.scan();
+      await (window as any).WB.scan();
     });
     
     const card = page.locator('#test-cardbutton');
-    await expect(card).toHaveClass(/wb-card/);
-    await expect(card).toHaveClass(/wb-card--button/);
+    await expect(card).toHaveClass(/x-card/);
+    await expect(card).toHaveClass(/x-card--button/);
     
     // Check primary button exists
-    const primaryBtn = card.locator('.wb-card__btn--primary');
+    const primaryBtn = card.locator('.x-card__btn--primary');
     await expect(primaryBtn).toHaveText('Click Me');
   });
 
@@ -33,7 +33,7 @@ test.describe('Card Button (integration)', () => {
     await page.waitForFunction(() => (window as any).WBSite && (window as any).WBSite.currentPage);
     await page.waitForTimeout(100);
     
-    await page.evaluate(() => {
+    await page.evaluate(async () => {
       const el = document.createElement('div');
       el.id = 'test-cardbutton-2';
       el.setAttribute('x-cardbutton', '');
@@ -41,12 +41,12 @@ test.describe('Card Button (integration)', () => {
       el.setAttribute('data-primary', 'Save');
       el.setAttribute('data-secondary', 'Cancel');
       document.body.appendChild(el);
-      (window as any).WB.scan();
+      await (window as any).WB.scan();
     });
     
     const card = page.locator('#test-cardbutton-2');
-    const primaryBtn = card.locator('.wb-card__btn--primary');
-    const secondaryBtn = card.locator('.wb-card__btn--secondary');
+    const primaryBtn = card.locator('.x-card__btn--primary');
+    const secondaryBtn = card.locator('.x-card__btn--secondary');
     
     await expect(primaryBtn).toHaveText('Save');
     await expect(secondaryBtn).toHaveText('Cancel');
@@ -58,13 +58,13 @@ test.describe('Card Button (integration)', () => {
     await page.waitForFunction(() => (window as any).WBSite && (window as any).WBSite.currentPage);
     await page.waitForTimeout(100);
     
-    await page.evaluate(() => {
+    await page.evaluate(async () => {
       const el = document.createElement('div');
       el.id = 'test-cardbutton-border';
       el.setAttribute('x-cardbutton', '');
       el.setAttribute('data-primary', 'Action');
       document.body.appendChild(el);
-      (window as any).WB.scan();
+      await (window as any).WB.scan();
     });
     
     const card = page.locator('#test-cardbutton-border');

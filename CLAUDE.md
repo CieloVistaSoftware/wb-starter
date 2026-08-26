@@ -39,7 +39,7 @@ All project docs are organized into 3 tiers. See `docs/claude/README.md` for the
 **Project location:** `C:\Users\jwpmi\Downloads\AI\wb-starter`
 
 ### MCP Access
-- **Filesystem:** `wb-filesystem` MCP server
+- **Filesystem:** `x-filesystem` MCP server
 - **npm commands:** `npm-runner` MCP server
 
 ### File Structure

@@ -21,14 +21,14 @@ export function fieldset(element, options = {}) {
     collapsed: options.collapsed ?? flag('collapsed'),
     ...options
   };
-  element.classList.add('wb-fieldset');
+  element.classList.add('x-fieldset');
   const legend = element.querySelector('legend');
   if (legend && config.collapsible) {
-    legend.classList.add('wb-fieldset__legend', 'wb-fieldset__legend--collapsible');
-    if (config.collapsed) element.classList.add('wb-fieldset--collapsed');
+    legend.classList.add('x-fieldset__legend', 'x-fieldset__legend--collapsible');
+    if (config.collapsed) element.classList.add('x-fieldset--collapsed');
     legend.onclick = () => {
-      element.classList.toggle('wb-fieldset--collapsed');
+      element.classList.toggle('x-fieldset--collapsed');
     };
   }
-  return () => element.classList.remove('wb-fieldset');
+  return () => element.classList.remove('x-fieldset');
 }

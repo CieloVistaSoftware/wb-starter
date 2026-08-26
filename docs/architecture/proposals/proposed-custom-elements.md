@@ -16,11 +16,11 @@ These tags handle the arrangement of child elements.
 
 | Tag | Behavior | Description | Implementation Config |
 | :--- | :--- | :--- | :--- |
-| `<wb-grid>` | `grid` | Standard CSS Grid layout. Supports `columns`, `gap`, `min-width`. | `{ selector: 'wb-grid', behavior: 'grid' }` |
-| `<wb-flex>` | `flex` | Flexbox layout. Supports `direction`, `wrap`, `justify`, `align`. | `{ selector: 'wb-flex', behavior: 'flex' }` |
-| `<div x-stack>` | `stack` | Vertical stack of items with consistent spacing. | `{ selector: 'wb-stack', behavior: 'stack' }` |
-| `<div x-cluster>` | `cluster` | Horizontal group of items (buttons, tags) that wrap automatically. | `{ selector: 'wb-cluster', behavior: 'cluster' }` |
-| `<wb-container>` | `container` | Versatile container. Can be a stack, row, or grid depending on configuration. | `{ selector: 'wb-container', behavior: 'container' }` |
+| `<div x-grid>` | `grid` | Standard CSS Grid layout. Supports `columns`, `gap`, `min-width`. | `{ selector: 'x-grid', behavior: 'grid' }` |
+| `<div x-flex>` | `flex` | Flexbox layout. Supports `direction`, `wrap`, `justify`, `align`. | `{ selector: 'x-flex', behavior: 'flex' }` |
+| `<div x-stack>` | `stack` | Vertical stack of items with consistent spacing. | `{ selector: 'x-stack', behavior: 'stack' }` |
+| `<div x-cluster>` | `cluster` | Horizontal group of items (buttons, tags) that wrap automatically. | `{ selector: 'x-cluster', behavior: 'cluster' }` |
+| `<div x-container>` | `container` | Versatile container. Can be a stack, row, or grid depending on configuration. | `{ selector: 'x-container', behavior: 'container' }` |
 
 ## 2. Page Layouts
 
@@ -28,11 +28,11 @@ These tags are designed for high-level page structure.
 
 | Tag | Behavior | Description | Implementation Config |
 | :--- | :--- | :--- | :--- |
-| `<wb-sidebar>` | `sidebarlayout` | Main content area with a fixed-width side panel. | `{ selector: 'wb-sidebar', behavior: 'sidebarlayout' }` |
-| `<wb-center>` | `center` | Centered content column with max-width (great for articles). | `{ selector: 'wb-center', behavior: 'center' }` |
-| `<wb-cover>` | `cover` | Full-screen "Hero" section that vertically centers its content. | `{ selector: 'wb-cover', behavior: 'cover' }` |
-| `<wb-masonry>` | `masonry` | Pinterest-style staggered grid layout. | `{ selector: 'wb-masonry', behavior: 'masonry' }` |
-| `<wb-switcher>` | `switcher` | Responsive layout that switches from horizontal to vertical based on container width. | `{ selector: 'wb-switcher', behavior: 'switcher' }` |
+| `<div x-sidebarlayout>` | `sidebarlayout` | Main content area with a fixed-width side panel. | `{ selector: 'x-sidebar', behavior: 'sidebarlayout' }` |
+| `<div x-center>` | `center` | Centered content column with max-width (great for articles). | `{ selector: 'x-center', behavior: 'center' }` |
+| `<div x-cover>` | `cover` | Full-screen "Hero" section that vertically centers its content. | `{ selector: 'x-cover', behavior: 'cover' }` |
+| `<div x-masonry>` | `masonry` | Pinterest-style staggered grid layout. | `{ selector: 'x-masonry', behavior: 'masonry' }` |
+| `<div x-switcher>` | `switcher` | Responsive layout that switches from horizontal to vertical based on container width. | `{ selector: 'x-switcher', behavior: 'switcher' }` |
 
 ## 3. Specialty Layouts
 
@@ -40,11 +40,11 @@ Specialized layout patterns for specific UI needs.
 
 | Tag | Behavior | Description | Implementation Config |
 | :--- | :--- | :--- | :--- |
-| `<wb-reel>` | `reel` | Horizontal scrolling carousel (like Instagram stories). | `{ selector: 'wb-reel', behavior: 'reel' }` |
-| `<wb-frame>` | `frame` | Enforces a specific aspect ratio (16:9, 4:3) for media content. | `{ selector: 'wb-frame', behavior: 'frame' }` |
-| `<div x-sticky>` | `sticky` | Sticks an element to the top/bottom of the viewport while scrolling. | `{ selector: 'wb-sticky', behavior: 'sticky' }` |
-| `<div x-drawer>` | `drawerLayout` | Collapsible side drawer (off-canvas menu). | `{ selector: 'wb-drawer', behavior: 'drawerLayout' }` |
-| `<wb-icon>` | `icon` | Inline-flex layout for aligning SVG icons with text. | `{ selector: 'wb-icon', behavior: 'icon' }` |
+| `<div x-reel>` | `reel` | Horizontal scrolling carousel (like Instagram stories). | `{ selector: 'x-reel', behavior: 'reel' }` |
+| `<div x-frame>` | `frame` | Enforces a specific aspect ratio (16:9, 4:3) for media content. | `{ selector: 'x-frame', behavior: 'frame' }` |
+| `<div x-sticky>` | `sticky` | Sticks an element to the top/bottom of the viewport while scrolling. | `{ selector: 'x-sticky', behavior: 'sticky' }` |
+| `<div x-drawer>` | `drawerLayout` | Collapsible side drawer (off-canvas menu). | `{ selector: 'x-drawer', behavior: 'drawerLayout' }` |
+| `<span x-icon>` | `icon` | Inline-flex layout for aligning SVG icons with text. | `{ selector: 'x-icon', behavior: 'icon' }` |
 
 ---
 
@@ -69,9 +69,9 @@ For these custom elements to behave correctly before the JavaScript loads (to mi
 ```css
 /* src/styles/site.css */
 
-wb-grid, wb-flex, wb-stack, wb-cluster, wb-container,
-wb-sidebar, wb-center, wb-cover, wb-masonry, wb-switcher,
-wb-reel, wb-frame, wb-sticky, wb-drawer, wb-icon {
+x-grid, x-flex, x-stack, x-cluster, x-container,
+x-sidebar, x-center, x-cover, x-masonry, x-switcher,
+x-reel, x-frame, x-sticky, x-drawer, x-icon {
   display: block;
 }
 ```

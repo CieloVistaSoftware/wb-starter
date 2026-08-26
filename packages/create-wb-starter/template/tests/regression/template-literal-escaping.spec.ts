@@ -11,7 +11,7 @@ import { fileURLToPath } from 'url';
  * SyntaxError at runtime.
  *
  * Root cause of bug #3: public/schema-viewer.html had unescaped backticks in
- * a template literal at line 476: <wb-mdhtml>```html ... ```</wb-mdhtml>
+ * a template literal at line 476: <div x-mdhtml>```html ... ```</div>
  * The backticks should be escaped: \`\`\`html
  */
 
@@ -94,14 +94,14 @@ test.describe('Template Literal Escaping', () => {
       const content = fs.readFileSync(file, 'utf-8');
 
       // Find template literals that contain HTML (likely to have code fences)
-      // Pattern: `...<wb-mdhtml>...```...```...</wb-mdhtml>...` (unescaped)
-      const badPattern = /`([^`\\]|\\.)*<wb-mdhtml>([^`\\]|\\.)*```([^`\\]|\\.)*```([^`\\]|\\.)*<\/wb-mdhtml>([^`\\]|\\.)*`/g;
+      // Pattern: `...<div x-mdhtml>...```...```...</div>...` (unescaped)
+      const badPattern = /`([^`\\]|\\.)*<div x-mdhtml>([^`\\]|\\.)*```([^`\\]|\\.)*```([^`\\]|\\.)*<\/x-mdhtml>([^`\\]|\\.)*`/g;
       let match;
 
       while ((match = badPattern.exec(content)) !== null) {
         const lineNum = content.substring(0, match.index).split('\n').length;
         violations.push(
-          `${path.relative(htmlDir, file)}:${lineNum}: Unescaped backticks in <wb-mdhtml> inside template`
+          `${path.relative(htmlDir, file)}:${lineNum}: Unescaped backticks in <div x-mdhtml> inside template`
         );
       }
     });

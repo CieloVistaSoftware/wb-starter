@@ -14,33 +14,33 @@ enforces the limit via the native `maxlength`. See
 <input type="text" x-counter max="50" placeholder="Type here — counts up to 50">
 ```
 
-Wrapped in `<wb-demo>`, so the live component renders below with its source shown underneath:
+Wrapped in `<div x-demo>`, so the live component renders below with its source shown underneath:
 
-<wb-demo>
+<div x-demo>
 <input type="text" x-counter max="50" placeholder="Type here — counts up to 50">
-</wb-demo>
+</div>
 
 Add `warning` for a threshold that turns the counter into a warning state
 before the field is actually full:
 
-<wb-demo>
+<div x-demo>
 <textarea x-counter max="120" warning="90" placeholder="Tell us about yourself" rows="3"></textarea>
-</wb-demo>
+</div>
 
 ## Properties
 
 | Attribute | Type | Default | Description |
 |---|---|---|---|
 | `max` | integer | the field's existing `maxlength`, or `0` (no limit) | Maximum character count. When set, the behavior also sets the element's native `maxLength` so the browser refuses further input past the limit. |
-| `warning` | integer | `0` (no warning state) | Character count at which `wb-counter--warning` is applied. |
+| `warning` | integer | `0` (no warning state) | Character count at which `x-counter--warning` is applied. |
 
 ## CSS Classes
 
 | Class | Applies to | When |
 |---|---|---|
 | `<div x-counter>` | the generated `<span>` counter | always |
-| `wb-counter--warning` | the counter `<span>` | length ≥ `warning` |
-| `wb-counter--error` | the counter `<span>` | `max` is set and length ≥ `max` |
+| `x-counter--warning` | the counter `<span>` | length ≥ `warning` |
+| `x-counter--error` | the counter `<span>` | `max` is set and length ≥ `max` |
 
 ## Events
 

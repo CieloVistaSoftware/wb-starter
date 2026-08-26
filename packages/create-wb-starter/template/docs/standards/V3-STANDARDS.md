@@ -19,15 +19,17 @@ presentation or structure. Components use an autonomous `<wb-*>` tag. The mapped
 behavior may create or normalize the component's internal Light DOM, apply its
 classes, bind events, and expose its API.
 
-```html
-<wb-card title="Release notes" variant="glass">
+<div x-demo>
+<article title="Release notes" variant="glass">
   <p>Changes in this release.</p>
-</wb-card>
+</article>
+</div>
 
-<wb-dialog title="Confirm action">
+<div x-demo>
+<dialog title="Confirm action">
   <p>Continue?</p>
-</wb-dialog>
-```
+</dialog>
+</div>
 
 The tag is the component's public boundary. It is not a class instance that must
 extend a shared base class. A `<wb-*>` tag is mapped to a behavior in
@@ -43,11 +45,20 @@ appropriate file under `src/styles/behaviors/`.
 Use a behavior when an existing element already has the right semantic meaning and
 only needs an enhancement. An explicit behavior uses an `x-*` attribute:
 
-```html
+<div x-demo>
 <button x-ripple type="button">Save</button>
+</div>
+
+<div x-demo>
 <a x-tooltip="Open the release notes" href="/release-notes">Release notes</a>
-<nav x-sticky aria-label="Primary">...</nav>
-```
+</div>
+
+<div x-demo>
+<nav x-sticky aria-label="Primary">
+  <a href="#top">Top</a>
+  <a href="#docs">Docs</a>
+</nav>
+</div>
 
 An `x-*` attribute is an opt-in declaration. It does not replace the host element,
 and it does not turn that element into a subclass. A behavior function must work
@@ -104,22 +115,28 @@ combination is intentional and supported. More-specific mappings, such as
 
 ### Tags and behavior attributes
 
-- Components use lowercase `<wb-component-name>` tags.
+- Components use lowercase `<div>` tags.
 - Explicit behaviors use lowercase `x-behavior-name` attributes.
 - Behavior attributes may be boolean or carry the behavior's configuration value.
 
-```html
-<wb-badge variant="success">Ready</wb-badge>
+<div x-demo>
+<span x-badge variant="success">Ready</span>
+</div>
+
+<div x-demo>
 <button x-tooltip="Save this record" type="button">Save</button>
-```
+</div>
 
 ### Configuration attributes
 
 Configuration attributes use clean names. Do not add `x-` or `data-` to a
 component or behavior property:
 
+<div x-demo>
+<article title="Hello" variant="glass" hoverable></article>
+</div>
+
 ```html
-<wb-card title="Hello" variant="glass" hoverable></wb-card>
 <input type="text" clearable>
 <table sortable searchable></table>
 ```
@@ -161,7 +178,7 @@ The WB runtime discovers declarations through three maps:
 
 | Markup | Map | Meaning |
 | --- | --- | --- |
-| `<wb-card>` | `elementMap` | Named component boundary |
+| `<article>` | `elementMap` | Named component boundary |
 | `<button x-ripple>` | `extensionMap` | Explicit enhancement |
 | `<button>`, `<details>`, `<table>` | `nativeMap` | Optional semantic auto-injection |
 
@@ -174,8 +191,8 @@ the function is being used as a component or as an enhancement.
 
 ### Component with semantic children
 
-```html
-<wb-article>
+<div x-demo>
+<div x-article>
   <header>
     <h2>Article title</h2>
     <p>Short summary.</p>
@@ -184,18 +201,18 @@ the function is being used as a component or as an enhancement.
   <footer>
     <time datetime="2026-08-07">August 7, 2026</time>
   </footer>
-</wb-article>
-```
+</div>
+</div>
 
-The `<wb-article>` boundary identifies the component, while its internal
+The `<div x-article>` boundary identifies the component, while its internal
 `<header>`, heading, paragraph, footer, and `<time>` elements retain their native
 meaning.
 
 ### Native element with an explicit enhancement
 
-```html
+<div x-demo>
 <button x-ripple type="submit">Submit</button>
-```
+</div>
 
 The button remains a button. The behavior adds the interaction without changing
 the control's native role, focus model, or form behavior.
@@ -225,7 +242,7 @@ now named components. Convert the structure to a `<wb-*>` tag, while retaining
 <button x-ripple type="button">Click me</button>
 
 <!-- v3 -->
-<wb-card title="Hello" variant="glass">Content</wb-card>
+<article title="Hello" variant="glass">Content</article>
 <button x-ripple type="button">Click me</button>
 ```
 
@@ -236,7 +253,7 @@ native form and use `nativeMap` or an explicit `x-*` behavior as appropriate.
 
 ```text
 COMPONENT BOUNDARY
-<wb-card title="..." variant="glass">...</wb-card>
+<article title="..." variant="glass">...</article>
 
 EXPLICIT ENHANCEMENT
 <button x-ripple type="button">Save</button>

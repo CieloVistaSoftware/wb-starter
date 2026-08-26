@@ -23,7 +23,7 @@
 ### 4. **Enhanced State Management**
 - Two separate storage keys:
   - `<div x-notes>`: Full notes state (content + position + size)
-  - `wb-todo`: TODO items array
+  - `x-todo`: TODO items array
 - Proper load order on initialization
 - All data survives page reload
 
@@ -77,7 +77,7 @@ draggedTodoId = null        // For drag-drop reordering
 
 ### Storage Structure
 ```javascript
-// localStorage['wb-notes']
+// localStorage['x-notes']
 {
   content: "note text...",
   position: "left|modal|right",
@@ -88,7 +88,7 @@ draggedTodoId = null        // For drag-drop reordering
   lastUpdated: "2025-12-15T..."
 }
 
-// localStorage['wb-todo']
+// localStorage['x-todo']
 [
   {
     id: "todo-1702234567890",
@@ -104,15 +104,15 @@ draggedTodoId = null        // For drag-drop reordering
 
 ### New Classes
 ```css
-.wb-notes__todo-panel           /* Main TODO container */
-.wb-notes__todo-header          /* TODO header bar */
-.wb-notes__todo-input-row       /* Input + add button */
-.wb-notes__todo-list            /* Scrollable items container */
-.wb-notes__todo-item            /* Individual TODO item */
-.wb-notes__todo-checkbox        /* Checkbox input */
-.wb-notes__todo-text            /* TODO text (with .done state) */
-.wb-notes__todo-delete          /* Delete button per item */
-.wb-notes__todo-drag            /* Drag handle indicator */
+.x-notes__todo-panel           /* Main TODO container */
+.x-notes__todo-header          /* TODO header bar */
+.x-notes__todo-input-row       /* Input + add button */
+.x-notes__todo-list            /* Scrollable items container */
+.x-notes__todo-item            /* Individual TODO item */
+.x-notes__todo-checkbox        /* Checkbox input */
+.x-notes__todo-text            /* TODO text (with .done state) */
+.x-notes__todo-delete          /* Delete button per item */
+.x-notes__todo-drag            /* Drag handle indicator */
 ```
 
 ### Key Features

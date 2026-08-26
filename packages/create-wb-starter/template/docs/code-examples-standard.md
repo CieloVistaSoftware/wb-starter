@@ -25,10 +25,10 @@ Code examples should prefer the **auto-inject format** using semantic HTML eleme
 
 Each code example should include an xs-font note explaining alternative syntax options.
 
-### Rule 4: Every renderable code example MUST use `<wb-demo>` — no static, un-rendered code fences
+### Rule 4: Every renderable code example MUST use `<div x-demo>` — no static, un-rendered code fences
 
-A code example that shows real `wb-*`/`x-*` markup must be a LIVE `<wb-demo>` block, not
-a plain ` ```html ` fenced code block that only shows text. `<wb-demo>` renders the markup
+A code example that shows real `wb-*`/`x-*` markup must be a LIVE `<div x-demo>` block, not
+a plain ` ```html ` fenced code block that only shows text. `<div x-demo>` renders the markup
 for real AND auto-generates the formatted code sample (with copy button) from it — one
 source of truth, always in sync, never a hand-typed sample that silently drifts from what
 actually renders.
@@ -37,23 +37,23 @@ actually renders.
 <!-- ❌ WRONG — static, never rendered, can drift from reality -->
 
 ```html
-<wb-card title="Hello" variant="elevated">
+<article title="Hello" variant="elevated">
   <p>It just works.</p>
-</wb-card>
+</article>
 ```
 
 <!-- ✅ CORRECT — live, rendered, code sample auto-generated from the real markup -->
-<wb-demo>
-<wb-card title="Hello" variant="elevated">
+<div x-demo>
+<article title="Hello" variant="elevated">
   <p>It just works.</p>
-</wb-card>
-</wb-demo>
+</article>
+</div>
 ```
 
 The only exception: a block illustrating something that genuinely isn't renderable in
 isolation — a CSS-only snippet, a JS-only snippet, an accessibility attribute reference
 table, or intentionally-invalid markup demonstrating what NOT to do. Those stay as plain
-fenced code. If the block shows a real component/behavior usage, it must be `<wb-demo>`.
+fenced code. If the block shows a real component/behavior usage, it must be `<div x-demo>`.
 
 ---
 
@@ -136,7 +136,6 @@ When you need to override auto-injection or apply behaviors to non-semantic elem
 </div>
 <!-- Combining multiple behaviors -->
 <button
-  x-button
   x-ripple
   x-toast
   variant="primary"
@@ -168,7 +167,7 @@ When you need to override auto-injection or apply behaviors to non-semantic elem
 | `video` | `<video>` | `<div x-video>` |
 | `figure` | `<figure>` | `<div x-figure>` |
 | `table` | `<table>` | `<div x-table>` |
-| `input` | — (not auto-injected; bare `<input>` needs `x-input`) | `<input x-input>` |
+| `input` | — (not auto-injected; bare `<input>` needs `x-input`) | `<input>` |
 | `textarea` | `<textarea>` | — (auto-injects, `x-textarea` is redundant) |
 | `select` | `<select>` | — (auto-injects, `x-select` is redundant) |
 | `progress` | `<progress>` | `<div x-progressbar>` |
@@ -206,14 +205,14 @@ element renders each attribute on its own line (see
 [Demos & Documentation Standards](./standards/DEMOS-AND-DOCS-STANDARDS.md) §5).
 
 **The one exception — short elements:** an element whose entire tag is short
-(roughly **under 25 characters**, e.g. `<wb-badge label="New">`) may stay on a single
+(roughly **under 25 characters**, e.g. `<span x-badge label="New">`) may stay on a single
 line, one element per line. Never split a short tag pointlessly, and never cram a long
 multi-attribute tag onto one line.
 
 ```html
 <!-- Short tags: one element per line -->
-<wb-badge label="New"></wb-badge>
-<wb-badge label="Done" variant="success"></wb-badge>
+<span x-badge label="New"></span>
+<span x-badge label="Done" variant="success"></span>
 
 <!-- Long tags: one attribute per line -->
 <button
@@ -237,7 +236,6 @@ multi-attribute tag onto one line.
 
 ```html
 <article
-  x-card
   title="Card Title"
   subtitle="Subtitle"
   elevated="true"
@@ -256,7 +254,7 @@ multi-attribute tag onto one line.
   controls
   width="300"
   src="video.mp4"
-  poster="thumbnail.jpg">
+  poster="https://picsum.photos/seed/thumbnail/800/450">
 </video>
 ```
 

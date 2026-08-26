@@ -3,6 +3,7 @@
 import WB from './wb.js';  // v3.0: Use main wb.js with schema support
 import { initViews } from './wb-views.js';
 import { preloadCssForHtml } from './style-loader.js';
+import { VERSION } from './version.js';
 
 export default class WBSite {
   constructor() {
@@ -45,7 +46,14 @@ export default class WBSite {
       
       const params = new URLSearchParams(window.location.search);
       const pageParam = params.get('page');
-      if (pageParam && this.config.navigationMenu.find(n => n.menuItemId === pageParam)) {
+      // #725 -- the SECOND copy of the same wrong rule. This one dropped the
+      // ?page= parameter on the floor whenever it was not a nav menu item, so
+      // currentPage stayed 'home' and navigateTo() never even saw the request.
+      // Fixing only the gate inside navigateTo() changed nothing: ?page=privacy
+      // still rendered home, because it never got that far. Same test as there:
+      // a plausible page id is accepted, and whether the page EXISTS is decided
+      // by the fetch, which already has a 404 path.
+      if (pageParam && /^[a-z0-9][a-z0-9-]*$/i.test(pageParam)) {
         this.currentPage = pageParam;
       }
 
@@ -53,6 +61,7 @@ export default class WBSite {
       this.initResizableNav();
       this.initStickyHeader();
       this.initStickyFooter();
+      this.initWheelScrollFallback();
 
       // Initialize Views System
       await initViews({
@@ -101,7 +110,7 @@ export default class WBSite {
               e.preventDefault();
               // #181's own fix (scrollIntoView instead of native anchor
               // jump) still isn't enough on a page as long/image-heavy as
-              // components.html's: dozens of <wb-cardimage>/<wb-cardhero>
+              // components.html's: dozens of <div x-cardimage>/<div x-cardhero>
               // external images ABOVE a lower target keep loading and
               // growing the page's total height for SECONDS after this
               // fires (confirmed live on a 47,500px-tall render: a fixed
@@ -188,7 +197,7 @@ export default class WBSite {
         </main>
       </div>
       ${this.renderFooter()}
-      <wb-notes id="siteNotes" x-eager position="right"></wb-notes>
+      <div x-notes id="siteNotes" x-eager position="right"></div>
     `;
     const toggleBtn = app.querySelector('.nav__toggle');
     if (toggleBtn) {
@@ -217,7 +226,7 @@ export default class WBSite {
     this.updateActiveNav();
 
     // === Runtime check for duplicate theme switchers ===
-    const themeSwitchers = document.querySelectorAll('wb-themecontrol');
+    const themeSwitchers = document.querySelectorAll('x-themecontrol');
     if (themeSwitchers.length > 1) {
       console.warn(`⚠️ Found ${themeSwitchers.length} theme switchers on the page!`);
       themeSwitchers.forEach((el, i) => {
@@ -242,10 +251,10 @@ export default class WBSite {
         <div class="header__right" id="headerRight" style="gap: 1rem;">
           ${headerSettings.displaySearchBar ? `
             <div class="header__search" id="headerSearch">
-              <input type="search" placeholder="Search..." aria-label="Search" class="wb-input-glass" style="padding: 0.4rem 0.8rem; width: 200px;">
+              <input type="search" placeholder="Search..." aria-label="Search" class="x-input-glass" style="padding: 0.4rem 0.8rem; width: 200px;">
             </div>
           ` : ''}
-          <wb-themecontrol id="headerThemeControl"></wb-themecontrol>
+          <div x-themecontrol id="headerThemeControl"></div>
           <a class="header__playground-btn" id="playgroundLink" href="demos/playground.html" target="_blank" rel="noopener" x-ripple title="Playground — paste HTML, see it render live" aria-label="Open the Playground">🧪</a>
           <button class="header__notes-btn" id="notesToggle" x-ripple title="Toggle Notes" aria-label="Toggle Notes">📝</button>
         </div>
@@ -450,6 +459,47 @@ export default class WBSite {
     });
   }
 
+  // #636: John, screenshot -- filtering pages/behaviors.html's search box
+  // correctly narrowed the result count ("Showing 69 of 88") but the matched
+  // <div x-demo> elements never appeared. Root cause: #siteBody IS the correct,
+  // genuinely-scrollable container (overflow-y:auto, scrollHeight >>
+  // clientHeight, confirmed live) and setting `.scrollTop` directly always
+  // worked -- but real/trusted wheel input landing on it did not advance
+  // scrollTop at all, on both the live .io site and this repo's own
+  // automation. No JS anywhere registers a `wheel` listener that could be
+  // preventing it (grepped the whole src/ tree), so this isn't application
+  // logic swallowing the event -- something in the browser's native
+  // wheel-to-scroll pipeline for this specific `height:100dvh; overflow:
+  // hidden` shell + `flex:1; overflow-y:auto` child layout just isn't
+  // reliably kicking in. Rather than keep chasing that platform-level cause,
+  // this makes wheel scrolling self-healing: after any wheel event, if
+  // scrollTop hasn't moved by the next frame (native handling silently did
+  // nothing), apply the delta manually. When native scrolling DOES work
+  // (the common case), this is a no-op every time -- scrollTop has already
+  // moved by the time the rAF fires, so the fallback branch never runs.
+  initWheelScrollFallback() {
+    const body = document.getElementById('siteBody');
+    if (!body) return;
+
+    body.addEventListener('wheel', (e) => {
+      const beforeTop = body.scrollTop;
+      const maxTop = body.scrollHeight - body.clientHeight;
+      if (maxTop <= 0) return; // nothing to scroll
+
+      // setTimeout, not requestAnimationFrame -- rAF is suspended on
+      // backgrounded/non-compositing tabs (confirmed while diagnosing this:
+      // a double-rAF await hung indefinitely in that state), which would
+      // silently disable this exact fallback in the situation it exists to
+      // cover. A short timeout still fires there.
+      setTimeout(() => {
+        if (body.scrollTop !== beforeTop) return; // native scroll handled it
+
+        const nextTop = beforeTop + e.deltaY;
+        body.scrollTop = Math.min(Math.max(nextTop, 0), maxTop);
+      }, 16);
+    }, { passive: true });
+  }
+
   renderFooter() {
     const { footerSettings, socialMediaLinks, additionalFooterLinks } = this.config;
     const socialLinks = footerSettings.displaySocialMediaLinks ? socialMediaLinks.map(s =>
@@ -501,9 +551,24 @@ export default class WBSite {
     if (window.innerWidth <= 768) {
       this.closeMobileNav();
     }
+
+    let main_notFound = false;
     
-    if (!this.config.navigationMenu.find(n => n.menuItemId === pageId)) {
-      pageId = 'home';
+    // #725 -- John's own footer links were broken by this. The gate used to be
+    //   if (!navigationMenu.find(n => n.menuItemId === pageId)) pageId = 'home';
+    // so ANY page that is not a nav menu item silently became home: 10 of the
+    // 20 files in pages/ were unreachable by URL, including ?page=privacy and
+    // ?page=terms, which the footer links to on every page of the site. No
+    // error, no 404, the URL still saying privacy while home rendered.
+    //
+    // The fetch below already handles a missing page properly -- render404() --
+    // so the nav list is the wrong authority for "does this page exist". What
+    // the gate WAS doing accidentally was keeping junk out of the fetch path,
+    // since pageId is interpolated straight into `pages/${pageId}.html`. That
+    // job is now done deliberately, and only that job.
+    if (!/^[a-z0-9][a-z0-9-]*$/i.test(pageId)) {
+      console.warn(`[WBSite] refusing to navigate to an invalid page id: ${JSON.stringify(pageId)}`);
+      main_notFound = true;
     }
     if (pageId === 'schema-viewer') {
       window.open('schema-viewer.html', '_blank');
@@ -516,7 +581,11 @@ export default class WBSite {
     this.currentPage = pageId;
     this.updateActiveNav();
     const main = document.getElementById('main');
-    main.innerHTML = `<div class="page__loading" id="mainPageLoading"><wb-spinner  id="mainSpinner"></div><p id="mainLoadingText">Loading...</p></div>`;
+    if (main_notFound) {
+      main.innerHTML = this.render404(pageId);
+      return;
+    }
+    main.innerHTML = `<div class="page__loading" id="mainPageLoading"><span x-spinner  id="mainSpinner"></div><p id="mainLoadingText">Loading...</p></div>`;
     // Optimization: Don't await scan here to start fetch immediately. MutationObserver handles injection.
     // WB.scan(main); 
     
@@ -526,13 +595,17 @@ export default class WBSite {
       loadingTimerId = window.WBLoadingManager.startMonitoring(loadingEl, `Page: ${pageId}`);
     }
     try {
-      const res = await fetch(`pages/${pageId}.html`);
+      // Cache-bust the fragment on the release version. Without this the SPA
+      // re-served whatever copy the browser had, so a page edit stayed
+      // invisible after deploy while the raw URL served the new file — the
+      // reason What's New kept looking unchanged after a release. See #743.
+      const res = await fetch(`pages/${pageId}.html?v=${VERSION.version}`);
       if (loadingTimerId && window.WBLoadingManager) {
         window.WBLoadingManager.stopMonitoring(loadingTimerId);
       }
       if (res.ok) {
         // A page fragment that needs to show the release number uses
-        // <span x-release> (or <wb-release>) -- src/wb-viewmodels/release.js
+        // <span x-release> (or <div x-release>) -- src/wb-viewmodels/release.js
         // reads the single canonical VERSION import itself, the same one
         // every other consumer (including this shell's own header) reads.
         // A hardcoded "v3.0" litters across several pages/*.html went stale
@@ -567,6 +640,17 @@ export default class WBSite {
           // Small delay to ensure DOM is fully updated
           setTimeout(() => window.WB.scan(main), 10);
         }
+
+        // #730 -- John: "if all elements on the page have an id then duplicate
+        // work would have a run time error." Checked AFTER the old page has been
+        // replaced and the new one scanned, so a normal navigation never trips
+        // it -- only genuine duplication does. Dynamic import so a page render
+        // never waits on the detector, and never fails because of it.
+        setTimeout(() => {
+          import('./duplicate-ids.js')
+            .then((m) => m.reportDuplicateIds(`after navigating to ${pageId}`))
+            .catch(() => { /* the detector is never allowed to break a render */ });
+        }, 400);
       } else {
         main.innerHTML = this.render404(pageId);
       }
@@ -619,7 +703,7 @@ export default class WBSite {
       this.mobileNavOpen = !this.mobileNavOpen;
       nav?.classList.toggle('site__nav--mobile-open', this.mobileNavOpen);
       backdrop?.classList.toggle('visible', this.mobileNavOpen);
-      document.body.classList.toggle('wb-scroll-lock', this.mobileNavOpen);
+      document.body.classList.toggle('x-scroll-lock', this.mobileNavOpen);
       // Opening while scrolled down the page would expand the in-flow fluent
       // nav (#293) above the current viewport, out of sight — bring it into
       // view so the menu is actually visible the moment it opens.
@@ -640,6 +724,6 @@ export default class WBSite {
     this.mobileNavOpen = false;
     nav?.classList.remove('site__nav--mobile-open');
     backdrop?.classList.remove('visible');
-    document.body.classList.remove('wb-scroll-lock');
+    document.body.classList.remove('x-scroll-lock');
   }
 }

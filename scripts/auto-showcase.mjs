@@ -131,7 +131,7 @@ function generateSections(schema) {
         if (rv.required && rk !== propName) {
           attrs[camelToKebab(rk)] = rv.default || `Sample ${rk}`;
         }
-        // A ranged number prop (e.g. wb-progress's `value`, min 0/max 100)
+        // A ranged number prop (e.g. x-progress's `value`, min 0/max 100)
         // is never `required` -- its schema default is a boundary value
         // (0), so an enum sweep that only fills in required props left it
         // unset everywhere. Confirmed live: every "Progress — variant
@@ -240,7 +240,7 @@ function buildPageSchema(schema) {
   sections = deduplicateSections(sections);
 
   const pageSchema = {
-    "$extends": "wb-page-defaults",
+    "$extends": "x-page-defaults",
     "title": title,
     "description": `Auto-generated showcase for ${schema.schemaFor} component — all variants, combinations, and toggles.`,
     "schemaFor": `${schema.schemaFor}-showcase`,

@@ -1,8 +1,8 @@
 /**
- * Generate VS Code IntelliSense data for wb-part elements
+ * Generate VS Code IntelliSense data for x-part elements
  * 
  * Generates html-custom-data.json entries for:
- * - <wb-part> element with all part name attributes
+ * - <div> element with all part name attributes
  * - Part-specific attributes for each part
  * 
  * Usage:
@@ -115,9 +115,9 @@ function generateIntelliSenseData(registry) {
     });
   });
   
-  // Build the wb-part element definition
+  // Build the x-part element definition
   const wbPartElement = {
-    name: 'wb-part',
+    name: 'x-part',
     description: 'WB Part - Reusable HTML template. First boolean attribute specifies the part name.',
     attributes: Array.from(allAttributes.values()),
     references: [
@@ -158,10 +158,10 @@ function mergeWithExisting(newData) {
     }
   }
   
-  // Remove existing wb-part entry if present
-  existing.tags = existing.tags.filter(t => t.name !== 'wb-part');
+  // Remove existing x-part entry if present
+  existing.tags = existing.tags.filter(t => t.name !== 'x-part');
   
-  // Add new wb-part entry
+  // Add new x-part entry
   existing.tags.push(...newData.tags);
   
   // Merge value sets
@@ -242,7 +242,7 @@ function main() {
   // Generate IntelliSense data
   const intelliSenseData = generateIntelliSenseData(registry);
   const attrCount = intelliSenseData.tags[0].attributes.length;
-  console.log(`Generated ${attrCount} attributes for <wb-part>`);
+  console.log(`Generated ${attrCount} attributes for <div>`);
   
   // Merge with existing
   const merged = mergeWithExisting(intelliSenseData);

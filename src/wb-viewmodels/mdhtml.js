@@ -4,18 +4,18 @@ import { readAttr } from '../core/read-attr.js';
  * -----------------------------------------------------------------------------
  * Converts markdown content to HTML using marked.js.
  * 
- * Custom Tag: <wb-mdhtml>
+ * Custom Tag: <div x-mdhtml>
  * 
  * Usage:
- *   <wb-mdhtml>
+ *   <div x-mdhtml>
  *     # Hello World
  *     This is **bold** and *italic*
- *   </wb-mdhtml>
+ *   </div>
  * 
  * Or with external file:
- *   <wb-mdhtml data-src="./docs/readme.md"></wb-mdhtml>
+ *   <div x-mdhtml data-src="./docs/readme.md"></div>
  * Or with absolute path:
- *   <wb-mdhtml data-src="/docs/architecture.md"></wb-mdhtml>
+ *   <div x-mdhtml data-src="/docs/architecture.md"></div>
  * -----------------------------------------------------------------------------
  */
 import { logError } from '../core/error-logger.js';
@@ -66,15 +66,15 @@ async function loadMarked() {
 // table intrinsic-sizing rules, so it reliably clips/scrolls its content.
 function wrapTables(root) {
   root.querySelectorAll('table').forEach((table) => {
-    if (table.parentElement && table.parentElement.classList.contains('wb-mdhtml__table-wrap')) return;
+    if (table.parentElement && table.parentElement.classList.contains('x-mdhtml__table-wrap')) return;
     const wrapper = document.createElement('div');
-    wrapper.className = 'wb-mdhtml__table-wrap';
+    wrapper.className = 'x-mdhtml__table-wrap';
     table.parentNode.insertBefore(wrapper, table);
     wrapper.appendChild(table);
   });
 }
 
-// #295: hyphenated identifiers/compound words (e.g. `x-toast`, `wb-card`,
+// #295: hyphenated identifiers/compound words (e.g. `x-toast`, `x-card`,
 // well-known) get split at the hyphen when the browser wraps text -- the
 // default Unicode line-breaking algorithm (UAX #14) treats a bare ASCII
 // hyphen between two word characters as a normal soft line-break
@@ -146,21 +146,21 @@ export async function mdhtml(element, options = {}) {
     // true keeps that doc-viewer.html behavior unchanged. Anything rendering
     // ARBITRARY/untrusted markdown (a GitHub issue body, a user comment) must
     // opt out -- confirmed live: issue #527's own body text illustrating
-    // this exact bug (a fenced `<wb-mdhtml src="/docs/guide.md">` example)
+    // this exact bug (a fenced `<div x-mdhtml src="/docs/guide.md">` example)
     // got auto-promoted to a real, live, fetching element on pages/issues.html,
     // reproducing the very 404 the issue was reporting.
     autoLiveRender: options.autoLiveRender ?? (element.getAttribute('auto-live-render') !== 'false'),
     ...options
   };
 
-  // #448: skip the bare 'wb-mdhtml' token on a literal <wb-mdhtml> host --
-  // mdhtml.css selects the `wb-mdhtml` TAG directly for that case now.
+  // #448: skip the bare 'x-mdhtml' token on a literal <div x-mdhtml> host --
+  // mdhtml.css selects the `x-mdhtml` TAG directly for that case now.
   // Still added for every OTHER host -- confirmed live: public/doc-viewer.html
   // calls mdhtml() directly on a plain <div id="content">, not a
-  // <wb-mdhtml> tag, and mdhtml.css's `.wb-mdhtml` class rules still need to
+  // <div x-mdhtml> tag, and mdhtml.css's `.x-mdhtml` class rules still need to
   // select that div.
-  if (element.tagName.toLowerCase() !== 'wb-mdhtml') element.classList.add('wb-mdhtml');
-  element.classList.add('wb-mdhtml--loading');
+  if (element.tagName.toLowerCase() !== 'x-mdhtml') element.classList.add('x-mdhtml');
+  element.classList.add('x-mdhtml--loading');
 
   try {
     // Load marked library
@@ -237,13 +237,13 @@ export async function mdhtml(element, options = {}) {
         
         console.log('[mdhtml] ✓ Loaded', markdown.length, 'characters');
       } catch (err) {
-        element.classList.remove('wb-mdhtml--loading');
-        element.classList.add('wb-mdhtml--error');
+        element.classList.remove('x-mdhtml--loading');
+        element.classList.add('x-mdhtml--error');
         
         console.warn('[mdhtml] Failed to load file: ' + config.src);
         logError('Unable to Load Documentation', {
           file: 'src/wb-viewmodels/mdhtml.js',
-          to: 'wb-mdhtml',
+          to: 'x-mdhtml',
           reason: err.message,
           response: err.message,
           src: config.src,
@@ -262,9 +262,9 @@ export async function mdhtml(element, options = {}) {
         return () => {};
       }
     } else {
-      // Use inline content. `<wb-mdhtml>` isn't a real custom element (no
+      // Use inline content. `<div x-mdhtml>` isn't a real custom element (no
       // connectedCallback to capture pristine markup before upgrade, unlike
-      // <wb-demo> — see wb-demo.js), so its raw content sits in the DOM as
+      // <div x-demo> — see x-demo.js), so its raw content sits in the DOM as
       // real, live, browser-parsed elements from initial page load until
       // THIS async behavior runs. When that content includes an example like
       // `<div x-gallery columns="4">`, WB's own async scan can independently
@@ -276,10 +276,10 @@ export async function mdhtml(element, options = {}) {
       // as-authored text, unaffected by any DOM mutation since parse time).
       let raw = null;
       try {
-        const allMdHtml = document.querySelectorAll('wb-mdhtml');
+        const allMdHtml = document.querySelectorAll('x-mdhtml');
         const idx = Array.from(allMdHtml).indexOf(element);
         const pageSource = await getPageSource();
-        const block = extractTagBlock(pageSource, 'wb-mdhtml', idx, allMdHtml.length);
+        const block = extractTagBlock(pageSource, 'x-mdhtml', idx, allMdHtml.length);
         if (block && block.trim()) raw = block;
       } catch (e) {
         // ignore — fall through to the live-DOM read below
@@ -335,8 +335,30 @@ export async function mdhtml(element, options = {}) {
 
     // Render HTML
     element.innerHTML = safeHtml;
-    element.classList.remove('wb-mdhtml--loading');
-    element.classList.add('wb-mdhtml--loaded');
+
+    // Capture each demo's AUTHORED markup now, while it is still pristine.
+    //
+    // demo.js builds its code panel from `_rawSource`, then a page-source
+    // fetch, then `element.innerHTML`. In a doc none of the first two apply:
+    // `_rawSource` was set by the old custom element's connectedCallback, and
+    // the page-source fetch reads doc-viewer.html, which never contains markup
+    // that only exists in the fetched markdown. So it fell through to
+    // innerHTML -- read AFTER the behaviors inside had already built themselves.
+    //
+    // The panel therefore showed the GENERATED DOM instead of the source. For
+    // `<div x-codecontrol></div>` -- one authored line -- it printed several
+    // hundred lines of every <optgroup> and <option> the behavior had just
+    // produced, so a reader could not tell what to type. John: "this does not
+    // show how the code was 'interpreted' what code was used?"
+    //
+    // This runs between "HTML exists" and "anything has scanned it", the only
+    // moment the authored text is still in the DOM.
+    element.querySelectorAll('[x-demo]').forEach((demo) => {
+      if (!demo._rawSource) demo._rawSource = demo.innerHTML;
+    });
+
+    element.classList.remove('x-mdhtml--loading');
+    element.classList.add('x-mdhtml--loaded');
     // Runtime/test hook: mark hydrated so tests can wait deterministically
     try { element.setAttribute('x-hydrated', '1'); element.dispatchEvent(new CustomEvent('wb:mdhtml:hydrated', { bubbles: true })); } catch (e) { /* best-effort */ }
 
@@ -392,10 +414,10 @@ export async function mdhtml(element, options = {}) {
     // check had nothing to find either, so wb.js never even got imported
     // for plain markdown docs (no <wb-*> tags), and a later manual
     // WB.scan(docEl) call (docs that DID import wb.js for other reasons,
-    // e.g. an embedded <wb-demo>) still found no [x-pre]/[x-code] elements
+    // e.g. an embedded <div x-demo>) still found no [x-pre]/[x-code] elements
     // to enhance. Confirmed live: every plain ```fenced``` code block
     // rendered through doc-viewer.html stayed unstyled (no .x-pre-wrapper,
-    // no copy button, no line numbers), while only <wb-demo>'s OWN code
+    // no copy button, no line numbers), while only <div x-demo>'s OWN code
     // panels (styled via demo.js's separate, unconditional scan call) got
     // pre()'s enhancement. Splitting the marking out from the WB-gated
     // scan() fixes both: marking now always happens, so (a) a later
@@ -403,7 +425,7 @@ export async function mdhtml(element, options = {}) {
     // (b) docHasWbContent()'s x-* check now sees the x-pre/x-code
     // attributes it just set and correctly decides the doc needs WB.
     // 0. Auto-live-render eligible ```html fenced blocks. John: "all of
-    // these examples must use wb-demo" -- a doc's usage examples were
+    // these examples must use x-demo" -- a doc's usage examples were
     // read-only syntax-highlighted TEXT (the x-pre/x-code marking below
     // makes them look nice but never actually renders the component), so
     // a reader had to take the markup on faith instead of seeing it work.
@@ -423,7 +445,7 @@ export async function mdhtml(element, options = {}) {
     // panel still shows the exact source correctly without any extra work.
     if (config.autoLiveRender) element.querySelectorAll('pre > code').forEach(code => {
         const pre = code.parentElement;
-        if (pre.closest('wb-demo')) return; // already inside a real wb-demo block
+        if (pre.closest('x-demo')) return; // already inside a real x-demo block
         const isHtmlLang = /\blanguage-html\b/.test(code.className) || (!code.className && /^\s*</.test(code.textContent || ''));
         if (!isHtmlLang) return;
 
@@ -455,7 +477,7 @@ export async function mdhtml(element, options = {}) {
         );
         if (!isRenderable) return;
 
-        const wbDemo = document.createElement('wb-demo');
+        const wbDemo = document.createElement('x-demo');
         wbDemo.innerHTML = raw;
         pre.replaceWith(wbDemo);
     });
@@ -513,12 +535,12 @@ export async function mdhtml(element, options = {}) {
     }));
 
   } catch (err) {
-    element.classList.remove('wb-mdhtml--loading');
-    element.classList.add('wb-mdhtml--error');
+    element.classList.remove('x-mdhtml--loading');
+    element.classList.add('x-mdhtml--error');
     console.warn('[mdhtml] Unexpected error');
     logError('mdhtml Unexpected Error', {
       file: 'src/wb-viewmodels/mdhtml.js',
-      to: 'wb-mdhtml',
+      to: 'x-mdhtml',
       reason: err.message,
       src: config.src,
       stack: err.stack
@@ -539,7 +561,7 @@ export async function mdhtml(element, options = {}) {
 
   // Cleanup
   return () => {
-    element.classList.remove('wb-mdhtml', 'wb-mdhtml--loading', 'wb-mdhtml--loaded', 'wb-mdhtml--error');
+    element.classList.remove('x-mdhtml', 'x-mdhtml--loading', 'x-mdhtml--loaded', 'x-mdhtml--error');
     delete element.wbMdhtml;
   };
 }

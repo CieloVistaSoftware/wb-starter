@@ -1,5 +1,5 @@
 /**
- * wb-tabs — headers from tab-title, panel switching (issue #130)
+ * x-tabs — headers from tab-title, panel switching (issue #130)
  */
 import { test, expect, Page } from '@playwright/test';
 
@@ -22,16 +22,16 @@ async function setup(page: Page, html: string): Promise<void> {
 }
 
 const MARKUP = `
-  <wb-tabs id="tabs">
+  <div x-tabs id="tabs">
     <div tab-title="Overview"><p>Overview content</p></div>
     <div tab-title="Features"><p>Features content</p></div>
     <div tab-title="Installation"><p>Installation content</p></div>
-  </wb-tabs>`;
+  </div>`;
 
-test.describe('wb-tabs', () => {
+test.describe('[x-tabs]', () => {
   test('renders the tab-title labels (not generic "Tab 1")', async ({ page }) => {
     await setup(page, MARKUP);
-    const tabs = page.locator('#tabs .wb-tabs__tab');
+    const tabs = page.locator('#tabs .x-tabs__tab');
     await expect(tabs).toHaveCount(3);
     await expect(tabs.nth(0)).toHaveText('Overview');
     await expect(tabs.nth(1)).toHaveText('Features');
@@ -40,10 +40,10 @@ test.describe('wb-tabs', () => {
 
   test('first panel active by default, clicking switches', async ({ page }) => {
     await setup(page, MARKUP);
-    const panels = page.locator('#tabs .wb-tabs__panel');
+    const panels = page.locator('#tabs .x-tabs__panel');
     await expect(panels.nth(0)).toBeVisible();
     await expect(panels.nth(1)).toBeHidden();
-    await page.locator('#tabs .wb-tabs__tab', { hasText: 'Features' }).click();
+    await page.locator('#tabs .x-tabs__tab', { hasText: 'Features' }).click();
     await expect(panels.nth(1)).toBeVisible();
     await expect(panels.nth(0)).toBeHidden();
   });

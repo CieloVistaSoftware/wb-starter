@@ -267,7 +267,7 @@ const showExample = flags.includes('--example');
 
 if (showExample) {
   const example = {
-    "$extends": "wb-page-defaults",
+    "$extends": "x-page-defaults",
     "title": "Multi-Component Demo",
     "schemaFor": "multi-demo",
     "header": {
@@ -293,11 +293,11 @@ if (showExample) {
       },
       {
         "heading": "Custom Section",
-        "tag": "wb-badge",
+        "tag": "x-badge",
         "columns": 2,
         "demos": [
-          { "tag": "wb-badge", "attrs": { "label": "Custom 1", "variant": "primary" } },
-          { "tag": "wb-badge", "attrs": { "label": "Custom 2", "variant": "success" } }
+          { "tag": "x-badge", "attrs": { "label": "Custom 1", "variant": "primary" } },
+          { "tag": "x-badge", "attrs": { "label": "Custom 2", "variant": "success" } }
         ]
       }
     ]

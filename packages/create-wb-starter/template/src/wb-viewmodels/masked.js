@@ -5,8 +5,8 @@ export function masked(element, options = {}) {
     placeholder: options.placeholder || element.getAttribute('mask-placeholder') || '_',
     ...options
   };
-  element.classList.add('wb-masked');
-  if (!config.mask) return () => element.classList.remove('wb-masked');
+  element.classList.add('x-masked');
+  if (!config.mask) return () => element.classList.remove('x-masked');
   if (!element.placeholder) {
     element.placeholder = config.mask.replace(/9/g, config.placeholder).replace(/A/g, config.placeholder);
   }
@@ -92,5 +92,5 @@ export function masked(element, options = {}) {
     applyMask();
   });
   if (element.value) applyMask();
-  return () => { element.classList.remove('wb-masked'); };
+  return () => { element.classList.remove('x-masked'); };
 }

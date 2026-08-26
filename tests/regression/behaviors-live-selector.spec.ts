@@ -189,7 +189,7 @@ test.describe('Behaviors selector — permutations render with their option appl
       row.click();
       const deadline = Date.now() + 8000;
       while (Date.now() < deadline) {
-        // The host element IS <wb-table>; it holds thead/tbody directly rather
+        // The host element IS <table>; it holds thead/tbody directly rather
         // than wrapping a nested <table>.
         if (document.querySelector('#behaviors-live-stage tbody tr')) break;
         await new Promise((r) => setTimeout(r, 100));
@@ -295,7 +295,7 @@ test.describe('Behaviors selector — interaction', () => {
 });
 
 test.describe('Behaviors page — the demo sections stay removed', () => {
-  test('no <wb-demo> blocks, and curated examples still come from the catalogue', async ({ page }) => {
+  test('no <div x-demo> blocks, and curated examples still come from the catalogue', async ({ page }) => {
     await waitForSelector(page);
     const r = await page.evaluate(async () => {
       const row = [...document.querySelectorAll('.behaviors-search-results__row')]
@@ -308,7 +308,7 @@ test.describe('Behaviors page — the demo sections stay removed', () => {
         await new Promise((res) => setTimeout(res, 100));
       }
       return {
-        demoBlocks: document.querySelectorAll('wb-demo').length,
+        demoBlocks: document.querySelectorAll('[x-demo]').length,
         code: document.querySelector('#behaviors-live-code code')?.textContent ?? '',
       };
     });

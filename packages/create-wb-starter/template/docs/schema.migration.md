@@ -37,7 +37,7 @@ src/wb-models/
 
 ### Step 3: Move Schemas to New Folders
 - Move each schema file into its appropriate subfolder.
-- Rename files if needed for clarity and consistency (e.g., `wb-card.schema.json`).
+- Rename files if needed for clarity and consistency (e.g., `x-card.schema.json`).
 
 ### Step 4: Refactor References
 - Update all code, tests, and documentation to reference the new schema locations and names.

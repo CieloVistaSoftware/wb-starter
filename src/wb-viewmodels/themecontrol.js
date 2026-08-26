@@ -3,7 +3,7 @@
  * -----------------------------------------------------------------------------
  * Dropdown to select from available themes - applies immediately.
  * 
- * Custom Tag: <wb-theme-control>
+ * Custom Tag: <div x-themecontrol>
  * -----------------------------------------------------------------------------
  */
 
@@ -67,12 +67,12 @@ const THEMES = [
 
 export function themecontrol(element, options = {}) {
   // Confirmed live: two full "Theme: [dropdown]" pairs rendered inside the
-  // SAME <wb-themecontrol id="headerThemeControl"> element, each showing a
+  // SAME <div x-themecontrol id="headerThemeControl"> element, each showing a
   // DIFFERENT selected theme -- this function had no re-init guard (every
   // other stateful behavior in this codebase has one, e.g. toast()'s
   // element._wbToastInit), so a second WB scan/observe pass reaching an
   // already-initialized element just appended a SECOND
-  // .wb-themecontrol__wrapper via element.appendChild() below, rather than
+  // .x-themecontrol__wrapper via element.appendChild() below, rather than
   // skipping or replacing the first. The two dropdowns then drifted apart
   // because each call's own applyTheme(currentTheme) read localStorage at
   // ITS OWN invocation time, not just once.
@@ -96,26 +96,32 @@ export function themecontrol(element, options = {}) {
     return () => {};
   }
 
-  // #448: no classList.add('wb-themecontrol') -- themecontrol.css selects
-  // the `wb-themecontrol` TAG directly now, so it just duplicated the tag
+  // #448: no classList.add('x-themecontrol') -- themecontrol.css selects
+  // the `[x-themecontrol]` TAG directly now, so it just duplicated the tag
   // name.
+  // #448 removed this class outright; restored WITH the tag-name guard.
+  // permutation-compliance requires compliance.baseClass to cover the host
+  // (classList.contains(cls) || tagName === cls), and on an attribute host
+  // like <div x-themecontrol> the tag is "div" -- so without the class nothing covers
+  // it. Guarded so a literal <x-themecontrol> tag does not get a redundant class.
+  if (element.tagName.toLowerCase() !== 'x-themecontrol') element.classList.add('x-themecontrol');
 
   // Create the control UI
   const wrapper = document.createElement('div');
-  wrapper.className = 'wb-themecontrol__wrapper';
+  wrapper.className = 'x-themecontrol__wrapper';
 
   // Label
   let label = null;
   if (config.showLabel) {
     label = document.createElement('label');
-    label.className = 'wb-themecontrol__label';
+    label.className = 'x-themecontrol__label';
     label.textContent = 'Theme:';
     wrapper.appendChild(label);
   }
 
   // Dropdown select
   const select = document.createElement('select');
-  select.className = 'wb-themecontrol__select';
+  select.className = 'x-themecontrol__select';
 
   // Add theme options
   THEMES.forEach(theme => {
@@ -132,7 +138,7 @@ export function themecontrol(element, options = {}) {
   // Get initial theme from localStorage or default
   let currentTheme = config.default;
   if (config.persist && typeof localStorage !== 'undefined') {
-    const saved = localStorage.getItem('wb-theme');
+    const saved = localStorage.getItem('x-theme');
     if (saved && THEMES.some(t => t.id === saved)) {
       currentTheme = saved;
     }
@@ -146,7 +152,7 @@ export function themecontrol(element, options = {}) {
 
     // Persist if enabled
     if (config.persist && typeof localStorage !== 'undefined') {
-      localStorage.setItem('wb-theme', themeId);
+      localStorage.setItem('x-theme', themeId);
     }
 
     // Dispatch event
@@ -170,7 +176,7 @@ export function themecontrol(element, options = {}) {
   // keep them all in sync on different pages." applyTheme() already
   // dispatches wb:theme:change (bubbles) on ITS OWN element whenever it
   // runs, but nothing was listening -- a page with more than one
-  // <wb-themecontrol> (e.g. the header's + one embedded in a doc/demo)
+  // <div x-themecontrol> (e.g. the header's + one embedded in a doc/demo)
   // only ever synced on a fresh page load (each instance's own initial
   // localStorage read), not live: changing the theme in one left every
   // other instance's dropdown showing the stale value until reload.

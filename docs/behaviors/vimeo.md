@@ -2,9 +2,11 @@
 
 Behavior applied with x-vimeo.
 
-Apply `x-vimeo` to any element.
+## Type — new capability
 
-## Usage
+`x-vimeo` adds behavior that no HTML element implies. Nothing about a tag says "ripple" or "tooltip", so this is always opted into by attribute, on whatever element you already chose.
+
+### How to write it
 
 ```html
 <div x-vimeo video-id="76979871"></div>

@@ -12,7 +12,7 @@
  * v3.0 Schema Format:
  *   {
  *     "behavior": "card",
- *     "baseClass": "wb-card",
+ *     "baseClass": "x-card",
  *     "properties": { ... },      // Model - data inputs
  *     "$view": [ ... ],           // View - DOM structure
  *     "$methods": { ... },        // ViewModel - callable functions
@@ -28,8 +28,8 @@
  *   await SchemaBuilder.init();
  *   
  *   // Then just write HTML:
- *   <wb-card title="Hello">Content</wb-card>
- *   <wb-card  data-title="Hello">Content</article>
+ *   <article title="Hello">Content</article>
+ *   <article  data-title="Hello">Content</article>
  */
 
 export { 

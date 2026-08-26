@@ -9,7 +9,7 @@ These are helper attributes for visual and animated effects. See [src/wb-viewmod
 Provides a set of visual and animated effects for UI elements. Add the relevant `x-*` attribute to enable the effect.
 
 ## Demo
-See [behaviors-showcase.html](../../demos/behaviors-showcase.html).
+See [behaviors-showcase.html](../../pages/behaviors.html).
 
 ## Schema/Test
 No dedicated schema or test file; see code for usage patterns.

@@ -8,7 +8,7 @@ test.describe('Sticky Behavior', () => {
   
   test.beforeEach(async ({ page }) => {
     // Navigate to a test page that loads WB properly
-    await page.goto('http://localhost:3000/demos/autoinject.html');
+    await page.goto('/demos/autoinject.html');
     
     // Inject our test content into the page with existing WB init
     await page.evaluate(() => {
@@ -39,9 +39,9 @@ test.describe('Sticky Behavior', () => {
     await page.waitForTimeout(200);
   });
 
-  test('adds wb-sticky class on init', async ({ page }) => {
+  test('adds [x-sticky] class on init', async ({ page }) => {
     const nav = page.locator('#stickyNav');
-    await expect(nav).toHaveClass(/wb-sticky/);
+    await expect(nav).toHaveClass(/x-sticky/);
   });
 
   test('becomes fixed when scrolled past trigger point', async ({ page }) => {

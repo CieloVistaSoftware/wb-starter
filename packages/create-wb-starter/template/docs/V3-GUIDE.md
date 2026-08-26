@@ -26,7 +26,7 @@ There are three ways UI gets enhanced, all by the same runtime:
 
 | You write | What happens |
 |---|---|
-| **Custom tag** — `<wb-card title="Hi">` | The tag is mapped to a *behavior* that builds the card |
+| **Custom tag** — `<article title="Hi">` | The tag is mapped to a *behavior* that builds the card |
 | **Behavior attribute** — `<button x-toast type="success">` | Any element gains a behavior via an `x-*` attribute |
 | **Plain element** — `<input type="text">` (with `autoInject`) | Native elements are auto-enhanced |
 
@@ -47,28 +47,28 @@ Key principles:
 
 A standalone page needs the theme + base styles and one module script:
 
-<wb-demo>
-<wb-card
+<div x-demo>
+<article
   title="Build resilient interfaces"
   subtitle="Separate structure from behavior"
   variant="elevated"
   footer="Start with semantic HTML, then compose focused behaviors.">
   <p>Keep content readable and focused by giving each card one clear job.</p>
   <p>WB-Starter applies behavior directly to the element, so the markup stays easy to inspect and reuse.</p>
-</wb-card>
-</wb-demo>
+</article>
+</div>
 
-<wb-demo>
+<div x-demo>
 <button
   x-toast
   message="Saved!"
   type="success">
   Save
 </button>
-</wb-demo>
+</div>
 
 The full page this comes from — everything outside `<body>` is boilerplate
-`<wb-demo>` can't represent (a `<!DOCTYPE>`/`<head>`/module script aren't
+`<div x-demo>` can't represent (a `<!DOCTYPE>`/`<head>`/module script aren't
 renderable fragments), so it's shown separately below rather than folded
 into the live example above:
 
@@ -89,14 +89,16 @@ into the live example above:
   </head>
 
   <body>
-    <wb-card
+    <article
       title="Build resilient interfaces"
       subtitle="Separate structure from behavior"
       variant="elevated">
-      <p>Keep content readable and focused by giving each card one clear job.</p>
-      <p>WB-Starter applies behavior directly to the element, so the markup stays easy to inspect and reuse.</p>
+      <p> Keep content readable and focused by giving each card one clear
+      job.</p>
+      <p> WB-Starter applies behavior directly to the element, so the markup
+      stays easy to inspect and reuse.</p>
       <p>Start with semantic HTML, then compose focused behaviors.</p>
-    </wb-card>
+    </article>
     <button
       x-toast
       message="Saved!"
@@ -130,64 +132,64 @@ into the live example above:
 
 Custom `wb-*` tags map to behaviors. Pass **plain attributes**; children are slotted as content.
 
-**Card** — `<wb-card>`:
+**Card** — `<article>`:
 
-<wb-demo>
-<wb-card
+<div x-demo>
+<article
   title="Pro"
   variant="glass">
   <p>Card body.</p>
-</wb-card>
-</wb-demo>
+</article>
+</div>
 
-**Spinner** — `<wb-spinner>`:
+**Spinner** — `<span x-spinner>`:
 
-<wb-demo>
-<wb-spinner
+<div x-demo>
+<span x-spinner
   size="lg"
   color="success">
-</wb-spinner>
-</wb-demo>
+</span>
+</div>
 
-**Progress bar** — `<wb-progress>`:
+**Progress bar** — `<progress>`:
 
-<wb-demo>
-<wb-progress
+<div x-demo>
+<progress
   value="75"
   striped>
-</wb-progress>
-</wb-demo>
+</progress>
+</div>
 
-**Badge** — `<wb-badge>`:
+**Badge** — `<span x-badge>`:
 
-<wb-demo>
-<wb-badge
+<div x-demo>
+<span x-badge
   variant="success"
   pill>
   New
-</wb-badge>
-</wb-demo>
+</span>
+</div>
 
-**Tabs** — `<wb-tabs>`:
+**Tabs** — `<div x-tabs>`:
 
-<wb-demo>
-<wb-tabs>
+<div x-demo>
+<div x-tabs>
   <div tab-title="Overview">
     <p>…</p>
   </div>
   <div tab-title="Install">
     <p>…</p>
   </div>
-</wb-tabs>
-</wb-demo>
+</div>
+</div>
 
-**Accordion** — `<wb-accordion>`:
+**Accordion** — `<div x-accordion>`:
 
-<wb-demo>
-<wb-accordion title="What is wb-starter?">
+<div x-demo>
+<div x-accordion title="What is wb-starter?">
   <p>A zero-build component library.</p>
-</wb-accordion>
-</wb-demo>
+</div>
+</div>
 
 Card variants come from the schema (`default`, `glass`, `elevated`, `float`, …).
 Each component's exact attributes live in its schema at `src/wb-models/<name>.schema.json`.
@@ -199,7 +201,7 @@ Each component's exact attributes live in its schema at `src/wb-models/<name>.sc
 Attach a behavior to **any** element with an `x-<name>` attribute. These don't
 need a custom tag:
 
-<wb-demo>
+<div x-demo>
 <!-- feedback -->
 <button
   x-toast
@@ -229,7 +231,7 @@ need a custom tag:
   type="password"
   x-password
   placeholder="Password with toggle">
-</wb-demo>
+</div>
 
 The full attribute → behavior map is in `src/core/wb-lazy.js`
 (`customElementMappings`). Every behavior name resolves to a module via
@@ -257,7 +259,7 @@ Themes are pure CSS variables in `src/styles/themes.css`, selected by the
 ```
 
 Switch at runtime with the `Theme` API (`src/core/theme.js`) or drop in a
-`<wb-themecontrol>` for a ready-made selector. **Never hardcode colors** — only
+`<div x-themecontrol>` for a ready-made selector. **Never hardcode colors** — only
 `themes.css` holds literals; everything else references `var(--…)` tokens.
 
 ---
@@ -281,7 +283,7 @@ WB.render(json, container)    // build DOM from a JSON component definition
 ### The lifecycle of one element
 
 1. **Map.** `scan()` matches each element against `customElementMappings`
-   (`wb-card` → `card`, `[x-toast]` → `toast`, …) and, if `autoInject`, against
+   (`x-card` → `card`, `[x-toast]` → `toast`, …) and, if `autoInject`, against
    the native map.
 2. **Schedule.** Matches are handed to `lazyInject()`, which observes the element
    with an `IntersectionObserver` (200px root margin) — behaviors load only when
@@ -324,7 +326,7 @@ Components can be **schema-driven**: a `*.schema.json` declares the component's
 `$view` (DOM structure), attributes, variants, and `test.setup` examples. The
 **schema builder** (`src/core/mvvm/schema-builder.js`) loads them (listed in
 `src/wb-models/index.json`) and builds the component's DOM before behaviors run.
-This is how a `<wb-card>` knows its header/body/footer structure declaratively.
+This is how a `<article>` knows its header/body/footer structure declaratively.
 Processed elements are marked `x-schema="<name>"`; legacy `x-behavior=` usage is
 rejected with a console error in strict mode.
 
@@ -354,7 +356,7 @@ For dynamic UIs, build elements from a definition instead of HTML:
 
 ```js
 WB.render({
-  t: 'wb-card',
+  t: 'x-card',
   d: { title: 'Generated' },
   children: [{ t: 'p', content: 'Built from JSON.' }],
 }, document.body);
@@ -370,15 +372,15 @@ appends to the container.
 1. **Create** `src/wb-viewmodels/my-thing.js`:
    ```js
    export function mything(element, options = {}) {
-     element.classList.add('wb-mything');
+     element.classList.add('x-mything');
      // build children / wire events using plain attributes
-     return () => element.classList.remove('wb-mything'); // cleanup
+     return () => element.classList.remove('x-mything'); // cleanup
    }
    ```
 2. **Register** the name in `src/wb-viewmodels/index.js`:
    `mything: 'my-thing',`
 3. **Map** a selector in `src/core/wb-lazy.js`:
-   `{ selector: 'wb-mything', behavior: 'mything' }` (tag) or
+   `{ selector: 'x-mything', behavior: 'mything' }` (tag) or
    `{ selector: '[x-mything]', behavior: 'mything' }` (attribute).
 4. **Style** it in `src/styles/behaviors/mything.css` using theme tokens only.
 5. **(Optional)** add `src/wb-models/mything.schema.json` for declarative DOM.

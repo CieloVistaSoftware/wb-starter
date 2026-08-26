@@ -13,7 +13,7 @@
  * to control the whole site without relying on server config we don't have.
  */
 
-const CACHE_VERSION = 'wb-cache-v2';
+const CACHE_VERSION = 'x-cache-v2';
 
 // App root derived from THIS worker's location, so precache URLs resolve
 // under any base — domain root locally or /wb-starter/ on GitHub Pages.

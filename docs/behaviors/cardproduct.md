@@ -2,14 +2,29 @@
 
 E-commerce product card with image, price, rating, and CTA
 
-Applies to `<article>`, and to any element carrying `x-cardproduct`.
+## Type — decorates a semantic element
 
-## Usage
+`x-cardproduct` is the **article behavior**. It attaches to `<article>`, the element you would have reached for anyway — there is no new tag to learn.
+
+### How to write it
 
 ```html
-<article x-cardproduct>
+<article x-cardproduct
+  image="https://picsum.photos/seed/headphones/400/400"
+  title="Field headphones"
+  description="Closed-back, 32Ω, folds flat."
+  price="$149"
+  original-price="$189"></article>
+```
+
+### On a different element
+
+Use `x-cardproduct` when the host is not a `<article>` and you want the same behavior:
+
+```html
+<div x-cardproduct>
   …
-</article>
+</div>
 ```
 
 ## Attributes

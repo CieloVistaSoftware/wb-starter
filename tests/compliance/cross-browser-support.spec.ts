@@ -372,7 +372,7 @@ test.describe('Cross-Browser Support Infrastructure', () => {
       await new Promise(r => setTimeout(r, 100));
       
       // Check if behavior was applied
-      const hasWbReady = pre.classList.contains('wb-ready');
+      const hasWbReady = pre.classList.contains('x-ready');
       pre.remove();
       
       return !hasWbReady;
@@ -397,7 +397,7 @@ test.describe('Cross-Browser Support Infrastructure', () => {
       // Wait for potential processing
       await new Promise(r => setTimeout(r, 100));
       
-      const hasWbReady = btn.classList.contains('wb-ready');
+      const hasWbReady = btn.classList.contains('x-ready');
       btn.remove();
       
       return !hasWbReady;
@@ -409,7 +409,7 @@ test.describe('Cross-Browser Support Infrastructure', () => {
   test('CSS custom properties can override component styles', async ({ page }) => {
     const overrideWorks = await page.evaluate(() => {
       // Create a card with custom property override
-      const card = document.createElement('wb-card');
+      const card = document.createElement('.x-card');
       card.style.setProperty('--card-padding', '99px');
       document.body.appendChild(card);
       

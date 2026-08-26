@@ -4,7 +4,7 @@ import { test, expect, Locator } from '@playwright/test';
 // first time IT runs -- an async, dynamic-imported behavior injection, not
 // synchronous with the input existing in the DOM. Reading .getAttribute('id')
 // immediately after locating the input raced that assignment under parallel
-// load: the beforeEach's readiness check only confirms the wb-counter
+// load: the beforeEach's readiness check only confirms the x-counter
 // readout finished, which is no guarantee every OTHER input's independent
 // label() injection has also completed by then. Root cause of the
 // intermittent `label[for="null"]` failures (wb-starter#373) -- poll for a
@@ -32,11 +32,11 @@ test.describe('Playground: 20 inputs with x-behaviors example set', () => {
     await page.goto('/demos/playground.html', { waitUntil: 'networkidle' });
     await page.selectOption('#pg-examples', 'inputs');
     await page.waitForFunction(() => document.querySelectorAll('#pg-preview input').length > 0, { timeout: 15000 });
-    // counter.js puts the "N/max" readout on a sibling <span class="wb-counter">,
+    // counter.js puts the "N/max" readout on a sibling <span class="[x-counter]">,
     // never on the input itself — wait for that span's text to confirm the
     // whole example set has actually finished enhancing.
     await page.waitForFunction(() => {
-      const spans = document.querySelectorAll('#pg-preview .wb-counter');
+      const spans = document.querySelectorAll('#pg-preview .x-counter');
       return spans.length >= 2 && [...spans].some((el) => el.textContent === '0/50');
     }, { timeout: 20000 });
   });
@@ -56,48 +56,48 @@ test.describe('Playground: 20 inputs with x-behaviors example set', () => {
   });
 
   test('2. x-search shows a search icon and a clear button once text is entered', async ({ page }) => {
-    const wrapper = page.locator('#pg-preview .wb-search__wrapper').first();
-    await expect(wrapper.locator('.wb-search__icon')).toBeVisible();
+    const wrapper = page.locator('#pg-preview .x-search__wrapper').first();
+    await expect(wrapper.locator('.x-search__icon')).toBeVisible();
     const input = wrapper.locator('input');
     await input.click();
     await input.pressSequentially('abc');
-    await expect(wrapper.locator('.wb-search__clear')).toBeVisible();
+    await expect(wrapper.locator('.x-search__clear')).toBeVisible();
   });
 
   test('3. x-colorpicker (on a div) builds a real native color input', async ({ page }) => {
     const picker = page.locator('#pg-preview [x-colorpicker]').first();
-    await expect(picker).toHaveClass(/wb-colorpicker/);
+    await expect(picker).toHaveClass(/x-colorpicker/);
     const colorInput = picker.locator('input[type="color"]');
     await expect(colorInput).toHaveCount(1);
     await expect(colorInput).toHaveValue('#6366f1');
   });
 
   test('4. x-tags: pressing Enter adds a tag pill and clears the input', async ({ page }) => {
-    const wrapper = page.locator('#pg-preview .wb-tags').first();
+    const wrapper = page.locator('#pg-preview .x-tags').first();
     const input = wrapper.locator('input');
     await input.click();
     await input.pressSequentially('urgent');
     await input.press('Enter');
-    await expect(wrapper.locator('.wb-tags__tag', { hasText: 'urgent' })).toBeVisible();
+    await expect(wrapper.locator('.x-tags__tag', { hasText: 'urgent' })).toBeVisible();
     await expect(input).toHaveValue('');
   });
 
   test('5. x-autocomplete shows a filtered dropdown and fills the input on click', async ({ page }) => {
-    const wrapper = page.locator('#pg-preview .wb-autocomplete').first();
+    const wrapper = page.locator('#pg-preview .x-autocomplete').first();
     const input = wrapper.locator('input');
     await input.click();
     await input.pressSequentially('ban');
-    const suggestion = wrapper.locator('.wb-autocomplete__list li', { hasText: 'Banana' });
+    const suggestion = wrapper.locator('.x-autocomplete__list li', { hasText: 'Banana' });
     await expect(suggestion).toBeVisible();
     await suggestion.click();
     await expect(input).toHaveValue('Banana');
   });
 
   test('6. x-password toggles the input type when the eye button is clicked', async ({ page }) => {
-    const wrapper = page.locator('#pg-preview .wb-password').first();
+    const wrapper = page.locator('#pg-preview .x-password').first();
     const input = wrapper.locator('input');
     await expect(input).toHaveAttribute('type', 'password');
-    await wrapper.locator('.wb-password__toggle').click();
+    await wrapper.locator('.x-password__toggle').click();
     await expect(input).toHaveAttribute('type', 'text');
   });
 
@@ -109,19 +109,19 @@ test.describe('Playground: 20 inputs with x-behaviors example set', () => {
   });
 
   test('8. x-stepper +/- buttons change the value and respect min/max', async ({ page }) => {
-    const wrapper = page.locator('#pg-preview .wb-stepper').filter({ has: page.locator('input') }).first();
+    const wrapper = page.locator('#pg-preview .x-stepper').filter({ has: page.locator('input') }).first();
     const input = wrapper.locator('input');
     await expect(input).toHaveValue('5');
-    await wrapper.locator('.wb-stepper__inc').click();
+    await wrapper.locator('.x-stepper__inc').click();
     await expect(input).toHaveValue('6');
-    await wrapper.locator('.wb-stepper__dec').click();
-    await wrapper.locator('.wb-stepper__dec').click();
+    await wrapper.locator('.x-stepper__dec').click();
+    await wrapper.locator('.x-stepper__dec').click();
     await expect(input).toHaveValue('4');
   });
 
   test('9. x-otp (on a div) builds 6 separate digit boxes and auto-advances focus', async ({ page }) => {
     const otp = page.locator('#pg-preview [x-otp][length="6"]');
-    await expect(otp).toHaveClass(/wb-otp/);
+    await expect(otp).toHaveClass(/x-otp/);
     const boxes = otp.locator('input');
     await expect(boxes).toHaveCount(6);
     await boxes.nth(0).click();
@@ -130,8 +130,8 @@ test.describe('Playground: 20 inputs with x-behaviors example set', () => {
   });
 
   test('10. x-floatinglabel moves the label text out of the placeholder', async ({ page }) => {
-    const wrapper = page.locator('#pg-preview .wb-floating-label').first();
-    await expect(wrapper.locator('.wb-floating-label__label')).toHaveText('Email address');
+    const wrapper = page.locator('#pg-preview .x-floating-label').first();
+    await expect(wrapper.locator('.x-floating-label__label')).toHaveText('Email address');
     const input = wrapper.locator('input');
     await expect(input).toHaveAttribute('placeholder', '');
   });
@@ -158,32 +158,32 @@ test.describe('Playground: 20 inputs with x-behaviors example set', () => {
   test('13. x-tooltip shows its content on hover', async ({ page }) => {
     const input = page.locator('#pg-preview input[x-tooltip="This field is required"]');
     await input.hover();
-    await expect(page.locator('.wb-tooltip, [role="tooltip"]').filter({ hasText: 'This field is required' }).first()).toBeVisible({ timeout: 5000 });
+    await expect(page.locator('.x-tooltip, [role="tooltip"]').filter({ hasText: 'This field is required' }).first()).toBeVisible({ timeout: 5000 });
   });
 
   test('14. x-ripple actually applies the ripple class on click', async ({ page }) => {
     const input = page.locator('#pg-preview input[x-ripple]');
-    await expect(input).toHaveClass(/wb-ripple/);
+    await expect(input).toHaveClass(/x-ripple/);
     await input.click();
-    await expect(page.locator('#pg-preview .wb-ripple__wave, #pg-preview .wb-ripple-effect').first()).toBeVisible({ timeout: 2000 }).catch(() => {});
+    await expect(page.locator('#pg-preview .x-ripple__wave, #pg-preview .x-ripple-effect').first()).toBeVisible({ timeout: 2000 }).catch(() => {});
   });
 
   test('15. combination: x-label="Search" + x-search both work on the same input', async ({ page }) => {
     const input = page.locator('#pg-preview input[x-label="Search"]');
-    await expect(input).toHaveClass(/wb-search__input/);
+    await expect(input).toHaveClass(/x-search__input/);
     const inputId = await waitForAssignedId(input);
     await expect(page.locator(`#pg-preview label[for="${inputId}"]`)).toHaveText('Search');
   });
 
   test('16. combination: x-label="Tags" + x-tags both work on the same input', async ({ page }) => {
     const input = page.locator('#pg-preview input[x-label="Tags"]');
-    await expect(input).toHaveClass(/wb-tags__input/);
+    await expect(input).toHaveClass(/x-tags__input/);
     const inputId = await waitForAssignedId(input);
     await expect(page.locator(`#pg-preview label[for="${inputId}"]`)).toHaveText('Tags');
     await input.click();
     await input.pressSequentially('idea');
     await input.press('Enter');
-    await expect(page.locator('#pg-preview .wb-tags__tag', { hasText: 'idea' })).toBeVisible();
+    await expect(page.locator('#pg-preview .x-tags__tag', { hasText: 'idea' })).toBeVisible();
   });
 
   test('17. combination: x-label="Bio" + x-counter (max 100) both work', async ({ page }) => {
@@ -198,10 +198,10 @@ test.describe('Playground: 20 inputs with x-behaviors example set', () => {
 
   test('18. combination: x-label="Password" + x-password both work', async ({ page }) => {
     const input = page.locator('#pg-preview input[x-label="Password"]');
-    await expect(input).toHaveClass(/wb-password__input/);
+    await expect(input).toHaveClass(/x-password__input/);
     const inputId = await waitForAssignedId(input);
     await expect(page.locator(`#pg-preview label[for="${inputId}"]`)).toHaveText('Password');
-    const toggle = page.locator('#pg-preview .wb-password:has(input[x-label="Password"]) .wb-password__toggle');
+    const toggle = page.locator('#pg-preview .x-password:has(input[x-label="Password"]) .x-password__toggle');
     await toggle.click();
     await expect(input).toHaveAttribute('type', 'text');
   });
@@ -220,7 +220,7 @@ test.describe('Playground: 20 inputs with x-behaviors example set', () => {
     const inputId = await waitForAssignedId(input);
     const label = page.locator(`#pg-preview label[for="${inputId}"]`);
     await expect(label).toHaveText('License plate');
-    await expect(label).toHaveClass(/wb-label--right/);
+    await expect(label).toHaveClass(/x-label--right/);
     const order = await page.evaluate((id) => {
       const inputEl = document.getElementById(id);
       const labelEl = document.querySelector(`label[for="${id}"]`);

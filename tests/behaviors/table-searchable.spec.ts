@@ -1,11 +1,11 @@
 /**
  * #433: `searchable` was computed by table.js but nothing ever created the
- * search input -- table.js only ever looked for an existing `.wb-table__search`
+ * search input -- table.js only ever looked for an existing `.x-table__search`
  * element that neither table.schema.json's $view nor any native-<table>
- * markup ever actually provided. Confirmed live (docs/components/semantics/
+ * markup ever actually provided. Confirmed live (docs/behaviors/
  * table.md's "Searchable" example rendered no search box at all). Fixed in
  * src/wb-viewmodels/semantics/table.js: when `searchable` is set and no
- * `.wb-table__search` input exists, one is created and inserted directly
+ * `.x-table__search` input exists, one is created and inserted directly
  * above the table (as a previous sibling for a real `<table>`, since an
  * `<input>` isn't valid `<table>` content; as a first child otherwise).
  */
@@ -32,7 +32,7 @@ async function setup(page: Page, html: string): Promise<void> {
 }
 
 test.describe('<table searchable> creates and wires a real search input (#433)', () => {
-  test('searchable renders a .wb-table__search input (none existed before)', async ({ page }) => {
+  test('searchable renders a .x-table__search input (none existed before)', async ({ page }) => {
     await setup(
       page,
       '<table id="t1" x-behavior="table" searchable>' +
@@ -40,8 +40,8 @@ test.describe('<table searchable> creates and wires a real search input (#433)',
         '<tbody><tr><td>Alice</td><td>Admin</td></tr><tr><td>Bob</td><td>User</td></tr></tbody>' +
         '</table>'
     );
-    await expect(page.locator('#table-test-area .wb-table__search')).toHaveCount(1);
-    await expect(page.locator('#table-test-area .wb-table__search')).toHaveAttribute('type', 'search');
+    await expect(page.locator('#table-test-area .x-table__search')).toHaveCount(1);
+    await expect(page.locator('#table-test-area .x-table__search')).toHaveAttribute('type', 'search');
   });
 
   test('without searchable, no search input is created', async ({ page }) => {
@@ -51,7 +51,7 @@ test.describe('<table searchable> creates and wires a real search input (#433)',
         '<thead><tr><th>Name</th></tr></thead><tbody><tr><td>Alice</td></tr></tbody>' +
         '</table>'
     );
-    await expect(page.locator('#table-test-area .wb-table__search')).toHaveCount(0);
+    await expect(page.locator('#table-test-area .x-table__search')).toHaveCount(0);
   });
 
   test('typing in the search input actually filters rows (effect-based, not presence-based)', async ({ page }) => {
@@ -68,7 +68,7 @@ test.describe('<table searchable> creates and wires a real search input (#433)',
     const rows = page.locator('#t3 tbody tr');
     await expect(rows).toHaveCount(3);
 
-    const search = page.locator('#table-test-area .wb-table__search');
+    const search = page.locator('#table-test-area .x-table__search');
     await search.fill('chen');
 
     const visibleRows = page.locator('#t3 tbody tr:visible');
@@ -83,12 +83,12 @@ test.describe('<table searchable> creates and wires a real search input (#433)',
         '<thead><tr><th>A</th></tr></thead><tbody><tr><td>1</td></tr></tbody></table>'
     );
     const table = page.locator('#t4');
-    const search = page.locator('#table-test-area .wb-table__search');
+    const search = page.locator('#table-test-area .x-table__search');
     // The <input> must be a sibling BEFORE the real <table> (never a child --
     // <input> is not valid <table> content and browsers would misplace it).
     const relation = await page.evaluate(() => {
       const t = document.getElementById('t4')!;
-      const input = document.querySelector('.wb-table__search')!;
+      const input = document.querySelector('.x-table__search')!;
       return {
         inputIsTableChild: t.contains(input),
         inputIsPrevSibling: t.previousElementSibling === input

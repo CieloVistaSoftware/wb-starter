@@ -44,7 +44,7 @@ export const DATA_FILES = {
 // (third, fourth...) time -- confirmed live: dark-mode.spec.ts alone took
 // 21+ minutes re-loading hundreds of pages from one stale worktree.
 //
-// wb-overlay-ext is a wholly separate, untracked Chrome extension (its own
+// x-overlay-ext is a wholly separate, untracked Chrome extension (its own
 // manifest.json, .crx/.pem signing files) that happens to live under src/ --
 // not part of the wb-starter component library, so its CSS/HTML isn't
 // subject to this project's theming/OOP conventions. Confirmed live:
@@ -56,7 +56,7 @@ export const DATA_FILES = {
 // packages/create-wb-starter/scripts/sync-template.mjs so the create-wb-starter
 // npm package ships a working scaffold -- it is not hand-authored CSS/HTML
 // subject to this project's own OOP conventions, same rationale as
-// wb-overlay-ext above. Confirmed live: because it duplicates every file
+// x-overlay-ext above. Confirmed live: because it duplicates every file
 // under src/styles/, every compliance scan (including this file's own
 // `!important` count) was silently counting each real violation TWICE the
 // moment the create-wb-starter package was added, thereby doubling the
@@ -66,7 +66,7 @@ export const DATA_FILES = {
 // the unrelated top-level `templates/` dir is plural and untouched.
 export const EXCLUDE_DIRS = [
   'node_modules', '.git', '.claude', 'dist', 'build', 'coverage',
-  'test-results', '.playwright-artifacts', 'wb-overlay-ext', 'template'
+  'test-results', '.playwright-artifacts', 'x-overlay-ext', 'template'
 ];
 
 // ═══════════════════════════════════════════════════════════════════════════
@@ -296,9 +296,9 @@ export function stripDynamicContent(html: string): string {
   let result = html;
   // Remove <script>...</script> blocks
   result = result.replace(/<script[^>]*>[\s\S]*?<\/script>/gi, '');
-  // Remove content inside x-mdhtml elements or wb-mdhtml components
+  // Remove content inside x-mdhtml elements or x-mdhtml components
   result = result.replace(/x-mdhtml[^>]*>[\s\S]*?<\/div>/gi, '');
-  result = result.replace(/<wb-mdhtml[^>]*>[\s\S]*?<\/wb-mdhtml>/gi, '');
+  result = result.replace(/<div x-mdhtml[^>]*>[\s\S]*?<\/x-mdhtml>/gi, '');
   // Remove markdown code blocks
   result = result.replace(/```[\s\S]*?```/g, '');
   return result;
@@ -510,11 +510,11 @@ export async function setupTestContainer(page: Page, html: string): Promise<Loca
   }, html);
   
   // Wait for lazy-loaded behavior modules to initialize
-  // Behaviors add .wb-ready class after init completes
+  // Behaviors add .x-ready class after init completes
   try {
-    await page.waitForSelector('#test-container > .wb-ready', { timeout: 3000 });
+    await page.waitForSelector('#test-container > .x-ready', { timeout: 3000 });
   } catch {
-    // Some elements (native inputs) may not get .wb-ready — fall through
+    // Some elements (native inputs) may not get .x-ready — fall through
     await page.waitForTimeout(300);
   }
   

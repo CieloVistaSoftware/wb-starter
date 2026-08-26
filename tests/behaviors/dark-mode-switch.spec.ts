@@ -1,10 +1,10 @@
 /**
- * The Dark Mode switch (<wb-switch theme-control>) must drive the page theme:
+ * The Dark Mode switch (<div x-switch theme-control>) must drive the page theme:
  * ON = dark, OFF = light. (#210)
  */
 import { test, expect } from '@playwright/test';
 
-const BASE = process.env.WB_BASE || 'http://localhost:3000';
+const BASE = process.env.WB_BASE || '';
 const URL = `${BASE.replace(/\/$/, '')}/?page=behaviors`;
 
 test('Dark Mode switch toggles data-theme between dark and light', async ({ page }) => {

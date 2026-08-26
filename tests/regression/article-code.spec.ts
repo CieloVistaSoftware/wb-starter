@@ -11,18 +11,18 @@ test.describe('External Markdown Code Block Injection', () => {
     // Assuming Playwright's baseURL is set to the root, or we use a relative path
     await page.goto('/articles/resilience-through-separation.html');
 
-    // Wait for the wb-mdhtml component to load. The page has two <wb-mdhtml>
+    // Wait for the x-mdhtml component to load. The page has two <div x-mdhtml>
     // elements (code + decoupled); target the code one explicitly to avoid a
-    // strict-mode ambiguity. It adds the class 'wb-mdhtml--loaded' when done.
-    const mdhtml = page.locator('wb-mdhtml[src="resilience-through-separation-code.md"]');
-    await expect(mdhtml).toHaveClass(/wb-mdhtml--loaded/, { timeout: 10000 });
+    // strict-mode ambiguity. It adds the class 'x-mdhtml--loaded' when done.
+    const mdhtml = page.locator('x-mdhtml[src="resilience-through-separation-code.md"]');
+    await expect(mdhtml).toHaveClass(/x-mdhtml--loaded/, { timeout: 10000 });
 
     // Verify content text exists in the DOM
     await expect(mdhtml).toContainText('class OrderService');
     await expect(mdhtml).toContainText('new StripePaymentService()');
 
     // Verify some formatting elements (e.g. Highlight.js classes or standard code blocks)
-    // wb-mdhtml uses 'marked' which outputs <pre><code>...</code></pre>
+    // x-mdhtml uses 'marked' which outputs <pre><code>...</code></pre>
     const pre = mdhtml.locator('pre').first();
     await expect(pre).toBeVisible();
 

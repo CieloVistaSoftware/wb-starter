@@ -29,26 +29,26 @@ Text input field with various types and validation.
 
 ```html
 <!-- Basic text input -->
-<wb-input
+<div x-input
   label="Full Name"
   placeholder="Enter your name"
   required>
-</wb-input>
+</div>
 <!-- Email input with validation -->
-<wb-input
+<div x-input
   type="email"
   label="Email Address"
   placeholder="you@example.com"
   required>
-</wb-input>
+</div>
 <!-- Password input -->
-<wb-input
+<div x-input
   type="password"
   label="Password"
   placeholder="Enter password"
   minlength="8"
   required>
-</wb-input>
+</div>
 ```
 
 ---
@@ -72,18 +72,18 @@ Multi-line text input with auto-resize capability.
 
 ```html
 <!-- Basic textarea -->
-<wb-textarea
+<textarea
   label="Message"
   placeholder="Enter your message"
   rows="6">
-</wb-textarea>
+</textarea>
 <!-- Auto-sizing textarea -->
-<wb-textarea
+<textarea
   label="Comments"
   placeholder="Share your thoughts..."
   autosize
   maxlength="500">
-</wb-textarea>
+</textarea>
 ```
 
 ---
@@ -106,20 +106,20 @@ Checkbox input with custom styling and indeterminate state support.
 
 ```html
 <!-- Basic checkbox -->
-<wb-checkbox
+<div x-checkbox
   label="I agree to the terms"
   required>
-</wb-checkbox>
+</div>
 <!-- Pre-checked checkbox -->
-<wb-checkbox
+<div x-checkbox
   label="Subscribe to newsletter"
   checked>
-</wb-checkbox>
+</div>
 <!-- Indeterminate checkbox -->
-<wb-checkbox
+<div x-checkbox
   label="Select all"
   indeterminate>
-</wb-checkbox>
+</div>
 ```
 
 ---
@@ -142,13 +142,13 @@ Toggle switch component (styled checkbox alternative).
 
 ```html
 <!-- Basic switch -->
-<wb-switch label="Enable notifications"></wb-switch>
+<div x-switch label="Enable notifications"></div>
 <!-- Large switch -->
-<wb-switch
+<div x-switch
   label="Dark mode"
   size="large"
   checked>
-</wb-switch>
+</div>
 ```
 
 ---
@@ -172,20 +172,20 @@ Dropdown select with search and multi-select support.
 
 ```html
 <!-- Basic select -->
-<wb-select label="Country">
+<select label="Country">
   <option value="us">United States</option>
   <option value="ca">Canada</option>
   <option value="uk">United Kingdom</option>
-</wb-select>
+</select>
 <!-- Multi-select -->
-<wb-select
+<select
   label="Skills"
   multiple
   searchable>
   <option value="js">JavaScript</option>
   <option value="py">Python</option>
   <option value="java">Java</option>
-</wb-select>
+</select>
 ```
 
 ---
@@ -208,14 +208,14 @@ Star rating input component.
 
 ```html
 <!-- Basic rating -->
-<wb-rating label="Rate this product"></wb-rating>
+<span x-rating label="Rate this product"></span>
 <!-- Half-star rating -->
-<wb-rating
+<span x-rating
   max="10"
   half
   value="7.5"
   readonly>
-</wb-rating>
+</span>
 ```
 
 ---
@@ -238,27 +238,27 @@ All form components support HTML5 validation with custom error messages.
 ### Custom Error Messages
 
 ```html
-<wb-input
+<div x-input
   label="Email"
   type="email"
   required
   error-required="Email is required"
   error-type="Please enter a valid email address">
-</wb-input>
+</div>
 ```
 
 ### Validation States
 
 ```css
-.wb-input--valid {
+.x-input--valid {
   border-color: var(--success-color);
 }
 
-.wb-input--invalid {
+.x-input--invalid {
   border-color: var(--error-color);
 }
 
-.wb-input__error {
+.x-input__error {
   color: var(--error-color);
   font-size: 0.875rem;
   margin-top: 0.25rem;
@@ -283,15 +283,15 @@ All form components emit standard events plus WB-specific events:
 
 ```html
 <form>
-  <wb-input
+  <div x-input
     label="Name"
     required>
-  </wb-input>
-  <wb-input
+  </div>
+  <div x-input
     label="Email"
     type="email"
     required>
-  </wb-input>
+  </div>
   <button type="submit">Submit</button>
 </form>
 ```
@@ -344,6 +344,6 @@ Form components use CSS custom properties for consistent theming:
 
 ## Implementation
 - **Components**: Located in `src/wb-viewmodels/` (input.js, textarea.js, etc.)
-- **Styles**: [src/styles/components/forms.css](../../src/styles/components/forms.css)
+- **Styles**: [src/styles/components/forms.css](../../../src/styles/behaviors/input.css)
 - **Schemas**: Form component schemas in `src/wb-models/`
 - **Tests**: Form tests in `tests/behaviors/ui/forms.spec.ts`

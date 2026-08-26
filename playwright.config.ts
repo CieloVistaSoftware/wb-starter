@@ -133,7 +133,21 @@ export default defineConfig({
   
   fullyParallel: true,
   workers: 8,
-  retries: 1,
+  // John: "there is no such thing as flaky, it either works or fails."
+  //
+  // retries: 1 does not make a test more reliable -- it makes an unreliable
+  // test INVISIBLE. A test that fails and then passes is reported as "flaky",
+  // Playwright exits 0, and the pre-commit gate goes green over a real defect.
+  // That is how 11 failures rode along in the 4.0.0 run reported as a separate
+  // benign category.
+  //
+  // A test that passes alone and fails under load is describing a genuine race
+  // -- almost always an assertion made before behavior attachment finishes.
+  // The retry wins because the second load is warm. Hiding that loses the
+  // signal exactly when the machine is busy, which is when it matters.
+  //
+  // Zero. Pass or fail, nothing in between. (#839)
+  retries: 0,
   timeout: 30000,
   
   expect: {
@@ -273,12 +287,12 @@ export default defineConfig({
       name: 'integration',
       testDir: './tests/integration',
       testMatch: '**/*.spec.ts',
-      // The components page hydrates 38 wb-demos (page-source fetch + WB.scan +
+      // The components page hydrates 38 x-demos (page-source fetch + WB.scan +
       // hljs each); under a full parallel run browsers are CPU-starved and the
       // default 30s timeout flakes. 60s absorbs the contention — the underlying
       // hydration latency is tracked as a performance issue.
       //
-      // #269 follow-up: wb-demo.js now lazy-builds blocks via
+      // #269 follow-up: x-demo.js now lazy-builds blocks via
       // IntersectionObserver (#312), which should make this stopgap
       // unnecessary — cold hydration measured ~1s steady-state. NOT yet
       // reverted to the 30s default: needs 3 consecutive clean integration

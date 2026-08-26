@@ -23,7 +23,7 @@ export function form(element, options = {}) {
     ...options
   };
 
-  element.classList.add('wb-form');
+  element.classList.add('x-form');
 
   if (config.ajax) {
     element.onsubmit = async (e) => {
@@ -51,7 +51,7 @@ export function form(element, options = {}) {
     submit: () => element.requestSubmit()
   };
 
-  return () => element.classList.remove('wb-form');
+  return () => element.classList.remove('x-form');
 }
 
 /**
@@ -64,20 +64,20 @@ export function fieldset(element, options = {}) {
     ...options
   };
 
-  element.classList.add('wb-fieldset');
+  element.classList.add('x-fieldset');
 
   const legend = element.querySelector('legend');
   if (legend && config.collapsible) {
-    legend.classList.add('wb-fieldset__legend', 'wb-fieldset__legend--collapsible');
+    legend.classList.add('x-fieldset__legend', 'x-fieldset__legend--collapsible');
     
-    if (config.collapsed) element.classList.add('wb-fieldset--collapsed');
+    if (config.collapsed) element.classList.add('x-fieldset--collapsed');
     
     legend.onclick = () => {
-      element.classList.toggle('wb-fieldset--collapsed');
+      element.classList.toggle('x-fieldset--collapsed');
     };
   }
 
-  return () => element.classList.remove('wb-fieldset');
+  return () => element.classList.remove('x-fieldset');
 }
 
 /**
@@ -90,44 +90,44 @@ export function label(element, options = {}) {
     ...options
   };
 
-  element.classList.add('wb-label');
-  if (config.required) element.classList.add('wb-label--required');
-  if (config.optional) element.classList.add('wb-label--optional');
+  element.classList.add('x-label');
+  if (config.required) element.classList.add('x-label--required');
+  if (config.optional) element.classList.add('x-label--optional');
 
-  return () => element.classList.remove('wb-label');
+  return () => element.classList.remove('x-label');
 }
 
 /**
  * Help - Form help text
  */
 export function help(element, options = {}) {
-  element.classList.add('wb-help');
+  element.classList.add('x-help');
   element.setAttribute('role', 'note');
-  return () => element.classList.remove('wb-help');
+  return () => element.classList.remove('x-help');
 }
 
 /**
  * Error - Form error message
  */
 export function error(element, options = {}) {
-  element.classList.add('wb-error');
+  element.classList.add('x-error');
   element.setAttribute('role', 'alert');
-  return () => element.classList.remove('wb-error');
+  return () => element.classList.remove('x-error');
 }
 
 /**
  * InputGroup - Grouped inputs
  */
 export function inputgroup(element, options = {}) {
-  element.classList.add('wb-input-group');
+  element.classList.add('x-input-group');
   
   const prepend = element.querySelector('[data-prepend]');
   const append = element.querySelector('[data-append]');
   
-  if (prepend) prepend.classList.add('wb-input-group__prepend');
-  if (append) append.classList.add('wb-input-group__append');
+  if (prepend) prepend.classList.add('x-input-group__prepend');
+  if (append) append.classList.add('x-input-group__append');
 
-  return () => element.classList.remove('wb-input-group');
+  return () => element.classList.remove('x-input-group');
 }
 
 /**
@@ -139,10 +139,10 @@ export function formrow(element, options = {}) {
     ...options
   };
 
-  element.classList.add('wb-form-row');
-  if (config.inline) element.classList.add('wb-form-row--inline');
+  element.classList.add('x-form-row');
+  if (config.inline) element.classList.add('x-form-row--inline');
 
-  return () => element.classList.remove('wb-form-row');
+  return () => element.classList.remove('x-form-row');
 }
 
 /**
@@ -157,24 +157,24 @@ export function stepper(element, options = {}) {
   };
 
   const wrapper = document.createElement('div');
-  wrapper.className = 'wb-stepper';
+  wrapper.className = 'x-stepper';
   element.parentNode.insertBefore(wrapper, element);
   
   const decBtn = document.createElement('button');
   decBtn.type = 'button';
-  decBtn.className = 'wb-stepper__btn wb-stepper__dec';
+  decBtn.className = 'x-stepper__btn x-stepper__dec';
   decBtn.textContent = '−';
   
   const incBtn = document.createElement('button');
   incBtn.type = 'button';
-  incBtn.className = 'wb-stepper__btn wb-stepper__inc';
+  incBtn.className = 'x-stepper__btn x-stepper__inc';
   incBtn.textContent = '+';
   
   wrapper.appendChild(decBtn);
   wrapper.appendChild(element);
   wrapper.appendChild(incBtn);
   
-  element.classList.add('wb-stepper__input');
+  element.classList.add('x-stepper__input');
   
   const updateValue = (delta) => {
     let value = parseFloat(element.value) || 0;
@@ -204,14 +204,14 @@ export function search(element, options = {}) {
   };
 
   const wrapper = document.createElement('div');
-  wrapper.className = 'wb-search';
+  wrapper.className = 'x-search';
   element.parentNode.insertBefore(wrapper, element);
   wrapper.appendChild(element);
-  element.classList.add('wb-search__input');
+  element.classList.add('x-search__input');
   element.type = 'search';
 
   const icon = document.createElement('span');
-  icon.className = 'wb-search__icon';
+  icon.className = 'x-search__icon';
   icon.textContent = '🔍';
   wrapper.insertBefore(icon, element);
 
@@ -248,11 +248,11 @@ export function password(element, options = {}) {
   }
 
   const wrapper = document.createElement('div');
-  wrapper.className = 'wb-password';
+  wrapper.className = 'x-password';
   wrapper.style.cssText = 'position:relative;display:flex;align-items:stretch;width:100%;';
   element.parentNode.insertBefore(wrapper, element);
   wrapper.appendChild(element);
-  element.classList.add('wb-password__input');
+  element.classList.add('x-password__input');
   
   // Style input to have room for toggle button
   element.style.cssText = `
@@ -271,7 +271,7 @@ export function password(element, options = {}) {
   if (config.toggle) {
     const toggleBtn = document.createElement('button');
     toggleBtn.type = 'button';
-    toggleBtn.className = 'wb-password__toggle';
+    toggleBtn.className = 'x-password__toggle';
     toggleBtn.style.cssText = `
       position:absolute;
       right:0;
@@ -306,7 +306,7 @@ export function password(element, options = {}) {
 
   if (config.strength) {
     const meter = document.createElement('div');
-    meter.className = 'wb-password__strength';
+    meter.className = 'x-password__strength';
     meter.style.cssText = `
       position:absolute;
       bottom:-4px;
@@ -337,11 +337,11 @@ export function password(element, options = {}) {
     });
   }
 
-  element.classList.add('wb-ready');
+  element.classList.add('x-ready');
   return () => {
     wrapper.parentNode.insertBefore(element, wrapper);
     wrapper.remove();
-    element.classList.remove('wb-password__input');
+    element.classList.remove('x-password__input');
     element.style.cssText = '';
   };
 }
@@ -367,9 +367,9 @@ export function masked(element, options = {}) {
     ...options
   };
 
-  element.classList.add('wb-masked');
+  element.classList.add('x-masked');
 
-  if (!config.mask) return () => element.classList.remove('wb-masked');
+  if (!config.mask) return () => element.classList.remove('x-masked');
 
   // Show mask as placeholder hint
   if (!element.placeholder) {
@@ -445,7 +445,7 @@ export function masked(element, options = {}) {
   if (element.value) applyMask();
 
   return () => {
-    element.classList.remove('wb-masked');
+    element.classList.remove('x-masked');
   };
 }
 
@@ -460,15 +460,15 @@ export function counter(element, options = {}) {
   };
 
   const counter = document.createElement('span');
-  counter.className = 'wb-counter';
+  counter.className = 'x-counter';
   element.parentNode.insertBefore(counter, element.nextSibling);
 
   const update = () => {
     const val = element.value || '';
     const len = val.length;
     counter.textContent = config.max ? `${len}/${config.max}` : len;
-    counter.classList.toggle('wb-counter--warning', config.warning && len >= config.warning);
-    counter.classList.toggle('wb-counter--error', config.max && len >= config.max);
+    counter.classList.toggle('x-counter--warning', config.warning && len >= config.warning);
+    counter.classList.toggle('x-counter--error', config.max && len >= config.max);
   };
 
   element.addEventListener('input', update);
@@ -482,19 +482,19 @@ export function counter(element, options = {}) {
  */
 export function floatinglabel(element, options = {}) {
   const wrapper = document.createElement('div');
-  wrapper.className = 'wb-floating-label';
+  wrapper.className = 'x-floating-label';
   element.parentNode.insertBefore(wrapper, element);
   wrapper.appendChild(element);
 
   const label = document.createElement('label');
-  label.className = 'wb-floating-label__label';
+  label.className = 'x-floating-label__label';
   label.textContent = element.placeholder || element.dataset.label || '';
   wrapper.appendChild(label);
 
   element.placeholder = '';
 
   const checkValue = () => {
-    wrapper.classList.toggle('wb-floating-label--active', element.value || document.activeElement === element);
+    wrapper.classList.toggle('x-floating-label--active', element.value || document.activeElement === element);
   };
 
   element.addEventListener('focus', checkValue);
@@ -517,7 +517,7 @@ export function otp(element, options = {}) {
     ...options
   };
 
-  element.classList.add('wb-otp');
+  element.classList.add('x-otp');
   element.innerHTML = '';
   element.style.display = 'flex';
   element.style.gap = '0.5rem';
@@ -527,7 +527,7 @@ export function otp(element, options = {}) {
     const input = document.createElement('input');
     input.type = 'text';
     input.maxLength = 1;
-    input.className = 'wb-otp__input';
+    input.className = 'x-otp__input';
     input.style.cssText = 'width:2.5rem;height:3rem;text-align:center;font-size:1.25rem;border:1px solid var(--border-color,#374151);border-radius:6px;background:var(--bg-secondary,#1f2937);color:var(--text-primary,#f9fafb);';
     
     input.oninput = (e) => {
@@ -591,11 +591,11 @@ export function colorpicker(element, options = {}) {
   }
   
   input.value = config.value;
-  input.classList.add('wb-colorpicker');
+  input.classList.add('x-colorpicker');
   input.style.cssText = 'width:3rem;height:3rem;padding:0;border:none;border-radius:6px;cursor:pointer;background:none;';
 
   return () => {
-    input.classList.remove('wb-colorpicker');
+    input.classList.remove('x-colorpicker');
     if (element !== input) input.remove();
   };
 }
@@ -612,7 +612,7 @@ export function tags(element, options = {}) {
     ...options
   };
 
-  element.classList.add('wb-tags');
+  element.classList.add('x-tags');
   element.style.cssText = 'display:flex;flex-wrap:wrap;gap:0.5rem;padding:0.5rem;border:1px solid var(--border-color,#374151);border-radius:6px;background:var(--bg-secondary,#1f2937);min-height:2.5rem;';
 
   const renderTags = () => {
@@ -622,7 +622,7 @@ export function tags(element, options = {}) {
     
     config.items.forEach((item, i) => {
       const tag = document.createElement('span');
-      tag.className = 'wb-tag';
+      tag.className = 'x-tag';
       tag.style.cssText = 'display:inline-flex;align-items:center;gap:0.25rem;padding:0.25rem 0.5rem;background:var(--primary,#6366f1);color:white;border-radius:4px;font-size:0.875rem;';
       tag.innerHTML = `<span>${item}</span>`;
       
@@ -680,7 +680,7 @@ export function autocomplete(element, options = {}) {
     ...options
   };
 
-  const listId = 'wb-autocomplete-' + Math.random().toString(36).substr(2, 9);
+  const listId = 'x-autocomplete-' + Math.random().toString(36).substr(2, 9);
   element.setAttribute('list', listId);
 
   const datalist = document.createElement('datalist');
@@ -711,7 +711,7 @@ export function file(element, options = {}) {
     ...options
   };
 
-  element.classList.add('wb-file');
+  element.classList.add('x-file');
   element.style.display = 'none'; // Hide original container if it's a div
 
   // Create hidden input
@@ -724,7 +724,7 @@ export function file(element, options = {}) {
 
   // Create UI
   const dropzone = document.createElement('div');
-  dropzone.className = 'wb-file-dropzone';
+  dropzone.className = 'x-file-dropzone';
   dropzone.style.cssText = 'border:2px dashed var(--border-color,#374151);border-radius:8px;padding:2rem;text-align:center;cursor:pointer;transition:all 0.2s;background:var(--bg-secondary,#1f2937);';
   dropzone.innerHTML = `
     <div style="font-size:2rem;margin-bottom:0.5rem;">📁</div>
@@ -765,14 +765,14 @@ export function file(element, options = {}) {
       dropzone.innerHTML = `
         <div style="font-size:2rem;margin-bottom:0.5rem;">⏳</div>
         <div style="color:var(--text-primary,#f9fafb);font-weight:500;">Uploading...</div>
-        <div class="wb-file-progress" style="width:100%;height:4px;background:var(--bg-tertiary,#374151);margin-top:1rem;border-radius:2px;overflow:hidden;">
+        <div class="x-file-progress" style="width:100%;height:4px;background:var(--bg-tertiary,#374151);margin-top:1rem;border-radius:2px;overflow:hidden;">
           <div style="width:0%;height:100%;background:var(--primary,#6366f1);transition:width 1.5s ease-out;"></div>
         </div>
       `;
       
       // Simulate upload
       setTimeout(() => {
-        const progressBar = dropzone.querySelector('.wb-file-progress div');
+        const progressBar = dropzone.querySelector('.x-file-progress div');
         if (progressBar) progressBar.style.width = '100%';
         
         setTimeout(() => {

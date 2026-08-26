@@ -6,24 +6,24 @@
  * -----------------------------------------------------------------------------
  */
 
-/* #448: `wb-dropdown` TAG selector added alongside the `.wb-dropdown`
-   class -- dropdown() (dropdown.js) still adds `.wb-dropdown` for the
+/* #448: `x-dropdown` TAG selector added alongside the `.x-dropdown`
+   class -- dropdown() (dropdown.js) still adds `.x-dropdown` for the
    x-dropdown-on-any-element case (e.g. demos/site/interactive.html's
-   `<button x-dropdown>`), but skips it for a literal <wb-dropdown> host,
+   `<button x-dropdown>`), but skips it for a literal <div x-dropdown> host,
    which now matches via tag instead. */
-wb-dropdown, [x-dropdown],
-.wb-dropdown {
+x-dropdown, [x-dropdown],
+.x-dropdown {
   position: relative;
   display: inline-block;
 }
 
 /* dropdown.js: when the host has no `label` attribute and no real
-   <a>/<button>/<div> children (bare text content, e.g. <wb-dropdown
-   position="...">click me</wb-dropdown>), no separate trigger button is
+   <a>/<button>/<div> children (bare text content, e.g. <div x-dropdown
+   position="...">click me</div>), no separate trigger button is
    built -- the host's own text IS the trigger. Give it the same
    button-like affordance a real trigger button gets (background, border,
    padding, pointer cursor) instead of leaving it as plain unstyled text. */
-.wb-dropdown-trigger {
+.x-dropdown-trigger {
   display: inline-block;
   padding: 0.5rem 1rem;
   border: 1px solid var(--border-color, #374151);
@@ -33,7 +33,7 @@ wb-dropdown, [x-dropdown],
   color: var(--text-primary, inherit);
 }
 
-.wb-dropdown-menu {
+.x-dropdown-menu {
   position: absolute;
   top: 100%;
   left: 0;
@@ -46,17 +46,17 @@ wb-dropdown, [x-dropdown],
   margin-top: 4px;
 }
 
-wb-dropdown.open .wb-dropdown-menu, [x-dropdown].open .wb-dropdown-menu,
-.wb-dropdown.open .wb-dropdown-menu {
+x-dropdown.open .x-dropdown-menu, [x-dropdown].open .x-dropdown-menu,
+.x-dropdown.open .x-dropdown-menu {
   display: block;
 }
 
-.wb-dropdown-item {
+.x-dropdown-item {
   padding: 0.5rem 0.75rem;
   cursor: pointer;
   font-size: 0.85rem;
 }
 
-.wb-dropdown-item:hover {
+.x-dropdown-item:hover {
   background: var(--bg-secondary);
 }

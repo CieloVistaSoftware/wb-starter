@@ -147,7 +147,7 @@
   {
     "file": "tests\\behaviors\\behaviors-showcase-visual.spec.ts",
     "line": 343,
-    "text": "const codeBlocks = page.locator('.wb-mdhtml pre, .behavior-card pre');"
+    "text": "const codeBlocks = page.locator('.x-mdhtml pre, .behavior-card pre');"
   },
   {
     "file": "tests\\behaviors\\behaviors-showcase-visual.spec.ts",
@@ -157,7 +157,7 @@
   {
     "file": "tests\\behaviors\\behaviors-showcase-visual.spec.ts",
     "line": 364,
-    "text": "const codeBlocks = page.locator('.wb-mdhtml code, .behavior-card code');"
+    "text": "const codeBlocks = page.locator('.x-mdhtml code, .behavior-card code');"
   },
   {
     "file": "tests\\behaviors\\behaviors-showcase.spec.ts",
@@ -855,37 +855,37 @@
     "text": "() => (window as any).WB && (window as any).WB.behaviors && Object.keys((window as any).WB.behaviors).length > 0,"
   },
   {
-    "file": "tests\\components\\wb-cluster.spec.ts",
+    "file": "tests\\components\\x-cluster.spec.ts",
     "line": 13,
     "text": "() => (window as any).WB && (window as any).WB.behaviors && Object.keys((window as any).WB.behaviors).length > 0,"
   },
   {
-    "file": "tests\\components\\wb-column.spec.ts",
+    "file": "tests\\components\\x-column.spec.ts",
     "line": 13,
     "text": "() => (window as any).WB && (window as any).WB.behaviors && Object.keys((window as any).WB.behaviors).length > 0,"
   },
   {
-    "file": "tests\\components\\wb-control.spec.ts",
+    "file": "tests\\components\\x-control.spec.ts",
     "line": 13,
     "text": "() => (window as any).WB && (window as any).WB.behaviors && Object.keys((window as any).WB.behaviors).length > 0,"
   },
   {
-    "file": "tests\\components\\wb-grid.spec.ts",
+    "file": "tests\\components\\x-grid.spec.ts",
     "line": 13,
     "text": "() => (window as any).WB && (window as any).WB.behaviors && Object.keys((window as any).WB.behaviors).length > 0,"
   },
   {
-    "file": "tests\\components\\wb-repeater.spec.ts",
+    "file": "tests\\components\\x-repeater.spec.ts",
     "line": 13,
     "text": "() => (window as any).WB && (window as any).WB.behaviors && Object.keys((window as any).WB.behaviors).length > 0,"
   },
   {
-    "file": "tests\\components\\wb-row.spec.ts",
+    "file": "tests\\components\\x-row.spec.ts",
     "line": 13,
     "text": "() => (window as any).WB && (window as any).WB.behaviors && Object.keys((window as any).WB.behaviors).length > 0,"
   },
   {
-    "file": "tests\\components\\wb-stack.spec.ts",
+    "file": "tests\\components\\x-stack.spec.ts",
     "line": 13,
     "text": "() => (window as any).WB && (window as any).WB.behaviors && Object.keys((window as any).WB.behaviors).length > 0,"
   },

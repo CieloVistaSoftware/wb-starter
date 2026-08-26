@@ -1,0 +1,6607 @@
+{
+  "generatedBy": "tests/regression/inline-style-audit.spec.ts",
+  "issues": "#779 (inline styles), #790 (hardcoded colours inside them)",
+  "standard": "No inline styles anywhere. Unqualified — overridability is a consequence, not a condition.",
+  "behaviorsWithInlineStyles": 56,
+  "totalDeclarations": 1035,
+  "colourLiteralDeclarations": 35,
+  "classification": {
+    "COVERED": {
+      "count": 626,
+      "meaning": "a stylesheet already supplies this exact value — delete the inline write, no CSS to author"
+    },
+    "UNCOVERED": {
+      "count": 409,
+      "meaning": "the inline is the only source — a rule must be written before it can be removed"
+    },
+    "DYNAMIC": {
+      "count": 0,
+      "meaning": "the value is computed at runtime — set a CSS custom property on the element and let a rule consume it"
+    }
+  },
+  "byBehavior": [
+    {
+      "behavior": "x-tabs",
+      "total": 80,
+      "covered": 48,
+      "uncovered": 32,
+      "dynamic": 0
+    },
+    {
+      "behavior": "x-cardminimizable",
+      "total": 73,
+      "covered": 70,
+      "uncovered": 3,
+      "dynamic": 0
+    },
+    {
+      "behavior": "x-cardexpandable",
+      "total": 67,
+      "covered": 66,
+      "uncovered": 1,
+      "dynamic": 0
+    },
+    {
+      "behavior": "x-drawer-layout",
+      "total": 62,
+      "covered": 42,
+      "uncovered": 20,
+      "dynamic": 0
+    },
+    {
+      "behavior": "x-confetti",
+      "total": 60,
+      "covered": 34,
+      "uncovered": 26,
+      "dynamic": 0
+    },
+    {
+      "behavior": "x-cardpricing",
+      "total": 58,
+      "covered": 56,
+      "uncovered": 2,
+      "dynamic": 0
+    },
+    {
+      "behavior": "x-cardtestimonial",
+      "total": 50,
+      "covered": 46,
+      "uncovered": 4,
+      "dynamic": 0
+    },
+    {
+      "behavior": "x-codecontrol",
+      "total": 46,
+      "covered": 25,
+      "uncovered": 21,
+      "dynamic": 0
+    },
+    {
+      "behavior": "x-dropdown",
+      "total": 44,
+      "covered": 19,
+      "uncovered": 25,
+      "dynamic": 0
+    },
+    {
+      "behavior": "x-demo",
+      "total": 43,
+      "covered": 25,
+      "uncovered": 18,
+      "dynamic": 0
+    },
+    {
+      "behavior": "x-rating",
+      "total": 39,
+      "covered": 0,
+      "uncovered": 39,
+      "dynamic": 0
+    },
+    {
+      "behavior": "x-progressbar",
+      "total": 36,
+      "covered": 12,
+      "uncovered": 24,
+      "dynamic": 0
+    },
+    {
+      "behavior": "x-cardoverlay",
+      "total": 25,
+      "covered": 23,
+      "uncovered": 2,
+      "dynamic": 0
+    },
+    {
+      "behavior": "x-cardportfolio",
+      "total": 25,
+      "covered": 18,
+      "uncovered": 7,
+      "dynamic": 0
+    },
+    {
+      "behavior": "x-fireworks",
+      "total": 24,
+      "covered": 8,
+      "uncovered": 16,
+      "dynamic": 0
+    },
+    {
+      "behavior": "x-snow",
+      "total": 24,
+      "covered": 8,
+      "uncovered": 16,
+      "dynamic": 0
+    },
+    {
+      "behavior": "x-navbar",
+      "total": 22,
+      "covered": 8,
+      "uncovered": 14,
+      "dynamic": 0
+    },
+    {
+      "behavior": "x-carddraggable",
+      "total": 22,
+      "covered": 19,
+      "uncovered": 3,
+      "dynamic": 0
+    },
+    {
+      "behavior": "x-input",
+      "total": 20,
+      "covered": 6,
+      "uncovered": 14,
+      "dynamic": 0
+    },
+    {
+      "behavior": "x-cardfile",
+      "total": 16,
+      "covered": 12,
+      "uncovered": 4,
+      "dynamic": 0
+    },
+    {
+      "behavior": "x-rainbow",
+      "total": 15,
+      "covered": 7,
+      "uncovered": 8,
+      "dynamic": 0
+    },
+    {
+      "behavior": "x-cardlink",
+      "total": 14,
+      "covered": 7,
+      "uncovered": 7,
+      "dynamic": 0
+    },
+    {
+      "behavior": "x-glow",
+      "total": 13,
+      "covered": 7,
+      "uncovered": 6,
+      "dynamic": 0
+    },
+    {
+      "behavior": "x-cardhorizontal",
+      "total": 13,
+      "covered": 13,
+      "uncovered": 0,
+      "dynamic": 0
+    },
+    {
+      "behavior": "x-cardproduct",
+      "total": 12,
+      "covered": 12,
+      "uncovered": 0,
+      "dynamic": 0
+    },
+    {
+      "behavior": "x-container",
+      "total": 11,
+      "covered": 0,
+      "uncovered": 11,
+      "dynamic": 0
+    },
+    {
+      "behavior": "x-notes",
+      "total": 9,
+      "covered": 6,
+      "uncovered": 3,
+      "dynamic": 0
+    },
+    {
+      "behavior": "x-resizable",
+      "total": 8,
+      "covered": 0,
+      "uncovered": 8,
+      "dynamic": 0
+    },
+    {
+      "behavior": "x-flex",
+      "total": 7,
+      "covered": 1,
+      "uncovered": 6,
+      "dynamic": 0
+    },
+    {
+      "behavior": "x-cover",
+      "total": 7,
+      "covered": 0,
+      "uncovered": 7,
+      "dynamic": 0
+    },
+    {
+      "behavior": "x-reel",
+      "total": 7,
+      "covered": 0,
+      "uncovered": 7,
+      "dynamic": 0
+    },
+    {
+      "behavior": "x-toggle",
+      "total": 7,
+      "covered": 4,
+      "uncovered": 3,
+      "dynamic": 0
+    },
+    {
+      "behavior": "x-cluster",
+      "total": 6,
+      "covered": 0,
+      "uncovered": 6,
+      "dynamic": 0
+    },
+    {
+      "behavior": "x-textarea",
+      "total": 6,
+      "covered": 4,
+      "uncovered": 2,
+      "dynamic": 0
+    },
+    {
+      "behavior": "x-switcher",
+      "total": 6,
+      "covered": 0,
+      "uncovered": 6,
+      "dynamic": 0
+    },
+    {
+      "behavior": "x-frame",
+      "total": 6,
+      "covered": 0,
+      "uncovered": 6,
+      "dynamic": 0
+    },
+    {
+      "behavior": "x-cardprofile",
+      "total": 5,
+      "covered": 5,
+      "uncovered": 0,
+      "dynamic": 0
+    },
+    {
+      "behavior": "x-center",
+      "total": 5,
+      "covered": 2,
+      "uncovered": 3,
+      "dynamic": 0
+    },
+    {
+      "behavior": "x-stagelight",
+      "total": 4,
+      "covered": 0,
+      "uncovered": 4,
+      "dynamic": 0
+    },
+    {
+      "behavior": "x-stack",
+      "total": 4,
+      "covered": 0,
+      "uncovered": 4,
+      "dynamic": 0
+    },
+    {
+      "behavior": "x-grid",
+      "total": 4,
+      "covered": 4,
+      "uncovered": 0,
+      "dynamic": 0
+    },
+    {
+      "behavior": "x-icon",
+      "total": 4,
+      "covered": 0,
+      "uncovered": 4,
+      "dynamic": 0
+    },
+    {
+      "behavior": "x-sidebarlayout",
+      "total": 4,
+      "covered": 0,
+      "uncovered": 4,
+      "dynamic": 0
+    },
+    {
+      "behavior": "x-gallery",
+      "total": 4,
+      "covered": 2,
+      "uncovered": 2,
+      "dynamic": 0
+    },
+    {
+      "behavior": "x-sparkle",
+      "total": 3,
+      "covered": 2,
+      "uncovered": 1,
+      "dynamic": 0
+    },
+    {
+      "behavior": "x-scrollalong",
+      "total": 3,
+      "covered": 0,
+      "uncovered": 3,
+      "dynamic": 0
+    },
+    {
+      "behavior": "x-draggable",
+      "total": 2,
+      "covered": 0,
+      "uncovered": 2,
+      "dynamic": 0
+    },
+    {
+      "behavior": "x-mdhtml",
+      "total": 2,
+      "covered": 1,
+      "uncovered": 1,
+      "dynamic": 0
+    },
+    {
+      "behavior": "x-articles",
+      "total": 1,
+      "covered": 1,
+      "uncovered": 0,
+      "dynamic": 0
+    },
+    {
+      "behavior": "x-dialog",
+      "total": 1,
+      "covered": 1,
+      "uncovered": 0,
+      "dynamic": 0
+    },
+    {
+      "behavior": "x-ratio",
+      "total": 1,
+      "covered": 0,
+      "uncovered": 1,
+      "dynamic": 0
+    },
+    {
+      "behavior": "x-searchfield",
+      "total": 1,
+      "covered": 0,
+      "uncovered": 1,
+      "dynamic": 0
+    },
+    {
+      "behavior": "x-video",
+      "total": 1,
+      "covered": 0,
+      "uncovered": 1,
+      "dynamic": 0
+    },
+    {
+      "behavior": "x-cardhero",
+      "total": 1,
+      "covered": 1,
+      "uncovered": 0,
+      "dynamic": 0
+    },
+    {
+      "behavior": "x-modal",
+      "total": 1,
+      "covered": 1,
+      "uncovered": 0,
+      "dynamic": 0
+    },
+    {
+      "behavior": "x-copy",
+      "total": 1,
+      "covered": 0,
+      "uncovered": 1,
+      "dynamic": 0
+    }
+  ],
+  "detail": [
+    {
+      "behavior": "x-glow",
+      "elements": [
+        {
+          "path": ":host",
+          "classes": "x-glow",
+          "declarations": [
+            {
+              "prop": "--glow-color",
+              "value": "var(--primary, #6366f1)",
+              "classification": "UNCOVERED"
+            },
+            {
+              "prop": "animation-duration",
+              "value": "1.5s",
+              "classification": "UNCOVERED"
+            },
+            {
+              "prop": "animation-timing-function",
+              "value": "ease-in-out",
+              "classification": "UNCOVERED"
+            },
+            {
+              "prop": "animation-delay",
+              "value": "0s",
+              "classification": "COVERED"
+            },
+            {
+              "prop": "animation-iteration-count",
+              "value": "infinite",
+              "classification": "UNCOVERED"
+            },
+            {
+              "prop": "animation-direction",
+              "value": "normal",
+              "classification": "COVERED"
+            },
+            {
+              "prop": "animation-fill-mode",
+              "value": "none",
+              "classification": "COVERED"
+            },
+            {
+              "prop": "animation-play-state",
+              "value": "running",
+              "classification": "COVERED"
+            },
+            {
+              "prop": "animation-name",
+              "value": "x-glow",
+              "classification": "UNCOVERED"
+            },
+            {
+              "prop": "animation-timeline",
+              "value": "auto",
+              "classification": "COVERED"
+            },
+            {
+              "prop": "animation-range-start",
+              "value": "normal",
+              "classification": "COVERED"
+            },
+            {
+              "prop": "animation-range-end",
+              "value": "normal",
+              "classification": "COVERED"
+            },
+            {
+              "prop": "box-shadow",
+              "value": "0 0 10px var(--primary, #6366f1), 0 0 20px var(--primary, #6366f1), 0 0 30px var(--primary, #6366f1)",
+              "classification": "UNCOVERED"
+            }
+          ]
+        }
+      ],
+      "total": 13
+    },
+    {
+      "behavior": "x-sparkle",
+      "elements": [
+        {
+          "path": ":host",
+          "classes": "x-sparkle-trigger x-sparkle",
+          "declarations": [
+            {
+              "prop": "position",
+              "value": "relative",
+              "classification": "UNCOVERED"
+            },
+            {
+              "prop": "overflow-x",
+              "value": "visible",
+              "classification": "COVERED"
+            },
+            {
+              "prop": "overflow-y",
+              "value": "visible",
+              "classification": "COVERED"
+            }
+          ]
+        }
+      ],
+      "total": 3
+    },
+    {
+      "behavior": "x-rainbow",
+      "elements": [
+        {
+          "path": ":host",
+          "classes": "x-rainbow",
+          "declarations": [
+            {
+              "prop": "background-image",
+              "value": "linear-gradient(45deg, rgb(255, 107, 107), rgb(254, 202, 87), rgb(72, 219, 251), rgb(255, 159, 243), rgb(84, 160, 255), rgb(95, 39, 205), rgb(255, 107, 107))",
+              "classification": "UNCOVERED"
+            },
+            {
+              "prop": "background-size",
+              "value": "400% 400%",
+              "classification": "UNCOVERED"
+            },
+            {
+              "prop": "background-clip",
+              "value": "text",
+              "classification": "UNCOVERED"
+            },
+            {
+              "prop": "color",
+              "value": "transparent",
+              "classification": "UNCOVERED"
+            },
+            {
+              "prop": "animation-duration",
+              "value": "3s",
+              "classification": "UNCOVERED"
+            },
+            {
+              "prop": "animation-timing-function",
+              "value": "linear",
+              "classification": "UNCOVERED"
+            },
+            {
+              "prop": "animation-delay",
+              "value": "0s",
+              "classification": "COVERED"
+            },
+            {
+              "prop": "animation-iteration-count",
+              "value": "infinite",
+              "classification": "UNCOVERED"
+            },
+            {
+              "prop": "animation-direction",
+              "value": "normal",
+              "classification": "COVERED"
+            },
+            {
+              "prop": "animation-fill-mode",
+              "value": "none",
+              "classification": "COVERED"
+            },
+            {
+              "prop": "animation-play-state",
+              "value": "running",
+              "classification": "COVERED"
+            },
+            {
+              "prop": "animation-name",
+              "value": "x-rainbow",
+              "classification": "UNCOVERED"
+            },
+            {
+              "prop": "animation-timeline",
+              "value": "auto",
+              "classification": "COVERED"
+            },
+            {
+              "prop": "animation-range-start",
+              "value": "normal",
+              "classification": "COVERED"
+            },
+            {
+              "prop": "animation-range-end",
+              "value": "normal",
+              "classification": "COVERED"
+            }
+          ]
+        }
+      ],
+      "total": 15
+    },
+    {
+      "behavior": "x-draggable",
+      "elements": [
+        {
+          "path": ":host",
+          "classes": "x-draggable__handle",
+          "declarations": [
+            {
+              "prop": "cursor",
+              "value": "grab",
+              "classification": "UNCOVERED"
+            },
+            {
+              "prop": "position",
+              "value": "relative",
+              "classification": "UNCOVERED"
+            }
+          ]
+        }
+      ],
+      "total": 2
+    },
+    {
+      "behavior": "x-resizable",
+      "elements": [
+        {
+          "path": ":host",
+          "classes": "",
+          "declarations": [
+            {
+              "prop": "position",
+              "value": "relative",
+              "classification": "UNCOVERED"
+            }
+          ]
+        },
+        {
+          "path": "div[1]",
+          "classes": "x-resizable__handle x-resizable__handle--se",
+          "declarations": [
+            {
+              "prop": "position",
+              "value": "absolute",
+              "classification": "UNCOVERED"
+            },
+            {
+              "prop": "z-index",
+              "value": "10",
+              "classification": "UNCOVERED"
+            },
+            {
+              "prop": "bottom",
+              "value": "-4px",
+              "classification": "UNCOVERED"
+            },
+            {
+              "prop": "right",
+              "value": "-4px",
+              "classification": "UNCOVERED"
+            },
+            {
+              "prop": "width",
+              "value": "12px",
+              "classification": "UNCOVERED"
+            },
+            {
+              "prop": "height",
+              "value": "12px",
+              "classification": "UNCOVERED"
+            },
+            {
+              "prop": "cursor",
+              "value": "se-resize",
+              "classification": "UNCOVERED"
+            }
+          ]
+        }
+      ],
+      "total": 8
+    },
+    {
+      "behavior": "x-scrollalong",
+      "elements": [
+        {
+          "path": ":host",
+          "classes": "",
+          "declarations": [
+            {
+              "prop": "position",
+              "value": "sticky",
+              "classification": "UNCOVERED"
+            },
+            {
+              "prop": "top",
+              "value": "0px",
+              "classification": "UNCOVERED"
+            },
+            {
+              "prop": "align-self",
+              "value": "flex-start",
+              "classification": "UNCOVERED"
+            }
+          ]
+        }
+      ],
+      "total": 3
+    },
+    {
+      "behavior": "x-progressbar",
+      "elements": [
+        {
+          "path": ":host",
+          "classes": "x-progress",
+          "declarations": [
+            {
+              "prop": "background-image",
+              "value": "",
+              "classification": "COVERED"
+            },
+            {
+              "prop": "background-position-x",
+              "value": "",
+              "classification": "COVERED"
+            },
+            {
+              "prop": "background-position-y",
+              "value": "",
+              "classification": "COVERED"
+            },
+            {
+              "prop": "background-size",
+              "value": "",
+              "classification": "COVERED"
+            },
+            {
+              "prop": "background-repeat",
+              "value": "",
+              "classification": "COVERED"
+            },
+            {
+              "prop": "background-attachment",
+              "value": "",
+              "classification": "COVERED"
+            },
+            {
+              "prop": "background-origin",
+              "value": "",
+              "classification": "COVERED"
+            },
+            {
+              "prop": "background-clip",
+              "value": "",
+              "classification": "COVERED"
+            },
+            {
+              "prop": "background-color",
+              "value": "",
+              "classification": "UNCOVERED"
+            },
+            {
+              "prop": "border-top-left-radius",
+              "value": "999px",
+              "classification": "UNCOVERED"
+            },
+            {
+              "prop": "border-top-right-radius",
+              "value": "999px",
+              "classification": "UNCOVERED"
+            },
+            {
+              "prop": "border-bottom-right-radius",
+              "value": "999px",
+              "classification": "UNCOVERED"
+            },
+            {
+              "prop": "border-bottom-left-radius",
+              "value": "999px",
+              "classification": "UNCOVERED"
+            },
+            {
+              "prop": "height",
+              "value": "1.5rem",
+              "classification": "UNCOVERED"
+            },
+            {
+              "prop": "width",
+              "value": "100%",
+              "classification": "COVERED"
+            },
+            {
+              "prop": "position",
+              "value": "relative",
+              "classification": "UNCOVERED"
+            },
+            {
+              "prop": "overflow-x",
+              "value": "hidden",
+              "classification": "UNCOVERED"
+            },
+            {
+              "prop": "overflow-y",
+              "value": "hidden",
+              "classification": "UNCOVERED"
+            }
+          ]
+        },
+        {
+          "path": "div[0]",
+          "classes": "x-progress-bar",
+          "declarations": [
+            {
+              "prop": "background-color",
+              "value": "var(--primary, #6366f1)",
+              "classification": "UNCOVERED"
+            },
+            {
+              "prop": "width",
+              "value": "0%",
+              "classification": "UNCOVERED"
+            },
+            {
+              "prop": "height",
+              "value": "100%",
+              "classification": "UNCOVERED"
+            },
+            {
+              "prop": "border-top-left-radius",
+              "value": "999px",
+              "classification": "UNCOVERED"
+            },
+            {
+              "prop": "border-top-right-radius",
+              "value": "999px",
+              "classification": "UNCOVERED"
+            },
+            {
+              "prop": "border-bottom-right-radius",
+              "value": "999px",
+              "classification": "UNCOVERED"
+            },
+            {
+              "prop": "border-bottom-left-radius",
+              "value": "999px",
+              "classification": "UNCOVERED"
+            },
+            {
+              "prop": "transition-behavior",
+              "value": "normal",
+              "classification": "COVERED"
+            },
+            {
+              "prop": "transition-duration",
+              "value": "0.3s",
+              "classification": "UNCOVERED"
+            },
+            {
+              "prop": "transition-timing-function",
+              "value": "ease",
+              "classification": "COVERED"
+            },
+            {
+              "prop": "transition-delay",
+              "value": "0s",
+              "classification": "COVERED"
+            },
+            {
+              "prop": "transition-property",
+              "value": "width",
+              "classification": "UNCOVERED"
+            },
+            {
+              "prop": "display",
+              "value": "flex",
+              "classification": "UNCOVERED"
+            },
+            {
+              "prop": "align-items",
+              "value": "center",
+              "classification": "UNCOVERED"
+            },
+            {
+              "prop": "justify-content",
+              "value": "center",
+              "classification": "UNCOVERED"
+            },
+            {
+              "prop": "color",
+              "value": "white",
+              "classification": "UNCOVERED"
+            },
+            {
+              "prop": "font-size",
+              "value": "0.75rem",
+              "classification": "UNCOVERED"
+            },
+            {
+              "prop": "font-weight",
+              "value": "bold",
+              "classification": "UNCOVERED"
+            }
+          ]
+        }
+      ],
+      "total": 36
+    },
+    {
+      "behavior": "x-confetti",
+      "elements": [
+        {
+          "path": ":host",
+          "classes": "x-confetti-trigger",
+          "declarations": [
+            {
+              "prop": "cursor",
+              "value": "pointer",
+              "classification": "UNCOVERED"
+            },
+            {
+              "prop": "display",
+              "value": "inline-flex",
+              "classification": "UNCOVERED"
+            },
+            {
+              "prop": "align-items",
+              "value": "center",
+              "classification": "UNCOVERED"
+            },
+            {
+              "prop": "row-gap",
+              "value": "0.5rem",
+              "classification": "UNCOVERED"
+            },
+            {
+              "prop": "column-gap",
+              "value": "0.5rem",
+              "classification": "UNCOVERED"
+            },
+            {
+              "prop": "padding-top",
+              "value": "0.75rem",
+              "classification": "UNCOVERED"
+            },
+            {
+              "prop": "padding-right",
+              "value": "1.5rem",
+              "classification": "UNCOVERED"
+            },
+            {
+              "prop": "padding-bottom",
+              "value": "0.75rem",
+              "classification": "UNCOVERED"
+            },
+            {
+              "prop": "padding-left",
+              "value": "1.5rem",
+              "classification": "UNCOVERED"
+            },
+            {
+              "prop": "background-image",
+              "value": "linear-gradient(135deg, rgb(255, 107, 107), rgb(254, 202, 87), rgb(72, 219, 251), rgb(255, 159, 243))",
+              "classification": "UNCOVERED"
+            },
+            {
+              "prop": "background-position-x",
+              "value": "initial",
+              "classification": "COVERED"
+            },
+            {
+              "prop": "background-position-y",
+              "value": "initial",
+              "classification": "COVERED"
+            },
+            {
+              "prop": "background-repeat",
+              "value": "initial",
+              "classification": "COVERED"
+            },
+            {
+              "prop": "background-attachment",
+              "value": "initial",
+              "classification": "COVERED"
+            },
+            {
+              "prop": "background-origin",
+              "value": "initial",
+              "classification": "COVERED"
+            },
+            {
+              "prop": "background-clip",
+              "value": "initial",
+              "classification": "COVERED"
+            },
+            {
+              "prop": "background-color",
+              "value": "initial",
+              "classification": "COVERED"
+            },
+            {
+              "prop": "background-size",
+              "value": "300% 300%",
+              "classification": "UNCOVERED"
+            },
+            {
+              "prop": "animation-duration",
+              "value": "3s",
+              "classification": "UNCOVERED"
+            },
+            {
+              "prop": "animation-timing-function",
+              "value": "ease",
+              "classification": "COVERED"
+            },
+            {
+              "prop": "animation-delay",
+              "value": "0s",
+              "classification": "COVERED"
+            },
+            {
+              "prop": "animation-iteration-count",
+              "value": "infinite",
+              "classification": "UNCOVERED"
+            },
+            {
+              "prop": "animation-direction",
+              "value": "normal",
+              "classification": "COVERED"
+            },
+            {
+              "prop": "animation-fill-mode",
+              "value": "none",
+              "classification": "COVERED"
+            },
+            {
+              "prop": "animation-play-state",
+              "value": "running",
+              "classification": "COVERED"
+            },
+            {
+              "prop": "animation-name",
+              "value": "x-confetti-gradient",
+              "classification": "UNCOVERED"
+            },
+            {
+              "prop": "animation-timeline",
+              "value": "auto",
+              "classification": "COVERED"
+            },
+            {
+              "prop": "animation-range-start",
+              "value": "normal",
+              "classification": "COVERED"
+            },
+            {
+              "prop": "animation-range-end",
+              "value": "normal",
+              "classification": "COVERED"
+            },
+            {
+              "prop": "color",
+              "value": "rgb(255, 255, 255)",
+              "classification": "UNCOVERED"
+            },
+            {
+              "prop": "font-weight",
+              "value": "bold",
+              "classification": "UNCOVERED"
+            },
+            {
+              "prop": "border-top-left-radius",
+              "value": "8px",
+              "classification": "UNCOVERED"
+            },
+            {
+              "prop": "border-top-right-radius",
+              "value": "8px",
+              "classification": "UNCOVERED"
+            },
+            {
+              "prop": "border-bottom-right-radius",
+              "value": "8px",
+              "classification": "UNCOVERED"
+            },
+            {
+              "prop": "border-bottom-left-radius",
+              "value": "8px",
+              "classification": "UNCOVERED"
+            },
+            {
+              "prop": "font-size",
+              "value": "1rem",
+              "classification": "COVERED"
+            },
+            {
+              "prop": "text-shadow",
+              "value": "rgba(0, 0, 0, 0.3) 0px 1px 2px",
+              "classification": "UNCOVERED"
+            },
+            {
+              "prop": "border-top-width",
+              "value": "initial",
+              "classification": "COVERED"
+            },
+            {
+              "prop": "border-right-width",
+              "value": "initial",
+              "classification": "COVERED"
+            },
+            {
+              "prop": "border-bottom-width",
+              "value": "initial",
+              "classification": "COVERED"
+            },
+            {
+              "prop": "border-left-width",
+              "value": "initial",
+              "classification": "COVERED"
+            },
+            {
+              "prop": "border-top-style",
+              "value": "none",
+              "classification": "COVERED"
+            },
+            {
+              "prop": "border-right-style",
+              "value": "none",
+              "classification": "COVERED"
+            },
+            {
+              "prop": "border-bottom-style",
+              "value": "none",
+              "classification": "COVERED"
+            },
+            {
+              "prop": "border-left-style",
+              "value": "none",
+              "classification": "COVERED"
+            },
+            {
+              "prop": "border-top-color",
+              "value": "initial",
+              "classification": "COVERED"
+            },
+            {
+              "prop": "border-right-color",
+              "value": "initial",
+              "classification": "COVERED"
+            },
+            {
+              "prop": "border-bottom-color",
+              "value": "initial",
+              "classification": "COVERED"
+            },
+            {
+              "prop": "border-left-color",
+              "value": "initial",
+              "classification": "COVERED"
+            },
+            {
+              "prop": "border-image-source",
+              "value": "initial",
+              "classification": "COVERED"
+            },
+            {
+              "prop": "border-image-slice",
+              "value": "initial",
+              "classification": "COVERED"
+            },
+            {
+              "prop": "border-image-width",
+              "value": "initial",
+              "classification": "COVERED"
+            },
+            {
+              "prop": "border-image-outset",
+              "value": "initial",
+              "classification": "COVERED"
+            },
+            {
+              "prop": "border-image-repeat",
+              "value": "initial",
+              "classification": "COVERED"
+            },
+            {
+              "prop": "box-shadow",
+              "value": "rgba(255, 107, 107, 0.4) 0px 4px 15px",
+              "classification": "COVERED"
+            },
+            {
+              "prop": "transition-behavior",
+              "value": "normal, normal",
+              "classification": "UNCOVERED"
+            },
+            {
+              "prop": "transition-duration",
+              "value": "0.2s, 0.2s",
+              "classification": "UNCOVERED"
+            },
+            {
+              "prop": "transition-timing-function",
+              "value": "ease, ease",
+              "classification": "UNCOVERED"
+            },
+            {
+              "prop": "transition-delay",
+              "value": "0s, 0s",
+              "classification": "UNCOVERED"
+            },
+            {
+              "prop": "transition-property",
+              "value": "transform, box-shadow",
+              "classification": "UNCOVERED"
+            }
+          ]
+        }
+      ],
+      "total": 60
+    },
+    {
+      "behavior": "x-fireworks",
+      "elements": [
+        {
+          "path": ":host",
+          "classes": "x-fireworks-trigger",
+          "declarations": [
+            {
+              "prop": "cursor",
+              "value": "pointer",
+              "classification": "UNCOVERED"
+            },
+            {
+              "prop": "padding-top",
+              "value": "1rem",
+              "classification": "UNCOVERED"
+            },
+            {
+              "prop": "padding-right",
+              "value": "1.5rem",
+              "classification": "UNCOVERED"
+            },
+            {
+              "prop": "padding-bottom",
+              "value": "1rem",
+              "classification": "UNCOVERED"
+            },
+            {
+              "prop": "padding-left",
+              "value": "1.5rem",
+              "classification": "UNCOVERED"
+            },
+            {
+              "prop": "background-image",
+              "value": "linear-gradient(135deg, rgb(26, 26, 46), rgb(22, 33, 62))",
+              "classification": "UNCOVERED"
+            },
+            {
+              "prop": "background-position-x",
+              "value": "initial",
+              "classification": "COVERED"
+            },
+            {
+              "prop": "background-position-y",
+              "value": "initial",
+              "classification": "COVERED"
+            },
+            {
+              "prop": "background-size",
+              "value": "initial",
+              "classification": "COVERED"
+            },
+            {
+              "prop": "background-repeat",
+              "value": "initial",
+              "classification": "COVERED"
+            },
+            {
+              "prop": "background-attachment",
+              "value": "initial",
+              "classification": "COVERED"
+            },
+            {
+              "prop": "background-origin",
+              "value": "initial",
+              "classification": "COVERED"
+            },
+            {
+              "prop": "background-clip",
+              "value": "initial",
+              "classification": "COVERED"
+            },
+            {
+              "prop": "background-color",
+              "value": "initial",
+              "classification": "COVERED"
+            },
+            {
+              "prop": "color",
+              "value": "rgb(255, 255, 255)",
+              "classification": "UNCOVERED"
+            },
+            {
+              "prop": "border-top-left-radius",
+              "value": "8px",
+              "classification": "UNCOVERED"
+            },
+            {
+              "prop": "border-top-right-radius",
+              "value": "8px",
+              "classification": "UNCOVERED"
+            },
+            {
+              "prop": "border-bottom-right-radius",
+              "value": "8px",
+              "classification": "UNCOVERED"
+            },
+            {
+              "prop": "border-bottom-left-radius",
+              "value": "8px",
+              "classification": "UNCOVERED"
+            },
+            {
+              "prop": "font-weight",
+              "value": "bold",
+              "classification": "UNCOVERED"
+            },
+            {
+              "prop": "display",
+              "value": "inline-flex",
+              "classification": "UNCOVERED"
+            },
+            {
+              "prop": "align-items",
+              "value": "center",
+              "classification": "UNCOVERED"
+            },
+            {
+              "prop": "row-gap",
+              "value": "0.5rem",
+              "classification": "UNCOVERED"
+            },
+            {
+              "prop": "column-gap",
+              "value": "0.5rem",
+              "classification": "UNCOVERED"
+            }
+          ]
+        }
+      ],
+      "total": 24
+    },
+    {
+      "behavior": "x-snow",
+      "elements": [
+        {
+          "path": ":host",
+          "classes": "x-snow-trigger",
+          "declarations": [
+            {
+              "prop": "cursor",
+              "value": "pointer",
+              "classification": "UNCOVERED"
+            },
+            {
+              "prop": "padding-top",
+              "value": "0.75rem",
+              "classification": "UNCOVERED"
+            },
+            {
+              "prop": "padding-right",
+              "value": "1.5rem",
+              "classification": "UNCOVERED"
+            },
+            {
+              "prop": "padding-bottom",
+              "value": "0.75rem",
+              "classification": "UNCOVERED"
+            },
+            {
+              "prop": "padding-left",
+              "value": "1.5rem",
+              "classification": "UNCOVERED"
+            },
+            {
+              "prop": "background-image",
+              "value": "linear-gradient(135deg, rgb(168, 237, 234), rgb(254, 214, 227))",
+              "classification": "UNCOVERED"
+            },
+            {
+              "prop": "background-position-x",
+              "value": "initial",
+              "classification": "COVERED"
+            },
+            {
+              "prop": "background-position-y",
+              "value": "initial",
+              "classification": "COVERED"
+            },
+            {
+              "prop": "background-size",
+              "value": "initial",
+              "classification": "COVERED"
+            },
+            {
+              "prop": "background-repeat",
+              "value": "initial",
+              "classification": "COVERED"
+            },
+            {
+              "prop": "background-attachment",
+              "value": "initial",
+              "classification": "COVERED"
+            },
+            {
+              "prop": "background-origin",
+              "value": "initial",
+              "classification": "COVERED"
+            },
+            {
+              "prop": "background-clip",
+              "value": "initial",
+              "classification": "COVERED"
+            },
+            {
+              "prop": "background-color",
+              "value": "initial",
+              "classification": "COVERED"
+            },
+            {
+              "prop": "color",
+              "value": "rgb(51, 51, 51)",
+              "classification": "UNCOVERED"
+            },
+            {
+              "prop": "border-top-left-radius",
+              "value": "8px",
+              "classification": "UNCOVERED"
+            },
+            {
+              "prop": "border-top-right-radius",
+              "value": "8px",
+              "classification": "UNCOVERED"
+            },
+            {
+              "prop": "border-bottom-right-radius",
+              "value": "8px",
+              "classification": "UNCOVERED"
+            },
+            {
+              "prop": "border-bottom-left-radius",
+              "value": "8px",
+              "classification": "UNCOVERED"
+            },
+            {
+              "prop": "font-weight",
+              "value": "bold",
+              "classification": "UNCOVERED"
+            },
+            {
+              "prop": "display",
+              "value": "inline-flex",
+              "classification": "UNCOVERED"
+            },
+            {
+              "prop": "align-items",
+              "value": "center",
+              "classification": "UNCOVERED"
+            },
+            {
+              "prop": "row-gap",
+              "value": "0.5rem",
+              "classification": "UNCOVERED"
+            },
+            {
+              "prop": "column-gap",
+              "value": "0.5rem",
+              "classification": "UNCOVERED"
+            }
+          ]
+        }
+      ],
+      "total": 24
+    },
+    {
+      "behavior": "x-stagelight",
+      "elements": [
+        {
+          "path": ":host",
+          "classes": "x-stagelight--beam",
+          "declarations": [
+            {
+              "prop": "--x-stagelight-color",
+              "value": "#ffffff",
+              "classification": "UNCOVERED"
+            },
+            {
+              "prop": "--x-stagelight-size",
+              "value": "300px",
+              "classification": "UNCOVERED"
+            },
+            {
+              "prop": "--x-stagelight-intensity",
+              "value": "0.5",
+              "classification": "UNCOVERED"
+            },
+            {
+              "prop": "--speed",
+              "value": "3s",
+              "classification": "UNCOVERED"
+            }
+          ]
+        }
+      ],
+      "total": 4
+    },
+    {
+      "behavior": "x-stack",
+      "elements": [
+        {
+          "path": ":host",
+          "classes": "",
+          "declarations": [
+            {
+              "prop": "display",
+              "value": "flex",
+              "classification": "UNCOVERED"
+            },
+            {
+              "prop": "flex-direction",
+              "value": "column",
+              "classification": "UNCOVERED"
+            },
+            {
+              "prop": "row-gap",
+              "value": "1rem",
+              "classification": "UNCOVERED"
+            },
+            {
+              "prop": "column-gap",
+              "value": "1rem",
+              "classification": "UNCOVERED"
+            }
+          ]
+        }
+      ],
+      "total": 4
+    },
+    {
+      "behavior": "x-cluster",
+      "elements": [
+        {
+          "path": ":host",
+          "classes": "",
+          "declarations": [
+            {
+              "prop": "display",
+              "value": "flex",
+              "classification": "UNCOVERED"
+            },
+            {
+              "prop": "flex-wrap",
+              "value": "wrap",
+              "classification": "UNCOVERED"
+            },
+            {
+              "prop": "row-gap",
+              "value": "1rem",
+              "classification": "UNCOVERED"
+            },
+            {
+              "prop": "column-gap",
+              "value": "1rem",
+              "classification": "UNCOVERED"
+            },
+            {
+              "prop": "justify-content",
+              "value": "flex-start",
+              "classification": "UNCOVERED"
+            },
+            {
+              "prop": "align-items",
+              "value": "center",
+              "classification": "UNCOVERED"
+            }
+          ]
+        }
+      ],
+      "total": 6
+    },
+    {
+      "behavior": "x-articles",
+      "elements": [
+        {
+          "path": "div[0]",
+          "classes": "x-articles__list x-articles--grid",
+          "declarations": [
+            {
+              "prop": "--x-articles-columns",
+              "value": "3",
+              "classification": "COVERED"
+            }
+          ]
+        }
+      ],
+      "total": 1
+    },
+    {
+      "behavior": "x-codecontrol",
+      "elements": [
+        {
+          "path": "div[1]",
+          "classes": "x-codecontrol__wrapper",
+          "declarations": [
+            {
+              "prop": "display",
+              "value": "inline-flex",
+              "classification": "UNCOVERED"
+            },
+            {
+              "prop": "align-items",
+              "value": "center",
+              "classification": "UNCOVERED"
+            },
+            {
+              "prop": "row-gap",
+              "value": "0.35rem",
+              "classification": "UNCOVERED"
+            },
+            {
+              "prop": "column-gap",
+              "value": "0.35rem",
+              "classification": "UNCOVERED"
+            }
+          ]
+        },
+        {
+          "path": "div[1] > label[0]",
+          "classes": "x-codecontrol__label x-label",
+          "declarations": [
+            {
+              "prop": "font-weight",
+              "value": "500",
+              "classification": "UNCOVERED"
+            },
+            {
+              "prop": "font-size",
+              "value": "0.875rem",
+              "classification": "COVERED"
+            },
+            {
+              "prop": "color",
+              "value": "var(--text-primary, inherit)",
+              "classification": "COVERED"
+            }
+          ]
+        },
+        {
+          "path": "div[1] > select[1]",
+          "classes": "x-codecontrol__select",
+          "declarations": [
+            {
+              "prop": "padding-top",
+              "value": "0.5rem",
+              "classification": "UNCOVERED"
+            },
+            {
+              "prop": "padding-right",
+              "value": "2rem",
+              "classification": "UNCOVERED"
+            },
+            {
+              "prop": "padding-bottom",
+              "value": "0.5rem",
+              "classification": "UNCOVERED"
+            },
+            {
+              "prop": "padding-left",
+              "value": "0.75rem",
+              "classification": "UNCOVERED"
+            },
+            {
+              "prop": "font-size",
+              "value": "0.875rem",
+              "classification": "UNCOVERED"
+            },
+            {
+              "prop": "border-top-color",
+              "value": "",
+              "classification": "COVERED"
+            },
+            {
+              "prop": "border-top-style",
+              "value": "",
+              "classification": "COVERED"
+            },
+            {
+              "prop": "border-top-width",
+              "value": "",
+              "classification": "COVERED"
+            },
+            {
+              "prop": "border-right-color",
+              "value": "",
+              "classification": "COVERED"
+            },
+            {
+              "prop": "border-right-style",
+              "value": "",
+              "classification": "COVERED"
+            },
+            {
+              "prop": "border-right-width",
+              "value": "",
+              "classification": "COVERED"
+            },
+            {
+              "prop": "border-bottom-color",
+              "value": "",
+              "classification": "COVERED"
+            },
+            {
+              "prop": "border-bottom-style",
+              "value": "",
+              "classification": "COVERED"
+            },
+            {
+              "prop": "border-bottom-width",
+              "value": "",
+              "classification": "COVERED"
+            },
+            {
+              "prop": "border-left-color",
+              "value": "",
+              "classification": "COVERED"
+            },
+            {
+              "prop": "border-left-style",
+              "value": "",
+              "classification": "COVERED"
+            },
+            {
+              "prop": "border-left-width",
+              "value": "",
+              "classification": "COVERED"
+            },
+            {
+              "prop": "border-image-source",
+              "value": "",
+              "classification": "COVERED"
+            },
+            {
+              "prop": "border-image-slice",
+              "value": "",
+              "classification": "COVERED"
+            },
+            {
+              "prop": "border-image-width",
+              "value": "",
+              "classification": "COVERED"
+            },
+            {
+              "prop": "border-image-outset",
+              "value": "",
+              "classification": "COVERED"
+            },
+            {
+              "prop": "border-image-repeat",
+              "value": "",
+              "classification": "COVERED"
+            },
+            {
+              "prop": "border-top-left-radius",
+              "value": "",
+              "classification": "UNCOVERED"
+            },
+            {
+              "prop": "border-top-right-radius",
+              "value": "",
+              "classification": "UNCOVERED"
+            },
+            {
+              "prop": "border-bottom-right-radius",
+              "value": "",
+              "classification": "UNCOVERED"
+            },
+            {
+              "prop": "border-bottom-left-radius",
+              "value": "",
+              "classification": "UNCOVERED"
+            },
+            {
+              "prop": "background-size",
+              "value": "",
+              "classification": "COVERED"
+            },
+            {
+              "prop": "background-attachment",
+              "value": "",
+              "classification": "COVERED"
+            },
+            {
+              "prop": "background-origin",
+              "value": "",
+              "classification": "COVERED"
+            },
+            {
+              "prop": "background-clip",
+              "value": "",
+              "classification": "COVERED"
+            },
+            {
+              "prop": "background-color",
+              "value": "",
+              "classification": "COVERED"
+            },
+            {
+              "prop": "color",
+              "value": "var(--text-primary, #f3f4f6)",
+              "classification": "COVERED"
+            },
+            {
+              "prop": "cursor",
+              "value": "pointer",
+              "classification": "UNCOVERED"
+            },
+            {
+              "prop": "appearance",
+              "value": "none",
+              "classification": "UNCOVERED"
+            },
+            {
+              "prop": "background-image",
+              "value": "url(\"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%239ca3af' d='M6 8L1 3h10z'/%3E%3C/svg%3E\")",
+              "classification": "UNCOVERED"
+            },
+            {
+              "prop": "background-repeat",
+              "value": "no-repeat",
+              "classification": "UNCOVERED"
+            },
+            {
+              "prop": "background-position-x",
+              "value": "right 0.35rem",
+              "classification": "UNCOVERED"
+            },
+            {
+              "prop": "background-position-y",
+              "value": "center",
+              "classification": "UNCOVERED"
+            },
+            {
+              "prop": "min-width",
+              "value": "140px",
+              "classification": "UNCOVERED"
+            }
+          ]
+        }
+      ],
+      "total": 46
+    },
+    {
+      "behavior": "x-demo",
+      "elements": [
+        {
+          "path": ":host",
+          "classes": "",
+          "declarations": [
+            {
+              "prop": "--x-demo-shrink-width",
+              "value": "238px",
+              "classification": "UNCOVERED"
+            }
+          ]
+        },
+        {
+          "path": "div[1] > div[0] > div[0]",
+          "classes": "",
+          "declarations": [
+            {
+              "prop": "top",
+              "value": "26px",
+              "classification": "UNCOVERED"
+            }
+          ]
+        },
+        {
+          "path": "div[1] > div[0] > div[1]",
+          "classes": "",
+          "declarations": [
+            {
+              "prop": "top",
+              "value": "50px",
+              "classification": "UNCOVERED"
+            }
+          ]
+        },
+        {
+          "path": "div[1] > div[0] > div[2]",
+          "classes": "",
+          "declarations": [
+            {
+              "prop": "top",
+              "value": "74px",
+              "classification": "UNCOVERED"
+            }
+          ]
+        },
+        {
+          "path": "div[1] > pre[1] > code[0]",
+          "classes": "language-html x-code hljs language-xml",
+          "declarations": [
+            {
+              "prop": "font-family",
+              "value": "inherit",
+              "classification": "UNCOVERED"
+            },
+            {
+              "prop": "font-size",
+              "value": "inherit",
+              "classification": "COVERED"
+            },
+            {
+              "prop": "padding-top",
+              "value": "0px",
+              "classification": "UNCOVERED"
+            },
+            {
+              "prop": "padding-right",
+              "value": "0px",
+              "classification": "UNCOVERED"
+            },
+            {
+              "prop": "padding-bottom",
+              "value": "0px",
+              "classification": "UNCOVERED"
+            },
+            {
+              "prop": "padding-left",
+              "value": "0px",
+              "classification": "UNCOVERED"
+            },
+            {
+              "prop": "border-top-left-radius",
+              "value": "0px",
+              "classification": "UNCOVERED"
+            },
+            {
+              "prop": "border-top-right-radius",
+              "value": "0px",
+              "classification": "UNCOVERED"
+            },
+            {
+              "prop": "border-bottom-right-radius",
+              "value": "0px",
+              "classification": "UNCOVERED"
+            },
+            {
+              "prop": "border-bottom-left-radius",
+              "value": "0px",
+              "classification": "UNCOVERED"
+            },
+            {
+              "prop": "background-color",
+              "value": "transparent",
+              "classification": "UNCOVERED"
+            },
+            {
+              "prop": "color",
+              "value": "inherit",
+              "classification": "UNCOVERED"
+            },
+            {
+              "prop": "border-top-width",
+              "value": "initial",
+              "classification": "COVERED"
+            },
+            {
+              "prop": "border-right-width",
+              "value": "initial",
+              "classification": "COVERED"
+            },
+            {
+              "prop": "border-bottom-width",
+              "value": "initial",
+              "classification": "COVERED"
+            },
+            {
+              "prop": "border-left-width",
+              "value": "initial",
+              "classification": "COVERED"
+            },
+            {
+              "prop": "border-top-style",
+              "value": "none",
+              "classification": "COVERED"
+            },
+            {
+              "prop": "border-right-style",
+              "value": "none",
+              "classification": "COVERED"
+            },
+            {
+              "prop": "border-bottom-style",
+              "value": "none",
+              "classification": "COVERED"
+            },
+            {
+              "prop": "border-left-style",
+              "value": "none",
+              "classification": "COVERED"
+            },
+            {
+              "prop": "border-top-color",
+              "value": "initial",
+              "classification": "COVERED"
+            },
+            {
+              "prop": "border-right-color",
+              "value": "initial",
+              "classification": "COVERED"
+            },
+            {
+              "prop": "border-bottom-color",
+              "value": "initial",
+              "classification": "COVERED"
+            },
+            {
+              "prop": "border-left-color",
+              "value": "initial",
+              "classification": "COVERED"
+            },
+            {
+              "prop": "border-image-source",
+              "value": "initial",
+              "classification": "COVERED"
+            },
+            {
+              "prop": "border-image-slice",
+              "value": "initial",
+              "classification": "COVERED"
+            },
+            {
+              "prop": "border-image-width",
+              "value": "initial",
+              "classification": "COVERED"
+            },
+            {
+              "prop": "border-image-outset",
+              "value": "initial",
+              "classification": "COVERED"
+            },
+            {
+              "prop": "border-image-repeat",
+              "value": "initial",
+              "classification": "COVERED"
+            },
+            {
+              "prop": "display",
+              "value": "inline",
+              "classification": "UNCOVERED"
+            },
+            {
+              "prop": "white-space-collapse",
+              "value": "inherit",
+              "classification": "COVERED"
+            },
+            {
+              "prop": "text-wrap-mode",
+              "value": "inherit",
+              "classification": "COVERED"
+            },
+            {
+              "prop": "word-break",
+              "value": "inherit",
+              "classification": "COVERED"
+            },
+            {
+              "prop": "vertical-align",
+              "value": "baseline",
+              "classification": "COVERED"
+            },
+            {
+              "prop": "box-shadow",
+              "value": "none",
+              "classification": "COVERED"
+            },
+            {
+              "prop": "visibility",
+              "value": "visible",
+              "classification": "COVERED"
+            },
+            {
+              "prop": "opacity",
+              "value": "1",
+              "classification": "COVERED"
+            }
+          ]
+        },
+        {
+          "path": "div[1] > button[2]",
+          "classes": "x-pre__copy x-button",
+          "declarations": [
+            {
+              "prop": "right",
+              "value": "4px",
+              "classification": "UNCOVERED"
+            }
+          ]
+        },
+        {
+          "path": "div[1] > span[3]",
+          "classes": "x-pre__language",
+          "declarations": [
+            {
+              "prop": "right",
+              "value": "40.9844px",
+              "classification": "UNCOVERED"
+            }
+          ]
+        }
+      ],
+      "total": 43
+    },
+    {
+      "behavior": "x-dialog",
+      "elements": [
+        {
+          "path": ":host",
+          "classes": "x-dialog-trigger x-modal",
+          "declarations": [
+            {
+              "prop": "cursor",
+              "value": "pointer",
+              "classification": "COVERED"
+            }
+          ]
+        }
+      ],
+      "total": 1
+    },
+    {
+      "behavior": "x-flex",
+      "elements": [
+        {
+          "path": ":host",
+          "classes": "x-flex",
+          "declarations": [
+            {
+              "prop": "display",
+              "value": "flex",
+              "classification": "UNCOVERED"
+            },
+            {
+              "prop": "flex-direction",
+              "value": "row",
+              "classification": "COVERED"
+            },
+            {
+              "prop": "flex-wrap",
+              "value": "wrap",
+              "classification": "UNCOVERED"
+            },
+            {
+              "prop": "justify-content",
+              "value": "flex-start",
+              "classification": "UNCOVERED"
+            },
+            {
+              "prop": "align-items",
+              "value": "stretch",
+              "classification": "UNCOVERED"
+            },
+            {
+              "prop": "row-gap",
+              "value": "1rem",
+              "classification": "UNCOVERED"
+            },
+            {
+              "prop": "column-gap",
+              "value": "1rem",
+              "classification": "UNCOVERED"
+            }
+          ]
+        }
+      ],
+      "total": 7
+    },
+    {
+      "behavior": "x-input",
+      "elements": [
+        {
+          "path": "div[0]",
+          "classes": "x-input__wrapper",
+          "declarations": [
+            {
+              "prop": "position",
+              "value": "relative",
+              "classification": "UNCOVERED"
+            },
+            {
+              "prop": "display",
+              "value": "flex",
+              "classification": "UNCOVERED"
+            },
+            {
+              "prop": "align-items",
+              "value": "center",
+              "classification": "UNCOVERED"
+            },
+            {
+              "prop": "width",
+              "value": "100%",
+              "classification": "COVERED"
+            }
+          ]
+        },
+        {
+          "path": "div[0] > div[0]",
+          "classes": "x-input__wrapper",
+          "declarations": [
+            {
+              "prop": "position",
+              "value": "relative",
+              "classification": "UNCOVERED"
+            },
+            {
+              "prop": "display",
+              "value": "flex",
+              "classification": "UNCOVERED"
+            },
+            {
+              "prop": "align-items",
+              "value": "center",
+              "classification": "UNCOVERED"
+            },
+            {
+              "prop": "width",
+              "value": "100%",
+              "classification": "UNCOVERED"
+            }
+          ]
+        },
+        {
+          "path": "div[0] > div[0] > input[0]",
+          "classes": "x-input__field x-input--md",
+          "declarations": [
+            {
+              "prop": "width",
+              "value": "auto",
+              "classification": "COVERED"
+            },
+            {
+              "prop": "flex-grow",
+              "value": "1",
+              "classification": "UNCOVERED"
+            },
+            {
+              "prop": "flex-shrink",
+              "value": "1",
+              "classification": "COVERED"
+            },
+            {
+              "prop": "flex-basis",
+              "value": "0%",
+              "classification": "UNCOVERED"
+            },
+            {
+              "prop": "min-width",
+              "value": "0px",
+              "classification": "UNCOVERED"
+            },
+            {
+              "prop": "outline-color",
+              "value": "initial",
+              "classification": "COVERED"
+            },
+            {
+              "prop": "outline-style",
+              "value": "none",
+              "classification": "COVERED"
+            },
+            {
+              "prop": "outline-width",
+              "value": "initial",
+              "classification": "COVERED"
+            },
+            {
+              "prop": "padding-top",
+              "value": "0.5rem",
+              "classification": "UNCOVERED"
+            },
+            {
+              "prop": "padding-right",
+              "value": "0.75rem",
+              "classification": "UNCOVERED"
+            },
+            {
+              "prop": "padding-bottom",
+              "value": "0.5rem",
+              "classification": "UNCOVERED"
+            },
+            {
+              "prop": "padding-left",
+              "value": "0.75rem",
+              "classification": "UNCOVERED"
+            }
+          ]
+        }
+      ],
+      "total": 20
+    },
+    {
+      "behavior": "x-mdhtml",
+      "elements": [
+        {
+          "path": ":host",
+          "classes": "x-mdhtml x-mdhtml--loaded",
+          "declarations": [
+            {
+              "prop": "font-size",
+              "value": "var(--md-font-size, 1rem)",
+              "classification": "COVERED"
+            },
+            {
+              "prop": "max-width",
+              "value": "100%",
+              "classification": "UNCOVERED"
+            }
+          ]
+        }
+      ],
+      "total": 2
+    },
+    {
+      "behavior": "x-navbar",
+      "elements": [
+        {
+          "path": ":host",
+          "classes": "",
+          "declarations": [
+            {
+              "prop": "display",
+              "value": "flex",
+              "classification": "UNCOVERED"
+            },
+            {
+              "prop": "align-items",
+              "value": "center",
+              "classification": "UNCOVERED"
+            },
+            {
+              "prop": "justify-content",
+              "value": "space-between",
+              "classification": "UNCOVERED"
+            },
+            {
+              "prop": "padding-top",
+              "value": "0.5rem",
+              "classification": "UNCOVERED"
+            },
+            {
+              "prop": "padding-right",
+              "value": "1rem",
+              "classification": "UNCOVERED"
+            },
+            {
+              "prop": "padding-bottom",
+              "value": "0.5rem",
+              "classification": "UNCOVERED"
+            },
+            {
+              "prop": "padding-left",
+              "value": "1rem",
+              "classification": "UNCOVERED"
+            },
+            {
+              "prop": "background-image",
+              "value": "",
+              "classification": "COVERED"
+            },
+            {
+              "prop": "background-position-x",
+              "value": "",
+              "classification": "COVERED"
+            },
+            {
+              "prop": "background-position-y",
+              "value": "",
+              "classification": "COVERED"
+            },
+            {
+              "prop": "background-size",
+              "value": "",
+              "classification": "COVERED"
+            },
+            {
+              "prop": "background-repeat",
+              "value": "",
+              "classification": "COVERED"
+            },
+            {
+              "prop": "background-attachment",
+              "value": "",
+              "classification": "COVERED"
+            },
+            {
+              "prop": "background-origin",
+              "value": "",
+              "classification": "COVERED"
+            },
+            {
+              "prop": "background-clip",
+              "value": "",
+              "classification": "COVERED"
+            },
+            {
+              "prop": "background-color",
+              "value": "",
+              "classification": "UNCOVERED"
+            },
+            {
+              "prop": "border-top-left-radius",
+              "value": "6px",
+              "classification": "UNCOVERED"
+            },
+            {
+              "prop": "border-top-right-radius",
+              "value": "6px",
+              "classification": "UNCOVERED"
+            },
+            {
+              "prop": "border-bottom-right-radius",
+              "value": "6px",
+              "classification": "UNCOVERED"
+            },
+            {
+              "prop": "border-bottom-left-radius",
+              "value": "6px",
+              "classification": "UNCOVERED"
+            },
+            {
+              "prop": "row-gap",
+              "value": "1rem",
+              "classification": "UNCOVERED"
+            },
+            {
+              "prop": "column-gap",
+              "value": "1rem",
+              "classification": "UNCOVERED"
+            }
+          ]
+        }
+      ],
+      "total": 22
+    },
+    {
+      "behavior": "x-notes",
+      "elements": [
+        {
+          "path": ":host",
+          "classes": "x-notes--left",
+          "declarations": [
+            {
+              "prop": "--notes-max-width",
+              "value": "50vw",
+              "classification": "COVERED"
+            },
+            {
+              "prop": "--notes-min-width",
+              "value": "200px",
+              "classification": "COVERED"
+            },
+            {
+              "prop": "width",
+              "value": "320px",
+              "classification": "UNCOVERED"
+            }
+          ]
+        },
+        {
+          "path": "div[1] > textarea[4]",
+          "classes": "x-notes__textarea x-textarea",
+          "declarations": [
+            {
+              "prop": "resize",
+              "value": "vertical",
+              "classification": "UNCOVERED"
+            },
+            {
+              "prop": "min-height",
+              "value": "3rem",
+              "classification": "UNCOVERED"
+            },
+            {
+              "prop": "padding-top",
+              "value": "0.5rem",
+              "classification": "COVERED"
+            },
+            {
+              "prop": "padding-right",
+              "value": "0.75rem",
+              "classification": "COVERED"
+            },
+            {
+              "prop": "padding-bottom",
+              "value": "0.5rem",
+              "classification": "COVERED"
+            },
+            {
+              "prop": "padding-left",
+              "value": "0.75rem",
+              "classification": "COVERED"
+            }
+          ]
+        }
+      ],
+      "total": 9
+    },
+    {
+      "behavior": "x-rating",
+      "elements": [
+        {
+          "path": ":host",
+          "classes": "x-rating--md",
+          "declarations": [
+            {
+              "prop": "display",
+              "value": "inline-flex",
+              "classification": "UNCOVERED"
+            },
+            {
+              "prop": "row-gap",
+              "value": "0.25rem",
+              "classification": "UNCOVERED"
+            },
+            {
+              "prop": "column-gap",
+              "value": "0.25rem",
+              "classification": "UNCOVERED"
+            },
+            {
+              "prop": "cursor",
+              "value": "pointer",
+              "classification": "UNCOVERED"
+            }
+          ]
+        },
+        {
+          "path": "span[0]",
+          "classes": "x-rating__star",
+          "declarations": [
+            {
+              "prop": "line-height",
+              "value": "1",
+              "classification": "UNCOVERED"
+            },
+            {
+              "prop": "transition-behavior",
+              "value": "normal, normal",
+              "classification": "UNCOVERED"
+            },
+            {
+              "prop": "transition-duration",
+              "value": "0.2s, 0.1s",
+              "classification": "UNCOVERED"
+            },
+            {
+              "prop": "transition-timing-function",
+              "value": "ease, ease",
+              "classification": "UNCOVERED"
+            },
+            {
+              "prop": "transition-delay",
+              "value": "0s, 0s",
+              "classification": "UNCOVERED"
+            },
+            {
+              "prop": "transition-property",
+              "value": "color, transform",
+              "classification": "UNCOVERED"
+            },
+            {
+              "prop": "color",
+              "value": "var(--border-color, #e5e7eb)",
+              "classification": "UNCOVERED"
+            }
+          ]
+        },
+        {
+          "path": "span[1]",
+          "classes": "x-rating__star",
+          "declarations": [
+            {
+              "prop": "line-height",
+              "value": "1",
+              "classification": "UNCOVERED"
+            },
+            {
+              "prop": "transition-behavior",
+              "value": "normal, normal",
+              "classification": "UNCOVERED"
+            },
+            {
+              "prop": "transition-duration",
+              "value": "0.2s, 0.1s",
+              "classification": "UNCOVERED"
+            },
+            {
+              "prop": "transition-timing-function",
+              "value": "ease, ease",
+              "classification": "UNCOVERED"
+            },
+            {
+              "prop": "transition-delay",
+              "value": "0s, 0s",
+              "classification": "UNCOVERED"
+            },
+            {
+              "prop": "transition-property",
+              "value": "color, transform",
+              "classification": "UNCOVERED"
+            },
+            {
+              "prop": "color",
+              "value": "var(--border-color, #e5e7eb)",
+              "classification": "UNCOVERED"
+            }
+          ]
+        },
+        {
+          "path": "span[2]",
+          "classes": "x-rating__star",
+          "declarations": [
+            {
+              "prop": "line-height",
+              "value": "1",
+              "classification": "UNCOVERED"
+            },
+            {
+              "prop": "transition-behavior",
+              "value": "normal, normal",
+              "classification": "UNCOVERED"
+            },
+            {
+              "prop": "transition-duration",
+              "value": "0.2s, 0.1s",
+              "classification": "UNCOVERED"
+            },
+            {
+              "prop": "transition-timing-function",
+              "value": "ease, ease",
+              "classification": "UNCOVERED"
+            },
+            {
+              "prop": "transition-delay",
+              "value": "0s, 0s",
+              "classification": "UNCOVERED"
+            },
+            {
+              "prop": "transition-property",
+              "value": "color, transform",
+              "classification": "UNCOVERED"
+            },
+            {
+              "prop": "color",
+              "value": "var(--border-color, #e5e7eb)",
+              "classification": "UNCOVERED"
+            }
+          ]
+        },
+        {
+          "path": "span[3]",
+          "classes": "x-rating__star",
+          "declarations": [
+            {
+              "prop": "line-height",
+              "value": "1",
+              "classification": "UNCOVERED"
+            },
+            {
+              "prop": "transition-behavior",
+              "value": "normal, normal",
+              "classification": "UNCOVERED"
+            },
+            {
+              "prop": "transition-duration",
+              "value": "0.2s, 0.1s",
+              "classification": "UNCOVERED"
+            },
+            {
+              "prop": "transition-timing-function",
+              "value": "ease, ease",
+              "classification": "UNCOVERED"
+            },
+            {
+              "prop": "transition-delay",
+              "value": "0s, 0s",
+              "classification": "UNCOVERED"
+            },
+            {
+              "prop": "transition-property",
+              "value": "color, transform",
+              "classification": "UNCOVERED"
+            },
+            {
+              "prop": "color",
+              "value": "var(--border-color, #e5e7eb)",
+              "classification": "UNCOVERED"
+            }
+          ]
+        },
+        {
+          "path": "span[4]",
+          "classes": "x-rating__star",
+          "declarations": [
+            {
+              "prop": "line-height",
+              "value": "1",
+              "classification": "UNCOVERED"
+            },
+            {
+              "prop": "transition-behavior",
+              "value": "normal, normal",
+              "classification": "UNCOVERED"
+            },
+            {
+              "prop": "transition-duration",
+              "value": "0.2s, 0.1s",
+              "classification": "UNCOVERED"
+            },
+            {
+              "prop": "transition-timing-function",
+              "value": "ease, ease",
+              "classification": "UNCOVERED"
+            },
+            {
+              "prop": "transition-delay",
+              "value": "0s, 0s",
+              "classification": "UNCOVERED"
+            },
+            {
+              "prop": "transition-property",
+              "value": "color, transform",
+              "classification": "UNCOVERED"
+            },
+            {
+              "prop": "color",
+              "value": "var(--border-color, #e5e7eb)",
+              "classification": "UNCOVERED"
+            }
+          ]
+        }
+      ],
+      "total": 39
+    },
+    {
+      "behavior": "x-ratio",
+      "elements": [
+        {
+          "path": ":host",
+          "classes": "x-ratio",
+          "declarations": [
+            {
+              "prop": "aspect-ratio",
+              "value": "16 / 9",
+              "classification": "UNCOVERED"
+            }
+          ]
+        }
+      ],
+      "total": 1
+    },
+    {
+      "behavior": "x-searchfield",
+      "elements": [
+        {
+          "path": "div[1] > button[2]",
+          "classes": "x-search__clear x-button",
+          "declarations": [
+            {
+              "prop": "display",
+              "value": "none",
+              "classification": "UNCOVERED"
+            }
+          ]
+        }
+      ],
+      "total": 1
+    },
+    {
+      "behavior": "x-tabs",
+      "elements": [
+        {
+          "path": "nav[0]",
+          "classes": "x-tabs__nav",
+          "declarations": [
+            {
+              "prop": "display",
+              "value": "flex",
+              "classification": "UNCOVERED"
+            },
+            {
+              "prop": "row-gap",
+              "value": "0px",
+              "classification": "UNCOVERED"
+            },
+            {
+              "prop": "column-gap",
+              "value": "0px",
+              "classification": "UNCOVERED"
+            },
+            {
+              "prop": "border-bottom-width",
+              "value": "",
+              "classification": "UNCOVERED"
+            },
+            {
+              "prop": "border-bottom-style",
+              "value": "",
+              "classification": "UNCOVERED"
+            },
+            {
+              "prop": "border-bottom-color",
+              "value": "",
+              "classification": "UNCOVERED"
+            },
+            {
+              "prop": "margin-bottom",
+              "value": "0.5rem",
+              "classification": "UNCOVERED"
+            }
+          ]
+        },
+        {
+          "path": "nav[0] > button[0]",
+          "classes": "x-tabs__tab x-tabs__tab--active x-button",
+          "declarations": [
+            {
+              "prop": "padding-top",
+              "value": "0.25rem",
+              "classification": "COVERED"
+            },
+            {
+              "prop": "padding-right",
+              "value": "0.75rem",
+              "classification": "COVERED"
+            },
+            {
+              "prop": "padding-bottom",
+              "value": "0.25rem",
+              "classification": "COVERED"
+            },
+            {
+              "prop": "padding-left",
+              "value": "0.75rem",
+              "classification": "COVERED"
+            },
+            {
+              "prop": "background-image",
+              "value": "none",
+              "classification": "COVERED"
+            },
+            {
+              "prop": "background-position-x",
+              "value": "initial",
+              "classification": "COVERED"
+            },
+            {
+              "prop": "background-position-y",
+              "value": "initial",
+              "classification": "COVERED"
+            },
+            {
+              "prop": "background-size",
+              "value": "initial",
+              "classification": "COVERED"
+            },
+            {
+              "prop": "background-repeat",
+              "value": "initial",
+              "classification": "COVERED"
+            },
+            {
+              "prop": "background-attachment",
+              "value": "initial",
+              "classification": "COVERED"
+            },
+            {
+              "prop": "background-origin",
+              "value": "initial",
+              "classification": "COVERED"
+            },
+            {
+              "prop": "background-clip",
+              "value": "initial",
+              "classification": "COVERED"
+            },
+            {
+              "prop": "background-color",
+              "value": "initial",
+              "classification": "COVERED"
+            },
+            {
+              "prop": "border-top-width",
+              "value": "initial",
+              "classification": "COVERED"
+            },
+            {
+              "prop": "border-right-width",
+              "value": "initial",
+              "classification": "COVERED"
+            },
+            {
+              "prop": "border-bottom-width",
+              "value": "",
+              "classification": "COVERED"
+            },
+            {
+              "prop": "border-left-width",
+              "value": "initial",
+              "classification": "COVERED"
+            },
+            {
+              "prop": "border-top-style",
+              "value": "none",
+              "classification": "UNCOVERED"
+            },
+            {
+              "prop": "border-right-style",
+              "value": "none",
+              "classification": "UNCOVERED"
+            },
+            {
+              "prop": "border-bottom-style",
+              "value": "",
+              "classification": "COVERED"
+            },
+            {
+              "prop": "border-left-style",
+              "value": "none",
+              "classification": "UNCOVERED"
+            },
+            {
+              "prop": "border-top-color",
+              "value": "initial",
+              "classification": "UNCOVERED"
+            },
+            {
+              "prop": "border-right-color",
+              "value": "initial",
+              "classification": "UNCOVERED"
+            },
+            {
+              "prop": "border-bottom-color",
+              "value": "",
+              "classification": "UNCOVERED"
+            },
+            {
+              "prop": "border-left-color",
+              "value": "initial",
+              "classification": "UNCOVERED"
+            },
+            {
+              "prop": "border-image-source",
+              "value": "initial",
+              "classification": "COVERED"
+            },
+            {
+              "prop": "border-image-slice",
+              "value": "initial",
+              "classification": "COVERED"
+            },
+            {
+              "prop": "border-image-width",
+              "value": "initial",
+              "classification": "COVERED"
+            },
+            {
+              "prop": "border-image-outset",
+              "value": "initial",
+              "classification": "COVERED"
+            },
+            {
+              "prop": "border-image-repeat",
+              "value": "initial",
+              "classification": "COVERED"
+            },
+            {
+              "prop": "cursor",
+              "value": "pointer",
+              "classification": "COVERED"
+            },
+            {
+              "prop": "color",
+              "value": "inherit",
+              "classification": "COVERED"
+            },
+            {
+              "prop": "font-size",
+              "value": "0.8rem",
+              "classification": "COVERED"
+            },
+            {
+              "prop": "margin-bottom",
+              "value": "-1px",
+              "classification": "COVERED"
+            },
+            {
+              "prop": "font-weight",
+              "value": "600",
+              "classification": "COVERED"
+            },
+            {
+              "prop": "opacity",
+              "value": "1",
+              "classification": "COVERED"
+            }
+          ]
+        },
+        {
+          "path": "div[1]",
+          "classes": "x-tabs__panels",
+          "declarations": [
+            {
+              "prop": "width",
+              "value": "100%",
+              "classification": "COVERED"
+            },
+            {
+              "prop": "margin-top",
+              "value": "0.5rem",
+              "classification": "UNCOVERED"
+            }
+          ]
+        },
+        {
+          "path": "div[1] > section[0]",
+          "classes": "x-tabs__panel",
+          "declarations": [
+            {
+              "prop": "padding-top",
+              "value": "1rem",
+              "classification": "UNCOVERED"
+            },
+            {
+              "prop": "padding-right",
+              "value": "1rem",
+              "classification": "UNCOVERED"
+            },
+            {
+              "prop": "padding-bottom",
+              "value": "1rem",
+              "classification": "UNCOVERED"
+            },
+            {
+              "prop": "padding-left",
+              "value": "1rem",
+              "classification": "UNCOVERED"
+            },
+            {
+              "prop": "border-top-color",
+              "value": "",
+              "classification": "UNCOVERED"
+            },
+            {
+              "prop": "border-top-style",
+              "value": "",
+              "classification": "UNCOVERED"
+            },
+            {
+              "prop": "border-top-width",
+              "value": "",
+              "classification": "COVERED"
+            },
+            {
+              "prop": "border-right-color",
+              "value": "",
+              "classification": "UNCOVERED"
+            },
+            {
+              "prop": "border-right-style",
+              "value": "",
+              "classification": "UNCOVERED"
+            },
+            {
+              "prop": "border-right-width",
+              "value": "",
+              "classification": "COVERED"
+            },
+            {
+              "prop": "border-bottom-color",
+              "value": "",
+              "classification": "UNCOVERED"
+            },
+            {
+              "prop": "border-bottom-style",
+              "value": "",
+              "classification": "UNCOVERED"
+            },
+            {
+              "prop": "border-bottom-width",
+              "value": "",
+              "classification": "COVERED"
+            },
+            {
+              "prop": "border-left-color",
+              "value": "",
+              "classification": "UNCOVERED"
+            },
+            {
+              "prop": "border-left-style",
+              "value": "",
+              "classification": "UNCOVERED"
+            },
+            {
+              "prop": "border-left-width",
+              "value": "",
+              "classification": "COVERED"
+            },
+            {
+              "prop": "border-image-source",
+              "value": "",
+              "classification": "COVERED"
+            },
+            {
+              "prop": "border-image-slice",
+              "value": "",
+              "classification": "COVERED"
+            },
+            {
+              "prop": "border-image-width",
+              "value": "",
+              "classification": "COVERED"
+            },
+            {
+              "prop": "border-image-outset",
+              "value": "",
+              "classification": "COVERED"
+            },
+            {
+              "prop": "border-image-repeat",
+              "value": "",
+              "classification": "COVERED"
+            },
+            {
+              "prop": "border-top-left-radius",
+              "value": "4px",
+              "classification": "UNCOVERED"
+            },
+            {
+              "prop": "border-top-right-radius",
+              "value": "4px",
+              "classification": "UNCOVERED"
+            },
+            {
+              "prop": "border-bottom-right-radius",
+              "value": "4px",
+              "classification": "UNCOVERED"
+            },
+            {
+              "prop": "border-bottom-left-radius",
+              "value": "4px",
+              "classification": "UNCOVERED"
+            },
+            {
+              "prop": "background-image",
+              "value": "",
+              "classification": "COVERED"
+            },
+            {
+              "prop": "background-position-x",
+              "value": "",
+              "classification": "COVERED"
+            },
+            {
+              "prop": "background-position-y",
+              "value": "",
+              "classification": "COVERED"
+            },
+            {
+              "prop": "background-size",
+              "value": "",
+              "classification": "COVERED"
+            },
+            {
+              "prop": "background-repeat",
+              "value": "",
+              "classification": "COVERED"
+            },
+            {
+              "prop": "background-attachment",
+              "value": "",
+              "classification": "COVERED"
+            },
+            {
+              "prop": "background-origin",
+              "value": "",
+              "classification": "COVERED"
+            },
+            {
+              "prop": "background-clip",
+              "value": "",
+              "classification": "COVERED"
+            },
+            {
+              "prop": "background-color",
+              "value": "",
+              "classification": "UNCOVERED"
+            },
+            {
+              "prop": "display",
+              "value": "block",
+              "classification": "COVERED"
+            }
+          ]
+        }
+      ],
+      "total": 80
+    },
+    {
+      "behavior": "x-textarea",
+      "elements": [
+        {
+          "path": ":host",
+          "classes": "x-textarea",
+          "declarations": [
+            {
+              "prop": "resize",
+              "value": "vertical",
+              "classification": "UNCOVERED"
+            },
+            {
+              "prop": "min-height",
+              "value": "3rem",
+              "classification": "UNCOVERED"
+            },
+            {
+              "prop": "padding-top",
+              "value": "0.5rem",
+              "classification": "COVERED"
+            },
+            {
+              "prop": "padding-right",
+              "value": "0.75rem",
+              "classification": "COVERED"
+            },
+            {
+              "prop": "padding-bottom",
+              "value": "0.5rem",
+              "classification": "COVERED"
+            },
+            {
+              "prop": "padding-left",
+              "value": "0.75rem",
+              "classification": "COVERED"
+            }
+          ]
+        }
+      ],
+      "total": 6
+    },
+    {
+      "behavior": "x-video",
+      "elements": [
+        {
+          "path": "video[0]",
+          "classes": "x-video",
+          "declarations": [
+            {
+              "prop": "width",
+              "value": "100%",
+              "classification": "UNCOVERED"
+            }
+          ]
+        }
+      ],
+      "total": 1
+    },
+    {
+      "behavior": "x-carddraggable",
+      "elements": [
+        {
+          "path": "header[0]",
+          "classes": "x-card__header x-card__drag-handle x-header",
+          "declarations": [
+            {
+              "prop": "padding-top",
+              "value": "1rem",
+              "classification": "COVERED"
+            },
+            {
+              "prop": "padding-right",
+              "value": "1rem",
+              "classification": "COVERED"
+            },
+            {
+              "prop": "padding-bottom",
+              "value": "1rem",
+              "classification": "UNCOVERED"
+            },
+            {
+              "prop": "padding-left",
+              "value": "1rem",
+              "classification": "COVERED"
+            },
+            {
+              "prop": "border-bottom-width",
+              "value": "",
+              "classification": "COVERED"
+            },
+            {
+              "prop": "border-bottom-style",
+              "value": "",
+              "classification": "COVERED"
+            },
+            {
+              "prop": "border-bottom-color",
+              "value": "",
+              "classification": "COVERED"
+            },
+            {
+              "prop": "background-image",
+              "value": "",
+              "classification": "COVERED"
+            },
+            {
+              "prop": "background-position-x",
+              "value": "",
+              "classification": "COVERED"
+            },
+            {
+              "prop": "background-position-y",
+              "value": "",
+              "classification": "COVERED"
+            },
+            {
+              "prop": "background-size",
+              "value": "",
+              "classification": "COVERED"
+            },
+            {
+              "prop": "background-repeat",
+              "value": "",
+              "classification": "COVERED"
+            },
+            {
+              "prop": "background-attachment",
+              "value": "",
+              "classification": "COVERED"
+            },
+            {
+              "prop": "background-origin",
+              "value": "",
+              "classification": "COVERED"
+            },
+            {
+              "prop": "background-clip",
+              "value": "",
+              "classification": "COVERED"
+            },
+            {
+              "prop": "background-color",
+              "value": "",
+              "classification": "COVERED"
+            },
+            {
+              "prop": "cursor",
+              "value": "grab",
+              "classification": "COVERED"
+            },
+            {
+              "prop": "display",
+              "value": "flex",
+              "classification": "COVERED"
+            },
+            {
+              "prop": "align-items",
+              "value": "center",
+              "classification": "UNCOVERED"
+            },
+            {
+              "prop": "row-gap",
+              "value": "0.5rem",
+              "classification": "COVERED"
+            },
+            {
+              "prop": "column-gap",
+              "value": "0.5rem",
+              "classification": "COVERED"
+            }
+          ]
+        },
+        {
+          "path": "header[0] > span[0]",
+          "classes": "",
+          "declarations": [
+            {
+              "prop": "opacity",
+              "value": "0.5",
+              "classification": "UNCOVERED"
+            }
+          ]
+        }
+      ],
+      "total": 22
+    },
+    {
+      "behavior": "x-cardexpandable",
+      "elements": [
+        {
+          "path": "main[0]",
+          "classes": "x-card__expandable-content",
+          "declarations": [
+            {
+              "prop": "padding-top",
+              "value": "1rem",
+              "classification": "COVERED"
+            },
+            {
+              "prop": "padding-right",
+              "value": "1rem",
+              "classification": "COVERED"
+            },
+            {
+              "prop": "padding-bottom",
+              "value": "1rem",
+              "classification": "COVERED"
+            },
+            {
+              "prop": "padding-left",
+              "value": "1rem",
+              "classification": "COVERED"
+            },
+            {
+              "prop": "overflow-x",
+              "value": "hidden",
+              "classification": "COVERED"
+            },
+            {
+              "prop": "overflow-y",
+              "value": "hidden",
+              "classification": "COVERED"
+            },
+            {
+              "prop": "transition-behavior",
+              "value": "normal",
+              "classification": "COVERED"
+            },
+            {
+              "prop": "transition-duration",
+              "value": "0.3s",
+              "classification": "COVERED"
+            },
+            {
+              "prop": "transition-timing-function",
+              "value": "ease",
+              "classification": "COVERED"
+            },
+            {
+              "prop": "transition-delay",
+              "value": "0s",
+              "classification": "COVERED"
+            },
+            {
+              "prop": "transition-property",
+              "value": "max-height",
+              "classification": "COVERED"
+            },
+            {
+              "prop": "max-height",
+              "value": "100px",
+              "classification": "UNCOVERED"
+            }
+          ]
+        },
+        {
+          "path": "footer[1]",
+          "classes": "x-card__footer x-footer",
+          "declarations": [
+            {
+              "prop": "padding-top",
+              "value": "0.75rem",
+              "classification": "COVERED"
+            },
+            {
+              "prop": "padding-right",
+              "value": "1rem",
+              "classification": "COVERED"
+            },
+            {
+              "prop": "padding-bottom",
+              "value": "0.75rem",
+              "classification": "COVERED"
+            },
+            {
+              "prop": "padding-left",
+              "value": "1rem",
+              "classification": "COVERED"
+            },
+            {
+              "prop": "border-top-width",
+              "value": "",
+              "classification": "COVERED"
+            },
+            {
+              "prop": "border-top-style",
+              "value": "",
+              "classification": "COVERED"
+            },
+            {
+              "prop": "border-top-color",
+              "value": "",
+              "classification": "COVERED"
+            }
+          ]
+        },
+        {
+          "path": "footer[1] > button[0]",
+          "classes": "x-card__expand-btn x-button",
+          "declarations": [
+            {
+              "prop": "width",
+              "value": "100%",
+              "classification": "COVERED"
+            },
+            {
+              "prop": "padding-top",
+              "value": "0.5rem",
+              "classification": "COVERED"
+            },
+            {
+              "prop": "padding-right",
+              "value": "0.5rem",
+              "classification": "COVERED"
+            },
+            {
+              "prop": "padding-bottom",
+              "value": "0.5rem",
+              "classification": "COVERED"
+            },
+            {
+              "prop": "padding-left",
+              "value": "0.5rem",
+              "classification": "COVERED"
+            },
+            {
+              "prop": "background-image",
+              "value": "",
+              "classification": "COVERED"
+            },
+            {
+              "prop": "background-position-x",
+              "value": "",
+              "classification": "COVERED"
+            },
+            {
+              "prop": "background-position-y",
+              "value": "",
+              "classification": "COVERED"
+            },
+            {
+              "prop": "background-size",
+              "value": "",
+              "classification": "COVERED"
+            },
+            {
+              "prop": "background-repeat",
+              "value": "",
+              "classification": "COVERED"
+            },
+            {
+              "prop": "background-attachment",
+              "value": "",
+              "classification": "COVERED"
+            },
+            {
+              "prop": "background-origin",
+              "value": "",
+              "classification": "COVERED"
+            },
+            {
+              "prop": "background-clip",
+              "value": "",
+              "classification": "COVERED"
+            },
+            {
+              "prop": "background-color",
+              "value": "",
+              "classification": "COVERED"
+            },
+            {
+              "prop": "border-top-width",
+              "value": "initial",
+              "classification": "COVERED"
+            },
+            {
+              "prop": "border-right-width",
+              "value": "initial",
+              "classification": "COVERED"
+            },
+            {
+              "prop": "border-bottom-width",
+              "value": "initial",
+              "classification": "COVERED"
+            },
+            {
+              "prop": "border-left-width",
+              "value": "initial",
+              "classification": "COVERED"
+            },
+            {
+              "prop": "border-top-style",
+              "value": "none",
+              "classification": "COVERED"
+            },
+            {
+              "prop": "border-right-style",
+              "value": "none",
+              "classification": "COVERED"
+            },
+            {
+              "prop": "border-bottom-style",
+              "value": "none",
+              "classification": "COVERED"
+            },
+            {
+              "prop": "border-left-style",
+              "value": "none",
+              "classification": "COVERED"
+            },
+            {
+              "prop": "border-top-color",
+              "value": "initial",
+              "classification": "COVERED"
+            },
+            {
+              "prop": "border-right-color",
+              "value": "initial",
+              "classification": "COVERED"
+            },
+            {
+              "prop": "border-bottom-color",
+              "value": "initial",
+              "classification": "COVERED"
+            },
+            {
+              "prop": "border-left-color",
+              "value": "initial",
+              "classification": "COVERED"
+            },
+            {
+              "prop": "border-image-source",
+              "value": "initial",
+              "classification": "COVERED"
+            },
+            {
+              "prop": "border-image-slice",
+              "value": "initial",
+              "classification": "COVERED"
+            },
+            {
+              "prop": "border-image-width",
+              "value": "initial",
+              "classification": "COVERED"
+            },
+            {
+              "prop": "border-image-outset",
+              "value": "initial",
+              "classification": "COVERED"
+            },
+            {
+              "prop": "border-image-repeat",
+              "value": "initial",
+              "classification": "COVERED"
+            },
+            {
+              "prop": "border-top-left-radius",
+              "value": "6px",
+              "classification": "COVERED"
+            },
+            {
+              "prop": "border-top-right-radius",
+              "value": "6px",
+              "classification": "COVERED"
+            },
+            {
+              "prop": "border-bottom-right-radius",
+              "value": "6px",
+              "classification": "COVERED"
+            },
+            {
+              "prop": "border-bottom-left-radius",
+              "value": "6px",
+              "classification": "COVERED"
+            },
+            {
+              "prop": "color",
+              "value": "var(--text-primary,#f9fafb)",
+              "classification": "COVERED"
+            },
+            {
+              "prop": "cursor",
+              "value": "pointer",
+              "classification": "COVERED"
+            },
+            {
+              "prop": "display",
+              "value": "flex",
+              "classification": "COVERED"
+            },
+            {
+              "prop": "align-items",
+              "value": "center",
+              "classification": "COVERED"
+            },
+            {
+              "prop": "justify-content",
+              "value": "center",
+              "classification": "COVERED"
+            },
+            {
+              "prop": "row-gap",
+              "value": "0.5rem",
+              "classification": "COVERED"
+            },
+            {
+              "prop": "column-gap",
+              "value": "0.5rem",
+              "classification": "COVERED"
+            }
+          ]
+        },
+        {
+          "path": "footer[1] > button[0] > span[0]",
+          "classes": "x-card__expand-icon",
+          "declarations": [
+            {
+              "prop": "display",
+              "value": "inline-block",
+              "classification": "COVERED"
+            },
+            {
+              "prop": "transition-behavior",
+              "value": "normal",
+              "classification": "COVERED"
+            },
+            {
+              "prop": "transition-duration",
+              "value": "0.3s",
+              "classification": "COVERED"
+            },
+            {
+              "prop": "transition-timing-function",
+              "value": "ease",
+              "classification": "COVERED"
+            },
+            {
+              "prop": "transition-delay",
+              "value": "0s",
+              "classification": "COVERED"
+            },
+            {
+              "prop": "transition-property",
+              "value": "transform",
+              "classification": "COVERED"
+            }
+          ]
+        }
+      ],
+      "total": 67
+    },
+    {
+      "behavior": "x-cardfile",
+      "elements": [
+        {
+          "path": ":host",
+          "classes": "x-card x-card--file x-card--auto x-card-file",
+          "declarations": [
+            {
+              "prop": "padding-top",
+              "value": "1rem",
+              "classification": "COVERED"
+            },
+            {
+              "prop": "padding-right",
+              "value": "1rem",
+              "classification": "COVERED"
+            },
+            {
+              "prop": "padding-bottom",
+              "value": "1rem",
+              "classification": "COVERED"
+            },
+            {
+              "prop": "padding-left",
+              "value": "1rem",
+              "classification": "COVERED"
+            },
+            {
+              "prop": "flex-direction",
+              "value": "row",
+              "classification": "COVERED"
+            },
+            {
+              "prop": "align-items",
+              "value": "center",
+              "classification": "COVERED"
+            },
+            {
+              "prop": "row-gap",
+              "value": "1rem",
+              "classification": "COVERED"
+            },
+            {
+              "prop": "column-gap",
+              "value": "1rem",
+              "classification": "COVERED"
+            }
+          ]
+        },
+        {
+          "path": "span[0]",
+          "classes": "",
+          "declarations": [
+            {
+              "prop": "font-size",
+              "value": "2.5rem",
+              "classification": "UNCOVERED"
+            }
+          ]
+        },
+        {
+          "path": "div[1]",
+          "classes": "",
+          "declarations": [
+            {
+              "prop": "flex-grow",
+              "value": "1",
+              "classification": "UNCOVERED"
+            },
+            {
+              "prop": "flex-shrink",
+              "value": "1",
+              "classification": "COVERED"
+            },
+            {
+              "prop": "flex-basis",
+              "value": "0%",
+              "classification": "UNCOVERED"
+            },
+            {
+              "prop": "min-width",
+              "value": "0px",
+              "classification": "UNCOVERED"
+            }
+          ]
+        },
+        {
+          "path": "div[2]",
+          "classes": "x-card__file-warning",
+          "declarations": [
+            {
+              "prop": "margin-top",
+              "value": "0.25rem",
+              "classification": "COVERED"
+            },
+            {
+              "prop": "font-size",
+              "value": "0.8rem",
+              "classification": "COVERED"
+            },
+            {
+              "prop": "color",
+              "value": "var(--danger-color,#ef4444)",
+              "classification": "COVERED"
+            }
+          ]
+        }
+      ],
+      "total": 16
+    },
+    {
+      "behavior": "x-cardhero",
+      "elements": [
+        {
+          "path": ":host",
+          "classes": "x-card x-card--hero x-card--auto x-hero x-card--xalign-center",
+          "declarations": [
+            {
+              "prop": "min-height",
+              "value": "400px",
+              "classification": "COVERED"
+            }
+          ]
+        }
+      ],
+      "total": 1
+    },
+    {
+      "behavior": "x-cardhorizontal",
+      "elements": [
+        {
+          "path": ":host",
+          "classes": "x-card x-card--horizontal x-card--auto x-card--hoverable x-card-horizontal",
+          "declarations": [
+            {
+              "prop": "flex-direction",
+              "value": "row",
+              "classification": "COVERED"
+            }
+          ]
+        },
+        {
+          "path": "div[0]",
+          "classes": "x-card__horizontal-content",
+          "declarations": [
+            {
+              "prop": "flex-grow",
+              "value": "1",
+              "classification": "COVERED"
+            },
+            {
+              "prop": "flex-shrink",
+              "value": "1",
+              "classification": "COVERED"
+            },
+            {
+              "prop": "flex-basis",
+              "value": "0%",
+              "classification": "COVERED"
+            },
+            {
+              "prop": "padding-top",
+              "value": "1rem",
+              "classification": "COVERED"
+            },
+            {
+              "prop": "padding-right",
+              "value": "1rem",
+              "classification": "COVERED"
+            },
+            {
+              "prop": "padding-bottom",
+              "value": "1rem",
+              "classification": "COVERED"
+            },
+            {
+              "prop": "padding-left",
+              "value": "1rem",
+              "classification": "COVERED"
+            },
+            {
+              "prop": "display",
+              "value": "flex",
+              "classification": "COVERED"
+            },
+            {
+              "prop": "flex-direction",
+              "value": "column",
+              "classification": "COVERED"
+            },
+            {
+              "prop": "justify-content",
+              "value": "center",
+              "classification": "COVERED"
+            }
+          ]
+        },
+        {
+          "path": "div[0] > div[0]",
+          "classes": "x-card__horiz-body",
+          "declarations": [
+            {
+              "prop": "margin-top",
+              "value": "0.75rem",
+              "classification": "COVERED"
+            },
+            {
+              "prop": "color",
+              "value": "var(--text-primary,#f9fafb)",
+              "classification": "COVERED"
+            }
+          ]
+        }
+      ],
+      "total": 13
+    },
+    {
+      "behavior": "x-cardlink",
+      "elements": [
+        {
+          "path": ":host",
+          "classes": "x-card x-card--link x-card--auto x-card--hoverable x-card-link",
+          "declarations": [
+            {
+              "prop": "cursor",
+              "value": "pointer",
+              "classification": "COVERED"
+            },
+            {
+              "prop": "position",
+              "value": "relative",
+              "classification": "COVERED"
+            },
+            {
+              "prop": "padding-top",
+              "value": "1.25rem",
+              "classification": "COVERED"
+            },
+            {
+              "prop": "padding-right",
+              "value": "1.25rem",
+              "classification": "COVERED"
+            },
+            {
+              "prop": "padding-bottom",
+              "value": "1.25rem",
+              "classification": "COVERED"
+            },
+            {
+              "prop": "padding-left",
+              "value": "1.25rem",
+              "classification": "COVERED"
+            }
+          ]
+        },
+        {
+          "path": "div[0]",
+          "classes": "",
+          "declarations": [
+            {
+              "prop": "display",
+              "value": "flex",
+              "classification": "UNCOVERED"
+            },
+            {
+              "prop": "align-items",
+              "value": "flex-start",
+              "classification": "UNCOVERED"
+            },
+            {
+              "prop": "justify-content",
+              "value": "space-between",
+              "classification": "UNCOVERED"
+            },
+            {
+              "prop": "row-gap",
+              "value": "1rem",
+              "classification": "UNCOVERED"
+            },
+            {
+              "prop": "column-gap",
+              "value": "1rem",
+              "classification": "UNCOVERED"
+            }
+          ]
+        },
+        {
+          "path": "div[0] > div[0]",
+          "classes": "",
+          "declarations": [
+            {
+              "prop": "flex-grow",
+              "value": "1",
+              "classification": "UNCOVERED"
+            },
+            {
+              "prop": "flex-shrink",
+              "value": "1",
+              "classification": "COVERED"
+            },
+            {
+              "prop": "flex-basis",
+              "value": "0%",
+              "classification": "UNCOVERED"
+            }
+          ]
+        }
+      ],
+      "total": 14
+    },
+    {
+      "behavior": "x-cardminimizable",
+      "elements": [
+        {
+          "path": "header[0]",
+          "classes": "x-card__header x-header",
+          "declarations": [
+            {
+              "prop": "padding-top",
+              "value": "1rem",
+              "classification": "COVERED"
+            },
+            {
+              "prop": "padding-right",
+              "value": "1rem",
+              "classification": "COVERED"
+            },
+            {
+              "prop": "padding-bottom",
+              "value": "1rem",
+              "classification": "COVERED"
+            },
+            {
+              "prop": "padding-left",
+              "value": "1rem",
+              "classification": "COVERED"
+            },
+            {
+              "prop": "border-bottom-width",
+              "value": "",
+              "classification": "COVERED"
+            },
+            {
+              "prop": "border-bottom-style",
+              "value": "",
+              "classification": "COVERED"
+            },
+            {
+              "prop": "border-bottom-color",
+              "value": "",
+              "classification": "COVERED"
+            },
+            {
+              "prop": "background-image",
+              "value": "",
+              "classification": "COVERED"
+            },
+            {
+              "prop": "background-position-x",
+              "value": "",
+              "classification": "COVERED"
+            },
+            {
+              "prop": "background-position-y",
+              "value": "",
+              "classification": "COVERED"
+            },
+            {
+              "prop": "background-size",
+              "value": "",
+              "classification": "COVERED"
+            },
+            {
+              "prop": "background-repeat",
+              "value": "",
+              "classification": "COVERED"
+            },
+            {
+              "prop": "background-attachment",
+              "value": "",
+              "classification": "COVERED"
+            },
+            {
+              "prop": "background-origin",
+              "value": "",
+              "classification": "COVERED"
+            },
+            {
+              "prop": "background-clip",
+              "value": "",
+              "classification": "COVERED"
+            },
+            {
+              "prop": "background-color",
+              "value": "",
+              "classification": "COVERED"
+            },
+            {
+              "prop": "display",
+              "value": "flex",
+              "classification": "COVERED"
+            },
+            {
+              "prop": "align-items",
+              "value": "center",
+              "classification": "COVERED"
+            },
+            {
+              "prop": "row-gap",
+              "value": "0.75rem",
+              "classification": "COVERED"
+            },
+            {
+              "prop": "column-gap",
+              "value": "0.75rem",
+              "classification": "COVERED"
+            }
+          ]
+        },
+        {
+          "path": "header[0] > div[0]",
+          "classes": "",
+          "declarations": [
+            {
+              "prop": "flex-grow",
+              "value": "1",
+              "classification": "UNCOVERED"
+            },
+            {
+              "prop": "flex-shrink",
+              "value": "1",
+              "classification": "COVERED"
+            },
+            {
+              "prop": "flex-basis",
+              "value": "0%",
+              "classification": "UNCOVERED"
+            },
+            {
+              "prop": "min-width",
+              "value": "0px",
+              "classification": "UNCOVERED"
+            }
+          ]
+        },
+        {
+          "path": "header[0] > button[1]",
+          "classes": "x-card__minimize-btn x-button",
+          "declarations": [
+            {
+              "prop": "width",
+              "value": "32px",
+              "classification": "COVERED"
+            },
+            {
+              "prop": "height",
+              "value": "32px",
+              "classification": "COVERED"
+            },
+            {
+              "prop": "background-image",
+              "value": "",
+              "classification": "COVERED"
+            },
+            {
+              "prop": "background-position-x",
+              "value": "",
+              "classification": "COVERED"
+            },
+            {
+              "prop": "background-position-y",
+              "value": "",
+              "classification": "COVERED"
+            },
+            {
+              "prop": "background-size",
+              "value": "",
+              "classification": "COVERED"
+            },
+            {
+              "prop": "background-repeat",
+              "value": "",
+              "classification": "COVERED"
+            },
+            {
+              "prop": "background-attachment",
+              "value": "",
+              "classification": "COVERED"
+            },
+            {
+              "prop": "background-origin",
+              "value": "",
+              "classification": "COVERED"
+            },
+            {
+              "prop": "background-clip",
+              "value": "",
+              "classification": "COVERED"
+            },
+            {
+              "prop": "background-color",
+              "value": "",
+              "classification": "COVERED"
+            },
+            {
+              "prop": "border-top-color",
+              "value": "",
+              "classification": "COVERED"
+            },
+            {
+              "prop": "border-top-style",
+              "value": "",
+              "classification": "COVERED"
+            },
+            {
+              "prop": "border-top-width",
+              "value": "",
+              "classification": "COVERED"
+            },
+            {
+              "prop": "border-right-color",
+              "value": "",
+              "classification": "COVERED"
+            },
+            {
+              "prop": "border-right-style",
+              "value": "",
+              "classification": "COVERED"
+            },
+            {
+              "prop": "border-right-width",
+              "value": "",
+              "classification": "COVERED"
+            },
+            {
+              "prop": "border-bottom-color",
+              "value": "",
+              "classification": "COVERED"
+            },
+            {
+              "prop": "border-bottom-style",
+              "value": "",
+              "classification": "COVERED"
+            },
+            {
+              "prop": "border-bottom-width",
+              "value": "",
+              "classification": "COVERED"
+            },
+            {
+              "prop": "border-left-color",
+              "value": "",
+              "classification": "COVERED"
+            },
+            {
+              "prop": "border-left-style",
+              "value": "",
+              "classification": "COVERED"
+            },
+            {
+              "prop": "border-left-width",
+              "value": "",
+              "classification": "COVERED"
+            },
+            {
+              "prop": "border-image-source",
+              "value": "",
+              "classification": "COVERED"
+            },
+            {
+              "prop": "border-image-slice",
+              "value": "",
+              "classification": "COVERED"
+            },
+            {
+              "prop": "border-image-width",
+              "value": "",
+              "classification": "COVERED"
+            },
+            {
+              "prop": "border-image-outset",
+              "value": "",
+              "classification": "COVERED"
+            },
+            {
+              "prop": "border-image-repeat",
+              "value": "",
+              "classification": "COVERED"
+            },
+            {
+              "prop": "border-top-left-radius",
+              "value": "6px",
+              "classification": "COVERED"
+            },
+            {
+              "prop": "border-top-right-radius",
+              "value": "6px",
+              "classification": "COVERED"
+            },
+            {
+              "prop": "border-bottom-right-radius",
+              "value": "6px",
+              "classification": "COVERED"
+            },
+            {
+              "prop": "border-bottom-left-radius",
+              "value": "6px",
+              "classification": "COVERED"
+            },
+            {
+              "prop": "color",
+              "value": "var(--text-primary,#f9fafb)",
+              "classification": "COVERED"
+            },
+            {
+              "prop": "font-size",
+              "value": "1.25rem",
+              "classification": "COVERED"
+            },
+            {
+              "prop": "cursor",
+              "value": "pointer",
+              "classification": "COVERED"
+            },
+            {
+              "prop": "display",
+              "value": "flex",
+              "classification": "COVERED"
+            },
+            {
+              "prop": "align-items",
+              "value": "center",
+              "classification": "COVERED"
+            },
+            {
+              "prop": "justify-content",
+              "value": "center",
+              "classification": "COVERED"
+            }
+          ]
+        },
+        {
+          "path": "main[1]",
+          "classes": "x-card__minimizable-content",
+          "declarations": [
+            {
+              "prop": "padding-top",
+              "value": "1rem",
+              "classification": "COVERED"
+            },
+            {
+              "prop": "padding-right",
+              "value": "1rem",
+              "classification": "COVERED"
+            },
+            {
+              "prop": "padding-bottom",
+              "value": "1rem",
+              "classification": "COVERED"
+            },
+            {
+              "prop": "padding-left",
+              "value": "1rem",
+              "classification": "COVERED"
+            },
+            {
+              "prop": "overflow-x",
+              "value": "hidden",
+              "classification": "COVERED"
+            },
+            {
+              "prop": "overflow-y",
+              "value": "hidden",
+              "classification": "COVERED"
+            },
+            {
+              "prop": "transition-behavior",
+              "value": "normal",
+              "classification": "COVERED"
+            },
+            {
+              "prop": "transition-duration",
+              "value": "0.3s",
+              "classification": "COVERED"
+            },
+            {
+              "prop": "transition-timing-function",
+              "value": "ease",
+              "classification": "COVERED"
+            },
+            {
+              "prop": "transition-delay",
+              "value": "0s",
+              "classification": "COVERED"
+            },
+            {
+              "prop": "transition-property",
+              "value": "all",
+              "classification": "COVERED"
+            }
+          ]
+        }
+      ],
+      "total": 73
+    },
+    {
+      "behavior": "x-cardoverlay",
+      "elements": [
+        {
+          "path": ":host",
+          "classes": "x-card x-card--overlay x-card--auto x-card-overlay x-card--overlay-card x-card--overlay-bottom",
+          "declarations": [
+            {
+              "prop": "height",
+              "value": "300px",
+              "classification": "COVERED"
+            },
+            {
+              "prop": "position",
+              "value": "relative",
+              "classification": "COVERED"
+            },
+            {
+              "prop": "background-image",
+              "value": "linear-gradient(135deg, rgb(102, 126, 234), rgb(118, 75, 162))",
+              "classification": "COVERED"
+            },
+            {
+              "prop": "background-size",
+              "value": "cover",
+              "classification": "COVERED"
+            },
+            {
+              "prop": "background-position-x",
+              "value": "center",
+              "classification": "COVERED"
+            },
+            {
+              "prop": "background-position-y",
+              "value": "center",
+              "classification": "COVERED"
+            },
+            {
+              "prop": "background-repeat",
+              "value": "no-repeat",
+              "classification": "UNCOVERED"
+            },
+            {
+              "prop": "flex-direction",
+              "value": "row",
+              "classification": "COVERED"
+            },
+            {
+              "prop": "align-items",
+              "value": "flex-end",
+              "classification": "COVERED"
+            }
+          ]
+        },
+        {
+          "path": "div[0]",
+          "classes": "x-card__overlay-content",
+          "declarations": [
+            {
+              "prop": "padding-top",
+              "value": "1.5rem",
+              "classification": "COVERED"
+            },
+            {
+              "prop": "padding-right",
+              "value": "1.5rem",
+              "classification": "COVERED"
+            },
+            {
+              "prop": "padding-bottom",
+              "value": "1.5rem",
+              "classification": "COVERED"
+            },
+            {
+              "prop": "padding-left",
+              "value": "1.5rem",
+              "classification": "COVERED"
+            },
+            {
+              "prop": "color",
+              "value": "white",
+              "classification": "COVERED"
+            },
+            {
+              "prop": "width",
+              "value": "100%",
+              "classification": "COVERED"
+            },
+            {
+              "prop": "text-align",
+              "value": "left",
+              "classification": "COVERED"
+            },
+            {
+              "prop": "background-image",
+              "value": "linear-gradient(to top, rgba(0, 0, 0, 0.7), transparent)",
+              "classification": "UNCOVERED"
+            },
+            {
+              "prop": "background-position-x",
+              "value": "initial",
+              "classification": "COVERED"
+            },
+            {
+              "prop": "background-position-y",
+              "value": "initial",
+              "classification": "COVERED"
+            },
+            {
+              "prop": "background-size",
+              "value": "initial",
+              "classification": "COVERED"
+            },
+            {
+              "prop": "background-repeat",
+              "value": "initial",
+              "classification": "COVERED"
+            },
+            {
+              "prop": "background-attachment",
+              "value": "initial",
+              "classification": "COVERED"
+            },
+            {
+              "prop": "background-origin",
+              "value": "initial",
+              "classification": "COVERED"
+            },
+            {
+              "prop": "background-clip",
+              "value": "initial",
+              "classification": "COVERED"
+            },
+            {
+              "prop": "background-color",
+              "value": "initial",
+              "classification": "COVERED"
+            }
+          ]
+        }
+      ],
+      "total": 25
+    },
+    {
+      "behavior": "x-cardportfolio",
+      "elements": [
+        {
+          "path": ":host",
+          "classes": "x-card x-card--portfolio x-card--auto x-portfolio",
+          "declarations": [
+            {
+              "prop": "max-width",
+              "value": "400px",
+              "classification": "UNCOVERED"
+            }
+          ]
+        },
+        {
+          "path": "header[0]",
+          "classes": "x-portfolio__header x-header",
+          "declarations": [
+            {
+              "prop": "height",
+              "value": "auto",
+              "classification": "COVERED"
+            },
+            {
+              "prop": "min-height",
+              "value": "0px",
+              "classification": "UNCOVERED"
+            },
+            {
+              "prop": "background-image",
+              "value": "initial",
+              "classification": "COVERED"
+            },
+            {
+              "prop": "background-position-x",
+              "value": "initial",
+              "classification": "COVERED"
+            },
+            {
+              "prop": "background-position-y",
+              "value": "initial",
+              "classification": "COVERED"
+            },
+            {
+              "prop": "background-size",
+              "value": "initial",
+              "classification": "COVERED"
+            },
+            {
+              "prop": "background-repeat",
+              "value": "initial",
+              "classification": "COVERED"
+            },
+            {
+              "prop": "background-attachment",
+              "value": "initial",
+              "classification": "COVERED"
+            },
+            {
+              "prop": "background-origin",
+              "value": "initial",
+              "classification": "COVERED"
+            },
+            {
+              "prop": "background-clip",
+              "value": "initial",
+              "classification": "COVERED"
+            },
+            {
+              "prop": "background-color",
+              "value": "transparent",
+              "classification": "UNCOVERED"
+            },
+            {
+              "prop": "border-bottom-width",
+              "value": "initial",
+              "classification": "COVERED"
+            },
+            {
+              "prop": "border-bottom-style",
+              "value": "none",
+              "classification": "UNCOVERED"
+            },
+            {
+              "prop": "border-bottom-color",
+              "value": "initial",
+              "classification": "UNCOVERED"
+            },
+            {
+              "prop": "font-size",
+              "value": "1rem",
+              "classification": "UNCOVERED"
+            }
+          ]
+        },
+        {
+          "path": "header[0] > figure[0] > span[1]",
+          "classes": "x-portfolio__availability",
+          "declarations": [
+            {
+              "prop": "background-image",
+              "value": "initial",
+              "classification": "COVERED"
+            },
+            {
+              "prop": "background-position-x",
+              "value": "initial",
+              "classification": "COVERED"
+            },
+            {
+              "prop": "background-position-y",
+              "value": "initial",
+              "classification": "COVERED"
+            },
+            {
+              "prop": "background-size",
+              "value": "initial",
+              "classification": "COVERED"
+            },
+            {
+              "prop": "background-repeat",
+              "value": "initial",
+              "classification": "COVERED"
+            },
+            {
+              "prop": "background-attachment",
+              "value": "initial",
+              "classification": "COVERED"
+            },
+            {
+              "prop": "background-origin",
+              "value": "initial",
+              "classification": "COVERED"
+            },
+            {
+              "prop": "background-clip",
+              "value": "initial",
+              "classification": "COVERED"
+            },
+            {
+              "prop": "background-color",
+              "value": "rgb(34, 197, 94)",
+              "classification": "UNCOVERED"
+            }
+          ]
+        }
+      ],
+      "total": 25
+    },
+    {
+      "behavior": "x-cardpricing",
+      "elements": [
+        {
+          "path": ":host",
+          "classes": "x-card x-card--pricing x-card--auto x-card--hoverable x-pricing",
+          "declarations": [
+            {
+              "prop": "text-align",
+              "value": "center",
+              "classification": "COVERED"
+            },
+            {
+              "prop": "container-type",
+              "value": "inline-size",
+              "classification": "COVERED"
+            },
+            {
+              "prop": "padding-top",
+              "value": "0px",
+              "classification": "COVERED"
+            },
+            {
+              "prop": "padding-right",
+              "value": "0px",
+              "classification": "COVERED"
+            },
+            {
+              "prop": "padding-bottom",
+              "value": "0px",
+              "classification": "COVERED"
+            },
+            {
+              "prop": "padding-left",
+              "value": "0px",
+              "classification": "COVERED"
+            }
+          ]
+        },
+        {
+          "path": "header[0]",
+          "classes": "x-card__header x-header",
+          "declarations": [
+            {
+              "prop": "text-align",
+              "value": "center",
+              "classification": "COVERED"
+            }
+          ]
+        },
+        {
+          "path": "header[0] > h3[0]",
+          "classes": "x-card__title x-card__plan",
+          "declarations": [
+            {
+              "prop": "margin-top",
+              "value": "0px",
+              "classification": "COVERED"
+            },
+            {
+              "prop": "margin-right",
+              "value": "0px",
+              "classification": "COVERED"
+            },
+            {
+              "prop": "margin-bottom",
+              "value": "0px",
+              "classification": "COVERED"
+            },
+            {
+              "prop": "margin-left",
+              "value": "0px",
+              "classification": "COVERED"
+            },
+            {
+              "prop": "font-size",
+              "value": "1.25rem",
+              "classification": "COVERED"
+            },
+            {
+              "prop": "color",
+              "value": "var(--text-primary,#f9fafb)",
+              "classification": "COVERED"
+            }
+          ]
+        },
+        {
+          "path": "main[1]",
+          "classes": "x-card__main",
+          "declarations": [
+            {
+              "prop": "text-align",
+              "value": "center",
+              "classification": "COVERED"
+            }
+          ]
+        },
+        {
+          "path": "main[1] > div[1]",
+          "classes": "x-card__price-wrap",
+          "declarations": [
+            {
+              "prop": "margin-top",
+              "value": "1rem",
+              "classification": "COVERED"
+            },
+            {
+              "prop": "margin-right",
+              "value": "0px",
+              "classification": "COVERED"
+            },
+            {
+              "prop": "margin-bottom",
+              "value": "1rem",
+              "classification": "COVERED"
+            },
+            {
+              "prop": "margin-left",
+              "value": "0px",
+              "classification": "COVERED"
+            }
+          ]
+        },
+        {
+          "path": "main[1] > div[1] > span[0]",
+          "classes": "x-card__amount",
+          "declarations": [
+            {
+              "prop": "font-size",
+              "value": "clamp(1.5rem, 18cqi, 3rem)",
+              "classification": "COVERED"
+            },
+            {
+              "prop": "font-weight",
+              "value": "700",
+              "classification": "COVERED"
+            },
+            {
+              "prop": "color",
+              "value": "var(--text-primary,#f9fafb)",
+              "classification": "COVERED"
+            },
+            {
+              "prop": "white-space-collapse",
+              "value": "collapse",
+              "classification": "COVERED"
+            },
+            {
+              "prop": "text-wrap-mode",
+              "value": "nowrap",
+              "classification": "COVERED"
+            }
+          ]
+        },
+        {
+          "path": "main[1] > div[1] > span[1]",
+          "classes": "x-card__period",
+          "declarations": [
+            {
+              "prop": "color",
+              "value": "var(--text-secondary,#9ca3af)",
+              "classification": "COVERED"
+            }
+          ]
+        },
+        {
+          "path": "main[1] > ul[2]",
+          "classes": "x-card__features",
+          "declarations": [
+            {
+              "prop": "list-style-position",
+              "value": "initial",
+              "classification": "COVERED"
+            },
+            {
+              "prop": "list-style-image",
+              "value": "initial",
+              "classification": "COVERED"
+            },
+            {
+              "prop": "list-style-type",
+              "value": "none",
+              "classification": "COVERED"
+            },
+            {
+              "prop": "padding-top",
+              "value": "0px",
+              "classification": "COVERED"
+            },
+            {
+              "prop": "padding-right",
+              "value": "0px",
+              "classification": "COVERED"
+            },
+            {
+              "prop": "padding-bottom",
+              "value": "0px",
+              "classification": "COVERED"
+            },
+            {
+              "prop": "padding-left",
+              "value": "0px",
+              "classification": "COVERED"
+            },
+            {
+              "prop": "margin-top",
+              "value": "1.5rem",
+              "classification": "COVERED"
+            },
+            {
+              "prop": "margin-right",
+              "value": "0px",
+              "classification": "COVERED"
+            },
+            {
+              "prop": "margin-bottom",
+              "value": "1.5rem",
+              "classification": "COVERED"
+            },
+            {
+              "prop": "margin-left",
+              "value": "0px",
+              "classification": "COVERED"
+            },
+            {
+              "prop": "text-align",
+              "value": "left",
+              "classification": "COVERED"
+            }
+          ]
+        },
+        {
+          "path": "main[1] > ul[2] > li[0]",
+          "classes": "x-card__feature",
+          "declarations": [
+            {
+              "prop": "padding-top",
+              "value": "0.5rem",
+              "classification": "COVERED"
+            },
+            {
+              "prop": "padding-right",
+              "value": "0px",
+              "classification": "COVERED"
+            },
+            {
+              "prop": "padding-bottom",
+              "value": "0.5rem",
+              "classification": "COVERED"
+            },
+            {
+              "prop": "padding-left",
+              "value": "0px",
+              "classification": "COVERED"
+            },
+            {
+              "prop": "color",
+              "value": "var(--text-primary,#f9fafb)",
+              "classification": "COVERED"
+            },
+            {
+              "prop": "border-bottom-width",
+              "value": "",
+              "classification": "COVERED"
+            },
+            {
+              "prop": "border-bottom-style",
+              "value": "",
+              "classification": "COVERED"
+            },
+            {
+              "prop": "border-bottom-color",
+              "value": "",
+              "classification": "COVERED"
+            }
+          ]
+        },
+        {
+          "path": "main[1] > ul[2] > li[0] > span[0]",
+          "classes": "",
+          "declarations": [
+            {
+              "prop": "color",
+              "value": "var(--success,#22c55e)",
+              "classification": "UNCOVERED"
+            },
+            {
+              "prop": "margin-right",
+              "value": "0.5rem",
+              "classification": "UNCOVERED"
+            }
+          ]
+        },
+        {
+          "path": "footer[2]",
+          "classes": "x-card__footer x-footer",
+          "declarations": [
+            {
+              "prop": "background-image",
+              "value": "initial",
+              "classification": "COVERED"
+            },
+            {
+              "prop": "background-position-x",
+              "value": "initial",
+              "classification": "COVERED"
+            },
+            {
+              "prop": "background-position-y",
+              "value": "initial",
+              "classification": "COVERED"
+            },
+            {
+              "prop": "background-size",
+              "value": "initial",
+              "classification": "COVERED"
+            },
+            {
+              "prop": "background-repeat",
+              "value": "initial",
+              "classification": "COVERED"
+            },
+            {
+              "prop": "background-attachment",
+              "value": "initial",
+              "classification": "COVERED"
+            },
+            {
+              "prop": "background-origin",
+              "value": "initial",
+              "classification": "COVERED"
+            },
+            {
+              "prop": "background-clip",
+              "value": "initial",
+              "classification": "COVERED"
+            },
+            {
+              "prop": "background-color",
+              "value": "transparent",
+              "classification": "COVERED"
+            },
+            {
+              "prop": "border-top-width",
+              "value": "initial",
+              "classification": "COVERED"
+            },
+            {
+              "prop": "border-top-style",
+              "value": "none",
+              "classification": "COVERED"
+            },
+            {
+              "prop": "border-top-color",
+              "value": "initial",
+              "classification": "COVERED"
+            }
+          ]
+        }
+      ],
+      "total": 58
+    },
+    {
+      "behavior": "x-cardproduct",
+      "elements": [
+        {
+          "path": "div[0]",
+          "classes": "x-card__product-info",
+          "declarations": [
+            {
+              "prop": "padding-top",
+              "value": "1rem",
+              "classification": "COVERED"
+            },
+            {
+              "prop": "padding-right",
+              "value": "1rem",
+              "classification": "COVERED"
+            },
+            {
+              "prop": "padding-bottom",
+              "value": "1rem",
+              "classification": "COVERED"
+            },
+            {
+              "prop": "padding-left",
+              "value": "1rem",
+              "classification": "COVERED"
+            }
+          ]
+        },
+        {
+          "path": "div[0] > div[0]",
+          "classes": "x-card__price-wrap",
+          "declarations": [
+            {
+              "prop": "margin-top",
+              "value": "0.75rem",
+              "classification": "COVERED"
+            },
+            {
+              "prop": "margin-right",
+              "value": "0px",
+              "classification": "COVERED"
+            },
+            {
+              "prop": "margin-bottom",
+              "value": "0.75rem",
+              "classification": "COVERED"
+            },
+            {
+              "prop": "margin-left",
+              "value": "0px",
+              "classification": "COVERED"
+            },
+            {
+              "prop": "display",
+              "value": "flex",
+              "classification": "COVERED"
+            },
+            {
+              "prop": "align-items",
+              "value": "center",
+              "classification": "COVERED"
+            },
+            {
+              "prop": "row-gap",
+              "value": "0.5rem",
+              "classification": "COVERED"
+            },
+            {
+              "prop": "column-gap",
+              "value": "0.5rem",
+              "classification": "COVERED"
+            }
+          ]
+        }
+      ],
+      "total": 12
+    },
+    {
+      "behavior": "x-cardprofile",
+      "elements": [
+        {
+          "path": "div[0]",
+          "classes": "x-card__profile-content",
+          "declarations": [
+            {
+              "prop": "text-align",
+              "value": "center",
+              "classification": "COVERED"
+            },
+            {
+              "prop": "padding-top",
+              "value": "1rem",
+              "classification": "COVERED"
+            },
+            {
+              "prop": "padding-right",
+              "value": "1rem",
+              "classification": "COVERED"
+            },
+            {
+              "prop": "padding-bottom",
+              "value": "1rem",
+              "classification": "COVERED"
+            },
+            {
+              "prop": "padding-left",
+              "value": "1rem",
+              "classification": "COVERED"
+            }
+          ]
+        }
+      ],
+      "total": 5
+    },
+    {
+      "behavior": "x-cardtestimonial",
+      "elements": [
+        {
+          "path": ":host",
+          "classes": "x-card x-card--testimonial x-card--auto x-testimonial",
+          "declarations": [
+            {
+              "prop": "padding-top",
+              "value": "1rem",
+              "classification": "COVERED"
+            },
+            {
+              "prop": "padding-right",
+              "value": "1rem",
+              "classification": "COVERED"
+            },
+            {
+              "prop": "padding-bottom",
+              "value": "1rem",
+              "classification": "COVERED"
+            },
+            {
+              "prop": "padding-left",
+              "value": "1rem",
+              "classification": "COVERED"
+            }
+          ]
+        },
+        {
+          "path": "div[0]",
+          "classes": "",
+          "declarations": [
+            {
+              "prop": "font-size",
+              "value": "3rem",
+              "classification": "UNCOVERED"
+            },
+            {
+              "prop": "line-height",
+              "value": "1",
+              "classification": "UNCOVERED"
+            },
+            {
+              "prop": "color",
+              "value": "var(--primary,#6366f1)",
+              "classification": "UNCOVERED"
+            },
+            {
+              "prop": "opacity",
+              "value": "0.3",
+              "classification": "UNCOVERED"
+            }
+          ]
+        },
+        {
+          "path": "blockquote[1]",
+          "classes": "x-card__quote",
+          "declarations": [
+            {
+              "prop": "margin-top",
+              "value": "0.5rem",
+              "classification": "COVERED"
+            },
+            {
+              "prop": "margin-right",
+              "value": "0px",
+              "classification": "COVERED"
+            },
+            {
+              "prop": "margin-bottom",
+              "value": "1rem",
+              "classification": "COVERED"
+            },
+            {
+              "prop": "margin-left",
+              "value": "0px",
+              "classification": "COVERED"
+            },
+            {
+              "prop": "font-size",
+              "value": "1rem",
+              "classification": "COVERED"
+            },
+            {
+              "prop": "line-height",
+              "value": "1.6",
+              "classification": "COVERED"
+            },
+            {
+              "prop": "color",
+              "value": "var(--text-primary,#f9fafb)",
+              "classification": "COVERED"
+            },
+            {
+              "prop": "font-style",
+              "value": "italic",
+              "classification": "COVERED"
+            }
+          ]
+        },
+        {
+          "path": "footer[2]",
+          "classes": "x-card__footer x-footer",
+          "declarations": [
+            {
+              "prop": "display",
+              "value": "flex",
+              "classification": "COVERED"
+            },
+            {
+              "prop": "align-items",
+              "value": "center",
+              "classification": "COVERED"
+            },
+            {
+              "prop": "row-gap",
+              "value": "0.75rem",
+              "classification": "COVERED"
+            },
+            {
+              "prop": "column-gap",
+              "value": "0.75rem",
+              "classification": "COVERED"
+            },
+            {
+              "prop": "background-image",
+              "value": "initial",
+              "classification": "COVERED"
+            },
+            {
+              "prop": "background-position-x",
+              "value": "initial",
+              "classification": "COVERED"
+            },
+            {
+              "prop": "background-position-y",
+              "value": "initial",
+              "classification": "COVERED"
+            },
+            {
+              "prop": "background-size",
+              "value": "initial",
+              "classification": "COVERED"
+            },
+            {
+              "prop": "background-repeat",
+              "value": "initial",
+              "classification": "COVERED"
+            },
+            {
+              "prop": "background-attachment",
+              "value": "initial",
+              "classification": "COVERED"
+            },
+            {
+              "prop": "background-origin",
+              "value": "initial",
+              "classification": "COVERED"
+            },
+            {
+              "prop": "background-clip",
+              "value": "initial",
+              "classification": "COVERED"
+            },
+            {
+              "prop": "background-color",
+              "value": "transparent",
+              "classification": "COVERED"
+            },
+            {
+              "prop": "border-top-width",
+              "value": "initial",
+              "classification": "COVERED"
+            },
+            {
+              "prop": "border-right-width",
+              "value": "initial",
+              "classification": "COVERED"
+            },
+            {
+              "prop": "border-bottom-width",
+              "value": "initial",
+              "classification": "COVERED"
+            },
+            {
+              "prop": "border-left-width",
+              "value": "initial",
+              "classification": "COVERED"
+            },
+            {
+              "prop": "border-top-style",
+              "value": "none",
+              "classification": "COVERED"
+            },
+            {
+              "prop": "border-right-style",
+              "value": "none",
+              "classification": "COVERED"
+            },
+            {
+              "prop": "border-bottom-style",
+              "value": "none",
+              "classification": "COVERED"
+            },
+            {
+              "prop": "border-left-style",
+              "value": "none",
+              "classification": "COVERED"
+            },
+            {
+              "prop": "border-top-color",
+              "value": "initial",
+              "classification": "COVERED"
+            },
+            {
+              "prop": "border-right-color",
+              "value": "initial",
+              "classification": "COVERED"
+            },
+            {
+              "prop": "border-bottom-color",
+              "value": "initial",
+              "classification": "COVERED"
+            },
+            {
+              "prop": "border-left-color",
+              "value": "initial",
+              "classification": "COVERED"
+            },
+            {
+              "prop": "border-image-source",
+              "value": "initial",
+              "classification": "COVERED"
+            },
+            {
+              "prop": "border-image-slice",
+              "value": "initial",
+              "classification": "COVERED"
+            },
+            {
+              "prop": "border-image-width",
+              "value": "initial",
+              "classification": "COVERED"
+            },
+            {
+              "prop": "border-image-outset",
+              "value": "initial",
+              "classification": "COVERED"
+            },
+            {
+              "prop": "border-image-repeat",
+              "value": "initial",
+              "classification": "COVERED"
+            },
+            {
+              "prop": "padding-top",
+              "value": "0px",
+              "classification": "COVERED"
+            },
+            {
+              "prop": "padding-right",
+              "value": "0px",
+              "classification": "COVERED"
+            },
+            {
+              "prop": "padding-bottom",
+              "value": "0px",
+              "classification": "COVERED"
+            },
+            {
+              "prop": "padding-left",
+              "value": "0px",
+              "classification": "COVERED"
+            }
+          ]
+        }
+      ],
+      "total": 50
+    },
+    {
+      "behavior": "x-container",
+      "elements": [
+        {
+          "path": ":host",
+          "classes": "",
+          "declarations": [
+            {
+              "prop": "display",
+              "value": "flex",
+              "classification": "UNCOVERED"
+            },
+            {
+              "prop": "flex-direction",
+              "value": "column",
+              "classification": "UNCOVERED"
+            },
+            {
+              "prop": "flex-wrap",
+              "value": "wrap",
+              "classification": "UNCOVERED"
+            },
+            {
+              "prop": "align-items",
+              "value": "stretch",
+              "classification": "UNCOVERED"
+            },
+            {
+              "prop": "justify-content",
+              "value": "flex-start",
+              "classification": "UNCOVERED"
+            },
+            {
+              "prop": "row-gap",
+              "value": "1rem",
+              "classification": "UNCOVERED"
+            },
+            {
+              "prop": "column-gap",
+              "value": "1rem",
+              "classification": "UNCOVERED"
+            },
+            {
+              "prop": "padding-top",
+              "value": "1rem",
+              "classification": "UNCOVERED"
+            },
+            {
+              "prop": "padding-right",
+              "value": "1rem",
+              "classification": "UNCOVERED"
+            },
+            {
+              "prop": "padding-bottom",
+              "value": "1rem",
+              "classification": "UNCOVERED"
+            },
+            {
+              "prop": "padding-left",
+              "value": "1rem",
+              "classification": "UNCOVERED"
+            }
+          ]
+        }
+      ],
+      "total": 11
+    },
+    {
+      "behavior": "x-grid",
+      "elements": [
+        {
+          "path": ":host",
+          "classes": "",
+          "declarations": [
+            {
+              "prop": "display",
+              "value": "grid",
+              "classification": "COVERED"
+            },
+            {
+              "prop": "row-gap",
+              "value": "1rem",
+              "classification": "COVERED"
+            },
+            {
+              "prop": "column-gap",
+              "value": "1rem",
+              "classification": "COVERED"
+            },
+            {
+              "prop": "grid-template-columns",
+              "value": "repeat(auto-fit, minmax(min(250px, 100%), 1fr))",
+              "classification": "COVERED"
+            }
+          ]
+        }
+      ],
+      "total": 4
+    },
+    {
+      "behavior": "x-center",
+      "elements": [
+        {
+          "path": ":host",
+          "classes": "x-center",
+          "declarations": [
+            {
+              "prop": "box-sizing",
+              "value": "content-box",
+              "classification": "UNCOVERED"
+            },
+            {
+              "prop": "margin-left",
+              "value": "auto",
+              "classification": "COVERED"
+            },
+            {
+              "prop": "margin-right",
+              "value": "auto",
+              "classification": "COVERED"
+            },
+            {
+              "prop": "padding-left",
+              "value": "1rem",
+              "classification": "UNCOVERED"
+            },
+            {
+              "prop": "padding-right",
+              "value": "1rem",
+              "classification": "UNCOVERED"
+            }
+          ]
+        }
+      ],
+      "total": 5
+    },
+    {
+      "behavior": "x-cover",
+      "elements": [
+        {
+          "path": ":host",
+          "classes": "x-cover",
+          "declarations": [
+            {
+              "prop": "display",
+              "value": "flex",
+              "classification": "UNCOVERED"
+            },
+            {
+              "prop": "flex-direction",
+              "value": "column",
+              "classification": "UNCOVERED"
+            },
+            {
+              "prop": "min-height",
+              "value": "100vh",
+              "classification": "UNCOVERED"
+            },
+            {
+              "prop": "padding-top",
+              "value": "1rem",
+              "classification": "UNCOVERED"
+            },
+            {
+              "prop": "padding-right",
+              "value": "1rem",
+              "classification": "UNCOVERED"
+            },
+            {
+              "prop": "padding-bottom",
+              "value": "1rem",
+              "classification": "UNCOVERED"
+            },
+            {
+              "prop": "padding-left",
+              "value": "1rem",
+              "classification": "UNCOVERED"
+            }
+          ]
+        }
+      ],
+      "total": 7
+    },
+    {
+      "behavior": "x-switcher",
+      "elements": [
+        {
+          "path": ":host",
+          "classes": "x-switcher",
+          "declarations": [
+            {
+              "prop": "display",
+              "value": "flex",
+              "classification": "UNCOVERED"
+            },
+            {
+              "prop": "flex-wrap",
+              "value": "wrap",
+              "classification": "UNCOVERED"
+            },
+            {
+              "prop": "row-gap",
+              "value": "1rem",
+              "classification": "UNCOVERED"
+            },
+            {
+              "prop": "column-gap",
+              "value": "1rem",
+              "classification": "UNCOVERED"
+            }
+          ]
+        },
+        {
+          "path": "span[0]",
+          "classes": "",
+          "declarations": [
+            {
+              "prop": "flex-grow",
+              "value": "1",
+              "classification": "UNCOVERED"
+            },
+            {
+              "prop": "flex-basis",
+              "value": "calc(-99900% + 29970rem)",
+              "classification": "UNCOVERED"
+            }
+          ]
+        }
+      ],
+      "total": 6
+    },
+    {
+      "behavior": "x-reel",
+      "elements": [
+        {
+          "path": ":host",
+          "classes": "x-reel",
+          "declarations": [
+            {
+              "prop": "display",
+              "value": "flex",
+              "classification": "UNCOVERED"
+            },
+            {
+              "prop": "overflow-x",
+              "value": "auto",
+              "classification": "UNCOVERED"
+            },
+            {
+              "prop": "row-gap",
+              "value": "1rem",
+              "classification": "UNCOVERED"
+            },
+            {
+              "prop": "column-gap",
+              "value": "1rem",
+              "classification": "UNCOVERED"
+            },
+            {
+              "prop": "scroll-snap-type",
+              "value": "x mandatory",
+              "classification": "UNCOVERED"
+            }
+          ]
+        },
+        {
+          "path": "span[0]",
+          "classes": "",
+          "declarations": [
+            {
+              "prop": "flex-shrink",
+              "value": "0",
+              "classification": "UNCOVERED"
+            },
+            {
+              "prop": "scroll-snap-align",
+              "value": "start",
+              "classification": "UNCOVERED"
+            }
+          ]
+        }
+      ],
+      "total": 7
+    },
+    {
+      "behavior": "x-frame",
+      "elements": [
+        {
+          "path": ":host",
+          "classes": "x-frame",
+          "declarations": [
+            {
+              "prop": "aspect-ratio",
+              "value": "16 / 9",
+              "classification": "UNCOVERED"
+            },
+            {
+              "prop": "overflow-x",
+              "value": "hidden",
+              "classification": "UNCOVERED"
+            },
+            {
+              "prop": "overflow-y",
+              "value": "hidden",
+              "classification": "UNCOVERED"
+            }
+          ]
+        },
+        {
+          "path": "span[0]",
+          "classes": "",
+          "declarations": [
+            {
+              "prop": "width",
+              "value": "100%",
+              "classification": "UNCOVERED"
+            },
+            {
+              "prop": "height",
+              "value": "100%",
+              "classification": "UNCOVERED"
+            },
+            {
+              "prop": "object-fit",
+              "value": "cover",
+              "classification": "UNCOVERED"
+            }
+          ]
+        }
+      ],
+      "total": 6
+    },
+    {
+      "behavior": "x-icon",
+      "elements": [
+        {
+          "path": ":host",
+          "classes": "x-icon",
+          "declarations": [
+            {
+              "prop": "display",
+              "value": "inline-flex",
+              "classification": "UNCOVERED"
+            },
+            {
+              "prop": "align-items",
+              "value": "center",
+              "classification": "UNCOVERED"
+            },
+            {
+              "prop": "row-gap",
+              "value": "0.5em",
+              "classification": "UNCOVERED"
+            },
+            {
+              "prop": "column-gap",
+              "value": "0.5em",
+              "classification": "UNCOVERED"
+            }
+          ]
+        }
+      ],
+      "total": 4
+    },
+    {
+      "behavior": "x-sidebarlayout",
+      "elements": [
+        {
+          "path": ":host",
+          "classes": "x-sidebar-layout",
+          "declarations": [
+            {
+              "prop": "display",
+              "value": "flex",
+              "classification": "UNCOVERED"
+            },
+            {
+              "prop": "flex-wrap",
+              "value": "wrap",
+              "classification": "UNCOVERED"
+            },
+            {
+              "prop": "row-gap",
+              "value": "1rem",
+              "classification": "UNCOVERED"
+            },
+            {
+              "prop": "column-gap",
+              "value": "1rem",
+              "classification": "UNCOVERED"
+            }
+          ]
+        }
+      ],
+      "total": 4
+    },
+    {
+      "behavior": "x-modal",
+      "elements": [
+        {
+          "path": ":host",
+          "classes": "x-dialog-trigger x-modal",
+          "declarations": [
+            {
+              "prop": "cursor",
+              "value": "pointer",
+              "classification": "COVERED"
+            }
+          ]
+        }
+      ],
+      "total": 1
+    },
+    {
+      "behavior": "x-copy",
+      "elements": [
+        {
+          "path": ":host",
+          "classes": "",
+          "declarations": [
+            {
+              "prop": "cursor",
+              "value": "pointer",
+              "classification": "UNCOVERED"
+            }
+          ]
+        }
+      ],
+      "total": 1
+    },
+    {
+      "behavior": "x-drawer-layout",
+      "elements": [
+        {
+          "path": ":host",
+          "classes": "x-drawer",
+          "declarations": [
+            {
+              "prop": "position",
+              "value": "relative",
+              "classification": "UNCOVERED"
+            },
+            {
+              "prop": "display",
+              "value": "flex",
+              "classification": "UNCOVERED"
+            },
+            {
+              "prop": "flex-direction",
+              "value": "column",
+              "classification": "UNCOVERED"
+            },
+            {
+              "prop": "transition-behavior",
+              "value": "normal, normal, normal",
+              "classification": "UNCOVERED"
+            },
+            {
+              "prop": "transition-duration",
+              "value": "0.3s, 0.3s, 0.3s",
+              "classification": "UNCOVERED"
+            },
+            {
+              "prop": "transition-timing-function",
+              "value": "ease, ease, ease",
+              "classification": "UNCOVERED"
+            },
+            {
+              "prop": "transition-delay",
+              "value": "0s, 0s, 0s",
+              "classification": "UNCOVERED"
+            },
+            {
+              "prop": "transition-property",
+              "value": "width, min-width, flex-basis",
+              "classification": "UNCOVERED"
+            },
+            {
+              "prop": "width",
+              "value": "250px",
+              "classification": "UNCOVERED"
+            },
+            {
+              "prop": "min-width",
+              "value": "250px",
+              "classification": "UNCOVERED"
+            },
+            {
+              "prop": "flex-basis",
+              "value": "250px",
+              "classification": "UNCOVERED"
+            },
+            {
+              "prop": "max-width",
+              "value": "50vw",
+              "classification": "UNCOVERED"
+            }
+          ]
+        },
+        {
+          "path": "button[1]",
+          "classes": "x-drawer-toggle x-button",
+          "declarations": [
+            {
+              "prop": "position",
+              "value": "absolute",
+              "classification": "UNCOVERED"
+            },
+            {
+              "prop": "background-image",
+              "value": "",
+              "classification": "COVERED"
+            },
+            {
+              "prop": "background-position-x",
+              "value": "",
+              "classification": "COVERED"
+            },
+            {
+              "prop": "background-position-y",
+              "value": "",
+              "classification": "COVERED"
+            },
+            {
+              "prop": "background-size",
+              "value": "",
+              "classification": "COVERED"
+            },
+            {
+              "prop": "background-repeat",
+              "value": "",
+              "classification": "COVERED"
+            },
+            {
+              "prop": "background-attachment",
+              "value": "",
+              "classification": "COVERED"
+            },
+            {
+              "prop": "background-origin",
+              "value": "",
+              "classification": "COVERED"
+            },
+            {
+              "prop": "background-clip",
+              "value": "",
+              "classification": "COVERED"
+            },
+            {
+              "prop": "background-color",
+              "value": "",
+              "classification": "COVERED"
+            },
+            {
+              "prop": "border-top-color",
+              "value": "",
+              "classification": "COVERED"
+            },
+            {
+              "prop": "border-top-style",
+              "value": "",
+              "classification": "COVERED"
+            },
+            {
+              "prop": "border-top-width",
+              "value": "",
+              "classification": "COVERED"
+            },
+            {
+              "prop": "border-right-color",
+              "value": "",
+              "classification": "COVERED"
+            },
+            {
+              "prop": "border-right-style",
+              "value": "",
+              "classification": "COVERED"
+            },
+            {
+              "prop": "border-right-width",
+              "value": "",
+              "classification": "COVERED"
+            },
+            {
+              "prop": "border-bottom-color",
+              "value": "",
+              "classification": "COVERED"
+            },
+            {
+              "prop": "border-bottom-style",
+              "value": "",
+              "classification": "COVERED"
+            },
+            {
+              "prop": "border-bottom-width",
+              "value": "",
+              "classification": "COVERED"
+            },
+            {
+              "prop": "border-image-source",
+              "value": "",
+              "classification": "COVERED"
+            },
+            {
+              "prop": "border-image-slice",
+              "value": "",
+              "classification": "COVERED"
+            },
+            {
+              "prop": "border-image-width",
+              "value": "",
+              "classification": "COVERED"
+            },
+            {
+              "prop": "border-image-outset",
+              "value": "",
+              "classification": "COVERED"
+            },
+            {
+              "prop": "border-image-repeat",
+              "value": "",
+              "classification": "COVERED"
+            },
+            {
+              "prop": "cursor",
+              "value": "pointer",
+              "classification": "COVERED"
+            },
+            {
+              "prop": "z-index",
+              "value": "10",
+              "classification": "UNCOVERED"
+            },
+            {
+              "prop": "display",
+              "value": "flex",
+              "classification": "COVERED"
+            },
+            {
+              "prop": "align-items",
+              "value": "center",
+              "classification": "COVERED"
+            },
+            {
+              "prop": "justify-content",
+              "value": "center",
+              "classification": "COVERED"
+            },
+            {
+              "prop": "font-size",
+              "value": "0.625rem",
+              "classification": "COVERED"
+            },
+            {
+              "prop": "color",
+              "value": "var(--text-secondary, #9ca3af)",
+              "classification": "COVERED"
+            },
+            {
+              "prop": "padding-top",
+              "value": "0px",
+              "classification": "COVERED"
+            },
+            {
+              "prop": "padding-right",
+              "value": "0px",
+              "classification": "COVERED"
+            },
+            {
+              "prop": "padding-bottom",
+              "value": "0px",
+              "classification": "COVERED"
+            },
+            {
+              "prop": "padding-left",
+              "value": "0px",
+              "classification": "COVERED"
+            },
+            {
+              "prop": "outline-color",
+              "value": "initial",
+              "classification": "COVERED"
+            },
+            {
+              "prop": "outline-style",
+              "value": "none",
+              "classification": "COVERED"
+            },
+            {
+              "prop": "outline-width",
+              "value": "initial",
+              "classification": "COVERED"
+            },
+            {
+              "prop": "top",
+              "value": "50%",
+              "classification": "UNCOVERED"
+            },
+            {
+              "prop": "transform",
+              "value": "translateY(-50%)",
+              "classification": "COVERED"
+            },
+            {
+              "prop": "right",
+              "value": "-1.5rem",
+              "classification": "UNCOVERED"
+            },
+            {
+              "prop": "width",
+              "value": "1.5rem",
+              "classification": "UNCOVERED"
+            },
+            {
+              "prop": "height",
+              "value": "3rem",
+              "classification": "UNCOVERED"
+            },
+            {
+              "prop": "border-left-width",
+              "value": "initial",
+              "classification": "COVERED"
+            },
+            {
+              "prop": "border-left-style",
+              "value": "none",
+              "classification": "UNCOVERED"
+            },
+            {
+              "prop": "border-left-color",
+              "value": "initial",
+              "classification": "UNCOVERED"
+            },
+            {
+              "prop": "border-top-left-radius",
+              "value": "0px",
+              "classification": "COVERED"
+            },
+            {
+              "prop": "border-top-right-radius",
+              "value": "4px",
+              "classification": "COVERED"
+            },
+            {
+              "prop": "border-bottom-right-radius",
+              "value": "4px",
+              "classification": "COVERED"
+            },
+            {
+              "prop": "border-bottom-left-radius",
+              "value": "0px",
+              "classification": "COVERED"
+            }
+          ]
+        }
+      ],
+      "total": 62
+    },
+    {
+      "behavior": "x-dropdown",
+      "elements": [
+        {
+          "path": ":host",
+          "classes": "x-dropdown x-dropdown-trigger",
+          "declarations": [
+            {
+              "prop": "position",
+              "value": "relative",
+              "classification": "COVERED"
+            },
+            {
+              "prop": "display",
+              "value": "inline-block",
+              "classification": "COVERED"
+            }
+          ]
+        },
+        {
+          "path": "div[1]",
+          "classes": "x-dropdown__menu",
+          "declarations": [
+            {
+              "prop": "position",
+              "value": "absolute",
+              "classification": "UNCOVERED"
+            },
+            {
+              "prop": "top",
+              "value": "100%",
+              "classification": "UNCOVERED"
+            },
+            {
+              "prop": "left",
+              "value": "0px",
+              "classification": "UNCOVERED"
+            },
+            {
+              "prop": "background-image",
+              "value": "",
+              "classification": "COVERED"
+            },
+            {
+              "prop": "background-position-x",
+              "value": "",
+              "classification": "COVERED"
+            },
+            {
+              "prop": "background-position-y",
+              "value": "",
+              "classification": "COVERED"
+            },
+            {
+              "prop": "background-size",
+              "value": "",
+              "classification": "COVERED"
+            },
+            {
+              "prop": "background-repeat",
+              "value": "",
+              "classification": "COVERED"
+            },
+            {
+              "prop": "background-attachment",
+              "value": "",
+              "classification": "COVERED"
+            },
+            {
+              "prop": "background-origin",
+              "value": "",
+              "classification": "COVERED"
+            },
+            {
+              "prop": "background-clip",
+              "value": "",
+              "classification": "COVERED"
+            },
+            {
+              "prop": "background-color",
+              "value": "",
+              "classification": "UNCOVERED"
+            },
+            {
+              "prop": "border-top-color",
+              "value": "",
+              "classification": "UNCOVERED"
+            },
+            {
+              "prop": "border-top-style",
+              "value": "",
+              "classification": "UNCOVERED"
+            },
+            {
+              "prop": "border-top-width",
+              "value": "",
+              "classification": "COVERED"
+            },
+            {
+              "prop": "border-right-color",
+              "value": "",
+              "classification": "UNCOVERED"
+            },
+            {
+              "prop": "border-right-style",
+              "value": "",
+              "classification": "UNCOVERED"
+            },
+            {
+              "prop": "border-right-width",
+              "value": "",
+              "classification": "COVERED"
+            },
+            {
+              "prop": "border-bottom-color",
+              "value": "",
+              "classification": "UNCOVERED"
+            },
+            {
+              "prop": "border-bottom-style",
+              "value": "",
+              "classification": "UNCOVERED"
+            },
+            {
+              "prop": "border-bottom-width",
+              "value": "",
+              "classification": "COVERED"
+            },
+            {
+              "prop": "border-left-color",
+              "value": "",
+              "classification": "UNCOVERED"
+            },
+            {
+              "prop": "border-left-style",
+              "value": "",
+              "classification": "UNCOVERED"
+            },
+            {
+              "prop": "border-left-width",
+              "value": "",
+              "classification": "COVERED"
+            },
+            {
+              "prop": "border-image-source",
+              "value": "",
+              "classification": "COVERED"
+            },
+            {
+              "prop": "border-image-slice",
+              "value": "",
+              "classification": "COVERED"
+            },
+            {
+              "prop": "border-image-width",
+              "value": "",
+              "classification": "COVERED"
+            },
+            {
+              "prop": "border-image-outset",
+              "value": "",
+              "classification": "COVERED"
+            },
+            {
+              "prop": "border-image-repeat",
+              "value": "",
+              "classification": "COVERED"
+            },
+            {
+              "prop": "border-top-left-radius",
+              "value": "8px",
+              "classification": "UNCOVERED"
+            },
+            {
+              "prop": "border-top-right-radius",
+              "value": "8px",
+              "classification": "UNCOVERED"
+            },
+            {
+              "prop": "border-bottom-right-radius",
+              "value": "8px",
+              "classification": "UNCOVERED"
+            },
+            {
+              "prop": "border-bottom-left-radius",
+              "value": "8px",
+              "classification": "UNCOVERED"
+            },
+            {
+              "prop": "min-width",
+              "value": "150px",
+              "classification": "UNCOVERED"
+            },
+            {
+              "prop": "width",
+              "value": "max-content",
+              "classification": "UNCOVERED"
+            },
+            {
+              "prop": "max-width",
+              "value": "min(90vw, 32rem)",
+              "classification": "UNCOVERED"
+            },
+            {
+              "prop": "box-shadow",
+              "value": "rgba(0, 0, 0, 0.2) 0px 10px 25px",
+              "classification": "UNCOVERED"
+            },
+            {
+              "prop": "display",
+              "value": "none",
+              "classification": "UNCOVERED"
+            },
+            {
+              "prop": "z-index",
+              "value": "1000",
+              "classification": "UNCOVERED"
+            },
+            {
+              "prop": "overflow-x",
+              "value": "hidden",
+              "classification": "UNCOVERED"
+            },
+            {
+              "prop": "overflow-y",
+              "value": "hidden",
+              "classification": "UNCOVERED"
+            },
+            {
+              "prop": "margin-top",
+              "value": "4px",
+              "classification": "UNCOVERED"
+            }
+          ]
+        }
+      ],
+      "total": 44
+    },
+    {
+      "behavior": "x-gallery",
+      "elements": [
+        {
+          "path": ":host",
+          "classes": "x-gallery",
+          "declarations": [
+            {
+              "prop": "display",
+              "value": "grid",
+              "classification": "COVERED"
+            },
+            {
+              "prop": "grid-template-columns",
+              "value": "repeat(3, 1fr)",
+              "classification": "COVERED"
+            },
+            {
+              "prop": "row-gap",
+              "value": "1rem",
+              "classification": "UNCOVERED"
+            },
+            {
+              "prop": "column-gap",
+              "value": "1rem",
+              "classification": "UNCOVERED"
+            }
+          ]
+        }
+      ],
+      "total": 4
+    },
+    {
+      "behavior": "x-toggle",
+      "elements": [
+        {
+          "path": ":host",
+          "classes": "",
+          "declarations": [
+            {
+              "prop": "cursor",
+              "value": "pointer",
+              "classification": "UNCOVERED"
+            },
+            {
+              "prop": "user-select",
+              "value": "none",
+              "classification": "UNCOVERED"
+            },
+            {
+              "prop": "transition-behavior",
+              "value": "normal",
+              "classification": "COVERED"
+            },
+            {
+              "prop": "transition-duration",
+              "value": "0.1s",
+              "classification": "UNCOVERED"
+            },
+            {
+              "prop": "transition-timing-function",
+              "value": "ease",
+              "classification": "COVERED"
+            },
+            {
+              "prop": "transition-delay",
+              "value": "0s",
+              "classification": "COVERED"
+            },
+            {
+              "prop": "transition-property",
+              "value": "all",
+              "classification": "COVERED"
+            }
+          ]
+        }
+      ],
+      "total": 7
+    }
+  ]
+}

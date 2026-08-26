@@ -4,13 +4,13 @@
   "title": "Product Card",
   "description": "E-commerce product card with image, price, rating, and CTA",
   "schemaFor": "cardproduct",
-  "baseClass": "wb-product",
+  "baseClass": "x-product",
   "semanticElement": {
     "tagName": "article",
     "implicitRole": "article"
   },
   "compliance": {
-    "baseClass": "wb-product",
+    "baseClass": "x-product",
     "supportLevel": "stable",
     "accessibility": "high"
   },
@@ -66,7 +66,7 @@
       "type": "boolean",
       "description": "Highlight as featured",
       "default": false,
-      "appliesClass": "wb-product--featured"
+      "appliesClass": "x-product--featured"
     },
     "variant": {
       "type": "string",
@@ -78,7 +78,7 @@
         "minimal"
       ],
       "default": "default",
-      "appliesClass": "wb-product--{{value}}"
+      "appliesClass": "x-product--{{value}}"
     }
   },
   "$view": [
@@ -211,87 +211,87 @@
     }
   },
   "$cssAPI": {
-    "--wb-product-radius": {
+    "--x-product-radius": {
       "default": "8px",
       "description": "Card border radius"
     },
-    "--wb-product-bg": {
+    "--x-product-bg": {
       "default": "var(--bg-surface, #ffffff)",
       "description": "Card background"
     },
-    "--wb-product-border": {
+    "--x-product-border": {
       "default": "1px solid var(--border-color, #e0e0e0)",
       "description": "Card border"
     },
-    "--wb-product-shadow": {
+    "--x-product-shadow": {
       "default": "none",
       "description": "Card shadow"
     },
-    "--wb-product-padding": {
+    "--x-product-padding": {
       "default": "1rem",
       "description": "Content padding"
     },
-    "--wb-product-gap": {
+    "--x-product-gap": {
       "default": "0.75rem",
       "description": "Gap between elements"
     },
-    "--wb-product-image-aspect": {
+    "--x-product-image-aspect": {
       "default": "4/3",
       "description": "Image aspect ratio"
     },
-    "--wb-product-image-radius": {
+    "--x-product-image-radius": {
       "default": "8px 8px 0 0",
       "description": "Image border radius"
     },
-    "--wb-product-title-size": {
+    "--x-product-title-size": {
       "default": "1rem",
       "description": "Title font size"
     },
-    "--wb-product-title-weight": {
+    "--x-product-title-weight": {
       "default": "600",
       "description": "Title font weight"
     },
-    "--wb-product-description-size": {
+    "--x-product-description-size": {
       "default": "0.875rem",
       "description": "Description font size"
     },
-    "--wb-product-description-color": {
+    "--x-product-description-color": {
       "default": "var(--text-secondary, #666)",
       "description": "Description color"
     },
-    "--wb-product-price-size": {
+    "--x-product-price-size": {
       "default": "1.25rem",
       "description": "Price font size"
     },
-    "--wb-product-price-weight": {
+    "--x-product-price-weight": {
       "default": "700",
       "description": "Price font weight"
     },
-    "--wb-product-price-color": {
+    "--x-product-price-color": {
       "default": "var(--text-primary, #1a1a1a)",
       "description": "Price color"
     },
-    "--wb-product-original-price-color": {
+    "--x-product-original-price-color": {
       "default": "var(--text-tertiary, #999)",
       "description": "Original price color"
     },
-    "--wb-product-badge-bg": {
+    "--x-product-badge-bg": {
       "default": "var(--error, #ef4444)",
       "description": "Badge background"
     },
-    "--wb-product-badge-color": {
+    "--x-product-badge-color": {
       "default": "#ffffff",
       "description": "Badge text color"
     },
-    "--wb-product-rating-color": {
+    "--x-product-rating-color": {
       "default": "var(--warning, #ffc107)",
       "description": "Rating star color"
     },
-    "--wb-product-cta-bg": {
+    "--x-product-cta-bg": {
       "default": "var(--primary, #6366f1)",
       "description": "CTA button background"
     },
-    "--wb-product-cta-color": {
+    "--x-product-cta-color": {
       "default": "#ffffff",
       "description": "CTA button text color"
     }
@@ -308,16 +308,16 @@
   },
   "test": {
     "setup": [
-      "<wb-cardproduct>Basic cardproduct content</wb-cardproduct>",
-      "<wb-cardproduct variant=\"default\">variant=default</wb-cardproduct>",
-      "<wb-cardproduct variant=\"compact\">variant=compact</wb-cardproduct>",
-      "<wb-cardproduct variant=\"horizontal\">variant=horizontal</wb-cardproduct>",
-      "<wb-cardproduct featured>with featured</wb-cardproduct>",
-      "<wb-cardproduct image=\"Sample image\">image=\"Sample image\"</wb-cardproduct>",
-      "<wb-cardproduct title=\"Sample title\">title=\"Sample title\"</wb-cardproduct>",
-      "<wb-cardproduct description=\"Sample description\">description=\"Sample description\"</wb-cardproduct>",
-      "<wb-cardproduct title=\"Widget\" price=\"$29\"></wb-cardproduct>",
-      "<wb-cardproduct image=\"product.jpg\" title=\"Widget\" price=\"$19\" badge=\"Sale\"></wb-cardproduct>"
+      "<div x-cardproduct>Basic cardproduct content</div>",
+      "<div x-cardproduct variant=\"default\">variant=default</div>",
+      "<div x-cardproduct variant=\"compact\">variant=compact</div>",
+      "<div x-cardproduct variant=\"horizontal\">variant=horizontal</div>",
+      "<div x-cardproduct featured>with featured</div>",
+      "<div x-cardproduct image=\"/images/dachshund-puppy-image-960x540.jpg\">image=\"/images/dachshund-puppy-image-960x540.jpg\"</div>",
+      "<div x-cardproduct title=\"Sample title\">title=\"Sample title\"</div>",
+      "<div x-cardproduct description=\"Sample description\">description=\"Sample description\"</div>",
+      "<div x-cardproduct title=\"Widget\" price=\"$29\"></div>",
+      "<div x-cardproduct image=\"/images/dachshund-puppy-image-960x540.jpg\" title=\"Widget\" price=\"$19\" badge=\"Sale\"></div>"
     ],
     "matrix": {
       "combinations": [
@@ -331,7 +331,7 @@
           "originalPrice": "$49"
         },
         {
-          "image": "product.jpg",
+          "image": "/images/dachshund-puppy-image-960x540.jpg",
           "title": "Product",
           "price": "$29"
         },
@@ -351,15 +351,15 @@
     },
     "site": {
       "page": "cards",
-      "tag": "wb-cardproduct",
+      "tag": "x-cardproduct",
       "renders": true,
-      "baseClass": "wb-product",
+      "baseClass": "x-product",
       "minInstances": 5,
       "checkText": [
         "Product"
       ],
       "checkClasses": [
-        "wb-product--compact"
+        "x-product--compact"
       ],
       "checkAttributes": [
         "title",

@@ -19,10 +19,10 @@ export function ol(element, options = {}) {
     ...options
   };
 
-  element.classList.add('wb-ol');
+  element.classList.add('x-ol');
 
   // Apply variant
-  element.classList.add(`wb-ol--${config.variant}`);
+  element.classList.add(`x-ol--${config.variant}`);
 
   // Base list styling
   element.style.listStyleType = config.numberType;
@@ -36,7 +36,7 @@ export function ol(element, options = {}) {
   // Apply gap between items
   const items = element.querySelectorAll(':scope > li');
   items.forEach((li, index) => {
-    li.classList.add('wb-ol__item');
+    li.classList.add('x-ol__item');
     if (index < items.length - 1) {
       li.style.marginBottom = config.gap;
     }
@@ -44,18 +44,18 @@ export function ol(element, options = {}) {
 
   // Variant-specific styling
   if (config.variant === 'stepped') {
-    element.style.counterReset = `wb-step ${config.start - 1}`;
+    element.style.counterReset = `x-step ${config.start - 1}`;
     element.style.listStyleType = 'none';
     element.style.paddingLeft = '0';
 
     items.forEach(li => {
-      li.style.counterIncrement = 'wb-step';
+      li.style.counterIncrement = 'x-step';
       li.style.display = 'flex';
       li.style.alignItems = 'start';
       li.style.gap = '1rem';
 
       const stepNumber = document.createElement('span');
-      stepNumber.className = 'wb-ol__step-number';
+      stepNumber.className = 'x-ol__step-number';
       stepNumber.style.cssText = `
         display: flex;
         align-items: center;
@@ -83,7 +83,7 @@ export function ol(element, options = {}) {
       li.style.paddingLeft = '1.5rem';
 
       const marker = document.createElement('span');
-      marker.className = 'wb-ol__timeline-marker';
+      marker.className = 'x-ol__timeline-marker';
       marker.style.cssText = `
         position: absolute;
         left: -0.5rem;
@@ -100,11 +100,11 @@ export function ol(element, options = {}) {
   }
 
   return () => {
-    element.classList.remove('wb-ol', `wb-ol--${config.variant}`);
+    element.classList.remove('x-ol', `x-ol--${config.variant}`);
     items.forEach(li => {
-      li.classList.remove('wb-ol__item');
-      li.querySelector('.wb-ol__step-number')?.remove();
-      li.querySelector('.wb-ol__timeline-marker')?.remove();
+      li.classList.remove('x-ol__item');
+      li.querySelector('.x-ol__step-number')?.remove();
+      li.querySelector('.x-ol__timeline-marker')?.remove();
     });
   };
 }

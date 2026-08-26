@@ -4,12 +4,12 @@
   "title": "Audio",
   "description": "Audio player with optional 15-band graphic equalizer",
   "schemaFor": "audio",
-  "baseClass": "wb-audio",
+  "baseClass": "x-audio",
   "semanticElement": {
     "tagName": "div"
   },
   "compliance": {
-    "baseClass": "wb-audio",
+    "baseClass": "x-audio",
     "supportLevel": "stable",
     "accessibility": "high"
   },
@@ -17,7 +17,7 @@
     "src": {
       "type": "string",
       "description": "Audio source URL",
-      "default": "../audio.mp3",
+      "default": "https://archive.org/download/nineinchnails_ghosts_I_IV/01_Ghosts_I.mp3",
       "required": true
     },
     "volume": {
@@ -175,47 +175,47 @@
     }
   },
   "$cssAPI": {
-    "--wb-audio-bg": {
+    "--x-audio-bg": {
       "default": "linear-gradient(135deg, #1a1a2e, #16213e)",
       "description": "Player background"
     },
-    "--wb-audio-radius": {
+    "--x-audio-radius": {
       "default": "16px",
       "description": "Border radius"
     },
-    "--wb-audio-padding": {
+    "--x-audio-padding": {
       "default": "1rem",
       "description": "Padding"
     },
-    "--wb-audio-eq-slider-width": {
+    "--x-audio-eq-slider-width": {
       "default": "24px",
       "description": "EQ slider width"
     },
-    "--wb-audio-eq-slider-height": {
+    "--x-audio-eq-slider-height": {
       "default": "120px",
       "description": "EQ slider height"
     },
-    "--wb-audio-eq-slider-bg": {
+    "--x-audio-eq-slider-bg": {
       "default": "#333",
       "description": "Slider track background"
     },
-    "--wb-audio-eq-slider-fill": {
+    "--x-audio-eq-slider-fill": {
       "default": "#6366f1",
       "description": "Slider fill color"
     },
-    "--wb-audio-display-bg": {
+    "--x-audio-display-bg": {
       "default": "linear-gradient(180deg, #1a1200 0%, #0d0900 100%)",
       "description": "Marantz display background"
     },
-    "--wb-audio-display-color": {
+    "--x-audio-display-color": {
       "default": "#e8a020",
       "description": "Marantz display text color (warm amber)"
     },
-    "--wb-audio-display-glow": {
+    "--x-audio-display-glow": {
       "default": "0 0 8px rgba(232, 160, 32, 0.4)",
       "description": "Marantz display text glow"
     },
-    "--wb-audio-play-size": {
+    "--x-audio-play-size": {
       "default": "48px",
       "description": "Play button size"
     }
@@ -246,39 +246,39 @@
   },
   "test": {
     "setup": [
-      "<wb-audio>Basic audio content</wb-audio>",
-      "<wb-audio loop>with loop</wb-audio>",
-      "<wb-audio autoplay>with autoplay</wb-audio>",
-      "<wb-audio muted>with muted</wb-audio>",
-      "<wb-audio show-eq>with showEq</wb-audio>",
-      "<wb-audio src=\"Sample src\">src=\"Sample src\"</wb-audio>",
-      "<wb-audio volume=\"0.8\">volume=0.8</wb-audio>",
-      "<wb-audio bass=\"0\">bass=0</wb-audio>"
+      "<audio>Basic audio content</audio>",
+      "<audio loop>with loop</audio>",
+      "<audio autoplay>with autoplay</audio>",
+      "<audio muted>with muted</audio>",
+      "<audio show-eq>with showEq</audio>",
+      "<audio src=\"Sample src\">src=\"Sample src\"</audio>",
+      "<audio volume=\"0.8\">volume=0.8</audio>",
+      "<audio bass=\"0\">bass=0</audio>"
     ],
     "matrix": {
       "combinations": [
         {
-          "src": "../audio.mp3"
+          "src": "https://archive.org/download/nineinchnails_ghosts_I_IV/01_Ghosts_I.mp3"
         },
         {
-          "src": "../audio.mp3",
+          "src": "https://archive.org/download/nineinchnails_ghosts_I_IV/01_Ghosts_I.mp3",
           "showEq": true
         },
         {
-          "src": "../audio.mp3",
+          "src": "https://archive.org/download/nineinchnails_ghosts_I_IV/01_Ghosts_I.mp3",
           "volume": 0.5
         },
         {
-          "src": "../audio.mp3",
+          "src": "https://archive.org/download/nineinchnails_ghosts_I_IV/01_Ghosts_I.mp3",
           "loop": true
         }
       ]
     },
     "site": {
       "page": "content",
-      "tag": "wb-audio",
+      "tag": "x-audio",
       "renders": true,
-      "baseClass": "wb-audio",
+      "baseClass": "x-audio",
       "minInstances": 4,
       "checkText": [],
       "checkClasses": [],

@@ -5,16 +5,16 @@
  * -----------------------------------------------------------------------------
  */
 
-.wb-autocomplete {
+.x-autocomplete {
   position: relative;
   display: inline-block;
 }
 
-.wb-autocomplete__input {
+.x-autocomplete__input {
   width: 100%;
 }
 
-.wb-autocomplete__list {
+.x-autocomplete__list {
   position: absolute;
   top: 100%;
   left: 0;
@@ -31,17 +31,17 @@
   overflow-y: auto;
 }
 
-.wb-autocomplete__list:empty {
+.x-autocomplete__list:empty {
   display: none;
 }
 
-.wb-autocomplete__list li {
+.x-autocomplete__list li {
   padding: 0.4rem 0.75rem;
   cursor: pointer;
   color: var(--text-primary);
   font-size: 0.85rem;
 }
 
-.wb-autocomplete__list li:hover {
+.x-autocomplete__list li:hover {
   background: var(--bg-tertiary);
 }

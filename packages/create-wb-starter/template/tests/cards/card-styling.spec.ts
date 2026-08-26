@@ -15,7 +15,7 @@ test.describe('Card Styling Standards', () => {
 
   test('elevated cards have LIGHTER background than base cards', async ({ page }) => {
     // Get a base card background
-    const baseCard = page.locator('article.wb-card:not(.wb-card--elevated)').first();
+    const baseCard = page.locator('article.x-card:not(.x-card--elevated)').first();
     const elevatedCard = page.locator('[data-elevated="true"]').first();
     
     await expect(baseCard).toBeVisible();
@@ -56,7 +56,7 @@ test.describe('Card Styling Standards', () => {
   });
 
   test('all cards have at least 1rem (16px) content padding', async ({ page }) => {
-    const cards = await page.locator('.wb-card').all();
+    const cards = await page.locator('.x-card').all();
     expect(cards.length).toBeGreaterThan(0);
     
     const failures: string[] = [];
@@ -78,8 +78,8 @@ test.describe('Card Styling Standards', () => {
         
         // Or internal containers have padding
         const containers = [
-          '.wb-card__header',
-          '.wb-card__main', 
+          '.x-card__header',
+          '.x-card__main', 
           'main',
           'header',
           '[class*="content"]'
@@ -108,8 +108,8 @@ test.describe('Card Styling Standards', () => {
     expect(failures).toHaveLength(0);
   });
 
-  test('wb-cardstats has proper internal padding', async ({ page }) => {
-    const statsCard = page.locator('wb-cardstats').first();
+  test('x-cardstats has proper internal padding', async ({ page }) => {
+    const statsCard = page.locator('x-cardstats').first();
     await expect(statsCard).toBeVisible();
     
     const padding = await statsCard.evaluate(el => {
@@ -140,7 +140,7 @@ test.describe('Card Styling Standards', () => {
     const issues = await page.evaluate(() => {
       const problems: string[] = [];
       
-      document.querySelectorAll('.wb-card').forEach((card, idx) => {
+      document.querySelectorAll('.x-card').forEach((card, idx) => {
         const cardRect = card.getBoundingClientRect();
         
         // Check first text element

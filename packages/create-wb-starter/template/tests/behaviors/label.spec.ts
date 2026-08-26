@@ -13,7 +13,7 @@ test.describe('x-label behavior (value on a form control)', () => {
     const input = page.locator('#test-input');
     const label = page.locator(`label[for="test-input"]`);
     await expect(label).toHaveText('Label for input:');
-    await expect(label).toHaveClass(/wb-label/);
+    await expect(label).toHaveClass(/x-label/);
     // The label renders before the control (to its left), not after it.
     const order = await page.evaluate(() => {
       const input = document.getElementById('test-input')!;
@@ -24,7 +24,7 @@ test.describe('x-label behavior (value on a form control)', () => {
     void input;
   });
 
-  test('x-label="text" + required generates wb-label--required on the new <label>', async ({ page }) => {
+  test('x-label="text" + required generates x-label--required on the new <label>', async ({ page }) => {
     await page.goto('index.html');
     await page.evaluate(() => {
       const el = document.createElement('input');
@@ -35,10 +35,10 @@ test.describe('x-label behavior (value on a form control)', () => {
       (window as any).WB.scan(el);
     });
     const label = page.locator(`label[for="test-input-req"]`);
-    await expect(label).toHaveClass(/wb-label--required/);
+    await expect(label).toHaveClass(/x-label--required/);
   });
 
-  test('label-position="right" puts the <label> after the control, with wb-label--right', async ({ page }) => {
+  test('label-position="right" puts the <label> after the control, with x-label--right', async ({ page }) => {
     await page.goto('index.html');
     await page.evaluate(() => {
       const el = document.createElement('input');
@@ -49,7 +49,7 @@ test.describe('x-label behavior (value on a form control)', () => {
       (window as any).WB.scan(el);
     });
     const label = page.locator(`label[for="test-input-rtl"]`);
-    await expect(label).toHaveClass(/wb-label--right/);
+    await expect(label).toHaveClass(/x-label--right/);
     const order = await page.evaluate(() => {
       const input = document.getElementById('test-input-rtl')!;
       const label = document.querySelector('label[for="test-input-rtl"]')!;
@@ -60,7 +60,7 @@ test.describe('x-label behavior (value on a form control)', () => {
 });
 
 test.describe('x-label behavior (legacy: bare attribute on a <label>)', () => {
-  test('applies wb-label class', async ({ page }) => {
+  test('applies x-label class', async ({ page }) => {
     await page.goto('index.html');
     await page.evaluate(() => {
       const el = document.createElement('label');
@@ -71,10 +71,10 @@ test.describe('x-label behavior (legacy: bare attribute on a <label>)', () => {
       (window as any).WB.scan(el);
     });
     const label = page.locator('#test-label');
-    await expect(label).toHaveClass(/wb-label/);
+    await expect(label).toHaveClass(/x-label/);
   });
 
-  test('required state applies wb-label--required', async ({ page }) => {
+  test('required state applies x-label--required', async ({ page }) => {
     await page.goto('index.html');
     await page.evaluate(() => {
       const el = document.createElement('label');
@@ -86,10 +86,10 @@ test.describe('x-label behavior (legacy: bare attribute on a <label>)', () => {
       (window as any).WB.scan(el);
     });
     const label = page.locator('#test-label');
-    await expect(label).toHaveClass(/wb-label--required/);
+    await expect(label).toHaveClass(/x-label--required/);
   });
 
-  test('optional state applies wb-label--optional', async ({ page }) => {
+  test('optional state applies x-label--optional', async ({ page }) => {
     await page.goto('index.html');
     await page.evaluate(() => {
       const el = document.createElement('label');
@@ -101,6 +101,6 @@ test.describe('x-label behavior (legacy: bare attribute on a <label>)', () => {
       (window as any).WB.scan(el);
     });
     const label = page.locator('#test-label');
-    await expect(label).toHaveClass(/wb-label--optional/);
+    await expect(label).toHaveClass(/x-label--optional/);
   });
 });

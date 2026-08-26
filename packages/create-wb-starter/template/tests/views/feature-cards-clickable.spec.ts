@@ -25,7 +25,7 @@ test.describe('#184 — home feature cards are clickable', () => {
       [...document.querySelectorAll('.feature-card-link')].map((a) => ({
         href: a.getAttribute('href'),
         title: (a.querySelector('h3')?.textContent || '').replace(/^[^A-Za-z]+/, '').trim(),
-        hasCard: !!a.querySelector('wb-card'),
+        hasCard: !!a.querySelector('x-card'),
         underline: getComputedStyle(a as HTMLElement).textDecorationLine,
       }))
     );
@@ -34,7 +34,7 @@ test.describe('#184 — home feature cards are clickable', () => {
       const found = links.find((l) => l.title.startsWith(exp.title));
       expect(found, `feature card "${exp.title}" not found`).toBeTruthy();
       expect(found!.href, `"${exp.title}" links to wrong route`).toBe(exp.href);
-      expect(found!.hasCard, `"${exp.title}" anchor does not wrap a wb-card`).toBe(true);
+      expect(found!.hasCard, `"${exp.title}" anchor does not wrap a x-card`).toBe(true);
       expect(found!.underline, 'feature card link should not be underlined').toBe('none');
     }
   });

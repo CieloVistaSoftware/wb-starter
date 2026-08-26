@@ -2,14 +2,29 @@
 
 Card with horizontal layout - image on side, content on other
 
-Applies to `<article>`, and to any element carrying `x-cardhorizontal`.
+## Type — decorates a semantic element
 
-## Usage
+`x-cardhorizontal` is the **article behavior**. It attaches to `<article>`, the element you would have reached for anyway — there is no new tag to learn.
+
+### How to write it
 
 ```html
-<article x-cardhorizontal>
+<article x-cardhorizontal
+  image="https://picsum.photos/seed/trail/320/240"
+  image-alt="Pine trail at dawn"
+  image-position="start"
+  title="Ridge loop, 8km"
+  subtitle="Moderate · 3h"></article>
+```
+
+### On a different element
+
+Use `x-cardhorizontal` when the host is not a `<article>` and you want the same behavior:
+
+```html
+<div x-cardhorizontal>
   …
-</article>
+</div>
 ```
 
 ## Attributes

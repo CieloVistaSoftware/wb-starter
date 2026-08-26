@@ -24,14 +24,14 @@ test.describe('viewport-lazy injection prepares elements before visibility (#491
 
       await (window as any).WB.scan(target.parentElement);
       await new Promise(resolve => setTimeout(resolve, 100));
-      const lazyClassBeforeEagerScan = target.classList.contains('wb-ripple');
+      const lazyClassBeforeEagerScan = target.classList.contains('[x-ripple]');
 
       await (window as any).WB.scan(target.parentElement, { eager: true });
       await new Promise(resolve => setTimeout(resolve, 100));
 
       return {
         lazyClassBeforeEagerScan,
-        eagerClassAfterScan: target.classList.contains('wb-ripple'),
+        eagerClassAfterScan: target.classList.contains('[x-ripple]'),
         rootMargins: ((window as any).__wbIntersectionObservers as IntersectionObserverInit[])
           .map(observer => observer.rootMargin)
           .filter(Boolean),

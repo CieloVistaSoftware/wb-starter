@@ -4,13 +4,13 @@
   "title": "Footer",
   "description": "Page footer with copyright, links, and social icons",
   "schemaFor": "footer",
-  "baseClass": "wb-footer",
+  "baseClass": "x-footer",
   "semanticElement": {
     "tagName": "footer",
     "implicitRole": "contentinfo"
   },
   "compliance": {
-    "baseClass": "wb-footer",
+    "baseClass": "x-footer",
     "supportLevel": "stable",
     "accessibility": "high"
   },
@@ -39,7 +39,7 @@
       "type": "boolean",
       "description": "Sticky at bottom",
       "default": false,
-      "appliesClass": "wb-footer--sticky"
+      "appliesClass": "x-footer--sticky"
     }
   },
   "$view": [
@@ -104,27 +104,27 @@
     }
   },
   "$cssAPI": {
-    "--wb-footer-padding": {
+    "--x-footer-padding": {
       "default": "1rem 2rem",
       "description": "Padding"
     },
-    "--wb-footer-bg": {
+    "--x-footer-bg": {
       "default": "var(--bg-surface, #ffffff)",
       "description": "Background"
     },
-    "--wb-footer-border": {
+    "--x-footer-border": {
       "default": "1px solid var(--border-color, #e0e0e0)",
       "description": "Border"
     },
-    "--wb-footer-color": {
+    "--x-footer-color": {
       "default": "var(--text-secondary, #666)",
       "description": "Text color"
     },
-    "--wb-footer-link-color": {
+    "--x-footer-link-color": {
       "default": "var(--text-primary, #1a1a1a)",
       "description": "Link color"
     },
-    "--wb-footer-link-hover-color": {
+    "--x-footer-link-hover-color": {
       "default": "var(--primary, #6366f1)",
       "description": "Link hover"
     }
@@ -134,13 +134,13 @@
   },
   "test": {
     "setup": [
-      "<wb-footer>Basic footer content</wb-footer>",
-      "<wb-footer sticky>with sticky</wb-footer>",
-      "<wb-footer copyright=\"Sample copyright\">copyright=\"Sample copyright\"</wb-footer>",
-      "<wb-footer brand=\"Sample brand\">brand=\"Sample brand\"</wb-footer>",
-      "<wb-footer links=\"Sample links\">links=\"Sample links\"</wb-footer>",
-      "<wb-footer social=\"Sample social\">social=\"Sample social\"</wb-footer>",
-      "<wb-footer copyright=\"© 2025 Acme\"></wb-footer>"
+      "<footer>Basic footer content</footer>",
+      "<footer sticky>with sticky</footer>",
+      "<footer copyright=\"Sample copyright\">copyright=\"Sample copyright\"</footer>",
+      "<footer brand=\"Sample brand\">brand=\"Sample brand\"</footer>",
+      "<footer links=\"Sample links\">links=\"Sample links\"</footer>",
+      "<footer social=\"Sample social\">social=\"Sample social\"</footer>",
+      "<footer copyright=\"© 2025 Acme\"></footer>"
     ],
     "matrix": {
       "combinations": [
@@ -159,9 +159,9 @@
     },
     "site": {
       "page": "layout",
-      "tag": "wb-footer",
+      "tag": "x-footer",
       "renders": true,
-      "baseClass": "wb-footer",
+      "baseClass": "x-footer",
       "minInstances": 3,
       "checkText": [],
       "checkClasses": [],

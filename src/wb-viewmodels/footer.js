@@ -4,10 +4,10 @@ import { readFlag } from '../core/read-attr.js';
  * -----------------------------------------------------------------------------
  * Generates a site/page footer with copyright, links, and optional elements.
  * 
- * Custom Tag: <wb-footer>
+ * Custom Tag: <footer>
  * 
  * Usage:
- * <wb-footer  data-copyright="© 2025 Acme Inc"></footer>
+ * <footer  data-copyright="© 2025 Acme Inc"></footer>
  * <footer data-copyright="© 2025" data-links="Privacy,Terms,Contact"></footer>
  * -----------------------------------------------------------------------------
  */
@@ -19,28 +19,28 @@ import { readFlag } from '../core/read-attr.js';
 // file fetched twice per page load, alongside header.css).
 
 export function footer(element) {
-  // #448: skip the class on a literal <wb-footer> host -- footer.css
-  // selects the `wb-footer` TAG directly for that case now. Still added
+  // #448: skip the class on a literal <footer> host -- footer.css
+  // selects the `x-footer` TAG directly for that case now. Still added
   // for a native <footer> host (autoInject), since footer.css's
-  // `.wb-footer` rules still select it by class.
-  if (element.tagName.toLowerCase() !== 'wb-footer') element.classList.add('wb-footer');
+  // `.x-footer` rules still select it by class.
+  if (element.tagName.toLowerCase() !== 'x-footer') element.classList.add('x-footer');
   
   // Get attributes
   const sticky = readFlag(element, 'sticky');
   
   // Apply sticky if requested
   if (sticky) {
-    element.classList.add('wb-footer--sticky');
+    element.classList.add('x-footer--sticky');
   }
   
   // API
   element.wbFooter = {
     setCopyright: (text) => {
-      const copyrightEl = element.querySelector('.wb-footer__copyright');
+      const copyrightEl = element.querySelector('.x-footer__copyright');
       if (copyrightEl) copyrightEl.textContent = text;
     },
     setBrand: (text) => {
-      const brandEl = element.querySelector('.wb-footer__brand');
+      const brandEl = element.querySelector('.x-footer__brand');
       if (brandEl) brandEl.textContent = text;
     }
   };

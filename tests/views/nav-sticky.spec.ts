@@ -5,7 +5,7 @@
  */
 import { test, expect } from '@playwright/test';
 
-const BASE = process.env.WB_BASE || 'http://localhost:3000';
+const BASE = process.env.WB_BASE || '';
 
 test.describe('Side nav stays at the current scroll location', () => {
   test('nav is sticky and pinned while .site__body scrolls', async ({ page }) => {

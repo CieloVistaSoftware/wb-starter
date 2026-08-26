@@ -1,11 +1,11 @@
 import { test, expect } from '@playwright/test';
 
 /**
- * REGRESSION (#374 / BUG-2026-07-27-001, general mechanism): <wb-demo> blocks
- * past EAGER_BUILD_COUNT (wb-demo.js) build lazily via IntersectionObserver,
+ * REGRESSION (#374 / BUG-2026-07-27-001, general mechanism): <div x-demo> blocks
+ * past EAGER_BUILD_COUNT (x-demo.js) build lazily via IntersectionObserver,
  * well after the page's one-time eager WB.scan(document.body) already ran.
  * demo.js used to only re-scan its own source-code <pre> panel, never the
- * real children it moves into .wb-demo__grid -- so ANY interactive element
+ * real children it moves into .x-demo__grid -- so ANY interactive element
  * inside a lazy-built demo block never got its behavior attached at all,
  * regardless of which specific behavior it used.
  *
@@ -15,13 +15,13 @@ import { test, expect } from '@playwright/test';
  * attempting to reproduce the SAME off-screen/lazy timing generically (any
  * x-* behavior, not just lightbox) turned out unreliable to construct --
  * WB.init({autoInject:true})'s own immediate scan injects x-* attributes
- * before the wb-demo lazy build completes regardless of geometric position
+ * before the x-demo lazy build completes regardless of geometric position
  * in a minimal fixture, unlike observed real-page behavior, and chasing that
  * discrepancy further wasn't worth it here.
  *
  * This test instead directly and deterministically exercises the actual
  * code contract that was the fix: demo() (src/wb-viewmodels/demo.js) must
- * call window.WB.scan() on the newly-built .wb-demo__grid -- but ONLY when
+ * call window.WB.scan() on the newly-built .x-demo__grid -- but ONLY when
  * options.isLazy is true. Calling it unconditionally (the pre-fix
  * regression, minus the isLazy gate) would reintroduce the double-injection
  * listener-loss race documented inline in demo.js for the EAGER path, which
@@ -36,8 +36,8 @@ test.describe('demo() scans its grid only on the lazy build path (#374)', () => 
       const scanCalls: Element[] = [];
       (window as any).WB = { scan: (el: Element) => { scanCalls.push(el); } };
 
-      // A plain div, NOT document.createElement('wb-demo') -- appending a
-      // real <wb-demo> triggers its own connectedCallback automatically,
+      // A plain div, NOT document.createElement('x-demo') -- appending a
+      // real <div x-demo> triggers its own connectedCallback automatically,
       // which races this test's manual demo() call and trips the
       // _demoInitialized guard before it ever runs. demo() itself doesn't
       // care about tag name, only .innerHTML/.children/._rawSource.
@@ -49,11 +49,11 @@ test.describe('demo() scans its grid only on the lazy build path (#374)', () => 
 
       await demo(el, { isLazy: true });
 
-      const grid = el.querySelector('.wb-demo__grid');
+      const grid = el.querySelector('.x-demo__grid');
       return { scannedGrid: scanCalls.includes(grid as Element), gridExists: !!grid };
     });
 
-    expect(result.gridExists, 'demo() must still build the .wb-demo__grid').toBe(true);
+    expect(result.gridExists, 'demo() must still build the .x-demo__grid').toBe(true);
     expect(result.scannedGrid, 'WB.scan must be called with the grid it just built, on the lazy path').toBe(true);
   });
 
@@ -64,8 +64,8 @@ test.describe('demo() scans its grid only on the lazy build path (#374)', () => 
       const scanCalls: Element[] = [];
       (window as any).WB = { scan: (el: Element) => { scanCalls.push(el); } };
 
-      // A plain div, NOT document.createElement('wb-demo') -- appending a
-      // real <wb-demo> triggers its own connectedCallback automatically,
+      // A plain div, NOT document.createElement('x-demo') -- appending a
+      // real <div x-demo> triggers its own connectedCallback automatically,
       // which races this test's manual demo() call and trips the
       // _demoInitialized guard before it ever runs. demo() itself doesn't
       // care about tag name, only .innerHTML/.children/._rawSource.
@@ -75,14 +75,14 @@ test.describe('demo() scans its grid only on the lazy build path (#374)', () => 
       document.body.appendChild(el);
       (el as any)._rawSource = el.innerHTML;
 
-      // No isLazy at all -- matches wb-demo.js's EAGER connectedCallback
+      // No isLazy at all -- matches x-demo.js's EAGER connectedCallback
       // call site, which relies on the concurrent global WB.scan(main) pass
       // to cover the grid instead (scanning it here too would race that
       // pass -- see demo.js's own comment on the listener-loss regression
       // this caused before).
       await demo(el, {});
 
-      const grid = el.querySelector('.wb-demo__grid');
+      const grid = el.querySelector('.x-demo__grid');
       return { scannedGrid: scanCalls.includes(grid as Element) };
     });
 

@@ -4,13 +4,13 @@
   "title": "Alert",
   "description": "Alert component for displaying messages with severity levels",
   "schemaFor": "alert",
-  "baseClass": "wb-alert",
+  "baseClass": "x-alert",
   "semanticElement": {
     "tagName": "div",
     "implicitRole": "alert"
   },
   "compliance": {
-    "baseClass": "wb-alert",
+    "baseClass": "x-alert",
     "supportLevel": "stable",
     "accessibility": "high"
   },
@@ -18,7 +18,6 @@
     "variant": {
       "type": "string",
       "description": "Alert severity/style variant",
-      "aliases": ["type"],
       "enum": [
         "info",
         "success",
@@ -26,7 +25,7 @@
         "error"
       ],
       "default": "info",
-      "appliesClass": "wb-alert--{{value}}"
+      "appliesClass": "x-alert--{{value}}"
     },
     "title": {
       "type": "string",
@@ -50,7 +49,7 @@
       "default": false
     }
   },
-  "_view_note": "The alert BEHAVIOR (src/wb-viewmodels/feedback.js, alert()) is the SOLE renderer of <wb-alert> — it builds icon/content/dismiss-button and wires the dismiss click handler directly. This $view used to build a COMPETING native <button> dismiss element via buildStructure(), asynchronously (schema processing resolves before the behavior's dynamic import settles) racing feedback.js's own synchronous build+listener-attach — whichever ran second silently won, and the schema's button had no click handler at all. Confirmed live: the dismiss (✕) button did nothing on click ~90% of the time. Emptied, same fix already applied to 'card' (#202) and the views-registry 'button' template.",
+  "_view_note": "The alert BEHAVIOR (src/wb-viewmodels/feedback.js, alert()) is the SOLE renderer of <div x-alert> — it builds icon/content/dismiss-button and wires the dismiss click handler directly. This $view used to build a COMPETING native <button> dismiss element via buildStructure(), asynchronously (schema processing resolves before the behavior's dynamic import settles) racing feedback.js's own synchronous build+listener-attach — whichever ran second silently won, and the schema's button had no click handler at all. Confirmed live: the dismiss (✕) button did nothing on click ~90% of the time. Emptied, same fix already applied to 'card' (#202) and the views-registry 'button' template.",
   "$view": [],
   "$methods": {
     "show": {
@@ -72,85 +71,85 @@
     }
   },
   "$cssAPI": {
-    "--wb-alert-padding": {
+    "--x-alert-padding": {
       "default": "1rem",
       "description": "Internal padding"
     },
-    "--wb-alert-radius": {
+    "--x-alert-radius": {
       "default": "4px",
       "description": "Border radius"
     },
-    "--wb-alert-gap": {
+    "--x-alert-gap": {
       "default": "0.75rem",
       "description": "Gap between icon, content, and close button"
     },
-    "--wb-alert-icon-size": {
+    "--x-alert-icon-size": {
       "default": "1.25rem",
       "description": "Icon font size"
     },
-    "--wb-alert-title-weight": {
+    "--x-alert-title-weight": {
       "default": "600",
       "description": "Title font weight"
     },
-    "--wb-alert-info-bg": {
+    "--x-alert-info-bg": {
       "default": "#e3f2fd",
       "description": "Info variant background color"
     },
-    "--wb-alert-info-border": {
+    "--x-alert-info-border": {
       "default": "#2196f3",
       "description": "Info variant border color"
     },
-    "--wb-alert-info-color": {
+    "--x-alert-info-color": {
       "default": "#1565c0",
       "description": "Info variant text color"
     },
-    "--wb-alert-success-bg": {
+    "--x-alert-success-bg": {
       "default": "#e8f5e9",
       "description": "Success variant background color"
     },
-    "--wb-alert-success-border": {
+    "--x-alert-success-border": {
       "default": "#4caf50",
       "description": "Success variant border color"
     },
-    "--wb-alert-success-color": {
+    "--x-alert-success-color": {
       "default": "#2e7d32",
       "description": "Success variant text color"
     },
-    "--wb-alert-warning-bg": {
+    "--x-alert-warning-bg": {
       "default": "#fff3e0",
       "description": "Warning variant background color"
     },
-    "--wb-alert-warning-border": {
+    "--x-alert-warning-border": {
       "default": "#ff9800",
       "description": "Warning variant border color"
     },
-    "--wb-alert-warning-color": {
+    "--x-alert-warning-color": {
       "default": "#e65100",
       "description": "Warning variant text color"
     },
-    "--wb-alert-error-bg": {
+    "--x-alert-error-bg": {
       "default": "#ffebee",
       "description": "Error variant background color"
     },
-    "--wb-alert-error-border": {
+    "--x-alert-error-border": {
       "default": "#f44336",
       "description": "Error variant border color"
     },
-    "--wb-alert-error-color": {
+    "--x-alert-error-color": {
       "default": "#c62828",
       "description": "Error variant text color"
     }
   },
   "test": {
     "setup": [
-      "<wb-alert>Basic alert content</wb-alert>",
-      "<wb-alert variant=\"info\">variant=info</wb-alert>",
-      "<wb-alert variant=\"success\">variant=success</wb-alert>",
-      "<wb-alert variant=\"warning\">variant=warning</wb-alert>",
-      "<wb-alert dismissible>with dismissible</wb-alert>",
-      "<wb-alert title=\"Sample title\">title=\"Sample title\"</wb-alert>",
-      "<wb-alert message=\"Sample message\">message=\"Sample message\"</wb-alert>",
-      "<wb-alert icon=\"Sample icon\">icon=\"Sample icon\"</wb-alert>"
+      "<div x-alert>Basic alert content</div>",
+      "<div x-alert variant=\"info\">variant=info</div>",
+      "<div x-alert variant=\"success\">variant=success</div>",
+      "<div x-alert variant=\"warning\">variant=warning</div>",
+      "<div x-alert dismissible>with dismissible</div>",
+      "<div x-alert title=\"Sample title\">title=\"Sample title\"</div>",
+      "<div x-alert message=\"Sample message\">message=\"Sample message\"</div>",
+      "<div x-alert icon=\"Sample icon\">icon=\"Sample icon\"</div>"
     ],
     "matrix": {
       "combinations": [
@@ -196,15 +195,15 @@
     },
     "site": {
       "page": "feedback",
-      "tag": "wb-alert",
+      "tag": "x-alert",
       "renders": true,
-      "baseClass": "wb-alert",
+      "baseClass": "x-alert",
       "minInstances": 8,
       "checkText": [
         "Test"
       ],
       "checkClasses": [
-        "wb-alert--success"
+        "x-alert--success"
       ],
       "checkAttributes": [
         "variant",

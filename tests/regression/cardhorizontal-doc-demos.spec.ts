@@ -1,13 +1,13 @@
 import { test, expect, Page, Locator } from '@playwright/test';
 
 /**
- * docs/components/cards/cardhorizontal.md: John asked for unit tests on
+ * docs/behaviors/cardhorizontal.md: John asked for unit tests on
  * every live demo rendered on this doc page
- * (public/doc-viewer.html?file=docs%2Fcomponents%2Fcards%2Fcardhorizontal.md).
+ * (public/doc-viewer.html?file=docs%2Fbehaviors%2Fcardhorizontal.md).
  * mdhtml.js's auto-live-render promotes the doc's one hand-authored
- * <wb-demo> block plus its four ```html fenced examples ("Basic Horizontal
+ * <div x-demo> block plus its four ```html fenced examples ("Basic Horizontal
  * Card", "Image on Left (explicit)", "Image on Right", "Custom Image
- * Width") into five live <wb-cardhorizontal> instances (the doc's final
+ * Width") into five live <div x-cardhorizontal> instances (the doc's final
  * fenced block, "Generated Structure", stays plain text -- it's
  * native-tag-only markup with no wb- or x- attribute, so mdhtml's
  * isRenderable check correctly leaves it alone).
@@ -36,11 +36,11 @@ import { test, expect, Page, Locator } from '@playwright/test';
  * Separately (not a docs issue -- a real component gap): cardhorizontal()'s
  * <img> had no 'error' handler at all, so a broken image src rendered as a
  * silent broken-image icon with zero console/error-log signal. See
- * tests/regression/wb-cardhorizontal-image-error-on-broken-src.spec.ts for
+ * tests/regression/x-cardhorizontal-image-error-on-broken-src.spec.ts for
  * the fix + dedicated regression coverage of that behavior.
  */
 
-const DOC_FILE = 'docs/components/cards/cardhorizontal.md';
+const DOC_FILE = 'docs/behaviors/cardhorizontal.md';
 const DOC_URL = `/public/doc-viewer.html?file=${encodeURIComponent(DOC_FILE)}`;
 const EXPECTED_DEMO_COUNT = 5;
 
@@ -50,7 +50,7 @@ async function gotoDoc(page: Page): Promise<void> {
     const t = document.getElementById('content')?.innerText || '';
     return t.length > 200 && !t.includes('Loading documentation');
   }, { timeout: 15000 });
-  const cards = page.locator('wb-cardhorizontal');
+  const cards = page.locator('[x-cardhorizontal]');
   await expect(cards).toHaveCount(EXPECTED_DEMO_COUNT, { timeout: 15000 });
   // Let shrink-to-fit's rAF-scheduled code-panel measurement settle (same
   // wait used by doc-viewer-code-panel-not-narrow.spec.ts for this exact
@@ -78,7 +78,7 @@ async function isImageLoaded(img: Locator): Promise<boolean> {
 /** Standard §6: the demo's code panel(s) must never wrap and must show
  * their full source (no artificial narrowing forcing a scrollbar). */
 async function assertCodePanelStandards(demo: Locator, label: string): Promise<void> {
-  const panels = demo.locator('.wb-demo__code');
+  const panels = demo.locator('.x-demo__code');
   const count = await panels.count();
   expect(count, `${label}: expected a code panel`).toBeGreaterThan(0);
   for (let p = 0; p < count; p++) {
@@ -100,8 +100,8 @@ async function assertCodePanelStandards(demo: Locator, label: string): Promise<v
 
 /** Standard §13: >= 1rem padding inside the card's rendered content area. */
 async function assertContentPadding(card: Locator, label: string): Promise<void> {
-  const content = card.locator('.wb-card__horizontal-content');
-  await expect(content, `${label}: expected .wb-card__horizontal-content`).toHaveCount(1);
+  const content = card.locator('.x-card__horizontal-content');
+  await expect(content, `${label}: expected .x-card__horizontal-content`).toHaveCount(1);
   const padding = await content.evaluate((el) => {
     const cs = getComputedStyle(el);
     return {
@@ -122,18 +122,18 @@ async function assertNoPageHorizontalScroll(page: Page, label: string): Promise<
   expect(overflow, `${label}: page must not have horizontal overflow`).toBe(false);
 }
 
-test.describe('docs/components/cards/cardhorizontal.md live demos (doc-viewer)', () => {
-  test('demo 1 -- <wb-demo> block (Overview): Basic Horizontal Card renders correctly', async ({ page }) => {
+test.describe('docs/behaviors/cardhorizontal.md live demos (doc-viewer)', () => {
+  test('demo 1 -- <div x-demo> block (Overview): Basic Horizontal Card renders correctly', async ({ page }) => {
     await gotoDoc(page);
-    const label = 'demo 1 (wb-demo block)';
-    const card = page.locator('wb-cardhorizontal').nth(0);
-    const demo = page.locator('wb-demo').nth(0);
+    const label = 'demo 1 ([x-demo] block)';
+    const card = page.locator('[x-cardhorizontal]').nth(0);
+    const demo = page.locator('[x-demo]').nth(0);
 
-    await expect(card.locator('.wb-card__title'), `${label}: title`).toHaveText('Feature Title');
-    await expect(card.locator('.wb-card__subtitle'), `${label}: subtitle`).toHaveText('Feature description');
-    await expect(card.locator('.wb-card__horiz-body'), `${label}: body`).toContainText('Detailed content here.');
+    await expect(card.locator('.x-card__title'), `${label}: title`).toHaveText('Feature Title');
+    await expect(card.locator('.x-card__subtitle'), `${label}: subtitle`).toHaveText('Feature description');
+    await expect(card.locator('.x-card__horiz-body'), `${label}: body`).toContainText('Detailed content here.');
 
-    const img = card.locator('.wb-card__figure img');
+    const img = card.locator('.x-card__figure img');
     await expect(img, `${label}: image element`).toHaveCount(1);
     expect(await isImageLoaded(img), `${label}: image must actually load, not 404/render broken`).toBe(true);
 
@@ -149,14 +149,14 @@ test.describe('docs/components/cards/cardhorizontal.md live demos (doc-viewer)',
   test('demo 2 -- "Basic Horizontal Card" fenced example renders correctly', async ({ page }) => {
     await gotoDoc(page);
     const label = 'demo 2 (Basic Horizontal Card)';
-    const card = page.locator('wb-cardhorizontal').nth(1);
-    const demo = page.locator('wb-demo').nth(1);
+    const card = page.locator('[x-cardhorizontal]').nth(1);
+    const demo = page.locator('[x-demo]').nth(1);
 
-    await expect(card.locator('.wb-card__title'), `${label}: title`).toHaveText('Feature Title');
-    await expect(card.locator('.wb-card__subtitle'), `${label}: subtitle`).toHaveText('Feature description');
-    await expect(card.locator('.wb-card__horiz-body'), `${label}: body`).toContainText('Detailed content here.');
+    await expect(card.locator('.x-card__title'), `${label}: title`).toHaveText('Feature Title');
+    await expect(card.locator('.x-card__subtitle'), `${label}: subtitle`).toHaveText('Feature description');
+    await expect(card.locator('.x-card__horiz-body'), `${label}: body`).toContainText('Detailed content here.');
 
-    const img = card.locator('.wb-card__figure img');
+    const img = card.locator('.x-card__figure img');
     await expect(img, `${label}: image element`).toHaveCount(1);
     expect(await isImageLoaded(img), `${label}: image must actually load, not 404/render broken`).toBe(true);
 
@@ -171,13 +171,13 @@ test.describe('docs/components/cards/cardhorizontal.md live demos (doc-viewer)',
   test('demo 3 -- "Image on Left (explicit)" fenced example: image renders on the left', async ({ page }) => {
     await gotoDoc(page);
     const label = 'demo 3 (Image on Left, explicit)';
-    const card = page.locator('wb-cardhorizontal').nth(2);
-    const demo = page.locator('wb-demo').nth(2);
+    const card = page.locator('[x-cardhorizontal]').nth(2);
+    const demo = page.locator('[x-demo]').nth(2);
 
-    await expect(card.locator('.wb-card__title'), `${label}: title`).toHaveText('Left Image');
-    await expect(card.locator('.wb-card__horiz-body'), `${label}: body`).toContainText('Content appears on the right.');
+    await expect(card.locator('.x-card__title'), `${label}: title`).toHaveText('Left Image');
+    await expect(card.locator('.x-card__horiz-body'), `${label}: body`).toContainText('Content appears on the right.');
 
-    const img = card.locator('.wb-card__figure img');
+    const img = card.locator('.x-card__figure img');
     await expect(img, `${label}: image element`).toHaveCount(1);
     expect(await isImageLoaded(img), `${label}: image must actually load, not 404/render broken`).toBe(true);
 
@@ -194,13 +194,13 @@ test.describe('docs/components/cards/cardhorizontal.md live demos (doc-viewer)',
   test('demo 4 -- "Image on Right" fenced example: image renders on the right', async ({ page }) => {
     await gotoDoc(page);
     const label = 'demo 4 (Image on Right)';
-    const card = page.locator('wb-cardhorizontal').nth(3);
-    const demo = page.locator('wb-demo').nth(3);
+    const card = page.locator('[x-cardhorizontal]').nth(3);
+    const demo = page.locator('[x-demo]').nth(3);
 
-    await expect(card.locator('.wb-card__title'), `${label}: title`).toHaveText('Right Image');
-    await expect(card.locator('.wb-card__horiz-body'), `${label}: body`).toContainText('Content appears on the left.');
+    await expect(card.locator('.x-card__title'), `${label}: title`).toHaveText('Right Image');
+    await expect(card.locator('.x-card__horiz-body'), `${label}: body`).toContainText('Content appears on the left.');
 
-    const img = card.locator('.wb-card__figure img');
+    const img = card.locator('.x-card__figure img');
     await expect(img, `${label}: image element`).toHaveCount(1);
     expect(await isImageLoaded(img), `${label}: image must actually load, not 404/render broken`).toBe(true);
 
@@ -217,13 +217,13 @@ test.describe('docs/components/cards/cardhorizontal.md live demos (doc-viewer)',
   test('demo 5 -- "Custom Image Width" fenced example: image width is 60%', async ({ page }) => {
     await gotoDoc(page);
     const label = 'demo 5 (Custom Image Width)';
-    const card = page.locator('wb-cardhorizontal').nth(4);
-    const demo = page.locator('wb-demo').nth(4);
+    const card = page.locator('[x-cardhorizontal]').nth(4);
+    const demo = page.locator('[x-demo]').nth(4);
 
-    await expect(card.locator('.wb-card__title'), `${label}: title`).toHaveText('Large Image');
-    await expect(card.locator('.wb-card__horiz-body'), `${label}: body`).toContainText('Narrower content area.');
+    await expect(card.locator('.x-card__title'), `${label}: title`).toHaveText('Large Image');
+    await expect(card.locator('.x-card__horiz-body'), `${label}: body`).toContainText('Narrower content area.');
 
-    const img = card.locator('.wb-card__figure img');
+    const img = card.locator('.x-card__figure img');
     await expect(img, `${label}: image element`).toHaveCount(1);
     expect(await isImageLoaded(img), `${label}: image must actually load, not 404/render broken`).toBe(true);
 
@@ -231,7 +231,7 @@ test.describe('docs/components/cards/cardhorizontal.md live demos (doc-viewer)',
     // actually measure ~60% of the card's own width (small tolerance for
     // border/box-sizing rounding).
     const { figureWidth, cardWidth } = await card.evaluate((el) => {
-      const figure = el.querySelector('.wb-card__figure') as HTMLElement;
+      const figure = el.querySelector('.x-card__figure') as HTMLElement;
       return { figureWidth: figure.getBoundingClientRect().width, cardWidth: el.getBoundingClientRect().width };
     });
     const ratio = figureWidth / cardWidth;

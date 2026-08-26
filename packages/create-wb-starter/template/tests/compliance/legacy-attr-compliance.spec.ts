@@ -13,7 +13,7 @@ import * as path from 'path';
  *
  * A small allowlist covers data-* that are NOT behavior config:
  *   - data-accordion-title / data-tab-title : multi-item CONTENT markers (the
- *     documented API for <wb-accordion>/<wb-tabs> child items).
+ *     documented API for <div x-accordion>/<div x-tabs> child items).
  *   - data-variant : a CSS attribute-selector hook (src/styles/behaviors/input.css,
  *     issue #133), not a JS-read config attribute.
  *   - data-code-width : a CSS attribute-selector hook (src/styles/behaviors/demo.css,

@@ -27,7 +27,7 @@ test.describe('#312 follow-up — header/footer CSS is not fetched twice', () =>
       }
     });
 
-    await page.goto('http://localhost:3000/');
+    await page.goto('/');
     await page.waitForSelector('#siteHeader', { timeout: 20000 });
     await page.waitForTimeout(500);
 
@@ -46,7 +46,7 @@ test.describe('#275 — header/footer span the full viewport width', () => {
   for (const width of WIDTHS) {
     test(`header and footer width === clientWidth at ${width}px`, async ({ page }) => {
       await page.setViewportSize({ width, height: 800 });
-      await page.goto('http://localhost:3000/');
+      await page.goto('/');
       await page.waitForSelector('#siteHeader', { timeout: 20000 });
       await page.waitForSelector('#siteFooter', { timeout: 20000 });
 

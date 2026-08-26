@@ -16,18 +16,18 @@ import {
 // Demo/showcase/test pages that intentionally display raw color values as
 // content (e.g. a hue-spectrum color wheel, permutation test harness) — not
 // product UI subject to theming. Same convention as demo.css.
-const COLOR_EXCEPTION_FILES = ['themes.css', 'wb-signature.css', 'variables.css', 'demo.css', 'components.css', 'site.css', 'transitions.css', 'wb-grayscale.css', 'wb-grayscale-dark.css', 'hero.css', 'navbar.css', 'wizard.css', 'themes-showcase.css', 'ai-permutation-test.css'];
+const COLOR_EXCEPTION_FILES = ['themes.css', 'x-signature.css', 'variables.css', 'demo.css', 'components.css', 'site.css', 'transitions.css', 'x-grayscale.css', 'x-grayscale-dark.css', 'hero.css', 'navbar.css', 'wizard.css', 'themes-showcase.css', 'ai-permutation-test.css', 'frameworks.css'];
 
 // Patterns that violate OOP
 const FORBIDDEN_PATTERNS = {
-  variableAliases: /--wb-(bg|text|primary|border|color)/g,
+  variableAliases: /--x-(bg|text|primary|border|color)/g,
   importantUsage: /!important/g
 };
 
 test.describe('CSS OOP Compliance', () => {
   
   test('forbidden files should not exist', () => {
-    const forbidden = ['styles/wb-components.css'];
+    const forbidden = ['styles/x-components.css'];
     for (const file of forbidden) {
       if (fileExists(path.join(ROOT, file))) {
         console.warn(`⚠️ OOP VIOLATION: ${file} should be deleted`);
@@ -78,7 +78,7 @@ test.describe('CSS OOP Compliance', () => {
     expect(violations, 'CSS files should use var(--*) instead of hardcoded colors').toHaveLength(0);
   });
 
-  test('no --wb-* variable aliases', () => {
+  test('no --x-* variable aliases', () => {
     const cssFiles = getCssFiles(ROOT);
     const violations: string[] = [];
 
@@ -91,7 +91,7 @@ test.describe('CSS OOP Compliance', () => {
       }
     }
 
-    expect(violations, 'Should not create --wb-* aliases for theme variables').toHaveLength(0);
+    expect(violations, 'Should not create --x-* aliases for theme variables').toHaveLength(0);
   });
 
   test('CSS variables only defined in themes.css', () => {
@@ -101,7 +101,7 @@ test.describe('CSS OOP Compliance', () => {
 
     for (const file of cssFiles) {
       const filename = path.basename(file);
-      if (['themes.css', 'wb-signature.css', 'variables.css'].includes(filename)) continue;
+      if (['themes.css', 'x-signature.css', 'variables.css'].includes(filename)) continue;
 
       const content = readFile(file);
       const matches = content.match(varDefinition);
@@ -156,7 +156,13 @@ test.describe('CSS OOP Compliance', () => {
     let total = 0;
 
     for (const file of cssFiles) {
-      const content = readFile(file);
+      // Blank out /* ... */ block comments first (same technique as the
+      // hardcoded-colors test above, #190) -- otherwise prose that documents
+      // a PAST !important removal (e.g. code.css's "!important was never
+      // actually needed..." writeup, #543) is misread as a live violation.
+      // Keeps length + newlines so line numbers stay valid if this is ever
+      // extended to report locations.
+      const content = readFile(file).replace(/\/\*[\s\S]*?\*\//g, (m) => m.replace(/[^\n]/g, ' '));
       const matches = content.match(FORBIDDEN_PATTERNS.importantUsage);
       if (matches) total += matches.length;
     }

@@ -1,22 +1,22 @@
 import { test, expect } from '@playwright/test';
 
 /**
- * §19: `<wb-badge>` attributes must WORK. The behavior read variant/pill/dot/
+ * §19: `<span x-badge>` attributes must WORK. The behavior read variant/pill/dot/
  * outline but ignored `label` AND `size`, and bare badges rendered full-width.
  * Fixed: label text renders, size applies (xs<lg), pill is fully rounded, the
  * tag is fit-content (not full-width), removable adds a × that removes it.
  */
-test('wb-badge label/size/pill/removable all take effect (§19)', async ({ page }) => {
+test('[x-badge] label/size/pill/removable all take effect (§19)', async ({ page }) => {
   await page.goto('/');
   await page.setContent(`
     <link rel="stylesheet" href="/src/styles/themes.css">
     <link rel="stylesheet" href="/src/styles/behaviors/badge.css">
-    <wb-badge id="b1" label="New"></wb-badge>
-    <wb-badge id="bxs" label="X" size="xs"></wb-badge>
-    <wb-badge id="blg" label="X" size="lg"></wb-badge>
-    <wb-badge id="bpill" label="Pill" pill></wb-badge>
-    <wb-badge id="brem" label="Tag" variant="info" removable></wb-badge>
-    <wb-badge id="bdot" variant="success" dot></wb-badge>
+    <span x-badge id="b1" label="New"></span>
+    <span x-badge id="bxs" label="X" size="xs"></span>
+    <span x-badge id="blg" label="X" size="lg"></span>
+    <span x-badge id="bpill" label="Pill" pill></span>
+    <span x-badge id="brem" label="Tag" variant="info" removable></span>
+    <span x-badge id="bdot" variant="success" dot></span>
     <script type="module">
       import WB from '/src/core/wb.js';
       window.__wbDone = false;
@@ -49,6 +49,6 @@ test('wb-badge label/size/pill/removable all take effect (§19)', async ({ page 
 
   // removable: renders a × button (click-to-remove verified in-app; the
   // wb.js+autoInject test harness re-scans and re-adds it, so we assert presence)
-  await expect(page.locator('#brem .wb-badge__remove')).toBeVisible();
+  await expect(page.locator('#brem .x-badge__remove')).toBeVisible();
   await expect(page.locator('#brem')).toContainText('Tag');
 });

@@ -274,7 +274,7 @@
     "interactive": { "type": "boolean" }
   },
   "compliance": {
-    "requiredChildren": [".wb-card__header"]
+    "requiredChildren": [".x-card__header"]
   }
 }</div>
         <figcaption>Fig 1. A simplified Component Schema for a Card element.</figcaption>
@@ -302,7 +302,7 @@
             <!-- These are real working components -->
             <button variant="primary" size="xs">Schema Valid</button>
             <button variant="outlined" size="xs">Schema Valid</button>
-            <button class="btn-fake-hallucination" style="padding: 2px 6px; font-size: 0.7rem; border: 1px solid red; color: red; background: transparent;" x-toast type="error" message="Error: Schema Validation Failed. Missing required child '.wb-card__header'.">Hallucination (Invalid)</button>
+            <button class="btn-fake-hallucination" style="padding: 2px 6px; font-size: 0.7rem; border: 1px solid red; color: red; background: transparent;" x-toast type="error" message="Error: Schema Validation Failed. Missing required child '.x-card__header'.">Hallucination (Invalid)</button>
           </div>
         </div>
         <figcaption>Fig 2. Visual comparison of schema-compliant components vs. unstyled hallucination.</figcaption>

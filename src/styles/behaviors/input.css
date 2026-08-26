@@ -4,18 +4,18 @@
  * Extracted from components.css (Post-Phase 3 cleanup)
  * Works with src/wb-viewmodels/semantics/input.js
  *
- * #448: `wb-select` below is a TAG selector, not a class -- select()
- * (semantics/select.js) no longer adds a classList.add('wb-select') that
- * just duplicated the <wb-select> tag name (that container is only ever
- * the <wb-select> custom tag itself; a native <select> never reaches that
- * code path at all). `.wb-input`/`.wb-textarea` are unrelated components,
+ * #448: `x-select` below is a TAG selector, not a class -- select()
+ * (semantics/select.js) no longer adds a classList.add('x-select') that
+ * just duplicated the <select> tag name (that container is only ever
+ * the <select> custom tag itself; a native <select> never reaches that
+ * code path at all). `.x-input`/`.x-textarea` are unrelated components,
  * untouched.
  * -----------------------------------------------------------------------------
  */
 
-.wb-input,
-.wb-textarea,
-wb-select, [x-select]{
+.x-input,
+.x-textarea,
+x-select, [x-select]{
   display: block;
   width: 100%;
   padding: 0.5rem 0.75rem;
@@ -30,7 +30,7 @@ wb-select, [x-select]{
 }
 
 /* Theme bare native form controls so <input>/<select>/<textarea> without a
-   .wb-input class aren't rendered browser-white in dark themes (#191). Excludes
+   .x-input class aren't rendered browser-white in dark themes (#191). Excludes
    controls with their own rendering (checkbox/radio/range/color/file/buttons). */
 input:where(:not([type="checkbox"]):not([type="radio"]):not([type="range"]):not([type="color"]):not([type="file"]):not([type="submit"]):not([type="button"]):not([type="reset"]):not([type="image"])),
 select,
@@ -56,81 +56,81 @@ input[type="month"]::-webkit-calendar-picker-indicator {
   cursor: pointer;
 }
 
-.wb-input:focus,
-.wb-textarea:focus,
-wb-select:focus, [x-select]:focus{
+.x-input:focus,
+.x-textarea:focus,
+x-select:focus, [x-select]:focus{
   border-color: var(--primary);
   outline: 0;
   box-shadow: 0 0 0 3px hsla(var(--hue-primary), var(--saturation-primary), var(--lightness-primary), 0.2);
 }
 
-.wb-input::placeholder,
-.wb-textarea::placeholder {
+.x-input::placeholder,
+.x-textarea::placeholder {
   color: var(--text-muted);
   opacity: 1;
 }
 
-.wb-input:disabled,
-.wb-textarea:disabled,
-wb-select:disabled, [x-select]:disabled{
+.x-input:disabled,
+.x-textarea:disabled,
+x-select:disabled, [x-select]:disabled{
   background-color: var(--bg-secondary);
   opacity: 1;
   cursor: not-allowed;
 }
 
 /* Sizes */
-.wb-input--xs, .wb-select--xs, .wb-textarea--xs {
+.x-input--xs, .x-select--xs, .x-textarea--xs {
   padding: 0.125rem 0.5rem;
   font-size: 0.75rem;
 }
 
-.wb-input--sm, .wb-select--sm, .wb-textarea--sm {
+.x-input--sm, .x-select--sm, .x-textarea--sm {
   padding: 0.25rem 0.75rem;
   font-size: 0.875rem;
 }
 
-.wb-input--lg, .wb-select--lg, .wb-textarea--lg {
+.x-input--lg, .x-select--lg, .x-textarea--lg {
   padding: 0.75rem 1rem;
   font-size: 1.125rem;
 }
 
-.wb-input--xl, .wb-select--xl, .wb-textarea--xl {
+.x-input--xl, .x-select--xl, .x-textarea--xl {
   padding: 1rem 1.25rem;
   font-size: 1.25rem;
 }
 
 /* Validation States */
-.wb-input--success,
-.wb-textarea--success,
-.wb-select--success {
+.x-input--success,
+.x-textarea--success,
+.x-select--success {
   border-color: var(--success-color);
 }
-.wb-input--success:focus,
-.wb-textarea--success:focus,
-.wb-select--success:focus {
+.x-input--success:focus,
+.x-textarea--success:focus,
+.x-select--success:focus {
   box-shadow: 0 0 0 3px hsla(142, 76%, 45%, 0.2);
 }
 
-.wb-input--warning,
-.wb-textarea--warning,
-.wb-select--warning {
+.x-input--warning,
+.x-textarea--warning,
+.x-select--warning {
   border-color: var(--warning-color);
 }
 
-.wb-input--error,
-.wb-textarea--error,
-.wb-select--error {
+.x-input--error,
+.x-textarea--error,
+.x-select--error {
   border-color: var(--danger-color);
 }
-.wb-input--error:focus,
-.wb-textarea--error:focus,
-.wb-select--error:focus {
+.x-input--error:focus,
+.x-textarea--error:focus,
+.x-select--error:focus {
   box-shadow: 0 0 0 3px hsla(0, 84%, 60%, 0.2);
 }
 
 /* Checkbox & Radio */
-.wb-checkbox,
-.wb-radio {
+.x-checkbox,
+.x-radio {
   accent-color: var(--primary);
   width: 1.2em;
   height: 1.2em;
@@ -138,7 +138,7 @@ wb-select:disabled, [x-select]:disabled{
 }
 
 /* Range */
-.wb-range {
+.x-range {
   width: 100%;
   cursor: pointer;
   accent-color: var(--primary);
@@ -154,11 +154,11 @@ select[data-variant="error"] { border: 1px solid var(--danger-color); }
 
 /* -----------------------------------------------------------------------------
  * Native form controls — theme-aware defaults (#191)
- * Plain <input>/<textarea>/<select> in docs/showcases have no .wb-input class
+ * Plain <input>/<textarea>/<select> in docs/showcases have no .x-input class
  * and were falling back to the browser-native white box on dark themes. Theme
  * them from the active theme so they are dark on dark, light on light. Excludes
  * range/checkbox/radio/color (they have their own theming via accent-color).
- * Low specificity so .wb-input and component-specific rules still win.
+ * Low specificity so .x-input and component-specific rules still win.
  * --------------------------------------------------------------------------- */
 input:where(:not([type="range"]):not([type="checkbox"]):not([type="radio"]):not([type="color"]):not([type="file"])),
 textarea,
@@ -183,23 +183,23 @@ input[type="radio"] {
 /* ─────────────────────────────────────────────────────────────────────────
    #757 — <select clearable> clear affordance
 
-   John: "way too large". The clear control was built as a <wb-button>, so it
-   picked up the full button treatment (wb-button--md is padding:1rem) and
+   John: "way too large". The clear control was built as a <button>, so it
+   picked up the full button treatment (x-button--md is padding:1rem) and
    rendered as a square larger than the select beside it — and no rule for
-   .wb-select__clear existed anywhere to constrain it.
+   .x-select__clear existed anywhere to constrain it.
 
    It is now a plain <button>. These rules make it what it always should have
    been: a small glyph sitting at the end of the field, sized from the text
    around it rather than a fixed pixel value, so it tracks the select's own
    size variant.
    ───────────────────────────────────────────────────────────────────────── */
-.wb-select-clearable {
+.x-select-clearable {
   display: inline-flex;
   align-items: center;
   gap: 0.25rem;
 }
 
-.wb-select__clear {
+.x-select__clear {
   /* Reset the inherited button box rather than fight it with overrides. */
   all: unset;
   cursor: pointer;
@@ -216,14 +216,14 @@ input[type="radio"] {
   flex: 0 0 auto;
 }
 
-.wb-select__clear:hover,
-.wb-select__clear:focus-visible {
+.x-select__clear:hover,
+.x-select__clear:focus-visible {
   opacity: 1;
   background: color-mix(in srgb, var(--text-primary) 12%, transparent);
 }
 
 /* Keyboard users must be able to see it. `all: unset` drops the UA outline. */
-.wb-select__clear:focus-visible {
+.x-select__clear:focus-visible {
   outline: 2px solid var(--accent);
   outline-offset: 1px;
 }

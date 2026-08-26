@@ -20,14 +20,14 @@ There are 19 distinct card behaviors available. All share the `card` behavior bu
 
 ### cardlink
 
-To create a card that acts as a link, use the `<card-link>` custom element:
+To create a card that acts as a link, use the `<div x-cardlink>` custom element:
 
 ```html
-<card-link
+<div x-cardlink
   href="/page"
   title="My Page"
   badge="NEW">
-</card-link>
+</div>
 ```
 
 Supported attributes:
@@ -50,10 +50,10 @@ Supported attributes:
 
 ## Implementation
 - Source: [src/wb-viewmodels/card.js](../src/wb-viewmodels/card.js)
-- Playwright tests: [tests/behaviors/ui/card.spec.ts](../tests/behaviors/ui/card.spec.ts)
-- The card behavior is automatically applied to `<wb-card>` elements or `<article>` elements (if auto-inject is enabled).
-- Always adds the `wb-card` class.
-- Always adds the `wb-card--default` class if no variant is specified.
+- Playwright tests: [tests/behaviors/ui/card.spec.ts](../tests/cards/card-examples-demo.spec.ts)
+- The card behavior is automatically applied to `<article>` elements or `<article>` elements (if auto-inject is enabled).
+- Always adds the `x-card` class.
+- Always adds the `x-card--default` class if no variant is specified.
 - Supports additional classes for hoverable, clickable, elevated, and custom variants.
 
 ### Semantic HTML Relationship
@@ -67,22 +67,22 @@ When using `<article>` or `<section>`, the component will automatically enhance 
 ---
 
 ## Usage Example
-<wb-demo>
-<wb-card
+<div x-demo>
+<article
   variant="primary"
   hoverable
   clickable>
   <h3>Card Title</h3>
   <p>Card content goes here.</p>
-</wb-card>
-</wb-demo>
+</article>
+</div>
 
-> **Developer Tip:** In VS Code, type `<wb-card` to trigger IntelliSense and see available attributes.
+> **Developer Tip:** In VS Code, type `<article` to trigger IntelliSense and see available attributes.
 
 **Attribute Definitions:**
-- `variant="primary"`: Sets the card variant (e.g., primary, secondary, default). If omitted, `wb-card--default` is used.
-- `hoverable`: Adds the `wb-card--hoverable` class for hover effects. Omit or set to `false` to disable.
-- `clickable`: Adds the `wb-card--clickable` class for click interaction styling.
+- `variant="primary"`: Sets the card variant (e.g., primary, secondary, default). If omitted, `x-card--default` is used.
+- `hoverable`: Adds the `x-card--hoverable` class for hover effects. Omit or set to `false` to disable.
+- `clickable`: Adds the `x-card--clickable` class for click interaction styling.
 
 ---
 
@@ -98,10 +98,10 @@ When using `<article>` or `<section>`, the component will automatically enhance 
 ---
 
 ## Styles
-- Root class: `wb-card` (applied by the card behavior, not inherited)
-- Default variant: `wb-card--default`
-- Other variants: `wb-card--[variant]`
-- Additional: `wb-card--hoverable`, `wb-card--clickable`, `wb-card--elevated`
+- Root class: `x-card` (applied by the card behavior, not inherited)
+- Default variant: `x-card--default`
+- Other variants: `x-card--[variant]`
+- Additional: `x-card--hoverable`, `x-card--clickable`, `x-card--elevated`
 
 ---
 

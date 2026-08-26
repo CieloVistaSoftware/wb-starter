@@ -4,12 +4,12 @@
   "title": "Notes",
   "description": "Slide-out notes drawer with multiple display modes",
   "schemaFor": "notes",
-  "baseClass": "wb-notes",
+  "baseClass": "x-notes",
   "semanticElement": {
     "tagName": "aside"
   },
   "compliance": {
-    "baseClass": "wb-notes",
+    "baseClass": "x-notes",
     "supportLevel": "stable",
     "accessibility": "high"
   },
@@ -22,7 +22,7 @@
         "modal"
       ],
       "default": "left",
-      "appliesClass": "wb-notes--{{value}}"
+      "appliesClass": "x-notes--{{value}}"
     },
     "maxWidth": {
       "type": "string",
@@ -153,35 +153,35 @@
     }
   },
   "$cssAPI": {
-    "--wb-notes-width": {
+    "--x-notes-width": {
       "default": "320px",
       "description": "Default width"
     },
-    "--wb-notes-max-width": {
+    "--x-notes-max-width": {
       "default": "50vw",
       "description": "Max width"
     },
-    "--wb-notes-min-width": {
+    "--x-notes-min-width": {
       "default": "200px",
       "description": "Min width"
     },
-    "--wb-notes-bg": {
+    "--x-notes-bg": {
       "default": "var(--bg-surface, #ffffff)",
       "description": "Background"
     },
-    "--wb-notes-border": {
+    "--x-notes-border": {
       "default": "1px solid var(--border-color, #e0e0e0)",
       "description": "Border"
     },
-    "--wb-notes-shadow": {
+    "--x-notes-shadow": {
       "default": "0 4px 20px rgba(0,0,0,0.15)",
       "description": "Shadow"
     },
-    "--wb-notes-header-bg": {
+    "--x-notes-header-bg": {
       "default": "var(--bg-secondary, #f3f4f6)",
       "description": "Header background"
     },
-    "--wb-notes-z-index": {
+    "--x-notes-z-index": {
       "default": "1000",
       "description": "Z-index"
     }
@@ -214,14 +214,14 @@
   },
   "test": {
     "setup": [
-      "<wb-notes>Basic notes content</wb-notes>",
-      "<wb-notes position=\"left\">position=left</wb-notes>",
-      "<wb-notes position=\"right\">position=right</wb-notes>",
-      "<wb-notes position=\"modal\">position=modal</wb-notes>",
-      "<wb-notes auto-save>with autoSave</wb-notes>",
-      "<wb-notes max-width=\"50vw\">maxWidth=\"50vw\"</wb-notes>",
-      "<wb-notes min-width=\"200px\">minWidth=\"200px\"</wb-notes>",
-      "<wb-notes default-width=\"320px\">defaultWidth=\"320px\"</wb-notes>"
+      "<div x-notes>Basic notes content</div>",
+      "<div x-notes position=\"left\">position=left</div>",
+      "<div x-notes position=\"right\">position=right</div>",
+      "<div x-notes position=\"modal\">position=modal</div>",
+      "<div x-notes auto-save>with autoSave</div>",
+      "<div x-notes max-width=\"50vw\">maxWidth=\"50vw\"</div>",
+      "<div x-notes min-width=\"200px\">minWidth=\"200px\"</div>",
+      "<div x-notes default-width=\"320px\">defaultWidth=\"320px\"</div>"
     ],
     "matrix": {
       "combinations": [
@@ -239,13 +239,13 @@
     },
     "site": {
       "page": "content",
-      "tag": "wb-notes",
+      "tag": "x-notes",
       "renders": true,
-      "baseClass": "wb-notes",
+      "baseClass": "x-notes",
       "minInstances": 4,
       "checkText": [],
       "checkClasses": [
-        "wb-notes--right"
+        "x-notes--right"
       ],
       "checkAttributes": []
     }

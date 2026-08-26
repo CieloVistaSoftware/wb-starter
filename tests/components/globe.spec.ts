@@ -25,14 +25,14 @@ async function injectAndScan(page: Page, html: string) {
     container.innerHTML = h;
     
     // Force eager loading
-    const elements = container.querySelectorAll('.wb-ready');
+    const elements = container.querySelectorAll('.x-ready');
     elements.forEach(el => el.setAttribute('', ''));
     
     document.body.appendChild(container);
   }, html);
   
-  await page.evaluate(() => {
-    (window as any).WB.scan(document.getElementById('test-container'));
+  await page.evaluate(async () => {
+    await (window as any).WB.scan(document.getElementById('test-container'));
   });
   
   await page.waitForTimeout(500);
@@ -45,11 +45,11 @@ test.describe('globe Behavior', () => {
     page.on('pageerror', (err) => errors.push(err.message));
     
     const setupHtml = [
-      "<wb-globe>Basic globe content</wb-globe>",
-      "<wb-globe>Test permutation 2</wb-globe>",
-      "<wb-globe>Test permutation 3</wb-globe>",
-      "<wb-globe>Test permutation 4</wb-globe>",
-      "<wb-globe>Test permutation 5</wb-globe>"
+      "<div x-globe>Basic globe content</div>",
+      "<div x-globe>Test permutation 2</div>",
+      "<div x-globe>Test permutation 3</div>",
+      "<div x-globe>Test permutation 4</div>",
+      "<div x-globe>Test permutation 5</div>"
     ];
     
     await injectAndScan(page, setupHtml.join('\n'));
@@ -65,10 +65,10 @@ test.describe('globe Behavior', () => {
   });
 
   test('element is visible after scan', async ({ page }) => {
-    const html = "<wb-globe>Basic globe content</wb-globe>";
+    const html = "<div x-globe>Basic globe content</div>";
     await injectAndScan(page, html);
     
-    const el = page.locator('#test-container wb-globe, #test-container wb-globe').first();
+    const el = page.locator('#test-container [x-globe], #test-container [x-globe]').first();
     const isPresent = await el.count() > 0;
     
     if (isPresent) {

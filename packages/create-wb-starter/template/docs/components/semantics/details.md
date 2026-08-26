@@ -6,10 +6,10 @@ Enhanced accordion/disclosure component with smooth animations.
 
 | Property | Value |
 |----------|-------|
-| Custom Tag | `<wb-details>` |
+| Custom Tag | `<details>` |
 | Behavior | `details` |
 | Semantic | `<details>` |
-| Root CSS Class | `wb-details` |
+| Root CSS Class | `x-details` |
 | Category | Content |
 
 ## Properties
@@ -20,22 +20,22 @@ Enhanced accordion/disclosure component with smooth animations.
 | `open` | boolean | `false` | Open by default |
 | `animated` | boolean | `true` | Enable smooth transitions |
 
-Wrapped in `<wb-demo>`, so the live component renders below with its source shown underneath:
+Wrapped in `<div x-demo>`, so the live component renders below with its source shown underneath:
 
-<wb-demo>
-<wb-details summary="More Information">
+<div x-demo>
+<details summary="More Information">
   <p>Hidden content revealed when expanded.</p>
-</wb-details>
-</wb-demo>
+</details>
+</div>
 
 ## Usage
 
 ### Custom Element
 
 ```html
-<wb-details summary="More Information">
+<details summary="More Information">
   <p>Hidden content revealed when expanded.</p>
-</wb-details>
+</details>
 ```
 
 ### Native Details (Enhanced)
@@ -53,29 +53,29 @@ automatically, no `x-details` attribute needed.
 ### Open by Default
 
 ```html
-<wb-details
+<details
   summary="Expanded Section"
   open>
   <p>This section starts open.</p>
-</wb-details>
+</details>
 ```
 
 ### Multiple Accordion Items
 
 ```html
-<wb-details summary="Section 1">Content 1</wb-details>
-<wb-details summary="Section 2">Content 2</wb-details>
-<wb-details summary="Section 3">Content 3</wb-details>
+<details summary="Section 1">Content 1</details>
+<details summary="Section 2">Content 2</details>
+<details summary="Section 3">Content 3</details>
 ```
 
 ### Without Animation
 
 ```html
-<wb-details
+<details
   summary="Quick Toggle"
   animated="false">
   <p>No animation on open/close.</p>
-</wb-details>
+</details>
 ```
 
 ## Generated Structure
@@ -84,12 +84,12 @@ The behavior adds these classes automatically — don't hand-author them,
 they're not part of the input markup shown above.
 
 ```html
-<details class="wb-details">
-  <summary class="wb-details__summary">
-    <span class="wb-details__icon">▶</span>
-    <span class="wb-details__text">Summary Text</span>
+<details class="x-details">
+  <summary class="x-details__summary">
+    <span class="x-details__icon">▶</span>
+    <span class="x-details__text">Summary Text</span>
   </summary>
-  <div class="wb-details__content">
+  <div class="x-details__content">
     <p>Hidden content...</p>
   </div>
 </details>
@@ -99,9 +99,9 @@ they're not part of the input markup shown above.
 
 | Class | Applied When | Description |
 |-------|--------------|-------------|
-| `.wb-details` | Always | Base styling |
-| `.wb-details--open` | `open` | Open state |
-| `.wb-details--animated` | `animated` | Animations enabled |
+| `.x-details` | Always | Base styling |
+| `.x-details--open` | `open` | Open state |
+| `.x-details--animated` | `animated` | Animations enabled |
 
 ## Methods
 
@@ -113,7 +113,7 @@ they're not part of the input markup shown above.
 | `isOpen` | Property: open state | `boolean` |
 
 ```javascript
-const details = document.querySelector('wb-details');
+const details = document.querySelector('x-details');
 
 // Open/close
 details.open();
@@ -143,12 +143,12 @@ details.addEventListener('wb:details:toggle', (e) => {
 
 | Variable | Default | Description |
 |----------|---------|-------------|
-| `--wb-details-bg` | `var(--bg-secondary)` | Background |
-| `--wb-details-radius` | `4px` | Border radius |
-| `--wb-details-padding` | `1rem` | Content padding |
-| `--wb-details-summary-padding` | `0.75rem 1rem` | Summary padding |
-| `--wb-details-icon-size` | `0.75rem` | Icon size |
-| `--wb-details-transition` | `all 0.2s ease` | Animation timing |
+| `--x-details-bg` | `var(--bg-secondary)` | Background |
+| `--x-details-radius` | `4px` | Border radius |
+| `--x-details-padding` | `1rem` | Content padding |
+| `--x-details-summary-padding` | `0.75rem 1rem` | Summary padding |
+| `--x-details-icon-size` | `0.75rem` | Icon size |
+| `--x-details-transition` | `all 0.2s ease` | Animation timing |
 
 ## Accessibility
 

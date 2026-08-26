@@ -10,12 +10,12 @@
    BASE PROGRESS BAR (from demo.css)
    ═══════════════════════════════════════════════════════════════════════════ */
 
-/* #448: `wb-progress` TAG selector added alongside the `.wb-progress`
-   class -- progress() skips the bare 'wb-progress' token only for a literal
-   <wb-progress> host; a native <progress> (autoInject) or a plain
+/* #448: `x-progress` TAG selector added alongside the `.x-progress`
+   class -- progress() skips the bare 'x-progress' token only for a literal
+   <progress> host; a native <progress> (autoInject) or a plain
    <div x-progress> still gets the class, and still needs it selected here. */
-wb-progress,
-.wb-progress {
+x-progress,
+.x-progress {
   position: relative;
   height: 6px;
   background: var(--bg-tertiary);
@@ -23,19 +23,19 @@ wb-progress,
   overflow: hidden;
 }
 
-.wb-progress__bar {
+.x-progress__bar {
   height: 100%;
   background: var(--primary);
   transition: width 0.3s;
 }
 
-/* Variant colors for the custom <wb-progress> tag's fill div. progress.js
-   (semantics/progress.js) applies wb-progress--{variant} to the host for
+/* Variant colors for the custom <progress> tag's fill div. progress.js
+   (semantics/progress.js) applies x-progress--{variant} to the host for
    every variant in the schema's enum (default/primary/success/warning/error/
-   info), but no rule ever mapped that class to the .wb-progress__bar's
+   info), but no rule ever mapped that class to the .x-progress__bar's
    color — every variant silently rendered as the default primary blue.
    Custom-property names match progress.schema.json's documented
-   --wb-progress-{variant}-bg contract; values point at the theme's real
+   --x-progress-{variant}-bg contract; values point at the theme's real
    color tokens (the schema's own fallbacks reference --success/--warning/
    --error/--info, which don't exist in themes.css — only the *-color
    suffixed tokens do). Uses background-color, not the `background`
@@ -43,35 +43,35 @@ wb-progress,
    their initial values too, and this selector's higher specificity
    (two classes vs. --striped's one) silently erased the striped texture
    regardless of which rule was declared later in the file. */
-.wb-progress--default .wb-progress__bar,
-.wb-progress--primary .wb-progress__bar { background-color: var(--wb-progress-primary-bg, var(--primary)); }
-.wb-progress--success .wb-progress__bar { background-color: var(--wb-progress-success-bg, var(--success-color)); }
-.wb-progress--warning .wb-progress__bar { background-color: var(--wb-progress-warning-bg, var(--warning-color)); }
-.wb-progress--error .wb-progress__bar { background-color: var(--wb-progress-error-bg, var(--danger-color)); }
-.wb-progress--info .wb-progress__bar { background-color: var(--wb-progress-info-bg, var(--info-color)); }
+.x-progress--default .x-progress__bar,
+.x-progress--primary .x-progress__bar { background-color: var(--x-progress-primary-bg, var(--primary)); }
+.x-progress--success .x-progress__bar { background-color: var(--x-progress-success-bg, var(--success-color)); }
+.x-progress--warning .x-progress__bar { background-color: var(--x-progress-warning-bg, var(--warning-color)); }
+.x-progress--error .x-progress__bar { background-color: var(--x-progress-error-bg, var(--danger-color)); }
+.x-progress--info .x-progress__bar { background-color: var(--x-progress-info-bg, var(--info-color)); }
 
 /* Built-in % label (#280) — bump height so the text has room; the label
    overlays the bar, centered, with a shadow so it stays legible over either
    the filled or unfilled portion. */
-.wb-progress--labeled { height: 1.25rem; }
+.x-progress--labeled { height: 1.25rem; }
 
-/* Size — progress.js applies wb-progress--{size} for every value in
+/* Size — progress.js applies x-progress--{size} for every value in
    progress.schema.json's enum (xs/sm/md/lg/xl), but no rule ever mapped
    that class to a height -- every size rendered identical (confirmed live:
-   size="xs" and size="xl" both computed to 20px). `.wb-progress--labeled`
+   size="xs" and size="xl" both computed to 20px). `.x-progress--labeled`
    alone was also always forcing 1.25rem regardless of size since showLabel
    defaults true; the doubled selectors below (0,2,0) outrank it. */
-.wb-progress--xs { height: 4px; }
-.wb-progress--xs.wb-progress--labeled { height: 0.75rem; }
-.wb-progress--sm { height: 6px; }
-.wb-progress--sm.wb-progress--labeled { height: 1rem; }
-.wb-progress--md { height: 8px; }
-.wb-progress--md.wb-progress--labeled { height: 1.25rem; }
-.wb-progress--lg { height: 12px; }
-.wb-progress--lg.wb-progress--labeled { height: 1.5rem; }
-.wb-progress--xl { height: 16px; }
-.wb-progress--xl.wb-progress--labeled { height: 2rem; }
-.wb-progress__label {
+.x-progress--xs { height: 4px; }
+.x-progress--xs.x-progress--labeled { height: 0.75rem; }
+.x-progress--sm { height: 6px; }
+.x-progress--sm.x-progress--labeled { height: 1rem; }
+.x-progress--md { height: 8px; }
+.x-progress--md.x-progress--labeled { height: 1.25rem; }
+.x-progress--lg { height: 12px; }
+.x-progress--lg.x-progress--labeled { height: 1.5rem; }
+.x-progress--xl { height: 16px; }
+.x-progress--xl.x-progress--labeled { height: 2rem; }
+.x-progress__label {
   position: absolute;
   inset: 0;
   display: flex;
@@ -88,7 +88,7 @@ wb-progress,
    ANIMATE-ON-LOAD (from components.css)
    `animated` (schema default: true) means the fill grows in on first paint —
    it previously drew the SAME scrolling diagonal-stripe texture as `striped`
-   (below), so every default <wb-progress> (animated=true unless explicitly
+   (below), so every default <progress> (animated=true unless explicitly
    turned off) rendered as if `striped` were set even when it wasn't. Now
    `--animated` only grows the bar's width in; `striped`'s texture is the
    only thing that draws stripes, and `--animated` only makes that texture
@@ -96,34 +96,34 @@ wb-progress,
    see the combined selector further down).
    ═══════════════════════════════════════════════════════════════════════════ */
 
-.wb-progress--animated .wb-progress__bar {
-  animation: wb-progress-grow-in 0.6s ease-out;
+.x-progress--animated .x-progress__bar {
+  animation: x-progress-grow-in 0.6s ease-out;
 }
 
-@keyframes wb-progress-grow-in {
+@keyframes x-progress-grow-in {
   from { width: 0; }
 }
 
-@keyframes wb-progress-stripes {
+@keyframes x-progress-stripes {
   from { background-position: 1rem 0; }
   to { background-position: 0 0; }
 }
 
 /* ═══════════════════════════════════════════════════════════════════════════
-   INDETERMINATE VARIANT — for the <wb-progress> custom tag's div-based
-   .wb-progress__bar. progress.js's native-<progress> path already had an
+   INDETERMINATE VARIANT — for the <progress> custom tag's div-based
+   .x-progress__bar. progress.js's native-<progress> path already had an
    indeterminate animation, but targeting ::-webkit-progress-value — a
    pseudo-element that only exists on a real native <progress>, never on
-   this div. <wb-progress indeterminate> (every demo/showcase's usage) had
+   this div. <progress indeterminate> (every demo/showcase's usage) had
    no visual effect at all until this rule existed.
    ═══════════════════════════════════════════════════════════════════════════ */
 
-.wb-progress--indeterminate .wb-progress__bar {
+.x-progress--indeterminate .x-progress__bar {
   width: 40%;
-  animation: wb-progress-indeterminate-sweep 1.5s ease-in-out infinite;
+  animation: x-progress-indeterminate-sweep 1.5s ease-in-out infinite;
 }
 
-@keyframes wb-progress-indeterminate-sweep {
+@keyframes x-progress-indeterminate-sweep {
   0% { margin-left: -40%; }
   50% { margin-left: 60%; }
   100% { margin-left: 100%; }
@@ -133,7 +133,7 @@ wb-progress,
    GRADIENT VARIANT (from site.css)
    ═══════════════════════════════════════════════════════════════════════════ */
 
-.wb-progress-gradient {
+.x-progress-gradient {
   width: 100%;
   height: 8px;
   background: rgba(255, 255, 255, 0.1);
@@ -141,15 +141,15 @@ wb-progress,
   overflow: hidden;
 }
 
-.wb-progress-gradient__bar {
+.x-progress-gradient__bar {
   height: 100%;
   background: linear-gradient(90deg, var(--primary), var(--secondary), var(--accent));
   background-size: 200% 100%;
   border-radius: 999px;
-  animation: wb-progress-shimmer 2s linear infinite;
+  animation: x-progress-shimmer 2s linear infinite;
 }
 
-@keyframes wb-progress-shimmer {
+@keyframes x-progress-shimmer {
   0% { background-position: 200% 0; }
   100% { background-position: -200% 0; }
 }
@@ -158,7 +158,7 @@ wb-progress,
    STRIPED VARIANT (from site.css)
    ═══════════════════════════════════════════════════════════════════════════ */
 
-.wb-progress-striped {
+.x-progress-striped {
   width: 100%;
   height: 16px;
   background: rgba(255, 255, 255, 0.1);
@@ -168,7 +168,7 @@ wb-progress,
   margin-bottom: 0.75rem;
 }
 
-.wb-progress-striped__bar {
+.x-progress-striped__bar {
   height: 100%;
   background-color: var(--primary);
   background-image: linear-gradient(
@@ -183,23 +183,23 @@ wb-progress,
   );
   background-size: 1rem 1rem;
   border-radius: 999px;
-  animation: wb-progress-stripes 1s linear infinite, wb-progress-grow 2s ease-out forwards;
+  animation: x-progress-stripes 1s linear infinite, x-progress-grow 2s ease-out forwards;
   width: 0;
 }
 
-@keyframes wb-progress-grow {
+@keyframes x-progress-grow {
   from { width: 0; }
   to { width: var(--target-width, 100%); }
 }
 
 /* Color Variants */
-.wb-progress-striped__bar--primary { background-color: var(--primary); }
-.wb-progress-striped__bar--success { background-color: var(--success-color); }
-.wb-progress-striped__bar--warning { background-color: var(--warning-color); }
-.wb-progress-striped__bar--danger { background-color: var(--danger-color); }
-.wb-progress-striped__bar--info { background-color: var(--info-color, #0ea5e9); }
+.x-progress-striped__bar--primary { background-color: var(--primary); }
+.x-progress-striped__bar--success { background-color: var(--success-color); }
+.x-progress-striped__bar--warning { background-color: var(--warning-color); }
+.x-progress-striped__bar--danger { background-color: var(--danger-color); }
+.x-progress-striped__bar--info { background-color: var(--info-color, #0ea5e9); }
 
-.wb-progress-striped__bar--gradient {
+.x-progress-striped__bar--gradient {
   background-color: transparent;
   background-image: linear-gradient(
     45deg,
@@ -214,10 +214,10 @@ wb-progress,
   background-size: 1rem 1rem, 100% 100%;
 }
 
-/* Striped fill modifier for custom <wb-progress> (issue #127) — a STATIC
+/* Striped fill modifier for custom <progress> (issue #127) — a STATIC
    diagonal texture by default. It only scrolls when the host is ALSO
    `animated` (see the combined selector immediately below). */
-.wb-progress__bar--striped {
+.x-progress__bar--striped {
   background-image: linear-gradient(
     45deg,
     rgba(255, 255, 255, 0.15) 25%,
@@ -231,10 +231,10 @@ wb-progress,
   background-size: 1rem 1rem;
 }
 
-.wb-progress--animated .wb-progress__bar--striped {
-  animation: wb-progress-stripes 1s linear infinite;
+.x-progress--animated .x-progress__bar--striped {
+  animation: x-progress-stripes 1s linear infinite;
 }
 
-/* Custom <wb-progress> must be block to honor height (issue #127) */
-wb-progress,
-.wb-progress { display: block; width: 100%; }
+/* Custom <progress> must be block to honor height (issue #127) */
+x-progress,
+.x-progress { display: block; width: 100%; }

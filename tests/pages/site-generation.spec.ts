@@ -8,8 +8,8 @@ import * as path from 'path';
  * Data-driven from data/site-generator-result.json
  * Validates:
  *   1. Index page loads with all category cards
- *   2. Each category page loads, has correct wb-demo sections
- *   3. Components render inside wb-demo containers
+ *   2. Each category page loads, has correct x-demo sections
+ *   3. Components render inside x-demo containers
  *   4. No critical JS errors
  *   5. Back-to-index navigation works
  */
@@ -49,7 +49,20 @@ const siteResult = readJson<SiteResult>(resultPath);
 
 test.describe('Site Generation — Phase 4', () => {
 
-  test.skip(!siteResult, 'No site-generator-result.json — run generate-site.mjs first');
+  // #822: the guard used to be `!siteResult` alone, which only catches a
+  // MISSING file. data/site-generator-result.json sat in the repo with every
+  // count at zero, so the guard passed and the suite then asserted "0 pages"
+  // against a real index page reading "8 pages · 70 components · 767 demos".
+  // A stale artifact read as a product bug, and it blocked every commit.
+  //
+  // An empty result is not a reason to assert zeros — it means the artifact
+  // was never regenerated, which is a different thing from the site not
+  // having been generated at all. Both now skip, and both say what to run.
+  test.skip(
+    !siteResult || !siteResult.summary?.generated,
+    'data/site-generator-result.json is missing or empty — run: '
+    + 'node scripts/generate-site.mjs src/wb-models/pages/x-component-library.site.json',
+  );
 
   // ─── Index Page ───
 
@@ -112,7 +125,10 @@ test.describe('Site Generation — Phase 4', () => {
 
       test('page loads with correct heading', async ({ page }) => {
         await page.goto(`${SITE_DIR}/${pg.filename}`);
-        const h1 = page.locator('h1');
+        // The page's OWN heading, not any <h1>. content.html demos heading
+        // behaviors, so a second <h1> appears at runtime once the demos
+        // render and a bare `h1` locator hits a strict-mode violation (#837).
+        const h1 = page.locator('h1').first();
         await expect(h1).toBeVisible();
         // Heading includes icon + title
         await expect(h1).toContainText(pg.title);
@@ -124,27 +140,39 @@ test.describe('Site Generation — Phase 4', () => {
         await expect(backLink).toBeVisible();
       });
 
-      test(`has wb-demo sections`, async ({ page }) => {
+      test(`has [x-demo] sections`, async ({ page }) => {
         await page.goto(`${SITE_DIR}/${pg.filename}`);
-        const demos = page.locator('wb-demo');
+        const demos = page.locator('[x-demo]');
         const count = await demos.count();
-        // Should have at least 1 wb-demo per page
+        // Should have at least 1 x-demo per page
         expect(count).toBeGreaterThan(0);
-        // Should roughly match expected section count (demos can be deduped)
+        // #837: this used to assert `count <= sectionCount`, which had the
+        // generator backwards. #538/#563 made it emit one demo host PER
+        // INSTANCE rather than one per section -- deliberately, so a section
+        // sweeping enum variants does not bundle them into a single shared
+        // code sample (the permutation-matrix anti-pattern). cards has 66
+        // sections and 293 hosts, so the old bound could never hold. It never
+        // failed only because the whole suite was skipping on a zeroed
+        // data/site-generator-result.json.
+        //
+        // The invariant runs the other way: every section must render at
+        // least one demo host. That is the thing worth catching -- a section
+        // that generated nothing at all.
         if (pg.sectionCount) {
-          expect(count).toBeLessThanOrEqual(pg.sectionCount);
+          expect(count, `${pg.id}: ${pg.sectionCount} sections produced only ${count} demo hosts`)
+            .toBeGreaterThanOrEqual(pg.sectionCount);
         }
       });
 
-      test('wb-demo containers have child elements', async ({ page }) => {
+      test('[x-demo] containers have child elements', async ({ page }) => {
         await page.goto(`${SITE_DIR}/${pg.filename}`);
         // Wait for WB init
         await page.waitForFunction(() => (window as any).WB, null, { timeout: 10000 }).catch(() => {});
 
-        // Wait for at least one wb-demo to finish init (demo() adds a .wb-demo__grid child — #447 removed the redundant .wb-demo class)
-        await page.waitForSelector('wb-demo .wb-demo__grid', { timeout: 10000 }).catch(() => {});
+        // Wait for at least one x-demo to finish init (demo() adds a .x-demo__grid child — #447 removed the redundant .x-demo class)
+        await page.waitForSelector('[x-demo] .x-demo__grid', { timeout: 10000 }).catch(() => {});
 
-        const demos = page.locator('wb-demo:has(.wb-demo__grid)');
+        const demos = page.locator('[x-demo]:has(.x-demo__grid)');
         const count = await demos.count();
         let emptyCount = 0;
 
@@ -153,13 +181,13 @@ test.describe('Site Generation — Phase 4', () => {
         for (let i = 0; i < checkCount; i++) {
           const demo = demos.nth(i);
           await safeScrollIntoView(demo);
-          // After demo() completes, wb-demo has .wb-demo__grid + <pre> children
-          const hasGrid = await demo.locator('.wb-demo__grid').count();
+          // After demo() completes, x-demo has .x-demo__grid + <pre> children
+          const hasGrid = await demo.locator('.x-demo__grid').count();
           if (hasGrid === 0) emptyCount++;
         }
 
         // At least 1 demo should have rendered
-        expect(count, 'No initialized wb-demo found — demo() may not have run').toBeGreaterThan(0);
+        expect(count, 'No initialized [x-demo] found — demo() may not have run').toBeGreaterThan(0);
         // Allow some empty (edge cases), but not all
         expect(emptyCount, `${emptyCount}/${checkCount} demos were empty`).toBeLessThan(checkCount);
       });
@@ -168,22 +196,23 @@ test.describe('Site Generation — Phase 4', () => {
       if (pg.components && pg.components.length > 0) {
         const okComponents = pg.components.filter(c => c.status === 'ok');
 
-        test(`has wb-* tags for ${okComponents.length} components`, async ({ page }) => {
+        test(`has a host for each of ${okComponents.length} behaviors`, async ({ page }) => {
           await page.goto(`${SITE_DIR}/${pg.filename}`);
           await page.waitForFunction(() => (window as any).WB, null, { timeout: 10000 }).catch(() => {});
 
           let foundCount = 0;
           for (const comp of okComponents) {
-            const tag = `wb-${comp.name}`;
-            const elements = page.locator(tag);
+            // Components are gone: a behavior is an x- attribute on a neutral host,
+              // so search for the attribute, not a <wb-*> tag that no longer exists.
+              const elements = page.locator(`[x-${comp.name}]`);
             const elCount = await elements.count();
             if (elCount > 0) foundCount++;
           }
 
           // Most components should be present — allow a few missing
-          // (some components might share a tag, e.g. drawerLayout → wb-drawerlayout)
+          // (some components might share a tag, e.g. drawerLayout → x-drawerlayout)
           const threshold = Math.max(1, Math.floor(okComponents.length * 0.6));
-          expect(foundCount, `Only ${foundCount}/${okComponents.length} component tags found`).toBeGreaterThanOrEqual(threshold);
+          expect(foundCount, `Only ${foundCount}/${okComponents.length} behavior hosts found`).toBeGreaterThanOrEqual(threshold);
         });
       }
 

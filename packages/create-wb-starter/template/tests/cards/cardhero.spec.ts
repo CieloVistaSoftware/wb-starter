@@ -18,15 +18,15 @@ test.describe('Card Hero (integration)', () => {
     });
     
     const card = page.locator('#test-hero');
-    await expect(card).toHaveClass(/wb-card/);
-    await expect(card).toHaveClass(/wb-card--hero/);
+    await expect(card).toHaveClass(/x-card/);
+    await expect(card).toHaveClass(/x-card--hero/);
     
     // Check title exists
-    const title = card.locator('.wb-card__hero-title');
+    const title = card.locator('.x-card__hero-title');
     await expect(title).toHaveText('Hero Title');
     
     // Check subtitle exists
-    const subtitle = card.locator('.wb-card__hero-subtitle');
+    const subtitle = card.locator('.x-card__hero-subtitle');
     await expect(subtitle).toHaveText('Hero Subtitle');
   });
 
@@ -87,6 +87,6 @@ test.describe('Card Hero (integration)', () => {
     });
     
     const card = page.locator('#test-hero-left');
-    await expect(card).toHaveClass(/wb-card--align-left/);
+    await expect(card).toHaveClass(/x-card--align-left/);
   });
 });

@@ -7,8 +7,8 @@
   <meta name="description" content="A research paper on how Schema First Architecture solves AI hallucination in web development.">
   
   <!-- Import project styles for functional components -->
-  <link rel="stylesheet" href="../src/styles/themes.css">
-  <link rel="stylesheet" href="../src/styles/site.css">
+  <link rel="stylesheet" href="../src/styles/themes.css?v=3.0.91">
+  <link rel="stylesheet" href="../src/styles/site.css?v=3.0.91">
   
   <style>
     /* Scientific Paper Theme */
@@ -268,7 +268,10 @@
     .comparison-table th {
       background: #1e1e1e;
       color: white;
-      padding: 0.5rem;
+      /* #545: was 0.5rem (8px) -- th has its own dark background distinct
+         from the table, so it reads as a content panel and needs the full
+         1rem to clear the site's content-panel-edge minimum. */
+      padding: 1rem;
       text-align: left;
       font-family: var(--paper-font-sans);
       font-size: 8pt;
@@ -526,9 +529,9 @@
     "interactive": { "type": "boolean" }
   },
   "compliance": {
-    "baseClass": "wb-card",
+    "baseClass": "x-card",
     "requiredChildren": {
-      ".wb-card__header": { "description": "Card header element" }
+      ".x-card__header": { "description": "Card header element" }
     }
   },
   "test": {

@@ -22,7 +22,7 @@ export function label(element, options = {}) {
   let labelEl = element;
   let group = null;
   if (text) {
-    if (!element.id) element.id = `wb-label-target-${++_autoId}`;
+    if (!element.id) element.id = `x-label-target-${++_autoId}`;
     labelEl = document.createElement('label');
     labelEl.setAttribute('for', element.id);
     labelEl.textContent = text;
@@ -31,7 +31,7 @@ export function label(element, options = {}) {
     // never splits them onto separate lines (a bare pair of siblings could
     // wrap between them, stranding the label on its own line).
     group = document.createElement('span');
-    group.className = 'wb-label-group';
+    group.className = 'x-label-group';
     element.parentNode.insertBefore(group, element);
     if (onRight) {
       group.appendChild(element);
@@ -42,13 +42,13 @@ export function label(element, options = {}) {
     }
   }
 
-  labelEl.classList.add('wb-label');
-  if (onRight) labelEl.classList.add('wb-label--right');
-  if (config.required) labelEl.classList.add('wb-label--required');
-  if (config.optional) labelEl.classList.add('wb-label--optional');
+  labelEl.classList.add('x-label');
+  if (onRight) labelEl.classList.add('x-label--right');
+  if (config.required) labelEl.classList.add('x-label--required');
+  if (config.optional) labelEl.classList.add('x-label--optional');
 
   return () => {
-    labelEl.classList.remove('wb-label', 'wb-label--right', 'wb-label--required', 'wb-label--optional');
+    labelEl.classList.remove('x-label', 'x-label--right', 'x-label--required', 'x-label--optional');
     if (labelEl !== element) {
       labelEl.remove();
       if (group && group.parentNode) {

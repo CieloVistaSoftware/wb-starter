@@ -92,11 +92,11 @@ console.log(sayHello("Developer"));
 
 ### HTML
 
-<wb-demo>
+<div x-demo>
 <button
   variant="primary"
   x-ripple
   x-tooltip="Click me!">
   Interactive Button
 </button>
-</wb-demo>
+</div>

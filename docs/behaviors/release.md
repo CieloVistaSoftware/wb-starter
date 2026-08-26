@@ -11,7 +11,7 @@ renders the version. Reads a single source of truth
 |----------|-------|
 | Behavior | `release` |
 | Attribute | `x-release` |
-| Custom Tag | `<div x-release>` |
+| Attribute form | `<div x-release>` |
 | Applies to | any element (typically a `<span>` or `<a>`) |
 | Category | Content |
 | Source | `src/wb-viewmodels/release.js` |
@@ -34,34 +34,34 @@ without any manual `WB.scan()` call.
 
 ### Default
 
-<wb-demo>
+<div x-demo>
 <span x-release></span>
-</wb-demo>
+</div>
 
 ### Custom format showing the commit and build time
 
-<wb-demo>
+<div x-demo>
 <span x-release format="{version} ({commit}) — built {built}"></span>
-</wb-demo>
+</div>
 
 ### Non-interactive (no click-to-reload)
 
-<wb-demo>
+<div x-demo>
 <span x-release reload="false"></span>
-</wb-demo>
+</div>
 
-### Custom Tag
+### Attribute form
 
-<wb-demo>
+<div x-demo>
 <div x-release></div>
-</wb-demo>
+</div>
 
 ## CSS Classes
 
 | Class | Applied When | Description |
 |-------|--------------|--------------|
-| `.wb-release` | Always | Small, muted text styling (`font-size: 0.7em`, `color: var(--text-muted)`) |
-| `.wb-release--clickable` | `reload` is not `"false"` | Pointer cursor and a hover underline/color change to signal it's clickable |
+| `.x-release` | Always | Small, muted text styling (`font-size: 0.7em`, `color: var(--text-muted)`) |
+| `.x-release--clickable` | `reload` is not `"false"` | Pointer cursor and a hover underline/color change to signal it's clickable |
 
 ## Accessibility
 

@@ -25,16 +25,16 @@ test.describe('Dark Mode Standard: forms.html', () => {
 
   test('should have correct button variants and disabled pattern', async ({ page }) => {
     await page.goto('/demos/site/forms.html');
-    // Scoped to the button-variant showcase section (one wb-button per known
-    // variant) — the rest of the page's wb-buttons cover icon/size/boolean
+    // Scoped to the button-variant showcase section (one x-button per known
+    // variant) — the rest of the page's x-buttons cover icon/size/boolean
     // combos that legitimately have no variant attribute set.
-    const buttons = await page.$$('#button-variant-variants wb-button');
+    const buttons = await page.$$('#button-variant-variants .x-button');
     const expectedVariants = [
       'primary', 'secondary', 'success', 'warning', 'error', 'ghost', 'outline', 'link', 'info'
     ];
     for (const btn of buttons) {
       const variant = await btn.getAttribute('variant');
-      expect(variant, `every wb-button should declare a known variant`).not.toBeNull();
+      expect(variant, `every .x-button should declare a known variant`).not.toBeNull();
       expect(expectedVariants).toContain(variant);
     }
   });
@@ -46,7 +46,7 @@ test.describe('Dark Mode Standard: forms.html', () => {
     // bug. Only the BACKGROUND should never fall back to a light-mode gray
     // that would look wrong against this page's dark theme. Scroll each into
     // view first (wb-lazy.js defers enhancement via IntersectionObserver).
-    const buttons = await page.$$('#button-variant-variants wb-button');
+    const buttons = await page.$$('#button-variant-variants .x-button');
     for (const btn of buttons) {
       await btn.scrollIntoViewIfNeeded();
       await page.waitForTimeout(200);

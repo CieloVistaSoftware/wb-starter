@@ -1,0 +1,13 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "flip.schema.json",
+  "title": "Flip",
+  "description": "On click, plays the flip animation for 0.6s.",
+  "schemaFor": "x-flip",
+  "properties": {},
+  "_metadata": {
+    "generatedBy": "scripts/generate-behavior-schemas.mjs (#716)",
+    "derivedFrom": "the behavior implementation — every property here is one the code actually reads",
+    "note": "Expand by hand: enums, richer descriptions and accessibility notes cannot be read from source."
+  }
+}

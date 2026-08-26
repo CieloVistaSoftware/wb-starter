@@ -18,7 +18,7 @@ test.describe('playground: interactive examples do not steal textarea focus', ()
     await page.selectOption('#pg-examples', 'xbehaviors');
     await page.waitForFunction(() => {
       const btn = document.querySelector('#pg-preview button[x-ripple]');
-      return !!btn && btn.classList.contains('wb-ripple');
+      return !!btn && btn.classList.contains('[x-ripple]');
     }, { timeout: 15000 });
 
     await page.locator('#pg-input').evaluate((el: HTMLTextAreaElement) => {
@@ -42,9 +42,9 @@ test.describe('playground: interactive examples do not steal textarea focus', ()
   test('clicking a plain (non-interactive) card example still jumps to its source', async ({ page }) => {
     await page.goto('/demos/playground.html', { waitUntil: 'networkidle' });
     await page.selectOption('#pg-examples', 'cards');
-    await page.waitForFunction(() => document.querySelectorAll('#pg-preview wb-card').length > 0, { timeout: 15000 });
+    await page.waitForFunction(() => document.querySelectorAll('#pg-preview .x-card').length > 0, { timeout: 15000 });
 
-    await page.locator('#pg-preview wb-card').first().click();
+    await page.locator('#pg-preview .x-card').first().click();
 
     const sel = await page.locator('#pg-input').evaluate((el: HTMLTextAreaElement) => ({
       hasSelection: el.selectionEnd > el.selectionStart,

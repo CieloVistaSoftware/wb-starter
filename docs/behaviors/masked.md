@@ -16,13 +16,13 @@ literal separator inserted automatically as the user fills in slots:
 <input type="text" x-masked mask="(999) 999-9999" placeholder="(000) 000-0000">
 ```
 
-<wb-demo>
+<div x-demo>
 <input type="text" x-masked mask="(999) 999-9999" placeholder="(000) 000-0000">
-</wb-demo>
+</div>
 
-<wb-demo>
+<div x-demo>
 <input type="text" x-masked mask="AA-9999" mask-placeholder="#">
-</wb-demo>
+</div>
 
 ## Properties
 

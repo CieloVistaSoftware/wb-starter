@@ -1,4 +1,4 @@
-import { WBCard } from './wb-card.js';
+import { WBCard } from './x-card.js';
 import { mdhtml } from './mdhtml.js';
 
 /**
@@ -6,7 +6,7 @@ import { mdhtml } from './mdhtml.js';
  * -----------------------------------------------------------------------------
  * Special card for displaying fix details.
  * 
- * Custom Tag: <wb-fix-card>
+ * Custom Tag: <div x-fix-card>
  * -----------------------------------------------------------------------------
  */
 export class WBFixCard extends WBCard {
@@ -25,14 +25,14 @@ export class WBFixCard extends WBCard {
     this.classList.add('fix-card');
     
     // Inject styles for hiding scrollbars if not present
-    if (!document.getElementById('wb-fix-card-styles')) {
+    if (!document.getElementById('x-fix-card-styles')) {
       const style = document.createElement('style');
-      style.id = 'wb-fix-card-styles';
+      style.id = 'x-fix-card-styles';
       style.textContent = `
-        .wb-fix-card-scroll-container::-webkit-scrollbar {
+        .x-fix-card-scroll-container::-webkit-scrollbar {
           display: none;
         }
-        .wb-fix-card-scroll-container {
+        .x-fix-card-scroll-container {
           -ms-overflow-style: none;  /* IE and Edge */
           scrollbar-width: none;  /* Firefox */
         }
@@ -326,7 +326,7 @@ export class WBFixCard extends WBCard {
       internalBlocks.forEach(block => {
         // Only apply scroll container class to non-fix-code blocks (stack trace etc)
         if (!block.closest('.fix-code-block')) {
-            block.classList.add('wb-fix-card-scroll-container');
+            block.classList.add('x-fix-card-scroll-container');
             block.style.maxHeight = '100px';
             block.style.overflowY = 'auto';
             block.style.display = 'block';
@@ -336,9 +336,8 @@ export class WBFixCard extends WBCard {
   }
 }
 
-if (!customElements.get('wb-fix-card')) {
-  customElements.define('wb-fix-card', WBFixCard);
-}
+// Component tags are gone, so this element is no longer defined.
+// The class stays: other exports in this file are still imported.
 
 // #365: exported so wb-viewmodels/index.js's lazy-loader can resolve a
 // 'fix-card' behavior for this module (getBehavior() falls back to
@@ -346,10 +345,10 @@ if (!customElements.get('wb-fix-card')) {
 // WBFixCard's own connectedCallback/`data` setter above via the native
 // custom-element upgrade that importing this module triggers -- this
 // function is only the compliance-signaling touch other self-registering
-// custom elements use (see wb-control.js's `control()`), so schema/tag-map
+// custom elements use (see x-control.js's `control()`), so schema/tag-map
 // dispatch has something to call without fighting the class for DOM
 // ownership.
 export default function fixCard(element) {
-  element.classList.add('wb-fix-card');
+  element.classList.add('x-fix-card');
   return () => {};
 }

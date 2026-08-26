@@ -63,7 +63,7 @@ for (const file of files) {
           modified = true;
         }
         if (!entry.description) {
-          entry.description = varName.replace(/^--wb-[a-z]+-/, '').replace(/-/g, ' ');
+          entry.description = varName.replace(/^--x-[a-z]+-/, '').replace(/-/g, ' ');
           report.fixes.push({ file, type: 'cssapi_add_description', variable: varName });
           modified = true;
         }

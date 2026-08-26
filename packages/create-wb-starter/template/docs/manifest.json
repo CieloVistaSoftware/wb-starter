@@ -60,7 +60,7 @@
         {
           "file": "standards/DEMOS-AND-DOCS-STANDARDS.md",
           "title": "Demos & Documentation Standards",
-          "description": "Rules for how every demo and .md doc shows components and code: wb-demo, one code sample per rendered element, vertical + highlighted code, no horizontal scrollbars, themed Markdown, composition over inheritance, mobile-first."
+          "description": "Rules for how every demo and .md doc shows components and code: x-demo, one code sample per rendered element, vertical + highlighted code, no horizontal scrollbars, themed Markdown, composition over inheritance, mobile-first."
         },
         {
           "file": "AI.md",
@@ -257,7 +257,7 @@
         {
           "file": "behavior-cross-reference.md",
           "title": "Behavior Cross-Reference",
-          "description": "Relationships between all 168 behaviors"
+          "description": "Relationships between all 110 behaviors"
         },
         {
           "file": "audio.md",
@@ -270,6 +270,11 @@
           "description": "Auto-resize textarea behavior"
         },
         {
+          "file": "behaviors/codecontrol.md",
+          "title": "Code Control",
+          "description": "Dropdown to switch the highlight.js code theme site-wide"
+        },
+        {
           "file": "behaviors/help.md",
           "title": "Help Behavior",
           "description": "Help text behavior"
@@ -280,68 +285,93 @@
           "description": "Label behavior"
         },
         {
+          "file": "behaviors/move.md",
+          "title": "Move",
+          "description": "Reorder grid/flex items with direction buttons"
+        },
+        {
+          "file": "behaviors/release.md",
+          "title": "Release",
+          "description": "Displays the site's build/release number"
+        },
+        {
+          "file": "behaviors/ripple.md",
+          "title": "Ripple",
+          "description": "Material-style ripple effect on click"
+        },
+        {
+          "file": "behaviors/scrollalong.md",
+          "title": "ScrollAlong",
+          "description": "Sticky-sidebar positioning via CSS sticky"
+        },
+        {
+          "file": "behaviors/stagelight.md",
+          "title": "Stage Light",
+          "description": "Beam, spotlight, and fixture lighting effects"
+        },
+        {
           "file": "behaviors/tooltip.md",
           "title": "Tooltip Behavior",
           "description": "Tooltip behavior"
         },
         {
-          "file": "behaviors/wb-audio.md",
-          "title": "WB Audio",
+          "file": "behaviors/x-audio.md",
+          "title": "X-Audio",
           "description": "Audio component behavior"
         },
         {
-          "file": "behaviors/wb-card.md",
-          "title": "WB Card",
+          "file": "behaviors/x-card.md",
+          "title": "X-Card",
           "description": "Card component behavior"
         },
         {
-          "file": "behaviors/wb-cluster.md",
-          "title": "WB Cluster",
+          "file": "behaviors/x-cluster.md",
+          "title": "X-Cluster",
           "description": "Cluster layout behavior"
         },
         {
-          "file": "behaviors/wb-column.md",
-          "title": "WB Column",
+          "file": "behaviors/x-column.md",
+          "title": "X-Column",
           "description": "Column layout behavior"
         },
         {
-          "file": "behaviors/wb-control.md",
-          "title": "WB Control",
+          "file": "behaviors/x-control.md",
+          "title": "X-Control",
           "description": "Control behavior"
         },
         {
-          "file": "behaviors/wb-demo.md",
-          "title": "WB Demo",
+          "file": "behaviors/x-demo.md",
+          "title": "X-Demo",
           "description": "Demo container behavior"
         },
         {
-          "file": "behaviors/wb-grid.md",
-          "title": "WB Grid",
+          "file": "behaviors/x-grid.md",
+          "title": "X-Grid",
           "description": "Grid layout behavior"
         },
         {
-          "file": "behaviors/wb-repeater.md",
-          "title": "WB Repeater",
+          "file": "behaviors/x-repeater.md",
+          "title": "X-Repeater",
           "description": "Repeater behavior"
         },
         {
-          "file": "behaviors/wb-row.md",
-          "title": "WB Row",
+          "file": "behaviors/x-row.md",
+          "title": "X-Row",
           "description": "Row layout behavior"
         },
         {
-          "file": "behaviors/wb-search.md",
-          "title": "WB Search",
+          "file": "behaviors/x-search.md",
+          "title": "X-Searchfield",
           "description": "Search behavior"
         },
         {
-          "file": "behaviors/wb-stack.md",
-          "title": "WB Stack",
+          "file": "behaviors/x-stack.md",
+          "title": "X-Stack",
           "description": "Stack layout behavior"
         },
         {
-          "file": "behaviors/wb-themecontrol.md",
-          "title": "WB Theme Control",
+          "file": "behaviors/x-themecontrol.md",
+          "title": "X-Themecontrol",
           "description": "Theme picker dropdown — applies and persists a data-theme choice"
         },
         {
@@ -816,6 +846,11 @@
           "file": "architecture/proposals/v4-golden-ratio-layout-spec.md",
           "title": "v4 Golden-Ratio Layout Spec (Proposal)",
           "description": "Proposed golden-ratio-derived spacing scale, adapted from a real prior document"
+        },
+        {
+          "file": "architecture/proposals/remove-wb-prefix-authoring-surface.md",
+          "title": "Proposal: Drop the wb- Tag Prefix from the Authoring Surface",
+          "description": "Proposal to author components as plain HTML plus an x-* attribute instead of wb-* custom tags, keeping the wb- prefix internal to CSS/registry naming"
         },
         {
           "file": "architecture/standards/ATTRIBUTE-NAMING-STANDARD.md",

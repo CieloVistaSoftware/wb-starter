@@ -1,6 +1,6 @@
 {
   "_meta": {
-    "description": "Registry for #268 (demos/ consolidation). Categorizes every top-level demos/*.html file so the coverage gate (tests/compliance/demos-registry-coverage.spec.ts) can flag orphans/new duplicates. Scope is demos/*.html top-level only — demos/site/*.html is the generated consolidated catalog (scripts/generate-site.mjs + src/wb-models/pages/wb-component-library.site.json) and isn't tracked here. See docs/_today/demos-redo-plan-268.md for the full history.",
+    "description": "Registry for #268 (demos/ consolidation). Categorizes every top-level demos/*.html file so the coverage gate (tests/compliance/demos-registry-coverage.spec.ts) can flag orphans/new duplicates. Scope is demos/*.html top-level only — demos/site/*.html is the generated consolidated catalog (scripts/generate-site.mjs + src/wb-models/pages/x-component-library.site.json) and isn't tracked here. See docs/_today/demos-redo-plan-268.md for the full history.",
     "scope": "demos/*.html (top-level only)",
     "updated": "2026-07-15"
   },

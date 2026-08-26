@@ -15,11 +15,6 @@
       "description": "Read by accordion(). Bare attribute.",
       "default": false
     },
-    "data-accordion-title": {
-      "type": "boolean",
-      "description": "Read by accordion(). Bare attribute.",
-      "default": false
-    },
     "open": {
       "type": "boolean",
       "description": "Read by accordion(). Bare attribute.",

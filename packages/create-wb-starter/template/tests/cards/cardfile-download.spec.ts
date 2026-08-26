@@ -1,5 +1,5 @@
 /**
- * wb-cardfile — clicking the card downloads the file.
+ * x-cardfile — clicking the card downloads the file.
  * The whole card is the click target (and keyboard-activatable); it triggers a
  * download of href (falling back to the filename), naming it after `filename`.
  */
@@ -22,13 +22,13 @@ async function inject(page: Page, html: string) {
     document.body.appendChild(container);
     (window as any).WB.scan(container);
   }, html);
-  await page.locator('#test-container wb-cardfile.wb-card-file').first().waitFor({ state: 'attached', timeout: 10000 });
+  await page.locator('#test-container x-cardfile.x-card-file').first().waitFor({ state: 'attached', timeout: 10000 });
 }
 
-test.describe('wb-cardfile download', () => {
+test.describe('x-cardfile download', () => {
   test('clicking a file card downloads the file (named after filename)', async ({ page }) => {
-    await inject(page, '<wb-cardfile filename="report.pdf" size="2.4 MB" type="pdf" href="/files/report.pdf"></wb-cardfile>');
-    const card = page.locator('#test-container wb-cardfile');
+    await inject(page, '<div x-cardfile filename="report.pdf" size="2.4 MB" type="pdf" href="/files/report.pdf"></div>');
+    const card = page.locator('#test-container x-cardfile');
     await expect(card).toHaveAttribute('role', 'button');
 
     const downloadPromise = page.waitForEvent('download');
@@ -38,8 +38,8 @@ test.describe('wb-cardfile download', () => {
   });
 
   test('keyboard (Enter) on a focused file card downloads it', async ({ page }) => {
-    await inject(page, '<wb-cardfile filename="archive.zip" size="15.7 MB" type="zip" href="/files/archive.zip"></wb-cardfile>');
-    const card = page.locator('#test-container wb-cardfile');
+    await inject(page, '<div x-cardfile filename="archive.zip" size="15.7 MB" type="zip" href="/files/archive.zip"></div>');
+    const card = page.locator('#test-container x-cardfile');
     await expect(card).toHaveAttribute('tabindex', '0');
 
     const downloadPromise = page.waitForEvent('download');
@@ -58,15 +58,15 @@ test.describe('wb-cardfile download', () => {
     // screenshot: a whole grid of demo file-type cards all downloading as
     // "Sample filename (N).htm". With no href there's nothing real to
     // download, so the card must not offer to.
-    await inject(page, '<wb-cardfile filename="photo.jpg" size="856 KB" type="image"></wb-cardfile>');
-    const card = page.locator('#test-container wb-cardfile');
+    await inject(page, '<div x-cardfile filename="photo.jpg" size="856 KB" type="image"></div>');
+    const card = page.locator('#test-container x-cardfile');
     await expect(card).not.toHaveAttribute('role', 'button');
     await expect(card).not.toHaveAttribute('tabindex', '0');
-    await expect(card.locator('.wb-card__file-download')).toHaveCount(0);
+    await expect(card.locator('.x-card__file-download')).toHaveCount(0);
     // Silently doing nothing is confusing to whoever's authoring/testing
     // the card -- surface it visibly instead.
-    await expect(card.locator('.wb-card__file-warning')).toBeVisible();
-    await expect(card.locator('.wb-card__file-warning')).toHaveText(/no href/i);
+    await expect(card.locator('.x-card__file-warning')).toBeVisible();
+    await expect(card.locator('.x-card__file-warning')).toHaveText(/no href/i);
   });
 
   test('file-type attribute (the schema-declared name) picks the matching icon', async ({ page }) => {
@@ -77,8 +77,8 @@ test.describe('wb-cardfile download', () => {
     // generic file (📁) icon regardless of its declared file-type. Confirmed
     // live: demos/site/cards.html's "fileType variants" section showed the
     // identical folder icon for pdf/doc/image/video/audio/zip/file.
-    await inject(page, '<wb-cardfile file-type="image" filename="photo.jpg" href="/files/photo.jpg"></wb-cardfile>');
-    const icon = page.locator('#test-container wb-cardfile > span').first();
+    await inject(page, '<div x-cardfile file-type="image" filename="photo.jpg" href="/files/photo.jpg"></div>');
+    const icon = page.locator('#test-container x-cardfile > span').first();
     await expect(icon).toHaveText('🖼️');
   });
 });

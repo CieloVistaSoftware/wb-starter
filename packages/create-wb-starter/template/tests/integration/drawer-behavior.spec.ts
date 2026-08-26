@@ -17,7 +17,7 @@ test.describe('x-drawer auto-injection (drawer behavior)', () => {
     await page.goto('/?page=components', { waitUntil: 'networkidle' });
     const btn = page.locator('button[x-drawer]', { hasText: 'Left' }).first();
     await btn.scrollIntoViewIfNeeded();
-    await expect(btn).toHaveClass(/wb-drawer/, { timeout: 15000 });
+    await expect(btn).toHaveClass(/x-drawer/, { timeout: 15000 });
     await btn.click();
     // drawer() appends a backdrop + panel directly to <body>, not a
     // semantic <dialog> — assert by the panel's own rendered title text.
@@ -28,7 +28,7 @@ test.describe('x-drawer auto-injection (drawer behavior)', () => {
     await page.goto('/?page=components', { waitUntil: 'networkidle' });
     const btn = page.locator('button[x-drawer]', { hasText: 'Right' }).first();
     await btn.scrollIntoViewIfNeeded();
-    await expect(btn).toHaveClass(/wb-drawer/, { timeout: 15000 });
+    await expect(btn).toHaveClass(/x-drawer/, { timeout: 15000 });
     await btn.click();
     await expect(page.getByText('Right Drawer', { exact: true })).toBeVisible({ timeout: 5000 });
   });
@@ -37,7 +37,7 @@ test.describe('x-drawer auto-injection (drawer behavior)', () => {
     await page.goto('/demos/playground.html', { waitUntil: 'networkidle' });
     await page.selectOption('#pg-examples', 'xbehaviors');
     const btn = page.locator('#pg-preview button[x-drawer]').first();
-    await expect(btn).toHaveClass(/wb-drawer/, { timeout: 15000 });
+    await expect(btn).toHaveClass(/x-drawer/, { timeout: 15000 });
     await btn.click();
     await expect(page.getByText('Settings', { exact: true })).toBeVisible({ timeout: 5000 });
   });

@@ -19,6 +19,22 @@ export async function writeToClipboard(text) {
     await navigator.clipboard.writeText(text);
     return true;
   } catch (err) {
+    // The fallback has to put the text in a real, selected field for
+    // execCommand('copy') to see it — and selecting a field focuses it. That
+    // takes focus away from whatever the user was in, and removing the element
+    // afterwards leaves document.activeElement as <body> rather than handing
+    // it back.
+    //
+    // Caught as a wrong-looking Playground: clicking an example jumped to its
+    // markup and selected it, but the textarea was no longer focused, so the
+    // next keystroke went nowhere. The selection survived — it is a property
+    // of the element, not of the focus — which is what made the jump look like
+    // it had worked.
+    //
+    // For a keyboard user that is the whole bug: copy anything and you are
+    // silently returned to the top of the document.
+    const previouslyFocused = document.activeElement;
+
     const textarea = document.createElement('textarea');
     textarea.value = text;
     textarea.style.cssText = 'position:fixed;left:-9999px';
@@ -33,6 +49,18 @@ export async function writeToClipboard(text) {
       return false;
     } finally {
       document.body.removeChild(textarea);
+
+      // Restore focus, but never *give* focus to something that did not have
+      // it: with nothing focused, activeElement is <body>, and calling focus()
+      // there would be a change rather than a restoration.
+      if (previouslyFocused
+          && previouslyFocused !== document.body
+          && previouslyFocused.isConnected
+          && typeof previouslyFocused.focus === 'function') {
+        // preventScroll: restoring focus must not yank the viewport back to
+        // wherever that element sits.
+        previouslyFocused.focus({ preventScroll: true });
+      }
     }
   }
 }
@@ -48,7 +76,7 @@ export function copy(element, options = {}) {
   const config = {
     // copy.schema.json declares plain `text`/`target` (Law 11/v3 canonical
     // attributes) -- the copy-text/copy-target legacy names below were the
-    // ONLY thing ever read, so <wb-copy text="..."> (what the schema itself
+    // ONLY thing ever read, so <div x-copy text="..."> (what the schema itself
     // documents, and what demos/site/interactive.html actually writes)
     // silently fell through to copying the element's own textContent instead.
     text: options.text || element.getAttribute('text') || element.getAttribute('copy-text'),
@@ -59,8 +87,14 @@ export function copy(element, options = {}) {
     ...options
   };
 
-  // #448: no classList.add('wb-copy') -- copybutton.css's own comment
-  // confirms .wb-copy has "no dedicated CSS"; nothing selects the bare class.
+  // #448: no classList.add('x-copy') -- copybutton.css's own comment
+  // confirms .x-copy has "no dedicated CSS"; nothing selects the bare class.
+  // #448 removed this class outright; restored WITH the tag-name guard.
+  // permutation-compliance requires compliance.baseClass to cover the host
+  // (classList.contains(cls) || tagName === cls), and on an attribute host
+  // like <div x-copy> the tag is "div" -- so without the class nothing covers
+  // it. Guarded so a literal <x-copy> tag does not get a redundant class.
+  if (element.tagName.toLowerCase() !== 'x-copy') element.classList.add('x-copy');
 
   // Store original content
   const originalContent = element.innerHTML;
@@ -84,7 +118,7 @@ export function copy(element, options = {}) {
     if (config.toast) {
       createToast(config.feedback, 'success');
     } else {
-      element.classList.add('wb-copy--copied');
+      element.classList.add('x-copy--copied');
       
       // Store original and show feedback
       const originalHTML = element.innerHTML;
@@ -94,7 +128,7 @@ export function copy(element, options = {}) {
       clearTimeout(timeout);
       timeout = setTimeout(() => {
         element.innerHTML = originalHTML;
-        element.classList.remove('wb-copy--copied');
+        element.classList.remove('x-copy--copied');
       }, config.duration);
     }
   };
@@ -128,7 +162,7 @@ export function copy(element, options = {}) {
   // Cleanup
   return () => {
     clearTimeout(timeout);
-    element.classList.remove('wb-copy', 'wb-copy--copied');
+    element.classList.remove('x-copy', 'x-copy--copied');
     element.innerHTML = originalContent;
     element.style.cursor = '';
     element.removeEventListener('click', onClick);

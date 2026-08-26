@@ -29,9 +29,9 @@ export function list(element, options = {}) {
   }
 
   // Add class for styling
-  element.classList.add('wb-list');
+  element.classList.add('x-list');
   if (config.dividers) {
-    element.classList.add('wb-list--dividers');
+    element.classList.add('x-list--dividers');
   }
 
   // Clear existing content if empty (or just append?)
@@ -41,18 +41,18 @@ export function list(element, options = {}) {
   items.forEach(item => {
     const li = document.createElement('li');
     li.textContent = item;
-    li.classList.add('wb-list__item');
+    li.classList.add('x-list__item');
     element.appendChild(li);
   });
   
   // Add basic styles if not present
-  if (!document.getElementById('wb-list-style')) {
+  if (!document.getElementById('x-list-style')) {
     const style = document.createElement('style');
-    style.id = 'wb-list-style';
+    style.id = 'x-list-style';
     style.textContent = `
-      .wb-list { list-style: none; padding: 0; margin: 0; }
-      .wb-list__item { padding: 0.5rem 0; }
-      .wb-list--dividers .wb-list__item:not(:last-child) {
+      .x-list { list-style: none; padding: 0; margin: 0; }
+      .x-list__item { padding: 0.5rem 0; }
+      .x-list--dividers .x-list__item:not(:last-child) {
         border-bottom: 1px solid var(--border-color, #eee);
       }
     `;

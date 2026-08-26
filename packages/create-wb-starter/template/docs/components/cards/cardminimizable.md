@@ -6,10 +6,10 @@ Card that can be minimized like a window.
 
 | Property | Value |
 |----------|-------|
-| Custom Tag | `<wb-cardminimizable>` |
+| Custom Tag | `<div x-cardminimizable>` |
 | Behavior | `cardminimizable` |
 | Semantic | `<article>` |
-| Root CSS Class | `wb-card wb-card-minimizable wb-card--minimizable` |
+| Root CSS Class | `x-card x-card-minimizable x-card--minimizable` |
 | Composes | card structure + CSS (no base class) |
 
 ## Properties
@@ -20,28 +20,28 @@ Supports every [card property](./card.md) — that shared structure and CSS are 
 |----------|------|---------|-------------|
 | `minimized` | boolean | `false` | Initial minimized state |
 
-Wrapped in `<wb-demo>`, so the live component renders below with its source shown underneath:
+Wrapped in `<div x-demo>`, so the live component renders below with its source shown underneath:
 
-<wb-demo>
-<wb-cardminimizable title="Dashboard Widget"> Widget content here. </wb-cardminimizable>
-</wb-demo>
+<div x-demo>
+<div x-cardminimizable title="Dashboard Widget"> Widget content here. </div>
+</div>
 
 ## Usage
 
 ### Basic Minimizable
 
 ```html
-<wb-cardminimizable title="Dashboard Widget"> Widget content here. </wb-cardminimizable>
+<div x-cardminimizable title="Dashboard Widget"> Widget content here. </div>
 ```
 
 ### Initially Minimized
 
 ```html
-<wb-cardminimizable
+<div x-cardminimizable
   title="Collapsed Widget"
   minimized>
   This content is hidden initially.
-</wb-cardminimizable>
+</div>
 ```
 
 ## Events
@@ -49,7 +49,7 @@ Wrapped in `<wb-demo>`, so the live component renders below with its source show
 ### wb:cardminimizable:toggle
 
 ```javascript
-document.querySelector('wb-cardminimizable').addEventListener('wb:cardminimizable:toggle', (e) => {
+document.querySelector('x-cardminimizable').addEventListener('wb:cardminimizable:toggle', (e) => {
   console.log('Minimized:', e.detail.minimized);
 });
 ```
@@ -57,7 +57,7 @@ document.querySelector('wb-cardminimizable').addEventListener('wb:cardminimizabl
 ## JavaScript API
 
 ```javascript
-const card = document.querySelector('wb-cardminimizable');
+const card = document.querySelector('x-cardminimizable');
 
 // Control minimization
 card.wbCardMinimizable.minimize();
@@ -78,8 +78,8 @@ console.log(card.wbCardMinimizable.minimized);
 
 | Class | Applied When |
 |-------|--------------|
-| `.wb-card--minimizable` | Always |
-| `.wb-card--minimized` | When minimized |
+| `.x-card--minimizable` | Always |
+| `.x-card--minimized` | When minimized |
 
 ## Schema
 

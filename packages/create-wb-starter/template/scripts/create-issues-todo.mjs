@@ -16,7 +16,7 @@ const issues = {
     { id: "note-1769305932956-p0", type: "UI", description: "remove issues button in builder bottom right", date: "1/24/2026", fixed: false },
     { id: "note-1769302437975-p0", type: "BUG", description: "semanticContextMenu broken", date: "1/24/2026", fixed: false },
     { id: "note-1769220751805-p0", type: "BUG", description: "Behavior category buttons do not scroll to section", date: "1/23/2026", fixed: false },
-    { id: "note-1769212344261-p0", type: "UI", description: "remove wb-issues refs not in navbar", date: "1/23/2026", fixed: false },
+    { id: "note-1769212344261-p0", type: "UI", description: "remove x-issues refs not in navbar", date: "1/23/2026", fixed: false },
     { id: "note-1769212252713-p0", type: "ENHANCEMENT", description: "unit tests for x-attribute add/remove", date: "1/23/2026", fixed: false },
     { id: "note-1769194490447-p0", type: "ENHANCEMENT", description: "Issues component publishable to npm", date: "1/23/2026", fixed: false },
     { id: "note-1769194412485-p0", type: "ENHANCEMENT", description: "require test link to resolve issue", date: "1/23/2026", fixed: false },

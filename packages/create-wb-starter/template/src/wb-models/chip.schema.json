@@ -4,13 +4,13 @@
   "title": "Chip",
   "description": "Small pill-shaped tag/label, optionally dismissible",
   "schemaFor": "chip",
-  "baseClass": "wb-chip",
+  "baseClass": "x-chip",
   "semanticElement": {
     "tagName": "span",
     "implicitRole": "status"
   },
   "compliance": {
-    "baseClass": "wb-chip",
+    "baseClass": "x-chip",
     "supportLevel": "stable",
     "accessibility": "high"
   },
@@ -46,7 +46,7 @@
         "info"
       ],
       "default": "default",
-      "appliesClass": "wb-chip--{{value}}"
+      "appliesClass": "x-chip--{{value}}"
     },
     "size": {
       "type": "string",
@@ -56,13 +56,13 @@
         "lg"
       ],
       "default": "md",
-      "appliesClass": "wb-chip--{{value}}"
+      "appliesClass": "x-chip--{{value}}"
     },
     "outlined": {
       "type": "boolean",
       "description": "Outlined style",
       "default": false,
-      "appliesClass": "wb-chip--outlined"
+      "appliesClass": "x-chip--outlined"
     }
   },
   "$view": [
@@ -104,35 +104,35 @@
     }
   },
   "$cssAPI": {
-    "--wb-chip-height": {
+    "--x-chip-height": {
       "default": "28px",
       "description": "Chip height"
     },
-    "--wb-chip-padding": {
+    "--x-chip-padding": {
       "default": "0 12px",
       "description": "Chip padding"
     },
-    "--wb-chip-radius": {
+    "--x-chip-radius": {
       "default": "9999px",
       "description": "Border radius"
     },
-    "--wb-chip-font-size": {
+    "--x-chip-font-size": {
       "default": "0.75rem",
       "description": "Font size"
     },
-    "--wb-chip-bg": {
+    "--x-chip-bg": {
       "default": "var(--bg-secondary, #f3f4f6)",
       "description": "Background"
     },
-    "--wb-chip-color": {
+    "--x-chip-color": {
       "default": "var(--text-primary, #1a1a1a)",
       "description": "Text color"
     },
-    "--wb-chip-border": {
+    "--x-chip-border": {
       "default": "none",
       "description": "Border"
     },
-    "--wb-chip-gap": {
+    "--x-chip-gap": {
       "default": "4px",
       "description": "Gap between elements"
     }
@@ -147,14 +147,14 @@
   },
   "test": {
     "setup": [
-      "<wb-chip>Basic chip content</wb-chip>",
-      "<wb-chip variant=\"default\">variant=default</wb-chip>",
-      "<wb-chip variant=\"primary\">variant=primary</wb-chip>",
-      "<wb-chip variant=\"success\">variant=success</wb-chip>",
-      "<wb-chip size=\"sm\">size=sm</wb-chip>",
-      "<wb-chip size=\"md\">size=md</wb-chip>",
-      "<wb-chip size=\"lg\">size=lg</wb-chip>",
-      "<wb-chip dismissible>with dismissible</wb-chip>"
+      "<span x-chip>Basic chip content</span>",
+      "<span x-chip variant=\"default\">variant=default</span>",
+      "<span x-chip variant=\"primary\">variant=primary</span>",
+      "<span x-chip variant=\"success\">variant=success</span>",
+      "<span x-chip size=\"sm\">size=sm</span>",
+      "<span x-chip size=\"md\">size=md</span>",
+      "<span x-chip size=\"lg\">size=lg</span>",
+      "<span x-chip dismissible>with dismissible</span>"
     ],
     "matrix": {
       "combinations": [
@@ -177,16 +177,16 @@
     },
     "site": {
       "page": "feedback",
-      "tag": "wb-chip",
+      "tag": "x-chip",
       "renders": true,
-      "baseClass": "wb-chip",
+      "baseClass": "x-chip",
       "minInstances": 4,
       "checkText": [
         "Tag"
       ],
       "checkClasses": [
-        "wb-chip--primary",
-        "wb-chip--sm"
+        "x-chip--primary",
+        "x-chip--sm"
       ],
       "checkAttributes": [
         "label"

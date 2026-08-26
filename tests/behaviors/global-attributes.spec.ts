@@ -23,7 +23,7 @@ test.describe('Global Attributes', () => {
 
     await element.hover();
 
-    const tooltip = page.locator('.wb-tooltip');
+    const tooltip = page.locator('.x-tooltip');
     await expect(tooltip).toBeVisible();
     await expect(tooltip).toContainText('Global Tooltip');
   });
@@ -36,7 +36,7 @@ test.describe('Global Attributes', () => {
 
     await element.click();
 
-    const toastContainer = page.locator('.wb-toast-container');
+    const toastContainer = page.locator('.x-toast-container');
     await expect(toastContainer).toBeVisible();
     await expect(toastContainer).toContainText('Global Toast');
   });
@@ -51,10 +51,10 @@ test.describe('Global Attributes', () => {
     await element.click();
 
     // Check for the ripple effect element that should be created.
-    // ripple.js (createRipple) creates a <span class="wb-ripple__wave">, not
-    // ".wb-ripple-effect" -- that class has never existed anywhere in the
+    // ripple.js (createRipple) creates a <span class="[x-ripple]__wave">, not
+    // ".x-ripple-effect" -- that class has never existed anywhere in the
     // codebase; this assertion was stale (#354).
-    const rippleEffect = element.locator('.wb-ripple__wave');
+    const rippleEffect = element.locator('.x-ripple__wave');
     await expect(rippleEffect).toBeAttached();
   });
 
@@ -64,7 +64,7 @@ test.describe('Global Attributes', () => {
       '<span badge="success">Badge</span>'
     );
 
-    await expect(element).toHaveClass(/wb-badge--success/);
+    await expect(element).toHaveClass(/x-badge--success/);
   });
 
   test('badge global attribute with no value applies default', async ({ page }) => {
@@ -74,6 +74,6 @@ test.describe('Global Attributes', () => {
     );
 
     // Should have base badge class and potentially default variant
-    await expect(element).toHaveClass(/wb-badge/);
+    await expect(element).toHaveClass(/x-badge/);
   });
 });

@@ -1,4 +1,4 @@
-<link rel="stylesheet" href="src/styles/pages/demos.css">
+<link rel="stylesheet" href="src/styles/pages/demos.css?v=3.0.91">
 
 <div id="demos-hero" class="page__hero">
   <h1>🎮 Demos</h1>
@@ -21,67 +21,78 @@
   <details class="demos-category" data-category="Card Components">
     <summary class="demos-category__title">🃏 Card Components</summary>
     <div class="page__grid demos-card-grid">
-      <wb-card-link title="Card Components" description="18 card variants — from simple to portfolio, pricing to testimonials" href="demos/site/cards.html" target="_blank" icon="🃏"></wb-card-link>
+      <div x-cardlink title="Card Components" description="18 card variants — from simple to portfolio, pricing to testimonials" href="demos/site/cards.html" target="_blank" icon="🃏"></div>
     </div>
   </details>
   <details class="demos-category" data-category="Feedback & Status">
     <summary class="demos-category__title">🔔 Feedback & Status</summary>
     <div class="page__grid demos-card-grid">
-      <wb-card-link title="Feedback & Status" description="Alerts, badges, progress bars, ratings, spinners, toasts, tooltips" href="demos/site/feedback.html" target="_blank" icon="🔔"></wb-card-link>
+      <div x-cardlink title="Feedback & Status" description="Alerts, badges, progress bars, ratings, spinners, toasts, tooltips" href="demos/site/feedback.html" target="_blank" icon="🔔"></div>
     </div>
   </details>
   <details class="demos-category" data-category="Form Controls">
     <summary class="demos-category__title">📝 Form Controls</summary>
     <div class="page__grid demos-card-grid">
-      <wb-card-link title="Form Controls" description="Buttons, inputs, selects, checkboxes, switches, textareas" href="demos/site/forms.html" target="_blank" icon="📝"></wb-card-link>
+      <div x-cardlink title="Form Controls" description="Buttons, inputs, selects, checkboxes, switches, textareas" href="demos/site/forms.html" target="_blank" icon="📝"></div>
     </div>
   </details>
   <details class="demos-category" data-category="Overlays & Popups">
     <summary class="demos-category__title">🪟 Overlays & Popups</summary>
     <div class="page__grid demos-card-grid">
-      <wb-card-link title="Overlays & Popups" description="Dialogs, drawers, dropdowns for modal content" href="demos/site/overlays.html" target="_blank" icon="🪟"></wb-card-link>
+      <div x-cardlink title="Overlays & Popups" description="Dialogs, drawers, dropdowns for modal content" href="demos/site/overlays.html" target="_blank" icon="🪟"></div>
     </div>
   </details>
   <details class="demos-category" data-category="Layout & Navigation">
     <summary class="demos-category__title">📐 Layout & Navigation</summary>
     <div class="page__grid demos-card-grid">
-      <wb-card-link title="Layout & Navigation" description="Headers, footers, navbars, tabs, drawers, sticky, scrollalong" href="demos/site/layout.html" target="_blank" icon="📐"></wb-card-link>
+      <div x-cardlink title="Layout & Navigation" description="Headers, footers, navbars, tabs, drawers, sticky, scrollalong" href="demos/site/layout.html" target="_blank" icon="📐"></div>
     </div>
   </details>
   <details class="demos-category" data-category="Content & Media">
     <summary class="demos-category__title">📄 Content & Media</summary>
     <div class="page__grid demos-card-grid">
-      <wb-card-link title="Content & Media" description="Articles, markdown rendering, audio, tables" href="demos/site/content.html" target="_blank" icon="📄"></wb-card-link>
+      <div x-cardlink title="Content & Media" description="Articles, markdown rendering, audio, tables" href="demos/site/content.html" target="_blank" icon="📄"></div>
     </div>
   </details>
   <details class="demos-category" data-category="Visual Effects">
     <summary class="demos-category__title">✨ Visual Effects</summary>
     <div class="page__grid demos-card-grid">
-      <wb-card-link title="Visual Effects" description="Confetti, fireworks, ripple, snow — fun stuff" href="demos/site/effects.html" target="_blank" icon="✨"></wb-card-link>
+      <div x-cardlink title="Visual Effects" description="Confetti, fireworks, ripple, snow — fun stuff" href="demos/site/effects.html" target="_blank" icon="✨"></div>
     </div>
   </details>
   <details class="demos-category" data-category="Interactive & Utility">
     <summary class="demos-category__title">🔧 Interactive & Utility</summary>
     <div class="page__grid demos-card-grid">
-      <wb-card-link title="Interactive & Utility" description="Draggable, resizable, copy, dark mode, views" href="demos/site/interactive.html" target="_blank" icon="🔧"></wb-card-link>
+      <div x-cardlink title="Interactive & Utility" description="Draggable, resizable, copy, dark mode, views" href="demos/site/interactive.html" target="_blank" icon="🔧"></div>
+    </div>
+  </details>
+  <details class="demos-category" data-category="Cards & Layout">
+    <summary class="demos-category__title">🃏 Cards & Layout</summary>
+    <div class="demos-inline-examples">
+      <div x-demo><article title="Welcome" subtitle="Standard card" hoverable>This is a basic card with default styling.</article></div>
+      <div x-demo><article title="Glass Card" subtitle="With badge" badge="NEW" variant="glass" clickable hoverable elevated>All features enabled.</article></div>
+    </div>
+    <div class="page__grid demos-card-grid">
+      <div x-cardlink title="Hero" href="demos/hero.html" target="_blank" icon="🎮"></div>
     </div>
   </details>
   <details class="demos-category" data-category="Narrative & Tools">
     <summary class="demos-category__title">🏗️ Narrative & Tools</summary>
     <div class="demos-inline-examples">
-      <wb-demo><wb-themecontrol></wb-themecontrol></wb-demo>
-      <wb-demo><div x-darkmode target="self" theme="dark" class="demos-forced-dark-demo"><strong>Forced Dark Mode</strong> — stays dark regardless of the global theme.</div></wb-demo>
+      <div x-demo><div x-themecontrol></div></div>
+      <div x-demo><div x-darkmode target="self" theme="dark" class="demos-forced-dark-demo"><strong>Forced Dark Mode</strong> — stays dark regardless of the global theme.</div></div>
     </div>
     <div class="page__grid demos-card-grid">
-      <wb-card-link title="Autoinject" href="demos/autoinject.html" target="_blank" icon="🎮"></wb-card-link>
-      <wb-card-link title="Uganda Community Food Bank" href="demos/charity-food.html" target="_blank" icon="🎮"></wb-card-link>
-      <wb-card-link title="Framework Integration Demo" href="demos/frameworks.html" target="_blank" icon="🎮"></wb-card-link>
-      <wb-card-link title="wb-starter — Zero-build web components for developers" href="demos/landing-page-showcase.html" target="_blank" icon="🎮"></wb-card-link>
-      <wb-card-link title="🧩 Multi-Component Demo" href="demos/multi-component-demo-generated.html" target="_blank" icon="🎮"></wb-card-link>
-      <wb-card-link title="Playground" href="demos/playground.html" target="_blank" icon="🎮"></wb-card-link>
-      <wb-card-link title="WB Views Registry Browser" href="demos/registry-browser.html" target="_blank" icon="🎮"></wb-card-link>
-      <wb-card-link title="Schema-First Architecture: A Deterministic Framework for AI-Driven Web Development" href="demos/schema-first-architecture.html" target="_blank" icon="🎮"></wb-card-link>
-      <wb-card-link title="WB Views Demo - Complete Examples" href="demos/wb-views-demo.html" target="_blank" icon="🎮"></wb-card-link>
+      <div x-cardlink title="Autoinject" href="demos/autoinject.html" target="_blank" icon="🎮"></div>
+      <div x-cardlink title="Uganda Community Food Bank" href="demos/charity-food.html" target="_blank" icon="🎮"></div>
+      <div x-cardlink title="Framework Integration Demo" href="demos/frameworks.html" target="_blank" icon="🎮"></div>
+      <div x-cardlink title="wb-starter — Zero-build web components for developers" href="demos/landing-page-showcase.html" target="_blank" icon="🎮"></div>
+      <div x-cardlink title="🧩 Multi-Component Demo" href="demos/multi-component-demo-generated.html" target="_blank" icon="🎮"></div>
+      <div x-cardlink title="Playground" href="demos/playground.html" target="_blank" icon="🎮"></div>
+      <div x-cardlink title="WB Views Registry Browser" href="demos/registry-browser.html" target="_blank" icon="🎮"></div>
+      <div x-cardlink title="Schema-First Architecture: A Deterministic Framework for AI-Driven Web Development" href="demos/schema-first-architecture.html" target="_blank" icon="🎮"></div>
+      <div x-cardlink title="Standalone Preview" href="demos/standalone.html" target="_blank" icon="🎮"></div>
+      <div x-cardlink title="WB Views Demo - Complete Examples" href="demos/wb-views-demo.html" target="_blank" icon="🎮"></div>
     </div>
   </details>
   <!-- demos:auto:end -->
@@ -100,7 +111,7 @@
     // blocks now (scripts/generate-demos-list.mjs) — query descends into them
     // the same way regardless of nesting.
     const sections = Array.from(grid.querySelectorAll('.demos-category'));
-    const cards = Array.from(grid.querySelectorAll('wb-card-link'));
+    const cards = Array.from(grid.querySelectorAll('x-card-link'));
 
     // #253: content search. scripts/generate-demos-search-index.mjs scans
     // every demos/**/*.html and writes data/demos-search-index.json — a map
@@ -108,7 +119,7 @@
     // wb-* tags and x-* behaviors (not just the card's title). Loaded once
     // at page load; a card matches on title OR content-index terms so a
     // search like "kampala" finds a demo even though that word never
-    // appears in its <wb-card-link title>.
+    // appears in its <div x-cardlink title>.
     let contentIndex = new Map(); // href -> single lowercase searchable string
     fetch('data/demos-search-index.json')
       .then((res) => (res.ok ? res.json() : null))
@@ -143,14 +154,14 @@
         const categoryName = (section.getAttribute('data-category') || '').toLowerCase();
         const categoryMatches = !!query && categoryName.includes(query);
         if (categoryMatches) {
-          section.querySelectorAll('wb-card-link').forEach((card) => {
+          section.querySelectorAll('x-card-link').forEach((card) => {
             if (card.hidden) { card.hidden = false; visibleCount++; }
           });
         }
-        // Hide the whole section (heading + inline wb-demo examples included)
+        // Hide the whole section (heading + inline x-demo examples included)
         // once none of its cards are showing, so search doesn't leave behind
         // an empty heading with nothing under it.
-        const sectionHasVisibleCard = Array.from(section.querySelectorAll('wb-card-link')).some((c) => !c.hidden);
+        const sectionHasVisibleCard = Array.from(section.querySelectorAll('x-card-link')).some((c) => !c.hidden);
         section.hidden = !sectionHasVisibleCard;
       });
 

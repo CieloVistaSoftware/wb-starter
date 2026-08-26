@@ -5,8 +5,8 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>🧩 Multi-Component Demo</title>
-  <link rel="stylesheet" href="../src/styles/themes.css?v=3.0.91">
-  <link rel="stylesheet" href="../src/styles/site.css?v=3.0.91">
+  <link rel="stylesheet" href="../src/styles/themes.css?v=4.0.0">
+  <link rel="stylesheet" href="../src/styles/site.css?v=4.0.0">
   <style>
     body {
       padding: 2rem;
@@ -45,212 +45,212 @@
 <body>
   <header>
     <h1>🧩 Multi-Component Demo</h1>
-    <wb-themecontrol></wb-themecontrol>
+    <div x-themecontrol></div>
   </header>
   <p>Composed from multiple sources using $extends, $generate, $ref, and $include</p>
 
   <!-- 1. Badges — From Matrix -->
   <h2>Badges — From Matrix</h2>
   <div class="demo-section">
-    <wb-demo columns="1">
-      <wb-badge label="New">
-      </wb-badge>
-    </wb-demo>
-    <wb-demo columns="1">
-      <wb-badge label="Done" variant="success">
-      </wb-badge>
-    </wb-demo>
-    <wb-demo columns="1">
-      <wb-badge label="Warning" variant="warning">
-      </wb-badge>
-    </wb-demo>
-    <wb-demo columns="1">
-      <wb-badge label="Error" variant="error">
-      </wb-badge>
-    </wb-demo>
-    <wb-demo columns="1">
-      <wb-badge label="5" variant="primary" pill>
-      </wb-badge>
-    </wb-demo>
-    <wb-demo columns="1">
-      <wb-badge label="Badge" variant="success" dot>
-      </wb-badge>
-    </wb-demo>
-    <wb-demo columns="1">
-      <wb-badge label="Tag" variant="info" removable>
-      </wb-badge>
-    </wb-demo>
-    <wb-demo columns="1">
-      <wb-badge label="Outline" variant="primary" outline>
-      </wb-badge>
-    </wb-demo>
+    <div x-demo columns="1">
+      <span x-badge label="New">
+      </span>
+    </div>
+    <div x-demo columns="1">
+      <span x-badge label="Done" variant="success">
+      </span>
+    </div>
+    <div x-demo columns="1">
+      <span x-badge label="Warning" variant="warning">
+      </span>
+    </div>
+    <div x-demo columns="1">
+      <span x-badge label="Error" variant="error">
+      </span>
+    </div>
+    <div x-demo columns="1">
+      <span x-badge label="5" variant="primary" pill>
+      </span>
+    </div>
+    <div x-demo columns="1">
+      <span x-badge label="Badge" variant="success" dot>
+      </span>
+    </div>
+    <div x-demo columns="1">
+      <span x-badge label="Tag" variant="info" removable>
+      </span>
+    </div>
+    <div x-demo columns="1">
+      <span x-badge label="Outline" variant="primary" outline>
+      </span>
+    </div>
   </div>
 
   <!-- 2. Notifications — Matrix Combos -->
   <h2>Notifications — Matrix Combos</h2>
   <div class="demo-section">
-    <wb-demo columns="1">
-      <wb-cardnotification message="Info message">
-      </wb-cardnotification>
-    </wb-demo>
-    <wb-demo columns="1">
-      <wb-cardnotification message="Done!" variant="success" title="Success">
-      </wb-cardnotification>
-    </wb-demo>
-    <wb-demo columns="1">
-      <wb-cardnotification message="Warning!" variant="warning">
-      </wb-cardnotification>
-    </wb-demo>
-    <wb-demo columns="1">
-      <wb-cardnotification message="Error!" variant="error">
-      </wb-cardnotification>
-    </wb-demo>
-    <wb-demo columns="1">
-      <wb-cardnotification message="Info" variant="info" title="Notice" icon="🔔">
-      </wb-cardnotification>
-    </wb-demo>
+    <div x-demo columns="1">
+      <div x-cardnotification message="Info message">
+      </div>
+    </div>
+    <div x-demo columns="1">
+      <div x-cardnotification message="Done!" variant="success" title="Success">
+      </div>
+    </div>
+    <div x-demo columns="1">
+      <div x-cardnotification message="Warning!" variant="warning">
+      </div>
+    </div>
+    <div x-demo columns="1">
+      <div x-cardnotification message="Error!" variant="error">
+      </div>
+    </div>
+    <div x-demo columns="1">
+      <div x-cardnotification message="Info" variant="info" title="Notice" icon="🔔">
+      </div>
+    </div>
   </div>
 
   <!-- 3. Progress — All Enum Variants -->
   <h2>Progress — All Enum Variants</h2>
   <div class="demo-section">
-    <wb-demo columns="1">
-      <wb-progress variant="default" value="60">
-      </wb-progress>
-    </wb-demo>
-    <wb-demo columns="1">
-      <wb-progress variant="primary" value="60">
-      </wb-progress>
-    </wb-demo>
-    <wb-demo columns="1">
-      <wb-progress variant="success" value="60">
-      </wb-progress>
-    </wb-demo>
-    <wb-demo columns="1">
-      <wb-progress variant="warning" value="60">
-      </wb-progress>
-    </wb-demo>
-    <wb-demo columns="1">
-      <wb-progress variant="error" value="60">
-      </wb-progress>
-    </wb-demo>
-    <wb-demo columns="1">
-      <wb-progress variant="info" value="60">
-      </wb-progress>
-    </wb-demo>
-    <wb-demo columns="1">
-      <wb-progress size="xs" value="60">
-      </wb-progress>
-    </wb-demo>
-    <wb-demo columns="1">
-      <wb-progress size="sm" value="60">
-      </wb-progress>
-    </wb-demo>
-    <wb-demo columns="1">
-      <wb-progress size="md" value="60">
-      </wb-progress>
-    </wb-demo>
-    <wb-demo columns="1">
-      <wb-progress size="lg" value="60">
-      </wb-progress>
-    </wb-demo>
-    <wb-demo columns="1">
-      <wb-progress size="xl" value="60">
-      </wb-progress>
-    </wb-demo>
+    <div x-demo columns="1">
+      <progress variant="default" value="60">
+      </progress>
+    </div>
+    <div x-demo columns="1">
+      <progress variant="primary" value="60">
+      </progress>
+    </div>
+    <div x-demo columns="1">
+      <progress variant="success" value="60">
+      </progress>
+    </div>
+    <div x-demo columns="1">
+      <progress variant="warning" value="60">
+      </progress>
+    </div>
+    <div x-demo columns="1">
+      <progress variant="error" value="60">
+      </progress>
+    </div>
+    <div x-demo columns="1">
+      <progress variant="info" value="60">
+      </progress>
+    </div>
+    <div x-demo columns="1">
+      <progress size="xs" value="60">
+      </progress>
+    </div>
+    <div x-demo columns="1">
+      <progress size="sm" value="60">
+      </progress>
+    </div>
+    <div x-demo columns="1">
+      <progress size="md" value="60">
+      </progress>
+    </div>
+    <div x-demo columns="1">
+      <progress size="lg" value="60">
+      </progress>
+    </div>
+    <div x-demo columns="1">
+      <progress size="xl" value="60">
+      </progress>
+    </div>
   </div>
 
   <!-- 4. availability variants -->
   <h2>availability variants</h2>
   <div class="demo-section">
-    <wb-demo columns="1">
-      <wb-cardportfolio availability="available" name="Sample name">
-      </wb-cardportfolio>
-    </wb-demo>
-    <wb-demo columns="1">
-      <wb-cardportfolio availability="busy" name="Sample name">
-      </wb-cardportfolio>
-    </wb-demo>
-    <wb-demo columns="1">
-      <wb-cardportfolio availability="not-available" name="Sample name">
-      </wb-cardportfolio>
-    </wb-demo>
-    <wb-demo columns="1">
-      <wb-cardportfolio availability="open-to-opportunities" name="Sample name">
-      </wb-cardportfolio>
-    </wb-demo>
+    <div x-demo columns="1">
+      <div x-cardportfolio availability="available" name="Sample name">
+      </div>
+    </div>
+    <div x-demo columns="1">
+      <div x-cardportfolio availability="busy" name="Sample name">
+      </div>
+    </div>
+    <div x-demo columns="1">
+      <div x-cardportfolio availability="not-available" name="Sample name">
+      </div>
+    </div>
+    <div x-demo columns="1">
+      <div x-cardportfolio availability="open-to-opportunities" name="Sample name">
+      </div>
+    </div>
   </div>
 
   <!-- 5. Variants -->
   <h2>Variants</h2>
   <div class="demo-section">
-    <wb-demo columns="1">
-      <wb-cardportfolio variant="default" name="Sample name">
-      </wb-cardportfolio>
-    </wb-demo>
-    <wb-demo columns="1">
-      <wb-cardportfolio variant="compact" name="Sample name">
-      </wb-cardportfolio>
-    </wb-demo>
-    <wb-demo columns="1">
-      <wb-cardportfolio variant="horizontal" name="Sample name">
-      </wb-cardportfolio>
-    </wb-demo>
-    <wb-demo columns="1">
-      <wb-cardportfolio variant="full" name="Sample name">
-      </wb-cardportfolio>
-    </wb-demo>
+    <div x-demo columns="1">
+      <div x-cardportfolio variant="default" name="Sample name">
+      </div>
+    </div>
+    <div x-demo columns="1">
+      <div x-cardportfolio variant="compact" name="Sample name">
+      </div>
+    </div>
+    <div x-demo columns="1">
+      <div x-cardportfolio variant="horizontal" name="Sample name">
+      </div>
+    </div>
+    <div x-demo columns="1">
+      <div x-cardportfolio variant="full" name="Sample name">
+      </div>
+    </div>
   </div>
 
   <!-- 6. size variants -->
   <h2>size variants</h2>
   <div class="demo-section">
-    <wb-demo columns="1">
-      <wb-cardportfolio size="sm" name="Sample name">
-      </wb-cardportfolio>
-    </wb-demo>
-    <wb-demo columns="1">
-      <wb-cardportfolio size="md" name="Sample name">
-      </wb-cardportfolio>
-    </wb-demo>
-    <wb-demo columns="1">
-      <wb-cardportfolio size="lg" name="Sample name">
-      </wb-cardportfolio>
-    </wb-demo>
-    <wb-demo columns="1">
-      <wb-cardportfolio size="xl" name="Sample name">
-      </wb-cardportfolio>
-    </wb-demo>
-    <wb-demo columns="1">
-      <wb-cardportfolio size="full" name="Sample name">
-      </wb-cardportfolio>
-    </wb-demo>
-    <wb-demo columns="1">
-      <wb-cardportfolio size="auto" name="Sample name">
-      </wb-cardportfolio>
-    </wb-demo>
+    <div x-demo columns="1">
+      <div x-cardportfolio size="sm" name="Sample name">
+      </div>
+    </div>
+    <div x-demo columns="1">
+      <div x-cardportfolio size="md" name="Sample name">
+      </div>
+    </div>
+    <div x-demo columns="1">
+      <div x-cardportfolio size="lg" name="Sample name">
+      </div>
+    </div>
+    <div x-demo columns="1">
+      <div x-cardportfolio size="xl" name="Sample name">
+      </div>
+    </div>
+    <div x-demo columns="1">
+      <div x-cardportfolio size="full" name="Sample name">
+      </div>
+    </div>
+    <div x-demo columns="1">
+      <div x-cardportfolio size="auto" name="Sample name">
+      </div>
+    </div>
   </div>
 
   <!-- 7. cardportfolio — Defaults -->
   <h2>cardportfolio — Defaults</h2>
   <div class="demo-section">
-    <wb-demo columns="1">
-      <wb-cardportfolio name="Sample name" availability="available" variant="default" size="auto">
-      </wb-cardportfolio>
-    </wb-demo>
+    <div x-demo columns="1">
+      <div x-cardportfolio name="Sample name" availability="available" variant="default" size="auto">
+      </div>
+    </div>
   </div>
 
   <!-- 8. Custom Hand-Authored Section -->
   <h2>Custom Hand-Authored Section</h2>
   <div class="demo-section">
-    <wb-demo columns="1">
-      <wb-badge label="Hand-crafted" variant="primary" pill>
-      </wb-badge>
-    </wb-demo>
-    <wb-demo columns="1">
-      <wb-badge label="Also custom" variant="success" size="lg">
-      </wb-badge>
-    </wb-demo>
+    <div x-demo columns="1">
+      <span x-badge label="Hand-crafted" variant="primary" pill>
+      </span>
+    </div>
+    <div x-demo columns="1">
+      <span x-badge label="Also custom" variant="success" size="lg">
+      </span>
+    </div>
   </div>
 
   <!-- Load wb-starter -->

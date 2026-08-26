@@ -1,14 +1,16 @@
-# stack
+# Stack Layout Component
 
 Vertical stack layout component. Renders children in a column with configurable gap, background color, padding, and border radius.
 
-Apply `x-stack` to any element.
+## Type — new capability
 
-## Usage
+`x-stack` adds behavior that no HTML element implies. Nothing about a tag says "ripple" or "tooltip", so this is always opted into by attribute, on whatever element you already chose.
+
+### How to write it
 
 ```html
-<div x-stack>
-  …
+<div x-stack gap="0.75rem" pad="1rem" radius="8px">
+  <div>Queued</div><div>Running</div><div>Passed</div>
 </div>
 ```
 

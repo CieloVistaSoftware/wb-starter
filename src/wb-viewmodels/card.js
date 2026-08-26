@@ -6,8 +6,8 @@ import { readFlag, readAttr } from '../core/read-attr.js';
  * Handles extensive variants like heroes, profiles, pricing, and media cards.
  * 
  * Usage:
- *   <wb-card variant="glass" title="Title">Content</wb-card>
- *   <wb-cardhero variant="cosmic" title="Hero Title" ...></wb-cardhero>
+ *   <article variant="glass" title="Title">Content</article>
+ *   <div x-cardhero variant="cosmic" title="Hero Title" ...></div>
  * -----------------------------------------------------------------------------
  * 
  * ARCHITECTURE:
@@ -169,11 +169,11 @@ export function composeCard(element, options = {}) {
   //   - schemaProcessed: the structure came from $view, so innerHTML is the
   //     BUILT markup, not the author's -- re-injecting it would nest the card
   //     inside itself.
-  //   - an existing .wb-card__main/__header: a MutationObserver re-visit of an
+  //   - an existing .x-card__main/__header: a MutationObserver re-visit of an
   //     already-built card, same nesting hazard.
   //   - trim(): whitespace-only innerHTML is truthy, and would otherwise
   //     manufacture an empty <main> -- the blank-line problem #608 removed.
-  const alreadyBuilt = !!element.querySelector(':scope > .wb-card__main, :scope > .wb-card__header, :scope > .wb-card__body');
+  const alreadyBuilt = !!element.querySelector(':scope > .x-card__main, :scope > .x-card__header, :scope > .x-card__body');
   const authoredContent = (schemaProcessed || alreadyBuilt) ? '' : (element.innerHTML || '').trim();
 
   const config = {
@@ -221,16 +221,16 @@ export function composeCard(element, options = {}) {
   // Validate semantic container
   validateSemanticContainer(element, config.behavior);
 
-  // Apply base classes. Skip the bare 'wb-card' class when the host tag IS
-  // literally <wb-card> -- redundant (card.css selects the tag directly too,
+  // Apply base classes. Skip the bare 'x-card' class when the host tag IS
+  // literally <article> -- redundant (card.css selects the tag directly too,
   // see its own comment) and flagged by tests/compliance/
   // no-redundant-tag-name-class.spec.ts (#478). Every OTHER card variant
-  // (<wb-cardimage>, <article> auto-inject, ...) still needs the class since
-  // its own tag name isn't "wb-card" -- shared card.css rules have nothing
+  // (<div x-cardimage>, <article> auto-inject, ...) still needs the class since
+  // its own tag name isn't "x-card" -- shared card.css rules have nothing
   // else to select there.
-  if (element.tagName.toLowerCase() !== 'wb-card') element.classList.add('wb-card');
+  if (element.tagName.toLowerCase() !== 'x-card') element.classList.add('x-card');
   if (config.behavior !== 'card') {
-    element.classList.add(`wb-card--${config.behavior.replace('card', '')}`);
+    element.classList.add(`x-card--${config.behavior.replace('card', '')}`);
   }
   
   // Apply hover text as a THEMED WB tooltip (x-tooltip / tooltip.js), not
@@ -262,12 +262,12 @@ export function composeCard(element, options = {}) {
   // declared every one of them:
   //
   //   transition, border-radius, overflow, display, contain, overflow-wrap
-  //     -> `.wb-card` (card.css:24)
+  //     -> `.x-card` (card.css:24)
   //   the default background + border
-  //     -> `.wb-card { background: var(--card-bg-override, var(--bg-secondary));
+  //     -> `.x-card { background: var(--card-bg-override, var(--bg-secondary));
   //                    border: 1px solid var(--border-color) }`
   //   the rack treatment
-  //     -> `.wb-card--rack`, which uses --rack-bg / --rack-border / --rack-side
+  //     -> `.x-card--rack`, which uses --rack-bg / --rack-border / --rack-side
   //        TOKENS where this code hardcoded #0f172a / #334155 / #1e293b
   //
   // An inline declaration beats every one of those rules regardless of
@@ -283,7 +283,7 @@ export function composeCard(element, options = {}) {
   //
   // flex-direction was already left out for exactly this reason -- the comment
   // that used to sit here explained that setting it inline would block
-  // `.wb-product.wb-card--horizontal { flex-direction: row }`. That reasoning
+  // `.x-product.x-card--horizontal { flex-direction: row }`. That reasoning
   // applies to every property in the object, not just that one.
   const baseStyles = {};
 
@@ -295,7 +295,7 @@ export function composeCard(element, options = {}) {
   }
 
   // The default surface and the rack treatment were written here inline and
-  // are both already in card.css (`.wb-card`, `.wb-card--rack`). The variant
+  // are both already in card.css (`.x-card`, `.x-card--rack`). The variant
   // classes are applied a few lines below, so each variant's own rules now
   // reach the element instead of losing to an inline declaration. Nothing to
   // set here for any of them.
@@ -304,28 +304,28 @@ export function composeCard(element, options = {}) {
   
   // Variant class
   if (config.variant !== 'default') {
-    element.classList.add(`wb-card--${config.variant}`);
+    element.classList.add(`x-card--${config.variant}`);
   }
   
   // Size class (max/min-width scale, card.css) — 'xs' was missing from the
-  // allowlist so <wb-card size="xs"> silently did nothing (#282). 'auto'
-  // (a real schema-declared enum value, matching .wb-card--auto in
+  // allowlist so <article size="xs"> silently did nothing (#282). 'auto'
+  // (a real schema-declared enum value, matching .x-card--auto in
   // card.css) was missing too, for the same reason.
   if (config.size && ['xs','sm','md','lg','xl','full','auto'].includes(config.size)) {
-    element.classList.add(`wb-card--${config.size}`);
+    element.classList.add(`x-card--${config.size}`);
   }
   
-  // Elevated -- `.wb-card--elevated` (card.css) already declares the shadow,
+  // Elevated -- `.x-card--elevated` (card.css) already declares the shadow,
   // the border-color and `background: var(--bg-elevated)`. That rule carries
   // !important solely because it had to beat the inline write that used to be
   // here; its own comment says so ("!important is the only way a stylesheet
   // rule can win against an inline style"). With the inline gone the class is
   // enough, and the !important can be dropped separately. (#779)
   if (config.elevated) {
-    element.classList.add('wb-card--elevated');
+    element.classList.add('x-card--elevated');
   }
 
-  // Hoverable -- `.wb-card--hoverable:hover` (card.css:520) declares exactly
+  // Hoverable -- `.x-card--hoverable:hover` (card.css:520) declares exactly
   // the three properties the old JS handlers wrote inline (transform,
   // box-shadow, border-color). A :hover rule also does it without listeners,
   // without a mouseleave that had to guess what to restore, and it works for
@@ -338,17 +338,17 @@ export function composeCard(element, options = {}) {
   // the first hover. With no inline write there is nothing to override and
   // nothing to guard.
   if (config.hoverable) {
-    element.classList.add('wb-card--hoverable');
+    element.classList.add('x-card--hoverable');
   }
   
   if (config.clickable) {
-    element.classList.add('wb-card--clickable');
+    element.classList.add('x-card--clickable');
     element.style.cursor = 'pointer';
     element.setAttribute('tabindex', '0');
     element.setAttribute('role', 'button');
 
     clickHandler = () => {
-      element.classList.toggle('wb-card--active');
+      element.classList.toggle('x-card--active');
     };
     element.addEventListener('click', clickHandler);
     
@@ -431,19 +431,19 @@ export function composeCard(element, options = {}) {
     renderAuthoredContent: () => {
       if (!config.content) return null;
       // An existing <main> is filled rather than skipped. cardstats builds its
-      // own EMPTY .wb-card__main, so bailing out on "a main already exists"
+      // own EMPTY .x-card__main, so bailing out on "a main already exists"
       // left the content homeless AND left a styled empty box on screen -- the
       // blank-line problem of #608 with the content loss of #678 on top.
       // Only fill it when it is empty: a main with real content in it is
       // somebody else's, and overwriting it would be a different bug.
-      const existing = element.querySelector(':scope > .wb-card__main');
+      const existing = element.querySelector(':scope > .x-card__main');
       if (existing) {
         if (existing.innerHTML.trim()) return null;
         existing.innerHTML = config.content;
         return existing;
       }
       const body = document.createElement('main');
-      body.className = 'wb-card__main';
+      body.className = 'x-card__main';
       body.innerHTML = config.content;
       element.appendChild(body);
       return body;
@@ -459,22 +459,22 @@ export function composeCard(element, options = {}) {
      */
     createHeader: (extraContent = '') => {
       const h = document.createElement('header');
-      h.className = 'wb-card__header';
+      h.className = 'x-card__header';
       
       const contentDiv = document.createElement('div');
-      contentDiv.className = 'wb-card__header-content';
+      contentDiv.className = 'x-card__header-content';
       contentDiv.style.cssText = 'flex:1;min-width:0;';
 
       if (config.title) {
         const titleEl = document.createElement('h3');
-        titleEl.className = 'wb-card__title';
+        titleEl.className = 'x-card__title';
         titleEl.textContent = config.title;
         contentDiv.appendChild(titleEl);
       }
       
       if (config.subtitle) {
         const subtitleEl = document.createElement('div');
-        subtitleEl.className = 'wb-card__subtitle';
+        subtitleEl.className = 'x-card__subtitle';
         subtitleEl.textContent = config.subtitle;
         contentDiv.appendChild(subtitleEl);
       }
@@ -489,7 +489,7 @@ export function composeCard(element, options = {}) {
 
       if (config.badge) {
         const badgeEl = document.createElement('span');
-        badgeEl.className = 'wb-card__badge';
+        badgeEl.className = 'x-card__badge';
         badgeEl.textContent = config.badge;
         h.appendChild(badgeEl);
       }
@@ -502,7 +502,7 @@ export function composeCard(element, options = {}) {
      */
     createMain: (content = '') => {
       const m = document.createElement('main');
-      m.className = 'wb-card__main';
+      m.className = 'x-card__main';
       
       // Use config.content if no content passed
       const finalContent = content || config.content;
@@ -519,7 +519,7 @@ export function composeCard(element, options = {}) {
      */
     createFooter: (content = '') => {
       const footEl = document.createElement('footer');
-      footEl.className = 'wb-card__footer';
+      footEl.className = 'x-card__footer';
       
       const footerText = content || config.footer;
       if (footerText) {
@@ -536,7 +536,7 @@ export function composeCard(element, options = {}) {
     createFigure: () => {
       const fig = document.createElement('figure');
     
-      fig.className = 'wb-card__figure';
+      fig.className = 'x-card__figure';
       fig.style.cssText = 'margin:0;overflow:hidden;';
       
       return fig;
@@ -560,33 +560,33 @@ export function composeCard(element, options = {}) {
       // element.innerHTML = '';
       
       // HEADER - show if title/subtitle/badge config exists OR a semantic
-      // <header> is already present (enhance it to wb-card__header). (#159)
+      // <header> is already present (enhance it to x-card__header). (#159)
       if (showHeader && (header || config.title || config.subtitle || headerContent || config.badge)) {
         if (!header) {
           const headerEl = document.createElement('header');
-          headerEl.className = 'wb-card__header';
+          headerEl.className = 'x-card__header';
           
           const headerContentWrap = document.createElement('div');
-          headerContentWrap.className = 'wb-card__header-content';
+          headerContentWrap.className = 'x-card__header-content';
           headerContentWrap.style.cssText = 'flex:1;min-width:0;';
 
           if (config.title) {
             const titleElem = document.createElement('h3');
-            titleElem.className = 'wb-card__title';
+            titleElem.className = 'x-card__title';
             titleElem.textContent = config.title;
             headerContentWrap.appendChild(titleElem);
           }
           
           if (config.subtitle) {
             const subtitleElem = document.createElement('div');
-            subtitleElem.className = 'wb-card__subtitle';
+            subtitleElem.className = 'x-card__subtitle';
             subtitleElem.textContent = config.subtitle;
             headerContentWrap.appendChild(subtitleElem);
           }
           
           if (headerContent) {
             const extraDiv = document.createElement('div');
-            extraDiv.className = 'wb-card__header-extra';
+            extraDiv.className = 'x-card__header-extra';
             extraDiv.innerHTML = headerContent;
             headerContentWrap.appendChild(extraDiv);
           }
@@ -595,7 +595,7 @@ export function composeCard(element, options = {}) {
 
           if (config.badge) {
             const headerBadge = document.createElement('span');
-            headerBadge.className = 'wb-card__badge';
+            headerBadge.className = 'x-card__badge';
             headerBadge.textContent = config.badge;
             headerEl.appendChild(headerBadge);
           }
@@ -608,15 +608,15 @@ export function composeCard(element, options = {}) {
           }
         } else {
           // Enhance existing header
-          header.classList.add('wb-card__header');
+          header.classList.add('x-card__header');
           header.style.padding = header.style.padding || '1rem';
           header.style.borderBottom = header.style.borderBottom || '1px solid var(--border-color,#374151)';
           header.style.background = header.style.background || VAR_BG_TERTIARY;
           
           // Inject badge if missing
-          if (config.badge && !header.querySelector('.wb-card__badge')) {
+          if (config.badge && !header.querySelector('.x-card__badge')) {
             const existingHeaderBadge = document.createElement('span');
-            existingHeaderBadge.className = 'wb-card__badge';
+            existingHeaderBadge.className = 'x-card__badge';
             existingHeaderBadge.textContent = config.badge;
             header.appendChild(existingHeaderBadge);
           }
@@ -630,7 +630,7 @@ export function composeCard(element, options = {}) {
         const mainText = mainContent || config.content;
         if (!main && mainText) {
           const mainEl = document.createElement('main');
-          mainEl.className = 'wb-card__main';
+          mainEl.className = 'x-card__main';
           mainEl.innerHTML = mainText;
           main = mainEl;
           if (footer) {
@@ -657,7 +657,7 @@ export function composeCard(element, options = {}) {
             main.remove();
             main = null;
           } else {
-            main.classList.add('wb-card__main');
+            main.classList.add('x-card__main');
             main.style.padding = main.style.padding || '1rem';
             main.style.flex = main.style.flex || '1';
             main.style.color = main.style.color || VAR_TEXT_PRIMARY;
@@ -666,18 +666,18 @@ export function composeCard(element, options = {}) {
       }
       
       // FOOTER - show if footer config text exists OR a semantic <footer> is
-      // already present (enhance it to wb-card__footer). (#159)
+      // already present (enhance it to x-card__footer). (#159)
       if (showFooter && (footer || config.footer || footerContent)) {
         if (!footer) {
           const footerEl = document.createElement('footer');
-          footerEl.className = 'wb-card__footer';
+          footerEl.className = 'x-card__footer';
           footerEl.textContent = footerContent || config.footer;
           
           footer = footerEl;
           element.appendChild(footerEl);
         } else {
           // Enhance existing footer
-          footer.classList.add('wb-card__footer');
+          footer.classList.add('x-card__footer');
           footer.style.padding = footer.style.padding || '0.75rem 1rem';
           footer.style.borderTop = footer.style.borderTop || '1px solid var(--border-color,#374151)';
           footer.style.background = footer.style.background || VAR_BG_TERTIARY;
@@ -689,10 +689,10 @@ export function composeCard(element, options = {}) {
     
     // Cleanup function
     cleanup: () => {
-      element.classList.remove('wb-card', `wb-card--${config.behavior.replace('card', '')}`,
-        `wb-card--${config.variant}`, `wb-card--${config.size}`, 'wb-card--hoverable', 'wb-card--elevated', 
-        'wb-card--clickable', 'wb-card--active');
-      // No hover listeners to remove: hover is `.wb-card--hoverable:hover` in
+      element.classList.remove('x-card', `x-card--${config.behavior.replace('card', '')}`,
+        `x-card--${config.variant}`, `x-card--${config.size}`, 'x-card--hoverable', 'x-card--elevated', 
+        'x-card--clickable', 'x-card--active');
+      // No hover listeners to remove: hover is `.x-card--hoverable:hover` in
       // card.css now, and the class is removed above. (#779)
       if (clickHandler) {
         element.removeEventListener('click', clickHandler);
@@ -706,13 +706,13 @@ export function composeCard(element, options = {}) {
 
 /**
  * Card Component
- * Custom Tag: <wb-card>
+ * Custom Tag: <article>
  */
 export function card(element, options = {}) {
   // #202: a legacy MVVM template (schema $view / views-registry / partial) may
   // have ALREADY wrapped our content in a competing `.card` structure
   // (.card__header/.card__title/.card__body). card.js is the SOLE renderer of the
-  // card (.wb-card__*), so unwrap that legacy chrome — keep only its body content
+  // card (.x-card__*), so unwrap that legacy chrome — keep only its body content
   // — before we build. Title/subtitle/footer come from attributes; the body is the
   // real slotted content. This is what produced 2–4× duplicate title/footer.
   const legacyCard = element.querySelector(':scope > .card, :scope > article.card, :scope > div.card');
@@ -723,7 +723,7 @@ export function card(element, options = {}) {
 
   // FIX: Un-wrap auto-generated main if it contains semantic elements
   // This happens because SchemaBuilder wraps ALL content in the 'main' part defined in schema
-  const autoMain = element.querySelector(':scope > .wb-card__main');
+  const autoMain = element.querySelector(':scope > .x-card__main');
   if (autoMain && (autoMain.querySelector('header') || autoMain.querySelector('main'))) {
     const fragment = document.createDocumentFragment();
     while (autoMain.firstChild) {
@@ -787,7 +787,7 @@ export function cardimage(element, options = {}) {
     // variant's own content resolution already has (see composeCard/card()
     // line ~155) -- a plain content="..." ATTRIBUTE (the form every
     // cardimage.md example uses) was silently ignored, falling through to
-    // innerHTML, which is empty for a self-closing-style <wb-cardimage
+    // innerHTML, which is empty for a self-closing-style <div x-cardimage
     // src="..." content="...">. Confirmed live: "Optional content below the
     // image." never rendered, just an empty content area.
     content: options.content || readAttr(element, 'content') || element.getAttribute('content') || element.innerHTML,
@@ -795,7 +795,7 @@ export function cardimage(element, options = {}) {
   };
 
   const base = composeCard(element, { ...config, behavior: 'cardimage' });
-  element.classList.add('wb-card-image');
+  element.classList.add('x-card-image');
   element.innerHTML = '';
 
   // Build header/main/footer structure
@@ -861,7 +861,7 @@ export function cardvideo(element, options = {}) {
   };
 
   const base = composeCard(element, { ...config, behavior: 'cardvideo' });
-  element.classList.add('wb-card-video');
+  element.classList.add('x-card-video');
   element.innerHTML = '';
 
   // Build header/main/footer
@@ -891,7 +891,7 @@ export function cardvideo(element, options = {}) {
       element.setAttribute('data-captions-missing', 'true');
       // Add accessibility warning
       const warning = document.createElement('div');
-      warning.className = 'wb-card__video-warning';
+      warning.className = 'x-card__video-warning';
       warning.style.cssText = 'display:none;'; // Hidden but present for tests/SR
       warning.textContent = 'Video missing captions';
       coverFigure.appendChild(warning);
@@ -921,23 +921,23 @@ export function cardbutton(element, options = {}) {
   };
 
   const base = composeCard(element, config);
-  element.classList.add('wb-card-button');
+  element.classList.add('x-card-button');
   element.innerHTML = '';
   base.buildStructure();
 
   // Add button footer if needed
   if (config.primary || config.secondary) {
     const btnFooter = document.createElement('footer');
-    btnFooter.className = 'wb-card__btn-footer';
+    btnFooter.className = 'x-card__btn-footer';
     // #561: this and the two button inline style.cssText assignments below
-    // duplicated card.css's `.wb-card__btn-footer` / `.wb-card__btn.wb-card__
-    // btn--secondary` / `.wb-card__btn.wb-card__btn--primary` rules property
+    // duplicated card.css's `.x-card__btn-footer` / `.x-card__btn.x-card__
+    // btn--secondary` / `.x-card__btn.x-card__btn--primary` rules property
     // for property -- and being inline, silently overrode them, so bumping
     // the CSS class alone (the button's own padding was 0.625rem/10px,
     // below the §13 1rem/16px minimum) would never have changed what
-    // actually rendered. card.css's own comment on `.wb-card__btn-footer
-    // .wb-card__btn` already said "the buttons only ever appear inside
-    // .wb-card__btn-footer... so this costs nothing" -- that migration was
+    // actually rendered. card.css's own comment on `.x-card__btn-footer
+    // .x-card__btn` already said "the buttons only ever appear inside
+    // .x-card__btn-footer... so this costs nothing" -- that migration was
     // written but never finished; these three inline styles were the reason.
     // Buttons with no *Href just sat inert -- no click handler at all, so
     // clicking e.g. "Confirm Delete" did visibly nothing. A component
@@ -945,32 +945,37 @@ export function cardbutton(element, options = {}) {
     // signal the click happened -- same bubbling wb:{behavior}:{action}
     // convention as cardnotification/cardproduct/etc (card.js) -- so a real
     // consumer (or this project's own demo pages) has something to listen for.
-    if (config.secondary) {
-      const secBtn = document.createElement(config.secondaryHref ? 'a' : 'button');
-      secBtn.className = 'wb-card__btn wb-card__btn--secondary';
-      secBtn.textContent = config.secondary;
-      if (config.secondaryHref) {
-        secBtn.href = config.secondaryHref;
+    // One builder, two kinds. These were two 13-line blocks differing only in
+    // the words "secondary" and "primary" -- a NEAR duplicate flagged by the
+    // code auditor (#883). Two copies of one piece of logic is two places for
+    // a fix to land in only one, which is exactly how this project's dispatch
+    // and prefix bugs happened.
+    const addActionButton = (kind) => {
+      const label = config[kind];
+      if (!label) return;
+      const href = config[`${kind}Href`];
+      const btn = document.createElement(href ? 'a' : 'button');
+      btn.className = `x-card__btn x-card__btn--${kind}`;
+      btn.textContent = label;
+      if (href) {
+        btn.href = href;
       } else {
-        secBtn.addEventListener('click', () => {
-          element.dispatchEvent(new CustomEvent('wb:cardbutton:secondary', { bubbles: true, detail: { label: config.secondary } }));
+        // A component-library button cannot know the app's save/confirm logic,
+        // but it must signal that the click happened -- the same bubbling
+        // wb:{behavior}:{action} convention the other card variants use.
+        btn.addEventListener('click', () => {
+          element.dispatchEvent(new CustomEvent(`wb:cardbutton:${kind}`, {
+            bubbles: true,
+            detail: { label },
+          }));
         });
       }
-      btnFooter.appendChild(secBtn);
-    }
-    if (config.primary) {
-      const priBtn = document.createElement(config.primaryHref ? 'a' : 'button');
-      priBtn.className = 'wb-card__btn wb-card__btn--primary';
-      priBtn.textContent = config.primary;
-      if (config.primaryHref) {
-        priBtn.href = config.primaryHref;
-      } else {
-        priBtn.addEventListener('click', () => {
-          element.dispatchEvent(new CustomEvent('wb:cardbutton:primary', { bubbles: true, detail: { label: config.primary } }));
-        });
-      }
-      btnFooter.appendChild(priBtn);
-    }
+      btnFooter.appendChild(btn);
+    };
+
+    // Order matters: secondary renders before primary.
+    addActionButton('secondary');
+    addActionButton('primary');
     element.appendChild(btnFooter);
   }
   return base.cleanup;
@@ -995,16 +1000,16 @@ export function cardhero(element, options = {}) {
     pretitle: options.pretitle || readAttr(element, 'pretitle') || element.getAttribute('pretitle'),
     // Documented in cardhero.schema.json (enum: default/cosmic/split/
     // minimal/gradient) but never actually read here -- CSS never got a
-    // corresponding .wb-cardhero--<variant> rule either, so every variant
+    // corresponding .x-cardhero--<variant> rule either, so every variant
     // rendered pixel-identical (#383).
     variant: options.variant || readAttr(element, 'variant') || element.getAttribute('variant') || 'default',
     ...options
   };
 
   const base = composeCard(element, { ...config, behavior: 'cardhero', hoverable: false });
-  element.classList.add('wb-hero');
+  element.classList.add('x-hero');
   if (config.variant && config.variant !== 'default') {
-    element.classList.add(`wb-cardhero--${config.variant}`);
+    element.classList.add(`x-cardhero--${config.variant}`);
   }
   // composeCard applies the default card surface (inline background:var(--bg-secondary)
   // + border). A hero owns its own full-bleed background, so clear those inline
@@ -1035,10 +1040,10 @@ export function cardhero(element, options = {}) {
 
   element.innerHTML = '';
   element.style.minHeight = config.height;
-  element.classList.add(`wb-card--xalign-${config.xalign}`);
+  element.classList.add(`x-card--xalign-${config.xalign}`);
 
   // Background: a user-provided image/gradient is applied inline; the default
-  // rich theme gradient + all colors live in hero.css (wb-cardhero…), so there
+  // rich theme gradient + all colors live in hero.css (x-cardhero…), so there
   // are NO hardcoded colors here.
   if (config.background) {
     const isCssValue = config.background.includes('gradient') || config.background.startsWith('var(');
@@ -1067,7 +1072,7 @@ export function cardhero(element, options = {}) {
         if (!document.contains(element)) return;
         element.removeAttribute('background');
         element.style.removeProperty('background-image');
-        throw new Error(`wb-cardhero: failed to load background "${config.background}" -- the file is missing or unreachable. Falling back to the default gradient.`);
+        throw new Error(`x-cardhero: failed to load background "${config.background}" -- the file is missing or unreachable. Falling back to the default gradient.`);
       });
       probe.src = config.background;
     }
@@ -1076,42 +1081,42 @@ export function cardhero(element, options = {}) {
   // Legibility scrim + content are styled by classes in hero.css.
   if (config.overlay) {
     const overlayEl = document.createElement('div');
-    overlayEl.className = 'wb-card__overlay';
+    overlayEl.className = 'x-card__overlay';
     element.appendChild(overlayEl);
   }
 
   const content = document.createElement('div');
-  content.className = 'wb-card__hero-content';
+  content.className = 'x-card__hero-content';
 
   // Pretitle (eyebrow). All visual styling lives in hero.css.
   if (slots.pretitle) {
-    slots.pretitle.classList.add('wb-card__hero-pretitle');
+    slots.pretitle.classList.add('x-card__hero-pretitle');
     content.appendChild(slots.pretitle);
   } else if (base.config.pretitle) {
     const preEl = document.createElement('div');
-    preEl.className = 'wb-card__hero-pretitle';
+    preEl.className = 'x-card__hero-pretitle';
     preEl.innerHTML = base.config.pretitle;
     content.appendChild(preEl);
   }
 
   // Title.
   if (slots.title) {
-    slots.title.classList.add('wb-card__title', 'wb-card__hero-title');
+    slots.title.classList.add('x-card__title', 'x-card__hero-title');
     content.appendChild(slots.title);
   } else if (base.config.title) {
     const titleEl = document.createElement('h3');
-    titleEl.className = 'wb-card__title wb-card__hero-title';
+    titleEl.className = 'x-card__title x-card__hero-title';
     titleEl.innerHTML = base.config.title;
     content.appendChild(titleEl);
   }
 
   // Subtitle.
   if (slots.subtitle) {
-    slots.subtitle.classList.add('wb-card__subtitle', 'wb-card__hero-subtitle');
+    slots.subtitle.classList.add('x-card__subtitle', 'x-card__hero-subtitle');
     content.appendChild(slots.subtitle);
   } else if (base.config.subtitle) {
     const subtitleEl = document.createElement('div');
-    subtitleEl.className = 'wb-card__subtitle wb-card__hero-subtitle';
+    subtitleEl.className = 'x-card__subtitle x-card__hero-subtitle';
     subtitleEl.innerHTML = base.config.subtitle;
     content.appendChild(subtitleEl);
   }
@@ -1119,11 +1124,11 @@ export function cardhero(element, options = {}) {
   // CTAs — hero-specific button classes (styled in hero.css, theme colors).
   if (base.config.cta || base.config.ctaSecondary) {
     const ctaGroup = document.createElement('div');
-    ctaGroup.className = 'wb-card__cta-group';
+    ctaGroup.className = 'x-card__cta-group';
 
     if (base.config.cta) {
       const btn = document.createElement('a');
-      btn.className = 'wb-hero-cta wb-hero-cta--primary';
+      btn.className = 'x-hero-cta x-hero-cta--primary';
       btn.href = base.config.ctaHref || '#';
       btn.textContent = base.config.cta;
       // Set BEFORE appending — the MutationObserver-driven auto-injection
@@ -1135,7 +1140,7 @@ export function cardhero(element, options = {}) {
 
     if (base.config.ctaSecondary) {
       const secondaryBtn = document.createElement('a');
-      secondaryBtn.className = 'wb-hero-cta wb-hero-cta--secondary';
+      secondaryBtn.className = 'x-hero-cta x-hero-cta--secondary';
       secondaryBtn.href = base.config.ctaSecondaryHref || '#';
       secondaryBtn.textContent = base.config.ctaSecondary;
       if (base.config.ctaSecondaryTooltip) secondaryBtn.setAttribute('x-tooltip', base.config.ctaSecondaryTooltip);
@@ -1181,7 +1186,7 @@ export function cardprofile(element, options = {}) {
   // Cover
   if (config.cover) {
     const coverFig = base.createFigure();
-    coverFig.className = 'wb-card__figure wb-card__cover';
+    coverFig.className = 'x-card__figure x-card__cover';
     coverFig.style.cssText = `position:relative;margin:0;height:36px;background-image:url(${config.cover});background-size:cover;background-position:center;`;
 
     // Role sits on the cover (the card's top half) instead of below the
@@ -1198,7 +1203,7 @@ export function cardprofile(element, options = {}) {
     // taller strip so there's still balanced clearance below.
     if (config.role) {
       const roleBadge = document.createElement('div');
-      roleBadge.className = 'wb-card__subtitle wb-card__role';
+      roleBadge.className = 'x-card__subtitle x-card__role';
       roleBadge.style.cssText = 'position:absolute;top:8px;right:0.6rem;padding:0.15rem 0.6rem;border-radius:999px;background:rgba(0,0,0,0.55);color:#fff;font-size:0.7rem;';
       roleBadge.textContent = config.role;
       coverFig.appendChild(roleBadge);
@@ -1210,14 +1215,14 @@ export function cardprofile(element, options = {}) {
   // Profile content
   // A <div>, not <header> -- a literal <header> tag is auto-injected as the
   // SITE header behavior (tag-map.js maps native 'header' -> 'header'),
-  // which forces display:flex/flex-direction:row via .wb-header (header.css)
+  // which forces display:flex/flex-direction:row via .x-header (header.css)
   // and made avatar/name/bio render side-by-side instead of stacked.
   // No overlap with the cover -- a fixed -40px pull-up was calibrated for the
   // old 100px cover; against the current thin cover strip it dragged the
   // avatar up into the cover image instead of sitting cleanly below it.
   const textAlign = config.align === 'left' ? 'left' : 'center';
   const content = document.createElement('div');
-  content.className = 'wb-card__profile-content';
+  content.className = 'x-card__profile-content';
   content.style.cssText = `text-align:${textAlign};padding:1rem;`;
 
   const avatarSizes = { sm: '56px', md: '80px', lg: '104px' };
@@ -1225,7 +1230,7 @@ export function cardprofile(element, options = {}) {
 
   if (config.avatar) {
     const avatarImg = document.createElement('img');
-    avatarImg.className = 'wb-card__avatar';
+    avatarImg.className = 'x-card__avatar';
     avatarImg.src = config.avatar;
     avatarImg.alt = config.name || 'Avatar';
     avatarImg.style.cssText = `width:${avatarSize};height:${avatarSize};border-radius:50%;border:4px solid var(--bg-secondary,#1f2937);object-fit:cover;`;
@@ -1234,7 +1239,7 @@ export function cardprofile(element, options = {}) {
 
   if (config.name) {
     const nameEl = document.createElement('h3');
-    nameEl.className = 'wb-card__title wb-card__name';
+    nameEl.className = 'x-card__title x-card__name';
     nameEl.style.cssText = 'margin:0.75rem 0 0;font-size:1.25rem;color:var(--text-primary,#f9fafb);';
     nameEl.textContent = config.name;
     content.appendChild(nameEl);
@@ -1242,7 +1247,7 @@ export function cardprofile(element, options = {}) {
 
   if (config.role && !config.cover) {
     const roleEl = document.createElement('div');
-    roleEl.className = 'wb-card__subtitle wb-card__role';
+    roleEl.className = 'x-card__subtitle x-card__role';
     roleEl.style.cssText = 'margin:0.25rem 0 0.5rem;color:var(--primary,#6366f1);font-size:0.9rem;';
     roleEl.textContent = config.role;
     content.appendChild(roleEl);
@@ -1250,7 +1255,7 @@ export function cardprofile(element, options = {}) {
 
   if (config.bio) {
     const bioEl = document.createElement('div');
-    bioEl.className = 'wb-card__bio';
+    bioEl.className = 'x-card__bio';
     bioEl.style.cssText = 'margin:1rem 0 0;color:var(--text-secondary,#9ca3af);font-size:0.875rem;line-height:1.5;';
     bioEl.textContent = config.bio;
     content.appendChild(bioEl);
@@ -1287,7 +1292,7 @@ export function cardpricing(element, options = {}) {
   };
 
   const base = composeCard(element, { ...config, behavior: 'cardpricing' });
-  element.classList.add('wb-pricing');
+  element.classList.add('x-pricing');
   element.innerHTML = '';
   element.style.textAlign = 'center';
   element.style.containerType = 'inline-size'; // Enable container queries for responsive text
@@ -1311,7 +1316,7 @@ export function cardpricing(element, options = {}) {
   header.style.textAlign = 'center';
   
   const planEl = document.createElement('h3');
-  planEl.className = 'wb-card__title wb-card__plan';
+  planEl.className = 'x-card__title x-card__plan';
   planEl.style.cssText = 'margin:0;font-size:1.25rem;color:var(--text-primary,#f9fafb);';
   planEl.textContent = config.plan;
   header.appendChild(planEl);
@@ -1323,18 +1328,18 @@ export function cardpricing(element, options = {}) {
 
   // Price
   const priceWrap = document.createElement('div');
-  priceWrap.className = 'wb-card__price-wrap';
+  priceWrap.className = 'x-card__price-wrap';
   priceWrap.style.cssText = 'margin:1rem 0;';
 
   const priceEl = document.createElement('span');
-  priceEl.className = 'wb-card__amount';
+  priceEl.className = 'x-card__amount';
   // Use container query units (cqi) to scale text relative to card width
   priceEl.style.cssText = 'font-size:clamp(1.5rem, 18cqi, 3rem);font-weight:700;color:var(--text-primary,#f9fafb);white-space:nowrap;';
   priceEl.textContent = config.price;
   priceWrap.appendChild(priceEl);
 
   const periodEl = document.createElement('span');
-  periodEl.className = 'wb-card__period';
+  periodEl.className = 'x-card__period';
   periodEl.style.cssText = 'color:var(--text-secondary,#9ca3af);';
   periodEl.textContent = config.period;
   priceWrap.appendChild(periodEl);
@@ -1343,12 +1348,12 @@ export function cardpricing(element, options = {}) {
 
   // Features
   const featuresList = document.createElement('ul');
-  featuresList.className = 'wb-card__features';
+  featuresList.className = 'x-card__features';
   featuresList.style.cssText = 'list-style:none;padding:0;margin:1.5rem 0;text-align:left;';
 
   config.features.forEach(f => {
     const li = document.createElement('li');
-    li.className = 'wb-card__feature';
+    li.className = 'x-card__feature';
     li.style.cssText = 'padding:0.5rem 0;color:var(--text-primary,#f9fafb);border-bottom:1px solid var(--border-color,#374151);';
     li.innerHTML = `<span style="color:var(--success,#22c55e);margin-right:0.5rem;">✓</span> ${f.trim()}`;
     featuresList.appendChild(li);
@@ -1365,14 +1370,14 @@ export function cardpricing(element, options = {}) {
   
   const ctaBtn = document.createElement('a');
   ctaBtn.href = config.ctaHref;
-  ctaBtn.className = 'wb-card__cta';
+  ctaBtn.className = 'x-card__cta';
   // #561: #520 already removed this exact inline style.cssText (its
   // padding:0.875rem/14px duplicated -- and silently overrode -- card.css's
-  // `.wb-card__cta` rule, which #520 also bumped to the compliant 1rem/16px).
+  // `.x-card__cta` rule, which #520 also bumped to the compliant 1rem/16px).
   // A later, unrelated commit (0005dbb0, same day) re-added it verbatim,
   // regressing #520 without touching card.css at all -- confirmed via
   // `git blame`, this line's inline cssText was reintroduced after #520's
-  // removal. No inline style needed here: card.css's `.wb-card__cta` already
+  // removal. No inline style needed here: card.css's `.x-card__cta` already
   // covers every property this used to set.
   ctaBtn.textContent = config.cta;
   footer.appendChild(ctaBtn);
@@ -1399,28 +1404,28 @@ export function cardstats(element, options = {}) {
   // Defensive init: catch unexpected runtime errors to avoid killing the page
   try {
     const base = composeCard(element, { ...config, behavior: 'cardstats', hoverable: false });
-    element.classList.add('wb-stats');
+    element.classList.add('x-stats');
     element.innerHTML = '';
     // Layout, container-query sizing, and default padding all live in
-    // card.css's `.wb-stats` rule now (Law 9, #370 -- was unconditional
-    // inline styles here, which also silently beat wb-card--compact/large's
-    // own CSS regardless of specificity; wb-card__header/__main below get
+    // card.css's `.x-stats` rule now (Law 9, #370 -- was unconditional
+    // inline styles here, which also silently beat x-card--compact/large's
+    // own CSS regardless of specificity; x-card__header/__main below get
     // real classes so those variant rules can actually win).
 
   // Semantic: Icon belongs in header
   if (config.icon) {
     const header = document.createElement('header');
-    // wb-card__header is required even though .wb-stats .wb-card__header
+    // x-card__header is required even though .x-stats .x-card__header
     // (card.css) overrides its padding/border/background back to zero:
-    // card.css's fallback rule `.wb-card:not(:has(.wb-card__header)):not(
-    // :has(.wb-card__main)) { padding: 1rem }` outranks (0,3,0 vs 0,2,0
-    // specificity) `.wb-stats.wb-card--compact/--large`'s own padding when
+    // card.css's fallback rule `.x-card:not(:has(.x-card__header)):not(
+    // :has(.x-card__main)) { padding: 1rem }` outranks (0,3,0 vs 0,2,0
+    // specificity) `.x-stats.x-card--compact/--large`'s own padding when
     // neither class is present, silently forcing 1rem on every variant
     // (confirmed live).
-    header.className = 'wb-card__header';
+    header.className = 'x-card__header';
 
     const iconEl = document.createElement('span');
-    iconEl.className = 'wb-card__icon';
+    iconEl.className = 'x-card__icon';
     iconEl.style.cssText = 'font-size:2rem;line-height:1;display:block;';
     iconEl.textContent = config.icon;
 
@@ -1430,12 +1435,12 @@ export function cardstats(element, options = {}) {
 
   // Semantic: Main content
   const content = document.createElement('main');
-  content.className = 'wb-card__main';
+  content.className = 'x-card__main';
 
   if (config.value) {
     const valueEl = document.createElement('data');
     valueEl.value = config.value.replace(/[^0-9.-]/g, '') || config.value;
-    valueEl.className = 'wb-card__stats-value';
+    valueEl.className = 'x-card__stats-value';
     valueEl.style.cssText = 'font-size:clamp(1.25rem, 15cqi, 1.75rem);font-weight:700;color:var(--text-primary,#f9fafb);line-height:1.2;display:block;white-space:nowrap;';
     valueEl.textContent = config.value;
     content.appendChild(valueEl);
@@ -1443,7 +1448,7 @@ export function cardstats(element, options = {}) {
 
   if (config.label) {
     const labelEl = document.createElement('div');
-    labelEl.className = 'wb-card__stats-label';
+    labelEl.className = 'x-card__stats-label';
     labelEl.style.cssText = 'color:var(--text-secondary,#9ca3af);font-size:0.875rem;margin:0.25rem 0 0 0;';
     labelEl.textContent = config.label;
     content.appendChild(labelEl);
@@ -1451,7 +1456,7 @@ export function cardstats(element, options = {}) {
 
   if (config.trend && config.trendValue) {
     const trendEl = document.createElement('div');
-    trendEl.className = 'wb-card__stats-trend';
+    trendEl.className = 'x-card__stats-trend';
     const trendColor = config.trend === 'up' ? 'var(--success, #22c55e)' : config.trend === 'down' ? 'var(--error, #ef4444)' : 'var(--text-secondary, #6b7280)';
     const trendIcon = config.trend === 'up' ? '↑' : config.trend === 'down' ? '↓' : '→';
     trendEl.style.cssText = `color:${trendColor};font-size:0.8rem;margin:0.25rem 0 0 0;font-weight:500;`;
@@ -1469,7 +1474,7 @@ export function cardstats(element, options = {}) {
   return base.cleanup;
   } catch (err) {
     // Prevent unhandled errors from closing the test page; surface diagnostics instead.
-    try { console.error('[cardstats] init error:', err && err.message ? err.message : err); element.setAttribute('x-error', (err && err.message) || 'init-failed'); element.classList.add('wb-cardstats--error'); } catch (e) { /* best-effort */ }
+    try { console.error('[cardstats] init error:', err && err.message ? err.message : err); element.setAttribute('x-error', (err && err.message) || 'init-failed'); element.classList.add('x-cardstats--error'); } catch (e) { /* best-effort */ }
     return () => {};
   }
 }
@@ -1489,7 +1494,7 @@ export function cardtestimonial(element, options = {}) {
   };
 
   const base = composeCard(element, { ...config, behavior: 'cardtestimonial', hoverable: false });
-  element.classList.add('wb-testimonial');
+  element.classList.add('x-testimonial');
   element.innerHTML = '';
   element.style.padding = CARD_PADDING;
 
@@ -1502,7 +1507,7 @@ export function cardtestimonial(element, options = {}) {
   // Quote
   if (config.quote) {
     const quoteEl = document.createElement('blockquote');
-    quoteEl.className = 'wb-card__quote';
+    quoteEl.className = 'x-card__quote';
     quoteEl.style.cssText = 'margin:0.5rem 0 1rem;font-size:1rem;line-height:1.6;color:var(--text-primary,#f9fafb);font-style:italic;';
     quoteEl.textContent = config.quote;
     element.appendChild(quoteEl);
@@ -1511,7 +1516,7 @@ export function cardtestimonial(element, options = {}) {
   // Rating
   if (config.rating) {
     const ratingEl = document.createElement('div');
-    ratingEl.className = 'wb-card__rating';
+    ratingEl.className = 'x-card__rating';
     ratingEl.style.cssText = 'color:#f59e0b;margin-bottom:1rem;';
     ratingEl.textContent = '★'.repeat(parseInt(config.rating)) + '☆'.repeat(5 - parseInt(config.rating));
     element.appendChild(ratingEl);
@@ -1519,12 +1524,12 @@ export function cardtestimonial(element, options = {}) {
 
   // Author
   const authorWrap = document.createElement('footer');
-  authorWrap.className = 'wb-card__footer';
+  authorWrap.className = 'x-card__footer';
   authorWrap.style.cssText = 'display:flex;align-items:center;gap:0.75rem;background:transparent;border:none;padding:0;';
 
   if (config.avatar) {
     const avatarImg = document.createElement('img');
-    avatarImg.className = 'wb-card__avatar';
+    avatarImg.className = 'x-card__avatar';
     avatarImg.src = config.avatar;
     avatarImg.alt = config.author || '';
     avatarImg.style.cssText = 'width:48px;height:48px;border-radius:50%;object-fit:cover;';
@@ -1534,7 +1539,7 @@ export function cardtestimonial(element, options = {}) {
   const authorInfo = document.createElement('div');
   if (config.author) {
     const authorName = document.createElement('cite');
-    authorName.className = 'wb-card__author';
+    authorName.className = 'x-card__author';
     authorName.style.cssText = 'font-style:normal;font-weight:600;color:var(--text-primary,#f9fafb);display:block;';
     authorName.textContent = config.author;
     authorInfo.appendChild(authorName);
@@ -1542,7 +1547,7 @@ export function cardtestimonial(element, options = {}) {
 
   if (config.role) {
     const roleEl = document.createElement('span');
-    roleEl.className = 'wb-card__author-role';
+    roleEl.className = 'x-card__author-role';
     roleEl.style.cssText = 'font-size:0.85rem;color:var(--text-secondary,#9ca3af);';
     roleEl.textContent = config.role;
     authorInfo.appendChild(roleEl);
@@ -1577,7 +1582,7 @@ export function cardproduct(element, options = {}) {
   }
 
   const base = composeCard(element, { ...config, behavior: 'cardproduct' });
-  element.classList.add('wb-product');
+  element.classList.add('x-product');
   element.innerHTML = '';
 
   // Product image
@@ -1597,7 +1602,7 @@ export function cardproduct(element, options = {}) {
       // logic elsewhere in this file) -- it never calls that path, so the
       // badge has to render here or not at all (#380).
       const badgeEl = document.createElement('span');
-      badgeEl.className = 'wb-card__badge';
+      badgeEl.className = 'x-card__badge';
       badgeEl.style.cssText = STYLE_BADGE + 'position:absolute;top:0.5rem;left:0.5rem;';
       badgeEl.textContent = config.badge;
       figure.appendChild(badgeEl);
@@ -1608,12 +1613,12 @@ export function cardproduct(element, options = {}) {
 
   // Product info
   const info = document.createElement('div');
-  info.className = 'wb-card__product-info';
+  info.className = 'x-card__product-info';
   info.style.cssText = 'padding:1rem;';
 
   if (base.config.title) {
     const titleEl = document.createElement('h3');
-    titleEl.className = 'wb-card__title wb-card__product-title';
+    titleEl.className = 'x-card__title x-card__product-title';
     titleEl.style.cssText = 'margin:0;font-size:1rem;color:var(--text-primary,#f9fafb);';
     titleEl.textContent = base.config.title;
     info.appendChild(titleEl);
@@ -1621,7 +1626,7 @@ export function cardproduct(element, options = {}) {
 
   if (base.config.subtitle) {
     const descEl = document.createElement('div');
-    descEl.className = 'wb-card__subtitle wb-card__product-desc';
+    descEl.className = 'x-card__subtitle x-card__product-desc';
     descEl.style.cssText = 'margin:0.25rem 0 0.5rem;font-size:0.85rem;color:var(--text-secondary,#9ca3af);';
     descEl.textContent = base.config.subtitle;
     info.appendChild(descEl);
@@ -1630,7 +1635,7 @@ export function cardproduct(element, options = {}) {
   // Rating
   if (config.rating) {
     const ratingWrap = document.createElement('div');
-    ratingWrap.className = 'wb-card__product-rating';
+    ratingWrap.className = 'x-card__product-rating';
     ratingWrap.style.cssText = 'margin:0.5rem 0;display:flex;align-items:center;gap:0.5rem;';
     
     const stars = document.createElement('span');
@@ -1648,12 +1653,12 @@ export function cardproduct(element, options = {}) {
 
   // Price
   const priceWrap = document.createElement('div');
-  priceWrap.className = 'wb-card__price-wrap';
+  priceWrap.className = 'x-card__price-wrap';
   priceWrap.style.cssText = 'margin:0.75rem 0;display:flex;align-items:center;gap:0.5rem;';
 
   if (config.price) {
     const priceEl = document.createElement('span');
-    priceEl.className = 'wb-card__price-current';
+    priceEl.className = 'x-card__price-current';
     priceEl.style.cssText = 'font-size:1.25rem;font-weight:700;color:var(--text-primary,#f9fafb);';
     priceEl.textContent = config.price;
     priceWrap.appendChild(priceEl);
@@ -1661,7 +1666,7 @@ export function cardproduct(element, options = {}) {
 
   if (config.originalPrice) {
     const origEl = document.createElement('span');
-    origEl.className = 'wb-card__price-original';
+    origEl.className = 'x-card__price-original';
     origEl.style.cssText = 'text-decoration:line-through;color:var(--text-secondary,#6b7280);font-size:0.9rem;';
     origEl.textContent = config.originalPrice;
     priceWrap.appendChild(origEl);
@@ -1672,14 +1677,14 @@ export function cardproduct(element, options = {}) {
   // CTA button
   const ctaBtn = document.createElement('button');
   ctaBtn.type = 'button';
-  ctaBtn.className = 'wb-card__product-cta';
+  ctaBtn.className = 'x-card__product-cta';
   // #561: same regression as the cardpricing() CTA above -- #520 removed
   // this inline style.cssText (padding:0.75rem/12px, below the §13 1rem/16px
-  // minimum, and redundant with card.css's already-compliant `.wb-product
-  // .wb-card__product-cta` rule at padding:1rem), and commit 0005dbb0
+  // minimum, and redundant with card.css's already-compliant `.x-product
+  // .x-card__product-cta` rule at padding:1rem), and commit 0005dbb0
   // (same day, unrelated fix) re-added it verbatim. No inline style needed:
-  // element.classList.add('wb-product') below already puts this button
-  // inside `.wb-product`, so the CSS rule applies on its own.
+  // element.classList.add('x-product') below already puts this button
+  // inside `.x-product`, so the CSS rule applies on its own.
   ctaBtn.textContent = config.cta;
 
   const addToCart = () => {
@@ -1715,7 +1720,7 @@ export function cardproduct(element, options = {}) {
 
 /**
  * Card Notification Component
- * Custom Tag: <wb-cardnotification>
+ * Custom Tag: <div x-cardnotification>
  *
  * v3.0 MVVM:
  *   Schema  → owns DOM structure + CSS class-based variant colors
@@ -1762,19 +1767,19 @@ export function cardnotification(element, options = {}) {
   if (schemaProcessed) {
     // Ensure variant class is present (schema should have added it,
     // but belt-and-suspenders for edge cases)
-    element.classList.add('wb-notification');
+    element.classList.add('x-notification');
     if (variant !== 'default') {
-      element.classList.add(`wb-notification--${variant}`);
+      element.classList.add(`x-notification--${variant}`);
     }
 
     // Fill in default icon text if schema left it empty
-    const iconEl = element.querySelector('.wb-notification__icon');
+    const iconEl = element.querySelector('.x-notification__icon');
     if (iconEl && !iconEl.textContent.trim()) {
       iconEl.textContent = customIcon || defaultIcons[variant] || 'i';
     }
 
     // Wire up dismiss button
-    const dismissBtn = element.querySelector('.wb-notification__dismiss');
+    const dismissBtn = element.querySelector('.x-notification__dismiss');
     if (dismissBtn) {
       dismissBtn.setAttribute('aria-label', 'Dismiss notification');
       dismissBtn.addEventListener('click', dismiss);
@@ -1796,32 +1801,32 @@ export function cardnotification(element, options = {}) {
   // PATH B: No schema — build DOM from scratch (standalone)
   // Uses CSS classes, no inline color styles
   // ═══════════════════════════════════════════════════════
-  element.classList.add('wb-notification');
+  element.classList.add('x-notification');
   if (variant !== 'default') {
-    element.classList.add(`wb-notification--${variant}`);
+    element.classList.add(`x-notification--${variant}`);
   }
   element.innerHTML = '';
 
   // Icon
   const standaloneIconEl = document.createElement('span');
-  standaloneIconEl.className = 'wb-notification__icon';
+  standaloneIconEl.className = 'x-notification__icon';
   standaloneIconEl.textContent = customIcon || defaultIcons[variant] || 'i';
   element.appendChild(standaloneIconEl);
 
   // Content
   const content = document.createElement('main');
-  content.className = 'wb-notification__content';
+  content.className = 'x-notification__content';
 
   if (title) {
     const titleEl = document.createElement('strong');
-    titleEl.className = 'wb-notification__title';
+    titleEl.className = 'x-notification__title';
     titleEl.textContent = title;
     content.appendChild(titleEl);
   }
 
   if (message) {
     const msgEl = document.createElement('div');
-    msgEl.className = 'wb-notification__message';
+    msgEl.className = 'x-notification__message';
     msgEl.textContent = message;
     content.appendChild(msgEl);
   }
@@ -1831,7 +1836,7 @@ export function cardnotification(element, options = {}) {
   // Dismiss button
   if (dismissible) {
     const closeBtn = document.createElement('button');
-    closeBtn.className = 'wb-notification__dismiss';
+    closeBtn.className = 'x-notification__dismiss';
     closeBtn.textContent = '\u2715';
     closeBtn.setAttribute('aria-label', 'Dismiss notification');
     closeBtn.addEventListener('click', dismiss);
@@ -1870,7 +1875,7 @@ export function cardfile(element, options = {}) {
   const icons = { pdf: '📄', doc: '📝', image: '🖼️', video: '🎬', audio: '🎵', zip: '📦', file: '📁' };
 
   const base = composeCard(element, { ...config, behavior: 'cardfile', hoverable: false });
-  element.classList.add('wb-card-file');
+  element.classList.add('x-card-file');
   element.innerHTML = '';
   element.style.padding = CARD_PADDING;
   element.style.flexDirection = 'row';
@@ -1889,7 +1894,7 @@ export function cardfile(element, options = {}) {
 
   if (config.filename) {
     const nameEl = document.createElement('h3');
-    nameEl.className = 'wb-card__filename';
+    nameEl.className = 'x-card__filename';
     nameEl.style.cssText = 'margin:0;font-size:1rem;color:var(--text-primary,#f9fafb);white-space:normal;word-break:break-word;';
     nameEl.textContent = config.filename;
     info.appendChild(nameEl);
@@ -1901,7 +1906,7 @@ export function cardfile(element, options = {}) {
 
   if (meta.length) {
     const metaEl = document.createElement('div');
-    metaEl.className = 'wb-card__file-meta';
+    metaEl.className = 'x-card__file-meta';
     metaEl.style.cssText = 'margin:0.25rem 0 0;font-size:0.85rem;color:var(--text-secondary,#9ca3af);';
     metaEl.textContent = meta.join(' • ');
     info.appendChild(metaEl);
@@ -1918,7 +1923,7 @@ export function cardfile(element, options = {}) {
   const downloadUrl = config.href;
   if (config.downloadable && downloadUrl) {
     const dlIcon = document.createElement('span');
-    dlIcon.className = 'wb-card__file-download';
+    dlIcon.className = 'x-card__file-download';
     dlIcon.style.cssText = 'font-size:1.5rem;line-height:1;';
     dlIcon.textContent = '⬇️';
     element.appendChild(dlIcon);
@@ -1955,7 +1960,7 @@ export function cardfile(element, options = {}) {
     // confusing for anyone authoring/testing this component -- surface it
     // visibly instead of leaving it a silent dead end.
     const warning = document.createElement('div');
-    warning.className = 'wb-card__file-warning';
+    warning.className = 'x-card__file-warning';
     warning.style.cssText = 'margin-top:0.25rem;font-size:0.8rem;color:var(--danger-color,#ef4444);';
     warning.textContent = 'No href given — nothing to download.';
     element.appendChild(warning);
@@ -1982,9 +1987,9 @@ export function cardlink(element, options = {}) {
   };
 
   const base = composeCard(element, { ...config, behavior: 'cardlink' });
-  // Redundant when the host tag IS <wb-card-link> (#478) -- card.css matches
-  // the tag directly there via :is(.wb-card-link, wb-card-link).
-  if (element.tagName.toLowerCase() !== 'wb-card-link') element.classList.add('wb-card-link');
+  // Redundant when the host tag IS <div> (#478) -- card.css matches
+  // the tag directly there via :is(.x-card-link, x-card-link).
+  if (element.tagName.toLowerCase() !== 'x-card-link') element.classList.add('x-card-link');
   
   element.innerHTML = '';
   element.style.cursor = 'pointer';
@@ -2005,7 +2010,7 @@ export function cardlink(element, options = {}) {
     
     if (config.icon) {
       const iconEl = document.createElement('span');
-      iconEl.className = 'wb-card__icon';
+      iconEl.className = 'x-card__icon';
       iconEl.style.cssText = 'font-size:1.25rem;line-height:1;';
       iconEl.textContent = config.icon;
       titleRow.appendChild(iconEl);
@@ -2013,7 +2018,7 @@ export function cardlink(element, options = {}) {
     
     if (base.config.title) {
       const titleEl = document.createElement('h3');
-      titleEl.className = 'wb-card__title';
+      titleEl.className = 'x-card__title';
       titleEl.textContent = base.config.title;
       titleRow.appendChild(titleEl);
     }
@@ -2025,7 +2030,7 @@ export function cardlink(element, options = {}) {
   const desc = config.description || base.config.subtitle;
   if (desc) {
     const descEl = document.createElement('div');
-    descEl.className = 'wb-card__description';
+    descEl.className = 'x-card__description';
     descEl.style.cssText = 'margin:0.5rem 0 0;font-size:0.875rem;color:var(--text-secondary,#9ca3af);line-height:1.5;';
     descEl.textContent = desc;
     titleGroup.appendChild(descEl);
@@ -2034,7 +2039,7 @@ export function cardlink(element, options = {}) {
   // Badge
   if (config.badge) {
     const badgeEl = document.createElement('span');
-    badgeEl.className = config.badgeVariant === 'gradient' ? 'wb-badge-gradient' : 'wb-tag-glass';
+    badgeEl.className = config.badgeVariant === 'gradient' ? 'x-badge-gradient' : 'x-tag-glass';
     badgeEl.style.cssText = 'margin-top:0.75rem;display:inline-block;';
     badgeEl.textContent = config.badge;
     titleGroup.appendChild(badgeEl);
@@ -2112,13 +2117,13 @@ export function cardhorizontal(element, options = {}) {
     // the permutation-matrix's "variant variants" / "imagePosition variants"
     // sections, tests/fixtures/cards-permutation-matrix.html) silently lost
     // that text the instant `element.innerHTML = ''` ran a few lines down --
-    // confirmed live, zero .wb-card__horiz-body elements ever got created.
+    // confirmed live, zero .x-card__horiz-body elements ever got created.
     content: options.content || readAttr(element, 'content') || element.innerHTML,
     ...options
   };
 
   const base = composeCard(element, { ...config, behavior: 'cardhorizontal' });
-  element.classList.add('wb-card-horizontal');
+  element.classList.add('x-card-horizontal');
   element.innerHTML = '';
   element.style.flexDirection = config.imagePosition === 'right' ? 'row-reverse' : 'row';
 
@@ -2144,7 +2149,7 @@ export function cardhorizontal(element, options = {}) {
     // nonexistent /images/feature.jpg and /images/wide.jpg). Same
     // fail-loud pattern already used elsewhere in THIS file for a broken
     // image-like resource -- cardhero's background-image probe just above
-    // (search "wb-cardhero: failed to load background") -- and the same
+    // (search "x-cardhero: failed to load background") -- and the same
     // "throw so the global error handler (error-logger.js's
     // setupGlobalErrorHandler) catches and logs it" convention audio.js
     // uses for its own broken src (#433). A real <img> already shows its
@@ -2153,7 +2158,7 @@ export function cardhorizontal(element, options = {}) {
     // fallback to apply here -- just the loud signal that was missing.
     img.addEventListener('error', () => {
       if (!document.contains(img)) return;
-      throw new Error(`wb-cardhorizontal: failed to load image "${config.image}" -- the file is missing or unreachable.`);
+      throw new Error(`x-cardhorizontal: failed to load image "${config.image}" -- the file is missing or unreachable.`);
     });
     figure.appendChild(img);
     element.appendChild(figure);
@@ -2161,12 +2166,12 @@ export function cardhorizontal(element, options = {}) {
 
   // Content
   const content = document.createElement('div');
-  content.className = 'wb-card__horizontal-content';
+  content.className = 'x-card__horizontal-content';
   content.style.cssText = 'flex:1;padding:1rem;display:flex;flex-direction:column;justify-content:center;';
 
   if (base.config.title) {
     const titleEl = document.createElement('h3');
-    titleEl.className = 'wb-card__title';
+    titleEl.className = 'x-card__title';
     titleEl.style.cssText = 'margin:0;color:var(--text-primary,#f9fafb);';
     titleEl.textContent = base.config.title;
     content.appendChild(titleEl);
@@ -2174,7 +2179,7 @@ export function cardhorizontal(element, options = {}) {
 
   if (base.config.subtitle) {
     const subtitleEl = document.createElement('div');
-    subtitleEl.className = 'wb-card__subtitle';
+    subtitleEl.className = 'x-card__subtitle';
     subtitleEl.style.cssText = 'margin:0.25rem 0 0.5rem;color:var(--text-secondary,#9ca3af);';
     subtitleEl.textContent = base.config.subtitle;
     content.appendChild(subtitleEl);
@@ -2182,7 +2187,7 @@ export function cardhorizontal(element, options = {}) {
 
   if (base.config.content) {
     const bodyEl = document.createElement('div');
-    bodyEl.className = 'wb-card__horiz-body';
+    bodyEl.className = 'x-card__horiz-body';
     bodyEl.style.cssText = 'margin-top:0.75rem;color:var(--text-primary,#f9fafb);';
     bodyEl.innerHTML = base.config.content;
     content.appendChild(bodyEl);
@@ -2205,16 +2210,16 @@ export function cardoverlay(element, options = {}) {
     height: options.height || readAttr(element, 'height') || element.getAttribute('height') || '300px',
     // Neither was ever read here before -- xalign only existed on cardhero
     // (a different function), and variant only got composeCard's generic
-    // wb-card--{variant} class with no matching CSS for dark/light/blur.
+    // x-card--{variant} class with no matching CSS for dark/light/blur.
     xalign: options.xalign || readAttr(element, 'xalign') || element.getAttribute('xalign') || 'left',
     variant: options.variant || readAttr(element, 'variant') || element.getAttribute('variant') || 'default',
     ...options
   };
 
   const base = composeCard(element, { ...config, behavior: 'cardoverlay', hoverable: false });
-  element.classList.add('wb-card-overlay');
-  element.classList.add('wb-card--overlay-card');
-  element.classList.add(`wb-card--overlay-${config.position}`);
+  element.classList.add('x-card-overlay');
+  element.classList.add('x-card--overlay-card');
+  element.classList.add(`x-card--overlay-${config.position}`);
   element.innerHTML = '';
   
   element.style.height = config.height;
@@ -2252,7 +2257,7 @@ export function cardoverlay(element, options = {}) {
     probe.addEventListener('error', () => {
       if (!document.contains(element)) return;
       element.style.backgroundImage = 'linear-gradient(135deg, #667eea, #764ba2)';
-      throw new Error(`wb-cardoverlay: failed to load image "${config.image}" -- the file is missing or unreachable. Falling back to the default gradient.`);
+      throw new Error(`x-cardoverlay: failed to load image "${config.image}" -- the file is missing or unreachable. Falling back to the default gradient.`);
     });
     probe.src = config.image;
   }
@@ -2270,7 +2275,7 @@ export function cardoverlay(element, options = {}) {
 
   // Content
   const content = document.createElement('div');
-  content.className = 'wb-card__overlay-content';
+  content.className = 'x-card__overlay-content';
   content.style.cssText = `padding:1.5rem;color:white;width:100%;text-align:${config.xalign};`;
 
   if (config.gradient) {
@@ -2294,7 +2299,7 @@ export function cardoverlay(element, options = {}) {
 
   if (base.config.title) {
     const titleEl = document.createElement('h3');
-    titleEl.className = 'wb-card__title wb-card__overlay-title';
+    titleEl.className = 'x-card__title x-card__overlay-title';
     titleEl.style.cssText = 'margin:0;font-size:1.5rem;text-shadow:0 2px 4px rgba(0,0,0,0.5);';
     titleEl.textContent = base.config.title;
     content.appendChild(titleEl);
@@ -2302,7 +2307,7 @@ export function cardoverlay(element, options = {}) {
 
   if (base.config.subtitle) {
     const subtitleEl = document.createElement('div');
-    subtitleEl.className = 'wb-card__subtitle wb-card__overlay-subtitle';
+    subtitleEl.className = 'x-card__subtitle x-card__overlay-subtitle';
     subtitleEl.style.cssText = 'margin:0.5rem 0;opacity:0.9;text-shadow:0 1px 2px rgba(0,0,0,0.5);';
     subtitleEl.textContent = base.config.subtitle;
     content.appendChild(subtitleEl);
@@ -2326,7 +2331,7 @@ export function cardexpandable(element, options = {}) {
   const config = {
     // Bare `expanded` (no value) is the codebase's boolean-attribute convention
     // (see clickable/elevated above) -- this only checked expanded="true",
-    // so <wb-cardexpandable expanded> (what every demo actually writes) was
+    // so <div x-cardexpandable expanded> (what every demo actually writes) was
     // silently ignored and always rendered collapsed.
     expanded: parseBoolean(options.expanded) ?? (readAttr(element, 'expanded') === 'true' || element.getAttribute('expanded') === 'true' || (readFlag(element, 'expanded') && readAttr(element, 'expanded') !== 'false') || element.hasAttribute('expanded')),
     maxHeight: options.maxHeight || readAttr(element, 'maxHeight') || element.getAttribute('max-height') || '100px',
@@ -2341,7 +2346,7 @@ export function cardexpandable(element, options = {}) {
   };
 
   const base = composeCard(element, { ...config, behavior: 'cardexpandable' });
-  element.classList.add('wb-card-expandable');
+  element.classList.add('x-card-expandable');
   element.innerHTML = '';
 
   // Build header
@@ -2366,7 +2371,7 @@ export function cardexpandable(element, options = {}) {
 
   // Content
   const contentWrap = document.createElement('main');
-  contentWrap.className = 'wb-card__expandable-content';
+  contentWrap.className = 'x-card__expandable-content';
   if (config.lines) {
     contentWrap.style.cssText = 'padding:1rem;';
     applyLineClamp(contentWrap, config.expanded ? null : config.lines);
@@ -2381,18 +2386,18 @@ export function cardexpandable(element, options = {}) {
 
   // Expand button
   const btnWrap = document.createElement('footer');
-  btnWrap.className = 'wb-card__footer';
+  btnWrap.className = 'x-card__footer';
   btnWrap.style.cssText = 'padding:0.75rem 1rem;border-top:1px solid var(--border-color,#374151);';
 
   const btn = document.createElement('button');
-  btn.className = 'wb-card__expand-btn';
+  btn.className = 'x-card__expand-btn';
   btn.style.cssText = 'width:100%;padding:0.5rem;background:var(--bg-tertiary,#374151);border:none;border-radius:6px;color:var(--text-primary,#f9fafb);cursor:pointer;display:flex;align-items:center;justify-content:center;gap:0.5rem;';
   btn.setAttribute('aria-expanded', config.expanded);
   btn.setAttribute('aria-controls', contentId);
   
   const icon = document.createElement('span');
-  icon.className = 'wb-card__expand-icon';
-  if (config.expanded) icon.classList.add('wb-card__expand-icon--expanded');
+  icon.className = 'x-card__expand-icon';
+  if (config.expanded) icon.classList.add('x-card__expand-icon--expanded');
   icon.textContent = '▼';
   icon.style.display = 'inline-block';
   icon.style.transition = 'transform 0.3s ease';
@@ -2400,12 +2405,12 @@ export function cardexpandable(element, options = {}) {
   btn.appendChild(icon);
 
   const text = document.createElement('span');
-  text.className = 'wb-card__expand-text';
+  text.className = 'x-card__expand-text';
   text.textContent = config.expanded ? 'Show Less' : 'Show More';
   btn.appendChild(text);
 
   let isExpanded = config.expanded;
-  if (isExpanded) element.classList.add('wb-card--expanded');
+  if (isExpanded) element.classList.add('x-card--expanded');
   
   const toggle = () => {
     isExpanded = !isExpanded;
@@ -2415,9 +2420,9 @@ export function cardexpandable(element, options = {}) {
       contentWrap.style.maxHeight = isExpanded ? '1000px' : config.maxHeight;
     }
     icon.style.transform = isExpanded ? 'rotate(180deg)' : 'rotate(0deg)';
-    icon.classList.toggle('wb-card__expand-icon--expanded', isExpanded);
+    icon.classList.toggle('x-card__expand-icon--expanded', isExpanded);
     text.textContent = isExpanded ? 'Show Less' : 'Show More';
-    element.classList.toggle('wb-card--expanded', isExpanded);
+    element.classList.toggle('x-card--expanded', isExpanded);
     btn.setAttribute('aria-expanded', isExpanded);
     element.dispatchEvent(new CustomEvent('wb:cardexpandable:toggle', { 
       bubbles: true, 
@@ -2466,20 +2471,20 @@ export function cardminimizable(element, options = {}) {
 
   const config = {
     // Same bare-boolean-attribute gap as cardexpandable's `expanded` had --
-    // <wb-cardminimizable minimized> (the only form any demo writes) was
+    // <div x-cardminimizable minimized> (the only form any demo writes) was
     // never detected without this hasAttribute check.
     minimized: parseBoolean(options.minimized) ?? (readAttr(element, 'minimized') === 'true' || element.getAttribute('minimized') === 'true' || (readFlag(element, 'minimized') && readAttr(element, 'minimized') !== 'false') || element.hasAttribute('minimized')),
     ...options
   };
 
   const base = composeCard(element, { ...config, behavior: 'cardminimizable' });
-  element.classList.add('wb-card-minimizable');
-  element.classList.add('wb-card--minimizable'); // Explicitly add for compliance
+  element.classList.add('x-card-minimizable');
+  element.classList.add('x-card--minimizable'); // Explicitly add for compliance
   element.innerHTML = '';
 
   // Header with minimize button
   const header = document.createElement('header');
-  header.className = 'wb-card__header';
+  header.className = 'x-card__header';
   header.style.cssText = 'padding:1rem;border-bottom:1px solid var(--border-color,#374151);background:var(--bg-tertiary,#1e293b);display:flex;align-items:center;gap:0.75rem;';
 
   const titleWrap = document.createElement('div');
@@ -2487,7 +2492,7 @@ export function cardminimizable(element, options = {}) {
 
   if (base.config.title) {
     const titleEl = document.createElement('h3');
-    titleEl.className = 'wb-card__title';
+    titleEl.className = 'x-card__title';
     titleEl.style.cssText = 'margin:0;color:var(--text-primary,#f9fafb);';
     titleEl.textContent = base.config.title;
     titleWrap.appendChild(titleEl);
@@ -2495,7 +2500,7 @@ export function cardminimizable(element, options = {}) {
 
   if (base.config.subtitle) {
     const subtitleEl = document.createElement('div');
-    subtitleEl.className = 'wb-card__subtitle';
+    subtitleEl.className = 'x-card__subtitle';
     subtitleEl.style.cssText = 'margin:0.25rem 0 0.5rem;color:var(--text-secondary,#9ca3af);font-size:0.85rem;';
     subtitleEl.textContent = base.config.subtitle;
     titleWrap.appendChild(subtitleEl);
@@ -2505,7 +2510,7 @@ export function cardminimizable(element, options = {}) {
 
   // Minimize button
   const minBtn = document.createElement('button');
-  minBtn.className = 'wb-card__minimize-btn';
+  minBtn.className = 'x-card__minimize-btn';
   minBtn.style.cssText = 'width:32px;height:32px;background:var(--bg-secondary,#1f2937);border:1px solid var(--border-color,#374151);border-radius:6px;color:var(--text-primary,#f9fafb);font-size:1.25rem;cursor:pointer;display:flex;align-items:center;justify-content:center;';
   minBtn.textContent = config.minimized ? '+' : '−';
   header.appendChild(minBtn);
@@ -2514,14 +2519,14 @@ export function cardminimizable(element, options = {}) {
 
   // Content
   const content = document.createElement('main');
-  content.className = 'wb-card__minimizable-content';
+  content.className = 'x-card__minimizable-content';
   content.style.cssText = `padding:1rem;overflow:hidden;transition:all 0.3s ease;${config.minimized ? 'max-height:0;padding:0 1rem;opacity:0;' : ''}`;
   content.innerHTML = base.config.content || rawContent || '<div style="margin:0;color:var(--text-secondary);">Add content here...</div>';
   element.appendChild(content);
 
   // Toggle
   let isMinimized = config.minimized;
-  if (isMinimized) element.classList.add('wb-card--minimized');
+  if (isMinimized) element.classList.add('x-card--minimized');
 
   const toggle = () => {
     isMinimized = !isMinimized;
@@ -2531,10 +2536,10 @@ export function cardminimizable(element, options = {}) {
     minBtn.textContent = isMinimized ? '+' : '−';
     minBtn.setAttribute('aria-expanded', !isMinimized);
     minBtn.setAttribute('aria-label', isMinimized ? 'Expand' : 'Minimize');
-    element.classList.toggle('wb-card--minimized', isMinimized);
+    element.classList.toggle('x-card--minimized', isMinimized);
     
     // Update footer visibility if it exists
-    const footerEl = element.querySelector('.wb-card__footer');
+    const footerEl = element.querySelector('.x-card__footer');
     if (footerEl) {
       footerEl.style.display = isMinimized ? 'none' : '';
     }
@@ -2598,7 +2603,7 @@ export function carddraggable(element, options = {}) {
   };
 
   const base = composeCard(element, { ...config, behavior: 'carddraggable', hoverable: false });
-  element.classList.add('wb-card-draggable');
+  element.classList.add('x-card-draggable');
   
   element.innerHTML = '';
   // Only set position if not already positioned (absolute/fixed)
@@ -2606,11 +2611,11 @@ export function carddraggable(element, options = {}) {
   if (computed.position === 'static') {
     element.style.position = 'relative';
   }
-  element.classList.add('wb-card--draggable');
+  element.classList.add('x-card--draggable');
 
   // Header with drag handle
   const headerEl = document.createElement('header');
-  headerEl.className = 'wb-card__header wb-card__drag-handle';
+  headerEl.className = 'x-card__header x-card__drag-handle';
   headerEl.style.cssText = 'padding:1rem;border-bottom:1px solid var(--border-color,#374151);background:var(--bg-tertiary,#1e293b);cursor:grab;display:flex;align-items:center;gap:0.5rem;';
   headerEl.setAttribute('aria-label', 'Drag to move card');
   headerEl.setAttribute('role', 'button');
@@ -2622,7 +2627,7 @@ export function carddraggable(element, options = {}) {
 
   if (base.config.title) {
     const titleEl = document.createElement('h3');
-    titleEl.className = 'wb-card__title';
+    titleEl.className = 'x-card__title';
     titleEl.style.cssText = 'margin:0;flex:1;color:var(--text-primary,#f9fafb);';
     titleEl.textContent = base.config.title;
     headerEl.appendChild(titleEl);
@@ -2660,7 +2665,7 @@ export function carddraggable(element, options = {}) {
     initialTop = getCurrentTop();
     
     headerEl.style.cursor = 'grabbing';
-    element.classList.add('wb-card--dragging');
+    element.classList.add('x-card--dragging');
     element.style.opacity = '0.8';
     element.style.zIndex = '1000';
     
@@ -2753,7 +2758,7 @@ export function carddraggable(element, options = {}) {
     if (isDragging) {
       isDragging = false;
       headerEl.style.cursor = 'grab';
-      element.classList.remove('wb-card--dragging');
+      element.classList.remove('x-card--dragging');
       element.style.opacity = '';
       element.style.zIndex = '';
       
@@ -2803,7 +2808,7 @@ export function carddraggable(element, options = {}) {
 
 // ============================================
 // PORTFOLIO CARD - FULL-FEATURED
-// Custom Tag: <wb-cardportfolio>
+// Custom Tag: <div x-cardportfolio>
 // ============================================
 export function cardportfolio(element, options = {}) {
   // Parse JSON attributes safely
@@ -2858,14 +2863,14 @@ export function cardportfolio(element, options = {}) {
   };
 
   const base = composeCard(element, { ...config, behavior: 'cardportfolio', hoverable: false });
-  element.classList.add('wb-portfolio');
+  element.classList.add('x-portfolio');
   if (config.variant !== 'default') {
-    element.classList.add(`wb-portfolio--${config.variant}`);
+    element.classList.add(`x-portfolio--${config.variant}`);
   }
   element.innerHTML = '';
   
   // Size handling. compact/horizontal have their own CSS-driven max-width
-  // (card.css `.wb-portfolio.wb-portfolio--compact` / `--horizontal`,
+  // (card.css `.x-portfolio.x-portfolio--compact` / `--horizontal`,
   // specificity 0,2,0) -- setting an inline default here for those variants
   // would force !important to let that CSS win (same "inline always beats
   // class" issue documented throughout this file), so skip the inline
@@ -2887,21 +2892,21 @@ export function cardportfolio(element, options = {}) {
   // ==================== COVER ====================
   if (config.cover) {
     const coverFigure = document.createElement('figure');
-    coverFigure.className = 'wb-portfolio__cover';
+    coverFigure.className = 'x-portfolio__cover';
     coverFigure.style.cssText = `margin:0;height:150px;background-image:url(${config.cover});background-size:cover;background-position:center;position:relative;`;
     element.appendChild(coverFigure);
   }
 
   // ==================== HEADER ====================
   const header = document.createElement('header');
-  header.className = 'wb-portfolio__header';
-  // The <header> also inherits the generic .wb-header navbar rule
+  header.className = 'x-portfolio__header';
+  // The <header> also inherits the generic .x-header navbar rule
   // (display:flex; height:60px; fixed bg + border-bottom + 0.8em font). The
   // flex squeezed the avatar into a column and the fixed 60px height clipped
   // the header so its 120px avatar + text overflowed onto the sections below.
   // display/text-align/padding now live in card.css's compound
-  // `.wb-portfolio__header.wb-header` rule (0,2,0 always outranks the plain
-  // .wb-header selector's 0,1,0 -- same pattern as .wb-card__footer.wb-footer
+  // `.x-portfolio__header.x-header` rule (0,2,0 always outranks the plain
+  // .x-header selector's 0,1,0 -- same pattern as .x-card__footer.x-footer
   // above) instead of being forced inline, so the compact/horizontal/full/
   // size-scaling CSS below can override the default padding/display without
   // needing !important. Only the properties nothing else needs to override
@@ -2919,21 +2924,21 @@ export function cardportfolio(element, options = {}) {
   // dot always has something to attach to.
   if (config.avatar || (config.availability && availabilityConfig[config.availability])) {
     const avatarWrap = document.createElement('figure');
-    avatarWrap.className = 'wb-portfolio__avatar-wrap';
-    // margin/position/display now live in card.css's `.wb-portfolio__avatar-wrap`
+    avatarWrap.className = 'x-portfolio__avatar-wrap';
+    // margin/position/display now live in card.css's `.x-portfolio__avatar-wrap`
     // base rule -- kept out of inline so the horizontal variant's own margin
     // override (card.css) can win by normal cascade instead of !important.
 
     if (config.avatar) {
       const avatarImg = document.createElement('img');
-      avatarImg.className = 'wb-portfolio__avatar';
+      avatarImg.className = 'x-portfolio__avatar';
       avatarImg.src = config.avatar;
       avatarImg.alt = config.name || 'Avatar';
       // width/height/border-radius/border/object-fit/display now live in
-      // card.css's `.wb-portfolio__avatar` base rule -- see the comment on
+      // card.css's `.x-portfolio__avatar` base rule -- see the comment on
       // avatarWrap above; same reason (lets compact/full/size-scaling CSS
       // resize the avatar without !important).
-      // #556: deliberately overlaps .wb-portfolio__cover -- the `header`
+      // #556: deliberately overlaps .x-portfolio__cover -- the `header`
       // above gets `margin-top:-60px` exactly when config.cover is set,
       // pulling this avatar up to straddle the cover photo's bottom edge
       // (the standard social-profile "avatar over cover" layout, same
@@ -2946,10 +2951,10 @@ export function cardportfolio(element, options = {}) {
       avatarWrap.appendChild(avatarImg);
     } else {
       // No avatar image supplied — render initials (or a generic mark) in a
-      // themed circle (styling in card.css: .wb-portfolio__avatar-placeholder,
+      // themed circle (styling in card.css: .x-portfolio__avatar-placeholder,
       // Law 9) so the availability dot below still has a visible anchor.
       const placeholder = document.createElement('span');
-      placeholder.className = 'wb-portfolio__avatar wb-portfolio__avatar-placeholder';
+      placeholder.className = 'x-portfolio__avatar x-portfolio__avatar-placeholder';
       const initials = (config.name || '')
         .split(/\s+/)
         .filter(Boolean)
@@ -2964,10 +2969,10 @@ export function cardportfolio(element, options = {}) {
     // Availability indicator
     if (config.availability && availabilityConfig[config.availability]) {
       const availDot = document.createElement('span');
-      availDot.className = 'wb-portfolio__availability';
+      availDot.className = 'x-portfolio__availability';
       availDot.title = availabilityConfig[config.availability].label;
       // position/size/border/cursor now live in card.css's
-      // `.wb-portfolio__availability` base rule -- only `background` stays
+      // `.x-portfolio__availability` base rule -- only `background` stays
       // inline since it's the one genuinely per-instance value (the status
       // color), matching the same only-inline-what's-dynamic pattern
       // `setAvailability()` below already uses. Keeping the rest out of
@@ -2983,9 +2988,9 @@ export function cardportfolio(element, options = {}) {
   // Name
   if (config.name) {
     const nameEl = document.createElement('h2');
-    nameEl.className = 'wb-portfolio__name';
+    nameEl.className = 'x-portfolio__name';
     // margin/font-size/color/white-space/overflow/max-width now live in
-    // card.css's `.wb-portfolio__name` base rule -- see the avatarWrap
+    // card.css's `.x-portfolio__name` base rule -- see the avatarWrap
     // comment above; lets compact/horizontal/full/size-scaling CSS resize
     // or rewrap the name without !important.
     nameEl.textContent = config.name;
@@ -2995,13 +3000,13 @@ export function cardportfolio(element, options = {}) {
   // Title & Company
   if (config.title) {
     const titleEl = document.createElement('div');
-    titleEl.className = 'wb-portfolio__title';
+    titleEl.className = 'x-portfolio__title';
     titleEl.style.cssText = 'margin:0.25rem 0 0;color:var(--primary,#6366f1);font-weight:600;font-size:1.1rem;';
     titleEl.textContent = config.title + (config.company ? ` at ${config.company}` : '');
     header.appendChild(titleEl);
   } else if (config.company) {
     const companyEl = document.createElement('div');
-    companyEl.className = 'wb-portfolio__company';
+    companyEl.className = 'x-portfolio__company';
     companyEl.style.cssText = 'margin:0.25rem 0 0;color:var(--text-secondary,#9ca3af);';
     companyEl.textContent = config.company;
     header.appendChild(companyEl);
@@ -3010,7 +3015,7 @@ export function cardportfolio(element, options = {}) {
   // Location
   if (config.location) {
     const locEl = document.createElement('div');
-    locEl.className = 'wb-portfolio__location';
+    locEl.className = 'x-portfolio__location';
     locEl.style.cssText = 'margin:0.5rem 0 0;color:var(--text-secondary,#9ca3af);font-size:0.9rem;';
     locEl.textContent = `📍 ${config.location}`;
     header.appendChild(locEl);
@@ -3019,7 +3024,7 @@ export function cardportfolio(element, options = {}) {
   // Tagline
   if (config.tagline) {
     const tagEl = document.createElement('div');
-    tagEl.className = 'wb-portfolio__tagline';
+    tagEl.className = 'x-portfolio__tagline';
     tagEl.style.cssText = 'margin:0.75rem 0 0;color:var(--text-secondary,#9ca3af);font-style:italic;font-size:0.95rem;';
     tagEl.textContent = `"${config.tagline}"`;
     header.appendChild(tagEl);
@@ -3029,15 +3034,15 @@ export function cardportfolio(element, options = {}) {
 
   // ==================== MAIN CONTENT ====================
   const main = document.createElement('main');
-  main.className = 'wb-portfolio__main';
-  // padding now lives in card.css's `.wb-portfolio__main` base rule -- see
+  main.className = 'x-portfolio__main';
+  // padding now lives in card.css's `.x-portfolio__main` base rule -- see
   // the avatarWrap comment above; lets the compact variant's own padding
   // override win without !important.
 
   // Bio Section
   if (config.bio) {
     const bioSection = document.createElement('section');
-    bioSection.className = 'wb-portfolio__bio';
+    bioSection.className = 'x-portfolio__bio';
     bioSection.style.cssText = 'margin-bottom:1.5rem;';
     
     const bioText = document.createElement('div');
@@ -3050,7 +3055,7 @@ export function cardportfolio(element, options = {}) {
   // Stats Section
   if (config.stats && config.stats.length > 0) {
     const statsSection = document.createElement('section');
-    statsSection.className = 'wb-portfolio__stats';
+    statsSection.className = 'x-portfolio__stats';
     statsSection.style.cssText = 'display:flex;flex-direction:column;gap:0.5rem;padding:1rem;background:var(--bg-tertiary,#374151);border-radius:8px;margin-bottom:1.5rem;';
     
     config.stats.forEach(stat => {
@@ -3075,7 +3080,7 @@ export function cardportfolio(element, options = {}) {
   // Skills Section
   if (config.skills || config.skillLevels) {
     const skillsSection = document.createElement('section');
-    skillsSection.className = 'wb-portfolio__skills';
+    skillsSection.className = 'x-portfolio__skills';
     skillsSection.style.cssText = 'margin-bottom:1.5rem;';
     
     const skillsTitle = document.createElement('h3');
@@ -3130,7 +3135,7 @@ export function cardportfolio(element, options = {}) {
   // Experience Section
   if (config.experience && config.experience.length > 0) {
     const expSection = document.createElement('section');
-    expSection.className = 'wb-portfolio__experience';
+    expSection.className = 'x-portfolio__experience';
     expSection.style.cssText = 'margin-bottom:1.5rem;';
     
     const expTitle = document.createElement('h3');
@@ -3180,7 +3185,7 @@ export function cardportfolio(element, options = {}) {
   // Education Section
   if (config.education && config.education.length > 0) {
     const eduSection = document.createElement('section');
-    eduSection.className = 'wb-portfolio__education';
+    eduSection.className = 'x-portfolio__education';
     eduSection.style.cssText = 'margin-bottom:1.5rem;';
     
     const eduTitle = document.createElement('h3');
@@ -3210,7 +3215,7 @@ export function cardportfolio(element, options = {}) {
   // Projects Section
   if (config.projects && config.projects.length > 0) {
     const projSection = document.createElement('section');
-    projSection.className = 'wb-portfolio__projects';
+    projSection.className = 'x-portfolio__projects';
     projSection.style.cssText = 'margin-bottom:1.5rem;';
     
     const projTitle = document.createElement('h3');
@@ -3263,7 +3268,7 @@ export function cardportfolio(element, options = {}) {
   // Certifications
   if (config.certifications) {
     const certSection = document.createElement('section');
-    certSection.className = 'wb-portfolio__certifications';
+    certSection.className = 'x-portfolio__certifications';
     certSection.style.cssText = 'margin-bottom:1.5rem;';
     
     const certTitle = document.createElement('h3');
@@ -3287,7 +3292,7 @@ export function cardportfolio(element, options = {}) {
   // Languages
   if (config.languages) {
     const langSection = document.createElement('section');
-    langSection.className = 'wb-portfolio__languages';
+    langSection.className = 'x-portfolio__languages';
     langSection.style.cssText = 'margin-bottom:1.5rem;';
     
     const langTitle = document.createElement('h3');
@@ -3313,7 +3318,7 @@ export function cardportfolio(element, options = {}) {
   // ==================== CONTACT ====================
   if (config.email || config.phone || config.website) {
     const contact = document.createElement('address');
-    contact.className = 'wb-portfolio__contact';
+    contact.className = 'x-portfolio__contact';
     contact.style.cssText = 'padding:1rem 1.5rem;border-top:1px solid var(--border-color,#374151);font-style:normal;display:flex;flex-wrap:wrap;gap:1rem;justify-content:center;';
 
     const contactItems = [
@@ -3346,7 +3351,7 @@ export function cardportfolio(element, options = {}) {
 
   if (socialLinks.length > 0) {
     const social = document.createElement('nav');
-    social.className = 'wb-portfolio__social';
+    social.className = 'x-portfolio__social';
     social.setAttribute('aria-label', 'Social links');
     social.style.cssText = 'padding:1rem 1.5rem;border-top:1px solid var(--border-color,#374151);display:flex;justify-content:center;gap:0.75rem;';
 
@@ -3369,13 +3374,13 @@ export function cardportfolio(element, options = {}) {
   // ==================== CTA FOOTER ====================
   if (config.cta) {
     const footer = document.createElement('footer');
-    footer.className = 'wb-portfolio__footer';
+    footer.className = 'x-portfolio__footer';
     footer.style.cssText = 'padding:1rem 1.5rem;border-top:1px solid var(--border-color,#374151);';
     
     const ctaBtn = document.createElement('a');
     ctaBtn.href = config.ctaHref || '#';
-    ctaBtn.className = 'wb-portfolio__cta';
-    // #561: static layout/padding now lives in card.css's `.wb-portfolio__cta`
+    ctaBtn.className = 'x-portfolio__cta';
+    // #561: static layout/padding now lives in card.css's `.x-portfolio__cta`
     // rule (padding:1rem, was inline at 0.875rem/14px -- below the §13
     // minimum). Only the genuinely dynamic hover-state background/transform
     // stay inline, since those are set by JS pointer handlers, not CSS.
@@ -3390,7 +3395,7 @@ export function cardportfolio(element, options = {}) {
   // API
   element.wbPortfolio = {
     setAvailability: (status) => {
-      const dot = element.querySelector('.wb-portfolio__availability');
+      const dot = element.querySelector('.x-portfolio__availability');
       if (dot && availabilityConfig[status]) {
         dot.style.background = availabilityConfig[status].color;
         dot.title = availabilityConfig[status].label;

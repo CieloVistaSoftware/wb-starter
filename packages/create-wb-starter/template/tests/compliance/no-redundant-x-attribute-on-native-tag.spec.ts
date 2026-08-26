@@ -14,7 +14,7 @@ import * as path from 'path';
  * page) is in effect. The explicit x-<tag> attribute was needed under an
  * older convention; keeping it in demo markup teaches readers a pattern
  * that's no longer necessary, the same class of issue #448 (redundant
- * class="wb-x" on a <wb-x> tag) already fixed for custom elements.
+ * class="x-x" on a <div> tag) already fixed for custom elements.
  *
  * Scoped to demos/**\/*.html and pages/**\/*.html -- the markup readers
  * actually copy from, matching demos-no-legacy-data-attrs.spec.ts's scope
@@ -44,7 +44,25 @@ function targetFiles(): string[] {
 // Matches a bare native-tag opening tag (no hyphen in the name -- excludes
 // wb-*/x-* custom elements, which are a different, already-covered check)
 // whose attribute list contains a bare `x-<sametagname>` token.
+/**
+ * Comments are not markup. A comment that DOCUMENTS the anti-pattern — and
+ * several in pages/behaviors.html quote `<button x-button>` and
+ * `<figure x-figure>` precisely to say they must never be emitted — is not an
+ * instance of it. Scanning raw text made writing about the rule a violation
+ * of the rule.
+ *
+ * `//` is only treated as a comment when preceded by start-of-line or
+ * whitespace, so the `//` in `https://…` inside a real attribute survives.
+ */
+function stripComments(text: string): string {
+  return text
+    .replace(/<!--[\s\S]*?-->/g, '')
+    .replace(/\/\*[\s\S]*?\*\//g, '')
+    .replace(/(^|\s)\/\/.*$/gm, '$1');
+}
+
 function findRedundantPairs(html: string): string[] {
+  html = stripComments(html);
   const found: string[] = [];
   const openTagRe = /<([a-z][a-z0-9]*)\b([^>]*)>/gi;
   let m;

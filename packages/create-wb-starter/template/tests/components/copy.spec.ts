@@ -25,7 +25,7 @@ async function injectAndScan(page: Page, html: string) {
     container.innerHTML = h;
     
     // Force eager loading
-    const elements = container.querySelectorAll('.wb-ready');
+    const elements = container.querySelectorAll('.x-ready');
     elements.forEach(el => el.setAttribute('', ''));
     
     document.body.appendChild(container);
@@ -45,11 +45,11 @@ test.describe('copy Behavior', () => {
     page.on('pageerror', (err) => errors.push(err.message));
     
     const setupHtml = [
-      "<wb-copy>Basic copy content</wb-copy>",
-      "<wb-copy text=\"Sample text\">text=\"Sample text\"</wb-copy>",
-      "<wb-copy target=\"Sample target\">target=\"Sample target\"</wb-copy>",
-      "<wb-copy text=\"Sample text\" target=\"Sample target\">Combined: text=\"Sample text\", target=\"Sample target\"</wb-copy>",
-      "<wb-copy>Test permutation 5</wb-copy>"
+      "<div x-copy>Basic copy content</div>",
+      "<div x-copy text=\"Sample text\">text=\"Sample text\"</div>",
+      "<div x-copy target=\"Sample target\">target=\"Sample target\"</div>",
+      "<div x-copy text=\"Sample text\" target=\"Sample target\">Combined: text=\"Sample text\", target=\"Sample target\"</div>",
+      "<div x-copy>Test permutation 5</div>"
     ];
     
     await injectAndScan(page, setupHtml.join('\n'));
@@ -65,10 +65,10 @@ test.describe('copy Behavior', () => {
   });
 
   test('element is visible after scan', async ({ page }) => {
-    const html = "<wb-copy>Basic copy content</wb-copy>";
+    const html = "<div x-copy>Basic copy content</div>";
     await injectAndScan(page, html);
     
-    const el = page.locator('#test-container wb-copy, #test-container wb-copy').first();
+    const el = page.locator('#test-container x-copy, #test-container x-copy').first();
     const isPresent = await el.count() > 0;
     
     if (isPresent) {

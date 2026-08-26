@@ -25,14 +25,14 @@ async function injectAndScan(page: Page, html: string) {
     container.innerHTML = h;
     
     // Force eager loading
-    const elements = container.querySelectorAll('.wb-ready');
+    const elements = container.querySelectorAll('.x-ready');
     elements.forEach(el => el.setAttribute('', ''));
     
     document.body.appendChild(container);
   }, html);
   
-  await page.evaluate(() => {
-    (window as any).WB.scan(document.getElementById('test-container'));
+  await page.evaluate(async () => {
+    await (window as any).WB.scan(document.getElementById('test-container'));
   });
   
   await page.waitForTimeout(500);
@@ -45,11 +45,11 @@ test.describe('hero Behavior', () => {
     page.on('pageerror', (err) => errors.push(err.message));
     
     const setupHtml = [
-      "<wb-hero>Basic hero content</wb-hero>",
-      "<wb-hero variant=\"default\">variant=default</wb-hero>",
-      "<wb-hero variant=\"cosmic\">variant=cosmic</wb-hero>",
-      "<wb-hero variant=\"default\" variant=\"cosmic\">Combined: variant=default, variant=cosmic</wb-hero>",
-      "<wb-hero>Test permutation 5</wb-hero>"
+      "<div x-hero>Basic hero content</div>",
+      "<div x-hero variant=\"default\">variant=default</div>",
+      "<div x-hero variant=\"cosmic\">variant=cosmic</div>",
+      "<div x-hero variant=\"default\" variant=\"cosmic\">Combined: variant=default, variant=cosmic</div>",
+      "<div x-hero>Test permutation 5</div>"
     ];
     
     await injectAndScan(page, setupHtml.join('\n'));
@@ -65,10 +65,10 @@ test.describe('hero Behavior', () => {
   });
 
   test('element is visible after scan', async ({ page }) => {
-    const html = "<wb-hero>Basic hero content</wb-hero>";
+    const html = "<div x-hero>Basic hero content</div>";
     await injectAndScan(page, html);
     
-    const el = page.locator('#test-container wb-hero, #test-container wb-hero').first();
+    const el = page.locator('#test-container [x-hero], #test-container [x-hero]').first();
     const isPresent = await el.count() > 0;
     
     if (isPresent) {

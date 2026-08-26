@@ -61,7 +61,7 @@ const pkgPath = join(targetDir, 'package.json');
 const pkgName = basename(targetDir)
   .toLowerCase()
   .replace(/[^a-z0-9-]+/g, '-')
-  .replace(/^-+|-+$/g, '') || 'wb-site';
+  .replace(/^-+|-+$/g, '') || 'x-site';
 const pkg = JSON.parse(readFileSync(pkgPath, 'utf8'));
 pkg.name = pkgName;
 writeFileSync(pkgPath, JSON.stringify(pkg, null, 2) + '\n');

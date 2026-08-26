@@ -1,21 +1,49 @@
 {
-  "generatedAt": "2026-08-20T00:54:20.377Z",
-  "count": 104,
+  "generatedAt": "2026-08-26T17:57:07.232Z",
+  "count": 152,
   "schemas": [
+    {
+      "file": "accordion.schema.json",
+      "name": "x-accordion",
+      "title": "Accordion",
+      "description": "Behavior applied with x-accordion.",
+      "tag": "wb-x-accordion",
+      "baseClass": "wb-x-accordion",
+      "properties": {
+        "data-title": {
+          "type": "boolean",
+          "description": "Read by accordion(). Bare attribute.",
+          "default": false
+        },
+        "accordion-title": {
+          "type": "boolean",
+          "description": "Read by accordion(). Bare attribute.",
+          "default": false
+        },
+        "open": {
+          "type": "boolean",
+          "description": "Read by accordion(). Bare attribute.",
+          "default": false
+        }
+      },
+      "matrix": [],
+      "_metadata": {
+        "generatedBy": "scripts/generate-behavior-schemas.mjs (#716)",
+        "derivedFrom": "the behavior implementation — every property here is one the code actually reads",
+        "note": "Expand by hand: enums, richer descriptions and accessibility notes cannot be read from source."
+      }
+    },
     {
       "file": "alert.schema.json",
       "name": "alert",
       "title": "Alert",
       "description": "Alert component for displaying messages with severity levels",
       "tag": "wb-alert",
-      "baseClass": "wb-alert",
+      "baseClass": "x-alert",
       "properties": {
         "variant": {
           "type": "string",
           "description": "Alert severity/style variant",
-          "aliases": [
-            "type"
-          ],
           "enum": [
             "info",
             "success",
@@ -23,7 +51,7 @@
             "error"
           ],
           "default": "info",
-          "appliesClass": "wb-alert--{{value}}"
+          "appliesClass": "x-alert--{{value}}"
         },
         "title": {
           "type": "string",
@@ -100,7 +128,7 @@
       "title": "Article Component",
       "description": "Semantic article component for blog posts, news, and documentation pages.",
       "tag": "wb-article",
-      "baseClass": "wb-article",
+      "baseClass": "x-article",
       "properties": {
         "title": {
           "type": "string",
@@ -146,7 +174,7 @@
           "type": "boolean",
           "description": "Whether the article is featured",
           "default": false,
-          "appliesClass": "wb-article--featured"
+          "appliesClass": "x-article--featured"
         }
       },
       "matrix": [
@@ -159,7 +187,7 @@
         },
         {
           "title": "Article",
-          "image": "cover.jpg"
+          "image": "/images/dachshund-puppy-image-960x540.jpg"
         },
         {
           "title": "Article",
@@ -186,7 +214,7 @@
       "title": "Articles List Component",
       "description": "A wrapper component to display a list or grid of articles.",
       "tag": "wb-articles",
-      "baseClass": "wb-articles",
+      "baseClass": "x-articles",
       "properties": {
         "layout": {
           "type": "string",
@@ -246,12 +274,12 @@
       "title": "Audio",
       "description": "Audio player with optional 15-band graphic equalizer",
       "tag": "wb-audio",
-      "baseClass": "wb-audio",
+      "baseClass": "x-audio",
       "properties": {
         "src": {
           "type": "string",
           "description": "Audio source URL",
-          "default": "../audio.mp3",
+          "default": "https://archive.org/download/nineinchnails_ghosts_I_IV/01_Ghosts_I.mp3",
           "required": true
         },
         "volume": {
@@ -302,18 +330,18 @@
       },
       "matrix": [
         {
-          "src": "../audio.mp3"
+          "src": "https://archive.org/download/nineinchnails_ghosts_I_IV/01_Ghosts_I.mp3"
         },
         {
-          "src": "../audio.mp3",
+          "src": "https://archive.org/download/nineinchnails_ghosts_I_IV/01_Ghosts_I.mp3",
           "showEq": true
         },
         {
-          "src": "../audio.mp3",
+          "src": "https://archive.org/download/nineinchnails_ghosts_I_IV/01_Ghosts_I.mp3",
           "volume": 0.5
         },
         {
-          "src": "../audio.mp3",
+          "src": "https://archive.org/download/nineinchnails_ghosts_I_IV/01_Ghosts_I.mp3",
           "loop": true
         }
       ],
@@ -345,12 +373,27 @@
       "_metadata": {}
     },
     {
+      "file": "autosize.schema.json",
+      "name": "x-autosize",
+      "title": "Autosize",
+      "description": "Behavior applied with x-autosize.",
+      "tag": "wb-x-autosize",
+      "baseClass": "wb-x-autosize",
+      "properties": {},
+      "matrix": [],
+      "_metadata": {
+        "generatedBy": "scripts/generate-behavior-schemas.mjs (#716)",
+        "derivedFrom": "the behavior implementation — every property here is one the code actually reads",
+        "note": "Expand by hand: enums, richer descriptions and accessibility notes cannot be read from source."
+      }
+    },
+    {
       "file": "avatar.schema.json",
       "name": "avatar",
       "title": "Avatar",
       "description": "User avatar with image, initials fallback, and status indicator",
       "tag": "wb-avatar",
-      "baseClass": "wb-avatar",
+      "baseClass": "x-avatar",
       "properties": {
         "src": {
           "type": "string",
@@ -383,7 +426,7 @@
             "2xl"
           ],
           "default": "md",
-          "appliesClass": "wb-avatar--{{value}}"
+          "appliesClass": "x-avatar--{{value}}"
         },
         "shape": {
           "type": "string",
@@ -393,7 +436,7 @@
             "rounded"
           ],
           "default": "circle",
-          "appliesClass": "wb-avatar--{{value}}"
+          "appliesClass": "x-avatar--{{value}}"
         },
         "status": {
           "type": "string",
@@ -411,7 +454,7 @@
           "type": "boolean",
           "description": "Show border",
           "default": false,
-          "appliesClass": "wb-avatar--bordered"
+          "appliesClass": "x-avatar--bordered"
         }
       },
       "matrix": [
@@ -447,7 +490,7 @@
       "title": "Badge",
       "description": "Small label/tag for status indicators, counts, or categories",
       "tag": "wb-badge",
-      "baseClass": "wb-badge",
+      "baseClass": "x-badge",
       "properties": {
         "label": {
           "type": "string",
@@ -469,7 +512,7 @@
             "gradient"
           ],
           "default": "default",
-          "appliesClass": "wb-badge--{{value}}"
+          "appliesClass": "x-badge--{{value}}"
         },
         "size": {
           "type": "string",
@@ -481,25 +524,25 @@
             "lg"
           ],
           "default": "md",
-          "appliesClass": "wb-badge--{{value}}"
+          "appliesClass": "x-badge--{{value}}"
         },
         "pill": {
           "type": "boolean",
           "description": "Pill shape with full border radius",
           "default": false,
-          "appliesClass": "wb-badge--pill"
+          "appliesClass": "x-badge--pill"
         },
         "dot": {
           "type": "boolean",
           "description": "Dot indicator (no text)",
           "default": false,
-          "appliesClass": "wb-badge--dot"
+          "appliesClass": "x-badge--dot"
         },
         "outline": {
           "type": "boolean",
           "description": "Outline style (transparent background)",
           "default": false,
-          "appliesClass": "wb-badge--outline"
+          "appliesClass": "x-badge--outline"
         },
         "removable": {
           "type": "boolean",
@@ -510,7 +553,7 @@
           "type": "boolean",
           "description": "Soft pulsing glow halo in the badge's own variant color, for drawing attention (e.g. NEW/LIVE badges)",
           "default": false,
-          "appliesClass": "wb-badge--glow"
+          "appliesClass": "x-badge--glow"
         },
         "icon": {
           "type": "string",
@@ -837,12 +880,53 @@
       }
     },
     {
+      "file": "bounce.schema.json",
+      "name": "x-bounce",
+      "title": "Bounce",
+      "description": "On click, plays the bounce animation for 0.75s.",
+      "tag": "wb-x-bounce",
+      "baseClass": "wb-x-bounce",
+      "properties": {},
+      "matrix": [],
+      "_metadata": {
+        "generatedBy": "scripts/generate-behavior-schemas.mjs (#716)",
+        "derivedFrom": "the behavior implementation — every property here is one the code actually reads",
+        "note": "Expand by hand: enums, richer descriptions and accessibility notes cannot be read from source."
+      }
+    },
+    {
+      "file": "breadcrumb.schema.json",
+      "name": "x-breadcrumb",
+      "title": "Breadcrumb",
+      "description": "Behavior applied with x-breadcrumb.",
+      "tag": "wb-x-breadcrumb",
+      "baseClass": "wb-x-breadcrumb",
+      "properties": {
+        "items": {
+          "type": "string",
+          "description": "Read by breadcrumb().",
+          "default": ""
+        },
+        "separator": {
+          "type": "string",
+          "description": "Read by breadcrumb().",
+          "default": "/"
+        }
+      },
+      "matrix": [],
+      "_metadata": {
+        "generatedBy": "scripts/generate-behavior-schemas.mjs (#716)",
+        "derivedFrom": "the behavior implementation — every property here is one the code actually reads",
+        "note": "Expand by hand: enums, richer descriptions and accessibility notes cannot be read from source."
+      }
+    },
+    {
       "file": "button.schema.json",
       "name": "button",
       "title": "Button",
       "description": "Interactive button with variants, sizes, and optional icon",
       "tag": "wb-button",
-      "baseClass": "wb-button",
+      "baseClass": "x-button",
       "properties": {
         "label": {
           "type": "string",
@@ -899,7 +983,7 @@
             "link"
           ],
           "default": "primary",
-          "appliesClass": "wb-button--{{value}}"
+          "appliesClass": "x-button--{{value}}"
         },
         "size": {
           "type": "string",
@@ -912,7 +996,7 @@
             "xl"
           ],
           "default": "md",
-          "appliesClass": "wb-button--{{value}}"
+          "appliesClass": "x-button--{{value}}"
         },
         "disabled": {
           "type": "boolean",
@@ -923,19 +1007,19 @@
           "type": "boolean",
           "description": "Loading state with spinner",
           "default": false,
-          "appliesClass": "wb-button--loading"
+          "appliesClass": "x-button--loading"
         },
         "fullWidth": {
           "type": "boolean",
           "description": "Full width button",
           "default": false,
-          "appliesClass": "wb-button--full"
+          "appliesClass": "x-button--full"
         },
         "iconOnly": {
           "type": "boolean",
           "description": "Icon-only button (square)",
           "default": false,
-          "appliesClass": "wb-button--icon-only"
+          "appliesClass": "x-button--icon-only"
         },
         "href": {
           "type": "string",
@@ -1015,7 +1099,7 @@
       "title": "Button Card",
       "description": "Card with action buttons in footer",
       "tag": "wb-cardbutton",
-      "baseClass": "wb-card-button",
+      "baseClass": "x-card-button",
       "properties": {
         "title": {
           "type": "string",
@@ -1056,7 +1140,7 @@
             "bordered"
           ],
           "default": "default",
-          "appliesClass": "wb-card-button--{{value}}"
+          "appliesClass": "x-card-button--{{value}}"
         }
       },
       "matrix": [
@@ -1088,7 +1172,7 @@
       "title": "Card Component",
       "description": "Card component. IS-A article, HAS-A header, main, footer.",
       "tag": "wb-card",
-      "baseClass": "wb-card",
+      "baseClass": "x-card",
       "properties": {
         "title": {
           "type": "string",
@@ -1109,13 +1193,13 @@
           "type": "boolean",
           "description": "Add drop shadow",
           "default": false,
-          "appliesClass": "wb-card--elevated"
+          "appliesClass": "x-card--elevated"
         },
         "clickable": {
           "type": "boolean",
           "description": "Make card clickable",
           "default": false,
-          "appliesClass": "wb-card--clickable"
+          "appliesClass": "x-card--clickable"
         },
         "variant": {
           "type": "string",
@@ -1141,7 +1225,7 @@
             "auto"
           ],
           "default": "auto",
-          "appliesClass": "wb-card--{value}"
+          "appliesClass": "x-card--{value}"
         },
         "tooltip": {
           "type": "string",
@@ -1231,7 +1315,7 @@
       "title": "Card Profile",
       "description": "Simple profile card. INHERITS from card.base (IS-A card), CONTAINS profile elements (HAS-A avatar, name, role, bio, cover).",
       "tag": "wb-cardprofile",
-      "baseClass": "wb-card",
+      "baseClass": "x-card",
       "properties": {
         "name": {
           "type": "string",
@@ -1338,7 +1422,7 @@
       "title": "Checkbox",
       "description": "Checkbox input with label and custom styling",
       "tag": "wb-checkbox",
-      "baseClass": "wb-checkbox",
+      "baseClass": "x-checkbox",
       "properties": {
         "label": {
           "type": "string",
@@ -1349,7 +1433,7 @@
           "type": "boolean",
           "description": "Checked state",
           "default": false,
-          "appliesClass": "wb-checkbox--checked"
+          "appliesClass": "x-checkbox--checked"
         },
         "disabled": {
           "type": "boolean",
@@ -1384,7 +1468,7 @@
             "lg"
           ],
           "default": "md",
-          "appliesClass": "wb-checkbox--{{value}}"
+          "appliesClass": "x-checkbox--{{value}}"
         },
         "variant": {
           "type": "string",
@@ -1394,7 +1478,7 @@
             "success"
           ],
           "default": "default",
-          "appliesClass": "wb-checkbox--{{value}}"
+          "appliesClass": "x-checkbox--{{value}}"
         }
       },
       "matrix": [
@@ -1440,7 +1524,7 @@
       "title": "Chip",
       "description": "Small pill-shaped tag/label, optionally dismissible",
       "tag": "wb-chip",
-      "baseClass": "wb-chip",
+      "baseClass": "x-chip",
       "properties": {
         "label": {
           "type": "string",
@@ -1473,7 +1557,7 @@
             "info"
           ],
           "default": "default",
-          "appliesClass": "wb-chip--{{value}}"
+          "appliesClass": "x-chip--{{value}}"
         },
         "size": {
           "type": "string",
@@ -1483,13 +1567,13 @@
             "lg"
           ],
           "default": "md",
-          "appliesClass": "wb-chip--{{value}}"
+          "appliesClass": "x-chip--{{value}}"
         },
         "outlined": {
           "type": "boolean",
           "description": "Outlined style",
           "default": false,
-          "appliesClass": "wb-chip--outlined"
+          "appliesClass": "x-chip--outlined"
         }
       },
       "matrix": [
@@ -1514,6 +1598,109 @@
         "icon": "🏷️",
         "since": "1.0.0",
         "status": "stable"
+      }
+    },
+    {
+      "file": "clock.schema.json",
+      "name": "x-clock",
+      "title": "Clock",
+      "description": "Behavior applied with x-clock.",
+      "tag": "wb-x-clock",
+      "baseClass": "wb-x-clock",
+      "properties": {
+        "variant": {
+          "type": "string",
+          "description": "Read by clock().",
+          "default": "digital"
+        },
+        "format": {
+          "type": "string",
+          "description": "Read by clock().",
+          "default": "24"
+        },
+        "show-seconds": {
+          "type": "string",
+          "description": "Read by clock()."
+        }
+      },
+      "matrix": [],
+      "_metadata": {
+        "generatedBy": "scripts/generate-behavior-schemas.mjs (#716)",
+        "derivedFrom": "the behavior implementation — every property here is one the code actually reads",
+        "note": "Expand by hand: enums, richer descriptions and accessibility notes cannot be read from source."
+      }
+    },
+    {
+      "file": "cluster.schema.json",
+      "name": "x-cluster",
+      "title": "Cluster",
+      "description": "Behavior applied with x-cluster.",
+      "tag": "wb-x-cluster",
+      "baseClass": "wb-x-cluster",
+      "properties": {
+        "gap": {
+          "type": "string",
+          "description": "Read by cluster().",
+          "default": "1rem"
+        },
+        "justify": {
+          "type": "string",
+          "description": "Read by cluster().",
+          "default": "flex-start"
+        },
+        "align": {
+          "type": "string",
+          "description": "Read by cluster().",
+          "default": "center"
+        }
+      },
+      "matrix": [],
+      "_metadata": {
+        "generatedBy": "scripts/generate-behavior-schemas.mjs (#716)",
+        "derivedFrom": "the behavior implementation — every property here is one the code actually reads",
+        "note": "Expand by hand: enums, richer descriptions and accessibility notes cannot be read from source."
+      }
+    },
+    {
+      "file": "code.schema.json",
+      "name": "x-code",
+      "title": "Code",
+      "description": "Behavior applied with x-code.",
+      "tag": "wb-x-code",
+      "baseClass": "wb-x-code",
+      "properties": {
+        "language": {
+          "type": "string",
+          "description": "Read by code()."
+        },
+        "variant": {
+          "type": "string",
+          "description": "Read by code()."
+        },
+        "scrollable": {
+          "type": "string",
+          "description": "Read by code()."
+        },
+        "size": {
+          "type": "string",
+          "description": "Read by code()."
+        },
+        "show-copy": {
+          "type": "boolean",
+          "description": "Read by code(). Bare attribute.",
+          "default": false
+        },
+        "data-copy": {
+          "type": "boolean",
+          "description": "Read by code(). Bare attribute.",
+          "default": false
+        }
+      },
+      "matrix": [],
+      "_metadata": {
+        "generatedBy": "scripts/generate-behavior-schemas.mjs (#716)",
+        "derivedFrom": "the behavior implementation — every property here is one the code actually reads",
+        "note": "Expand by hand: enums, richer descriptions and accessibility notes cannot be read from source."
       }
     },
     {
@@ -1580,7 +1767,7 @@
       "title": "Confetti",
       "description": "Confetti particle animation effect",
       "tag": "wb-confetti",
-      "baseClass": "wb-confetti",
+      "baseClass": "x-confetti",
       "properties": {
         "count": {
           "type": "number",
@@ -1635,6 +1822,65 @@
       }
     },
     {
+      "file": "confirm.schema.json",
+      "name": "x-confirm",
+      "title": "Confirm",
+      "description": "Behavior applied with x-confirm.",
+      "tag": "wb-x-confirm",
+      "baseClass": "wb-x-confirm",
+      "properties": {
+        "heading": {
+          "type": "string",
+          "description": "Read by confirm().",
+          "default": "Confirm"
+        },
+        "message": {
+          "type": "string",
+          "description": "Read by confirm().",
+          "default": "Are you sure?"
+        },
+        "confirm-text": {
+          "type": "string",
+          "description": "Read by confirm().",
+          "default": "OK"
+        },
+        "cancel-text": {
+          "type": "string",
+          "description": "Read by confirm().",
+          "default": "Cancel"
+        },
+        "confirm-title": {
+          "type": "string",
+          "description": "Read by confirm()."
+        },
+        "confirm-message": {
+          "type": "string",
+          "description": "Read by confirm()."
+        }
+      },
+      "matrix": [],
+      "_metadata": {
+        "generatedBy": "scripts/generate-behavior-schemas.mjs (#716)",
+        "derivedFrom": "the behavior implementation — every property here is one the code actually reads",
+        "note": "Expand by hand: enums, richer descriptions and accessibility notes cannot be read from source."
+      }
+    },
+    {
+      "file": "control.schema.json",
+      "name": "control",
+      "title": "Control",
+      "description": "Behavior applied with x-control.",
+      "tag": "wb-control",
+      "baseClass": "wb-control",
+      "properties": {},
+      "matrix": [],
+      "_metadata": {
+        "generatedBy": "scripts/generate-behavior-schemas.mjs (#716)",
+        "derivedFrom": "the behavior implementation — every property here is one the code actually reads",
+        "note": "Expand by hand: enums, richer descriptions and accessibility notes cannot be read from source."
+      }
+    },
+    {
       "file": "copy.schema.json",
       "name": "copy",
       "title": "Copy",
@@ -1662,6 +1908,85 @@
         }
       ],
       "_metadata": {}
+    },
+    {
+      "file": "copybutton.schema.json",
+      "name": "x-copybutton",
+      "title": "Copybutton",
+      "description": "Behavior applied with x-copybutton.",
+      "tag": "wb-x-copybutton",
+      "baseClass": "wb-x-copybutton",
+      "properties": {
+        "x-copybutton": {
+          "type": "string",
+          "description": "Read by copybutton().",
+          "default": ""
+        },
+        "label": {
+          "type": "string",
+          "description": "Read by copybutton().",
+          "default": "Copy"
+        },
+        "position": {
+          "type": "string",
+          "description": "Read by copybutton().",
+          "default": "top-right"
+        },
+        "copy-feedback": {
+          "type": "string",
+          "description": "Read by copybutton().",
+          "default": "Copied ✓"
+        },
+        "copy-duration": {
+          "type": "string",
+          "description": "Read by copybutton().",
+          "default": "2000"
+        },
+        "copy-target": {
+          "type": "string",
+          "description": "Read by copybutton()."
+        }
+      },
+      "matrix": [],
+      "_metadata": {
+        "generatedBy": "scripts/generate-behavior-schemas.mjs (#716)",
+        "derivedFrom": "the behavior implementation — every property here is one the code actually reads",
+        "note": "Expand by hand: enums, richer descriptions and accessibility notes cannot be read from source."
+      }
+    },
+    {
+      "file": "countdown.schema.json",
+      "name": "x-countdown",
+      "title": "Countdown",
+      "description": "Behavior applied with x-countdown.",
+      "tag": "wb-x-countdown",
+      "baseClass": "wb-x-countdown",
+      "properties": {
+        "seconds": {
+          "type": "string",
+          "description": "Read by countdown().",
+          "default": "0"
+        },
+        "format": {
+          "type": "string",
+          "description": "Read by countdown().",
+          "default": "auto"
+        },
+        "date": {
+          "type": "string",
+          "description": "Read by countdown()."
+        },
+        "to": {
+          "type": "string",
+          "description": "Read by countdown()."
+        }
+      },
+      "matrix": [],
+      "_metadata": {
+        "generatedBy": "scripts/generate-behavior-schemas.mjs (#716)",
+        "derivedFrom": "the behavior implementation — every property here is one the code actually reads",
+        "note": "Expand by hand: enums, richer descriptions and accessibility notes cannot be read from source."
+      }
     },
     {
       "file": "counter.schema.json",
@@ -1704,7 +2029,7 @@
       "title": "Demo Container",
       "description": "A container that renders children normally in a CSS grid and shows the raw HTML as a syntax-highlighted, auto-formatted code sample below. Uses fetch for raw page source, formatHtml for consistent 2-space indentation, and textContent to prevent browser inflation.",
       "tag": "wb-demo",
-      "baseClass": "wb-demo",
+      "baseClass": "x-demo",
       "properties": {
         "columns": {
           "type": "integer",
@@ -1733,7 +2058,7 @@
       "title": "Details",
       "description": "Native HTML5 details disclosure widget with optional animation",
       "tag": "wb-details",
-      "baseClass": "wb-details",
+      "baseClass": "x-details",
       "properties": {
         "summary": {
           "type": "string",
@@ -1764,7 +2089,7 @@
             "filled"
           ],
           "default": "default",
-          "appliesClass": "wb-details--{{value}}"
+          "appliesClass": "x-details--{{value}}"
         }
       },
       "matrix": [
@@ -1793,7 +2118,7 @@
       "title": "Dialog",
       "description": "Modal dialog using native HTML5 dialog element",
       "tag": "wb-dialog",
-      "baseClass": "wb-dialog",
+      "baseClass": "x-dialog",
       "properties": {
         "title": {
           "type": "string",
@@ -1815,7 +2140,7 @@
             "full"
           ],
           "default": "md",
-          "appliesClass": "wb-dialog--{{value}}"
+          "appliesClass": "x-dialog--{{value}}"
         },
         "closeOnBackdrop": {
           "type": "boolean",
@@ -1840,7 +2165,7 @@
             "fullscreen"
           ],
           "default": "default",
-          "appliesClass": "wb-dialog--{{value}}"
+          "appliesClass": "x-dialog--{{value}}"
         }
       },
       "matrix": [
@@ -1909,7 +2234,7 @@
       "title": "Draggable Card",
       "description": "Card that can be dragged around the page",
       "tag": "wb-carddraggable",
-      "baseClass": "wb-card-draggable",
+      "baseClass": "x-card-draggable",
       "properties": {
         "title": {
           "type": "string",
@@ -1953,7 +2278,7 @@
             "elevated"
           ],
           "default": "default",
-          "appliesClass": "wb-card-draggable--{{value}}"
+          "appliesClass": "x-card-draggable--{{value}}"
         }
       },
       "matrix": [
@@ -1985,7 +2310,7 @@
       "title": "Drawer",
       "description": "Slide-out panel overlay from screen edge",
       "tag": "wb-drawer",
-      "baseClass": "wb-drawer",
+      "baseClass": "x-drawer",
       "properties": {
         "title": {
           "type": "string",
@@ -2006,7 +2331,7 @@
             "bottom"
           ],
           "default": "right",
-          "appliesClass": "wb-drawer--{{value}}"
+          "appliesClass": "x-drawer--{{value}}"
         },
         "width": {
           "type": "string",
@@ -2041,7 +2366,7 @@
             "push"
           ],
           "default": "overlay",
-          "appliesClass": "wb-drawer--{{value}}"
+          "appliesClass": "x-drawer--{{value}}"
         }
       },
       "matrix": [
@@ -2071,7 +2396,7 @@
       "title": "Drawer Layout",
       "description": "Collapsible sidebar layout with toggle",
       "tag": "wb-drawer-layout",
-      "baseClass": "wb-drawer-layout",
+      "baseClass": "x-drawer-layout",
       "properties": {
         "position": {
           "type": "string",
@@ -2080,7 +2405,7 @@
             "right"
           ],
           "default": "left",
-          "appliesClass": "wb-drawer-layout--{{value}}"
+          "appliesClass": "x-drawer-layout--{{value}}"
         },
         "width": {
           "type": "string",
@@ -2122,7 +2447,7 @@
       "title": "Dropdown",
       "description": "Toggleable dropdown menu",
       "tag": "wb-dropdown",
-      "baseClass": "wb-dropdown",
+      "baseClass": "x-dropdown",
       "properties": {
         "position": {
           "type": "string",
@@ -2133,7 +2458,7 @@
             "top-end"
           ],
           "default": "bottom-start",
-          "appliesClass": "wb-dropdown--{{value}}"
+          "appliesClass": "x-dropdown--{{value}}"
         },
         "trigger": {
           "type": "string",
@@ -2194,7 +2519,7 @@
       "title": "Expandable Card",
       "description": "Card with collapsible/expandable content section",
       "tag": "wb-cardexpandable",
-      "baseClass": "wb-card-expandable",
+      "baseClass": "x-card-expandable",
       "properties": {
         "title": {
           "type": "string",
@@ -2211,7 +2536,7 @@
           "type": "boolean",
           "description": "Initial expanded state",
           "default": false,
-          "appliesClass": "wb-card-expandable--expanded"
+          "appliesClass": "x-card-expandable--expanded"
         },
         "maxHeight": {
           "type": "string",
@@ -2231,7 +2556,7 @@
             "bordered"
           ],
           "default": "default",
-          "appliesClass": "wb-card-expandable--{{value}}"
+          "appliesClass": "x-card-expandable--{{value}}"
         }
       },
       "matrix": [
@@ -2258,6 +2583,21 @@
       }
     },
     {
+      "file": "fadein.schema.json",
+      "name": "x-fadein",
+      "title": "Fadein",
+      "description": "On click, plays the fade-in animation for 0.5s.",
+      "tag": "wb-x-fadein",
+      "baseClass": "wb-x-fadein",
+      "properties": {},
+      "matrix": [],
+      "_metadata": {
+        "generatedBy": "scripts/generate-behavior-schemas.mjs (#716)",
+        "derivedFrom": "the behavior implementation — every property here is one the code actually reads",
+        "note": "Expand by hand: enums, richer descriptions and accessibility notes cannot be read from source."
+      }
+    },
+    {
       "file": "fieldset.schema.json",
       "name": "fieldset",
       "title": "Fieldset Behavior",
@@ -2267,17 +2607,51 @@
       "properties": {
         "collapsible": {
           "type": "boolean",
-          "description": "Allow fieldset to be collapsible",
+          "description": "Turns the <legend> into a toggle: clicking it hides and shows the fieldset's contents. The legend stays visible when collapsed, and collapsed contents are removed from the tab order.",
           "default": false
         },
         "collapsed": {
           "type": "boolean",
-          "description": "Initial collapsed state",
+          "description": "Start collapsed. Requires collapsible — on its own it does nothing, because nothing would be able to reopen it.",
           "default": false
         }
       },
       "matrix": [],
       "_metadata": {}
+    },
+    {
+      "file": "figure.schema.json",
+      "name": "x-figure",
+      "title": "Figure",
+      "description": "Behavior applied with x-figure.",
+      "tag": "wb-x-figure",
+      "baseClass": "wb-x-figure",
+      "properties": {
+        "caption-position": {
+          "type": "string",
+          "description": "Read by figure().",
+          "default": "bottom"
+        },
+        "zoom": {
+          "type": "boolean",
+          "description": "Read by figure(). Bare attribute.",
+          "default": false
+        },
+        "lightbox": {
+          "type": "string",
+          "description": "Read by figure()."
+        },
+        "caption": {
+          "type": "string",
+          "description": "Read by figure()."
+        }
+      },
+      "matrix": [],
+      "_metadata": {
+        "generatedBy": "scripts/generate-behavior-schemas.mjs (#716)",
+        "derivedFrom": "the behavior implementation — every property here is one the code actually reads",
+        "note": "Expand by hand: enums, richer descriptions and accessibility notes cannot be read from source."
+      }
     },
     {
       "file": "file.schema.json",
@@ -2296,7 +2670,7 @@
       "title": "File Card",
       "description": "File display card with icon, name, size, and download",
       "tag": "wb-cardfile",
-      "baseClass": "wb-card-file",
+      "baseClass": "x-card-file",
       "properties": {
         "filename": {
           "type": "string",
@@ -2346,7 +2720,7 @@
             "elevated"
           ],
           "default": "default",
-          "appliesClass": "wb-card-file--{{value}}"
+          "appliesClass": "x-card-file--{{value}}"
         },
         "hoverText": {
           "type": "string",
@@ -2379,12 +2753,29 @@
       }
     },
     {
+      "file": "fill.schema.json",
+      "name": "fill",
+      "title": "Fill",
+      "description": "Makes an element as wide as its container allows, using the property that actually governs width in the parent's layout",
+      "tag": "wb-fill",
+      "baseClass": "x-fill",
+      "properties": {
+        "ignoreMaxWidth": {
+          "type": "boolean",
+          "description": "Override an inherited max-width. Off by default: a cap set by a variant class or design token is usually a deliberate constraint, and 'as wide as possible' still means 'as wide as you are allowed to be'. Turn this on when the cap is the thing in the way.",
+          "default": false
+        }
+      },
+      "matrix": [],
+      "_metadata": {}
+    },
+    {
       "file": "fireworks.schema.json",
       "name": "fireworks",
       "title": "Fireworks",
       "description": "Fireworks particle burst animation effect",
       "tag": "wb-fireworks",
-      "baseClass": "wb-fireworks",
+      "baseClass": "x-fireworks",
       "properties": {
         "count": {
           "type": "number",
@@ -2450,6 +2841,77 @@
       "_metadata": {}
     },
     {
+      "file": "flash.schema.json",
+      "name": "x-flash",
+      "title": "Flash",
+      "description": "On click, plays the flash animation for 0.75s.",
+      "tag": "wb-x-flash",
+      "baseClass": "wb-x-flash",
+      "properties": {},
+      "matrix": [],
+      "_metadata": {
+        "generatedBy": "scripts/generate-behavior-schemas.mjs (#716)",
+        "derivedFrom": "the behavior implementation — every property here is one the code actually reads",
+        "note": "Expand by hand: enums, richer descriptions and accessibility notes cannot be read from source."
+      }
+    },
+    {
+      "file": "flex.schema.json",
+      "name": "x-flex",
+      "title": "Flex",
+      "description": "Behavior applied with x-flex.",
+      "tag": "wb-x-flex",
+      "baseClass": "wb-x-flex",
+      "properties": {
+        "direction": {
+          "type": "string",
+          "description": "Read by flex().",
+          "default": "row"
+        },
+        "wrap": {
+          "type": "string",
+          "description": "Read by flex().",
+          "default": "wrap"
+        },
+        "justify": {
+          "type": "string",
+          "description": "Read by flex().",
+          "default": "flex-start"
+        },
+        "align": {
+          "type": "string",
+          "description": "Read by flex().",
+          "default": "stretch"
+        },
+        "gap": {
+          "type": "string",
+          "description": "Read by flex().",
+          "default": "1rem"
+        }
+      },
+      "matrix": [],
+      "_metadata": {
+        "generatedBy": "scripts/generate-behavior-schemas.mjs (#716)",
+        "derivedFrom": "the behavior implementation — every property here is one the code actually reads",
+        "note": "Expand by hand: enums, richer descriptions and accessibility notes cannot be read from source."
+      }
+    },
+    {
+      "file": "flip.schema.json",
+      "name": "x-flip",
+      "title": "Flip",
+      "description": "On click, plays the flip animation for 0.6s.",
+      "tag": "wb-x-flip",
+      "baseClass": "wb-x-flip",
+      "properties": {},
+      "matrix": [],
+      "_metadata": {
+        "generatedBy": "scripts/generate-behavior-schemas.mjs (#716)",
+        "derivedFrom": "the behavior implementation — every property here is one the code actually reads",
+        "note": "Expand by hand: enums, richer descriptions and accessibility notes cannot be read from source."
+      }
+    },
+    {
       "file": "floatinglabel.schema.json",
       "name": "floatinglabel",
       "title": "Floating Label Behavior",
@@ -2466,7 +2928,7 @@
       "title": "Footer",
       "description": "Page footer with copyright, links, and social icons",
       "tag": "wb-footer",
-      "baseClass": "wb-footer",
+      "baseClass": "x-footer",
       "properties": {
         "copyright": {
           "type": "string",
@@ -2492,7 +2954,7 @@
           "type": "boolean",
           "description": "Sticky at bottom",
           "default": false,
-          "appliesClass": "wb-footer--sticky"
+          "appliesClass": "x-footer--sticky"
         }
       },
       "matrix": [
@@ -2555,6 +3017,67 @@
       "_metadata": {}
     },
     {
+      "file": "fullscreen.schema.json",
+      "name": "x-fullscreen",
+      "title": "Fullscreen",
+      "description": "Behavior applied with x-fullscreen.",
+      "tag": "wb-x-fullscreen",
+      "baseClass": "wb-x-fullscreen",
+      "properties": {
+        "target": {
+          "type": "string",
+          "description": "Read by fullscreen().",
+          "default": ""
+        },
+        "label": {
+          "type": "string",
+          "description": "Read by fullscreen().",
+          "default": "⛶ Fullscreen"
+        }
+      },
+      "matrix": [],
+      "_metadata": {
+        "generatedBy": "scripts/generate-behavior-schemas.mjs (#716)",
+        "derivedFrom": "the behavior implementation — every property here is one the code actually reads",
+        "note": "Expand by hand: enums, richer descriptions and accessibility notes cannot be read from source."
+      }
+    },
+    {
+      "file": "gallery.schema.json",
+      "name": "x-gallery",
+      "title": "Gallery",
+      "description": "Behavior applied with x-gallery.",
+      "tag": "wb-x-gallery",
+      "baseClass": "wb-x-gallery",
+      "properties": {
+        "columns": {
+          "type": "string",
+          "description": "Read by gallery().",
+          "default": "3"
+        },
+        "size": {
+          "type": "string",
+          "description": "Read by gallery().",
+          "default": ""
+        },
+        "gap": {
+          "type": "string",
+          "description": "Read by gallery().",
+          "default": "1rem"
+        },
+        "lightbox": {
+          "type": "string",
+          "description": "Read by gallery()."
+        }
+      },
+      "matrix": [],
+      "_metadata": {
+        "generatedBy": "scripts/generate-behavior-schemas.mjs (#716)",
+        "derivedFrom": "the behavior implementation — every property here is one the code actually reads",
+        "note": "Expand by hand: enums, richer descriptions and accessibility notes cannot be read from source."
+      }
+    },
+    {
       "file": "globe.schema.json",
       "name": "globe",
       "title": "Globe",
@@ -2566,12 +3089,33 @@
       "_metadata": {}
     },
     {
+      "file": "glow.schema.json",
+      "name": "x-glow",
+      "title": "Glow",
+      "description": "Behavior applied with x-glow.",
+      "tag": "wb-x-glow",
+      "baseClass": "wb-x-glow",
+      "properties": {
+        "color": {
+          "type": "string",
+          "description": "Read by glow().",
+          "default": "var(--primary, #6366f1)"
+        }
+      },
+      "matrix": [],
+      "_metadata": {
+        "generatedBy": "scripts/generate-behavior-schemas.mjs (#716)",
+        "derivedFrom": "the behavior implementation — every property here is one the code actually reads",
+        "note": "Expand by hand: enums, richer descriptions and accessibility notes cannot be read from source."
+      }
+    },
+    {
       "file": "header.schema.json",
       "name": "header",
       "title": "Header",
       "description": "Page header with logo, title, and optional navigation",
       "tag": "wb-header",
-      "baseClass": "wb-header",
+      "baseClass": "x-header",
       "properties": {
         "icon": {
           "type": "string",
@@ -2602,7 +3146,7 @@
           "type": "boolean",
           "description": "Sticky at top",
           "default": false,
-          "appliesClass": "wb-header--sticky"
+          "appliesClass": "x-header--sticky"
         }
       },
       "matrix": [
@@ -2628,6 +3172,21 @@
         "icon": "📰",
         "since": "1.0.0",
         "status": "stable"
+      }
+    },
+    {
+      "file": "heartbeat.schema.json",
+      "name": "x-heartbeat",
+      "title": "Heartbeat",
+      "description": "On click, plays the heartbeat animation for 1.3s.",
+      "tag": "wb-x-heartbeat",
+      "baseClass": "wb-x-heartbeat",
+      "properties": {},
+      "matrix": [],
+      "_metadata": {
+        "generatedBy": "scripts/generate-behavior-schemas.mjs (#716)",
+        "derivedFrom": "the behavior implementation — every property here is one the code actually reads",
+        "note": "Expand by hand: enums, richer descriptions and accessibility notes cannot be read from source."
       }
     },
     {
@@ -2675,7 +3234,7 @@
       "title": "Hero Card",
       "description": "Hero banner with background image, title, subtitle, and optional CTA",
       "tag": "wb-cardhero",
-      "baseClass": "wb-hero",
+      "baseClass": "x-hero",
       "properties": {
         "background": {
           "type": "string",
@@ -2735,7 +3294,7 @@
             "gradient"
           ],
           "default": "default",
-          "appliesClass": "wb-hero--{{value}}"
+          "appliesClass": "x-hero--{{value}}"
         },
         "xalign": {
           "type": "string",
@@ -2746,55 +3305,55 @@
             "right"
           ],
           "default": "center",
-          "appliesClass": "wb-hero--xalign-{{value}}"
+          "appliesClass": "x-hero--xalign-{{value}}"
         },
         "overlay": {
           "type": "boolean",
           "description": "Show gradient overlay for text readability",
           "default": true,
-          "appliesClass": "wb-hero--overlay"
+          "appliesClass": "x-hero--overlay"
         },
         "fullHeight": {
           "type": "boolean",
           "description": "Make hero full viewport height",
           "default": false,
-          "appliesClass": "wb-hero--full"
+          "appliesClass": "x-hero--full"
         }
       },
       "matrix": [
         {
-          "background": "hero.jpg",
+          "background": "/images/dachshund-puppy-image-960x540.jpg",
           "title": "Welcome"
         },
         {
-          "background": "hero.jpg",
+          "background": "/images/dachshund-puppy-image-960x540.jpg",
           "title": "Welcome",
           "subtitle": "Subtitle"
         },
         {
-          "background": "hero.jpg",
+          "background": "/images/dachshund-puppy-image-960x540.jpg",
           "title": "Welcome",
           "cta": "Click Me"
         },
         {
-          "background": "hero.jpg",
+          "background": "/images/dachshund-puppy-image-960x540.jpg",
           "title": "Welcome",
           "subtitle": "Sub",
           "cta": "Go",
           "variant": "cosmic"
         },
         {
-          "background": "hero.jpg",
+          "background": "/images/dachshund-puppy-image-960x540.jpg",
           "title": "Welcome",
           "xalign": "left"
         },
         {
-          "background": "hero.jpg",
+          "background": "/images/dachshund-puppy-image-960x540.jpg",
           "title": "Welcome",
           "overlay": false
         },
         {
-          "background": "hero.jpg",
+          "background": "/images/dachshund-puppy-image-960x540.jpg",
           "title": "Welcome",
           "fullHeight": true
         }
@@ -2816,7 +3375,7 @@
       "properties": {
         "hero": {
           "type": "object",
-          "description": "Hero section using wb-cardhero.",
+          "description": "Hero section using x-cardhero.",
           "required": true,
           "properties": {
             "variant": {
@@ -2851,7 +3410,7 @@
         },
         "stats": {
           "type": "array",
-          "description": "Stats row using wb-cardstats inside wb-container.",
+          "description": "Stats row using x-cardstats inside x-container.",
           "minItems": 4,
           "maxItems": 4,
           "items": {
@@ -2926,7 +3485,7 @@
         },
         "features": {
           "type": "array",
-          "description": "Feature cards in a wb-grid layout.",
+          "description": "Feature cards in a x-grid layout.",
           "minItems": 6,
           "items": {
             "type": "object",
@@ -3053,7 +3612,7 @@
           "variant": "cosmic",
           "title": "Build stunning UIs",
           "pretitle": "100 Components",
-          "background": "hero.jpg"
+          "background": "/images/dachshund-puppy-image-960x540.jpg"
         },
         {
           "_section": "stats",
@@ -3115,7 +3674,7 @@
       "title": "Horizontal Card",
       "description": "Card with horizontal layout - image on side, content on other",
       "tag": "wb-cardhorizontal",
-      "baseClass": "wb-card-horizontal",
+      "baseClass": "x-card-horizontal",
       "properties": {
         "image": {
           "type": "string",
@@ -3135,7 +3694,7 @@
             "right"
           ],
           "default": "left",
-          "appliesClass": "wb-card-horizontal--image-{{value}}"
+          "appliesClass": "x-card-horizontal--image-{{value}}"
         },
         "imageWidth": {
           "type": "string",
@@ -3162,7 +3721,7 @@
             "minimal"
           ],
           "default": "default",
-          "appliesClass": "wb-card-horizontal--{{value}}"
+          "appliesClass": "x-card-horizontal--{{value}}"
         }
       },
       "matrix": [
@@ -3194,12 +3753,53 @@
       }
     },
     {
+      "file": "image.schema.json",
+      "name": "x-image",
+      "title": "Image",
+      "description": "Behavior applied with x-image.",
+      "tag": "wb-x-image",
+      "baseClass": "wb-x-image",
+      "properties": {
+        "placeholder": {
+          "type": "string",
+          "description": "Read by image().",
+          "default": ""
+        },
+        "fallback": {
+          "type": "string",
+          "description": "Read by image().",
+          "default": ""
+        },
+        "aspect-ratio": {
+          "type": "string",
+          "description": "Read by image().",
+          "default": ""
+        },
+        "lazy": {
+          "type": "boolean",
+          "description": "Read by image(). Bare attribute.",
+          "default": false
+        },
+        "zoomable": {
+          "type": "boolean",
+          "description": "Read by image(). Bare attribute.",
+          "default": false
+        }
+      },
+      "matrix": [],
+      "_metadata": {
+        "generatedBy": "scripts/generate-behavior-schemas.mjs (#716)",
+        "derivedFrom": "the behavior implementation — every property here is one the code actually reads",
+        "note": "Expand by hand: enums, richer descriptions and accessibility notes cannot be read from source."
+      }
+    },
+    {
       "file": "cardimage.schema.json",
       "name": "cardimage",
       "title": "Image Card",
       "description": "Card with featured image and optional title/subtitle",
       "tag": "wb-cardimage",
-      "baseClass": "wb-card-image",
+      "baseClass": "x-card-image",
       "properties": {
         "src": {
           "type": "string",
@@ -3255,7 +3855,7 @@
             "right"
           ],
           "default": "top",
-          "appliesClass": "wb-card-image--{{value}}"
+          "appliesClass": "x-card-image--{{value}}"
         },
         "fit": {
           "type": "string",
@@ -3287,7 +3887,7 @@
             "minimal"
           ],
           "default": "default",
-          "appliesClass": "wb-card-image--{{value}}"
+          "appliesClass": "x-card-image--{{value}}"
         }
       },
       "matrix": [
@@ -3333,12 +3933,53 @@
       }
     },
     {
+      "file": "img.schema.json",
+      "name": "x-img",
+      "title": "Img",
+      "description": "Behavior applied with x-img.",
+      "tag": "wb-x-img",
+      "baseClass": "wb-x-img",
+      "properties": {
+        "placeholder": {
+          "type": "string",
+          "description": "Read by img().",
+          "default": ""
+        },
+        "fallback": {
+          "type": "string",
+          "description": "Read by img().",
+          "default": ""
+        },
+        "aspect-ratio": {
+          "type": "string",
+          "description": "Read by img().",
+          "default": ""
+        },
+        "lazy": {
+          "type": "boolean",
+          "description": "Read by img(). Bare attribute.",
+          "default": false
+        },
+        "zoomable": {
+          "type": "boolean",
+          "description": "Read by img(). Bare attribute.",
+          "default": false
+        }
+      },
+      "matrix": [],
+      "_metadata": {
+        "generatedBy": "scripts/generate-behavior-schemas.mjs (#716)",
+        "derivedFrom": "the behavior implementation — every property here is one the code actually reads",
+        "note": "Expand by hand: enums, richer descriptions and accessibility notes cannot be read from source."
+      }
+    },
+    {
       "file": "input.schema.json",
       "name": "input",
       "title": "Input",
       "description": "Text input field with label, helper text, and validation states",
       "tag": "wb-input",
-      "baseClass": "wb-input",
+      "baseClass": "x-input",
       "properties": {
         "label": {
           "type": "string",
@@ -3396,7 +4037,7 @@
             "error"
           ],
           "default": "default",
-          "appliesClass": "wb-input--{{value}}"
+          "appliesClass": "x-input--{{value}}"
         },
         "size": {
           "type": "string",
@@ -3407,7 +4048,7 @@
             "lg"
           ],
           "default": "md",
-          "appliesClass": "wb-input--{{value}}"
+          "appliesClass": "x-input--{{value}}"
         },
         "disabled": {
           "type": "boolean",
@@ -3516,6 +4157,36 @@
       "_metadata": {}
     },
     {
+      "file": "jello.schema.json",
+      "name": "x-jello",
+      "title": "Jello",
+      "description": "On click, plays the jello animation for 1s.",
+      "tag": "wb-x-jello",
+      "baseClass": "wb-x-jello",
+      "properties": {},
+      "matrix": [],
+      "_metadata": {
+        "generatedBy": "scripts/generate-behavior-schemas.mjs (#716)",
+        "derivedFrom": "the behavior implementation — every property here is one the code actually reads",
+        "note": "Expand by hand: enums, richer descriptions and accessibility notes cannot be read from source."
+      }
+    },
+    {
+      "file": "kbd.schema.json",
+      "name": "x-kbd",
+      "title": "Kbd",
+      "description": "Behavior applied with x-kbd.",
+      "tag": "wb-x-kbd",
+      "baseClass": "wb-x-kbd",
+      "properties": {},
+      "matrix": [],
+      "_metadata": {
+        "generatedBy": "scripts/generate-behavior-schemas.mjs (#716)",
+        "derivedFrom": "the behavior implementation — every property here is one the code actually reads",
+        "note": "Expand by hand: enums, richer descriptions and accessibility notes cannot be read from source."
+      }
+    },
+    {
       "file": "label.schema.json",
       "name": "label",
       "title": "Label Behavior",
@@ -3552,12 +4223,27 @@
       "_metadata": {}
     },
     {
+      "file": "lightbox.schema.json",
+      "name": "x-lightbox",
+      "title": "Lightbox",
+      "description": "Behavior applied with x-lightbox.",
+      "tag": "wb-x-lightbox",
+      "baseClass": "wb-x-lightbox",
+      "properties": {},
+      "matrix": [],
+      "_metadata": {
+        "generatedBy": "scripts/generate-behavior-schemas.mjs (#716)",
+        "derivedFrom": "the behavior implementation — every property here is one the code actually reads",
+        "note": "Expand by hand: enums, richer descriptions and accessibility notes cannot be read from source."
+      }
+    },
+    {
       "file": "cardlink.schema.json",
       "name": "cardlink",
       "title": "Link Card",
       "description": "Clickable card that navigates to a URL",
       "tag": "wb-cardlink",
-      "baseClass": "wb-card-link",
+      "baseClass": "x-card-link",
       "properties": {
         "href": {
           "type": "string",
@@ -3605,7 +4291,7 @@
             "glass"
           ],
           "default": "default",
-          "appliesClass": "wb-card-link--{{value}}"
+          "appliesClass": "x-card-link--{{value}}"
         }
       },
       "matrix": [
@@ -3642,12 +4328,36 @@
       }
     },
     {
+      "file": "mark.schema.json",
+      "name": "x-mark",
+      "title": "Mark",
+      "description": "Behavior applied with x-mark.",
+      "tag": "wb-x-mark",
+      "baseClass": "wb-x-mark",
+      "properties": {
+        "variant": {
+          "type": "string",
+          "description": "Read by mark()."
+        },
+        "color": {
+          "type": "string",
+          "description": "Read by mark()."
+        }
+      },
+      "matrix": [],
+      "_metadata": {
+        "generatedBy": "scripts/generate-behavior-schemas.mjs (#716)",
+        "derivedFrom": "the behavior implementation — every property here is one the code actually reads",
+        "note": "Expand by hand: enums, richer descriptions and accessibility notes cannot be read from source."
+      }
+    },
+    {
       "file": "mdhtml.schema.json",
       "name": "mdhtml",
       "title": "Markdown to HTML",
       "description": "Renders Markdown content as HTML, either from inline content or external source",
       "tag": "wb-mdhtml",
-      "baseClass": "wb-mdhtml",
+      "baseClass": "x-mdhtml",
       "properties": {
         "src": {
           "type": "string",
@@ -3708,12 +4418,38 @@
       "_metadata": {}
     },
     {
+      "file": "masonry.schema.json",
+      "name": "x-masonry",
+      "title": "Masonry",
+      "description": "Behavior applied with x-masonry.",
+      "tag": "wb-x-masonry",
+      "baseClass": "wb-x-masonry",
+      "properties": {
+        "columns": {
+          "type": "string",
+          "description": "Read by masonry().",
+          "default": "3"
+        },
+        "gap": {
+          "type": "string",
+          "description": "Read by masonry().",
+          "default": "1rem"
+        }
+      },
+      "matrix": [],
+      "_metadata": {
+        "generatedBy": "scripts/generate-behavior-schemas.mjs (#716)",
+        "derivedFrom": "the behavior implementation — every property here is one the code actually reads",
+        "note": "Expand by hand: enums, richer descriptions and accessibility notes cannot be read from source."
+      }
+    },
+    {
       "file": "cardminimizable.schema.json",
       "name": "cardminimizable",
       "title": "Minimizable Card",
       "description": "Card with minimize/expand toggle button in header",
       "tag": "wb-cardminimizable",
-      "baseClass": "wb-card-minimizable",
+      "baseClass": "x-card-minimizable",
       "properties": {
         "title": {
           "type": "string",
@@ -3730,7 +4466,7 @@
           "type": "boolean",
           "description": "Initial minimized state",
           "default": false,
-          "appliesClass": "wb-card-minimizable--minimized"
+          "appliesClass": "x-card-minimizable--minimized"
         },
         "variant": {
           "type": "string",
@@ -3740,7 +4476,7 @@
             "bordered"
           ],
           "default": "default",
-          "appliesClass": "wb-card-minimizable--{{value}}"
+          "appliesClass": "x-card-minimizable--{{value}}"
         }
       },
       "matrix": [
@@ -3778,7 +4514,7 @@
       "title": "Navbar",
       "description": "Navigation bar with brand, links, and responsive menu",
       "tag": "wb-navbar",
-      "baseClass": "wb-navbar",
+      "baseClass": "x-navbar",
       "properties": {
         "brand": {
           "type": "string",
@@ -3814,7 +4550,7 @@
           "type": "boolean",
           "description": "Sticky positioning",
           "default": false,
-          "appliesClass": "wb-navbar--sticky"
+          "appliesClass": "x-navbar--sticky"
         },
         "variant": {
           "type": "string",
@@ -3824,7 +4560,7 @@
             "transparent"
           ],
           "default": "default",
-          "appliesClass": "wb-navbar--{{value}}"
+          "appliesClass": "x-navbar--{{value}}"
         }
       },
       "matrix": [
@@ -3853,7 +4589,7 @@
       "title": "Notes",
       "description": "Slide-out notes drawer with multiple display modes",
       "tag": "wb-notes",
-      "baseClass": "wb-notes",
+      "baseClass": "x-notes",
       "properties": {
         "position": {
           "type": "string",
@@ -3863,7 +4599,7 @@
             "modal"
           ],
           "default": "left",
-          "appliesClass": "wb-notes--{{value}}"
+          "appliesClass": "x-notes--{{value}}"
         },
         "maxWidth": {
           "type": "string",
@@ -3916,7 +4652,7 @@
       "title": "Notification Card",
       "description": "Dismissible notification card with variant-based styling",
       "tag": "wb-cardnotification",
-      "baseClass": "wb-notification",
+      "baseClass": "x-notification",
       "properties": {
         "variant": {
           "type": "string",
@@ -3928,7 +4664,7 @@
             "error"
           ],
           "default": "info",
-          "appliesClass": "wb-notification--{{value}}"
+          "appliesClass": "x-notification--{{value}}"
         },
         "title": {
           "type": "string",
@@ -3955,7 +4691,7 @@
           "type": "boolean",
           "description": "Add shadow elevation",
           "default": false,
-          "appliesClass": "wb-notification--elevated"
+          "appliesClass": "x-notification--elevated"
         }
       },
       "matrix": [
@@ -3991,6 +4727,32 @@
       }
     },
     {
+      "file": "notify.schema.json",
+      "name": "x-notify",
+      "title": "Notify",
+      "description": "Behavior applied with x-notify.",
+      "tag": "wb-x-notify",
+      "baseClass": "wb-x-notify",
+      "properties": {
+        "message": {
+          "type": "string",
+          "description": "Read by notify().",
+          "default": "Notification"
+        },
+        "duration": {
+          "type": "string",
+          "description": "Read by notify().",
+          "default": "3000"
+        }
+      },
+      "matrix": [],
+      "_metadata": {
+        "generatedBy": "scripts/generate-behavior-schemas.mjs (#716)",
+        "derivedFrom": "the behavior implementation — every property here is one the code actually reads",
+        "note": "Expand by hand: enums, richer descriptions and accessibility notes cannot be read from source."
+      }
+    },
+    {
       "file": "otp.schema.json",
       "title": "OTP Behavior",
       "description": "Schema for x-otp behavior (one-time password input)",
@@ -4011,7 +4773,7 @@
       "title": "Overlay Card",
       "description": "Card with text overlaid on background image",
       "tag": "wb-cardoverlay",
-      "baseClass": "wb-card-overlay",
+      "baseClass": "x-card-overlay",
       "properties": {
         "image": {
           "type": "string",
@@ -4038,7 +4800,7 @@
             "bottom"
           ],
           "default": "bottom",
-          "appliesClass": "wb-card-overlay--{{value}}"
+          "appliesClass": "x-card-overlay--{{value}}"
         },
         "xalign": {
           "type": "string",
@@ -4049,13 +4811,13 @@
             "right"
           ],
           "default": "left",
-          "appliesClass": "wb-card-overlay--xalign-{{value}}"
+          "appliesClass": "x-card-overlay--xalign-{{value}}"
         },
         "gradient": {
           "type": "boolean",
           "description": "Show gradient overlay for text readability",
           "default": true,
-          "appliesClass": "wb-card-overlay--gradient"
+          "appliesClass": "x-card-overlay--gradient"
         },
         "height": {
           "type": "string",
@@ -4072,36 +4834,36 @@
             "blur"
           ],
           "default": "default",
-          "appliesClass": "wb-card-overlay--{{value}}"
+          "appliesClass": "x-card-overlay--{{value}}"
         }
       },
       "matrix": [
         {
-          "image": "bg.jpg",
+          "image": "/images/dachshund-puppy-image-960x540.jpg",
           "title": "Title"
         },
         {
-          "image": "bg.jpg",
+          "image": "/images/dachshund-puppy-image-960x540.jpg",
           "title": "Title",
           "subtitle": "Subtitle"
         },
         {
-          "image": "bg.jpg",
+          "image": "/images/dachshund-puppy-image-960x540.jpg",
           "title": "Title",
           "position": "top"
         },
         {
-          "image": "bg.jpg",
+          "image": "/images/dachshund-puppy-image-960x540.jpg",
           "title": "Title",
           "position": "center"
         },
         {
-          "image": "bg.jpg",
+          "image": "/images/dachshund-puppy-image-960x540.jpg",
           "title": "Title",
           "gradient": false
         },
         {
-          "image": "bg.jpg",
+          "image": "/images/dachshund-puppy-image-960x540.jpg",
           "title": "Title",
           "xalign": "center"
         }
@@ -4111,6 +4873,54 @@
         "icon": "🖼️",
         "since": "1.0.0",
         "status": "stable"
+      }
+    },
+    {
+      "file": "pagination.schema.json",
+      "name": "x-pagination",
+      "title": "Pagination",
+      "description": "Behavior applied with x-pagination.",
+      "tag": "wb-x-pagination",
+      "baseClass": "wb-x-pagination",
+      "properties": {
+        "total": {
+          "type": "string",
+          "description": "Read by pagination().",
+          "default": "0"
+        },
+        "per-page": {
+          "type": "string",
+          "description": "Read by pagination().",
+          "default": "10"
+        },
+        "pages": {
+          "type": "string",
+          "description": "Read by pagination().",
+          "default": "0"
+        },
+        "current": {
+          "type": "string",
+          "description": "Read by pagination().",
+          "default": "1"
+        },
+        "aria-disabled": {
+          "type": "string",
+          "description": "Read by pagination()."
+        },
+        "action": {
+          "type": "string",
+          "description": "Read by pagination()."
+        },
+        "page": {
+          "type": "string",
+          "description": "Read by pagination()."
+        }
+      },
+      "matrix": [],
+      "_metadata": {
+        "generatedBy": "scripts/generate-behavior-schemas.mjs (#716)",
+        "derivedFrom": "the behavior implementation — every property here is one the code actually reads",
+        "note": "Expand by hand: enums, richer descriptions and accessibility notes cannot be read from source."
       }
     },
     {
@@ -4133,12 +4943,56 @@
       "_metadata": {}
     },
     {
+      "file": "popover.schema.json",
+      "name": "x-popover",
+      "title": "Popover",
+      "description": "Behavior applied with x-popover.",
+      "tag": "wb-x-popover",
+      "baseClass": "wb-x-popover",
+      "properties": {
+        "description": {
+          "type": "string",
+          "description": "Read by popover().",
+          "default": ""
+        },
+        "heading": {
+          "type": "string",
+          "description": "Read by popover().",
+          "default": ""
+        },
+        "trigger": {
+          "type": "string",
+          "description": "Read by popover().",
+          "default": "click"
+        },
+        "position": {
+          "type": "string",
+          "description": "Read by popover().",
+          "default": "top"
+        },
+        "popover-content": {
+          "type": "string",
+          "description": "Read by popover()."
+        },
+        "popover-title": {
+          "type": "string",
+          "description": "Read by popover()."
+        }
+      },
+      "matrix": [],
+      "_metadata": {
+        "generatedBy": "scripts/generate-behavior-schemas.mjs (#716)",
+        "derivedFrom": "the behavior implementation — every property here is one the code actually reads",
+        "note": "Expand by hand: enums, richer descriptions and accessibility notes cannot be read from source."
+      }
+    },
+    {
       "file": "cardportfolio.schema.json",
       "name": "cardportfolio",
       "title": "Portfolio Card",
       "description": "Full-featured professional portfolio card with skills, experience, projects, and more",
       "tag": "wb-cardportfolio",
-      "baseClass": "wb-portfolio",
+      "baseClass": "x-portfolio",
       "properties": {
         "name": {
           "type": "string",
@@ -4286,7 +5140,7 @@
             "full"
           ],
           "default": "default",
-          "appliesClass": "wb-portfolio--{{value}}"
+          "appliesClass": "x-portfolio--{{value}}"
         },
         "size": {
           "type": "string",
@@ -4343,12 +5197,63 @@
       }
     },
     {
+      "file": "pre.schema.json",
+      "name": "x-pre",
+      "title": "Pre",
+      "description": "Behavior applied with x-pre.",
+      "tag": "wb-x-pre",
+      "baseClass": "wb-x-pre",
+      "properties": {
+        "language": {
+          "type": "string",
+          "description": "Read by pre()."
+        },
+        "scrollable": {
+          "type": "string",
+          "description": "Read by pre()."
+        },
+        "show-line-numbers": {
+          "type": "string",
+          "description": "Read by pre()."
+        },
+        "max-height": {
+          "type": "string",
+          "description": "Read by pre()."
+        },
+        "wrap": {
+          "type": "boolean",
+          "description": "Read by pre(). Bare attribute.",
+          "default": false
+        },
+        "size": {
+          "type": "string",
+          "description": "Read by pre()."
+        },
+        "show-copy": {
+          "type": "boolean",
+          "description": "Read by pre(). Bare attribute.",
+          "default": false
+        },
+        "data-copy": {
+          "type": "boolean",
+          "description": "Read by pre(). Bare attribute.",
+          "default": false
+        }
+      },
+      "matrix": [],
+      "_metadata": {
+        "generatedBy": "scripts/generate-behavior-schemas.mjs (#716)",
+        "derivedFrom": "the behavior implementation — every property here is one the code actually reads",
+        "note": "Expand by hand: enums, richer descriptions and accessibility notes cannot be read from source."
+      }
+    },
+    {
       "file": "cardpricing.schema.json",
       "name": "cardpricing",
       "title": "Pricing Card",
       "description": "Pricing tier card with plan name, price, features list, and CTA",
       "tag": "wb-cardpricing",
-      "baseClass": "wb-pricing",
+      "baseClass": "x-pricing",
       "properties": {
         "plan": {
           "type": "string",
@@ -4391,7 +5296,7 @@
           "type": "boolean",
           "description": "Highlight as featured/recommended plan",
           "default": false,
-          "appliesClass": "wb-pricing--featured"
+          "appliesClass": "x-pricing--featured"
         },
         "variant": {
           "type": "string",
@@ -4403,7 +5308,7 @@
             "minimal"
           ],
           "default": "default",
-          "appliesClass": "wb-pricing--{{value}}"
+          "appliesClass": "x-pricing--{{value}}"
         }
       },
       "matrix": [
@@ -4446,12 +5351,38 @@
       }
     },
     {
+      "file": "print.schema.json",
+      "name": "x-print",
+      "title": "Print",
+      "description": "Behavior applied with x-print.",
+      "tag": "wb-x-print",
+      "baseClass": "wb-x-print",
+      "properties": {
+        "target": {
+          "type": "string",
+          "description": "Read by print().",
+          "default": ""
+        },
+        "label": {
+          "type": "string",
+          "description": "Read by print().",
+          "default": "🖨️ Print"
+        }
+      },
+      "matrix": [],
+      "_metadata": {
+        "generatedBy": "scripts/generate-behavior-schemas.mjs (#716)",
+        "derivedFrom": "the behavior implementation — every property here is one the code actually reads",
+        "note": "Expand by hand: enums, richer descriptions and accessibility notes cannot be read from source."
+      }
+    },
+    {
       "file": "cardproduct.schema.json",
       "name": "cardproduct",
       "title": "Product Card",
       "description": "E-commerce product card with image, price, rating, and CTA",
       "tag": "wb-cardproduct",
-      "baseClass": "wb-product",
+      "baseClass": "x-product",
       "properties": {
         "image": {
           "type": "string",
@@ -4504,7 +5435,7 @@
           "type": "boolean",
           "description": "Highlight as featured",
           "default": false,
-          "appliesClass": "wb-product--featured"
+          "appliesClass": "x-product--featured"
         },
         "variant": {
           "type": "string",
@@ -4516,7 +5447,7 @@
             "minimal"
           ],
           "default": "default",
-          "appliesClass": "wb-product--{{value}}"
+          "appliesClass": "x-product--{{value}}"
         }
       },
       "matrix": [
@@ -4530,7 +5461,7 @@
           "originalPrice": "$49"
         },
         {
-          "image": "product.jpg",
+          "image": "/images/dachshund-puppy-image-960x540.jpg",
           "title": "Product",
           "price": "$29"
         },
@@ -4560,7 +5491,7 @@
       "title": "Progress",
       "description": "Progress bar with determinate and indeterminate states",
       "tag": "wb-progress",
-      "baseClass": "wb-progress",
+      "baseClass": "x-progress",
       "properties": {
         "value": {
           "type": "number",
@@ -4596,7 +5527,7 @@
             "info"
           ],
           "default": "primary",
-          "appliesClass": "wb-progress--{{value}}"
+          "appliesClass": "x-progress--{{value}}"
         },
         "size": {
           "type": "string",
@@ -4609,7 +5540,7 @@
             "xl"
           ],
           "default": "md",
-          "appliesClass": "wb-progress--{{value}}"
+          "appliesClass": "x-progress--{{value}}"
         },
         "animated": {
           "type": "boolean",
@@ -4620,13 +5551,13 @@
           "type": "boolean",
           "description": "Show striped pattern",
           "default": false,
-          "appliesClass": "wb-progress--striped"
+          "appliesClass": "x-progress--striped"
         },
         "indeterminate": {
           "type": "boolean",
           "description": "Indeterminate loading state",
           "default": false,
-          "appliesClass": "wb-progress--indeterminate"
+          "appliesClass": "x-progress--indeterminate"
         }
       },
       "matrix": [
@@ -4689,12 +5620,92 @@
       }
     },
     {
+      "file": "prompt.schema.json",
+      "name": "x-prompt",
+      "title": "Prompt",
+      "description": "Behavior applied with x-prompt.",
+      "tag": "wb-x-prompt",
+      "baseClass": "wb-x-prompt",
+      "properties": {
+        "heading": {
+          "type": "string",
+          "description": "Read by prompt().",
+          "default": "Input"
+        },
+        "message": {
+          "type": "string",
+          "description": "Read by prompt().",
+          "default": ""
+        },
+        "placeholder": {
+          "type": "string",
+          "description": "Read by prompt().",
+          "default": ""
+        },
+        "default-value": {
+          "type": "string",
+          "description": "Read by prompt().",
+          "default": ""
+        },
+        "prompt-title": {
+          "type": "string",
+          "description": "Read by prompt()."
+        },
+        "prompt-message": {
+          "type": "string",
+          "description": "Read by prompt()."
+        }
+      },
+      "matrix": [],
+      "_metadata": {
+        "generatedBy": "scripts/generate-behavior-schemas.mjs (#716)",
+        "derivedFrom": "the behavior implementation — every property here is one the code actually reads",
+        "note": "Expand by hand: enums, richer descriptions and accessibility notes cannot be read from source."
+      }
+    },
+    {
+      "file": "pulse.schema.json",
+      "name": "x-pulse",
+      "title": "Pulse",
+      "description": "On click, plays the pulse animation for 0.5s.",
+      "tag": "wb-x-pulse",
+      "baseClass": "wb-x-pulse",
+      "properties": {},
+      "matrix": [],
+      "_metadata": {
+        "generatedBy": "scripts/generate-behavior-schemas.mjs (#716)",
+        "derivedFrom": "the behavior implementation — every property here is one the code actually reads",
+        "note": "Expand by hand: enums, richer descriptions and accessibility notes cannot be read from source."
+      }
+    },
+    {
+      "file": "rainbow.schema.json",
+      "name": "x-rainbow",
+      "title": "Rainbow",
+      "description": "Behavior applied with x-rainbow.",
+      "tag": "wb-x-rainbow",
+      "baseClass": "wb-x-rainbow",
+      "properties": {
+        "duration": {
+          "type": "string",
+          "description": "Read by rainbow().",
+          "default": "3s"
+        }
+      },
+      "matrix": [],
+      "_metadata": {
+        "generatedBy": "scripts/generate-behavior-schemas.mjs (#716)",
+        "derivedFrom": "the behavior implementation — every property here is one the code actually reads",
+        "note": "Expand by hand: enums, richer descriptions and accessibility notes cannot be read from source."
+      }
+    },
+    {
       "file": "rating.schema.json",
       "name": "rating",
       "title": "Rating",
       "description": "Star rating component for displaying or collecting ratings",
       "tag": "wb-rating",
-      "baseClass": "wb-rating",
+      "baseClass": "x-rating",
       "properties": {
         "value": {
           "type": "number",
@@ -4731,7 +5742,7 @@
             "lg"
           ],
           "default": "md",
-          "appliesClass": "wb-rating--{{value}}"
+          "appliesClass": "x-rating--{{value}}"
         },
         "icon": {
           "type": "string",
@@ -4766,15 +5777,101 @@
       }
     },
     {
-      "file": "wb-repeater.schema.json",
+      "file": "ratio.schema.json",
+      "name": "x-ratio",
+      "title": "Ratio",
+      "description": "Behavior applied with x-ratio.",
+      "tag": "wb-x-ratio",
+      "baseClass": "wb-x-ratio",
+      "properties": {
+        "ratio": {
+          "type": "string",
+          "description": "Read by ratio().",
+          "default": "16x9"
+        }
+      },
+      "matrix": [],
+      "_metadata": {
+        "generatedBy": "scripts/generate-behavior-schemas.mjs (#716)",
+        "derivedFrom": "the behavior implementation — every property here is one the code actually reads",
+        "note": "Expand by hand: enums, richer descriptions and accessibility notes cannot be read from source."
+      }
+    },
+    {
+      "file": "relativetime.schema.json",
+      "name": "x-relativetime",
+      "title": "Relativetime",
+      "description": "Behavior applied with x-relativetime.",
+      "tag": "wb-x-relativetime",
+      "baseClass": "wb-x-relativetime",
+      "properties": {
+        "datetime": {
+          "type": "string",
+          "description": "Read by relativetime().",
+          "default": ""
+        },
+        "refresh": {
+          "type": "string",
+          "description": "Read by relativetime().",
+          "default": "60000"
+        },
+        "date": {
+          "type": "string",
+          "description": "Read by relativetime()."
+        }
+      },
+      "matrix": [],
+      "_metadata": {
+        "generatedBy": "scripts/generate-behavior-schemas.mjs (#716)",
+        "derivedFrom": "the behavior implementation — every property here is one the code actually reads",
+        "note": "Expand by hand: enums, richer descriptions and accessibility notes cannot be read from source."
+      }
+    },
+    {
+      "file": "release.schema.json",
+      "name": "x-release",
+      "title": "Release",
+      "description": "Behavior applied with x-release.",
+      "tag": "wb-x-release",
+      "baseClass": "wb-x-release",
+      "properties": {
+        "format": {
+          "type": "string",
+          "description": "Read by release().",
+          "default": "v{version}"
+        },
+        "reload": {
+          "type": "string",
+          "description": "Read by release()."
+        }
+      },
+      "matrix": [],
+      "_metadata": {
+        "generatedBy": "scripts/generate-behavior-schemas.mjs (#716)",
+        "derivedFrom": "the behavior implementation — every property here is one the code actually reads",
+        "note": "Expand by hand: enums, richer descriptions and accessibility notes cannot be read from source."
+      }
+    },
+    {
+      "file": "repeater.schema.json",
       "name": "repeater",
       "title": "Repeater",
-      "description": "Repeat content based on data.",
+      "description": "Behavior applied with x-repeater.",
       "tag": "wb-repeater",
       "baseClass": "wb-repeater",
-      "properties": {},
+      "properties": {
+        "count": {
+          "type": "string",
+          "description": "Read by repeater().",
+          "default": "0"
+        }
+      },
       "matrix": [],
-      "_metadata": {}
+      "_metadata": {
+        "generatedBy": "scripts/generate-behavior-schemas.mjs (#716)",
+        "derivedFrom": "the behavior implementation — every property here is one the code actually reads",
+        "note": "Expand by hand: enums, richer descriptions and accessibility notes cannot be read from source."
+      }
     },
     {
       "file": "resizable.schema.json",
@@ -4802,7 +5899,7 @@
       "title": "Ripple",
       "description": "Material Design ripple effect on click",
       "tag": "wb-ripple",
-      "baseClass": "wb-ripple",
+      "baseClass": "x-ripple",
       "properties": {
         "color": {
           "type": "string",
@@ -4842,7 +5939,7 @@
       "title": "ScrollAlong",
       "description": "CSS sticky positioning for sidebars that stay visible while scrolling",
       "tag": "wb-scrollalong",
-      "baseClass": "wb-scrollalong",
+      "baseClass": "x-scrollalong",
       "properties": {
         "offset": {
           "type": "string",
@@ -4866,7 +5963,7 @@
       "title": "Search",
       "description": "Search input component with icon and debounced search events",
       "tag": "wb-search",
-      "baseClass": "wb-search",
+      "baseClass": "x-search",
       "properties": {
         "placeholder": {
           "type": "string",
@@ -4909,7 +6006,7 @@
             "lg"
           ],
           "default": "md",
-          "appliesClass": "wb-search--{{value}}"
+          "appliesClass": "x-search--{{value}}"
         },
         "variant": {
           "type": "string",
@@ -4920,7 +6017,7 @@
             "minimal"
           ],
           "default": "default",
-          "appliesClass": "wb-search--{{value}}"
+          "appliesClass": "x-search--{{value}}"
         },
         "icon": {
           "type": "string",
@@ -4971,12 +6068,72 @@
       }
     },
     {
+      "file": "searchfield.schema.json",
+      "name": "x-searchfield",
+      "title": "Searchfield",
+      "description": "Behavior applied with x-searchfield.",
+      "tag": "wb-x-searchfield",
+      "baseClass": "wb-x-searchfield",
+      "properties": {
+        "size": {
+          "type": "string",
+          "description": "Read by searchfield().",
+          "default": "md"
+        },
+        "variant": {
+          "type": "string",
+          "description": "Read by searchfield().",
+          "default": "default"
+        },
+        "placeholder": {
+          "type": "string",
+          "description": "Read by searchfield().",
+          "default": "Search..."
+        },
+        "debounce": {
+          "type": "string",
+          "description": "Read by searchfield().",
+          "default": "300"
+        },
+        "icon": {
+          "type": "string",
+          "description": "Read by searchfield().",
+          "default": "🔍"
+        },
+        "clearable": {
+          "type": "string",
+          "description": "Read by searchfield()."
+        },
+        "disabled": {
+          "type": "boolean",
+          "description": "Read by searchfield(). Bare attribute.",
+          "default": false
+        },
+        "loading": {
+          "type": "boolean",
+          "description": "Read by searchfield(). Bare attribute.",
+          "default": false
+        },
+        "instant": {
+          "type": "boolean",
+          "description": "Read by searchfield(). Bare attribute.",
+          "default": false
+        }
+      },
+      "matrix": [],
+      "_metadata": {
+        "generatedBy": "scripts/generate-behavior-schemas.mjs (#716)",
+        "derivedFrom": "the behavior implementation — every property here is one the code actually reads",
+        "note": "Expand by hand: enums, richer descriptions and accessibility notes cannot be read from source."
+      }
+    },
+    {
       "file": "select.schema.json",
       "name": "select",
       "title": "Select",
       "description": "Enhanced select dropdown with search, clear, and multi-select",
       "tag": "wb-select",
-      "baseClass": "wb-select",
+      "baseClass": "x-select",
       "properties": {
         "label": {
           "type": "string",
@@ -5007,19 +6164,19 @@
           "type": "boolean",
           "description": "Enable search",
           "default": false,
-          "appliesClass": "wb-select--searchable"
+          "appliesClass": "x-select--searchable"
         },
         "clearable": {
           "type": "boolean",
           "description": "Enable clear button",
           "default": false,
-          "appliesClass": "wb-select--clearable"
+          "appliesClass": "x-select--clearable"
         },
         "multiple": {
           "type": "boolean",
           "description": "Allow multiple selection",
           "default": false,
-          "appliesClass": "wb-select--multiple"
+          "appliesClass": "x-select--multiple"
         },
         "disabled": {
           "type": "boolean",
@@ -5039,7 +6196,7 @@
             "lg"
           ],
           "default": "md",
-          "appliesClass": "wb-select--{{value}}"
+          "appliesClass": "x-select--{{value}}"
         },
         "variant": {
           "type": "string",
@@ -5049,7 +6206,7 @@
             "error"
           ],
           "default": "default",
-          "appliesClass": "wb-select--{{value}}"
+          "appliesClass": "x-select--{{value}}"
         }
       },
       "matrix": [
@@ -5075,12 +6232,69 @@
       }
     },
     {
+      "file": "shake.schema.json",
+      "name": "x-shake",
+      "title": "Shake",
+      "description": "On click, plays the shake animation for 0.5s.",
+      "tag": "wb-x-shake",
+      "baseClass": "wb-x-shake",
+      "properties": {},
+      "matrix": [],
+      "_metadata": {
+        "generatedBy": "scripts/generate-behavior-schemas.mjs (#716)",
+        "derivedFrom": "the behavior implementation — every property here is one the code actually reads",
+        "note": "Expand by hand: enums, richer descriptions and accessibility notes cannot be read from source."
+      }
+    },
+    {
+      "file": "share.schema.json",
+      "name": "x-share",
+      "title": "Share",
+      "description": "Behavior applied with x-share.",
+      "tag": "wb-x-share",
+      "baseClass": "wb-x-share",
+      "properties": {
+        "text": {
+          "type": "string",
+          "description": "Read by share().",
+          "default": ""
+        },
+        "label": {
+          "type": "string",
+          "description": "Read by share().",
+          "default": "📤 Share"
+        },
+        "share-title": {
+          "type": "string",
+          "description": "Read by share()."
+        },
+        "share-text": {
+          "type": "string",
+          "description": "Read by share()."
+        },
+        "share-url": {
+          "type": "string",
+          "description": "Read by share()."
+        },
+        "url": {
+          "type": "string",
+          "description": "Read by share()."
+        }
+      },
+      "matrix": [],
+      "_metadata": {
+        "generatedBy": "scripts/generate-behavior-schemas.mjs (#716)",
+        "derivedFrom": "the behavior implementation — every property here is one the code actually reads",
+        "note": "Expand by hand: enums, richer descriptions and accessibility notes cannot be read from source."
+      }
+    },
+    {
       "file": "skeleton.schema.json",
       "name": "skeleton",
       "title": "Skeleton",
       "description": "Loading skeleton placeholder with shimmer animation",
       "tag": "wb-skeleton",
-      "baseClass": "wb-skeleton",
+      "baseClass": "x-skeleton",
       "properties": {
         "variant": {
           "type": "string",
@@ -5091,7 +6305,7 @@
             "card"
           ],
           "default": "text",
-          "appliesClass": "wb-skeleton--{{value}}"
+          "appliesClass": "x-skeleton--{{value}}"
         },
         "lines": {
           "type": "number",
@@ -5141,6 +6355,27 @@
       }
     },
     {
+      "file": "slidein.schema.json",
+      "name": "x-slidein",
+      "title": "Slidein",
+      "description": "On click, plays the slide-in-<dir> animation for 0.5s.",
+      "tag": "wb-x-slidein",
+      "baseClass": "wb-x-slidein",
+      "properties": {
+        "direction": {
+          "type": "string",
+          "description": "Read by slidein().",
+          "default": "left"
+        }
+      },
+      "matrix": [],
+      "_metadata": {
+        "generatedBy": "scripts/generate-behavior-schemas.mjs (#716)",
+        "derivedFrom": "the behavior implementation — every property here is one the code actually reads",
+        "note": "Expand by hand: enums, richer descriptions and accessibility notes cannot be read from source."
+      }
+    },
+    {
       "file": "slider.schema.json",
       "name": "slider",
       "title": "Slider",
@@ -5159,7 +6394,7 @@
       "title": "Snow",
       "description": "Falling snowflake animation effect",
       "tag": "wb-snow",
-      "baseClass": "wb-snow",
+      "baseClass": "x-snow",
       "properties": {
         "count": {
           "type": "number",
@@ -5214,7 +6449,7 @@
       "title": "Span",
       "description": "A generic inline container for applying utility classes and variants. Useful for traffic lights (window controls), badges, and status indicators.",
       "tag": "wb-span",
-      "baseClass": "wb-span",
+      "baseClass": "x-span",
       "properties": {
         "variant": {
           "type": "string",
@@ -5233,7 +6468,7 @@
             "info"
           ],
           "default": "default",
-          "appliesClass": "wb-span--{{value}}"
+          "appliesClass": "x-span--{{value}}"
         }
       },
       "matrix": [],
@@ -5246,12 +6481,33 @@
       }
     },
     {
+      "file": "sparkle.schema.json",
+      "name": "x-sparkle",
+      "title": "Sparkle",
+      "description": "Behavior applied with x-sparkle.",
+      "tag": "wb-x-sparkle",
+      "baseClass": "wb-x-sparkle",
+      "properties": {
+        "count": {
+          "type": "string",
+          "description": "Read by sparkle().",
+          "default": "15"
+        }
+      },
+      "matrix": [],
+      "_metadata": {
+        "generatedBy": "scripts/generate-behavior-schemas.mjs (#716)",
+        "derivedFrom": "the behavior implementation — every property here is one the code actually reads",
+        "note": "Expand by hand: enums, richer descriptions and accessibility notes cannot be read from source."
+      }
+    },
+    {
       "file": "spinner.schema.json",
       "name": "spinner",
       "title": "Spinner",
       "description": "Loading spinner indicator",
       "tag": "wb-spinner",
-      "baseClass": "wb-spinner",
+      "baseClass": "x-spinner",
       "properties": {
         "size": {
           "type": "string",
@@ -5263,7 +6519,7 @@
             "xl"
           ],
           "default": "md",
-          "appliesClass": "wb-spinner--{{value}}"
+          "appliesClass": "x-spinner--{{value}}"
         },
         "variant": {
           "type": "string",
@@ -5275,7 +6531,7 @@
             "error"
           ],
           "default": "primary",
-          "appliesClass": "wb-spinner--{{value}}"
+          "appliesClass": "x-spinner--{{value}}"
         },
         "speed": {
           "type": "string",
@@ -5285,7 +6541,7 @@
             "fast"
           ],
           "default": "medium",
-          "appliesClass": "wb-spinner--{{value}}"
+          "appliesClass": "x-spinner--{{value}}"
         },
         "label": {
           "type": "string",
@@ -5321,7 +6577,7 @@
       "title": "Stack Layout Component",
       "description": "Vertical stack layout component. Renders children in a column with configurable gap, background color, padding, and border radius.",
       "tag": "wb-stack",
-      "baseClass": "wb-stack",
+      "baseClass": "x-stack",
       "properties": {
         "gap": {
           "type": "string",
@@ -5352,7 +6608,7 @@
       "_metadata": {
         "category": "layout",
         "icon": "📦",
-        "viewModel": "src/wb-viewmodels/wb-stack.js"
+        "viewModel": "src/wb-viewmodels/x-stack.js"
       }
     },
     {
@@ -5361,7 +6617,7 @@
       "title": "Stage Light",
       "description": "Versatile stage lighting effects including spotlights, beams, and fixtures.",
       "tag": "wb-stagelight",
-      "baseClass": "wb-stagelight",
+      "baseClass": "x-stagelight",
       "properties": {
         "variant": {
           "type": "string",
@@ -5372,7 +6628,7 @@
             "fixture"
           ],
           "default": "beam",
-          "appliesClass": "wb-stagelight--{{value}}"
+          "appliesClass": "x-stagelight--{{value}}"
         },
         "color": {
           "type": "string",
@@ -5436,7 +6692,7 @@
       "title": "Stats Card",
       "description": "Statistics display card with value, label, icon, and trend indicator",
       "tag": "wb-cardstats",
-      "baseClass": "wb-stats",
+      "baseClass": "x-stats",
       "properties": {
         "value": {
           "type": "string",
@@ -5463,7 +6719,7 @@
             "down",
             "neutral"
           ],
-          "appliesClass": "wb-stats--trend-{{value}}",
+          "appliesClass": "x-stats--trend-{{value}}",
           "default": ""
         },
         "trendValue": {
@@ -5481,7 +6737,7 @@
             "minimal"
           ],
           "default": "default",
-          "appliesClass": "wb-stats--{{value}}"
+          "appliesClass": "x-stats--{{value}}"
         },
         "color": {
           "type": "string",
@@ -5550,12 +6806,38 @@
       "_metadata": {}
     },
     {
+      "file": "steps.schema.json",
+      "name": "x-steps",
+      "title": "Steps",
+      "description": "Behavior applied with x-steps.",
+      "tag": "wb-x-steps",
+      "baseClass": "wb-x-steps",
+      "properties": {
+        "items": {
+          "type": "string",
+          "description": "Read by steps().",
+          "default": ""
+        },
+        "current": {
+          "type": "string",
+          "description": "Read by steps().",
+          "default": "1"
+        }
+      },
+      "matrix": [],
+      "_metadata": {
+        "generatedBy": "scripts/generate-behavior-schemas.mjs (#716)",
+        "derivedFrom": "the behavior implementation — every property here is one the code actually reads",
+        "note": "Expand by hand: enums, richer descriptions and accessibility notes cannot be read from source."
+      }
+    },
+    {
       "file": "sticky.schema.json",
       "name": "sticky",
       "title": "Sticky",
       "description": "Makes element stick to viewport on scroll",
       "tag": "wb-sticky",
-      "baseClass": "wb-sticky",
+      "baseClass": "x-sticky",
       "properties": {
         "offset": {
           "type": "string",
@@ -5605,7 +6887,7 @@
       "title": "Switch",
       "description": "Toggle switch for boolean settings",
       "tag": "wb-switch",
-      "baseClass": "wb-switch",
+      "baseClass": "x-switch",
       "properties": {
         "label": {
           "type": "string",
@@ -5648,7 +6930,7 @@
             "lg"
           ],
           "default": "md",
-          "appliesClass": "wb-switch--{{value}}"
+          "appliesClass": "x-switch--{{value}}"
         },
         "variant": {
           "type": "string",
@@ -5658,7 +6940,7 @@
             "success"
           ],
           "default": "default",
-          "appliesClass": "wb-switch--{{value}}"
+          "appliesClass": "x-switch--{{value}}"
         }
       },
       "matrix": [
@@ -5691,7 +6973,7 @@
       "title": "Table",
       "description": "Data table with sorting, filtering, and pagination",
       "tag": "wb-table",
-      "baseClass": "wb-table",
+      "baseClass": "x-table",
       "properties": {
         "data": {
           "type": "string",
@@ -5727,25 +7009,50 @@
           "type": "boolean",
           "description": "Striped rows",
           "default": false,
-          "appliesClass": "wb-table--striped"
+          "appliesClass": "x-table--striped"
         },
         "hoverable": {
           "type": "boolean",
           "description": "Hover effect on rows",
           "default": true,
-          "appliesClass": "wb-table--hoverable"
+          "appliesClass": "x-table--hoverable"
         },
         "compact": {
           "type": "boolean",
           "description": "Compact row spacing",
           "default": false,
-          "appliesClass": "wb-table--compact"
+          "appliesClass": "x-table--compact"
         },
         "bordered": {
           "type": "boolean",
           "description": "Cell borders",
           "default": false,
-          "appliesClass": "wb-table--bordered"
+          "appliesClass": "x-table--bordered"
+        },
+        "headers": {
+          "type": "string",
+          "default": "",
+          "description": "Comma-separated column headings."
+        },
+        "rows": {
+          "type": "string",
+          "default": "",
+          "description": "JSON array-of-arrays of row data."
+        },
+        "searchable": {
+          "type": "boolean",
+          "default": false,
+          "description": "Show a filter input above the table. Alias of filterable."
+        },
+        "copyable": {
+          "type": "boolean",
+          "default": false,
+          "description": "Add a control that copies the table as text."
+        },
+        "selectable": {
+          "type": "boolean",
+          "default": false,
+          "description": "Let a row be clicked to become the active row."
         }
       },
       "matrix": [
@@ -5774,7 +7081,7 @@
       "title": "Tabs",
       "description": "Tab navigation for switching between content panels",
       "tag": "wb-tabs",
-      "baseClass": "wb-tabs",
+      "baseClass": "x-tabs",
       "properties": {
         "activeTab": {
           "type": "number",
@@ -5790,7 +7097,7 @@
             "bordered"
           ],
           "default": "default",
-          "appliesClass": "wb-tabs--{{value}}"
+          "appliesClass": "x-tabs--{{value}}"
         },
         "size": {
           "type": "string",
@@ -5800,19 +7107,19 @@
             "lg"
           ],
           "default": "md",
-          "appliesClass": "wb-tabs--{{value}}"
+          "appliesClass": "x-tabs--{{value}}"
         },
         "fullWidth": {
           "type": "boolean",
           "description": "Tabs fill container width",
           "default": false,
-          "appliesClass": "wb-tabs--full-width"
+          "appliesClass": "x-tabs--full-width"
         },
         "vertical": {
           "type": "boolean",
           "description": "Vertical tab layout",
           "default": false,
-          "appliesClass": "wb-tabs--vertical"
+          "appliesClass": "x-tabs--vertical"
         }
       },
       "matrix": [
@@ -5840,6 +7147,21 @@
       }
     },
     {
+      "file": "tada.schema.json",
+      "name": "x-tada",
+      "title": "Tada",
+      "description": "On click, plays the tada animation for 1s.",
+      "tag": "wb-x-tada",
+      "baseClass": "wb-x-tada",
+      "properties": {},
+      "matrix": [],
+      "_metadata": {
+        "generatedBy": "scripts/generate-behavior-schemas.mjs (#716)",
+        "derivedFrom": "the behavior implementation — every property here is one the code actually reads",
+        "note": "Expand by hand: enums, richer descriptions and accessibility notes cannot be read from source."
+      }
+    },
+    {
       "file": "tags.schema.json",
       "name": "tags",
       "title": "Tags Behavior",
@@ -5856,7 +7178,7 @@
       "title": "Testimonial Card",
       "description": "Customer testimonial/review card with quote, author, avatar, and rating",
       "tag": "wb-cardtestimonial",
-      "baseClass": "wb-testimonial",
+      "baseClass": "x-testimonial",
       "properties": {
         "quote": {
           "type": "string",
@@ -5898,7 +7220,7 @@
             "centered"
           ],
           "default": "default",
-          "appliesClass": "wb-testimonial--{{value}}"
+          "appliesClass": "x-testimonial--{{value}}"
         },
         "size": {
           "type": "string",
@@ -5909,7 +7231,7 @@
             "lg"
           ],
           "default": "md",
-          "appliesClass": "wb-testimonial--{{value}}"
+          "appliesClass": "x-testimonial--{{value}}"
         }
       },
       "matrix": [
@@ -5968,7 +7290,7 @@
       "title": "Textarea",
       "description": "Multi-line text input with autosize and character count",
       "tag": "wb-textarea",
-      "baseClass": "wb-textarea",
+      "baseClass": "x-textarea",
       "properties": {
         "label": {
           "type": "string",
@@ -6009,7 +7331,7 @@
           "type": "boolean",
           "description": "Auto-resize to content",
           "default": false,
-          "appliesClass": "wb-textarea--autosize"
+          "appliesClass": "x-textarea--autosize"
         },
         "disabled": {
           "type": "boolean",
@@ -6044,7 +7366,7 @@
             "error"
           ],
           "default": "default",
-          "appliesClass": "wb-textarea--{{value}}"
+          "appliesClass": "x-textarea--{{value}}"
         }
       },
       "matrix": [
@@ -6091,7 +7413,7 @@
       "title": "Timeline",
       "description": "Vertical timeline component for displaying sequential events",
       "tag": "wb-timeline",
-      "baseClass": "wb-timeline",
+      "baseClass": "x-timeline",
       "properties": {
         "items": {
           "type": "string",
@@ -6121,9 +7443,9 @@
       "file": "toast.schema.json",
       "name": "toast",
       "title": "Toast",
-      "description": "Toast notification system for temporary messages. Container (.wb-toast-container, feedback.js's createToast()) is fixed-positioned below the site header rather than the viewport top -- top: calc(var(--site-header-height) + 1rem), so toasts never cover the nav/logo. --site-header-height (site.css) defaults to 0 and is only set to 64px when the page actually has a .site__header, so standalone pages without one are unaffected.",
+      "description": "Toast notification system for temporary messages. Container (.x-toast-container, feedback.js's createToast()) is fixed-positioned below the site header rather than the viewport top -- top: calc(var(--site-header-height) + 1rem), so toasts never cover the nav/logo. --site-header-height (site.css) defaults to 0 and is only set to 64px when the page actually has a .site__header, so standalone pages without one are unaffected.",
       "tag": "wb-toast",
-      "baseClass": "wb-toast",
+      "baseClass": "x-toast",
       "properties": {
         "message": {
           "type": "string",
@@ -6146,7 +7468,7 @@
             "error"
           ],
           "default": "info",
-          "appliesClass": "wb-toast--{{value}}"
+          "appliesClass": "x-toast--{{value}}"
         },
         "icon": {
           "type": "string",
@@ -6260,7 +7582,7 @@
       "title": "Tooltip",
       "description": "Tooltip for displaying additional information on hover/focus",
       "tag": "wb-tooltip",
-      "baseClass": "wb-tooltip-trigger",
+      "baseClass": "x-tooltip-trigger",
       "properties": {
         "content": {
           "type": "string",
@@ -6282,7 +7604,7 @@
             "bottom-end"
           ],
           "default": "top",
-          "appliesClass": "wb-tooltip--{{value}}"
+          "appliesClass": "x-tooltip--{{value}}"
         },
         "variant": {
           "type": "string",
@@ -6294,7 +7616,7 @@
             "primary"
           ],
           "default": "default",
-          "appliesClass": "wb-tooltip--{{value}}"
+          "appliesClass": "x-tooltip--{{value}}"
         },
         "delay": {
           "type": "number",
@@ -6378,12 +7700,111 @@
       }
     },
     {
+      "file": "truncate.schema.json",
+      "name": "x-truncate",
+      "title": "Truncate",
+      "description": "Behavior applied with x-truncate.",
+      "tag": "wb-x-truncate",
+      "baseClass": "wb-x-truncate",
+      "properties": {
+        "lines": {
+          "type": "string",
+          "description": "Read by truncate().",
+          "default": "1"
+        },
+        "expandable": {
+          "type": "boolean",
+          "description": "Read by truncate(). Bare attribute.",
+          "default": false
+        }
+      },
+      "matrix": [],
+      "_metadata": {
+        "generatedBy": "scripts/generate-behavior-schemas.mjs (#716)",
+        "derivedFrom": "the behavior implementation — every property here is one the code actually reads",
+        "note": "Expand by hand: enums, richer descriptions and accessibility notes cannot be read from source."
+      }
+    },
+    {
+      "file": "typewriter.schema.json",
+      "name": "x-typewriter",
+      "title": "Typewriter",
+      "description": "Behavior applied with x-typewriter.",
+      "tag": "wb-x-typewriter",
+      "baseClass": "wb-x-typewriter",
+      "properties": {
+        "speed": {
+          "type": "string",
+          "description": "Read by typewriter().",
+          "default": "50"
+        },
+        "text": {
+          "type": "string",
+          "description": "Read by typewriter()."
+        },
+        "cursor": {
+          "type": "string",
+          "description": "Read by typewriter()."
+        }
+      },
+      "matrix": [],
+      "_metadata": {
+        "generatedBy": "scripts/generate-behavior-schemas.mjs (#716)",
+        "derivedFrom": "the behavior implementation — every property here is one the code actually reads",
+        "note": "Expand by hand: enums, richer descriptions and accessibility notes cannot be read from source."
+      }
+    },
+    {
+      "file": "video.schema.json",
+      "name": "x-video",
+      "title": "Video",
+      "description": "Behavior applied with x-video.",
+      "tag": "wb-x-video",
+      "baseClass": "wb-x-video",
+      "properties": {
+        "poster": {
+          "type": "string",
+          "description": "Read by video().",
+          "default": ""
+        },
+        "controls": {
+          "type": "string",
+          "description": "Read by video()."
+        },
+        "playsinline": {
+          "type": "string",
+          "description": "Read by video()."
+        },
+        "autoplay": {
+          "type": "boolean",
+          "description": "Read by video(). Bare attribute.",
+          "default": false
+        },
+        "muted": {
+          "type": "boolean",
+          "description": "Read by video(). Bare attribute.",
+          "default": false
+        },
+        "loop": {
+          "type": "boolean",
+          "description": "Read by video(). Bare attribute.",
+          "default": false
+        }
+      },
+      "matrix": [],
+      "_metadata": {
+        "generatedBy": "scripts/generate-behavior-schemas.mjs (#716)",
+        "derivedFrom": "the behavior implementation — every property here is one the code actually reads",
+        "note": "Expand by hand: enums, richer descriptions and accessibility notes cannot be read from source."
+      }
+    },
+    {
       "file": "cardvideo.schema.json",
       "name": "cardvideo",
       "title": "Video Card",
       "description": "Card with embedded video player",
       "tag": "wb-cardvideo",
-      "baseClass": "wb-card-video",
+      "baseClass": "x-card-video",
       "properties": {
         "src": {
           "type": "string",
@@ -6448,7 +7869,7 @@
             "elevated"
           ],
           "default": "default",
-          "appliesClass": "wb-card-video--{{value}}"
+          "appliesClass": "x-card-video--{{value}}"
         }
       },
       "matrix": [
@@ -6486,6 +7907,41 @@
         "icon": "🎬",
         "since": "1.0.0",
         "status": "stable"
+      }
+    },
+    {
+      "file": "vimeo.schema.json",
+      "name": "x-vimeo",
+      "title": "Vimeo",
+      "description": "Behavior applied with x-vimeo.",
+      "tag": "wb-x-vimeo",
+      "baseClass": "wb-x-vimeo",
+      "properties": {
+        "video-id": {
+          "type": "string",
+          "description": "Read by vimeo()."
+        },
+        "autoplay": {
+          "type": "boolean",
+          "description": "Read by vimeo(). Bare attribute.",
+          "default": false
+        },
+        "muted": {
+          "type": "boolean",
+          "description": "Read by vimeo(). Bare attribute.",
+          "default": false
+        },
+        "loop": {
+          "type": "boolean",
+          "description": "Read by vimeo(). Bare attribute.",
+          "default": false
+        }
+      },
+      "matrix": [],
+      "_metadata": {
+        "generatedBy": "scripts/generate-behavior-schemas.mjs (#716)",
+        "derivedFrom": "the behavior implementation — every property here is one the code actually reads",
+        "note": "Expand by hand: enums, richer descriptions and accessibility notes cannot be read from source."
       }
     },
     {
@@ -6788,75 +8244,19 @@
       "_metadata": {}
     },
     {
-      "file": "wb-control.schema.json",
-      "name": "control",
-      "title": "WB Control",
-      "description": "Base control interaction behavior.",
-      "tag": "wb-control",
-      "baseClass": "wb-control",
+      "file": "wobble.schema.json",
+      "name": "x-wobble",
+      "title": "Wobble",
+      "description": "On click, plays the wobble animation for 1s.",
+      "tag": "wb-x-wobble",
+      "baseClass": "wb-x-wobble",
       "properties": {},
       "matrix": [],
-      "_metadata": {}
-    },
-    {
-      "file": "x-behavior.schema.json",
-      "title": "x-behavior Attribute",
-      "description": "Schema for x-behavior attribute. Used for generic behavior attachment.",
-      "tag": "wb-undefined",
-      "baseClass": "wb-undefined",
-      "properties": {
-        "x-behavior": {
-          "type": "string",
-          "description": "Name of the behavior to attach."
-        }
-      },
-      "matrix": [],
-      "_metadata": {}
-    },
-    {
-      "file": "x-collapse.schema.json",
-      "title": "x-collapse Attribute",
-      "description": "Schema for x-collapse attribute. Enables collapsible UI sections.",
-      "tag": "wb-undefined",
-      "baseClass": "wb-undefined",
-      "properties": {
-        "x-collapse": {
-          "type": "boolean",
-          "description": "Whether the element is collapsible."
-        }
-      },
-      "matrix": [],
-      "_metadata": {}
-    },
-    {
-      "file": "x-copy.schema.json",
-      "title": "x-copy Attribute",
-      "description": "Schema for x-copy attribute. Enables copy-to-clipboard functionality.",
-      "tag": "wb-undefined",
-      "baseClass": "wb-undefined",
-      "properties": {
-        "x-copy": {
-          "type": "boolean",
-          "description": "Whether the element supports copy-to-clipboard."
-        }
-      },
-      "matrix": [],
-      "_metadata": {}
-    },
-    {
-      "file": "x-draggable.schema.json",
-      "title": "x-draggable Attribute",
-      "description": "Schema for x-draggable attribute. Enables drag-and-drop functionality.",
-      "tag": "wb-undefined",
-      "baseClass": "wb-undefined",
-      "properties": {
-        "x-draggable": {
-          "type": "boolean",
-          "description": "Whether the element is draggable."
-        }
-      },
-      "matrix": [],
-      "_metadata": {}
+      "_metadata": {
+        "generatedBy": "scripts/generate-behavior-schemas.mjs (#716)",
+        "derivedFrom": "the behavior implementation — every property here is one the code actually reads",
+        "note": "Expand by hand: enums, richer descriptions and accessibility notes cannot be read from source."
+      }
     },
     {
       "file": "x-effects.schema.json",
@@ -6909,6 +8309,64 @@
       },
       "matrix": [],
       "_metadata": {}
+    },
+    {
+      "file": "youtube.schema.json",
+      "name": "x-youtube",
+      "title": "Youtube",
+      "description": "Behavior applied with x-youtube.",
+      "tag": "wb-x-youtube",
+      "baseClass": "wb-x-youtube",
+      "properties": {
+        "url": {
+          "type": "string",
+          "description": "Read by youtube()."
+        },
+        "video-id": {
+          "type": "string",
+          "description": "Read by youtube()."
+        },
+        "controls": {
+          "type": "string",
+          "description": "Read by youtube()."
+        },
+        "autoplay": {
+          "type": "boolean",
+          "description": "Read by youtube(). Bare attribute.",
+          "default": false
+        },
+        "muted": {
+          "type": "boolean",
+          "description": "Read by youtube(). Bare attribute.",
+          "default": false
+        },
+        "loop": {
+          "type": "boolean",
+          "description": "Read by youtube(). Bare attribute.",
+          "default": false
+        }
+      },
+      "matrix": [],
+      "_metadata": {
+        "generatedBy": "scripts/generate-behavior-schemas.mjs (#716)",
+        "derivedFrom": "the behavior implementation — every property here is one the code actually reads",
+        "note": "Expand by hand: enums, richer descriptions and accessibility notes cannot be read from source."
+      }
+    },
+    {
+      "file": "zoomin.schema.json",
+      "name": "x-zoomin",
+      "title": "Zoomin",
+      "description": "On click, plays the zoom-in animation for 0.4s.",
+      "tag": "wb-x-zoomin",
+      "baseClass": "wb-x-zoomin",
+      "properties": {},
+      "matrix": [],
+      "_metadata": {
+        "generatedBy": "scripts/generate-behavior-schemas.mjs (#716)",
+        "derivedFrom": "the behavior implementation — every property here is one the code actually reads",
+        "note": "Expand by hand: enums, richer descriptions and accessibility notes cannot be read from source."
+      }
     }
   ]
 }

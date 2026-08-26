@@ -2,12 +2,16 @@
 
 On click, plays the shake animation for 0.5s.
 
-Apply `x-shake` to any element.
+## Type — new capability
 
-## Usage
+`x-shake` adds behavior that no HTML element implies. Nothing about a tag says "ripple" or "tooltip", so this is always opted into by attribute, on whatever element you already chose.
+
+### How to write it
 
 ```html
-<button class="effect-demo" x-shake>Shake</button>
+<button class="effect-demo" x-shake>
+  x-shake
+</button>
 ```
 
 ## Live example

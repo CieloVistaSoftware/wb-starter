@@ -32,7 +32,7 @@ test.describe('Behaviors page — full coverage', () => {
   test('buttons: variants render distinct backgrounds', async ({ page }) => {
     const colors = await page.evaluate(() =>
       ['primary', 'secondary', 'ghost'].map((v) => {
-        const el = document.querySelector(`.wb-btn--${v}, .wb-button--${v}`) as HTMLElement;
+        const el = document.querySelector(`.x-btn--${v}, .x-button--${v}`) as HTMLElement;
         return el ? getComputedStyle(el).backgroundColor : 'MISSING';
       })
     );
@@ -45,14 +45,14 @@ test.describe('Behaviors page — full coverage', () => {
       const sw = document.querySelector('[x-switch]');
       if (!sw) return 'NO_SWITCH';
       const before = sw.getAttribute('checked') ?? sw.querySelector('input')?.checked ?? null;
-      const clickable = sw.querySelector('input, [role="switch"], .wb-switch__track, button') as HTMLElement || (sw as HTMLElement);
+      const clickable = sw.querySelector('input, [role="switch"], .x-switch__track, button') as HTMLElement || (sw as HTMLElement);
       clickable.click();
       await new Promise((r) => setTimeout(r, 120));
       const after = sw.getAttribute('checked') ?? sw.querySelector('input')?.checked ?? null;
       return { hasVisual: !!sw.querySelector('*'), before, after };
     });
-    expect(r, 'no wb-switch on page').not.toBe('NO_SWITCH');
-    expect((r as any).hasVisual, 'wb-switch rendered nothing').toBe(true);
+    expect(r, 'no x-switch on page').not.toBe('NO_SWITCH');
+    expect((r as any).hasVisual, 'x-switch rendered nothing').toBe(true);
   });
 
   test('alerts: 4 variants render distinct backgrounds', async ({ page }) => {
@@ -102,14 +102,14 @@ test.describe('Behaviors page — full coverage', () => {
       })
     );
     expect(r.length, 'no spinners').toBeGreaterThanOrEqual(4);
-    expect(r.every((s) => s.bw >= 1.5 && s.anim === 'wb-spin'), `spinner invisible/not animated: ${JSON.stringify(r)}`).toBe(true);
+    expect(r.every((s) => s.bw >= 1.5 && s.anim === 'x-spin'), `spinner invisible/not animated: ${JSON.stringify(r)}`).toBe(true);
   });
 
   test('rating: custom icon honored + value painted', async ({ page }) => {
     const r = await page.evaluate(() => {
       const heart = [...document.querySelectorAll('[x-rating]')].find((el) => el.getAttribute('icon') === '❤️');
-      const glyph = heart?.querySelector('.wb-rating__star')?.textContent || '';
-      const anyFilled = [...document.querySelectorAll('[x-rating]')].some((el) => el.querySelectorAll('.wb-rating__star--full').length > 0);
+      const glyph = heart?.querySelector('.x-rating__star')?.textContent || '';
+      const anyFilled = [...document.querySelectorAll('[x-rating]')].some((el) => el.querySelectorAll('.x-rating__star--full').length > 0);
       return { glyph, anyFilled };
     });
     expect(r.glyph, 'rating icon=❤️ not honored').toContain('❤️');
@@ -127,7 +127,7 @@ test.describe('Behaviors page — full coverage', () => {
       const visibleAfter = getComputedStyle(modal as HTMLElement).display !== 'none' && (modal as HTMLElement).offsetParent !== null;
       return { hasTrigger: !!trigger, visibleBefore, visibleAfter };
     });
-    expect(r, 'no wb-modal on page').not.toBe('NO_MODAL');
+    expect(r, 'no x-modal on page').not.toBe('NO_MODAL');
     expect((r as any).hasTrigger, 'modal has no discoverable open trigger').toBe(true);
   });
 
@@ -135,7 +135,7 @@ test.describe('Behaviors page — full coverage', () => {
     const r = await page.evaluate(async () => {
       const tabs = document.querySelector('[x-tabs]');
       if (!tabs) return 'NO_TABS';
-      const buttons = [...tabs.querySelectorAll('[role="tab"], .wb-tabs__tab, button')];
+      const buttons = [...tabs.querySelectorAll('[role="tab"], .x-tabs__tab, button')];
       if (buttons.length < 2) return { tabCount: buttons.length, switched: false };
       const activeBefore = tabs.querySelector('[aria-selected="true"], .active, [class*="--active"]')?.textContent?.trim();
       (buttons[1] as HTMLElement).click();
@@ -143,16 +143,16 @@ test.describe('Behaviors page — full coverage', () => {
       const activeAfter = tabs.querySelector('[aria-selected="true"], .active, [class*="--active"]')?.textContent?.trim();
       return { tabCount: buttons.length, activeBefore, activeAfter, switched: activeBefore !== activeAfter };
     });
-    expect(r, 'no wb-tabs on page').not.toBe('NO_TABS');
+    expect(r, 'no x-tabs on page').not.toBe('NO_TABS');
     expect((r as any).tabCount, 'tabs rendered fewer than 2 tab buttons').toBeGreaterThanOrEqual(2);
     expect((r as any).switched, `clicking a tab did not change the active panel: ${JSON.stringify(r)}`).toBe(true);
   });
 
   test('accordion: clicking a header expands/collapses', async ({ page }) => {
     const r = await page.evaluate(async () => {
-      const acc = document.querySelector('wb-accordion');
+      const acc = document.querySelector('x-accordion');
       if (!acc) return 'NO_ACCORDION';
-      const header = acc.querySelector('[role="button"], summary, .wb-accordion__header, button, h3, h4') as HTMLElement;
+      const header = acc.querySelector('[role="button"], summary, .x-accordion__header, button, h3, h4') as HTMLElement;
       if (!header) return { hasHeader: false };
       const panel = acc.querySelector('[class*="content"], [class*="panel"], [class*="body"]') as HTMLElement;
       const hBefore = panel ? Math.round(panel.getBoundingClientRect().height) : -1;
@@ -161,14 +161,14 @@ test.describe('Behaviors page — full coverage', () => {
       const hAfter = panel ? Math.round(panel.getBoundingClientRect().height) : -1;
       return { hasHeader: true, hasPanel: !!panel, hBefore, hAfter, changed: hBefore !== hAfter };
     });
-    expect(r, 'no wb-accordion on page').not.toBe('NO_ACCORDION');
+    expect(r, 'no x-accordion on page').not.toBe('NO_ACCORDION');
     expect((r as any).hasHeader, 'accordion has no clickable header').toBe(true);
     expect((r as any).changed, `accordion did not expand/collapse on click: ${JSON.stringify(r)}`).toBe(true);
   });
 
   test('avatars: render an image or initials', async ({ page }) => {
     const r = await page.evaluate(() =>
-      [...document.querySelectorAll('wb-avatar')].map((a) => ({
+      [...document.querySelectorAll('x-avatar')].map((a) => ({
         h: Math.round((a as HTMLElement).getBoundingClientRect().height),
         hasImgOrText: !!a.querySelector('img') || (a.textContent || '').trim().length > 0,
       }))
@@ -179,7 +179,7 @@ test.describe('Behaviors page — full coverage', () => {
 
   test('skeletons: render with shimmer animation', async ({ page }) => {
     const r = await page.evaluate(() =>
-      [...document.querySelectorAll('wb-skeleton')].map((s) => {
+      [...document.querySelectorAll('x-skeleton')].map((s) => {
         const target = (s.querySelector('*') as HTMLElement) || (s as HTMLElement);
         const cs = getComputedStyle(target);
         return { h: Math.round((s as HTMLElement).getBoundingClientRect().height), anim: cs.animationName };

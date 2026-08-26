@@ -128,7 +128,7 @@
     }
 
     .fix-card {
-      /* Base styles handled by wb-card behavior */
+      /* Base styles handled by x-card behavior */
       height: 100%;
       max-height: 700px;
       overflow-y: auto;
@@ -581,7 +581,7 @@
         grid.className = 'fix-grid';
         
         items.forEach(fix => {
-          const card = document.createElement('wb-fix-card');
+          const card = document.createElement('x-fix-card');
           card.data = fix;
           grid.appendChild(card);
         });

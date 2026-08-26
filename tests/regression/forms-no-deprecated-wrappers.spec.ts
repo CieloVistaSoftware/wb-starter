@@ -1,7 +1,7 @@
 import { test, expect } from '@playwright/test';
 
 /**
- * #390: demos/site/forms.html used <wb-checkbox>/<wb-textarea> — both
+ * #390: demos/site/forms.html used <div x-checkbox>/<textarea> — both
  * explicitly DEPRECATED (see the console warning + header comment in
  * src/wb-viewmodels/semantics/checkbox.js and textarea.js: "prefer a bare
  * <input type=\"checkbox\">/<textarea> directly ... no wrapper element
@@ -12,19 +12,19 @@ import { test, expect } from '@playwright/test';
  * show-count, readonly).
  */
 test.describe('demos/site/forms.html uses native elements, not deprecated wrappers (#390)', () => {
-  test('no <wb-checkbox> or <wb-textarea> custom elements remain', async ({ page }) => {
+  test('no <div x-checkbox> or <textarea> custom elements remain', async ({ page }) => {
     await page.goto('/demos/site/forms.html');
     await page.waitForFunction(() => (window as any).WB && (window as any).WB.behaviors, { timeout: 15000 });
-    const wbCheckboxCount = await page.locator('wb-checkbox').count();
-    const wbTextareaCount = await page.locator('wb-textarea').count();
+    const wbCheckboxCount = await page.locator('[x-checkbox]').count();
+    const wbTextareaCount = await page.locator('.x-textarea').count();
     expect(wbCheckboxCount).toBe(0);
     expect(wbTextareaCount).toBe(0);
   });
 
-  test('no [wb-checkbox]/[wb-textarea] deprecation warning fires on a fresh load', async ({ page }) => {
+  test('no [x-checkbox]/[x-textarea] deprecation warning fires on a fresh load', async ({ page }) => {
     const warnings: string[] = [];
     page.on('console', (msg) => {
-      if (msg.type() === 'warning' && /wb-checkbox|wb-textarea/.test(msg.text())) {
+      if (msg.type() === 'warning' && /x-checkbox|x-textarea/.test(msg.text())) {
         warnings.push(msg.text());
       }
     });

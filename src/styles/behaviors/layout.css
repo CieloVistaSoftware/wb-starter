@@ -1,54 +1,54 @@
 /* Layout custom elements extracted from site.css */
-wb-flex, [x-flex], wb-stack, [x-stack], wb-cluster, [x-cluster], wb-container, [x-container],
-wb-row, [x-row], wb-column, [x-column],
-wb-sidebar, [x-sidebar], wb-center, [x-center], wb-cover, [x-cover], wb-masonry, [x-masonry], wb-switcher, [x-switcher],
-wb-reel, [x-reel], wb-frame, [x-frame], wb-sticky, [x-sticky], wb-drawer, [x-drawer], wb-icon, [x-icon]{
+x-flex, [x-flex], x-stack, [x-stack], x-cluster, [x-cluster], x-container, [x-container],
+x-row, [x-row], x-column, [x-column],
+x-sidebar, [x-sidebar], x-center, [x-center], x-cover, [x-cover], x-masonry, [x-masonry], x-switcher, [x-switcher],
+x-reel, [x-reel], x-frame, [x-frame], x-sticky, [x-sticky], x-drawer, [x-drawer], x-icon, [x-icon]{
   display: block;
 }
 
-/* wb-grid gets its own grid-shaped default here (not lumped in with the
+/* x-grid gets its own grid-shaped default here (not lumped in with the
    block-display group above) matching layouts.js's grid() 3-column
    default (defaultMins['3'] = '250px'). grid() itself only runs once
-   wb-grid.js's module has loaded/executed and the custom element upgrades, [x-grid].js's module has loaded/executed and the custom element upgrades
+   x-grid.js's module has loaded/executed and the custom element upgrades, [x-grid].js's module has loaded/executed and the custom element upgrades
    -- setting display:grid/grid-template-columns purely via JS inline
    styles left a real gap: this tag painted as block (single column) on
    first paint, then reflowed into a multi-column grid once JS caught up.
    That gap used to be hidden by how slow the old 46-file @import CSS
    chain made first paint (JS had time to finish first); JIT CSS loading
    made first paint fast enough to expose it (confirmed live via Chrome
-   DevTools Performance: wb-grid.wb-grid alone scored 0.1327 of a 0.14
+   DevTools Performance: x-grid.x-grid alone scored 0.1327 of a 0.14
    total CLS). Inline styles set by grid() always win over this stylesheet
    rule, so custom columns/gap/minWidth configs still apply correctly --
    for the common default case they now just match what's already
    painted, so there's nothing left to shift. */
-wb-grid, [x-grid]{
+x-grid, [x-grid]{
   display: grid;
   gap: 1rem;
   grid-template-columns: repeat(auto-fit, minmax(min(250px, 100%), 1fr));
 }
 
-wb-drawer, [x-drawer]{
+x-drawer, [x-drawer]{
   visibility: hidden;
 }
-/* .wb-drawer-layout: enhanced by drawerLayout() (layouts.js) as a page-shell
-   panel. .wb-drawer-trigger: enhanced by drawer() (overlay.js) as a
+/* .x-drawer-layout: enhanced by drawerLayout() (layouts.js) as a page-shell
+   panel. .x-drawer-trigger: enhanced by drawer() (overlay.js) as a
    self-triggering button (drawer-behavior root cause -- without this, every
-   <wb-drawer title="…" content="…">Label</wb-drawer> trigger stayed
+   <div x-drawer title="…" content="…">Label</div> trigger stayed
    invisible even after drawer()'s click handler was correctly attached,
-   because this base rule hides every <wb-drawer> that isn't a
-   .wb-drawer-layout). Same specificity as the rule above by design -- this
+   because this base rule hides every <div x-drawer> that isn't a
+   .x-drawer-layout). Same specificity as the rule above by design -- this
    just extends its selector list, not a new override. */
-wb-drawer.wb-drawer-layout, [x-drawer].wb-drawer-layout,
-wb-drawer.wb-drawer-trigger, [x-drawer].wb-drawer-trigger{
+x-drawer.x-drawer-layout, [x-drawer].x-drawer-layout,
+x-drawer.x-drawer-trigger, [x-drawer].x-drawer-trigger{
   visibility: visible;
 }
 
-/* wb-grid: alt-rows zebra striping (#281) — themed, no literal colors */
-.wb-grid--alt-rows > *:nth-child(even) {
+/* x-grid: alt-rows zebra striping (#281) — themed, no literal colors */
+.x-grid--alt-rows > *:nth-child(even) {
   background: var(--bg-secondary);
 }
 
-.wb-grid__header {
+.x-grid__header {
   font-weight: 600;
   padding: 0.5rem;
   border-bottom: 2px solid var(--border-color);
@@ -63,7 +63,7 @@ wb-drawer.wb-drawer-trigger, [x-drawer].wb-drawer-trigger{
    took over sizing. Since layout.css is lazily loaded (only when a page
    uses a layout behavior) it can load AFTER site.css, letting this stale
    copy win the cascade on same-specificity properties on any page that
-   happens to use wb-grid/wb-flex/wb-stack/etc. Removed entirely rather
+   happens to use x-grid/x-flex/x-stack/etc. Removed entirely rather
    than re-synced -- these selectors don't belong in a BEHAVIOR stylesheet
    at all, only the shell's own site.css should ever define them. */
 

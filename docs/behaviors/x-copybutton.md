@@ -21,21 +21,21 @@ clipboard, with visible "Copied ✓" feedback. See
 
 ## Demo
 
-<wb-demo title="Copy button on a textarea">
+<div x-demo title="Copy button on a textarea">
   <textarea x-copybutton rows="3" cols="40">npm install wb-starter</textarea>
-</wb-demo>
+</div>
 
-<wb-demo title="Copy button on a pre/code block">
+<div x-demo title="Copy button on a pre/code block">
   <pre x-copybutton><code>const wb = require('wb-starter');
 wb.init();</code></pre>
-</wb-demo>
+</div>
 
-<wb-demo title="Copy button targeting another element">
+<div x-demo title="Copy button targeting another element">
   <div>
     <code id="x-copybutton-target-demo">npm install wb-starter --save</code>
     <button x-copybutton="#x-copybutton-target-demo" label="Copy install command" position="top-right">Install command ↑</button>
   </div>
-</wb-demo>
+</div>
 
 ## Events
 

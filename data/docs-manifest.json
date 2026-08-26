@@ -1,6 +1,6 @@
 {
-  "generated": "2026-08-21T17:51:08.258Z",
-  "totalFiles": 350,
+  "generated": "2026-08-26T20:13:10.199Z",
+  "totalFiles": 264,
   "categories": [
     "_today",
     "architecture",
@@ -8,7 +8,6 @@
     "behaviors",
     "claude",
     "compliance",
-    "components",
     "guides",
     "root",
     "standards"
@@ -29,7 +28,7 @@
       },
       {
         "path": "docs/audio.md",
-        "title": "Audio Component",
+        "title": "Audio",
         "name": "audio",
         "category": "root"
       },
@@ -280,12 +279,6 @@
         "category": "root"
       },
       {
-        "path": "docs/wb-parts-spec.md",
-        "title": "gcan# WB-Starter Parts Specification",
-        "name": "wb-parts-spec",
-        "category": "root"
-      },
-      {
         "path": "docs/wbservices.md",
         "title": "wbservices",
         "name": "wbservices",
@@ -342,9 +335,9 @@
         "category": "architecture"
       },
       {
-        "path": "docs/architecture/WBVIEWS.md",
-        "title": "wb-views System",
-        "name": "WBVIEWS",
+        "path": "docs/architecture/WB-PREFIX-AUDIT.md",
+        "title": "`wb-` Prefix Audit",
+        "name": "WB-PREFIX-AUDIT",
         "category": "architecture"
       }
     ],
@@ -376,6 +369,12 @@
         "category": "behaviors"
       },
       {
+        "path": "docs/behaviors/address.md",
+        "title": "`<address>` Element",
+        "name": "address",
+        "category": "behaviors"
+      },
+      {
         "path": "docs/behaviors/alert.md",
         "title": "Alert",
         "name": "alert",
@@ -391,6 +390,12 @@
         "path": "docs/behaviors/articles.md",
         "title": "articles",
         "name": "articles",
+        "category": "behaviors"
+      },
+      {
+        "path": "docs/behaviors/aside.md",
+        "title": "`<aside>` Element",
+        "name": "aside",
         "category": "behaviors"
       },
       {
@@ -424,6 +429,12 @@
         "category": "behaviors"
       },
       {
+        "path": "docs/behaviors/blockquote.md",
+        "title": "`<blockquote>` Element",
+        "name": "blockquote",
+        "category": "behaviors"
+      },
+      {
         "path": "docs/behaviors/bounce.md",
         "title": "Bounce",
         "name": "bounce",
@@ -439,12 +450,6 @@
         "path": "docs/behaviors/button.md",
         "title": "Button",
         "name": "button",
-        "category": "behaviors"
-      },
-      {
-        "path": "docs/behaviors/card.md",
-        "title": "Card Component",
-        "name": "card",
         "category": "behaviors"
       },
       {
@@ -556,6 +561,12 @@
         "category": "behaviors"
       },
       {
+        "path": "docs/behaviors/center.md",
+        "title": "Center - wb-starter v3.0",
+        "name": "center",
+        "category": "behaviors"
+      },
+      {
         "path": "docs/behaviors/checkbox.md",
         "title": "Checkbox",
         "name": "checkbox",
@@ -616,6 +627,12 @@
         "category": "behaviors"
       },
       {
+        "path": "docs/behaviors/container.md",
+        "title": "Container - wb-starter v3.0",
+        "name": "container",
+        "category": "behaviors"
+      },
+      {
         "path": "docs/behaviors/control.md",
         "title": "Control",
         "name": "control",
@@ -646,9 +663,21 @@
         "category": "behaviors"
       },
       {
+        "path": "docs/behaviors/cover.md",
+        "title": "Cover - wb-starter v3.0",
+        "name": "cover",
+        "category": "behaviors"
+      },
+      {
         "path": "docs/behaviors/darkmode.md",
         "title": "Dark Mode Toggle",
         "name": "darkmode",
+        "category": "behaviors"
+      },
+      {
+        "path": "docs/behaviors/data.md",
+        "title": "`<data>` Element",
+        "name": "data",
         "category": "behaviors"
       },
       {
@@ -667,6 +696,12 @@
         "path": "docs/behaviors/dialog.md",
         "title": "Dialog",
         "name": "dialog",
+        "category": "behaviors"
+      },
+      {
+        "path": "docs/behaviors/dl.md",
+        "title": "DL (Description List) Component Design & User Guide",
+        "name": "dl",
         "category": "behaviors"
       },
       {
@@ -724,6 +759,12 @@
         "category": "behaviors"
       },
       {
+        "path": "docs/behaviors/fill.md",
+        "title": "fill — as wide as the container allows",
+        "name": "fill",
+        "category": "behaviors"
+      },
+      {
         "path": "docs/behaviors/fireworks.md",
         "title": "Fireworks",
         "name": "fireworks",
@@ -778,6 +819,12 @@
         "category": "behaviors"
       },
       {
+        "path": "docs/behaviors/frame.md",
+        "title": "Frame",
+        "name": "frame",
+        "category": "behaviors"
+      },
+      {
         "path": "docs/behaviors/fullscreen.md",
         "title": "Fullscreen",
         "name": "fullscreen",
@@ -799,6 +846,12 @@
         "path": "docs/behaviors/glow.md",
         "title": "Glow",
         "name": "glow",
+        "category": "behaviors"
+      },
+      {
+        "path": "docs/behaviors/grid.md",
+        "title": "x-grid",
+        "name": "grid",
         "category": "behaviors"
       },
       {
@@ -826,9 +879,9 @@
         "category": "behaviors"
       },
       {
-        "path": "docs/behaviors/image.md",
-        "title": "Image",
-        "name": "image",
+        "path": "docs/behaviors/icon.md",
+        "title": "Icon - wb-starter v3.0",
+        "name": "icon",
         "category": "behaviors"
       },
       {
@@ -874,6 +927,12 @@
         "category": "behaviors"
       },
       {
+        "path": "docs/behaviors/list.md",
+        "title": "List Component",
+        "name": "list",
+        "category": "behaviors"
+      },
+      {
         "path": "docs/behaviors/mark.md",
         "title": "Mark",
         "name": "mark",
@@ -898,6 +957,12 @@
         "category": "behaviors"
       },
       {
+        "path": "docs/behaviors/modal.md",
+        "title": "Modal",
+        "name": "modal",
+        "category": "behaviors"
+      },
+      {
         "path": "docs/behaviors/move.md",
         "title": "Move - wb-starter v3.0",
         "name": "move",
@@ -919,6 +984,12 @@
         "path": "docs/behaviors/notify.md",
         "title": "Notify",
         "name": "notify",
+        "category": "behaviors"
+      },
+      {
+        "path": "docs/behaviors/ol.md",
+        "title": "OL (Ordered List) Component Design & User Guide",
+        "name": "ol",
         "category": "behaviors"
       },
       {
@@ -976,9 +1047,21 @@
         "category": "behaviors"
       },
       {
+        "path": "docs/behaviors/radio.md",
+        "title": "Radio Component Design & User Guide",
+        "name": "radio",
+        "category": "behaviors"
+      },
+      {
         "path": "docs/behaviors/rainbow.md",
         "title": "Rainbow",
         "name": "rainbow",
+        "category": "behaviors"
+      },
+      {
+        "path": "docs/behaviors/range.md",
+        "title": "Range Component Design & User Guide",
+        "name": "range",
         "category": "behaviors"
       },
       {
@@ -991,6 +1074,12 @@
         "path": "docs/behaviors/ratio.md",
         "title": "Ratio",
         "name": "ratio",
+        "category": "behaviors"
+      },
+      {
+        "path": "docs/behaviors/reel.md",
+        "title": "Reel - wb-starter v3.0",
+        "name": "reel",
         "category": "behaviors"
       },
       {
@@ -1021,6 +1110,12 @@
         "path": "docs/behaviors/ripple.md",
         "title": "Ripple - wb-starter v3.0",
         "name": "ripple",
+        "category": "behaviors"
+      },
+      {
+        "path": "docs/behaviors/scrollable.md",
+        "title": "Scrollable - wb-starter v3.0",
+        "name": "scrollable",
         "category": "behaviors"
       },
       {
@@ -1057,6 +1152,12 @@
         "path": "docs/behaviors/share.md",
         "title": "Share",
         "name": "share",
+        "category": "behaviors"
+      },
+      {
+        "path": "docs/behaviors/sidebarlayout.md",
+        "title": "Sidebar Layout - wb-starter v3.0",
+        "name": "sidebarlayout",
         "category": "behaviors"
       },
       {
@@ -1114,6 +1215,12 @@
         "category": "behaviors"
       },
       {
+        "path": "docs/behaviors/stat.md",
+        "title": "Stat",
+        "name": "stat",
+        "category": "behaviors"
+      },
+      {
         "path": "docs/behaviors/stepper.md",
         "title": "Stepper Behavior",
         "name": "stepper",
@@ -1135,6 +1242,12 @@
         "path": "docs/behaviors/switch.md",
         "title": "Switch",
         "name": "switch",
+        "category": "behaviors"
+      },
+      {
+        "path": "docs/behaviors/switcher.md",
+        "title": "Switcher - wb-starter v3.0",
+        "name": "switcher",
         "category": "behaviors"
       },
       {
@@ -1174,6 +1287,12 @@
         "category": "behaviors"
       },
       {
+        "path": "docs/behaviors/time.md",
+        "title": "`<time>` Element",
+        "name": "time",
+        "category": "behaviors"
+      },
+      {
         "path": "docs/behaviors/timeline.md",
         "title": "Timeline",
         "name": "timeline",
@@ -1210,6 +1329,12 @@
         "category": "behaviors"
       },
       {
+        "path": "docs/behaviors/ul.md",
+        "title": "UL (Unordered List) Component Design & User Guide",
+        "name": "ul",
+        "category": "behaviors"
+      },
+      {
         "path": "docs/behaviors/video.md",
         "title": "Video",
         "name": "video",
@@ -1219,78 +1344,6 @@
         "path": "docs/behaviors/vimeo.md",
         "title": "Vimeo",
         "name": "vimeo",
-        "category": "behaviors"
-      },
-      {
-        "path": "docs/behaviors/wb-audio.md",
-        "title": "wb-audio",
-        "name": "wb-audio",
-        "category": "behaviors"
-      },
-      {
-        "path": "docs/behaviors/wb-card.md",
-        "title": "wb-card",
-        "name": "wb-card",
-        "category": "behaviors"
-      },
-      {
-        "path": "docs/behaviors/wb-cluster.md",
-        "title": "wb-cluster",
-        "name": "wb-cluster",
-        "category": "behaviors"
-      },
-      {
-        "path": "docs/behaviors/wb-column.md",
-        "title": "wb-column",
-        "name": "wb-column",
-        "category": "behaviors"
-      },
-      {
-        "path": "docs/behaviors/wb-control.md",
-        "title": "wb-control",
-        "name": "wb-control",
-        "category": "behaviors"
-      },
-      {
-        "path": "docs/behaviors/wb-demo.md",
-        "title": "wb-demo",
-        "name": "wb-demo",
-        "category": "behaviors"
-      },
-      {
-        "path": "docs/behaviors/wb-grid.md",
-        "title": "wb-grid",
-        "name": "wb-grid",
-        "category": "behaviors"
-      },
-      {
-        "path": "docs/behaviors/wb-repeater.md",
-        "title": "wb-repeater",
-        "name": "wb-repeater",
-        "category": "behaviors"
-      },
-      {
-        "path": "docs/behaviors/wb-row.md",
-        "title": "wb-row",
-        "name": "wb-row",
-        "category": "behaviors"
-      },
-      {
-        "path": "docs/behaviors/wb-search.md",
-        "title": "wb-search",
-        "name": "wb-search",
-        "category": "behaviors"
-      },
-      {
-        "path": "docs/behaviors/wb-stack.md",
-        "title": "wb-stack",
-        "name": "wb-stack",
-        "category": "behaviors"
-      },
-      {
-        "path": "docs/behaviors/wb-themecontrol.md",
-        "title": "wb-themecontrol",
-        "name": "wb-themecontrol",
         "category": "behaviors"
       },
       {
@@ -1418,584 +1471,6 @@
         "category": "compliance"
       }
     ],
-    "components": [
-      {
-        "path": "docs/components/cards/card.md",
-        "title": "Card Component Overview",
-        "name": "card",
-        "category": "components"
-      },
-      {
-        "path": "docs/components/cards/cardbutton.md",
-        "title": "Card Button - wb-starter v3.0",
-        "name": "cardbutton",
-        "category": "components"
-      },
-      {
-        "path": "docs/components/cards/carddraggable.md",
-        "title": "Card Draggable - wb-starter v3.0",
-        "name": "carddraggable",
-        "category": "components"
-      },
-      {
-        "path": "docs/components/cards/cardexpandable.md",
-        "title": "Card Expandable - wb-starter v3.0",
-        "name": "cardexpandable",
-        "category": "components"
-      },
-      {
-        "path": "docs/components/cards/cardfile.md",
-        "title": "Card File - wb-starter v3.0",
-        "name": "cardfile",
-        "category": "components"
-      },
-      {
-        "path": "docs/components/cards/cardhero.md",
-        "title": "Card Hero - wb-starter v3.0",
-        "name": "cardhero",
-        "category": "components"
-      },
-      {
-        "path": "docs/components/cards/cardhorizontal.md",
-        "title": "Card Horizontal - wb-starter v3.0",
-        "name": "cardhorizontal",
-        "category": "components"
-      },
-      {
-        "path": "docs/components/cards/cardimage.md",
-        "title": "Card Image - wb-starter v3.0",
-        "name": "cardimage",
-        "category": "components"
-      },
-      {
-        "path": "docs/components/cards/cardlink.md",
-        "title": "Card Link - wb-starter v3.0",
-        "name": "cardlink",
-        "category": "components"
-      },
-      {
-        "path": "docs/components/cards/cardminimizable.md",
-        "title": "Card Minimizable - wb-starter v3.0",
-        "name": "cardminimizable",
-        "category": "components"
-      },
-      {
-        "path": "docs/components/cards/cardnotification.md",
-        "title": "Card Notification - wb-starter v3.0",
-        "name": "cardnotification",
-        "category": "components"
-      },
-      {
-        "path": "docs/components/cards/cardoverlay.md",
-        "title": "Card Overlay - wb-starter v3.0",
-        "name": "cardoverlay",
-        "category": "components"
-      },
-      {
-        "path": "docs/components/cards/cardportfolio.md",
-        "title": "Card Portfolio - wb-starter v3.0",
-        "name": "cardportfolio",
-        "category": "components"
-      },
-      {
-        "path": "docs/components/cards/cardpricing.md",
-        "title": "Card Pricing - wb-starter v3.0",
-        "name": "cardpricing",
-        "category": "components"
-      },
-      {
-        "path": "docs/components/cards/cardproduct.md",
-        "title": "Card Product - wb-starter v3.0",
-        "name": "cardproduct",
-        "category": "components"
-      },
-      {
-        "path": "docs/components/cards/cardprofile.md",
-        "title": "Card Profile - wb-starter v3.0",
-        "name": "cardprofile",
-        "category": "components"
-      },
-      {
-        "path": "docs/components/cards/cards.index.md",
-        "title": "Card Components - wb-starter v3.0",
-        "name": "cards.index",
-        "category": "components"
-      },
-      {
-        "path": "docs/components/cards/cards.readme.md",
-        "title": "Cards Components Documentation",
-        "name": "cards.readme",
-        "category": "components"
-      },
-      {
-        "path": "docs/components/cards/cardstats.md",
-        "title": "Card Stats - wb-starter v3.0",
-        "name": "cardstats",
-        "category": "components"
-      },
-      {
-        "path": "docs/components/cards/cardtestimonial.md",
-        "title": "Card Testimonial - wb-starter v3.0",
-        "name": "cardtestimonial",
-        "category": "components"
-      },
-      {
-        "path": "docs/components/cards/cardvideo.md",
-        "title": "Card Video - wb-starter v3.0",
-        "name": "cardvideo",
-        "category": "components"
-      },
-      {
-        "path": "docs/components/cards/README.md",
-        "title": "wb-starter v3.0 - Cards",
-        "name": "README",
-        "category": "components"
-      },
-      {
-        "path": "docs/components/components.md",
-        "title": "components",
-        "name": "components",
-        "category": "components"
-      },
-      {
-        "path": "docs/components/demo/demo.md",
-        "title": "wb-demo",
-        "name": "demo",
-        "category": "components"
-      },
-      {
-        "path": "docs/components/drawer.md",
-        "title": "Drawer Components - wb-starter v3.0",
-        "name": "drawer",
-        "category": "components"
-      },
-      {
-        "path": "docs/components/effects/confetti.md",
-        "title": "Confetti - wb-starter v3.0",
-        "name": "confetti",
-        "category": "components"
-      },
-      {
-        "path": "docs/components/effects/fireworks.md",
-        "title": "Fireworks - wb-starter v3.0",
-        "name": "fireworks",
-        "category": "components"
-      },
-      {
-        "path": "docs/components/effects/README.md",
-        "title": "wb-starter v3.0 - Effects",
-        "name": "README",
-        "category": "components"
-      },
-      {
-        "path": "docs/components/effects/snow.md",
-        "title": "Snow - wb-starter v3.0",
-        "name": "snow",
-        "category": "components"
-      },
-      {
-        "path": "docs/components/feedback/alert.md",
-        "title": "Alert - wb-starter v3.0",
-        "name": "alert",
-        "category": "components"
-      },
-      {
-        "path": "docs/components/feedback/avatar.md",
-        "title": "Avatar - wb-starter v3.0",
-        "name": "avatar",
-        "category": "components"
-      },
-      {
-        "path": "docs/components/feedback/badge.md",
-        "title": "Badge - wb-starter v3.0",
-        "name": "badge",
-        "category": "components"
-      },
-      {
-        "path": "docs/components/feedback/feedback.readme.md",
-        "title": "Feedback Components Documentation",
-        "name": "feedback.readme",
-        "category": "components"
-      },
-      {
-        "path": "docs/components/feedback/progress.md",
-        "title": "Progress - wb-starter v3.0",
-        "name": "progress",
-        "category": "components"
-      },
-      {
-        "path": "docs/components/feedback/spinner.md",
-        "title": "Spinner - wb-starter v3.0",
-        "name": "spinner",
-        "category": "components"
-      },
-      {
-        "path": "docs/components/forms/button.md",
-        "title": "Button - wb-starter v3.0",
-        "name": "button",
-        "category": "components"
-      },
-      {
-        "path": "docs/components/forms/card.md",
-        "title": "Card - wb-starter v3.0",
-        "name": "card",
-        "category": "components"
-      },
-      {
-        "path": "docs/components/forms/checkbox.md",
-        "title": "Checkbox - wb-starter v3.0",
-        "name": "checkbox",
-        "category": "components"
-      },
-      {
-        "path": "docs/components/forms/forms.readme.md",
-        "title": "Form Components Documentation",
-        "name": "forms.readme",
-        "category": "components"
-      },
-      {
-        "path": "docs/components/forms/input.md",
-        "title": "Input - wb-starter v3.0",
-        "name": "input",
-        "category": "components"
-      },
-      {
-        "path": "docs/components/forms/select.md",
-        "title": "Select - wb-starter v3.0",
-        "name": "select",
-        "category": "components"
-      },
-      {
-        "path": "docs/components/forms/switch.md",
-        "title": "Switch - wb-starter v3.0",
-        "name": "switch",
-        "category": "components"
-      },
-      {
-        "path": "docs/components/forms/textarea.md",
-        "title": "Textarea - wb-starter v3.0",
-        "name": "textarea",
-        "category": "components"
-      },
-      {
-        "path": "docs/components/layout/center.md",
-        "title": "Center - wb-starter v3.0",
-        "name": "center",
-        "category": "components"
-      },
-      {
-        "path": "docs/components/layout/cluster.md",
-        "title": "Cluster - wb-starter v3.0",
-        "name": "cluster",
-        "category": "components"
-      },
-      {
-        "path": "docs/components/layout/container.md",
-        "title": "Container - wb-starter v3.0",
-        "name": "container",
-        "category": "components"
-      },
-      {
-        "path": "docs/components/layout/cover.md",
-        "title": "Cover - wb-starter v3.0",
-        "name": "cover",
-        "category": "components"
-      },
-      {
-        "path": "docs/components/layout/flex.md",
-        "title": "Flex - wb-starter v3.0",
-        "name": "flex",
-        "category": "components"
-      },
-      {
-        "path": "docs/components/layout/grid.md",
-        "title": "Grid - wb-starter v3.0",
-        "name": "grid",
-        "category": "components"
-      },
-      {
-        "path": "docs/components/layout/header.md",
-        "title": "Header - wb-starter v3.0",
-        "name": "header",
-        "category": "components"
-      },
-      {
-        "path": "docs/components/layout/icon.md",
-        "title": "Icon - wb-starter v3.0",
-        "name": "icon",
-        "category": "components"
-      },
-      {
-        "path": "docs/components/layout/layout.readme.md",
-        "title": "Layout Components Documentation",
-        "name": "layout.readme",
-        "category": "components"
-      },
-      {
-        "path": "docs/components/layout/masonry.md",
-        "title": "Masonry - wb-starter v3.0",
-        "name": "masonry",
-        "category": "components"
-      },
-      {
-        "path": "docs/components/layout/reel.md",
-        "title": "Reel - wb-starter v3.0",
-        "name": "reel",
-        "category": "components"
-      },
-      {
-        "path": "docs/components/layout/scrollable.md",
-        "title": "Scrollable - wb-starter v3.0",
-        "name": "scrollable",
-        "category": "components"
-      },
-      {
-        "path": "docs/components/layout/sidebarlayout.md",
-        "title": "Sidebar Layout - wb-starter v3.0",
-        "name": "sidebarlayout",
-        "category": "components"
-      },
-      {
-        "path": "docs/components/layout/sticky.md",
-        "title": "Sticky - wb-starter v3.0",
-        "name": "sticky",
-        "category": "components"
-      },
-      {
-        "path": "docs/components/layout/switcher.md",
-        "title": "Switcher - wb-starter v3.0",
-        "name": "switcher",
-        "category": "components"
-      },
-      {
-        "path": "docs/components/mdhtml.md",
-        "title": "WB mdhtml User Guide",
-        "name": "mdhtml",
-        "category": "components"
-      },
-      {
-        "path": "docs/components/navigation/navigation.readme.md",
-        "title": "Navigation Components Documentation",
-        "name": "navigation.readme",
-        "category": "components"
-      },
-      {
-        "path": "docs/components/README.md",
-        "title": "wb-starter v3.0 - Component Library",
-        "name": "README",
-        "category": "components"
-      },
-      {
-        "path": "docs/components/semantic/address.md",
-        "title": "`<address>` Element",
-        "name": "address",
-        "category": "components"
-      },
-      {
-        "path": "docs/components/semantic/article.md",
-        "title": "Article Element - wb-starter v3.0",
-        "name": "article",
-        "category": "components"
-      },
-      {
-        "path": "docs/components/semantic/aside.md",
-        "title": "`<aside>` Element",
-        "name": "aside",
-        "category": "components"
-      },
-      {
-        "path": "docs/components/semantic/blockquote.md",
-        "title": "`<blockquote>` Element",
-        "name": "blockquote",
-        "category": "components"
-      },
-      {
-        "path": "docs/components/semantic/data.md",
-        "title": "`<data>` Element",
-        "name": "data",
-        "category": "components"
-      },
-      {
-        "path": "docs/components/semantic/details.md",
-        "title": "`<details>` and `<summary>` Elements",
-        "name": "details",
-        "category": "components"
-      },
-      {
-        "path": "docs/components/semantic/figure.md",
-        "title": "`<figure>` and `<figcaption>` Elements",
-        "name": "figure",
-        "category": "components"
-      },
-      {
-        "path": "docs/components/semantic/semantic.index.md",
-        "title": "Semantic HTML Elements - wb-starter v3.0",
-        "name": "semantic.index",
-        "category": "components"
-      },
-      {
-        "path": "docs/components/semantic/semantic.readme.md",
-        "title": "Semantic HTML Components Documentation",
-        "name": "semantic.readme",
-        "category": "components"
-      },
-      {
-        "path": "docs/components/semantic/time.md",
-        "title": "`<time>` Element",
-        "name": "time",
-        "category": "components"
-      },
-      {
-        "path": "docs/components/semantics/audio.md",
-        "title": "Audio - wb-starter v3.0",
-        "name": "audio",
-        "category": "components"
-      },
-      {
-        "path": "docs/components/semantics/button.md",
-        "title": "Button - wb-starter v3.0",
-        "name": "button",
-        "category": "components"
-      },
-      {
-        "path": "docs/components/semantics/checkbox.md",
-        "title": "Checkbox - wb-starter v3.0",
-        "name": "checkbox",
-        "category": "components"
-      },
-      {
-        "path": "docs/components/semantics/code.md",
-        "title": "Code - wb-starter v3.0",
-        "name": "code",
-        "category": "components"
-      },
-      {
-        "path": "docs/components/semantics/details.md",
-        "title": "Details - wb-starter v3.0",
-        "name": "details",
-        "category": "components"
-      },
-      {
-        "path": "docs/components/semantics/dialog.md",
-        "title": "Dialog - wb-starter v3.0",
-        "name": "dialog",
-        "category": "components"
-      },
-      {
-        "path": "docs/components/semantics/dl.md",
-        "title": "DL (Description List) Component Design & User Guide",
-        "name": "dl",
-        "category": "components"
-      },
-      {
-        "path": "docs/components/semantics/figure.md",
-        "title": "Figure Component Design & User Guide",
-        "name": "figure",
-        "category": "components"
-      },
-      {
-        "path": "docs/components/semantics/form.md",
-        "title": "Form - wb-starter v3.0",
-        "name": "form",
-        "category": "components"
-      },
-      {
-        "path": "docs/components/semantics/img.md",
-        "title": "Image - wb-starter v3.0",
-        "name": "img",
-        "category": "components"
-      },
-      {
-        "path": "docs/components/semantics/input.md",
-        "title": "Input - wb-starter v3.0",
-        "name": "input",
-        "category": "components"
-      },
-      {
-        "path": "docs/components/semantics/list.md",
-        "title": "List Component",
-        "name": "list",
-        "category": "components"
-      },
-      {
-        "path": "docs/components/semantics/ol.md",
-        "title": "OL (Ordered List) Component Design & User Guide",
-        "name": "ol",
-        "category": "components"
-      },
-      {
-        "path": "docs/components/semantics/pre.md",
-        "title": "Pre Component Design & User Guide",
-        "name": "pre",
-        "category": "components"
-      },
-      {
-        "path": "docs/components/semantics/progress.md",
-        "title": "Progress - wb-starter v3.0",
-        "name": "progress",
-        "category": "components"
-      },
-      {
-        "path": "docs/components/semantics/radio.md",
-        "title": "Radio Component Design & User Guide",
-        "name": "radio",
-        "category": "components"
-      },
-      {
-        "path": "docs/components/semantics/range.md",
-        "title": "Range Component Design & User Guide",
-        "name": "range",
-        "category": "components"
-      },
-      {
-        "path": "docs/components/semantics/rating.md",
-        "title": "Rating - wb-starter v3.0",
-        "name": "rating",
-        "category": "components"
-      },
-      {
-        "path": "docs/components/semantics/select.md",
-        "title": "Select - wb-starter v3.0",
-        "name": "select",
-        "category": "components"
-      },
-      {
-        "path": "docs/components/semantics/switch.md",
-        "title": "Switch - wb-starter v3.0",
-        "name": "switch",
-        "category": "components"
-      },
-      {
-        "path": "docs/components/semantics/table.md",
-        "title": "Table - wb-starter v3.0",
-        "name": "table",
-        "category": "components"
-      },
-      {
-        "path": "docs/components/semantics/textarea.md",
-        "title": "Textarea - wb-starter v3.0",
-        "name": "textarea",
-        "category": "components"
-      },
-      {
-        "path": "docs/components/semantics/ul.md",
-        "title": "UL (Unordered List) Component Design & User Guide",
-        "name": "ul",
-        "category": "components"
-      },
-      {
-        "path": "docs/components/semantics/video.md",
-        "title": "Video - wb-starter v3.0",
-        "name": "video",
-        "category": "components"
-      },
-      {
-        "path": "docs/components/tabs.md",
-        "title": "Tabs Component Documentation",
-        "name": "tabs",
-        "category": "components"
-      }
-    ],
     "guides": [
       {
         "path": "docs/guides/search-index.md",
@@ -2009,6 +1484,12 @@
         "path": "docs/standards/DEMOS-AND-DOCS-STANDARDS.md",
         "title": "Demos & Documentation Standards",
         "name": "DEMOS-AND-DOCS-STANDARDS",
+        "category": "standards"
+      },
+      {
+        "path": "docs/standards/RELEASE-PROCESS.md",
+        "title": "Release Process Standards",
+        "name": "RELEASE-PROCESS",
         "category": "standards"
       },
       {
@@ -2039,7 +1520,7 @@
       },
       {
         "path": "docs/_today/audit-code-panels-v3-standards.md",
-        "title": "Audit: `.wb-demo__code` panels on `docs/standards/V3-STANDARDS.md` via doc-viewer",
+        "title": "Audit: `.x-demo__code` panels on `docs/standards/V3-STANDARDS.md` via doc-viewer",
         "name": "audit-code-panels-v3-standards",
         "category": "_today"
       },
@@ -2063,7 +1544,7 @@
       },
       {
         "path": "docs/_today/CURRENT-STATUS.md",
-        "title": "CURRENT HANDOFF — 2026-08-19",
+        "title": "CURRENT HANDOFF — 2026-08-25",
         "name": "CURRENT-STATUS",
         "category": "_today"
       },
@@ -2156,7 +1637,7 @@
     },
     {
       "path": "docs/_today/audit-code-panels-v3-standards.md",
-      "title": "Audit: `.wb-demo__code` panels on `docs/standards/V3-STANDARDS.md` via doc-viewer",
+      "title": "Audit: `.x-demo__code` panels on `docs/standards/V3-STANDARDS.md` via doc-viewer",
       "name": "audit-code-panels-v3-standards",
       "category": "_today"
     },
@@ -2180,7 +1661,7 @@
     },
     {
       "path": "docs/_today/CURRENT-STATUS.md",
-      "title": "CURRENT HANDOFF — 2026-08-19",
+      "title": "CURRENT HANDOFF — 2026-08-25",
       "name": "CURRENT-STATUS",
       "category": "_today"
     },
@@ -2305,14 +1786,14 @@
       "category": "architecture"
     },
     {
-      "path": "docs/architecture/WBVIEWS.md",
-      "title": "wb-views System",
-      "name": "WBVIEWS",
+      "path": "docs/architecture/WB-PREFIX-AUDIT.md",
+      "title": "`wb-` Prefix Audit",
+      "name": "WB-PREFIX-AUDIT",
       "category": "architecture"
     },
     {
       "path": "docs/audio.md",
-      "title": "Audio Component",
+      "title": "Audio",
       "name": "audio",
       "category": "root"
     },
@@ -2359,6 +1840,12 @@
       "category": "behaviors"
     },
     {
+      "path": "docs/behaviors/address.md",
+      "title": "`<address>` Element",
+      "name": "address",
+      "category": "behaviors"
+    },
+    {
       "path": "docs/behaviors/alert.md",
       "title": "Alert",
       "name": "alert",
@@ -2374,6 +1861,12 @@
       "path": "docs/behaviors/articles.md",
       "title": "articles",
       "name": "articles",
+      "category": "behaviors"
+    },
+    {
+      "path": "docs/behaviors/aside.md",
+      "title": "`<aside>` Element",
+      "name": "aside",
       "category": "behaviors"
     },
     {
@@ -2407,6 +1900,12 @@
       "category": "behaviors"
     },
     {
+      "path": "docs/behaviors/blockquote.md",
+      "title": "`<blockquote>` Element",
+      "name": "blockquote",
+      "category": "behaviors"
+    },
+    {
       "path": "docs/behaviors/bounce.md",
       "title": "Bounce",
       "name": "bounce",
@@ -2422,12 +1921,6 @@
       "path": "docs/behaviors/button.md",
       "title": "Button",
       "name": "button",
-      "category": "behaviors"
-    },
-    {
-      "path": "docs/behaviors/card.md",
-      "title": "Card Component",
-      "name": "card",
       "category": "behaviors"
     },
     {
@@ -2539,6 +2032,12 @@
       "category": "behaviors"
     },
     {
+      "path": "docs/behaviors/center.md",
+      "title": "Center - wb-starter v3.0",
+      "name": "center",
+      "category": "behaviors"
+    },
+    {
       "path": "docs/behaviors/checkbox.md",
       "title": "Checkbox",
       "name": "checkbox",
@@ -2599,6 +2098,12 @@
       "category": "behaviors"
     },
     {
+      "path": "docs/behaviors/container.md",
+      "title": "Container - wb-starter v3.0",
+      "name": "container",
+      "category": "behaviors"
+    },
+    {
       "path": "docs/behaviors/control.md",
       "title": "Control",
       "name": "control",
@@ -2629,9 +2134,21 @@
       "category": "behaviors"
     },
     {
+      "path": "docs/behaviors/cover.md",
+      "title": "Cover - wb-starter v3.0",
+      "name": "cover",
+      "category": "behaviors"
+    },
+    {
       "path": "docs/behaviors/darkmode.md",
       "title": "Dark Mode Toggle",
       "name": "darkmode",
+      "category": "behaviors"
+    },
+    {
+      "path": "docs/behaviors/data.md",
+      "title": "`<data>` Element",
+      "name": "data",
       "category": "behaviors"
     },
     {
@@ -2650,6 +2167,12 @@
       "path": "docs/behaviors/dialog.md",
       "title": "Dialog",
       "name": "dialog",
+      "category": "behaviors"
+    },
+    {
+      "path": "docs/behaviors/dl.md",
+      "title": "DL (Description List) Component Design & User Guide",
+      "name": "dl",
       "category": "behaviors"
     },
     {
@@ -2707,6 +2230,12 @@
       "category": "behaviors"
     },
     {
+      "path": "docs/behaviors/fill.md",
+      "title": "fill — as wide as the container allows",
+      "name": "fill",
+      "category": "behaviors"
+    },
+    {
       "path": "docs/behaviors/fireworks.md",
       "title": "Fireworks",
       "name": "fireworks",
@@ -2761,6 +2290,12 @@
       "category": "behaviors"
     },
     {
+      "path": "docs/behaviors/frame.md",
+      "title": "Frame",
+      "name": "frame",
+      "category": "behaviors"
+    },
+    {
       "path": "docs/behaviors/fullscreen.md",
       "title": "Fullscreen",
       "name": "fullscreen",
@@ -2782,6 +2317,12 @@
       "path": "docs/behaviors/glow.md",
       "title": "Glow",
       "name": "glow",
+      "category": "behaviors"
+    },
+    {
+      "path": "docs/behaviors/grid.md",
+      "title": "x-grid",
+      "name": "grid",
       "category": "behaviors"
     },
     {
@@ -2809,9 +2350,9 @@
       "category": "behaviors"
     },
     {
-      "path": "docs/behaviors/image.md",
-      "title": "Image",
-      "name": "image",
+      "path": "docs/behaviors/icon.md",
+      "title": "Icon - wb-starter v3.0",
+      "name": "icon",
       "category": "behaviors"
     },
     {
@@ -2857,6 +2398,12 @@
       "category": "behaviors"
     },
     {
+      "path": "docs/behaviors/list.md",
+      "title": "List Component",
+      "name": "list",
+      "category": "behaviors"
+    },
+    {
       "path": "docs/behaviors/mark.md",
       "title": "Mark",
       "name": "mark",
@@ -2881,6 +2428,12 @@
       "category": "behaviors"
     },
     {
+      "path": "docs/behaviors/modal.md",
+      "title": "Modal",
+      "name": "modal",
+      "category": "behaviors"
+    },
+    {
       "path": "docs/behaviors/move.md",
       "title": "Move - wb-starter v3.0",
       "name": "move",
@@ -2902,6 +2455,12 @@
       "path": "docs/behaviors/notify.md",
       "title": "Notify",
       "name": "notify",
+      "category": "behaviors"
+    },
+    {
+      "path": "docs/behaviors/ol.md",
+      "title": "OL (Ordered List) Component Design & User Guide",
+      "name": "ol",
       "category": "behaviors"
     },
     {
@@ -2959,9 +2518,21 @@
       "category": "behaviors"
     },
     {
+      "path": "docs/behaviors/radio.md",
+      "title": "Radio Component Design & User Guide",
+      "name": "radio",
+      "category": "behaviors"
+    },
+    {
       "path": "docs/behaviors/rainbow.md",
       "title": "Rainbow",
       "name": "rainbow",
+      "category": "behaviors"
+    },
+    {
+      "path": "docs/behaviors/range.md",
+      "title": "Range Component Design & User Guide",
+      "name": "range",
       "category": "behaviors"
     },
     {
@@ -2974,6 +2545,12 @@
       "path": "docs/behaviors/ratio.md",
       "title": "Ratio",
       "name": "ratio",
+      "category": "behaviors"
+    },
+    {
+      "path": "docs/behaviors/reel.md",
+      "title": "Reel - wb-starter v3.0",
+      "name": "reel",
       "category": "behaviors"
     },
     {
@@ -3004,6 +2581,12 @@
       "path": "docs/behaviors/ripple.md",
       "title": "Ripple - wb-starter v3.0",
       "name": "ripple",
+      "category": "behaviors"
+    },
+    {
+      "path": "docs/behaviors/scrollable.md",
+      "title": "Scrollable - wb-starter v3.0",
+      "name": "scrollable",
       "category": "behaviors"
     },
     {
@@ -3040,6 +2623,12 @@
       "path": "docs/behaviors/share.md",
       "title": "Share",
       "name": "share",
+      "category": "behaviors"
+    },
+    {
+      "path": "docs/behaviors/sidebarlayout.md",
+      "title": "Sidebar Layout - wb-starter v3.0",
+      "name": "sidebarlayout",
       "category": "behaviors"
     },
     {
@@ -3097,6 +2686,12 @@
       "category": "behaviors"
     },
     {
+      "path": "docs/behaviors/stat.md",
+      "title": "Stat",
+      "name": "stat",
+      "category": "behaviors"
+    },
+    {
       "path": "docs/behaviors/stepper.md",
       "title": "Stepper Behavior",
       "name": "stepper",
@@ -3118,6 +2713,12 @@
       "path": "docs/behaviors/switch.md",
       "title": "Switch",
       "name": "switch",
+      "category": "behaviors"
+    },
+    {
+      "path": "docs/behaviors/switcher.md",
+      "title": "Switcher - wb-starter v3.0",
+      "name": "switcher",
       "category": "behaviors"
     },
     {
@@ -3157,6 +2758,12 @@
       "category": "behaviors"
     },
     {
+      "path": "docs/behaviors/time.md",
+      "title": "`<time>` Element",
+      "name": "time",
+      "category": "behaviors"
+    },
+    {
       "path": "docs/behaviors/timeline.md",
       "title": "Timeline",
       "name": "timeline",
@@ -3193,6 +2800,12 @@
       "category": "behaviors"
     },
     {
+      "path": "docs/behaviors/ul.md",
+      "title": "UL (Unordered List) Component Design & User Guide",
+      "name": "ul",
+      "category": "behaviors"
+    },
+    {
       "path": "docs/behaviors/video.md",
       "title": "Video",
       "name": "video",
@@ -3202,78 +2815,6 @@
       "path": "docs/behaviors/vimeo.md",
       "title": "Vimeo",
       "name": "vimeo",
-      "category": "behaviors"
-    },
-    {
-      "path": "docs/behaviors/wb-audio.md",
-      "title": "wb-audio",
-      "name": "wb-audio",
-      "category": "behaviors"
-    },
-    {
-      "path": "docs/behaviors/wb-card.md",
-      "title": "wb-card",
-      "name": "wb-card",
-      "category": "behaviors"
-    },
-    {
-      "path": "docs/behaviors/wb-cluster.md",
-      "title": "wb-cluster",
-      "name": "wb-cluster",
-      "category": "behaviors"
-    },
-    {
-      "path": "docs/behaviors/wb-column.md",
-      "title": "wb-column",
-      "name": "wb-column",
-      "category": "behaviors"
-    },
-    {
-      "path": "docs/behaviors/wb-control.md",
-      "title": "wb-control",
-      "name": "wb-control",
-      "category": "behaviors"
-    },
-    {
-      "path": "docs/behaviors/wb-demo.md",
-      "title": "wb-demo",
-      "name": "wb-demo",
-      "category": "behaviors"
-    },
-    {
-      "path": "docs/behaviors/wb-grid.md",
-      "title": "wb-grid",
-      "name": "wb-grid",
-      "category": "behaviors"
-    },
-    {
-      "path": "docs/behaviors/wb-repeater.md",
-      "title": "wb-repeater",
-      "name": "wb-repeater",
-      "category": "behaviors"
-    },
-    {
-      "path": "docs/behaviors/wb-row.md",
-      "title": "wb-row",
-      "name": "wb-row",
-      "category": "behaviors"
-    },
-    {
-      "path": "docs/behaviors/wb-search.md",
-      "title": "wb-search",
-      "name": "wb-search",
-      "category": "behaviors"
-    },
-    {
-      "path": "docs/behaviors/wb-stack.md",
-      "title": "wb-stack",
-      "name": "wb-stack",
-      "category": "behaviors"
-    },
-    {
-      "path": "docs/behaviors/wb-themecontrol.md",
-      "title": "wb-themecontrol",
-      "name": "wb-themecontrol",
       "category": "behaviors"
     },
     {
@@ -3419,582 +2960,6 @@
       "title": "ISO/IEC 42001 Alignment Report",
       "name": "iso-42001-alignment",
       "category": "compliance"
-    },
-    {
-      "path": "docs/components/cards/card.md",
-      "title": "Card Component Overview",
-      "name": "card",
-      "category": "components"
-    },
-    {
-      "path": "docs/components/cards/cardbutton.md",
-      "title": "Card Button - wb-starter v3.0",
-      "name": "cardbutton",
-      "category": "components"
-    },
-    {
-      "path": "docs/components/cards/carddraggable.md",
-      "title": "Card Draggable - wb-starter v3.0",
-      "name": "carddraggable",
-      "category": "components"
-    },
-    {
-      "path": "docs/components/cards/cardexpandable.md",
-      "title": "Card Expandable - wb-starter v3.0",
-      "name": "cardexpandable",
-      "category": "components"
-    },
-    {
-      "path": "docs/components/cards/cardfile.md",
-      "title": "Card File - wb-starter v3.0",
-      "name": "cardfile",
-      "category": "components"
-    },
-    {
-      "path": "docs/components/cards/cardhero.md",
-      "title": "Card Hero - wb-starter v3.0",
-      "name": "cardhero",
-      "category": "components"
-    },
-    {
-      "path": "docs/components/cards/cardhorizontal.md",
-      "title": "Card Horizontal - wb-starter v3.0",
-      "name": "cardhorizontal",
-      "category": "components"
-    },
-    {
-      "path": "docs/components/cards/cardimage.md",
-      "title": "Card Image - wb-starter v3.0",
-      "name": "cardimage",
-      "category": "components"
-    },
-    {
-      "path": "docs/components/cards/cardlink.md",
-      "title": "Card Link - wb-starter v3.0",
-      "name": "cardlink",
-      "category": "components"
-    },
-    {
-      "path": "docs/components/cards/cardminimizable.md",
-      "title": "Card Minimizable - wb-starter v3.0",
-      "name": "cardminimizable",
-      "category": "components"
-    },
-    {
-      "path": "docs/components/cards/cardnotification.md",
-      "title": "Card Notification - wb-starter v3.0",
-      "name": "cardnotification",
-      "category": "components"
-    },
-    {
-      "path": "docs/components/cards/cardoverlay.md",
-      "title": "Card Overlay - wb-starter v3.0",
-      "name": "cardoverlay",
-      "category": "components"
-    },
-    {
-      "path": "docs/components/cards/cardportfolio.md",
-      "title": "Card Portfolio - wb-starter v3.0",
-      "name": "cardportfolio",
-      "category": "components"
-    },
-    {
-      "path": "docs/components/cards/cardpricing.md",
-      "title": "Card Pricing - wb-starter v3.0",
-      "name": "cardpricing",
-      "category": "components"
-    },
-    {
-      "path": "docs/components/cards/cardproduct.md",
-      "title": "Card Product - wb-starter v3.0",
-      "name": "cardproduct",
-      "category": "components"
-    },
-    {
-      "path": "docs/components/cards/cardprofile.md",
-      "title": "Card Profile - wb-starter v3.0",
-      "name": "cardprofile",
-      "category": "components"
-    },
-    {
-      "path": "docs/components/cards/cards.index.md",
-      "title": "Card Components - wb-starter v3.0",
-      "name": "cards.index",
-      "category": "components"
-    },
-    {
-      "path": "docs/components/cards/cards.readme.md",
-      "title": "Cards Components Documentation",
-      "name": "cards.readme",
-      "category": "components"
-    },
-    {
-      "path": "docs/components/cards/cardstats.md",
-      "title": "Card Stats - wb-starter v3.0",
-      "name": "cardstats",
-      "category": "components"
-    },
-    {
-      "path": "docs/components/cards/cardtestimonial.md",
-      "title": "Card Testimonial - wb-starter v3.0",
-      "name": "cardtestimonial",
-      "category": "components"
-    },
-    {
-      "path": "docs/components/cards/cardvideo.md",
-      "title": "Card Video - wb-starter v3.0",
-      "name": "cardvideo",
-      "category": "components"
-    },
-    {
-      "path": "docs/components/cards/README.md",
-      "title": "wb-starter v3.0 - Cards",
-      "name": "README",
-      "category": "components"
-    },
-    {
-      "path": "docs/components/components.md",
-      "title": "components",
-      "name": "components",
-      "category": "components"
-    },
-    {
-      "path": "docs/components/demo/demo.md",
-      "title": "wb-demo",
-      "name": "demo",
-      "category": "components"
-    },
-    {
-      "path": "docs/components/drawer.md",
-      "title": "Drawer Components - wb-starter v3.0",
-      "name": "drawer",
-      "category": "components"
-    },
-    {
-      "path": "docs/components/effects/confetti.md",
-      "title": "Confetti - wb-starter v3.0",
-      "name": "confetti",
-      "category": "components"
-    },
-    {
-      "path": "docs/components/effects/fireworks.md",
-      "title": "Fireworks - wb-starter v3.0",
-      "name": "fireworks",
-      "category": "components"
-    },
-    {
-      "path": "docs/components/effects/README.md",
-      "title": "wb-starter v3.0 - Effects",
-      "name": "README",
-      "category": "components"
-    },
-    {
-      "path": "docs/components/effects/snow.md",
-      "title": "Snow - wb-starter v3.0",
-      "name": "snow",
-      "category": "components"
-    },
-    {
-      "path": "docs/components/feedback/alert.md",
-      "title": "Alert - wb-starter v3.0",
-      "name": "alert",
-      "category": "components"
-    },
-    {
-      "path": "docs/components/feedback/avatar.md",
-      "title": "Avatar - wb-starter v3.0",
-      "name": "avatar",
-      "category": "components"
-    },
-    {
-      "path": "docs/components/feedback/badge.md",
-      "title": "Badge - wb-starter v3.0",
-      "name": "badge",
-      "category": "components"
-    },
-    {
-      "path": "docs/components/feedback/feedback.readme.md",
-      "title": "Feedback Components Documentation",
-      "name": "feedback.readme",
-      "category": "components"
-    },
-    {
-      "path": "docs/components/feedback/progress.md",
-      "title": "Progress - wb-starter v3.0",
-      "name": "progress",
-      "category": "components"
-    },
-    {
-      "path": "docs/components/feedback/spinner.md",
-      "title": "Spinner - wb-starter v3.0",
-      "name": "spinner",
-      "category": "components"
-    },
-    {
-      "path": "docs/components/forms/button.md",
-      "title": "Button - wb-starter v3.0",
-      "name": "button",
-      "category": "components"
-    },
-    {
-      "path": "docs/components/forms/card.md",
-      "title": "Card - wb-starter v3.0",
-      "name": "card",
-      "category": "components"
-    },
-    {
-      "path": "docs/components/forms/checkbox.md",
-      "title": "Checkbox - wb-starter v3.0",
-      "name": "checkbox",
-      "category": "components"
-    },
-    {
-      "path": "docs/components/forms/forms.readme.md",
-      "title": "Form Components Documentation",
-      "name": "forms.readme",
-      "category": "components"
-    },
-    {
-      "path": "docs/components/forms/input.md",
-      "title": "Input - wb-starter v3.0",
-      "name": "input",
-      "category": "components"
-    },
-    {
-      "path": "docs/components/forms/select.md",
-      "title": "Select - wb-starter v3.0",
-      "name": "select",
-      "category": "components"
-    },
-    {
-      "path": "docs/components/forms/switch.md",
-      "title": "Switch - wb-starter v3.0",
-      "name": "switch",
-      "category": "components"
-    },
-    {
-      "path": "docs/components/forms/textarea.md",
-      "title": "Textarea - wb-starter v3.0",
-      "name": "textarea",
-      "category": "components"
-    },
-    {
-      "path": "docs/components/layout/center.md",
-      "title": "Center - wb-starter v3.0",
-      "name": "center",
-      "category": "components"
-    },
-    {
-      "path": "docs/components/layout/cluster.md",
-      "title": "Cluster - wb-starter v3.0",
-      "name": "cluster",
-      "category": "components"
-    },
-    {
-      "path": "docs/components/layout/container.md",
-      "title": "Container - wb-starter v3.0",
-      "name": "container",
-      "category": "components"
-    },
-    {
-      "path": "docs/components/layout/cover.md",
-      "title": "Cover - wb-starter v3.0",
-      "name": "cover",
-      "category": "components"
-    },
-    {
-      "path": "docs/components/layout/flex.md",
-      "title": "Flex - wb-starter v3.0",
-      "name": "flex",
-      "category": "components"
-    },
-    {
-      "path": "docs/components/layout/grid.md",
-      "title": "Grid - wb-starter v3.0",
-      "name": "grid",
-      "category": "components"
-    },
-    {
-      "path": "docs/components/layout/header.md",
-      "title": "Header - wb-starter v3.0",
-      "name": "header",
-      "category": "components"
-    },
-    {
-      "path": "docs/components/layout/icon.md",
-      "title": "Icon - wb-starter v3.0",
-      "name": "icon",
-      "category": "components"
-    },
-    {
-      "path": "docs/components/layout/layout.readme.md",
-      "title": "Layout Components Documentation",
-      "name": "layout.readme",
-      "category": "components"
-    },
-    {
-      "path": "docs/components/layout/masonry.md",
-      "title": "Masonry - wb-starter v3.0",
-      "name": "masonry",
-      "category": "components"
-    },
-    {
-      "path": "docs/components/layout/reel.md",
-      "title": "Reel - wb-starter v3.0",
-      "name": "reel",
-      "category": "components"
-    },
-    {
-      "path": "docs/components/layout/scrollable.md",
-      "title": "Scrollable - wb-starter v3.0",
-      "name": "scrollable",
-      "category": "components"
-    },
-    {
-      "path": "docs/components/layout/sidebarlayout.md",
-      "title": "Sidebar Layout - wb-starter v3.0",
-      "name": "sidebarlayout",
-      "category": "components"
-    },
-    {
-      "path": "docs/components/layout/sticky.md",
-      "title": "Sticky - wb-starter v3.0",
-      "name": "sticky",
-      "category": "components"
-    },
-    {
-      "path": "docs/components/layout/switcher.md",
-      "title": "Switcher - wb-starter v3.0",
-      "name": "switcher",
-      "category": "components"
-    },
-    {
-      "path": "docs/components/mdhtml.md",
-      "title": "WB mdhtml User Guide",
-      "name": "mdhtml",
-      "category": "components"
-    },
-    {
-      "path": "docs/components/navigation/navigation.readme.md",
-      "title": "Navigation Components Documentation",
-      "name": "navigation.readme",
-      "category": "components"
-    },
-    {
-      "path": "docs/components/README.md",
-      "title": "wb-starter v3.0 - Component Library",
-      "name": "README",
-      "category": "components"
-    },
-    {
-      "path": "docs/components/semantic/address.md",
-      "title": "`<address>` Element",
-      "name": "address",
-      "category": "components"
-    },
-    {
-      "path": "docs/components/semantic/article.md",
-      "title": "Article Element - wb-starter v3.0",
-      "name": "article",
-      "category": "components"
-    },
-    {
-      "path": "docs/components/semantic/aside.md",
-      "title": "`<aside>` Element",
-      "name": "aside",
-      "category": "components"
-    },
-    {
-      "path": "docs/components/semantic/blockquote.md",
-      "title": "`<blockquote>` Element",
-      "name": "blockquote",
-      "category": "components"
-    },
-    {
-      "path": "docs/components/semantic/data.md",
-      "title": "`<data>` Element",
-      "name": "data",
-      "category": "components"
-    },
-    {
-      "path": "docs/components/semantic/details.md",
-      "title": "`<details>` and `<summary>` Elements",
-      "name": "details",
-      "category": "components"
-    },
-    {
-      "path": "docs/components/semantic/figure.md",
-      "title": "`<figure>` and `<figcaption>` Elements",
-      "name": "figure",
-      "category": "components"
-    },
-    {
-      "path": "docs/components/semantic/semantic.index.md",
-      "title": "Semantic HTML Elements - wb-starter v3.0",
-      "name": "semantic.index",
-      "category": "components"
-    },
-    {
-      "path": "docs/components/semantic/semantic.readme.md",
-      "title": "Semantic HTML Components Documentation",
-      "name": "semantic.readme",
-      "category": "components"
-    },
-    {
-      "path": "docs/components/semantic/time.md",
-      "title": "`<time>` Element",
-      "name": "time",
-      "category": "components"
-    },
-    {
-      "path": "docs/components/semantics/audio.md",
-      "title": "Audio - wb-starter v3.0",
-      "name": "audio",
-      "category": "components"
-    },
-    {
-      "path": "docs/components/semantics/button.md",
-      "title": "Button - wb-starter v3.0",
-      "name": "button",
-      "category": "components"
-    },
-    {
-      "path": "docs/components/semantics/checkbox.md",
-      "title": "Checkbox - wb-starter v3.0",
-      "name": "checkbox",
-      "category": "components"
-    },
-    {
-      "path": "docs/components/semantics/code.md",
-      "title": "Code - wb-starter v3.0",
-      "name": "code",
-      "category": "components"
-    },
-    {
-      "path": "docs/components/semantics/details.md",
-      "title": "Details - wb-starter v3.0",
-      "name": "details",
-      "category": "components"
-    },
-    {
-      "path": "docs/components/semantics/dialog.md",
-      "title": "Dialog - wb-starter v3.0",
-      "name": "dialog",
-      "category": "components"
-    },
-    {
-      "path": "docs/components/semantics/dl.md",
-      "title": "DL (Description List) Component Design & User Guide",
-      "name": "dl",
-      "category": "components"
-    },
-    {
-      "path": "docs/components/semantics/figure.md",
-      "title": "Figure Component Design & User Guide",
-      "name": "figure",
-      "category": "components"
-    },
-    {
-      "path": "docs/components/semantics/form.md",
-      "title": "Form - wb-starter v3.0",
-      "name": "form",
-      "category": "components"
-    },
-    {
-      "path": "docs/components/semantics/img.md",
-      "title": "Image - wb-starter v3.0",
-      "name": "img",
-      "category": "components"
-    },
-    {
-      "path": "docs/components/semantics/input.md",
-      "title": "Input - wb-starter v3.0",
-      "name": "input",
-      "category": "components"
-    },
-    {
-      "path": "docs/components/semantics/list.md",
-      "title": "List Component",
-      "name": "list",
-      "category": "components"
-    },
-    {
-      "path": "docs/components/semantics/ol.md",
-      "title": "OL (Ordered List) Component Design & User Guide",
-      "name": "ol",
-      "category": "components"
-    },
-    {
-      "path": "docs/components/semantics/pre.md",
-      "title": "Pre Component Design & User Guide",
-      "name": "pre",
-      "category": "components"
-    },
-    {
-      "path": "docs/components/semantics/progress.md",
-      "title": "Progress - wb-starter v3.0",
-      "name": "progress",
-      "category": "components"
-    },
-    {
-      "path": "docs/components/semantics/radio.md",
-      "title": "Radio Component Design & User Guide",
-      "name": "radio",
-      "category": "components"
-    },
-    {
-      "path": "docs/components/semantics/range.md",
-      "title": "Range Component Design & User Guide",
-      "name": "range",
-      "category": "components"
-    },
-    {
-      "path": "docs/components/semantics/rating.md",
-      "title": "Rating - wb-starter v3.0",
-      "name": "rating",
-      "category": "components"
-    },
-    {
-      "path": "docs/components/semantics/select.md",
-      "title": "Select - wb-starter v3.0",
-      "name": "select",
-      "category": "components"
-    },
-    {
-      "path": "docs/components/semantics/switch.md",
-      "title": "Switch - wb-starter v3.0",
-      "name": "switch",
-      "category": "components"
-    },
-    {
-      "path": "docs/components/semantics/table.md",
-      "title": "Table - wb-starter v3.0",
-      "name": "table",
-      "category": "components"
-    },
-    {
-      "path": "docs/components/semantics/textarea.md",
-      "title": "Textarea - wb-starter v3.0",
-      "name": "textarea",
-      "category": "components"
-    },
-    {
-      "path": "docs/components/semantics/ul.md",
-      "title": "UL (Unordered List) Component Design & User Guide",
-      "name": "ul",
-      "category": "components"
-    },
-    {
-      "path": "docs/components/semantics/video.md",
-      "title": "Video - wb-starter v3.0",
-      "name": "video",
-      "category": "components"
-    },
-    {
-      "path": "docs/components/tabs.md",
-      "title": "Tabs Component Documentation",
-      "name": "tabs",
-      "category": "components"
     },
     {
       "path": "docs/container-pattern.md",
@@ -4171,6 +3136,12 @@
       "category": "standards"
     },
     {
+      "path": "docs/standards/RELEASE-PROCESS.md",
+      "title": "Release Process Standards",
+      "name": "RELEASE-PROCESS",
+      "category": "standards"
+    },
+    {
       "path": "docs/standards/V3-STANDARDS.md",
       "title": "WB-Starter v3 Standards",
       "name": "V3-STANDARDS",
@@ -4222,12 +3193,6 @@
       "path": "docs/WB_BEHAVIOR_SYSTEM.md",
       "title": "WB-Starter Behavior System - Technical Workflow",
       "name": "WB_BEHAVIOR_SYSTEM",
-      "category": "root"
-    },
-    {
-      "path": "docs/wb-parts-spec.md",
-      "title": "gcan# WB-Starter Parts Specification",
-      "name": "wb-parts-spec",
       "category": "root"
     },
     {

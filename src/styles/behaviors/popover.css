@@ -6,7 +6,7 @@
  * -----------------------------------------------------------------------------
  */
 
-.wb-popover {
+.x-popover {
   position: absolute;
   z-index: 1000;
   background: var(--bg-primary);
@@ -17,6 +17,6 @@
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
 }
 
-.wb-popover.open {
+.x-popover.open {
   display: block;
 }

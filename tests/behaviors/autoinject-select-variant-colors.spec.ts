@@ -4,7 +4,7 @@ import { test, expect } from '@playwright/test';
  * demos/autoinject.html's "Static Theme Variants" select examples used
  * hardcoded rgba() literals in their inline style attribute instead of the
  * theme's own translucent success/danger background variables. (#288,
- * partial — the full page-wide <wb-demo> conversion this issue also asks
+ * partial — the full page-wide <div x-demo> conversion this issue also asks
  * for is tracked separately alongside #268's larger demos/ initiative.)
  */
 test('theme-variant selects use theme vars, not hardcoded rgba() literals', async ({ page }) => {

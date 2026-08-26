@@ -23,7 +23,7 @@ function findHtmlFiles(dir: string, files: string[] = []): string[] {
     // second (third, fourth...) time -- hundreds of duplicate page loads,
     // 21+ minutes for a "fast subset" compliance run (confirmed live).
     if (entry.isDirectory()) {
-      if (!['node_modules', '.git', '.claude', 'wb-overlay-ext', 'data', 'test-results', 'tmp'].includes(entry.name)) {
+      if (!['node_modules', '.git', '.claude', 'x-overlay-ext', 'data', 'test-results', 'tmp'].includes(entry.name)) {
         findHtmlFiles(fullPath, files);
       }
     } else if (entry.name.endsWith('.html')) {
@@ -104,7 +104,7 @@ test.describe('Dark Mode Compliance', () => {
       });
       
       // Navigate to the page
-      const url = `http://localhost:3000/${htmlFile}`;
+      const url = `/${htmlFile}`;
       const response = await page.goto(url);
       
       // Page should load
@@ -186,28 +186,46 @@ test.describe('Dark Mode Compliance', () => {
     !SKIP_DARK_MODE.some(skip => f.includes(skip))
   );
 
+  // #863: every one of these tests asserted nothing. A missing data-theme
+  // produced a console.warn and a PASS, and the bare catch swallowed navigation
+  // failures into a second console.warn and a PASS -- so this loop reported
+  // every main page as themed whether it was, whether it 404'd, or whether it
+  // failed to load at all. It is the exact shape #863 was opened for.
+  //
+  // Now asserted: the page must load, and site-engine must have stamped
+  // data-theme on <html> by the time it settles. Measured when turned on: all
+  // main pages pass.
   for (const htmlFile of mainSitePages) {
     test(`${htmlFile} has data-theme attribute`, async ({ page }) => {
-      try {
-        await page.goto(`http://localhost:3000/${htmlFile}`);
-        await page.waitForTimeout(300);
+      const response = await page.goto(`/${htmlFile}`);
+      expect(
+        response?.status(),
+        `/${htmlFile} did not load (status ${response?.status()})`,
+      ).toBeLessThan(400);
 
-        const hasTheme = await page.evaluate(() =>
-          document.documentElement.hasAttribute('data-theme')
-        );
+      await page.waitForTimeout(300);
 
-        // Main pages should have theme attribute after site-engine loads
-        if (!hasTheme) {
-          console.warn(`⚠️ ${htmlFile} missing data-theme attribute`);
-        }
-      } catch {
-        console.warn(`⚠️ ${htmlFile} navigation issue — skipping data-theme check`);
-      }
+      // Poll rather than snapshot once: site-engine stamps the attribute during
+      // init, and under full-suite worker load that can land after a fixed
+      // wait. A fixed wait here would be flaky in exactly one direction --
+      // reporting a themed page as unthemed.
+      await expect
+        .poll(
+          () => page.evaluate(() => document.documentElement.hasAttribute('data-theme')),
+          {
+            message:
+              `${htmlFile}: <html> has no data-theme attribute. Main pages must `
+              + 'be themed by site-engine on load; without it the page renders '
+              + 'against whatever the browser default happens to be.',
+            timeout: 5000,
+          },
+        )
+        .toBe(true);
     });
   }
   
   test('theme variables are defined in dark mode', async ({ page }) => {
-    await page.goto('http://localhost:3000/');
+    await page.goto('/');
     await page.waitForTimeout(500);
     
     // Ensure dark mode
@@ -233,7 +251,7 @@ test.describe('Dark Mode Compliance', () => {
   });
   
   test('dark mode has dark background colors', async ({ page }) => {
-    await page.goto('http://localhost:3000/');
+    await page.goto('/');
     await page.waitForTimeout(500);
     
     // Set dark mode

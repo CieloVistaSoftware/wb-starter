@@ -1,7 +1,7 @@
 /**
  * #174 — the WB Behaviors showcase must not spam "[Schema Builder] Schema not found"
- * for tags that are owned by custom elements / behaviors / CSS (wb-stack, wb-grid,
- * wb-modal, wb-accordion, wb-container, code, …). The schema-builder now only claims
+ * for tags that are owned by custom elements / behaviors / CSS (x-stack, x-grid,
+ * x-modal, x-accordion, x-container, code, …). The schema-builder now only claims
  * tags it has a registered schema for; everything else is left to its real owner.
  *
  * Guards the fix in src/core/mvvm/schema-builder.js (detectSchema) +
@@ -17,7 +17,7 @@ test.describe('#174 — no spurious "Schema not found" warnings', () => {
       if (/Schema not found/i.test(t)) schemaWarnings.push(t);
     });
 
-    await page.goto('http://localhost:3000/?page=behaviors');
+    await page.goto('/?page=behaviors');
     await page.waitForSelector('#mainPage-behaviors', { timeout: 20000 });
     await page.waitForTimeout(2500); // lazy injection + schema build + observer
 
@@ -31,15 +31,15 @@ test.describe('#174 — no spurious "Schema not found" warnings', () => {
     const pageErrors: string[] = [];
     page.on('pageerror', (e) => pageErrors.push(String(e)));
 
-    await page.goto('http://localhost:3000/?page=behaviors');
+    await page.goto('/?page=behaviors');
     await page.waitForSelector('#mainPage-behaviors', { timeout: 20000 });
-    // navigate away and back — this is what tripped wb-demo's disconnectedCallback (#174/#175)
+    // navigate away and back — this is what tripped x-demo's disconnectedCallback (#174/#175)
     await page.evaluate(() => {
       const home = document.querySelector('.nav__item[href="?page=home"]') as HTMLElement;
       home?.click();
     });
     await page.waitForTimeout(800);
-    await page.goto('http://localhost:3000/?page=behaviors');
+    await page.goto('/?page=behaviors');
     await page.waitForTimeout(1500);
 
     expect(pageErrors, `uncaught errors:\n${pageErrors.join('\n')}`).toEqual([]);

@@ -35,28 +35,28 @@ test.describe('Fix Verification Tests', () => {
     // data-behavior="X" is a dead attribute -- nothing in the current
     // runtime reads it (WB.scan()/WB.observe() dispatch off the <wb-X> tag
     // itself, x-X attributes, or {prefix}-X shorthand, never data-behavior).
-    // <wb-card> is schema-excluded (card.js builds its own DOM) and reads
+    // <article> is schema-excluded (card.js builds its own DOM) and reads
     // bare attribute names, matching every real usage elsewhere (e.g.
     // demos/site/cards.html).
-    await mount(page, `<wb-card id="test-card-bool" clickable title="Boolean Test"></wb-card>`);
+    await mount(page, `<article id="test-card-bool" clickable title="Boolean Test"></article>`);
 
     const card = page.locator('#test-card-bool');
-    await expect(card).toHaveClass(/wb-card--clickable/);
+    await expect(card).toHaveClass(/x-card--clickable/);
     await expect(card).toHaveAttribute('role', 'button');
   });
 
   // WB_CARD_CLICKABLE_TOGGLE_025
   test('Clickable card toggles active state on click', async ({ page }) => {
-    await mount(page, `<wb-card id="test-card-toggle" clickable title="Toggle Test"></wb-card>`);
+    await mount(page, `<article id="test-card-toggle" clickable title="Toggle Test"></article>`);
 
     const card = page.locator('#test-card-toggle');
-    await expect(card).not.toHaveClass(/wb-card--active/);
+    await expect(card).not.toHaveClass(/x-card--active/);
 
     await card.click();
-    await expect(card).toHaveClass(/wb-card--active/);
+    await expect(card).toHaveClass(/x-card--active/);
 
     await card.click();
-    await expect(card).not.toHaveClass(/wb-card--active/);
+    await expect(card).not.toHaveClass(/x-card--active/);
   });
 
   // WB_FIGURE_CAPTION_021
@@ -84,25 +84,25 @@ test.describe('Fix Verification Tests', () => {
     // src/wb-viewmodels/index.js) -- audio is now semantics/audio.js, driven
     // off a real <audio> element with a bare `show-eq` attribute (not
     // data-eq). buildEqUI()/createVolumeRow() there build
-    // .wb-audio__eq-container with a master-volume row containing an
-    // (unclassed) play/pause button and .wb-audio__master-vol.
+    // .x-audio__eq-container with a master-volume row containing an
+    // (unclassed) play/pause button and .x-audio__master-vol.
     // audio() (semantics/audio.js) hides the underlying <audio> tag itself
     // (display:none) once it builds the custom "Marantz transport" UI --
     // when given a bare <audio> directly, that self-hide takes the
     // transport/EQ container down with it (both got appendChild'd onto the
     // element being hidden). Every real usage (pages/behaviors.html,
-    // pages/components.html) uses the <wb-audio> wrapper tag instead, where
+    // pages/components.html) uses the <audio> wrapper tag instead, where
     // the internal <audio> is a separate hidden child and the custom UI
     // stays visible. demos/audio.mp3 is a real local asset.
-    await mount(page, `<wb-audio id="test-eq" src="/demos/audio.mp3" show-eq controls></wb-audio>`);
+    await mount(page, `<audio id="test-eq" src="/demos/audio.mp3" show-eq controls></audio>`);
 
     // Scoped to the mount container -- the real homepage (loaded by
-    // beforeEach's goto('/')) has its own <wb-audio show-eq> too, and an
+    // beforeEach's goto('/')) has its own <audio show-eq> too, and an
     // unscoped locator hits both (strict-mode violation).
-    const eqContainer = page.locator('#fixes-verification-mount .wb-audio__eq-container');
+    const eqContainer = page.locator('#fixes-verification-mount .x-audio__eq-container');
     await expect(eqContainer).toBeVisible();
 
-    const masterVol = eqContainer.locator('.wb-audio__master-vol');
+    const masterVol = eqContainer.locator('.x-audio__master-vol');
     await expect(masterVol).toBeVisible();
 
     // The volume row's play/pause button has no class of its own; it's the
@@ -116,7 +116,7 @@ test.describe('Fix Verification Tests', () => {
   // ==========================================================================
   test('Colorpicker converts input to native type=color', async ({ page }) => {
     // colorpicker() (src/wb-viewmodels/colorpicker.js) is a plain behavior
-    // function, not a class-based <wb-color-picker> custom element -- it was
+    // function, not a class-based <div x-colorpicker> custom element -- it was
     // rewritten to convert a real <input> into the browser's own native
     // <input type="color"> (light DOM, no shadow root, no custom
     // open/close/toggle API -- the native picker owns that), per this
@@ -127,8 +127,8 @@ test.describe('Fix Verification Tests', () => {
     await mount(page, `<input id="test-picker" type="text" x-colorpicker value="#6366f1">`);
 
     const picker = page.locator('#test-picker');
-    await expect(picker).toHaveClass(/wb-colorpicker/);
-    await expect(picker).toHaveClass(/wb-colorpicker__input/);
+    await expect(picker).toHaveClass(/x-colorpicker/);
+    await expect(picker).toHaveClass(/x-colorpicker__input/);
     await expect(picker).toHaveAttribute('type', 'color');
 
     const hasShadow = await page.evaluate(() => !!document.querySelector('#test-picker').shadowRoot);
@@ -166,11 +166,11 @@ test.describe('Fix Verification Tests', () => {
     await expect(listItems).toHaveCount(3);
     await expect(listItems.first()).toHaveText('A');
 
-    // 037: Desclist -- actual class is wb-dl (desclist.js), not wb-desclist
-    await expect(page.locator('#test-desclist')).toHaveClass(/wb-dl/);
+    // 037: Desclist -- actual class is x-dl (desclist.js), not x-desclist
+    await expect(page.locator('#test-desclist')).toHaveClass(/x-dl/);
 
     // 038: Empty
-    await expect(page.locator('#test-empty')).toHaveClass(/wb-empty/);
+    await expect(page.locator('#test-empty')).toHaveClass(/x-empty/);
 
     // 039: <pre> is auto-enhanced by its native-tag mapping (tag-map.js)
     // without needing an explicit x-code attribute -- x-code is for a
@@ -180,13 +180,13 @@ test.describe('Fix Verification Tests', () => {
     await expect(page.locator('#test-code')).toHaveClass(/x-pre/);
 
     // 042: Stat
-    await expect(page.locator('#test-stat')).toHaveClass(/wb-stat/);
+    await expect(page.locator('#test-stat')).toHaveClass(/x-stat/);
 
     // 043: Timeline
-    await expect(page.locator('#test-timeline')).toHaveClass(/wb-timeline/);
+    await expect(page.locator('#test-timeline')).toHaveClass(/x-timeline/);
 
     // 044: JSON
-    await expect(page.locator('#test-json')).toHaveClass(/wb-json/);
+    await expect(page.locator('#test-json')).toHaveClass(/x-json/);
   });
 
   // ==========================================================================
@@ -194,18 +194,18 @@ test.describe('Fix Verification Tests', () => {
   // ==========================================================================
   test('Card behavior fixes', async ({ page }) => {
     // cardproduct() (card.js) is its own self-sufficient tag -- it builds
-    // its own .wb-card__cta button internally from `title`/`price`/etc
+    // its own .x-card__cta button internally from `title`/`price`/etc
     // attributes, same as every real usage (e.g. demos/site/cards.html).
-    await mount(page, `<wb-cardproduct id="test-card" title="Test Product" price="$10"></wb-cardproduct>`);
+    await mount(page, `<div x-cardproduct id="test-card" title="Test Product" price="$10"></div>`);
 
     const card = page.locator('#test-card');
 
     // 023: No crash -- WB.inject() marks a failed behavior with x-error
-    // (wb.js), not data-wb-error.
+    // (wb.js), not data-x-error.
     await expect(card).not.toHaveAttribute('x-error', 'true');
 
     // 027: Compliance classes
-    await expect(card).toHaveClass(/wb-card/);
+    await expect(card).toHaveClass(/x-card/);
 
     // 024: Product event
     const eventFired = await page.evaluate(() => {
@@ -214,9 +214,9 @@ test.describe('Fix Verification Tests', () => {
         let fired = false;
         card.addEventListener('wb:cardproduct:addtocart', () => { fired = true; });
 
-        // cardproduct()'s real CTA class is wb-card__product-cta, not the
-        // generic wb-card__cta.
-        const btn = card.querySelector('.wb-card__product-cta');
+        // cardproduct()'s real CTA class is x-card__product-cta, not the
+        // generic x-card__cta.
+        const btn = card.querySelector('.x-card__product-cta');
         if (btn) (btn as HTMLElement).click();
 
         setTimeout(() => resolve(fired), 100);
@@ -233,9 +233,9 @@ test.describe('Fix Verification Tests', () => {
 
     // 029: Rating implemented
     const rating = page.locator('#test-rating');
-    await expect(rating).toHaveClass(/wb-rating/);
+    await expect(rating).toHaveClass(/x-rating/);
     // Should have stars
-    await expect(rating.locator('.wb-rating__star').first()).toBeVisible();
+    await expect(rating.locator('.x-rating__star').first()).toBeVisible();
 
     // 028, 040: Missing behaviors and aliases
     // We check if we can import them dynamically without error.
@@ -252,9 +252,9 @@ test.describe('Fix Verification Tests', () => {
     });
     expect(importsWork).toBe(true);
 
-    // 032: Async loading (WB.inject/scan) -- .wb-ready was never a real
+    // 032: Async loading (WB.inject/scan) -- .x-ready was never a real
     // class any behavior adds (confirmed: no such classList.add anywhere in
-    // src/); the wb-rating assertion above already proves async
+    // src/); the x-rating assertion above already proves async
     // scan()/inject() completed successfully for this element.
   });
 

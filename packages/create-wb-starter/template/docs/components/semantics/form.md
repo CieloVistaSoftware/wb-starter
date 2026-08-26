@@ -6,10 +6,10 @@ Enhanced form with AJAX submission, validation, and auto-save.
 
 | Property | Value |
 |----------|-------|
-| Custom Tag | `<wb-form>` |
+| Custom Tag | `<form>` |
 | Behavior | `form` |
 | Semantic | `<form>` |
-| Root CSS Class | `wb-form` |
+| Root CSS Class | `x-form` |
 | Category | Forms |
 
 ## Properties
@@ -24,41 +24,40 @@ Enhanced form with AJAX submission, validation, and auto-save.
 | `loadingText` | string | `"Submitting..."` | Button text during submit |
 | `successMessage` | string | `"Success!"` | Message on success |
 
-Wrapped in `<wb-demo>`, so the live component renders below with its source shown underneath:
+Wrapped in `<div x-demo>`, so the live component renders below with its source shown underneath:
 
-<wb-demo>
-<wb-form action="/api/submit">
-  <wb-input
+<div x-demo>
+<form action="/api/submit">
+  <div x-input
     name="email"
     label="Email"
     required>
-  </wb-input>
-  <wb-button type="submit">Submit</wb-button>
-</wb-form>
-</wb-demo>
+  </div>
+  <button type="submit">Submit</button>
+</form>
+</div>
 
 ## Usage
 
 ### Custom Element
 
 ```html
-<wb-form action="/api/submit">
-  <wb-input
+<form action="/api/submit">
+  <div x-input
     name="email"
     label="Email"
     required>
-  </wb-input>
-  <wb-button type="submit">Submit</wb-button>
-</wb-form>
+  </div>
+  <button type="submit">Submit</button>
+</form>
 ```
 
 ### Native Form (Enhanced)
 
-`x-form` alone (no `ajax`) only adds the `.wb-form` class and a `wbForm` JS API (`getData()`/`reset()`/`submit()`) — the form still submits natively (full page navigation). Add `ajax` for the actual AJAX-submission enhancement.
+`x-form` alone (no `ajax`) only adds the `.x-form` class and a `wbForm` JS API (`getData()`/`reset()`/`submit()`) — the form still submits natively (full page navigation). Add `ajax` for the actual AJAX-submission enhancement.
 
 ```html
 <form
-  x-form
   ajax
   action="/api/submit">
   <input
@@ -71,77 +70,77 @@ Wrapped in `<wb-demo>`, so the live component renders below with its source show
 ### AJAX Submission
 
 ```html
-<wb-form
+<form
   action="/api/contact"
   ajax>
-  <wb-input
+  <div x-input
     name="email"
     label="Email"
     inputType="email"
     required>
-  </wb-input>
-  <wb-textarea
+  </div>
+  <textarea
     name="message"
     label="Message"
     required>
-  </wb-textarea>
-  <wb-button
+  </textarea>
+  <button
     label="Send Message"
     type="submit">
-  </wb-button>
-</wb-form>
+  </button>
+</form>
 ```
 
 ### With Auto-Save
 
 ```html
-<wb-form
+<form
   action="/api/application"
   autoSave
   id="application-form">
-  <wb-input
+  <div x-input
     name="name"
     label="Full Name">
-  </wb-input>
-  <wb-textarea
+  </div>
+  <textarea
     name="bio"
     label="Biography">
-  </wb-textarea>
-  <wb-button
+  </textarea>
+  <button
     label="Submit"
     type="submit">
-  </wb-button>
-</wb-form>
+  </button>
+</form>
 ```
 
 ### Custom Success Message
 
 ```html
-<wb-form
+<form
   action="/api/newsletter"
   ajax
   successMessage="Thanks for subscribing!">
-  <wb-input
+  <div x-input
     name="email"
     label="Email"
     inputType="email">
-  </wb-input>
-  <wb-button
+  </div>
+  <button
     label="Subscribe"
     type="submit">
-  </wb-button>
-</wb-form>
+  </button>
+</form>
 ```
 
 ## Generated Structure
 
 ```html
 <form
-  class="wb-form"
+  class="x-form"
   action="/api/submit"
   method="POST">
   <!-- Form fields -->
-  <div class="wb-form__message wb-form__message--success"> Success! </div>
+  <div class="x-form__message x-form__message--success"> Success! </div>
 </form>
 ```
 
@@ -149,10 +148,10 @@ Wrapped in `<wb-demo>`, so the live component renders below with its source show
 
 | Class | Applied When | Description |
 |-------|--------------|-------------|
-| `.wb-form` | Always | Base styling |
-| `.wb-form--loading` | Submitting | Submission in progress |
-| `.wb-form--success` | Success | Successful submission |
-| `.wb-form--error` | Error | Submission failed |
+| `.x-form` | Always | Base styling |
+| `.x-form--loading` | Submitting | Submission in progress |
+| `.x-form--success` | Success | Successful submission |
+| `.x-form--error` | Error | Submission failed |
 
 ## Methods
 
@@ -166,7 +165,7 @@ Wrapped in `<wb-demo>`, so the live component renders below with its source show
 | `clearAutoSave()` | Clears saved data | - |
 
 ```javascript
-const form = document.querySelector('wb-form');
+const form = document.querySelector('x-form');
 
 // Submit programmatically
 await form.submit();
@@ -207,13 +206,13 @@ form.addEventListener('wb:form:error', (e) => {
 
 | Variable | Default | Description |
 |----------|---------|-------------|
-| `--wb-form-gap` | `1rem` | Gap between fields |
-| `--wb-form-message-padding` | `1rem` | Message padding |
-| `--wb-form-message-radius` | `4px` | Message border radius |
-| `--wb-form-success-bg` | `var(--success-light)` | Success message background |
-| `--wb-form-success-color` | `var(--success)` | Success message color |
-| `--wb-form-error-bg` | `var(--error-light)` | Error message background |
-| `--wb-form-error-color` | `var(--error)` | Error message color |
+| `--x-form-gap` | `1rem` | Gap between fields |
+| `--x-form-message-padding` | `1rem` | Message padding |
+| `--x-form-message-radius` | `4px` | Message border radius |
+| `--x-form-success-bg` | `var(--success-light)` | Success message background |
+| `--x-form-success-color` | `var(--success)` | Success message color |
+| `--x-form-error-bg` | `var(--error-light)` | Error message background |
+| `--x-form-error-color` | `var(--error)` | Error message color |
 
 ## Accessibility
 

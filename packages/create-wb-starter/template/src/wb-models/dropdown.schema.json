@@ -4,13 +4,13 @@
   "title": "Dropdown",
   "description": "Toggleable dropdown menu",
   "schemaFor": "dropdown",
-  "baseClass": "wb-dropdown",
+  "baseClass": "x-dropdown",
   "semanticElement": {
     "tagName": "div",
     "implicitRole": "menu"
   },
   "compliance": {
-    "baseClass": "wb-dropdown",
+    "baseClass": "x-dropdown",
     "supportLevel": "stable",
     "accessibility": "high"
   },
@@ -24,7 +24,7 @@
         "top-end"
       ],
       "default": "bottom-start",
-      "appliesClass": "wb-dropdown--{{value}}"
+      "appliesClass": "x-dropdown--{{value}}"
     },
     "trigger": {
       "type": "string",
@@ -93,43 +93,43 @@
     }
   },
   "$cssAPI": {
-    "--wb-dropdown-min-width": {
+    "--x-dropdown-min-width": {
       "default": "180px",
       "description": "Menu min width"
     },
-    "--wb-dropdown-max-height": {
+    "--x-dropdown-max-height": {
       "default": "300px",
       "description": "Menu max height"
     },
-    "--wb-dropdown-bg": {
+    "--x-dropdown-bg": {
       "default": "var(--bg-surface, #ffffff)",
       "description": "Menu background"
     },
-    "--wb-dropdown-border": {
+    "--x-dropdown-border": {
       "default": "1px solid var(--border-color, #e0e0e0)",
       "description": "Menu border"
     },
-    "--wb-dropdown-radius": {
+    "--x-dropdown-radius": {
       "default": "4px",
       "description": "Border radius"
     },
-    "--wb-dropdown-shadow": {
+    "--x-dropdown-shadow": {
       "default": "0 4px 12px rgba(0,0,0,0.15)",
       "description": "Box shadow"
     },
-    "--wb-dropdown-padding": {
+    "--x-dropdown-padding": {
       "default": "0.25rem",
       "description": "Menu padding"
     },
-    "--wb-dropdown-item-padding": {
+    "--x-dropdown-item-padding": {
       "default": "0.5rem 0.75rem",
       "description": "Item padding"
     },
-    "--wb-dropdown-item-hover-bg": {
+    "--x-dropdown-item-hover-bg": {
       "default": "var(--bg-secondary, #f3f4f6)",
       "description": "Item hover background"
     },
-    "--wb-dropdown-z-index": {
+    "--x-dropdown-z-index": {
       "default": "100",
       "description": "Z-index"
     }
@@ -163,14 +163,14 @@
   "test": {
     "functional": true,
     "setup": [
-      "<wb-dropdown>Basic dropdown content</wb-dropdown>",
-      "<wb-dropdown position=\"bottom-start\">position=bottom-start</wb-dropdown>",
-      "<wb-dropdown position=\"bottom-end\">position=bottom-end</wb-dropdown>",
-      "<wb-dropdown position=\"top-start\">position=top-start</wb-dropdown>",
-      "<wb-dropdown trigger=\"click\">trigger=click</wb-dropdown>",
-      "<wb-dropdown trigger=\"hover\">trigger=hover</wb-dropdown>",
-      "<wb-dropdown close-on-select>with closeOnSelect</wb-dropdown>",
-      "<wb-dropdown close-on-outside>with closeOnOutside</wb-dropdown>"
+      "<div x-dropdown>Basic dropdown content</div>",
+      "<div x-dropdown position=\"bottom-start\">position=bottom-start</div>",
+      "<div x-dropdown position=\"bottom-end\">position=bottom-end</div>",
+      "<div x-dropdown position=\"top-start\">position=top-start</div>",
+      "<div x-dropdown trigger=\"click\">trigger=click</div>",
+      "<div x-dropdown trigger=\"hover\">trigger=hover</div>",
+      "<div x-dropdown close-on-select>with closeOnSelect</div>",
+      "<div x-dropdown close-on-outside>with closeOnOutside</div>"
     ],
     "matrix": {
       "combinations": [
@@ -187,13 +187,13 @@
     },
     "site": {
       "page": "overlays",
-      "tag": "wb-dropdown",
+      "tag": "x-dropdown",
       "renders": true,
-      "baseClass": "wb-dropdown",
+      "baseClass": "x-dropdown",
       "minInstances": 3,
       "checkText": [],
       "checkClasses": [
-        "wb-dropdown--bottom-end"
+        "x-dropdown--bottom-end"
       ],
       "checkAttributes": [
         "position"

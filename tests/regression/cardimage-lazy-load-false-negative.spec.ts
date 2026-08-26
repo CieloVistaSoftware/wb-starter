@@ -1,7 +1,7 @@
 import { test, expect } from '@playwright/test';
 
 /**
- * REGRESSION (BUG-2026-07-27-005): every <wb-cardimage> on what was then
+ * REGRESSION (BUG-2026-07-27-005): every <div x-cardimage> on what was then
  * demos/site/cards.html's "Image Card" section (now
  * tests/fixtures/cards-permutation-matrix.html -- the permutation-matrix
  * content was split out of the demo page separately) rendered "⚠ Image
@@ -38,7 +38,7 @@ test.describe('cardimage image actually loads, not just has a src attribute (#ca
 
     const section = page.locator('#cardimage-image-card');
     await expect(section, 'the matrix fixture should still have the Image Card section').toHaveCount(1);
-    const firstCard = section.locator('wb-cardimage').first();
+    const firstCard = section.locator('[x-cardimage]').first();
     const img = firstCard.locator('img');
     await expect(img, 'cardimage must render a real <img>').toHaveCount(1);
 
@@ -53,7 +53,7 @@ test.describe('cardimage image actually loads, not just has a src attribute (#ca
     // scrolling. The fix gates the retry clock on real intersection, so
     // this must NOT have given up yet.
     await page.waitForTimeout(28000);
-    await expect(firstCard.locator('.wb-media-load-failed'), 'must not give up while still off-screen').toHaveCount(0);
+    await expect(firstCard.locator('.x-media-load-failed'), 'must not give up while still off-screen').toHaveCount(0);
 
     // Now scroll to it — a real user looking at this section, which the
     // reported screenshot proves happens well within any reasonable
@@ -69,8 +69,8 @@ test.describe('cardimage image actually loads, not just has a src attribute (#ca
       })
       .toBe(true);
 
-    const failedSibling = firstCard.locator('.wb-media-load-failed');
+    const failedSibling = firstCard.locator('.x-media-load-failed');
     await expect(failedSibling, 'a valid, loadable image must never trigger the "unavailable" fallback').toHaveCount(0);
-    await expect(img).not.toHaveClass(/wb-img--load-failed/);
+    await expect(img).not.toHaveClass(/x-img--load-failed/);
   });
 });

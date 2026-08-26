@@ -1,4 +1,18 @@
-<link rel="stylesheet" href="src/styles/pages/contact.css?v=3.0.91">
+<script>
+  /* A page fragment opened on its own resolves its CSS and modules relative to
+     /pages/ instead of the site root, so it renders unstyled and never
+     finishes loading. These files are fetched and injected by index.html;
+     opened directly they are simply the wrong URL. Redirect to the route that
+     works. server.js wraps them automatically, so this only fires on a static
+     host. */
+  (function () {
+    var m = location.pathname.match(/\/pages\/([a-z0-9-]+)\.html$/i);
+    if (!m) return;                       // injected by the SPA: nothing to do
+    var root = location.pathname.slice(0, m.index + 1);
+    location.replace(root + '?page=' + m[1] + location.search.replace(/^\?/, '&') + location.hash);
+  })();
+</script>
+<link rel="stylesheet" href="src/styles/pages/contact.css?v=4.0.0">
 
 <div id="contact-div-1" class="page__hero">
   <h1 id="contact-h1-2">📧 Contact</h1>
@@ -23,7 +37,7 @@
         
         <div id="contact-div-15">
           <label id="contact-label-16">Subject</label>
-          <select id="contact-select-17" options="General Inquiry,Bug Report,Feature Request,Partnership"></select>
+          <div x-select id="contact-select-17" options="General Inquiry,Bug Report,Feature Request,Partnership"></div>
         </div>
         
         <div id="contact-div-18">
@@ -41,19 +55,19 @@
       <h2 id="contact-h2-23">Other Ways to Reach Us</h2>
       
       <div id="contact-div-24" class="contact-info-stack">
-        <wb-card id="contact-div-25" title="📍 Address">
+        <article id="contact-div-25" title="📍 Address">
           <p id="contact-p-26">123 Main Street<br id="contact-br-27">City, State 12345</p>
         </div>
         
-        <wb-card id="contact-div-28" title="📞 Phone">
+        <article id="contact-div-28" title="📞 Phone">
           <p id="contact-p-29">+1 (555) 123-4567</p>
         </div>
         
-        <wb-card id="contact-div-30" title="✉️ Email">
+        <article id="contact-div-30" title="✉️ Email">
           <p id="contact-p-31">hello@example.com</p>
         </div>
         
-        <wb-card id="contact-div-32" title="🕐 Hours">
+        <article id="contact-div-32" title="🕐 Hours">
           <p id="contact-p-33">Monday - Friday<br id="contact-br-34">9:00 AM - 5:00 PM</p>
         </div>
       </div>

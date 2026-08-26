@@ -2,7 +2,7 @@ import { test, expect } from '@playwright/test';
 import fs from 'fs';
 
 // Verifies that WB will fetch an individual schema file on-demand when index.json is unavailable.
-test('schema builder should process wb-cardhero when index.json is missing (on-demand fetch)', async ({ page }) => {
+test('schema builder should process x-cardhero when index.json is missing (on-demand fetch)', async ({ page }) => {
   // Stub index.json to simulate it being missing/unavailable
   await page.route('/src/wb-models/index.json', route => route.fulfill({ status: 404, body: 'not found' }));
 
@@ -12,13 +12,13 @@ test('schema builder should process wb-cardhero when index.json is missing (on-d
 
   await page.goto('/');
 
-  // The fallback should allow the page to register/process the wb-cardhero element
-  await page.waitForSelector('wb-cardhero', { state: 'attached', timeout: 10000 });
-  const hero = page.locator('wb-cardhero').first();
+  // The fallback should allow the page to register/process the x-cardhero element
+  await page.waitForSelector('x-cardhero', { state: 'attached', timeout: 10000 });
+  const hero = page.locator('x-cardhero').first();
   // Element may be hidden or render its title via attribute-only API in some environments.
   // Accept either rendered text OR presence of a title attribute that contains the key phrase.
   const titleAttr = await hero.getAttribute('title');
   const hasRenderedText = await hero.locator('text=Build stunning UIs').count() > 0;
-  expect(titleAttr || hasRenderedText, 'wb-cardhero must expose the hero title (rendered or attribute)').toBeTruthy();
+  expect(titleAttr || hasRenderedText, 'x-cardhero must expose the hero title (rendered or attribute)').toBeTruthy();
   if (titleAttr) expect(titleAttr).toMatch(/Build\s+<span|Build\s+stunning UIs/);
 });

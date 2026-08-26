@@ -3,7 +3,7 @@
   "title": "Card Profile",
   "description": "Simple profile card. INHERITS from card.base (IS-A card), CONTAINS profile elements (HAS-A avatar, name, role, bio, cover).",
   "schemaFor": "cardprofile",
-  "baseClass": "wb-card",
+  "baseClass": "x-card",
   "$extends": "card.base.schema.json",
   "$inheritance": {
     "type": "IS-A",
@@ -74,7 +74,7 @@
     {
       "name": "cover",
       "tag": "figure",
-      "class": "wb-card__profile-cover",
+      "class": "x-card__profile-cover",
       "createdWhen": "cover",
       "children": [
         {
@@ -88,7 +88,7 @@
     {
       "name": "avatar",
       "tag": "figure",
-      "class": "wb-card__profile-avatar"
+      "class": "x-card__profile-avatar"
     },
     {
       "name": "avatar-img",
@@ -106,7 +106,7 @@
       "name": "name",
       "tag": "h3",
       "parent": "header",
-      "class": "wb-card__profile-name",
+      "class": "x-card__profile-name",
       "content": "{{name}}",
       "required": true
     },
@@ -114,14 +114,14 @@
       "name": "role",
       "tag": "p",
       "parent": "header",
-      "class": "wb-card__profile-role",
+      "class": "x-card__profile-role",
       "content": "{{role}}",
       "createdWhen": "role"
     },
     {
       "name": "bio",
       "tag": "p",
-      "class": "wb-card__profile-bio",
+      "class": "x-card__profile-bio",
       "content": "{{bio}}",
       "createdWhen": "bio"
     }
@@ -144,9 +144,9 @@
   },
   "compliance": {
     "$inherits": "card.base.schema.json#compliance",
-    "baseClass": "wb-card",
+    "baseClass": "x-card",
     "additionalClasses": [
-      "wb-card--profile"
+      "x-card--profile"
     ]
   },
   "accessibility": {
@@ -171,15 +171,15 @@
   },
   "test": {
     "setup": [
-      "<wb-cardprofile>Basic cardprofile content</wb-cardprofile>",
-      "<wb-cardprofile size=\"sm\">size=sm</wb-cardprofile>",
-      "<wb-cardprofile size=\"md\">size=md</wb-cardprofile>",
-      "<wb-cardprofile size=\"lg\">size=lg</wb-cardprofile>",
-      "<wb-cardprofile align=\"left\">align=left</wb-cardprofile>",
-      "<wb-cardprofile align=\"center\">align=center</wb-cardprofile>",
-      "<wb-cardprofile name=\"John Doe\">name=\"John Doe\"</wb-cardprofile>",
-      "<wb-cardprofile role=\"Designer\">role=\"Designer\"</wb-cardprofile>",
-      "<wb-card-profile name=\"Jane\" role=\"Designer\" avatar=\"https://i.pravatar.cc/80\"></wb-card-profile>"
+      "<div x-cardprofile>Basic cardprofile content</div>",
+      "<div x-cardprofile size=\"sm\">size=sm</div>",
+      "<div x-cardprofile size=\"md\">size=md</div>",
+      "<div x-cardprofile size=\"lg\">size=lg</div>",
+      "<div x-cardprofile align=\"left\">align=left</div>",
+      "<div x-cardprofile align=\"center\">align=center</div>",
+      "<div x-cardprofile name=\"John Doe\">name=\"John Doe\"</div>",
+      "<div x-cardprofile role=\"Designer\">role=\"Designer\"</div>",
+      "<div name=\"Jane\" role=\"Designer\" avatar=\"https://i.pravatar.cc/80\"></div>"
     ],
     "matrix": {
       "combinations": [
@@ -227,9 +227,9 @@
     },
     "site": {
       "page": "cards",
-      "tag": "wb-cardprofile",
+      "tag": "x-cardprofile",
       "renders": true,
-      "baseClass": "wb-card",
+      "baseClass": "x-card",
       "minInstances": 9,
       "checkText": [
         "John Doe",

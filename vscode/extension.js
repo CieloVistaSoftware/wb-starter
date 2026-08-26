@@ -15,7 +15,7 @@ function activate(context) {
     
     // Create status bar item
     statusBarItem = vscode.window.createStatusBarItem(vscode.StatusBarAlignment.Right, 100);
-    statusBarItem.command = 'wb-server.restart';
+    statusBarItem.command = 'x-server.restart';
     statusBarItem.text = "$(sync~spin) WB Server: Init...";
     statusBarItem.show();
     context.subscriptions.push(statusBarItem);
@@ -24,7 +24,7 @@ function activate(context) {
     checkAndStartServer();
 
     // Register command to open file
-    let openDisposable = vscode.commands.registerCommand('wb-server.open', async function (uri) {
+    let openDisposable = vscode.commands.registerCommand('x-server.open', async function (uri) {
         // The uri argument depends on where the command was invoked from (context menu vs command palette)
         if (!uri && vscode.window.activeTextEditor) {
             uri = vscode.window.activeTextEditor.document.uri;
@@ -59,7 +59,7 @@ function activate(context) {
     });
 
     // Register command to restart server
-    let restartDisposable = vscode.commands.registerCommand('wb-server.restart', async function () {
+    let restartDisposable = vscode.commands.registerCommand('x-server.restart', async function () {
         if (serverProcess) {
             outputChannel.appendLine('Stopping server...');
             serverProcess.kill();
@@ -70,7 +70,7 @@ function activate(context) {
     });
 
     // Register command to show logs
-    let logsDisposable = vscode.commands.registerCommand('wb-server.showLogs', function () {
+    let logsDisposable = vscode.commands.registerCommand('x-server.showLogs', function () {
         outputChannel.show();
     });
 

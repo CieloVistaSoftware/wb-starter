@@ -2,9 +2,9 @@ import { test, expect } from '@playwright/test';
 import { globSync } from 'glob';
 
 /**
- * #447: <wb-demo> carried a class="wb-demo" that just repeated its own tag
+ * #447: <div x-demo> carried a class="x-demo" that just repeated its own tag
  * name -- no CSS anywhere selected the bare class (every real rule targets
- * the `wb-demo` TAG itself, or a `.wb-demo__*`/`.wb-demo--*` BEM sub-part or
+ * the `x-demo` TAG itself, or a `.x-demo__*`/`.x-demo--*` BEM sub-part or
  * modifier). Enforced site-wide so the same redundant pattern can't creep
  * back in on this or any other <wb-*> component: if a component's styling
  * ever seems to need "class == own tag name", the fix is to select the TAG

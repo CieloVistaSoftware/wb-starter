@@ -8,7 +8,7 @@ export const Theme = {
     this.current = theme;
     if (typeof document !== 'undefined') {
       document.documentElement.dataset.theme = theme;
-      localStorage.setItem('wb-theme', theme);
+      localStorage.setItem('x-theme', theme);
 
       // Ensure critical CSS custom-property aliases exist so tests and components relying on
       // shorthand tokens (--text-primary, --primary, --accent, etc.) never observe an empty value.
@@ -36,7 +36,7 @@ export const Theme = {
   
   get() {
     if (typeof document !== 'undefined') {
-      return document.documentElement.dataset.theme || localStorage.getItem('wb-theme') || 'dark';
+      return document.documentElement.dataset.theme || localStorage.getItem('x-theme') || 'dark';
     }
     return this.current;
   },

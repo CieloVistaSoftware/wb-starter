@@ -1,6 +1,6 @@
 /**
  * build-behavior-examples.mjs — the one-way migration that lifted the curated
- * <wb-demo> examples out of pages/behaviors.html into
+ * <div x-demo> examples out of pages/behaviors.html into
  * data/behavior-examples.json (#666).
  *
  * The Behaviors page's live-preview panel used to read its examples straight off
@@ -22,6 +22,7 @@
 import fs from 'fs';
 import path from 'path';
 import { fileURLToPath } from 'url';
+import { demoInnerBlocks } from './lib/demo-blocks.mjs';
 
 const ROOT = path.join(path.dirname(fileURLToPath(import.meta.url)), '..');
 const SOURCE = path.join(ROOT, 'pages', 'behaviors.html');
@@ -61,7 +62,7 @@ if (process.argv.includes('--check')) {
 
 // ─── extraction ────────────────────────────────────────────────────
 const html = fs.readFileSync(SOURCE, 'utf8');
-const blocks = [...html.matchAll(/<wb-demo[^>]*>([\s\S]*?)<\/wb-demo>/g)].map((m) => m[1].trim());
+const blocks = demoInnerBlocks(html).map((s) => s.trim());
 
 /** Every distinct x-* token used as a real attribute or tag in a block. */
 function tokensIn(src) {
@@ -108,7 +109,7 @@ if (held.count > payload.count) {
     [
       `Refusing to overwrite ${path.relative(ROOT, OUT)}`,
       `  existing:  ${held.count} examples`,
-      `  extracted: ${payload.count} from ${blocks.length} <wb-demo> blocks in ${path.relative(ROOT, SOURCE)}`,
+      `  extracted: ${payload.count} from ${blocks.length} <div x-demo> blocks in ${path.relative(ROOT, SOURCE)}`,
       '',
       '  The demo sections were removed from that page once their contents were',
       '  migrated here, so extraction now yields less than the file already holds.',
@@ -120,6 +121,6 @@ if (held.count > payload.count) {
 
 fs.writeFileSync(OUT, JSON.stringify(payload, null, 2) + '\n');
 const alts = Object.values(examples).reduce((n, e) => n + e.alternates.length, 0);
-console.log(`Extracted ${payload.count} tokens from ${blocks.length} <wb-demo> blocks.`);
+console.log(`Extracted ${payload.count} tokens from ${blocks.length} <div x-demo> blocks.`);
 console.log(`  Output: ${path.relative(ROOT, OUT)}`);
 console.log(`  ${claimed} primary examples, ${alts} alternates preserved.`);

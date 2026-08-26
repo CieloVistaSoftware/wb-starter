@@ -18,9 +18,9 @@ created, since an `<input>` can't hold children:
 <input type="text" x-colorpicker value="#22c55e">
 ```
 
-<wb-demo>
+<div x-demo>
 <input type="text" x-colorpicker value="#22c55e">
-</wb-demo>
+</div>
 
 Applied to a non-input container instead, it builds its own child
 `<input type="color">` inside the element:
@@ -29,9 +29,9 @@ Applied to a non-input container instead, it builds its own child
 <div x-colorpicker value="#6366f1"></div>
 ```
 
-<wb-demo>
+<div x-demo>
 <div x-colorpicker value="#6366f1"></div>
-</wb-demo>
+</div>
 
 ## Properties
 
@@ -44,7 +44,7 @@ Applied to a non-input container instead, it builds its own child
 | Class | Applies to | When |
 |---|---|---|
 | `<div x-colorpicker>` | the target element | always |
-| `wb-colorpicker__input` | the `<input type="color">` (the target itself when it's an `<input>`, otherwise the generated child) | always |
+| `x-colorpicker__input` | the `<input type="color">` (the target itself when it's an `<input>`, otherwise the generated child) | always |
 
 ## Events
 

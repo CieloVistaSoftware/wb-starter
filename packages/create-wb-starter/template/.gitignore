@@ -16,6 +16,14 @@ Thumbs.db
 # Test Results
 data/test-results/
 data/content-issues.json
+# #562: runtime/test-run artifact written by src/core/error-logger.js +
+# server.js's /api/error-log/* endpoints (and reset at the start of every
+# `playwright test` invocation by scripts/tools/test-reporter.ts). Tracking
+# it in git meant stale entries from unrelated past commits/sessions rode
+# along into every fresh checkout and silently failed
+# tests/compliance/error-log-empty.spec.ts for reasons no test in the CURRENT
+# run caused -- same class of problem as data/content-issues.json above.
+data/errors.json
 .test-cache.json
 .test-results-temp.json
 # Playwright reports/screenshots — never track or deploy these to GitHub Pages
@@ -37,3 +45,14 @@ test-results/
 *.pem
 *.crx
 src/wb-overlay-ext/
+
+# Agent worktrees (each is its own git repo) — never committed as gitlinks.
+# A prior session accidentally `git add`ed one from the parent repo, which
+# git recorded as a submodule reference (mode 160000) with no matching
+# .gitmodules entry. GitHub's checkout action recursively inits submodules
+# on every workflow run, including the Pages deploy -- with 30+ of these
+# broken gitlinks accumulated in history, `pages-build-deployment` fatally
+# errored on `git submodule update --init` on EVERY push since 2026-08-07,
+# silently blocking every .io deployment. Ignoring the whole directory so
+# this can't happen again.
+.claude/worktrees/

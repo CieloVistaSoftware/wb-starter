@@ -1,8 +1,22 @@
+<script>
+  /* A page fragment opened on its own resolves its CSS and modules relative to
+     /pages/ instead of the site root, so it renders unstyled and never
+     finishes loading. These files are fetched and injected by index.html;
+     opened directly they are simply the wrong URL. Redirect to the route that
+     works. server.js wraps them automatically, so this only fires on a static
+     host. */
+  (function () {
+    var m = location.pathname.match(/\/pages\/([a-z0-9-]+)\.html$/i);
+    if (!m) return;                       // injected by the SPA: nothing to do
+    var root = location.pathname.slice(0, m.index + 1);
+    location.replace(root + '?page=' + m[1] + location.search.replace(/^\?/, '&') + location.hash);
+  })();
+</script>
 <!-- ═══════════════════════════════════════════════════════════════════════════
      wb-starter - BEHAVIORS SHOWCASE
      Auto-generated from behaviors.schema.json
      ═══════════════════════════════════════════════════════════════════════════ -->
-<link rel="stylesheet" href="src/styles/pages/behaviors.css?v=3.0.91">
+<link rel="stylesheet" href="src/styles/pages/behaviors.css?v=4.0.0">
 
 <div id="behaviors-hero" class="page__hero">
   <!-- #774 -- John: "remove these ... We already know where we are."
@@ -18,7 +32,20 @@
        navigator and rendered side together. It deliberately starts BELOW the
        hero title, so going fullscreen spends the screen on the three things
        being used rather than on the page heading. -->
+  <!-- #820 -- these headings are .sr-only, and that is the point.
+       #774 removed the visible title and strapline on John's instruction
+       ("remove these ... We already know where we are") because the left nav
+       already says where you are and the heading pushed the search box down
+       every screen. That was about what the page LOOKS like.
+       With no <h1> at all, though, the page had no accessible name and no
+       landmark for a screen-reader user to jump to -- and the fragment
+       compliance gate failed on it, blocking every commit repo-wide.
+       Hidden headings satisfy both: nothing appears on screen, the document
+       regains its outline. -->
+  <h1 class="sr-only">Behaviors</h1>
+
   <div id="behaviors-workspace" class="behaviors-workspace">
+    <h2 class="sr-only">Search behaviors</h2>
   <div class="behaviors-search">
     <input type="search" id="behaviors-search" placeholder="Search behaviors — e.g. x-tooltip, x-toast — or just x- to see everything" aria-label="Search behaviors">
     <span id="behaviors-search-count" aria-live="polite"></span>
@@ -40,8 +67,8 @@
   <div class="behaviors-browse">
     <ul id="behaviors-search-results" class="behaviors-search-results" hidden></ul>
     <!-- A <div>, deliberately not a <section id>: applyFilter() hides every
-         `section[id]` that contains no visible <wb-demo>, which would sweep up
-         this panel (it holds injected markup, never a wb-demo) and leave it
+         `section[id]` that contains no visible <div x-demo>, which would sweep up
+         this panel (it holds injected markup, never a x-demo) and leave it
          display:none no matter what was clicked. -->
     <div id="behaviors-live" class="behaviors-live" hidden aria-live="polite">
       <header class="behaviors-live__head">
@@ -144,7 +171,7 @@
   </div><!-- /#behaviors-workspace (#744) -->
 </div>
 <!-- #666: the per-category demo sections and their jump-nav were removed here.
-     Every one of those 88 <wb-demo> blocks now lives in
+     Every one of those 88 <div x-demo> blocks now lives in
      data/behavior-examples.json (scripts/build-behavior-examples.mjs) and is
      rendered on demand by the live-preview panel above -- so the examples are
      still here, they are just no longer 13,000px of markup you have to scroll
@@ -167,9 +194,9 @@
   <script>
   // #635: John, screenshot on this page: "Add a search here that allows
   // finding all of our behaviors. e.g. x-tooltiop, x-this, x-that etc.
-  // typing in just x- will show all of them". Matches each <wb-demo>'s own
+  // typing in just x- will show all of them". Matches each <div x-demo>'s own
   // `_rawSource` (the exact authored markup, captured synchronously at
-  // connectedCallback -- see wb-demo.js -- available immediately, no need
+  // connectedCallback -- see x-demo.js -- available immediately, no need
   // to wait for lazy behaviors to finish applying) against the query, then
   // hides the h3/section around any group with nothing left visible so the
   // filtered page never shows an orphaned empty heading.
@@ -179,7 +206,7 @@
     const resultsEl = document.getElementById('behaviors-search-results');
     if (!input || !countEl || !resultsEl) return;
 
-    const demos = Array.from(document.querySelectorAll('wb-demo'));
+    const demos = Array.from(document.querySelectorAll('x-demo'));
     const total = demos.length;
 
     // John: "prefill this dropdown box with all known x- attributes" --
@@ -260,7 +287,7 @@
     import(siteRoot() + 'src/core/tag-map.js')
       .then(async (mod) => {
         // #665: extensionMap, NOT elementMap. elementMap maps wb-* COMPONENT
-        // TAGS to behavior names (wb-card, wb-button, wb-badge, ...), so
+        // TAGS to behavior names (x-card, x-button, x-badge, ...), so
         // prefixing its values with "x-" produced a list of components wearing
         // behavior names -- x-card, x-button, x-cardbutton -- on a page titled
         // "WB Behaviors Showcase", while the ~105 real behaviors never
@@ -1013,7 +1040,7 @@
     }
 
     // The markup for most behaviors is already on this page, inside the
-    // <wb-demo> blocks. Prefer a demo whose source ACTUALLY uses the token as
+    // <div x-demo> blocks. Prefer a demo whose source ACTUALLY uses the token as
     // an attribute/tag rather than merely mentioning it in prose, so clicking
     // "x-card" does not land on a demo that happens to say "x-card" in a
     // sentence.
@@ -1031,7 +1058,12 @@
         // only one form working unchanged.
         if (form === 'attribute') {
           const bare = token.replace(/^x-/, '');
-          const carries = new RegExp(`\sx-${bare}(?=[\s/>=]|$)`, 'i');
+          // Doubled backslashes -- see the note 12 lines below, which gets this
+          // right. In a template literal a lone `\s` collapses to a bare "s",
+          // so this compiled to /sx-badge(?=[s\/>=]|$)/ and matched the literal
+          // text "sx-badge". Every attribute-form row silently fell back to the
+          // semantic example instead of the x- one it asked for.
+          const carries = new RegExp(`\\sx-${bare}(?=[\\s/>=]|$)`, 'i');
           if (!carries.test(fromCatalogue.source)) {
             const alt = (fromCatalogue.alternates || []).find((a) => carries.test(a));
             if (alt) return alt;
@@ -1315,7 +1347,7 @@
       tr: `
   <td>Cell</td>`,
       figure: `
-  <img src="https://picsum.photos/seed/wb-figure/600/400" alt="Sample">
+  <img src="https://picsum.photos/seed/x-figure/600/400" alt="Sample">
   <figcaption>Example caption</figcaption>`,
       details: `
   <summary>Example summary</summary>
@@ -1326,7 +1358,7 @@
     };
 
     // A generated example must satisfy what the behavior actually requires.
-    // audio.js throws outright ("wb-audio: no src provided -- nothing to play")
+    // audio.js throws outright ("x-audio: no src provided -- nothing to play")
     // and logs to the error viewer, so an <audio> with no src is not a harmless
     // stub, it is a real error on every page load. Seeded from the schema's own
     // default where there is one, falling back to the known-good source below.
@@ -1361,7 +1393,7 @@
       // required to upload a file". An upload ICON on its own uploads nothing;
       // a real control needs the file input and the wiring. Emit all of it, so
       // the example is complete rather than decorative.
-      // #670: the download half of the pair that replaces wb-cardfile. Unlike
+      // #670: the download half of the pair that replaces x-cardfile. Unlike
       // upload, this needs no JavaScript at all -- <a download> is the platform
       // feature, and a button styled as one would be strictly worse: it would
       // lose middle-click, "save link as", and the real URL on hover.
@@ -1369,15 +1401,15 @@
         // No icon= here: the button behavior only decorates <button>, so the
         // attribute is inert on an anchor -- verified live, it produced no
         // class and no icon. Shipping it would be exactly the
-        // declared-but-does-nothing pattern of #669. .wb-button is a plain CSS
+        // declared-but-does-nothing pattern of #669. .x-button is a plain CSS
         // class, so the anchor still gets the button LOOK.
         return [
-          // wb-button--primary, not the bare .wb-button: the default button
+          // x-button--primary, not the bare .x-button: the default button
           // background is rgb(41,48,61), which is also the panel surface, so a
-          // plain .wb-button anchor rendered as flat text. Modifier CLASSES work
+          // plain .x-button anchor rendered as flat text. Modifier CLASSES work
           // without the behavior; a variant= ATTRIBUTE would not, since button()
           // only decorates <button>.
-          '<a href="https://archive.org/download/nineinchnails_ghosts_I_IV/01_Ghosts_I.mp3" download="ghosts-i-01.mp3" class="wb-button wb-button--primary">',
+          '<a href="https://archive.org/download/nineinchnails_ghosts_I_IV/01_Ghosts_I.mp3" download="ghosts-i-01.mp3" class="x-button x-button--primary">',
           '  ↓ Download the sample',
           '</a>',
         ].join('\n');
@@ -1385,9 +1417,9 @@
 
       if (behavior === 'button' && prop === 'icon' && variant === 'upload') {
         return [
-          '<button icon="upload" aria-controls="wb-demo-file">Upload a file</button>',
-          '<input id="wb-demo-file" type="file" hidden>',
-          '<p class="wb-demo-file-name" aria-live="polite">No file chosen</p>',
+          '<button icon="upload" aria-controls="x-demo-file">Upload a file</button>',
+          '<input id="x-demo-file" type="file" hidden>',
+          '<p class="x-demo-file-name" aria-live="polite">No file chosen</p>',
         ].join('\n');
       }
 
@@ -1482,16 +1514,16 @@
     /**
      * Give every element in the stage an id, and return the root's.
      * Existing ids are left alone -- some examples carry a meaningful one
-     * already (#wb-demo-file, which its own wiring and snippet both reference).
+     * already (#x-demo-file, which its own wiring and snippet both reference).
      */
     function assignExampleIds(token, optionText) {
       // John: "i didn't mean to make them all super long nonsense they need to
       // be short describing the element they came from and where they are
       // going the target".
       //
-      // So: drop the `wb-ex-` prefix and the authoring-surface `x-` prefix,
+      // So: drop the `x-ex-` prefix and the authoring-surface `x-` prefix,
       // which said nothing about the element, and name each element after what
-      // it IS. `wb-ex-x-button-icon-check-1` becomes `button-check`, and its
+      // it IS. `x-ex-x-button-icon-check-1` becomes `button-check`, and its
       // icon span becomes `button-check-icon` -- readable in the handler
       // snippet a reader copies.
       const root = [slug(token).replace(/^x-/, ''), slug(optionText)].filter(Boolean).join('-');
@@ -1503,7 +1535,7 @@
        */
       const describe = (el) => {
         const target = el.getAttribute('aria-controls') || el.getAttribute('for');
-        if (target) return slug(target.replace(/^wb-demo-/, ''));
+        if (target) return slug(target.replace(/^x-demo-/, ''));
         // getAttribute('class'), never el.className: on an SVG element
         // className is an SVGAnimatedString, and stringifying it yields
         // "[object SVGAnimatedString]" -- which slugged to a literal
@@ -1514,7 +1546,7 @@
         // A plain class still says more than the tag does: `-p` is short but
         // meaningless, `-file-name` tells the reader what the element is for.
         const cls = classAttr.trim().split(/\s+/)[0];
-        if (cls) return slug(cls.replace(/^(wb-demo-|wb-|x-)/, ''));
+        if (cls) return slug(cls.replace(/^(x-demo-|wb-|x-)/, ''));
         return slug(el.tagName.toLowerCase().replace(/^wb-/, ''));
       };
 
@@ -1522,7 +1554,7 @@
         if (el.id) return;
         // The bare root belongs to the example root -- but only if nothing
         // holds it yet. Some behaviors WRAP their element after the fact
-        // (audio.js builds a .wb-audio-host around the <audio>), so on the
+        // (audio.js builds a .x-audio-host around the <audio>), so on the
         // second pass the new wrapper is firstElementChild while the original
         // already carries `root`. Handing it out twice would put a duplicate
         // id in the document and break the very selector the snippet teaches.
@@ -1531,7 +1563,7 @@
           return;
         }
         // A descriptive suffix, numbered only when the same description
-        // repeats (three `.wb-audio__band` sliders, say).
+        // repeats (three `.x-audio__band` sliders, say).
         const name = `${root}-${describe(el)}`;
         let candidate = name;
         let n = 1;
@@ -1546,9 +1578,9 @@
     // markup alone is inert, and a demo that cannot actually pick a file is not
     // demonstrating uploading.
     function wireExample() {
-      const btn = liveStage.querySelector('button[aria-controls="wb-demo-file"]');
-      const input = liveStage.querySelector('#wb-demo-file');
-      const out = liveStage.querySelector('.wb-demo-file-name');
+      const btn = liveStage.querySelector('button[aria-controls="x-demo-file"]');
+      const input = liveStage.querySelector('#x-demo-file');
+      const out = liveStage.querySelector('.x-demo-file-name');
       if (!btn || !input) return;
       btn.addEventListener('click', () => input.click());
       input.addEventListener('change', () => {
@@ -1769,7 +1801,7 @@
     let eventCount = 0;
 
     // #677 -- John: "this is an ambiguous event handler, don't we need a from
-    // location?". Entries used to read `button.wb-button` for every element
+    // location?". Entries used to read `button.x-button` for every element
     // sharing a tag and a class, which is most of them, so two events from two
     // different elements were indistinguishable. #675 gave every element in the
     // stage a stable id, so an entry can now name its actual source.
@@ -1852,10 +1884,10 @@
 
     /** The wiring a reader would copy to handle this example's events. */
     function handlerSnippet(hostTag, token, rootId) {
-      if (liveStage.querySelector('#wb-demo-file')) {
+      if (liveStage.querySelector('#x-demo-file')) {
         return [
-          `const btn = document.querySelector('button[aria-controls="wb-demo-file"]');`,
-          `const input = document.querySelector('#wb-demo-file');`,
+          `const btn = document.querySelector('button[aria-controls="x-demo-file"]');`,
+          `const input = document.querySelector('#x-demo-file');`,
           ``,
           `btn.addEventListener('click', () => input.click());`,
           ``,

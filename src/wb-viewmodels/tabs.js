@@ -3,16 +3,22 @@
  * -----------------------------------------------------------------------------
  * Tab panels from child elements
  * 
- * Custom Tag: <wb-tabs>
+ * Custom Tag: <div x-tabs>
  * -----------------------------------------------------------------------------
  */
 export function tabs(element, options = {}) {
-  // #448: no classList.add('wb-tabs') -- no CSS selector anywhere depends
+  // #448: no classList.add('x-tabs') -- no CSS selector anywhere depends
   // on the bare class.
+  // #448 removed this class outright; restored WITH the tag-name guard.
+  // permutation-compliance requires compliance.baseClass to cover the host
+  // (classList.contains(cls) || tagName === cls), and on an attribute host
+  // like <div x-tabs> the tag is "div" -- so without the class nothing covers
+  // it. Guarded so a literal <x-tabs> tag does not get a redundant class.
+  if (element.tagName.toLowerCase() !== 'x-tabs') element.classList.add('x-tabs');
 
   // 1. Check if structure exists (Pre-rendered from Template)
-  let nav = element.querySelector('.wb-tabs__nav');
-  let panelsContainer = element.querySelector('.wb-tabs__panels');
+  let nav = element.querySelector('.x-tabs__nav');
+  let panelsContainer = element.querySelector('.x-tabs__panels');
 
   // 2. If not, build it from children (Behavior Mode)
   if (!nav) {
@@ -21,7 +27,7 @@ export function tabs(element, options = {}) {
 
     // Create Containers
     nav = document.createElement('nav');
-    nav.className = 'wb-tabs__nav';
+    nav.className = 'x-tabs__nav';
     nav.setAttribute('role', 'tablist');
     Object.assign(nav.style, {
       display: 'flex',
@@ -31,11 +37,23 @@ export function tabs(element, options = {}) {
     });
 
     panelsContainer = document.createElement('div');
-    panelsContainer.className = 'wb-tabs__panels';
+    panelsContainer.className = 'x-tabs__panels';
     Object.assign(panelsContainer.style, {
       width: '100%',
       marginTop: '0.5rem'
     });
+
+    // tabs.schema.json declares activeTab ("Initially active tab index",
+    // default 0), which the docs render as `active-tab`. The opening tab was
+    // hard-coded to index 0, so the attribute did nothing (#861). Clamped
+    // deliberately: an out-of-range index would open no panel at all, which
+    // reads as a broken control rather than a bad attribute value.
+    const requestedActive = parseInt(
+      options.activeTab ?? element.getAttribute('active-tab') ?? '0', 10,
+    );
+    const activeIndex = Number.isFinite(requestedActive)
+      ? Math.min(Math.max(requestedActive, 0), originalPanels.length - 1)
+      : 0;
 
     // Process Panels
     originalPanels.forEach((panel, i) => {
@@ -43,11 +61,15 @@ export function tabs(element, options = {}) {
       // for back-compat (matches the accordion-title dual-read in collapse.js).
       const title = panel.getAttribute('tab-title') || panel.getAttribute('tab') ||
         panel.getAttribute('data-tab-title') || `Tab ${i + 1}`;
-      const isActive = i === 0;
+      const isActive = i === activeIndex;
 
       // Create Tab Button
       const button = document.createElement('button');
-      button.className = `wb-tabs__tab ${isActive ? 'wb-tabs__tab--active' : ''}`;
+      // #859: the prefix rename rewrote this class name into an ATTRIBUTE
+      // SELECTOR inside a template literal. `[x-tabs]__tab--active` is not
+      // a valid CSS identifier, so the active tab matched no rule and
+      // rendered identically to an inactive one -- silently, no error.
+      button.className = `x-tabs__tab ${isActive ? 'x-tabs__tab--active' : ''}`;
       button.setAttribute('role', 'tab');
       button.setAttribute('index', i);
       button.setAttribute('aria-selected', isActive);
@@ -76,7 +98,7 @@ export function tabs(element, options = {}) {
       // But we need to wrap it in a section with specific classes/attributes.
       
       const panelWrapper = document.createElement('section');
-      panelWrapper.className = 'wb-tabs__panel';
+      panelWrapper.className = 'x-tabs__panel';
       panelWrapper.setAttribute('role', 'tabpanel');
       panelWrapper.setAttribute('index', i);
       panelWrapper.id = `panel-${i}`;
@@ -105,15 +127,15 @@ export function tabs(element, options = {}) {
 
   // 3. Attach Event Listeners
   const clickHandler = (e) => {
-    const tab = e.target.closest('.wb-tabs__tab');
+    const tab = e.target.closest('.x-tabs__tab');
     if (!tab) return;
 
     const index = parseInt(tab.getAttribute('index'));
 
     // Update tabs
-    nav.querySelectorAll('.wb-tabs__tab').forEach((t, i) => {
+    nav.querySelectorAll('.x-tabs__tab').forEach((t, i) => {
       const active = i === index;
-      t.classList.toggle('wb-tabs__tab--active', active);
+      t.classList.toggle('x-tabs__tab--active', active);
       t.style.borderBottomColor = active ? 'var(--primary, #6366f1)' : 'transparent';
       t.style.fontWeight = active ? '600' : '400';
       t.style.opacity = active ? '1' : '0.7';
@@ -121,7 +143,7 @@ export function tabs(element, options = {}) {
     });
 
     // Update panels
-    const panels = panelsContainer ? panelsContainer.querySelectorAll('.wb-tabs__panel') : element.querySelectorAll('.wb-tabs__panel');
+    const panels = panelsContainer ? panelsContainer.querySelectorAll('.x-tabs__panel') : element.querySelectorAll('.x-tabs__panel');
     panels.forEach((p, i) => {
       p.style.display = i === index ? 'block' : 'none';
     });
@@ -135,7 +157,7 @@ export function tabs(element, options = {}) {
   nav.addEventListener('click', clickHandler);
 
   return () => {
-    element.classList.remove('wb-tabs');
+    element.classList.remove('x-tabs');
     nav.removeEventListener('click', clickHandler);
   };
 }

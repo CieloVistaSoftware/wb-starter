@@ -4,13 +4,13 @@
   "title": "Notification Card",
   "description": "Dismissible notification card with variant-based styling",
   "schemaFor": "cardnotification",
-  "baseClass": "wb-notification",
+  "baseClass": "x-notification",
   "semanticElement": {
     "tagName": "aside",
     "implicitRole": "alert"
   },
   "compliance": {
-    "baseClass": "wb-notification",
+    "baseClass": "x-notification",
     "supportLevel": "stable",
     "accessibility": "high"
   },
@@ -25,7 +25,7 @@
         "error"
       ],
       "default": "info",
-      "appliesClass": "wb-notification--{{value}}"
+      "appliesClass": "x-notification--{{value}}"
     },
     "title": {
       "type": "string",
@@ -52,7 +52,7 @@
       "type": "boolean",
       "description": "Add shadow elevation",
       "default": false,
-      "appliesClass": "wb-notification--elevated"
+      "appliesClass": "x-notification--elevated"
     }
   },
   "$view": [
@@ -116,71 +116,71 @@
     }
   },
   "$cssAPI": {
-    "--wb-notification-padding": {
+    "--x-notification-padding": {
       "default": "1rem",
       "description": "Card padding"
     },
-    "--wb-notification-radius": {
+    "--x-notification-radius": {
       "default": "8px",
       "description": "Border radius"
     },
-    "--wb-notification-gap": {
+    "--x-notification-gap": {
       "default": "0.75rem",
       "description": "Gap between elements"
     },
-    "--wb-notification-icon-size": {
+    "--x-notification-icon-size": {
       "default": "1.25rem",
       "description": "Icon size"
     },
-    "--wb-notification-title-weight": {
+    "--x-notification-title-weight": {
       "default": "600",
       "description": "Title font weight"
     },
-    "--wb-notification-info-bg": {
+    "--x-notification-info-bg": {
       "default": "#e3f2fd",
       "description": "Info background"
     },
-    "--wb-notification-info-border": {
+    "--x-notification-info-border": {
       "default": "#2196f3",
       "description": "Info border color"
     },
-    "--wb-notification-info-color": {
+    "--x-notification-info-color": {
       "default": "#1565c0",
       "description": "Info text color"
     },
-    "--wb-notification-success-bg": {
+    "--x-notification-success-bg": {
       "default": "#e8f5e9",
       "description": "Success background"
     },
-    "--wb-notification-success-border": {
+    "--x-notification-success-border": {
       "default": "#4caf50",
       "description": "Success border"
     },
-    "--wb-notification-success-color": {
+    "--x-notification-success-color": {
       "default": "#2e7d32",
       "description": "Success text color"
     },
-    "--wb-notification-warning-bg": {
+    "--x-notification-warning-bg": {
       "default": "#fff3e0",
       "description": "Warning background"
     },
-    "--wb-notification-warning-border": {
+    "--x-notification-warning-border": {
       "default": "#ff9800",
       "description": "Warning border"
     },
-    "--wb-notification-warning-color": {
+    "--x-notification-warning-color": {
       "default": "#e65100",
       "description": "Warning text color"
     },
-    "--wb-notification-error-bg": {
+    "--x-notification-error-bg": {
       "default": "#ffebee",
       "description": "Error background"
     },
-    "--wb-notification-error-border": {
+    "--x-notification-error-border": {
       "default": "#f44336",
       "description": "Error border"
     },
-    "--wb-notification-error-color": {
+    "--x-notification-error-color": {
       "default": "#c62828",
       "description": "Error text color"
     }
@@ -201,16 +201,16 @@
   },
   "test": {
     "setup": [
-      "<wb-cardnotification>Basic cardnotification content</wb-cardnotification>",
-      "<wb-cardnotification variant=\"info\">variant=info</wb-cardnotification>",
-      "<wb-cardnotification variant=\"success\">variant=success</wb-cardnotification>",
-      "<wb-cardnotification variant=\"warning\">variant=warning</wb-cardnotification>",
-      "<wb-cardnotification dismissible>with dismissible</wb-cardnotification>",
-      "<wb-cardnotification elevated>with elevated</wb-cardnotification>",
-      "<wb-cardnotification title=\"Sample title\">title=\"Sample title\"</wb-cardnotification>",
-      "<wb-cardnotification message=\"Sample message\">message=\"Sample message\"</wb-cardnotification>",
-      "<wb-cardnotification message=\"Info message\"></wb-cardnotification>",
-      "<wb-cardnotification variant=\"success\" title=\"Success\" message=\"Done!\"></wb-cardnotification>"
+      "<div x-cardnotification>Basic cardnotification content</div>",
+      "<div x-cardnotification variant=\"info\">variant=info</div>",
+      "<div x-cardnotification variant=\"success\">variant=success</div>",
+      "<div x-cardnotification variant=\"warning\">variant=warning</div>",
+      "<div x-cardnotification dismissible>with dismissible</div>",
+      "<div x-cardnotification elevated>with elevated</div>",
+      "<div x-cardnotification title=\"Sample title\">title=\"Sample title\"</div>",
+      "<div x-cardnotification message=\"Sample message\">message=\"Sample message\"</div>",
+      "<div x-cardnotification message=\"Info message\"></div>",
+      "<div x-cardnotification variant=\"success\" title=\"Success\" message=\"Done!\"></div>"
     ],
     "matrix": {
       "combinations": [
@@ -241,9 +241,9 @@
     },
     "site": {
       "page": "cards",
-      "tag": "wb-cardnotification",
+      "tag": "x-cardnotification",
       "renders": true,
-      "baseClass": "wb-notification",
+      "baseClass": "x-notification",
       "minInstances": 5,
       "checkText": [
         "Info message",
@@ -253,7 +253,7 @@
         "Error!"
       ],
       "checkClasses": [
-        "wb-notification--success"
+        "x-notification--success"
       ],
       "checkAttributes": [
         "message"

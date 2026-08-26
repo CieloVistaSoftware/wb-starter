@@ -17,7 +17,7 @@
 >   `component | base | definition | behavior | page`.
 > - Recognized `page` as a valid tier (`home-page.schema.json`).
 > - `getComponentSchemas()` is now tier-aware (component-only).
-> - Setup-example validation accepts the v3 `x-*` attribute syntax (e.g. `<form x-form>`).
+> - Setup-example validation accepts the v3 `x-*` attribute syntax (e.g. `<form>`).
 > - Added missing `default`s (`collapse.target`, `behaviors.src`); purged the untracked
 >   `tmp/` tree and fixed the `.gitignore` pattern that never matched it.
 > - Compliance suite: the 10 schema/v3-syntax failures + the `tmp/` `html-ids` failure are
@@ -32,7 +32,7 @@
 
 Migrate all 41+ components to MVVM architecture using schema-driven DOM generation.
 
-**Goal**: User writes `<wb-card title="Hello">` → Framework builds semantic DOM from schema.
+**Goal**: User writes `<article title="Hello">` → Framework builds semantic DOM from schema.
 
 ## Golden Rule: Attributes Over Slots
 
@@ -43,16 +43,16 @@ Users provide simple attribute values. The schema defines how those values becom
 
 ```html
 <!-- ✅ CLEAN: User just sets values -->
-<wb-hero
+<div x-hero
   title="Explore"
   subtitle="Your journey"
   cta="Launch">
-</wb-hero>
+</div>
 <!-- ❌ UGLY: User must know internal slots -->
-<wb-hero>
+<div x-hero>
   <h1 slot="title">Explore</h1>
   <p slot="subtitle">Your journey</p>
-</wb-hero>
+</div>
 ```
 
 | Content Type | Use |
@@ -75,7 +75,7 @@ Users provide simple attribute values. The schema defines how those values becom
 ```json
 {
   "behavior": "card",
-  "baseClass": "wb-card",
+  "baseClass": "x-card",
   
   "properties": {
     "title":    { "type": "string" },
@@ -102,15 +102,15 @@ Users provide simple attribute values. The schema defines how those values becom
 }
 ```
 
-**Class auto-generation**: `{baseClass}__{name}` → `wb-card__header`
+**Class auto-generation**: `{baseClass}__{name}` → `x-card__header`
 
 ## Detection Triggers (Keep 2)
 
 | Trigger | Example | Status |
 |---------|---------|--------|
-| Web Component tag | `<wb-card>` | ✅ Keep |
-| Data attribute | `<article x-card>` | ✅ Keep |
-| ~~Class name~~ | ~~`<article class="wb-card">`~~ | ❌ Drop (CSS-only) |
+| Web Component tag | `<article>` | ✅ Keep |
+| Data attribute | `<article>` | ✅ Keep |
+| ~~Class name~~ | ~~`<article class="x-card">`~~ | ❌ Drop (CSS-only) |
 
 ## Schema Sections Explained
 
@@ -272,12 +272,12 @@ Since props, view, and methods are defined in schema, tests auto-generate:
 
 | Test Type | Input | Expected |
 |-----------|-------|----------|
-| No props | `<wb-card>` | main only |
+| No props | `<article>` | main only |
 | Title | `title="X"` | header + main |
 | Subtitle | `subtitle="X"` | header + main |
 | Footer | `footer="X"` | main + footer |
 | All props | `title + subtitle + footer` | header + main + footer |
-| Variant | `variant="glass"` | has `.wb-card--glass` |
+| Variant | `variant="glass"` | has `.x-card--glass` |
 | Method | `card.show()` | card visible |
 | Method | `card.hide()` | card hidden |
 

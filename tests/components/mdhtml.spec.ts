@@ -25,14 +25,14 @@ async function injectAndScan(page: Page, html: string) {
     container.innerHTML = h;
     
     // Force eager loading
-    const elements = container.querySelectorAll('.wb-ready');
+    const elements = container.querySelectorAll('.x-ready');
     elements.forEach(el => el.setAttribute('', ''));
     
     document.body.appendChild(container);
   }, html);
   
-  await page.evaluate(() => {
-    (window as any).WB.scan(document.getElementById('test-container'));
+  await page.evaluate(async () => {
+    await (window as any).WB.scan(document.getElementById('test-container'));
   });
   
   await page.waitForTimeout(500);
@@ -45,11 +45,11 @@ test.describe('mdhtml Behavior', () => {
     page.on('pageerror', (err) => errors.push(err.message));
     
     const setupHtml = [
-      "<wb-mdhtml>Basic mdhtml content</wb-mdhtml>",
-      "<wb-mdhtml sanitize>with sanitize</wb-mdhtml>",
-      "<wb-mdhtml gfm>with gfm</wb-mdhtml>",
-      "<wb-mdhtml src=\"Sample src\">src=\"Sample src\"</wb-mdhtml>",
-      "<wb-mdhtml sanitize gfm>Combined: with sanitize, with gfm</wb-mdhtml>"
+      "<div x-mdhtml>Basic mdhtml content</div>",
+      "<div x-mdhtml sanitize>with sanitize</div>",
+      "<div x-mdhtml gfm>with gfm</div>",
+      "<div x-mdhtml src=\"Sample src\">src=\"Sample src\"</div>",
+      "<div x-mdhtml sanitize gfm>Combined: with sanitize, with gfm</div>"
     ];
     
     await injectAndScan(page, setupHtml.join('\n'));
@@ -65,10 +65,10 @@ test.describe('mdhtml Behavior', () => {
   });
 
   test('element is visible after scan', async ({ page }) => {
-    const html = "<wb-mdhtml>Basic mdhtml content</wb-mdhtml>";
+    const html = "<div x-mdhtml>Basic mdhtml content</div>";
     await injectAndScan(page, html);
     
-    const el = page.locator('#test-container wb-mdhtml, #test-container wb-mdhtml').first();
+    const el = page.locator('#test-container [x-mdhtml], #test-container [x-mdhtml]').first();
     const isPresent = await el.count() > 0;
     
     if (isPresent) {

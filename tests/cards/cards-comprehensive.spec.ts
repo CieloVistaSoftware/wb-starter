@@ -50,33 +50,33 @@ test.describe('Base Cards', () => {
   test.describe('card (base)', () => {
     test('renders with title and subtitle', async ({ page }) => {
       await createTestPage(page, `
-        <wb-card data-title="Test Title" data-subtitle="Test Subtitle">
+        <article data-title="Test Title" data-subtitle="Test Subtitle">
           <p>Card content</p>
-        </wb-card>
+        </article>
       `);
       
-      const card = page.locator('wb-card');
+      const card = page.locator('.x-card');
       await expect(card).toBeVisible();
-      await expect(card).toHaveClass(/wb-card/);
+      await expect(card).toHaveClass(/x-card/);
       
       // Check title rendered
-      const title = card.locator('.wb-card__title, h3');
+      const title = card.locator('.x-card__title, h3');
       await expect(title).toContainText('Test Title');
       
       // Check subtitle rendered
-      const subtitle = card.locator('.wb-card__subtitle, p').first();
+      const subtitle = card.locator('.x-card__subtitle, p').first();
       await expect(subtitle).toContainText('Test Subtitle');
     });
     
     test('elevated variant has shadow', async ({ page }) => {
       await createTestPage(page, `
-        <wb-card data-title="Elevated" data-elevated="true">
+        <article data-title="Elevated" data-elevated="true">
           Content
-        </wb-card>
+        </article>
       `);
       
-      const card = page.locator('wb-card');
-      await expect(card).toHaveClass(/wb-card--elevated/);
+      const card = page.locator('.x-card');
+      await expect(card).toHaveClass(/x-card--elevated/);
       
       const boxShadow = await card.evaluate(el => getComputedStyle(el).boxShadow);
       expect(boxShadow).not.toBe('none');
@@ -84,13 +84,13 @@ test.describe('Base Cards', () => {
     
     test('clickable variant is interactive', async ({ page }) => {
       await createTestPage(page, `
-        <wb-card data-title="Clickable" data-clickable="true">
+        <article data-title="Clickable" data-clickable="true">
           Click me
-        </wb-card>
+        </article>
       `);
       
-      const card = page.locator('wb-card');
-      await expect(card).toHaveClass(/wb-card--clickable/);
+      const card = page.locator('.x-card');
+      await expect(card).toHaveClass(/x-card--clickable/);
       await expect(card).toHaveAttribute('role', 'button');
       await expect(card).toHaveAttribute('tabindex', '0');
       
@@ -100,49 +100,49 @@ test.describe('Base Cards', () => {
     
     test('glass variant has backdrop filter', async ({ page }) => {
       await createTestPage(page, `
-        <wb-card data-title="Glass" data-variant="glass">
+        <article data-title="Glass" data-variant="glass">
           Glass effect
-        </wb-card>
+        </article>
       `);
       
-      const card = page.locator('wb-card');
-      await expect(card).toHaveClass(/wb-card--glass/);
+      const card = page.locator('.x-card');
+      await expect(card).toHaveClass(/x-card--glass/);
     });
   });
   
   test.describe('cardlink', () => {
     test('renders with href and navigates', async ({ page }) => {
       await createTestPage(page, `
-        <wb-cardlink data-title="Link Card" data-href="https://example.com" data-target="_blank">
+        <div x-cardlink data-title="Link Card" data-href="https://example.com" data-target="_blank">
           Click to navigate
-        </wb-cardlink>
+        </div>
       `);
       
-      const card = page.locator('wb-cardlink');
+      const card = page.locator('[x-cardlink]');
       await expect(card).toBeVisible();
       await expect(card).toHaveAttribute('role', 'link');
     });
     
     test('shows external indicator for _blank target', async ({ page }) => {
       await createTestPage(page, `
-        <wb-cardlink data-title="External" data-href="https://example.com" data-target="_blank">
+        <div x-cardlink data-title="External" data-href="https://example.com" data-target="_blank">
           External link
-        </wb-cardlink>
+        </div>
       `);
       
-      const card = page.locator('wb-cardlink');
+      const card = page.locator('[x-cardlink]');
       // Should show ↗ indicator
       await expect(card).toContainText('↗');
     });
     
     test('renders badge when provided', async ({ page }) => {
       await createTestPage(page, `
-        <wb-cardlink data-title="With Badge" data-badge="NEW" data-href="#">
+        <div x-cardlink data-title="With Badge" data-badge="NEW" data-href="#">
           Has badge
-        </wb-cardlink>
+        </div>
       `);
       
-      const card = page.locator('wb-cardlink');
+      const card = page.locator('[x-cardlink]');
       await expect(card).toContainText('NEW');
     });
   });
@@ -150,18 +150,18 @@ test.describe('Base Cards', () => {
   test.describe('cardbutton', () => {
     test('renders with primary and secondary buttons', async ({ page }) => {
       await createTestPage(page, `
-        <wb-cardbutton data-title="Action Card" data-primary="Submit" data-secondary="Cancel">
+        <div x-cardbutton data-title="Action Card" data-primary="Submit" data-secondary="Cancel">
           Card with buttons
-        </wb-cardbutton>
+        </div>
       `);
       
-      const card = page.locator('wb-cardbutton');
+      const card = page.locator('[x-cardbutton]');
       await expect(card).toBeVisible();
       
-      const primaryBtn = card.locator('.wb-card__btn--primary, button:has-text("Submit")');
+      const primaryBtn = card.locator('.x-card__btn--primary, button:has-text("Submit")');
       await expect(primaryBtn).toBeVisible();
       
-      const secondaryBtn = card.locator('.wb-card__btn--secondary, button:has-text("Cancel")');
+      const secondaryBtn = card.locator('.x-card__btn--secondary, button:has-text("Cancel")');
       await expect(secondaryBtn).toBeVisible();
     });
   });
@@ -172,15 +172,15 @@ test.describe('Content Cards', () => {
   test.describe('cardprofile', () => {
     test('renders with name, role, avatar', async ({ page }) => {
       await createTestPage(page, `
-        <wb-cardprofile 
+        <div x-cardprofile 
           data-name="John Doe" 
           data-role="Developer" 
           data-avatar="https://i.pravatar.cc/80?u=1"
           data-bio="Building cool stuff">
-        </wb-cardprofile>
+        </div>
       `);
       
-      const card = page.locator('wb-cardprofile');
+      const card = page.locator('[x-cardprofile]');
       await expect(card).toBeVisible();
       
       // Check name
@@ -199,14 +199,14 @@ test.describe('Content Cards', () => {
     
     test('renders cover image when provided', async ({ page }) => {
       await createTestPage(page, `
-        <wb-cardprofile 
+        <div x-cardprofile 
           data-name="Jane Smith" 
           data-cover="https://picsum.photos/400/100">
-        </wb-cardprofile>
+        </div>
       `);
       
-      const card = page.locator('wb-cardprofile');
-      const cover = card.locator('.wb-card__cover, .wb-card__profile-cover, figure');
+      const card = page.locator('[x-cardprofile]');
+      const cover = card.locator('.x-card__cover, .x-card__profile-cover, figure');
       await expect(cover.first()).toBeVisible();
     });
   });
@@ -214,15 +214,15 @@ test.describe('Content Cards', () => {
   test.describe('cardtestimonial', () => {
     test('renders with quote, author, rating', async ({ page }) => {
       await createTestPage(page, `
-        <wb-cardtestimonial 
+        <div x-cardtestimonial 
           data-quote="This product is amazing!" 
           data-author="Jane Smith" 
           data-role="CEO" 
           data-rating="5">
-        </wb-cardtestimonial>
+        </div>
       `);
       
-      const card = page.locator('wb-cardtestimonial');
+      const card = page.locator('[x-cardtestimonial]');
       await expect(card).toBeVisible();
       
       // Check quote
@@ -242,14 +242,14 @@ test.describe('Media Cards', () => {
   test.describe('cardimage', () => {
     test('renders image with correct src and alt', async ({ page }) => {
       await createTestPage(page, `
-        <wb-cardimage 
+        <div x-cardimage 
           data-src="https://picsum.photos/400/300" 
           data-alt="Test image"
           data-title="Image Title">
-        </wb-cardimage>
+        </div>
       `);
       
-      const card = page.locator('wb-cardimage');
+      const card = page.locator('[x-cardimage]');
       await expect(card).toBeVisible();
       
       const img = card.locator('img');
@@ -261,13 +261,13 @@ test.describe('Media Cards', () => {
     
     test('respects aspect ratio', async ({ page }) => {
       await createTestPage(page, `
-        <wb-cardimage 
+        <div x-cardimage 
           data-src="https://picsum.photos/400/400" 
           data-aspect="1/1">
-        </wb-cardimage>
+        </div>
       `);
       
-      const card = page.locator('wb-cardimage');
+      const card = page.locator('[x-cardimage]');
       const figure = card.locator('figure');
       
       const aspectRatio = await figure.evaluate(el => getComputedStyle(el).aspectRatio);
@@ -278,13 +278,13 @@ test.describe('Media Cards', () => {
   test.describe('cardvideo', () => {
     test('renders video element with controls', async ({ page }) => {
       await createTestPage(page, `
-        <wb-cardvideo 
+        <div x-cardvideo 
           data-src="https://www.w3schools.com/html/mov_bbb.mp4"
           data-title="Video Title">
-        </wb-cardvideo>
+        </div>
       `);
       
-      const card = page.locator('wb-cardvideo');
+      const card = page.locator('[x-cardvideo]');
       await expect(card).toBeVisible();
       
       const video = card.locator('video');
@@ -296,14 +296,14 @@ test.describe('Media Cards', () => {
   test.describe('cardfile', () => {
     test('renders file info with icon', async ({ page }) => {
       await createTestPage(page, `
-        <wb-cardfile 
+        <div x-cardfile 
           data-filename="document.pdf" 
           data-type="pdf" 
           data-size="2.5 MB">
-        </wb-cardfile>
+        </div>
       `);
       
-      const card = page.locator('wb-cardfile');
+      const card = page.locator('[x-cardfile]');
       await expect(card).toBeVisible();
       
       await expect(card).toContainText('document.pdf');
@@ -319,13 +319,13 @@ test.describe('Data Cards', () => {
   test.describe('cardstats', () => {
     test('renders value and label', async ({ page }) => {
       await createTestPage(page, `
-        <wb-cardstats 
+        <div x-cardstats 
           data-value="1,234" 
           data-label="Total Users">
-        </wb-cardstats>
+        </div>
       `);
       
-      const card = page.locator('wb-cardstats');
+      const card = page.locator('[x-cardstats]');
       await expect(card).toBeVisible();
       
       await expect(card).toContainText('1,234');
@@ -334,29 +334,29 @@ test.describe('Data Cards', () => {
     
     test('shows trend indicator', async ({ page }) => {
       await createTestPage(page, `
-        <wb-cardstats 
+        <div x-cardstats 
           data-value="$50K" 
           data-label="Revenue" 
           data-trend="up" 
           data-trend-value="+12%">
-        </wb-cardstats>
+        </div>
       `);
       
-      const card = page.locator('wb-cardstats');
+      const card = page.locator('[x-cardstats]');
       await expect(card).toContainText('+12%');
       await expect(card).toContainText('↑');
     });
     
     test('shows icon when provided', async ({ page }) => {
       await createTestPage(page, `
-        <wb-cardstats 
+        <div x-cardstats 
           data-value="42" 
           data-label="Projects" 
           data-icon="🚀">
-        </wb-cardstats>
+        </div>
       `);
       
-      const card = page.locator('wb-cardstats');
+      const card = page.locator('[x-cardstats]');
       await expect(card).toContainText('🚀');
     });
   });
@@ -364,16 +364,16 @@ test.describe('Data Cards', () => {
   test.describe('cardpricing', () => {
     test('renders plan, price, and features', async ({ page }) => {
       await createTestPage(page, `
-        <wb-cardpricing 
+        <div x-cardpricing 
           data-plan="Pro" 
           data-price="$29" 
           data-period="/month"
           data-features="Feature 1,Feature 2,Feature 3"
           data-cta="Get Started">
-        </wb-cardpricing>
+        </div>
       `);
       
-      const card = page.locator('wb-cardpricing');
+      const card = page.locator('[x-cardpricing]');
       await expect(card).toBeVisible();
       
       await expect(card).toContainText('Pro');
@@ -386,14 +386,14 @@ test.describe('Data Cards', () => {
     
     test('featured variant has special styling', async ({ page }) => {
       await createTestPage(page, `
-        <wb-cardpricing 
+        <div x-cardpricing 
           data-plan="Pro" 
           data-price="$29" 
           data-featured="true">
-        </wb-cardpricing>
+        </div>
       `);
       
-      const card = page.locator('wb-cardpricing');
+      const card = page.locator('[x-cardpricing]');
       
       // Should have featured border or transform
       const border = await card.evaluate(el => getComputedStyle(el).border);
@@ -408,16 +408,16 @@ test.describe('Data Cards', () => {
   test.describe('cardproduct', () => {
     test('renders product with price and CTA', async ({ page }) => {
       await createTestPage(page, `
-        <wb-cardproduct 
+        <div x-cardproduct 
           data-title="Product Name"
           data-image="https://picsum.photos/200"
           data-price="$99"
           data-rating="4.5"
           data-cta="Add to Cart">
-        </wb-cardproduct>
+        </div>
       `);
       
-      const card = page.locator('wb-cardproduct');
+      const card = page.locator('[x-cardproduct]');
       await expect(card).toBeVisible();
       
       await expect(card).toContainText('Product Name');
@@ -432,17 +432,17 @@ test.describe('Interactive Cards', () => {
   test.describe('cardexpandable', () => {
     test('expands and collapses on button click', async ({ page }) => {
       await createTestPage(page, `
-        <wb-cardexpandable 
+        <div x-cardexpandable 
           data-title="Expandable" 
           data-content="<p>Hidden content that can be revealed</p>">
-        </wb-cardexpandable>
+        </div>
       `);
       
-      const card = page.locator('wb-cardexpandable');
+      const card = page.locator('[x-cardexpandable]');
       await expect(card).toBeVisible();
       
       // Find expand button
-      const expandBtn = card.locator('.wb-card__expand-btn, button:has-text("Show")');
+      const expandBtn = card.locator('.x-card__expand-btn, button:has-text("Show")');
       await expect(expandBtn).toBeVisible();
       
       // Click to expand
@@ -450,48 +450,48 @@ test.describe('Interactive Cards', () => {
       await page.waitForTimeout(400);
       
       // Check expanded state
-      await expect(card).toHaveClass(/wb-card--expanded/);
+      await expect(card).toHaveClass(/x-card--expanded/);
       
       // Click again to collapse
       await expandBtn.click();
       await page.waitForTimeout(400);
       
-      await expect(card).not.toHaveClass(/wb-card--expanded/);
+      await expect(card).not.toHaveClass(/x-card--expanded/);
     });
     
     test('starts expanded when data-expanded="true"', async ({ page }) => {
       await createTestPage(page, `
-        <wb-cardexpandable 
+        <div x-cardexpandable 
           data-title="Pre-expanded" 
           data-expanded="true">
-        </wb-cardexpandable>
+        </div>
       `);
       
-      const card = page.locator('wb-cardexpandable');
-      await expect(card).toHaveClass(/wb-card--expanded/);
+      const card = page.locator('[x-cardexpandable]');
+      await expect(card).toHaveClass(/x-card--expanded/);
     });
   });
   
   test.describe('cardminimizable', () => {
     test('minimizes and expands on button click', async ({ page }) => {
       await createTestPage(page, `
-        <wb-cardminimizable 
+        <div x-cardminimizable 
           data-title="Minimizable Card"
           data-content="<p>Content that can be minimized</p>">
-        </wb-cardminimizable>
+        </div>
       `);
       
-      const card = page.locator('wb-cardminimizable');
-      await expect(card).toHaveClass(/wb-card--minimizable/);
+      const card = page.locator('[x-cardminimizable]');
+      await expect(card).toHaveClass(/x-card--minimizable/);
       
-      const minBtn = card.locator('.wb-card__minimize-btn, button');
+      const minBtn = card.locator('.x-card__minimize-btn, button');
       await expect(minBtn).toBeVisible();
       
       // Click to minimize
       await minBtn.click();
       await page.waitForTimeout(400);
       
-      await expect(card).toHaveClass(/wb-card--minimized/);
+      await expect(card).toHaveClass(/x-card--minimized/);
     });
   });
   
@@ -499,18 +499,18 @@ test.describe('Interactive Cards', () => {
     test('has drag handle and can be dragged', async ({ page }) => {
       await createTestPage(page, `
         <div style="position: relative; width: 500px; height: 500px;">
-          <wb-carddraggable 
+          <div x-carddraggable 
             data-title="Drag Me"
             style="position: absolute; top: 50px; left: 50px;">
             Draggable content
-          </wb-carddraggable>
+          </div>
         </div>
       `);
       
-      const card = page.locator('wb-carddraggable');
-      await expect(card).toHaveClass(/wb-card--draggable/);
+      const card = page.locator('[x-carddraggable]');
+      await expect(card).toHaveClass(/x-card--draggable/);
       
-      const handle = card.locator('.wb-card__drag-handle, header');
+      const handle = card.locator('.x-card__drag-handle, header');
       await expect(handle).toBeVisible();
       
       // Check cursor is grab
@@ -522,15 +522,15 @@ test.describe('Interactive Cards', () => {
   test.describe('cardoverlay', () => {
     test('renders with background image and text overlay', async ({ page }) => {
       await createTestPage(page, `
-        <wb-cardoverlay 
+        <div x-cardoverlay 
           data-title="Overlay Title"
           data-subtitle="Overlay subtitle"
           data-image="https://picsum.photos/400/300"
           data-height="300px">
-        </wb-cardoverlay>
+        </div>
       `);
       
-      const card = page.locator('wb-cardoverlay');
+      const card = page.locator('[x-cardoverlay]');
       await expect(card).toBeVisible();
       
       await expect(card).toContainText('Overlay Title');
@@ -551,14 +551,14 @@ test.describe('Notification Cards', () => {
     for (const variant of variants) {
       test(`renders ${variant} variant with correct styling`, async ({ page }) => {
         await createTestPage(page, `
-          <wb-cardnotification 
+          <div x-cardnotification 
             data-type="${variant}"
             data-title="${variant.charAt(0).toUpperCase() + variant.slice(1)}"
             data-message="This is a ${variant} notification">
-          </wb-cardnotification>
+          </div>
         `);
         
-        const card = page.locator('wb-cardnotification');
+        const card = page.locator('[x-cardnotification]');
         await expect(card).toBeVisible();
         await expect(card).toHaveAttribute('role', 'alert');
         
@@ -568,15 +568,15 @@ test.describe('Notification Cards', () => {
     
     test('dismissible notification can be closed', async ({ page }) => {
       await createTestPage(page, `
-        <wb-cardnotification 
+        <div x-cardnotification 
           data-type="info"
           data-message="Dismissible notification"
           data-dismissible="true">
-        </wb-cardnotification>
+        </div>
       `);
       
-      const card = page.locator('wb-cardnotification');
-      const closeBtn = card.locator('.wb-notification__dismiss, button[aria-label*="Dismiss"]');
+      const card = page.locator('[x-cardnotification]');
+      const closeBtn = card.locator('.x-notification__dismiss, button[aria-label*="Dismiss"]');
       
       await expect(closeBtn).toBeVisible();
       
@@ -593,16 +593,16 @@ test.describe('Hero Cards', () => {
   test.describe('cardhero', () => {
     test('renders with background, title, subtitle, and CTA', async ({ page }) => {
       await createTestPage(page, `
-        <wb-cardhero 
+        <div x-cardhero 
           data-title="Hero Title"
           data-subtitle="Hero subtitle text"
           data-cta="Get Started"
           data-cta-href="#start"
           data-height="400px">
-        </wb-cardhero>
+        </div>
       `);
       
-      const card = page.locator('wb-cardhero');
+      const card = page.locator('[x-cardhero]');
       await expect(card).toBeVisible();
       
       await expect(card).toContainText('Hero Title');
@@ -612,27 +612,27 @@ test.describe('Hero Cards', () => {
     
     test('xalign positions content correctly', async ({ page }) => {
       await createTestPage(page, `
-        <wb-cardhero 
+        <div x-cardhero 
           data-title="Left Aligned"
           data-xalign="left">
-        </wb-cardhero>
+        </div>
       `);
       
-      const card = page.locator('wb-cardhero');
-      await expect(card).toHaveClass(/wb-card--xalign-left/);
+      const card = page.locator('[x-cardhero]');
+      await expect(card).toHaveClass(/x-card--xalign-left/);
     });
   });
 });
 
 test.describe('Theme Control', () => {
   
-  test('wb-themecontrol renders and changes theme', async ({ page }) => {
+  test('[x-themecontrol] renders and changes theme', async ({ page }) => {
     await createTestPage(page, `
-      <wb-themecontrol></wb-themecontrol>
-      <wb-card data-title="Test Card">Content</wb-card>
+      <div x-themecontrol></div>
+      <article data-title="Test Card">Content</article>
     `);
     
-    const themeControl = page.locator('wb-themecontrol');
+    const themeControl = page.locator('[x-themecontrol]');
     await expect(themeControl).toBeVisible();
     
     // Find and click a theme option
@@ -648,14 +648,14 @@ test.describe('Animation Effects', () => {
   
   test('bounce animation triggers correctly', async ({ page }) => {
     await createTestPage(page, `
-      <wb-card data-title="Animated" id="animated-card">
+      <article data-title="Animated" id="animated-card">
         Click for animation
-      </wb-card>
+      </article>
       <script type="module">
         const card = document.getElementById('animated-card');
         card.addEventListener('click', () => {
-          card.classList.add('wb-animate-bounce');
-          setTimeout(() => card.classList.remove('wb-animate-bounce'), 1000);
+          card.classList.add('x-animate-bounce');
+          setTimeout(() => card.classList.remove('x-animate-bounce'), 1000);
         });
       </script>
     `);
@@ -664,7 +664,7 @@ test.describe('Animation Effects', () => {
     await card.click();
     
     // Check animation class was added
-    await expect(card).toHaveClass(/wb-animate-bounce/);
+    await expect(card).toHaveClass(/x-animate-bounce/);
   });
 });
 

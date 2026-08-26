@@ -1,3 +1,4 @@
+import { readFlag, readAttr } from '../../core/read-attr.js';
 /**
  * DL - Enhanced <dl> element (Description List)
  * Adds styling variants, term/definition formatting
@@ -10,14 +11,14 @@ export function dl(element, options = {}) {
   }
 
   const config = {
-    variant: options.variant || element.dataset.variant || 'vertical',
-    gap: options.gap || element.dataset.gap || '0.5rem',
-    bordered: options.bordered ?? element.hasAttribute('data-bordered'),
-    striped: options.striped ?? element.hasAttribute('data-striped'),
+    variant: options.variant || readAttr(element, 'variant') || 'vertical',
+    gap: options.gap || readAttr(element, 'gap') || '0.5rem',
+    bordered: options.bordered ?? readFlag(element, 'bordered'),
+    striped: options.striped ?? readFlag(element, 'striped'),
     ...options
   };
 
-  element.classList.add('wb-dl');
+  element.classList.add('x-dl');
 
   // Apply variant styling
   if (config.variant === 'horizontal') {
@@ -34,7 +35,7 @@ export function dl(element, options = {}) {
   // Style dt (term) elements
   const terms = element.querySelectorAll('dt');
   terms.forEach(dt => {
-    dt.classList.add('wb-dl__term');
+    dt.classList.add('x-dl__term');
     dt.style.fontWeight = '600';
     dt.style.color = 'var(--text-primary, #f9fafb)';
 
@@ -46,7 +47,7 @@ export function dl(element, options = {}) {
   // Style dd (definition) elements
   const definitions = element.querySelectorAll('dd');
   definitions.forEach((dd, index) => {
-    dd.classList.add('wb-dl__definition');
+    dd.classList.add('x-dl__definition');
     dd.style.margin = '0';
     dd.style.color = 'var(--text-secondary, #9ca3af)';
 
@@ -70,9 +71,9 @@ export function dl(element, options = {}) {
   }
 
   return () => {
-    element.classList.remove('wb-dl');
-    terms.forEach(dt => dt.classList.remove('wb-dl__term'));
-    definitions.forEach(dd => dd.classList.remove('wb-dl__definition'));
+    element.classList.remove('x-dl');
+    terms.forEach(dt => dt.classList.remove('x-dl__term'));
+    definitions.forEach(dd => dd.classList.remove('x-dl__definition'));
   };
 }
 

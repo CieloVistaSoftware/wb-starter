@@ -1,74 +1,71 @@
 /* Layout custom elements extracted from site.css */
-wb-flex, wb-stack, wb-cluster, wb-container,
-wb-row, wb-column,
-wb-sidebar, wb-center, wb-cover, wb-masonry, wb-switcher,
-wb-reel, wb-frame, wb-sticky, wb-drawer, wb-icon {
+x-flex, x-stack, x-cluster, x-container,
+x-row, x-column,
+x-sidebar, x-center, x-cover, x-masonry, x-switcher,
+x-reel, x-frame, x-sticky, x-drawer, x-icon {
   display: block;
 }
 
-/* wb-grid gets its own grid-shaped default here (not lumped in with the
+/* x-grid gets its own grid-shaped default here (not lumped in with the
    block-display group above) matching layouts.js's grid() 3-column
    default (defaultMins['3'] = '250px'). grid() itself only runs once
-   wb-grid.js's module has loaded/executed and the custom element upgrades
+   x-grid.js's module has loaded/executed and the custom element upgrades
    -- setting display:grid/grid-template-columns purely via JS inline
    styles left a real gap: this tag painted as block (single column) on
    first paint, then reflowed into a multi-column grid once JS caught up.
    That gap used to be hidden by how slow the old 46-file @import CSS
    chain made first paint (JS had time to finish first); JIT CSS loading
    made first paint fast enough to expose it (confirmed live via Chrome
-   DevTools Performance: wb-grid.wb-grid alone scored 0.1327 of a 0.14
+   DevTools Performance: x-grid.x-grid alone scored 0.1327 of a 0.14
    total CLS). Inline styles set by grid() always win over this stylesheet
    rule, so custom columns/gap/minWidth configs still apply correctly --
    for the common default case they now just match what's already
    painted, so there's nothing left to shift. */
-wb-grid {
+x-grid {
   display: grid;
   gap: 1rem;
   grid-template-columns: repeat(auto-fit, minmax(min(250px, 100%), 1fr));
 }
 
-wb-drawer {
+x-drawer {
   visibility: hidden;
 }
-/* .wb-drawer-layout: enhanced by drawerLayout() (layouts.js) as a page-shell
-   panel. .wb-drawer-trigger: enhanced by drawer() (overlay.js) as a
+/* .x-drawer-layout: enhanced by drawerLayout() (layouts.js) as a page-shell
+   panel. .x-drawer-trigger: enhanced by drawer() (overlay.js) as a
    self-triggering button (drawer-behavior root cause -- without this, every
-   <wb-drawer title="…" content="…">Label</wb-drawer> trigger stayed
+   <div x-drawer title="…" content="…">Label</div> trigger stayed
    invisible even after drawer()'s click handler was correctly attached,
-   because this base rule hides every <wb-drawer> that isn't a
-   .wb-drawer-layout). Same specificity as the rule above by design -- this
+   because this base rule hides every <div x-drawer> that isn't a
+   .x-drawer-layout). Same specificity as the rule above by design -- this
    just extends its selector list, not a new override. */
-wb-drawer.wb-drawer-layout,
-wb-drawer.wb-drawer-trigger {
+x-drawer.x-drawer-layout,
+x-drawer.x-drawer-trigger {
   visibility: visible;
 }
 
-/* wb-grid: alt-rows zebra striping (#281) — themed, no literal colors */
-.wb-grid--alt-rows > *:nth-child(even) {
+/* x-grid: alt-rows zebra striping (#281) — themed, no literal colors */
+.x-grid--alt-rows > *:nth-child(even) {
   background: var(--bg-secondary);
 }
 
-.wb-grid__header {
+.x-grid__header {
   font-weight: 600;
   padding: 0.5rem;
   border-bottom: 2px solid var(--border-color);
   color: var(--text-secondary);
 }
 
-.site {
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  background: var(--bg-color);
-  color: var(--text-primary);
-}
-
-.site__body {
-  display: flex;
-  flex: 1;
-  overflow-y: auto;
-  height: calc(100vh - 60px);
-}
+/* #636: .site/.site__body's real, authoritative definitions live in
+   site.css (the shell stylesheet, loaded eagerly) -- these were a stale,
+   forgotten duplicate that had drifted out of sync, including a hardcoded
+   `height: calc(100vh - 60px)` on .site__body that site.css's own comment
+   says was deliberately removed as "dead, misleading code" once flex-basis
+   took over sizing. Since layout.css is lazily loaded (only when a page
+   uses a layout behavior) it can load AFTER site.css, letting this stale
+   copy win the cascade on same-specificity properties on any page that
+   happens to use x-grid/x-flex/x-stack/etc. Removed entirely rather
+   than re-synced -- these selectors don't belong in a BEHAVIOR stylesheet
+   at all, only the shell's own site.css should ever define them. */
 
 .site__main {
   flex: 1;

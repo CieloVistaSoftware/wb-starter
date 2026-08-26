@@ -30,38 +30,38 @@
   "sections": [
     {
       "heading": "badge — Combinations",
-      "tag": "wb-badge",
+      "tag": "x-badge",
       "columns": 3,
       "demos": [
         {
-          "tag": "wb-badge",
+          "tag": "x-badge",
           "attrs": {
             "label": "New"
           }
         },
         {
-          "tag": "wb-badge",
+          "tag": "x-badge",
           "attrs": {
             "label": "Done",
             "variant": "success"
           }
         },
         {
-          "tag": "wb-badge",
+          "tag": "x-badge",
           "attrs": {
             "label": "Warning",
             "variant": "warning"
           }
         },
         {
-          "tag": "wb-badge",
+          "tag": "x-badge",
           "attrs": {
             "label": "Error",
             "variant": "error"
           }
         },
         {
-          "tag": "wb-badge",
+          "tag": "x-badge",
           "attrs": {
             "label": "5",
             "variant": "primary",
@@ -69,14 +69,14 @@
           }
         },
         {
-          "tag": "wb-badge",
+          "tag": "x-badge",
           "attrs": {
             "variant": "success",
             "dot": true
           }
         },
         {
-          "tag": "wb-badge",
+          "tag": "x-badge",
           "attrs": {
             "label": "Tag",
             "variant": "info",
@@ -84,7 +84,7 @@
           }
         },
         {
-          "tag": "wb-badge",
+          "tag": "x-badge",
           "attrs": {
             "label": "Outline",
             "variant": "primary",
@@ -95,47 +95,47 @@
     },
     {
       "heading": "variant variants",
-      "tag": "wb-badge",
+      "tag": "x-badge",
       "columns": 3,
       "demos": [
         {
-          "tag": "wb-badge",
+          "tag": "x-badge",
           "attrs": {
             "variant": "default"
           }
         },
         {
-          "tag": "wb-badge",
+          "tag": "x-badge",
           "attrs": {
             "variant": "primary"
           }
         },
         {
-          "tag": "wb-badge",
+          "tag": "x-badge",
           "attrs": {
             "variant": "secondary"
           }
         },
         {
-          "tag": "wb-badge",
+          "tag": "x-badge",
           "attrs": {
             "variant": "success"
           }
         },
         {
-          "tag": "wb-badge",
+          "tag": "x-badge",
           "attrs": {
             "variant": "warning"
           }
         },
         {
-          "tag": "wb-badge",
+          "tag": "x-badge",
           "attrs": {
             "variant": "error"
           }
         },
         {
-          "tag": "wb-badge",
+          "tag": "x-badge",
           "attrs": {
             "variant": "info"
           }
@@ -144,29 +144,29 @@
     },
     {
       "heading": "size variants",
-      "tag": "wb-badge",
+      "tag": "x-badge",
       "columns": 2,
       "demos": [
         {
-          "tag": "wb-badge",
+          "tag": "x-badge",
           "attrs": {
             "size": "xs"
           }
         },
         {
-          "tag": "wb-badge",
+          "tag": "x-badge",
           "attrs": {
             "size": "sm"
           }
         },
         {
-          "tag": "wb-badge",
+          "tag": "x-badge",
           "attrs": {
             "size": "md"
           }
         },
         {
-          "tag": "wb-badge",
+          "tag": "x-badge",
           "attrs": {
             "size": "lg"
           }
@@ -175,29 +175,29 @@
     },
     {
       "heading": "Boolean toggles",
-      "tag": "wb-badge",
+      "tag": "x-badge",
       "columns": 3,
       "demos": [
         {
-          "tag": "wb-badge",
+          "tag": "x-badge",
           "attrs": {
             "pill": true
           }
         },
         {
-          "tag": "wb-badge",
+          "tag": "x-badge",
           "attrs": {
             "dot": true
           }
         },
         {
-          "tag": "wb-badge",
+          "tag": "x-badge",
           "attrs": {
             "outline": true
           }
         },
         {
-          "tag": "wb-badge",
+          "tag": "x-badge",
           "attrs": {
             "removable": true
           }

@@ -41,7 +41,7 @@ test.describe('Lightbox reads data-src on non-<img> triggers (#374)', () => {
     const expectedSrc = await trigger.getAttribute('data-src');
     await trigger.click();
 
-    const lightboxImg = page.locator('.wb-lightbox img');
+    const lightboxImg = page.locator('.x-lightbox img');
     await expect(lightboxImg).toBeVisible({ timeout: 5000 });
 
     const actualSrc = await lightboxImg.getAttribute('src');
@@ -62,7 +62,7 @@ test.describe('Lightbox reads data-src on non-<img> triggers (#374)', () => {
     const expectedSrc = await trigger.getAttribute('src');
     await trigger.click();
 
-    const lightboxImg = page.locator('.wb-lightbox img');
+    const lightboxImg = page.locator('.x-lightbox img');
     await expect(lightboxImg).toBeVisible({ timeout: 5000 });
     await expect(lightboxImg).toHaveAttribute('src', expectedSrc!);
   });

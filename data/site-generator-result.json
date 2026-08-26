@@ -1,16 +1,541 @@
 {
-  "generatedAt": "2026-08-05T20:10:38.686Z",
-  "siteSchema": "config/site.json",
+  "generatedAt": "2026-08-25T18:59:24.702Z",
+  "siteSchema": "src/wb-models/pages/x-component-library.site.json",
   "outputDir": "C:\\Users\\jwpmi\\Downloads\\AI\\wb-starter\\demos\\site",
-  "elapsed": "0.0s",
+  "elapsed": "1.1s",
   "summary": {
-    "totalPages": 0,
-    "generated": 0,
+    "totalPages": 8,
+    "generated": 8,
     "errors": 0,
     "skipped": 0,
-    "totalComponents": 0,
-    "totalSections": 0,
-    "totalDemos": 0
+    "totalComponents": 70,
+    "totalSections": 208,
+    "totalDemos": 772
   },
-  "pages": []
+  "pages": [
+    {
+      "id": "cards",
+      "title": "Card Components",
+      "description": "18 card variants — from simple to portfolio, pricing to testimonials",
+      "icon": "🃏",
+      "status": "ok",
+      "filename": "cards.html",
+      "componentCount": 19,
+      "sectionCount": 66,
+      "totalDemos": 259,
+      "components": [
+        {
+          "name": "card",
+          "status": "ok",
+          "sections": 4,
+          "demos": 21
+        },
+        {
+          "name": "cardbutton",
+          "status": "ok",
+          "sections": 2,
+          "demos": 6
+        },
+        {
+          "name": "carddraggable",
+          "status": "ok",
+          "sections": 4,
+          "demos": 11
+        },
+        {
+          "name": "cardexpandable",
+          "status": "ok",
+          "sections": 3,
+          "demos": 7
+        },
+        {
+          "name": "cardfile",
+          "status": "ok",
+          "sections": 3,
+          "demos": 13
+        },
+        {
+          "name": "cardhero",
+          "status": "ok",
+          "sections": 4,
+          "demos": 16
+        },
+        {
+          "name": "cardhorizontal",
+          "status": "ok",
+          "sections": 3,
+          "demos": 10
+        },
+        {
+          "name": "cardimage",
+          "status": "ok",
+          "sections": 6,
+          "demos": 28
+        },
+        {
+          "name": "cardlink",
+          "status": "ok",
+          "sections": 3,
+          "demos": 13
+        },
+        {
+          "name": "cardminimizable",
+          "status": "ok",
+          "sections": 3,
+          "demos": 6
+        },
+        {
+          "name": "cardnotification",
+          "status": "ok",
+          "sections": 3,
+          "demos": 10
+        },
+        {
+          "name": "cardoverlay",
+          "status": "ok",
+          "sections": 4,
+          "demos": 16
+        },
+        {
+          "name": "cardportfolio",
+          "status": "ok",
+          "sections": 4,
+          "demos": 18
+        },
+        {
+          "name": "cardpricing",
+          "status": "ok",
+          "sections": 3,
+          "demos": 11
+        },
+        {
+          "name": "cardproduct",
+          "status": "ok",
+          "sections": 3,
+          "demos": 10
+        },
+        {
+          "name": "cardprofile",
+          "status": "ok",
+          "sections": 3,
+          "demos": 14
+        },
+        {
+          "name": "cardstats",
+          "status": "ok",
+          "sections": 3,
+          "demos": 14
+        },
+        {
+          "name": "cardtestimonial",
+          "status": "ok",
+          "sections": 3,
+          "demos": 16
+        },
+        {
+          "name": "cardvideo",
+          "status": "ok",
+          "sections": 4,
+          "demos": 19
+        }
+      ]
+    },
+    {
+      "id": "feedback",
+      "title": "Feedback & Status",
+      "description": "Alerts, badges, progress bars, ratings, spinners, toasts, tooltips",
+      "icon": "🔔",
+      "status": "ok",
+      "filename": "feedback.html",
+      "componentCount": 10,
+      "sectionCount": 40,
+      "totalDemos": 210,
+      "components": [
+        {
+          "name": "alert",
+          "status": "ok",
+          "sections": 3,
+          "demos": 13
+        },
+        {
+          "name": "avatar",
+          "status": "ok",
+          "sections": 5,
+          "demos": 20
+        },
+        {
+          "name": "badge",
+          "status": "ok",
+          "sections": 4,
+          "demos": 58
+        },
+        {
+          "name": "chip",
+          "status": "ok",
+          "sections": 4,
+          "demos": 16
+        },
+        {
+          "name": "progress",
+          "status": "ok",
+          "sections": 4,
+          "demos": 28
+        },
+        {
+          "name": "rating",
+          "status": "ok",
+          "sections": 3,
+          "demos": 11
+        },
+        {
+          "name": "skeleton",
+          "status": "ok",
+          "sections": 2,
+          "demos": 9
+        },
+        {
+          "name": "spinner",
+          "status": "ok",
+          "sections": 4,
+          "demos": 18
+        },
+        {
+          "name": "toast",
+          "status": "ok",
+          "sections": 3,
+          "demos": 19
+        },
+        {
+          "name": "tooltip",
+          "status": "ok",
+          "sections": 5,
+          "demos": 26
+        }
+      ]
+    },
+    {
+      "id": "forms",
+      "title": "Form Controls",
+      "description": "Buttons, inputs, selects, checkboxes, switches, textareas",
+      "icon": "📝",
+      "status": "ok",
+      "filename": "forms.html",
+      "componentCount": 9,
+      "sectionCount": 43,
+      "totalDemos": 159,
+      "components": [
+        {
+          "name": "button",
+          "status": "ok",
+          "sections": 7,
+          "demos": 52
+        },
+        {
+          "name": "checkbox",
+          "status": "ok",
+          "sections": 4,
+          "demos": 17
+        },
+        {
+          "name": "input",
+          "status": "ok",
+          "sections": 6,
+          "demos": 32
+        },
+        {
+          "name": "search",
+          "status": "ok",
+          "sections": 4,
+          "demos": 15
+        },
+        {
+          "name": "select",
+          "status": "ok",
+          "sections": 4,
+          "demos": 16
+        },
+        {
+          "name": "switch",
+          "status": "ok",
+          "sections": 5,
+          "demos": 14
+        },
+        {
+          "name": "textarea",
+          "status": "ok",
+          "sections": 4,
+          "demos": 17
+        },
+        {
+          "name": "slider",
+          "status": "ok",
+          "sections": 1,
+          "demos": 1
+        },
+        {
+          "name": "toggle",
+          "status": "ok",
+          "sections": 1,
+          "demos": 1
+        }
+      ]
+    },
+    {
+      "id": "overlays",
+      "title": "Overlays & Popups",
+      "description": "Dialogs, drawers, dropdowns for modal content",
+      "icon": "🪟",
+      "status": "ok",
+      "filename": "overlays.html",
+      "componentCount": 3,
+      "sectionCount": 9,
+      "totalDemos": 28,
+      "components": [
+        {
+          "name": "dialog",
+          "status": "ok",
+          "sections": 3,
+          "demos": 12
+        },
+        {
+          "name": "drawer",
+          "status": "ok",
+          "sections": 3,
+          "demos": 10
+        },
+        {
+          "name": "dropdown",
+          "status": "ok",
+          "sections": 3,
+          "demos": 9
+        }
+      ]
+    },
+    {
+      "id": "layout",
+      "title": "Layout & Navigation",
+      "description": "Headers, footers, navbars, tabs, drawers, sticky, scrollalong",
+      "icon": "📐",
+      "status": "ok",
+      "filename": "layout.html",
+      "componentCount": 9,
+      "sectionCount": 18,
+      "totalDemos": 44,
+      "components": [
+        {
+          "name": "header",
+          "status": "ok",
+          "sections": 2,
+          "demos": 5
+        },
+        {
+          "name": "footer",
+          "status": "ok",
+          "sections": 2,
+          "demos": 4
+        },
+        {
+          "name": "navbar",
+          "status": "ok",
+          "sections": 3,
+          "demos": 7
+        },
+        {
+          "name": "tabs",
+          "status": "ok",
+          "sections": 4,
+          "demos": 14
+        },
+        {
+          "name": "details",
+          "status": "ok",
+          "sections": 3,
+          "demos": 7
+        },
+        {
+          "name": "drawerLayout",
+          "status": "ok",
+          "sections": 3,
+          "demos": 6
+        },
+        {
+          "name": "scrollalong",
+          "status": "ok",
+          "sections": 1,
+          "demos": 1
+        },
+        {
+          "name": "sticky",
+          "status": "ok",
+          "sections": 1,
+          "demos": 3
+        },
+        {
+          "name": "timeline",
+          "status": "ok",
+          "sections": 1,
+          "demos": 3
+        }
+      ]
+    },
+    {
+      "id": "content",
+      "title": "Content & Media",
+      "description": "Articles, markdown rendering, audio, tables",
+      "icon": "📄",
+      "status": "ok",
+      "filename": "content.html",
+      "componentCount": 7,
+      "sectionCount": 14,
+      "totalDemos": 38,
+      "components": [
+        {
+          "name": "article",
+          "status": "ok",
+          "sections": 2,
+          "demos": 6
+        },
+        {
+          "name": "articles",
+          "status": "ok",
+          "sections": 3,
+          "demos": 7
+        },
+        {
+          "name": "mdhtml",
+          "status": "ok",
+          "sections": 1,
+          "demos": 3
+        },
+        {
+          "name": "audio",
+          "status": "ok",
+          "sections": 2,
+          "demos": 8
+        },
+        {
+          "name": "table",
+          "status": "ok",
+          "sections": 2,
+          "demos": 12
+        },
+        {
+          "name": "notes",
+          "status": "ok",
+          "sections": 2,
+          "demos": 7
+        },
+        {
+          "name": "codecontrol",
+          "status": "ok",
+          "sections": 1,
+          "demos": 1
+        }
+      ]
+    },
+    {
+      "id": "effects",
+      "title": "Visual Effects",
+      "description": "Confetti, fireworks, ripple, snow — fun stuff",
+      "icon": "✨",
+      "status": "ok",
+      "filename": "effects.html",
+      "componentCount": 5,
+      "sectionCount": 7,
+      "totalDemos": 20,
+      "components": [
+        {
+          "name": "confetti",
+          "status": "ok",
+          "sections": 2,
+          "demos": 4
+        },
+        {
+          "name": "fireworks",
+          "status": "ok",
+          "sections": 2,
+          "demos": 4
+        },
+        {
+          "name": "ripple",
+          "status": "ok",
+          "sections": 2,
+          "demos": 4
+        },
+        {
+          "name": "snow",
+          "status": "ok",
+          "sections": 1,
+          "demos": 3
+        },
+        {
+          "name": "stagelight",
+          "status": "ok",
+          "sections": 2,
+          "demos": 7
+        }
+      ]
+    },
+    {
+      "id": "interactive",
+      "title": "Interactive & Utility",
+      "description": "Draggable, resizable, copy, dark mode, views",
+      "icon": "🔧",
+      "status": "ok",
+      "filename": "interactive.html",
+      "componentCount": 8,
+      "sectionCount": 11,
+      "totalDemos": 14,
+      "components": [
+        {
+          "name": "draggable",
+          "status": "ok",
+          "sections": 2,
+          "demos": 6
+        },
+        {
+          "name": "resizable",
+          "status": "ok",
+          "sections": 1,
+          "demos": 1
+        },
+        {
+          "name": "copy",
+          "status": "ok",
+          "sections": 1,
+          "demos": 2
+        },
+        {
+          "name": "darkmode",
+          "status": "ok",
+          "sections": 1,
+          "demos": 1
+        },
+        {
+          "name": "themecontrol",
+          "status": "ok",
+          "sections": 1,
+          "demos": 1
+        },
+        {
+          "name": "collapse",
+          "status": "ok",
+          "sections": 2,
+          "demos": 3
+        },
+        {
+          "name": "hero",
+          "status": "ok",
+          "sections": 2,
+          "demos": 5
+        },
+        {
+          "name": "views",
+          "status": "ok",
+          "sections": 1,
+          "demos": 1
+        }
+      ]
+    }
+  ]
 }

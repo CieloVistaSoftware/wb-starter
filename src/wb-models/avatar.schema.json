@@ -4,13 +4,13 @@
   "title": "Avatar",
   "description": "User avatar with image, initials fallback, and status indicator",
   "schemaFor": "avatar",
-  "baseClass": "wb-avatar",
+  "baseClass": "x-avatar",
   "semanticElement": {
     "tagName": "div",
     "implicitRole": "img"
   },
   "compliance": {
-    "baseClass": "wb-avatar",
+    "baseClass": "x-avatar",
     "supportLevel": "stable",
     "accessibility": "high"
   },
@@ -46,7 +46,7 @@
         "2xl"
       ],
       "default": "md",
-      "appliesClass": "wb-avatar--{{value}}"
+      "appliesClass": "x-avatar--{{value}}"
     },
     "shape": {
       "type": "string",
@@ -56,7 +56,7 @@
         "rounded"
       ],
       "default": "circle",
-      "appliesClass": "wb-avatar--{{value}}"
+      "appliesClass": "x-avatar--{{value}}"
     },
     "status": {
       "type": "string",
@@ -74,7 +74,7 @@
       "type": "boolean",
       "description": "Show border",
       "default": false,
-      "appliesClass": "wb-avatar--bordered"
+      "appliesClass": "x-avatar--bordered"
     }
   },
   "$view": [],
@@ -104,51 +104,51 @@
     }
   },
   "$cssAPI": {
-    "--wb-avatar-size": {
+    "--x-avatar-size": {
       "default": "40px",
       "description": "Avatar size"
     },
-    "--wb-avatar-bg": {
+    "--x-avatar-bg": {
       "default": "var(--bg-secondary, #e5e7eb)",
       "description": "Background (for initials)"
     },
-    "--wb-avatar-color": {
+    "--x-avatar-color": {
       "default": "var(--text-secondary, #6b7280)",
       "description": "Initials text color"
     },
-    "--wb-avatar-font-size": {
+    "--x-avatar-font-size": {
       "default": "0.875rem",
       "description": "Initials font size"
     },
-    "--wb-avatar-font-weight": {
+    "--x-avatar-font-weight": {
       "default": "600",
       "description": "Initials font weight"
     },
-    "--wb-avatar-border": {
+    "--x-avatar-border": {
       "default": "2px solid var(--bg-surface, #ffffff)",
       "description": "Border style"
     },
-    "--wb-avatar-radius": {
+    "--x-avatar-radius": {
       "default": "50%",
       "description": "Border radius"
     },
-    "--wb-avatar-status-size": {
+    "--x-avatar-status-size": {
       "default": "12px",
       "description": "Status indicator size"
     },
-    "--wb-avatar-status-online": {
+    "--x-avatar-status-online": {
       "default": "#22c55e",
       "description": "Online status color"
     },
-    "--wb-avatar-status-offline": {
+    "--x-avatar-status-offline": {
       "default": "#9ca3af",
       "description": "Offline status color"
     },
-    "--wb-avatar-status-busy": {
+    "--x-avatar-status-busy": {
       "default": "#ef4444",
       "description": "Busy status color"
     },
-    "--wb-avatar-status-away": {
+    "--x-avatar-status-away": {
       "default": "#f59e0b",
       "description": "Away status color"
     }
@@ -159,14 +159,14 @@
   },
   "test": {
     "setup": [
-      "<wb-avatar>Basic avatar content</wb-avatar>",
-      "<wb-avatar size=\"xs\">size=xs</wb-avatar>",
-      "<wb-avatar size=\"sm\">size=sm</wb-avatar>",
-      "<wb-avatar size=\"md\">size=md</wb-avatar>",
-      "<wb-avatar shape=\"circle\">shape=circle</wb-avatar>",
-      "<wb-avatar shape=\"square\">shape=square</wb-avatar>",
-      "<wb-avatar shape=\"rounded\">shape=rounded</wb-avatar>",
-      "<wb-avatar status=\"online\">status=online</wb-avatar>"
+      "<span x-avatar>Basic avatar content</span>",
+      "<span x-avatar size=\"xs\">size=xs</span>",
+      "<span x-avatar size=\"sm\">size=sm</span>",
+      "<span x-avatar size=\"md\">size=md</span>",
+      "<span x-avatar shape=\"circle\">shape=circle</span>",
+      "<span x-avatar shape=\"square\">shape=square</span>",
+      "<span x-avatar shape=\"rounded\">shape=rounded</span>",
+      "<span x-avatar status=\"online\">status=online</span>"
     ],
     "matrix": {
       "combinations": [
@@ -192,14 +192,14 @@
     },
     "site": {
       "page": "feedback",
-      "tag": "wb-avatar",
+      "tag": "x-avatar",
       "renders": true,
-      "baseClass": "wb-avatar",
+      "baseClass": "x-avatar",
       "minInstances": 5,
       "checkText": [],
       "checkClasses": [
-        "wb-avatar--xs",
-        "wb-avatar--square"
+        "x-avatar--xs",
+        "x-avatar--square"
       ],
       "checkAttributes": [
         "initials"

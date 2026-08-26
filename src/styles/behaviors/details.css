@@ -10,12 +10,12 @@
 /* ============================================
    DETAILS - Single disclosure widget
    ============================================ */
-.wb-details {
+.x-details {
   /* Base styles provided by theme, not hardcoded here */
   display: block;
 }
 
-.wb-details__summary {
+.x-details__summary {
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -25,19 +25,19 @@
 }
 
 /* Remove default marker in different browsers */
-.wb-details__summary::-webkit-details-marker,
-.wb-details__summary::marker {
+.x-details__summary::-webkit-details-marker,
+.x-details__summary::marker {
   display: none;
 }
 
-.wb-details__icon {
+.x-details__icon {
   transition: transform 0.2s ease;
   display: inline-block;
 }
 
 /* Use class-based toggle for icon rotation to support JS-less fallback if needed, 
    but primarily driven by [open] attribute */
-.wb-details[open] .wb-details__icon {
+.x-details[open] .x-details__icon {
   transform: rotate(0deg);
 }
 
@@ -45,7 +45,7 @@
    ANIMATION (optional)
    ============================================ */
 @media (prefers-reduced-motion: no-preference) {
-  .wb-details[open] .wb-details__content {
+  .x-details[open] .x-details__content {
     animation: detailsOpen 0.2s ease;
   }
   
@@ -73,14 +73,14 @@
    consumer can now override any of it with an ordinary rule.
    ========================================================================== */
 
-.wb-details {
+.x-details {
   border: 1px solid var(--border-color, #374151);
   border-radius: 6px;
   overflow: hidden;
   background: var(--bg-primary, #111827);
 }
 
-.wb-details > .wb-details__summary {
+.x-details > .x-details__summary {
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -91,19 +91,19 @@
   list-style: none;
 }
 
-.wb-details > .wb-details__content {
+.x-details > .x-details__content {
   padding: 1rem;
   background: var(--bg-primary, #111827);
 }
 
 /* The arrow: sideways when closed, down when open (#775). The transition was
    an inline style on the span; it belongs here with the rest. */
-.wb-details__icon {
+.x-details__icon {
   transition: transform 200ms ease-out;
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .wb-details__icon { transition: none; }
+  .x-details__icon { transition: none; }
 }
 
 
@@ -116,7 +116,7 @@
 
    The glyph is a down-pointing triangle, so OPEN is its natural 0deg and
    CLOSED turns it -90deg to point right. */
-.wb-details__icon {
+.x-details__icon {
   transform: rotate(-90deg);
 }
 

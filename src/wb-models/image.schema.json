@@ -25,17 +25,7 @@
       "description": "Read by image(). Bare attribute.",
       "default": false
     },
-    "data-lazy": {
-      "type": "boolean",
-      "description": "Read by image(). Bare attribute.",
-      "default": false
-    },
     "zoomable": {
-      "type": "boolean",
-      "description": "Read by image(). Bare attribute.",
-      "default": false
-    },
-    "data-zoomable": {
       "type": "boolean",
       "description": "Read by image(). Bare attribute.",
       "default": false

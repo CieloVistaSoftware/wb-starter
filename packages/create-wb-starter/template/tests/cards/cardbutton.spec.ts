@@ -19,11 +19,11 @@ test.describe('Card Button (integration)', () => {
     });
     
     const card = page.locator('#test-cardbutton');
-    await expect(card).toHaveClass(/wb-card/);
-    await expect(card).toHaveClass(/wb-card--button/);
+    await expect(card).toHaveClass(/x-card/);
+    await expect(card).toHaveClass(/x-card--button/);
     
     // Check primary button exists
-    const primaryBtn = card.locator('.wb-card__btn--primary');
+    const primaryBtn = card.locator('.x-card__btn--primary');
     await expect(primaryBtn).toHaveText('Click Me');
   });
 
@@ -45,8 +45,8 @@ test.describe('Card Button (integration)', () => {
     });
     
     const card = page.locator('#test-cardbutton-2');
-    const primaryBtn = card.locator('.wb-card__btn--primary');
-    const secondaryBtn = card.locator('.wb-card__btn--secondary');
+    const primaryBtn = card.locator('.x-card__btn--primary');
+    const secondaryBtn = card.locator('.x-card__btn--secondary');
     
     await expect(primaryBtn).toHaveText('Save');
     await expect(secondaryBtn).toHaveText('Cancel');

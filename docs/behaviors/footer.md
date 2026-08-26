@@ -2,15 +2,29 @@
 
 Page footer with copyright, links, and social icons
 
-Applies to `<footer>`, and to any element carrying `x-footer`.
+## Type — decorates a semantic element
 
-## Usage
+`x-footer` is the **footer behavior**. It attaches to `<footer>`, the element you would have reached for anyway — there is no new tag to learn.
+
+### How to write it
 
 ```html
-<footer>
-  …
-</footer>
+<!-- Plain semantic HTML. The behavior is injected automatically -->
+<!-- because the element itself implies it. No attribute needed. -->
+<footer brand="Cielo Vista Software" copyright="2026" links="Privacy,Terms,Status"></footer>
 ```
+
+### On a different element
+
+Use `x-footer` when the host is not a `<footer>` and you want the same behavior:
+
+```html
+<div x-footer>
+  …
+</div>
+```
+
+> Do not write `<footer x-footer>`. The element already injects it, and the redundant attribute can suppress the behavior (#746).
 
 ## Attributes
 

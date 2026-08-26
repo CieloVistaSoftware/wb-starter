@@ -16,23 +16,31 @@ import {
 // Demo/showcase/test pages that intentionally display raw color values as
 // content (e.g. a hue-spectrum color wheel, permutation test harness) — not
 // product UI subject to theming. Same convention as demo.css.
-const COLOR_EXCEPTION_FILES = ['themes.css', 'wb-signature.css', 'variables.css', 'demo.css', 'components.css', 'site.css', 'transitions.css', 'wb-grayscale.css', 'wb-grayscale-dark.css', 'hero.css', 'navbar.css', 'wizard.css', 'themes-showcase.css', 'ai-permutation-test.css', 'frameworks.css'];
+const COLOR_EXCEPTION_FILES = ['themes.css', 'x-signature.css', 'variables.css', 'demo.css', 'components.css', 'site.css', 'transitions.css', 'x-grayscale.css', 'x-grayscale-dark.css', 'hero.css', 'navbar.css', 'wizard.css', 'themes-showcase.css', 'ai-permutation-test.css', 'frameworks.css'];
 
 // Patterns that violate OOP
 const FORBIDDEN_PATTERNS = {
-  variableAliases: /--wb-(bg|text|primary|border|color)/g,
+  variableAliases: /--x-(bg|text|primary|border|color)/g,
   importantUsage: /!important/g
 };
 
 test.describe('CSS OOP Compliance', () => {
   
+  // #863: this only console.warn()ed, so the "forbidden" file could be
+  // reintroduced and the test would still report success. It also checked a
+  // single stale path -- `styles/` was the pre-v3 stylesheet root; everything
+  // now lives under `src/styles/`, so the one path it did check could not have
+  // matched a real reintroduction anyway. Both locations are checked now, and
+  // the result is asserted. Measured at the time of this change: 0 present.
   test('forbidden files should not exist', () => {
-    const forbidden = ['styles/wb-components.css'];
-    for (const file of forbidden) {
-      if (fileExists(path.join(ROOT, file))) {
-        console.warn(`⚠️ OOP VIOLATION: ${file} should be deleted`);
-      }
-    }
+    const forbidden = ['styles/x-components.css', 'src/styles/x-components.css'];
+    const present = forbidden.filter(file => fileExists(path.join(ROOT, file)));
+    expect(
+      present,
+      'OOP VIOLATION: these files must not exist -- component styling belongs '
+      + 'in the per-behavior stylesheets under src/styles/behaviors/, not in a '
+      + `single monolithic x-components.css:\n${present.join('\n')}`,
+    ).toEqual([]);
   });
 
   test('no hardcoded colors in CSS (except themes.css)', () => {
@@ -78,7 +86,7 @@ test.describe('CSS OOP Compliance', () => {
     expect(violations, 'CSS files should use var(--*) instead of hardcoded colors').toHaveLength(0);
   });
 
-  test('no --wb-* variable aliases', () => {
+  test('no --x-* variable aliases', () => {
     const cssFiles = getCssFiles(ROOT);
     const violations: string[] = [];
 
@@ -91,7 +99,7 @@ test.describe('CSS OOP Compliance', () => {
       }
     }
 
-    expect(violations, 'Should not create --wb-* aliases for theme variables').toHaveLength(0);
+    expect(violations, 'Should not create --x-* aliases for theme variables').toHaveLength(0);
   });
 
   test('CSS variables only defined in themes.css', () => {
@@ -101,7 +109,7 @@ test.describe('CSS OOP Compliance', () => {
 
     for (const file of cssFiles) {
       const filename = path.basename(file);
-      if (['themes.css', 'wb-signature.css', 'variables.css'].includes(filename)) continue;
+      if (['themes.css', 'x-signature.css', 'variables.css'].includes(filename)) continue;
 
       const content = readFile(file);
       const matches = content.match(varDefinition);
@@ -119,9 +127,22 @@ test.describe('CSS OOP Compliance', () => {
       }
     }
 
-    if (violations.length > 0) {
-      console.warn('⚠️ Consider moving variable definitions to themes.css');
-    }
+    // #863: this collected `violations` and then only console.warn()ed, so the
+    // single-source-of-truth rule it names was never enforced -- any file could
+    // start defining global custom properties and the test stayed green.
+    //
+    // Turning it on found 5 offending files (25 variables) already present, so
+    // it is ratcheted at that measured count rather than asserted at zero: a
+    // gate that cannot be satisfied gets bypassed, and the rule is real. THIS
+    // CEILING MUST ONLY COME DOWN. Lower it as files are cleaned up; never
+    // raise it to go green.
+    const GLOBAL_VAR_FILE_BASELINE = 5;
+    expect(
+      violations.length,
+      'CSS custom properties must be defined in themes.css (single source of '
+      + `truth), not per-file. ${violations.length} file(s) define their own, `
+      + `above the ${GLOBAL_VAR_FILE_BASELINE} ceiling:\n${violations.join('\n')}`,
+    ).toBeLessThanOrEqual(GLOBAL_VAR_FILE_BASELINE);
   });
 
   test('HTML files import CSS in correct order', () => {

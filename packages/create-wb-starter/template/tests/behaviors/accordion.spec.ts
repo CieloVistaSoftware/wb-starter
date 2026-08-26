@@ -1,5 +1,5 @@
 /**
- * <wb-accordion> must be a working, accessible disclosure: collapsed by default,
+ * <div x-accordion> must be a working, accessible disclosure: collapsed by default,
  * expands on click/Enter (body visible + aria-expanded=true), collapses again.
  * Asserts the user-visible STATE TRANSITION, not mere presence.
  */
@@ -10,19 +10,19 @@ const URL = `${BASE.replace(/\/$/, '')}/?page=behaviors`;
 
 async function load(page: Page) {
   await page.goto(URL, { waitUntil: 'domcontentloaded' });
-  await page.waitForSelector('wb-accordion', { timeout: 25000 });
+  await page.waitForSelector('x-accordion', { timeout: 25000 });
   await page.waitForTimeout(1500);
 }
 
 function state(page: Page) {
   return page.evaluate(() => {
-    const acc = document.querySelector('wb-accordion')!;
-    const head = acc.querySelector('.wb-accordion-head') as HTMLElement | null;
-    const body = acc.querySelector('.wb-accordion-body') as HTMLElement | null;
+    const acc = document.querySelector('x-accordion')!;
+    const head = acc.querySelector('.x-accordion-head') as HTMLElement | null;
+    const body = acc.querySelector('.x-accordion-body') as HTMLElement | null;
     return {
       hasHead: !!head,
       hasBody: !!body,
-      title: acc.querySelector('.wb-accordion-title')?.textContent || '',
+      title: acc.querySelector('.x-accordion-title')?.textContent || '',
       ariaExpanded: head?.getAttribute('aria-expanded') ?? null,
       bodyVisible: body ? getComputedStyle(body).display !== 'none' && body.getBoundingClientRect().height > 0 : false,
     };
@@ -42,13 +42,13 @@ test.describe('Accordion — disclosure behavior', () => {
   });
 
   test('clicking the head expands, clicking again collapses', async ({ page }) => {
-    await page.click('wb-accordion .wb-accordion-head');
+    await page.click('x-accordion .x-accordion-head');
     await page.waitForTimeout(150);
     const opened = await state(page);
     expect(opened.bodyVisible, 'accordion did not expand on click').toBe(true);
     expect(opened.ariaExpanded, 'aria-expanded not updated to true').toBe('true');
 
-    await page.click('wb-accordion .wb-accordion-head');
+    await page.click('x-accordion .x-accordion-head');
     await page.waitForTimeout(150);
     const closed = await state(page);
     expect(closed.bodyVisible, 'accordion did not collapse on second click').toBe(false);
@@ -56,7 +56,7 @@ test.describe('Accordion — disclosure behavior', () => {
   });
 
   test('keyboard: Enter on a focused head toggles it', async ({ page }) => {
-    await page.focus('wb-accordion .wb-accordion-head');
+    await page.focus('x-accordion .x-accordion-head');
     await page.keyboard.press('Enter');
     await page.waitForTimeout(150);
     const s = await state(page);

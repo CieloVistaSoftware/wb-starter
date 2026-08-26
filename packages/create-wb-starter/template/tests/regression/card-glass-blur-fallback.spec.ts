@@ -1,8 +1,8 @@
 import { test, expect, Page } from '@playwright/test';
 
 /**
- * #351: `<wb-card variant="glass">` showed no glassmorphism effect on a
- * Samsung phone. `.wb-card--glass` (card.css) already declares
+ * #351: `<article variant="glass">` showed no glassmorphism effect on a
+ * Samsung phone. `.x-card--glass` (card.css) already declares
  * `backdrop-filter: blur(16px)` + the `-webkit-` prefix, but had NO
  * `@supports not (backdrop-filter: blur(1px))` fallback -- unlike
  * navbar.css, which has one for the same property. Some older/budget
@@ -44,16 +44,16 @@ async function injectGlassCard(page: Page) {
     if (existing) existing.remove();
     const container = document.createElement('div');
     container.id = 'test-container';
-    container.innerHTML = `<wb-card id="glass-card" variant="glass">Glass card content</wb-card>`;
+    container.innerHTML = `<article id="glass-card" variant="glass">Glass card content</article>`;
     document.body.appendChild(container);
     await (window as any).WB.scan(container);
   });
 
-  // card.js applies the wb-card--glass class asynchronously (deferred via
+  // card.js applies the x-card--glass class asynchronously (deferred via
   // IntersectionObserver, same as card-typed-variants-no-op.spec.ts) --
   // poll rather than assume it's present immediately.
   await page.waitForFunction(
-    () => document.getElementById('glass-card')?.classList.contains('wb-card--glass'),
+    () => document.getElementById('glass-card')?.classList.contains('x-card--glass'),
     null,
     { timeout: 5000 }
   );
@@ -68,7 +68,7 @@ async function injectGlassCard(page: Page) {
   }, null, { timeout: 5000 });
 }
 
-test.describe('wb-card glass variant: backdrop-filter fallback (#351)', () => {
+test.describe('x-card glass variant: backdrop-filter fallback (#351)', () => {
   test('normal case: glass card still declares backdrop-filter (blur) in its CSS', async ({ page }) => {
     await injectGlassCard(page);
 
@@ -76,7 +76,7 @@ test.describe('wb-card glass variant: backdrop-filter fallback (#351)', () => {
       for (const sheet of Array.from(document.styleSheets)) {
         try {
           for (const rule of Array.from(sheet.cssRules) as CSSStyleRule[]) {
-            if (rule.selectorText === '.wb-card--glass' && rule.style) {
+            if (rule.selectorText === '.x-card--glass' && rule.style) {
               const bd = rule.style.getPropertyValue('backdrop-filter');
               const webkitBd = rule.style.getPropertyValue('-webkit-backdrop-filter');
               if (bd || webkitBd) return { backdropFilter: bd, webkitBackdropFilter: webkitBd };
@@ -89,7 +89,7 @@ test.describe('wb-card glass variant: backdrop-filter fallback (#351)', () => {
       return null;
     });
 
-    expect(declared, '.wb-card--glass rule with backdrop-filter must exist in a loaded stylesheet').not.toBeNull();
+    expect(declared, '.x-card--glass rule with backdrop-filter must exist in a loaded stylesheet').not.toBeNull();
     // Chromium's CSSOM treats `-webkit-backdrop-filter` as an alias of the
     // canonical `backdrop-filter` longhand rather than a distinct stored
     // property, so only one of the two getPropertyValue() calls is
@@ -133,9 +133,9 @@ test.describe('wb-card glass variant: backdrop-filter fallback (#351)', () => {
             result.found = true;
             for (const inner of Array.from(r.cssRules) as CSSStyleRule[]) {
               const sel = inner.selectorText || '';
-              if (sel.includes('.wb-card--glass') && sel.includes('::before')) {
+              if (sel.includes('.x-card--glass') && sel.includes('::before')) {
                 result.shimmerDisabled = inner.style.getPropertyValue('display').trim() === 'none';
-              } else if (sel.includes('.wb-card--glass')) {
+              } else if (sel.includes('.x-card--glass')) {
                 const bg = inner.style.getPropertyValue('background');
                 const bc = inner.style.getPropertyValue('border-color');
                 if (bg) result.background = bg;
@@ -149,8 +149,8 @@ test.describe('wb-card glass variant: backdrop-filter fallback (#351)', () => {
     });
 
     expect(fallback.found, '@supports not (backdrop-filter: blur(1px)) block must exist (same pattern as navbar.css)').toBe(true);
-    expect(fallback.background, 'fallback .wb-card--glass background must be set').toContain('--card-glass-bg-fallback');
-    expect(fallback.borderColor, 'fallback .wb-card--glass border-color must be set').toContain('--card-glass-border-fallback');
+    expect(fallback.background, 'fallback .x-card--glass background must be set').toContain('--card-glass-bg-fallback');
+    expect(fallback.borderColor, 'fallback .x-card--glass border-color must be set').toContain('--card-glass-border-fallback');
     expect(fallback.shimmerDisabled, '::before shimmer must be disabled (display: none) inside the fallback block').toBe(true);
 
     // The fallback tokens themselves must resolve to a MORE opaque alpha

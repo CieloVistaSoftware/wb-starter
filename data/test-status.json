@@ -1,30 +1,21 @@
 {
-  "state": "failed",
+  "state": "passed",
   "mode": "suite",
   "specFile": null,
-  "startedAt": "2026-08-21T22:58:47.611Z",
-  "updatedAt": "2026-08-21T22:59:12.869Z",
-  "command": "npx playwright test --workers=8 example-elements-have-ids",
-  "pid": 38608,
+  "startedAt": "2026-08-26T19:49:17.975Z",
+  "updatedAt": "2026-08-26T19:49:33.050Z",
+  "command": "npx playwright test --workers=8 home-headline-declared-once",
+  "pid": 43800,
   "passed": 1,
-  "failed": 1,
+  "failed": 0,
   "skipped": 0,
-  "total": 2,
-  "currentFile": "tests\\regression\\example-elements-have-ids.spec.ts",
-  "output": "\nRunning 2 tests using 2 workers\n\n  ok 1 [regression] › tests\\regression\\example-elements-have-ids.spec.ts:116:3 › Rendered examples carry ids › ids within one rendered example are unique (7.9s)\n  x  2 [regression] › tests\\regression\\example-elements-have-ids.spec.ts:98:3 › Rendered examples carry ids › every element in every rendered example has an id (8.1s)\n  x  3 [regression] › tests\\regression\\example-elements-have-ids.spec.ts:98:3 › Rendered examples carry ids › every element in every rendered example has an id (retry #1) (7.2s)\n\n════════════════════════════════════════════════════════════\n  WB TEST RESULTS\n════════════════════════════════════════════════════════════\n  Total: 3 tests in 21.1s\n  ✓ Passed:  1\n  ✗ Failed:  2\n\n  By Project:\n    ✗ regression: 1/3 passed\n\n  See failures: data/test-results/failures.json\n  Live log:    data/test-results/failures-live.log\n════════════════════════════════════════════════════════════\n\n\n\n  1) [regression] › tests\\regression\\example-elements-have-ids.spec.ts:98:3 › Rendered examples carry ids › every element in every rendered example has an id \n\n    Error: 4 elements in rendered examples have no id (of 384 inspected). These are the markup a customer copies; without an id nothing can be scripted, tested or referenced.\n      x-audio / true: <div> has no id\n      x-audio / true: <button> has no id\n      x-audio / true: <span> has no id\n      x-audio / true: <input> has no id\n\n    \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // deep equality\u001b[22m\n\n    \u001b[32m- Expected  - 1\u001b[39m\n    \u001b[31m+ Received  + 6\u001b[39m\n\n    \u001b[32m- Array []\u001b[39m\n    \u001b[31m+ Array [\u001b[39m\n    \u001b[31m+   \"x-audio / true: <div> has no id\",\u001b[39m\n    \u001b[31m+   \"x-audio / true: <button> has no id\",\u001b[39m\n    \u001b[31m+   \"x-audio / true: <span> has no id\",\u001b[39m\n    \u001b[31m+   \"x-audio / true: <input> has no id\",\u001b[39m\n    \u001b[31m+ ]\u001b[39m\n\n      111 |       `without an id nothing can be scripted, tested or referenced.\\n  ` +\n      112 |       unique.slice(0, 40).join('\\n  '),\n    > 113 |     ).toEqual([]);\n          |       ^\n      114 |   });\n      115 |\n      116 |   test('ids within one rendered example are unique', async ({ page }) => {\n        at C:\\Users\\jwpmi\\Downloads\\AI\\wb-starter\\tests\\regression\\example-elements-have-ids.spec.ts:113:7\n\n    Error Context: data\\test-results\\example-elements-have-ids--66b94--rendered-example-has-an-id-regression\\error-context.md\n\n    Retry #1 ───────────────────────────────────────────────────────────────────────────────────────\n\n    Error: 4 elements in rendered examples have no id (of 399 inspected). These are the markup a customer copies; without an id nothing can be scripted, tested or referenced.\n      x-button / ghost: <span> has no id\n      x-button / ghost: <svg> has no id\n      x-button / ghost: <path> has no id\n      x-button / true: <span> has no id\n\n    \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // deep equality\u001b[22m\n\n    \u001b[32m- Expected  - 1\u001b[39m\n    \u001b[31m+ Received  + 6\u001b[39m\n\n    \u001b[32m- Array []\u001b[39m\n    \u001b[31m+ Array [\u001b[39m\n    \u001b[31m+   \"x-button / ghost: <span> has no id\",\u001b[39m\n    \u001b[31m+   \"x-button / ghost: <svg> has no id\",\u001b[39m\n    \u001b[31m+   \"x-button / ghost: <path> has no id\",\u001b[39m\n    \u001b[31m+   \"x-button / true: <span> has no id\",\u001b[39m\n    \u001b[31m+ ]\u001b[39m\n\n      111 |       `without an id nothing can be scripted, tested or referenced.\\n  ` +\n      112 |       unique.slice(0, 40).join('\\n  '),\n    > 113 |     ).toEqual([]);\n          |       ^\n      114 |   });\n      115 |\n      116 |   test('ids within one rendered example are unique', async ({ page }) => {\n        at C:\\Users\\jwpmi\\Downloads\\AI\\wb-starter\\tests\\regression\\example-elements-have-ids.spec.ts:113:7\n\n    Error Context: data\\test-results\\example-elements-have-ids--66b94--rendered-example-has-an-id-regression-retry1\\error-context.md\n\n  1 failed\n    [regression] › tests\\regression\\example-elements-have-ids.spec.ts:98:3 › Rendered examples carry ids › every element in every rendered example has an id \n  1 passed (21.4s)\n",
-  "errors": "\n❌ FAILED: every element in every rendered example has an id\n   Error: 4 elements in rendered examples have no id (of 384 inspected). These are the markup a customer copies; without an id nothing can be scripted, tested or referenced.\n\n❌ FAILED: every element in every rendered example has an id\n   Error: 4 elements in rendered examples have no id (of 399 inspected). These are the markup a customer copies; without an id nothing can be scripted, tested or referenced.\n",
-  "failures": [
-    {
-      "file": "tests\\regression\\example-elements-have-ids.spec.ts",
-      "name": "Rendered examples carry ids › every element in every rendered example has an id"
-    },
-    {
-      "file": "tests\\regression\\example-elements-have-ids.spec.ts",
-      "name": "Rendered examples carry ids › every element in every rendered example has an id (retry #1)"
-    }
-  ],
-  "completedAt": "2026-08-21T22:59:12.869Z",
-  "duration": "25.26s",
-  "exitCode": 1,
+  "total": 1,
+  "currentFile": "tests\\regression\\home-headline-declared-once.spec.ts",
+  "output": "\nRunning 1 test using 1 worker\n\n  ok 1 [regression] › tests\\regression\\home-headline-declared-once.spec.ts:15:3 › home headline › the headline appears exactly once, in a real h1 (2.2s)\n\n════════════════════════════════════════════════════════════\n  WB TEST RESULTS\n════════════════════════════════════════════════════════════\n  Total: 1 tests in 6.2s\n  ✓ Passed:  1\n  ✗ Failed:  0\n\n  By Project:\n    ✓ regression: 1/1 passed\n════════════════════════════════════════════════════════════\n\n\n  1 passed (8.8s)\n",
+  "errors": "",
+  "failures": [],
+  "completedAt": "2026-08-26T19:49:33.050Z",
+  "duration": "15.07s",
+  "exitCode": 0,
   "flaky": 0
 }

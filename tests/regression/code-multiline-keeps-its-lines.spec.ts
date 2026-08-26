@@ -8,7 +8,7 @@ import { test, expect, type Page } from '@playwright/test';
  * collapsed to a space, the whole thing reflowed as prose.
  *
  * Cause: `variant` defaults to "inline" in code.schema.json. That is correct
- * for the common case (a `<code>wb-card</code>` chip amid prose) and wrong for
+ * for the common case (a `<code>.x-card</code>` chip amid prose) and wrong for
  * a standalone listing — an inline box gets `white-space: normal`, so source
  * newlines are collapsed by CSS before anyone sees them.
  *
@@ -85,7 +85,7 @@ test.describe('multi-line <code> keeps its line breaks', () => {
   test('a single-line inline chip is NOT turned into a block', async ({ page }) => {
     // The other half of the fix: keying on content instead of the variant
     // attribute must leave every inline `<code>` chip in the docs alone.
-    await render(page, `<p>prose with <code id="chip">wb-card</code> inline</p>`);
+    await render(page, `<p>prose with <code id="chip">x-card</code> inline</p>`);
 
     const got = await info(page, '#chip');
     expect(got!.renderedLines, 'an inline chip stays on one line').toBe(1);

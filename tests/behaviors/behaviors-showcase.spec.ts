@@ -13,7 +13,7 @@
  * so it's repointed here rather than deleted.
  */
 
-import { test, expect } from '@playwright/test';
+import { test, expect, Page } from '@playwright/test';
 
 test.describe('Behaviors Showcase Page', () => {
   test.beforeEach(async ({ page }) => {
@@ -49,13 +49,13 @@ test.describe('Behaviors Showcase Page', () => {
       // .behavior-card/.demo-area were the old standalone
       // demos/behaviors-showcase.html's grid-card layout; the schema-generated
       // page (behaviors.schema.json -> generate-behaviors-page.js) uses
-      // <section id="..."> + <wb-demo> instead. Same intent, current markup.
+      // <section id="..."> + <div x-demo> instead. Same intent, current markup.
       const sections = await page.locator('main section[id], section[id]').all();
       expect(sections.length).toBeGreaterThan(5);
 
       for (const section of sections) {
         // Sections use several different demo-container conventions
-        // (<wb-demo>, .demo-grid-*, .demo-row, .alerts-stack,
+        // (<div x-demo>, .demo-grid-*, .demo-row, .alerts-stack,
         // .progress-stack, ...) depending on whether the behavior is a
         // custom wb-* element or a native element being enhanced in place --
         // rather than enumerate every container class name (guaranteed to
@@ -116,7 +116,7 @@ test.describe('Behaviors Showcase Page', () => {
       
       // Get the sidebar text element
       const sidebarText = drawerCard.locator('.demo-area [x-drawer-layout] > div:first-child');
-      const toggleButton = drawerCard.locator('.wb-drawer-toggle');
+      const toggleButton = drawerCard.locator('.x-drawer-toggle');
       
       if (await toggleButton.count() > 0) {
         const sidebarRect = await sidebarText.boundingBox();
@@ -153,8 +153,8 @@ test.describe('Behaviors Showcase Page', () => {
   });
 
   // behaviors.schema.json (generate-behaviors-page.js's source of truth for
-  // pages/behaviors.html) has no demo section for wb-dropdown/drawer-layout/
-  // wb-toggle/wb-masonry -- none of these tags exist on the page at all.
+  // pages/behaviors.html) has no demo section for x-dropdown/drawer-layout/
+  // x-toggle/x-masonry -- none of these tags exist on the page at all.
   // These describe blocks were written against the old standalone
   // demos/behaviors-showcase.html (removed once its content migrated into
   // the schema-generated SPA page). Their "all(...)" locators quietly
@@ -164,15 +164,15 @@ test.describe('Behaviors Showcase Page', () => {
   // section in the schema.
   test.describe.skip('Dropdown Behavior', () => {
     test('dropdown should have items attribute OR proper children structure', async ({ page }) => {
-      const dropdowns = await page.locator('wb-dropdown').all();
+      const dropdowns = await page.locator('[x-dropdown]').all();
       
       for (const dropdown of dropdowns) {
         // Check if data-items is set
         const hasItems = await dropdown.getAttribute('items');
         
         // Check if proper child structure exists
-        const hasTrigger = await dropdown.locator('.wb-dropdown-trigger, .wb-dropdown__trigger').count() > 0;
-        const hasMenu = await dropdown.locator('.wb-dropdown-menu, .wb-dropdown__menu').count() > 0;
+        const hasTrigger = await dropdown.locator('.x-dropdown-trigger, .x-dropdown__trigger').count() > 0;
+        const hasMenu = await dropdown.locator('.x-dropdown-menu, .x-dropdown__menu').count() > 0;
         
         // One of these patterns must be true
         const isValid = hasItems !== null || (hasTrigger && hasMenu);
@@ -188,14 +188,14 @@ test.describe('Behaviors Showcase Page', () => {
     });
 
     test('dropdown shows menu when clicked', async ({ page }) => {
-      const dropdown = page.locator('wb-dropdown').first();
+      const dropdown = page.locator('[x-dropdown]').first();
       
       // Click the dropdown
       await dropdown.click();
       await page.waitForTimeout(200);
       
       // Check if menu is visible
-      const menu = dropdown.locator('.wb-dropdown__menu, .wb-dropdown-menu');
+      const menu = dropdown.locator('.x-dropdown__menu, .x-dropdown-menu');
       if (await menu.count() > 0) {
         await expect(menu).toBeVisible();
       } else {
@@ -207,7 +207,7 @@ test.describe('Behaviors Showcase Page', () => {
 
   test.describe('Tabs Behavior', () => {
     test('tabs children should use tab-title attribute', async ({ page }) => {
-      const tabContainers = await page.locator('wb-tabs').all();
+      const tabContainers = await page.locator('[x-tabs]').all();
       
       for (const tabs of tabContainers) {
         const children = await tabs.locator('> div[tab-title], > div[tab]').all();
@@ -228,13 +228,13 @@ test.describe('Behaviors Showcase Page', () => {
     });
 
     test('tabs generate tab buttons', async ({ page }) => {
-      const tabContainers = await page.locator('wb-tabs').all();
+      const tabContainers = await page.locator('[x-tabs]').all();
       
       for (const tabs of tabContainers) {
-        const nav = tabs.locator('.wb-tabs__nav');
+        const nav = tabs.locator('.x-tabs__nav');
         await expect(nav).toBeVisible();
         
-        const tabButtons = tabs.locator('.wb-tabs__tab');
+        const tabButtons = tabs.locator('.x-tabs__tab');
         const buttonCount = await tabButtons.count();
         
         expect(buttonCount).toBeGreaterThan(0);
@@ -242,7 +242,7 @@ test.describe('Behaviors Showcase Page', () => {
     });
 
     test('tab buttons are properly sized (not too tall)', async ({ page }) => {
-      const tabButtons = await page.locator('.wb-tabs__tab').all();
+      const tabButtons = await page.locator('.x-tabs__tab').all();
       
       for (const button of tabButtons) {
         const box = await button.boundingBox();
@@ -254,19 +254,19 @@ test.describe('Behaviors Showcase Page', () => {
     });
 
     test('clicking tab shows corresponding panel', async ({ page }) => {
-      const tabContainer = page.locator('wb-tabs').first();
+      const tabContainer = page.locator('[x-tabs]').first();
       
       // Click second tab
-      const secondTab = tabContainer.locator('.wb-tabs__tab').nth(1);
+      const secondTab = tabContainer.locator('.x-tabs__tab').nth(1);
       await secondTab.click();
       await page.waitForTimeout(100);
       
       // Second panel should be visible
-      const secondPanel = tabContainer.locator('.wb-tabs__panel').nth(1);
+      const secondPanel = tabContainer.locator('.x-tabs__panel').nth(1);
       await expect(secondPanel).toBeVisible();
       
       // First panel should be hidden
-      const firstPanel = tabContainer.locator('.wb-tabs__panel').first();
+      const firstPanel = tabContainer.locator('.x-tabs__panel').first();
       await expect(firstPanel).toBeHidden();
     });
   });
@@ -276,13 +276,13 @@ test.describe('Behaviors Showcase Page', () => {
     test('drawer-layout behavior initializes', async ({ page }) => {
       const drawer = page.locator('[x-drawer-layout]').first();
       
-      // Should have wb-drawer class after initialization
-      await expect(drawer).toHaveClass(/wb-drawer/);
+      // Should have x-drawer class after initialization
+      await expect(drawer).toHaveClass(/x-drawer/);
     });
 
     test('drawer toggle button is visible and accessible', async ({ page }) => {
       const drawerCard = page.locator('.behavior-card:has(.behavior-title:has-text("Drawer"))');
-      const toggleButton = drawerCard.locator('.wb-drawer-toggle');
+      const toggleButton = drawerCard.locator('.x-drawer-toggle');
       
       if (await toggleButton.count() > 0) {
         await expect(toggleButton).toBeVisible();
@@ -313,32 +313,16 @@ test.describe('Behaviors Showcase Page', () => {
   });
 
   // See the skip note on 'Dropdown Behavior' above -- same situation.
+  //
+  // #873: 'toggle button has visible styling' used to live here. It had no
+  // expect() at all (it console.warn'd and returned), AND it sat inside a
+  // skipped describe, so it was inert twice over. It now lives in 'Visual
+  // Regression Checks' below, where it runs and asserts -- rewritten to inject
+  // its own markup through WB.scan() rather than depending on demo sections
+  // this page no longer has.
   test.describe.skip('Toggle Behavior', () => {
-    test('toggle button has visible styling', async ({ page }) => {
-      const toggleButton = page.locator('wb-toggle').first();
-      
-      // Get computed styles
-      const styles = await toggleButton.evaluate(el => {
-        const computed = window.getComputedStyle(el);
-        return {
-          background: computed.backgroundColor,
-          color: computed.color,
-          border: computed.border
-        };
-      });
-      
-      // Button should not be pure black/white with no styling
-      const isUnstyled = 
-        (styles.background === 'rgba(0, 0, 0, 0)' || styles.background === 'transparent') &&
-        styles.border.includes('none');
-      
-      if (isUnstyled) {
-        console.warn('Toggle button appears unstyled - may need button behavior');
-      }
-    });
-
     test('toggle toggles class on target', async ({ page }) => {
-      const toggleButton = page.locator('wb-toggle[target="#toggle-box"]');
+      const toggleButton = page.locator('x-toggle[target="#toggle-box"]');
       const target = page.locator('#toggle-box');
       
       // Initial state
@@ -357,7 +341,7 @@ test.describe('Behaviors Showcase Page', () => {
   // See the skip note on 'Dropdown Behavior' above -- same situation.
   test.describe.skip('Masonry Layout', () => {
     test('masonry container uses column layout', async ({ page }) => {
-      const masonry = page.locator('wb-masonry').first();
+      const masonry = page.locator('[x-masonry]').first();
       
       const styles = await masonry.evaluate(el => {
         const computed = window.getComputedStyle(el);
@@ -372,7 +356,7 @@ test.describe('Behaviors Showcase Page', () => {
     });
 
     test('masonry children are visible', async ({ page }) => {
-      const masonry = page.locator('wb-masonry').first();
+      const masonry = page.locator('[x-masonry]').first();
       const children = await masonry.locator('> *').all();
       
       expect(children.length).toBeGreaterThan(0);
@@ -383,7 +367,7 @@ test.describe('Behaviors Showcase Page', () => {
     });
 
     test('masonry items have correct break-inside', async ({ page }) => {
-      const masonry = page.locator('wb-masonry').first();
+      const masonry = page.locator('[x-masonry]').first();
       const firstChild = masonry.locator('> *').first();
       
       const breakInside = await firstChild.evaluate(el => {
@@ -404,9 +388,9 @@ test.describe('Behaviors Showcase Page', () => {
         const cardBox = await card.boundingBox();
         if (!cardBox) continue;
         
-        // #448: wb-mdhtml no longer carries a same-named `.wb-mdhtml` class
+        // #448: x-mdhtml no longer carries a same-named `.x-mdhtml` class
         // -- select the tag directly too.
-        const codeBlocks = await card.locator('pre, code, wb-mdhtml, .wb-mdhtml').all();
+        const codeBlocks = await card.locator('pre, code, [x-mdhtml], .x-mdhtml').all();
         
         for (const code of codeBlocks) {
           const codeBox = await code.boundingBox();
@@ -437,7 +421,7 @@ test.describe('Behaviors Showcase Page', () => {
     });
 
     test('line numbers column is narrow', async ({ page }) => {
-      const lineNumbers = await page.locator('.wb-pre__line-numbers').all();
+      const lineNumbers = await page.locator('.x-pre__line-numbers').all();
       
       for (const ln of lineNumbers) {
         const box = await ln.boundingBox();
@@ -453,9 +437,9 @@ test.describe('Behaviors Showcase Page', () => {
     test('all behavior elements are initialized', async ({ page }) => {
       const uninitializedCount = await page.evaluate(() => {
         let count = 0;
-        document.querySelectorAll('.wb-ready').forEach(el => {
-          // Check for wb-ready or class starting with wb-
-          const hasReady = el.classList.contains("wb-ready");
+        document.querySelectorAll('.x-ready').forEach(el => {
+          // Check for x-ready or class starting with wb-
+          const hasReady = el.classList.contains("x-ready");
           const hasWbClass = Array.from(el.classList).some(c => c.startsWith('wb-'));
           
           if (!hasReady && !hasWbClass) {
@@ -476,33 +460,208 @@ test.describe('Behaviors Showcase Page', () => {
   });
 
   test.describe('Visual Regression Checks', () => {
+    /**
+     * #873: 'buttons have consistent styling' used to loop over
+     * `button[variant]` on this page and console.log anything transparent. It
+     * had no expect() at all, and -- measured live against a dev server --
+     * `/?page=behaviors` contains ZERO `button[variant]` elements, because
+     * #664/#666 replaced the per-behavior demo sections with a search box and
+     * a live preview panel. The loop body never ran once.
+     *
+     * So the probes are injected and upgraded through the public API instead.
+     * Prepended to <body> and scrolled to, NOT appended: several behaviors
+     * inject lazily off an IntersectionObserver, so a host parked below the
+     * fold of a very long page is upgraded only when something scrolls it into
+     * view (the #860 note on the same helper in effects-actions.spec.ts).
+     * WB.scan() is awaited -- it is async, and asserting before it resolves is
+     * a race that passes at --workers=1 and fails at --workers=8.
+     */
+    async function scanProbe(page: Page, html: string): Promise<void> {
+      await page.evaluate(async (markup: string) => {
+        document.getElementById('wb-style-probe')?.remove();
+        const host = document.createElement('div');
+        host.id = 'wb-style-probe';
+        host.style.cssText =
+          'position:relative;z-index:2147483000;display:flex;flex-wrap:wrap;gap:8px;';
+        host.innerHTML = markup;
+        document.body.prepend(host);
+        window.scrollTo(0, 0);
+        await (window as any).WB.scan(host, { eager: true });
+      }, html);
+    }
+
+    /**
+     * button.schema.json's own variant enum. `appliesClass` there is
+     * `x-button--{{value}}`, which is the styling hook asserted below.
+     */
+    const SOLID_VARIANTS = ['primary', 'secondary', 'success', 'warning', 'error'];
+    const OPEN_VARIANTS = ['ghost', 'outline', 'link'];
+
     test('buttons have consistent styling', async ({ page }) => {
-      const buttons = await page.locator('button[variant]').all();
-      
-      for (const button of buttons) {
-        // Buttons with data-variant should have WB styling
-        const hasStyle = await button.evaluate(el => {
-          const computed = window.getComputedStyle(el);
-          // Should have some background color (not transparent)
-          return computed.backgroundColor !== 'rgba(0, 0, 0, 0)' &&
-                 computed.backgroundColor !== 'transparent';
-        });
-        
-        if (!hasStyle) {
-          const variant = await button.getAttribute('variant');
-          console.log(`Button with variant="${variant}" may be unstyled`);
-        }
-      }
+      const variants = [...SOLID_VARIANTS, ...OPEN_VARIANTS];
+
+      // Two authoring forms of the SAME variant, side by side. The promise of
+      // the button behavior is that they are indistinguishable -- and that
+      // promise is exactly what #772 broke, when behavior stylesheets matched
+      // only the wb-* tag and x-* authoring rendered unstyled.
+      await scanProbe(
+        page,
+        variants
+          .map(
+            (v) =>
+              `<button variant="${v}" data-probe="native-${v}">${v}</button>` +
+              `<div x-button variant="${v}" data-probe="decorated-${v}">${v}</div>`
+          )
+          .join('')
+      );
+
+      // WB.scan() attaches the styling hook; wait on the OUTCOME rather than a
+      // fixed sleep, so nothing below can read styles off an un-upgraded node.
+      await expect
+        .poll(
+          async () =>
+            page.locator('#wb-style-probe [data-probe]').evaluateAll(
+              (els) => els.filter((el) => el.classList.contains('x-button')).length
+            ),
+          { timeout: 20000, message: 'button() never attached to the injected probes' }
+        )
+        .toBe(variants.length * 2);
+
+      const probes = await page.locator('#wb-style-probe [data-probe]').evaluateAll((els) =>
+        els.map((el) => {
+          const c = getComputedStyle(el);
+          return {
+            probe: el.getAttribute('data-probe') as string,
+            classes: el.className,
+            // The variant-defining properties only. Deliberately NOT font-size
+            // or padding: <button> and <div> start from different UA defaults
+            // for those, and a difference there would say nothing about the
+            // variant styling this test is named after.
+            paint: [c.backgroundColor, c.color, c.borderRadius, c.borderStyle, c.borderColor].join(' | '),
+          };
+        })
+      );
+
+      const byProbe = new Map(probes.map((p) => [p.probe, p]));
+
+      // 1. The attribute became the styling hook, in BOTH authoring forms.
+      const missingHook = probes
+        .filter((p) => !new RegExp(`\\bx-button--${p.probe.split('-')[1]}\\b`).test(p.classes))
+        .map((p) => `${p.probe} -> class="${p.classes}"`);
+      expect(
+        missingHook,
+        'variant="X" must produce the x-button--X class button.schema.json declares '
+        + '(appliesClass), whichever authoring form was used',
+      ).toEqual([]);
+
+      // 2. Same variant, two authoring forms, identical paint. No palette is
+      //    hard-coded, so this survives every theme.
+      //
+      //    KNOWN EXCEPTION, tracked as #875: `outline` is in
+      //    button.schema.json's variant enum but NOTHING implements it --
+      //    there is no .x-button--outline rule and no
+      //    x-button[variant="outline"] rule anywhere in src/. With no variant
+      //    rule the two forms fall through to DIFFERENT defaults: the native
+      //    <button> keeps a site-level button border, the decorated <div>
+      //    keeps .x-button's own `border: 1px solid transparent`. Measured:
+      //      <button>       ... | solid | color(srgb 0.9425 0.9475 0.9575 / 0.22)
+      //      <div x-button> ... | solid | rgba(0, 0, 0, 0)
+      //
+      //    Named here rather than quietly filtered out of `variants`, and
+      //    asserted with toEqual rather than a subset check, so this is a
+      //    RATCHET: the day #875 is implemented the list goes empty, this
+      //    fails, and whoever fixed it deletes the exception. A silent
+      //    exclusion would instead outlive the bug forever.
+      const KNOWN_INCONSISTENT = ['outline'];
+
+      const inconsistent = variants
+        .map((v) => ({
+          v,
+          native: byProbe.get(`native-${v}`)!.paint,
+          decorated: byProbe.get(`decorated-${v}`)!.paint,
+        }))
+        .filter((r) => r.native !== r.decorated);
+
+      expect(
+        inconsistent.map((r) => r.v),
+        '<button variant="X"> and <div x-button variant="X"> must paint identically -- '
+        + 'the x-* authoring form rendering unstyled is #772. Only the variants named in '
+        + `KNOWN_INCONSISTENT (${KNOWN_INCONSISTENT.join(', ') || 'none'}, see #875) may differ, `
+        + 'and when that one is fixed this assertion fails on purpose so the exception gets '
+        + 'removed.\n'
+        + inconsistent
+          .map((r) => `  variant=${r.v}\n    <button>      ${r.native}\n    <div x-button> ${r.decorated}`)
+          .join('\n'),
+      ).toEqual(KNOWN_INCONSISTENT);
+
+      // 3. ...and "consistently unstyled" must not be able to satisfy (2).
+      //    The five solid variants carry distinct opaque fills by design; if
+      //    button.css failed to load they would collapse to one value (or to
+      //    transparent), which is the regression this catches.
+      const solidFills = SOLID_VARIANTS.map(
+        (v) => byProbe.get(`native-${v}`)!.paint.split(' | ')[0]
+      );
+      expect(
+        solidFills.filter((bg) => bg === 'rgba(0, 0, 0, 0)' || bg === 'transparent'),
+        `the solid variants (${SOLID_VARIANTS.join(', ')}) must have a real fill`,
+      ).toEqual([]);
+      expect(
+        new Set(solidFills).size,
+        `the solid variants must be visually distinguishable, got ${solidFills.join(', ')}`,
+      ).toBe(SOLID_VARIANTS.length);
+    });
+
+    /**
+     * #873: moved out of the skipped 'Toggle Behavior' describe above, where it
+     * was doubly inert -- skipped, and console.warn-only with no expect().
+     */
+    test('toggle button has visible styling', async ({ page }) => {
+      await scanProbe(
+        page,
+        '<button x-toggle target="#wb-probe-toggle-panel" data-probe="toggle">Toggle</button>'
+        + '<div id="wb-probe-toggle-panel">the panel this button toggles</div>'
+      );
+
+      const btn = page.locator('#wb-style-probe [data-probe="toggle"]');
+      await expect(btn).toHaveCount(1);
+      await expect(btn).toBeVisible();
+
+      // A real, clickable target -- not a zero-box element that "exists".
+      const box = await btn.boundingBox();
+      expect(box, 'the toggle button has no layout box at all').toBeTruthy();
+      expect(box!.width).toBeGreaterThan(20);
+      expect(box!.height).toBeGreaterThan(10);
+
+      // Styled by the project's stylesheet, not by the UA. Chromium's default
+      // <button> is border-radius 0 with a 2px outset border and ~1px 6px
+      // padding, so every one of these three differs from an unstyled control.
+      // That is what "has visible styling" means, stated as something that can
+      // actually fail.
+      const style = await btn.evaluate((el) => {
+        const c = getComputedStyle(el);
+        return {
+          radius: parseFloat(c.borderTopLeftRadius),
+          borderStyle: c.borderTopStyle,
+          padY: parseFloat(c.paddingTop),
+          padX: parseFloat(c.paddingLeft),
+          cursor: c.cursor,
+        };
+      });
+      expect(style.radius, 'no border-radius: the UA default, so nothing styled it').toBeGreaterThan(0);
+      expect(style.borderStyle, 'still the UA outset border').not.toBe('outset');
+      expect(style.padX, 'still the UA default horizontal padding').toBeGreaterThan(6);
+      expect(style.padY, 'still the UA default vertical padding').toBeGreaterThan(1);
+      expect(style.cursor, 'a toggle must look clickable').toBe('pointer');
     });
 
     test('spinners are animating', async ({ page }) => {
-      const spinners = await page.locator('wb-spinner').all();
+      const spinners = await page.locator('[x-spinner]').all();
       
       expect(spinners.length).toBeGreaterThan(0);
       
       for (const spinner of spinners) {
         // spinner() (feedback.js) builds a plain <div> ring, not an <svg> --
-        // the outer <wb-spinner> itself has animation:none (site.css, #182,
+        // the outer <span x-spinner> itself has animation:none (site.css, #182,
         // avoids a double ring); the actual spin animation lives on the
         // child <div>.
         const hasAnimation = await spinner.evaluate(el => {

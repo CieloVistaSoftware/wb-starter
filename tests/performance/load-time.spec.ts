@@ -5,7 +5,7 @@ test.describe('Performance Tests', () => {
   
   const pages = [
     { name: 'Home', path: '/' },
-    { name: 'Components', path: '/?page=components' },
+    { name: 'Components', path: '/?page=behaviors' },
     { name: 'Docs', path: '/?page=docs' }
   ];
 

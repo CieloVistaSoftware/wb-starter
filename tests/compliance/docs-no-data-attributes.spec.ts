@@ -10,10 +10,10 @@
  * Genuinely-legitimate data-* (not WB component conventions) are allowlisted:
  *  - data-theme       — the theme system attribute on <html>
  *  - data-page        — SPA route marker
- *  - data-code-width  — <wb-demo>'s code-panel width preset. Verified (#553)
+ *  - data-code-width  — <div x-demo>'s code-panel width preset. Verified (#553)
  *    against src/styles/behaviors/demo.css and src/wb-viewmodels/demo.js:
  *    it's a pure CSS attribute-selector hook
- *    (`wb-demo[data-code-width="narrow"] .wb-demo__code { … }`), never read
+ *    (`x-demo[data-code-width="narrow"] .x-demo__code { … }`), never read
  *    by JS, and has no plain-attribute equivalent anywhere in the codebase
  *    — migrate-legacy-attrs.mjs's verified data-*→plain map deliberately
  *    excludes it for the same reason. Same category and same allowlist

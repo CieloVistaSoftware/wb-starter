@@ -1,14 +1,14 @@
 #!/usr/bin/env node
 /**
- * WB Framework - <wb-demo> Markup Integrity Check
- * Runs as: npm run test:wb-demo-integrity
+ * WB Framework - <div x-demo> Markup Integrity Check
+ * Runs as: npm run test:x-demo-integrity
  * Part of: npm test (compliance checks)
  *
  * FAST-FAIL: Exits with code 1 if any pages/*.html or demos/*.html file has
- * unbalanced <wb-demo>/</wb-demo> tags or a <wb-demo> with no content.
+ * unbalanced <div x-demo>/</div> tags or a <div x-demo> with no content.
  *
  * Written after a real bug (#behaviors.html "Special Input Types" and
- * "Masked Inputs"): a stray self-closed <wb-demo></wb-demo> rendered as a
+ * "Masked Inputs"): a stray self-closed <div x-demo></div> rendered as a
  * blank box, and an orphaned closing tag left three <input> elements as bare
  * siblings with no wrapper (no spacing). Nothing caught it — this does.
  */
@@ -21,9 +21,9 @@ const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const PROJECT_DIR = path.resolve(__dirname, '..');
 const SCAN_DIRS = ['pages', 'demos'];
 
-const OPEN_RE = /<wb-demo(?:\s[^>]*)?>/g;
-const CLOSE_RE = /<\/wb-demo>/g;
-const EMPTY_RE = /<wb-demo(?:\s[^>]*)?>\s*<\/wb-demo>/g;
+const OPEN_RE = /<div x-demo(?:\s[^>]*)?>/g;
+const CLOSE_RE = /<\/x-demo>/g;
+const EMPTY_RE = /<div x-demo(?:\s[^>]*)?>\s*<\/x-demo>/g;
 
 function stripHtmlComments(html) {
   return html.replace(/<!--[\s\S]*?-->/g, '');
@@ -71,7 +71,7 @@ function stripJsComments(code) {
     }
 
     // String / template literals -- copy verbatim (respecting backslash
-    // escapes) so any // or <wb-demo>-looking text inside is left intact
+    // escapes) so any // or <div x-demo>-looking text inside is left intact
     // and never mistaken for a real tag or a comment.
     if (c === "'" || c === '"' || c === '`') {
       const quote = c;
@@ -172,8 +172,8 @@ function getAllHtmlFiles(dir) {
 }
 
 /**
- * Pure function, no filesystem access — scans an HTML string for <wb-demo>
- * markup issues. Exported so tests/compliance/wb-demo-integrity.spec.ts can
+ * Pure function, no filesystem access — scans an HTML string for <div x-demo>
+ * markup issues. Exported so tests/compliance/x-demo-integrity.spec.ts can
  * exercise it directly against example fixtures, independent of which real
  * files currently exist on disk.
  */
@@ -184,12 +184,12 @@ export function scanHtml(rawHtml) {
   const opens = (html.match(OPEN_RE) || []).length;
   const closes = (html.match(CLOSE_RE) || []).length;
   if (opens !== closes) {
-    issues.push(`unbalanced <wb-demo> tags: ${opens} open vs ${closes} close`);
+    issues.push(`unbalanced <div x-demo> tags: ${opens} open vs ${closes} close`);
   }
 
   const emptyMatches = html.match(EMPTY_RE) || [];
   if (emptyMatches.length > 0) {
-    issues.push(`${emptyMatches.length} empty <wb-demo></wb-demo> block(s) — renders as a blank box`);
+    issues.push(`${emptyMatches.length} empty <div x-demo></div> block(s) — renders as a blank box`);
   }
 
   return issues;
@@ -202,7 +202,7 @@ function scanFile(filePath) {
 }
 
 function main() {
-  console.log('\n🔍 WB Framework - <wb-demo> Markup Integrity Check\n');
+  console.log('\n🔍 WB Framework - <div x-demo> Markup Integrity Check\n');
 
   const files = SCAN_DIRS.flatMap((dir) => getAllHtmlFiles(path.join(PROJECT_DIR, dir)));
   console.log(`📊 Scanning ${files.length} page/demo HTML files...\n`);
@@ -210,21 +210,21 @@ function main() {
   const results = files.map(scanFile).filter((r) => r.issues.length > 0);
 
   if (results.length === 0) {
-    console.log('✅ All <wb-demo> tags are balanced and non-empty!\n');
+    console.log('✅ All <div x-demo> tags are balanced and non-empty!\n');
     process.exit(0);
   }
 
-  console.error(`❌ Found <wb-demo> markup issues in ${results.length} file(s):\n`);
+  console.error(`❌ Found <div x-demo> markup issues in ${results.length} file(s):\n`);
   results.forEach(({ relativePath, issues }) => {
     console.error(`   ${relativePath}`);
     issues.forEach((issue) => console.error(`      ⚠️  ${issue}`));
   });
-  console.error('\n   Fix: each <wb-demo> needs exactly one matching </wb-demo>, with content between them.\n');
+  console.error('\n   Fix: each <div x-demo> needs exactly one matching </div>, with content between them.\n');
   process.exit(1);
 }
 
 // Only run the CLI scan (and its process.exit calls) when this file is
-// executed directly — not when tests/compliance/wb-demo-integrity.spec.ts
+// executed directly — not when tests/compliance/x-demo-integrity.spec.ts
 // imports scanHtml() for fixture-based assertions. Resolve both sides to
 // real filesystem paths before comparing — raw import.meta.url vs
 // process.argv[1] string comparison silently mismatches on Windows

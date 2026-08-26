@@ -21,7 +21,7 @@ test.describe('#178 — stepper + range', () => {
       return st
         ? {
             buttons: st.querySelectorAll('button').length,
-            value: st.querySelector('.wb-stepper__value')?.textContent,
+            value: st.querySelector('.x-stepper__value')?.textContent,
           }
         : null;
     });
@@ -33,9 +33,9 @@ test.describe('#178 — stepper + range', () => {
   test('stepper + increments and clamps to data-max', async ({ page }) => {
     const result = await page.evaluate(async () => {
       const st = document.querySelector('[x-stepper]') as HTMLElement;
-      const valEl = st.querySelector('.wb-stepper__value') as HTMLElement;
-      const inc = st.querySelector('.wb-stepper__inc') as HTMLButtonElement;
-      const dec = st.querySelector('.wb-stepper__dec') as HTMLButtonElement;
+      const valEl = st.querySelector('.x-stepper__value') as HTMLElement;
+      const inc = st.querySelector('.x-stepper__inc') as HTMLButtonElement;
+      const dec = st.querySelector('.x-stepper__dec') as HTMLButtonElement;
       const start = valEl.textContent;
       inc.click();
       const afterInc = valEl.textContent;

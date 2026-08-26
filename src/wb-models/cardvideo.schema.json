@@ -4,13 +4,13 @@
   "title": "Video Card",
   "description": "Card with embedded video player",
   "schemaFor": "cardvideo",
-  "baseClass": "wb-card-video",
+  "baseClass": "x-card-video",
   "semanticElement": {
     "tagName": "article",
     "implicitRole": "article"
   },
   "compliance": {
-    "baseClass": "wb-card-video",
+    "baseClass": "x-card-video",
     "supportLevel": "stable",
     "accessibility": "high"
   },
@@ -78,7 +78,7 @@
         "elevated"
       ],
       "default": "default",
-      "appliesClass": "wb-card-video--{{value}}"
+      "appliesClass": "x-card-video--{{value}}"
     }
   },
   "$view": [
@@ -173,47 +173,47 @@
     }
   },
   "$cssAPI": {
-    "--wb-card-video-radius": {
+    "--x-card-video-radius": {
       "default": "8px",
       "description": "Card border radius"
     },
-    "--wb-card-video-bg": {
+    "--x-card-video-bg": {
       "default": "#000000",
       "description": "Video background color"
     },
-    "--wb-card-video-aspect": {
+    "--x-card-video-aspect": {
       "default": "16/9",
       "description": "Video aspect ratio"
     },
-    "--wb-card-video-border": {
+    "--x-card-video-border": {
       "default": "none",
       "description": "Card border"
     },
-    "--wb-card-video-shadow": {
+    "--x-card-video-shadow": {
       "default": "none",
       "description": "Card shadow"
     },
-    "--wb-card-video-content-padding": {
+    "--x-card-video-content-padding": {
       "default": "1rem",
       "description": "Content padding"
     },
-    "--wb-card-video-content-bg": {
+    "--x-card-video-content-bg": {
       "default": "var(--bg-surface, #ffffff)",
       "description": "Content background"
     },
-    "--wb-card-video-title-size": {
+    "--x-card-video-title-size": {
       "default": "1rem",
       "description": "Title font size"
     },
-    "--wb-card-video-title-weight": {
+    "--x-card-video-title-weight": {
       "default": "600",
       "description": "Title font weight"
     },
-    "--wb-card-video-description-size": {
+    "--x-card-video-description-size": {
       "default": "0.875rem",
       "description": "Description font size"
     },
-    "--wb-card-video-description-color": {
+    "--x-card-video-description-color": {
       "default": "var(--text-secondary, #666)",
       "description": "Description color"
     }
@@ -237,17 +237,17 @@
   },
   "test": {
     "setup": [
-      "<wb-cardvideo>Basic cardvideo content</wb-cardvideo>",
-      "<wb-cardvideo aspect=\"16/9\">aspect=16/9</wb-cardvideo>",
-      "<wb-cardvideo aspect=\"4/3\">aspect=4/3</wb-cardvideo>",
-      "<wb-cardvideo aspect=\"1/1\">aspect=1/1</wb-cardvideo>",
-      "<wb-cardvideo variant=\"default\">variant=default</wb-cardvideo>",
-      "<wb-cardvideo variant=\"minimal\">variant=minimal</wb-cardvideo>",
-      "<wb-cardvideo variant=\"bordered\">variant=bordered</wb-cardvideo>",
-      "<wb-cardvideo autoplay>with autoplay</wb-cardvideo>",
-      "<wb-cardvideo title=\"Test Title\">With title attribute</wb-cardvideo>",
-      "<wb-card-video src=\"https://www.w3schools.com/html/mov_bbb.mp4\"></wb-card-video>",
-      "<wb-card-video src=\"https://www.w3schools.com/html/mov_bbb.mp4\" title=\"My Video\" poster=\"https://picsum.photos/seed/screening/640/360\"></wb-card-video>"
+      "<div x-cardvideo>Basic cardvideo content</div>",
+      "<div x-cardvideo aspect=\"16/9\">aspect=16/9</div>",
+      "<div x-cardvideo aspect=\"4/3\">aspect=4/3</div>",
+      "<div x-cardvideo aspect=\"1/1\">aspect=1/1</div>",
+      "<div x-cardvideo variant=\"default\">variant=default</div>",
+      "<div x-cardvideo variant=\"minimal\">variant=minimal</div>",
+      "<div x-cardvideo variant=\"bordered\">variant=bordered</div>",
+      "<div x-cardvideo autoplay>with autoplay</div>",
+      "<div x-cardvideo title=\"Test Title\">With title attribute</div>",
+      "<div src=\"https://www.w3schools.com/html/mov_bbb.mp4\"></div>",
+      "<div src=\"https://www.w3schools.com/html/mov_bbb.mp4\" title=\"My Video\" poster=\"https://picsum.photos/seed/screening/640/360\"></div>"
     ],
     "matrix": {
       "combinations": [
@@ -283,15 +283,15 @@
     },
     "site": {
       "page": "cards",
-      "tag": "wb-cardvideo",
+      "tag": "x-cardvideo",
       "renders": true,
-      "baseClass": "wb-card-video",
+      "baseClass": "x-card-video",
       "minInstances": 7,
       "checkText": [
         "Video Title"
       ],
       "checkClasses": [
-        "wb-card-video--minimal"
+        "x-card-video--minimal"
       ],
       "checkAttributes": [
         "src"

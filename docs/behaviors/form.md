@@ -2,14 +2,20 @@
 
 Schema for x-form behavior (form enhancement)
 
-Apply `x-form` to any element.
+## Type — new capability
 
-## Usage
+`x-form` adds behavior that no HTML element implies. Nothing about a tag says "ripple" or "tooltip", so this is always opted into by attribute, on whatever element you already chose.
+
+### How to write it
 
 ```html
-<div x-form>
-  …
-</div>
+<form validate ajax action="/api/demo-form" successMessage="Sent — check the events panel below.">
+  <label>Email <input type="email" name="email" required placeholder="you@example.com"></label>
+  <label>Message <textarea name="message" rows="3" required></textarea></label>
+  <button type="submit">
+  type: submit
+</button>
+</form>
 ```
 
 ## Attributes

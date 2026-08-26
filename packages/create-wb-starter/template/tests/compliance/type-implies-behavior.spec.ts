@@ -30,7 +30,7 @@ function isEnhanced(behaviorName) {
     return [...document.querySelectorAll('style')].some(s => s.textContent.includes('input[type="checkbox"]'));
   }
   if (behaviorName === 'password') {
-    return !!el.parentElement && el.parentElement.classList.contains('wb-password');
+    return !!el.parentElement && el.parentElement.classList.contains('x-password');
   }
   return el.classList.contains(`wb-${behaviorName}`);
 }
@@ -40,11 +40,11 @@ function isEnhanced(behaviorName) {
 // type="file" already render usably on their own, so the richer wrapper is an opt-in
 // upgrade, not something every instance of that type obviously wants. `marker` is the class
 // the RICHER behavior specifically adds — search still gets the unrelated generic input()
-// wrapper (wb-input__field) for free like any other text-like type, so absence of ALL classes
+// wrapper (x-input__field) for free like any other text-like type, so absence of ALL classes
 // isn't the right check; absence of search()'s own marker is.
 const OPT_IN_BY_DESIGN = {
-  search: { marker: 'wb-search__input' },
-  file: { marker: 'wb-file__input' },
+  search: { marker: 'x-search__input' },
+  file: { marker: 'x-file__input' },
   // 'image'/'button' behaviors (card.js's image()/button()) enhance <img>/<button> TAGS
   // (already correctly native-mapped via their own tag selectors) and only coincidentally
   // share a name with the rare/deprecated <input type="image">/<input type="button">) values
@@ -131,7 +131,7 @@ for (const core of ['/src/core/wb.js', '/src/core/wb-lazy.js']) {
     test('type="password" AND explicit x-password together still apply the behavior exactly once (no double-wrap)', async ({ page }) => {
       await renderWithWB(page, core, `<input id="probe" type="password" x-password>`);
       const toggleCount = await page.locator('#probe').evaluate(el =>
-        (el.parentElement ? el.parentElement.querySelectorAll('.wb-password__toggle').length : 0)
+        (el.parentElement ? el.parentElement.querySelectorAll('.x-password__toggle').length : 0)
       );
       expect(toggleCount, 'exactly one toggle button — never double-applied').toBe(1);
     });
@@ -149,9 +149,9 @@ for (const core of ['/src/core/wb.js', '/src/core/wb-lazy.js']) {
 
 test.describe('wb-* custom elements never need a matching x-attribute on top of the bare tag', () => {
   for (const core of ['/src/core/wb.js', '/src/core/wb-lazy.js']) {
-    test(`<wb-cardexpandable> with zero x-* attributes still activates (${core})`, async ({ page }) => {
-      await renderWithWB(page, core, `<wb-cardexpandable id="probe" title="Read More" max-height="80px"><p>Body</p></wb-cardexpandable>`);
-      await expect(page.locator('#probe')).toHaveClass(/wb-card/, { timeout: 10000 });
+    test(`<div x-cardexpandable> with zero x-* attributes still activates (${core})`, async ({ page }) => {
+      await renderWithWB(page, core, `<div x-cardexpandable id="probe" title="Read More" max-height="80px"><p>Body</p></div>`);
+      await expect(page.locator('#probe')).toHaveClass(/x-card/, { timeout: 10000 });
     });
   }
 });

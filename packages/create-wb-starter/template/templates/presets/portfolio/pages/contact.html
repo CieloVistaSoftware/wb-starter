@@ -17,45 +17,45 @@
     <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
       <div>
         <label style="display: block; margin-bottom: 0.5rem;">Name *</label>
-        <wb-input placeholder="Your name" style="width: 100%;"></wb-input>
+        <div x-input placeholder="Your name" style="width: 100%;"></div>
       </div>
       <div>
         <label style="display: block; margin-bottom: 0.5rem;">Email *</label>
-        <wb-input type="email" placeholder="your@email.com" style="width: 100%;"></wb-input>
+        <div x-input type="email" placeholder="your@email.com" style="width: 100%;"></div>
       </div>
     </div>
     
     <div>
       <label style="display: block; margin-bottom: 0.5rem;">Company</label>
-      <wb-input placeholder="Your company (optional)" style="width: 100%;"></wb-input>
+      <div x-input placeholder="Your company (optional)" style="width: 100%;"></div>
     </div>
     
     <div>
       <label style="display: block; margin-bottom: 0.5rem;">Project Type</label>
-      <wb-select style="width: 100%;">
+      <select style="width: 100%;">
         <option>Brand Identity</option>
         <option>Web Design</option>
         <option>Mobile App</option>
         <option>Other</option>
-      </wb-select>
+      </select>
     </div>
     
     <div>
       <label style="display: block; margin-bottom: 0.5rem;">Budget Range</label>
-      <wb-select style="width: 100%;">
+      <select style="width: 100%;">
         <option>$5k - $10k</option>
         <option>$10k - $25k</option>
         <option>$25k - $50k</option>
         <option>$50k+</option>
-      </wb-select>
+      </select>
     </div>
     
     <div>
       <label style="display: block; margin-bottom: 0.5rem;">Tell us about your project *</label>
-      <wb-textarea placeholder="Describe your project, goals, and timeline..." rows="6" style="width: 100%;"></wb-textarea>
+      <textarea placeholder="Describe your project, goals, and timeline..." rows="6" style="width: 100%;"></textarea>
     </div>
     
-    <wb-button variant="gradient" type="submit" size="lg">Send Message</wb-button>
+    <button variant="gradient" type="submit" size="lg">Send Message</button>
     
   </form>
 </section>

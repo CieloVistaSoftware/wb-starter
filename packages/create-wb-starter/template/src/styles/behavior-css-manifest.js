@@ -17,24 +17,24 @@
  * A behavior can map to more than one file — e.g. `cardhero` needs both
  * card.css (base card structure) and hero.css (the hero-specific bits it
  * also styles). card.css and notification.css both independently style
- * `.wb-notification*` for the `cardnotification` behavior (verified: real
+ * `.x-notification*` for the `cardnotification` behavior (verified: real
  * duplication, not a mistake to fix here) — both must load together.
  *
  * Intentionally NOT in this manifest:
  *   - modal.css: dead/legacy CSS not exercised by the current dialog.js
- *     (`<dialog>` + showModal(), not the old `.wb-modal.open` toggle it
+ *     (`<dialog>` + showModal(), not the old `.x-modal.open` toggle it
  *     defines). Never loading it is a strict improvement, not a gap.
  *   - stock.css: confirmed orphaned — no behavior, tag, or markup anywhere
- *     in the repo references `.wb-stock`/`data-wb="stock"`.
+ *     in the repo references `.x-stock`/`data-wb="stock"`.
  *   - layout.css, ui-utils.css: kept as unconditional imports in site.css
  *     (see the comment there) rather than JIT-loaded — both are small
- *     (<1.5KB) and layout.css's real content (.wb-grid--alt-rows) is needed
- *     by <wb-grid>, a genuine custom element that never calls WB.inject()
+ *     (<1.5KB) and layout.css's real content (.x-grid--alt-rows) is needed
+ *     by <div x-grid>, a genuine custom element that never calls WB.inject()
  *     and so never passes through the hook this manifest feeds.
  */
 
 export const BEHAVIOR_CSS_MAP = {
-  // Cards — all 19 wb-card* behaviors share card.css's base structure.
+  // Cards — all 19 x-card* behaviors share card.css's base structure.
   card: ['card.css'],
   cardbutton: ['card.css'],
   carddraggable: ['card.css'],
@@ -70,6 +70,7 @@ export const BEHAVIOR_CSS_MAP = {
   chip: ['chip.css'],
   code: ['code.css'],
   collapse: ['collapse.css'],
+  fill: ['fill.css'],
   // x-copybutton (#291) — copy() itself (x-copy) is pure JS with nothing to
   // style, but copyButton() injects a real positioned button, so it needs
   // its own CSS file loaded.
@@ -78,7 +79,7 @@ export const BEHAVIOR_CSS_MAP = {
   table: ['data.css'],
   demo: ['demo.css'],
   details: ['details.css'],
-  dialog: ['dialog.css'], // also covers wb-modal (tag-map.js maps it to 'dialog')
+  dialog: ['dialog.css'], // also covers x-modal (tag-map.js maps it to 'dialog')
   drawer: ['drawer.css'],
   dropdown: ['dropdown.css'],
   footer: ['footer.css'],
@@ -86,7 +87,7 @@ export const BEHAVIOR_CSS_MAP = {
   header: ['header.css'],
   mark: ['inline.css'],
 
-  // Native form controls + wb-input/wb-select/wb-textarea all share
+  // Native form controls + x-input/x-select/x-textarea all share
   // input.css, including its unscoped native-fallback rules.
   input: ['input.css'],
   textarea: ['input.css'],

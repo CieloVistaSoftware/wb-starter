@@ -2,14 +2,28 @@
 
 Card with embedded video player
 
-Applies to `<article>`, and to any element carrying `x-cardvideo`.
+## Type — decorates a semantic element
 
-## Usage
+`x-cardvideo` is the **article behavior**. It attaches to `<article>`, the element you would have reached for anyway — there is no new tag to learn.
+
+### How to write it
 
 ```html
-<article x-cardvideo>
+<article x-cardvideo
+  src="https://www.w3schools.com/html/mov_bbb.mp4"
+  poster="https://picsum.photos/seed/screening/480/270"
+  title="Behaviors in 90 seconds"
+  description="What replaced the component base class, and why."></article>
+```
+
+### On a different element
+
+Use `x-cardvideo` when the host is not a `<article>` and you want the same behavior:
+
+```html
+<div x-cardvideo>
   …
-</article>
+</div>
 ```
 
 ## Attributes

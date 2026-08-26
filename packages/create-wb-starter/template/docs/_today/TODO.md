@@ -2,14 +2,14 @@
 # TODO — WB-Starter Project
 Generated: 2026-02-16 from test suite results (2443 passed, 262 failed, 25 skipped / 2730 total)
 **Updated:** 2026-02-17 — Compliance run: 2475 passed, 22 failed, 5 skipped / 2502 compliance tests
-**Session fixes:** 93 failures resolved (wb-ready class removal, demo themes.css, card test rewrites, stale SPA routes, builder nav removal)
+**Session fixes:** 93 failures resolved (x-ready class removal, demo themes.css, card test rewrites, stale SPA routes, builder nav removal)
 
 ---
 
 ## Priority 1 — Showcase Page: Match Tests to Reality (54 failures)
 
 ### behaviors-showcase-definitive.spec.ts (32 → 15 failures)
-- [x] **FIXED: Registered 30+ missing behaviors in `src/core/wb-lazy.js`** — x-clock, x-countdown, x-youtube, x-pagination, x-steps, x-timeline, x-kbd, x-gallery, x-image, x-popover, x-confirm, x-prompt, x-lightbox, x-share, x-print, x-fullscreen, x-darkmode, x-truncate, x-sticky, x-scrollalong, x-masonry, x-dropdown, x-toggle, x-drawer-layout, x-autosize, wb-accordion, wb-modal
+- [x] **FIXED: Registered 30+ missing behaviors in `src/core/wb-lazy.js`** — x-clock, x-countdown, x-youtube, x-pagination, x-steps, x-timeline, x-kbd, x-gallery, x-image, x-popover, x-confirm, x-prompt, x-lightbox, x-share, x-print, x-fullscreen, x-darkmode, x-truncate, x-sticky, x-scrollalong, x-masonry, x-dropdown, x-toggle, x-drawer-layout, x-autosize, x-accordion, x-modal
 - [x] **FIXED: Improved waitForWB** to wait for behavior rendering signals
 - [ ] countdown element still not visible (x-countdown)
 - [ ] spinners have animation check (SVG animation)
@@ -21,7 +21,7 @@ Generated: 2026-02-16 from test suite results (2443 passed, 262 failed, 25 skipp
 - [ ] Rerun tests and confirm all pass
 
 ### behaviors-showcase.spec.ts (22 failures)  
-- [ ] Tabs interaction timeout — verify wb-tabs renders and tab switching works
+- [ ] Tabs interaction timeout — verify x-tabs renders and tab switching works
 - [ ] Dropdown interaction — add `x-dropdown` to showcase page (currently 0 instances)
 - [ ] Masonry layout — add `x-masonry` to showcase page (currently 0 instances)
 - [ ] Toggle behavior — add `x-toggle` to showcase page (currently 0 instances)
@@ -36,13 +36,13 @@ Generated: 2026-02-16 from test suite results (2443 passed, 262 failed, 25 skipp
 ## Priority 2 — Sticky Behavior (18 failures)
 
 **File:** `sticky.spec.ts` — Tests go to `/demos/autoinject.html`, inject `x-sticky` HTML, call `WB.scan()`
-**Root cause:** WB engine not processing `x-sticky` attribute on scan — `wb-sticky` class never applied, API never attached
+**Root cause:** WB engine not processing `x-sticky` attribute on scan — `x-sticky` class never applied, API never attached
 
 - [ ] Verify `sticky` is registered in `wb-viewmodels/index.js` behavior registry (confirmed: `sticky: 'sticky'`)
 	[~claimed copilot 2026-02-16T00:00Z]
 - [ ] Debug WB.scan() → does it find and invoke `sticky()` for `x-sticky` elements?
 - [ ] Fix sticky behavior initialization via WB.scan
-- [ ] Verify `wb-sticky` class applied on init
+- [ ] Verify `x-sticky` class applied on init
 - [ ] Verify `is-stuck` class applied on scroll past trigger
 - [ ] Verify `wbSticky.isStuck()`, `.stick()`, `.unstick()` API works
 - [ ] Verify `offset` and `class` attributes respected
@@ -57,7 +57,7 @@ Generated: 2026-02-16 from test suite results (2443 passed, 262 failed, 25 skipp
 
 - [ ] Create standalone test page: `demos/scrollalong-test.html` with a nav element using `x-scrollalong`
 - [ ] Update `scrollalong.spec.ts` to use the standalone test page instead of `#siteNav`
-- [ ] Verify `wb-scrollalong` class applied on init
+- [ ] Verify `x-scrollalong` class applied on init
 - [ ] Verify `position: sticky` applied
 - [ ] Verify element stays visible on scroll
 - [ ] Verify element remains clickable after scroll
@@ -103,7 +103,7 @@ Generated: 2026-02-16 from test suite results (2443 passed, 262 failed, 25 skipp
 
 - [ ] `cards-comprehensive.spec.ts` — card base, cardlink, cardbutton, cardprofile, cardtestimonial, cardimage, cardfile, cardvideo rendering
 - [ ] `card-styling.spec.ts` — elevated cards missing shadow/lighter background
-- [ ] `cardprogressbar.spec.ts` — progress bar not rendering with `wb-progress` class, height, fill, animation
+- [ ] `cardprogressbar.spec.ts` — progress bar not rendering with `x-progress` class, height, fill, animation
 - [ ] `cardportfolio.spec.ts` — portfolio fields, cover image not rendering
 - [ ] `cardproduct.spec.ts` — product properties not rendering
 - [ ] `cardhero.spec.ts` — background image, text alignment
@@ -138,7 +138,7 @@ Generated: 2026-02-16 from test suite results (2443 passed, 262 failed, 25 skipp
 - `schema-validation.spec.ts` — missing $view, $methods, schemaFor, defaults
 - `v3-syntax-compliance.spec.ts` — missing $view, $methods, $cssAPI
 
-**Schemas needing completion:** autocomplete, colorpicker, counter, error, fieldset, file, floatinglabel, form, formrow, help-demo, help, inputgroup, label, masked, otp, password, stepper, tags, tooltip-demo, x-behavior, x-collapse, x-copy, x-draggable, x-effects, x-enhancements
+**Schemas needing completion:** autocomplete, colorpicker, counter, error, fieldset, file, floatinglabel, form, formrow, help, inputgroup, label, masked, otp, password, stepper, tags, x-behavior, x-collapse, x-copy, x-draggable, x-effects, x-enhancements
 
 - [ ] Add `schemaFor` field to all 25 schemas
 - [ ] Add `$view` section to all 25 schemas
@@ -187,10 +187,10 @@ Generated: 2026-02-16 from test suite results (2443 passed, 262 failed, 25 skipp
 - [ ] Drawer position — left/right drawer opens correctly (4 tests)
 
 ### Badge (2 failures)
-- [ ] `wb-badge` renders as inline-level display check failing
+- [ ] `x-badge` renders as inline-level display check failing
 
 ### PCE (4 failures)
-- [ ] `wb-cardprofile` PCE recognition — TypeError: Cannot read properties of undefined
+- [ ] `x-cardprofile` PCE recognition — TypeError: Cannot read properties of undefined
 - [ ] `pce-test.html` rendering failures
 
 ### Autosize (2 failures)
@@ -247,10 +247,10 @@ Generated: 2026-02-16 from test suite results (2443 passed, 262 failed, 25 skipp
 - [x] Behavior-registry builder entry removed
 - [x] Docs-manifest-integrity — 32 entries added
 - [x] MCP Server v2.0 async test execution
-- [x] wb-demo component complete
+- [x] x-demo component complete
 - [x] themes.css regression fix
 - [x] `behaviors-showcase-visual.spec.ts` — port 5173 → relative URL
-- [x] **2026-02-17: wb-ready class fixes** — removed `.wb-ready` CSS selector waits from site-generation.spec.ts, wizard.spec.ts
+- [x] **2026-02-17: x-ready class fixes** — removed `.x-ready` CSS selector waits from site-generation.spec.ts, wizard.spec.ts
 - [x] **2026-02-17: Stale SPA route tests gutted** — behaviors-showcase, home-showcase, themes-showcase (pointed to dead `/?page=` routes)
 - [x] **2026-02-17: Card test rewrites** — card.spec.ts + card-product-behavior.spec.ts rewritten for current architecture (no data-*, no SPA)
 - [x] **2026-02-17: behaviors-page-scroll fix** — added `goto('/demos/behaviors-showcase.html')` in beforeEach

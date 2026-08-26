@@ -14,7 +14,7 @@ test('autosize modifier adjusts textarea and marks element', async ({ page }) =>
   });
 
   // autosize.js marks the element with a plain x-autosize-init attribute
-  // (v3 convention), not a data-* attribute — the old data-wb-autosize
+  // (v3 convention), not a data-* attribute — the old data-x-autosize
   // assertion predates that naming and no longer matches reality.
   await page.waitForFunction(() => document.querySelector('#as-1 textarea')?.getAttribute('x-autosize-init') === '1', null, { timeout: 2000 });
   const ta = page.locator('#as-1 textarea');

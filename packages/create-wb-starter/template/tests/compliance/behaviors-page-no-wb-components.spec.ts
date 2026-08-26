@@ -7,17 +7,17 @@ import * as path from 'path';
  * showcase x-* attribute behaviors on plain/native elements — NOT full
  * wb-* custom component demos, which already have their own home
  * (pages/components.html, "Components Library"). It had drifted to mix
- * 12+ wb-* component demos in (wb-alert, wb-badge, wb-progress,
- * wb-spinner, wb-modal, wb-drawer, wb-tabs, wb-accordion, wb-audio,
- * wb-rating, wb-switch), reported live twice by John and previously
+ * 12+ wb-* component demos in (x-alert, x-badge, x-progress,
+ * x-spinner, x-modal, x-drawer, x-tabs, x-accordion, x-audio,
+ * x-rating, x-switch), reported live twice by John and previously
  * filed as #304 but never fixed. Cleaned up (component demos removed,
  * section notes updated to point at Components instead) alongside this
  * test, which is the actual build-time gate preventing it drifting back.
  *
- * `<wb-demo>` itself and the header's single functional `<wb-themecontrol>`
+ * `<div x-demo>` itself and the header's single functional `<div x-themecontrol>`
  * (real UI chrome, not a demo of the behavior) are exempt.
  */
-const EXEMPT_TAGS = new Set(['wb-demo', 'wb-themecontrol']);
+const EXEMPT_TAGS = new Set(['x-demo', 'x-themecontrol']);
 
 test('behaviors.html contains no wb-* custom component demos', () => {
   const filePath = path.join(process.cwd(), 'pages', 'behaviors.html');

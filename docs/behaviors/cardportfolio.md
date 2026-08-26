@@ -2,14 +2,29 @@
 
 Full-featured professional portfolio card with skills, experience, projects, and more
 
-Applies to `<article>`, and to any element carrying `x-cardportfolio`.
+## Type — decorates a semantic element
 
-## Usage
+`x-cardportfolio` is the **article behavior**. It attaches to `<article>`, the element you would have reached for anyway — there is no new tag to learn.
+
+### How to write it
 
 ```html
-<article x-cardportfolio>
+<article x-cardportfolio
+  name="Ada Lovelace"
+  title="Principal engineer"
+  company="Analytical Engines"
+  location="London"
+  cover="https://picsum.photos/seed/ada-cover/480/200"></article>
+```
+
+### On a different element
+
+Use `x-cardportfolio` when the host is not a `<article>` and you want the same behavior:
+
+```html
+<div x-cardportfolio>
   …
-</article>
+</div>
 ```
 
 ## Attributes

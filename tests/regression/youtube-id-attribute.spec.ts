@@ -6,7 +6,7 @@ import { test, expect } from '@playwright/test';
  * both actually ship) never loaded a video. youtube() (src/wb-viewmodels/
  * semantics/youtube.js) only read element.getAttribute('video-id') -- a
  * FOURTH attribute-name mismatch on top of lightbox (#374), alert (#375),
- * countdown (#376): pages/components.html uses video-id (matches!),
+ * countdown (#376): pages/behaviors.html uses video-id (matches!),
  * pages/behaviors.html + pages/newbehaviors.html use plain id, and the
  * generator (scripts/generate-behaviors-page.js) emits data-id. With no id
  * resolved, config.id is null, youtube() logs a console.warn and returns
@@ -31,15 +31,15 @@ test.describe('x-youtube reads id="..." as the video ID (#377)', () => {
       container.innerHTML = '<div x-youtube id="dQw4w9WgXcQ" ratio="16:9"></div>';
       document.body.appendChild(container);
     });
-    await page.evaluate(() => (window as any).WB.scan(document.getElementById('yt-test-container'), { eager: true }));
+    await page.evaluate(async () => await (window as any).WB.scan(document.getElementById('yt-test-container'), { eager: true }));
 
     const host = page.locator('#yt-test-container [x-youtube]');
-    await expect(host).toHaveClass(/wb-youtube/, { timeout: 5000 });
+    await expect(host).toHaveClass(/x-youtube/, { timeout: 5000 });
 
     const noIdWarning = warnings.find(w => w.includes('No video ID provided'));
     expect(noIdWarning, `youtube() logged: ${noIdWarning}`).toBeFalsy();
 
-    const poster = host.locator('.wb-youtube__poster');
+    const poster = host.locator('.x-youtube__poster');
     await expect(poster, 'a click-to-play poster should render once an id is resolved').toBeVisible();
 
     await poster.click();

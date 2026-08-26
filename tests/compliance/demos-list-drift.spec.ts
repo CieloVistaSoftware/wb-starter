@@ -7,7 +7,7 @@
  * hand edits and stale stat counts accumulated because the only gate we had,
  * `demos-list-complete.spec.ts`, checks link completeness/validity, not that
  * the page content still matches the generator's current output. So a stat
- * count could rot (`203 demos` -> `210 demos`) or a curated `<wb-demo>`
+ * count could rot (`203 demos` -> `210 demos`) or a curated `<div x-demo>`
  * example present in `CATEGORY_EXAMPLES` could be missing from the page, and
  * nothing failed.
  *
@@ -75,7 +75,7 @@ test('demos page stat counts come from data/site-generator-result.json, never ha
     unbacked,
     `pages/demos.html shows stat counts that data/site-generator-result.json does not back:\n  ${unbacked.join('\n  ')}\n` +
       `Stats must be generated, not typed. Rebuild the report with ` +
-      `\`node scripts/generate-site.mjs src/wb-models/pages/wb-component-library.site.json\`, ` +
+      `\`node scripts/generate-site.mjs src/wb-models/pages/x-component-library.site.json\`, ` +
       `then \`node scripts/generate-demos-list.mjs\`.`
   ).toEqual([]);
 });

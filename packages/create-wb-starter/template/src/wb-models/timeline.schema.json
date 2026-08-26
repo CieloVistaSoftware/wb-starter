@@ -4,13 +4,13 @@
   "title": "Timeline",
   "description": "Vertical timeline component for displaying sequential events",
   "schemaFor": "timeline",
-  "baseClass": "wb-timeline",
+  "baseClass": "x-timeline",
   "semanticElement": {
     "tagName": "div",
     "implicitRole": "list"
   },
   "compliance": {
-    "baseClass": "wb-timeline",
+    "baseClass": "x-timeline",
     "supportLevel": "stable",
     "accessibility": "high"
   },
@@ -70,30 +70,30 @@
     }
   },
   "$cssAPI": {
-    "--wb-timeline-marker-size": {
+    "--x-timeline-marker-size": {
       "default": "0.75rem",
       "description": "Marker dot diameter"
     },
-    "--wb-timeline-marker-bg": {
+    "--x-timeline-marker-bg": {
       "default": "var(--primary, #6366f1)",
       "description": "Marker dot color"
     },
-    "--wb-timeline-line-color": {
+    "--x-timeline-line-color": {
       "default": "var(--border-color, #374151)",
       "description": "Connecting line color"
     },
-    "--wb-timeline-line-width": {
+    "--x-timeline-line-width": {
       "default": "2px",
       "description": "Connecting line thickness"
     },
-    "--wb-timeline-gap": {
+    "--x-timeline-gap": {
       "default": "1.5rem",
       "description": "Spacing between items"
     }
   },
   "test": {
     "setup": [
-      "<wb-timeline items='Step 1,Step 2,Step 3'></wb-timeline>"
+      "<div x-timeline items='Step 1,Step 2,Step 3'></div>"
     ],
     "matrix": {
       "combinations": [
@@ -110,9 +110,9 @@
     },
     "site": {
       "page": "layout",
-      "tag": "wb-timeline",
+      "tag": "x-timeline",
       "renders": true,
-      "baseClass": "wb-timeline",
+      "baseClass": "x-timeline",
       "minInstances": 3,
       "checkText": [
         "Project Kickoff,Design Phase,Development,Testing,Launch",

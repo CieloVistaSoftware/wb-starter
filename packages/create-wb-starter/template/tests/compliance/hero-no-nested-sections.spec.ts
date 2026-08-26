@@ -7,8 +7,8 @@ import { test, expect } from '@playwright/test';
  * stays nested INSIDE it and inherits that centering. That's exactly what
  * happened in pages/components.html: `#components-hero` opened at the top of
  * the file and its closing `</div>` was missing, so the entire "Cards"
- * section — including every `.wb-card__header`/`.wb-card__main`, which have
- * no text-align of their own — rendered centered, while `.wb-card__footer`
+ * section — including every `.x-card__header`/`.x-card__main`, which have
+ * no text-align of their own — rendered centered, while `.x-card__footer`
  * (which DOES set `text-align: left` directly on itself) stayed left,
  * producing a visibly inconsistent card (header/body centered, footer not).
  *
@@ -37,19 +37,19 @@ test.describe('.page__hero never swallows page sections (unclosed-div structural
 
   test('components: card header/main/footer share the same text-align (no inherited-centering leak)', async ({ page }) => {
     await page.goto('/?page=components', { waitUntil: 'networkidle' });
-    await page.waitForSelector('.wb-card__header', { timeout: 15000 });
+    await page.waitForSelector('.x-card__header', { timeout: 15000 });
     const aligns = await page.evaluate(() => {
-      const card = [...document.querySelectorAll('wb-card')].find((c) => c.querySelector('.wb-card__footer'));
+      const card = [...document.querySelectorAll('x-card')].find((c) => c.querySelector('.x-card__footer'));
       if (!card) return null;
       const ta = (sel: string) => {
         const el = card.querySelector(sel);
         return el ? getComputedStyle(el).textAlign : null;
       };
-      return { header: ta('.wb-card__header'), main: ta('.wb-card__main'), footer: ta('.wb-card__footer') };
+      return { header: ta('.x-card__header'), main: ta('.x-card__main'), footer: ta('.x-card__footer') };
     });
     expect(aligns).not.toBeNull();
     // 'start' (the browser default, no rule matched) and 'left' (an explicit
-    // `text-align: left` rule, e.g. .wb-card__footer's) render identically in
+    // `text-align: left` rule, e.g. .x-card__footer's) render identically in
     // LTR — normalize both to the same token so this asserts real visual
     // consistency, not incidental computed-value spelling.
     const normalize = (v: string | null) => (v === 'start' ? 'left' : v);

@@ -40,7 +40,7 @@ test.describe('Stock Market Indicator Spacing Compliance', () => {
       '/demos/ticker.html', 
       '/demos/market.html',
       '/public/stock-demo.html',
-      '/?page=components&filter=stock',
+      '/?page=behaviors&filter=stock',
     ];
     
     const violations: SpacingViolation[] = [];
@@ -56,14 +56,14 @@ test.describe('Stock Market Indicator Spacing Compliance', () => {
         
         // Find all stock market indicator elements
         const stockSelectors = [
-          'wb-stock',
-          'wb-ticker',
-          'wb-market',
-          'wb-stockticker',
-          'wb-marketindicator',
-          '.wb-stock',
-          '.wb-ticker',
-          '.wb-market',
+          'x-stock',
+          'x-ticker',
+          'x-market',
+          'x-stockticker',
+          'x-marketindicator',
+          '.x-stock',
+          '.x-ticker',
+          '.x-market',
           '.stock-indicator',
           '.market-widget',
         ];
@@ -184,7 +184,7 @@ test.describe('Stock Market Indicator Spacing Compliance', () => {
             '4. Apply the fix from violation.fix.code',
             '5. Re-run tests to verify fix'
           ],
-          globalFix: `/* Global fix for all stock indicators */\nwb-stock,\nwb-ticker,\nwb-market,\n.wb-stock,\n.wb-ticker {\n  padding-left: 1rem;\n  padding-right: 1rem;\n}`
+          globalFix: `/* Global fix for all stock indicators */\nwb-stock,\nwb-ticker,\nwb-market,\n.x-stock,\n.x-ticker {\n  padding-left: 1rem;\n  padding-right: 1rem;\n}`
         }
       });
       
@@ -202,65 +202,84 @@ test.describe('Stock Market Indicator Spacing Compliance', () => {
     expect(violations.length, `${violations.length} spacing violations found`).toBeLessThan(50);
   });
   
-  test('verify stock indicator base styles have proper padding', async ({ page }) => {
-    // Check the CSS file directly for proper defaults
-    const cssFiles = [
-      'src/styles/site.css',
-      'src/styles/components.css',
-      'src/behaviors/css/stock.css',
-      'src/behaviors/css/ticker.css',
-      'src/behaviors/css/market.css',
-    ];
-    
+  // #863: this test could not report anything, for two independent reasons,
+  // and then console.warn()ed instead of asserting even if it had:
+  //
+  //   1. Three of its five paths (src/behaviors/css/{stock,ticker,market}.css)
+  //      are pre-v3 locations that have not existed since behaviour styles moved
+  //      to src/styles/behaviors/. The only real file, stock.css, was never
+  //      opened. The other two (site.css, components.css) contain no stock
+  //      selectors at all.
+  //   2. Its rule extractor was `<selector>\s*\{`, which cannot match a GROUPED
+  //      selector -- and every rule in stock.css is grouped (`.x-stock,\n
+  //      [data-wb="stock"], ... {`). So even against the right file it found
+  //      zero rule blocks.
+  //
+  // `missingPadding` was therefore structurally always empty. Pointed at the
+  // real file and rewritten to read the declarations that actually govern the
+  // 1rem edge spacing this whole spec is named for. Measured after the fix: 0
+  // violations -- stock.css does declare padding-left/right: 1rem.
+  //
+  // NOTE for whoever touches this next: src/styles/behavior-css-manifest.js
+  // records stock.css as "confirmed orphaned -- no behavior, tag, or markup
+  // anywhere in the repo references .x-stock/data-wb='stock'". If that
+  // stylesheet is ever deleted, delete this spec with it rather than leaving a
+  // test pointed at a file that is gone.
+  test('verify stock indicator base styles have proper padding', async () => {
+    const STOCK_CSS = 'src/styles/behaviors/stock.css';
+    const fullPath = path.join(ROOT, STOCK_CSS);
+
+    expect(
+      fs.existsSync(fullPath),
+      `${STOCK_CSS} must exist -- this spec measures the 1rem edge spacing it `
+      + 'declares. If the stock indicator styles were removed, remove this spec '
+      + 'too instead of letting it scan nothing.',
+    ).toBe(true);
+
+    const content = fs.readFileSync(fullPath, 'utf-8');
+
+    // Rule blocks whose selector list mentions any stock indicator selector.
+    // Grouped selectors are the norm here, so match the whole comma-separated
+    // list up to the opening brace rather than a single selector token.
+    const RULE_RE = new RegExp('([^{}]+)\\{([^}]*)\\}', 'g');
+    const STOCK_SELECTOR_RE = new RegExp('(^|[\\s,])\\.?x-(stock|ticker|market)\\b|data-wb="(stock|ticker|market)"');
+
     const missingPadding: string[] = [];
-    
-    for (const cssFile of cssFiles) {
-      const fullPath = path.join(ROOT, cssFile);
-      if (!fs.existsSync(fullPath)) continue;
-      
-      const content = fs.readFileSync(fullPath, 'utf-8');
-      
-      // Check for stock-related selectors
-      const stockSelectors = [
-        '.wb-stock',
-        '.wb-ticker', 
-        '.wb-market',
-        'wb-stock',
-        'wb-ticker',
-        'wb-market',
-      ];
-      
-      for (const selector of stockSelectors) {
-        // Check if selector exists in file
-        if (content.includes(selector)) {
-          // Extract the rule block
-          const selectorRegex = new RegExp(`${selector.replace(/[[\]]/g, '\\$&')}\\s*\\{[^}]*\\}`, 'g');
-          const matches = content.match(selectorRegex);
-          
-          if (matches) {
-            for (const rule of matches) {
-              const hasPaddingLeft = /padding-left\s*:\s*1rem|padding\s*:\s*[^;]*1rem/.test(rule);
-              const hasPaddingRight = /padding-right\s*:\s*1rem|padding\s*:\s*[^;]*1rem/.test(rule);
-              const hasPadding = /padding\s*:\s*1rem/.test(rule);
-              
-              if (!hasPaddingLeft && !hasPadding) {
-                missingPadding.push(`${cssFile}: ${selector} missing padding-left: 1rem`);
-              }
-              if (!hasPaddingRight && !hasPadding) {
-                missingPadding.push(`${cssFile}: ${selector} missing padding-right: 1rem`);
-              }
-            }
-          }
-        }
-      }
+    let baseRulesChecked = 0;
+
+    for (const m of content.matchAll(RULE_RE)) {
+      const selectorList = m[1].replace(/\/\*[\s\S]*?\*\//g, '').trim();
+      const body = m[2];
+      if (!STOCK_SELECTOR_RE.test(selectorList)) continue;
+
+      // Only the BASE rules carry edge spacing; the modifier rules
+      // (.x-ticker font-weight, .x-price/.x-change colours) are not expected
+      // to restate padding. A base rule is one that sets display.
+      if (!/(^|;|\s)display\s*:/.test(body)) continue;
+      baseRulesChecked++;
+
+      const shorthand = /(^|;|\s)padding\s*:\s*[^;]*1rem/.test(body);
+      const hasLeft = shorthand || /padding-left\s*:\s*1rem/.test(body);
+      const hasRight = shorthand || /padding-right\s*:\s*1rem/.test(body);
+
+      const label = selectorList.replace(/\s+/g, ' ');
+      if (!hasLeft) missingPadding.push(`${STOCK_CSS}: "${label}" missing padding-left: 1rem`);
+      if (!hasRight) missingPadding.push(`${STOCK_CSS}: "${label}" missing padding-right: 1rem`);
     }
-    
-    if (missingPadding.length > 0) {
-      console.warn('\n⚠️ CSS files with potentially missing 1rem padding:');
-      missingPadding.forEach(m => console.warn(`   ${m}`));
-      console.warn('\n🔧 Suggested global fix:');
-      console.warn(`   .wb-stock, .wb-ticker, .wb-market { padding: 1rem; }`);
-    }
+
+    expect(
+      baseRulesChecked,
+      `No base stock indicator rule found in ${STOCK_CSS}. The previous version `
+      + 'of this test silently scanned nothing for exactly this reason -- if the '
+      + 'selectors were renamed, update this test rather than letting it pass on '
+      + 'an empty scan.',
+    ).toBeGreaterThan(0);
+
+    expect(
+      missingPadding,
+      'Stock indicators must keep 1rem (16px) spacing from their left and '
+      + `right edges:\n${missingPadding.join('\n')}`,
+    ).toEqual([]);
   });
 });
 
@@ -286,7 +305,7 @@ test.describe('Stock Indicator Spacing - Live Component Check', () => {
       </head>
       <body>
         <div class="test-container">
-          <wb-stock id="stock-test-1" symbol="AAPL" price="150.00" change="+2.5%">
+          <div id="stock-test-1" symbol="AAPL" price="150.00" change="+2.5%">
             <span class="stock-symbol">AAPL</span>
             <span class="stock-price">$150.00</span>
             <span class="stock-change">+2.5%</span>
@@ -294,7 +313,7 @@ test.describe('Stock Indicator Spacing - Live Component Check', () => {
         </div>
         
         <div class="test-container">
-          <wb-ticker id="ticker-test-1">
+          <div id="ticker-test-1">
             <img src="/assets/icons/chart.svg" alt="chart" style="width: 24px;">
             <span>Market Update</span>
           </div>
@@ -303,7 +322,7 @@ test.describe('Stock Indicator Spacing - Live Component Check', () => {
         <script type="module">
           import WB from '/src/core/wb.js';
           window.WB = WB;
-          WB.scan();
+          await WB.scan();
         </script>
       </body>
       </html>
@@ -357,8 +376,8 @@ test.describe('Stock Indicator Spacing - Live Component Check', () => {
       violations.forEach(v => console.log(`   ${v}`));
       console.log('\n🤖 AI AUTO-FIX SUGGESTION:');
       console.log(`   Add to src/behaviors/css/stock.css:`);
-      console.log(`   .wb-stock, wb-stock { padding: 1rem; }`);
-      console.log(`   .wb-ticker, wb-ticker { padding: 1rem; }`);
+      console.log(`   .x-stock, x-stock { padding: 1rem; }`);
+      console.log(`   .x-ticker, x-ticker { padding: 1rem; }`);
     }
     
     // Soft fail - log issues but don't break build for this new test

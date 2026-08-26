@@ -2,14 +2,26 @@
 
 Collapsible sidebar layout with toggle
 
-Applies to `<aside>`, and to any element carrying `x-drawer-layout`.
+## Type — decorates a semantic element
 
-## Usage
+`x-drawer-layout` is the **aside behavior**. It attaches to `<aside>`, the element you would have reached for anyway — there is no new tag to learn.
+
+### How to write it
 
 ```html
-<aside x-drawer-layout>
-  …
+<aside x-drawer-layout position="start" width="220px" min-width="64px">
+  <nav><a href="#">Overview</a><a href="#">Runs</a><a href="#">Settings</a></nav>
 </aside>
+```
+
+### On a different element
+
+Use `x-drawer-layout` when the host is not a `<aside>` and you want the same behavior:
+
+```html
+<div x-drawer-layout>
+  …
+</div>
 ```
 
 ## Attributes

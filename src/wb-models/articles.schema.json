@@ -4,13 +4,13 @@
   "title": "Articles List Component",
   "description": "A wrapper component to display a list or grid of articles.",
   "schemaFor": "articles",
-  "baseClass": "wb-articles",
+  "baseClass": "x-articles",
   "semanticElement": {
     "tagName": "section",
     "implicitRole": "feed"
   },
   "compliance": {
-    "baseClass": "wb-articles",
+    "baseClass": "x-articles",
     "supportLevel": "stable",
     "accessibility": "high"
   },
@@ -50,7 +50,7 @@
     {
       "name": "header",
       "tag": "header",
-      "class": "wb-articles__header",
+      "class": "x-articles__header",
       "createdWhen": "title"
     },
     {
@@ -63,22 +63,22 @@
     {
       "name": "list",
       "tag": "div",
-      "class": "wb-articles__list wb-articles--{{layout}}",
+      "class": "x-articles__list x-articles--{{layout}}",
       "content": "{{slot}}"
     }
   ],
   "$cssAPI": {},
   "test": {
     "setup": [
-      "<wb-articles>Basic articles content</wb-articles>",
-      "<wb-articles layout=\"grid\">layout=grid</wb-articles>",
-      "<wb-articles layout=\"list\">layout=list</wb-articles>",
-      "<wb-articles layout=\"masonry\">layout=masonry</wb-articles>",
-      "<wb-articles pagination>with pagination</wb-articles>",
-      "<wb-articles columns=\"3\">columns=3</wb-articles>",
-      "<wb-articles limit=\"10\">limit=10</wb-articles>",
-      "<wb-articles source=\"Sample source\">source=\"Sample source\"</wb-articles>",
-      "<wb-articles layout=\"grid\"><wb-article title=\"1\"></wb-article><wb-article title=\"2\"></wb-article></wb-articles>"
+      "<div x-articles>Basic articles content</div>",
+      "<div x-articles layout=\"grid\">layout=grid</div>",
+      "<div x-articles layout=\"list\">layout=list</div>",
+      "<div x-articles layout=\"masonry\">layout=masonry</div>",
+      "<div x-articles pagination>with pagination</div>",
+      "<div x-articles columns=\"3\">columns=3</div>",
+      "<div x-articles limit=\"10\">limit=10</div>",
+      "<div x-articles source=\"Sample source\">source=\"Sample source\"</div>",
+      "<div x-articles layout=\"grid\"><div x-article title=\"1\"></div><div x-article title=\"2\"></div></div>"
     ],
     "matrix": {
       "combinations": [
@@ -96,9 +96,9 @@
     },
     "site": {
       "page": "content",
-      "tag": "wb-articles",
+      "tag": "x-articles",
       "renders": true,
-      "baseClass": "wb-articles",
+      "baseClass": "x-articles",
       "minInstances": 3,
       "checkText": [],
       "checkClasses": [],

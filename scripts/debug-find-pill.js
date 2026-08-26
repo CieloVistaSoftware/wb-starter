@@ -9,9 +9,9 @@ export default async function findPillMatches(url = 'http://localhost:3000/') {
     await page.waitForFunction(() => !!window.WB);
     await page.waitForTimeout(300);
     const results = await page.evaluate(() => {
-      const nodes = Array.from(document.querySelectorAll('[data-wb], [data-wb-error], [data-pill], [data-dot]'));
+      const nodes = Array.from(document.querySelectorAll('[data-wb], [data-x-error], [data-pill], [data-dot]'));
       return nodes
-        .filter(n => n.getAttribute('data-wb') === 'pill' || n.getAttribute('data-wb-error') === 'legacy' || (n.hasAttribute('data-pill') && n.tagName.toLowerCase() !== 'wb-badge'))
+        .filter(n => n.getAttribute('data-wb') === 'pill' || n.getAttribute('data-x-error') === 'legacy' || (n.hasAttribute('data-pill') && n.tagName.toLowerCase() !== 'x-badge'))
         .map(n => ({ outer: n.outerHTML, attrs: Array.from(n.attributes).map(a=>({ name: a.name, value: a.value })) }));
     });
     console.log('FOUND', results.length, 'matches');

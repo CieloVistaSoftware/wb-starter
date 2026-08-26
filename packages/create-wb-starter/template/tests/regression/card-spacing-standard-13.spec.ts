@@ -36,8 +36,8 @@ test.describe('Card Spacing — Standard §13 Compliance', () => {
       { timeout: 10000 }
     );
 
-    // Find all .wb-card__main elements
-    const mainPadding = await page.locator('.wb-card__main').first().evaluate((el) => {
+    // Find all .x-card__main elements
+    const mainPadding = await page.locator('.x-card__main').first().evaluate((el) => {
       const cs = getComputedStyle(el);
       return {
         paddingTop: cs.paddingTop,
@@ -62,7 +62,7 @@ test.describe('Card Spacing — Standard §13 Compliance', () => {
       { timeout: 10000 }
     );
 
-    const headerPadding = await page.locator('.wb-card__header').first().evaluate((el) => {
+    const headerPadding = await page.locator('.x-card__header').first().evaluate((el) => {
       const cs = getComputedStyle(el);
       return {
         paddingTop: cs.paddingTop,
@@ -86,7 +86,7 @@ test.describe('Card Spacing — Standard §13 Compliance', () => {
       { timeout: 10000 }
     );
 
-    const footerPadding = await page.locator('.wb-card__footer').first().evaluate((el) => {
+    const footerPadding = await page.locator('.x-card__footer').first().evaluate((el) => {
       const cs = getComputedStyle(el);
       return {
         paddingTop: cs.paddingTop,
@@ -112,11 +112,11 @@ test.describe('Card Spacing — Standard §13 Compliance', () => {
     );
 
     // Get the height of a card's content area
-    const cardHeight = await page.locator('.wb-card').first().evaluate((el) => {
+    const cardHeight = await page.locator('.x-card').first().evaluate((el) => {
       return {
         minHeight: getComputedStyle(el).minHeight,
         height: getComputedStyle(el).height,
-        lineHeight: getComputedStyle(el.querySelector('.wb-card__main') || el).lineHeight,
+        lineHeight: getComputedStyle(el.querySelector('.x-card__main') || el).lineHeight,
       };
     });
 
@@ -132,8 +132,8 @@ test.describe('Card Spacing — Standard §13 Compliance', () => {
       { timeout: 10000 }
     );
 
-    // Get the gap property of wb-demo (grid)
-    const demoGap = await page.locator('wb-demo').first().evaluate((el) => {
+    // Get the gap property of x-demo (grid)
+    const demoGap = await page.locator('x-demo').first().evaluate((el) => {
       return getComputedStyle(el).gap || getComputedStyle(el).columnGap || 'auto';
     });
 
@@ -150,11 +150,11 @@ test.describe('Card Spacing — Standard §13 Compliance', () => {
     );
 
     // Check button cards specifically (they have footer buttons)
-    const buttonCardCount = await page.locator('wb-cardbutton').count();
+    const buttonCardCount = await page.locator('x-cardbutton').count();
     expect(buttonCardCount, 'button cards should be present in demo').toBeGreaterThan(0);
 
     // Check that button card buttons have proper spacing
-    const btnFooter = await page.locator('wb-cardbutton .wb-card__btn-footer').first().evaluate((el) => {
+    const btnFooter = await page.locator('x-cardbutton .x-card__btn-footer').first().evaluate((el) => {
       const cs = getComputedStyle(el);
       return {
         padding: cs.padding,
@@ -175,7 +175,7 @@ test.describe('Card Spacing — Standard §13 Compliance', () => {
     );
 
     // Check title/subtitle margin spacing
-    const titleSpacing = await page.locator('.wb-card__title').first().evaluate((el) => {
+    const titleSpacing = await page.locator('.x-card__title').first().evaluate((el) => {
       return getComputedStyle(el).marginBottom;
     });
 
@@ -190,8 +190,8 @@ test.describe('Card Spacing — Standard §13 Compliance', () => {
       { timeout: 10000 }
     );
 
-    // Pricing cards have .wb-card__feature items
-    const featureSpacing = await page.locator('.wb-card__feature').first().evaluate((el) => {
+    // Pricing cards have .x-card__feature items
+    const featureSpacing = await page.locator('.x-card__feature').first().evaluate((el) => {
       return getComputedStyle(el).padding;
     });
 

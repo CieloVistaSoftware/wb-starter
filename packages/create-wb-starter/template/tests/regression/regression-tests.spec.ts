@@ -119,16 +119,16 @@ test.describe.skip('BUG-2025-12-26-002: Audio EQ panel controls (needs rewrite)'
 
     await page.waitForTimeout(300);
     
-    const eqPanel = page.locator('.wb-audio__eq-container');
+    const eqPanel = page.locator('.x-audio__eq-container');
     await expect(eqPanel).toBeVisible();
 
     // Check for Play/Pause button
-    const playBtn = eqPanel.locator('.wb-audio__eq-play-btn');
+    const playBtn = eqPanel.locator('.x-audio__eq-play-btn');
     await expect(playBtn).toBeVisible();
     await expect(playBtn).toHaveAttribute('aria-label', 'Play/Pause');
 
     // Check for Master Volume slider
-    const volumeSlider = eqPanel.locator('.wb-audio__eq-master-volume');
+    const volumeSlider = eqPanel.locator('.x-audio__eq-master-volume');
     await expect(volumeSlider).toBeVisible();
     await expect(volumeSlider).toHaveAttribute('type', 'range');
   });
@@ -194,7 +194,7 @@ test.describe.skip('BUG-2024-12-19-001: src attribute routing (needs rewrite)', 
 
     await page.waitForTimeout(300);
     
-    const element = page.locator('wb-audio').first();
+    const element = page.locator('x-audio').first();
     
     // CRITICAL CHECK 1: src should be in dataset
     const datasetSrc = await element.evaluate(el => (el as HTMLElement).dataset.src);
@@ -231,7 +231,7 @@ test.describe.skip('BUG-2024-12-19-001: src attribute routing (needs rewrite)', 
 
     await page.waitForTimeout(300);
     
-    const element = page.locator('wb-video').first();
+    const element = page.locator('x-video').first();
     const count = await element.count();
     
     if (count > 0) {
@@ -261,7 +261,7 @@ test.describe.skip('BUG-2024-12-19-001: src attribute routing (needs rewrite)', 
 
     await page.waitForTimeout(300);
     
-    const element = page.locator('wb-cardimage').first();
+    const element = page.locator('x-cardimage').first();
     const count = await element.count();
     
     if (count > 0) {
@@ -290,7 +290,7 @@ test.describe.skip('BUG-2024-12-19-001: src attribute routing (needs rewrite)', 
 
     await page.waitForTimeout(300);
     
-    const element = page.locator('wb-cardvideo').first();
+    const element = page.locator('x-cardvideo').first();
     const count = await element.count();
     
     if (count > 0) {
@@ -320,7 +320,7 @@ test.describe.skip('BUG-2024-12-19-001: src attribute routing (needs rewrite)', 
 
     await page.waitForTimeout(300);
     
-    const element = page.locator('wb-avatar').first();
+    const element = page.locator('x-avatar').first();
     const count = await element.count();
     
     if (count > 0) {
@@ -349,7 +349,7 @@ test.describe.skip('BUG-2024-12-19-001: src attribute routing (needs rewrite)', 
 
     await page.waitForTimeout(300);
     
-    const element = page.locator('wb-youtube').first();
+    const element = page.locator('x-youtube').first();
     const count = await element.count();
     
     if (count > 0) {
@@ -375,7 +375,7 @@ test.describe.skip('BUG-2024-12-19-001: src attribute routing (needs rewrite)', 
 
     await page.waitForTimeout(300);
     
-    const element = page.locator('wb-vimeo').first();
+    const element = page.locator('x-vimeo').first();
     const count = await element.count();
     
     if (count > 0) {
@@ -403,7 +403,7 @@ test.describe.skip('BUG-2024-12-19-001: src attribute routing (needs rewrite)', 
 
     await page.waitForTimeout(300);
     
-    const element = page.locator('wb-image').first();
+    const element = page.locator('x-image').first();
     const count = await element.count();
     
     if (count > 0) {
@@ -505,7 +505,7 @@ test.describe.skip('Attribute Routing Permutations (needs rewrite)', () => {
 
       await page.waitForTimeout(300);
       
-      const element = page.locator('wb-audio').first();
+      const element = page.locator('x-audio').first();
       const count = await element.count();
       
       if (count > 0) {
@@ -548,7 +548,7 @@ test.describe.skip('Audio Component Regression Suite (needs rewrite)', () => {
 
       await page.waitForTimeout(300);
       
-      const audio = page.locator('wb-audio audio').first();
+      const audio = page.locator('x-audio audio').first();
       const count = await audio.count();
       
       if (count > 0) {
@@ -585,7 +585,7 @@ test.describe.skip('Audio Component Regression Suite (needs rewrite)', () => {
 
       await page.waitForTimeout(300);
       
-      const eqPanel = page.locator('wb-audio .wb-audio__eq-container');
+      const eqPanel = page.locator('x-audio .x-audio__eq-container');
       const panelCount = await eqPanel.count();
       
       if (state.expectPanel) {
@@ -624,7 +624,7 @@ test.describe.skip('Audio Component Regression Suite (needs rewrite)', () => {
 
       await page.waitForTimeout(300);
       
-      const audio = page.locator('wb-audio audio').first();
+      const audio = page.locator('x-audio audio').first();
       const count = await audio.count();
       
       if (count > 0) {
@@ -655,7 +655,7 @@ test.describe.skip("BUG-2026-07-27-001: 'lightbox' data-src (see lightbox-data-s
 // this marker only satisfies the bug-registry cross-reference scan.
 // =============================================================================
 test.describe.skip("BUG-2026-07-27-002: 'alert' variant class (see alert-variant-class.spec.ts)", () => {
-  test('alert: variant gets wb-alert--<variant> class', () => {});
+  test('alert: variant gets x-alert--<variant> class', () => {});
 });
 
 // =============================================================================

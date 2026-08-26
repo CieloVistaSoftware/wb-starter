@@ -159,7 +159,7 @@ if (schema.header) {
   const h = schema.header;
   lines.push('  <header>');
   lines.push(`    <${h.tag || 'h1'}>${h.content}</${h.tag || 'h1'}>`);
-  lines.push('    <wb-themecontrol></wb-themecontrol>');
+  lines.push('    <div x-themecontrol></div>');
   lines.push('  </header>');
   if (h.subtitle) {
     lines.push(`  <${h.subtitle.tag || 'p'}>${h.subtitle.content}</${h.subtitle.tag || 'p'}>`);
@@ -181,14 +181,17 @@ if (schema.sections) {
 
     if (section.demos.length > 1) {
       // §2 "one code sample per rendered element": a section with several
-      // differently-configured instances gets one <wb-demo> per instance
+      // differently-configured instances gets one <div x-demo> per instance
       // (each with its own code sample) instead of bundling them all under
-      // one shared <wb-demo>. Stacked vertically, NOT grid-wrapped side by
+      // one shared <div x-demo>. Stacked vertically, NOT grid-wrapped side by
       // side -- §3 "demos are vertical, never side-by-side" forbids placing
-      // two rendered demos on the same row. Fixes #563.
+      // two rendered demos on the same row. An earlier version wrapped these
+      // in `.demo-section__grid--cols-N`, which violated §3 and was a likely
+      // root cause of recurring shrink-to-fit layout failures (mismatched
+      // natural widths forced into shared grid tracks). Fixes #563.
       for (const demo of section.demos) {
         const attrs = attrString(demo.attrs);
-        lines.push('    <wb-demo columns="1">');
+        lines.push('    <div x-demo columns="1">');
         if (demo.children) {
           lines.push(`      <${demo.tag}${attrs}>`);
           lines.push(`        ${demo.children}`);
@@ -197,10 +200,10 @@ if (schema.sections) {
           lines.push(`      <${demo.tag}${attrs}>`);
           lines.push(`      </${demo.tag}>`);
         }
-        lines.push('    </wb-demo>');
+        lines.push('    </div>');
       }
     } else {
-      lines.push(`    <wb-demo columns="${cols}">`);
+      lines.push(`    <div x-demo columns="${cols}">`);
       for (const demo of section.demos) {
         const attrs = attrString(demo.attrs);
         if (demo.children) {
@@ -212,7 +215,7 @@ if (schema.sections) {
           lines.push(`      </${demo.tag}>`);
         }
       }
-      lines.push('    </wb-demo>');
+      lines.push('    </div>');
     }
 
     lines.push('  </div>');

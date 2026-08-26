@@ -42,7 +42,7 @@ function convertLine(line) {
   let modified = line;
   let changes = 0;
   
-  // Pattern 1: on div/span/etc -> <wb-component>
+  // Pattern 1: on div/span/etc -> <div>
   // This is complex - would need DOM parsing. Skip for now, document for manual fix.
   
   // Pattern 2: -> x-behavior
@@ -135,5 +135,5 @@ console.log('='.repeat(60));
 console.log(`Files processed: ${stats.filesProcessed}`);
 console.log(`Files modified: ${stats.filesModified}`);
 console.log(`Total replacements: ${stats.replacements}`);
-console.log('\nNote: Complex component conversions (div -> <wb-card>)');
+console.log('\nNote: Complex component conversions (div -> <article>)');
 console.log('require manual review or a more sophisticated parser.');

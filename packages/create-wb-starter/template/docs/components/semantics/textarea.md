@@ -6,10 +6,10 @@ Multi-line text input with autosize and character count.
 
 | Property | Value |
 |----------|-------|
-| Custom Tag | `<wb-textarea>` |
+| Custom Tag | `<textarea>` |
 | Behavior | `textarea` |
 | Semantic | `<div>` (role="textbox") |
-| Root CSS Class | `wb-textarea` |
+| Root CSS Class | `x-textarea` |
 | Category | Forms |
 | Schema | `src/wb-models/textarea.schema.json` |
 
@@ -31,31 +31,30 @@ Multi-line text input with autosize and character count.
 | `resize` | string | `"vertical"` | Resize: `none`, `vertical`, `horizontal`, `both` |
 | `variant` | string | `"default"` | Variant: `default`, `success`, `error` |
 
-Wrapped in `<wb-demo>`, so the live component renders below with its source shown underneath:
+Wrapped in `<div x-demo>`, so the live component renders below with its source shown underneath:
 
-<wb-demo>
-<wb-textarea
+<div x-demo>
+<textarea
   label="Message"
   placeholder="Enter your message...">
-</wb-textarea>
-</wb-demo>
+</textarea>
+</div>
 
 ## Usage
 
 ### Custom Element
 
 ```html
-<wb-textarea
+<textarea
   label="Message"
   placeholder="Enter your message...">
-</wb-textarea>
+</textarea>
 ```
 
 ### Native Textarea (Enhanced)
 
 ```html
 <textarea
-  x-textarea
   placeholder="Write something...">
 </textarea>
 ```
@@ -63,100 +62,100 @@ Wrapped in `<wb-demo>`, so the live component renders below with its source show
 ### With Label
 
 ```html
-<wb-textarea
+<textarea
   label="Description"
   placeholder="Enter description...">
-</wb-textarea>
+</textarea>
 ```
 
 ### Character Count
 
 ```html
-<wb-textarea
+<textarea
   label="Bio"
   placeholder="Tell us about yourself..."
   maxLength="200"
   showCount>
-</wb-textarea>
+</textarea>
 ```
 
 ### Autosize
 
 ```html
-<wb-textarea
+<textarea
   label="Comment"
   placeholder="Write a comment..."
   autosize>
-</wb-textarea>
+</textarea>
 ```
 
 ### Custom Rows
 
 ```html
-<wb-textarea
+<textarea
   label="Notes"
   rows="5">
-</wb-textarea>
-<wb-textarea
+</textarea>
+<textarea
   label="Content"
   rows="10">
-</wb-textarea>
+</textarea>
 ```
 
 ### Resize Options
 
 ```html
-<wb-textarea
+<textarea
   label="No resize"
   resize="none">
-</wb-textarea>
-<wb-textarea
+</textarea>
+<textarea
   label="Vertical only"
   resize="vertical">
-</wb-textarea>
-<wb-textarea
+</textarea>
+<textarea
   label="Both directions"
   resize="both">
-</wb-textarea>
+</textarea>
 ```
 
 ### Validation States
 
 ```html
-<wb-textarea
+<textarea
   label="Valid"
   variant="success">
-</wb-textarea>
-<wb-textarea
+</textarea>
+<textarea
   label="Error"
   variant="error">
-</wb-textarea>
+</textarea>
 ```
 
 ### Disabled/Readonly
 
 ```html
-<wb-textarea
+<textarea
   label="Disabled"
   disabled>
-</wb-textarea>
-<wb-textarea
+</textarea>
+<textarea
   label="Readonly"
   readonly
   value="Can't edit this">
-</wb-textarea>
+</textarea>
 ```
 
 ## Generated Structure
 
 ```html
-<div class="wb-textarea">
-  <label class="wb-textarea__label">Label</label>
+<div class="x-textarea">
+  <label class="x-textarea__label">Label</label>
   <textarea
-    class="wb-textarea__field"
+    class="x-textarea__field"
     rows="3">
   </textarea>
-  <span class="wb-textarea__counter">0 / 200</span>
+  <span class="x-textarea__counter">0 / 200</span>
 </div>
 ```
 
@@ -164,11 +163,11 @@ Wrapped in `<wb-demo>`, so the live component renders below with its source show
 
 | Class | Applied When | Description |
 |-------|--------------|-------------|
-| `.wb-textarea` | Always | Base styling |
-| `.wb-textarea--autosize` | `autosize` | Auto-resizing |
-| `.wb-textarea--success` | `variant="success"` | Success state |
-| `.wb-textarea--error` | `variant="error"` | Error state |
-| `.wb-textarea--disabled` | `disabled` | Disabled state |
+| `.x-textarea` | Always | Base styling |
+| `.x-textarea--autosize` | `autosize` | Auto-resizing |
+| `.x-textarea--success` | `variant="success"` | Success state |
+| `.x-textarea--error` | `variant="error"` | Error state |
+| `.x-textarea--disabled` | `disabled` | Disabled state |
 
 ## Methods
 
@@ -184,7 +183,7 @@ Wrapped in `<wb-demo>`, so the live component renders below with its source show
 | `disable()` | Disables the textarea | - |
 
 ```javascript
-const textarea = document.querySelector('wb-textarea');
+const textarea = document.querySelector('x-textarea');
 
 // Get/set value
 const value = textarea.getValue();
@@ -213,17 +212,17 @@ textarea.addEventListener('input', (e) => {
 
 | Variable | Default | Description |
 |----------|---------|-------------|
-| `--wb-textarea-padding` | `0.75rem` | Textarea padding |
-| `--wb-textarea-radius` | `4px` | Border radius |
-| `--wb-textarea-bg` | `var(--bg-surface, #ffffff)` | Background |
-| `--wb-textarea-border` | `1px solid var(--border-color)` | Border |
-| `--wb-textarea-font-size` | `0.875rem` | Font size |
-| `--wb-textarea-line-height` | `1.5` | Line height |
-| `--wb-textarea-focus-border` | `var(--primary, #6366f1)` | Focus border |
-| `--wb-textarea-focus-ring` | `0 0 0 3px rgba(99, 102, 241, 0.2)` | Focus ring |
-| `--wb-textarea-disabled-bg` | `var(--bg-disabled)` | Disabled background |
-| `--wb-textarea-counter-size` | `0.75rem` | Counter font size |
-| `--wb-textarea-counter-color` | `var(--text-secondary)` | Counter color |
+| `--x-textarea-padding` | `0.75rem` | Textarea padding |
+| `--x-textarea-radius` | `4px` | Border radius |
+| `--x-textarea-bg` | `var(--bg-surface, #ffffff)` | Background |
+| `--x-textarea-border` | `1px solid var(--border-color)` | Border |
+| `--x-textarea-font-size` | `0.875rem` | Font size |
+| `--x-textarea-line-height` | `1.5` | Line height |
+| `--x-textarea-focus-border` | `var(--primary, #6366f1)` | Focus border |
+| `--x-textarea-focus-ring` | `0 0 0 3px rgba(99, 102, 241, 0.2)` | Focus ring |
+| `--x-textarea-disabled-bg` | `var(--bg-disabled)` | Disabled background |
+| `--x-textarea-counter-size` | `0.75rem` | Counter font size |
+| `--x-textarea-counter-color` | `var(--text-secondary)` | Counter color |
 
 ## Accessibility
 

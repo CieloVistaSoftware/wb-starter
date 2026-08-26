@@ -14,16 +14,16 @@
  * v3.0 Syntax Strategy:
  * =====================
  * PRIMARY (use in new code):
- *   1. wb-card title="Hello"> - Web component tags for components
+ *   1. x-card title="Hello"> - Web component tags for components
  *   2. <button x-ripple> - x- prefix for adding behaviors
  * 
  * DEPRECATED (legacy fallback):
- *   3. wb-card > - Still works but avoid in new code
+ *   3. x-card > - Still works but avoid in new code
  * 
  * Schema Format:
  *   {
  *     "behavior": "card",
- *     "baseClass": "wb-card",
+ *     "baseClass": "x-card",
  *     "properties": {
  *       "title": { "type": "string" },
  *       "elevated": { "type": "boolean" }
@@ -38,7 +38,7 @@
  *     }
  *   }
  * 
- * Classes are AUTO-GENERATED: baseClass + "__" + name → "wb-card__header"
+ * Classes are AUTO-GENERATED: baseClass + "__" + name → "x-card__header"
  * Tags are lowercase per HTML5: "header", "main", "footer"
  */
 
@@ -46,15 +46,15 @@
 // SCHEMA REGISTRY
 // =============================================================================
 
-// Debug logging — silent unless localStorage['wb-debug'] === '1'.
-const WB_DEBUG = (() => { try { return localStorage.getItem('wb-debug') === '1'; } catch (e) { return false; } })();
+// Debug logging — silent unless localStorage['x-debug'] === '1'.
+const WB_DEBUG = (() => { try { return localStorage.getItem('x-debug') === '1'; } catch (e) { return false; } })();
 const _wbClog = console.log.bind(console);
 const dlog = (...args) => { if (WB_DEBUG) _wbClog(...args); };
 
 /** @type {Map<string, Object>} Schema name → parsed schema */
 const schemaRegistry = new Map();
 
-/** @type {Map<string, string>} Tag name → schema name (wb-card-profile → cardprofile) */
+/** @type {Map<string, string>} Tag name → schema name (x-card-profile → cardprofile) */
 const tagToSchema = new Map();
 
 /** @type {WeakSet<HTMLElement>} Track processed elements */
@@ -122,7 +122,7 @@ export function registerSchema(schema, filename) {
   
   schemaRegistry.set(name, schema);
   
-  // Map tag name: wb-card-profile → cardprofile
+  // Map tag name: x-card-profile → cardprofile
   const tagName = `wb-${name.replace(/([a-z])([A-Z])/g, '$1-$2').toLowerCase()}`;
   tagToSchema.set(tagName, name);
   
@@ -134,7 +134,7 @@ export function registerSchema(schema, filename) {
  * Returns true if the schema was fetched & registered, false otherwise.
  */
 // A page with several instances of the same component (e.g. multiple
-// <wb-card>-family tags on one page) each independently discover, on scan,
+// <article>-family tags on one page) each independently discover, on scan,
 // that the shared schema isn't registered yet and race to fetch it — none
 // of them see it as registered until their own fetch resolves. Observed
 // live: card.schema.json fetched 6x, cardstats.schema.json 4x, on a single
@@ -238,7 +238,7 @@ function extractData(element, schema) {
   
   // Honor property aliases declared in the schema BEFORE defaults are applied,
   // so an alias attribute beats the default. e.g. the alert schema declares
-  // `variant` with aliases ["type"] so <wb-alert type="success"> works (#176).
+  // `variant` with aliases ["type"] so <div x-alert type="success"> works (#176).
   if (schema.properties) {
     for (const [propName, propDef] of Object.entries(schema.properties)) {
       const aliases = propDef && propDef.aliases;
@@ -313,7 +313,7 @@ function buildStructure(element, schema, data) {
   const baseClass = getBaseClass(schema);
 
   // Apply base class -- skip when the host tag already IS baseClass (e.g.
-  // <wb-mdhtml> getting classList.add('wb-mdhtml')); redundant, and flagged
+  // <div x-mdhtml> getting classList.add('x-mdhtml')); redundant, and flagged
   // by tests/compliance/no-redundant-tag-name-class.spec.ts (#478). Every
   // per-component behavior fn's OWN identical guard (card.js, checkbox.js,
   // mdhtml.js, ...) only covers ITS OWN classList.add call -- this generic
@@ -321,7 +321,7 @@ function buildStructure(element, schema, data) {
   // guard, or a component's own correct guard gets silently bypassed here.
   if (element.tagName.toLowerCase() !== baseClass) element.classList.add(baseClass);
   
-  // Apply additional classes (for variants like wb-card--profile)
+  // Apply additional classes (for variants like x-card--profile)
   if (schema.compliance?.additionalClasses) {
     element.classList.add(...schema.compliance.additionalClasses);
   }
@@ -348,14 +348,23 @@ function buildStructure(element, schema, data) {
 
   // Stash the pre-wipe original content as a plain JS property (not an
   // attribute -- Law 11) before clearing it below. A schema-built element
-  // that's ALSO used as a self-triggering control (e.g. <wb-drawer
-  // title="…">Left Drawer</wb-drawer> in overlay.js's drawer()) needs its
+  // that's ALSO used as a self-triggering control (e.g. <div x-drawer
+  // title="…">Left Drawer</div> in overlay.js's drawer()) needs its
   // own original label back after its behavior relocates the schema-built
   // structure elsewhere (document.body) -- without this, that text is gone
   // for good the moment $view replaces it, and the trigger renders empty
   // (#drawer root cause). Purely additive: nothing reads this unless a
   // behavior explicitly opts in.
   element._wbOriginalSlot = data.slot || '';
+  // data.slot is TEXT only (extractData reads it for {{slot}} string
+  // interpolation) -- it can't round-trip real markup like a <thead>/
+  // <tbody> pair of table rows. table.js needs the actual pre-wipe HTML
+  // to restore <table>'s original rows after $view rebuilds an empty
+  // thead/tbody shell (table.schema.json has no row-building logic of its
+  // own). Confirmed live: every <table> authored with real <thead>/
+  // <tbody> markup rendered a genuinely empty table, 0 <tr> elements,
+  // because nothing could get the real rows back after this wipe.
+  element._wbOriginalHTML = element.innerHTML;
 
   // Clear existing content (we saved it as slot)
   element.innerHTML = '';
@@ -578,7 +587,7 @@ function applyVariantClasses(element, schema, data) {
     const value = data[key];
     if (value === undefined || value === null || value === '') continue;
     
-    // appliesClass: "wb-card--elevated"
+    // appliesClass: "x-card--elevated"
     if (prop.appliesClass && value === true) {
       element.classList.add(prop.appliesClass);
     }
@@ -588,8 +597,15 @@ function applyVariantClasses(element, schema, data) {
       element.setAttribute(prop.appliesAttribute, value);
     }
     
-    // Enum variants: variant="glass" → wb-card--glass
-    if (prop.enum && typeof value === 'string' && value !== 'default') {
+    // Enum variants: variant="glass" → x-card--glass
+    // Some enum-typed properties (e.g. button's `icon`) list known presets
+    // for tooling/autocomplete but also accept arbitrary free text (emoji,
+    // custom names) per their own schema description -- generating a class
+    // from THAT would produce garbage like "x-button--💾" for an
+    // emoji icon. Only emit the modifier class when the value is itself a
+    // valid CSS identifier segment; free-text values that fall outside the
+    // enum's known set are content, not a variant, and get no class.
+    if (prop.enum && typeof value === 'string' && value !== 'default' && /^[a-zA-Z0-9_-]+$/.test(value)) {
       element.classList.add(`${baseClass}--${value}`);
     }
   }
@@ -675,7 +691,7 @@ export function processElement(element, schemaName = null) {
   // processSchema() all end up here, some passing an explicit schemaName
   // that bypasses detectSchema()). Mirrors wb.js's native-tag autoInject
   // skip (`x-ignore`, wb.js:204) -- previously never wired into this file
-  // at all, so <wb-card x-ignore> was fully built and injected despite the
+  // at all, so <article x-ignore> was fully built and injected despite the
   // attribute (found auditing #521). One opt-out covers both the native
   // and schema-driven paths; no separate attribute needed.
   if (element.hasAttribute('x-ignore')) {
@@ -805,7 +821,7 @@ function bindSchemaMethodsToElement(element, schema, data) {
  * Detect schema from element
  * 
  * v3.0 Priority:
- *   1. wb-card> - Web component tag (PRIMARY)
+ *   1. x-card> - Web component tag (PRIMARY)
  *   2. - Data attribute (DEPRECATED - legacy fallback)
  * 
  * Note: Class detection was removed - classes are for CSS only
@@ -820,7 +836,7 @@ function bindSchemaMethodsToElement(element, schema, data) {
 // last wins via its own `element.innerHTML = ''`, silently wiping the
 // other's work). Others (header.js confirmed live, and likely many more of
 // the 74 tags with both a behavior AND a schema.json) are the OPPOSITE:
-// they never build `.wb-header__right`/etc. themselves at all -- they
+// they never build `.x-header__right`/etc. themselves at all -- they
 // EXPECT schema to have already built that structure and only enhance it.
 // Excluding those from schema entirely doesn't fix a race, it just deletes
 // their DOM outright (confirmed live: excluding all 74 broke header.spec.ts
@@ -829,70 +845,100 @@ function bindSchemaMethodsToElement(element, schema, data) {
 // So this is a per-tag fact, not a blanket rule keyed off "has a behavior."
 // SCHEMA_EXCLUDED_TAGS lists tags CONFIRMED (by reading the actual behavior
 // source, not assumed) to build their own complete DOM unconditionally:
-// wb-demo (#312 -- pre.js's "view source" toggle silently stopped
+// x-demo (#312 -- pre.js's "view source" toggle silently stopped
 // responding whenever WB.scan()'s schema loop raced WBDemo.
 // connectedCallback(), because buildStructure()'s empty-$view fallback
 // re-parses element.innerHTML as a string, producing a listener-less
-// look-alike); wb-details (#305/#336 -- schema's "content" node type
+// look-alike); x-details (#305/#336 -- schema's "content" node type
 // discarded the element's real children into an empty div, which
-// details() then wrapped as if it were the real content); wb-stack/
-// wb-search (found live via #279's audit); the entire wb-card* family,
+// details() then wrapped as if it were the real content); x-stack/
+// x-search (found live via #279's audit); the entire x-card* family,
 // most visibly cardimage/cardvideo -- confirmed live via [WB:card-media]
 // tracing (card.js): PAINTED succeeds, then a stale check ~2s later shows
 // the element wiped from the DOM entirely by a schema fetch that resolved
 // late. Adding a new tag here requires reading its actual behavior source
 // first to confirm it doesn't rely on schema-built children -- do not
 // widen this to "every tag with a behavior" again.
-// wb-skeleton: skeleton.schema.json has a real, non-empty $view (builds
+// x-skeleton: skeleton.schema.json has a real, non-empty $view (builds
 // line/circle/rect/card placeholder divs conditionally). skeleton()
 // (feedback.js) unconditionally does `element.innerHTML = ''` and rebuilds
 // when lines > 1, with no schemaProcessed-aware cooperation -- the exact
 // same "always self-rebuild" pattern as the card family, so it's exposed to
 // the same async-schema-race. This was a LATENT, previously-unreported bug
 // (found auditing schemas while investigating #279, not from a live
-// complaint) -- <wb-skeleton> was never in this list before tonight.
-// wb-article/wb-articles: had a real $view but NO behavior implementation at
-// all (confirmed: no article.js existed anywhere) -- <wb-article> rendered
+// complaint) -- <div x-skeleton> was never in this list before tonight.
+// x-article/x-articles: had a real $view but NO behavior implementation at
+// all (confirmed: no article.js existed anywhere) -- <div x-article> rendered
 // as bare unstyled text on any page not running the schema-builder engine
 // (e.g. wb-lazy.js-based demo pages, which have no MVVM layer whatsoever).
 // article.js now builds the full structure itself, unconditionally, the same
 // self-sufficient pattern as the card family -- so it's added here for the
 // same reason, not left to race with schema's $view build.
-// wb-select: select.schema.json's $view built a fake dropdown out of
+// x-select: select.schema.json's $view built a fake dropdown out of
 // <button>/<div>/<ul> -- no real <select> anywhere in it, so it had none of
 // a native <select>'s keyboard nav/mobile picker/form submission/screen
 // reader semantics. semantics/select.js now builds a REAL <select> for this
 // tag itself (self-sufficient, same pattern), so schema must never build
 // the old fake widget on top of/instead of it.
-// wb-dialog (#387 audit, docs/audits/HOST-CHILD-DISPATCH-AUDIT.md):
+// x-dialog (#387 audit, docs/audits/HOST-CHILD-DISPATCH-AUDIT.md):
 // dialog.js already builds a real native <dialog> + showModal() on
 // trigger, appended fresh to document.body -- it never uses the
-// <wb-dialog> host's own children/innerHTML at all in the common path.
+// <dialog> host's own children/innerHTML at all in the common path.
 // dialog.schema.json's $view (div/header/h2/button/main/footer) is stale
 // and would only ever sit as dead, mismatched chrome inside the host if
 // schema ever processed it -- currently latent since only wb-lazy.js demo
-// pages (no schema support) use <wb-dialog> today. Excluding here is
+// pages (no schema support) use <dialog> today. Excluding here is
 // independent of the separate "should dialog.js eagerly deliver a real
 // <dialog> tag on connect instead of lazily on click" question, which
 // stays a tracked, maintainer-decision-pending known violation in
 // tests/regression/semantic-element-fidelity.spec.ts.
-// wb-fix-card (#365): a WBCard subclass (fix-card.js) -- same
+// x-fix-card (#365): a WBCard subclass (fix-card.js) -- same
 // self-sufficient, unconditional-DOM-rebuild pattern as the rest of the
 // card family below (its schema's $view is empty anyway, but excluding it
 // here documents the same "never race the class" intent explicitly rather
 // than relying on the empty $view being a no-op forever).
+// x-drawer-layout (#556): drawerLayout() (layouts.js) unconditionally
+// builds its own complete toggle <button class="x-drawer-toggle"> --
+// same self-sufficient pattern as the rest of this list, no
+// options.schemaProcessed cooperation anywhere in that function. Left off
+// this list, schema-builder ALSO ran drawerLayout.schema.json's own $view
+// (a "toggle" part -- getPartClass() above turns baseClass "x-drawer-layout"
+// + part name "toggle" into literally "x-drawer-layout__toggle"), building
+// a SECOND, empty placeholder button on top of the first. Confirmed live via
+// no-element-overlap.spec.ts on demos/site/layout.html: the two buttons sit
+// at the exact same position, an empty "x-drawer-layout__toggle" painted
+// over the real "x-drawer-toggle" arrow.
 const SCHEMA_EXCLUDED_TAGS = new Set([
-  'wb-demo', 'wb-details', 'wb-stack', 'wb-search', 'wb-skeleton', 'wb-select',
-  'wb-article', 'wb-articles', 'wb-dialog',
-  'wb-card', 'wb-cardimage', 'wb-cardvideo', 'wb-cardbutton', 'wb-carddraggable',
-  'wb-cardexpandable', 'wb-cardfile', 'wb-cardhero', 'wb-cardhorizontal',
-  'wb-cardlink', 'wb-card-link', 'wb-cardminimizable', 'wb-cardnotification',
-  'wb-cardoverlay', 'wb-cardportfolio', 'wb-cardpricing', 'wb-cardproduct',
-  'wb-cardprofile', 'wb-cardstats', 'wb-cardtestimonial', 'wb-fix-card'
+  'x-demo', 'x-details', 'x-stack', 'x-search', 'x-skeleton', 'x-select',
+  'x-article', 'x-articles', 'x-dialog', 'x-drawer-layout',
+  'x-card', 'x-cardimage', 'x-cardvideo', 'x-cardbutton', 'x-carddraggable',
+  'x-cardexpandable', 'x-cardfile', 'x-cardhero', 'x-cardhorizontal',
+  'x-cardlink', 'x-card-link', 'x-cardminimizable', 'x-cardnotification',
+  'x-cardoverlay', 'x-cardportfolio', 'x-cardpricing', 'x-cardproduct',
+  'x-cardprofile', 'x-cardstats', 'x-cardtestimonial', 'x-fix-card',
+  // #654: x-ripple's schema $view is a single `<span name="effect">` whose own
+  // description says "created on click" -- it documents a RUNTIME element, not
+  // view content. Running it destroyed the author's children (processSchema
+  // wipes before building) and replaced them with an empty, zero-size span, so
+  // `<div x-ripple>text</div>` rendered nothing at all and had no box to
+  // click. ripple() builds its own `span.x-ripple__wave` per click and never
+  // reads `.x-ripple__effect`; it needs the host's content left alone.
+  'x-ripple',
+  // #655: confetti() substitutes its default "Fire Confetti!" label only when
+  // the host is empty -- a correct guard that the schema wipe defeated, since
+  // textContent was always empty by the time it ran. Authored content was
+  // silently replaced on every <div x-confetti>.
+  'x-confetti',
+  // #656: stagelight.schema.json's $view builds source/beam/spot/housing/label
+  // -- the SAME elements stagelight() builds unconditionally for every variant.
+  // That is precisely the schema-vs-behavior race this list exists for
+  // ("whichever finishes last wins via its own innerHTML = ''"), and it also
+  // destroyed the host's authored text on every <div x-stagelight>.
+  'x-stagelight'
 ]);
 
 // x-{name} attribute matching a registered schema: <article x-card> resolves
-// the same as <wb-card>. Same dynamically-named boolean-attribute convention
+// the same as <article>. Same dynamically-named boolean-attribute convention
 // wb.js's native-tag autoInject already uses for behaviors (x-ripple,
 // x-password, ... -- wb.js:229's `${prefix}-${candidate}` check). Dual-
 // maintained alongside tag detection indefinitely, by design -- see
@@ -908,6 +954,18 @@ function detectXAttributeSchema(element) {
   for (const attr of element.attributes) {
     if (!attr.name.startsWith('x-') || META_X_ATTRIBUTES.has(attr.name)) continue;
     const name = attr.name.slice(2);
+    // #678: SCHEMA_EXCLUDED_TAGS was consulted ONLY by the wb-* tag branch of
+    // detectSchema(), so every entry on it -- 34 behaviors confirmed to build
+    // their own DOM and to be destroyed by the schema wipe -- was bypassed
+    // entirely by the equivalent x-* attribute form. `<div x-ripple>text</div>`
+    // was protected; `<div x-ripple>text</div>` was not, and the two forms are
+    // documented as equivalent authoring surfaces.
+    //
+    // That asymmetry is why <div x-cardstats>text</div> still lost its content
+    // after the card behaviors were fixed to preserve it: processSchema() wiped
+    // the element before cardstats() ever ran, so there was nothing left to
+    // preserve. The exclusion list is keyed by tag name, hence the wb- prefix.
+    if (SCHEMA_EXCLUDED_TAGS.has('wb-' + name)) continue;
     if (schemaRegistry.has(name)) return name;
   }
   return null;
@@ -916,7 +974,7 @@ function detectXAttributeSchema(element) {
 function detectSchema(element) {
   const tagName = element.tagName.toLowerCase();
 
-  // 1. Web component tag: wb-card>
+  // 1. Web component tag: x-card>
   if (tagName.startsWith('wb-')) {
     if (SCHEMA_EXCLUDED_TAGS.has(tagName)) return null;
     const mapped = tagToSchema.get(tagName);
@@ -945,8 +1003,8 @@ export function scan(root = document.body) {
   for (const el of root.querySelectorAll('*')) {
     const tag = el.tagName.toLowerCase();
 
-    // Process wb-* tags (not wb-view)
-    if (tag.startsWith('wb-') && tag !== 'wb-view') {
+    // Process wb-* tags (not x-view)
+    if (tag.startsWith('wb-') && tag !== 'x-view') {
       processElement(el);
       continue;
     }
@@ -981,7 +1039,7 @@ export function startObserver() {
         
         const tag = node.tagName?.toLowerCase();
 
-        if (tag?.startsWith('wb-') && tag !== 'wb-view') {
+        if (tag?.startsWith('wb-') && tag !== 'x-view') {
           processElement(node);
         }
 

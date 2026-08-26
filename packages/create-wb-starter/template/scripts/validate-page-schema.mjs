@@ -45,8 +45,8 @@ function loadComponentSchemas() {
 }
 
 // ─── Resolve tag name to behavior name ───
-// wb-cardprofile → cardprofile
-// wb-card → card
+// x-cardprofile → cardprofile
+// x-card → card
 
 function tagToBehavior(tag) {
   if (!tag) return null;

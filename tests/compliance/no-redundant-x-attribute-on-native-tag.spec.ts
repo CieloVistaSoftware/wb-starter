@@ -14,7 +14,7 @@ import * as path from 'path';
  * page) is in effect. The explicit x-<tag> attribute was needed under an
  * older convention; keeping it in demo markup teaches readers a pattern
  * that's no longer necessary, the same class of issue #448 (redundant
- * class="wb-x" on a <wb-x> tag) already fixed for custom elements.
+ * class="x-x" on a <div> tag) already fixed for custom elements.
  *
  * Scoped to demos/**\/*.html and pages/**\/*.html -- the markup readers
  * actually copy from, matching demos-no-legacy-data-attrs.spec.ts's scope

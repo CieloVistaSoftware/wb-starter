@@ -3,7 +3,7 @@
  * Handles height, layout, and responsiveness
  */
 
-wb-hero, [x-hero]{
+x-hero, [x-hero]{
   display: flex;
   align-items: center;
   justify-content: center;
@@ -13,11 +13,11 @@ wb-hero, [x-hero]{
   overflow: hidden;
 }
 
-wb-cardhero, [x-cardhero]{
+x-cardhero, [x-cardhero]{
   /* Fill the container, NOT the viewport. The previous 100vw + negative-margin
      full-bleed broke the cardhero out of its grid cell and overlapped
      neighbouring cards (e.g. the overlay card in the components demo).
-     Opt into edge-to-edge with the .wb-cardhero--fullbleed modifier instead. */
+     Opt into edge-to-edge with the .x-cardhero--fullbleed modifier instead. */
   width: 100%;
   /* Title/subtitle size off the hero's OWN width (cqi), not the viewport
      (vw) — a hero embedded in a narrow column (2-up grid, sidebar) is far
@@ -38,7 +38,7 @@ wb-cardhero, [x-cardhero]{
 
 /* Default background — a rich, animated gradient built from THEME hues (no
    literals): a diagonal brand gradient with two radial glows in adjacent hues. */
-wb-cardhero:not([background]), [x-cardhero]:not([background]){
+x-cardhero:not([background]), [x-cardhero]:not([background]){
   background-image:
     radial-gradient(130% 130% at 0% 0%, hsl(var(--hue-primary, 240) 85% 58% / 0.85), transparent 55%),
     radial-gradient(130% 130% at 100% 100%, hsl(calc(var(--hue-primary, 240) + 55) 85% 52% / 0.85), transparent 55%),
@@ -46,20 +46,20 @@ wb-cardhero:not([background]), [x-cardhero]:not([background]){
 }
 
 /* Animated diagonal sheen sweeping across the hero. */
-wb-cardhero::before, [x-cardhero]::before{
+x-cardhero::before, [x-cardhero]::before{
   content: '';
   position: absolute;
   inset: -60%;
   z-index: 0;
   pointer-events: none;
   background: linear-gradient(115deg, transparent 42%, hsl(var(--overlay-light-hsl) / 0.10) 50%, transparent 58%);
-  animation: wb-cardhero-sheen 7s linear infinite;
+  animation: x-cardhero-sheen 7s linear infinite;
 }
-@keyframes wb-cardhero-sheen { from { transform: translateX(-30%); } to { transform: translateX(30%); } }
-@media (prefers-reduced-motion: reduce) { wb-cardhero::before { animation: none; } }
+@keyframes x-cardhero-sheen { from { transform: translateX(-30%); } to { transform: translateX(30%); } }
+@media (prefers-reduced-motion: reduce) { x-cardhero::before { animation: none; } }
 
 /* Legibility scrim (top-to-bottom, darker at the base). */
-wb-cardhero .wb-card__overlay, [x-cardhero] .wb-card__overlay{
+x-cardhero .x-card__overlay, [x-cardhero] .x-card__overlay{
   position: absolute;
   inset: 0;
   z-index: 0;
@@ -67,7 +67,7 @@ wb-cardhero .wb-card__overlay, [x-cardhero] .wb-card__overlay{
 }
 
 /* Content column — centered, breathable, animates in. */
-wb-cardhero .wb-card__hero-content, [x-cardhero] .wb-card__hero-content{
+x-cardhero .x-card__hero-content, [x-cardhero] .x-card__hero-content{
   position: relative;
   z-index: 1;
   display: flex;
@@ -78,16 +78,16 @@ wb-cardhero .wb-card__hero-content, [x-cardhero] .wb-card__hero-content{
   max-width: 46rem;
   padding: clamp(2rem, 5vw, 4rem);
   color: var(--text-on-accent, #fff);
-  animation: wb-cardhero-in 0.6s cubic-bezier(0.2, 0.7, 0.2, 1) both;
+  animation: x-cardhero-in 0.6s cubic-bezier(0.2, 0.7, 0.2, 1) both;
 }
-@keyframes wb-cardhero-in { from { opacity: 0; transform: translateY(1rem); } }
-@media (prefers-reduced-motion: reduce) { wb-cardhero .wb-card__hero-content { animation: none; } }
+@keyframes x-cardhero-in { from { opacity: 0; transform: translateY(1rem); } }
+@media (prefers-reduced-motion: reduce) { x-cardhero .x-card__hero-content { animation: none; } }
 
-wb-cardhero.wb-card--xalign-left  .wb-card__hero-content { align-items: flex-start; text-align: left; margin-right: auto; }, [x-cardhero].wb-card--xalign-left  .wb-card__hero-content { align-items: flex-start; text-align: left; margin-right: auto; }
-wb-cardhero.wb-card--xalign-right .wb-card__hero-content { align-items: flex-end;   text-align: right; margin-left: auto; }, [x-cardhero].wb-card--xalign-right .wb-card__hero-content { align-items: flex-end;   text-align: right; margin-left: auto; }
+[x-cardhero].x-card--xalign-left  .x-card__hero-content { align-items: flex-start; text-align: left; margin-right: auto; }
+[x-cardhero].x-card--xalign-right .x-card__hero-content { align-items: flex-end;   text-align: right; margin-left: auto; }
 
 /* Eyebrow / pretitle — a frosted pill. */
-wb-cardhero .wb-card__hero-pretitle, [x-cardhero] .wb-card__hero-pretitle{
+x-cardhero .x-card__hero-pretitle, [x-cardhero] .x-card__hero-pretitle{
   display: inline-block;
   margin-bottom: 0.75rem;
   padding: 0.3rem 0.9rem;
@@ -101,8 +101,8 @@ wb-cardhero .wb-card__hero-pretitle, [x-cardhero] .wb-card__hero-pretitle{
 }
 
 /* Title — big, tight, with depth.
-   `color` set directly here (not left to inherit from .wb-card__hero-content)
-   -- .wb-card__title's own `color: var(--text-primary)` rule is a DIRECT
+   `color` set directly here (not left to inherit from .x-card__hero-content)
+   -- .x-card__title's own `color: var(--text-primary)` rule is a DIRECT
    match on this same element, and a direct rule always beats an inherited
    one regardless of specificity. That silently discarded the scrim's
    intended light --text-on-accent color in favor of the theme's regular
@@ -110,11 +110,11 @@ wb-cardhero .wb-card__hero-pretitle, [x-cardhero] .wb-card__hero-pretitle{
    arbitrary background photo. Confirmed live: "Summer Collection 2026"
    rendered in --text-primary (illegible blue-on-photo), not white.
    Selector also compounds BOTH classes already on the element (0,2,1),
-   not just `.wb-card__hero-title` (0,1,1) -- site.css's `.page h3` is
+   not just `.x-card__hero-title` (0,1,1) -- site.css's `.page h3` is
    ALSO 0,1,1 and ties, so which one wins came down to stylesheet load
    order (site.css won). The extra class guarantees this rule wins
    regardless of load order. */
-wb-cardhero .wb-card__title.wb-card__hero-title, [x-cardhero] .wb-card__title.wb-card__hero-title{
+x-cardhero .x-card__title.x-card__hero-title, [x-cardhero] .x-card__title.x-card__hero-title{
   margin: 0;
   font-weight: 800;
   line-height: 1.05;
@@ -124,7 +124,7 @@ wb-cardhero .wb-card__title.wb-card__hero-title, [x-cardhero] .wb-card__title.wb
   text-shadow: 0 2px 14px hsl(var(--overlay-dark-hsl) / 0.35);
 }
 
-wb-cardhero .wb-card__subtitle.wb-card__hero-subtitle, [x-cardhero] .wb-card__subtitle.wb-card__hero-subtitle{
+x-cardhero .x-card__subtitle.x-card__hero-subtitle, [x-cardhero] .x-card__subtitle.x-card__hero-subtitle{
   margin: 0.75rem 0 0;
   font-size: clamp(1rem, 2.5cqi, 1.35rem);
   line-height: 1.5;
@@ -134,14 +134,14 @@ wb-cardhero .wb-card__subtitle.wb-card__hero-subtitle, [x-cardhero] .wb-card__su
 }
 
 /* CTA group + buttons. */
-wb-cardhero .wb-card__cta-group, [x-cardhero] .wb-card__cta-group{
+x-cardhero .x-card__cta-group, [x-cardhero] .x-card__cta-group{
   display: flex;
   gap: 1rem;
   flex-wrap: wrap;
   justify-content: inherit;
   margin-top: 1.75rem;
 }
-wb-cardhero .wb-hero-cta, [x-cardhero] .wb-hero-cta{
+x-cardhero .x-hero-cta, [x-cardhero] .x-hero-cta{
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -153,27 +153,27 @@ wb-cardhero .wb-hero-cta, [x-cardhero] .wb-hero-cta{
   text-decoration: none;
   transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
 }
-wb-cardhero .wb-hero-cta--primary, [x-cardhero] .wb-hero-cta--primary{
+x-cardhero .x-hero-cta--primary, [x-cardhero] .x-hero-cta--primary{
   background: var(--text-on-accent, #fff);
   color: var(--primary);
   box-shadow: 0 12px 30px hsl(var(--overlay-dark-hsl) / 0.35);
 }
-wb-cardhero .wb-hero-cta--primary:hover { transform: translateY(-2px); box-shadow: 0 18px 42px hsl(var(--overlay-dark-hsl) / 0.45); }, [x-cardhero] .wb-hero-cta--primary:hover { transform: translateY(-2px); box-shadow: 0 18px 42px hsl(var(--overlay-dark-hsl) / 0.45); }
-wb-cardhero .wb-hero-cta--secondary, [x-cardhero] .wb-hero-cta--secondary{
+[x-cardhero] .x-hero-cta--primary:hover { transform: translateY(-2px); box-shadow: 0 18px 42px hsl(var(--overlay-dark-hsl) / 0.45); }
+x-cardhero .x-hero-cta--secondary, [x-cardhero] .x-hero-cta--secondary{
   background: hsl(var(--overlay-light-hsl) / 0.14);
   color: var(--text-on-accent, #fff);
   border: 1.5px solid hsl(var(--overlay-light-hsl) / 0.4);
   backdrop-filter: blur(8px);
 }
-wb-cardhero .wb-hero-cta--secondary:hover { background: hsl(var(--overlay-light-hsl) / 0.26); transform: translateY(-2px); }, [x-cardhero] .wb-hero-cta--secondary:hover { background: hsl(var(--overlay-light-hsl) / 0.26); transform: translateY(-2px); }
+[x-cardhero] .x-hero-cta--secondary:hover { background: hsl(var(--overlay-light-hsl) / 0.26); transform: translateY(-2px); }
 
 @media (max-width: 640px) {
-  wb-cardhero .wb-card__cta-group { flex-direction: column; align-items: stretch; width: 100%; }, [x-cardhero] .wb-card__cta-group { flex-direction: column; align-items: stretch; width: 100%; }
-  wb-cardhero .wb-hero-cta { width: 100%; }, [x-cardhero] .wb-hero-cta { width: 100%; }
+[x-cardhero] .x-card__cta-group { flex-direction: column; align-items: stretch; width: 100%; }
+[x-cardhero] .x-hero-cta { width: 100%; }
 }
 
 /* Opt-in full-bleed for page-top heroes that should span the viewport. */
-wb-cardhero.wb-cardhero--fullbleed, [x-cardhero].wb-cardhero--fullbleed{
+x-cardhero.x-cardhero--fullbleed, [x-cardhero].x-cardhero--fullbleed{
   width: 100vw;
   margin-left: calc(-50vw + 50%);
 }
@@ -181,7 +181,7 @@ wb-cardhero.wb-cardhero--fullbleed, [x-cardhero].wb-cardhero--fullbleed{
 /* ── variant= (cardhero.schema.json enum: default/cosmic/split/minimal/
    gradient) — #383: documented but never implemented. Each below only
    applies when the user hasn't supplied their own background=, matching
-   the existing wb-cardhero:not([background]) default-gradient convention. */
+   the existing x-cardhero:not([background]) default-gradient convention. */
 
 /* cosmic — a denser, multi-hue nebula: three overlapping radial glows
    (vs. the default's two) plus a starfield.
@@ -196,7 +196,7 @@ wb-cardhero.wb-cardhero--fullbleed, [x-cardhero].wb-cardhero--fullbleed{
    exactly the technique the 3 big color glows two layers down already use,
    which is why those never looked gridded. No background-size/repeat
    trickery needed; a plain 'cover'/'no-repeat' applies to every layer. */
-wb-cardhero.wb-cardhero--cosmic:not([background]), [x-cardhero].wb-cardhero--cosmic:not([background]){
+x-cardhero.x-cardhero--cosmic:not([background]), [x-cardhero].x-cardhero--cosmic:not([background]){
   background-image:
     radial-gradient(circle at 6% 12%,  hsl(var(--overlay-light-hsl) / 0.55) 0 1px, transparent 1px),
     radial-gradient(circle at 14% 55%, hsl(var(--overlay-light-hsl) / 0.85) 0 1px, transparent 1px),
@@ -226,19 +226,19 @@ wb-cardhero.wb-cardhero--cosmic:not([background]), [x-cardhero].wb-cardhero--cos
 
 /* split — content pinned to one half, background visible on the other,
    instead of the default centered treatment. */
-wb-cardhero.wb-cardhero--split, [x-cardhero].wb-cardhero--split{
+x-cardhero.x-cardhero--split, [x-cardhero].x-cardhero--split{
   justify-content: flex-start;
 }
-wb-cardhero.wb-cardhero--split .wb-card__hero-content, [x-cardhero].wb-cardhero--split .wb-card__hero-content{
+x-cardhero.x-cardhero--split .x-card__hero-content, [x-cardhero].x-cardhero--split .x-card__hero-content{
   align-items: flex-start;
   text-align: left;
   max-width: 46%;
   margin-right: auto;
 }
-wb-cardhero.wb-cardhero--split.wb-card--xalign-right, [x-cardhero].wb-cardhero--split.wb-card--xalign-right{
+x-cardhero.x-cardhero--split.x-card--xalign-right, [x-cardhero].x-cardhero--split.x-card--xalign-right{
   justify-content: flex-end;
 }
-wb-cardhero.wb-cardhero--split.wb-card--xalign-right .wb-card__hero-content, [x-cardhero].wb-cardhero--split.wb-card--xalign-right .wb-card__hero-content{
+x-cardhero.x-cardhero--split.x-card--xalign-right .x-card__hero-content, [x-cardhero].x-cardhero--split.x-card--xalign-right .x-card__hero-content{
   align-items: flex-end;
   text-align: right;
   margin-right: 0;
@@ -247,30 +247,30 @@ wb-cardhero.wb-cardhero--split.wb-card--xalign-right .wb-card__hero-content, [x-
 
 /* minimal — flat theme surface, no sheen sweep, no legibility scrim, no
    CTA drama: the opposite instinct of the default's rich animated glow. */
-wb-cardhero.wb-cardhero--minimal:not([background]), [x-cardhero].wb-cardhero--minimal:not([background]){
+x-cardhero.x-cardhero--minimal:not([background]), [x-cardhero].x-cardhero--minimal:not([background]){
   background-image: none;
   background-color: var(--bg-secondary, #1f2937);
 }
-wb-cardhero.wb-cardhero--minimal::before, [x-cardhero].wb-cardhero--minimal::before{
+x-cardhero.x-cardhero--minimal::before, [x-cardhero].x-cardhero--minimal::before{
   content: none; /* no sheen sweep */
 }
-wb-cardhero.wb-cardhero--minimal .wb-card__overlay, [x-cardhero].wb-cardhero--minimal .wb-card__overlay{
+x-cardhero.x-cardhero--minimal .x-card__overlay, [x-cardhero].x-cardhero--minimal .x-card__overlay{
   content: none;
   background: none;
 }
-wb-cardhero.wb-cardhero--minimal .wb-card__hero-content, [x-cardhero].wb-cardhero--minimal .wb-card__hero-content{
+x-cardhero.x-cardhero--minimal .x-card__hero-content, [x-cardhero].x-cardhero--minimal .x-card__hero-content{
   color: var(--text-primary, #f9fafb);
 }
-wb-cardhero.wb-cardhero--minimal .wb-card__hero-title, [x-cardhero].wb-cardhero--minimal .wb-card__hero-title,
-wb-cardhero.wb-cardhero--minimal .wb-card__hero-subtitle, [x-cardhero].wb-cardhero--minimal .wb-card__hero-subtitle{
+x-cardhero.x-cardhero--minimal .x-card__hero-title, [x-cardhero].x-cardhero--minimal .x-card__hero-title,
+x-cardhero.x-cardhero--minimal .x-card__hero-subtitle, [x-cardhero].x-cardhero--minimal .x-card__hero-subtitle{
   text-shadow: none;
 }
-wb-cardhero.wb-cardhero--minimal .wb-hero-cta--primary, [x-cardhero].wb-cardhero--minimal .wb-hero-cta--primary{
+x-cardhero.x-cardhero--minimal .x-hero-cta--primary, [x-cardhero].x-cardhero--minimal .x-hero-cta--primary{
   background: var(--primary);
   color: var(--text-on-accent, #fff);
   box-shadow: none;
 }
-wb-cardhero.wb-cardhero--minimal .wb-hero-cta--secondary, [x-cardhero].wb-cardhero--minimal .wb-hero-cta--secondary{
+x-cardhero.x-cardhero--minimal .x-hero-cta--secondary, [x-cardhero].x-cardhero--minimal .x-hero-cta--secondary{
   background: transparent;
   border-color: var(--border-color, #374151);
   backdrop-filter: none;
@@ -278,71 +278,71 @@ wb-cardhero.wb-cardhero--minimal .wb-hero-cta--secondary, [x-cardhero].wb-cardhe
 
 /* gradient — a clean two-hue linear sweep, no radial glows, no sheen
    animation, no starfield: simpler and calmer than cosmic or the default. */
-wb-cardhero.wb-cardhero--gradient:not([background]), [x-cardhero].wb-cardhero--gradient:not([background]){
+x-cardhero.x-cardhero--gradient:not([background]), [x-cardhero].x-cardhero--gradient:not([background]){
   background-image: linear-gradient(135deg, var(--primary), hsl(calc(var(--hue-primary, 240) + 120) 70% 45%));
 }
-wb-cardhero.wb-cardhero--gradient::before, [x-cardhero].wb-cardhero--gradient::before{
+x-cardhero.x-cardhero--gradient::before, [x-cardhero].x-cardhero--gradient::before{
   content: none; /* no sheen sweep -- the gradient itself is the whole point */
 }
 
 /* Apply height from data attribute */
-wb-hero[data-height="100vh"], [x-hero][data-height="100vh"]{
+x-hero[data-height="100vh"], [x-hero][data-height="100vh"]{
   height: 100vh;
   min-height: 100vh;
 }
 
-wb-hero[data-height="80vh"], [x-hero][data-height="80vh"]{
+x-hero[data-height="80vh"], [x-hero][data-height="80vh"]{
   height: 80vh;
   min-height: 80vh;
 }
 
-wb-hero[data-height="60vh"], [x-hero][data-height="60vh"]{
+x-hero[data-height="60vh"], [x-hero][data-height="60vh"]{
   height: 60vh;
   min-height: 60vh;
 }
 
-wb-hero[data-height="50vh"], [x-hero][data-height="50vh"]{
+x-hero[data-height="50vh"], [x-hero][data-height="50vh"]{
   height: 50vh;
   min-height: 50vh;
 }
 
 /* Alignment */
-wb-hero[data-align="center"], [x-hero][data-align="center"]{
+x-hero[data-align="center"], [x-hero][data-align="center"]{
   text-align: center;
 }
 
-wb-hero[data-align="left"], [x-hero][data-align="left"]{
+x-hero[data-align="left"], [x-hero][data-align="left"]{
   text-align: left;
 }
 
-wb-hero[data-align="right"], [x-hero][data-align="right"]{
+x-hero[data-align="right"], [x-hero][data-align="right"]{
   text-align: right;
 }
 
 /* Variants - Always ensure visible background */
-wb-hero[data-variant="gradient"], [x-hero][data-variant="gradient"]{
+x-hero[data-variant="gradient"], [x-hero][data-variant="gradient"]{
   background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
   color: white;
 }
 
-wb-hero[data-variant="dark"], [x-hero][data-variant="dark"]{
+x-hero[data-variant="dark"], [x-hero][data-variant="dark"]{
   background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
   color: white;
 }
 
-wb-hero[data-variant="light"], [x-hero][data-variant="light"]{
+x-hero[data-variant="light"], [x-hero][data-variant="light"]{
   background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
   color: #0f172a;
 }
 
 /* Default gradient if no variant */
-wb-hero:not([data-variant]), [x-hero]:not([data-variant]){
+x-hero:not([data-variant]), [x-hero]:not([data-variant]){
   background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
   color: white;
 }
 
 /* Hero Content Container */
-wb-hero > div, [x-hero] > div{
+x-hero > div, [x-hero] > div{
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -352,21 +352,21 @@ wb-hero > div, [x-hero] > div{
   padding: 2rem;
 }
 
-wb-hero h1, [x-hero] h1{
+x-hero h1, [x-hero] h1{
   font-size: clamp(2rem, 8vw, 4rem);
   margin: 0 0 1rem 0;
   font-weight: 700;
   line-height: 1.2;
 }
 
-wb-hero h2, [x-hero] h2{
+x-hero h2, [x-hero] h2{
   font-size: clamp(1.5rem, 5vw, 2.5rem);
   margin: 0 0 1rem 0;
   font-weight: 700;
   line-height: 1.3;
 }
 
-wb-hero p, [x-hero] p{
+x-hero p, [x-hero] p{
   font-size: clamp(1rem, 2vw, 1.25rem);
   margin: 0 0 2rem 0;
   line-height: 1.6;
@@ -374,7 +374,7 @@ wb-hero p, [x-hero] p{
 }
 
 /* CTA Buttons */
-wb-hero .cta-buttons, [x-hero] .cta-buttons{
+x-hero .cta-buttons, [x-hero] .cta-buttons{
   display: flex;
   gap: 1rem;
   flex-wrap: wrap;
@@ -382,8 +382,8 @@ wb-hero .cta-buttons, [x-hero] .cta-buttons{
   margin-top: 2rem;
 }
 
-wb-hero .cta-button, [x-hero] .cta-button,
-wb-hero button, [x-hero] button{
+x-hero .cta-button, [x-hero] .cta-button,
+x-hero button, [x-hero] button{
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -397,29 +397,29 @@ wb-hero button, [x-hero] button{
   text-decoration: none;
 }
 
-wb-hero .cta-button--primary, [x-hero] .cta-button--primary,
-wb-hero button[data-primary], [x-hero] button[data-primary]{
+x-hero .cta-button--primary, [x-hero] .cta-button--primary,
+x-hero button[data-primary], [x-hero] button[data-primary]{
   background: white;
   color: #667eea;
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
 }
 
-wb-hero .cta-button--primary:hover, [x-hero] .cta-button--primary:hover,
-wb-hero button[data-primary]:hover, [x-hero] button[data-primary]:hover{
+x-hero .cta-button--primary:hover, [x-hero] .cta-button--primary:hover,
+x-hero button[data-primary]:hover, [x-hero] button[data-primary]:hover{
   transform: translateY(-2px);
   box-shadow: 0 15px 40px rgba(0, 0, 0, 0.4);
 }
 
-wb-hero .cta-button--secondary, [x-hero] .cta-button--secondary,
-wb-hero button[data-secondary], [x-hero] button[data-secondary]{
+x-hero .cta-button--secondary, [x-hero] .cta-button--secondary,
+x-hero button[data-secondary], [x-hero] button[data-secondary]{
   background: rgba(255, 255, 255, 0.2);
   color: white;
   border: 2px solid rgba(255, 255, 255, 0.3);
   backdrop-filter: blur(10px);
 }
 
-wb-hero .cta-button--secondary:hover, [x-hero] .cta-button--secondary:hover,
-wb-hero button[data-secondary]:hover, [x-hero] button[data-secondary]:hover{
+x-hero .cta-button--secondary:hover, [x-hero] .cta-button--secondary:hover,
+x-hero button[data-secondary]:hover, [x-hero] button[data-secondary]:hover{
   background: rgba(255, 255, 255, 0.3);
   border-color: rgba(255, 255, 255, 0.5);
   transform: translateY(-2px);
@@ -427,52 +427,52 @@ wb-hero button[data-secondary]:hover, [x-hero] button[data-secondary]:hover{
 
 /* Responsive */
 @media (max-width: 768px) {
-  wb-hero, [x-hero]{
+  x-hero, [x-hero]{
     min-height: 300px;
   }
 
-  wb-hero[data-height="100vh"], [x-hero][data-height="100vh"]{
+  x-hero[data-height="100vh"], [x-hero][data-height="100vh"]{
     height: auto;
     min-height: 60vh;
   }
 
-  wb-hero > div, [x-hero] > div{
+  x-hero > div, [x-hero] > div{
     padding: 1.5rem;
   }
 
-  wb-hero h1, [x-hero] h1{
+  x-hero h1, [x-hero] h1{
     font-size: clamp(1.5rem, 7vw, 2.5rem);
   }
 
-  wb-hero p, [x-hero] p{
+  x-hero p, [x-hero] p{
     font-size: clamp(0.9rem, 4vw, 1.1rem);
   }
 
-  wb-hero .cta-buttons, [x-hero] .cta-buttons{
+  x-hero .cta-buttons, [x-hero] .cta-buttons{
     flex-direction: column;
     gap: 0.75rem;
   }
 
-  wb-hero .cta-button, [x-hero] .cta-button,
-  wb-hero button, [x-hero] button{
+  x-hero .cta-button, [x-hero] .cta-button,
+  x-hero button, [x-hero] button{
     width: 100%;
   }
 }
 
 @media (max-width: 480px) {
-  wb-hero, [x-hero]{
+  x-hero, [x-hero]{
     min-height: 250px;
   }
 
-  wb-hero > div, [x-hero] > div{
+  x-hero > div, [x-hero] > div{
     padding: 1rem;
   }
 
-  wb-hero h1, [x-hero] h1{
+  x-hero h1, [x-hero] h1{
     font-size: 1.5rem;
   }
 
-  wb-hero p, [x-hero] p{
+  x-hero p, [x-hero] p{
     font-size: 0.95rem;
     margin-bottom: 1.5rem;
   }

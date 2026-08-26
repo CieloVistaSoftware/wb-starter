@@ -23,10 +23,10 @@ async function setup(page: Page, html: string): Promise<void> {
 
 test.describe('x-toast', () => {
   for (const type of ['success', 'warning', 'error']) {
-    test(`toast-variant="${type}" produces a wb-toast--${type}`, async ({ page }) => {
+    test(`toast-variant="${type}" produces a x-toast--${type}`, async ({ page }) => {
       await setup(page, `<button id="bt-${type}" x-toast message="${type} msg" toast-variant="${type}">Go</button>`);
       await page.locator(`#bt-${type}`).click();
-      const toast = page.locator(`.wb-toast--${type}`);
+      const toast = page.locator(`.x-toast--${type}`);
       await expect(toast).toHaveCount(1);
       await expect(toast).toContainText(`${type} msg`);
     });
@@ -39,8 +39,8 @@ test.describe('x-toast', () => {
     await page.locator('#b-succ').click();
     await page.locator('#b-err').click();
     await page.waitForTimeout(200);
-    const succBg = await page.locator('.wb-toast--success').first().evaluate((el) => getComputedStyle(el).backgroundColor);
-    const errBg = await page.locator('.wb-toast--error').first().evaluate((el) => getComputedStyle(el).backgroundColor);
+    const succBg = await page.locator('.x-toast--success').first().evaluate((el) => getComputedStyle(el).backgroundColor);
+    const errBg = await page.locator('.x-toast--error').first().evaluate((el) => getComputedStyle(el).backgroundColor);
     expect(succBg).not.toBe(errBg);
   });
 });

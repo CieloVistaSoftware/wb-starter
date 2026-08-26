@@ -1,41 +1,68 @@
 /**
- * #176 — <wb-alert> must honor the `type=` attribute as an alias for `variant`.
- * The showcase authors alerts as `type="success|warning|error"`, but the schema
- * property is `variant` (default "info"), so every alert rendered blue. The
- * schema-builder now supports property aliases (extractData) and the alert schema
- * declares variant.aliases = ["type"].
+ * #176 / #375 / #727 — an alert's variant must be visible.
+ *
+ * Two claims, both of which lost their guard when #664 removed the showcase's
+ * `<div x-demo>` sections:
+ *
+ *   #176 — `type=` is an alias for `variant`, and the four types are four
+ *          colours (they all rendered "info" blue).
+ *   #375 — alert() adds `.x-alert` AND `.x-alert--<variant>`; without the
+ *          modifier class every alert rendered unstyled and identical.
+ *
+ * The old version scanned the page for `[x-alert][type="info"]` and failed with
+ * "no alerts found on showcase" — the page builds its examples on demand now.
+ * This drives the panel instead, and reads the rendered example, never a
+ * browse-list row (#727).
  */
 import { test, expect } from '@playwright/test';
+import { openBehaviorsPanel, renderVariant, example, exampleStyle } from '../utils/behaviors-panel';
 
-test('#176 — alert type= maps to variant: four distinct colors', async ({ page }) => {
-  await page.goto('http://localhost:3000/?page=behaviors');
-  await page.waitForSelector('#mainPage-behaviors', { timeout: 20000 });
-  await page.waitForTimeout(2500); // lazy injection + schema build
+const VARIANTS = ['info', 'success', 'warning', 'error'] as const;
 
-  const info = await page.locator('[x-alert][type="info"], [x-alert].wb-alert--info').first();
-  await expect(info, 'no alerts found on showcase').toBeVisible();
+test.describe('#176/#375 — alert variants', () => {
+  test('each variant carries x-alert and its own modifier class', async ({ page }) => {
+    await openBehaviorsPanel(page, 'x-alert');
 
-  // Each type= alert should carry the matching wb-alert--<type> class…
-  const classMatch = await page.evaluate(() => {
-    const types = ['info', 'success', 'warning', 'error'];
-    return types.map((t) => {
-      const el = document.querySelector(`[x-alert][type="${t}"]`);
-      return { t, hasClass: !!el && el.classList.contains(`wb-alert--${t}`) };
-    });
+    for (const variant of VARIANTS) {
+      await renderVariant(page, 'x-alert', variant);
+      const el = example(page);
+      await expect(el, `${variant}: missing the base class`).toHaveClass(/\bwb-alert\b/);
+      await expect(el, `${variant}: missing x-alert--${variant}`)
+        .toHaveClass(new RegExp(`\\bwb-alert--${variant}\\b`));
+    }
   });
-  for (const { t, hasClass } of classMatch) {
-    expect(hasClass, `wb-alert[type="${t}"] did not get class wb-alert--${t}`).toBe(true);
-  }
 
-  // …and the four variants must be visually distinct (not all "info" blue).
-  const colors = await page.evaluate(() =>
-    ['info', 'success', 'warning', 'error'].map((t) => {
-      const el = document.querySelector(`[x-alert][type="${t}"]`) as HTMLElement;
-      return el ? getComputedStyle(el).backgroundColor : 'MISSING';
-    })
-  );
-  expect(
-    new Set(colors).size,
-    `alert variants not distinct (type= ignored?): ${colors.join(', ')}`
-  ).toBe(4);
+  test('the four variants render four distinct appearances', async ({ page }) => {
+    await openBehaviorsPanel(page, 'x-alert');
+
+    const seen: Record<string, string> = {};
+    for (const variant of VARIANTS) {
+      await renderVariant(page, 'x-alert', variant);
+      // Alerts colour themselves through background AND border; take both, so a
+      // theme that varies only one still reads as distinct.
+      const bg = await exampleStyle(page, 'background-color');
+      const border = await exampleStyle(page, 'border-color');
+      seen[variant] = `${bg} | ${border}`;
+    }
+
+    const distinct = new Set(Object.values(seen));
+    expect(
+      distinct.size,
+      'expected 4 distinct alert appearances, got:\n' +
+      Object.entries(seen).map(([v, s]) => `  ${v}: ${s}`).join('\n'),
+    ).toBe(VARIANTS.length);
+  });
+
+  test('what is measured is the rendered alert, not a list row', async ({ page }) => {
+    await openBehaviorsPanel(page, 'x-alert');
+    await renderVariant(page, 'x-alert', 'warning');
+
+    const where = await example(page).evaluate((el) => ({
+      insideExample: !!el.closest('#behaviors-live-example'),
+      insideList: !!el.closest('.behaviors-search-results'),
+    }));
+
+    expect(where.insideExample, 'must measure inside the example wrapper').toBe(true);
+    expect(where.insideList, 'must never measure a browse-list row (#727)').toBe(false);
+  });
 });

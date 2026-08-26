@@ -1,35 +1,41 @@
-# wb-demo
+# x-demo
 
-A container that does two things:
+```html
+<article
+  title="Elevated Card"
+  elevated>
+  <p>This card has elevation shadow.</p>
+</article>
+<article
+  title="Clickable Card"
+  clickable>
+  <p>Click me! I'm interactive.</p>
+</article>
+<article
+  title="With Footer"
+  footer="Last updated: Today">
+  <p>This card has a footer section.</p>
+</article>
+```
+
+The panel above IS a live `<div x-demo>` — the doc viewer auto-wraps any fenced
+`html` block containing WB markup in one, so this page demonstrates its own
+subject without writing `<div x-demo>` explicitly (writing it explicitly here
+would nest a second, real `<div x-demo>` inside the auto-generated wrapper,
+duplicating the code panel — don't do that; just write the content you want
+demonstrated). It does two things:
 
 1. Renders its children normally (in a CSS grid)
-2. Shows the raw HTML as a syntax-highlighted, auto-formatted code sample below
+2. Shows the raw HTML you just saw as a syntax-highlighted, auto-formatted code
+   sample below the rendered output
 
-That's it.
+That's it. The code sample is auto-formatted with consistent 2-space indentation
+regardless of how the source above was written.
 
 ## Usage
 
-```html
-<wb-demo columns="3">
-  <wb-card
-    title="Elevated Card"
-    elevated>
-    <p>This card has elevation shadow.</p>
-  </wb-card>
-  <wb-card
-    title="Clickable Card"
-    clickable>
-    <p>Click me! I'm interactive.</p>
-  </wb-card>
-  <wb-card
-    title="With Footer"
-    footer="Last updated: Today">
-    <p>This card has a footer section.</p>
-  </wb-card>
-</wb-demo>
-```
-
-This renders three cards in a row. Below them, the exact HTML above appears as a syntax-highlighted code sample — automatically. The code is auto-formatted with consistent 2-space indentation regardless of how the source is written.
+Any content goes inside `<div x-demo>` — the example above is the complete pattern:
+wrap what you want rendered, get a live preview and a matching source panel for free.
 
 ## Attributes
 
@@ -40,9 +46,9 @@ This renders three cards in a row. Below them, the exact HTML above appears as a
 ## How It Works
 
 1. `demo()` fetches the raw page source via `fetch(location.href)`
-2. Extracts the nth `<wb-demo>` block from the raw source using regex
+2. Extracts the nth `<div x-demo>` block from the raw source using regex
 3. `formatHtml()` auto-formats the raw source: trims blank lines, strips common indent, re-indents with 2 spaces based on tag nesting
-4. Wraps live children in a `.wb-demo__grid` div (CSS grid, `columns` wide)
+4. Wraps live children in a `.x-demo__grid` div (CSS grid, `columns` wide)
 5. Creates a `<pre><code>` block and sets the formatted source via `textContent`
 6. WB scans the pre/code for syntax highlighting (x-pre, x-code)
 
@@ -50,9 +56,9 @@ This renders three cards in a row. Below them, the exact HTML above appears as a
 
 Two problems had to be solved:
 
-**Problem 1: innerHTML is inflated.** Child custom elements like `wb-card` inflate via `connectedCallback` before `wb-demo`'s behavior runs. By the time `demo()` reads `innerHTML`, cards already have injected headers, footers, inline styles, and classes. Solution: fetch the raw HTML file from the server before the browser touches it.
+**Problem 1: innerHTML is inflated.** Child custom elements like `x-card` inflate via `connectedCallback` before `x-demo`'s behavior runs. By the time `demo()` reads `innerHTML`, cards already have injected headers, footers, inline styles, and classes. Solution: fetch the raw HTML file from the server before the browser touches it.
 
-**Problem 2: innerHTML creates real elements.** Setting `mdEl.innerHTML = rawBlock` makes the browser parse the raw HTML into real `<wb-card>` elements. The MutationObserver picks them up and inflates them. By the time anything reads the content back, it's bloated. Solution: use `textContent` on a `<code>` element — the browser treats it as plain text, no parsing, no custom elements, no inflation.
+**Problem 2: innerHTML creates real elements.** Setting `mdEl.innerHTML = rawBlock` makes the browser parse the raw HTML into real `<article>` elements. The MutationObserver picks them up and inflates them. By the time anything reads the content back, it's bloated. Solution: use `textContent` on a `<code>` element — the browser treats it as plain text, no parsing, no custom elements, no inflation.
 
 ## Auto-Formatting
 
@@ -74,10 +80,10 @@ The `formatHtml()` function normalizes code display regardless of source indenta
 
 All styles in `src/styles/behaviors/demo.css`. Zero inline styles.
 
-- `wb-demo` — block container, margin-bottom 1rem, max-width 100vw
-- `.wb-demo__grid` — CSS grid with 1rem gap
-- `.wb-demo__grid--cols-{n}` — column count (1-6)
-- `.wb-demo__code` / `pre` / `.x-pre-wrapper` — 0.5rem top margin below grid
+- `x-demo` — block container, margin-bottom 1rem, max-width 100vw
+- `.x-demo__grid` — CSS grid with 1rem gap
+- `.x-demo__grid--cols-{n}` — column count (1-6)
+- `.x-demo__code` / `pre` / `.x-pre-wrapper` — 0.5rem top margin below grid
 - Responsive: 2 cols at 768px, 1 col at 480px
 
 ## Theme Dependency
@@ -89,6 +95,6 @@ The page must have `data-theme` set on `<html>` for proper dark/light mode. The 
 | File | Purpose |
 |------|---------|
 | `src/wb-viewmodels/demo.js` | Behavior logic (fetch, format, render) |
-| `src/wb-viewmodels/wb-demo.js` | Custom element registration |
+| `src/wb-viewmodels/x-demo.js` | Custom element registration |
 | `src/wb-models/demo.schema.json` | Schema |
 | `src/styles/behaviors/demo.css` | Styles (must be imported in site.css) |

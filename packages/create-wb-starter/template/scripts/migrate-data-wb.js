@@ -23,50 +23,50 @@ const FILE_FILTER = args.find(a => a.startsWith('--file='))?.split('=')[1];
 
 // Components that become <wb-*> custom elements
 const COMPONENT_MAP = {
-  'card': 'wb-card',
-  'cardimage': 'wb-cardimage',
-  'cardvideo': 'wb-cardvideo',
-  'cardhero': 'wb-cardhero',
-  'cardprofile': 'wb-cardprofile',
-  'cardpricing': 'wb-cardpricing',
-  'cardstats': 'wb-cardstats',
-  'cardtestimonial': 'wb-cardtestimonial',
-  'cardproduct': 'wb-cardproduct',
-  'cardnotification': 'wb-cardnotification',
-  'cardfile': 'wb-cardfile',
-  'cardlink': 'wb-cardlink',
-  'cardhorizontal': 'wb-cardhorizontal',
-  'cardoverlay': 'wb-cardoverlay',
-  'carddraggable': 'wb-carddraggable',
-  'cardexpandable': 'wb-cardexpandable',
-  'cardminimizable': 'wb-cardminimizable',
-  'cardbutton': 'wb-cardbutton',
-  'cardportfolio': 'wb-cardportfolio',
-  'modal': 'wb-modal',
-  'dropdown': 'wb-dropdown',
-  'accordion': 'wb-accordion',
-  'tabs': 'wb-tabs',
-  'dialog': 'wb-dialog',
-  'drawer': 'wb-drawer',
-  'badge': 'wb-badge',
-  'progress': 'wb-progress',
-  'spinner': 'wb-spinner',
-  'avatar': 'wb-avatar',
-  'chip': 'wb-chip',
-  'alert': 'wb-alert',
-  'skeleton': 'wb-skeleton',
-  'input': 'wb-input',
-  'textarea': 'wb-textarea',
-  'select': 'wb-select',
-  'checkbox': 'wb-checkbox',
-  'switch': 'wb-switch',
-  'rating': 'wb-rating',
-  'navbar': 'wb-navbar',
-  'table': 'wb-table',
-  'code': 'wb-code',
-  'mdhtml': 'wb-mdhtml',
-  'themecontrol': 'wb-themecontrol',
-  'container': 'wb-container'
+  'card': 'x-card',
+  'cardimage': 'x-cardimage',
+  'cardvideo': 'x-cardvideo',
+  'cardhero': 'x-cardhero',
+  'cardprofile': 'x-cardprofile',
+  'cardpricing': 'x-cardpricing',
+  'cardstats': 'x-cardstats',
+  'cardtestimonial': 'x-cardtestimonial',
+  'cardproduct': 'x-cardproduct',
+  'cardnotification': 'x-cardnotification',
+  'cardfile': 'x-cardfile',
+  'cardlink': 'x-cardlink',
+  'cardhorizontal': 'x-cardhorizontal',
+  'cardoverlay': 'x-cardoverlay',
+  'carddraggable': 'x-carddraggable',
+  'cardexpandable': 'x-cardexpandable',
+  'cardminimizable': 'x-cardminimizable',
+  'cardbutton': 'x-cardbutton',
+  'cardportfolio': 'x-cardportfolio',
+  'modal': 'x-modal',
+  'dropdown': 'x-dropdown',
+  'accordion': 'x-accordion',
+  'tabs': 'x-tabs',
+  'dialog': 'x-dialog',
+  'drawer': 'x-drawer',
+  'badge': 'x-badge',
+  'progress': 'x-progress',
+  'spinner': 'x-spinner',
+  'avatar': 'x-avatar',
+  'chip': 'x-chip',
+  'alert': 'x-alert',
+  'skeleton': 'x-skeleton',
+  'input': 'x-input',
+  'textarea': 'x-textarea',
+  'select': 'x-select',
+  'checkbox': 'x-checkbox',
+  'switch': 'x-switch',
+  'rating': 'x-rating',
+  'navbar': 'x-navbar',
+  'table': 'x-table',
+  'code': 'x-code',
+  'mdhtml': 'x-mdhtml',
+  'themecontrol': 'x-themecontrol',
+  'container': 'x-container'
 };
 
 // Behaviors that become x-* attributes (on existing elements)
@@ -102,7 +102,7 @@ const stats = {
  */
 function convertToCustomElement(html, behavior, tagName) {
   // Pattern: <TAG ... ... data-prop="value" ...>
-  // Result: <wb-behavior ... prop="value" ...>
+  // Result: <div ... prop="value" ...>
   
   const regex = new RegExp(
     `<(\\w+)([^>]*?)\\s*([^>]*)>`,
@@ -131,7 +131,7 @@ function convertToCustomElement(html, behavior, tagName) {
  */
 function convertClosingTags(html, behavior, tagName) {
   // This is tricky - we need to match the closing tag for the original element
-  // For now, we'll do a simpler approach: convert <wb-card >...</div> patterns
+  // For now, we'll do a simpler approach: convert <article >...</div> patterns
   
   // Find all instances and track original tags
   const openPattern = new RegExp(`<(\\w+)([^>]*)`, 'gi');
@@ -148,7 +148,7 @@ function convertClosingTags(html, behavior, tagName) {
   // Now we need to fix closing tags - this requires more sophisticated parsing
   // For safety, we'll do a basic replacement of common patterns
   for (const origTag of [...new Set(originalTags)]) {
-    // Pattern: </div> after a <wb-card...> should become </wb-card>
+    // Pattern: </div> after a <article...> should become </article>
     // This is imperfect but handles most cases
   }
   
@@ -236,7 +236,7 @@ function migrate() {
   const queuePath = path.join(ROOT, 'data', 'migration-queue.json');
   
   if (!fs.existsSync(queuePath)) {
-    console.log('❌ Migration queue not found. Run find-data-wb-artifacts.js first.');
+    console.log('❌ Migration queue not found. Run find-data-x-artifacts.js first.');
     process.exit(1);
   }
   

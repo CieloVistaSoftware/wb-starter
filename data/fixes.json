@@ -57,9 +57,9 @@
         "pages/ai-permutation-test.html",
         "src/wb-models/page.schema.json",
         "src/wb-models/pages/behaviors-card-code.page.json",
-        "src/wb-models/pages/wb-component-library.site.json",
-        "src/wb-models/sites/wb-library.site.json",
-        "src/wb-viewmodels/wb-audio.js",
+        "src/wb-models/pages/x-component-library.site.json",
+        "src/wb-models/sites/x-library.site.json",
+        "src/wb-viewmodels/x-audio.js",
         "tests/compliance/terminology.spec.ts",
         "docs/claude/SCHEMAS-GUIDE.md",
         "docs/claude/PAGE-GENERATION.md",
@@ -95,7 +95,7 @@
       "test": "html-ids-home.spec.ts",
       "title": "Missing IDs on home.html stat items and preview elements",
       "problem": "Test expected #autogen-home-stat-0 through #autogen-home-stat-3, #home-preview-canvas, and #home-preview-row-1 but none existed",
-      "fix": "Added id attributes to 4 stat-item divs, preview canvas wb-card, and first preview-row div",
+      "fix": "Added id attributes to 4 stat-item divs, preview canvas x-card, and first preview-row div",
       "filesChanged": ["pages/home.html"],
       "category": "html-fix"
     },
@@ -148,11 +148,11 @@
   "remainingFailures": [
     {
       "test": "strict-mode-runtime.spec.ts",
-      "reason": "DEEP FIX: WB engine needs to set data-wb-schema on processed elements and throw on legacy data-wb usage"
+      "reason": "DEEP FIX: WB engine needs to set data-x-schema on processed elements and throw on legacy data-wb usage"
     },
     {
       "test": "semantic-article-to-card.spec.ts",
-      "reason": "DEEP FIX: WB engine needs to process <article> into card with wb-card classes synchronously"
+      "reason": "DEEP FIX: WB engine needs to process <article> into card with x-card classes synchronously"
     },
     {
       "test": "css-oop-compliance.spec.ts",

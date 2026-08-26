@@ -4,15 +4,15 @@ import * as path from 'path';
 
 /**
  * #296: authored demos/pages must use the button SHORTHAND (`variant`/`size` on a
- * native <button> or <wb-button>), NOT the long-hand `class="wb-btn wb-btn--*"`.
+ * native <button> or <button>), NOT the long-hand `class="x-btn x-btn--*"`.
  * `variant`/`size` are wired on native buttons (button.js), so the class markup is
  * legacy verbosity.
  */
 const ROOT = process.cwd();
 const DIRS = ['demos', 'pages', 'public', 'articles'];
 const SKIP = new Set(['node_modules', '.git', 'data', 'test-results', '.playwright-artifacts', 'coverage', 'dist', 'out']);
-// A wb-btn modifier class (variant/size) — the thing to migrate. Bare structural
-// uses without a modifier are rare; flag anything with `wb-btn--`.
+// A x-btn modifier class (variant/size) — the thing to migrate. Bare structural
+// uses without a modifier are rare; flag anything with `x-btn--`.
 const RE = /class\s*=\s*["'][^"']*\bwb-btn--[a-z0-9-]+/i;
 
 function walk(dir: string, out: string[]): void {
@@ -26,7 +26,7 @@ function walk(dir: string, out: string[]): void {
   }
 }
 
-test('demos/pages use variant/size, not long-hand wb-btn-- classes (#296)', () => {
+test('demos/pages use variant/size, not long-hand x-btn-- classes (#296)', () => {
   const files: string[] = [];
   for (const d of DIRS) walk(path.join(ROOT, d), files);
 
@@ -40,6 +40,6 @@ test('demos/pages use variant/size, not long-hand wb-btn-- classes (#296)', () =
   }
   expect(
     offenders,
-    `Use variant="…"/size="…" instead of class="wb-btn wb-btn--…":\n  ${offenders.join('\n  ')}`
+    `Use variant="…"/size="…" instead of class="x-btn x-btn--…":\n  ${offenders.join('\n  ')}`
   ).toEqual([]);
 });

@@ -16,7 +16,7 @@ import { readFileSync, writeFileSync, mkdirSync, existsSync } from 'fs';
 import { resolve, join } from 'path';
 
 const MODELS = resolve('src/wb-models');
-const SITE_CONFIG = resolve('src/wb-models/pages/wb-component-library.site.json');
+const SITE_CONFIG = resolve('src/wb-models/pages/x-component-library.site.json');
 const OUTPUT_DIR = resolve('tests/site-generated');
 
 // Ensure output dir

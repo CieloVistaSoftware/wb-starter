@@ -6,11 +6,11 @@ import { setupBehaviorTest, setupTestContainer } from '../base';
 /**
  * Every schema.json may declare `semanticElement.tagName` -- a promise that
  * the live component is a superset of that real native element (the way
- * <wb-select> must be a superset of <select>, not a replacement for it --
+ * <select> must be a superset of <select>, not a replacement for it --
  * see #360). Nothing has ever enforced that promise: found live via a
  * systemic audit (docs/audits/HOST-CHILD-DISPATCH-AUDIT.md) after #360 and
  * #361 both turned out to be a schema declaring native intent it never
- * delivered. wb-dialog and wb-table are CONFIRMED existing violations,
+ * delivered. x-dialog and x-table are CONFIRMED existing violations,
  * deferred pending a maintainer decision (rebuild vs. relax the schema
  * claim) rather than fixed here -- this test exists to make sure the list
  * of violations never grows past what's explicitly acknowledged below.
@@ -29,7 +29,7 @@ import { setupBehaviorTest, setupTestContainer } from '../base';
  * button) rather than an accidental drift from the schema. progress's ARIA
  * pattern is complete and correct (a progress bar isn't focusable/
  * interactive, so aria-value* alone is the full WAI-ARIA contract).
- * button's is NOT complete -- confirmed live that a focused <wb-button>
+ * button's is NOT complete -- confirmed live that a focused <button>
  * does not respond to Enter/Space at all, which the ARIA button pattern
  * requires -- but that's a keyboard-activation bug, not a
  * declares-vs-delivers-the-tag bug, so it's tracked separately rather than

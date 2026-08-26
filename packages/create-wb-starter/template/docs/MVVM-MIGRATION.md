@@ -10,7 +10,7 @@ WB-Starter v3.0 implements a **Schema-Driven MVVM Architecture** that eliminates
 ┌─────────────────────────────────────────────────────────────┐
 │                     USER WRITES HTML                        │
 ├─────────────────────────────────────────────────────────────┤
-│  <wb-card title="Hello">Content</wb-card>                  │
+│  <article title="Hello">Content</article>                  │
 │                        OR                                   │
 │  <button x-ripple>Click</button>  (behaviors)              │
 └─────────────────────────────────────────────────────────────┘
@@ -59,16 +59,16 @@ WB v3.0 uses **Light DOM exclusively**. No Shadow DOM.
 
 ```html
 <!-- User writes this -->
-<wb-card title="Hello">Content</wb-card>
+<article title="Hello">Content</article>
 <!-- DOM becomes (Light DOM) -->
-<wb-card
+<article
   title="Hello"
-  class="wb-card">
-  <header class="wb-card__header">
-    <h3 class="wb-card__title">Hello</h3>
+  class="x-card">
+  <header class="x-card__header">
+    <h3 class="x-card__title">Hello</h3>
   </header>
-  <main class="wb-card__body">Content</main>
-</wb-card>
+  <main class="x-card__body">Content</main>
+</article>
 ```
 
 ### 2. Schema-First Development
@@ -78,9 +78,9 @@ Every component is defined by a JSON schema that serves as the single source of 
 ```json
 {
   "$component": "card",
-  "$tagName": "wb-card",
+  "$tagName": "x-card",
   "behavior": "card",
-  "baseClass": "wb-card",
+  "baseClass": "x-card",
   
   "properties": {
     "title": { "type": "string", "description": "Card header text" },
@@ -100,8 +100,8 @@ Every component is defined by a JSON schema that serves as the single source of 
   },
   
   "$cssAPI": {
-    "--wb-card-padding": "Internal padding",
-    "--wb-card-radius": "Border radius"
+    "--x-card-padding": "Internal padding",
+    "--x-card-radius": "Border radius"
   }
 }
 ```
@@ -113,25 +113,25 @@ Every component is defined by a JSON schema that serves as the single source of 
 
 ```html
 <!-- ✅ CLEAN: User sets attributes -->
-<wb-card
+<article
   title="Hello"
   subtitle="World"
   elevated>
   <p>Content here</p>
-</wb-card>
+</article>
 <!-- ❌ DON'T: Force users to know internals -->
-<wb-card>
+<article>
   <h3 slot="title">Hello</h3>
   <p slot="subtitle">World</p>
   <p>Content here</p>
-</wb-card>
+</article>
 ```
 
 ### 4. Behaviors vs Components
 
 | Type | Tag | Purpose | Example |
 |------|-----|---------|---------|
-| **Component** | `<wb-*>` | Creates new DOM structure | `<wb-card title="Hi">` |
+| **Component** | `<wb-*>` | Creates new DOM structure | `<article title="Hi">` |
 | **Behavior** | `x-*` attribute | Enhances existing element | `<button x-ripple>` |
 
 ## File Structure
@@ -178,15 +178,15 @@ src/
 | Property | Purpose | Example |
 |----------|---------|---------|
 | `$component` | Component identifier | `"card"` |
-| `$tagName` | Custom element tag | `"wb-card"` |
+| `$tagName` | Custom element tag | `"x-card"` |
 | `behavior` | Viewmodel function name | `"card"` |
-| `baseClass` | BEM block class | `"wb-card"` |
+| `baseClass` | BEM block class | `"x-card"` |
 
 ### $view Properties
 
 | Property | Purpose | Example |
 |----------|---------|---------|
-| `name` | Part identifier → BEM element | `"header"` → `.wb-card__header` |
+| `name` | Part identifier → BEM element | `"header"` → `.x-card__header` |
 | `tag` | HTML element (lowercase) | `"header"`, `"main"`, `"footer"` |
 | `parent` | Nest inside another part | `"parent": "header"` |
 | `content` | Template interpolation | `"{{title}}"` or `"{{slot}}"` |
@@ -208,9 +208,9 @@ Documents CSS custom properties for theming:
 
 ```json
 "$cssAPI": {
-  "--wb-card-padding": "Internal padding (default: 1.5rem)",
-  "--wb-card-radius": "Border radius (default: 8px)",
-  "--wb-card-bg": "Background color"
+  "--x-card-padding": "Internal padding (default: 1.5rem)",
+  "--x-card-radius": "Border radius (default: 8px)",
+  "--x-card-bg": "Background color"
 }
 ```
 
@@ -251,22 +251,22 @@ Documents CSS custom properties for theming:
 ### Basic Component
 
 ```html
-<wb-card
+<article
   title="Hello World"
   elevated>
   <p>Card content goes here.</p>
-</wb-card>
+</article>
 ```
 
 ### With Behaviors
 
 ```html
-<wb-card
+<article
   title="Interactive Card"
   x-draggable
   x-ripple>
   <p>This card is draggable with ripple effect.</p>
-</wb-card>
+</article>
 ```
 
 ### Behavior Only (No Component)
@@ -283,10 +283,10 @@ Documents CSS custom properties for theming:
 
 ```css
 /* Override via CSS variables */
-wb-card {
-  --wb-card-padding: 2rem;
-  --wb-card-radius: 16px;
-  --wb-card-bg: var(--bg-tertiary);
+x-card {
+  --x-card-padding: 2rem;
+  --x-card-radius: 16px;
+  --x-card-bg: var(--bg-tertiary);
 }
 ```
 
@@ -299,13 +299,13 @@ Since schemas define the contract, tests can be auto-generated:
 ```javascript
 // Auto-generated from card.schema.json
 test('card with title shows header', async () => {
-  const card = await renderComponent('wb-card', { title: 'Test' });
-  expect(card.querySelector('.wb-card__header')).toBeTruthy();
+  const card = await renderComponent('x-card', { title: 'Test' });
+  expect(card.querySelector('.x-card__header')).toBeTruthy();
 });
 
 test('card without title hides header', async () => {
-  const card = await renderComponent('wb-card', {});
-  expect(card.querySelector('.wb-card__header')).toBeFalsy();
+  const card = await renderComponent('x-card', {});
+  expect(card.querySelector('.x-card__header')).toBeFalsy();
 });
 ```
 
@@ -341,8 +341,8 @@ console.log(WB.schema.registry);
 
 ```javascript
 // See what behaviors are on an element
-const card = document.querySelector('wb-card');
-console.log(card.classList.contains("wb-ready")); // Lists applied behaviors
+const card = document.querySelector('x-card');
+console.log(card.classList.contains("x-ready")); // Lists applied behaviors
 ```
 
 ## Resources

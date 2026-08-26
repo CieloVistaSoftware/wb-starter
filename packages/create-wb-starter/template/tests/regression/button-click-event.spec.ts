@@ -9,14 +9,14 @@ import { test, expect } from '@playwright/test';
  * the schema had no top-level `events` section declaring it either. A
  * documented-but-never-implemented event. Fixed by dispatching a real
  * bubbling `wb:button:click` CustomEvent (in addition to native click) for
- * both <wb-button> and native <button> paths, and adding the missing
+ * both <button> and native <button> paths, and adding the missing
  * top-level `events` section to the schema.
  */
 test.describe('wb:button:click event dispatch (#344)', () => {
-  test('<wb-button> dispatches wb:button:click on click', async ({ page }) => {
+  test('<button> dispatches wb:button:click on click', async ({ page }) => {
     await page.goto('/');
     await page.setContent(`
-      <wb-button id="wbb">Click me</wb-button>
+      <button id="wbb">Click me</button>
       <script type="module">
         import WB from '/src/core/wb.js';
         window.__wbDone = false;
@@ -29,7 +29,7 @@ test.describe('wb:button:click event dispatch (#344)', () => {
       return new Promise((resolve) => {
         const el = document.getElementById('wbb')!;
         el.addEventListener('wb:button:click', () => resolve(true), { once: true });
-        // NOTE: <wb-button>'s customElements.define() is unexpectedly owned by
+        // NOTE: <button>'s customElements.define() is unexpectedly owned by
         // the unrelated "WB Views" system (see button.js's own comment on
         // synthesizeClick()) -- that class's element.click() silently no-ops,
         // so a real click must be dispatched instead, same as button.js's own

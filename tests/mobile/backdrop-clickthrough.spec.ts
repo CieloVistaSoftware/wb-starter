@@ -8,7 +8,7 @@ import { test, expect } from '@playwright/test';
 
 test.describe('Mobile nav backdrop click-through (#171)', () => {
   test('closed drawer: backdrop does not intercept clicks over page content', async ({ page }) => {
-    await page.goto('http://localhost:3000/?page=docs');
+    await page.goto('/?page=docs');
     await page.waitForSelector('a.docs-card', { timeout: 20000 });
     await page.waitForTimeout(800);
 
@@ -29,7 +29,7 @@ test.describe('Mobile nav backdrop click-through (#171)', () => {
   });
 
   test('a real tap on a content link is not swallowed by the backdrop', async ({ page, context }) => {
-    await page.goto('http://localhost:3000/?page=docs');
+    await page.goto('/?page=docs');
     await page.waitForSelector('a.docs-card', { timeout: 20000 });
     await page.waitForTimeout(800);
     // doc-viewer cards open in a new tab; a real click must produce that popup.

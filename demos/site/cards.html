@@ -21,2204 +21,1789 @@
   <!-- 1. 🃏 Curated Card Gallery — one example per variant -->
   <section id="card-gallery">
   <h2>🃏 Curated Card Gallery — one example per variant</h2>
-<wb-stack gap="1rem">
+<div x-stack gap="1rem">
 
-    <h2>Card</h2>
-    <wb-demo columns="1">
-    <wb-card
-      title="Welcome"
-      subtitle="Standard card"
-      hoverable>This is a basic card with default styling.</wb-card>
-    </wb-demo>
-    <wb-demo columns="1">
-    <wb-card
-      title="Glass Card"
-      subtitle="With Badge"
-      badge="NEW"
-      variant="glass"
-      clickable
-      hoverable
-      elevated>All features enabled.</wb-card>
-    </wb-demo>
+    <h2>Base Card</h2>
+    <div id="demo-base" class="demo-section__grid demo-section__grid--cols-2">
+    <div x-demo columns="1">
+      <article title="Welcome" subtitle="Standard card" hoverable>This is a basic card with default styling.</article>
+    </div>
+    <div x-demo columns="1">
+      <article title="Glass Card" subtitle="With Badge" badge="NEW" variant="glass" clickable hoverable elevated>All features enabled.</article>
+    </div>
+  </div>
 
     <h2>Image Card</h2>
-    <wb-demo columns="1">
-    <wb-cardimage
-      src="https://picsum.photos/seed/mountain-vista/600/400"
-      title="Mountain Vista"
-      subtitle="Nature photography"></wb-cardimage>
-    </wb-demo>
-    <wb-demo columns="1">
-    <wb-cardimage
-      src="https://picsum.photos/seed/ocean-breeze/600/400"
-      title="Ocean Breeze"
-      subtitle="Coastal landscapes"></wb-cardimage>
-    </wb-demo>
+    <div id="demo-image" class="demo-section__grid demo-section__grid--cols-2">
+    <div x-demo columns="1">
+      <div x-cardimage src="https://picsum.photos/seed/mountain/600/400" title="Mountain Vista" subtitle="Nature photography"></div>
+    </div>
+    <div x-demo columns="1">
+      <div x-cardimage src="https://picsum.photos/seed/ocean22/600/400" title="Ocean Breeze" subtitle="Coastal landscapes"></div>
+    </div>
+  </div>
 
     <h2>Hero Card</h2>
-    <wb-demo id="demo-hero" columns="1" full-width>
-      <wb-cardhero
-        title="Summer Collection 2026"
-        subtitle="Fresh styles, bold colors"
-        cta="Shop Now"
-        cta-secondary="Learn More"
-        background="https://picsum.photos/seed/summer-collection/1200/600"
-        height="450px"></wb-cardhero>
-    </wb-demo>
+    <div x-demo id="demo-hero" columns="1" full-width>
+      <div x-cardhero title="Summer Collection 2026" subtitle="Fresh styles, bold colors" cta="Shop Now" cta-secondary="Learn More" background="https://picsum.photos/seed/hero99/1200/600" height="360px"></div>
+    </div>
 
     <h2>Profile Card</h2>
-    <wb-demo id="demo-profile" columns="1">
-      <wb-cardprofile
-        avatar="https://ui-avatars.com/api/?name=Ronnie+R.&size=150&background=475569&color=fff"
-        cover="https://picsum.photos/seed/design/800/200"
-        name="Ronnie R."
-        role="UI/UX Designer"
-        bio="Creating beautiful, accessible interfaces."></wb-cardprofile>
-    </wb-demo>
+    <div x-demo id="demo-profile" columns="1">
+      <div x-cardprofile avatar="https://i.pravatar.cc/150?u=janedoe" cover="https://picsum.photos/seed/cover1/800/200" name="Ronnie R." role="UI/UX Designer" bio="Creating beautiful, accessible interfaces."></div>
+    </div>
 
     <h2>Button Card</h2>
-    <wb-demo columns="1">
-    <wb-cardbutton
-      title="Save Document"
-      subtitle="Your changes are ready"
-      primary="Save Now"
-      secondary="Discard"></wb-cardbutton>
-    </wb-demo>
-    <wb-demo columns="1">
-    <wb-cardbutton
-      title="Delete Account"
-      subtitle="This action is permanent"
-      primary="Confirm Delete"
-      secondary="Go Back"></wb-cardbutton>
-    </wb-demo>
+    <div id="demo-button" class="demo-section__grid demo-section__grid--cols-2">
+    <div x-demo columns="1">
+      <div x-cardbutton title="Save Document" subtitle="Your changes are ready" primary="Save Now" secondary="Discard"></div>
+    </div>
+    <div x-demo columns="1">
+      <div x-cardbutton title="Delete Account" subtitle="This action is permanent" primary="Confirm Delete" secondary="Go Back"></div>
+    </div>
+  </div>
 
     <h2>Pricing Cards</h2>
-    <wb-demo columns="1">
-    <wb-cardpricing
-      plan="Starter"
-      price="$0"
-      period="/month"
-      features="3 Projects,Community Support,1 GB Storage"
-      cta="Get Started"></wb-cardpricing>
-    </wb-demo>
-    <wb-demo columns="1">
-    <wb-cardpricing
-      plan="Pro"
-      price="$19"
-      period="/month"
-      features="Unlimited Projects,Priority Support,50 GB Storage,API Access"
-      cta="Upgrade"
-      featured></wb-cardpricing>
-    </wb-demo>
-    <wb-demo columns="1">
-    <wb-cardpricing
-      plan="Enterprise"
-      price="$99"
-      period="/month"
-      features="Everything in Pro,SSO & SAML,Dedicated Manager,SLA"
-      cta="Contact Sales"></wb-cardpricing>
-    </wb-demo>
+    <div id="demo-pricing" class="demo-section__grid demo-section__grid--cols-3">
+    <div x-demo columns="1">
+      <div x-cardpricing plan="Starter" price="$0" period="/month" features="3 Projects,Community Support,1 GB Storage" cta="Get Started"></div>
+    </div>
+    <div x-demo columns="1">
+      <div x-cardpricing plan="Pro" price="$19" period="/month" features="Unlimited Projects,Priority Support,50 GB Storage,API Access" cta="Upgrade" featured></div>
+    </div>
+    <div x-demo columns="1">
+      <div x-cardpricing plan="Enterprise" price="$99" period="/month" features="Everything in Pro,SSO & SAML,Dedicated Manager,SLA" cta="Contact Sales"></div>
+    </div>
+  </div>
 
     <h2>Stats Cards</h2>
-    <wb-demo columns="1">
-    <wb-cardstats
-      value="42K"
-      label="Users"
-      icon="👥"
-      trend="up"
-      trend-value="+12.5%"></wb-cardstats>
-    </wb-demo>
-    <wb-demo columns="1">
-    <wb-cardstats
-      value="$1.2M"
-      label="Revenue"
-      icon="💰"
-      trend="up"
-      trend-value="+8.3%"></wb-cardstats>
-    </wb-demo>
-    <wb-demo columns="1">
-    <wb-cardstats
-      value="99.9%"
-      label="Uptime"
-      icon="⚡"
-      trend="up"
-      trend-value="+0.1%"></wb-cardstats>
-    </wb-demo>
-    <wb-demo columns="1">
-    <wb-cardstats
-      value="4.8"
-      label="Rating"
-      icon="⭐"
-      trend="up"
-      trend-value="+0.3"></wb-cardstats>
-    </wb-demo>
+    <div id="demo-stats" class="demo-section__grid demo-section__grid--cols-4">
+    <div x-demo columns="1">
+      <div x-cardstats value="42K" label="Users" icon="👥" trend="up" trend-value="+12.5%"></div>
+    </div>
+    <div x-demo columns="1">
+      <div x-cardstats value="$1.2M" label="Revenue" icon="💰" trend="up" trend-value="+8.3%"></div>
+    </div>
+    <div x-demo columns="1">
+      <div x-cardstats value="99.9%" label="Uptime" icon="⚡" trend="up" trend-value="+0.1%"></div>
+    </div>
+    <div x-demo columns="1">
+      <div x-cardstats value="4.8" label="Rating" icon="⭐" trend="up" trend-value="+0.3"></div>
+    </div>
+  </div>
 
     <h2>Testimonial Card</h2>
-    <wb-demo id="demo-testimonial" columns="2">
-      <wb-cardtestimonial
-        quote="This framework completely transformed how we build web
-               components."
-        author="Alex Rivera"
-        role="Lead Developer, TechCorp"
-        avatar="https://ui-avatars.com/api/?name=Alex+Rivera&size=150&background=0f766e&color=fff"
-        rating="5"></wb-cardtestimonial>
-      <wb-cardtestimonial
-        quote="Clean API, great docs, incredibly comprehensive."
-        author="Maria Chen"
-        role="CTO, StartupLab"
-        avatar="https://ui-avatars.com/api/?name=Maria+Chen&size=150&background=be185d&color=fff"
-        rating="5"></wb-cardtestimonial>
-    </wb-demo>
+    <div id="demo-testimonial" class="demo-section__grid demo-section__grid--cols-2">
+    <div x-demo columns="1">
+      <div x-cardtestimonial quote="This framework completely transformed how we build web components." author="Alex Rivera" role="Lead Developer, TechCorp" avatar="https://i.pravatar.cc/150?u=alex" rating="5"></div>
+    </div>
+    <div x-demo columns="1">
+      <div x-cardtestimonial quote="Clean API, great docs, incredibly comprehensive." author="Maria Chen" role="CTO, StartupLab" avatar="https://i.pravatar.cc/150?u=maria" rating="5"></div>
+    </div>
+  </div>
 
     <h2>Product Card</h2>
-    <wb-demo columns="1" events="wb:cardproduct:addtocart">
-    <wb-cardproduct
-      image="https://picsum.photos/seed/sneakers/400/300"
-      title="Premium Sneakers"
-      description="Lightweight with responsive cushioning"
-      price="$129"
-      rating="4.5"
-      reviews="238"></wb-cardproduct>
-    </wb-demo>
-    <wb-demo columns="1" events="wb:cardproduct:addtocart">
-    <wb-cardproduct
-      image="https://picsum.photos/seed/smart-watch/400/300"
-      title="Smart Watch"
-      description="Health tracking and notifications"
-      price="$299"
-      rating="4.8"
-      reviews="1024"></wb-cardproduct>
-    </wb-demo>
-    <wb-demo columns="1" events="wb:cardproduct:addtocart">
-    <wb-cardproduct
-      image="https://picsum.photos/seed/headphones/400/300"
-      title="Wireless Headphones"
-      description="Active noise cancellation"
-      price="$89"
-      rating="4.3"
-      reviews="567"></wb-cardproduct>
-    </wb-demo>
+    <div id="demo-product" class="demo-section__grid demo-section__grid--cols-3">
+    <div x-demo columns="1">
+      <div x-cardproduct image="https://picsum.photos/seed/sneaker/400/300" title="Premium Sneakers" description="Lightweight with responsive cushioning" price="$129" rating="4.5" reviews="238"></div>
+    </div>
+    <div x-demo columns="1">
+      <div x-cardproduct image="https://picsum.photos/seed/watch99/400/300" title="Smart Watch" description="Health tracking and notifications" price="$299" rating="4.8" reviews="1024"></div>
+    </div>
+    <div x-demo columns="1">
+      <div x-cardproduct image="https://picsum.photos/seed/headphone/400/300" title="Wireless Headphones" description="Active noise cancellation" price="$89" rating="4.3" reviews="567"></div>
+    </div>
+  </div>
 
     <h2>Notification Card</h2>
-    <wb-demo columns="1">
-    <wb-cardnotification
-      variant="success"
-      title="Changes Saved!"
-      message="Your profile has been updated successfully."></wb-cardnotification>
-    </wb-demo>
-    <wb-demo columns="1">
-    <wb-cardnotification
-      variant="error"
-      title="Upload Failed"
-      message="File exceeds the 10MB size limit."></wb-cardnotification>
-    </wb-demo>
+    <div id="demo-notification" class="demo-section__grid demo-section__grid--cols-2">
+    <div x-demo columns="1">
+      <div x-cardnotification variant="success" title="Changes Saved!" message="Your profile has been updated successfully."></div>
+    </div>
+    <div x-demo columns="1">
+      <div x-cardnotification variant="error" title="Upload Failed" message="File exceeds the 10MB size limit."></div>
+    </div>
+  </div>
 
     <h2>File Card</h2>
-    <wb-demo columns="1">
-    <wb-cardfile
-      filename="quarterly-report.pdf"
-      type="pdf"
-      size="2.4 MB"
-      date="2026-02-16"
-      href="https://github.com/CieloVistaSoftware/wb-starter/pulse"></wb-cardfile>
-    </wb-demo>
-    <wb-demo columns="1">
-    <wb-cardfile
-      filename="team-photo.jpg"
-      type="image"
-      size="4.1 MB"
-      date="2026-02-15"
-      href="https://github.com/CieloVistaSoftware/wb-starter/graphs/contributors"></wb-cardfile>
-    </wb-demo>
-    <wb-demo columns="1">
-    <wb-cardfile
-      filename="backup.zip"
-      type="zip"
-      size="128 MB"
-      date="2026-02-14"
-      href="https://github.com/CieloVistaSoftware/wb-starter/archive/refs/heads/main.zip"></wb-cardfile>
-    </wb-demo>
+    <div id="demo-file" class="demo-section__grid demo-section__grid--cols-3">
+    <div x-demo columns="1">
+      <div x-cardfile filename="quarterly-report.pdf" type="pdf" size="2.4 MB" date="2026-02-16"></div>
+    </div>
+    <div x-demo columns="1">
+      <div x-cardfile filename="team-photo.jpg" type="image" size="4.1 MB" date="2026-02-15"></div>
+    </div>
+    <div x-demo columns="1">
+      <div x-cardfile filename="backup.zip" type="zip" size="128 MB" date="2026-02-14"></div>
+    </div>
+  </div>
 
     <h2>Link Card</h2>
-    <wb-demo columns="1">
-    <wb-cardlink
-      href="https://github.com/CieloVistaSoftware/wb-starter#readme"
-      icon="📚"
-      title="Documentation"
-      description="Browse the full API reference."
-      target="_blank"></wb-cardlink>
-    </wb-demo>
-    <wb-demo columns="1">
-    <wb-cardlink
-      href="https://github.com/CieloVistaSoftware/wb-starter/releases"
-      icon="🚀"
-      title="Release Notes"
-      description="See what's new in the latest version."
-      target="_blank"></wb-cardlink>
-    </wb-demo>
+    <div id="demo-link" class="demo-section__grid demo-section__grid--cols-2">
+    <div x-demo columns="1">
+      <div x-cardlink href="https://example.com" icon="📚" title="Documentation" description="Browse the full API reference." target="_blank"></div>
+    </div>
+    <div x-demo columns="1">
+      <div x-cardlink href="https://example.com" icon="🚀" title="Release Notes" description="See what's new in the latest version." target="_blank"></div>
+    </div>
+  </div>
 
     <h2>Horizontal Card</h2>
-    <wb-demo id="demo-horizontal" columns="1">
-      <wb-cardhorizontal
-        image="https://picsum.photos/seed/web-components/400/300"
-        title="Featured Article"
-        subtitle="The Future of Web Components"
-        content="Web components are evolving rapidly with native browser APIs."></wb-cardhorizontal>
-    </wb-demo>
+    <div x-demo id="demo-horizontal" columns="1">
+      <div x-cardhorizontal image="https://picsum.photos/seed/horiz88/400/300" title="Featured Article" subtitle="The Future of Web Components" content="Web components are evolving rapidly with native browser APIs."></div>
+    </div>
 
     <h2>Expandable Card</h2>
-    <wb-demo id="demo-expandable" columns="1">
-      <wb-cardexpandable
-        size="sm"
-        title="FAQ: How does it work?"
-        subtitle="Click to reveal the answer"
-        content="The card system uses a behavior-based architecture. Each
-                 variant is an independent component that composes the shared
-                 card structure and CSS — there is no base class to inherit
-                 from."></wb-cardexpandable>
-    </wb-demo>
+    <div x-demo id="demo-expandable" columns="1">
+      <div x-cardexpandable size="sm" title="FAQ: How does it work?" subtitle="Click to reveal the answer" content="The card system uses a behavior-based architecture. Each variant is an independent component that composes the shared card structure and CSS — there is no base class to inherit from. Variants CONTAIN specialized content rather than inheriting it, so a change to the shared structure propagates to every variant automatically."></div>
+    </div>
 
     <h2>Minimizable Card</h2>
-    <wb-demo id="demo-minimizable" columns="1">
-      <wb-cardminimizable
-        title="Dashboard Widget"
-        subtitle="Server Status"
-        content="Active connections: 1,234 | CPU: 45% | Memory: 67%"></wb-cardminimizable>
-    </wb-demo>
+    <div x-demo id="demo-minimizable" columns="1">
+      <div x-cardminimizable title="Dashboard Widget" subtitle="Server Status" content="Active connections: 1,234 | CPU: 45% | Memory: 67%"></div>
+    </div>
 
     <h2>Overlay Card</h2>
-    <wb-demo columns="1">
-    <wb-cardoverlay
-      image="https://picsum.photos/seed/city-lights/800/500"
-      title="City Lights"
-      subtitle="Urban photography"
-      height="300px"></wb-cardoverlay>
-    </wb-demo>
-    <wb-demo columns="1">
-    <wb-cardoverlay
-      image="https://picsum.photos/seed/mountain-trail/800/500"
-      title="Mountain Trail"
-      subtitle="Adventure awaits"
-      height="300px"></wb-cardoverlay>
-    </wb-demo>
+    <div id="demo-overlay" class="demo-section__grid demo-section__grid--cols-2">
+    <div x-demo columns="1">
+      <div x-cardoverlay image="https://picsum.photos/seed/overlay1/800/500" title="City Lights" subtitle="Urban photography" height="300px"></div>
+    </div>
+    <div x-demo columns="1">
+      <div x-cardoverlay image="https://picsum.photos/seed/overlay2/800/500" title="Mountain Trail" subtitle="Adventure awaits" height="300px"></div>
+    </div>
+  </div>
 
     <h2>Video Card</h2>
-    <wb-demo id="demo-video" columns="1">
-      <wb-cardvideo
-        src="https://www.w3schools.com/html/mov_bbb.mp4"
-        title="Big Buck Bunny"
-        subtitle="Sample video"
-        controls></wb-cardvideo>
-    </wb-demo>
+    <div x-demo id="demo-video" columns="1">
+      <div x-cardvideo src="https://www.w3schools.com/html/mov_bbb.mp4" title="Big Buck Bunny" subtitle="Sample video" controls></div>
+    </div>
 
     <h2>Portfolio Card</h2>
-    <wb-demo id="demo-portfolio" columns="1">
-      <wb-cardportfolio
-        name="Dana K."
-        title="Senior UI Engineer"
-        company="Cielo Vista Software"
-        location="Rochester, MN"
-        avatar="https://ui-avatars.com/api/?name=Dana+K.&size=150&background=334155&color=fff"
-        cover="https://picsum.photos/seed/cielo-vista-software/800/300"
-        bio="Full-stack developer with 10+ years experience."
-        skills="JavaScript,TypeScript,Web Components,CSS"
-        email="dana.k@example.com"
-        website="https://cielovistasoftware.github.io/wb-starter/"
-        github="https://github.com/CieloVistaSoftware"
-        cta="View Full Profile"
-        availability="available"
-        tagline="Building the web, one component at a time"></wb-cardportfolio>
-    </wb-demo>
+    <div x-demo id="demo-portfolio" columns="1">
+      <div x-cardportfolio name="Jane Doe" title="Senior UI Engineer" company="Cielo Vista Software" location="Rochester, MN" avatar="https://i.pravatar.cc/150?u=portfolio" cover="https://picsum.photos/seed/wbcover/800/300" bio="Full-stack developer with 10+ years experience." skills="JavaScript,TypeScript,Web Components,CSS" email="jane@example.com" website="https://example.com" github="https://github.com" linkedin="https://linkedin.com" cta="View Full Profile" availability="available" tagline="Building the web, one component at a time"></div>
+    </div>
 
-  </wb-stack>
+  </div>
   </section>
 
   <!-- 2. 🃏 Card Component -->
   <section id="card-card-component">
   <h2>🃏 Card Component</h2>
-  <wb-demo columns="1">
-    <wb-card title="Default Card" subtitle="A simple card" footer="Card footer">
-    This is example card component content.
-  </wb-card>
-  </wb-demo>
-  <wb-demo columns="1">
-    <wb-card title="Glass Card" variant="glass" subtitle="With glass effect">
-    This is example card component content.
-  </wb-card>
-  </wb-demo>
-  <wb-demo columns="1">
-    <wb-card title="Bordered Card" variant="bordered" footer="Bordered style">
-    This is example card component content.
-  </wb-card>
-  </wb-demo>
-  <wb-demo columns="1">
-    <wb-card title="Flat Card" variant="flat" subtitle="Minimal look">
-    This is example card component content.
-  </wb-card>
-  </wb-demo>
-  <wb-demo columns="1">
-    <wb-card title="Elevated Card" elevated subtitle="With shadow">
-    This is example card component content.
-  </wb-card>
-  </wb-demo>
-  <wb-demo columns="1">
-    <wb-card
-      title="Clickable Card"
-      clickable
-      subtitle="Click me"
-      footer="Interactive">
-    This is example card component content.
-  </wb-card>
-  </wb-demo>
-  <wb-demo columns="1">
-    <wb-card title="Small Card" size="sm" subtitle="Compact size">
-    This is example card component content.
-  </wb-card>
-  </wb-demo>
-  <wb-demo columns="1">
-    <wb-card
-      title="Large Card"
-      size="lg"
-      subtitle="Spacious layout"
-      footer="Extra room">
-    This is example card component content.
-  </wb-card>
-  </wb-demo>
+  <div x-demo columns="1">
+    <article x-card title="Default Card" subtitle="A simple card" footer="Card footer">
+      This is example card component content.
+    </article>
+  </div>
+  <div x-demo columns="1">
+    <article x-card title="Glass Card" variant="glass" subtitle="With glass effect">
+      This is example card component content.
+    </article>
+  </div>
+  <div x-demo columns="1">
+    <article x-card title="Bordered Card" variant="bordered" footer="Bordered style">
+      This is example card component content.
+    </article>
+  </div>
+  <div x-demo columns="1">
+    <article x-card title="Flat Card" variant="flat" subtitle="Minimal look">
+      This is example card component content.
+    </article>
+  </div>
+  <div x-demo columns="1">
+    <article x-card title="Elevated Card" elevated subtitle="With shadow">
+      This is example card component content.
+    </article>
+  </div>
+  <div x-demo columns="1">
+    <article x-card title="Clickable Card" clickable subtitle="Click me" footer="Interactive">
+      This is example card component content.
+    </article>
+  </div>
+  <div x-demo columns="1">
+    <article x-card title="Small Card" size="sm" subtitle="Compact size">
+      This is example card component content.
+    </article>
+  </div>
+  <div x-demo columns="1">
+    <article x-card title="Large Card" size="lg" subtitle="Spacious layout" footer="Extra room">
+      This is example card component content.
+    </article>
+  </div>
   </section>
 
   <!-- 3. Variants -->
-  <section id="card-variants">
+  <section id="card-variant-variants">
   <h2>Variants</h2>
-  <wb-demo columns="1">
-    <wb-card variant="default">
-    This is example card component content.
-  </wb-card>
-  </wb-demo>
-  <wb-demo columns="1">
-    <wb-card variant="glass">
-    This is example card component content.
-  </wb-card>
-  </wb-demo>
-  <wb-demo columns="1">
-    <wb-card variant="bordered">
-    This is example card component content.
-  </wb-card>
-  </wb-demo>
-  <wb-demo columns="1">
-    <wb-card variant="flat">
-    This is example card component content.
-  </wb-card>
-  </wb-demo>
+  <div x-demo columns="1">
+    <article x-card variant="default">
+      This is example card component content.
+    </article>
+  </div>
+  <div x-demo columns="1">
+    <article x-card variant="glass">
+      This is example card component content.
+    </article>
+  </div>
+  <div x-demo columns="1">
+    <article x-card variant="bordered">
+      This is example card component content.
+    </article>
+  </div>
+  <div x-demo columns="1">
+    <article x-card variant="flat">
+      This is example card component content.
+    </article>
+  </div>
   </section>
 
   <!-- 4. size variants -->
   <section id="card-size-variants">
   <h2>size variants</h2>
-  <wb-demo columns="1">
-    <wb-card size="xs">
-    This is example card component content.
-  </wb-card>
-  </wb-demo>
-  <wb-demo columns="1">
-    <wb-card size="sm">
-    This is example card component content.
-  </wb-card>
-  </wb-demo>
-  <wb-demo columns="1">
-    <wb-card size="md">
-    This is example card component content.
-  </wb-card>
-  </wb-demo>
-  <wb-demo columns="1">
-    <wb-card size="lg">
-    This is example card component content.
-  </wb-card>
-  </wb-demo>
-  <wb-demo columns="1">
-    <wb-card size="xl">
-    This is example card component content.
-  </wb-card>
-  </wb-demo>
-  <wb-demo columns="1">
-    <wb-card size="full">
-    This is example card component content.
-  </wb-card>
-  </wb-demo>
-  <wb-demo columns="1">
-    <wb-card size="auto">
-    This is example card component content.
-  </wb-card>
-  </wb-demo>
+  <div x-demo columns="1">
+    <article x-card size="xs">
+      This is example card component content.
+    </article>
+  </div>
+  <div x-demo columns="1">
+    <article x-card size="sm">
+      This is example card component content.
+    </article>
+  </div>
+  <div x-demo columns="1">
+    <article x-card size="md">
+      This is example card component content.
+    </article>
+  </div>
+  <div x-demo columns="1">
+    <article x-card size="lg">
+      This is example card component content.
+    </article>
+  </div>
+  <div x-demo columns="1">
+    <article x-card size="xl">
+      This is example card component content.
+    </article>
+  </div>
+  <div x-demo columns="1">
+    <article x-card size="full">
+      This is example card component content.
+    </article>
+  </div>
+  <div x-demo columns="1">
+    <article x-card size="auto">
+      This is example card component content.
+    </article>
+  </div>
   </section>
 
   <!-- 5. Toggles -->
   <section id="card-toggles">
   <h2>Toggles</h2>
-  <wb-demo columns="1">
-    <wb-card elevated>
-    This is example card component content.
-  </wb-card>
-  </wb-demo>
-  <wb-demo columns="1">
-    <wb-card clickable>
-    This is example card component content.
-  </wb-card>
-  </wb-demo>
+  <div x-demo columns="1">
+    <article x-card elevated>
+      This is example card component content.
+    </article>
+  </div>
+  <div x-demo columns="1">
+    <article x-card clickable>
+      This is example card component content.
+    </article>
+  </div>
   </section>
 
   <!-- 6. 🔘 Button Card -->
   <section id="cardbutton-button-card">
   <h2>🔘 Button Card</h2>
-  <wb-demo columns="1">
-    <wb-cardbutton title="Card" primary="OK">
-    This is example button card content.
-  </wb-cardbutton>
-  </wb-demo>
-  <wb-demo columns="1">
-    <wb-cardbutton title="Card" primary="Submit" content="Content">
-    This is example button card content.
-  </wb-cardbutton>
-  </wb-demo>
-  <wb-demo columns="1">
-    <wb-cardbutton title="Card" primary="Yes" secondary="No">
-    This is example button card content.
-  </wb-cardbutton>
-  </wb-demo>
+  <div x-demo columns="1">
+    <article x-cardbutton title="Card" primary="OK">
+      This is example button card content.
+    </article>
+  </div>
+  <div x-demo columns="1">
+    <article x-cardbutton title="Card" primary="Submit" content="Content">
+      This is example button card content.
+    </article>
+  </div>
+  <div x-demo columns="1">
+    <article x-cardbutton title="Card" primary="Yes" secondary="No">
+      This is example button card content.
+    </article>
+  </div>
   </section>
 
   <!-- 7. Variants -->
-  <section id="cardbutton-variants">
+  <section id="cardbutton-variant-variants">
   <h2>Variants</h2>
-  <wb-demo columns="1">
-    <wb-cardbutton variant="default" primary="Sample primary">
-    This is example button card content.
-  </wb-cardbutton>
-  </wb-demo>
-  <wb-demo columns="1">
-    <wb-cardbutton variant="elevated" primary="Sample primary">
-    This is example button card content.
-  </wb-cardbutton>
-  </wb-demo>
-  <wb-demo columns="1">
-    <wb-cardbutton variant="bordered" primary="Sample primary">
-    This is example button card content.
-  </wb-cardbutton>
-  </wb-demo>
+  <div x-demo columns="1">
+    <article x-cardbutton variant="default" primary="Sample primary">
+      This is example button card content.
+    </article>
+  </div>
+  <div x-demo columns="1">
+    <article x-cardbutton variant="elevated" primary="Sample primary">
+      This is example button card content.
+    </article>
+  </div>
+  <div x-demo columns="1">
+    <article x-cardbutton variant="bordered" primary="Sample primary">
+      This is example button card content.
+    </article>
+  </div>
   </section>
 
   <!-- 8. 🎯 Draggable Card -->
   <section id="carddraggable-draggable-card">
   <h2>🎯 Draggable Card</h2>
-  <wb-demo columns="1">
-    <wb-carddraggable title="Basic" content="Content">
-    This is example draggable card content.
-  </wb-carddraggable>
-  </wb-demo>
-  <wb-demo columns="1">
-    <wb-carddraggable title="Constrained" content="Content" constrain="parent">
-    This is example draggable card content.
-  </wb-carddraggable>
-  </wb-demo>
-  <wb-demo columns="1">
-    <wb-carddraggable title="X Only" content="Content" axis="x">
-    This is example draggable card content.
-  </wb-carddraggable>
-  </wb-demo>
+  <div x-demo columns="1">
+    <article x-carddraggable title="Basic" content="Content">
+      This is example draggable card content.
+    </article>
+  </div>
+  <div x-demo columns="1">
+    <article x-carddraggable title="Constrained" content="Content" constrain="parent">
+      This is example draggable card content.
+    </article>
+  </div>
+  <div x-demo columns="1">
+    <article x-carddraggable title="X Only" content="Content" axis="x">
+      This is example draggable card content.
+    </article>
+  </div>
   </section>
 
   <!-- 9. constrain variants -->
   <section id="carddraggable-constrain-variants">
   <h2>constrain variants</h2>
-  <wb-demo columns="1">
-    <wb-carddraggable constrain="none">
-    This is example draggable card content.
-  </wb-carddraggable>
-  </wb-demo>
-  <wb-demo columns="1">
-    <wb-carddraggable constrain="parent">
-    This is example draggable card content.
-  </wb-carddraggable>
-  </wb-demo>
-  <wb-demo columns="1">
-    <wb-carddraggable constrain="viewport">
-    This is example draggable card content.
-  </wb-carddraggable>
-  </wb-demo>
+  <div x-demo columns="1">
+    <article x-carddraggable constrain="none">
+      This is example draggable card content.
+    </article>
+  </div>
+  <div x-demo columns="1">
+    <article x-carddraggable constrain="parent">
+      This is example draggable card content.
+    </article>
+  </div>
+  <div x-demo columns="1">
+    <article x-carddraggable constrain="viewport">
+      This is example draggable card content.
+    </article>
+  </div>
   </section>
 
   <!-- 10. axis variants -->
   <section id="carddraggable-axis-variants">
   <h2>axis variants</h2>
-  <wb-demo columns="1">
-    <wb-carddraggable axis="both">
-    This is example draggable card content.
-  </wb-carddraggable>
-  </wb-demo>
-  <wb-demo columns="1">
-    <wb-carddraggable axis="x">
-    This is example draggable card content.
-  </wb-carddraggable>
-  </wb-demo>
-  <wb-demo columns="1">
-    <wb-carddraggable axis="y">
-    This is example draggable card content.
-  </wb-carddraggable>
-  </wb-demo>
+  <div x-demo columns="1">
+    <article x-carddraggable axis="both">
+      This is example draggable card content.
+    </article>
+  </div>
+  <div x-demo columns="1">
+    <article x-carddraggable axis="x">
+      This is example draggable card content.
+    </article>
+  </div>
+  <div x-demo columns="1">
+    <article x-carddraggable axis="y">
+      This is example draggable card content.
+    </article>
+  </div>
   </section>
 
   <!-- 11. Variants -->
-  <section id="carddraggable-variants">
+  <section id="carddraggable-variant-variants">
   <h2>Variants</h2>
-  <wb-demo columns="1">
-    <wb-carddraggable variant="default">
-    This is example draggable card content.
-  </wb-carddraggable>
-  </wb-demo>
-  <wb-demo columns="1">
-    <wb-carddraggable variant="elevated">
-    This is example draggable card content.
-  </wb-carddraggable>
-  </wb-demo>
+  <div x-demo columns="1">
+    <article x-carddraggable variant="default">
+      This is example draggable card content.
+    </article>
+  </div>
+  <div x-demo columns="1">
+    <article x-carddraggable variant="elevated">
+      This is example draggable card content.
+    </article>
+  </div>
   </section>
 
   <!-- 12. ➕ Expandable Card -->
   <section id="cardexpandable-expandable-card">
   <h2>➕ Expandable Card</h2>
-  <wb-demo columns="1">
-    <wb-cardexpandable size="sm" title="Basic">
-    This card's body text is intentionally long enough that it wraps past the
-    collapsed height, so clicking Show More/Show Less produces a real, visible
-    change instead of nothing at all.
-  </wb-cardexpandable>
-  </wb-demo>
-  <wb-demo columns="1">
-    <wb-cardexpandable size="sm" title="Expanded" expanded>
-    This card's body text is intentionally long enough that it wraps past the
-    collapsed height, so clicking Show More/Show Less produces a real, visible
-    change instead of nothing at all.
-  </wb-cardexpandable>
-  </wb-demo>
-  <wb-demo columns="1">
-    <wb-cardexpandable size="sm" title="Custom" max-height="150px">
-    This card's body text is intentionally long enough that it wraps past the
-    collapsed height, so clicking Show More/Show Less produces a real, visible
-    change instead of nothing at all.
-  </wb-cardexpandable>
-  </wb-demo>
+  <div x-demo columns="1">
+    <article x-cardexpandable title="Basic" content="Content">
+      This is example expandable card content.
+    </article>
+  </div>
+  <div x-demo columns="1">
+    <article x-cardexpandable title="Expanded" content="Content" expanded>
+      This is example expandable card content.
+    </article>
+  </div>
+  <div x-demo columns="1">
+    <article x-cardexpandable title="Custom" content="Content" max-height="150px">
+      This is example expandable card content.
+    </article>
+  </div>
   </section>
 
   <!-- 13. Variants -->
-  <section id="cardexpandable-variants">
+  <section id="cardexpandable-variant-variants">
   <h2>Variants</h2>
-  <wb-demo columns="1">
-    <wb-cardexpandable size="sm" variant="default" title="Sample title">
-    This card's body text is intentionally long enough that it wraps past the
-    collapsed height, so clicking Show More/Show Less produces a real, visible
-    change instead of nothing at all.
-  </wb-cardexpandable>
-  </wb-demo>
-  <wb-demo columns="1">
-    <wb-cardexpandable size="sm" variant="elevated" title="Sample title">
-    This card's body text is intentionally long enough that it wraps past the
-    collapsed height, so clicking Show More/Show Less produces a real, visible
-    change instead of nothing at all.
-  </wb-cardexpandable>
-  </wb-demo>
-  <wb-demo columns="1">
-    <wb-cardexpandable size="sm" variant="bordered" title="Sample title">
-    This card's body text is intentionally long enough that it wraps past the
-    collapsed height, so clicking Show More/Show Less produces a real, visible
-    change instead of nothing at all.
-  </wb-cardexpandable>
-  </wb-demo>
+  <div x-demo columns="1">
+    <article x-cardexpandable variant="default" title="Sample title">
+      This is example expandable card content.
+    </article>
+  </div>
+  <div x-demo columns="1">
+    <article x-cardexpandable variant="elevated" title="Sample title">
+      This is example expandable card content.
+    </article>
+  </div>
+  <div x-demo columns="1">
+    <article x-cardexpandable variant="bordered" title="Sample title">
+      This is example expandable card content.
+    </article>
+  </div>
   </section>
 
   <!-- 14. Toggles -->
   <section id="cardexpandable-toggles">
   <h2>Toggles</h2>
-  <wb-demo columns="1">
-    <wb-cardexpandable size="sm" expanded title="Sample title">
-      This card's body text is intentionally long enough that it wraps past the
-      collapsed height, so clicking Show More/Show Less produces a real, visible
-      change instead of nothing at all.
-    </wb-cardexpandable>
-  </wb-demo>
+  <div x-demo columns="1">
+    <article x-cardexpandable expanded title="Sample title">
+      This is example expandable card content.
+    </article>
+  </div>
   </section>
 
   <!-- 15. 📄 File Card -->
   <section id="cardfile-file-card">
   <h2>📄 File Card</h2>
-  <wb-demo columns="1">
-    <wb-cardfile
-      filename="document.pdf"
-      href="https://github.com/CieloVistaSoftware/wb-starter/pulse">
-    This is example file card content.
-  </wb-cardfile>
-  </wb-demo>
-  <wb-demo columns="1">
-    <wb-cardfile
-      filename="document.pdf"
-      file-type="pdf"
-      size="1.2 MB"
-      href="https://github.com/CieloVistaSoftware/wb-starter/pulse">
-    This is example file card content.
-  </wb-cardfile>
-  </wb-demo>
-  <wb-demo columns="1">
-    <wb-cardfile
-      filename="photo.jpg"
-      file-type="image"
-      size="2.4 MB"
-      href="https://github.com/CieloVistaSoftware/wb-starter/graphs/contributors">
-    This is example file card content.
-  </wb-cardfile>
-  </wb-demo>
+  <div x-demo columns="1">
+    <article x-cardfile filename="document.pdf">
+      This is example file card content.
+    </article>
+  </div>
+  <div x-demo columns="1">
+    <article x-cardfile filename="document.pdf" file-type="pdf" size="1.2 MB">
+      This is example file card content.
+    </article>
+  </div>
+  <div x-demo columns="1">
+    <article x-cardfile filename="photo.jpg" file-type="image" size="2.4 MB" href="/files/photo.jpg">
+      This is example file card content.
+    </article>
+  </div>
   </section>
 
   <!-- 16. fileType variants -->
-  <section id="cardfile-filetype-variants">
+  <section id="cardfile-file-type-variants">
   <h2>fileType variants</h2>
-  <wb-demo columns="1">
-    <wb-cardfile
-      file-type="pdf"
-      filename="Sample filename"
-      href="https://github.com/CieloVistaSoftware/wb-starter/pulse">
-    This is example file card content.
-  </wb-cardfile>
-  </wb-demo>
-  <wb-demo columns="1">
-    <wb-cardfile
-      file-type="doc"
-      filename="Sample filename"
-      href="https://github.com/CieloVistaSoftware/wb-starter/pulse">
-    This is example file card content.
-  </wb-cardfile>
-  </wb-demo>
-  <wb-demo columns="1">
-    <wb-cardfile
-      file-type="image"
-      filename="Sample filename"
-      href="https://github.com/CieloVistaSoftware/wb-starter/graphs/contributors">
-    This is example file card content.
-  </wb-cardfile>
-  </wb-demo>
-  <wb-demo columns="1">
-    <wb-cardfile
-      file-type="video"
-      filename="Sample filename"
-      href="https://github.com/CieloVistaSoftware/wb-starter/pulse">
-    This is example file card content.
-  </wb-cardfile>
-  </wb-demo>
-  <wb-demo columns="1">
-    <wb-cardfile
-      file-type="audio"
-      filename="Sample filename"
-      href="https://github.com/CieloVistaSoftware/wb-starter/pulse">
-    This is example file card content.
-  </wb-cardfile>
-  </wb-demo>
-  <wb-demo columns="1">
-    <wb-cardfile
-      file-type="zip"
-      filename="Sample filename"
-      href="https://github.com/CieloVistaSoftware/wb-starter/archive/refs/heads/main.zip">
-    This is example file card content.
-  </wb-cardfile>
-  </wb-demo>
-  <wb-demo columns="1">
-    <wb-cardfile
-      file-type="file"
-      filename="Sample filename"
-      href="https://github.com/CieloVistaSoftware/wb-starter/pulse">
-    This is example file card content.
-  </wb-cardfile>
-  </wb-demo>
+  <div x-demo columns="1">
+    <article x-cardfile file-type="pdf" filename="Sample filename">
+      This is example file card content.
+    </article>
+  </div>
+  <div x-demo columns="1">
+    <article x-cardfile file-type="doc" filename="Sample filename">
+      This is example file card content.
+    </article>
+  </div>
+  <div x-demo columns="1">
+    <article x-cardfile file-type="image" filename="Sample filename">
+      This is example file card content.
+    </article>
+  </div>
+  <div x-demo columns="1">
+    <article x-cardfile file-type="video" filename="Sample filename">
+      This is example file card content.
+    </article>
+  </div>
+  <div x-demo columns="1">
+    <article x-cardfile file-type="audio" filename="Sample filename">
+      This is example file card content.
+    </article>
+  </div>
+  <div x-demo columns="1">
+    <article x-cardfile file-type="zip" filename="Sample filename">
+      This is example file card content.
+    </article>
+  </div>
+  <div x-demo columns="1">
+    <article x-cardfile file-type="file" filename="Sample filename">
+      This is example file card content.
+    </article>
+  </div>
   </section>
 
   <!-- 17. Variants -->
-  <section id="cardfile-variants">
+  <section id="cardfile-variant-variants">
   <h2>Variants</h2>
-  <wb-demo columns="1">
-    <wb-cardfile
-      variant="default"
-      filename="Sample filename"
-      href="https://github.com/CieloVistaSoftware/wb-starter/pulse">
-    This is example file card content.
-  </wb-cardfile>
-  </wb-demo>
-  <wb-demo columns="1">
-    <wb-cardfile
-      variant="compact"
-      filename="Sample filename"
-      href="https://github.com/CieloVistaSoftware/wb-starter/pulse">
-    This is example file card content.
-  </wb-cardfile>
-  </wb-demo>
-  <wb-demo columns="1">
-    <wb-cardfile
-      variant="elevated"
-      filename="Sample filename"
-      href="https://github.com/CieloVistaSoftware/wb-starter/pulse">
-    This is example file card content.
-  </wb-cardfile>
-  </wb-demo>
+  <div x-demo columns="1">
+    <article x-cardfile variant="default" filename="Sample filename">
+      This is example file card content.
+    </article>
+  </div>
+  <div x-demo columns="1">
+    <article x-cardfile variant="compact" filename="Sample filename">
+      This is example file card content.
+    </article>
+  </div>
+  <div x-demo columns="1">
+    <article x-cardfile variant="elevated" filename="Sample filename">
+      This is example file card content.
+    </article>
+  </div>
   </section>
 
   <!-- 18. 🦸 Hero Card -->
   <section id="cardhero-hero-card">
   <h2>🦸 Hero Card</h2>
-  <wb-demo columns="1" full-width>
-    <wb-cardhero
-      background="https://picsum.photos/seed/hero/1200/600"
-      title="Welcome">
-    This is example hero card content.
-  </wb-cardhero>
-  </wb-demo>
-  <wb-demo columns="1" full-width>
-    <wb-cardhero
-      background="https://picsum.photos/seed/hero-2/1200/600"
-      title="Welcome"
-      subtitle="Subtitle">
-    This is example hero card content.
-  </wb-cardhero>
-  </wb-demo>
-  <wb-demo columns="1" full-width>
-    <wb-cardhero
-      background="https://picsum.photos/seed/hero-3/1200/600"
-      title="Welcome"
-      cta="Click Me">
-    This is example hero card content.
-  </wb-cardhero>
-  </wb-demo>
-  <wb-demo columns="1" full-width>
-    <wb-cardhero
-      background="https://picsum.photos/seed/hero-4/1200/600"
-      title="Welcome"
-      subtitle="Sub"
-      cta="Go"
-      variant="cosmic">
-    This is example hero card content.
-  </wb-cardhero>
-  </wb-demo>
-  <wb-demo columns="1" full-width>
-    <wb-cardhero
-      background="https://picsum.photos/seed/hero-5/1200/600"
-      title="Welcome"
-      xalign="left">
-    This is example hero card content.
-  </wb-cardhero>
-  </wb-demo>
-  <wb-demo columns="1" full-width>
-    <wb-cardhero
-      background="https://picsum.photos/seed/hero-6/1200/600"
-      title="Welcome">
-    This is example hero card content.
-  </wb-cardhero>
-  </wb-demo>
-  <wb-demo columns="1" full-width>
-    <wb-cardhero
-      background="https://picsum.photos/seed/hero-7/1200/600"
-      title="Welcome"
-      full-height>
-    This is example hero card content.
-  </wb-cardhero>
-  </wb-demo>
+  <div x-demo columns="1">
+    <section x-cardhero background="/images/dachshund-puppy-image-960x540.jpg" title="Welcome">
+      This is example hero card content.
+    </section>
+  </div>
+  <div x-demo columns="1">
+    <section x-cardhero background="/images/dachshund-puppy-image-960x540.jpg" title="Welcome" subtitle="Subtitle">
+      This is example hero card content.
+    </section>
+  </div>
+  <div x-demo columns="1">
+    <section x-cardhero background="/images/dachshund-puppy-image-960x540.jpg" title="Welcome" cta="Click Me">
+      This is example hero card content.
+    </section>
+  </div>
+  <div x-demo columns="1">
+    <section x-cardhero background="/images/dachshund-puppy-image-960x540.jpg" title="Welcome" subtitle="Sub" cta="Go" variant="cosmic">
+      This is example hero card content.
+    </section>
+  </div>
+  <div x-demo columns="1">
+    <section x-cardhero background="/images/dachshund-puppy-image-960x540.jpg" title="Welcome" xalign="left">
+      This is example hero card content.
+    </section>
+  </div>
+  <div x-demo columns="1">
+    <section x-cardhero background="/images/dachshund-puppy-image-960x540.jpg" title="Welcome">
+      This is example hero card content.
+    </section>
+  </div>
+  <div x-demo columns="1">
+    <section x-cardhero background="/images/dachshund-puppy-image-960x540.jpg" title="Welcome" full-height>
+      This is example hero card content.
+    </section>
+  </div>
   </section>
 
   <!-- 19. Variants -->
-  <section id="cardhero-variants">
+  <section id="cardhero-variant-variants">
   <h2>Variants</h2>
-  <wb-demo columns="1" full-width>
-    <wb-cardhero
-      variant="default"
-      background="https://picsum.photos/seed/sample/1200/600"
-      title="Sample title">
-    This is example hero card content.
-  </wb-cardhero>
-  </wb-demo>
-  <wb-demo columns="1" full-width>
-    <wb-cardhero
-      variant="cosmic"
-      background="https://picsum.photos/seed/sample-2/1200/600"
-      title="Sample title">
-    This is example hero card content.
-  </wb-cardhero>
-  </wb-demo>
-  <wb-demo columns="1" full-width>
-    <wb-cardhero
-      variant="split"
-      background="https://picsum.photos/seed/sample-3/1200/600"
-      title="Sample title">
-    This is example hero card content.
-  </wb-cardhero>
-  </wb-demo>
-  <wb-demo columns="1" full-width>
-    <wb-cardhero
-      variant="minimal"
-      background="https://picsum.photos/seed/sample-4/1200/600"
-      title="Sample title">
-    This is example hero card content.
-  </wb-cardhero>
-  </wb-demo>
-  <wb-demo columns="1" full-width>
-    <wb-cardhero
-      variant="gradient"
-      background="https://picsum.photos/seed/sample-5/1200/600"
-      title="Sample title">
-    This is example hero card content.
-  </wb-cardhero>
-  </wb-demo>
+  <div x-demo columns="1">
+    <section x-cardhero variant="default" background="/images/dachshund-puppy-image-960x540.jpg" title="Sample title">
+      This is example hero card content.
+    </section>
+  </div>
+  <div x-demo columns="1">
+    <section x-cardhero variant="cosmic" background="/images/dachshund-puppy-image-960x540.jpg" title="Sample title">
+      This is example hero card content.
+    </section>
+  </div>
+  <div x-demo columns="1">
+    <section x-cardhero variant="split" background="/images/dachshund-puppy-image-960x540.jpg" title="Sample title">
+      This is example hero card content.
+    </section>
+  </div>
+  <div x-demo columns="1">
+    <section x-cardhero variant="minimal" background="/images/dachshund-puppy-image-960x540.jpg" title="Sample title">
+      This is example hero card content.
+    </section>
+  </div>
+  <div x-demo columns="1">
+    <section x-cardhero variant="gradient" background="/images/dachshund-puppy-image-960x540.jpg" title="Sample title">
+      This is example hero card content.
+    </section>
+  </div>
   </section>
 
   <!-- 20. xalign variants -->
   <section id="cardhero-xalign-variants">
   <h2>xalign variants</h2>
-  <wb-demo columns="1" full-width>
-    <wb-cardhero
-      xalign="left"
-      background="https://picsum.photos/seed/sample-6/1200/600"
-      title="Sample title">
-    This is example hero card content.
-  </wb-cardhero>
-  </wb-demo>
-  <wb-demo columns="1" full-width>
-    <wb-cardhero
-      xalign="center"
-      background="https://picsum.photos/seed/sample-7/1200/600"
-      title="Sample title">
-    This is example hero card content.
-  </wb-cardhero>
-  </wb-demo>
-  <wb-demo columns="1" full-width>
-    <wb-cardhero
-      xalign="right"
-      background="https://picsum.photos/seed/sample-8/1200/600"
-      title="Sample title">
-    This is example hero card content.
-  </wb-cardhero>
-  </wb-demo>
+  <div x-demo columns="1">
+    <section x-cardhero xalign="left" background="/images/dachshund-puppy-image-960x540.jpg" title="Sample title">
+      This is example hero card content.
+    </section>
+  </div>
+  <div x-demo columns="1">
+    <section x-cardhero xalign="center" background="/images/dachshund-puppy-image-960x540.jpg" title="Sample title">
+      This is example hero card content.
+    </section>
+  </div>
+  <div x-demo columns="1">
+    <section x-cardhero xalign="right" background="/images/dachshund-puppy-image-960x540.jpg" title="Sample title">
+      This is example hero card content.
+    </section>
+  </div>
   </section>
 
   <!-- 21. Toggles -->
   <section id="cardhero-toggles">
   <h2>Toggles</h2>
-  <wb-demo columns="1" full-width>
-    <wb-cardhero
-      full-height
-      background="https://picsum.photos/seed/sample-9/1200/600"
-      title="Sample title">
+  <div x-demo columns="1">
+    <section x-cardhero full-height background="/images/dachshund-puppy-image-960x540.jpg" title="Sample title">
       This is example hero card content.
-    </wb-cardhero>
-  </wb-demo>
+    </section>
+  </div>
   </section>
 
   <!-- 22. ↔️ Horizontal Card -->
   <section id="cardhorizontal-horizontal-card">
   <h2>↔️ Horizontal Card</h2>
-  <wb-demo columns="1">
-    <wb-cardhorizontal
-      image="https://picsum.photos/seed/cardhorizontal/600/400"
-      title="Title">
-    This is example horizontal card content.
-  </wb-cardhorizontal>
-  </wb-demo>
-  <wb-demo columns="1">
-    <wb-cardhorizontal
-      image="https://picsum.photos/seed/cardhorizontal/600/400"
-      title="Title"
-      subtitle="Subtitle">
-    This is example horizontal card content.
-  </wb-cardhorizontal>
-  </wb-demo>
-  <wb-demo columns="1">
-    <wb-cardhorizontal
-      image="https://picsum.photos/seed/cardhorizontal/600/400"
-      title="Title"
-      image-position="right">
-    This is example horizontal card content.
-  </wb-cardhorizontal>
-  </wb-demo>
-  <wb-demo columns="1">
-    <wb-cardhorizontal
-      image="https://picsum.photos/seed/cardhorizontal/600/400"
-      title="Title"
-      variant="elevated">
-    This is example horizontal card content.
-  </wb-cardhorizontal>
-  </wb-demo>
+  <div x-demo columns="1">
+    <article x-cardhorizontal image="https://picsum.photos/seed/cardhorizontal/600/400" title="Title">
+      This is example horizontal card content.
+    </article>
+  </div>
+  <div x-demo columns="1">
+    <article x-cardhorizontal image="https://picsum.photos/seed/cardhorizontal/600/400" title="Title" subtitle="Subtitle">
+      This is example horizontal card content.
+    </article>
+  </div>
+  <div x-demo columns="1">
+    <article x-cardhorizontal image="https://picsum.photos/seed/cardhorizontal/600/400" title="Title" image-position="right">
+      This is example horizontal card content.
+    </article>
+  </div>
+  <div x-demo columns="1">
+    <article x-cardhorizontal image="https://picsum.photos/seed/cardhorizontal/600/400" title="Title" variant="elevated">
+      This is example horizontal card content.
+    </article>
+  </div>
   </section>
 
   <!-- 23. imagePosition variants -->
-  <section id="cardhorizontal-imageposition-variants">
+  <section id="cardhorizontal-image-position-variants">
   <h2>imagePosition variants</h2>
-  <wb-demo columns="1">
-    <wb-cardhorizontal image-position="left">
-    This is example horizontal card content.
-  </wb-cardhorizontal>
-  </wb-demo>
-  <wb-demo columns="1">
-    <wb-cardhorizontal image-position="right">
-    This is example horizontal card content.
-  </wb-cardhorizontal>
-  </wb-demo>
+  <div x-demo columns="1">
+    <article x-cardhorizontal image-position="left">
+      This is example horizontal card content.
+    </article>
+  </div>
+  <div x-demo columns="1">
+    <article x-cardhorizontal image-position="right">
+      This is example horizontal card content.
+    </article>
+  </div>
   </section>
 
   <!-- 24. Variants -->
-  <section id="cardhorizontal-variants">
+  <section id="cardhorizontal-variant-variants">
   <h2>Variants</h2>
-  <wb-demo columns="1">
-    <wb-cardhorizontal variant="default">
-    This is example horizontal card content.
-  </wb-cardhorizontal>
-  </wb-demo>
-  <wb-demo columns="1">
-    <wb-cardhorizontal variant="elevated">
-    This is example horizontal card content.
-  </wb-cardhorizontal>
-  </wb-demo>
-  <wb-demo columns="1">
-    <wb-cardhorizontal variant="bordered">
-    This is example horizontal card content.
-  </wb-cardhorizontal>
-  </wb-demo>
-  <wb-demo columns="1">
-    <wb-cardhorizontal variant="minimal">
-    This is example horizontal card content.
-  </wb-cardhorizontal>
-  </wb-demo>
+  <div x-demo columns="1">
+    <article x-cardhorizontal variant="default">
+      This is example horizontal card content.
+    </article>
+  </div>
+  <div x-demo columns="1">
+    <article x-cardhorizontal variant="elevated">
+      This is example horizontal card content.
+    </article>
+  </div>
+  <div x-demo columns="1">
+    <article x-cardhorizontal variant="bordered">
+      This is example horizontal card content.
+    </article>
+  </div>
+  <div x-demo columns="1">
+    <article x-cardhorizontal variant="minimal">
+      This is example horizontal card content.
+    </article>
+  </div>
   </section>
 
   <!-- 25. 🖼️ Image Card -->
   <section id="cardimage-image-card">
   <h2>🖼️ Image Card</h2>
-  <wb-demo columns="1">
-    <wb-cardimage src="https://picsum.photos/seed/cardimage/600/400">
-    This is example image card content.
-  </wb-cardimage>
-  </wb-demo>
-  <wb-demo columns="1">
-    <wb-cardimage
-      src="https://picsum.photos/seed/cardimage/600/400"
-      alt="Description">
-    This is example image card content.
-  </wb-cardimage>
-  </wb-demo>
-  <wb-demo columns="1">
-    <wb-cardimage
-      src="https://picsum.photos/seed/cardimage/600/400"
-      title="Title">
-    This is example image card content.
-  </wb-cardimage>
-  </wb-demo>
-  <wb-demo columns="1">
-    <wb-cardimage
-      src="https://picsum.photos/seed/cardimage/600/400"
-      title="Title"
-      subtitle="Subtitle">
-    This is example image card content.
-  </wb-cardimage>
-  </wb-demo>
-  <wb-demo columns="1">
-    <wb-cardimage
-      src="https://picsum.photos/seed/cardimage/600/400"
-      caption="Photo by John">
-    This is example image card content.
-  </wb-cardimage>
-  </wb-demo>
-  <wb-demo columns="1">
-    <wb-cardimage
-      src="https://picsum.photos/seed/cardimage/600/400"
-      aspect="1/1">
-    This is example image card content.
-  </wb-cardimage>
-  </wb-demo>
-  <wb-demo columns="1">
-    <wb-cardimage
-      src="https://picsum.photos/seed/cardimage/600/400"
-      position="bottom"
-      title="Title">
-    This is example image card content.
-  </wb-cardimage>
-  </wb-demo>
-  <wb-demo columns="1">
-    <wb-cardimage
-      src="https://picsum.photos/seed/cardimage/600/400"
-      variant="elevated">
-    This is example image card content.
-  </wb-cardimage>
-  </wb-demo>
+  <div x-demo columns="1">
+    <article x-cardimage src="https://picsum.photos/seed/cardimage/600/400">
+      This is example image card content.
+    </article>
+  </div>
+  <div x-demo columns="1">
+    <article x-cardimage src="https://picsum.photos/seed/cardimage/600/400" alt="Description">
+      This is example image card content.
+    </article>
+  </div>
+  <div x-demo columns="1">
+    <article x-cardimage src="https://picsum.photos/seed/cardimage/600/400" title="Title">
+      This is example image card content.
+    </article>
+  </div>
+  <div x-demo columns="1">
+    <article x-cardimage src="https://picsum.photos/seed/cardimage/600/400" title="Title" subtitle="Subtitle">
+      This is example image card content.
+    </article>
+  </div>
+  <div x-demo columns="1">
+    <article x-cardimage src="https://picsum.photos/seed/cardimage/600/400" caption="Photo by John">
+      This is example image card content.
+    </article>
+  </div>
+  <div x-demo columns="1">
+    <article x-cardimage src="https://picsum.photos/seed/cardimage/600/400" aspect="1/1">
+      This is example image card content.
+    </article>
+  </div>
+  <div x-demo columns="1">
+    <article x-cardimage src="https://picsum.photos/seed/cardimage/600/400" position="bottom" title="Title">
+      This is example image card content.
+    </article>
+  </div>
+  <div x-demo columns="1">
+    <article x-cardimage src="https://picsum.photos/seed/cardimage/600/400" variant="elevated">
+      This is example image card content.
+    </article>
+  </div>
   </section>
 
   <!-- 26. aspect variants -->
   <section id="cardimage-aspect-variants">
   <h2>aspect variants</h2>
-  <wb-demo columns="1">
-    <wb-cardimage
-      aspect="16/9"
-      src="https://picsum.photos/seed/cardimage/600/400">
-    This is example image card content.
-  </wb-cardimage>
-  </wb-demo>
-  <wb-demo columns="1">
-    <wb-cardimage
-      aspect="4/3"
-      src="https://picsum.photos/seed/cardimage/600/400">
-    This is example image card content.
-  </wb-cardimage>
-  </wb-demo>
-  <wb-demo columns="1">
-    <wb-cardimage
-      aspect="1/1"
-      src="https://picsum.photos/seed/cardimage/600/400">
-    This is example image card content.
-  </wb-cardimage>
-  </wb-demo>
-  <wb-demo columns="1">
-    <wb-cardimage
-      aspect="3/2"
-      src="https://picsum.photos/seed/cardimage/600/400">
-    This is example image card content.
-  </wb-cardimage>
-  </wb-demo>
-  <wb-demo columns="1">
-    <wb-cardimage
-      aspect="21/9"
-      src="https://picsum.photos/seed/cardimage/600/400">
-    This is example image card content.
-  </wb-cardimage>
-  </wb-demo>
-  <wb-demo columns="1">
-    <wb-cardimage
-      aspect="auto"
-      src="https://picsum.photos/seed/cardimage/600/400">
-    This is example image card content.
-  </wb-cardimage>
-  </wb-demo>
+  <div x-demo columns="1">
+    <article x-cardimage aspect="16/9" src="https://picsum.photos/seed/cardimage/600/400">
+      This is example image card content.
+    </article>
+  </div>
+  <div x-demo columns="1">
+    <article x-cardimage aspect="4/3" src="https://picsum.photos/seed/cardimage/600/400">
+      This is example image card content.
+    </article>
+  </div>
+  <div x-demo columns="1">
+    <article x-cardimage aspect="1/1" src="https://picsum.photos/seed/cardimage/600/400">
+      This is example image card content.
+    </article>
+  </div>
+  <div x-demo columns="1">
+    <article x-cardimage aspect="3/2" src="https://picsum.photos/seed/cardimage/600/400">
+      This is example image card content.
+    </article>
+  </div>
+  <div x-demo columns="1">
+    <article x-cardimage aspect="21/9" src="https://picsum.photos/seed/cardimage/600/400">
+      This is example image card content.
+    </article>
+  </div>
+  <div x-demo columns="1">
+    <article x-cardimage aspect="auto" src="https://picsum.photos/seed/cardimage/600/400">
+      This is example image card content.
+    </article>
+  </div>
   </section>
 
   <!-- 27. position variants -->
   <section id="cardimage-position-variants">
   <h2>position variants</h2>
-  <wb-demo columns="1">
-    <wb-cardimage
-      position="top"
-      src="https://picsum.photos/seed/cardimage/600/400">
-    This is example image card content.
-  </wb-cardimage>
-  </wb-demo>
-  <wb-demo columns="1">
-    <wb-cardimage
-      position="bottom"
-      src="https://picsum.photos/seed/cardimage/600/400">
-    This is example image card content.
-  </wb-cardimage>
-  </wb-demo>
-  <wb-demo columns="1">
-    <wb-cardimage
-      position="left"
-      src="https://picsum.photos/seed/cardimage/600/400">
-    This is example image card content.
-  </wb-cardimage>
-  </wb-demo>
-  <wb-demo columns="1">
-    <wb-cardimage
-      position="right"
-      src="https://picsum.photos/seed/cardimage/600/400">
-    This is example image card content.
-  </wb-cardimage>
-  </wb-demo>
+  <div x-demo columns="1">
+    <article x-cardimage position="top" src="https://picsum.photos/seed/cardimage/600/400">
+      This is example image card content.
+    </article>
+  </div>
+  <div x-demo columns="1">
+    <article x-cardimage position="bottom" src="https://picsum.photos/seed/cardimage/600/400">
+      This is example image card content.
+    </article>
+  </div>
+  <div x-demo columns="1">
+    <article x-cardimage position="left" src="https://picsum.photos/seed/cardimage/600/400">
+      This is example image card content.
+    </article>
+  </div>
+  <div x-demo columns="1">
+    <article x-cardimage position="right" src="https://picsum.photos/seed/cardimage/600/400">
+      This is example image card content.
+    </article>
+  </div>
   </section>
 
   <!-- 28. fit variants -->
   <section id="cardimage-fit-variants">
   <h2>fit variants</h2>
-  <wb-demo columns="1">
-    <wb-cardimage
-      fit="cover"
-      src="https://picsum.photos/seed/cardimage/600/400">
-    This is example image card content.
-  </wb-cardimage>
-  </wb-demo>
-  <wb-demo columns="1">
-    <wb-cardimage
-      fit="contain"
-      src="https://picsum.photos/seed/cardimage/600/400">
-    This is example image card content.
-  </wb-cardimage>
-  </wb-demo>
-  <wb-demo columns="1">
-    <wb-cardimage fit="fill" src="https://picsum.photos/seed/cardimage/600/400">
-    This is example image card content.
-  </wb-cardimage>
-  </wb-demo>
-  <wb-demo columns="1">
-    <wb-cardimage fit="none" src="https://picsum.photos/seed/cardimage/600/400">
-    This is example image card content.
-  </wb-cardimage>
-  </wb-demo>
+  <div x-demo columns="1">
+    <article x-cardimage fit="cover" src="https://picsum.photos/seed/cardimage/600/400">
+      This is example image card content.
+    </article>
+  </div>
+  <div x-demo columns="1">
+    <article x-cardimage fit="contain" src="https://picsum.photos/seed/cardimage/600/400">
+      This is example image card content.
+    </article>
+  </div>
+  <div x-demo columns="1">
+    <article x-cardimage fit="fill" src="https://picsum.photos/seed/cardimage/600/400">
+      This is example image card content.
+    </article>
+  </div>
+  <div x-demo columns="1">
+    <article x-cardimage fit="none" src="https://picsum.photos/seed/cardimage/600/400">
+      This is example image card content.
+    </article>
+  </div>
   </section>
 
   <!-- 29. loading variants -->
   <section id="cardimage-loading-variants">
   <h2>loading variants</h2>
-  <wb-demo columns="1">
-    <wb-cardimage
-      loading="lazy"
-      src="https://picsum.photos/seed/cardimage/600/400">
-    This is example image card content.
-  </wb-cardimage>
-  </wb-demo>
-  <wb-demo columns="1">
-    <wb-cardimage
-      loading="eager"
-      src="https://picsum.photos/seed/cardimage/600/400">
-    This is example image card content.
-  </wb-cardimage>
-  </wb-demo>
+  <div x-demo columns="1">
+    <article x-cardimage loading="lazy" src="https://picsum.photos/seed/cardimage/600/400">
+      This is example image card content.
+    </article>
+  </div>
+  <div x-demo columns="1">
+    <article x-cardimage loading="eager" src="https://picsum.photos/seed/cardimage/600/400">
+      This is example image card content.
+    </article>
+  </div>
   </section>
 
   <!-- 30. Variants -->
-  <section id="cardimage-variants">
+  <section id="cardimage-variant-variants">
   <h2>Variants</h2>
-  <wb-demo columns="1">
-    <wb-cardimage
-      variant="default"
-      src="https://picsum.photos/seed/cardimage/600/400">
-    This is example image card content.
-  </wb-cardimage>
-  </wb-demo>
-  <wb-demo columns="1">
-    <wb-cardimage
-      variant="elevated"
-      src="https://picsum.photos/seed/cardimage/600/400">
-    This is example image card content.
-  </wb-cardimage>
-  </wb-demo>
-  <wb-demo columns="1">
-    <wb-cardimage
-      variant="bordered"
-      src="https://picsum.photos/seed/cardimage/600/400">
-    This is example image card content.
-  </wb-cardimage>
-  </wb-demo>
-  <wb-demo columns="1">
-    <wb-cardimage
-      variant="minimal"
-      src="https://picsum.photos/seed/cardimage/600/400">
-    This is example image card content.
-  </wb-cardimage>
-  </wb-demo>
+  <div x-demo columns="1">
+    <article x-cardimage variant="default" src="https://picsum.photos/seed/cardimage/600/400">
+      This is example image card content.
+    </article>
+  </div>
+  <div x-demo columns="1">
+    <article x-cardimage variant="elevated" src="https://picsum.photos/seed/cardimage/600/400">
+      This is example image card content.
+    </article>
+  </div>
+  <div x-demo columns="1">
+    <article x-cardimage variant="bordered" src="https://picsum.photos/seed/cardimage/600/400">
+      This is example image card content.
+    </article>
+  </div>
+  <div x-demo columns="1">
+    <article x-cardimage variant="minimal" src="https://picsum.photos/seed/cardimage/600/400">
+      This is example image card content.
+    </article>
+  </div>
   </section>
 
   <!-- 31. 🔗 Link Card -->
   <section id="cardlink-link-card">
   <h2>🔗 Link Card</h2>
-  <wb-demo columns="1">
-    <wb-cardlink href="https://example.com">
-    This is example link card content.
-  </wb-cardlink>
-  </wb-demo>
-  <wb-demo columns="1">
-    <wb-cardlink href="https://example.com" title="Link Title">
-    This is example link card content.
-  </wb-cardlink>
-  </wb-demo>
-  <wb-demo columns="1">
-    <wb-cardlink
-      href="https://example.com"
-      title="Title"
-      description="Description">
-    This is example link card content.
-  </wb-cardlink>
-  </wb-demo>
-  <wb-demo columns="1">
-    <wb-cardlink href="https://example.com" icon="🔗">
-    This is example link card content.
-  </wb-cardlink>
-  </wb-demo>
-  <wb-demo columns="1">
-    <wb-cardlink href="https://example.com" badge="NEW">
-    This is example link card content.
-  </wb-cardlink>
-  </wb-demo>
-  <wb-demo columns="1">
-    <wb-cardlink href="https://example.com" target="_blank">
-    This is example link card content.
-  </wb-cardlink>
-  </wb-demo>
+  <div x-demo columns="1">
+    <article x-cardlink href="https://example.com">
+      This is example link card content.
+    </article>
+  </div>
+  <div x-demo columns="1">
+    <article x-cardlink href="https://example.com" title="Link Title">
+      This is example link card content.
+    </article>
+  </div>
+  <div x-demo columns="1">
+    <article x-cardlink href="https://example.com" title="Title" description="Description">
+      This is example link card content.
+    </article>
+  </div>
+  <div x-demo columns="1">
+    <article x-cardlink href="https://example.com" icon="🔗">
+      This is example link card content.
+    </article>
+  </div>
+  <div x-demo columns="1">
+    <article x-cardlink href="https://example.com" badge="NEW">
+      This is example link card content.
+    </article>
+  </div>
+  <div x-demo columns="1">
+    <article x-cardlink href="https://example.com" target="_blank">
+      This is example link card content.
+    </article>
+  </div>
   </section>
 
   <!-- 32. target variants -->
   <section id="cardlink-target-variants">
   <h2>target variants</h2>
-  <wb-demo columns="1">
-    <wb-cardlink target="_self" href="https://example.com">
-    This is example link card content.
-  </wb-cardlink>
-  </wb-demo>
-  <wb-demo columns="1">
-    <wb-cardlink target="_blank" href="https://example.com">
-    This is example link card content.
-  </wb-cardlink>
-  </wb-demo>
+  <div x-demo columns="1">
+    <article x-cardlink target="_self" href="https://example.com">
+      This is example link card content.
+    </article>
+  </div>
+  <div x-demo columns="1">
+    <article x-cardlink target="_blank" href="https://example.com">
+      This is example link card content.
+    </article>
+  </div>
   </section>
 
   <!-- 33. Variants -->
-  <section id="cardlink-variants">
+  <section id="cardlink-variant-variants">
   <h2>Variants</h2>
-  <wb-demo columns="1">
-    <wb-cardlink variant="default" href="https://example.com">
-    This is example link card content.
-  </wb-cardlink>
-  </wb-demo>
-  <wb-demo columns="1">
-    <wb-cardlink variant="elevated" href="https://example.com">
-    This is example link card content.
-  </wb-cardlink>
-  </wb-demo>
-  <wb-demo columns="1">
-    <wb-cardlink variant="bordered" href="https://example.com">
-    This is example link card content.
-  </wb-cardlink>
-  </wb-demo>
-  <wb-demo columns="1">
-    <wb-cardlink variant="minimal" href="https://example.com">
-    This is example link card content.
-  </wb-cardlink>
-  </wb-demo>
-  <wb-demo columns="1">
-    <wb-cardlink variant="glass" href="https://example.com">
-    This is example link card content.
-  </wb-cardlink>
-  </wb-demo>
+  <div x-demo columns="1">
+    <article x-cardlink variant="default" href="https://example.com">
+      This is example link card content.
+    </article>
+  </div>
+  <div x-demo columns="1">
+    <article x-cardlink variant="elevated" href="https://example.com">
+      This is example link card content.
+    </article>
+  </div>
+  <div x-demo columns="1">
+    <article x-cardlink variant="bordered" href="https://example.com">
+      This is example link card content.
+    </article>
+  </div>
+  <div x-demo columns="1">
+    <article x-cardlink variant="minimal" href="https://example.com">
+      This is example link card content.
+    </article>
+  </div>
+  <div x-demo columns="1">
+    <article x-cardlink variant="glass" href="https://example.com">
+      This is example link card content.
+    </article>
+  </div>
   </section>
 
   <!-- 34. ➖ Minimizable Card -->
   <section id="cardminimizable-minimizable-card">
   <h2>➖ Minimizable Card</h2>
-  <wb-demo columns="1">
-    <wb-cardminimizable title="Basic" content="Content">
-    This is example minimizable card content.
-  </wb-cardminimizable>
-  </wb-demo>
-  <wb-demo columns="1">
-    <wb-cardminimizable title="Minimized" content="Content" minimized>
-    This is example minimizable card content.
-  </wb-cardminimizable>
-  </wb-demo>
+  <div x-demo columns="1">
+    <article x-cardminimizable title="Basic" content="Content">
+      This is example minimizable card content.
+    </article>
+  </div>
+  <div x-demo columns="1">
+    <article x-cardminimizable title="Minimized" content="Content" minimized>
+      This is example minimizable card content.
+    </article>
+  </div>
   </section>
 
   <!-- 35. Variants -->
-  <section id="cardminimizable-variants">
+  <section id="cardminimizable-variant-variants">
   <h2>Variants</h2>
-  <wb-demo columns="1">
-    <wb-cardminimizable variant="default" title="Sample title">
-    This is example minimizable card content.
-  </wb-cardminimizable>
-  </wb-demo>
-  <wb-demo columns="1">
-    <wb-cardminimizable variant="elevated" title="Sample title">
-    This is example minimizable card content.
-  </wb-cardminimizable>
-  </wb-demo>
-  <wb-demo columns="1">
-    <wb-cardminimizable variant="bordered" title="Sample title">
-    This is example minimizable card content.
-  </wb-cardminimizable>
-  </wb-demo>
+  <div x-demo columns="1">
+    <article x-cardminimizable variant="default" title="Sample title">
+      This is example minimizable card content.
+    </article>
+  </div>
+  <div x-demo columns="1">
+    <article x-cardminimizable variant="elevated" title="Sample title">
+      This is example minimizable card content.
+    </article>
+  </div>
+  <div x-demo columns="1">
+    <article x-cardminimizable variant="bordered" title="Sample title">
+      This is example minimizable card content.
+    </article>
+  </div>
   </section>
 
   <!-- 36. Toggles -->
   <section id="cardminimizable-toggles">
   <h2>Toggles</h2>
-  <wb-demo columns="1">
-    <wb-cardminimizable minimized title="Sample title">
+  <div x-demo columns="1">
+    <article x-cardminimizable minimized title="Sample title">
       This is example minimizable card content.
-    </wb-cardminimizable>
-  </wb-demo>
+    </article>
+  </div>
   </section>
 
   <!-- 37. 🔔 Notification Card -->
   <section id="cardnotification-notification-card">
   <h2>🔔 Notification Card</h2>
-  <wb-demo columns="1">
-    <wb-cardnotification message="Info message">
-    This is example notification card content.
-  </wb-cardnotification>
-  </wb-demo>
-  <wb-demo columns="1">
-    <wb-cardnotification variant="success" title="Success" message="Done!">
-    This is example notification card content.
-  </wb-cardnotification>
-  </wb-demo>
-  <wb-demo columns="1">
-    <wb-cardnotification variant="warning" message="Warning!">
-    This is example notification card content.
-  </wb-cardnotification>
-  </wb-demo>
-  <wb-demo columns="1">
-    <wb-cardnotification variant="error" message="Error!">
-    This is example notification card content.
-  </wb-cardnotification>
-  </wb-demo>
-  <wb-demo columns="1">
-    <wb-cardnotification variant="info" title="Notice" message="Info" icon="🔔">
-    This is example notification card content.
-  </wb-cardnotification>
-  </wb-demo>
+  <div x-demo columns="1">
+    <aside x-cardnotification message="Info message">
+      This is example notification card content.
+    </aside>
+  </div>
+  <div x-demo columns="1">
+    <aside x-cardnotification variant="success" title="Success" message="Done!">
+      This is example notification card content.
+    </aside>
+  </div>
+  <div x-demo columns="1">
+    <aside x-cardnotification variant="warning" message="Warning!">
+      This is example notification card content.
+    </aside>
+  </div>
+  <div x-demo columns="1">
+    <aside x-cardnotification variant="error" message="Error!">
+      This is example notification card content.
+    </aside>
+  </div>
+  <div x-demo columns="1">
+    <aside x-cardnotification variant="info" title="Notice" message="Info" icon="🔔">
+      This is example notification card content.
+    </aside>
+  </div>
   </section>
 
   <!-- 38. Variants -->
-  <section id="cardnotification-variants">
+  <section id="cardnotification-variant-variants">
   <h2>Variants</h2>
-  <wb-demo columns="1">
-    <wb-cardnotification variant="info" message="Sample message">
-    This is example notification card content.
-  </wb-cardnotification>
-  </wb-demo>
-  <wb-demo columns="1">
-    <wb-cardnotification variant="success" message="Sample message">
-    This is example notification card content.
-  </wb-cardnotification>
-  </wb-demo>
-  <wb-demo columns="1">
-    <wb-cardnotification variant="warning" message="Sample message">
-    This is example notification card content.
-  </wb-cardnotification>
-  </wb-demo>
-  <wb-demo columns="1">
-    <wb-cardnotification variant="error" message="Sample message">
-    This is example notification card content.
-  </wb-cardnotification>
-  </wb-demo>
+  <div x-demo columns="1">
+    <aside x-cardnotification variant="info" message="Sample message">
+      This is example notification card content.
+    </aside>
+  </div>
+  <div x-demo columns="1">
+    <aside x-cardnotification variant="success" message="Sample message">
+      This is example notification card content.
+    </aside>
+  </div>
+  <div x-demo columns="1">
+    <aside x-cardnotification variant="warning" message="Sample message">
+      This is example notification card content.
+    </aside>
+  </div>
+  <div x-demo columns="1">
+    <aside x-cardnotification variant="error" message="Sample message">
+      This is example notification card content.
+    </aside>
+  </div>
   </section>
 
   <!-- 39. Toggles -->
   <section id="cardnotification-toggles">
   <h2>Toggles</h2>
-  <wb-demo columns="1">
-    <wb-cardnotification elevated message="Sample message">
+  <div x-demo columns="1">
+    <aside x-cardnotification elevated message="Sample message">
       This is example notification card content.
-    </wb-cardnotification>
-  </wb-demo>
+    </aside>
+  </div>
   </section>
 
   <!-- 40. 🖼️ Overlay Card -->
   <section id="cardoverlay-overlay-card">
   <h2>🖼️ Overlay Card</h2>
-  <wb-demo columns="1">
-    <wb-cardoverlay
-      image="https://picsum.photos/seed/overlay-background/800/500"
-      title="Title">
-    This is example overlay card content.
-  </wb-cardoverlay>
-  </wb-demo>
-  <wb-demo columns="1">
-    <wb-cardoverlay
-      image="https://picsum.photos/seed/overlay-background-2/800/500"
-      title="Title"
-      subtitle="Subtitle">
-    This is example overlay card content.
-  </wb-cardoverlay>
-  </wb-demo>
-  <wb-demo columns="1">
-    <wb-cardoverlay
-      image="https://picsum.photos/seed/overlay-background-3/800/500"
-      title="Title"
-      position="top">
-    This is example overlay card content.
-  </wb-cardoverlay>
-  </wb-demo>
-  <wb-demo columns="1">
-    <wb-cardoverlay
-      image="https://picsum.photos/seed/overlay-background-4/800/500"
-      title="Title"
-      position="center">
-    This is example overlay card content.
-  </wb-cardoverlay>
-  </wb-demo>
-  <wb-demo columns="1">
-    <wb-cardoverlay
-      image="https://picsum.photos/seed/overlay-background-5/800/500"
-      title="Title">
-    This is example overlay card content.
-  </wb-cardoverlay>
-  </wb-demo>
-  <wb-demo columns="1">
-    <wb-cardoverlay
-      image="https://picsum.photos/seed/overlay-background-6/800/500"
-      title="Title"
-      xalign="center">
-    This is example overlay card content.
-  </wb-cardoverlay>
-  </wb-demo>
+  <div x-demo columns="1">
+    <article x-cardoverlay image="/images/dachshund-puppy-image-960x540.jpg" title="Title">
+      This is example overlay card content.
+    </article>
+  </div>
+  <div x-demo columns="1">
+    <article x-cardoverlay image="/images/dachshund-puppy-image-960x540.jpg" title="Title" subtitle="Subtitle">
+      This is example overlay card content.
+    </article>
+  </div>
+  <div x-demo columns="1">
+    <article x-cardoverlay image="/images/dachshund-puppy-image-960x540.jpg" title="Title" position="top">
+      This is example overlay card content.
+    </article>
+  </div>
+  <div x-demo columns="1">
+    <article x-cardoverlay image="/images/dachshund-puppy-image-960x540.jpg" title="Title" position="center">
+      This is example overlay card content.
+    </article>
+  </div>
+  <div x-demo columns="1">
+    <article x-cardoverlay image="/images/dachshund-puppy-image-960x540.jpg" title="Title">
+      This is example overlay card content.
+    </article>
+  </div>
+  <div x-demo columns="1">
+    <article x-cardoverlay image="/images/dachshund-puppy-image-960x540.jpg" title="Title" xalign="center">
+      This is example overlay card content.
+    </article>
+  </div>
   </section>
 
   <!-- 41. position variants -->
   <section id="cardoverlay-position-variants">
   <h2>position variants</h2>
-  <wb-demo columns="1">
-    <wb-cardoverlay
-      position="top"
-      image="https://picsum.photos/seed/cardoverlay-cards1/800/600">
-    This is example overlay card content.
-  </wb-cardoverlay>
-  </wb-demo>
-  <wb-demo columns="1">
-    <wb-cardoverlay
-      position="center"
-      image="https://picsum.photos/seed/cardoverlay-cards2/800/600">
-    This is example overlay card content.
-  </wb-cardoverlay>
-  </wb-demo>
-  <wb-demo columns="1">
-    <wb-cardoverlay
-      position="bottom"
-      image="https://picsum.photos/seed/cardoverlay-cards3/800/600">
-    This is example overlay card content.
-  </wb-cardoverlay>
-  </wb-demo>
+  <div x-demo columns="1">
+    <article x-cardoverlay position="top" image="/images/dachshund-puppy-image-960x540.jpg">
+      This is example overlay card content.
+    </article>
+  </div>
+  <div x-demo columns="1">
+    <article x-cardoverlay position="center" image="/images/dachshund-puppy-image-960x540.jpg">
+      This is example overlay card content.
+    </article>
+  </div>
+  <div x-demo columns="1">
+    <article x-cardoverlay position="bottom" image="/images/dachshund-puppy-image-960x540.jpg">
+      This is example overlay card content.
+    </article>
+  </div>
   </section>
 
   <!-- 42. xalign variants -->
   <section id="cardoverlay-xalign-variants">
   <h2>xalign variants</h2>
-  <wb-demo columns="1">
-    <wb-cardoverlay
-      xalign="left"
-      image="https://picsum.photos/seed/cardoverlay-cards4/800/600">
-    This is example overlay card content.
-  </wb-cardoverlay>
-  </wb-demo>
-  <wb-demo columns="1">
-    <wb-cardoverlay
-      xalign="center"
-      image="https://picsum.photos/seed/cardoverlay-cards5/800/600">
-    This is example overlay card content.
-  </wb-cardoverlay>
-  </wb-demo>
-  <wb-demo columns="1">
-    <wb-cardoverlay
-      xalign="right"
-      image="https://picsum.photos/seed/cardoverlay-cards6/800/600">
-    This is example overlay card content.
-  </wb-cardoverlay>
-  </wb-demo>
+  <div x-demo columns="1">
+    <article x-cardoverlay xalign="left" image="/images/dachshund-puppy-image-960x540.jpg">
+      This is example overlay card content.
+    </article>
+  </div>
+  <div x-demo columns="1">
+    <article x-cardoverlay xalign="center" image="/images/dachshund-puppy-image-960x540.jpg">
+      This is example overlay card content.
+    </article>
+  </div>
+  <div x-demo columns="1">
+    <article x-cardoverlay xalign="right" image="/images/dachshund-puppy-image-960x540.jpg">
+      This is example overlay card content.
+    </article>
+  </div>
   </section>
 
   <!-- 43. Variants -->
-  <section id="cardoverlay-variants">
+  <section id="cardoverlay-variant-variants">
   <h2>Variants</h2>
-  <wb-demo columns="1">
-    <wb-cardoverlay
-      variant="default"
-      image="https://picsum.photos/seed/cardoverlay-cards7/800/600">
-    This is example overlay card content.
-  </wb-cardoverlay>
-  </wb-demo>
-  <wb-demo columns="1">
-    <wb-cardoverlay
-      variant="dark"
-      image="https://picsum.photos/seed/cardoverlay-cards8/800/600">
-    This is example overlay card content.
-  </wb-cardoverlay>
-  </wb-demo>
-  <wb-demo columns="1">
-    <wb-cardoverlay
-      variant="light"
-      image="https://picsum.photos/seed/cardoverlay-cards9/800/600">
-    This is example overlay card content.
-  </wb-cardoverlay>
-  </wb-demo>
-  <wb-demo columns="1">
-    <wb-cardoverlay
-      variant="blur"
-      image="https://picsum.photos/seed/cardoverlay-cards10/800/600">
-    This is example overlay card content.
-  </wb-cardoverlay>
-  </wb-demo>
+  <div x-demo columns="1">
+    <article x-cardoverlay variant="default" image="/images/dachshund-puppy-image-960x540.jpg">
+      This is example overlay card content.
+    </article>
+  </div>
+  <div x-demo columns="1">
+    <article x-cardoverlay variant="dark" image="/images/dachshund-puppy-image-960x540.jpg">
+      This is example overlay card content.
+    </article>
+  </div>
+  <div x-demo columns="1">
+    <article x-cardoverlay variant="light" image="/images/dachshund-puppy-image-960x540.jpg">
+      This is example overlay card content.
+    </article>
+  </div>
+  <div x-demo columns="1">
+    <article x-cardoverlay variant="blur" image="/images/dachshund-puppy-image-960x540.jpg">
+      This is example overlay card content.
+    </article>
+  </div>
   </section>
 
   <!-- 44. 💼 Portfolio Card -->
   <section id="cardportfolio-portfolio-card">
   <h2>💼 Portfolio Card</h2>
-  <wb-demo columns="2">
-    <wb-cardportfolio
-      name="Jane Smith"
-      title="UX Designer"
-      company="Anthropic"
-      skills="Figma,CSS,React"
-      bio="Creative designer with 8 years experience"
-      availability="available">
+  <div x-demo columns="1">
+    <article x-cardportfolio name="Jane Smith" title="UX Designer" company="Anthropic" skills="Figma,CSS,React" bio="Creative designer with 8 years experience" availability="available">
       This is example portfolio card content.
-    </wb-cardportfolio>
-    <wb-cardportfolio
-      name="John Doe"
-      title="Senior Engineer"
-      company="Cielo Vista"
-      skills="TypeScript,Node,SQL"
-      variant="compact"
-      availability="busy">
+    </article>
+  </div>
+  <div x-demo columns="1">
+    <article x-cardportfolio name="John Doe" title="Senior Engineer" company="Cielo Vista" skills="TypeScript,Node,SQL" variant="compact" availability="busy">
       This is example portfolio card content.
-    </wb-cardportfolio>
-    <wb-cardportfolio
-      name="Sarah Chen"
-      title="Product Manager"
-      company="TechCorp"
-      variant="horizontal"
-      bio="Building products users love"
-      cta="Contact Me">
+    </article>
+  </div>
+  <div x-demo columns="1">
+    <article x-cardportfolio name="Sarah Chen" title="Product Manager" company="TechCorp" variant="horizontal" bio="Building products users love" cta="Contact Me">
       This is example portfolio card content.
-    </wb-cardportfolio>
-    <wb-cardportfolio
-      name="Alex Rivera"
-      title="Full Stack Dev"
-      skills="Python,Go,Rust"
-      variant="full"
-      availability="open-to-opportunities"
-      stats="[{&quot;
-             label&quot;
-             :&quot;
-             Projects&quot;
-             ,&quot;
-             value&quot;
-             :&quot;
-             24&quot;
-             },{&quot;
-             label&quot;
-             :&quot;
-             Years&quot;
-             ,&quot;
-             value&quot;
-             :&quot;
-             10&quot;
-             }]">
+    </article>
+  </div>
+  <div x-demo columns="1">
+    <article x-cardportfolio name="Alex Rivera" title="Full Stack Dev" skills="Python,Go,Rust" variant="full" availability="open-to-opportunities" stats="[{&quot;label&quot;:&quot;Projects&quot;,&quot;value&quot;:&quot;24&quot;},{&quot;label&quot;:&quot;Years&quot;,&quot;value&quot;:&quot;10&quot;}]">
       This is example portfolio card content.
-    </wb-cardportfolio>
-  </wb-demo>
+    </article>
+  </div>
   </section>
 
   <!-- 45. availability variants -->
   <section id="cardportfolio-availability-variants">
   <h2>availability variants</h2>
-  <wb-demo columns="2">
-    <wb-cardportfolio availability="available" name="Sample name">
+  <div x-demo columns="1">
+    <article x-cardportfolio availability="available" name="Sample name">
       This is example portfolio card content.
-    </wb-cardportfolio>
-    <wb-cardportfolio availability="busy" name="Sample name">
+    </article>
+  </div>
+  <div x-demo columns="1">
+    <article x-cardportfolio availability="busy" name="Sample name">
       This is example portfolio card content.
-    </wb-cardportfolio>
-    <wb-cardportfolio availability="not-available" name="Sample name">
+    </article>
+  </div>
+  <div x-demo columns="1">
+    <article x-cardportfolio availability="not-available" name="Sample name">
       This is example portfolio card content.
-    </wb-cardportfolio>
-    <wb-cardportfolio availability="open-to-opportunities" name="Sample name">
+    </article>
+  </div>
+  <div x-demo columns="1">
+    <article x-cardportfolio availability="open-to-opportunities" name="Sample name">
       This is example portfolio card content.
-    </wb-cardportfolio>
-  </wb-demo>
+    </article>
+  </div>
   </section>
 
   <!-- 46. Variants -->
-  <section id="cardportfolio-variants">
+  <section id="cardportfolio-variant-variants">
   <h2>Variants</h2>
-  <wb-demo columns="2">
-    <wb-cardportfolio variant="default" name="Sample name">
+  <div x-demo columns="1">
+    <article x-cardportfolio variant="default" name="Sample name">
       This is example portfolio card content.
-    </wb-cardportfolio>
-    <wb-cardportfolio variant="compact" name="Sample name">
+    </article>
+  </div>
+  <div x-demo columns="1">
+    <article x-cardportfolio variant="compact" name="Sample name">
       This is example portfolio card content.
-    </wb-cardportfolio>
-    <wb-cardportfolio variant="horizontal" name="Sample name">
+    </article>
+  </div>
+  <div x-demo columns="1">
+    <article x-cardportfolio variant="horizontal" name="Sample name">
       This is example portfolio card content.
-    </wb-cardportfolio>
-    <wb-cardportfolio variant="full" name="Sample name">
+    </article>
+  </div>
+  <div x-demo columns="1">
+    <article x-cardportfolio variant="full" name="Sample name">
       This is example portfolio card content.
-    </wb-cardportfolio>
-  </wb-demo>
+    </article>
+  </div>
   </section>
 
   <!-- 47. size variants -->
   <section id="cardportfolio-size-variants">
   <h2>size variants</h2>
-  <wb-demo columns="3">
-    <wb-cardportfolio size="sm" name="Sample name">
+  <div x-demo columns="1">
+    <article x-cardportfolio size="sm" name="Sample name">
       This is example portfolio card content.
-    </wb-cardportfolio>
-    <wb-cardportfolio size="md" name="Sample name">
+    </article>
+  </div>
+  <div x-demo columns="1">
+    <article x-cardportfolio size="md" name="Sample name">
       This is example portfolio card content.
-    </wb-cardportfolio>
-    <wb-cardportfolio size="lg" name="Sample name">
+    </article>
+  </div>
+  <div x-demo columns="1">
+    <article x-cardportfolio size="lg" name="Sample name">
       This is example portfolio card content.
-    </wb-cardportfolio>
-    <wb-cardportfolio size="xl" name="Sample name">
+    </article>
+  </div>
+  <div x-demo columns="1">
+    <article x-cardportfolio size="xl" name="Sample name">
       This is example portfolio card content.
-    </wb-cardportfolio>
-    <wb-cardportfolio size="full" name="Sample name">
+    </article>
+  </div>
+  <div x-demo columns="1">
+    <article x-cardportfolio size="full" name="Sample name">
       This is example portfolio card content.
-    </wb-cardportfolio>
-    <wb-cardportfolio size="auto" name="Sample name">
+    </article>
+  </div>
+  <div x-demo columns="1">
+    <article x-cardportfolio size="auto" name="Sample name">
       This is example portfolio card content.
-    </wb-cardportfolio>
-  </wb-demo>
+    </article>
+  </div>
   </section>
 
   <!-- 48. 💰 Pricing Card -->
   <section id="cardpricing-pricing-card">
   <h2>💰 Pricing Card</h2>
-  <wb-demo columns="1">
-    <wb-cardpricing plan="Basic" price="$9">
-    This is example pricing card content.
-  </wb-cardpricing>
-  </wb-demo>
-  <wb-demo columns="1">
-    <wb-cardpricing plan="Pro" price="$29" featured>
-    This is example pricing card content.
-  </wb-cardpricing>
-  </wb-demo>
-  <wb-demo columns="1">
-    <wb-cardpricing plan="Basic" price="$9" period="/year">
-    This is example pricing card content.
-  </wb-cardpricing>
-  </wb-demo>
-  <wb-demo columns="1">
-    <wb-cardpricing plan="Pro" price="$29" features="Feature 1,Feature 2">
-    This is example pricing card content.
-  </wb-cardpricing>
-  </wb-demo>
-  <wb-demo columns="1">
-    <wb-cardpricing plan="Pro" price="$29" cta="Subscribe Now">
-    This is example pricing card content.
-  </wb-cardpricing>
-  </wb-demo>
-  <wb-demo columns="1">
-    <wb-cardpricing
-      plan="Enterprise"
-      price="$99"
-      description="For large teams"
-      featured>
-    This is example pricing card content.
-  </wb-cardpricing>
-  </wb-demo>
+  <div x-demo columns="1">
+    <article x-cardpricing plan="Basic" price="$9">
+      This is example pricing card content.
+    </article>
+  </div>
+  <div x-demo columns="1">
+    <article x-cardpricing plan="Pro" price="$29" featured>
+      This is example pricing card content.
+    </article>
+  </div>
+  <div x-demo columns="1">
+    <article x-cardpricing plan="Basic" price="$9" period="/year">
+      This is example pricing card content.
+    </article>
+  </div>
+  <div x-demo columns="1">
+    <article x-cardpricing plan="Pro" price="$29" features="Feature 1,Feature 2">
+      This is example pricing card content.
+    </article>
+  </div>
+  <div x-demo columns="1">
+    <article x-cardpricing plan="Pro" price="$29" cta="Subscribe Now">
+      This is example pricing card content.
+    </article>
+  </div>
+  <div x-demo columns="1">
+    <article x-cardpricing plan="Enterprise" price="$99" description="For large teams" featured>
+      This is example pricing card content.
+    </article>
+  </div>
   </section>
 
   <!-- 49. Variants -->
-  <section id="cardpricing-variants">
+  <section id="cardpricing-variant-variants">
   <h2>Variants</h2>
-  <wb-demo columns="1">
-    <wb-cardpricing variant="default" plan="Sample plan" price="Sample price">
-    This is example pricing card content.
-  </wb-cardpricing>
-  </wb-demo>
-  <wb-demo columns="1">
-    <wb-cardpricing variant="bordered" plan="Sample plan" price="Sample price">
-    This is example pricing card content.
-  </wb-cardpricing>
-  </wb-demo>
-  <wb-demo columns="1">
-    <wb-cardpricing variant="elevated" plan="Sample plan" price="Sample price">
-    This is example pricing card content.
-  </wb-cardpricing>
-  </wb-demo>
-  <wb-demo columns="1">
-    <wb-cardpricing variant="minimal" plan="Sample plan" price="Sample price">
-    This is example pricing card content.
-  </wb-cardpricing>
-  </wb-demo>
+  <div x-demo columns="1">
+    <article x-cardpricing variant="default" plan="Sample plan" price="Sample price">
+      This is example pricing card content.
+    </article>
+  </div>
+  <div x-demo columns="1">
+    <article x-cardpricing variant="bordered" plan="Sample plan" price="Sample price">
+      This is example pricing card content.
+    </article>
+  </div>
+  <div x-demo columns="1">
+    <article x-cardpricing variant="elevated" plan="Sample plan" price="Sample price">
+      This is example pricing card content.
+    </article>
+  </div>
+  <div x-demo columns="1">
+    <article x-cardpricing variant="minimal" plan="Sample plan" price="Sample price">
+      This is example pricing card content.
+    </article>
+  </div>
   </section>
 
   <!-- 50. Toggles -->
   <section id="cardpricing-toggles">
   <h2>Toggles</h2>
-  <wb-demo columns="1">
-    <wb-cardpricing featured plan="Sample plan" price="Sample price">
+  <div x-demo columns="1">
+    <article x-cardpricing featured plan="Sample plan" price="Sample price">
       This is example pricing card content.
-    </wb-cardpricing>
-  </wb-demo>
+    </article>
+  </div>
   </section>
 
   <!-- 51. 🛒 Product Card -->
   <section id="cardproduct-product-card">
   <h2>🛒 Product Card</h2>
-  <wb-demo columns="1">
-    <wb-cardproduct title="Product" price="$29">
-    This is example product card content.
-  </wb-cardproduct>
-  </wb-demo>
-  <wb-demo columns="1">
-    <wb-cardproduct title="Product" price="$29" original-price="$49">
-    This is example product card content.
-  </wb-cardproduct>
-  </wb-demo>
-  <wb-demo columns="1">
-    <wb-cardproduct
-      image="https://picsum.photos/seed/product/400/300"
-      title="Product"
-      price="$29">
-    This is example product card content.
-  </wb-cardproduct>
-  </wb-demo>
-  <wb-demo columns="1">
-    <wb-cardproduct title="Product" price="$29" rating="4.5" reviews="128">
-    This is example product card content.
-  </wb-cardproduct>
-  </wb-demo>
-  <wb-demo columns="1">
-    <wb-cardproduct title="Product" price="$29" badge="Sale" featured>
-    This is example product card content.
-  </wb-cardproduct>
-  </wb-demo>
+  <div x-demo columns="1">
+    <article x-cardproduct title="Product" price="$29">
+      This is example product card content.
+    </article>
+  </div>
+  <div x-demo columns="1">
+    <article x-cardproduct title="Product" price="$29" original-price="$49">
+      This is example product card content.
+    </article>
+  </div>
+  <div x-demo columns="1">
+    <article x-cardproduct image="/images/dachshund-puppy-image-960x540.jpg" title="Product" price="$29">
+      This is example product card content.
+    </article>
+  </div>
+  <div x-demo columns="1">
+    <article x-cardproduct title="Product" price="$29" rating="4.5" reviews="128">
+      This is example product card content.
+    </article>
+  </div>
+  <div x-demo columns="1">
+    <article x-cardproduct title="Product" price="$29" badge="Sale" featured>
+      This is example product card content.
+    </article>
+  </div>
   </section>
 
   <!-- 52. Variants -->
-  <section id="cardproduct-variants">
+  <section id="cardproduct-variant-variants">
   <h2>Variants</h2>
-  <wb-demo columns="1">
-    <wb-cardproduct variant="default" title="Sample title" price="Sample price">
-    This is example product card content.
-  </wb-cardproduct>
-  </wb-demo>
-  <wb-demo columns="1">
-    <wb-cardproduct variant="compact" title="Sample title" price="Sample price">
-    This is example product card content.
-  </wb-cardproduct>
-  </wb-demo>
-  <wb-demo columns="1">
-    <wb-cardproduct
-      variant="horizontal"
-      title="Sample title"
-      price="Sample price">
-    This is example product card content.
-  </wb-cardproduct>
-  </wb-demo>
-  <wb-demo columns="1">
-    <wb-cardproduct variant="minimal" title="Sample title" price="Sample price">
-    This is example product card content.
-  </wb-cardproduct>
-  </wb-demo>
+  <div x-demo columns="1">
+    <article x-cardproduct variant="default" title="Sample title" price="Sample price">
+      This is example product card content.
+    </article>
+  </div>
+  <div x-demo columns="1">
+    <article x-cardproduct variant="compact" title="Sample title" price="Sample price">
+      This is example product card content.
+    </article>
+  </div>
+  <div x-demo columns="1">
+    <article x-cardproduct variant="horizontal" title="Sample title" price="Sample price">
+      This is example product card content.
+    </article>
+  </div>
+  <div x-demo columns="1">
+    <article x-cardproduct variant="minimal" title="Sample title" price="Sample price">
+      This is example product card content.
+    </article>
+  </div>
   </section>
 
   <!-- 53. Toggles -->
   <section id="cardproduct-toggles">
   <h2>Toggles</h2>
-  <wb-demo columns="1">
-    <wb-cardproduct featured title="Sample title" price="Sample price">
+  <div x-demo columns="1">
+    <article x-cardproduct featured title="Sample title" price="Sample price">
       This is example product card content.
-    </wb-cardproduct>
-  </wb-demo>
+    </article>
+  </div>
   </section>
 
   <!-- 54. 📦 Card Profile -->
   <section id="cardprofile-card-profile">
   <h2>📦 Card Profile</h2>
-  <wb-demo columns="3">
-    <wb-cardprofile name="John Doe">
+  <div x-demo columns="1">
+    <div x-cardprofile name="John Doe">
       This is example card profile content.
-    </wb-cardprofile>
-    <wb-cardprofile name="John Doe" role="Developer">
+    </div>
+  </div>
+  <div x-demo columns="1">
+    <div x-cardprofile name="John Doe" role="Developer">
       This is example card profile content.
-    </wb-cardprofile>
-    <wb-cardprofile name="John Doe" avatar="https://i.pravatar.cc/80">
+    </div>
+  </div>
+  <div x-demo columns="1">
+    <div x-cardprofile name="John Doe" avatar="https://i.pravatar.cc/80">
       This is example card profile content.
-    </wb-cardprofile>
-    <wb-cardprofile name="John Doe" bio="Short bio.">
+    </div>
+  </div>
+  <div x-demo columns="1">
+    <div x-cardprofile name="John Doe" bio="Short bio.">
       This is example card profile content.
-    </wb-cardprofile>
-    <wb-cardprofile name="John Doe" cover="https://picsum.photos/400/100">
+    </div>
+  </div>
+  <div x-demo columns="1">
+    <div x-cardprofile name="John Doe" cover="https://picsum.photos/400/100">
       This is example card profile content.
-    </wb-cardprofile>
-    <wb-cardprofile name="John Doe" size="sm">
+    </div>
+  </div>
+  <div x-demo columns="1">
+    <div x-cardprofile name="John Doe" size="sm">
       This is example card profile content.
-    </wb-cardprofile>
-    <wb-cardprofile name="John Doe" size="lg">
+    </div>
+  </div>
+  <div x-demo columns="1">
+    <div x-cardprofile name="John Doe" size="lg">
       This is example card profile content.
-    </wb-cardprofile>
-    <wb-cardprofile name="John Doe" align="left">
+    </div>
+  </div>
+  <div x-demo columns="1">
+    <div x-cardprofile name="John Doe" align="left">
       This is example card profile content.
-    </wb-cardprofile>
-    <wb-cardprofile
-      name="Full"
-      role="CEO"
-      avatar="https://i.pravatar.cc/80"
-      bio="Leader."
-      cover="https://picsum.photos/400/100"
-      size="lg"
-      align="center">
+    </div>
+  </div>
+  <div x-demo columns="1">
+    <div x-cardprofile name="Full" role="CEO" avatar="https://i.pravatar.cc/80" bio="Leader." cover="https://picsum.photos/400/100" size="lg" align="center">
       This is example card profile content.
-    </wb-cardprofile>
-  </wb-demo>
+    </div>
+  </div>
   </section>
 
   <!-- 55. size variants -->
   <section id="cardprofile-size-variants">
   <h2>size variants</h2>
-  <wb-demo columns="2">
-    <wb-cardprofile size="sm" name="John Doe">
+  <div x-demo columns="1">
+    <div x-cardprofile size="sm" name="John Doe">
       This is example card profile content.
-    </wb-cardprofile>
-    <wb-cardprofile size="md" name="John Doe">
+    </div>
+  </div>
+  <div x-demo columns="1">
+    <div x-cardprofile size="md" name="John Doe">
       This is example card profile content.
-    </wb-cardprofile>
-    <wb-cardprofile size="lg" name="John Doe">
+    </div>
+  </div>
+  <div x-demo columns="1">
+    <div x-cardprofile size="lg" name="John Doe">
       This is example card profile content.
-    </wb-cardprofile>
-  </wb-demo>
+    </div>
+  </div>
   </section>
 
   <!-- 56. align variants -->
   <section id="cardprofile-align-variants">
   <h2>align variants</h2>
-  <wb-demo columns="2">
-    <wb-cardprofile align="left" name="John Doe">
+  <div x-demo columns="1">
+    <div x-cardprofile align="left" name="John Doe">
       This is example card profile content.
-    </wb-cardprofile>
-    <wb-cardprofile align="center" name="John Doe">
+    </div>
+  </div>
+  <div x-demo columns="1">
+    <div x-cardprofile align="center" name="John Doe">
       This is example card profile content.
-    </wb-cardprofile>
-  </wb-demo>
+    </div>
+  </div>
   </section>
 
   <!-- 57. 📊 Stats Card -->
   <section id="cardstats-stats-card">
   <h2>📊 Stats Card</h2>
-  <wb-demo columns="1">
-    <wb-cardstats value="100">
-    This is example stats card content.
-  </wb-cardstats>
-  </wb-demo>
-  <wb-demo columns="1">
-    <wb-cardstats value="1,234" label="Users">
-    This is example stats card content.
-  </wb-cardstats>
-  </wb-demo>
-  <wb-demo columns="1">
-    <wb-cardstats value="100" icon="📊">
-    This is example stats card content.
-  </wb-cardstats>
-  </wb-demo>
-  <wb-demo columns="1">
-    <wb-cardstats value="100" trend="up" trend-value="+10%">
-    This is example stats card content.
-  </wb-cardstats>
-  </wb-demo>
-  <wb-demo columns="1">
-    <wb-cardstats value="100" trend="down" trend-value="-5%">
-    This is example stats card content.
-  </wb-cardstats>
-  </wb-demo>
-  <wb-demo columns="1">
-    <wb-cardstats
-      value="$50K"
-      label="Revenue"
-      icon="💰"
-      trend="up"
-      trend-value="+12%">
-    This is example stats card content.
-  </wb-cardstats>
-  </wb-demo>
+  <div x-demo columns="1">
+    <article x-cardstats value="100">
+      This is example stats card content.
+    </article>
+  </div>
+  <div x-demo columns="1">
+    <article x-cardstats value="1,234" label="Users">
+      This is example stats card content.
+    </article>
+  </div>
+  <div x-demo columns="1">
+    <article x-cardstats value="100" icon="📊">
+      This is example stats card content.
+    </article>
+  </div>
+  <div x-demo columns="1">
+    <article x-cardstats value="100" trend="up" trend-value="+10%">
+      This is example stats card content.
+    </article>
+  </div>
+  <div x-demo columns="1">
+    <article x-cardstats value="100" trend="down" trend-value="-5%">
+      This is example stats card content.
+    </article>
+  </div>
+  <div x-demo columns="1">
+    <article x-cardstats value="$50K" label="Revenue" icon="💰" trend="up" trend-value="+12%">
+      This is example stats card content.
+    </article>
+  </div>
   </section>
 
   <!-- 58. trend variants -->
   <section id="cardstats-trend-variants">
   <h2>trend variants</h2>
-  <wb-demo columns="1">
-    <wb-cardstats trend="" value="Sample value">
-    This is example stats card content.
-  </wb-cardstats>
-  </wb-demo>
-  <wb-demo columns="1">
-    <wb-cardstats trend="up" value="Sample value">
-    This is example stats card content.
-  </wb-cardstats>
-  </wb-demo>
-  <wb-demo columns="1">
-    <wb-cardstats trend="down" value="Sample value">
-    This is example stats card content.
-  </wb-cardstats>
-  </wb-demo>
-  <wb-demo columns="1">
-    <wb-cardstats trend="neutral" value="Sample value">
-    This is example stats card content.
-  </wb-cardstats>
-  </wb-demo>
+  <div x-demo columns="1">
+    <article x-cardstats trend="" value="Sample value">
+      This is example stats card content.
+    </article>
+  </div>
+  <div x-demo columns="1">
+    <article x-cardstats trend="up" value="Sample value">
+      This is example stats card content.
+    </article>
+  </div>
+  <div x-demo columns="1">
+    <article x-cardstats trend="down" value="Sample value">
+      This is example stats card content.
+    </article>
+  </div>
+  <div x-demo columns="1">
+    <article x-cardstats trend="neutral" value="Sample value">
+      This is example stats card content.
+    </article>
+  </div>
   </section>
 
   <!-- 59. Variants -->
-  <section id="cardstats-variants">
+  <section id="cardstats-variant-variants">
   <h2>Variants</h2>
-  <wb-demo columns="1">
-    <wb-cardstats variant="default" value="Sample value">
-    This is example stats card content.
-  </wb-cardstats>
-  </wb-demo>
-  <wb-demo columns="1">
-    <wb-cardstats variant="compact" value="Sample value">
-    This is example stats card content.
-  </wb-cardstats>
-  </wb-demo>
-  <wb-demo columns="1">
-    <wb-cardstats variant="large" value="Sample value">
-    This is example stats card content.
-  </wb-cardstats>
-  </wb-demo>
-  <wb-demo columns="1">
-    <wb-cardstats variant="minimal" value="Sample value">
-    This is example stats card content.
-  </wb-cardstats>
-  </wb-demo>
+  <div x-demo columns="1">
+    <article x-cardstats variant="default" value="Sample value">
+      This is example stats card content.
+    </article>
+  </div>
+  <div x-demo columns="1">
+    <article x-cardstats variant="compact" value="Sample value">
+      This is example stats card content.
+    </article>
+  </div>
+  <div x-demo columns="1">
+    <article x-cardstats variant="large" value="Sample value">
+      This is example stats card content.
+    </article>
+  </div>
+  <div x-demo columns="1">
+    <article x-cardstats variant="minimal" value="Sample value">
+      This is example stats card content.
+    </article>
+  </div>
   </section>
 
   <!-- 60. 💬 Testimonial Card -->
   <section id="cardtestimonial-testimonial-card">
   <h2>💬 Testimonial Card</h2>
-  <wb-demo columns="1">
-    <wb-cardtestimonial quote="Great!" author="John">
-    This is example testimonial card content.
-  </wb-cardtestimonial>
-  </wb-demo>
-  <wb-demo columns="1">
-    <wb-cardtestimonial quote="Great!" author="John" role="CEO">
-    This is example testimonial card content.
-  </wb-cardtestimonial>
-  </wb-demo>
-  <wb-demo columns="1">
-    <wb-cardtestimonial
-      quote="Great!"
-      author="John"
-      avatar="https://i.pravatar.cc/150?u=john">
-    This is example testimonial card content.
-  </wb-cardtestimonial>
-  </wb-demo>
-  <wb-demo columns="1">
-    <wb-cardtestimonial quote="Great!" author="John" rating="5">
-    This is example testimonial card content.
-  </wb-cardtestimonial>
-  </wb-demo>
-  <wb-demo columns="1">
-    <wb-cardtestimonial quote="Great!" author="John" rating="3">
-    This is example testimonial card content.
-  </wb-cardtestimonial>
-  </wb-demo>
-  <wb-demo columns="1">
-    <wb-cardtestimonial
-      quote="Excellent service!"
-      author="Jane"
-      role="CTO at Acme"
-      avatar="https://i.pravatar.cc/150?u=jane"
-      rating="5">
-    This is example testimonial card content.
-  </wb-cardtestimonial>
-  </wb-demo>
-  <wb-demo columns="1">
-    <wb-cardtestimonial quote="Great!" author="John" variant="elevated">
-    This is example testimonial card content.
-  </wb-cardtestimonial>
-  </wb-demo>
-  <wb-demo columns="1">
-    <wb-cardtestimonial quote="Great!" author="John" variant="centered">
-    This is example testimonial card content.
-  </wb-cardtestimonial>
-  </wb-demo>
+  <div x-demo columns="1">
+    <article x-cardtestimonial quote="Great!" author="John">
+      This is example testimonial card content.
+    </article>
+  </div>
+  <div x-demo columns="1">
+    <article x-cardtestimonial quote="Great!" author="John" role="CEO">
+      This is example testimonial card content.
+    </article>
+  </div>
+  <div x-demo columns="1">
+    <article x-cardtestimonial quote="Great!" author="John" avatar="https://i.pravatar.cc/150?u=john">
+      This is example testimonial card content.
+    </article>
+  </div>
+  <div x-demo columns="1">
+    <article x-cardtestimonial quote="Great!" author="John" rating="5">
+      This is example testimonial card content.
+    </article>
+  </div>
+  <div x-demo columns="1">
+    <article x-cardtestimonial quote="Great!" author="John" rating="3">
+      This is example testimonial card content.
+    </article>
+  </div>
+  <div x-demo columns="1">
+    <article x-cardtestimonial quote="Excellent service!" author="Jane" role="CTO at Acme" avatar="https://i.pravatar.cc/150?u=jane" rating="5">
+      This is example testimonial card content.
+    </article>
+  </div>
+  <div x-demo columns="1">
+    <article x-cardtestimonial quote="Great!" author="John" variant="elevated">
+      This is example testimonial card content.
+    </article>
+  </div>
+  <div x-demo columns="1">
+    <article x-cardtestimonial quote="Great!" author="John" variant="centered">
+      This is example testimonial card content.
+    </article>
+  </div>
   </section>
 
   <!-- 61. Variants -->
-  <section id="cardtestimonial-variants">
+  <section id="cardtestimonial-variant-variants">
   <h2>Variants</h2>
-  <wb-demo columns="1">
-    <wb-cardtestimonial
-      variant="default"
-      quote="Sample quote"
-      author="Sample author">
-    This is example testimonial card content.
-  </wb-cardtestimonial>
-  </wb-demo>
-  <wb-demo columns="1">
-    <wb-cardtestimonial
-      variant="elevated"
-      quote="Sample quote"
-      author="Sample author">
-    This is example testimonial card content.
-  </wb-cardtestimonial>
-  </wb-demo>
-  <wb-demo columns="1">
-    <wb-cardtestimonial
-      variant="bordered"
-      quote="Sample quote"
-      author="Sample author">
-    This is example testimonial card content.
-  </wb-cardtestimonial>
-  </wb-demo>
-  <wb-demo columns="1">
-    <wb-cardtestimonial
-      variant="minimal"
-      quote="Sample quote"
-      author="Sample author">
-    This is example testimonial card content.
-  </wb-cardtestimonial>
-  </wb-demo>
-  <wb-demo columns="1">
-    <wb-cardtestimonial
-      variant="centered"
-      quote="Sample quote"
-      author="Sample author">
-    This is example testimonial card content.
-  </wb-cardtestimonial>
-  </wb-demo>
+  <div x-demo columns="1">
+    <article x-cardtestimonial variant="default" quote="Sample quote" author="Sample author">
+      This is example testimonial card content.
+    </article>
+  </div>
+  <div x-demo columns="1">
+    <article x-cardtestimonial variant="elevated" quote="Sample quote" author="Sample author">
+      This is example testimonial card content.
+    </article>
+  </div>
+  <div x-demo columns="1">
+    <article x-cardtestimonial variant="bordered" quote="Sample quote" author="Sample author">
+      This is example testimonial card content.
+    </article>
+  </div>
+  <div x-demo columns="1">
+    <article x-cardtestimonial variant="minimal" quote="Sample quote" author="Sample author">
+      This is example testimonial card content.
+    </article>
+  </div>
+  <div x-demo columns="1">
+    <article x-cardtestimonial variant="centered" quote="Sample quote" author="Sample author">
+      This is example testimonial card content.
+    </article>
+  </div>
   </section>
 
   <!-- 62. size variants -->
   <section id="cardtestimonial-size-variants">
   <h2>size variants</h2>
-  <wb-demo columns="1">
-    <wb-cardtestimonial size="sm" quote="Sample quote" author="Sample author">
-    This is example testimonial card content.
-  </wb-cardtestimonial>
-  </wb-demo>
-  <wb-demo columns="1">
-    <wb-cardtestimonial size="md" quote="Sample quote" author="Sample author">
-    This is example testimonial card content.
-  </wb-cardtestimonial>
-  </wb-demo>
-  <wb-demo columns="1">
-    <wb-cardtestimonial size="lg" quote="Sample quote" author="Sample author">
-    This is example testimonial card content.
-  </wb-cardtestimonial>
-  </wb-demo>
+  <div x-demo columns="1">
+    <article x-cardtestimonial size="sm" quote="Sample quote" author="Sample author">
+      This is example testimonial card content.
+    </article>
+  </div>
+  <div x-demo columns="1">
+    <article x-cardtestimonial size="md" quote="Sample quote" author="Sample author">
+      This is example testimonial card content.
+    </article>
+  </div>
+  <div x-demo columns="1">
+    <article x-cardtestimonial size="lg" quote="Sample quote" author="Sample author">
+      This is example testimonial card content.
+    </article>
+  </div>
   </section>
 
   <!-- 63. 🎬 Video Card -->
   <section id="cardvideo-video-card">
   <h2>🎬 Video Card</h2>
-  <wb-demo columns="1">
-    <wb-cardvideo src="https://www.w3schools.com/html/mov_bbb.mp4">
-    This is example video card content.
-  </wb-cardvideo>
-  </wb-demo>
-  <wb-demo columns="1">
-    <wb-cardvideo
-      src="https://www.w3schools.com/html/mov_bbb.mp4"
-      title="Video Title">
-    This is example video card content.
-  </wb-cardvideo>
-  </wb-demo>
-  <wb-demo columns="1">
-    <wb-cardvideo
-      src="https://www.w3schools.com/html/mov_bbb.mp4"
-      poster="https://picsum.photos/seed/videoposter/800/450">
-    This is example video card content.
-  </wb-cardvideo>
-  </wb-demo>
-  <wb-demo columns="1">
-    <wb-cardvideo
-      src="https://www.w3schools.com/html/mov_bbb.mp4"
-      autoplay
-      muted>
-    This is example video card content.
-  </wb-cardvideo>
-  </wb-demo>
-  <wb-demo columns="1">
-    <wb-cardvideo src="https://www.w3schools.com/html/mov_bbb.mp4" loop>
-    This is example video card content.
-  </wb-cardvideo>
-  </wb-demo>
-  <wb-demo columns="1">
-    <wb-cardvideo src="https://www.w3schools.com/html/mov_bbb.mp4">
-    This is example video card content.
-  </wb-cardvideo>
-  </wb-demo>
-  <wb-demo columns="1">
-    <wb-cardvideo src="https://www.w3schools.com/html/mov_bbb.mp4" aspect="4/3">
-    This is example video card content.
-  </wb-cardvideo>
-  </wb-demo>
+  <div x-demo columns="1">
+    <article x-cardvideo src="https://www.w3schools.com/html/mov_bbb.mp4">
+      This is example video card content.
+    </article>
+  </div>
+  <div x-demo columns="1">
+    <article x-cardvideo src="https://www.w3schools.com/html/mov_bbb.mp4" title="Video Title">
+      This is example video card content.
+    </article>
+  </div>
+  <div x-demo columns="1">
+    <article x-cardvideo src="https://www.w3schools.com/html/mov_bbb.mp4" poster="https://picsum.photos/seed/videoposter/800/450">
+      This is example video card content.
+    </article>
+  </div>
+  <div x-demo columns="1">
+    <article x-cardvideo src="https://www.w3schools.com/html/mov_bbb.mp4" autoplay muted>
+      This is example video card content.
+    </article>
+  </div>
+  <div x-demo columns="1">
+    <article x-cardvideo src="https://www.w3schools.com/html/mov_bbb.mp4" loop>
+      This is example video card content.
+    </article>
+  </div>
+  <div x-demo columns="1">
+    <article x-cardvideo src="https://www.w3schools.com/html/mov_bbb.mp4">
+      This is example video card content.
+    </article>
+  </div>
+  <div x-demo columns="1">
+    <article x-cardvideo src="https://www.w3schools.com/html/mov_bbb.mp4" aspect="4/3">
+      This is example video card content.
+    </article>
+  </div>
   </section>
 
   <!-- 64. aspect variants -->
   <section id="cardvideo-aspect-variants">
   <h2>aspect variants</h2>
-  <wb-demo columns="1">
-    <wb-cardvideo
-      aspect="16/9"
-      src="https://www.w3schools.com/html/mov_bbb.mp4">
-    This is example video card content.
-  </wb-cardvideo>
-  </wb-demo>
-  <wb-demo columns="1">
-    <wb-cardvideo aspect="4/3" src="https://www.w3schools.com/html/mov_bbb.mp4">
-    This is example video card content.
-  </wb-cardvideo>
-  </wb-demo>
-  <wb-demo columns="1">
-    <wb-cardvideo aspect="1/1" src="https://www.w3schools.com/html/mov_bbb.mp4">
-    This is example video card content.
-  </wb-cardvideo>
-  </wb-demo>
-  <wb-demo columns="1">
-    <wb-cardvideo
-      aspect="21/9"
-      src="https://www.w3schools.com/html/mov_bbb.mp4">
-    This is example video card content.
-  </wb-cardvideo>
-  </wb-demo>
-  <wb-demo columns="1">
-    <wb-cardvideo
-      aspect="9/16"
-      src="https://www.w3schools.com/html/mov_bbb.mp4">
-    This is example video card content.
-  </wb-cardvideo>
-  </wb-demo>
+  <div x-demo columns="1">
+    <article x-cardvideo aspect="16/9" src="https://www.w3schools.com/html/mov_bbb.mp4">
+      This is example video card content.
+    </article>
+  </div>
+  <div x-demo columns="1">
+    <article x-cardvideo aspect="4/3" src="https://www.w3schools.com/html/mov_bbb.mp4">
+      This is example video card content.
+    </article>
+  </div>
+  <div x-demo columns="1">
+    <article x-cardvideo aspect="1/1" src="https://www.w3schools.com/html/mov_bbb.mp4">
+      This is example video card content.
+    </article>
+  </div>
+  <div x-demo columns="1">
+    <article x-cardvideo aspect="21/9" src="https://www.w3schools.com/html/mov_bbb.mp4">
+      This is example video card content.
+    </article>
+  </div>
+  <div x-demo columns="1">
+    <article x-cardvideo aspect="9/16" src="https://www.w3schools.com/html/mov_bbb.mp4">
+      This is example video card content.
+    </article>
+  </div>
   </section>
 
   <!-- 65. Variants -->
-  <section id="cardvideo-variants">
+  <section id="cardvideo-variant-variants">
   <h2>Variants</h2>
-  <wb-demo columns="1">
-    <wb-cardvideo
-      variant="default"
-      src="https://www.w3schools.com/html/mov_bbb.mp4">
-    This is example video card content.
-  </wb-cardvideo>
-  </wb-demo>
-  <wb-demo columns="1">
-    <wb-cardvideo
-      variant="minimal"
-      src="https://www.w3schools.com/html/mov_bbb.mp4">
-    This is example video card content.
-  </wb-cardvideo>
-  </wb-demo>
-  <wb-demo columns="1">
-    <wb-cardvideo
-      variant="bordered"
-      src="https://www.w3schools.com/html/mov_bbb.mp4">
-    This is example video card content.
-  </wb-cardvideo>
-  </wb-demo>
-  <wb-demo columns="1">
-    <wb-cardvideo
-      variant="elevated"
-      src="https://www.w3schools.com/html/mov_bbb.mp4">
-    This is example video card content.
-  </wb-cardvideo>
-  </wb-demo>
+  <div x-demo columns="1">
+    <article x-cardvideo variant="default" src="https://www.w3schools.com/html/mov_bbb.mp4">
+      This is example video card content.
+    </article>
+  </div>
+  <div x-demo columns="1">
+    <article x-cardvideo variant="minimal" src="https://www.w3schools.com/html/mov_bbb.mp4">
+      This is example video card content.
+    </article>
+  </div>
+  <div x-demo columns="1">
+    <article x-cardvideo variant="bordered" src="https://www.w3schools.com/html/mov_bbb.mp4">
+      This is example video card content.
+    </article>
+  </div>
+  <div x-demo columns="1">
+    <article x-cardvideo variant="elevated" src="https://www.w3schools.com/html/mov_bbb.mp4">
+      This is example video card content.
+    </article>
+  </div>
   </section>
 
   <!-- 66. Toggles -->
   <section id="cardvideo-toggles">
   <h2>Toggles</h2>
-  <wb-demo columns="1">
-    <wb-cardvideo autoplay src="https://www.w3schools.com/html/mov_bbb.mp4">
-    This is example video card content.
-  </wb-cardvideo>
-  </wb-demo>
-  <wb-demo columns="1">
-    <wb-cardvideo muted src="https://www.w3schools.com/html/mov_bbb.mp4">
-    This is example video card content.
-  </wb-cardvideo>
-  </wb-demo>
-  <wb-demo columns="1">
-    <wb-cardvideo loop src="https://www.w3schools.com/html/mov_bbb.mp4">
-    This is example video card content.
-  </wb-cardvideo>
-  </wb-demo>
+  <div x-demo columns="1">
+    <article x-cardvideo autoplay src="https://www.w3schools.com/html/mov_bbb.mp4">
+      This is example video card content.
+    </article>
+  </div>
+  <div x-demo columns="1">
+    <article x-cardvideo muted src="https://www.w3schools.com/html/mov_bbb.mp4">
+      This is example video card content.
+    </article>
+  </div>
+  <div x-demo columns="1">
+    <article x-cardvideo loop src="https://www.w3schools.com/html/mov_bbb.mp4">
+      This is example video card content.
+    </article>
+  </div>
   </section>
 
   <script type="module">

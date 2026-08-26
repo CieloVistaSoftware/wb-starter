@@ -4,13 +4,13 @@
   "title": "Markdown to HTML",
   "description": "Renders Markdown content as HTML, either from inline content or external source",
   "schemaFor": "mdhtml",
-  "baseClass": "wb-mdhtml",
+  "baseClass": "x-mdhtml",
   "semanticElement": {
     "tagName": "div",
     "implicitRole": "generic"
   },
   "compliance": {
-    "baseClass": "wb-mdhtml",
+    "baseClass": "x-mdhtml",
     "supportLevel": "stable",
     "accessibility": "high"
   },
@@ -43,11 +43,11 @@
   "$cssAPI": {},
   "test": {
     "setup": [
-      "<wb-mdhtml>Basic mdhtml content</wb-mdhtml>",
-      "<wb-mdhtml sanitize>with sanitize</wb-mdhtml>",
-      "<wb-mdhtml gfm>with gfm</wb-mdhtml>",
-      "<wb-mdhtml src=\"Sample src\">src=\"Sample src\"</wb-mdhtml>",
-      "<wb-mdhtml sanitize gfm>Combined: with sanitize, with gfm</wb-mdhtml>"
+      "<div x-mdhtml>Basic mdhtml content</div>",
+      "<div x-mdhtml sanitize>with sanitize</div>",
+      "<div x-mdhtml gfm>with gfm</div>",
+      "<div x-mdhtml src=\"Sample src\">src=\"Sample src\"</div>",
+      "<div x-mdhtml sanitize gfm>Combined: with sanitize, with gfm</div>"
     ],
     "matrix": {
       "combinations": [
@@ -65,9 +65,9 @@
     },
     "site": {
       "page": "content",
-      "tag": "wb-mdhtml",
+      "tag": "x-mdhtml",
       "renders": true,
-      "baseClass": "wb-mdhtml",
+      "baseClass": "x-mdhtml",
       "minInstances": 3,
       "checkText": [],
       "checkClasses": [],

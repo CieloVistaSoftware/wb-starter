@@ -8,17 +8,17 @@ import {
 
 /**
  * button() (src/wb-viewmodels/semantics/button.js) maps a native
- * <button size="…" variant="…">'s attributes to `.wb-button--{value}` modifier
+ * <button size="…" variant="…">'s attributes to `.x-button--{value}` modifier
  * CLASSES — a native <button> cannot be styled through the tag+attribute
- * selectors used for the real <wb-button> custom element. The behavior's
- * injected CSS once declared only `wb-button[size="sm"]`-style rules, so every
+ * selectors used for the real <button> custom element. The behavior's
+ * injected CSS once declared only `x-button[size="sm"]`-style rules, so every
  * class the JS added had no matching CSS and all sizes rendered identically.
  *
  * ─────────────────────────────────────────────────────────────────────────
  * WHY THIS SPEC WAS REWRITTEN (#752)
  *
  * It located buttons with `page.locator('button', { hasText: 'Small' })`
- * against the whole page. #664 removed the per-category <wb-demo> sections, so
+ * against the whole page. #664 removed the per-category <div x-demo> sections, so
  * those buttons no longer exist there — and `hasText: 'Primary'` now matches
  * the browse-list ROWS, whose variant column literally reads "primary".
  *
@@ -44,8 +44,8 @@ test.describe('Native <button> size/variant attributes actually apply', () => {
       // a native <button>, so the class is what makes the CSS apply at all.
       await expect(
         example(page),
-        `size="${size}" did not put wb-button--${size} on the rendered button`,
-      ).toHaveClass(new RegExp(`wb-button--${size}\\b`));
+        `size="${size}" did not put x-button--${size} on the rendered button`,
+      ).toHaveClass(new RegExp(`x-button--${size}\\b`));
 
       seen[size] = await exampleStyle(page, 'font-size');
     }
@@ -68,8 +68,8 @@ test.describe('Native <button> size/variant attributes actually apply', () => {
 
       await expect(
         example(page),
-        `variant="${variant}" did not put wb-button--${variant} on the rendered button`,
-      ).toHaveClass(new RegExp(`wb-button--${variant}\\b`));
+        `variant="${variant}" did not put x-button--${variant} on the rendered button`,
+      ).toHaveClass(new RegExp(`x-button--${variant}\\b`));
 
       seen[variant] = await exampleStyle(page, 'background-color');
     }

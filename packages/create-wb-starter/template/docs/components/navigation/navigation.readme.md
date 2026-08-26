@@ -23,29 +23,29 @@ Tabbed content interface with keyboard navigation and ARIA support.
 
 ```html
 <!-- Basic tabs -->
-<wb-tabs>
-  <wb-tab label="Home">Welcome to our site</wb-tab>
-  <wb-tab label="About">Learn more about us</wb-tab>
-  <wb-tab label="Contact">Get in touch</wb-tab>
-</wb-tabs>
+<div x-tabs>
+  <div label="Home">Welcome to our site</div>
+  <div label="About">Learn more about us</div>
+  <div label="Contact">Get in touch</div>
+</div>
 <!-- Pills variant -->
-<wb-tabs
+<div x-tabs
   variant="pills"
   active="1">
-  <wb-tab label="Tab 1">Content 1</wb-tab>
-  <wb-tab label="Tab 2">Content 2</wb-tab>
-</wb-tabs>
+  <div label="Tab 1">Content 1</div>
+  <div label="Tab 2">Content 2</div>
+</div>
 <!-- Vertical tabs -->
-<wb-tabs vertical>
-  <wb-tab label="Section A">Section A content</wb-tab>
-  <wb-tab label="Section B">Section B content</wb-tab>
-</wb-tabs>
+<div x-tabs vertical>
+  <div label="Section A">Section A content</div>
+  <div label="Section B">Section B content</div>
+</div>
 ```
 
 ### Programmatic API
 
 ```javascript
-const tabs = document.querySelector('wb-tabs');
+const tabs = document.querySelector('x-tabs');
 
 // Switch to tab by index
 tabs.setAttribute('active', '2');
@@ -74,20 +74,20 @@ Collapsible content sections with smooth animations.
 
 ```html
 <!-- Single accordion -->
-<wb-accordion>
-  <wb-accordion-item label="Section 1">
+<div x-accordion>
+  <div label="Section 1">
     <p>Content for section 1</p>
-  </wb-accordion-item>
-  <wb-accordion-item label="Section 2">
+  </div>
+  <div label="Section 2">
     <p>Content for section 2</p>
-  </wb-accordion-item>
-</wb-accordion>
+  </div>
+</div>
 <!-- Multiple sections open -->
-<wb-accordion multiple>
-  <wb-accordion-item label="FAQ 1">Answer 1</wb-accordion-item>
-  <wb-accordion-item label="FAQ 2">Answer 2</wb-accordion-item>
-  <wb-accordion-item label="FAQ 3">Answer 3</wb-accordion-item>
-</wb-accordion>
+<div x-accordion multiple>
+  <div label="FAQ 1">Answer 1</div>
+  <div label="FAQ 2">Answer 2</div>
+  <div label="FAQ 3">Answer 3</div>
+</div>
 ```
 
 ---
@@ -107,18 +107,18 @@ Navigation breadcrumb trail with semantic markup.
 
 ```html
 <!-- Simple breadcrumb -->
-<wb-breadcrumb>
-  <wb-breadcrumb-item href="/">Home</wb-breadcrumb-item>
-  <wb-breadcrumb-item href="/products">Products</wb-breadcrumb-item>
-  <wb-breadcrumb-item>Current Page</wb-breadcrumb-item>
-</wb-breadcrumb>
+<div x-breadcrumb>
+  <li href="/">Home</li>
+  <li href="/products">Products</li>
+  <li>Current Page</li>
+</div>
 <!-- With custom separator -->
-<wb-breadcrumb separator=">">
-  <wb-breadcrumb-item href="/">Home</wb-breadcrumb-item>
-  <wb-breadcrumb-item href="/docs">Documentation</wb-breadcrumb-item>
-  <wb-breadcrumb-item href="/docs/components">Components</wb-breadcrumb-item>
-  <wb-breadcrumb-item>Breadcrumb</wb-breadcrumb-item>
-</wb-breadcrumb>
+<div x-breadcrumb separator=">">
+  <li href="/">Home</li>
+  <li href="/docs">Documentation</li>
+  <li href="/docs/components">Components</li>
+  <li>Breadcrumb</li>
+</div>
 ```
 
 ---
@@ -139,23 +139,23 @@ Navigation menu with optional submenus.
 
 ```html
 <!-- Horizontal menu -->
-<wb-menu>
-  <wb-menu-item href="/">Home</wb-menu-item>
-  <wb-menu-item href="/about">About</wb-menu-item>
-  <wb-menu-item>
+<menu>
+  <li href="/">Home</li>
+  <li href="/about">About</li>
+  <li>
     <span slot="label">Products</span>
-    <wb-menu slot="submenu">
-      <wb-menu-item href="/products/a">Product A</wb-menu-item>
-      <wb-menu-item href="/products/b">Product B</wb-menu-item>
-    </wb-menu>
-  </wb-menu-item>
-</wb-menu>
+    <menu slot="submenu">
+      <li href="/products/a">Product A</li>
+      <li href="/products/b">Product B</li>
+    </menu>
+  </li>
+</menu>
 <!-- Vertical menu -->
-<wb-menu variant="vertical">
-  <wb-menu-item href="#dashboard">Dashboard</wb-menu-item>
-  <wb-menu-item href="#users">Users</wb-menu-item>
-  <wb-menu-item href="#settings">Settings</wb-menu-item>
-</wb-menu>
+<menu variant="vertical">
+  <li href="#dashboard">Dashboard</li>
+  <li href="#users">Users</li>
+  <li href="#settings">Settings</li>
+</menu>
 ```
 
 ---
@@ -180,28 +180,28 @@ Page navigation with customizable display options.
 
 ```html
 <!-- Basic pagination -->
-<wb-pagination
+<div x-pagination
   current="5"
   total="20">
-</wb-pagination>
+</div>
 <!-- Compact pagination -->
-<wb-pagination
+<div x-pagination
   current="3"
   total="8"
   siblings="0">
-</wb-pagination>
+</div>
 <!-- Full pagination -->
-<wb-pagination
+<div x-pagination
   current="10"
   total="50"
   siblings="2">
-</wb-pagination>
+</div>
 ```
 
 ### Programmatic API
 
 ```javascript
-const pagination = document.querySelector('wb-pagination');
+const pagination = document.querySelector('x-pagination');
 
 // Go to specific page
 pagination.setAttribute('current', '15');
@@ -232,20 +232,20 @@ Multi-step progress indicator for wizards and processes.
 
 ```html
 <!-- Horizontal stepper -->
-<wb-stepper current="2">
-  <wb-step label="Account Setup"></wb-step>
-  <wb-step label="Profile Information"></wb-step>
-  <wb-step label="Review & Submit"></wb-step>
-  <wb-step label="Complete"></wb-step>
-</wb-stepper>
+<div x-stepper current="2">
+  <li label="Account Setup"></li>
+  <li label="Profile Information"></li>
+  <li label="Review & Submit"></li>
+  <li label="Complete"></li>
+</div>
 <!-- Vertical stepper -->
-<wb-stepper
+<div x-stepper
   variant="vertical"
   current="3">
-  <wb-step label="Step 1">Step 1 content</wb-step>
-  <wb-step label="Step 2">Step 2 content</wb-step>
-  <wb-step label="Step 3">Step 3 content</wb-step>
-</wb-stepper>
+  <li label="Step 1">Step 1 content</li>
+  <li label="Step 2">Step 2 content</li>
+  <li label="Step 3">Step 3 content</li>
+</div>
 ```
 
 ### Step States
@@ -274,16 +274,16 @@ Simple numbered step indicator.
 
 ```html
 <!-- Basic steps -->
-<wb-steps
+<div x-steps
   total="5"
   current="3">
-</wb-steps>
+</div>
 <!-- Large steps -->
-<wb-steps
+<div x-steps
   total="4"
   current="2"
   size="lg">
-</wb-steps>
+</div>
 ```
 
 ---
@@ -304,13 +304,13 @@ Smooth scroll anchor link with offset support.
 
 ```html
 <!-- Basic anchor link -->
-<wb-link href="#section-2">Jump to Section 2</wb-link>
+<div href="#section-2">Jump to Section 2</div>
 <!-- With offset for fixed header -->
-<wb-link
+<div
   href="#features"
   offset="80">
   View Features
-</wb-link>
+</div>
 ```
 
 ---
@@ -332,14 +332,14 @@ Scroll to top button that appears after scrolling.
 
 ```html
 <!-- Basic back to top -->
-<wb-backtotop></wb-backtotop>
+<div></div>
 <!-- Custom threshold and icon -->
-<wb-backtotop
+<div
   threshold="500"
   icon="⬆️">
-</wb-backtotop>
+</div>
 <!-- Different position -->
-<wb-backtotop position="bottom-left"></wb-backtotop>
+<div position="bottom-left"></div>
 ```
 
 ---
@@ -441,6 +441,6 @@ Navigation components use CSS custom properties for theming:
 
 ## Implementation
 - **Components**: Located in `src/wb-viewmodels/` (tabs.js, accordion.js, menu.js, etc.)
-- **Styles**: [src/styles/components/navigation.css](../../src/styles/components/navigation.css)
+- **Styles**: [src/styles/components/navigation.css](../../../src/styles/behaviors/navbar.css)
 - **Schemas**: Navigation component schemas in `src/wb-models/`
 - **Tests**: Navigation tests in `tests/behaviors/ui/navigation.spec.ts`

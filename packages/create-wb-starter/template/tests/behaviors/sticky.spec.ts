@@ -39,9 +39,9 @@ test.describe('Sticky Behavior', () => {
     await page.waitForTimeout(200);
   });
 
-  test('adds wb-sticky class on init', async ({ page }) => {
+  test('adds x-sticky class on init', async ({ page }) => {
     const nav = page.locator('#stickyNav');
-    await expect(nav).toHaveClass(/wb-sticky/);
+    await expect(nav).toHaveClass(/x-sticky/);
   });
 
   test('becomes fixed when scrolled past trigger point', async ({ page }) => {

@@ -25,14 +25,14 @@ async function injectAndScan(page: Page, html: string) {
     container.innerHTML = h;
     
     // Force eager loading
-    const elements = container.querySelectorAll('.wb-ready');
+    const elements = container.querySelectorAll('.x-ready');
     elements.forEach(el => el.setAttribute('', ''));
     
     document.body.appendChild(container);
   }, html);
   
-  await page.evaluate(() => {
-    (window as any).WB.scan(document.getElementById('test-container'));
+  await page.evaluate(async () => {
+    await (window as any).WB.scan(document.getElementById('test-container'));
   });
   
   await page.waitForTimeout(500);
@@ -45,11 +45,11 @@ test.describe('resizable Behavior', () => {
     page.on('pageerror', (err) => errors.push(err.message));
     
     const setupHtml = [
-      "<wb-resizable>Basic resizable content</wb-resizable>",
-      "<wb-resizable handles=\"se\">handles=\"se\"</wb-resizable>",
-      "<wb-resizable>Test permutation 3</wb-resizable>",
-      "<wb-resizable>Test permutation 4</wb-resizable>",
-      "<wb-resizable>Test permutation 5</wb-resizable>"
+      "<div x-resizable>Basic resizable content</div>",
+      "<div x-resizable handles=\"se\">handles=\"se\"</div>",
+      "<div x-resizable>Test permutation 3</div>",
+      "<div x-resizable>Test permutation 4</div>",
+      "<div x-resizable>Test permutation 5</div>"
     ];
     
     await injectAndScan(page, setupHtml.join('\n'));
@@ -65,10 +65,10 @@ test.describe('resizable Behavior', () => {
   });
 
   test('element is visible after scan', async ({ page }) => {
-    const html = "<wb-resizable>Basic resizable content</wb-resizable>";
+    const html = "<div x-resizable>Basic resizable content</div>";
     await injectAndScan(page, html);
     
-    const el = page.locator('#test-container wb-resizable, #test-container wb-resizable').first();
+    const el = page.locator('#test-container [x-resizable], #test-container [x-resizable]').first();
     const isPresent = await el.count() > 0;
     
     if (isPresent) {

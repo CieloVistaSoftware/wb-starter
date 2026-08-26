@@ -7,7 +7,7 @@ Double-clicking on editable elements in the canvas allows direct WYSIWYG editing
 ## Editable Element Types
 
 ### 1. Text Elements (contenteditable)
-- Titles (`h1-h6`, `.wb-card__title`, etc.)
+- Titles (`h1-h6`, `.x-card__title`, etc.)
 - Paragraphs and descriptions
 - Button labels
 - List items
@@ -119,14 +119,14 @@ Components should mark their editable areas:
 function card(element) {
   // ... create card structure ...
   
-  const title = element.querySelector('.wb-card__title');
+  const title = element.querySelector('.x-card__title');
   if (title) {
     title.dataset.editable = 'text';
     title.dataset.editableKey = 'title';
     title.dataset.originalValue = title.textContent;
   }
   
-  const content = element.querySelector('.wb-card__content');
+  const content = element.querySelector('.x-card__content');
   if (content) {
     content.dataset.editable = 'text';
     content.dataset.editableKey = 'content';

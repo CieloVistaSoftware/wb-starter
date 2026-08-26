@@ -18,8 +18,8 @@ test.describe('Clickable Card Fix', () => {
     await card.click();
 
     // Check for toast notification
-    // The toast is created in a container .wb-toast-container
-    const toast = page.locator('.wb-toast-container div');
+    // The toast is created in a container .x-toast-container
+    const toast = page.locator('.x-toast-container div');
     await expect(toast).toBeVisible();
     await expect(toast).toContainText('Card clicked!');
   });

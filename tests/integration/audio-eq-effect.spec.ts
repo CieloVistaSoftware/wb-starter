@@ -17,20 +17,20 @@ test('Studio EQ Player: a band slider actually changes its filter gain (#233)', 
   // (IntersectionObserver) — content.html is now a long consolidated
   // category page, so the Studio EQ Player sits well below the fold at
   // load and never gets scanned unless explicitly scrolled into view.
-  await page.locator('wb-audio[playlist]').scrollIntoViewIfNeeded();
+  await page.locator('.x-audio[playlist]').scrollIntoViewIfNeeded();
   // WB scans/enhances asynchronously — wait for wbAudio to actually attach
   // (domcontentloaded alone is not enough and was flaky).
-  await page.waitForFunction(() => [...document.querySelectorAll('[class*="wb-audio"]')]
-    .some((el) => (el as any).wbAudio && el.querySelectorAll('.wb-audio__eq-slider').length > 5),
+  await page.waitForFunction(() => [...document.querySelectorAll('[class*=".x-audio"]')]
+    .some((el) => (el as any).wbAudio && el.querySelectorAll('.x-audio__eq-slider').length > 5),
     { timeout: 20000 });
 
   const result = await page.evaluate(() => {
-    const audioEls = [...document.querySelectorAll('[class*="wb-audio"]')]
+    const audioEls = [...document.querySelectorAll('[class*=".x-audio"]')]
       .filter((el) => (el as any).wbAudio);
-    const studio = audioEls.find((el) => el.querySelectorAll('.wb-audio__eq-slider').length > 5);
+    const studio = audioEls.find((el) => el.querySelectorAll('.x-audio__eq-slider').length > 5);
     if (!studio) return { found: false };
 
-    const slider = studio.querySelectorAll('.wb-audio__eq-slider')[3] as HTMLInputElement;
+    const slider = studio.querySelectorAll('.x-audio__eq-slider')[3] as HTMLInputElement;
     slider.value = '10';
     slider.dispatchEvent(new Event('input', { bubbles: true }));
 
@@ -48,15 +48,15 @@ test('Studio EQ Player: a preset applies its gain curve to the real filters (#23
   // (IntersectionObserver) — content.html is now a long consolidated
   // category page, so the Studio EQ Player sits well below the fold at
   // load and never gets scanned unless explicitly scrolled into view.
-  await page.locator('wb-audio[playlist]').scrollIntoViewIfNeeded();
-  await page.waitForFunction(() => [...document.querySelectorAll('[class*="wb-audio"]')]
-    .some((el) => (el as any).wbAudio && el.querySelectorAll('.wb-audio__eq-slider').length > 5),
+  await page.locator('.x-audio[playlist]').scrollIntoViewIfNeeded();
+  await page.waitForFunction(() => [...document.querySelectorAll('[class*=".x-audio"]')]
+    .some((el) => (el as any).wbAudio && el.querySelectorAll('.x-audio__eq-slider').length > 5),
     { timeout: 20000 });
 
   const gains = await page.evaluate(() => {
-    const audioEls = [...document.querySelectorAll('[class*="wb-audio"]')]
+    const audioEls = [...document.querySelectorAll('[class*=".x-audio"]')]
       .filter((el) => (el as any).wbAudio);
-    const studio = audioEls.find((el) => el.querySelectorAll('.wb-audio__eq-slider').length > 5);
+    const studio = audioEls.find((el) => el.querySelectorAll('.x-audio__eq-slider').length > 5);
     if (!studio) return null;
     const bassBtn = [...studio.querySelectorAll('button')].find((b) => /bass boost/i.test(b.textContent || ''));
     bassBtn?.dispatchEvent(new MouseEvent('click', { bubbles: true }));
@@ -73,15 +73,15 @@ test('Studio EQ Player: playlist attribute renders a track picker with all track
   // (IntersectionObserver) — content.html is now a long consolidated
   // category page, so the Studio EQ Player sits well below the fold at
   // load and never gets scanned unless explicitly scrolled into view.
-  await page.locator('wb-audio[playlist]').scrollIntoViewIfNeeded();
-  await page.waitForFunction(() => !!document.querySelector('.wb-audio__track-picker'), { timeout: 20000 });
+  await page.locator('.x-audio[playlist]').scrollIntoViewIfNeeded();
+  await page.waitForFunction(() => !!document.querySelector('.x-audio__track-picker'), { timeout: 20000 });
 
   const result = await page.evaluate(() => {
-    const picker = document.querySelector('.wb-audio__track-picker') as HTMLSelectElement;
+    const picker = document.querySelector('.x-audio__track-picker') as HTMLSelectElement;
     const before = picker.value;
     picker.value = '5';
     picker.dispatchEvent(new Event('change', { bubbles: true }));
-    const audioEl = picker.closest('wb-audio')!.querySelector('audio') as HTMLAudioElement;
+    const audioEl = picker.closest('.x-audio')!.querySelector('audio') as HTMLAudioElement;
     return { optionCount: picker.options.length, before, after: audioEl.src };
   });
 
@@ -109,12 +109,12 @@ test('Studio EQ Player: every playlist track actually loads (catches CORS-silent
   // (IntersectionObserver) — content.html is now a long consolidated
   // category page, so the Studio EQ Player sits well below the fold at
   // load and never gets scanned unless explicitly scrolled into view.
-  await page.locator('wb-audio[playlist]').scrollIntoViewIfNeeded();
-  await page.waitForFunction(() => !!document.querySelector('.wb-audio__track-picker'), { timeout: 20000 });
+  await page.locator('.x-audio[playlist]').scrollIntoViewIfNeeded();
+  await page.waitForFunction(() => !!document.querySelector('.x-audio__track-picker'), { timeout: 20000 });
 
   const results = await page.evaluate(async () => {
-    const picker = document.querySelector('.wb-audio__track-picker') as HTMLSelectElement;
-    const audioEl = picker.closest('wb-audio')!.querySelector('audio') as HTMLAudioElement;
+    const picker = document.querySelector('.x-audio__track-picker') as HTMLSelectElement;
+    const audioEl = picker.closest('.x-audio')!.querySelector('audio') as HTMLAudioElement;
 
     // Waits for one settle: 'error' is a real, immediate signal (CORS/404 —
     // the actual regression class this test exists to catch) and resolves

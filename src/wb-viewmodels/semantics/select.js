@@ -10,10 +10,10 @@ import { logError } from '../../core/error-logger.js';
  *     <option value="1">Option 1</option>
  *   </select>
  *
- * <wb-select> is a SUPERSET of <select>, not a replacement for it: given a
- * non-<select> host (the <wb-select> custom tag), this builds a real
+ * <div x-select> is a SUPERSET of <select>, not a replacement for it: given a
+ * non-<select> host (an element carrying the x-select attribute), this builds a real
  * <select>/<option> tree from the host's attributes, then re-invokes itself
- * on that real element so every wb-component and a bare <select> share
+ * on that real element so every x-component and a bare <select> share
  * IDENTICAL enhancement logic. This used to be schema-driven (select.schema.json's
  * $view built a fake dropdown out of <button>/<div>/<ul> -- no real <select>
  * anywhere in it, so keyboard nav/mobile picker/form submission/screen
@@ -32,37 +32,37 @@ export function select(element, options = {}) {
   const nativeVariant = options.variant || element.getAttribute('variant') || 'default';
   const nativeSize = options.size || element.getAttribute('size') || 'md';
   const appliedClasses = [];
-  if (nativeVariant !== 'default') appliedClasses.push(`wb-select--${nativeVariant}`);
+  if (nativeVariant !== 'default') appliedClasses.push(`x-select--${nativeVariant}`);
   // `size` on a native <select> is ALSO a real HTML attribute meaning "how many
   // rows to show", and it is numeric. Only treat it as a style token when it is
   // not a number, so <select size="4"> keeps its native meaning.
   if (nativeSize !== 'md' && !/^\d+$/.test(String(nativeSize))) {
-    appliedClasses.push(`wb-select--${nativeSize}`);
+    appliedClasses.push(`x-select--${nativeSize}`);
   }
   if (appliedClasses.length) element.classList.add(...appliedClasses);
 
   const clearable = options.clearable ?? element.hasAttribute('clearable');
 
-  if (clearable && !element.parentElement?.classList.contains('wb-select-clearable')) {
+  if (clearable && !element.parentElement?.classList.contains('x-select-clearable')) {
     const wrapper = document.createElement('div');
-    wrapper.className = 'wb-select-clearable';
+    wrapper.className = 'x-select-clearable';
     if (element.parentNode) {
       element.parentNode.insertBefore(wrapper, element);
     }
     wrapper.appendChild(element);
 
-    // #757 -- John: "way too large". This was a <wb-button>, so the button
-    // behavior styled it as a full button (wb-button--md is padding:1rem) and
+    // #757 -- John: "way too large". This was a <button>, so the button
+    // behavior styled it as a full button (x-button--md is padding:1rem) and
     // the clear affordance rendered as a blue square larger than the select it
-    // belonged to. There was also no CSS for .wb-select__clear anywhere, so
+    // belonged to. There was also no CSS for .x-select__clear anywhere, so
     // nothing reined it back in.
     //
     // A plain <button> -- the same choice input.js already makes for the same
-    // job -- takes the compact .wb-select__clear rule added in input.css
+    // job -- takes the compact .x-select__clear rule added in input.css
     // instead of the full button treatment.
     const clearBtn = document.createElement('button');
     clearBtn.type = 'button';
-    clearBtn.className = 'wb-select__clear';
+    clearBtn.className = 'x-select__clear';
     clearBtn.setAttribute('aria-label', 'Clear selection');
     clearBtn.textContent = '\u00d7';
     clearBtn.addEventListener('click', (e) => {
@@ -85,14 +85,14 @@ export function select(element, options = {}) {
 
 /**
  * Builds a real <select> (+ <option>s) inside a non-<select> host element
- * (the <wb-select> custom tag), then re-invokes select() on that real
+ * (an x-select host element), then re-invokes select() on that real
  * element so it gets the exact same clearable/API enhancement as a bare
  * <select> -- one code path, not a second implementation to drift from it.
  */
 function buildWbSelect(element, options) {
   // Idempotent: a MutationObserver re-visit must not rebuild on top of
   // structure we already built.
-  if (element.querySelector(':scope > select.wb-select__field')) return () => {};
+  if (element.querySelector(':scope > select.x-select__field')) return () => {};
 
   const label = options.label || element.getAttribute('label') || '';
   const placeholder = options.placeholder || element.getAttribute('placeholder') || 'Select...';
@@ -102,7 +102,7 @@ function buildWbSelect(element, options) {
   // BEFORE `element.innerHTML = ''` below wipes them -- that line used to
   // run first, silently destroying any authored <option> children with
   // nothing ever reading them first, so every documented
-  // <wb-select><option>...</option></wb-select> example rendered an empty
+  // <select><option>...</option></select> example rendered an empty
   // dropdown (confirmed live, #390).
   const childOptions = Array.from(element.querySelectorAll(':scope > option')).map((o) => ({
     value: o.getAttribute('value') ?? o.textContent.trim(),
@@ -154,16 +154,16 @@ function buildWbSelect(element, options) {
   const clearable = options.clearable ?? element.hasAttribute('clearable');
 
   element.innerHTML = '';
-  // #448: no bare 'wb-select' token -- input.css selects the `wb-select`
-  // TAG directly now (this container is only ever the <wb-select> custom
-  // tag itself; a native <select> takes the early-return branch above and
+  // #448: no bare '.x-select' token -- input.css selects the `.x-select`
+  // attribute-host directly now (this container is only ever an x-select
+  // host element; a native <select> takes the early-return branch above and
   // never reaches this function at all, so the class never mattered for it).
-  if (size !== 'md') element.classList.add(`wb-select--${size}`);
-  if (variant !== 'default') element.classList.add(`wb-select--${variant}`);
+  if (size !== 'md') element.classList.add(`x-select--${size}`);
+  if (variant !== 'default') element.classList.add(`x-select--${variant}`);
   // #497: the classes above only ever reached this HOST wrapper. The
-  // actually-visible control is the real <select class="wb-select__field">
-  // built below -- input.css's `.wb-select--*` size/variant rules are bare
-  // class selectors (not scoped to the `wb-select` tag), so they never
+  // actually-visible control is the real <select class="x-select__field">
+  // built below -- input.css's `.x-select--*` size/variant rules are bare
+  // class selectors (not scoped to the `.x-select` tag), so they never
   // matched anything on the host's *child*. Result: every size/variant
   // combination rendered the field with the same constant padding/
   // font-size/border-color (confirmed live -- "almost zero variation"
@@ -171,19 +171,19 @@ function buildWbSelect(element, options) {
   // itself lets the existing CSS rules match the element users actually
   // see, with zero CSS changes needed.
   const fieldClasses = [];
-  if (size !== 'md') fieldClasses.push(`wb-select--${size}`);
-  if (variant !== 'default') fieldClasses.push(`wb-select--${variant}`);
+  if (size !== 'md') fieldClasses.push(`x-select--${size}`);
+  if (variant !== 'default') fieldClasses.push(`x-select--${variant}`);
 
   let labelEl = null;
   if (label) {
     labelEl = document.createElement('label');
-    labelEl.className = 'wb-select__label';
+    labelEl.className = 'x-select__label';
     labelEl.textContent = label;
     element.appendChild(labelEl);
   }
 
   const sel = document.createElement('select');
-  sel.className = 'wb-select__field';
+  sel.className = 'x-select__field';
   if (fieldClasses.length) sel.classList.add(...fieldClasses);
   if (name) sel.name = name;
   if (multiple) sel.multiple = true;
@@ -208,7 +208,7 @@ function buildWbSelect(element, options) {
   });
 
   if (labelEl) {
-    const labelId = 'wb-select-label-' + Math.random().toString(36).slice(2, 9);
+    const labelId = 'x-select-label-' + Math.random().toString(36).slice(2, 9);
     labelEl.id = labelId;
     sel.setAttribute('aria-labelledby', labelId);
   }
@@ -221,7 +221,7 @@ function buildWbSelect(element, options) {
   return () => {
     if (cleanupField) cleanupField();
     element.innerHTML = '';
-    element.classList.remove(`wb-select--${size}`, `wb-select--${variant}`);
+    element.classList.remove(`x-select--${size}`, `x-select--${variant}`);
     delete element.wbSelect;
   };
 }

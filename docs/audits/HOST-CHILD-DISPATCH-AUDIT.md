@@ -1,7 +1,7 @@
 # Host/Child Dispatch Audit — schema-built native elements vs. their behavior JS
 
 **Date:** 2026-07-17
-**Trigger:** Found while fixing #360 (wb-select) and #361 (wb-switch) — both turned
+**Trigger:** Found while fixing #360 (x-select) and #361 (x-switch) — both turned
 out to be instances of the same underlying architecture bug, not one-off mistakes.
 **Scope:** Every schema in `src/wb-models/*.schema.json` whose `$view` builds a real
 native form/interactive element (`input`, `select`, `textarea`, `button`) as a child
@@ -24,13 +24,13 @@ That collision breaks in three distinct ways, all seen live this session:
    `element` IS the real native element. When dispatched a second time on the HOST
    (which is not that native tag), it either does something structurally wrong to the
    host, or silently no-ops and nothing ever reflects the host's own attributes onto
-   the real child it built. *(wb-input, wb-textarea)*
+   the real child it built. *(x-input, x-textarea)*
 2. **Missing type/attribute on the schema's own `$view` node** causes the built
    child to fail to match its OWN intended nativeMap entry, so it instead falls
-   through to a more generic one that visually clobbers it. *(wb-switch, wb-checkbox)*
+   through to a more generic one that visually clobbers it. *(x-switch, x-checkbox)*
 3. **Cross-behavior collision.** A DIFFERENT nativeMap behavior (not the host's own)
    matches the schema-built child too, and that unrelated behavior's CSS/JS wins the
-   cascade or overwrites structure. *(wb-switch's input also matching `checkbox.js`)*
+   cascade or overwrites structure. *(x-switch's input also matching `checkbox.js`)*
 
 `<select>`'s original bug (#360) was a fourth, more severe variant: the schema
 never built a real `<select>` at all (a fake `<button>`/`<div>`/`<ul>` widget), so
@@ -62,14 +62,14 @@ skip live verification.
   `select(sel, {clearable})` on it directly (line 127) — if a MutationObserver
   separately re-visits that newly-inserted real `<select>` via `nativeMap['select']`
   and dispatches `select()` on it a second time, `clearable: true` would build a
-  second nested `.wb-select-clearable` wrapper around the first. Needs a test with
-  `<wb-select clearable options='...'>` checking for exactly one `.wb-select-clearable`.
+  second nested `.x-select-clearable` wrapper around the first. Needs a test with
+  `<select clearable options='...'>` checking for exactly one `.x-select-clearable`.
 - **`<div x-notes>`**: `notes.schema.json` declares a `$view` with a `textarea` node, but
   `notes.js` (`src/wb-viewmodels/notes.js`) builds its entire DOM itself from
   `element.dataset.*`, the same self-sufficient pattern as the card family
   (`SCHEMA_EXCLUDED_TAGS` in `schema-builder.js`). `<div x-notes>` is **not** currently in
   that exclusion list. If schema-builder processes it before `notes()` runs, this may
-  be the exact race `schema-builder.js`'s own comments describe for wb-card/wb-skeleton
+  be the exact race `schema-builder.js`'s own comments describe for x-card/x-skeleton
   (schema builds first, then the behavior's own unconditional rebuild either races it
   or silently discards it) — or `notes.js` may already tolerate it. Unverified.
 - **`<table>`**: separate from this pattern, but same root cause category —
@@ -86,7 +86,7 @@ skip live verification.
 
 - **`<div x-searchfield>`** — `search.js` already explicitly builds/wraps its own child
   `<input>` and delegates to `search()`; `input.js` has a dedicated guard
-  (`element.closest('.wb-search__wrapper, .wb-password')`) specifically to skip that
+  (`element.closest('.x-search__wrapper, .x-password')`) specifically to skip that
   input. Already correctly architected (confirmed via #279 per existing code
   comments).
 - **`<audio>`** — `audio.js` already branches on `element.tagName !== 'AUDIO'` the
@@ -96,7 +96,7 @@ skip live verification.
   native semantic element to be a superset of. Not in scope for this pattern.
 - **Card family, `<div x-cardbutton>`, `<div x-cardexpandable>`, `<div x-cardminimizable>`,
   `<div x-cardnotification>`, `<div x-cardproduct>`, `<div x-chip>`, `<div x-confetti>`, `<dialog>`
-  (close button), `<div x-drawer>`, `wb-drawerLayout`, `<nav x-navbar>`, `<div x-snow>`,
+  (close button), `<div x-drawer>`, `x-drawerLayout`, `<nav x-navbar>`, `<div x-snow>`,
   `<div x-fireworks>`, `<div x-toast>`** — all build a `<button>` child via schema, but their
   own `schemaFor` is a *different* name than `button` (e.g. `cardbutton`, not
   `button`), so there's no same-name self-collision. The generic `button` behavior
@@ -107,7 +107,7 @@ skip live verification.
 
 ## Follow-up: the observer schema-build race (#362)
 
-Fixing #362 (wb-textarea) surfaced a fourth, more general failure mode than the three
+Fixing #362 (x-textarea) surfaced a fourth, more general failure mode than the three
 in the pattern above — and it's specific to *how a component was inserted*, not to
 any one schema:
 
@@ -128,7 +128,7 @@ inherently racy for elements inserted via `appendChild` rather than passed throu
 `placeholder`/`rows`/`name`/`variant` **declaratively in the schema's own `$view`**
 via `{{...}}` attribute interpolation (schema-builder.js already supports this — the
 same mechanism `content: "{{label}}"` uses) instead of reflecting them from JS after
-the fact. **Prefer this approach for #366 (wb-checkbox) and #367 (wb-input) too**,
+the fact. **Prefer this approach for #366 (x-checkbox) and #367 (x-input) too**,
 wherever the value being reflected is a plain attribute the schema can template
 directly — it sidesteps the observer race by construction, rather than needing to
 outrun it.
@@ -148,11 +148,11 @@ showed both are false positives — see the test file's own header comment for t
 full reasoning. Chasing why `<button>` looked incomplete surfaced two more real,
 separate bugs:
 
-- **[#368](https://github.com/CieloVistaSoftware/wb-starter/issues/368) — wb-button
+- **[#368](https://github.com/CieloVistaSoftware/wb-starter/issues/368) — x-button
   never activated on Enter/Space.** `role="button"` + `tabindex="0"` is a legitimate
   ARIA-widget pattern, but the WAI-ARIA button contract also requires wiring
   keyboard activation, which `button.js` never did. **Fixed** — closed, validated by
-  `tests/regression/wb-button-keyboard-activation.spec.ts`.
+  `tests/regression/x-button-keyboard-activation.spec.ts`.
 - **[#369](https://github.com/CieloVistaSoftware/wb-starter/issues/369) — `<div x-badge>`,
   `<button>`, `<article>` tag names are claimed by the unrelated WB Views registry.**
   `src/wb-views/views-registry.json` (a separate generic templating feature) had its
@@ -166,7 +166,7 @@ separate bugs:
   `registerViewAsElement()` that refuses to claim a tag name already in `tag-map.js`'s
   `elementMap`; added `tests/compliance/wb-views-tag-collision.spec.ts` (static, no
   browser) so any future view name that collides fails CI immediately. Verified live
-  that `customElements.get('wb-button'|'wb-badge'|'wb-card')` are now all `null`.
+  that `customElements.get('x-button'|'x-badge'|'x-card')` are now all `null`.
 
 ## Recommendation
 
@@ -181,6 +181,6 @@ Remaining, in priority order:
    `variant`/`size` are still not read on the real input's own dispatch path
    (deliberately left out of #367's scope — file only if reported live).
 
-Done: #360 (wb-select), #361 (wb-switch), #362 (wb-textarea), #366 (wb-checkbox),
-#367 (wb-input), #368 (wb-button keyboard), #369 (wb-views tag collision). All 7
+Done: #360 (x-select), #361 (x-switch), #362 (x-textarea), #366 (x-checkbox),
+#367 (x-input), #368 (x-button keyboard), #369 (wb-views tag collision). All 7
 originally-confirmed items in this audit are now fixed and closed.

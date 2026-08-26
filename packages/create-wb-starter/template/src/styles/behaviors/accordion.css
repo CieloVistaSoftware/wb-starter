@@ -6,20 +6,20 @@
  * -----------------------------------------------------------------------------
  */
 
-.wb-accordion-item {
+.x-accordion-item {
   border: 1px solid var(--border-color);
   margin-top: -1px;
 }
 
-.wb-accordion-item:first-child {
+.x-accordion-item:first-child {
   border-radius: 6px 6px 0 0;
 }
 
-.wb-accordion-item:last-child {
+.x-accordion-item:last-child {
   border-radius: 0 0 6px 6px;
 }
 
-.wb-accordion-head {
+.x-accordion-head {
   padding: 0.75rem;
   background: var(--bg-secondary);
   cursor: pointer;
@@ -28,12 +28,12 @@
   font-size: 0.85rem;
 }
 
-.wb-accordion-body {
+.x-accordion-body {
   padding: 0.75rem;
   display: none;
   font-size: 0.85rem;
 }
 
-.wb-accordion-item.open .wb-accordion-body {
+.x-accordion-item.open .x-accordion-body {
   display: block;
 }

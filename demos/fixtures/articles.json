@@ -1,0 +1,5 @@
+[
+  { "title": "On Engines", "author": "Ada Lovelace", "category": "Computing", "date": "1843-10-01" },
+  { "title": "On Looms", "author": "Joseph Jacquard", "category": "Textiles", "date": "1804-01-01" },
+  { "title": "On Notation", "author": "Charles Babbage", "category": "Computing", "date": "1826-01-01" }
+]

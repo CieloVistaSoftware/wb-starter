@@ -20,7 +20,7 @@
  * Usage:
  *   npm run test:async                              → suite (all)
  *   npm run test:async -- --project=compliance      → suite (filtered)
- *   npm run test:async -- --grep "wb-card"          → suite (filtered)
+ *   npm run test:async -- --grep "x-card"          → suite (filtered)
  *   npm run test:async -- tests/behaviors/badge.spec.ts  → single (parallel)
  *   npm run test:async -- --stop                          → stop running suite
  * 

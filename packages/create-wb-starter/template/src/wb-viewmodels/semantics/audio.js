@@ -1,3 +1,4 @@
+import { readFlag, readAttr } from '../../core/read-attr.js';
 /**
  * Audio - Enhanced <audio> element with 15-Band Graphic Equalizer
  * Premium audio player with Web Audio API EQ, presets, and master volume
@@ -28,13 +29,48 @@ export function audio(element, options = {}) {
   function attr(name) {
     return element.getAttribute(name) ?? element.dataset[name.replace(/-([a-z])/g, (_, c) => c.toUpperCase())] ?? null;
   }
+  // Three-state read: TRUE when present, FALSE when explicitly ="false",
+  // undefined when absent (#669). hasAttribute() alone is not enough -- a bare
+  // attribute and one set to "false" are both "present", so
+  // showplaybutton="false" read as TRUE and the flag could never turn anything
+  // off, which is exactly what John saw.
+  const triState = (names) => {
+    for (const n of names) {
+      if (!element.hasAttribute(n)) continue;
+      const v = (element.getAttribute(n) || '').trim().toLowerCase();
+      return v === 'false' ? false : true;
+    }
+    return undefined;
+  };
+
   const config = {
-    src: options.src || attr('src') || '',
+    // Standard HTML5 pattern: a src-less <audio> with one or more <source
+    // src="..."> children is valid markup the native browser plays fine --
+    // the src attribute is just the shorthand for a single source. Fall
+    // back to the first <source>'s src before concluding there's nothing
+    // to play (confirmed live: demos/autoinject.html's 4 audio players use
+    // exactly this <source>-child pattern and threw "no src provided"
+    // despite each having a real, working <source src="...">).
+    src: options.src || attr('src') || element.querySelector('source[src]')?.getAttribute('src') || '',
     controls: options.controls ?? attr('controls') !== 'false',
-    autoplay: options.autoplay ?? (element.hasAttribute('autoplay') || element.hasAttribute('data-autoplay')),
-    loop: options.loop ?? (element.hasAttribute('loop') || element.hasAttribute('data-loop')),
+    autoplay: options.autoplay ?? (element.hasAttribute('autoplay') || readFlag(element, 'autoplay')),
+    loop: options.loop ?? (element.hasAttribute('loop') || readFlag(element, 'loop')),
     volume: parseFloat(options.volume || attr('volume') || '0.8'),
-    showEq: options.showEq ?? (element.hasAttribute('show-eq') || element.hasAttribute('data-show-eq') || attr('show-eq') === 'true' || element.dataset.showEq === 'true'),
+    // #669 -- accept BOTH spellings. audio.schema.json publishes `showEq`,
+    // this code only ever read `show-eq`, so the documented name silently did
+    // nothing. Plain-first, data- fallback, matching the established pattern.
+    showEq: options.showEq ?? (
+      element.hasAttribute('show-eq') || element.hasAttribute('showeq') ||
+      readFlag(element, 'show-eq') ||
+      attr('show-eq') === 'true' || readAttr(element, 'showEq') === 'true'
+    ),
+    // #669 -- showDisplay and showPlayButton were declared in the schema and
+    // read NOWHERE, so <audio showdisplay> did nothing at all (John reported
+    // exactly that). They default to TRUE so every existing custom-UI player
+    // keeps its display and play button unchanged; setting either explicitly
+    // is what now also opts a plain <audio> into the custom transport below.
+    showDisplay: options.showDisplay ?? triState(['show-display', 'showdisplay', 'data-show-display']),
+    showPlayButton: options.showPlayButton ?? triState(['show-play-button', 'showplaybutton', 'data-show-play-button']),
     // Optional track picker: playlist="url1|Title 1,url2|Title 2,..." (same
     // comma-separated-values convention as x-breadcrumb/x-timeline's `items`).
     // Falls back to the current single static track-name display when absent.
@@ -49,13 +85,24 @@ export function audio(element, options = {}) {
     ...options
   };
 
+  // A missing src never reaches the native 'error' listener below -- an
+  // <audio>/<audio> with no src attribute simply has nothing to load,
+  // so the browser never fires 'error' on it. That let a src-less
+  // instance build a fully-dressed, silently non-functional player with
+  // no visible signal anything was wrong. Fail loud and immediately
+  // instead, matching how every other real load failure in this file
+  // already throws.
+  if (!config.src) {
+    throw new Error('x-audio: no src provided -- nothing to play. Add a src attribute.');
+  }
+
   injectAudioStyles();
-  // #448: skip the class on a literal <wb-audio> host -- audio.css selects
-  // the `wb-audio` TAG directly for that case now. Still added for a
+  // #448: skip the class on a literal <audio> host -- audio.css selects
+  // the `x-audio` TAG directly for that case now. Still added for a
   // native <audio> host (autoInject's native.audio entry, tag 'audio' !==
-  // 'wb-audio'), since audio.css's `.wb-audio` rules still select it by
+  // 'x-audio'), since audio.css's `.x-audio` rules still select it by
   // class.
-  if (element.tagName.toLowerCase() !== 'wb-audio') element.classList.add('wb-audio');
+  if (element.tagName.toLowerCase() !== 'x-audio') element.classList.add('x-audio');
   
   // Dark studio look
   Object.assign(element.style, {
@@ -96,7 +143,7 @@ export function audio(element, options = {}) {
   // a 404, a network failure, and a 0-byte/corrupt file all fire the native
   // 'error' event on the media element (a 0-byte file fails to decode,
   // MEDIA_ERR_SRC_NOT_SUPPORTED). Silently doing nothing here previously let
-  // broken audio sources ship undetected (confirmed live: several <wb-audio>
+  // broken audio sources ship undetected (confirmed live: several <audio>
   // instances pointed at empty placeholder files).
   //
   // audio() has no cleanup path: a second call on the same host (a lazy
@@ -118,6 +165,7 @@ export function audio(element, options = {}) {
   // keeps the song playable; the EQ just won't have any visible effect on
   // this specific source (a strictly better trade than "nothing plays").
   let corsFallbackTried = false;
+  let genericRetryTried = false;
   audioEl.addEventListener('error', () => {
     if (!document.contains(audioEl)) return;
     if (!corsFallbackTried && audioEl.crossOrigin && config.src) {
@@ -129,18 +177,37 @@ export function audio(element, options = {}) {
       audioEl.src = config.src;
       return;
     }
+    // A single transient network blip (confirmed live: a src whose URL
+    // resolves fine via a direct HTTP check -- correct content-type,
+    // correct byte length -- still occasionally throws MEDIA_ERR_SRC_NOT_
+    // SUPPORTED on first load, no crossOrigin involved) shouldn't
+    // permanently brand a genuinely intact source as broken. Same
+    // reasoning as the crossOrigin retry above, generalized: one plain
+    // reload before giving up, capped so a truly missing/corrupt file
+    // still throws instead of retrying forever.
+    if (!genericRetryTried && config.src) {
+      genericRetryTried = true;
+      console.warn(`[WB Audio] "${config.src}" failed to load (transient?) -- retrying once before reporting it broken.`);
+      audioEl.src = '';
+      audioEl.src = config.src;
+      return;
+    }
     const mediaError = audioEl.error;
     const reason = mediaError ? `code ${mediaError.code} (${mediaError.message || 'no message'})` : 'unknown';
-    throw new Error(`wb-audio: failed to load src "${config.src}" -- ${reason}. The file is missing, unreachable, or has no real content (0 bytes).`);
+    throw new Error(`x-audio: failed to load src "${config.src}" -- ${reason}. The file is missing, unreachable, or has no real content (0 bytes).`);
   });
 
   // Only replace with the custom Marantz transport when the author actually
-  // asked for the enhanced UI: the <wb-audio> custom tag (which has nothing
+  // asked for the enhanced UI: the <audio> custom tag (which has nothing
   // native to fall back to), or show-eq (which needs the custom UI to expose
   // the slider controls). A plain native <audio controls> with neither of
   // those was getting unconditionally hidden and replaced here, silently
   // discarding its native controls for demos that wanted to show them.
-  const needsCustomUI = element.tagName !== 'AUDIO' || config.showEq;
+  // #669: an explicitly requested display or play button is a request for the
+  // custom transport. Without this a plain <audio showdisplay> fell straight
+  // through to native controls and the flag was inert.
+  const needsCustomUI = element.tagName !== 'AUDIO' || config.showEq ||
+    config.showDisplay === true || config.showPlayButton === true;
   if (needsCustomUI && audioEl.tagName === 'AUDIO') {
     audioEl.style.display = 'none';
   }
@@ -232,18 +299,42 @@ export function audio(element, options = {}) {
   };
 
   return () => {
-    element.classList.remove('wb-audio');
+    element.classList.remove('x-audio');
     if (audioContext) audioContext.close();
   };
 }
 
+/**
+ * Where the custom UI may be appended.
+ *
+ * #669: a native <audio> element's children are FALLBACK CONTENT -- the browser
+ * never renders them. Appending the transport/EQ into `element` therefore built
+ * a complete, correct UI that was invisible: present in the DOM, computed
+ * display:none via its parent, 0x0 on screen. It worked on <audio> (a custom
+ * element, whose children do render), which is exactly why DOM-presence checks
+ * passed while nothing appeared.
+ *
+ * For a native <audio>, wrap it once and mount the UI as a SIBLING inside that
+ * wrapper. Idempotent: repeated calls reuse the wrapper rather than nesting.
+ */
+function uiHost(element) {
+  if (element.tagName !== 'AUDIO') return element;
+  const existing = element.parentElement;
+  if (existing && existing.classList.contains('x-audio-host')) return existing;
+  const wrapper = element.ownerDocument.createElement('div');
+  wrapper.className = 'x-audio-host x-audio';
+  element.replaceWith(wrapper);
+  wrapper.appendChild(element);
+  return wrapper;
+}
+
 function buildTransportUI(element, audioEl, config) {
   const transport = document.createElement('div');
-  transport.className = 'wb-audio__transport';
+  transport.className = 'x-audio__transport';
 
   // Play/Pause button
   const playBtn = document.createElement('button');
-  playBtn.className = 'wb-audio__play-btn';
+  playBtn.className = 'x-audio__play-btn';
   playBtn.setAttribute('aria-label', 'Play');
   playBtn.innerHTML = '&#9654;'; // ▶
   playBtn.onclick = () => {
@@ -254,7 +345,7 @@ function buildTransportUI(element, audioEl, config) {
     const p = audioEl.play();
     if (p && typeof p.catch === 'function') {
       p.catch((err) => {
-        console.warn('[wb-audio] playback failed:', err && err.message);
+        console.warn('[x-audio] playback failed:', err && err.message);
         playBtn.setAttribute('aria-label', 'Audio source unavailable');
         playBtn.title = 'Audio source unavailable';
       });
@@ -264,19 +355,21 @@ function buildTransportUI(element, audioEl, config) {
   audioEl.addEventListener('play', () => {
     playBtn.innerHTML = '&#9646;&#9646;'; // ❚❚
     playBtn.setAttribute('aria-label', 'Pause');
-    playBtn.classList.add('wb-audio__play-btn--playing');
+    playBtn.classList.add('x-audio__play-btn--playing');
   });
   audioEl.addEventListener('pause', () => {
     playBtn.innerHTML = '&#9654;'; // ▶
     playBtn.setAttribute('aria-label', 'Play');
-    playBtn.classList.remove('wb-audio__play-btn--playing');
+    playBtn.classList.remove('x-audio__play-btn--playing');
   });
 
-  transport.appendChild(playBtn);
+  // #669: showPlayButton === false hides it. Undefined means "not specified",
+  // which keeps the long-standing default of showing it.
+  if (config.showPlayButton !== false) transport.appendChild(playBtn);
 
   // Marantz-style display
   const display = document.createElement('div');
-  display.className = 'wb-audio__display';
+  display.className = 'x-audio__display';
 
   const trackNameFromSrc = (src) => src
     ? decodeURIComponent(src.split('/').pop().replace(/\.[^.]+$/, '').replace(/[-_]/g, ' '))
@@ -287,7 +380,7 @@ function buildTransportUI(element, audioEl, config) {
     // static text it replaces. Switching tracks loads the new src; playback
     // state (playing vs paused) carries over.
     const picker = document.createElement('select');
-    picker.className = 'wb-audio__display-text wb-audio__track-picker';
+    picker.className = 'x-audio__display-text x-audio__track-picker';
     config.playlist.forEach((track, i) => {
       const opt = document.createElement('option');
       opt.value = String(i);
@@ -306,14 +399,14 @@ function buildTransportUI(element, audioEl, config) {
     display.appendChild(picker);
   } else {
     const displayText = document.createElement('div');
-    displayText.className = 'wb-audio__display-text';
+    displayText.className = 'x-audio__display-text';
     displayText.textContent = trackNameFromSrc(config.src);
     display.appendChild(displayText);
   }
 
   // Time display
   const timeDisplay = document.createElement('div');
-  timeDisplay.className = 'wb-audio__display-time';
+  timeDisplay.className = 'x-audio__display-time';
   timeDisplay.textContent = '0:00 / 0:00';
   display.appendChild(timeDisplay);
 
@@ -332,18 +425,19 @@ function buildTransportUI(element, audioEl, config) {
     timeDisplay.textContent = '0:00 / ' + formatTime(audioEl.duration);
   });
 
-  transport.appendChild(display);
+  // #669: same for the Marantz-style display.
+  if (config.showDisplay !== false) transport.appendChild(display);
 
   // Volume knob area
   const volArea = document.createElement('div');
-  volArea.className = 'wb-audio__transport-vol';
+  volArea.className = 'x-audio__transport-vol';
   const volIcon = document.createElement('span');
-  volIcon.className = 'wb-audio__vol-icon';
+  volIcon.className = 'x-audio__vol-icon';
   volIcon.textContent = '\uD83D\uDD0A'; // 🔊
   volArea.appendChild(volIcon);
   transport.appendChild(volArea);
 
-  element.appendChild(transport);
+  uiHost(element).appendChild(transport);
 }
 
 function buildEqUI(element, audioEl, config, initAudioContext, filters) {
@@ -369,7 +463,7 @@ function buildEqUI(element, audioEl, config, initAudioContext, filters) {
   }
 
   const eqContainer = document.createElement('div');
-  eqContainer.className = 'wb-audio__eq-container';
+  eqContainer.className = 'x-audio__eq-container';
   Object.assign(eqContainer.style, {
     background: 'linear-gradient(180deg, rgba(0,0,0,0.4) 0%, rgba(0,0,0,0.2) 100%)',
     borderRadius: '12px',
@@ -402,7 +496,7 @@ function buildEqUI(element, audioEl, config, initAudioContext, filters) {
 
   // 'Zero All' removed — identical to the 'Flat' preset below (all-zero gains),
   // just a redundant second button for the same action.
-  // 'Demo Track' removed — swapped in demos/sample.wav regardless of the
+  // 'Demo Track' removed — swapped in https://archive.org/download/nineinchnails_ghosts_I_IV/01_Ghosts_I.mp3 regardless of the
   // author's chosen src, and that file has had its own load reliability
   // issues; a preset button silently changing the loaded track is also
   // surprising UX.
@@ -441,7 +535,7 @@ function buildEqUI(element, audioEl, config, initAudioContext, filters) {
   // Volume control
   const volumeRow = createVolumeRow(audioEl, config);
   eqContainer.appendChild(volumeRow);
-  element.appendChild(eqContainer);
+  uiHost(element).appendChild(eqContainer);
 }
 
 function createPresetButton(text) {
@@ -498,7 +592,7 @@ function createBandSlider(band, index, initAudioContext, filters, updateSliderVi
   slider.min = -12;
   slider.max = 12;
   slider.value = 0;
-  slider.className = 'wb-audio__eq-slider';
+  slider.className = 'x-audio__eq-slider';
   Object.assign(slider.style, {
     width: '120px', height: '24px', transform: 'rotate(-90deg)',
     transformOrigin: 'center center', position: 'absolute',
@@ -556,7 +650,7 @@ function createVolumeRow(audioEl, config) {
     const p = audioEl.play();
     if (p && typeof p.catch === 'function') {
       p.catch((err) => {
-        console.warn('[wb-audio] playback failed:', err && err.message);
+        console.warn('[x-audio] playback failed:', err && err.message);
         playBtn.setAttribute('aria-label', 'Audio source unavailable');
         playBtn.title = 'Audio source unavailable';
       });
@@ -576,7 +670,7 @@ function createVolumeRow(audioEl, config) {
   volSlider.min = 0;
   volSlider.max = 100;
   volSlider.value = config.volume * 100;
-  volSlider.className = 'wb-audio__master-vol';
+  volSlider.className = 'x-audio__master-vol';
   Object.assign(volSlider.style, { flex: '1', height: '8px', cursor: 'pointer' });
   volumeRow.appendChild(volSlider);
 
@@ -597,26 +691,26 @@ function createVolumeRow(audioEl, config) {
 }
 
 function injectAudioStyles() {
-  if (document.getElementById('wb-audio-eq-css')) return;
+  if (document.getElementById('x-audio-eq-css')) return;
   
   const style = document.createElement('style');
-  style.id = 'wb-audio-eq-css';
+  style.id = 'x-audio-eq-css';
   style.textContent = `
-    .wb-audio__eq-slider {
+    .x-audio__eq-slider {
       -webkit-appearance: none;
       appearance: none;
       background: transparent;
     }
-    .wb-audio__eq-slider:focus { outline: none; }
-    .wb-audio__eq-slider::-webkit-slider-runnable-track {
+    .x-audio__eq-slider:focus { outline: none; }
+    .x-audio__eq-slider::-webkit-slider-runnable-track {
       width: 100%; height: 8px;
       background: linear-gradient(90deg, rgba(99,102,241,0.2) 0%, rgba(139,92,246,0.3) 50%, rgba(99,102,241,0.2) 100%);
       border-radius: 4px; border: 1px solid rgba(255,255,255,0.1);
     }
-    .wb-audio__eq-slider::-moz-range-track {
+    .x-audio__eq-slider::-moz-range-track {
       width: 100%; height: 8px; background: rgba(99,102,241,0.2); border-radius: 4px;
     }
-    .wb-audio__eq-slider::-webkit-slider-thumb {
+    .x-audio__eq-slider::-webkit-slider-thumb {
       -webkit-appearance: none; width: 20px; height: 20px; margin-top: -6px;
       border-radius: 50%; cursor: grab;
       background: radial-gradient(ellipse 60% 40% at 30% 25%, rgba(255,255,255,0.9) 0%, transparent 50%),
@@ -626,44 +720,44 @@ function injectAudioStyles() {
       box-shadow: 0 2px 8px rgba(0,0,0,0.5), 0 0 12px rgba(99,102,241,0.3), inset 0 1px 2px rgba(255,255,255,0.8);
       transition: all 0.1s ease;
     }
-    .wb-audio__eq-slider::-webkit-slider-thumb:hover {
+    .x-audio__eq-slider::-webkit-slider-thumb:hover {
       transform: scale(1.15);
       box-shadow: 0 4px 12px rgba(0,0,0,0.6), 0 0 20px rgba(99,102,241,0.5), inset 0 1px 2px rgba(255,255,255,0.9);
     }
-    .wb-audio__eq-slider::-webkit-slider-thumb:active { cursor: grabbing; transform: scale(1.1); }
-    .wb-audio__eq-slider::-moz-range-thumb {
+    .x-audio__eq-slider::-webkit-slider-thumb:active { cursor: grabbing; transform: scale(1.1); }
+    .x-audio__eq-slider::-moz-range-thumb {
       width: 20px; height: 20px; border-radius: 50%; cursor: grab;
       background: linear-gradient(180deg, #f8f8ff 0%, #8888b0 60%, #5858a0 100%);
       border: 1px solid rgba(255,255,255,0.3);
       box-shadow: 0 2px 8px rgba(0,0,0,0.5), 0 0 12px rgba(99,102,241,0.3);
     }
-    .wb-audio__master-vol {
+    .x-audio__master-vol {
       -webkit-appearance: none; appearance: none;
       background: linear-gradient(90deg, #1e293b 0%, #334155 100%);
       border-radius: 4px; border: 1px solid rgba(255,255,255,0.1);
     }
-    .wb-audio__master-vol::-webkit-slider-thumb {
+    .x-audio__master-vol::-webkit-slider-thumb {
       -webkit-appearance: none; width: 18px; height: 18px; border-radius: 50%;
       background: radial-gradient(ellipse 60% 40% at 30% 25%, rgba(255,255,255,0.9) 0%, transparent 50%),
                   linear-gradient(180deg, #60a5fa 0%, #3b82f6 50%, #2563eb 100%);
       border: 2px solid rgba(59,130,246,0.5);
       box-shadow: 0 2px 8px rgba(0,0,0,0.4), 0 0 15px rgba(59,130,246,0.4); cursor: pointer;
     }
-    .wb-audio__master-vol::-webkit-slider-thumb:hover {
+    .x-audio__master-vol::-webkit-slider-thumb:hover {
       transform: scale(1.1);
       box-shadow: 0 4px 12px rgba(0,0,0,0.5), 0 0 25px rgba(59,130,246,0.6);
     }
-    .wb-audio__master-vol::-moz-range-thumb {
+    .x-audio__master-vol::-moz-range-thumb {
       width: 18px; height: 18px; border-radius: 50%;
       background: linear-gradient(180deg, #60a5fa 0%, #2563eb 100%);
       border: 2px solid rgba(59,130,246,0.5);
       box-shadow: 0 2px 8px rgba(0,0,0,0.4); cursor: pointer;
     }
-    [data-theme="light"] .wb-audio {
+    [data-theme="light"] .x-audio {
       background: linear-gradient(145deg, #e8e8f0 0%, #d8d8e8 50%, #c8c8d8 100%) !important;
       box-shadow: 0 10px 40px rgba(0,0,0,0.15) !important;
     }
-    [data-theme="light"] .wb-audio__eq-container { background: rgba(0,0,0,0.05) !important; }
+    [data-theme="light"] .x-audio__eq-container { background: rgba(0,0,0,0.05) !important; }
   `;
   document.head.appendChild(style);
 }

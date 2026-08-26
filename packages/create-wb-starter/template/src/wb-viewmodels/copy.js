@@ -48,7 +48,7 @@ export function copy(element, options = {}) {
   const config = {
     // copy.schema.json declares plain `text`/`target` (Law 11/v3 canonical
     // attributes) -- the copy-text/copy-target legacy names below were the
-    // ONLY thing ever read, so <wb-copy text="..."> (what the schema itself
+    // ONLY thing ever read, so <div x-copy text="..."> (what the schema itself
     // documents, and what demos/site/interactive.html actually writes)
     // silently fell through to copying the element's own textContent instead.
     text: options.text || element.getAttribute('text') || element.getAttribute('copy-text'),
@@ -59,8 +59,8 @@ export function copy(element, options = {}) {
     ...options
   };
 
-  // #448: no classList.add('wb-copy') -- copybutton.css's own comment
-  // confirms .wb-copy has "no dedicated CSS"; nothing selects the bare class.
+  // #448: no classList.add('x-copy') -- copybutton.css's own comment
+  // confirms .x-copy has "no dedicated CSS"; nothing selects the bare class.
 
   // Store original content
   const originalContent = element.innerHTML;
@@ -84,7 +84,7 @@ export function copy(element, options = {}) {
     if (config.toast) {
       createToast(config.feedback, 'success');
     } else {
-      element.classList.add('wb-copy--copied');
+      element.classList.add('x-copy--copied');
       
       // Store original and show feedback
       const originalHTML = element.innerHTML;
@@ -94,7 +94,7 @@ export function copy(element, options = {}) {
       clearTimeout(timeout);
       timeout = setTimeout(() => {
         element.innerHTML = originalHTML;
-        element.classList.remove('wb-copy--copied');
+        element.classList.remove('x-copy--copied');
       }, config.duration);
     }
   };
@@ -128,7 +128,7 @@ export function copy(element, options = {}) {
   // Cleanup
   return () => {
     clearTimeout(timeout);
-    element.classList.remove('wb-copy', 'wb-copy--copied');
+    element.classList.remove('x-copy', 'x-copy--copied');
     element.innerHTML = originalContent;
     element.style.cursor = '';
     element.removeEventListener('click', onClick);

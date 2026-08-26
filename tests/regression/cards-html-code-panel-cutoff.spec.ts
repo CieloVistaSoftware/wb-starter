@@ -1,25 +1,25 @@
 import { test, expect } from '@playwright/test';
 
 /**
- * #586: demos/site/cards.html's <wb-demo> code panels didn't show all the
- * code -- confirmed live in the "Card Gallery" section's wb-card,
- * wb-cardexpandable, and wb-cardvideo single-item demos (columns="1", one
+ * #586: demos/site/cards.html's <div x-demo> code panels didn't show all the
+ * code -- confirmed live in the "Card Gallery" section's x-card,
+ * x-cardexpandable, and x-cardvideo single-item demos (columns="1", one
  * child each), which should be governed by demo.js's #486/#563 single-item
  * shrink-to-fit width measurement (measure(), in demo()).
  *
  * Root cause (two layered races, both in demo()):
  *  1. The measurement block used to run IMMEDIATELY after the grid was
- *     built -- BEFORE `<pre class="wb-demo__code">` existed (pre creation
+ *     built -- BEFORE `<pre class="[x-demo]__code">` existed (pre creation
  *     was gated behind `await loadDocsManifest()`, further down). With no
  *     `<pre>` in the DOM, codeWidth read a stable `0` and could lock in
  *     alongside controlWidth before the real code panel ever existed.
  *  2. Even after moving the block below `<pre>`'s creation, `<pre>`
  *     EXISTING is not the same as `<pre>` being STYLED --
- *     `WB.scan(pre, {eager:true})` is itself async (applies the real
+ *     `await WB.scan(pre, {eager:true})` is itself async (applies the real
  *     `.x-pre` class/font/padding/highlighting on a later tick), so the
  *     first poll(s) could still read the bare, unstyled element's smaller
  *     width and lock in on that.
- * On a page this size (267 stacked <wb-demo> blocks, 5 built synchronously
+ * On a page this size (267 stacked <div x-demo> blocks, 5 built synchronously
  * and concurrently right at page load per EAGER_BUILD_COUNT), main-thread
  * contention made both races easy to lose, intermittently.
  *
@@ -32,9 +32,9 @@ import { test, expect } from '@playwright/test';
  * it needed to be -- a bug) from unavoidable horizontal scroll (a single
  * unwrapped line wider than the entire page can ever show -- accepted by
  * Standard §27's own "scrolling available for unavoidable long lines"
- * carve-out for wb-demo code panels, not a bug to eliminate).
+ * carve-out for x-demo code panels, not a bug to eliminate).
  */
-test.describe('demos/site/cards.html: single-item wb-demo code panels are never clipped', () => {
+test.describe('demos/site/cards.html: single-item [x-demo] code panels are never clipped', () => {
   test('cardexpandable and cardvideo code panels show all their code, no horizontal overflow', async ({ page }) => {
     const pageErrors: string[] = [];
     page.on('pageerror', (err) => pageErrors.push(String(err)));
@@ -43,7 +43,7 @@ test.describe('demos/site/cards.html: single-item wb-demo code panels are never 
     await page.waitForFunction(() => (window as any).__WB_DEMO_INITIALIZED__ === true, { timeout: 20000 });
 
     // The bug lives in the FIRST section on the page ("Card Gallery") --
-    // its wb-cardexpandable/wb-cardvideo demos are among the eagerly-built
+    // its x-cardexpandable/x-cardvideo demos are among the eagerly-built
     // ones (EAGER_BUILD_COUNT=5) and reproduced on nearly every load without
     // any scrolling. Scroll each relevant section into view anyway (cheap,
     // and also exercises the lazy-build path for the same components
@@ -69,7 +69,7 @@ test.describe('demos/site/cards.html: single-item wb-demo code panels are never 
 
     expect(pageErrors, 'no uncaught page errors while building the demos above').toEqual([]);
 
-    // Upper bound on how wide ANY wb-demo code panel could ever grow on this
+    // Upper bound on how wide ANY x-demo code panel could ever grow on this
     // page -- the `.demo-page` body wrapper's own available width. A code
     // panel whose content needs MORE than this can never avoid a horizontal
     // scrollbar no matter how the shrink-to-fit measurement behaves (the
@@ -78,7 +78,7 @@ test.describe('demos/site/cards.html: single-item wb-demo code panels are never 
     const pageMaxWidth = await page.locator('body.demo-page').evaluate((el) => el.clientWidth);
 
     const codePanels = page.locator(
-      sectionIds.map((id) => `#${id} .wb-demo__code`).join(', ')
+      sectionIds.map((id) => `#${id} .x-demo__code`).join(', ')
     );
     const count = await codePanels.count();
     expect(count, 'the targeted sections must actually have code panels to check').toBeGreaterThan(0);

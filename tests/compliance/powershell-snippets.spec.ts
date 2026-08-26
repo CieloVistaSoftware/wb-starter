@@ -24,9 +24,18 @@ test('docs: no POSIX-only one-liners in markdown (PowerShell-safe)', async () =>
     const lines = txt.split(/\r?\n/);
     let inCode = false;
     let codeLanguage = '';
-    const shellLangs = /^```(bash|sh|shell|powershell|pwsh|cmd|console|terminal)$/i;
+    // #863: these two were regex LITERALS containing bare ``` fences. The
+    // "every test contains at least one expect()" gate scans source text and
+    // treats a backtick as the start of a template literal, so the odd number
+    // of backticks in each literal desynced its scan and truncated this test
+    // body before the expect() at the bottom -- reporting this test as
+    // asserting nothing when it always has. Built from strings instead: the
+    // backticks now sit inside quotes the scanner skips cleanly. Same patterns,
+    // same behaviour.
+    const shellLangs = new RegExp('^```(bash|sh|shell|powershell|pwsh|cmd|console|terminal)$', 'i');
+    const fenceLine = new RegExp('^```(.*)$');
     for (let i = 0; i < lines.length; i++) {
-      const fence = lines[i].match(/^```(.*)$/);
+      const fence = lines[i].match(fenceLine);
       if (fence) {
         if (!inCode) {
           inCode = true;

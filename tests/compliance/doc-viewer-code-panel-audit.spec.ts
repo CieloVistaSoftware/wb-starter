@@ -13,16 +13,16 @@ import { globSync } from 'glob';
  * ORIGINAL SCOPE (kept, now passing): docs/standards/V3-STANDARDS.md, per
  * the #583 audit (docs/_today/audit-code-panels-v3-standards.md). The root
  * cause (mdhtml.css's `.x-pre` wrap rule overriding the #390 no-wrap
- * carve-out for `<wb-demo>` panels) was fixed and merged; all 3 checks now
+ * carve-out for `<div x-demo>` panels) was fixed and merged; all 3 checks now
  * pass for that one file.
  *
  * GENERALIZED SCOPE (this pass, docs/_today/test-audit-2026-08-14.md):
- * every OTHER doc that actually renders a `<wb-demo>` through
+ * every OTHER doc that actually renders a `<div x-demo>` through
  * doc-viewer.html, PLUS every plain demos/**\/*.html and pages/**\/*.html
- * page that renders `<wb-demo>` directly (no doc-viewer/mdhtml wrapper
+ * page that renders `<div x-demo>` directly (no doc-viewer/mdhtml wrapper
  * involved at all — a different code path, worth checking independently).
- * "Renders a <wb-demo>" is determined by literally grepping the source for
- * `<wb-demo` — a file with none has no `.wb-demo__code` panel to audit, so
+ * "Renders a <div x-demo>" is determined by literally grepping the source for
+ * `<div x-demo` — a file with none has no `.x-demo__code` panel to audit, so
  * it's excluded from DOCS/HTML_PAGES rather than wastefully asserting on a
  * page with 0 panels. `docs/_today/**` is excluded: those are dated
  * session/planning artifacts (audit reports, status logs), not real
@@ -33,10 +33,10 @@ import { globSync } from 'glob';
  * tests/compliance/ like every other gate), so failures here are real,
  * visible signal — see the audit report for what to do with them.
  *
- * Scope: every `.wb-demo__code` panel (the <pre x-behavior="pre"> that
- * <wb-demo> builds for its "view source" sample — see
- * src/wb-viewmodels/demo.js's `pre.className = 'wb-demo__code'` and its
- * sibling `wb-demo__events-code` panel for the optional "Listening for
+ * Scope: every `.x-demo__code` panel (the <pre x-behavior="pre"> that
+ * <div x-demo> builds for its "view source" sample — see
+ * src/wb-viewmodels/demo.js's `pre.className = '[x-demo]__code'` and its
+ * sibling `[x-demo]__events-code` panel for the optional "Listening for
  * events" sample, §27). Three checks per panel, matching
  * docs/standards/DEMOS-AND-DOCS-STANDARDS.md:
  *
@@ -50,10 +50,10 @@ import { globSync } from 'glob';
  *       narrower than it was actually laid out to be.
  *
  *   (b) No blank lines that don't exist in the actual rendered text.
- *       <wb-demo>'s own pretty-printer (`formatHtml` in demo.js) never
- *       emits an empty line for a `.wb-demo__code` (non-events) panel — see
+ *       <div x-demo>'s own pretty-printer (`formatHtml` in demo.js) never
+ *       emits an empty line for a `.x-demo__code` (non-events) panel — see
  *       "Methodology" in the #583 report for the one documented exception
- *       (`wb-demo__events-code` panels CAN have a real blank line, a `\n\n`
+ *       (`[x-demo]__events-code` panels CAN have a real blank line, a `\n\n`
  *       join between multiple event listeners) — so a genuinely blank
  *       VISUAL row elsewhere is a rendering artifact (#559: a wrapped
  *       line's number never gets positioned, leaving a visual gap that
@@ -61,25 +61,25 @@ import { globSync } from 'glob';
  *       `.x-pre__line-numbers > div` top offsets and compares each
  *       consecutive gap to the panel's own single-line-height.
  *
- *   (c) §6/§28/pre.css "no text wrapping" — `.wb-demo__code` is a pre.js
+ *   (c) §6/§28/pre.css "no text wrapping" — `.x-demo__code` is a pre.js
  *       `x-pre` block with no `wrap` attribute, so pre.css's default
  *       (`white-space: pre; overflow-x: auto`) must apply.
  */
 
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '../..');
 
-/** A doc/page only has `.wb-demo__code` panels to audit if it literally
- * authors a `<wb-demo` block (or mdhtml.js's auto-live-render promotes a
+/** A doc/page only has `.x-demo__code` panels to audit if it literally
+ * authors a `<div x-demo` block (or mdhtml.js's auto-live-render promotes a
  * ```html fence containing one — same literal substring either way, since
- * the fence source itself doesn't contain "<wb-demo" but the CONTENT it
+ * the fence source itself doesn't contain "<div x-demo" but the CONTENT it
  * promotes might contain a live component; auto-live-render candidates
- * without an authored <wb-demo> tag are rare and already covered by the
+ * without an authored <div x-demo> tag are rare and already covered by the
  * #583 report's "Incidental finding" for V3-STANDARDS.md — not re-derived
  * here, this is a fast pre-filter, not a precise one, and false inclusions
  * just mean a test that (correctly) finds 0 panels and is skipped). */
 function hasWbDemo(file: string): boolean {
   try {
-    return fs.readFileSync(file, 'utf8').includes('<wb-demo');
+    return fs.readFileSync(file, 'utf8').includes('<div x-demo');
   } catch {
     return false;
   }
@@ -125,11 +125,11 @@ interface PanelReport {
 async function collectPanelReports(page: import('@playwright/test').Page, url: string): Promise<PanelReport[]> {
   await page.goto(url, { waitUntil: 'domcontentloaded' });
 
-  const demos = page.locator('wb-demo');
+  const demos = page.locator('[x-demo]');
   // Doc-viewer/mdhtml renders markdown asynchronously (fetch + parse), so
-  // <wb-demo> tags don't exist in the DOM immediately after
+  // <div x-demo> tags don't exist in the DOM immediately after
   // domcontentloaded -- wait for the first one to actually appear (this
-  // file is pre-filtered by grep for "<wb-demo" so every DOCS/HTML_PAGES
+  // file is pre-filtered by grep for "<div x-demo" so every DOCS/HTML_PAGES
   // entry should genuinely get at least one; a real timeout here means the
   // page failed to render its markdown at all, not "no demos").
   try {
@@ -140,7 +140,7 @@ async function collectPanelReports(page: import('@playwright/test').Page, url: s
   const demoCount = await demos.count();
   if (demoCount === 0) return [];
 
-  // wb-demo.js only builds the first EAGER_BUILD_COUNT (5) blocks
+  // x-demo.js only builds the first EAGER_BUILD_COUNT (5) blocks
   // synchronously on connect; every block after that is deferred to an
   // IntersectionObserver keyed to #siteBody (the real scroll container,
   // not the viewport) and only builds once scrolled near it. Scroll every
@@ -162,16 +162,16 @@ async function collectPanelReports(page: import('@playwright/test').Page, url: s
   // line-number's `top` via a double-rAF-deferred measurement pass. Poll
   // until every panel that EXISTS has its line-number gutter fully built
   // (count matches its own text's line count, every number positioned). A
-  // demo with ZERO `.wb-demo__code` panels (e.g. a §25 boilerplate-only
+  // demo with ZERO `.x-demo__code` panels (e.g. a §25 boilerplate-only
   // example, or a live-rendered component that legitimately has no source
   // sample) is vacuously satisfied here — waiting for a panel that will
   // never exist would just burn the timeout.
   await page.waitForFunction(
     () => {
-      const demoEls = Array.from(document.querySelectorAll('wb-demo'));
+      const demoEls = Array.from(document.querySelectorAll('[x-demo]'));
       if (demoEls.length === 0) return false;
       return demoEls.every((demo) => {
-        const panels = Array.from(demo.querySelectorAll('.wb-demo__code'));
+        const panels = Array.from(demo.querySelectorAll('.x-demo__code'));
         if (panels.length === 0) return true; // nothing on this demo to wait for
         return panels.every((panel) => {
           const code = panel.querySelector('code');
@@ -192,9 +192,9 @@ async function collectPanelReports(page: import('@playwright/test').Page, url: s
 
   return page.evaluate(() => {
     const out: PanelReport[] = [];
-    const demoEls = Array.from(document.querySelectorAll('wb-demo'));
+    const demoEls = Array.from(document.querySelectorAll('[x-demo]'));
     demoEls.forEach((demo, demoIndex) => {
-      const panels = Array.from(demo.querySelectorAll('.wb-demo__code')) as HTMLElement[];
+      const panels = Array.from(demo.querySelectorAll('.x-demo__code')) as HTMLElement[];
       panels.forEach((panel, panelIndex) => {
         const code = panel.querySelector('code');
         const text = (code || panel).textContent || '';
@@ -285,10 +285,10 @@ function auditReports(reports: PanelReport[]): { a: string[]; b: string[]; c: st
 
 test.describe('Doc-viewer code panel audit — docs rendered through doc-viewer.html', () => {
   for (const rel of DOCS) {
-    test(`${rel}: .wb-demo__code panels show all the code, no phantom blanks, no wrap`, async ({ page }) => {
+    test(`${rel}: .x-demo__code panels show all the code, no phantom blanks, no wrap`, async ({ page }) => {
       const url = '/public/doc-viewer.html?file=' + encodeURIComponent(rel);
       const reports = await collectPanelReports(page, url);
-      if (reports.length === 0) test.skip(true, 'no .wb-demo__code panels rendered on this doc');
+      if (reports.length === 0) test.skip(true, 'no .x-demo__code panels rendered on this doc');
 
       const { a, b, c } = auditReports(reports);
       const violations = [
@@ -303,10 +303,10 @@ test.describe('Doc-viewer code panel audit — docs rendered through doc-viewer.
 
 test.describe('Doc-viewer code panel audit — plain demo/page .html files (direct, no doc-viewer wrapper)', () => {
   for (const rel of HTML_PAGES) {
-    test(`${rel}: .wb-demo__code panels show all the code, no phantom blanks, no wrap`, async ({ page }) => {
+    test(`${rel}: .x-demo__code panels show all the code, no phantom blanks, no wrap`, async ({ page }) => {
       const url = '/' + rel.replace(/\\/g, '/');
       const reports = await collectPanelReports(page, url);
-      if (reports.length === 0) test.skip(true, 'no .wb-demo__code panels rendered on this page');
+      if (reports.length === 0) test.skip(true, 'no .x-demo__code panels rendered on this page');
 
       const { a, b, c } = auditReports(reports);
       const violations = [

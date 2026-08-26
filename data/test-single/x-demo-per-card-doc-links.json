@@ -1,0 +1,20 @@
+{
+  "state": "passed",
+  "mode": "single",
+  "specFile": "tests/regression/x-demo-per-card-doc-links.spec.ts",
+  "startedAt": "2026-07-30T17:41:26.928Z",
+  "updatedAt": "2026-07-30T17:42:15.960Z",
+  "command": "npx playwright test --workers=8 tests/regression/x-demo-per-card-doc-links.spec.ts",
+  "pid": 34616,
+  "passed": 3,
+  "failed": 0,
+  "skipped": 0,
+  "total": 3,
+  "currentFile": "tests\\regression\\x-demo-per-card-doc-links.spec.ts",
+  "output": "\nRunning 3 tests using 3 workers\n\n  ok 1 [regression] › tests\\regression\\x-demo-per-card-doc-links.spec.ts:50:3 › x-demo: per-card doc links (#388) › each card in a multi-card demo gets its own top-right doc link, not a shared line (7.6s)\n  ok 2 [regression] › tests\\regression\\x-demo-per-card-doc-links.spec.ts:83:3 › x-demo: per-card doc links (#388) › a card with no resolvable doc gets no link (never a dead link) (5.2s)\n  ok 3 [regression] › tests\\regression\\x-demo-per-card-doc-links.spec.ts:105:3 › x-demo: per-card doc links (#388) › mixed demo: non-card content keeps the shared Docs: line, the card gets its own (4.8s)\n\n════════════════════════════════════════════════════════════\n  WB TEST RESULTS\n════════════════════════════════════════════════════════════\n  Total: 3 tests in 31.3s\n  ✓ Passed:  3\n  ✗ Failed:  0\n\n  By Project:\n    ✓ regression: 3/3 passed\n════════════════════════════════════════════════════════════\n\n\n  3 passed (34.7s)\n",
+  "errors": "",
+  "failures": [],
+  "completedAt": "2026-07-30T17:42:15.960Z",
+  "duration": "49.03s",
+  "exitCode": 0
+}

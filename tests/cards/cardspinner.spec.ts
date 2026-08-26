@@ -7,27 +7,27 @@ test.describe('Spinner (integration)', () => {
     await page.waitForFunction(() => (window as any).WBSite && (window as any).WBSite.currentPage);
     await page.waitForTimeout(100);
     
-    await page.evaluate(() => {
+    await page.evaluate(async () => {
       const el = document.createElement('div');
       el.id = 'test-spinner';
       el.setAttribute('x-spinner', '');
       el.setAttribute('data-color', 'primary');
       document.body.appendChild(el);
-      (window as any).WB.scan();
+      await (window as any).WB.scan();
     });
     
-    // The spinner behavior adds wb-spinner class
+    // The spinner behavior adds x-spinner class
     const spinner = page.locator('#test-spinner');
-    await expect(spinner).toHaveClass(/wb-spinner/);
+    await expect(spinner).toHaveClass(/x-spinner/);
     
     // Check the inner spinning div exists and has animation
     const innerDiv = spinner.locator('div');
     await expect(innerDiv).toBeVisible();
     
-    // Verify animation is applied (wb-spin)
+    // Verify animation is applied (x-spin)
     const style = await innerDiv.getAttribute('style');
     expect(style).toContain('animation');
-    expect(style).toContain('wb-spin');
+    expect(style).toContain('x-spin');
   });
 
   test('should have border-radius for circular spinner', async ({ page }: { page: Page }) => {
@@ -36,12 +36,12 @@ test.describe('Spinner (integration)', () => {
     await page.waitForFunction(() => (window as any).WBSite && (window as any).WBSite.currentPage);
     await page.waitForTimeout(100);
     
-    await page.evaluate(() => {
+    await page.evaluate(async () => {
       const el = document.createElement('div');
       el.id = 'test-spinner-2';
       el.setAttribute('x-spinner', '');
       document.body.appendChild(el);
-      (window as any).WB.scan();
+      await (window as any).WB.scan();
     });
     
     const innerDiv = page.locator('#test-spinner-2 div');
@@ -54,13 +54,13 @@ test.describe('Spinner (integration)', () => {
     await page.waitForFunction(() => (window as any).WBSite && (window as any).WBSite.currentPage);
     await page.waitForTimeout(100);
     
-    await page.evaluate(() => {
+    await page.evaluate(async () => {
       const el = document.createElement('div');
       el.id = 'test-spinner-3';
       el.setAttribute('x-spinner', '');
       el.setAttribute('data-color', 'primary');
       document.body.appendChild(el);
-      (window as any).WB.scan();
+      await (window as any).WB.scan();
     });
     
     const innerDiv = page.locator('#test-spinner-3 div');

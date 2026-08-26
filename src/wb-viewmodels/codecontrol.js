@@ -1,14 +1,14 @@
 import { readAttr } from '../core/read-attr.js';
 /**
  * Code Control Behavior
- * Custom Tag: <wb-codecontrol>
+ * Custom Tag: <div x-codecontrol>
  * Dropdown to select from available highlight.js code themes - applies immediately.
  *
  * Usage (plain attributes are canonical per Law 11; data-* accepted for
  * back-compat only):
- *   <wb-codecontrol></wb-codecontrol>
- *   <wb-codecontrol size="xs"></wb-codecontrol>
- *   <wb-codecontrol show-label="false" size="sm"></wb-codecontrol>
+ *   <div x-codecontrol></div>
+ *   <div x-codecontrol size="xs"></div>
+ *   <div x-codecontrol show-label="false" size="sm"></div>
  *
  * #638: every option here used to be read exclusively via element.dataset.*
  * (data-default/data-show-label/data-show-category/data-persist/data-size),
@@ -20,7 +20,7 @@ import { readAttr } from '../core/read-attr.js';
 // Curated list of highlight.js themes (organized by category)
 const CODE_THEMES = [
   // Grayscale / Minimal
-  { id: 'wb-grayscale-dark', name: 'WB Grayscale (Dark)', category: 'Minimal', description: 'High contrast dark grayscale', path: new URL('../styles/code-themes/wb-grayscale-dark.css', import.meta.url).href },
+  { id: 'x-grayscale-dark', name: 'WB Grayscale (Dark)', category: 'Minimal', description: 'High contrast dark grayscale', path: new URL('../styles/code-themes/x-grayscale-dark.css', import.meta.url).href },
   { id: 'ascetic', name: 'Ascetic', category: 'Minimal', description: 'Ultra minimal' },
   
   // Dark Themes

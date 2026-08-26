@@ -44,19 +44,19 @@ async function renderWithWB(page, bodyHtml: string, initOptions = '{ autoInject:
 }
 
 test.describe('Auto-Injection Compliance', () => {
-  test('Explicit <wb-card> IS a Card', async ({ page }) => {
-    await renderWithWB(page, `<wb-card id="explicit-card"><header><h1>Title</h1></header><p>Content</p></wb-card>`);
-    await expect(page.locator('#explicit-card')).toHaveClass(/wb-card/, { timeout: 10000 });
+  test('Explicit <article> IS a Card', async ({ page }) => {
+    await renderWithWB(page, `<article id="explicit-card"><header><h1>Title</h1></header><p>Content</p></article>`);
+    await expect(page.locator('#explicit-card')).toHaveClass(/x-card/, { timeout: 10000 });
   });
 
-  test('Native <dialog> is auto-injected with wb-dialog (nativeMap: dialog -> dialog)', async ({ page }) => {
+  test('Native <dialog> is auto-injected with .x-dialog (nativeMap: dialog -> dialog)', async ({ page }) => {
     await renderWithWB(page, `<dialog id="auto-dialog">Content</dialog>`);
-    await expect(page.locator('#auto-dialog')).toHaveClass(/wb-dialog/, { timeout: 10000 });
+    await expect(page.locator('#auto-dialog')).toHaveClass(/x-dialog/, { timeout: 10000 });
   });
 
   test('Native <article> IS auto-injected as Card (nativeMap: article -> card)', async ({ page }) => {
     await renderWithWB(page, `<article id="auto-article"><header><h1>Title</h1></header><p>Content</p></article>`);
-    await expect(page.locator('#auto-article')).toHaveClass(/wb-card/, { timeout: 10000 });
+    await expect(page.locator('#auto-article')).toHaveClass(/x-card/, { timeout: 10000 });
   });
 
   // Contract decision (#277): <nav> does NOT auto-inject as navbar, even with
@@ -67,13 +67,13 @@ test.describe('Auto-Injection Compliance', () => {
   // behavior. If 'nav' were added to nativeMap, every autoInject:true page
   // (including the real site, now that config/site.json's
   // autoInjectComponents defaults to true — #279) would have its own
-  // site__nav silently reclassified/re-enhanced as a wb-navbar underneath
+  // site__nav silently reclassified/re-enhanced as a x-navbar underneath
   // site-engine.js's unrelated logic. Native <nav> auto-inject is therefore
   // out of scope for #277; a page that wants navbar behavior on a <nav> must
-  // opt in explicitly (e.g. <wb-navbar> or an x-as-navbar style extension),
+  // opt in explicitly (e.g. <div x-navbar> or an x-as-navbar style extension),
   // not receive it implicitly.
   test('Native <nav> is NOT auto-injected as Navbar (nav intentionally absent from nativeMap)', async ({ page }) => {
     await renderWithWB(page, `<nav id="auto-nav"><ul><li><a href="#">Link</a></li></ul></nav>`);
-    await expect(page.locator('#auto-nav')).not.toHaveClass(/wb-navbar/);
+    await expect(page.locator('#auto-nav')).not.toHaveClass(/x-navbar/);
   });
 });

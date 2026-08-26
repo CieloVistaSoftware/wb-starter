@@ -25,7 +25,7 @@ async function injectAndScan(page: Page, html: string) {
     container.innerHTML = h;
     
     // Force eager loading
-    const elements = container.querySelectorAll('.wb-ready');
+    const elements = container.querySelectorAll('.x-ready');
     elements.forEach(el => el.setAttribute('', ''));
     
     document.body.appendChild(container);
@@ -45,7 +45,7 @@ test.describe('scroll-progress Behavior', () => {
     page.on('pageerror', (err) => errors.push(err.message));
     
     const setupHtml = [
-      '<wb-scroll-progress>Test content</wb-scroll-progress>'
+      '<div>Test content</div>'
     ];
     
     await injectAndScan(page, setupHtml.join('\n'));
@@ -61,10 +61,10 @@ test.describe('scroll-progress Behavior', () => {
   });
 
   test('element is visible after scan', async ({ page }) => {
-    const html = '<wb-scroll-progress>Test content</wb-scroll-progress>';
+    const html = '<div>Test content</div>';
     await injectAndScan(page, html);
     
-    const el = page.locator('#test-container wb-scroll-progress, #test-container [x-scroll-progress]').first();
+    const el = page.locator('#test-container x-scroll-progress, #test-container [x-scroll-progress]').first();
     const isPresent = await el.count() > 0;
     
     if (isPresent) {

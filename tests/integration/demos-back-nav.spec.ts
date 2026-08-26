@@ -23,10 +23,10 @@ async function expandFirstCategory(page: import('@playwright/test').Page) {
 
 test('links survive goto + goBack', async ({ page }) => {
   await page.goto('/?page=demos', { waitUntil: 'domcontentloaded' });
-  const cards = page.locator('#app wb-card-link');
+  const cards = page.locator('#app [x-cardlink]');
   await expect.poll(() => cards.count(), { timeout: 20000 }).toBeGreaterThan(0);
   await expandFirstCategory(page);
-  // Not just present — RENDERED. (#264 root cause: wb-card-link had no behavior
+  // Not just present — RENDERED. (#264 root cause: x-card-link had no behavior
   // mapping, so the elements existed but hydrated empty/invisible.)
   await expect(cards.first()).toBeVisible({ timeout: 15000 });
 
@@ -36,16 +36,16 @@ test('links survive goto + goBack', async ({ page }) => {
   await page.goBack({ waitUntil: 'domcontentloaded' });
 
   await expect
-    .poll(() => page.locator('#app wb-card-link').count(), { timeout: 15000 })
+    .poll(() => page.locator('#app [x-cardlink]').count(), { timeout: 15000 })
     .toBeGreaterThan(0);
 });
 
 test('links survive opening a demo in a new tab and returning (#264)', async ({ page, context }) => {
   await page.goto('/?page=demos', { waitUntil: 'domcontentloaded' });
-  const cards = page.locator('#app wb-card-link');
+  const cards = page.locator('#app [x-cardlink]');
   await expect.poll(() => cards.count(), { timeout: 20000 }).toBeGreaterThan(0);
   await expandFirstCategory(page);
-  // Not just present — RENDERED. (#264 root cause: wb-card-link had no behavior
+  // Not just present — RENDERED. (#264 root cause: x-card-link had no behavior
   // mapping, so the elements existed but hydrated empty/invisible.)
   await expect(cards.first()).toBeVisible({ timeout: 15000 });
 
@@ -61,7 +61,7 @@ test('links survive opening a demo in a new tab and returning (#264)', async ({ 
   await page.bringToFront();
   await page.waitForTimeout(500); // let any visibility/pageshow handlers run
   await expect
-    .poll(() => page.locator('#app wb-card-link').count(), {
+    .poll(() => page.locator('#app [x-cardlink]').count(), {
       timeout: 10000,
       message: 'demo links must survive returning from a new tab (#264)',
     })

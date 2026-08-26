@@ -44,7 +44,7 @@ Variants:
 - error
 
 CSS Rules:
-- wb-alert--*
+- x-alert--*
 ```
 
 <details><summary>View 5 Attribute Tooltips</summary>
@@ -131,7 +131,7 @@ Variants:
 - info
 
 CSS Rules:
-- wb-badge--*
+- x-badge--*
 ```
 
 <details><summary>View 7 Attribute Tooltips</summary>
@@ -150,7 +150,7 @@ CSS Rules:
 
 ---
 
-## `<wb-behavior>`
+## `<div>`
 
 **Tooltip Output:**
 ```text
@@ -161,7 +161,7 @@ Master schema defining all behavior metadata, properties, interactions, accessib
 
 ---
 
-## `<wb-behaviors-showcase>`
+## `<div>`
 
 **Tooltip Output:**
 ```text
@@ -172,7 +172,7 @@ Schema for behaviors-showcase.html - validates all behaviors render correctly
 
 ---
 
-## `<wb-builder>`
+## `<div>`
 
 **Tooltip Output:**
 ```text
@@ -213,7 +213,7 @@ Variants:
 - link
 
 CSS Rules:
-- wb-button--*
+- x-button--*
 ```
 
 <details><summary>View 9 Attribute Tooltips</summary>
@@ -241,10 +241,10 @@ CSS Rules:
 A generic card component. Use this for basic content containers.
 
 For specialized cards, use:
-- <wb-card-hero> (Hero/Banner)
-- <wb-card-product> (E-commerce)
-- <wb-card-profile> (User profile)
-- <wb-card-pricing> (Pricing table)
+- <div x-cardhero> (Hero/Banner)
+- <div x-cardproduct> (E-commerce)
+- <div x-cardprofile> (User profile)
+- <div x-cardpricing> (Pricing table)
 
 Methods (via JS):
 - element.show()
@@ -269,7 +269,7 @@ Methods (via JS):
 
 ---
 
-## `<wb-card-file>`
+## `<div x-cardfile>`
 
 **Tooltip Output:**
 ```text
@@ -289,7 +289,7 @@ File attachment card.
 
 ---
 
-## `<wb-card-hero>`
+## `<div x-cardhero>`
 
 **Tooltip Output:**
 ```text
@@ -321,7 +321,7 @@ Attributes:
 
 ---
 
-## `<wb-card-image>`
+## `<div x-cardimage>`
 
 **Tooltip Output:**
 ```text
@@ -359,7 +359,7 @@ Entirely clickable link card.
 
 ---
 
-## `<wb-card-notification>`
+## `<div x-cardnotification>`
 
 **Tooltip Output:**
 ```text
@@ -378,7 +378,7 @@ Notification card style.
 
 ---
 
-## `<wb-card-overlay>`
+## `<div x-cardoverlay>`
 
 **Tooltip Output:**
 ```text
@@ -395,7 +395,7 @@ Card with content overlaid on background image.
 
 ---
 
-## `<wb-card-portfolio>`
+## `<div x-cardportfolio>`
 
 **Tooltip Output:**
 ```text
@@ -414,7 +414,7 @@ Portfolio item card.
 
 ---
 
-## `<wb-card-pricing>`
+## `<div x-cardpricing>`
 
 **Tooltip Output:**
 ```text
@@ -435,7 +435,7 @@ Pricing table card with price point, features, and CTA.
 
 ---
 
-## `<wb-card-product>`
+## `<div x-cardproduct>`
 
 **Tooltip Output:**
 ```text
@@ -467,7 +467,7 @@ Attributes:
 
 ---
 
-## `<wb-card-profile>`
+## `<div x-cardprofile>`
 
 **Tooltip Output:**
 ```text
@@ -488,7 +488,7 @@ User profile card with avatar, stats, and bio.
 
 ---
 
-## `<wb-card-stats>`
+## `<div x-cardstats>`
 
 **Tooltip Output:**
 ```text
@@ -508,7 +508,7 @@ Statistics card for dashboards.
 
 ---
 
-## `<wb-card-testimonial>`
+## `<div x-cardtestimonial>`
 
 **Tooltip Output:**
 ```text
@@ -528,7 +528,7 @@ Testimonial card with quote and author.
 
 ---
 
-## `<wb-card-video>`
+## `<div x-cardvideo>`
 
 **Tooltip Output:**
 ```text
@@ -561,7 +561,7 @@ Variants:
 - bordered
 
 CSS Rules:
-- wb-card-button--*
+- x-card-button--*
 ```
 
 <details><summary>View 7 Attribute Tooltips</summary>
@@ -593,7 +593,7 @@ Variants:
 - elevated
 
 CSS Rules:
-- wb-card-draggable--*
+- x-card-draggable--*
 ```
 
 <details><summary>View 6 Attribute Tooltips</summary>
@@ -625,7 +625,7 @@ Variants:
 - bordered
 
 CSS Rules:
-- wb-card-expandable--*
+- x-card-expandable--*
 ```
 
 <details><summary>View 5 Attribute Tooltips</summary>
@@ -656,7 +656,7 @@ Variants:
 - elevated
 
 CSS Rules:
-- wb-card-file--*
+- x-card-file--*
 ```
 
 <details><summary>View 7 Attribute Tooltips</summary>
@@ -691,7 +691,7 @@ Variants:
 - gradient
 
 CSS Rules:
-- wb-hero--*
+- x-hero--*
 ```
 
 <details><summary>View 9 Attribute Tooltips</summary>
@@ -727,7 +727,7 @@ Variants:
 - minimal
 
 CSS Rules:
-- wb-card-horizontal--*
+- x-card-horizontal--*
 ```
 
 <details><summary>View 7 Attribute Tooltips</summary>
@@ -761,7 +761,7 @@ Variants:
 - minimal
 
 CSS Rules:
-- wb-card-image--*
+- x-card-image--*
 ```
 
 <details><summary>View 11 Attribute Tooltips</summary>
@@ -800,7 +800,7 @@ Variants:
 - glass
 
 CSS Rules:
-- wb-card-link--*
+- x-card-link--*
 ```
 
 <details><summary>View 7 Attribute Tooltips</summary>
@@ -833,7 +833,7 @@ Variants:
 - bordered
 
 CSS Rules:
-- wb-card-minimizable--*
+- x-card-minimizable--*
 ```
 
 <details><summary>View 4 Attribute Tooltips</summary>
@@ -864,7 +864,7 @@ Variants:
 - error
 
 CSS Rules:
-- wb-notification--*
+- x-notification--*
 ```
 
 <details><summary>View 6 Attribute Tooltips</summary>
@@ -897,7 +897,7 @@ Variants:
 - blur
 
 CSS Rules:
-- wb-card-overlay--*
+- x-card-overlay--*
 ```
 
 <details><summary>View 8 Attribute Tooltips</summary>
@@ -931,7 +931,7 @@ Variants:
 - horizontal
 
 CSS Rules:
-- wb-portfolio--*
+- x-portfolio--*
 ```
 
 <details><summary>View 12 Attribute Tooltips</summary>
@@ -970,7 +970,7 @@ Variants:
 - minimal
 
 CSS Rules:
-- wb-pricing--*
+- x-pricing--*
 ```
 
 <details><summary>View 9 Attribute Tooltips</summary>
@@ -1006,7 +1006,7 @@ Variants:
 - minimal
 
 CSS Rules:
-- wb-product--*
+- x-product--*
 ```
 
 <details><summary>View 11 Attribute Tooltips</summary>
@@ -1070,7 +1070,7 @@ Variants:
 - minimal
 
 CSS Rules:
-- wb-stats--*
+- x-stats--*
 ```
 
 <details><summary>View 7 Attribute Tooltips</summary>
@@ -1105,7 +1105,7 @@ Variants:
 - centered
 
 CSS Rules:
-- wb-testimonial--*
+- x-testimonial--*
 ```
 
 <details><summary>View 7 Attribute Tooltips</summary>
@@ -1139,7 +1139,7 @@ Variants:
 - elevated
 
 CSS Rules:
-- wb-card-video--*
+- x-card-video--*
 ```
 
 <details><summary>View 10 Attribute Tooltips</summary>
@@ -1161,7 +1161,7 @@ CSS Rules:
 
 ---
 
-## `<wb-center>`
+## `<div x-center>`
 
 **Tooltip Output:**
 ```text
@@ -1199,7 +1199,7 @@ Variants:
 - success
 
 CSS Rules:
-- wb-checkbox--*
+- x-checkbox--*
 ```
 
 <details><summary>View 9 Attribute Tooltips</summary>
@@ -1237,7 +1237,7 @@ Variants:
 - info
 
 CSS Rules:
-- wb-chip--*
+- x-chip--*
 ```
 
 <details><summary>View 7 Attribute Tooltips</summary>
@@ -1297,7 +1297,7 @@ Use for:
 - Form field stacks
 
 Example:
-<wb-column gap="sm">
+<div x-stack gap="sm">
   <h3>Title</h3>
   <p>Content</p>
 </div>
@@ -1341,7 +1341,7 @@ Confetti particle animation effect
 
 ---
 
-## `<wb-container>`
+## `<div x-container>`
 
 **Tooltip Output:**
 ```text
@@ -1353,8 +1353,8 @@ Features:
 - Layout directions (Row or Column)
 
 Example:
-<wb-container max-width="1200px" padding="2rem">
-</wb-container>
+<div x-container max-width="1200px" padding="2rem">
+</div>
 ```
 
 <details><summary>View 8 Attribute Tooltips</summary>
@@ -1374,7 +1374,7 @@ Example:
 
 ---
 
-## `<wb-cover>`
+## `<div x-cover>`
 
 **Tooltip Output:**
 ```text
@@ -1396,7 +1396,7 @@ Attributes:
 
 ---
 
-## `<wb-demo>`
+## `<div x-demo>`
 
 **Tooltip Output:**
 ```text
@@ -1431,7 +1431,7 @@ Variants:
 - filled
 
 CSS Rules:
-- wb-details--*
+- x-details--*
 ```
 
 <details><summary>View 5 Attribute Tooltips</summary>
@@ -1462,7 +1462,7 @@ Variants:
 - fullscreen
 
 CSS Rules:
-- wb-dialog--*
+- x-dialog--*
 ```
 
 <details><summary>View 7 Attribute Tooltips</summary>
@@ -1573,7 +1573,7 @@ Fireworks particle burst animation effect
 
 ---
 
-## `<wb-flex>`
+## `<div x-flex>`
 
 **Tooltip Output:**
 ```text
@@ -1624,7 +1624,7 @@ Page footer with copyright, links, and social icons
 
 ---
 
-## `<wb-frame>`
+## `<div x-frame>`
 
 **Tooltip Output:**
 ```text
@@ -1644,7 +1644,7 @@ Attributes:
 
 ---
 
-## `<wb-grid>`
+## `<div x-grid>`
 
 **Tooltip Output:**
 ```text
@@ -1653,11 +1653,11 @@ A layout component that creates a responsive CSS Grid.
 Key Feature: The `min-width` attribute enables 'Auto-Fit' columns - no media queries needed.
 
 Example:
-<wb-grid min-width="300px" gap="md">
+<div x-grid min-width="300px" gap="md">
   <div>Card 1</div>
   <div>Card 2</div>
   <div>Card 3</div>
-</wb-grid>
+</div>
 ```
 
 <details><summary>View 3 Attribute Tooltips</summary>
@@ -1696,7 +1696,7 @@ Page header with logo, title, and optional navigation
 
 ---
 
-## `<wb-icon>`
+## `<span x-icon>`
 
 **Tooltip Output:**
 ```text
@@ -1734,7 +1734,7 @@ Variants:
 - error
 
 CSS Rules:
-- wb-input--*
+- x-input--*
 ```
 
 <details><summary>View 15 Attribute Tooltips</summary>
@@ -1761,7 +1761,7 @@ CSS Rules:
 
 ---
 
-## `<wb-masonry>`
+## `<div x-masonry>`
 
 **Tooltip Output:**
 ```text
@@ -1797,7 +1797,7 @@ Variants:
 - transparent
 
 CSS Rules:
-- wb-navbar--*
+- x-navbar--*
 ```
 
 <details><summary>View 5 Attribute Tooltips</summary>
@@ -1838,7 +1838,7 @@ Slide-out notes drawer with multiple display modes
 
 ---
 
-## `<wb-part>`
+## `<div>`
 
 **Tooltip Output:**
 ```text
@@ -1912,7 +1912,7 @@ Variants:
 - info
 
 CSS Rules:
-- wb-progress--*
+- x-progress--*
 ```
 
 <details><summary>View 9 Attribute Tooltips</summary>
@@ -1958,7 +1958,7 @@ Star rating component for displaying or collecting ratings
 
 ---
 
-## `<wb-reel>`
+## `<div x-reel>`
 
 **Tooltip Output:**
 ```text
@@ -2018,7 +2018,7 @@ Use for:
 - Form layouts
 
 Example:
-<wb-row gap="md" align="center">
+<div x-flex gap="md" align="center">
   <button>OK</button>
   <button>Cancel</button>
 </div>
@@ -2056,7 +2056,7 @@ CSS sticky positioning for sidebars that stay visible while scrolling
 
 ---
 
-## `<wb-search-index>`
+## `<div>`
 
 **Tooltip Output:**
 ```text
@@ -2093,7 +2093,7 @@ Variants:
 - error
 
 CSS Rules:
-- wb-select--*
+- x-select--*
 ```
 
 <details><summary>View 12 Attribute Tooltips</summary>
@@ -2117,7 +2117,7 @@ CSS Rules:
 
 ---
 
-## `<wb-sidebar>`
+## `<div x-sidebarlayout>`
 
 **Tooltip Output:**
 ```text
@@ -2156,7 +2156,7 @@ Variants:
 - card
 
 CSS Rules:
-- wb-skeleton--*
+- x-skeleton--*
 ```
 
 <details><summary>View 5 Attribute Tooltips</summary>
@@ -2213,7 +2213,7 @@ Variants:
 - error
 
 CSS Rules:
-- wb-spinner--*
+- x-spinner--*
 ```
 
 <details><summary>View 4 Attribute Tooltips</summary>
@@ -2233,7 +2233,7 @@ CSS Rules:
 
 **Tooltip Output:**
 ```text
-A vertical stack layout component (Alternative to wb-flex direction=column).
+A vertical stack layout component (Alternative to x-flex direction=column).
 
 Use for:
 - Vertical lists
@@ -2291,7 +2291,7 @@ Variants:
 - success
 
 CSS Rules:
-- wb-switch--*
+- x-switch--*
 ```
 
 <details><summary>View 8 Attribute Tooltips</summary>
@@ -2311,7 +2311,7 @@ CSS Rules:
 
 ---
 
-## `<wb-switcher>`
+## `<div x-switcher>`
 
 **Tooltip Output:**
 ```text
@@ -2378,7 +2378,7 @@ Variants:
 - bordered
 
 CSS Rules:
-- wb-tabs--*
+- x-tabs--*
 ```
 
 <details><summary>View 5 Attribute Tooltips</summary>
@@ -2409,7 +2409,7 @@ Variants:
 - error
 
 CSS Rules:
-- wb-textarea--*
+- x-textarea--*
 ```
 
 <details><summary>View 13 Attribute Tooltips</summary>
@@ -2449,7 +2449,7 @@ Variants:
 - error
 
 CSS Rules:
-- wb-toast--*
+- x-toast--*
 ```
 
 <details><summary>View 9 Attribute Tooltips</summary>
@@ -2485,7 +2485,7 @@ Variants:
 - primary
 
 CSS Rules:
-- wb-tooltip--*
+- x-tooltip--*
 ```
 
 <details><summary>View 9 Attribute Tooltips</summary>
@@ -2506,7 +2506,7 @@ CSS Rules:
 
 ---
 
-## `<wb-views>`
+## `<div>`
 
 **Tooltip Output:**
 ```text

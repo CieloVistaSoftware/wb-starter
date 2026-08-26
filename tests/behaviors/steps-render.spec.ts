@@ -24,7 +24,7 @@ async function setup(page: Page, html: string): Promise<void> {
 test.describe('x-steps', () => {
   test('renders one item per items entry', async ({ page }) => {
     await setup(page, '<div id="st" x-steps items="Cart,Shipping,Payment,Confirm" current="2"></div>');
-    const items = page.locator('#st .wb-steps__item');
+    const items = page.locator('#st .x-steps__item');
     await expect(items).toHaveCount(4);
     await expect(page.locator('#st')).toContainText('Cart');
     await expect(page.locator('#st')).toContainText('Confirm');
@@ -32,9 +32,9 @@ test.describe('x-steps', () => {
 
   test('completed step shows a check, current shows its number', async ({ page }) => {
     await setup(page, '<div id="st2" x-steps items="Cart,Shipping,Payment,Confirm" current="2"></div>');
-    const first = page.locator('#st2 .wb-steps__item').nth(0);
+    const first = page.locator('#st2 .x-steps__item').nth(0);
     await expect(first).toContainText('✓'); // step 1 complete
-    const second = page.locator('#st2 .wb-steps__item').nth(1);
+    const second = page.locator('#st2 .x-steps__item').nth(1);
     await expect(second).toContainText('2'); // step 2 current
   });
 });

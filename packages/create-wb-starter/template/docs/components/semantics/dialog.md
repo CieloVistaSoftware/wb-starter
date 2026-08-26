@@ -6,10 +6,10 @@ Modal dialog using native HTML5 dialog element.
 
 | Property | Value |
 |----------|-------|
-| Custom Tag | `<wb-dialog>` |
+| Custom Tag | `<dialog>` |
 | Behavior | `dialog` |
 | Semantic | `<dialog>` |
-| Root CSS Class | `wb-dialog` |
+| Root CSS Class | `x-dialog` |
 | Category | Overlay |
 | Schema | `src/wb-models/dialog.schema.json` |
 
@@ -25,27 +25,26 @@ Modal dialog using native HTML5 dialog element.
 | `showClose` | boolean | `true` | Show close button |
 | `variant` | string | `"default"` | Variant: `default`, `centered`, `fullscreen` |
 
-Wrapped in `<wb-demo>`, so the live component renders below with its source shown underneath:
+Wrapped in `<div x-demo>`, so the live component renders below with its source shown underneath:
 
-<wb-demo>
-<wb-dialog
+<div x-demo>
+<dialog
   title="Welcome"
   id="my-dialog">
-  <p>Dialog content goes here.</p>
-</wb-dialog>
-<button onclick="document.getElementById('my-dialog').open()"> Open Dialog </button>
-</wb-demo>
+  <p>Click Me</p>
+</dialog>
+</div>
 
 ## Usage
 
 ### Custom Element
 
 ```html
-<wb-dialog
+<dialog
   title="Welcome"
   id="my-dialog">
   <p>Dialog content goes here.</p>
-</wb-dialog>
+</dialog>
 <button onclick="document.getElementById('my-dialog').open()"> Open Dialog </button>
 ```
 
@@ -63,59 +62,59 @@ Wrapped in `<wb-demo>`, so the live component renders below with its source show
 ### Sizes
 
 ```html
-<wb-dialog
+<dialog
   title="Small"
   size="sm">
   Small dialog
-</wb-dialog>
-<wb-dialog
+</dialog>
+<dialog
   title="Medium"
   size="md">
   Medium dialog
-</wb-dialog>
-<wb-dialog
+</dialog>
+<dialog
   title="Large"
   size="lg">
   Large dialog
-</wb-dialog>
-<wb-dialog
+</dialog>
+<dialog
   title="Full"
   size="full">
   Full dialog
-</wb-dialog>
+</dialog>
 ```
 
 ### Centered Variant
 
 ```html
-<wb-dialog
+<dialog
   title="Centered"
   variant="centered">
   This dialog is vertically centered.
-</wb-dialog>
+</dialog>
 ```
 
 ### Without Close Button
 
 ```html
-<wb-dialog
+<dialog
   title="Required Action"
   showClose="false">
   You must complete this action.
-</wb-dialog>
+</dialog>
 ```
 
 ## Generated Structure
 
 ```html
-<dialog class="wb-dialog wb-dialog--md">
-  <div class="wb-dialog__container">
-    <header class="wb-dialog__header">
-      <h2 class="wb-dialog__title">Title</h2>
-      <button class="wb-dialog__close">×</button>
+<dialog class="x-dialog x-dialog--md">
+  <div class="x-dialog__container">
+    <header class="x-dialog__header">
+      <h2 class="x-dialog__title">Title</h2>
+      <button class="x-dialog__close">×</button>
     </header>
-    <main class="wb-dialog__body"> Content here </main>
-    <footer class="wb-dialog__footer"> Footer content </footer>
+    <main class="x-dialog__body"> Content here </main>
+    <footer class="x-dialog__footer"> Footer content </footer>
   </div>
 </dialog>
 ```
@@ -124,14 +123,14 @@ Wrapped in `<wb-demo>`, so the live component renders below with its source show
 
 | Class | Applied When | Description |
 |-------|--------------|-------------|
-| `.wb-dialog` | Always | Base styling |
-| `.wb-dialog--sm` | `size="sm"` | Small size |
-| `.wb-dialog--md` | `size="md"` | Medium size |
-| `.wb-dialog--lg` | `size="lg"` | Large size |
-| `.wb-dialog--xl` | `size="xl"` | Extra large size |
-| `.wb-dialog--full` | `size="full"` | Full screen |
-| `.wb-dialog--centered` | `variant="centered"` | Centered variant |
-| `.wb-dialog--fullscreen` | `variant="fullscreen"` | Fullscreen variant |
+| `.x-dialog` | Always | Base styling |
+| `.x-dialog--sm` | `size="sm"` | Small size |
+| `.x-dialog--md` | `size="md"` | Medium size |
+| `.x-dialog--lg` | `size="lg"` | Large size |
+| `.x-dialog--xl` | `size="xl"` | Extra large size |
+| `.x-dialog--full` | `size="full"` | Full screen |
+| `.x-dialog--centered` | `variant="centered"` | Centered variant |
+| `.x-dialog--fullscreen` | `variant="fullscreen"` | Fullscreen variant |
 
 ## Methods
 
@@ -145,7 +144,7 @@ Wrapped in `<wb-demo>`, so the live component renders below with its source show
 | `setTitle(title)` | Updates title | - |
 
 ```javascript
-const dialog = document.querySelector('wb-dialog');
+const dialog = document.querySelector('x-dialog');
 
 // Open/close
 await dialog.open();
@@ -183,21 +182,21 @@ dialog.addEventListener('wb:dialog:close', () => {
 
 | Variable | Default | Description |
 |----------|---------|-------------|
-| `--wb-dialog-width` | `500px` | Dialog width |
-| `--wb-dialog-max-width` | `90vw` | Max dialog width |
-| `--wb-dialog-max-height` | `85vh` | Max dialog height |
-| `--wb-dialog-radius` | `8px` | Border radius |
-| `--wb-dialog-bg` | `var(--bg-surface, #ffffff)` | Background |
-| `--wb-dialog-shadow` | `0 20px 60px rgba(0,0,0,0.3)` | Box shadow |
-| `--wb-dialog-padding` | `1.5rem` | Content padding |
-| `--wb-dialog-header-gap` | `1rem` | Header gap |
-| `--wb-dialog-title-size` | `1.25rem` | Title font size |
-| `--wb-dialog-title-weight` | `600` | Title font weight |
-| `--wb-dialog-backdrop-bg` | `rgba(0,0,0,0.5)` | Backdrop background |
-| `--wb-dialog-backdrop-blur` | `0` | Backdrop blur |
-| `--wb-dialog-enter-animation` | `dialogFadeIn 0.2s ease` | Enter animation |
-| `--wb-dialog-exit-animation` | `dialogFadeOut 0.15s ease` | Exit animation |
-| `--wb-dialog-z-index` | `1000` | Z-index |
+| `--x-dialog-width` | `500px` | Dialog width |
+| `--x-dialog-max-width` | `90vw` | Max dialog width |
+| `--x-dialog-max-height` | `85vh` | Max dialog height |
+| `--x-dialog-radius` | `8px` | Border radius |
+| `--x-dialog-bg` | `var(--bg-surface, #ffffff)` | Background |
+| `--x-dialog-shadow` | `0 20px 60px rgba(0,0,0,0.3)` | Box shadow |
+| `--x-dialog-padding` | `1.5rem` | Content padding |
+| `--x-dialog-header-gap` | `1rem` | Header gap |
+| `--x-dialog-title-size` | `1.25rem` | Title font size |
+| `--x-dialog-title-weight` | `600` | Title font weight |
+| `--x-dialog-backdrop-bg` | `rgba(0,0,0,0.5)` | Backdrop background |
+| `--x-dialog-backdrop-blur` | `0` | Backdrop blur |
+| `--x-dialog-enter-animation` | `dialogFadeIn 0.2s ease` | Enter animation |
+| `--x-dialog-exit-animation` | `dialogFadeOut 0.15s ease` | Exit animation |
+| `--x-dialog-z-index` | `1000` | Z-index |
 
 ## Accessibility
 

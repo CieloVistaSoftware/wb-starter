@@ -1,3 +1,4 @@
+import { readFlag, readAttr } from '../../core/read-attr.js';
 import { writeToClipboard } from '../copy.js';
 
 /**
@@ -28,30 +29,30 @@ export function pre(element, options = {}) {
 
   // Try to infer language from child code element if not set on pre
   const codeChild = element.querySelector('code');
-  const childLanguage = codeChild ? (codeChild.getAttribute('language') || codeChild.dataset.language || '') : '';
+  const childLanguage = codeChild ? (codeChild.getAttribute('language') || readAttr(codeChild, 'language') || '') : '';
 
   // v3: plain `scrollable` attribute is canonical; data-scrollable accepted for back-compat.
-  const scrollable = options.scrollable ?? (element.getAttribute('scrollable') === 'true' || element.dataset.scrollable === 'true');
+  const scrollable = options.scrollable ?? (element.getAttribute('scrollable') === 'true' || readAttr(element, 'scrollable') === 'true');
   // Code blocks should read like a code editor: DO NOT wrap by default (wrapping
-  // breaks tokens mid-word, e.g. "wb-btn--" / "sm"). Long lines scroll
+  // breaks tokens mid-word, e.g. "x-btn--" / "sm"). Long lines scroll
   // horizontally instead. Opt into wrapping explicitly with wrap="true". (#199)
   const defaultWrap = false;
 
   const config = {
     // v3: plain `language` attribute is canonical; data-language accepted for back-compat.
-    language: options.language || element.getAttribute('language') || element.dataset.language || childLanguage || '',
+    language: options.language || element.getAttribute('language') || readAttr(element, 'language') || childLanguage || '',
     // v3 default: ON, matching an actual code editor (VS Code shows line
     // numbers by default) — explicit show-line-numbers="false" opts out.
     showLineNumbers: options.showLineNumbers ?? (element.getAttribute('show-line-numbers') !== 'false'),
-    showCopy: options.showCopy ?? (element.hasAttribute('show-copy') || element.hasAttribute('data-show-copy') || element.hasAttribute('data-copy')),
-    maxHeight: options.maxHeight || element.getAttribute('max-height') || element.dataset.maxHeight || '',
+    showCopy: options.showCopy ?? (element.hasAttribute('show-copy') || readFlag(element, 'show-copy') || readFlag(element, 'copy')),
+    maxHeight: options.maxHeight || element.getAttribute('max-height') || readAttr(element, 'maxHeight') || '',
     // v3: plain `wrap` attribute is canonical; data-wrap accepted for back-compat.
     wrap: options.wrap ?? (element.hasAttribute('wrap')
       ? element.getAttribute('wrap') !== 'false'
-      : (element.hasAttribute('data-wrap') ? element.dataset.wrap !== 'false' : defaultWrap)),
+      : (readFlag(element, 'wrap') ? readAttr(element, 'wrap') !== 'false' : defaultWrap)),
     scrollable: scrollable,
     // v3: plain `size` attribute is canonical; data-size accepted for back-compat.
-    size: options.size || element.getAttribute('size') || element.dataset.size || 'md',
+    size: options.size || element.getAttribute('size') || readAttr(element, 'size') || 'md',
     ...options
   };
 
@@ -163,7 +164,7 @@ export function pre(element, options = {}) {
   // Only worth offering when there's actually something to collapse away —
   // gated on maxHeight (the same signal the wrapper itself uses to decide
   // whether the code needs clipping). Previously unconditional: every
-  // <wb-demo> code sample (typically 3-10 lines, never maxHeight) got a
+  // <div x-demo> code sample (typically 3-10 lines, never maxHeight) got a
   // "hide code" toggle with nothing meaningful to hide.
   let collapsed = false;
 
@@ -287,8 +288,39 @@ export function pre(element, options = {}) {
         return null;
       };
 
+      // #559: a line's number must sit next to where its VISIBLE content
+      // starts, not necessarily its very first character. When wrapping is
+      // enabled (doc-viewer's forced pre-wrap, mdhtml.css) and a line opens
+      // with indentation whitespace (e.g. "  src=...") whose available row
+      // width is narrow (a long wrapped attribute value + enlarged
+      // font-size both shrink it), that leading run of spaces can itself
+      // soft-wrap onto its own visual row, landing the number next to an
+      // empty-looking row while the real text ("src=...") starts one row
+      // below with no number of its own -- reads as a phantom blank line.
+      // Skip past leading spaces/tabs (never past a real newline -- an
+      // all-whitespace/blank source line has nothing better to anchor to)
+      // so the measured position always lands on real content when there
+      // is any. Confirmed live: without this, docs/components/semantics/
+      // audio.md's "With Bass/Treble Boost" sample (long src="https://…"
+      // attribute) showed exactly this at a narrow effective row width.
+      const firstContentOffset = (nodeIndex, offset) => {
+        while (nodeIndex < textNodes.length) {
+          const text = textNodes[nodeIndex].nodeValue;
+          while (offset < text.length) {
+            const ch = text[offset];
+            if (ch === '\n') return { nodeIndex, offset }; // blank line
+            if (ch !== ' ' && ch !== '\t') return { nodeIndex, offset };
+            offset++;
+          }
+          nodeIndex++;
+          offset = 0;
+        }
+        return { nodeIndex, offset };
+      };
+
       if (textNodes[0] && lineNumEls[0]) {
-        const rect = measureFrom(0, 0);
+        const pos = firstContentOffset(0, 0);
+        const rect = measureFrom(pos.nodeIndex, pos.offset);
         if (rect) lineNumEls[0].style.top = (rect.top - containerTop) + 'px';
       }
 
@@ -300,7 +332,8 @@ export function pre(element, options = {}) {
         while ((nlAt = text.indexOf('\n', searchFrom)) !== -1) {
           lineIndex++;
           if (lineIndex < lineNumEls.length) {
-            const rect = measureFrom(i, nlAt + 1);
+            const pos = firstContentOffset(i, nlAt + 1);
+            const rect = measureFrom(pos.nodeIndex, pos.offset);
             if (rect) lineNumEls[lineIndex].style.top = (rect.top - containerTop) + 'px';
           }
           searchFrom = nlAt + 1;

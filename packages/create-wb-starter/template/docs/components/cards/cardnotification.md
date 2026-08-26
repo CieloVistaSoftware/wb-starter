@@ -6,10 +6,10 @@ Alert/notification card using semantic `<aside>` element.
 
 | Property | Value |
 |----------|-------|
-| Custom Tag | `<wb-cardnotification>` |
+| Custom Tag | `<div x-cardnotification>` |
 | Behavior | `cardnotification` |
 | Semantic | `<aside>` with `role="alert"` |
-| Root CSS Class | `wb-notification` |
+| Root CSS Class | `x-notification` |
 | CSS File | `src/styles/behaviors/card.css` |
 | Schema | `src/wb-models/cardnotification.schema.json` |
 
@@ -18,7 +18,7 @@ Alert/notification card using semantic `<aside>` element.
 | Layer | Responsibility |
 |-------|---------------|
 | **Schema** (`$view`) | DOM structure: icon, content, title, message, dismiss button |
-| **CSS** (card.css) | Variant colors via `.wb-notification--{variant}` classes |
+| **CSS** (card.css) | Variant colors via `.x-notification--{variant}` classes |
 | **Behavior** (card.js) | Interactivity: dismiss handler, Escape key, aria, default icon text |
 
 The behavior does **not** rebuild the DOM when the schema has already processed the element. It only wires up event handlers and fills in default icon letters.
@@ -34,82 +34,82 @@ The behavior does **not** rebuild the DOM when the schema has already processed 
 | `icon` | string | auto | Custom icon (overrides variant-based letter) |
 | `elevated` | boolean | `false` | Add shadow elevation |
 
-Wrapped in `<wb-demo>`, so the live component renders below with its source shown underneath:
+Wrapped in `<div x-demo>`, so the live component renders below with its source shown underneath:
 
-<wb-demo>
-<wb-cardnotification
+<div x-demo>
+<div x-cardnotification
   variant="info"
   title="Information"
   message="This is an informational message.">
-</wb-cardnotification>
-</wb-demo>
+</div>
+</div>
 
 ## Usage
 
 ### Info Notification
 
 ```html
-<wb-cardnotification
+<div x-cardnotification
   variant="info"
   title="Information"
   message="This is an informational message.">
-</wb-cardnotification>
+</div>
 ```
 
 ### Success Notification
 
 ```html
-<wb-cardnotification
+<div x-cardnotification
   variant="success"
   title="Success!"
   message="Your changes have been saved.">
-</wb-cardnotification>
+</div>
 ```
 
 ### Warning Notification
 
 ```html
-<wb-cardnotification
+<div x-cardnotification
   variant="warning"
   title="Warning"
   message="Please review your input.">
-</wb-cardnotification>
+</div>
 ```
 
 ### Error Notification
 
 ```html
-<wb-cardnotification
+<div x-cardnotification
   variant="error"
   title="Error"
   message="Something went wrong. Please try again.">
-</wb-cardnotification>
+</div>
 ```
 
 ### Non-Dismissible
 
 ```html
-<wb-cardnotification
+<div x-cardnotification
   variant="info"
   message="This notification cannot be dismissed."
   dismissible="false">
-</wb-cardnotification>
+</div>
 ```
 
 ## CSS Classes
 
 | Class | Purpose |
 |-------|---------|
-| `.wb-notification` | Base layout (flex row, gap, padding, border-left) |
-| `.wb-notification--info` | Blue border + tinted background |
-| `.wb-notification--success` | Green border + tinted background |
-| `.wb-notification--warning` | Amber border + tinted background |
-| `.wb-notification--error` | Red border + tinted background |
-| `.wb-notification__icon` | Colored circle with variant letter |
-| `.wb-notification__content` | Flex-1 text container |
-| `.wb-notification__title` | Bold title text |
-| `.wb-notification__message` | Message paragraph |
-| `.wb-notification__dismiss` | Close button |
+| `.x-notification` | Base layout (flex row, gap, padding, border-left) |
+| `.x-notification--info` | Blue border + tinted background |
+| `.x-notification--success` | Green border + tinted background |
+| `.x-notification--warning` | Amber border + tinted background |
+| `.x-notification--error` | Red border + tinted background |
+| `.x-notification__icon` | Colored circle with variant letter |
+| `.x-notification__content` | Flex-1 text container |
+| `.x-notification__title` | Bold title text |
+| `.x-notification__message` | Message paragraph |
+| `.x-notification__dismiss` | Close button |
 
 ## Events
 
@@ -118,7 +118,7 @@ Wrapped in `<wb-demo>`, so the live component renders below with its source show
 Fired when notification is dismissed:
 
 ```javascript
-document.querySelector('wb-cardnotification').addEventListener('wb:cardnotification:dismiss', (e) => {
+document.querySelector('x-cardnotification').addEventListener('wb:cardnotification:dismiss', (e) => {
   console.log('Dismissed:', e.detail.variant, e.detail.title);
 });
 ```

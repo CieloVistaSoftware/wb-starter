@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Standalone Preview — WB</title>
+  <link rel="stylesheet" href="../src/styles/themes.css?v=3.0.91">
+  <style>
+    /* #659: a bare, full-bleed stage. Deliberately NOT loading site.css -- its
+       page gutters and max-width are exactly what makes the Playground pane
+       unable to show a full-width component. The element under test gets the
+       whole viewport, and resizing the browser resizes it. */
+    html, body {
+      margin: 0;
+      padding: 0;
+      min-height: 100%;
+      background: var(--bg-primary, #0b0f14);
+      color: var(--text-primary, #e5e7eb);
+      font-family: system-ui, -apple-system, "Segoe UI", sans-serif;
+    }
+
+    #stage { width: 100%; }
+
+    /* Without this a `width:100%` element with padding computes to
+       100% + padding and overflows the viewport (measured: 1312px in a 1280px
+       window, with a horizontal scrollbar). This page's whole job is showing
+       an element at true browser width, so border-box is the correct default
+       for the stage rather than a workaround. */
+    #stage, #stage *, #stage *::before, #stage *::after { box-sizing: border-box; }
+
+    /* Shown only when there is nothing to render, so a direct visit to this
+       URL explains itself instead of looking broken. */
+    #empty {
+      max-width: 34rem;
+      margin: 4rem auto;
+      padding: 0 1.5rem;
+      line-height: 1.6;
+    }
+    #empty code {
+      background: var(--bg-tertiary, #1f2937);
+      padding: 0.15rem 0.4rem;
+      border-radius: 4px;
+    }
+
+    /* A small, unobtrusive readout of the live viewport size -- the whole
+       reason for this page is watching the element respond to it. Sits above
+       the content and never intercepts clicks on the element being tested. */
+    #size-readout {
+      position: fixed;
+      right: 0.75rem;
+      bottom: 0.75rem;
+      z-index: 2147483647;
+      pointer-events: none;
+      font: 600 0.75rem/1 ui-monospace, SFMono-Regular, Menlo, monospace;
+      padding: 0.4rem 0.6rem;
+      border-radius: 6px;
+      background: color-mix(in srgb, var(--bg-secondary, #111827) 85%, transparent);
+      color: var(--text-primary, #e5e7eb);
+      border: 1px solid var(--border-color, #374151);
+    }
+    #size-readout[hidden] { display: none; }
+  </style>
+</head>
+<body>
+  <div id="stage"></div>
+
+  <div id="empty" hidden>
+    <h1>Nothing to preview</h1>
+    <p>This page renders whatever markup the URL hands it, edge to edge, so you
+      can resize the browser and watch the element respond. A bare
+      <code>standalone.html</code> with no <code>#fragment</code> has nothing to
+      draw &mdash; which is why you are seeing this instead of a component.</p>
+    <p>Open it from the Playground's <strong>&#x29C9; Standalone</strong> button.
+      It builds a self-contained link with the markup in the URL, so the result
+      can be pasted into any browser, shared, or bookmarked.</p>
+    <p><a href="./playground.html">&larr; Go to the Playground</a></p>
+  </div>
+
+  <div id="size-readout" hidden></div>
+
+  <script type="module">
+    import WB from '../src/core/wb-lazy.js';
+
+    const STORAGE_KEY = 'x-standalone-markup';
+    const stage = document.getElementById('stage');
+
+    // The hash wins when present (shareable link), otherwise localStorage
+    // (what the Playground button uses -- no URL length limit).
+    let markup = '';
+    if (location.hash.length > 1) {
+      try { markup = decodeURIComponent(location.hash.slice(1)); } catch { markup = ''; }
+    }
+    if (!markup) markup = localStorage.getItem(STORAGE_KEY) || '';
+
+    if (markup.trim()) {
+      stage.innerHTML = markup;
+      await WB.init({ autoInject: true });
+      // The markup was injected before init(), but a direct innerHTML write
+      // does not notify the MutationObserver for content that was already
+      // present at init time -- scan explicitly so wb-*/x-* upgrade reliably.
+      await WB.scan(stage, { eager: true });
+
+      const readout = document.getElementById('size-readout');
+      readout.hidden = false;
+      const el = stage.firstElementChild;
+      const update = () => {
+        const w = window.innerWidth;
+        const r = el ? el.getBoundingClientRect() : null;
+        readout.textContent = r
+          ? `viewport ${w}px · element ${Math.round(r.width)}×${Math.round(r.height)}px`
+          : `viewport ${w}px`;
+      };
+      update();
+      window.addEventListener('resize', update);
+      if (el && typeof ResizeObserver !== 'undefined') new ResizeObserver(update).observe(el);
+    } else {
+      document.getElementById('empty').hidden = false;
+    }
+  </script>
+</body>
+</html>

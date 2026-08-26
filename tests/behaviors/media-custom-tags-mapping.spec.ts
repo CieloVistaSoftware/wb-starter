@@ -1,8 +1,8 @@
 /**
- * <wb-video>, <wb-vimeo>, <wb-youtube>, <wb-gallery>, <wb-ratio>, and
- * <wb-figure> (as a custom tag — separate from native <figure>, covered
- * in wb-figure-tag-mapping.spec.ts) had ZERO selector→behavior mapping
- * anywhere in tag-map.js or wb-lazy.js — only <wb-audio> among this
+ * <video>, <div x-vimeo>, <div x-youtube>, <div x-gallery>, <div x-ratio>, and
+ * <figure> (as a custom tag — separate from native <figure>, covered
+ * in x-figure-tag-mapping.spec.ts) had ZERO selector→behavior mapping
+ * anywhere in tag-map.js or wb-lazy.js — only <audio> among this
  * whole media-behavior family was ever wired up. Every one of these tags
  * was completely inert on every page, everywhere, always. Discovered
  * while migrating the underlying functions out of the old media.js
@@ -11,7 +11,7 @@
  * Also fixed along the way: vimeo()'s old media.js implementation
  * referenced undefined `iframe`/`params` variables (only `videoIframe`/
  * `embedParams` were ever declared) — a real ReferenceError that would
- * have fired instantly, the moment <wb-vimeo> was ever actually reachable.
+ * have fired instantly, the moment <div x-vimeo> was ever actually reachable.
  */
 import { test, expect, Page } from '@playwright/test';
 
@@ -36,45 +36,45 @@ async function setup(page: Page, html: string): Promise<void> {
 }
 
 test.describe('media custom-tag mappings (were completely unmapped)', () => {
-  test('<wb-video> gets enhanced and wraps a real <video>', async ({ page }) => {
-    await setup(page, '<wb-video id="v1" src="https://example.com/x.mp4"></wb-video>');
-    await expect(page.locator('#v1')).toHaveClass(/wb-video/);
+  test('<video> gets enhanced and wraps a real <video>', async ({ page }) => {
+    await setup(page, '<video id="v1" src="https://example.com/x.mp4"></video>');
+    await expect(page.locator('#v1')).toHaveClass(/x-video/);
     await expect(page.locator('#v1 video')).toHaveCount(1);
   });
 
-  test('<wb-vimeo> renders a real iframe with no ReferenceError (previously undefined iframe/params)', async ({ page }) => {
+  test('<div x-vimeo> renders a real iframe with no ReferenceError (previously undefined iframe/params)', async ({ page }) => {
     const errors: string[] = [];
     page.on('pageerror', (e) => errors.push(e.message));
-    await setup(page, '<wb-vimeo id="vm1" video-id="123456789"></wb-vimeo>');
-    await expect(page.locator('#vm1')).toHaveClass(/wb-vimeo/);
+    await setup(page, '<div x-vimeo id="vm1" video-id="123456789"></div>');
+    await expect(page.locator('#vm1')).toHaveClass(/x-vimeo/);
     const iframe = page.locator('#vm1 iframe');
     await expect(iframe).toHaveCount(1);
     await expect(iframe).toHaveAttribute('src', /player\.vimeo\.com\/video\/123456789/);
     expect(errors).toEqual([]);
   });
 
-  test('<wb-youtube> renders a poster (no autoplay)', async ({ page }) => {
-    await setup(page, '<wb-youtube id="yt1" video-id="dQw4w9WgXcQ"></wb-youtube>');
-    await expect(page.locator('#yt1')).toHaveClass(/wb-youtube/);
-    await expect(page.locator('#yt1 .wb-youtube__poster')).toHaveCount(1);
+  test('<div x-youtube> renders a poster (no autoplay)', async ({ page }) => {
+    await setup(page, '<div x-youtube id="yt1" video-id="dQw4w9WgXcQ"></div>');
+    await expect(page.locator('#yt1')).toHaveClass(/x-youtube/);
+    await expect(page.locator('#yt1 .x-youtube__poster')).toHaveCount(1);
   });
 
-  test('<wb-gallery> gets enhanced with a grid layout', async ({ page }) => {
-    await setup(page, `<wb-gallery id="g1"><img src="${PIXEL}"><img src="${PIXEL}"></wb-gallery>`);
-    await expect(page.locator('#g1')).toHaveClass(/wb-gallery/);
+  test('<div x-gallery> gets enhanced with a grid layout', async ({ page }) => {
+    await setup(page, `<div x-gallery id="g1"><img src="${PIXEL}"><img src="${PIXEL}"></div>`);
+    await expect(page.locator('#g1')).toHaveClass(/x-gallery/);
     const display = await page.locator('#g1').evaluate((el) => getComputedStyle(el).display);
     expect(display).toBe('grid');
   });
 
-  test('<wb-ratio> gets enhanced with the configured aspect-ratio', async ({ page }) => {
-    await setup(page, '<wb-ratio id="r1" ratio="16x9"><div>content</div></wb-ratio>');
-    await expect(page.locator('#r1')).toHaveClass(/wb-ratio/);
+  test('<div x-ratio> gets enhanced with the configured aspect-ratio', async ({ page }) => {
+    await setup(page, '<div x-ratio id="r1" ratio="16x9"><div>content</div></div>');
+    await expect(page.locator('#r1')).toHaveClass(/x-ratio/);
     const aspectRatio = await page.locator('#r1').evaluate((el) => (el as HTMLElement).style.aspectRatio);
     expect(aspectRatio).toBe('16 / 9');
   });
 
-  test('<wb-figure> (custom tag) gets enhanced', async ({ page }) => {
-    await setup(page, `<wb-figure id="f1"><img src="${PIXEL}"></wb-figure>`);
-    await expect(page.locator('#f1')).toHaveClass(/wb-figure/);
+  test('<figure> (custom tag) gets enhanced', async ({ page }) => {
+    await setup(page, `<figure id="f1"><img src="${PIXEL}"></figure>`);
+    await expect(page.locator('#f1')).toHaveClass(/x-figure/);
   });
 });

@@ -1,0 +1,13 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "heartbeat.schema.json",
+  "title": "Heartbeat",
+  "description": "On click, plays the heartbeat animation for 1.3s.",
+  "schemaFor": "x-heartbeat",
+  "properties": {},
+  "_metadata": {
+    "generatedBy": "scripts/generate-behavior-schemas.mjs (#716)",
+    "derivedFrom": "the behavior implementation — every property here is one the code actually reads",
+    "note": "Expand by hand: enums, richer descriptions and accessibility notes cannot be read from source."
+  }
+}

@@ -31,8 +31,8 @@ async function auditCodebase() {
     const unknownFiles = [];
 
     // Helper to map filename to likely schema/tag name
-    // e.g. wb-row.js -> wb-row -> row.schema.json
-    // e.g. span.js -> wb-span -> span.schema.json
+    // e.g. x-row.js -> x-row -> row.schema.json
+    // e.g. span.js -> x-span -> span.schema.json
     for (const file of viewFiles) {
         // Skip known library files
         if (['layouts.js', 'helpers.js', 'effects.js', 'validator.js'].includes(file)) continue;
@@ -42,10 +42,10 @@ async function auditCodebase() {
         let expectedSchema = '';
 
         if (componentName.startsWith('wb-')) {
-            tagName = componentName; // wb-row
+            tagName = componentName; // x-row
             expectedSchema = componentName.replace('wb-', '') + '.schema.json'; // row.schema.json
         } else {
-            tagName = `wb-${componentName}`; // wb-span
+            tagName = `wb-${componentName}`; // x-span
             expectedSchema = componentName + '.schema.json'; // span.schema.json
         }
 

@@ -9,10 +9,10 @@ stacked lines, a circle, or a rectangle. Implemented by `skeleton()` in
 | Property | Value |
 |----------|-------|
 | Attribute | `x-skeleton` |
-| Custom Tag | `<div x-skeleton>` |
+| Attribute form | `<div x-skeleton>` |
 | Behavior function | `skeleton()` — `src/wb-viewmodels/feedback.js` |
 | Semantic element | `<div role="status">` |
-| Root CSS Class | none added by JS — `skeleton.css` styles the `<div x-skeleton>` **tag** directly, so `x-skeleton` on any other element gets no shimmer styling from the base rule (only the `.wb-skeleton--{variant}` modifier class is added) |
+| Root CSS Class | none added by JS — `skeleton.css` styles the `<div x-skeleton>` **tag** directly, so `x-skeleton` on any other element gets no shimmer styling from the base rule (only the `.x-skeleton--{variant}` modifier class is added) |
 | Category | Feedback |
 | Schema | [skeleton.schema.json](../../src/wb-models/skeleton.schema.json) — declares an `animated` property the JS never reads; the shimmer animation always runs, it isn't toggleable |
 
@@ -29,31 +29,31 @@ stacked lines, a circle, or a rectangle. Implemented by `skeleton()` in
 
 ### Single line
 
-<wb-demo>
-<wb-skeleton variant="text"></div>
-</wb-demo>
+<div x-demo>
+<div x-skeleton variant="text"></div>
+</div>
 
 ### Multiple lines
 
-<wb-demo>
-<wb-skeleton variant="text" lines="3"></div>
-</wb-demo>
+<div x-demo>
+<div x-skeleton variant="text" lines="3"></div>
+</div>
 
 ### Circle (e.g. an avatar placeholder)
 
-<wb-demo>
-<wb-skeleton variant="circle" width="48px" height="48px"></div>
-</wb-demo>
+<div x-demo>
+<div x-skeleton variant="circle" width="48px" height="48px"></div>
+</div>
 
 ### Rectangle (e.g. an image placeholder)
 
-<wb-demo>
-<wb-skeleton variant="rect" height="150px"></div>
-</wb-demo>
+<div x-demo>
+<div x-skeleton variant="rect" height="150px"></div>
+</div>
 
 > `x-skeleton` on a non-`<div x-skeleton>` element still runs `skeleton()`, but only
-> gets the `.wb-skeleton--{variant}` modifier class — the shimmer gradient and
-> sizing come from `skeleton.css`'s `wb-skeleton { ... }` **tag** selector, which
+> gets the `.x-skeleton--{variant}` modifier class — the shimmer gradient and
+> sizing come from `skeleton.css`'s `x-skeleton { ... }` **tag** selector, which
 > a different tag never matches. Use the `<div x-skeleton>` custom tag to get the
 > full visual, not `x-skeleton` on an arbitrary element.
 
@@ -62,10 +62,10 @@ stacked lines, a circle, or a rectangle. Implemented by `skeleton()` in
 | Class | Applied when | Description |
 |-------|--------------|-------------|
 | `<div x-skeleton>` (tag selector, not a class) | the host is a literal `<div x-skeleton>` | Base shimmering block: gradient background, `1rem` height, animated |
-| `.wb-skeleton--{variant}` | Always | `text`/`circle`/`rect` modifier |
-| `wb-skeleton[variant="circle"]` | `variant="circle"` | 1:1 aspect ratio, fully rounded |
-| `wb-skeleton[variant="rect"]` | `variant="rect"` | Sharp-ish corners (`4px` radius), height comes from the `height` attribute |
-| `wb-skeleton > span` | `variant="text"` and `lines > 1` | Each stacked line gets its own shimmer; the last line is narrower (`60%` width) |
+| `.x-skeleton--{variant}` | Always | `text`/`circle`/`rect` modifier |
+| `x-skeleton[variant="circle"]` | `variant="circle"` | 1:1 aspect ratio, fully rounded |
+| `x-skeleton[variant="rect"]` | `variant="rect"` | Sharp-ish corners (`4px` radius), height comes from the `height` attribute |
+| `x-skeleton > span` | `variant="text"` and `lines > 1` | Each stacked line gets its own shimmer; the last line is narrower (`60%` width) |
 
 ## Events
 

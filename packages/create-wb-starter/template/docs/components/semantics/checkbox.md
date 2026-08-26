@@ -6,10 +6,10 @@ Checkbox input with label and custom styling.
 
 | Property | Value |
 |----------|-------|
-| Custom Tag | `<wb-checkbox>` |
+| Custom Tag | `<div x-checkbox>` |
 | Behavior | `checkbox` |
 | Semantic | `<div>` (role="checkbox") |
-| Root CSS Class | `wb-checkbox` |
+| Root CSS Class | `x-checkbox` |
 | Category | Forms |
 | Schema | `src/wb-models/checkbox.schema.json` |
 
@@ -27,18 +27,18 @@ Checkbox input with label and custom styling.
 | `size` | string | `"md"` | Size: `sm`, `md`, `lg` |
 | `variant` | string | `"default"` | Variant: `default`, `primary`, `success` |
 
-Wrapped in `<wb-demo>`, so the live component renders below with its source shown underneath:
+Wrapped in `<div x-demo>`, so the live component renders below with its source shown underneath:
 
-<wb-demo>
-<wb-checkbox label="I agree to the terms"></wb-checkbox>
-</wb-demo>
+<div x-demo>
+<div x-checkbox label="I agree to the terms"></div>
+</div>
 
 ## Usage
 
 ### Custom Element
 
 ```html
-<wb-checkbox label="I agree to the terms"></wb-checkbox>
+<div x-checkbox label="I agree to the terms"></div>
 ```
 
 ### Native Input (Enhanced)
@@ -53,69 +53,69 @@ Wrapped in `<wb-demo>`, so the live component renders below with its source show
 ### Pre-Checked
 
 ```html
-<wb-checkbox
+<div x-checkbox
   label="Remember me"
   checked>
-</wb-checkbox>
+</div>
 ```
 
 ### Indeterminate State
 
 ```html
-<wb-checkbox
+<div x-checkbox
   label="Select All"
   indeterminate>
-</wb-checkbox>
+</div>
 ```
 
 ### Disabled
 
 ```html
-<wb-checkbox
+<div x-checkbox
   label="Unavailable option"
   disabled>
-</wb-checkbox>
+</div>
 ```
 
 ### Sizes
 
 ```html
-<wb-checkbox
+<div x-checkbox
   label="Small"
   size="sm">
-</wb-checkbox>
-<wb-checkbox
+</div>
+<div x-checkbox
   label="Medium"
   size="md">
-</wb-checkbox>
-<wb-checkbox
+</div>
+<div x-checkbox
   label="Large"
   size="lg">
-</wb-checkbox>
+</div>
 ```
 
 ### In Forms
 
 ```html
-<wb-checkbox
+<div x-checkbox
   label="Subscribe to newsletter"
   name="subscribe"
   value="yes"
   required>
-</wb-checkbox>
+</div>
 ```
 
 ## Generated Structure
 
 ```html
-<div class="wb-checkbox">
+<div class="x-checkbox">
   <input
     type="checkbox"
-    class="wb-checkbox__input">
-  <span class="wb-checkbox__box">
-    <span class="wb-checkbox__check"></span>
+    class="x-checkbox__input">
+  <span class="x-checkbox__box">
+    <span class="x-checkbox__check"></span>
   </span>
-  <span class="wb-checkbox__label">Label text</span>
+  <span class="x-checkbox__label">Label text</span>
 </div>
 ```
 
@@ -123,15 +123,15 @@ Wrapped in `<wb-demo>`, so the live component renders below with its source show
 
 | Class | Applied When | Description |
 |-------|--------------|-------------|
-| `.wb-checkbox` | Always | Base styling |
-| `.wb-checkbox--checked` | `checked` | Checked state |
-| `.wb-checkbox--indeterminate` | `indeterminate` | Indeterminate state |
-| `.wb-checkbox--disabled` | `disabled` | Disabled state |
-| `.wb-checkbox--sm` | `size="sm"` | Small size |
-| `.wb-checkbox--md` | `size="md"` | Medium size |
-| `.wb-checkbox--lg` | `size="lg"` | Large size |
-| `.wb-checkbox--primary` | `variant="primary"` | Primary variant |
-| `.wb-checkbox--success` | `variant="success"` | Success variant |
+| `.x-checkbox` | Always | Base styling |
+| `.x-checkbox--checked` | `checked` | Checked state |
+| `.x-checkbox--indeterminate` | `indeterminate` | Indeterminate state |
+| `.x-checkbox--disabled` | `disabled` | Disabled state |
+| `.x-checkbox--sm` | `size="sm"` | Small size |
+| `.x-checkbox--md` | `size="md"` | Medium size |
+| `.x-checkbox--lg` | `size="lg"` | Large size |
+| `.x-checkbox--primary` | `variant="primary"` | Primary variant |
+| `.x-checkbox--success` | `variant="success"` | Success variant |
 
 ## Methods
 
@@ -145,7 +145,7 @@ Wrapped in `<wb-demo>`, so the live component renders below with its source show
 | `disable()` | Disables the checkbox |
 
 ```javascript
-const checkbox = document.querySelector('wb-checkbox');
+const checkbox = document.querySelector('x-checkbox');
 
 // Check/uncheck
 checkbox.check();
@@ -174,17 +174,17 @@ checkbox.addEventListener('wb:checkbox:change', (e) => {
 
 | Variable | Default | Description |
 |----------|---------|-------------|
-| `--wb-checkbox-size` | `18px` | Checkbox size |
-| `--wb-checkbox-radius` | `4px` | Border radius |
-| `--wb-checkbox-border` | `2px solid var(--border-color)` | Border style |
-| `--wb-checkbox-bg` | `var(--bg-surface, #ffffff)` | Background |
-| `--wb-checkbox-checked-bg` | `var(--primary, #6366f1)` | Checked background |
-| `--wb-checkbox-checked-border` | `var(--primary, #6366f1)` | Checked border |
-| `--wb-checkbox-check-color` | `#ffffff` | Checkmark color |
-| `--wb-checkbox-disabled-opacity` | `0.5` | Disabled opacity |
-| `--wb-checkbox-label-gap` | `0.5rem` | Gap between box and label |
-| `--wb-checkbox-label-size` | `0.875rem` | Label font size |
-| `--wb-checkbox-focus-ring` | `0 0 0 3px rgba(99, 102, 241, 0.2)` | Focus ring |
+| `--x-checkbox-size` | `18px` | Checkbox size |
+| `--x-checkbox-radius` | `4px` | Border radius |
+| `--x-checkbox-border` | `2px solid var(--border-color)` | Border style |
+| `--x-checkbox-bg` | `var(--bg-surface, #ffffff)` | Background |
+| `--x-checkbox-checked-bg` | `var(--primary, #6366f1)` | Checked background |
+| `--x-checkbox-checked-border` | `var(--primary, #6366f1)` | Checked border |
+| `--x-checkbox-check-color` | `#ffffff` | Checkmark color |
+| `--x-checkbox-disabled-opacity` | `0.5` | Disabled opacity |
+| `--x-checkbox-label-gap` | `0.5rem` | Gap between box and label |
+| `--x-checkbox-label-size` | `0.875rem` | Label font size |
+| `--x-checkbox-focus-ring` | `0 0 0 3px rgba(99, 102, 241, 0.2)` | Focus ring |
 
 ## Accessibility
 

@@ -27,7 +27,7 @@ test.describe('Schema Viewer Rendering Tests', () => {
       };
     });
 
-    await page.goto('http://localhost:3000/public/schema-viewer.html');
+    await page.goto('/public/schema-viewer.html');
     await page.waitForLoadState('networkidle');
     await page.waitForFunction(() => (window as any).WB);
   });

@@ -13,154 +13,23 @@
 // Source: Each filename in src/wb-models/ without extension and .schema
 
 export const elementMap = {
-  // Layout — behaviors, not classes that extend HTMLElement (v3). The
-  // <wb-column>/<wb-cluster>/<wb-stack>/<wb-row> custom elements were removed
-  // (#279) — each was a thin connectedCallback wrapper that just called the
-  // already-existing pure behavior function from layouts.js directly.
-  'wb-column': 'stack',
-  'wb-cluster': 'cluster',
-  'wb-stack': 'stack',
-  // flex()'s own default direction is 'row' (layouts.js), so no special
-  // options are needed to reproduce wb-row.js's hardcoded direction:'row'.
-  'wb-row': 'flex',
-  // Components
-  'wb-alert': 'alert',
-  'wb-article': 'article',
-  'wb-articles': 'articles',
-  // wb-autocomplete/wb-colorpicker/wb-counter/wb-error/wb-fieldset/wb-file/
-  // wb-floatinglabel/wb-formrow/wb-help/wb-inputgroup/wb-label/wb-masked/
-  // wb-tags (#365 audit): each has its own real behavior function
-  // (src/wb-viewmodels/*.js, already registered in wb-viewmodels/index.js's
-  // behaviorModules) AND its own schema.json, but was missing here entirely
-  // -- getElementBehavior() (used by both wb.js's _detectSchemaName() and
-  // its own unconditional wb-* injection loop in scan()) returns null for
-  // any tag not in this map, so WB.scan() never dispatched ANY of these 13
-  // tags at all: no schema fetch, no behavior injection, no x-schema
-  // attribute, nothing -- a silent total no-op, confirmed live via a bare
-  // `<wb-X></wb-X>` producing zero classes/children/console output for each.
-  // Each behavior already handles being called on a plain non-input host
-  // element (autocomplete/colorpicker/file/tags/floatinglabel all build a
-  // real child <input> or wrapper when `element` isn't already one), so
-  // wiring the tag here restores the same real, functioning render these
-  // already get via their (working) x-{name} attribute form on native
-  // elements -- it does not change x-* behavior at all, only enables the
-  // <wb-X> custom-tag form to actually run.
-  'wb-autocomplete': 'autocomplete',
-  'wb-colorpicker': 'colorpicker',
-  'wb-counter': 'counter',
-  'wb-error': 'error',
-  'wb-fieldset': 'fieldset',
-  'wb-file': 'file',
-  'wb-floatinglabel': 'floatinglabel',
-  'wb-formrow': 'formrow',
-  'wb-help': 'help',
-  'wb-inputgroup': 'inputgroup',
-  'wb-label': 'label',
-  'wb-masked': 'masked',
-  'wb-tags': 'tags',
-  'wb-audio': 'audio',
-  'wb-avatar': 'avatar',
-  'wb-badge': 'badge',
-  'wb-button': 'button',
-  'wb-card': 'card',
-  'wb-cardbutton': 'cardbutton',
-  'wb-carddraggable': 'carddraggable',
-  'wb-cardexpandable': 'cardexpandable',
-  'wb-cardfile': 'cardfile',
-  'wb-cardhero': 'cardhero',
-  'wb-cardhorizontal': 'cardhorizontal',
-  'wb-cardimage': 'cardimage',
-  'wb-cardlink': 'cardlink',
-  'wb-card-link': 'cardlink',
-  'wb-cardminimizable': 'cardminimizable',
-  'wb-cardnotification': 'cardnotification',
-  'wb-cardoverlay': 'cardoverlay',
-  'wb-cardportfolio': 'cardportfolio',
-  'wb-cardpricing': 'cardpricing',
-  'wb-cardproduct': 'cardproduct',
-  'wb-cardprofile': 'cardprofile',
-  'wb-cardstats': 'cardstats',
-  'wb-cardtestimonial': 'cardtestimonial',
-  'wb-cardvideo': 'cardvideo',
-  // wb-fix-card (#365): own file (fix-card.js), not part of the wb-card*
-  // family generated above -- was missing here entirely, so WB.scan() never
-  // dispatched the tag and fix-card.js's customElements.define() never ran.
-  'wb-fix-card': 'fix-card',
-  'wb-checkbox': 'checkbox',
-  'wb-chip': 'chip',
-  'wb-codecontrol': 'codecontrol',
-  'wb-collapse': 'collapse',
-  'wb-confetti': 'confetti',
-  'wb-control': 'control',
-  'wb-copy': 'copy',
-  'wb-darkmode': 'darkmode',
-  'wb-demo': 'demo',
-  'wb-details': 'details',
-  'wb-dialog': 'dialog',
-  // dialog.js's TRIGGER mode (modal-title/modal-content) was written for this
-  // exact tag but never mapped here, so WB never invoked it — the "Open Modal"
-  // click did nothing regardless of how many times dialog.js itself was fixed
-  // (#251, recurred).
-  'wb-modal': 'dialog',
-  'wb-draggable': 'draggable',
-  'wb-drawer': 'drawer',
-  // #363: was 'wb-drawerLayout' (mixed-case key) -- getElementBehavior()
-  // always looks up tagName.toLowerCase(), and the real tag is authored
-  // lowercase/hyphenated everywhere (confirmed live: demos/site/layout.html
-  // uses <wb-drawer-layout>), so the old mixed-case key could never match
-  // any real tag lookup. Renamed to the actual lowercase tag name.
-  'wb-drawer-layout': 'drawerLayout',
-  'wb-dropdown': 'dropdown',
-  'wb-figure': 'figure',
-  'wb-fireworks': 'fireworks',
-  'wb-footer': 'footer',
-  'wb-form': 'form',
-  'wb-gallery': 'gallery',
-  'wb-globe': 'globe',
-  'wb-header': 'header',
-  'wb-hero': 'hero',
-  'wb-input': 'input',
-  'wb-mdhtml': 'mdhtml',
-  'wb-move': 'move',
-  'wb-release': 'release',
-  'wb-navbar': 'navbar',
-  'wb-notes': 'notes',
-  'wb-progress': 'progress',
-  'wb-rating': 'rating',
-  'wb-ratio': 'ratio',
-  'wb-repeater': 'repeater',
-  'wb-resizable': 'resizable',
-  'wb-ripple': 'ripple',
-  'wb-scrollalong': 'scrollalong',
-  // 'searchfield' (not the bare 'search' behavior) — search() operates
-  // directly on whatever element it's given (used as-is via x-search on a
-  // literal <input>). <wb-search> is a CONTAINER tag, not an input itself;
-  // it needs the child-input-aware wrapper. See search.js's searchField().
-  'wb-search': 'searchfield',
-  'wb-select': 'select',
-  'wb-skeleton': 'skeleton',
-  'wb-slider': 'slider',
-  'wb-snow': 'snow',
-  'wb-span': 'span',
-  'wb-spinner': 'spinner',
-  'wb-stagelight': 'stagelight',
-  'wb-sticky': 'sticky',
-  'wb-switch': 'switch',
-  'wb-table': 'table',
-  'wb-tabs': 'tabs',
-  'wb-textarea': 'textarea',
-  'wb-themecontrol': 'themecontrol',
-  'wb-toast': 'toast',
-  'wb-toggle': 'toggle',
-  'wb-tooltip': 'tooltip',
-  'wb-timeline': 'timeline',
-  // wb-accordion is DEPRECATED (prefer <details>/<summary> — see
-  // semantics/details.js) but still rendered/toggled via accordion()
-  // (collapse.js), retained for back-compat (#279).
-  'wb-accordion': 'accordion',
-  'wb-video': 'video',
-  'wb-vimeo': 'vimeo',
-  'wb-youtube': 'youtube'
+  // EMPTY ON PURPOSE.
+  //
+  // John: "we are not using components any more ... there should be nothing
+  // calling for x-tag." The 104 <wb-*> component tags that lived here are
+  // gone. Every one had a replacement, so no behavior was lost: 18 became the
+  // semantic element that already auto-injects them (<article> -> <article>),
+  // the rest became a host carrying the x- attribute
+  // (<div x-alert> -> <div x-alert>).
+  //
+  // Kept as an exported empty object rather than deleted: wb-lazy.js and
+  // style-loader.js both import it, so an empty map means "no component tags"
+  // everywhere at once instead of a missing-export crash.
+  //
+  // Eleven behaviors were reachable ONLY through their tag -- container, grid,
+  // center, cover, switcher, reel, frame, icon, stat, sidebarlayout, modal.
+  // Their x- forms were added to extensionMap below FIRST; deleting the tags
+  // without them would have deleted the behaviors with them.
 };
 
 // ============================================================================
@@ -197,10 +66,13 @@ export const nativeMap = {
   'form': 'form',
   'fieldset': 'fieldset',
   'label': 'label',
-  'article': 'card', // semantic <article> -> card (only when autoInject enabled)
+  // <article> injects the article behavior, which renders a card. The
+  // behavior is named for the element that triggers it; "card" describes
+  // what you see, and lives in the class and the docs, not the registry.
+  'article': 'article',
 
   // Media
-  'img': 'image',
+  'img': 'img',
   'video': 'video',
   'audio': 'audio',
   'figure': 'figure',
@@ -230,6 +102,13 @@ export const nativeMap = {
 export const extensionMap = {
   // Effects & Utilities
   'x-ripple': 'ripple',
+  // #816: glow, sparkle and rainbow are implemented in effects.js and styled
+  // in effects.css, and had no entry here — so those attributes dispatched to
+  // nothing while ripple, confetti and fireworks worked. Three of six
+  // registered, with nothing marking which three.
+  'x-glow': 'glow',
+  'x-sparkle': 'sparkle',
+  'x-rainbow': 'rainbow',
   'x-tooltip': 'tooltip',
   'x-draggable': 'draggable',
   'x-resizable': 'resizable',
@@ -271,7 +150,7 @@ export const extensionMap = {
   // John, screenshot on docs/behaviors-reference.md's cluster example:
   // "don't use class names when an x-cluster behavior works better...
   // Intellisense will list all x-behaviors." stack()/cluster() (layouts.js)
-  // already worked via the <wb-stack>/<wb-cluster> TAG form (elementMap
+  // already worked via the <div x-stack>/<div x-cluster> TAG form (elementMap
   // above), but had no attribute-decoration form for applying them to an
   // arbitrary element -- unlike most other behaviors in this table. Canonical
   // location (not wb-lazy.js's own WB_LAZY_ONLY_ATTRIBUTES table) so both
@@ -288,9 +167,10 @@ export const extensionMap = {
   // dedicated key for consistency; x-behavior="card" still works too (it's
   // the always-available generic fallback every registered behavior name
   // supports, not being removed here).
-  'x-card': 'card',
+  // Kept: 'card' says what you get, for a host that is not an <article>.
+  'x-card': 'article',
 
-  // #631: an audit (John: "how many wb-tags do we have and whether or not
+  // #631: an audit (John: "how many x-tags do we have and whether or not
   // they all have an equivalent x-attribute") found 65 of the 104 wb-* tags
   // had NO dedicated x-{name} entry anywhere -- confirmed live that all 65
   // already WORK today via wb.js's dynamic [x-{behaviorName}] dispatch
@@ -304,7 +184,7 @@ export const extensionMap = {
   // prerequisite: wb-lazy.js parity, plus making every one of them a real,
   // documented, discoverable attribute instead of an undocumented fallback.
   // x-search already maps to the DIFFERENT 'search' behavior (searchfield's
-  // own wb-search tag is the CONTAINER-aware wrapper, see tag-map.js's own
+  // own x-search tag is the CONTAINER-aware wrapper, see tag-map.js's own
   // comment above) -- used x-searchfield here, not x-search, to avoid
   // silently colliding the two.
   'x-accordion': 'accordion',
@@ -389,13 +269,36 @@ export const extensionMap = {
   // x-attribute coverage anywhere (absent from both this table and
   // wb-lazy.js's), unlike the other 19 below, which were already fully
   // functional via wb-lazy.js's table. Routes to the 'article' behavior
-  // (src/wb-viewmodels/article.js, already reachable via the <wb-article>
+  // (src/wb-viewmodels/article.js, already reachable via the <div x-article>
   // tag in elementMap above). Distinct from 'x-articles' just above (plural
   // LIST view, a different behavior) and from the former 'x-as-article' in the
   // Morphing section above (morph-only form that rewrites an existing
   // element's semantics) -- three different names for three different
   // behaviors, not aliases of each other.
   'x-article': 'article',
+
+  // #834 -- the three native mappings that had no x- form at all. A tag that
+  // auto-injects must have an attribute that applies the same behavior to
+  // another host; without it the behavior is reachable one way only.
+  // Layout and utility behaviors that were reachable ONLY through their
+  // <wb-*> tag. With components going away they needed an attribute form or
+  // the behavior would have gone with the tag. Registered here (not in
+  // wb-lazy.js) so both runtimes and every tooling path see them -- putting
+  // them in the second registry is what hid them in the first place.
+  'x-container': 'container',
+  'x-grid': 'grid',
+  'x-center': 'center',
+  'x-cover': 'cover',
+  'x-switcher': 'switcher',
+  'x-reel': 'reel',
+  'x-frame': 'frame',
+  'x-icon': 'icon',
+  'x-stat': 'stat',
+  'x-sidebarlayout': 'sidebarlayout',
+  'x-modal': 'modal',
+  'x-radio': 'radio',
+  'x-range': 'range',
+  'x-mark': 'mark',
   'x-autocomplete': 'autocomplete',
   'x-colorpicker': 'colorpicker',
   'x-counter': 'counter',
@@ -410,8 +313,8 @@ export const extensionMap = {
   // src/wb-viewmodels/copy.js.
   'x-copy': 'copy',
   'x-drawer': 'drawer',
-  // Hyphenated to match #363's tag-name convention (wb-drawer-layout, not
-  // wb-drawerLayout) -- a page-shell layout primitive, a DIFFERENT behavior
+  // Hyphenated to match #363's tag-name convention (x-drawer-layout, not
+  // x-drawerLayout) -- a page-shell layout primitive, a DIFFERENT behavior
   // from plain 'x-drawer' above (slide-out panel + backdrop triggered by a
   // click). Easy to conflate by name, not the same thing.
   'x-drawer-layout': 'drawerLayout',
@@ -449,7 +352,7 @@ export const allBehaviors = {
 
 /**
  * Get behavior name from element tag
- * @param {string} tagName - Element tag name (e.g., 'wb-card', 'wb-cardhero')
+ * @param {string} tagName - Element tag name (e.g., '.x-card', '[x-cardhero]')
  * @returns {string|null} Behavior name or null if not found
  */
 export function getElementBehavior(tagName) {

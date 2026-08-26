@@ -4,13 +4,13 @@
   "title": "Search",
   "description": "Search input component with icon and debounced search events",
   "schemaFor": "search",
-  "baseClass": "wb-search",
+  "baseClass": "x-search",
   "semanticElement": {
     "tagName": "div",
     "implicitRole": "search"
   },
   "compliance": {
-    "baseClass": "wb-search",
+    "baseClass": "x-search",
     "supportLevel": "stable",
     "accessibility": "high"
   },
@@ -56,7 +56,7 @@
         "lg"
       ],
       "default": "md",
-      "appliesClass": "wb-search--{{value}}"
+      "appliesClass": "x-search--{{value}}"
     },
     "variant": {
       "type": "string",
@@ -67,7 +67,7 @@
         "minimal"
       ],
       "default": "default",
-      "appliesClass": "wb-search--{{value}}"
+      "appliesClass": "x-search--{{value}}"
     },
     "icon": {
       "type": "string",
@@ -165,63 +165,63 @@
     }
   },
   "$cssAPI": {
-    "--wb-search-height": {
+    "--x-search-height": {
       "default": "2.5rem",
       "description": "Search input height"
     },
-    "--wb-search-padding-x": {
+    "--x-search-padding-x": {
       "default": "0.75rem",
       "description": "Horizontal padding"
     },
-    "--wb-search-radius": {
+    "--x-search-radius": {
       "default": "6px",
       "description": "Border radius"
     },
-    "--wb-search-font-size": {
+    "--x-search-font-size": {
       "default": "0.875rem",
       "description": "Font size"
     },
-    "--wb-search-bg": {
+    "--x-search-bg": {
       "default": "var(--bg-surface, #ffffff)",
       "description": "Background color"
     },
-    "--wb-search-border": {
+    "--x-search-border": {
       "default": "1px solid var(--border-color, #d1d5db)",
       "description": "Border style"
     },
-    "--wb-search-color": {
+    "--x-search-color": {
       "default": "var(--text-primary, #1a1a1a)",
       "description": "Text color"
     },
-    "--wb-search-placeholder-color": {
+    "--x-search-placeholder-color": {
       "default": "var(--text-tertiary, #9ca3af)",
       "description": "Placeholder color"
     },
-    "--wb-search-focus-border": {
+    "--x-search-focus-border": {
       "default": "var(--primary, #6366f1)",
       "description": "Focus border color"
     },
-    "--wb-search-focus-ring": {
+    "--x-search-focus-ring": {
       "default": "0 0 0 3px rgba(99, 102, 241, 0.2)",
       "description": "Focus ring shadow"
     },
-    "--wb-search-icon-size": {
+    "--x-search-icon-size": {
       "default": "1rem",
       "description": "Icon size"
     },
-    "--wb-search-icon-color": {
+    "--x-search-icon-color": {
       "default": "var(--text-secondary, #6b7280)",
       "description": "Icon color"
     },
-    "--wb-search-clear-size": {
+    "--x-search-clear-size": {
       "default": "0.75rem",
       "description": "Clear button size"
     },
-    "--wb-search-clear-color": {
+    "--x-search-clear-color": {
       "default": "var(--text-secondary, #6b7280)",
       "description": "Clear button color"
     },
-    "--wb-search-loading-color": {
+    "--x-search-loading-color": {
       "default": "var(--primary, #6366f1)",
       "description": "Loading indicator color"
     }
@@ -260,17 +260,17 @@
   },
   "test": {
     "setup": [
-      "<wb-search>Basic search</wb-search>",
-      "<wb-search placeholder='Search docs...'>Custom placeholder</wb-search>",
-      "<wb-search size='lg'>Large search</wb-search>",
-      "<wb-search variant='glass'>Glass variant</wb-search>",
-      "<wb-search instant>Instant search</wb-search>"
+      "<div x-searchfield>Basic search</div>",
+      "<div x-searchfield placeholder='Search docs...'>Custom placeholder</div>",
+      "<div x-searchfield size='lg'>Large search</div>",
+      "<div x-searchfield variant='glass'>Glass variant</div>",
+      "<div x-searchfield instant>Instant search</div>"
     ],
     "functional": {
       "interactions": [
         {
           "name": "Search Typing",
-          "setup": "<wb-search placeholder='Type here'></wb-search>",
+          "setup": "<div x-searchfield placeholder='Type here'></div>",
           "action": "type",
           "value": "test",
           "expect": {
@@ -282,7 +282,7 @@
         },
         {
           "name": "Clear Button",
-          "setup": "<wb-search value='search term' clearable></wb-search>",
+          "setup": "<div x-searchfield value='search term' clearable></div>",
           "steps": [
             {
               "action": "click",
@@ -296,7 +296,7 @@
         },
         {
           "name": "Instant Search",
-          "setup": "<wb-search instant></wb-search>",
+          "setup": "<div x-searchfield instant></div>",
           "action": "type",
           "value": "a",
           "expect": {
@@ -310,14 +310,14 @@
       "visual": [
         {
           "name": "Loading State",
-          "setup": "<wb-search loading></wb-search>",
+          "setup": "<div x-searchfield loading></div>",
           "expect": {
             "textContains": "⏳"
           }
         },
         {
           "name": "Icon Display",
-          "setup": "<wb-search icon='🔎'></wb-search>",
+          "setup": "<div x-searchfield icon='🔎'></div>",
           "expect": {
             "textContains": "🔎"
           }
@@ -326,7 +326,7 @@
       "disabled": [
         {
           "name": "Disabled Search",
-          "setup": "<wb-search disabled></wb-search>",
+          "setup": "<div x-searchfield disabled></div>",
           "action": "click",
           "expect": {
             "attribute": {
@@ -338,7 +338,7 @@
       "focus": [
         {
           "name": "Focus Search",
-          "setup": "<wb-search></wb-search>",
+          "setup": "<div x-searchfield></div>",
           "action": "click",
           "expect": {
             "focused": "input"
@@ -375,9 +375,9 @@
     },
     "site": {
       "page": "forms",
-      "tag": "wb-search",
+      "tag": "x-search",
       "renders": true,
-      "baseClass": "wb-search",
+      "baseClass": "x-search",
       "minInstances": 6,
       "checkText": [
         "Search...",
@@ -386,8 +386,8 @@
         "Minimal"
       ],
       "checkClasses": [
-        "wb-search--sm",
-        "wb-search--glass"
+        "x-search--sm",
+        "x-search--glass"
       ],
       "checkAttributes": [
         "placeholder"

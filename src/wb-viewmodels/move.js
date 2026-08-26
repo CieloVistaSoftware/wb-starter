@@ -12,10 +12,10 @@ import { readFlag } from '../core/read-attr.js';
  * NOT the hyphenated [x-move-up] etc this comment used to (incorrectly)
  * document).
  *
- * move() is the container-level entry point for <wb-move>/[x-move]
+ * move() is the container-level entry point for <div x-move>/[x-move]
  * (tag-map.js). Issue #344: schema/behavior completeness audit found
  * `move.schema.json` had no matching exported `move` function at all, AND
- * `behaviorModules` (index.js) had no `move` key -- so <wb-move>/[x-move]
+ * `behaviorModules` (index.js) had no `move` key -- so <div x-move>/[x-move]
  * threw "Unknown behavior: move" the moment anything tried to use it. This
  * adds the missing entry point: it marks the container with the schema's
  * baseClass and wires any descendant buttons carrying the per-direction
@@ -221,13 +221,13 @@ export function moveall(element, x = 0, y = 0) {
 }
 
 /**
- * Move - Container entry point for <wb-move> / [x-move]
+ * Move - Container entry point for <div x-move> / [x-move]
  * Marks the element with the schema baseClass and wires up any descendant
  * buttons carrying [x-moveup]/[x-movedown]/[x-moveleft]/[x-moveright].
  */
 export function move(element) {
   if (!element) return;
-  element.classList.add('wb-move');
+  element.classList.add('x-move');
 
   const cleanups = [];
   const wire = (attr, fn) => {

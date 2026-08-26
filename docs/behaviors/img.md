@@ -2,9 +2,11 @@
 
 Behavior applied with x-img.
 
-Apply `x-img` to any element.
+## Type — new capability
 
-## Usage
+`x-img` adds behavior that no HTML element implies. Nothing about a tag says "ripple" or "tooltip", so this is always opted into by attribute, on whatever element you already chose.
+
+### How to write it
 
 ```html
 <img x-img src="https://picsum.photos/seed/lens/480/320" alt="Prime lens on a wooden desk">

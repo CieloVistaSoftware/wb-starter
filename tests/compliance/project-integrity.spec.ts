@@ -71,11 +71,15 @@ test.describe('Project Integrity', () => {
       }
     }
     
-    if (issues.count > 0) {
-        console.log('Broken JS imports found:');
-        issues.all.forEach(i => console.log(i));
-    }
-    issues.expectEmpty('Broken JS imports found');
+    // #863: this used to call issues.expectEmpty(), which throws carrying ONLY
+    // the header string -- the collected list went to console.log and was lost
+    // in CI output. Assert with expect() so the offending imports ride on the
+    // failure itself, and so the "every test contains at least one expect()"
+    // gate can see that this test asserts at all.
+    expect(
+      issues.all,
+      `Broken JS imports found:\n${issues.all.join('\n')}`,
+    ).toEqual([]);
   });
 
   test('all HTML resource links point to existing files', () => {
@@ -125,11 +129,21 @@ test.describe('Project Integrity', () => {
       }
     }
     
-    if (issues.count > 0) {
-        console.log('Broken HTML links found:');
-        issues.all.forEach(i => console.log(i));
-    }
-    issues.expectEmpty('Broken HTML links found');
+    // #872: this test was missed when #863 converted its two siblings above.
+    // issues.expectEmpty('Broken HTML links found') throws carrying ONLY that
+    // header, so the paths went to console.log and were lost in CI output --
+    // you learned that links were broken but never which. It was also
+    // invisible to the "every test contains at least one expect()" gate, which
+    // matches /expect\s*[.(]/ on the body and cannot see an assertion hidden
+    // behind a method name like `issues.expectEmpty`.
+    //
+    // Asserted at zero, not baselined. Measured: 3, all pointing at a
+    // `wb-views-demo` that no longer exists (pages/demos.html,
+    // demos/index.html, demos/registry-browser.html) — see #872.
+    expect(
+      issues.all,
+      `${issues.count} broken HTML resource links:\n${issues.all.join('\n')}`,
+    ).toEqual([]);
   });
 
   test('no redundant data-wb attributes on auto-injected semantic elements', () => {
@@ -181,12 +195,20 @@ test.describe('Project Integrity', () => {
       }
     }
     
-    // Warn but don't break - these are optimization suggestions
-    if (issues.count > 0) {
-      console.warn(`Found ${issues.count} redundant data-wb attributes:`);
-      issues.all.slice(0, 5).forEach(i => console.warn(`  - ${i}`));
-    }
-    issues.expectLessThan(50, 'Too many redundant data-wb attributes');
+    // #872: was `issues.expectLessThan(50, …)` plus a console.warn, with a
+    // MEASURED count of 0. A 50-wide ceiling on a rule with zero violations is
+    // 50 free regressions, and the title claims NO redundant attributes, not
+    // fewer than fifty — so the ratchet comes down to 0, which is where the
+    // codebase already is. This is a tightening; it must only ever come down
+    // further, never back up.
+    //
+    // The old form was also invisible to the "every test contains at least one
+    // expect()" gate: `issues.expectLessThan` does not match /expect\s*[.(]/.
+    expect(
+      issues.all,
+      `${issues.count} redundant data-wb attributes — these behaviors are auto-injected `
+      + `from the tag/type, so naming them again does nothing:\n${issues.all.join('\n')}`,
+    ).toEqual([]);
   });
 
   test('all data-wb attributes reference valid behaviors', () => {
@@ -222,6 +244,12 @@ test.describe('Project Integrity', () => {
       }
     }
     
-    issues.expectEmpty('Unknown behaviors used in HTML');
+    // #863: same as the imports test above -- expectEmpty() threw with only a
+    // header and dropped the list. Assert the collected violations directly so
+    // the unknown behaviour names appear in the failure.
+    expect(
+      issues.all,
+      `Unknown behaviors used in HTML:\n${issues.all.join('\n')}`,
+    ).toEqual([]);
   });
 });

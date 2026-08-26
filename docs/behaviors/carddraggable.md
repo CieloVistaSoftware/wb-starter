@@ -2,14 +2,24 @@
 
 Card that can be dragged around the page
 
-Applies to `<article>`, and to any element carrying `x-carddraggable`.
+## Type — decorates a semantic element
 
-## Usage
+`x-carddraggable` is the **article behavior**. It attaches to `<article>`, the element you would have reached for anyway — there is no new tag to learn.
+
+### How to write it
 
 ```html
-<article x-carddraggable>
+<article x-carddraggable title="Drag me" content="Pick this card up and move it — the position sticks." constrain axis="both"></article>
+```
+
+### On a different element
+
+Use `x-carddraggable` when the host is not a `<article>` and you want the same behavior:
+
+```html
+<div x-carddraggable>
   …
-</article>
+</div>
 ```
 
 ## Attributes

@@ -118,4 +118,4 @@ Object.keys(byFile).sort().forEach(file => {
   }
 });
 
-fs.writeFileSync('data/data-wb-categorized.json', JSON.stringify(categories, null, 2));
+fs.writeFileSync('data/data-x-categorized.json', JSON.stringify(categories, null, 2));

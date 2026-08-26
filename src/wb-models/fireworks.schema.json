@@ -4,12 +4,12 @@
   "title": "Fireworks",
   "description": "Fireworks particle burst animation effect",
   "schemaFor": "fireworks",
-  "baseClass": "wb-fireworks",
+  "baseClass": "x-fireworks",
   "semanticElement": {
     "tagName": "div"
   },
   "compliance": {
-    "baseClass": "wb-fireworks",
+    "baseClass": "x-fireworks",
     "supportLevel": "stable",
     "accessibility": "high"
   },
@@ -77,7 +77,7 @@
     }
   },
   "$cssAPI": {
-    "--wb-fireworks-z-index": {
+    "--x-fireworks-z-index": {
       "default": "9999",
       "description": "Z-index"
     }
@@ -92,14 +92,14 @@
   },
   "test": {
     "setup": [
-      "<wb-fireworks>Basic fireworks content</wb-fireworks>",
-      "<wb-fireworks show-button>with showButton</wb-fireworks>",
-      "<wb-fireworks repeat>with repeat</wb-fireworks>",
-      "<wb-fireworks count=\"30\">count=30</wb-fireworks>",
-      "<wb-fireworks label=\"Fireworks!\">label=\"Fireworks!\"</wb-fireworks>",
-      "<wb-fireworks delay=\"0s\">delay=\"0s\"</wb-fireworks>",
-      "<wb-fireworks duration=\"1.5s\">duration=\"1.5s\"</wb-fireworks>",
-      "<wb-fireworks colors=\"[\"#ff0\",\"#f00\",\"#0ff\",\"#f0f\"]\">colors=\"[\"#ff0\",\"#f00\",\"#0ff\",\"#f0f\"]\"</wb-fireworks>"
+      "<div x-fireworks>Basic fireworks content</div>",
+      "<div x-fireworks show-button>with showButton</div>",
+      "<div x-fireworks repeat>with repeat</div>",
+      "<div x-fireworks count=\"30\">count=30</div>",
+      "<div x-fireworks label=\"Fireworks!\">label=\"Fireworks!\"</div>",
+      "<div x-fireworks delay=\"0s\">delay=\"0s\"</div>",
+      "<div x-fireworks duration=\"1.5s\">duration=\"1.5s\"</div>",
+      "<div x-fireworks colors=\"[\"#ff0\",\"#f00\",\"#0ff\",\"#f0f\"]\">colors=\"[\"#ff0\",\"#f00\",\"#0ff\",\"#f0f\"]\"</div>"
     ],
     "matrix": {
       "combinations": [
@@ -114,9 +114,9 @@
     },
     "site": {
       "page": "effects",
-      "tag": "wb-fireworks",
+      "tag": "x-fireworks",
       "renders": true,
-      "baseClass": "wb-fireworks",
+      "baseClass": "x-fireworks",
       "minInstances": 3,
       "checkText": [],
       "checkClasses": [],

@@ -43,7 +43,7 @@ const ordered = [...ORDER.filter((n) => present.includes(n)),
 const cards = ordered.map((name, i) => {
   const title = titleOf(name).replace(/"/g, '&quot;');
   const icon = NUM[i] || '📄';
-  return `  <wb-card-link title="${title}" href="public/doc-viewer.html?file=docs/claude/${name}" target="_blank" icon="${icon}"></wb-card-link>`;
+  return `  <div x-cardlink title="${title}" href="public/doc-viewer.html?file=docs/claude/${name}" target="_blank" icon="${icon}"></div>`;
 });
 
 const block = '<!-- ai-docs:auto:start -->\n' + cards.join('\n') + '\n    <!-- ai-docs:auto:end -->';

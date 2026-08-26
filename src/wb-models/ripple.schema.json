@@ -4,12 +4,12 @@
   "title": "Ripple",
   "description": "Material Design ripple effect on click",
   "schemaFor": "ripple",
-  "baseClass": "wb-ripple",
+  "baseClass": "x-ripple",
   "semanticElement": {
     "tagName": "div"
   },
   "compliance": {
-    "baseClass": "wb-ripple",
+    "baseClass": "x-ripple",
     "supportLevel": "stable",
     "accessibility": "high"
   },
@@ -48,11 +48,11 @@
     }
   },
   "$cssAPI": {
-    "--wb-ripple-color": {
+    "--x-ripple-color": {
       "default": "rgba(255,255,255,0.3)",
       "description": "Ripple color"
     },
-    "--wb-ripple-duration": {
+    "--x-ripple-duration": {
       "default": "600ms",
       "description": "Animation duration"
     }
@@ -68,11 +68,11 @@
   },
   "test": {
     "setup": [
-      "<wb-ripple>Basic ripple content</wb-ripple>",
-      "<wb-ripple centered>with centered</wb-ripple>",
-      "<wb-ripple color=\"rgba(255,255,255,0.3)\">color=\"rgba(255,255,255,0.3)\"</wb-ripple>",
-      "<wb-ripple duration=\"600\">duration=600</wb-ripple>",
-      "<wb-ripple centered color=\"rgba(255,255,255,0.3)\">Combined: with centered, color=\"rgba(255,255,255,0.3)\"</wb-ripple>"
+      "<div x-ripple>Basic ripple content</div>",
+      "<div x-ripple centered>with centered</div>",
+      "<div x-ripple color=\"rgba(255,255,255,0.3)\">color=\"rgba(255,255,255,0.3)\"</div>",
+      "<div x-ripple duration=\"600\">duration=600</div>",
+      "<div x-ripple centered color=\"rgba(255,255,255,0.3)\">Combined: with centered, color=\"rgba(255,255,255,0.3)\"</div>"
     ],
     "matrix": {
       "combinations": [
@@ -87,9 +87,9 @@
     },
     "site": {
       "page": "effects",
-      "tag": "wb-ripple",
+      "tag": "x-ripple",
       "renders": true,
-      "baseClass": "wb-ripple",
+      "baseClass": "x-ripple",
       "minInstances": 3,
       "checkText": [],
       "checkClasses": [],

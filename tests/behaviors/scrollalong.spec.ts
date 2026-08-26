@@ -7,7 +7,7 @@ import { test, expect } from '@playwright/test';
 test.describe('ScrollAlong Behavior - Standalone Test Page', () => {
   test.beforeEach(async ({ page }) => {
     // Load the standalone scrollalong test page
-    await page.goto('http://localhost:3000/demos/scrollalong-test.html');
+    await page.goto('/demos/scrollalong-test.html');
     await page.waitForTimeout(500);
   });
 
@@ -16,15 +16,15 @@ test.describe('ScrollAlong Behavior - Standalone Test Page', () => {
     await expect(nav).toHaveAttribute('x-scrollalong', '');
   });
 
-  test('nav has wb-scrollalong class applied', async ({ page }) => {
+  test('nav has [x-scrollalong] class applied', async ({ page }) => {
     const nav = page.locator('#testNav');
-    await expect(nav).toHaveClass(/wb-scrollalong/);
+    await expect(nav).toHaveClass(/x-scrollalong/);
   });
 
   test('nav has sticky positioning applied', async ({ page }) => {
     const nav = page.locator('#testNav');
     // Wait for WB to apply the behavior
-    await expect(nav).toHaveClass(/wb-scrollalong/);
+    await expect(nav).toHaveClass(/x-scrollalong/);
     const position = await nav.evaluate(el => getComputedStyle(el).position);
     expect(position).toBe('sticky');
   });

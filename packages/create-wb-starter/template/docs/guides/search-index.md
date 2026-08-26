@@ -158,11 +158,11 @@ const results = search('card component');
 ### With WB Search Component
 
 ```html
-<wb-search
+<div x-searchfield
   placeholder="Search docs..."
   src="/data/search.json"
   limit="10">
-</wb-search>
+</div>
 ```
 
 ## Document Types

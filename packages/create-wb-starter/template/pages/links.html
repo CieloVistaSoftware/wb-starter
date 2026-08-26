@@ -1,10 +1,10 @@
-<link rel="stylesheet" href="src/styles/pages/links.css">
+<link rel="stylesheet" href="src/styles/pages/links.css?v=3.0.91">
 
-<div class="wb-hero">
-  <div class="wb-hero__content">
+<div class="x-hero">
+  <div class="x-hero__content">
     <div class="page__hero">
-  <h1>Interesting <span class="wb-gradient-text">Links</span></h1>
-  <p class="wb-hero__subtitle">A curated list of interesting resources.</p>
+  <h1>Interesting <span class="x-gradient-text">Links</span></h1>
+  <p class="x-hero__subtitle">A curated list of interesting resources.</p>
 </div>
 
 <div class="page__section">
@@ -17,13 +17,13 @@
   <div class="links-container">
     
     <!-- Add Form -->
-    <div class="wb-glass links-add-form-card">
+    <div class="x-glass links-add-form-card">
       <h3>Add New Link</h3>
       <form id="add-link-form" class="links-add-form">
-        <input type="text" id="link-url" placeholder="URL (e.g. https://github.com/...)" class="wb-input-glass" required>
-        <input type="text" id="link-title" placeholder="Title" class="wb-input-glass" required>
-        <input type="text" id="link-desc" placeholder="Description" class="wb-input-glass">
-        <button type="submit" class="wb-btn-gradient">Add Link</button>
+        <input type="text" id="link-url" placeholder="URL (e.g. https://github.com/...)" class="x-input-glass" required>
+        <input type="text" id="link-title" placeholder="Title" class="x-input-glass" required>
+        <input type="text" id="link-desc" placeholder="Description" class="x-input-glass">
+        <button type="submit" class="x-btn-gradient">Add Link</button>
       </form>
     </div>
 
@@ -75,7 +75,7 @@
     
     links.forEach(link => {
       const item = document.createElement('div');
-      item.className = 'wb-glass';
+      item.className = 'x-glass';
       item.style.padding = '1.5rem';
       item.style.display = 'flex';
       item.style.justifyContent = 'space-between';
@@ -91,8 +91,8 @@
           <a href="${link.url}" target="_blank" style="font-size: 0.8rem; color: var(--primary); text-decoration: none; display: block; margin-top: 0.5rem;">${link.url}</a>
         </div>
         <div style="display: flex; gap: 0.5rem;">
-          <button class="wb-btn-glass" onclick="editLink(${link.id})" style="padding: 0.5rem;" title="Edit">✏️</button>
-          <button class="wb-btn-glass" onclick="deleteLink(${link.id})" style="padding: 0.5rem; color: var(--danger-color, #ef4444);" title="Delete">🗑️</button>
+          <button class="x-btn-glass" onclick="editLink(${link.id})" style="padding: 0.5rem;" title="Edit">✏️</button>
+          <button class="x-btn-glass" onclick="deleteLink(${link.id})" style="padding: 0.5rem; color: var(--danger-color, #ef4444);" title="Delete">🗑️</button>
         </div>
       `;
       container.appendChild(item);

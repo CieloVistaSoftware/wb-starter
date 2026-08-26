@@ -1575,12 +1575,12 @@
       ]
     },
     {
-      "file": "wb-control.schema.json",
+      "file": "x-control.schema.json",
       "status": "OK",
       "fixes": []
     },
     {
-      "file": "wb-repeater.schema.json",
+      "file": "x-repeater.schema.json",
       "status": "OK",
       "fixes": []
     },

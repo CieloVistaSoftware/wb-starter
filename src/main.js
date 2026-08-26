@@ -57,10 +57,10 @@ async function init() {
   // Debug it via tracing, not guessing: always show whether [WB.scan]/
   // [WB.observe] trace output is active, right on the 2nd console line, so
   // it's never a guessing game whether logging is on before you go looking
-  // for trace output that isn't there. #338: 'wb-debug' can now name a
+  // for trace output that isn't there. #338: 'x-debug' can now name a
   // comma-separated set of categories (e.g. 'media,scan') instead of just
   // '1' for everything — see debug-trace.js.
-  console.log(`[WB] debug tracing: ${traceStatusLabel()} — localStorage.setItem('wb-debug','1') for everything, or e.g. 'scan,observe' for just those categories, then reload. Or live: wbDebugTrace.set('scan,observe')`);
+  console.log(`[WB] debug tracing: ${traceStatusLabel()} — localStorage.setItem('x-debug','1') for everything, or e.g. 'scan,observe' for just those categories, then reload. Or live: wbDebugTrace.set('scan,observe')`);
 
   try {
     // Expose WB globally

@@ -89,20 +89,20 @@ const behaviorsHtml = fs.readFileSync(path.join(ROOT, 'pages/behaviors.html'), '
  * character offset in the result still lines up with the original string --
  * required since matched positions are later used to splice the ORIGINAL
  * file). Several source comments in this codebase illustrate markup inline
- * (e.g. "one <wb-demo> per element") -- without this, that literal text
+ * (e.g. "one <div x-demo> per element") -- without this, that literal text
  * inside a comment matches the same regex a real tag does, and both
  * mis-identifies a "block" spanning from the comment to the next real
- * </wb-demo> AND skips the actual real block the comment was describing.
+ * </div> AND skips the actual real block the comment was describing.
  */
 function blankComments(html) {
   return html.replace(/<!--[\s\S]*?-->/g, (m) => ' '.repeat(m.length));
 }
 
-/** Every <wb-demo ...> block on the page, with its tag-open position (for id injection) and inner content. */
+/** Every <div x-demo ...> block on the page, with its tag-open position (for id injection) and inner content. */
 function demoBlocks(html) {
   const searchable = blankComments(html);
   const blocks = [];
-  const re = /<wb-demo([^>]*)>([\s\S]*?)<\/wb-demo>/g;
+  const re = /<div x-demo([^>]*)>([\s\S]*?)<\/x-demo>/g;
   let m;
   while ((m = re.exec(searchable))) {
     blocks.push({ openStart: m.index, openAttrs: m[1], inner: m[2] });
@@ -114,7 +114,7 @@ const componentsDemoBlocks = demoBlocks(componentsHtml);
 const behaviorsDemoBlocks = demoBlocks(behaviorsHtml);
 
 /**
- * Which <wb-demo> block (if any) on which page demonstrates this component?
+ * Which <div x-demo> block (if any) on which page demonstrates this component?
  * A block counts as a match on two signals, either is good evidence:
  *   1. A `<wb-{name}>` custom element or `x-{name}` attribute ANYWHERE
  *      inside it -- both are unambiguous, deliberate markers.
@@ -162,7 +162,7 @@ const docs = walk(path.join(ROOT, 'docs/components'))
 
 const components = [];
 // Positions (in componentsHtml) where an id needs injecting into the
-// matched <wb-demo ...> opening tag. Collected during the loop, applied
+// matched <div x-demo ...> opening tag. Collected during the loop, applied
 // afterward (in one pass, position-descending) so earlier injections don't
 // shift the offsets of later ones.
 const idInjections = [];
@@ -237,7 +237,7 @@ if (idInjections.length) {
   idInjections.sort((a, b) => b.pos - a.pos); // descending, so splicing doesn't shift earlier offsets
   let html = componentsHtml;
   for (const { pos, anchorId } of idInjections) {
-    const insertAt = pos + '<wb-demo'.length;
+    const insertAt = pos + '<div x-demo'.length;
     html = html.slice(0, insertAt) + ` id="${anchorId}"` + html.slice(insertAt);
   }
   fs.writeFileSync(path.join(ROOT, 'pages/components.html'), html);

@@ -6,10 +6,10 @@ Fireworks burst explosion effect.
 
 | Property | Value |
 |----------|-------|
-| Custom Tag | `<wb-fireworks>` |
+| Custom Tag | `<div x-fireworks>` |
 | Behavior | `fireworks` |
 | Semantic | `<div>` |
-| Root CSS Class | `wb-fireworks` |
+| Root CSS Class | `x-fireworks` |
 | Category | Effects |
 | Schema | `src/wb-models/fireworks.schema.json` |
 
@@ -25,24 +25,24 @@ Fireworks burst explosion effect.
 | `duration` | string | `"1.5s"` | Animation duration |
 | `colors` | string | `'["#ff0","#f00","#0ff","#f0f"]'` | Particle colors as JSON array |
 
-Wrapped in `<wb-demo>`, so the live component renders below with its source shown underneath:
+Wrapped in `<div x-demo>`, so the live component renders below with its source shown underneath:
 
-<wb-demo>
-<wb-fireworks
+<div x-demo>
+<div x-fireworks
   count="50"
   label="Celebrate!">
-</wb-fireworks>
-</wb-demo>
+</div>
+</div>
 
 ## Usage
 
 ### Custom Element
 
 ```html
-<wb-fireworks
+<div x-fireworks
   count="50"
   label="Celebrate!">
-</wb-fireworks>
+</div>
 ```
 
 ### Data Attribute
@@ -57,30 +57,30 @@ Wrapped in `<wb-demo>`, so the live component renders below with its source show
 ### Auto-Trigger (No Button)
 
 ```html
-<wb-fireworks
+<div x-fireworks
   count="40"
   showButton="false"
   delay="1s">
-</wb-fireworks>
+</div>
 ```
 
 ### Looping Animation
 
 ```html
-<wb-fireworks
+<div x-fireworks
   count="20"
   repeat>
-</wb-fireworks>
+</div>
 ```
 
 ## Generated Structure
 
 ```html
-<div class="wb-fireworks">
+<div class="x-fireworks">
   <!-- Button (when showButton is true) -->
-  <button class="wb-fireworks__button">Fireworks!</button>
+  <button class="x-fireworks__button">Fireworks!</button>
   <!-- Particle container -->
-  <div class="wb-fireworks__container">
+  <div class="x-fireworks__container">
     <!-- Particles are dynamically created -->
   </div>
 </div>
@@ -94,7 +94,7 @@ Wrapped in `<wb-demo>`, so the live component renders below with its source show
 | `stop()` | Stops the animation |
 
 ```javascript
-const fireworks = document.querySelector('wb-fireworks');
+const fireworks = document.querySelector('x-fireworks');
 
 // Trigger fireworks
 fireworks.fire();
@@ -124,7 +124,7 @@ fireworks.addEventListener('wb:fireworks:end', () => {
 
 | Variable | Default | Description |
 |----------|---------|-------------|
-| `--wb-fireworks-z-index` | `9999` | Z-index for overlay |
+| `--x-fireworks-z-index` | `9999` | Z-index for overlay |
 
 ## Schema
 

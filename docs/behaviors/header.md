@@ -2,15 +2,29 @@
 
 Page header with logo, title, and optional navigation
 
-Applies to `<header>`, and to any element carrying `x-header`.
+## Type — decorates a semantic element
 
-## Usage
+`x-header` is the **header behavior**. It attaches to `<header>`, the element you would have reached for anyway — there is no new tag to learn.
+
+### How to write it
 
 ```html
-<header>
-  …
-</header>
+<!-- Plain semantic HTML. The behavior is injected automatically -->
+<!-- because the element itself implies it. No attribute needed. -->
+<header title="Field notes" subtitle="Everything that happened this week" badge="New"></header>
 ```
+
+### On a different element
+
+Use `x-header` when the host is not a `<header>` and you want the same behavior:
+
+```html
+<div x-header>
+  …
+</div>
+```
+
+> Do not write `<header x-header>`. The element already injects it, and the redundant attribute can suppress the behavior (#746).
 
 ## Attributes
 

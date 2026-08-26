@@ -16,7 +16,7 @@ export function table(element, options = {}) {
       element.getAttribute('hoverable') !== 'false'
     ),
     // #669: paginated and pageSize were declared and read NOWHERE, so
-    // <wb-table paginated> produced no pagination at all -- exactly what John
+    // <table paginated> produced no pagination at all -- exactly what John
     // reported. pageSize accepts the schema spelling and the hyphenated one.
     paginated: options.paginated ?? (
       element.hasAttribute('paginated') && element.getAttribute('paginated') !== 'false'
@@ -39,19 +39,19 @@ export function table(element, options = {}) {
 
   const tableEl = element.querySelector('table') || element;
   // Detect an existing search input in either of the two places it can
-  // legitimately live: nested inside `element` (the <wb-table> host acting
+  // legitimately live: nested inside `element` (the <table> host acting
   // as its own table, or a wrapped native <table> child), OR as the bare
   // native <table>'s own previous sibling (see the insertion logic below --
   // an <input> can't be a valid child of a real <table>).
-  let searchInput = element.querySelector('.wb-table__search') ||
+  let searchInput = element.querySelector('.x-table__search') ||
     (tableEl.previousElementSibling && tableEl.previousElementSibling.classList &&
-      tableEl.previousElementSibling.classList.contains('wb-table__search')
+      tableEl.previousElementSibling.classList.contains('x-table__search')
       ? tableEl.previousElementSibling : null);
 
   // #433: `searchable` was computed above but nothing ever created the
   // input -- table.js only ever looked for one a schema/$view template was
   // assumed to have already rendered, which was never actually true for
-  // either a bare <wb-table searchable> (table.schema.json's $view has no
+  // either a bare <table searchable> (table.schema.json's $view has no
   // "search" part -- only an unrelated "filter" part gated on a different
   // property, `filterable`, that this file doesn't read at all) or a native
   // <table searchable> (no schema involvement for native tags at all).
@@ -62,7 +62,7 @@ export function table(element, options = {}) {
   if (config.searchable && !searchInput) {
     searchInput = document.createElement('input');
     searchInput.type = 'search';
-    searchInput.className = 'wb-table__search';
+    searchInput.className = 'x-table__search';
     searchInput.placeholder = 'Search...';
     searchInput.setAttribute('aria-label', 'Search table');
     if (tableEl.tagName.toLowerCase() === 'table' && tableEl.parentNode) {
@@ -72,7 +72,7 @@ export function table(element, options = {}) {
       // still directly above the rows it filters.
       tableEl.parentNode.insertBefore(searchInput, tableEl);
     } else {
-      // <wb-table> acting as its own table host (no nested <table> child)
+      // <table> acting as its own table host (no nested <table> child)
       // -- a custom element has no HTML content-model restriction, so the
       // search box can be a real first child, ahead of its <thead>.
       element.insertBefore(searchInput, element.firstChild);
@@ -87,7 +87,7 @@ export function table(element, options = {}) {
   // schema-builder.js's own comment). table.js never opted in: the comment
   // it used to have here ("Logic removed... assume the table structure
   // exists") assumed something else would populate rows, but nothing ever
-  // did. Confirmed live: every <wb-table> on docs/components/semantics/
+  // did. Confirmed live: every <table> on docs/components/semantics/
   // table.md rendered a completely empty table (0 <tr> elements) regardless
   // of whether rows were authored as slotted <thead>/<tbody> markup,
   // headers/rows attributes, or the schema's own data/columns properties.
@@ -147,18 +147,18 @@ export function table(element, options = {}) {
     filteredData = [...currentData];
   }
 
-  // #448: skip the class specifically when tableEl IS the <wb-table> HOST
-  // itself (a <wb-table> used with no nested <table> child) -- data.css
-  // selects the `wb-table` TAG directly for that case now. Still added when
+  // #448: skip the class specifically when tableEl IS the <table> HOST
+  // itself (a <table> used with no nested <table> child) -- data.css
+  // selects the `.x-table` TAG directly for that case now. Still added when
   // tableEl is a native <table> (either autoInject's native.table entry, or
-  // the child <table> a <wb-table> wraps), since data.css's `table.wb-table`/
-  // `.wb-table > table` rules still need the class there (a native `table`
-  // tag can never match a `wb-table` tag selector).
-  if (tableEl.tagName.toLowerCase() !== 'wb-table') tableEl.classList.add('wb-table');
-  if (config.striped) tableEl.classList.add('wb-table--striped');
-  if (config.hover) tableEl.classList.add('wb-table--hover');
-  if (config.bordered) tableEl.classList.add('wb-table--bordered');
-  if (config.compact) tableEl.classList.add('wb-table--compact');
+  // the child <table> a <table> wraps), since data.css's `table.x-table`/
+  // `.x-table > table` rules still need the class there (a native `table`
+  // tag can never match a `.x-table` tag selector).
+  if (tableEl.tagName.toLowerCase() !== 'x-table') tableEl.classList.add('x-table');
+  if (config.striped) tableEl.classList.add('x-table--striped');
+  if (config.hover) tableEl.classList.add('x-table--hover');
+  if (config.bordered) tableEl.classList.add('x-table--bordered');
+  if (config.compact) tableEl.classList.add('x-table--compact');
 
   // Search Logic
   if (searchInput) {
@@ -188,8 +188,8 @@ export function table(element, options = {}) {
         }
         
         // Update UI
-        headers.forEach(h => h.classList.remove('wb-table--sorted-asc', 'wb-table--sorted-desc'));
-        th.classList.add(sortDir === 'asc' ? 'wb-table--sorted-asc' : 'wb-table--sorted-desc');
+        headers.forEach(h => h.classList.remove('x-table--sorted-asc', 'x-table--sorted-desc'));
+        th.classList.add(sortDir === 'asc' ? 'x-table--sorted-asc' : 'x-table--sorted-desc');
         
         // Sort Rows
         const dataRows = Array.from(tbody.querySelectorAll('tr'));
@@ -270,7 +270,7 @@ export function table(element, options = {}) {
 
   return () => {
     if (pagerCleanup) pagerCleanup();
-    tableEl.classList.remove('wb-table', 'wb-table--striped', 'wb-table--hover', 'wb-table--bordered', 'wb-table--compact');
+    tableEl.classList.remove('x-table', 'x-table--striped', 'x-table--hover', 'x-table--bordered', 'x-table--compact');
   };
 }
 
@@ -286,21 +286,21 @@ function buildPager(element, tableEl, pageSize) {
   if (!tbody) return null;
 
   const pager = document.createElement('nav');
-  pager.className = 'wb-table__pager';
+  pager.className = 'x-table__pager';
   pager.setAttribute('aria-label', 'Table pagination');
 
   const prev = document.createElement('button');
   prev.type = 'button';
-  prev.className = 'wb-table__pager-btn';
+  prev.className = 'x-table__pager-btn';
   prev.textContent = 'Previous';
 
   const status = document.createElement('span');
-  status.className = 'wb-table__pager-status';
+  status.className = 'x-table__pager-status';
   status.setAttribute('aria-live', 'polite');
 
   const next = document.createElement('button');
   next.type = 'button';
-  next.className = 'wb-table__pager-btn';
+  next.className = 'x-table__pager-btn';
   next.textContent = 'Next';
 
   pager.append(prev, status, next);

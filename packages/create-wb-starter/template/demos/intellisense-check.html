@@ -4,9 +4,9 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>IntelliSense Check</title>
-    <link rel="stylesheet" href="../src/styles/themes.css" />
-    <link rel="stylesheet" href="../src/styles/site.css" />
-    <script type="module" src="../src/index.js"></script>
+    <link rel="stylesheet" href="../src/styles/themes.css?v=3.0.91" />
+    <link rel="stylesheet" href="../src/styles/site.css?v=3.0.91" />
+    <script type="module" src="../src/index.js?v=3.0.91"></script>
 
     <script type="module">
       import WB from "../src/core/wb-lazy.js";
@@ -20,19 +20,19 @@
     <!-- 
         TRY IT HERE:
         1. Type "<wb-" below to see the list of components.
-        2. Select "wb-container".
+        2. Select "x-container".
         3. Inside the tag, type a space to see attributes like "size".
     -->
-    <wb-tabs x->
-      <wb-tab title="Tab 1">
+    <div x-tabs x->
+      <div title="Tab 1">
         <p>This is the content of Tab 1.</p>
-      </wb-tab>
-      <wb-tab title="Tab 2">
+      </div>
+      <div title="Tab 2">
         <p>This is the content of Tab 2.</p>
-      </wb-tab>
-    </wb-tabs>
-    <wb-container size="large" color="secondary">
+      </div>
+    </div>
+    <div x-container size="large" color="secondary">
       <p>This is a container inside the grid.</p>
-    </wb-container>
+    </div>
   </body>
 </html>

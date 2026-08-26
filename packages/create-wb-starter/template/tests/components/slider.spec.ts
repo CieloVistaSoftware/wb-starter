@@ -25,7 +25,7 @@ async function injectAndScan(page: Page, html: string) {
     container.innerHTML = h;
     
     // Force eager loading
-    const elements = container.querySelectorAll('.wb-ready');
+    const elements = container.querySelectorAll('.x-ready');
     elements.forEach(el => el.setAttribute('', ''));
     
     document.body.appendChild(container);
@@ -45,11 +45,11 @@ test.describe('slider Behavior', () => {
     page.on('pageerror', (err) => errors.push(err.message));
     
     const setupHtml = [
-      "<wb-slider>Basic slider content</wb-slider>",
-      "<wb-slider>Test permutation 2</wb-slider>",
-      "<wb-slider>Test permutation 3</wb-slider>",
-      "<wb-slider>Test permutation 4</wb-slider>",
-      "<wb-slider>Test permutation 5</wb-slider>"
+      "<div x-slider>Basic slider content</div>",
+      "<div x-slider>Test permutation 2</div>",
+      "<div x-slider>Test permutation 3</div>",
+      "<div x-slider>Test permutation 4</div>",
+      "<div x-slider>Test permutation 5</div>"
     ];
     
     await injectAndScan(page, setupHtml.join('\n'));
@@ -65,10 +65,10 @@ test.describe('slider Behavior', () => {
   });
 
   test('element is visible after scan', async ({ page }) => {
-    const html = "<wb-slider>Basic slider content</wb-slider>";
+    const html = "<div x-slider>Basic slider content</div>";
     await injectAndScan(page, html);
     
-    const el = page.locator('#test-container wb-slider, #test-container wb-slider').first();
+    const el = page.locator('#test-container x-slider, #test-container x-slider').first();
     const isPresent = await el.count() > 0;
     
     if (isPresent) {

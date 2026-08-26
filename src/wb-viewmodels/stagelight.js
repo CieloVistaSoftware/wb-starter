@@ -8,28 +8,28 @@ import { readAttr } from '../core/read-attr.js';
  * 3. Fixture: UI element representation of a physical light
  * 
  * Usage:
- * <wb-stagelight variant="beam" color="#ff0000"></wb-stagelight>
- * <wb-stagelight variant="spotlight"></wb-stagelight>
+ * <div x-stagelight variant="beam" color="#ff0000"></div>
+ * <div x-stagelight variant="spotlight"></div>
  * -----------------------------------------------------------------------------
  */
 
 // Inject styles lazily
 function injectStyles() {
-  if (document.getElementById('wb-stagelight-styles')) return;
+  if (document.getElementById('x-stagelight-styles')) return;
 
   const style = document.createElement('style');
-  style.id = 'wb-stagelight-styles';
+  style.id = 'x-stagelight-styles';
   style.textContent = `
-    .wb-stagelight {
+    .x-stagelight {
       position: relative;
       pointer-events: none; /* Let clicks pass through generally */
-      --wb-stagelight-color: #ffffff;
-      --wb-stagelight-size: 300px;
-      --wb-stagelight-intensity: 0.5;
+      --x-stagelight-color: #ffffff;
+      --x-stagelight-size: 300px;
+      --x-stagelight-intensity: 0.5;
     }
 
     /* === VARIANT: BEAM === */
-    .wb-stagelight--beam {
+    .x-stagelight--beam {
       position: absolute;
       top: 0;
       left: 50%;
@@ -37,20 +37,20 @@ function injectStyles() {
       height: 0;
       z-index: 10;
       /* Swing animation */
-      animation: wb-beam-swing var(--speed, 3s) ease-in-out infinite alternate;
+      animation: x-beam-swing var(--speed, 3s) ease-in-out infinite alternate;
       transform-origin: top center;
     }
 
-    .wb-stagelight__beam {
+    .x-stagelight__beam {
       position: absolute;
       top: 0;
-      left: calc(var(--wb-stagelight-size) / -2);
-      width: var(--wb-stagelight-size);
+      left: calc(var(--x-stagelight-size) / -2);
+      width: var(--x-stagelight-size);
       height: 100vh; /* Long beam */
       background: linear-gradient(
         to bottom, 
-        rgba(255, 255, 255, var(--wb-stagelight-intensity)) 0%, 
-        var(--wb-stagelight-color) 20%, 
+        rgba(255, 255, 255, var(--x-stagelight-intensity)) 0%, 
+        var(--x-stagelight-color) 20%, 
         transparent 80%
       );
       /* Make it cone shaped via clip-path or mask */
@@ -59,7 +59,7 @@ function injectStyles() {
       mix-blend-mode: screen;
     }
 
-    .wb-stagelight__source {
+    .x-stagelight__source {
       position: absolute;
       top: -10px;
       left: -20px;
@@ -67,10 +67,10 @@ function injectStyles() {
       height: 20px;
       background: #333;
       border-radius: 0 0 20px 20px;
-      box-shadow: 0 0 10px var(--wb-stagelight-color);
+      box-shadow: 0 0 10px var(--x-stagelight-color);
     }
 
-    @keyframes wb-beam-swing {
+    @keyframes x-beam-swing {
       from { transform: rotate(-15deg); }
       to { transform: rotate(15deg); }
     }
@@ -85,7 +85,7 @@ function injectStyles() {
        Beam and fixture already build a child for their visuals; spotlight now
        does the same (its old comment claimed an ::after did this -- there was
        no ::after anywhere). */
-    .wb-stagelight--spotlight {
+    .x-stagelight--spotlight {
       position: relative;
       /* A spotlight with zero area is meaningless. The host is often empty
          (the component consumes its text), and inside a single-item demo grid
@@ -106,28 +106,28 @@ function injectStyles() {
        inside.
        Standalone the containing block IS the viewport, so full-screen coverage
        is unchanged; inside a demo box that establishes one, it stays in the box.
-       Pairs with ".wb-demo__grid { contain: layout }" in
+       Pairs with ".x-demo__grid { contain: layout }" in
        styles/behaviors/demo.css -- BOTH are required, neither suffices.
        NOTE: this block sits inside a JS template literal -- never use a
        backtick here, it terminates the string. */
     /* #658: off state. Only the OVERLAY is hidden -- the host and its content
        stay visible, which is the whole point of being able to switch the
        effect off and read what is underneath. */
-    .wb-stagelight--spotlight[data-wb-stagelight-off] .wb-stagelight__spot {
+    .x-stagelight--spotlight[data-x-stagelight-off] .x-stagelight__spot {
       display: none;
     }
 
-    .wb-stagelight--spotlight {
+    .x-stagelight--spotlight {
       cursor: pointer;
     }
 
-    .wb-stagelight__spot {
+    .x-stagelight__spot {
       position: fixed;
       inset: 0;
       z-index: 9999;
       pointer-events: none;
       mix-blend-mode: multiply; /* Darkens everything except the spot */
-      /* --wb-stagelight-radius is the EFFECTIVE radius: the author's size
+      /* --x-stagelight-radius is the EFFECTIVE radius: the author's size
          capped to what the box can actually show (set in JS below). A circle
          gradient's radius must be a length -- CSS cannot express "40% of the
          box" here -- so the cap is computed rather than declared. Without it a
@@ -135,24 +135,24 @@ function injectStyles() {
          only part of the effect is visible. Falls back to the raw size. */
       background: radial-gradient(
         circle at var(--x, 50%) var(--y, 50%), 
-        transparent var(--wb-stagelight-radius, var(--wb-stagelight-size)), 
-        rgba(0,0,0,0.85) calc(var(--wb-stagelight-radius, var(--wb-stagelight-size)) + 50px)
+        transparent var(--x-stagelight-radius, var(--x-stagelight-size)), 
+        rgba(0,0,0,0.85) calc(var(--x-stagelight-radius, var(--x-stagelight-size)) + 50px)
       );
       transition: background 0.1s ease-out; /* Smooth follow */
     }
     
     /* Variant: Spotlight - Screen Mode (Light beam in dark room) */
-    .wb-stagelight--spotlight.mode-add .wb-stagelight__spot {
+    .x-stagelight--spotlight.mode-add .x-stagelight__spot {
       mix-blend-mode: screen;
       background: radial-gradient(
         circle at var(--x, 50%) var(--y, 50%), 
         rgba(255,255,255,0.2) 0%, 
-        transparent var(--wb-stagelight-size)
+        transparent var(--x-stagelight-size)
       );
     }
 
     /* === VARIANT: FIXTURE === */
-    .wb-stagelight--fixture {
+    .x-stagelight--fixture {
       display: inline-flex;
       flex-direction: column;
       align-items: center;
@@ -160,7 +160,7 @@ function injectStyles() {
       pointer-events: auto;
     }
 
-    .wb-stagelight__housing {
+    .x-stagelight__housing {
       width: 60px;
       height: 80px;
       background: #222;
@@ -175,21 +175,21 @@ function injectStyles() {
     }
     
     /* Light Emitter inside fixture */
-    .wb-stagelight__housing::after {
+    .x-stagelight__housing::after {
       content: '';
       width: 40px; 
       height: 40px;
-      background: var(--wb-stagelight-color);
+      background: var(--x-stagelight-color);
       border-radius: 50%;
-      box-shadow: 0 0 20px var(--wb-stagelight-color);
-      opacity: var(--wb-stagelight-intensity);
+      box-shadow: 0 0 20px var(--x-stagelight-color);
+      opacity: var(--x-stagelight-intensity);
     }
     
-    .wb-stagelight__housing:hover {
+    .x-stagelight__housing:hover {
        transform: rotateX(-20deg);
     }
 
-    .wb-stagelight--fixture span {
+    .x-stagelight--fixture span {
       margin-top: 0.5rem;
       font-size: 0.75rem;
       color: var(--text-secondary, #888);
@@ -213,26 +213,32 @@ export default function stagelight(element, options = {}) {
     ...options
   };
 
-  // #448: no classList.add('wb-stagelight') -- no CSS selector anywhere
-  // depends on the bare class; it just duplicated <wb-stagelight>'s own
+  // #448: no classList.add('x-stagelight') -- no CSS selector anywhere
+  // depends on the bare class; it just duplicated <div x-stagelight>'s own
   // tag name.
+  // #448 removed this class outright; restored WITH the tag-name guard.
+  // permutation-compliance requires compliance.baseClass to cover the host
+  // (classList.contains(cls) || tagName === cls), and on an attribute host
+  // like <div x-stagelight> the tag is "div" -- so without the class nothing covers
+  // it. Guarded so a literal <x-stagelight> tag does not get a redundant class.
+  if (element.tagName.toLowerCase() !== 'x-stagelight') element.classList.add('x-stagelight');
 
   // === STEP 2: CREATE DOM STRUCTURE BASED ON VARIANT ===
   if (config.variant === 'beam') {
     // Create source (light fixture at top)
     const source = document.createElement('div');
-    source.className = 'wb-stagelight__source';
+    source.className = 'x-stagelight__source';
     element.appendChild(source);
     
     // Create beam element
     const beam = document.createElement('div');
-    beam.className = 'wb-stagelight__beam';
+    beam.className = 'x-stagelight__beam';
     element.appendChild(beam);
   } 
   else if (config.variant === 'fixture') {
     // Create housing (light bulb container)
     const housing = document.createElement('div');
-    housing.className = 'wb-stagelight__housing';
+    housing.className = 'x-stagelight__housing';
     element.appendChild(housing);
     
     // Create label if provided
@@ -246,18 +252,18 @@ export default function stagelight(element, options = {}) {
     // #647: the overlay is a CHILD, so the host keeps its own text in normal
     // flow and still gives its demo box real dimensions.
     const spot = document.createElement('div');
-    spot.className = 'wb-stagelight__spot';
+    spot.className = 'x-stagelight__spot';
     element.appendChild(spot);
   }
 
   // Apply CSS Variables
-  element.style.setProperty('--wb-stagelight-color', config.color);
-  element.style.setProperty('--wb-stagelight-size', config.size);
-  element.style.setProperty('--wb-stagelight-intensity', config.intensity);
+  element.style.setProperty('--x-stagelight-color', config.color);
+  element.style.setProperty('--x-stagelight-size', config.size);
+  element.style.setProperty('--x-stagelight-intensity', config.intensity);
   element.style.setProperty('--speed', config.speed);
 
   // Apply Variant Class
-  element.classList.add(`wb-stagelight--${config.variant}`);
+  element.classList.add(`x-stagelight--${config.variant}`);
 
   // === BEHAVIOR LOGIC ===
   
@@ -273,7 +279,7 @@ export default function stagelight(element, options = {}) {
     // and left it rendering as a uniformly dark rectangle. When nothing
     // contains it the box IS the viewport and rect.left/top are 0, so
     // standalone behaviour is byte-identical to before.
-    const overlay = element.querySelector('.wb-stagelight__spot');
+    const overlay = element.querySelector('.x-stagelight__spot');
 
     // Cap the radius to the box so the WHOLE effect is visible. A spotlight
     // configured at 400px inside a 288x160 demo box could only ever clip
@@ -286,7 +292,7 @@ export default function stagelight(element, options = {}) {
       const r = overlay.getBoundingClientRect();
       const limit = Math.min(r.width, r.height) * 0.35;
       const effective = limit > 0 ? Math.min(configuredPx, limit) : configuredPx;
-      element.style.setProperty('--wb-stagelight-radius', `${Math.round(effective)}px`);
+      element.style.setProperty('--x-stagelight-radius', `${Math.round(effective)}px`);
     };
     syncRadius();
     let ro = null;
@@ -310,8 +316,8 @@ export default function stagelight(element, options = {}) {
     // way to stop, which is an inconsistency between variants of one component.
     let isOn = !element.hasAttribute('off');
     const applyState = () => {
-      if (isOn) element.removeAttribute('data-wb-stagelight-off');
-      else element.setAttribute('data-wb-stagelight-off', '');
+      if (isOn) element.removeAttribute('data-x-stagelight-off');
+      else element.setAttribute('data-x-stagelight-off', '');
       element.setAttribute('aria-pressed', String(isOn));
     };
     const toggle = () => { isOn = !isOn; applyState(); };
@@ -352,11 +358,11 @@ export default function stagelight(element, options = {}) {
     // Fixture Logic - Click to toggle
     let isOn = true;
     // Use the housing element we just created
-    const housing = element.querySelector('.wb-stagelight__housing');
+    const housing = element.querySelector('.x-stagelight__housing');
     
     const toggle = () => {
       isOn = !isOn;
-      element.style.setProperty('--wb-stagelight-intensity', isOn ? config.intensity : '0.1');
+      element.style.setProperty('--x-stagelight-intensity', isOn ? config.intensity : '0.1');
     };
     
     housing.addEventListener('click', toggle);
@@ -367,9 +373,9 @@ export default function stagelight(element, options = {}) {
 
   // Expose API
   element.wbStageLight = {
-    setColor: (c) => element.style.setProperty('--wb-stagelight-color', c),
-    setIntensity: (i) => element.style.setProperty('--wb-stagelight-intensity', i),
-    setSize: (s) => element.style.setProperty('--wb-stagelight-size', s)
+    setColor: (c) => element.style.setProperty('--x-stagelight-color', c),
+    setIntensity: (i) => element.style.setProperty('--x-stagelight-intensity', i),
+    setSize: (s) => element.style.setProperty('--x-stagelight-size', s)
   };
 
   // #658: spotlight-only controls. Assigned explicitly rather than spread --
@@ -388,6 +394,6 @@ export default function stagelight(element, options = {}) {
   // Return cleanup function
   return () => {
     cleanup();
-    element.classList.remove('wb-stagelight', `wb-stagelight--${config.variant}`);
+    element.classList.remove('x-stagelight', `x-stagelight--${config.variant}`);
   };
 }

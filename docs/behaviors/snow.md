@@ -2,12 +2,16 @@
 
 Falling snowflake animation effect
 
-Applies to `<div>`, and to any element carrying `x-snow`.
+## Type — new capability
 
-## Usage
+`x-snow` adds behavior that no HTML element implies. Nothing about a tag says "ripple" or "tooltip", so this is always opted into by attribute, on whatever element you already chose.
+
+### How to write it
 
 ```html
-<button variant="primary" x-snow>❄️ Snow</button>
+<button variant="primary" x-snow>
+  x-snow · variant: primary
+</button>
 ```
 
 ## Attributes

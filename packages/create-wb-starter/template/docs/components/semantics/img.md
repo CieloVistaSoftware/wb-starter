@@ -6,10 +6,10 @@ Enhanced image component with lazy loading, aspect ratio, and fallback support.
 
 | Property | Value |
 |----------|-------|
-| Custom Tag | `<wb-img>` |
+| Custom Tag | `<img>` |
 | Behavior | `img` |
 | Semantic | `<img>` |
-| Root CSS Class | `wb-img` |
+| Root CSS Class | `x-img` |
 | Category | Media |
 
 ## Properties
@@ -24,99 +24,97 @@ Enhanced image component with lazy loading, aspect ratio, and fallback support.
 | `fallback` | string | `""` | URL of fallback image on error |
 | `fit` | string | `"cover"` | Object-fit: `cover`, `contain`, `fill` |
 
-Wrapped in `<wb-demo>`, so the live component renders below with its source shown underneath:
+Wrapped in `<div x-demo>`, so the live component renders below with its source shown underneath:
 
-<wb-demo>
+<div x-demo>
 <img
-  x-image
-  src="photo.jpg"
+  src="https://placehold.co/600x400/1e293b/e2e8f0?text=Photo"
   alt="Photo">
-</wb-demo>
+</div>
 
 ## Usage
 
 ### Custom Element
 
 ```html
-<wb-img
-  src="photo.jpg"
+<img
+  src="https://picsum.photos/seed/photo/600/400"
   alt="Photo description">
-</wb-img>
+</img>
 ```
 
 ### Native Image (Enhanced)
 
 ```html
 <img
-  x-image
-  src="photo.jpg"
+  src="https://picsum.photos/seed/photo/600/400"
   alt="Photo">
 ```
 
 ### Lazy Loading
 
 ```html
-<wb-img
-  src="large-image.jpg"
+<img
+  src="https://picsum.photos/seed/large-image/600/400"
   lazy
   alt="Large photo">
-</wb-img>
+</img>
 ```
 
 ### With Aspect Ratio
 
 ```html
-<wb-img
-  src="banner.jpg"
+<img
+  src="https://picsum.photos/seed/banner/600/400"
   aspectRatio="16/9"
   alt="Banner">
-</wb-img>
+</img>
 ```
 
 ### Zoomable
 
 ```html
-<wb-img
-  src="artwork.jpg"
+<img
+  src="https://picsum.photos/seed/artwork/600/400"
   zoomable
   alt="Click to zoom">
-</wb-img>
+</img>
 ```
 
 ### With Fallback
 
 ```html
-<wb-img
-  src="user-avatar.jpg"
-  fallback="/assets/default-avatar.png"
+<img
+  src="https://picsum.photos/seed/user-avatar/600/400"
+  fallback="https://picsum.photos/seed/default-avatar/200/200"
   alt="User avatar">
-</wb-img>
+</img>
 ```
 
 ### Object Fit
 
 ```html
-<wb-img
-  src="photo.jpg"
+<img
+  src="https://picsum.photos/seed/photo/600/400"
   fit="contain"
   alt="Photo">
-</wb-img>
-<wb-img
-  src="photo.jpg"
+</img>
+<img
+  src="https://picsum.photos/seed/photo/600/400"
   fit="cover"
   alt="Photo">
-</wb-img>
+</img>
 ```
 
 ## Generated Structure
 
 ```html
 <div
-  class="wb-img"
+  class="x-img"
   style="aspect-ratio: 16/9">
   <img
-    class="wb-img__image"
-    src="photo.jpg"
+    class="x-img__image"
+    src="https://picsum.photos/seed/photo/600/400"
     alt="Description"
     loading="lazy">
 </div>
@@ -126,12 +124,12 @@ Wrapped in `<wb-demo>`, so the live component renders below with its source show
 
 | Class | Applied When | Description |
 |-------|--------------|-------------|
-| `.wb-img` | Always | Base styling |
-| `.wb-img--lazy` | `lazy` | Lazy loading enabled |
-| `.wb-img--zoomable` | `zoomable` | Click-to-zoom enabled |
-| `.wb-img--loading` | Loading | Image loading |
-| `.wb-img--loaded` | Loaded | Image loaded |
-| `.wb-img--error` | Error | Failed to load |
+| `.x-img` | Always | Base styling |
+| `.x-img--lazy` | `lazy` | Lazy loading enabled |
+| `.x-img--zoomable` | `zoomable` | Click-to-zoom enabled |
+| `.x-img--loading` | Loading | Image loading |
+| `.x-img--loaded` | Loaded | Image loaded |
+| `.x-img--error` | Error | Failed to load |
 
 ## Methods
 
@@ -141,7 +139,7 @@ Wrapped in `<wb-demo>`, so the live component renders below with its source show
 | `load()` | Forces image load |
 
 ```javascript
-const img = document.querySelector('wb-img');
+const img = document.querySelector('x-img');
 
 // Open lightbox
 img.zoom();
@@ -169,9 +167,9 @@ img.addEventListener('error', () => {
 
 | Variable | Default | Description |
 |----------|---------|-------------|
-| `--wb-img-radius` | `0` | Border radius |
-| `--wb-img-bg` | `var(--bg-secondary)` | Placeholder background |
-| `--wb-img-transition` | `opacity 0.3s ease` | Load transition |
+| `--x-img-radius` | `0` | Border radius |
+| `--x-img-bg` | `var(--bg-secondary)` | Placeholder background |
+| `--x-img-transition` | `opacity 0.3s ease` | Load transition |
 
 ## Accessibility
 

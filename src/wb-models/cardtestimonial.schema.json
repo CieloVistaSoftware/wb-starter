@@ -4,13 +4,13 @@
   "title": "Testimonial Card",
   "description": "Customer testimonial/review card with quote, author, avatar, and rating",
   "schemaFor": "cardtestimonial",
-  "baseClass": "wb-testimonial",
+  "baseClass": "x-testimonial",
   "semanticElement": {
     "tagName": "article",
     "implicitRole": "article"
   },
   "compliance": {
-    "baseClass": "wb-testimonial",
+    "baseClass": "x-testimonial",
     "supportLevel": "stable",
     "accessibility": "high"
   },
@@ -55,7 +55,7 @@
         "centered"
       ],
       "default": "default",
-      "appliesClass": "wb-testimonial--{{value}}"
+      "appliesClass": "x-testimonial--{{value}}"
     },
     "size": {
       "type": "string",
@@ -66,7 +66,7 @@
         "lg"
       ],
       "default": "md",
-      "appliesClass": "wb-testimonial--{{value}}"
+      "appliesClass": "x-testimonial--{{value}}"
     }
   },
   "$view": [
@@ -162,95 +162,95 @@
     }
   },
   "$cssAPI": {
-    "--wb-testimonial-padding": {
+    "--x-testimonial-padding": {
       "default": "1.5rem",
       "description": "Card padding"
     },
-    "--wb-testimonial-radius": {
+    "--x-testimonial-radius": {
       "default": "8px",
       "description": "Border radius"
     },
-    "--wb-testimonial-bg": {
+    "--x-testimonial-bg": {
       "default": "var(--bg-surface, #ffffff)",
       "description": "Card background"
     },
-    "--wb-testimonial-border": {
+    "--x-testimonial-border": {
       "default": "none",
       "description": "Card border"
     },
-    "--wb-testimonial-shadow": {
+    "--x-testimonial-shadow": {
       "default": "none",
       "description": "Card shadow"
     },
-    "--wb-testimonial-gap": {
+    "--x-testimonial-gap": {
       "default": "1rem",
       "description": "Gap between elements"
     },
-    "--wb-testimonial-quote-size": {
+    "--x-testimonial-quote-size": {
       "default": "1rem",
       "description": "Quote text font size"
     },
-    "--wb-testimonial-quote-color": {
+    "--x-testimonial-quote-color": {
       "default": "var(--text-primary, #1a1a1a)",
       "description": "Quote text color"
     },
-    "--wb-testimonial-quote-style": {
+    "--x-testimonial-quote-style": {
       "default": "italic",
       "description": "Quote font style"
     },
-    "--wb-testimonial-quote-line-height": {
+    "--x-testimonial-quote-line-height": {
       "default": "1.6",
       "description": "Quote line height"
     },
-    "--wb-testimonial-quote-mark": {
+    "--x-testimonial-quote-mark": {
       "default": "“",
       "description": "Opening quote character"
     },
-    "--wb-testimonial-quote-mark-size": {
+    "--x-testimonial-quote-mark-size": {
       "default": "3rem",
       "description": "Quote mark font size"
     },
-    "--wb-testimonial-quote-mark-color": {
+    "--x-testimonial-quote-mark-color": {
       "default": "var(--primary, #6366f1)",
       "description": "Quote mark color"
     },
-    "--wb-testimonial-avatar-size": {
+    "--x-testimonial-avatar-size": {
       "default": "48px",
       "description": "Avatar size"
     },
-    "--wb-testimonial-avatar-radius": {
+    "--x-testimonial-avatar-radius": {
       "default": "50%",
       "description": "Avatar border radius"
     },
-    "--wb-testimonial-author-size": {
+    "--x-testimonial-author-size": {
       "default": "1rem",
       "description": "Author name font size"
     },
-    "--wb-testimonial-author-weight": {
+    "--x-testimonial-author-weight": {
       "default": "600",
       "description": "Author name font weight"
     },
-    "--wb-testimonial-author-color": {
+    "--x-testimonial-author-color": {
       "default": "var(--text-primary, #1a1a1a)",
       "description": "Author name color"
     },
-    "--wb-testimonial-role-size": {
+    "--x-testimonial-role-size": {
       "default": "0.875rem",
       "description": "Role font size"
     },
-    "--wb-testimonial-role-color": {
+    "--x-testimonial-role-color": {
       "default": "var(--text-secondary, #666)",
       "description": "Role text color"
     },
-    "--wb-testimonial-star-color": {
+    "--x-testimonial-star-color": {
       "default": "var(--warning, #ffc107)",
       "description": "Filled star color"
     },
-    "--wb-testimonial-star-empty-color": {
+    "--x-testimonial-star-empty-color": {
       "default": "var(--border-color, #e0e0e0)",
       "description": "Empty star color"
     },
-    "--wb-testimonial-star-size": {
+    "--x-testimonial-star-size": {
       "default": "1rem",
       "description": "Star size"
     }
@@ -265,16 +265,16 @@
   },
   "test": {
     "setup": [
-      "<wb-cardtestimonial>Basic cardtestimonial content</wb-cardtestimonial>",
-      "<wb-cardtestimonial variant=\"default\">variant=default</wb-cardtestimonial>",
-      "<wb-cardtestimonial variant=\"elevated\">variant=elevated</wb-cardtestimonial>",
-      "<wb-cardtestimonial variant=\"bordered\">variant=bordered</wb-cardtestimonial>",
-      "<wb-cardtestimonial size=\"sm\">size=sm</wb-cardtestimonial>",
-      "<wb-cardtestimonial size=\"md\">size=md</wb-cardtestimonial>",
-      "<wb-cardtestimonial size=\"lg\">size=lg</wb-cardtestimonial>",
-      "<wb-cardtestimonial quote=\"Sample quote\">quote=\"Sample quote\"</wb-cardtestimonial>",
-      "<wb-cardtestimonial quote=\"Great product!\" author=\"John Doe\"></wb-cardtestimonial>",
-      "<wb-cardtestimonial quote=\"Amazing!\" author=\"Jane\" role=\"CEO\" avatar=\"avatar.jpg\" rating=\"5\"></wb-cardtestimonial>"
+      "<div x-cardtestimonial>Basic cardtestimonial content</div>",
+      "<div x-cardtestimonial variant=\"default\">variant=default</div>",
+      "<div x-cardtestimonial variant=\"elevated\">variant=elevated</div>",
+      "<div x-cardtestimonial variant=\"bordered\">variant=bordered</div>",
+      "<div x-cardtestimonial size=\"sm\">size=sm</div>",
+      "<div x-cardtestimonial size=\"md\">size=md</div>",
+      "<div x-cardtestimonial size=\"lg\">size=lg</div>",
+      "<div x-cardtestimonial quote=\"Sample quote\">quote=\"Sample quote\"</div>",
+      "<div x-cardtestimonial quote=\"Great product!\" author=\"John Doe\"></div>",
+      "<div x-cardtestimonial quote=\"Amazing!\" author=\"Jane\" role=\"CEO\" avatar=\"avatar.jpg\" rating=\"5\"></div>"
     ],
     "matrix": {
       "combinations": [
@@ -323,14 +323,14 @@
     },
     "site": {
       "page": "cards",
-      "tag": "wb-cardtestimonial",
+      "tag": "x-cardtestimonial",
       "renders": true,
-      "baseClass": "wb-testimonial",
+      "baseClass": "x-testimonial",
       "minInstances": 8,
       "checkText": [],
       "checkClasses": [
-        "wb-testimonial--elevated",
-        "wb-testimonial--sm"
+        "x-testimonial--elevated",
+        "x-testimonial--sm"
       ],
       "checkAttributes": [
         "quote",

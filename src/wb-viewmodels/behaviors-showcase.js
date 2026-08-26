@@ -19,7 +19,7 @@
  * @param {Object} options - Configuration options
  */
 export function behaviorsShowcase(element, options = {}) {
-  element.classList.add('wb-behaviors-showcase');
+  element.classList.add('x-behaviors-showcase');
   
   // Initialize features
   initNavHighlighting(element);
@@ -62,19 +62,19 @@ function initNavHighlighting(container) {
           }
         });
       } catch (cbErr) {
-        console.debug('[wb-showcase] IntersectionObserver callback error:', cbErr);
+        console.debug('[x-showcase] IntersectionObserver callback error:', cbErr);
       }
     }, {
       threshold: 0.3,
       rootMargin: '-100px 0px -50% 0px'
     });
   } catch (instErr) {
-    console.debug('[wb-showcase] IntersectionObserver unavailable:', instErr);
+    console.debug('[x-showcase] IntersectionObserver unavailable:', instErr);
   }
 
   if (observer) {
     sections.forEach(section => {
-      try { observer.observe(section); } catch (obsErr) { console.debug('[wb-showcase] observer.observe failed', obsErr); }
+      try { observer.observe(section); } catch (obsErr) { console.debug('[x-showcase] observer.observe failed', obsErr); }
     });
   }
 }
@@ -107,7 +107,7 @@ function initSmoothScroll(container) {
  * Add copy functionality to code examples
  */
 function initCodeCopy(container) {
-  container.querySelectorAll('wb-mdhtml').forEach(mdhtml => {
+  container.querySelectorAll('x-mdhtml').forEach(mdhtml => {
     // Check if copy button already exists
     if (mdhtml.querySelector('.code-copy-btn')) return;
     
@@ -203,16 +203,16 @@ export function scrollToSection(sectionId) {
  * @param {HTMLElement} demoContainer - The demo container element
  */
 export function toggleCode(demoContainer) {
-  const codeBlock = demoContainer.querySelector('wb-mdhtml');
+  const codeBlock = demoContainer.querySelector('x-mdhtml');
   if (codeBlock) {
     codeBlock.classList.toggle('collapsed');
   }
 }
 
 // CSS for copy button (injected once)
-if (!document.getElementById('wb-showcase-styles')) {
+if (!document.getElementById('x-showcase-styles')) {
   const style = document.createElement('style');
-  style.id = 'wb-showcase-styles';
+  style.id = 'x-showcase-styles';
   style.textContent = `
     .code-copy-btn {
       position: absolute;
@@ -241,7 +241,7 @@ if (!document.getElementById('wb-showcase-styles')) {
       border-color: var(--primary, #6366f1);
     }
     
-    wb-mdhtml.collapsed {
+    x-mdhtml.collapsed {
       display: none;
     }
   `;

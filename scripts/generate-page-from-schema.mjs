@@ -53,11 +53,11 @@ function renderView(viewName) {
   if (!viewDef) return `<!-- ERROR: no $view entry for "${viewName}" -->`;
 
   switch (viewDef.tag) {
-    case 'wb-cardhero': return renderHero(viewDef);
-    case 'wb-container': return renderContainer(viewDef);
-    case 'wb-grid': return renderGrid(viewDef);
-    case 'wb-stack': return renderStack(viewDef);
-    case 'wb-audio': return renderAudio(viewDef);
+    case 'x-cardhero': return renderHero(viewDef);
+    case 'x-container': return renderContainer(viewDef);
+    case 'x-grid': return renderGrid(viewDef);
+    case 'x-stack': return renderStack(viewDef);
+    case 'x-audio': return renderAudio(viewDef);
     default: return `<!-- TODO: renderer for ${viewDef.tag} -->`;
   }
 }
@@ -70,27 +70,27 @@ function renderHero(viewDef) {
     const value = heroProps[propName]?.default || attrDef.example;
     if (value) attrs.push(`${attrDef.name}="${escapeHtml(value)}"`);
   }
-  return `<wb-cardhero ${attrs.join(' ')}></wb-cardhero>`;
+  return `<div x-cardhero ${attrs.join(' ')}></div>`;
 }
 
 function renderContainer(viewDef) {
   const lines = [];
   const attrs = (viewDef.attributes || []).map(a => `${a.name}="${a.example}"`).join(' ');
-  lines.push(`<wb-container ${attrs}>`);
+  lines.push(`<div x-container ${attrs}>`);
 
   for (const child of viewDef.children || []) {
-    if ((child.tag === 'wb-grid' || child.tag === 'wb-row') && child.children?.[0]?.tag === 'wb-cardstats') {
+    if ((child.tag === 'x-grid' || child.tag === 'x-row') && child.children?.[0]?.tag === 'x-cardstats') {
       const attrs = (child.attributes || []).map(a => `${a.name}="${a.example}"`).join(' ');
       lines.push(`  <${child.tag} ${attrs}>`);
       for (const stat of schema.properties?.stats?.default || []) {
-        lines.push(`    <wb-cardstats value="${escapeHtml(stat.value)}" label="${escapeHtml(stat.label)}" icon="${stat.icon}"></wb-cardstats>`);
+        lines.push(`    <div x-cardstats value="${escapeHtml(stat.value)}" label="${escapeHtml(stat.label)}" icon="${stat.icon}"></div>`);
       }
       lines.push(`  </${child.tag}>`);
     } else if (child.tag === 'div' && child.className) {
       lines.push(`  <div class="${child.className}"></div>`);
-    } else if (child.tag === 'wb-row' && child.children?.[0]?.tag === 'button') {
+    } else if (child.tag === 'x-row' && child.children?.[0]?.tag === 'button') {
       const rowAttrs = (child.attributes || []).map(a => `${a.name}="${a.example}"`).join(' ');
-      lines.push(`  <wb-row ${rowAttrs}>`);
+      lines.push(`  <div ${rowAttrs}>`);
       for (const action of schema.properties?.actions?.default || []) {
         if (action.behavior === 'x-tooltip') {
           lines.push(`    <button ${action.behavior}="I appear on hover!">${action.label}</button>`);
@@ -98,34 +98,36 @@ function renderContainer(viewDef) {
           lines.push(`    <button ${action.behavior}>${action.label}</button>`);
         }
       }
-      lines.push(`  </wb-row>`);
+      lines.push(`  </div>`);
     }
   }
-  lines.push(`</wb-container>`);
+  lines.push(`</div>`);
   return lines.join('\n');
 }
 
 function renderGrid(viewDef) {
-  const lines = ['<wb-grid>'];
+  const lines = ['<div x-grid>'];
   const variant = viewDef.children?.[0]?.attributes?.find(a => a.name === 'variant')?.example || '';
   for (const feature of schema.properties?.features?.default || []) {
-    lines.push(`  <wb-card${variant ? ` variant="${variant}"` : ''}>`);
+    // <article> is the card: 'x-card' maps to the 'article' behavior in
+    // tag-map.js, and injecting on <article> is what renders one.
+    lines.push(`  <article${variant ? ` variant="${variant}"` : ''}>`);
     lines.push(`    <h3>${feature.title}</h3>`);
     lines.push(`    <p>${feature.description}</p>`);
-    lines.push(`  </wb-card>`);
+    lines.push(`  </article>`);
   }
-  lines.push('</wb-grid>');
+  lines.push('</div>');
   return lines.join('\n');
 }
 
 function renderStack(viewDef) {
-  const lines = ['<wb-stack>'];
-  const childTag = viewDef.children?.[0]?.tag || 'wb-cardnotification';
+  const lines = ['<div x-stack>'];
+  const childTag = viewDef.children?.[0]?.tag || 'x-cardnotification';
   for (const notif of schema.properties?.notifications?.default || []) {
     const variant = notif.variant || notif.type || 'info';
     lines.push(`  <${childTag} variant="${variant}" title="${escapeHtml(notif.title)}" message="${escapeHtml(notif.message)}"></${childTag}>`);
   }
-  lines.push('</wb-stack>');
+  lines.push('</div>');
   return lines.join('\n');
 }
 
@@ -145,7 +147,7 @@ function renderAudio(viewDef) {
       attrs.push(`${attrDef.name}="${attrDef.example}"`);
     }
   }
-  return `<wb-audio ${attrs.join(' ')}></wb-audio>`;
+  return `<audio ${attrs.join(' ')}></audio>`;
 }
 
 // ─── Page Assembly ────────────────────────────────────────────────────────────

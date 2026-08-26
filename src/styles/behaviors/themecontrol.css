@@ -7,24 +7,24 @@
  */
 
 /* #448: tag selector -- themecontrol() no longer adds a redundant
-   classList.add('wb-themecontrol') that just duplicated the
-   <wb-themecontrol> tag name. */
-wb-themecontrol, [x-themecontrol]{
+   classList.add('x-themecontrol') that just duplicated the
+   <div x-themecontrol> tag name. */
+x-themecontrol, [x-themecontrol]{
   display: inline-block;
 }
 
-.wb-themecontrol__wrapper {
+.x-themecontrol__wrapper {
   display: inline-flex;
   align-items: center;
   gap: 0.5rem;
 }
 
-.wb-themecontrol__label {
+.x-themecontrol__label {
   font-weight: 500;
   font-size: 0.875rem;
 }
 
-.wb-themecontrol__select {
+.x-themecontrol__select {
   padding: 0.5rem 2rem 0.5rem 0.75rem;
   font-size: 0.875rem;
   border: 1px solid var(--border-color, #ddd);

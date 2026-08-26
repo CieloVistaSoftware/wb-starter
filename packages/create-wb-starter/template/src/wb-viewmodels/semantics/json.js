@@ -11,7 +11,7 @@ export function json(element, options = {}) {
     ...options
   };
 
-  element.classList.add('wb-json');
+  element.classList.add('x-json');
   
   try {
     const obj = typeof config.data === 'string' ? JSON.parse(config.data) : config.data;
@@ -46,7 +46,7 @@ export function json(element, options = {}) {
     element.style.color = 'var(--error, #ef4444)';
   }
 
-  return () => element.classList.remove('wb-json');
+  return () => element.classList.remove('x-json');
 }
 
 export default json;

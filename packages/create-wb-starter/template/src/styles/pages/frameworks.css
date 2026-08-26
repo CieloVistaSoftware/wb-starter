@@ -1,0 +1,125 @@
+/* demos/frameworks.html — page-specific layout.
+   Moved out of the page's own <head><style> block and inline style="..."
+   attributes (Tier-1 Law 9: no <style> blocks or inline styles in HTML). */
+
+body {
+  padding: 2rem;
+  max-width: 1000px;
+  margin: 0 auto;
+  background: var(--bg-color);
+  color: var(--text-primary);
+}
+
+section {
+  margin-bottom: 3rem;
+  padding: 2rem;
+  border: 1px solid var(--border-color);
+  border-radius: 12px;
+  background: var(--bg-secondary);
+}
+
+h2 {
+  margin-top: 0;
+  border-bottom: 1px solid var(--border-color);
+  padding-bottom: 1rem;
+  margin-bottom: 1.5rem;
+}
+
+.back-link {
+  display: inline-block;
+  margin-bottom: 2rem;
+  color: var(--text-secondary);
+  text-decoration: none;
+}
+
+.advantages-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 1.5rem;
+}
+
+.advantages-grid h3 {
+  margin-top: 0;
+  color: var(--primary-color);
+}
+
+.advantages-grid p {
+  font-size: 0.95rem;
+  line-height: 1.5;
+}
+
+.demo-code-block {
+  margin-top: 1.5rem;
+}
+
+.demo-code-label {
+  margin-bottom: 0.5rem;
+  font-size: 0.9rem;
+  color: var(--text-secondary);
+}
+
+.demo-input-full {
+  margin-bottom: 1rem;
+  width: 100%;
+}
+
+/* Framework live-mount containers -- accent border color per framework,
+   matching each section's existing .badge-* color. */
+.framework-mount {
+  padding: 1rem;
+  border: 1px dashed var(--mount-accent, var(--border-color));
+  border-radius: 8px;
+  min-height: 2.5rem;
+}
+.framework-mount--vue { --mount-accent: #42b883; }
+.framework-mount--svelte { --mount-accent: #ff3e00; }
+.framework-mount--angular { --mount-accent: #dd0031; }
+.framework-mount--solid { --mount-accent: #2c4f7c; }
+
+.framework-badge {
+  display: inline-block;
+  padding: 0.25rem 0.75rem;
+  border-radius: 999px;
+  font-size: 0.8rem;
+  font-weight: bold;
+  margin-bottom: 1rem;
+}
+.badge-react { background: #61dafb; color: #000; }
+.badge-vue { background: #42b883; color: #fff; }
+.badge-svelte { background: #ff3e00; color: #fff; }
+.badge-angular { background: #dd0031; color: #fff; }
+.badge-solid { background: #2c4f7c; color: #fff; }
+.badge-htmx { background: #3d72d7; color: #fff; }
+
+/* inline code only — block code (pre) is styled separately below */
+:not(pre) > code {
+  background: rgba(0, 0, 0, 0.3);
+  padding: 0.2rem 0.4rem;
+  border-radius: 4px;
+  font-family: monospace;
+}
+
+/* #449: this used to hand-roll layout/highlighting/copy-button for these
+   <pre language="…" copy> blocks, under the (now stale) assumption that
+   "WB's code behavior doesn't activate on these hand-written blocks"
+   (#241). It does now -- the global pre.js/pre.css system enhances them
+   the same as every other code panel on the site (line numbers, copy
+   button, language badge). Running BOTH systems on the same element
+   conflicted: this page's old attribute-qualified padding rule (an
+   attribute selector, specificity 0,1,1) outranked the global
+   `.x-pre--has-line-numbers { padding-left: 2.5rem; }` (a single class,
+   0,1,0) regardless of source order, leaving only 16px of left padding
+   for code that needs 40px to clear the line-number gutter -- the gutter
+   visually overlapped the first ~24px of every line, reading as clipped
+   text with no left breathing room (confirmed live via screenshot).
+   Removed the duplicate layout/badge/copy-button rules and JS below;
+   only the theme-variable color overrides survive, rescoped onto the
+   global system's own `.x-pre` class so they still outrank whatever CDN
+   highlight.js theme WB loads at runtime. */
+.x-pre.hljs { color: var(--text-primary); background: transparent; }
+.x-pre .hljs-comment, .x-pre .hljs-quote { color: var(--text-muted); font-style: italic; }
+.x-pre .hljs-keyword, .x-pre .hljs-selector-tag, .x-pre .hljs-literal { color: var(--primary); }
+.x-pre .hljs-string, .x-pre .hljs-attr { color: var(--success-color); }
+.x-pre .hljs-number, .x-pre .hljs-built_in { color: var(--warning-color); }
+.x-pre .hljs-title, .x-pre .hljs-name, .x-pre .hljs-type, .x-pre .hljs-tag { color: var(--info-color); }
+.x-pre .hljs-attribute, .x-pre .hljs-variable, .x-pre .hljs-template-variable, .x-pre .hljs-symbol { color: var(--danger-color); }

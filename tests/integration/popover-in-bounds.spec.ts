@@ -11,12 +11,12 @@ import { test, expect } from '@playwright/test';
  * the popover stays inside the viewport.
  */
 test('popover clamps to the viewport when its trigger is at the edge (#252, §15)', async ({ page }) => {
-  await page.goto('/?page=components', { waitUntil: 'domcontentloaded' });
+  await page.goto('/?page=behaviors', { waitUntil: 'domcontentloaded' });
   await page.waitForFunction(() => !!(window as any).WB, { timeout: 20000 });
 
   // Inject a popover trigger hard against the right edge and upgrade it.
   await page.evaluate(async () => {
-    document.querySelectorAll('#edge-pop, body > div.wb-popover').forEach((e) => e.remove());
+    document.querySelectorAll('#edge-pop, body > div.x-popover').forEach((e) => e.remove());
     const btn = document.createElement('button');
     btn.id = 'edge-pop';
     btn.setAttribute('x-popover', '');
@@ -30,7 +30,7 @@ test('popover clamps to the viewport when its trigger is at the edge (#252, §15
 
   await page.locator('#edge-pop').click();
 
-  const pop = page.locator('body > div.wb-popover');
+  const pop = page.locator('body > div.x-popover');
   await expect(pop).toBeVisible({ timeout: 5000 });
 
   const box = await pop.evaluate((el) => {

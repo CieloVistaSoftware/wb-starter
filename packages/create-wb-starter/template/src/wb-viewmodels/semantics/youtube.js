@@ -1,6 +1,6 @@
 /**
  * YouTube - YouTube embed
- * Custom Tag: <wb-youtube>
+ * Custom Tag: <div x-youtube>
  *
  * Migrated from the old media.js grab-bag file to match this project's
  * one-file-per-semantic-element convention (audio.js, table.js, ...).
@@ -28,7 +28,7 @@ function extractYouTubeId(url) {
   return null;
 }
 
-// Only one <wb-youtube> video plays at a time: when any player starts,
+// Only one <div x-youtube> video plays at a time: when any player starts,
 // every other player on the page is paused. Registered once (module-level),
 // using the YouTube iframe postMessage API (requires enablejsapi=1 on each
 // embed's src) rather than one listener per instance. Also tracks whichever
@@ -43,11 +43,11 @@ function ensureSingleYouTubePlayback() {
     let data;
     try { data = JSON.parse(e.data); } catch { return; }
     if (data.event !== 'infoDelivery' || !data.info || data.info.playerState !== 1) return; // 1 = playing
-    document.querySelectorAll('.wb-youtube iframe').forEach((frame) => {
+    document.querySelectorAll('.x-youtube iframe').forEach((frame) => {
       if (frame.contentWindow !== e.source) {
         frame.contentWindow.postMessage(JSON.stringify({ event: 'command', func: 'pauseVideo', args: '' }), '*');
       } else {
-        currentPlayingYouTubeEl = frame.closest('.wb-youtube');
+        currentPlayingYouTubeEl = frame.closest('.x-youtube');
       }
     });
   });
@@ -85,7 +85,7 @@ export function youtube(element, options = {}) {
     return;
   }
 
-  element.classList.add('wb-youtube');
+  element.classList.add('x-youtube');
   element.style.position = 'relative';
   element.style.aspectRatio = '16/9';
   element.style.width = '100%';
@@ -148,7 +148,7 @@ export function youtube(element, options = {}) {
     // result of the user's own click, a real gesture).
     const poster = document.createElement('button');
     poster.type = 'button';
-    poster.className = 'wb-youtube__poster';
+    poster.className = 'x-youtube__poster';
     poster.setAttribute('aria-label', 'Play video');
     poster.style.cssText = 'all:unset;position:absolute;inset:0;cursor:pointer;display:flex;' +
       `align-items:center;justify-content:center;background:center/cover no-repeat url(https://img.youtube.com/vi/${config.id}/hqdefault.jpg);`;
@@ -161,7 +161,7 @@ export function youtube(element, options = {}) {
     element.appendChild(poster);
   }
 
-  return () => element.classList.remove('wb-youtube');
+  return () => element.classList.remove('x-youtube');
 }
 
 export default { youtube };

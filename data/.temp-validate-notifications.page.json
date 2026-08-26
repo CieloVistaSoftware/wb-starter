@@ -31,17 +31,17 @@
   "sections": [
     {
       "heading": "cardnotification — Combinations",
-      "tag": "wb-cardnotification",
+      "tag": "x-cardnotification",
       "columns": 3,
       "demos": [
         {
-          "tag": "wb-cardnotification",
+          "tag": "x-cardnotification",
           "attrs": {
             "message": "Info message"
           }
         },
         {
-          "tag": "wb-cardnotification",
+          "tag": "x-cardnotification",
           "attrs": {
             "variant": "success",
             "title": "Success",
@@ -49,14 +49,14 @@
           }
         },
         {
-          "tag": "wb-cardnotification",
+          "tag": "x-cardnotification",
           "attrs": {
             "variant": "warning",
             "message": "Warning!"
           }
         },
         {
-          "tag": "wb-cardnotification",
+          "tag": "x-cardnotification",
           "attrs": {
             "variant": "error",
             "message": "Error!",
@@ -64,7 +64,7 @@
           }
         },
         {
-          "tag": "wb-cardnotification",
+          "tag": "x-cardnotification",
           "attrs": {
             "variant": "info",
             "title": "Notice",
@@ -76,32 +76,32 @@
     },
     {
       "heading": "variant variants",
-      "tag": "wb-cardnotification",
+      "tag": "x-cardnotification",
       "columns": 2,
       "demos": [
         {
-          "tag": "wb-cardnotification",
+          "tag": "x-cardnotification",
           "attrs": {
             "variant": "info",
             "message": "Sample message"
           }
         },
         {
-          "tag": "wb-cardnotification",
+          "tag": "x-cardnotification",
           "attrs": {
             "variant": "success",
             "message": "Sample message"
           }
         },
         {
-          "tag": "wb-cardnotification",
+          "tag": "x-cardnotification",
           "attrs": {
             "variant": "warning",
             "message": "Sample message"
           }
         },
         {
-          "tag": "wb-cardnotification",
+          "tag": "x-cardnotification",
           "attrs": {
             "variant": "error",
             "message": "Sample message"
@@ -111,11 +111,11 @@
     },
     {
       "heading": "Boolean toggles",
-      "tag": "wb-cardnotification",
+      "tag": "x-cardnotification",
       "columns": 1,
       "demos": [
         {
-          "tag": "wb-cardnotification",
+          "tag": "x-cardnotification",
           "attrs": {
             "elevated": true,
             "message": "Sample message"

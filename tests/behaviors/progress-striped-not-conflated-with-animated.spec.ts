@@ -1,5 +1,5 @@
 /**
- * <wb-progress>'s `animated` (schema default: true) and `striped` (default
+ * <progress>'s `animated` (schema default: true) and `striped` (default
  * false) drew the SAME scrolling diagonal-stripe texture, so every default
  * progress bar rendered as if `striped` were set even when it wasn't.
  * A second, compounding bug: the variant-color rule used the `background`
@@ -29,41 +29,41 @@ async function setup(page: Page, html: string): Promise<void> {
   await page.waitForTimeout(400);
 }
 
-test.describe('wb-progress — striped texture is independent of the animated default', () => {
+test.describe('progress — striped texture is independent of the animated default', () => {
   test('a default (animated, not striped) bar has no diagonal texture', async ({ page }) => {
-    await setup(page, '<wb-progress id="p1" value="50"></wb-progress>');
-    const bar = page.locator('#p1 .wb-progress__bar');
-    await expect(bar).toHaveClass(/wb-progress--?animated|wb-progress__bar/); // sanity: bar exists
-    await expect(page.locator('#p1')).toHaveClass(/wb-progress--animated/);
+    await setup(page, '<progress id="p1" value="50"></progress>');
+    const bar = page.locator('#p1 .x-progress__bar');
+    await expect(bar).toHaveClass(/x-progress--?animated|x-progress__bar/); // sanity: bar exists
+    await expect(page.locator('#p1')).toHaveClass(/x-progress--animated/);
     const bg = await bar.evaluate((el) => getComputedStyle(el).backgroundImage);
     expect(bg).toBe('none');
   });
 
   test('a striped bar shows the diagonal texture', async ({ page }) => {
-    await setup(page, '<wb-progress id="p2" value="75" striped></wb-progress>');
-    const bar = page.locator('#p2 .wb-progress__bar');
-    await expect(bar).toHaveClass(/wb-progress__bar--striped/);
+    await setup(page, '<progress id="p2" value="75" striped></progress>');
+    const bar = page.locator('#p2 .x-progress__bar');
+    await expect(bar).toHaveClass(/x-progress__bar--striped/);
     const bg = await bar.evaluate((el) => getComputedStyle(el).backgroundImage);
     expect(bg).not.toBe('none');
   });
 
   test('animated="false" + striped shows a static (non-scrolling) texture', async ({ page }) => {
-    await setup(page, '<wb-progress id="p3" value="75" striped animated="false"></wb-progress>');
-    const bar = page.locator('#p3 .wb-progress__bar');
+    await setup(page, '<progress id="p3" value="75" striped animated="false"></progress>');
+    const bar = page.locator('#p3 .x-progress__bar');
     const animationName = await bar.evaluate((el) => getComputedStyle(el).animationName);
     expect(animationName).toBe('none');
   });
 
   test('animated (default) + striped scrolls the texture', async ({ page }) => {
-    await setup(page, '<wb-progress id="p4" value="75" striped></wb-progress>');
-    const bar = page.locator('#p4 .wb-progress__bar');
+    await setup(page, '<progress id="p4" value="75" striped></progress>');
+    const bar = page.locator('#p4 .x-progress__bar');
     const animationName = await bar.evaluate((el) => getComputedStyle(el).animationName);
-    expect(animationName).toBe('wb-progress-stripes');
+    expect(animationName).toBe('x-progress-stripes');
   });
 
   test('variant color (e.g. success) does not erase the striped texture', async ({ page }) => {
-    await setup(page, '<wb-progress id="p5" value="60" striped variant="success"></wb-progress>');
-    const bar = page.locator('#p5 .wb-progress__bar');
+    await setup(page, '<progress id="p5" value="60" striped variant="success"></progress>');
+    const bar = page.locator('#p5 .x-progress__bar');
     const bg = await bar.evaluate((el) => getComputedStyle(el).backgroundImage);
     expect(bg).not.toBe('none');
   });

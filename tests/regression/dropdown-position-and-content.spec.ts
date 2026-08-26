@@ -30,7 +30,7 @@ async function ready(page) {
 test.describe('demos/site/overlays.html: dropdowns actually work', () => {
   test('every dropdown menu has real, visible items when opened (not an empty sliver)', async ({ page }) => {
     await ready(page);
-    const dropdowns = page.locator('wb-dropdown');
+    const dropdowns = page.locator('[x-dropdown]');
     const count = await dropdowns.count();
     expect(count).toBeGreaterThanOrEqual(6);
 
@@ -43,8 +43,8 @@ test.describe('demos/site/overlays.html: dropdowns actually work', () => {
       } else {
         await dd.click();
       }
-      const menu = dd.locator('.wb-dropdown__menu');
-      const items = menu.locator('.wb-dropdown__item');
+      const menu = dd.locator('.x-dropdown__menu');
+      const items = menu.locator('.x-dropdown__item');
       await expect(items.first(), `dropdown #${i} menu should have real items, not be empty`).toBeVisible({ timeout: 5000 });
       const itemCount = await items.count();
       expect(itemCount, `dropdown #${i} should have multiple menu items`).toBeGreaterThanOrEqual(2);
@@ -58,7 +58,7 @@ test.describe('demos/site/overlays.html: dropdowns actually work', () => {
 
   test('bottom-start/bottom-end/top-start/top-end each position the menu distinctly', async ({ page }) => {
     await ready(page);
-    const positioned = page.locator('wb-dropdown[position]');
+    const positioned = page.locator('[x-dropdown][position]');
     const count = await positioned.count();
     expect(count).toBeGreaterThanOrEqual(4);
 
@@ -68,7 +68,7 @@ test.describe('demos/site/overlays.html: dropdowns actually work', () => {
       const pos = await dd.getAttribute('position');
       await dd.scrollIntoViewIfNeeded();
       await dd.click();
-      const menu = dd.locator('.wb-dropdown__menu');
+      const menu = dd.locator('.x-dropdown__menu');
       await expect(menu).toBeVisible();
       const ddBox = await dd.boundingBox();
       const menuBox = await menu.boundingBox();

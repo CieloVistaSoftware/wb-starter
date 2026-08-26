@@ -17,9 +17,9 @@ appended children (they're silently not rendered).
 <div x-file></div>
 ```
 
-<wb-demo>
+<div x-demo>
 <div x-file></div>
-</wb-demo>
+</div>
 
 ## Properties
 
@@ -30,7 +30,7 @@ None — `file()` takes no configurable attributes.
 | Class | Applies to | When |
 |---|---|---|
 | `<div x-file>` | the host element | always |
-| `wb-file__input` | the generated `<input type="file">` | always |
+| `x-file__input` | the generated `<input type="file">` | always |
 
 ## Events
 

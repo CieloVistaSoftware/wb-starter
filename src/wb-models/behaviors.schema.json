@@ -174,7 +174,7 @@
     "categories": {
       "buttons": [
         {
-          "name": "wb-btn",
+          "name": "x-btn",
           "type": "modifier",
           "category": "buttons",
           "description": "Button styling and variants",
@@ -262,7 +262,7 @@
           "src": "src/wb-viewmodels/semantics/radio.js"
         },
         {
-          "name": "wb-switch",
+          "name": "x-switch",
           "type": "element",
           "category": "selection",
           "description": "Toggle switch",
@@ -276,7 +276,7 @@
           "src": "src/wb-viewmodels/semantics/select.js"
         },
         {
-          "name": "wb-rating",
+          "name": "x-rating",
           "type": "element",
           "category": "selection",
           "description": "Star rating component",
@@ -304,22 +304,22 @@
           "description": "Alert behavior with variants"
         },
         {
-          "name": "wb-alert",
+          "name": "x-alert",
           "type": "element",
           "description": "Alert/notification component"
         },
         {
-          "name": "wb-badge",
+          "name": "x-badge",
           "type": "element",
           "description": "Badge component"
         },
         {
-          "name": "wb-progress",
+          "name": "x-progress",
           "type": "element",
           "description": "Progress bar"
         },
         {
-          "name": "wb-spinner",
+          "name": "x-spinner",
           "type": "element",
           "description": "Loading spinner"
         },
@@ -331,12 +331,12 @@
       ],
       "overlays": [
         {
-          "name": "wb-modal",
+          "name": "x-modal",
           "type": "element",
           "description": "Modal dialog"
         },
         {
-          "name": "wb-drawer",
+          "name": "x-drawer",
           "type": "element",
           "description": "Slide-out drawer"
         },
@@ -368,12 +368,12 @@
       ],
       "navigation": [
         {
-          "name": "wb-tabs",
+          "name": "x-tabs",
           "type": "element",
           "description": "Tab navigation"
         },
         {
-          "name": "wb-accordion",
+          "name": "x-accordion",
           "type": "element",
           "description": "Collapsible accordion"
         },
@@ -395,12 +395,12 @@
       ],
       "data": [
         {
-          "name": "wb-avatar",
+          "name": "x-avatar",
           "type": "element",
           "description": "User avatar"
         },
         {
-          "name": "wb-skeleton",
+          "name": "x-skeleton",
           "type": "element",
           "description": "Loading skeleton"
         },
@@ -427,7 +427,7 @@
           "description": "Image gallery"
         },
         {
-          "name": "wb-audio",
+          "name": "x-audio",
           "type": "element",
           "description": "Audio player"
         },
@@ -576,7 +576,7 @@
           "description": "Dark mode toggle"
         },
         {
-          "name": "wb-themecontrol",
+          "name": "x-themecontrol",
           "type": "element",
           "description": "Theme selector"
         },

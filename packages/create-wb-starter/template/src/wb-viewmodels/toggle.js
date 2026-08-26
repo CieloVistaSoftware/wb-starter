@@ -16,7 +16,7 @@ export function toggle(element, options = {}) {
     ...options
   };
 
-  // #448: no classList.add('wb-toggle') -- no CSS selector anywhere depends
+  // #448: no classList.add('x-toggle') -- no CSS selector anywhere depends
   // on the bare class.
   element.style.cursor = 'pointer';
   element.style.userSelect = 'none';
@@ -96,7 +96,7 @@ export function toggle(element, options = {}) {
   };
 
   return () => {
-    element.classList.remove('wb-toggle', ...classes);
+    element.classList.remove('x-toggle', ...classes);
     element.style.background = '';
     element.style.color = '';
     element.style.borderColor = '';

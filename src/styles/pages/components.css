@@ -36,9 +36,9 @@
    for this page's OWN section headings only (`<h3>Basic Cards</h3>` etc.,
    direct children of `.component-section`). A descendant selector also
    matched a component's own internal heading nested several levels deep
-   (e.g. `<wb-card><header><div><h3 class="wb-card__title">`), and used to
+   (e.g. `<article><header><div><h3 class="x-card__title">`), and used to
    win there too since `.component-section h3` (0,1,1) outranks
-   `.wb-card__title` (0,1,0) -- invisible while card.js still set the title's
+   `.x-card__title` (0,1,0) -- invisible while card.js still set the title's
    margin/font-size inline (always beats any class), but a real regression
    once that inline style was migrated to card.css alone (Law 9, #370). */
 .component-section > h2 {
@@ -71,24 +71,24 @@
   }
 
   /* #390: .component-section already gives its content 1rem of horizontal
-     breathing room (its own padding, above) -- wb-demo's own 1rem
+     breathing room (its own padding, above) -- x-demo's own 1rem
      horizontal padding (Standard §13, demo.css) then stacked ON TOP of
      that, pushing the code panel ~2rem from the section edge instead of
      the intended ~1rem. Standard §13 is already satisfied by the section's
-     padding here, so drop wb-demo's redundant horizontal half; keep its
+     padding here, so drop x-demo's redundant horizontal half; keep its
      vertical padding (spacing above/below the grid+code stack is still
      needed regardless of the ancestor). Scoped to this page's card-styled
-     mobile sections only -- wb-demo elsewhere (standalone demo pages, docs
+     mobile sections only -- x-demo elsewhere (standalone demo pages, docs
      markdown with no padded ancestor) keeps its own full 1rem, still the
      only source of breathing room there. */
-  .component-section wb-demo {
+  .component-section x-demo {
     padding-left: 0;
     padding-right: 0;
   }
 }
 
 /* Buttons */
-.wb-btn {
+.x-btn {
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -105,17 +105,17 @@
   color: white;
 }
 
-.wb-btn:hover {
+.x-btn:hover {
   opacity: 0.9;
   transform: translateY(-1px);
 }
 
-.wb-btn--secondary {
+.x-btn--secondary {
   background: var(--bg-tertiary);
   color: var(--text-primary);
 }
 
-.wb-btn--ghost {
+.x-btn--ghost {
   background: transparent;
   color: var(--text-secondary);
   border: 1px solid var(--border-color);

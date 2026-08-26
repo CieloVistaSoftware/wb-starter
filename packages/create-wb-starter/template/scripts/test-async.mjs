@@ -3,17 +3,24 @@
  * 
  * Two modes:
  *   SUITE — full or filtered runs (--project, --grep, no args)
- *     - Locked via data/test.lock (one at a time)
+ *     - Locked via ~/.wb-starter/test.lock (one at a time, MACHINE-WIDE)
  *     - Status: data/test-status.json
  *   
  *   SINGLE — specific spec file (*.spec.ts)
- *     - No lock (parallel allowed)
+ *     - Capped by a machine-wide slot semaphore (WB_MAX_PARALLEL_SINGLE)
  *     - Status: data/test-single/{specname}.json
+ *
+ * Concurrency is coordinated OUTSIDE the repo on purpose (#651). The lock used
+ * to live at <ROOT>/data/test.lock, and since every git worktree carries its own
+ * copy of this script, ROOT resolved to that worktree — so each worktree got its
+ * own private lock and N agents each launched a full suite believing they were
+ * the only one. On a 16 GB box that exhausts memory and freezes the desktop.
+ * Status/results files stay per-worktree; they are per-run output, not coordination.
  * 
  * Usage:
  *   npm run test:async                              → suite (all)
  *   npm run test:async -- --project=compliance      → suite (filtered)
- *   npm run test:async -- --grep "wb-card"          → suite (filtered)
+ *   npm run test:async -- --grep "x-card"          → suite (filtered)
  *   npm run test:async -- tests/behaviors/badge.spec.ts  → single (parallel)
  *   npm run test:async -- --stop                          → stop running suite
  * 
@@ -24,33 +31,23 @@
  *   pipes and writes progress to the status file every 2 seconds.
  */
 
-import { spawn, fork } from "child_process";
-import { writeFile, readFile, unlink, mkdir } from "fs/promises";
+import { spawn } from "child_process";
+import { writeFile, readFile, mkdir } from "fs/promises";
 import { join, dirname, basename } from "path";
 import { fileURLToPath } from "url";
-import { existsSync } from "fs";
+import { createGuards, isProcessRunning } from "./lib/test-lock.mjs";
+import { parsePlaywrightSummary } from "./lib/playwright-summary.mjs";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 const ROOT = join(__dirname, "..");
 const DATA_DIR = join(ROOT, "data");
 const SINGLE_DIR = join(DATA_DIR, "test-single");
-const LOCK_FILE = join(DATA_DIR, "test.lock");
 const STATUS_FILE = join(DATA_DIR, "test-status.json");
 const RESULTS_FILE = join(DATA_DIR, "test-results.json");
 
-function isProcessRunning(pid) {
-  try {
-    process.kill(pid, 0);
-    return true;
-  } catch (e) {
-    return false;
-  }
-}
-
-async function removeLock() {
-  try { await unlink(LOCK_FILE); } catch (e) { /* ignore */ }
-}
+// Concurrency is coordinated machine-wide, outside this worktree (#651).
+const guards = createGuards({ root: ROOT });
 
 function detectMode(args) {
   const specFile = args.find((a) => a.endsWith(".spec.ts"));
@@ -124,17 +121,10 @@ if (isStop) {
 // ─── STOP ──────────────────────────────────────────────────────────
 // Reads lock file, kills monitor + Playwright PIDs, updates status.
 async function runStop() {
-  if (!existsSync(LOCK_FILE)) {
-    console.log("⚠️  No tests running (no lock file).");
-    process.exit(0);
-  }
-
-  let lock;
-  try {
-    lock = JSON.parse(await readFile(LOCK_FILE, "utf-8"));
-  } catch (e) {
-    console.log("⚠️  Corrupt lock file. Removing.");
-    await removeLock();
+  const lock = await guards.readLock();
+  if (!lock) {
+    console.log("⚠️  No suite running (no lock, or the lock was unreadable).");
+    await guards.removeLock();
     process.exit(0);
   }
 
@@ -159,7 +149,7 @@ async function runStop() {
     await writeFile(STATUS_FILE, JSON.stringify(status, null, 2));
   } catch (e) { /* ignore */ }
 
-  await removeLock();
+  await guards.removeLock();
 
   if (killed.length > 0) {
     console.log(`🛑 Stopped: ${killed.join(", ")}`);
@@ -174,45 +164,46 @@ async function runLauncher(args) {
   await mkdir(DATA_DIR, { recursive: true });
   await mkdir(SINGLE_DIR, { recursive: true });
 
-  // Clear stale data from previous runs
-  await writeFile(STATUS_FILE, "{}");
-  await writeFile(RESULTS_FILE, "{}");
+  const memoryProblem = guards.checkMemory();
+  if (memoryProblem) {
+    console.error(`❌ ${memoryProblem}`);
+    process.exit(1);
+  }
 
   const { mode, specFile } = detectMode(args);
   const cmdArgs = buildPlaywrightArgs(args);
   const startTime = new Date().toISOString();
 
+  let slotPath = null;
+
   if (mode === "suite") {
-    // Check lock
-    if (existsSync(LOCK_FILE)) {
-      try {
-        const lock = JSON.parse(await readFile(LOCK_FILE, "utf-8"));
-        if (lock.pid && isProcessRunning(lock.pid)) {
-          console.error(`❌ Tests already running (PID: ${lock.pid}, started: ${lock.startedAt})`);
-          console.error(`   Poll data/test-status.json for progress.`);
-          process.exit(1);
-        } else {
-          console.log(`⚠️  Stale lock (PID: ${lock.pid} dead). Clearing.`);
-          await removeLock();
-        }
-      } catch (e) {
-        console.log(`⚠️  Corrupt lock file. Clearing.`);
-        await removeLock();
-      }
+    // Claim the machine-wide lock BEFORE touching any status file, so a
+    // rejected launcher leaves the running suite's state untouched.
+    const denied = await guards.acquireSuiteLock(startTime, `npx ${cmdArgs.join(" ")}`);
+    if (denied) {
+      console.error(`❌ ${denied}`);
+      process.exit(1);
     }
 
-    // Write initial status
+    // Only now that this launcher owns the lock is it safe to clear the
+    // previous run's output — a refused launcher must leave it intact.
+    await writeFile(RESULTS_FILE, "{}");
+
     const status = makeStatus(startTime, cmdArgs, null);
     await writeFile(STATUS_FILE, JSON.stringify(status, null, 2));
-
-    // Write lock (PID will be the monitor process)
-    // We'll update it once monitor starts — for now use placeholder
-    await writeFile(LOCK_FILE, JSON.stringify({
-      pid: null,
-      startedAt: startTime,
-      command: status.command,
-    }, null, 2));
   } else {
+    slotPath = await guards.acquireSingleSlot(specFile);
+    if (!slotPath) {
+      console.error(
+        `❌ All ${guards.maxParallelSingle} single-run slots are busy machine-wide.`
+      );
+      for (const line of await guards.describeSingleSlots()) console.error(line);
+      console.error(
+        `   Wait for one to finish, or raise WB_MAX_PARALLEL_SINGLE if this box can take it.`
+      );
+      process.exit(1);
+    }
+
     const specName = basename(specFile, ".spec.ts");
     const singleStatusFile = join(SINGLE_DIR, `${specName}.json`);
     const status = makeStatus(startTime, cmdArgs, specFile);
@@ -234,17 +225,20 @@ async function runLauncher(args) {
   monitor.unref();
 
   if (mode === "suite") {
-    // Update lock with actual monitor PID
-    await writeFile(LOCK_FILE, JSON.stringify({
-      pid: monitor.pid,
+    // Hand the lock to the detached monitor; this launcher is about to exit.
+    await guards.bindSuiteLock(monitor.pid, {
       startedAt: startTime,
       command: `npx ${cmdArgs.join(" ")}`,
-    }, null, 2));
+    });
 
     console.log(`✅ Suite launched (monitor PID: ${monitor.pid})`);
     console.log(`   Command: npx ${cmdArgs.join(" ")}`);
     console.log(`   Poll data/test-status.json for progress.`);
   } else {
+    // Re-key the slot to the monitor, since this launcher is about to exit and
+    // a slot pointing at a dead PID would be reaped by the next run.
+    await guards.bindSlot(slotPath, monitor.pid, specFile, startTime);
+
     const specName = basename(specFile, ".spec.ts");
     console.log(`✅ Single test launched (monitor PID: ${monitor.pid})`);
     console.log(`   Spec: ${specFile}`);
@@ -280,6 +274,10 @@ async function runMonitor(args) {
     status = makeStatus(startTime, cmdArgs, specFile);
   }
 
+  // The launcher keyed our slot to this PID before exiting; hold onto it so we
+  // can free it the moment Playwright is done (#651).
+  const ownSlot = mode === "single" ? await guards.findOwnSlot() : null;
+
   // Spawn Playwright with pipes so we can read output
   const proc = spawn("npx", cmdArgs, {
     cwd: ROOT,
@@ -292,12 +290,11 @@ async function runMonitor(args) {
 
   // Update lock with Playwright PID for suite mode
   if (mode === "suite") {
-    await writeFile(LOCK_FILE, JSON.stringify({
-      pid: process.pid,
+    await guards.bindSuiteLock(process.pid, {
       playwrightPid: proc.pid,
       startedAt: status.startedAt,
       command: status.command,
-    }, null, 2));
+    });
   }
 
   await writeFile(statusFile, JSON.stringify(status, null, 2));
@@ -409,15 +406,14 @@ async function runMonitor(args) {
     status.output = stdout.length > 50000 ? stdout.slice(-50000) : stdout;
     status.errors = stderr.length > 10000 ? stderr.slice(-10000) : stderr;
 
-    // Final counts — prefer Playwright summary if available, else use our tracked counts
-    const combined = stdout + stderr;
-    const passMatch = combined.match(/(\d+) passed/);
-    const failMatch = combined.match(/(\d+) failed/);
-    const skipMatch = combined.match(/(\d+) skipped/);
-    if (passMatch) status.passed = parseInt(passMatch[1]);
-    if (failMatch) status.failed = parseInt(failMatch[1]);
-    if (skipMatch) status.skipped = parseInt(skipMatch[1]);
-    status.total = status.passed + status.failed + status.skipped;
+    // Final counts (#652) — parsed by scripts/lib/playwright-summary.mjs, which
+    // documents why the previous inline regexes reported unstable numbers.
+    const summary = parsePlaywrightSummary(stdout + stderr);
+    if (summary.passed !== null) status.passed = summary.passed;
+    if (summary.failed !== null) status.failed = summary.failed;
+    if (summary.skipped !== null) status.skipped = summary.skipped;
+    status.flaky = summary.flaky || 0;
+    status.total = status.passed + status.failed + status.skipped + status.flaky;
     status.failures = testResults.filter(t => t.status === "failed").map(t => ({
       file: t.file,
       name: t.name,
@@ -445,7 +441,9 @@ async function runMonitor(args) {
         }, null, 2));
       } catch (e) { /* ignore */ }
 
-      await removeLock();
+      await guards.removeLock();
+    } else {
+      await guards.releaseSlot(ownSlot);
     }
   });
 
@@ -457,6 +455,7 @@ async function runMonitor(args) {
     try {
       await writeFile(statusFile, JSON.stringify(status, null, 2));
     } catch (e) { /* ignore */ }
-    if (mode === "suite") await removeLock();
+    if (mode === "suite") await guards.removeLock();
+    else await guards.releaseSlot(ownSlot);
   });
 }

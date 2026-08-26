@@ -102,7 +102,7 @@ test.describe('Media Path Validation', () => {
 
     htmlFiles.forEach(file => {
       const content = fs.readFileSync(file, 'utf-8');
-      // Match <wb-audio>, <wb-video>, <audio>, <video> with src
+      // Match <audio>, <video>, <audio>, <video> with src
       const mediaPattern = /<(?:wb-)?(?:audio|video)[^>]+src=["']([^"']+)["'][^>]*>/g;
       let match;
 

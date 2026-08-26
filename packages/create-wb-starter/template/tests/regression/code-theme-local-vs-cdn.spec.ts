@@ -5,14 +5,14 @@ import { test, expect } from '@playwright/test';
  * before codecontrol.js takes over, if it's present on the page at all)
  * built a cdnjs.cloudflare.com URL from WHATEVER theme id was saved in
  * localStorage['x-code-theme'] -- but a handful of codecontrol.js's
- * CODE_THEMES entries (e.g. "wb-grayscale-dark") are WB's own local themes,
+ * CODE_THEMES entries (e.g. "x-grayscale-dark") are WB's own local themes,
  * not real highlight.js CDN theme names. Selecting one of those produced a
- * confirmed-live 404 (wb-grayscale-dark.min.css never existed on cdnjs)
+ * confirmed-live 404 (x-grayscale-dark.min.css never existed on cdnjs)
  * instead of the actual local file at src/styles/code-themes/.
  */
-test('saved local code theme (e.g. wb-grayscale-dark) resolves to its local path, not a broken CDN URL', async ({ page }) => {
+test('saved local code theme (e.g. x-grayscale-dark) resolves to its local path, not a broken CDN URL', async ({ page }) => {
   await page.goto('/');
-  await page.evaluate(() => localStorage.setItem('x-code-theme', 'wb-grayscale-dark'));
+  await page.evaluate(() => localStorage.setItem('x-code-theme', 'x-grayscale-dark'));
   await page.setContent(`
     <link rel="stylesheet" href="/src/styles/themes.css">
     <link rel="stylesheet" href="/src/styles/site.css">
@@ -29,7 +29,7 @@ test('saved local code theme (e.g. wb-grayscale-dark) resolves to its local path
   const href = await link.getAttribute('href');
 
   expect(href, 'must not build a broken cdnjs URL for a local-only theme id').not.toContain('cdnjs.cloudflare.com');
-  expect(href, 'must resolve to the real local theme file').toContain('/src/styles/code-themes/wb-grayscale-dark.css');
+  expect(href, 'must resolve to the real local theme file').toContain('/src/styles/code-themes/x-grayscale-dark.css');
 
   // The referenced stylesheet must actually exist -- not just point somewhere
   // plausible-looking.

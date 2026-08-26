@@ -11,8 +11,11 @@
  */
 import { test, expect } from '@playwright/test';
 
-const ORIGIN = 'http://localhost:3000';
-
+// #856: this was `const ORIGIN = ''`, used as the BASE for `new URL(href, ORIGIN)`
+// below. Every docs-card href is relative and the empty string is not a valid
+// absolute URL, so `new URL` threw 'Invalid URL' on the first doc-viewer card
+// and the test died before making a single assertion. Resolve against the
+// page's real origin instead.
 test.describe('docs page links', () => {
   test('every docs-card link resolves to real content, not the SPA fallback shell', async ({ page }) => {
     await page.goto('/?page=docs');
@@ -28,11 +31,12 @@ test.describe('docs page links', () => {
     const isShellFallback = (body: string) =>
       body.trim() === shell || (/data-theme=/.test(body) && /site__loading|new WBSite|WBSite\s*\(/.test(body));
 
+    const origin = new URL(page.url()).origin;
     const broken: string[] = [];
     for (const href of hrefs) {
       // doc-viewer links: the doc itself (?file=) is the resource that must exist
       const target = href.includes('/public/doc-viewer.html')
-        ? new URL(href, ORIGIN).searchParams.get('file') || href
+        ? new URL(href, origin).searchParams.get('file') || href
         : href;
 
       const resp = await page.request.get(target);

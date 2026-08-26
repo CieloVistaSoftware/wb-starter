@@ -4,13 +4,13 @@
   "title": "Input",
   "description": "Text input field with label, helper text, and validation states",
   "schemaFor": "input",
-  "baseClass": "wb-input",
+  "baseClass": "x-input",
   "semanticElement": {
     "tagName": "div",
     "implicitRole": "textbox"
   },
   "compliance": {
-    "baseClass": "wb-input",
+    "baseClass": "x-input",
     "supportLevel": "stable",
     "accessibility": "high"
   },
@@ -71,7 +71,7 @@
         "error"
       ],
       "default": "default",
-      "appliesClass": "wb-input--{{value}}"
+      "appliesClass": "x-input--{{value}}"
     },
     "size": {
       "type": "string",
@@ -82,7 +82,7 @@
         "lg"
       ],
       "default": "md",
-      "appliesClass": "wb-input--{{value}}"
+      "appliesClass": "x-input--{{value}}"
     },
     "disabled": {
       "type": "boolean",
@@ -255,107 +255,107 @@
     }
   },
   "$cssAPI": {
-    "--wb-input-height": {
+    "--x-input-height": {
       "default": "2.5rem",
       "description": "Input height"
     },
-    "--wb-input-padding-x": {
+    "--x-input-padding-x": {
       "default": "0.75rem",
       "description": "Horizontal padding"
     },
-    "--wb-input-padding-y": {
+    "--x-input-padding-y": {
       "default": "0.5rem",
       "description": "Vertical padding"
     },
-    "--wb-input-radius": {
+    "--x-input-radius": {
       "default": "4px",
       "description": "Border radius"
     },
-    "--wb-input-font-size": {
+    "--x-input-font-size": {
       "default": "0.875rem",
       "description": "Font size"
     },
-    "--wb-input-bg": {
+    "--x-input-bg": {
       "default": "var(--bg-surface, #ffffff)",
       "description": "Background color"
     },
-    "--wb-input-border": {
+    "--x-input-border": {
       "default": "1px solid var(--border-color, #d1d5db)",
       "description": "Border style"
     },
-    "--wb-input-color": {
+    "--x-input-color": {
       "default": "var(--text-primary, #1a1a1a)",
       "description": "Text color"
     },
-    "--wb-input-placeholder-color": {
+    "--x-input-placeholder-color": {
       "default": "var(--text-tertiary, #9ca3af)",
       "description": "Placeholder color"
     },
-    "--wb-input-focus-border": {
+    "--x-input-focus-border": {
       "default": "var(--primary, #6366f1)",
       "description": "Focus border color"
     },
-    "--wb-input-focus-ring": {
+    "--x-input-focus-ring": {
       "default": "0 0 0 3px rgba(99, 102, 241, 0.2)",
       "description": "Focus ring shadow"
     },
-    "--wb-input-disabled-bg": {
+    "--x-input-disabled-bg": {
       "default": "var(--bg-disabled, #f3f4f6)",
       "description": "Disabled background"
     },
-    "--wb-input-disabled-color": {
+    "--x-input-disabled-color": {
       "default": "var(--text-disabled, #9ca3af)",
       "description": "Disabled text color"
     },
-    "--wb-input-success-border": {
+    "--x-input-success-border": {
       "default": "var(--success, #22c55e)",
       "description": "Success state border color"
     },
-    "--wb-input-success-focus-ring": {
+    "--x-input-success-focus-ring": {
       "default": "0 0 0 3px rgba(34, 197, 94, 0.2)",
       "description": "Success state focus ring"
     },
-    "--wb-input-error-border": {
+    "--x-input-error-border": {
       "default": "var(--error, #ef4444)",
       "description": "Error state border color"
     },
-    "--wb-input-error-focus-ring": {
+    "--x-input-error-focus-ring": {
       "default": "0 0 0 3px rgba(239, 68, 68, 0.2)",
       "description": "Error state focus ring"
     },
-    "--wb-input-label-size": {
+    "--x-input-label-size": {
       "default": "0.875rem",
       "description": "Label font size"
     },
-    "--wb-input-label-weight": {
+    "--x-input-label-weight": {
       "default": "500",
       "description": "Label font weight"
     },
-    "--wb-input-label-color": {
+    "--x-input-label-color": {
       "default": "var(--text-primary, #1a1a1a)",
       "description": "Label color"
     },
-    "--wb-input-label-gap": {
+    "--x-input-label-gap": {
       "default": "0.5rem",
       "description": "Gap between label and input"
     },
-    "--wb-input-helper-size": {
+    "--x-input-helper-size": {
       "default": "0.75rem",
       "description": "Helper text font size"
     },
-    "--wb-input-helper-color": {
+    "--x-input-helper-color": {
       "default": "var(--text-secondary, #6b7280)",
       "description": "Helper text color"
     },
-    "--wb-input-error-color": {
+    "--x-input-error-color": {
       "default": "var(--error, #ef4444)",
       "description": "Error text color"
     },
-    "--wb-input-icon-size": {
+    "--x-input-icon-size": {
       "default": "1rem",
       "description": "Icon size"
     },
-    "--wb-input-icon-color": {
+    "--x-input-icon-color": {
       "default": "var(--text-secondary, #6b7280)",
       "description": "Icon color"
     }
@@ -390,20 +390,20 @@
   },
   "test": {
     "setup": [
-      "<wb-input>Basic input content</wb-input>",
-      "<wb-input input-type=\"text\">inputType=text</wb-input>",
-      "<wb-input input-type=\"email\">inputType=email</wb-input>",
-      "<wb-input input-type=\"password\">inputType=password</wb-input>",
-      "<wb-input variant=\"default\">variant=default</wb-input>",
-      "<wb-input variant=\"success\">variant=success</wb-input>",
-      "<wb-input variant=\"error\">variant=error</wb-input>",
-      "<wb-input size=\"sm\">size=sm</wb-input>"
+      "<div x-input>Basic input content</div>",
+      "<div x-input input-type=\"text\">inputType=text</div>",
+      "<div x-input input-type=\"email\">inputType=email</div>",
+      "<div x-input input-type=\"password\">inputType=password</div>",
+      "<div x-input variant=\"default\">variant=default</div>",
+      "<div x-input variant=\"success\">variant=success</div>",
+      "<div x-input variant=\"error\">variant=error</div>",
+      "<div x-input size=\"sm\">size=sm</div>"
     ],
     "functional": {
       "interactions": [
         {
           "name": "Input Typing",
-          "setup": "<wb-input label='Type here'></wb-input>",
+          "setup": "<div x-input label='Type here'></div>",
           "action": "type",
           "value": "Hello",
           "expect": {
@@ -413,7 +413,7 @@
         },
         {
           "name": "Clear Button",
-          "setup": "<wb-input label='Clear' value='Text' clearable></wb-input>",
+          "setup": "<div x-input label='Clear' value='Text' clearable></div>",
           "steps": [
             {
               "action": "click",
@@ -428,15 +428,15 @@
       "visual": [
         {
           "name": "Error State",
-          "setup": "<wb-input label='Error' error='Invalid' variant='error'></wb-input>",
+          "setup": "<div x-input label='Error' error='Invalid' variant='error'></div>",
           "expect": {
             "textContains": "Invalid",
-            "hasClass": "wb-input--error"
+            "hasClass": "x-input--error"
           }
         },
         {
           "name": "Helper Text",
-          "setup": "<wb-input label='Helper' helper='Help text'></wb-input>",
+          "setup": "<div x-input label='Helper' helper='Help text'></div>",
           "expect": {
             "textContains": "Help text"
           }
@@ -445,7 +445,7 @@
       "disabled": [
         {
           "name": "Disabled Input",
-          "setup": "<wb-input label='Disabled' disabled></wb-input>",
+          "setup": "<div x-input label='Disabled' disabled></div>",
           "action": "click",
           "expect": {
             "attribute": {
@@ -457,7 +457,7 @@
       "focus": [
         {
           "name": "Focus Input",
-          "setup": "<wb-input label='Focus'></wb-input>",
+          "setup": "<div x-input label='Focus'></div>",
           "action": "click",
           "expect": {
             "focused": "input"
@@ -522,9 +522,9 @@
     },
     "site": {
       "page": "forms",
-      "tag": "wb-input",
+      "tag": "x-input",
       "renders": true,
-      "baseClass": "wb-input",
+      "baseClass": "x-input",
       "minInstances": 10,
       "checkText": [
         "Text Input",
@@ -535,8 +535,8 @@
         "••••••••"
       ],
       "checkClasses": [
-        "wb-input--success",
-        "wb-input--sm"
+        "x-input--success",
+        "x-input--sm"
       ],
       "checkAttributes": [
         "label",

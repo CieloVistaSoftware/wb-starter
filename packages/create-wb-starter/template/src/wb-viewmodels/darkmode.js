@@ -3,7 +3,7 @@
  * -----------------------------------------------------------------------------
  * Applies dark mode immediately when injected.
  * 
- * Custom Tag: <wb-darkmode>
+ * Custom Tag: <div x-darkmode>
  * -----------------------------------------------------------------------------
  */
 export function darkmode(element, options = {}) {
@@ -31,7 +31,7 @@ export function darkmode(element, options = {}) {
 
   // Apply dark theme immediately
   targetEl.setAttribute('data-theme', config.theme);
-  // #448: no classList.add('wb-darkmode') -- no CSS selector anywhere
+  // #448: no classList.add('x-darkmode') -- no CSS selector anywhere
   // depends on the bare class.
 
   // If element is a button, make it toggle
@@ -57,7 +57,7 @@ export function darkmode(element, options = {}) {
   // Mark as ready
   // Cleanup - restore original theme
   return () => {
-    element.classList.remove('wb-darkmode');
+    element.classList.remove('x-darkmode');
     if (originalTheme) {
       targetEl.setAttribute('data-theme', originalTheme);
     } else {

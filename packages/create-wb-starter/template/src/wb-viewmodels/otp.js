@@ -4,7 +4,7 @@ export function otp(element, options = {}) {
     length: parseInt(options.length || element.getAttribute('length') || '6'),
     ...options
   };
-  element.classList.add('wb-otp');
+  element.classList.add('x-otp');
   const inputs = [];
   element.innerHTML = '';
   for (let i = 0; i < config.length; i++) {
@@ -12,7 +12,7 @@ export function otp(element, options = {}) {
     input.type = 'text';
     input.inputMode = 'numeric';
     input.maxLength = 1;
-    input.className = 'wb-otp__input';
+    input.className = 'x-otp__input';
     input.addEventListener('input', (e) => {
       if (input.value.length === 1 && i < config.length - 1) {
         inputs[i + 1].focus();
@@ -32,7 +32,7 @@ export function otp(element, options = {}) {
   }
   element.wbOtp = { getValue };
   return () => {
-    element.classList.remove('wb-otp');
+    element.classList.remove('x-otp');
     element.innerHTML = '';
   };
 }

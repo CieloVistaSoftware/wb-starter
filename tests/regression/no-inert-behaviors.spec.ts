@@ -13,7 +13,7 @@
  *
  *   x-demo    (#770)  registered, builds nothing — demo() reads _rawSource from
  *                     connectedCallback, which a plain <div> never fires
- *   x-glow            .wb-glow exists in CSS, no attribute routes to it
+ *   x-glow            .x-glow exists in CSS, no attribute routes to it
  *   x-input   (#754)  variants and sizes declared and inert
  *   x-button  (#746)  actively SUPPRESSED the button behavior for 3 releases
  *   #772              260 selectors matched only the wb-* tag, so attribute

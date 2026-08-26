@@ -4,13 +4,13 @@
   "title": "Skeleton",
   "description": "Loading skeleton placeholder with shimmer animation",
   "schemaFor": "skeleton",
-  "baseClass": "wb-skeleton",
+  "baseClass": "x-skeleton",
   "semanticElement": {
     "tagName": "div",
     "implicitRole": "status"
   },
   "compliance": {
-    "baseClass": "wb-skeleton",
+    "baseClass": "x-skeleton",
     "supportLevel": "stable",
     "accessibility": "high"
   },
@@ -24,7 +24,7 @@
         "card"
       ],
       "default": "text",
-      "appliesClass": "wb-skeleton--{{value}}"
+      "appliesClass": "x-skeleton--{{value}}"
     },
     "lines": {
       "type": "number",
@@ -88,23 +88,23 @@
     }
   },
   "$cssAPI": {
-    "--wb-skeleton-bg": {
+    "--x-skeleton-bg": {
       "default": "linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%)",
       "description": "Shimmer gradient"
     },
-    "--wb-skeleton-radius": {
+    "--x-skeleton-radius": {
       "default": "4px",
       "description": "Border radius"
     },
-    "--wb-skeleton-line-height": {
+    "--x-skeleton-line-height": {
       "default": "1em",
       "description": "Text line height"
     },
-    "--wb-skeleton-line-gap": {
+    "--x-skeleton-line-gap": {
       "default": "0.5em",
       "description": "Gap between lines"
     },
-    "--wb-skeleton-animation": {
+    "--x-skeleton-animation": {
       "default": "shimmer 1.5s infinite",
       "description": "Animation"
     }
@@ -115,14 +115,14 @@
   },
   "test": {
     "setup": [
-      "<wb-skeleton>Basic skeleton content</wb-skeleton>",
-      "<wb-skeleton variant=\"text\">variant=text</wb-skeleton>",
-      "<wb-skeleton variant=\"circle\">variant=circle</wb-skeleton>",
-      "<wb-skeleton variant=\"rect\">variant=rect</wb-skeleton>",
-      "<wb-skeleton animated>with animated</wb-skeleton>",
-      "<wb-skeleton lines=\"1\">lines=1</wb-skeleton>",
-      "<wb-skeleton width=\"100%\">width=\"100%\"</wb-skeleton>",
-      "<wb-skeleton height=\"1em\">height=\"1em\"</wb-skeleton>"
+      "<div x-skeleton>Basic skeleton content</div>",
+      "<div x-skeleton variant=\"text\">variant=text</div>",
+      "<div x-skeleton variant=\"circle\">variant=circle</div>",
+      "<div x-skeleton variant=\"rect\">variant=rect</div>",
+      "<div x-skeleton animated>with animated</div>",
+      "<div x-skeleton lines=\"1\">lines=1</div>",
+      "<div x-skeleton width=\"100%\">width=\"100%\"</div>",
+      "<div x-skeleton height=\"1em\">height=\"1em\"</div>"
     ],
     "matrix": {
       "combinations": [
@@ -147,13 +147,13 @@
     },
     "site": {
       "page": "feedback",
-      "tag": "wb-skeleton",
+      "tag": "x-skeleton",
       "renders": true,
-      "baseClass": "wb-skeleton",
+      "baseClass": "x-skeleton",
       "minInstances": 5,
       "checkText": [],
       "checkClasses": [
-        "wb-skeleton--circle"
+        "x-skeleton--circle"
       ],
       "checkAttributes": [
         "variant"

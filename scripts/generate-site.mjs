@@ -8,7 +8,7 @@
  *   {
  *     "title": "WB Component Library",
  *     "outputDir": "demos/site",          // where HTML goes
- *     "defaults": "wb-page-defaults",     // $extends for all pages
+ *     "defaults": "x-page-defaults",     // $extends for all pages
  *     "generateIndex": true,              // create index.html with links
  *     "pages": [
  *       {
@@ -51,6 +51,31 @@ function loadJSON(path) {
   return JSON.parse(readFileSync(resolve(path), 'utf-8'));
 }
 
+/**
+ * A stand-in value for a required prop that declares no `default`.
+ *
+ * Prose is the right answer for most props -- `message="Sample message"`
+ * reads as a label and renders as one. It is the WRONG answer for a prop
+ * whose value gets FETCHED: `image="Sample image"` is not a broken link, it
+ * is a string that was never meant to reach the network, and the behavior
+ * dutifully requests it and throws. That accounted for 38 of the 67 uncaught
+ * errors on demos/site/cards.html (#838) -- enough on its own to blow the
+ * "fewer than 10 errors" budget in site-generation.spec.ts.
+ *
+ * Local, not picsum.photos: a demo page that needs the network to render
+ * without errors cannot be asserted on offline or in CI.
+ */
+const URL_VALUED_PROPS = /^(image|background|src|avatar|poster|thumbnail|cover)$/i;
+const PLACEHOLDER_IMAGE = '/images/dachshund-puppy-image-960x540.jpg';
+const PLACEHOLDER_LOGO = '/images/wb.png';
+
+function samplePropValue(propName, propDef) {
+  if (propDef && propDef.default) return propDef.default;
+  if (/^logo$/i.test(propName)) return PLACEHOLDER_LOGO;
+  if (URL_VALUED_PROPS.test(propName)) return PLACEHOLDER_IMAGE;
+  return `Sample ${propName}`;
+}
+
 function camelToKebab(str) {
   return str.replace(/([a-z])([A-Z])/g, '$1-$2').toLowerCase();
 }
@@ -86,12 +111,12 @@ function findSchema(name) {
 // without it, a custom element with no CSS default size (most of them; only
 // a handful of behaviors have a dedicated .css file) collapses to
 // offsetHeight:0 and is completely invisible despite being correctly
-// "enhanced" (confirmed live: <wb-draggable axis="both"></wb-draggable>,
+// "enhanced" (confirmed live: <div x-draggable axis="both"></div>,
 // zero height, on the deployed interactive.html page).
 //
 // The whole POINT of these demos is showing what each attribute combo does
 // (#268/#279 and onward) -- a single static placeholder shared by every
-// instance defeats that just as badly as being invisible: four <wb-dialog>
+// instance defeats that just as badly as being invisible: four <dialog>
 // triggers with title="Basic Dialog"/"Large"/"No Close"/"Centered" all just
 // said "Dialog", indistinguishable at a glance (confirmed live).
 //
@@ -102,8 +127,8 @@ function findSchema(name) {
 // third, word-for-word repetition of information already on screen twice.
 // Per docs/architecture/standards/ATTRIBUTE-NAMING-STANDARD.md ("Content
 // (Children)"), body content should be genuinely distinct copy, not an
-// echo of the attributes -- e.g. `<wb-alert variant="warning"><strong>
-// Warning:</strong> This is the alert content.</wb-alert>`. A generator
+// echo of the attributes -- e.g. `<div x-alert variant="warning"><strong>
+// Warning:</strong> This is the alert content.</div>`. A generator
 // can't hand-write per-component prose, but it can stay non-empty (still
 // solving the original 0-height problem) without parroting the attrs.
 function placeholderChildren(schema) {
@@ -141,6 +166,40 @@ const DEMO_EXTRA_ATTRS = {
 // (#490), generic placeholder for everything else (#413), plus any
 // functional extra attrs (which never override the showcased attrs and
 // never appear in the label).
+
+/**
+ * element -> behavior, read from src/core/tag-map.js's nativeMap. Read rather
+ * than duplicated: a copied table drifts from the registry silently, and this
+ * decides whether a demo carries its behavior attribute at all.
+ */
+const NATIVE_MAP = (() => {
+  try {
+    // This module imports NAMED exports from fs/path -- there is no `fs`
+    // namespace here. Calling fs.readFileSync threw, the catch swallowed it,
+    // NATIVE_MAP came back {} and every lookup failed, so EVERY demo got an
+    // attribute -- including <button x-button>, the redundant form that can
+    // suppress the behavior (#746). A silent catch turned a typo into wrong
+    // output rather than a crash.
+    const src = readFileSync(resolve('src/core/tag-map.js'), 'utf8');
+    const i = src.indexOf('nativeMap');
+    const o = src.indexOf('{', i);
+    let d = 0, e = -1;
+    for (let k = o; k < src.length; k++) {
+      if (src[k] === '{') d++;
+      else if (src[k] === '}' && --d === 0) { e = k + 1; break; }
+    }
+    return new Function(`return ${src.slice(o, e)}`)();
+  } catch (err) {
+    // Fail loudly. An empty map does not degrade gracefully -- it changes
+    // what every generated demo says.
+    throw new Error(`could not read nativeMap from tag-map.js: ${err.message}`);
+  }
+})();
+
+if (!Object.keys(NATIVE_MAP).length) {
+  throw new Error('nativeMap parsed empty — refusing to generate demos that would all carry a redundant attribute');
+}
+
 function buildDemo(schema, tag, attrs) {
   const isTrigger = TRIGGER_COMPONENTS.has(schema.schemaFor);
   // Skip the values generatePageHtml's attr emitter drops (false/null/
@@ -151,12 +210,43 @@ function buildDemo(schema, tag, attrs) {
     .map(([k, v]) => `${k}=${v}`).join(', ');
   const children = (isTrigger && label) ? label : placeholderChildren(schema);
   const extras = DEMO_EXTRA_ATTRS[schema.schemaFor] || {};
-  return { tag, attrs: { ...extras, ...attrs }, children };
+
+  // Components are gone, but "no component tag" does not mean "always a div".
+  // There are two kinds of behavior and the demo must show the right one:
+  //
+  //   decorates a semantic element  ->  <button variant="primary">
+  //   new capability                ->  <div x-ripple>
+  //
+  // Emitting `<div x-button …>` for the first kind teaches readers to reach
+  // for a div where <button> is the answer -- losing the implicit role, the
+  // keyboard behavior and the point of a semantic-first framework. Worse,
+  // for an element that auto-injects, the redundant attribute can suppress
+  // the behavior outright (#746), so the demo must omit it.
+  const declared = schema.semanticElement;
+  const semanticTag = typeof declared === 'string' ? declared : declared?.tagName;
+  // div/span are neutral hosts, not semantic elements -- naming one means the
+  // behavior is new capability, not decoration.
+  const isSemantic = semanticTag && semanticTag !== 'div' && semanticTag !== 'span';
+
+  // Naming a semantic element is NOT permission to drop the attribute. The
+  // attribute may only be omitted when that element auto-injects THIS
+  // behavior. cardimage declares semanticElement `article`, but nativeMap
+  // maps article -> the `article` behavior, so `<article src=…>` injects a
+  // plain article and the card never renders -- ~30 generated sections came
+  // out as bare placeholder text (#844).
+  //
+  // nativeMap is the authority for what a bare tag actually becomes.
+  const autoInjectsThis = isSemantic && NATIVE_MAP[semanticTag] === schema.schemaFor;
+
+  const host = isSemantic ? semanticTag : tag;
+  const behavior = autoInjectsThis ? {} : { [`x-${schema.schemaFor}`]: true };
+
+  return { tag: host, attrs: { ...behavior, ...extras, ...attrs }, children };
 }
 
 function generateComponentSections(schema) {
   const sections = [];
-  const tag = `wb-${schema.schemaFor}`;
+  const tag = 'div';   // was `wb-${schema.schemaFor}` -- components removed
   const props = schema.properties || {};
 
   // Matrix combinations
@@ -188,7 +278,7 @@ function generateComponentSections(schema) {
       const attrs = { [attrName]: val };
       for (const [rk, rv] of Object.entries(props)) {
         if (rv.required && rk !== propName) {
-          attrs[camelToKebab(rk)] = rv.default || `Sample ${rk}`;
+          attrs[camelToKebab(rk)] = samplePropValue(rk, rv);
         }
       }
       return buildDemo(schema, tag, attrs);
@@ -220,7 +310,7 @@ function generateComponentSections(schema) {
       const attrs = { [camelToKebab(propName)]: true };
       for (const [rk, rv] of Object.entries(props)) {
         if (rv.required && rk !== propName) {
-          attrs[camelToKebab(rk)] = rv.default || `Sample ${rk}`;
+          attrs[camelToKebab(rk)] = samplePropValue(rk, rv);
         }
       }
       return buildDemo(schema, tag, attrs);
@@ -247,7 +337,7 @@ function generateComponentSections(schema) {
       if (propDef.default !== undefined && propDef.default !== '' && propDef.default !== false) {
         defaultAttrs[camelToKebab(propName)] = propDef.default;
       } else if (propDef.required) {
-        defaultAttrs[camelToKebab(propName)] = propDef.default || `Sample ${propName}`;
+        defaultAttrs[camelToKebab(propName)] = samplePropValue(propName, propDef);
       }
     }
     if (Object.keys(defaultAttrs).length > 0) {
@@ -526,9 +616,9 @@ function generatePageHtml(pageSchema) {
         // §2 "one code sample per rendered element (strict 1:1)": a section
         // sweeping several differently-configured instances of the same
         // component (enum variants, boolean toggles, matrix combinations)
-        // must not bundle them all under one shared <wb-demo> code sample --
+        // must not bundle them all under one shared <div x-demo> code sample --
         // that's the exact "permutation matrix" anti-pattern §2 forbids. One
-        // <wb-demo> per instance instead, each with its own code sample.
+        // <div x-demo> per instance instead, each with its own code sample.
         // Fixes #538. Stacked vertically, NOT grid-wrapped side by side --
         // §3 "demos are vertical, never side-by-side" forbids placing two
         // rendered demos on the same row. An earlier version of this fix
@@ -537,16 +627,16 @@ function generatePageHtml(pageSchema) {
         // layout failures (mismatched natural widths forced into shared grid
         // tracks). Fixes #563.
         for (const demo of demos) {
-          lines.push('  <wb-demo columns="1">');
+          lines.push('  <div x-demo columns="1">');
           pushDemoTag(demo, '    ');
-          lines.push('  </wb-demo>');
+          lines.push('  </div>');
         }
       } else {
-        lines.push(`  <wb-demo columns="${section.columns || 3}">`);
+        lines.push(`  <div x-demo columns="${section.columns || 3}">`);
         for (const demo of demos) {
           pushDemoTag(demo, '    ');
         }
-        lines.push('  </wb-demo>');
+        lines.push('  </div>');
       }
       lines.push('  </section>');
       lines.push('');

@@ -5,7 +5,7 @@ test.describe('Figure Component', () => {
     await page.goto('index.html');
     await page.waitForFunction(() => (window as any).WB && (window as any).WB.behaviors);
     
-    await page.evaluate(() => {
+    await page.evaluate(async () => {
       const el = document.createElement('figure');
       el.id = 'test-figure-caption';
       el.setAttribute('x-figure', '');
@@ -14,7 +14,7 @@ test.describe('Figure Component', () => {
       img.src = 'https://picsum.photos/200';
       el.appendChild(img);
       document.body.appendChild(el);
-      (window as any).WB.scan();
+      await (window as any).WB.scan();
     });
     
     const figure = page.locator('#test-figure-caption');

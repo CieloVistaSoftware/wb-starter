@@ -6,10 +6,10 @@ File/document download card with file type icons.
 
 | Property | Value |
 |----------|-------|
-| Custom Tag | `<wb-cardfile>` |
+| Custom Tag | `<div x-cardfile>` |
 | Behavior | `cardfile` |
 | Semantic | `<article>` + `<figure>` |
-| Root CSS Class | `wb-card wb-card-file` |
+| Root CSS Class | `x-card x-card-file` |
 | Composes | card structure + CSS (no base class) |
 
 ## Properties
@@ -25,50 +25,50 @@ Supports every [card property](./card.md) — that shared structure and CSS are 
 | `downloadable` | boolean | `true` | Show download button |
 | `href` | string | `""` | Download URL |
 
-Wrapped in `<wb-demo>`, so the live component renders below with its source shown underneath:
+Wrapped in `<div x-demo>`, so the live component renders below with its source shown underneath:
 
-<wb-demo>
-<wb-cardfile
+<div x-demo>
+<div x-cardfile
   filename="Annual Report.pdf"
   type="pdf"
   size="2.5 MB">
-</wb-cardfile>
-</wb-demo>
+</div>
+</div>
 
 ## Usage
 
 ### Basic File Card
 
 ```html
-<wb-cardfile
+<div x-cardfile
   filename="Annual Report.pdf"
   type="pdf"
   size="2.5 MB">
-</wb-cardfile>
+</div>
 ```
 
 ### Downloadable File
 
 ```html
-<wb-cardfile
+<div x-cardfile
   filename="Project Assets.zip"
   type="zip"
   size="15.3 MB"
   date="Jan 10, 2024"
   href="/downloads/assets.zip"
   downloadable>
-</wb-cardfile>
+</div>
 ```
 
 ### Image File
 
 ```html
-<wb-cardfile
+<div x-cardfile
   filename="hero-banner.jpg"
   type="image"
   size="850 KB"
   date="Dec 5, 2023">
-</wb-cardfile>
+</div>
 ```
 
 ## File Type Icons

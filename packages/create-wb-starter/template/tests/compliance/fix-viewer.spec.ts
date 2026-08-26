@@ -52,7 +52,22 @@ test.describe('Fix Viewer Compliance', () => {
       // Wait for the mocked fixes to fetch + render before any assertion — under
       // full-suite load the cards weren't painted yet, so assertions raced and
       // flaked (passed in isolation, failed under load).
-      await page.waitForSelector('.fix-card', { timeout: 15000 });
+      //
+      // #541: this page's client-side work (WB.init({autoInject:true}) full-page
+      // scan, x-fix-card custom-element upgrade, composeCard DOM/style build,
+      // mdhtml processing) genuinely takes 4-13s even in isolation with minimal
+      // worker contention (measured locally: 8 workers running only these 14
+      // tests). Under the full 79-file compliance project's 8 parallel workers
+      // (playwright.config.ts), that already-thin margin was repeatedly blown
+      // through — 14/14 failures, all TimeoutError on this exact selector.
+      // 15000ms was also SELF-IMPOSED: every test in this file has a 30000ms
+      // budget (playwright.config.ts `timeout: 30000`), and fix-viewer-grouping.spec.ts's
+      // equivalent wait has no override at all, so it already gets the full 30s.
+      // Raising this to 30000 doesn't invent new slack — it just stops leaving
+      // half of this test's own already-approved budget unused before failing.
+      // See the `integration` project's 60s bump in playwright.config.ts for the
+      // same class of documented, evidence-backed contention allowance.
+      await page.waitForSelector('.fix-card', { timeout: 30000 });
     });
 
     test('should load and display fixes', async ({ page }) => {
@@ -142,9 +157,12 @@ test.describe('Fix Viewer Compliance', () => {
     test('should not have any cards taller than 500px', async ({ page }) => {
       // Load the real page with real data
       await page.goto('/public/fix-viewer.html');
-      
-      // Wait for fixes to load
-      await page.waitForSelector('.fix-card', { timeout: 5000 });
+
+      // Wait for fixes to load. #541: this loads the REAL (unmocked)
+      // /data/fixes.json — 13 cards, i.e. more render work than the mocked
+      // tests above, yet this had the *tighter* 5000ms budget. Matched to the
+      // same 30000ms rationale as the mocked beforeEach above.
+      await page.waitForSelector('.fix-card', { timeout: 30000 });
 
       // Evaluate heights of all cards
       const tallCards = await page.evaluate(() => {
@@ -225,7 +243,8 @@ test.describe('Fix Viewer Compliance', () => {
 
     test('should not have duplicate IDs', async ({ page }) => {
       await page.goto('/public/fix-viewer.html');
-      await page.waitForSelector('.fix-card', { timeout: 5000 });
+      // #541: see beforeEach above for the 30000ms rationale.
+      await page.waitForSelector('.fix-card', { timeout: 30000 });
 
       const duplicateIds = await page.evaluate(() => {
         const allIds = Array.from(document.querySelectorAll('[id]')).map(el => el.id);
@@ -247,7 +266,8 @@ test.describe('Fix Viewer Compliance', () => {
 
     test('should ensure code tags contain only text and are not too long', async ({ page }) => {
       await page.goto('/public/fix-viewer.html');
-      await page.waitForSelector('.fix-card', { timeout: 5000 });
+      // #541: see beforeEach above for the 30000ms rationale.
+      await page.waitForSelector('.fix-card', { timeout: 30000 });
 
       const codeIssues = await page.evaluate(() => {
         // Only check code tags that are NOT inside fix-code-block (syntax highlighted blocks are expected to have child spans)

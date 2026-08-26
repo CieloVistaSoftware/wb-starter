@@ -14,27 +14,12 @@
       "description": "Read by vimeo(). Bare attribute.",
       "default": false
     },
-    "data-autoplay": {
-      "type": "boolean",
-      "description": "Read by vimeo(). Bare attribute.",
-      "default": false
-    },
     "muted": {
       "type": "boolean",
       "description": "Read by vimeo(). Bare attribute.",
       "default": false
     },
-    "data-muted": {
-      "type": "boolean",
-      "description": "Read by vimeo(). Bare attribute.",
-      "default": false
-    },
     "loop": {
-      "type": "boolean",
-      "description": "Read by vimeo(). Bare attribute.",
-      "default": false
-    },
-    "data-loop": {
       "type": "boolean",
       "description": "Read by vimeo(). Bare attribute.",
       "default": false

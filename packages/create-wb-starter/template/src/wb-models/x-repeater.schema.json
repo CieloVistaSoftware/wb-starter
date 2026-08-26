@@ -1,0 +1,25 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "x-repeater.schema.json",
+  "title": "Repeater",
+  "description": "Repeat content based on data.",
+  "schemaFor": "repeater",
+  "compliance": {
+    "baseClass": "x-repeater",
+    "supportLevel": "stable",
+    "accessibility": "high"
+  },
+  "properties": {},
+  "$view": [],
+  "$methods": {},
+  "$cssAPI": {},
+  "test": {
+    "setup": [
+      "<div x-repeater>Basic repeater content</div>",
+      "<div x-repeater>Test permutation 2</div>",
+      "<div x-repeater>Test permutation 3</div>",
+      "<div x-repeater>Test permutation 4</div>",
+      "<div x-repeater>Test permutation 5</div>"
+    ]
+  }
+}

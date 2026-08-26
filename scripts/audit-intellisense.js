@@ -37,8 +37,8 @@ async function audit() {
             const schema = JSON.parse(fs.readFileSync(schemaPath, 'utf8'));
             const behaviorName = schema.behavior || file.replace('.schema.json', '');
             
-            // Expected Tag Name: "wb-" + behaviorName (e.g., wb-card)
-            // Handle camelCase behavior names for tags: cardProduct -> wb-card-product
+            // Expected Tag Name: "wb-" + behaviorName (e.g., x-card)
+            // Handle camelCase behavior names for tags: cardProduct -> x-card-product
             const tagName = `wb-${behaviorName.replace(/([a-z0-9])([A-Z])/g, '$1-$2').toLowerCase()}`;
             
             // Expected Behavior Attribute: "x-" + behaviorName (e.g., x-card) or "x-as-" + behaviorName

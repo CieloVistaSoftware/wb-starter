@@ -2,12 +2,16 @@
 
 Behavior applied with x-fullscreen.
 
-Apply `x-fullscreen` to any element.
+## Type — new capability
 
-## Usage
+`x-fullscreen` adds behavior that no HTML element implies. Nothing about a tag says "ripple" or "tooltip", so this is always opted into by attribute, on whatever element you already chose.
+
+### How to write it
 
 ```html
-<button variant="secondary" x-fullscreen>⛶ Fullscreen</button>
+<button variant="secondary" x-fullscreen>
+  x-fullscreen · variant: secondary
+</button>
 ```
 
 ## Attributes

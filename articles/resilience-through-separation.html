@@ -147,7 +147,7 @@
   <div class="article-container">
     <div class="content-card">
       <header>
-        <wb-badge label="Architecture Series" variant="gradient" style="margin-bottom: 1rem; display: inline-block;"></wb-badge>
+        <span x-badge label="Architecture Series" variant="gradient" style="margin-bottom: 1rem; display: inline-block;"></span>
         <h1>Resilience Through Separation</h1>
         <div class="meta">
             January 10, 2026
@@ -163,11 +163,11 @@
 
         <p>Yet to the average programmer this code looks fine.</p>
 
-        <wb-mdhtml src="resilience-through-separation-code.md"></wb-mdhtml>
+        <div x-mdhtml src="resilience-through-separation-code.md"></div>
 
         <p>Is an OrderService a payment? Is a payment an order service? No they have different concerns.</p>
 
-        <wb-mdhtml src="resilience-through-separation-decoupled.md"></wb-mdhtml>
+        <div x-mdhtml src="resilience-through-separation-decoupled.md"></div>
     
         <p><a href="https://en.wikipedia.org/wiki/SOLID" target="_blank" rel="noopener noreferrer" style="color: var(--primary); text-decoration: none; border-bottom: 1px dashed var(--primary);">SOLID</a> gave our team language to resist that decay. Composition gave them the discipline to contain it.</p>
 

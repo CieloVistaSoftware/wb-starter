@@ -25,7 +25,7 @@ test.describe('Tooltip Button Showcase', () => {
   test('shows tooltip on hover (top)', async ({ page }) => {
     await page.goto('http://localhost:3000/demos/site/feedback.html');
     await hoverEnhancedButton(page, '#btn-top');
-    const tooltip = page.locator('.wb-tooltip');
+    const tooltip = page.locator('.x-tooltip');
     await expect(tooltip).toBeVisible();
     await expect(tooltip).toHaveText('Tooltip text');
   });
@@ -33,7 +33,7 @@ test.describe('Tooltip Button Showcase', () => {
   test('shows tooltip on hover (bottom)', async ({ page }) => {
     await page.goto('http://localhost:3000/demos/site/feedback.html');
     await hoverEnhancedButton(page, '#btn-bottom');
-    const tooltip = page.locator('.wb-tooltip');
+    const tooltip = page.locator('.x-tooltip');
     await expect(tooltip).toBeVisible();
     await expect(tooltip).toHaveText('Tooltip text');
   });
@@ -41,7 +41,7 @@ test.describe('Tooltip Button Showcase', () => {
   test('shows tooltip on hover (left)', async ({ page }) => {
     await page.goto('http://localhost:3000/demos/site/feedback.html');
     await hoverEnhancedButton(page, '#btn-left');
-    const tooltip = page.locator('.wb-tooltip');
+    const tooltip = page.locator('.x-tooltip');
     await expect(tooltip).toBeVisible();
     await expect(tooltip).toHaveText('Tooltip text');
   });
@@ -49,7 +49,7 @@ test.describe('Tooltip Button Showcase', () => {
   test('shows tooltip on hover (right)', async ({ page }) => {
     await page.goto('http://localhost:3000/demos/site/feedback.html');
     await hoverEnhancedButton(page, '#btn-right');
-    const tooltip = page.locator('.wb-tooltip');
+    const tooltip = page.locator('.x-tooltip');
     await expect(tooltip).toBeVisible();
     await expect(tooltip).toHaveText('Tooltip text');
   });

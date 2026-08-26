@@ -8,8 +8,8 @@
       "declarations": [
         {
           "kind": "custom-element-definition",
-          "name": "wb-card",
-          "tagName": "wb-card",
+          "name": "x-card",
+          "tagName": "x-card",
           "customElement": true,
           "description": "Base card component. IS-A article, HAS-A header, main, footer.",
           "attributes": [
@@ -85,9 +85,9 @@
       "exports": [
         {
           "kind": "custom-element-definition",
-          "name": "wb-card",
+          "name": "x-card",
           "declaration": {
-            "name": "wb-card",
+            "name": "x-card",
             "module": "src/wb-viewmodels/card.js"
           }
         }
@@ -99,8 +99,8 @@
       "declarations": [
         {
           "kind": "custom-element-definition",
-          "name": "wb-cardimage",
-          "tagName": "wb-cardimage",
+          "name": "x-cardimage",
+          "tagName": "x-cardimage",
           "customElement": true,
           "description": "Card with featured image and optional title/subtitle",
           "attributes": [
@@ -203,9 +203,9 @@
       "exports": [
         {
           "kind": "custom-element-definition",
-          "name": "wb-cardimage",
+          "name": "x-cardimage",
           "declaration": {
-            "name": "wb-cardimage",
+            "name": "x-cardimage",
             "module": "src/wb-viewmodels/cardimage.js"
           }
         }
@@ -217,8 +217,8 @@
       "declarations": [
         {
           "kind": "custom-element-definition",
-          "name": "wb-cardvideo",
-          "tagName": "wb-cardvideo",
+          "name": "x-cardvideo",
+          "tagName": "x-cardvideo",
           "customElement": true,
           "description": "Card with embedded video player",
           "attributes": [
@@ -314,9 +314,9 @@
       "exports": [
         {
           "kind": "custom-element-definition",
-          "name": "wb-cardvideo",
+          "name": "x-cardvideo",
           "declaration": {
-            "name": "wb-cardvideo",
+            "name": "x-cardvideo",
             "module": "src/wb-viewmodels/cardvideo.js"
           }
         }
@@ -328,8 +328,8 @@
       "declarations": [
         {
           "kind": "custom-element-definition",
-          "name": "wb-cardprofile",
-          "tagName": "wb-cardprofile",
+          "name": "x-cardprofile",
+          "tagName": "x-cardprofile",
           "customElement": true,
           "description": "Simple profile card. INHERITS from card.base (IS-A card), CONTAINS profile elements (HAS-A avatar, name, role, bio, cover).",
           "attributes": [
@@ -411,9 +411,9 @@
       "exports": [
         {
           "kind": "custom-element-definition",
-          "name": "wb-cardprofile",
+          "name": "x-cardprofile",
           "declaration": {
-            "name": "wb-cardprofile",
+            "name": "x-cardprofile",
             "module": "src/wb-viewmodels/cardprofile.js"
           }
         }
@@ -425,8 +425,8 @@
       "declarations": [
         {
           "kind": "custom-element-definition",
-          "name": "wb-cardpricing",
-          "tagName": "wb-cardpricing",
+          "name": "x-cardpricing",
+          "tagName": "x-cardpricing",
           "customElement": true,
           "description": "Pricing tier card with plan name, price, features list, and CTA",
           "attributes": [
@@ -514,9 +514,9 @@
       "exports": [
         {
           "kind": "custom-element-definition",
-          "name": "wb-cardpricing",
+          "name": "x-cardpricing",
           "declaration": {
-            "name": "wb-cardpricing",
+            "name": "x-cardpricing",
             "module": "src/wb-viewmodels/cardpricing.js"
           }
         }
@@ -528,8 +528,8 @@
       "declarations": [
         {
           "kind": "custom-element-definition",
-          "name": "wb-cardproduct",
-          "tagName": "wb-cardproduct",
+          "name": "x-cardproduct",
+          "tagName": "x-cardproduct",
           "customElement": true,
           "description": "E-commerce product card with image, price, rating, and CTA",
           "attributes": [
@@ -629,9 +629,9 @@
       "exports": [
         {
           "kind": "custom-element-definition",
-          "name": "wb-cardproduct",
+          "name": "x-cardproduct",
           "declaration": {
-            "name": "wb-cardproduct",
+            "name": "x-cardproduct",
             "module": "src/wb-viewmodels/cardproduct.js"
           }
         }
@@ -643,8 +643,8 @@
       "declarations": [
         {
           "kind": "custom-element-definition",
-          "name": "wb-cardstats",
-          "tagName": "wb-cardstats",
+          "name": "x-cardstats",
+          "tagName": "x-cardstats",
           "customElement": true,
           "description": "Statistics display card with value, label, icon, and trend indicator",
           "attributes": [
@@ -714,9 +714,9 @@
       "exports": [
         {
           "kind": "custom-element-definition",
-          "name": "wb-cardstats",
+          "name": "x-cardstats",
           "declaration": {
-            "name": "wb-cardstats",
+            "name": "x-cardstats",
             "module": "src/wb-viewmodels/cardstats.js"
           }
         }
@@ -728,8 +728,8 @@
       "declarations": [
         {
           "kind": "custom-element-definition",
-          "name": "wb-cardtestimonial",
-          "tagName": "wb-cardtestimonial",
+          "name": "x-cardtestimonial",
+          "tagName": "x-cardtestimonial",
           "customElement": true,
           "description": "Customer testimonial/review card with quote, author, avatar, and rating",
           "attributes": [
@@ -800,9 +800,9 @@
       "exports": [
         {
           "kind": "custom-element-definition",
-          "name": "wb-cardtestimonial",
+          "name": "x-cardtestimonial",
           "declaration": {
-            "name": "wb-cardtestimonial",
+            "name": "x-cardtestimonial",
             "module": "src/wb-viewmodels/cardtestimonial.js"
           }
         }
@@ -814,8 +814,8 @@
       "declarations": [
         {
           "kind": "custom-element-definition",
-          "name": "wb-cardhero",
-          "tagName": "wb-cardhero",
+          "name": "x-cardhero",
+          "tagName": "x-cardhero",
           "customElement": true,
           "description": "Hero banner with background image, title, subtitle, and optional CTA",
           "attributes": [
@@ -936,9 +936,9 @@
       "exports": [
         {
           "kind": "custom-element-definition",
-          "name": "wb-cardhero",
+          "name": "x-cardhero",
           "declaration": {
-            "name": "wb-cardhero",
+            "name": "x-cardhero",
             "module": "src/wb-viewmodels/cardhero.js"
           }
         }
@@ -950,8 +950,8 @@
       "declarations": [
         {
           "kind": "custom-element-definition",
-          "name": "wb-cardfile",
-          "tagName": "wb-cardfile",
+          "name": "x-cardfile",
+          "tagName": "x-cardfile",
           "customElement": true,
           "description": "File display card with icon, name, size, and download",
           "attributes": [
@@ -1023,9 +1023,9 @@
       "exports": [
         {
           "kind": "custom-element-definition",
-          "name": "wb-cardfile",
+          "name": "x-cardfile",
           "declaration": {
-            "name": "wb-cardfile",
+            "name": "x-cardfile",
             "module": "src/wb-viewmodels/cardfile.js"
           }
         }
@@ -1037,8 +1037,8 @@
       "declarations": [
         {
           "kind": "custom-element-definition",
-          "name": "wb-cardnotification",
-          "tagName": "wb-cardnotification",
+          "name": "x-cardnotification",
+          "tagName": "x-cardnotification",
           "customElement": true,
           "description": "Dismissible notification card with type-based styling",
           "attributes": [
@@ -1103,9 +1103,9 @@
       "exports": [
         {
           "kind": "custom-element-definition",
-          "name": "wb-cardnotification",
+          "name": "x-cardnotification",
           "declaration": {
-            "name": "wb-cardnotification",
+            "name": "x-cardnotification",
             "module": "src/wb-viewmodels/cardnotification.js"
           }
         }
@@ -1117,8 +1117,8 @@
       "declarations": [
         {
           "kind": "custom-element-definition",
-          "name": "wb-cardportfolio",
-          "tagName": "wb-cardportfolio",
+          "name": "x-cardportfolio",
+          "tagName": "x-cardportfolio",
           "customElement": true,
           "description": "Full-featured professional portfolio card with skills, experience, projects, and more",
           "attributes": [
@@ -1337,9 +1337,9 @@
       "exports": [
         {
           "kind": "custom-element-definition",
-          "name": "wb-cardportfolio",
+          "name": "x-cardportfolio",
           "declaration": {
-            "name": "wb-cardportfolio",
+            "name": "x-cardportfolio",
             "module": "src/wb-viewmodels/cardportfolio.js"
           }
         }
@@ -1351,8 +1351,8 @@
       "declarations": [
         {
           "kind": "custom-element-definition",
-          "name": "wb-cardlink",
-          "tagName": "wb-cardlink",
+          "name": "x-cardlink",
+          "tagName": "x-cardlink",
           "customElement": true,
           "description": "Clickable card that navigates to a URL",
           "attributes": [
@@ -1423,9 +1423,9 @@
       "exports": [
         {
           "kind": "custom-element-definition",
-          "name": "wb-cardlink",
+          "name": "x-cardlink",
           "declaration": {
-            "name": "wb-cardlink",
+            "name": "x-cardlink",
             "module": "src/wb-viewmodels/cardlink.js"
           }
         }
@@ -1437,8 +1437,8 @@
       "declarations": [
         {
           "kind": "custom-element-definition",
-          "name": "wb-cardhorizontal",
-          "tagName": "wb-cardhorizontal",
+          "name": "x-cardhorizontal",
+          "tagName": "x-cardhorizontal",
           "customElement": true,
           "description": "Card with horizontal layout - image on side, content on other",
           "attributes": [
@@ -1511,9 +1511,9 @@
       "exports": [
         {
           "kind": "custom-element-definition",
-          "name": "wb-cardhorizontal",
+          "name": "x-cardhorizontal",
           "declaration": {
-            "name": "wb-cardhorizontal",
+            "name": "x-cardhorizontal",
             "module": "src/wb-viewmodels/cardhorizontal.js"
           }
         }
@@ -1525,8 +1525,8 @@
       "declarations": [
         {
           "kind": "custom-element-definition",
-          "name": "wb-cardoverlay",
-          "tagName": "wb-cardoverlay",
+          "name": "x-cardoverlay",
+          "tagName": "x-cardoverlay",
           "customElement": true,
           "description": "Card with text overlaid on background image",
           "attributes": [
@@ -1607,9 +1607,9 @@
       "exports": [
         {
           "kind": "custom-element-definition",
-          "name": "wb-cardoverlay",
+          "name": "x-cardoverlay",
           "declaration": {
-            "name": "wb-cardoverlay",
+            "name": "x-cardoverlay",
             "module": "src/wb-viewmodels/cardoverlay.js"
           }
         }
@@ -1621,8 +1621,8 @@
       "declarations": [
         {
           "kind": "custom-element-definition",
-          "name": "wb-cardbutton",
-          "tagName": "wb-cardbutton",
+          "name": "x-cardbutton",
+          "tagName": "x-cardbutton",
           "customElement": true,
           "description": "Card with action buttons in footer",
           "attributes": [
@@ -1692,9 +1692,9 @@
       "exports": [
         {
           "kind": "custom-element-definition",
-          "name": "wb-cardbutton",
+          "name": "x-cardbutton",
           "declaration": {
-            "name": "wb-cardbutton",
+            "name": "x-cardbutton",
             "module": "src/wb-viewmodels/cardbutton.js"
           }
         }
@@ -1706,8 +1706,8 @@
       "declarations": [
         {
           "kind": "custom-element-definition",
-          "name": "wb-cardexpandable",
-          "tagName": "wb-cardexpandable",
+          "name": "x-cardexpandable",
+          "tagName": "x-cardexpandable",
           "customElement": true,
           "description": "Card with collapsible/expandable content section",
           "attributes": [
@@ -1765,9 +1765,9 @@
       "exports": [
         {
           "kind": "custom-element-definition",
-          "name": "wb-cardexpandable",
+          "name": "x-cardexpandable",
           "declaration": {
-            "name": "wb-cardexpandable",
+            "name": "x-cardexpandable",
             "module": "src/wb-viewmodels/cardexpandable.js"
           }
         }
@@ -1779,8 +1779,8 @@
       "declarations": [
         {
           "kind": "custom-element-definition",
-          "name": "wb-cardminimizable",
-          "tagName": "wb-cardminimizable",
+          "name": "x-cardminimizable",
+          "tagName": "x-cardminimizable",
           "customElement": true,
           "description": "Card with minimize/expand toggle button in header",
           "attributes": [
@@ -1830,9 +1830,9 @@
       "exports": [
         {
           "kind": "custom-element-definition",
-          "name": "wb-cardminimizable",
+          "name": "x-cardminimizable",
           "declaration": {
-            "name": "wb-cardminimizable",
+            "name": "x-cardminimizable",
             "module": "src/wb-viewmodels/cardminimizable.js"
           }
         }
@@ -1844,8 +1844,8 @@
       "declarations": [
         {
           "kind": "custom-element-definition",
-          "name": "wb-carddraggable",
-          "tagName": "wb-carddraggable",
+          "name": "x-carddraggable",
+          "tagName": "x-carddraggable",
           "customElement": true,
           "description": "Card that can be dragged around the page",
           "attributes": [
@@ -1911,9 +1911,9 @@
       "exports": [
         {
           "kind": "custom-element-definition",
-          "name": "wb-carddraggable",
+          "name": "x-carddraggable",
           "declaration": {
-            "name": "wb-carddraggable",
+            "name": "x-carddraggable",
             "module": "src/wb-viewmodels/carddraggable.js"
           }
         }
@@ -1925,8 +1925,8 @@
       "declarations": [
         {
           "kind": "custom-element-definition",
-          "name": "wb-spinner",
-          "tagName": "wb-spinner",
+          "name": "x-spinner",
+          "tagName": "x-spinner",
           "customElement": true,
           "description": "Loading spinner indicator",
           "attributes": [
@@ -1978,9 +1978,9 @@
       "exports": [
         {
           "kind": "custom-element-definition",
-          "name": "wb-spinner",
+          "name": "x-spinner",
           "declaration": {
-            "name": "wb-spinner",
+            "name": "x-spinner",
             "module": "src/wb-viewmodels/spinner.js"
           }
         }
@@ -1992,8 +1992,8 @@
       "declarations": [
         {
           "kind": "custom-element-definition",
-          "name": "wb-avatar",
-          "tagName": "wb-avatar",
+          "name": "x-avatar",
+          "tagName": "x-avatar",
           "customElement": true,
           "description": "User avatar with image, initials fallback, and status indicator",
           "attributes": [
@@ -2072,9 +2072,9 @@
       "exports": [
         {
           "kind": "custom-element-definition",
-          "name": "wb-avatar",
+          "name": "x-avatar",
           "declaration": {
-            "name": "wb-avatar",
+            "name": "x-avatar",
             "module": "src/wb-viewmodels/avatar.js"
           }
         }
@@ -2086,8 +2086,8 @@
       "declarations": [
         {
           "kind": "custom-element-definition",
-          "name": "wb-badge",
-          "tagName": "wb-badge",
+          "name": "x-badge",
+          "tagName": "x-badge",
           "customElement": true,
           "description": "Small label/tag for status indicators, counts, or categories",
           "attributes": [
@@ -2162,9 +2162,9 @@
       "exports": [
         {
           "kind": "custom-element-definition",
-          "name": "wb-badge",
+          "name": "x-badge",
           "declaration": {
-            "name": "wb-badge",
+            "name": "x-badge",
             "module": "src/wb-viewmodels/badge.js"
           }
         }
@@ -2176,8 +2176,8 @@
       "declarations": [
         {
           "kind": "custom-element-definition",
-          "name": "wb-alert",
-          "tagName": "wb-alert",
+          "name": "x-alert",
+          "tagName": "x-alert",
           "customElement": true,
           "description": "Alert component for displaying messages with severity levels",
           "attributes": [
@@ -2235,9 +2235,9 @@
       "exports": [
         {
           "kind": "custom-element-definition",
-          "name": "wb-alert",
+          "name": "x-alert",
           "declaration": {
-            "name": "wb-alert",
+            "name": "x-alert",
             "module": "src/wb-viewmodels/alert.js"
           }
         }
@@ -2249,8 +2249,8 @@
       "declarations": [
         {
           "kind": "custom-element-definition",
-          "name": "wb-progress",
-          "tagName": "wb-progress",
+          "name": "x-progress",
+          "tagName": "x-progress",
           "customElement": true,
           "description": "Progress bar with determinate and indeterminate states",
           "attributes": [
@@ -2341,9 +2341,9 @@
       "exports": [
         {
           "kind": "custom-element-definition",
-          "name": "wb-progress",
+          "name": "x-progress",
           "declaration": {
-            "name": "wb-progress",
+            "name": "x-progress",
             "module": "src/wb-viewmodels/progress.js"
           }
         }
@@ -2355,8 +2355,8 @@
       "declarations": [
         {
           "kind": "custom-element-definition",
-          "name": "wb-rating",
-          "tagName": "wb-rating",
+          "name": "x-rating",
+          "tagName": "x-rating",
           "customElement": true,
           "description": "Star rating component for displaying or collecting ratings",
           "attributes": [
@@ -2432,9 +2432,9 @@
       "exports": [
         {
           "kind": "custom-element-definition",
-          "name": "wb-rating",
+          "name": "x-rating",
           "declaration": {
-            "name": "wb-rating",
+            "name": "x-rating",
             "module": "src/wb-viewmodels/rating.js"
           }
         }
@@ -2446,8 +2446,8 @@
       "declarations": [
         {
           "kind": "custom-element-definition",
-          "name": "wb-tabs",
-          "tagName": "wb-tabs",
+          "name": "x-tabs",
+          "tagName": "x-tabs",
           "customElement": true,
           "description": "Tab navigation for switching between content panels",
           "attributes": [
@@ -2507,9 +2507,9 @@
       "exports": [
         {
           "kind": "custom-element-definition",
-          "name": "wb-tabs",
+          "name": "x-tabs",
           "declaration": {
-            "name": "wb-tabs",
+            "name": "x-tabs",
             "module": "src/wb-viewmodels/tabs.js"
           }
         }
@@ -2521,8 +2521,8 @@
       "declarations": [
         {
           "kind": "custom-element-definition",
-          "name": "wb-switch",
-          "tagName": "wb-switch",
+          "name": "x-switch",
+          "tagName": "x-switch",
           "customElement": true,
           "description": "Toggle switch for boolean settings",
           "attributes": [
@@ -2603,9 +2603,9 @@
       "exports": [
         {
           "kind": "custom-element-definition",
-          "name": "wb-switch",
+          "name": "x-switch",
           "declaration": {
-            "name": "wb-switch",
+            "name": "x-switch",
             "module": "src/wb-viewmodels/switch.js"
           }
         }
@@ -2617,8 +2617,8 @@
       "declarations": [
         {
           "kind": "custom-element-definition",
-          "name": "wb-grid",
-          "tagName": "wb-grid",
+          "name": "x-grid",
+          "tagName": "x-grid",
           "customElement": true,
           "description": "wb-starter grid component",
           "attributes": [],
@@ -2637,9 +2637,9 @@
       "exports": [
         {
           "kind": "custom-element-definition",
-          "name": "wb-grid",
+          "name": "x-grid",
           "declaration": {
-            "name": "wb-grid",
+            "name": "x-grid",
             "module": "src/wb-viewmodels/grid.js"
           }
         }
@@ -2651,8 +2651,8 @@
       "declarations": [
         {
           "kind": "custom-element-definition",
-          "name": "wb-flex",
-          "tagName": "wb-flex",
+          "name": "x-flex",
+          "tagName": "x-flex",
           "customElement": true,
           "description": "wb-starter flex component",
           "attributes": [],
@@ -2671,9 +2671,9 @@
       "exports": [
         {
           "kind": "custom-element-definition",
-          "name": "wb-flex",
+          "name": "x-flex",
           "declaration": {
-            "name": "wb-flex",
+            "name": "x-flex",
             "module": "src/wb-viewmodels/flex.js"
           }
         }
@@ -2685,8 +2685,8 @@
       "declarations": [
         {
           "kind": "custom-element-definition",
-          "name": "wb-stack",
-          "tagName": "wb-stack",
+          "name": "x-stack",
+          "tagName": "x-stack",
           "customElement": true,
           "description": "wb-starter stack component",
           "attributes": [],
@@ -2705,9 +2705,9 @@
       "exports": [
         {
           "kind": "custom-element-definition",
-          "name": "wb-stack",
+          "name": "x-stack",
           "declaration": {
-            "name": "wb-stack",
+            "name": "x-stack",
             "module": "src/wb-viewmodels/stack.js"
           }
         }
@@ -2719,8 +2719,8 @@
       "declarations": [
         {
           "kind": "custom-element-definition",
-          "name": "wb-cluster",
-          "tagName": "wb-cluster",
+          "name": "x-cluster",
+          "tagName": "x-cluster",
           "customElement": true,
           "description": "wb-starter cluster component",
           "attributes": [],
@@ -2739,9 +2739,9 @@
       "exports": [
         {
           "kind": "custom-element-definition",
-          "name": "wb-cluster",
+          "name": "x-cluster",
           "declaration": {
-            "name": "wb-cluster",
+            "name": "x-cluster",
             "module": "src/wb-viewmodels/cluster.js"
           }
         }
@@ -2753,8 +2753,8 @@
       "declarations": [
         {
           "kind": "custom-element-definition",
-          "name": "wb-container",
-          "tagName": "wb-container",
+          "name": "x-container",
+          "tagName": "x-container",
           "customElement": true,
           "description": "wb-starter container component",
           "attributes": [],
@@ -2773,9 +2773,9 @@
       "exports": [
         {
           "kind": "custom-element-definition",
-          "name": "wb-container",
+          "name": "x-container",
           "declaration": {
-            "name": "wb-container",
+            "name": "x-container",
             "module": "src/wb-viewmodels/container.js"
           }
         }
@@ -2787,8 +2787,8 @@
       "declarations": [
         {
           "kind": "custom-element-definition",
-          "name": "wb-sidebar",
-          "tagName": "wb-sidebar",
+          "name": "x-sidebar",
+          "tagName": "x-sidebar",
           "customElement": true,
           "description": "wb-starter sidebarlayout component",
           "attributes": [],
@@ -2807,9 +2807,9 @@
       "exports": [
         {
           "kind": "custom-element-definition",
-          "name": "wb-sidebar",
+          "name": "x-sidebar",
           "declaration": {
-            "name": "wb-sidebar",
+            "name": "x-sidebar",
             "module": "src/wb-viewmodels/sidebarlayout.js"
           }
         }
@@ -2821,8 +2821,8 @@
       "declarations": [
         {
           "kind": "custom-element-definition",
-          "name": "wb-center",
-          "tagName": "wb-center",
+          "name": "x-center",
+          "tagName": "x-center",
           "customElement": true,
           "description": "wb-starter center component",
           "attributes": [],
@@ -2841,9 +2841,9 @@
       "exports": [
         {
           "kind": "custom-element-definition",
-          "name": "wb-center",
+          "name": "x-center",
           "declaration": {
-            "name": "wb-center",
+            "name": "x-center",
             "module": "src/wb-viewmodels/center.js"
           }
         }
@@ -2855,8 +2855,8 @@
       "declarations": [
         {
           "kind": "custom-element-definition",
-          "name": "wb-cover",
-          "tagName": "wb-cover",
+          "name": "x-cover",
+          "tagName": "x-cover",
           "customElement": true,
           "description": "wb-starter cover component",
           "attributes": [],
@@ -2875,9 +2875,9 @@
       "exports": [
         {
           "kind": "custom-element-definition",
-          "name": "wb-cover",
+          "name": "x-cover",
           "declaration": {
-            "name": "wb-cover",
+            "name": "x-cover",
             "module": "src/wb-viewmodels/cover.js"
           }
         }
@@ -2889,8 +2889,8 @@
       "declarations": [
         {
           "kind": "custom-element-definition",
-          "name": "wb-masonry",
-          "tagName": "wb-masonry",
+          "name": "x-masonry",
+          "tagName": "x-masonry",
           "customElement": true,
           "description": "wb-starter masonry component",
           "attributes": [],
@@ -2909,9 +2909,9 @@
       "exports": [
         {
           "kind": "custom-element-definition",
-          "name": "wb-masonry",
+          "name": "x-masonry",
           "declaration": {
-            "name": "wb-masonry",
+            "name": "x-masonry",
             "module": "src/wb-viewmodels/masonry.js"
           }
         }
@@ -2923,8 +2923,8 @@
       "declarations": [
         {
           "kind": "custom-element-definition",
-          "name": "wb-switcher",
-          "tagName": "wb-switcher",
+          "name": "x-switcher",
+          "tagName": "x-switcher",
           "customElement": true,
           "description": "wb-starter switcher component",
           "attributes": [],
@@ -2943,9 +2943,9 @@
       "exports": [
         {
           "kind": "custom-element-definition",
-          "name": "wb-switcher",
+          "name": "x-switcher",
           "declaration": {
-            "name": "wb-switcher",
+            "name": "x-switcher",
             "module": "src/wb-viewmodels/switcher.js"
           }
         }
@@ -2957,8 +2957,8 @@
       "declarations": [
         {
           "kind": "custom-element-definition",
-          "name": "wb-reel",
-          "tagName": "wb-reel",
+          "name": "x-reel",
+          "tagName": "x-reel",
           "customElement": true,
           "description": "wb-starter reel component",
           "attributes": [],
@@ -2977,9 +2977,9 @@
       "exports": [
         {
           "kind": "custom-element-definition",
-          "name": "wb-reel",
+          "name": "x-reel",
           "declaration": {
-            "name": "wb-reel",
+            "name": "x-reel",
             "module": "src/wb-viewmodels/reel.js"
           }
         }
@@ -2991,8 +2991,8 @@
       "declarations": [
         {
           "kind": "custom-element-definition",
-          "name": "wb-frame",
-          "tagName": "wb-frame",
+          "name": "x-frame",
+          "tagName": "x-frame",
           "customElement": true,
           "description": "wb-starter frame component",
           "attributes": [],
@@ -3011,9 +3011,9 @@
       "exports": [
         {
           "kind": "custom-element-definition",
-          "name": "wb-frame",
+          "name": "x-frame",
           "declaration": {
-            "name": "wb-frame",
+            "name": "x-frame",
             "module": "src/wb-viewmodels/frame.js"
           }
         }
@@ -3025,8 +3025,8 @@
       "declarations": [
         {
           "kind": "custom-element-definition",
-          "name": "wb-sticky",
-          "tagName": "wb-sticky",
+          "name": "x-sticky",
+          "tagName": "x-sticky",
           "customElement": true,
           "description": "Makes element stick to viewport on scroll",
           "attributes": [
@@ -3085,9 +3085,9 @@
       "exports": [
         {
           "kind": "custom-element-definition",
-          "name": "wb-sticky",
+          "name": "x-sticky",
           "declaration": {
-            "name": "wb-sticky",
+            "name": "x-sticky",
             "module": "src/wb-viewmodels/sticky.js"
           }
         }
@@ -3099,8 +3099,8 @@
       "declarations": [
         {
           "kind": "custom-element-definition",
-          "name": "wb-drawer",
-          "tagName": "wb-drawer",
+          "name": "x-drawer",
+          "tagName": "x-drawer",
           "customElement": true,
           "description": "Collapsible sidebar layout with toggle",
           "attributes": [
@@ -3152,9 +3152,9 @@
       "exports": [
         {
           "kind": "custom-element-definition",
-          "name": "wb-drawer",
+          "name": "x-drawer",
           "declaration": {
-            "name": "wb-drawer",
+            "name": "x-drawer",
             "module": "src/wb-viewmodels/drawerLayout.js"
           }
         }
@@ -3166,8 +3166,8 @@
       "declarations": [
         {
           "kind": "custom-element-definition",
-          "name": "wb-icon",
-          "tagName": "wb-icon",
+          "name": "x-icon",
+          "tagName": "x-icon",
           "customElement": true,
           "description": "wb-starter icon component",
           "attributes": [],
@@ -3186,9 +3186,9 @@
       "exports": [
         {
           "kind": "custom-element-definition",
-          "name": "wb-icon",
+          "name": "x-icon",
           "declaration": {
-            "name": "wb-icon",
+            "name": "x-icon",
             "module": "src/wb-viewmodels/icon.js"
           }
         }
@@ -3200,8 +3200,8 @@
       "declarations": [
         {
           "kind": "custom-element-definition",
-          "name": "wb-span",
-          "tagName": "wb-span",
+          "name": "x-span",
+          "tagName": "x-span",
           "customElement": true,
           "description": "A generic inline container for applying utility classes and variants. Useful for traffic lights (window controls), badges, and status indicators.",
           "attributes": [
@@ -3229,9 +3229,9 @@
       "exports": [
         {
           "kind": "custom-element-definition",
-          "name": "wb-span",
+          "name": "x-span",
           "declaration": {
-            "name": "wb-span",
+            "name": "x-span",
             "module": "src/wb-viewmodels/span.js"
           }
         }
@@ -3243,8 +3243,8 @@
       "declarations": [
         {
           "kind": "custom-element-definition",
-          "name": "wb-control",
-          "tagName": "wb-control",
+          "name": "x-control",
+          "tagName": "x-control",
           "customElement": true,
           "description": "wb-starter control component",
           "attributes": [],
@@ -3263,9 +3263,9 @@
       "exports": [
         {
           "kind": "custom-element-definition",
-          "name": "wb-control",
+          "name": "x-control",
           "declaration": {
-            "name": "wb-control",
+            "name": "x-control",
             "module": "src/wb-viewmodels/control.js"
           }
         }
@@ -3277,8 +3277,8 @@
       "declarations": [
         {
           "kind": "custom-element-definition",
-          "name": "wb-repeater",
-          "tagName": "wb-repeater",
+          "name": "x-repeater",
+          "tagName": "x-repeater",
           "customElement": true,
           "description": "wb-starter repeater component",
           "attributes": [],
@@ -3297,9 +3297,9 @@
       "exports": [
         {
           "kind": "custom-element-definition",
-          "name": "wb-repeater",
+          "name": "x-repeater",
           "declaration": {
-            "name": "wb-repeater",
+            "name": "x-repeater",
             "module": "src/wb-viewmodels/repeater.js"
           }
         }
@@ -3311,8 +3311,8 @@
       "declarations": [
         {
           "kind": "custom-element-definition",
-          "name": "wb-mdhtml",
-          "tagName": "wb-mdhtml",
+          "name": "x-mdhtml",
+          "tagName": "x-mdhtml",
           "customElement": true,
           "description": "Renders Markdown content as HTML, either from inline content or external source",
           "attributes": [
@@ -3355,9 +3355,9 @@
       "exports": [
         {
           "kind": "custom-element-definition",
-          "name": "wb-mdhtml",
+          "name": "x-mdhtml",
           "declaration": {
-            "name": "wb-mdhtml",
+            "name": "x-mdhtml",
             "module": "src/wb-viewmodels/mdhtml.js"
           }
         }
@@ -3369,8 +3369,8 @@
       "declarations": [
         {
           "kind": "custom-element-definition",
-          "name": "wb-codecontrol",
-          "tagName": "wb-codecontrol",
+          "name": "x-codecontrol",
+          "tagName": "x-codecontrol",
           "customElement": true,
           "description": "Interactive code editor/viewer control.",
           "attributes": [],
@@ -3389,9 +3389,9 @@
       "exports": [
         {
           "kind": "custom-element-definition",
-          "name": "wb-codecontrol",
+          "name": "x-codecontrol",
           "declaration": {
-            "name": "wb-codecontrol",
+            "name": "x-codecontrol",
             "module": "src/wb-viewmodels/codecontrol.js"
           }
         }
@@ -3403,8 +3403,8 @@
       "declarations": [
         {
           "kind": "custom-element-definition",
-          "name": "wb-collapse",
-          "tagName": "wb-collapse",
+          "name": "x-collapse",
+          "tagName": "x-collapse",
           "customElement": true,
           "description": "Collapsible content area.",
           "attributes": [
@@ -3432,9 +3432,9 @@
       "exports": [
         {
           "kind": "custom-element-definition",
-          "name": "wb-collapse",
+          "name": "x-collapse",
           "declaration": {
-            "name": "wb-collapse",
+            "name": "x-collapse",
             "module": "src/wb-viewmodels/collapse.js"
           }
         }
@@ -3446,8 +3446,8 @@
       "declarations": [
         {
           "kind": "custom-element-definition",
-          "name": "wb-darkmode",
-          "tagName": "wb-darkmode",
+          "name": "x-darkmode",
+          "tagName": "x-darkmode",
           "customElement": true,
           "description": "Button to toggle dark/light theme.",
           "attributes": [],
@@ -3466,9 +3466,9 @@
       "exports": [
         {
           "kind": "custom-element-definition",
-          "name": "wb-darkmode",
+          "name": "x-darkmode",
           "declaration": {
-            "name": "wb-darkmode",
+            "name": "x-darkmode",
             "module": "src/wb-viewmodels/darkmode.js"
           }
         }
@@ -3480,8 +3480,8 @@
       "declarations": [
         {
           "kind": "custom-element-definition",
-          "name": "wb-dropdown",
-          "tagName": "wb-dropdown",
+          "name": "x-dropdown",
+          "tagName": "x-dropdown",
           "customElement": true,
           "description": "Toggleable dropdown menu",
           "attributes": [
@@ -3541,9 +3541,9 @@
       "exports": [
         {
           "kind": "custom-element-definition",
-          "name": "wb-dropdown",
+          "name": "x-dropdown",
           "declaration": {
-            "name": "wb-dropdown",
+            "name": "x-dropdown",
             "module": "src/wb-viewmodels/dropdown.js"
           }
         }
@@ -3555,8 +3555,8 @@
       "declarations": [
         {
           "kind": "custom-element-definition",
-          "name": "wb-footer",
-          "tagName": "wb-footer",
+          "name": "x-footer",
+          "tagName": "x-footer",
           "customElement": true,
           "description": "Page footer with copyright, links, and social icons",
           "attributes": [
@@ -3612,9 +3612,9 @@
       "exports": [
         {
           "kind": "custom-element-definition",
-          "name": "wb-footer",
+          "name": "x-footer",
           "declaration": {
-            "name": "wb-footer",
+            "name": "x-footer",
             "module": "src/wb-viewmodels/footer.js"
           }
         }
@@ -3626,8 +3626,8 @@
       "declarations": [
         {
           "kind": "custom-element-definition",
-          "name": "wb-header",
-          "tagName": "wb-header",
+          "name": "x-header",
+          "tagName": "x-header",
           "customElement": true,
           "description": "Page header with logo, title, and optional navigation",
           "attributes": [
@@ -3691,9 +3691,9 @@
       "exports": [
         {
           "kind": "custom-element-definition",
-          "name": "wb-header",
+          "name": "x-header",
           "declaration": {
-            "name": "wb-header",
+            "name": "x-header",
             "module": "src/wb-viewmodels/header.js"
           }
         }
@@ -3705,8 +3705,8 @@
       "declarations": [
         {
           "kind": "custom-element-definition",
-          "name": "wb-globe",
-          "tagName": "wb-globe",
+          "name": "x-globe",
+          "tagName": "x-globe",
           "customElement": true,
           "description": "3D Globe visualization.",
           "attributes": [],
@@ -3725,9 +3725,9 @@
       "exports": [
         {
           "kind": "custom-element-definition",
-          "name": "wb-globe",
+          "name": "x-globe",
           "declaration": {
-            "name": "wb-globe",
+            "name": "x-globe",
             "module": "src/wb-viewmodels/globe.js"
           }
         }
@@ -3739,8 +3739,8 @@
       "declarations": [
         {
           "kind": "custom-element-definition",
-          "name": "wb-stagelight",
-          "tagName": "wb-stagelight",
+          "name": "x-stagelight",
+          "tagName": "x-stagelight",
           "customElement": true,
           "description": "Versatile stage lighting effects including spotlights, beams, and fixtures.",
           "attributes": [
@@ -3816,9 +3816,9 @@
       "exports": [
         {
           "kind": "custom-element-definition",
-          "name": "wb-stagelight",
+          "name": "x-stagelight",
           "declaration": {
-            "name": "wb-stagelight",
+            "name": "x-stagelight",
             "module": "src/wb-viewmodels/stagelight.js"
           }
         }

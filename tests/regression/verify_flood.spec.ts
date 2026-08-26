@@ -4,7 +4,7 @@ test('Should not flood network with requests', async ({ page }) => {
   const requests = [];
   page.on('request', request => requests.push(request.url()));
 
-  await page.goto('http://localhost:3000/tests/repro_flood.html');
+  await page.goto('/tests/repro_flood.html');
   
   // Wait for cards to be processed
   await page.waitForTimeout(2000);

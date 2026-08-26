@@ -22,7 +22,7 @@ test.describe('Card Schema-First Architecture', () => {
   test('Enhancer: Injects badge into existing header', async ({ page }) => {
     const card = page.locator('#semantic-card-badge');
     // The JS should have injected the badge into the header
-    const badge = card.locator('.wb-card__badge');
+    const badge = card.locator('.x-card__badge');
     await expect(badge).toBeVisible();
     await expect(badge).toHaveText('Verified');
     

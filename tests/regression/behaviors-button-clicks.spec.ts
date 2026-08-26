@@ -15,7 +15,7 @@ import { test, expect } from '@playwright/test';
  * broken call and render it live in the showcase:
  *
  *   docs/behaviors-reference.md:226
- *   docs/components/semantics/dialog.md:48
+ *   docs/behaviors/dialog.md:48
  *
  * Every other gate passed while this shipped, because nothing CLICKED anything.
  * The example renders, the behavior applies, the markup is correct — the error

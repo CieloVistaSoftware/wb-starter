@@ -43,7 +43,7 @@
     "Run npm test to validate all schemas",
     "Add TIER 4 functional tests for button clicks",
     "Add keyboard interaction tests",
-    "Delete styles/wb-components.css (violates OOP)",
+    "Delete styles/x-components.css (violates OOP)",
     "Move any remaining styles to src/behaviors/css/"
   ]
 }

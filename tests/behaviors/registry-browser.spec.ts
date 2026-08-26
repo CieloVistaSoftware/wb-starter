@@ -8,7 +8,7 @@ import { test, expect } from '@playwright/test';
  *    Source column entirely at narrow widths).
  * 2. An intro + working "how to use" live example — this page never
  *    called initViews(), so the wb-views template system that renders
- *    registered custom tags (<wb-badge>, <alert-box>, etc.) was never
+ *    registered custom tags (<span x-badge>, <alert-box>, etc.) was never
  *    initialized at all.
  */
 test.describe('registry-browser.html (#263)', () => {
@@ -40,7 +40,7 @@ test.describe('registry-browser.html (#263)', () => {
     await page.goto('/demos/registry-browser.html', { waitUntil: 'domcontentloaded' });
     await page.waitForTimeout(1500);
 
-    const badge = page.locator('#usage-example wb-badge');
+    const badge = page.locator('#usage-example [x-badge]');
     await expect(badge).toBeVisible();
     await expect(badge.locator('.badge')).toHaveText('New');
     expect(errs, 'no page errors while rendering the usage example').toEqual([]);

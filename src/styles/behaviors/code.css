@@ -15,7 +15,7 @@
      on every side of an inline element (padding doesn't grow the line's
      own height) balloons even a 2-character snippet like "WB" into a
      58x60px box, reported repeatedly as "these are too big".
-     !important was never actually needed: mdhtml.css's `.wb-mdhtml code`
+     !important was never actually needed: mdhtml.css's `.x-mdhtml code`
      rule (ancestor class + element, specificity 0-1-1) already sets this
      exact value with no !important -- it was only losing to the OLD 1rem
      value here because !important overrides specificity outright. Dropping

@@ -20,10 +20,10 @@ if (!document.querySelector('link[data-highlight-theme]')) {
   if (!CODE_THEMES.some((t) => t.id === savedTheme)) {
     savedTheme = 'atom-one-dark-reasonable';
   }
-  // A handful of CODE_THEMES entries (e.g. wb-grayscale-dark) are WB's own
+  // A handful of CODE_THEMES entries (e.g. x-grayscale-dark) are WB's own
   // local themes, not real highlight.js CDN theme names -- blindly building
   // a cdnjs URL from ANY saved theme id 404'd for those (confirmed live:
-  // wb-grayscale-dark.min.css never existed on cdnjs). Use the local path
+  // x-grayscale-dark.min.css never existed on cdnjs). Use the local path
   // when the saved theme is one of ours.
   const localTheme = CODE_THEMES.find(t => t.id === savedTheme && t.path);
   // Use CDNJS for reliable loading
@@ -160,7 +160,7 @@ export function code(element, options = {}) {
     // one wrapped paragraph with every newline collapsed.
     //
     // `variant` defaults to "inline" in code.schema.json, which is right for
-    // the common case (a `<code>wb-card</code>` chip amid prose) and wrong for
+    // the common case (a `<code>.x-card</code>` chip amid prose) and wrong for
     // a standalone listing: an inline box gets `white-space: normal`, so every
     // newline in the source collapsed to a space.
     //
@@ -171,11 +171,13 @@ export function code(element, options = {}) {
     const isMultiline = /\n/.test((element.textContent || '').trim());
     const isBlock = config.variant !== 'inline' || isMultiline;
     // Only single-token content (no whitespace, e.g. a tag-name chip like
-    // "wb-card") should be forced onto one line. Multi-word inline code
+    // ".x-card") should be forced onto one line. Multi-word inline code
     // (e.g. a formula like "Colors = Primary + 0°, 120°, 240°") must still
     // wrap normally at spaces, or it overflows its container -- confirmed
     // live on pages/themes.html's harmony-formula boxes.
-    const isSingleToken = !/\s/.test((element.textContent || '').trim());
+    // Kept for reference: inline code used to wrap unless it was a single
+    // token. See the whiteSpace line below for why that distinction was
+    // wrong.
 
     Object.assign(element.style, {
       fontFamily: 'ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace',
@@ -192,15 +194,28 @@ export function code(element, options = {}) {
       color: 'var(--text-primary, inherit)',
       border: '1px solid var(--border-color, rgba(255,255,255,0.1))',
       display: !isBlock ? 'inline' : 'block',
-      // A single-token inline code chip (e.g. `<wb-card>`) must stay on one
+      // A single-token inline code chip (e.g. `<article>`) must stay on one
       // line -- `white-space: normal` lets the browser wrap at the hyphen
-      // inside "wb-card" like a hyphenated English word, splitting "<wb-"
+      // inside ".x-card" like a hyphenated English word, splitting "<wb-"
       // onto one line and "card>" onto the next (confirmed live on
       // pages/components.html). `overflow:hidden` is a no-op on a plain
       // `display:inline` box, so `nowrap` here can't cause clipping -- it
       // just lets the token run as one atomic unit on its line, same as
       // block/pre code already does via `pre`/`pre-wrap`.
-      whiteSpace: !isBlock ? (isSingleToken ? 'nowrap' : 'normal') : (config.scrollable ? 'pre' : 'pre-wrap'),
+      // Inline code never wraps, whether or not it contains a space.
+      // This read `isSingleToken ? 'nowrap' : 'normal'`, so a chip like
+      // `<article>` stayed whole but `<label for="...">` -- one idea that
+      // happens to contain a space -- was allowed to break, rendering as
+      // `<label` on one line and `for="...">` on the next, which reads as
+      // two different things. John: "don't break text up like this".
+      //
+      // A space inside a code span is not a sentence break; it is part of
+      // the token. §6 of the standard already says code never wraps and
+      // takes horizontal overflow instead, and this is the inline case of
+      // that same rule. `overflow: hidden` is a no-op on a display:inline
+      // box, so nowrap cannot clip -- the line simply breaks before or
+      // after the span, which is where a reader expects it.
+      whiteSpace: !isBlock ? 'nowrap' : (config.scrollable ? 'pre' : 'pre-wrap'),
       wordBreak: 'break-word', // Always break to prevent overflow
       overflowWrap: 'break-word',
       overflow: (isBlock && config.scrollable) ? 'auto' : 'hidden',

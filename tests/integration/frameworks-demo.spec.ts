@@ -15,11 +15,11 @@ import { test, expect } from '@playwright/test';
  * copy button + line numbers + language badge every other code panel gets,
  * via `.x-pre__copy` instead of the removed `.code-copy-btn`.
  *
- * #324 — the HTMX section moved to a real <wb-demo> (it's plain, build-step-free
- * HTML, so <wb-demo> can render it live AND show its exact source — see
+ * #324 — the HTMX section moved to a real <div x-demo> (it's plain, build-step-free
+ * HTML, so <div x-demo> can render it live AND show its exact source — see
  * DEMOS-AND-DOCS-STANDARDS.md §25). That drops the hand-rolled pre[language] count
  * from 6 to 5 (React, Vue, Svelte, Angular, SolidJS); HTMX is covered by the
- * separate <wb-demo> checks below instead.
+ * separate <div x-demo> checks below instead.
  */
 test.describe('frameworks demo: code examples highlighted + copyable (#241)', () => {
   test('every pre[language] block is highlighted, vertical, and has a copy button', async ({ page }) => {
@@ -73,12 +73,12 @@ test.describe('frameworks demo: code examples highlighted + copyable (#241)', ()
 /**
  * #324 / #460 — DEMOS-AND-DOCS-STANDARDS.md §1/§16/§25.
  *
- * HTMX needs no build step, so it's real, executable HTML and MUST use <wb-demo>
+ * HTMX needs no build step, so it's real, executable HTML and MUST use <div x-demo>
  * like any other component example (§25's own carve-out for what stays exempt).
  * The React/Vue/Svelte/Angular/SolidJS sections mount via framework-specific
- * script/compiler output that <wb-demo> can't represent as 1:1 source — they keep
+ * script/compiler output that <div x-demo> can't represent as 1:1 source — they keep
  * the hand-rolled highlighted <pre> pattern (already covered by the #241 test
- * above) instead of <wb-demo>'s paired live+source.
+ * above) instead of <div x-demo>'s paired live+source.
  *
  * #460 now covers all five framework sections: React and Vue use CDN UMD builds;
  * Svelte and SolidJS compile client-side at runtime; Angular bootstraps a real
@@ -86,19 +86,19 @@ test.describe('frameworks demo: code examples highlighted + copyable (#241)', ()
  * build dependency, and each keeps its author-facing source block below the live
  * mount because compiled framework output is not 1:1 with that source.
  */
-test.describe('frameworks demo: wb-demo / build-step exception (§25, #324, #460)', () => {
-  test('HTMX section renders as a real <wb-demo> (live control + matching source)', async ({ page }) => {
+test.describe('frameworks demo: [x-demo] / build-step exception (§25, #324, #460)', () => {
+  test('HTMX section renders as a real <div x-demo> (live control + matching source)', async ({ page }) => {
     const errs: string[] = [];
     page.on('pageerror', (e) => errs.push(String(e)));
 
     await page.goto('/demos/frameworks.html', { waitUntil: 'domcontentloaded' });
 
-    const demo = page.locator('wb-demo').first();
+    const demo = page.locator('[x-demo]').first();
     await expect(demo).toBeVisible();
-    await expect(demo.locator('.wb-demo__grid')).toBeVisible({ timeout: 20000 });
-    await expect(demo.locator('.wb-demo__code, pre').first()).toBeVisible();
+    await expect(demo.locator('.x-demo__grid')).toBeVisible({ timeout: 20000 });
+    await expect(demo.locator('.x-demo__code, pre').first()).toBeVisible();
 
-    const button = demo.locator('.wb-demo__grid button[hx-post]').first();
+    const button = demo.locator('.x-demo__grid button[hx-post]').first();
     await expect(button).toBeVisible();
     await expect(button).toHaveAttribute('hx-post', '/clicked');
 
@@ -106,12 +106,12 @@ test.describe('frameworks demo: wb-demo / build-step exception (§25, #324, #460
     // outerHTML into a visible confirmation -- a reader can point at the
     // "✓ Swapped!" text as the event listener's result, not just infer it.
     await button.click();
-    await expect(demo.locator('.wb-demo__grid button')).toHaveText(/Swapped/, { timeout: 5000 });
+    await expect(demo.locator('.x-demo__grid button')).toHaveText(/Swapped/, { timeout: 5000 });
 
     expect(errs, 'no page errors while rendering demos/frameworks.html').toEqual([]);
   });
 
-  test('React and Vue sections have both a live render and a real source block, no <wb-demo>', async ({ page }) => {
+  test('React and Vue sections have both a live render and a real source block, no <div x-demo>', async ({ page }) => {
     await page.goto('/demos/frameworks.html', { waitUntil: 'domcontentloaded' });
 
     // Live render: React mounts a real button into #react-root; Vue mounts its app.
@@ -132,9 +132,9 @@ test.describe('frameworks demo: wb-demo / build-step exception (§25, #324, #460
     await expect(page.locator('#react-demo pre[language]')).toBeVisible();
     await expect(page.locator('#vue-demo pre[language]')).toBeVisible();
 
-    // Neither section is wrapped in <wb-demo> — that's the deliberate §25 exception.
-    expect(await page.locator('#react-demo wb-demo').count()).toBe(0);
-    expect(await page.locator('#vue-demo wb-demo').count()).toBe(0);
+    // Neither section is wrapped in <div x-demo> — that's the deliberate §25 exception.
+    expect(await page.locator('#react-demo [x-demo]').count()).toBe(0);
+    expect(await page.locator('#vue-demo [x-demo]').count()).toBe(0);
   });
 
   test('Svelte section compiles client-side and renders live, interactively, with its real source shown (#460)', async ({ page }) => {
@@ -161,21 +161,21 @@ test.describe('frameworks demo: wb-demo / build-step exception (§25, #324, #460
     await expect(page.locator('#svelte-root h3')).toHaveText('Svelte Count: 2');
 
     // WB's own x-ripple behavior must have wired up on the compiled-and-mounted
-    // button just like any other WB-enhanced element (adds the wb-ripple class).
-    await expect(button).toHaveClass(/wb-ripple/);
+    // button just like any other WB-enhanced element (adds the x-ripple class).
+    await expect(button).toHaveClass(/x-ripple/);
 
     // x-toast must also have wired up and fire a real, live toast on click —
     // same "reads the current attribute at click time, not a stale bind-time
     // snapshot" contract #458's fix guarantees. Two clicks already happened
     // above, so a toast should already be in the container.
-    await expect(page.locator('.wb-toast-container .wb-toast').last()).toBeVisible();
+    await expect(page.locator('.x-toast-container .x-toast').last()).toBeVisible();
 
     // Source: the section's own highlighted pre[language] block, still present.
     await expect(page.locator('#svelte-demo pre[language]')).toBeVisible();
 
-    // Not wrapped in <wb-demo> — compiled Svelte output isn't 1:1 with the
+    // Not wrapped in <div x-demo> — compiled Svelte output isn't 1:1 with the
     // hand-authored .svelte-equivalent source shown below it.
-    expect(await page.locator('#svelte-demo wb-demo').count()).toBe(0);
+    expect(await page.locator('#svelte-demo [x-demo]').count()).toBe(0);
 
     expect(errs, `no page errors while compiling/mounting the Svelte demo: ${errs.join(' | ')}`).toEqual([]);
   });
@@ -205,15 +205,15 @@ test.describe('frameworks demo: wb-demo / build-step exception (§25, #324, #460
     await expect(page.locator('#solid-root h3')).toHaveText('SolidJS Count: 3');
 
     // WB's own x-ripple behavior must have wired up on the compiled-and-mounted
-    // button just like any other WB-enhanced element (adds the wb-ripple class).
-    await expect(button).toHaveClass(/wb-ripple/);
+    // button just like any other WB-enhanced element (adds the x-ripple class).
+    await expect(button).toHaveClass(/x-ripple/);
 
     // Source: the section's own highlighted pre[language] block, still present.
     await expect(page.locator('#solid-demo pre[language]')).toBeVisible();
 
-    // Not wrapped in <wb-demo> — compiled Solid output isn't 1:1 with the
+    // Not wrapped in <div x-demo> — compiled Solid output isn't 1:1 with the
     // hand-authored JSX source shown below it.
-    expect(await page.locator('#solid-demo wb-demo').count()).toBe(0);
+    expect(await page.locator('#solid-demo [x-demo]').count()).toBe(0);
 
     expect(errs, `no page errors while compiling/mounting the SolidJS demo: ${errs.join(' | ')}`).toEqual([]);
   });
@@ -237,10 +237,10 @@ test.describe('frameworks demo: wb-demo / build-step exception (§25, #324, #460
     await button.click();
     await expect(page.locator('#angular-root h3')).toHaveText('Angular Count: 2');
     await expect(button).toHaveAttribute('tooltip', 'Count: 2');
-    await expect(button).toHaveClass(/wb-ripple/);
+    await expect(button).toHaveClass(/x-ripple/);
     await expect(page.locator('#angular-demo pre[language]')).toBeVisible();
 
     expect(errs, `no page errors while bootstrapping the Angular demo: ${errs.join(' | ')}`).toEqual([]);
-    expect(await page.locator('wb-demo').count()).toBe(1); // HTMX only
+    expect(await page.locator('[x-demo]').count()).toBe(1); // HTMX only
   });
 });

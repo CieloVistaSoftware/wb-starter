@@ -2,9 +2,9 @@ import { test, expect } from '@playwright/test';
 
 /**
  * pages/behaviors.html's Progress Bars demo used `data-value="25"` /
- * `data-striped` on `<wb-progress>` -- a Tier-1 Law 11 violation
+ * `data-striped` on `<progress>` -- a Tier-1 Law 11 violation
  * (docs/claude/TIER1-LAWS.md: "No data-* Attributes on wb-* Components").
- * The live behavior handler for `wb-progress` (tag-map.js maps it to
+ * The live behavior handler for `x-progress` (tag-map.js maps it to
  * `semantics/progress.js`'s `progress()`) only ever reads the PLAIN
  * `value`/`striped` attributes via `element.getAttribute()` -- it never reads
  * `element.dataset`. So every bar silently read value=0, rendering all four
@@ -20,17 +20,17 @@ test.describe('Behaviors page: Progress Bars demo actually reflects its labeled 
   });
 
   test('25/50/75/100 bars each render their own distinct, non-zero fill percentage', async ({ page }) => {
-    const bars = page.locator('main').getByText(/^\d+%$/).locator('xpath=ancestor::wb-progress[1]');
+    const bars = page.locator('main').getByText(/^\d+%$/).locator('xpath=ancestor::x-progress[1]');
     // Fall back to a direct selector if the label-based lookup above doesn't
-    // resolve (label text lives in a child .wb-progress__label span).
-    const progressEls = page.locator('wb-progress');
+    // resolve (label text lives in a child .x-progress__label span).
+    const progressEls = page.locator('x-progress');
     const count = await progressEls.count();
-    expect(count, 'expected the 4 demo <wb-progress> elements to be present').toBeGreaterThanOrEqual(4);
+    expect(count, 'expected the 4 demo <progress> elements to be present').toBeGreaterThanOrEqual(4);
 
     const percents: number[] = [];
     for (let i = 0; i < count; i++) {
       const pct = await progressEls.nth(i).evaluate((el) => {
-        const bar = el.querySelector('.wb-progress__bar') as HTMLElement | null;
+        const bar = el.querySelector('.x-progress__bar') as HTMLElement | null;
         if (!bar) return null;
         return parseFloat(bar.style.width || '0');
       });

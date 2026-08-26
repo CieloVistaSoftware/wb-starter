@@ -122,7 +122,7 @@
         "#6366f1": 2
       }
     },
-    "src/core/wb-devconsole.js": {
+    "src/core/x-devconsole.js": {
       "bare": 37,
       "fallback": 0,
       "colors": {
@@ -483,7 +483,7 @@
         "rgba(0, 0, 0, 0.25)": 1
       }
     },
-    "src/styles/code-themes/wb-grayscale-dark.css": {
+    "src/styles/code-themes/x-grayscale-dark.css": {
       "bare": 18,
       "fallback": 0,
       "colors": {
@@ -501,7 +501,7 @@
         "#224422": 1
       }
     },
-    "src/styles/code-themes/wb-grayscale.css": {
+    "src/styles/code-themes/x-grayscale.css": {
       "bare": 16,
       "fallback": 0,
       "colors": {
@@ -760,7 +760,7 @@
         "rgba(0,0,0,0.5)": 1
       }
     },
-    "src/styles/wb-signature.css": {
+    "src/styles/x-signature.css": {
       "bare": 31,
       "fallback": 1,
       "colors": {
@@ -1288,7 +1288,7 @@
       "colors": {
         "#ff0000": 1,
         "#ffffff": 2,
-        "rgba(255, 255, 255, var(--wb-stagelight-intensity)": 1,
+        "rgba(255, 255, 255, var(--x-stagelight-intensity)": 1,
         "#333": 1,
         "rgba(0,0,0,0.85)": 1,
         "rgba(255,255,255,0.2)": 1,
@@ -1342,14 +1342,14 @@
       "fallback": 1,
       "colors": {}
     },
-    "src/wb-viewmodels/wb-accordion.js": {
+    "src/wb-viewmodels/x-accordion.js": {
       "bare": 2,
       "fallback": 0,
       "colors": {
         "#215": 2
       }
     },
-    "src/wb-viewmodels/wb-demo.js": {
+    "src/wb-viewmodels/x-demo.js": {
       "bare": 1,
       "fallback": 0,
       "colors": {
@@ -1734,7 +1734,7 @@
     "#210": 1,
     "#220": 1,
     "#ff0000": 1,
-    "rgba(255, 255, 255, var(--wb-stagelight-intensity)": 1,
+    "rgba(255, 255, 255, var(--x-stagelight-intensity)": 1,
     "rgba(0,0,0,0.85)": 1,
     "#215": 2
   }

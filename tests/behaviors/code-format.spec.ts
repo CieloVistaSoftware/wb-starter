@@ -5,7 +5,7 @@
  */
 import { test, expect } from '@playwright/test';
 
-const BASE = process.env.WB_BASE || 'http://localhost:3000';
+const BASE = process.env.WB_BASE || '';
 const URL = `${BASE.replace(/\/$/, '')}/?page=behaviors`;
 
 test('NO demo code block wraps/breaks tokens (editor style, horizontal scroll)', async ({ page }) => {
@@ -14,7 +14,7 @@ test('NO demo code block wraps/breaks tokens (editor style, horizontal scroll)',
   await page.waitForTimeout(3000);
 
   const blocks = await page.evaluate(() => {
-    const pres = [...document.querySelectorAll('pre.x-pre, .x-pre-wrapper pre, pre.wb-demo__code')];
+    const pres = [...document.querySelectorAll('pre.x-pre, .x-pre-wrapper pre, pre.x-demo__code')];
     return pres.map((p, i) => {
       const cs = getComputedStyle(p as HTMLElement);
       return { i, whiteSpace: cs.whiteSpace, overflowX: cs.overflowX, wordBreak: cs.wordBreak };

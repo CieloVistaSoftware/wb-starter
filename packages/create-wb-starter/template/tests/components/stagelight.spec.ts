@@ -25,7 +25,7 @@ async function injectAndScan(page: Page, html: string) {
     container.innerHTML = h;
     
     // Force eager loading
-    const elements = container.querySelectorAll('.wb-ready');
+    const elements = container.querySelectorAll('.x-ready');
     elements.forEach(el => el.setAttribute('', ''));
     
     document.body.appendChild(container);
@@ -45,14 +45,14 @@ test.describe('stagelight Behavior', () => {
     page.on('pageerror', (err) => errors.push(err.message));
     
     const setupHtml = [
-      "<wb-stagelight>Basic stagelight content</wb-stagelight>",
-      "<wb-stagelight variant=\"beam\">variant=beam</wb-stagelight>",
-      "<wb-stagelight variant=\"spotlight\">variant=spotlight</wb-stagelight>",
-      "<wb-stagelight variant=\"fixture\">variant=fixture</wb-stagelight>",
-      "<wb-stagelight color=\"#ffffff\">color=\"#ffffff\"</wb-stagelight>",
-      "<wb-stagelight intensity=\"0.5\">intensity=0.5</wb-stagelight>",
-      "<wb-stagelight size=\"300px\">size=\"300px\"</wb-stagelight>",
-      "<wb-stagelight speed=\"3s\">speed=\"3s\"</wb-stagelight>"
+      "<div x-stagelight>Basic stagelight content</div>",
+      "<div x-stagelight variant=\"beam\">variant=beam</div>",
+      "<div x-stagelight variant=\"spotlight\">variant=spotlight</div>",
+      "<div x-stagelight variant=\"fixture\">variant=fixture</div>",
+      "<div x-stagelight color=\"#ffffff\">color=\"#ffffff\"</div>",
+      "<div x-stagelight intensity=\"0.5\">intensity=0.5</div>",
+      "<div x-stagelight size=\"300px\">size=\"300px\"</div>",
+      "<div x-stagelight speed=\"3s\">speed=\"3s\"</div>"
     ];
     
     await injectAndScan(page, setupHtml.join('\n'));
@@ -68,10 +68,10 @@ test.describe('stagelight Behavior', () => {
   });
 
   test('element is visible after scan', async ({ page }) => {
-    const html = "<wb-stagelight>Basic stagelight content</wb-stagelight>";
+    const html = "<div x-stagelight>Basic stagelight content</div>";
     await injectAndScan(page, html);
     
-    const el = page.locator('#test-container wb-stagelight, #test-container wb-stagelight').first();
+    const el = page.locator('#test-container x-stagelight, #test-container x-stagelight').first();
     const isPresent = await el.count() > 0;
     
     if (isPresent) {

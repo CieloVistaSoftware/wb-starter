@@ -41,7 +41,7 @@ These behaviors enhance the element while preserving its identity.
 **Element:** `<button>`
 
 **What it adds:**
-- Class: `wb-button`, `wb-button--{variant}`, `wb-button--{size}`
+- Class: `x-button`, `x-button--{variant}`, `x-button--{size}`
 - Styles: padding, border-radius, cursor, font-weight, transitions
 - Variants: primary, secondary, success, danger, warning, ghost, link, outline
 - Sizes: xs, sm, md, lg, xl
@@ -61,18 +61,18 @@ These behaviors enhance the element while preserving its identity.
 
 Basic buttons - auto-styled:
 
-<wb-demo>
-<wb-container>
+<div x-demo>
+<div x-container>
 <button>Default Primary</button>
 <button type="submit">Submit Form</button>
 <button type="reset">Reset</button>
-</wb-container>
-</wb-demo>
+</div>
+</div>
 
 All variants:
 
-<wb-demo>
-<wb-container>
+<div x-demo>
+<div x-container>
 <button variant="primary">Primary</button>
 <button variant="secondary">Secondary</button>
 <button variant="success">Success</button>
@@ -81,25 +81,25 @@ All variants:
 <button variant="ghost">Ghost</button>
 <button variant="link">Link Style</button>
 <button variant="outline">Outline</button>
-</wb-container>
-</wb-demo>
+</div>
+</div>
 
 All sizes:
 
-<wb-demo>
-<wb-container>
+<div x-demo>
+<div x-container>
 <button size="xs">Extra Small</button>
 <button size="sm">Small</button>
 <button size="md">Medium (default)</button>
 <button size="lg">Large</button>
 <button size="xl">Extra Large</button>
-</wb-container>
-</wb-demo>
+</div>
+</div>
 
 With icons:
 
-<wb-demo>
-<wb-container>
+<div x-demo>
+<div x-container>
 <button icon="💾">Save</button>
 <button
   icon="🗑️"
@@ -112,22 +112,22 @@ With icons:
   Next
 </button>
 <button icon="←">Back</button>
-</wb-container>
-</wb-demo>
+</div>
+</div>
 
 States:
 
-<wb-demo>
-<wb-container>
+<div x-demo>
+<div x-container>
 <button loading>Saving...</button>
 <button disabled>Disabled</button>
-</wb-container>
-</wb-demo>
+</div>
+</div>
 
 Combined (variant + size + icon together):
 
-<wb-demo>
-<wb-container>
+<div x-demo>
+<div x-container>
 <button
   variant="success"
   icon="✓"
@@ -147,18 +147,18 @@ Combined (variant + size + icon together):
   icon-position="right">
   Confirm Order
 </button>
-</wb-container>
-</wb-demo>
+</div>
+</div>
 
 **Button Group Example:**
 
-<wb-demo>
-<wb-row gap="0.5rem">
+<div x-demo>
+<div x-flex gap="0.5rem">
   <button variant="outline">Cancel</button>
   <button variant="primary">Save Draft</button>
   <button variant="success">Publish</button>
-</wb-row>
-</wb-demo>
+</div>
+</div>
 
 ---
 
@@ -167,8 +167,8 @@ Combined (variant + size + icon together):
 **Element:** `<input>`
 
 **What it adds:**
-- Wrapper div: `wb-input`
-- Class on input: `wb-input__field`
+- Wrapper div: `x-input`
+- Class on input: `x-input__field`
 - Styles: border, border-radius, background, color, padding
 - Sizes: xs, sm, md, lg, xl
 - Variants: success (green border), error (red border)
@@ -186,8 +186,8 @@ Combined (variant + size + icon together):
 
 Basic inputs - auto-styled:
 
-<wb-demo>
-<wb-container>
+<div x-demo>
+<div x-container>
 <input
   type="text"
   placeholder="Your name">
@@ -206,13 +206,13 @@ Basic inputs - auto-styled:
 <input
   type="tel"
   placeholder="(555) 123-4567">
-</wb-container>
-</wb-demo>
+</div>
+</div>
 
 All sizes:
 
-<wb-demo>
-<wb-container>
+<div x-demo>
+<div x-container>
 <input
   type="text"
   size="xs"
@@ -233,13 +233,13 @@ All sizes:
   type="text"
   size="xl"
   placeholder="Extra large">
-</wb-container>
-</wb-demo>
+</div>
+</div>
 
 Validation states:
 
-<wb-demo>
-<wb-container>
+<div x-demo>
+<div x-container>
 <input
   type="email"
   variant="success"
@@ -248,13 +248,13 @@ Validation states:
   type="email"
   variant="error"
   value="invalid-email">
-</wb-container>
-</wb-demo>
+</div>
+</div>
 
 With prefix/suffix:
 
-<wb-demo>
-<wb-container>
+<div x-demo>
+<div x-container>
 <input
   type="text"
   prefix="$"
@@ -280,13 +280,13 @@ With prefix/suffix:
   prefix="$"
   suffix="USD"
   placeholder="Amount">
-</wb-container>
-</wb-demo>
+</div>
+</div>
 
 Clearable:
 
-<wb-demo>
-<wb-container>
+<div x-demo>
+<div x-container>
 <input
   type="text"
   clearable
@@ -300,13 +300,13 @@ Clearable:
   clearable
   variant="error"
   placeholder="Fix this email">
-</wb-container>
-</wb-demo>
+</div>
+</div>
 
 Combined (size + prefix + clearable together):
 
-<wb-demo>
-<wb-container>
+<div x-demo>
+<div x-container>
 <input
   type="text"
   size="lg"
@@ -319,14 +319,14 @@ Combined (size + prefix + clearable together):
   suffix="/month"
   size="lg"
   placeholder="99">
-</wb-container>
-</wb-demo>
+</div>
+</div>
 
 **Form Field Examples:**
 
 Login form:
 
-<wb-demo>
+<div x-demo>
 <form>
   <label>Email
     <input
@@ -346,11 +346,11 @@ Login form:
     Sign In
   </button>
 </form>
-</wb-demo>
+</div>
 
 Price input:
 
-<wb-demo>
+<div x-demo>
 <label>Product Price
   <input
     type="number"
@@ -359,18 +359,18 @@ Price input:
     placeholder="99"
     size="lg">
 </label>
-</wb-demo>
+</div>
 
 Search with icon:
 
-<wb-demo>
+<div x-demo>
 <input
   type="search"
   prefix="🔍"
   clearable
   size="lg"
   placeholder="Search documentation...">
-</wb-demo>
+</div>
 
 ---
 
@@ -379,7 +379,7 @@ Search with icon:
 **Element:** `<details>`
 
 **What it adds:**
-- Class: `wb-details`
+- Class: `x-details`
 - Styles: border, border-radius, overflow, background
 - Summary styling: flex layout, padding, background, cursor
 - Custom toggle icon (▼) with rotation animation
@@ -396,26 +396,26 @@ Search with icon:
 
 Basic collapsible:
 
-<wb-demo>
+<div x-demo>
 <details>
   <summary>What is WB Behaviors?</summary>
   <p>WB Behaviors is a behavior-based UI library that enhances semantic HTML.</p>
 </details>
-</wb-demo>
+</div>
 
 Starts open:
 
-<wb-demo>
+<div x-demo>
 <details open>
   <summary>Important Notice</summary>
   <p>This section is expanded by default so users see it immediately.</p>
 </details>
-</wb-demo>
+</div>
 
 FAQ section:
 
-<wb-demo>
-<wb-container>
+<div x-demo>
+<div x-container>
 <details>
   <summary>How do I install WB Behaviors?</summary>
   <p>Run <code>npm install wb-starter</code> in your project directory.</p>
@@ -428,12 +428,12 @@ FAQ section:
   <summary>Is it accessible?</summary>
   <p>Absolutely. WB uses native HTML elements and adds ARIA attributes where needed.</p>
 </details>
-</wb-container>
-</wb-demo>
+</div>
+</div>
 
 Nested details:
 
-<wb-demo>
+<div x-demo>
 <details>
   <summary>Product Categories</summary>
   <details>
@@ -453,11 +453,11 @@ Nested details:
     </ul>
   </details>
 </details>
-</wb-demo>
+</div>
 
 With rich content:
 
-<wb-demo>
+<div x-demo>
 <details>
   <summary>View Code Example</summary>
   <pre><code>
@@ -466,11 +466,11 @@ function greet(name) {
 }
   </code></pre>
 </details>
-</wb-demo>
+</div>
 
 Settings panel:
 
-<wb-demo>
+<div x-demo>
 <details>
   <summary>Advanced Settings</summary>
   <label>
@@ -486,12 +486,12 @@ Settings panel:
     </select>
   </label>
 </details>
-</wb-demo>
+</div>
 
 **Accordion Pattern (multiple details):**
 
-<wb-demo>
-<wb-stack class="accordion" gap="0.5rem">
+<div x-demo>
+<div x-stack class="accordion" gap="0.5rem">
   <details open>
     <summary>Step 1: Create Account</summary>
     <p>Fill out the registration form with your email and password.</p>
@@ -504,8 +504,8 @@ Settings panel:
     <summary>Step 3: Complete Profile</summary>
     <p>Add your name, photo, and preferences.</p>
   </details>
-</wb-stack>
-</wb-demo>
+</div>
+</div>
 
 ---
 
@@ -514,7 +514,7 @@ Settings panel:
 **Element:** `<dialog>`
 
 **What it adds:**
-- Class: `wb-dialog`
+- Class: `x-dialog`
 - Backdrop styling
 - Close button styling
 - Open/close animations
@@ -527,72 +527,72 @@ Settings panel:
 The `dialog` behavior only decorates a **real, already-open** `<dialog open>` in
 place (see the Auto-Injection demo above) — it does not wire up a show/hide
 trigger. For a self-contained trigger button that builds and opens a dialog on
-click with no JavaScript, use the `<wb-modal>` custom tag (`semantics/dialog.js`,
+click with no JavaScript, use the `<dialog>` custom tag (`semantics/dialog.js`,
 exported as `modal`): `modal-title`/`modal-content` attributes supply the
 dialog's contents, and the element's own text becomes the trigger label. Every
-`<wb-modal>` dialog gets the same auto-generated Cancel/OK footer.
+`<dialog>` dialog gets the same auto-generated Cancel/OK footer.
 
 Basic modal:
 
-<wb-demo>
-<wb-modal
+<div x-demo>
+<dialog
   modal-title="Welcome!"
   modal-content="<p>Thanks for visiting our site.</p>">
   Show Welcome
-</wb-modal>
-</wb-demo>
+</dialog>
+</div>
 
 Confirmation dialog:
 
-<wb-demo>
-<wb-modal
+<div x-demo>
+<dialog
   modal-title="Delete Item?"
   modal-content="<p>This action cannot be undone. Are you sure?</p>">
   🗑️ Delete
-</wb-modal>
-</wb-demo>
+</dialog>
+</div>
 
 Form in dialog:
 
-<wb-demo>
-<wb-modal
+<div x-demo>
+<dialog
   modal-title="Sign In"
   modal-content='<label>Email <input type="email" placeholder="you@example.com"></label><label>Password <input type="password" placeholder="••••••••"></label>'>
   Sign In
-</wb-modal>
-</wb-demo>
+</dialog>
+</div>
 
 Image lightbox dialog:
 
-<wb-demo>
-<wb-modal
+<div x-demo>
+<dialog
   modal-title="Full Size Photo"
-  modal-content='<img src="large-photo.jpg" alt="Full size photo">'>
+  modal-content='<img src="https://placehold.co/1200x800/1e293b/e2e8f0?text=Full+Size+Photo" alt="Full size photo">'>
   <img
-    src="thumbnail.jpg"
+    src="https://placehold.co/200x150/1e293b/e2e8f0?text=Thumbnail"
     alt="Click to enlarge">
-</wb-modal>
-</wb-demo>
+</dialog>
+</div>
 
 Terms and conditions:
 
-<wb-demo>
-<wb-modal
+<div x-demo>
+<dialog
   modal-title="Terms of Service"
   modal-content='<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit...</p><p>Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua...</p><label><input type="checkbox"> I agree to the terms and conditions</label>'>
   📜 View Terms
-</wb-modal>
-</wb-demo>
+</dialog>
+</div>
 
 Settings dialog:
 
-<wb-demo>
-<wb-modal
+<div x-demo>
+<dialog
   modal-title="Settings"
   modal-content='<fieldset><legend>Notifications</legend><label><input type="checkbox" checked> Email notifications</label><label><input type="checkbox"> Push notifications</label><label><input type="checkbox" checked> Weekly digest</label></fieldset><fieldset><legend>Privacy</legend><label><input type="checkbox"> Show online status</label><label><input type="checkbox" checked> Allow search engines</label></fieldset>'>
   ⚙️ Settings
-</wb-modal>
-</wb-demo>
+</dialog>
+</div>
 
 ---
 
@@ -601,7 +601,7 @@ Settings dialog:
 **Element:** `<table>`
 
 **What it adds:**
-- Class: `wb-table`
+- Class: `x-table`
 - Sortable column headers (click to sort)
 - Striped rows
 - Hover states
@@ -617,7 +617,7 @@ Settings dialog:
 
 Basic data table:
 
-<wb-demo>
+<div x-demo>
 <table>
   <thead>
     <tr>
@@ -644,11 +644,11 @@ Basic data table:
     </tr>
   </tbody>
 </table>
-</wb-demo>
+</div>
 
 With caption:
 
-<wb-demo>
+<div x-demo>
 <table>
   <caption>Q4 2025 Sales Report</caption>
   <thead>
@@ -678,11 +678,11 @@ With caption:
     </tr>
   </tfoot>
 </table>
-</wb-demo>
+</div>
 
 Pricing table:
 
-<wb-demo>
+<div x-demo>
 <table>
   <thead>
     <tr>
@@ -719,11 +719,11 @@ Pricing table:
     </tr>
   </tbody>
 </table>
-</wb-demo>
+</div>
 
 Schedule/calendar table:
 
-<wb-demo>
+<div x-demo>
 <table>
   <thead>
     <tr>
@@ -762,11 +762,11 @@ Schedule/calendar table:
     </tr>
   </tbody>
 </table>
-</wb-demo>
+</div>
 
 Status table with badges:
 
-<wb-demo>
+<div x-demo>
 <table>
   <thead>
     <tr>
@@ -815,7 +815,7 @@ Status table with badges:
     </tr>
   </tbody>
 </table>
-</wb-demo>
+</div>
 
 ---
 
@@ -824,7 +824,7 @@ Status table with badges:
 **Element:** `<form>`
 
 **What it adds:**
-- Class: `wb-form`
+- Class: `x-form`
 - Validation UI
 - Loading states
 - Error display styling
@@ -835,7 +835,7 @@ Status table with badges:
 
 Contact form:
 
-<wb-demo>
+<div x-demo>
 <form
   action="/contact"
   method="post">
@@ -876,11 +876,11 @@ Contact form:
     Send Message
   </button>
 </form>
-</wb-demo>
+</div>
 
 Registration form:
 
-<wb-demo>
+<div x-demo>
 <form
   action="/register"
   method="post">
@@ -956,11 +956,11 @@ Registration form:
     Create Account
   </button>
 </form>
-</wb-demo>
+</div>
 
 Payment form:
 
-<wb-demo>
+<div x-demo>
 <form
   action="/checkout"
   method="post">
@@ -975,7 +975,7 @@ Payment form:
         placeholder="1234 5678 9012 3456"
         prefix="💳">
     </label>
-    <wb-grid
+    <div x-grid
       columns="2"
       gap="1rem">
       <label> Expiry
@@ -994,7 +994,7 @@ Payment form:
           pattern="[0-9]{3,4}"
           placeholder="123">
       </label>
-    </wb-grid>
+    </div>
   </fieldset>
   <button
     type="submit"
@@ -1004,15 +1004,15 @@ Payment form:
     Pay $99.00
   </button>
 </form>
-</wb-demo>
+</div>
 
 Search form:
 
-<wb-demo>
+<div x-demo>
 <form
   action="/search"
   method="get">
-  <wb-row gap="0.5rem">
+  <div x-flex gap="0.5rem">
     <input
       type="search"
       name="q"
@@ -1026,13 +1026,13 @@ Search form:
       icon="🔍">
       Search
     </button>
-  </wb-row>
+  </div>
 </form>
-</wb-demo>
+</div>
 
 Filter form:
 
-<wb-demo>
+<div x-demo>
 <form>
   <fieldset>
     <legend>Price Range</legend>
@@ -1110,7 +1110,7 @@ Filter form:
     Clear All
   </button>
 </form>
-</wb-demo>
+</div>
 
 ---
 
@@ -1119,7 +1119,7 @@ Filter form:
 **Element:** `<select>`
 
 **What it adds:**
-- Class: `wb-select`
+- Class: `x-select`
 - Custom dropdown styling
 - Focus states
 
@@ -1129,18 +1129,18 @@ Filter form:
 
 Basic select:
 
-<wb-demo>
+<div x-demo>
 <select>
   <option value="">Choose an option...</option>
   <option value="1">Option 1</option>
   <option value="2">Option 2</option>
   <option value="3">Option 3</option>
 </select>
-</wb-demo>
+</div>
 
 With optgroups:
 
-<wb-demo>
+<div x-demo>
 <select>
   <option value="">Select a car...</option>
   <optgroup label="Swedish Cars">
@@ -1153,11 +1153,11 @@ With optgroups:
     <option value="bmw">BMW</option>
   </optgroup>
 </select>
-</wb-demo>
+</div>
 
 Country selector:
 
-<wb-demo>
+<div x-demo>
 <select name="country">
   <option value="">Select country...</option>
   <option value="us">🇺🇸 United States</option>
@@ -1168,11 +1168,11 @@ Country selector:
   <option value="fr">🇫🇷 France</option>
   <option value="jp">🇯🇵 Japan</option>
 </select>
-</wb-demo>
+</div>
 
 Multiple selection:
 
-<wb-demo>
+<div x-demo>
 <select
   multiple
   size="5">
@@ -1184,11 +1184,11 @@ Multiple selection:
   <option value="vue">Vue</option>
   <option value="angular">Angular</option>
 </select>
-</wb-demo>
+</div>
 
 With disabled options:
 
-<wb-demo>
+<div x-demo>
 <select>
   <option value="">Choose a plan...</option>
   <option value="free">Free - $0/mo</option>
@@ -1199,12 +1199,12 @@ With disabled options:
     Enterprise - Contact Us
   </option>
 </select>
-</wb-demo>
+</div>
 
 Date selectors:
 
-<wb-demo>
-<wb-row gap="0.5rem">
+<div x-demo>
+<div x-flex gap="0.5rem">
   <select name="month">
     <option value="">Month</option>
     <option value="1">January</option>
@@ -1222,8 +1222,8 @@ Date selectors:
     <option value="2025">2025</option>
     <option value="2024">2024</option>
   </select>
-</wb-row>
-</wb-demo>
+</div>
+</div>
 
 ---
 
@@ -1232,7 +1232,7 @@ Date selectors:
 **Element:** `<textarea>`
 
 **What it adds:**
-- Class: `wb-textarea`
+- Class: `x-textarea`
 - Auto-resize on input
 - Character counter (optional)
 - Focus styling
@@ -1243,24 +1243,24 @@ Date selectors:
 
 Basic textarea:
 
-<wb-demo>
+<div x-demo>
 <textarea placeholder="Enter your message..."></textarea>
-</wb-demo>
+</div>
 
 With character limit:
 
-<wb-demo>
+<div x-demo>
 <textarea
   maxlength="500"
   counter
   placeholder="Write your bio (max 500 characters)...">
 </textarea>
-</wb-demo>
+</div>
 
 Different sizes:
 
-<wb-demo>
-<wb-container>
+<div x-demo>
+<div x-container>
 <textarea
   rows="3"
   placeholder="Short message...">
@@ -1269,23 +1269,23 @@ Different sizes:
   rows="10"
   placeholder="Long description...">
 </textarea>
-</wb-container>
-</wb-demo>
+</div>
+</div>
 
 Code input:
 
-<wb-demo>
+<div x-demo>
 <textarea
   rows="15"
   style="font-family: monospace;"
   placeholder="// Paste your code here...">
 </textarea>
-</wb-demo>
+</div>
 
 Various use cases:
 
-<wb-demo>
-<wb-container>
+<div x-demo>
+<div x-container>
 <label> Product Description
   <textarea
     rows="5"
@@ -1319,8 +1319,8 @@ Various use cases:
 }'>
   </textarea>
 </label>
-</wb-container>
-</wb-demo>
+</div>
+</div>
 
 ---
 
@@ -1329,7 +1329,7 @@ Various use cases:
 **Element:** `<input type="checkbox">`
 
 **What it adds:**
-- Class: `wb-checkbox`
+- Class: `x-checkbox`
 - Custom visual styling
 - Animated checkmark
 
@@ -1339,18 +1339,18 @@ Various use cases:
 
 Single checkbox:
 
-<wb-demo>
+<div x-demo>
 <label>
   <input
     type="checkbox"
     name="subscribe">
     Subscribe to newsletter
 </label>
-</wb-demo>
+</div>
 
 Terms agreement:
 
-<wb-demo>
+<div x-demo>
 <label>
   <input
     type="checkbox"
@@ -1359,11 +1359,11 @@ Terms agreement:
     I agree to the <a href="/terms">Terms of Service</a> and <a href="/privacy">Privacy Policy
   </a>
 </label>
-</wb-demo>
+</div>
 
 Checkbox group:
 
-<wb-demo>
+<div x-demo>
 <fieldset>
   <legend>Select your interests:</legend>
   <label>
@@ -1402,11 +1402,11 @@ Checkbox group:
       Food & Cooking
   </label>
 </fieldset>
-</wb-demo>
+</div>
 
 Settings toggles:
 
-<wb-demo>
+<div x-demo>
 <fieldset>
   <legend>Notification Settings</legend>
   <label>
@@ -1436,11 +1436,11 @@ Settings toggles:
       Weekly digest
   </label>
 </fieldset>
-</wb-demo>
+</div>
 
 Feature selection:
 
-<wb-demo>
+<div x-demo>
 <fieldset>
   <legend>Select Features</legend>
   <label>
@@ -1473,21 +1473,21 @@ Feature selection:
       📤 Data Export
   </label>
 </fieldset>
-</wb-demo>
+</div>
 
 Select-all pattern (the `toggleAll()`/indeterminate wiring is application JavaScript,
 not something the doc-viewer's sanitized renderer executes — the markup below
 shows the structural pattern; wiring `checkbox.indeterminate = true` is a
 one-line JS API left to your own code):
 
-<wb-demo>
+<div x-demo>
 <label>
   <input
     type="checkbox"
     id="selectAll">
   <strong>Select All</strong>
 </label>
-<wb-stack gap="0.25rem">
+<div x-stack gap="0.25rem">
   <label>
     <input
       type="checkbox"
@@ -1506,8 +1506,8 @@ one-line JS API left to your own code):
       class="item">
       Item 3
   </label>
-</wb-stack>
-</wb-demo>
+</div>
+</div>
 
 ---
 
@@ -1516,7 +1516,7 @@ one-line JS API left to your own code):
 **Element:** `<input type="radio">`
 
 **What it adds:**
-- Class: `wb-radio`
+- Class: `x-radio`
 - Custom visual styling
 - Animated selection dot
 
@@ -1525,11 +1525,11 @@ one-line JS API left to your own code):
 **Examples:**
 
 Each `<fieldset>` below is one grouped set of radios sharing a `name` — the whole
-group is the unit (one `<wb-demo>` per group, not one per `<input>`).
+group is the unit (one `<div x-demo>` per group, not one per `<input>`).
 
 Basic radio group:
 
-<wb-demo>
+<div x-demo>
 <fieldset>
   <legend>Choose a size:</legend>
   <label>
@@ -1562,11 +1562,11 @@ Basic radio group:
       Extra Large
   </label>
 </fieldset>
-</wb-demo>
+</div>
 
 Payment method:
 
-<wb-demo>
+<div x-demo>
 <fieldset>
   <legend>Payment Method</legend>
   <label>
@@ -1599,11 +1599,11 @@ Payment method:
       ₿ Cryptocurrency
   </label>
 </fieldset>
-</wb-demo>
+</div>
 
 Shipping options:
 
-<wb-demo>
+<div x-demo>
 <fieldset>
   <legend>Shipping Speed</legend>
   <label>
@@ -1628,11 +1628,11 @@ Shipping options:
       ✈️ Overnight - $24.99
   </label>
 </fieldset>
-</wb-demo>
+</div>
 
 Rating scale:
 
-<wb-demo>
+<div x-demo>
 <fieldset>
   <legend>How satisfied are you?</legend>
   <label>
@@ -1671,11 +1671,11 @@ Rating scale:
       5 - Very Satisfied
   </label>
 </fieldset>
-</wb-demo>
+</div>
 
 Pricing plans:
 
-<wb-demo>
+<div x-demo>
 <fieldset>
   <legend>Choose Your Plan</legend>
   <label style="display: block; padding: 1rem; border: 1px solid var(--border-color); border-radius: 8px; margin-bottom: 0.5rem;">
@@ -1707,11 +1707,11 @@ Pricing plans:
     <small>Collaboration features for teams</small>
   </label>
 </fieldset>
-</wb-demo>
+</div>
 
 Yes/No questions:
 
-<wb-demo>
+<div x-demo>
 <fieldset>
   <legend>Do you have prior experience?</legend>
   <label>
@@ -1729,11 +1729,11 @@ Yes/No questions:
       No
   </label>
 </fieldset>
-</wb-demo>
+</div>
 
 Frequency selection:
 
-<wb-demo>
+<div x-demo>
 <fieldset>
   <legend>How often do you exercise?</legend>
   <label>
@@ -1772,7 +1772,7 @@ Frequency selection:
       Never
   </label>
 </fieldset>
-</wb-demo>
+</div>
 
 ---
 
@@ -1781,7 +1781,7 @@ Frequency selection:
 **Element:** `<input type="range">`
 
 **What it adds:**
-- Class: `wb-range`
+- Class: `x-range`
 - Custom track styling
 - Custom thumb styling
 - Value tooltip on hover
@@ -1797,7 +1797,7 @@ wiring `input.addEventListener('input', ...)` is one line of your own JS.
 
 Basic range:
 
-<wb-demo>
+<div x-demo>
 <label> Volume
   <input
     type="range"
@@ -1805,11 +1805,11 @@ Basic range:
     max="100"
     value="50">
 </label>
-</wb-demo>
+</div>
 
 With output display:
 
-<wb-demo>
+<div x-demo>
 <label> Brightness: <output id="brightnessValue">75</output>%
   <input
     type="range"
@@ -1817,11 +1817,11 @@ With output display:
     max="100"
     value="75">
 </label>
-</wb-demo>
+</div>
 
 Price range:
 
-<wb-demo>
+<div x-demo>
 <label> Max Price: $<output id="priceValue">500</output>
   <input
     type="range"
@@ -1830,11 +1830,11 @@ Price range:
     step="50"
     value="500">
 </label>
-</wb-demo>
+</div>
 
 Rating slider:
 
-<wb-demo>
+<div x-demo>
 <label> Rating: <output id="ratingValue">3</output> / 5
   <input
     type="range"
@@ -1843,11 +1843,11 @@ Rating slider:
     step="1"
     value="3">
 </label>
-</wb-demo>
+</div>
 
 Temperature control:
 
-<wb-demo>
+<div x-demo>
 <label> Temperature: <output id="tempValue">72</output>°F
   <input
     type="range"
@@ -1855,11 +1855,11 @@ Temperature control:
     max="85"
     value="72">
 </label>
-</wb-demo>
+</div>
 
 Opacity slider:
 
-<wb-demo>
+<div x-demo>
 <label> Opacity: <output id="opacityValue">100</output>%
   <input
     type="range"
@@ -1867,11 +1867,11 @@ Opacity slider:
     max="100"
     value="100">
 </label>
-</wb-demo>
+</div>
 
 Zoom control:
 
-<wb-demo>
+<div x-demo>
 <label style="display: flex; align-items: center; gap: 0.5rem;">
   <span>🔍-</span>
   <input
@@ -1882,11 +1882,11 @@ Zoom control:
     style="flex: 1;">
   <span>🔍+</span>
 </label>
-</wb-demo>
+</div>
 
 Color hue picker:
 
-<wb-demo>
+<div x-demo>
 <label> Hue: <output id="hueValue">180</output>°
   <input
     type="range"
@@ -1895,7 +1895,7 @@ Color hue picker:
     value="180"
     style="background: linear-gradient(to right, red, yellow, lime, cyan, blue, magenta, red);">
 </label>
-</wb-demo>
+</div>
 
 ---
 
@@ -1904,7 +1904,7 @@ Color hue picker:
 **Element:** `<progress>`
 
 **What it adds:**
-- Class: `wb-progress`
+- Class: `x-progress`
 - Custom bar styling
 - Animated fill
 - Percentage label (optional)
@@ -1915,23 +1915,23 @@ Color hue picker:
 
 Basic progress:
 
-<wb-demo>
+<div x-demo>
 <progress
   value="70"
   max="100">
 </progress>
-</wb-demo>
+</div>
 
 Indeterminate (loading):
 
-<wb-demo>
+<div x-demo>
 <progress></progress>
-</wb-demo>
+</div>
 
 Various completion levels:
 
-<wb-demo>
-<wb-container>
+<div x-demo>
+<div x-container>
 <label>Not started: <progress
     value="0"
     max="100">
@@ -1957,12 +1957,12 @@ Various completion levels:
     max="100">
   </progress>
 </label>
-</wb-container>
-</wb-demo>
+</div>
+</div>
 
 File upload progress:
 
-<wb-demo>
+<div x-demo>
 <div>
   <p>Uploading document.pdf...</p>
   <progress
@@ -1971,11 +1971,11 @@ File upload progress:
   </progress>
   <span>45%</span>
 </div>
-</wb-demo>
+</div>
 
 Download progress:
 
-<wb-demo>
+<div x-demo>
 <div>
   <p>Downloading update (125 MB / 500 MB)</p>
   <progress
@@ -1983,11 +1983,11 @@ Download progress:
     max="500">
   </progress>
 </div>
-</wb-demo>
+</div>
 
 Step progress:
 
-<wb-demo>
+<div x-demo>
 <div>
   <p>Step 2 of 4</p>
   <progress
@@ -1995,11 +1995,11 @@ Step progress:
     max="4">
   </progress>
 </div>
-</wb-demo>
+</div>
 
 Course progress:
 
-<wb-demo>
+<div x-demo>
 <div>
   <h3>JavaScript Fundamentals</h3>
   <p>12 of 20 lessons completed</p>
@@ -2008,12 +2008,12 @@ Course progress:
     max="20">
   </progress>
 </div>
-</wb-demo>
+</div>
 
 Multiple progress bars (dashboard):
 
-<wb-demo>
-<wb-container>
+<div x-demo>
+<div x-container>
   <label>Storage Used (7.5 GB / 10 GB) <progress
       value="75"
       max="100">
@@ -2029,8 +2029,8 @@ Multiple progress bars (dashboard):
       max="100">
     </progress>
   </label>
-</wb-container>
-</wb-demo>
+</div>
+</div>
 
 ---
 
@@ -2039,7 +2039,7 @@ Multiple progress bars (dashboard):
 **Element:** `<code>`
 
 **What it adds:**
-- Class: `wb-code`
+- Class: `x-code`
 - Inline code styling
 - Monospace font
 - Background color
@@ -2049,42 +2049,42 @@ Multiple progress bars (dashboard):
 
 Inline code in text:
 
-<wb-demo>
-<wb-container>
+<div x-demo>
+<div x-container>
 <p>Use the <code>console.log()</code> function to debug your code.</p>
 <p>The <code>Array.map()</code> method creates a new array.</p>
 <p>Set <code>display: flex</code> on the container.</p>
 <p>Run <code>npm install</code> to install dependencies.</p>
 <p>The <code>async/await</code> syntax makes asynchronous code easier to read.</p>
-</wb-container>
-</wb-demo>
+</div>
+</div>
 
 Variable names:
 
-<wb-demo>
+<div x-demo>
 <p>Store the result in <code>userData</code> variable.</p>
-</wb-demo>
+</div>
 
 File paths:
 
-<wb-demo>
+<div x-demo>
 <p>Configuration is in <code>/config/site.json</code>.</p>
-</wb-demo>
+</div>
 
 Commands:
 
-<wb-demo>
+<div x-demo>
 <p>Press <code>Ctrl+C</code> to copy.</p>
-</wb-demo>
+</div>
 
 Multiple inline codes:
 
-<wb-demo>
-<wb-container>
+<div x-demo>
+<div x-container>
 <p>Compare <code>==</code> (loose equality) vs <code>===</code> (strict equality).</p>
 <p>Use <code>let</code> for variables that change, <code>const</code> for constants.</p>
-</wb-container>
-</wb-demo>
+</div>
+</div>
 
 ---
 
@@ -2093,7 +2093,7 @@ Multiple inline codes:
 **Element:** `<pre>`
 
 **What it adds:**
-- Class: `wb-pre`
+- Class: `x-pre`
 - Copy button
 - Line numbers (optional)
 - Syntax highlighting (optional)
@@ -2107,17 +2107,17 @@ Multiple inline codes:
 
 Basic code block:
 
-<wb-demo>
+<div x-demo>
 <pre>
 function greet(name) {
   return `Hello, ${name}!`;
 }
 </pre>
-</wb-demo>
+</div>
 
 With line numbers:
 
-<wb-demo>
+<div x-demo>
 <pre line-numbers>
 const express = require('express');
 const app = express();
@@ -2128,11 +2128,11 @@ app.get('/', (req, res) => {
 
 app.listen(3000);
 </pre>
-</wb-demo>
+</div>
 
 JavaScript example:
 
-<wb-demo>
+<div x-demo>
 <pre language="javascript">
 // Fetch data from API
 async function fetchUsers() {
@@ -2141,11 +2141,11 @@ async function fetchUsers() {
   return users;
 }
 </pre>
-</wb-demo>
+</div>
 
 HTML example:
 
-<wb-demo>
+<div x-demo>
 <pre language="html">
 &lt;article&gt;
   &lt;header&gt;
@@ -2156,11 +2156,11 @@ HTML example:
   &lt;/main&gt;
 &lt;/article&gt;
 </pre>
-</wb-demo>
+</div>
 
 CSS example:
 
-<wb-demo>
+<div x-demo>
 <pre language="css">
 .card {
   display: flex;
@@ -2175,11 +2175,11 @@ CSS example:
   box-shadow: 0 4px 16px rgba(0, 0, 0, 0.15);
 }
 </pre>
-</wb-demo>
+</div>
 
 JSON example:
 
-<wb-demo>
+<div x-demo>
 <pre language="json">
 {
   "name": "wb-starter",
@@ -2190,11 +2190,11 @@ JSON example:
   }
 }
 </pre>
-</wb-demo>
+</div>
 
 Shell commands:
 
-<wb-demo>
+<div x-demo>
 <pre language="bash">
 # Install dependencies
 npm install
@@ -2205,11 +2205,11 @@ npm run dev
 # Build for production
 npm run build
 </pre>
-</wb-demo>
+</div>
 
 Terminal output:
 
-<wb-demo>
+<div x-demo>
 <pre>
 $ npm test
 
@@ -2219,7 +2219,7 @@ $ npm test
 
   3 passing (42ms)
 </pre>
-</wb-demo>
+</div>
 
 ---
 
@@ -2234,7 +2234,7 @@ These behaviors transform the element into a component.
 **Element:** `<article>` morphs into card component
 
 **What it adds:**
-- Class: `wb-card`
+- Class: `x-card`
 - Styles: flex column, border, border-radius (8px), background, box-shadow, overflow hidden
 - Hover effects: translateY(-2px), increased box-shadow, border color change
 - Styles existing `<header>`, `<main>`, `<footer>` children with card structure
@@ -2256,7 +2256,7 @@ These behaviors transform the element into a component.
 
 Basic semantic card:
 
-<wb-demo>
+<div x-demo>
 <article>
   <header>
     <h3>Getting Started</h3>
@@ -2268,15 +2268,15 @@ Basic semantic card:
     <a href="/docs/start">Read more →</a>
   </footer>
 </article>
-</wb-demo>
+</div>
 
 Card with image:
 
-<wb-demo>
+<div x-demo>
 <article>
   <figure>
     <img
-      src="product.jpg"
+      src="https://placehold.co/400x300/1f2937/f3f4f6?text=Premium+Widget"
       alt="Product photo">
   </figure>
   <header>
@@ -2290,11 +2290,11 @@ Card with image:
     <button variant="primary">Add to Cart</button>
   </footer>
 </article>
-</wb-demo>
+</div>
 
 Glass variant:
 
-<wb-demo>
+<div x-demo>
 <article variant="glass">
   <header>
     <h3>Glassmorphism Card</h3>
@@ -2303,11 +2303,11 @@ Glass variant:
     <p>Beautiful frosted glass effect with blur backdrop.</p>
   </main>
 </article>
-</wb-demo>
+</div>
 
 Elevated card:
 
-<wb-demo>
+<div x-demo>
 <article elevated>
   <header>
     <h3>Elevated Card</h3>
@@ -2316,11 +2316,11 @@ Elevated card:
     <p>This card has a stronger shadow for emphasis.</p>
   </main>
 </article>
-</wb-demo>
+</div>
 
 Clickable card:
 
-<wb-demo>
+<div x-demo>
 <article clickable>
   <header>
     <h3>Click Me!</h3>
@@ -2329,15 +2329,15 @@ Clickable card:
     <p>This entire card is clickable and interactive.</p>
   </main>
 </article>
-</wb-demo>
+</div>
 
 Profile card:
 
-<wb-demo>
+<div x-demo>
 <article>
   <figure style="text-align: center; padding: 2rem;">
     <img
-      src="avatar.jpg"
+      src="https://ui-avatars.com/api/?name=Jane+Smith&size=150&background=475569&color=fff"
       alt="User avatar"
       style="width: 80px; height: 80px; border-radius: 50%;">
   </figure>
@@ -2354,15 +2354,15 @@ Profile card:
     <a href="#">LinkedIn</a>
   </footer>
 </article>
-</wb-demo>
+</div>
 
 Blog post card:
 
-<wb-demo>
+<div x-demo>
 <article>
   <figure>
     <img
-      src="blog-hero.jpg"
+      src="https://placehold.co/800x400/0f172a/e2e8f0?text=Blog+Hero"
       alt="Blog post hero image">
   </figure>
   <header>
@@ -2377,11 +2377,11 @@ Blog post card:
     <span>By John Doe</span>
   </footer>
 </article>
-</wb-demo>
+</div>
 
 Pricing card:
 
-<wb-demo>
+<div x-demo>
 <article
   variant="glass"
   elevated>
@@ -2407,11 +2407,11 @@ Pricing card:
     </button>
   </footer>
 </article>
-</wb-demo>
+</div>
 
 Feature card:
 
-<wb-demo>
+<div x-demo>
 <article>
   <header>
     <span style="font-size: 2rem;">🚀</span>
@@ -2421,11 +2421,11 @@ Feature card:
     <p>Optimized for performance with lazy loading and minimal JavaScript overhead.</p>
   </main>
 </article>
-</wb-demo>
+</div>
 
 Notification/Alert card:
 
-<wb-demo>
+<div x-demo>
 <article style="border-left: 4px solid var(--success);">
   <header>
     <h3>✓ Payment Successful</h3>
@@ -2437,11 +2437,11 @@ Notification/Alert card:
     <a href="/orders/12345">View Order Details</a>
   </footer>
 </article>
-</wb-demo>
+</div>
 
 Stat card:
 
-<wb-demo>
+<div x-demo>
 <article>
   <main style="text-align: center; padding: 2rem;">
     <p style="font-size: 3rem; font-weight: bold; margin: 0;">2,847</p>
@@ -2449,12 +2449,12 @@ Stat card:
     <p style="color: var(--success); font-size: 0.875rem;">↑ 12% from last month</p>
   </main>
 </article>
-</wb-demo>
+</div>
 
 **Card Grid Example:**
 
-<wb-demo>
-<wb-grid min-width="250px" gap="1.5rem">
+<div x-demo>
+<div x-grid min-width="250px" gap="1.5rem">
   <article>
     <header>
       <h3>Card 1</h3>
@@ -2479,8 +2479,8 @@ Stat card:
       <p>Third card content.</p>
     </main>
   </article>
-</wb-grid>
-</wb-demo>
+</div>
+</div>
 
 ---
 
@@ -2506,7 +2506,7 @@ Stat card:
 
 Internal link card:
 
-<wb-demo>
+<div x-demo>
 <article href="/docs/getting-started">
   <header>
     <h3>📚 Documentation</h3>
@@ -2515,13 +2515,13 @@ Internal link card:
     <p>Complete guide to using WB Behaviors.</p>
   </main>
 </article>
-</wb-demo>
+</div>
 
 External link card:
 
-<wb-demo>
+<div x-demo>
 <article
-  href="https://github.com/wb-framework"
+  href="https://github.com/x-framework"
   target="_blank">
   <header>
     <h3>🐙 GitHub Repository</h3>
@@ -2530,12 +2530,12 @@ External link card:
     <p>View source code, report issues, and contribute.</p>
   </main>
 </article>
-</wb-demo>
+</div>
 
 Navigation cards:
 
-<wb-demo>
-<wb-grid columns="2" gap="1rem">
+<div x-demo>
+<div x-grid columns="2" gap="1rem">
   <article href="/products">
     <header>
       <span style="font-size: 2rem;">🛍️</span>
@@ -2572,13 +2572,13 @@ Navigation cards:
       <p>Get help</p>
     </main>
   </article>
-</wb-grid>
-</wb-demo>
+</div>
+</div>
 
 Resource links:
 
-<wb-demo>
-<wb-container>
+<div x-demo>
+<div x-container>
 <article
   href="https://docs.example.com"
   target="_blank">
@@ -2599,7 +2599,7 @@ Resource links:
   target="_blank">
   <figure>
     <img
-      src="video-thumbnail.jpg"
+      src="https://placehold.co/400x225/1e293b/e2e8f0?text=Video+Thumbnail"
       alt="Tutorial video">
   </figure>
   <header>
@@ -2609,8 +2609,8 @@ Resource links:
     <p>Watch our step-by-step guide on YouTube.</p>
   </main>
 </article>
-</wb-container>
-</wb-demo>
+</div>
+</div>
 
 ---
 
@@ -2619,7 +2619,7 @@ Resource links:
 **Element:** `<nav>` morphs into navigation bar
 
 **What it adds:**
-- Class: `wb-navbar`
+- Class: `x-navbar`
 - Styles: flex layout, space-between, padding, background, border-radius, gap
 - Brand area styling (font-weight, no-shrink)
 - Menu area styling (flex, gap, flex-wrap)
@@ -2637,7 +2637,7 @@ Resource links:
 
 Basic semantic navbar:
 
-<wb-demo>
+<div x-demo>
 <nav>
   <a
     href="/"
@@ -2659,15 +2659,15 @@ Basic semantic navbar:
     </li>
   </ul>
 </nav>
-</wb-demo>
+</div>
 
 With logo image:
 
-<wb-demo>
+<div x-demo>
 <nav>
   <a href="/">
     <img
-      src="logo.svg"
+      src="https://placehold.co/120x32/1e293b/e2e8f0?text=Logo"
       alt="Company Logo"
       height="32">
   </a>
@@ -2686,30 +2686,30 @@ With logo image:
     </li>
   </ul>
 </nav>
-</wb-demo>
+</div>
 
 Generated navbar (content built from `brand`/`items` attributes, no children needed):
 
-<wb-demo>
+<div x-demo>
 <nav
   brand="WB Behaviors"
   items="Home, Features, Docs, Pricing, Contact">
 </nav>
-</wb-demo>
+</div>
 
 Sticky navbar:
 
-<wb-demo>
+<div x-demo>
 <nav
   brand="MySite"
   items="Home, About, Blog, Contact"
   sticky>
 </nav>
-</wb-demo>
+</div>
 
 Full featured navbar:
 
-<wb-demo>
+<div x-demo>
 <nav>
   <div style="display: flex; align-items: center; gap: 1rem;">
     <a
@@ -2740,16 +2740,16 @@ Full featured navbar:
       🔔
     </button>
     <img
-      src="avatar.jpg"
+      src="https://ui-avatars.com/api/?name=User&size=64&background=475569&color=fff"
       alt="Profile"
       style="width: 32px; height: 32px; border-radius: 50%;">
   </div>
 </nav>
-</wb-demo>
+</div>
 
 E-commerce navbar:
 
-<wb-demo>
+<div x-demo>
 <nav>
   <a href="/">ShopName</a>
   <ul>
@@ -2776,11 +2776,11 @@ E-commerce navbar:
     <button variant="ghost">🛒 (3)</button>
   </div>
 </nav>
-</wb-demo>
+</div>
 
 Documentation navbar:
 
-<wb-demo>
+<div x-demo>
 <nav>
   <a href="/">
     <strong>WB Docs</strong>
@@ -2813,7 +2813,7 @@ Documentation navbar:
     </button>
   </div>
 </nav>
-</wb-demo>
+</div>
 
 ---
 
@@ -2822,7 +2822,7 @@ Documentation navbar:
 **Element:** `<aside>` morphs into sidebar
 
 **What it adds:**
-- Class: `wb-sidebar`
+- Class: `x-sidebar`
 - Styles: flex column, gap, padding, background, border-radius, min-width
 - Item styling: padding, border-radius, hover states
 - Active item highlighting
@@ -2838,16 +2838,16 @@ Documentation navbar:
 
 Basic sidebar (content built from `items`/`active` attributes, no children needed):
 
-<wb-demo>
+<div x-demo>
 <aside
   items="Dashboard, Projects, Team, Settings"
   active="Dashboard">
 </aside>
-</wb-demo>
+</div>
 
 Semantic sidebar:
 
-<wb-demo>
+<div x-demo>
 <aside>
   <nav>
     <a
@@ -2861,11 +2861,11 @@ Semantic sidebar:
     <a href="/settings">⚙️ Settings</a>
   </nav>
 </aside>
-</wb-demo>
+</div>
 
 Sidebar with sections:
 
-<wb-demo>
+<div x-demo>
 <aside>
   <nav>
     <strong style="display: block; padding: 0.5rem; opacity: 0.7; font-size: 0.75rem;">MAIN</strong>
@@ -2882,11 +2882,11 @@ Sidebar with sections:
     <a href="/logout">Log out</a>
   </nav>
 </aside>
-</wb-demo>
+</div>
 
 Documentation sidebar:
 
-<wb-demo>
+<div x-demo>
 <aside>
   <nav>
     <strong>Getting Started</strong>
@@ -2907,11 +2907,11 @@ Documentation sidebar:
     <a href="/docs/api">JavaScript API</a>
   </nav>
 </aside>
-</wb-demo>
+</div>
 
 Admin sidebar with icons:
 
-<wb-demo>
+<div x-demo>
 <aside>
   <div style="padding: 1rem; border-bottom: 1px solid var(--border-color);">
     <strong>Admin Panel</strong>
@@ -2929,12 +2929,12 @@ Admin sidebar with icons:
     <a href="/logout">🚪 Log out</a>
   </div>
 </aside>
-</wb-demo>
+</div>
 
 **Layout with Sidebar:**
 
-<wb-demo>
-<wb-flex min-height="100vh">
+<div x-demo>
+<div x-flex min-height="100vh">
   <aside style="width: 240px; flex-shrink: 0;">
     <nav>
       <a href="/dashboard">Dashboard</a>
@@ -2946,8 +2946,8 @@ Admin sidebar with icons:
     <h1>Dashboard</h1>
     <p>Main content goes here.</p>
   </main>
-</wb-flex>
-</wb-demo>
+</div>
+</div>
 
 ---
 
@@ -2994,38 +2994,39 @@ Admin sidebar with icons:
 
 | Custom Tag | Behavior | Description |
 |------------|----------|-------------|
-| `<wb-grid>` | grid | CSS Grid layout |
-| `<wb-flex>` | flex | Flexbox layout |
-| `<wb-row>` | flex | Horizontal flex (alias) |
-| `<wb-column>` | stack | Vertical stack (alias) |
-| `<wb-stack>` | stack | Vertical stack |
-| `<wb-cluster>` | cluster | Horizontal cluster |
-| `<wb-container>` | container | Full-featured container |
-| `<wb-center>` | center | Centered content |
-| `<wb-cover>` | cover | Full-screen cover |
-| `<wb-sidebar>` | sidebarlayout | Main + sidebar layout |
-| `<wb-masonry>` | masonry | Masonry grid |
-| `<wb-switcher>` | switcher | Responsive switcher |
-| `<wb-reel>` | reel | Horizontal scroll |
-| `<wb-frame>` | frame | Aspect ratio frame |
-| `<wb-sticky>` | sticky | Sticky positioning |
-| `<wb-drawer>` | drawerLayout | Collapsible drawer |
-| `<wb-icon>` | icon | Icon + text alignment |
-| `<card-basic>` | card | Generic card |
-| `<card-image>` | cardimage | Card with image |
-| `<card-video>` | cardvideo | Video card |
-| `<card-profile>` | cardprofile | User profile card |
-| `<card-pricing>` | cardpricing | Pricing card |
-| `<card-product>` | cardproduct | Product card |
-| `<card-stats>` | cardstats | Statistics card |
-| `<card-testimonial>` | cardtestimonial | Testimonial card |
-| `<card-hero>` | cardhero | Hero card |
-| `<card-file>` | cardfile | File download card |
-| `<card-notification>` | cardnotification | Notification card |
-| `<card-portfolio>` | cardportfolio | Portfolio item card |
-| `<card-link>` | cardlink | Clickable card |
-| `<card-horizontal>` | cardhorizontal | Horizontal card |
-| `<card-overlay>` | cardoverlay | Text over image |
+| `<div x-grid>` | grid | CSS Grid layout |
+| `<div x-flex>` | flex | Flexbox layout |
+| `<div x-flex>` | flex | Horizontal flex (alias) |
+| `<div x-stack>` | stack | Vertical stack (alias) |
+| `<div x-stack>` | stack | Vertical stack |
+| `<div x-cluster>` | cluster | Horizontal cluster |
+| `<div x-container>` | container | Full-featured container |
+| `<div x-center>` | center | Centered content |
+| `<div x-cover>` | cover | Full-screen cover |
+| `<div x-sidebarlayout>` | sidebarlayout | Main + sidebar layout |
+| `<div x-masonry>` | masonry | Masonry grid |
+| `<div x-switcher>` | switcher | Responsive switcher |
+| `<div x-reel>` | reel | Horizontal scroll |
+| `<div x-frame>` | frame | Aspect ratio frame |
+| `<div x-sticky>` | sticky | Sticky positioning |
+| `[x-fill]` | fill | As wide as the container allows (attribute-only — width is a layout choice, not a kind of element) |
+| `<div x-drawer>` | drawerLayout | Collapsible drawer |
+| `<span x-icon>` | icon | Icon + text alignment |
+| `<article>` | card | Generic card |
+| `<div x-cardimage>` | cardimage | Card with image |
+| `<div x-cardvideo>` | cardvideo | Video card |
+| `<div x-cardprofile>` | cardprofile | User profile card |
+| `<div x-cardpricing>` | cardpricing | Pricing card |
+| `<div x-cardproduct>` | cardproduct | Product card |
+| `<div x-cardstats>` | cardstats | Statistics card |
+| `<div x-cardtestimonial>` | cardtestimonial | Testimonial card |
+| `<div x-cardhero>` | cardhero | Hero card |
+| `<div x-cardfile>` | cardfile | File download card |
+| `<div x-cardnotification>` | cardnotification | Notification card |
+| `<div x-cardportfolio>` | cardportfolio | Portfolio item card |
+| `<div x-cardlink>` | cardlink | Clickable card |
+| `<div x-cardhorizontal>` | cardhorizontal | Horizontal card |
+| `<div x-cardoverlay>` | cardoverlay | Text over image |
 
 ### Attribute Shortcuts (Always Active)
 
@@ -3040,7 +3041,7 @@ Admin sidebar with icons:
 
 ## Custom Tags: Not Web Components!
 
-WB Behaviors supports custom tag names like `<wb-grid>` and `<price-card>`. Here's the important thing:
+WB Behaviors supports custom tag names like `<div x-grid>` and `<div x-cardpricing>`. Here's the important thing:
 
 **These are NOT Web Components.**
 
@@ -3054,19 +3055,19 @@ WB Behaviors supports custom tag names like `<wb-grid>` and `<price-card>`. Here
 ### How Custom Tags Work
 
 ```
-1. You write:     <wb-grid columns="3">...</wb-grid>
+1. You write:     <div x-grid columns="3">...</div>
 
 2. Browser sees:  Unknown tag → creates generic HTMLElement
                   (Browsers don't reject unknown tags!)
 
 3. WB scans:      The customElementMappings array in wb-lazy.js:
-                  { selector: 'wb-grid', behavior: 'grid' }
+                  { selector: 'x-grid', behavior: 'grid' }
 
-4. WB matches:    element.matches('wb-grid') → true
+4. WB matches:    element.matches('x-grid') → true
 
 5. WB injects:    grid(element, options) function runs
 
-6. Result:        Your <wb-grid> now has CSS Grid styles applied
+6. Result:        Your <div x-grid> now has CSS Grid styles applied
 ```
 
 This happens via `MutationObserver` - WB watches for new elements and applies behaviors automatically.
@@ -3078,11 +3079,11 @@ In `src/core/wb-lazy.js`:
 ```javascript
 const customElementMappings = [
   // Layout tags
-  { selector: 'wb-grid', behavior: 'grid' },
-  { selector: 'wb-flex', behavior: 'flex' },
-  { selector: 'wb-row', behavior: 'flex' },      // Alias!
-  { selector: 'wb-column', behavior: 'stack' },  // Alias!
-  { selector: 'wb-stack', behavior: 'stack' },
+  { selector: 'x-grid', behavior: 'grid' },
+  { selector: 'x-flex', behavior: 'flex' },
+  { selector: 'x-row', behavior: 'flex' },      // Alias!
+  { selector: 'x-column', behavior: 'stack' },  // Alias!
+  { selector: 'x-stack', behavior: 'stack' },
   // ... more mappings
   
   // Card tags
@@ -3141,63 +3142,63 @@ if (getConfig('autoInject')) {
 
 ## Layout Custom Tags Examples
 
-### wb-grid
+### x-grid
 
 Basic 3-column grid:
 
-<wb-demo>
-<wb-grid
+<div x-demo>
+<div x-grid
   columns="3"
   gap="1rem">
   <div>Column 1</div>
   <div>Column 2</div>
   <div>Column 3</div>
-</wb-grid>
-</wb-demo>
+</div>
+</div>
 
 Responsive grid with min-width:
 
-<wb-demo>
-<wb-grid
+<div x-demo>
+<div x-grid
   min-width="250px"
   gap="2rem">
   <article>Card 1</article>
   <article>Card 2</article>
   <article>Card 3</article>
   <article>Card 4</article>
-</wb-grid>
-</wb-demo>
+</div>
+</div>
 
-### wb-flex / wb-row
+### x-flex / x-row
 
 Horizontal layout:
 
-<wb-demo>
-<wb-flex
+<div x-demo>
+<div x-flex
   gap="1rem"
   justify="space-between">
   <div>Left</div>
   <div>Right</div>
-</wb-flex>
-</wb-demo>
+</div>
+</div>
 
-Button row (wb-row is alias for flex):
+Button row (x-row is alias for flex):
 
-<wb-demo>
-<wb-row
+<div x-demo>
+<div x-flex
   gap="0.5rem"
   justify="flex-end">
   <button variant="ghost">Cancel</button>
   <button variant="primary">Save</button>
-</wb-row>
-</wb-demo>
+</div>
+</div>
 
-### wb-stack / wb-column
+### x-stack / x-column
 
 Vertical stack:
 
-<wb-demo>
-<wb-stack gap="1rem">
+<div x-demo>
+<div x-stack gap="1rem">
   <input
     type="text"
     placeholder="Name">
@@ -3205,81 +3206,81 @@ Vertical stack:
     type="email"
     placeholder="Email">
   <button>Submit</button>
-</wb-stack>
-</wb-demo>
+</div>
+</div>
 
-wb-column is alias for stack:
+x-column is alias for stack:
 
-<wb-demo>
-<wb-column gap="1rem">
+<div x-demo>
+<div x-stack gap="1rem">
   <h3>Title</h3>
   <p>Content</p>
-</wb-column>
-</wb-demo>
+</div>
+</div>
 
-### wb-container
+### x-container
 
 Centered content with max-width:
 
-<wb-demo>
-<wb-container
+<div x-demo>
+<div x-container
   max-width="800px"
   padding="2rem">
   <h1>Article Title</h1>
   <p>Content goes here...</p>
-</wb-container>
-</wb-demo>
+</div>
+</div>
 
 Multi-column grid mode:
 
-<wb-demo>
-<wb-container
+<div x-demo>
+<div x-container
   columns="2"
   gap="2rem">
   <div>Left column</div>
   <div>Right column</div>
-</wb-container>
-</wb-demo>
+</div>
+</div>
 
-### wb-center
+### x-center
 
 Max-width centering:
 
-<wb-demo>
-<wb-center max-width="600px">
+<div x-demo>
+<div x-center max-width="600px">
   <h1>Centered Heading</h1>
-</wb-center>
-</wb-demo>
+</div>
+</div>
 
 Intrinsic centering (based on content width):
 
-<wb-demo>
-<wb-center intrinsic>
+<div x-demo>
+<div x-center intrinsic>
   <button variant="primary">Centered Button</button>
-</wb-center>
-</wb-demo>
+</div>
+</div>
 
-### wb-cover
+### x-cover
 
 Full-screen hero with vertical centering:
 
-<wb-demo>
-<wb-cover min-height="320px">
+<div x-demo>
+<div x-cover min-height="320px">
   <header>Logo</header>
   <div principal>
     <h1>Main Content</h1>
     <p>This is vertically centered</p>
   </div>
   <footer>Scroll down ↓</footer>
-</wb-cover>
-</wb-demo>
+</div>
+</div>
 
-### wb-sidebar
+### x-sidebar
 
 Two-column layout with sidebar:
 
-<wb-demo>
-<wb-sidebar
+<div x-demo>
+<div x-sidebarlayout
   side="left"
   side-width="250px"
   gap="2rem">
@@ -3289,98 +3290,98 @@ Two-column layout with sidebar:
   <main>
     <h1>Main Content</h1>
   </main>
-</wb-sidebar>
-</wb-demo>
+</div>
+</div>
 
-### wb-masonry
+### x-masonry
 
 Pinterest-style masonry:
 
-<wb-demo>
-<wb-masonry
+<div x-demo>
+<div x-masonry
   columns="3"
   gap="1rem">
   <img
-    src="tall.jpg"
+    src="https://placehold.co/300x500/1e293b/e2e8f0?text=Tall"
     alt="">
   <img
-    src="wide.jpg"
+    src="https://placehold.co/500x300/1e293b/e2e8f0?text=Wide"
     alt="">
   <img
-    src="square.jpg"
+    src="https://placehold.co/400x400/1e293b/e2e8f0?text=Square"
     alt="">
   <img
-    src="tall2.jpg"
+    src="https://placehold.co/300x450/1e293b/e2e8f0?text=Tall+2"
     alt="">
-</wb-masonry>
-</wb-demo>
+</div>
+</div>
 
-### wb-reel
+### x-reel
 
 Horizontal scroll carousel:
 
-<wb-demo>
-<wb-reel
+<div x-demo>
+<div x-reel
   item-width="300px"
   gap="1rem">
   <article>Card 1</article>
   <article>Card 2</article>
   <article>Card 3</article>
   <article>Card 4</article>
-</wb-reel>
-</wb-demo>
+</div>
+</div>
 
-### wb-frame
+### x-frame
 
 16:9 video frame:
 
-<wb-demo>
-<wb-frame ratio="16/9">
+<div x-demo>
+<div x-frame ratio="16/9">
   <iframe src="about:blank" title="16:9 video frame placeholder"></iframe>
-</wb-frame>
-</wb-demo>
+</div>
+</div>
 
 Square avatar frame:
 
-<wb-demo>
-<wb-frame ratio="1/1">
+<div x-demo>
+<div x-frame ratio="1/1">
   <img
-    src="avatar.jpg"
+    src="https://ui-avatars.com/api/?name=User&size=150&background=475569&color=fff"
     alt="User">
-</wb-frame>
-</wb-demo>
+</div>
+</div>
 
-### wb-sticky
+### x-sticky
 
 Sticky header:
 
-<wb-demo>
-<wb-sticky
+<div x-demo>
+<div x-sticky
   top="0"
   z-index="100">
   <header>This stays at top when scrolling</header>
-</wb-sticky>
-</wb-demo>
+</div>
+</div>
 
-### wb-drawer
+### x-drawer
 
-`<wb-drawer>` (`drawer` behavior, `semantics`/`overlay.js`) is itself the
+`<div x-drawer>` (`drawer` behavior, `semantics`/`overlay.js`) is itself the
 clickable trigger — its own text is the visible label, `title`/`width`/
 `position` configure the slide-in panel, and clicking it opens an overlay
 panel built from those attributes. (An earlier version of this doc showed
-`<wb-drawer>` as a static, always-visible sidebar with `resizable`/
+`<div x-drawer>` as a static, always-visible sidebar with `resizable`/
 `save-state` attributes that don't exist on this behavior — that pattern is
-`<wb-drawer-layout>`, a different tag/behavior; see
+`<div x-drawer-layout>`, a different tag/behavior; see
 [Drawer Components](components/drawer.md).)
 
-<wb-demo>
-<wb-drawer
+<div x-demo>
+<div x-drawer
   position="left"
   width="250px"
   title="Menu">
   Click to open the navigation drawer
-</wb-drawer>
-</wb-demo>
+</div>
+</div>
 
 ---
 
@@ -3390,166 +3391,166 @@ All card tags use `card-*` prefix for easy autocomplete and grouping:
 
 Basic card:
 
-<wb-demo>
-<card-basic>
+<div x-demo>
+<article>
   <h3>Card Title</h3>
   <p>Card content goes here.</p>
-</card-basic>
-</wb-demo>
+</article>
+</div>
 
 Image card:
 
-<wb-demo>
-<card-image
-  src="photo.jpg"
+<div x-demo>
+<div x-cardimage
+  src="https://picsum.photos/seed/photo/600/400"
   title="Beautiful Sunset"
   alt="Sunset over mountains">
-</card-image>
-</wb-demo>
+</div>
+</div>
 
 Profile card:
 
-<wb-demo>
-<card-profile
-  avatar="avatar.jpg"
+<div x-demo>
+<div x-cardprofile
+  avatar="https://ui-avatars.com/api/?name=Jane+Doe&size=150&background=475569&color=fff"
   name="Jane Doe"
   title="Senior Developer"
   bio="Full-stack developer with 10+ years experience.">
-</card-profile>
-</wb-demo>
+</div>
+</div>
 
 Pricing card:
 
-<wb-demo>
-<card-pricing
+<div x-demo>
+<div x-cardpricing
   plan="Pro"
   price="$29"
   period="/month"
   features="Unlimited projects, Priority support, API access"
   cta="Get Started"
   popular="true">
-</card-pricing>
-</wb-demo>
+</div>
+</div>
 
 Product card:
 
-<wb-demo>
-<card-product
-  image="product.jpg"
+<div x-demo>
+<div x-cardproduct
+  image="https://picsum.photos/seed/product/600/400"
   title="Widget Pro"
   price="$99.99"
   rating="4.5"
   reviews="128">
-</card-product>
-</wb-demo>
+</div>
+</div>
 
 Stats card:
 
-<wb-demo>
-<card-stats
+<div x-demo>
+<div x-cardstats
   value="2,847"
   label="Active Users"
   change="+12%"
   trend="up">
-</card-stats>
-</wb-demo>
+</div>
+</div>
 
 Testimonial card:
 
-<wb-demo>
-<card-testimonial
+<div x-demo>
+<div x-cardtestimonial
   quote="This product changed everything!"
   author="John Smith"
   role="CEO, TechCorp"
-  avatar="john.jpg">
-</card-testimonial>
-</wb-demo>
+  avatar="https://picsum.photos/seed/john/200/200">
+</div>
+</div>
 
 Hero card:
 
-<wb-demo>
-<card-hero
+<div x-demo>
+<div x-cardhero
   title="Welcome"
   subtitle="Get started today"
-  image="hero-bg.jpg"
+  image="https://picsum.photos/seed/hero-bg/600/400"
   cta="Learn More"
   href="/start">
-</card-hero>
-</wb-demo>
+</div>
+</div>
 
 Video card:
 
-<wb-demo>
-<card-video
+<div x-demo>
+<div x-cardvideo
   src="demo.mp4"
-  poster="poster.jpg"
+  poster="https://picsum.photos/seed/poster/800/450"
   title="Product Demo">
-</card-video>
-</wb-demo>
+</div>
+</div>
 
 File card:
 
-<wb-demo>
-<card-file
+<div x-demo>
+<div x-cardfile
   filename="report.pdf"
   size="2.4 MB"
   icon="📄"
   href="/downloads/report.pdf">
-</card-file>
-</wb-demo>
+</div>
+</div>
 
 Notification card:
 
-<wb-demo>
-<card-notification
+<div x-demo>
+<div x-cardnotification
   type="success"
   title="Payment Received"
   message="Your payment of $99.00 was successful."
   time="2 minutes ago">
-</card-notification>
-</wb-demo>
+</div>
+</div>
 
 Portfolio card:
 
-<wb-demo>
-<card-portfolio
-  image="project.jpg"
+<div x-demo>
+<div x-cardportfolio
+  image="https://picsum.photos/seed/project/600/400"
   title="E-commerce Redesign"
   category="Web Design"
   href="/portfolio/ecommerce">
-</card-portfolio>
-</wb-demo>
+</div>
+</div>
 
 Link card (clickable):
 
-<wb-demo>
-<card-link
+<div x-demo>
+<div x-cardlink
   href="/docs"
   title="Documentation"
   description="Learn how to use the framework"
   icon="📚">
-</card-link>
-</wb-demo>
+</div>
+</div>
 
 Horizontal card:
 
-<wb-demo>
-<card-horizontal
-  image="thumb.jpg"
+<div x-demo>
+<div x-cardhorizontal
+  image="https://picsum.photos/seed/thumb/600/400"
   title="Article Title"
   description="Brief description of the article...">
-</card-horizontal>
-</wb-demo>
+</div>
+</div>
 
 Overlay card:
 
-<wb-demo>
-<card-overlay
-  image="background.jpg"
+<div x-demo>
+<div x-cardoverlay
+  image="https://picsum.photos/seed/background/600/400"
   title="Overlay Title"
   subtitle="Text appears over the image">
-</card-overlay>
-</wb-demo>
+</div>
+</div>
 
 ---
 
@@ -3559,8 +3560,8 @@ These work on ANY element and are always active:
 
 Tooltip on any element:
 
-<wb-demo>
-<wb-container>
+<div x-demo>
+<div x-container>
 <button tooltip="Save your work">💾 Save</button>
 <span tooltip="Click for more information">ℹ️</span>
 <a
@@ -3568,22 +3569,22 @@ Tooltip on any element:
   tooltip="Go to homepage">
   Home
 </a>
-</wb-container>
-</wb-demo>
+</div>
+</div>
 
 Toast message on click:
 
-<wb-demo>
-<wb-container>
+<div x-demo>
+<div x-container>
 <button toast-message="Copied to clipboard!">📋 Copy</button>
 <button toast-message="Item added to cart">🛒 Add to Cart</button>
-</wb-container>
-</wb-demo>
+</div>
+</div>
 
 Ripple effect on any clickable element:
 
-<wb-demo>
-<wb-container>
+<div x-demo>
+<div x-container>
 <div
   ripple
   style="padding: 2rem; cursor: pointer;">
@@ -3594,13 +3595,13 @@ Ripple effect on any clickable element:
   ripple>
   Ripple Link
 </a>
-</wb-container>
-</wb-demo>
+</div>
+</div>
 
 Badge on any element:
 
-<wb-demo>
-<wb-container>
+<div x-demo>
+<div x-container>
 <span badge="3">🔔 Notifications</span>
 <button badge="New">✨ Features</button>
 <a
@@ -3608,8 +3609,8 @@ Badge on any element:
   badge="99+">
   📧 Inbox
 </a>
-</wb-container>
-</wb-demo>
+</div>
+</div>
 
 ---
 

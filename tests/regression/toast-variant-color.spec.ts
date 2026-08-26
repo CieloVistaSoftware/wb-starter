@@ -2,7 +2,7 @@ import { test, expect } from '@playwright/test';
 
 /**
  * Regression: pages/behaviors.html, pages/newbehaviors.html,
- * pages/components.html, demos/buttons.html, demos/feedback-demo.html, and
+ * pages/behaviors.html, demos/buttons.html, demos/feedback-demo.html, and
  * demos/frameworks.html all triggered toasts via `type="success"` (or, in
  * frameworks.html's React-prop object, `'type': 'info'`) -- but
  * feedback.js's toast() never reads `type` at all. Its real, documented
@@ -25,19 +25,19 @@ test.describe('Toast variant coloring (Behaviors page)', () => {
     await heading.scrollIntoViewIfNeeded();
 
     const cases: Array<[string, string]> = [
-      ['Info Toast', 'wb-toast--info'],
-      ['Success Toast', 'wb-toast--success'],
-      ['Warning Toast', 'wb-toast--warning'],
-      ['Error Toast', 'wb-toast--error'],
+      ['Info Toast', 'x-toast--info'],
+      ['Success Toast', 'x-toast--success'],
+      ['Warning Toast', 'x-toast--warning'],
+      ['Error Toast', 'x-toast--error'],
     ];
 
     for (const [label, expectedClass] of cases) {
       await page.locator('button', { hasText: label }).click();
-      const toasts = page.locator('.wb-toast-container .wb-toast');
+      const toasts = page.locator('.x-toast-container .x-toast');
       const last = toasts.last();
       await expect(last).toHaveClass(new RegExp(expectedClass));
       // Clear it so the next iteration's "last toast" isn't ambiguous.
-      await page.evaluate(() => document.querySelectorAll('.wb-toast-container .wb-toast').forEach(el => el.remove()));
+      await page.evaluate(() => document.querySelectorAll('.x-toast-container .x-toast').forEach(el => el.remove()));
     }
   });
 });

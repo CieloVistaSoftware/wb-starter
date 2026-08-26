@@ -4,13 +4,13 @@
   "title": "Switch",
   "description": "Toggle switch for boolean settings",
   "schemaFor": "switch",
-  "baseClass": "wb-switch",
+  "baseClass": "x-switch",
   "semanticElement": {
     "tagName": "div",
     "implicitRole": "switch"
   },
   "compliance": {
-    "baseClass": "wb-switch",
+    "baseClass": "x-switch",
     "supportLevel": "stable",
     "accessibility": "high"
   },
@@ -56,7 +56,7 @@
         "lg"
       ],
       "default": "md",
-      "appliesClass": "wb-switch--{{value}}"
+      "appliesClass": "x-switch--{{value}}"
     },
     "variant": {
       "type": "string",
@@ -66,7 +66,7 @@
         "success"
       ],
       "default": "default",
-      "appliesClass": "wb-switch--{{value}}"
+      "appliesClass": "x-switch--{{value}}"
     }
   },
   "$view": [
@@ -137,51 +137,51 @@
     }
   },
   "$cssAPI": {
-    "--wb-switch-width": {
+    "--x-switch-width": {
       "default": "44px",
       "description": "Track width"
     },
-    "--wb-switch-height": {
+    "--x-switch-height": {
       "default": "24px",
       "description": "Track height"
     },
-    "--wb-switch-radius": {
+    "--x-switch-radius": {
       "default": "9999px",
       "description": "Track border radius"
     },
-    "--wb-switch-track-bg": {
+    "--x-switch-track-bg": {
       "default": "var(--bg-tertiary, #d1d5db)",
       "description": "Track background (off)"
     },
-    "--wb-switch-track-bg-on": {
+    "--x-switch-track-bg-on": {
       "default": "var(--primary, #6366f1)",
       "description": "Track background (on)"
     },
-    "--wb-switch-thumb-size": {
+    "--x-switch-thumb-size": {
       "default": "20px",
       "description": "Thumb size"
     },
-    "--wb-switch-thumb-bg": {
+    "--x-switch-thumb-bg": {
       "default": "#ffffff",
       "description": "Thumb background"
     },
-    "--wb-switch-thumb-shadow": {
+    "--x-switch-thumb-shadow": {
       "default": "0 1px 3px rgba(0,0,0,0.2)",
       "description": "Thumb shadow"
     },
-    "--wb-switch-transition": {
+    "--x-switch-transition": {
       "default": "all 0.2s ease",
       "description": "Toggle transition"
     },
-    "--wb-switch-disabled-opacity": {
+    "--x-switch-disabled-opacity": {
       "default": "0.5",
       "description": "Disabled opacity"
     },
-    "--wb-switch-label-gap": {
+    "--x-switch-label-gap": {
       "default": "0.5rem",
       "description": "Gap between switch and label"
     },
-    "--wb-switch-focus-ring": {
+    "--x-switch-focus-ring": {
       "default": "0 0 0 3px rgba(99, 102, 241, 0.2)",
       "description": "Focus ring"
     }
@@ -196,14 +196,14 @@
   },
   "test": {
     "setup": [
-      "<wb-switch>Basic switch content</wb-switch>",
-      "<wb-switch label-position=\"start\">labelPosition=start</wb-switch>",
-      "<wb-switch label-position=\"end\">labelPosition=end</wb-switch>",
-      "<wb-switch size=\"sm\">size=sm</wb-switch>",
-      "<wb-switch size=\"md\">size=md</wb-switch>",
-      "<wb-switch size=\"lg\">size=lg</wb-switch>",
-      "<wb-switch variant=\"default\">variant=default</wb-switch>",
-      "<wb-switch variant=\"primary\">variant=primary</wb-switch>"
+      "<div x-switch>Basic switch content</div>",
+      "<div x-switch label-position=\"start\">labelPosition=start</div>",
+      "<div x-switch label-position=\"end\">labelPosition=end</div>",
+      "<div x-switch size=\"sm\">size=sm</div>",
+      "<div x-switch size=\"md\">size=md</div>",
+      "<div x-switch size=\"lg\">size=lg</div>",
+      "<div x-switch variant=\"default\">variant=default</div>",
+      "<div x-switch variant=\"primary\">variant=primary</div>"
     ],
     "matrix": {
       "combinations": [
@@ -226,16 +226,16 @@
     },
     "site": {
       "page": "forms",
-      "tag": "wb-switch",
+      "tag": "x-switch",
       "renders": true,
-      "baseClass": "wb-switch",
+      "baseClass": "x-switch",
       "minInstances": 4,
       "checkText": [
         "Test"
       ],
       "checkClasses": [
-        "wb-switch--sm",
-        "wb-switch--primary"
+        "x-switch--sm",
+        "x-switch--primary"
       ],
       "checkAttributes": [
         "label"

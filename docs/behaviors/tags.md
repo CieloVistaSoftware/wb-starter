@@ -10,16 +10,16 @@ to a text input. See [src/wb-viewmodels/tags.js](../../src/wb-viewmodels/tags.js
 ## Usage
 
 Apply `x-tags` directly to a real `<input>` — the behavior wraps it in a
-`.wb-tags` container and adds the tag list as a sibling (an `<input>` is a
+`.x-tags` container and adds the tag list as a sibling (an `<input>` is a
 void element and can't hold children, so nothing is ever appended inside it).
 
 ```html
 <input type="text" x-tags placeholder="Type a skill and press Enter…">
 ```
 
-<wb-demo>
+<div x-demo>
 <input type="text" x-tags placeholder="Type a skill and press Enter…">
-</wb-demo>
+</div>
 
 Click any tag to remove it.
 
@@ -33,9 +33,9 @@ interactively (there's no attribute for pre-populating an initial tag list).
 | Class | Applies to | When |
 |---|---|---|
 | `<div x-tags>` | wrapper `<div>` | always |
-| `wb-tags__input` | the `<input>` | always |
-| `wb-tags__list` | the generated tag list `<div>` | always |
-| `wb-tags__tag` | each generated tag `<span>` | one per added tag |
+| `x-tags__input` | the `<input>` | always |
+| `x-tags__list` | the generated tag list `<div>` | always |
+| `x-tags__tag` | each generated tag `<span>` | one per added tag |
 
 ## Events
 

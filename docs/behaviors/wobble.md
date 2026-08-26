@@ -2,12 +2,16 @@
 
 On click, plays the wobble animation for 1s.
 
-Apply `x-wobble` to any element.
+## Type — new capability
 
-## Usage
+`x-wobble` adds behavior that no HTML element implies. Nothing about a tag says "ripple" or "tooltip", so this is always opted into by attribute, on whatever element you already chose.
+
+### How to write it
 
 ```html
-<button class="effect-demo" x-wobble>Wobble</button>
+<button class="effect-demo" x-wobble>
+  x-wobble
+</button>
 ```
 
 ## Live example

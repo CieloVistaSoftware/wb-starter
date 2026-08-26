@@ -14,7 +14,7 @@ sections.forEach(s => {
 
 // Check for key components
 console.log('---');
-const components = ['wb-tabs','wb-accordion','wb-alert','wb-badge','wb-progress','wb-spinner','wb-avatar','wb-rating','wb-modal','wb-drawer','wb-audio','wb-switch','wb-demo'];
+const components = ['x-tabs','x-accordion','x-alert','x-badge','x-progress','x-spinner','x-avatar','x-rating','x-modal','x-drawer','x-audio','x-switch','x-demo'];
 components.forEach(c => {
   const re = new RegExp('<' + c + '[\\s>]', 'gi');
   const count = (html.match(re) || []).length;

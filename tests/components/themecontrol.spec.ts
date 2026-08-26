@@ -25,14 +25,14 @@ async function injectAndScan(page: Page, html: string) {
     container.innerHTML = h;
     
     // Force eager loading
-    const elements = container.querySelectorAll('.wb-ready');
+    const elements = container.querySelectorAll('.x-ready');
     elements.forEach(el => el.setAttribute('', ''));
     
     document.body.appendChild(container);
   }, html);
   
-  await page.evaluate(() => {
-    (window as any).WB.scan(document.getElementById('test-container'));
+  await page.evaluate(async () => {
+    await (window as any).WB.scan(document.getElementById('test-container'));
   });
   
   await page.waitForTimeout(500);
@@ -45,11 +45,11 @@ test.describe('themecontrol Behavior', () => {
     page.on('pageerror', (err) => errors.push(err.message));
     
     const setupHtml = [
-      "<wb-themecontrol>Basic themecontrol content</wb-themecontrol>",
-      "<wb-themecontrol>Test permutation 2</wb-themecontrol>",
-      "<wb-themecontrol>Test permutation 3</wb-themecontrol>",
-      "<wb-themecontrol>Test permutation 4</wb-themecontrol>",
-      "<wb-themecontrol>Test permutation 5</wb-themecontrol>"
+      "<div x-themecontrol>Basic themecontrol content</div>",
+      "<div x-themecontrol>Test permutation 2</div>",
+      "<div x-themecontrol>Test permutation 3</div>",
+      "<div x-themecontrol>Test permutation 4</div>",
+      "<div x-themecontrol>Test permutation 5</div>"
     ];
     
     await injectAndScan(page, setupHtml.join('\n'));
@@ -65,10 +65,10 @@ test.describe('themecontrol Behavior', () => {
   });
 
   test('element is visible after scan', async ({ page }) => {
-    const html = "<wb-themecontrol>Basic themecontrol content</wb-themecontrol>";
+    const html = "<div x-themecontrol>Basic themecontrol content</div>";
     await injectAndScan(page, html);
     
-    const el = page.locator('#test-container wb-themecontrol, #test-container wb-themecontrol').first();
+    const el = page.locator('#test-container [x-themecontrol], #test-container [x-themecontrol]').first();
     const isPresent = await el.count() > 0;
     
     if (isPresent) {

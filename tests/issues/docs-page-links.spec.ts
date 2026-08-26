@@ -6,7 +6,7 @@ import { test, expect } from '@playwright/test';
 
 test.describe('Docs Page Links', () => {
   test('docs page loads with documentation cards', async ({ page }) => {
-    await page.goto('http://localhost:3000/?page=docs');
+    await page.goto('/?page=docs');
     await page.waitForLoadState('networkidle');
 
     // Wait for docs to load
@@ -21,7 +21,7 @@ test.describe('Docs Page Links', () => {
   });
 
   test('markdown doc links have correct hrefs', async ({ page }) => {
-    await page.goto('http://localhost:3000/?page=docs');
+    await page.goto('/?page=docs');
     await page.waitForLoadState('networkidle');
 
     // Wait for docs to load
@@ -43,7 +43,7 @@ test.describe('Docs Page Links', () => {
   });
 
   test('page links have correct hrefs', async ({ page }) => {
-    await page.goto('http://localhost:3000/?page=docs');
+    await page.goto('/?page=docs');
     await page.waitForLoadState('networkidle');
 
     // Wait for docs to load
@@ -65,7 +65,7 @@ test.describe('Docs Page Links', () => {
   });
 
   test('search input exists and is functional', async ({ page }) => {
-    await page.goto('http://localhost:3000/?page=docs');
+    await page.goto('/?page=docs');
     await page.waitForLoadState('networkidle');
 
     // Check search input exists

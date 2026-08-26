@@ -2,13 +2,17 @@
 
 Behavior applied with x-copybutton.
 
-Apply `x-copybutton` to any element.
+## Type — new capability
 
-## Usage
+`x-copybutton` adds behavior that no HTML element implies. Nothing about a tag says "ripple" or "tooltip", so this is always opted into by attribute, on whatever element you already chose.
+
+### How to write it
 
 ```html
-<button x-copybutton copy-target="#wb-ex-copy-source">Copy command</button>
-<code id="wb-ex-copy-source">npm run test:compliance</code>
+<button x-copybutton copy-target="#x-ex-copy-source">
+  x-copybutton · copy-target: #x-ex-copy-source
+</button>
+<code id="x-ex-copy-source">npm run test:compliance</code>
 ```
 
 ## Attributes

@@ -25,7 +25,7 @@ const COVERED = new Set([
   'autosize', 'behavior', 'behaviors-showcase', 'builder',
   'card', 'feedback', 'header', 'notes', 'scrollalong', 'sticky',
   // Card variants covered by cards/ tests
-  'wb-card',
+  'x-card',
 ]);
 
 // Skip these — not real behaviors or special cases
@@ -36,7 +36,7 @@ const SKIP = new Set([
 // Map behavior name → target test folder
 function getTestFolder(name) {
   // Card-related behaviors
-  if (name.startsWith('card') || name === 'wb-card') return 'cards';
+  if (name.startsWith('card') || name === 'x-card') return 'cards';
   // Builder-related
   if (name.startsWith('builder')) return 'builder';
   // Everything else → components
@@ -162,7 +162,7 @@ async function injectAndScan(page: Page, html: string) {
     
     // Force eager loading
     const elements = container.querySelectorAll('[data-wb]');
-    elements.forEach(el => el.setAttribute('data-wb-eager', ''));
+    elements.forEach(el => el.setAttribute('data-x-eager', ''));
     
     document.body.appendChild(container);
   }, html);

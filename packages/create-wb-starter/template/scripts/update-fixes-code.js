@@ -43,9 +43,9 @@ for (const key in fixes) {
         } else if (fix.action.includes('Added logic to create figcaption')) {
              fix.code = "if (!element.querySelector('figcaption') && element.dataset.caption) {\n  const cap = document.createElement('figcaption');\n  cap.textContent = element.dataset.caption;\n  element.appendChild(cap);\n}";
         } else if (fix.action.includes('Added controls row')) {
-             fix.code = "const controls = document.createElement('div');\ncontrols.className = 'wb-audio-controls';\n// ... append play/pause buttons";
+             fix.code = "const controls = document.createElement('div');\ncontrols.className = 'x-audio-controls';\n// ... append play/pause buttons";
         } else if (fix.action.includes('Added missing classList.add')) {
-             fix.code = "element.classList.add('wb-card--align-left');\nelement.classList.add('wb-card--overlay-bottom');";
+             fix.code = "element.classList.add('x-card--align-left');\nelement.classList.add('x-card--overlay-bottom');";
         } else if (fix.action.includes('Created missing behavior files')) {
              fix.code = "// Created file: src/behaviors/js/globe.js\nexport default function globe(el) { ... }";
         } else if (fix.action.includes('Implemented full star rating')) {

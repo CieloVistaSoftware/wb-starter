@@ -55,7 +55,7 @@ test.describe('Behaviors page — STRICT audit (dark theme)', () => {
 
   test('AUDIT: no wb-* component is zero-size or left as raw inline text', async ({ page }) => {
     const offenders = await page.evaluate(() => {
-      const tags = ['[x-switch]', '[x-rating]', '[x-alert]', '[x-badge]', '[x-progress]', '[x-spinner]', 'wb-avatar', 'wb-skeleton', '[x-tabs]', '[x-cardnotification]'];
+      const tags = ['[x-switch]', '[x-rating]', '[x-alert]', '[x-badge]', '[x-progress]', '[x-spinner]', 'x-avatar', 'x-skeleton', '[x-tabs]', '[x-cardnotification]'];
       const bad: any[] = [];
       for (const t of tags) {
         document.querySelectorAll('#mainPage-behaviors ' + t).forEach((el) => {
@@ -80,12 +80,12 @@ test.describe('Behaviors page — STRICT audit (dark theme)', () => {
         return inp ? String(inp.checked) : (sw.getAttribute('checked') ?? sw.classList.contains('checked') ? 'on' : 'off');
       };
       const before = read();
-      const target = (sw.querySelector('input, [role=switch], .wb-switch__track, label, button') as HTMLElement) || (sw as HTMLElement);
+      const target = (sw.querySelector('input, [role=switch], .x-switch__track, label, button') as HTMLElement) || (sw as HTMLElement);
       target.click();
       await new Promise((r) => setTimeout(r, 150));
       return { before, after: read() };
     });
-    expect(result, 'no wb-switch on page').not.toBe('NO_SWITCH');
+    expect(result, 'no x-switch on page').not.toBe('NO_SWITCH');
     expect((result as any).after, `switch did not change state on click (${JSON.stringify(result)})`).not.toBe((result as any).before);
   });
 

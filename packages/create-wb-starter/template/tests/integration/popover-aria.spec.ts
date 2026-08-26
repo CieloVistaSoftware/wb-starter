@@ -15,7 +15,7 @@ test('popover announces itself to assistive tech via ARIA (#209)', async ({ page
   await page.waitForFunction(() => !!(window as any).WB, { timeout: 20000 });
 
   await page.evaluate(async () => {
-    document.querySelectorAll('#aria-pop, body > div.wb-popover').forEach((e) => e.remove());
+    document.querySelectorAll('#aria-pop, body > div.x-popover').forEach((e) => e.remove());
     const btn = document.createElement('button');
     btn.id = 'aria-pop';
     btn.setAttribute('x-popover', '');
@@ -27,7 +27,7 @@ test('popover announces itself to assistive tech via ARIA (#209)', async ({ page
   });
 
   const btn = page.locator('#aria-pop');
-  await expect(btn).toHaveClass(/wb-popover-trigger/, { timeout: 15000 });
+  await expect(btn).toHaveClass(/x-popover-trigger/, { timeout: 15000 });
 
   // Static hint present before any interaction; not yet expanded.
   await expect(btn).toHaveAttribute('aria-haspopup', 'dialog');

@@ -5,7 +5,7 @@
   "description": "Toggle visibility or state of another element.",
   "schemaFor": "toggle",
   "compliance": {
-    "baseClass": "wb-toggle",
+    "baseClass": "x-toggle",
     "supportLevel": "stable",
     "accessibility": "high"
   },
@@ -21,11 +21,11 @@
   "$cssAPI": {},
   "test": {
     "setup": [
-      "<wb-toggle>Basic toggle content</wb-toggle>",
-      "<wb-toggle target=\"Sample target\">target=\"Sample target\"</wb-toggle>",
-      "<wb-toggle>Test permutation 3</wb-toggle>",
-      "<wb-toggle>Test permutation 4</wb-toggle>",
-      "<wb-toggle>Test permutation 5</wb-toggle>"
+      "<div x-toggle>Basic toggle content</div>",
+      "<div x-toggle target=\"Sample target\">target=\"Sample target\"</div>",
+      "<div x-toggle>Test permutation 3</div>",
+      "<div x-toggle>Test permutation 4</div>",
+      "<div x-toggle>Test permutation 5</div>"
     ],
     "matrix": {
       "combinations": [
@@ -36,9 +36,9 @@
     },
     "site": {
       "page": "forms",
-      "tag": "wb-toggle",
+      "tag": "x-toggle",
       "renders": true,
-      "baseClass": "wb-toggle",
+      "baseClass": "x-toggle",
       "minInstances": 1,
       "checkText": [],
       "checkClasses": [],

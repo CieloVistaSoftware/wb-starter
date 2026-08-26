@@ -21,9 +21,9 @@ export function desclist(element, options = {}) {
     return;
   }
 
-  element.classList.add('wb-dl');
+  element.classList.add('x-dl');
   if (config.horizontal) {
-    element.classList.add('wb-dl--horizontal');
+    element.classList.add('x-dl--horizontal');
   }
 
   element.innerHTML = '';
@@ -40,20 +40,20 @@ export function desclist(element, options = {}) {
   });
 
   // Add styles
-  if (!document.getElementById('wb-dl-style')) {
+  if (!document.getElementById('x-dl-style')) {
     const style = document.createElement('style');
-    style.id = 'wb-dl-style';
+    style.id = 'x-dl-style';
     style.textContent = `
-      .wb-dl { display: grid; gap: 0.5rem; }
-      .wb-dl dt { font-weight: 600; color: var(--text-primary); }
-      .wb-dl dd { margin: 0; color: var(--text-secondary); }
+      .x-dl { display: grid; gap: 0.5rem; }
+      .x-dl dt { font-weight: 600; color: var(--text-primary); }
+      .x-dl dd { margin: 0; color: var(--text-secondary); }
       
-      .wb-dl--horizontal {
+      .x-dl--horizontal {
         grid-template-columns: auto 1fr;
         align-items: baseline;
         gap: 0.5rem 2rem;
       }
-      .wb-dl--horizontal dt { text-align: right; }
+      .x-dl--horizontal dt { text-align: right; }
     `;
     document.head.appendChild(style);
   }

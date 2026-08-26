@@ -28,7 +28,7 @@ across two columns) and `margin-bottom` equal to `gap`.
 
 ### Default (3 columns)
 
-<wb-demo>
+<div x-demo>
 <div x-masonry>
   <div>Item 1</div>
   <div>Item 2<br>Item 2 has<br>extra lines<br>of content.</div>
@@ -37,24 +37,24 @@ across two columns) and `margin-bottom` equal to `gap`.
   <div>Item 5<br>Also taller<br>than the rest.</div>
   <div>Item 6</div>
 </div>
-</wb-demo>
+</div>
 
 ### Two columns with a wider gap
 
-<wb-demo>
+<div x-demo>
 <div x-masonry columns="2" gap="2rem">
   <div>Item 1</div>
   <div>Item 2</div>
   <div>Item 3</div>
   <div>Item 4</div>
 </div>
-</wb-demo>
+</div>
 
 ## CSS Classes
 
 | Class | Applied When | Description |
 |-------|--------------|-------------|
-| `.wb-masonry` | Always | Marker class for targeting/testing; the column layout itself is set via inline `column-count`/`column-gap` |
+| `.x-masonry` | Always | Marker class for targeting/testing; the column layout itself is set via inline `column-count`/`column-gap` |
 
 ## Accessibility
 

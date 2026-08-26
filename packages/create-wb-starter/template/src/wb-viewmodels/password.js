@@ -1,8 +1,9 @@
+import { readFlag } from '../core/read-attr.js';
 // Standalone password behavior extracted from enhancements.js
 export function password(element, options = {}) {
   const config = {
     toggle: options.toggle ?? element.getAttribute('toggle') !== 'false',
-    strength: options.strength ?? element.hasAttribute('data-strength'),
+    strength: options.strength ?? readFlag(element, 'strength'),
     ...options
   };
   if (!element.parentNode) {
@@ -19,11 +20,11 @@ export function password(element, options = {}) {
     element.autocomplete = /new|confirm|signup|register/.test(hint) ? 'new-password' : 'current-password';
   }
   const wrapper = document.createElement('div');
-  wrapper.className = 'wb-password';
+  wrapper.className = 'x-password';
   wrapper.style.cssText = 'position:relative;display:flex;align-items:stretch;width:100%;';
   element.parentNode.insertBefore(wrapper, element);
   wrapper.appendChild(element);
-  element.classList.add('wb-password__input');
+  element.classList.add('x-password__input');
   element.style.cssText = `
     flex:1;
     padding-right:2.5rem;
@@ -39,7 +40,7 @@ export function password(element, options = {}) {
   if (config.toggle) {
     const toggleBtn = document.createElement('button');
     toggleBtn.type = 'button';
-    toggleBtn.className = 'wb-password__toggle';
+    toggleBtn.className = 'x-password__toggle';
     toggleBtn.style.cssText = `
       position:absolute;
       right:0;
@@ -70,7 +71,7 @@ export function password(element, options = {}) {
   }
   if (config.strength) {
     const meter = document.createElement('div');
-    meter.className = 'wb-password__strength';
+    meter.className = 'x-password__strength';
     meter.style.cssText = `
       position:absolute;
       bottom:-4px;
@@ -100,7 +101,7 @@ export function password(element, options = {}) {
   return () => {
     wrapper.parentNode.insertBefore(element, wrapper);
     wrapper.remove();
-    element.classList.remove('wb-password__input');
+    element.classList.remove('x-password__input');
     element.style.cssText = '';
   };
 }

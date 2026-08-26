@@ -1,11 +1,11 @@
 /**
  * Demo Container Styles
- * <wb-demo columns="3"> lays out children in a grid. Default 3 columns.
- * Colored code sample below via <wb-mdhtml>.
+ * <div x-demo columns="3"> lays out children in a grid. Default 3 columns.
+ * Colored code sample below via <div x-mdhtml>.
  */
 
-wb-demo, [x-demo],
-wb-code-card, [x-code-card]{
+x-demo, [x-demo],
+x-code-card, [x-code-card]{
   display: block;
   margin-bottom: 1rem;
   max-width: 100vw;
@@ -22,23 +22,23 @@ wb-code-card, [x-code-card]{
 }
 
 /* #425: an open dropdown positioned to open upward (top-start/top-end)
-   extends above its trigger and got clipped by wb-demo's own
+   extends above its trigger and got clipped by x-demo's own
    overflow:hidden above. Lift the clip specifically while a dropdown
    inside is open, rather than removing overflow:hidden globally (it's
    still needed to prevent wide code samples from blowing out the page
    width). Flat selector, not CSS nesting -- no other file in this
    codebase uses nesting syntax. */
-/* #448: also match a literal <wb-dropdown open> host directly (tag
-   selector) -- dropdown() no longer adds a same-named `.wb-dropdown` class
-   to that specific host, only to non-<wb-dropdown> hosts (e.g. x-dropdown
-   on a <button>), which the `.wb-dropdown.open` half of this selector still
+/* #448: also match a literal <div x-dropdown open> host directly (tag
+   selector) -- dropdown() no longer adds a same-named `.x-dropdown` class
+   to that specific host, only to non-<div x-dropdown> hosts (e.g. x-dropdown
+   on a <button>), which the `.x-dropdown.open` half of this selector still
    covers. */
-wb-demo:has(wb-dropdown.open), [x-demo]:has(wb-dropdown.open),
-wb-demo:has(.wb-dropdown.open), [x-demo]:has(.wb-dropdown.open){
+x-demo:has(x-dropdown.open), [x-demo]:has(x-dropdown.open),
+x-demo:has(.x-dropdown.open), [x-demo]:has(.x-dropdown.open){
   overflow: visible;
 }
 
-.wb-demo__grid {
+.x-demo__grid {
   display: grid;
   gap: 1rem;
   /* A native <dialog>, even with `open` set directly (not via showModal()),
@@ -59,7 +59,7 @@ wb-demo:has(.wb-dropdown.open), [x-demo]:has(.wb-dropdown.open){
      document with a mouse-tracking vignette (mix-blend-mode: multiply,
      z-index: 9999) sourced from a gallery demo far below the fold.
      Only effective together with overlays sizing via `inset` rather than
-     viewport units -- see .wb-stagelight--spotlight in
+     viewport units -- see .x-stagelight--spotlight in
      wb-viewmodels/stagelight.js. */
   contain: layout;
 }
@@ -69,12 +69,12 @@ wb-demo:has(.wb-dropdown.open), [x-demo]:has(.wb-dropdown.open){
    Code panels span full demo width regardless of column layout, with horizontal
    scroll for long lines (Standard §27: code samples flow left-to-right with
    natural line breaks, scrolling available for unavoidable long lines). */
-.wb-demo__code,
-.wb-demo__code code {
+.x-demo__code,
+.x-demo__code code {
   text-align: left;
 }
 
-.wb-demo__code {
+.x-demo__code {
   width: 100%;
   /* John, live correction (screenshot): "do not cut off code when there is
      only 1 card per row." Every demo on the site is single-column now (§3,
@@ -98,7 +98,7 @@ wb-demo:has(.wb-dropdown.open), [x-demo]:has(.wb-dropdown.open){
      control measured under ~296px, which is most buttons/inputs/labels on
      the site.
      The floor was added (#486, see git blame) to fix a real but narrower
-     problem: a genuinely tiny control (bare <wb-spinner>/<wb-progress>,
+     problem: a genuinely tiny control (bare <span x-spinner>/<progress>,
      30-70px) dragging its code panel down to unreadable width. But that
      fix wasn't actually needed for the reason given -- `white-space: pre`
      (pre.css's `.x-pre`, below) already makes a `<pre>` NEVER wrap,
@@ -115,7 +115,7 @@ wb-demo:has(.wb-dropdown.open), [x-demo]:has(.wb-dropdown.open){
      labels measure under 100px, well inside "genuinely tiny" territory
      too).
      --demo-code-min-width stays a variable (not now-unused) because
-     wb-demo[data-code-width="50vw"] below still explicitly OPTS IN to a, [x-demo][data-code-width="50vw"] below still explicitly OPTS IN to a
+     x-demo[data-code-width="50vw"] below still explicitly OPTS IN to a, [x-demo][data-code-width="50vw"] below still explicitly OPTS IN to a
      50vw floor for pages that want a wider code panel on purpose --
      unaffected by this change, since it sets the variable itself rather
      than relying on the fallback. */
@@ -124,55 +124,55 @@ wb-demo:has(.wb-dropdown.open), [x-demo]:has(.wb-dropdown.open){
 }
 
 /* Per-demo code width control: use data-code-width or --demo-code-max-width
-   Example: <wb-demo style="--demo-code-max-width: 600px;">
+   Example: <div x-demo style="--demo-code-max-width: 600px;">
    Presets: narrow (400px), normal (600px), wide (800px), full (100%) */
-wb-demo[data-code-width="narrow"] .wb-demo__code, [x-demo][data-code-width="narrow"] .wb-demo__code{
+x-demo[data-code-width="narrow"] .x-demo__code, [x-demo][data-code-width="narrow"] .x-demo__code{
   max-width: 400px;
 }
 
-wb-demo[data-code-width="normal"] .wb-demo__code, [x-demo][data-code-width="normal"] .wb-demo__code{
+x-demo[data-code-width="normal"] .x-demo__code, [x-demo][data-code-width="normal"] .x-demo__code{
   max-width: 600px;
 }
 
-wb-demo[data-code-width="wide"] .wb-demo__code, [x-demo][data-code-width="wide"] .wb-demo__code{
+x-demo[data-code-width="wide"] .x-demo__code, [x-demo][data-code-width="wide"] .x-demo__code{
   max-width: 800px;
 }
 
-wb-demo[data-code-width="full"] .wb-demo__code, [x-demo][data-code-width="full"] .wb-demo__code{
+x-demo[data-code-width="full"] .x-demo__code, [x-demo][data-code-width="full"] .x-demo__code{
   max-width: 100%;
 }
 
-wb-demo[data-code-width="50vw"] .wb-demo__code, [x-demo][data-code-width="50vw"] .wb-demo__code{
+x-demo[data-code-width="50vw"] .x-demo__code, [x-demo][data-code-width="50vw"] .x-demo__code{
   max-width: 50vw;
 }
 
-/* #486's single-item shrink-to-fit (--wb-demo-shrink-width, above) sizes the
-   WHOLE demo -- code panel included, since .wb-demo__code is width:100% of
-   its wb-demo parent -- to the rendered control's own natural width. For a
-   small control (a plain text <wb-card>, ~250-340px) that leaves the code
-   panel just as cramped as the control, even though .wb-demo__code's own
+/* #486's single-item shrink-to-fit (--x-demo-shrink-width, above) sizes the
+   WHOLE demo -- code panel included, since .x-demo__code is width:100% of
+   its x-demo parent -- to the rendered control's own natural width. For a
+   small control (a plain text <article>, ~250-340px) that leaves the code
+   panel just as cramped as the control, even though .x-demo__code's own
    max-width already allows up to 50vw -- a max-width can never make an
    element WIDER than its constrained parent, only narrower. min-width on
-   the wb-demo itself is what actually lets the code panel reach the
+   the x-demo itself is what actually lets the code panel reach the
    requested width: min-width always wins over the JS-set `width` in the
    box model, so the demo (and everything width:100% inside it) grows to
    50vw regardless of how narrow the control's own shrink-measurement was.
    Confirmed live: pages/components.html's "This is the title" card demo
    was rendering source at ~250px with a horizontal scrollbar cutting off
    every attribute value mid-word. */
-wb-demo[data-code-width="50vw"], [x-demo][data-code-width="50vw"]{
+x-demo[data-code-width="50vw"], [x-demo][data-code-width="50vw"]{
   --demo-code-min-width: 50vw;
   min-width: 50vw;
 }
 
-.wb-demo__grid--cols-1 { grid-template-columns: 1fr; }
+.x-demo__grid--cols-1 { grid-template-columns: 1fr; }
 
 /* justify-items: start (not the grid default `stretch`), single-item grids
-   ONLY -- #390: a grid item with no explicit width (e.g. `.wb-card--auto`,
+   ONLY -- #390: a grid item with no explicit width (e.g. `.x-card--auto`,
    "no constraints, fills container" per card.css) stretches to fill its
    1fr track by default. That stretch is circular with the width:fit-content
    rules below's shrink-to-fit computation -- confirmed live: a single
-   <wb-cardimage> demo left the grid (and therefore wb-demo, its code
+   <div x-cardimage> demo left the grid (and therefore x-demo, its code
    panel, everything) at full container width instead of hugging the
    card's own natural size, while a plain <button> (which doesn't stretch)
    shrank correctly. Forcing `start` makes a lone item use its own natural
@@ -185,7 +185,7 @@ wb-demo[data-code-width="50vw"], [x-demo][data-code-width="50vw"]{
    selector, to size the TRACK itself rather than just aligning the item
    within it -- fixes some real cards (pricing cards, which justify-items
    alone leaves too wide) but BREAKS others (collapsed a real
-   <wb-cardpricing> to a 2px-wide sliver, its content forced into an
+   <div x-cardpricing> to a 2px-wide sliver, its content forced into an
    unusable space -- confirmed live). justify-items:start alone is an
    incomplete fix (some real cards stay wider than ideal) but never
    actively breaks rendering, which max-content did -- the safer of the
@@ -195,7 +195,7 @@ wb-demo[data-code-width="50vw"], [x-demo][data-code-width="50vw"]{
    width:fit-content -- justify-items:start alone only aligns the item
    inside an otherwise full-width 1fr track; the TRACK stays full width
    until the grid's own box is told to shrink too. */
-.wb-demo__grid--cols-1:has(> :only-child) {
+.x-demo__grid--cols-1:has(> :only-child) {
   justify-items: start;
   width: fit-content;
   max-width: 100%;
@@ -215,8 +215,8 @@ wb-demo[data-code-width="50vw"], [x-demo][data-code-width="50vw"]{
    so the box is exactly as wide as it needs to be to show every code line
    in full, without ever going wider than that (still hugs content, never
    stretches to the page). */
-wb-demo:has(> .wb-demo__grid--cols-1 > :only-child), [x-demo]:has(> .wb-demo__grid--cols-1 > :only-child){
-  width: var(--wb-demo-shrink-width, fit-content);
+x-demo:has(> .x-demo__grid--cols-1 > :only-child), [x-demo]:has(> .x-demo__grid--cols-1 > :only-child){
+  width: var(--x-demo-shrink-width, fit-content);
   max-width: 100%;
   min-width: min(var(--demo-code-min-width, 0px), 90vw);
 }
@@ -228,7 +228,7 @@ wb-demo:has(> .wb-demo__grid--cols-1 > :only-child), [x-demo]:has(> .wb-demo__gr
    source order alone can't win this -- !important is the deliberate,
    intended override for this specific opt-out, not a specificity workaround
    for something accidental. */
-wb-demo.wb-demo--full-width, [x-demo].wb-demo--full-width{
+x-demo.x-demo--full-width, [x-demo].x-demo--full-width{
   width: 100% !important;
   max-width: 100% !important;
 }
@@ -237,14 +237,14 @@ wb-demo.wb-demo--full-width, [x-demo].wb-demo--full-width{
    width, not just BE wide -- without this, `justify-items: start` (added
    for the single-item shrink-to-content fix) leaves a full-width hero
    card sitting at its own narrow intrinsic content width inside an
-   invisibly-wide grid. Confirmed live: a <wb-cardhero> with a full-width
-   <wb-demo> collapsed to a ~40px sliver of clipped text on mobile before
-   this override. Also must override .wb-demo__grid--cols-1:has(> :only-child)'s
+   invisibly-wide grid. Confirmed live: a <div x-cardhero> with a full-width
+   <div x-demo> collapsed to a ~40px sliver of clipped text on mobile before
+   this override. Also must override .x-demo__grid--cols-1:has(> :only-child)'s
    `width: fit-content` rule (which otherwise would shrink the grid to its
    content's intrinsic width, creating the 11.44x height:width problem --
    confirmed live: cardhero in full-width single-item demo collapsed to 33px
    wide with 487px height = 14.7x aspect ratio). */
-wb-demo.wb-demo--full-width .wb-demo__grid, [x-demo].wb-demo--full-width .wb-demo__grid{
+x-demo.x-demo--full-width .x-demo__grid, [x-demo].x-demo--full-width .x-demo__grid{
   width: 100% !important;
   max-width: 100% !important;
   justify-items: stretch;
@@ -257,55 +257,55 @@ wb-demo.wb-demo--full-width .wb-demo__grid, [x-demo].wb-demo--full-width .wb-dem
    left/right as you scroll past narrow vs. wide demos ("window slop"),
    with no spare screen width to absorb it the way desktop has. Split the
    two apart here: the grid (and therefore the control it renders) still
-   hugs its content per §7, but `wb-demo` itself -- and `.wb-demo__code`,
+   hugs its content per §7, but `x-demo` itself -- and `.x-demo__code`,
    its code-panel child -- stay full width, so the page's horizontal
    footprint holds constant across every demo. NOT applied above 700px; see
    the desktop rule above for why. */
 @media (max-width: 700px) {
-  /* John: "the margins are still not right on our wb-demos... change the
+  /* John: "the margins are still not right on our x-demos... change the
      left and right gaps to be .5rem for mobile." Left/right only -- the
      base rule's 1rem vertical spacing (between stacked demos) stays, this
      just narrows the horizontal breathing room to match mobile's tighter
      available width. */
-  wb-demo, [x-demo],
-  wb-code-card, [x-code-card]{
+  x-demo, [x-demo],
+  x-code-card, [x-code-card]{
     padding-left: 0.5rem;
     padding-right: 0.5rem;
   }
 
-  wb-demo:has(> .wb-demo__grid--cols-1 > :only-child), [x-demo]:has(> .wb-demo__grid--cols-1 > :only-child){
+  x-demo:has(> .x-demo__grid--cols-1 > :only-child), [x-demo]:has(> .x-demo__grid--cols-1 > :only-child){
     width: 100%;
     max-width: 100%;
   }
 
-  .wb-demo__grid--cols-1:has(> :only-child) {
+  .x-demo__grid--cols-1:has(> :only-child) {
     width: fit-content;
     max-width: 100%;
   }
 
-  wb-demo.wb-demo--full-width .wb-demo__grid, [x-demo].wb-demo--full-width .wb-demo__grid{
+  x-demo.x-demo--full-width .x-demo__grid, [x-demo].x-demo--full-width .x-demo__grid{
     width: 100% !important;
     max-width: 100% !important;
   }
 
-  .wb-demo__code {
+  .x-demo__code {
     width: 100%;
   }
 }
 
-.wb-demo__grid--cols-2 { grid-template-columns: repeat(2, 1fr); }
-.wb-demo__grid--cols-3 { grid-template-columns: repeat(3, 1fr); }
-.wb-demo__grid--cols-4 { grid-template-columns: repeat(4, 1fr); }
-.wb-demo__grid--cols-5 { grid-template-columns: repeat(5, 1fr); }
-.wb-demo__grid--cols-6 { grid-template-columns: repeat(6, 1fr); }
+.x-demo__grid--cols-2 { grid-template-columns: repeat(2, 1fr); }
+.x-demo__grid--cols-3 { grid-template-columns: repeat(3, 1fr); }
+.x-demo__grid--cols-4 { grid-template-columns: repeat(4, 1fr); }
+.x-demo__grid--cols-5 { grid-template-columns: repeat(5, 1fr); }
+.x-demo__grid--cols-6 { grid-template-columns: repeat(6, 1fr); }
 
-.wb-demo__grid > * {
+.x-demo__grid > * {
   min-width: 0;
 }
 
-wb-demo > wb-mdhtml, [x-demo] > wb-mdhtml,
-wb-code-card > wb-mdhtml, [x-code-card] > wb-mdhtml,
-wb-demo > .x-pre-wrapper, [x-demo] > .x-pre-wrapper{
+x-demo > x-mdhtml, [x-demo] > x-mdhtml,
+x-code-card > x-mdhtml, [x-code-card] > x-mdhtml,
+x-demo > .x-pre-wrapper, [x-demo] > .x-pre-wrapper{
   display: block;
   margin-top: 0.5rem;
 }
@@ -315,55 +315,55 @@ wb-demo > .x-pre-wrapper, [x-demo] > .x-pre-wrapper{
    tier used — that looked cramped/needlessly tall on real tablet-width
    screens, which can comfortably fit 2 columns. */
 @media (max-width: 1024px) {
-  .wb-demo__grid--cols-4,
-  .wb-demo__grid--cols-5,
-  .wb-demo__grid--cols-6 {
+  .x-demo__grid--cols-4,
+  .x-demo__grid--cols-5,
+  .x-demo__grid--cols-6 {
     grid-template-columns: repeat(2, 1fr);
   }
 }
 
 @media (max-width: 700px) {
-  .wb-demo__grid--cols-2,
-  .wb-demo__grid--cols-3,
-  .wb-demo__grid--cols-4,
-  .wb-demo__grid--cols-5,
-  .wb-demo__grid--cols-6 {
+  .x-demo__grid--cols-2,
+  .x-demo__grid--cols-3,
+  .x-demo__grid--cols-4,
+  .x-demo__grid--cols-5,
+  .x-demo__grid--cols-6 {
     grid-template-columns: 1fr;
   }
 }
 
-.wb-demo__links {
+.x-demo__links {
   margin-bottom: 0.5rem;
   font-size: 0.9rem;
   color: var(--color-text-2);
 }
 
-.wb-demo__links a {
+.x-demo__links a {
   color: var(--color-primary);
   text-decoration: none;
 }
 
-.wb-demo__links a:hover {
+.x-demo__links a:hover {
   text-decoration: underline;
 }
 
 /* #388: per-card doc-link "badge" -- attached directly onto an individual
-   wb-card* element (see demo.js's attachCardDocLink) instead of the shared
-   .wb-demo__links line above. Sits ABOVE the element's own top-right
+   x-card* element (see demo.js's attachCardDocLink) instead of the shared
+   .x-demo__links line above. Sits ABOVE the element's own top-right
    corner, never inside the header content flow, never the same shape
-   or position as a card's own .wb-card__badge (card.js STYLE_BADGE), which
+   or position as a card's own .x-card__badge (card.js STYLE_BADGE), which
    sits inset within the header instead. position:absolute is !important
-   because `.wb-card--glass > *` (card.css) sets position:relative on every
+   because `.x-card--glass > *` (card.css) sets position:relative on every
    direct child of a glass-variant card, which would otherwise outrank this
-   single-class rule and break the corner placement. Every wb-card* element
-   is `position: relative` (card.css `.wb-card`), so this anchors correctly
+   single-class rule and break the corner placement. Every x-card* element
+   is `position: relative` (card.css `.x-card`), so this anchors correctly
    regardless of card type.
 
    John: "Make sure all help links are off the element by at least .5rem.
    As they are now they are in the way." -- this used to sit AT the corner,
    slightly overlapping the border (top/right: -0.5rem), which worked fine
    for large cards but covered a meaningful chunk of small elements (e.g.
-   wb-badge, [x-badge], ~1.5-2rem tall) -- the icon and the thing it labels were
+   x-badge, [x-badge], ~1.5-2rem tall) -- the icon and the thing it labels were
    nearly the same size. Moved fully above the element with real clearance
    instead of overlapping it (later moved again, see below).
 
@@ -371,9 +371,9 @@ wb-demo > .x-pre-wrapper, [x-demo] > .x-pre-wrapper{
    above-with-clearance still read as loosely associated with whatever was
    above it rather than clearly belonging to THIS element. Tried level with
    the top edge, offset OUTSIDE the right edge (top:0; right:-2rem) -- but
-   `.wb-card`'s own `overflow:hidden` (needed for its rounded corners)
+   `.x-card`'s own `overflow:hidden` (needed for its rounded corners)
    clips anything positioned past its own bounds, making the badge
-   completely invisible on every wb-card* component (confirmed live on
+   completely invisible on every x-card* component (confirmed live on
    demos/site/cards.html: 293 links existed in the DOM, Playwright reported
    every sampled one "visible", but a real screenshot showed zero of them
    -- clipped, not hidden by opacity/display). Settled on an INSET
@@ -387,7 +387,7 @@ wb-demo > .x-pre-wrapper, [x-demo] > .x-pre-wrapper{
    -2rem attempt that went past it and got clipped) -- 0 is the boundary
    itself, never past it, so the overflow:hidden clipping bug above still
    can't happen here. */
-.wb-demo__card-doc-link {
+.x-demo__card-doc-link {
   position: absolute !important;
   top: 0;
   right: 0;
@@ -408,8 +408,8 @@ wb-demo > .x-pre-wrapper, [x-demo] > .x-pre-wrapper{
   transition: opacity 150ms ease, color 150ms ease, border-color 150ms ease;
 }
 
-.wb-demo__card-doc-link:hover,
-.wb-demo__card-doc-link:focus-visible {
+.x-demo__card-doc-link:hover,
+.x-demo__card-doc-link:focus-visible {
   opacity: 1;
   color: var(--primary);
   border-color: var(--primary);
@@ -418,17 +418,17 @@ wb-demo > .x-pre-wrapper, [x-demo] > .x-pre-wrapper{
 /* #641: John, badge.md -- doc-links were sitting flush against (~1-3px
    gap, essentially touching) whatever small element they labeled. "all doc
    links must be 5rem off of the element." demo.js now always anchors the
-   icon to the outer <wb-demo> (never a small per-instance host like a
-   single wb-badge pill -- see attachInstanceDocLink's anchor comment),
+   icon to the outer <div x-demo> (never a small per-instance host like a
+   single x-badge pill -- see attachInstanceDocLink's anchor comment),
    collapsing same-file instances in one grid down to a single icon per
-   demo block. Reserving the clearance as padding-top on wb-demo itself
-   (rather than pushing the icon UP/OUT past wb-demo's own edge) keeps it
-   inside wb-demo's box, where the #619/#630-era attempts already
+   demo block. Reserving the clearance as padding-top on x-demo itself
+   (rather than pushing the icon UP/OUT past x-demo's own edge) keeps it
+   inside x-demo's box, where the #619/#630-era attempts already
    established overflow:hidden can't clip it -- the grid content just
    starts 5rem lower, leaving the icon a full 5rem of genuinely clear space
    above every rendered example, regardless of how small any individual
    instance is. */
-wb-demo:has(> .wb-demo__card-doc-link), [x-demo]:has(> .wb-demo__card-doc-link){
+x-demo:has(> .x-demo__card-doc-link), [x-demo]:has(> .x-demo__card-doc-link){
   padding-top: 5rem;
 }
 
@@ -437,16 +437,16 @@ wb-demo:has(> .wb-demo__card-doc-link), [x-demo]:has(> .wb-demo__card-doc-link){
    doc file instead of silently dropping the second (see the href-based
    dedup in attachInstanceDocLink). Offset a later icon left so it doesn't
    stack directly on the first. */
-.wb-demo__card-doc-link ~ .wb-demo__card-doc-link {
+.x-demo__card-doc-link ~ .x-demo__card-doc-link {
   right: 2.75rem;
 }
 
 /* #385: "Events" section -- optional, only rendered when a demo declares
-   `<wb-demo events="wb:switch:change">`. Heading + example addEventListener
+   `<div x-demo events="wb:switch:change">`. Heading + example addEventListener
    code sample (styled like the source panel above it) + a live log panel
    that proves the event actually fires when the reader interacts with the
    rendered control. */
-.wb-demo__events-heading {
+.x-demo__events-heading {
   margin-top: 0.75rem;
   margin-bottom: 0.25rem;
   font-size: 0.9rem;
@@ -454,11 +454,11 @@ wb-demo:has(> .wb-demo__card-doc-link), [x-demo]:has(> .wb-demo__card-doc-link){
   color: var(--color-text-2, var(--text-primary));
 }
 
-.wb-demo__events-code {
+.x-demo__events-code {
   margin-top: 0;
 }
 
-.wb-demo__events-log {
+.x-demo__events-log {
   margin-top: 0.5rem;
   padding: 1rem;
   border: 1px solid var(--border-color);
@@ -472,18 +472,18 @@ wb-demo:has(> .wb-demo__card-doc-link), [x-demo]:has(> .wb-demo__card-doc-link){
   text-align: left;
 }
 
-.wb-demo__events-log-empty {
+.x-demo__events-log-empty {
   color: var(--text-muted);
   font-style: italic;
 }
 
-.wb-demo__events-log-entry {
+.x-demo__events-log-entry {
   padding: 0.15rem 0;
   border-bottom: 1px dashed var(--border-color);
   white-space: pre-wrap;
   overflow-wrap: break-word;
 }
 
-.wb-demo__events-log-entry:last-child {
+.x-demo__events-log-entry:last-child {
   border-bottom: none;
 }

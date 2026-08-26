@@ -6,10 +6,10 @@ Image card with text overlay.
 
 | Property | Value |
 |----------|-------|
-| Custom Tag | `<wb-cardoverlay>` |
+| Custom Tag | `<div x-cardoverlay>` |
 | Behavior | `cardoverlay` |
 | Semantic | `<article>` |
-| Root CSS Class | `wb-card wb-card-overlay` |
+| Root CSS Class | `x-card x-card-overlay` |
 | Composes | card structure + CSS (no base class) |
 
 ## Properties
@@ -23,77 +23,77 @@ Supports every [card property](./card.md) — that shared structure and CSS are 
 | `gradient` | boolean | `true` | Show gradient overlay for readability |
 | `height` | string | `"300px"` | Card height |
 
-Wrapped in `<wb-demo>`, so the live component renders below with its source shown underneath:
+Wrapped in `<div x-demo>`, so the live component renders below with its source shown underneath:
 
-<wb-demo>
-<wb-cardoverlay
+<div x-demo>
+<div x-cardoverlay
   title="Featured Story"
   subtitle="Read more about this"
-  image="/images/background.jpg">
-</wb-cardoverlay>
-</wb-demo>
+  image="https://picsum.photos/seed/cardoverlay-basic/1000/800">
+</div>
+</div>
 
 ## Usage
 
 ### Basic Overlay
 
 ```html
-<wb-cardoverlay
+<div x-cardoverlay
   title="Featured Story"
   subtitle="Read more about this"
-  image="/images/background.jpg">
-</wb-cardoverlay>
+  image="https://picsum.photos/seed/cardoverlay-usage/1000/800">
+</div>
 ```
 
 ### Top Position
 
 ```html
-<wb-cardoverlay
+<div x-cardoverlay
   title="Top Overlay"
-  image="/images/bg.jpg"
+  image="https://picsum.photos/seed/cardoverlay-top/1000/800"
   position="top">
-</wb-cardoverlay>
+</div>
 ```
 
 ### Center Position
 
 ```html
-<wb-cardoverlay
+<div x-cardoverlay
   title="Centered"
   subtitle="Text in the middle"
-  image="/images/bg.jpg"
+  image="https://picsum.photos/seed/cardoverlay-center/1000/800"
   position="center">
-</wb-cardoverlay>
+</div>
 ```
 
 ### No Gradient
 
 ```html
-<wb-cardoverlay
+<div x-cardoverlay
   title="No Gradient"
-  image="/images/light-bg.jpg"
+  image="https://picsum.photos/seed/cardoverlay-nogradient/1000/800"
   gradient="false">
-</wb-cardoverlay>
+</div>
 ```
 
 ### Custom Height
 
 ```html
-<wb-cardoverlay
+<div x-cardoverlay
   title="Tall Card"
-  image="/images/bg.jpg"
+  image="https://picsum.photos/seed/cardoverlay-tall/1000/800"
   height="500px">
-</wb-cardoverlay>
+</div>
 ```
 
 ## CSS Classes
 
 | Class | Description |
 |-------|-------------|
-| `.wb-card--overlay-card` | Base overlay styling |
-| `.wb-card--overlay-top` | Top position |
-| `.wb-card--overlay-center` | Center position |
-| `.wb-card--overlay-bottom` | Bottom position |
+| `.x-card--overlay-card` | Base overlay styling |
+| `.x-card--overlay-top` | Top position |
+| `.x-card--overlay-center` | Center position |
+| `.x-card--overlay-bottom` | Bottom position |
 
 ## Schema
 

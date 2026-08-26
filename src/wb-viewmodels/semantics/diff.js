@@ -10,7 +10,7 @@ export default function diff(element) {
     const after = element.querySelector('.diff-after');
     if (before && after) {
       const wrapper = document.createElement('div');
-      wrapper.className = 'wb-diff--rendered';
+      wrapper.className = 'x-diff--rendered';
       wrapper.appendChild(before.cloneNode(true));
       wrapper.appendChild(after.cloneNode(true));
       element.appendChild(wrapper);

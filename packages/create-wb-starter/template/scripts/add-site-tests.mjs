@@ -13,7 +13,7 @@ import { readFileSync, writeFileSync } from 'fs';
 import { resolve, join } from 'path';
 
 const MODELS = resolve('src/wb-models');
-const site = JSON.parse(readFileSync(resolve('src/wb-models/pages/wb-component-library.site.json'), 'utf-8'));
+const site = JSON.parse(readFileSync(resolve('src/wb-models/pages/x-component-library.site.json'), 'utf-8'));
 
 // Build page→component map
 const pageMap = {};

@@ -5,7 +5,7 @@
   "description": "Button to toggle dark/light theme.",
   "schemaFor": "darkmode",
   "compliance": {
-    "baseClass": "wb-darkmode",
+    "baseClass": "x-darkmode",
     "supportLevel": "stable",
     "accessibility": "high"
   },
@@ -15,11 +15,11 @@
   "$cssAPI": {},
   "test": {
     "setup": [
-      "<wb-darkmode>Basic darkmode content</wb-darkmode>",
-      "<wb-darkmode>Test permutation 2</wb-darkmode>",
-      "<wb-darkmode>Test permutation 3</wb-darkmode>",
-      "<wb-darkmode>Test permutation 4</wb-darkmode>",
-      "<wb-darkmode>Test permutation 5</wb-darkmode>"
+      "<div x-darkmode>Basic darkmode content</div>",
+      "<div x-darkmode>Test permutation 2</div>",
+      "<div x-darkmode>Test permutation 3</div>",
+      "<div x-darkmode>Test permutation 4</div>",
+      "<div x-darkmode>Test permutation 5</div>"
     ],
     "matrix": {
       "combinations": [
@@ -28,9 +28,9 @@
     },
     "site": {
       "page": "interactive",
-      "tag": "wb-darkmode",
+      "tag": "x-darkmode",
       "renders": true,
-      "baseClass": "wb-darkmode",
+      "baseClass": "x-darkmode",
       "minInstances": 1,
       "checkText": [],
       "checkClasses": [],

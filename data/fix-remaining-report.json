@@ -143,17 +143,17 @@
     {
       "file": "stagelight.schema.json",
       "type": "cssapi_add_default",
-      "variable": "--wb-stagelight-color"
+      "variable": "--x-stagelight-color"
     },
     {
       "file": "stagelight.schema.json",
       "type": "cssapi_add_default",
-      "variable": "--wb-stagelight-size"
+      "variable": "--x-stagelight-size"
     },
     {
       "file": "stagelight.schema.json",
       "type": "cssapi_add_default",
-      "variable": "--wb-stagelight-intensity"
+      "variable": "--x-stagelight-intensity"
     }
   ]
 }

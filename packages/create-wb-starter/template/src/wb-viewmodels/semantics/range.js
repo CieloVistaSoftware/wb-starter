@@ -18,7 +18,7 @@ export function range(element, options = {}) {
     ...options
   };
 
-  element.classList.add('wb-range');
+  element.classList.add('x-range');
 
   let wrapper = null;
   let valueDisplay = null;
@@ -28,7 +28,7 @@ export function range(element, options = {}) {
   // Wrap in container for value display and labels
   if (config.showValue || config.showLabels) {
     wrapper = document.createElement('div');
-    wrapper.className = 'wb-range-wrapper';
+    wrapper.className = 'x-range-wrapper';
     wrapper.style.cssText = 'display:flex;flex-direction:column;gap:0.5rem;';
 
     element.parentNode.insertBefore(wrapper, element);
@@ -37,7 +37,7 @@ export function range(element, options = {}) {
     // Value display
     if (config.showValue) {
       valueDisplay = document.createElement('output');
-      valueDisplay.className = 'wb-range-value';
+      valueDisplay.className = 'x-range-value';
       valueDisplay.style.cssText = 'text-align:center;font-weight:500;color:var(--text-primary,#f9fafb);';
       valueDisplay.textContent = `${config.valuePrefix}${element.value}${config.valueSuffix}`;
       wrapper.insertBefore(valueDisplay, element);
@@ -71,7 +71,7 @@ export function range(element, options = {}) {
   }
 
   return () => {
-    element.classList.remove('wb-range');
+    element.classList.remove('x-range');
     if (wrapper && wrapper.parentNode) {
       wrapper.parentNode.insertBefore(element, wrapper);
       wrapper.remove();

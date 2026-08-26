@@ -3,8 +3,25 @@
   "$id": "control.schema.json",
   "title": "Control",
   "description": "Behavior applied with x-control.",
-  "schemaFor": "x-control",
+  "schemaFor": "control",
+  "compliance": {
+    "baseClass": "x-control",
+    "supportLevel": "stable",
+    "accessibility": "high"
+  },
   "properties": {},
+  "$view": [],
+  "$methods": {},
+  "$cssAPI": {},
+  "test": {
+    "setup": [
+      "<div x-control>Basic control content</div>",
+      "<div x-control>Test permutation 2</div>",
+      "<div x-control>Test permutation 3</div>",
+      "<div x-control>Test permutation 4</div>",
+      "<div x-control>Test permutation 5</div>"
+    ]
+  },
   "_metadata": {
     "generatedBy": "scripts/generate-behavior-schemas.mjs (#716)",
     "derivedFrom": "the behavior implementation — every property here is one the code actually reads",

@@ -10,11 +10,6 @@
       "description": "Read by truncate().",
       "default": "1"
     },
-    "data-expandable": {
-      "type": "boolean",
-      "description": "Read by truncate(). Bare attribute.",
-      "default": false
-    },
     "expandable": {
       "type": "boolean",
       "description": "Read by truncate(). Bare attribute.",

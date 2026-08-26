@@ -4,13 +4,13 @@
   "title": "Rating",
   "description": "Star rating component for displaying or collecting ratings",
   "schemaFor": "rating",
-  "baseClass": "wb-rating",
+  "baseClass": "x-rating",
   "semanticElement": {
     "tagName": "div",
     "implicitRole": "slider"
   },
   "compliance": {
-    "baseClass": "wb-rating",
+    "baseClass": "x-rating",
     "supportLevel": "stable",
     "accessibility": "high"
   },
@@ -50,7 +50,7 @@
         "lg"
       ],
       "default": "md",
-      "appliesClass": "wb-rating--{{value}}"
+      "appliesClass": "x-rating--{{value}}"
     },
     "icon": {
       "type": "string",
@@ -99,23 +99,23 @@
     }
   },
   "$cssAPI": {
-    "--wb-rating-size": {
+    "--x-rating-size": {
       "default": "24px",
       "description": "Star size"
     },
-    "--wb-rating-gap": {
+    "--x-rating-gap": {
       "default": "2px",
       "description": "Gap between stars"
     },
-    "--wb-rating-color": {
+    "--x-rating-color": {
       "default": "#fbbf24",
       "description": "Filled star color"
     },
-    "--wb-rating-empty-color": {
+    "--x-rating-empty-color": {
       "default": "#d1d5db",
       "description": "Empty star color"
     },
-    "--wb-rating-hover-color": {
+    "--x-rating-hover-color": {
       "default": "#f59e0b",
       "description": "Hover color"
     }
@@ -137,14 +137,14 @@
   },
   "test": {
     "setup": [
-      "<wb-rating>Basic rating content</wb-rating>",
-      "<wb-rating size=\"sm\">size=sm</wb-rating>",
-      "<wb-rating size=\"md\">size=md</wb-rating>",
-      "<wb-rating size=\"lg\">size=lg</wb-rating>",
-      "<wb-rating readonly>with readonly</wb-rating>",
-      "<wb-rating disabled>with disabled</wb-rating>",
-      "<wb-rating half>with half</wb-rating>",
-      "<wb-rating value=\"0\">value=0</wb-rating>"
+      "<span x-rating>Basic rating content</span>",
+      "<span x-rating size=\"sm\">size=sm</span>",
+      "<span x-rating size=\"md\">size=md</span>",
+      "<span x-rating size=\"lg\">size=lg</span>",
+      "<span x-rating readonly>with readonly</span>",
+      "<span x-rating disabled>with disabled</span>",
+      "<span x-rating half>with half</span>",
+      "<span x-rating value=\"0\">value=0</span>"
     ],
     "matrix": {
       "combinations": [
@@ -169,13 +169,13 @@
     },
     "site": {
       "page": "feedback",
-      "tag": "wb-rating",
+      "tag": "x-rating",
       "renders": true,
-      "baseClass": "wb-rating",
+      "baseClass": "x-rating",
       "minInstances": 5,
       "checkText": [],
       "checkClasses": [
-        "wb-rating--sm"
+        "x-rating--sm"
       ],
       "checkAttributes": []
     }

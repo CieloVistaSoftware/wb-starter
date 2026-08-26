@@ -4,13 +4,13 @@
   "title": "Article Component",
   "description": "Semantic article component for blog posts, news, and documentation pages.",
   "schemaFor": "article",
-  "baseClass": "wb-article",
+  "baseClass": "x-article",
   "semanticElement": {
     "tagName": "article",
     "implicitRole": "article"
   },
   "compliance": {
-    "baseClass": "wb-article",
+    "baseClass": "x-article",
     "supportLevel": "stable",
     "accessibility": "high"
   },
@@ -59,19 +59,19 @@
       "type": "boolean",
       "description": "Whether the article is featured",
       "default": false,
-      "appliesClass": "wb-article--featured"
+      "appliesClass": "x-article--featured"
     }
   },
   "$view": [
     {
       "name": "header",
       "tag": "header",
-      "class": "wb-article__header"
+      "class": "x-article__header"
     },
     {
       "name": "media",
       "tag": "figure",
-      "class": "wb-article__media",
+      "class": "x-article__media",
       "parent": "header",
       "createdWhen": "image"
     },
@@ -88,13 +88,13 @@
     {
       "name": "meta",
       "tag": "div",
-      "class": "wb-article__meta",
+      "class": "x-article__meta",
       "parent": "header"
     },
     {
       "name": "category",
       "tag": "span",
-      "class": "wb-article__category",
+      "class": "x-article__category",
       "parent": "meta",
       "content": "{{category}}",
       "createdWhen": "category"
@@ -102,7 +102,7 @@
     {
       "name": "date",
       "tag": "time",
-      "class": "wb-article__date",
+      "class": "x-article__date",
       "parent": "meta",
       "content": "{{date}}",
       "createdWhen": "date"
@@ -110,7 +110,7 @@
     {
       "name": "title",
       "tag": "h1",
-      "class": "wb-article__title",
+      "class": "x-article__title",
       "parent": "header",
       "content": "{{title}}",
       "createdWhen": "title"
@@ -118,7 +118,7 @@
     {
       "name": "subtitle",
       "tag": "p",
-      "class": "wb-article__subtitle",
+      "class": "x-article__subtitle",
       "parent": "header",
       "content": "{{subtitle}}",
       "createdWhen": "subtitle"
@@ -126,7 +126,7 @@
     {
       "name": "byline",
       "tag": "div",
-      "class": "wb-article__byline",
+      "class": "x-article__byline",
       "parent": "header",
       "createdWhen": "author"
     },
@@ -139,14 +139,14 @@
     {
       "name": "main",
       "tag": "div",
-      "class": "wb-article__content",
+      "class": "x-article__content",
       "required": true,
       "content": "{{slot}}"
     },
     {
       "name": "footer",
       "tag": "footer",
-      "class": "wb-article__footer",
+      "class": "x-article__footer",
       "content": "{{footer}}",
       "createdWhen": "footer"
     }
@@ -154,15 +154,15 @@
   "$cssAPI": {},
   "test": {
     "setup": [
-      "<wb-article>Basic article content</wb-article>",
-      "<wb-article featured>with featured</wb-article>",
-      "<wb-article title=\"Sample title\">title=\"Sample title\"</wb-article>",
-      "<wb-article subtitle=\"Sample subtitle\">subtitle=\"Sample subtitle\"</wb-article>",
-      "<wb-article author=\"Sample author\">author=\"Sample author\"</wb-article>",
-      "<wb-article date=\"Sample date\">date=\"Sample date\"</wb-article>",
-      "<wb-article category=\"Sample category\">category=\"Sample category\"</wb-article>",
-      "<wb-article image=\"Sample image\">image=\"Sample image\"</wb-article>",
-      "<wb-article title=\"Test Article\">Content</wb-article>"
+      "<div x-article>Basic article content</div>",
+      "<div x-article featured>with featured</div>",
+      "<div x-article title=\"Sample title\">title=\"Sample title\"</div>",
+      "<div x-article subtitle=\"Sample subtitle\">subtitle=\"Sample subtitle\"</div>",
+      "<div x-article author=\"Sample author\">author=\"Sample author\"</div>",
+      "<div x-article date=\"Sample date\">date=\"Sample date\"</div>",
+      "<div x-article category=\"Sample category\">category=\"Sample category\"</div>",
+      "<div x-article image=\"/images/dachshund-puppy-image-960x540.jpg\">image=\"/images/dachshund-puppy-image-960x540.jpg\"</div>",
+      "<div x-article title=\"Test Article\">Content</div>"
     ],
     "matrix": {
       "combinations": [
@@ -175,7 +175,7 @@
         },
         {
           "title": "Article",
-          "image": "cover.jpg"
+          "image": "/images/dachshund-puppy-image-960x540.jpg"
         },
         {
           "title": "Article",
@@ -190,9 +190,9 @@
     },
     "site": {
       "page": "content",
-      "tag": "wb-article",
+      "tag": "x-article",
       "renders": true,
-      "baseClass": "wb-article",
+      "baseClass": "x-article",
       "minInstances": 5,
       "checkText": [
         "Article",

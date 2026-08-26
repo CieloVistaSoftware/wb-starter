@@ -2,11 +2,11 @@
  * #176 / #375 / #727 — an alert's variant must be visible.
  *
  * Two claims, both of which lost their guard when #664 removed the showcase's
- * `<wb-demo>` sections:
+ * `<div x-demo>` sections:
  *
  *   #176 — `type=` is an alias for `variant`, and the four types are four
  *          colours (they all rendered "info" blue).
- *   #375 — alert() adds `.wb-alert` AND `.wb-alert--<variant>`; without the
+ *   #375 — alert() adds `.x-alert` AND `.x-alert--<variant>`; without the
  *          modifier class every alert rendered unstyled and identical.
  *
  * The old version scanned the page for `[x-alert][type="info"]` and failed with
@@ -20,14 +20,14 @@ import { openBehaviorsPanel, renderVariant, example, exampleStyle } from '../uti
 const VARIANTS = ['info', 'success', 'warning', 'error'] as const;
 
 test.describe('#176/#375 — alert variants', () => {
-  test('each variant carries wb-alert and its own modifier class', async ({ page }) => {
+  test('each variant carries [x-alert] and its own modifier class', async ({ page }) => {
     await openBehaviorsPanel(page, 'x-alert');
 
     for (const variant of VARIANTS) {
       await renderVariant(page, 'x-alert', variant);
       const el = example(page);
       await expect(el, `${variant}: missing the base class`).toHaveClass(/\bwb-alert\b/);
-      await expect(el, `${variant}: missing wb-alert--${variant}`)
+      await expect(el, `${variant}: missing x-alert--${variant}`)
         .toHaveClass(new RegExp(`\\bwb-alert--${variant}\\b`));
     }
   });

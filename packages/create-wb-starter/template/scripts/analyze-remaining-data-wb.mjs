@@ -21,7 +21,7 @@ for (const f of files) {
   const rel = path.relative(ROOT, f);
   lines.forEach((line, i) => {
     if (!line.includes('data-wb')) return;
-    if (line.includes('data-wb-ready') || line.includes('data-wb-error')) return;
+    if (line.includes('data-x-ready') || line.includes('data-x-error')) return;
     
     const entry = `${rel}:${i + 1}: ${line.trim().substring(0, 120)}`;
     

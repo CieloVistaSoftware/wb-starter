@@ -2,11 +2,11 @@
 
 Displays always-visible help text for form fields or UI elements.
 
-Wrapped in `<wb-demo>`, so the live component renders below with its source shown underneath:
+Wrapped in `<div x-demo>`, so the live component renders below with its source shown underneath:
 
-<wb-demo>
+<div x-demo>
 <span x-help>Enter your email address here.</span>
-</wb-demo>
+</div>
 
 - **Type:** Modifier
 - **Note:** x-help is functionally the same as a span except for styling and accessibility (adds role="note" and a help class). For hover-based help, use x-tooltip.

@@ -11,7 +11,7 @@ import { test, expect } from '@playwright/test';
  */
 test.describe('pre.js code blocks have no static inline styles (#285)', () => {
   test.beforeEach(async ({ page }) => {
-    await page.goto('http://localhost:3000/?page=behaviors');
+    await page.goto('/?page=behaviors');
     await page.waitForSelector('#mainPage-behaviors', { timeout: 20000 });
     await page.waitForTimeout(2500);
   });

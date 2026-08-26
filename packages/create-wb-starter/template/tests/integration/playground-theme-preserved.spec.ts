@@ -18,20 +18,20 @@ test('selecting the x-behaviors example set does not change the site theme', asy
   // longer mirrors that name into a redundant class.
   await page.waitForFunction(() => {
     const tc = document.getElementById('pg-themecontrol');
-    return !!tc && !!tc.wbThemeControl && !!tc.querySelector('select.wb-themecontrol__select');
+    return !!tc && !!tc.wbThemeControl && !!tc.querySelector('select.x-themecontrol__select');
   }, { timeout: 15000 });
   await page.evaluate(() => document.documentElement.setAttribute('data-theme', 'ocean'));
 
   await page.selectOption('#pg-examples', 'xbehaviors');
   await page.waitForFunction(() => {
     const input = document.querySelector('#pg-preview input[x-counter]');
-    return !!input && !!input.nextElementSibling?.classList.contains('wb-counter');
+    return !!input && !!input.nextElementSibling?.classList.contains('x-counter');
   }, { timeout: 15000 });
 
   const theme = await page.evaluate(() => document.documentElement.getAttribute('data-theme'));
   expect(theme).toBe('ocean');
 
   // The replacement example itself should actually work.
-  const counterSpan = page.locator('#pg-preview input[x-counter] + span.wb-counter');
+  const counterSpan = page.locator('#pg-preview input[x-counter] + span.x-counter');
   await expect(counterSpan).toHaveText('0/50');
 });

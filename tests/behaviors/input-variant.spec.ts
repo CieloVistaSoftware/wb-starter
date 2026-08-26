@@ -10,7 +10,7 @@ async function setup(page: Page, html: string): Promise<void> {
   // an SPA route, so window.WBSite is never created there -- this waited the
   // full 20s and then failed before a single assertion ran. Same bug as
   // details-summary.spec.ts had. WB.behaviors is the signal that applies, and
-  // setup() calls WB.scan() itself below.
+  // setup() calls await WB.scan() itself below.
   await page.evaluate((h: string) => {
     const c = document.createElement('div');
     c.id = 'input-test-area';

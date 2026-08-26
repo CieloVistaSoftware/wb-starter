@@ -252,8 +252,8 @@ function loadSchemas(): Map<string, Schema> {
       // and views.schema.json (schemaType 'definition': data-file formats for
       // the search index / views registry, not components) all declare
       // schemaFor for cross-referencing purposes but were never meant to be
-      // instantiated as <wb-behavior>/<wb-home-page>/<wb-search-index>/
-      // <wb-views> tags -- no such custom elements exist. Testing them here
+      // instantiated as <div>/<div>/<div>/
+      // <div> tags -- no such custom elements exist. Testing them here
       // generated fake tags, then reported real elements/classes/children as
       // "missing" for structures that were never supposed to exist.
       if (schema.schemaType && schema.schemaType !== 'component') {
@@ -270,10 +270,10 @@ function loadSchemas(): Map<string, Schema> {
 }
 
 // Generate HTML for testing.
-// v3: components are wb-* TAGS with PLAIN attributes (e.g. <wb-card variant="x">),
+// v3: components are wb-* TAGS with PLAIN attributes (e.g. <article variant="x">),
 // NOT the legacy <div x-behavior data-prop>. Generating the old form meant the
 // element never became the component, so baseClass was "missing" — a false
-// positive. Also strip a leading wb- from the name to avoid wb-wb-control.
+// positive. Also strip a leading wb- from the name to avoid x-wb-control.
 function generateHtml(behavior: string, props: Record<string, any>, content: string = 'Test Content', tagName?: string): string {
   const bare = behavior.replace(/^wb-/, '');
   // Use an explicit non-div element tag if the schema provides one, else the wb- tag.
@@ -410,8 +410,28 @@ test.describe('Component Compliance', () => {
       const element = await setupTestContainer(page, baseHtml);
       
       if (schema.compliance?.baseClass) {
-        const hasBaseClass = await element.evaluate((el, cls) => el.classList.contains(cls), schema.compliance.baseClass);
-        if (!hasBaseClass) {
+        // #736 -- this generates its markup as the CUSTOM TAG (<div x-alert ...>),
+        // and behaviors deliberately skip the redundant base class on a literal
+        // custom-tag host because the stylesheet targets the tag directly -- the
+        // #448 pattern, written down in the source:
+        //
+        //   // skip the redundant class on a literal <div x-alert> host (its own
+        //   // tag selector already covers it), add it for every other host.
+        //   if (element.tagName.toLowerCase() !== 'x-alert') element.classList.add('x-alert');
+        //
+        // Measured: <div x-alert variant="warning"> -> "x-alert x-alert--warning",
+        // <div x-alert variant="warning"> -> "x-alert--warning", and alert.css line
+        // 10 is `x-alert,`. Both are styled. Asserting the literal class failed
+        // 50 behaviors for doing the right thing.
+        //
+        // What matters is that the element is COVERED by its base style, so the
+        // tag counts. An attribute host missing the class is still a failure --
+        // that is the #375 bug this check exists to catch.
+        const covered = await element.evaluate(
+          (el, cls) => el.classList.contains(cls) || el.tagName.toLowerCase() === cls,
+          schema.compliance.baseClass,
+        );
+        if (!covered) {
           allErrors.push(`[BASE CLASS] Missing: "${schema.compliance.baseClass}"`);
         }
       }
@@ -477,11 +497,11 @@ test.describe('Component Compliance', () => {
           
           const el = await setupTestContainer(page, html);
           
-          // Check if component rendered - look for baseClass OR .wb-ready class
+          // Check if component rendered - look for baseClass OR .x-ready class
           const hasBaseClass = schema.compliance?.baseClass 
             ? await el.evaluate((e, cls) => e.classList.contains(cls), schema.compliance.baseClass)
             : true;
-          const wbReady = await el.classList.contains('wb-ready');
+          const wbReady = await el.classList.contains('x-ready');
           
           if (!hasBaseClass && !wbReady) {
             allErrors.push(`[PERMUTATION] ${propName}=${JSON.stringify(value)}: Component did not initialize`);
@@ -505,12 +525,12 @@ test.describe('Component Compliance', () => {
 
           // "Initialized" = ANY sign the component was processed: its baseClass,
           // the x-schema marker, any wb-* class, or built child structure. (The
-          // old check required the exact baseClass OR a non-existent .wb-ready
+          // old check required the exact baseClass OR a non-existent .x-ready
           // class, so it failed working components — a false positive.)
           const initialized = await el.evaluate((e, cls) =>
             (cls ? e.classList.contains(cls) : false) ||
             e.hasAttribute('x-schema') ||
-            e.classList.contains('wb-ready') ||
+            e.classList.contains('x-ready') ||
             /\bwb-[a-z]/.test(e.className) ||
             e.children.length > 0,
           schema.compliance?.baseClass || '');
@@ -550,7 +570,7 @@ test.describe('Component Compliance', () => {
               // (CHECK 9) already honor. Without this, any schema whose
               // button test targets the host element directly (e.g.
               // button.schema.json's own "Basic Click"/"Variant Classes",
-              // since <wb-button> IS the clickable button, no inner
+              // since <button> IS the clickable button, no inner
               // selector to point at) got a literal `el.locator('element')`
               // CSS-tag lookup -- which never matches a real element named
               // <element> -- and failed every such test with a false
@@ -634,7 +654,7 @@ test.describe('Component Compliance', () => {
               const target = noSelector ? el : el.locator(visTest.expect.selector).first();
 
               // Check classes. Schemas overwhelmingly write hasClass as a
-              // single string (card.schema.json's "Basic Card" -> "wb-card",
+              // single string (card.schema.json's "Basic Card" -> "x-card",
               // etc.) -- only accepting an array here meant `for...of` silently
               // iterated the STRING'S CHARACTERS instead ('w','b','-','c'...),
               // checking for nonsense one-letter classes and reporting them
@@ -642,8 +662,16 @@ test.describe('Component Compliance', () => {
               if (visTest.expect.hasClass) {
                 const classes = Array.isArray(visTest.expect.hasClass) ? visTest.expect.hasClass : [visTest.expect.hasClass];
                 for (const cls of classes) {
-                  const hasClass = await target.evaluate((el, c) => el.classList.contains(c), cls);
-                  if (!hasClass) {
+                  // #736, same rule as CHECK 1: a custom-tag host is styled by
+                  // its TAG selector, so behaviors skip the redundant base class
+                  // there (card.js:230 for this exact case). card.schema.json's
+                  // "Basic Card" sets up a <article> and expects "x-card" --
+                  // covered by the tag, absent as a class, and correct either way.
+                  const covered = await target.evaluate(
+                    (el, c) => el.classList.contains(c) || el.tagName.toLowerCase() === c,
+                    cls,
+                  );
+                  if (!covered) {
                     allErrors.push(`[VISUAL] ${visTest.name}: Missing class "${cls}"`);
                   }
                 }

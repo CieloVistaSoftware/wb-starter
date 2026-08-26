@@ -2,14 +2,28 @@
 
 Card with text overlaid on background image
 
-Applies to `<article>`, and to any element carrying `x-cardoverlay`.
+## Type — decorates a semantic element
 
-## Usage
+`x-cardoverlay` is the **article behavior**. It attaches to `<article>`, the element you would have reached for anyway — there is no new tag to learn.
+
+### How to write it
 
 ```html
-<article x-cardoverlay>
+<article x-cardoverlay
+  image="https://picsum.photos/seed/city/480/320"
+  title="Night shift"
+  subtitle="City desk, 02:00"
+  position="bottom"></article>
+```
+
+### On a different element
+
+Use `x-cardoverlay` when the host is not a `<article>` and you want the same behavior:
+
+```html
+<div x-cardoverlay>
   …
-</article>
+</div>
 ```
 
 ## Attributes

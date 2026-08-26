@@ -26,7 +26,7 @@ There are three ways UI gets enhanced, all by the same runtime:
 
 | You write | What happens |
 |---|---|
-| **Custom tag** — `<wb-card title="Hi">` | The tag is mapped to a *behavior* that builds the card |
+| **Custom tag** — `<article title="Hi">` | The tag is mapped to a *behavior* that builds the card |
 | **Behavior attribute** — `<button x-toast type="success">` | Any element gains a behavior via an `x-*` attribute |
 | **Plain element** — `<input type="text">` (with `autoInject`) | Native elements are auto-enhanced |
 
@@ -47,8 +47,8 @@ Key principles:
 
 A standalone page needs the theme + base styles and one module script:
 
-<wb-demo>
-<wb-card
+<div x-demo>
+<article
   title="Build resilient interfaces"
   subtitle="Separate structure from behavior"
   variant="elevated"
@@ -56,19 +56,19 @@ A standalone page needs the theme + base styles and one module script:
   <p>Keep content readable and focused by giving each card one clear job.</p>
   <p>WB-Starter applies behavior directly to the element, so the markup stays easy to inspect and reuse.</p>
 </article>
-</wb-demo>
+</div>
 
-<wb-demo>
+<div x-demo>
 <button
   x-toast
   message="Saved!"
   type="success">
   Save
 </button>
-</wb-demo>
+</div>
 
 The full page this comes from — everything outside `<body>` is boilerplate
-`<wb-demo>` can't represent (a `<!DOCTYPE>`/`<head>`/module script aren't
+`<div x-demo>` can't represent (a `<!DOCTYPE>`/`<head>`/module script aren't
 renderable fragments), so it's shown separately below rather than folded
 into the live example above:
 
@@ -89,7 +89,7 @@ into the live example above:
   </head>
 
   <body>
-    <wb-card
+    <article
       title="Build resilient interfaces"
       subtitle="Separate structure from behavior"
       variant="elevated">
@@ -134,45 +134,45 @@ Custom `wb-*` tags map to behaviors. Pass **plain attributes**; children are slo
 
 **Card** — `<article>`:
 
-<wb-demo>
-<wb-card
+<div x-demo>
+<article
   title="Pro"
   variant="glass">
   <p>Card body.</p>
 </article>
-</wb-demo>
+</div>
 
 **Spinner** — `<div x-spinner>`:
 
-<wb-demo>
-<wb-spinner
+<div x-demo>
+<span x-spinner
   size="lg"
   color="success">
 </div>
-</wb-demo>
+</div>
 
 **Progress bar** — `<progress>`:
 
-<wb-demo>
-<wb-progress
+<div x-demo>
+<progress
   value="75"
   striped>
 </progress>
-</wb-demo>
+</div>
 
 **Badge** — `<div x-badge>`:
 
-<wb-demo>
-<wb-badge
+<div x-demo>
+<span x-badge
   variant="success"
   pill>
   New
 </div>
-</wb-demo>
+</div>
 
 **Tabs** — `<nav x-tabs>`:
 
-<wb-demo>
+<div x-demo>
 <nav x-tabs>
   <div tab-title="Overview">
     <p>…</p>
@@ -181,15 +181,15 @@ Custom `wb-*` tags map to behaviors. Pass **plain attributes**; children are slo
     <p>…</p>
   </div>
 </nav>
-</wb-demo>
+</div>
 
 **Accordion** — `<div x-accordion>`:
 
-<wb-demo>
-<wb-accordion title="What is wb-starter?">
+<div x-demo>
+<div x-accordion title="What is wb-starter?">
   <p>A zero-build component library.</p>
 </div>
-</wb-demo>
+</div>
 
 Card variants come from the schema (`default`, `glass`, `elevated`, `float`, …).
 Each component's exact attributes live in its schema at `src/wb-models/<name>.schema.json`.
@@ -201,7 +201,7 @@ Each component's exact attributes live in its schema at `src/wb-models/<name>.sc
 Attach a behavior to **any** element with an `x-<name>` attribute. These don't
 need a custom tag:
 
-<wb-demo>
+<div x-demo>
 <!-- feedback -->
 <button
   x-toast
@@ -231,7 +231,7 @@ need a custom tag:
   type="password"
   x-password
   placeholder="Password with toggle">
-</wb-demo>
+</div>
 
 The full attribute → behavior map is in `src/core/wb-lazy.js`
 (`customElementMappings`). Every behavior name resolves to a module via
@@ -356,7 +356,7 @@ For dynamic UIs, build elements from a definition instead of HTML:
 
 ```js
 WB.render({
-  t: 'wb-card',
+  t: 'x-card',
   d: { title: 'Generated' },
   children: [{ t: 'p', content: 'Built from JSON.' }],
 }, document.body);
@@ -372,15 +372,15 @@ appends to the container.
 1. **Create** `src/wb-viewmodels/my-thing.js`:
    ```js
    export function mything(element, options = {}) {
-     element.classList.add('wb-mything');
+     element.classList.add('x-mything');
      // build children / wire events using plain attributes
-     return () => element.classList.remove('wb-mything'); // cleanup
+     return () => element.classList.remove('x-mything'); // cleanup
    }
    ```
 2. **Register** the name in `src/wb-viewmodels/index.js`:
    `mything: 'my-thing',`
 3. **Map** a selector in `src/core/wb-lazy.js`:
-   `{ selector: 'wb-mything', behavior: 'mything' }` (tag) or
+   `{ selector: 'x-mything', behavior: 'mything' }` (tag) or
    `{ selector: '[x-mything]', behavior: 'mything' }` (attribute).
 4. **Style** it in `src/styles/behaviors/mything.css` using theme tokens only.
 5. **(Optional)** add `src/wb-models/mything.schema.json` for declarative DOM.

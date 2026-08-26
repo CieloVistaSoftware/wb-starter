@@ -247,9 +247,31 @@ test.describe('Source-Schema: Event Compliance', () => {
       }
     }
     
-    if (issues.length > 0) {
-      console.log('Event dispatch issues (may be in helper functions):', issues.slice(0, 5).join('\n'));
-    }
+    // #863: this collected `issues` and console.log()ged the first 5, never
+    // asserting -- the schema/implementation event contract was not enforced at
+    // all.
+    //
+    // Turning it on measured 71 issues across 84 schema-declared events. Two
+    // distinct causes, both real:
+    //   - ~29 are dispatched, but from a helper inside the module rather than
+    //     from the top-level exported function extractFunction() slices out
+    //     (e.g. wb:toast:show lives in feedback.js outside toast()). These are
+    //     limitations of the static slice, not defects.
+    //   - 42 of the 84 declared events appear NOWHERE in src/wb-viewmodels at
+    //     all -- schema declares an event no code ever fires (audio:*, dialog:*,
+    //     drawer:*, select:*, table:*, tooltip:*, confetti:*, fireworks:*,
+    //     snow:*, ...). Those are genuine schema/implementation drift.
+    //
+    // Ratcheted at the measured count rather than asserted at zero, because
+    // fixing 42 event contracts is its own piece of work and an unsatisfiable
+    // gate gets bypassed. THIS CEILING MUST ONLY COME DOWN.
+    const EVENT_DISPATCH_BASELINE = 71;
+    expect(
+      issues.length,
+      `${issues.length} schema events are not dispatched by their behavior `
+      + `function, above the ${EVENT_DISPATCH_BASELINE} ceiling. Either dispatch `
+      + `the event or remove it from the schema:\n${issues.join('\n')}`,
+    ).toBeLessThanOrEqual(EVENT_DISPATCH_BASELINE);
   });
 });
 

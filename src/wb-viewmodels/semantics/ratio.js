@@ -1,6 +1,6 @@
 /**
  * Ratio - Aspect ratio container
- * Custom Tag: <wb-ratio>
+ * Custom Tag: <div x-ratio>
  *
  * Migrated from the old media.js grab-bag file to match this project's
  * one-file-per-semantic-element convention (audio.js, table.js, ...).
@@ -11,7 +11,7 @@ export function ratio(element, options = {}) {
     ...options
   };
 
-  element.classList.add('wb-ratio');
+  element.classList.add('x-ratio');
 
   // Convert 16x9 to 16/9 for CSS
   const cssRatio = config.ratio.replace('x', '/').replace(':', '/');
@@ -26,7 +26,7 @@ export function ratio(element, options = {}) {
   }
 
   return () => {
-    element.classList.remove('wb-ratio');
+    element.classList.remove('x-ratio');
     element.style.aspectRatio = '';
   };
 }

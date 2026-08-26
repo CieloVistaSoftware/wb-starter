@@ -4,12 +4,12 @@
   "title": "Confetti",
   "description": "Confetti particle animation effect",
   "schemaFor": "confetti",
-  "baseClass": "wb-confetti",
+  "baseClass": "x-confetti",
   "semanticElement": {
     "tagName": "div"
   },
   "compliance": {
-    "baseClass": "wb-confetti",
+    "baseClass": "x-confetti",
     "supportLevel": "stable",
     "accessibility": "high"
   },
@@ -77,7 +77,7 @@
     }
   },
   "$cssAPI": {
-    "--wb-confetti-z-index": {
+    "--x-confetti-z-index": {
       "default": "9999",
       "description": "Z-index"
     }
@@ -92,14 +92,14 @@
   },
   "test": {
     "setup": [
-      "<wb-confetti>Basic confetti content</wb-confetti>",
-      "<wb-confetti show-button>with showButton</wb-confetti>",
-      "<wb-confetti repeat>with repeat</wb-confetti>",
-      "<wb-confetti count=\"50\">count=50</wb-confetti>",
-      "<wb-confetti label=\"Fire Confetti!\">label=\"Fire Confetti!\"</wb-confetti>",
-      "<wb-confetti delay=\"0s\">delay=\"0s\"</wb-confetti>",
-      "<wb-confetti duration=\"3s\">duration=\"3s\"</wb-confetti>",
-      "<wb-confetti colors=\"[\"#ff0\",\"#f0f\",\"#0ff\",\"#0f0\",\"#f00\"]\">colors=\"[\"#ff0\",\"#f0f\",\"#0ff\",\"#0f0\",\"#f00\"]\"</wb-confetti>"
+      "<div x-confetti>Basic confetti content</div>",
+      "<div x-confetti show-button>with showButton</div>",
+      "<div x-confetti repeat>with repeat</div>",
+      "<div x-confetti count=\"50\">count=50</div>",
+      "<div x-confetti label=\"Fire Confetti!\">label=\"Fire Confetti!\"</div>",
+      "<div x-confetti delay=\"0s\">delay=\"0s\"</div>",
+      "<div x-confetti duration=\"3s\">duration=\"3s\"</div>",
+      "<div x-confetti colors=\"[\"#ff0\",\"#f0f\",\"#0ff\",\"#0f0\",\"#f00\"]\">colors=\"[\"#ff0\",\"#f0f\",\"#0ff\",\"#0f0\",\"#f00\"]\"</div>"
     ],
     "matrix": {
       "combinations": [
@@ -114,9 +114,9 @@
     },
     "site": {
       "page": "effects",
-      "tag": "wb-confetti",
+      "tag": "x-confetti",
       "renders": true,
-      "baseClass": "wb-confetti",
+      "baseClass": "x-confetti",
       "minInstances": 3,
       "checkText": [],
       "checkClasses": [],

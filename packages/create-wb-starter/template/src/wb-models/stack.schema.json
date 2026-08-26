@@ -4,9 +4,9 @@
   "title": "Stack Layout Component",
   "description": "Vertical stack layout component. Renders children in a column with configurable gap, background color, padding, and border radius.",
   "schemaFor": "stack",
-  "baseClass": "wb-stack",
+  "baseClass": "x-stack",
   "compliance": {
-    "baseClass": "wb-stack",
+    "baseClass": "x-stack",
     "supportLevel": "stable",
     "accessibility": "low"
   },
@@ -37,8 +37,8 @@
     }
   },
   "usage": {
-    "basic": "<wb-stack>\n  <span>Item one</span>\n  <span>Item two</span>\n</wb-stack>",
-    "card": "<wb-stack gap=\"0.25rem\" bg=\"#1a2f4e\" pad=\"0 0 0.75rem\" radius=\"8px\">\n  <img src=\"photo.jpg\" style=\"width:100%;height:180px;object-fit:cover;border-radius:8px 8px 0 0;display:block\">\n  <span style=\"padding:0.5rem 1rem 0;display:block\">Card Title</span>\n  <span style=\"padding:0 1rem;display:block\">Subtitle text</span>\n</wb-stack>",
+    "basic": "<div x-stack>\n  <span>Item one</span>\n  <span>Item two</span>\n</div>",
+    "card": "<div x-stack gap=\"0.25rem\" bg=\"#1a2f4e\" pad=\"0 0 0.75rem\" radius=\"8px\">\n  <img src=\"photo.jpg\" style=\"width:100%;height:180px;object-fit:cover;border-radius:8px 8px 0 0;display:block\">\n  <span style=\"padding:0.5rem 1rem 0;display:block\">Card Title</span>\n  <span style=\"padding:0 1rem;display:block\">Subtitle text</span>\n</div>",
     "notes": [
       "Images inside a card-style stack should use border-radius:8px 8px 0 0 to match the top corners of the stack.",
       "When using bg+radius, set pad to bottom-only (e.g. '0 0 0.75rem') so the image bleeds to the top and side edges.",
@@ -48,12 +48,12 @@
   },
   "test": {
     "setup": [
-      "<wb-stack><span>A</span><span>B</span></wb-stack>",
-      "<wb-stack gap=\"0.5rem\"><span>A</span><span>B</span></wb-stack>",
-      "<wb-stack bg=\"#1a2f4e\"><span>A</span><span>B</span></wb-stack>",
-      "<wb-stack pad=\"1rem\"><span>A</span><span>B</span></wb-stack>",
-      "<wb-stack radius=\"8px\"><span>A</span><span>B</span></wb-stack>",
-      "<wb-stack gap=\"0.25rem\" bg=\"#2d4a1e\" pad=\"0 0 0.75rem\" radius=\"8px\"><span>Full card style</span></wb-stack>"
+      "<div x-stack><span>A</span><span>B</span></div>",
+      "<div x-stack gap=\"0.5rem\"><span>A</span><span>B</span></div>",
+      "<div x-stack bg=\"#1a2f4e\"><span>A</span><span>B</span></div>",
+      "<div x-stack pad=\"1rem\"><span>A</span><span>B</span></div>",
+      "<div x-stack radius=\"8px\"><span>A</span><span>B</span></div>",
+      "<div x-stack gap=\"0.25rem\" bg=\"#2d4a1e\" pad=\"0 0 0.75rem\" radius=\"8px\"><span>Full card style</span></div>"
     ]
   },
   "$view": [],
@@ -62,6 +62,6 @@
   "_metadata": {
     "category": "layout",
     "icon": "📦",
-    "viewModel": "src/wb-viewmodels/wb-stack.js"
+    "viewModel": "src/wb-viewmodels/x-stack.js"
   }
 }

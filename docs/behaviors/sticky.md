@@ -2,13 +2,15 @@
 
 Makes element stick to viewport on scroll
 
-Applies to `<div>`, and to any element carrying `x-sticky`.
+## Type — new capability
 
-## Usage
+`x-sticky` adds behavior that no HTML element implies. Nothing about a tag says "ripple" or "tooltip", so this is always opted into by attribute, on whatever element you already chose.
+
+### How to write it
 
 ```html
-<div x-sticky>
-  …
+<div x-sticky offset="0" stuck-class="is-stuck">
+  Sticks to the top of its scroll container once you pass it.
 </div>
 ```
 

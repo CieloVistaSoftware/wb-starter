@@ -4,13 +4,13 @@
   "title": "File Card",
   "description": "File display card with icon, name, size, and download",
   "schemaFor": "cardfile",
-  "baseClass": "wb-card-file",
+  "baseClass": "x-card-file",
   "semanticElement": {
     "tagName": "article",
     "implicitRole": "article"
   },
   "compliance": {
-    "baseClass": "wb-card-file",
+    "baseClass": "x-card-file",
     "supportLevel": "stable",
     "accessibility": "high"
   },
@@ -63,7 +63,7 @@
         "elevated"
       ],
       "default": "default",
-      "appliesClass": "wb-card-file--{{value}}"
+      "appliesClass": "x-card-file--{{value}}"
     },
     "hoverText": {
       "type": "string",
@@ -126,54 +126,54 @@
     }
   },
   "$cssAPI": {
-    "--wb-card-file-padding": {
+    "--x-card-file-padding": {
       "default": "1rem",
       "description": "Card padding"
     },
-    "--wb-card-file-radius": {
+    "--x-card-file-radius": {
       "default": "8px",
       "description": "Border radius"
     },
-    "--wb-card-file-gap": {
+    "--x-card-file-gap": {
       "default": "1rem",
       "description": "Gap between elements"
     },
-    "--wb-card-file-icon-size": {
+    "--x-card-file-icon-size": {
       "default": "40px",
       "description": "Icon size"
     },
-    "--wb-card-file-icon-bg": {
+    "--x-card-file-icon-bg": {
       "default": "var(--bg-secondary, #f3f4f6)",
       "description": "Icon background"
     },
-    "--wb-card-file-name-size": {
+    "--x-card-file-name-size": {
       "default": "0.875rem",
       "description": "Filename font size"
     },
-    "--wb-card-file-name-weight": {
+    "--x-card-file-name-weight": {
       "default": "600",
       "description": "Filename font weight"
     },
-    "--wb-card-file-meta-size": {
+    "--x-card-file-meta-size": {
       "default": "0.75rem",
       "description": "Meta font size"
     },
-    "--wb-card-file-meta-color": {
+    "--x-card-file-meta-color": {
       "default": "var(--text-secondary, #666)",
       "description": "Meta text color"
     }
   },
   "test": {
     "setup": [
-      "<wb-cardfile>Basic cardfile content</wb-cardfile>",
-      "<wb-cardfile file-type=\"pdf\">fileType=pdf</wb-cardfile>",
-      "<wb-cardfile file-type=\"doc\">fileType=doc</wb-cardfile>",
-      "<wb-cardfile file-type=\"image\">fileType=image</wb-cardfile>",
-      "<wb-cardfile variant=\"default\">variant=default</wb-cardfile>",
-      "<wb-cardfile variant=\"compact\">variant=compact</wb-cardfile>",
-      "<wb-cardfile variant=\"elevated\">variant=elevated</wb-cardfile>",
-      "<wb-cardfile downloadable>with downloadable</wb-cardfile>",
-      "<wb-card-file filename=\"report.pdf\" file-type=\"pdf\"></wb-card-file>"
+      "<div x-cardfile>Basic cardfile content</div>",
+      "<div x-cardfile file-type=\"pdf\">fileType=pdf</div>",
+      "<div x-cardfile file-type=\"doc\">fileType=doc</div>",
+      "<div x-cardfile file-type=\"image\">fileType=image</div>",
+      "<div x-cardfile variant=\"default\">variant=default</div>",
+      "<div x-cardfile variant=\"compact\">variant=compact</div>",
+      "<div x-cardfile variant=\"elevated\">variant=elevated</div>",
+      "<div x-cardfile downloadable>with downloadable</div>",
+      "<div x-cardfile filename=\"report.pdf\" file-type=\"pdf\"></div>"
     ],
     "matrix": {
       "combinations": [
@@ -195,13 +195,13 @@
     },
     "site": {
       "page": "cards",
-      "tag": "wb-cardfile",
+      "tag": "x-cardfile",
       "renders": true,
-      "baseClass": "wb-card-file",
+      "baseClass": "x-card-file",
       "minInstances": 3,
       "checkText": [],
       "checkClasses": [
-        "wb-card-file--compact"
+        "x-card-file--compact"
       ],
       "checkAttributes": [
         "filename"

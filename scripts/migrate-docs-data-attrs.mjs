@@ -3,7 +3,7 @@
  * files to v3 plain attributes / x- behaviors. (#188)
  *
  *   data-wb="ripple tooltip"  ->  x-ripple x-tooltip      (behaviors stay on the element)
- *   data-wb-title="Hi"         ->  title="Hi"             (strip data-wb-)
+ *   data-x-title="Hi"         ->  title="Hi"             (strip data-x-)
  *   data-variant="primary"     ->  variant="primary"      (strip data-)
  *
  * Keeps the allowlist (data-theme, data-page). Idempotent.
@@ -31,8 +31,8 @@ function migrate(src) {
   s = s.replace(/data-wb=(["'])([^"']*)\1/g, (_m, _q, vals) =>
     vals.trim().split(/\s+/).filter(Boolean).map((v) => 'x-' + v).join(' ')
   );
-  // 2. data-wb-REST(=...)  ->  REST(=...)   (strip the data-wb- prefix)
-  s = s.replace(/\bdata-wb-([a-z0-9-]+)/g, '$1');
+  // 2. data-x-REST(=...)  ->  REST(=...)   (strip the data-x- prefix)
+  s = s.replace(/\bdata-x-([a-z0-9-]+)/g, '$1');
   // 3. a bare `data-wb` token with no value -> x-wb removed; treat as nothing useful
   s = s.replace(/\bdata-wb\b(?!-)/g, 'x-behavior');
   // 4. generic data-ATTR -> ATTR, except the allowlist

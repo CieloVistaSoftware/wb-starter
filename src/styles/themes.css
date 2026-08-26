@@ -6,7 +6,7 @@
  * Example: <html data-theme="ocean">
  * 
  * All themes derive from HCS (Harmonic Color System) definitions
- * Source: components/wb-control-panel/config/themes-hcs.json
+ * Source: components/x-control-panel/config/themes-hcs.json
  * 
  * @version 1.0.0
  */
@@ -28,9 +28,9 @@
    the standard's "compact atom" exclusion list (badges/pills/kbd/etc). This
    selector's specificity ([data-theme] + button = 0,1,1) beats any single
    class like `.effect-demo` (0,1,0) with no compound modifier, so a button
-   that never gets a `.wb-button`/`.wb-btn--*`/`wb-button[size]` match (e.g.
+   that never gets a `.x-button`/`.x-btn--*`/`x-button[size]` match (e.g.
    pages/behaviors.html's x-*-decorated demo buttons, which button.js
-   deliberately skips styling for -- see wb-btn-bare-class-audit.spec.ts)
+   deliberately skips styling for -- see x-btn-bare-class-audit.spec.ts)
    fell all the way through to this bare 0.5rem/1rem reset regardless of
    any lower-specificity class meant to style it. Matches the same 1rem
    floor already applied everywhere else buttons are sized (button.css,
@@ -79,7 +79,7 @@
   --overlay-dark-hsl: 0 0% 0%;    /* scrims, shadows */
   --overlay-light-hsl: 0 0% 100%; /* glass, sheen, hovers */
 
-  /* Pre-composed glass tokens (card.css .wb-card--glass, #232) — css-oop-
+  /* Pre-composed glass tokens (card.css .x-card--glass, #232) — css-oop-
      compliance only exempts hsl()/rgba() composition in shadow contexts or
      exception-listed files, so the alpha is baked in here rather than
      composed at the call site as a bare var() reference.

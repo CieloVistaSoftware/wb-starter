@@ -7,12 +7,12 @@
  */
 
 /* #448: tag selector -- collapse() no longer adds a redundant classList.add
-   ('wb-collapse') that just duplicated the <wb-collapse> tag name. */
-wb-collapse {
+   ('x-collapse') that just duplicated the <div x-collapse> tag name. */
+x-collapse {
   display: block;
 }
 
-.wb-collapse__trigger {
+.x-collapse__trigger {
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -29,23 +29,23 @@ wb-collapse {
   text-align: left;
 }
 
-.wb-collapse__trigger:hover {
+.x-collapse__trigger:hover {
   background: var(--bg-tertiary, #374151);
 }
 
-.wb-collapse--open .wb-collapse__trigger {
+.x-collapse--open .x-collapse__trigger {
   border-radius: 6px 6px 0 0;
 }
 
-.wb-collapse__icon {
+.x-collapse__icon {
   transition: transform 0.2s;
 }
 
-.wb-collapse--open .wb-collapse__icon {
+.x-collapse--open .x-collapse__icon {
   transform: rotate(180deg);
 }
 
-.wb-collapse__content {
+.x-collapse__content {
   padding: 0.75rem 1rem;
   border: 1px solid var(--border-color, #374151);
   border-top: none;
@@ -54,6 +54,6 @@ wb-collapse {
   display: none;
 }
 
-.wb-collapse--open .wb-collapse__content {
+.x-collapse--open .x-collapse__content {
   display: block;
 }

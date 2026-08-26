@@ -3,11 +3,11 @@
  * -----------------------------------------------------------------------------
  * Timeline component from items attribute
  *
- * Custom Tag: <wb-timeline>
+ * Custom Tag: <div x-timeline>
  * -----------------------------------------------------------------------------
  */
 export function timeline(element, options = {}) {
-  element.classList.add('wb-timeline');
+  element.classList.add('x-timeline');
 
   // Parse items from attribute
   const itemsAttr = element.getAttribute('items') || '';
@@ -17,7 +17,7 @@ export function timeline(element, options = {}) {
   element.items = items;
 
   return () => {
-    element.classList.remove('wb-timeline');
+    element.classList.remove('x-timeline');
   };
 }
 

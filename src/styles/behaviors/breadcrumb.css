@@ -6,18 +6,18 @@
  * -----------------------------------------------------------------------------
  */
 
-.wb-breadcrumb {
+.x-breadcrumb {
   display: flex;
   gap: 0.4rem;
   font-size: 0.8rem;
   color: var(--text-muted);
 }
 
-.wb-breadcrumb a {
+.x-breadcrumb a {
   color: var(--text-secondary);
   text-decoration: none;
 }
 
-.wb-breadcrumb a:hover {
+.x-breadcrumb a:hover {
   color: var(--primary);
 }

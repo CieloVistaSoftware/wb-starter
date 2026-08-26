@@ -1,7 +1,7 @@
 # Inline Styles Audit — Tier-1 Law 9 violation
 
 **Date:** 2026-07-18
-**Trigger:** John reviewing live-rendered `<wb-cardbutton>`/`<wb-card x-slidein>` markup,
+**Trigger:** John reviewing live-rendered `<div x-cardbutton>`/`<article x-slidein>` markup,
 flagging the sheer volume of inline `style="..."` attributes as "really noisy," then
 identifying it as a standards violation.
 **Standard violated:** `docs/claude/TIER1-LAWS.md`, Law 9 — "No One-Off Styles — Use
@@ -42,7 +42,7 @@ duplicate existing styles."*
 each build several inline-styled elements (title, subtitle, body, footer, buttons)
 rather than using `card.css` classes. This is exactly the pattern that made tonight's
 card-subtitle-margin bug (see main session log — several variants' inline
-`style.cssText` silently overrode `card.css`'s correct `.wb-card__subtitle` rule)
+`style.cssText` silently overrode `card.css`'s correct `.x-card__subtitle` rule)
 possible in the first place: a class-based fix in the shared stylesheet can't reach
 an element that never got the class-only treatment to begin with.
 
@@ -58,7 +58,7 @@ an element that never got the class-only treatment to begin with.
   correct CSS rule).
 - **DOM bloat**: every rendered card/audio-player/dropdown/etc. serializes a full
   style dump per element instead of a short class list — visible directly in the
-  `<wb-cardbutton>`/`<wb-card>` markup John pasted.
+  `<div x-cardbutton>`/`<article>` markup John pasted.
 - **No single source of truth**: the "same" visual property (e.g. subtitle margin)
   can be defined in up to N different places (once per variant's inline string) 
   instead of once in `card.css`, which is exactly how they drifted out of sync.
@@ -71,7 +71,7 @@ session. Suggested order:
 
 1. **`card.js` first** — biggest win by far (155/250+ occurrences in one file), and
    already has an established CSS home (`card.css`) with most of the BEM class names
-   (`.wb-card__title`, `.wb-card__subtitle`, etc.) already defined — many of these
+   (`.x-card__title`, `.x-card__subtitle`, etc.) already defined — many of these
    inline styles are likely pure duplicates of an existing rule and can be deleted
    outright rather than migrated.
 2. **`semantics/audio.js`, `enhancements.js`, `effects.js`, `overlay.js`,

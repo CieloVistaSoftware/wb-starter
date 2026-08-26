@@ -16,7 +16,7 @@
 
 ### 2. View (`src/wb-views/`)
 *   **What**: The Visual Structure.
-*   **Format**: HTML Templates (`<template wb-view="...">`).
+*   **Format**: HTML Templates (`<template x-view="...">`).
 *   **Role**: Defines the DOM hierarchy, semantic tags, and initial layout.
 *   **Example**: `card.html` defines `<article><header>...</header><main>...</main></article>`.
 
@@ -72,7 +72,7 @@ Ensure that Views and ViewModels speak the same language (Semantic HTML).
 
 ### Phase 3: Feature Parity
 Ensure that the "View Path" and the "ViewModel Path" support the same features defined in the Model.
-*   **Goal**: `new Card({ badge: 'New' })` (ViewModel) should render the same output as `<wb-view="card" badge="New">` (View).
+*   **Goal**: `new Card({ badge: 'New' })` (ViewModel) should render the same output as `<div="card" badge="New">` (View).
 
 ### Phase 4: The Future
 *   **Goal**: Developers primarily write **Views** (HTML) and **Models** (JSON).

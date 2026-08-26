@@ -20,15 +20,15 @@ test.describe('Input and Switch Behaviors', () => {
         <body>
           <div class="demo-area">
             <!-- Input with Icon -->
-            <div class="wb-input-wrapper">
-              <span class="wb-input-icon">🔍</span>
-              <wb-input type="text" placeholder="Search...">
-            </wb-input>
+            <div class="x-input-wrapper">
+              <span class="x-input-icon">🔍</span>
+              <div x-input type="text" placeholder="Search...">
+            </div>
           </div>
 
           <div class="demo-area">
             <!-- Switch -->
-            <wb-switch type="checkbox" id="switch1">
+            <div x-switch type="checkbox" id="switch1">
             <label for="switch1">Toggle Me</label>
           </div>
 
@@ -59,15 +59,15 @@ test.describe('Input and Switch Behaviors', () => {
 
   test('Input should have correct styling classes', async ({ page }) => {
     const input = page.locator('input[type="text"]');
-    await expect(input).toHaveClass(/wb-input/);
+    await expect(input).toHaveClass(/x-input/);
     
     // Check wrapper styling
-    const wrapper = page.locator('.wb-input-wrapper');
+    const wrapper = page.locator('.x-input-wrapper');
     await expect(wrapper).toHaveCSS('position', 'relative');
     await expect(wrapper).toHaveCSS('display', 'flex');
     
     // Check icon positioning
-    const icon = page.locator('.wb-input-icon');
+    const icon = page.locator('.x-input-icon');
     await expect(icon).toBeVisible();
   });
 
@@ -77,15 +77,15 @@ test.describe('Input and Switch Behaviors', () => {
     // We look for the wrapper that the behavior creates
     
     // Wait for transformation
-    // #448: wb-switch no longer carries a same-named `.wb-switch` class on
-    // a literal <wb-switch> host -- select the tag directly.
-    await page.waitForSelector('wb-switch');
+    // #448: x-switch no longer carries a same-named `.x-switch` class on
+    // a literal <div x-switch> host -- select the tag directly.
+    await page.waitForSelector('[x-switch]');
 
-    const switchWrapper = page.locator('wb-switch');
+    const switchWrapper = page.locator('[x-switch]');
     await expect(switchWrapper).toBeVisible();
     
     // Check for the slider element
-    const slider = switchWrapper.locator('.wb-switch__slider');
+    const slider = switchWrapper.locator('.x-switch__slider');
     await expect(slider).toBeVisible();
     
     // Check interaction

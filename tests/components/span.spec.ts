@@ -25,14 +25,14 @@ async function injectAndScan(page: Page, html: string) {
     container.innerHTML = h;
     
     // Force eager loading
-    const elements = container.querySelectorAll('.wb-ready');
+    const elements = container.querySelectorAll('.x-ready');
     elements.forEach(el => el.setAttribute('', ''));
     
     document.body.appendChild(container);
   }, html);
   
-  await page.evaluate(() => {
-    (window as any).WB.scan(document.getElementById('test-container'));
+  await page.evaluate(async () => {
+    await (window as any).WB.scan(document.getElementById('test-container'));
   });
   
   await page.waitForTimeout(500);
@@ -45,11 +45,11 @@ test.describe('span Behavior', () => {
     page.on('pageerror', (err) => errors.push(err.message));
     
     const setupHtml = [
-      "<wb-span>Basic span content</wb-span>",
-      "<wb-span variant=\"red\">variant=red</wb-span>",
-      "<wb-span variant=\"yellow\">variant=yellow</wb-span>",
-      "<wb-span variant=\"green\">variant=green</wb-span>",
-      "<wb-span variant=\"red\" variant=\"yellow\">Combined: variant=red, variant=yellow</wb-span>"
+      "<div x-span>Basic span content</div>",
+      "<div x-span variant=\"red\">variant=red</div>",
+      "<div x-span variant=\"yellow\">variant=yellow</div>",
+      "<div x-span variant=\"green\">variant=green</div>",
+      "<div x-span variant=\"red\" variant=\"yellow\">Combined: variant=red, variant=yellow</div>"
     ];
     
     await injectAndScan(page, setupHtml.join('\n'));
@@ -65,10 +65,10 @@ test.describe('span Behavior', () => {
   });
 
   test('element is visible after scan', async ({ page }) => {
-    const html = "<wb-span>Basic span content</wb-span>";
+    const html = "<div x-span>Basic span content</div>";
     await injectAndScan(page, html);
     
-    const el = page.locator('#test-container wb-span, #test-container wb-span').first();
+    const el = page.locator('#test-container [x-span], #test-container [x-span]').first();
     const isPresent = await el.count() > 0;
     
     if (isPresent) {

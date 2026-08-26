@@ -1,3 +1,4 @@
+import { readFlag, readAttr } from '../../core/read-attr.js';
 /**
  * Details - Enhanced <details> element
  * Helper Attribute: [x-behavior="details"]
@@ -12,23 +13,23 @@
  */
 export function details(element, options = {}) {
   const config = {
-    open: options.open ?? (element.hasAttribute('open') || element.hasAttribute('data-open')),
-    animated: options.animated ?? element.dataset.animated !== 'false',
+    open: options.open ?? (element.hasAttribute('open') || readFlag(element, 'open')),
+    animated: options.animated ?? readAttr(element, 'animated') !== 'false',
     ...options
   };
 
   // If not already a <details>, wrap content
   if (element.tagName !== 'DETAILS') {
-    const summaryText = element.getAttribute('summary') || element.dataset.summary || element.dataset.title || 'Details';
+    const summaryText = element.getAttribute('summary') || readAttr(element, 'summary') || readAttr(element, 'title') || 'Details';
     const contentHtml = element.innerHTML;
     
     const detailsEl = document.createElement('details');
-    detailsEl.className = 'wb-details ' + (element.className || '');
+    detailsEl.className = 'x-details ' + (element.className || '');
     if (config.open) detailsEl.open = true;
     
     detailsEl.innerHTML = `
-      <summary class="wb-details__summary">${summaryText}</summary>
-      <div class="wb-details__content">${contentHtml}</div>
+      <summary class="x-details__summary">${summaryText}</summary>
+      <div class="x-details__content">${contentHtml}</div>
     `;
     
     Object.keys(element.dataset).forEach(key => {
@@ -36,13 +37,37 @@ export function details(element, options = {}) {
     });
     
     // Add class to original element in case tests are checking it
-    element.classList.add('wb-details');
+    element.classList.add('x-details');
     
     element.replaceWith(detailsEl);
     element = detailsEl;
   } else {
-    element.classList.add('wb-details');
+    element.classList.add('x-details');
     if (config.open) element.open = true;
+
+    // #689 -- John: "the gaps here are not right". A native <details> authored
+    // with the summary as an ATTRIBUTE (<details summary="Trail conditions">)
+    // got neither a <summary> element nor a .x-details__content wrapper, so
+    // the styling below -- which is what applies the 1rem to each half -- had
+    // nothing to find. The browser fell back to its own unpadded "Details"
+    // label (dropping the authored text entirely), the <img> sat flush against
+    // the 1px border, and a centred <p> kept its 48px auto margins: three
+    // different insets in one box. Build the same structure the wrap path
+    // above builds, so both paths end up styled identically.
+    const ownSummary = [...element.children].find((c) => c.tagName === 'SUMMARY');
+    if (!ownSummary) {
+      const content = document.createElement('div');
+      content.className = 'x-details__content';
+      while (element.firstChild) content.appendChild(element.firstChild);
+
+      const summaryEl = document.createElement('summary');
+      summaryEl.className = 'x-details__summary';
+      // textContent, not innerHTML: the attribute is author input and the
+      // label is plain text -- there is nothing here that needs markup.
+      summaryEl.textContent = element.getAttribute('summary') || 'Details';
+
+      element.append(summaryEl, content);
+    }
   }
 
   // Style the native element
@@ -55,12 +80,12 @@ export function details(element, options = {}) {
 
   const summary = element.querySelector('summary');
   if (summary) {
-    summary.classList.add('wb-details__summary');
+    summary.classList.add('x-details__summary');
     Object.assign(summary.style, {
       display: 'flex',
       alignItems: 'center',
       justifyContent: 'space-between',
-      padding: '0.75rem 1rem',
+      padding: '1rem',
       background: 'var(--bg-secondary, #1f2937)',
       cursor: 'pointer',
       fontWeight: '500',
@@ -68,27 +93,27 @@ export function details(element, options = {}) {
     });
     
     // Custom icon (guard against re-wrapping on a second scan — issue #131)
-    if (!summary.querySelector(".wb-details__label")) {
+    if (!summary.querySelector(".x-details__label")) {
       const labelText = summary.textContent.trim();
       summary.innerHTML = `
-        <span class="wb-details__label">${labelText}</span>
-        <span class="wb-details__icon" style="transition: transform 0.2s;">▼</span>
+        <span class="x-details__label">${labelText}</span>
+        <span class="x-details__icon" style="transition: transform 0.2s;">▼</span>
       `;
     }
   }
 
   // Content styling
-  const content = element.querySelector('.wb-details__content') || element.querySelector('summary + *');
+  const content = element.querySelector('.x-details__content') || element.querySelector('summary + *');
   if (content) {
-    content.classList.add('wb-details__content');
+    content.classList.add('x-details__content');
     Object.assign(content.style, {
-      padding: '0.75rem 1rem',
+      padding: '1rem',
       background: 'var(--bg-primary, #111827)'
     });
   }
 
   // Animation
-  const icon = element.querySelector('.wb-details__icon');
+  const icon = element.querySelector('.x-details__icon');
   element.addEventListener('toggle', () => {
     if (icon) {
       icon.style.transform = element.open ? 'rotate(180deg)' : '';
@@ -107,7 +132,7 @@ export function details(element, options = {}) {
     get isOpen() { return element.open; }
   };
 
-  return () => element.classList.remove('wb-details');
+  return () => element.classList.remove('x-details');
 }
 
 export default { details };

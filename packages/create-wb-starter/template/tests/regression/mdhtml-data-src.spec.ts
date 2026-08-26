@@ -15,7 +15,7 @@ import { test, expect } from '@playwright/test';
  * through to its "inline content" branch and rendered whatever was already
  * sitting in the element's innerHTML (doc-viewer.html's static "Loading
  * documentation..." placeholder) as if it were the markdown source --
- * still marking itself `wb-mdhtml--loaded` with no error. The existing
+ * still marking itself `x-mdhtml--loaded` with no error. The existing
  * doc-viewer.spec.ts test would have caught this immediately, but it lives
  * in the `behaviors` Playwright project, which `npm run test:compliance`
  * (the documented "pre-push-to-.io gate") never runs -- so the regression
@@ -41,7 +41,7 @@ test.describe('mdhtml() config.src reads data-src (regression for the 8afed94 de
       document.body.appendChild(el);
       await mdhtml(el, {});
       return {
-        loaded: el.classList.contains('wb-mdhtml--loaded'),
+        loaded: el.classList.contains('x-mdhtml--loaded'),
         hasPlaceholderText: el.textContent.includes('Loading documentation'),
         h1: el.querySelector('h1')?.textContent || null,
       };

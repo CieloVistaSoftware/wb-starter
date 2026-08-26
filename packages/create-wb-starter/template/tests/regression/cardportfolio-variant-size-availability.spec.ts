@@ -1,26 +1,26 @@
 import { test, expect } from '@playwright/test';
 
 /**
- * wb-cardportfolio (card.js → cardportfolio(), CSS in card.css) had three
+ * x-cardportfolio (card.js → cardportfolio(), CSS in card.css) had three
  * related bugs, all found live on demos/multi-component-demo-generated.html
- * (the auto-generated page that renders one <wb-demo> per enum value):
+ * (the auto-generated page that renders one <div x-demo> per enum value):
  *
- * 1. variant="compact"/"horizontal"/"full" added a `wb-portfolio--{variant}`
- *    class (card.js) but card.css had ZERO `.wb-portfolio--*` rules -- the
+ * 1. variant="compact"/"horizontal"/"full" added a `x-portfolio--{variant}`
+ *    class (card.js) but card.css had ZERO `.x-portfolio--*` rules -- the
  *    same "JS adds a modifier class, no matching CSS exists" pattern already
- *    fixed this session for wb-switch/wb-button/wb-progress/wb-chip/wb-rating.
+ *    fixed this session for x-switch/x-button/x-progress/x-chip/x-rating.
  *    compact/horizontal rendered pixel-identical to default.
  *
  * 2. size="sm"/"md"/"lg"/"xl"/"full" go through cardBase()'s shared
- *    `.wb-card--{size}` classes (real max-width/min-width rules), but inside
- *    a multi-column <wb-demo> grid the item stretches to fill its column
+ *    `.x-card--{size}` classes (real max-width/min-width rules), but inside
+ *    a multi-column <div x-demo> grid the item stretches to fill its column
  *    (grid default `justify-items: stretch`) -- confirmed live: size=md/lg/
  *    xl/full all rendered at the same 328-335px column width, only sm's
  *    280px max-width was narrower than the column. Fixed by scaling the
  *    portfolio's own avatar size / name font-size / header padding with the
  *    size class too, so diversity is visible independent of container width.
  *
- * 3. The availability dot (`.wb-portfolio__availability`) was built ONLY
+ * 3. The availability dot (`.x-portfolio__availability`) was built ONLY
  *    inside `if (config.avatar) {...}` -- since the demo generator never
  *    sets `avatar` (not a required schema property) and `availability`
  *    defaults to 'available' (cardportfolio.schema.json), the dot never
@@ -31,17 +31,17 @@ import { test, expect } from '@playwright/test';
 
 const FIXTURE = '/tests/fixtures/cards-permutation-matrix.html';
 
-test.describe('wb-cardportfolio variant/size/availability (regression)', () => {
+test.describe('x-cardportfolio variant/size/availability (regression)', () => {
   test('availability dot renders and is color-distinct with no avatar attribute set', async ({ page }) => {
     await page.goto(FIXTURE);
     const section = page.locator('#cardportfolio-availability-variants');
-    await section.locator('wb-cardportfolio').first().waitFor();
+    await section.locator('x-cardportfolio').first().waitFor();
 
     const results = await section.evaluate((sectionEl) => {
-      const cards = Array.from(sectionEl.querySelectorAll('wb-cardportfolio'));
+      const cards = Array.from(sectionEl.querySelectorAll('x-cardportfolio'));
       return cards.map((c) => {
-        const dot = c.querySelector('.wb-portfolio__availability');
-        const placeholder = c.querySelector('.wb-portfolio__avatar-placeholder');
+        const dot = c.querySelector('.x-portfolio__availability');
+        const placeholder = c.querySelector('.x-portfolio__avatar-placeholder');
         return {
           availability: c.getAttribute('availability'),
           hasAvatarAttr: c.hasAttribute('avatar'),
@@ -67,21 +67,21 @@ test.describe('wb-cardportfolio variant/size/availability (regression)', () => {
   test('variant=compact/horizontal/full render visually distinct from default', async ({ page }) => {
     await page.goto(FIXTURE);
     const section = page.locator('#cardportfolio-variant-variants');
-    await section.locator('wb-cardportfolio').first().waitFor();
+    await section.locator('x-cardportfolio').first().waitFor();
 
     const byVariant = await section.evaluate((sectionEl) => {
       const read = (variant: string) => {
-        const el = Array.from(sectionEl.querySelectorAll('wb-cardportfolio')).find(
+        const el = Array.from(sectionEl.querySelectorAll('x-cardportfolio')).find(
           (c) => c.getAttribute('variant') === variant,
         ) as HTMLElement | undefined;
         if (!el) return null;
         const cs = getComputedStyle(el);
-        const avatar = el.querySelector('.wb-portfolio__avatar');
+        const avatar = el.querySelector('.x-portfolio__avatar');
         return {
           width: el.getBoundingClientRect().width,
           flexDirection: cs.flexDirection,
           avatarWidth: avatar ? avatar.getBoundingClientRect().width : null,
-          hasVariantClass: el.classList.contains(`wb-portfolio--${variant}`),
+          hasVariantClass: el.classList.contains(`x-portfolio--${variant}`),
         };
       };
       return {
@@ -117,16 +117,16 @@ test.describe('wb-cardportfolio variant/size/availability (regression)', () => {
   test('size=sm/md/lg/xl/full show increasing visual weight even inside a multi-column grid', async ({ page }) => {
     await page.goto(FIXTURE);
     const section = page.locator('#cardportfolio-size-variants');
-    await section.locator('wb-cardportfolio').first().waitFor();
+    await section.locator('x-cardportfolio').first().waitFor();
 
     const bySize = await section.evaluate((sectionEl) => {
       const read = (size: string) => {
-        const el = Array.from(sectionEl.querySelectorAll('wb-cardportfolio')).find(
+        const el = Array.from(sectionEl.querySelectorAll('x-cardportfolio')).find(
           (c) => c.getAttribute('size') === size,
         ) as HTMLElement | undefined;
         if (!el) return null;
-        const avatar = el.querySelector('.wb-portfolio__avatar');
-        const name = el.querySelector('.wb-portfolio__name');
+        const avatar = el.querySelector('.x-portfolio__avatar');
+        const name = el.querySelector('.x-portfolio__name');
         return {
           avatarWidth: avatar ? avatar.getBoundingClientRect().width : null,
           nameFontSize: name ? parseFloat(getComputedStyle(name).fontSize) : null,

@@ -1,7 +1,7 @@
 import { test, expect } from '@playwright/test';
 
 /**
- * #518: playwright.config.ts used to hardcode `baseURL: 'http://localhost:3000'`
+ * #518: playwright.config.ts used to hardcode `baseURL: ''`
  * and `webServer: { port: 3000, reuseExistingServer: true }` unconditionally.
  * Any Playwright run started from a git worktree (every background agent)
  * silently reused whatever server already held port 3000 -- normally the

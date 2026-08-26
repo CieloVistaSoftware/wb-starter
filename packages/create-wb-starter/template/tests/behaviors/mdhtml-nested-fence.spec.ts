@@ -11,7 +11,7 @@ import { test, expect } from '@playwright/test';
  * orphaned literal text on the page instead of inside the widget. (#260)
  *
  * Fixed by widening the outer fence to 4 backticks. This block must be
- * scrolled into view before it renders — <wb-mdhtml> (via wb-lazy.js's
+ * scrolled into view before it renders — <div x-mdhtml> (via wb-lazy.js's
  * customElementMappings) is lazily injected on IntersectionObserver, not
  * eagerly on page load.
  */
@@ -19,7 +19,7 @@ test('nested code fence renders as one complete, highlighted block (#260)', asyn
   await page.goto('/demos/autoinject.html', { waitUntil: 'domcontentloaded' });
   const widget = page.locator('#autoinject-mdhtml-typo');
   await widget.scrollIntoViewIfNeeded();
-  await expect(widget).toHaveClass(/wb-mdhtml--loaded/, { timeout: 10000 });
+  await expect(widget).toHaveClass(/x-mdhtml--loaded/, { timeout: 10000 });
 
   // Rendered as a real highlighted code block, not left as plain unparsed
   // markdown text.

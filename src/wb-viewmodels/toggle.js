@@ -16,8 +16,14 @@ export function toggle(element, options = {}) {
     ...options
   };
 
-  // #448: no classList.add('wb-toggle') -- no CSS selector anywhere depends
+  // #448: no classList.add('x-toggle') -- no CSS selector anywhere depends
   // on the bare class.
+  // #448 removed this class outright; restored WITH the tag-name guard.
+  // permutation-compliance requires compliance.baseClass to cover the host
+  // (classList.contains(cls) || tagName === cls), and on an attribute host
+  // like <div x-toggle> the tag is "div" -- so without the class nothing covers
+  // it. Guarded so a literal <x-toggle> tag does not get a redundant class.
+  if (element.tagName.toLowerCase() !== 'x-toggle') element.classList.add('x-toggle');
   element.style.cursor = 'pointer';
   element.style.userSelect = 'none';
   element.style.transition = 'all 0.1s ease';
@@ -96,7 +102,7 @@ export function toggle(element, options = {}) {
   };
 
   return () => {
-    element.classList.remove('wb-toggle', ...classes);
+    element.classList.remove('x-toggle', ...classes);
     element.style.background = '';
     element.style.color = '';
     element.style.borderColor = '';

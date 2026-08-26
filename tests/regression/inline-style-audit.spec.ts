@@ -18,7 +18,7 @@ import { join } from 'path';
  * WHY A COUNT IS NOT ENOUGH
  *
  * card.js is the worked example. It writes STYLE_HEADER / STYLE_MAIN / etc.
- * inline onto elements that ALREADY carry .wb-card__header / .wb-card__main,
+ * inline onto elements that ALREADY carry .x-card__header / .x-card__main,
  * and card.css ALREADY defines those exact rules with identical values --
  * migrated in #370, whose comments claim "now that the inline version is
  * gone". It was not gone. Those stylesheet rules have been dead ever since,

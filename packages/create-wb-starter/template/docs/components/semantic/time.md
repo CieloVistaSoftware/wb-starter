@@ -26,17 +26,17 @@ The `<time>` element represents a specific period in time. In WB-Starter, it's u
 ### 1. Card File (`cardfile`)
 
 `x-cardfile` builds its own metadata line from the `date`/`size` attributes.
-**Note:** it renders `date` as plain text inside `.wb-card__file-meta`, not a
+**Note:** it renders `date` as plain text inside `.x-card__file-meta`, not a
 real `<time>` element.
 
-<wb-demo>
+<div x-demo>
 <article
   x-cardfile
   filename="report.pdf"
   type="pdf"
   date="Dec 15, 2024">
 </article>
-</wb-demo>
+</div>
 
 ### 2. Card Notification (`cardnotification`)
 
@@ -55,24 +55,24 @@ Shown here as illustrative markup only; it will render without a timestamp.
 
 ### 3. Timeline Component
 
-`x-timeline` only adds a `wb-timeline` class hook — it doesn't rebuild
+`x-timeline` only adds a `x-timeline` class hook — it doesn't rebuild
 children, so hand-authored markup (including real `<time>` elements) renders
 as-is.
 
-<wb-demo>
+<div x-demo>
 <div x-timeline>
-  <article class="wb-timeline__item">
+  <article class="x-timeline__item">
     <time
       datetime="2024-01"
-      class="wb-timeline__date">
+      class="x-timeline__date">
       January 2024
     </time>
-    <div class="wb-timeline__content">
+    <div class="x-timeline__content">
       <h4>Project Started</h4>
     </div>
   </article>
 </div>
-</wb-demo>
+</div>
 
 ### 4. Relative Time Component (`relativetime`)
 
@@ -81,12 +81,12 @@ as-is.
 replaced, so the text below is illustrative only; the real rendered demo
 recomputes it live.
 
-<wb-demo>
+<div x-demo>
 <time
   x-relativetime
   datetime="2026-07-08T10:30:00Z">
 </time>
-</wb-demo>
+</div>
 
 ## Accessibility Considerations
 
@@ -98,7 +98,7 @@ recomputes it live.
 
 ## Example: Blog Post Metadata
 
-<wb-demo>
+<div x-demo>
 <article class="blog-post">
   <header>
     <h1>Understanding Semantic HTML</h1>
@@ -121,7 +121,7 @@ recomputes it live.
     </p>
   </footer>
 </article>
-</wb-demo>
+</div>
 
 ## CSS Styling
 
@@ -130,13 +130,13 @@ time {
   /* Often used inline, no special styling needed */
 }
 
-time.wb-card__file-date,
-time.wb-card__notif-time {
+time.x-card__file-date,
+time.x-card__notif-time {
   font-size: 0.75rem;
   color: var(--text-muted);
 }
 
-time.wb-timeline__date {
+time.x-timeline__date {
   font-weight: 600;
   color: var(--primary);
 }

@@ -4,12 +4,12 @@
  *
  * Enumerates every registered wb-* tag (src/core/tag-map.js) and x-* behavior
  * (src/core/wb-lazy.js selector map), then scans demos/**.html for where each is
- * demonstrated — distinguishing usage inside a <wb-demo> (standards-compliant:
+ * demonstrated — distinguishing usage inside a <div x-demo> (standards-compliant:
  * live control + source, §16) from bare usage.
  *
  * Output: data/demo-coverage.json + console summary of
  *   - MISSING: tags/behaviors with no demo anywhere
- *   - BARE-ONLY: demonstrated, but never inside a <wb-demo>
+ *   - BARE-ONLY: demonstrated, but never inside a <div x-demo>
  *   - DUPES: demonstrated across many files (overlap to consolidate)
  */
 import fs from 'fs';
@@ -38,9 +38,9 @@ const seen = (name) => (coverage[name] = coverage[name] || { inWbDemo: [], bare:
 
 for (const rel of demoFiles) {
   const src = fs.readFileSync(path.join(ROOT, rel), 'utf8');
-  // Split into wb-demo blocks vs the rest.
-  const wbDemoBlocks = [...src.matchAll(/<wb-demo[^>]*>([\s\S]*?)<\/wb-demo>/gi)].map((m) => m[1]).join('\n');
-  const stripped = src.replace(/<wb-demo[^>]*>[\s\S]*?<\/wb-demo>/gi, '');
+  // Split into x-demo blocks vs the rest.
+  const wbDemoBlocks = [...src.matchAll(/<div x-demo[^>]*>([\s\S]*?)<\/x-demo>/gi)].map((m) => m[1]).join('\n');
+  const stripped = src.replace(/<div x-demo[^>]*>[\s\S]*?<\/x-demo>/gi, '');
 
   for (const tag of TAGS) {
     const re = new RegExp('<' + tag + '(?![a-z0-9-])', 'i');
@@ -75,7 +75,7 @@ fs.writeFileSync(path.join(ROOT, 'data/demo-coverage.json'), JSON.stringify(out,
 console.log(`Registered: ${TAGS.length} wb-* tags, ${BEHAVIORS.length} x-* behaviors; ${demoFiles.length} demo files.`);
 console.log(`\nMISSING (no demo anywhere): ${missing.length}`);
 missing.forEach((n) => console.log('  ' + n));
-console.log(`\nBARE-ONLY (never inside <wb-demo>): ${bareOnly.length}`);
+console.log(`\nBARE-ONLY (never inside <div x-demo>): ${bareOnly.length}`);
 bareOnly.slice(0, 40).forEach((n) => console.log('  ' + n));
 console.log(`\nHEAVY OVERLAP (in 4+ files): ${dupes.length}`);
 dupes.slice(0, 20).forEach((d) => console.log(`  ${d.n}: ${d.files.length} files`));

@@ -1,9 +1,9 @@
 import { test, expect } from '@playwright/test';
 
 /**
- * demo.js's single-item width measurement (§7/#486, "--wb-demo-shrink-width")
+ * demo.js's single-item width measurement (§7/#486, "--x-demo-shrink-width")
  * is a genuine race, not a flicker -- confirmed live on pages/components.html's
- * standalone <wb-cardhero>: identical navigations sometimes measured a correct
+ * standalone <div x-cardhero>: identical navigations sometimes measured a correct
  * ~760px width and sometimes collapsed to a ~45px sliver with text wrapping
  * one letter per line, no code change between attempts.
  *
@@ -35,7 +35,7 @@ test('single-item demo self-corrects width after its lazily-loaded control rende
 
   await page.goto('/?page=components', { waitUntil: 'domcontentloaded' });
 
-  const hero = page.locator('wb-cardhero').first();
+  const hero = page.locator('x-cardhero').first();
   await expect(hero).toBeVisible({ timeout: 15000 });
 
   // Let everything -- including any legitimate delayed re-measure -- settle,
@@ -48,7 +48,7 @@ test('single-item demo self-corrects width after its lazily-loaded control rende
   await page.waitForTimeout(500);
 
   const heroBox = await hero.boundingBox();
-  expect(heroBox, 'wb-cardhero must have a measurable box').not.toBeNull();
+  expect(heroBox, 'x-cardhero must have a measurable box').not.toBeNull();
 
   const contentBox = await page.locator('.page__hero').first().boundingBox();
   expect(contentBox, 'page content container must have a measurable box').not.toBeNull();
@@ -56,7 +56,7 @@ test('single-item demo self-corrects width after its lazily-loaded control rende
   const ratio = heroBox!.width / contentBox!.width;
   expect(
     ratio,
-    `wb-cardhero settled at ${Math.round(heroBox!.width)}px wide against a ` +
+    `x-cardhero settled at ${Math.round(heroBox!.width)}px wide against a ` +
     `${Math.round(contentBox!.width)}px content column (ratio ${ratio.toFixed(2)}) under a slow ` +
     `device (6x CPU throttle) -- a control that renders late must still end up full-width, not ` +
     `permanently stuck at whatever it measured as ~0px before its own rendering finished.`

@@ -62,10 +62,10 @@
     "no-wb-btn-class.spec.ts",
     "no-wb-ready.spec.ts",
     "v3-syntax-compliance.spec.ts",
-    "wb-alert-attribute-correctness.spec.ts",
+    "x-alert-attribute-correctness.spec.ts",
     "cardhero-attrs.spec.ts",
     "semantic-article-to-card.spec.ts",
-    "wb-demo-integrity.spec.ts"
+    "x-demo-integrity.spec.ts"
   ],
   "paths": [
     "no-absolute-asset-paths.spec.ts",

@@ -7,7 +7,7 @@
 export function autocomplete(element, options = {}) {
   const isInput = element.tagName === 'INPUT';
   const wrapper = document.createElement('div');
-  wrapper.className = 'wb-autocomplete';
+  wrapper.className = 'x-autocomplete';
   element.parentNode.insertBefore(wrapper, element);
   wrapper.appendChild(element);
 
@@ -16,10 +16,10 @@ export function autocomplete(element, options = {}) {
     input.type = 'text';
     wrapper.appendChild(input);
   }
-  input.classList.add('wb-autocomplete__input');
+  input.classList.add('x-autocomplete__input');
 
   const list = document.createElement('ul');
-  list.className = 'wb-autocomplete__list';
+  list.className = 'x-autocomplete__list';
   wrapper.appendChild(list);
 
   // Accept a JS array (options.items) or the HTML attribute as CSV
@@ -42,7 +42,7 @@ export function autocomplete(element, options = {}) {
   // available so far.
   const remoteUrl = options.src || element.getAttribute('src') || element.getAttribute('href');
   if (remoteUrl) {
-    wrapper.classList.add('wb-autocomplete--loading');
+    wrapper.classList.add('x-autocomplete--loading');
     fetch(remoteUrl)
       .then((r) => {
         if (!r.ok) throw new Error(`HTTP ${r.status}`);
@@ -55,7 +55,7 @@ export function autocomplete(element, options = {}) {
         console.warn('[x-autocomplete] Failed to load remote items from', remoteUrl, err);
       })
       .finally(() => {
-        wrapper.classList.remove('wb-autocomplete--loading');
+        wrapper.classList.remove('x-autocomplete--loading');
       });
   }
 
@@ -77,8 +77,8 @@ export function autocomplete(element, options = {}) {
   input.addEventListener('input', renderSuggestions);
 
   return () => {
-    wrapper.classList.remove('wb-autocomplete');
-    input.classList.remove('wb-autocomplete__input');
+    wrapper.classList.remove('x-autocomplete');
+    input.classList.remove('x-autocomplete__input');
     if (wrapper.parentNode) {
       wrapper.parentNode.insertBefore(element, wrapper);
       wrapper.remove();

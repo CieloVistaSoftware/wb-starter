@@ -12,14 +12,14 @@ const BASE = 'http://localhost:3000/';
 async function loadHome(page: Page) {
   await page.goto(BASE);
   // Site engine fetches pages/home.html into #app; wait for the hero CTA.
-  await page.locator('wb-cardhero a, .hero a, #app a').first().waitFor({ state: 'visible', timeout: 10000 });
+  await page.locator('x-cardhero a, .hero a, #app a').first().waitFor({ state: 'visible', timeout: 10000 });
 }
 
 test.describe('Home page — link integrity', () => {
   test('no dead links (no #, empty, or javascript: hrefs)', async ({ page }) => {
     await loadHome(page);
 
-    const dead = await page.$$eval('#app a[href], main a[href], wb-cardhero a[href]', (as) =>
+    const dead = await page.$$eval('#app a[href], main a[href], x-cardhero a[href]', (as) =>
       as
         .map((a) => ({ text: (a.textContent || '').trim().slice(0, 40), href: a.getAttribute('href') || '' }))
         .filter((l) => {
@@ -55,7 +55,7 @@ test.describe('Home page — link integrity', () => {
   test('every in-app ?page= link resolves to a fetchable page', async ({ page, request }) => {
     await loadHome(page);
 
-    const pageLinks: string[] = await page.$$eval('#app a[href^="?page="], wb-cardhero a[href^="?page="]', (as) =>
+    const pageLinks: string[] = await page.$$eval('#app a[href^="?page="], x-cardhero a[href^="?page="]', (as) =>
       Array.from(new Set(as.map((a) => (a.getAttribute('href') || '').replace('?page=', '')).filter(Boolean)))
     );
 

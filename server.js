@@ -287,13 +287,13 @@ app.get('/pages/:page', (req, res, next) => {
       // correct for its real production consumer.
       //
       // #542: the original #486 fix only listed native tag names, so
-      // <wb-audio src="demos/sample.wav"> (pages/home.html) never matched --
-      // <wb-audio isn't <audio -- and stayed unrewritten, 404ing under this
+      // <audio src="demos/sample.wav"> (pages/home.html) never matched --
+      // <audio isn't <audio -- and stayed unrewritten, 404ing under this
       // standalone wrap (confirmed by dark-mode.spec.ts, which navigates
       // directly here) while working fine via the real SPA-injection
       // consumer. Added a generic wb-[a-z0-9-]+ alternative so every
-      // src/href-bearing <wb-*> component (wb-audio, wb-avatar, wb-cardimage,
-      // wb-cardvideo today, any future one) is covered, not just today's
+      // src/href-bearing <wb-*> component (x-audio, x-avatar, x-cardimage,
+      // x-cardvideo today, any future one) is covered, not just today's
       // known offenders.
       const RESOURCE_REF = /(<(?:link|script|img|source|audio|video|wb-[a-z0-9-]+)\b[^>]*?\b(?:href|src)\s*=\s*")([^"]+)(")/gi;
       const rewritten = content.replace(RESOURCE_REF, (full, pre, ref, post) => {
@@ -381,7 +381,7 @@ app.use((req, res, next) => {
     // The server never formats markdown itself — mdhtml (the doc-viewer) does all
     // of it. A DIRECT browser navigation to /docs/x.md (Sec-Fetch-Dest: document)
     // is redirected to the doc-viewer, which renders it themed, highlighted,
-    // path-linked, with live <wb-demo>s. Everything else (the doc-viewer's
+    // path-linked, with live <div x-demo>s. Everything else (the doc-viewer's
     // fetch(), tooling, curl) gets the RAW MARKDOWN. Server-side pre-rendering
     // caused a double-parse — mdhtml re-rendered the HTML and collapsed multi-line
     // code blocks (the V3-GUIDE quick-start bug).
@@ -593,7 +593,7 @@ app.post("/api/log-issues", (req, res) => {
 app.post("/clicked", (req, res) => {
   setTimeout(() => {
     res.send(`
-      <button class="wb-btn-gradient" data-tooltip="I was fetched from the server!" style="background: linear-gradient(135deg, #10b981 0%, #059669 100%);">
+      <button class="x-btn-gradient" data-tooltip="I was fetched from the server!" style="background: linear-gradient(135deg, #10b981 0%, #059669 100%);">
         ✓ Swapped!
       </button>
     `);
@@ -951,7 +951,7 @@ app.use((req, res, next) => {
   // omitted .md -- a nonexistent docs/*.md path (e.g. an illustrative example
   // path in documentation) fell through to this same `res.sendFile(index.html)`
   // below, returning a 200 whose body was the FULL site shell HTML instead of
-  // a 404. wb-mdhtml (src/wb-viewmodels/mdhtml.js) only checks `response.ok`
+  // a 404. x-mdhtml (src/wb-viewmodels/mdhtml.js) only checks `response.ok`
   // before treating the body as markdown -- it rendered that entire HTML
   // document as content, and the browser then parsed and fetched every
   // embedded <link>/<script> tag (normalize.css, themes.css, site.css,

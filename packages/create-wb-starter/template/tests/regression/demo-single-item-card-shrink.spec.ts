@@ -1,8 +1,8 @@
 import { test, expect } from '@playwright/test';
 
 const CASES = [
-  { name: 'pricing', file: 'docs/components/cards/cardpricing.md', selector: 'wb-cardpricing' },
-  { name: 'stats', file: 'docs/components/cards/cardstats.md', selector: 'wb-cardstats' },
+  { name: 'pricing', file: 'docs/components/cards/cardpricing.md', selector: 'x-cardpricing' },
+  { name: 'stats', file: 'docs/components/cards/cardstats.md', selector: 'x-cardstats' },
 ];
 
 for (const cardCase of CASES) {
@@ -11,16 +11,16 @@ for (const cardCase of CASES) {
       waitUntil: 'domcontentloaded',
     });
 
-    const demo = page.locator('wb-demo').first();
-    const card = demo.locator(`.wb-demo__grid ${cardCase.selector}`).first();
-    const code = demo.locator('.wb-demo__code').first();
+    const demo = page.locator('x-demo').first();
+    const card = demo.locator(`.x-demo__grid ${cardCase.selector}`).first();
+    const code = demo.locator('.x-demo__code').first();
     await expect(card).toBeVisible({ timeout: 20000 });
     await expect(code).toBeVisible({ timeout: 20000 });
 
     const metrics = await demo.evaluate((demoElement) => {
-      const grid = demoElement.querySelector('.wb-demo__grid') as HTMLElement | null;
+      const grid = demoElement.querySelector('.x-demo__grid') as HTMLElement | null;
       const cardElement = grid?.firstElementChild as HTMLElement | null;
-      const pre = demoElement.querySelector('.wb-demo__code') as HTMLElement | null;
+      const pre = demoElement.querySelector('.x-demo__code') as HTMLElement | null;
       if (!grid || !cardElement || !pre) throw new Error('canonical demo did not build');
       return {
         cardWidth: cardElement.getBoundingClientRect().width,

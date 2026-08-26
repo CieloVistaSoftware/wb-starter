@@ -25,11 +25,11 @@ test.describe('x-breadcrumb', () => {
   test('renders each items entry with the last marked current', async ({ page }) => {
     await setup(page, '<nav id="bc" x-breadcrumb items="Home,Products,Electronics,Smartphones"></nav>');
     const nav = page.locator('#bc');
-    await expect(nav).toHaveClass(/wb-breadcrumb/);
+    await expect(nav).toHaveClass(/x-breadcrumb/);
     await expect(nav).toContainText('Home');
     await expect(nav).toContainText('Smartphones');
     await expect(nav.locator('[aria-current="page"]')).toHaveText('Smartphones');
     // 4 items → 3 separators
-    await expect(nav.locator('.wb-breadcrumb__separator')).toHaveCount(3);
+    await expect(nav.locator('.x-breadcrumb__separator')).toHaveCount(3);
   });
 });

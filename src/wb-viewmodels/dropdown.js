@@ -3,14 +3,14 @@
  * -----------------------------------------------------------------------------
  * Click to show menu.
  * 
- * Custom Tag: <wb-dropdown>
+ * Custom Tag: <div x-dropdown>
  * 
  * Usage:
  *   Option 1 - data-items attribute:
- *     <wb-dropdown  data-items="Profile,Settings,Logout">Click me</div>
+ *     <div x-dropdown  data-items="Profile,Settings,Logout">Click me</div>
  * 
  *   Option 2 - data-label with child elements:
- *     <wb-dropdown  data-label="Options">
+ *     <div x-dropdown  data-label="Options">
  *       <a href="#">Profile</a>
  *       <a href="#">Settings</a>
  *     </div>
@@ -35,13 +35,13 @@ export function dropdown(element, options = {}) {
     ...options
   };
 
-  // #448: skip the class on a literal <wb-dropdown> host -- dropdown.css
-  // selects the `wb-dropdown` TAG directly for that case now. Still added
+  // #448: skip the class on a literal <div x-dropdown> host -- dropdown.css
+  // selects the `x-dropdown` TAG directly for that case now. Still added
   // for every OTHER host (x-dropdown on a <button>, per demos/site/
-  // interactive.html), since dropdown.css's `.wb-dropdown`/`.wb-dropdown.open`
+  // interactive.html), since dropdown.css's `.x-dropdown`/`.x-dropdown.open`
   // rules still select those by class.
-  if (element.tagName.toLowerCase() !== 'wb-dropdown') element.classList.add('wb-dropdown');
-  element.classList.add('wb-dropdown-trigger');
+  if (element.tagName.toLowerCase() !== 'x-dropdown') element.classList.add('x-dropdown');
+  element.classList.add('x-dropdown-trigger');
   element.style.position = 'relative';
   element.style.display = 'inline-block';
 
@@ -55,7 +55,7 @@ export function dropdown(element, options = {}) {
   let trigger;
   if (config.label || hasChildItems) {
     trigger = document.createElement('button');
-    trigger.className = 'wb-dropdown__trigger';
+    trigger.className = 'x-dropdown__trigger';
     trigger.type = 'button';
     trigger.innerHTML = `${config.label || 'Menu'} <span style="margin-left:0.5rem;font-size:0.7em;">▼</span>`;
     trigger.style.cssText = `
@@ -74,7 +74,7 @@ export function dropdown(element, options = {}) {
 
   // Create menu
   const menu = document.createElement('div');
-  menu.className = 'wb-dropdown__menu';
+  menu.className = 'x-dropdown__menu';
   
   // Position styles. Keys MUST match dropdown.schema.json's `position`
   // enum (bottom-start/bottom-end/top-start/top-end) -- this used to be
@@ -108,7 +108,7 @@ export function dropdown(element, options = {}) {
   if (hasChildItems) {
     // Move existing children into menu and style them
     childElements.forEach(child => {
-      child.classList.add('wb-dropdown__item');
+      child.classList.add('x-dropdown__item');
       Object.assign(child.style, {
         // #707: the menu is sized to its content, so an option never needs to
         // wrap -- and a wrapped label misrepresents the component.
@@ -132,14 +132,14 @@ export function dropdown(element, options = {}) {
   } else if (config.items.length > 0) {
     // Create menu items from data-items
     menu.innerHTML = config.items.map(item => `
-      <div class="wb-dropdown__item" style="
+      <div class="x-dropdown__item" style="
         padding:0.5rem 0.75rem;cursor:pointer;
         transition:background 0.15s;white-space:nowrap;
       ">${item.trim()}</div>
     `).join('');
     
     // Add hover events
-    menu.querySelectorAll('.wb-dropdown__item').forEach(item => {
+    menu.querySelectorAll('.x-dropdown__item').forEach(item => {
       item.addEventListener('mouseenter', () => item.style.background = 'var(--bg-tertiary,#374151)');
       item.addEventListener('mouseleave', () => item.style.background = '');
     });
@@ -151,12 +151,12 @@ export function dropdown(element, options = {}) {
     element.appendChild(trigger);
   } else {
     // No label, no child <a>/<button>/<div> items -- the host's own bare
-    // text content (e.g. <wb-dropdown position="...">click me</wb-dropdown>)
+    // text content (e.g. <div x-dropdown position="...">click me</div>)
     // IS the trigger (clickHandler below already handles `e.target ===
     // element`), but it had zero visual styling: no background, border,
     // padding, or pointer cursor -- confirmed live, it just looked like
     // plain unstyled text with no clickable affordance. Style the host
-    // itself the same way .wb-dropdown__trigger styles a real button.
+    // itself the same way .x-dropdown__trigger styles a real button.
   }
   element.appendChild(menu);
 
@@ -171,7 +171,7 @@ export function dropdown(element, options = {}) {
       trigger.setAttribute('aria-expanded', isOpen);
     }
     if (isOpen) {
-      menu.style.animation = 'wb-fade-in 0.15s ease';
+      menu.style.animation = 'x-fade-in 0.15s ease';
     }
   };
 
@@ -186,7 +186,7 @@ export function dropdown(element, options = {}) {
 
   // Click handler
   const clickHandler = (e) => {
-    const item = e.target.closest('.wb-dropdown__item');
+    const item = e.target.closest('.x-dropdown__item');
     
     if (item) {
       // Item clicked
@@ -196,7 +196,7 @@ export function dropdown(element, options = {}) {
       // a handler had nothing stable to switch on. id when the item has one,
       // index always; value keeps its old meaning so existing handlers still work.
       const index = Array.prototype.indexOf.call(
-        menu.querySelectorAll('.wb-dropdown__item'), item);
+        menu.querySelectorAll('.x-dropdown__item'), item);
       element.dispatchEvent(new CustomEvent('wb:dropdown:select', {
         bubbles: true,
         detail: {
@@ -215,7 +215,7 @@ export function dropdown(element, options = {}) {
       if (item.tagName !== 'A') {
         e.preventDefault();
       }
-    } else if (e.target.closest('.wb-dropdown__trigger') || e.target === element) {
+    } else if (e.target.closest('.x-dropdown__trigger') || e.target === element) {
       // Trigger clicked
       e.preventDefault();
       toggle();
@@ -269,7 +269,7 @@ export function dropdown(element, options = {}) {
     trigger.setAttribute('aria-expanded', 'false');
   }
   menu.setAttribute('role', 'menu');
-  menu.querySelectorAll('.wb-dropdown__item').forEach(item => {
+  menu.querySelectorAll('.x-dropdown__item').forEach(item => {
     item.setAttribute('role', 'menuitem');
   });
 
@@ -279,7 +279,7 @@ export function dropdown(element, options = {}) {
     element.removeEventListener('keydown', keyHandler);
     menu.remove();
     if (trigger) trigger.remove();
-    element.classList.remove('wb-dropdown', 'wb-dropdown-trigger', 'open');
+    element.classList.remove('x-dropdown', 'x-dropdown-trigger', 'open');
   };
 }
 

@@ -5,11 +5,11 @@
   "description": "Versatile stage lighting effects including spotlights, beams, and fixtures.",
   "schemaFor": "stagelight",
   "compliance": {
-    "baseClass": "wb-stagelight",
+    "baseClass": "x-stagelight",
     "supportLevel": "experimental",
     "accessibility": "presentation"
   },
-  "baseClass": "wb-stagelight",
+  "baseClass": "x-stagelight",
   "semanticElement": {
     "tagName": "div",
     "implicitRole": "presentation"
@@ -24,7 +24,7 @@
         "fixture"
       ],
       "default": "beam",
-      "appliesClass": "wb-stagelight--{{value}}"
+      "appliesClass": "x-stagelight--{{value}}"
     },
     "color": {
       "type": "string",
@@ -61,25 +61,25 @@
     {
       "name": "source",
       "tag": "div",
-      "class": "wb-stagelight__source",
+      "class": "x-stagelight__source",
       "createdWhen": "variant == 'fixture' OR variant == 'beam'"
     },
     {
       "name": "beam",
       "tag": "div",
-      "class": "wb-stagelight__beam",
+      "class": "x-stagelight__beam",
       "createdWhen": "variant == 'beam'"
     },
     {
       "name": "spot",
       "tag": "div",
-      "class": "wb-stagelight__spot",
+      "class": "x-stagelight__spot",
       "createdWhen": "variant == 'spotlight'"
     },
     {
       "name": "housing",
       "tag": "div",
-      "class": "wb-stagelight__housing",
+      "class": "x-stagelight__housing",
       "createdWhen": "variant == 'fixture'"
     },
     {
@@ -91,29 +91,29 @@
   ],
   "$methods": {},
   "$cssAPI": {
-    "--wb-stagelight-color": {
+    "--x-stagelight-color": {
       "description": "Main color of the light",
       "default": "inherit"
     },
-    "--wb-stagelight-size": {
+    "--x-stagelight-size": {
       "description": "Size of the light beam or spot",
       "default": "inherit"
     },
-    "--wb-stagelight-intensity": {
+    "--x-stagelight-intensity": {
       "description": "Opacity of the light",
       "default": "inherit"
     }
   },
   "test": {
     "setup": [
-      "<wb-stagelight>Basic stagelight content</wb-stagelight>",
-      "<wb-stagelight variant=\"beam\">variant=beam</wb-stagelight>",
-      "<wb-stagelight variant=\"spotlight\">variant=spotlight</wb-stagelight>",
-      "<wb-stagelight variant=\"fixture\">variant=fixture</wb-stagelight>",
-      "<wb-stagelight color=\"#ffffff\">color=\"#ffffff\"</wb-stagelight>",
-      "<wb-stagelight intensity=\"0.5\">intensity=0.5</wb-stagelight>",
-      "<wb-stagelight size=\"300px\">size=\"300px\"</wb-stagelight>",
-      "<wb-stagelight speed=\"3s\">speed=\"3s\"</wb-stagelight>"
+      "<div x-stagelight>Basic stagelight content</div>",
+      "<div x-stagelight variant=\"beam\">variant=beam</div>",
+      "<div x-stagelight variant=\"spotlight\">variant=spotlight</div>",
+      "<div x-stagelight variant=\"fixture\">variant=fixture</div>",
+      "<div x-stagelight color=\"#ffffff\">color=\"#ffffff\"</div>",
+      "<div x-stagelight intensity=\"0.5\">intensity=0.5</div>",
+      "<div x-stagelight size=\"300px\">size=\"300px\"</div>",
+      "<div x-stagelight speed=\"3s\">speed=\"3s\"</div>"
     ],
     "matrix": {
       "combinations": [
@@ -142,15 +142,15 @@
     },
     "site": {
       "page": "effects",
-      "tag": "wb-stagelight",
+      "tag": "x-stagelight",
       "renders": true,
-      "baseClass": "wb-stagelight",
+      "baseClass": "x-stagelight",
       "minInstances": 4,
       "checkText": [
         "Red Light"
       ],
       "checkClasses": [
-        "wb-stagelight--spotlight"
+        "x-stagelight--spotlight"
       ],
       "checkAttributes": [
         "variant",

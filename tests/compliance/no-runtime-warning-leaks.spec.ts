@@ -2,7 +2,7 @@ import { test, expect } from '@playwright/test';
 import { globSync } from 'glob';
 
 /**
- * Release gate: some components (e.g. wb-cardfile) intentionally surface a
+ * Release gate: some components (e.g. x-cardfile) intentionally surface a
  * visible in-DOM warning when authored with missing/invalid config, so the
  * problem isn't a silent dead end during development (card.js:
  * "confusing for anyone authoring/testing this component -- surface it

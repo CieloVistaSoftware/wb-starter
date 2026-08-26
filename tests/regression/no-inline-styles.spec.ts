@@ -84,7 +84,7 @@ const ROOT = process.cwd();
  *
  * Even when the author supplies NOTHING, the default is pinned inline, so a
  * theme redefining `--glow-color` loses to an element that was never asked to
- * carry a value. The default belongs in `.wb-glow { --glow-color: var(--primary) }`
+ * carry a value. The default belongs in `.x-glow { --glow-color: var(--primary) }`
  * and the JS should write nothing at all.
  *
  * It also buys almost nothing: 21 call sites across 7 files, and there are
@@ -175,7 +175,18 @@ function scanMarkup(dirs: string[]): Violation[] {
     for (const file of walk(join(ROOT, dir), ['.html'])) {
       const raw = readFileSync(file, 'utf8');
       raw.split('\n').forEach((line, i) => {
-        if (/\sstyle\s*=\s*["']/.test(line)) {
+        // `[\x22\x27]` is `["']` written without literal quote characters, and
+        // the escapes are load-bearing (#872). tests-must-assert.spec.ts finds
+        // each test body by scanning characters and brace-matching; it has no
+        // concept of a regex literal, so a `"` inside a character class opened
+        // a phantom string that ran to the NEXT `"` in this file, 135 lines
+        // away. Everything between stopped being comment-blanked, the
+        // apostrophe in a `//` comment further down opened a second phantom
+        // string, the brace matcher lost a level, and the `runtime:` test's
+        // body was computed as ending 21 lines early -- just short of its
+        // expect(). The gate then reported a test that was running and failing
+        // correctly as asserting nothing. Same bytes, no scanner to desync.
+        if (/\sstyle\s*=\s*[\x22\x27]/.test(line)) {
           violations.push({
             file: relative(ROOT, file).replace(/\\/g, '/'),
             line: i + 1,

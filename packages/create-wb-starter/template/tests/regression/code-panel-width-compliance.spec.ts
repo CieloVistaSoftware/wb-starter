@@ -13,15 +13,15 @@ test.describe('Code Panel Width Compliance (Standard §28)', () => {
   test('demos with short code snippets use data-code-width="narrow"', async ({ page }) => {
     await page.goto('http://localhost:3000/demos/site/content.html');
 
-    // Find all wb-demo elements with short code snippets
-    const shortDemos = page.locator('wb-demo');
+    // Find all x-demo elements with short code snippets
+    const shortDemos = page.locator('x-demo');
     const count = await shortDemos.count();
 
     // Check for demos that should have narrow width
     const narrowPatterns = [
-      '.wb-link',      // Single line link styling
-      '.wb-badge',     // Short badge component
-      '.wb-button',    // Single button example
+      '.x-link',      // Single line link styling
+      '.x-badge',     // Short badge component
+      '.x-button',    // Single button example
       'class="wb-',    // Other single-line examples
     ];
 
@@ -31,7 +31,7 @@ test.describe('Code Panel Width Compliance (Standard §28)', () => {
 
       // Check if this looks like a short snippet
       const isShortSnippet =
-        innerHTML.includes('<a ') && innerHTML.includes('class="wb-link"') ||
+        innerHTML.includes('<a ') && innerHTML.includes('class="x-link"') ||
         innerHTML.length < 200; // Simple heuristic: under 200 chars
 
       if (isShortSnippet) {
@@ -50,7 +50,7 @@ test.describe('Code Panel Width Compliance (Standard §28)', () => {
   test('all data-code-width attributes use valid presets', async ({ page }) => {
     await page.goto('http://localhost:3000/demos/site/content.html');
 
-    const demosWithWidth = page.locator('wb-demo[data-code-width]');
+    const demosWithWidth = page.locator('x-demo[data-code-width]');
     const count = await demosWithWidth.count();
 
     const validPresets = ['narrow', 'normal', 'wide', 'full'];
@@ -69,9 +69,9 @@ test.describe('Code Panel Width Compliance (Standard §28)', () => {
   test('code panel max-width CSS variable is applied correctly', async ({ page }) => {
     await page.goto('http://localhost:3000/demos/site/content.html');
 
-    const demoNarrow = page.locator('wb-demo[data-code-width="narrow"]').first();
+    const demoNarrow = page.locator('x-demo[data-code-width="narrow"]').first();
     if (await demoNarrow.isVisible()) {
-      const codePanel = demoNarrow.locator('.wb-demo__code');
+      const codePanel = demoNarrow.locator('.x-demo__code');
       const maxWidth = await codePanel.evaluate((el) => {
         return window.getComputedStyle(el).maxWidth;
       });
@@ -80,9 +80,9 @@ test.describe('Code Panel Width Compliance (Standard §28)', () => {
       expect(maxWidth).toContain('400px');
     }
 
-    const demoNormal = page.locator('wb-demo[data-code-width="normal"]').first();
+    const demoNormal = page.locator('x-demo[data-code-width="normal"]').first();
     if (await demoNormal.isVisible()) {
-      const codePanel = demoNormal.locator('.wb-demo__code');
+      const codePanel = demoNormal.locator('.x-demo__code');
       const maxWidth = await codePanel.evaluate((el) => {
         return window.getComputedStyle(el).maxWidth;
       });
@@ -91,9 +91,9 @@ test.describe('Code Panel Width Compliance (Standard §28)', () => {
       expect(maxWidth).toContain('600px');
     }
 
-    const demoWide = page.locator('wb-demo[data-code-width="wide"]').first();
+    const demoWide = page.locator('x-demo[data-code-width="wide"]').first();
     if (await demoWide.isVisible()) {
-      const codePanel = demoWide.locator('.wb-demo__code');
+      const codePanel = demoWide.locator('.x-demo__code');
       const maxWidth = await codePanel.evaluate((el) => {
         return window.getComputedStyle(el).maxWidth;
       });
@@ -111,7 +111,7 @@ test.describe('Code Panel Width Compliance (Standard §28)', () => {
     await linkSection.scrollIntoViewIfNeeded();
 
     // Find the demo after the Link heading
-    const linkDemo = linkSection.locator('xpath=../following-sibling::*//wb-demo').first();
+    const linkDemo = linkSection.locator('xpath=../following-sibling::*//x-demo').first();
     const dataCodeWidth = await linkDemo.getAttribute('data-code-width');
 
     expect(

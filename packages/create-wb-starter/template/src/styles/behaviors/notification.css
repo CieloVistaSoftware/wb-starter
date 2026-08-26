@@ -1,17 +1,17 @@
 /* ==========================================================================
- * wb-cardnotification — Notification Card Styles
+ * x-cardnotification — Notification Card Styles
  * ==========================================================================
  * Variant colors: info=blue, success=green, warning=yellow, error=red
  * Uses CSS custom properties from cardnotification.schema.json $cssAPI
  * ========================================================================== */
 
 /* Base notification layout */
-.wb-notification {
+.x-notification {
   display: flex;
   align-items: flex-start;
-  gap: var(--wb-notification-gap, 0.75rem);
-  padding: var(--wb-notification-padding, 1rem);
-  border-radius: var(--wb-notification-radius, 8px);
+  gap: var(--x-notification-gap, 0.75rem);
+  padding: var(--x-notification-padding, 1rem);
+  border-radius: var(--x-notification-radius, 8px);
   border-left: 4px solid var(--border-color);
   background: var(--bg-secondary);
   color: var(--text-primary);
@@ -19,7 +19,7 @@
 }
 
 /* Icon */
-.wb-notification__icon {
+.x-notification__icon {
   flex-shrink: 0;
   width: 28px;
   height: 28px;
@@ -27,26 +27,26 @@
   align-items: center;
   justify-content: center;
   border-radius: 50%;
-  font-size: var(--wb-notification-icon-size, 0.85rem);
+  font-size: var(--x-notification-icon-size, 0.85rem);
   font-weight: 700;
   text-transform: uppercase;
 }
 
 /* Content area */
-.wb-notification__content {
+.x-notification__content {
   flex: 1;
   min-width: 0;
 }
 
 /* Title */
-.wb-notification__title {
+.x-notification__title {
   display: block;
-  font-weight: var(--wb-notification-title-weight, 600);
+  font-weight: var(--x-notification-title-weight, 600);
   margin-bottom: 0.25rem;
 }
 
 /* Message */
-.wb-notification__message {
+.x-notification__message {
   margin: 0;
   font-size: 0.9rem;
   line-height: 1.5;
@@ -54,7 +54,7 @@
 }
 
 /* Dismiss button */
-.wb-notification__dismiss {
+.x-notification__dismiss {
   flex-shrink: 0;
   width: 28px;
   height: 28px;
@@ -71,13 +71,13 @@
   transition: opacity 0.2s, background 0.2s;
 }
 
-.wb-notification__dismiss:hover {
+.x-notification__dismiss:hover {
   opacity: 1;
   background: rgba(255, 255, 255, 0.1);
 }
 
 /* Elevated */
-.wb-notification--elevated {
+.x-notification--elevated {
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
 }
 
@@ -86,53 +86,53 @@
    use the semantic state colors, and icon text uses --text-primary. */
 
 /* ── INFO ── */
-.wb-notification--info {
+.x-notification--info {
   background: var(--notification-info-dark-bg);
   border-left-color: var(--info-color);
   color: var(--notification-info-dark-color);
 }
 
-.wb-notification--info .wb-notification__icon {
+.x-notification--info .x-notification__icon {
   background: var(--info-color);
   color: var(--text-primary);
 }
 
 /* ── SUCCESS ── */
-.wb-notification--success {
+.x-notification--success {
   background: var(--notification-success-dark-bg);
   border-left-color: var(--success-color);
   color: var(--notification-success-dark-color);
 }
 
-.wb-notification--success .wb-notification__icon {
+.x-notification--success .x-notification__icon {
   background: var(--success-color);
   color: var(--text-primary);
 }
 
 /* ── WARNING ── */
-.wb-notification--warning {
+.x-notification--warning {
   background: var(--notification-warning-dark-bg);
   border-left-color: var(--warning-color);
   color: var(--notification-warning-dark-color);
 }
 
-.wb-notification--warning .wb-notification__icon {
+.x-notification--warning .x-notification__icon {
   background: var(--warning-color);
   color: var(--text-primary);
 }
 
 /* ── ERROR (danger) ── */
-.wb-notification--error {
+.x-notification--error {
   background: var(--notification-danger-dark-bg);
   border-left-color: var(--danger-color);
   color: var(--notification-danger-dark-color);
 }
 
-.wb-notification--error .wb-notification__icon {
+.x-notification--error .x-notification__icon {
   background: var(--danger-color);
   color: var(--text-primary);
 }
 
-[data-theme="dark"] .wb-notification__icon {
+[data-theme="dark"] .x-notification__icon {
   opacity: 0.9;
 }

@@ -73,9 +73,9 @@ function attachLoadRetry(el, config) {
     // "broken" chrome (video controls with nothing to play, browken-image
     // icon) doesn't sit next to the message looking doubly broken.
     el.style.display = 'none';
-    if (!el.nextElementSibling || !el.nextElementSibling.classList.contains('wb-media-load-failed')) {
+    if (!el.nextElementSibling || !el.nextElementSibling.classList.contains('x-media-load-failed')) {
       const msg = document.createElement('div');
-      msg.className = 'wb-media-load-failed';
+      msg.className = 'x-media-load-failed';
       msg.textContent = `⚠ ${config.label} unavailable`;
       el.insertAdjacentElement('afterend', msg);
     }
@@ -196,7 +196,7 @@ export function attachVideoLoadRetry(videoEl, options = {}) {
     options,
     label: 'Video',
     successEvents: ['loadeddata', 'canplay'],
-    failedClass: 'wb-video--load-failed',
+    failedClass: 'x-video--load-failed',
     failedEvent: 'wb:video:load-failed',
     currentSrc: (el) => el.currentSrc || el.src,
     // HAVE_CURRENT_DATA (2) or higher means a real frame is available.
@@ -211,7 +211,7 @@ export function attachImageLoadRetry(imgEl, options = {}) {
     options,
     label: 'Image',
     successEvents: ['load'],
-    failedClass: 'wb-img--load-failed',
+    failedClass: 'x-img--load-failed',
     failedEvent: 'wb:image:load-failed',
     currentSrc: (el) => el.currentSrc || el.src,
     isReady: (el) => el.complete && el.naturalWidth > 0,

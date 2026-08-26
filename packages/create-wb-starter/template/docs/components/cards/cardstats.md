@@ -6,10 +6,10 @@ Statistics/metric display card using semantic `<data>` element.
 
 | Property | Value |
 |----------|-------|
-| Custom Tag | `<wb-cardstats>` |
+| Custom Tag | `<div x-cardstats>` |
 | Behavior | `cardstats` |
 | Semantic | `<article>` + `<data>` |
-| Root CSS Class | `wb-card wb-stats` |
+| Root CSS Class | `x-card x-stats` |
 | Composes | card structure + CSS (no base class) |
 
 ## Properties
@@ -24,67 +24,67 @@ Supports every [card property](./card.md) — that shared structure and CSS are 
 | `trend` | string | `""` | Trend: `up`, `down`, `neutral` |
 | `trendValue` | string | `""` | Trend percentage/value |
 
-Wrapped in `<wb-demo>`, so the live component renders below with its source shown underneath:
+Wrapped in `<div x-demo>`, so the live component renders below with its source shown underneath:
 
-<wb-demo>
-<wb-cardstats
+<div x-demo>
+<div x-cardstats
   value="1,234"
   label="Total Users"
   icon="👥">
-</wb-cardstats>
-</wb-demo>
+</div>
+</div>
 
 ## Usage
 
 ### Basic Stats Card
 
 ```html
-<wb-cardstats
+<div x-cardstats
   value="1,234"
   label="Total Users"
   icon="👥">
-</wb-cardstats>
+</div>
 ```
 
 ### With Trend
 
-<wb-demo>
-<wb-cardstats
+<div x-demo>
+<div x-cardstats
   value="$45,678"
   label="Revenue"
   icon="💰"
   trend="up"
   trendValue="+12.5%">
-</wb-cardstats>
-</wb-demo>
+</div>
+</div>
 
 ### Negative Trend
 
-<wb-demo>
-<wb-cardstats
+<div x-demo>
+<div x-cardstats
   value="23"
   label="Open Issues"
   icon="🐛"
   trend="down"
   trendValue="-5">
-</wb-cardstats>
-</wb-demo>
+</div>
+</div>
 
 ## Generated Structure
 
 ```html
-<article class="wb-card wb-stats">
+<article class="x-card x-stats">
   <header>
-    <span class="wb-card__icon">👥</span>
+    <span class="x-card__icon">👥</span>
   </header>
   <main>
     <data
       value="1234"
-      class="wb-card__stats-value">
+      class="x-card__stats-value">
       1,234
     </data>
-    <p class="wb-card__stats-label">Total Users</p>
-    <p class="wb-card__stats-trend">↑ +12.5%</p>
+    <p class="x-card__stats-label">Total Users</p>
+    <p class="x-card__stats-trend">↑ +12.5%</p>
   </main>
 </article>
 ```

@@ -7,7 +7,7 @@ import { setupBehaviorTest, setupTestContainer } from '../base';
  * scan()'s auto-inject loop directly). A bare <input type="checkbox">
  * matches BOTH 'input[type="checkbox"]' (checkbox()) AND the generic
  * 'input' selector (input()), so both behaviors ran, with input() running
- * second and wrapping the checkbox in .wb-input / .wb-input__field --
+ * second and wrapping the checkbox in .x-input / .x-input__field --
  * the generic text-field treatment (padding, flex:1, border-radius,
  * background) -- confirmed live: a native checkbox rendered as a wide
  * rounded pill on the Behaviors page, visually indistinguishable from a
@@ -25,8 +25,8 @@ test.describe('input() behavior does not wrap non-text input types', () => {
     test(`<input type="${type}"> is not wrapped by the generic text-input behavior`, async ({ page }) => {
       const element = await setupTestContainer(page, `<input type="${type}">`);
 
-      await expect(element).not.toHaveClass(/wb-input__field/);
-      await expect(page.locator('.wb-input')).toHaveCount(0);
+      await expect(element).not.toHaveClass(/x-input__field/);
+      await expect(page.locator('.x-input')).toHaveCount(0);
     });
   }
 

@@ -54,7 +54,7 @@ test.describe('Fix Viewer Compliance', () => {
       // flaked (passed in isolation, failed under load).
       //
       // #541: this page's client-side work (WB.init({autoInject:true}) full-page
-      // scan, wb-fix-card custom-element upgrade, composeCard DOM/style build,
+      // scan, x-fix-card custom-element upgrade, composeCard DOM/style build,
       // mdhtml processing) genuinely takes 4-13s even in isolation with minimal
       // worker contention (measured locally: 8 workers running only these 14
       // tests). Under the full 79-file compliance project's 8 parallel workers
@@ -97,7 +97,7 @@ test.describe('Fix Viewer Compliance', () => {
       
       await expect(signatureBlock).toContainText('Enhancement: See list.md');
       const link = signatureBlock.locator('a');
-      await expect(link).toHaveAttribute('href', '/docs/components/semantics/list.md');
+      await expect(link).toHaveAttribute('href', '/docs/behaviors/list.md');
     });
 
     test('should have valid enhancement links', async ({ page }) => {
@@ -107,7 +107,7 @@ test.describe('Fix Viewer Compliance', () => {
       // Check if link is visible and has correct href
       await expect(link).toBeVisible();
       const href = await link.getAttribute('href');
-      expect(href).toBe('/docs/components/semantics/list.md');
+      expect(href).toBe('/docs/behaviors/list.md');
     });
 
     test('should have consistent card layout', async ({ page }) => {

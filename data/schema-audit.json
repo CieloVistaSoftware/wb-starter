@@ -461,11 +461,11 @@
       "tier": "definition"
     },
     {
-      "file": "wb-control.schema.json",
+      "file": "x-control.schema.json",
       "tier": "component"
     },
     {
-      "file": "wb-repeater.schema.json",
+      "file": "x-repeater.schema.json",
       "tier": "component"
     },
     {

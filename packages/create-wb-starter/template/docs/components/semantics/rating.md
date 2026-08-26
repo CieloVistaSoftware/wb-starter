@@ -6,10 +6,10 @@ Star rating component for displaying or collecting ratings.
 
 | Property | Value |
 |----------|-------|
-| Custom Tag | `<wb-rating>` |
+| Custom Tag | `<span x-rating>` |
 | Behavior | `rating` |
 | Semantic | `<div>` (role="slider") |
-| Root CSS Class | `wb-rating` |
+| Root CSS Class | `x-rating` |
 | Category | Feedback |
 | Schema | `src/wb-models/rating.schema.json` |
 
@@ -25,18 +25,18 @@ Star rating component for displaying or collecting ratings.
 | `size` | string | `"md"` | Size: `sm`, `md`, `lg` |
 | `icon` | string | `"★"` | Custom icon (emoji or symbol) |
 
-Wrapped in `<wb-demo>`, so the live component renders below with its source shown underneath:
+Wrapped in `<div x-demo>`, so the live component renders below with its source shown underneath:
 
-<wb-demo>
-<wb-rating value="3"></wb-rating>
-</wb-demo>
+<div x-demo>
+<span x-rating value="3"></span>
+</div>
 
 ## Usage
 
 ### Custom Element
 
 ```html
-<wb-rating value="3"></wb-rating>
+<span x-rating value="3"></span>
 ```
 
 ### Data Attribute
@@ -51,98 +51,98 @@ Wrapped in `<wb-demo>`, so the live component renders below with its source show
 ### Read-Only Display
 
 ```html
-<wb-rating
+<span x-rating
   value="4.5"
   half
   readonly>
-</wb-rating>
+</span>
 ```
 
 ### Interactive Input
 
 ```html
-<wb-rating
+<span x-rating
   value="0"
   max="5">
-</wb-rating>
+</span>
 ```
 
 ### Half Stars
 
 ```html
-<wb-rating
+<span x-rating
   value="3.5"
   half>
-</wb-rating>
+</span>
 ```
 
 ### Custom Max
 
 ```html
-<wb-rating
+<span x-rating
   value="7"
   max="10">
-</wb-rating>
+</span>
 ```
 
 ### Sizes
 
 ```html
-<wb-rating
+<span x-rating
   value="3"
   size="sm">
-</wb-rating>
-<wb-rating
+</span>
+<span x-rating
   value="3"
   size="md">
-</wb-rating>
-<wb-rating
+</span>
+<span x-rating
   value="3"
   size="lg">
-</wb-rating>
+</span>
 ```
 
 ### Custom Icons
 
 ```html
-<wb-rating
+<span x-rating
   value="3"
   icon="❤️">
-</wb-rating>
-<wb-rating
+</span>
+<span x-rating
   value="4"
   icon="👍">
-</wb-rating>
-<wb-rating
+</span>
+<span x-rating
   value="2"
   icon="🔥">
-</wb-rating>
+</span>
 ```
 
 ### Disabled
 
 ```html
-<wb-rating
+<span x-rating
   value="4"
   disabled>
-</wb-rating>
+</span>
 ```
 
 ## Generated Structure
 
 ```html
 <div
-  class="wb-rating"
+  class="x-rating"
   role="slider"
   aria-valuemin="0"
   aria-valuemax="5"
   aria-valuenow="3">
-  <span class="wb-rating__star wb-rating__star--filled">★</span>
-  <span class="wb-rating__star wb-rating__star--filled">★</span>
-  <span class="wb-rating__star wb-rating__star--filled">★</span>
-  <span class="wb-rating__star">★</span>
-  <span class="wb-rating__star">★</span>
-  <span class="wb-rating__value">3 / 5</span>
+  <span class="x-rating__star x-rating__star--filled">★</span>
+  <span class="x-rating__star x-rating__star--filled">★</span>
+  <span class="x-rating__star x-rating__star--filled">★</span>
+  <span class="x-rating__star">★</span>
+  <span class="x-rating__star">★</span>
+  <span class="x-rating__value">3 / 5</span>
 </div>
 ```
 
@@ -150,14 +150,14 @@ Wrapped in `<wb-demo>`, so the live component renders below with its source show
 
 | Class | Applied When | Description |
 |-------|--------------|-------------|
-| `.wb-rating` | Always | Base styling |
-| `.wb-rating--readonly` | `readonly` | Read-only state |
-| `.wb-rating--disabled` | `disabled` | Disabled state |
-| `.wb-rating--sm` | `size="sm"` | Small size |
-| `.wb-rating--md` | `size="md"` | Medium size |
-| `.wb-rating--lg` | `size="lg"` | Large size |
-| `.wb-rating__star--filled` | Star is filled | Filled star |
-| `.wb-rating__star--half` | Half-filled star | Half star (when `half`) |
+| `.x-rating` | Always | Base styling |
+| `.x-rating--readonly` | `readonly` | Read-only state |
+| `.x-rating--disabled` | `disabled` | Disabled state |
+| `.x-rating--sm` | `size="sm"` | Small size |
+| `.x-rating--md` | `size="md"` | Medium size |
+| `.x-rating--lg` | `size="lg"` | Large size |
+| `.x-rating__star--filled` | Star is filled | Filled star |
+| `.x-rating__star--half` | Half-filled star | Half star (when `half`) |
 
 ## Methods
 
@@ -170,7 +170,7 @@ Wrapped in `<wb-demo>`, so the live component renders below with its source show
 | `disable()` | Disables the rating | - |
 
 ```javascript
-const rating = document.querySelector('wb-rating');
+const rating = document.querySelector('x-rating');
 
 // Get/set value
 const value = rating.getValue();
@@ -201,11 +201,11 @@ rating.addEventListener('wb:rating:change', (e) => {
 
 | Variable | Default | Description |
 |----------|---------|-------------|
-| `--wb-rating-size` | `24px` | Star size |
-| `--wb-rating-gap` | `2px` | Gap between stars |
-| `--wb-rating-color` | `#fbbf24` | Filled star color |
-| `--wb-rating-empty-color` | `#d1d5db` | Empty star color |
-| `--wb-rating-hover-color` | `#f59e0b` | Hover color |
+| `--x-rating-size` | `24px` | Star size |
+| `--x-rating-gap` | `2px` | Gap between stars |
+| `--x-rating-color` | `#fbbf24` | Filled star color |
+| `--x-rating-empty-color` | `#d1d5db` | Empty star color |
+| `--x-rating-hover-color` | `#f59e0b` | Hover color |
 
 ## Accessibility
 

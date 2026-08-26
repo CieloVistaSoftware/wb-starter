@@ -25,14 +25,14 @@ async function injectAndScan(page: Page, html: string) {
     container.innerHTML = h;
     
     // Force eager loading
-    const elements = container.querySelectorAll('.wb-ready');
+    const elements = container.querySelectorAll('.x-ready');
     elements.forEach(el => el.setAttribute('', ''));
     
     document.body.appendChild(container);
   }, html);
   
-  await page.evaluate(() => {
-    (window as any).WB.scan(document.getElementById('test-container'));
+  await page.evaluate(async () => {
+    await (window as any).WB.scan(document.getElementById('test-container'));
   });
   
   await page.waitForTimeout(500);
@@ -45,11 +45,11 @@ test.describe('toggle Behavior', () => {
     page.on('pageerror', (err) => errors.push(err.message));
     
     const setupHtml = [
-      "<wb-toggle>Basic toggle content</wb-toggle>",
-      "<wb-toggle target=\"Sample target\">target=\"Sample target\"</wb-toggle>",
-      "<wb-toggle>Test permutation 3</wb-toggle>",
-      "<wb-toggle>Test permutation 4</wb-toggle>",
-      "<wb-toggle>Test permutation 5</wb-toggle>"
+      "<div x-toggle>Basic toggle content</div>",
+      "<div x-toggle target=\"Sample target\">target=\"Sample target\"</div>",
+      "<div x-toggle>Test permutation 3</div>",
+      "<div x-toggle>Test permutation 4</div>",
+      "<div x-toggle>Test permutation 5</div>"
     ];
     
     await injectAndScan(page, setupHtml.join('\n'));
@@ -65,10 +65,10 @@ test.describe('toggle Behavior', () => {
   });
 
   test('element is visible after scan', async ({ page }) => {
-    const html = "<wb-toggle>Basic toggle content</wb-toggle>";
+    const html = "<div x-toggle>Basic toggle content</div>";
     await injectAndScan(page, html);
     
-    const el = page.locator('#test-container wb-toggle, #test-container wb-toggle').first();
+    const el = page.locator('#test-container [x-toggle], #test-container [x-toggle]').first();
     const isPresent = await el.count() > 0;
     
     if (isPresent) {

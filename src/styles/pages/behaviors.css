@@ -19,7 +19,7 @@
    John, screenshot: "Add a search here that allows finding all of our
    behaviors. e.g. x-tooltiop, x-this, x-that etc. typing in just x- will
    show all of them" -- JS lives inline at the bottom of behaviors.html
-   (matches each wb-demo's captured _rawSource against the query).
+   (matches each x-demo's captured _rawSource against the query).
    ═══════════════════════════════════════════════════════════════════ */
 .behaviors-search {
   display: flex;
@@ -321,7 +321,7 @@ section h3 {
 
 /* #486: Buttons in demo containers must have >=1rem padding per Standard §13.
    Applies to buttons with x-* behaviors that don't get styled by button.js. */
-wb-demo button {
+x-demo button {
   padding: 1rem 1rem;
 }
 
@@ -497,7 +497,7 @@ footer a:hover {
 
 /* The running example. contain: layout keeps a position:fixed demo (a toast, a
    spotlight) inside this box instead of painting over the page — the same rule
-   .wb-demo__grid needs, and for the same reason (#647). */
+   .x-demo__grid needs, and for the same reason (#647). */
 /* #720 -- the stage can go fullscreen so an example bigger than the panel (the
    table family, masonry, gallery, cardhero) can actually be read. A fullscreen
    element paints on black unless it brings its own background, and `contain:

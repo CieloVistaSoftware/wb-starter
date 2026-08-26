@@ -3,7 +3,7 @@ import { test, expect, Page } from '@playwright/test';
 /**
  * Badge design system (John: "we need a badge design system this is too
  * plain") — adds `variant="glass"`, `variant="gradient"`, and a `glow`
- * boolean modifier to <wb-badge> (feedback.js badge()), styled entirely in
+ * boolean modifier to <span x-badge> (feedback.js badge()), styled entirely in
  * badge.css (Law 9: zero inline styles) with theme tokens (Law 10: zero
  * hardcoded colors) and plain attributes (Law 11: no data-*).
  *
@@ -32,14 +32,14 @@ async function inject(page: Page, html: string) {
     return Array.from(container.children).map(el => el.id).filter(Boolean);
   }, html);
 
-  // #448: a literal <wb-badge> host no longer carries a same-named
-  // `.wb-badge` class -- badge.css selects the tag directly. Wait for a
+  // #448: a literal <span x-badge> host no longer carries a same-named
+  // `.x-badge` class -- badge.css selects the tag directly. Wait for a
   // variant modifier class instead, which only gets added once badge()
   // has actually run.
   await page.waitForFunction(
     (elementIds: string[]) => elementIds.every(id => {
       const el = document.getElementById(id);
-      return el && Array.from(el.classList).some(c => c.startsWith('wb-badge--'));
+      return el && Array.from(el.classList).some(c => c.startsWith('x-badge--'));
     }),
     ids,
     { timeout: 5000 }
@@ -60,8 +60,8 @@ async function surface(page: Page, selector: string) {
 test.describe('Badge design system — new variants actually differ', () => {
   test('glass variant applies a backdrop-filter blur that default does not', async ({ page }) => {
     await inject(page, `
-      <wb-badge id="b-default">Default</wb-badge>
-      <wb-badge id="b-glass" variant="glass">Glass</wb-badge>
+      <span x-badge id="b-default">Default</span>
+      <span x-badge id="b-glass" variant="glass">Glass</span>
     `);
 
     const def = await surface(page, '#b-default');
@@ -74,8 +74,8 @@ test.describe('Badge design system — new variants actually differ', () => {
 
   test('gradient variant applies a gradient background that default does not', async ({ page }) => {
     await inject(page, `
-      <wb-badge id="b-default2">Default</wb-badge>
-      <wb-badge id="b-gradient" variant="gradient">Gradient</wb-badge>
+      <span x-badge id="b-default2">Default</span>
+      <span x-badge id="b-gradient" variant="gradient">Gradient</span>
     `);
 
     const def = await surface(page, '#b-default2');
@@ -87,8 +87,8 @@ test.describe('Badge design system — new variants actually differ', () => {
 
   test('glow modifier adds a box-shadow-free but visually distinct halo (via ::after) not present on a plain badge', async ({ page }) => {
     await inject(page, `
-      <wb-badge id="b-plain" variant="primary">Plain</wb-badge>
-      <wb-badge id="b-glow" variant="primary" glow>Glow</wb-badge>
+      <span x-badge id="b-plain" variant="primary">Plain</span>
+      <span x-badge id="b-glow" variant="primary" glow>Glow</span>
     `);
 
     // The glow halo is implemented as a positioned, blurred ::after (not an
@@ -111,8 +111,8 @@ test.describe('Badge design system — new variants actually differ', () => {
 
   test('different variants under glow use different halo colors', async ({ page }) => {
     await inject(page, `
-      <wb-badge id="b-glow-success" variant="success" glow>Live</wb-badge>
-      <wb-badge id="b-glow-error" variant="error" glow>Alert</wb-badge>
+      <span x-badge id="b-glow-success" variant="success" glow>Live</span>
+      <span x-badge id="b-glow-error" variant="error" glow>Alert</span>
     `);
 
     const successAfter = await page.locator('#b-glow-success').evaluate((el) => getComputedStyle(el, '::after').backgroundColor);
@@ -122,22 +122,22 @@ test.describe('Badge design system — new variants actually differ', () => {
   });
 
   test('icon attribute renders a leading icon element before the label', async ({ page }) => {
-    await inject(page, `<wb-badge id="b-icon" variant="success" icon="🟢">Live</wb-badge>`);
+    await inject(page, `<span x-badge id="b-icon" variant="success" icon="🟢">Live</span>`);
 
-    const icon = page.locator('#b-icon .wb-badge__icon');
+    const icon = page.locator('#b-icon .x-badge__icon');
     await expect(icon).toBeVisible();
     await expect(icon).toHaveText('🟢');
     await expect(page.locator('#b-icon')).toContainText('Live');
   });
 
   test('variant="glass" pill glow composes cleanly: no throw, all classes present, still visible with text', async ({ page }) => {
-    await inject(page, `<wb-badge id="b-combo" variant="glass" pill glow icon="💎">Combo</wb-badge>`);
+    await inject(page, `<span x-badge id="b-combo" variant="glass" pill glow icon="💎">Combo</span>`);
 
     const badge = page.locator('#b-combo');
     await expect(badge).toBeVisible();
-    await expect(badge).toHaveClass(/wb-badge--glass/);
-    await expect(badge).toHaveClass(/wb-badge--pill/);
-    await expect(badge).toHaveClass(/wb-badge--glow/);
+    await expect(badge).toHaveClass(/x-badge--glass/);
+    await expect(badge).toHaveClass(/x-badge--pill/);
+    await expect(badge).toHaveClass(/x-badge--glow/);
     await expect(badge).toContainText('Combo');
 
     const radius = await badge.evaluate((el) => getComputedStyle(el).borderRadius);
@@ -152,20 +152,20 @@ test.describe('Badge design system — new variants actually differ', () => {
 
   test('existing modifiers (pill/outline/dot/size) still compose with the new variants', async ({ page }) => {
     await inject(page, `
-      <wb-badge id="b-mix1" variant="gradient" size="lg" pill>Big Gradient Pill</wb-badge>
-      <wb-badge id="b-mix2" variant="glass" outline>Glass Outline</wb-badge>
-      <wb-badge id="b-mix3" variant="success" dot glow></wb-badge>
+      <span x-badge id="b-mix1" variant="gradient" size="lg" pill>Big Gradient Pill</span>
+      <span x-badge id="b-mix2" variant="glass" outline>Glass Outline</span>
+      <span x-badge id="b-mix3" variant="success" dot glow></span>
     `);
 
-    await expect(page.locator('#b-mix1')).toHaveClass(/wb-badge--gradient/);
-    await expect(page.locator('#b-mix1')).toHaveClass(/wb-badge--lg/);
-    await expect(page.locator('#b-mix1')).toHaveClass(/wb-badge--pill/);
+    await expect(page.locator('#b-mix1')).toHaveClass(/x-badge--gradient/);
+    await expect(page.locator('#b-mix1')).toHaveClass(/x-badge--lg/);
+    await expect(page.locator('#b-mix1')).toHaveClass(/x-badge--pill/);
 
-    await expect(page.locator('#b-mix2')).toHaveClass(/wb-badge--glass/);
-    await expect(page.locator('#b-mix2')).toHaveClass(/wb-badge--outline/);
+    await expect(page.locator('#b-mix2')).toHaveClass(/x-badge--glass/);
+    await expect(page.locator('#b-mix2')).toHaveClass(/x-badge--outline/);
 
-    await expect(page.locator('#b-mix3')).toHaveClass(/wb-badge--dot/);
-    await expect(page.locator('#b-mix3')).toHaveClass(/wb-badge--glow/);
+    await expect(page.locator('#b-mix3')).toHaveClass(/x-badge--dot/);
+    await expect(page.locator('#b-mix3')).toHaveClass(/x-badge--glow/);
     expect((await page.locator('#b-mix3').textContent())?.trim()).toBe('');
   });
 });

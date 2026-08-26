@@ -1,6 +1,6 @@
 /**
  * Rule 4 (docs/code-examples-standard.md, #307): a markdown code example
- * showing real wb-* / x-* markup must be a live wb-demo block, not a plain
+ * showing real wb-* / x-* markup must be a live x-demo block, not a plain
  * static html fence.
  *
  * This is a focused policy gate for the issue's zero-demo corpus. The existing
@@ -29,7 +29,7 @@ function mdFiles(dir: string, acc: string[] = []): string[] {
 }
 
 const RENDERABLE = /<(wb-[a-z-]+)[\s>]|\sx-[a-z][a-z0-9-]*(=|[\s>])/;
-const WB_DEMO_OPEN = String.fromCharCode(60) + 'wb-demo';
+const WB_DEMO_OPEN = String.fromCharCode(60) + 'x-demo';
 
 // These are the issue #423 legacy files. They remain visible in the audit
 // report until their examples are migrated, but new zero-demo files are not
@@ -41,10 +41,10 @@ const LEGACY_ZERO_DEMO_FILES = new Set([
   'Auto-Injection.md',
   'behaviors/autosize.md',
   'behaviors/label.md',
-  'behaviors/wb-card.md',
-  'behaviors/wb-control.md',
-  'behaviors/wb-repeater.md',
-  'behaviors/wb-search.md',
+  'behaviors/x-card.md',
+  'behaviors/x-control.md',
+  'behaviors/x-repeater.md',
+  'behaviors/x-search.md',
   'components/cards/cards.readme.md',
   'components/feedback/feedback.readme.md',
   'components/forms/forms.readme.md',
@@ -59,7 +59,6 @@ const LEGACY_ZERO_DEMO_FILES = new Set([
   'components/semantics/pre.md',
   'components/semantics/radio.md',
   'components/semantics/range.md',
-  'components/semantics/table.md',
   'components/semantics/ul.md',
   'escape-hatches.md',
   'guides/search-index.md',
@@ -74,9 +73,28 @@ const LEGACY_ZERO_DEMO_FILES = new Set([
   'wb-parts-spec.md',
   'wbservices.md',
   'WB_BEHAVIOR_SYSTEM.md',
+
+  // Issue #554 (#307): these two are a different bucket than the #423 migration
+  // debt above — not "not yet converted," but permanently exempt because their
+  // fences are not real component usage:
+  // - claude/TIER1-LAWS.md's Law 11 fence intentionally nests an unclosed
+  //   "WRONG" x-alert/x-stepper/x-toast example against a "CORRECT" one to
+  //   teach AI agents the attribute-naming rule. Making a rule-violation
+  //   example "live" would render broken/invalid markup and defeats the
+  //   point — this is exactly the "intentionally-invalid markup demonstrating
+  //   what NOT to do" exception carved out by code-examples-standard.md Rule 4.
+  // - architecture/proposals/remove-wb-prefix-authoring-surface.md's "Today"
+  //   vs "Proposed" fence contrasts current `<article>` markup (shown with
+  //   placeholder `...` content, not real attributes) against the `x-card`
+  //   attribute-detection form the proposal is arguing for — which the
+  //   proposal's own body confirms is NOT wired into schema-builder.js yet.
+  //   A live demo can't render a mechanism that doesn't exist; this is a
+  //   future-facing illustration, not current-state runnable markup.
+  'claude/TIER1-LAWS.md',
+  'architecture/proposals/remove-wb-prefix-authoring-surface.md',
 ]);
 
-test('audit: markdown code fences that should be live wb-demo blocks (Rule 4, #307)', () => {
+test('audit: markdown code fences that should be live x-demo blocks (Rule 4, #307)', () => {
   const offenders: { file: string; count: number }[] = [];
   const unexpectedZeroDemoFiles: string[] = [];
   let totalFences = 0;
@@ -102,10 +120,10 @@ test('audit: markdown code fences that should be live wb-demo blocks (Rule 4, #3
   offenders.sort((a, b) => b.count - a.count);
   const report = offenders.map((o) => `  ${o.file}: ${o.count}`).join('\n');
   console.log(
-    `Rule 4 audit: ${totalFences} static fence(s) across ${offenders.length} file(s) still need wb-demo conversion:\n${report}`
+    `Rule 4 audit: ${totalFences} static fence(s) across ${offenders.length} file(s) still need x-demo conversion:\n${report}`
   );
   expect(
     unexpectedZeroDemoFiles,
-    'New markdown files with executable HTML examples must use wb-demo; add a live demo or explicitly migrate a named legacy file.'
+    'New markdown files with executable HTML examples must use x-demo; add a live demo or explicitly migrate a named legacy file.'
   ).toEqual([]);
 });

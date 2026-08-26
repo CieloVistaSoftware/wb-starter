@@ -1,5 +1,5 @@
 {
-  "name": "wb-server-opener",
+  "name": "x-server-opener",
   "displayName": "WB Server Opener",
   "description": "Opens the current HTML file in the WB Server (localhost:3000)",
   "version": "0.0.1",
@@ -25,29 +25,29 @@
   "contributes": {
     "commands": [
       {
-        "command": "wb-server.open",
+        "command": "x-server.open",
         "title": "Open with WB Server"
       },
       {
-        "command": "wb-server.restart",
+        "command": "x-server.restart",
         "title": "Restart WB Server"
       },
       {
-        "command": "wb-server.showLogs",
+        "command": "x-server.showLogs",
         "title": "Show WB Server Logs"
       }
     ],
     "menus": {
       "editor/context": [
         {
-          "command": "wb-server.open",
+          "command": "x-server.open",
           "group": "navigation",
           "when": "resourceExtname == .html"
         }
       ],
       "explorer/context": [
         {
-          "command": "wb-server.open",
+          "command": "x-server.open",
           "group": "navigation",
           "when": "resourceExtname == .html"
         }

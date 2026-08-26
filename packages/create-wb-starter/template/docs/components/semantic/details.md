@@ -22,25 +22,25 @@ a rotating disclosure icon, and a `wb:details:toggle` event. No `x-*`
 attribute is required. (Non-`<details>` elements use `x-details` explicitly —
 see below.)
 
-<wb-demo>
+<div x-demo>
 <details>
   <summary>What is WB-Starter?</summary>
   <p>A schema-first MVVM site starter with zero build step — components are
   plain custom elements enhanced by small, composable behaviors.</p>
 </details>
-</wb-demo>
+</div>
 
 ### Open by Default
 
 The native `open` attribute controls initial state — WB reads it on init.
 
-<wb-demo>
+<div x-demo>
 <details open>
   <summary>Already expanded</summary>
   <p>Content is visible immediately because the <code>open</code> attribute
   is present.</p>
 </details>
-</wb-demo>
+</div>
 
 ### Non-`<details>` Elements (`x-details`)
 
@@ -48,12 +48,12 @@ Applying the `details` behavior to a non-`<details>` element wraps its
 content in a real `<details>`/`<summary>` pair — the label comes from the
 `summary` attribute (content is preserved, not discarded).
 
-<wb-demo>
+<div x-demo>
 <div x-details summary="Click to expand">
   <p>This started as a plain &lt;div&gt; — the behavior replaced it with a
   real, native &lt;details&gt; element wrapping this same content.</p>
 </div>
-</wb-demo>
+</div>
 
 ## Accessibility Considerations
 
@@ -70,7 +70,7 @@ Multiple `<details>` elements are independent by default — opening one
 doesn't close the others (unlike a true accordion, where only one panel is
 open at a time).
 
-<wb-demo>
+<div x-demo>
 <details>
   <summary>Do I need a build step?</summary>
   <p>No — everything runs directly in the browser via ES modules.</p>
@@ -79,19 +79,19 @@ open at a time).
   <summary>Can I use my own CSS framework?</summary>
   <p>Yes, though the theme system expects CSS custom properties for colors.</p>
 </details>
-</wb-demo>
+</div>
 
 ## CSS Styling
 
 ```css
-details.wb-details {
+details.x-details {
   border: 1px solid var(--border-color);
   border-radius: 6px;
   overflow: hidden;
   background: var(--bg-primary);
 }
 
-summary.wb-details__summary {
+summary.x-details__summary {
   padding: 0.75rem 1rem;
   background: var(--bg-secondary);
   cursor: pointer;
@@ -99,11 +99,11 @@ summary.wb-details__summary {
   list-style: none; /* Remove default disclosure triangle — WB draws its own */
 }
 
-.wb-details__icon {
+.x-details__icon {
   transition: transform 0.2s;
 }
 
-details[open] .wb-details__icon {
+details[open] .x-details__icon {
   transform: rotate(180deg);
 }
 ```

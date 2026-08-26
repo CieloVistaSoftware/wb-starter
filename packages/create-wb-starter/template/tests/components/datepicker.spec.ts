@@ -14,5 +14,5 @@ test('datepicker registers and marks element', async ({ page }) => {
 
   const el = page.locator('#dp-1');
   await page.waitForFunction(() => document.querySelector('#dp-1')?.dataset.wbDatepicker === '1', null, { timeout: 2000 });
-  expect(await el.getAttribute('data-wb-datepicker')).toBe('1');
+  expect(await el.getAttribute('data-x-datepicker')).toBe('1');
 });

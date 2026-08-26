@@ -120,7 +120,7 @@ function buildTerms(html) {
     freq.set(w, (freq.get(w) || 0) + 1);
   }
 
-  // wb-* custom elements used, e.g. <wb-card ...> -> "wb-card"
+  // wb-* custom elements used, e.g. <article ...> -> "x-card"
   const wbTags = extractTags(html, /<(wb-[a-z0-9-]+)/g);
   // x-* behavior attributes used, e.g. x-tooltip="..." or bare x-ripple
   const xBehaviors = extractTags(html, /[\s"'](x-[a-z0-9-]+)/g);

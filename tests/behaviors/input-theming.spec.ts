@@ -7,7 +7,7 @@
  */
 import { test, expect, Page } from '@playwright/test';
 
-const BASE = process.env.WB_BASE || 'http://localhost:3000';
+const BASE = process.env.WB_BASE || '';
 const URL = `${BASE.replace(/\/$/, '')}/?page=behaviors`;
 
 const DARK_THEMES = ['dark', 'ocean', 'midnight', 'cyberpunk'];

@@ -1,6 +1,6 @@
 import { test, expect } from '@playwright/test';
 /**
- * #468: John reported the V3-GUIDE.md Quick Start wb-card example reading as
+ * #468: John reported the V3-GUIDE.md Quick Start x-card example reading as
  * "too stubby" — audit the actual live demo against layout standards
  * (Standard §13).
  *
@@ -34,25 +34,25 @@ test.describe('V3-GUIDE Quick Start card proportions (#468)', () => {
   test('Quick Start card has adequate padding and proportions per Standard §13', async ({
     page,
   }) => {
-    const demo = page.locator('wb-demo').filter({
-      has: page.locator('wb-card[title="Build resilient interfaces"]'),
+    const demo = page.locator('[x-demo]').filter({
+      has: page.locator('x-card[title="Build resilient interfaces"]'),
     }).first();
-    await expect(demo.locator('.wb-demo__grid')).toBeVisible({ timeout: 20000 });
-    await expect(demo.locator('.wb-demo__code, pre').first()).toBeVisible();
+    await expect(demo.locator('.x-demo__grid')).toBeVisible({ timeout: 20000 });
+    await expect(demo.locator('.x-demo__code, pre').first()).toBeVisible();
 
-    const card = demo.locator('.wb-demo__grid wb-card').first();
+    const card = demo.locator('.x-demo__grid .x-card').first();
     await expect(card).toBeVisible();
-    await expect(card.locator('.wb-card__title')).toHaveText('Build resilient interfaces');
-    await expect(card.locator('.wb-card__subtitle')).toHaveText('Separate structure from behavior');
-    await expect(card.locator('.wb-card__main')).toContainText('Keep content readable and focused');
-    await expect(card.locator('.wb-card__main')).toContainText('applies behavior directly to the element');
+    await expect(card.locator('.x-card__title')).toHaveText('Build resilient interfaces');
+    await expect(card.locator('.x-card__subtitle')).toHaveText('Separate structure from behavior');
+    await expect(card.locator('.x-card__main')).toContainText('Keep content readable and focused');
+    await expect(card.locator('.x-card__main')).toContainText('applies behavior directly to the element');
 
     // Get detailed measurements
     const measurements = await card.evaluate((node: HTMLElement) => {
       const rect = node.getBoundingClientRect();
       const styles = getComputedStyle(node);
-      const header = (node as any).querySelector('.wb-card__header');
-      const main = (node as any).querySelector('.wb-card__main');
+      const header = (node as any).querySelector('.x-card__header');
+      const main = (node as any).querySelector('.x-card__main');
 
       // Parse padding values (handle rem, px, etc.)
       const parseSize = (value: string) => {
@@ -134,18 +134,18 @@ test.describe('V3-GUIDE Quick Start card proportions (#468)', () => {
   });
 
   test('Quick Start card content has visible spacing (not cramped)', async ({ page }) => {
-    const demo = page.locator('wb-demo').filter({
-      has: page.locator('wb-card[title="Build resilient interfaces"]'),
+    const demo = page.locator('[x-demo]').filter({
+      has: page.locator('x-card[title="Build resilient interfaces"]'),
     }).first();
-    await expect(demo.locator('.wb-demo__grid')).toBeVisible({ timeout: 20000 });
-    const card = demo.locator('.wb-demo__grid wb-card').first();
+    await expect(demo.locator('.x-demo__grid')).toBeVisible({ timeout: 20000 });
+    const card = demo.locator('.x-demo__grid .x-card').first();
     await expect(card).toBeVisible();
 
     // Check header/body spacing
     const spacingData = await card.evaluate((node: HTMLElement) => {
-      const header = (node as any).querySelector('.wb-card__header');
-      const main = (node as any).querySelector('.wb-card__main');
-      const title = header?.querySelector('.wb-card__title');
+      const header = (node as any).querySelector('.x-card__header');
+      const main = (node as any).querySelector('.x-card__main');
+      const title = header?.querySelector('.x-card__title');
       const body = main?.querySelector('p');
 
       const titleRect = title?.getBoundingClientRect();
@@ -179,18 +179,18 @@ test.describe('V3-GUIDE Quick Start card proportions (#468)', () => {
     // The gap includes header padding-bottom + main padding-top
     expect(spacingData.verticalSpacing).toBeGreaterThanOrEqual(8);
 
-    await expect(demo.locator('.wb-demo__code, pre').first()).toContainText('Build resilient interfaces');
-    await expect(demo.locator('.wb-demo__code, pre').first()).toContainText('Keep content readable and focused');
+    await expect(demo.locator('.x-demo__code, pre').first()).toContainText('Build resilient interfaces');
+    await expect(demo.locator('.x-demo__code, pre').first()).toContainText('Keep content readable and focused');
   });
 
   test('Quick Start card keeps one docs link when its Light DOM is built', async ({ page }) => {
-    const demo = page.locator('wb-demo').filter({
-      has: page.locator('wb-card[title="Build resilient interfaces"]'),
+    const demo = page.locator('[x-demo]').filter({
+      has: page.locator('x-card[title="Build resilient interfaces"]'),
     }).first();
-    await expect(demo.locator('.wb-demo__grid')).toBeVisible({ timeout: 20000 });
+    await expect(demo.locator('.x-demo__grid')).toBeVisible({ timeout: 20000 });
 
-    const card = demo.locator('.wb-demo__grid wb-card').first();
-    await expect(card.locator('.wb-card__main')).toContainText('Keep content readable and focused');
-    await expect(card.locator('.wb-demo__card-doc-link')).toHaveCount(1);
+    const card = demo.locator('.x-demo__grid .x-card').first();
+    await expect(card.locator('.x-card__main')).toContainText('Keep content readable and focused');
+    await expect(card.locator('.x-demo__card-doc-link')).toHaveCount(1);
   });
 });

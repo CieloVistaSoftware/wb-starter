@@ -57,7 +57,7 @@ const partialDemos = demoFiles.filter(d => !/<!doctype\s+html>/i.test(d.html));
 // in its own source. Named per file, with the reason, so a NEW demo that
 // drops site.css by accident still fails.
 const NO_SITE_CSS: Record<string, string> = {
-  'hero.html':       'full-bleed <wb-cardhero> stage — site.css gutters would cap it',
+  'hero.html':       'full-bleed <div x-cardhero> stage — site.css gutters would cap it',
   'standalone.html': '#659 standalone preview — the element under test gets the whole viewport',
 };
 

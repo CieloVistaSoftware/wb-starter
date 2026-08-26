@@ -1,15 +1,28 @@
-# article
+# Article Component
 
 Semantic article component for blog posts, news, and documentation pages.
 
-Applies to `<article>`, and to any element carrying `x-article`.
+## Type — decorates a semantic element
 
-## Usage
+`x-card` is the **article behavior**. It attaches to `<article>`, the element you would have reached for anyway — there is no new tag to learn.
+
+### How to write it
 
 ```html
-<article x-article>
-  …
+<article title="Trailhead access" subtitle="Updated this morning" elevated>
+  The north gate is open. Parking fills by 9am on weekends — the overflow lot adds
+  about ten minutes on foot.
 </article>
+```
+
+### On a different element
+
+Use `x-card` when the host is not a `<article>` and you want the same behavior:
+
+```html
+<div x-card>
+  …
+</div>
 ```
 
 ## Attributes
@@ -28,7 +41,7 @@ Applies to `<article>`, and to any element carrying `x-article`.
 
 ## Live example
 
-See `x-article` on the [Behaviors showcase](/?page=behaviors) — search for `x-article` to run it and copy its markup.
+See `x-card` on the [Behaviors showcase](/?page=behaviors) — search for `x-card` to run it and copy its markup.
 
 ---
 

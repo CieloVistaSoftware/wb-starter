@@ -75,52 +75,52 @@ test.describe('Components Page', () => {
   test.describe('Cards Section', () => {
     
     test('basic cards render correctly', async ({ page }) => {
-      const basicCard = page.locator('wb-card[title="Title + Body"]');
+      const basicCard = page.locator('x-card[title="Title + Body"]');
       await safeScrollIntoView(basicCard);
       await expect(basicCard).toBeVisible();
     });
 
     test('card with header and footer renders', async ({ page }) => {
-      const card = page.locator('wb-card[title="This is the title"][footer="This is the footer"]');
+      const card = page.locator('x-card[title="This is the title"][footer="This is the footer"]');
       await safeScrollIntoView(card);
       await expect(card).toBeVisible();
     });
 
     test('image-card renders', async ({ page }) => {
-      const imageCard = page.locator('wb-cardimage').first();
+      const imageCard = page.locator('x-cardimage').first();
       await safeScrollIntoView(imageCard);
       await expect(imageCard).toBeVisible();
     });
 
     test('overlay-card renders correctly', async ({ page }) => {
-      const overlayCard = page.locator('wb-cardoverlay');
+      const overlayCard = page.locator('x-cardoverlay');
       await safeScrollIntoView(overlayCard);
       await expect(overlayCard).toBeVisible();
     });
 
     test('stats-card (stock indicators) render', async ({ page }) => {
-      // Stats Cards is now built from <wb-cardlink icon="..."> (S&P 500, Dow
-      // Jones, NASDAQ, Gold) -- there's no <wb-cardstats> tag on this page at
-      // all. `icon` is only set on the stats-card usage of wb-cardlink (the
-      // Link/Horizontal Cards section's wb-cardlink has no icon), so it's a
+      // Stats Cards is now built from <div x-cardlink icon="..."> (S&P 500, Dow
+      // Jones, NASDAQ, Gold) -- there's no <div x-cardstats> tag on this page at
+      // all. `icon` is only set on the stats-card usage of x-cardlink (the
+      // Link/Horizontal Cards section's x-cardlink has no icon), so it's a
       // safe, precise selector for this specific section.
-      const statsCards = page.locator('wb-cardlink[icon]');
+      const statsCards = page.locator('x-cardlink[icon]');
       await safeScrollIntoView(statsCards.first());
-      await expect(statsCards.first()).toHaveClass(/wb-card/);
+      await expect(statsCards.first()).toHaveClass(/x-card/);
 
       const statsCount = await statsCards.count();
       expect(statsCount).toBeGreaterThanOrEqual(4);
     });
 
     test('price-card renders with features', async ({ page }) => {
-      const pricingCards = page.locator('wb-cardpricing');
+      const pricingCards = page.locator('x-cardpricing');
       await safeScrollIntoView(pricingCards.first());
       await expect(pricingCards.first()).toBeVisible();
     });
 
     // Modified to scroll to the container likely to hold these cards
     test('product-card renders', async ({ page }) => {
-      const productCards = page.locator('wb-cardproduct');
+      const productCards = page.locator('x-cardproduct');
       // Scroll to the section header to trigger loading
       await safeScrollIntoView(page.locator('h3:has-text("Product Cards")'));
       
@@ -134,25 +134,25 @@ test.describe('Components Page', () => {
     });
 
     test('testimonial-card renders', async ({ page }) => {
-      const testimonialCards = page.locator('wb-cardtestimonial');
+      const testimonialCards = page.locator('x-cardtestimonial');
       await safeScrollIntoView(testimonialCards.first());
       await expect(testimonialCards.first()).toBeVisible();
     });
 
     test('notification-card renders all types', async ({ page }) => {
-      const notificationCards = page.locator('wb-cardnotification');
+      const notificationCards = page.locator('x-cardnotification');
       await safeScrollIntoView(notificationCards.first());
       await expect(notificationCards).toHaveCount(4); // info, success, warning, error
     });
 
     test('file-card renders', async ({ page }) => {
-      const fileCards = page.locator('wb-cardfile');
+      const fileCards = page.locator('x-cardfile');
       await safeScrollIntoView(fileCards.first());
       await expect(fileCards.count()).resolves.toBeGreaterThan(0);
     });
 
     test('portfolio-card (business cards) render', async ({ page }) => {
-      const portfolioCards = page.locator('wb-cardportfolio');
+      const portfolioCards = page.locator('x-cardportfolio');
       await safeScrollIntoView(portfolioCards.first());
       await expect(portfolioCards).toHaveCount(1);
     });
@@ -165,7 +165,7 @@ test.describe('Components Page', () => {
     
     test('badges render with variants', async ({ page }) => {
       await safeScrollIntoView(page.locator('h2:has-text("Feedback Components")'));
-      const badges = page.locator('wb-badge');
+      const badges = page.locator('x-badge');
       await badges.first().waitFor({ state: 'attached' });
       await safeScrollIntoView(badges.first());
       await expect(badges.count()).resolves.toBeGreaterThan(0);
@@ -177,7 +177,7 @@ test.describe('Components Page', () => {
       const header = page.locator('h2:has-text("Feedback Components")').first();
       await safeScrollIntoView(header);
 
-      const alerts = page.locator('.preview-container wb-alert, #feedback wb-alert, wb-alert');
+      const alerts = page.locator('.preview-container x-alert, #feedback x-alert, x-alert');
 
       // If the page variant under test doesn't include the alerts example, skip.
       const count = await alerts.count();
@@ -198,25 +198,25 @@ test.describe('Components Page', () => {
     });
 
     test('progress bars render', async ({ page }) => {
-      const progressBars = page.locator('wb-progress');
+      const progressBars = page.locator('x-progress');
       await safeScrollIntoView(progressBars.first());
       await expect(progressBars).toHaveCount(4);
     });
 
     test('spinners render with colors', async ({ page }) => {
-      const spinners = page.locator('wb-spinner');
+      const spinners = page.locator('x-spinner');
       await safeScrollIntoView(spinners.first());
       await expect(spinners.count()).resolves.toBeGreaterThan(0);
     });
 
     test('avatars render', async ({ page }) => {
-      const avatars = page.locator('wb-avatar');
+      const avatars = page.locator('x-avatar');
       await safeScrollIntoView(avatars.first());
       await expect(avatars.count()).resolves.toBeGreaterThan(0);
     });
 
     test('skeleton loaders render', async ({ page }) => {
-      const skeletons = page.locator('wb-skeleton');
+      const skeletons = page.locator('x-skeleton');
       await safeScrollIntoView(skeletons.first());
       await expect(skeletons.count()).resolves.toBeGreaterThan(0);
     });
@@ -234,13 +234,13 @@ test.describe('Components Page', () => {
   test.describe('Overlays Section', () => {
     
     test('modal trigger button exists', async ({ page }) => {
-      const modalBtn = page.locator('wb-modal');
+      const modalBtn = page.locator('x-modal');
       await safeScrollIntoView(modalBtn);
       await expect(modalBtn).toBeVisible();
     });
 
     test('drawer trigger buttons exist', async ({ page }) => {
-      // wb-drawer is a page-shell layout primitive, not what this section
+      // x-drawer is a page-shell layout primitive, not what this section
       // demonstrates -- the Drawer example here is two plain
       // <button x-drawer position="left|right"> triggers.
       const drawerBtns = page.locator('button[x-drawer]');
@@ -273,15 +273,15 @@ test.describe('Components Page', () => {
   test.describe('Navigation Section', () => {
     
     test('tabs component renders', async ({ page }) => {
-      const tabs = page.locator('wb-tabs');
+      const tabs = page.locator('x-tabs');
       await safeScrollIntoView(tabs);
       await expect(tabs).toBeVisible();
     });
 
     test('accordion component renders', async ({ page }) => {
-      const accordion = page.locator('wb-accordion');
+      const accordion = page.locator('x-accordion');
       if (await accordion.count() === 0) {
-        test.skip(true, 'wb-accordion not present on this page');
+        test.skip(true, 'x-accordion not present on this page');
         return;
       }
       await safeScrollIntoView(accordion);
@@ -331,15 +331,15 @@ test.describe('Components Page', () => {
     });
 
     test('switch component exists', async ({ page }) => {
-      const switchComp = page.locator('wb-switch');
+      const switchComp = page.locator('x-switch');
       await safeScrollIntoView(switchComp);
       const switchCount = await switchComp.count();
-      test.skip(switchCount === 0, 'wb-switch example not present in this build');
+      test.skip(switchCount === 0, 'x-switch example not present in this build');
       expect(switchCount).toBeGreaterThan(0);
     });
 
     test('rating component exists', async ({ page }) => {
-      const ratings = page.locator('wb-rating');
+      const ratings = page.locator('x-rating');
       await safeScrollIntoView(ratings.first());
       await expect(ratings.count()).resolves.toBeGreaterThanOrEqual(2);
     });
@@ -359,25 +359,25 @@ test.describe('Components Page', () => {
   test.describe('Data Display Section', () => {
     
     test('timeline renders', async ({ page }) => {
-      // <wb-timeline items="..."> is a real custom element (elementMap),
+      // <div x-timeline items="..."> is a real custom element (elementMap),
       // not a native div enhanced via x-timeline.
-      const timeline = page.locator('wb-timeline');
+      const timeline = page.locator('x-timeline');
       await safeScrollIntoView(timeline);
       await expect(timeline).toBeVisible();
     });
     
     test('code blocks render within mdhtml', async ({ page }) => {
-        // Find wb-mdhtml elements
-        const mdHtml = page.locator('wb-mdhtml');
+        // Find x-mdhtml elements
+        const mdHtml = page.locator('x-mdhtml');
         // Ensure at least one is present; skip when the example is not included in this build.
         const mdCount = await mdHtml.count();
-        test.skip(mdCount === 0, 'wb-mdhtml example not present in this build');
+        test.skip(mdCount === 0, 'x-mdhtml example not present in this build');
 
         // Scroll to the first one to trigger hydration
         await safeScrollIntoView(mdHtml.first());
 
         // Wait for hydration marker (avoid relying solely on visual checks)
-        await expect(mdHtml.first()).not.toHaveClass(/wb-mdhtml--loading/);
+        await expect(mdHtml.first()).not.toHaveClass(/x-mdhtml--loading/);
         // Prefer checking rendered output semantically
         const codeBlocks = mdHtml.locator('pre code');
         await expect(codeBlocks.count()).resolves.toBeGreaterThan(0);
@@ -415,7 +415,7 @@ test.describe('Components Page', () => {
     });
     
     test('audio player exists', async ({ page }) => {
-        const audio = page.locator('wb-audio');
+        const audio = page.locator('x-audio');
         await safeScrollIntoView(audio);
         // Assert the source/config is present rather than visual layout (CI viewports vary).
         await expect(audio).toHaveAttribute('src');
@@ -448,7 +448,7 @@ test.describe('Components Page', () => {
     });
 
     test('tooltip buttons exist', async ({ page }) => {
-      const tooltipBtns = page.locator('wb-tooltip');
+      const tooltipBtns = page.locator('x-tooltip');
       await safeScrollIntoView(tooltipBtns.first());
       await expect(tooltipBtns.count()).resolves.toBeGreaterThanOrEqual(4);
     });
@@ -460,7 +460,7 @@ test.describe('Components Page', () => {
     });
 
     test('theme control exists', async ({ page }) => {
-      const themeControl = page.locator('wb-themecontrol');
+      const themeControl = page.locator('x-themecontrol');
       await safeScrollIntoView(themeControl);
       await expect(themeControl).toBeVisible();
     });
@@ -489,16 +489,16 @@ test.describe('Components Page', () => {
       await toastBtn.click();
       
       // Wait for toast to appear
-      const toast = page.locator('.wb-toast, [class*="toast"], .toast'); 
+      const toast = page.locator('.x-toast, [class*="toast"], .toast'); 
       await expect(toast.first()).toBeVisible({ timeout: 5000 });
     });
 
     test('accordion section can expand', async ({ page }) => {
-      const accordion = page.locator('wb-accordion');
+      const accordion = page.locator('x-accordion');
 
       // Skip gracefully if accordion is absent from this page
       if (await accordion.count() === 0) {
-        test.skip(true, 'wb-accordion not present on this page');
+        test.skip(true, 'x-accordion not present on this page');
         return;
       }
 
@@ -507,20 +507,20 @@ test.describe('Components Page', () => {
       // Wait for the accordion behavior to finish initialising
       await page.waitForFunction(
         () => {
-          const el = document.querySelector('wb-accordion');
+          const el = document.querySelector('x-accordion');
           return el && (el as HTMLElement).dataset.wbHydrated === '1';
         },
         { timeout: 5000 }
       ).catch(() => null);
 
       // Click the first accordion head (created by the accordion behavior)
-      const accordionHead = accordion.locator('.wb-accordion-head').first();
+      const accordionHead = accordion.locator('.x-accordion-head').first();
       await safeScrollIntoView(accordionHead);
       await accordionHead.click();
       await page.waitForTimeout(300);
 
       // The item should now be open
-      const firstItem = accordion.locator('.wb-accordion-item').first();
+      const firstItem = accordion.locator('.x-accordion-item').first();
       await expect(firstItem).toHaveClass(/open/);
     });
 

@@ -1,3 +1,4 @@
+import { readFlag, readAttr } from '../core/read-attr.js';
 /**
  * Validator Behavior
  * -----------------------------------------------------------------------------
@@ -16,13 +17,13 @@ export function validator(element, options = {}) {
   const config = {
     validateOn: options.validateOn || element.dataset.validateOn || 'blur', // blur, change, input, submit
     showErrors: options.showErrors ?? (element.dataset.showErrors !== 'false'),
-    errorClass: options.errorClass || element.dataset.errorClass || 'wb-error',
-    successClass: options.successClass || element.dataset.successClass || 'wb-success',
+    errorClass: options.errorClass || element.dataset.errorClass || 'x-error',
+    successClass: options.successClass || element.dataset.successClass || 'x-success',
     ...options
   };
 
   const isForm = element.tagName === 'FORM';
-  element.classList.add('wb-validator');
+  element.classList.add('x-validator');
 
   // Validation rules
   const rules = {
@@ -44,7 +45,7 @@ export function validator(element, options = {}) {
 
   // Parse validation rules from data attribute
   const parseRules = (input) => {
-    const ruleStr = input.dataset.validate || '';
+    const ruleStr = readAttr(input, 'validate') || '';
     return ruleStr.split(/\s+/).filter(Boolean).map(rule => {
       const [name, param] = rule.split(':');
       return { name, param };
@@ -78,11 +79,11 @@ export function validator(element, options = {}) {
       input.setAttribute('aria-invalid', 'true');
       if (config.showErrors) {
         const errorSpanEl = document.createElement('span');
-        errorSpanEl.className = 'wb-validator__error';
+        errorSpanEl.className = 'x-validator__error';
         errorSpanEl.textContent = showErrorsArr[0];
         errorSpanEl.style.cssText = `
           display: block;
-          color: var(--wb-color-error, #dc3545);
+          color: var(--x-color-error, #dc3545);
           font-size: 0.875rem;
           margin-top: 0.25rem;
         `;
@@ -100,7 +101,7 @@ export function validator(element, options = {}) {
   const clearError = (input) => {
     input.classList.remove(config.errorClass, config.successClass);
     input.removeAttribute('aria-invalid');
-    const errorSpanNode = input.parentNode.querySelector('.wb-validator__error');
+    const errorSpanNode = input.parentNode.querySelector('.x-validator__error');
     if (errorSpanNode) errorSpanNode.remove();
   };
 
@@ -129,7 +130,7 @@ export function validator(element, options = {}) {
   // Event handler for individual inputs
   const onInputEvent = (e) => {
     const input = e.target;
-    if (input.hasAttribute('data-validate')) {
+    if (readFlag(input, 'validate')) {
       const inputErrorsEvt = validateInput(input);
       showError(input, inputErrorsEvt);
     }
@@ -162,15 +163,15 @@ export function validator(element, options = {}) {
   // Expose methods
   element.wbValidator = {
     validate: validateAll,
-    validateInput: (input) => showError(input, validateInput(input)),
-    clearErrors: () => getInputs().forEach(clearError),
+    validate: (input) => showError(input, validateInput(input)),
+    reset: () => getInputs().forEach(clearError),
     addRule: (name, fn) => { rules[name] = fn; }
   };
 
   // Mark as ready
   // Cleanup
   return () => {
-    element.classList.remove('wb-validator');
+    element.classList.remove('x-validator');
     events.forEach(evt => {
       element.removeEventListener(evt, onInputEvent);
     });

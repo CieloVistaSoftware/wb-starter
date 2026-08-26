@@ -115,7 +115,7 @@
     }
   },
   "compliance": {
-    "baseClass": "wb-card",
+    "baseClass": "x-card",
     "containerTag": {
       "preferred": "ARTICLE",
       "allowed": [
@@ -126,19 +126,19 @@
       "warnIf": "DIV"
     },
     "requiredChildren": {
-      ".wb-card__main": {
+      ".x-card__main": {
         "description": "Main content area - always created",
         "tagName": "MAIN",
         "required": true
       }
     },
     "optionalChildren": {
-      ".wb-card__header": {
+      ".x-card__header": {
         "description": "Header section with title/subtitle",
         "createdWhen": "data-title is set",
         "tagName": "HEADER"
       },
-      ".wb-card__footer": {
+      ".x-card__footer": {
         "description": "Footer section",
         "createdWhen": "data-footer is set",
         "tagName": "FOOTER"
@@ -153,7 +153,7 @@
         "focusable": "when data-clickable",
         "click": {
           "when": "clickable",
-          "action": "toggles wb-card--active class",
+          "action": "toggles x-card--active class",
           "event": "wb:card:click"
         },
         "hover": {

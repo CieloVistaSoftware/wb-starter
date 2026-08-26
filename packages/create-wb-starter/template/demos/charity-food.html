@@ -5,8 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Uganda Community Food Bank - WB Charity Site</title>
     <!-- Core styles -->
-    <link rel="stylesheet" href="../src/styles/themes.css">
-    <link rel="stylesheet" href="../src/styles/site.css">
+    <link rel="stylesheet" href="../src/styles/themes.css?v=3.0.91">
+    <link rel="stylesheet" href="../src/styles/site.css?v=3.0.91">
     <!-- WB Behaviors -->
     <script type="module">
         import WB from '../src/core/wb-lazy.js';
@@ -22,17 +22,17 @@
 <body class="site">
 
     <!-- Navigation -->
-    <wb-header fixed>
+    <header fixed>
         <div slot="brand" style="font-weight: bold; font-size: 1.2rem;">🇺🇬 Uganda Food Bank</div>
-        <wb-button variant="ghost" onclick="window.location.href='/?page=home'">Back to Home</wb-button>
-        <wb-button variant="primary" onclick="alert('Donation flow would open here!')">Donate Now</wb-button>
-    </wb-header>
+        <button variant="ghost" onclick="window.location.href='/?page=home'">Back to Home</button>
+        <button variant="primary" onclick="alert('Donation flow would open here!')">Donate Now</button>
+    </header>
 
     <!-- Hero Section 
          Fixed: Combined gradient and image into 'background' attribute so image shows through. 
          Made gradient transparent.
     -->
-    <wb-cardhero 
+    <div x-cardhero 
         variant="split" 
         height="500px"
         background="linear-gradient(135deg, rgba(236, 253, 245, 0.85) 0%, rgba(209, 250, 229, 0.85) 100%), url('https://images.unsplash.com/photo-1489710437720-ebb67ec84dd2?auto=format&fit=crop&w=800&q=80')"
@@ -42,52 +42,52 @@
         cta-secondary-href="#volunteer"
     >
         <div slot="pretitle">
-            <wb-badge variant="success">Serving 5,000+ Families</wb-badge>
+            <span x-badge variant="success">Serving 5,000+ Families</span>
         </div>
         <h1 slot="title" style="color: #064e3b;">
             Nourishing Our <br>
-            <span class="wb-gradient-text" style="background-image: linear-gradient(to right, #059669, #10b981);">Nation Together</span>
+            <span class="x-gradient-text" style="background-image: linear-gradient(to right, #059669, #10b981);">Nation Together</span>
         </h1>
         <p slot="subtitle" style="color: #065f46;">
             We believe no one in Uganda should go to bed hungry. Join us in our mission to provide nutritious meals to families across the region.
         </p>
-    </wb-cardhero>
+    </div>
 
     <!-- Urgent Needs / Stats -->
-    <wb-container padding="3rem 1rem" style="background: var(--bg-secondary);">
-        <wb-grid columns="3" gap="2rem">
-            <wb-card variant="float" xalign="center">
+    <div x-container padding="3rem 1rem" style="background: var(--bg-secondary);">
+        <div x-grid columns="3" gap="2rem">
+            <article variant="float" xalign="center">
                 <div style="font-size: 2.5rem;">🌽</div>
                 <h3>Maize & Beans</h3>
                 <p>Urgently need posho (cornmeal) and beans as staples.</p>
-                <wb-progress value="75" max="100" variant="warning" style="margin-top: 1rem;"></wb-progress>
+                <progress value="75" max="100" variant="warning" style="margin-top: 1rem;"></progress>
                 <small>75% goal reached</small>
-            </wb-card>
+            </article>
 
-            <wb-card variant="float" xalign="center">
+            <article variant="float" xalign="center">
                 <div style="font-size: 2.5rem;">🥕</div>
                 <h3>Fresh Produce</h3>
                 <p>Partnering with local farms to bring fresh items.</p>
-                <wb-badge variant="success">Fully Stocked</wb-badge>
-            </wb-card>
+                <span x-badge variant="success">Fully Stocked</span>
+            </article>
 
-            <wb-card variant="float" xalign="center">
+            <article variant="float" xalign="center">
                 <div style="font-size: 2.5rem;">🤝</div>
                 <h3>Volunteers</h3>
                 <p>We need 50 more volunteers for this weekend.</p>
-                <wb-button variant="outline" size="small" style="margin-top: 1rem;">Sign Up</wb-button>
-            </wb-card>
-        </wb-grid>
-    </wb-container>
+                <button variant="outline" size="small" style="margin-top: 1rem;">Sign Up</button>
+            </article>
+        </div>
+    </div>
 
     <!-- Our Programs -->
     <section id="programs" style="padding: 4rem 1rem;">
-        <wb-container>
+        <div x-container>
             <h2 style="text-align: center; marginBottom: 3rem;">Our Programs</h2>
             
-            <wb-grid columns="2" gap="2rem">
+            <div x-grid columns="2" gap="2rem">
                 <!-- Program 1 -->
-                <div class="wb-row" style="align-items: center; gap: 2rem;">
+                <div class="x-row" style="align-items: center; gap: 2rem;">
                     <!-- Fixed: Added height/width/loading to ensure rendering -->
                     <img src="https://images.unsplash.com/photo-1519238360173-04e9ae6031fa?auto=format&fit=crop&w=400&q=80" 
                          alt="Happy children at pantry" 
@@ -96,12 +96,12 @@
                     <div>
                         <h3>Weekly Pantry</h3>
                         <p>Open every Tuesday and Thursday, providing staples to registered families.</p>
-                        <wb-button variant="glass">View Schedule</wb-button>
+                        <button variant="glass">View Schedule</button>
                     </div>
                 </div>
 
                 <!-- Program 2 -->
-                <div class="wb-row" style="align-items: center; gap: 2rem;">
+                <div class="x-row" style="align-items: center; gap: 2rem;">
                     <img src="https://images.unsplash.com/photo-1543354786-8a5f4c51571d?auto=format&fit=crop&w=400&q=80" 
                          alt="Hot Meals Sharing" 
                          width="300" height="200"
@@ -109,16 +109,16 @@
                     <div>
                         <h3>Hot Meals</h3>
                         <p>Community kitchen serving hot dinner every evening at 6:00 PM.</p>
-                        <wb-button variant="glass">View Menu</wb-button>
+                        <button variant="glass">View Menu</button>
                     </div>
                 </div>
-            </wb-grid>
-        </wb-container>
+            </div>
+        </div>
     </section>
 
     <!-- Footer -->
-    <wb-footer style="background: #064e3b; color: white; padding: 3rem 1rem;">
-        <wb-grid columns="3" gap="2rem">
+    <footer style="background: #064e3b; color: white; padding: 3rem 1rem;">
+        <div x-grid columns="3" gap="2rem">
             <div>
                 <h4>Uganda Community Food Bank</h4>
                 <p>Plot 42 Kampala Road<br>Kampala, Uganda</p>
@@ -136,15 +136,15 @@
                 <h4>Newsletter</h4>
                 <p>Stay updated with our needs.</p>
                 <div style="display: flex; gap: 0.5rem;">
-                    <input type="email" placeholder="Your email" class="wb-input" style="background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.2); color: white;">
-                    <wb-button variant="primary">Subscribe</wb-button>
+                    <input type="email" placeholder="Your email" class="x-input" style="background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.2); color: white;">
+                    <button variant="primary">Subscribe</button>
                 </div>
             </div>
-        </wb-grid>
+        </div>
         <div style="text-align: center; margin-top: 3rem; opacity: 0.7; font-size: 0.9rem;">
             &copy; 2026 Community Food Bank. Built with WB.
         </div>
-    </wb-footer>
+    </footer>
 
 </body>
 </html>

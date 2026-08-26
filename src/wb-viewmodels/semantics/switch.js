@@ -2,10 +2,10 @@
  * Switch - Toggle switch component
  * Helper Attribute: [x-behavior="switch"]
  *
- * Wires the schema-built <wb-switch> host: its inner <input> becomes a real
+ * Wires the schema-built <div x-switch> host: its inner <input> becomes a real
  * checkbox, the host's checked/disabled/label/name/value are reflected onto it,
  * and clicking (or Space/Enter) toggles it. The CSS (switch.css) shows the ON
- * state via `.wb-switch__input:checked ~ .wb-switch__track`. Also supports the
+ * state via `.x-switch__input:checked ~ .x-switch__track`. Also supports the
  * legacy form where the element IS a bare <input type=checkbox>. (#197)
  */
 import { createToast } from '../feedback.js';
@@ -15,12 +15,12 @@ export function switchInput(element, options = {}) {
   const isBareCheckbox = host.tagName === 'INPUT' && host.type === 'checkbox';
   let input = isBareCheckbox ? host : host.querySelector('input');
 
-  // Neither a bare checkbox nor a schema-built <wb-switch> host (which
+  // Neither a bare checkbox nor a schema-built <div x-switch> host (which
   // pre-builds input/track/thumb via switch.schema.json's $view) — e.g.
   // x-switch on a plain <div>. Self-build the same input+track+thumb
   // structure switch.schema.json builds, as direct siblings (switch.css's
-  // `.wb-switch__input:checked ~ .wb-switch__track` needs them adjacent),
-  // so x-switch renders identically to <wb-switch> regardless of dispatch
+  // `.x-switch__input:checked ~ .x-switch__track` needs them adjacent),
+  // so x-switch renders identically to <div x-switch> regardless of dispatch
   // path. Mirrors tabs.js's "build from children if no pre-rendered
   // structure exists" pattern. (#279)
   if (!isBareCheckbox && !input) {
@@ -29,48 +29,48 @@ export function switchInput(element, options = {}) {
     host.appendChild(input);
 
     const track = document.createElement('span');
-    track.className = 'wb-switch__track';
+    track.className = 'x-switch__track';
     const thumb = document.createElement('span');
-    thumb.className = 'wb-switch__thumb';
+    thumb.className = 'x-switch__thumb';
     track.appendChild(thumb);
     host.appendChild(track);
   }
 
   if (!input) return () => {};
 
-  // Schema-built <wb-switch> gets this from its baseClass; the self-built
+  // Schema-built <div x-switch> gets this from its baseClass; the self-built
   // path above bypasses schema entirely, so add it explicitly here too —
-  // makes `.wb-switch` a reliable selector regardless of dispatch path.
-  // #448: skip it specifically for a literal <wb-switch> HOST -- that just
+  // makes `.x-switch` a reliable selector regardless of dispatch path.
+  // #448: skip it specifically for a literal <div x-switch> HOST -- that just
   // duplicated the tag name, and switch.css now also selects the
-  // `wb-switch` TAG directly. Still added for the bare-<input>/self-built
-  // x-switch-on-a-<div> cases above, which aren't the `wb-switch` tag and
+  // `[x-switch]` TAG directly. Still added for the bare-<input>/self-built
+  // x-switch-on-a-<div> cases above, which aren't the `[x-switch]` tag and
   // still need the class.
-  if (host.tagName.toLowerCase() !== 'wb-switch') host.classList.add('wb-switch');
+  if (host.tagName.toLowerCase() !== 'x-switch') host.classList.add('x-switch');
 
   // switch.schema.json declares size/variant with appliesClass:
-  // "wb-switch--{{value}}" -- but that's SCHEMA-BUILDER's mechanism, and
+  // "x-switch--{{value}}" -- but that's SCHEMA-BUILDER's mechanism, and
   // schema-builder.js never runs at all on a wb-lazy.js-only page (test
   // harness, standalone demos/*.html -- no schema pass, ever, regardless of
   // eager/lazy scan timing). The self-built fallback above only replicates
   // the DOM structure schema would have built, not the classes schema would
   // have applied -- so every switch silently lost its size/variant styling
-  // on those pages (confirmed live: <wb-switch size="lg" variant="success">
-  // built correctly as input+track+thumb but with class="wb-switch" only,
-  // no wb-switch--lg/--success). Reading and applying them here directly
+  // on those pages (confirmed live: <div x-switch size="lg" variant="success">
+  // built correctly as input+track+thumb but with class="[x-switch]" only,
+  // no x-switch--lg/--success). Reading and applying them here directly
   // matches the pattern every other component in this file (card.js,
   // badge(), progress()) already uses, and is idempotent alongside
   // schema-builder's own class application on pages where it DOES run.
   if (!isBareCheckbox) {
     const size = host.getAttribute('size');
-    if (size) host.classList.add(`wb-switch--${size}`);
+    if (size) host.classList.add(`x-switch--${size}`);
     const variant = host.getAttribute('variant');
-    if (variant) host.classList.add(`wb-switch--${variant}`);
+    if (variant) host.classList.add(`x-switch--${variant}`);
   }
 
   // The schema builds a typeless <input> (renders as text) — make it a checkbox.
   if (input.type !== 'checkbox') input.type = 'checkbox';
-  input.classList.add('wb-switch__input');
+  input.classList.add('x-switch__input');
   // role="switch" on the real checkbox is a standard ARIA attribute browsers
   // increasingly use to render native switch affordance directly (Safari
   // does this today) -- unconditional (bare-checkbox path included) so it
@@ -92,9 +92,9 @@ export function switchInput(element, options = {}) {
     // The schema only builds a label span for certain labelPosition values, so
     // the label often never renders — ensure it is shown.
     const label = host.getAttribute('label');
-    if (label && !host.querySelector('[class*="wb-switch__label"]')) {
+    if (label && !host.querySelector('[class*="[x-switch]__label"]')) {
       const span = document.createElement('span');
-      span.className = 'wb-switch__label-end';
+      span.className = 'x-switch__label-end';
       span.textContent = label;
       host.appendChild(span);
     }
@@ -130,7 +130,7 @@ export function switchInput(element, options = {}) {
   if (!isBareCheckbox) host.addEventListener('keydown', onKey);
   input.addEventListener('change', sync);
 
-  // Optional: <wb-switch theme-control> drives the page theme (data-theme).
+  // Optional: <div x-switch theme-control> drives the page theme (data-theme).
   // ON = dark, OFF = light. Initial state reflects the current theme. (#210)
   let applyTheme = null;
   if (!isBareCheckbox && host.hasAttribute('theme-control')) {
@@ -141,7 +141,7 @@ export function switchInput(element, options = {}) {
     input.addEventListener('change', applyTheme);
   }
 
-  // Optional: <wb-switch notify-control> demonstrates what the switch
+  // Optional: <div x-switch notify-control> demonstrates what the switch
   // actually does — toggling it ON fires a real toast, OFF is silent.
   // A demo switch labeled "Notifications" that just flips visually with
   // no observable effect doesn't show what it does (docs/standards/

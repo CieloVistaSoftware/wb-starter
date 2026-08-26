@@ -58,7 +58,7 @@ Page-level rules that govern generation and validation:
 
 | Field | Type | Description |
 |-------|------|-------------|
-| `showcase` | boolean | If true, all sections wrap in `wb-demo` (shows source code). False for production pages. |
+| `showcase` | boolean | If true, all sections wrap in `x-demo` (shows source code). False for production pages. |
 | `fragment` | boolean | Page is a fragment — no DOCTYPE/html/head/body. Server shell wraps it. |
 | `noInlineStyles` | boolean | No inline styles allowed on any element. |
 | `noPageSpecificCSS` | boolean | No page-specific CSS file. All styling from component CSS. |
@@ -205,7 +205,7 @@ Users provide simple attribute values. The schema defines how those values becom
 
 ```html
 <!-- ✅ CLEAN: User just sets values -->
-<wb-hero
+<div x-hero
   title="Explore"
   subtitle="Your journey"
   cta="Launch">
@@ -236,7 +236,7 @@ Users provide simple attribute values. The schema defines how those values becom
   "description": "Component description",
   
   "behavior": "component",
-  "baseClass": "wb-component",
+  "baseClass": "x-component",
   
   "semanticElement": {
     "tagName": "article",
@@ -293,7 +293,7 @@ The `properties` section defines **data inputs** - the attributes users provide.
       "type": "boolean",
       "description": "Add drop shadow",
       "default": false,
-      "appliesClass": "wb-card--elevated"
+      "appliesClass": "x-card--elevated"
     },
     "dismissible": {
       "type": "boolean",
@@ -418,9 +418,9 @@ The `$view` section defines **DOM structure** - what gets rendered.
 
 | `name` | `baseClass` | Generated Class |
 |--------|-------------|-----------------|
-| `header` | `<article>` | `wb-card__header` |
-| `title` | `<article>` | `wb-card__title` |
-| `wrapper` (private) | `<article>` | `wb-card__-wrapper` |
+| `header` | `<article>` | `x-card__header` |
+| `title` | `<article>` | `x-card__title` |
+| `wrapper` (private) | `<article>` | `x-card__-wrapper` |
 
 ---
 
@@ -485,23 +485,23 @@ The `$cssAPI` section defines **public CSS custom properties** for theming/custo
 ```json
 {
   "$cssAPI": {
-    "--wb-card-padding": {
+    "--x-card-padding": {
       "default": "1rem",
       "description": "Internal padding"
     },
-    "--wb-card-radius": {
+    "--x-card-radius": {
       "default": "8px",
       "description": "Border radius"
     },
-    "--wb-card-shadow": {
+    "--x-card-shadow": {
       "default": "none",
       "description": "Box shadow (applied when elevated)"
     },
-    "--wb-card-header-bg": {
+    "--x-card-header-bg": {
       "default": "transparent",
       "description": "Header background color"
     },
-    "--wb-card-border": {
+    "--x-card-border": {
       "default": "1px solid var(--border-color, #e0e0e0)",
       "description": "Border style"
     }
@@ -521,19 +521,19 @@ CSS is inherently public - anyone can target any selector. `$cssAPI` documents:
 
 ```css
 /* ✅ GOOD: Uses public CSS API */
-wb-card {
-  --wb-card-padding: 2rem;
-  --wb-card-header-bg: #f5f5f5;
-  --wb-card-radius: 16px;
+x-card {
+  --x-card-padding: 2rem;
+  --x-card-header-bg: #f5f5f5;
+  --x-card-radius: 16px;
 }
 
 /* ⚠️ FRAGILE: Targets internal structure (may break) */
-.wb-card__header {
+.x-card__header {
   background: #f5f5f5;
 }
 
 /* ❌ BAD: Targets private part (will break) */
-.wb-card__-wrapper {
+.x-card__-wrapper {
   display: flex;
 }
 ```
@@ -554,8 +554,8 @@ wb-card {
 
 | Type | Class Pattern | Documented | Stable | Can Target |
 |------|---------------|------------|--------|------------|
-| **Public** | `.wb-card__header` | ✅ Yes | ✅ Yes | ✅ Yes |
-| **Private** | `.wb-card__-wrapper` | ❌ No | ❌ No | ⚠️ At your risk |
+| **Public** | `.x-card__header` | ✅ Yes | ✅ Yes | ✅ Yes |
+| **Private** | `.x-card__-wrapper` | ❌ No | ❌ No | ⚠️ At your risk |
 
 ### Default Behavior
 
@@ -584,10 +584,10 @@ Private: .wb-{component}__-{name}   ← Note the dash prefix
 **Rendered:**
 ```html
 <article>
-  <header class="wb-card__header"> <!-- Public: stable -->
-    <h3 class="wb-card__title">Hello</h3> <!-- Public: stable -->
+  <header class="x-card__header"> <!-- Public: stable -->
+    <h3 class="x-card__title">Hello</h3> <!-- Public: stable -->
   </header>
-  <div class="wb-card__-layout"> <!-- Private: may change --> ... </div>
+  <div class="x-card__-layout"> <!-- Private: may change --> ... </div>
 </article>
 ```
 
@@ -611,7 +611,7 @@ Private: .wb-{component}__-{name}   ← Note the dash prefix
   "description": "Alert component for displaying messages with severity levels",
   
   "behavior": "alert",
-  "baseClass": "wb-alert",
+  "baseClass": "x-alert",
   
   "semanticElement": {
     "tagName": "div",
@@ -716,31 +716,31 @@ Private: .wb-{component}__-{name}   ← Note the dash prefix
   },
   
   "$cssAPI": {
-    "--wb-alert-padding": {
+    "--x-alert-padding": {
       "default": "1rem",
       "description": "Internal padding"
     },
-    "--wb-alert-radius": {
+    "--x-alert-radius": {
       "default": "4px",
       "description": "Border radius"
     },
-    "--wb-alert-icon-size": {
+    "--x-alert-icon-size": {
       "default": "1.25rem",
       "description": "Icon font size"
     },
-    "--wb-alert-info-bg": {
+    "--x-alert-info-bg": {
       "default": "#e3f2fd",
       "description": "Info variant background"
     },
-    "--wb-alert-success-bg": {
+    "--x-alert-success-bg": {
       "default": "#e8f5e9",
       "description": "Success variant background"
     },
-    "--wb-alert-warning-bg": {
+    "--x-alert-warning-bg": {
       "default": "#fff3e0",
       "description": "Warning variant background"
     },
-    "--wb-alert-error-bg": {
+    "--x-alert-error-bg": {
       "default": "#ffebee",
       "description": "Error variant background"
     }
@@ -748,7 +748,7 @@ Private: .wb-{component}__-{name}   ← Note the dash prefix
   
   "test": {
     "setup": [
-      "<wb-alert message=\"Test alert\"></div>",
+      "<div x-alert message=\"Test alert\"></div>",
       "<div x-behavior=\"alert\" message=\"Test\"></div>"
     ],
     "matrix": {
@@ -779,7 +779,7 @@ The `test` section defines how the component is tested, including setup HTML and
 {
   "test": {
     "setup": [
-      "<wb-alert message=\"Test alert\"></div>"
+      "<div x-alert message=\"Test alert\"></div>"
     ],
     "matrix": {
       "combinations": [
@@ -826,13 +826,13 @@ The `test` section defines how the component is tested, including setup HTML and
 ```json
 {
   "compliance": {
-    "baseClass": "wb-alert",
+    "baseClass": "x-alert",
     "requiredChildren": {
-      ".wb-alert__content": {}
+      ".x-alert__content": {}
     },
     "optionalChildren": {
-      ".wb-alert__icon": {},
-      ".wb-alert__close": { "createdWhen": "dismissible=true" }
+      ".x-alert__icon": {},
+      ".x-alert__close": { "createdWhen": "dismissible=true" }
     }
   }
 }
@@ -841,7 +841,7 @@ The `test` section defines how the component is tested, including setup HTML and
 **After:**
 ```json
 {
-  "baseClass": "wb-alert",
+  "baseClass": "x-alert",
   "$view": [
     { "name": "content", "tag": "div", "required": true },
     { "name": "icon", "tag": "span", "content": "{{icon}}", "createdWhen": "icon" },
@@ -879,8 +879,8 @@ The `test` section defines how the component is tested, including setup HTML and
 │  PUBLIC vs PRIVATE                                         │
 ├─────────────────────────────────────────────────────────────┤
 │                                                            │
-│  public: true   →  .wb-card__header   →  Stable, documented │
-│  public: false  →  .wb-card__-wrapper →  Internal, may change│
+│  public: true   →  .x-card__header   →  Stable, documented │
+│  public: false  →  .x-card__-wrapper →  Internal, may change│
 │                                                            │
 ├─────────────────────────────────────────────────────────────┤
 │  CREATION LOGIC                                            │

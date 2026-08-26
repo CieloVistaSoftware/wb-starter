@@ -6,22 +6,22 @@ import { test, expect } from '@playwright/test';
  * 3 behavior CSS files -- every one of those `var(--x, var(--bg-surface,
  * #ffffff))` chains silently bottomed out at the literal white fallback
  * in EVERY theme, including dark. Live symptom: "why do the two drawer
- * demos render only in white?" -- demos/site/overlays.html's wb-drawer
+ * demos render only in white?" -- demos/site/overlays.html's x-drawer
  * panels rendered solid white regardless of the page's dark theme.
  * Fixed by pointing at --bg-primary, the real theme-defined variable
  * every other overlay panel already uses.
  */
 
-test('demos/site/overlays.html: wb-drawer panel uses a real theme background, not the dead --bg-surface white fallback', async ({ page }) => {
+test('demos/site/overlays.html: [x-drawer] panel uses a real theme background, not the dead --bg-surface white fallback', async ({ page }) => {
   await page.goto('/demos/site/overlays.html', { waitUntil: 'domcontentloaded' });
   await page.waitForFunction(() => (window as any).WB && (window as any).WB.behaviors, { timeout: 20000 });
   await page.waitForTimeout(1000);
 
-  const trigger = page.locator('wb-drawer').first();
+  const trigger = page.locator('[x-drawer]').first();
   await trigger.scrollIntoViewIfNeeded();
   await trigger.click();
 
-  const panel = page.locator('.wb-drawer__panel--open');
+  const panel = page.locator('.x-drawer__panel--open');
   await expect(panel).toBeVisible({ timeout: 5000 });
   const bg = await panel.evaluate((el) => getComputedStyle(el).backgroundColor);
   expect(bg, 'drawer panel must not fall back to literal white').not.toBe('rgb(255, 255, 255)');

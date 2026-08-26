@@ -4,24 +4,24 @@ import { logPerfResult } from './perf-logger';
 test.describe('Interaction Performance', () => {
 
   test('Modal should open in under 100ms', async ({ page }) => {
-    await page.goto('/?page=components');
+    await page.goto('/?page=behaviors');
 
     // #331/#335-adjacent: the old selector (button[data-modal-title="Glass
     // Modal"]) is stale legacy-syntax that hasn't existed since the v3
     // data-* purge -- it never matched anything, so this test timed out for
     // 30s on every run instead of measuring anything. The real, current
-    // trigger is <wb-modal modal-title="..."> itself (components.html) --
+    // trigger is <div x-modal modal-title="..."> itself (behaviors.html) --
     // the tag IS the clickable trigger, no nested button.
-    const modalTrigger = page.locator('wb-modal').first();
+    const modalTrigger = page.locator('[x-modal]').first();
     await modalTrigger.waitFor({ state: 'visible' });
 
     const startTime = Date.now();
     await modalTrigger.click();
 
-    // wb-modal's behavior maps to 'dialog' (tag-map.js) -- opens a real
-    // <dialog class="wb-dialog" open>, not the old test's assumed selector
+    // x-modal's behavior maps to 'dialog' (tag-map.js) -- opens a real
+    // <dialog class="x-dialog" open>, not the old test's assumed selector
     // shape. Confirmed live before writing this.
-    const modal = page.locator('dialog.wb-dialog[open]');
+    const modal = page.locator('dialog.x-dialog[open]');
     await modal.waitFor({ state: 'visible' });
 
     const duration = Date.now() - startTime;
@@ -43,19 +43,19 @@ test.describe('Interaction Performance', () => {
     // The old version of this test didn't test tabs at all -- despite its
     // name, it measured the mobile nav-toggle collapse (see its own comment:
     // "let's test the navigation menu toggle which is a similar
-    // interaction"). components.html genuinely has a <wb-tabs> widget; test
+    // interaction"). behaviors.html genuinely has a <div x-tabs> widget; test
     // the real thing instead of a mislabeled placeholder.
-    await page.goto('/?page=components');
+    await page.goto('/?page=behaviors');
 
-    const tabs = page.locator('wb-tabs').first();
+    const tabs = page.locator('[x-tabs]').first();
     await tabs.scrollIntoViewIfNeeded();
-    const secondTab = tabs.locator('.wb-tabs__tab').nth(1);
+    const secondTab = tabs.locator('.x-tabs__tab').nth(1);
     await secondTab.waitFor({ state: 'visible' });
 
     const startTime = Date.now();
     await secondTab.click();
 
-    await expect(secondTab).toHaveClass(/wb-tabs__tab--active/);
+    await expect(secondTab).toHaveClass(/x-tabs__tab--active/);
 
     const duration = Date.now() - startTime;
     console.log(`Tab switch duration: ${duration}ms`);
@@ -75,7 +75,7 @@ test.describe('Interaction Performance', () => {
     // What the old "Tabs should switch" test actually measured, kept as its
     // own correctly-named test rather than dropped -- nav collapse is a
     // real, common interaction worth its own perf budget.
-    await page.goto('/?page=components');
+    await page.goto('/?page=behaviors');
 
     const navToggle = page.locator('.nav__toggle');
     await navToggle.waitFor({ state: 'visible' });

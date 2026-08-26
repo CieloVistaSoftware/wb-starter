@@ -18,16 +18,16 @@ Users provide simple attribute values. The schema defines how those values becom
 
 ```html
 <!-- ✅ CLEAN: User just sets values -->
-<wb-hero
+<div x-hero
   title="Explore the Universe"
   subtitle="Your journey begins"
   cta="Launch Mission">
 </div>
 <!-- ❌ UGLY: User must hand-author internal structure and classes -->
-<wb-hero variant="cosmic">
-  <h1 class="wb-hero__title">Explore the Universe</h1>
-  <p class="wb-hero__subtitle">Your journey begins</p>
-  <button class="wb-hero__cta">Launch Mission</button>
+<div x-hero variant="cosmic">
+  <h1 class="x-hero__title">Explore the Universe</h1>
+  <p class="x-hero__subtitle">Your journey begins</p>
+  <button class="x-hero__cta">Launch Mission</button>
 </div>
 ```
 
@@ -184,10 +184,10 @@ These native attributes have meanings that **conflict** with typical component u
 
 ```html
 <!-- BAD: Creates browser tooltip, not a heading -->
-<wb-cardpricing title="Pro Plan">
+<div x-cardpricing title="Pro Plan">
   <!-- GOOD: Use 'heading' or component-specific name -->
-  <wb-cardpricing heading="Pro Plan">
-    <wb-cardpricing plan="Pro">
+  <div x-cardpricing heading="Pro Plan">
+    <div x-cardpricing plan="Pro">
 ```
 
 **Why:** Native `title` creates a browser tooltip on hover. Using it for heading text causes unintended tooltips.
@@ -195,9 +195,9 @@ These native attributes have meanings that **conflict** with typical component u
 ### ❌ `type` - DO NOT USE for variants
 ```html
 <!-- BAD: Collides with input/button type -->
-<wb-alert type="warning">
+<div x-alert type="warning">
   <!-- GOOD: Use 'variant' for styling variants -->
-  <wb-alert variant="warning">
+  <div x-alert variant="warning">
 ```
 
 **Why:** Native `type` has specific meaning on `<input>`, `<button>`, `<script>`, `<style>`. Using it for variants causes confusion.
@@ -205,35 +205,35 @@ These native attributes have meanings that **conflict** with typical component u
 ### ❌ `content` - AVOID
 ```html
 <!-- BAD: Conflicts with meta content, CSS content -->
-<wb-card content="Body text">
+<article content="Body text">
   <!-- GOOD: Use children or a specific attribute -->
   <article>Body text</article>
-  <wb-card description="Body text">
+  <article description="Body text">
 ```
 
 ### ❌ `data` - AVOID as attribute name
 ```html
 <!-- BAD: Too generic, conflicts with data-* pattern -->
-<wb-chart data="[1,2,3]">
+<div data="[1,2,3]">
   <!-- GOOD: Use specific name or data-* -->
-  <wb-chart points="1,2,3">
-    <wb-chart points='[1,2,3]'>
+  <div points="1,2,3">
+    <div points='[1,2,3]'>
 ```
 
 ### ❌ `style` - DO NOT USE
 ```html
 <!-- BAD: Conflicts with inline styles -->
-<wb-card style="minimal">
+<article style="minimal">
   <!-- GOOD: Use 'variant' -->
-  <wb-card variant="minimal">
+  <article variant="minimal">
 ```
 
 ### ❌ `class` - DO NOT USE
 ```html
 <!-- BAD: Conflicts with CSS classes -->
-<wb-cardnotification class="warning">
+<div x-cardnotification class="warning">
   <!-- GOOD: Use 'variant' -->
-  <wb-cardnotification variant="warning">
+  <div x-cardnotification variant="warning">
 ```
 
 ---
@@ -313,7 +313,7 @@ Use `data-*` attributes for complex data (arrays, objects, external sources):
 ### Simple Arrays (CSV)
 ```html
 <!-- For simple string lists, CSV is fine -->
-<wb-tabs items="Home,About,Contact">
+<div x-tabs items="Home,About,Contact">
   <nav x-breadcrumb items="Home,Products,Shoes">
     <input x-tags items="JavaScript,HTML,CSS">
 ```
@@ -321,13 +321,13 @@ Use `data-*` attributes for complex data (arrays, objects, external sources):
 ### JSON Arrays
 ```html
 <!-- For arrays needing preservation (commas in values, etc.) -->
-<wb-tabs items='["Home","About","Contact Us"]'>
+<div x-tabs items='["Home","About","Contact Us"]'>
 ```
 
 ### Objects
 ```html
 <!-- Single object -->
-<wb-cardprofile user='{"name":"John","role":"Admin"}'>
+<div x-cardprofile user='{"name":"John","role":"Admin"}'>
   <!-- Array of objects -->
   <table rows='[
   {"name":"Alice","email":"alice@example.com"},
@@ -339,7 +339,7 @@ Use `data-*` attributes for complex data (arrays, objects, external sources):
 ```html
 <!-- Load from URL -->
 <table src="/api/users.json">
-  <wb-chart src="/api/metrics.json">
+  <div src="/api/metrics.json">
 ```
 
 ### Embedded JSON (for large data)
@@ -420,11 +420,11 @@ Extensions use `x-` prefix with optional value:
 
 ```html
 <!-- Count = singular noun -->
-<wb-grid columns="4"> <!-- Number of columns -->
+<div x-grid columns="4"> <!-- Number of columns -->
   <!-- List = plural noun -->
-  <wb-tabs items="Home,About,Contact"> <!-- Multiple items -->
+  <div x-tabs items="Home,About,Contact"> <!-- Multiple items -->
     <!-- Single = singular noun -->
-    <wb-table column="name"> <!-- Single column reference -->
+    <table column="name"> <!-- Single column reference -->
 ```
 
 ### Boolean Attributes
@@ -433,16 +433,16 @@ Boolean attributes follow HTML5 convention - **presence = true, absence = false*
 
 ```html
 <!-- ✅ CORRECT: Boolean present = true -->
-<wb-cardpricing featured> <!-- featured = true -->
-  <wb-alert dismissible> <!-- dismissible = true -->
+<div x-cardpricing featured> <!-- featured = true -->
+  <div x-alert dismissible> <!-- dismissible = true -->
     <button disabled> <!-- disabled = true -->
       <!-- ✅ CORRECT: Absent = false -->
       <div x-cardpricing> <!-- featured = false (default) -->
         <!-- ⚠️ ALLOWED but verbose -->
-        <wb-cardpricing featured="true"> <!-- Works, but unnecessary -->
-          <wb-cardpricing featured=""> <!-- Also works -->
+        <div x-cardpricing featured="true"> <!-- Works, but unnecessary -->
+          <div x-cardpricing featured=""> <!-- Also works -->
             <!-- ❌ WRONG: No "false" value -->
-            <wb-cardpricing featured="false"> <!-- Don't do this, just omit -->
+            <div x-cardpricing featured="false"> <!-- Don't do this, just omit -->
 ```
 
 ### Enum Values
@@ -491,12 +491,12 @@ up, down, flat, neutral
 ARIA attributes should pass through unchanged:
 
 ```html
-<wb-modal
+<dialog
   aria-label="Settings dialog"
   aria-describedby="modal-desc"
   role="dialog">
 </dialog>
-<wb-tabs aria-label="Main navigation">
+<div x-tabs aria-label="Main navigation">
 </nav>
 ```
 
@@ -516,9 +516,9 @@ Some ARIA attributes are set automatically by behaviors:
 
 ```html
 <!-- Use 'label' for visible label text -->
-<wb-switch label="Enable notifications">
+<div x-switch label="Enable notifications">
   <!-- Use 'aria-label' for screen-reader-only label -->
-  <wb-button
+  <button
     aria-label="Close"
     icon="✕">
     <!-- Use 'aria-labelledby' to reference another element -->
@@ -545,7 +545,7 @@ Some ARIA attributes are set automatically by behaviors:
 
 ```html
 <!-- Units included -->
-<wb-grid
+<div x-grid
   gap="1.5rem"
   min-width="280px">
   <!-- Unitless -->
@@ -554,11 +554,11 @@ Some ARIA attributes are set automatically by behaviors:
     total="100"
     per-page="10"
     current="3">
-    <wb-progress
+    <progress
       value="75"
       max="100">
       <!-- Time: milliseconds for JS, seconds for CSS -->
-      <wb-toast duration="5000"> <!-- 5 seconds -->
+      <div x-toast duration="5000"> <!-- 5 seconds -->
         <div
           x-animate="fade"
           x-delay="0.3">
@@ -578,7 +578,7 @@ Display values can include formatting - they're strings, not numbers:
     value="99.9%"
     label="Uptime">
     <!-- Numeric value (number) - no formatting -->
-    <wb-progress
+    <progress
       value="75"
       max="100">
       <input
@@ -595,10 +595,10 @@ Display values can include formatting - they're strings, not numbers:
 wb-starter is light DOM only — composition over inheritance, no Shadow DOM, no `<slot>` mechanism. Element children ARE the component's body content, exactly as authored:
 
 ```html
-<wb-card heading="Title">
+<article heading="Title">
   <p>This paragraph is the card's body content.</p>
 </article>
-<wb-alert variant="warning">
+<div x-alert variant="warning">
   <strong>Warning:</strong> This is the alert content.
 </div>
 ```
@@ -631,7 +631,7 @@ Components should expose CSS custom properties for theming:
 ### Override via Style Attribute
 
 ```html
-<wb-card style="--card-padding: 2rem; --card-radius: 16px;"> Custom styled card </article>
+<article style="--card-padding: 2rem; --card-radius: 16px;"> Custom styled card </article>
 ```
 
 ---
@@ -655,12 +655,12 @@ Components should expose CSS custom properties for theming:
 
 ### After (v3 — current standard)
 ```html
-<wb-card
+<article
   title="Hello"
   elevated>
   Content
 </article>
-<wb-alert
+<div x-alert
   variant="warning"
   message="Caution!">
 </div>
@@ -770,14 +770,14 @@ name         attribute with DIFFERENT meaning?
 
 ### Cards
 ```html
-<wb-card
+<article
   heading="Welcome"
   subheading="Get started"
   elevated
   hoverable>
   Card content here
 </article>
-<wb-cardpricing
+<div x-cardpricing
   plan="Pro"
   price="$29"
   period="/mo"
@@ -791,7 +791,7 @@ name         attribute with DIFFERENT meaning?
   trend="up"
   trend-value="+12%">
 </div>
-<wb-cardimage
+<div x-cardimage
   src="https://picsum.photos/seed/photo/600/400"
   alt="Description"
   heading="Photo Title"
@@ -801,20 +801,20 @@ name         attribute with DIFFERENT meaning?
 
 ### Feedback
 ```html
-<wb-alert
+<div x-alert
   variant="warning"
   heading="Caution"
   message="Check your input"
   dismissible>
 </div>
-<wb-badge variant="success">Active</div>
-<wb-avatar
+<span x-badge variant="success">Active</div>
+<span x-avatar
   src="https://picsum.photos/seed/user/600/400"
   alt="John Doe"
   size="lg"
   status="online">
 </div>
-<wb-toast
+<div x-toast
   variant="success"
   message="Saved successfully!"
   duration="3000">
@@ -824,7 +824,7 @@ name         attribute with DIFFERENT meaning?
 ### Navigation
 ```html
 <nav x-breadcrumb items="Home,Products,Shoes"></nav>
-<wb-tabs
+<div x-tabs
   items="Overview,Features,Pricing"
   active="0">
 </nav>
@@ -848,16 +848,16 @@ name         attribute with DIFFERENT meaning?
   required
   maxlength="100"
   pattern="[A-Za-z ]+">
-<wb-rating
+<span x-rating
   value="4"
   max="5"
   icon="⭐">
 </div>
-<wb-switch
+<div x-switch
   label="Enable notifications"
   checked>
 </div>
-<wb-slider
+<div x-slider
   min="0"
   max="100"
   value="50"
@@ -896,7 +896,7 @@ name         attribute with DIFFERENT meaning?
   sortable
   hoverable>
 </table>
-<wb-timeline items='[
+<div x-timeline items='[
   {"date": "2024-01", "label": "Project Start"},
   {"date": "2024-06", "label": "Beta Launch"}
 ]'>
@@ -950,12 +950,12 @@ When adding new components or attributes:
 
 ```html
 <!-- ❌ NEVER DO THIS -->
-<wb-card title="Heading"> <!-- Use heading -->
-  <wb-alert type="warning"> <!-- Use variant -->
-    <wb-card content="..."> <!-- Use children or a specific attr -->
-      <wb-card style="minimal"> <!-- Use variant -->
-        <wb-card class="special"> <!-- Use variant or boolean -->
-          <wb-card data="[...]"> <!-- Use data-* pattern -->
+<article title="Heading"> <!-- Use heading -->
+  <div x-alert type="warning"> <!-- Use variant -->
+    <article content="..."> <!-- Use children or a specific attr -->
+      <article style="minimal"> <!-- Use variant -->
+        <article class="special"> <!-- Use variant or boolean -->
+          <article data="[...]"> <!-- Use data-* pattern -->
 ```
 
 ---

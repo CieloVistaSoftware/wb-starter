@@ -29,38 +29,38 @@
   "sections": [
     {
       "heading": "badge — Combinations",
-      "tag": "wb-badge",
+      "tag": "x-badge",
       "columns": 3,
       "demos": [
         {
-          "tag": "wb-badge",
+          "tag": "x-badge",
           "attrs": {
             "label": "New"
           }
         },
         {
-          "tag": "wb-badge",
+          "tag": "x-badge",
           "attrs": {
             "label": "Done",
             "variant": "success"
           }
         },
         {
-          "tag": "wb-badge",
+          "tag": "x-badge",
           "attrs": {
             "label": "Warning",
             "variant": "warning"
           }
         },
         {
-          "tag": "wb-badge",
+          "tag": "x-badge",
           "attrs": {
             "label": "Error",
             "variant": "error"
           }
         },
         {
-          "tag": "wb-badge",
+          "tag": "x-badge",
           "attrs": {
             "label": "5",
             "variant": "primary",
@@ -68,14 +68,14 @@
           }
         },
         {
-          "tag": "wb-badge",
+          "tag": "x-badge",
           "attrs": {
             "variant": "success",
             "dot": true
           }
         },
         {
-          "tag": "wb-badge",
+          "tag": "x-badge",
           "attrs": {
             "label": "Tag",
             "variant": "info",
@@ -83,7 +83,7 @@
           }
         },
         {
-          "tag": "wb-badge",
+          "tag": "x-badge",
           "attrs": {
             "label": "Outline",
             "variant": "primary",
@@ -91,14 +91,14 @@
           }
         },
         {
-          "tag": "wb-badge",
+          "tag": "x-badge",
           "attrs": {
             "label": "Glass",
             "variant": "glass"
           }
         },
         {
-          "tag": "wb-badge",
+          "tag": "x-badge",
           "attrs": {
             "label": "Premium",
             "variant": "gradient",
@@ -107,7 +107,7 @@
           }
         },
         {
-          "tag": "wb-badge",
+          "tag": "x-badge",
           "attrs": {
             "label": "Live",
             "variant": "success",
@@ -117,7 +117,7 @@
           }
         },
         {
-          "tag": "wb-badge",
+          "tag": "x-badge",
           "attrs": {
             "label": "Glass Glow",
             "variant": "glass",
@@ -126,7 +126,7 @@
           }
         },
         {
-          "tag": "wb-badge",
+          "tag": "x-badge",
           "attrs": {
             "label": "default-xs-pill-dot-outline-removable",
             "variant": "default",
@@ -138,7 +138,7 @@
           }
         },
         {
-          "tag": "wb-badge",
+          "tag": "x-badge",
           "attrs": {
             "label": "default-sm-plain",
             "variant": "default",
@@ -150,7 +150,7 @@
           }
         },
         {
-          "tag": "wb-badge",
+          "tag": "x-badge",
           "attrs": {
             "label": "default-md-pill-outline",
             "variant": "default",
@@ -162,7 +162,7 @@
           }
         },
         {
-          "tag": "wb-badge",
+          "tag": "x-badge",
           "attrs": {
             "label": "default-lg-dot-removable",
             "variant": "default",
@@ -174,7 +174,7 @@
           }
         },
         {
-          "tag": "wb-badge",
+          "tag": "x-badge",
           "attrs": {
             "label": "primary-xs-outline-removable",
             "variant": "primary",
@@ -186,7 +186,7 @@
           }
         },
         {
-          "tag": "wb-badge",
+          "tag": "x-badge",
           "attrs": {
             "label": "primary-sm-pill-dot",
             "variant": "primary",
@@ -198,7 +198,7 @@
           }
         },
         {
-          "tag": "wb-badge",
+          "tag": "x-badge",
           "attrs": {
             "label": "primary-md-dot-removable",
             "variant": "primary",
@@ -210,7 +210,7 @@
           }
         },
         {
-          "tag": "wb-badge",
+          "tag": "x-badge",
           "attrs": {
             "label": "primary-lg-pill-outline",
             "variant": "primary",
@@ -222,7 +222,7 @@
           }
         },
         {
-          "tag": "wb-badge",
+          "tag": "x-badge",
           "attrs": {
             "label": "secondary-xs-pill-dot",
             "variant": "secondary",
@@ -234,7 +234,7 @@
           }
         },
         {
-          "tag": "wb-badge",
+          "tag": "x-badge",
           "attrs": {
             "label": "secondary-sm-outline-removable",
             "variant": "secondary",
@@ -246,7 +246,7 @@
           }
         },
         {
-          "tag": "wb-badge",
+          "tag": "x-badge",
           "attrs": {
             "label": "secondary-md-pill-dot-outline-removable",
             "variant": "secondary",
@@ -258,7 +258,7 @@
           }
         },
         {
-          "tag": "wb-badge",
+          "tag": "x-badge",
           "attrs": {
             "label": "secondary-lg-pill-dot-outline-removable",
             "variant": "secondary",
@@ -270,7 +270,7 @@
           }
         },
         {
-          "tag": "wb-badge",
+          "tag": "x-badge",
           "attrs": {
             "label": "success-xs-pill-dot-outline-removable",
             "variant": "success",
@@ -282,7 +282,7 @@
           }
         },
         {
-          "tag": "wb-badge",
+          "tag": "x-badge",
           "attrs": {
             "label": "success-sm-plain",
             "variant": "success",
@@ -294,7 +294,7 @@
           }
         },
         {
-          "tag": "wb-badge",
+          "tag": "x-badge",
           "attrs": {
             "label": "success-md-pill-dot-outline-removable",
             "variant": "success",
@@ -306,7 +306,7 @@
           }
         },
         {
-          "tag": "wb-badge",
+          "tag": "x-badge",
           "attrs": {
             "label": "success-lg-pill-dot-outline-removable",
             "variant": "success",
@@ -318,7 +318,7 @@
           }
         },
         {
-          "tag": "wb-badge",
+          "tag": "x-badge",
           "attrs": {
             "label": "warning-xs-pill-dot-outline-removable",
             "variant": "warning",
@@ -330,7 +330,7 @@
           }
         },
         {
-          "tag": "wb-badge",
+          "tag": "x-badge",
           "attrs": {
             "label": "warning-sm-plain",
             "variant": "warning",
@@ -342,7 +342,7 @@
           }
         },
         {
-          "tag": "wb-badge",
+          "tag": "x-badge",
           "attrs": {
             "label": "warning-md-pill-dot-outline-removable",
             "variant": "warning",
@@ -354,7 +354,7 @@
           }
         },
         {
-          "tag": "wb-badge",
+          "tag": "x-badge",
           "attrs": {
             "label": "warning-lg-pill-dot-outline-removable",
             "variant": "warning",
@@ -366,7 +366,7 @@
           }
         },
         {
-          "tag": "wb-badge",
+          "tag": "x-badge",
           "attrs": {
             "label": "error-xs-pill-dot-outline-removable",
             "variant": "error",
@@ -378,7 +378,7 @@
           }
         },
         {
-          "tag": "wb-badge",
+          "tag": "x-badge",
           "attrs": {
             "label": "error-sm-plain",
             "variant": "error",
@@ -390,7 +390,7 @@
           }
         },
         {
-          "tag": "wb-badge",
+          "tag": "x-badge",
           "attrs": {
             "label": "error-md-pill-dot-outline-removable",
             "variant": "error",
@@ -402,7 +402,7 @@
           }
         },
         {
-          "tag": "wb-badge",
+          "tag": "x-badge",
           "attrs": {
             "label": "error-lg-pill-dot-outline-removable",
             "variant": "error",
@@ -414,7 +414,7 @@
           }
         },
         {
-          "tag": "wb-badge",
+          "tag": "x-badge",
           "attrs": {
             "label": "info-xs-pill-dot-outline-removable",
             "variant": "info",
@@ -426,7 +426,7 @@
           }
         },
         {
-          "tag": "wb-badge",
+          "tag": "x-badge",
           "attrs": {
             "label": "info-sm-plain",
             "variant": "info",
@@ -438,7 +438,7 @@
           }
         },
         {
-          "tag": "wb-badge",
+          "tag": "x-badge",
           "attrs": {
             "label": "info-md-pill-dot-outline-removable",
             "variant": "info",
@@ -450,7 +450,7 @@
           }
         },
         {
-          "tag": "wb-badge",
+          "tag": "x-badge",
           "attrs": {
             "label": "info-lg-pill-dot-outline-removable",
             "variant": "info",
@@ -465,59 +465,59 @@
     },
     {
       "heading": "Variants",
-      "tag": "wb-badge",
+      "tag": "x-badge",
       "columns": 3,
       "demos": [
         {
-          "tag": "wb-badge",
+          "tag": "x-badge",
           "attrs": {
             "variant": "default"
           }
         },
         {
-          "tag": "wb-badge",
+          "tag": "x-badge",
           "attrs": {
             "variant": "primary"
           }
         },
         {
-          "tag": "wb-badge",
+          "tag": "x-badge",
           "attrs": {
             "variant": "secondary"
           }
         },
         {
-          "tag": "wb-badge",
+          "tag": "x-badge",
           "attrs": {
             "variant": "success"
           }
         },
         {
-          "tag": "wb-badge",
+          "tag": "x-badge",
           "attrs": {
             "variant": "warning"
           }
         },
         {
-          "tag": "wb-badge",
+          "tag": "x-badge",
           "attrs": {
             "variant": "error"
           }
         },
         {
-          "tag": "wb-badge",
+          "tag": "x-badge",
           "attrs": {
             "variant": "info"
           }
         },
         {
-          "tag": "wb-badge",
+          "tag": "x-badge",
           "attrs": {
             "variant": "glass"
           }
         },
         {
-          "tag": "wb-badge",
+          "tag": "x-badge",
           "attrs": {
             "variant": "gradient"
           }
@@ -526,29 +526,29 @@
     },
     {
       "heading": "size variants",
-      "tag": "wb-badge",
+      "tag": "x-badge",
       "columns": 2,
       "demos": [
         {
-          "tag": "wb-badge",
+          "tag": "x-badge",
           "attrs": {
             "size": "xs"
           }
         },
         {
-          "tag": "wb-badge",
+          "tag": "x-badge",
           "attrs": {
             "size": "sm"
           }
         },
         {
-          "tag": "wb-badge",
+          "tag": "x-badge",
           "attrs": {
             "size": "md"
           }
         },
         {
-          "tag": "wb-badge",
+          "tag": "x-badge",
           "attrs": {
             "size": "lg"
           }
@@ -557,35 +557,35 @@
     },
     {
       "heading": "Toggles",
-      "tag": "wb-badge",
+      "tag": "x-badge",
       "columns": 3,
       "demos": [
         {
-          "tag": "wb-badge",
+          "tag": "x-badge",
           "attrs": {
             "pill": true
           }
         },
         {
-          "tag": "wb-badge",
+          "tag": "x-badge",
           "attrs": {
             "dot": true
           }
         },
         {
-          "tag": "wb-badge",
+          "tag": "x-badge",
           "attrs": {
             "outline": true
           }
         },
         {
-          "tag": "wb-badge",
+          "tag": "x-badge",
           "attrs": {
             "removable": true
           }
         },
         {
-          "tag": "wb-badge",
+          "tag": "x-badge",
           "attrs": {
             "glow": true
           }

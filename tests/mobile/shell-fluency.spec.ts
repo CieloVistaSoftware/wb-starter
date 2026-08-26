@@ -10,9 +10,9 @@
 import { test, expect } from '@playwright/test';
 
 const PAGES = [
-  { name: 'home', url: 'http://localhost:3000/?page=home' },
-  { name: 'components', url: 'http://localhost:3000/?page=components' },
-  { name: 'docs', url: 'http://localhost:3000/?page=docs' },
+  { name: 'home', url: '/?page=home' },
+  { name: 'components', url: '/?page=behaviors' },
+  { name: 'docs', url: '/?page=docs' },
 ];
 
 test.describe('Mobile shell fluency (real SPA, not fragments)', () => {

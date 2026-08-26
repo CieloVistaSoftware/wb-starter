@@ -1,20 +1,43 @@
+import { readAttr } from '../../core/read-attr.js';
 /**
  * Form - Enhanced <form> element
  * Adds AJAX submit, validation UI, loading states, auto-save
  * Helper Attribute: [x-behavior="form"]
  */
 export function form(element, options = {}) {
+  // #751: read the PLAIN attribute as well as the data-* form. The showcase
+  // example writes `<form validate ajax>` -- the documented spelling -- while
+  // this only ever read `data-ajax`, so ajax was never enabled and submitting
+  // did nothing visible. Same gap #697 closed for x-fieldset/x-formrow.
+  //
+  // `"false"` is honoured as false (#747): a string attribute value is truthy
+  // in JS, so `ajax="false"` read as a bare presence check means ON, which is
+  // the opposite of what the markup says.
+  const flag = (plain, dataKey) => {
+    for (const name of [plain, dataKey]) {
+      if (!element.hasAttribute(name)) continue;
+      const v = element.getAttribute(name);
+      if (v === 'false' || v === '0') return false;
+      return true;
+    }
+    return false;
+  };
+  const str = (plain, dataProp) =>
+    element.getAttribute(plain) || element.dataset[dataProp] || '';
+
   const config = {
-    ajax: options.ajax ?? element.hasAttribute('data-ajax'),
-    validate: options.validate ?? element.dataset.validate !== 'false',
-    autoSave: options.autoSave ?? element.hasAttribute('data-auto-save'),
-    loadingText: options.loadingText || element.dataset.loadingText || 'Submitting...',
-    successMessage: options.successMessage || element.dataset.successMessage || 'Success!',
-    errorMessage: options.errorMessage || element.dataset.errorMessage || 'Error. Please try again.',
+    ajax: options.ajax ?? flag('ajax', 'data-ajax'),
+    validate: options.validate ?? (element.hasAttribute('validate')
+      ? flag('validate', 'data-validate')
+      : readAttr(element, 'validate') !== 'false'),
+    autoSave: options.autoSave ?? flag('auto-save', 'data-auto-save'),
+    loadingText: options.loadingText || str('loadingmessage', 'loadingText') || 'Submitting...',
+    successMessage: options.successMessage || str('successmessage', 'successMessage') || 'Success!',
+    errorMessage: options.errorMessage || str('errormessage', 'errorMessage') || 'Error. Please try again.',
     ...options
   };
 
-  element.classList.add('wb-form');
+  element.classList.add('x-form');
   element.noValidate = config.validate; // Use custom validation
 
   let submitBtn = element.querySelector('[type="submit"]');
@@ -25,17 +48,17 @@ export function form(element, options = {}) {
       submitBtn.disabled = loading;
       submitBtn.textContent = loading ? config.loadingText : originalBtnText;
     }
-    element.classList.toggle('wb-form--loading', loading);
+    element.classList.toggle('x-form--loading', loading);
   };
 
   const showMessage = (type, message) => {
-    let msg = element.querySelector('.wb-form__message');
+    let msg = element.querySelector('.x-form__message');
     if (!msg) {
       msg = document.createElement('div');
-      msg.className = 'wb-form__message';
+      msg.className = 'x-form__message';
       element.insertBefore(msg, element.firstChild);
     }
-    msg.className = `wb-form__message wb-form__message--${type}`;
+    msg.className = `x-form__message x-form__message--${type}`;
     msg.textContent = message;
     msg.style.cssText = `
       padding: 0.75rem 1rem;
@@ -106,7 +129,7 @@ export function form(element, options = {}) {
 
   // Auto-save
   if (config.autoSave) {
-    const saveKey = `wb-form-${element.id || element.name || 'default'}`;
+    const saveKey = `x-form-${element.id || element.name || 'default'}`;
     
     // Restore saved data
     const saved = localStorage.getItem(saveKey);
@@ -140,7 +163,7 @@ export function form(element, options = {}) {
     showMessage
   };
 
-  return () => element.classList.remove('wb-form', 'wb-form--loading');
+  return () => element.classList.remove('x-form', 'x-form--loading');
 }
 
 export default { form };

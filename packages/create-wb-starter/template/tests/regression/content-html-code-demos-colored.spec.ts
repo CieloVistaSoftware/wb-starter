@@ -1,20 +1,20 @@
 /**
- * REGRESSION: demos/site/content.html includes a <wb-codecontrol> (same
+ * REGRESSION: demos/site/content.html includes a <div x-codecontrol> (same
  * component fixed in #431 -- see codecontrol-theme-cdn-url.spec.ts). This
  * test asserts the actual visible effect on THIS page specifically: every
- * <wb-demo> code panel must render with real, non-default syntax colors,
+ * <div x-demo> code panel must render with real, non-default syntax colors,
  * not just that the theme <link> resolves correctly in isolation.
  */
 import { test, expect } from '@playwright/test';
 
-test('every wb-demo code panel on content.html has real syntax coloring', async ({ page }) => {
+test('every x-demo code panel on content.html has real syntax coloring', async ({ page }) => {
   await page.goto('/demos/site/content.html');
   await page.waitForFunction(() => {
-    const el = document.querySelector('wb-codecontrol') as any;
+    const el = document.querySelector('x-codecontrol') as any;
     return !!(el && el.wbCodeControl);
   }, { timeout: 15000 });
 
-  const codePanels = page.locator('wb-demo pre code, wb-demo code.hljs');
+  const codePanels = page.locator('x-demo pre code, x-demo code.hljs');
   const count = await codePanels.count();
   expect(count, 'content.html must have at least one code demo panel').toBeGreaterThan(0);
 

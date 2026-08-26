@@ -1,3 +1,4 @@
+import { readFlag, readAttr } from '../core/read-attr.js';
 /**
  * Utility Behaviors - Extended
  * -----------------------------------------------------------------------------
@@ -25,12 +26,12 @@ export function lazy(element, options = {}) {
     ...options
   };
 
-  element.classList.add('wb-lazy');
+  element.classList.add('x-lazy');
   
   // Show loading state
   if (!config.src) {
     element.textContent = '⏳ No data-src provided';
-    return () => element.classList.remove('wb-lazy');
+    return () => element.classList.remove('x-lazy');
   }
   
   // Show placeholder while loading
@@ -56,8 +57,8 @@ export function lazy(element, options = {}) {
             if (config.srcset) element.srcset = config.srcset;
 
             element.onload = () => {
-              element.classList.add('wb-lazy--loaded');
-              element.classList.remove('wb-lazy--loading');
+              element.classList.add('x-lazy--loaded');
+              element.classList.remove('x-lazy--loading');
               element.style.backgroundColor = '';
               element.style.minHeight = '';
               element.dispatchEvent(new CustomEvent('wb:lazy:loaded', {
@@ -80,17 +81,17 @@ export function lazy(element, options = {}) {
     console.debug('[wb-lazy] IntersectionObserver unavailable, falling back:', instErr);
     if (config.src) element.src = config.src;
 
-    element.classList.add('wb-lazy--loaded');
+    element.classList.add('x-lazy--loaded');
 
-    return () => element.classList.remove('wb-lazy', 'wb-lazy--loading', 'wb-lazy--loaded');
+    return () => element.classList.remove('x-lazy', 'x-lazy--loading', 'x-lazy--loaded');
   }
 
-  element.classList.add('wb-lazy--loading');
+  element.classList.add('x-lazy--loading');
   try { observer.observe(element); } catch (obsErr) { console.debug('[wb-lazy] observer.observe failed', obsErr); }
 
   return () => {
     try { observer.disconnect(); } catch (e) { /* best-effort */ }
-    element.classList.remove('wb-lazy', 'wb-lazy--loading', 'wb-lazy--loaded');
+    element.classList.remove('x-lazy', 'x-lazy--loading', 'x-lazy--loaded');
   };
 }
 
@@ -105,7 +106,7 @@ export function print(element, options = {}) {
     ...options
   };
 
-  element.classList.add('wb-print');
+  element.classList.add('x-print');
   
   // Make it VISIBLE!
   if (!element.textContent.trim()) {
@@ -133,7 +134,7 @@ export function print(element, options = {}) {
     }
   };
 
-  return () => element.classList.remove('wb-print');
+  return () => element.classList.remove('x-print');
 }
 
 /**
@@ -149,7 +150,7 @@ export function share(element, options = {}) {
     ...options
   };
 
-  element.classList.add('wb-share');
+  element.classList.add('x-share');
   
   // Make it VISIBLE!
   if (!element.textContent.trim()) {
@@ -175,7 +176,7 @@ export function share(element, options = {}) {
     }
   };
 
-  return () => element.classList.remove('wb-share');
+  return () => element.classList.remove('x-share');
 }
 
 /**
@@ -189,7 +190,7 @@ export function fullscreen(element, options = {}) {
     ...options
   };
 
-  element.classList.add('wb-fullscreen');
+  element.classList.add('x-fullscreen');
   
   // Make it VISIBLE!
   if (!element.textContent.trim()) {
@@ -229,27 +230,61 @@ export function fullscreen(element, options = {}) {
   element.onclick = () => {
     if (document.fullscreenElement) {
       document.exitFullscreen();
-    } else {
-      // Store original styles
-      originalStyles = {
-        overflow: targetEl.style.overflow,
-        overflowY: targetEl.style.overflowY,
-        height: targetEl.style.height
-      };
-      
-      // Set styles for scrolling in fullscreen
-      targetEl.style.overflow = 'auto';
-      targetEl.style.overflowY = 'auto';
-      targetEl.style.height = '100vh';
-      
-      targetEl.requestFullscreen();
-      element.textContent = '✕ Exit Fullscreen';
+      return;
     }
+    if (!targetEl) {
+      console.error('[WB:fullscreen] no element matches target', JSON.stringify(config.target));
+      return;
+    }
+
+    // #733 -- John: "fullscreen is not working". Every side effect used to be
+    // committed BEFORE requestFullscreen() settled, and its promise was thrown
+    // away. Measured on a real click: document.fullscreenElement stayed null
+    // while the target had already been stretched to height:100vh and the button
+    // already read "Exit Fullscreen" -- a panel blown up to viewport height, a
+    // control lying about the state, and no error to explain either. The restore
+    // path only runs on `fullscreenchange`, which never fires for a request that
+    // was rejected.
+    //
+    // Request first. Apply the styles and the label only once it resolves.
+    const saved = {
+      overflow: targetEl.style.overflow,
+      overflowY: targetEl.style.overflowY,
+      height: targetEl.style.height
+    };
+
+    let request;
+    try {
+      request = targetEl.requestFullscreen();
+    } catch (err) {
+      console.error(`[WB:fullscreen] request threw: ${err.name}: ${err.message}`);
+      return;
+    }
+
+    Promise.resolve(request)
+      .then(() => {
+        originalStyles = saved;
+        targetEl.style.overflow = 'auto';
+        targetEl.style.overflowY = 'auto';
+        targetEl.style.height = '100vh';
+        element.textContent = '✕ Exit Fullscreen';
+      })
+      .catch((err) => {
+        // Nothing was changed, so there is nothing to undo -- but SAY why.
+        // The reason is the difference between "no user gesture", "blocked by
+        // permissions policy" and "this element cannot be fullscreened", and
+        // swallowing it left the reader with no way to tell them apart.
+        console.error(`[WB:fullscreen] request rejected: ${err && err.name}: ${err && err.message}`);
+        targetEl.style.overflow = saved.overflow;
+        targetEl.style.overflowY = saved.overflowY;
+        targetEl.style.height = saved.height;
+        element.textContent = config.label;
+      });
   };
 
   return () => {
     document.removeEventListener('fullscreenchange', handleFullscreenChange);
-    element.classList.remove('wb-fullscreen');
+    element.classList.remove('x-fullscreen');
   };
 }
 
@@ -268,7 +303,7 @@ export function hotkey(element, options = {}) {
     return () => {};
   }
 
-  element.classList.add('wb-hotkey');
+  element.classList.add('x-hotkey');
 
   // Parse key combo: "ctrl+shift+k" -> { ctrl: true, shift: true, key: 'k' }
   const parts = config.key.split('+').map(p => p.trim().toLowerCase());
@@ -280,9 +315,9 @@ export function hotkey(element, options = {}) {
 
   // Show the hotkey in the element
   const keyDisplay = config.key.toUpperCase().replace(/\+/g, ' + ');
-  if (!element.querySelector('.wb-hotkey__badge')) {
+  if (!element.querySelector('.x-hotkey__badge')) {
     const badge = document.createElement('span');
-    badge.className = 'wb-hotkey__badge';
+    badge.className = 'x-hotkey__badge';
     badge.style.cssText = 'margin-left:0.5rem;padding:0.15rem 0.4rem;background:var(--bg-tertiary,#374151);border-radius:4px;font-size:0.75rem;font-family:monospace;';
     badge.textContent = keyDisplay;
     element.appendChild(badge);
@@ -303,7 +338,7 @@ export function hotkey(element, options = {}) {
       element.style.outlineOffset = '2px';
       element.style.background = 'var(--primary, #6366f1)';
       element.style.color = 'white';
-      element.classList.add('wb-hotkey--triggered');
+      element.classList.add('x-hotkey--triggered');
       
       // Dispatch event
       element.dispatchEvent(new CustomEvent('wb:hotkey:triggered', {
@@ -320,7 +355,7 @@ export function hotkey(element, options = {}) {
         element.style.outlineOffset = '';
         element.style.background = '';
         element.style.color = '';
-        element.classList.remove('wb-hotkey--triggered');
+        element.classList.remove('x-hotkey--triggered');
       }, 300);
     }
   };
@@ -329,7 +364,7 @@ export function hotkey(element, options = {}) {
 
   return () => { 
     document.removeEventListener('keydown', handler); 
-    element.classList.remove('wb-hotkey', 'wb-hotkey--triggered'); 
+    element.classList.remove('x-hotkey', 'x-hotkey--triggered'); 
   };
 }
 
@@ -346,7 +381,7 @@ export function clipboard(element, options = {}) {
     ...options
   };
 
-  element.classList.add('wb-clipboard');
+  element.classList.add('x-clipboard');
   
   // Make it VISIBLE!
   if (!element.textContent.trim()) {
@@ -365,12 +400,12 @@ export function clipboard(element, options = {}) {
       element.innerHTML = config.feedback;
       element.style.background = 'var(--success, #22c55e)';
       element.style.color = 'white';
-      element.classList.add('wb-clipboard--copied');
+      element.classList.add('x-clipboard--copied');
       setTimeout(() => { 
         element.innerHTML = original; 
         element.style.background = '';
         element.style.color = '';
-        element.classList.remove('wb-clipboard--copied');
+        element.classList.remove('x-clipboard--copied');
       }, 2000);
     } else {
       element.innerHTML = '⚠️ Nothing to copy';
@@ -378,7 +413,7 @@ export function clipboard(element, options = {}) {
     }
   };
 
-  return () => element.classList.remove('wb-clipboard', 'wb-clipboard--copied');
+  return () => element.classList.remove('x-clipboard', 'x-clipboard--copied');
 }
 
 /**
@@ -394,7 +429,7 @@ export function scroll(element, options = {}) {
     ...options
   };
 
-  element.classList.add('wb-scroll');
+  element.classList.add('x-scroll');
   
   // Make it VISIBLE!
   if (!element.textContent.trim()) {
@@ -422,7 +457,7 @@ export function scroll(element, options = {}) {
     }
   };
 
-  return () => element.classList.remove('wb-scroll');
+  return () => element.classList.remove('x-scroll');
 }
 
 /**
@@ -439,7 +474,7 @@ export function truncate(element, options = {}) {
     ...options
   };
 
-  element.classList.add('wb-truncate');
+  element.classList.add('x-truncate');
   element.style.overflow = 'hidden';
   element.style.display = '-webkit-box';
   element.style.webkitBoxOrient = 'vertical';
@@ -448,18 +483,18 @@ export function truncate(element, options = {}) {
 
   if (config.expandable) {
     const btn = document.createElement('button');
-    btn.className = 'wb-truncate__toggle';
+    btn.className = 'x-truncate__toggle';
     btn.textContent = 'Show more';
     btn.style.cssText = 'margin-top:0.5rem;background:none;border:none;color:var(--primary,#6366f1);cursor:pointer;';
     btn.onclick = () => {
-      const expanded = element.classList.toggle('wb-truncate--expanded');
+      const expanded = element.classList.toggle('x-truncate--expanded');
       element.style.webkitLineClamp = expanded ? 'unset' : config.lines;
       btn.textContent = expanded ? 'Show less' : 'Show more';
     };
     element.parentNode.insertBefore(btn, element.nextSibling);
   }
 
-  return () => element.classList.remove('wb-truncate', 'wb-truncate--expanded');
+  return () => element.classList.remove('x-truncate', 'x-truncate--expanded');
 }
 
 /**
@@ -473,7 +508,7 @@ export function highlight(element, options = {}) {
     ...options
   };
 
-  element.classList.add('wb-highlight');
+  element.classList.add('x-highlight');
   element.style.backgroundColor = config.color;
   element.style.color = config.textColor;
   element.style.padding = '0.125rem 0.35rem';
@@ -481,7 +516,7 @@ export function highlight(element, options = {}) {
   element.style.fontWeight = '500';
 
   return () => {
-    element.classList.remove('wb-highlight');
+    element.classList.remove('x-highlight');
     element.style.backgroundColor = '';
     element.style.color = '';
     element.style.padding = '';
@@ -501,20 +536,20 @@ export function external(element, options = {}) {
     ...options
   };
 
-  element.classList.add('wb-external');
+  element.classList.add('x-external');
   if (config.newTab) {
     element.target = '_blank';
     element.rel = 'noopener noreferrer';
   }
-  if (config.icon && !element.querySelector('.wb-external__icon')) {
+  if (config.icon && !element.querySelector('.x-external__icon')) {
     const icon = document.createElement('span');
-    icon.className = 'wb-external__icon';
+    icon.className = 'x-external__icon';
     icon.textContent = ' ↗';
     icon.style.fontSize = '0.8em';
     element.appendChild(icon);
   }
 
-  return () => element.classList.remove('wb-external');
+  return () => element.classList.remove('x-external');
 }
 
 /**
@@ -528,13 +563,13 @@ export function countdown(element, options = {}) {
     // and neither ever matched this function's `date` -- a three-way name
     // mismatch that always left config.date '' and silently fell through to
     // the unconditional 60s default below (#376).
-    date: options.date || element.getAttribute('date') || element.getAttribute('to') || element.dataset.to || '',
+    date: options.date || element.getAttribute('date') || element.getAttribute('to') || readAttr(element, 'to') || '',
     seconds: parseInt(options.seconds || element.getAttribute('seconds') || '0') || 0,
     format: options.format || element.getAttribute('format') || 'auto',
     ...options
   };
 
-  element.classList.add('wb-countdown');
+  element.classList.add('x-countdown');
   element.style.fontFamily = 'monospace';
   element.style.fontSize = '1.25rem';
   element.style.fontWeight = 'bold';
@@ -553,7 +588,7 @@ export function countdown(element, options = {}) {
     const target = new Date(config.date).getTime();
     if (isNaN(target)) {
       element.textContent = '⚠️ Invalid date';
-      return () => element.classList.remove('wb-countdown');
+      return () => element.classList.remove('x-countdown');
     }
     remaining = Math.max(0, Math.floor((target - Date.now()) / 1000));
   } else if (config.seconds > 0) {
@@ -593,7 +628,7 @@ export function countdown(element, options = {}) {
 
     if (remaining === 0) {
       clearInterval(interval);
-      element.classList.add('wb-countdown--complete');
+      element.classList.add('x-countdown--complete');
       element.style.color = 'var(--success, #22c55e)';
       element.dispatchEvent(new CustomEvent('wb:countdown:complete', { bubbles: true }));
     } else {
@@ -606,7 +641,7 @@ export function countdown(element, options = {}) {
 
   return () => { 
     clearInterval(interval); 
-    element.classList.remove('wb-countdown', 'wb-countdown--complete'); 
+    element.classList.remove('x-countdown', 'x-countdown--complete'); 
   };
 }
 
@@ -622,7 +657,7 @@ export function clock(element, options = {}) {
     ...options
   };
 
-  element.classList.add('wb-clock', `wb-clock--${config.variant}`);
+  element.classList.add('x-clock', `x-clock--${config.variant}`);
   
   // Base styles
   element.style.fontFamily = 'monospace';
@@ -675,7 +710,7 @@ export function clock(element, options = {}) {
 
   return () => { 
     clearInterval(interval); 
-    element.classList.remove('wb-clock', `wb-clock--${config.variant}`); 
+    element.classList.remove('x-clock', `x-clock--${config.variant}`); 
   };
 }
 
@@ -690,7 +725,7 @@ export function relativetime(element, options = {}) {
     ...options
   };
 
-  element.classList.add('wb-relativetime');
+  element.classList.add('x-relativetime');
 
   const update = () => {
     const date = new Date(config.date);
@@ -716,7 +751,7 @@ export function relativetime(element, options = {}) {
   update();
   const timerInterval = setInterval(update, config.refresh);
 
-  return () => { clearInterval(interval); element.classList.remove('wb-relativetime'); };
+  return () => { clearInterval(interval); element.classList.remove('x-relativetime'); };
 }
 
 /**
@@ -724,7 +759,7 @@ export function relativetime(element, options = {}) {
  * Helper Attribute: [x-offline]
  */
 export function offline(element, options = {}) {
-  element.classList.add('wb-offline');
+  element.classList.add('x-offline');
   // #486: padding floored at 1rem (16px) -- Standard §13 requires >=1rem
   // padding on every side of text in a content panel; 0.5rem (8px) failed
   // demo-layout-standards.spec.ts on pages/behaviors.html.
@@ -736,8 +771,8 @@ export function offline(element, options = {}) {
   element.style.fontWeight = '500';
 
   const update = () => {
-    element.classList.toggle('wb-offline--online', navigator.onLine);
-    element.classList.toggle('wb-offline--offline', !navigator.onLine);
+    element.classList.toggle('x-offline--online', navigator.onLine);
+    element.classList.toggle('x-offline--offline', !navigator.onLine);
     if (navigator.onLine) {
       element.textContent = '🟢 Online';
       element.style.background = 'var(--success-bg, #dcfce7)';
@@ -756,7 +791,7 @@ export function offline(element, options = {}) {
   return () => {
     window.removeEventListener('online', update);
     window.removeEventListener('offline', update);
-    element.classList.remove('wb-offline');
+    element.classList.remove('x-offline');
   };
 }
 
@@ -765,7 +800,7 @@ export function offline(element, options = {}) {
  * Helper Attribute: [x-visible]
  */
 export function visible(element, options = {}) {
-  element.classList.add('wb-visible');
+  element.classList.add('x-visible');
 
   element.wbVisible = {
     show: () => { element.style.display = ''; },
@@ -773,7 +808,7 @@ export function visible(element, options = {}) {
     toggle: () => { element.style.display = element.style.display === 'none' ? '' : 'none'; }
   };
 
-  return () => { element.classList.remove('wb-visible'); delete element.wbVisible; };
+  return () => { element.classList.remove('x-visible'); delete element.wbVisible; };
 }
 
 /**
@@ -785,13 +820,13 @@ export function debug(element, options = {}) {
   const config = {
     showErrors: options.showErrors ?? element.getAttribute('show-errors') !== 'false',
     showWarnings: options.showWarnings ?? element.getAttribute('show-warnings') !== 'false',
-    showLogs: options.showLogs ?? element.hasAttribute('data-show-logs'),
+    showLogs: options.showLogs ?? readFlag(element, 'show-logs'),
     maxMessages: parseInt(options.maxMessages || element.getAttribute('max-messages') || '50'),
     position: options.position || element.getAttribute('position') || 'bottom-right',
     ...options
   };
 
-  element.classList.add('wb-debug');
+  element.classList.add('x-debug');
   
   // Position styles
   const positions = {
@@ -821,13 +856,13 @@ export function debug(element, options = {}) {
   header.style.cssText = 'padding:8px 12px;background:#1a1a1a;border-bottom:1px solid #333;display:flex;justify-content:space-between;align-items:center;border-radius:8px 8px 0 0;position:sticky;top:0;';
   header.innerHTML = `
     <span style="font-weight:bold;">🐛 Console</span>
-    <button id="wb-debug-clear" style="background:#333;border:none;color:#fff;padding:2px 8px;border-radius:4px;cursor:pointer;font-size:0.6875rem;">Clear</button>
+    <button id="x-debug-clear" style="background:#333;border:none;color:#fff;padding:2px 8px;border-radius:4px;cursor:pointer;font-size:0.6875rem;">Clear</button>
   `;
   element.appendChild(header);
   
   // Messages container
   const messages = document.createElement('div');
-  messages.id = 'wb-debug-messages';
+  messages.id = 'x-debug-messages';
   messages.style.cssText = 'padding:8px;';
   element.appendChild(messages);
   
@@ -928,7 +963,7 @@ export function debug(element, options = {}) {
   window.addEventListener('unhandledrejection', rejectionHandler);
   
   // Clear button
-  element.querySelector('#wb-debug-clear').onclick = () => {
+  element.querySelector('#x-debug-clear').onclick = () => {
     messages.innerHTML = '';
     count = 0;
   };
@@ -941,7 +976,7 @@ export function debug(element, options = {}) {
     console.info = originalInfo;
     window.removeEventListener('error', errorHandler);
     window.removeEventListener('unhandledrejection', rejectionHandler);
-    element.classList.remove('wb-debug');
+    element.classList.remove('x-debug');
   };
 }
 

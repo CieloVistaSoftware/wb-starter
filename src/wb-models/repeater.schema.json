@@ -3,13 +3,30 @@
   "$id": "repeater.schema.json",
   "title": "Repeater",
   "description": "Behavior applied with x-repeater.",
-  "schemaFor": "x-repeater",
+  "schemaFor": "repeater",
+  "compliance": {
+    "baseClass": "x-repeater",
+    "supportLevel": "stable",
+    "accessibility": "high"
+  },
   "properties": {
     "count": {
       "type": "string",
       "description": "Read by repeater().",
       "default": "0"
     }
+  },
+  "$view": [],
+  "$methods": {},
+  "$cssAPI": {},
+  "test": {
+    "setup": [
+      "<div x-repeater>Basic repeater content</div>",
+      "<div x-repeater>Test permutation 2</div>",
+      "<div x-repeater>Test permutation 3</div>",
+      "<div x-repeater>Test permutation 4</div>",
+      "<div x-repeater>Test permutation 5</div>"
+    ]
   },
   "_metadata": {
     "generatedBy": "scripts/generate-behavior-schemas.mjs (#716)",

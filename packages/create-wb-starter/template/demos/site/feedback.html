@@ -7,6 +7,7 @@
   <title>Feedback & Status</title>
   <link rel="stylesheet" href="../../src/styles/themes.css">
   <link rel="stylesheet" href="../../src/styles/site.css">
+  <link rel="stylesheet" href="../../src/styles/pages/showcase.css">
 
 </head>
 
@@ -20,925 +21,1206 @@
   <!-- 1. 🔔 Alert -->
   <section id="alert-alert">
   <h2>🔔 Alert</h2>
-  <wb-demo columns="3">
-    <wb-alert variant="info" message="Test">
-      This is example alert content.
-    </wb-alert>
-    <wb-alert variant="success" message="Test">
-      This is example alert content.
-    </wb-alert>
-    <wb-alert variant="warning" message="Test">
-      This is example alert content.
-    </wb-alert>
-    <wb-alert variant="error" message="Test">
-      This is example alert content.
-    </wb-alert>
-    <wb-alert variant="info" title="Title" message="Test">
-      This is example alert content.
-    </wb-alert>
-    <wb-alert variant="info" message="Test" icon="ℹ️">
-      This is example alert content.
-    </wb-alert>
-    <wb-alert variant="info" message="Test" dismissible>
-      This is example alert content.
-    </wb-alert>
-    <wb-alert variant="warning" title="Warning" message="Be careful" icon="⚠️" dismissible>
-      This is example alert content.
-    </wb-alert>
-  </wb-demo>
+  <div x-demo columns="1" full-width>
+    <div x-alert variant="info" message="Test">
+    This is example alert content.
+  </div>
+  </div>
+  <div x-demo columns="1" full-width>
+    <div x-alert variant="success" message="Test">
+    This is example alert content.
+  </div>
+  </div>
+  <div x-demo columns="1" full-width>
+    <div x-alert variant="warning" message="Test">
+    This is example alert content.
+  </div>
+  </div>
+  <div x-demo columns="1" full-width>
+    <div x-alert variant="error" message="Test">
+    This is example alert content.
+  </div>
+  </div>
+  <div x-demo columns="1" full-width>
+    <div x-alert variant="info" title="Title" message="Test">
+    This is example alert content.
+  </div>
+  </div>
+  <div x-demo columns="1" full-width>
+    <div x-alert variant="info" message="Test" icon="ℹ️">
+    This is example alert content.
+  </div>
+  </div>
+  <div x-demo columns="1" full-width>
+    <div x-alert variant="info" message="Test" dismissible>
+    This is example alert content.
+  </div>
+  </div>
+  <div x-demo columns="1" full-width>
+    <div x-alert variant="warning" title="Warning" message="Be careful" icon="⚠️" dismissible>
+    This is example alert content.
+  </div>
+  </div>
   </section>
 
   <!-- 2. Variants -->
   <section id="alert-variant-variants">
   <h2>Variants</h2>
-  <wb-demo columns="2">
-    <wb-alert variant="info" message="Sample message">
-      This is example alert content.
-    </wb-alert>
-    <wb-alert variant="success" message="Sample message">
-      This is example alert content.
-    </wb-alert>
-    <wb-alert variant="warning" message="Sample message">
-      This is example alert content.
-    </wb-alert>
-    <wb-alert variant="error" message="Sample message">
-      This is example alert content.
-    </wb-alert>
-  </wb-demo>
+  <div x-demo columns="1" full-width>
+    <div x-alert variant="info" message="Sample message">
+    This is example alert content.
+  </div>
+  </div>
+  <div x-demo columns="1" full-width>
+    <div x-alert variant="success" message="Sample message">
+    This is example alert content.
+  </div>
+  </div>
+  <div x-demo columns="1" full-width>
+    <div x-alert variant="warning" message="Sample message">
+    This is example alert content.
+  </div>
+  </div>
+  <div x-demo columns="1" full-width>
+    <div x-alert variant="error" message="Sample message">
+    This is example alert content.
+  </div>
+  </div>
   </section>
 
   <!-- 3. Toggles -->
   <section id="alert-toggles">
   <h2>Toggles</h2>
-  <wb-demo columns="1">
-    <wb-alert dismissible message="Sample message">
+  <div x-demo columns="1" full-width>
+    <div x-alert dismissible message="Sample message">
       This is example alert content.
-    </wb-alert>
-  </wb-demo>
+    </div>
+  </div>
   </section>
 
   <!-- 4. 👤 Avatar -->
   <section id="avatar-avatar">
   <h2>👤 Avatar</h2>
-  <wb-demo columns="3">
-    <wb-avatar initials="JD">
-      This is example avatar content.
-    </wb-avatar>
-    <wb-avatar src="https://i.pravatar.cc/150?u=avatar1">
-      This is example avatar content.
-    </wb-avatar>
-    <wb-avatar initials="JD" size="lg">
-      This is example avatar content.
-    </wb-avatar>
-    <wb-avatar initials="JD" status="online">
-      This is example avatar content.
-    </wb-avatar>
-    <wb-avatar initials="JD" shape="square">
-      This is example avatar content.
-    </wb-avatar>
-  </wb-demo>
+  <div x-demo columns="1">
+    <span x-avatar initials="JD">
+    This is example avatar content.
+  </span>
+  </div>
+  <div x-demo columns="1">
+    <span x-avatar src="https://i.pravatar.cc/150?u=avatar1">
+    This is example avatar content.
+  </span>
+  </div>
+  <div x-demo columns="1">
+    <span x-avatar initials="JD" size="lg">
+    This is example avatar content.
+  </span>
+  </div>
+  <div x-demo columns="1">
+    <span x-avatar initials="JD" status="online">
+    This is example avatar content.
+  </span>
+  </div>
+  <div x-demo columns="1">
+    <span x-avatar initials="JD" shape="square">
+    This is example avatar content.
+  </span>
+  </div>
   </section>
 
   <!-- 5. size variants -->
   <section id="avatar-size-variants">
   <h2>size variants</h2>
-  <wb-demo columns="3">
-    <wb-avatar size="xs">
-      This is example avatar content.
-    </wb-avatar>
-    <wb-avatar size="sm">
-      This is example avatar content.
-    </wb-avatar>
-    <wb-avatar size="md">
-      This is example avatar content.
-    </wb-avatar>
-    <wb-avatar size="lg">
-      This is example avatar content.
-    </wb-avatar>
-    <wb-avatar size="xl">
-      This is example avatar content.
-    </wb-avatar>
-    <wb-avatar size="2xl">
-      This is example avatar content.
-    </wb-avatar>
-  </wb-demo>
+  <div x-demo columns="1">
+    <span x-avatar size="xs">
+    This is example avatar content.
+  </span>
+  </div>
+  <div x-demo columns="1">
+    <span x-avatar size="sm">
+    This is example avatar content.
+  </span>
+  </div>
+  <div x-demo columns="1">
+    <span x-avatar size="md">
+    This is example avatar content.
+  </span>
+  </div>
+  <div x-demo columns="1">
+    <span x-avatar size="lg">
+    This is example avatar content.
+  </span>
+  </div>
+  <div x-demo columns="1">
+    <span x-avatar size="xl">
+    This is example avatar content.
+  </span>
+  </div>
+  <div x-demo columns="1">
+    <span x-avatar size="2xl">
+    This is example avatar content.
+  </span>
+  </div>
   </section>
 
   <!-- 6. shape variants -->
   <section id="avatar-shape-variants">
   <h2>shape variants</h2>
-  <wb-demo columns="2">
-    <wb-avatar shape="circle">
-      This is example avatar content.
-    </wb-avatar>
-    <wb-avatar shape="square">
-      This is example avatar content.
-    </wb-avatar>
-    <wb-avatar shape="rounded">
-      This is example avatar content.
-    </wb-avatar>
-  </wb-demo>
+  <div x-demo columns="1">
+    <span x-avatar shape="circle">
+    This is example avatar content.
+  </span>
+  </div>
+  <div x-demo columns="1">
+    <span x-avatar shape="square">
+    This is example avatar content.
+  </span>
+  </div>
+  <div x-demo columns="1">
+    <span x-avatar shape="rounded">
+    This is example avatar content.
+  </span>
+  </div>
   </section>
 
   <!-- 7. status variants -->
   <section id="avatar-status-variants">
   <h2>status variants</h2>
-  <wb-demo columns="3">
-    <wb-avatar status="">
-      This is example avatar content.
-    </wb-avatar>
-    <wb-avatar status="online">
-      This is example avatar content.
-    </wb-avatar>
-    <wb-avatar status="offline">
-      This is example avatar content.
-    </wb-avatar>
-    <wb-avatar status="busy">
-      This is example avatar content.
-    </wb-avatar>
-    <wb-avatar status="away">
-      This is example avatar content.
-    </wb-avatar>
-  </wb-demo>
+  <div x-demo columns="1">
+    <span x-avatar status="">
+    This is example avatar content.
+  </span>
+  </div>
+  <div x-demo columns="1">
+    <span x-avatar status="online">
+    This is example avatar content.
+  </span>
+  </div>
+  <div x-demo columns="1">
+    <span x-avatar status="offline">
+    This is example avatar content.
+  </span>
+  </div>
+  <div x-demo columns="1">
+    <span x-avatar status="busy">
+    This is example avatar content.
+  </span>
+  </div>
+  <div x-demo columns="1">
+    <span x-avatar status="away">
+    This is example avatar content.
+  </span>
+  </div>
   </section>
 
   <!-- 8. Toggles -->
   <section id="avatar-toggles">
   <h2>Toggles</h2>
-  <wb-demo columns="1">
-    <wb-avatar bordered>
+  <div x-demo columns="1">
+    <span x-avatar bordered>
       This is example avatar content.
-    </wb-avatar>
-  </wb-demo>
+    </span>
+  </div>
   </section>
 
   <!-- 9. 🏷️ Badge -->
+  <!-- #561: every x-badge below used to carry the boilerplate slotted text
+       "This is example badge content." copy-pasted from this file's other
+       component sections (alert/avatar/etc.). feedback.js's badge() only
+       falls back to the `label` attribute "if the author didn't already put
+       content inside the tag (children win over label)" -- so that long
+       sentence was what actually rendered, not the intended short label.
+       At badge.css's compact 2-4px vertical padding (correct for a small
+       UI atom, per this spec's own "badges... have their own established
+       compact padding scale by design" exception), that sentence pushed
+       the badge past the 120x32px content-panel-detection threshold, so
+       the panel-edge check (rightly) treated it as an under-padded panel.
+       Removed the placeholder text everywhere in this section (letting the
+       already-present `label` attribute render, or adding a short
+       `label="Badge"` where none existed) -- a demo-content fix, not a
+       padding/CSS fix, since the badge was never actually cramped. -->
   <section id="badge-badge">
   <h2>🏷️ Badge</h2>
-  <wb-demo columns="3">
-    <wb-badge label="New">
-      This is example badge content.
-    </wb-badge>
-    <wb-badge label="Done" variant="success">
-      This is example badge content.
-    </wb-badge>
-    <wb-badge label="Warning" variant="warning">
-      This is example badge content.
-    </wb-badge>
-    <wb-badge label="Error" variant="error">
-      This is example badge content.
-    </wb-badge>
-    <wb-badge label="5" variant="primary" pill>
-      This is example badge content.
-    </wb-badge>
-    <wb-badge variant="success" dot>
-      This is example badge content.
-    </wb-badge>
-    <wb-badge label="Tag" variant="info" removable>
-      This is example badge content.
-    </wb-badge>
-    <wb-badge label="Outline" variant="primary" outline>
-      This is example badge content.
-    </wb-badge>
-    <wb-badge label="Glass" variant="glass">
-      This is example badge content.
-    </wb-badge>
-    <wb-badge label="Premium" variant="gradient" pill icon="⭐">
-      This is example badge content.
-    </wb-badge>
-    <wb-badge label="Live" variant="success" pill glow icon="🟢">
-      This is example badge content.
-    </wb-badge>
-    <wb-badge label="Glass Glow" variant="glass" pill glow>
-      This is example badge content.
-    </wb-badge>
-    <wb-badge label="default-xs-pill-dot-outline-removable" variant="default" size="xs" pill dot outline removable>
-      This is example badge content.
-    </wb-badge>
-    <wb-badge label="default-sm-plain" variant="default" size="sm">
-      This is example badge content.
-    </wb-badge>
-    <wb-badge label="default-md-pill-outline" variant="default" size="md" pill outline>
-      This is example badge content.
-    </wb-badge>
-    <wb-badge label="default-lg-dot-removable" variant="default" size="lg" dot removable>
-      This is example badge content.
-    </wb-badge>
-    <wb-badge label="primary-xs-outline-removable" variant="primary" size="xs" outline removable>
-      This is example badge content.
-    </wb-badge>
-    <wb-badge label="primary-sm-pill-dot" variant="primary" size="sm" pill dot>
-      This is example badge content.
-    </wb-badge>
-    <wb-badge label="primary-md-dot-removable" variant="primary" size="md" dot removable>
-      This is example badge content.
-    </wb-badge>
-    <wb-badge label="primary-lg-pill-outline" variant="primary" size="lg" pill outline>
-      This is example badge content.
-    </wb-badge>
-    <wb-badge label="secondary-xs-pill-dot" variant="secondary" size="xs" pill dot>
-      This is example badge content.
-    </wb-badge>
-    <wb-badge label="secondary-sm-outline-removable" variant="secondary" size="sm" outline removable>
-      This is example badge content.
-    </wb-badge>
-    <wb-badge label="secondary-md-pill-dot-outline-removable" variant="secondary" size="md" pill dot outline removable>
-      This is example badge content.
-    </wb-badge>
-    <wb-badge label="secondary-lg-pill-dot-outline-removable" variant="secondary" size="lg" pill dot outline removable>
-      This is example badge content.
-    </wb-badge>
-    <wb-badge label="success-xs-pill-dot-outline-removable" variant="success" size="xs" pill dot outline removable>
-      This is example badge content.
-    </wb-badge>
-    <wb-badge label="success-sm-plain" variant="success" size="sm">
-      This is example badge content.
-    </wb-badge>
-    <wb-badge label="success-md-pill-dot-outline-removable" variant="success" size="md" pill dot outline removable>
-      This is example badge content.
-    </wb-badge>
-    <wb-badge label="success-lg-pill-dot-outline-removable" variant="success" size="lg" pill dot outline removable>
-      This is example badge content.
-    </wb-badge>
-    <wb-badge label="warning-xs-pill-dot-outline-removable" variant="warning" size="xs" pill dot outline removable>
-      This is example badge content.
-    </wb-badge>
-    <wb-badge label="warning-sm-plain" variant="warning" size="sm">
-      This is example badge content.
-    </wb-badge>
-    <wb-badge label="warning-md-pill-dot-outline-removable" variant="warning" size="md" pill dot outline removable>
-      This is example badge content.
-    </wb-badge>
-    <wb-badge label="warning-lg-pill-dot-outline-removable" variant="warning" size="lg" pill dot outline removable>
-      This is example badge content.
-    </wb-badge>
-    <wb-badge label="error-xs-pill-dot-outline-removable" variant="error" size="xs" pill dot outline removable>
-      This is example badge content.
-    </wb-badge>
-    <wb-badge label="error-sm-plain" variant="error" size="sm">
-      This is example badge content.
-    </wb-badge>
-    <wb-badge label="error-md-pill-dot-outline-removable" variant="error" size="md" pill dot outline removable>
-      This is example badge content.
-    </wb-badge>
-    <wb-badge label="error-lg-pill-dot-outline-removable" variant="error" size="lg" pill dot outline removable>
-      This is example badge content.
-    </wb-badge>
-    <wb-badge label="info-xs-pill-dot-outline-removable" variant="info" size="xs" pill dot outline removable>
-      This is example badge content.
-    </wb-badge>
-    <wb-badge label="info-sm-plain" variant="info" size="sm">
-      This is example badge content.
-    </wb-badge>
-    <wb-badge label="info-md-pill-dot-outline-removable" variant="info" size="md" pill dot outline removable>
-      This is example badge content.
-    </wb-badge>
-    <wb-badge label="info-lg-pill-dot-outline-removable" variant="info" size="lg" pill dot outline removable>
-      This is example badge content.
-    </wb-badge>
-  </wb-demo>
+  <div x-demo columns="1">
+    <span x-badge label="New"></span>
+  </div>
+  <div x-demo columns="1">
+    <span x-badge label="Done" variant="success"></span>
+  </div>
+  <div x-demo columns="1">
+    <span x-badge label="Warning" variant="warning"></span>
+  </div>
+  <div x-demo columns="1">
+    <span x-badge label="Error" variant="error"></span>
+  </div>
+  <div x-demo columns="1">
+    <span x-badge label="5" variant="primary" pill></span>
+  </div>
+  <div x-demo columns="1">
+    <span x-badge variant="success" dot></span>
+  </div>
+  <div x-demo columns="1">
+    <span x-badge label="Tag" variant="info" removable></span>
+  </div>
+  <div x-demo columns="1">
+    <span x-badge label="Outline" variant="primary" outline></span>
+  </div>
+  <div x-demo columns="1">
+    <span x-badge label="Glass" variant="glass"></span>
+  </div>
+  <div x-demo columns="1">
+    <span x-badge label="Premium" variant="gradient" pill icon="⭐"></span>
+  </div>
+  <div x-demo columns="1">
+    <span x-badge label="Live" variant="success" pill glow icon="🟢"></span>
+  </div>
+  <div x-demo columns="1">
+    <span x-badge label="Glass Glow" variant="glass" pill glow></span>
+  </div>
+  <div x-demo columns="1">
+    <!-- default-xs-pill-dot-outline-removable: kept as a comment (not the visible label) -- see #561 -->
+    <span x-badge label="Badge" variant="default" size="xs" pill dot outline removable></span>
+  </div>
+  <div x-demo columns="1">
+    <!-- default-sm-plain: kept as a comment (not the visible label) -- see #561 -->
+    <span x-badge label="Badge" variant="default" size="sm"></span>
+  </div>
+  <div x-demo columns="1">
+    <!-- default-md-pill-outline: kept as a comment (not the visible label) -- see #561 -->
+    <span x-badge label="Badge" variant="default" size="md" pill outline></span>
+  </div>
+  <div x-demo columns="1">
+    <!-- default-lg-dot-removable: kept as a comment (not the visible label) -- see #561 -->
+    <span x-badge label="Badge" variant="default" size="lg" dot removable></span>
+  </div>
+  <div x-demo columns="1">
+    <!-- primary-xs-outline-removable: kept as a comment (not the visible label) -- see #561 -->
+    <span x-badge label="Badge" variant="primary" size="xs" outline removable></span>
+  </div>
+  <div x-demo columns="1">
+    <!-- primary-sm-pill-dot: kept as a comment (not the visible label) -- see #561 -->
+    <span x-badge label="Badge" variant="primary" size="sm" pill dot></span>
+  </div>
+  <div x-demo columns="1">
+    <!-- primary-md-dot-removable: kept as a comment (not the visible label) -- see #561 -->
+    <span x-badge label="Badge" variant="primary" size="md" dot removable></span>
+  </div>
+  <div x-demo columns="1">
+    <!-- primary-lg-pill-outline: kept as a comment (not the visible label) -- see #561 -->
+    <span x-badge label="Badge" variant="primary" size="lg" pill outline></span>
+  </div>
+  <div x-demo columns="1">
+    <!-- secondary-xs-pill-dot: kept as a comment (not the visible label) -- see #561 -->
+    <span x-badge label="Badge" variant="secondary" size="xs" pill dot></span>
+  </div>
+  <div x-demo columns="1">
+    <!-- secondary-sm-outline-removable: kept as a comment (not the visible label) -- see #561 -->
+    <span x-badge label="Badge" variant="secondary" size="sm" outline removable></span>
+  </div>
+  <div x-demo columns="1">
+    <!-- secondary-md-pill-dot-outline-removable: kept as a comment (not the visible label) -- see #561 -->
+    <span x-badge label="Badge" variant="secondary" size="md" pill dot outline removable></span>
+  </div>
+  <div x-demo columns="1">
+    <!-- secondary-lg-pill-dot-outline-removable: kept as a comment (not the visible label) -- see #561 -->
+    <span x-badge label="Badge" variant="secondary" size="lg" pill dot outline removable></span>
+  </div>
+  <div x-demo columns="1">
+    <!-- success-xs-pill-dot-outline-removable: kept as a comment (not the visible label) -- see #561 -->
+    <span x-badge label="Badge" variant="success" size="xs" pill dot outline removable></span>
+  </div>
+  <div x-demo columns="1">
+    <!-- success-sm-plain: kept as a comment (not the visible label) -- see #561 -->
+    <span x-badge label="Badge" variant="success" size="sm"></span>
+  </div>
+  <div x-demo columns="1">
+    <!-- success-md-pill-dot-outline-removable: kept as a comment (not the visible label) -- see #561 -->
+    <span x-badge label="Badge" variant="success" size="md" pill dot outline removable></span>
+  </div>
+  <div x-demo columns="1">
+    <!-- success-lg-pill-dot-outline-removable: kept as a comment (not the visible label) -- see #561 -->
+    <span x-badge label="Badge" variant="success" size="lg" pill dot outline removable></span>
+  </div>
+  <div x-demo columns="1">
+    <!-- warning-xs-pill-dot-outline-removable: kept as a comment (not the visible label) -- see #561 -->
+    <span x-badge label="Badge" variant="warning" size="xs" pill dot outline removable></span>
+  </div>
+  <div x-demo columns="1">
+    <!-- warning-sm-plain: kept as a comment (not the visible label) -- see #561 -->
+    <span x-badge label="Badge" variant="warning" size="sm"></span>
+  </div>
+  <div x-demo columns="1">
+    <!-- warning-md-pill-dot-outline-removable: kept as a comment (not the visible label) -- see #561 -->
+    <span x-badge label="Badge" variant="warning" size="md" pill dot outline removable></span>
+  </div>
+  <div x-demo columns="1">
+    <!-- warning-lg-pill-dot-outline-removable: kept as a comment (not the visible label) -- see #561 -->
+    <span x-badge label="Badge" variant="warning" size="lg" pill dot outline removable></span>
+  </div>
+  <div x-demo columns="1">
+    <!-- error-xs-pill-dot-outline-removable: kept as a comment (not the visible label) -- see #561 -->
+    <span x-badge label="Badge" variant="error" size="xs" pill dot outline removable></span>
+  </div>
+  <div x-demo columns="1">
+    <!-- error-sm-plain: kept as a comment (not the visible label) -- see #561 -->
+    <span x-badge label="Badge" variant="error" size="sm"></span>
+  </div>
+  <div x-demo columns="1">
+    <!-- error-md-pill-dot-outline-removable: kept as a comment (not the visible label) -- see #561 -->
+    <span x-badge label="Badge" variant="error" size="md" pill dot outline removable></span>
+  </div>
+  <div x-demo columns="1">
+    <!-- error-lg-pill-dot-outline-removable: kept as a comment (not the visible label) -- see #561 -->
+    <span x-badge label="Badge" variant="error" size="lg" pill dot outline removable></span>
+  </div>
+  <div x-demo columns="1">
+    <!-- info-xs-pill-dot-outline-removable: kept as a comment (not the visible label) -- see #561 -->
+    <span x-badge label="Badge" variant="info" size="xs" pill dot outline removable></span>
+  </div>
+  <div x-demo columns="1">
+    <!-- info-sm-plain: kept as a comment (not the visible label) -- see #561 -->
+    <span x-badge label="Badge" variant="info" size="sm"></span>
+  </div>
+  <div x-demo columns="1">
+    <!-- info-md-pill-dot-outline-removable: kept as a comment (not the visible label) -- see #561 -->
+    <span x-badge label="Badge" variant="info" size="md" pill dot outline removable></span>
+  </div>
+  <div x-demo columns="1">
+    <!-- info-lg-pill-dot-outline-removable: kept as a comment (not the visible label) -- see #561 -->
+    <span x-badge label="Badge" variant="info" size="lg" pill dot outline removable></span>
+  </div>
   </section>
 
   <!-- 10. Variants -->
   <section id="badge-variant-variants">
   <h2>Variants</h2>
-  <wb-demo columns="3">
-    <wb-badge variant="default">
-      This is example badge content.
-    </wb-badge>
-    <wb-badge variant="primary">
-      This is example badge content.
-    </wb-badge>
-    <wb-badge variant="secondary">
-      This is example badge content.
-    </wb-badge>
-    <wb-badge variant="success">
-      This is example badge content.
-    </wb-badge>
-    <wb-badge variant="warning">
-      This is example badge content.
-    </wb-badge>
-    <wb-badge variant="error">
-      This is example badge content.
-    </wb-badge>
-    <wb-badge variant="info">
-      This is example badge content.
-    </wb-badge>
-    <wb-badge variant="glass">
-      This is example badge content.
-    </wb-badge>
-    <wb-badge variant="gradient">
-      This is example badge content.
-    </wb-badge>
-  </wb-demo>
+  <div x-demo columns="1">
+    <span x-badge variant="default" label="Badge"></span>
+  </div>
+  <div x-demo columns="1">
+    <span x-badge variant="primary" label="Badge"></span>
+  </div>
+  <div x-demo columns="1">
+    <span x-badge variant="secondary" label="Badge"></span>
+  </div>
+  <div x-demo columns="1">
+    <span x-badge variant="success" label="Badge"></span>
+  </div>
+  <div x-demo columns="1">
+    <span x-badge variant="warning" label="Badge"></span>
+  </div>
+  <div x-demo columns="1">
+    <span x-badge variant="error" label="Badge"></span>
+  </div>
+  <div x-demo columns="1">
+    <span x-badge variant="info" label="Badge"></span>
+  </div>
+  <div x-demo columns="1">
+    <span x-badge variant="glass" label="Badge"></span>
+  </div>
+  <div x-demo columns="1">
+    <span x-badge variant="gradient" label="Badge"></span>
+  </div>
   </section>
 
   <!-- 11. size variants -->
   <section id="badge-size-variants">
   <h2>size variants</h2>
-  <wb-demo columns="2">
-    <wb-badge size="xs">
-      This is example badge content.
-    </wb-badge>
-    <wb-badge size="sm">
-      This is example badge content.
-    </wb-badge>
-    <wb-badge size="md">
-      This is example badge content.
-    </wb-badge>
-    <wb-badge size="lg">
-      This is example badge content.
-    </wb-badge>
-  </wb-demo>
+  <div x-demo columns="1">
+    <span x-badge size="xs" label="Badge"></span>
+  </div>
+  <div x-demo columns="1">
+    <span x-badge size="sm" label="Badge"></span>
+  </div>
+  <div x-demo columns="1">
+    <span x-badge size="md" label="Badge"></span>
+  </div>
+  <div x-demo columns="1">
+    <span x-badge size="lg" label="Badge"></span>
+  </div>
   </section>
 
   <!-- 12. Toggles -->
   <section id="badge-toggles">
   <h2>Toggles</h2>
-  <wb-demo columns="1">
-    <wb-badge pill>
-      This is example badge content.
-    </wb-badge>
-    <wb-badge dot>
-      This is example badge content.
-    </wb-badge>
-    <wb-badge outline>
-      This is example badge content.
-    </wb-badge>
-    <wb-badge removable>
-      This is example badge content.
-    </wb-badge>
-    <wb-badge glow>
-      This is example badge content.
-    </wb-badge>
-  </wb-demo>
+  <div x-demo columns="1">
+    <span x-badge pill label="Badge"></span>
+  </div>
+  <div x-demo columns="1">
+    <span x-badge dot></span>
+  </div>
+  <div x-demo columns="1">
+    <span x-badge outline label="Badge"></span>
+  </div>
+  <div x-demo columns="1">
+    <span x-badge removable label="Badge"></span>
+  </div>
+  <div x-demo columns="1">
+    <span x-badge glow label="Badge"></span>
+  </div>
   </section>
 
   <!-- 13. 🏷️ Chip -->
   <section id="chip-chip">
   <h2>🏷️ Chip</h2>
-  <wb-demo columns="2">
-    <wb-chip label="Tag">
-      This is example chip content.
-    </wb-chip>
-    <wb-chip label="Tag" dismissible>
-      This is example chip content.
-    </wb-chip>
-    <wb-chip label="Tag" variant="primary">
-      This is example chip content.
-    </wb-chip>
-    <wb-chip label="Tag" icon="🏷️">
-      This is example chip content.
-    </wb-chip>
-  </wb-demo>
+  <div x-demo columns="1">
+    <span x-chip label="Tag">
+    This is example chip content.
+  </span>
+  </div>
+  <div x-demo columns="1">
+    <span x-chip label="Tag" dismissible>
+    This is example chip content.
+  </span>
+  </div>
+  <div x-demo columns="1">
+    <span x-chip label="Tag" variant="primary">
+    This is example chip content.
+  </span>
+  </div>
+  <div x-demo columns="1">
+    <span x-chip label="Tag" icon="🏷️">
+    This is example chip content.
+  </span>
+  </div>
   </section>
 
   <!-- 14. Variants -->
   <section id="chip-variant-variants">
   <h2>Variants</h2>
-  <wb-demo columns="3">
-    <wb-chip variant="default">
-      This is example chip content.
-    </wb-chip>
-    <wb-chip variant="primary">
-      This is example chip content.
-    </wb-chip>
-    <wb-chip variant="success">
-      This is example chip content.
-    </wb-chip>
-    <wb-chip variant="warning">
-      This is example chip content.
-    </wb-chip>
-    <wb-chip variant="error">
-      This is example chip content.
-    </wb-chip>
-    <wb-chip variant="info">
-      This is example chip content.
-    </wb-chip>
-  </wb-demo>
+  <div x-demo columns="1">
+    <span x-chip variant="default">
+    This is example chip content.
+  </span>
+  </div>
+  <div x-demo columns="1">
+    <span x-chip variant="primary">
+    This is example chip content.
+  </span>
+  </div>
+  <div x-demo columns="1">
+    <span x-chip variant="success">
+    This is example chip content.
+  </span>
+  </div>
+  <div x-demo columns="1">
+    <span x-chip variant="warning">
+    This is example chip content.
+  </span>
+  </div>
+  <div x-demo columns="1">
+    <span x-chip variant="error">
+    This is example chip content.
+  </span>
+  </div>
+  <div x-demo columns="1">
+    <span x-chip variant="info">
+    This is example chip content.
+  </span>
+  </div>
   </section>
 
   <!-- 15. size variants -->
   <section id="chip-size-variants">
   <h2>size variants</h2>
-  <wb-demo columns="2">
-    <wb-chip size="sm">
-      This is example chip content.
-    </wb-chip>
-    <wb-chip size="md">
-      This is example chip content.
-    </wb-chip>
-    <wb-chip size="lg">
-      This is example chip content.
-    </wb-chip>
-  </wb-demo>
+  <div x-demo columns="1">
+    <span x-chip size="sm">
+    This is example chip content.
+  </span>
+  </div>
+  <div x-demo columns="1">
+    <span x-chip size="md">
+    This is example chip content.
+  </span>
+  </div>
+  <div x-demo columns="1">
+    <span x-chip size="lg">
+    This is example chip content.
+  </span>
+  </div>
   </section>
 
   <!-- 16. Toggles -->
   <section id="chip-toggles">
   <h2>Toggles</h2>
-  <wb-demo columns="1">
-    <wb-chip dismissible>
-      This is example chip content.
-    </wb-chip>
-    <wb-chip disabled>
-      This is example chip content.
-    </wb-chip>
-    <wb-chip outlined>
-      This is example chip content.
-    </wb-chip>
-  </wb-demo>
+  <div x-demo columns="1">
+    <span x-chip dismissible>
+    This is example chip content.
+  </span>
+  </div>
+  <div x-demo columns="1">
+    <span x-chip disabled>
+    This is example chip content.
+  </span>
+  </div>
+  <div x-demo columns="1">
+    <span x-chip outlined>
+    This is example chip content.
+  </span>
+  </div>
   </section>
 
   <!-- 17. 📊 Progress -->
   <section id="progress-progress">
   <h2>📊 Progress</h2>
-  <wb-demo columns="3">
-    <wb-progress value="0">
-      This is example progress content.
-    </wb-progress>
-    <wb-progress value="25">
-      This is example progress content.
-    </wb-progress>
-    <wb-progress value="50">
-      This is example progress content.
-    </wb-progress>
-    <wb-progress value="75">
-      This is example progress content.
-    </wb-progress>
-    <wb-progress value="100">
-      This is example progress content.
-    </wb-progress>
-    <wb-progress value="50" label="Loading...">
-      This is example progress content.
-    </wb-progress>
-    <wb-progress value="50" show-value>
-      This is example progress content.
-    </wb-progress>
-    <wb-progress value="50" striped>
-      This is example progress content.
-    </wb-progress>
-    <wb-progress value="50" variant="success">
-      This is example progress content.
-    </wb-progress>
-    <wb-progress value="50" variant="warning">
-      This is example progress content.
-    </wb-progress>
-    <wb-progress value="50" variant="error">
-      This is example progress content.
-    </wb-progress>
-    <wb-progress value="50" size="sm">
-      This is example progress content.
-    </wb-progress>
-    <wb-progress value="50" size="lg">
-      This is example progress content.
-    </wb-progress>
-    <wb-progress indeterminate>
-      This is example progress content.
-    </wb-progress>
-  </wb-demo>
+  <div x-demo columns="1">
+    <progress value="0">
+    This is example progress content.
+  </progress>
+  </div>
+  <div x-demo columns="1">
+    <progress value="25">
+    This is example progress content.
+  </progress>
+  </div>
+  <div x-demo columns="1">
+    <progress value="50">
+    This is example progress content.
+  </progress>
+  </div>
+  <div x-demo columns="1">
+    <progress value="75">
+    This is example progress content.
+  </progress>
+  </div>
+  <div x-demo columns="1">
+    <progress value="100">
+    This is example progress content.
+  </progress>
+  </div>
+  <div x-demo columns="1">
+    <progress value="50" label="Loading...">
+    This is example progress content.
+  </progress>
+  </div>
+  <div x-demo columns="1">
+    <progress value="50" show-value>
+    This is example progress content.
+  </progress>
+  </div>
+  <div x-demo columns="1">
+    <progress value="50" striped>
+    This is example progress content.
+  </progress>
+  </div>
+  <div x-demo columns="1">
+    <progress value="50" variant="success">
+    This is example progress content.
+  </progress>
+  </div>
+  <div x-demo columns="1">
+    <progress value="50" variant="warning">
+    This is example progress content.
+  </progress>
+  </div>
+  <div x-demo columns="1">
+    <progress value="50" variant="error">
+    This is example progress content.
+  </progress>
+  </div>
+  <div x-demo columns="1">
+    <progress value="50" size="sm">
+    This is example progress content.
+  </progress>
+  </div>
+  <div x-demo columns="1">
+    <progress value="50" size="lg">
+    This is example progress content.
+  </progress>
+  </div>
+  <div x-demo columns="1">
+    <progress indeterminate>
+    This is example progress content.
+  </progress>
+  </div>
   </section>
 
   <!-- 18. Variants -->
   <section id="progress-variant-variants">
   <h2>Variants</h2>
-  <wb-demo columns="3">
-    <wb-progress variant="default" value="60">
-      This is example progress content.
-    </wb-progress>
-    <wb-progress variant="primary" value="60">
-      This is example progress content.
-    </wb-progress>
-    <wb-progress variant="success" value="60">
-      This is example progress content.
-    </wb-progress>
-    <wb-progress variant="warning" value="60">
-      This is example progress content.
-    </wb-progress>
-    <wb-progress variant="error" value="60">
-      This is example progress content.
-    </wb-progress>
-    <wb-progress variant="info" value="60">
-      This is example progress content.
-    </wb-progress>
-  </wb-demo>
+  <div x-demo columns="1">
+    <progress variant="default" value="60">
+    This is example progress content.
+  </progress>
+  </div>
+  <div x-demo columns="1">
+    <progress variant="primary" value="60">
+    This is example progress content.
+  </progress>
+  </div>
+  <div x-demo columns="1">
+    <progress variant="success" value="60">
+    This is example progress content.
+  </progress>
+  </div>
+  <div x-demo columns="1">
+    <progress variant="warning" value="60">
+    This is example progress content.
+  </progress>
+  </div>
+  <div x-demo columns="1">
+    <progress variant="error" value="60">
+    This is example progress content.
+  </progress>
+  </div>
+  <div x-demo columns="1">
+    <progress variant="info" value="60">
+    This is example progress content.
+  </progress>
+  </div>
   </section>
 
   <!-- 19. size variants -->
   <section id="progress-size-variants">
   <h2>size variants</h2>
-  <wb-demo columns="3">
-    <wb-progress size="xs" value="60">
-      This is example progress content.
-    </wb-progress>
-    <wb-progress size="sm" value="60">
-      This is example progress content.
-    </wb-progress>
-    <wb-progress size="md" value="60">
-      This is example progress content.
-    </wb-progress>
-    <wb-progress size="lg" value="60">
-      This is example progress content.
-    </wb-progress>
-    <wb-progress size="xl" value="60">
-      This is example progress content.
-    </wb-progress>
-  </wb-demo>
+  <div x-demo columns="1">
+    <progress size="xs" value="60">
+    This is example progress content.
+  </progress>
+  </div>
+  <div x-demo columns="1">
+    <progress size="sm" value="60">
+    This is example progress content.
+  </progress>
+  </div>
+  <div x-demo columns="1">
+    <progress size="md" value="60">
+    This is example progress content.
+  </progress>
+  </div>
+  <div x-demo columns="1">
+    <progress size="lg" value="60">
+    This is example progress content.
+  </progress>
+  </div>
+  <div x-demo columns="1">
+    <progress size="xl" value="60">
+    This is example progress content.
+  </progress>
+  </div>
   </section>
 
   <!-- 20. Toggles -->
   <section id="progress-toggles">
   <h2>Toggles</h2>
-  <wb-demo columns="1">
-    <wb-progress show-value value="60">
-      This is example progress content.
-    </wb-progress>
-    <wb-progress striped value="60">
-      This is example progress content.
-    </wb-progress>
-    <wb-progress indeterminate value="60">
-      This is example progress content.
-    </wb-progress>
-  </wb-demo>
+  <div x-demo columns="1">
+    <progress show-value value="60">
+    This is example progress content.
+  </progress>
+  </div>
+  <div x-demo columns="1">
+    <progress striped value="60">
+    This is example progress content.
+  </progress>
+  </div>
+  <div x-demo columns="1">
+    <progress indeterminate value="60">
+    This is example progress content.
+  </progress>
+  </div>
   </section>
 
   <!-- 21. ⭐ Rating -->
   <section id="rating-rating">
   <h2>⭐ Rating</h2>
-  <wb-demo columns="3">
-    <wb-rating value="0">
-      This is example rating content.
-    </wb-rating>
-    <wb-rating value="3">
-      This is example rating content.
-    </wb-rating>
-    <wb-rating value="5">
-      This is example rating content.
-    </wb-rating>
-    <wb-rating value="3.5" half>
-      This is example rating content.
-    </wb-rating>
-    <wb-rating value="4" readonly>
-      This is example rating content.
-    </wb-rating>
-  </wb-demo>
+  <div x-demo columns="1">
+    <span x-rating value="0">
+    This is example rating content.
+  </span>
+  </div>
+  <div x-demo columns="1">
+    <span x-rating value="3">
+    This is example rating content.
+  </span>
+  </div>
+  <div x-demo columns="1">
+    <span x-rating value="5">
+    This is example rating content.
+  </span>
+  </div>
+  <div x-demo columns="1">
+    <span x-rating value="3.5" half>
+    This is example rating content.
+  </span>
+  </div>
+  <div x-demo columns="1">
+    <span x-rating value="4" readonly>
+    This is example rating content.
+  </span>
+  </div>
   </section>
 
   <!-- 22. size variants -->
   <section id="rating-size-variants">
   <h2>size variants</h2>
-  <wb-demo columns="2">
-    <wb-rating size="sm" value="3">
-      This is example rating content.
-    </wb-rating>
-    <wb-rating size="md" value="3">
-      This is example rating content.
-    </wb-rating>
-    <wb-rating size="lg" value="3">
-      This is example rating content.
-    </wb-rating>
-  </wb-demo>
+  <div x-demo columns="1">
+    <span x-rating size="sm" value="3">
+    This is example rating content.
+  </span>
+  </div>
+  <div x-demo columns="1">
+    <span x-rating size="md" value="3">
+    This is example rating content.
+  </span>
+  </div>
+  <div x-demo columns="1">
+    <span x-rating size="lg" value="3">
+    This is example rating content.
+  </span>
+  </div>
   </section>
 
   <!-- 23. Toggles -->
   <section id="rating-toggles">
   <h2>Toggles</h2>
-  <wb-demo columns="1">
-    <wb-rating readonly value="3">
-      This is example rating content.
-    </wb-rating>
-    <wb-rating disabled value="3">
-      This is example rating content.
-    </wb-rating>
-    <wb-rating half value="3">
-      This is example rating content.
-    </wb-rating>
-  </wb-demo>
+  <div x-demo columns="1">
+    <span x-rating readonly value="3">
+    This is example rating content.
+  </span>
+  </div>
+  <div x-demo columns="1">
+    <span x-rating disabled value="3">
+    This is example rating content.
+  </span>
+  </div>
+  <div x-demo columns="1">
+    <span x-rating half value="3">
+    This is example rating content.
+  </span>
+  </div>
   </section>
 
   <!-- 24. ▓ Skeleton -->
   <section id="skeleton-skeleton">
   <h2>▓ Skeleton</h2>
-  <wb-demo columns="3">
-    <wb-skeleton variant="text">
-      This is example skeleton content.
-    </wb-skeleton>
-    <wb-skeleton variant="text" lines="3">
-      This is example skeleton content.
-    </wb-skeleton>
-    <wb-skeleton variant="circle">
-      This is example skeleton content.
-    </wb-skeleton>
-    <wb-skeleton variant="rect" height="150px">
-      This is example skeleton content.
-    </wb-skeleton>
-    <wb-skeleton variant="card">
-      This is example skeleton content.
-    </wb-skeleton>
-  </wb-demo>
+  <div x-demo columns="1">
+    <div x-skeleton variant="text">
+    This is example skeleton content.
+  </div>
+  </div>
+  <div x-demo columns="1">
+    <div x-skeleton variant="text" lines="3">
+    This is example skeleton content.
+  </div>
+  </div>
+  <div x-demo columns="1">
+    <div x-skeleton variant="circle">
+    This is example skeleton content.
+  </div>
+  </div>
+  <div x-demo columns="1">
+    <div x-skeleton variant="rect" height="150px">
+    This is example skeleton content.
+  </div>
+  </div>
+  <div x-demo columns="1">
+    <div x-skeleton variant="card">
+    This is example skeleton content.
+  </div>
+  </div>
   </section>
 
   <!-- 25. Variants -->
   <section id="skeleton-variant-variants">
   <h2>Variants</h2>
-  <wb-demo columns="2">
-    <wb-skeleton variant="rect">
+  <div x-demo columns="2">
+    <div x-skeleton variant="rect">
       This is example skeleton content.
-    </wb-skeleton>
-  </wb-demo>
+    </div>
+  </div>
   </section>
 
   <!-- 26. ⏳ Spinner -->
   <section id="spinner-spinner">
   <h2>⏳ Spinner</h2>
-  <wb-demo columns="3">
-    <wb-spinner>
-      This is example spinner content.
-    </wb-spinner>
-    <wb-spinner size="sm">
-      This is example spinner content.
-    </wb-spinner>
-    <wb-spinner size="lg">
-      This is example spinner content.
-    </wb-spinner>
-    <wb-spinner variant="success">
-      This is example spinner content.
-    </wb-spinner>
-    <wb-spinner speed="fast">
-      This is example spinner content.
-    </wb-spinner>
-  </wb-demo>
+  <div x-demo columns="1">
+    <span x-spinner>
+    This is example spinner content.
+  </span>
+  </div>
+  <div x-demo columns="1">
+    <span x-spinner size="sm">
+    This is example spinner content.
+  </span>
+  </div>
+  <div x-demo columns="1">
+    <span x-spinner size="lg">
+    This is example spinner content.
+  </span>
+  </div>
+  <div x-demo columns="1">
+    <span x-spinner variant="success">
+    This is example spinner content.
+  </span>
+  </div>
+  <div x-demo columns="1">
+    <span x-spinner speed="fast">
+    This is example spinner content.
+  </span>
+  </div>
   </section>
 
   <!-- 27. size variants -->
   <section id="spinner-size-variants">
   <h2>size variants</h2>
-  <wb-demo columns="3">
-    <wb-spinner size="xs">
-      This is example spinner content.
-    </wb-spinner>
-    <wb-spinner size="md">
-      This is example spinner content.
-    </wb-spinner>
-    <wb-spinner size="xl">
-      This is example spinner content.
-    </wb-spinner>
-  </wb-demo>
+  <div x-demo columns="1">
+    <span x-spinner size="xs">
+    This is example spinner content.
+  </span>
+  </div>
+  <div x-demo columns="1">
+    <span x-spinner size="md">
+    This is example spinner content.
+  </span>
+  </div>
+  <div x-demo columns="1">
+    <span x-spinner size="xl">
+    This is example spinner content.
+  </span>
+  </div>
   </section>
 
   <!-- 28. Variants -->
   <section id="spinner-variant-variants">
   <h2>Variants</h2>
-  <wb-demo columns="3">
-    <wb-spinner variant="default">
-      This is example spinner content.
-    </wb-spinner>
-    <wb-spinner variant="primary">
-      This is example spinner content.
-    </wb-spinner>
-    <wb-spinner variant="warning">
-      This is example spinner content.
-    </wb-spinner>
-    <wb-spinner variant="error">
-      This is example spinner content.
-    </wb-spinner>
-  </wb-demo>
+  <div x-demo columns="1">
+    <span x-spinner variant="default">
+    This is example spinner content.
+  </span>
+  </div>
+  <div x-demo columns="1">
+    <span x-spinner variant="primary">
+    This is example spinner content.
+  </span>
+  </div>
+  <div x-demo columns="1">
+    <span x-spinner variant="warning">
+    This is example spinner content.
+  </span>
+  </div>
+  <div x-demo columns="1">
+    <span x-spinner variant="error">
+    This is example spinner content.
+  </span>
+  </div>
   </section>
 
   <!-- 29. speed variants -->
   <section id="spinner-speed-variants">
   <h2>speed variants</h2>
-  <wb-demo columns="2">
-    <wb-spinner speed="slow">
-      This is example spinner content.
-    </wb-spinner>
-    <wb-spinner speed="medium">
-      This is example spinner content.
-    </wb-spinner>
-  </wb-demo>
+  <div x-demo columns="1">
+    <span x-spinner speed="slow">
+    This is example spinner content.
+  </span>
+  </div>
+  <div x-demo columns="1">
+    <span x-spinner speed="medium">
+    This is example spinner content.
+  </span>
+  </div>
   </section>
 
   <!-- 30. 🔔 Toast -->
   <section id="toast-toast">
   <h2>🔔 Toast</h2>
-  <wb-demo columns="3">
-    <wb-toast message="Test">
-      This is example toast content.
-    </wb-toast>
-    <wb-toast message="Test" variant="info">
-      This is example toast content.
-    </wb-toast>
-    <wb-toast message="Test" variant="success">
-      This is example toast content.
-    </wb-toast>
-    <wb-toast message="Test" variant="warning">
-      This is example toast content.
-    </wb-toast>
-    <wb-toast message="Test" variant="error">
-      This is example toast content.
-    </wb-toast>
-    <wb-toast message="Test" title="Notice">
-      This is example toast content.
-    </wb-toast>
-    <wb-toast message="Test" duration="5000">
-      This is example toast content.
-    </wb-toast>
-    <wb-toast message="Test" position="bottom-right">
-      This is example toast content.
-    </wb-toast>
-    <wb-toast message="Test" action="Undo">
-      This is example toast content.
-    </wb-toast>
-  </wb-demo>
+  <div x-demo columns="1">
+    <div x-toast message="Test">
+    This is example toast content.
+  </div>
+  </div>
+  <div x-demo columns="1">
+    <div x-toast message="Test" variant="info">
+    This is example toast content.
+  </div>
+  </div>
+  <div x-demo columns="1">
+    <div x-toast message="Test" variant="success">
+    This is example toast content.
+  </div>
+  </div>
+  <div x-demo columns="1">
+    <div x-toast message="Test" variant="warning">
+    This is example toast content.
+  </div>
+  </div>
+  <div x-demo columns="1">
+    <div x-toast message="Test" variant="error">
+    This is example toast content.
+  </div>
+  </div>
+  <div x-demo columns="1">
+    <div x-toast message="Test" title="Notice">
+    This is example toast content.
+  </div>
+  </div>
+  <div x-demo columns="1">
+    <div x-toast message="Test" duration="5000">
+    This is example toast content.
+  </div>
+  </div>
+  <div x-demo columns="1">
+    <div x-toast message="Test" position="bottom-right">
+    This is example toast content.
+  </div>
+  </div>
+  <div x-demo columns="1">
+    <div x-toast message="Test" action="Undo">
+    This is example toast content.
+  </div>
+  </div>
   </section>
 
   <!-- 31. Variants -->
   <section id="toast-variant-variants">
   <h2>Variants</h2>
-  <wb-demo columns="2">
-    <wb-toast variant="info" message="Sample message">
-      This is example toast content.
-    </wb-toast>
-    <wb-toast variant="success" message="Sample message">
-      This is example toast content.
-    </wb-toast>
-    <wb-toast variant="warning" message="Sample message">
-      This is example toast content.
-    </wb-toast>
-    <wb-toast variant="error" message="Sample message">
-      This is example toast content.
-    </wb-toast>
-  </wb-demo>
+  <div x-demo columns="1">
+    <div x-toast variant="info" message="Sample message">
+    This is example toast content.
+  </div>
+  </div>
+  <div x-demo columns="1">
+    <div x-toast variant="success" message="Sample message">
+    This is example toast content.
+  </div>
+  </div>
+  <div x-demo columns="1">
+    <div x-toast variant="warning" message="Sample message">
+    This is example toast content.
+  </div>
+  </div>
+  <div x-demo columns="1">
+    <div x-toast variant="error" message="Sample message">
+    This is example toast content.
+  </div>
+  </div>
   </section>
 
   <!-- 32. position variants -->
   <section id="toast-position-variants">
   <h2>position variants</h2>
-  <wb-demo columns="3">
-    <wb-toast position="top-right" message="Sample message">
-      This is example toast content.
-    </wb-toast>
-    <wb-toast position="top-left" message="Sample message">
-      This is example toast content.
-    </wb-toast>
-    <wb-toast position="top-center" message="Sample message">
-      This is example toast content.
-    </wb-toast>
-    <wb-toast position="bottom-right" message="Sample message">
-      This is example toast content.
-    </wb-toast>
-    <wb-toast position="bottom-left" message="Sample message">
-      This is example toast content.
-    </wb-toast>
-    <wb-toast position="bottom-center" message="Sample message">
-      This is example toast content.
-    </wb-toast>
-  </wb-demo>
+  <div x-demo columns="1">
+    <div x-toast position="top-right" message="Sample message">
+    This is example toast content.
+  </div>
+  </div>
+  <div x-demo columns="1">
+    <div x-toast position="top-left" message="Sample message">
+    This is example toast content.
+  </div>
+  </div>
+  <div x-demo columns="1">
+    <div x-toast position="top-center" message="Sample message">
+    This is example toast content.
+  </div>
+  </div>
+  <div x-demo columns="1">
+    <div x-toast position="bottom-right" message="Sample message">
+    This is example toast content.
+  </div>
+  </div>
+  <div x-demo columns="1">
+    <div x-toast position="bottom-left" message="Sample message">
+    This is example toast content.
+  </div>
+  </div>
+  <div x-demo columns="1">
+    <div x-toast position="bottom-center" message="Sample message">
+    This is example toast content.
+  </div>
+  </div>
   </section>
 
   <!-- 33. 💬 Tooltip -->
   <section id="tooltip-tooltip">
   <h2>💬 Tooltip</h2>
-  <wb-demo columns="3">
-    <wb-tooltip content="Tooltip text">
-      This is example tooltip content.
-    </wb-tooltip>
-    <wb-tooltip content="Tooltip text" position="top">
-      This is example tooltip content.
-    </wb-tooltip>
-    <wb-tooltip content="Tooltip text" position="bottom">
-      This is example tooltip content.
-    </wb-tooltip>
-    <wb-tooltip content="Tooltip text" position="left">
-      This is example tooltip content.
-    </wb-tooltip>
-    <wb-tooltip content="Tooltip text" position="right">
-      This is example tooltip content.
-    </wb-tooltip>
-    <wb-tooltip content="Tooltip text" variant="light">
-      This is example tooltip content.
-    </wb-tooltip>
-    <wb-tooltip content="Tooltip text" variant="primary">
-      This is example tooltip content.
-    </wb-tooltip>
-    <wb-tooltip content="Tooltip text">
-      This is example tooltip content.
-    </wb-tooltip>
-    <wb-tooltip content="Tooltip text" delay="500">
-      This is example tooltip content.
-    </wb-tooltip>
-  </wb-demo>
+  <div x-demo columns="1">
+    <span x-tooltip content="Tooltip text">
+    This is example tooltip content.
+  </span>
+  </div>
+  <div x-demo columns="1">
+    <span x-tooltip content="Tooltip text" position="top">
+    This is example tooltip content.
+  </span>
+  </div>
+  <div x-demo columns="1">
+    <span x-tooltip content="Tooltip text" position="bottom">
+    This is example tooltip content.
+  </span>
+  </div>
+  <div x-demo columns="1">
+    <span x-tooltip content="Tooltip text" position="left">
+    This is example tooltip content.
+  </span>
+  </div>
+  <div x-demo columns="1">
+    <span x-tooltip content="Tooltip text" position="right">
+    This is example tooltip content.
+  </span>
+  </div>
+  <div x-demo columns="1">
+    <span x-tooltip content="Tooltip text" variant="light">
+    This is example tooltip content.
+  </span>
+  </div>
+  <div x-demo columns="1">
+    <span x-tooltip content="Tooltip text" variant="primary">
+    This is example tooltip content.
+  </span>
+  </div>
+  <div x-demo columns="1">
+    <span x-tooltip content="Tooltip text">
+    This is example tooltip content.
+  </span>
+  </div>
+  <div x-demo columns="1">
+    <span x-tooltip content="Tooltip text" delay="500">
+    This is example tooltip content.
+  </span>
+  </div>
   </section>
 
   <!-- 34. position variants -->
   <section id="tooltip-position-variants">
   <h2>position variants</h2>
-  <wb-demo columns="3">
-    <wb-tooltip position="top" content="Sample content">
-      This is example tooltip content.
-    </wb-tooltip>
-    <wb-tooltip position="bottom" content="Sample content">
-      This is example tooltip content.
-    </wb-tooltip>
-    <wb-tooltip position="left" content="Sample content">
-      This is example tooltip content.
-    </wb-tooltip>
-    <wb-tooltip position="right" content="Sample content">
-      This is example tooltip content.
-    </wb-tooltip>
-    <wb-tooltip position="top-start" content="Sample content">
-      This is example tooltip content.
-    </wb-tooltip>
-    <wb-tooltip position="top-end" content="Sample content">
-      This is example tooltip content.
-    </wb-tooltip>
-    <wb-tooltip position="bottom-start" content="Sample content">
-      This is example tooltip content.
-    </wb-tooltip>
-    <wb-tooltip position="bottom-end" content="Sample content">
-      This is example tooltip content.
-    </wb-tooltip>
-  </wb-demo>
+  <div x-demo columns="1">
+    <span x-tooltip position="top" content="Sample content">
+    This is example tooltip content.
+  </span>
+  </div>
+  <div x-demo columns="1">
+    <span x-tooltip position="bottom" content="Sample content">
+    This is example tooltip content.
+  </span>
+  </div>
+  <div x-demo columns="1">
+    <span x-tooltip position="left" content="Sample content">
+    This is example tooltip content.
+  </span>
+  </div>
+  <div x-demo columns="1">
+    <span x-tooltip position="right" content="Sample content">
+    This is example tooltip content.
+  </span>
+  </div>
+  <div x-demo columns="1">
+    <span x-tooltip position="top-start" content="Sample content">
+    This is example tooltip content.
+  </span>
+  </div>
+  <div x-demo columns="1">
+    <span x-tooltip position="top-end" content="Sample content">
+    This is example tooltip content.
+  </span>
+  </div>
+  <div x-demo columns="1">
+    <span x-tooltip position="bottom-start" content="Sample content">
+    This is example tooltip content.
+  </span>
+  </div>
+  <div x-demo columns="1">
+    <span x-tooltip position="bottom-end" content="Sample content">
+    This is example tooltip content.
+  </span>
+  </div>
   </section>
 
   <!-- 35. Variants -->
   <section id="tooltip-variant-variants">
   <h2>Variants</h2>
-  <wb-demo columns="2">
-    <wb-tooltip variant="default" content="Sample content">
-      This is example tooltip content.
-    </wb-tooltip>
-    <wb-tooltip variant="dark" content="Sample content">
-      This is example tooltip content.
-    </wb-tooltip>
-    <wb-tooltip variant="light" content="Sample content">
-      This is example tooltip content.
-    </wb-tooltip>
-    <wb-tooltip variant="primary" content="Sample content">
-      This is example tooltip content.
-    </wb-tooltip>
-  </wb-demo>
+  <div x-demo columns="1">
+    <span x-tooltip variant="default" content="Sample content">
+    This is example tooltip content.
+  </span>
+  </div>
+  <div x-demo columns="1">
+    <span x-tooltip variant="dark" content="Sample content">
+    This is example tooltip content.
+  </span>
+  </div>
+  <div x-demo columns="1">
+    <span x-tooltip variant="light" content="Sample content">
+    This is example tooltip content.
+  </span>
+  </div>
+  <div x-demo columns="1">
+    <span x-tooltip variant="primary" content="Sample content">
+    This is example tooltip content.
+  </span>
+  </div>
   </section>
 
   <!-- 36. trigger variants -->
   <section id="tooltip-trigger-variants">
   <h2>trigger variants</h2>
-  <wb-demo columns="2">
-    <wb-tooltip trigger="hover" content="Sample content">
-      This is example tooltip content.
-    </wb-tooltip>
-    <wb-tooltip trigger="focus" content="Sample content">
-      This is example tooltip content.
-    </wb-tooltip>
-    <wb-tooltip trigger="click" content="Sample content">
-      This is example tooltip content.
-    </wb-tooltip>
-    <wb-tooltip trigger="hover-focus" content="Sample content">
-      This is example tooltip content.
-    </wb-tooltip>
-  </wb-demo>
+  <div x-demo columns="1">
+    <span x-tooltip trigger="hover" content="Sample content">
+    This is example tooltip content.
+  </span>
+  </div>
+  <div x-demo columns="1">
+    <span x-tooltip trigger="focus" content="Sample content">
+    This is example tooltip content.
+  </span>
+  </div>
+  <div x-demo columns="1">
+    <span x-tooltip trigger="click" content="Sample content">
+    This is example tooltip content.
+  </span>
+  </div>
+  <div x-demo columns="1">
+    <span x-tooltip trigger="hover-focus" content="Sample content">
+    This is example tooltip content.
+  </span>
+  </div>
   </section>
 
   <!-- 37. Toggles -->
   <section id="tooltip-toggles">
   <h2>Toggles</h2>
-  <wb-demo columns="1">
-    <wb-tooltip interactive content="Sample content">
+  <div x-demo columns="1">
+    <span x-tooltip interactive content="Sample content">
       This is example tooltip content.
-    </wb-tooltip>
-  </wb-demo>
+    </span>
+  </div>
   </section>
 
   <!-- 38. 🧩 x-tooltip — on a real trigger element -->
   <section id="x-tooltip-on-a-real-trigger-element">
   <h2>🧩 x-tooltip — on a real trigger element</h2>
   <p>The tooltip <em>behavior</em> attaches via <code>x-tooltip</code> to a real trigger element (button, span, …) — not a standalone custom tag.</p>
-  <wb-demo columns="4">
-    <wb-button id="btn-top" x-tooltip="Tooltip text" position="top">Top</wb-button>
-    <wb-button id="btn-bottom" x-tooltip="Tooltip text" position="bottom">Bottom</wb-button>
-    <wb-button id="btn-left" x-tooltip="Tooltip text" position="left">Left</wb-button>
-    <wb-button id="btn-right" x-tooltip="Tooltip text" position="right">Right</wb-button>
-  </wb-demo>
+  <div x-demo columns="1">
+    <button id="btn-top" x-tooltip="Tooltip text" position="top">Top</button>
+  </div>
+  <div x-demo columns="1">
+    <button id="btn-bottom" x-tooltip="Tooltip text" position="bottom">Bottom</button>
+  </div>
+  <div x-demo columns="1">
+    <button id="btn-left" x-tooltip="Tooltip text" position="left">Left</button>
+  </div>
+  <div x-demo columns="1">
+    <button id="btn-right" x-tooltip="Tooltip text" position="right">Right</button>
+  </div>
   </section>
 
   <!-- 39. 🧩 x-progressbar — attribute-based progress bar -->
   <section id="x-progressbar-attribute-based-progress-bar">
   <h2>🧩 x-progressbar — attribute-based progress bar</h2>
-  <p>Apply directly to any element, no custom tag required — an alternative to <code>&lt;wb-progress&gt;</code> above.</p>
-  <wb-demo>
+  <p>Apply directly to any element, no custom tag required — an alternative to <code>&lt;x-progress&gt;</code> above.</p>
+  <div x-demo>
     <div x-progressbar value="40" style="width: 300px; height: 24px;"></div>
-  </wb-demo>
-  <wb-demo>
+  </div>
+  <div x-demo>
     <div x-progressbar value="80" variant="success" style="width: 300px; height: 24px;"></div>
-  </wb-demo>
+  </div>
   </section>
 
   <!-- 40. 🧩 x-notify — one-off notification -->
   <section id="x-notify-one-off-notification">
   <h2>🧩 x-notify — one-off notification</h2>
-  <wb-demo>
-    <button x-notify message="New notification received" class="wb-button">Show Notify</button>
-  </wb-demo>
+  <div x-demo>
+    <button x-notify message="New notification received" class="x-button">Show Notify</button>
+  </div>
   </section>
 
   <script type="module">
@@ -947,6 +1229,12 @@
     await WB.init({ autoInject: true });
     await WB.scan(document.body, { eager: true });
     console.log('Feedback & Status initialized');
+    // #451/#628: this page was missed when __WB_DEMO_INITIALIZED__ sync
+    // markers were batch-added to the other 7 demos/site/*.html pages in
+    // 5e57bc0 -- without it, the regression test's waitForFunction() never
+    // resolves and always times out (30s), not the "intermittent" failure
+    // the rest of this test suite exhibited.
+    window.__WB_DEMO_INITIALIZED__ = true;
   </script>
 </body>
 

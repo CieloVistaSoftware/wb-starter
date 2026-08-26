@@ -28,48 +28,48 @@ test.describe('Portfolio Card - Business Card (integration)', () => {
     });
     
     const card = page.locator('#test-portfolio');
-    await expect(card).toHaveClass(/wb-card/);
-    await expect(card).toHaveClass(/wb-card--portfolio/);
+    await expect(card).toHaveClass(/x-card/);
+    await expect(card).toHaveClass(/x-card--portfolio/);
     
     // Name
-    const name = card.locator('.wb-card__portfolio-name');
+    const name = card.locator('.x-card__portfolio-name');
     await expect(name).toHaveText('John Doe');
     
     // Title
-    const title = card.locator('.wb-card__portfolio-title');
+    const title = card.locator('.x-card__portfolio-title');
     await expect(title).toHaveText('Senior Developer');
     
     // Company
-    const company = card.locator('.wb-card__portfolio-company');
+    const company = card.locator('.x-card__portfolio-company');
     await expect(company).toHaveText('Acme Corp');
     
     // Location
-    const location = card.locator('.wb-card__portfolio-location');
+    const location = card.locator('.x-card__portfolio-location');
     await expect(location).toContainText('San Francisco, CA');
     
     // Bio
-    const bio = card.locator('.wb-card__portfolio-bio');
+    const bio = card.locator('.x-card__portfolio-bio');
     await expect(bio).toHaveText('Passionate developer with 10+ years experience.');
     
     // Email link
-    const email = card.locator('.wb-card__portfolio-email');
+    const email = card.locator('.x-card__portfolio-email');
     await expect(email).toContainText('john@example.com');
     await expect(email).toHaveAttribute('href', 'mailto:john@example.com');
     
     // Phone link
-    const phone = card.locator('.wb-card__portfolio-phone');
+    const phone = card.locator('.x-card__portfolio-phone');
     await expect(phone).toContainText('+1-555-1234');
     
     // Website link
-    const website = card.locator('.wb-card__portfolio-website');
+    const website = card.locator('.x-card__portfolio-website');
     await expect(website).toContainText('https://johndoe.com');
     
     // Avatar
-    const avatar = card.locator('.wb-card__portfolio-avatar');
+    const avatar = card.locator('.x-card__portfolio-avatar');
     await expect(avatar).toBeVisible();
     
     // Social links
-    const social = card.locator('.wb-card__portfolio-social');
+    const social = card.locator('.x-card__portfolio-social');
     await expect(social).toBeVisible();
     await expect(social.locator('a')).toHaveCount(3); // linkedin, twitter, github
   });
@@ -109,7 +109,7 @@ test.describe('Portfolio Card - Business Card (integration)', () => {
       (window as any).WB.scan();
     });
     
-    const cover = page.locator('#test-portfolio-cover .wb-card__portfolio-cover');
+    const cover = page.locator('#test-portfolio-cover .x-card__portfolio-cover');
     await expect(cover).toBeVisible();
   });
 });

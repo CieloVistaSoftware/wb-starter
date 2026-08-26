@@ -77,12 +77,12 @@
 
 /* Doubled selector (.x-pre-wrapper .x-pre__copy) raises specificity to 0,2,0.
  * Both are real <button> elements, so WB's native-behavior auto-injection
- * enhances them with a plain `.wb-button` class -- button.js injects that
+ * enhances them with a plain `.x-button` class -- button.js injects that
  * rule into <head> at runtime, giving it equal (0,1,0) specificity but LATER
  * source position, so a single-class `.x-pre__copy`/`.x-pre__toggle` was
- * being overridden by wb-button's default (md) padding/font-size. Same
+ * being overridden by x-button's default (md) padding/font-size. Same
  * specificity war button.css documents fixing for its own size modifiers
- * (#button-sizes) -- confirmed live: computed font-size was 1rem (wb-button's
+ * (#button-sizes) -- confirmed live: computed font-size was 1rem (x-button's
  * default) regardless of what was set here, until qualified like this. */
 .x-pre-wrapper .x-pre__copy {
   padding: 0.1rem 0.25rem;

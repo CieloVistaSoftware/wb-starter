@@ -9,7 +9,7 @@ button. Implemented by `chip()` in
 | Property | Value |
 |----------|-------|
 | Attribute | `x-chip` |
-| Custom Tag | `<div x-chip>` |
+| Attribute form | `<div x-chip>` |
 | Behavior function | `chip()` — `src/wb-viewmodels/feedback.js` |
 | Semantic element | `<span role="status">` |
 | Root CSS Class | `<div x-chip>` |
@@ -35,40 +35,40 @@ attributes, so any hand-written inner content is discarded in favor of `label`.
 
 ### Basic chip
 
-<wb-demo>
+<div x-demo>
 <span x-chip label="Tag"></span>
-</wb-demo>
+</div>
 
 ### Variant + size
 
-<wb-demo>
+<div x-demo>
 <span x-chip label="Primary" variant="primary" size="lg"></span>
-</wb-demo>
+</div>
 
 ### Dismissible
 
-<wb-demo>
+<div x-demo>
 <span x-chip label="Removable" variant="info" dismissible></span>
-</wb-demo>
+</div>
 
 ### Icon + outlined
 
-<wb-demo>
+<div x-demo>
 <span x-chip label="Starred" icon="⭐" outlined variant="warning"></span>
-</wb-demo>
+</div>
 
 ## CSS Classes
 
 | Class | Applied when | Description |
 |-------|--------------|-------------|
 | `<div x-chip>` | host isn't already a `<div x-chip>` tag | Base pill shape, padding, background |
-| `.wb-chip--{variant}` | `variant` is not `default` | `primary`/`success`/`warning`/`error`/`info` background+text color |
-| `.wb-chip--{sm,lg}` | `size` is not `md` | Padding/font-size/min-height scale |
-| `.wb-chip--outlined` | `outlined` | Transparent background, colored border |
-| `.wb-chip--disabled` | `disabled` | 50% opacity, `pointer-events: none`, and sets `aria-disabled="true"` |
-| `.wb-chip__icon` | `icon` set | Leading icon wrapper |
-| `.wb-chip__label` | Always | Wraps the label text |
-| `.wb-chip__remove` | `dismissible` and not `disabled` | The × remove button (a `<button>`) |
+| `.x-chip--{variant}` | `variant` is not `default` | `primary`/`success`/`warning`/`error`/`info` background+text color |
+| `.x-chip--{sm,lg}` | `size` is not `md` | Padding/font-size/min-height scale |
+| `.x-chip--outlined` | `outlined` | Transparent background, colored border |
+| `.x-chip--disabled` | `disabled` | 50% opacity, `pointer-events: none`, and sets `aria-disabled="true"` |
+| `.x-chip__icon` | `icon` set | Leading icon wrapper |
+| `.x-chip__label` | Always | Wraps the label text |
+| `.x-chip__remove` | `dismissible` and not `disabled` | The × remove button (a `<button>`) |
 
 ## Events
 

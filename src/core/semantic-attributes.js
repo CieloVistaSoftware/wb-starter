@@ -22,13 +22,13 @@ export const SEMANTIC_PROPERTY_ATTRIBUTES = {
   badge: 'badge',
 };
 
-// Every wb-card* family tag treats `badge` AND `tooltip` as its own component
-// props (composeCard renders `badge` as an internal .wb-card__badge span, and
+// Every x-card* family tag treats `badge` AND `tooltip` as its own component
+// props (composeCard renders `badge` as an internal .x-card__badge span, and
 // wires `tooltip`/`hoverText` straight to the same themed tooltip.js behavior
 // itself -- #283). The bare [badge]/[tooltip] selectors below would
 // otherwise also match these cards, double-applying feedback.js's badge()
-// on the card ROOT element (confirmed: a <wb-card badge="NEW" variant="glass">
-// picked up wb-badge/wb-badge--glass classes and collapsed to fit-content
+// on the card ROOT element (confirmed: a <article badge="NEW" variant="glass">
+// picked up x-badge/x-badge--glass classes and collapsed to fit-content
 // width instead of filling its grid column) -- and for `tooltip`, RACING
 // composeCard()'s own tooltip wiring: this generic auto-inject calls tooltip()
 // with no explicit content, so it falls back to reading the element's
@@ -36,26 +36,26 @@ export const SEMANTIC_PROPERTY_ATTRIBUTES = {
 // attribute immediately. If that generic injection's dynamic import happened
 // to resolve before card behavior's, composeCard() would then read an
 // already-stripped `title` attribute and silently drop the card's heading
-// (confirmed live: <wb-card title="…" tooltip="…"> intermittently rendered
+// (confirmed live: <article title="…" tooltip="…"> intermittently rendered
 // with no header at all, depending on import timing). Excluded explicitly so
 // card components keep sole ownership of their own `badge`/`tooltip`
 // attributes.
 export const CARD_TAGS = [
-  'wb-card', 'wb-cardbutton', 'wb-carddraggable', 'wb-cardexpandable', 'wb-cardfile',
-  'wb-cardhero', 'wb-cardhorizontal', 'wb-cardimage', 'wb-cardlink', 'wb-card-link',
-  'wb-cardminimizable', 'wb-cardnotification', 'wb-cardoverlay', 'wb-cardportfolio',
-  'wb-cardpricing', 'wb-cardproduct', 'wb-cardprofile', 'wb-cardstats',
-  'wb-cardtestimonial', 'wb-cardvideo',
+  'x-card', 'x-cardbutton', 'x-carddraggable', 'x-cardexpandable', 'x-cardfile',
+  'x-cardhero', 'x-cardhorizontal', 'x-cardimage', 'x-cardlink', 'x-card-link',
+  'x-cardminimizable', 'x-cardnotification', 'x-cardoverlay', 'x-cardportfolio',
+  'x-cardpricing', 'x-cardproduct', 'x-cardprofile', 'x-cardstats',
+  'x-cardtestimonial', 'x-cardvideo',
 ];
-// #625/#626: the tag-based exclusion above only ever covered the wb-card*
+// #625/#626: the tag-based exclusion above only ever covered the x-card*
 // CUSTOM TAGS -- it has no way to recognize a semantic
 // <article x-behavior="card">/<article x-card> (the now-preferred,
 // semantic-HTML-first way to author a card per John's "pull away from our
 // wb tags" directive). Confirmed live: docs/components/cards/card.md's own
 // "Card anatomy" example, rewritten to <article x-behavior="card"
-// badge="LIVE">, picked up wb-badge/wb-badge--live classes on the ROOT
+// badge="LIVE">, picked up x-badge/x-badge--live classes on the ROOT
 // element -- the exact double-application bug this file's own CARD_TAGS
-// comment already documents for the wb-card TAG case, just re-surfaced for
+// comment already documents for the x-card TAG case, just re-surfaced for
 // the attribute-decoration case, which the exclusion never accounted for.
 // Extend the same exclusion pattern to BOTH attribute forms (x-card is now
 // the registered dedicated key, tag-map.js; x-behavior="card" is the

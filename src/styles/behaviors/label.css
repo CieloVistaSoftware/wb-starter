@@ -8,7 +8,7 @@
 /* Groups a generated <label> with its control as one atomic inline unit —
    without this, a bare pair of siblings can wrap between the label and the
    control in a flowing layout, stranding the label alone on its own line. */
-.wb-label-group {
+.x-label-group {
   display: inline-flex;
   align-items: center;
   gap: 1rem;
@@ -21,21 +21,21 @@
    horizontal room (confirmed live on demos/playground.html's form
    example). Safe for the OTHER usage too (label.js's generated
    label-beside-its-control pattern): that label is always a flex item
-   inside .wb-label-group (inline-flex), and a flex item's own display
+   inside .x-label-group (inline-flex), and a flex item's own display
    value doesn't affect its position — the flex container's layout wins
    regardless. */
-.wb-label {
+.x-label {
   display: block;
   color: var(--text-primary);
   font-size: var(--text-sm);
 }
 
-.wb-label--required::after {
+.x-label--required::after {
   content: ' *';
   color: var(--danger-color);
 }
 
-.wb-label--optional::after {
+.x-label--optional::after {
   content: ' (optional)';
   color: var(--text-tertiary);
   font-weight: normal;

@@ -1,6 +1,6 @@
 // Standalone help behavior extracted from enhancements.js
 export function help(element, options = {}) {
-  element.classList.add('wb-help');
+  element.classList.add('x-help');
   element.setAttribute('role', 'note');
-  return () => element.classList.remove('wb-help');
+  return () => element.classList.remove('x-help');
 }

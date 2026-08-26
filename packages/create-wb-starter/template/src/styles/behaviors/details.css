@@ -10,12 +10,12 @@
 /* ============================================
    DETAILS - Single disclosure widget
    ============================================ */
-.wb-details {
+.x-details {
   /* Base styles provided by theme, not hardcoded here */
   display: block;
 }
 
-.wb-details__summary {
+.x-details__summary {
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -25,19 +25,19 @@
 }
 
 /* Remove default marker in different browsers */
-.wb-details__summary::-webkit-details-marker,
-.wb-details__summary::marker {
+.x-details__summary::-webkit-details-marker,
+.x-details__summary::marker {
   display: none;
 }
 
-.wb-details__icon {
+.x-details__icon {
   transition: transform 0.2s ease;
   display: inline-block;
 }
 
 /* Use class-based toggle for icon rotation to support JS-less fallback if needed, 
    but primarily driven by [open] attribute */
-.wb-details[open] .wb-details__icon {
+.x-details[open] .x-details__icon {
   transform: rotate(180deg);
 }
 
@@ -45,7 +45,7 @@
    ANIMATION (optional)
    ============================================ */
 @media (prefers-reduced-motion: no-preference) {
-  .wb-details[open] .wb-details__content {
+  .x-details[open] .x-details__content {
     animation: detailsOpen 0.2s ease;
   }
   

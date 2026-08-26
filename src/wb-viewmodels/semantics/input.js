@@ -6,7 +6,7 @@ import { logError } from '../../core/error-logger.js';
  * Helper Attribute: [x-behavior="input"]
  */
 export function input(element, options = {}) {
-  // #439: <wb-input> is declared as a schema-driven host in
+  // #439: <div x-input> is declared as a schema-driven host in
   // input.schema.json's $view (label, wrapper, icon spans, clear button,
   // the real <input>) -- but that $view is only ever interpreted by
   // schema-builder.js's processElement()/WB.processSchema(), which the
@@ -15,7 +15,7 @@ export function input(element, options = {}) {
   // demos/site/*.html page) never calls processSchema at all -- it only
   // dispatches tag-mapped behavior functions. #367's no-op here assumed
   // the schema "already does everything," true only under the eager
-  // runtime. Under the lazy runtime this left <wb-input> completely
+  // runtime. Under the lazy runtime this left <div x-input> completely
   // unbuilt: no real <input> child at all, just the host tag's raw
   // attribute-dump text content -- confirmed live, nothing to type into.
   // card.js/hero.js/etc. avoid this gap because they build their own DOM
@@ -61,12 +61,12 @@ export function input(element, options = {}) {
     // same mechanism button uses, so the CSS that already exists applies.
     const variant = element.getAttribute('variant') || '';
     const size = element.getAttribute('size') || '';
-    element.classList.add('wb-input');
-    if (variant) element.classList.add(`wb-input--${variant}`);
-    if (size) element.classList.add(`wb-input--${size}`);
+    element.classList.add('x-input');
+    if (variant) element.classList.add(`x-input--${variant}`);
+    if (size) element.classList.add(`x-input--${size}`);
 
     element.innerHTML = '';
-    // NOT .wb-input on the host -- that class is input.css's styling for a
+    // NOT .x-input on the host -- that class is input.css's styling for a
     // plain bare <input> (border/padding/background), meant for the real
     // <input> field below, not this wrapper tag. Adding it here gave the
     // host its own visible border too, stacking a second ring around the
@@ -84,7 +84,7 @@ export function input(element, options = {}) {
     }
 
     const wrapper = document.createElement('div');
-    wrapper.className = 'wb-input__wrapper';
+    wrapper.className = 'x-input__wrapper';
     wrapper.style.cssText = 'position:relative;display:flex;align-items:center;width:100%;';
 
     if (icon && iconPosition === 'start') {
@@ -101,12 +101,12 @@ export function input(element, options = {}) {
     if (disabled) realInput.disabled = true;
     if (readonly) realInput.readOnly = true;
     if (required) realInput.required = true;
-    realInput.classList.add('wb-input__field');
+    realInput.classList.add('x-input__field');
     // Border/radius/padding/background/color already come from input.css's
     // generic bare-<input> rule (line 28) -- setting them again here as
     // inline styles just stacked a second, redundant border on top of it
-    // (and a THIRD from the host <wb-input> tag incorrectly also getting
-    // the .wb-input class below, now removed). Only set what CSS can't:
+    // (and a THIRD from the host <div x-input> tag incorrectly also getting
+    // the .x-input class below, now removed). Only set what CSS can't:
     // flex sizing within the wrapper.
     Object.assign(realInput.style, {
       width: 'auto',
@@ -133,13 +133,13 @@ export function input(element, options = {}) {
 
     if (helper && !error) {
       const helperEl = document.createElement('span');
-      helperEl.className = 'wb-input__helper';
+      helperEl.className = 'x-input__helper';
       helperEl.textContent = helper;
       element.appendChild(helperEl);
     }
     if (error) {
       const errorEl = document.createElement('span');
-      errorEl.className = 'wb-input__error';
+      errorEl.className = 'x-input__error';
       errorEl.textContent = error;
       element.appendChild(errorEl);
     }
@@ -154,14 +154,14 @@ export function input(element, options = {}) {
   // that check races against lazy behavior-module loading (the skip only
   // fires if the OTHER behavior happens to already be registered at scan
   // time) -- confirmed live: <input type="search" x-search> got wrapped by
-  // BOTH search() (search.js) and input(), nesting wb-search__wrapper
-  // around wb-input around another wb-search__wrapper ("concentric
+  // BOTH search() (search.js) and input(), nesting x-search__wrapper
+  // around x-input around another x-search__wrapper ("concentric
   // rings"). Guard here too so it can't happen regardless of load order.
   const RICHER_INPUT_BEHAVIORS = ['search', 'password', 'autocomplete', 'datepicker', 'autosize', 'colorpicker'];
   if (RICHER_INPUT_BEHAVIORS.some(name => element.hasAttribute(`x-${name}`))) {
     return () => {};
   }
-  if (element.closest('.wb-search__wrapper, .wb-password')) {
+  if (element.closest('.x-search__wrapper, .x-password')) {
     return () => {};
   }
 
@@ -172,7 +172,7 @@ export function input(element, options = {}) {
   // than "most specific selector wins" -- a bare <input type="checkbox">
   // matches BOTH 'input[type="checkbox"]' (checkbox()) AND the generic
   // 'input' selector (this function), so without this guard input() runs
-  // second and clobbers the checkbox with .wb-input/.wb-input__field
+  // second and clobbers the checkbox with .x-input/.x-input__field
   // text-field styling (padding, flex:1, border-radius) -- confirmed live: a
   // native checkbox rendered as a wide rounded pill, indistinguishable from
   // a text input, on the Behaviors page checkbox demo.
@@ -225,25 +225,25 @@ export function input(element, options = {}) {
   };
 
   const wrapper = document.createElement('div');
-  // #485: NOT .wb-input -- that class is input.css's border/padding/background
+  // #485: NOT .x-input -- that class is input.css's border/padding/background
   // styling for the real text field itself. Putting it on this wrapper div
   // painted a second concentric border ring around the real <input>'s own
   // border ("two lines" on the Success/Error variant demos). Same bug, same
-  // fix as the <wb-input> custom-tag branch above: the wrapper gets the
-  // purely structural wb-input__wrapper class (no CSS targets it visually)
+  // fix as the <div x-input> custom-tag branch above: the wrapper gets the
+  // purely structural x-input__wrapper class (no CSS targets it visually)
   // and carries only layout via inline styles; border/background stay
   // exclusively on the real input.
-  wrapper.className = 'wb-input__wrapper';
+  wrapper.className = 'x-input__wrapper';
   // Wrapper takes full width to mimic the input's behavior
   wrapper.style.cssText = 'position:relative;display:flex;align-items:center;width:100%;';
   element.parentNode.insertBefore(wrapper, element);
   wrapper.appendChild(element);
-  element.classList.add('wb-input__field');
+  element.classList.add('x-input__field');
   
   // #671: border/borderRadius/background/color were set inline here too, with
   // the same consequence as textarea.js -- inline wins over every stylesheet
-  // rule, so `wb-input--error` and `wb-input--success` were dead on arrival.
-  // input.css already applies all four from theme tokens (both via `.wb-input`
+  // rule, so `x-input--error` and `x-input--success` were dead on arrival.
+  // input.css already applies all four from theme tokens (both via `.x-input`
   // and via the bare-native `input:not(...)` rule that covers an unclassed
   // field), so removing them changes nothing visually except letting the
   // variant classes through.
@@ -269,8 +269,8 @@ export function input(element, options = {}) {
   element.style.padding = paddings[config.size] || paddings.md;
   
   // #485: size/variant modifier classes go on the real input, not the
-  // wrapper -- .wb-input--{size} adds padding/font-size and
-  // .wb-input--{variant} adds border-color, all of which belong to the
+  // wrapper -- .x-input--{size} adds padding/font-size and
+  // .x-input--{variant} adds border-color, all of which belong to the
   // field itself. On the wrapper they padded/colored the structural div,
   // contributing to the doubled-up ring/spacing.
   // #754: this used to skip 'md', so `size="md"` left NO trace on the element
@@ -279,30 +279,30 @@ export function input(element, options = {}) {
   // carrying its own class costs nothing and makes the rendered element say
   // what it is.
   if (config.size) {
-    element.classList.add(`wb-input--${config.size}`);
+    element.classList.add(`x-input--${config.size}`);
   }
 
   // #754: `variant="default"` is a declared enum value that landed nowhere,
   // so the schema's own default was silently unrepresented. Every variant now
   // carries its class; the specific ones below keep their border treatment.
   if (config.variant) {
-    element.classList.add(`wb-input--${config.variant}`);
+    element.classList.add(`x-input--${config.variant}`);
   }
 
   if (config.variant === 'success') {
     element.style.borderColor = 'var(--success-color, #22c55e)';
-    element.classList.add('wb-input--success');
+    element.classList.add('x-input--success');
   } else if (config.variant === 'warning') {
     element.style.borderColor = 'var(--warning-color, #f59e0b)';
-    element.classList.add('wb-input--warning');
+    element.classList.add('x-input--warning');
   } else if (config.variant === 'error') {
     element.style.borderColor = 'var(--danger-color, #ef4444)';
-    element.classList.add('wb-input--error');
+    element.classList.add('x-input--error');
   }
 
   if (config.prefix) {
     const pre = document.createElement('span');
-    pre.className = 'wb-input__prefix';
+    pre.className = 'x-input__prefix';
     pre.style.cssText = 'padding:0 0.5rem;color:var(--text-secondary,#9ca3af);';
     pre.textContent = config.prefix;
     wrapper.insertBefore(pre, element);
@@ -310,7 +310,7 @@ export function input(element, options = {}) {
 
   if (config.suffix) {
     const suf = document.createElement('span');
-    suf.className = 'wb-input__suffix';
+    suf.className = 'x-input__suffix';
     suf.style.cssText = 'padding:0 0.5rem;color:var(--text-secondary,#9ca3af);';
     suf.textContent = config.suffix;
     wrapper.appendChild(suf);
@@ -318,7 +318,7 @@ export function input(element, options = {}) {
 
   if (config.clearable) {
     const clear = document.createElement('button');
-    clear.className = 'wb-input__clear';
+    clear.className = 'x-input__clear';
     clear.type = 'button';
     clear.textContent = '×';
     clear.style.cssText = 'background:none;border:none;cursor:pointer;padding:0 0.5rem;font-size:1.25rem;color:var(--text-secondary,#9ca3af);';
@@ -334,11 +334,11 @@ export function input(element, options = {}) {
     wrapper.parentNode.insertBefore(element, wrapper);
     wrapper.remove();
     element.classList.remove(
-      'wb-input__field',
-      `wb-input--${config.size}`,
-      'wb-input--success',
-      'wb-input--warning',
-      'wb-input--error'
+      'x-input__field',
+      `x-input--${config.size}`,
+      'x-input--success',
+      'x-input--warning',
+      'x-input--error'
     );
   };
 }

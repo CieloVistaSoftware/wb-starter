@@ -47,10 +47,10 @@
     ],
     "assertions": [
       {
-        "description": "Fieldset initializes with wb-fieldset class",
+        "description": "Fieldset initializes with x-fieldset class",
         "selector": "#test-fieldset",
         "checks": {
-          "hasClass": "wb-fieldset"
+          "hasClass": "x-fieldset"
         }
       },
       {
@@ -58,17 +58,17 @@
         "selector": "#test-fieldset legend",
         "action": "click",
         "checks": {
-          "hasClass": "wb-fieldset__legend--collapsible"
+          "hasClass": "x-fieldset__legend--collapsible"
         },
         "when": {
           "collapsible": true
         }
       },
       {
-        "description": "Collapsed state applies wb-fieldset--collapsed class",
+        "description": "Collapsed state applies x-fieldset--collapsed class",
         "selector": "#test-fieldset",
         "checks": {
-          "hasClass": "wb-fieldset--collapsed"
+          "hasClass": "x-fieldset--collapsed"
         },
         "when": {
           "collapsed": true

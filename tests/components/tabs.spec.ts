@@ -25,14 +25,14 @@ async function injectAndScan(page: Page, html: string) {
     container.innerHTML = h;
     
     // Force eager loading
-    const elements = container.querySelectorAll('.wb-ready');
+    const elements = container.querySelectorAll('.x-ready');
     elements.forEach(el => el.setAttribute('', ''));
     
     document.body.appendChild(container);
   }, html);
   
-  await page.evaluate(() => {
-    (window as any).WB.scan(document.getElementById('test-container'));
+  await page.evaluate(async () => {
+    await (window as any).WB.scan(document.getElementById('test-container'));
   });
   
   await page.waitForTimeout(500);
@@ -45,14 +45,14 @@ test.describe('tabs Behavior', () => {
     page.on('pageerror', (err) => errors.push(err.message));
     
     const setupHtml = [
-      "<wb-tabs>Basic tabs content</wb-tabs>",
-      "<wb-tabs variant=\"default\">variant=default</wb-tabs>",
-      "<wb-tabs variant=\"pills\">variant=pills</wb-tabs>",
-      "<wb-tabs variant=\"underline\">variant=underline</wb-tabs>",
-      "<wb-tabs size=\"sm\">size=sm</wb-tabs>",
-      "<wb-tabs size=\"md\">size=md</wb-tabs>",
-      "<wb-tabs size=\"lg\">size=lg</wb-tabs>",
-      "<wb-tabs full-width>with fullWidth</wb-tabs>"
+      "<div x-tabs>Basic tabs content</div>",
+      "<div x-tabs variant=\"default\">variant=default</div>",
+      "<div x-tabs variant=\"pills\">variant=pills</div>",
+      "<div x-tabs variant=\"underline\">variant=underline</div>",
+      "<div x-tabs size=\"sm\">size=sm</div>",
+      "<div x-tabs size=\"md\">size=md</div>",
+      "<div x-tabs size=\"lg\">size=lg</div>",
+      "<div x-tabs full-width>with fullWidth</div>"
     ];
     
     await injectAndScan(page, setupHtml.join('\n'));
@@ -68,10 +68,10 @@ test.describe('tabs Behavior', () => {
   });
 
   test('element is visible after scan', async ({ page }) => {
-    const html = "<wb-tabs>Basic tabs content</wb-tabs>";
+    const html = "<div x-tabs>Basic tabs content</div>";
     await injectAndScan(page, html);
     
-    const el = page.locator('#test-container wb-tabs, #test-container wb-tabs').first();
+    const el = page.locator('#test-container [x-tabs], #test-container [x-tabs]').first();
     const isPresent = await el.count() > 0;
     
     if (isPresent) {
@@ -85,32 +85,32 @@ test.describe('tabs Behavior', () => {
   });
 
   test('matrix combo 1: activeTab=0', async ({ page }) => {
-    await injectAndScan(page, "<wb-tabs activeTab=\"0\">Test</wb-tabs>");
-    const el = page.locator('#test-container wb-tabs, #test-container wb-tabs').first();
+    await injectAndScan(page, "<div x-tabs activeTab=\"0\">Test</div>");
+    const el = page.locator('#test-container [x-tabs], #test-container [x-tabs]').first();
     await expect(el).toBeVisible({ timeout: 5000 });
   });
 
   test('matrix combo 2: activeTab=1', async ({ page }) => {
-    await injectAndScan(page, "<wb-tabs activeTab=\"1\">Test</wb-tabs>");
-    const el = page.locator('#test-container wb-tabs, #test-container wb-tabs').first();
+    await injectAndScan(page, "<div x-tabs activeTab=\"1\">Test</div>");
+    const el = page.locator('#test-container [x-tabs], #test-container [x-tabs]').first();
     await expect(el).toBeVisible({ timeout: 5000 });
   });
 
   test('matrix combo 3: variant=pills', async ({ page }) => {
-    await injectAndScan(page, "<wb-tabs variant=\"pills\">Test</wb-tabs>");
-    const el = page.locator('#test-container wb-tabs, #test-container wb-tabs').first();
+    await injectAndScan(page, "<div x-tabs variant=\"pills\">Test</div>");
+    const el = page.locator('#test-container [x-tabs], #test-container [x-tabs]').first();
     await expect(el).toBeVisible({ timeout: 5000 });
   });
 
   test('matrix combo 4: variant=underline', async ({ page }) => {
-    await injectAndScan(page, "<wb-tabs variant=\"underline\">Test</wb-tabs>");
-    const el = page.locator('#test-container wb-tabs, #test-container wb-tabs').first();
+    await injectAndScan(page, "<div x-tabs variant=\"underline\">Test</div>");
+    const el = page.locator('#test-container [x-tabs], #test-container [x-tabs]').first();
     await expect(el).toBeVisible({ timeout: 5000 });
   });
 
   test('matrix combo 5: fullWidth=true', async ({ page }) => {
-    await injectAndScan(page, "<wb-tabs fullWidth=\"true\">Test</wb-tabs>");
-    const el = page.locator('#test-container wb-tabs, #test-container wb-tabs').first();
+    await injectAndScan(page, "<div x-tabs fullWidth=\"true\">Test</div>");
+    const el = page.locator('#test-container [x-tabs], #test-container [x-tabs]').first();
     await expect(el).toBeVisible({ timeout: 5000 });
   });
 });

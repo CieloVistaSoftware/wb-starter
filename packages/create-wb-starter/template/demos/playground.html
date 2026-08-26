@@ -1,11 +1,17 @@
 <!DOCTYPE html>
 <html lang="en" data-theme="dark">
 <head>
+  <!-- #784: this page is edited constantly and a held copy is indistinguishable
+       from a fix that did not work. The dev server already sends no-store; this
+       covers the browser regardless of what any server says. -->
+  <meta http-equiv="Cache-Control" content="no-store, no-cache, must-revalidate">
+  <meta http-equiv="Pragma" content="no-cache">
+  <meta http-equiv="Expires" content="0">
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Playground — WB</title>
-  <link rel="stylesheet" href="../src/styles/themes.css">
-  <link rel="stylesheet" href="../src/styles/site.css">
+  <link rel="stylesheet" href="../src/styles/themes.css?v=3.0.91">
+  <link rel="stylesheet" href="../src/styles/site.css?v=3.0.91">
   <style>
     body { max-width: 1200px; margin: 0 auto; padding: 1.5rem; background: var(--bg-color);
       color: var(--text-primary); line-height: 1.6; }
@@ -51,11 +57,34 @@
       font-size: 0.9rem; line-height: 1.6; tab-size: 2; white-space: pre; }
     #pg-input:focus { outline: none; }
 
-    #pg-preview { padding: 1.25rem; min-height: 70vh; background: var(--bg-primary); }
+    /* John, screenshot: "Why does playground come up looking like this?" --
+       the default-loaded example uses x-stagelight variant="spotlight",
+       whose ::after overlay is `position: fixed` (stagelight.js, by design
+       -- elsewhere on the site it's meant to cover the whole viewport).
+       #pg-preview renders arbitrary example markup via plain innerHTML (no
+       iframe/shadow-root isolation), so that fixed overlay escaped this
+       small box entirely and painted over the ENTIRE page -- the dark
+       vignette and the example's own "Spotlight effect behind this text"
+       ghosting past the panel's left edge in the screenshot. `contain:
+       layout` makes #pg-preview a containing block for its own
+       position:fixed descendants (a standard, well-supported CSS
+       mechanism), so ANY example that uses fixed positioning -- stagelight,
+       a modal/dialog demo, etc. -- now sizes/positions relative to the
+       preview box instead of the viewport, which is also just the more
+       correct behavior for a component playground generally. */
+    /* #778 -- John: "the search light shit is flashing at start up."
+       `contain: layout` makes this a containing block for fixed descendants,
+       which stops the spotlight overlay from being POSITIONED against the
+       viewport -- but layout containment does not CLIP. Between first paint
+       and the behavior's own stylesheet arriving (style-loader fetches it per
+       behavior), the overlay still painted outside this box: the flash.
+       Adding `paint` clips descendants to the box, so nothing can show
+       outside it at any point, regardless of when CSS lands. */
+    #pg-preview { padding: 1.25rem; min-height: 70vh; background: var(--bg-primary); contain: layout paint; }
     /* Space stacked top-level previewed elements (e.g. the 50 cards) so they
        don't sit flush on top of each other. */
     #pg-preview > * + * { margin-top: 1rem; }
-    #pg-preview > wb-card, #pg-preview > [class*="wb-card"] { display: block; }
+    #pg-preview > x-card, #pg-preview > [class*="x-card"] { display: block; }
     /* Sample form example (SAMPLE, below): a bare <label>Text <input></label>
        with no wrapper div stayed on one line -- <label> is inline by default
        and neither its text node nor an <input>/<select>/<textarea> child
@@ -95,16 +124,19 @@
         grid-template-columns: 1fr;
       }
     }
-    /* Signature hero example set: hero + its companion wb-modal trigger,
+    /* Signature hero example set: hero + its companion x-modal trigger,
        grouped as one visual unit with a small gap between them. */
     .pg-signature-hero { display: flex; flex-direction: column; gap: 0.75rem; }
+    /* Video card example set: an x-youtube embed with its real title as a caption. */
+    .pg-video-card { display: flex; flex-direction: column; gap: 0.5rem; }
+    .pg-video-card figcaption { font-size: 0.9rem; color: var(--text-secondary); line-height: 1.4; }
     /* The preview is arbitrary pasted HTML — let long content wrap, never overflow.
        `anywhere` (not `break-word`) is wrong here: it lets the browser break a
        word mid-character even when the whole word would fit on the next line
        (e.g. a hero title wrapping "config" + "ure" instead of just moving
        "configure" down) — `break-word` only breaks as a last resort. */
     /* :where() keeps this selector's specificity at ZERO despite the #id, so it
-       never outranks a real component class like .wb-card--xs's own max-width —
+       never outranks a real component class like .x-card--xs's own max-width —
        otherwise this safety net silently defeats legitimate size styling and
        misrepresents real behavior to anyone testing sizes in the playground. */
     #pg-preview { max-width: 100%; overflow-wrap: break-word; }
@@ -134,18 +166,23 @@
             <option value="">🎴 Examples…</option>
             <option value="form">Sample form</option>
             <option value="cards">50 cards</option>
-            <option value="heroes">20 card heroes</option>
-            <option value="signature-heroes">20 signature heroes</option>
-            <option value="xbehaviors">50 x-* behaviors</option>
+            <option value="heroes-120">120 card heroes (all permutations)</option>
+            <option value="hero-variants">5 hero variants</option>
+            <option value="xbehaviors" id="pg-opt-xbehaviors">x-* behaviors</option>
             <option value="inputs">20 inputs with x-behaviors</option>
             <option value="badges">50 badges</option>
             <option value="selects">25 selects</option>
             <option value="switches">25 switches (all different)</option>
             <option value="youtube">20 YouTube URL formats</option>
+            <option value="youtube-channel">20 Richard Moore Videos</option>
+            <option value="hero-fullwidth">Full-width hero (500px)</option>
           </select>
           <button id="pg-format" class="pg-btn" type="button"
             style="background:var(--bg-tertiary); color:var(--text-primary);"
             title="Format vertically (one attribute per line)">⭹ Format</button>
+          <button id="pg-standalone" class="pg-btn" type="button"
+            style="background:var(--bg-tertiary); color:var(--text-primary);"
+            title="Open this markup on its own page at full browser width (#659)">&#x29C9; Standalone</button>
           <button id="pg-copy" class="pg-btn" type="button"
             style="background:var(--bg-tertiary); color:var(--text-primary);" title="Copy the HTML (or right-click a preview element)">📋 Copy</button>
         </span>
@@ -156,7 +193,7 @@
       <div class="pg-panel__head">
         <span class="pg-panel__label">Preview</span>
         <span class="pg-toolbar">
-          <wb-themecontrol id="pg-themecontrol" show-label="false"></wb-themecontrol>
+          <div x-themecontrol id="pg-themecontrol" show-label="false"></div>
           <select id="pg-sort" class="pg-btn" title="Sort the previewed elements"
             style="background:var(--bg-tertiary); color:var(--text-primary); appearance:auto;">
             <option value="">↕ Sort by…</option>
@@ -179,6 +216,14 @@
       font-family: 'JetBrains Mono', 'Fira Code', Consolas, monospace; font-size: 0.85rem;
       line-height: 1.6; overflow-x: auto;"></div>
   </div>
+
+  <!-- #780 -- John: "Playground shouldn't show component gallery."
+       A 290-line static gallery of 53 <div x-demo> blocks used to live here,
+       below the editor. It is a different thing from a playground -- the
+       playground is for pasting your own markup and seeing it render -- and
+       it was written entirely in the retired wb-* tags. The behaviors
+       showcase is where a catalogue of examples belongs. -->
+
 
   <script type="module">
     import WB from '../src/core/wb-lazy.js';
@@ -412,11 +457,35 @@
       { value: 'removable', label: 'Removable first' },
       { value: 'elevated', label: 'Elevated first' },
     ];
+    // A single full-bleed hero at a fixed 500px. `height` is applied by
+    // card.js as min-height, so it is a floor -- the inline height pins the
+    // box to exactly 500px, and width:100% lets it fill the preview panel
+    // rather than the viewport (the preview is the "page" here).
+    function fullWidthHero() {
+      return [
+        '<div x-cardhero',
+        '  pretitle="Open Source #4"',
+        '  title="WB-Starter, the last wave needed!"',
+        '  subtitle="Light DOM, no shadow boundaries. No class heirarchy. Bullet-proof."',
+        '  height="500px"',
+        '  xalign="center"',
+        '  variant="minimal"',
+        '  cta="Star on GitHub"',
+        '  cta-href="https://github.com/CieloVistaSoftware/wb-starter"',
+        '  cta-secondary="Read the guide"',
+        '  cta-secondary-href="../public/doc-viewer.html?file=docs%2FV3-GUIDE.md"',
+        '  background="linear-gradient(135deg, var(--danger-color), var(--warning-color))"',
+        '  style="display:block; width:100%;"',
+        '  x-fadein>',
+        '</div>',
+      ].join('\n');
+    }
+
     const EXAMPLE_SORT_MODES = {
       form: [],
       cards: ['variant', 'size', 'title', 'tag', 'elevated'],
-      heroes: ['title', 'tag'],
-      'signature-heroes': ['title', 'tag'],
+      'heroes-120': ['variant', 'title', 'tag'],
+      'hero-variants': ['variant', 'title', 'tag'],
       xbehaviors: ['tag'],
       badges: ['variant', 'size', 'title', 'tag', 'pill', 'outline', 'removable'],
       selects: ['variant', 'size', 'title', 'tag'],
@@ -518,10 +587,11 @@
       });
     });
 
-    // Theme control — the real <wb-themecontrol> component (never a one-off
+    // Theme control — the real <div x-themecontrol> component (never a one-off
     // hand-rolled select). It lives outside #pg-preview, so it isn't wiped by
     // render()'s innerHTML swap; scan it once, here, on load.
     ensureWB().then(() => WB.scan(document.getElementById('pg-themecontrol'), { eager: true }));
+
 
     // ── Example sets (loaded from the Examples dropdown) ──────────────────────
     const V = ['default', 'primary', 'success', 'danger', 'warning', 'info'];
@@ -530,134 +600,125 @@
 
     function fiftyCards() {
       const T = [
-        (i, v, s) => `<wb-card title="#${i} ${v} · ${s}" variant="${v}" size="${s}" footer="Footer ${i}">Body ${i}</wb-card>`,
-        (i, v, s) => `<wb-card title="#${i} ${v}" variant="${v}" subtitle="With subtitle + badge" badge="New">${LOREM}</wb-card>`,
-        (i, v, s) => `<wb-card title="#${i} elevated" variant="${v}" elevated footer="Elevated">Body ${i}</wb-card>`,
-        (i, v, s) => `<wb-card title="#${i} hoverable" variant="${v}" hoverable tooltip="Hover text for #${i}">Hover me — ${LOREM}</wb-card>`,
-        (i, v, s) => `<wb-card title="#${i} ${v}" variant="${v}">Title + body only, no footer. ${i}</wb-card>`,
-        (i, v, s) => `<wb-cardimage title="#${i} image card" subtitle="cardimage" src="https://picsum.photos/seed/${i}/320/120">Image card body ${i}</wb-cardimage>`,
-        (i, v, s) => `<wb-cardpricing title="Plan #${i}" price="$${i}9" variant="${v}">Feature A · Feature B · Feature C</wb-cardpricing>`,
-        (i, v, s) => `<wb-cardprofile title="Person #${i}" subtitle="Role ${s}" variant="${v}">${LOREM}</wb-cardprofile>`,
+        (i, v, s) => `<article title="#${i} ${v} · ${s}" variant="${v}" size="${s}" footer="Footer ${i}">Body ${i}</article>`,
+        (i, v, s) => `<article title="#${i} ${v}" variant="${v}" subtitle="With subtitle + badge" badge="New">${LOREM}</article>`,
+        (i, v, s) => `<article title="#${i} elevated" variant="${v}" elevated footer="Elevated">Body ${i}</article>`,
+        (i, v, s) => `<article title="#${i} hoverable" variant="${v}" hoverable tooltip="Hover text for #${i}">Hover me — ${LOREM}</article>`,
+        (i, v, s) => `<article title="#${i} ${v}" variant="${v}">Title + body only, no footer. ${i}</article>`,
+        (i, v, s) => `<div x-cardimage title="#${i} image card" subtitle="cardimage" src="https://picsum.photos/seed/${i}/320/120">Image card body ${i}</div>`,
+        (i, v, s) => `<div x-cardpricing title="Plan #${i}" price="$${i}9" variant="${v}">Feature A · Feature B · Feature C</div>`,
+        (i, v, s) => `<div x-cardprofile title="Person #${i}" subtitle="Role ${s}" variant="${v}">${LOREM}</div>`,
       ];
       const out = [];
       for (let i = 0; i < 50; i++) out.push(T[i % T.length](i + 1, V[i % V.length], S[i % S.length]));
       return out.join('\n');
     }
 
-    function twentyHeroes() {
-      const heroes = [
+    // Combines the previous separate "20 card heroes" (plain x-cardhero)
+    // and "20 signature heroes" (x-cardhero + companion x-modal + x-fadein)
+    // generators into one 120-instance set, and now also cycles variant=
+    // and overlay= -- properties neither original ever touched -- alongside
+    // xalign/height/background. Property arrays deliberately have different
+    // lengths and are each offset by a different multiple of `round` (how
+    // many times the 12-item content list has already looped), the same
+    // background-offset trick both originals already used, now applied to
+    // every axis so paired combinations keep shifting well past any single
+    // array's own wrap point instead of repeating in lockstep.
+    function oneTwentyHeroes() {
+      const CONTENT = [
         ['Launch', 'Build faster with wb-starter', 'Schema-first, zero-build web components.', 'Get Started', 'View Docs'],
         ['New', 'Compose, don\'t configure', 'Stack x-* behaviors on any element.', 'Try it', 'Learn more'],
         ['v3', 'Themeable to the core', 'Every color flows from one theme system.', 'Explore themes', null],
         ['Open Source', 'Own your components', 'Light DOM, no shadow boundaries.', 'Star on GitHub', 'Read the guide'],
         ['Fast', 'No build step. Ever.', 'Drop a script tag and go.', 'Get Started', null],
         ['Accessible', 'Semantics by default', 'Native elements, enhanced.', 'See a11y', 'Docs'],
+        ['Zero Build.', 'Infinite Possibility.', 'The web framework that doesn’t need a framework.', 'Try the Playground', 'Read the Guide'],
+        ['No Bundler.', 'No JSX. No Waiting.', 'Ship the way the browser already understands.', 'Try the Playground', 'Read the Guide'],
+        ['Light DOM.', 'Always.', 'Never fight a shadow boundary again.', 'Try the Playground', 'Read the Guide'],
+        ['Schema First.', 'Behavior Second.', 'Describe the shape. Let behaviors do the rest.', 'Try the Playground', 'Read the Guide'],
+        ['Compose,', 'Don’t Configure.', 'Stack x-* behaviors on any native element.', 'Try the Playground', 'Read the Guide'],
+        ['Themeable', 'To The Core.', 'Every color flows from one variable system.', 'Try the Playground', 'Read the Guide'],
       ];
-      const bgs = [
+      const VARIANTS = ['default', 'cosmic', 'split', 'minimal', 'gradient'];
+      const XALIGNS = ['center', 'left', 'right'];
+      const HEIGHTS = ['320px', '380px', '440px', '500px'];
+      const BGS = [
         null, null,
         'linear-gradient(135deg, var(--success-color), var(--info-color))',
         'linear-gradient(135deg, var(--danger-color), var(--warning-color))',
-        'https://picsum.photos/seed/hero/1200/500',
         'linear-gradient(135deg, var(--primary), var(--secondary))',
+        'linear-gradient(135deg, var(--primary), var(--info-color))',
+        'https://picsum.photos/seed/hero/1200/500',
       ];
-      const heights = ['320px', '380px', '440px'];
-      const aligns = ['center', 'left', 'right'];
       // Each CTA links to the doc it's talking about (opens in the doc-viewer).
       const DV = (file) => '../public/doc-viewer.html?file=' + encodeURIComponent(file);
       const CTA_HREF = {
         'Get Started': DV('docs/V3-GUIDE.md'), 'View Docs': DV('docs/V3-GUIDE.md'),
-        'Docs': DV('docs/V3-GUIDE.md'), 'Read the guide': DV('docs/V3-GUIDE.md'),
-        'Try it': DV('docs/V3-GUIDE.md'), 'Learn more': DV('docs/behaviors/wb-behaviors.md'),
+        'Docs': DV('docs/V3-GUIDE.md'), 'Read the guide': DV('docs/V3-GUIDE.md'), 'Read the Guide': DV('docs/V3-GUIDE.md'),
+        'Try it': DV('docs/V3-GUIDE.md'), 'Learn more': DV('docs/behaviors/x-behaviors.md'),
         'Explore themes': DV('docs/themes.md'), 'See a11y': DV('docs/V3-GUIDE.md'),
         'Star on GitHub': 'https://github.com/CieloVistaSoftware/wb-starter',
+        'Try the Playground': 'playground.html',
       };
       const href = (c) => CTA_HREF[c] || DV('docs/V3-GUIDE.md');
       const out = [];
-      for (let i = 0; i < 20; i++) {
-        const [pre, title, sub, cta, cta2] = heroes[i % heroes.length];
-        // Offset the bg index by how many times we've already looped through
-        // heroes, so a repeated title always shows a DIFFERENT background
-        // (bgs.length === heroes.length, so without this offset every repeat
-        // of the same title would land on the exact same bg every time).
-        const round = Math.floor(i / heroes.length);
-        const bg = bgs[(i + round) % bgs.length];
+      for (let i = 0; i < 120; i++) {
+        const round = Math.floor(i / CONTENT.length);
+        const [pre, title, sub, cta, cta2] = CONTENT[i % CONTENT.length];
+        const variant = VARIANTS[(i + round) % VARIANTS.length];
+        const xalign = XALIGNS[(i + round * 2) % XALIGNS.length];
+        const height = HEIGHTS[(i + round * 3) % HEIGHTS.length];
+        const bg = BGS[(i + round * 5) % BGS.length];
+        const overlay = (i + round) % 5 !== 0; // on by default; off roughly 1-in-5 so it's exercised too
+        const signatureStyle = i % 2 === 1; // alternate the two original styles
         const attrs = [
           `pretitle="${pre} #${i + 1}"`,
           `title="${title}"`,
           `subtitle="${sub}"`,
-          `height="${heights[i % heights.length]}"`,
-          `xalign="${aligns[i % aligns.length]}"`,
+          `height="${height}"`,
+          `xalign="${xalign}"`,
+          variant !== 'default' ? `variant="${variant}"` : '',
+          overlay ? '' : `overlay="false"`,
           cta ? `cta="${cta}"` : '',
           cta ? `cta-href="${href(cta)}"` : '',
           cta2 ? `cta-secondary="${cta2}"` : '',
           cta2 ? `cta-secondary-href="${href(cta2)}"` : '',
           bg ? `background="${bg}"` : '',
+          signatureStyle ? 'x-fadein' : '',
         ].filter(Boolean);
-        out.push(`<wb-cardhero\n  ${attrs.join('\n  ')}>\n</wb-cardhero>`);
+        const hero = `<div x-cardhero\n  ${attrs.join('\n  ')}>\n</div>`;
+        out.push(
+          signatureStyle
+            ? `<div class="pg-signature-hero">\n  ${hero.replace(/\n/g, '\n  ')}\n  <dialog\n    modal-title="${title}"\n    modal-content="${sub}">\n    See it in action\n  </dialog>\n</div>`
+            : hero
+        );
       }
       return out.join('\n');
     }
 
-    // "Signature hero" style: a wb-cardhero (pretitle/title/subtitle/CTAs,
-    // x-fadein scroll-reveal, a tooltip on its primary CTA) paired with a real
-    // <wb-modal> trigger as its companion "live demo" beneath it. Built from
-    // a user-submitted template that also referenced x-parallax, a
-    // <wb-codepreview> tag, and Vue-style x-on:change directives — none of
-    // which exist in this codebase (verified against tag-map.js/wb-lazy.js);
-    // this version keeps only what's real: wb-cardhero's own attrs, x-fadein
-    // (wired in wb-lazy.js), x-tooltip (tooltip.js reads it directly, added
-    // to cardhero.js as an opt-in cta-tooltip/cta-secondary-tooltip attr),
-    // and wb-modal's actual self-contained trigger API (modal-title/
-    // modal-content on the trigger itself — not a separate <wb-modal id=…>
-    // referenced by a button).
-    function twentySignatureHeroes() {
-      const heroes = [
-        ['Zero Build.', 'Infinite Possibility.', 'The web framework that doesn’t need a framework.', 'Native elements. Schema-first behaviors. One script tag.'],
-        ['No Bundler.', 'No JSX. No Waiting.', 'Ship the way the browser already understands.', 'Drop a script tag and start composing components.'],
-        ['Light DOM.', 'Always.', 'Never fight a shadow boundary again.', 'Your CSS and devtools reach every component, always.'],
-        ['Schema First.', 'Behavior Second.', 'Describe the shape. Let behaviors do the rest.', 'One runtime scans the DOM and upgrades what it finds.'],
-        ['Compose,', 'Don’t Configure.', 'Stack x-* behaviors on any native element.', 'Small, focused functions — not a class to subclass.'],
-        ['Themeable', 'To The Core.', 'Every color flows from one variable system.', '25+ built-in themes, or define your own in minutes.'],
+    // All 5 x-cardhero variant= values (cardhero.schema.json enum:
+    // default/cosmic/split/minimal/gradient, wired in hero.css's
+    // x-cardhero--{{value}} rules per #383) side by side, each labeled with
+    // its own name -- documented in cardhero.md's Properties table, but
+    // nothing anywhere actually showed all 5 rendered together to compare.
+    function fiveHeroVariants() {
+      const variants = [
+        ['default', 'Default', 'Two radial glows over a diagonal brand gradient, with an animated sheen sweep.'],
+        ['cosmic', 'Cosmic', 'A denser multi-hue nebula with a faint starfield.'],
+        ['split', 'Split', 'Content pinned to one side; background stays visible on the other.'],
+        ['minimal', 'Minimal', 'Flat theme surface -- no sheen, no scrim, no CTA drama.'],
+        ['gradient', 'Gradient', 'A clean two-hue linear sweep, no radial glows or animation.'],
       ];
-      const bgs = [
-        'linear-gradient(135deg, var(--primary), var(--secondary))',
-        'linear-gradient(135deg, var(--success-color), var(--info-color))',
-        'linear-gradient(135deg, var(--danger-color), var(--warning-color))',
-        'linear-gradient(135deg, var(--primary), var(--info-color))',
-      ];
-      const heights = ['420px', '480px', '520px'];
-      const aligns = ['left', 'center'];
-      const DV = (file) => '../public/doc-viewer.html?file=' + encodeURIComponent(file);
-      const out = [];
-      for (let i = 0; i < 20; i++) {
-        const [pre, title, sub, tip] = heroes[i % heroes.length];
-        const round = Math.floor(i / heroes.length);
-        const bg = bgs[(i + round) % bgs.length];
+      const out = variants.map(([variant, title, sub]) => {
         const attrs = [
-          `pretitle="${pre} #${i + 1}"`,
+          `pretitle="variant=${variant}"`,
           `title="${title}"`,
           `subtitle="${sub}"`,
-          `height="${heights[i % heights.length]}"`,
-          `xalign="${aligns[i % aligns.length]}"`,
-          `cta="Try the Playground"`,
-          `cta-href="playground.html"`,
-          `cta-tooltip="${tip}"`,
-          `cta-secondary="Read the Guide"`,
-          `cta-secondary-href="${DV('docs/V3-GUIDE.md')}"`,
-          `background="${bg}"`,
-          `x-fadein`,
+          `height="320px"`,
+          `variant="${variant}"`,
         ];
-        out.push(
-          `<div class="pg-signature-hero">\n` +
-          `  <wb-cardhero\n    ${attrs.join('\n    ')}>\n  </wb-cardhero>\n` +
-          `  <wb-modal\n` +
-          `    modal-title="${title}"\n` +
-          `    modal-content="${sub}">\n` +
-          `    See it in action\n` +
-          `  </wb-modal>\n` +
-          `</div>`
-        );
-      }
+        return `<div x-cardhero\n  ${attrs.join('\n  ')}>\n</div>`;
+      });
       return out.join('\n');
     }
 
@@ -670,9 +731,35 @@
     // x-rubberband) are intentionally left out rather than shown not-working.
     function fiftyXBehaviors() {
       return [
+        // #779 -- John: "we don't have any cardheros showing on this one."
+        // This set claimed to show the x-* behaviors and contained NO card
+        // behaviors at all -- 19 of them, the largest family in the library,
+        // entirely absent. Taken from data/behavior-examples.json rather than
+        // hand-written here, so they are the same markup the showcase renders
+        // and cannot drift from it.
+        "<div x-card title=\"Trailhead access\" subtitle=\"Updated this morning\" elevated>\n  The north gate is open. Parking fills by 9am on weekends \u2014 the overflow lot adds\n  about ten minutes on foot.\n</div>",
+        "<article x-cardbutton\n  title=\"Upgrade to Team\"\n  content=\"Shared workspaces, audit history and SSO.\"\n  primary=\"Start free trial\"\n  secondary=\"Compare plans\"></article>",
+        "<article x-carddraggable title=\"Drag me\" content=\"Pick this card up and move it \u2014 the position sticks.\" constrain axis=\"both\"></article>",
+        "<article x-cardexpandable\n  title=\"What changed in 3.0\"\n  content=\"Composition replaced inheritance: a tag maps to a behavior function that decorates the element in place, in light DOM. There is no component base class any more, and no shadow boundary to reach through.\"\n  lines=\"2\"></article>",
+        "<article x-cardfile filename=\"quarterly-report.pdf\" file-type=\"pdf\" size=\"2.4 MB\" date=\"2026-08-14\" href=\"#\"></article>",
+        "<section x-cardhero\n  pretitle=\"Release 3.0\"\n  title=\"Zero build. Real components.\"\n  subtitle=\"Light DOM, no shadow boundaries, no class hierarchy.\"\n  cta=\"Read the guide\"\n  cta-href=\"#\"\n  height=\"320px\"></section>",
+        "<article x-cardhorizontal\n  image=\"https://picsum.photos/seed/trail/320/240\"\n  image-alt=\"Pine trail at dawn\"\n  image-position=\"start\"\n  title=\"Ridge loop, 8km\"\n  subtitle=\"Moderate \u00b7 3h\"></article>",
+        "<article x-cardimage\n  src=\"https://picsum.photos/seed/harbour/480/300\"\n  alt=\"Fishing boats at the harbour wall\"\n  title=\"Harbour at first light\"\n  caption=\"Shot on the 6am walk-around.\"></article>",
+        "<article x-cardlink\n  href=\"#\"\n  title=\"Attribute naming standard\"\n  description=\"Why every attribute is kebab-case, and what breaks when it is not.\"\n  badge=\"Standard\"></article>",
+        "<article x-cardminimizable\n  title=\"Build log\"\n  content=\"tsc --noEmit clean. 141 regression tests passed. Packaged in 4.2s.\"></article>",
+        "<aside x-cardnotification\n  variant=\"warning\"\n  title=\"Certificate expires in 6 days\"\n  message=\"Renew before 26 Aug or the staging domain will start failing TLS.\"\n  dismissible></aside>",
+        "<article x-cardoverlay\n  image=\"https://picsum.photos/seed/city/480/320\"\n  title=\"Night shift\"\n  subtitle=\"City desk, 02:00\"\n  position=\"bottom\"></article>",
+        "<article x-cardportfolio\n  name=\"Ada Lovelace\"\n  title=\"Principal engineer\"\n  company=\"Analytical Engines\"\n  location=\"London\"\n  cover=\"https://picsum.photos/seed/ada-cover/480/200\"></article>",
+        "<article x-cardpricing\n  plan=\"Team\"\n  price=\"$18\"\n  period=\"per user / month\"\n  description=\"For teams that need shared history and SSO.\"\n  features=\"Unlimited projects,Audit log,SSO,Priority support\"></article>",
+        "<article x-cardproduct\n  image=\"https://picsum.photos/seed/headphones/400/400\"\n  title=\"Field headphones\"\n  description=\"Closed-back, 32\u03a9, folds flat.\"\n  price=\"$149\"\n  original-price=\"$189\"></article>",
+        "<article x-cardprofile\n  name=\"Grace Hopper\"\n  role=\"Compiler pioneer\"\n  avatar=\"https://picsum.photos/seed/grace/96/96\"\n  bio=\"Wrote the first compiler, then spent a career arguing that people should not have to write machine code.\"></article>",
+        "<article x-cardstats value=\"1,284\" label=\"Builds this month\" trend=\"up\" trend-value=\"12%\"></article>",
+        "<article x-cardtestimonial\n  quote=\"We deleted the build step and shipped faster the same week.\"\n  author=\"Katherine Johnson\"\n  role=\"Platform lead\"\n  avatar=\"https://picsum.photos/seed/katherine/96/96\"\n  rating=\"5\"></article>",
+        "<article x-cardvideo\n  src=\"https://www.w3schools.com/html/mov_bbb.mp4\"\n  poster=\"https://picsum.photos/seed/screening/480/270\"\n  title=\"Behaviors in 90 seconds\"\n  description=\"What replaced the component base class, and why.\"></article>",
+
         // Attention/animation effects (button — most of these are click-triggered)
         '<button x-ripple>Ripple</button>',
-        '<button x-glow color="var(--success-color)">Glow</button>',
+        '<button x-glow color="var(--success-color)">Glowing (always on, no click)</button>',
         '<button x-pulse>Click to Pulse</button>',
         '<button x-shake>Click to Shake</button>',
         '<button x-bounce>Click to Bounce</button>',
@@ -686,7 +773,7 @@
         '<div x-slidein>Slides in as it scrolls into view</div>',
         '<div x-zoomin>Zooms in as it scrolls into view</div>',
         '<h3 x-typewriter text="Typed out letter by letter" speed="40"></h3>',
-        '<div x-rainbow duration="3s">Cycles through rainbow colors</div>',
+        '<div x-rainbow duration="3s">Cycling through rainbow colors (always on, no click)</div>',
         '<button x-confetti count="80" label="🎉 Celebrate"></button>',
         '<button x-sparkle count="20">Sparkle Button</button>',
         '<button x-fireworks count="40">Fireworks</button>',
@@ -773,11 +860,11 @@
       const out = [];
       for (let i = 0; i < 50; i++) {
         const v = V[i % V.length], s = S[i % S.length], m = MOD[i % MOD.length];
-        out.push(`<wb-badge label="#${i + 1} ${v}" variant="${v}" size="${s}"${m}></wb-badge>`);
+        out.push(`<span x-badge label="#${i + 1} ${v}" variant="${v}" size="${s}"${m}></span>`);
       }
       // a couple of dot badges at the end
-      out.push('<wb-badge variant="success" dot></wb-badge>');
-      out.push('<wb-badge variant="error" dot></wb-badge>');
+      out.push('<span x-badge variant="success" dot></span>');
+      out.push('<span x-badge variant="error" dot></span>');
       return out.join('\n');
     }
 
@@ -794,14 +881,14 @@
       for (let i = 0; i < 20; i++) {
         const v = V[i % V.length], s = S[i % S.length];
         const options = OPTION_SETS[i % OPTION_SETS.length];
-        out.push(`<wb-select label="#${i + 1} ${v}/${s}" placeholder="Choose one…" variant="${v}" size="${s}" options='${JSON.stringify(options)}'></wb-select>`);
+        out.push(`<select label="#${i + 1} ${v}/${s}" placeholder="Choose one…" variant="${v}" size="${s}" options='${JSON.stringify(options)}'></select>`);
       }
       // Explicit flag combinations, one per notable behavior
-      out.push(`<wb-select label="Searchable" searchable placeholder="Type to filter…" options='${JSON.stringify(OPTION_SETS[0])}'></wb-select>`);
-      out.push(`<wb-select label="Clearable" clearable value="banana" options='${JSON.stringify(OPTION_SETS[0])}'></wb-select>`);
-      out.push(`<wb-select label="Multiple" multiple options='${JSON.stringify(OPTION_SETS[1])}'></wb-select>`);
-      out.push(`<wb-select label="Disabled" disabled value="us" options='${JSON.stringify(OPTION_SETS[1])}'></wb-select>`);
-      out.push(`<wb-select label="Required" required placeholder="This one is required" options='${JSON.stringify(OPTION_SETS[2])}'></wb-select>`);
+      out.push(`<select label="Searchable" searchable placeholder="Type to filter…" options='${JSON.stringify(OPTION_SETS[0])}'></select>`);
+      out.push(`<select label="Clearable" clearable value="banana" options='${JSON.stringify(OPTION_SETS[0])}'></select>`);
+      out.push(`<select label="Multiple" multiple options='${JSON.stringify(OPTION_SETS[1])}'></select>`);
+      out.push(`<select label="Disabled" disabled value="us" options='${JSON.stringify(OPTION_SETS[1])}'></select>`);
+      out.push(`<select label="Required" required placeholder="This one is required" options='${JSON.stringify(OPTION_SETS[2])}'></select>`);
       return out.join('\n');
     }
 
@@ -839,7 +926,7 @@
           checked ? 'checked' : '',
           disabled ? 'disabled' : '',
         ].filter(Boolean).join(' ');
-        out.push(`<wb-switch ${attrs}></wb-switch>`);
+        out.push(`<div x-switch ${attrs}></div>`);
       }
       return out.join('\n');
     }
@@ -881,19 +968,57 @@
       return urls.map((u) => `<div x-youtube url="${u}"></div>`).join('\n');
     }
 
+    // 20 real videos from a real channel (https://www.youtube.com/@richardm23),
+    // pulled live from the channel's own page data (lockupViewModel entries in
+    // window.ytInitialData) -- not guessed IDs. Each x-youtube embed is paired
+    // with the video's actual title as a caption, unlike twentyYouTubeFormats()
+    // above (which reuses ONE video across many different URL string shapes).
+    function twentyChannelVideos() {
+      const videos = [
+        ['9YEdVtc0odg', 'Do Christians Have the Same Power as Christ?'],
+        ['SCJZsmlvocY', 'Was Jim Jones a Faith Healer? The Latter Rain Connection to William Branham, Bethel, & N.A.R.'],
+        ['-CHaUE6hPDM', 'Did God Show Bob Jones Abortions?'],
+        ['5zJgNtzqxOY', 'What is a Corporate Anointing?'],
+        ['UDx2maxqre4', 'Ché Ahn Quotes The Passion Translation and Believes Apostles Can Impart Spiritual Gifts'],
+        ['eWtCrn4xxOs', 'Will This Be the Last Time We Ever See Kenneth Copeland Speak?'],
+        ['9O1MF3gyIxU', 'Bill Johnson is Engaged to a Much Younger Woman!'],
+        ['8eA-ef0SGt4', 'Can you Rob God of Glory?'],
+        ['lL1QODiWt0k', 'Kathryn Krick "Tries" to Heal Cerebral Palsy & Down Syndrome'],
+        ['EjizZrwlEug', 'Bob Jones Prophecies Judgement on America Because of Homosexuality'],
+        ['g9fYZy4P87o', 'Richard Reacts: First-Time Visitor John Christ & Shama Mrema Visit Creflo Dollar\'s Church'],
+        ['LxkOOn-Cv7A', 'Can We Reach the Full Maturity of the God Man?'],
+        ['R-M4VQ_wzaY', 'Bob Jones Prophecies Using Astrology'],
+        ['iDm7SrT9KSQ', 'Apostle Kathryn Krick has a New Posse'],
+        ['yUydO6Qj_h4', 'Pastor Loran Livingston Preaches "Repent! the Axe is at the Root of the Tree"'],
+        ['Fo4dLAzVHzQ', 'Bob Jones Had 50 to 100 Visions? Can That Be True?'],
+        ['4vUJ1aq7QZg', 'Bob Jones Admits he was a False Prophet'],
+        ['51Run8mV3h8', 'Bill Johnson Wants to Heal Down Syndrome'],
+        ['js_WYPK4Vvk', 'Apostle Ché Ahn Says, "I\'ve never Met Anyone In the NAR New Apostolic Reformation Network"'],
+        ['Y--lEcckiZ0', 'What Podcasters are Saying about Bethel'],
+      ];
+      return videos.map(([id, title]) =>
+        `<figure class="pg-video-card">\n` +
+        `  <div x-youtube url="https://www.youtube.com/watch?v=${id}"></div>\n` +
+        `  <figcaption>${title.replace(/&/g, '&amp;').replace(/</g, '&lt;')}</figcaption>\n` +
+        `</figure>`
+      ).join('\n');
+    }
+
     document.getElementById('pg-examples').addEventListener('change', async (e) => {
       const which = e.target.value;
       if (!which) return;
       if (which === 'form') input.value = SAMPLE;
       else if (which === 'cards') input.value = fiftyCards();
-      else if (which === 'heroes') input.value = twentyHeroes();
-      else if (which === 'signature-heroes') input.value = twentySignatureHeroes();
+      else if (which === 'heroes-120') input.value = oneTwentyHeroes();
+      else if (which === 'hero-variants') input.value = fiveHeroVariants();
       else if (which === 'xbehaviors') input.value = fiftyXBehaviors();
       else if (which === 'inputs') input.value = twentyInputs();
       else if (which === 'badges') input.value = fiftyBadges();
       else if (which === 'selects') input.value = twentyFiveSelects();
       else if (which === 'switches') input.value = twentyFiveSwitches();
       else if (which === 'youtube') input.value = twentyYouTubeFormats();
+      else if (which === 'youtube-channel') input.value = twentyChannelVideos();
+      else if (which === 'hero-fullwidth') input.value = fullWidthHero();
       setSortModes(EXAMPLE_SORT_MODES[which] || []);
       e.target.value = ''; // reset to placeholder
       endpointPanel.hidden = true;
@@ -903,6 +1028,37 @@
       // whether the preview pane itself had scrolled or the whole page had.
       preview.scrollTop = 0;
       preview.closest('.pg-panel').scrollIntoView({ behavior: 'smooth', block: 'start' });
+    });
+
+    // #659: the preview pane is ~41% of the browser (563px of 1280 measured),
+    // so a full-bleed component can never be seen at real width here, and
+    // resizing the window resizes the LAYOUT rather than the element. Hand the
+    // current markup to a bare full-bleed page in a new tab instead.
+    // localStorage rather than the URL: no length limit, no server round-trip.
+    document.getElementById('pg-standalone').addEventListener('click', () => {
+      const markup = (input.value || '').trim();
+      if (!markup) return;
+
+      // The markup travels in the URL hash, so the resulting link is
+      // SELF-CONTAINED: it can be pasted into any browser, shared, or
+      // bookmarked. An earlier version handed it over via localStorage, which
+      // is per-browser-profile -- the URL then rendered the empty state for
+      // anyone but the tab that created it, which is indistinguishable from
+      // "the page is broken". The hash never reaches the server, so there is no
+      // request-size limit; localStorage stays as a fallback for markup large
+      // enough to bump the browser's own URL ceiling.
+      const encoded = encodeURIComponent(markup);
+      let url = './standalone.html#' + encoded;
+      if (url.length > 30000) {
+        try {
+          localStorage.setItem('x-standalone-markup', markup);
+          url = './standalone.html';
+        } catch (err) {
+          console.warn('[playground] markup too large to hand off', err);
+          return;
+        }
+      }
+      window.open(url, '_blank', 'noopener');
     });
 
     const copyBtn = document.getElementById('pg-copy');
@@ -924,7 +1080,7 @@
     });
     // Enter should behave like a code editor: carry the current line's
     // indentation onto the new line, and indent one level deeper when the
-    // line so far hasn't closed its tag yet (e.g. `<wb-cardhero` opening a
+    // line so far hasn't closed its tag yet (e.g. `<div x-cardhero` opening a
     // multi-line attribute list — this project's own §5 markup style).
     input.addEventListener('keydown', (e) => {
       if (e.key !== 'Enter') return;
@@ -951,6 +1107,19 @@
       clearTimeout(debounce); debounce = setTimeout(render, 400);
     });
     window.addEventListener('resize', fitEditor);
+
+    // #781 -- John: "i dont see the x-behaviors count it's not 50 any more."
+    // The label said 50 because someone counted once. It is generated, so the
+    // count is generated too -- adding the 19 card behaviors made it 69, and a
+    // hardcoded number is wrong the moment the set changes again.
+    (function labelXBehaviourCount() {
+      const opt = document.getElementById('pg-opt-xbehaviors');
+      if (!opt) return;
+      try {
+        const n = (fiftyXBehaviors().match(/^\s*</gm) || []).length;
+        opt.textContent = `${n} x-* behaviors`;
+      } catch { /* leave the plain label */ }
+    })();
 
     fitEditor();
     render();

@@ -6,10 +6,10 @@ User avatar with image, initials fallback, and status indicator.
 
 | Property | Value |
 |----------|-------|
-| Custom Tag | `<wb-avatar>` |
+| Custom Tag | `<span x-avatar>` |
 | Behavior | `avatar` |
 | Semantic | `<div>` (implicit role `img`) |
-| Root CSS Class | `wb-avatar` |
+| Root CSS Class | `x-avatar` |
 | Category | Feedback |
 | Schema | `src/wb-models/avatar.schema.json` |
 
@@ -30,75 +30,75 @@ User avatar with image, initials fallback, and status indicator.
 
 ### Image Avatar
 
-<wb-demo>
-  <wb-avatar src="https://i.pravatar.cc/150?u=avatar1" alt="Jane Doe"></wb-avatar>
-</wb-demo>
+<div x-demo>
+  <span x-avatar src="https://i.pravatar.cc/150?u=avatar1" alt="Jane Doe"></span>
+</div>
 
 ### Initials Fallback
 
 Without a `src`, `initials` renders as plain text instead:
 
-<wb-demo>
-  <wb-avatar initials="JD"></wb-avatar>
-</wb-demo>
+<div x-demo>
+  <span x-avatar initials="JD"></span>
+</div>
 
 ### Auto-Generated Initials from Name
 
 When neither `src` nor `initials` is set, `name` is split into initials automatically:
 
-<wb-demo>
-  <wb-avatar name="Jane Doe"></wb-avatar>
-</wb-demo>
+<div x-demo>
+  <span x-avatar name="Jane Doe"></span>
+</div>
 
 ### Sizes
 
-<wb-demo columns="6">
-  <wb-avatar initials="XS" size="xs"></wb-avatar>
-  <wb-avatar initials="SM" size="sm"></wb-avatar>
-  <wb-avatar initials="MD" size="md"></wb-avatar>
-  <wb-avatar initials="LG" size="lg"></wb-avatar>
-  <wb-avatar initials="XL" size="xl"></wb-avatar>
-  <wb-avatar initials="2X" size="2xl"></wb-avatar>
-</wb-demo>
+<div x-demo columns="6">
+  <span x-avatar initials="XS" size="xs"></span>
+  <span x-avatar initials="SM" size="sm"></span>
+  <span x-avatar initials="MD" size="md"></span>
+  <span x-avatar initials="LG" size="lg"></span>
+  <span x-avatar initials="XL" size="xl"></span>
+  <span x-avatar initials="2X" size="2xl"></span>
+</div>
 
 ### Shapes
 
-<wb-demo columns="3">
-  <wb-avatar initials="JD" shape="circle"></wb-avatar>
-  <wb-avatar initials="JD" shape="square"></wb-avatar>
-  <wb-avatar initials="JD" shape="rounded"></wb-avatar>
-</wb-demo>
+<div x-demo columns="3">
+  <span x-avatar initials="JD" shape="circle"></span>
+  <span x-avatar initials="JD" shape="square"></span>
+  <span x-avatar initials="JD" shape="rounded"></span>
+</div>
 
 ### Status Indicator
 
-<wb-demo columns="4">
-  <wb-avatar initials="JD" status="online"></wb-avatar>
-  <wb-avatar initials="JD" status="offline"></wb-avatar>
-  <wb-avatar initials="JD" status="busy"></wb-avatar>
-  <wb-avatar initials="JD" status="away"></wb-avatar>
-</wb-demo>
+<div x-demo columns="4">
+  <span x-avatar initials="JD" status="online"></span>
+  <span x-avatar initials="JD" status="offline"></span>
+  <span x-avatar initials="JD" status="busy"></span>
+  <span x-avatar initials="JD" status="away"></span>
+</div>
 
 ## Generated Structure
 
 Image variant:
 
 ```html
-<wb-avatar src="..." size="md" shape="circle">
+<span x-avatar src="..." size="md" shape="circle">
   <img src="..." alt="...">
-</wb-avatar>
+</span>
 ```
 
 Initials variant, with a status dot:
 
 ```html
-<wb-avatar initials="JD" status="online">
+<span x-avatar initials="JD" status="online">
   JD
-  <span class="wb-avatar__status--online"></span>
-</wb-avatar>
+  <span class="x-avatar__status--online"></span>
+</span>
 ```
 
 `size` and `shape` are read directly off the `size`/`shape` attributes by CSS attribute
-selectors (`wb-avatar[size="lg"]`, `wb-avatar[shape="square"]`) in
+selectors (`x-avatar[size="lg"]`, `x-avatar[shape="square"]`) in
 `src/styles/behaviors/avatar.css`. The behavior (`avatar()` in
 `src/wb-viewmodels/feedback.js`) only builds the `<img>`/initials text and the status
 dot — it adds no classes.
@@ -112,9 +112,9 @@ dot — it adds no classes.
 - **`alt`** is declared but ignored: the rendered `<img>`'s `alt` is always set from
   `name`, never from the `alt` attribute.
 - **`setImage()` / `setInitials()` / `setStatus()` / `clearStatus()`** are listed under
-  the schema's `$methods` but are not implemented anywhere — `<wb-avatar>` exposes no JS
+  the schema's `$methods` but are not implemented anywhere — `<span x-avatar>` exposes no JS
   API. To change an avatar, update its attributes and let it re-render.
-- The schema's `$cssAPI` (`--wb-avatar-bg`, `--wb-avatar-color`, etc.) is not read by
+- The schema's `$cssAPI` (`--x-avatar-bg`, `--x-avatar-color`, etc.) is not read by
   `avatar.css` — see Theme Variables Used below for what's actually wired up.
 
 ## Theme Variables Used

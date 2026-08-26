@@ -26,17 +26,17 @@
     "content": "🃏 Card Behaviors Demo (Code)",
     "subtitle": {
       "tag": "p",
-      "content": "All 19 card behavior variants wrapped in wb-demo for each section."
+      "content": "All 19 card behavior variants wrapped in x-demo for each section."
     }
   },
   "sections": [
     {
       "heading": "card (base)",
-      "tag": "wb-card",
+      "tag": "x-card",
       "columns": 3,
       "demos": [
         {
-          "tag": "wb-card",
+          "tag": "x-card",
           "attrs": {
             "title": "Elevated Card",
             "elevated": true
@@ -44,7 +44,7 @@
           "children": "<p>This card has elevation shadow.</p>"
         },
         {
-          "tag": "wb-card",
+          "tag": "x-card",
           "attrs": {
             "title": "Clickable Card",
             "clickable": true
@@ -52,7 +52,7 @@
           "children": "<p>Click me! I'm interactive.</p>"
         },
         {
-          "tag": "wb-card",
+          "tag": "x-card",
           "attrs": {
             "title": "With Footer",
             "footer": "Last updated: Today"
@@ -63,11 +63,11 @@
     },
     {
       "heading": "cardprofile",
-      "tag": "wb-cardprofile",
+      "tag": "x-cardprofile",
       "columns": 3,
       "demos": [
         {
-          "tag": "wb-cardprofile",
+          "tag": "x-cardprofile",
           "attrs": {
             "name": "Alice Chen",
             "role": "UX Designer",
@@ -75,7 +75,7 @@
           }
         },
         {
-          "tag": "wb-cardprofile",
+          "tag": "x-cardprofile",
           "attrs": {
             "name": "Bob Martinez",
             "role": "Lead Engineer",
@@ -84,7 +84,7 @@
           }
         },
         {
-          "tag": "wb-cardprofile",
+          "tag": "x-cardprofile",
           "attrs": {
             "name": "Clara Novak",
             "role": "Product Manager",
@@ -96,11 +96,11 @@
     },
     {
       "heading": "cardpricing",
-      "tag": "wb-cardpricing",
+      "tag": "x-cardpricing",
       "columns": 3,
       "demos": [
         {
-          "tag": "wb-cardpricing",
+          "tag": "x-cardpricing",
           "attrs": {
             "plan": "Basic",
             "price": "$9",
@@ -109,7 +109,7 @@
           }
         },
         {
-          "tag": "wb-cardpricing",
+          "tag": "x-cardpricing",
           "attrs": {
             "plan": "Pro",
             "price": "$29",
@@ -119,7 +119,7 @@
           }
         },
         {
-          "tag": "wb-cardpricing",
+          "tag": "x-cardpricing",
           "attrs": {
             "plan": "Enterprise",
             "price": "$99",
@@ -132,11 +132,11 @@
     },
     {
       "heading": "cardstats",
-      "tag": "wb-cardstats",
+      "tag": "x-cardstats",
       "columns": 3,
       "demos": [
         {
-          "tag": "wb-cardstats",
+          "tag": "x-cardstats",
           "attrs": {
             "value": "1,234",
             "label": "Users",
@@ -146,7 +146,7 @@
           }
         },
         {
-          "tag": "wb-cardstats",
+          "tag": "x-cardstats",
           "attrs": {
             "value": "$50K",
             "label": "Revenue",
@@ -156,7 +156,7 @@
           }
         },
         {
-          "tag": "wb-cardstats",
+          "tag": "x-cardstats",
           "attrs": {
             "value": "98.5%",
             "label": "Uptime",
@@ -169,11 +169,11 @@
     },
     {
       "heading": "cardimage",
-      "tag": "wb-cardimage",
+      "tag": "x-cardimage",
       "columns": 3,
       "demos": [
         {
-          "tag": "wb-cardimage",
+          "tag": "x-cardimage",
           "attrs": {
             "src": "https://picsum.photos/400/250?random=1",
             "alt": "Mountain landscape",
@@ -181,7 +181,7 @@
           }
         },
         {
-          "tag": "wb-cardimage",
+          "tag": "x-cardimage",
           "attrs": {
             "src": "https://picsum.photos/400/250?random=2",
             "alt": "City skyline",
@@ -190,7 +190,7 @@
           }
         },
         {
-          "tag": "wb-cardimage",
+          "tag": "x-cardimage",
           "attrs": {
             "src": "https://picsum.photos/400/250?random=3",
             "alt": "Ocean waves",
@@ -202,11 +202,11 @@
     },
     {
       "heading": "cardbutton",
-      "tag": "wb-cardbutton",
+      "tag": "x-cardbutton",
       "columns": 3,
       "demos": [
         {
-          "tag": "wb-cardbutton",
+          "tag": "x-cardbutton",
           "attrs": {
             "title": "Confirm Action",
             "content": "Are you sure you want to proceed?",
@@ -215,7 +215,7 @@
           }
         },
         {
-          "tag": "wb-cardbutton",
+          "tag": "x-cardbutton",
           "attrs": {
             "title": "Save Changes",
             "content": "Your draft has unsaved edits.",
@@ -223,7 +223,7 @@
           }
         },
         {
-          "tag": "wb-cardbutton",
+          "tag": "x-cardbutton",
           "attrs": {
             "title": "Delete Item",
             "content": "This action cannot be undone.",
@@ -235,18 +235,18 @@
     },
     {
       "heading": "carddraggable",
-      "tag": "wb-carddraggable",
+      "tag": "x-carddraggable",
       "columns": 3,
       "demos": [
         {
-          "tag": "wb-carddraggable",
+          "tag": "x-carddraggable",
           "attrs": {
             "title": "Drag Me",
             "content": "I can be moved around."
           }
         },
         {
-          "tag": "wb-carddraggable",
+          "tag": "x-carddraggable",
           "attrs": {
             "title": "X Axis Only",
             "content": "Horizontal drag only.",
@@ -254,7 +254,7 @@
           }
         },
         {
-          "tag": "wb-carddraggable",
+          "tag": "x-carddraggable",
           "attrs": {
             "title": "Constrained",
             "content": "Stays within parent.",
@@ -265,18 +265,18 @@
     },
     {
       "heading": "cardexpandable",
-      "tag": "wb-cardexpandable",
+      "tag": "x-cardexpandable",
       "columns": 3,
       "demos": [
         {
-          "tag": "wb-cardexpandable",
+          "tag": "x-cardexpandable",
           "attrs": {
             "title": "Read More",
             "content": "This is the expanded content that was previously hidden. It reveals additional details about the topic."
           }
         },
         {
-          "tag": "wb-cardexpandable",
+          "tag": "x-cardexpandable",
           "attrs": {
             "title": "Already Open",
             "content": "This card starts in expanded state.",
@@ -284,7 +284,7 @@
           }
         },
         {
-          "tag": "wb-cardexpandable",
+          "tag": "x-cardexpandable",
           "attrs": {
             "title": "Custom Height",
             "content": "Collapsed at 50px instead of default.",
@@ -295,11 +295,11 @@
     },
     {
       "heading": "cardfile",
-      "tag": "wb-cardfile",
+      "tag": "x-cardfile",
       "columns": 3,
       "demos": [
         {
-          "tag": "wb-cardfile",
+          "tag": "x-cardfile",
           "attrs": {
             "filename": "report.pdf",
             "file-type": "pdf",
@@ -308,7 +308,7 @@
           }
         },
         {
-          "tag": "wb-cardfile",
+          "tag": "x-cardfile",
           "attrs": {
             "filename": "photo.jpg",
             "file-type": "image",
@@ -317,7 +317,7 @@
           }
         },
         {
-          "tag": "wb-cardfile",
+          "tag": "x-cardfile",
           "attrs": {
             "filename": "archive.zip",
             "file-type": "zip",
@@ -329,11 +329,11 @@
     },
     {
       "heading": "cardhero",
-      "tag": "wb-cardhero",
+      "tag": "x-cardhero",
       "columns": 1,
       "demos": [
         {
-          "tag": "wb-cardhero",
+          "tag": "x-cardhero",
           "attrs": {
             "background": "https://picsum.photos/1200/400?random=10",
             "title": "Welcome to WB Framework",
@@ -345,11 +345,11 @@
     },
     {
       "heading": "cardhorizontal",
-      "tag": "wb-cardhorizontal",
+      "tag": "x-cardhorizontal",
       "columns": 2,
       "demos": [
         {
-          "tag": "wb-cardhorizontal",
+          "tag": "x-cardhorizontal",
           "attrs": {
             "image": "https://picsum.photos/300/200?random=4",
             "title": "Horizontal Layout",
@@ -357,7 +357,7 @@
           }
         },
         {
-          "tag": "wb-cardhorizontal",
+          "tag": "x-cardhorizontal",
           "attrs": {
             "image": "https://picsum.photos/300/200?random=5",
             "title": "Right Image",
@@ -369,11 +369,11 @@
     },
     {
       "heading": "cardlink",
-      "tag": "wb-cardlink",
+      "tag": "x-cardlink",
       "columns": 3,
       "demos": [
         {
-          "tag": "wb-cardlink",
+          "tag": "x-cardlink",
           "attrs": {
             "href": "/docs",
             "title": "Documentation",
@@ -382,7 +382,7 @@
           }
         },
         {
-          "tag": "wb-cardlink",
+          "tag": "x-cardlink",
           "attrs": {
             "href": "/github",
             "title": "GitHub Repo",
@@ -392,7 +392,7 @@
           }
         },
         {
-          "tag": "wb-cardlink",
+          "tag": "x-cardlink",
           "attrs": {
             "href": "/changelog",
             "title": "What's New",
@@ -405,18 +405,18 @@
     },
     {
       "heading": "cardminimizable",
-      "tag": "wb-cardminimizable",
+      "tag": "x-cardminimizable",
       "columns": 3,
       "demos": [
         {
-          "tag": "wb-cardminimizable",
+          "tag": "x-cardminimizable",
           "attrs": {
             "title": "Panel A",
             "content": "This content can be minimized."
           }
         },
         {
-          "tag": "wb-cardminimizable",
+          "tag": "x-cardminimizable",
           "attrs": {
             "title": "Panel B (Minimized)",
             "content": "Start minimized.",
@@ -424,7 +424,7 @@
           }
         },
         {
-          "tag": "wb-cardminimizable",
+          "tag": "x-cardminimizable",
           "attrs": {
             "title": "Panel C",
             "content": "Another minimizable panel with some text."
@@ -434,11 +434,11 @@
     },
     {
       "heading": "cardnotification",
-      "tag": "wb-cardnotification",
+      "tag": "x-cardnotification",
       "columns": 2,
       "demos": [
         {
-          "tag": "wb-cardnotification",
+          "tag": "x-cardnotification",
           "attrs": {
             "variant": "info",
             "title": "Info",
@@ -446,7 +446,7 @@
           }
         },
         {
-          "tag": "wb-cardnotification",
+          "tag": "x-cardnotification",
           "attrs": {
             "variant": "success",
             "title": "Success",
@@ -454,7 +454,7 @@
           }
         },
         {
-          "tag": "wb-cardnotification",
+          "tag": "x-cardnotification",
           "attrs": {
             "variant": "warning",
             "title": "Warning",
@@ -462,7 +462,7 @@
           }
         },
         {
-          "tag": "wb-cardnotification",
+          "tag": "x-cardnotification",
           "attrs": {
             "variant": "error",
             "title": "Error",
@@ -473,11 +473,11 @@
     },
     {
       "heading": "cardoverlay",
-      "tag": "wb-cardoverlay",
+      "tag": "x-cardoverlay",
       "columns": 3,
       "demos": [
         {
-          "tag": "wb-cardoverlay",
+          "tag": "x-cardoverlay",
           "attrs": {
             "image": "https://picsum.photos/400/300?random=6",
             "title": "Bottom Text",
@@ -485,7 +485,7 @@
           }
         },
         {
-          "tag": "wb-cardoverlay",
+          "tag": "x-cardoverlay",
           "attrs": {
             "image": "https://picsum.photos/400/300?random=7",
             "title": "Centered",
@@ -494,7 +494,7 @@
           }
         },
         {
-          "tag": "wb-cardoverlay",
+          "tag": "x-cardoverlay",
           "attrs": {
             "image": "https://picsum.photos/400/300?random=8",
             "title": "Top Aligned",
@@ -506,11 +506,11 @@
     },
     {
       "heading": "cardportfolio",
-      "tag": "wb-cardportfolio",
+      "tag": "x-cardportfolio",
       "columns": 3,
       "demos": [
         {
-          "tag": "wb-cardportfolio",
+          "tag": "x-cardportfolio",
           "attrs": {
             "name": "John Peters",
             "title": "Lead Software Engineer",
@@ -525,7 +525,7 @@
           }
         },
         {
-          "tag": "wb-cardportfolio",
+          "tag": "x-cardportfolio",
           "attrs": {
             "name": "Maya Rodriguez",
             "title": "AI Research Engineer",
@@ -540,7 +540,7 @@
           }
         },
         {
-          "tag": "wb-cardportfolio",
+          "tag": "x-cardportfolio",
           "attrs": {
             "name": "David Kowalski",
             "title": "Senior .NET Architect",
@@ -558,11 +558,11 @@
     },
     {
       "heading": "cardproduct",
-      "tag": "wb-cardproduct",
+      "tag": "x-cardproduct",
       "columns": 3,
       "demos": [
         {
-          "tag": "wb-cardproduct",
+          "tag": "x-cardproduct",
           "attrs": {
             "image": "https://picsum.photos/400/300?random=20",
             "title": "Wireless Headphones",
@@ -574,7 +574,7 @@
           }
         },
         {
-          "tag": "wb-cardproduct",
+          "tag": "x-cardproduct",
           "attrs": {
             "image": "https://picsum.photos/400/300?random=21",
             "title": "Mechanical Keyboard",
@@ -585,7 +585,7 @@
           }
         },
         {
-          "tag": "wb-cardproduct",
+          "tag": "x-cardproduct",
           "attrs": {
             "image": "https://picsum.photos/400/300?random=22",
             "title": "USB-C Hub",
@@ -598,11 +598,11 @@
     },
     {
       "heading": "cardtestimonial",
-      "tag": "wb-cardtestimonial",
+      "tag": "x-cardtestimonial",
       "columns": 3,
       "demos": [
         {
-          "tag": "wb-cardtestimonial",
+          "tag": "x-cardtestimonial",
           "attrs": {
             "quote": "This framework changed how we build UIs.",
             "author": "Sarah Kim",
@@ -612,7 +612,7 @@
           }
         },
         {
-          "tag": "wb-cardtestimonial",
+          "tag": "x-cardtestimonial",
           "attrs": {
             "quote": "Clean, fast, and easy to use. Highly recommend.",
             "author": "Marcus Lee",
@@ -622,7 +622,7 @@
           }
         },
         {
-          "tag": "wb-cardtestimonial",
+          "tag": "x-cardtestimonial",
           "attrs": {
             "quote": "The best component library I've worked with.",
             "author": "Priya Patel",
@@ -635,11 +635,11 @@
     },
     {
       "heading": "cardvideo",
-      "tag": "wb-cardvideo",
+      "tag": "x-cardvideo",
       "columns": 2,
       "demos": [
         {
-          "tag": "wb-cardvideo",
+          "tag": "x-cardvideo",
           "attrs": {
             "src": "https://www.w3schools.com/html/mov_bbb.mp4",
             "title": "Sample Video",
@@ -648,7 +648,7 @@
           }
         },
         {
-          "tag": "wb-cardvideo",
+          "tag": "x-cardvideo",
           "attrs": {
             "src": "https://www.w3schools.com/html/mov_bbb.mp4",
             "title": "Looping Muted",

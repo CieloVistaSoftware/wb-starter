@@ -1,7 +1,7 @@
 /**
  * Effect-based coverage for x-copybutton (#291): overlays a positioned copy
  * button on ANY element, reusing copy.js's shared writeToClipboard() core.
- * Distinct from x-copy (tests/behaviors/wb-button-effect.spec.ts covers that
+ * Distinct from x-copy (tests/behaviors/x-button-effect.spec.ts covers that
  * one's clipboard effect) — x-copy makes the element ITSELF the trigger;
  * x-copybutton puts a SEPARATE button on the element without changing what
  * the element does.
@@ -10,9 +10,9 @@
  * proven to produce its REAL effect (clipboard write / DOM mutation / event
  * payload) -- not just "the element rendered".
  *
- * Setup pattern copied from tests/behaviors/wb-button-effect.spec.ts: goto
+ * Setup pattern copied from tests/behaviors/x-button-effect.spec.ts: goto
  * the lightweight test-harness page (wb-lazy.js runtime), inject markup,
- * then WB.scan(document.body, { eager: true }) so behaviors attach
+ * then await WB.scan(document.body, { eager: true }) so behaviors attach
  * synchronously before any interaction is dispatched.
  */
 import { test, expect, Page } from '@playwright/test';

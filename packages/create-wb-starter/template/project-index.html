@@ -7,8 +7,8 @@
     <title>Project Index</title>
     <link rel="icon" type="image/svg+xml" href="favicon.svg">
     <link rel="apple-touch-icon" href="assets/icons/icon-192.png">
-    <link rel="stylesheet" href="src/styles/themes.css?v=4e594f1">
-    <link rel="stylesheet" href="src/styles/site.css?v=4e594f1">
+    <link rel="stylesheet" href="src/styles/themes.css?v=3.0.91">
+    <link rel="stylesheet" href="src/styles/site.css?v=3.0.91">
     <script type="module">
       import WB from './src/core/wb.js';
       WB.init({ autoInject: true });
@@ -32,54 +32,54 @@
         </div>
 
         <h2>New & Featured</h2>
-        <wb-grid min-width="300px" gap="1.5rem" class="featured" style="margin-bottom: 2rem;">
-            <wb-card-link href="demos/stage-light.html" title="Stage Light Demo" description="demos/stage-light.html" badge="NEWEST" badge-variant="gradient"></wb-card-link>
-            <wb-card-link href="demos/autoinject.html" title="Autoinject Demo" description="demos/autoinject.html" badge="RECENT" badge-variant="gradient"></wb-card-link>
-            <wb-card-link href="demos/layout-test.html" title="Layout Test" description="demos/layout-test.html" badge="RECENT" badge-variant="gradient"></wb-card-link>
-            <wb-card-link href="demos/card-examples.html" title="Card Examples" description="demos/card-examples.html" badge="RECENT" badge-variant="gradient"></wb-card-link>
-        </wb-grid>
+        <div x-grid min-width="300px" gap="1.5rem" class="featured" style="margin-bottom: 2rem;">
+            <div x-cardlink href="demos/stage-light.html" title="Stage Light Demo" description="demos/stage-light.html" badge="NEWEST" badge-variant="gradient"></div>
+            <div x-cardlink href="demos/autoinject.html" title="Autoinject Demo" description="demos/autoinject.html" badge="RECENT" badge-variant="gradient"></div>
+            <div x-cardlink href="demos/layout-test.html" title="Layout Test" description="demos/layout-test.html" badge="RECENT" badge-variant="gradient"></div>
+            <div x-cardlink href="demos/card-examples.html" title="Card Examples" description="demos/card-examples.html" badge="RECENT" badge-variant="gradient"></div>
+        </div>
 
         <h2>Demos</h2>
-        <wb-grid min-width="280px" gap="1rem" style="margin-bottom: 2rem;">
-            <wb-card-link href="demos/autoinject.html" title="autoinject.html" description="demos/autoinject.html" badge="Demo"></wb-card-link>
+        <div x-grid min-width="280px" gap="1rem" style="margin-bottom: 2rem;">
+            <div x-cardlink href="demos/autoinject.html" title="autoinject.html" description="demos/autoinject.html" badge="Demo"></div>
 
-            <wb-card-link href="demos/card.html" title="card.html" description="demos/card.html" badge="Demo"></wb-card-link>
-            <wb-card-link href="demos/code.html" title="code.html" description="demos/code.html" badge="Demo"></wb-card-link>
-            <wb-card-link href="demos/frameworks.html" title="frameworks.html" description="demos/frameworks.html" badge="Demo"></wb-card-link>
-            <wb-card-link href="demos/intellisense-check.html" title="intellisense-check.html" description="demos/intellisense-check.html" badge="Demo"></wb-card-link>
-            <wb-card-link href="demos/semantics-forms.html" title="semantics-forms.html" description="demos/semantics-forms.html" badge="Demo"></wb-card-link>
-            <wb-card-link href="demos/semantics-media.html" title="semantics-media.html" description="demos/semantics-media.html" badge="Demo"></wb-card-link>
-            <wb-card-link href="demos/semantics-structure.html" title="semantics-structure.html" description="demos/semantics-structure.html" badge="Demo"></wb-card-link>
-            <wb-card-link href="demos/semantics-theme.html" title="semantics-theme.html" description="demos/semantics-theme.html" badge="Demo"></wb-card-link>
-        </wb-grid>
+            <div x-cardlink href="demos/card.html" title="card.html" description="demos/card.html" badge="Demo"></div>
+            <div x-cardlink href="demos/code.html" title="code.html" description="demos/code.html" badge="Demo"></div>
+            <div x-cardlink href="demos/frameworks.html" title="frameworks.html" description="demos/frameworks.html" badge="Demo"></div>
+            <div x-cardlink href="demos/intellisense-check.html" title="intellisense-check.html" description="demos/intellisense-check.html" badge="Demo"></div>
+            <div x-cardlink href="demos/semantics-forms.html" title="semantics-forms.html" description="demos/semantics-forms.html" badge="Demo"></div>
+            <div x-cardlink href="demos/semantics-media.html" title="semantics-media.html" description="demos/semantics-media.html" badge="Demo"></div>
+            <div x-cardlink href="demos/semantics-structure.html" title="semantics-structure.html" description="demos/semantics-structure.html" badge="Demo"></div>
+            <div x-cardlink href="demos/semantics-theme.html" title="semantics-theme.html" description="demos/semantics-theme.html" badge="Demo"></div>
+        </div>
 
         <h2>Public Tools</h2>
-        <wb-grid min-width="280px" gap="1rem" style="margin-bottom: 2rem;">
-            <wb-card-link href="public/doc-viewer.html" title="doc-viewer.html" description="public/doc-viewer.html" badge="Tool"></wb-card-link>
-            <wb-card-link href="public/errors-viewer.html" title="errors-viewer.html" description="public/errors-viewer.html" badge="Tool"></wb-card-link>
-            <wb-card-link href="public/fix-viewer.html" title="fix-viewer.html" description="public/fix-viewer.html" badge="Tool"></wb-card-link>
-            <wb-card-link href="public/schema-viewer.html" title="schema-viewer.html" description="public/schema-viewer.html" badge="Tool"></wb-card-link>
-        </wb-grid>
+        <div x-grid min-width="280px" gap="1rem" style="margin-bottom: 2rem;">
+            <div x-cardlink href="public/doc-viewer.html" title="doc-viewer.html" description="public/doc-viewer.html" badge="Tool"></div>
+            <div x-cardlink href="public/errors-viewer.html" title="errors-viewer.html" description="public/errors-viewer.html" badge="Tool"></div>
+            <div x-cardlink href="public/fix-viewer.html" title="fix-viewer.html" description="public/fix-viewer.html" badge="Tool"></div>
+            <div x-cardlink href="public/schema-viewer.html" title="schema-viewer.html" description="public/schema-viewer.html" badge="Tool"></div>
+        </div>
 
         <h2>Pages</h2>
-        <wb-grid min-width="280px" gap="1rem" style="margin-bottom: 2rem;">
-            <wb-card-link href="pages/about.html" title="about.html" description="pages/about.html" badge="Page"></wb-card-link>
-            <wb-card-link href="pages/components.html" title="components.html" description="pages/components.html" badge="Page"></wb-card-link>
-            <wb-card-link href="pages/contact.html" title="contact.html" description="pages/contact.html" badge="Page"></wb-card-link>
-            <wb-card-link href="pages/demos.html" title="demos.html" description="pages/demos.html" badge="Page"></wb-card-link>
-            <wb-card-link href="pages/docs.html" title="docs.html" description="pages/docs.html" badge="Page"></wb-card-link>
-            <wb-card-link href="pages/features.html" title="features.html" description="pages/features.html" badge="Page"></wb-card-link>
-            <wb-card-link href="pages/hero-variants.html" title="hero-variants.html" description="pages/hero-variants.html" badge="Page"></wb-card-link>
-            <wb-card-link href="pages/home.html" title="home.html" description="pages/home.html" badge="Page"></wb-card-link>
-            <wb-card-link href="pages/links.html" title="links.html" description="pages/links.html" badge="Page"></wb-card-link>
-            <wb-card-link href="pages/newpage.html" title="newpage.html" description="pages/newpage.html" badge="Page"></wb-card-link>
-            <wb-card-link href="pages/schema-first-architecture.html" title="schema-first-architecture.html" description="pages/schema-first-architecture.html" badge="Page"></wb-card-link>
-        </wb-grid>
+        <div x-grid min-width="280px" gap="1rem" style="margin-bottom: 2rem;">
+            <div x-cardlink href="pages/about.html" title="about.html" description="pages/about.html" badge="Page"></div>
+            <div x-cardlink href="pages/components.html" title="components.html" description="pages/components.html" badge="Page"></div>
+            <div x-cardlink href="pages/contact.html" title="contact.html" description="pages/contact.html" badge="Page"></div>
+            <div x-cardlink href="pages/demos.html" title="demos.html" description="pages/demos.html" badge="Page"></div>
+            <div x-cardlink href="pages/docs.html" title="docs.html" description="pages/docs.html" badge="Page"></div>
+            <div x-cardlink href="pages/features.html" title="features.html" description="pages/features.html" badge="Page"></div>
+            <div x-cardlink href="pages/hero-variants.html" title="hero-variants.html" description="pages/hero-variants.html" badge="Page"></div>
+            <div x-cardlink href="pages/home.html" title="home.html" description="pages/home.html" badge="Page"></div>
+            <div x-cardlink href="pages/links.html" title="links.html" description="pages/links.html" badge="Page"></div>
+            <div x-cardlink href="pages/newpage.html" title="newpage.html" description="pages/newpage.html" badge="Page"></div>
+            <div x-cardlink href="pages/schema-first-architecture.html" title="schema-first-architecture.html" description="pages/schema-first-architecture.html" badge="Page"></div>
+        </div>
 
         <h2>Tests</h2>
-        <wb-grid min-width="280px" gap="1rem" style="margin-bottom: 2rem;">
-            <wb-card-link href="tests/index.html" title="index.html" description="tests/index.html" badge="Test"></wb-card-link>
-        </wb-grid>
+        <div x-grid min-width="280px" gap="1rem" style="margin-bottom: 2rem;">
+            <div x-cardlink href="tests/index.html" title="index.html" description="tests/index.html" badge="Test"></div>
+        </div>
     </main>
 </body>
 

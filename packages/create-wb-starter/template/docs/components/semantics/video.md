@@ -6,10 +6,10 @@ Enhanced HTML5 video player with configurable defaults.
 
 | Property | Value |
 |----------|-------|
-| Custom Tag | `<wb-video>` |
+| Custom Tag | `<video>` |
 | Behavior | `video` |
 | Semantic | `<video>` |
-| Root CSS Class | `wb-video` |
+| Root CSS Class | `x-video` |
 | Category | Media |
 
 ## Properties
@@ -24,25 +24,24 @@ Enhanced HTML5 video player with configurable defaults.
 | `loop` | boolean | `false` | Loop playback |
 | `playsInline` | boolean | `true` | Play inline on mobile |
 
-Wrapped in `<wb-demo>`, so the live component renders below with its source shown underneath:
+Wrapped in `<div x-demo>`, so the live component renders below with its source shown underneath:
 
-<wb-demo>
-<wb-video src="movie.mp4"></wb-video>
-</wb-demo>
+<div x-demo>
+<video src="https://interactive-examples.mdn.mozilla.net/media/cc0-videos/flower.mp4"></video>
+</div>
 
 ## Usage
 
 ### Custom Element
 
 ```html
-<wb-video src="movie.mp4"></wb-video>
+<video src="movie.mp4"></video>
 ```
 
 ### Native Video (Enhanced)
 
 ```html
 <video
-  x-video
   src="clip.mp4"
   controls>
 </video>
@@ -51,32 +50,32 @@ Wrapped in `<wb-demo>`, so the live component renders below with its source show
 ### With Poster
 
 ```html
-<wb-video
+<video
   src="movie.mp4"
-  poster="thumbnail.jpg">
-</wb-video>
+  poster="https://picsum.photos/seed/thumbnail/800/450">
+</video>
 ```
 
 ### Background Video
 
 ```html
-<wb-video
+<video
   src="background.mp4"
   autoplay
   muted
   loop
   controls="false">
-</wb-video>
+</video>
 ```
 
 ## Generated Structure
 
 ```html
-<div class="wb-video">
+<div class="x-video">
   <video
-    class="wb-video__player"
+    class="x-video__player"
     src="movie.mp4"
-    poster="thumb.jpg"
+    poster="https://picsum.photos/seed/thumb/800/450"
     controls
     playsinline>
   </video>
@@ -97,7 +96,7 @@ Wrapped in `<wb-demo>`, so the live component renders below with its source show
 | `unmute()` | Unmutes audio | - |
 
 ```javascript
-const video = document.querySelector('wb-video');
+const video = document.querySelector('x-video');
 
 // Playback
 video.play();
@@ -133,9 +132,9 @@ video.addEventListener('ended', () => {
 
 | Class | Applied When | Description |
 |-------|--------------|-------------|
-| `.wb-video` | Always | Base styling |
-| `.wb-video--playing` | Playing | Playback active |
-| `.wb-video--fullscreen` | Fullscreen | Fullscreen mode |
+| `.x-video` | Always | Base styling |
+| `.x-video--playing` | Playing | Playback active |
+| `.x-video--fullscreen` | Fullscreen | Fullscreen mode |
 
 ## Accessibility
 
@@ -145,11 +144,11 @@ The native video element provides built-in accessibility:
 - Captions support via `<track>` elements
 
 ```html
-<wb-video src="movie.mp4">
+<video src="movie.mp4">
   <track
     kind="captions"
     src="captions.vtt"
     srclang="en"
     label="English">
-</wb-video>
+</video>
 ```

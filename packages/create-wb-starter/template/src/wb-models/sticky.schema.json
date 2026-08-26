@@ -4,12 +4,12 @@
   "title": "Sticky",
   "description": "Makes element stick to viewport on scroll",
   "schemaFor": "sticky",
-  "baseClass": "wb-sticky",
+  "baseClass": "x-sticky",
   "semanticElement": {
     "tagName": "div"
   },
   "compliance": {
-    "baseClass": "wb-sticky",
+    "baseClass": "x-sticky",
     "supportLevel": "stable",
     "accessibility": "high"
   },
@@ -64,19 +64,19 @@
     }
   },
   "$cssAPI": {
-    "--wb-sticky-offset": {
+    "--x-sticky-offset": {
       "default": "0",
       "description": "Top offset when stuck"
     },
-    "--wb-sticky-z-index": {
+    "--x-sticky-z-index": {
       "default": "100",
       "description": "Z-index when stuck"
     },
-    "--wb-sticky-transition": {
+    "--x-sticky-transition": {
       "default": "all 0.2s ease",
       "description": "Transition"
     },
-    "--wb-sticky-shadow": {
+    "--x-sticky-shadow": {
       "default": "0 2px 8px rgba(0,0,0,0.1)",
       "description": "Shadow when stuck"
     }
@@ -94,13 +94,13 @@
   },
   "test": {
     "setup": [
-      "<wb-sticky>Basic sticky content</wb-sticky>",
-      "<wb-sticky animated>with animated</wb-sticky>",
-      "<wb-sticky offset=\"0\">offset=\"0\"</wb-sticky>",
-      "<wb-sticky z-index=\"100\">zIndex=100</wb-sticky>",
-      "<wb-sticky threshold=\"50\">threshold=50</wb-sticky>",
-      "<wb-sticky stuck-class=\"is-stuck\">stuckClass=\"is-stuck\"</wb-sticky>",
-      "<wb-sticky>Navigation</wb-sticky>"
+      "<div x-sticky>Basic sticky content</div>",
+      "<div x-sticky animated>with animated</div>",
+      "<div x-sticky offset=\"0\">offset=\"0\"</div>",
+      "<div x-sticky z-index=\"100\">zIndex=100</div>",
+      "<div x-sticky threshold=\"50\">threshold=50</div>",
+      "<div x-sticky stuck-class=\"is-stuck\">stuckClass=\"is-stuck\"</div>",
+      "<div x-sticky>Navigation</div>"
     ],
     "matrix": {
       "combinations": [
@@ -115,9 +115,9 @@
     },
     "site": {
       "page": "layout",
-      "tag": "wb-sticky",
+      "tag": "x-sticky",
       "renders": true,
-      "baseClass": "wb-sticky",
+      "baseClass": "x-sticky",
       "minInstances": 3,
       "checkText": [],
       "checkClasses": [],

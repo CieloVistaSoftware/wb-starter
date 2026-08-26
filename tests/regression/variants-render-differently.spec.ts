@@ -18,8 +18,8 @@
  *
  * Every existing test asserts a variant applies its CLASS. None asserts the
  * class changes anything a reader can see — so a variant whose CSS was never
- * written passes today. `wb-card--glass` being present proves nothing if no
- * rule matches `.wb-card--glass`. The fingerprint below is therefore taken
+ * written passes today. `x-card--glass` being present proves nothing if no
+ * rule matches `.x-card--glass`. The fingerprint below is therefore taken
  * from getComputedStyle, which is the only thing that reflects what actually
  * reached the screen.
  *

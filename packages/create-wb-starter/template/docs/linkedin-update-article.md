@@ -18,7 +18,7 @@ The founding principle held — **zero build step, drop the tag in, it works** �
 | Standards | 100% Web Standards |
 | Error Handling | Enterprise-grade, regression-tested |
 
-The suite spans cards, feedback, form controls, overlays, layout, media, effects, and interactive utilities — from a basic `<wb-card>` to a 15-band graphic equalizer audio player.
+The suite spans cards, feedback, form controls, overlays, layout, media, effects, and interactive utilities — from a basic `<article>` to a 15-band graphic equalizer audio player.
 
 ## 💡 The Correction Worth Making
 

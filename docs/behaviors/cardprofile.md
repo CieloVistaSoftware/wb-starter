@@ -1,19 +1,19 @@
 # Card Profile
 
-A card for presenting a person: avatar, name, role, short bio, and an
-optional cover image across the top.
+Simple profile card. INHERITS from card.base (IS-A card), CONTAINS profile elements (HAS-A avatar, name, role, bio, cover).
 
-It builds on the same structure as `card`, so the layout, variants and sizing
-behave the same way — this one just arranges those regions for a profile.
+## Type — new capability
 
-Apply `x-cardprofile` to any element.
+`x-cardprofile` adds behavior that no HTML element implies. Nothing about a tag says "ripple" or "tooltip", so this is always opted into by attribute, on whatever element you already chose.
 
-## Usage
+### How to write it
 
 ```html
-<div x-cardprofile>
-  …
-</div>
+<article x-cardprofile
+  name="Grace Hopper"
+  role="Compiler pioneer"
+  avatar="https://picsum.photos/seed/grace/96/96"
+  bio="Wrote the first compiler, then spent a career arguing that people should not have to write machine code."></article>
 ```
 
 ## Attributes

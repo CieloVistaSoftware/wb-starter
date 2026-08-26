@@ -4,13 +4,13 @@
   "title": "Horizontal Card",
   "description": "Card with horizontal layout - image on side, content on other",
   "schemaFor": "cardhorizontal",
-  "baseClass": "wb-card-horizontal",
+  "baseClass": "x-card-horizontal",
   "semanticElement": {
     "tagName": "article",
     "implicitRole": "article"
   },
   "compliance": {
-    "baseClass": "wb-card-horizontal",
+    "baseClass": "x-card-horizontal",
     "supportLevel": "stable",
     "accessibility": "high"
   },
@@ -33,7 +33,7 @@
         "right"
       ],
       "default": "left",
-      "appliesClass": "wb-card-horizontal--image-{{value}}"
+      "appliesClass": "x-card-horizontal--image-{{value}}"
     },
     "imageWidth": {
       "type": "string",
@@ -60,7 +60,7 @@
         "minimal"
       ],
       "default": "default",
-      "appliesClass": "wb-card-horizontal--{{value}}"
+      "appliesClass": "x-card-horizontal--{{value}}"
     }
   },
   "$view": [
@@ -136,67 +136,67 @@
     }
   },
   "$cssAPI": {
-    "--wb-card-horizontal-gap": {
+    "--x-card-horizontal-gap": {
       "default": "1rem",
       "description": "Gap between image and content"
     },
-    "--wb-card-horizontal-radius": {
+    "--x-card-horizontal-radius": {
       "default": "8px",
       "description": "Border radius"
     },
-    "--wb-card-horizontal-bg": {
+    "--x-card-horizontal-bg": {
       "default": "var(--bg-surface, #ffffff)",
       "description": "Background"
     },
-    "--wb-card-horizontal-border": {
+    "--x-card-horizontal-border": {
       "default": "none",
       "description": "Border"
     },
-    "--wb-card-horizontal-shadow": {
+    "--x-card-horizontal-shadow": {
       "default": "none",
       "description": "Box shadow"
     },
-    "--wb-card-horizontal-image-width": {
+    "--x-card-horizontal-image-width": {
       "default": "40%",
       "description": "Image width"
     },
-    "--wb-card-horizontal-image-radius": {
+    "--x-card-horizontal-image-radius": {
       "default": "8px 0 0 8px",
       "description": "Image border radius"
     },
-    "--wb-card-horizontal-content-padding": {
+    "--x-card-horizontal-content-padding": {
       "default": "1rem",
       "description": "Content padding"
     },
-    "--wb-card-horizontal-title-size": {
+    "--x-card-horizontal-title-size": {
       "default": "1.125rem",
       "description": "Title font size"
     },
-    "--wb-card-horizontal-title-weight": {
+    "--x-card-horizontal-title-weight": {
       "default": "600",
       "description": "Title font weight"
     },
-    "--wb-card-horizontal-subtitle-size": {
+    "--x-card-horizontal-subtitle-size": {
       "default": "0.875rem",
       "description": "Subtitle font size"
     },
-    "--wb-card-horizontal-subtitle-color": {
+    "--x-card-horizontal-subtitle-color": {
       "default": "var(--text-secondary, #666)",
       "description": "Subtitle color"
     }
   },
   "test": {
     "setup": [
-      "<wb-cardhorizontal>Basic cardhorizontal content</wb-cardhorizontal>",
-      "<wb-cardhorizontal image-position=\"left\">imagePosition=left</wb-cardhorizontal>",
-      "<wb-cardhorizontal image-position=\"right\">imagePosition=right</wb-cardhorizontal>",
-      "<wb-cardhorizontal variant=\"default\">variant=default</wb-cardhorizontal>",
-      "<wb-cardhorizontal variant=\"elevated\">variant=elevated</wb-cardhorizontal>",
-      "<wb-cardhorizontal variant=\"bordered\">variant=bordered</wb-cardhorizontal>",
-      "<wb-cardhorizontal image=\"Sample image\">image=\"Sample image\"</wb-cardhorizontal>",
-      "<wb-cardhorizontal image-alt=\"Sample imageAlt\">imageAlt=\"Sample imageAlt\"</wb-cardhorizontal>",
-      "<wb-cardhorizontal title=\"Test Title\">With title attribute</wb-cardhorizontal>",
-      "<wb-card-horizontal image=\"photo.jpg\" title=\"Title\"></wb-card-horizontal>"
+      "<div x-cardhorizontal>Basic cardhorizontal content</div>",
+      "<div x-cardhorizontal image-position=\"left\">imagePosition=left</div>",
+      "<div x-cardhorizontal image-position=\"right\">imagePosition=right</div>",
+      "<div x-cardhorizontal variant=\"default\">variant=default</div>",
+      "<div x-cardhorizontal variant=\"elevated\">variant=elevated</div>",
+      "<div x-cardhorizontal variant=\"bordered\">variant=bordered</div>",
+      "<div x-cardhorizontal image=\"Sample image\">image=\"Sample image\"</div>",
+      "<div x-cardhorizontal image-alt=\"Sample imageAlt\">imageAlt=\"Sample imageAlt\"</div>",
+      "<div x-cardhorizontal title=\"Test Title\">With title attribute</div>",
+      "<div x-cardhorizontal image=\"photo.jpg\" title=\"Title\"></div>"
     ],
     "matrix": {
       "combinations": [
@@ -223,17 +223,17 @@
     },
     "site": {
       "page": "cards",
-      "tag": "wb-cardhorizontal",
+      "tag": "x-cardhorizontal",
       "renders": true,
-      "baseClass": "wb-card-horizontal",
+      "baseClass": "x-card-horizontal",
       "minInstances": 4,
       "checkText": [
         "Title",
         "Subtitle"
       ],
       "checkClasses": [
-        "wb-card-horizontal--image-right",
-        "wb-card-horizontal--elevated"
+        "x-card-horizontal--image-right",
+        "x-card-horizontal--elevated"
       ],
       "checkAttributes": [
         "image",

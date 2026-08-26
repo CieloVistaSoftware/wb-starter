@@ -105,7 +105,7 @@ export function getExtensionBehavior(attrName)
 Maps `<wb-*>` tag names to behavior names.
 
 **Source Data:** Schema filenames in `src/wb-models/`  
-**Format:** `{ 'wb-card': 'card', 'wb-alert': 'alert', ... }`
+**Format:** `{ 'x-card': 'card', 'x-alert': 'alert', ... }`
 
 **Generation Logic:**
 ```javascript
@@ -113,39 +113,39 @@ Maps `<wb-*>` tag names to behavior names.
 // Extract filename without extension
 // Handle naming conventions:
 
-// Standard: alert.schema.json → wb-alert
-// Compound: cardpricing.schema.json → wb-card-pricing
-// Exception: cardstats.schema.json → wb-card-stats (preserve camelCase)
+// Standard: alert.schema.json → x-alert
+// Compound: cardpricing.schema.json → x-card-pricing
+// Exception: cardstats.schema.json → x-card-stats (preserve camelCase)
 
 elementMap = {
-  'wb-card': 'card',
-  'wb-card-stats': 'cardstats',
-  'wb-card-pricing': 'cardpricing',
-  'wb-card-product': 'cardproduct',
-  'wb-alert': 'alert',
-  'wb-avatar': 'avatar',
-  'wb-badge': 'badge',
-  'wb-button': 'button',
-  'wb-checkbox': 'checkbox',
-  'wb-dialog': 'dialog',
-  'wb-dropdown': 'dropdown',
-  'wb-progress': 'progress',
-  'wb-radio': 'radio',
-  'wb-select': 'select',
-  'wb-switch': 'switch',
-  'wb-table': 'table',
-  'wb-tabs': 'tabs',
-  'wb-textarea': 'textarea',
-  'wb-timeline': 'timeline',
-  'wb-toast': 'toast',
-  'wb-toggle': 'toggle',
-  'wb-tooltip': 'tooltip',
+  'x-card': 'card',
+  'x-card-stats': 'cardstats',
+  'x-card-pricing': 'cardpricing',
+  'x-card-product': 'cardproduct',
+  'x-alert': 'alert',
+  'x-avatar': 'avatar',
+  'x-badge': 'badge',
+  'x-button': 'button',
+  'x-checkbox': 'checkbox',
+  'x-dialog': 'dialog',
+  'x-dropdown': 'dropdown',
+  'x-progress': 'progress',
+  'x-radio': 'radio',
+  'x-select': 'select',
+  'x-switch': 'switch',
+  'x-table': 'table',
+  'x-tabs': 'tabs',
+  'x-textarea': 'textarea',
+  'x-timeline': 'timeline',
+  'x-toast': 'toast',
+  'x-toggle': 'toggle',
+  'x-tooltip': 'tooltip',
   // ... (80+ entries)
 }
 ```
 
 **Notes:**
-- Compound names: schema file `cardhero.schema.json` → element `<wb-card-hero>` → behavior `cardhero`
+- Compound names: schema file `cardhero.schema.json` → element `<div x-cardhero>` → behavior `cardhero`
 - Naming must match `wb.js` behavior imports exactly
 - Document any special cases (e.g., `span.schema.json` → no auto-inject)
 
@@ -242,7 +242,7 @@ allBehaviors = {
 ```javascript
 /**
  * Detect behavior from element tag name
- * @param {string} tagName - e.g., 'wb-card', 'wb-card-pricing'
+ * @param {string} tagName - e.g., 'x-card', 'x-card-pricing'
  * @returns {string|null} Behavior name or null
  */
 export function getElementBehavior(tagName) {
@@ -287,8 +287,8 @@ export function getExtensionBehavior(attrName) {
 // === CUSTOM ELEMENT MAPPINGS ===
 // <article> → card behavior + card.schema.json
 export const elementMap = {
-  'wb-card': 'card',
-  'wb-card-stats': 'cardstats',
+  'x-card': 'card',
+  'x-card-stats': 'cardstats',
   // ... (80 total)
 };
 
@@ -525,7 +525,7 @@ Phase 1 is complete when:
 ## Open Questions for John
 
 1. **Compound naming:** Should `cardhero.schema.json` map to:
-   - `wb-card-hero` (kebab-case, matches HTML convention)?
+   - `x-card-hero` (kebab-case, matches HTML convention)?
    - `<article x-cardhero>` (single tag)?
 
 2. **Extension validation:** Should invalid `x-*` attributes:

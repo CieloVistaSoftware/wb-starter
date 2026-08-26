@@ -29,11 +29,11 @@
   "sections": [
     {
       "heading": "cardportfolio — Combinations",
-      "tag": "wb-cardportfolio",
+      "tag": "x-cardportfolio",
       "columns": 2,
       "demos": [
         {
-          "tag": "wb-cardportfolio",
+          "tag": "x-cardportfolio",
           "attrs": {
             "name": "Jane Smith",
             "title": "UX Designer",
@@ -44,7 +44,7 @@
           }
         },
         {
-          "tag": "wb-cardportfolio",
+          "tag": "x-cardportfolio",
           "attrs": {
             "name": "John Doe",
             "title": "Senior Engineer",
@@ -55,7 +55,7 @@
           }
         },
         {
-          "tag": "wb-cardportfolio",
+          "tag": "x-cardportfolio",
           "attrs": {
             "name": "Sarah Chen",
             "title": "Product Manager",
@@ -66,7 +66,7 @@
           }
         },
         {
-          "tag": "wb-cardportfolio",
+          "tag": "x-cardportfolio",
           "attrs": {
             "name": "Alex Rivera",
             "title": "Full Stack Dev",
@@ -80,32 +80,32 @@
     },
     {
       "heading": "availability variants",
-      "tag": "wb-cardportfolio",
+      "tag": "x-cardportfolio",
       "columns": 2,
       "demos": [
         {
-          "tag": "wb-cardportfolio",
+          "tag": "x-cardportfolio",
           "attrs": {
             "availability": "available",
             "name": "Sample name"
           }
         },
         {
-          "tag": "wb-cardportfolio",
+          "tag": "x-cardportfolio",
           "attrs": {
             "availability": "busy",
             "name": "Sample name"
           }
         },
         {
-          "tag": "wb-cardportfolio",
+          "tag": "x-cardportfolio",
           "attrs": {
             "availability": "not-available",
             "name": "Sample name"
           }
         },
         {
-          "tag": "wb-cardportfolio",
+          "tag": "x-cardportfolio",
           "attrs": {
             "availability": "open-to-opportunities",
             "name": "Sample name"
@@ -115,32 +115,32 @@
     },
     {
       "heading": "Variants",
-      "tag": "wb-cardportfolio",
+      "tag": "x-cardportfolio",
       "columns": 2,
       "demos": [
         {
-          "tag": "wb-cardportfolio",
+          "tag": "x-cardportfolio",
           "attrs": {
             "variant": "default",
             "name": "Sample name"
           }
         },
         {
-          "tag": "wb-cardportfolio",
+          "tag": "x-cardportfolio",
           "attrs": {
             "variant": "compact",
             "name": "Sample name"
           }
         },
         {
-          "tag": "wb-cardportfolio",
+          "tag": "x-cardportfolio",
           "attrs": {
             "variant": "horizontal",
             "name": "Sample name"
           }
         },
         {
-          "tag": "wb-cardportfolio",
+          "tag": "x-cardportfolio",
           "attrs": {
             "variant": "full",
             "name": "Sample name"
@@ -150,46 +150,46 @@
     },
     {
       "heading": "size variants",
-      "tag": "wb-cardportfolio",
+      "tag": "x-cardportfolio",
       "columns": 3,
       "demos": [
         {
-          "tag": "wb-cardportfolio",
+          "tag": "x-cardportfolio",
           "attrs": {
             "size": "sm",
             "name": "Sample name"
           }
         },
         {
-          "tag": "wb-cardportfolio",
+          "tag": "x-cardportfolio",
           "attrs": {
             "size": "md",
             "name": "Sample name"
           }
         },
         {
-          "tag": "wb-cardportfolio",
+          "tag": "x-cardportfolio",
           "attrs": {
             "size": "lg",
             "name": "Sample name"
           }
         },
         {
-          "tag": "wb-cardportfolio",
+          "tag": "x-cardportfolio",
           "attrs": {
             "size": "xl",
             "name": "Sample name"
           }
         },
         {
-          "tag": "wb-cardportfolio",
+          "tag": "x-cardportfolio",
           "attrs": {
             "size": "full",
             "name": "Sample name"
           }
         },
         {
-          "tag": "wb-cardportfolio",
+          "tag": "x-cardportfolio",
           "attrs": {
             "size": "auto",
             "name": "Sample name"

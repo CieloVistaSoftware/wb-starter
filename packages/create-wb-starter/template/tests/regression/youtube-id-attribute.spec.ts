@@ -34,12 +34,12 @@ test.describe('x-youtube reads id="..." as the video ID (#377)', () => {
     await page.evaluate(() => (window as any).WB.scan(document.getElementById('yt-test-container'), { eager: true }));
 
     const host = page.locator('#yt-test-container [x-youtube]');
-    await expect(host).toHaveClass(/wb-youtube/, { timeout: 5000 });
+    await expect(host).toHaveClass(/x-youtube/, { timeout: 5000 });
 
     const noIdWarning = warnings.find(w => w.includes('No video ID provided'));
     expect(noIdWarning, `youtube() logged: ${noIdWarning}`).toBeFalsy();
 
-    const poster = host.locator('.wb-youtube__poster');
+    const poster = host.locator('.x-youtube__poster');
     await expect(poster, 'a click-to-play poster should render once an id is resolved').toBeVisible();
 
     await poster.click();

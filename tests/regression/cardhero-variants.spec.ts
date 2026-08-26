@@ -1,7 +1,7 @@
 import { test, expect } from '@playwright/test';
 
 /**
- * REGRESSION (#383): <wb-cardhero variant="cosmic|split|minimal|gradient">
+ * REGRESSION (#383): <div x-cardhero variant="cosmic|split|minimal|gradient">
  * was documented in cardhero.schema.json's enum but cardhero() (src/wb-
  * viewmodels/card.js) never read `variant` at all -- every variant rendered
  * pixel-identical to the default.
@@ -19,20 +19,20 @@ test.describe('cardhero variant= produces genuinely distinct visuals (#383)', ()
       const container = document.createElement('div');
       container.id = 'cardhero-variant-test';
       container.innerHTML = vs
-        .map((v) => `<wb-cardhero variant="${v}" title="Title" style="width:400px;height:200px;"></wb-cardhero>`)
+        .map((v) => `<div x-cardhero variant="${v}" title="Title" style="width:400px;height:200px;"></div>`)
         .join('');
       document.body.appendChild(container);
     }, variants);
-    await page.evaluate(() => (window as any).WB.scan(document.getElementById('cardhero-variant-test'), { eager: true }));
+    await page.evaluate(async () => await (window as any).WB.scan(document.getElementById('cardhero-variant-test'), { eager: true }));
 
-    const heroes = page.locator('#cardhero-variant-test wb-cardhero');
+    const heroes = page.locator('#cardhero-variant-test [x-cardhero]');
     await expect(heroes).toHaveCount(5);
 
     const backgrounds: string[] = [];
     for (let i = 0; i < 5; i++) {
       const el = heroes.nth(i);
       await expect(el, `variant="${variants[i]}" must carry its class`).toHaveClass(
-        variants[i] === 'default' ? /wb-hero/ : new RegExp(`wb-cardhero--${variants[i]}`)
+        variants[i] === 'default' ? /x-hero/ : new RegExp(`x-cardhero--${variants[i]}`)
       );
       backgrounds.push(await el.evaluate((e) => getComputedStyle(e).backgroundImage));
     }
@@ -47,8 +47,8 @@ test.describe('cardhero variant= produces genuinely distinct visuals (#383)', ()
     expect(unique.size, `default/cosmic/minimal/gradient must all look different, got:\n${colorVariantIndexes.map((i) => `${variants[i]}: ${backgrounds[i].slice(0, 80)}`).join('\n')}`).toBe(colorBackgrounds.length);
 
     // split specifically: content must NOT be horizontally centered like the default.
-    const splitContent = heroes.nth(variants.indexOf('split')).locator('.wb-card__hero-content');
-    const defaultContent = heroes.nth(variants.indexOf('default')).locator('.wb-card__hero-content');
+    const splitContent = heroes.nth(variants.indexOf('split')).locator('.x-card__hero-content');
+    const defaultContent = heroes.nth(variants.indexOf('default')).locator('.x-card__hero-content');
     const [splitBox, splitParentBox, defaultBox, defaultParentBox] = await Promise.all([
       splitContent.boundingBox(),
       heroes.nth(variants.indexOf('split')).boundingBox(),

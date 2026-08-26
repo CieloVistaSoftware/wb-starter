@@ -5,7 +5,7 @@
 
 (() => {
   const initPremiumNavbar = () => {
-    const navbar = document.querySelector('wb-navbar');
+    const navbar = document.querySelector('[x-navbar]');
     
     if (!navbar) return;
     

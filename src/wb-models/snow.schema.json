@@ -4,12 +4,12 @@
   "title": "Snow",
   "description": "Falling snowflake animation effect",
   "schemaFor": "snow",
-  "baseClass": "wb-snow",
+  "baseClass": "x-snow",
   "semanticElement": {
     "tagName": "div"
   },
   "compliance": {
-    "baseClass": "wb-snow",
+    "baseClass": "x-snow",
     "supportLevel": "stable",
     "accessibility": "high"
   },
@@ -76,11 +76,11 @@
     }
   },
   "$cssAPI": {
-    "--wb-snow-z-index": {
+    "--x-snow-z-index": {
       "default": "9999",
       "description": "Z-index"
     },
-    "--wb-snow-color": {
+    "--x-snow-color": {
       "default": "#ffffff",
       "description": "Snowflake color"
     }
@@ -95,13 +95,13 @@
   },
   "test": {
     "setup": [
-      "<wb-snow>Basic snow content</wb-snow>",
-      "<wb-snow show-button>with showButton</wb-snow>",
-      "<wb-snow repeat>with repeat</wb-snow>",
-      "<wb-snow count=\"30\">count=30</wb-snow>",
-      "<wb-snow label=\"Let it Snow!\">label=\"Let it Snow!\"</wb-snow>",
-      "<wb-snow delay=\"0s\">delay=\"0s\"</wb-snow>",
-      "<wb-snow duration=\"8s\">duration=\"8s\"</wb-snow>"
+      "<div x-snow>Basic snow content</div>",
+      "<div x-snow show-button>with showButton</div>",
+      "<div x-snow repeat>with repeat</div>",
+      "<div x-snow count=\"30\">count=30</div>",
+      "<div x-snow label=\"Let it Snow!\">label=\"Let it Snow!\"</div>",
+      "<div x-snow delay=\"0s\">delay=\"0s\"</div>",
+      "<div x-snow duration=\"8s\">duration=\"8s\"</div>"
     ],
     "matrix": {
       "combinations": [
@@ -116,9 +116,9 @@
     },
     "site": {
       "page": "effects",
-      "tag": "wb-snow",
+      "tag": "x-snow",
       "renders": true,
-      "baseClass": "wb-snow",
+      "baseClass": "x-snow",
       "minInstances": 3,
       "checkText": [],
       "checkClasses": [],

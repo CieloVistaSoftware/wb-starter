@@ -1,7 +1,6 @@
 // Site Engine Module
 // Contains WBSite class and site logic
 import WB from './wb.js';  // v3.0: Use main wb.js with schema support
-import { initViews } from './wb-views.js';
 import { preloadCssForHtml } from './style-loader.js';
 import { VERSION } from './version.js';
 
@@ -63,13 +62,9 @@ export default class WBSite {
       this.initStickyFooter();
       this.initWheelScrollFallback();
 
-      // Initialize Views System
-      await initViews({
-        registry: [
-          'src/wb-views/views-registry.json',
-          'src/wb-views/partials-registry.json'
-        ]
-      });
+      // The wb-views system was removed with the component tags: <div>
+      // was one. It ran here on every page load, fetching two registries and
+      // 47 partials, and no page in pages/ ever used it — only two demos did.
 
       await WB.init({
         debug: false,
@@ -110,7 +105,7 @@ export default class WBSite {
               e.preventDefault();
               // #181's own fix (scrollIntoView instead of native anchor
               // jump) still isn't enough on a page as long/image-heavy as
-              // components.html's: dozens of <wb-cardimage>/<wb-cardhero>
+              // components.html's: dozens of <div x-cardimage>/<div x-cardhero>
               // external images ABOVE a lower target keep loading and
               // growing the page's total height for SECONDS after this
               // fires (confirmed live on a 47,500px-tall render: a fixed
@@ -197,7 +192,7 @@ export default class WBSite {
         </main>
       </div>
       ${this.renderFooter()}
-      <wb-notes id="siteNotes" x-eager position="right"></wb-notes>
+      <div x-notes id="siteNotes" x-eager position="right"></div>
     `;
     const toggleBtn = app.querySelector('.nav__toggle');
     if (toggleBtn) {
@@ -226,7 +221,7 @@ export default class WBSite {
     this.updateActiveNav();
 
     // === Runtime check for duplicate theme switchers ===
-    const themeSwitchers = document.querySelectorAll('wb-themecontrol');
+    const themeSwitchers = document.querySelectorAll('[x-themecontrol]');
     if (themeSwitchers.length > 1) {
       console.warn(`⚠️ Found ${themeSwitchers.length} theme switchers on the page!`);
       themeSwitchers.forEach((el, i) => {
@@ -246,15 +241,19 @@ export default class WBSite {
             ${branding.headerLogoImage ? `<span class="header__logo-icon" id="headerLogoIcon">${branding.headerLogoImage}</span>` : ''}
             <span class="header__logo-text" id="headerLogoText">${branding.companyName}</span>
           </a>
-          <a href="#" class="header__version" id="headerVersion" x-ripple x-release></a>
+          <!-- #821: a button, not a link. x-release clears caches and reloads;
+               it navigates nowhere, so href="#" was only there to make an
+               anchor clickable. An <a> announces as a link and promises
+               navigation, and Enter/Space differ between the two. -->
+          <button type="button" class="header__version" id="headerVersion" x-ripple x-release></button>
         </div>
         <div class="header__right" id="headerRight" style="gap: 1rem;">
           ${headerSettings.displaySearchBar ? `
             <div class="header__search" id="headerSearch">
-              <input type="search" placeholder="Search..." aria-label="Search" class="wb-input-glass" style="padding: 0.4rem 0.8rem; width: 200px;">
+              <input type="search" placeholder="Search..." aria-label="Search" class="x-input-glass" style="padding: 0.4rem 0.8rem; width: 200px;">
             </div>
           ` : ''}
-          <wb-themecontrol id="headerThemeControl"></wb-themecontrol>
+          <div x-themecontrol id="headerThemeControl"></div>
           <a class="header__playground-btn" id="playgroundLink" href="demos/playground.html" target="_blank" rel="noopener" x-ripple title="Playground — paste HTML, see it render live" aria-label="Open the Playground">🧪</a>
           <button class="header__notes-btn" id="notesToggle" x-ripple title="Toggle Notes" aria-label="Toggle Notes">📝</button>
         </div>
@@ -461,7 +460,7 @@ export default class WBSite {
 
   // #636: John, screenshot -- filtering pages/behaviors.html's search box
   // correctly narrowed the result count ("Showing 69 of 88") but the matched
-  // <wb-demo> elements never appeared. Root cause: #siteBody IS the correct,
+  // <div x-demo> elements never appeared. Root cause: #siteBody IS the correct,
   // genuinely-scrollable container (overflow-y:auto, scrollHeight >>
   // clientHeight, confirmed live) and setting `.scrollTop` directly always
   // worked -- but real/trusted wheel input landing on it did not advance
@@ -585,7 +584,7 @@ export default class WBSite {
       main.innerHTML = this.render404(pageId);
       return;
     }
-    main.innerHTML = `<div class="page__loading" id="mainPageLoading"><wb-spinner  id="mainSpinner"></div><p id="mainLoadingText">Loading...</p></div>`;
+    main.innerHTML = `<div class="page__loading" id="mainPageLoading"><span x-spinner  id="mainSpinner"></div><p id="mainLoadingText">Loading...</p></div>`;
     // Optimization: Don't await scan here to start fetch immediately. MutationObserver handles injection.
     // WB.scan(main); 
     
@@ -605,7 +604,7 @@ export default class WBSite {
       }
       if (res.ok) {
         // A page fragment that needs to show the release number uses
-        // <span x-release> (or <wb-release>) -- src/wb-viewmodels/release.js
+        // <span x-release> (or <div x-release>) -- src/wb-viewmodels/release.js
         // reads the single canonical VERSION import itself, the same one
         // every other consumer (including this shell's own header) reads.
         // A hardcoded "v3.0" litters across several pages/*.html went stale
@@ -703,7 +702,7 @@ export default class WBSite {
       this.mobileNavOpen = !this.mobileNavOpen;
       nav?.classList.toggle('site__nav--mobile-open', this.mobileNavOpen);
       backdrop?.classList.toggle('visible', this.mobileNavOpen);
-      document.body.classList.toggle('wb-scroll-lock', this.mobileNavOpen);
+      document.body.classList.toggle('x-scroll-lock', this.mobileNavOpen);
       // Opening while scrolled down the page would expand the in-flow fluent
       // nav (#293) above the current viewport, out of sight — bring it into
       // view so the menu is actually visible the moment it opens.
@@ -724,6 +723,6 @@ export default class WBSite {
     this.mobileNavOpen = false;
     nav?.classList.remove('site__nav--mobile-open');
     backdrop?.classList.remove('visible');
-    document.body.classList.remove('wb-scroll-lock');
+    document.body.classList.remove('x-scroll-lock');
   }
 }

@@ -1,0 +1,2332 @@
+{
+  "behaviors": [
+    {
+      "name": "accordion",
+      "file": "accordion.schema.json",
+      "declared": [
+        "data-title",
+        "accordion-title",
+        "open"
+      ],
+      "aliases": [],
+      "violations": [],
+      "compliant": true
+    },
+    {
+      "name": "alert",
+      "file": "alert.schema.json",
+      "declared": [
+        "variant",
+        "title",
+        "message",
+        "icon",
+        "dismissible"
+      ],
+      "aliases": [
+        "type"
+      ],
+      "violations": [],
+      "compliant": true
+    },
+    {
+      "name": "article",
+      "file": "article.schema.json",
+      "declared": [
+        "title",
+        "subtitle",
+        "author",
+        "date",
+        "category",
+        "image",
+        "imageAlt",
+        "readingTime",
+        "featured"
+      ],
+      "aliases": [],
+      "violations": [],
+      "compliant": true
+    },
+    {
+      "name": "articles",
+      "file": "articles.schema.json",
+      "declared": [
+        "layout",
+        "columns",
+        "limit",
+        "source",
+        "pagination"
+      ],
+      "aliases": [],
+      "violations": [],
+      "compliant": true
+    },
+    {
+      "name": "audio",
+      "file": "audio.schema.json",
+      "declared": [
+        "src",
+        "volume",
+        "loop",
+        "autoplay",
+        "muted",
+        "showEq",
+        "showDisplay",
+        "showPlayButton",
+        "bass",
+        "treble"
+      ],
+      "aliases": [],
+      "violations": [],
+      "compliant": true
+    },
+    {
+      "name": "autocomplete",
+      "file": "autocomplete.schema.json",
+      "declared": [
+        "items"
+      ],
+      "aliases": [],
+      "violations": [],
+      "compliant": true
+    },
+    {
+      "name": "avatar",
+      "file": "avatar.schema.json",
+      "declared": [
+        "src",
+        "alt",
+        "initials",
+        "name",
+        "size",
+        "shape",
+        "status",
+        "bordered"
+      ],
+      "aliases": [],
+      "violations": [],
+      "compliant": true
+    },
+    {
+      "name": "badge",
+      "file": "badge.schema.json",
+      "declared": [
+        "label",
+        "variant",
+        "size",
+        "pill",
+        "dot",
+        "outline",
+        "removable",
+        "glow",
+        "icon"
+      ],
+      "aliases": [],
+      "violations": [],
+      "compliant": true
+    },
+    {
+      "name": "breadcrumb",
+      "file": "breadcrumb.schema.json",
+      "declared": [
+        "items",
+        "separator"
+      ],
+      "aliases": [],
+      "violations": [],
+      "compliant": true
+    },
+    {
+      "name": "button",
+      "file": "button.schema.json",
+      "declared": [
+        "label",
+        "icon",
+        "iconPosition",
+        "variant",
+        "size",
+        "disabled",
+        "loading",
+        "fullWidth",
+        "iconOnly",
+        "href",
+        "target"
+      ],
+      "aliases": [],
+      "violations": [],
+      "compliant": true
+    },
+    {
+      "name": "card",
+      "file": "card.schema.json",
+      "declared": [
+        "title",
+        "subtitle",
+        "footer",
+        "elevated",
+        "clickable",
+        "variant",
+        "size",
+        "tooltip",
+        "hoverText"
+      ],
+      "aliases": [],
+      "violations": [],
+      "compliant": true
+    },
+    {
+      "name": "cardbutton",
+      "file": "cardbutton.schema.json",
+      "declared": [
+        "title",
+        "content",
+        "primary",
+        "primaryHref",
+        "secondary",
+        "secondaryHref",
+        "variant"
+      ],
+      "aliases": [],
+      "violations": [],
+      "compliant": true
+    },
+    {
+      "name": "carddraggable",
+      "file": "carddraggable.schema.json",
+      "declared": [
+        "title",
+        "content",
+        "constrain",
+        "axis",
+        "snapToGrid",
+        "variant"
+      ],
+      "aliases": [],
+      "violations": [],
+      "compliant": true
+    },
+    {
+      "name": "cardexpandable",
+      "file": "cardexpandable.schema.json",
+      "declared": [
+        "title",
+        "content",
+        "expanded",
+        "maxHeight",
+        "lines",
+        "variant"
+      ],
+      "aliases": [],
+      "violations": [],
+      "compliant": true
+    },
+    {
+      "name": "cardfile",
+      "file": "cardfile.schema.json",
+      "declared": [
+        "filename",
+        "fileType",
+        "size",
+        "date",
+        "href",
+        "downloadable",
+        "variant",
+        "hoverText"
+      ],
+      "aliases": [],
+      "violations": [],
+      "compliant": true
+    },
+    {
+      "name": "cardhero",
+      "file": "cardhero.schema.json",
+      "declared": [
+        "background",
+        "title",
+        "pretitle",
+        "subtitle",
+        "content",
+        "cta",
+        "ctaHref",
+        "ctaSecondary",
+        "ctaSecondaryHref",
+        "variant",
+        "xalign",
+        "overlay",
+        "fullHeight"
+      ],
+      "aliases": [],
+      "violations": [],
+      "compliant": true
+    },
+    {
+      "name": "cardhorizontal",
+      "file": "cardhorizontal.schema.json",
+      "declared": [
+        "image",
+        "imageAlt",
+        "imagePosition",
+        "imageWidth",
+        "title",
+        "subtitle",
+        "variant"
+      ],
+      "aliases": [],
+      "violations": [],
+      "compliant": true
+    },
+    {
+      "name": "cardimage",
+      "file": "cardimage.schema.json",
+      "declared": [
+        "src",
+        "alt",
+        "title",
+        "subtitle",
+        "caption",
+        "href",
+        "aspect",
+        "position",
+        "fit",
+        "loading",
+        "variant"
+      ],
+      "aliases": [],
+      "violations": [],
+      "compliant": true
+    },
+    {
+      "name": "cardlink",
+      "file": "cardlink.schema.json",
+      "declared": [
+        "href",
+        "title",
+        "description",
+        "icon",
+        "badge",
+        "target",
+        "variant"
+      ],
+      "aliases": [],
+      "violations": [],
+      "compliant": true
+    },
+    {
+      "name": "cardminimizable",
+      "file": "cardminimizable.schema.json",
+      "declared": [
+        "title",
+        "content",
+        "minimized",
+        "variant"
+      ],
+      "aliases": [],
+      "violations": [],
+      "compliant": true
+    },
+    {
+      "name": "cardnotification",
+      "file": "cardnotification.schema.json",
+      "declared": [
+        "variant",
+        "title",
+        "message",
+        "icon",
+        "dismissible",
+        "elevated"
+      ],
+      "aliases": [],
+      "violations": [],
+      "compliant": true
+    },
+    {
+      "name": "cardoverlay",
+      "file": "cardoverlay.schema.json",
+      "declared": [
+        "image",
+        "title",
+        "subtitle",
+        "position",
+        "xalign",
+        "gradient",
+        "height",
+        "variant"
+      ],
+      "aliases": [],
+      "violations": [],
+      "compliant": true
+    },
+    {
+      "name": "cardportfolio",
+      "file": "cardportfolio.schema.json",
+      "declared": [
+        "name",
+        "title",
+        "company",
+        "location",
+        "cover",
+        "avatar",
+        "bio",
+        "tagline",
+        "availability",
+        "email",
+        "phone",
+        "website",
+        "linkedin",
+        "twitter",
+        "github",
+        "dribbble",
+        "skills",
+        "skillLevels",
+        "experience",
+        "education",
+        "projects",
+        "certifications",
+        "languages",
+        "stats",
+        "cta",
+        "ctaHref",
+        "variant",
+        "size"
+      ],
+      "aliases": [],
+      "violations": [],
+      "compliant": true
+    },
+    {
+      "name": "cardpricing",
+      "file": "cardpricing.schema.json",
+      "declared": [
+        "plan",
+        "price",
+        "period",
+        "description",
+        "features",
+        "cta",
+        "ctaHref",
+        "featured",
+        "variant"
+      ],
+      "aliases": [],
+      "violations": [],
+      "compliant": true
+    },
+    {
+      "name": "cardproduct",
+      "file": "cardproduct.schema.json",
+      "declared": [
+        "image",
+        "title",
+        "description",
+        "price",
+        "originalPrice",
+        "badge",
+        "rating",
+        "reviews",
+        "cta",
+        "featured",
+        "variant"
+      ],
+      "aliases": [],
+      "violations": [],
+      "compliant": true
+    },
+    {
+      "name": "cardprofile",
+      "file": "cardprofile.schema.json",
+      "declared": [
+        "name",
+        "role",
+        "avatar",
+        "bio",
+        "cover",
+        "size",
+        "align",
+        "hoverText"
+      ],
+      "aliases": [],
+      "violations": [],
+      "compliant": true
+    },
+    {
+      "name": "cardstats",
+      "file": "cardstats.schema.json",
+      "declared": [
+        "value",
+        "label",
+        "icon",
+        "trend",
+        "trendValue",
+        "variant",
+        "color"
+      ],
+      "aliases": [],
+      "violations": [],
+      "compliant": true
+    },
+    {
+      "name": "cardtestimonial",
+      "file": "cardtestimonial.schema.json",
+      "declared": [
+        "quote",
+        "author",
+        "role",
+        "avatar",
+        "rating",
+        "variant",
+        "size"
+      ],
+      "aliases": [],
+      "violations": [],
+      "compliant": true
+    },
+    {
+      "name": "cardvideo",
+      "file": "cardvideo.schema.json",
+      "declared": [
+        "src",
+        "poster",
+        "title",
+        "description",
+        "autoplay",
+        "muted",
+        "loop",
+        "controls",
+        "aspect",
+        "variant"
+      ],
+      "aliases": [],
+      "violations": [],
+      "compliant": true
+    },
+    {
+      "name": "checkbox",
+      "file": "checkbox.schema.json",
+      "declared": [
+        "label",
+        "checked",
+        "disabled",
+        "indeterminate",
+        "name",
+        "value",
+        "required",
+        "size",
+        "variant"
+      ],
+      "aliases": [],
+      "violations": [],
+      "compliant": true
+    },
+    {
+      "name": "chip",
+      "file": "chip.schema.json",
+      "declared": [
+        "label",
+        "icon",
+        "dismissible",
+        "disabled",
+        "variant",
+        "size",
+        "outlined"
+      ],
+      "aliases": [],
+      "violations": [],
+      "compliant": true
+    },
+    {
+      "name": "clock",
+      "file": "clock.schema.json",
+      "declared": [
+        "variant",
+        "format",
+        "show-seconds"
+      ],
+      "aliases": [],
+      "violations": [],
+      "compliant": true
+    },
+    {
+      "name": "cluster",
+      "file": "cluster.schema.json",
+      "declared": [
+        "gap",
+        "justify",
+        "align"
+      ],
+      "aliases": [],
+      "violations": [],
+      "compliant": true
+    },
+    {
+      "name": "code",
+      "file": "code.schema.json",
+      "declared": [
+        "language",
+        "variant",
+        "scrollable",
+        "size",
+        "show-copy",
+        "data-copy"
+      ],
+      "aliases": [],
+      "violations": [],
+      "compliant": true
+    },
+    {
+      "name": "collapse",
+      "file": "collapse.schema.json",
+      "declared": [
+        "heading",
+        "expanded",
+        "target"
+      ],
+      "aliases": [],
+      "violations": [],
+      "compliant": true
+    },
+    {
+      "name": "confetti",
+      "file": "confetti.schema.json",
+      "declared": [
+        "count",
+        "label",
+        "showButton",
+        "repeat",
+        "delay",
+        "duration",
+        "colors"
+      ],
+      "aliases": [],
+      "violations": [],
+      "compliant": true
+    },
+    {
+      "name": "confirm",
+      "file": "confirm.schema.json",
+      "declared": [
+        "heading",
+        "message",
+        "confirm-text",
+        "cancel-text",
+        "confirm-title",
+        "confirm-message"
+      ],
+      "aliases": [],
+      "violations": [],
+      "compliant": true
+    },
+    {
+      "name": "copy",
+      "file": "copy.schema.json",
+      "declared": [
+        "text",
+        "target"
+      ],
+      "aliases": [],
+      "violations": [],
+      "compliant": true
+    },
+    {
+      "name": "copybutton",
+      "file": "copybutton.schema.json",
+      "declared": [
+        "label",
+        "position",
+        "copy-feedback",
+        "copy-duration",
+        "copy-target"
+      ],
+      "aliases": [],
+      "violations": [],
+      "compliant": true
+    },
+    {
+      "name": "countdown",
+      "file": "countdown.schema.json",
+      "declared": [
+        "seconds",
+        "format",
+        "date",
+        "to"
+      ],
+      "aliases": [],
+      "violations": [],
+      "compliant": true
+    },
+    {
+      "name": "counter",
+      "file": "counter.schema.json",
+      "declared": [
+        "max",
+        "warning"
+      ],
+      "aliases": [],
+      "violations": [],
+      "compliant": true
+    },
+    {
+      "name": "demo",
+      "file": "demo.schema.json",
+      "declared": [
+        "columns"
+      ],
+      "aliases": [],
+      "violations": [],
+      "compliant": true
+    },
+    {
+      "name": "details",
+      "file": "details.schema.json",
+      "declared": [
+        "summary",
+        "open",
+        "name",
+        "animated",
+        "variant"
+      ],
+      "aliases": [],
+      "violations": [],
+      "compliant": true
+    },
+    {
+      "name": "dialog",
+      "file": "dialog.schema.json",
+      "declared": [
+        "title",
+        "content",
+        "size",
+        "closeOnBackdrop",
+        "closeOnEscape",
+        "showClose",
+        "variant"
+      ],
+      "aliases": [],
+      "violations": [],
+      "compliant": true
+    },
+    {
+      "name": "draggable",
+      "file": "draggable.schema.json",
+      "declared": [
+        "axis",
+        "handle"
+      ],
+      "aliases": [],
+      "violations": [],
+      "compliant": true
+    },
+    {
+      "name": "drawer",
+      "file": "drawer.schema.json",
+      "declared": [
+        "title",
+        "content",
+        "position",
+        "width",
+        "height",
+        "closeOnBackdrop",
+        "closeOnEscape",
+        "showClose",
+        "variant"
+      ],
+      "aliases": [],
+      "violations": [],
+      "compliant": true
+    },
+    {
+      "name": "drawer-layout",
+      "file": "drawerLayout.schema.json",
+      "declared": [
+        "position",
+        "width",
+        "minWidth",
+        "collapsed"
+      ],
+      "aliases": [],
+      "violations": [],
+      "compliant": true
+    },
+    {
+      "name": "dropdown",
+      "file": "dropdown.schema.json",
+      "declared": [
+        "position",
+        "trigger",
+        "closeOnSelect",
+        "closeOnOutside",
+        "offset"
+      ],
+      "aliases": [],
+      "violations": [],
+      "compliant": true
+    },
+    {
+      "name": "fieldset",
+      "file": "fieldset.schema.json",
+      "declared": [
+        "collapsible",
+        "collapsed"
+      ],
+      "aliases": [],
+      "violations": [],
+      "compliant": true
+    },
+    {
+      "name": "figure",
+      "file": "figure.schema.json",
+      "declared": [
+        "caption-position",
+        "zoom",
+        "lightbox",
+        "caption"
+      ],
+      "aliases": [],
+      "violations": [],
+      "compliant": true
+    },
+    {
+      "name": "fill",
+      "file": "fill.schema.json",
+      "declared": [
+        "ignoreMaxWidth"
+      ],
+      "aliases": [],
+      "violations": [],
+      "compliant": true
+    },
+    {
+      "name": "fireworks",
+      "file": "fireworks.schema.json",
+      "declared": [
+        "count",
+        "label",
+        "showButton",
+        "repeat",
+        "delay",
+        "duration",
+        "colors"
+      ],
+      "aliases": [],
+      "violations": [],
+      "compliant": true
+    },
+    {
+      "name": "flex",
+      "file": "flex.schema.json",
+      "declared": [
+        "direction",
+        "wrap",
+        "justify",
+        "align",
+        "gap"
+      ],
+      "aliases": [],
+      "violations": [],
+      "compliant": true
+    },
+    {
+      "name": "footer",
+      "file": "footer.schema.json",
+      "declared": [
+        "copyright",
+        "brand",
+        "links",
+        "social",
+        "sticky"
+      ],
+      "aliases": [],
+      "violations": [],
+      "compliant": true
+    },
+    {
+      "name": "form",
+      "file": "form.schema.json",
+      "declared": [
+        "ajax",
+        "validate"
+      ],
+      "aliases": [],
+      "violations": [],
+      "compliant": true
+    },
+    {
+      "name": "formrow",
+      "file": "formrow.schema.json",
+      "declared": [
+        "inline"
+      ],
+      "aliases": [],
+      "violations": [],
+      "compliant": true
+    },
+    {
+      "name": "fullscreen",
+      "file": "fullscreen.schema.json",
+      "declared": [
+        "target",
+        "label"
+      ],
+      "aliases": [],
+      "violations": [],
+      "compliant": true
+    },
+    {
+      "name": "gallery",
+      "file": "gallery.schema.json",
+      "declared": [
+        "columns",
+        "size",
+        "gap",
+        "lightbox"
+      ],
+      "aliases": [],
+      "violations": [],
+      "compliant": true
+    },
+    {
+      "name": "glow",
+      "file": "glow.schema.json",
+      "declared": [
+        "color"
+      ],
+      "aliases": [],
+      "violations": [],
+      "compliant": true
+    },
+    {
+      "name": "header",
+      "file": "header.schema.json",
+      "declared": [
+        "icon",
+        "title",
+        "subtitle",
+        "badge",
+        "logoHref",
+        "sticky"
+      ],
+      "aliases": [],
+      "violations": [],
+      "compliant": true
+    },
+    {
+      "name": "hero",
+      "file": "hero.schema.json",
+      "declared": [
+        "variant"
+      ],
+      "aliases": [],
+      "violations": [],
+      "compliant": true
+    },
+    {
+      "name": "image",
+      "file": "image.schema.json",
+      "declared": [
+        "placeholder",
+        "fallback",
+        "aspect-ratio",
+        "lazy",
+        "zoomable"
+      ],
+      "aliases": [],
+      "violations": [],
+      "compliant": true
+    },
+    {
+      "name": "img",
+      "file": "img.schema.json",
+      "declared": [
+        "placeholder",
+        "fallback",
+        "aspect-ratio",
+        "lazy",
+        "zoomable"
+      ],
+      "aliases": [],
+      "violations": [],
+      "compliant": true
+    },
+    {
+      "name": "input",
+      "file": "input.schema.json",
+      "declared": [
+        "label",
+        "placeholder",
+        "value",
+        "name",
+        "inputType",
+        "helper",
+        "error",
+        "variant",
+        "size",
+        "disabled",
+        "readonly",
+        "required",
+        "icon",
+        "iconPosition",
+        "clearable"
+      ],
+      "aliases": [],
+      "violations": [],
+      "compliant": true
+    },
+    {
+      "name": "label",
+      "file": "label.schema.json",
+      "declared": [
+        "label-position",
+        "required",
+        "optional"
+      ],
+      "aliases": [],
+      "violations": [],
+      "compliant": true
+    },
+    {
+      "name": "mark",
+      "file": "mark.schema.json",
+      "declared": [
+        "variant",
+        "color"
+      ],
+      "aliases": [],
+      "violations": [],
+      "compliant": true
+    },
+    {
+      "name": "masked",
+      "file": "masked.schema.json",
+      "declared": [
+        "mask",
+        "placeholder"
+      ],
+      "aliases": [],
+      "violations": [],
+      "compliant": true
+    },
+    {
+      "name": "masonry",
+      "file": "masonry.schema.json",
+      "declared": [
+        "columns",
+        "gap"
+      ],
+      "aliases": [],
+      "violations": [],
+      "compliant": true
+    },
+    {
+      "name": "mdhtml",
+      "file": "mdhtml.schema.json",
+      "declared": [
+        "src",
+        "sanitize",
+        "gfm"
+      ],
+      "aliases": [],
+      "violations": [],
+      "compliant": true
+    },
+    {
+      "name": "navbar",
+      "file": "navbar.schema.json",
+      "declared": [
+        "brand",
+        "brandHref",
+        "logo",
+        "logoSize",
+        "tagline",
+        "items",
+        "sticky",
+        "variant"
+      ],
+      "aliases": [],
+      "violations": [],
+      "compliant": true
+    },
+    {
+      "name": "notes",
+      "file": "notes.schema.json",
+      "declared": [
+        "position",
+        "maxWidth",
+        "minWidth",
+        "defaultWidth",
+        "autoSave",
+        "placeholder"
+      ],
+      "aliases": [],
+      "violations": [],
+      "compliant": true
+    },
+    {
+      "name": "notify",
+      "file": "notify.schema.json",
+      "declared": [
+        "message",
+        "duration"
+      ],
+      "aliases": [],
+      "violations": [],
+      "compliant": true
+    },
+    {
+      "name": "otp",
+      "file": "otp.schema.json",
+      "declared": [
+        "length"
+      ],
+      "aliases": [],
+      "violations": [],
+      "compliant": true
+    },
+    {
+      "name": "pagination",
+      "file": "pagination.schema.json",
+      "declared": [
+        "total",
+        "per-page",
+        "pages",
+        "current",
+        "aria-disabled",
+        "action",
+        "page"
+      ],
+      "aliases": [],
+      "violations": [],
+      "compliant": true
+    },
+    {
+      "name": "password",
+      "file": "password.schema.json",
+      "declared": [
+        "toggle",
+        "strength"
+      ],
+      "aliases": [],
+      "violations": [],
+      "compliant": true
+    },
+    {
+      "name": "popover",
+      "file": "popover.schema.json",
+      "declared": [
+        "description",
+        "heading",
+        "trigger",
+        "position",
+        "popover-content",
+        "popover-title"
+      ],
+      "aliases": [],
+      "violations": [],
+      "compliant": true
+    },
+    {
+      "name": "pre",
+      "file": "pre.schema.json",
+      "declared": [
+        "language",
+        "scrollable",
+        "show-line-numbers",
+        "max-height",
+        "wrap",
+        "size",
+        "show-copy",
+        "data-copy"
+      ],
+      "aliases": [],
+      "violations": [],
+      "compliant": true
+    },
+    {
+      "name": "print",
+      "file": "print.schema.json",
+      "declared": [
+        "target",
+        "label"
+      ],
+      "aliases": [],
+      "violations": [],
+      "compliant": true
+    },
+    {
+      "name": "progress",
+      "file": "progress.schema.json",
+      "declared": [
+        "value",
+        "max",
+        "label",
+        "showValue",
+        "variant",
+        "size",
+        "animated",
+        "striped",
+        "indeterminate"
+      ],
+      "aliases": [],
+      "violations": [],
+      "compliant": true
+    },
+    {
+      "name": "prompt",
+      "file": "prompt.schema.json",
+      "declared": [
+        "heading",
+        "message",
+        "placeholder",
+        "default-value",
+        "prompt-title",
+        "prompt-message"
+      ],
+      "aliases": [],
+      "violations": [],
+      "compliant": true
+    },
+    {
+      "name": "rainbow",
+      "file": "rainbow.schema.json",
+      "declared": [
+        "duration"
+      ],
+      "aliases": [],
+      "violations": [],
+      "compliant": true
+    },
+    {
+      "name": "rating",
+      "file": "rating.schema.json",
+      "declared": [
+        "value",
+        "max",
+        "readonly",
+        "disabled",
+        "half",
+        "size",
+        "icon"
+      ],
+      "aliases": [],
+      "violations": [],
+      "compliant": true
+    },
+    {
+      "name": "ratio",
+      "file": "ratio.schema.json",
+      "declared": [
+        "ratio"
+      ],
+      "aliases": [],
+      "violations": [],
+      "compliant": true
+    },
+    {
+      "name": "relativetime",
+      "file": "relativetime.schema.json",
+      "declared": [
+        "datetime",
+        "refresh",
+        "date"
+      ],
+      "aliases": [],
+      "violations": [],
+      "compliant": true
+    },
+    {
+      "name": "release",
+      "file": "release.schema.json",
+      "declared": [
+        "format",
+        "reload"
+      ],
+      "aliases": [],
+      "violations": [],
+      "compliant": true
+    },
+    {
+      "name": "repeater",
+      "file": "repeater.schema.json",
+      "declared": [
+        "count"
+      ],
+      "aliases": [],
+      "violations": [],
+      "compliant": true
+    },
+    {
+      "name": "resizable",
+      "file": "resizable.schema.json",
+      "declared": [
+        "handles"
+      ],
+      "aliases": [],
+      "violations": [],
+      "compliant": true
+    },
+    {
+      "name": "ripple",
+      "file": "ripple.schema.json",
+      "declared": [
+        "color",
+        "duration",
+        "centered"
+      ],
+      "aliases": [],
+      "violations": [],
+      "compliant": true
+    },
+    {
+      "name": "scrollalong",
+      "file": "scrollalong.schema.json",
+      "declared": [
+        "offset"
+      ],
+      "aliases": [],
+      "violations": [],
+      "compliant": true
+    },
+    {
+      "name": "search",
+      "file": "search.schema.json",
+      "declared": [
+        "placeholder",
+        "value",
+        "name",
+        "debounce",
+        "instant",
+        "disabled",
+        "size",
+        "variant",
+        "icon",
+        "clearable",
+        "loading"
+      ],
+      "aliases": [],
+      "violations": [],
+      "compliant": true
+    },
+    {
+      "name": "searchfield",
+      "file": "searchfield.schema.json",
+      "declared": [
+        "size",
+        "variant",
+        "placeholder",
+        "debounce",
+        "icon",
+        "clearable",
+        "disabled",
+        "loading",
+        "instant"
+      ],
+      "aliases": [],
+      "violations": [],
+      "compliant": true
+    },
+    {
+      "name": "select",
+      "file": "select.schema.json",
+      "declared": [
+        "label",
+        "placeholder",
+        "options",
+        "value",
+        "name",
+        "searchable",
+        "clearable",
+        "multiple",
+        "disabled",
+        "required",
+        "size",
+        "variant"
+      ],
+      "aliases": [],
+      "violations": [],
+      "compliant": true
+    },
+    {
+      "name": "share",
+      "file": "share.schema.json",
+      "declared": [
+        "text",
+        "label",
+        "share-title",
+        "share-text",
+        "share-url",
+        "url"
+      ],
+      "aliases": [],
+      "violations": [],
+      "compliant": true
+    },
+    {
+      "name": "skeleton",
+      "file": "skeleton.schema.json",
+      "declared": [
+        "variant",
+        "lines",
+        "width",
+        "height",
+        "animated"
+      ],
+      "aliases": [],
+      "violations": [],
+      "compliant": true
+    },
+    {
+      "name": "slidein",
+      "file": "slidein.schema.json",
+      "declared": [
+        "direction"
+      ],
+      "aliases": [],
+      "violations": [],
+      "compliant": true
+    },
+    {
+      "name": "snow",
+      "file": "snow.schema.json",
+      "declared": [
+        "count",
+        "label",
+        "showButton",
+        "repeat",
+        "delay",
+        "duration"
+      ],
+      "aliases": [],
+      "violations": [],
+      "compliant": true
+    },
+    {
+      "name": "span",
+      "file": "span.schema.json",
+      "declared": [
+        "variant"
+      ],
+      "aliases": [],
+      "violations": [],
+      "compliant": true
+    },
+    {
+      "name": "sparkle",
+      "file": "sparkle.schema.json",
+      "declared": [
+        "count"
+      ],
+      "aliases": [],
+      "violations": [],
+      "compliant": true
+    },
+    {
+      "name": "spinner",
+      "file": "spinner.schema.json",
+      "declared": [
+        "size",
+        "variant",
+        "speed",
+        "label"
+      ],
+      "aliases": [],
+      "violations": [],
+      "compliant": true
+    },
+    {
+      "name": "stack",
+      "file": "stack.schema.json",
+      "declared": [
+        "gap",
+        "bg",
+        "pad",
+        "radius"
+      ],
+      "aliases": [],
+      "violations": [],
+      "compliant": true
+    },
+    {
+      "name": "stagelight",
+      "file": "stagelight.schema.json",
+      "declared": [
+        "variant",
+        "color",
+        "intensity",
+        "size",
+        "speed",
+        "target",
+        "label"
+      ],
+      "aliases": [],
+      "violations": [],
+      "compliant": true
+    },
+    {
+      "name": "stepper",
+      "file": "stepper.schema.json",
+      "declared": [
+        "min",
+        "max",
+        "step"
+      ],
+      "aliases": [],
+      "violations": [],
+      "compliant": true
+    },
+    {
+      "name": "steps",
+      "file": "steps.schema.json",
+      "declared": [
+        "items",
+        "current"
+      ],
+      "aliases": [],
+      "violations": [],
+      "compliant": true
+    },
+    {
+      "name": "sticky",
+      "file": "sticky.schema.json",
+      "declared": [
+        "offset",
+        "zIndex",
+        "threshold",
+        "stuckClass",
+        "animated"
+      ],
+      "aliases": [],
+      "violations": [],
+      "compliant": true
+    },
+    {
+      "name": "switch",
+      "file": "switch.schema.json",
+      "declared": [
+        "label",
+        "checked",
+        "disabled",
+        "name",
+        "value",
+        "labelPosition",
+        "size",
+        "variant"
+      ],
+      "aliases": [],
+      "violations": [],
+      "compliant": true
+    },
+    {
+      "name": "table",
+      "file": "table.schema.json",
+      "declared": [
+        "data",
+        "columns",
+        "sortable",
+        "filterable",
+        "paginated",
+        "pageSize",
+        "striped",
+        "hoverable",
+        "compact",
+        "bordered",
+        "headers",
+        "rows",
+        "searchable",
+        "copyable",
+        "selectable"
+      ],
+      "aliases": [],
+      "violations": [],
+      "compliant": true
+    },
+    {
+      "name": "tabs",
+      "file": "tabs.schema.json",
+      "declared": [
+        "activeTab",
+        "variant",
+        "size",
+        "fullWidth",
+        "vertical"
+      ],
+      "aliases": [],
+      "violations": [],
+      "compliant": true
+    },
+    {
+      "name": "textarea",
+      "file": "textarea.schema.json",
+      "declared": [
+        "label",
+        "placeholder",
+        "value",
+        "name",
+        "rows",
+        "maxLength",
+        "showCount",
+        "autosize",
+        "disabled",
+        "readonly",
+        "required",
+        "resize",
+        "variant"
+      ],
+      "aliases": [],
+      "violations": [],
+      "compliant": true
+    },
+    {
+      "name": "timeline",
+      "file": "timeline.schema.json",
+      "declared": [
+        "items"
+      ],
+      "aliases": [],
+      "violations": [],
+      "compliant": true
+    },
+    {
+      "name": "toast",
+      "file": "toast.schema.json",
+      "declared": [
+        "message",
+        "title",
+        "variant",
+        "icon",
+        "duration",
+        "position",
+        "dismissible",
+        "action",
+        "actionHref"
+      ],
+      "aliases": [],
+      "violations": [],
+      "compliant": true
+    },
+    {
+      "name": "toggle",
+      "file": "toggle.schema.json",
+      "declared": [
+        "target"
+      ],
+      "aliases": [],
+      "violations": [],
+      "compliant": true
+    },
+    {
+      "name": "tooltip",
+      "file": "tooltip.schema.json",
+      "declared": [
+        "content",
+        "position",
+        "variant",
+        "delay",
+        "hideDelay",
+        "trigger",
+        "arrow",
+        "interactive",
+        "maxWidth"
+      ],
+      "aliases": [],
+      "violations": [],
+      "compliant": true
+    },
+    {
+      "name": "truncate",
+      "file": "truncate.schema.json",
+      "declared": [
+        "lines",
+        "expandable"
+      ],
+      "aliases": [],
+      "violations": [],
+      "compliant": true
+    },
+    {
+      "name": "typewriter",
+      "file": "typewriter.schema.json",
+      "declared": [
+        "speed",
+        "text",
+        "cursor"
+      ],
+      "aliases": [],
+      "violations": [],
+      "compliant": true
+    },
+    {
+      "name": "video",
+      "file": "video.schema.json",
+      "declared": [
+        "poster",
+        "controls",
+        "playsinline",
+        "autoplay",
+        "muted",
+        "loop"
+      ],
+      "aliases": [],
+      "violations": [],
+      "compliant": true
+    },
+    {
+      "name": "vimeo",
+      "file": "vimeo.schema.json",
+      "declared": [
+        "video-id",
+        "autoplay",
+        "muted",
+        "loop"
+      ],
+      "aliases": [],
+      "violations": [],
+      "compliant": true
+    },
+    {
+      "name": "youtube",
+      "file": "youtube.schema.json",
+      "declared": [
+        "url",
+        "video-id",
+        "controls",
+        "autoplay",
+        "muted",
+        "loop"
+      ],
+      "aliases": [],
+      "violations": [],
+      "compliant": true
+    }
+  ],
+  "undeclared": [
+    {
+      "attr": "active",
+      "readBy": [
+        "navigation.js"
+      ]
+    },
+    {
+      "attr": "alt-rows",
+      "readBy": [
+        "layouts.js"
+      ]
+    },
+    {
+      "attr": "animate",
+      "readBy": [
+        "sticky.js"
+      ]
+    },
+    {
+      "attr": "animation",
+      "readBy": [
+        "effects.js"
+      ]
+    },
+    {
+      "attr": "auto-live-render",
+      "readBy": [
+        "mdhtml.js"
+      ]
+    },
+    {
+      "attr": "badge-variant",
+      "readBy": [
+        "card.js"
+      ]
+    },
+    {
+      "attr": "bounds",
+      "readBy": [
+        "draggable.js"
+      ]
+    },
+    {
+      "attr": "breakout",
+      "readBy": [
+        "layouts.js"
+      ]
+    },
+    {
+      "attr": "breaks",
+      "readBy": [
+        "mdhtml.js"
+      ]
+    },
+    {
+      "attr": "class-name",
+      "readBy": [
+        "sticky.js"
+      ]
+    },
+    {
+      "attr": "clipboard-text",
+      "readBy": [
+        "helpers.js"
+      ]
+    },
+    {
+      "attr": "content-class",
+      "readBy": [
+        "x-demo.js"
+      ]
+    },
+    {
+      "attr": "content-min",
+      "readBy": [
+        "layouts.js"
+      ]
+    },
+    {
+      "attr": "copy",
+      "readBy": [
+        "code.js",
+        "pre.js"
+      ]
+    },
+    {
+      "attr": "copy-text",
+      "readBy": [
+        "copy.js"
+      ]
+    },
+    {
+      "attr": "crossorigin",
+      "readBy": [
+        "audio.js"
+      ]
+    },
+    {
+      "attr": "cta-secondary-tooltip",
+      "readBy": [
+        "card.js"
+      ]
+    },
+    {
+      "attr": "cta-tooltip",
+      "readBy": [
+        "card.js"
+      ]
+    },
+    {
+      "attr": "data-allow-overlap",
+      "readBy": [
+        "card.js",
+        "figure.js"
+      ]
+    },
+    {
+      "attr": "data-articles-error",
+      "readBy": [
+        "article.js"
+      ]
+    },
+    {
+      "attr": "data-captions-missing",
+      "readBy": [
+        "card.js"
+      ]
+    },
+    {
+      "attr": "data-highlight-theme",
+      "readBy": [
+        "code.js",
+        "codecontrol.js"
+      ]
+    },
+    {
+      "attr": "data-slot",
+      "readBy": [
+        "card.js"
+      ]
+    },
+    {
+      "attr": "data-tab-title",
+      "readBy": [
+        "tabs.js"
+      ]
+    },
+    {
+      "attr": "data-theme",
+      "readBy": [
+        "darkmode.js",
+        "switch.js"
+      ]
+    },
+    {
+      "attr": "data-using-default",
+      "readBy": [
+        "x-audio.js"
+      ]
+    },
+    {
+      "attr": "data-x-stagelight-off",
+      "readBy": [
+        "stagelight.js"
+      ]
+    },
+    {
+      "attr": "decimals",
+      "readBy": [
+        "effects.js"
+      ]
+    },
+    {
+      "attr": "dividers",
+      "readBy": [
+        "list.js"
+      ]
+    },
+    {
+      "attr": "drawer-content",
+      "readBy": [
+        "overlay.js"
+      ]
+    },
+    {
+      "attr": "drawer-title",
+      "readBy": [
+        "overlay.js"
+      ]
+    },
+    {
+      "attr": "easing",
+      "readBy": [
+        "effects.js"
+      ]
+    },
+    {
+      "attr": "editable",
+      "readBy": [
+        "enhancements.js"
+      ]
+    },
+    {
+      "attr": "events",
+      "readBy": [
+        "demo.js",
+        "x-demo.js"
+      ]
+    },
+    {
+      "attr": "feedback",
+      "readBy": [
+        "helpers.js"
+      ]
+    },
+    {
+      "attr": "for",
+      "readBy": [
+        "label.js"
+      ]
+    },
+    {
+      "attr": "grid",
+      "readBy": [
+        "draggable.js"
+      ]
+    },
+    {
+      "attr": "grid-item",
+      "readBy": [
+        "move.js"
+      ]
+    },
+    {
+      "attr": "gutters",
+      "readBy": [
+        "layouts.js"
+      ]
+    },
+    {
+      "attr": "handle-selector",
+      "readBy": [
+        "layouts.js"
+      ]
+    },
+    {
+      "attr": "header-ids",
+      "readBy": [
+        "mdhtml.js"
+      ]
+    },
+    {
+      "attr": "highlight",
+      "readBy": [
+        "mdhtml.js"
+      ]
+    },
+    {
+      "attr": "horizontal",
+      "readBy": [
+        "desclist.js"
+      ]
+    },
+    {
+      "attr": "hover",
+      "readBy": [
+        "table.js"
+      ]
+    },
+    {
+      "attr": "intrinsic",
+      "readBy": [
+        "layouts.js"
+      ]
+    },
+    {
+      "attr": "item-width",
+      "readBy": [
+        "layouts.js"
+      ]
+    },
+    {
+      "attr": "list",
+      "readBy": [
+        "enhancements.js"
+      ]
+    },
+    {
+      "attr": "margin",
+      "readBy": [
+        "layouts.js"
+      ]
+    },
+    {
+      "attr": "mask-placeholder",
+      "readBy": [
+        "enhancements.js",
+        "masked.js"
+      ]
+    },
+    {
+      "attr": "max-messages",
+      "readBy": [
+        "helpers.js"
+      ]
+    },
+    {
+      "attr": "max-rows",
+      "readBy": [
+        "textarea.js"
+      ]
+    },
+    {
+      "attr": "min-height",
+      "readBy": [
+        "layouts.js"
+      ]
+    },
+    {
+      "attr": "min-rows",
+      "readBy": [
+        "textarea.js"
+      ]
+    },
+    {
+      "attr": "modal-content",
+      "readBy": [
+        "dialog.js"
+      ]
+    },
+    {
+      "attr": "modal-size",
+      "readBy": [
+        "dialog.js"
+      ]
+    },
+    {
+      "attr": "modal-title",
+      "readBy": [
+        "dialog.js"
+      ]
+    },
+    {
+      "attr": "moveable",
+      "readBy": [
+        "move.js"
+      ]
+    },
+    {
+      "attr": "new-tab",
+      "readBy": [
+        "helpers.js"
+      ]
+    },
+    {
+      "attr": "notify-control",
+      "readBy": [
+        "switch.js"
+      ]
+    },
+    {
+      "attr": "offcanvas-content",
+      "readBy": [
+        "overlay.js"
+      ]
+    },
+    {
+      "attr": "offcanvas-title",
+      "readBy": [
+        "overlay.js"
+      ]
+    },
+    {
+      "attr": "padding",
+      "readBy": [
+        "layouts.js"
+      ]
+    },
+    {
+      "attr": "persist",
+      "readBy": [
+        "codecontrol.js",
+        "themecontrol.js"
+      ]
+    },
+    {
+      "attr": "prefix",
+      "readBy": [
+        "effects.js",
+        "input.js"
+      ]
+    },
+    {
+      "attr": "resizable",
+      "readBy": [
+        "layouts.js"
+      ]
+    },
+    {
+      "attr": "ripple-centered",
+      "readBy": [
+        "ripple.js"
+      ]
+    },
+    {
+      "attr": "ripple-color",
+      "readBy": [
+        "ripple.js"
+      ]
+    },
+    {
+      "attr": "ripple-duration",
+      "readBy": [
+        "ripple.js"
+      ]
+    },
+    {
+      "attr": "save-path",
+      "readBy": [
+        "notes.js"
+      ]
+    },
+    {
+      "attr": "save-state",
+      "readBy": [
+        "layouts.js"
+      ]
+    },
+    {
+      "attr": "scroll-to",
+      "readBy": [
+        "helpers.js"
+      ]
+    },
+    {
+      "attr": "sheet-content",
+      "readBy": [
+        "overlay.js"
+      ]
+    },
+    {
+      "attr": "sheet-title",
+      "readBy": [
+        "overlay.js"
+      ]
+    },
+    {
+      "attr": "show-category",
+      "readBy": [
+        "codecontrol.js"
+      ]
+    },
+    {
+      "attr": "show-errors",
+      "readBy": [
+        "helpers.js"
+      ]
+    },
+    {
+      "attr": "show-label",
+      "readBy": [
+        "codecontrol.js",
+        "progress.js",
+        "themecontrol.js"
+      ]
+    },
+    {
+      "attr": "show-labels",
+      "readBy": [
+        "range.js"
+      ]
+    },
+    {
+      "attr": "show-logs",
+      "readBy": [
+        "helpers.js"
+      ]
+    },
+    {
+      "attr": "show-warnings",
+      "readBy": [
+        "helpers.js"
+      ]
+    },
+    {
+      "attr": "side-width",
+      "readBy": [
+        "layouts.js"
+      ]
+    },
+    {
+      "attr": "space",
+      "readBy": [
+        "layouts.js"
+      ]
+    },
+    {
+      "attr": "srcset",
+      "readBy": [
+        "helpers.js"
+      ]
+    },
+    {
+      "attr": "suffix",
+      "readBy": [
+        "effects.js",
+        "input.js"
+      ]
+    },
+    {
+      "attr": "tab",
+      "readBy": [
+        "tabs.js"
+      ]
+    },
+    {
+      "attr": "tab-title",
+      "readBy": [
+        "tabs.js"
+      ]
+    },
+    {
+      "attr": "text-color",
+      "readBy": [
+        "helpers.js"
+      ]
+    },
+    {
+      "attr": "theme-control",
+      "readBy": [
+        "switch.js"
+      ]
+    },
+    {
+      "attr": "toast",
+      "readBy": [
+        "copy.js"
+      ]
+    },
+    {
+      "attr": "toast-message",
+      "readBy": [
+        "feedback.js"
+      ]
+    },
+    {
+      "attr": "toast-variant",
+      "readBy": [
+        "feedback.js"
+      ]
+    },
+    {
+      "attr": "toggle-class",
+      "readBy": [
+        "toggle.js"
+      ]
+    },
+    {
+      "attr": "toggle-selector",
+      "readBy": [
+        "layouts.js"
+      ]
+    },
+    {
+      "attr": "toggle-self",
+      "readBy": [
+        "toggle.js"
+      ]
+    },
+    {
+      "attr": "toggle-target",
+      "readBy": [
+        "toggle.js"
+      ]
+    },
+    {
+      "attr": "tooltip-class",
+      "readBy": [
+        "tooltip.js"
+      ]
+    },
+    {
+      "attr": "tooltip-delay",
+      "readBy": [
+        "tooltip.js"
+      ]
+    },
+    {
+      "attr": "tooltip-hide-delay",
+      "readBy": [
+        "tooltip.js"
+      ]
+    },
+    {
+      "attr": "tooltip-position",
+      "readBy": [
+        "tooltip.js"
+      ]
+    },
+    {
+      "attr": "using-default",
+      "readBy": [
+        "x-audio.js"
+      ]
+    },
+    {
+      "attr": "value-prefix",
+      "readBy": [
+        "range.js"
+      ]
+    },
+    {
+      "attr": "value-suffix",
+      "readBy": [
+        "range.js"
+      ]
+    }
+  ],
+  "totals": {
+    "behaviors": 117,
+    "declared": 639,
+    "compliant": 117,
+    "violations": 0,
+    "byRule": {
+      "R1": 0,
+      "R2": 0,
+      "R3": 0,
+      "R5": 0,
+      "R4": 101,
+      "R6": 0
+    },
+    "undeclared": 101
+  }
+}

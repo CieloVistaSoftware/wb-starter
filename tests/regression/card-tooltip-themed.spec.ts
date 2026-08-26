@@ -1,11 +1,11 @@
 import { test, expect } from '@playwright/test';
 
 /**
- * #283: <wb-card> hover text was only ever wired to the NATIVE browser
+ * #283: <article> hover text was only ever wired to the NATIVE browser
  * `title` attribute (cardBase(), card.js -- `element.setAttribute('title',
  * config.hoverText)`), which is unstyled, slow to appear, and inconsistent
  * across browsers. John: "is Hover text a settable prop?" -- yes, and it
- * should render the same themed tooltip (`.wb-tooltip`, tooltip.js) used
+ * should render the same themed tooltip (`.x-tooltip`, tooltip.js) used
  * everywhere else in WB-Starter (e.g. cardhero's CTA buttons already wire
  * `x-tooltip` for exactly this reason).
  *
@@ -18,14 +18,14 @@ import { test, expect } from '@playwright/test';
  * `tooltip` nor `hoverText` set -- only a plain `title` -- keeps the native
  * browser tooltip working exactly as before.
  */
-test.describe('wb-card tooltip -- themed hover text (#283)', () => {
-  test('tooltip attribute shows the themed .wb-tooltip on hover, not native title', async ({ page }) => {
-    await page.goto('http://localhost:3000/tests/fixtures/card-tooltip.html');
+test.describe('.x-card tooltip -- themed hover text (#283)', () => {
+  test('tooltip attribute shows the themed .x-tooltip on hover, not native title', async ({ page }) => {
+    await page.goto('/tests/fixtures/card-tooltip.html');
     const card = page.locator('#card-tooltip');
     await card.waitFor();
 
     // The heading itself still renders from `title` (its normal job)...
-    await expect(card.locator('.wb-card__title')).toHaveText('Card Heading');
+    await expect(card.locator('.x-card__title')).toHaveText('Card Heading');
     // ...but the themed behavior takes over the hover experience -- the
     // literal `title` DOM attribute must not remain (tooltip.js strips it),
     // so there's no double native+themed tooltip on hover.
@@ -33,25 +33,25 @@ test.describe('wb-card tooltip -- themed hover text (#283)', () => {
     await expect(card).toHaveAttribute('x-tooltip', 'Themed tooltip text');
 
     await card.hover();
-    const tip = page.locator('.wb-tooltip', { hasText: 'Themed tooltip text' });
+    const tip = page.locator('.x-tooltip', { hasText: 'Themed tooltip text' });
     await expect(tip).toBeVisible();
-    await expect(tip).toHaveClass(/wb-tooltip--visible/);
+    await expect(tip).toHaveClass(/x-tooltip--visible/);
   });
 
   test('hover-text alias also shows the themed tooltip', async ({ page }) => {
-    await page.goto('http://localhost:3000/tests/fixtures/card-tooltip.html');
+    await page.goto('/tests/fixtures/card-tooltip.html');
     const card = page.locator('#card-hovertext');
     await card.waitFor();
 
     await expect(card).toHaveAttribute('x-tooltip', 'Themed hover-text alias');
 
     await card.hover();
-    const tip = page.locator('.wb-tooltip', { hasText: 'Themed hover-text alias' });
+    const tip = page.locator('.x-tooltip', { hasText: 'Themed hover-text alias' });
     await expect(tip).toBeVisible();
   });
 
   test('a card with only a plain title attribute does not get a themed tooltip', async ({ page }) => {
-    await page.goto('http://localhost:3000/tests/fixtures/card-tooltip.html');
+    await page.goto('/tests/fixtures/card-tooltip.html');
     const card = page.locator('#card-plain-title');
     await card.waitFor();
 
@@ -63,6 +63,6 @@ test.describe('wb-card tooltip -- themed hover text (#283)', () => {
 
     await card.hover();
     await page.waitForTimeout(300); // longer than tooltip.js's 200ms show delay
-    await expect(page.locator('.wb-tooltip')).toHaveCount(0);
+    await expect(page.locator('.x-tooltip')).toHaveCount(0);
   });
 });

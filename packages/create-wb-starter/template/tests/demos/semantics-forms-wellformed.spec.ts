@@ -5,7 +5,7 @@ import * as path from 'path';
 /**
  * semantics-forms.html must have well-formed custom-element tags.
  *
- * The demo had <wb-switch> tags with no closing tag and <wb-rating>/<wb-themecontrol>
+ * The demo had <div x-switch> tags with no closing tag and <span x-rating>/<div x-themecontrol>
  * closed with </div>. Unknown custom elements have no auto-close rules, so these
  * nest/swallow each other instead of rendering as siblings — the switch and rating
  * sections don't render correctly. (The all-demos smoke test misses this: malformed
@@ -20,7 +20,7 @@ function balance(tag: string) {
 }
 
 test.describe('semantics-forms.html — well-formed custom elements', () => {
-  for (const tag of ['wb-switch', 'wb-rating', 'wb-themecontrol']) {
+  for (const tag of ['x-switch', 'x-rating', 'x-themecontrol']) {
     test(`<${tag}> is properly closed (open count === </${tag}> count)`, () => {
       const b = balance(tag);
       expect(

@@ -1,0 +1,30 @@
+{
+  "state": "failed",
+  "mode": "single",
+  "specFile": "tests/regression/no-inert-behaviors.spec.ts",
+  "startedAt": "2026-08-22T21:30:47.436Z",
+  "updatedAt": "2026-08-22T22:01:08.704Z",
+  "command": "npx playwright test --workers=8 tests/regression/no-inert-behaviors.spec.ts",
+  "pid": 35500,
+  "passed": 0,
+  "failed": 1,
+  "skipped": 0,
+  "total": 1,
+  "currentFile": "tests\\regression\\no-inert-behaviors.spec.ts",
+  "output": "\nRunning 1 test using 1 worker\n\n  x  1 [regression] › tests\\regression\\no-inert-behaviors.spec.ts:60:3 › Registered behaviors do something › every x- attribute changes the element it is applied to (15.1m)\n  x  2 [regression] › tests\\regression\\no-inert-behaviors.spec.ts:60:3 › Registered behaviors do something › every x- attribute changes the element it is applied to (retry #1) (15.1m)\n\n════════════════════════════════════════════════════════════\n  WB TEST RESULTS\n════════════════════════════════════════════════════════════\n  Total: 2 tests in 1817.3s\n  ✓ Passed:  0\n  ✗ Failed:  2\n\n  By Project:\n    ✗ regression: 0/2 passed\n\n  See failures: data/test-results/failures.json\n  Live log:    data/test-results/failures-live.log\n════════════════════════════════════════════════════════════\n\n\n\n  1) [regression] › tests\\regression\\no-inert-behaviors.spec.ts:60:3 › Registered behaviors do something › every x- attribute changes the element it is applied to \n\n    \u001b[31mTest timeout of 900000ms exceeded.\u001b[39m\n\n    Error: page.evaluate: Test timeout of 900000ms exceeded.\n\n      70 |     await page.waitForFunction(() => !!(window as any).WB, { timeout: 30_000 });\n      71 |\n    > 72 |     const result = await page.evaluate(async ({ hostHtml }) => {\n         |                               ^\n      73 |       const WB = (window as any).WB;\n      74 |       const mod = await import('/src/core/tag-map.js');\n      75 |       const extensionMap: Record<string, string> = mod.extensionMap;\n        at C:\\Users\\jwpmi\\Downloads\\AI\\wb-starter\\tests\\regression\\no-inert-behaviors.spec.ts:72:31\n\n    Retry #1 ───────────────────────────────────────────────────────────────────────────────────────\n\n    \u001b[31mTest timeout of 900000ms exceeded.\u001b[39m\n\n    Error: page.evaluate: Test timeout of 900000ms exceeded.\n\n      70 |     await page.waitForFunction(() => !!(window as any).WB, { timeout: 30_000 });\n      71 |\n    > 72 |     const result = await page.evaluate(async ({ hostHtml }) => {\n         |                               ^\n      73 |       const WB = (window as any).WB;\n      74 |       const mod = await import('/src/core/tag-map.js');\n      75 |       const extensionMap: Record<string, string> = mod.extensionMap;\n        at C:\\Users\\jwpmi\\Downloads\\AI\\wb-starter\\tests\\regression\\no-inert-behaviors.spec.ts:72:31\n\n  1 failed\n    [regression] › tests\\regression\\no-inert-behaviors.spec.ts:60:3 › Registered behaviors do something › every x- attribute changes the element it is applied to \n",
+  "errors": "\n⏱️ FAILED: every x- attribute changes the element it is applied to\n   Test timeout of 900000ms exceeded.\n\n⏱️ FAILED: every x- attribute changes the element it is applied to\n   Test timeout of 900000ms exceeded.\n",
+  "failures": [
+    {
+      "file": "tests\\regression\\no-inert-behaviors.spec.ts",
+      "name": "Registered behaviors do something › every x- attribute changes the element it is applied to (15.1m)"
+    },
+    {
+      "file": "tests\\regression\\no-inert-behaviors.spec.ts",
+      "name": "Registered behaviors do something › every x- attribute changes the element it is applied to (retry #1) (15.1m)"
+    }
+  ],
+  "completedAt": "2026-08-22T22:01:08.704Z",
+  "duration": "1821.27s",
+  "exitCode": 1,
+  "flaky": 0
+}

@@ -36,8 +36,8 @@ were updated automatically and
 ### MISSING ROOT CSS CLASS ASSIGNMENTS
 | Issue | Fixed |
 |-------|:-----:|
-| ❌ checkbox: Doesn't add "wb-checkbox-input" | ✅ |
-| ❌ dropdown: Doesn't add "wb-dropdown" | ✅ |
+| ❌ checkbox: Doesn't add "x-checkbox-input" | ✅ |
+| ❌ dropdown: Doesn't add "x-dropdown" | ✅ |
 
 ### MISSING CRITICAL STYLES
 | Issue | Fixed |
@@ -53,18 +53,18 @@ were updated automatically and
 ### MISSING REQUIRED ELEMENTS
 | Issue | Fixed |
 |-------|:-----:|
-| ❌ carddraggable: Should create &lt;main&gt; for main.wb-card__main | ✅ |
-| ❌ cardexpandable: Should create &lt;header&gt; for header.wb-card__header | ✅ |
-| ❌ cardexpandable: Should create &lt;main&gt; for main.wb-card__expandable-content | ✅ |
-| ❌ cardexpandable: Should create &lt;footer&gt; for footer.wb-card__footer | ✅ |
-| ❌ cardnotification: Should create &lt;main&gt; for main.wb-card__notification-content | ✅ |
+| ❌ carddraggable: Should create &lt;main&gt; for main.x-card__main | ✅ |
+| ❌ cardexpandable: Should create &lt;header&gt; for header.x-card__header | ✅ |
+| ❌ cardexpandable: Should create &lt;main&gt; for main.x-card__expandable-content | ✅ |
+| ❌ cardexpandable: Should create &lt;footer&gt; for footer.x-card__footer | ✅ |
+| ❌ cardnotification: Should create &lt;main&gt; for main.x-card__notification-content | ✅ |
 | ❌ cardportfolio: Should create &lt;header&gt; for header | ✅ |
-| ❌ cardprofile: Should create &lt;figure&gt; for figure.wb-card__profile-avatar | ✅ |
+| ❌ cardprofile: Should create &lt;figure&gt; for figure.x-card__profile-avatar | ✅ |
 | ❌ cardprofile: Should create &lt;header&gt; for header | ✅ |
-| ❌ cardtestimonial: Should create &lt;footer&gt; for footer.wb-card__footer | ✅ |
-| ❌ cardvideo: Should create &lt;figure&gt; for figure.wb-card__figure | ✅ |
-| ❌ dropdown: Should create &lt;button&gt; for .wb-dropdown-trigger | ✅ |
-| ❌ dropdown: Should create &lt;div&gt; for .wb-dropdown-menu | ✅ |
-| ❌ notes: Should create &lt;header&gt; for .wb-notes__header | ✅ |
-| ❌ notes: Should create &lt;textarea&gt; for .wb-notes__textarea | ✅ |
-| ❌ notes: Should create &lt;footer&gt; for .wb-notes__footer | ✅ |
+| ❌ cardtestimonial: Should create &lt;footer&gt; for footer.x-card__footer | ✅ |
+| ❌ cardvideo: Should create &lt;figure&gt; for figure.x-card__figure | ✅ |
+| ❌ dropdown: Should create &lt;button&gt; for .x-dropdown-trigger | ✅ |
+| ❌ dropdown: Should create &lt;div&gt; for .x-dropdown-menu | ✅ |
+| ❌ notes: Should create &lt;header&gt; for .x-notes__header | ✅ |
+| ❌ notes: Should create &lt;textarea&gt; for .x-notes__textarea | ✅ |
+| ❌ notes: Should create &lt;footer&gt; for .x-notes__footer | ✅ |

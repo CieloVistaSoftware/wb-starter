@@ -6,24 +6,24 @@
  * -----------------------------------------------------------------------------
  */
 
-.wb-rating span {
+.x-rating span {
   font-size: 1.2rem;
   color: var(--border-color);
   cursor: pointer;
 }
 
-.wb-rating span.active {
+.x-rating span.active {
   color: var(--rating-active-color);
 }
 
-/* Real star markup uses .wb-rating__star (rating.js), not a bare span --
+/* Real star markup uses .x-rating__star (rating.js), not a bare span --
    the rule above never actually matched it. Size was also previously
    hardcoded inline in JS regardless of the size attribute
    (rating.schema.json declares sm/md/lg but nothing ever read or applied
    it) -- confirmed live: size="sm"/"lg" rendered identical stars. */
-.wb-rating__star {
+.x-rating__star {
   font-size: 1.5rem;
 }
-.wb-rating--sm .wb-rating__star { font-size: 1rem; }
-.wb-rating--md .wb-rating__star { font-size: 1.5rem; }
-.wb-rating--lg .wb-rating__star { font-size: 2.25rem; }
+.x-rating--sm .x-rating__star { font-size: 1rem; }
+.x-rating--md .x-rating__star { font-size: 1.5rem; }
+.x-rating--lg .x-rating__star { font-size: 2.25rem; }

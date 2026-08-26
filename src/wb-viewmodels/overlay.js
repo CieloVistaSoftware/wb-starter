@@ -5,11 +5,11 @@ import { readAttr } from '../core/read-attr.js';
  * Full-screen or partial overlays like modals, drawers, and lightboxes.
  * Manages z-index, blocking backgrounds, and focus trapping.
  * 
- * Custom Tag: <wb-overlay>
+ * Custom Tag: <div>
  * -----------------------------------------------------------------------------
  * 
  * Usage:
- *   <wb-drawer  data-target="#menu">Open Menu</button>
+ *   <div x-drawer  data-target="#menu">Open Menu</button>
  *   <a href="img.jpg" x-lightbox>View Image</a>
  * -----------------------------------------------------------------------------
  * All overlays show visual feedback when their trigger is clicked
@@ -27,7 +27,7 @@ const OVERLAY_STYLES = `
   align-items: center;
   justify-content: center;
   z-index: 10000;
-  animation: wb-fade-in 0.2s ease;
+  animation: x-fade-in 0.2s ease;
 `;
 
 const DIALOG_STYLES = `
@@ -45,7 +45,7 @@ const DIALOG_STYLES = `
 
 /**
  * Popover - Click-triggered popup
- * Custom Tag: <wb-popover>
+ * Custom Tag: <div>
  */
 export function popover(element, options = {}) {
   const config = {
@@ -56,15 +56,15 @@ export function popover(element, options = {}) {
     ...options
   };
 
-  element.classList.add('wb-popover-trigger');
-  // NOT '.wb-popover' — that class is popover.css's styling for the
+  element.classList.add('x-popover-trigger');
+  // NOT '.x-popover' — that class is popover.css's styling for the
   // dynamically-created CONTENT PANEL (position:absolute; z-index:1000),
   // reused here by name collision on the TRIGGER too. That yanked the
   // trigger out of normal document flow onto whatever absolute position
   // its (unpositioned) ancestor computed, landing it on top of unrelated
   // nearby content — e.g. covering the very next sibling's click target.
   let popoverEl = null;
-  const popoverId = `wb-popover-${Math.random().toString(36).slice(2, 9)}`;
+  const popoverId = `x-popover-${Math.random().toString(36).slice(2, 9)}`;
 
   // #209: a popover opening/closing was invisible to assistive tech — no
   // role, no announcement, no link between trigger and content. aria-haspopup
@@ -76,7 +76,7 @@ export function popover(element, options = {}) {
   const show = () => {
     if (popoverEl) return;
     popoverEl = document.createElement('div');
-    popoverEl.className = `wb-popover wb-popover--${config.position}`;
+    popoverEl.className = `x-popover x-popover--${config.position}`;
     popoverEl.id = popoverId;
     popoverEl.setAttribute('role', 'dialog');
     popoverEl.setAttribute('aria-label', config.title || config.content);
@@ -88,7 +88,7 @@ export function popover(element, options = {}) {
       padding: 0.75rem 1rem;
       box-shadow: 0 10px 40px rgba(0,0,0,0.3);
       z-index: 10000;
-      animation: wb-fade-in 0.15s ease;
+      animation: x-fade-in 0.15s ease;
       color: var(--text-primary, #f9fafb);
       max-width: 300px;
     `;
@@ -125,7 +125,7 @@ export function popover(element, options = {}) {
 
   return () => {
     hide();
-    element.classList.remove('wb-popover-trigger');
+    element.classList.remove('x-popover-trigger');
     element.removeAttribute('aria-haspopup');
     element.removeAttribute('aria-expanded');
   };
@@ -177,28 +177,28 @@ function positionPopover(trigger, popover, position) {
 
 /**
  * Drawer - Slide-out panel (works on button click)
- * Custom Tag: <wb-drawer>
+ * Custom Tag: <div x-drawer>
  *
- * Two competing DOM owners used to fight over the same <wb-drawer> element
+ * Two competing DOM owners used to fight over the same <div x-drawer> element
  * (root-caused live): drawer.schema.json's $view builds a real
  * backdrop/panel/header/title/close/body structure INSIDE the host the
  * moment WB.scan() processes it (schema-builder.js), wiping out whatever
  * text the host had (its trigger label, e.g. "Left Drawer") in the process.
- * Separately, tag-map.js maps <wb-drawer> to this behavior, and wb.js's
- * scan() unconditionally calls WB.inject(el, 'drawer') for every wb-drawer
+ * Separately, tag-map.js maps <div x-drawer> to this behavior, and wb.js's
+ * scan() unconditionally calls WB.inject(el, 'drawer') for every x-drawer
  * tag regardless of whether schema already ran -- so this function ALSO
  * used to build its own second, independent backdrop+panel pair on click,
  * appended to document.body, while the schema's copy sat inertly (and
- * invisibly -- see layout.css's `wb-drawer { visibility: hidden }` default)
+ * invisibly -- see layout.css's `x-drawer { visibility: hidden }` default)
  * inside the host. Result: an empty/malformed trigger box, and (had it ever
  * become visible) two overlays opening per click.
  *
  * Fix: when schema already processed this element (x-schema="drawer"), do
  * NOT build a second structure. Relocate the schema-built
- * .wb-drawer__backdrop/.wb-drawer__panel out to document.body (so the host
+ * .x-drawer__backdrop/.x-drawer__panel out to document.body (so the host
  * keeps its own visible label instead of showing the panel's internal
  * markup) and wire click-to-open/close to that existing DOM instead. Legacy
- * [x-drawer] usage (plain buttons, no wb-drawer tag, no schema involved --
+ * [x-drawer] usage (plain buttons, no x-drawer tag, no schema involved --
  * see tests/integration/drawer-behavior.spec.ts) is untouched: schemaProcessed
  * is never true for those, so they keep building their own DOM exactly as
  * before.
@@ -231,7 +231,7 @@ export function drawer(element, options = {}) {
     // No more hardcoded 'Drawer'/'Drawer content' placeholders (#overlays.html
     // live bug: "WTF where did this text come from?"). PATH B builds its own
     // panel from scratch and never reads the host's own text, so every
-    // attribute-less demo like `<wb-drawer position="left">position=left</wb-drawer>`
+    // attribute-less demo like `<div x-drawer position="left">position=left</div>`
     // popped open showing the literal, unrelated words "Drawer"/"Drawer
     // content" instead of "position=left". Title now defaults to '' (matches
     // drawer.schema.json's own `"default": ""` and its $view's
@@ -257,20 +257,26 @@ export function drawer(element, options = {}) {
     ...options
   };
 
-  element.classList.add('wb-drawer-trigger');
-  // #448: no classList.add('wb-drawer') here -- it just duplicated this
-  // element's own <wb-drawer> tag name (the "Marker for test compliance"
+  element.classList.add('x-drawer-trigger');
+  // #448: no classList.add('x-drawer') here -- it just duplicated this
+  // element's own <div x-drawer> tag name (the "Marker for test compliance"
   // comment predates #448's compliance test, which now flags exactly this
   // pattern). No CSS selector depends on the bare class -- layout.css's
-  // visibility rule already selects the wb-drawer TAG plus the OTHER real
-  // classes here (wb-drawer.wb-drawer-trigger, wb-drawer.wb-drawer-layout).
+  // visibility rule already selects the x-drawer TAG plus the OTHER real
+  // classes here (x-drawer.x-drawer-trigger, x-drawer.x-drawer-layout).
+  // #448 removed this class outright; restored WITH the tag-name guard.
+  // permutation-compliance requires compliance.baseClass to cover the host
+  // (classList.contains(cls) || tagName === cls), and on an attribute host
+  // like <div x-drawer> the tag is "div" -- so without the class nothing covers
+  // it. Guarded so a literal <x-drawer> tag does not get a redundant class.
+  if (element.tagName.toLowerCase() !== 'x-drawer') element.classList.add('x-drawer');
 
   // ═══════════════════════════════════════════════════════
   // PATH A: Schema already built the panel/backdrop — enhance, don't rebuild
   // ═══════════════════════════════════════════════════════
   if (schemaProcessed) {
-    const builtPanel = element.querySelector(':scope > .wb-drawer__panel');
-    const builtBackdrop = element.querySelector(':scope > .wb-drawer__backdrop');
+    const builtPanel = element.querySelector(':scope > .x-drawer__panel');
+    const builtBackdrop = element.querySelector(':scope > .x-drawer__backdrop');
 
     if (builtPanel) {
       // Move the schema-built structure out of the host and into
@@ -290,25 +296,25 @@ export function drawer(element, options = {}) {
         element.innerHTML = element._wbOriginalSlot || config.title;
       }
 
-      builtPanel.classList.add(`wb-drawer--${config.position}`);
+      builtPanel.classList.add(`x-drawer--${config.position}`);
 
       // $view's "close" part has no default content (drawer.schema.json
       // never gives it a label) -- give it one only if still empty, so an
       // author-supplied close label (via a future schema change) isn't
       // clobbered.
-      const closeBtn = builtPanel.querySelector('.wb-drawer__close');
+      const closeBtn = builtPanel.querySelector('.x-drawer__close');
       if (closeBtn && !closeBtn.textContent.trim()) closeBtn.innerHTML = '&times;';
 
-      const isOpen = () => builtPanel.classList.contains('wb-drawer__panel--open');
+      const isOpen = () => builtPanel.classList.contains('x-drawer__panel--open');
       const show = () => {
-        builtPanel.classList.add('wb-drawer__panel--open');
-        if (builtBackdrop) builtBackdrop.classList.add('wb-drawer__backdrop--open');
-        document.body.classList.add('wb-scroll-lock');
+        builtPanel.classList.add('x-drawer__panel--open');
+        if (builtBackdrop) builtBackdrop.classList.add('x-drawer__backdrop--open');
+        document.body.classList.add('x-scroll-lock');
       };
       const hide = () => {
-        builtPanel.classList.remove('wb-drawer__panel--open');
-        if (builtBackdrop) builtBackdrop.classList.remove('wb-drawer__backdrop--open');
-        document.body.classList.remove('wb-scroll-lock');
+        builtPanel.classList.remove('x-drawer__panel--open');
+        if (builtBackdrop) builtBackdrop.classList.remove('x-drawer__backdrop--open');
+        document.body.classList.remove('x-scroll-lock');
       };
       const toggle = () => (isOpen() ? hide() : show());
 
@@ -336,10 +342,10 @@ export function drawer(element, options = {}) {
         document.removeEventListener('keydown', onEscape);
         builtPanel.remove();
         if (builtBackdrop) builtBackdrop.remove();
-        element.classList.remove('wb-drawer-trigger');
+        element.classList.remove('x-drawer-trigger');
       };
     }
-    // No .wb-drawer__panel found despite schemaProcessed being true --
+    // No .x-drawer__panel found despite schemaProcessed being true --
     // shouldn't happen (drawer.schema.json's "panel" $view part is
     // required: true), but fall through to the self-building path below
     // rather than leaving the trigger with no click behavior at all.
@@ -357,8 +363,8 @@ export function drawer(element, options = {}) {
   // `position === 'right'`, silently rendering top/bottom as a left
   // sidebar, and (c) never read `variant` at all, so
   // default/overlay/push were pixel-identical. Now builds its DOM with the
-  // SAME `.wb-drawer__backdrop`/`.wb-drawer__panel`/`.wb-drawer--{position}`/
-  // `.wb-drawer__panel--open` classes src/styles/behaviors/drawer.css
+  // SAME `.x-drawer__backdrop`/`.x-drawer__panel`/`.x-drawer--{position}`/
+  // `.x-drawer__panel--open` classes src/styles/behaviors/drawer.css
   // already defines for PATH A (Tier-1 Law 9 -- reuse real CSS instead of
   // a second hand-rolled inline-style implementation that can drift out of
   // sync with it), so position support is defined in exactly one place.
@@ -384,32 +390,32 @@ export function drawer(element, options = {}) {
     // for 'overlay' rather than inventing a third undocumented interaction.
     if (!isPush) {
       backdropEl = document.createElement('div');
-      backdropEl.className = 'wb-drawer__backdrop';
+      backdropEl.className = 'x-drawer__backdrop';
       backdropEl.onclick = hide;
       document.body.appendChild(backdropEl);
     }
 
     panelEl = document.createElement('div');
-    panelEl.className = `wb-drawer__panel wb-drawer--${config.position} wb-drawer--${config.variant}`;
-    // --wb-drawer-width/--wb-drawer-height are drawer.schema.json's own
+    panelEl.className = `x-drawer__panel x-drawer--${config.position} x-drawer--${config.variant}`;
+    // --x-drawer-width/--x-drawer-height are drawer.schema.json's own
     // declared $cssAPI custom properties (drawer.css already reads them) --
     // setting them per-instance is the documented override mechanism, not a
     // one-off inline style (Law 9).
     if (isHorizontalEdge()) {
-      panelEl.style.setProperty('--wb-drawer-height', config.height);
+      panelEl.style.setProperty('--x-drawer-height', config.height);
     } else {
-      panelEl.style.setProperty('--wb-drawer-width', config.width);
+      panelEl.style.setProperty('--x-drawer-width', config.width);
     }
     panelEl.innerHTML = `
-      <div class="wb-drawer__header">
-        ${config.title ? `<h2 class="wb-drawer__title">${config.title}</h2>` : ''}
-        <button type="button" class="wb-drawer__close" aria-label="Close">&times;</button>
+      <div class="x-drawer__header">
+        ${config.title ? `<h2 class="x-drawer__title">${config.title}</h2>` : ''}
+        <button type="button" class="x-drawer__close" aria-label="Close">&times;</button>
       </div>
-      <div class="wb-drawer__body">${config.content}</div>
+      <div class="x-drawer__body">${config.content}</div>
     `;
-    panelEl.querySelector('.wb-drawer__close').onclick = hide;
+    panelEl.querySelector('.x-drawer__close').onclick = hide;
     document.body.appendChild(panelEl);
-    document.body.classList.add('wb-scroll-lock');
+    document.body.classList.add('x-scroll-lock');
 
     if (isPush) {
       // Push the page's own content wrapper (`body > .page`, the standard
@@ -428,15 +434,15 @@ export function drawer(element, options = {}) {
     // at least one frame before `--open` is added, or the browser paints
     // the open state directly with no visible slide-in transition.
     requestAnimationFrame(() => {
-      if (backdropEl) backdropEl.classList.add('wb-drawer__backdrop--open');
-      panelEl.classList.add('wb-drawer__panel--open');
+      if (backdropEl) backdropEl.classList.add('x-drawer__backdrop--open');
+      panelEl.classList.add('x-drawer__panel--open');
       if (pushTarget) {
         const rect = panelEl.getBoundingClientRect();
         const amount = isHorizontalEdge() ? rect.height : rect.width;
         const sign = (config.position === 'right' || config.position === 'bottom') ? -1 : 1;
-        pushTarget.style.setProperty(isHorizontalEdge() ? '--wb-drawer-push-y' : '--wb-drawer-push-x', `${sign * amount}px`);
-        pushTarget.classList.add('wb-drawer-push-target');
-        pushTarget.classList.add('wb-drawer-push-target--open');
+        pushTarget.style.setProperty(isHorizontalEdge() ? '--x-drawer-push-y' : '--x-drawer-push-x', `${sign * amount}px`);
+        pushTarget.classList.add('x-drawer-push-target');
+        pushTarget.classList.add('x-drawer-push-target--open');
       }
     });
   };
@@ -445,12 +451,12 @@ export function drawer(element, options = {}) {
     if (backdropEl) { backdropEl.remove(); backdropEl = null; }
     if (panelEl) { panelEl.remove(); panelEl = null; }
     if (pushTarget) {
-      pushTarget.classList.remove('wb-drawer-push-target--open');
-      pushTarget.style.removeProperty('--wb-drawer-push-x');
-      pushTarget.style.removeProperty('--wb-drawer-push-y');
+      pushTarget.classList.remove('x-drawer-push-target--open');
+      pushTarget.style.removeProperty('--x-drawer-push-x');
+      pushTarget.style.removeProperty('--x-drawer-push-y');
       pushTarget = null;
     }
-    document.body.classList.remove('wb-scroll-lock');
+    document.body.classList.remove('x-scroll-lock');
   };
 
   const toggle = () => panelEl ? hide() : show();
@@ -460,7 +466,7 @@ export function drawer(element, options = {}) {
   return () => {
     hide();
     element.removeEventListener('click', toggle);
-    element.classList.remove('wb-drawer-trigger');
+    element.classList.remove('x-drawer-trigger');
   };
 }
 
@@ -480,15 +486,15 @@ export function lightbox(element, options = {}) {
     ...options
   };
 
-  element.classList.add('wb-lightbox-trigger');
-  element.classList.add('wb-lightbox');
+  element.classList.add('x-lightbox-trigger');
+  element.classList.add('x-lightbox');
   element.style.cursor = 'pointer';
 
   element.onclick = (e) => {
     e.preventDefault();
     
     const overlay = document.createElement('div');
-    overlay.className = 'wb-lightbox';
+    overlay.className = 'x-lightbox';
     overlay.style.cssText = `
       position: fixed;
       top: 0; left: 0; right: 0; bottom: 0;
@@ -497,7 +503,7 @@ export function lightbox(element, options = {}) {
       display: flex;
       align-items: center;
       justify-content: center;
-      animation: wb-fade-in 0.2s ease;
+      animation: x-fade-in 0.2s ease;
       cursor: zoom-out;
     `;
     
@@ -509,7 +515,7 @@ export function lightbox(element, options = {}) {
       object-fit: contain;
       border-radius: 4px;
       box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
-      animation: wb-zoom-in 0.3s ease;
+      animation: x-zoom-in 0.3s ease;
     `;
     
     const closeBtn = document.createElement('button');
@@ -533,7 +539,7 @@ export function lightbox(element, options = {}) {
     closeBtn.onmouseleave = () => closeBtn.style.background = 'rgba(255,255,255,0.1)';
     
     const close = () => {
-      overlay.style.animation = 'wb-fade-out 0.2s ease';
+      overlay.style.animation = 'x-fade-out 0.2s ease';
       setTimeout(() => overlay.remove(), 200);
     };
     
@@ -549,12 +555,12 @@ export function lightbox(element, options = {}) {
     document.body.appendChild(overlay);
   };
 
-  return () => element.classList.remove('wb-lightbox-trigger');
+  return () => element.classList.remove('x-lightbox-trigger');
 }
 
 /**
  * Offcanvas - Off-canvas panel
- * Custom Tag: <wb-offcanvas>
+ * Custom Tag: <div>
  */
 export function offcanvas(element, options = {}) {
   const config = {
@@ -564,7 +570,7 @@ export function offcanvas(element, options = {}) {
     ...options
   };
 
-  element.classList.add('wb-offcanvas-trigger');
+  element.classList.add('x-offcanvas-trigger');
   let panelEl = null;
   let backdropEl = null;
 
@@ -575,7 +581,7 @@ export function offcanvas(element, options = {}) {
     backdropEl.style.cssText = `
       position: fixed; top: 0; left: 0; right: 0; bottom: 0;
       background: rgba(0,0,0,0.5); z-index: 9999;
-      animation: wb-fade-in 0.2s ease;
+      animation: x-fade-in 0.2s ease;
     `;
     backdropEl.onclick = hide;
     document.body.appendChild(backdropEl);
@@ -587,7 +593,7 @@ export function offcanvas(element, options = {}) {
       width: 280px; background: var(--bg-primary, #1f2937);
       border-${isLeft ? 'right' : 'left'}: 1px solid var(--border-color, #374151);
       z-index: 10000; display: flex; flex-direction: column;
-      animation: wb-slide-in 0.3s ease;
+      animation: x-slide-in 0.3s ease;
       box-shadow: ${isLeft ? '' : '-'}10px 0 30px rgba(0,0,0,0.3);
     `;
     panelEl.innerHTML = `
@@ -599,24 +605,24 @@ export function offcanvas(element, options = {}) {
     `;
     panelEl.querySelector('button').onclick = hide;
     document.body.appendChild(panelEl);
-    document.body.classList.add('wb-scroll-lock');
+    document.body.classList.add('x-scroll-lock');
   };
 
   const hide = () => {
     if (backdropEl) { backdropEl.remove(); backdropEl = null; }
     if (panelEl) { panelEl.remove(); panelEl = null; }
-    document.body.classList.remove('wb-scroll-lock');
+    document.body.classList.remove('x-scroll-lock');
   };
 
   element.onclick = () => panelEl ? hide() : show();
   element.wbOffcanvas = { show, hide, toggle: () => panelEl ? hide() : show() };
 
-  return () => { hide(); element.classList.remove('wb-offcanvas-trigger'); };
+  return () => { hide(); element.classList.remove('x-offcanvas-trigger'); };
 }
 
 /**
  * Sheet - Notes panel from left side with resizable width
- * Custom Tag: <wb-sheet>
+ * Custom Tag: <div>
  */
 export function sheet(element, options = {}) {
   const config = {
@@ -628,7 +634,7 @@ export function sheet(element, options = {}) {
     ...options
   };
 
-  element.classList.add('wb-sheet-trigger');
+  element.classList.add('x-sheet-trigger');
   let sheetEl = null;
   let backdropEl = null;
   let isResizing = false;
@@ -640,7 +646,7 @@ export function sheet(element, options = {}) {
     backdropEl.style.cssText = `
       position: fixed; top: 0; left: 0; right: 0; bottom: 0;
       background: rgba(0,0,0,0.5); z-index: 9999;
-      animation: wb-fade-in 0.2s ease;
+      animation: x-fade-in 0.2s ease;
     `;
     backdropEl.onclick = hide;
     document.body.appendChild(backdropEl);
@@ -652,7 +658,7 @@ export function sheet(element, options = {}) {
       background: var(--bg-primary, #1f2937);
       border-right: 1px solid var(--border-color, #374151);
       z-index: 10000; display: flex; flex-direction: column;
-      animation: wb-slide-in 0.3s ease;
+      animation: x-slide-in 0.3s ease;
       box-shadow: 10px 0 30px rgba(0,0,0,0.3);
     `;
     
@@ -663,19 +669,19 @@ export function sheet(element, options = {}) {
         </h3>
         <button style="background:none;border:none;font-size:1.5rem;cursor:pointer;color:var(--text-secondary);">&times;</button>
       </div>
-      <div class="wb-sheet__content" style="padding:1rem;flex:1;overflow:auto;color:var(--text-primary);">
+      <div class="x-sheet__content" style="padding:1rem;flex:1;overflow:auto;color:var(--text-primary);">
         ${config.content || '<textarea style="width:100%;height:100%;background:transparent;border:none;color:inherit;resize:none;font-family:inherit;font-size:0.875rem;outline:none;" placeholder="Type your notes here..."></textarea>'}
       </div>
-      <div class="wb-sheet__resize" style="position:absolute;top:0;right:0;bottom:0;width:6px;cursor:ew-resize;background:transparent;"></div>
+      <div class="x-sheet__resize" style="position:absolute;top:0;right:0;bottom:0;width:6px;cursor:ew-resize;background:transparent;"></div>
     `;
     
     sheetEl.querySelector('button').onclick = hide;
     
     // Resize handle
-    const resizeHandle = sheetEl.querySelector('.wb-sheet__resize');
+    const resizeHandle = sheetEl.querySelector('.x-sheet__resize');
     resizeHandle.onmousedown = (e) => {
       isResizing = true;
-      document.body.classList.add('wb-resizing');
+      document.body.classList.add('x-resizing');
     };
     
     document.addEventListener('mousemove', (e) => {
@@ -690,11 +696,11 @@ export function sheet(element, options = {}) {
     
     document.addEventListener('mouseup', () => {
       isResizing = false;
-      document.body.classList.remove('wb-resizing');
+      document.body.classList.remove('x-resizing');
     });
     
     document.body.appendChild(sheetEl);
-    document.body.classList.add('wb-scroll-lock');
+    document.body.classList.add('x-scroll-lock');
     
     // Focus textarea if present
     const textarea = sheetEl.querySelector('textarea');
@@ -704,7 +710,7 @@ export function sheet(element, options = {}) {
   const hide = () => {
     if (backdropEl) { backdropEl.remove(); backdropEl = null; }
     if (sheetEl) { sheetEl.remove(); sheetEl = null; }
-    document.body.classList.remove('wb-scroll-lock');
+    document.body.classList.remove('x-scroll-lock');
   };
 
   const toggle = () => sheetEl ? hide() : show();
@@ -714,7 +720,7 @@ export function sheet(element, options = {}) {
   return () => { 
     hide(); 
     element.removeEventListener('click', toggle);
-    element.classList.remove('wb-sheet-trigger'); 
+    element.classList.remove('x-sheet-trigger'); 
   };
 }
 
@@ -731,7 +737,7 @@ export function confirm(element, options = {}) {
     ...options
   };
 
-  element.classList.add('wb-confirm-trigger');
+  element.classList.add('x-confirm-trigger');
 
   element.onclick = (e) => {
     e.preventDefault();
@@ -763,7 +769,7 @@ export function confirm(element, options = {}) {
     document.body.appendChild(overlay);
   };
 
-  return () => element.classList.remove('wb-confirm-trigger');
+  return () => element.classList.remove('x-confirm-trigger');
 }
 
 /**
@@ -779,7 +785,7 @@ export function prompt(element, options = {}) {
     ...options
   };
 
-  element.classList.add('wb-prompt-trigger');
+  element.classList.add('x-prompt-trigger');
 
   element.onclick = (e) => {
     e.preventDefault();
@@ -822,7 +828,7 @@ export function prompt(element, options = {}) {
     input.select();
   };
 
-  return () => element.classList.remove('wb-prompt-trigger');
+  return () => element.classList.remove('x-prompt-trigger');
 }
 
 export default { popover, drawer, lightbox, offcanvas, sheet, confirm, prompt };

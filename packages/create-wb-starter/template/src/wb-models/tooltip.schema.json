@@ -4,13 +4,13 @@
   "title": "Tooltip",
   "description": "Tooltip for displaying additional information on hover/focus",
   "schemaFor": "tooltip",
-  "baseClass": "wb-tooltip-trigger",
+  "baseClass": "x-tooltip-trigger",
   "semanticElement": {
     "tagName": "div",
     "implicitRole": "tooltip"
   },
   "compliance": {
-    "baseClass": "wb-tooltip-trigger",
+    "baseClass": "x-tooltip-trigger",
     "supportLevel": "stable",
     "accessibility": "high"
   },
@@ -35,7 +35,7 @@
         "bottom-end"
       ],
       "default": "top",
-      "appliesClass": "wb-tooltip--{{value}}"
+      "appliesClass": "x-tooltip--{{value}}"
     },
     "variant": {
       "type": "string",
@@ -47,7 +47,7 @@
         "primary"
       ],
       "default": "default",
-      "appliesClass": "wb-tooltip--{{value}}"
+      "appliesClass": "x-tooltip--{{value}}"
     },
     "delay": {
       "type": "number",
@@ -122,83 +122,83 @@
     }
   },
   "$cssAPI": {
-    "--wb-tooltip-bg": {
+    "--x-tooltip-bg": {
       "default": "#1f2937",
       "description": "Background color"
     },
-    "--wb-tooltip-color": {
+    "--x-tooltip-color": {
       "default": "#ffffff",
       "description": "Text color"
     },
-    "--wb-tooltip-padding": {
+    "--x-tooltip-padding": {
       "default": "0.5rem 0.75rem",
       "description": "Content padding"
     },
-    "--wb-tooltip-radius": {
+    "--x-tooltip-radius": {
       "default": "4px",
       "description": "Border radius"
     },
-    "--wb-tooltip-font-size": {
+    "--x-tooltip-font-size": {
       "default": "0.75rem",
       "description": "Font size"
     },
-    "--wb-tooltip-line-height": {
+    "--x-tooltip-line-height": {
       "default": "1.4",
       "description": "Line height"
     },
-    "--wb-tooltip-max-width": {
+    "--x-tooltip-max-width": {
       "default": "200px",
       "description": "Maximum width"
     },
-    "--wb-tooltip-shadow": {
+    "--x-tooltip-shadow": {
       "default": "0 2px 8px rgba(0,0,0,0.15)",
       "description": "Box shadow"
     },
-    "--wb-tooltip-z-index": {
+    "--x-tooltip-z-index": {
       "default": "9999",
       "description": "Z-index"
     },
-    "--wb-tooltip-arrow-size": {
+    "--x-tooltip-arrow-size": {
       "default": "6px",
       "description": "Arrow size"
     },
-    "--wb-tooltip-offset": {
+    "--x-tooltip-offset": {
       "default": "8px",
       "description": "Distance from trigger"
     },
-    "--wb-tooltip-enter-animation": {
+    "--x-tooltip-enter-animation": {
       "default": "fadeIn 0.15s ease",
       "description": "Enter animation"
     },
-    "--wb-tooltip-exit-animation": {
+    "--x-tooltip-exit-animation": {
       "default": "fadeOut 0.1s ease",
       "description": "Exit animation"
     },
-    "--wb-tooltip-dark-bg": {
+    "--x-tooltip-dark-bg": {
       "default": "#1f2937",
       "description": "Dark variant background"
     },
-    "--wb-tooltip-dark-color": {
+    "--x-tooltip-dark-color": {
       "default": "#ffffff",
       "description": "Dark variant text color"
     },
-    "--wb-tooltip-light-bg": {
+    "--x-tooltip-light-bg": {
       "default": "#ffffff",
       "description": "Light variant background"
     },
-    "--wb-tooltip-light-color": {
+    "--x-tooltip-light-color": {
       "default": "#1f2937",
       "description": "Light variant text color"
     },
-    "--wb-tooltip-light-border": {
+    "--x-tooltip-light-border": {
       "default": "1px solid #e5e7eb",
       "description": "Light variant border"
     },
-    "--wb-tooltip-primary-bg": {
+    "--x-tooltip-primary-bg": {
       "default": "var(--primary, #6366f1)",
       "description": "Primary variant background"
     },
-    "--wb-tooltip-primary-color": {
+    "--x-tooltip-primary-color": {
       "default": "#ffffff",
       "description": "Primary variant text color"
     }
@@ -221,14 +221,14 @@
   },
   "test": {
     "setup": [
-      "<wb-tooltip>Basic tooltip content</wb-tooltip>",
-      "<wb-tooltip position=\"top\">position=top</wb-tooltip>",
-      "<wb-tooltip position=\"bottom\">position=bottom</wb-tooltip>",
-      "<wb-tooltip position=\"left\">position=left</wb-tooltip>",
-      "<wb-tooltip variant=\"default\">variant=default</wb-tooltip>",
-      "<wb-tooltip variant=\"dark\">variant=dark</wb-tooltip>",
-      "<wb-tooltip variant=\"light\">variant=light</wb-tooltip>",
-      "<wb-tooltip trigger=\"hover\">trigger=hover</wb-tooltip>"
+      "<span x-tooltip>Basic tooltip content</span>",
+      "<span x-tooltip position=\"top\">position=top</span>",
+      "<span x-tooltip position=\"bottom\">position=bottom</span>",
+      "<span x-tooltip position=\"left\">position=left</span>",
+      "<span x-tooltip variant=\"default\">variant=default</span>",
+      "<span x-tooltip variant=\"dark\">variant=dark</span>",
+      "<span x-tooltip variant=\"light\">variant=light</span>",
+      "<span x-tooltip trigger=\"hover\">trigger=hover</span>"
     ],
     "matrix": {
       "combinations": [
@@ -271,14 +271,14 @@
     },
     "site": {
       "page": "feedback",
-      "tag": "wb-tooltip",
+      "tag": "x-tooltip",
       "renders": true,
-      "baseClass": "wb-tooltip",
+      "baseClass": "x-tooltip",
       "minInstances": 9,
       "checkText": [],
       "checkClasses": [
-        "wb-tooltip--bottom",
-        "wb-tooltip--dark"
+        "x-tooltip--bottom",
+        "x-tooltip--dark"
       ],
       "checkAttributes": [
         "content"

@@ -7,26 +7,26 @@ test.describe('Card Overlay (integration)', () => {
     await page.waitForFunction(() => (window as any).WBSite && (window as any).WBSite.currentPage);
     await page.waitForTimeout(100);
     
-    await page.evaluate(() => {
+    await page.evaluate(async () => {
       const el = document.createElement('div');
       el.id = 'test-overlay';
       el.setAttribute('x-cardoverlay', '');
       el.setAttribute('data-title', 'My Overlay Title');
       el.setAttribute('data-image', 'https://picsum.photos/400/300');
       document.body.appendChild(el);
-      (window as any).WB.scan();
+      await (window as any).WB.scan();
     });
     
     const card = page.locator('#test-overlay');
-    await expect(card).toHaveClass(/wb-card/);
-    await expect(card).toHaveClass(/wb-card--overlay-card/);
+    await expect(card).toHaveClass(/x-card/);
+    await expect(card).toHaveClass(/x-card--overlay-card/);
     
     // Should have overlay content with title
-    const overlayContent = card.locator('.wb-card__overlay-content');
+    const overlayContent = card.locator('.x-card__overlay-content');
     await expect(overlayContent).toBeVisible();
     
     // Title should be visible
-    const title = card.locator('.wb-card__overlay-title');
+    const title = card.locator('.x-card__overlay-title');
     await expect(title).toHaveText('My Overlay Title');
   });
 
@@ -36,16 +36,16 @@ test.describe('Card Overlay (integration)', () => {
     await page.waitForFunction(() => (window as any).WBSite && (window as any).WBSite.currentPage);
     await page.waitForTimeout(100);
     
-    await page.evaluate(() => {
+    await page.evaluate(async () => {
       const el = document.createElement('div');
       el.id = 'test-overlay-gradient';
       el.setAttribute('x-cardoverlay', '');
       el.setAttribute('data-title', 'Gradient Test');
       document.body.appendChild(el);
-      (window as any).WB.scan();
+      await (window as any).WB.scan();
     });
     
-    const overlayContent = page.locator('#test-overlay-gradient .wb-card__overlay-content');
+    const overlayContent = page.locator('#test-overlay-gradient .x-card__overlay-content');
     await expect(overlayContent).toBeVisible();
     const style = await overlayContent.getAttribute('style');
     expect(style).toContain('gradient');
@@ -57,17 +57,17 @@ test.describe('Card Overlay (integration)', () => {
     await page.waitForFunction(() => (window as any).WBSite && (window as any).WBSite.currentPage);
     await page.waitForTimeout(100);
     
-    await page.evaluate(() => {
+    await page.evaluate(async () => {
       const el = document.createElement('div');
       el.id = 'test-overlay-position';
       el.setAttribute('x-cardoverlay', '');
       el.setAttribute('data-title', 'Bottom Position');
       document.body.appendChild(el);
-      (window as any).WB.scan();
+      await (window as any).WB.scan();
     });
     
     const card = page.locator('#test-overlay-position');
-    await expect(card).toHaveClass(/wb-card--overlay-bottom/);
+    await expect(card).toHaveClass(/x-card--overlay-bottom/);
     await expect(card).toHaveCSS('align-items', 'flex-end');
   });
 
@@ -77,14 +77,14 @@ test.describe('Card Overlay (integration)', () => {
     await page.waitForFunction(() => (window as any).WBSite && (window as any).WBSite.currentPage);
     await page.waitForTimeout(100);
     
-    await page.evaluate(() => {
+    await page.evaluate(async () => {
       const el = document.createElement('div');
       el.id = 'test-overlay-image';
       el.setAttribute('x-cardoverlay', '');
       el.setAttribute('data-title', 'Image Test');
       el.setAttribute('data-image', 'https://picsum.photos/400/300');
       document.body.appendChild(el);
-      (window as any).WB.scan();
+      await (window as any).WB.scan();
     });
     
     const card = page.locator('#test-overlay-image');

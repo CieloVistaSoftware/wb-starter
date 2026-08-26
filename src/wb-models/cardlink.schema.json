@@ -4,13 +4,13 @@
   "title": "Link Card",
   "description": "Clickable card that navigates to a URL",
   "schemaFor": "cardlink",
-  "baseClass": "wb-card-link",
+  "baseClass": "x-card-link",
   "semanticElement": {
     "tagName": "article",
     "implicitRole": "link"
   },
   "compliance": {
-    "baseClass": "wb-card-link",
+    "baseClass": "x-card-link",
     "supportLevel": "stable",
     "accessibility": "high"
   },
@@ -61,7 +61,7 @@
         "glass"
       ],
       "default": "default",
-      "appliesClass": "wb-card-link--{{value}}"
+      "appliesClass": "x-card-link--{{value}}"
     }
   },
   "$view": [
@@ -139,67 +139,67 @@
     }
   },
   "$cssAPI": {
-    "--wb-card-link-padding": {
+    "--x-card-link-padding": {
       "default": "1rem",
       "description": "Card padding"
     },
-    "--wb-card-link-radius": {
+    "--x-card-link-radius": {
       "default": "8px",
       "description": "Border radius"
     },
-    "--wb-card-link-bg": {
+    "--x-card-link-bg": {
       "default": "var(--bg-surface, #ffffff)",
       "description": "Background"
     },
-    "--wb-card-link-border": {
+    "--x-card-link-border": {
       "default": "1px solid var(--border-color, #e0e0e0)",
       "description": "Border"
     },
-    "--wb-card-link-shadow": {
+    "--x-card-link-shadow": {
       "default": "none",
       "description": "Box shadow"
     },
-    "--wb-card-link-hover-border": {
+    "--x-card-link-hover-border": {
       "default": "var(--primary, #6366f1)",
       "description": "Hover border color"
     },
-    "--wb-card-link-hover-shadow": {
+    "--x-card-link-hover-shadow": {
       "default": "0 4px 12px rgba(0,0,0,0.1)",
       "description": "Hover shadow"
     },
-    "--wb-card-link-hover-transform": {
+    "--x-card-link-hover-transform": {
       "default": "translateY(-2px)",
       "description": "Hover transform"
     },
-    "--wb-card-link-transition": {
+    "--x-card-link-transition": {
       "default": "all 0.2s ease",
       "description": "Transition"
     },
-    "--wb-card-link-icon-size": {
+    "--x-card-link-icon-size": {
       "default": "1.5rem",
       "description": "Icon size"
     },
-    "--wb-card-link-icon-color": {
+    "--x-card-link-icon-color": {
       "default": "var(--primary, #6366f1)",
       "description": "Icon color"
     },
-    "--wb-card-link-title-size": {
+    "--x-card-link-title-size": {
       "default": "1rem",
       "description": "Title font size"
     },
-    "--wb-card-link-title-weight": {
+    "--x-card-link-title-weight": {
       "default": "600",
       "description": "Title font weight"
     },
-    "--wb-card-link-description-size": {
+    "--x-card-link-description-size": {
       "default": "0.875rem",
       "description": "Description font size"
     },
-    "--wb-card-link-description-color": {
+    "--x-card-link-description-color": {
       "default": "var(--text-secondary, #666)",
       "description": "Description color"
     },
-    "--wb-card-link-arrow-color": {
+    "--x-card-link-arrow-color": {
       "default": "var(--text-tertiary, #999)",
       "description": "Arrow color"
     }
@@ -219,15 +219,15 @@
   },
   "test": {
     "setup": [
-      "<wb-cardlink>Basic cardlink content</wb-cardlink>",
-      "<wb-cardlink target=\"_self\">target=_self</wb-cardlink>",
-      "<wb-cardlink target=\"_blank\">target=_blank</wb-cardlink>",
-      "<wb-cardlink variant=\"default\">variant=default</wb-cardlink>",
-      "<wb-cardlink variant=\"elevated\">variant=elevated</wb-cardlink>",
-      "<wb-cardlink variant=\"bordered\">variant=bordered</wb-cardlink>",
-      "<wb-cardlink href=\"Sample href\">href=\"Sample href\"</wb-cardlink>",
-      "<wb-cardlink title=\"Sample title\">title=\"Sample title\"</wb-cardlink>",
-      "<wb-card-link href=\"/page\" title=\"My Page\"></wb-card-link>"
+      "<div x-cardlink>Basic cardlink content</div>",
+      "<div x-cardlink target=\"_self\">target=_self</div>",
+      "<div x-cardlink target=\"_blank\">target=_blank</div>",
+      "<div x-cardlink variant=\"default\">variant=default</div>",
+      "<div x-cardlink variant=\"elevated\">variant=elevated</div>",
+      "<div x-cardlink variant=\"bordered\">variant=bordered</div>",
+      "<div x-cardlink href=\"Sample href\">href=\"Sample href\"</div>",
+      "<div x-cardlink title=\"Sample title\">title=\"Sample title\"</div>",
+      "<div x-cardlink href=\"/page\" title=\"My Page\"></div>"
     ],
     "matrix": {
       "combinations": [
@@ -259,16 +259,16 @@
     },
     "site": {
       "page": "cards",
-      "tag": "wb-cardlink",
+      "tag": "x-cardlink",
       "renders": true,
-      "baseClass": "wb-card-link",
+      "baseClass": "x-card-link",
       "minInstances": 6,
       "checkText": [
         "Link Title",
         "Title"
       ],
       "checkClasses": [
-        "wb-card-link--elevated"
+        "x-card-link--elevated"
       ],
       "checkAttributes": [
         "href"

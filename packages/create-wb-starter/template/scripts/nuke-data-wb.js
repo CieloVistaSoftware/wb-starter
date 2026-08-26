@@ -46,7 +46,7 @@ function fixContent(content, filePath) {
   // === HTML FILES ===
   if (filePath.endsWith('.html')) {
     
-    // 1. Convert component tags: <wb-card  ...> -> <wb-card ...>
+    // 1. Convert component tags: <article  ...> -> <article ...>
     COMPONENTS.forEach(comp => {
       // Match any HTML tag with
       const pattern = new RegExp(

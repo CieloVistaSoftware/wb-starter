@@ -156,7 +156,7 @@
     ]
   },
   "structure": {
-    "template": "<div class=\"wb-container\" style=\"{{computedStyles}}\">\n  {{children}}\n</div>",
+    "template": "<div class=\"x-container\" style=\"{{computedStyles}}\">\n  {{children}}\n</div>",
     "computedStyles": {
       "columns1_column": "display: flex; flex-direction: column; gap: {{gap}}; align-items: {{align}}; justify-content: {{justify}};",
       "columns1_row": "display: flex; flex-direction: row; gap: {{gap}}; align-items: {{align}}; justify-content: {{justify}}; flex-wrap: {{wrap ? 'wrap' : 'nowrap'}};",
@@ -166,7 +166,7 @@
   "containerBehavior": {
     "acceptsChildren": true,
     "childTypes": "any",
-    "dropZoneSelector": "[data-wb='container'], .wb-container",
+    "dropZoneSelector": "[data-wb='container'], .x-container",
     "visualIndicator": "Show grid lines when dragging over"
   },
   "builderConfig": {

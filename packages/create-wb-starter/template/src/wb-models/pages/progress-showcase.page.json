@@ -29,97 +29,97 @@
   "sections": [
     {
       "heading": "progress — Combinations",
-      "tag": "wb-progress",
+      "tag": "x-progress",
       "columns": 3,
       "demos": [
         {
-          "tag": "wb-progress",
+          "tag": "x-progress",
           "attrs": {
             "value": 0
           }
         },
         {
-          "tag": "wb-progress",
+          "tag": "x-progress",
           "attrs": {
             "value": 25
           }
         },
         {
-          "tag": "wb-progress",
+          "tag": "x-progress",
           "attrs": {
             "value": 50
           }
         },
         {
-          "tag": "wb-progress",
+          "tag": "x-progress",
           "attrs": {
             "value": 75
           }
         },
         {
-          "tag": "wb-progress",
+          "tag": "x-progress",
           "attrs": {
             "value": 100
           }
         },
         {
-          "tag": "wb-progress",
+          "tag": "x-progress",
           "attrs": {
             "value": 50,
             "label": "Loading..."
           }
         },
         {
-          "tag": "wb-progress",
+          "tag": "x-progress",
           "attrs": {
             "value": 50,
             "show-value": true
           }
         },
         {
-          "tag": "wb-progress",
+          "tag": "x-progress",
           "attrs": {
             "value": 50,
             "striped": true
           }
         },
         {
-          "tag": "wb-progress",
+          "tag": "x-progress",
           "attrs": {
             "value": 50,
             "variant": "success"
           }
         },
         {
-          "tag": "wb-progress",
+          "tag": "x-progress",
           "attrs": {
             "value": 50,
             "variant": "warning"
           }
         },
         {
-          "tag": "wb-progress",
+          "tag": "x-progress",
           "attrs": {
             "value": 50,
             "variant": "error"
           }
         },
         {
-          "tag": "wb-progress",
+          "tag": "x-progress",
           "attrs": {
             "value": 50,
             "size": "sm"
           }
         },
         {
-          "tag": "wb-progress",
+          "tag": "x-progress",
           "attrs": {
             "value": 50,
             "size": "lg"
           }
         },
         {
-          "tag": "wb-progress",
+          "tag": "x-progress",
           "attrs": {
             "indeterminate": true
           }
@@ -128,46 +128,46 @@
     },
     {
       "heading": "Variants",
-      "tag": "wb-progress",
+      "tag": "x-progress",
       "columns": 3,
       "demos": [
         {
-          "tag": "wb-progress",
+          "tag": "x-progress",
           "attrs": {
             "variant": "default",
             "value": 60
           }
         },
         {
-          "tag": "wb-progress",
+          "tag": "x-progress",
           "attrs": {
             "variant": "primary",
             "value": 60
           }
         },
         {
-          "tag": "wb-progress",
+          "tag": "x-progress",
           "attrs": {
             "variant": "success",
             "value": 60
           }
         },
         {
-          "tag": "wb-progress",
+          "tag": "x-progress",
           "attrs": {
             "variant": "warning",
             "value": 60
           }
         },
         {
-          "tag": "wb-progress",
+          "tag": "x-progress",
           "attrs": {
             "variant": "error",
             "value": 60
           }
         },
         {
-          "tag": "wb-progress",
+          "tag": "x-progress",
           "attrs": {
             "variant": "info",
             "value": 60
@@ -177,39 +177,39 @@
     },
     {
       "heading": "size variants",
-      "tag": "wb-progress",
+      "tag": "x-progress",
       "columns": 3,
       "demos": [
         {
-          "tag": "wb-progress",
+          "tag": "x-progress",
           "attrs": {
             "size": "xs",
             "value": 60
           }
         },
         {
-          "tag": "wb-progress",
+          "tag": "x-progress",
           "attrs": {
             "size": "sm",
             "value": 60
           }
         },
         {
-          "tag": "wb-progress",
+          "tag": "x-progress",
           "attrs": {
             "size": "md",
             "value": 60
           }
         },
         {
-          "tag": "wb-progress",
+          "tag": "x-progress",
           "attrs": {
             "size": "lg",
             "value": 60
           }
         },
         {
-          "tag": "wb-progress",
+          "tag": "x-progress",
           "attrs": {
             "size": "xl",
             "value": 60
@@ -219,17 +219,17 @@
     },
     {
       "heading": "Toggles",
-      "tag": "wb-progress",
+      "tag": "x-progress",
       "columns": 3,
       "demos": [
         {
-          "tag": "wb-progress",
+          "tag": "x-progress",
           "attrs": {
             "show-value": true
           }
         },
         {
-          "tag": "wb-progress",
+          "tag": "x-progress",
           "attrs": {
             "striped": true
           }

@@ -2,13 +2,17 @@
 
 Tab navigation for switching between content panels
 
-Applies to `<div>`, and to any element carrying `x-tabs`.
+## Type — new capability
 
-## Usage
+`x-tabs` adds behavior that no HTML element implies. Nothing about a tag says "ripple" or "tooltip", so this is always opted into by attribute, on whatever element you already chose.
+
+### How to write it
 
 ```html
-<div x-tabs>
-  …
+<div x-tabs active-tab="0" variant="underline">
+  <section title="Overview">Composition over inheritance, in light DOM.</section>
+  <section title="Attributes">Every attribute is kebab-case (§31).</section>
+  <section title="Events">Behaviors fire wb:&lt;name&gt;:&lt;action&gt;.</section>
 </div>
 ```
 

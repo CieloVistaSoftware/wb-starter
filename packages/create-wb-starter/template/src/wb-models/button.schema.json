@@ -4,13 +4,13 @@
   "title": "Button",
   "description": "Interactive button with variants, sizes, and optional icon",
   "schemaFor": "button",
-  "baseClass": "wb-button",
+  "baseClass": "x-button",
   "semanticElement": {
     "tagName": "button",
     "implicitRole": "button"
   },
   "compliance": {
-    "baseClass": "wb-button",
+    "baseClass": "x-button",
     "supportLevel": "stable",
     "accessibility": "high"
   },
@@ -70,7 +70,7 @@
         "link"
       ],
       "default": "primary",
-      "appliesClass": "wb-button--{{value}}"
+      "appliesClass": "x-button--{{value}}"
     },
     "size": {
       "type": "string",
@@ -83,7 +83,7 @@
         "xl"
       ],
       "default": "md",
-      "appliesClass": "wb-button--{{value}}"
+      "appliesClass": "x-button--{{value}}"
     },
     "disabled": {
       "type": "boolean",
@@ -94,22 +94,36 @@
       "type": "boolean",
       "description": "Loading state with spinner",
       "default": false,
-      "appliesClass": "wb-button--loading"
+      "appliesClass": "x-button--loading"
     },
     "fullWidth": {
       "type": "boolean",
       "description": "Full width button",
       "default": false,
-      "appliesClass": "wb-button--full"
+      "appliesClass": "x-button--full"
     },
     "iconOnly": {
       "type": "boolean",
       "description": "Icon-only button (square)",
       "default": false,
-      "appliesClass": "wb-button--icon-only"
+      "appliesClass": "x-button--icon-only"
+    },
+    "href": {
+      "type": "string",
+      "description": "Destination URL. Turns the control into a real link \u2014 required for variant=\"link\" to mean anything.",
+      "default": ""
+    },
+    "target": {
+      "type": "string",
+      "description": "Where to open href",
+      "enum": [
+        "_self",
+        "_blank"
+      ],
+      "default": "_self"
     }
   },
-  "_view_note": "The button BEHAVIOR (src/wb-viewmodels/semantics/button.js) is the SOLE renderer of <wb-button> — its own comment: 'CSS targets the tag and attributes directly. No inner <button> created. No classes added.' This $view rebuilt content via buildStructure() (element.innerHTML = '' then rebuild from $view/slot) whenever schema processing reached a <wb-button> — including ones created and populated by OTHER behaviors at runtime (e.g. feedback.js's alert() dismiss button, plain textContent = '×'), silently replacing that content with a span-wrapped version and contributing to the alert dismiss-button bug (see alert.schema.json). Emptied, same fix already applied to 'card' (#202) and 'alert'.",
+  "_view_note": "The button BEHAVIOR (src/wb-viewmodels/semantics/button.js) is the SOLE renderer of <button> \u2014 its own comment: 'CSS targets the tag and attributes directly. No inner <button> created. No classes added.' This $view rebuilt content via buildStructure() (element.innerHTML = '' then rebuild from $view/slot) whenever schema processing reached a <button> \u2014 including ones created and populated by OTHER behaviors at runtime (e.g. feedback.js's alert() dismiss button, plain textContent = '\u00d7'), silently replacing that content with a span-wrapped version and contributing to the alert dismiss-button bug (see alert.schema.json). Emptied, same fix already applied to 'card' (#202) and 'alert'.",
   "$view": [],
   "$methods": {
     "enable": {
@@ -142,99 +156,99 @@
     }
   },
   "$cssAPI": {
-    "--wb-button-padding-x": {
+    "--x-button-padding-x": {
       "default": "1rem",
       "description": "Horizontal padding"
     },
-    "--wb-button-padding-y": {
+    "--x-button-padding-y": {
       "default": "0.5rem",
       "description": "Vertical padding"
     },
-    "--wb-button-radius": {
+    "--x-button-radius": {
       "default": "4px",
       "description": "Border radius"
     },
-    "--wb-button-font-size": {
+    "--x-button-font-size": {
       "default": "0.875rem",
       "description": "Font size"
     },
-    "--wb-button-font-weight": {
+    "--x-button-font-weight": {
       "default": "600",
       "description": "Font weight"
     },
-    "--wb-button-gap": {
+    "--x-button-gap": {
       "default": "0.5rem",
       "description": "Gap between icon and label"
     },
-    "--wb-button-transition": {
+    "--x-button-transition": {
       "default": "all 0.15s ease",
       "description": "Transition for hover/active states"
     },
-    "--wb-button-primary-bg": {
+    "--x-button-primary-bg": {
       "default": "var(--primary, #6366f1)",
       "description": "Primary variant background"
     },
-    "--wb-button-primary-color": {
+    "--x-button-primary-color": {
       "default": "#ffffff",
       "description": "Primary variant text color"
     },
-    "--wb-button-primary-hover-bg": {
+    "--x-button-primary-hover-bg": {
       "default": "var(--primary-dark, #4f46e5)",
       "description": "Primary variant hover background"
     },
-    "--wb-button-secondary-bg": {
+    "--x-button-secondary-bg": {
       "default": "var(--secondary, #64748b)",
       "description": "Secondary variant background"
     },
-    "--wb-button-secondary-color": {
+    "--x-button-secondary-color": {
       "default": "#ffffff",
       "description": "Secondary variant text color"
     },
-    "--wb-button-success-bg": {
+    "--x-button-success-bg": {
       "default": "var(--success, #4caf50)",
       "description": "Success variant background"
     },
-    "--wb-button-success-color": {
+    "--x-button-success-color": {
       "default": "#ffffff",
       "description": "Success variant text color"
     },
-    "--wb-button-warning-bg": {
+    "--x-button-warning-bg": {
       "default": "var(--warning, #ff9800)",
       "description": "Warning variant background"
     },
-    "--wb-button-warning-color": {
+    "--x-button-warning-color": {
       "default": "#ffffff",
       "description": "Warning variant text color"
     },
-    "--wb-button-error-bg": {
+    "--x-button-error-bg": {
       "default": "var(--error, #f44336)",
       "description": "Error variant background"
     },
-    "--wb-button-error-color": {
+    "--x-button-error-color": {
       "default": "#ffffff",
       "description": "Error variant text color"
     },
-    "--wb-button-ghost-bg": {
+    "--x-button-ghost-bg": {
       "default": "transparent",
       "description": "Ghost variant background"
     },
-    "--wb-button-ghost-color": {
+    "--x-button-ghost-color": {
       "default": "var(--text-primary, #1a1a1a)",
       "description": "Ghost variant text color"
     },
-    "--wb-button-ghost-hover-bg": {
+    "--x-button-ghost-hover-bg": {
       "default": "var(--bg-hover, rgba(0,0,0,0.05))",
       "description": "Ghost variant hover background"
     },
-    "--wb-button-outline-border": {
+    "--x-button-outline-border": {
       "default": "1px solid currentColor",
       "description": "Outline variant border"
     },
-    "--wb-button-disabled-opacity": {
+    "--x-button-disabled-opacity": {
       "default": "0.5",
       "description": "Disabled state opacity"
     },
-    "--wb-button-focus-ring": {
+    "--x-button-focus-ring": {
       "default": "0 0 0 3px rgba(99, 102, 241, 0.3)",
       "description": "Focus ring box-shadow"
     }
@@ -264,20 +278,20 @@
   },
   "test": {
     "setup": [
-      "<wb-button>Basic button content</wb-button>",
-      "<wb-button icon-position=\"start\">iconPosition=start</wb-button>",
-      "<wb-button icon-position=\"end\">iconPosition=end</wb-button>",
-      "<wb-button variant=\"primary\">variant=primary</wb-button>",
-      "<wb-button variant=\"secondary\">variant=secondary</wb-button>",
-      "<wb-button variant=\"success\">variant=success</wb-button>",
-      "<wb-button size=\"xs\">size=xs</wb-button>",
-      "<wb-button size=\"sm\">size=sm</wb-button>"
+      "<button>Basic button content</button>",
+      "<button icon-position=\"start\">iconPosition=start</button>",
+      "<button icon-position=\"end\">iconPosition=end</button>",
+      "<button variant=\"primary\">variant=primary</button>",
+      "<button variant=\"secondary\">variant=secondary</button>",
+      "<button variant=\"success\">variant=success</button>",
+      "<button size=\"xs\">size=xs</button>",
+      "<button size=\"sm\">size=sm</button>"
     ],
     "functional": {
       "buttons": [
         {
           "name": "Basic Click",
-          "setup": "<wb-button>Click Me</wb-button>",
+          "setup": "<button>Click Me</button>",
           "selector": "element",
           "expect": {
             "textContains": "Click Me",
@@ -286,17 +300,17 @@
         },
         {
           "name": "Variant Classes",
-          "setup": "<wb-button variant='primary'>Primary</wb-button>",
+          "setup": "<button variant='primary'>Primary</button>",
           "selector": "element",
           "expect": {
-            "hasClass": "wb-button--primary"
+            "hasClass": "x-button--primary"
           }
         }
       ],
       "focus": [
         {
           "name": "Focus State",
-          "setup": "<wb-button>Focus Me</wb-button>",
+          "setup": "<button>Focus Me</button>",
           "action": "click",
           "selector": "element",
           "expect": {
@@ -307,7 +321,7 @@
       "disabled": [
         {
           "name": "Disabled State",
-          "setup": "<wb-button disabled>Disabled</wb-button>",
+          "setup": "<button disabled>Disabled</button>",
           "action": "click",
           "selector": "element",
           "expect": {
@@ -321,7 +335,7 @@
       "keyboard": [
         {
           "name": "Enter Key",
-          "setup": "<wb-button>Enter Me</wb-button>",
+          "setup": "<button>Enter Me</button>",
           "key": "Enter",
           "expect": {
             "event": "click"
@@ -329,7 +343,7 @@
         },
         {
           "name": "Space Key",
-          "setup": "<wb-button>Space Me</wb-button>",
+          "setup": "<button>Space Me</button>",
           "key": "Space",
           "expect": {
             "event": "click"
@@ -383,17 +397,17 @@
           "loading": true
         },
         {
-          "label": "🚀 With Icon",
+          "label": "\ud83d\ude80 With Icon",
           "variant": "primary",
-          "icon": "🚀"
+          "icon": "\ud83d\ude80"
         }
       ]
     },
     "site": {
       "page": "forms",
-      "tag": "wb-button",
+      "tag": "x-button",
       "renders": true,
-      "baseClass": "wb-button",
+      "baseClass": "x-button",
       "minInstances": 11,
       "checkText": [
         "Primary",
@@ -402,8 +416,8 @@
         "Warning"
       ],
       "checkClasses": [
-        "wb-button--secondary",
-        "wb-button--xs"
+        "x-button--secondary",
+        "x-button--xs"
       ],
       "checkAttributes": [
         "label",
@@ -413,7 +427,7 @@
   },
   "_metadata": {
     "category": "forms",
-    "icon": "🔘",
+    "icon": "\ud83d\udd18",
     "since": "1.0.0",
     "status": "stable"
   }

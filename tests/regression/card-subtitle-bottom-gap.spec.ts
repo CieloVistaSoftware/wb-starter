@@ -4,19 +4,19 @@ import { setupBehaviorTest, setupTestContainer } from '../base';
 /**
  * Every card variant's subtitle must keep a 0.5rem gap below it (John's
  * direct instruction). Several variants set their own inline
- * style.cssText that overrode card.css's correct `.wb-card__subtitle`
+ * style.cssText that overrode card.css's correct `.x-card__subtitle`
  * rule with margin-bottom: 0 (cardhorizontal, cardminimizable,
  * cardproduct, cardprofile's role element) or had it backwards entirely
  * (cardoverlay: 0.5rem top, 0 bottom). Fixed inline; this locks it in so
  * a future inline override can't silently drop the gap again.
  */
 const VARIANTS = [
-  { tag: 'wb-card', extra: '' },
-  { tag: 'wb-cardhorizontal', extra: '' },
-  { tag: 'wb-cardoverlay', extra: '' },
-  { tag: 'wb-cardminimizable', extra: '' },
-  { tag: 'wb-cardproduct', extra: '' },
-  { tag: 'wb-cardprofile', extra: 'role="Engineer"' },
+  { tag: '.x-card', extra: '' },
+  { tag: '[x-cardhorizontal]', extra: '' },
+  { tag: '[x-cardoverlay]', extra: '' },
+  { tag: '[x-cardminimizable]', extra: '' },
+  { tag: '[x-cardproduct]', extra: '' },
+  { tag: '[x-cardprofile]', extra: 'role="Engineer"' },
 ];
 
 test.describe('card subtitles keep a 0.5rem bottom gap', () => {
@@ -30,7 +30,7 @@ test.describe('card subtitles keep a 0.5rem bottom gap', () => {
         page,
         `<${tag} title="Title" subtitle="Subtitle text" ${extra}></${tag}>`
       );
-      const subtitle = el.locator('.wb-card__subtitle').first();
+      const subtitle = el.locator('.x-card__subtitle').first();
       await expect(subtitle).toHaveCount(1);
       await expect(subtitle).toHaveCSS('margin-bottom', '8px');
     });

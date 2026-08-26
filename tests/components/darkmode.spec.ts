@@ -25,14 +25,14 @@ async function injectAndScan(page: Page, html: string) {
     container.innerHTML = h;
     
     // Force eager loading
-    const elements = container.querySelectorAll('.wb-ready');
+    const elements = container.querySelectorAll('.x-ready');
     elements.forEach(el => el.setAttribute('', ''));
     
     document.body.appendChild(container);
   }, html);
   
-  await page.evaluate(() => {
-    (window as any).WB.scan(document.getElementById('test-container'));
+  await page.evaluate(async () => {
+    await (window as any).WB.scan(document.getElementById('test-container'));
   });
   
   await page.waitForTimeout(500);
@@ -45,11 +45,11 @@ test.describe('darkmode Behavior', () => {
     page.on('pageerror', (err) => errors.push(err.message));
     
     const setupHtml = [
-      "<wb-darkmode>Basic darkmode content</wb-darkmode>",
-      "<wb-darkmode>Test permutation 2</wb-darkmode>",
-      "<wb-darkmode>Test permutation 3</wb-darkmode>",
-      "<wb-darkmode>Test permutation 4</wb-darkmode>",
-      "<wb-darkmode>Test permutation 5</wb-darkmode>"
+      "<div x-darkmode>Basic darkmode content</div>",
+      "<div x-darkmode>Test permutation 2</div>",
+      "<div x-darkmode>Test permutation 3</div>",
+      "<div x-darkmode>Test permutation 4</div>",
+      "<div x-darkmode>Test permutation 5</div>"
     ];
     
     await injectAndScan(page, setupHtml.join('\n'));
@@ -65,10 +65,10 @@ test.describe('darkmode Behavior', () => {
   });
 
   test('element is visible after scan', async ({ page }) => {
-    const html = "<wb-darkmode>Basic darkmode content</wb-darkmode>";
+    const html = "<div x-darkmode>Basic darkmode content</div>";
     await injectAndScan(page, html);
     
-    const el = page.locator('#test-container wb-darkmode, #test-container wb-darkmode').first();
+    const el = page.locator('#test-container [x-darkmode], #test-container [x-darkmode]').first();
     const isPresent = await el.count() > 0;
     
     if (isPresent) {

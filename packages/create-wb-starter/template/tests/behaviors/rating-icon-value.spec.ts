@@ -1,5 +1,5 @@
 /**
- * #177 — <wb-rating> must honor the custom icon, paint its value on first render,
+ * #177 — <span x-rating> must honor the custom icon, paint its value on first render,
  * and use theme colors (overridable via color=).
  *
  * The behavior only read data-attributes and options, so the plain attributes
@@ -19,7 +19,7 @@ test.describe('#177 — rating icon + value + color', () => {
     const glyphs = await page.evaluate(() =>
       ['❤️', '👍'].map((ic) => {
         const r = document.querySelector(`[x-rating][icon="${ic}"]`);
-        const first = r?.querySelector('.wb-rating__star');
+        const first = r?.querySelector('.x-rating__star');
         return { icon: ic, glyph: first?.textContent || '' };
       })
     );
@@ -32,7 +32,7 @@ test.describe('#177 — rating icon + value + color', () => {
     const r = await page.evaluate(() => {
       return [...document.querySelectorAll('[x-rating]')].map((el) => {
         const value = parseInt(el.getAttribute('value') || '0', 10);
-        const filled = el.querySelectorAll('.wb-rating__star--full').length;
+        const filled = el.querySelectorAll('.x-rating__star--full').length;
         return { value, filled };
       });
     });
@@ -44,7 +44,7 @@ test.describe('#177 — rating icon + value + color', () => {
 
   test('filled stars use the theme rating color, not a hardcoded gray', async ({ page }) => {
     const color = await page.evaluate(() => {
-      const star = document.querySelector('[x-rating] .wb-rating__star--full') as HTMLElement;
+      const star = document.querySelector('[x-rating] .x-rating__star--full') as HTMLElement;
       return star ? getComputedStyle(star).color : 'NONE';
     });
     // --rating-active-color resolves to gold rgb(251, 197, 35)

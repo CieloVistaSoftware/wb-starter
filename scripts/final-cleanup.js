@@ -14,7 +14,7 @@ function processFile(filePath) {
     
     if (!content.includes('x-behavior')) return;
     
-    // HTML-encoded examples: &lt;div -> &lt;wb-card
+    // HTML-encoded examples: &lt;div -> &lt;x-card
     const components = [
       'card', 'cardimage', 'cardstats', 'cardpricing', 'cardprofile', 
       'cardproduct', 'cardhero', 'cardtestimonial', 'button', 'input',
@@ -22,7 +22,7 @@ function processFile(filePath) {
     ];
     
     components.forEach(c => {
-      // &lt;div -> &lt;wb-card
+      // &lt;div -> &lt;x-card
       content = content.replace(
         new RegExp(`&lt;(div|section|article)\\s+x-legacy=["']${c}["']`, 'gi'),
         `&lt;wb-${c}`
@@ -45,8 +45,8 @@ function processFile(filePath) {
     content = content.replace(/<code>data-wb<\/code>/g, '<code>x-*</code>');
     
     // Fix CSS comments
-    content = content.replace(//g, 'wb-header');
-    content = content.replace(//g, 'wb-builder');
+    content = content.replace(//g, 'x-header');
+    content = content.replace(//g, 'x-builder');
     
     // Fix button patterns
     content = content.replace(//g, 'x-$1');

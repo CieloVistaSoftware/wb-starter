@@ -31,9 +31,9 @@
     ],
     "assertions": [
       {
-        "description": "Form initializes with wb-form class",
+        "description": "Form initializes with x-form class",
         "selector": "#test-form",
-        "checks": { "hasClass": "wb-form" }
+        "checks": { "hasClass": "x-form" }
       },
       {
         "description": "AJAX submit dispatches wb:form:submit event",

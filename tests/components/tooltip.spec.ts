@@ -25,14 +25,14 @@ async function injectAndScan(page: Page, html: string) {
     container.innerHTML = h;
     
     // Force eager loading
-    const elements = container.querySelectorAll('.wb-ready');
+    const elements = container.querySelectorAll('.x-ready');
     elements.forEach(el => el.setAttribute('', ''));
     
     document.body.appendChild(container);
   }, html);
   
-  await page.evaluate(() => {
-    (window as any).WB.scan(document.getElementById('test-container'));
+  await page.evaluate(async () => {
+    await (window as any).WB.scan(document.getElementById('test-container'));
   });
   
   await page.waitForTimeout(500);
@@ -45,14 +45,14 @@ test.describe('tooltip Behavior', () => {
     page.on('pageerror', (err) => errors.push(err.message));
     
     const setupHtml = [
-      "<wb-tooltip>Basic tooltip content</wb-tooltip>",
-      "<wb-tooltip position=\"top\">position=top</wb-tooltip>",
-      "<wb-tooltip position=\"bottom\">position=bottom</wb-tooltip>",
-      "<wb-tooltip position=\"left\">position=left</wb-tooltip>",
-      "<wb-tooltip variant=\"default\">variant=default</wb-tooltip>",
-      "<wb-tooltip variant=\"dark\">variant=dark</wb-tooltip>",
-      "<wb-tooltip variant=\"light\">variant=light</wb-tooltip>",
-      "<wb-tooltip trigger=\"hover\">trigger=hover</wb-tooltip>"
+      "<span x-tooltip>Basic tooltip content</span>",
+      "<span x-tooltip position=\"top\">position=top</span>",
+      "<span x-tooltip position=\"bottom\">position=bottom</span>",
+      "<span x-tooltip position=\"left\">position=left</span>",
+      "<span x-tooltip variant=\"default\">variant=default</span>",
+      "<span x-tooltip variant=\"dark\">variant=dark</span>",
+      "<span x-tooltip variant=\"light\">variant=light</span>",
+      "<span x-tooltip trigger=\"hover\">trigger=hover</span>"
     ];
     
     await injectAndScan(page, setupHtml.join('\n'));
@@ -68,10 +68,10 @@ test.describe('tooltip Behavior', () => {
   });
 
   test('element is visible after scan', async ({ page }) => {
-    const html = "<wb-tooltip>Basic tooltip content</wb-tooltip>";
+    const html = "<span x-tooltip>Basic tooltip content</span>";
     await injectAndScan(page, html);
     
-    const el = page.locator('#test-container wb-tooltip, #test-container wb-tooltip').first();
+    const el = page.locator('#test-container [x-tooltip], #test-container [x-tooltip]').first();
     const isPresent = await el.count() > 0;
     
     if (isPresent) {
@@ -85,56 +85,56 @@ test.describe('tooltip Behavior', () => {
   });
 
   test('matrix combo 1: content=Tooltip text', async ({ page }) => {
-    await injectAndScan(page, "<wb-tooltip>Tooltip text</wb-tooltip>");
-    const el = page.locator('#test-container wb-tooltip, #test-container wb-tooltip').first();
+    await injectAndScan(page, "<span x-tooltip>Tooltip text</span>");
+    const el = page.locator('#test-container [x-tooltip], #test-container [x-tooltip]').first();
     await expect(el).toBeVisible({ timeout: 5000 });
   });
 
   test('matrix combo 2: content=Tooltip text, position=top', async ({ page }) => {
-    await injectAndScan(page, "<wb-tooltip position=\"top\">Tooltip text</wb-tooltip>");
-    const el = page.locator('#test-container wb-tooltip, #test-container wb-tooltip').first();
+    await injectAndScan(page, "<span x-tooltip position=\"top\">Tooltip text</span>");
+    const el = page.locator('#test-container [x-tooltip], #test-container [x-tooltip]').first();
     await expect(el).toBeVisible({ timeout: 5000 });
   });
 
   test('matrix combo 3: content=Tooltip text, position=bottom', async ({ page }) => {
-    await injectAndScan(page, "<wb-tooltip position=\"bottom\">Tooltip text</wb-tooltip>");
-    const el = page.locator('#test-container wb-tooltip, #test-container wb-tooltip').first();
+    await injectAndScan(page, "<span x-tooltip position=\"bottom\">Tooltip text</span>");
+    const el = page.locator('#test-container [x-tooltip], #test-container [x-tooltip]').first();
     await expect(el).toBeVisible({ timeout: 5000 });
   });
 
   test('matrix combo 4: content=Tooltip text, position=left', async ({ page }) => {
-    await injectAndScan(page, "<wb-tooltip position=\"left\">Tooltip text</wb-tooltip>");
-    const el = page.locator('#test-container wb-tooltip, #test-container wb-tooltip').first();
+    await injectAndScan(page, "<span x-tooltip position=\"left\">Tooltip text</span>");
+    const el = page.locator('#test-container [x-tooltip], #test-container [x-tooltip]').first();
     await expect(el).toBeVisible({ timeout: 5000 });
   });
 
   test('matrix combo 5: content=Tooltip text, position=right', async ({ page }) => {
-    await injectAndScan(page, "<wb-tooltip position=\"right\">Tooltip text</wb-tooltip>");
-    const el = page.locator('#test-container wb-tooltip, #test-container wb-tooltip').first();
+    await injectAndScan(page, "<span x-tooltip position=\"right\">Tooltip text</span>");
+    const el = page.locator('#test-container [x-tooltip], #test-container [x-tooltip]').first();
     await expect(el).toBeVisible({ timeout: 5000 });
   });
 
   test('matrix combo 6: content=Tooltip text, variant=light', async ({ page }) => {
-    await injectAndScan(page, "<wb-tooltip variant=\"light\">Tooltip text</wb-tooltip>");
-    const el = page.locator('#test-container wb-tooltip, #test-container wb-tooltip').first();
+    await injectAndScan(page, "<span x-tooltip variant=\"light\">Tooltip text</span>");
+    const el = page.locator('#test-container [x-tooltip], #test-container [x-tooltip]').first();
     await expect(el).toBeVisible({ timeout: 5000 });
   });
 
   test('matrix combo 7: content=Tooltip text, variant=primary', async ({ page }) => {
-    await injectAndScan(page, "<wb-tooltip variant=\"primary\">Tooltip text</wb-tooltip>");
-    const el = page.locator('#test-container wb-tooltip, #test-container wb-tooltip').first();
+    await injectAndScan(page, "<span x-tooltip variant=\"primary\">Tooltip text</span>");
+    const el = page.locator('#test-container [x-tooltip], #test-container [x-tooltip]').first();
     await expect(el).toBeVisible({ timeout: 5000 });
   });
 
   test('matrix combo 8: content=Tooltip text, arrow=false', async ({ page }) => {
-    await injectAndScan(page, "<wb-tooltip arrow=\"false\">Tooltip text</wb-tooltip>");
-    const el = page.locator('#test-container wb-tooltip, #test-container wb-tooltip').first();
+    await injectAndScan(page, "<span x-tooltip arrow=\"false\">Tooltip text</span>");
+    const el = page.locator('#test-container [x-tooltip], #test-container [x-tooltip]').first();
     await expect(el).toBeVisible({ timeout: 5000 });
   });
 
   test('matrix combo 9: content=Tooltip text, delay=500', async ({ page }) => {
-    await injectAndScan(page, "<wb-tooltip delay=\"500\">Tooltip text</wb-tooltip>");
-    const el = page.locator('#test-container wb-tooltip, #test-container wb-tooltip').first();
+    await injectAndScan(page, "<span x-tooltip delay=\"500\">Tooltip text</span>");
+    const el = page.locator('#test-container [x-tooltip], #test-container [x-tooltip]').first();
     await expect(el).toBeVisible({ timeout: 5000 });
   });
 });

@@ -1,5 +1,19 @@
+<script>
+  /* A page fragment opened on its own resolves its CSS and modules relative to
+     /pages/ instead of the site root, so it renders unstyled and never
+     finishes loading. These files are fetched and injected by index.html;
+     opened directly they are simply the wrong URL. Redirect to the route that
+     works. server.js wraps them automatically, so this only fires on a static
+     host. */
+  (function () {
+    var m = location.pathname.match(/\/pages\/([a-z0-9-]+)\.html$/i);
+    if (!m) return;                       // injected by the SPA: nothing to do
+    var root = location.pathname.slice(0, m.index + 1);
+    location.replace(root + '?page=' + m[1] + location.search.replace(/^\?/, '&') + location.hash);
+  })();
+</script>
 <!-- Page styles: src/styles/pages/about.css -->
-<link rel="stylesheet" href="src/styles/pages/about.css?v=3.0.91">
+<link rel="stylesheet" href="src/styles/pages/about.css?v=4.0.0">
 
 <div class="about-hero-banner">
   <div>
@@ -32,5 +46,5 @@
 </div>
 
 <div class="about-cta">
-  <a href="?page=components" class="about-cta-link">Explore the Components</a>
+  <a href="?page=behaviors" class="about-cta-link">Explore the Behaviors</a>
 </div>

@@ -18,5 +18,5 @@ test('diff behavior attaches and does not error', async ({ page }) => {
   await expect(el).toHaveAttribute('x-diff', '');
   // wait for marker set by the shim
   await page.waitForFunction(() => document.querySelector('#test-diff')?.dataset.wbDiff === '1', null, { timeout: 2000 });
-  expect(await el.getAttribute('data-wb-diff')).toBe('1');
+  expect(await el.getAttribute('data-x-diff')).toBe('1');
 });

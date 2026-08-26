@@ -14,13 +14,13 @@ test.describe('Progress Bars', () => {
     await page.waitForFunction(() => (window as any).WBSite && (window as any).WBSite.currentPage);
     await page.waitForTimeout(100);
     
-    await page.evaluate(() => {
+    await page.evaluate(async () => {
       const el = document.createElement('div');
       el.id = 'test-progress-height';
       el.setAttribute('x-progress', '');
       el.setAttribute('value', '75');
       document.body.appendChild(el);
-      (window as any).WB.scan();
+      await (window as any).WB.scan();
     });
 
     const progress = page.locator('#test-progress-height');
@@ -37,21 +37,21 @@ test.describe('Progress Bars', () => {
     await page.waitForFunction(() => (window as any).WBSite && (window as any).WBSite.currentPage);
     await page.waitForTimeout(100);
     
-    await page.evaluate(() => {
+    await page.evaluate(async () => {
       const el = document.createElement('div');
       el.id = 'test-progress-anim';
       el.setAttribute('x-progress', '');
       el.setAttribute('value', '75');
       el.setAttribute('animated', 'true');
       document.body.appendChild(el);
-      (window as any).WB.scan();
+      await (window as any).WB.scan();
     });
 
     // Wait for animation to complete
     await page.waitForTimeout(1200);
 
     // Check final width matches value
-    const progressBar = page.locator('#test-progress-anim .wb-progress__bar');
+    const progressBar = page.locator('#test-progress-anim .x-progress__bar');
     const barWidth = await progressBar.evaluate(el => el.style.width);
     
     expect(barWidth).toBe('75%');
@@ -65,21 +65,21 @@ test.describe('Spinners', () => {
     await page.waitForFunction(() => (window as any).WBSite && (window as any).WBSite.currentPage);
     await page.waitForTimeout(100);
     
-    await page.evaluate(() => {
+    await page.evaluate(async () => {
       const el = document.createElement('div');
       el.id = 'test-spinner';
       el.setAttribute('x-spinner', '');
       document.body.appendChild(el);
-      (window as any).WB.scan();
+      await (window as any).WB.scan();
     });
     
     const spinner = page.locator('#test-spinner');
-    await expect(spinner).toHaveClass(/wb-spinner/);
+    await expect(spinner).toHaveClass(/x-spinner/);
     
     const inner = spinner.locator('div').first();
     const style = await inner.getAttribute('style');
     expect(style).toContain('animation');
-    expect(style).toContain('wb-spin');
+    expect(style).toContain('x-spin');
   });
   
   test('should have different colors based on color', async ({ page }) => {
@@ -88,7 +88,7 @@ test.describe('Spinners', () => {
     await page.waitForFunction(() => (window as any).WBSite && (window as any).WBSite.currentPage);
     await page.waitForTimeout(100);
     
-    await page.evaluate(() => {
+    await page.evaluate(async () => {
       const primary = document.createElement('div');
       primary.id = 'spinner-primary';
       primary.setAttribute('x-spinner', '');
@@ -101,7 +101,7 @@ test.describe('Spinners', () => {
       success.setAttribute('color', 'success');
       document.body.appendChild(success);
       
-      (window as any).WB.scan();
+      await (window as any).WB.scan();
     });
     
     const primaryInner = page.locator('#spinner-primary > div').first();
@@ -121,13 +121,13 @@ test.describe('Skeleton Loaders', () => {
     await page.waitForFunction(() => (window as any).WBSite && (window as any).WBSite.currentPage);
     await page.waitForTimeout(100);
     
-    await page.evaluate(() => {
+    await page.evaluate(async () => {
       const el = document.createElement('div');
       el.id = 'test-skeleton';
       el.setAttribute('x-skeleton', '');
       el.setAttribute('variant', 'text');
       document.body.appendChild(el);
-      (window as any).WB.scan();
+      await (window as any).WB.scan();
     });
 
     const skeleton = page.locator('#test-skeleton');
@@ -146,18 +146,18 @@ test.describe('Skeleton Loaders', () => {
     await page.waitForFunction(() => (window as any).WBSite && (window as any).WBSite.currentPage);
     await page.waitForTimeout(100);
     
-    await page.evaluate(() => {
+    await page.evaluate(async () => {
       const el = document.createElement('div');
       el.id = 'test-skeleton-lines';
       el.setAttribute('x-skeleton', '');
       el.setAttribute('variant', 'text');
       el.setAttribute('lines', '3');
       document.body.appendChild(el);
-      (window as any).WB.scan();
+      await (window as any).WB.scan();
     });
     
     const skeleton = page.locator('#test-skeleton-lines');
-    const lines = skeleton.locator('.wb-skeleton__line');
+    const lines = skeleton.locator('.x-skeleton__line');
     const lineCount = await lines.count();
     
     expect(lineCount).toBe(3);
@@ -171,14 +171,14 @@ test.describe('Clickable Card', () => {
     await page.waitForFunction(() => (window as any).WBSite && (window as any).WBSite.currentPage);
     await page.waitForTimeout(100);
     
-    await page.evaluate(() => {
+    await page.evaluate(async () => {
       const el = document.createElement('div');
       el.id = 'test-clickable-card';
       el.setAttribute('x-card', '');
       el.setAttribute('data-clickable', '');
       el.textContent = 'Click me';
       document.body.appendChild(el);
-      (window as any).WB.scan();
+      await (window as any).WB.scan();
     });
     
     const card = page.locator('#test-clickable-card');
@@ -191,13 +191,13 @@ test.describe('Clickable Card', () => {
     await card.click();
     await page.waitForTimeout(150);
     
-    await expect(card).toHaveClass(/wb-card--active/);
+    await expect(card).toHaveClass(/x-card--active/);
     
     // Click again to toggle off
     await card.click();
     await page.waitForTimeout(150);
     
-    await expect(card).not.toHaveClass(/wb-card--active/);
+    await expect(card).not.toHaveClass(/x-card--active/);
   });
 });
 
@@ -208,7 +208,7 @@ test.describe('Card Structure', () => {
     await page.waitForFunction(() => (window as any).WBSite && (window as any).WBSite.currentPage);
     await page.waitForTimeout(100);
     
-    await page.evaluate(() => {
+    await page.evaluate(async () => {
       const el = document.createElement('div');
       el.id = 'test-card-structure';
       el.setAttribute('x-card', '');
@@ -216,7 +216,7 @@ test.describe('Card Structure', () => {
       el.setAttribute('data-footer', 'Footer text');
       el.textContent = 'Card content';
       document.body.appendChild(el);
-      (window as any).WB.scan();
+      await (window as any).WB.scan();
     });
     
     const card = page.locator('#test-card-structure');

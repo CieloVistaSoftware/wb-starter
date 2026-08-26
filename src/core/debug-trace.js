@@ -1,31 +1,31 @@
 /**
  * Selectable debug-trace category filter (#338).
  *
- * localStorage['wb-debug'] used to be strictly binary -- '1' turned on every
+ * localStorage['x-debug'] used to be strictly binary -- '1' turned on every
  * dlog() call in wb.js/wb-lazy.js at once (all [WB.scan]/[WB.observe]/
  * [WB.processSchema] chatter together), anything else meant silence. That
  * all-or-nothing model is why traceMediaLoads() (wb.js) had to be carved out
  * as its own bespoke always-on tracer -- isolating "just media loads" from
  * the rest of the noise had no other way to happen. This module generalizes
- * that escape hatch: 'wb-debug' now holds a comma-separated list of category
+ * that escape hatch: 'x-debug' now holds a comma-separated list of category
  * names (e.g. 'media,scan') and only dlog() calls tagged with a listed
  * category fire. '1' keeps meaning "everything on" and unset/'0' keeps
  * meaning "everything off", so existing muscle memory
- * (localStorage.setItem('wb-debug','1')) still works unchanged.
+ * (localStorage.setItem('x-debug','1')) still works unchanged.
  *
  * traceMediaLoads() (wb.js) and traceCardMedia() (card.js) are deliberately
  * NOT gated through this filter -- both are always-on by design (per their
  * own header comments) and must keep firing no matter what's set here.
  *
  * Categories are read fresh on every check (not cached at module load), so
- * flipping localStorage.setItem('wb-debug', ...) takes effect on the very
+ * flipping localStorage.setItem('x-debug', ...) takes effect on the very
  * next dlog() call -- no reload needed for anything that logs more than
  * once per page (e.g. observe()'s MutationObserver callback). A reload is
  * only needed to change the one-time "debug tracing: ON/OFF" banner each
  * module prints on boot.
  */
 
-const STORAGE_KEY = 'wb-debug';
+const STORAGE_KEY = 'x-debug';
 
 function readRaw() {
   try {

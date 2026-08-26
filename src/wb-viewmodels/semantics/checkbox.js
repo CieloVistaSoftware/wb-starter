@@ -11,7 +11,7 @@
  *   <label><input type="checkbox" disabled> Disabled</label>
  *   <label><input type="checkbox" variant="success"> Success</label>
  *
- * ⚠️ <wb-checkbox> is DEPRECATED — prefer a native <input type="checkbox">
+ * ⚠️ <div x-checkbox> is DEPRECATED — prefer a native <input type="checkbox">
  * directly (see usage above); this behavior already enhances a bare input
  * fully, no wrapper element ever needed. Retained for back-compat (self-
  * builds the real input now, see below); emits a one-time console warning.
@@ -109,12 +109,12 @@ function injectStyles() {
 }
 
 export function checkbox(element, options = {}) {
-  // <wb-checkbox> host with no real <input> yet (schema $view never ran --
+  // <div x-checkbox> host with no real <input> yet (schema $view never ran --
   // e.g. on wb-lazy.js pages, which have no schema-processing support at
   // all): self-build a real, semantic <label><input type="checkbox">text</label>
-  // and enhance THAT, the same way switch.js already does for <wb-switch>.
+  // and enhance THAT, the same way switch.js already does for <div x-switch>.
   // Deliberately does NOT replicate checkbox.schema.json's separate
-  // .wb-checkbox__box/.wb-checkbox__check span visual -- this file's own
+  // .x-checkbox__box/.x-checkbox__check span visual -- this file's own
   // injectStyles() below already gives a fully custom-styled checkbox on a
   // bare input via appearance:none, with no extra DOM needed. Native
   // .indeterminate is a DOM property, not an HTML attribute, so it's the
@@ -126,12 +126,12 @@ export function checkbox(element, options = {}) {
   // (confirmed live: reading host.textContent/attributes AFTER the other
   // path already cleared them). Only self-build when schema support
   // genuinely doesn't exist at all.
-  if (element.tagName.toLowerCase() === 'wb-checkbox' && !_checkboxHostDeprecationWarned) {
+  if (element.tagName.toLowerCase() === 'x-checkbox' && !_checkboxHostDeprecationWarned) {
     _checkboxHostDeprecationWarned = true;
-    console.warn('[wb-checkbox] is deprecated — use a bare <input type="checkbox"> instead, it already gets this same custom styling with no wrapper element needed.');
+    console.warn('[x-checkbox] is deprecated — use a bare <input type="checkbox"> instead, it already gets this same custom styling with no wrapper element needed.');
   }
 
-  if (element.tagName !== 'INPUT' && element.tagName.toLowerCase() === 'wb-checkbox' && !window.WB?.schema) {
+  if (element.tagName !== 'INPUT' && element.tagName.toLowerCase() === 'x-checkbox' && !window.WB?.schema) {
     if (element.querySelector('input[type="checkbox"]')) return () => {};
     const host = element;
     const label = host.getAttribute('label') || '';
@@ -154,29 +154,29 @@ export function checkbox(element, options = {}) {
     labelEl.appendChild(input);
     if (label) labelEl.appendChild(document.createTextNode(label));
     host.appendChild(labelEl);
-    // Redundant when host IS <wb-checkbox> (#478) -- checkbox.css matches the
+    // Redundant when host IS <div x-checkbox> (#478) -- checkbox.css matches the
     // tag directly too now.
-    if (host.tagName.toLowerCase() !== 'wb-checkbox') host.classList.add('wb-checkbox');
+    if (host.tagName.toLowerCase() !== 'x-checkbox') host.classList.add('x-checkbox');
     return checkbox(input, options);
   }
 
-  // Schema already built the real, hidden <input class="wb-checkbox__input">
+  // Schema already built the real, hidden <input class="[x-checkbox]__input">
   // (checkbox.schema.json's $view) when window.WB.schema ran -- but
   // schema-builder.js's generic $view builder only ever sets STATIC
   // part.attributes (checkbox.schema.json's input view only declares
   // `type: checkbox`) and its appliesClass mechanism only adds a class to
-  // the HOST element for a boolean property (e.g. wb-checkbox--checked) --
+  // the HOST element for a boolean property (e.g. x-checkbox--checked) --
   // neither actually sets the real input's checked/disabled/indeterminate
   // DOM properties. checkbox.css's visual state depends entirely on the
-  // native `:checked` pseudo-class (`.wb-checkbox__input:checked ~
-  // .wb-checkbox__box`), so a <wb-checkbox checked> or <wb-checkbox
+  // native `:checked` pseudo-class (`.x-checkbox__input:checked ~
+  // .x-checkbox__box`), so a <div x-checkbox checked> or <div x-checkbox
   // disabled> always rendered as a plain unchecked, enabled box -- confirmed
   // live (forms.html's "Checked"/"Disabled" demos). switch.js already does
-  // this same reflection for <wb-switch>'s schema-built input; checkbox.js
+  // this same reflection for <div x-switch>'s schema-built input; checkbox.js
   // just never had the equivalent step. Runs before the schema-built input's
-  // own `.wb-checkbox__input` early-return below, since it targets the HOST
-  // (wb-checkbox), not that input.
-  if (element.tagName.toLowerCase() === 'wb-checkbox' && window.WB?.schema) {
+  // own `.x-checkbox__input` early-return below, since it targets the HOST
+  // (x-checkbox), not that input.
+  if (element.tagName.toLowerCase() === 'x-checkbox' && window.WB?.schema) {
     const input = element.querySelector('input[type="checkbox"]');
     if (input) {
       if (element.hasAttribute('checked')) input.checked = true;
@@ -188,25 +188,25 @@ export function checkbox(element, options = {}) {
 
   if (element.tagName !== 'INPUT' || element.type !== 'checkbox') return () => {};
 
-  // wb-switch's internal <input type="checkbox"> is a visually-hidden state
+  // x-switch's internal <input type="checkbox"> is a visually-hidden state
   // driver styled by switch.css (position:absolute, width:1px, opacity:0) --
   // it is not a rendered checkbox. The generic visual treatment here
   // (width:1.125rem, display:inline-flex, appearance:none) matches it too
   // via the same nativeMap dispatch (any input[type="checkbox"] gets both
   // behaviors, additively -- see wb.js's scan()), and ties switch.css's
-  // `.wb-switch input` rule on specificity, winning on source order. (#361)
-  if (element.classList.contains('wb-switch__input')) return () => {};
+  // `.x-switch input` rule on specificity, winning on source order. (#361)
+  if (element.classList.contains('x-switch__input')) return () => {};
 
-  // wb-checkbox's OWN internal <input type="checkbox"> is the same kind of
+  // x-checkbox's OWN internal <input type="checkbox"> is the same kind of
   // visually-hidden state driver -- checkbox.schema.json's $view builds a
-  // separate .wb-checkbox__box/.wb-checkbox__check pair as the actual visual
-  // (matching the $cssAPI's --wb-checkbox-size/--wb-checkbox-radius/etc.
+  // separate .x-checkbox__box/.x-checkbox__check pair as the actual visual
+  // (matching the $cssAPI's --x-checkbox-size/--x-checkbox-radius/etc.
   // variables, which target that visual, not a raw input). Giving the input
   // its own type="checkbox" (fixing #366's text-field-wrap bug) means this
   // function's normal injectStyles() path now also matches it -- would
   // render a second, fully-visible native checkbox next to the box/check
   // visual. Keep it hidden via CSS instead (checkbox.css).
-  if (element.classList.contains('wb-checkbox__input')) return () => {};
+  if (element.classList.contains('x-checkbox__input')) return () => {};
 
   injectStyles();
 

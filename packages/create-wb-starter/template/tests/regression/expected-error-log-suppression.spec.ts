@@ -13,7 +13,7 @@ test('expected fixture errors stay out of the persistent error log', async ({ pa
   await page.goto('/demos/test-harness.html');
   await page.evaluate(() => {
     const container = document.createElement('div');
-    container.innerHTML = '<wb-audio src="/tests/fixtures/broken-audio-0-bytes.mp3"></wb-audio>';
+    container.innerHTML = '<audio src="/tests/fixtures/broken-audio-0-bytes.mp3"></audio>';
     document.body.appendChild(container);
     return (window as any).WB.scan(container);
   });
@@ -21,7 +21,7 @@ test('expected fixture errors stay out of the persistent error log', async ({ pa
   expect(appendRequests).toBe(0);
 
   await page.evaluate(async () => {
-    document.documentElement.removeAttribute('data-wb-expected-errors');
+    document.documentElement.removeAttribute('data-x-expected-errors');
     const { logError } = await import('/src/core/error-logger.js');
     await logError('unmarked regression error');
   });

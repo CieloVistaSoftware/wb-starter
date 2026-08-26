@@ -3,15 +3,15 @@ import { test, expect } from '@playwright/test';
 /**
  * REGRESSION (#375 / BUG-2026-07-27-002): plain <div x-alert variant="...">
  * triggers (the form pages/behaviors.html and scripts/generate-behaviors-page.js
- * emit, distinct from the schema-driven <wb-alert type="..."> component
+ * emit, distinct from the schema-driven <div x-alert type="..."> component
  * already covered by tests/behaviors/alerts-variants.spec.ts) rendered with
  * NO styling at all -- alert() in src/wb-viewmodels/feedback.js set a
- * `variant` attribute but never added the `.wb-alert` base class or the
- * `.wb-alert--<variant>` modifier class that src/styles/behaviors/alert.css
+ * `variant` attribute but never added the `.x-alert` base class or the
+ * `.x-alert--<variant>` modifier class that src/styles/behaviors/alert.css
  * actually targets, so every alert (info/success/warning/error alike)
  * rendered as an unstyled div.
  */
-test.describe('x-alert gets wb-alert + wb-alert--<variant> classes (#375)', () => {
+test.describe('x-alert gets x-alert + x-alert--<variant> classes (#375)', () => {
   test('warning and error alerts on the Behaviors showcase are visually distinct, not unstyled', async ({ page }) => {
     await page.goto('/?page=behaviors');
     await page.waitForSelector('#mainPage-behaviors', { timeout: 20000 });

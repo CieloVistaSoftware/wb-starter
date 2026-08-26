@@ -23,10 +23,10 @@ test.describe('x-code language badge does not overlap the code text', () => {
   test('badge sits above the first line of code, not on top of it', async ({ page }) => {
     await ready(page);
 
-    const container = page.locator('wb-demo', { has: page.locator('code[x-code]') }).first();
+    const container = page.locator('x-demo', { has: page.locator('code[x-code]') }).first();
     await container.scrollIntoViewIfNeeded();
 
-    const codeEl = container.locator('.wb-demo__grid code[x-code]').first();
+    const codeEl = container.locator('.x-demo__grid code[x-code]').first();
     await expect(codeEl).toBeVisible({ timeout: 20000 });
 
     await expect

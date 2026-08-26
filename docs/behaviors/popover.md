@@ -2,12 +2,16 @@
 
 Behavior applied with x-popover.
 
-Apply `x-popover` to any element.
+## Type — new capability
 
-## Usage
+`x-popover` adds behavior that no HTML element implies. Nothing about a tag says "ripple" or "tooltip", so this is always opted into by attribute, on whatever element you already chose.
+
+### How to write it
 
 ```html
-<button variant="primary" x-popover popover-title="Popover Title" popover-content="This is additional information displayed in a popover.">Show Popover</button>
+<button variant="primary" x-popover popover-title="Popover Title" popover-content="This is additional information displayed in a popover.">
+  x-popover · variant: primary · popover-title: Popover Title · popover-content: This is additional information displayed in a popover.
+</button>
 ```
 
 ## Attributes

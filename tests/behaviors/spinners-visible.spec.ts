@@ -1,5 +1,5 @@
 /**
- * #182 — <wb-spinner> must render a visible, animated ring.
+ * #182 — <span x-spinner> must render a visible, animated ring.
  *
  * Root cause: `--border-color` was referenced by the spinner CSS (and many other
  * behaviors) but defined in NO theme. `border: 2px solid var(--border-color)` with
@@ -11,7 +11,7 @@ import { test, expect } from '@playwright/test';
 
 test.describe('#182 — spinners visible + animated', () => {
   test.beforeEach(async ({ page }) => {
-    await page.goto('http://localhost:3000/?page=behaviors');
+    await page.goto('/?page=behaviors');
     await page.waitForSelector('#mainPage-behaviors', { timeout: 20000 });
     await page.waitForTimeout(2000);
   });
@@ -40,7 +40,7 @@ test.describe('#182 — spinners visible + animated', () => {
     for (const r of rings) {
       expect(r.hasInner, 'spinner has no inner ring element').toBe(true);
       expect(r.borderTopWidth, 'spinner ring border is 0 (invisible)').toBeGreaterThanOrEqual(1.5);
-      expect(r.anim, 'spinner ring is not animated').toBe('wb-spin');
+      expect(r.anim, 'spinner ring is not animated').toBe('x-spin');
     }
   });
 

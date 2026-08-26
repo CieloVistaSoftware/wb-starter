@@ -2,12 +2,16 @@
 
 On click, plays the pulse animation for 0.5s.
 
-Apply `x-pulse` to any element.
+## Type — new capability
 
-## Usage
+`x-pulse` adds behavior that no HTML element implies. Nothing about a tag says "ripple" or "tooltip", so this is always opted into by attribute, on whatever element you already chose.
+
+### How to write it
 
 ```html
-<button class="effect-demo" x-pulse>Pulse</button>
+<button class="effect-demo" x-pulse>
+  x-pulse
+</button>
 ```
 
 ## Live example

@@ -23,21 +23,21 @@ The collapsible flags read `data-collapsible` / `data-collapsed` (plain
 </fieldset>
 ```
 
-<wb-demo>
+<div x-demo>
 <fieldset data-collapsible>
   <legend>Shipping details</legend>
   <input type="text" placeholder="Address line 1">
 </fieldset>
-</wb-demo>
+</div>
 
 Add `data-collapsed` to start collapsed:
 
-<wb-demo>
+<div x-demo>
 <fieldset data-collapsible data-collapsed>
   <legend>Advanced options</legend>
   <input type="text" placeholder="Coupon code">
 </fieldset>
-</wb-demo>
+</div>
 
 ## Properties
 
@@ -51,9 +51,9 @@ Add `data-collapsed` to start collapsed:
 | Class | Applies to | When |
 |---|---|---|
 | `<fieldset>` | the `<fieldset>` | always |
-| `wb-fieldset__legend` | the `<legend>` | `data-collapsible` present |
-| `wb-fieldset__legend--collapsible` | the `<legend>` | `data-collapsible` present |
-| `wb-fieldset--collapsed` | the `<fieldset>` | collapsed (toggled by clicking the legend) |
+| `x-fieldset__legend` | the `<legend>` | `data-collapsible` present |
+| `x-fieldset__legend--collapsible` | the `<legend>` | `data-collapsible` present |
+| `x-fieldset--collapsed` | the `<fieldset>` | collapsed (toggled by clicking the legend) |
 
 ## Events
 

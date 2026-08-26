@@ -25,19 +25,19 @@ test.describe('Toast variant coloring (Behaviors page)', () => {
     await heading.scrollIntoViewIfNeeded();
 
     const cases: Array<[string, string]> = [
-      ['Info Toast', 'wb-toast--info'],
-      ['Success Toast', 'wb-toast--success'],
-      ['Warning Toast', 'wb-toast--warning'],
-      ['Error Toast', 'wb-toast--error'],
+      ['Info Toast', 'x-toast--info'],
+      ['Success Toast', 'x-toast--success'],
+      ['Warning Toast', 'x-toast--warning'],
+      ['Error Toast', 'x-toast--error'],
     ];
 
     for (const [label, expectedClass] of cases) {
       await page.locator('button', { hasText: label }).click();
-      const toasts = page.locator('.wb-toast-container .wb-toast');
+      const toasts = page.locator('.x-toast-container .x-toast');
       const last = toasts.last();
       await expect(last).toHaveClass(new RegExp(expectedClass));
       // Clear it so the next iteration's "last toast" isn't ambiguous.
-      await page.evaluate(() => document.querySelectorAll('.wb-toast-container .wb-toast').forEach(el => el.remove()));
+      await page.evaluate(() => document.querySelectorAll('.x-toast-container .x-toast').forEach(el => el.remove()));
     }
   });
 });

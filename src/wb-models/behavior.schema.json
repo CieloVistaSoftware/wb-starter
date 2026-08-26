@@ -516,7 +516,7 @@
         "required": true,
         "description": "The behavior name"
       },
-      "wb-ready": {
+      "x-ready": {
         "type": "boolean",
         "description": "Class added by WB when behavior is initialized"
       },
@@ -674,7 +674,7 @@
     "screenReaderText": {
       "srOnly": {
         "description": "Visually hidden but screen reader accessible",
-        "class": "wb-sr-only"
+        "class": "x-sr-only"
       }
     }
   },
@@ -722,34 +722,34 @@
     "description": "CSS styling conventions for behaviors",
     "cssVariables": {
       "colors": {
-        "--wb-primary": "Primary brand color",
-        "--wb-secondary": "Secondary brand color",
-        "--wb-success": "Success/positive color",
-        "--wb-warning": "Warning color",
-        "--wb-error": "Error/danger color",
-        "--wb-info": "Informational color"
+        "--x-primary": "Primary brand color",
+        "--x-secondary": "Secondary brand color",
+        "--x-success": "Success/positive color",
+        "--x-warning": "Warning color",
+        "--x-error": "Error/danger color",
+        "--x-info": "Informational color"
       },
       "spacing": {
-        "--wb-space-xs": "0.25rem",
-        "--wb-space-sm": "0.5rem",
-        "--wb-space-md": "1rem",
-        "--wb-space-lg": "1.5rem",
-        "--wb-space-xl": "2rem"
+        "--x-space-xs": "0.25rem",
+        "--x-space-sm": "0.5rem",
+        "--x-space-md": "1rem",
+        "--x-space-lg": "1.5rem",
+        "--x-space-xl": "2rem"
       },
       "typography": {
-        "--wb-font-family": "System font stack",
-        "--wb-font-size-base": "1rem",
-        "--wb-line-height": "1.5"
+        "--x-font-family": "System font stack",
+        "--x-font-size-base": "1rem",
+        "--x-line-height": "1.5"
       },
       "borders": {
-        "--wb-border-radius": "0.375rem",
-        "--wb-border-width": "1px",
-        "--wb-border-color": "Border color"
+        "--x-border-radius": "0.375rem",
+        "--x-border-width": "1px",
+        "--x-border-color": "Border color"
       },
       "shadows": {
-        "--wb-shadow-sm": "Small shadow",
-        "--wb-shadow-md": "Medium shadow",
-        "--wb-shadow-lg": "Large shadow"
+        "--x-shadow-sm": "Small shadow",
+        "--x-shadow-md": "Medium shadow",
+        "--x-shadow-lg": "Large shadow"
       }
     },
     "bemConvention": {
@@ -765,7 +765,7 @@
         "description": "Verify behavior initializes correctly",
         "checks": [
           "baseClass applied",
-          "wb-ready class set",
+          "x-ready class set",
           "required children created"
         ]
       },
@@ -899,7 +899,7 @@
     ]
   },
   "compliance": {
-    "baseClass": "wb-behavior"
+    "baseClass": "x-behavior"
   },
   "properties": {},
   "test": {

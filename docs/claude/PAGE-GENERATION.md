@@ -123,11 +123,11 @@ node scripts/auto-showcase.mjs --list
   "sections": [
     {
       "heading": "Section Title",
-      "tag": "wb-badge",
+      "tag": "x-badge",
       "columns": 3,
       "demos": [
-        { "tag": "wb-badge", "attrs": { "label": "New", "variant": "primary" } },
-        { "tag": "wb-badge", "attrs": { "label": "Done", "variant": "success", "pill": true } }
+        { "tag": "x-badge", "attrs": { "label": "New", "variant": "primary" } },
+        { "tag": "x-badge", "attrs": { "label": "Done", "variant": "success", "pill": true } }
       ]
     }
   ]
@@ -138,7 +138,7 @@ node scripts/auto-showcase.mjs --list
 - `attrs` use HTML attribute names (kebab-case: `trend-value`, not `trendValue`)
 - Boolean attrs: `true` renders as bare attr (`elevated`), `false` omits it
 - `children` key adds inner HTML content
-- `columns` sets the `wb-demo` grid (1-6, default 3)
+- `columns` sets the `x-demo` grid (1-6, default 3)
 
 ---
 
@@ -187,13 +187,13 @@ Generates an entire set of pages from one master `.site.json` schema. One comman
 
 ```bash
 # Full build — all pages + index
-node scripts/generate-site.mjs src/wb-models/pages/wb-component-library.site.json
+node scripts/generate-site.mjs src/wb-models/pages/x-component-library.site.json
 
 # Dry run — validate only, no files written
-node scripts/generate-site.mjs src/wb-models/pages/wb-component-library.site.json --dry-run
+node scripts/generate-site.mjs src/wb-models/pages/x-component-library.site.json --dry-run
 
 # Regenerate index only (after manual edits to pages)
-node scripts/generate-site.mjs src/wb-models/pages/wb-component-library.site.json --index-only
+node scripts/generate-site.mjs src/wb-models/pages/x-component-library.site.json --index-only
 ```
 
 **Output:**
@@ -232,7 +232,7 @@ node scripts/generate-site.mjs src/wb-models/pages/wb-component-library.site.jso
 
 ### Default Site Schema
 
-`src/wb-models/pages/wb-component-library.site.json` groups 70 components into 8 categories:
+`src/wb-models/pages/x-component-library.site.json` groups 70 components into 8 categories:
 
 | Page | Components | Demos |
 |------|-----------|-------|

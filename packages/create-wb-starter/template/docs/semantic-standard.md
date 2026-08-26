@@ -79,12 +79,12 @@
 
 ```html
 <!-- CORRECT -->
-<article x-card>
-  <header class="wb-card__header">
+<article>
+  <header class="x-card__header">
     <h3>Title</h3>
   </header>
-  <main class="wb-card__main"> Content goes here </main>
-  <footer class="wb-card__footer">
+  <main class="x-card__main"> Content goes here </main>
+  <footer class="x-card__footer">
     <button>Action</button>
   </footer>
 </article>
@@ -101,12 +101,12 @@
 ```html
 <!-- CORRECT -->
 <dialog x-modal>
-  <header class="wb-modal__header">
+  <header class="x-modal__header">
     <h2>Modal Title</h2>
     <button aria-label="Close">×</button>
   </header>
-  <main class="wb-modal__main"> Modal content </main>
-  <footer class="wb-modal__footer">
+  <main class="x-modal__main"> Modal content </main>
+  <footer class="x-modal__footer">
     <button>Cancel</button>
     <button>Confirm</button>
   </footer>
@@ -239,7 +239,6 @@ automatically, no `x-form` attribute needed.
     <label> Name
       <input
         type="text"
-        x-input
         required>
     </label>
   </fieldset>
@@ -265,7 +264,7 @@ Only use `<div>` for:
 <!-- OK - layout wrapper with ID -->
 <div
   id="grid-layout-1"
-  class="wb-grid"
+  class="x-grid"
   x-grid
   columns="3">
   <article id="card-1">...</article>
@@ -274,18 +273,17 @@ Only use `<div>` for:
 </div>
 <!-- OK - styling wrapper with ID -->
 <article
-  id="card-4"
-  x-card>
+  id="card-4">
   <header id="card-header-4">
     <div
       id="header-content-4"
-      class="wb-card__header-content">
+      class="x-card__header-content">
       <h3 id="card-title-4">Title</h3>
       <p id="card-subtitle-4">Subtitle</p>
     </div>
     <div
       id="header-actions-4"
-      class="wb-card__header-actions">
+      class="x-card__header-actions">
       <button id="btn-action-4">...</button>
     </div>
   </header>
@@ -301,11 +299,11 @@ Only use `<div>` for:
 ```javascript
 // WRONG
 const header = document.createElement('div');
-header.className = 'wb-card__header';
+header.className = 'x-card__header';
 
 // CORRECT
 const header = document.createElement('header');
-header.className = 'wb-card__header';
+header.className = 'x-card__header';
 ```
 
 ### 2. innerHTML Generation
@@ -319,8 +317,8 @@ element.innerHTML = `
 
 // CORRECT
 element.innerHTML = `
-  <header class="wb-card__header"><h3>${title}</h3></header>
-  <main class="wb-card__main">${content}</main>
+  <header class="x-card__header"><h3>${title}</h3></header>
+  <main class="x-card__main">${content}</main>
 `;
 ```
 
@@ -350,15 +348,15 @@ Schemas MUST enforce semantic elements:
     "preferredTag": "article",
     "allowedTags": ["article", "section"],
     "requiredChildren": {
-      ".wb-card__header": {
+      ".x-card__header": {
         "tagName": "HEADER",
         "required": false
       },
-      ".wb-card__main": {
+      ".x-card__main": {
         "tagName": "MAIN",
         "required": true
       },
-      ".wb-card__footer": {
+      ".x-card__footer": {
         "tagName": "FOOTER",
         "required": false
       }

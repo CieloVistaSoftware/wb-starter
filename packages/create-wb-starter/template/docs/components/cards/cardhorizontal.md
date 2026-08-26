@@ -6,10 +6,10 @@ Card with side-by-side image and content layout.
 
 | Property | Value |
 |----------|-------|
-| Custom Tag | `<wb-cardhorizontal>` |
+| Custom Tag | `<div x-cardhorizontal>` |
 | Behavior | `cardhorizontal` |
 | Semantic | `<article>` + `<figure>` |
-| Root CSS Class | `wb-card wb-card-horizontal` |
+| Root CSS Class | `x-card x-card-horizontal` |
 | Composes | card structure + CSS (no base class) |
 
 ## Properties
@@ -22,67 +22,90 @@ Supports every [card property](./card.md) — that shared structure and CSS are 
 | `imagePosition` | string | `"left"` | Position: `left`, `right` |
 | `imageWidth` | string | `"40%"` | Image width |
 
-Wrapped in `<wb-demo>`, so the live component renders below with its source shown underneath:
+**Attribute naming:** `card.js` reads these via `element.getAttribute('image-position')`/
+`element.getAttribute('image-width')` — the schema property names above are
+camelCase (JS-style), but the HTML attributes you actually write are
+kebab-case: `image-position="right"`, `image-width="60%"`. Writing the
+camelCase form in markup (e.g. <code>imagePosition="right"</code>) is
+silently ignored — it never matches, and the default applies instead with
+no error.
 
-<wb-demo>
-<wb-cardhorizontal
+Wrapped in `<div x-demo>`, so the live component renders below with its source shown underneath:
+
+<div x-demo>
+<div x-cardhorizontal
   title="Feature Title"
   subtitle="Feature description"
-  image="/images/feature.jpg">
+  image="https://picsum.photos/seed/cardhorizontal-feature/1000/800">
   Detailed content here.
-</wb-cardhorizontal>
-</wb-demo>
+</div>
+</div>
 
 ## Usage
 
 ### Basic Horizontal Card
 
 ```html
-<wb-cardhorizontal
+<div x-cardhorizontal
   title="Feature Title"
   subtitle="Feature description"
-  image="/images/feature.jpg">
+  image="https://picsum.photos/seed/cardhorizontal-basic/1000/800">
   Detailed content here.
-</wb-cardhorizontal>
+</div>
+```
+
+### Image on Left (explicit)
+
+`left` is the default (see the Basic Horizontal Card example above), but it's
+also a valid explicit value — set it directly when you want the markup to say
+so rather than rely on the default.
+
+```html
+<div x-cardhorizontal
+  title="Left Image"
+  image="https://picsum.photos/seed/cardhorizontal-left/1000/800"
+  image-position="left">
+  Content appears on the right.
+</div>
 ```
 
 ### Image on Right
 
 ```html
-<wb-cardhorizontal
+<div x-cardhorizontal
   title="Right Image"
-  image="/images/feature.jpg"
-  imagePosition="right">
+  image="https://picsum.photos/seed/cardhorizontal-right/1000/800"
+  image-position="right">
   Content appears on the left.
-</wb-cardhorizontal>
+</div>
 ```
 
 ### Custom Image Width
 
 ```html
-<wb-cardhorizontal
+<div x-cardhorizontal
   title="Large Image"
-  image="/images/wide.jpg"
-  imageWidth="60%">
+  image="https://picsum.photos/seed/cardhorizontal-wide/1000/800"
+  image-width="60%">
   Narrower content area.
-</wb-cardhorizontal>
+</div>
 ```
 
 ## Generated Structure
 
 ```html
 <article
-  class="wb-card wb-card-horizontal"
+  class="x-card x-card-horizontal"
   style="flex-direction: row">
   <figure
-    class="wb-card__figure"
+    class="x-card__figure"
     style="width: 40%">
     <img src="...">
   </figure>
-  <div class="wb-card__horizontal-content">
-    <h3 class="wb-card__title">Title</h3>
-    <p class="wb-card__subtitle">Subtitle</p>
-    <div class="wb-card__horiz-body">Content</div>
+  <div class="x-card__horizontal-content">
+    <h3 class="x-card__title">Title</h3>
+    <p class="x-card__subtitle">Subtitle</p>
+    <div class="x-card__horiz-body">Content</div>
   </div>
 </article>
 ```

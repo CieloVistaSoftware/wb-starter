@@ -30,7 +30,7 @@ The **~104 functional** uses (52 + 38 + 9 + 3 + 2) are the real work; the 140 pr
 
 ## Docs (update prose after)
 
-- `ATTRIBUTE-NAMING-STANDARD.md` (20), `WBVIEWS.md` (9), `wb-parts-spec.md` (7), `MVVM-MIGRATION*.md` (12), `docs/behaviors/wb-card.md` (7), `docs/components/cards/cardhero.md` (5), …
+- `ATTRIBUTE-NAMING-STANDARD.md` (20), `WBVIEWS.md` (9), `wb-parts-spec.md` (7), `MVVM-MIGRATION*.md` (12), `docs/behaviors/x-card.md` (7), `docs/components/cards/cardhero.md` (5), …
 
 ## Recommendations
 

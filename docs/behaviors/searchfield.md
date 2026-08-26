@@ -24,23 +24,23 @@ and wires the full search UI around it:
 <div x-searchfield placeholder="Search docs..." variant="glass"></div>
 ```
 
-<wb-demo>
+<div x-demo>
 <div x-searchfield placeholder="Search docs..." variant="glass"></div>
-</wb-demo>
+</div>
 
 The `<div x-searchfield>` custom tag is the same behavior, applied via the element
 map instead of the attribute:
 
-<wb-demo>
-<wb-search placeholder="Search..." size="lg"></div>
-</wb-demo>
+<div x-demo>
+<div x-searchfield placeholder="Search..." size="lg"></div>
+</div>
 
 Applied directly to a real `<input>`, it delegates straight to the plain
 `search()` behavior (no container is built):
 
-<wb-demo>
+<div x-demo>
 <input type="text" x-searchfield placeholder="Search…" instant>
-</wb-demo>
+</div>
 
 ## Properties
 
@@ -52,26 +52,26 @@ Applied directly to a real `<input>`, it delegates straight to the plain
 | `debounce` | integer (ms) | `300` | Delay before a non-instant `wb:search` event fires after typing stops. |
 | `instant` | boolean (presence) | `false` | Fire `wb:search` on every keystroke instead of debouncing. |
 | `disabled` | boolean (presence) | `false` | Disables the input. |
-| `size` | `sm` \| `md` \| `lg` | `md` | Applies `wb-search--{size}` (omitted for `md`). |
-| `variant` | `default` \| `glass` \| `minimal` | `default` | Applies `wb-search--{variant}` (omitted for `default`). |
+| `size` | `sm` \| `md` \| `lg` | `md` | Applies `x-search--{size}` (omitted for `md`). |
+| `variant` | `default` \| `glass` \| `minimal` | `default` | Applies `x-search--{variant}` (omitted for `default`). |
 | `icon` | string | `🔍` | Icon shown before the input. |
 | `clearable` | boolean | `true` | Set `clearable="false"` to hide the clear (✕) button. |
-| `loading` | boolean (presence) | `false` | Shows a loading indicator (⏳) and `wb-search--loading`. |
+| `loading` | boolean (presence) | `false` | Shows a loading indicator (⏳) and `x-search--loading`. |
 
 ## CSS Classes
 
 | Class | Applies to | When |
 |---|---|---|
 | `<div x-searchfield>` | host element (and the inner `<input>`) | always |
-| `wb-search--{size}` | host element | `size` ≠ `md` |
-| `wb-search--{variant}` | host element | `variant` ≠ `default` |
-| `wb-search--disabled` | host element | `disabled` present |
-| `wb-search--loading` | host element (and toggled via `setLoading()`) | `loading` present |
-| `wb-search__wrapper` | generated wrapper `<div>` around the input | always |
-| `wb-search__icon` | generated icon `<span>` | always |
-| `wb-search__input` | the `<input>` | always |
-| `wb-search__clear` | generated clear `<button>` | `clearable` |
-| `wb-search__loading` | generated loading `<span>` | `loading` present |
+| `x-search--{size}` | host element | `size` ≠ `md` |
+| `x-search--{variant}` | host element | `variant` ≠ `default` |
+| `x-search--disabled` | host element | `disabled` present |
+| `x-search--loading` | host element (and toggled via `setLoading()`) | `loading` present |
+| `x-search__wrapper` | generated wrapper `<div>` around the input | always |
+| `x-search__icon` | generated icon `<span>` | always |
+| `x-search__input` | the `<input>` | always |
+| `x-search__clear` | generated clear `<button>` | `clearable` |
+| `x-search__loading` | generated loading `<span>` | `loading` present |
 
 ## Events
 
@@ -90,5 +90,5 @@ The container form exposes an imperative API on `element.wbSearch`:
 `value` (get/set), `focus()`, `blur()`, `clear()`, `search()`, `setLoading(bool)`.
 
 - [Schema (underlying `search` behavior)](../../src/wb-models/search.schema.json)
-- [Test](../../tests/behaviors/wb-search-select-effect.spec.ts)
+- [Test](../../tests/behaviors/x-search-select-effect.spec.ts)
 - [Source](../../src/wb-viewmodels/search.js)

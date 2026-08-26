@@ -3,7 +3,7 @@ import { waitForWB } from '../base';
 
 /**
  * #350: John reported a card footer's text ("This is the footer") rendering
- * visually CENTERED, despite `.wb-card__footer { text-align: left; }`
+ * visually CENTERED, despite `.x-card__footer { text-align: left; }`
  * (card.css). A prior investigation checked `getComputedStyle(footer)
  * .textAlign` (correctly "left") and bounding-rect measurements on desktop
  * viewports and could not reproduce it -- closed as "needs repro details."
@@ -12,21 +12,21 @@ import { waitForWB } from '../base';
  * documents `<footer>` as the correct semantic tag for a card's footer
  * ("Footer content (actions, buttons): <footer>"), and every variant that
  * uses `base.createFooter()` (cardBase, card.js) literally
- * `document.createElement('footer')`s it and classes it `.wb-card__footer`.
+ * `document.createElement('footer')`s it and classes it `.x-card__footer`.
  * But WB's generic native-tag auto-injection (tag-map.js: `'footer':
  * 'footer'`, gated behind config/site.json's `autoInjectComponents: true`,
  * which the real site enables) scans EVERY bare `<footer>` tag on the page
  * -- including one a card already built and classed itself -- and
  * unconditionally runs the SITE-CHROME footer behavior (footer.js) on it,
- * which adds a second class: `.wb-footer`. So a card's footer ends up
- * `class="wb-card__footer wb-footer"`. footer.css's `.wb-footer` sets
+ * which adds a second class: `.x-footer`. So a card's footer ends up
+ * `class="x-card__footer .x-footer"`. footer.css's `.x-footer` sets
  * `display:flex; align-items:center`, and at <=768px switches to
  * `flex-direction:column` -- which turns the footer's own text content into
  * a single anonymous flex item and CENTERS it via flexbox `align-items`, a
  * completely different mechanism from `text-align`. That is exactly why the
  * prior investigation's `getComputedStyle().textAlign` check found nothing
  * wrong: it correctly read "left" the entire time. Confirmed live
- * (pages/components.html's "This is the title" / "This is the footer"
+ * (pages/behaviors.html's "This is the title" / "This is the footer"
  * card, the only place that exact footer text exists) at a 500px viewport:
  * leftGap and rightGap were both ~124.6px -- genuinely centered -- despite
  * computed text-align:left.
@@ -42,11 +42,11 @@ import { waitForWB } from '../base';
  * harness (index.html, tests/base.ts's setupTestContainer) does NOT load
  * that config, so `autoInject` defaults to false there and the collision
  * never fires -- confirmed by running this test against index.html first
- * and seeing the `.wb-footer` class never get added. Using a real served
+ * and seeing the `.x-footer` class never get added. Using a real served
  * page is required for a faithful repro, not a stylistic choice.
  *
- * Fix (card.css): `.wb-card__footer.wb-footer` (0,2,0 specificity, always
- * beats `.wb-footer`'s 0,1,0 regardless of viewport/media-query) reasserts
+ * Fix (card.css): `.x-card__footer.x-footer` (0,2,0 specificity, always
+ * beats `.x-footer`'s 0,1,0 regardless of viewport/media-query) reasserts
  * the card's own block layout and left alignment.
  *
  * This test asserts the actual rendered TEXT POSITION via bounding-box
@@ -56,14 +56,14 @@ import { waitForWB } from '../base';
 const VARIANTS = [
   // The exact real card from the report -- already on the page, no
   // synthetic injection needed.
-  { selector: 'wb-card[title="This is the title"][footer="This is the footer"]', inject: null },
+  { selector: 'x-card[title="This is the title"][footer="This is the footer"]', inject: null },
   {
     selector: '#footer-repro-cardprofile',
-    inject: `<wb-cardprofile id="footer-repro-cardprofile" title="This is the title" name="Jane Doe" footer="This is the footer"></wb-cardprofile>`,
+    inject: `<div x-cardprofile id="footer-repro-cardprofile" title="This is the title" name="Jane Doe" footer="This is the footer"></div>`,
   },
   {
     selector: '#footer-repro-carddraggable',
-    inject: `<wb-carddraggable id="footer-repro-carddraggable" title="This is the title" footer="This is the footer"></wb-carddraggable>`,
+    inject: `<div x-carddraggable id="footer-repro-carddraggable" title="This is the title" footer="This is the footer"></div>`,
   },
 ];
 
@@ -76,7 +76,7 @@ for (const { width, height, label } of VIEWPORTS) {
   test.describe(`card footer text stays left-aligned at ${label} (#350)`, () => {
     test.beforeEach(async ({ page }) => {
       await page.setViewportSize({ width, height });
-      await page.goto('/pages/components.html');
+      await page.goto('/pages/behaviors.html');
       await waitForWB(page);
     });
 
@@ -96,12 +96,12 @@ for (const { width, height, label } of VIEWPORTS) {
 
         const card = page.locator(selector).first();
         await expect(card).toHaveCount(1);
-        const footer = card.locator('.wb-card__footer').first();
+        const footer = card.locator('.x-card__footer').first();
         await expect(footer).toHaveCount(1);
 
         // Confirm this test actually exercises the #350 collision -- the
-        // generic native-tag scanner should still be adding .wb-footer
-        // alongside .wb-card__footer. If this ever stops being true (e.g.
+        // generic native-tag scanner should still be adding .x-footer
+        // alongside .x-card__footer. If this ever stops being true (e.g.
         // tag-map.js changes to skip nested/already-classed footers), that's
         // fine and this assertion should be relaxed -- but it should not
         // silently start passing for a different reason than the fix below.

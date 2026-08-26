@@ -5,23 +5,23 @@
  */
 
 /* #448: tag selectors -- notes() no longer adds a redundant classList.add
-   ('wb-notes') that just duplicated the <wb-notes> tag name. */
-wb-notes, [x-notes]{
+   ('x-notes') that just duplicated the <div x-notes> tag name. */
+x-notes, [x-notes]{
   --notes-max-width: 50vw;
   --notes-min-width: 200px;
 }
 
-/* Start hidden - only show when wb-notes--open class is added */
-wb-notes .wb-notes__drawer, [x-notes] .wb-notes__drawer{
+/* Start hidden - only show when x-notes--open class is added */
+x-notes .x-notes__drawer, [x-notes] .x-notes__drawer{
   display: none !important;
 }
 
-wb-notes.wb-notes--open .wb-notes__drawer, [x-notes].wb-notes--open .wb-notes__drawer{
+x-notes.x-notes--open .x-notes__drawer, [x-notes].x-notes--open .x-notes__drawer{
   display: flex !important;
 }
 
 /* Backdrop */
-.wb-notes__backdrop {
+.x-notes__backdrop {
   position: fixed;
   inset: 0;
   background: var(--overlay-bg, rgba(0, 0, 0, 0.6));
@@ -31,13 +31,13 @@ wb-notes.wb-notes--open .wb-notes__drawer, [x-notes].wb-notes--open .wb-notes__d
   transition: opacity 0.3s ease;
 }
 
-.wb-notes__backdrop.visible {
+.x-notes__backdrop.visible {
   opacity: 1;
   pointer-events: auto;
 }
 
 /* Drawer */
-.wb-notes__drawer {
+.x-notes__drawer {
   position: fixed;
   top: 0;
   bottom: 0;
@@ -54,17 +54,17 @@ wb-notes.wb-notes--open .wb-notes__drawer, [x-notes].wb-notes--open .wb-notes__d
 }
 
 /* Left position */
-.wb-notes--left .wb-notes__drawer {
+.x-notes--left .x-notes__drawer {
   left: 0;
   transform: translateX(-100%);
   border-radius: 0 8px 8px 0;
 }
 
-.wb-notes--left.wb-notes--open .wb-notes__drawer {
+.x-notes--left.x-notes--open .x-notes__drawer {
   transform: translateX(0);
 }
 
-.wb-notes--left .wb-notes__resize-handle {
+.x-notes--left .x-notes__resize-handle {
   position: absolute;
   right: 0;
   top: 0;
@@ -74,18 +74,18 @@ wb-notes.wb-notes--open .wb-notes__drawer, [x-notes].wb-notes--open .wb-notes__d
 }
 
 /* Right position */
-.wb-notes--right .wb-notes__drawer {
+.x-notes--right .x-notes__drawer {
   right: 0;
   left: auto;
   transform: translateX(100%);
   border-radius: 8px 0 0 8px;
 }
 
-.wb-notes--right.wb-notes--open .wb-notes__drawer {
+.x-notes--right.x-notes--open .x-notes__drawer {
   transform: translateX(0);
 }
 
-.wb-notes--right .wb-notes__resize-handle {
+.x-notes--right .x-notes__resize-handle {
   position: absolute;
   left: 0;
   top: 0;
@@ -95,7 +95,7 @@ wb-notes.wb-notes--open .wb-notes__drawer, [x-notes].wb-notes--open .wb-notes__d
 }
 
 /* Modal position */
-.wb-notes--modal .wb-notes__drawer {
+.x-notes--modal .x-notes__drawer {
   top: 50%;
   left: 50%;
   bottom: auto;
@@ -109,22 +109,22 @@ wb-notes.wb-notes--open .wb-notes__drawer, [x-notes].wb-notes--open .wb-notes__d
   border-radius: 12px;
 }
 
-.wb-notes--modal.wb-notes--open .wb-notes__drawer {
+.x-notes--modal.x-notes--open .x-notes__drawer {
   transform: translate(-50%, -50%) scale(1);
   opacity: 1;
   pointer-events: auto;
 }
 
-.wb-notes--modal .wb-notes__resize-handle {
+.x-notes--modal .x-notes__resize-handle {
   display: none;
 }
 
 /* Modal resize handle */
-.wb-notes__resize-handle-modal {
+.x-notes__resize-handle-modal {
   display: none;
 }
 
-.wb-notes--modal .wb-notes__resize-handle-modal {
+.x-notes--modal .x-notes__resize-handle-modal {
   display: block;
   position: absolute;
   bottom: 0;
@@ -135,7 +135,7 @@ wb-notes.wb-notes--open .wb-notes__drawer, [x-notes].wb-notes--open .wb-notes__d
   z-index: 10;
 }
 
-.wb-notes--modal .wb-notes__resize-handle-modal::before {
+.x-notes--modal .x-notes__resize-handle-modal::before {
   content: '';
   position: absolute;
   bottom: 4px;
@@ -147,19 +147,19 @@ wb-notes.wb-notes--open .wb-notes__drawer, [x-notes].wb-notes--open .wb-notes__d
 }
 
 /* Resize handle */
-.wb-notes__resize-handle {
+.x-notes__resize-handle {
   background: transparent;
   transition: background 0.2s ease;
   z-index: 10;
 }
 
-.wb-notes__resize-handle:hover,
-.wb-notes__resize-handle.dragging {
+.x-notes__resize-handle:hover,
+.x-notes__resize-handle.dragging {
   background: var(--primary);
 }
 
 /* Header */
-.wb-notes__header {
+.x-notes__header {
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -170,23 +170,23 @@ wb-notes.wb-notes--open .wb-notes__drawer, [x-notes].wb-notes--open .wb-notes__d
   gap: 0.25rem;
 }
 
-.wb-notes--modal .wb-notes__header {
+.x-notes--modal .x-notes__header {
   cursor: move;
 }
 
-.wb-notes--modal .wb-notes__header.dragging {
+.x-notes--modal .x-notes__header.dragging {
   cursor: grabbing;
   user-select: none;
 }
 
-.wb-notes__title {
+.x-notes__title {
   font-weight: 600;
   font-size: 0.9rem;
   color: var(--text-primary);
   white-space: nowrap;
 }
 
-.wb-notes__actions {
+.x-notes__actions {
   flex: 1;
   min-width: 0;
 }
@@ -199,13 +199,13 @@ wb-notes.wb-notes--open .wb-notes__drawer, [x-notes].wb-notes--open .wb-notes__d
    that 36px cap and got clipped by the row's own overflow, rendering as
    blank/missing buttons (reported live: "it needs a save button" -- the
    button existed in the DOM the whole time, just visually unreadable). */
-.wb-notes__btn-row {
+.x-notes__btn-row {
   display: flex;
   gap: 1px;
   flex-wrap: wrap;
 }
 
-.wb-notes__wide-btn {
+.x-notes__wide-btn {
   flex: 0 1 auto;
   min-width: 22px;
   height: 22px;
@@ -223,33 +223,33 @@ wb-notes.wb-notes--open .wb-notes__drawer, [x-notes].wb-notes--open .wb-notes__d
   justify-content: center;
 }
 
-.wb-notes__wide-btn:hover {
+.x-notes__wide-btn:hover {
   background: var(--primary);
   border-color: var(--primary);
 }
 
-.wb-notes__wide-btn.active {
+.x-notes__wide-btn.active {
   background: var(--primary);
   border-color: var(--primary);
   color: white;
 }
 
 /* Save button green on hover */
-.wb-notes__wide-btn--save:hover {
+.x-notes__wide-btn--save:hover {
   background: var(--success-color);
   border-color: var(--success-color);
 }
 
 /* New-note button in footer -- non-destructive (saves the outgoing note
    first), so no confirm step and no danger color -- just a clear accent. */
-.wb-notes__wide-btn--new:hover {
+.x-notes__wide-btn--new:hover {
   background: var(--primary);
   border-color: var(--primary);
 }
 
 /* Close button pinned to the header's own top-right corner, separate from
    the toolbar rows below. */
-.wb-notes__close-corner {
+.x-notes__close-corner {
   flex-shrink: 0;
   width: 24px;
   height: 24px;
@@ -264,14 +264,14 @@ wb-notes.wb-notes--open .wb-notes__drawer, [x-notes].wb-notes--open .wb-notes__d
   justify-content: center;
 }
 
-.wb-notes__close-corner:hover {
+.x-notes__close-corner:hover {
   background: var(--danger-color);
   border-color: var(--danger-color);
   color: white;
 }
 
 /* Textarea */
-.wb-notes__textarea {
+.x-notes__textarea {
   flex: 1;
   width: 100%;
   resize: none;
@@ -284,17 +284,17 @@ wb-notes.wb-notes--open .wb-notes__drawer, [x-notes].wb-notes--open .wb-notes__d
   line-height: 1.6;
 }
 
-.wb-notes__textarea:focus {
+.x-notes__textarea:focus {
   outline: none;
 }
 
-.wb-notes__textarea::placeholder {
+.x-notes__textarea::placeholder {
   color: var(--text-muted);
   opacity: 0.7;
 }
 
 /* Footer with status and clear button */
-.wb-notes__footer {
+.x-notes__footer {
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -306,25 +306,25 @@ wb-notes.wb-notes--open .wb-notes__drawer, [x-notes].wb-notes--open .wb-notes__d
   gap: 0.25rem;
 }
 
-.wb-notes__status {
+.x-notes__status {
   flex: 1;
   font-size: 0.7rem;
   color: var(--text-muted);
   transition: color 0.2s ease;
 }
 
-.wb-notes__status--success {
+.x-notes__status--success {
   color: var(--success-color);
 }
 
-.wb-notes__status--error {
+.x-notes__status--error {
   color: var(--danger-color);
 }
 
-.wb-notes__status--warning {
+.x-notes__status--warning {
   color: var(--warning-color);
 }
 
-.wb-notes__status--info {
+.x-notes__status--info {
   color: var(--info-color);
 }

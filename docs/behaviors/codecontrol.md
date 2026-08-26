@@ -10,7 +10,7 @@ code block on the page — applies immediately on selection, and keeps every
 |----------|-------|
 | Behavior | `codecontrol` |
 | Attribute | `x-codecontrol` |
-| Custom Tag | `<div x-codecontrol>` |
+| Attribute form | `<div x-codecontrol>` |
 | Applies to | any container element |
 | Category | Content |
 | Schema | `src/wb-models/codecontrol.schema.json` |
@@ -37,27 +37,27 @@ without any manual `WB.scan()` call.
 
 ### Default
 
-<wb-demo>
+<div x-demo>
 <div x-codecontrol></div>
-</wb-demo>
+</div>
 
 ### Small, no label
 
-<wb-demo>
+<div x-demo>
 <div x-codecontrol size="sm" show-label="false"></div>
-</wb-demo>
+</div>
 
 ### Flat list (no category groups), non-persisting
 
-<wb-demo>
+<div x-demo>
 <div x-codecontrol show-category="false" persist="false"></div>
-</wb-demo>
+</div>
 
-### Custom Tag
+### Attribute form
 
-<wb-demo>
-<wb-codecontrol size="lg"></div>
-</wb-demo>
+<div x-demo>
+<div x-codecontrol size="lg"></div>
+</div>
 
 ## CSS Classes
 

@@ -1,0 +1,25 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "x-control.schema.json",
+  "title": "WB Control",
+  "description": "Base control interaction behavior.",
+  "schemaFor": "control",
+  "compliance": {
+    "baseClass": "x-control",
+    "supportLevel": "stable",
+    "accessibility": "high"
+  },
+  "properties": {},
+  "$view": [],
+  "$methods": {},
+  "$cssAPI": {},
+  "test": {
+    "setup": [
+      "<div x-control>Basic control content</div>",
+      "<div x-control>Test permutation 2</div>",
+      "<div x-control>Test permutation 3</div>",
+      "<div x-control>Test permutation 4</div>",
+      "<div x-control>Test permutation 5</div>"
+    ]
+  }
+}

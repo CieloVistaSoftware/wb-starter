@@ -11,12 +11,50 @@
  */
 
 /**
+ * Every @keyframes shipped in src/styles/ is kebab-cased and x-prefixed
+ * (x-fade-in, x-slide-in-left, x-zoom-in). An animation-name that matches no
+ * @keyframes is NOT a CSS error -- the property holds the value, getComputedStyle
+ * reports it, and nothing whatsoever animates. So a single wrong character here
+ * is invisible in the browser and invisible to any test that only asks whether
+ * animation-name is set (#860, and #847 before it, which shipped the whole
+ * `wb-` prefix against `x-*` keyframes and went unnoticed).
+ *
+ * `animation="fadeIn"` and `animation="slideInLeft"` are the spellings an author
+ * naturally reaches for -- they are the names every other animation library uses
+ * -- so accept them and normalise, rather than silently producing x-fadeIn and
+ * animating nothing. (#849)
+ */
+function kebab(name) {
+  return String(name).trim().replace(/([a-z0-9])([A-Z])/g, '$1-$2').toLowerCase();
+}
+
+/**
+ * Kebab-casing covers the whole declared enum except one: `rubberBand`'s
+ * keyframe is `x-rubberband`, a single word. Listed rather than special-cased
+ * so the next mismatch is one line, not another branch.
+ *
+ * `slideOut` needs no alias: the four x-slide-out-{dir} keyframes it builds
+ * now exist in styles/behaviors/effects.css. They did not when this note was
+ * written, which made slideout() a dead control (#866) -- it set an
+ * animation-name matching nothing and rendered nothing, silently.
+ */
+const KEYFRAME_ALIASES = { 'rubber-band': 'rubberband' };
+
+function keyframeFor(name) {
+  const k = kebab(name);
+  return `x-${KEYFRAME_ALIASES[k] || k}`;
+}
+
+/**
  * Animate - General animation trigger
  * Helper Attribute: [x-animate]
  */
 export function animate(element, options = {}) {
   const config = {
-    animation: options.animation || element.getAttribute('animation') || 'fadeIn',
+    // #849: was 'fadeIn', which concatenated to `x-fadeIn` below -- no such
+    // keyframe exists, so <div x-animate> with no `animation` attribute has
+    // never animated. The keyframe is `x-fade-in`.
+    animation: options.animation || element.getAttribute('animation') || 'fade-in',
     duration: options.duration || element.getAttribute('duration') || '0.5s',
     delay: options.delay || element.getAttribute('delay') || '0s',
     easing: options.easing || element.getAttribute('easing') || 'ease',
@@ -24,12 +62,14 @@ export function animate(element, options = {}) {
     ...options
   };
 
-  element.classList.add('wb-animate');
-  
+  element.classList.add('x-animate');
+
+  const keyframe = keyframeFor(config.animation);
+
   const play = () => {
     element.style.animation = 'none';
     void element.offsetWidth;
-    element.style.animation = `wb-${config.animation} ${config.duration} ${config.easing}`;
+    element.style.animation = `${keyframe} ${config.duration} ${config.easing}`;
   };
 
   // All buttons trigger on click
@@ -43,16 +83,16 @@ export function animate(element, options = {}) {
   }
 
   element.wbAnimate = { play };
-  return () => element.classList.remove('wb-animate');
+  return () => element.classList.remove('x-animate');
 }
 
 // Helper for click-triggered animations
 function clickAnim(element, animName, duration = '0.5s') {
-  element.classList.add(`wb-${animName}`);
+  element.classList.add(`x-${animName}`);
   const playAnimation = () => {
     element.style.animation = 'none';
     void element.offsetWidth;
-    element.style.animation = `wb-${animName} ${duration} ease`;
+    element.style.animation = `x-${animName} ${duration} ease`;
   };
   if (element.tagName === 'BUTTON') {
     element.onclick = playAnimation;
@@ -60,7 +100,7 @@ function clickAnim(element, animName, duration = '0.5s') {
     element.onclick = playAnimation;
   }
   element.wbAnim = { play: playAnimation };
-  return () => element.classList.remove(`wb-${animName}`);
+  return () => element.classList.remove(`x-${animName}`);
 }
 
 // Entrances - work on click for buttons
@@ -104,6 +144,41 @@ export function rubberband(element) { return clickAnim(element, 'rubberband', '1
 export function heartbeat(element) { return clickAnim(element, 'heartbeat', '1.3s'); }
 
 /**
+ * Particle colours from a declared `colors` attribute.
+ *
+ * confetti.schema.json and fireworks.schema.json both declare `colors` as
+ * "Particle colors as JSON array" with a JSON-array default -- and both
+ * hard-coded their palettes instead, so the attribute was documented and
+ * inert (#861). One parser, used by both: a second copy is how the two
+ * palettes would drift apart.
+ *
+ * Tolerant by design. A palette is decoration, so a malformed value falls back
+ * to the built-in rather than throwing and killing the whole effect. Accepts
+ * a JSON array (as the schema says) or a plain comma-separated list, because
+ * `colors="red, blue"` is what people actually type.
+ *
+ * @param {string} raw attribute value
+ * @param {string[]} fallback palette to use when raw is absent or unusable
+ * @returns {string[]}
+ */
+export function parseColorList(raw, fallback) {
+  if (!raw || typeof raw !== 'string') return fallback;
+  const text = raw.trim();
+  if (!text) return fallback;
+  if (text.startsWith('[')) {
+    try {
+      const parsed = JSON.parse(text);
+      const list = Array.isArray(parsed) ? parsed.filter((c) => typeof c === 'string' && c.trim()) : [];
+      return list.length ? list : fallback;
+    } catch {
+      return fallback;
+    }
+  }
+  const list = text.split(',').map((c) => c.trim()).filter(Boolean);
+  return list.length ? list : fallback;
+}
+
+/**
  * Confetti - Explosion of colorful particles (VISIBLE BUTTON)
  * Helper Attribute: [x-confetti]
  */
@@ -112,12 +187,14 @@ export function confetti(element, options = {}) {
     count: parseInt(options.count || element.getAttribute('count') || '50'),
     label: options.label || element.getAttribute('label') || 'Fire Confetti!',
     // #655: `repeat` is declared in confetti.schema.json and shipped as an
-    // official example (`<wb-confetti repeat>with repeat</wb-confetti>`), but
+    // official example (`<div x-confetti repeat>with repeat</div>`), but
     // nothing ever read it -- the attribute was silently inert.
     repeat: options.repeat ?? element.hasAttribute('repeat'),
     // Schema calls these strings ("3s"); accept a bare number of ms too.
     duration: options.duration || element.getAttribute('duration') || '3s',
     delay: options.delay || element.getAttribute('delay') || '0s',
+    // Declared in confetti.schema.json as a JSON array; see parseColorList.
+    colors: options.colors || element.getAttribute('colors') || '',
     ...options
   };
 
@@ -129,10 +206,16 @@ export function confetti(element, options = {}) {
     return m[2] === 'ms' ? parseFloat(m[1]) : parseFloat(m[1]) * 1000;
   };
   
-  element.classList.add('wb-confetti-trigger');
-  // #448: no classList.add('wb-confetti') -- it just duplicated
-  // <wb-confetti>'s own tag name; no CSS selector depends on the bare class
-  // (only .wb-confetti-trigger/-piece, unaffected).
+  element.classList.add('x-confetti-trigger');
+  // #448: no classList.add('x-confetti') -- it just duplicated
+  // <div x-confetti>'s own tag name; no CSS selector depends on the bare class
+  // (only .x-confetti-trigger/-piece, unaffected).
+  // #448 removed this class outright; restored WITH the tag-name guard.
+  // permutation-compliance requires compliance.baseClass to cover the host
+  // (classList.contains(cls) || tagName === cls), and on an attribute host
+  // like <div x-confetti> the tag is "div" -- so without the class nothing covers
+  // it. Guarded so a literal <x-confetti> tag does not get a redundant class.
+  if (element.tagName.toLowerCase() !== 'x-confetti') element.classList.add('x-confetti');
 
   // MAKE IT VISIBLE! Render as a button if empty
   if (!element.textContent.trim()) {
@@ -148,7 +231,7 @@ export function confetti(element, options = {}) {
     padding: 0.75rem 1.5rem;
     background: linear-gradient(135deg, #ff6b6b, #feca57, #48dbfb, #ff9ff3);
     background-size: 300% 300%;
-    animation: wb-confetti-gradient 3s ease infinite;
+    animation: x-confetti-gradient 3s ease infinite;
     color: #fff;
     font-weight: bold;
     border-radius: 8px;
@@ -170,16 +253,16 @@ export function confetti(element, options = {}) {
   };
   
   // Inject CSS keyframes if not present
-  if (!document.getElementById('wb-confetti-styles')) {
+  if (!document.getElementById('x-confetti-styles')) {
     const style = document.createElement('style');
-    style.id = 'wb-confetti-styles';
+    style.id = 'x-confetti-styles';
     style.textContent = `
-      @keyframes wb-confetti-gradient {
+      @keyframes x-confetti-gradient {
         0% { background-position: 0% 50%; }
         50% { background-position: 100% 50%; }
         100% { background-position: 0% 50%; }
       }
-      @keyframes wb-confetti-fall {
+      @keyframes x-confetti-fall {
         0% { transform: translateY(0) translateX(0) rotate(0deg); opacity: 1; }
         100% { transform: translateY(100vh) translateX(var(--end-x, 0)) rotate(var(--rotation, 720deg)); opacity: 0; }
       }
@@ -190,11 +273,14 @@ export function confetti(element, options = {}) {
   const fire = () => {
     // Create container
     const container = document.createElement('div');
-    container.className = 'wb-confetti-container';
+    container.className = 'x-confetti-container';
     container.style.cssText = 'position:fixed;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:9999;overflow:hidden;';
     
     // Create particles
-    const colors = ['#ff6b6b', '#4ecdc4', '#ffe66d', '#95e1d3', '#f38181', '#aa96da', '#fcbad3', '#a8d8ea'];
+    const colors = parseColorList(
+      config.colors,
+      ['#ff6b6b', '#4ecdc4', '#ffe66d', '#95e1d3', '#f38181', '#aa96da', '#fcbad3', '#a8d8ea'],
+    );
     for (let i = 0; i < config.count; i++) {
       const particle = document.createElement('div');
       const size = Math.random() * 10 + 5;
@@ -212,7 +298,7 @@ export function confetti(element, options = {}) {
         left: ${startX}%;
         top: -20px;
         border-radius: ${Math.random() > 0.5 ? '50%' : '0'};
-        animation: wb-confetti-fall ${duration}s ease-out forwards;
+        animation: x-confetti-fall ${duration}s ease-out forwards;
         --end-x: ${endX - startX}vw;
         --rotation: ${rotation}deg;
         animation-delay: ${Math.random() * 0.3}s;
@@ -249,7 +335,7 @@ export function confetti(element, options = {}) {
   element.wbConfetti = { fire, startRepeat, stopRepeat };
   return () => {
     stopRepeat();
-    element.classList.remove('wb-confetti-trigger');
+    element.classList.remove('x-confetti-trigger');
   };
 }
 
@@ -264,7 +350,7 @@ export function typewriter(element, options = {}) {
     cursor: options.cursor ?? element.getAttribute('cursor') !== 'false',
   };
   
-  element.classList.add('wb-typewriter');
+  element.classList.add('x-typewriter');
   
   const type = () => {
     element.textContent = '';
@@ -297,7 +383,7 @@ export function typewriter(element, options = {}) {
 
   element.wbTypewriter = { type };
   return () => {
-    element.classList.remove('wb-typewriter');
+    element.classList.remove('x-typewriter');
     element.removeEventListener('click', type);
   };
 }
@@ -315,7 +401,7 @@ export function countup(element, options = {}) {
     decimals: parseInt(options.decimals || element.getAttribute('decimals') || '0'),
   };
   
-  element.classList.add('wb-countup');
+  element.classList.add('x-countup');
   
   const count = () => {
     const startTime = performance.now();
@@ -343,7 +429,7 @@ export function countup(element, options = {}) {
   observer.observe(element);
   
   element.wbCountup = { count };
-  return () => { observer.disconnect(); element.classList.remove('wb-countup'); };
+  return () => { observer.disconnect(); element.classList.remove('x-countup'); };
 }
 
 /**
@@ -351,7 +437,7 @@ export function countup(element, options = {}) {
  */
 export function parallax(element, options = {}) {
   const speed = parseFloat(options.speed || element.getAttribute('speed') || '0.5');
-  element.classList.add('wb-parallax');
+  element.classList.add('x-parallax');
   
   let ticking = false;
 
@@ -374,7 +460,7 @@ export function parallax(element, options = {}) {
   
   return () => {
     window.removeEventListener('scroll', onScroll);
-    element.classList.remove('wb-parallax');
+    element.classList.remove('x-parallax');
   };
 }
 
@@ -387,7 +473,7 @@ export function reveal(element, options = {}) {
     once: options.once ?? element.getAttribute('once') !== 'false',
   };
   
-  element.classList.add('wb-reveal');
+  element.classList.add('x-reveal');
   element.style.opacity = '0';
   element.style.transform = 'translateY(20px)';
   element.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
@@ -403,7 +489,7 @@ export function reveal(element, options = {}) {
   }, { threshold: config.threshold });
   
   observer.observe(element);
-  return () => { observer.disconnect(); element.classList.remove('wb-reveal'); };
+  return () => { observer.disconnect(); element.classList.remove('x-reveal'); };
 }
 
 /**
@@ -411,7 +497,7 @@ export function reveal(element, options = {}) {
  */
 export function marquee(element, options = {}) {
   const speed = parseInt(options.speed || element.getAttribute('speed') || '30');
-  element.classList.add('wb-marquee');
+  element.classList.add('x-marquee');
   
   const content = element.innerHTML;
   element.innerHTML = '';
@@ -420,11 +506,11 @@ export function marquee(element, options = {}) {
   for (let i = 0; i < 2; i++) {
     const span = document.createElement('span');
     span.innerHTML = content + '&nbsp;&nbsp;&nbsp;';
-    span.style.cssText = `display:inline-block;animation:wb-marquee ${speed}s linear infinite;padding-right:2rem;`;
+    span.style.cssText = `display:inline-block;animation:x-marquee ${speed}s linear infinite;padding-right:2rem;`;
     element.appendChild(span);
   }
   
-  return () => element.classList.remove('wb-marquee');
+  return () => element.classList.remove('x-marquee');
 }
 
 /**
@@ -432,17 +518,17 @@ export function marquee(element, options = {}) {
  */
 export function sparkle(element, options = {}) {
   const count = parseInt(options.count || element.getAttribute('count') || '15');
-  element.classList.add('wb-sparkle-trigger');
-  element.classList.add('wb-sparkle');
+  element.classList.add('x-sparkle-trigger');
+  element.classList.add('x-sparkle');
   element.style.position = 'relative';
   element.style.overflow = 'visible';
   
   // Inject sparkle keyframes
-  if (!document.getElementById('wb-sparkle-styles')) {
+  if (!document.getElementById('x-sparkle-styles')) {
     const style = document.createElement('style');
-    style.id = 'wb-sparkle-styles';
+    style.id = 'x-sparkle-styles';
     style.textContent = `
-      @keyframes wb-sparkle {
+      @keyframes x-sparkle {
         0% { transform: translate(-50%, -50%) scale(0); opacity: 1; }
         100% { transform: translate(calc(-50% + var(--end-x)), calc(-50% + var(--end-y))) scale(1); opacity: 0; }
       }
@@ -464,7 +550,7 @@ export function sparkle(element, options = {}) {
           spark.textContent = sparkles[Math.floor(Math.random() * sparkles.length)];
           spark.style.cssText = `
             position:absolute;top:50%;left:50%;font-size:${size / 16}rem;pointer-events:none;
-            animation:wb-sparkle ${duration}s ease-out forwards;
+            animation:x-sparkle ${duration}s ease-out forwards;
             --end-x:${Math.cos(angle) * distance}px;--end-y:${Math.sin(angle) * distance}px;
             z-index:1000;filter:drop-shadow(0 0 4px gold);
           `;
@@ -477,7 +563,7 @@ export function sparkle(element, options = {}) {
   
   element.onclick = fire;
   element.wbSparkle = { fire };
-  return () => element.classList.remove('wb-sparkle-trigger');
+  return () => element.classList.remove('x-sparkle-trigger');
 }
 
 /**
@@ -507,14 +593,14 @@ function addPressFeedback(element) {
   const down = () => {
     pressedAt = Date.now();
     clearTimeout(releaseTimer);
-    element.classList.add('wb-pressed');
+    element.classList.add('x-pressed');
   };
 
   const up = () => {
     const held = Date.now() - pressedAt;
     const wait = Math.max(0, PRESS_MS - held);
     clearTimeout(releaseTimer);
-    releaseTimer = setTimeout(() => element.classList.remove('wb-pressed'), wait);
+    releaseTimer = setTimeout(() => element.classList.remove('x-pressed'), wait);
   };
 
   element.addEventListener('pointerdown', down);
@@ -529,7 +615,7 @@ function addPressFeedback(element) {
 
   return () => {
     clearTimeout(releaseTimer);
-    element.classList.remove('wb-pressed');
+    element.classList.remove('x-pressed');
     element.removeEventListener('pointerdown', down);
     element.removeEventListener('pointerup', up);
     element.removeEventListener('pointerleave', up);
@@ -542,14 +628,14 @@ function addPressFeedback(element) {
  */
 export function glow(element, options = {}) {
   const color = options.color || element.getAttribute('color') || 'var(--primary, #6366f1)';
-  element.classList.add('wb-glow');
+  element.classList.add('x-glow');
   element.style.setProperty('--glow-color', color);
-  element.style.animation = 'wb-glow 1.5s ease-in-out infinite';
+  element.style.animation = 'x-glow 1.5s ease-in-out infinite';
   element.style.boxShadow = `0 0 10px ${color}, 0 0 20px ${color}, 0 0 30px ${color}`;
 
   const releasePress = addPressFeedback(element);
 
-  return () => { releasePress(); element.classList.remove('wb-glow'); };
+  return () => { releasePress(); element.classList.remove('x-glow'); };
 }
 
 /**
@@ -557,14 +643,14 @@ export function glow(element, options = {}) {
  */
 export function rainbow(element, options = {}) {
   const duration = options.duration || element.getAttribute('duration') || '3s';
-  element.classList.add('wb-rainbow');
+  element.classList.add('x-rainbow');
   
   // Inject rainbow keyframes
-  if (!document.getElementById('wb-rainbow-styles')) {
+  if (!document.getElementById('x-rainbow-styles')) {
     const style = document.createElement('style');
-    style.id = 'wb-rainbow-styles';
+    style.id = 'x-rainbow-styles';
     style.textContent = `
-      @keyframes wb-rainbow {
+      @keyframes x-rainbow {
         0% { background-position: 0% 50%; }
         50% { background-position: 100% 50%; }
         100% { background-position: 0% 50%; }
@@ -578,13 +664,13 @@ export function rainbow(element, options = {}) {
   element.style.backgroundClip = 'text';
   element.style.webkitBackgroundClip = 'text';
   element.style.color = 'transparent';
-  element.style.animation = `wb-rainbow ${duration} linear infinite`;
+  element.style.animation = `x-rainbow ${duration} linear infinite`;
   
 
   const releasePress = addPressFeedback(element);
   return () => {
     releasePress();
-    element.classList.remove('wb-rainbow');
+    element.classList.remove('x-rainbow');
   };
 }
 
@@ -593,9 +679,17 @@ export function rainbow(element, options = {}) {
  */
 export function fireworks(element, options = {}) {
   const count = parseInt(options.count || element.getAttribute('count') || '30');
-  element.classList.add('wb-fireworks-trigger');
-  // #448: no classList.add('wb-fireworks') -- it just duplicated
-  // <wb-fireworks>'s own tag name; no CSS selector depends on the bare class.
+  // Declared in fireworks.schema.json as a JSON array; see parseColorList.
+  const colorSpec = options.colors || element.getAttribute('colors') || '';
+  element.classList.add('x-fireworks-trigger');
+  // #448: no classList.add('x-fireworks') -- it just duplicated
+  // <div x-fireworks>'s own tag name; no CSS selector depends on the bare class.
+  // #448 removed this class outright; restored WITH the tag-name guard.
+  // permutation-compliance requires compliance.baseClass to cover the host
+  // (classList.contains(cls) || tagName === cls), and on an attribute host
+  // like <div x-fireworks> the tag is "div" -- so without the class nothing covers
+  // it. Guarded so a literal <x-fireworks> tag does not get a redundant class.
+  if (element.tagName.toLowerCase() !== 'x-fireworks') element.classList.add('x-fireworks');
 
   // Make visible
   if (!element.textContent.trim()) {
@@ -609,11 +703,11 @@ export function fireworks(element, options = {}) {
   element.style.cssText = 'cursor:pointer;padding:1rem 1.5rem;background:linear-gradient(135deg,#1a1a2e,#16213e);color:#fff;border-radius:8px;font-weight:bold;display:inline-flex;align-items:center;gap:0.5rem;';
   
   // Inject keyframes
-  if (!document.getElementById('wb-firework-styles')) {
+  if (!document.getElementById('x-firework-styles')) {
     const style = document.createElement('style');
-    style.id = 'wb-firework-styles';
+    style.id = 'x-firework-styles';
     style.textContent = `
-      @keyframes wb-firework-particle {
+      @keyframes x-firework-particle {
         0% { transform: translate(0, 0) scale(1); opacity: 1; }
         100% { transform: translate(var(--end-x), var(--end-y)) scale(0); opacity: 0; }
       }
@@ -630,7 +724,7 @@ export function fireworks(element, options = {}) {
     const animContainer = document.createElement('div');
     animContainer.style.cssText = 'position:fixed;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:9999;';
     
-    const colors = ['#ff0', '#f0f', '#0ff', '#f00', '#0f0', '#00f', '#fff'];
+    const colors = parseColorList(colorSpec, ['#ff0', '#f0f', '#0ff', '#f00', '#0f0', '#00f', '#fff']);
     
     for (let i = 0; i < count; i++) {
       const particle = document.createElement('div');
@@ -642,7 +736,7 @@ export function fireworks(element, options = {}) {
       particle.style.cssText = `
         position:absolute;width:${size}px;height:${size}px;background:${color};border-radius:50%;
         left:${centerX}px;top:${centerY}px;box-shadow:0 0 ${size * 2}px ${color};
-        animation:wb-firework-particle 1s ease-out forwards;
+        animation:x-firework-particle 1s ease-out forwards;
         --end-x:${Math.cos(angle) * velocity}px;--end-y:${Math.sin(angle) * velocity}px;
       `;
       animContainer.appendChild(particle);
@@ -654,7 +748,7 @@ export function fireworks(element, options = {}) {
   
   element.onclick = fire;
   element.wbFireworks = { fire };
-  return () => element.classList.remove('wb-fireworks-trigger');
+  return () => element.classList.remove('x-fireworks-trigger');
 }
 
 /**
@@ -662,9 +756,15 @@ export function fireworks(element, options = {}) {
  */
 export function snow(element, options = {}) {
   const count = parseInt(options.count || element.getAttribute('count') || '30');
-  element.classList.add('wb-snow-trigger');
-  // #448: no classList.add('wb-snow') -- it just duplicated <wb-snow>'s own
+  element.classList.add('x-snow-trigger');
+  // #448: no classList.add('x-snow') -- it just duplicated <div x-snow>'s own
   // tag name; no CSS selector depends on the bare class.
+  // #448 removed this class outright; restored WITH the tag-name guard.
+  // permutation-compliance requires compliance.baseClass to cover the host
+  // (classList.contains(cls) || tagName === cls), and on an attribute host
+  // like <div x-snow> the tag is "div" -- so without the class nothing covers
+  // it. Guarded so a literal <x-snow> tag does not get a redundant class.
+  if (element.tagName.toLowerCase() !== 'x-snow') element.classList.add('x-snow');
 
   // Make visible
   if (!element.textContent.trim()) {
@@ -673,11 +773,11 @@ export function snow(element, options = {}) {
   element.style.cssText = 'cursor:pointer;padding:0.75rem 1.5rem;background:linear-gradient(135deg,#a8edea,#fed6e3);color:#333;border-radius:8px;font-weight:bold;display:inline-flex;align-items:center;gap:0.5rem;';
   
   // Inject keyframes
-  if (!document.getElementById('wb-snow-styles')) {
+  if (!document.getElementById('x-snow-styles')) {
     const style = document.createElement('style');
-    style.id = 'wb-snow-styles';
+    style.id = 'x-snow-styles';
     style.textContent = `
-      @keyframes wb-snow-fall {
+      @keyframes x-snow-fall {
         0% { transform: translateY(0) rotate(0deg); }
         100% { transform: translateY(100vh) rotate(360deg); }
       }
@@ -700,7 +800,7 @@ export function snow(element, options = {}) {
       flake.textContent = '❄️';
       flake.style.cssText = `
         position:absolute;font-size:${size / 16}rem;left:${startX}%;top:-30px;
-        animation:wb-snow-fall ${duration}s linear ${delay}s forwards;opacity:0.8;
+        animation:x-snow-fall ${duration}s linear ${delay}s forwards;opacity:0.8;
       `;
       container.appendChild(flake);
     }
@@ -711,7 +811,7 @@ export function snow(element, options = {}) {
   
   element.onclick = fire;
   element.wbSnow = { fire };
-  return () => element.classList.remove('wb-snow-trigger');
+  return () => element.classList.remove('x-snow-trigger');
 }
 
 /**
@@ -720,16 +820,16 @@ export function snow(element, options = {}) {
 export function particle(element, options = {}) {
   const count = parseInt(options.count || element.getAttribute('count') || '20');
   const color = options.color || element.getAttribute('color') || 'var(--primary, #6366f1)';
-  element.classList.add('wb-particle');
+  element.classList.add('x-particle');
   element.style.position = 'relative';
   element.style.overflow = 'hidden';
   
   // Inject keyframes
-  if (!document.getElementById('wb-particle-styles')) {
+  if (!document.getElementById('x-particle-styles')) {
     const style = document.createElement('style');
-    style.id = 'wb-particle-styles';
+    style.id = 'x-particle-styles';
     style.textContent = `
-      @keyframes wb-particle-float {
+      @keyframes x-particle-float {
         0%, 100% { transform: translateY(0) translateX(0); opacity: 0; }
         10% { opacity: 0.6; }
         90% { opacity: 0.6; }
@@ -751,7 +851,7 @@ export function particle(element, options = {}) {
     p.style.cssText = `
       position:absolute;width:${size}px;height:${size}px;background:${color};border-radius:50%;
       left:${x}%;bottom:-10px;opacity:0.6;
-      animation:wb-particle-float ${duration}s ease-in-out ${delay}s infinite;pointer-events:none;
+      animation:x-particle-float ${duration}s ease-in-out ${delay}s infinite;pointer-events:none;
     `;
     element.appendChild(p);
     particles.push(p);
@@ -762,7 +862,7 @@ export function particle(element, options = {}) {
   return () => {
     releasePress();
     particles.forEach(p => p.remove());
-    element.classList.remove('wb-particle');
+    element.classList.remove('x-particle');
   };
 }
 

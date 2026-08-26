@@ -6,10 +6,10 @@ Quote/testimonial card using semantic `<blockquote>` and `<cite>` elements.
 
 | Property | Value |
 |----------|-------|
-| Custom Tag | `<wb-cardtestimonial>` |
+| Custom Tag | `<div x-cardtestimonial>` |
 | Behavior | `cardtestimonial` |
 | Semantic | `<article>` + `<blockquote>` + `<cite>` |
-| Root CSS Class | `wb-card wb-testimonial` |
+| Root CSS Class | `x-card x-testimonial` |
 | Composes | card structure + CSS (no base class) |
 
 ## Properties
@@ -24,54 +24,54 @@ Supports every [card property](./card.md) — that shared structure and CSS are 
 | `avatar` | string | `""` | Author avatar URL |
 | `rating` | number | `""` | Star rating (1-5) |
 
-Wrapped in `<wb-demo>`, so the live component renders below with its source shown underneath:
+Wrapped in `<div x-demo>`, so the live component renders below with its source shown underneath:
 
-<wb-demo>
-<wb-cardtestimonial
+<div x-demo>
+<div x-cardtestimonial
   quote="This product changed my life!"
   author="Jane Doe"
   role="CEO, TechCorp">
-</wb-cardtestimonial>
-</wb-demo>
+</div>
+</div>
 
 ## Usage
 
 ### Basic Testimonial
 
 ```html
-<wb-cardtestimonial
+<div x-cardtestimonial
   quote="This product changed my life!"
   author="Jane Doe"
   role="CEO, TechCorp">
-</wb-cardtestimonial>
+</div>
 ```
 
 ### With Avatar and Rating
 
 ```html
-<wb-cardtestimonial
+<div x-cardtestimonial
   quote="Absolutely incredible experience. Would recommend to everyone."
   author="John Smith"
   role="Product Manager"
-  avatar="/images/john.jpg"
+  avatar="https://picsum.photos/seed/john/200/200"
   rating="5">
-</wb-cardtestimonial>
+</div>
 ```
 
 ## Generated Structure
 
 ```html
-<article class="wb-card wb-testimonial">
+<article class="x-card x-testimonial">
   <div>"</div>
-  <blockquote class="wb-card__quote">Quote text...</blockquote>
-  <div class="wb-card__rating">★★★★★</div>
-  <footer class="wb-card__footer">
+  <blockquote class="x-card__quote">Quote text...</blockquote>
+  <div class="x-card__rating">★★★★★</div>
+  <footer class="x-card__footer">
     <img
-      class="wb-card__avatar"
+      class="x-card__avatar"
       src="...">
     <div>
-      <cite class="wb-card__author">Author Name</cite>
-      <span class="wb-card__author-role">Role</span>
+      <cite class="x-card__author">Author Name</cite>
+      <span class="x-card__author-role">Role</span>
     </div>
   </footer>
 </article>

@@ -34,7 +34,7 @@
       "docs\\architecture\\historical\\X-PREFIX-MIGRATION-PHASE1.md",
       "docs\\architecture.md",
       "docs\\audio.md",
-      "docs\\behaviors\\wb-card.md",
+      "docs\\behaviors\\x-card.md",
       "docs\\behaviors-reference.md",
       "docs\\claude\\SCHEMAS-GUIDE.md",
       "docs\\claude\\TIER2-DOMAIN-GUIDES.md",
@@ -138,7 +138,7 @@
       "file": ".vscode\\html-custom-data.json",
       "hitCount": 7,
       "hits": [
-        "L364: \"name\": \"wb-builder\",",
+        "L364: \"name\": \"x-builder\",",
         "L365: \"description\": \"Builder Schema\\n\\nUnified schema for builder components and UI interactions.\",",
         "L377: \"description\": \"List of components in the builder.\"",
         "L381: \"description\": \"Builder-level metadata (optional)\"",
@@ -216,7 +216,7 @@
       ]
     },
     {
-      "file": "docs\\behaviors\\wb-card.md",
+      "file": "docs\\behaviors\\x-card.md",
       "hitCount": 4,
       "hits": [
         "L14: - Designed for use with the WBServices pattern and builder",
@@ -319,7 +319,7 @@
       "file": "docs\\INTELLISENSE-TOOLTIPS.md",
       "hitCount": 5,
       "hits": [
-        "L175: ## `<wb-builder>`",
+        "L175: ## `<div>`",
         "L179: Builder Schema",
         "L181: Unified schema for builder components and UI interactions.",
         "L190: | `components` | List of components in the builder. |",
@@ -542,7 +542,7 @@
       "file": "pages\\components.html",
       "hitCount": 2,
       "hits": [
-        "L8: <a href=\"?page=builder\" class=\"wb-btn\">🚀 Get Started</a>",
+        "L8: <a href=\"?page=builder\" class=\"x-btn\">🚀 Get Started</a>",
         "L712: <a href=\"?page=builder\">Get Started</a> •"
       ]
     },
@@ -552,9 +552,9 @@
       "hits": [
         "L2: <h1 id=\"newpage-h1-2\">🆕 Page Builder</h1>",
         "L7: <h2 id=\"newpage-h2-6\">Page Builder Tool</h2>",
-        "L8: <wb-builder id=\"newpage-builder-5\" label=\"New Page\" icon=\"🎨\">",
+        "L8: <div id=\"newpage-builder-5\" label=\"New Page\" icon=\"🎨\">",
         "L9: <!-- Builder component will be injected here -->",
-        "L10: </wb-builder>"
+        "L10: </div>"
       ]
     },
     {
@@ -568,7 +568,7 @@
       "file": "project-index.html",
       "hitCount": 1,
       "hits": [
-        "L56: <wb-card-link href=\"public/builder.html\" title=\"builder.html\" description=\"public/builder.html\" badge=\"Tool\"></wb-card-l"
+        "L56: <div x-cardlink href=\"public/builder.html\" title=\"builder.html\" description=\"public/builder.html\" badge=\"Tool\"></div"
       ]
     },
     {
@@ -601,7 +601,7 @@
       "file": "scripts\\final-cleanup.js",
       "hitCount": 1,
       "hits": [
-        "L49: content = content.replace(//g, 'wb-builder');"
+        "L49: content = content.replace(//g, 'x-builder');"
       ]
     },
     {
@@ -793,7 +793,7 @@
       "file": "tests\\compliance\\schema-on-demand.spec.ts",
       "hitCount": 1,
       "hits": [
-        "L5: test('schema builder should process wb-cardhero when index.json is missing (on-demand fetch)', async ({ page }) => {"
+        "L5: test('schema builder should process x-cardhero when index.json is missing (on-demand fetch)', async ({ page }) => {"
       ]
     },
     {
@@ -818,7 +818,7 @@
       "hitCount": 2,
       "hits": [
         "L24: <!-- 2. Empty Card (Builder Fallback) -->",
-        "L25: <wb-card class=\"card\" id=\"empty-card\" title=\"Builder Title\" content=\"Builder Body\"></wb-card>"
+        "L25: <article class=\"card\" id=\"empty-card\" title=\"Builder Title\" content=\"Builder Body\"></article>"
       ]
     },
     {

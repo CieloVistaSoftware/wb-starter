@@ -20,7 +20,7 @@ test.describe('Pill Behavior Shortcut', () => {
         <body>
           <div class="demo-area">
             <!-- Pill Shortcut -->
-            <wb-pill id="test-pill" variant="success">Pill Shortcut</wb-pill>
+            <div id="test-pill" variant="success">Pill Shortcut</div>
           </div>
 
           <script type="module">
@@ -53,9 +53,9 @@ test.describe('Pill Behavior Shortcut', () => {
     await expect(pill).toBeVisible();
     
     // Should have badge classes
-    await expect(pill).toHaveClass(/wb-badge/);
-    await expect(pill).toHaveClass(/wb-badge--success/);
-    await expect(pill).toHaveClass(/wb-badge--pill/);
+    await expect(pill).toHaveClass(/x-badge/);
+    await expect(pill).toHaveClass(/x-badge--success/);
+    await expect(pill).toHaveClass(/x-badge--pill/);
     
     // Should have rounded corners
     await expect(pill).toHaveCSS('border-radius', '9999px');

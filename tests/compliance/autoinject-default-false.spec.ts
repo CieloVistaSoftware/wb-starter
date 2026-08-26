@@ -47,17 +47,17 @@ for (const core of ['/src/core/wb.js', '/src/core/wb-lazy.js']) {
   test.describe(`autoInject default (${core})`, () => {
     test('WB.init({}) — omitted entirely — still enhances native elements (default is true)', async ({ page }) => {
       await renderWithWB(page, core, '{}');
-      await expect(page.locator('#probe-card')).toHaveClass(/wb-card/, { timeout: 10000 });
+      await expect(page.locator('#probe-card')).toHaveClass(/x-card/, { timeout: 10000 });
     });
 
     test('WB.init({ autoInject: true }) — explicit true — enhances native elements', async ({ page }) => {
       await renderWithWB(page, core, '{ autoInject: true }');
-      await expect(page.locator('#probe-card')).toHaveClass(/wb-card/, { timeout: 10000 });
+      await expect(page.locator('#probe-card')).toHaveClass(/x-card/, { timeout: 10000 });
     });
 
     test('WB.init({ autoInject: false }) — explicit false — still lets a page opt out', async ({ page }) => {
       await renderWithWB(page, core, '{ autoInject: false }');
-      await expect(page.locator('#probe-card')).not.toHaveClass(/wb-card/);
+      await expect(page.locator('#probe-card')).not.toHaveClass(/x-card/);
     });
   });
 }

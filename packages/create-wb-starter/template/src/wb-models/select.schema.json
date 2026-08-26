@@ -4,13 +4,13 @@
   "title": "Select",
   "description": "Enhanced select dropdown with search, clear, and multi-select",
   "schemaFor": "select",
-  "baseClass": "wb-select",
+  "baseClass": "x-select",
   "semanticElement": {
     "tagName": "div",
     "implicitRole": "combobox"
   },
   "compliance": {
-    "baseClass": "wb-select",
+    "baseClass": "x-select",
     "supportLevel": "stable",
     "accessibility": "high"
   },
@@ -44,19 +44,19 @@
       "type": "boolean",
       "description": "Enable search",
       "default": false,
-      "appliesClass": "wb-select--searchable"
+      "appliesClass": "x-select--searchable"
     },
     "clearable": {
       "type": "boolean",
       "description": "Enable clear button",
       "default": false,
-      "appliesClass": "wb-select--clearable"
+      "appliesClass": "x-select--clearable"
     },
     "multiple": {
       "type": "boolean",
       "description": "Allow multiple selection",
       "default": false,
-      "appliesClass": "wb-select--multiple"
+      "appliesClass": "x-select--multiple"
     },
     "disabled": {
       "type": "boolean",
@@ -76,7 +76,7 @@
         "lg"
       ],
       "default": "md",
-      "appliesClass": "wb-select--{{value}}"
+      "appliesClass": "x-select--{{value}}"
     },
     "variant": {
       "type": "string",
@@ -86,7 +86,7 @@
         "error"
       ],
       "default": "default",
-      "appliesClass": "wb-select--{{value}}"
+      "appliesClass": "x-select--{{value}}"
     }
   },
   "$view": [
@@ -197,55 +197,55 @@
     }
   },
   "$cssAPI": {
-    "--wb-select-height": {
+    "--x-select-height": {
       "default": "2.5rem",
       "description": "Select height"
     },
-    "--wb-select-padding": {
+    "--x-select-padding": {
       "default": "0 0.75rem",
       "description": "Select padding"
     },
-    "--wb-select-radius": {
+    "--x-select-radius": {
       "default": "4px",
       "description": "Border radius"
     },
-    "--wb-select-bg": {
+    "--x-select-bg": {
       "default": "var(--bg-surface, #ffffff)",
       "description": "Background"
     },
-    "--wb-select-border": {
+    "--x-select-border": {
       "default": "1px solid var(--border-color, #d1d5db)",
       "description": "Border"
     },
-    "--wb-select-focus-border": {
+    "--x-select-focus-border": {
       "default": "var(--primary, #6366f1)",
       "description": "Focus border color"
     },
-    "--wb-select-focus-ring": {
+    "--x-select-focus-ring": {
       "default": "0 0 0 3px rgba(99, 102, 241, 0.2)",
       "description": "Focus ring"
     },
-    "--wb-select-dropdown-bg": {
+    "--x-select-dropdown-bg": {
       "default": "var(--bg-surface, #ffffff)",
       "description": "Dropdown background"
     },
-    "--wb-select-dropdown-shadow": {
+    "--x-select-dropdown-shadow": {
       "default": "0 4px 12px rgba(0,0,0,0.15)",
       "description": "Dropdown shadow"
     },
-    "--wb-select-dropdown-radius": {
+    "--x-select-dropdown-radius": {
       "default": "4px",
       "description": "Dropdown radius"
     },
-    "--wb-select-option-padding": {
+    "--x-select-option-padding": {
       "default": "0.5rem 0.75rem",
       "description": "Option padding"
     },
-    "--wb-select-option-hover-bg": {
+    "--x-select-option-hover-bg": {
       "default": "var(--bg-secondary, #f3f4f6)",
       "description": "Option hover background"
     },
-    "--wb-select-option-selected-bg": {
+    "--x-select-option-selected-bg": {
       "default": "var(--primary-light, #e0e7ff)",
       "description": "Selected option background"
     }
@@ -267,14 +267,14 @@
   "test": {
     "functional": true,
     "setup": [
-      "<wb-select>Basic select content</wb-select>",
-      "<wb-select size=\"sm\">size=sm</wb-select>",
-      "<wb-select size=\"md\">size=md</wb-select>",
-      "<wb-select size=\"lg\">size=lg</wb-select>",
-      "<wb-select variant=\"default\">variant=default</wb-select>",
-      "<wb-select variant=\"success\">variant=success</wb-select>",
-      "<wb-select variant=\"error\">variant=error</wb-select>",
-      "<wb-select searchable>with searchable</wb-select>"
+      "<select>Basic select content</select>",
+      "<select size=\"sm\">size=sm</select>",
+      "<select size=\"md\">size=md</select>",
+      "<select size=\"lg\">size=lg</select>",
+      "<select variant=\"default\">variant=default</select>",
+      "<select variant=\"success\">variant=success</select>",
+      "<select variant=\"error\">variant=error</select>",
+      "<select searchable>with searchable</select>"
     ],
     "matrix": {
       "combinations": [
@@ -295,14 +295,14 @@
     },
     "site": {
       "page": "forms",
-      "tag": "wb-select",
+      "tag": "x-select",
       "renders": true,
-      "baseClass": "wb-select",
+      "baseClass": "x-select",
       "minInstances": 5,
       "checkText": [],
       "checkClasses": [
-        "wb-select--sm",
-        "wb-select--success"
+        "x-select--sm",
+        "x-select--success"
       ],
       "checkAttributes": []
     }

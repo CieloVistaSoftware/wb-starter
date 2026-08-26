@@ -8,7 +8,10 @@ test.describe('Hero Variants Page', () => {
   });
 
   test('page loads successfully', async ({ page }) => {
-    const hero = page.locator('.page__hero, #herovariants-section-1');
+    // #725: the page renders now (it used to silently show home), and it has
+    // BOTH a .page__hero and #herovariants-section-1 -- an unqualified locator
+    // matching two elements is a strict-mode violation, not a page defect.
+    const hero = page.locator('.page__hero, #herovariants-section-1').first();
     await expect(hero).toBeVisible();
     await expect(page.locator('h1').first()).toContainText('Hero Variants');
   });
@@ -16,18 +19,18 @@ test.describe('Hero Variants Page', () => {
   test('renders all 12 hero variants', async ({ page }) => {
     // Check for specific variant classes or IDs
     const variants = [
-      '.wb-hero:not([class*="--"])', // Default
-      '.wb-hero--minimal',
-      '.wb-hero--split',
-      '.wb-hero--particles',
-      '.wb-hero--diagonal',
-      '.wb-hero--waves',
-      '.wb-hero--grid',
-      '.wb-hero--spotlight',
-      '.wb-hero--aurora',
-      '.wb-hero--mesh',
-      '.wb-hero--card',
-      '.wb-hero--cosmic'
+      '.x-hero:not([class*="--"])', // Default
+      '.x-hero--minimal',
+      '.x-hero--split',
+      '.x-hero--particles',
+      '.x-hero--diagonal',
+      '.x-hero--waves',
+      '.x-hero--grid',
+      '.x-hero--spotlight',
+      '.x-hero--aurora',
+      '.x-hero--mesh',
+      '.x-hero--card',
+      '.x-hero--cosmic'
     ];
 
     for (const selector of variants) {
@@ -37,7 +40,7 @@ test.describe('Hero Variants Page', () => {
   });
 
   test('aurora variant has video', async ({ page }) => {
-    const aurora = page.locator('.wb-hero--aurora');
+    const aurora = page.locator('.x-hero--aurora');
     await expect(aurora).toBeVisible();
     const video = aurora.locator('video');
     await expect(video).toBeVisible();

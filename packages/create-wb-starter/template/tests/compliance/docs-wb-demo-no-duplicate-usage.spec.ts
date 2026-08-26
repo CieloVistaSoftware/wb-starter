@@ -13,7 +13,7 @@ const FILES = [
   'docs/components/cards/card.md',
 ].sort();
 const DEMO_BLOCK = new RegExp(
-  String.fromCharCode(60) + 'wb-demo\\b[^>]*>([\\s\\S]*?)' + String.fromCharCode(60) + '\\/wb-demo>',
+  String.fromCharCode(60) + 'x-demo\\b[^>]*>([\\s\\S]*?)' + String.fromCharCode(60) + '\\/x-demo>',
   'gi'
 );
 
@@ -21,7 +21,7 @@ function normalizeMarkup(markup: string): string {
   return markup.replace(/\s+/g, ' ').trim();
 }
 
-test('docs do not repeat a wb-demo source in a fenced Usage block', () => {
+test('docs do not repeat a x-demo source in a fenced Usage block', () => {
   const violations: string[] = [];
 
   for (const file of FILES) {

@@ -99,7 +99,7 @@ test.describe('Schema/behavior completeness audit (#344)', () => {
       const behavior = schema.behavior || schema.schemaFor;
       const setups = schema.test?.setup || [];
       const surface = behaviorSurface(behavior);
-      if (behavior.startsWith('card')) surface.push('<wb-card');
+      if (behavior.startsWith('card')) surface.push('<article');
       const relevant = setups.filter((html: string) => surface.some(marker => html.includes(marker)));
 
       if (setups.some((html: string) => !surface.some(marker => html.includes(marker)))) {

@@ -25,29 +25,29 @@ test.describe('WB Components & Behaviors', () => {
 
   test.describe('Feedback Components', () => {
     test('Spinner renders', async ({ page }) => {
-      const el = page.locator('wb-spinner').first();
+      const el = page.locator('x-spinner').first();
       await safeScrollIntoView(el);
-      await expect(el).toHaveClass(/wb-spinner/);
+      await expect(el).toHaveClass(/x-spinner/);
       await expect(el).toBeVisible();
       // Check if it has classes or content
     });
 
     test('Badge renders', async ({ page }) => {
-      const el = page.locator('wb-badge').first();
+      const el = page.locator('x-badge').first();
       await safeScrollIntoView(el);
       await expect(el).toBeVisible();
       await expect(el).toContainText('Default');
     });
 
     test('Avatar renders', async ({ page }) => {
-      const el = page.locator('wb-avatar').first();
+      const el = page.locator('x-avatar').first();
       await safeScrollIntoView(el);
-      await expect(el).toHaveClass(/wb-avatar/);
+      await expect(el).toHaveClass(/x-avatar/);
       await expect(el).toBeVisible();
     });
 
     test('Alert renders', async ({ page }) => {
-      const el = page.locator('wb-alert').first();
+      const el = page.locator('x-alert').first();
       await expect(el).toBeVisible();
       await expect(el).toContainText('Info');
     });
@@ -73,20 +73,20 @@ test.describe('WB Components & Behaviors', () => {
     });
 
     test('Grid component works', async ({ page }) => {
-      const el = page.locator('wb-grid').first();
+      const el = page.locator('x-grid').first();
       await safeScrollIntoView(el);
       await expect(el).toBeVisible();
     });
     
     test('Masonry component works', async ({ page }) => {
-       const el = page.locator('[data-columns][style*="width: 100%"]').first(); // Masonry demo uses div with data-columns, explicitly checking implicit masonry or wb-masonry if used
+       const el = page.locator('[data-columns][style*="width: 100%"]').first(); // Masonry demo uses div with data-columns, explicitly checking implicit masonry or x-masonry if used
 
        // This relies on implicit behavior injection or just layout classes. 
 
        // The HTML shows: <div data-columns="3" ...> inside the Masonry card.
-       // It doesn't have x-masonry or wb-masonry tag in the snippet I saw.
+       // It doesn't have x-masonry or x-masonry tag in the snippet I saw.
        // Let's check if the generic 'Masonry' card title implies implicit behavior?
-       // Actually wb-lazy.js has `{ selector: 'wb-masonry', behavior: 'masonry' }`.
+       // Actually wb-lazy.js has `{ selector: 'x-masonry', behavior: 'masonry' }`.
 
 
        // It seems likely it relies on `WB.render` or Manual injection? 
@@ -117,16 +117,16 @@ test.describe('WB Components & Behaviors', () => {
         if (node && window.WB) window.WB.inject(node, 'breadcrumb');
       });
       
-      await expect(el).toHaveClass(/wb-breadcrumb/);
+      await expect(el).toHaveClass(/x-breadcrumb/);
       await expect(el).toBeVisible();
     });
 
     test('Tabs render', async ({ page }) => {
-      const el = page.locator('wb-tabs').first();
+      const el = page.locator('x-tabs').first();
       await safeScrollIntoView(el);
       
       await page.evaluate(() => {
-        const node = document.querySelector('wb-tabs');
+        const node = document.querySelector('x-tabs');
         if (node && window.WB) window.WB.inject(node, 'tabs');
       });
 
@@ -134,18 +134,18 @@ test.describe('WB Components & Behaviors', () => {
     });
 
     test('Dropdown renders', async ({ page }) => {
-      const el = page.locator('wb-dropdown').first();
+      const el = page.locator('x-dropdown').first();
       await expect(el).toBeVisible();
     });
   });
 
   test.describe('Data Display', () => {
     test('Rating renders', async ({ page }) => {
-      const el = page.locator('wb-rating').first();
+      const el = page.locator('x-rating').first();
       await safeScrollIntoView(el);
       // Force direct injection
       await page.evaluate(() => {
-        const node = document.querySelector('wb-rating');
+        const node = document.querySelector('x-rating');
         if (node && window.WB) window.WB.inject(node, 'rating');
       });
       await expect(el).toBeVisible();

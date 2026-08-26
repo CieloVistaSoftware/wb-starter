@@ -1,5 +1,5 @@
 /* x-copybutton (#291) — overlays a small positioned copy button on ANY
- * element. Distinct from x-copy (.wb-copy, no dedicated CSS -- it restyles
+ * element. Distinct from x-copy (.x-copy, no dedicated CSS -- it restyles
  * the host element's own content via JS): x-copybutton wraps the host in
  * .x-copybutton-wrapper and appends a separate .x-copybutton__btn sibling,
  * absolutely positioned in one of the four corners. Modeled on

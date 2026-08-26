@@ -7,10 +7,10 @@ import { readAttr } from '../core/read-attr.js';
  * cross-browser styling via pseudo-elements.
  * 
  * Migration:
- *   Before: <wb-progress data-value="50" data-max="100">Loading</wb-progress>
+ *   Before: <progress data-value="50" data-max="100">Loading</progress>
  *   After:  <progress value="50" max="100">50%</progress>
  * 
- * This file is retained for backward compatibility with existing <wb-progress>
+ * This file is retained for backward compatibility with existing <progress>
  * custom tags but will be removed in a future version.
  * -----------------------------------------------------------------------------
  */
@@ -25,29 +25,29 @@ export default function progressbar(element, options = {}) {
     ...options
   };
 
-  element.classList.add('wb-progress');
+  element.classList.add('x-progress');
   
   // Inject styles
   injectProgressStyles();
 
   // Clear existing content if it's just text or empty
-  if (!element.querySelector('.wb-progress-bar')) {
+  if (!element.querySelector('.x-progress-bar')) {
     element.innerHTML = '';
   }
 
   // Create bar
-  let bar = element.querySelector('.wb-progress-bar');
+  let bar = element.querySelector('.x-progress-bar');
   if (!bar) {
     bar = document.createElement('div');
-    bar.className = 'wb-progress-bar';
+    bar.className = 'x-progress-bar';
     element.appendChild(bar);
   }
 
   // Create label
-  let labelEl = element.querySelector('.wb-progress-label');
+  let labelEl = element.querySelector('.x-progress-label');
   if (config.label && !labelEl) {
     labelEl = document.createElement('span');
-    labelEl.className = 'wb-progress-label';
+    labelEl.className = 'x-progress-label';
     element.appendChild(labelEl);
   }
   if (labelEl) labelEl.textContent = config.label;
@@ -95,7 +95,7 @@ export default function progressbar(element, options = {}) {
   }
 
   if (config.animated) {
-    bar.style.animation = 'wb-progress-stripes 1s linear infinite';
+    bar.style.animation = 'x-progress-stripes 1s linear infinite';
   }
 
   if (labelEl) {
@@ -114,11 +114,11 @@ export default function progressbar(element, options = {}) {
 }
 
 function injectProgressStyles() {
-  if (document.getElementById('wb-progressbar-css')) return;
+  if (document.getElementById('x-progressbar-css')) return;
   const style = document.createElement('style');
-  style.id = 'wb-progressbar-css';
+  style.id = 'x-progressbar-css';
   style.textContent = `
-    @keyframes wb-progress-stripes {
+    @keyframes x-progress-stripes {
       from { background-position: 1rem 0; }
       to { background-position: 0 0; }
     }

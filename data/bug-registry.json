@@ -19,7 +19,7 @@
       "description": "John reported via screenshot: every card in demos/site/cards.html's Image Card section showed the \"unavailable\" fallback despite a valid, curl-verified-200 picsum.photos URL. cardimage() sets img.loading='lazy'; attachImageLoadRetry() started its readiness-check clock immediately regardless, so an off-screen image (true for any card deep in an eagerly-scanned generated page) raced a fetch the browser had not yet started. Confirmed live: zero network requests were ever made for the src before give-up. After ~27.5s (5 attempts) it hides the element and shows \"unavailable\" PERMANENTLY -- confirmed live that scrolling the failed card into view afterward does not recover it (no observer retries a settled element).",
       "rootCause": "The check/retry clock (scheduleCheck()) started unconditionally on attach, with no awareness that loading=\"lazy\" means the browser may not attempt the fetch at all until near-viewport.",
       "symptom": "Every off-screen-at-load cardimage with loading=lazy showed a permanent, unrecoverable \"⚠ Image unavailable\" fallback regardless of URL validity.",
-      "whyNotCaughtBefore": "tests/cards/cardimage-render.spec.ts only asserts an <img> element exists with a non-empty src attribute -- it never checks naturalWidth/complete or whether the .wb-media-load-failed fallback fired. It validates markup structure, never actual load success, so a permanently-broken image with a valid-looking src passed every existing assertion.",
+      "whyNotCaughtBefore": "tests/cards/cardimage-render.spec.ts only asserts an <img> element exists with a non-empty src attribute -- it never checks naturalWidth/complete or whether the .x-media-load-failed fallback fired. It validates markup structure, never actual load success, so a permanently-broken image with a valid-looking src passed every existing assertion.",
       "fix": {
         "file": "src/wb-viewmodels/media-load-retry.js",
         "before": "el.addEventListener('error', onError); ...; scheduleCheck();",
@@ -95,20 +95,20 @@
       "component": "feedback.js",
       "function": "alert()",
       "line": 294,
-      "description": "Reported by John via screenshot of the Behaviors showcase: warning and error alerts rendered with no background/border/color distinguishing them at all. alert() built the title/message/icon content and set a `variant` attribute, but never added any class to the element. src/styles/behaviors/alert.css styles alerts entirely through classes (.wb-alert base + .wb-alert--<variant> per-variant colors), so with no class present every alert rendered completely unstyled regardless of variant.",
-      "rootCause": "alert() set element.setAttribute('variant', variant) but never called element.classList.add('wb-alert') or element.classList.add(`wb-alert--${variant}`).",
+      "description": "Reported by John via screenshot of the Behaviors showcase: warning and error alerts rendered with no background/border/color distinguishing them at all. alert() built the title/message/icon content and set a `variant` attribute, but never added any class to the element. src/styles/behaviors/alert.css styles alerts entirely through classes (.x-alert base + .x-alert--<variant> per-variant colors), so with no class present every alert rendered completely unstyled regardless of variant.",
+      "rootCause": "alert() set element.setAttribute('variant', variant) but never called element.classList.add('x-alert') or element.classList.add(`x-alert--${variant}`).",
       "symptom": "All x-alert variants (info/success/warning/error) rendered identically -- no background color, no border, indistinguishable from plain unstyled divs.",
       "fix": {
         "file": "src/wb-viewmodels/feedback.js",
         "before": "element.setAttribute('role', 'alert'); element.setAttribute('variant', variant);",
-        "after": "element.setAttribute('role', 'alert'); element.setAttribute('variant', variant); element.classList.add('wb-alert'); element.classList.add(`wb-alert--${variant}`);"
+        "after": "element.setAttribute('role', 'alert'); element.setAttribute('variant', variant); element.classList.add('x-alert'); element.classList.add(`x-alert--${variant}`);"
       },
       "affectedComponents": ["alert"],
       "regressionTests": [
         "tests/regression/alert-variant-class.spec.ts"
       ],
       "testCases": [
-        "Alert: warning and error variants get wb-alert + wb-alert--<variant> classes",
+        "Alert: warning and error variants get x-alert + x-alert--<variant> classes",
         "Alert: warning and error variants have distinct, non-transparent backgrounds"
       ]
     },
@@ -233,14 +233,13 @@
     "figure": ["BUG-2025-12-26-001"],
     "audio": ["BUG-2024-12-19-001", "BUG-2025-12-26-002"],
     "video": ["BUG-2024-12-19-001"],
-    "cardimage": ["BUG-2024-12-19-001"],
+    "cardimage": ["BUG-2024-12-19-001", "BUG-2026-07-27-005"],
     "cardvideo": ["BUG-2024-12-19-001"],
     "avatar": ["BUG-2024-12-19-001"],
     "builder": ["BUG-2024-12-19-001"],
     "lightbox": ["BUG-2026-07-27-001"],
     "alert": ["BUG-2026-07-27-002"],
     "countdown": ["BUG-2026-07-27-003"],
-    "youtube": ["BUG-2026-07-27-004"],
-    "cardimage": ["BUG-2026-07-27-005"]
+    "youtube": ["BUG-2026-07-27-004"]
   }
 }

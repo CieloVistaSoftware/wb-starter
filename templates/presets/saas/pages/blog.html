@@ -20,11 +20,11 @@
 <section class="blog-grid" style="padding: 2rem; max-width: 1200px; margin: 0 auto;">
   <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 2rem;">
     
-    <wb-card variant="elevated">
+    <article variant="elevated">
       <div style="background: var(--surface-elevated); height: 150px; border-radius: 0.5rem; margin-bottom: 1rem; display: flex; align-items: center; justify-content: center; color: var(--text-secondary);">
         📷 Featured Image
       </div>
-      <wb-badge variant="info">Product</wb-badge>
+      <span x-badge variant="info">Product</span>
       <h3 style="margin: 0.5rem 0;">Your First Blog Post Title</h3>
       <p style="color: var(--text-secondary);">
         A brief excerpt or summary of this blog post to entice readers to click through...
@@ -32,13 +32,13 @@
       <div style="color: var(--text-secondary); font-size: 0.875rem;">
         January 15, 2025 · 5 min read
       </div>
-    </wb-card>
+    </article>
     
-    <wb-card variant="elevated">
+    <article variant="elevated">
       <div style="background: var(--surface-elevated); height: 150px; border-radius: 0.5rem; margin-bottom: 1rem; display: flex; align-items: center; justify-content: center; color: var(--text-secondary);">
         📷 Featured Image
       </div>
-      <wb-badge variant="success">Tutorial</wb-badge>
+      <span x-badge variant="success">Tutorial</span>
       <h3 style="margin: 0.5rem 0;">How to Get Started Guide</h3>
       <p style="color: var(--text-secondary);">
         Step-by-step instructions for new users to get up and running quickly...
@@ -46,13 +46,13 @@
       <div style="color: var(--text-secondary); font-size: 0.875rem;">
         January 10, 2025 · 8 min read
       </div>
-    </wb-card>
+    </article>
     
-    <wb-card variant="elevated">
+    <article variant="elevated">
       <div style="background: var(--surface-elevated); height: 150px; border-radius: 0.5rem; margin-bottom: 1rem; display: flex; align-items: center; justify-content: center; color: var(--text-secondary);">
         📷 Featured Image
       </div>
-      <wb-badge variant="warning">News</wb-badge>
+      <span x-badge variant="warning">News</span>
       <h3 style="margin: 0.5rem 0;">Company Announcement</h3>
       <p style="color: var(--text-secondary);">
         Exciting news about our latest milestone or upcoming feature release...
@@ -60,7 +60,7 @@
       <div style="color: var(--text-secondary); font-size: 0.875rem;">
         January 5, 2025 · 3 min read
       </div>
-    </wb-card>
+    </article>
     
   </div>
 </section>
@@ -71,7 +71,7 @@
     Get the latest posts delivered straight to your inbox.
   </p>
   <div style="display: flex; gap: 0.5rem; justify-content: center; max-width: 400px; margin: 0 auto;">
-    <wb-input placeholder="your@email.com" style="flex: 1;"></wb-input>
-    <wb-button variant="gradient">Subscribe</wb-button>
+    <input placeholder="your@email.com" style="flex: 1;"></input>
+    <button variant="gradient">Subscribe</button>
   </div>
 </section>

@@ -4,12 +4,12 @@
   "title": "ScrollAlong",
   "description": "CSS sticky positioning for sidebars that stay visible while scrolling",
   "schemaFor": "scrollalong",
-  "baseClass": "wb-scrollalong",
+  "baseClass": "x-scrollalong",
   "semanticElement": {
     "tagName": "aside"
   },
   "compliance": {
-    "baseClass": "wb-scrollalong",
+    "baseClass": "x-scrollalong",
     "supportLevel": "stable",
     "accessibility": "high"
   },
@@ -23,19 +23,19 @@
   "$view": [],
   "$methods": {},
   "$cssAPI": {
-    "--wb-scrollalong-top": {
+    "--x-scrollalong-top": {
       "default": "0",
       "description": "Sticky top position"
     }
   },
   "test": {
     "setup": [
-      "<wb-scrollalong>Basic scrollalong content</wb-scrollalong>",
-      "<wb-scrollalong offset=\"0\">offset=\"0\"</wb-scrollalong>",
-      "<wb-scrollalong>Test permutation 3</wb-scrollalong>",
-      "<wb-scrollalong>Test permutation 4</wb-scrollalong>",
-      "<wb-scrollalong>Test permutation 5</wb-scrollalong>",
-      "<wb-scrollalong>Sidebar</wb-scrollalong>"
+      "<div x-scrollalong>Basic scrollalong content</div>",
+      "<div x-scrollalong offset=\"0\">offset=\"0\"</div>",
+      "<div x-scrollalong>Test permutation 3</div>",
+      "<div x-scrollalong>Test permutation 4</div>",
+      "<div x-scrollalong>Test permutation 5</div>",
+      "<div x-scrollalong>Sidebar</div>"
     ],
     "matrix": {
       "combinations": [
@@ -44,9 +44,9 @@
     },
     "site": {
       "page": "layout",
-      "tag": "wb-scrollalong",
+      "tag": "x-scrollalong",
       "renders": true,
-      "baseClass": "wb-scrollalong",
+      "baseClass": "x-scrollalong",
       "minInstances": 1,
       "checkText": [],
       "checkClasses": [],

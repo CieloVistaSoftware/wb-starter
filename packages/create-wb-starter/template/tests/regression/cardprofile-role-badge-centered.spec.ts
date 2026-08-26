@@ -1,8 +1,8 @@
 import { test, expect } from '@playwright/test';
 
 /**
- * <wb-cardprofile cover="…" role="…"> renders the role as a pill badge
- * overlaid on the cover strip (.wb-card__role--badge, card.js's
+ * <div x-cardprofile cover="…" role="…"> renders the role as a pill badge
+ * overlaid on the cover strip (.x-card__role--badge, card.js's
  * cardprofile()).
  *
  * Position went through two rounds per John's live feedback:
@@ -23,13 +23,13 @@ import { test, expect } from '@playwright/test';
  *      the curve.
  */
 
-test.describe('wb-cardprofile role badge', () => {
+test.describe('x-cardprofile role badge', () => {
   test('role badge is vertically centered on the cover strip', async ({ page }) => {
     await page.goto('/demos/site/cards.html', { waitUntil: 'domcontentloaded' });
-    const badge = page.locator('.wb-card__role--badge').first();
+    const badge = page.locator('.x-card__role--badge').first();
     await expect(badge).toBeVisible();
 
-    const cover = page.locator('.wb-card__cover').first();
+    const cover = page.locator('.x-card__cover').first();
     const [badgeBox, coverBox] = await Promise.all([badge.boundingBox(), cover.boundingBox()]);
     expect(badgeBox && coverBox, 'both badge and cover must have a bounding box').toBeTruthy();
 
@@ -40,8 +40,8 @@ test.describe('wb-cardprofile role badge', () => {
 
   test('role badge sits on the right side of the cover strip', async ({ page }) => {
     await page.goto('/demos/site/cards.html', { waitUntil: 'domcontentloaded' });
-    const badge = page.locator('.wb-card__role--badge').first();
-    const cover = page.locator('.wb-card__cover').first();
+    const badge = page.locator('.x-card__role--badge').first();
+    const cover = page.locator('.x-card__cover').first();
     const [badgeBox, coverBox] = await Promise.all([badge.boundingBox(), cover.boundingBox()]);
 
     const badgeCenterX = badgeBox!.x + badgeBox!.width / 2;
@@ -51,9 +51,9 @@ test.describe('wb-cardprofile role badge', () => {
 
   test('role badge clears the card\'s border-radius curve on both edges (no corner clipping)', async ({ page }) => {
     await page.goto('/demos/site/cards.html', { waitUntil: 'domcontentloaded' });
-    const badge = page.locator('.wb-card__role--badge').first();
-    const cover = page.locator('.wb-card__cover').first();
-    const card = page.locator('.wb-card').filter({ has: page.locator('.wb-card__cover') }).first();
+    const badge = page.locator('.x-card__role--badge').first();
+    const cover = page.locator('.x-card__cover').first();
+    const card = page.locator('.x-card').filter({ has: page.locator('.x-card__cover') }).first();
 
     const [badgeBox, coverBox] = await Promise.all([badge.boundingBox(), cover.boundingBox()]);
     const radiusPx = await card.evaluate((el) => parseFloat(getComputedStyle(el).borderRadius));

@@ -1,3 +1,4 @@
+import { readAttr } from '../core/read-attr.js';
 /**
  * Sticky Behavior
  * -----------------------------------------------------------------------------
@@ -20,20 +21,20 @@
  */
 
 export function sticky(element, options = {}) {
-  // #448: skip the class on a literal <wb-sticky> host -- effects.css
-  // selects the `wb-sticky` TAG directly for that case now. The class is
+  // #448: skip the class on a literal <div x-sticky> host -- effects.css
+  // selects the `x-sticky` TAG directly for that case now. The class is
   // still added for every OTHER host (this docstring's own <nav x-sticky>/
-  // <header x-sticky> examples), since those tags aren't `wb-sticky` and
-  // effects.css's `.wb-sticky`/`.wb-sticky.is-stuck` rules still select them
+  // <header x-sticky> examples), since those tags aren't `x-sticky` and
+  // effects.css's `.x-sticky`/`.x-sticky.is-stuck` rules still select them
   // by class.
-  if (element.tagName.toLowerCase() !== 'wb-sticky') element.classList.add('wb-sticky');
+  if (element.tagName.toLowerCase() !== 'x-sticky') element.classList.add('x-sticky');
 
   // Config: plain attributes are canonical (Law 11); data-* kept as a
   // back-compat fallback only.
   const config = {
-    offset: parseInt(options.offset ?? element.getAttribute('offset') ?? element.dataset.offset ?? '0', 10),
-    zIndex: parseInt(options.zIndex ?? element.getAttribute('z-index') ?? element.dataset.zIndex ?? '100', 10),
-    threshold: options.threshold ?? element.getAttribute('threshold') ?? element.dataset.threshold ?? null,
+    offset: parseInt(options.offset ?? element.getAttribute('offset') ?? readAttr(element, 'offset') ?? '0', 10),
+    zIndex: parseInt(options.zIndex ?? element.getAttribute('z-index') ?? readAttr(element, 'zIndex') ?? '100', 10),
+    threshold: options.threshold ?? element.getAttribute('threshold') ?? readAttr(element, 'threshold') ?? null,
     stuckClass: options.class ?? element.getAttribute('class-name') ?? element.dataset.class ?? 'is-stuck',
     animate: options.animate !== false && (element.getAttribute('animate') !== 'false') && (element.dataset.animate !== 'false')
   };
@@ -178,9 +179,9 @@ export function sticky(element, options = {}) {
   window.addEventListener('resize', handleResize, { passive: true });
 
   // Add CSS for stuck state
-  if (!document.getElementById('wb-sticky-styles')) {
+  if (!document.getElementById('x-sticky-styles')) {
     const style = document.createElement('style');
-    style.id = 'wb-sticky-styles';
+    style.id = 'x-sticky-styles';
     style.textContent = `
       .is-stuck {
         box-shadow: 0 2px 10px rgba(0, 0, 0, 0.15);

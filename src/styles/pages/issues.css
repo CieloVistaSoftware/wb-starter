@@ -1,0 +1,38 @@
+/* Issues page.
+ *
+ * Lifted out of a <style> block inside pages/issues.html (#820). Page
+ * fragments must not carry one: the fragment is injected into the shell, so a
+ * <style> here is a global rule with no scoping and no cache, applied and
+ * reapplied on every navigation to this page.
+ *
+ * Colours are theme tokens, not literals. The block arrived with #fff on the
+ * active tab and three hardcoded status colours -- tolerable while it was
+ * inline and invisible to the CSS gates, wrong the moment it became a real
+ * stylesheet. open/in-progress/closed map onto the success/warning/info
+ * tokens, so they follow all 50 themes instead of one.
+ */
+
+  .issues-toolbar { display: flex; gap: 1rem; flex-wrap: wrap; align-items: center; justify-content: space-between; margin: 1.5rem 0 1rem; }
+  .issues-tabs { display: flex; gap: 0.5rem; }
+  .issues-tab { background: var(--bg-secondary); color: var(--text-secondary); border: 1px solid var(--border-color); border-radius: 6px; padding: 0.4rem 0.9rem; cursor: pointer; font-size: 0.875rem; }
+  .issues-tab--active { background: var(--primary); color: var(--text-on-accent); border-color: var(--primary); }
+  .issues-search { background: var(--bg-secondary); color: var(--text-primary); border: 1px solid var(--border-color); border-radius: 6px; padding: 0.4rem 0.75rem; min-width: 240px; }
+  .issues-summary { color: var(--text-secondary); font-size: 0.8rem; }
+  .issues-status { color: var(--text-secondary); }
+  .issues-list { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 0.5rem; }
+  .issue-row { border: 1px solid var(--border-color); border-radius: 8px; background: var(--bg-secondary); overflow: hidden; }
+  .issue-row__summary { display: flex; align-items: center; gap: 0.75rem; padding: 0.75rem 1rem; cursor: pointer; }
+  .issue-row__state { font-size: 0.75rem; font-weight: 700; padding: 0.15em 0.6em; border-radius: 999px; white-space: nowrap; }
+  .issue-row__state--open { background: color-mix(in srgb, var(--success-color) 25%, transparent); color: var(--success-color); }
+  .issue-row__state--in-progress { background: color-mix(in srgb, var(--warning-color) 25%, transparent); color: var(--warning-color); }
+  .issue-row__state--closed { background: color-mix(in srgb, var(--info-color) 25%, transparent); color: var(--info-color); }
+  .issue-row__number { color: var(--text-secondary); font-family: monospace; }
+  .issue-row__title { flex: 1; font-weight: 600; }
+  .issue-row__labels { display: flex; gap: 0.35rem; flex-wrap: wrap; }
+  .issue-row__label { font-size: 0.7rem; padding: 0.1em 0.5em; border-radius: 999px; background: var(--bg-tertiary); color: var(--text-secondary); }
+  .issue-row__body { display: none; padding: 0 1rem 1rem; border-top: 1px solid var(--border-color); color: var(--text-secondary); font-size: 0.9rem; line-height: 1.6; }
+  /* Rendered markdown (x-mdhtml) needs normal HTML flow, not the raw-text
+     pre-wrap this div used before -- headings/lists/code blocks would
+     otherwise inherit literal whitespace preservation meant for plain text. */
+  .issue-row__body .issue-row__mdhtml { display: block; }
+  .issue-row--expanded .issue-row__body { display: block; padding-top: 1rem; }

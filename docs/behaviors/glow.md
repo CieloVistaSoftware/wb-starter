@@ -2,12 +2,16 @@
 
 Behavior applied with x-glow.
 
-Apply `x-glow` to any element.
+## Type — new capability
 
-## Usage
+`x-glow` adds behavior that no HTML element implies. Nothing about a tag says "ripple" or "tooltip", so this is always opted into by attribute, on whatever element you already chose.
+
+### How to write it
 
 ```html
-<button variant="primary" x-glow>💡 Glow</button>
+<button variant="primary" x-glow>
+  x-glow · variant: primary
+</button>
 ```
 
 ## Attributes

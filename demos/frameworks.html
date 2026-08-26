@@ -4,17 +4,17 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Framework Integration Demo</title>
-  <link rel="stylesheet" href="../src/styles/themes.css?v=3.0.91">
-  <link rel="stylesheet" href="../src/styles/site.css?v=3.0.91">
-  <link rel="stylesheet" href="../src/styles/pages/frameworks.css?v=3.0.91">
+  <link rel="stylesheet" href="../src/styles/themes.css?v=4.0.0">
+  <link rel="stylesheet" href="../src/styles/site.css?v=4.0.0">
+  <link rel="stylesheet" href="../src/styles/pages/frameworks.css?v=4.0.0">
 </head>
 <body>
   <a href="../index.html" class="back-link">← Back to Home</a>
   <h1>Framework Agnostic Demos</h1>
-  <p class="wb-text-secondary">WB Behaviors work with any framework because they rely on standard HTML attributes. The framework handles the DOM, and WB handles the behavior.</p>
+  <p class="x-text-secondary">WB Behaviors work with any framework because they rely on standard HTML attributes. The framework handles the DOM, and WB handles the behavior.</p>
 
   <!-- Advantages Section -->
-  <section id="wb-advantages">
+  <section id="x-advantages">
     <h2>The WB Advantage</h2>
     <div class="advantages-grid">
       <div>
@@ -43,13 +43,13 @@
     <p>This button is rendered by React. The <code>x-*</code> behavior attributes are passed as standard props.</p>
 
     <!-- #324 / DEMOS-AND-DOCS-STANDARDS.md §25: intentionally NOT wrapped in
-         <wb-demo>. The live control below is React's *rendered output* -- the
+         <div x-demo>. The live control below is React's *rendered output* -- the
          instructive source is the JSX-style React.createElement code in the
-         <pre> block underneath, which <wb-demo>'s HTML-source extraction has
+         <pre> block underneath, which <div x-demo>'s HTML-source extraction has
          no way to represent (it would show this mount div/script, not the
          React component code a React developer would actually write). Both a
          live render AND its real source are still present, per §16 -- just
-         not paired by <wb-demo> specifically, which requires the two to be
+         not paired by <div x-demo> specifically, which requires the two to be
          the same markup. -->
     <div id="react-root"></div>
 
@@ -66,7 +66,7 @@
           e('h3', { key: 'h3' }, `React Counter: ${count}`),
           e('button', {
             key: 'btn',
-            className: 'wb-btn-gradient',
+            className: 'x-btn-gradient',
             'x-ripple': '',
             'x-tooltip': 'I am a React button!',
             'x-toast': '',
@@ -85,7 +85,7 @@
       <p class="demo-code-label">Code used in this demo:</p>
       <pre x-behavior="pre" x-eager language="javascript" show-copy><code x-behavior="code" x-eager class="language-javascript">import React, { useState, useEffect } from 'react';
 import ReactDOM from 'react-dom/client';
-import WB from 'wb-behaviors';
+import WB from 'x-behaviors';
 
 const e = React.createElement;
 
@@ -101,7 +101,7 @@ function ReactApp() {
     e('h3', { key: 'h3' }, `React Counter: ${count}`),
     e('button', {
       key: 'btn',
-      className: 'wb-btn-gradient',
+      className: 'x-btn-gradient',
       'x-ripple': '',
       'x-tooltip': 'I am a React button!',
       'x-toast': '',
@@ -126,18 +126,18 @@ root.render(e(ReactApp));</code></pre>
     <!-- #324 / DEMOS-AND-DOCS-STANDARDS.md §25: same reasoning as the React
          section above -- the live control is Vue's rendered template output;
          the instructive source (Vue SFC-style template + setup()) is shown in
-         the <pre> block below, which <wb-demo> cannot represent 1:1. -->
+         the <pre> block below, which <div x-demo> cannot represent 1:1. -->
     <div id="vue-app">
       <div class="framework-mount framework-mount--vue">
         <h3>Vue Message: {{ message }}</h3>
         <input
           v-model="message"
-          class="wb-input-glass demo-input-full"
+          class="x-input-glass demo-input-full"
           placeholder="Type here..."
         >
         
         <button 
-          class="wb-btn-glass"
+          class="x-btn-glass"
           x-ripple x-tooltip
           :tooltip="'Current length: ' + message.length"
           @click="reverseMessage"
@@ -171,13 +171,13 @@ root.render(e(ReactApp));</code></pre>
     &lt;h3&gt;Vue Message: {{ message }}&lt;/h3&gt;
     &lt;input 
       v-model="message" 
-      class="wb-input-glass" 
+      class="x-input-glass" 
       placeholder="Type here..." 
       style="margin-bottom: 1rem; width: 100%;"
     &gt;
     
     &lt;button 
-      class="wb-btn-glass"
+      class="x-btn-glass"
       x-ripple x-tooltip
       :tooltip="'Current length: ' + message.length"
       @click="reverseMessage"
@@ -189,7 +189,7 @@ root.render(e(ReactApp));</code></pre>
 
 &lt;script&gt;
   import { createApp, ref, onMounted } from 'vue';
-  import WB from 'wb-behaviors';
+  import WB from 'x-behaviors';
 
   createApp({
     setup() {
@@ -224,9 +224,9 @@ root.render(e(ReactApp));</code></pre>
          esm.sh, then mounts the real resulting Svelte component. This is
          Svelte's own real compiler output, generated in-browser instead of
          ahead of time by a bundler -- no server build step, same "live
-         render + real source, not paired by <wb-demo>" pattern the
+         render + real source, not paired by <div x-demo>" pattern the
          React/Vue sections above already use (§16), for the same reason:
-         <wb-demo> requires the rendered markup and its "source" to be
+         <div x-demo> requires the rendered markup and its "source" to be
          identical, and compiled-Svelte-output is not 1:1 with hand-authored
          Svelte source. -->
     <div id="svelte-root" class="framework-mount framework-mount--svelte"></div>
@@ -235,7 +235,7 @@ root.render(e(ReactApp));</code></pre>
       import WB from '../src/core/wb-lazy.js';
 
       const svelteSource = `<script>
-  import WB from 'wb-behaviors';
+  import WB from 'x-behaviors';
   import { onMount } from 'svelte';
 
   onMount(() => {
@@ -251,7 +251,7 @@ root.render(e(ReactApp));</code></pre>
 <h3>Svelte Count: {count}</h3>
 
 <button
-  class="wb-btn-gradient"
+  class="x-btn-gradient"
   x-ripple x-tooltip x-toast
   tooltip="Count: {count}"
   message="Svelte count is now {count}"
@@ -271,14 +271,14 @@ root.render(e(ReactApp));</code></pre>
       // svelte/internal/disclose-version to the SAME esm.sh version as the
       // compiler above (a version mismatch between compiler and runtime
       // isn't guaranteed compatible); the author-facing 'svelte' import
-      // (onMount) to esm.sh's top-level entry; 'wb-behaviors' to this page's
+      // (onMount) to esm.sh's top-level entry; 'x-behaviors' to this page's
       // real, already-initialized WB singleton so the demo shares state with
       // the rest of the page instead of loading a second copy.
       let code = js.code;
       code = code.replaceAll('"svelte/internal/disclose-version"', `"https://esm.sh/svelte@${SVELTE_VERSION}/internal/disclose-version"`);
       code = code.replaceAll('"svelte/internal"', `"https://esm.sh/svelte@${SVELTE_VERSION}/internal"`);
       code = code.replaceAll("'svelte'", `'https://esm.sh/svelte@${SVELTE_VERSION}'`);
-      code = code.replaceAll("'wb-behaviors'", `'${wbUrl}'`);
+      code = code.replaceAll("'x-behaviors'", `'${wbUrl}'`);
 
       const blobUrl = URL.createObjectURL(new Blob([code], { type: 'text/javascript' }));
       const { default: SvelteComponent } = await import(blobUrl);
@@ -291,7 +291,7 @@ root.render(e(ReactApp));</code></pre>
       // suspends only THIS script, so the page-wide init can finish first
       // and its one-time initial scan can run before this button even
       // exists yet. Explicitly (and eagerly, bypassing the default
-      // IntersectionObserver lazy gate -- same reasoning as the wb-demo/
+      // IntersectionObserver lazy gate -- same reasoning as the x-demo/
       // pre[language] eager-scans below) scanning the mount point after
       // mounting guarantees x-ripple/x-tooltip get wired up regardless of
       // that race, instead of relying on the compiled component's own
@@ -304,7 +304,7 @@ root.render(e(ReactApp));</code></pre>
     <div class="demo-code-block">
       <p class="demo-code-label">Code used in this demo:</p>
       <pre x-behavior="pre" x-eager language="html" show-copy><code x-behavior="code" x-eager class="language-html">&lt;script&gt;
-  import WB from 'wb-behaviors';
+  import WB from 'x-behaviors';
   import { onMount } from 'svelte';
 
   onMount(() => {
@@ -320,7 +320,7 @@ root.render(e(ReactApp));</code></pre>
 &lt;h3&gt;Svelte Count: {count}&lt;/h3&gt;
 
 &lt;button
-  class="wb-btn-gradient"
+  class="x-btn-gradient"
   x-ripple x-tooltip x-toast
   tooltip="Count: {count}"
   message="Svelte count is now {count}"
@@ -341,6 +341,11 @@ root.render(e(ReactApp));</code></pre>
          in a browser. This is the same standalone component API used by an
          Angular application; the CDN only replaces the build tool that would
          normally bundle these packages. -->
+    <!-- #854: <angular-demo> is ANGULAR's component selector (see
+         `selector: 'angular-demo'` below), not a wb-* component tag. The 4.0.0
+         tag-removal sweep rewrote it to <div>, so bootstrapApplication() had
+         nothing to match and threw NG05104 -- the live Angular demo rendered
+         nothing. Leave this tag alone. -->
     <div id="angular-root" class="framework-mount framework-mount--angular"><angular-demo></angular-demo></div>
 
     <script type="module">
@@ -359,7 +364,7 @@ root.render(e(ReactApp));</code></pre>
           <div>
             <h3>Angular Count: {{ count }}</h3>
             <button
-              class="wb-btn-gradient"
+              class="x-btn-gradient"
               x-ripple
               x-tooltip
               [attr.tooltip]="'Count: ' + count"
@@ -385,13 +390,13 @@ root.render(e(ReactApp));</code></pre>
     </script>
 
     <pre x-behavior="pre" x-eager language="typescript" show-copy><code x-behavior="code" x-eager class="language-typescript">import { Component, OnInit } from '@angular/core';
-import WB from 'wb-behaviors';
+import WB from 'x-behaviors';
 
 @Component({
   selector: 'app-demo',
   template: `
     &lt;button 
-      class="wb-btn-gradient"
+      class="x-btn-gradient"
       x-ripple x-tooltip
       [attr.x-tooltip]="'Count: ' + count"
       (click)="increment()"&gt;
@@ -436,7 +441,7 @@ export class DemoComponent implements OnInit {
       import WB from '../src/core/wb-lazy.js';
 
       const solidSource = `import { createSignal, onMount } from 'solid-js';
-import WB from 'wb-behaviors';
+import WB from 'x-behaviors';
 
 function Counter() {
   const [count, setCount] = createSignal(0);
@@ -449,7 +454,7 @@ function Counter() {
     <div>
       <h3>SolidJS Count: {count()}</h3>
       <button
-        class="wb-btn-gradient"
+        class="x-btn-gradient"
         x-ripple x-tooltip
         tooltip={\`Count: \${count()}\`}
         onClick={() => setCount(c => c + 1)}
@@ -487,7 +492,7 @@ export default Counter;`;
       let code = compiledJs;
       code = code.replaceAll('"solid-js/web"', `"https://esm.sh/solid-js@${SOLID_VERSION}/web"`);
       code = code.replaceAll("'solid-js'", `'https://esm.sh/solid-js@${SOLID_VERSION}'`);
-      code = code.replaceAll("'wb-behaviors'", `'${wbUrl}'`);
+      code = code.replaceAll("'x-behaviors'", `'${wbUrl}'`);
 
       const blobUrl = URL.createObjectURL(new Blob([code], { type: 'text/javascript' }));
       const [{ default: Counter }, solidWeb] = await Promise.all([
@@ -509,7 +514,7 @@ export default Counter;`;
     <div class="demo-code-block">
       <p class="demo-code-label">Code used in this demo:</p>
       <pre x-behavior="pre" x-eager language="javascript" show-copy><code x-behavior="code" x-eager class="language-javascript">import { createSignal, onMount } from 'solid-js';
-import WB from 'wb-behaviors';
+import WB from 'x-behaviors';
 
 function Counter() {
   const [count, setCount] = createSignal(0);
@@ -522,7 +527,7 @@ function Counter() {
     &lt;div&gt;
       &lt;h3&gt;SolidJS Count: {count()}&lt;/h3&gt;
       &lt;button
-        class="wb-btn-gradient"
+        class="x-btn-gradient"
         x-ripple x-tooltip
         tooltip={`Count: ${count()}`}
         onClick={() => setCount(c => c + 1)}
@@ -543,21 +548,21 @@ function Counter() {
 
     <!-- #324: HTMX needs no build step -- the button below IS the real, executable
          markup a developer would author (plain HTML + hx-*/x-* attributes), so
-         <wb-demo> can render it live AND show its exact source, same as any other
+         <div x-demo> can render it live AND show its exact source, same as any other
          component example (§1/§16) -- unlike the React/Vue/Svelte/Angular/SolidJS
          sections further down, which mount via framework-specific script/build
-         output that <wb-demo> cannot represent as one-to-one "source" (see the
+         output that <div x-demo> cannot represent as one-to-one "source" (see the
          explanatory notes on those sections and DEMOS-AND-DOCS-STANDARDS.md §16). -->
-    <wb-demo>
+    <div x-demo>
     <button
       hx-post="/clicked"
       hx-swap="outerHTML"
-      class="wb-btn-gradient"
+      class="x-btn-gradient"
       x-ripple
       x-tooltip="I ripple locally, but fetch remotely!">
       Click Me (HTMX)
     </button>
-    </wb-demo>
+    </div>
 
     <script src="https://unpkg.com/htmx.org@1.9.10"></script>
     <script>
@@ -577,15 +582,15 @@ function Counter() {
     // Initialize WB (autoInject/MutationObserver handles the React/Vue mounts).
     await WB.init({ autoInject: true });
 
-    // This page's single wb-demo (the HTMX section) sits far below the
+    // This page's single x-demo (the HTMX section) sits far below the
     // fold, so WB.init()'s default scan only lazily registers it with an
     // IntersectionObserver -- it never builds its grid/code-panel/CSS
     // without a real scroll into view. There's only one on the whole page,
     // so eager-building it costs nothing (same "laziness buys nothing here"
-    // reasoning as wb-demo.js's own EAGER_BUILD_COUNT for small pages).
+    // reasoning as x-demo.js's own EAGER_BUILD_COUNT for small pages).
     // Awaited AFTER WB.init()'s own scan settles, so this doesn't race the
     // same element's lazy registration.
-    const soleDemo = document.querySelector('wb-demo');
+    const soleDemo = document.querySelector('x-demo');
     if (soleDemo) await WB.scan(soleDemo.parentElement, { eager: true });
 
   </script>

@@ -68,14 +68,14 @@ Every property MUST define permutations with specific assertions:
     "default": {
       "selector": "element",
       "checks": {
-        "hasClass": "wb-component--default",
+        "hasClass": "x-component--default",
         "backgroundColor": "rgb(31, 41, 55)"
       }
     },
     "primary": {
       "selector": "element",
       "checks": {
-        "hasClass": "wb-component--primary",
+        "hasClass": "x-component--primary",
         "backgroundColor": "rgb(99, 102, 241)"
       }
     }
@@ -91,17 +91,17 @@ Defines structural requirements:
 
 ```json
 "compliance": {
-  "baseClass": "wb-card",
-  "parentClass": "wb-card--variant",
+  "baseClass": "x-card",
+  "parentClass": "x-card--variant",
   
   "requiredChildren": {
-    ".wb-card__header": {
+    ".x-card__header": {
       "description": "Card header section",
       "required": true,
       "tagName": "HEADER",
       "minCount": 1
     },
-    ".wb-card__btn--primary": {
+    ".x-card__btn--primary": {
       "description": "Primary action button",
       "required": true,
       "requiredWhen": "primary is set"
@@ -109,7 +109,7 @@ Defines structural requirements:
   },
   
   "optionalChildren": {
-    ".wb-card__subtitle": {
+    ".x-card__subtitle": {
       "description": "Optional subtitle",
       "required": false
     }
@@ -137,7 +137,7 @@ Defines ALL clickable/interactive elements and expected behavior:
 ```json
 "interactions": {
   "elements": {
-    ".wb-card__btn--primary": {
+    ".x-card__btn--primary": {
       "type": "button",
       "clickable": true,
       "click": {
@@ -152,7 +152,7 @@ Defines ALL clickable/interactive elements and expected behavior:
         "style": { "outline": "2px solid var(--primary)" }
       }
     },
-    ".wb-card__btn--secondary": {
+    ".x-card__btn--secondary": {
       "type": "button",
       "clickable": true,
       "click": {
@@ -161,16 +161,16 @@ Defines ALL clickable/interactive elements and expected behavior:
         "eventDetail": { "action": "secondary" }
       }
     },
-    ".wb-card__expand-btn": {
+    ".x-card__expand-btn": {
       "type": "button",
       "clickable": true,
       "click": {
         "action": "toggle class",
         "targetSelector": "element",
-        "class": "wb-card--expanded"
+        "class": "x-card--expanded"
       }
     },
-    ".wb-card__notif-close": {
+    ".x-card__notif-close": {
       "type": "button",
       "clickable": true,
       "click": {
@@ -196,7 +196,7 @@ Defines ALL clickable/interactive elements and expected behavior:
   },
   
   "drag": {
-    "handle": ".wb-card__drag-handle",
+    "handle": ".x-card__drag-handle",
     "bounds": "viewport",
     "events": ["dragstart", "drag", "dragend"]
   }
@@ -215,11 +215,11 @@ Defines ALL clickable/interactive elements and expected behavior:
     "aria-label": "dynamic"
   },
   "children": {
-    ".wb-card__header button": {
+    ".x-card__header button": {
       "aria-expanded": "true|false",
       "aria-controls": "panel-id"
     },
-    ".wb-card__close-btn": {
+    ".x-card__close-btn": {
       "aria-label": "Close"
     }
   }
@@ -280,7 +280,7 @@ All custom events the component dispatches:
       {
         "name": "primary button click",
         "setup": "<div x-behavior=\"cardbutton\" primary=\"Save\"></div>",
-        "selector": ".wb-card__btn--primary",
+        "selector": ".x-card__btn--primary",
         "action": "click",
         "expect": {
           "event": "wb:card:action",
@@ -290,7 +290,7 @@ All custom events the component dispatches:
       {
         "name": "secondary button click",
         "setup": "<div x-behavior=\"cardbutton\" secondary=\"Cancel\"></div>",
-        "selector": ".wb-card__btn--secondary",
+        "selector": ".x-card__btn--secondary",
         "action": "click",
         "expect": {
           "event": "wb:card:action"
@@ -314,7 +314,7 @@ All custom events the component dispatches:
         "setup": "<div x-behavior=\"card\" clickable></div>",
         "action": "click",
         "expect": {
-          "class": "wb-card--active",
+          "class": "x-card--active",
           "event": "wb:card:click"
         }
       }
@@ -326,7 +326,7 @@ All custom events the component dispatches:
         "setup": "<div x-behavior=\"card\" clickable></div>",
         "key": "Enter",
         "expect": {
-          "class": "wb-card--active"
+          "class": "x-card--active"
         }
       }
     ],
@@ -335,7 +335,7 @@ All custom events the component dispatches:
       {
         "name": "close button removes notification",
         "setup": "<div x-behavior=\"cardnotification\" dismissible message=\"Test\"></div>",
-        "selector": ".wb-card__notif-close",
+        "selector": ".x-card__notif-close",
         "action": "click",
         "expect": {
           "removed": true
@@ -351,7 +351,7 @@ All custom events the component dispatches:
         "setup": "<div x-behavior=\"cardexpandable\" title=\"Test\">Long content here</div>",
         "call": "element.wbCardExpandable.expand()",
         "expect": {
-          "class": "wb-card--expanded",
+          "class": "x-card--expanded",
           "property": { "expanded": true }
         }
       },
@@ -360,7 +360,7 @@ All custom events the component dispatches:
         "setup": "<div x-behavior=\"cardexpandable\" expanded>Content</div>",
         "call": "element.wbCardExpandable.collapse()",
         "expect": {
-          "notClass": "wb-card--expanded",
+          "notClass": "x-card--expanded",
           "property": { "expanded": false }
         }
       }
@@ -388,8 +388,8 @@ All custom events the component dispatches:
         "type": "EXPLICIT",
         "values": [null, "Short", "A Very Long Title That Should Truncate Properly"],
         "assertions": {
-          "null": { "selector": ".wb-card__header", "checks": { "exists": false } },
-          "Short": { "selector": ".wb-card__title", "checks": { "textContains": "Short" } }
+          "null": { "selector": ".x-card__header", "checks": { "exists": false } },
+          "Short": { "selector": ".x-card__title", "checks": { "textContains": "Short" } }
         }
       }
     },
@@ -400,9 +400,9 @@ All custom events the component dispatches:
         "type": "EXPLICIT",
         "values": [null, "Save", "Submit Form"],
         "assertions": {
-          "null": { "selector": ".wb-card__btn--primary", "checks": { "exists": false } },
+          "null": { "selector": ".x-card__btn--primary", "checks": { "exists": false } },
           "Save": { 
-            "selector": ".wb-card__btn--primary", 
+            "selector": ".x-card__btn--primary", 
             "checks": { 
               "exists": true,
               "textContains": "Save",
@@ -420,7 +420,7 @@ All custom events the component dispatches:
         "values": [null, "/save", "https://example.com"],
         "assertions": {
           "/save": { 
-            "selector": ".wb-card__btn--primary", 
+            "selector": ".x-card__btn--primary", 
             "checks": { 
               "tagName": "A",
               "attribute": { "href": "/save" }
@@ -437,7 +437,7 @@ All custom events the component dispatches:
         "values": [null, "Cancel"],
         "assertions": {
           "Cancel": { 
-            "selector": ".wb-card__btn--secondary", 
+            "selector": ".x-card__btn--secondary", 
             "checks": { "exists": true, "textContains": "Cancel" } 
           }
         }
@@ -446,10 +446,10 @@ All custom events the component dispatches:
   },
   
   "compliance": {
-    "baseClass": "wb-card",
-    "parentClass": "wb-card--button",
+    "baseClass": "x-card",
+    "parentClass": "x-card--button",
     "requiredChildren": {
-      ".wb-card__footer": {
+      ".x-card__footer": {
         "description": "Footer containing buttons",
         "required": true,
         "requiredWhen": "primary or secondary is set"
@@ -464,7 +464,7 @@ All custom events the component dispatches:
   
   "interactions": {
     "elements": {
-      ".wb-card__btn--primary": {
+      ".x-card__btn--primary": {
         "type": "button",
         "clickable": true,
         "click": {
@@ -479,7 +479,7 @@ All custom events the component dispatches:
           "visible": true
         }
       },
-      ".wb-card__btn--secondary": {
+      ".x-card__btn--secondary": {
         "type": "button", 
         "clickable": true
       }
@@ -487,10 +487,10 @@ All custom events the component dispatches:
   },
   
   "accessibility": {
-    ".wb-card__btn--primary": {
+    ".x-card__btn--primary": {
       "role": "implicit button/link"
     },
-    ".wb-card__btn--secondary": {
+    ".x-card__btn--secondary": {
       "role": "implicit button/link"
     }
   },
@@ -517,7 +517,7 @@ All custom events the component dispatches:
         {
           "name": "primary button is clickable",
           "setup": "<div x-behavior=\"cardbutton\" primary=\"Save\"></div>",
-          "selector": ".wb-card__btn--primary",
+          "selector": ".x-card__btn--primary",
           "action": "click",
           "expect": {
             "clickable": true,
@@ -527,7 +527,7 @@ All custom events the component dispatches:
         {
           "name": "primary button as link has href",
           "setup": "<div x-behavior=\"cardbutton\" primary=\"Go\" primary-href=\"/test\"></div>",
-          "selector": ".wb-card__btn--primary",
+          "selector": ".x-card__btn--primary",
           "expect": {
             "tagName": "A",
             "attribute": { "href": "/test" }
@@ -536,7 +536,7 @@ All custom events the component dispatches:
         {
           "name": "secondary button is clickable",
           "setup": "<div x-behavior=\"cardbutton\" secondary=\"Cancel\"></div>",
-          "selector": ".wb-card__btn--secondary",
+          "selector": ".x-card__btn--secondary",
           "action": "click",
           "expect": {
             "clickable": true
@@ -549,8 +549,8 @@ All custom events the component dispatches:
           "name": "buttons have proper styling",
           "setup": "<div x-behavior=\"cardbutton\" primary=\"Save\" secondary=\"Cancel\"></div>",
           "checks": [
-            { "selector": ".wb-card__btn--primary", "style": "backgroundColor", "pattern": "rgb\\(99, 102, 241\\)" },
-            { "selector": ".wb-card__btn--secondary", "style": "backgroundColor", "notEmpty": true }
+            { "selector": ".x-card__btn--primary", "style": "backgroundColor", "pattern": "rgb\\(99, 102, 241\\)" },
+            { "selector": ".x-card__btn--secondary", "style": "backgroundColor", "notEmpty": true }
           ]
         }
       ]

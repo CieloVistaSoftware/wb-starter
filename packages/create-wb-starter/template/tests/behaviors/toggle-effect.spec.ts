@@ -1,5 +1,5 @@
 /**
- * wb-toggle — effect-based coverage (Standard #19: every declared attribute
+ * x-toggle — effect-based coverage (Standard #19: every declared attribute
  * must be tested to actually WORK, not merely that the element renders).
  * The auto-generated tests/components/toggle.spec.ts only checks render +
  * no-console-errors; this file asserts the real behavior of toggle.js:
@@ -26,16 +26,16 @@ async function setup(page: Page, html: string): Promise<void> {
   // default lazy scan can leave toggle.js's event listeners un-attached by
   // the time a one-shot interaction (a single click, a single keypress) is
   // dispatched below, since only assertions retry, not the interaction
-  // itself. wb-demo-width-and-toggle.spec.ts uses the same fix.
+  // itself. x-demo-width-and-toggle.spec.ts uses the same fix.
   await page.evaluate(() => {
     (window as any).WB.scan(document.getElementById('toggle-effect-test-area'), { eager: true });
   });
   await page.waitForTimeout(100);
 }
 
-test.describe('wb-toggle behavior effects', () => {
+test.describe('x-toggle behavior effects', () => {
   test('clicking toggles the default "active" class on itself and updates aria-pressed', async ({ page }) => {
-    await setup(page, '<wb-toggle id="t1">Click me</wb-toggle>');
+    await setup(page, '<div x-toggle id="t1">Click me</div>');
     const el = page.locator('#t1');
 
     await expect(el).toHaveAttribute('aria-pressed', 'false');
@@ -49,7 +49,7 @@ test.describe('wb-toggle behavior effects', () => {
   });
 
   test('target attribute toggles the class on the referenced element, not just itself', async ({ page }) => {
-    await setup(page, '<wb-toggle id="t2" target="#panel2">Show</wb-toggle><div id="panel2">Panel content</div>');
+    await setup(page, '<div x-toggle id="t2" target="#panel2">Show</div><div id="panel2">Panel content</div>');
     const trigger = page.locator('#t2');
     const target = page.locator('#panel2');
 
@@ -67,7 +67,7 @@ test.describe('wb-toggle behavior effects', () => {
     // the class to flip, so it would already count as "on" at parse time and
     // a click would immediately remove it. `toggle-class` is the declared,
     // non-destructive way to rename the toggled class.
-    await setup(page, '<wb-toggle id="t3" toggle-class="highlighted">Custom</wb-toggle>');
+    await setup(page, '<div x-toggle id="t3" toggle-class="highlighted">Custom</div>');
     const el = page.locator('#t3');
 
     await expect(el).not.toHaveClass(/highlighted/);
@@ -77,7 +77,7 @@ test.describe('wb-toggle behavior effects', () => {
   });
 
   test('Enter key triggers the same toggle effect as a click', async ({ page }) => {
-    await setup(page, '<wb-toggle id="t4">Key toggle</wb-toggle>');
+    await setup(page, '<div x-toggle id="t4">Key toggle</div>');
     const el = page.locator('#t4');
 
     await el.focus();
@@ -87,7 +87,7 @@ test.describe('wb-toggle behavior effects', () => {
   });
 
   test('fires a wb:toggle custom event carrying the new active state', async ({ page }) => {
-    await setup(page, '<wb-toggle id="t5">Event</wb-toggle>');
+    await setup(page, '<div x-toggle id="t5">Event</div>');
 
     await page.evaluate(() => {
       (window as any).__wbToggleDetail = null;

@@ -8,8 +8,8 @@ import * as path from 'path';
  * Data-driven from data/site-generator-result.json
  * Validates:
  *   1. Index page loads with all category cards
- *   2. Each category page loads, has correct wb-demo sections
- *   3. Components render inside wb-demo containers
+ *   2. Each category page loads, has correct x-demo sections
+ *   3. Components render inside x-demo containers
  *   4. No critical JS errors
  *   5. Back-to-index navigation works
  */
@@ -124,11 +124,11 @@ test.describe('Site Generation — Phase 4', () => {
         await expect(backLink).toBeVisible();
       });
 
-      test(`has wb-demo sections`, async ({ page }) => {
+      test(`has x-demo sections`, async ({ page }) => {
         await page.goto(`${SITE_DIR}/${pg.filename}`);
-        const demos = page.locator('wb-demo');
+        const demos = page.locator('x-demo');
         const count = await demos.count();
-        // Should have at least 1 wb-demo per page
+        // Should have at least 1 x-demo per page
         expect(count).toBeGreaterThan(0);
         // Should roughly match expected section count (demos can be deduped)
         if (pg.sectionCount) {
@@ -136,15 +136,15 @@ test.describe('Site Generation — Phase 4', () => {
         }
       });
 
-      test('wb-demo containers have child elements', async ({ page }) => {
+      test('x-demo containers have child elements', async ({ page }) => {
         await page.goto(`${SITE_DIR}/${pg.filename}`);
         // Wait for WB init
         await page.waitForFunction(() => (window as any).WB, null, { timeout: 10000 }).catch(() => {});
 
-        // Wait for at least one wb-demo to finish init (demo() adds a .wb-demo__grid child — #447 removed the redundant .wb-demo class)
-        await page.waitForSelector('wb-demo .wb-demo__grid', { timeout: 10000 }).catch(() => {});
+        // Wait for at least one x-demo to finish init (demo() adds a .x-demo__grid child — #447 removed the redundant .x-demo class)
+        await page.waitForSelector('x-demo .x-demo__grid', { timeout: 10000 }).catch(() => {});
 
-        const demos = page.locator('wb-demo:has(.wb-demo__grid)');
+        const demos = page.locator('x-demo:has(.x-demo__grid)');
         const count = await demos.count();
         let emptyCount = 0;
 
@@ -153,13 +153,13 @@ test.describe('Site Generation — Phase 4', () => {
         for (let i = 0; i < checkCount; i++) {
           const demo = demos.nth(i);
           await safeScrollIntoView(demo);
-          // After demo() completes, wb-demo has .wb-demo__grid + <pre> children
-          const hasGrid = await demo.locator('.wb-demo__grid').count();
+          // After demo() completes, x-demo has .x-demo__grid + <pre> children
+          const hasGrid = await demo.locator('.x-demo__grid').count();
           if (hasGrid === 0) emptyCount++;
         }
 
         // At least 1 demo should have rendered
-        expect(count, 'No initialized wb-demo found — demo() may not have run').toBeGreaterThan(0);
+        expect(count, 'No initialized x-demo found — demo() may not have run').toBeGreaterThan(0);
         // Allow some empty (edge cases), but not all
         expect(emptyCount, `${emptyCount}/${checkCount} demos were empty`).toBeLessThan(checkCount);
       });
@@ -181,7 +181,7 @@ test.describe('Site Generation — Phase 4', () => {
           }
 
           // Most components should be present — allow a few missing
-          // (some components might share a tag, e.g. drawerLayout → wb-drawerlayout)
+          // (some components might share a tag, e.g. drawerLayout → x-drawerlayout)
           const threshold = Math.max(1, Math.floor(okComponents.length * 0.6));
           expect(foundCount, `Only ${foundCount}/${okComponents.length} component tags found`).toBeGreaterThanOrEqual(threshold);
         });

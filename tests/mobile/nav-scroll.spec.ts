@@ -55,7 +55,7 @@ async function scrollState(page: Page) {
 
 test.describe('Nav link scroll behavior', () => {
   test.beforeEach(async ({ page }) => {
-    await page.goto('http://localhost:3000/?page=home');
+    await page.goto('/?page=home');
     await page.waitForFunction(() => (window as any).WBSite?.currentPage, { timeout: 15000 });
     await page.waitForTimeout(400);
   });

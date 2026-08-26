@@ -1,5 +1,5 @@
 /**
- * wb-skeleton — renders text lines / circle / rect (issue #129)
+ * x-skeleton — renders text lines / circle / rect (issue #129)
  */
 import { test, expect, Page } from '@playwright/test';
 
@@ -21,9 +21,9 @@ async function setup(page: Page, html: string): Promise<void> {
   await page.waitForTimeout(400);
 }
 
-test.describe('wb-skeleton', () => {
+test.describe('[x-skeleton]', () => {
   test('text variant renders the requested number of visible lines', async ({ page }) => {
-    await setup(page, '<wb-skeleton id="sk-text" variant="text" lines="3" style="width:200px;"></wb-skeleton>');
+    await setup(page, '<div x-skeleton id="sk-text" variant="text" lines="3" style="width:200px;"></div>');
     const spans = page.locator('#sk-text > span');
     await expect(spans).toHaveCount(3);
     // first line must actually paint (not background:none inherited)
@@ -32,7 +32,7 @@ test.describe('wb-skeleton', () => {
   });
 
   test('circle variant is square and round', async ({ page }) => {
-    await setup(page, '<wb-skeleton id="sk-circle" variant="circle" width="60px"></wb-skeleton>');
+    await setup(page, '<div x-skeleton id="sk-circle" variant="circle" width="60px"></div>');
     const box = await page.locator('#sk-circle').boundingBox();
     expect(box).not.toBeNull();
     expect(Math.abs((box!.width) - (box!.height))).toBeLessThan(4);
@@ -40,7 +40,7 @@ test.describe('wb-skeleton', () => {
   });
 
   test('rect variant honors width and height', async ({ page }) => {
-    await setup(page, '<wb-skeleton id="sk-rect" variant="rect" width="150px" height="100px"></wb-skeleton>');
+    await setup(page, '<div x-skeleton id="sk-rect" variant="rect" width="150px" height="100px"></div>');
     const box = await page.locator('#sk-rect').boundingBox();
     expect(box).not.toBeNull();
     expect(box!.width).toBeGreaterThan(140);

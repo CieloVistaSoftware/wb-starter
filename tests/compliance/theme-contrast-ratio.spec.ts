@@ -5,7 +5,7 @@ import { MIN_CONTRAST_RATIO, hslContrastRatio } from '../../src/core/contrast.js
 /**
  * "put a global configurable contrast ratio that affects every control...
  * tied into our theme generator automatically." The concrete instance
- * (wb-cardhero title/subtitle losing their intended --text-on-accent
+ * (x-cardhero title/subtitle losing their intended --text-on-accent
  * color to --text-primary) was fixed directly in hero.css. This is the
  * systemic backstop: every theme's core text/background pairs must clear
  * WCAG AA (src/core/contrast.js's MIN_CONTRAST_RATIO) automatically --

@@ -1,3 +1,4 @@
+import { readFlag, readAttr } from '../core/read-attr.js';
 /**
  * Resizable Behavior
  * -----------------------------------------------------------------------------
@@ -9,15 +10,15 @@
 export function resizable(element, options = {}) {
   const config = {
     directions: options.directions || element.dataset.directions || 'se', // n, s, e, w, ne, nw, se, sw, all
-    minWidth: parseInt(options.minWidth || element.dataset.minWidth || '50', 10),
+    minWidth: parseInt(options.minWidth || readAttr(element, 'minWidth') || '50', 10),
     minHeight: parseInt(options.minHeight || element.dataset.minHeight || '50', 10),
-    maxWidth: parseInt(options.maxWidth || element.dataset.maxWidth || '0', 10) || Infinity,
-    maxHeight: parseInt(options.maxHeight || element.dataset.maxHeight || '0', 10) || Infinity,
-    aspectRatio: options.aspectRatio ?? element.hasAttribute('data-aspect-ratio'),
+    maxWidth: parseInt(options.maxWidth || readAttr(element, 'maxWidth') || '0', 10) || Infinity,
+    maxHeight: parseInt(options.maxHeight || readAttr(element, 'maxHeight') || '0', 10) || Infinity,
+    aspectRatio: options.aspectRatio ?? readFlag(element, 'aspect-ratio'),
     ...options
   };
 
-  // #448: no classList.add('wb-resizable') -- no CSS selector anywhere
+  // #448: no classList.add('x-resizable') -- no CSS selector anywhere
   // depends on the bare class.
 
   // Ensure element is positioned
@@ -35,7 +36,7 @@ export function resizable(element, options = {}) {
   const handles = {};
   dirs.forEach(dir => {
     const handle = document.createElement('div');
-    handle.className = `wb-resizable__handle wb-resizable__handle--${dir}`;
+    handle.className = `x-resizable__handle x-resizable__handle--${dir}`;
     handle.dataset.direction = dir;
     
     // Position and style handles
@@ -87,12 +88,12 @@ export function resizable(element, options = {}) {
   const onMouseDown = (e) => {
     if (e.button !== 0) return;
     // Use a different variable name to avoid duplicate declaration
-    const handleEl = e.target.closest('.wb-resizable__handle');
+    const handleEl = e.target.closest('.x-resizable__handle');
     if (!handleEl) return;
     
     e.preventDefault();
     isResizing = true;
-    currentDir = handleEl.dataset.direction;
+    currentDir = readAttr(handleEl, 'direction');
     
     startX = e.clientX;
     startY = e.clientY;
@@ -102,7 +103,7 @@ export function resizable(element, options = {}) {
     startTop = element.offsetTop;
     aspectRatioValue = startWidth / startHeight;
     
-    element.classList.add('wb-resizable--resizing');
+    element.classList.add('x-resizable--resizing');
     
     document.addEventListener('mousemove', onMouseMove);
     document.addEventListener('mouseup', onMouseUp);
@@ -177,7 +178,7 @@ export function resizable(element, options = {}) {
     
     isResizing = false;
     currentDir = null;
-    element.classList.remove('wb-resizable--resizing');
+    element.classList.remove('x-resizable--resizing');
     
     document.removeEventListener('mousemove', onMouseMove);
     document.removeEventListener('mouseup', onMouseUp);
@@ -202,7 +203,7 @@ export function resizable(element, options = {}) {
   // Mark as ready
   // Cleanup
   return () => {
-    element.classList.remove('wb-resizable', 'wb-resizable--resizing');
+    element.classList.remove('x-resizable', 'x-resizable--resizing');
     element.removeEventListener('mousedown', onMouseDown);
     document.removeEventListener('mousemove', onMouseMove);
     document.removeEventListener('mouseup', onMouseUp);

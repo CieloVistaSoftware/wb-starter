@@ -1,7 +1,7 @@
 import { test, expect } from '@playwright/test';
 
 /**
- * .wb-chip--sm/--lg only differed from the base by ~2px of vertical padding
+ * .x-chip--sm/--lg only differed from the base by ~2px of vertical padding
  * (0.125rem/0.25rem/0.375rem steps), which read as visually identical.
  * John: "these do not [show it], they should show vertical size too."
  * Fixed by adding explicit min-height per size, not just padding.

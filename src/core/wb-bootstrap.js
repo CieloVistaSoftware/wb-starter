@@ -22,7 +22,6 @@
  */
 
 import WB from "./wb-lazy.js";
-import { initViews } from "./wb-views.js";
 
 /**
  * Resolve a path relative to the bootstrap script location
@@ -122,18 +121,13 @@ export async function bootstrap(options = {}) {
             preload: config.preload
         });
 
-        // 3. Initialize Views if registry provided or DOM templates exist
-        if (config.registry || document.querySelector('template[wb-view]')) {
-            await initViews({
-                registry: config.registry
-            });
-        }
+        // 3. wb-views removed — <div> was a component tag.
 
         if (config.debug) {
             console.log('[WB Bootstrap] ✅ Framework ready', config);
         }
 
-        return { WB, initViews };
+        return { WB };
 
     } catch (error) {
         console.error('[WB Bootstrap] ❌ Initialization failed:', error);
@@ -196,5 +190,5 @@ if (!noAutoInit) {
 }
 
 // Export for manual usage
-export { WB, initViews };
+export { WB };
 export default bootstrap;

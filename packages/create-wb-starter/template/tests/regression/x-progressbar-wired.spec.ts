@@ -31,8 +31,8 @@ test('x-progressbar on a plain div actually renders a fill matching its value/va
     <div id="p1" x-progressbar value="40" style="width:300px;height:24px;"></div>
     <div id="p2" x-progressbar value="80" variant="success" style="width:300px;height:24px;"></div>
   `);
-  const p1Bar = page.locator('#p1 .wb-progress__bar');
-  const p2Bar = page.locator('#p2 .wb-progress__bar');
+  const p1Bar = page.locator('#p1 .x-progress__bar');
+  const p2Bar = page.locator('#p2 .x-progress__bar');
   await expect(p1Bar).toBeVisible();
   await expect(p2Bar).toBeVisible();
 

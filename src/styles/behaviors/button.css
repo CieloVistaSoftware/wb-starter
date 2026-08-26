@@ -6,7 +6,7 @@
  * -----------------------------------------------------------------------------
  */
 
-.wb-button,
+.x-button,
 button-tooltip {
   display: inline-flex;
   align-items: center;
@@ -22,13 +22,13 @@ button-tooltip {
   user-select: none;
 }
 
-.wb-button:focus-visible,
+.x-button:focus-visible,
 button-tooltip:focus-visible {
   outline: 2px solid var(--primary);
   outline-offset: 2px;
 }
 
-.wb-button:disabled,
+.x-button:disabled,
 button-tooltip[disabled] {
   opacity: 0.6;
   cursor: not-allowed;
@@ -36,10 +36,10 @@ button-tooltip[disabled] {
 }
 
 /* Sizes
- * Doubled selector (.wb-button.wb-button--sm) raises specificity to 0,2,0 so
- * these win over the plain `.wb-button` base rule that button.js injects into
+ * Doubled selector (.x-button.x-button--sm) raises specificity to 0,2,0 so
+ * these win over the plain `.x-button` base rule that button.js injects into
  * <head> at runtime. That injected rule has equal (0,1,0) specificity but comes
- * LATER in source order, so a single-class `.wb-button--sm` was being overridden
+ * LATER in source order, so a single-class `.x-button--sm` was being overridden
  * and every button collapsed to the same md padding/font-size. (#button-sizes) */
 /* Vertical padding floored at 1rem (16px) across every size -- Standard
    §13's >=1rem text-padding rule applies to buttons (its own exclusion
@@ -48,146 +48,146 @@ button-tooltip[disabled] {
    vertical padding well under that (2px/4px/8px), caught by CI. Size
    distinction is preserved via horizontal padding + font-size instead of
    vertical compactness. */
-.wb-button.wb-button--xs {
+.x-button.x-button--xs {
   padding: 1rem 0.5rem;
   font-size: 0.75rem;
 }
 
-.wb-button.wb-button--sm {
+.x-button.x-button--sm {
   padding: 1rem 0.75rem;
   font-size: 0.875rem;
 }
 
-.wb-button.wb-button--md {
+.x-button.x-button--md {
   padding: 1rem 1rem;
   font-size: 1rem;
 }
 
-.wb-button.wb-button--lg {
+.x-button.x-button--lg {
   padding: 1.125rem 1.5rem;
   font-size: 1.125rem;
 }
 
-.wb-button.wb-button--xl {
+.x-button.x-button--xl {
   padding: 1.25rem 2rem;
   font-size: 1.25rem;
 }
 
 /* Variants
- * Doubled selector (.wb-button.wb-button--primary → specificity 0,2,0) so these
- * variant colors win over the plain `.wb-button` base rule button.js injects into
+ * Doubled selector (.x-button.x-button--primary → specificity 0,2,0) so these
+ * variant colors win over the plain `.x-button` base rule button.js injects into
  * <head> at runtime (which sets background: var(--bg-secondary) at 0,1,0, later in
  * source order). Without this, success/danger/warning collapsed to the neutral
  * background — no color difference. Same reason as the sizes above. (#button-variant-colors) */
-.wb-button.wb-button--primary {
+.x-button.x-button--primary {
   background-color: var(--primary);
   color: var(--text-on-accent);
   border-color: transparent;
 }
-.wb-button.wb-button--primary:hover {
+.x-button.x-button--primary:hover {
   background-color: var(--primary-dark);
 }
 
-.wb-button.wb-button--secondary {
+.x-button.x-button--secondary {
   background-color: var(--secondary);
   color: var(--text-on-accent);
   border-color: transparent;
 }
-.wb-button.wb-button--secondary:hover {
+.x-button.x-button--secondary:hover {
   background-color: var(--secondary-dark);
 }
 
-.wb-button.wb-button--success {
+.x-button.x-button--success {
   background-color: var(--success-color);
   color: var(--text-on-accent);
   border-color: transparent;
 }
-.wb-button.wb-button--success:hover {
+.x-button.x-button--success:hover {
   filter: brightness(0.9);
 }
 
-.wb-button.wb-button--danger,
-.wb-button.wb-button--error {
+.x-button.x-button--danger,
+.x-button.x-button--error {
   background-color: var(--danger-color);
   color: var(--text-on-accent);
   border-color: transparent;
 }
-.wb-button.wb-button--danger:hover,
-.wb-button.wb-button--error:hover {
+.x-button.x-button--danger:hover,
+.x-button.x-button--error:hover {
   filter: brightness(0.9);
 }
 
-.wb-button.wb-button--warning {
+.x-button.x-button--warning {
   background-color: var(--warning-color);
   color: var(--text-on-accent);
   border-color: transparent;
 }
-.wb-button.wb-button--warning:hover {
+.x-button.x-button--warning:hover {
   filter: brightness(0.9);
 }
 
-.wb-button.wb-button--ghost {
+.x-button.x-button--ghost {
   background-color: transparent;
   color: var(--text-primary);
   border-color: var(--border-color);
 }
-.wb-button.wb-button--ghost:hover {
+.x-button.x-button--ghost:hover {
   background-color: var(--bg-tertiary);
   border-color: var(--text-secondary);
 }
 
-.wb-button.wb-button--link {
+.x-button.x-button--link {
   background-color: transparent;
   color: var(--primary);
   padding: 0;
   border: none;
   box-shadow: none;
 }
-.wb-button.wb-button--link:hover {
+.x-button.x-button--link:hover {
   text-decoration: underline;
 }
 
-/* Loading Spinner — uses wb-spin from effects.css */
-.wb-button__spinner {
+/* Loading Spinner — uses x-spin from effects.css */
+.x-button__spinner {
   display: inline-block;
-  animation: wb-spin 1s linear infinite;
+  animation: x-spin 1s linear infinite;
 }
 
 /* Loading state */
-.wb-button--loading {
+.x-button--loading {
   cursor: not-allowed;
   opacity: 0.7;
 }
 
 /* Disabled state */
-.wb-button--disabled {
+.x-button--disabled {
   opacity: 0.5;
   cursor: not-allowed;
   pointer-events: none;
 }
 
 /* Defensive base rule (audit, #button-audit-bare-wb-btn) — an element with ONLY
-   `class="wb-btn"` and no `.wb-btn--*` modifier previously got ZERO styling from
-   this file: every rule below is a compound `.wb-btn.wb-btn--*` selector, so a
-   bare `.wb-btn` rendered invisible (confirmed live on <wb-modal class="wb-btn">
-   and <wb-drawer class="wb-btn"> trigger elements in pages/behaviors.html and
-   pages/components.html — neither is a <button> or <wb-button>, so button.js's
-   variant/size attribute wiring never touches them; and every `.wb-btn` on a
+   `class="x-btn"` and no `.x-btn--*` modifier previously got ZERO styling from
+   this file: every rule below is a compound `.x-btn.x-btn--*` selector, so a
+   bare `.x-btn` rendered invisible (confirmed live on <div x-modal class="x-btn">
+   and <div x-drawer class="x-btn"> trigger elements in pages/behaviors.html and
+   pages/components.html — neither is a <button> or <button>, so button.js's
+   variant/size attribute wiring never touches them; and every `.x-btn` on a
    native <button> paired with an x-* behavior (x-toast, x-drawer, x-confirm,
    x-prompt, x-lightbox, x-popover, x-copy, x-share, x-print, x-fullscreen,
    x-darkmode, x-tooltip) is skipped by button.js's native-button branch on
    purpose, so `variant="…"` does nothing there either — CSS class matching is
    the only mechanism left). This bare rule is SAFE to add: it has specificity
-   0,1,0, strictly lower than every `.wb-btn.wb-btn--*` compound rule below
+   0,1,0, strictly lower than every `.x-btn.x-btn--*` compound rule below
    (0,2,0), so on every property they share (background-color, color,
    border-color) the compound rule still wins regardless of source order —
    verified against the actual cascade, not assumed. It only adds properties
    the compound/size rules don't set (display, gap, cursor, transition, and a
-   neutral fallback background/border), so already-correct `.wb-btn.wb-btn--*`
+   neutral fallback background/border), so already-correct `.x-btn.x-btn--*`
    usages keep their variant colors and gain a consistent box shape instead of
    silently inheriting bare-element/browser defaults. No hardcoded colors —
    every value is a theme token (Law 10). */
-.wb-btn {
+.x-btn {
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -202,32 +202,32 @@ button-tooltip[disabled] {
   transition: all 0.2s ease;
 }
 
-/* #173 — the showcase + ~60 usages use the .wb-btn / .wb-btn--* prefix while the
-   rules above use .wb-button. Compound .wb-btn.wb-btn--* selectors (specificity
-   0,2,0) so they beat any plain base .wb-btn rule regardless of load order. */
-.wb-btn.wb-btn--primary   { background-color: var(--primary); color: var(--text-on-accent); border-color: transparent; }
-.wb-btn.wb-btn--primary:hover   { background-color: var(--primary-dark); }
-.wb-btn.wb-btn--secondary { background-color: var(--secondary); color: var(--text-on-accent); border-color: transparent; }
-.wb-btn.wb-btn--secondary:hover { background-color: var(--secondary-dark); }
-.wb-btn.wb-btn--success   { background-color: var(--success-color); color: var(--text-on-accent); border-color: transparent; }
-.wb-btn.wb-btn--danger,
-.wb-btn.wb-btn--error     { background-color: var(--danger-color); color: var(--text-on-accent); border-color: transparent; }
-.wb-btn.wb-btn--warning   { background-color: var(--warning-color); color: var(--text-on-accent); border-color: transparent; }
-.wb-btn.wb-btn--ghost     { background-color: transparent; color: var(--text-primary); border: 1px solid var(--border-color); }
-.wb-btn.wb-btn--ghost:hover{ background-color: var(--bg-tertiary); border-color: var(--text-secondary); }
-.wb-btn.wb-btn--link      { background-color: transparent; color: var(--primary); border: none; box-shadow: none; }
-.wb-btn:disabled { opacity: 0.5; cursor: not-allowed; }
+/* #173 — the showcase + ~60 usages use the .x-btn / .x-btn--* prefix while the
+   rules above use .x-button. Compound .x-btn.x-btn--* selectors (specificity
+   0,2,0) so they beat any plain base .x-btn rule regardless of load order. */
+.x-btn.x-btn--primary   { background-color: var(--primary); color: var(--text-on-accent); border-color: transparent; }
+.x-btn.x-btn--primary:hover   { background-color: var(--primary-dark); }
+.x-btn.x-btn--secondary { background-color: var(--secondary); color: var(--text-on-accent); border-color: transparent; }
+.x-btn.x-btn--secondary:hover { background-color: var(--secondary-dark); }
+.x-btn.x-btn--success   { background-color: var(--success-color); color: var(--text-on-accent); border-color: transparent; }
+.x-btn.x-btn--danger,
+.x-btn.x-btn--error     { background-color: var(--danger-color); color: var(--text-on-accent); border-color: transparent; }
+.x-btn.x-btn--warning   { background-color: var(--warning-color); color: var(--text-on-accent); border-color: transparent; }
+.x-btn.x-btn--ghost     { background-color: transparent; color: var(--text-primary); border: 1px solid var(--border-color); }
+.x-btn.x-btn--ghost:hover{ background-color: var(--bg-tertiary); border-color: var(--text-secondary); }
+.x-btn.x-btn--link      { background-color: transparent; color: var(--primary); border: none; box-shadow: none; }
+.x-btn:disabled { opacity: 0.5; cursor: not-allowed; }
 
-/* The showcase sizes buttons with the .wb-btn--* prefix (Small/Medium/Large), but
-   only .wb-button--* sizes existed — so .wb-btn--sm/lg did nothing and every size
-   rendered identical. Mirror the size scale for the .wb-btn prefix. Compound
-   .wb-btn.wb-btn--* (specificity 0,2,0) is REQUIRED to beat themes.css's
+/* The showcase sizes buttons with the .x-btn--* prefix (Small/Medium/Large), but
+   only .x-button--* sizes existed — so .x-btn--sm/lg did nothing and every size
+   rendered identical. Mirror the size scale for the .x-btn prefix. Compound
+   .x-btn.x-btn--* (specificity 0,2,0) is REQUIRED to beat themes.css's
    `[data-theme] button { font: inherit }` reset (0,1,1), which otherwise forces
    every button back to the inherited 16px. (button sizes) */
-/* Vertical padding floored at 1rem (16px), same reasoning as .wb-button's
+/* Vertical padding floored at 1rem (16px), same reasoning as .x-button's
    size scale above -- Standard §13 applies to buttons regardless of size. */
-.wb-btn.wb-btn--xs { padding: 1rem 0.5rem; font-size: 0.75rem; }
-.wb-btn.wb-btn--sm { padding: 1rem 0.75rem; font-size: 0.875rem; }
-.wb-btn.wb-btn--md { padding: 1rem 1rem; font-size: 1rem; }
-.wb-btn.wb-btn--lg { padding: 1.125rem 1.5rem; font-size: 1.125rem; }
-.wb-btn.wb-btn--xl { padding: 1.25rem 2rem; font-size: 1.25rem; }
+.x-btn.x-btn--xs { padding: 1rem 0.5rem; font-size: 0.75rem; }
+.x-btn.x-btn--sm { padding: 1rem 0.75rem; font-size: 0.875rem; }
+.x-btn.x-btn--md { padding: 1rem 1rem; font-size: 1rem; }
+.x-btn.x-btn--lg { padding: 1.125rem 1.5rem; font-size: 1.125rem; }
+.x-btn.x-btn--xl { padding: 1.25rem 2rem; font-size: 1.25rem; }

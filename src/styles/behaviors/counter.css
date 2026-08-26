@@ -5,7 +5,7 @@
  * -----------------------------------------------------------------------------
  */
 
-.wb-counter {
+.x-counter {
   display: inline-block;
   margin-left: 1rem;
   color: var(--text-tertiary);
@@ -13,10 +13,10 @@
   white-space: nowrap;
 }
 
-.wb-counter--warning {
+.x-counter--warning {
   color: var(--warning-color);
 }
 
-.wb-counter--error {
+.x-counter--error {
   color: var(--danger-color);
 }

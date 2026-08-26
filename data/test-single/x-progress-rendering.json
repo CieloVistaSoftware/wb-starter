@@ -1,0 +1,20 @@
+{
+  "state": "passed",
+  "mode": "single",
+  "specFile": "tests/regression/x-progress-rendering.spec.ts",
+  "startedAt": "2026-08-07T19:24:23.741Z",
+  "updatedAt": "2026-08-07T19:24:31.373Z",
+  "command": "npx playwright test --workers=8 tests/regression/x-progress-rendering.spec.ts",
+  "pid": 6132,
+  "passed": 1,
+  "failed": 0,
+  "skipped": 0,
+  "total": 1,
+  "currentFile": null,
+  "output": "\nRunning 1 test using 1 worker\n\n  ✓  1 [regression] › tests\\regression\\x-progress-rendering.spec.ts:3:1 › x-progress renders its Light DOM fill after schema-aware scanning (343ms)\n\n════════════════════════════════════════════════════════════\n  WB TEST RESULTS\n════════════════════════════════════════════════════════════\n  Total: 1 tests in 2.3s\n  ✓ Passed:  1\n  ✗ Failed:  0\n\n  By Project:\n    ✓ regression: 1/1 passed\n════════════════════════════════════════════════════════════\n\n\n  1 passed (3.6s)\n",
+  "errors": "",
+  "failures": [],
+  "completedAt": "2026-08-07T19:24:31.373Z",
+  "duration": "7.63s",
+  "exitCode": 0
+}

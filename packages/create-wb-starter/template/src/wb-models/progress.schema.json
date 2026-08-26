@@ -4,13 +4,13 @@
   "title": "Progress",
   "description": "Progress bar with determinate and indeterminate states",
   "schemaFor": "progress",
-  "baseClass": "wb-progress",
+  "baseClass": "x-progress",
   "semanticElement": {
     "tagName": "progress",
     "implicitRole": "progressbar"
   },
   "compliance": {
-    "baseClass": "wb-progress",
+    "baseClass": "x-progress",
     "supportLevel": "stable",
     "accessibility": "high"
   },
@@ -49,7 +49,7 @@
         "info"
       ],
       "default": "primary",
-      "appliesClass": "wb-progress--{{value}}"
+      "appliesClass": "x-progress--{{value}}"
     },
     "size": {
       "type": "string",
@@ -62,7 +62,7 @@
         "xl"
       ],
       "default": "md",
-      "appliesClass": "wb-progress--{{value}}"
+      "appliesClass": "x-progress--{{value}}"
     },
     "animated": {
       "type": "boolean",
@@ -73,13 +73,13 @@
       "type": "boolean",
       "description": "Show striped pattern",
       "default": false,
-      "appliesClass": "wb-progress--striped"
+      "appliesClass": "x-progress--striped"
     },
     "indeterminate": {
       "type": "boolean",
       "description": "Indeterminate loading state",
       "default": false,
-      "appliesClass": "wb-progress--indeterminate"
+      "appliesClass": "x-progress--indeterminate"
     }
   },
   "$view": [],
@@ -123,71 +123,71 @@
     }
   },
   "$cssAPI": {
-    "--wb-progress-height": {
+    "--x-progress-height": {
       "default": "8px",
       "description": "Progress bar height"
     },
-    "--wb-progress-radius": {
+    "--x-progress-radius": {
       "default": "9999px",
       "description": "Border radius"
     },
-    "--wb-progress-track-bg": {
+    "--x-progress-track-bg": {
       "default": "var(--bg-secondary, #e5e7eb)",
       "description": "Track background color"
     },
-    "--wb-progress-bar-bg": {
+    "--x-progress-bar-bg": {
       "default": "var(--primary, #6366f1)",
       "description": "Bar background color"
     },
-    "--wb-progress-transition": {
+    "--x-progress-transition": {
       "default": "width 0.3s ease",
       "description": "Value change transition"
     },
-    "--wb-progress-primary-bg": {
+    "--x-progress-primary-bg": {
       "default": "var(--primary, #6366f1)",
       "description": "Primary variant bar color"
     },
-    "--wb-progress-success-bg": {
+    "--x-progress-success-bg": {
       "default": "var(--success, #22c55e)",
       "description": "Success variant bar color"
     },
-    "--wb-progress-warning-bg": {
+    "--x-progress-warning-bg": {
       "default": "var(--warning, #f59e0b)",
       "description": "Warning variant bar color"
     },
-    "--wb-progress-error-bg": {
+    "--x-progress-error-bg": {
       "default": "var(--error, #ef4444)",
       "description": "Error variant bar color"
     },
-    "--wb-progress-info-bg": {
+    "--x-progress-info-bg": {
       "default": "var(--info, #3b82f6)",
       "description": "Info variant bar color"
     },
-    "--wb-progress-stripe-color": {
+    "--x-progress-stripe-color": {
       "default": "rgba(255,255,255,0.2)",
       "description": "Stripe overlay color"
     },
-    "--wb-progress-stripe-width": {
+    "--x-progress-stripe-width": {
       "default": "1rem",
       "description": "Stripe width"
     },
-    "--wb-progress-label-size": {
+    "--x-progress-label-size": {
       "default": "0.875rem",
       "description": "Label font size"
     },
-    "--wb-progress-label-color": {
+    "--x-progress-label-color": {
       "default": "var(--text-primary, #1a1a1a)",
       "description": "Label text color"
     },
-    "--wb-progress-value-size": {
+    "--x-progress-value-size": {
       "default": "0.875rem",
       "description": "Value text font size"
     },
-    "--wb-progress-value-color": {
+    "--x-progress-value-color": {
       "default": "var(--text-secondary, #6b7280)",
       "description": "Value text color"
     },
-    "--wb-progress-gap": {
+    "--x-progress-gap": {
       "default": "0.5rem",
       "description": "Gap between label and bar"
     }
@@ -202,14 +202,14 @@
   "test": {
     "functional": true,
     "setup": [
-      "<wb-progress value=\"50\" max=\"100\"></wb-progress>",
-      "<wb-progress value=\"25\" max=\"100\" variant=\"default\"></wb-progress>",
-      "<wb-progress value=\"50\" max=\"100\" variant=\"primary\"></wb-progress>",
-      "<wb-progress value=\"75\" max=\"100\" variant=\"success\"></wb-progress>",
-      "<wb-progress value=\"30\" max=\"100\" size=\"xs\"></wb-progress>",
-      "<wb-progress value=\"40\" max=\"100\" size=\"sm\"></wb-progress>",
-      "<wb-progress value=\"60\" max=\"100\" size=\"md\"></wb-progress>",
-      "<wb-progress value=\"80\" max=\"100\" show-label></wb-progress>"
+      "<progress value=\"50\" max=\"100\"></progress>",
+      "<progress value=\"25\" max=\"100\" variant=\"default\"></progress>",
+      "<progress value=\"50\" max=\"100\" variant=\"primary\"></progress>",
+      "<progress value=\"75\" max=\"100\" variant=\"success\"></progress>",
+      "<progress value=\"30\" max=\"100\" size=\"xs\"></progress>",
+      "<progress value=\"40\" max=\"100\" size=\"sm\"></progress>",
+      "<progress value=\"60\" max=\"100\" size=\"md\"></progress>",
+      "<progress value=\"80\" max=\"100\" show-label></progress>"
     ],
     "matrix": {
       "combinations": [
@@ -267,14 +267,14 @@
     },
     "site": {
       "page": "feedback",
-      "tag": "wb-progress",
+      "tag": "x-progress",
       "renders": true,
-      "baseClass": "wb-progress",
+      "baseClass": "x-progress",
       "minInstances": 14,
       "checkText": [],
       "checkClasses": [
-        "wb-progress--default",
-        "wb-progress--xs"
+        "x-progress--default",
+        "x-progress--xs"
       ],
       "checkAttributes": []
     }

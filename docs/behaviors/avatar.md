@@ -2,14 +2,14 @@
 
 User avatar with image, initials fallback, and status indicator
 
-Applies to `<div>`, and to any element carrying `x-avatar`.
+## Type — new capability
 
-## Usage
+`x-avatar` adds behavior that no HTML element implies. Nothing about a tag says "ripple" or "tooltip", so this is always opted into by attribute, on whatever element you already chose.
+
+### How to write it
 
 ```html
-<div x-avatar>
-  …
-</div>
+<div x-avatar src="https://picsum.photos/seed/ada/64/64" alt="Ada Lovelace" name="Ada Lovelace" size="lg"></div>
 ```
 
 ## Attributes

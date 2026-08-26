@@ -25,14 +25,14 @@ async function injectAndScan(page: Page, html: string) {
     container.innerHTML = h;
     
     // Force eager loading
-    const elements = container.querySelectorAll('.wb-ready');
+    const elements = container.querySelectorAll('.x-ready');
     elements.forEach(el => el.setAttribute('', ''));
     
     document.body.appendChild(container);
   }, html);
   
-  await page.evaluate(() => {
-    (window as any).WB.scan(document.getElementById('test-container'));
+  await page.evaluate(async () => {
+    await (window as any).WB.scan(document.getElementById('test-container'));
   });
   
   await page.waitForTimeout(500);
@@ -45,7 +45,7 @@ test.describe('progressbar Behavior', () => {
     page.on('pageerror', (err) => errors.push(err.message));
     
     const setupHtml = [
-      '<wb-progress>Test content</wb-progress>'
+      '<progress>Test content</progress>'
     ];
     
     await injectAndScan(page, setupHtml.join('\n'));
@@ -61,10 +61,10 @@ test.describe('progressbar Behavior', () => {
   });
 
   test('element is visible after scan', async ({ page }) => {
-    const html = '<wb-progress>Test content</wb-progress>';
+    const html = '<progress>Test content</progress>';
     await injectAndScan(page, html);
     
-    const el = page.locator('#test-container wb-progress, #test-container wb-progressbar').first();
+    const el = page.locator('#test-container progress, #test-container x-progressbar').first();
     const isPresent = await el.count() > 0;
     
     if (isPresent) {

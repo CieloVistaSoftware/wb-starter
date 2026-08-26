@@ -67,7 +67,7 @@ type OverlapHit = {
 
 const TARGET_PAGES: { name: string; url: string }[] = [
   { name: 'pages/behaviors', url: '/?page=behaviors' },
-  { name: 'pages/components', url: '/?page=components' },
+  { name: 'pages/components', url: '/?page=behaviors' },
   { name: 'demos/site/cards', url: '/demos/site/cards.html' },
   { name: 'demos/site/content', url: '/demos/site/content.html' },
   { name: 'demos/site/effects', url: '/demos/site/effects.html' },

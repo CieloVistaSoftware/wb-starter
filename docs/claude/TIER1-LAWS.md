@@ -102,12 +102,12 @@ Every session, before doing anything:
 
 ## 9. No One-Off Styles — Use Existing CSS or Extend It
 
-**Never create inline styles, new CSS classes, or duplicate existing styles.** This is how `wb-btn` ended up duplicating `<button>` across two files, and dark mode broke because styles didn't match.
+**Never create inline styles, new CSS classes, or duplicate existing styles.** This is how `x-btn` ended up duplicating `<button>` across two files, and dark mode broke because styles didn't match.
 
 Before writing ANY CSS or class name:
 1. Search `src/styles/behaviors/` — does a style file already exist for this component?
 2. Search `site.css` imports — is it already loaded?
-3. If the class exists, USE IT. Don't invent a new name (`wb-btn` vs `<button>`).
+3. If the class exists, USE IT. Don't invent a new name (`x-btn` vs `<button>`).
 4. If new styles are genuinely needed, add them to the existing behavior CSS file.
 5. Page-specific layout goes in `src/styles/pages/{pagename}.css` — but ONLY layout, never component styles.
 6. Never put `<link rel="stylesheet">` in page fragments — the server injects `site.css`.
@@ -119,7 +119,7 @@ If you're not sure where a style belongs, ask John.
 
 Files in `pages/` are HTML fragments, not full documents.
 
-- No `<!DOCTYPE>`, no manual `<link>` to `site.css` or `wb-signature.css`
+- No `<!DOCTYPE>`, no manual `<link>` to `site.css` or `x-signature.css`
 - The server wraps fragments with the site shell, which injects all global CSS and JS
 - Page-specific CSS only: `<link rel="stylesheet" href="../src/styles/pages/{name}.css">`
 - Never put `<script type="module">` with WB.init() — the server handles initialization
@@ -159,7 +159,7 @@ If a test isn't in one of these directories, it won't run. Check `playwright.con
 
 ```html
 <!-- ❌ WRONG -->
-<wb-alert
+<div x-alert
   type="warning"
   message="Check input">
   <div
@@ -172,7 +172,7 @@ If a test isn't in one of these directories, it won't run. Check `playwright.con
       message="Saved!"
       type="success">
       <!-- ✅ CORRECT -->
-      <wb-alert
+      <div x-alert
         variant="warning"
         message="Check input">
         <div
@@ -197,7 +197,7 @@ If a test isn't in one of these directories, it won't run. Check `playwright.con
 
 **A hardcoded `id` inside a behavior/component function collides the moment
 that component appears twice in the same DOM.** Found live in `dialog.js`:
-`title.id = 'wb-dialog-title'` was set on every dialog instance, so two
+`title.id = 'x-dialog-title'` was set on every dialog instance, so two
 dialogs open (or even just present) in the same DOM meant `aria-labelledby`
 pointed screen readers at whichever title happened to be first — silently
 wrong for every instance after the first.
@@ -205,14 +205,14 @@ wrong for every instance after the first.
 - Never write `el.id = 'fixed-string'` inside a function that creates a
   per-instance element (a component's own title, body, generated content).
 - If you need an `id` for `aria-*` linkage, generate a unique one per call:
-  `` `wb-dialog-title-${Math.random().toString(36).slice(2, 9)}` `` — this
+  `` `x-dialog-title-${Math.random().toString(36).slice(2, 9)}` `` — this
   pattern is already established in `card.js`, `tooltip.js`, `overlay.js`,
   `enhancements.js`. Reuse it, don't reinvent it.
 - If you don't need `id` for ARIA/anchor linking, don't add one — use a
   class or scope a `querySelector` to the component's own root element
   instead.
 - **Exception:** a hardcoded id IS correct for genuine page-level
-  singletons — e.g. `style.id = 'wb-ripple-styles'` guards "only inject
+  singletons — e.g. `style.id = 'x-ripple-styles'` guards "only inject
   this stylesheet once," which is the intended behavior even if the
   component using it appears many times. The test: could this element
   legitimately exist more than once in the DOM at the same time? If yes,

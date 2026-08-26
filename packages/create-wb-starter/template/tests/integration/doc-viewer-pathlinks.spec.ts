@@ -6,7 +6,7 @@ import { test, expect, request as pwRequest } from '@playwright/test';
  * Index/tier docs (e.g. docs/claude/TIER2-DOMAIN-GUIDES.md) list dozens of files
  * as `inline code` or **bold** rather than markdown [links](…), so nothing was
  * clickable. The viewer now wraps any <code>/<strong>/<b> whose whole text is a
- * repo path ending .md/.html in an <a class="wb-doc-pathlink"> — but ONLY when
+ * repo path ending .md/.html in an <a class="x-doc-pathlink"> — but ONLY when
  * the target actually resolves (GET 200), so a stale/missing reference stays
  * plain text and we never ship a dead link.
  *
@@ -25,9 +25,9 @@ test.describe('doc-viewer auto-links path references (existing targets only)', (
     });
 
     // An existing reference MUST become a link — wait for it. Once any
-    // wb-doc-pathlink exists the linkifier's single wrapping pass is done
+    // x-doc-pathlink exists the linkifier's single wrapping pass is done
     // (all existence checks resolve together, then wrap synchronously).
-    const v3 = page.locator('a.wb-doc-pathlink', { hasText: 'V3-STANDARDS.md' }).first();
+    const v3 = page.locator('a.x-doc-pathlink', { hasText: 'V3-STANDARDS.md' }).first();
     await expect(v3).toHaveCount(1, { timeout: 20000 });
 
     // 1) existing docs/ path: doc-relative href, code styling preserved inside the link
@@ -35,18 +35,18 @@ test.describe('doc-viewer auto-links path references (existing targets only)', (
     await expect(v3.locator('code')).toHaveCount(1);
 
     // 2) existing NON-docs path (data/…) is linked too — routing isn't docs/-only
-    const dataLink = page.locator('a.wb-doc-pathlink', { hasText: 'FUNCTIONAL-TEST-ANALYSIS.md' }).first();
+    const dataLink = page.locator('a.x-doc-pathlink', { hasText: 'FUNCTIONAL-TEST-ANALYSIS.md' }).first();
     await expect(dataLink).toHaveCount(1);
     expect(await dataLink.getAttribute('href')).toBe('../../data/FUNCTIONAL-TEST-ANALYSIS.md');
 
     // 3) a MISSING reference (docs/architecture.md is gone) must NOT be linked
     const archLinked = await page
-      .locator('a.wb-doc-pathlink', { hasText: 'docs/architecture.md' })
+      .locator('a.x-doc-pathlink', { hasText: 'docs/architecture.md' })
       .count();
     expect(archLinked, 'a missing target must never be linked (no dead links)').toBe(0);
 
     // 4) EVERY rendered path-link resolves (GET 200) — zero dead links overall
-    const hrefs = await page.$$eval('a.wb-doc-pathlink[href]', (els) =>
+    const hrefs = await page.$$eval('a.x-doc-pathlink[href]', (els) =>
       els.map((a) => a.getAttribute('href') || '')
     );
     const req = await pwRequest.newContext({ baseURL });

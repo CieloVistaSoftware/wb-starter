@@ -11,16 +11,16 @@ PCE (Pseudo-Custom Elements) allows you to use **semantic tag names** instead of
 
 ### 1. WB Namespace (Recommended)
 ```html
-<wb-cardprofile name="Sarah"></div>
-<wb-cardhero title="Welcome"></article>
+<div x-cardprofile name="Sarah"></div>
+<div x-cardhero title="Welcome"></article>
 <articlestats value="1,234"></div>
 ```
 
 ### 2. Noun-First Aliases (Also Supported)
 ```html
-<profile-card name="Sarah"></profile-card>
-<hero-card title="Welcome"></hero-card>
-<stats-card value="1,234"></stats-card>
+<div x-cardprofile name="Sarah"></div>
+<div x-cardhero title="Welcome"></div>
+<div x-cardstats value="1,234"></div>
 ```
 
 ### 3. Behavior Attribute (Traditional)
@@ -53,19 +53,19 @@ All three are equivalent and produce the same result.
 
 | Tag (wb-*) | Tag (noun-first) | Behavior | Description |
 |------------|------------------|----------|-------------|
-| `<article>` | `<basic-card>` | `card` | Basic card container |
-| `<div x-cardprofile>` | `<profile-card>` | `cardprofile` | User profiles with avatar, bio |
-| `<article x-cardhero>` | `<hero-card>` | `cardhero` | Large banner/hero sections |
-| `<articlestats>` | `<stats-card>` | `cardstats` | Dashboard statistics |
-| `<div x-cardtestimonial>` | `<testimonial-card>` | `cardtestimonial` | User quotes with ratings |
-| `<article x-cardvideo>` | `<video-card>` | `cardvideo` | Video content with controls |
-| `<div x-cardfile>` | `<file-card>` | `cardfile` | File download/preview |
-| `<div x-cardnotification>` | `<notification-card>` | `cardnotification` | Alert/Notice blocks |
-| `<article x-cardimage>` | `<image-card>` | `cardimage` | Image with title/caption |
-| `<div x-cardoverlay>` | `<overlay-card>` | `cardoverlay` | Image with text overlay |
-| `<div x-cardportfolio>` | `<portfolio-card>` | `cardportfolio` | Portfolio/contact card |
-| `<div x-cardlink>` | `<link-card>` | `cardlink` | Clickable link card |
-| `<div x-cardhorizontal>` | `<horizontal-card>` | `cardhorizontal` | Side-by-side layout |
+| `<article>` | `<article>` | `card` | Basic card container |
+| `<div x-cardprofile>` | `<div x-cardprofile>` | `cardprofile` | User profiles with avatar, bio |
+| `<article x-cardhero>` | `<div x-cardhero>` | `cardhero` | Large banner/hero sections |
+| `<articlestats>` | `<div x-cardstats>` | `cardstats` | Dashboard statistics |
+| `<div x-cardtestimonial>` | `<div x-cardtestimonial>` | `cardtestimonial` | User quotes with ratings |
+| `<article x-cardvideo>` | `<div x-cardvideo>` | `cardvideo` | Video content with controls |
+| `<div x-cardfile>` | `<div x-cardfile>` | `cardfile` | File download/preview |
+| `<div x-cardnotification>` | `<div x-cardnotification>` | `cardnotification` | Alert/Notice blocks |
+| `<article x-cardimage>` | `<div x-cardimage>` | `cardimage` | Image with title/caption |
+| `<div x-cardoverlay>` | `<div x-cardoverlay>` | `cardoverlay` | Image with text overlay |
+| `<div x-cardportfolio>` | `<div x-cardportfolio>` | `cardportfolio` | Portfolio/contact card |
+| `<div x-cardlink>` | `<div x-cardlink>` | `cardlink` | Clickable link card |
+| `<div x-cardhorizontal>` | `<div x-cardhorizontal>` | `cardhorizontal` | Side-by-side layout |
 | `<div x-cardbutton>` | - | `cardbutton` | Card with button actions |
 | `<div x-cardexpandable>` | - | `cardexpandable` | Expandable/collapsible |
 | `<div x-cardminimizable>` | - | `cardminimizable` | Minimizable to title bar |
@@ -75,18 +75,18 @@ All three are equivalent and produce the same result.
 
 | Tag | Behavior | Description |
 |-----|----------|-------------|
-| `<wb-grid>` | `grid` | CSS Grid layout system |
-| `<wb-flex>` | `flex` | Flexbox layout wrapper |
+| `<div x-grid>` | `grid` | CSS Grid layout system |
+| `<div x-flex>` | `flex` | Flexbox layout wrapper |
 | `<div x-stack>` | `stack` | Vertical stacking layout |
 | `<div x-cluster>` | `cluster` | Horizontal cluster with wrapping |
-| `<wb-container>` | `container` | Centered content wrapper |
-| `<wb-sidebar>` | `sidebarlayout` | Sidebar + main content |
-| `<wb-center>` | `center` | Center content vertically/horizontally |
-| `<wb-cover>` | `cover` | Full viewport cover |
-| `<wb-masonry>` | `masonry` | Masonry grid layout |
-| `<wb-switcher>` | `switcher` | Responsive row/column switch |
-| `<wb-reel>` | `reel` | Horizontal scrolling |
-| `<wb-frame>` | `frame` | Aspect ratio container |
+| `<div x-container>` | `container` | Centered content wrapper |
+| `<div x-sidebarlayout>` | `sidebarlayout` | Sidebar + main content |
+| `<div x-center>` | `center` | Center content vertically/horizontally |
+| `<div x-cover>` | `cover` | Full viewport cover |
+| `<div x-masonry>` | `masonry` | Masonry grid layout |
+| `<div x-switcher>` | `switcher` | Responsive row/column switch |
+| `<div x-reel>` | `reel` | Horizontal scrolling |
+| `<div x-frame>` | `frame` | Aspect ratio container |
 | `<div x-sticky>` | `sticky` | Sticky positioning |
 | `<div x-drawer>` | `drawerLayout` | Drawer/off-canvas |
 
@@ -107,7 +107,7 @@ All three are equivalent and produce the same result.
 
 | Tag | Behavior | Description |
 |-----|----------|-------------|
-| `<wb-icon>` | `icon` | Icon display |
+| `<span x-icon>` | `icon` | Icon display |
 | `<div x-mdhtml>` | `mdhtml` | Markdown to HTML |
 | `<div x-codecontrol>` | `codecontrol` | Code theme selector |
 | `<div x-collapse>` | `collapse` | Collapsible content |
@@ -129,7 +129,7 @@ All three are equivalent and produce the same result.
    └── IntersectionObserver sees <div x-cardprofile> in viewport
    
 2. Lookup
-   └── customElementMappings finds: { selector: 'wb-cardprofile', behavior: 'cardprofile' }
+   └── customElementMappings finds: { selector: 'x-cardprofile', behavior: 'cardprofile' }
    
 3. Dynamic Import
    └── import('/src/wb-viewmodels/cardprofile.js') - only if not cached
@@ -147,10 +147,10 @@ The registry is defined in `src/core/wb-lazy.js`:
 ```javascript
 const customElementMappings = [
   // wb-* prefix (primary)
-  { selector: 'wb-card', behavior: 'card' },
-  { selector: 'wb-cardprofile', behavior: 'cardprofile' },
-  { selector: 'wb-cardhero', behavior: 'cardhero' },
-  { selector: 'wb-cardstats', behavior: 'cardstats' },
+  { selector: 'x-card', behavior: 'card' },
+  { selector: 'x-cardprofile', behavior: 'cardprofile' },
+  { selector: 'x-cardhero', behavior: 'cardhero' },
+  { selector: 'x-cardstats', behavior: 'cardstats' },
   // ...
   
   // noun-first aliases
@@ -167,7 +167,7 @@ const customElementMappings = [
 
 1. **Add mapping** to `customElementMappings` in `src/core/wb-lazy.js`:
    ```javascript
-   { selector: 'wb-mycomponent', behavior: 'mycomponent' },
+   { selector: 'x-mycomponent', behavior: 'mycomponent' },
    { selector: 'my-component', behavior: 'mycomponent' },  // optional alias
    ```
 
@@ -175,7 +175,7 @@ const customElementMappings = [
    ```javascript
    export function mycomponent(element, options = {}) {
      // Enhance element
-     element.classList.add("wb-ready");
+     element.classList.add("x-ready");
      
      return () => {
        // Cleanup function
@@ -236,7 +236,7 @@ npx playwright test tests/behaviors/pce-demo.spec.ts
 
 ### After (v3.0)
 ```html
-<wb-card title="Hello">Content</article>
+<article title="Hello">Content</article>
 ```
 
 Or with behavior attribute:

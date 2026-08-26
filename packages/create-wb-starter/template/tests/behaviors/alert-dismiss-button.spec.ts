@@ -1,5 +1,5 @@
 /**
- * <wb-alert dismissible>'s close button must actually remove the alert on click.
+ * <div x-alert dismissible>'s close button must actually remove the alert on click.
  *
  * Root cause: schema-builder.js's buildStructure() always wiped an element's
  * innerHTML and, for an empty $view (alert/button/card/demo — the behavior
@@ -28,7 +28,7 @@ test('dismissible alert close button removes the alert on click, on a fresh page
   const before = await page.locator('[role="alert"]').count();
   expect(before, 'expected at least one alert on the page').toBeGreaterThan(0);
 
-  await page.locator('.wb-alert__close').first().click();
+  await page.locator('.x-alert__close').first().click();
   await page.waitForTimeout(300);
 
   const after = await page.locator('[role="alert"]').count();

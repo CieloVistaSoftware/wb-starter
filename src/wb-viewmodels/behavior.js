@@ -4,5 +4,5 @@
  */
 export function behavior(element, options = {}) {
   // Master behavior function
-  element.classList.add('wb-behavior');
+  element.classList.add('x-behavior');
 }

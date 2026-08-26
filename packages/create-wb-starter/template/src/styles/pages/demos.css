@@ -67,7 +67,7 @@
   border-radius: 8px;
 }
 
-/* Curated live <wb-demo> examples sit above a category's link-cards, giving
+/* Curated live <div x-demo> examples sit above a category's link-cards, giving
    an immediate taste of what's in the category before clicking through. */
 .demos-inline-examples {
   margin-bottom: 1.5rem;

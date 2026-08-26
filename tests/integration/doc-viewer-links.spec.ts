@@ -68,7 +68,7 @@ test.describe('doc-viewer renders no dead links (#226)', () => {
         () => {
           const c = document.getElementById('content');
           if (!c) return false;
-          const errored = c.classList.contains('wb-mdhtml--error') || c.querySelector('.error') !== null;
+          const errored = c.classList.contains('x-mdhtml--error') || c.querySelector('.error') !== null;
           return errored || c.querySelector('h1, h2, p, ul, table') !== null;
         },
         { timeout: 20000 }
@@ -77,7 +77,7 @@ test.describe('doc-viewer renders no dead links (#226)', () => {
       // 1) The doc itself must have loaded (check the real error state, not text).
       const errored = await page.evaluate(() => {
         const c = document.getElementById('content');
-        return !!c && (c.classList.contains('wb-mdhtml--error') || c.querySelector('.error') !== null);
+        return !!c && (c.classList.contains('x-mdhtml--error') || c.querySelector('.error') !== null);
       });
       expect(errored, `${doc.file} failed to load in the doc-viewer`).toBe(false);
 

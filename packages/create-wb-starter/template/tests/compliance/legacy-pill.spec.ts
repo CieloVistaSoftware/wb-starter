@@ -14,8 +14,8 @@ test.describe('Legacy Pill Migration', () => {
       await page.waitForTimeout(300);
 
       // No legacy attributes or legacy-error markers in DOM
-      await expect(page.locator('wb-pill')).toHaveCount(0);
-      await expect(page.locator('[data-wb-error="legacy"]')).toHaveCount(0);
+      await expect(page.locator('x-pill')).toHaveCount(0);
+      await expect(page.locator('[data-x-error="legacy"]')).toHaveCount(0);
 
       // No console errors mentioning the legacy pill syntax
       const legacyConsole = errorLogs.find(l => l.includes('Legacy syntax') && l.includes('data-wb="pill"'));

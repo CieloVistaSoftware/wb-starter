@@ -2,21 +2,21 @@
 
 Audio player with optional 15-band graphic equalizer
 
-Applies to `<div>`, and to any element carrying `x-audio`.
+## Type — new capability
 
-## Usage
+`x-audio` adds behavior that no HTML element implies. Nothing about a tag says "ripple" or "tooltip", so this is always opted into by attribute, on whatever element you already chose.
+
+### How to write it
 
 ```html
-<div x-audio>
-  …
-</div>
+<audio src="https://archive.org/download/nineinchnails_ghosts_I_IV/01_Ghosts_I.mp3" controls></audio>
 ```
 
 ## Attributes
 
 | Attribute | Values | Default | Description |
 | --- | --- | --- | --- |
-| `src` | `string` | `../audio.mp3` | Audio source URL |
+| `src` | `string` | `https://archive.org/download/nineinchnails_ghosts_I_IV/01_Ghosts_I.mp3` | Audio source URL |
 | `volume` | `number` | `0.8` | Initial volume (0-1) |
 | `loop` | `boolean` | `false` | Loop playback |
 | `autoplay` | `boolean` | `false` | Auto-play (requires muted) |

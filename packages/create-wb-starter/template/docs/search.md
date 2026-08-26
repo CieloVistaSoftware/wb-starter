@@ -26,17 +26,17 @@ The search component supports multiple visual variants and sizes for different u
 
 ### Basic Usage
 ```html
-<wb-search placeholder="Search for content..."></wb-search>
+<div x-searchfield placeholder="Search for content..."></div>
 ```
 
 ### With Variants and Sizes
 ```html
-<wb-search
+<div x-searchfield
   placeholder="Search tutorials..."
   variant="glass"
   size="large"
   debounce="300">
-</wb-search>
+</div>
 ```
 
 ### Listening for Search Events
@@ -121,7 +121,7 @@ Fired when search is cleared.
 
 ### Public API
 ```javascript
-const search = document.querySelector('wb-search');
+const search = document.querySelector('x-search');
 
 // Get current value
 const value = search.value;
@@ -148,7 +148,7 @@ const isLoading = search.loading;
 
 ### CSS Custom Properties
 ```css
-wb-search {
+x-search {
   /* Size variants */
   --search-height-small: 2rem;
   --search-height-medium: 2.5rem;
@@ -173,10 +173,10 @@ wb-search {
 ```
 
 ### Variant-specific Classes
-- `.wb-search--glass` - Glass variant styling
-- `.wb-search--minimal` - Minimal variant styling
-- `.wb-search--small` - Small size styling
-- `.wb-search--large` - Large size styling
+- `.x-search--glass` - Glass variant styling
+- `.x-search--minimal` - Minimal variant styling
+- `.x-search--small` - Small size styling
+- `.x-search--large` - Large size styling
 
 ---
 
@@ -187,7 +187,7 @@ wb-search {
 ---
 
 ## Implementation
-- **Custom Element**: [src/wb-viewmodels/wb-search.js](../src/wb-viewmodels/wb-search.js)
+- **Custom Element**: [src/wb-viewmodels/x-search.js](../src/wb-viewmodels/search.js)
 - **Behavior**: [src/wb-viewmodels/search.js](../src/wb-viewmodels/search.js)
 - **Styles**: [src/styles/components/search.css](../src/styles/components/search.css)
 - **Tests**: Component tests located in `tests/behaviors/ui/search.spec.ts`
@@ -195,7 +195,7 @@ wb-search {
 ---
 
 ## Demo
-See the interactive demo: [demo-search.html](../demo-search.html)
+See the interactive demo: demo-search.html
 
 This demo showcases:
 - Real-time search with sample data

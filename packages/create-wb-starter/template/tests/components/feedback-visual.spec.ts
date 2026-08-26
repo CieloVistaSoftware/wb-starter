@@ -51,7 +51,7 @@ test.describe('Progress Bars', () => {
     await page.waitForTimeout(1200);
 
     // Check final width matches value
-    const progressBar = page.locator('#test-progress-anim .wb-progress__bar');
+    const progressBar = page.locator('#test-progress-anim .x-progress__bar');
     const barWidth = await progressBar.evaluate(el => el.style.width);
     
     expect(barWidth).toBe('75%');
@@ -74,12 +74,12 @@ test.describe('Spinners', () => {
     });
     
     const spinner = page.locator('#test-spinner');
-    await expect(spinner).toHaveClass(/wb-spinner/);
+    await expect(spinner).toHaveClass(/x-spinner/);
     
     const inner = spinner.locator('div').first();
     const style = await inner.getAttribute('style');
     expect(style).toContain('animation');
-    expect(style).toContain('wb-spin');
+    expect(style).toContain('x-spin');
   });
   
   test('should have different colors based on color', async ({ page }) => {
@@ -157,7 +157,7 @@ test.describe('Skeleton Loaders', () => {
     });
     
     const skeleton = page.locator('#test-skeleton-lines');
-    const lines = skeleton.locator('.wb-skeleton__line');
+    const lines = skeleton.locator('.x-skeleton__line');
     const lineCount = await lines.count();
     
     expect(lineCount).toBe(3);
@@ -191,13 +191,13 @@ test.describe('Clickable Card', () => {
     await card.click();
     await page.waitForTimeout(150);
     
-    await expect(card).toHaveClass(/wb-card--active/);
+    await expect(card).toHaveClass(/x-card--active/);
     
     // Click again to toggle off
     await card.click();
     await page.waitForTimeout(150);
     
-    await expect(card).not.toHaveClass(/wb-card--active/);
+    await expect(card).not.toHaveClass(/x-card--active/);
   });
 });
 

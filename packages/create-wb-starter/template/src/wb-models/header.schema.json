@@ -4,13 +4,13 @@
   "title": "Header",
   "description": "Page header with logo, title, and optional navigation",
   "schemaFor": "header",
-  "baseClass": "wb-header",
+  "baseClass": "x-header",
   "semanticElement": {
     "tagName": "header",
     "implicitRole": "banner"
   },
   "compliance": {
-    "baseClass": "wb-header",
+    "baseClass": "x-header",
     "supportLevel": "stable",
     "accessibility": "high"
   },
@@ -44,7 +44,7 @@
       "type": "boolean",
       "description": "Sticky at top",
       "default": false,
-      "appliesClass": "wb-header--sticky"
+      "appliesClass": "x-header--sticky"
     }
   },
   "$view": [
@@ -132,35 +132,35 @@
     }
   },
   "$cssAPI": {
-    "--wb-header-height": {
+    "--x-header-height": {
       "default": "60px",
       "description": "Header height"
     },
-    "--wb-header-padding": {
+    "--x-header-padding": {
       "default": "0 1rem",
       "description": "Padding"
     },
-    "--wb-header-bg": {
+    "--x-header-bg": {
       "default": "var(--bg-surface, #ffffff)",
       "description": "Background"
     },
-    "--wb-header-border": {
+    "--x-header-border": {
       "default": "1px solid var(--border-color, #e0e0e0)",
       "description": "Border"
     },
-    "--wb-header-shadow": {
+    "--x-header-shadow": {
       "default": "none",
       "description": "Shadow"
     },
-    "--wb-header-title-size": {
+    "--x-header-title-size": {
       "default": "1.25rem",
       "description": "Title font size"
     },
-    "--wb-header-title-weight": {
+    "--x-header-title-weight": {
       "default": "700",
       "description": "Title font weight"
     },
-    "--wb-header-icon-size": {
+    "--x-header-icon-size": {
       "default": "1.5rem",
       "description": "Icon size"
     }
@@ -170,14 +170,14 @@
   },
   "test": {
     "setup": [
-      "<wb-header>Basic header content</wb-header>",
-      "<wb-header sticky>with sticky</wb-header>",
-      "<wb-header icon=\"Sample icon\">icon=\"Sample icon\"</wb-header>",
-      "<wb-header title=\"Sample title\">title=\"Sample title\"</wb-header>",
-      "<wb-header subtitle=\"Sample subtitle\">subtitle=\"Sample subtitle\"</wb-header>",
-      "<wb-header badge=\"Sample badge\">badge=\"Sample badge\"</wb-header>",
-      "<wb-header logo-href=\"/\">logoHref=\"/\"</wb-header>",
-      "<wb-header icon=\"📂\" title=\"Project\"></wb-header>"
+      "<header>Basic header content</header>",
+      "<header sticky>with sticky</header>",
+      "<header icon=\"Sample icon\">icon=\"Sample icon\"</header>",
+      "<header title=\"Sample title\">title=\"Sample title\"</header>",
+      "<header subtitle=\"Sample subtitle\">subtitle=\"Sample subtitle\"</header>",
+      "<header badge=\"Sample badge\">badge=\"Sample badge\"</header>",
+      "<header logo-href=\"/\">logoHref=\"/\"</header>",
+      "<header icon=\"📂\" title=\"Project\"></header>"
     ],
     "matrix": {
       "combinations": [
@@ -201,9 +201,9 @@
     },
     "site": {
       "page": "layout",
-      "tag": "wb-header",
+      "tag": "x-header",
       "renders": true,
-      "baseClass": "wb-header",
+      "baseClass": "x-header",
       "minInstances": 4,
       "checkText": [
         "Title",

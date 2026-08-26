@@ -13,7 +13,7 @@ import { test, expect } from '@playwright/test';
  * Fixed in wb-views.js: registry-URL views now register their template
  * URL in `pendingViewUrls` instead of fetching immediately; the actual
  * fetch happens lazily in `ensureViewLoaded()`, called right before a
- * `<wb-view>`/registered-tag element is first rendered. A page that uses
+ * `<div>`/registered-tag element is first rendered. A page that uses
  * none of the partial-library views (home) now fetches none of them.
  * Measured after the fix: request count dropped from ~150-200 to ~82.
  *

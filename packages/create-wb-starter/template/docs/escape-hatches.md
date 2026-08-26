@@ -8,7 +8,7 @@ Every component respects CSS variables for styling overrides:
 
 ```css
 /* Override card styling */
-wb-card {
+x-card {
   --card-padding: 2rem;
   --card-radius: 0;
   --card-bg: transparent;
@@ -22,7 +22,7 @@ button[x-behavior="button"] {
 }
 
 /* Override any component's gap */
-wb-grid {
+x-grid {
   --gap: 2rem;
 }
 ```
@@ -49,16 +49,16 @@ Pass options via `data-*` attributes:
 
 ```html
 <!-- Override mdhtml defaults -->
-<wb-mdhtml
+<div x-mdhtml
   size="lg"
   highlight="false"
   breaks="false">
-</wb-mdhtml>
+</div>
 <!-- Override card variant -->
-<wb-card
+<article
   variant="outline"
   size="sm">
-</wb-card>
+</article>
 <!-- Override toast duration -->
 <button
   x-behavior="toast"
@@ -73,7 +73,7 @@ WB components inject minimal CSS. Override with higher specificity:
 
 ```css
 /* Override injected styles */
-wb-card.custom {
+x-card.custom {
   all: unset; /* Nuclear option - removes ALL styles */
   display: block;
 }
@@ -109,10 +109,10 @@ Just don't use WB attributes/tags:
   <p>Content</p>
 </div>
 <!-- vs WB-enhanced -->
-<wb-card>
+<article>
   <h3>Title</h3>
   <p>Content</p>
-</wb-card>
+</article>
 ```
 
 ## Override Theme Variables

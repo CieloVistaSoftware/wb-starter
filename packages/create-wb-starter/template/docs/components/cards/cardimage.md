@@ -6,10 +6,10 @@ Card with a featured image. Uses `<figure>` for semantic image containment.
 
 | Property | Value |
 |----------|-------|
-| Custom Tag | `<wb-cardimage>` |
+| Custom Tag | `<div x-cardimage>` |
 | Behavior | `cardimage` |
 | Semantic | `<article>` + `<figure>` |
-| Root CSS Class | `wb-card wb-card-image` |
+| Root CSS Class | `x-card x-card-image` |
 | Composes | card structure + CSS (no base class) |
 
 ## Properties
@@ -28,53 +28,53 @@ Supports every [card property](./card.md) — that shared structure and CSS are 
 
 ### Basic Image Card
 
-<wb-demo>
-<wb-cardimage
+<div x-demo>
+<div x-cardimage
   src="https://picsum.photos/seed/hero/400/225"
   alt="Hero image"
   title="Featured Image"
   content="Optional content below the image.">
-</wb-cardimage>
-</wb-demo>
+</div>
+</div>
 
 ### With Custom Aspect Ratio
 
-<wb-demo>
-<wb-cardimage
+<div x-demo>
+<div x-cardimage
   src="https://picsum.photos/seed/square/300/300"
   alt="Square image"
   aspect="1/1"
   title="Square Image Card">
-</wb-cardimage>
-</wb-demo>
+</div>
+</div>
 
 ### Image at Bottom
 
-<wb-demo>
-<wb-cardimage
+<div x-demo>
+<div x-cardimage
   src="https://picsum.photos/seed/footer/400/225"
   position="bottom"
   title="Image Below Content"
   content="Content appears above the image.">
-</wb-cardimage>
-</wb-demo>
+</div>
+</div>
 
 ## Generated Structure
 
 ```html
-<article class="wb-card wb-card-image">
+<article class="x-card x-card-image">
   <figure
-    class="wb-card__figure"
+    class="x-card__figure"
     style="aspect-ratio: 16/9">
     <img
       src="..."
       alt="..."
       loading="lazy">
   </figure>
-  <header class="wb-card__header">
-    <h3 class="wb-card__title">Title</h3>
+  <header class="x-card__header">
+    <h3 class="x-card__title">Title</h3>
   </header>
-  <main class="wb-card__main">Content</main>
+  <main class="x-card__main">Content</main>
 </article>
 ```
 

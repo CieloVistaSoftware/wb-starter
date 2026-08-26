@@ -7,7 +7,7 @@
  * pre-commit hook; never hand-edit src/core/version.js.
  */
 import { execSync } from 'child_process';
-import { readFileSync, writeFileSync } from 'fs';
+import { readFileSync, writeFileSync, readdirSync } from 'fs';
 import { fileURLToPath } from 'url';
 import path from 'path';
 
@@ -38,8 +38,30 @@ console.log(`[stamp-version] v${pkg.version} (${commit}) @ ${builtAt}`);
 // Cache-bust local resource references (src/… and config/…) in every HTML
 // entry point. Leaves external URLs (fonts, CDNs) and already-anchored hash
 // links alone — only same-origin src/config paths get a ?v= stamp.
-const ENTRY_HTML = ['index.html', 'project-index.html'];
-const ATTR_RE = /((?:href|src)=")((?:\.\/)?(?:src|config)\/[^"?]+)(?:\?[^"]*)?(")/g;
+// #783: only these two were ever cache-busted, so every standalone page under
+// demos/ was served from the browser cache indefinitely. Fix the playground,
+// reload, see the old page -- repeatedly, which reads as "still broken" and is
+// indistinguishable from a fix that did not work. Any HTML entry point that
+// loads local assets needs the stamp, not just the two SPA shells.
+const ENTRY_HTML = ['index.html', 'project-index.html', ...standaloneEntries()];
+
+function standaloneEntries() {
+  const out = [];
+  for (const dir of ['demos', 'pages']) {
+    let names;
+    try { names = readdirSync(path.join(root, dir)); } catch { continue; }
+    for (const name of names) {
+      if (name.endsWith('.html')) out.push(`${dir}/${name}`);
+    }
+  }
+  return out;
+}
+// #783: `(?:\.\/)?` matched "src/..." and "./src/..." but NOT "../src/...",
+// which is how every page under demos/ and pages/ reaches the same files.
+// Those pages were therefore never stamped, and a browser held their CSS and
+// modules indefinitely -- a fix would ship and the page would look unchanged,
+// repeatedly. Allow any number of leading "../".
+const ATTR_RE = /((?:href|src)=")((?:\.\.?\/)*(?:src|config)\/[^"?]+)(?:\?[^"]*)?(")/g;
 
 for (const file of ENTRY_HTML) {
   const filePath = path.join(root, file);
@@ -49,7 +71,15 @@ for (const file of ENTRY_HTML) {
   } catch {
     continue; // entry point doesn't exist in this checkout
   }
-  const stamped = html.replace(ATTR_RE, (_match, pre, url, post) => `${pre}${url}?v=${commit}${post}`);
+  // Cache-bust on the VERSION, not the commit hash. `git rev-parse HEAD` here
+  // reads the PARENT commit — this runs before the commit being made exists —
+  // so the token was always one commit behind the change it exists to bust.
+  // A CSS-only release therefore shipped with an unchanged ?v= and never
+  // reached any browser holding the old file (measured: 3.0.63 deployed with
+  // ?v=80d6768, the 3.0.62 commit). pkg.version is known before the commit,
+  // changes exactly when a release ships, and is what the release is named
+  // after. See #743.
+  const stamped = html.replace(ATTR_RE, (_match, pre, url, post) => `${pre}${url}?v=${pkg.version}${post}`);
   if (stamped !== html) {
     writeFileSync(filePath, stamped);
     console.log(`[stamp-version] cache-busted ${file}`);

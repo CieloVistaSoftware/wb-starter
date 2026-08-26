@@ -6,7 +6,7 @@ import { globSync } from 'glob';
  * "look through entire site, anywhere a release is found it must use one
  * time one place to read the information" -- found live: demos/landing-
  * page-showcase.html's hero badge hardcoded "v3.0", already stale next to
- * the real 3.0.3. Same hardcode also lived in pages/components.html (x2),
+ * the real 3.0.3. Same hardcode also lived in pages/behaviors.html (x2),
  * pages/behaviors.html (generated -- source hardcode was actually in
  * scripts/generate-behaviors-page.js), and pages/newbehaviors.html.
  *
@@ -41,8 +41,8 @@ test('config/site.json has no separate/drifted appVersion field', async () => {
   expect(site.branding?.appVersion).toBeUndefined();
 });
 
-test('?page=components: hero + footer show the real stamped version, not a stale literal', async ({ page }) => {
-  await page.goto('/?page=components', { waitUntil: 'domcontentloaded' });
+test('?page=behaviors: hero + footer show the real stamped version, not a stale literal', async ({ page }) => {
+  await page.goto('/?page=behaviors', { waitUntil: 'domcontentloaded' });
   await page.waitForFunction(() => (window as any).WB, { timeout: 20000 });
 
   const version = await page.evaluate(async () => {

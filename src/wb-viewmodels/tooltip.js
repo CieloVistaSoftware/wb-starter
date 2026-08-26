@@ -18,7 +18,7 @@ function injectStyles() {
   if (stylesInjected) return;
   const style = document.createElement('style');
   style.textContent = `
-    .wb-tooltip {
+    .x-tooltip {
       position: absolute;
       z-index: 10000;
       padding: 0.5rem 0.75rem;
@@ -33,59 +33,59 @@ function injectStyles() {
       transition: opacity 0.15s, transform 0.15s;
       pointer-events: none;
     }
-    .wb-tooltip--visible {
+    .x-tooltip--visible {
       opacity: 1;
       transform: scale(1);
     }
-    .wb-tooltip__arrow {
+    .x-tooltip__arrow {
       position: absolute;
       width: 8px;
       height: 8px;
       background: var(--bg-tertiary, #333);
       transform: rotate(45deg);
     }
-    .wb-tooltip--top .wb-tooltip__arrow {
+    .x-tooltip--top .x-tooltip__arrow {
       bottom: -4px;
       left: 50%;
       margin-left: -4px;
     }
-    .wb-tooltip--bottom .wb-tooltip__arrow {
+    .x-tooltip--bottom .x-tooltip__arrow {
       top: -4px;
       left: 50%;
       margin-left: -4px;
     }
-    .wb-tooltip--left .wb-tooltip__arrow {
+    .x-tooltip--left .x-tooltip__arrow {
       right: -4px;
       top: 50%;
       margin-top: -4px;
     }
-    .wb-tooltip--right .wb-tooltip__arrow {
+    .x-tooltip--right .x-tooltip__arrow {
       left: -4px;
       top: 50%;
       margin-top: -4px;
     }
-    .wb-tooltip--dark {
-      background: var(--wb-tooltip-dark-bg, #1f2937);
-      color: var(--wb-tooltip-dark-color, #ffffff);
+    .x-tooltip--dark {
+      background: var(--x-tooltip-dark-bg, #1f2937);
+      color: var(--x-tooltip-dark-color, #ffffff);
     }
-    .wb-tooltip--dark .wb-tooltip__arrow {
-      background: var(--wb-tooltip-dark-bg, #1f2937);
+    .x-tooltip--dark .x-tooltip__arrow {
+      background: var(--x-tooltip-dark-bg, #1f2937);
     }
-    .wb-tooltip--light {
-      background: var(--wb-tooltip-light-bg, #ffffff);
-      color: var(--wb-tooltip-light-color, #1f2937);
-      border: var(--wb-tooltip-light-border, 1px solid #e5e7eb);
+    .x-tooltip--light {
+      background: var(--x-tooltip-light-bg, #ffffff);
+      color: var(--x-tooltip-light-color, #1f2937);
+      border: var(--x-tooltip-light-border, 1px solid #e5e7eb);
     }
-    .wb-tooltip--light .wb-tooltip__arrow {
-      background: var(--wb-tooltip-light-bg, #ffffff);
-      border: var(--wb-tooltip-light-border, 1px solid #e5e7eb);
+    .x-tooltip--light .x-tooltip__arrow {
+      background: var(--x-tooltip-light-bg, #ffffff);
+      border: var(--x-tooltip-light-border, 1px solid #e5e7eb);
     }
-    .wb-tooltip--primary {
-      background: var(--wb-tooltip-primary-bg, var(--primary, #6366f1));
-      color: var(--wb-tooltip-primary-color, #ffffff);
+    .x-tooltip--primary {
+      background: var(--x-tooltip-primary-bg, var(--primary, #6366f1));
+      color: var(--x-tooltip-primary-color, #ffffff);
     }
-    .wb-tooltip--primary .wb-tooltip__arrow {
-      background: var(--wb-tooltip-primary-bg, var(--primary, #6366f1));
+    .x-tooltip--primary .x-tooltip__arrow {
+      background: var(--x-tooltip-primary-bg, var(--primary, #6366f1));
     }
   `;
   document.head.appendChild(style);
@@ -106,15 +106,29 @@ export async function tooltip(element, options = {}) {
   injectStyles();
 
   // Config
+  // `??` was wrong here and made the documented form dead. On
+  // <button x-tooltip content="hi">, getAttribute('x-tooltip') returns "" --
+  // an empty string, not null -- so `??` accepted it and every later source,
+  // including `content`, was never consulted. The tooltip then bailed on
+  // `if (!content)`. That is #861's "x-tooltip touches nothing": the bare
+  // token form advertised by the docs could never produce a tooltip.
+  // Empty means absent for every one of these sources.
+  const firstNonEmpty = (...vals) => {
+    for (const v of vals) {
+      if (v != null && String(v).trim() !== '') return v;
+    }
+    return '';
+  };
   const content = String(
-    options.content ??
-    element.getAttribute('x-tooltip') ??
-    element.getAttribute('content') ??
-    element.getAttribute('x-content') ??
-    element.getAttribute('tooltip') ??
-    element.getAttribute('title') ??
-    element.innerText.trim() ??
-    ''
+    firstNonEmpty(
+      options.content,
+      element.getAttribute('x-tooltip'),
+      element.getAttribute('content'),
+      element.getAttribute('x-content'),
+      element.getAttribute('tooltip'),
+      element.getAttribute('title'),
+      element.innerText.trim(),
+    )
   );
   if (!content) {
     console.warn('[WB:tooltip] No content');
@@ -135,7 +149,10 @@ export async function tooltip(element, options = {}) {
       return ['default', 'dark', 'light', 'primary'].includes(v) ? v : 'default';
     })(),
     delay: Math.max(0, parseInt(options.delay ?? element.getAttribute('x-delay') ?? element.getAttribute('tooltip-delay') ?? '200', 10)),
-    hideDelay: Math.max(0, parseInt(options.hideDelay ?? element.getAttribute('x-hide-delay') ?? element.getAttribute('tooltip-hide-delay') ?? '100', 10)),
+    // `hide-delay` comes first: tooltip.schema.json declares hideDelay, so the
+    // generated docs and the showcase both tell authors to write hide-delay --
+    // and that was the one spelling this chain did not read (#861).
+    hideDelay: Math.max(0, parseInt(options.hideDelay ?? element.getAttribute('hide-delay') ?? element.getAttribute('x-hide-delay') ?? element.getAttribute('tooltip-hide-delay') ?? '100', 10)),
     customClass: options.customClass ?? element.getAttribute('x-custom-class') ?? element.getAttribute('tooltip-class') ?? '',
   };
 
@@ -153,22 +170,22 @@ export async function tooltip(element, options = {}) {
 
   // Create tooltip element
   const tip = document.createElement('div');
-  tip.className = `wb-tooltip wb-tooltip--${config.position} wb-tooltip--${config.variant}`;
+  tip.className = `x-tooltip x-tooltip--${config.position} x-tooltip--${config.variant}`;
   if (config.customClass) {
     tip.classList.add(...config.customClass.split(' '));
   }
   
   const contentDiv = document.createElement('div');
-  contentDiv.className = 'wb-tooltip__content';
+  contentDiv.className = 'x-tooltip__content';
   contentDiv.textContent = config.content;
   
   const arrowDiv = document.createElement('div');
-  arrowDiv.className = 'wb-tooltip__arrow';
+  arrowDiv.className = 'x-tooltip__arrow';
   
   tip.appendChild(contentDiv);
   tip.appendChild(arrowDiv);
 
-  const tooltipId = `wb-tooltip-${Math.random().toString(36).substr(2, 9)}`;
+  const tooltipId = `x-tooltip-${Math.random().toString(36).substr(2, 9)}`;
   tip.id = tooltipId;
 
   // Position tooltip
@@ -220,7 +237,7 @@ export async function tooltip(element, options = {}) {
       document.body.appendChild(tip);
       position();
       void tip.offsetWidth;
-      tip.classList.add('wb-tooltip--visible');
+      tip.classList.add('x-tooltip--visible');
       state.visible = true;
     }, config.delay);
   };
@@ -231,7 +248,7 @@ export async function tooltip(element, options = {}) {
 
     state.hideTimer = setTimeout(() => {
       if (state.destroyed) return;
-      tip.classList.remove('wb-tooltip--visible');
+      tip.classList.remove('x-tooltip--visible');
       setTimeout(() => {
         if (tip.parentNode) tip.remove();
         state.visible = false;
@@ -245,7 +262,7 @@ export async function tooltip(element, options = {}) {
   const handleScroll = () => { if (state.visible) position(); };
 
   // Init
-  element.classList.add('wb-tooltip-trigger');
+  element.classList.add('x-tooltip-trigger');
   element.setAttribute('aria-describedby', tooltipId);
   element.addEventListener('mouseenter', handleEnter);
   element.addEventListener('mouseleave', handleLeave);

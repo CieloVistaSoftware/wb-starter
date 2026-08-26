@@ -20,12 +20,36 @@ import WB from './core/wb.js';
 import WBSiteClass from './core/site-engine.js';
 import { VERSION } from './core/version.js';
 import { traceStatusLabel } from './core/debug-trace.js';
+import { reportDuplicateIds } from './core/duplicate-ids.js';
 
 /**
  * Initialize the wb-starter application
  * @returns {Promise<void>}
  */
+/**
+ * #724/#730 -- a second boot silently built a second shell: two navbars, two
+ * sidebars, two heroes, and nothing said a word. init() runs once. A second
+ * call is a no-op, not a second page.
+ *
+ * It is reachable because the boot URL is version-stamped
+ * (`src/main.js?v=<commit>`) and ES modules are keyed by URL, so a tab holding
+ * a cached shell alongside a newer one loads two separate module instances,
+ * each calling init().
+ */
+const BOOT_FLAG = '__wbBooted';
+
 async function init() {
+  // The flag lives on window, NOT in module scope. #724's actual mechanism is
+  // TWO MODULE INSTANCES -- `main.js?v=A` and `main.js?v=B` are different URLs,
+  // so ES modules loads each separately and each gets its own module scope. A
+  // module-level `let booted` would be false in both and guard nothing. The
+  // window is the only thing the two instances share.
+  if (_window[BOOT_FLAG]) {
+    console.warn('[WB] init() called twice — ignoring the second boot (#724). ' +
+      'A second boot builds a second shell: two navbars, two sidebars, two of everything.');
+    return;
+  }
+  _window[BOOT_FLAG] = true;
   // Commit + build time on the very first line — the console log itself is
   // the fastest way to confirm which deploy you're actually looking at,
   // without digging through the header or network tab.
@@ -33,10 +57,10 @@ async function init() {
   // Debug it via tracing, not guessing: always show whether [WB.scan]/
   // [WB.observe] trace output is active, right on the 2nd console line, so
   // it's never a guessing game whether logging is on before you go looking
-  // for trace output that isn't there. #338: 'wb-debug' can now name a
+  // for trace output that isn't there. #338: 'x-debug' can now name a
   // comma-separated set of categories (e.g. 'media,scan') instead of just
   // '1' for everything — see debug-trace.js.
-  console.log(`[WB] debug tracing: ${traceStatusLabel()} — localStorage.setItem('wb-debug','1') for everything, or e.g. 'scan,observe' for just those categories, then reload. Or live: wbDebugTrace.set('scan,observe')`);
+  console.log(`[WB] debug tracing: ${traceStatusLabel()} — localStorage.setItem('x-debug','1') for everything, or e.g. 'scan,observe' for just those categories, then reload. Or live: wbDebugTrace.set('scan,observe')`);
 
   try {
     // Expose WB globally
@@ -55,6 +79,12 @@ async function init() {
 
     // Expose for debugging
     _window.WBSite = site;
+
+    // #730 -- John: "if all elements on the page have an id then duplicate work
+    // would have a run time error". Every rendered element carries an id (#675),
+    // so duplicates are a precise signal that something rendered twice -- and
+    // they are invalid HTML regardless. Report loudly; never break the page.
+    reportDuplicateIds('after boot');
 
     console.log('✅ wb-starter ready');
   } catch (error) {

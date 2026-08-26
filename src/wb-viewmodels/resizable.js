@@ -9,7 +9,12 @@ import { readFlag, readAttr } from '../core/read-attr.js';
  */
 export function resizable(element, options = {}) {
   const config = {
-    directions: options.directions || element.dataset.directions || 'se', // n, s, e, w, ne, nw, se, sw, all
+    // resizable.schema.json declares this option as `handles` (default "se"),
+    // which is what the docs and the showcase advertise -- but the only
+    // spelling read here was data-directions, so `handles` did nothing (#861).
+    // Values: n, s, e, w, ne, nw, se, sw, or "all".
+    directions: options.directions || options.handles
+      || element.getAttribute('handles') || element.dataset.directions || 'se',
     minWidth: parseInt(options.minWidth || readAttr(element, 'minWidth') || '50', 10),
     minHeight: parseInt(options.minHeight || element.dataset.minHeight || '50', 10),
     maxWidth: parseInt(options.maxWidth || readAttr(element, 'maxWidth') || '0', 10) || Infinity,
@@ -18,8 +23,14 @@ export function resizable(element, options = {}) {
     ...options
   };
 
-  // #448: no classList.add('wb-resizable') -- no CSS selector anywhere
+  // #448: no classList.add('x-resizable') -- no CSS selector anywhere
   // depends on the bare class.
+  // #448 removed this class outright; restored WITH the tag-name guard.
+  // permutation-compliance requires compliance.baseClass to cover the host
+  // (classList.contains(cls) || tagName === cls), and on an attribute host
+  // like <div x-resizable> the tag is "div" -- so without the class nothing covers
+  // it. Guarded so a literal <x-resizable> tag does not get a redundant class.
+  if (element.tagName.toLowerCase() !== 'x-resizable') element.classList.add('x-resizable');
 
   // Ensure element is positioned
   const computedStyle = window.getComputedStyle(element);
@@ -36,7 +47,7 @@ export function resizable(element, options = {}) {
   const handles = {};
   dirs.forEach(dir => {
     const handle = document.createElement('div');
-    handle.className = `wb-resizable__handle wb-resizable__handle--${dir}`;
+    handle.className = `x-resizable__handle x-resizable__handle--${dir}`;
     handle.dataset.direction = dir;
     
     // Position and style handles
@@ -88,7 +99,7 @@ export function resizable(element, options = {}) {
   const onMouseDown = (e) => {
     if (e.button !== 0) return;
     // Use a different variable name to avoid duplicate declaration
-    const handleEl = e.target.closest('.wb-resizable__handle');
+    const handleEl = e.target.closest('.x-resizable__handle');
     if (!handleEl) return;
     
     e.preventDefault();
@@ -103,7 +114,7 @@ export function resizable(element, options = {}) {
     startTop = element.offsetTop;
     aspectRatioValue = startWidth / startHeight;
     
-    element.classList.add('wb-resizable--resizing');
+    element.classList.add('x-resizable--resizing');
     
     document.addEventListener('mousemove', onMouseMove);
     document.addEventListener('mouseup', onMouseUp);
@@ -178,7 +189,7 @@ export function resizable(element, options = {}) {
     
     isResizing = false;
     currentDir = null;
-    element.classList.remove('wb-resizable--resizing');
+    element.classList.remove('x-resizable--resizing');
     
     document.removeEventListener('mousemove', onMouseMove);
     document.removeEventListener('mouseup', onMouseUp);
@@ -203,7 +214,7 @@ export function resizable(element, options = {}) {
   // Mark as ready
   // Cleanup
   return () => {
-    element.classList.remove('wb-resizable', 'wb-resizable--resizing');
+    element.classList.remove('x-resizable', 'x-resizable--resizing');
     element.removeEventListener('mousedown', onMouseDown);
     document.removeEventListener('mousemove', onMouseMove);
     document.removeEventListener('mouseup', onMouseUp);

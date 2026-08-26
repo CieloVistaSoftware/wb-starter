@@ -2,14 +2,28 @@
 
 Dismissible notification card with variant-based styling
 
-Applies to `<aside>`, and to any element carrying `x-cardnotification`.
+## Type — decorates a semantic element
 
-## Usage
+`x-cardnotification` is the **aside behavior**. It attaches to `<aside>`, the element you would have reached for anyway — there is no new tag to learn.
+
+### How to write it
 
 ```html
-<aside x-cardnotification>
+<aside x-cardnotification
+  variant="warning"
+  title="Certificate expires in 6 days"
+  message="Renew before 26 Aug or the staging domain will start failing TLS."
+  dismissible></aside>
+```
+
+### On a different element
+
+Use `x-cardnotification` when the host is not a `<aside>` and you want the same behavior:
+
+```html
+<div x-cardnotification>
   …
-</aside>
+</div>
 ```
 
 ## Attributes

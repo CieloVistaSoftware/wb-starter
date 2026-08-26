@@ -5,7 +5,7 @@
   "description": "3D Globe visualization.",
   "schemaFor": "globe",
   "compliance": {
-    "baseClass": "wb-globe",
+    "baseClass": "x-globe",
     "supportLevel": "stable",
     "accessibility": "high"
   },
@@ -15,11 +15,11 @@
   "$cssAPI": {},
   "test": {
     "setup": [
-      "<wb-globe>Basic globe content</wb-globe>",
-      "<wb-globe>Test permutation 2</wb-globe>",
-      "<wb-globe>Test permutation 3</wb-globe>",
-      "<wb-globe>Test permutation 4</wb-globe>",
-      "<wb-globe>Test permutation 5</wb-globe>"
+      "<div x-globe>Basic globe content</div>",
+      "<div x-globe>Test permutation 2</div>",
+      "<div x-globe>Test permutation 3</div>",
+      "<div x-globe>Test permutation 4</div>",
+      "<div x-globe>Test permutation 5</div>"
     ]
   }
 }

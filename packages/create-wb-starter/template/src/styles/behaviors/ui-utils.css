@@ -7,26 +7,26 @@
  */
 
 /* Divider */
-.wb-divider {
+.x-divider {
   height: 1px;
   background: var(--border-color);
   margin: 0.75rem 0;
 }
 
 /* Empty State */
-.wb-empty {
+.x-empty {
   text-align: center;
   padding: 1.5rem;
   color: var(--text-muted);
 }
 
-.wb-empty-icon {
+.x-empty-icon {
   font-size: 2rem;
   margin-bottom: 0.5rem;
 }
 
 /* Keyboard Shortcut */
-.wb-kbd {
+.x-kbd {
   display: inline-block;
   padding: 0.15rem 0.4rem;
   background: var(--bg-tertiary);

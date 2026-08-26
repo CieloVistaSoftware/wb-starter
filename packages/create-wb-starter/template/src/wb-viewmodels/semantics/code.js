@@ -1,3 +1,4 @@
+import { readFlag, readAttr } from '../../core/read-attr.js';
 import hljs from '../../lib/highlight.js';
 import { pre } from './pre.js';
 import { CODE_THEMES } from '../codecontrol.js';
@@ -7,11 +8,22 @@ if (!document.querySelector('link[data-highlight-theme]')) {
   const link = document.createElement('link');
   link.rel = 'stylesheet';
   // Check localStorage for saved preference from codecontrol
-  const savedTheme = localStorage.getItem('x-code-theme') || 'atom-one-dark-reasonable';
-  // A handful of CODE_THEMES entries (e.g. wb-grayscale-dark) are WB's own
+  let savedTheme = localStorage.getItem('x-code-theme') || 'atom-one-dark-reasonable';
+  // A saved theme id can go stale if it's ever removed from CODE_THEMES
+  // (e.g. rose-pine/rose-pine-moon were removed after confirming they
+  // don't exist at cdnjs's pinned highlight.js 11.9.0, even though they
+  // were a valid, selectable option when a visitor's browser saved them)
+  // -- blindly building a cdnjs URL from an unrecognized id 404s forever
+  // for that visitor, since nothing here ever re-validates or clears it.
+  // Fall back to the default whenever the saved id isn't a CURRENT,
+  // recognized theme at all, not just when it lacks a local `.path`.
+  if (!CODE_THEMES.some((t) => t.id === savedTheme)) {
+    savedTheme = 'atom-one-dark-reasonable';
+  }
+  // A handful of CODE_THEMES entries (e.g. x-grayscale-dark) are WB's own
   // local themes, not real highlight.js CDN theme names -- blindly building
   // a cdnjs URL from ANY saved theme id 404'd for those (confirmed live:
-  // wb-grayscale-dark.min.css never existed on cdnjs). Use the local path
+  // x-grayscale-dark.min.css never existed on cdnjs). Use the local path
   // when the saved theme is one of ours.
   const localTheme = CODE_THEMES.find(t => t.id === savedTheme && t.path);
   // Use CDNJS for reliable loading
@@ -63,7 +75,7 @@ export function code(element, options = {}) {
     if (codeElement) {
        // Pass language if set on pre — fall back to a language-xxx class on
        // the pre or the inner code element (standard markdown/hljs convention).
-       const lang = options.language || element.getAttribute('language') || element.dataset.language || langFromClass(element) || langFromClass(codeElement);
+       const lang = options.language || element.getAttribute('language') || readAttr(element, 'language') || langFromClass(element) || langFromClass(codeElement);
        // We don't pass other options because pre handles the chrome
        cleanupCode = code(codeElement, { language: lang });
     }
@@ -80,10 +92,10 @@ export function code(element, options = {}) {
   }
 
   const config = {
-    language: options.language || element.getAttribute('language') || element.dataset.language || langFromClass(element) || '',
-    showCopy: options.showCopy ?? (element.hasAttribute('show-copy') || element.hasAttribute('data-show-copy') || element.hasAttribute('data-copy')),
-    variant: options.variant || element.getAttribute('variant') || element.dataset.variant || 'inline',
-    scrollable: options.scrollable ?? (element.getAttribute('scrollable') === 'true' || element.dataset.scrollable === 'true'),
+    language: options.language || element.getAttribute('language') || readAttr(element, 'language') || langFromClass(element) || '',
+    showCopy: options.showCopy ?? (element.hasAttribute('show-copy') || readFlag(element, 'show-copy') || readFlag(element, 'copy')),
+    variant: options.variant || element.getAttribute('variant') || readAttr(element, 'variant') || 'inline',
+    scrollable: options.scrollable ?? (element.getAttribute('scrollable') === 'true' || readAttr(element, 'scrollable') === 'true'),
     // No `size` given -> normal (matches surrounding text, 1em) — every plain
     // <code> project-wide (table cells, inline mentions in prose, etc.) was
     // defaulting to 'xs' (0.55em, an INLINE style that beats any CSS fix),
@@ -108,6 +120,22 @@ export function code(element, options = {}) {
 
   const isInsidePre = element.parentElement && element.parentElement.tagName === 'PRE';
 
+  // #545: inline code inherits its font-size from the surrounding text
+  // (fontSize: 'normal' -> 1em, see sizeMap above). Inside a heading that
+  // inherited size can be 2x+ normal body text (e.g. an h2's 1.75rem), so
+  // the SAME em-relative padding below that reads correctly at 16px body
+  // text renders as only a few px at heading scale -- flagged by the
+  // content-panel-edge compliance test. Confirmed live: a <code> naming a
+  // tag inside "<h2>Audio <code>&lt;audio&gt;</code></h2>" (the pattern
+  // used throughout demos/site/content.html, forms.html, interactive.html)
+  // computed to 4.2px padding (0.15em * 28px). Scope the bigger, absolute
+  // padding to headings only -- switching ALL inline code to rem-based
+  // padding would recreate the "58x60px box for a 2-char snippet"
+  // regression code.css's own history already documents fixing (see that
+  // file's comment on the old project-wide `padding: 1rem !important`
+  // attempt).
+  const inHeading = !isInsidePre && !!element.closest('h1, h2, h3, h4, h5, h6');
+
   // Base styling
   if (isInsidePre) {
     Object.assign(element.style, {
@@ -128,9 +156,22 @@ export function code(element, options = {}) {
     });
   } else {
     // Standalone code block (not inline, not in pre)
-    const isBlock = config.variant !== 'inline';
+    // John: "not formatted right" -- a 27-line JavaScript listing rendered as
+    // one wrapped paragraph with every newline collapsed.
+    //
+    // `variant` defaults to "inline" in code.schema.json, which is right for
+    // the common case (a `<code>x-card</code>` chip amid prose) and wrong for
+    // a standalone listing: an inline box gets `white-space: normal`, so every
+    // newline in the source collapsed to a space.
+    //
+    // Content that CONTAINS a newline is a block listing whatever the variant
+    // default says. Keyed on the content rather than on the attribute so the
+    // many single-line inline chips across the docs are untouched -- they have
+    // no newline and keep their existing inline treatment.
+    const isMultiline = /\n/.test((element.textContent || '').trim());
+    const isBlock = config.variant !== 'inline' || isMultiline;
     // Only single-token content (no whitespace, e.g. a tag-name chip like
-    // "wb-card") should be forced onto one line. Multi-word inline code
+    // "x-card") should be forced onto one line. Multi-word inline code
     // (e.g. a formula like "Colors = Primary + 0°, 120°, 240°") must still
     // wrap normally at spaces, or it overflows its container -- confirmed
     // live on pages/themes.html's harmony-formula boxes.
@@ -139,15 +180,21 @@ export function code(element, options = {}) {
     Object.assign(element.style, {
       fontFamily: 'ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace',
       fontSize: fontSize,
-      padding: !isBlock ? '0.15em 0.3em' : '0.5rem 0.75rem',
+      // John: "the code demos cannot take up more space than the line
+      // allows" -- 1rem on all 4 sides of an inline chip inside a heading
+      // (this branch's original fix for #545's too-small em-padding
+      // problem) overcorrected into the opposite problem: a wide enough
+      // box to overflow the heading's own line. 0.25rem/0.5rem reads fine
+      // at heading scale without doing that.
+      padding: !isBlock ? (inHeading ? '0.25rem 0.5rem' : '0.15em 0.3em') : '1rem',
       borderRadius: 'var(--radius-sm, 4px)',
       backgroundColor: 'var(--bg-tertiary, rgba(255,255,255,0.1))',
       color: 'var(--text-primary, inherit)',
       border: '1px solid var(--border-color, rgba(255,255,255,0.1))',
       display: !isBlock ? 'inline' : 'block',
-      // A single-token inline code chip (e.g. `<wb-card>`) must stay on one
+      // A single-token inline code chip (e.g. `<article>`) must stay on one
       // line -- `white-space: normal` lets the browser wrap at the hyphen
-      // inside "wb-card" like a hyphenated English word, splitting "<wb-"
+      // inside "x-card" like a hyphenated English word, splitting "<wb-"
       // onto one line and "card>" onto the next (confirmed live on
       // pages/components.html). `overflow:hidden` is a no-op on a plain
       // `display:inline` box, so `nowrap` here can't cause clipping -- it
@@ -177,7 +224,11 @@ export function code(element, options = {}) {
         // Fix for inline code: hljs adds 'hljs' class which might set display: block and padding
         if (!isInsidePre && config.variant === 'inline') {
             element.style.display = 'inline';
-            element.style.padding = '0.2em 0.4em';
+            // #545/#612: same heading-scale padding fix as the base styling
+            // above -- hljs re-sets padding after highlighting, so it must
+            // repeat the inHeading check or a highlighted <code> in a
+            // heading would lose it.
+            element.style.padding = inHeading ? '0.25rem 0.5rem' : '0.2em 0.4em';
             element.style.backgroundColor = 'var(--bg-tertiary, rgba(255,255,255,0.1))'; // Keep our background for inline
         } else if (isInsidePre) {
              // Ensure background is transparent so pre's background shows

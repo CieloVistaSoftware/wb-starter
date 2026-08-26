@@ -2,310 +2,1951 @@
      wb-starter - BEHAVIORS SHOWCASE
      Auto-generated from behaviors.schema.json
      ═══════════════════════════════════════════════════════════════════════════ -->
-<link rel="stylesheet" href="src/styles/pages/behaviors.css">
+<link rel="stylesheet" href="src/styles/pages/behaviors.css?v=3.0.91">
 
 <div id="behaviors-hero" class="page__hero">
   <header id="header" x-ignore><div id="autogen-behaviors-html-0"><h1>⚡ WB Behaviors Showcase</h1>
   <p class="header-subtitle">170+ behaviors • Interactive demos • Copy-ready code</p>
   </div>
   </header>
-</div>
-<nav id="nav" class="nav-links"><a href="#buttons">🔘 Buttons</a>
-<a href="#inputs">📝 Inputs</a>
-<a href="#selection">☑️ Selection</a>
-<a href="#feedback">📢 Feedback</a>
-<a href="#overlays">🪟 Overlays</a>
-<a href="#navigation">🧭 Navigation</a>
-<a href="#data">📊 Data</a>
-<a href="#media">🖼️ Media</a>
-<a href="#effects">✨ Effects</a>
-<a href="#utilities">🔧 Utilities</a>
-</nav>
-
-  <!-- ═══════════════════════════════════════════════════════════════════════════
-     BUTTONS
-     ═══════════════════════════════════════════════════════════════════════════ -->
-  <section id="buttons">
-    <h2>🔘 Buttons</h2>
-    <div class="section-note">
-      <strong>Buttons behaviors:</strong> Button behaviors: Variants, sizes, and interactive effects like ripple and toast.
-    </div>
-
-    <wb-demo><button variant="primary">Primary</button></wb-demo>
-    <wb-demo><button variant="secondary">Secondary</button></wb-demo>
-    <wb-demo><button variant="ghost">Ghost</button></wb-demo>
-    <wb-demo><button variant="primary" disabled>Disabled</button></wb-demo>
-
-    <h3>Button Sizes</h3>
-    <wb-demo><button variant="primary" size="sm">Small</button></wb-demo>
-    <wb-demo><button variant="primary">Medium</button></wb-demo>
-    <wb-demo><button variant="primary" size="lg">Large</button></wb-demo>
-
-    <h3>Button with Behaviors</h3>
-    <wb-demo><button variant="primary" x-ripple>With Ripple</button></wb-demo>
-    <wb-demo><button variant="primary" x-toast message="Action completed!" toast-variant="success">With Toast</button></wb-demo>
-    <wb-demo><button variant="primary" x-tooltip="Helpful hint!" position="top">With Tooltip</button></wb-demo>
-  </section>
-
-  <!-- ═══════════════════════════════════════════════════════════════════════════
-     INPUTS
-     ═══════════════════════════════════════════════════════════════════════════ -->
-  <section id="inputs">
-    <h2>📝 Inputs</h2>
-    <div class="section-note">
-      <strong>Inputs behaviors:</strong> Input behaviors: Auto-enhanced inputs with validation variants, password toggle, and masking.
-    </div>
-
-    <h3>Basic Inputs</h3>
-    <wb-demo><input type="text" placeholder="Basic text input"></wb-demo>
-    <wb-demo><input type="email" placeholder="Email input"></wb-demo>
-    <wb-demo><input type="number" placeholder="Number input"></wb-demo>
-
-    <h3>Special Input Types</h3>
-    <wb-demo><input type="password" x-password placeholder="Password with toggle"></wb-demo>
-    <wb-demo><input type="text" x-search placeholder="Search with icon"></wb-demo>
-    <wb-demo><input type="text" x-colorpicker value="#6366f1"></wb-demo>
-
-    <h3>Masked Inputs</h3>
-    <wb-demo><input x-masked mask="(999) 999-9999" placeholder="Phone: (999) 999-9999"></wb-demo>
-    <wb-demo><input x-masked mask="99/99/9999" placeholder="Date: MM/DD/YYYY"></wb-demo>
-    <wb-demo><input x-masked mask="9999 9999 9999 9999" placeholder="Credit Card"></wb-demo>
-
-    <h3>Textarea</h3>
-    <wb-demo><textarea placeholder="Standard textarea" rows="3"></textarea></wb-demo>
-    <wb-demo><textarea autosize placeholder="Auto-sizing textarea - grows as you type"></textarea></wb-demo>
-  </section>
-
-  <!-- ═══════════════════════════════════════════════════════════════════════════
-     SELECTION
-     ═══════════════════════════════════════════════════════════════════════════ -->
-  <section id="selection">
-    <h2>☑️ Selection</h2>
-    <div class="section-note">
-      <strong>Selection behaviors:</strong> Selection behaviors: Checkboxes, radios, selects, and steppers. (Switches and ratings are wb-* components — see <a href="?page=components">Components</a>.)
-    </div>
-
-    <h3>Checkboxes</h3>
-    <wb-demo><label class="selection-label"><input type="checkbox"> Unchecked</label></wb-demo>
-    <wb-demo><label class="selection-label"><input type="checkbox" checked> Checked</label></wb-demo>
-    <wb-demo><label class="selection-label"><input type="checkbox" disabled> Disabled</label></wb-demo>
-
-    <h3>Radio Buttons</h3>
-    <wb-demo data-code-width="narrow">
-      <label class="selection-label"><input type="radio" name="demo-radio" checked> Option A</label>
-      <label class="selection-label"><input type="radio" name="demo-radio"> Option B</label>
-      <label class="selection-label"><input type="radio" name="demo-radio"> Option C</label>
-    </wb-demo>
-
-    <h3>Select Dropdown</h3>
-    <wb-demo>
-      <select>
-        <option>Select an option</option>
-        <option>Option 1</option>
-        <option>Option 2</option>
-        <option>Option 3</option>
-      </select>
-    </wb-demo>
-    <wb-demo>
-      <select multiple size="3">
-        <option>Multiple 1</option>
-        <option>Multiple 2</option>
-        <option>Multiple 3</option>
-      </select>
-    </wb-demo>
-
-    <h3>Stepper & Range</h3>
-    <wb-demo><div x-stepper value="5" min="0" max="10"></div></wb-demo>
-    <wb-demo><input type="range" min="0" max="100" value="50"></wb-demo>
-  </section>
-
-  <!-- ═══════════════════════════════════════════════════════════════════════════
-     FEEDBACK
-     ═══════════════════════════════════════════════════════════════════════════ -->
-  <section id="feedback">
-    <h2>📢 Feedback</h2>
-    <div class="section-note">
-      <strong>Feedback behaviors:</strong> Feedback behaviors: Alerts (attribute-decorated, via x-alert) and toast notifications. (Badges, progress bars, and spinners are wb-* components — see <a href="?page=components">Components</a>.)
-    </div>
-
-    <h3>Alerts</h3>
-    <wb-demo><div x-alert type="info" message="Info alert message"></div></wb-demo>
-    <wb-demo><div x-alert type="success" message="Success alert message"></div></wb-demo>
-    <wb-demo><div x-alert type="warning" message="Warning alert message"></div></wb-demo>
-    <wb-demo><div x-alert type="error" message="Error alert message"></div></wb-demo>
-    <wb-demo><div x-alert type="info" title="Dismissible" message="Click the × to dismiss this alert" dismissible></div></wb-demo>
-
-    <h3>Toast Notifications</h3>
-    <wb-demo><button variant="primary" x-toast message="Info message" toast-variant="info">Info Toast</button></wb-demo>
-    <wb-demo><button variant="primary" x-toast message="Success!" toast-variant="success">Success Toast</button></wb-demo>
-    <wb-demo><button variant="primary" x-toast message="Warning!" toast-variant="warning">Warning Toast</button></wb-demo>
-    <wb-demo><button variant="primary" x-toast message="Error!" toast-variant="error">Error Toast</button></wb-demo>
-  </section>
-
-  <!-- ═══════════════════════════════════════════════════════════════════════════
-     OVERLAYS
-     ═══════════════════════════════════════════════════════════════════════════ -->
-  <section id="overlays">
-    <h2>🪟 Overlays</h2>
-    <div class="section-note">
-      <strong>Overlays behaviors:</strong> Overlay behaviors: Tooltips, popovers, confirm dialogs, and lightboxes. (Modals and drawers are wb-* components — see <a href="?page=components">Components</a>.)
-    </div>
-
-    <h3>Tooltips</h3>
-    <wb-demo><button variant="secondary" x-tooltip="Top tooltip" position="top">Top</button></wb-demo>
-    <wb-demo><button variant="secondary" x-tooltip="Bottom tooltip" position="bottom">Bottom</button></wb-demo>
-    <wb-demo><button variant="secondary" x-tooltip="Left tooltip" position="left">Left</button></wb-demo>
-    <wb-demo><button variant="secondary" x-tooltip="Right tooltip" position="right">Right</button></wb-demo>
-
-    <h3>Popover</h3>
-    <wb-demo><button variant="primary" x-popover popover-title="Popover Title" popover-content="This is additional information displayed in a popover.">Show Popover</button></wb-demo>
-
-    <h3>Confirm & Prompt</h3>
-    <wb-demo><button variant="primary" x-confirm confirm-title="Confirm Action" confirm-message="Are you sure you want to proceed?">Confirm Dialog</button></wb-demo>
-    <wb-demo><button variant="primary" x-prompt prompt-title="Enter Value" prompt-message="Please enter your name:">Prompt Dialog</button></wb-demo>
-
-    <h3>Lightbox</h3>
-    <wb-demo><button variant="primary" x-lightbox src="https://picsum.photos/1200/800?r=lb1">View Image 1</button></wb-demo>
-    <wb-demo><button variant="primary" x-lightbox src="https://picsum.photos/1200/800?r=lb2">View Image 2</button></wb-demo>
-  </section>
-
-  <!-- ═══════════════════════════════════════════════════════════════════════════
-     NAVIGATION
-     ═══════════════════════════════════════════════════════════════════════════ -->
-  <section id="navigation">
-    <h2>🧭 Navigation</h2>
-    <div class="section-note">
-      <strong>Navigation behaviors:</strong> Navigation behaviors: Breadcrumbs, pagination, and step wizards. (Tabs and accordion are wb-* components — see <a href="?page=components">Components</a>.)
-    </div>
-
-    <h3>Breadcrumb</h3>
-    <wb-demo><nav x-breadcrumb items="Home,Products,Electronics,Smartphones"></nav></wb-demo>
-
-    <h3>Pagination</h3>
-    <wb-demo><nav x-pagination total="100" per-page="10" current="5"></nav></wb-demo>
-
-    <h3>Steps Wizard</h3>
-    <wb-demo><div x-steps items="Cart,Shipping,Payment,Confirm" current="2"></div></wb-demo>
-  </section>
-
-  <!-- ═══════════════════════════════════════════════════════════════════════════
-     DATA
-     ═══════════════════════════════════════════════════════════════════════════ -->
-  <section id="data">
-    <h2>📊 Data</h2>
-    <div class="section-note">
-      <strong>Data behaviors:</strong> Data behaviors: Avatars, skeletons, timelines, and keyboard keys.
-    </div>
-
-    <h3>Timeline</h3>
-    <wb-demo><div x-timeline items="Project kickoff,Design phase,Development,Testing,Launch"></div></wb-demo>
-
-    <h3>Keyboard Keys</h3>
-    <wb-demo><p>Press <span x-kbd>Ctrl</span> + <span x-kbd>S</span> to save, or <span x-kbd>⌘</span> + <span x-kbd>K</span> on Mac.</p></wb-demo>
-  </section>
-
-  <!-- ═══════════════════════════════════════════════════════════════════════════
-     MEDIA
-     ═══════════════════════════════════════════════════════════════════════════ -->
-  <section id="media">
-    <h2>🖼️ Media</h2>
-    <div class="section-note">
-      <strong>Media behaviors:</strong> Media behaviors: Images with lazy loading, galleries, and YouTube embeds. (Audio player is a wb-* component — see <a href="?page=components">Components</a>.)
-    </div>
-
-    <h3>Enhanced Images</h3>
-    <wb-demo><img x-image src="https://picsum.photos/200/150?r=enh1" alt="Lazy loaded" lazy class="demo-image"></wb-demo>
-    <wb-demo><img x-image src="https://picsum.photos/200/150?r=enh2" alt="Zoomable" zoomable class="demo-image"></wb-demo>
-
-    <h3>Gallery</h3>
-    <wb-demo>
-      <div x-gallery columns="4">
-        <img src="https://picsum.photos/200/200?r=gal1" alt="Gallery 1">
-        <img src="https://picsum.photos/200/200?r=gal2" alt="Gallery 2">
-        <img src="https://picsum.photos/200/200?r=gal3" alt="Gallery 3">
-        <img src="https://picsum.photos/200/200?r=gal4" alt="Gallery 4">
+  <!-- #744 -- John: "when full screen show both navigator and the rendered side
+       plus the search elements." The workspace is the fullscreen target: search,
+       navigator and rendered side together. It deliberately starts BELOW the
+       hero title, so going fullscreen spends the screen on the three things
+       being used rather than on the page heading. -->
+  <div id="behaviors-workspace" class="behaviors-workspace">
+  <div class="behaviors-search">
+    <input type="search" id="behaviors-search" placeholder="Search behaviors — e.g. x-tooltip, x-toast — or just x- to see everything" aria-label="Search behaviors">
+    <span id="behaviors-search-count" aria-live="polite"></span>
+    <!-- #764 -- John: "add radio buttons for filtering x-behaviors and semantic
+         or both". A behavior can be reached two ways: its semantic tag carries
+         it via autoInject, or any host carries it via x-. 22 behaviors offer
+         both. This narrows the list to the authoring form you are actually
+         looking for. -->
+    <fieldset id="behaviors-form-filter" class="behaviors-form-filter">
+      <legend class="behaviors-form-filter__legend">Filter</legend>
+      <label><input type="radio" name="authoring-form" value="both" checked> Both</label>
+      <label><input type="radio" name="authoring-form" value="semantic"> Semantic</label>
+      <label><input type="radio" name="authoring-form" value="attribute"> x-attribute</label>
+    </fieldset>
+  </div>
+  <!-- #664: the results list and a LIVE preview sit side by side, so clicking a
+       behavior runs it immediately instead of scrolling a 13,000px page to find
+       its example. -->
+  <div class="behaviors-browse">
+    <ul id="behaviors-search-results" class="behaviors-search-results" hidden></ul>
+    <!-- A <div>, deliberately not a <section id>: applyFilter() hides every
+         `section[id]` that contains no visible <div x-demo>, which would sweep up
+         this panel (it holds injected markup, never a x-demo) and leave it
+         display:none no matter what was clicked. -->
+    <div id="behaviors-live" class="behaviors-live" hidden aria-live="polite">
+      <header class="behaviors-live__head">
+        <span id="behaviors-live-token" class="behaviors-live__token"></span>
+        <span id="behaviors-live-note" class="behaviors-live__note"></span>
+        <!-- #720 -- John, on `table . bordered`: "put this element into a parent
+             container that will show this content when the fullscreen button is
+             pressed... otherwise it will keep this same location and size".
+             Some examples are simply bigger than a panel that shares its width
+             with the results list -- the table family, masonry, gallery,
+             cardhero. This uses the framework's OWN x-fullscreen behavior
+             (helpers.js), which already saves and restores the target's
+             height/overflow across the round trip, rather than hand-rolling a
+             second implementation in page chrome. -->
+        <button
+          id="behaviors-live-fullscreen"
+          class="behaviors-live__fullscreen"
+          type="button"
+          x-fullscreen
+          target="#behaviors-workspace"
+          label="&#9974; Fullscreen"></button>
+      </header>
+      <!-- #722 -- John: "When clicking fullscreen all of these elements go
+           fullscreen." The STAGE is the panel-sized surface the example is
+           centred in (#710/#711), so expanding it expanded the empty space too.
+           This wrapper is the parent container the original ask asked for: it
+           hugs the rendered example, and it is what goes fullscreen. -->
+      <div id="behaviors-live-stage" class="behaviors-live__stage">
+        <div id="behaviors-live-example" class="behaviors-live__example"></div>
       </div>
-    </wb-demo>
 
-    <h3>YouTube Embed</h3>
-    <wb-demo class="youtube-container"><div x-youtube id="dQw4w9WgXcQ" ratio="16:9"></div></wb-demo>
-  </section>
+      <!-- #666 — John: "switch the html to be right under the rendered thing,
+           then put the event hook up last, but show the events right under the
+           rendered element". Order is deliberate:
+             1. the rendered element
+             2. its HTML, immediately beneath it
+             3. the events it fires, as you interact
+             4. the handler you would write, last -- it is reference material,
+                not something to watch. -->
+      <div id="behaviors-live-code" class="behaviors-live__code"></div>
 
-  <!-- ═══════════════════════════════════════════════════════════════════════════
-     EFFECTS
-     ═══════════════════════════════════════════════════════════════════════════ -->
-  <section id="effects">
-    <h2>✨ Effects</h2>
-    <div class="section-note">
-      <strong>Effects behaviors:</strong> Effect behaviors: Attention seekers, entrance animations, particle effects, and ripples.
+      <div id="behaviors-live-events" class="behaviors-live__events">
+        <div class="behaviors-live__events-head">
+          <span>Events</span>
+          <span id="behaviors-live-events-hint" class="behaviors-live__events-hint">interact with the example above</span>
+        </div>
+        <ol id="behaviors-live-events-log" class="behaviors-live__events-log"></ol>
+        <p id="behaviors-live-events-empty" class="behaviors-live__events-empty">
+          No events yet — click the example above and they appear here.
+        </p>
+      </div>
+
+      <div id="behaviors-live-handler" class="behaviors-live__handler">
+        <div class="behaviors-live__events-head"><span>Event handler</span></div>
+        <div id="behaviors-live-events-snippet" class="behaviors-live__events-code"></div>
+      </div>
+
+      <!-- x-ignore: this <details> is page chrome, not a demo. Without it WB
+           auto-injects the `details` behavior (nativeMap maps details ->
+           details), which sets inline border/radius styles and restructures the
+           summary -- that is the "edge" John spotted, and no stylesheet rule
+           could win against an inline style. -->
+      <details id="behaviors-live-doc" class="behaviors-live__doc" x-ignore open hidden>
+        <summary class="behaviors-live__doc-summary">Documentation</summary>
+        <div id="behaviors-live-doc-body" class="behaviors-live__doc-body"></div>
+      </details>
     </div>
-
-    <h3>Attention Seekers (click to trigger)</h3>
-    <wb-demo><button class="effect-demo" x-bounce>Bounce</button></wb-demo>
-    <wb-demo><button class="effect-demo" x-shake>Shake</button></wb-demo>
-    <wb-demo><button class="effect-demo" x-pulse>Pulse</button></wb-demo>
-    <wb-demo><button class="effect-demo" x-flash>Flash</button></wb-demo>
-    <wb-demo><button class="effect-demo" x-tada>Tada</button></wb-demo>
-    <wb-demo><button class="effect-demo" x-wobble>Wobble</button></wb-demo>
-    <wb-demo><button class="effect-demo" x-jello>Jello</button></wb-demo>
-    <wb-demo><button class="effect-demo" x-heartbeat>💓 Heartbeat</button></wb-demo>
-
-    <h3>Entrance Animations</h3>
-    <wb-demo><button class="effect-demo" x-fadein>Fadein</button></wb-demo>
-    <wb-demo><button class="effect-demo" x-slidein direction="left">Slidein Left</button></wb-demo>
-    <wb-demo><button class="effect-demo" x-slidein direction="right">Slidein Right</button></wb-demo>
-    <wb-demo><button class="effect-demo" x-slidein direction="up">Slidein Up</button></wb-demo>
-    <wb-demo><button class="effect-demo" x-zoomin>Zoomin</button></wb-demo>
-    <wb-demo><button class="effect-demo" x-flip>Flip</button></wb-demo>
-
-    <h3>Special Effects</h3>
-    <wb-demo><button variant="primary" x-confetti>🎊 Confetti</button></wb-demo>
-    <wb-demo><button variant="primary" x-fireworks>🎆 Fireworks</button></wb-demo>
-    <wb-demo><button variant="primary" x-snow>❄️ Snow</button></wb-demo>
-    <wb-demo><button variant="primary" x-sparkle>✨ Sparkle</button></wb-demo>
-    <wb-demo><button variant="primary" x-glow>💡 Glow</button></wb-demo>
-    <wb-demo><button variant="primary" x-rainbow>🌈 Rainbow</button></wb-demo>
-    <wb-demo><button variant="primary" x-ripple>Click for Ripple</button></wb-demo>
-    <wb-demo><div x-ripple class="ripple-box">Ripple on any element</div></wb-demo>
-  </section>
-
-  <!-- ═══════════════════════════════════════════════════════════════════════════
-     UTILITIES
-     ═══════════════════════════════════════════════════════════════════════════ -->
-  <section id="utilities">
-    <h2>🔧 Utilities</h2>
-    <div class="section-note">
-      <strong>Utilities behaviors:</strong> Utility behaviors: Copy, share, print, fullscreen, clock, countdown, and dark mode toggle.
-    </div>
-
-    <h3>Copy functionality</h3>
-    <wb-demo><button variant="primary" x-copy copy-text="Text copied to clipboard!">📋 Copy Text</button></wb-demo>
-    <wb-demo><button variant="primary" x-copy copy-text="npm install wb-framework">📋 Copy Command</button></wb-demo>
-
-    <h3>Share, Print & Fullscreen</h3>
-    <wb-demo><button variant="secondary" x-share share-title="wb-starter" share-url="https://example.com">📤 Share</button></wb-demo>
-    <wb-demo><button variant="secondary" x-print>🖨️ Print</button></wb-demo>
-    <wb-demo><button variant="secondary" x-fullscreen>⛶ Fullscreen</button></wb-demo>
-
-    <h3>Clock & Countdown</h3>
-    <wb-demo><div x-clock class="time-display"></div></wb-demo>
-    <wb-demo><div x-countdown to="2027-12-31" class="time-display"></div></wb-demo>
-    <wb-demo><span x-relativetime date="2025-01-01" class="time-display">Jan 1, 2025</span></wb-demo>
-
-    <h3>Dark Mode Toggle</h3>
-    <wb-demo><button variant="primary" x-darkmode>🌙 Toggle Dark Mode</button></wb-demo>
-
-    <h3>Text Truncate</h3>
-    <wb-demo>
-      <p x-truncate lines="2" class="truncate-box">
-        This is a very long text that will be truncated after two lines. Lorem ipsum dolor sit amet, consectetur
-        adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
-      </p>
-    </wb-demo>
-  </section>
+  </div>
+  </div><!-- /#behaviors-workspace (#744) -->
+</div>
+<!-- #666: the per-category demo sections and their jump-nav were removed here.
+     Every one of those 88 <div x-demo> blocks now lives in
+     data/behavior-examples.json (scripts/build-behavior-examples.mjs) and is
+     rendered on demand by the live-preview panel above -- so the examples are
+     still here, they are just no longer 13,000px of markup you have to scroll
+     past to reach one. The jump-nav went with them: there is nothing below to
+     jump to, and the selector reaches every behavior directly. -->
 
   <!-- FOOTER -->
   <footer id="footer">
-    <p>wb-starter v{{WB_VERSION}} • 71 behaviors • 23 themes</p>
+    <!-- x-release, not {{WB_VERSION}}: that token is substituted only by
+         site-engine.js for SPA page fragments, so a direct visit to
+         /pages/behaviors.html rendered the literal "v{{WB_VERSION}}".
+         release.js exists to replace exactly that -- it "works identically
+         everywhere -- SPA fragment or standalone page". The behavior count is
+         filled in from the same registry the selector uses, so it cannot drift
+         the way the hardcoded 71 did. -->
+    <p>wb-starter <span x-release></span> • <span id="footer-behavior-count">…</span> behaviors • 50 themes</p>
     <p><a href="?page=docs">Documentation</a> • <a href="?page=themes">Themes</a> • <a href="?page=home">Home</a></p>
   </footer>
+
+  <script>
+  // #635: John, screenshot on this page: "Add a search here that allows
+  // finding all of our behaviors. e.g. x-tooltiop, x-this, x-that etc.
+  // typing in just x- will show all of them". Matches each <div x-demo>'s own
+  // `_rawSource` (the exact authored markup, captured synchronously at
+  // connectedCallback -- see x-demo.js -- available immediately, no need
+  // to wait for lazy behaviors to finish applying) against the query, then
+  // hides the h3/section around any group with nothing left visible so the
+  // filtered page never shows an orphaned empty heading.
+  (function () {
+    const input = document.getElementById('behaviors-search');
+    const countEl = document.getElementById('behaviors-search-count');
+    const resultsEl = document.getElementById('behaviors-search-results');
+    if (!input || !countEl || !resultsEl) return;
+
+    const demos = Array.from(document.querySelectorAll('x-demo'));
+    const total = demos.length;
+
+    // John: "prefill this dropdown box with all known x- attributes" --
+    // browsing before typing anything needs the CANONICAL list (every
+    // registered behavior, "x-" + name), not just whatever happens to
+    // appear in this page's own demo markup -- a behavior with zero demos
+    // on THIS page would otherwise never show up at all. Sourced from
+    // tag-map.js's elementMap (the same single source of truth the #631
+    // audit/registration work this session already established), via
+    // dynamic import() so this stays a classic <script> (matches every
+    // other inline script on this page) instead of needing type="module".
+    // siteRoot() mirrors demo.js's own helper -- this page can be loaded
+    // both through the SPA (root '/') and under a GitHub Pages sub-path
+    // ('/wb-starter/'), and a bare leading '/' import would 404 on the
+    // latter.
+    function siteRoot() {
+      const stripped = location.pathname.replace(/(?:public|demos|pages|articles|tests\/fixtures)\/.*$/, '');
+      return stripped.replace(/[^/]*$/, '');
+    }
+    let allEntries = [];
+    let extensionMap = {};
+    let nativeMap = {};
+    const schemaByName = new Map();
+    let exampleCatalogue = {};
+
+    // #666: one row per VARIANT, not one per behavior -- John: "add one entry
+    // for each variant too... show the behavior name and all possible variants
+    // (one per row so user can see them all)". A behavior with no declared
+    // variant enum still gets exactly one row, with an empty variant cell.
+    // #666 — John: "isn't the language type a variant" / "so shouldn't we
+    // include those?". Yes. `variant` is not the only axis a control varies on:
+    // size, position, icon, aspect, inputType and others are declared the same
+    // way, and a reader wanting to see every option needs all of them. Every
+    // enum-valued property now produces rows, SUMMED per axis (not a cartesian
+    // product -- that would explode 143 entries into thousands).
+    //   variant-only: 272 rows.  all enum properties: 484.
+    function variantsFor(attr) {
+      const sc = schemaByName.get(extensionMap[attr]);
+      const props = (sc && sc.properties) || {};
+      const out = [];
+      for (const [name, def] of Object.entries(props)) {
+        if (!def) continue;
+        if (Array.isArray(def.enum) && def.enum.length) {
+          for (const value of def.enum) out.push({ prop: name, value });
+        } else if (def.type === 'boolean') {
+          // #666 — John: "<audio showplaybutton> no different than when not
+          // used". Correct: showDisplay and showPlayButton both DEFAULT to
+          // true, so setting them true is a guaranteed no-op. Demonstrate the
+          // value that actually differs from the default -- for a default-true
+          // flag that means emitting flag="false".
+          // John asked for showDisplay specifically to demo as "true" -- seeing
+          // the display present is the useful demonstration there, whereas for
+          // showPlayButton seeing it ABSENT is what shows the flag working.
+          // Explicit override beats a blanket rule for either.
+          const DEMO_AS_TRUE = new Set(['showDisplay']);
+          const demoValue = (def.default === true && !DEMO_AS_TRUE.has(name)) ? 'false' : 'true';
+          out.push({ prop: name, value: demoValue, boolean: true, defaultsTo: def.default === true });
+          continue;
+        }
+      }
+      // Sorted so `variant` leads -- it is the axis most readers look for --
+      // and the rest follow alphabetically rather than in schema-key order.
+      out.sort((a, b) =>
+        (a.prop === 'variant' ? -1 : b.prop === 'variant' ? 1 : a.prop.localeCompare(b.prop)) ||
+        0
+      );
+      return out.length ? out : [{ prop: '', value: '' }];
+    }
+
+    /** How an option reads in the variant column: bare for variant, prop=value otherwise. */
+    function optionLabel(opt) {
+      if (!opt || !opt.value) return '';
+      // A default-true flag is demonstrated by switching it OFF, so the label
+      // has to say so -- a bare `showPlayButton` would imply the opposite.
+      if (opt.boolean) return opt.value === 'false' ? `${opt.prop}=false` : opt.prop;
+      return opt.prop === 'variant' ? opt.value : `${opt.prop}=${opt.value}`;
+    }
+    import(siteRoot() + 'src/core/tag-map.js')
+      .then(async (mod) => {
+        // #665: extensionMap, NOT elementMap. elementMap maps wb-* COMPONENT
+        // TAGS to behavior names (x-card, x-button, x-badge, ...), so
+        // prefixing its values with "x-" produced a list of components wearing
+        // behavior names -- x-card, x-button, x-cardbutton -- on a page titled
+        // "WB Behaviors Showcase", while the ~105 real behaviors never
+        // appeared at all. extensionMap is the actual x-* behavior registry:
+        // "Extensions are effects, utilities, and morphing behaviors".
+        //
+        // Its KEYS are already the authored attribute names (x-ripple), so
+        // they are used directly rather than rebuilt from the values -- several
+        // attributes share one behavior function, and mapping through the
+        // values would silently collapse them.
+        extensionMap = mod.extensionMap;
+        nativeMap = mod.nativeMap || {};
+        // John: "do not include any as- behaviors" -- x-as-{name} is the
+        // MORPHING form (x-as-card), which re-renders an element AS another
+        // component rather than adding behavior to it.
+        //
+        // And: "in cases where we fully inject into a semantic element like
+        // audio we do not need to list the x-audio as it's autoinjected" --
+        // writing <audio> already applies the behavior, so x-audio is pure
+        // duplication. Those 19 entries are listed under their SEMANTIC
+        // ELEMENT instead of dropped outright, because the element is the
+        // real authoring form (<button variant="primary">) and its variants
+        // still need to be visible.
+        const autoHost = {};
+        for (const [selector, beh] of Object.entries(mod.nativeMap)) {
+          if (!autoHost[beh]) autoHost[beh] = selector;
+        }
+        // #666: the x-* surface is split across TWO registries -- tag-map's
+        // extensionMap and wb-lazy's WB_LAZY_ONLY_ATTRIBUTES. 34 attributes
+        // used by real demos on this very page (x-fadein, x-lightbox,
+        // x-confirm, x-bounce, ...) live ONLY in the second one, so reading
+        // tag-map alone under-reported the behavior list by a third.
+        let lazyOnly = {};
+        try {
+          const lazy = await import(siteRoot() + 'src/core/wb-lazy.js');
+          lazyOnly = lazy.WB_LAZY_ONLY_ATTRIBUTES || {};
+        } catch (err) {
+          console.warn('[behaviors] could not read wb-lazy attribute table', err);
+        }
+        extensionMap = { ...lazyOnly, ...mod.extensionMap };
+
+        const seen = new Set();
+        allEntries = [];
+        Object.keys(extensionMap)
+          .filter((a) => !a.startsWith('x-as-'))
+          .forEach((attr) => {
+            const beh = extensionMap[attr];
+            const host = autoHost[beh];
+            // Key on the BEHAVIOR for auto-injected ones, so x-progress and
+            // x-progressbar (same behavior) collapse to a single <progress> row
+            // instead of duplicating it.
+            const key = host ? 'native:' + beh : attr;
+            if (seen.has(key)) return;
+            seen.add(key);
+            // #761 -- John: "Shouldn't this be listed as an x-dialog?"
+            //
+            // An auto-injected behavior is labelled by its semantic host, so
+            // `dialog` reads as `dialog` -- correct when the example IS a bare
+            // <dialog>, and the whole point of not teaching <dialog x-dialog>.
+            //
+            // But some behaviors cannot be demonstrated on their own host: a
+            // bare <dialog> is invisible until something opens it, so its
+            // example is `<button x-dialog>`. The row then claimed `dialog`
+            // while the code beside it said `x-dialog` -- the list and the
+            // source disagreeing about what the reader should type.
+            //
+            // So label by what the example ACTUALLY writes. The host label is
+            // kept only when the example uses that host; otherwise the row
+            // says the attribute, because that is what the reader would copy.
+            // #764: one row PER AUTHORING FORM, not per behavior. A single row
+            // labelled by its host made "Both" and "Semantic" render the same
+            // list, so the filter could not show what it claimed to filter.
+            //
+            // A behavior with a native host offers two genuinely different
+            // things to write, and each gets its own row:
+            //   semantic   <progress value="72">        — the tag carries it
+            //   attribute  <div x-progress value="72">  — any host carries it
+            // Behaviors with no native host only ever offer the attribute form.
+            if (host) {
+              allEntries.push({ label: host, attr, behavior: beh, native: true, host, form: 'semantic' });
+            }
+            allEntries.push({ label: attr, attr, behavior: beh, native: false, host, form: 'attribute' });
+          });
+        // Re-label any entry whose curated example does not use its semantic
+        // host. Runs after the catalogue fetch resolves; entries without a
+        // curated example keep the host label, since the generated example
+        // uses the host by construction (#753).
+        function relabelByExample() {
+          allEntries.forEach((e) => {
+            if (!e.host) return;
+            const src = exampleCatalogue && exampleCatalogue[e.attr] && exampleCatalogue[e.attr].source;
+            if (!src) return;
+            // #767: this built the boundary as '\b' inside a STRING, which is
+            // the backspace character, not a word boundary. The pattern was
+            // `<audio<backspace>` and matched nothing, ever -- so every entry
+            // failed the "uses its host" test and was relabelled to its x-
+            // token. That is why Semantic listed x-audio, x-button, x-card
+            // instead of audio, button, article.
+            //
+            // A prefix test says the same thing with no escape to get wrong:
+            // in real markup the tag is followed by whitespace, '>' or '/'.
+            // Only the SEMANTIC row may be relabelled; the attribute row is
+            // supposed to read x-{behavior}.
+            if (e.form === 'attribute') return;
+            const at = src.indexOf('<' + e.host);
+            const after = at === -1 ? '' : src.charAt(at + e.host.length + 1);
+            const usesHost = at !== -1 && (after === '' || /[\s>/]/.test(after));
+            if (!usesHost) { e.label = e.attr; e.native = false; }
+          });
+          allEntries.sort((a, b) => a.label.localeCompare(b.label));
+          // The catalogue fetch can resolve AFTER the list has rendered, in
+          // which case relabelling the data alone changes nothing on screen.
+          // Re-run the filter so the rows reflect it. Guarded: on the first
+          // load this runs before any render, and applyFilter is happy to be
+          // called with the current query either way.
+          try {
+            if (typeof applyFilter === 'function' && resultsEl && resultsEl.children.length) {
+              applyFilter(input ? input.value : '');
+            }
+          } catch { /* the list is already correct or not yet built */ }
+        }
+
+        allEntries.sort((a, b) => a.label.localeCompare(b.label));
+        // Variants come from the schema index (one fetch, not 105). Failure is
+        // non-fatal: the list still renders, just without variant rows.
+        // #666: curated examples now come from a data file, so the demo
+        // sections no longer have to stay on the page purely as a data source.
+        fetch(siteRoot() + 'data/behavior-examples.json')
+          .then((r) => (r.ok ? r.json() : null))
+          .then((cat) => { if (cat && cat.examples) { exampleCatalogue = cat.examples; try { relabelByExample(); } catch { /* list still renders */ } } })
+          .catch(() => {});
+
+        return fetch(siteRoot() + 'data/schema-index.json')
+          .then((r) => (r.ok ? r.json() : null))
+          .then((idx) => {
+            if (idx && Array.isArray(idx.schemas)) {
+              idx.schemas.forEach((sc) => schemaByName.set(sc.name, sc));
+            }
+          })
+          .catch(() => {})
+          .then(() => {
+            // Through applyFilter, not renderBrowseAll directly: the count is
+            // rendered from allEntries, which is empty until this async load
+            // resolves. Calling the renderer alone left "0 behaviors" on screen
+            // next to a full list.
+            applyFilter(input.value);
+            const footerCount = document.getElementById('footer-behavior-count');
+            if (footerCount) footerCount.textContent = String(allEntries.length);
+          });
+      })
+      .catch(() => {}); // browse-all list just stays empty; typed search still works
+
+    // #642: John, "the search box says there are 69 items from
+    // that search but there is no content. I want an element that has 69
+    // rows of information for the end user." -- the count was always
+    // correct and scrollIntoView (the earlier #634 follow-up fix) does
+    // work, but "scroll a 13,000px page and hope you land near a
+    // highlighted item" isn't the same thing as SEEING the 69 results.
+    // This builds an actual results list, directly under the search box,
+    // no scrolling required to see it exists.
+    //
+    // Each row's label is every distinct x-*/wb-* token found in that
+    // demo's own raw source -- not just the query itself, which for a
+    // broad query like "x-" would otherwise put an identical, useless
+    // "x-" label on all 69 rows.
+    const TOKEN_RE = /(?:<|\s)((?:wb|x)-[a-z0-9-]+)/gi;
+    function tokensFor(source) {
+      const seen = new Set();
+      let m;
+      TOKEN_RE.lastIndex = 0;
+      while ((m = TOKEN_RE.exec(source))) seen.add(m[1].toLowerCase());
+      return Array.from(seen);
+    }
+
+    // The heading a demo visually sits under (its nearest preceding h3,
+    // falling back to h2) -- gives each row context beyond the bare
+    // attribute name, e.g. "x-ripple" under "Ripple Effect".
+    function headingFor(demo) {
+      let el = demo.previousElementSibling;
+      while (el) {
+        if (el.tagName === 'H3' || el.tagName === 'H2') return el.textContent.trim();
+        el = el.previousElementSibling;
+      }
+      return '';
+    }
+
+    // Empty-query "browse all" state: the canonical list fetched above,
+    // not scoped to this page's demos -- lets a reader discover a behavior
+    // that has no example here at all. Clicking a row fills the input with
+    // that exact token and runs the normal typed-search path (matchedDemos
+    // above), rather than trying to scroll anywhere itself -- a behavior
+    // with zero demos on this page has nothing to scroll to, and this way
+    // that's an honest "Showing 0 of 88", not a silent no-op click.
+    let totalRowCount = 0;
+    // #764: which authoring form the reader wants to see.
+    function authoringForm() {
+      const picked = document.querySelector('input[name="authoring-form"]:checked');
+      return picked ? picked.value : 'both';
+    }
+
+    /**
+     * Does this behavior offer the given form?
+     *
+     * semantic  — the behavior has a native host tag, so the tag alone carries
+     *             it (autoInject). entry.host is set from tag-map's nativeMap.
+     * attribute — x-{behavior} on any host. Every entry offers this: that is
+     *             what the x- namespace IS. So "attribute" never hides a row,
+     *             it is the "semantic" filter that narrows.
+     */
+    function offersForm(entry, form) {
+      if (form === 'both') return true;
+      return entry.form === form;
+    }
+
+    function renderBrowseAll(query) {
+      const q = (query || '').trim().toLowerCase();
+      const form = authoringForm();
+      if (!allEntries.length) {
+        resultsEl.hidden = true;
+        return;
+      }
+      resultsEl.hidden = false;
+      resultsEl.innerHTML = '';
+      const frag = document.createDocumentFragment();
+      let rendered = 0;
+      allEntries.forEach((entry) => {
+        variantsFor(entry.attr).forEach((opt) => {
+          const variant = opt.value;
+          const shownOption = optionLabel(opt);
+          // Match on everything the reader can see or type: the displayed name,
+          // the underlying x-* attribute (still searchable even when the row is
+          // labelled by its semantic element), and the option.
+          if (!offersForm(entry, form)) return;
+          if (q && ![entry.label, entry.attr, shownOption].join(' ').toLowerCase().includes(q)) return;
+          rendered++;
+          const li = document.createElement('li');
+          const btn = document.createElement('button');
+          btn.type = 'button';
+          btn.className = 'behaviors-search-results__row';
+          btn.dataset.browseToken = entry.attr;
+          btn.dataset.label = entry.label;
+          btn.dataset.form = entry.form || 'attribute';
+          if (entry.native) btn.dataset.native = '1';
+          if (variant) {
+            btn.dataset.variant = variant;
+            btn.dataset.prop = opt.prop;
+            if (opt.boolean) btn.dataset.boolean = '1';
+          }
+
+          // John: "change the variant to be in col. two" -- name first, variant
+          // second, matching the panel header (behavior · variant). The variant
+          // cell is rendered even when empty so the two columns stay aligned
+          // down the list.
+          const t = document.createElement('span');
+          t.className = 'behaviors-search-results__token';
+          t.textContent = entry.label;
+          // #699: the token never wraps, so a long one (input[type="checkbox"])
+          // truncates with an ellipsis. Keep the full value reachable.
+          t.title = entry.label;
+          const v = document.createElement('span');
+          v.className = 'behaviors-search-results__variant';
+          v.textContent = shownOption;
+          btn.append(t, v);
+          li.appendChild(btn);
+          frag.appendChild(li);
+        });
+      });
+      if (!q) totalRowCount = rendered;
+      resultsEl.appendChild(frag);
+    }
+
+    // Which hit does the reader actually mean? Typing "button" matched
+    // `audio · showPlayButton` first -- "showPlayButton" contains "button", and
+    // audio sorts earlier. A match on the BEHAVIOR NAME beats a match buried in
+    // an option name, and an exact name beats a prefix.
+    function bestMatch(rows, q) {
+      const score = (row) => {
+        const label = (row.dataset.label || '').toLowerCase();
+        const attr = (row.dataset.browseToken || '').toLowerCase();
+        if (label === q || attr === q) return 0;
+        if (label.startsWith(q) || attr.startsWith(q)) return 1;
+        if (label.includes(q) || attr.includes(q)) return 2;
+        return 3;                       // matched only on the option name
+      };
+      let best = rows[0];
+      let bestScore = score(rows[0]);
+      for (const row of rows) {
+        const sc = score(row);
+        if (sc < bestScore) { best = row; bestScore = sc; }
+        if (bestScore === 0) break;
+      }
+      return best;
+    }
+
+    function applyFilter(rawQuery) {
+      // #666: filters the SELECTOR, not on-page demos. The per-category demo
+      // sections are gone -- their examples live in data/behavior-examples.json
+      // and render in the panel -- so there is nothing left to show/hide in the
+      // document, and the search now narrows the one list that reaches
+      // everything.
+      const q = rawQuery.trim().toLowerCase();
+      renderBrowseAll(q);
+
+      const rows = resultsEl.querySelectorAll('.behaviors-search-results__row');
+      const shown = rows.length;
+      countEl.textContent = q === ''
+        ? `${allEntries.length} behaviors`
+        : `Showing ${shown} of ${totalRowCount}`;
+
+      // #666 — John: "why does search not fill the first thing it finds with
+      // the search item e.g. button". Typing narrowed the list but rendered
+      // nothing, so a search told you a match EXISTS without showing it. Select
+      // the first hit as you type.
+      //
+      // focus:false is essential -- selectRow() focuses the row so arrow keys
+      // work after a click, but stealing focus mid-keystroke would eject the
+      // reader from the input they are still typing into.
+      if (q !== '' && shown) selectRow(bestMatch(rows, q), { focus: false });
+    }
+
+    // ─── #664: live preview ────────────────────────────────────────────
+    // John: "Make [the list] do the same thing playground does, inject code and
+    // immediately show the run time of each. put the demo window right next to
+    // this dropdown." Clicking a behavior injects its markup into the panel
+    // beside the list and upgrades it in place -- no scrolling a 13,000px page
+    // to find the example.
+    const liveEl = document.getElementById('behaviors-live');
+    // #686 -- must stay in sync with the `@media (max-width: 60rem)` rule in
+    // src/styles/pages/behaviors.css that collapses .behaviors-browse to one
+    // column. Below that width the panel stacks BELOW the results list rather
+    // than beside it, which is the only case where revealing it is correct.
+    const STACKED = matchMedia('(max-width: 60rem)');
+    const liveToken = document.getElementById('behaviors-live-token');
+    const liveNote = document.getElementById('behaviors-live-note');
+    const liveStage = document.getElementById('behaviors-live-stage');
+    const liveExample = document.getElementById('behaviors-live-example');
+    const liveCode = document.getElementById('behaviors-live-code');
+    const liveDoc = document.getElementById('behaviors-live-doc');
+
+    // #762 -- John: "Allow the document element to be dragged all the way to
+    // the top."
+    //
+    // The doc sits last, below the example, its source, the events log and the
+    // handler snippet. Reading the docs while looking at the example means
+    // scrolling past all of it, every time. Let the reader put it where they
+    // want it -- including first.
+    //
+    // The <summary> is the handle, not the whole <details>: making the entire
+    // panel draggable swallows text selection inside the docs, which is most
+    // of what the panel is for. draggable is switched on only while the
+    // pointer is down on the summary, and off again immediately after.
+    (function enableDocReorder() {
+      if (!liveDoc || !liveEl) return;
+      const handle = liveDoc.querySelector('.behaviors-live__doc-summary');
+      if (!handle) return;
+
+      handle.style.cursor = 'grab';
+      handle.title = 'Drag to reorder — drop above any section';
+
+      handle.addEventListener('mousedown', () => { liveDoc.draggable = true; });
+      document.addEventListener('mouseup', () => { liveDoc.draggable = false; });
+
+      liveDoc.addEventListener('dragstart', (e) => {
+        liveDoc.classList.add('is-dragging');
+        // Firefox refuses to start a drag without payload.
+        try { e.dataTransfer.setData('text/plain', 'behaviors-live-doc'); } catch { /* not required */ }
+        e.dataTransfer.effectAllowed = 'move';
+      });
+
+      liveDoc.addEventListener('dragend', () => {
+        liveDoc.classList.remove('is-dragging');
+        liveDoc.draggable = false;
+      });
+
+      liveEl.addEventListener('dragover', (e) => {
+        if (!liveDoc.draggable) return;
+        e.preventDefault();               // without this, drop never fires
+        e.dataTransfer.dropEffect = 'move';
+      });
+
+      liveEl.addEventListener('drop', (e) => {
+        if (!liveDoc.draggable) return;
+        e.preventDefault();
+        // Insert before the first sibling whose midpoint is below the pointer;
+        // dropping past everything puts it last. The header stays put -- it
+        // names what is being shown, so it is not part of the ordering.
+        const head = liveEl.querySelector('.behaviors-live__head');
+        const siblings = [...liveEl.children]
+          .filter((c) => c !== liveDoc && c !== head);
+        const target = siblings.find((c) => {
+          const r = c.getBoundingClientRect();
+          return e.clientY < r.top + r.height / 2;
+        });
+        if (target) liveEl.insertBefore(liveDoc, target);
+        else liveEl.appendChild(liveDoc);
+      });
+    })();
+    let liveDocBody = document.getElementById('behaviors-live-doc-body');
+
+    // #703 -- John: "Make sure when dropped down the height is right." An
+    // example that opens a floating layer (dropdown menu, tooltip, popover)
+    // positions it ABSOLUTELY, so it adds nothing to the stage's layout height:
+    // measured at 375x812 the open x-dropdown menu ran to 549px while the stage
+    // ended at 321px and the code panel started there, so the menu rendered
+    // straight over the code. Standard 15: an overlay must not overflow its
+    // parent. Grow the stage to whatever the example actually put on screen.
+    const STAGE_MIN_PX = 96;   // 6rem, matching .behaviors-live__stage in behaviors.css
+    let fitQueued = false;
+    function fitStageToOverlays() {
+      if (fitQueued) return;
+      fitQueued = true;
+      requestAnimationFrame(() => {
+        fitQueued = false;
+        const stageTop = liveStage.getBoundingClientRect().top;
+        let deepest = 0;
+        for (const el of liveStage.querySelectorAll('*')) {
+          const r = el.getBoundingClientRect();
+          if (r.width === 0 && r.height === 0) continue;   // display:none, not open
+          deepest = Math.max(deepest, r.bottom - stageTop);
+        }
+        const padding = parseFloat(getComputedStyle(liveStage).paddingBottom) || 0;
+        const wanted = Math.max(STAGE_MIN_PX, Math.ceil(deepest + padding));
+        // #760 -- John, on a collapsed <details>: "Why blank space?"
+        //
+        // This used to only ever GROW. Opening the details grew the stage to
+        // fit it; collapsing it left the height behind, so the example sat in
+        // a screen of nothing it no longer needed.
+        //
+        // The no-shrink rule was right for the case it was written for -- a
+        // dropdown or popover opens on hover, and pulling the floor up while
+        // the pointer is over it makes the panel jump. But that only applies
+        // to OVERLAYS. Content that collapses in place should give the space
+        // back; that is what collapsing means.
+        //
+        // So: if anything in the stage is taken out of flow, keep the grown
+        // box (the overlay needs somewhere to live). Otherwise track the
+        // content, up or down.
+        const hasOverlay = [...liveStage.querySelectorAll('*')].some((el) => {
+          const pos = getComputedStyle(el).position;
+          return pos === 'absolute' || pos === 'fixed';
+        });
+        const current = parseFloat(liveStage.style.minHeight) || 0;
+        if (wanted > current) liveStage.style.minHeight = wanted + 'px';
+        else if (!hasOverlay && wanted < current) liveStage.style.minHeight = wanted + 'px';
+      });
+    }
+
+    // A menu opens on click and, for trigger="hover", on pointer entry.
+    liveStage.addEventListener('click', fitStageToOverlays);
+    liveStage.addEventListener('mouseover', fitStageToOverlays);
+    liveStage.addEventListener('focusin', fitStageToOverlays);
+
+    // #710 -- John: "Make the height of the left element same as right element."
+    // CSS alone cannot express it: with align-items:stretch the LIST's own 585
+    // rows also feed the row's intrinsic height, so lifting its max-height grew
+    // both columns to 32,787px (measured) -- the 13,000px page #664 removed.
+    // So the panel is measured and the list is capped to it; the list keeps
+    // scrolling inside itself. Stacked, the cap is dropped and behaviors.css's
+    // fixed max-height applies again -- there is no second column to match.
+    const TWO_COL = matchMedia('(min-width: 60.0625rem)');
+    let syncQueued = false;
+    function syncListHeight() {
+      // Write on the next frame, never inside the observer callback: mutating
+      // layout during delivery is what produces "ResizeObserver loop completed
+      // with undelivered notifications".
+      if (syncQueued) return;
+      syncQueued = true;
+      requestAnimationFrame(() => {
+        syncQueued = false;
+        if (!TWO_COL.matches) {
+          if (resultsEl.style.maxHeight) resultsEl.style.maxHeight = '';
+          return;
+        }
+        const h = liveEl.getBoundingClientRect().height;
+        // Panel hidden (nothing picked yet) -> fall back to the stylesheet.
+        const next = h > 0 ? Math.round(h) + 'px' : '';
+        // Only write on a real change -- an unconditional write re-triggers the
+        // observer every frame for no reason.
+        if (resultsEl.style.maxHeight !== next) resultsEl.style.maxHeight = next;
+        keepSelectionVisible();
+      });
+    }
+    // #717 -- John: "When using the down or up button the current selection must
+    // be the first one." selectRow() sets scrollTop = rowTop and the browser
+    // clamps at scrollHeight - clientHeight, so for the LAST screenful of rows
+    // there is nothing below them to scroll into view: measured, row 48 of 49
+    // sat 1134px down instead of 0, drifting further the closer to the end.
+    // Trailing space equal to (viewport - last row) puts every row within reach
+    // of the top. Only while the list actually scrolls -- a short list gains
+    // nothing from it and would just grow a scrollbar.
+    // #728 -- every arrow press renders a different example, which resizes the
+    // panel, which resizes the list (#710) -- AFTER selectRow() has already
+    // scrolled. Measured: End selected the last row and then the resize left it
+    // out of view. This re-asserts VISIBILITY only, by the same minimum-scroll
+    // rule; it does not pin the row anywhere, which is what John asked to be
+    // rid of.
+    // Keyboard only. #664's contract is that a CLICK leaves the list exactly
+    // where the reader put it -- re-asserting visibility after a click broke
+    // that, because the panel resize that follows every render would drag the
+    // list to a row the reader had deliberately scrolled away from.
+    let selectedByKeyboard = false;
+
+    function keepSelectionVisible() {
+      if (!selectedByKeyboard) return;
+      const cur = resultsEl.querySelector('[aria-current="true"]');
+      if (!cur) return;
+      const top = cur.offsetTop - resultsEl.offsetTop;
+      const bottom = top + cur.offsetHeight;
+      if (top < resultsEl.scrollTop) resultsEl.scrollTop = top;
+      else if (bottom > resultsEl.scrollTop + resultsEl.clientHeight) {
+        resultsEl.scrollTop = bottom - resultsEl.clientHeight;
+      }
+    }
+
+    // The panel's height drives the list's; the list never drives the panel's,
+    // so this cannot feed back on itself.
+    new ResizeObserver(syncListHeight).observe(liveEl);
+    TWO_COL.addEventListener('change', syncListHeight);
+
+    // Cache: the same doc is re-requested every time a reader arrows back over
+    // a behavior, and a 404 is worth remembering too (49 docs, 143 entries --
+    // most misses are permanent).
+    const docCache = new Map();
+
+    async function showDoc(behavior) {
+      liveDoc.hidden = true;
+      if (!behavior) return;
+
+      // A FRESH host element per behavior. WB.inject() will not re-apply a
+      // behavior to an element that already carries it, so reusing one div
+      // rendered the first doc and then left every subsequent one as raw
+      // markdown text (confirmed: x-accordion rendered, x-chip and x-ripple
+      // did not). Replacing the node sidesteps that entirely.
+      const fresh = document.createElement('div');
+      fresh.id = 'behaviors-live-doc-body';
+      fresh.className = 'behaviors-live__doc-body';
+      liveDocBody.replaceWith(fresh);
+      liveDocBody = fresh;
+
+      let md = docCache.get(behavior);
+      if (md === undefined) {
+        try {
+          const res = await fetch(`${siteRoot()}docs/behaviors/${behavior}.md`);
+          md = res.ok ? await res.text() : null;
+        } catch (err) {
+          md = null;
+        }
+        docCache.set(behavior, md);
+      }
+      liveDoc.hidden = false;
+      // #746 -- John: "Don't just say Documentation say Button Documentation."
+      // The panel sits under a rendered example that changes with the
+      // selection; an unqualified "Documentation" gives the reader nothing to
+      // tie it to. There is one <summary> reused across every behavior, so it
+      // is set here rather than in the static markup.
+      const docSummary = liveDoc.querySelector('.behaviors-live__doc-summary');
+      if (docSummary) {
+        docSummary.textContent =
+          behavior.charAt(0).toUpperCase() + behavior.slice(1) + ' Documentation';
+      }
+      if (!md) {
+        // #673 -- John, on `article`: "Where is the docs element below this?"
+        // This used to `return` while the panel was still hidden, so for the
+        // 116 of 143 behaviors with no .md the whole panel silently vanished --
+        // indistinguishable from the feature being broken. Say so instead,
+        // matching how the Events panel states its own empty case.
+        liveDoc.open = true;
+        liveDocBody.className = 'behaviors-live__doc-body behaviors-live__doc-body--empty';
+        liveDocBody.textContent = 'No doc yet for ' + behavior + '.';
+        return;
+      }
+
+      // Open by default: John asked for an element that SHOWS the doc, and a
+      // collapsed 40px strip below the fold reads as "there is no doc". Still a
+      // <details> so it can be folded away once read.
+      liveDoc.open = true;
+      // textContent, not innerHTML: mdhtml.js decodes-then-parses and expects
+      // the browser to have HTML-escaped the raw markdown first. Assigning raw
+      // markdown via innerHTML double-escapes it (the pattern pages/issues.html
+      // documents for the same reason).
+      liveDocBody.textContent = md;
+      try {
+        const mod = await import(siteRoot() + 'src/core/wb-lazy.js');
+        const WB = mod.default || mod.WB || window.WB;
+        // autoLiveRender:false -- a doc that ILLUSTRATES a <wb-*> example must
+        // not have that example promoted into a live, fetching element inside
+        // this panel; the running example above is the live one.
+        if (WB && WB.inject) await WB.inject(liveDocBody, 'mdhtml', { autoLiveRender: false });
+      } catch (err) {
+        console.warn('[behaviors] could not render doc for ' + behavior, err);
+      }
+    }
+
+    // The markup for most behaviors is already on this page, inside the
+    // <div x-demo> blocks. Prefer a demo whose source ACTUALLY uses the token as
+    // an attribute/tag rather than merely mentioning it in prose, so clicking
+    // "x-card" does not land on a demo that happens to say "x-card" in a
+    // sentence.
+    function sourceFor(token, form) {
+      // Catalogue first (data/behavior-examples.json), DOM second. The DOM path
+      // is kept so the panel still works on a page that has its own demos --
+      // and so removing the sections from this one changes nothing here.
+      const fromCatalogue = exampleCatalogue[token];
+      if (fromCatalogue && fromCatalogue.source) {
+        // #764: a semantic row must render the semantic example and an
+        // attribute row the x- one. `source` leads with the semantic form
+        // where a native host exists, and the x- counterpart lives in
+        // alternates -- so an attribute row picks the alternate that actually
+        // carries x-{behavior}. Falling back to source keeps behaviors with
+        // only one form working unchanged.
+        if (form === 'attribute') {
+          const bare = token.replace(/^x-/, '');
+          const carries = new RegExp(`\sx-${bare}(?=[\s/>=]|$)`, 'i');
+          if (!carries.test(fromCatalogue.source)) {
+            const alt = (fromCatalogue.alternates || []).find((a) => carries.test(a));
+            if (alt) return alt;
+          }
+        }
+        return fromCatalogue.source;
+      }
+
+      const bare = token.replace(/^x-/, '');
+      // Doubled backslashes: inside a template literal a lone `\s` collapses
+      // to a bare "s", silently producing a regex that matches the wrong thing.
+      const asAttr = new RegExp(`[<\\s](?:${token}|wb-${bare})(?=[\\s>=/])`, 'i');
+      for (const demo of demos) {
+        const src = demo._rawSource || demo.innerHTML || '';
+        if (asAttr.test(src)) return src.trim();
+      }
+      return null;
+    }
+
+    // Apply the row's variant to the example, so clicking "error / x-alert"
+    // shows the ERROR alert rather than whatever variant the page's demo
+    // happened to hardcode. Rewrites an existing variant=, or adds one to the
+    // first tag when absent.
+    // Some options are only observable in the presence of ANOTHER property.
+    // John: `<button iconposition="end">` "doesn't show an icon to use" -- of
+    // course it does not, there is no icon to position. Rather than hardcode
+    // pairs, the companion is taken from the schema itself: iconPosition needs
+    // `icon`, so seed `icon` with its first enum value.
+    // An option is only observable alongside whatever creates the surface it
+    // acts on. iconPosition needs an icon to position. audio's showDisplay and
+    // showPlayButton are demonstrated by switching them OFF (both default to
+    // true) -- but "off" alone means the custom transport never builds at all,
+    // so there is nothing to see them absent FROM. Pair each with a flag that
+    // does build it.
+    const COMPANIONS = {
+      iconPosition: 'icon',
+      iconposition: 'icon',
+      iconOnly: 'icon',
+      icononly: 'icon',
+      showDisplay: 'showplaybutton',
+      showPlayButton: 'showdisplay',
+    };
+
+    /** Companions that are bare boolean attributes, not prop="value". */
+    const BARE_COMPANIONS = new Set(['showplaybutton', 'showdisplay']);
+
+    // TRIGGER-mode behaviors. dialog() decides its mode by ATTRIBUTE PRESENCE,
+    // not tag: with modal-title/modal-content it becomes a visible button that
+    // opens a dialog on click; WITHOUT them it takes DEFINITION mode and sets
+    // element.style.display = 'none'. So a generated `<dialog variant="...">`
+    // is not broken -- it is deliberately invisible, and there is nothing to
+    // click. John: "What triggers a dialog?" / "<dialog variant='fullscreen'>
+    // doesn't work". Emit the trigger form instead.
+    const TRIGGERS = {
+      dialog: {
+        tag: 'button',
+        label: 'Open dialog',
+        attrs: { 'modal-title': 'Dialog title', 'modal-content': 'Dialog content goes here.' },
+      },
+      modal: {
+        tag: 'button',
+        label: 'Open modal',
+        attrs: { 'modal-title': 'Modal title', 'modal-content': 'Modal content goes here.' },
+      },
+    };
+
+    // Some COMBINATIONS need a companion, not just some properties.
+    // variant="link" is the case John caught: the control is styled as a link
+    // while having nothing to link to, so the example has to carry an href for
+    // the variant to mean anything.
+    const VALUE_COMPANIONS = {
+      // #674: this was a root-absolute "/pages/docs.html". Every other URL on
+      // this page goes through siteRoot() precisely because the page can be
+      // served from a subpath, so this one sample was the only link that broke
+      // off-root. target="_blank" keeps the reader's place in the gallery --
+      // a component demo that ejects you from the gallery reads as broken even
+      // when the navigation itself succeeds.
+      'button:variant:link': ` href="${siteRoot()}pages/docs.html" target="_blank"`,
+    };
+
+    function companionFor(attr, prop, value) {
+      const behavior = extensionMap[attr] || attr.replace(/^x-/, '');
+      const byValue = VALUE_COMPANIONS[`${behavior}:${prop}:${value}`];
+      if (byValue) return byValue;
+
+      const partner = COMPANIONS[prop];
+      if (!partner) return '';
+      if (BARE_COMPANIONS.has(partner)) return ` ${partner}`;
+      const sc = schemaByName.get(extensionMap[attr]);
+      const def = sc && sc.properties && sc.properties[partner];
+      if (!def) return '';
+      const seedValue = Array.isArray(def.enum) && def.enum.length ? def.enum[0] : def.default;
+      return seedValue ? ` ${partner}="${seedValue}"` : '';
+    }
+
+    function withOption(src, attr, prop, value, isBoolean) {
+      if (!value) return src;
+
+      // Standard §20: booleans are authored as BARE attributes. Writing
+      // striped="true" would both misrepresent the API and, for flags the
+      // behavior reads with `!== 'false'`, be indistinguishable from default.
+      if (isBoolean) {
+        // "false" must be written explicitly -- a bare attribute is TRUE in
+        // HTML, so omitting it could never express "off".
+        if (value === 'false') {
+          const existing = new RegExp('\s' + prop + '(="[^"]*")?', 'i');
+          const cleaned = src.replace(existing, '');
+          return cleaned.replace(/^(\s*<[a-zA-Z][\w-]*)/, `$1 ${prop}="false"`);
+        }
+        const bare = new RegExp('\s' + prop + '(="[^"]*")?', 'i');
+        const cleaned = src.replace(bare, '');
+        return cleaned.replace(/^(\s*<[a-zA-Z][\w-]*)/, `$1 ${prop}`);
+      }
+
+      // Rewrite whichever attribute the example actually used. Several schemas
+      // declare ALIASES for variant -- alert's is `type` -- and the behavior
+      // reads the alias, so blindly adding `variant=` left the demo's own
+      // `type="warning"` winning and the wrong variant rendering. Aliases come
+      // from the schema rather than a hardcoded list, so this stays correct as
+      // schemas change.
+      const sc = schemaByName.get(extensionMap[attr]);
+      const target = prop || 'variant';
+      // Aliases are declared per-property, so read them for whichever axis this
+      // row represents -- alert's variant aliases to `type`, and the same
+      // mechanism applies to any other property that declares one.
+      const propDef = (sc && sc.properties && sc.properties[target]) || {};
+      const aliases = propDef.aliases || [];
+      // Ensure the companion is present on a curated example too.
+      const partner = COMPANIONS[prop] ||
+        (VALUE_COMPANIONS[`${extensionMap[attr] || attr.replace(/^x-/, '')}:${prop}:${value}`] ? 'href' : null);
+      if (partner && !new RegExp('\s' + partner + '\s*=').test(src)) {
+        const add = companionFor(attr, prop, value);
+        if (add) src = src.replace(/^(\s*<[a-zA-Z][\w-]*)/, `$1${add}`);
+      }
+
+      for (const name of [target, ...aliases]) {
+        const re = new RegExp('\\s' + name + '\\s*=\\s*"[^"]*"', 'i');
+        if (re.test(src)) return src.replace(re, ` ${name}="${value}"`);
+      }
+      return src.replace(/^(\s*<[a-zA-Z][\w-]*)/, `$1 ${target}="${value}"`);
+    }
+
+    // Which element should host a generated example? An x-* behavior can sit on
+    // ANY element, so the honest choice is the most semantic host available:
+    //   1. the native element the framework already injects this behavior into
+    //      (tag-map's nativeMap -- e.g. button -> button, article -> card)
+    //   2. failing that, the behavior's own name IF it is a real HTML element,
+    //      which is what makes x-article render a real <article>
+    //   3. otherwise <div>, the neutral fallback
+    let nativeByBehavior = null;
+    function semanticHostFor(behavior) {
+      if (!nativeByBehavior) {
+        nativeByBehavior = {};
+        for (const [selector, beh] of Object.entries(nativeMap || {})) {
+          // nativeMap keys are selectors ('input[type="checkbox"]'); only the
+          // bare-tag ones are usable as a host element name.
+          if (/^[a-z][a-z0-9-]*$/.test(selector) && !nativeByBehavior[beh]) {
+            nativeByBehavior[beh] = selector;
+          }
+        }
+      }
+      if (nativeByBehavior[behavior]) return nativeByBehavior[behavior];
+      // A real HTML element with this name? createElement returns
+      // HTMLUnknownElement for anything the parser does not recognise.
+      const probe = document.createElement(behavior);
+      const known = !(probe instanceof HTMLUnknownElement) && behavior.indexOf('-') === -1;
+      return known ? behavior : 'div';
+    }
+
+    const VOID = new Set(['img', 'input', 'br', 'hr', 'source', 'track', 'embed', 'col']);
+
+    // #681 -- John: "we need better samples of the select/option examples ...
+    // I didn't see any colors".
+    //
+    // The generator puts `Example {tag} content` inside every element, but some
+    // elements have a CONTENT MODEL: bare text in a <select> is not selectable,
+    // so the sample rendered an empty 21x17 control with nothing to pick. These
+    // elements get real children instead of a text node.
+    const CONTENT_MODEL = {
+      select: `
+  <option value="alpha">Alpha</option>
+  <option value="beta">Beta</option>
+  <option value="gamma">Gamma</option>`,
+      optgroup: `
+  <option value="alpha">Alpha</option>`,
+      ul: `
+  <li>First item</li>
+  <li>Second item</li>`,
+      ol: `
+  <li>First item</li>
+  <li>Second item</li>`,
+      dl: `
+  <dt>Term</dt>
+  <dd>Definition</dd>`,
+      table: `
+  <thead><tr><th>Column</th></tr></thead>
+  <tbody><tr><td>Cell</td></tr></tbody>`,
+      tr: `
+  <td>Cell</td>`,
+      figure: `
+  <img src="https://picsum.photos/seed/x-figure/600/400" alt="Sample">
+  <figcaption>Example caption</figcaption>`,
+      details: `
+  <summary>Example summary</summary>
+  Example details content`,
+      fieldset: `
+  <legend>Example legend</legend>
+  <input type="text" value="Example field">`,
+    };
+
+    // A generated example must satisfy what the behavior actually requires.
+    // audio.js throws outright ("x-audio: no src provided -- nothing to play")
+    // and logs to the error viewer, so an <audio> with no src is not a harmless
+    // stub, it is a real error on every page load. Seeded from the schema's own
+    // default where there is one, falling back to the known-good source below.
+    //
+    // #762 -- this used to fall back to a checked-in asset "so the example never
+    // depends on the network". John: "all audio and video must be from out there
+    // not local", so it depends on the network now and that is the point.
+    // archive.org rather than a nearer-looking host because it sends
+    // Access-Control-Allow-Origin: * -- show-eq feeds the element through the Web
+    // Audio analyser, and a source without CORS headers analyses as silence
+    // (soundhelix.com, the obvious pick, sends none: checked).
+    const FALLBACK_MEDIA = { audio: 'https://archive.org/download/nineinchnails_ghosts_I_IV/01_Ghosts_I.mp3' };
+    function seedAttributes(behavior) {
+      const sc = schemaByName.get(behavior);
+      const props = (sc && sc.properties) || {};
+      const out = [];
+      if (props.src) {
+        const fallback = FALLBACK_MEDIA[behavior];
+        let src = typeof props.src.default === 'string' ? props.src.default : '';
+        // A schema default may be written relative to a demo page rather than
+        // to this one -- prefer the known-good absolute source when we have it.
+        if (fallback) src = fallback;
+        if (src && !/^(https?:)?\/\//.test(src)) src = siteRoot() + src.replace(/^\.{1,2}\//, '');
+        if (src) out.push(` src="${src}"`);
+      }
+      return out.join('');
+    }
+    function generatedExample(attr, variant, label, prop, isBool) {
+      const behavior = extensionMap[attr] || attr.replace(/^x-/, '');
+
+      // #666 — John: "button with icon upload should also have everything
+      // required to upload a file". An upload ICON on its own uploads nothing;
+      // a real control needs the file input and the wiring. Emit all of it, so
+      // the example is complete rather than decorative.
+      // #670: the download half of the pair that replaces x-cardfile. Unlike
+      // upload, this needs no JavaScript at all -- <a download> is the platform
+      // feature, and a button styled as one would be strictly worse: it would
+      // lose middle-click, "save link as", and the real URL on hover.
+      if (behavior === 'button' && prop === 'icon' && variant === 'download') {
+        // No icon= here: the button behavior only decorates <button>, so the
+        // attribute is inert on an anchor -- verified live, it produced no
+        // class and no icon. Shipping it would be exactly the
+        // declared-but-does-nothing pattern of #669. .x-button is a plain CSS
+        // class, so the anchor still gets the button LOOK.
+        return [
+          // x-button--primary, not the bare .x-button: the default button
+          // background is rgb(41,48,61), which is also the panel surface, so a
+          // plain .x-button anchor rendered as flat text. Modifier CLASSES work
+          // without the behavior; a variant= ATTRIBUTE would not, since button()
+          // only decorates <button>.
+          '<a href="https://archive.org/download/nineinchnails_ghosts_I_IV/01_Ghosts_I.mp3" download="ghosts-i-01.mp3" class="x-button x-button--primary">',
+          '  ↓ Download the sample',
+          '</a>',
+        ].join('\n');
+      }
+
+      if (behavior === 'button' && prop === 'icon' && variant === 'upload') {
+        return [
+          '<button icon="upload" aria-controls="x-demo-file">Upload a file</button>',
+          '<input id="x-demo-file" type="file" hidden>',
+          '<p class="x-demo-file-name" aria-live="polite">No file chosen</p>',
+        ].join('\n');
+      }
+
+      const trigger = TRIGGERS[behavior];
+      if (trigger) {
+        const opt = variant ? (isBool ? ` ${prop}` : ` ${prop || 'variant'}="${variant}"`) : '';
+        const seeded = Object.entries(trigger.attrs)
+          .map(([k, v]) => ` ${k}="${v}"`)
+          .join('');
+        // The behavior is named explicitly here: on a <button> host the
+        // auto-injected behavior is `button`, not `dialog`.
+        return `<${trigger.tag} ${attr}${seeded}${opt}>
+  ${trigger.label}
+</${trigger.tag}>`;
+      }
+      const host = semanticHostFor(behavior);
+      // BARE when true, explicit only when false. John: "article shouldn't need
+      // elevated=true and clickable=true as the first word says it all" -- and
+      // that is the project's own convention, not just style: card.js:159 reads
+      // `clickable` via element.hasAttribute(), and card.md documents
+      // elevated/clickable as plain boolean attributes (#627). `="false"` still
+      // has to be written out, since a bare attribute cannot express "off".
+      const v = variant
+        ? (isBool
+            ? (variant === 'false' ? ` ${prop}="false"` : ` ${prop}`)
+            : ` ${prop || 'variant'}="${variant}"`)
+        : '';
+      const companion = companionFor(attr, prop, variant);
+
+      // Auto-injected behaviors need NO attribute -- writing the semantic
+      // element is the whole authoring form (John: "<button variant='primary'>
+      // ... this is because we created a module for the semantic button").
+      // Emitting `<button x-button>` here would demonstrate exactly the
+      // duplication we are removing.
+      // #753 -- John: "don't use x-figure in a figure tag."
+      //
+      // `label` is a DISPLAY string and is empty for several behaviors, so a
+      // falsy label sent <figure> down the attribute branch and emitted
+      // `<figure x-figure>` -- the duplication the comment above says must not
+      // be emitted. Whether the host auto-injects is a fact about the tag->
+      // behavior map, not about whether someone wrote a label, so ask the map:
+      // nativeByBehavior is already built from tag-map's nativeMap by
+      // semanticHostFor(), which ran above to pick this very host.
+      const autoInjected = !!(nativeByBehavior && nativeByBehavior[behavior] === host);
+      const isNative = (label && label !== attr) || autoInjected;
+      if (isNative) {
+        // Selector form: input[type="checkbox"] -> <input type="checkbox">
+        const sel = label ? label.match(/^([a-z][a-z0-9-]*)(?:\[([^=]+)="([^"]+)"\])?$/i) : null;
+        const tag = sel ? sel[1] : host;
+        const extra = sel && sel[2] ? ` ${sel[2]}="${sel[3]}"` : '';
+        const seed = seedAttributes(behavior);
+        if (VOID.has(tag)) return `<${tag}${extra}${seed}${companion}${v}>`;
+        const tagBody = CONTENT_MODEL[tag] || `
+  Example ${tag} content`;
+        return `<${tag}${extra}${seed}${companion}${v}>${tagBody}
+</${tag}>`;
+      }
+
+      const seed = seedAttributes(behavior);
+      if (VOID.has(host)) return `<${host} ${attr}${seed}${companion}${v}>`;
+      const hostBody = CONTENT_MODEL[host] || `
+  Example ${attr} content`;
+      return `<${host} ${attr}${seed}${companion}${v}>${hostBody}
+</${host}>`;
+    }
+
+    // #753 -- exposed for tests/compliance/no-redundant-x-attribute.spec.ts.
+    // That test used to drive the UI, clicking every row to read what got
+    // rendered; rows contain links, so a click occasionally navigated and
+    // destroyed the page context mid-sweep -- a flaky test guarding a real
+    // rule, which is worse than no test. Calling the generator directly is
+    // deterministic and checks the same output. Read-only: it builds a string
+    // and touches no state.
+    window.__wbGeneratedExample = generatedExample;
+
+
+    // #675 -- John: "all elements must have an id in the showcase".
+    //
+    // A rendered example had no stable handle: nothing for the event-handler
+    // snippet to point at, nothing for a test to target, and nothing a reader
+    // could copy into their own page and wire up. Ids are derived from the
+    // behavior + option so the same example always gets the same id.
+    //
+    // Runs BEFORE resetEvents() so the handler snippet can name the root id.
+    function slug(value) {
+      return String(value || '')
+        .toLowerCase()
+        .replace(/[^a-z0-9]+/g, '-')
+        .replace(/^-+|-+$/g, '');
+    }
+
+    /**
+     * Give every element in the stage an id, and return the root's.
+     * Existing ids are left alone -- some examples carry a meaningful one
+     * already (#x-demo-file, which its own wiring and snippet both reference).
+     */
+    function assignExampleIds(token, optionText) {
+      // John: "i didn't mean to make them all super long nonsense they need to
+      // be short describing the element they came from and where they are
+      // going the target".
+      //
+      // So: drop the `x-ex-` prefix and the authoring-surface `x-` prefix,
+      // which said nothing about the element, and name each element after what
+      // it IS. `x-ex-x-button-icon-check-1` becomes `button-check`, and its
+      // icon span becomes `button-check-icon` -- readable in the handler
+      // snippet a reader copies.
+      const root = [slug(token).replace(/^x-/, ''), slug(optionText)].filter(Boolean).join('-');
+
+      /**
+       * The short name for one element: what it points AT if it points at
+       * anything (aria-controls / for / href target), otherwise what it is
+       * (its BEM element suffix, else its tag).
+       */
+      const describe = (el) => {
+        const target = el.getAttribute('aria-controls') || el.getAttribute('for');
+        if (target) return slug(target.replace(/^x-demo-/, ''));
+        // getAttribute('class'), never el.className: on an SVG element
+        // className is an SVGAnimatedString, and stringifying it yields
+        // "[object SVGAnimatedString]" -- which slugged to a literal
+        // `-object` suffix on every <svg> and <path> in an icon.
+        const classAttr = el.getAttribute('class') || '';
+        const bem = classAttr.match(/[\w-]+__([\w-]+)/);
+        if (bem) return slug(bem[1]);
+        // A plain class still says more than the tag does: `-p` is short but
+        // meaningless, `-file-name` tells the reader what the element is for.
+        const cls = classAttr.trim().split(/\s+/)[0];
+        if (cls) return slug(cls.replace(/^(x-demo-|wb-|x-)/, ''));
+        return slug(el.tagName.toLowerCase().replace(/^wb-/, ''));
+      };
+
+      liveStage.querySelectorAll('*').forEach((el) => {
+        if (el.id) return;
+        // The bare root belongs to the example root -- but only if nothing
+        // holds it yet. Some behaviors WRAP their element after the fact
+        // (audio.js builds a .x-audio-host around the <audio>), so on the
+        // second pass the new wrapper is firstElementChild while the original
+        // already carries `root`. Handing it out twice would put a duplicate
+        // id in the document and break the very selector the snippet teaches.
+        if (el === liveExample.firstElementChild && !document.getElementById(root)) {
+          el.id = root;
+          return;
+        }
+        // A descriptive suffix, numbered only when the same description
+        // repeats (three `.x-audio__band` sliders, say).
+        const name = `${root}-${describe(el)}`;
+        let candidate = name;
+        let n = 1;
+        while (document.getElementById(candidate)) candidate = `${name}-${++n}`;
+        el.id = candidate;
+      });
+      return liveExample.firstElementChild ? liveExample.firstElementChild.id : null;
+    }
+
+    // Examples that need behaviour beyond what a behavior provides are wired
+    // here, AFTER injection. The upload control is the case John raised: the
+    // markup alone is inert, and a demo that cannot actually pick a file is not
+    // demonstrating uploading.
+    function wireExample() {
+      const btn = liveStage.querySelector('button[aria-controls="x-demo-file"]');
+      const input = liveStage.querySelector('#x-demo-file');
+      const out = liveStage.querySelector('.x-demo-file-name');
+      if (!btn || !input) return;
+      btn.addEventListener('click', () => input.click());
+      input.addEventListener('change', () => {
+        const f = input.files && input.files[0];
+        if (!f) {
+          if (out) out.textContent = 'No file chosen';
+          return;
+        }
+        // #676 -- John: "doesn't upload...". This used to print the filename
+        // and stop, so a control labelled "Upload a file" was a picker. Now it
+        // actually sends the bytes and reports what the server received.
+        //
+        // XHR rather than fetch(): fetch still has no upload-progress event,
+        // and progress is the part of an upload a reader needs to see.
+        const kb = Math.ceil(f.size / 1024);
+        const xhr = new XMLHttpRequest();
+        xhr.open('POST', siteRoot() + 'api/upload');
+        xhr.setRequestHeader('Content-Type', f.type || 'application/octet-stream');
+        xhr.setRequestHeader('X-File-Name', f.name);
+        xhr.upload.addEventListener('progress', (e) => {
+          if (!out || !e.lengthComputable) return;
+          out.textContent = `${f.name} (${kb} KB) — uploading ${Math.round((e.loaded / e.total) * 100)}%`;
+        });
+        xhr.addEventListener('load', () => {
+          if (!out) return;
+          if (xhr.status < 200 || xhr.status >= 300) {
+            out.textContent = `${f.name} (${kb} KB) — upload failed (HTTP ${xhr.status})`;
+            return;
+          }
+          let body = null;
+          try { body = JSON.parse(xhr.responseText); } catch (err) { body = null; }
+          out.textContent = body && body.ok
+            // The server's OWN count, not the local one -- that is what makes
+            // this evidence of a completed round trip rather than a claim.
+            ? `${body.name} — server received ${Math.ceil(body.bytes / 1024)} KB (${body.type}), not stored`
+            : `${f.name} (${kb} KB) — upload failed (bad response)`;
+        });
+        xhr.addEventListener('error', () => {
+          if (out) out.textContent = `${f.name} (${kb} KB) — upload failed (network error)`;
+        });
+        if (out) out.textContent = `${f.name} (${kb} KB) — uploading…`;
+        xhr.send(f);
+      });
+    }
+
+    // Shared by the real-demo and generated-example paths: pretty-print the
+    // source and hand it to the project's own pre/code highlighting pair.
+    async function renderSource(src) {
+      let pretty = src;
+      try {
+        const demoMod = await import(siteRoot() + 'src/wb-viewmodels/demo.js');
+        if (demoMod.formatHtml) pretty = demoMod.formatHtml(src) || src;
+      } catch (err) {
+        console.warn('[behaviors] could not format source', err);
+      }
+      liveCode.innerHTML = '';
+
+      // Copy button. It copies `pretty` -- the exact source we just formatted --
+      // rather than reading text back out of the rendered <pre>, which carries
+      // x-pre's line-number gutter and would paste "1 <button" instead of
+      // "<button".
+      const copy = document.createElement('button');
+      copy.type = 'button';
+      copy.className = 'behaviors-live__copy';
+      copy.textContent = 'Copy';
+      copy.title = 'Copy this example to the clipboard';
+      copy.addEventListener('click', async () => {
+        // #776 -- John: "Copy code in this example does not work."
+        //
+        // navigator.clipboard.writeText() throws for reasons that have nothing
+        // to do with the page being wrong: the document not being focused, a
+        // permissions policy, an embedded context. Verified live -- secure
+        // context, API present, and it still threw, so the button reported
+        // "Press Ctrl+C".
+        //
+        // Which was worse than failing: there is no selection, so Ctrl+C
+        // copies nothing. The advice was impossible to follow.
+        //
+        // execCommand('copy') is deprecated but works where the async API is
+        // refused, so it is the FALLBACK, not the primary. Only if both fail
+        // does the reader get told -- and then told something true.
+        const viaExecCommand = (text) => {
+          const ta = document.createElement('textarea');
+          ta.value = text;
+          // Off-screen but focusable: display:none or visibility:hidden cannot
+          // be selected, and the copy silently does nothing.
+          ta.setAttribute('readonly', '');
+          ta.style.cssText = 'position:fixed;top:0;left:-9999px;opacity:0';
+          document.body.appendChild(ta);
+          ta.select();
+          let ok = false;
+          try { ok = document.execCommand('copy'); } catch { ok = false; }
+          ta.remove();
+          return ok;
+        };
+
+        let ok = false;
+        try {
+          await navigator.clipboard.writeText(pretty);
+          ok = true;
+        } catch (err) {
+          console.warn('[behaviors] clipboard API refused, falling back', err);
+          ok = viaExecCommand(pretty);
+        }
+        copy.textContent = ok ? 'Copied' : 'Copy failed';
+        setTimeout(() => { copy.textContent = 'Copy'; }, 1600);
+      });
+      liveCode.appendChild(copy);
+
+      const pre = document.createElement('pre');
+      pre.setAttribute('x-behavior', 'pre');
+      const code = document.createElement('code');
+      code.setAttribute('x-behavior', 'code');
+      code.dataset.language = 'html';
+      code.textContent = pretty;
+      pre.appendChild(code);
+      liveCode.appendChild(pre);
+
+      try {
+        const mod = await import(siteRoot() + 'src/core/wb-lazy.js');
+        const WB = mod.default || mod.WB || window.WB;
+        if (WB && WB.scan) {
+          await WB.scan(liveStage, { eager: true });
+          await WB.scan(liveCode, { eager: true });
+          wireExample();
+        }
+      } catch (err) {
+        liveNote.textContent = 'could not run this example';
+        console.warn('[behaviors] live preview failed', err);
+      }
+    }
+
+    // #666 — John: 'then add a summary. In this case "shows a red background"'.
+    // Derived from what actually rendered, not hand-authored: 42 schemas x their
+    // variants is ~200 strings that would rot the moment a theme or variant
+    // changed, and a summary that disagrees with the pixels is worse than none.
+    // Reads the real computed style of the upgraded element and names the
+    // dominant visual difference.
+    const HUES = [
+      ['red', 0], ['orange', 30], ['yellow', 55], ['green', 100], ['teal', 165],
+      ['blue', 210], ['indigo', 250], ['purple', 280], ['pink', 320], ['red', 350],
+    ];
+    function colourName(r, g, b) {
+      const max = Math.max(r, g, b), min = Math.min(r, g, b);
+      const l = (max + min) / 2 / 255;
+      // Lightness first: a near-black surface with a slight blue cast is "dark"
+      // to a reader, not "blue". rgb(41,48,61) -- the default card background --
+      // has just enough spread to compute a blue hue, and calling that blue is
+      // simply wrong to anyone looking at it.
+      if (l < 0.22) return 'dark';
+      if (l > 0.9) return 'near-white';
+      if (max - min < 18) return l > 0.75 ? 'light grey' : 'grey';
+      let h = 0;
+      const d = max - min;
+      if (max === r) h = 60 * (((g - b) / d) % 6);
+      else if (max === g) h = 60 * ((b - r) / d + 2);
+      else h = 60 * ((r - g) / d + 4);
+      if (h < 0) h += 360;
+      let best = HUES[0];
+      for (const entry of HUES) {
+        if (Math.abs(h - entry[1]) < Math.abs(h - best[1])) best = entry;
+      }
+      return best[0];
+    }
+    function parseRgb(v) {
+      const str = String(v);
+      // Modern syntax: color(srgb 0.94 0.94 0.95 / 0.08). Chrome returns this
+      // for theme colours defined with color-mix/relative colour, so an
+      // rgba()-only parser silently returned null and every translucent
+      // surface (glass) fell through to the border branch.
+      const c = str.match(/color\(srgb\s+([^)]+)\)/i);
+      if (c) {
+        const parts = c[1].split('/');
+        const rgb = parts[0].trim().split(/\s+/).map(Number);
+        return {
+          r: rgb[0] * 255, g: rgb[1] * 255, b: rgb[2] * 255,
+          a: parts[1] === undefined ? 1 : parseFloat(parts[1]),
+        };
+      }
+      const m = str.match(/rgba?\(([^)]+)\)/);
+      if (!m) return null;
+      const p = m[1].split(',').map((n) => parseFloat(n));
+      return { r: p[0], g: p[1], b: p[2], a: p.length > 3 ? p[3] : 1 };
+    }
+    /** The schema's own description of this option -- what to expect to see. */
+    function optionDescription(attr, prop) {
+      if (!prop) return '';
+      const sc = schemaByName.get(extensionMap[attr]);
+      const def = sc && sc.properties && sc.properties[prop];
+      return (def && def.description) ? def.description : '';
+    }
+
+    function summarise(el) {
+      if (!el) return '';
+      const cs = getComputedStyle(el);
+      const bg = parseRgb(cs.backgroundColor);
+      if (cs.backgroundImage && cs.backgroundImage !== 'none') return 'shows a gradient background';
+      if (bg && bg.a > 0.85) return `shows a ${colourName(bg.r, bg.g, bg.b)} background`;
+      if (bg && bg.a > 0.05) return `shows a translucent ${colourName(bg.r, bg.g, bg.b)} background`;
+      const bw = parseFloat(cs.borderTopWidth) || 0;
+      if (bw > 0) {
+        const bc = parseRgb(cs.borderTopColor);
+        return bc ? `shows a ${colourName(bc.r, bc.g, bc.b)} border` : 'shows a border';
+      }
+      if (cs.boxShadow && cs.boxShadow !== 'none') return 'shows a raised shadow';
+      return 'no background or border — plain';
+    }
+
+    const eventsLog = document.getElementById('behaviors-live-events-log');
+    const eventsHint = document.getElementById('behaviors-live-events-hint');
+
+    // Events a behavior is likely to dispatch, plus the raw interaction that
+    // triggered it. Captured on the STAGE so a listener is never attached to
+    // the example itself -- attaching to the element could change what the
+    // behavior sees (stopPropagation, once-handlers) and the panel must observe,
+    // not participate.
+    const WATCHED = ['click', 'change', 'input', 'submit', 'toggle'];
+    let eventCount = 0;
+
+    // #677 -- John: "this is an ambiguous event handler, don't we need a from
+    // location?". Entries used to read `button.x-button` for every element
+    // sharing a tag and a class, which is most of them, so two events from two
+    // different elements were indistinguishable. #675 gave every element in the
+    // stage a stable id, so an entry can now name its actual source.
+    /**
+     * #755 -- John: "where's the element id ... all we need is the id not all
+     * that bullshit."
+     *
+     * Every element in the stage carries a stable id (#675), so the id alone
+     * identifies the source exactly. Tag and class added nothing an id does
+     * not already say, and buried the one token worth reading. They remain as
+     * the fallback for the rare element with no id.
+     */
+    function describeElement(el) {
+      if (!(el instanceof Element)) return '?';
+      if (el.id) return el.id;
+      const cls = typeof el.className === 'string' && el.className.trim()
+        ? '.' + el.className.trim().split(/\s+/)[0] : '';
+      return el.tagName.toLowerCase() + cls;
+    }
+
+    function logEvent(e) {
+      const target = e.target instanceof Element ? e.target : null;
+      // #755: the listener is on the STAGE, so a click on the stage's own
+      // padding logged `div#behaviors-live-stage` -- page chrome reported as
+      // if the example had fired it. The panel documents the EXAMPLE; an
+      // event that never reached it is not the example's event.
+      if (!target || !liveExample.contains(target)) return;
+      const from = describeElement(target);
+      // An event that started on a descendant is a different story from one on
+      // the example root, and that difference is exactly what was missing.
+      const root = liveExample.firstElementChild;
+      const origin = target && root && target !== root && root.contains(target)
+        ? ` <span class="behaviors-live__events-from">from ${describeElement(root)}</span>` : '';
+      const li = document.createElement('li');
+      li.className = 'behaviors-live__events-item';
+      li.innerHTML =
+        `<code class="behaviors-live__events-type">${e.type}</code>` +
+        `<span class="behaviors-live__events-target">${from}</span>${origin}`;
+      eventsLog.prepend(li);
+      eventsEmpty.hidden = true;
+      eventCount++;
+      eventsHint.textContent = `${eventCount} event${eventCount === 1 ? '' : 's'}`;
+      // Keep the last 12: a drag or a repeated toggle would otherwise grow the
+      // panel without bound.
+      while (eventsLog.children.length > 12) eventsLog.lastElementChild.remove();
+    }
+
+    // Attached ONCE, in the capture phase, on the stage container -- never on
+    // the example itself. A listener on the element could change what the
+    // behavior observes (a stopPropagation or a once-handler), and this panel
+    // must watch without participating. Capture also means it still sees events
+    // a behavior stops from bubbling.
+    WATCHED.forEach((type) => liveStage.addEventListener(type, logEvent, true));
+
+    // #705 -- John: "leave it there but log the event via handler". WATCHED only
+    // covers native types, so a behavior's OWN event -- wb:dropdown:select,
+    // wb:autocomplete:select, wb:cardexpandable:toggle, dozens more -- bubbled
+    // out unlogged, and the panel showed nothing for the one interaction the
+    // example exists to demonstrate (while the handler snippet below it told the
+    // reader to listen for exactly that event).
+    //
+    // There is no registry of behavior event names to subscribe to, and
+    // addEventListener has no wildcard. Wrapping dispatchEvent is the one place
+    // every custom event must pass through. The wrapper only OBSERVES: it always
+    // calls through, never swallows, and it ignores anything dispatched outside
+    // the stage, so nothing about how the page or the behaviors run changes.
+    const CUSTOM_EVENT_RE = /^(wb|x):/;
+    const nativeDispatch = EventTarget.prototype.dispatchEvent;
+    EventTarget.prototype.dispatchEvent = function (event) {
+      const result = nativeDispatch.call(this, event);
+      try {
+        if (event && CUSTOM_EVENT_RE.test(event.type) && this instanceof Node && liveStage.contains(this)) {
+          logEvent({ type: event.type, target: this });
+        }
+      } catch { /* logging must never break the event it is watching */ }
+      return result;
+    };
+
+    let eventsSnippet = document.getElementById('behaviors-live-events-snippet');
+
+    /** The wiring a reader would copy to handle this example's events. */
+    function handlerSnippet(hostTag, token, rootId) {
+      if (liveStage.querySelector('#x-demo-file')) {
+        return [
+          `const btn = document.querySelector('button[aria-controls="x-demo-file"]');`,
+          `const input = document.querySelector('#x-demo-file');`,
+          ``,
+          `btn.addEventListener('click', () => input.click());`,
+          ``,
+          `input.addEventListener('change', () => {`,
+          `  const file = input.files[0];`,
+          `  if (!file) return;`,
+          ``,
+          `  const xhr = new XMLHttpRequest();`,
+          `  xhr.open('POST', '/api/upload');`,
+          `  xhr.setRequestHeader('Content-Type', file.type);`,
+          `  xhr.setRequestHeader('X-File-Name', file.name);`,
+          ``,
+          `  // fetch() has no upload-progress event; XHR does.`,
+          `  xhr.upload.addEventListener('progress', (e) => {`,
+          `    if (e.lengthComputable) console.log(Math.round(e.loaded / e.total * 100) + '%');`,
+          `  });`,
+          `  xhr.addEventListener('load', () => console.log(xhr.responseText));`,
+          `  xhr.addEventListener('error', () => console.error('upload failed'));`,
+          ``,
+          `  xhr.send(file);`,
+          `});`,
+        ].join('\n');
+      }
+      // #675: an id beats a tag selector -- `document.querySelector('button')`
+      // grabs the first button on the READER's page, not this example.
+      const sel = rootId ? '#' + rootId : (hostTag ? hostTag : '[' + token + ']');
+
+      // #708 / Standard 27 -- a control that fires its own event should teach
+      // THAT event and the payload it actually carries, not a generic click.
+      // A generic click handler tells a reader nothing about how to know WHICH
+      // option was picked. Same precedent as the file-upload snippet above.
+      const CUSTOM_EVENT_SNIPPETS = {
+        'x-dropdown': [
+          `el.addEventListener('wb:dropdown:select', (e) => {`,
+          `  const { id, index, value, href } = e.detail;`,
+          `  console.log('picked', { id, index, value, href });`,
+          `});`,
+        ],
+      };
+      const custom = CUSTOM_EVENT_SNIPPETS[token];
+      if (custom) {
+        return [`const el = document.querySelector('${sel}');`, ``, ...custom].join('\n');
+      }
+
+      return [
+        `const el = document.querySelector('${sel}');`,
+        ``,
+        `el.addEventListener('click', (e) => {`,
+        `  console.log('clicked', e.target);`,
+        `});`,
+      ].join('\n');
+    }
+
+    const eventsEmpty = document.getElementById('behaviors-live-events-empty');
+
+    async function resetEvents(hostTag, token, rootId) {
+      eventsLog.innerHTML = '';
+      eventCount = 0;
+      eventsHint.textContent = 'interact with the example above';
+      eventsEmpty.hidden = false;
+
+      // Highlighted like the source panel, via the same x-behavior pre/code
+      // pair -- a plain <pre> rendered the handler as unstyled text, and it
+      // overflowed its box rather than wrapping. A FRESH host each time:
+      // WB.inject() will not re-apply a behavior to an element that already
+      // carries it (the same trap the doc panel hit).
+      const fresh = document.createElement('div');
+      fresh.id = 'behaviors-live-events-snippet';
+      fresh.className = 'behaviors-live__events-code';
+      eventsSnippet.replaceWith(fresh);
+      eventsSnippet = fresh;
+
+      const pre = document.createElement('pre');
+      pre.setAttribute('x-behavior', 'pre');
+      const code = document.createElement('code');
+      code.setAttribute('x-behavior', 'code');
+      code.dataset.language = 'javascript';
+      code.textContent = handlerSnippet(hostTag, token, rootId);
+      pre.appendChild(code);
+      eventsSnippet.appendChild(pre);
+
+      try {
+        const mod = await import(siteRoot() + 'src/core/wb-lazy.js');
+        const WB = mod.default || mod.WB || window.WB;
+        if (WB && WB.scan) await WB.scan(eventsSnippet, { eager: true });
+      } catch (err) {
+        console.warn('[behaviors] could not highlight the handler snippet', err);
+      }
+    }
+
+    async function showLive(token, variant, label, prop, isBool, form) {
+      // #769 -- John, 4th report: "get rid of all this dead space!"
+      //
+      // fitStageToOverlays() grows the stage so an open dropdown or a
+      // fullscreen dialog has somewhere to live. That growth has to be dropped
+      // when a DIFFERENT example is shown, or the next one inherits a box
+      // sized for the last one -- a two-line <details> centred in 400px of
+      // nothing.
+      //
+      // The reset existed, on ONE of the two render paths. Generated examples
+      // took the other one and kept the previous height. Same shape as the
+      // dev-server notice in 3.0.73: a fix applied to one branch of a two-
+      // branch render. Reset here instead, before either branch runs, so a
+      // path cannot be missed again.
+      liveStage.style.minHeight = '';
+      const raw = sourceFor(token, form);
+      const src = raw ? withOption(raw, token, prop, variant, isBool) : raw;
+      liveEl.hidden = false;
+      // John: "Switch these two, behaivor first, variant 2nd".
+      const shown = label || token;
+      showDoc(extensionMap[token] || token.replace(/^x-/, ''));
+      const optionText = variant
+        ? (isBool ? prop : (prop && prop !== 'variant' ? `${prop}=${variant}` : variant))
+        : '';
+      liveToken.textContent = optionText ? `${shown} · ${optionText}` : shown;
+
+      if (!src) {
+        // John: "x-article shows nothing shouldn't it at least show a semantic
+        // article?" -- yes. Rather than an empty box, synthesise a minimal
+        // example and run it. The whole point of an x-* behavior is that ANY
+        // element can carry it, so the only real question is which host to
+        // demonstrate it on.
+        const generated = generatedExample(token, variant, label, prop, isBool);
+        liveNote.textContent = 'generated example — no demo on this page';
+        liveCode.innerHTML = '';
+        liveExample.innerHTML = generated;
+        maybeWarnServerRequired(generated);
+        const genRootId = assignExampleIds(token, optionText);
+        resetEvents(liveExample.firstElementChild && liveExample.firstElementChild.tagName.toLowerCase(), token, genRootId);
+        await renderSource(generated);
+        assignExampleIds(token, optionText); // #675: catch behavior-injected children
+        const genDescribed = optionDescription(token, prop);
+        const genSummary = genDescribed || summarise(liveExample.firstElementChild);
+        liveNote.textContent = genSummary
+          ? `generated — ${genSummary}`
+          : 'generated example — no demo on this page';
+        return;
+      }
+
+      // #752 -- John: "this warning should be shown to the user using the
+      // static site reminding them to download this repo first."
+      //
+      // Some examples post to /api/... which only server.js serves. On the
+      // published static site that route cannot exist, so the demo fails and
+      // the reader has no way to know the example is fine and the HOST is the
+      // limitation. Say so, where they are looking, and tell them what to do.
+      function maybeWarnServerRequired(source) {
+        const prev = liveExample.parentNode.querySelector('.behaviors-live__server-note');
+        if (prev) prev.remove();
+        if (!/action=("|')\/api\//.test(source)) return;
+        // A static host serves files, not routes. Probing would cost a request
+        // per example and still race the render, so key off the one thing that
+        // is knowable synchronously: server.js is what serves this page during
+        // development, and it always runs on localhost.
+        const isLocal = ['localhost', '127.0.0.1', '::1'].includes(location.hostname);
+        if (isLocal) return;
+        const note = document.createElement('p');
+        note.className = 'behaviors-live__server-note';
+        note.innerHTML =
+          '⚠️ <strong>This example needs the local dev server.</strong> ' +
+          'It posts to <code>/api/…</code>, a route this static site cannot serve, ' +
+          'so submitting it here will fail. Clone the repo and run ' +
+          '<code>npm start</code> to see it work: ' +
+          '<a href="https://github.com/CieloVistaSoftware/wb-starter" target="_blank" rel="noopener">' +
+          'github.com/CieloVistaSoftware/wb-starter</a>';
+        liveExample.parentNode.insertBefore(note, liveExample.nextSibling);
+      }
+
+      liveNote.textContent = optionDescription(token, prop) || 'running live';
+      // #703: drop the previous example's grown height before measuring this one.
+      liveStage.style.minHeight = '';
+      liveExample.innerHTML = src;
+      maybeWarnServerRequired(src);
+      const rootId = assignExampleIds(token, optionText);
+      resetEvents(liveExample.firstElementChild && liveExample.firstElementChild.tagName.toLowerCase(), token, rootId);
+      await renderSource(src);
+      assignExampleIds(token, optionText); // #675: catch behavior-injected children
+      // After the upgrade, so the summary describes the UPGRADED element rather
+      // than the bare markup it was built from.
+      // Prefer the AUTHORED description of the option over a derived visual
+      // guess -- John: "add description on what to expect to see". The schema
+      // already says exactly that ("Show 15-band equalizer", "Start muted"),
+      // and it is accurate for options with no visible surface change, where
+      // summarise() can only ever report the host's background.
+      const described = optionDescription(token, prop);
+      const summary = described || summarise(liveExample.firstElementChild);
+      if (summary) liveNote.textContent = summary;
+      // #703: an example can render something taller than the stage's 6rem
+      // floor even before anything is opened.
+      fitStageToOverlays();
+    }
+
+    // #666 — John: "allow the user to use the down arrow for each item shown in
+    // list to render". Arrow keys walk the list and render each row as it is
+    // reached, so a reader can hold Down and watch every variant in turn
+    // without reaching for the mouse.
+    //
+    // aria-current marks the rendered row: clicking now SELECTS rather than
+    // navigates, and without it a screen-reader user has no way to tell which
+    // of 228 rows the panel is showing.
+    function rowsInOrder() {
+      return [...resultsEl.querySelectorAll('.behaviors-search-results__row')];
+    }
+
+    function selectRow(row, { focus = true, reveal = false } = {}) {
+      if (!row) return;
+      rowsInOrder().forEach((r) => r.removeAttribute('aria-current'));
+      row.setAttribute('aria-current', 'true');
+      // Scroll the LIST only, by hand. scrollIntoView({block:'nearest'}) still
+      // scrolls ancestor scrollers when the row is off-screen at page level --
+      // measured moving the page from 5541 to 341 while arrowing. The panel
+      // exists so the page does not move (John: "don't scroll down"), so the
+      // list's own scrollTop is adjusted directly and nothing else is touched.
+      // #728 -- John, having used the align-to-top version: "set it to normal
+      // action on key up and or down. I don't like the always at top stuff."
+      // So: move the selection, and scroll ONLY when the row would otherwise be
+      // out of view, by the minimum needed. A row already on screen leaves the
+      // list where it is. This replaces #687/#717.
+      const listTop = resultsEl.scrollTop;
+      const rowTop = row.offsetTop - resultsEl.offsetTop;
+      const rowBottom = rowTop + row.offsetHeight;
+      if (rowTop < listTop) resultsEl.scrollTop = rowTop;
+      else if (rowBottom > listTop + resultsEl.clientHeight) {
+        resultsEl.scrollTop = rowBottom - resultsEl.clientHeight;
+      }
+      if (focus) row.focus({ preventScroll: true });
+      showLive(row.dataset.browseToken, row.dataset.variant || '', row.dataset.label || '',
+               row.dataset.prop || '', row.dataset.boolean === '1', row.dataset.form || 'attribute');
+      // #686 -- John, on a phone: "doesn't show the sample code and result".
+      // Stacked, the panel starts ~300px past the bottom of #siteBody (measured
+      // at 375x812: list ends at 841, panel stage at 920, scroller is 627 tall),
+      // so a tap rendered the demo somewhere the reader could not see with no
+      // cue anything had happened. Two columns keep the no-scroll rule above --
+      // there the panel is already beside the list. `reveal` is opt-in per call
+      // so the best-match selectRow() that applyFilter() runs on EVERY keystroke
+      // never yanks the page away from the search box.
+      // Instant, not smooth: showLive() injects the demo, fetches its doc and
+      // re-lays out the panel while the animation would still be running, and
+      // the browser cancels a smooth scroll on that churn -- measured landing
+      // back at scrollTop 0 every time.
+      if (reveal && STACKED.matches) {
+        liveEl.scrollIntoView({ block: 'start' });
+      }
+    }
+
+    function moveSelection(delta) {
+      const rows = rowsInOrder();
+      if (!rows.length) return;
+      const current = resultsEl.querySelector('[aria-current="true"]');
+      let i = current ? rows.indexOf(current) : -1;
+      i = i < 0 ? (delta > 0 ? 0 : rows.length - 1) : i + delta;
+      if (i < 0) i = 0;
+      if (i > rows.length - 1) i = rows.length - 1;
+      selectRow(rows[i]);
+    }
+
+    resultsEl.addEventListener('keydown', (e) => {
+      if (['ArrowDown', 'ArrowUp', 'Home', 'End'].includes(e.key)) selectedByKeyboard = true;
+      if (e.key === 'ArrowDown') { e.preventDefault(); moveSelection(1); }
+      else if (e.key === 'ArrowUp') { e.preventDefault(); moveSelection(-1); }
+      else if (e.key === 'Home') { e.preventDefault(); selectRow(rowsInOrder()[0]); }
+      else if (e.key === 'End') { e.preventDefault(); const r = rowsInOrder(); selectRow(r[r.length - 1]); }
+    });
+
+    // Down from the search box drops into the list, so the keyboard path works
+    // straight from typing without an intervening Tab.
+    input.addEventListener('keydown', (e) => {
+      if (e.key === 'ArrowDown') {
+        selectedByKeyboard = true;
+        e.preventDefault();
+        const rows = rowsInOrder();
+        if (rows.length) selectRow(rows[0]);
+      }
+    });
+
+    // #759 -- John: "When clicking the button resync the left side to show
+    // which one it was (at the top)."
+    //
+    // The list is browsable while the panel stays put (#664), so scrolling it
+    // away from the current selection is normal and expected. The cost is that
+    // the panel then shows `button . iconOnly` while the list shows `article`
+    // rows, and nothing on screen connects the two.
+    //
+    // Clicking the rendered example resyncs: the row that produced it goes to
+    // the TOP of the list, which is where John asked for it. Aligning to top
+    // here does NOT conflict with #728 -- that was about arrow keys, where
+    // always-to-top was disorienting because the selection moves one row at a
+    // time. This is a deliberate "where am I?" gesture, and the answer is only
+    // useful if you can see it without hunting.
+    // Capture phase, and on the STAGE rather than the example: a behavior that
+    // calls stopPropagation on its own click -- dropdown, dialog, drawer,
+    // popover all do -- would otherwise never let this run, so the resync would
+    // work for a plain button and silently not for the examples most likely to
+    // leave you lost. Capture also means it fires before the example handles
+    // the click, so the behavior still does everything it normally does; this
+    // only reads the list and scrolls it.
+    liveStage.addEventListener('click', () => {
+      const current = resultsEl.querySelector('[aria-current="true"]');
+      if (!current) return;
+      resultsEl.scrollTop = current.offsetTop - resultsEl.offsetTop;
+    }, true);
+
+    resultsEl.addEventListener('click', (e) => {
+      const btn = e.target.closest('.behaviors-search-results__row');
+      if (!btn) return;
+      selectedByKeyboard = false;
+      if (btn.dataset.browseToken) {
+        // #664: render it, and LEAVE THE LIST ALONE. Filling the input would
+        // re-run applyFilter and collapse the browse list to just this one
+        // behavior, so picking the next one meant clearing the box first --
+        // the list has to stay browsable while the panel changes beside it.
+        selectRow(btn, { focus: false, reveal: true });
+        return;
+      }
+      // #664: render it in the panel beside the list. Deliberately NO
+      // scrollIntoView -- John: "don't scroll down to existing samples, just
+      // show the code render in element next to dropdown". Jumping the page
+      // away from the search box is the behaviour this panel replaces.
+      const rowToken = btn.querySelector('.behaviors-search-results__token');
+      if (rowToken) {
+        showLive(rowToken.textContent.trim().split(/\s+/)[0], btn.dataset.variant || '');
+        // #686: same reveal as the branch above -- stacked, the panel is below
+        // the fold and the render is invisible without it.
+        if (STACKED.matches) liveEl.scrollIntoView({ block: 'start' });
+      }
+    });
+
+    input.addEventListener('input', () => applyFilter(input.value));
+
+    // #766: changing the filter re-runs the same query, so the search text and
+    // the form choice compose instead of overriding each other.
+    //
+    // DELEGATED, not bound per radio. Binding with querySelectorAll at setup
+    // captured whatever existed at that instant -- and this script runs while
+    // the fragment is still being wired, so the NodeList came back empty and
+    // clicking a radio did nothing at all. The list simply stayed on "Both",
+    // which reads exactly like a filter that does not filter.
+    document.addEventListener('change', (e) => {
+      const t = e.target;
+      if (t && t.name === 'authoring-form') applyFilter(input ? input.value : '');
+    });
+    applyFilter('');
+
+    // #771 -- John: "always pick the first element on the left when this page
+    // is shown for the first time."
+    //
+    // The panel opened empty, so the first thing a reader saw was a list and a
+    // blank space with nothing explaining what to do. Select the first row so
+    // the page arrives showing something running.
+    //
+    // Deferred until the list has rows: allEntries is filled by two fetches
+    // (tag-map, then the schema index), so applyFilter('') above can render
+    // nothing on the first pass and fill in a tick later.
+    (function selectFirstOnLoad() {
+      let tries = 0;
+      const pick = () => {
+        if (resultsEl.querySelector('[aria-current="true"]')) return;   // reader got there first
+        const first = resultsEl.querySelector('.behaviors-search-results__row');
+        if (first) {
+          // focus:false -- stealing focus on load would move the caret out of
+          // the search box before the reader has typed anything.
+          selectRow(first, { focus: false, reveal: false });
+          return;
+        }
+        if (++tries < 40) setTimeout(pick, 100);
+      };
+      pick();
+    })();
+  })();
+  </script>

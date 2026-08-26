@@ -32,7 +32,7 @@ function updateIntellisense() {
             const schema = JSON.parse(fs.readFileSync(path.join(modelsDir, file), 'utf8'));
             const behaviorName = schema.behavior || file.replace('.schema.json', '');
             
-            // Determine Tag Name: prefers wb-card-product if CamelCase, wb-card for single word
+            // Determine Tag Name: prefers x-card-product if CamelCase, x-card for single word
             const hyphenatedName = toHyphenated(behaviorName);
             const tagName = `wb-${hyphenatedName}`;
             

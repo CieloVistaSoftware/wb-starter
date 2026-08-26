@@ -4,13 +4,13 @@
   "title": "Badge",
   "description": "Small label/tag for status indicators, counts, or categories",
   "schemaFor": "badge",
-  "baseClass": "wb-badge",
+  "baseClass": "x-badge",
   "semanticElement": {
     "tagName": "span",
     "implicitRole": "status"
   },
   "compliance": {
-    "baseClass": "wb-badge",
+    "baseClass": "x-badge",
     "supportLevel": "stable",
     "accessibility": "high"
   },
@@ -35,7 +35,7 @@
         "gradient"
       ],
       "default": "default",
-      "appliesClass": "wb-badge--{{value}}"
+      "appliesClass": "x-badge--{{value}}"
     },
     "size": {
       "type": "string",
@@ -47,25 +47,25 @@
         "lg"
       ],
       "default": "md",
-      "appliesClass": "wb-badge--{{value}}"
+      "appliesClass": "x-badge--{{value}}"
     },
     "pill": {
       "type": "boolean",
       "description": "Pill shape with full border radius",
       "default": false,
-      "appliesClass": "wb-badge--pill"
+      "appliesClass": "x-badge--pill"
     },
     "dot": {
       "type": "boolean",
       "description": "Dot indicator (no text)",
       "default": false,
-      "appliesClass": "wb-badge--dot"
+      "appliesClass": "x-badge--dot"
     },
     "outline": {
       "type": "boolean",
       "description": "Outline style (transparent background)",
       "default": false,
-      "appliesClass": "wb-badge--outline"
+      "appliesClass": "x-badge--outline"
     },
     "removable": {
       "type": "boolean",
@@ -76,7 +76,7 @@
       "type": "boolean",
       "description": "Soft pulsing glow halo in the badge's own variant color, for drawing attention (e.g. NEW/LIVE badges)",
       "default": false,
-      "appliesClass": "wb-badge--glow"
+      "appliesClass": "x-badge--glow"
     },
     "icon": {
       "type": "string",
@@ -111,125 +111,125 @@
     }
   },
   "$cssAPI": {
-    "--wb-badge-padding-x": {
+    "--x-badge-padding-x": {
       "default": "0.5rem",
       "description": "Horizontal padding"
     },
-    "--wb-badge-padding-y": {
+    "--x-badge-padding-y": {
       "default": "0.25rem",
       "description": "Vertical padding"
     },
-    "--wb-badge-radius": {
+    "--x-badge-radius": {
       "default": "4px",
       "description": "Border radius"
     },
-    "--wb-badge-font-size": {
+    "--x-badge-font-size": {
       "default": "0.75rem",
       "description": "Font size"
     },
-    "--wb-badge-font-weight": {
+    "--x-badge-font-weight": {
       "default": "600",
       "description": "Font weight"
     },
-    "--wb-badge-gap": {
+    "--x-badge-gap": {
       "default": "0.25rem",
       "description": "Gap between text and remove button"
     },
-    "--wb-badge-default-bg": {
+    "--x-badge-default-bg": {
       "default": "var(--bg-secondary, #e0e0e0)",
       "description": "Default variant background"
     },
-    "--wb-badge-default-color": {
+    "--x-badge-default-color": {
       "default": "var(--text-primary, #1a1a1a)",
       "description": "Default variant text color"
     },
-    "--wb-badge-primary-bg": {
+    "--x-badge-primary-bg": {
       "default": "var(--primary, #6366f1)",
       "description": "Primary variant background"
     },
-    "--wb-badge-primary-color": {
+    "--x-badge-primary-color": {
       "default": "#ffffff",
       "description": "Primary variant text color"
     },
-    "--wb-badge-success-bg": {
+    "--x-badge-success-bg": {
       "default": "var(--success, #4caf50)",
       "description": "Success variant background"
     },
-    "--wb-badge-success-color": {
+    "--x-badge-success-color": {
       "default": "#ffffff",
       "description": "Success variant text color"
     },
-    "--wb-badge-warning-bg": {
+    "--x-badge-warning-bg": {
       "default": "var(--warning, #ff9800)",
       "description": "Warning variant background"
     },
-    "--wb-badge-warning-color": {
+    "--x-badge-warning-color": {
       "default": "#ffffff",
       "description": "Warning variant text color"
     },
-    "--wb-badge-error-bg": {
+    "--x-badge-error-bg": {
       "default": "var(--error, #f44336)",
       "description": "Error variant background"
     },
-    "--wb-badge-error-color": {
+    "--x-badge-error-color": {
       "default": "#ffffff",
       "description": "Error variant text color"
     },
-    "--wb-badge-info-bg": {
+    "--x-badge-info-bg": {
       "default": "var(--info, #2196f3)",
       "description": "Info variant background"
     },
-    "--wb-badge-info-color": {
+    "--x-badge-info-color": {
       "default": "#ffffff",
       "description": "Info variant text color"
     },
-    "--wb-badge-dot-size": {
+    "--x-badge-dot-size": {
       "default": "0.5rem",
       "description": "Dot indicator size"
     }
   },
   "test": {
     "setup": [
-      "<wb-badge>Basic badge content</wb-badge>",
-      "<wb-badge variant=\"default\">variant=default</wb-badge>",
-      "<wb-badge variant=\"primary\">variant=primary</wb-badge>",
-      "<wb-badge variant=\"secondary\">variant=secondary</wb-badge>",
-      "<wb-badge size=\"xs\">size=xs</wb-badge>",
-      "<wb-badge size=\"sm\">size=sm</wb-badge>",
-      "<wb-badge size=\"md\">size=md</wb-badge>",
-      "<wb-badge pill>with pill</wb-badge>",
-      "<wb-badge variant=\"default\" size=\"xs\" pill dot outline removable>Test</wb-badge>",
-      "<wb-badge variant=\"default\" size=\"sm\">Test</wb-badge>",
-      "<wb-badge variant=\"default\" size=\"md\" pill outline>Test</wb-badge>",
-      "<wb-badge variant=\"default\" size=\"lg\" dot removable>Test</wb-badge>",
-      "<wb-badge variant=\"primary\" size=\"xs\" outline removable>Test</wb-badge>",
-      "<wb-badge variant=\"primary\" size=\"sm\" pill dot>Test</wb-badge>",
-      "<wb-badge variant=\"primary\" size=\"md\" dot removable>Test</wb-badge>",
-      "<wb-badge variant=\"primary\" size=\"lg\" pill outline>Test</wb-badge>",
-      "<wb-badge variant=\"secondary\" size=\"xs\" pill dot>Test</wb-badge>",
-      "<wb-badge variant=\"secondary\" size=\"sm\" outline removable>Test</wb-badge>",
-      "<wb-badge variant=\"secondary\" size=\"md\" pill dot outline removable>Test</wb-badge>",
-      "<wb-badge variant=\"secondary\" size=\"lg\" pill dot outline removable>Test</wb-badge>",
-      "<wb-badge variant=\"success\" size=\"xs\" pill dot outline removable>Test</wb-badge>",
-      "<wb-badge variant=\"success\" size=\"sm\">Test</wb-badge>",
-      "<wb-badge variant=\"success\" size=\"md\" pill dot outline removable>Test</wb-badge>",
-      "<wb-badge variant=\"success\" size=\"lg\" pill dot outline removable>Test</wb-badge>",
-      "<wb-badge variant=\"warning\" size=\"xs\" pill dot outline removable>Test</wb-badge>",
-      "<wb-badge variant=\"warning\" size=\"sm\">Test</wb-badge>",
-      "<wb-badge variant=\"warning\" size=\"md\" pill dot outline removable>Test</wb-badge>",
-      "<wb-badge variant=\"warning\" size=\"lg\" pill dot outline removable>Test</wb-badge>",
-      "<wb-badge variant=\"error\" size=\"xs\" pill dot outline removable>Test</wb-badge>",
-      "<wb-badge variant=\"error\" size=\"sm\">Test</wb-badge>",
-      "<wb-badge variant=\"error\" size=\"md\" pill dot outline removable>Test</wb-badge>",
-      "<wb-badge variant=\"error\" size=\"lg\" pill dot outline removable>Test</wb-badge>",
-      "<wb-badge variant=\"info\" size=\"xs\" pill dot outline removable>Test</wb-badge>",
-      "<wb-badge variant=\"info\" size=\"sm\">Test</wb-badge>",
-      "<wb-badge variant=\"info\" size=\"md\" pill dot outline removable>Test</wb-badge>",
-      "<wb-badge variant=\"info\" size=\"lg\" pill dot outline removable>Test</wb-badge>",
-      "<wb-badge variant=\"glass\">variant=glass</wb-badge>",
-      "<wb-badge variant=\"gradient\">variant=gradient</wb-badge>",
-      "<wb-badge variant=\"primary\" glow>with glow</wb-badge>",
-      "<wb-badge variant=\"glass\" pill glow icon=\"✨\">glass+pill+glow+icon</wb-badge>"
+      "<span x-badge>Basic badge content</span>",
+      "<span x-badge variant=\"default\">variant=default</span>",
+      "<span x-badge variant=\"primary\">variant=primary</span>",
+      "<span x-badge variant=\"secondary\">variant=secondary</span>",
+      "<span x-badge size=\"xs\">size=xs</span>",
+      "<span x-badge size=\"sm\">size=sm</span>",
+      "<span x-badge size=\"md\">size=md</span>",
+      "<span x-badge pill>with pill</span>",
+      "<span x-badge variant=\"default\" size=\"xs\" pill dot outline removable>Test</span>",
+      "<span x-badge variant=\"default\" size=\"sm\">Test</span>",
+      "<span x-badge variant=\"default\" size=\"md\" pill outline>Test</span>",
+      "<span x-badge variant=\"default\" size=\"lg\" dot removable>Test</span>",
+      "<span x-badge variant=\"primary\" size=\"xs\" outline removable>Test</span>",
+      "<span x-badge variant=\"primary\" size=\"sm\" pill dot>Test</span>",
+      "<span x-badge variant=\"primary\" size=\"md\" dot removable>Test</span>",
+      "<span x-badge variant=\"primary\" size=\"lg\" pill outline>Test</span>",
+      "<span x-badge variant=\"secondary\" size=\"xs\" pill dot>Test</span>",
+      "<span x-badge variant=\"secondary\" size=\"sm\" outline removable>Test</span>",
+      "<span x-badge variant=\"secondary\" size=\"md\" pill dot outline removable>Test</span>",
+      "<span x-badge variant=\"secondary\" size=\"lg\" pill dot outline removable>Test</span>",
+      "<span x-badge variant=\"success\" size=\"xs\" pill dot outline removable>Test</span>",
+      "<span x-badge variant=\"success\" size=\"sm\">Test</span>",
+      "<span x-badge variant=\"success\" size=\"md\" pill dot outline removable>Test</span>",
+      "<span x-badge variant=\"success\" size=\"lg\" pill dot outline removable>Test</span>",
+      "<span x-badge variant=\"warning\" size=\"xs\" pill dot outline removable>Test</span>",
+      "<span x-badge variant=\"warning\" size=\"sm\">Test</span>",
+      "<span x-badge variant=\"warning\" size=\"md\" pill dot outline removable>Test</span>",
+      "<span x-badge variant=\"warning\" size=\"lg\" pill dot outline removable>Test</span>",
+      "<span x-badge variant=\"error\" size=\"xs\" pill dot outline removable>Test</span>",
+      "<span x-badge variant=\"error\" size=\"sm\">Test</span>",
+      "<span x-badge variant=\"error\" size=\"md\" pill dot outline removable>Test</span>",
+      "<span x-badge variant=\"error\" size=\"lg\" pill dot outline removable>Test</span>",
+      "<span x-badge variant=\"info\" size=\"xs\" pill dot outline removable>Test</span>",
+      "<span x-badge variant=\"info\" size=\"sm\">Test</span>",
+      "<span x-badge variant=\"info\" size=\"md\" pill dot outline removable>Test</span>",
+      "<span x-badge variant=\"info\" size=\"lg\" pill dot outline removable>Test</span>",
+      "<span x-badge variant=\"glass\">variant=glass</span>",
+      "<span x-badge variant=\"gradient\">variant=gradient</span>",
+      "<span x-badge variant=\"primary\" glow>with glow</span>",
+      "<span x-badge variant=\"glass\" pill glow icon=\"✨\">glass+pill+glow+icon</span>"
     ],
     "matrix": {
       "combinations": [
@@ -546,9 +546,9 @@
     },
     "site": {
       "page": "feedback",
-      "tag": "wb-badge",
+      "tag": "x-badge",
       "renders": true,
-      "baseClass": "wb-badge",
+      "baseClass": "x-badge",
       "minInstances": 8,
       "checkText": [
         "New",
@@ -557,8 +557,8 @@
         "Error"
       ],
       "checkClasses": [
-        "wb-badge--primary",
-        "wb-badge--xs"
+        "x-badge--primary",
+        "x-badge--xs"
       ],
       "checkAttributes": [
         "label"

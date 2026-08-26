@@ -6,7 +6,7 @@ import { test, expect } from '@playwright/test';
  *   audio.js's behavior, which built a custom transport UI over EVERY
  *   audio element it touched, including plain native <audio controls> that
  *   never asked for it. Fixed: only replace with the custom UI for the
- *   <wb-audio> custom tag or when show-eq is requested.
+ *   <audio> custom tag or when show-eq is requested.
  * - Both <video> sources used commondatastorage.googleapis.com URLs that
  *   now 403 for everyone (bucket access revoked) — swapped for
  *   w3schools.com's long-standing public sample videos.

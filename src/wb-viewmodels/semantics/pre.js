@@ -34,7 +34,7 @@ export function pre(element, options = {}) {
   // v3: plain `scrollable` attribute is canonical; data-scrollable accepted for back-compat.
   const scrollable = options.scrollable ?? (element.getAttribute('scrollable') === 'true' || readAttr(element, 'scrollable') === 'true');
   // Code blocks should read like a code editor: DO NOT wrap by default (wrapping
-  // breaks tokens mid-word, e.g. "wb-btn--" / "sm"). Long lines scroll
+  // breaks tokens mid-word, e.g. "x-btn--" / "sm"). Long lines scroll
   // horizontally instead. Opt into wrapping explicitly with wrap="true". (#199)
   const defaultWrap = false;
 
@@ -164,7 +164,7 @@ export function pre(element, options = {}) {
   // Only worth offering when there's actually something to collapse away —
   // gated on maxHeight (the same signal the wrapper itself uses to decide
   // whether the code needs clipping). Previously unconditional: every
-  // <wb-demo> code sample (typically 3-10 lines, never maxHeight) got a
+  // <div x-demo> code sample (typically 3-10 lines, never maxHeight) got a
   // "hide code" toggle with nothing meaningful to hide.
   let collapsed = false;
 

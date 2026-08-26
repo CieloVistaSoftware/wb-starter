@@ -24,12 +24,12 @@ export function details(element, options = {}) {
     const contentHtml = element.innerHTML;
     
     const detailsEl = document.createElement('details');
-    detailsEl.className = 'wb-details ' + (element.className || '');
+    detailsEl.className = 'x-details ' + (element.className || '');
     if (config.open) detailsEl.open = true;
     
     detailsEl.innerHTML = `
-      <summary class="wb-details__summary">${summaryText}</summary>
-      <div class="wb-details__content">${contentHtml}</div>
+      <summary class="x-details__summary">${summaryText}</summary>
+      <div class="x-details__content">${contentHtml}</div>
     `;
     
     Object.keys(element.dataset).forEach(key => {
@@ -45,7 +45,7 @@ export function details(element, options = {}) {
 
     // #689 -- John: "the gaps here are not right". A native <details> authored
     // with the summary as an ATTRIBUTE (<details summary="Trail conditions">)
-    // got neither a <summary> element nor a .wb-details__content wrapper, so
+    // got neither a <summary> element nor a .x-details__content wrapper, so
     // the styling below -- which is what applies the 1rem to each half -- had
     // nothing to find. The browser fell back to its own unpadded "Details"
     // label (dropping the authored text entirely), the <img> sat flush against
@@ -55,11 +55,11 @@ export function details(element, options = {}) {
     const ownSummary = [...element.children].find((c) => c.tagName === 'SUMMARY');
     if (!ownSummary) {
       const content = document.createElement('div');
-      content.className = 'wb-details__content';
+      content.className = 'x-details__content';
       while (element.firstChild) content.appendChild(element.firstChild);
 
       const summaryEl = document.createElement('summary');
-      summaryEl.className = 'wb-details__summary';
+      summaryEl.className = 'x-details__summary';
       // textContent, not innerHTML: the attribute is author input and the
       // label is plain text -- there is nothing here that needs markup.
       summaryEl.textContent = element.getAttribute('summary') || 'Details';
@@ -77,32 +77,32 @@ export function details(element, options = {}) {
   //
   // The declarations moved verbatim into src/styles/behaviors/details.css,
   // so the default appearance is unchanged for anyone not overriding it.
-  element.classList.add('wb-details');
+  element.classList.add('x-details');
 
   const summary = element.querySelector('summary');
   if (summary) {
-    summary.classList.add('wb-details__summary');
+    summary.classList.add('x-details__summary');
     // #775: layout and colour live in details.css now, same reason.
     
     // Custom icon (guard against re-wrapping on a second scan — issue #131)
-    if (!summary.querySelector(".wb-details__label")) {
+    if (!summary.querySelector(".x-details__label")) {
       const labelText = summary.textContent.trim();
       summary.innerHTML = `
-        <span class="wb-details__label">${labelText}</span>
-        <span class="wb-details__icon">▼</span>
+        <span class="x-details__label">${labelText}</span>
+        <span class="x-details__icon">▼</span>
       `;
     }
   }
 
   // Content styling
-  const content = element.querySelector('.wb-details__content') || element.querySelector('summary + *');
+  const content = element.querySelector('.x-details__content') || element.querySelector('summary + *');
   if (content) {
-    content.classList.add('wb-details__content');
+    content.classList.add('x-details__content');
     // #775: padding and background live in details.css now.
   }
 
   // Animation
-  const icon = element.querySelector('.wb-details__icon');
+  const icon = element.querySelector('.x-details__icon');
   element.addEventListener('toggle', () => {
     if (icon) {
       // #775 -- John: "show the arrows - 90 degress to indicate collapsed.
@@ -131,7 +131,7 @@ export function details(element, options = {}) {
     get isOpen() { return element.open; }
   };
 
-  return () => element.classList.remove('wb-details');
+  return () => element.classList.remove('x-details');
 }
 
 export default { details };

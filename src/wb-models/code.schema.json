@@ -26,11 +26,6 @@
       "description": "Read by code(). Bare attribute.",
       "default": false
     },
-    "data-show-copy": {
-      "type": "boolean",
-      "description": "Read by code(). Bare attribute.",
-      "default": false
-    },
     "data-copy": {
       "type": "boolean",
       "description": "Read by code(). Bare attribute.",

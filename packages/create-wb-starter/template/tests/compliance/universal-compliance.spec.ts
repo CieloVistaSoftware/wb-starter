@@ -4,9 +4,9 @@ const pageSpecs = [
   {
     url: '/',
     elements: [
-      { selector: 'wb-cardhero', description: 'Hero section', required: true },
-      { selector: 'wb-card[variant="float"]', description: 'Feature cards', minCount: 6 },
-      { selector: 'wb-card[variant="glass"]', description: 'Live demo glass card', required: true },
+      { selector: 'x-cardhero', description: 'Hero section', required: true },
+      { selector: 'x-card[variant="float"]', description: 'Feature cards', minCount: 6 },
+      { selector: 'x-card[variant="glass"]', description: 'Live demo glass card', required: true },
       { selector: 'h2:has-text("Ready to build something")', description: 'CTA heading', required: true },
       { selector: 'a:has-text("Get Started")', description: 'Get Started link', required: true },
       { selector: 'a:has-text("GitHub")', description: 'GitHub link', required: true }

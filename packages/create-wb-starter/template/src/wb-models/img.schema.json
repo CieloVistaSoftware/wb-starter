@@ -1,0 +1,49 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "img.schema.json",
+  "title": "Img",
+  "description": "Behavior applied with x-img.",
+  "schemaFor": "x-img",
+  "properties": {
+    "placeholder": {
+      "type": "string",
+      "description": "Read by img().",
+      "default": ""
+    },
+    "fallback": {
+      "type": "string",
+      "description": "Read by img().",
+      "default": ""
+    },
+    "aspect-ratio": {
+      "type": "string",
+      "description": "Read by img().",
+      "default": ""
+    },
+    "lazy": {
+      "type": "boolean",
+      "description": "Read by img(). Bare attribute.",
+      "default": false
+    },
+    "data-lazy": {
+      "type": "boolean",
+      "description": "Read by img(). Bare attribute.",
+      "default": false
+    },
+    "zoomable": {
+      "type": "boolean",
+      "description": "Read by img(). Bare attribute.",
+      "default": false
+    },
+    "data-zoomable": {
+      "type": "boolean",
+      "description": "Read by img(). Bare attribute.",
+      "default": false
+    }
+  },
+  "_metadata": {
+    "generatedBy": "scripts/generate-behavior-schemas.mjs (#716)",
+    "derivedFrom": "the behavior implementation — every property here is one the code actually reads",
+    "note": "Expand by hand: enums, richer descriptions and accessibility notes cannot be read from source."
+  }
+}

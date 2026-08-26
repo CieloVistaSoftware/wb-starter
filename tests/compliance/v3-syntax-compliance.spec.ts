@@ -5,11 +5,11 @@
  * 
  * RATIONALE: We moved away from `data-wb` because:
  * 1. The `data-` prefix is verbose and clutters HTML
- * 2. `<wb-card>` is cleaner and more semantic
+ * 2. `<article>` is cleaner and more semantic
  * 3. `x-ripple` for behaviors avoids the data- prefix entirely
  * 
  * ✅ PRIMARY (v3.0):
- *   - <wb-card> - Web component tags for components
+ *   - <article> - Web component tags for components
  *   - x-ripple, x-draggable - Prefix for adding behaviors to elements
  * 
  * ⚠️ DEPRECATED:
@@ -28,7 +28,7 @@ const PUBLIC_DIR = 'public';
 
 // Files that are allowed to use data-wb (legacy demos, documentation)
 const LEGACY_ALLOWED = [
-  'data-wb-demo.html',
+  'data-x-demo.html',
   'migration-guide.html',
   'legacy-syntax.html'
 ];

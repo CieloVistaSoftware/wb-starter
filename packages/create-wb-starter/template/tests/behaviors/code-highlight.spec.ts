@@ -2,7 +2,7 @@
  * #183 — showcase code blocks must render like a code editor (highlight.js syntax
  * tokens, monospace, dark theme), not raw text.
  *
- * The breakage was a side effect of the wb-demo disconnect crash (#174/#175) which
+ * The breakage was a side effect of the x-demo disconnect crash (#174/#175) which
  * tore down rendering, plus the missing highlight theme. This regression test locks
  * the working state: every demo code block is highlighted.
  */

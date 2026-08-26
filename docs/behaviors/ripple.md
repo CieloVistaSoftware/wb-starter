@@ -9,7 +9,7 @@ element's center) on `mousedown`, then fades out.
 |----------|-------|
 | Behavior | `ripple` |
 | Attribute | `x-ripple` |
-| Custom Tag | `<div x-ripple>` |
+| Attribute form | `<div x-ripple>` |
 | Applies to | any element (buttons, cards, list items, ...) |
 | Category | Effects |
 | Schema | `src/wb-models/ripple.schema.json` |
@@ -37,34 +37,34 @@ there's no `="true"`/`="false"` value to set.
 
 ### Default (click position)
 
-<wb-demo>
+<div x-demo>
 <button x-ripple>Click me</button>
-</wb-demo>
+</div>
 
 ### Centered ripple
 
-<wb-demo>
+<div x-demo>
 <button x-ripple ripple-centered>Centered ripple</button>
-</wb-demo>
+</div>
 
 ### Custom color and duration
 
-<wb-demo>
+<div x-demo>
 <button x-ripple ripple-color="rgba(99, 102, 241, 0.5)" ripple-duration="900">Slow indigo ripple</button>
-</wb-demo>
+</div>
 
-### Custom Tag
+### Attribute form
 
-<wb-demo>
-<div x-ripple>Same behavior via the &lt;wb-ripple&gt; custom tag</div>
-</wb-demo>
+<div x-demo>
+<div x-ripple>Same behavior via the &lt;x-ripple&gt; custom tag</div>
+</div>
 
 ## CSS Classes
 
 | Class | Applied When | Description |
 |-------|--------------|-------------|
-| `.wb-ripple` | Always, except on a literal `<div x-ripple>` host (matched by its tag selector instead in `effects.css`) | Adds `position: relative; overflow: hidden` so the wave stays contained |
-| `.wb-ripple__wave` | On each press | The expanding circle itself (a `<span>` appended and removed per click) |
+| `.x-ripple` | Always, except on a literal `<div x-ripple>` host (matched by its tag selector instead in `effects.css`) | Adds `position: relative; overflow: hidden` so the wave stays contained |
+| `.x-ripple__wave` | On each press | The expanding circle itself (a `<span>` appended and removed per click) |
 
 ## Accessibility
 

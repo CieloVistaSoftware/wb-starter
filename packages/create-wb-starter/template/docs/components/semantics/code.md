@@ -6,10 +6,10 @@ Enhanced code display with copy button and language badge.
 
 | Property | Value |
 |----------|-------|
-| Custom Tag | `<wb-code>` |
+| Custom Tag | `<code>` |
 | Behavior | `code` |
 | Semantic | `<code>` |
-| Root CSS Class | `wb-code` |
+| Root CSS Class | `x-code` |
 | Category | Content |
 
 ## Properties
@@ -21,40 +21,38 @@ Enhanced code display with copy button and language badge.
 | `variant` | string | `"inline"` | Display style: `inline`, `block` |
 | `scrollable` | boolean | `false` | Enable horizontal scrolling |
 
-Wrapped in `<wb-demo>`, so the live component renders below with its source shown underneath:
+Wrapped in `<div x-demo>`, so the live component renders below with its source shown underneath:
 
-<wb-demo>
+<div x-demo>
 <code
-  x-code
   language="Python">
   print("Hello")
 </code>
-</wb-demo>
+</div>
 
 ## Usage
 
 ### Inline Code
 
 ```html
-<wb-code>const x = 1;</wb-code>
+<code>const x = 1;</code>
 ```
 
 ### Block Code
 
 ```html
-<wb-code
+<code
   variant="block"
   language="JavaScript"
   showCopy>
   function hello() { console.log("Hello World"); }
-</wb-code>
+</code>
 ```
 
 ### Native Code (Enhanced)
 
 ```html
 <code
-  x-code
   language="Python">
   print("Hello")
 </code>
@@ -63,38 +61,38 @@ Wrapped in `<wb-demo>`, so the live component renders below with its source show
 ### With Copy Button
 
 ```html
-<wb-code
+<code
   variant="block"
   showCopy>
-  npm install wb-framework
-</wb-code>
+  npm install x-framework
+</code>
 ```
 
 ### Scrollable (Long Lines)
 
 ```html
-<wb-code
+<code
   variant="block"
   scrollable>
   const veryLongLine = "This is a very long line of code that will scroll horizontally";
-</wb-code>
+</code>
 ```
 
 ## Generated Structure
 
 ### Inline
 ```html
-<code class="wb-code wb-code--inline">const x = 1;</code>
+<code class="x-code x-code--inline">const x = 1;</code>
 ```
 
 ### Block
 ```html
-<div class="wb-code wb-code--block">
-  <div class="wb-code__header">
-    <span class="wb-code__language">JavaScript</span>
-    <button class="wb-code__copy">Copy</button>
+<div class="x-code x-code--block">
+  <div class="x-code__header">
+    <span class="x-code__language">JavaScript</span>
+    <button class="x-code__copy">Copy</button>
   </div>
-  <pre class="wb-code__content">
+  <pre class="x-code__content">
     <code>function hello() { ... }</code>
   </pre>
 </div>
@@ -104,10 +102,10 @@ Wrapped in `<wb-demo>`, so the live component renders below with its source show
 
 | Class | Applied When | Description |
 |-------|--------------|-------------|
-| `.wb-code` | Always | Base styling |
-| `.wb-code--inline` | `variant="inline"` | Inline display |
-| `.wb-code--block` | `variant="block"` | Block display |
-| `.wb-code--scrollable` | `scrollable` | Horizontal scroll |
+| `.x-code` | Always | Base styling |
+| `.x-code--inline` | `variant="inline"` | Inline display |
+| `.x-code--block` | `variant="block"` | Block display |
+| `.x-code--scrollable` | `scrollable` | Horizontal scroll |
 
 ## Methods
 
@@ -116,7 +114,7 @@ Wrapped in `<wb-demo>`, so the live component renders below with its source show
 | `copy()` | Copies code to clipboard |
 
 ```javascript
-const code = document.querySelector('wb-code');
+const code = document.querySelector('x-code');
 code.copy();
 ```
 
@@ -136,10 +134,10 @@ code.addEventListener('wb:code:copy', () => {
 
 | Variable | Default | Description |
 |----------|---------|-------------|
-| `--wb-code-bg` | `var(--bg-tertiary)` | Background color |
-| `--wb-code-color` | `var(--text-primary)` | Text color |
-| `--wb-code-radius` | `4px` | Border radius |
-| `--wb-code-padding` | `0.25em 0.5em` | Inline padding |
-| `--wb-code-block-padding` | `1rem` | Block padding |
-| `--wb-code-font-family` | `monospace` | Font family |
-| `--wb-code-font-size` | `0.875em` | Font size |
+| `--x-code-bg` | `var(--bg-tertiary)` | Background color |
+| `--x-code-color` | `var(--text-primary)` | Text color |
+| `--x-code-radius` | `4px` | Border radius |
+| `--x-code-padding` | `0.25em 0.5em` | Inline padding |
+| `--x-code-block-padding` | `1rem` | Block padding |
+| `--x-code-font-family` | `monospace` | Font family |
+| `--x-code-font-size` | `0.875em` | Font size |

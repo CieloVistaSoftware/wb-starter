@@ -6,7 +6,7 @@
  * -----------------------------------------------------------------------------
  */
 
-.wb-stepper {
+.x-stepper {
   display: inline-flex;
   align-items: stretch;
   border: 1px solid var(--border-color);
@@ -17,7 +17,7 @@
   line-height: 1;
 }
 
-.wb-stepper__btn {
+.x-stepper__btn {
   border: 0;
   background: var(--bg-tertiary);
   color: var(--text-primary);
@@ -28,16 +28,16 @@
   transition: background 0.15s ease, color 0.15s ease;
 }
 
-.wb-stepper__btn:hover {
+.x-stepper__btn:hover {
   background: var(--primary);
   color: var(--text-primary);
 }
 
-.wb-stepper__btn:active {
+.x-stepper__btn:active {
   transform: translateY(1px);
 }
 
-.wb-stepper__value {
+.x-stepper__value {
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -48,7 +48,7 @@
 }
 
 /* Input form: <input x-stepper> wrapped between the two buttons */
-.wb-stepper__input {
+.x-stepper__input {
   border: 0;
   width: 3rem;
   text-align: center;
@@ -56,6 +56,6 @@
   color: var(--text-primary);
   font: inherit;
 }
-.wb-stepper__input:focus {
+.x-stepper__input:focus {
   outline: none;
 }

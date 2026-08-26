@@ -1,18 +1,26 @@
+import { readAttr } from '../core/read-attr.js';
 /**
  * Code Control Behavior
- * Custom Tag: <wb-codecontrol>
+ * Custom Tag: <div x-codecontrol>
  * Dropdown to select from available highlight.js code themes - applies immediately.
- * 
- * Usage:
- *   <wb-codecontrol ></div>
- *   <wb-codecontrol  data-size="xs"></div>
- *   <wb-codecontrol  data-show-label="false" data-size="sm"></div>
+ *
+ * Usage (plain attributes are canonical per Law 11; data-* accepted for
+ * back-compat only):
+ *   <div x-codecontrol></div>
+ *   <div x-codecontrol size="xs"></div>
+ *   <div x-codecontrol show-label="false" size="sm"></div>
+ *
+ * #638: every option here used to be read exclusively via element.dataset.*
+ * (data-default/data-show-label/data-show-category/data-persist/data-size),
+ * with no plain-attribute form at all -- unlike every other configurable
+ * behavior in this codebase. Fixed to read the plain attribute first,
+ * dataset as fallback, matching sticky.js/toggle.js.
  */
 
 // Curated list of highlight.js themes (organized by category)
 const CODE_THEMES = [
   // Grayscale / Minimal
-  { id: 'wb-grayscale-dark', name: 'WB Grayscale (Dark)', category: 'Minimal', description: 'High contrast dark grayscale', path: new URL('../styles/code-themes/wb-grayscale-dark.css', import.meta.url).href },
+  { id: 'x-grayscale-dark', name: 'WB Grayscale (Dark)', category: 'Minimal', description: 'High contrast dark grayscale', path: new URL('../styles/code-themes/x-grayscale-dark.css', import.meta.url).href },
   { id: 'ascetic', name: 'Ascetic', category: 'Minimal', description: 'Ultra minimal' },
   
   // Dark Themes
@@ -27,8 +35,6 @@ const CODE_THEMES = [
   { id: 'night-owl', name: 'Night Owl', category: 'Dark', description: 'Accessibility-focused dark' },
   { id: 'tokyo-night-dark', name: 'Tokyo Night', category: 'Dark', description: 'Inspired by Tokyo nights' },
   { id: 'panda-syntax-dark', name: 'Panda Dark', category: 'Dark', description: 'Minimal dark syntax' },
-  { id: 'rose-pine', name: 'Rosé Pine', category: 'Dark', description: 'All natural pine' },
-  { id: 'rose-pine-moon', name: 'Rosé Pine Moon', category: 'Dark', description: 'Rosé Pine variant' },
   { id: 'agate', name: 'Agate', category: 'Dark', description: 'Dark with muted colors' },
   { id: 'androidstudio', name: 'Android Studio', category: 'Dark', description: 'Android IDE theme' },
   { id: 'an-old-hope', name: 'An Old Hope', category: 'Dark', description: 'Star Wars inspired' },
@@ -50,7 +56,6 @@ const CODE_THEMES = [
   { id: 'intellij-light', name: 'IntelliJ Light', category: 'Light', description: 'JetBrains light variant' },
   { id: 'tokyo-night-light', name: 'Tokyo Night Light', category: 'Light', description: 'Tokyo light variant' },
   { id: 'panda-syntax-light', name: 'Panda Light', category: 'Light', description: 'Minimal light syntax' },
-  { id: 'rose-pine-dawn', name: 'Rosé Pine Dawn', category: 'Light', description: 'Rosé Pine light' },
   { id: 'stackoverflow-light', name: 'Stack Overflow Light', category: 'Light', description: 'SO light mode' },
   { id: 'default', name: 'Default', category: 'Light', description: 'highlight.js default' },
   { id: 'googlecode', name: 'Google Code', category: 'Light', description: 'Google style' },
@@ -82,11 +87,23 @@ const SYNC_EVENT = 'x:codetheme:sync';
 
 export function codecontrol(element, options = {}) {
   const config = {
-    default: options.default || element.dataset.default || 'atom-one-dark',
-    showLabel: options.showLabel ?? (element.dataset.showLabel !== 'false'),
-    showCategory: options.showCategory ?? (element.dataset.showCategory !== 'false'),
-    persist: options.persist ?? (element.dataset.persist !== 'false'),
-    size: options.size || element.dataset.size || 'md',
+    default: options.default || element.getAttribute('default') || element.dataset.default || 'atom-one-dark',
+    showLabel: options.showLabel ?? (
+      element.hasAttribute('show-label')
+        ? element.getAttribute('show-label') !== 'false'
+        : element.dataset.showLabel !== 'false'
+    ),
+    showCategory: options.showCategory ?? (
+      element.hasAttribute('show-category')
+        ? element.getAttribute('show-category') !== 'false'
+        : element.dataset.showCategory !== 'false'
+    ),
+    persist: options.persist ?? (
+      element.hasAttribute('persist')
+        ? element.getAttribute('persist') !== 'false'
+        : element.dataset.persist !== 'false'
+    ),
+    size: options.size || element.getAttribute('size') || readAttr(element, 'size') || 'md',
     ...options
   };
 

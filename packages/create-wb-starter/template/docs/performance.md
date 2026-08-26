@@ -58,4 +58,4 @@ This document tracks the performance optimization strategy and the work complete
 - **Resource Hints:** Added `rel="preload"` and `rel="modulepreload"` for critical CSS (`themes.css`, `site.css`), JS modules (`wb.js`, `site-engine.js`), and configuration (`site.json`). This helps the browser discover and download these high-priority assets earlier in the waterfall.
 
 **File:** `src/styles/site.css`
-- **Content Visibility:** Added `.wb-content-auto` utility class with `content-visibility: auto` and `contain-intrinsic-size`. This can be applied to large lists or off-screen sections to skip rendering work until they approach the viewport.
+- **Content Visibility:** Added `.x-content-auto` utility class with `content-visibility: auto` and `contain-intrinsic-size`. This can be applied to large lists or off-screen sections to skip rendering work until they approach the viewport.

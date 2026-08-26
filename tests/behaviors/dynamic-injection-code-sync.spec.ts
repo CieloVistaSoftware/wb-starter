@@ -15,10 +15,10 @@ test('Add New Checkbox updates the Code panel to show the added markup (#256)', 
   const addBtn = page.locator('#add-btn');
   await addBtn.scrollIntoViewIfNeeded();
 
-  // <wb-mdhtml> is lazily rendered via IntersectionObserver — wait for it
+  // <div x-mdhtml> is lazily rendered via IntersectionObserver — wait for it
   // to finish before clicking, or the update below has no <code> element
   // to find yet.
-  await expect(page.locator('#autoinject-mdhtml-dynamic')).toHaveClass(/wb-mdhtml--loaded/, { timeout: 10000 });
+  await expect(page.locator('#autoinject-mdhtml-dynamic')).toHaveClass(/x-mdhtml--loaded/, { timeout: 10000 });
 
   const codeEl = page.locator('#autoinject-mdhtml-dynamic code');
   await addBtn.click();

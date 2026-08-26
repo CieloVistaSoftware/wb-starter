@@ -14,7 +14,7 @@ function initErrorDisplay() {
   if (errorContainer) return;
   
   errorContainer = document.createElement('div');
-  errorContainer.id = 'wb-error-display';
+  errorContainer.id = 'x-error-display';
   errorContainer.style.cssText = `
     position: fixed;
     bottom: 1rem;
@@ -35,21 +35,21 @@ function initErrorDisplay() {
   
   errorContainer.innerHTML = `
     <div style="padding:10px 12px;background:#1a1a1a;border-bottom:1px solid #333;display:flex;justify-content:space-between;align-items:center;border-radius:8px 8px 0 0;position:sticky;top:0;">
-      <span style="font-weight:bold;color:#ef4444;">❌ Errors (<span id="wb-error-count">0</span>)</span>
+      <span style="font-weight:bold;color:#ef4444;">❌ Errors (<span id="x-error-count">0</span>)</span>
       <div>
-        <button id="wb-error-copy" style="background:#3b82f6;border:none;color:#fff;padding:4px 10px;border-radius:4px;cursor:pointer;font-size:0.6875rem;margin-right:4px;">📋 Copy</button>
-        <button id="wb-error-clear" style="background:#333;border:none;color:#fff;padding:4px 10px;border-radius:4px;cursor:pointer;font-size:0.6875rem;margin-right:4px;">Clear</button>
-        <button id="wb-error-close" style="background:#ef4444;border:none;color:#fff;padding:4px 10px;border-radius:4px;cursor:pointer;font-size:0.6875rem;">✕</button>
+        <button id="x-error-copy" style="background:#3b82f6;border:none;color:#fff;padding:4px 10px;border-radius:4px;cursor:pointer;font-size:0.6875rem;margin-right:4px;">📋 Copy</button>
+        <button id="x-error-clear" style="background:#333;border:none;color:#fff;padding:4px 10px;border-radius:4px;cursor:pointer;font-size:0.6875rem;margin-right:4px;">Clear</button>
+        <button id="x-error-close" style="background:#ef4444;border:none;color:#fff;padding:4px 10px;border-radius:4px;cursor:pointer;font-size:0.6875rem;">✕</button>
       </div>
     </div>
-    <div id="wb-error-list" style="padding:8px;"></div>
+    <div id="x-error-list" style="padding:8px;"></div>
   `;
   
   document.body.appendChild(errorContainer);
   
   // Copy button - formats errors for sharing
-  document.getElementById('wb-error-copy').onclick = async () => {
-    const copyBtn = document.getElementById('wb-error-copy');
+  document.getElementById('x-error-copy').onclick = async () => {
+    const copyBtn = document.getElementById('x-error-copy');
     const errorText = errors.map((e, i) => {
       let text = `[${i + 1}] ${e.message}`;
       if (e.details?.file) text += `\n    File: ${e.details.file}:${e.details.line || '?'}`;
@@ -81,15 +81,15 @@ function initErrorDisplay() {
   };
   
   // Clear button
-  document.getElementById('wb-error-clear').onclick = () => {
+  document.getElementById('x-error-clear').onclick = () => {
     errors = [];
-    document.getElementById('wb-error-list').innerHTML = '';
+    document.getElementById('x-error-list').innerHTML = '';
     updateErrorCount();
     clearErrorLogFile();
   };
   
   // Close button
-  document.getElementById('wb-error-close').onclick = () => {
+  document.getElementById('x-error-close').onclick = () => {
     errorContainer.style.display = 'none';
   };
 }
@@ -132,7 +132,7 @@ export async function logError(message, details = {}) {
   updateErrorCount();
   
   // Show in UI
-  const list = document.getElementById('wb-error-list');
+  const list = document.getElementById('x-error-list');
   const item = document.createElement('div');
   item.style.cssText = `
     padding: 8px 10px;
@@ -167,7 +167,7 @@ export async function logError(message, details = {}) {
   errorContainer.style.display = 'block';
   
   // Save to file
-  if (!document.documentElement.hasAttribute('data-wb-expected-errors')) {
+  if (!document.documentElement.hasAttribute('data-x-expected-errors')) {
     await appendErrorToLog(error);
   }
   
@@ -244,8 +244,8 @@ export function getErrors() {
  */
 export async function clearErrors() {
   errors = [];
-  if (document.getElementById('wb-error-list')) {
-    document.getElementById('wb-error-list').innerHTML = '';
+  if (document.getElementById('x-error-list')) {
+    document.getElementById('x-error-list').innerHTML = '';
   }
   updateErrorCount();
   await clearErrorLogFile();
@@ -266,7 +266,7 @@ function escapeHtml(str) {
  * Update the error count display
  */
 function updateErrorCount() {
-  const countEl = document.getElementById('wb-error-count');
+  const countEl = document.getElementById('x-error-count');
   if (countEl) countEl.textContent = errors.length;
 }
 

@@ -41,7 +41,12 @@ test.describe('demos/site/*.html: page-level padding wrapper', () => {
       expect(pageErrors, 'no uncaught page errors (guards against the </div>-inside-<script> regression)').toEqual([]);
       expect(consoleLogs.some((l) => l.includes(title)), `init script should have logged "${title}"`).toBe(true);
 
-      const wrapper = page.locator('.page').first();
+      // #628: body's padding wrapper class was renamed from `.page` to
+      // `.demo-page` in ece79e8 (wired via scripts/generate-site.mjs) --
+      // this test's selector went stale and never got updated, so every
+      // one of these 8 pages failed at "wrapper not found" regardless of
+      // the actual padding fix being intact.
+      const wrapper = page.locator('body.demo-page').first();
       await expect(wrapper).toBeVisible();
       const padding = await wrapper.evaluate((el) => getComputedStyle(el).paddingLeft);
       expect(parseFloat(padding)).toBeGreaterThanOrEqual(16); // >= 1rem

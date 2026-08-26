@@ -1,7 +1,7 @@
 import { readFlag } from '../../core/read-attr.js';
 /**
  * Vimeo - Vimeo embed
- * Custom Tag: <wb-vimeo>
+ * Custom Tag: <div x-vimeo>
  *
  * Migrated from the old media.js grab-bag file to match this project's
  * one-file-per-semantic-element convention (audio.js, table.js, ...).
@@ -10,7 +10,7 @@ import { readFlag } from '../../core/read-attr.js';
  * `videoIframe` via document.createElement('iframe') but then referenced
  * an undefined `iframe`/`params` (never declared — only `videoIframe`/
  * `embedParams` existed) — this threw a ReferenceError the instant
- * <wb-vimeo> was ever used. Completely broken, apparently never actually
+ * <div x-vimeo> was ever used. Completely broken, apparently never actually
  * exercised live.
  */
 export function vimeo(element, options = {}) {
@@ -27,7 +27,7 @@ export function vimeo(element, options = {}) {
     return;
   }
 
-  element.classList.add('wb-vimeo');
+  element.classList.add('x-vimeo');
   element.style.aspectRatio = '16/9';
   element.style.width = '100%';
   element.style.background = '#000';
@@ -49,7 +49,7 @@ export function vimeo(element, options = {}) {
   element.innerHTML = '';
   element.appendChild(iframe);
 
-  return () => element.classList.remove('wb-vimeo');
+  return () => element.classList.remove('x-vimeo');
 }
 
 export default { vimeo };

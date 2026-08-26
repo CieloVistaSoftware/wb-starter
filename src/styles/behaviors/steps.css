@@ -6,12 +6,12 @@
  * -----------------------------------------------------------------------------
  */
 
-.wb-steps {
+.x-steps {
   display: flex;
   gap: 0.5rem;
 }
 
-.wb-steps span {
+.x-steps span {
   flex: 1;
   text-align: center;
   padding: 0.5rem;
@@ -20,12 +20,12 @@
   font-size: 0.75rem;
 }
 
-.wb-steps span.active {
+.x-steps span.active {
   background: var(--primary);
   color: white;
 }
 
-.wb-steps span.done {
+.x-steps span.done {
   background: var(--success-color);
   color: white;
 }

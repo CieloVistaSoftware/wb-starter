@@ -29,7 +29,7 @@
   {
     "file": ".vscode\\html-custom-data.json",
     "hits": [
-      "L364: \"name\": \"wb-builder\",",
+      "L364: \"name\": \"x-builder\",",
       "L365: \"description\": \"Builder Schema\\n\\nUnified schema for builder components and UI interactions.\",",
       "L377: \"description\": \"List of components in the builder.\"",
       "L381: \"description\": \"Builder-level metadata (optional)\"",
@@ -75,9 +75,9 @@
   {
     "file": "data\\behavior-component-index.json",
     "hits": [
-      "L245: \"wb-builder\": {",
+      "L245: \"x-builder\": {",
       "L246: \"js\": \"src/wb-viewmodels/builder.js\",",
-      "L248: \"wb-builder-component\"",
+      "L248: \"x-builder-component\"",
       "L250: \"schema\": \"src/wb-models/builder.schema.json\""
     ]
   },
@@ -136,7 +136,7 @@
     ]
   },
   {
-    "file": "data\\data-wb-categorized.json",
+    "file": "data\\data-x-categorized.json",
     "hits": [
       "L69: \"file\": \"src/core/mvvm/schema-builder.js\",",
       "L74: \"file\": \"src/core/mvvm/schema-builder.js\",",
@@ -148,7 +148,7 @@
     ]
   },
   {
-    "file": "data\\data-wb-sources.json",
+    "file": "data\\data-x-sources.json",
     "hits": [
       "L22: \"src/core/mvvm/schema-builder.js\",",
       "L27: \"src/wb-viewmodels/builder-app/index.js\",",
@@ -163,7 +163,7 @@
     ]
   },
   {
-    "file": "data\\data-wb-triage.json",
+    "file": "data\\data-x-triage.json",
     "hits": [
       "L49: \"blocked_by_builder_migration\": {",
       "L50: \"description\": \"These selectors find elements created by the builder app, which still outputs data-wb attributes (28 hit",
@@ -238,7 +238,7 @@
     ]
   },
   {
-    "file": "data\\full-data-wb-audit.json",
+    "file": "data\\full-data-x-audit.json",
     "hits": [
       "L18: \"builder\": 29,",
       "L20: \"tests-builder\": 4,",
@@ -296,8 +296,8 @@
       "L510: \"name\": \"builder\",",
       "L511: \"title\": \"Builder Schema\",",
       "L512: \"description\": \"Unified schema for builder components and UI interactions.\",",
-      "L513: \"tag\": \"wb-builder\",",
-      "L514: \"baseClass\": \"wb-builder\",",
+      "L513: \"tag\": \"x-builder\",",
+      "L514: \"baseClass\": \"x-builder\",",
       "L518: \"default\": \"Builder\",",
       "L528: \"description\": \"List of components in the builder.\",",
       "L558: \"description\": \"Builder-level metadata (optional)\",",
@@ -311,12 +311,12 @@
       "L255: \"builder\": {",
       "L256: \"file\": \"builder.schema.json\",",
       "L257: \"behavior\": \"builder\",",
-      "L262: \"<wb-builder>Basic builder content</wb-builder>\",",
-      "L263: \"<wb-builder label=\\\"Builder\\\">label=\\\"Builder\\\"</wb-builder>\",",
-      "L264: \"<wb-builder icon=\\\"🎨\\\">icon=\\\"🎨\\\"</wb-builder>\",",
-      "L265: \"<wb-builder label=\\\"Builder\\\" icon=\\\"🎨\\\">Combined: label=\\\"Builder\\\", icon=\\\"🎨\\\"</wb-builder>\",",
-      "L266: \"<wb-builder>Test permutation 5</wb-builder>\"",
-      "L269: \"<wb-builder>Basic content</wb-builder>\","
+      "L262: \"<div>Basic builder content</div>\",",
+      "L263: \"<div label=\\\"Builder\\\">label=\\\"Builder\\\"</div>\",",
+      "L264: \"<div icon=\\\"🎨\\\">icon=\\\"🎨\\\"</div>\",",
+      "L265: \"<div label=\\\"Builder\\\" icon=\\\"🎨\\\">Combined: label=\\\"Builder\\\", icon=\\\"🎨\\\"</div>\",",
+      "L266: \"<div>Test permutation 5</div>\"",
+      "L269: \"<div>Basic content</div>\","
     ]
   },
   {
@@ -324,14 +324,14 @@
     "hits": [
       "L1216: \"builder\": {",
       "L1217: \"behavior\": \"builder\",",
-      "L1218: \"baseClass\": \"wb-builder\",",
-      "L1219: \"tagName\": \"wb-builder\",",
-      "L1224: \"html\": \"<wb-builder></wb-builder>\",",
-      "L1227: \"wb-builder\"",
-      "L1237: \"html\": \"<wb-builder label=\\\"Test label\\\"></wb-builder>\",",
-      "L1240: \"wb-builder\"",
-      "L1250: \"html\": \"<wb-builder icon=\\\"Test icon\\\"></wb-builder>\",",
-      "L1253: \"wb-builder\""
+      "L1218: \"baseClass\": \"x-builder\",",
+      "L1219: \"tagName\": \"x-builder\",",
+      "L1224: \"html\": \"<div></div>\",",
+      "L1227: \"x-builder\"",
+      "L1237: \"html\": \"<div label=\\\"Test label\\\"></div>\",",
+      "L1240: \"x-builder\"",
+      "L1250: \"html\": \"<div icon=\\\"Test icon\\\"></div>\",",
+      "L1253: \"x-builder\""
     ]
   },
   {
@@ -411,10 +411,10 @@
     ]
   },
   {
-    "file": "data\\test-single\\wb-audio-builder.json",
+    "file": "data\\test-single\\x-audio-builder.json",
     "hits": [
-      "L4: \"specFile\": \"tests/integration/wb-audio-builder.spec.ts\",",
-      "L7: \"command\": \"npx playwright test --workers=8 tests/integration/wb-audio-builder.spec.ts\","
+      "L4: \"specFile\": \"tests/integration/x-audio-builder.spec.ts\",",
+      "L7: \"command\": \"npx playwright test --workers=8 tests/integration/x-audio-builder.spec.ts\","
     ]
   },
   {
@@ -424,7 +424,7 @@
     ]
   },
   {
-    "file": "data\\wb-ready-migration.json",
+    "file": "data\\x-ready-migration.json",
     "hits": [
       "L10: \"file\": \"src\\\\wb-viewmodels\\\\builder-app\\\\builder-editing.js\",",
       "L14: \"file\": \"src\\\\wb-viewmodels\\\\builder-app\\\\builder-quick-edit.js\",",
@@ -478,7 +478,7 @@
     ]
   },
   {
-    "file": "docs\\behaviors\\wb-card.md",
+    "file": "docs\\behaviors\\x-card.md",
     "hits": [
       "L14: - Designed for use with the WBServices pattern and builder",
       "L29: - Designed for use with the WBServices pattern and builder",
@@ -611,7 +611,7 @@
   {
     "file": "docs\\INTELLISENSE-TOOLTIPS.md",
     "hits": [
-      "L175: ## `<wb-builder>`",
+      "L175: ## `<div>`",
       "L179: Builder Schema",
       "L181: Unified schema for builder components and UI interactions.",
       "L190: | `components` | List of components in the builder. |",
@@ -659,7 +659,7 @@
       "L1: # Web Behaviors (WB) Page Builder - Content Creation Rules",
       "L25: | **Auto-switch after create** | Builder switches to new page immediately |",
       "L43: The builder currently generates a traditional multi-page website where each page is a separate HTML file.",
-      "L267: | `wb-page-builder-site` | Complete site JSON |"
+      "L267: | `x-page-builder-site` | Complete site JSON |"
     ]
   },
   {
@@ -869,7 +869,7 @@
   {
     "file": "pages\\components.html",
     "hits": [
-      "L8: <a href=\"?page=builder\" class=\"wb-btn\">🚀 Get Started</a>",
+      "L8: <a href=\"?page=builder\" class=\"x-btn\">🚀 Get Started</a>",
       "L712: <a href=\"?page=builder\">Get Started</a> •"
     ]
   },
@@ -878,9 +878,9 @@
     "hits": [
       "L2: <h1 id=\"newpage-h1-2\">🆕 Page Builder</h1>",
       "L7: <h2 id=\"newpage-h2-6\">Page Builder Tool</h2>",
-      "L8: <wb-builder id=\"newpage-builder-5\" label=\"New Page\" icon=\"🎨\">",
+      "L8: <div id=\"newpage-builder-5\" label=\"New Page\" icon=\"🎨\">",
       "L9: <!-- Builder component will be injected here -->",
-      "L10: </wb-builder>"
+      "L10: </div>"
     ]
   },
   {
@@ -910,7 +910,7 @@
   {
     "file": "project-index.html",
     "hits": [
-      "L56: <wb-card-link href=\"public/builder.html\" title=\"builder.html\" description=\"public/builder.html\" badge=\"Tool\"></wb-card-l"
+      "L56: <div x-cardlink href=\"public/builder.html\" title=\"builder.html\" description=\"public/builder.html\" badge=\"Tool\"></div"
     ]
   },
   {
@@ -939,7 +939,7 @@
   {
     "file": "scripts\\final-cleanup.js",
     "hits": [
-      "L49: content = content.replace(//g, 'wb-builder');"
+      "L49: content = content.replace(//g, 'x-builder');"
     ]
   },
   {
@@ -1213,7 +1213,7 @@
   {
     "file": "tests\\compliance\\schema-on-demand.spec.ts",
     "hits": [
-      "L5: test('schema builder should process wb-cardhero when index.json is missing (on-demand fetch)', async ({ page }) => {"
+      "L5: test('schema builder should process x-cardhero when index.json is missing (on-demand fetch)', async ({ page }) => {"
     ]
   },
   {
@@ -1257,7 +1257,7 @@
     "file": "tests\\views\\card-schema-test.html",
     "hits": [
       "L24: <!-- 2. Empty Card (Builder Fallback) -->",
-      "L25: <wb-card class=\"card\" id=\"empty-card\" title=\"Builder Title\" content=\"Builder Body\"></wb-card>"
+      "L25: <article class=\"card\" id=\"empty-card\" title=\"Builder Title\" content=\"Builder Body\"></article>"
     ]
   },
   {

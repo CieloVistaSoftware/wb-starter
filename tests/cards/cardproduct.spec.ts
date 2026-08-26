@@ -7,7 +7,7 @@ test.describe('Product Card (integration)', () => {
     await page.waitForFunction(() => (window as any).WBSite && (window as any).WBSite.currentPage);
     await page.waitForTimeout(100);
     
-    await page.evaluate(() => {
+    await page.evaluate(async () => {
       const el = document.createElement('div');
       el.id = 'test-product';
       el.setAttribute('x-cardproduct', '');
@@ -20,38 +20,38 @@ test.describe('Product Card (integration)', () => {
       el.setAttribute('data-reviews', '128');
       el.setAttribute('data-cta', 'Buy Now');
       document.body.appendChild(el);
-      (window as any).WB.scan();
+      await (window as any).WB.scan();
     });
     
     const card = page.locator('#test-product');
-    await expect(card).toHaveClass(/wb-card/);
-    await expect(card).toHaveClass(/wb-card--product/);
+    await expect(card).toHaveClass(/x-card/);
+    await expect(card).toHaveClass(/x-card--product/);
 
     // Check title is rendered
-    const title = card.locator('.wb-card__product-title');
+    const title = card.locator('.x-card__product-title');
     await expect(title).toHaveText('Test Product');
     
     // Check price is rendered
-    const price = card.locator('.wb-card__price-current');
+    const price = card.locator('.x-card__price-current');
     await expect(price).toHaveText('$99.99');
     
     // Check original price (strikethrough)
-    const originalPrice = card.locator('.wb-card__price-original');
+    const originalPrice = card.locator('.x-card__price-original');
     await expect(originalPrice).toHaveText('$149.99');
     
     // Check badge is rendered
-    const badge = card.locator('.wb-card__badge');
+    const badge = card.locator('.x-card__badge');
     await expect(badge).toHaveText('SALE');
     
     // Check rating stars exist
-    const rating = card.locator('.wb-card__product-rating');
+    const rating = card.locator('.x-card__product-rating');
     await expect(rating).toBeVisible();
     const ratingText = await rating.textContent();
     expect(ratingText).toContain('4.5');
     expect(ratingText).toContain('128');
     
     // Check CTA button
-    const cta = card.locator('.wb-card__product-cta');
+    const cta = card.locator('.x-card__product-cta');
     await expect(cta).toHaveText('Buy Now');
   });
 
@@ -61,14 +61,14 @@ test.describe('Product Card (integration)', () => {
     await page.waitForFunction(() => (window as any).WBSite && (window as any).WBSite.currentPage);
     await page.waitForTimeout(100);
     
-    await page.evaluate(() => {
+    await page.evaluate(async () => {
       const el = document.createElement('div');
       el.id = 'test-product-img';
       el.setAttribute('x-cardproduct', '');
       el.setAttribute('data-image', 'https://picsum.photos/200/200');
       el.setAttribute('data-title', 'Product With Image');
       document.body.appendChild(el);
-      (window as any).WB.scan();
+      await (window as any).WB.scan();
     });
     
     const img = page.locator('#test-product-img img');

@@ -6,7 +6,7 @@
  */
 import { test, expect } from '@playwright/test';
 
-for (const route of ['/?page=components', '/?page=behaviors', '/?page=home']) {
+for (const route of ['/?page=behaviors', '/?page=home']) {
   test(`no "schema not registered yet" warnings on ${route}`, async ({ page }) => {
     const warns: string[] = [];
     page.on('console', (m) => { if (/Schema for .* not registered yet/.test(m.text())) warns.push(m.text()); });

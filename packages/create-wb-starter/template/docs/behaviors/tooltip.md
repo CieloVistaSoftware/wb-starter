@@ -2,11 +2,11 @@
 
 Shows a tooltip on hover/focus for any element.
 
-Wrapped in `<wb-demo>`, so the live component renders below with its source shown underneath:
+Wrapped in `<div x-demo>`, so the live component renders below with its source shown underneath:
 
-<wb-demo>
+<div x-demo>
 <button x-tooltip="Tooltip text">Hover me</button>
-</wb-demo>
+</div>
 
 - **Type:** Modifier
 - **Note:** Use for contextual, hover-based help.

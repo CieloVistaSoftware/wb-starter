@@ -2,14 +2,30 @@
 
 Hero banner with background image, title, subtitle, and optional CTA
 
-Applies to `<section>`, and to any element carrying `x-cardhero`.
+## Type — decorates a semantic element
 
-## Usage
+`x-cardhero` is the **section behavior**. It attaches to `<section>`, the element you would have reached for anyway — there is no new tag to learn.
+
+### How to write it
 
 ```html
-<section x-cardhero>
+<section x-cardhero
+  pretitle="Release 3.0"
+  title="Zero build. Real components."
+  subtitle="Light DOM, no shadow boundaries, no class hierarchy."
+  cta="Read the guide"
+  cta-href="#"
+  height="320px"></section>
+```
+
+### On a different element
+
+Use `x-cardhero` when the host is not a `<section>` and you want the same behavior:
+
+```html
+<div x-cardhero>
   …
-</section>
+</div>
 ```
 
 ## Attributes

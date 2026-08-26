@@ -5,7 +5,7 @@
   "description": "Component for displaying fix/remediation details.",
   "schemaFor": "fix-card",
   "compliance": {
-    "baseClass": "wb-fix-card",
+    "baseClass": "x-fix-card",
     "supportLevel": "stable",
     "accessibility": "high"
   },
@@ -15,11 +15,11 @@
   "$cssAPI": {},
   "test": {
     "setup": [
-      "<wb-fix-card>Basic fix-card content</wb-fix-card>",
-      "<wb-fix-card>Test permutation 2</wb-fix-card>",
-      "<wb-fix-card>Test permutation 3</wb-fix-card>",
-      "<wb-fix-card>Test permutation 4</wb-fix-card>",
-      "<wb-fix-card>Test permutation 5</wb-fix-card>"
+      "<div x-fix-card>Basic fix-card content</div>",
+      "<div x-fix-card>Test permutation 2</div>",
+      "<div x-fix-card>Test permutation 3</div>",
+      "<div x-fix-card>Test permutation 4</div>",
+      "<div x-fix-card>Test permutation 5</div>"
     ]
   }
 }

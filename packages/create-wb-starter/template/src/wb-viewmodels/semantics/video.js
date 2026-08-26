@@ -1,14 +1,15 @@
+import { readFlag } from '../../core/read-attr.js';
 /**
  * Video - Enhanced video player
- * Custom Tag: <wb-video>
+ * Custom Tag: <video>
  *
  * Migrated from the old media.js grab-bag file to match this project's
  * one-file-per-semantic-element convention (audio.js, table.js, ...). This
  * file already existed with a nicer wbVideo API (getTime/getDuration/
  * setVolume/getVolume/mute/toggleMute) but the same missing-bare-attribute-
- * fallback bug and no handling of <wb-video> as a non-native custom tag —
+ * fallback bug and no handling of <video> as a non-native custom tag —
  * merged the two: media.js's correct config reads + custom-tag wrapping
- * (a <wb-video> isn't a real <video>, so controls/autoplay/etc. must be
+ * (a <video> isn't a real <video>, so controls/autoplay/etc. must be
  * set on a real <video> child, not the host), this file's fuller API.
  */
 import { attachVideoLoadRetry } from '../media-load-retry.js';
@@ -17,15 +18,15 @@ export function video(element, options = {}) {
   const config = {
     src: options.src || element.getAttribute('src') || '',
     controls: options.controls ?? element.getAttribute('controls') !== 'false',
-    autoplay: options.autoplay ?? (element.hasAttribute('autoplay') || element.hasAttribute('data-autoplay')),
-    muted: options.muted ?? (element.hasAttribute('muted') || element.hasAttribute('data-muted')),
-    loop: options.loop ?? (element.hasAttribute('loop') || element.hasAttribute('data-loop')),
+    autoplay: options.autoplay ?? (element.hasAttribute('autoplay') || readFlag(element, 'autoplay')),
+    muted: options.muted ?? (element.hasAttribute('muted') || readFlag(element, 'muted')),
+    loop: options.loop ?? (element.hasAttribute('loop') || readFlag(element, 'loop')),
     poster: options.poster || element.getAttribute('poster') || '',
     playsinline: options.playsinline ?? element.getAttribute('playsinline') !== 'false',
     ...options
   };
 
-  element.classList.add('wb-video');
+  element.classList.add('x-video');
   element.setAttribute('role', 'region');
   element.setAttribute('aria-label', 'Video Player');
 
@@ -61,7 +62,7 @@ export function video(element, options = {}) {
     toggleMute: () => { videoEl.muted = !videoEl.muted; }
   };
 
-  return () => { element.classList.remove('wb-video'); if (retryCleanup) retryCleanup(); };
+  return () => { element.classList.remove('x-video'); if (retryCleanup) retryCleanup(); };
 }
 
 export default { video };

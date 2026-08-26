@@ -5,7 +5,7 @@ import * as path from 'path';
 /**
  * COMPLIANCE GATE: no domain-absolute media/asset paths in HTML.
  *
- * Sibling of no-absolute-nav-links (#226), for media dirs. `<wb-audio
+ * Sibling of no-absolute-nav-links (#226), for media dirs. `<audio
  * src="/demos/sample.wav">`, `<img src="/images/x.png">`, etc. resolve to the
  * DOMAIN root under the GitHub Pages sub-path (/wb-starter/) and 404 — even when
  * the file exists in the repo (which is why sample.wav 404'd despite being

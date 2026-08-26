@@ -9,21 +9,21 @@ import { test, expect } from '@playwright/test';
  * all. John, live: "it's broken" -- confirmed and root-caused.
  *
  * This page imports wb-lazy.js directly with no schema-builder involvement
- * (no `?page=` SPA route, no x-schema stamping) -- every <wb-dialog>/
- * <wb-drawer>/<wb-dropdown> here exercises the LEGACY, non-schema code path
+ * (no `?page=` SPA route, no x-schema stamping) -- every <dialog>/
+ * <div x-drawer>/<div x-dropdown> here exercises the LEGACY, non-schema code path
  * of its behavior function, which is a DIFFERENT path than pages/
  * behaviors.html's schema-processed one (already covered by
- * wb-drawer-trigger-not-op.spec.ts).
+ * x-drawer-trigger-not-op.spec.ts).
  *
  * Root cause found and fixed here: src/core/wb-lazy.js maintained its own
  * SEPARATE tag->behavior table (customElementMappings), independent of
  * src/core/tag-map.js used by the full SPA. That table mapped
- * 'wb-drawer' -> 'drawerLayout' (an unrelated collapsible-sidebar behavior)
+ * 'x-drawer' -> 'drawerLayout' (an unrelated collapsible-sidebar behavior)
  * instead of 'drawer' (the actual trigger+overlay behavior every demo here
  * uses) -- confirmed live via computed classList showing BOTH
- * wb-drawer-trigger AND wb-drawer-layout classes (the array-based mapping
+ * x-drawer-trigger AND x-drawer-layout classes (the array-based mapping
  * table let both entries match and both behaviors ran on the same element).
- * Fixed by removing the stale 'wb-drawer': 'drawerLayout' entry so the tag
+ * Fixed by removing the stale 'x-drawer': 'drawerLayout' entry so the tag
  * resolves only via the correct, already-shared tag-map.js mapping.
  */
 
@@ -38,17 +38,17 @@ test.describe('demos/site/overlays.html: triggers actually open their overlay', 
     await ready(page);
   });
 
-  test('wb-drawer trigger opens a real fixed-position panel, not a collapsible sidebar', async ({ page }) => {
-    const trigger = page.locator('wb-drawer').first();
+  test('x-drawer trigger opens a real fixed-position panel, not a collapsible sidebar', async ({ page }) => {
+    const trigger = page.locator('x-drawer').first();
     await expect(trigger).toBeVisible();
     // The bug this guards: the trigger used to carry BOTH the correct
-    // wb-drawer-trigger class AND the wrong wb-drawer-layout class.
-    await expect(trigger).toHaveClass(/wb-drawer-trigger/);
-    await expect(trigger).not.toHaveClass(/wb-drawer-layout/);
+    // x-drawer-trigger class AND the wrong x-drawer-layout class.
+    await expect(trigger).toHaveClass(/x-drawer-trigger/);
+    await expect(trigger).not.toHaveClass(/x-drawer-layout/);
 
     await trigger.click();
     // Legacy (non-schema) drawer() builds a plain fixed-position div, not
-    // the schema path's .wb-drawer__panel--open class -- assert via
+    // the schema path's .x-drawer__panel--open class -- assert via
     // computed position + visibility instead.
     const panels = page.locator('body > div').filter({ hasText: 'Right Drawer' });
     await expect(panels.last()).toBeVisible({ timeout: 10000 });
@@ -56,8 +56,8 @@ test.describe('demos/site/overlays.html: triggers actually open their overlay', 
     expect(position).toBe('fixed');
   });
 
-  test('wb-dialog trigger opens a real dialog with its own title/content', async ({ page }) => {
-    const trigger = page.locator('wb-dialog').first();
+  test('x-dialog trigger opens a real dialog with its own title/content', async ({ page }) => {
+    const trigger = page.locator('x-dialog').first();
     await expect(trigger).toBeVisible();
     await trigger.click();
     const dialog = page.locator('dialog[open]').first();
@@ -65,14 +65,14 @@ test.describe('demos/site/overlays.html: triggers actually open their overlay', 
     await expect(dialog).toContainText('Basic Dialog');
   });
 
-  test('wb-dropdown trigger opens its menu on click', async ({ page }) => {
-    const trigger = page.locator('wb-dropdown').first();
+  test('x-dropdown trigger opens its menu on click', async ({ page }) => {
+    const trigger = page.locator('x-dropdown').first();
     await expect(trigger).toBeVisible();
     await trigger.click();
-    // dropdown() builds a .wb-dropdown__menu (or similar) child -- accept any
+    // dropdown() builds a .x-dropdown__menu (or similar) child -- accept any
     // newly-visible descendant popup rather than over-specifying the class.
     const opened = await page.evaluate(() => {
-      const dd = document.querySelector('wb-dropdown');
+      const dd = document.querySelector('x-dropdown');
       if (!dd) return false;
       return Array.from(dd.querySelectorAll('*')).some((el) => {
         const cs = getComputedStyle(el);
@@ -90,16 +90,16 @@ test.describe('demos/site/overlays.html: triggers actually open their overlay', 
   // "not merely that the element renders").
   // ─────────────────────────────────────────────────────────────────────
 
-  test('every wb-dialog trigger on the page opens with real content', async ({ page }) => {
+  test('every x-dialog trigger on the page opens with real content', async ({ page }) => {
     // Only the "Basic Dialog" section's 4 triggers have distinct titles;
     // the size/variant-variant sections intentionally reuse the generic
     // default title (their point is demonstrating size/variant, not title
     // uniqueness) -- so assert every trigger opens with SOME real content,
     // and separately assert the Basic Dialog section specifically is
     // all-distinct (that's the section whose markup actually varies title).
-    const triggers = page.locator('wb-dialog');
+    const triggers = page.locator('x-dialog');
     const count = await triggers.count();
-    expect(count, 'expected multiple wb-dialog triggers on this page').toBeGreaterThan(1);
+    expect(count, 'expected multiple x-dialog triggers on this page').toBeGreaterThan(1);
 
     for (let i = 0; i < count; i++) {
       const trigger = triggers.nth(i);
@@ -113,7 +113,7 @@ test.describe('demos/site/overlays.html: triggers actually open their overlay', 
       await expect(dialog).not.toBeVisible({ timeout: 3000 }).catch(() => {});
     }
 
-    const basicSection = page.locator('#dialog-dialog wb-dialog');
+    const basicSection = page.locator('#dialog-dialog x-dialog');
     const basicCount = await basicSection.count();
     const basicTexts = new Set<string>();
     for (let i = 0; i < basicCount; i++) {
@@ -131,7 +131,7 @@ test.describe('demos/site/overlays.html: triggers actually open their overlay', 
     // The "size variants" section triggers are unlabeled ("size=sm" etc as
     // their own text) -- select them by that section's own scope.
     const section = page.locator('#dialog-size-variants');
-    const triggers = section.locator('wb-dialog');
+    const triggers = section.locator('x-dialog');
     const count = await triggers.count();
     expect(count).toBeGreaterThanOrEqual(5);
 
@@ -150,9 +150,9 @@ test.describe('demos/site/overlays.html: triggers actually open their overlay', 
     expect(new Set(widths).size, `expected ${count} distinct dialog widths across size variants, got: ${JSON.stringify(widths)}`).toBeGreaterThan(1);
   });
 
-  test('every wb-drawer trigger opens its own panel with matching position', async ({ page }) => {
+  test('every x-drawer trigger opens its own panel with matching position', async ({ page }) => {
     const section = page.locator('#drawer-position-variants');
-    const triggers = section.locator('wb-drawer');
+    const triggers = section.locator('x-drawer');
     const count = await triggers.count();
     expect(count).toBeGreaterThanOrEqual(4);
 
@@ -179,8 +179,8 @@ test.describe('demos/site/overlays.html: triggers actually open their overlay', 
     }
   });
 
-  test('every wb-dropdown trigger on the page opens something, not just the first', async ({ page }) => {
-    const triggers = page.locator('wb-dropdown');
+  test('every x-dropdown trigger on the page opens something, not just the first', async ({ page }) => {
+    const triggers = page.locator('x-dropdown');
     const count = await triggers.count();
     expect(count).toBeGreaterThan(1);
 

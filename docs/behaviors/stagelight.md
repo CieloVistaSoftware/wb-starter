@@ -10,7 +10,7 @@ on the host element.
 |----------|-------|
 | Behavior | `stagelight` |
 | Attribute | `x-stagelight` |
-| Custom Tag | `<div x-stagelight>` |
+| Attribute form | `<div x-stagelight>` |
 | Applies to | any element |
 | Category | Effects |
 | Support level | Experimental |
@@ -43,9 +43,9 @@ back-compat, but the plain attribute above is canonical.
 
 ### Beam (default) — sweeping animated cone
 
-<wb-demo>
+<div x-demo>
 <div x-stagelight variant="beam" color="#6366f1" style="height: 220px;"></div>
-</wb-demo>
+</div>
 
 ### Spotlight — follows the mouse
 
@@ -53,28 +53,28 @@ back-compat, but the plain attribute above is canonical.
 darkens everything except a circle around the cursor — move the mouse over the page
 to see it track.
 
-<wb-demo>
+<div x-demo>
 <div x-stagelight variant="spotlight" size="200px"></div>
-</wb-demo>
+</div>
 
 ### Fixture — clickable light housing with a label
 
 Click the housing to toggle the light on/off (dims to `intensity="0.1"`).
 
-<wb-demo>
+<div x-demo>
 <div x-stagelight variant="fixture" color="#ef4444" label="Key Light"></div>
-</wb-demo>
+</div>
 
 ## CSS Classes
 
 | Class | Applied When | Description |
 |-------|--------------|--------------|
-| `.wb-stagelight--beam` | `variant="beam"` | Positions the swinging beam cone at the top of the host |
-| `.wb-stagelight--spotlight` | `variant="spotlight"` | Fixed, full-viewport darkening overlay with a radial cutout |
-| `.wb-stagelight--fixture` | `variant="fixture"` | Inline-flex housing + label layout |
-| `.wb-stagelight__source` | `beam` variant | The fixture nub the beam appears to emit from |
-| `.wb-stagelight__beam` | `beam` variant | The gradient cone itself |
-| `.wb-stagelight__housing` | `fixture` variant | The clickable bulb housing |
+| `.x-stagelight--beam` | `variant="beam"` | Positions the swinging beam cone at the top of the host |
+| `.x-stagelight--spotlight` | `variant="spotlight"` | Fixed, full-viewport darkening overlay with a radial cutout |
+| `.x-stagelight--fixture` | `variant="fixture"` | Inline-flex housing + label layout |
+| `.x-stagelight__source` | `beam` variant | The fixture nub the beam appears to emit from |
+| `.x-stagelight__beam` | `beam` variant | The gradient cone itself |
+| `.x-stagelight__housing` | `fixture` variant | The clickable bulb housing |
 
 ## CSS Custom Properties
 
@@ -82,18 +82,18 @@ Set on the host element and consumed by the injected stylesheet:
 
 | Property | Description |
 |----------|--------------|
-| `--wb-stagelight-color` | Light color |
-| `--wb-stagelight-size` | Beam/spotlight size |
-| `--wb-stagelight-intensity` | Opacity/brightness |
+| `--x-stagelight-color` | Light color |
+| `--x-stagelight-size` | Beam/spotlight size |
+| `--x-stagelight-intensity` | Opacity/brightness |
 | `--speed` | Beam swing duration |
 
 ## Methods
 
 | Method | Description |
 |--------|--------------|
-| `element.wbStageLight.setColor(color)` | Updates `--wb-stagelight-color` |
-| `element.wbStageLight.setIntensity(intensity)` | Updates `--wb-stagelight-intensity` |
-| `element.wbStageLight.setSize(size)` | Updates `--wb-stagelight-size` |
+| `element.wbStageLight.setColor(color)` | Updates `--x-stagelight-color` |
+| `element.wbStageLight.setIntensity(intensity)` | Updates `--x-stagelight-intensity` |
+| `element.wbStageLight.setSize(size)` | Updates `--x-stagelight-size` |
 
 ## Accessibility
 

@@ -53,7 +53,7 @@ test.describe('Behaviors page — Feedback', () => {
     const b = page.locator('[x-badge]');
     await reveal(b);
     expect(await b.count()).toBeGreaterThan(0);
-    await expect(b.first()).toHaveClass(/wb-badge/);
+    await expect(b.first()).toHaveClass(/x-badge/);
   });
 
   test('alerts upgrade with role=alert', async ({ page }) => {
@@ -69,7 +69,7 @@ test.describe('Behaviors page — Feedback', () => {
     const p = page.locator('[x-progress]');
     await reveal(p);
     expect(await p.count()).toBeGreaterThan(0);
-    await expect(p.first().locator('.wb-progress__bar')).toHaveCount(1);
+    await expect(p.first().locator('.x-progress__bar')).toHaveCount(1);
   });
 
   test('spinners animate', async ({ page }) => {
@@ -83,7 +83,7 @@ test.describe('Behaviors page — Feedback', () => {
 
   test('skeletons render', async ({ page }) => {
     await loadPage(page);
-    const sk = page.locator('wb-skeleton');
+    const sk = page.locator('x-skeleton');
     await reveal(sk);
     expect(await sk.count()).toBeGreaterThan(0);
     await expect(sk.first()).toBeVisible();
@@ -94,14 +94,14 @@ test.describe('Behaviors page — Feedback', () => {
     const btn = page.locator('[x-toast][toast-variant="success"]').first();
     await reveal(btn);
     await btn.click();
-    await expect(page.locator('.wb-toast--success').first()).toBeVisible();
+    await expect(page.locator('.x-toast--success').first()).toBeVisible();
   });
 });
 
 test.describe('Behaviors page — Navigation', () => {
   test('tabs show real labels (not "Tab 1")', async ({ page }) => {
     await loadPage(page);
-    const tabs = page.locator('[x-tabs] .wb-tabs__tab');
+    const tabs = page.locator('[x-tabs] .x-tabs__tab');
     await reveal(page.locator('[x-tabs]'));
     expect(await tabs.count()).toBeGreaterThanOrEqual(2);
     await expect(tabs.first()).not.toHaveText(/^Tab \d+$/);
@@ -109,10 +109,10 @@ test.describe('Behaviors page — Navigation', () => {
 
   test('accordion upgrades (correct tag)', async ({ page }) => {
     await loadPage(page);
-    const acc = page.locator('wb-accordion');
+    const acc = page.locator('x-accordion');
     await reveal(acc);
     expect(await acc.count()).toBeGreaterThan(0);
-    expect(await page.locator('wb-accordian').count()).toBe(0); // misspelling gone
+    expect(await page.locator('x-accordian').count()).toBe(0); // misspelling gone
     await expect(acc.first()).not.toHaveAttribute('x-error', 'true');
   });
 
@@ -120,7 +120,7 @@ test.describe('Behaviors page — Navigation', () => {
     await loadPage(page);
     const bc = page.locator('[x-breadcrumb]').first();
     await reveal(bc);
-    await expect(bc).toHaveClass(/wb-breadcrumb/);
+    await expect(bc).toHaveClass(/x-breadcrumb/);
     await expect(bc.locator('[aria-current="page"]')).toHaveCount(1);
   });
 
@@ -128,14 +128,14 @@ test.describe('Behaviors page — Navigation', () => {
     await loadPage(page);
     const st = page.locator('[x-steps]').first();
     await reveal(st);
-    expect(await st.locator('.wb-steps__item').count()).toBeGreaterThan(0);
+    expect(await st.locator('.x-steps__item').count()).toBeGreaterThan(0);
   });
 });
 
 test.describe('Behaviors page — Data & Selection', () => {
   test('avatars render content', async ({ page }) => {
     await loadPage(page);
-    const av = page.locator('wb-avatar');
+    const av = page.locator('x-avatar');
     await reveal(av);
     expect(await av.count()).toBeGreaterThan(0);
     const filled = await av.first().evaluate((el) => (el.textContent || '').trim().length > 0 || !!el.querySelector('img'));

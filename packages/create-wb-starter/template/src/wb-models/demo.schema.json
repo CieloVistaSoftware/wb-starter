@@ -4,13 +4,13 @@
   "title": "Demo Container",
   "description": "A container that renders children normally in a CSS grid and shows the raw HTML as a syntax-highlighted, auto-formatted code sample below. Uses fetch for raw page source, formatHtml for consistent 2-space indentation, and textContent to prevent browser inflation.",
   "schemaFor": "demo",
-  "baseClass": "wb-demo",
+  "baseClass": "x-demo",
   "semanticElement": {
     "tagName": "div",
     "implicitRole": "region"
   },
   "compliance": {
-    "baseClass": "wb-demo",
+    "baseClass": "x-demo",
     "supportLevel": "stable",
     "accessibility": "high"
   },
@@ -33,9 +33,9 @@
   "$methods": {},
   "test": {
     "setup": [
-      "<wb-demo><p>Simple content</p></wb-demo>",
-      "<wb-demo columns=\"2\"><p>A</p><p>B</p></wb-demo>",
-      "<wb-demo columns=\"3\"><wb-card title=\"One\"><p>Card 1</p></wb-card><wb-card title=\"Two\"><p>Card 2</p></wb-card><wb-card title=\"Three\"><p>Card 3</p></wb-card></wb-demo>"
+      "<div x-demo><p>Simple content</p></div>",
+      "<div x-demo columns=\"2\"><p>A</p><p>B</p></div>",
+      "<div x-demo columns=\"3\"><article title=\"One\"><p>Card 1</p></article><article title=\"Two\"><p>Card 2</p></article><article title=\"Three\"><p>Card 3</p></article></div>"
     ]
   }
 }

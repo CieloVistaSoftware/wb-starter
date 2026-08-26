@@ -1,3 +1,4 @@
+import { readAttr } from '../core/read-attr.js';
 // Standalone stepper behavior extracted from enhancements.js
 //
 // Supports two markup forms:
@@ -12,11 +13,11 @@ export function stepper(element, options = {}) {
     return Number.isFinite(n) ? n : d;
   };
   const config = {
-    min: num(options.min ?? element.getAttribute('min') ?? element.dataset.min, -Infinity),
-    max: num(options.max ?? element.getAttribute('max') ?? element.dataset.max, Infinity),
-    step: num(options.step ?? element.getAttribute('step') ?? element.dataset.step, 1),
+    min: num(options.min ?? element.getAttribute('min') ?? readAttr(element, 'min'), -Infinity),
+    max: num(options.max ?? element.getAttribute('max') ?? readAttr(element, 'max'), Infinity),
+    step: num(options.step ?? element.getAttribute('step') ?? readAttr(element, 'step'), 1),
     value: num(
-      options.value ?? element.getAttribute('value') ?? element.dataset.value ?? (isInput ? element.value : '0'),
+      options.value ?? element.getAttribute('value') ?? readAttr(element, 'value') ?? (isInput ? element.value : '0'),
       0
     ),
     ...options,
@@ -31,14 +32,14 @@ export function stepper(element, options = {}) {
 
   const decBtn = document.createElement('button');
   decBtn.type = 'button';
-  decBtn.className = 'wb-stepper__btn wb-stepper__dec';
+  decBtn.className = 'x-stepper__btn x-stepper__dec';
   decBtn.textContent = '−';
   decBtn.title = `Decrease by ${config.step}`;
   decBtn.setAttribute('aria-label', 'Decrease');
 
   const incBtn = document.createElement('button');
   incBtn.type = 'button';
-  incBtn.className = 'wb-stepper__btn wb-stepper__inc';
+  incBtn.className = 'x-stepper__btn x-stepper__inc';
   incBtn.textContent = '+';
   incBtn.title = `Increase by ${config.step}`;
   incBtn.setAttribute('aria-label', 'Increase');
@@ -48,12 +49,12 @@ export function stepper(element, options = {}) {
   if (isInput) {
     // Form (1): wrap the input between the two buttons.
     const wrapper = document.createElement('div');
-    wrapper.className = 'wb-stepper';
+    wrapper.className = 'x-stepper';
     element.parentNode.insertBefore(wrapper, element);
     wrapper.appendChild(decBtn);
     wrapper.appendChild(element);
     wrapper.appendChild(incBtn);
-    element.classList.add('wb-stepper__input');
+    element.classList.add('x-stepper__input');
     element.value = config.value;
     read = () => num(element.value, 0);
     write = (v) => { element.value = v; element.dispatchEvent(new Event('change')); };
@@ -61,17 +62,17 @@ export function stepper(element, options = {}) {
   } else {
     // Form (2): build [−][value][+] inside the container so the value is visible
     // and the buttons are discoverable as children of the [x-stepper] element.
-    element.classList.add('wb-stepper');
+    element.classList.add('x-stepper');
     element.textContent = '';
     const valueEl = document.createElement('span');
-    valueEl.className = 'wb-stepper__value';
+    valueEl.className = 'x-stepper__value';
     valueEl.textContent = String(config.value);
     element.appendChild(decBtn);
     element.appendChild(valueEl);
     element.appendChild(incBtn);
     read = () => num(valueEl.textContent, 0);
     write = (v) => { valueEl.textContent = String(v); };
-    cleanup = () => { element.textContent = ''; element.classList.remove('wb-stepper'); };
+    cleanup = () => { element.textContent = ''; element.classList.remove('x-stepper'); };
   }
 
   const updateValue = (delta) => {

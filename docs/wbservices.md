@@ -37,11 +37,11 @@ WBServices is the central service registry and initialization pattern for all co
 ## Example: Registering a Component
 
 ```js
-import { WBServices } from '../core/wb-services.js';
+import { WBServices } from '../core/x-services.js';
 import { card } from '../wb-viewmodels/card.js';
 
 // Register the card behavior — a pure function that enhances the element.
-WBServices.register('wb-card', card);
+WBServices.register('x-card', card);
 ```
 
 ## Example: Registering a Service
@@ -85,7 +85,7 @@ theme.setTheme('dark');
 ## References
 - See also: `docs/claude/TIER1-LAWS.md` (Law #2)
 - Architecture overview: `docs/components/README.md`
-- Example usage: `src/core/wb-services.js`, `src/wb-viewmodels/`
+- Example usage: `src/core/x-services.js`, `src/wb-viewmodels/`
 
 ---
 
@@ -95,7 +95,7 @@ When you register a component or service via `WBServices.register()`, the follow
 
 1. **Registry Entry:**
    - The component or service is added to the central WBServices registry (an in-memory JS object or Map).
-   - Includes the name (e.g., 'wb-card', 'theme') and the class or instance.
+   - Includes the name (e.g., 'x-card', 'theme') and the class or instance.
 
 2. **Custom Element Definition (for components):**
    - For components, `customElements.define()` is called for the `<wb-*>` tag.
@@ -117,15 +117,15 @@ When you register a component or service via `WBServices.register()`, the follow
 When you register a component or service, the registry entry might look like this (conceptually):
 
 ```js
-// After WBServices.register('wb-card', WbCard)
+// After WBServices.register('x-card', WbCard)
 WBServices._registry = {
-   'wb-card': WbCard,
+   'x-card': WbCard,
    // ...other components/services
 }
 
 // After WBServices.register('theme', new ThemeService())
 WBServices._registry = {
-   'wb-card': WbCard,
+   'x-card': WbCard,
    'theme': ThemeServiceInstance,
    // ...
 }
@@ -133,7 +133,7 @@ WBServices._registry = {
 
 You can access these via:
 ```js
-const CardClass = WBServices.get('wb-card');
+const CardClass = WBServices.get('x-card');
 const theme = WBServices.get('theme');
 ```
 
@@ -168,7 +168,7 @@ This means:
    - Add an x-* attribute to any element:
      ```html
      <button x-ripple x-tooltip="Save">Save</button>
-     <wb-card x-badge="New">Card</article>
+     <article x-badge="New">Card</article>
      ```
 2. **Scanning:**
    - On page load, the bootstrapper scans the DOM for all x-* attributes.
@@ -187,5 +187,5 @@ This means:
 
 ### Key Points
 - x-behaviors are additive: you can use multiple on the same element.
-- They work on any element, not just wb-components.
+- They work on any element, not just x-components.
 - Behaviors are pure composition: no class hierarchy and no custom element registration is required.

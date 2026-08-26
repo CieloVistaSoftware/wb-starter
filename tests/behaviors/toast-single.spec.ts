@@ -22,5 +22,5 @@ test('clicking an x-toast button shows exactly one toast', async ({ page }) => {
   await btn.scrollIntoViewIfNeeded();
   await btn.click();
   await page.waitForTimeout(250);
-  await expect(page.locator('.wb-toast--success')).toHaveCount(1);
+  await expect(page.locator('.x-toast--success')).toHaveCount(1);
 });

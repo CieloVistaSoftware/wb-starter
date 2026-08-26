@@ -1,13 +1,13 @@
 <!-- Page styles: src/styles/pages/components.css -->
-<link rel="stylesheet" href="src/styles/pages/components.css">
+<link rel="stylesheet" href="src/styles/pages/components.css?v=3.0.91">
 
 <div id="components-hero" class="page__hero">
   <h1>🧩 Components Library</h1>
   <div>wb-starter <span x-release format="v{version}" reload="false"></span> • Interactive demos with copy-ready code</div>
   <p style="max-width: 640px; margin: 1rem auto 0;">
     Every component below is a real <code>&lt;wb-*&gt;</code> custom element —
-    <code>&lt;wb-card&gt;</code>, <code>&lt;wb-progress&gt;</code>,
-    <code>&lt;wb-modal&gt;</code>, and the rest. Drop the tag in, no build step,
+    <code>&lt;x-card&gt;</code>, <code>&lt;x-progress&gt;</code>,
+    <code>&lt;x-modal&gt;</code>, and the rest. Drop the tag in, no build step,
     no base class to extend. And it all lives in <strong>Light DOM</strong> — no
     Shadow DOM, no encapsulation boundary — so your theme's CSS, your own
     selectors, and the browser's devtools reach straight into every component
@@ -152,142 +152,273 @@
   
   <!-- Basic Cards -->
   <h3>Basic Cards</h3>
-  <wb-demo>
-    <wb-card
+  <div x-demo>
+    <article
       title="This is the title"
       elevated>
       Simple card with title and hover effect.
-    </wb-card>
-  </wb-demo>
-  <wb-demo id="cardComponentDemo" data-code-width="50vw">
-    <wb-card title="This is the title" footer="This is the footer" elevated>
+    </article>
+  </div>
+  <div x-demo id="cardComponentDemo" data-code-width="50vw">
+    <article title="This is the title" footer="This is the footer" elevated>
       this is an embedded paragraph
-    </wb-card>
-  </wb-demo>
-  <wb-demo data-code-width="50vw">
-    <wb-card title="Outlined Card" variant="bordered">
+    </article>
+  </div>
+  <div x-demo data-code-width="50vw">
+    <article title="Outlined Card" variant="bordered">
       Card with outline border.
-    </wb-card>
-  </wb-demo>
+    </article>
+  </div>
   <!-- Image Cards -->
   <h3>Image Cards</h3>
-  <wb-demo id="imageCardDemo" full-width>
-    <wb-cardimage src="https://picsum.photos/1200/600?r=img1" title="Image Card" subtitle="Card with image header"></wb-cardimage>
-  </wb-demo>
-  <wb-demo full-width>
-    <wb-cardimage src="https://picsum.photos/1200/600?r=img2" title="Another Image" subtitle="With subtitle text"></wb-cardimage>
-  </wb-demo>
+  <div x-demo id="imageCardDemo" full-width>
+    <div x-cardimage
+      src="https://picsum.photos/1200/600?r=img1"
+      title="Image Card"
+      subtitle="Card with image header"></div>
+  </div>
+  <div x-demo full-width>
+    <div x-cardimage
+      src="https://picsum.photos/1200/600?r=img2"
+      title="Another Image"
+      subtitle="With subtitle text"></div>
+  </div>
 
   <!-- Video Card -->
   <h3>Video Card</h3>
-  <wb-demo id="videoCardDemo" full-width>
-    <wb-cardvideo src="https://www.w3schools.com/html/mov_bbb.mp4" title="Video Card" controls></wb-cardvideo>
-  </wb-demo>
+  <div x-demo id="videoCardDemo" full-width>
+    <div x-cardvideo
+      src="https://www.w3schools.com/html/mov_bbb.mp4"
+      title="Video Card"
+      controls></div>
+  </div>
 
-  <!-- Overlay & Hero Cards — one <wb-demo> per element (live control + its own source) -->
+  <!-- Overlay & Hero Cards — one <div x-demo> per element (live control + its own
+  source) -->
   <h3>Overlay &amp; Hero Cards</h3>
-  <wb-demo id="overlayCardDemo" full-width>
-    <wb-cardoverlay image="https://picsum.photos/1200/900?r=ov1" title="Overlay Card" subtitle="Text overlays the image"></wb-cardoverlay>
-  </wb-demo>
-  <wb-demo id="heroCardDemo" full-width>
-    <wb-cardhero title="Hero Card" subtitle="Featured content with background" background="https://picsum.photos/800/400?r=hero"></wb-cardhero>
-  </wb-demo>
+  <div x-demo id="overlayCardDemo" full-width>
+    <div x-cardoverlay
+      image="https://picsum.photos/1200/900?r=ov1"
+      title="Overlay Card"
+      subtitle="Text overlays the image"></div>
+  </div>
+  <div x-demo id="heroCardDemo" full-width>
+    <div x-cardhero
+      title="Hero Card"
+      subtitle="Featured content with background"
+      background="https://picsum.photos/800/400?r=hero"></div>
+  </div>
 
   <!-- Stats Cards -->
   <h3>Stats Cards</h3>
-  <wb-demo id="linkCardDemo">
-    <wb-cardlink title="S&amp;P 500" href="#" description="4,891.23 (+1.2%)" icon="📈"></wb-cardlink>
-  </wb-demo>
-  <wb-demo>
-    <wb-cardlink title="Dow Jones" href="#" description="38,654.12 (+0.8%)" icon="🏦"></wb-cardlink>
-  </wb-demo>
-  <wb-demo>
-    <wb-cardlink title="NASDAQ" href="#" description="15,432.56 (-0.3%)" icon="💻"></wb-cardlink>
-  </wb-demo>
-  <wb-demo>
-    <wb-cardlink title="Gold" href="#" description="$2,045.30 (+2.1%)" icon="🥇"></wb-cardlink>
-  </wb-demo>
+  <div x-demo id="linkCardDemo">
+    <div x-cardlink
+      title="S&amp;P 500"
+      href="#"
+      description="4,891.23 (+1.2%)"
+      icon="📈"></div>
+  </div>
+  <div x-demo>
+    <div x-cardlink
+      title="Dow Jones"
+      href="#"
+      description="38,654.12 (+0.8%)"
+      icon="🏦"></div>
+  </div>
+  <div x-demo>
+    <div x-cardlink
+      title="NASDAQ"
+      href="#"
+      description="15,432.56 (-0.3%)"
+      icon="💻"></div>
+  </div>
+  <div x-demo>
+    <div x-cardlink
+      title="Gold"
+      href="#"
+      description="$2,045.30 (+2.1%)"
+      icon="🥇"></div>
+  </div>
 
-  <!-- Pricing Cards — one <wb-demo> per tier (live control + its own source) -->
+  <!-- Pricing Cards — one <div x-demo> per tier (live control + its own source)
+  -->
   <h3>Pricing Cards</h3>
-  <wb-demo id="pricingCardDemo">
-    <wb-cardpricing plan="Starter" price="$9" period="/mo" features="5 projects,Basic support,1GB storage" cta="Start Free" cta-href="https://github.com/CieloVistaSoftware/wb-starter#readme"></wb-cardpricing>
-  </wb-demo>
-  <wb-demo>
-    <wb-cardpricing plan="Pro" price="$29" period="/mo" features="Unlimited projects,Priority support,10GB storage" cta="Go Pro" cta-href="https://github.com/CieloVistaSoftware/wb-starter#readme" featured></wb-cardpricing>
-  </wb-demo>
-  <wb-demo>
-    <wb-cardpricing plan="Enterprise" price="$99" period="/mo" features="Custom integrations,Dedicated support,Unlimited storage" cta="Contact Us" cta-href="https://github.com/CieloVistaSoftware/wb-starter/issues"></wb-cardpricing>
-  </wb-demo>
+  <div x-demo id="pricingCardDemo">
+    <div x-cardpricing
+      plan="Starter"
+      price="$9"
+      period="/mo"
+      features="5 projects,Basic support,1GB storage"
+      cta="Start Free"
+      cta-href="https://github.com/CieloVistaSoftware/wb-starter#readme"></div>
+  </div>
+  <div x-demo>
+    <div x-cardpricing
+      plan="Pro"
+      price="$29"
+      period="/mo"
+      features="Unlimited projects,Priority support,10GB storage"
+      cta="Go Pro"
+      cta-href="https://github.com/CieloVistaSoftware/wb-starter#readme"
+      featured></div>
+  </div>
+  <div x-demo>
+    <div x-cardpricing
+      plan="Enterprise"
+      price="$99"
+      period="/mo"
+      features="Custom integrations,Dedicated support,Unlimited storage"
+      cta="Contact Us"
+      cta-href="https://github.com/CieloVistaSoftware/wb-starter/issues"></div>
+  </div>
 
   <!-- Product Cards -->
   <h3>Product Cards</h3>
-  <wb-demo id="productCardDemo" full-width>
-    <wb-cardproduct title="Basic Widget" price="$19.99" image="https://picsum.photos/800/800?r=p1" description="Perfect for beginners"></wb-cardproduct>
-  </wb-demo>
-  <wb-demo full-width>
-    <wb-cardproduct title="Premium Widget" price="$49.99" original-price="$79.99" image="https://picsum.photos/800/800?r=p2" badge="Sale" description="Most popular" featured></wb-cardproduct>
-  </wb-demo>
-  <wb-demo full-width>
-    <wb-cardproduct title="Enterprise" price="$149.99" image="https://picsum.photos/800/800?r=p3" description="Full features" badge="Pro"></wb-cardproduct>
-  </wb-demo>
-  <wb-demo full-width>
-    <wb-cardproduct title="Deluxe Widget" price="$79.99" image="https://picsum.photos/800/800?r=p4" description="Premium features" badge="Hot"></wb-cardproduct>
-  </wb-demo>
+  <div x-demo id="productCardDemo" full-width>
+    <div x-cardproduct
+      title="Basic Widget"
+      price="$19.99"
+      image="https://picsum.photos/800/800?r=p1"
+      description="Perfect for beginners"></div>
+  </div>
+  <div x-demo full-width>
+    <div x-cardproduct
+      title="Premium Widget"
+      price="$49.99"
+      original-price="$79.99"
+      image="https://picsum.photos/800/800?r=p2"
+      badge="Sale"
+      description="Most popular"
+      featured></div>
+  </div>
+  <div x-demo full-width>
+    <div x-cardproduct
+      title="Enterprise"
+      price="$149.99"
+      image="https://picsum.photos/800/800?r=p3"
+      description="Full features"
+      badge="Pro"></div>
+  </div>
+  <div x-demo full-width>
+    <div x-cardproduct
+      title="Deluxe Widget"
+      price="$79.99"
+      image="https://picsum.photos/800/800?r=p4"
+      description="Premium features"
+      badge="Hot"></div>
+  </div>
 
-  <!-- Testimonial Cards — one <wb-demo> per element -->
+  <!-- Testimonial Cards — one <div x-demo> per element -->
   <h3>Testimonial Cards</h3>
-  <wb-demo id="testimonialCardDemo">
-    <wb-cardtestimonial quote="The wb-starter framework has completely transformed our development process." author="Jane Smith" role="CEO, TechCorp" rating="5" avatar="https://i.pravatar.cc/150?img=5"></wb-cardtestimonial>
-  </wb-demo>
-  <wb-demo>
-    <wb-cardtestimonial quote="Building complex UIs is now incredibly simple." author="Michael Chen" role="CTO, StartupXYZ" rating="5" avatar="https://i.pravatar.cc/150?img=11"></wb-cardtestimonial>
-  </wb-demo>
+  <div x-demo id="testimonialCardDemo">
+    <div x-cardtestimonial
+      quote="The wb-starter framework has completely transformed our development
+             process."
+      author="Jane Smith"
+      role="CEO, TechCorp"
+      rating="5"
+      avatar="https://i.pravatar.cc/150?img=5"></div>
+  </div>
+  <div x-demo>
+    <div x-cardtestimonial
+      quote="Building complex UIs is now incredibly simple."
+      author="Michael Chen"
+      role="CTO, StartupXYZ"
+      rating="5"
+      avatar="https://i.pravatar.cc/150?img=11"></div>
+  </div>
 
-  <!-- Notification Cards — one <wb-demo> per element -->
+  <!-- Notification Cards — one <div x-demo> per element -->
   <h3>Notification Cards</h3>
-  <wb-demo id="notificationCardDemo">
-    <wb-cardnotification size="md" type="info" title="Info" message="You have a new update available"></wb-cardnotification>
-  </wb-demo>
-  <wb-demo>
-    <wb-cardnotification size="md" type="success" title="Success" message="Your changes have been saved"></wb-cardnotification>
-  </wb-demo>
-  <wb-demo>
-    <wb-cardnotification size="md" type="warning" title="Warning" message="Your subscription expires soon"></wb-cardnotification>
-  </wb-demo>
-  <wb-demo>
-    <wb-cardnotification size="md" type="error" title="Error" message="Failed to connect to server"></wb-cardnotification>
-  </wb-demo>
+  <div x-demo id="notificationCardDemo">
+    <div x-cardnotification
+      size="md"
+      type="info"
+      title="Info"
+      message="You have a new update available"></div>
+  </div>
+  <div x-demo>
+    <div x-cardnotification
+      size="md"
+      type="success"
+      title="Success"
+      message="Your changes have been saved"></div>
+  </div>
+  <div x-demo>
+    <div x-cardnotification
+      size="md"
+      type="warning"
+      title="Warning"
+      message="Your subscription expires soon"></div>
+  </div>
+  <div x-demo>
+    <div x-cardnotification
+      size="md"
+      type="error"
+      title="Error"
+      message="Failed to connect to server"></div>
+  </div>
 
-  <!-- File Cards — one <wb-demo> per element -->
+  <!-- File Cards — one <div x-demo> per element -->
   <h3>File Cards</h3>
-  <wb-demo id="fileCardDemo">
-    <wb-cardfile filename="report.pdf" size="2.4 MB" type="pdf" href="/files/report.pdf"></wb-cardfile>
-  </wb-demo>
-  <wb-demo>
-    <wb-cardfile filename="presentation.doc" size="1.2 MB" type="doc" href="/files/presentation.doc"></wb-cardfile>
-  </wb-demo>
-  <wb-demo>
-    <wb-cardfile filename="photo.jpg" size="856 KB" type="image" href="/files/photo.jpg"></wb-cardfile>
-  </wb-demo>
-  <wb-demo>
-    <wb-cardfile filename="archive.zip" size="15.7 MB" type="zip" href="/files/archive.zip"></wb-cardfile>
-  </wb-demo>
+  <div x-demo id="fileCardDemo">
+    <div x-cardfile
+      filename="report.pdf"
+      size="2.4 MB"
+      type="pdf"
+      href="/files/report.pdf"></div>
+  </div>
+  <div x-demo>
+    <div x-cardfile
+      filename="presentation.doc"
+      size="1.2 MB"
+      type="doc"
+      href="/files/presentation.doc"></div>
+  </div>
+  <div x-demo>
+    <div x-cardfile
+      filename="photo.jpg"
+      size="856 KB"
+      type="image"
+      href="/files/photo.jpg"></div>
+  </div>
+  <div x-demo>
+    <div x-cardfile
+      filename="archive.zip"
+      size="15.7 MB"
+      type="zip"
+      href="/files/archive.zip"></div>
+  </div>
 
-  <!-- Link & Horizontal Cards — one <wb-demo> per element -->
+  <!-- Link & Horizontal Cards — one <div x-demo> per element -->
   <h3>Link &amp; Horizontal Cards</h3>
-  <wb-demo>
-    <wb-cardlink title="External Link" href="https://example.com" description="Click to visit"></wb-cardlink>
-  </wb-demo>
-  <wb-demo id="horizontalCardDemo" full-width>
-    <wb-cardhorizontal title="Horizontal Card" image="https://picsum.photos/600/600?r=h1" subtitle="Image on the side"></wb-cardhorizontal>
-  </wb-demo>
+  <div x-demo>
+    <div x-cardlink
+      title="External Link"
+      href="https://example.com"
+      description="Click to visit"></div>
+  </div>
+  <div x-demo id="horizontalCardDemo" full-width>
+    <div x-cardhorizontal
+      title="Horizontal Card"
+      image="https://picsum.photos/600/600?r=h1"
+      subtitle="Image on the side"></div>
+  </div>
 
   <!-- Portfolio Card -->
   <h3>Portfolio Card</h3>
-  <wb-demo id="portfolioCardDemo">
-    <wb-cardportfolio name="Jane Smith" title="Senior Developer" company="Tech Corp" email="jane@techcorp.com" phone="+1-555-0123" location="San Francisco, CA" bio="Full-stack developer with 10+ years experience." avatar="https://i.pravatar.cc/150?img=5" github="https://github.com/janesmith"></wb-cardportfolio>
-  </wb-demo>
+  <div x-demo id="portfolioCardDemo">
+    <div x-cardportfolio
+      name="Jane Smith"
+      title="Senior Developer"
+      company="Tech Corp"
+      email="jane@techcorp.com"
+      phone="+1-555-0123"
+      location="San Francisco, CA"
+      bio="Full-stack developer with 10+ years experience."
+      avatar="https://i.pravatar.cc/150?img=5"
+      github="https://github.com/janesmith"></div>
+  </div>
 </section>
 
 <!-- ═══════════════════════════════════════════════════════════════════════════
@@ -298,121 +429,149 @@
   
   <!-- Badges -->
   <h3>Badges</h3>
-    <wb-demo id="badgeDemo">
-    <wb-badge variant="gray">Pending</wb-badge>
-  </wb-demo>
-  <wb-demo>
-    <wb-badge variant="primary">New</wb-badge>
-  </wb-demo>
-  <wb-demo>
-    <wb-badge variant="success">Approved</wb-badge>
-  </wb-demo>
-  <wb-demo>
-    <wb-badge variant="warning">Review</wb-badge>
-  </wb-demo>
-  <wb-demo>
-    <wb-badge variant="error">Rejected</wb-badge>
-  </wb-demo>
-  <wb-demo>
-    <wb-badge variant="info">Updated</wb-badge>
-  </wb-demo>
-  <wb-demo>
-    <wb-badge variant="purple">Premium</wb-badge>
-  </wb-demo>
-  <wb-demo>
-    <wb-badge variant="pink">Featured</wb-badge>
-  </wb-demo>
-  <wb-demo>
-    <wb-badge variant="orange">Hot</wb-badge>
-  </wb-demo>
-  <wb-demo>
-    <wb-badge variant="teal" pill>Live</wb-badge>
-  </wb-demo>
+    <div x-demo id="badgeDemo">
+    <span x-badge variant="gray">Pending</span>
+  </div>
+  <div x-demo>
+    <span x-badge variant="primary">New</span>
+  </div>
+  <div x-demo>
+    <span x-badge variant="success">Approved</span>
+  </div>
+  <div x-demo>
+    <span x-badge variant="warning">Review</span>
+  </div>
+  <div x-demo>
+    <span x-badge variant="error">Rejected</span>
+  </div>
+  <div x-demo>
+    <span x-badge variant="info">Updated</span>
+  </div>
+  <div x-demo>
+    <span x-badge variant="purple">Premium</span>
+  </div>
+  <div x-demo>
+    <span x-badge variant="pink">Featured</span>
+  </div>
+  <div x-demo>
+    <span x-badge variant="orange">Hot</span>
+  </div>
+  <div x-demo>
+    <span x-badge variant="teal" pill>Live</span>
+  </div>
 
   <!-- Alerts (as Toasts) -->
   <h3>Alerts</h3>
   <p>Click to trigger alert toasts:</p>
-    <wb-demo id="buttonDemo">
-    <button class="wb-btn" style="background: var(--info);" x-toast message="This is an informational message." toast-variant="info">ℹ️ Info Alert</button>
-  </wb-demo>
-  <wb-demo>
-    <button class="wb-btn" style="background: var(--success);" x-toast message="Operation completed successfully!" toast-variant="success">✅ Success Alert</button>
-  </wb-demo>
-  <wb-demo>
-    <button class="wb-btn" style="background: var(--warning);" x-toast message="Please review before continuing." toast-variant="warning">⚠️ Warning Alert</button>
-  </wb-demo>
-  <wb-demo>
-    <button class="wb-btn" style="background: var(--error);" x-toast message="Something went wrong. Please try again." toast-variant="error">❌ Error Alert</button>
-  </wb-demo>
+    <div x-demo id="buttonDemo">
+    <button
+      class="x-btn"
+      style="background: var(--info);"
+      x-toast
+      message="This is an informational message."
+      toast-variant="info">ℹ️ Info Alert</button>
+  </div>
+  <div x-demo>
+    <button
+      class="x-btn"
+      style="background: var(--success);"
+      x-toast
+      message="Operation completed successfully!"
+      toast-variant="success">✅ Success Alert</button>
+  </div>
+  <div x-demo>
+    <button
+      class="x-btn"
+      style="background: var(--warning);"
+      x-toast
+      message="Please review before continuing."
+      toast-variant="warning">⚠️ Warning Alert</button>
+  </div>
+  <div x-demo>
+    <button
+      class="x-btn"
+      style="background: var(--error);"
+      x-toast
+      message="Something went wrong. Please try again."
+      toast-variant="error">❌ Error Alert</button>
+  </div>
 
   <!-- Progress Bars -->
   <h3>Progress Bars</h3>
-    <wb-demo id="progressDemo">
-    <wb-progress value="25"></wb-progress>
-  </wb-demo>
-  <wb-demo>
-    <wb-progress value="50"></wb-progress>
-  </wb-demo>
-  <wb-demo>
-    <wb-progress value="75" striped></wb-progress>
-  </wb-demo>
-  <wb-demo>
-    <wb-progress value="100"></wb-progress>
-  </wb-demo>
+    <div x-demo id="progressDemo">
+    <progress value="25"></progress>
+  </div>
+  <div x-demo>
+    <progress value="50"></progress>
+  </div>
+  <div x-demo>
+    <progress value="75" striped></progress>
+  </div>
+  <div x-demo>
+    <progress value="100"></progress>
+  </div>
 
   <!-- Spinners -->
   <h3>Spinners</h3>
-    <wb-demo id="spinnerDemo">
-    <wb-spinner size="xs" color="primary"></wb-spinner>
-  </wb-demo>
-  <wb-demo>
-    <wb-spinner size="sm" color="success"></wb-spinner>
-  </wb-demo>
-  <wb-demo>
-    <wb-spinner size="md" color="warning"></wb-spinner>
-  </wb-demo>
-  <wb-demo>
-    <wb-spinner size="lg" color="error"></wb-spinner>
-  </wb-demo>
-  <wb-demo>
-    <wb-spinner size="xl" color="info"></wb-spinner>
-  </wb-demo>
+    <div x-demo id="spinnerDemo">
+    <span x-spinner size="xs" color="primary"></span>
+  </div>
+  <div x-demo>
+    <span x-spinner size="sm" color="success"></span>
+  </div>
+  <div x-demo>
+    <span x-spinner size="md" color="warning"></span>
+  </div>
+  <div x-demo>
+    <span x-spinner size="lg" color="error"></span>
+  </div>
+  <div x-demo>
+    <span x-spinner size="xl" color="info"></span>
+  </div>
 
   <!-- Avatars -->
   <h3>Avatars</h3>
-    <wb-demo id="avatarDemo">
-    <wb-avatar initials="JS" size="sm"></wb-avatar>
-  </wb-demo>
-  <wb-demo>
-    <wb-avatar initials="MC" size="md" style="--wb-avatar-bg: var(--success);"></wb-avatar>
-  </wb-demo>
-  <wb-demo>
-    <wb-avatar initials="KL" size="lg" style="--wb-avatar-bg: var(--warning);"></wb-avatar>
-  </wb-demo>
-  <wb-demo>
-    <wb-avatar initials="AR" size="md" status="online"></wb-avatar>
-  </wb-demo>
-  <wb-demo>
-    <wb-avatar initials="TB" size="md" status="away"></wb-avatar>
-  </wb-demo>
-  <wb-demo>
-    <wb-avatar initials="ZP" size="md" status="busy"></wb-avatar>
-  </wb-demo>
-  <wb-demo>
-    <wb-avatar src="https://api.dicebear.com/7.x/avataaars/svg?seed=Felix" size="lg"></wb-avatar>
-  </wb-demo>
+    <div x-demo id="avatarDemo">
+    <span x-avatar initials="JS" size="sm"></span>
+  </div>
+  <div x-demo>
+    <span x-avatar
+      initials="MC"
+      size="md"
+      style="--x-avatar-bg: var(--success);"></span>
+  </div>
+  <div x-demo>
+    <span x-avatar
+      initials="KL"
+      size="lg"
+      style="--x-avatar-bg: var(--warning);"></span>
+  </div>
+  <div x-demo>
+    <span x-avatar initials="AR" size="md" status="online"></span>
+  </div>
+  <div x-demo>
+    <span x-avatar initials="TB" size="md" status="away"></span>
+  </div>
+  <div x-demo>
+    <span x-avatar initials="ZP" size="md" status="busy"></span>
+  </div>
+  <div x-demo>
+    <span x-avatar
+      src="https://api.dicebear.com/7.x/avataaars/svg?seed=Felix"
+      size="lg"></span>
+  </div>
 
   <!-- Skeleton Loaders -->
   <h3>Skeleton Loaders</h3>
-    <wb-demo>
-    <wb-skeleton variant="text" lines="3" style="width: 200px;"></wb-skeleton>
-  </wb-demo>
-  <wb-demo>
-    <wb-skeleton variant="circle" width="60px"></wb-skeleton>
-  </wb-demo>
-  <wb-demo>
-    <wb-skeleton variant="rect" width="150px" height="100px"></wb-skeleton>
-  </wb-demo>
+    <div x-demo>
+    <div x-skeleton variant="text" lines="3" style="width: 200px;"></div>
+  </div>
+  <div x-demo>
+    <div x-skeleton variant="circle" width="60px"></div>
+  </div>
+  <div x-demo>
+    <div x-skeleton variant="rect" width="150px" height="100px"></div>
+  </div>
 </section>
 
 <!-- ═══════════════════════════════════════════════════════════════════════════
@@ -423,42 +582,70 @@
   
   <h3>Modal</h3>
   <p>Centered dialog with backdrop</p>
-  <wb-demo>
-    <wb-modal class="wb-btn" modal-title="Modal Dialog" modal-content="This is modal content. Press ESC or click outside to close.">Open Modal</wb-modal>
-  </wb-demo>
+  <div x-demo>
+    <dialog
+      class="x-btn"
+      modal-title="Modal Dialog"
+      modal-content="This is modal content. Press ESC or click outside to close.">Open Modal</dialog>
+  </div>
 
   <h3>Drawer</h3>
   <p>Slide-out panel</p>
-  <wb-demo id="drawerDemo">
-    <button class="wb-btn" x-drawer drawer-title="Left Drawer" drawer-content="Slide-out panel from the left." position="left">Left Drawer</button>
-  </wb-demo>
-  <wb-demo>
-    <button class="wb-btn" x-drawer drawer-title="Right Drawer" drawer-content="Slide-out panel from the right." position="right">Right Drawer</button>
-  </wb-demo>
+  <div x-demo id="drawerDemo">
+    <button
+      class="x-btn"
+      x-drawer
+      drawer-title="Left Drawer"
+      drawer-content="Slide-out panel from the left."
+      position="left">Left Drawer</button>
+  </div>
+  <div x-demo>
+    <button
+      class="x-btn"
+      x-drawer
+      drawer-title="Right Drawer"
+      drawer-content="Slide-out panel from the right."
+      position="right">Right Drawer</button>
+  </div>
 
   <h3>Confirm</h3>
   <p>Yes/No confirmation</p>
-  <wb-demo>
-    <button class="wb-btn" x-confirm confirm-title="Delete Item?" confirm-message="This cannot be undone.">Confirm</button>
-  </wb-demo>
+  <div x-demo>
+    <button
+      class="x-btn"
+      x-confirm
+      confirm-title="Delete Item?"
+      confirm-message="This cannot be undone.">Confirm</button>
+  </div>
 
   <h3>Prompt</h3>
   <p>Input dialog</p>
-  <wb-demo>
-    <button class="wb-btn" x-prompt prompt-title="Your Name" prompt-message="Please enter your name:">Prompt</button>
-  </wb-demo>
+  <div x-demo>
+    <button
+      class="x-btn"
+      x-prompt
+      prompt-title="Your Name"
+      prompt-message="Please enter your name:">Prompt</button>
+  </div>
 
   <h3>Lightbox</h3>
   <p>Full-screen image viewer</p>
-  <wb-demo>
-    <button class="wb-btn" x-lightbox src="https://picsum.photos/1200/800">View Image</button>
-  </wb-demo>
+  <div x-demo>
+    <button
+      class="x-btn"
+      x-lightbox
+      src="https://picsum.photos/1200/800">View Image</button>
+  </div>
 
   <h3>Popover</h3>
   <p>Small popup</p>
-  <wb-demo>
-    <button class="wb-btn" x-popover popover-title="Info" popover-content="Additional information here.">Show Popover</button>
-  </wb-demo>
+  <div x-demo>
+    <button
+      class="x-btn"
+      x-popover
+      popover-title="Info"
+      popover-content="Additional information here.">Show Popover</button>
+  </div>
 </section>
 
 <!-- ═══════════════════════════════════════════════════════════════════════════
@@ -469,11 +656,12 @@
 
   <!-- Tabs -->
   <h3>Tabs</h3>
-  <wb-demo id="tabsDemo">
-    <wb-tabs>
+  <div x-demo id="tabsDemo">
+    <div x-tabs>
       <div tab-title="Overview">
         <h4>Project Overview</h4>
-        <div>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</div>
+        <div> Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do
+        eiusmod tempor incididunt ut labore et dolore magna aliqua.</div>
       </div>
       <div tab-title="Features">
         <h4>Key Features</h4>
@@ -485,46 +673,50 @@
       </div>
       <div tab-title="Installation">
         <h4>Getting Started</h4>
-        <div>Aenean lacinia bibendum nulla sed consectetur. Just include the script and start building.</div>
+        <div> Aenean lacinia bibendum nulla sed consectetur. Just include the
+        script and start building.</div>
       </div>
-    </wb-tabs>
-  </wb-demo>
+    </div>
+  </div>
 
-  <!-- Details/Accordion — one <wb-demo> per element -->
+  <!-- Details/Accordion — one <div x-demo> per element -->
   <h3>Details / Accordion</h3>
-  <wb-demo id="detailsDemo">
-    <wb-details summary="What is wb-starter?">
-      <div>wb-starter is a zero-build web component library that provides modern, accessible UI components using native web standards.</div>
-    </wb-details>
-  </wb-demo>
-  <wb-demo>
-    <wb-details summary="How do I install it?">
-      <div>No installation needed! Just include the script tag in your HTML and start using the components immediately.</div>
-    </wb-details>
-  </wb-demo>
-  <wb-demo>
-    <wb-details summary="Is it production ready?">
-      <div>Yes! Fully tested and enterprise hardened with comprehensive accessibility support.</div>
-    </wb-details>
-  </wb-demo>
+  <div x-demo id="detailsDemo">
+    <details summary="What is wb-starter?">
+      <div> wb-starter is a zero-build web component library that provides
+      modern, accessible UI components using native web standards.</div>
+    </details>
+  </div>
+  <div x-demo>
+    <details summary="How do I install it?">
+      <div> No installation needed! Just include the script tag in your HTML and
+      start using the components immediately.</div>
+    </details>
+  </div>
+  <div x-demo>
+    <details summary="Is it production ready?">
+      <div> Yes! Fully tested and enterprise hardened with comprehensive
+      accessibility support.</div>
+    </details>
+  </div>
 
   <!-- Breadcrumb -->
   <h3>Breadcrumb</h3>
-  <wb-demo>
+  <div x-demo>
     <nav x-breadcrumb items="Home,Products,Electronics,Smartphones"></nav>
-  </wb-demo>
+  </div>
 
   <!-- Pagination -->
   <h3>Pagination</h3>
-  <wb-demo>
+  <div x-demo>
     <nav x-pagination total="100" per-page="10" current="5"></nav>
-  </wb-demo>
+  </div>
 
   <!-- Steps Wizard -->
   <h3>Steps Wizard</h3>
-  <wb-demo>
+  <div x-demo>
     <div x-steps items="Cart,Shipping,Payment,Confirm" current="2"></div>
-  </wb-demo>
+  </div>
 </section>
 
 <!-- ═══════════════════════════════════════════════════════════════════════════
@@ -535,36 +727,38 @@
   
   <!-- Text Inputs -->
   <h3>Text Inputs</h3>
-  <wb-demo id="inputDemo" columns="1">
+  <div x-demo id="inputDemo" columns="1">
     <input type="text" placeholder="Basic input">
     <input type="text" placeholder="Success" variant="success">
     <input type="text" placeholder="Error" variant="error">
     <input type="password" x-password placeholder="Password with toggle">
     <textarea placeholder="Textarea" rows="3"></textarea>
-  </wb-demo>
+  </div>
 
   <!-- Selection Inputs -->
   <h3>Selection Inputs</h3>
-  <wb-demo id="selectDemo" columns="1">
+  <div x-demo id="selectDemo" columns="1">
     <select>
       <option>Select an option</option>
       <option>Option 1</option>
       <option>Option 2</option>
     </select>
     <label class="selection-label"><input type="checkbox"> Checkbox</label>
-    <label class="selection-label"><input type="radio" name="radio-demo" checked> Radio A</label>
-    <label class="selection-label"><input type="radio" name="radio-demo"> Radio B</label>
-    <wb-switch label="Toggle switch"></wb-switch>
-  </wb-demo>
+    <label
+      class="selection-label"><input type="radio" name="radio-demo" checked> Radio A</label>
+    <label
+      class="selection-label"><input type="radio" name="radio-demo"> Radio B</label>
+    <div x-switch label="Toggle switch"></div>
+  </div>
 
   <!-- Range & Rating -->
   <h3>Range &amp; Rating Inputs</h3>
-  <wb-demo id="ratingDemo" columns="1">
+  <div x-demo id="ratingDemo" columns="1">
     <input type="range" min="0" max="100" value="50">
-    <wb-rating value="3" max="5"></wb-rating>
-    <wb-rating value="4" max="5" icon="❤️"></wb-rating>
+    <span x-rating value="3" max="5"></span>
+    <span x-rating value="4" max="5" icon="❤️"></span>
     <div x-stepper value="5" min="0" max="10"></div>
-  </wb-demo>
+  </div>
 </section>
 
 <!-- ═══════════════════════════════════════════════════════════════════════════
@@ -575,21 +769,28 @@
 
   <!-- Timeline -->
   <h3>Timeline</h3>
-  <wb-demo>
-    <wb-timeline items="🚀 Jan 2024 - Project Kickoff,🎨 Mar 2024 - Design Phase Complete,💻 Jun 2024 - Development Sprint,🧪 Sep 2024 - Beta Release,🎉 Dec 2024 - Production Launch"></wb-timeline>
-  </wb-demo>
+  <div x-demo>
+    <div x-timeline
+      items="🚀 Jan 2024 - Project Kickoff,🎨 Mar 2024 - Design Phase
+             Complete,💻 Jun 2024 - Development Sprint,🧪 Sep 2024 - Beta
+             Release,🎉 Dec 2024 - Production Launch"></div>
+  </div>
 
   <!-- Keyboard Keys -->
   <h3>Keyboard Keys</h3>
-  <wb-demo>
-    <p>Press <span x-kbd>Ctrl</span> + <span x-kbd>S</span> to save, or <span x-kbd>⌘</span> + <span x-kbd>K</span> on Mac.</p>
-  </wb-demo>
+  <div x-demo>
+    <p> Press <span x-kbd> Ctrl</span> + <span x-kbd> S</span> to save, or
+    <span x-kbd> ⌘</span> + <span x-kbd> K</span> on Mac.</p>
+  </div>
 
   <!-- JSON Viewer -->
   <h3>JSON Viewer</h3>
-  <wb-demo>
-    <div x-json>{"name": "John", "age": 30, "active": true, "roles": ["admin", "user"]}</div>
-  </wb-demo>
+  <div x-demo>
+    <div
+      x-json>
+      {"name": "John", "age": 30, "active": true, "roles": ["admin",
+      "user"]}</div>
+  </div>
 </section>
 
 <!-- ═══════════════════════════════════════════════════════════════════════════
@@ -600,26 +801,30 @@
 
   <!-- Gallery -->
   <h3>Gallery</h3>
-  <wb-demo>
+  <div x-demo>
     <div x-gallery columns="4">
       <img src="https://picsum.photos/800/800?r=g1" alt="Gallery 1">
       <img src="https://picsum.photos/800/800?r=g2" alt="Gallery 2">
       <img src="https://picsum.photos/800/800?r=g3" alt="Gallery 3">
       <img src="https://picsum.photos/800/800?r=g4" alt="Gallery 4">
     </div>
-  </wb-demo>
+  </div>
 
   <!-- YouTube Embed -->
   <h3>YouTube Embed</h3>
-  <wb-demo>
-    <div x-youtube video-id="dQw4w9WgXcQ" aspect-ratio="16:9" style="max-width: 600px;"></div>
-  </wb-demo>
+  <div x-demo>
+    <div
+      x-youtube
+      video-id="dQw4w9WgXcQ"
+      aspect-ratio="16:9"
+      style="max-width: 600px;"></div>
+  </div>
 
   <!-- Audio Player -->
   <h3>Audio Player</h3>
-  <wb-demo id="audioDemo">
-    <wb-audio src="demos/sample.wav" show-eq="true" volume="0.7"></wb-audio>
-  </wb-demo>
+  <div x-demo id="audioDemo">
+    <audio src="https://archive.org/download/nineinchnails_ghosts_I_IV/01_Ghosts_I.mp3" show-eq="true" volume="0.7"></audio>
+  </div>
 </section>
 
 <!-- ═══════════════════════════════════════════════════════════════════════════
@@ -630,50 +835,62 @@
 
   <!-- Tooltips -->
   <h3>Tooltips</h3>
-    <wb-demo>
-    <wb-tooltip position="top" content="Top tooltip"><button variant="secondary">Top</button></wb-tooltip>
-  </wb-demo>
-  <wb-demo>
-    <wb-tooltip position="bottom" content="Bottom tooltip"><button variant="secondary">Bottom</button></wb-tooltip>
-  </wb-demo>
-  <wb-demo>
-    <wb-tooltip position="left" content="Left tooltip"><button variant="secondary">Left</button></wb-tooltip>
-  </wb-demo>
-  <wb-demo>
-    <wb-tooltip position="right" content="Right tooltip"><button variant="secondary">Right</button></wb-tooltip>
-  </wb-demo>
+    <div x-demo>
+    <span x-tooltip
+      position="top"
+      content="Top tooltip"><button variant="secondary">Top</button></span>
+  </div>
+  <div x-demo>
+    <span x-tooltip
+      position="bottom"
+      content="Bottom tooltip"><button variant="secondary">Bottom</button></span>
+  </div>
+  <div x-demo>
+    <span x-tooltip
+      position="left"
+      content="Left tooltip"><button variant="secondary">Left</button></span>
+  </div>
+  <div x-demo>
+    <span x-tooltip
+      position="right"
+      content="Right tooltip"><button variant="secondary">Right</button></span>
+  </div>
 
   <!-- Copy, Share, Print -->
   <h3>Copy, Share, Print</h3>
-    <wb-demo>
-    <button class="wb-btn" x-copy copy-text="Text copied!">📋 Copy Text</button>
-  </wb-demo>
-  <wb-demo>
-    <button class="wb-btn" x-share share-title="wb-starter" share-url="https://example.com">📤 Share</button>
-  </wb-demo>
-  <wb-demo>
-    <button class="wb-btn" x-print>🖨️ Print</button>
-  </wb-demo>
-  <wb-demo>
-    <button class="wb-btn" x-fullscreen>⛶ Fullscreen</button>
-  </wb-demo>
+    <div x-demo>
+    <button class="x-btn" x-copy copy-text="Text copied!">📋 Copy Text</button>
+  </div>
+  <div x-demo>
+    <button
+      class="x-btn"
+      x-share
+      share-title="wb-starter"
+      share-url="https://example.com">📤 Share</button>
+  </div>
+  <div x-demo>
+    <button class="x-btn" x-print>🖨️ Print</button>
+  </div>
+  <div x-demo>
+    <button class="x-btn" x-fullscreen>⛶ Fullscreen</button>
+  </div>
 
   <!-- Clock & Countdown -->
   <h3>Clock &amp; Countdown</h3>
-    <wb-demo>
+    <div x-demo>
     <div x-clock class="time-display"></div>
-  </wb-demo>
-  <wb-demo>
+  </div>
+  <div x-demo>
     <div x-countdown date="2026-12-31" class="time-display"></div>
-  </wb-demo>
+  </div>
 
   <!-- Theme Controls -->
   <h3>Theme Controls</h3>
-  <wb-demo columns="1">
-    <button class="wb-btn" x-darkmode>🌙 Toggle Dark Mode</button>
-  </wb-demo>
-  <p><code>&lt;wb-themecontrol&gt;</code> is the site's global theme picker -- see it live in the header above. It's a page-scoped singleton (it directly controls the real site theme), so it's shown here as code only, not a second live instance, to avoid two theme pickers appearing to control the same page.</p>
-  <pre><code>&lt;wb-themecontrol&gt;&lt;/wb-themecontrol&gt;</code></pre>
+  <div x-demo columns="1">
+    <button class="x-btn" x-darkmode>🌙 Toggle Dark Mode</button>
+  </div>
+  <p><code>&lt;x-themecontrol&gt;</code> is the site's global theme picker -- see it live in the header above. It's a page-scoped singleton (it directly controls the real site theme), so it's shown here as code only, not a second live instance, to avoid two theme pickers appearing to control the same page.</p>
+  <pre><code>&lt;x-themecontrol&gt;&lt;/x-themecontrol&gt;</code></pre>
 </section>
 
 <!-- FOOTER -->

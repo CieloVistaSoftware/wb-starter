@@ -88,11 +88,11 @@ test.describe('HTML Validity', () => {
     }
   });
 
-  test('wb-demo code panels contain valid HTML markup', async ({ page }) => {
+  test('[x-demo] code panels contain valid HTML markup', async ({ page }) => {
     // Test the content.html page which has many demo components
-    await page.goto('http://localhost:3000/demos/site/content.html');
+    await page.goto('/demos/site/content.html');
 
-    const codePanels = page.locator('.wb-demo__code');
+    const codePanels = page.locator('.x-demo__code');
     const count = await codePanels.count();
 
     expect(count).toBeGreaterThan(0);

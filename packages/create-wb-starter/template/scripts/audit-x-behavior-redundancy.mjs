@@ -6,7 +6,7 @@ import { nativeMap, elementMap } from '../src/core/tag-map.js';
 // Finds every code example where an x-behavior="<name>" (or shorthand
 // x-<name>) attribute duplicates a behavior the element already gets for
 // free via autoinject (src/core/tag-map.js nativeMap/elementMap) -- e.g.
-// <input x-behavior="input">, <form x-form>, <wb-input x-input>. These are
+// <input x-behavior="input">, <form x-form>, <div x-input x-input>. These are
 // always redundant: the tag alone already produces exactly that behavior
 // (wb.js inject() dedupes by behavior name per element, so it isn't a
 // double-render bug -- but the markup is misleading and must not appear in

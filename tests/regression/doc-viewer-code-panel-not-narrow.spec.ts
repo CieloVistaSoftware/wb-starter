@@ -1,19 +1,19 @@
 import { test, expect } from '@playwright/test';
 
 /**
- * #560: "docs/components/semantic/article.md: doc-viewer code panels render
+ * #560: "docs/behaviors/article.md: doc-viewer code panels render
  * too narrow" -- reported live on public/doc-viewer.html, whose
- * `<wb-demo>`-wrapped examples (Standard Semantic Article / WB Card /
+ * `<div x-demo>`-wrapped examples (Standard Semantic Article / WB Card /
  * WB Card Data Attributes) render through the exact SAME demo.js
  * shrink-to-fit code path as demos/*.html direct pages: doc-viewer.html
  * imports `demo` from src/wb-viewmodels/demo.js directly, and every
- * <wb-demo> in a rendered .md also upgrades to the real WBDemo custom
- * element (src/wb-viewmodels/wb-demo.js) via the same wb.js -> demo.js
- * call once WB.scan() runs -- there is no separate doc-viewer-specific
+ * <div x-demo> in a rendered .md also upgrades to the real WBDemo custom
+ * element (src/wb-viewmodels/x-demo.js) via the same wb.js -> demo.js
+ * call once await WB.scan() runs -- there is no separate doc-viewer-specific
  * code-panel renderer.
  *
  * The narrow LOOK on article.md's small demos (a bare <article>, a small
- * <wb-card>) is correct per Standard §7 ("a demo is only as wide as what
+ * <article>) is correct per Standard §7 ("a demo is only as wide as what
  * it renders") -- confirmed live, those code panels show their full
  * source with no wrapping/truncation. What must NEVER happen, on
  * doc-viewer.html specifically or any other page using the same demo.js
@@ -28,28 +28,28 @@ import { test, expect } from '@playwright/test';
  * caught.
  */
 const DOCS = [
-  'docs/components/semantic/article.md',
-  'docs/components/semantic/figure.md',
-  'docs/components/semantics/table.md',
+  'docs/behaviors/article.md',
+  'docs/behaviors/figure.md',
+  'docs/behaviors/table.md',
 ];
 
 test.describe('doc-viewer.html code panels are never narrower than their own content (#560)', () => {
   for (const file of DOCS) {
-    test(`${file}: no <wb-demo> code panel shows a forced horizontal scrollbar`, async ({ page }) => {
+    test(`${file}: no <div x-demo> code panel shows a forced horizontal scrollbar`, async ({ page }) => {
       await page.goto('/public/doc-viewer.html?file=' + encodeURIComponent(file), {
         waitUntil: 'domcontentloaded',
       });
 
-      const demos = page.locator('wb-demo');
+      const demos = page.locator('[x-demo]');
       await expect(demos.first()).toBeVisible({ timeout: 20000 });
       // Let shrink-to-fit's rAF-scheduled measurement settle.
       await page.waitForTimeout(500);
 
       const count = await demos.count();
-      expect(count, `${file} should render at least one <wb-demo>`).toBeGreaterThan(0);
+      expect(count, `${file} should render at least one <div x-demo>`).toBeGreaterThan(0);
 
       for (let i = 0; i < count; i++) {
-        const codePanels = demos.nth(i).locator('.wb-demo__code');
+        const codePanels = demos.nth(i).locator('.x-demo__code');
         const panelCount = await codePanels.count();
         for (let p = 0; p < panelCount; p++) {
           const panel = codePanels.nth(p);
@@ -61,7 +61,7 @@ test.describe('doc-viewer.html code panels are never narrower than their own con
           // means the box is sized narrower than its own content again.
           expect(
             scrollWidth,
-            `${file} wb-demo[${i}] code panel [${p}] is ${scrollWidth}px of content in a ` +
+            `${file} [x-demo][${i}] code panel [${p}] is ${scrollWidth}px of content in a ` +
             `${clientWidth}px box -- narrower than its own content, forcing an unnecessary scrollbar`
           ).toBeLessThanOrEqual(clientWidth + 2);
         }
@@ -70,7 +70,7 @@ test.describe('doc-viewer.html code panels are never narrower than their own con
   }
 
   test('article.md: a plain (non-wb-demo) fenced code block spans the full reading column, not a cramped sliver', async ({ page }) => {
-    await page.goto('/public/doc-viewer.html?file=' + encodeURIComponent('docs/components/semantic/article.md'), {
+    await page.goto('/public/doc-viewer.html?file=' + encodeURIComponent('docs/behaviors/article.md'), {
       waitUntil: 'domcontentloaded',
     });
 
@@ -79,9 +79,9 @@ test.describe('doc-viewer.html code panels are never narrower than their own con
 
     // The "Structure" section's ```html fence has no wb-*/x-* tags, so
     // mdhtml.js's auto-live-render leaves it as a plain <pre> enhanced by
-    // pre.js (x-pre) -- a completely different code path from wb-demo's,
+    // pre.js (x-pre) -- a completely different code path from x-demo's,
     // and one that must fill the doc's own reading column width, not
-    // collapse to its content's natural size the way a <wb-demo> does.
+    // collapse to its content's natural size the way a <div x-demo> does.
     const pre = content.locator('pre').first();
     await expect(pre).toBeVisible();
 

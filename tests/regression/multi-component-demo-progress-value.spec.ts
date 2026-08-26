@@ -4,7 +4,7 @@ import { test, expect } from '@playwright/test';
  * demos/multi-component-demo-generated.html's "Progress — All Enum Variants"
  * section (generated from src/wb-models/pages/multi-component-demo.page.json
  * via scripts/compose-page.mjs) enumerated every `variant`/`size` value with
- * NO `value` attribute set -- wb-progress defaults `value` to its schema
+ * NO `value` attribute set -- x-progress defaults `value` to its schema
  * minimum (0), so every bar rendered at 0% width. A 0-width fill paints no
  * color, so all six variant bars (and all five size bars) looked visually
  * identical -- "NONE not one of the variants are working" (they were, the
@@ -21,13 +21,13 @@ import { test, expect } from '@playwright/test';
  */
 
 test.describe('multi-component-demo-generated.html: progress enum sweep is actually visible', () => {
-  test('every wb-progress demo in the enum-variants section has a non-zero value/fill', async ({ page }) => {
+  test('every progress demo in the enum-variants section has a non-zero value/fill', async ({ page }) => {
     await page.goto('/demos/multi-component-demo-generated.html', { waitUntil: 'domcontentloaded' });
 
     const heading = page.getByRole('heading', { name: /Progress — All Enum Variants/i });
     await expect(heading).toBeVisible({ timeout: 20000 });
 
-    const bars = page.locator('wb-progress');
+    const bars = page.locator('progress');
     const count = await bars.count();
     expect(count).toBeGreaterThanOrEqual(11); // 6 variants + 5 sizes
 
@@ -39,7 +39,7 @@ test.describe('multi-component-demo-generated.html: progress enum sweep is actua
       const fill = bar.locator('[class*="fill"], [class*="bar"]').first();
       await expect
         .poll(() => fill.evaluate((el) => el.getBoundingClientRect().width), {
-          message: `wb-progress #${i}'s fill should have real, non-zero rendered width at value=60`,
+          message: `x-progress #${i}'s fill should have real, non-zero rendered width at value=60`,
           timeout: 10000,
         })
         .toBeGreaterThan(0);

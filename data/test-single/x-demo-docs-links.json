@@ -1,0 +1,20 @@
+{
+  "state": "passed",
+  "mode": "single",
+  "specFile": "tests/integration/x-demo-docs-links.spec.ts",
+  "startedAt": "2026-07-30T17:42:28.804Z",
+  "updatedAt": "2026-07-30T17:42:46.580Z",
+  "command": "npx playwright test --workers=8 tests/integration/x-demo-docs-links.spec.ts",
+  "pid": 33876,
+  "passed": 2,
+  "failed": 0,
+  "skipped": 0,
+  "total": 2,
+  "currentFile": "tests\\integration\\x-demo-docs-links.spec.ts",
+  "output": "\nRunning 2 tests using 2 workers\n\n  ok 2 [integration] › tests\\integration\\x-demo-docs-links.spec.ts:54:3 › x-demo Docs: links resolve to real docs (#262) › doc-viewer surface: every Docs: link opens a real doc (3.3s)\n  ok 1 [integration] › tests\\integration\\x-demo-docs-links.spec.ts:48:3 › x-demo Docs: links resolve to real docs (#262) › SPA components page: every Docs: link opens a real doc (3.6s)\n\n════════════════════════════════════════════════════════════\n  WB TEST RESULTS\n════════════════════════════════════════════════════════════\n  Total: 2 tests in 11.4s\n  ✓ Passed:  2\n  ✗ Failed:  0\n\n  By Project:\n    ✓ integration: 2/2 passed\n════════════════════════════════════════════════════════════\n\n\n  2 passed (12.2s)\n",
+  "errors": "",
+  "failures": [],
+  "completedAt": "2026-07-30T17:42:46.580Z",
+  "duration": "17.78s",
+  "exitCode": 0
+}

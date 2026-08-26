@@ -44,7 +44,7 @@ test.describe('Cards Showcase Page', () => {
     });
 
     test('theme control is present and visible', async ({ page }) => {
-      const themeControl = page.locator('wb-themecontrol');
+      const themeControl = page.locator('x-themecontrol');
       await expect(themeControl).toBeVisible();
     });
 
@@ -60,18 +60,18 @@ test.describe('Cards Showcase Page', () => {
   // ═══════════════════════════════════════════════════════════════════════
   test.describe('Theme Control', () => {
     test('theme control has dropdown select', async ({ page }) => {
-      const select = page.locator('wb-themecontrol select');
+      const select = page.locator('x-themecontrol select');
       await expect(select).toBeVisible();
     });
 
     test('theme dropdown contains all themes', async ({ page }) => {
-      const options = page.locator('wb-themecontrol select option');
+      const options = page.locator('x-themecontrol select option');
       const count = await options.count();
       expect(count).toBe(50);
     });
 
     test('changing theme updates data-theme attribute', async ({ page }) => {
-      const select = page.locator('wb-themecontrol select');
+      const select = page.locator('x-themecontrol select');
       
       // Change to ocean theme
       await select.selectOption('ocean');
@@ -82,8 +82,8 @@ test.describe('Cards Showcase Page', () => {
     });
 
     test('changing theme updates card colors', async ({ page }) => {
-      const select = page.locator('wb-themecontrol select');
-      const card = page.locator('.wb-card').first();
+      const select = page.locator('x-themecontrol select');
+      const card = page.locator('.x-card').first();
       
       // Get initial background
       const initialBg = await card.evaluate(el => 
@@ -103,12 +103,12 @@ test.describe('Cards Showcase Page', () => {
     });
 
     test('theme persists after selection', async ({ page }) => {
-      const select = page.locator('wb-themecontrol select');
+      const select = page.locator('x-themecontrol select');
       await select.selectOption('sunset');
       await page.waitForTimeout(200);
       
       // Check localStorage
-      const savedTheme = await page.evaluate(() => localStorage.getItem('wb-theme'));
+      const savedTheme = await page.evaluate(() => localStorage.getItem('x-theme'));
       expect(savedTheme).toBe('sunset');
     });
   });
@@ -120,7 +120,7 @@ test.describe('Cards Showcase Page', () => {
     test('basic card renders with title', async ({ page }) => {
       const card = page.locator('[data-title="Basic Card"]');
       await expect(card).toBeVisible();
-      await expect(card.locator('.wb-card__title')).toContainText('Basic Card');
+      await expect(card.locator('.x-card__title')).toContainText('Basic Card');
     });
 
     test('elevated card has shadow', async ({ page }) => {
@@ -151,34 +151,34 @@ test.describe('Cards Showcase Page', () => {
   // ═══════════════════════════════════════════════════════════════════════
   test.describe('Card Stats', () => {
     test('stats card renders value', async ({ page }) => {
-      const statsCard = page.locator('wb-cardstats').first();
+      const statsCard = page.locator('x-cardstats').first();
       await expect(statsCard).toBeVisible();
       
-      const value = statsCard.locator('.wb-card__stats-value');
+      const value = statsCard.locator('.x-card__stats-value');
       await expect(value).toBeVisible();
     });
 
     test('stats card shows label', async ({ page }) => {
-      const statsCard = page.locator('wb-cardstats').first();
-      const label = statsCard.locator('.wb-card__stats-label');
+      const statsCard = page.locator('x-cardstats').first();
+      const label = statsCard.locator('.x-card__stats-label');
       await expect(label).toBeVisible();
     });
 
     test('stats card with trend up shows up arrow', async ({ page }) => {
-      const statsCard = page.locator('wb-cardstats[trend="up"]');
-      const trend = statsCard.locator('.wb-card__stats-trend');
+      const statsCard = page.locator('x-cardstats[trend="up"]');
+      const trend = statsCard.locator('.x-card__stats-trend');
       await expect(trend).toContainText('↑');
     });
 
     test('stats card with trend down shows down arrow', async ({ page }) => {
-      const statsCard = page.locator('wb-cardstats[trend="down"]');
-      const trend = statsCard.locator('.wb-card__stats-trend');
+      const statsCard = page.locator('x-cardstats[trend="down"]');
+      const trend = statsCard.locator('.x-card__stats-trend');
       await expect(trend).toContainText('↓');
     });
 
     test('stats card shows icon', async ({ page }) => {
-      const statsCard = page.locator('wb-cardstats[icon]').first();
-      const icon = statsCard.locator('.wb-card__icon');
+      const statsCard = page.locator('x-cardstats[icon]').first();
+      const icon = statsCard.locator('.x-card__icon');
       await expect(icon).toBeVisible();
     });
   });
@@ -188,33 +188,33 @@ test.describe('Cards Showcase Page', () => {
   // ═══════════════════════════════════════════════════════════════════════
   test.describe('Card Profile', () => {
     test('profile card renders avatar', async ({ page }) => {
-      const profileCard = page.locator('wb-cardprofile').first();
+      const profileCard = page.locator('x-cardprofile').first();
       await expect(profileCard).toBeVisible();
       
-      const avatar = profileCard.locator('.wb-card__avatar');
+      const avatar = profileCard.locator('.x-card__avatar');
       await expect(avatar).toBeVisible();
     });
 
     test('profile card shows name', async ({ page }) => {
-      const profileCard = page.locator('wb-cardprofile').first();
-      const name = profileCard.locator('.wb-card__name');
+      const profileCard = page.locator('x-cardprofile').first();
+      const name = profileCard.locator('.x-card__name');
       await expect(name).toBeVisible();
     });
 
     test('profile card shows role', async ({ page }) => {
-      const profileCard = page.locator('wb-cardprofile').first();
-      const role = profileCard.locator('.wb-card__role');
+      const profileCard = page.locator('x-cardprofile').first();
+      const role = profileCard.locator('.x-card__role');
       await expect(role).toBeVisible();
     });
 
     test('profile card shows bio', async ({ page }) => {
-      const profileCard = page.locator('wb-cardprofile[bio]').first();
-      const bio = profileCard.locator('.wb-card__bio');
+      const profileCard = page.locator('x-cardprofile[bio]').first();
+      const bio = profileCard.locator('.x-card__bio');
       await expect(bio).toBeVisible();
     });
 
     test('themed profile card applies theme', async ({ page }) => {
-      const themedProfile = page.locator('wb-cardprofile[theme="sunset"]');
+      const themedProfile = page.locator('x-cardprofile[theme="sunset"]');
       if (await themedProfile.count() > 0) {
         await expect(themedProfile).toBeVisible();
       }
@@ -226,37 +226,37 @@ test.describe('Cards Showcase Page', () => {
   // ═══════════════════════════════════════════════════════════════════════
   test.describe('Card Pricing', () => {
     test('pricing card renders plan name', async ({ page }) => {
-      const pricingCard = page.locator('wb-cardpricing').first();
+      const pricingCard = page.locator('x-cardpricing').first();
       await expect(pricingCard).toBeVisible();
       
-      const plan = pricingCard.locator('.wb-card__plan');
+      const plan = pricingCard.locator('.x-card__plan');
       await expect(plan).toBeVisible();
     });
 
     test('pricing card shows price', async ({ page }) => {
-      const pricingCard = page.locator('wb-cardpricing').first();
-      const price = pricingCard.locator('.wb-card__amount');
+      const pricingCard = page.locator('x-cardpricing').first();
+      const price = pricingCard.locator('.x-card__amount');
       await expect(price).toBeVisible();
     });
 
     test('pricing card shows features list', async ({ page }) => {
-      const pricingCard = page.locator('wb-cardpricing').first();
-      const features = pricingCard.locator('.wb-card__features');
+      const pricingCard = page.locator('x-cardpricing').first();
+      const features = pricingCard.locator('.x-card__features');
       await expect(features).toBeVisible();
       
-      const featureItems = pricingCard.locator('.wb-card__feature');
+      const featureItems = pricingCard.locator('.x-card__feature');
       const count = await featureItems.count();
       expect(count).toBeGreaterThan(0);
     });
 
     test('pricing card has CTA button', async ({ page }) => {
-      const pricingCard = page.locator('wb-cardpricing').first();
-      const cta = pricingCard.locator('.wb-card__cta');
+      const pricingCard = page.locator('x-cardpricing').first();
+      const cta = pricingCard.locator('.x-card__cta');
       await expect(cta).toBeVisible();
     });
 
     test('featured pricing card is scaled up', async ({ page }) => {
-      const featuredCard = page.locator('wb-cardpricing[featured="true"]');
+      const featuredCard = page.locator('x-cardpricing[featured="true"]');
       if (await featuredCard.count() > 0) {
         const transform = await featuredCard.evaluate(el => 
           window.getComputedStyle(el).transform
@@ -271,7 +271,7 @@ test.describe('Cards Showcase Page', () => {
   // ═══════════════════════════════════════════════════════════════════════
   test.describe('Card Image', () => {
     test('image card renders image', async ({ page }) => {
-      const imageCard = page.locator('wb-cardimage').first();
+      const imageCard = page.locator('x-cardimage').first();
       if (await imageCard.count() > 0) {
         await expect(imageCard).toBeVisible();
         
@@ -281,9 +281,9 @@ test.describe('Cards Showcase Page', () => {
     });
 
     test('image card respects aspect ratio', async ({ page }) => {
-      const imageCard = page.locator('wb-cardimage[aspect]').first();
+      const imageCard = page.locator('x-cardimage[aspect]').first();
       if (await imageCard.count() > 0) {
-        const figure = imageCard.locator('.wb-card__figure');
+        const figure = imageCard.locator('.x-card__figure');
         const aspectRatio = await figure.evaluate(el => 
           window.getComputedStyle(el).aspectRatio
         );
@@ -297,18 +297,18 @@ test.describe('Cards Showcase Page', () => {
   // ═══════════════════════════════════════════════════════════════════════
   test.describe('Card Button', () => {
     test('button card renders action buttons', async ({ page }) => {
-      const buttonCard = page.locator('wb-cardbutton').first();
+      const buttonCard = page.locator('x-cardbutton').first();
       if (await buttonCard.count() > 0) {
         await expect(buttonCard).toBeVisible();
         
-        const buttons = buttonCard.locator('.wb-card__btn');
+        const buttons = buttonCard.locator('.x-card__btn');
         const count = await buttons.count();
         expect(count).toBeGreaterThan(0);
       }
     });
 
     test('primary button is styled differently', async ({ page }) => {
-      const primaryBtn = page.locator('.wb-card__btn--primary').first();
+      const primaryBtn = page.locator('.x-card__btn--primary').first();
       if (await primaryBtn.count() > 0) {
         const bg = await primaryBtn.evaluate(el => 
           window.getComputedStyle(el).backgroundColor
@@ -324,27 +324,27 @@ test.describe('Cards Showcase Page', () => {
   // ═══════════════════════════════════════════════════════════════════════
   test.describe('Card Testimonial', () => {
     test('testimonial card shows quote', async ({ page }) => {
-      const testimonialCard = page.locator('wb-cardtestimonial').first();
+      const testimonialCard = page.locator('x-cardtestimonial').first();
       if (await testimonialCard.count() > 0) {
         await expect(testimonialCard).toBeVisible();
         
-        const quote = testimonialCard.locator('.wb-card__quote');
+        const quote = testimonialCard.locator('.x-card__quote');
         await expect(quote).toBeVisible();
       }
     });
 
     test('testimonial card shows author', async ({ page }) => {
-      const testimonialCard = page.locator('wb-cardtestimonial').first();
+      const testimonialCard = page.locator('x-cardtestimonial').first();
       if (await testimonialCard.count() > 0) {
-        const author = testimonialCard.locator('.wb-card__author');
+        const author = testimonialCard.locator('.x-card__author');
         await expect(author).toBeVisible();
       }
     });
 
     test('testimonial card shows rating stars', async ({ page }) => {
-      const testimonialCard = page.locator('wb-cardtestimonial[rating]').first();
+      const testimonialCard = page.locator('x-cardtestimonial[rating]').first();
       if (await testimonialCard.count() > 0) {
-        const rating = testimonialCard.locator('.wb-card__rating');
+        const rating = testimonialCard.locator('.x-card__rating');
         await expect(rating).toBeVisible();
         await expect(rating).toContainText('★');
       }
@@ -356,7 +356,7 @@ test.describe('Cards Showcase Page', () => {
   // ═══════════════════════════════════════════════════════════════════════
   test.describe('Card Product', () => {
     test('product card shows image', async ({ page }) => {
-      const productCard = page.locator('wb-cardproduct').first();
+      const productCard = page.locator('x-cardproduct').first();
       if (await productCard.count() > 0) {
         await expect(productCard).toBeVisible();
         
@@ -366,25 +366,25 @@ test.describe('Cards Showcase Page', () => {
     });
 
     test('product card shows price', async ({ page }) => {
-      const productCard = page.locator('wb-cardproduct').first();
+      const productCard = page.locator('x-cardproduct').first();
       if (await productCard.count() > 0) {
-        const price = productCard.locator('.wb-card__price-current');
+        const price = productCard.locator('.x-card__price-current');
         await expect(price).toBeVisible();
       }
     });
 
     test('product card has add to cart button', async ({ page }) => {
-      const productCard = page.locator('wb-cardproduct').first();
+      const productCard = page.locator('x-cardproduct').first();
       if (await productCard.count() > 0) {
-        const cta = productCard.locator('.wb-card__product-cta');
+        const cta = productCard.locator('.x-card__product-cta');
         await expect(cta).toBeVisible();
       }
     });
 
     test('product card with original price shows strikethrough', async ({ page }) => {
-      const productCard = page.locator('wb-cardproduct[data-original-price]').first();
+      const productCard = page.locator('x-cardproduct[data-original-price]').first();
       if (await productCard.count() > 0) {
-        const original = productCard.locator('.wb-card__price-original');
+        const original = productCard.locator('.x-card__price-original');
         const textDeco = await original.evaluate(el => 
           window.getComputedStyle(el).textDecoration
         );
@@ -401,7 +401,7 @@ test.describe('Cards Showcase Page', () => {
       const variants = ['info', 'success', 'warning', 'error'];
       
       for (const variant of variants) {
-        const card = page.locator(`wb-cardnotification[type="${variant}"]`);
+        const card = page.locator(`x-cardnotification[type="${variant}"]`);
         if (await card.count() > 0) {
           await expect(card.first()).toBeVisible();
         }
@@ -409,7 +409,7 @@ test.describe('Cards Showcase Page', () => {
     });
 
     test('notification card has role alert', async ({ page }) => {
-      const notification = page.locator('wb-cardnotification').first();
+      const notification = page.locator('x-cardnotification').first();
       if (await notification.count() > 0) {
         const role = await notification.getAttribute('role');
         expect(role).toBe('alert');
@@ -417,17 +417,17 @@ test.describe('Cards Showcase Page', () => {
     });
 
     test('dismissible notification has close button', async ({ page }) => {
-      const notification = page.locator('wb-cardnotification[dismissible="true"]').first();
+      const notification = page.locator('x-cardnotification[dismissible="true"]').first();
       if (await notification.count() > 0) {
-        const closeBtn = notification.locator('.wb-card__notification-dismiss');
+        const closeBtn = notification.locator('.x-card__notification-dismiss');
         await expect(closeBtn).toBeVisible();
       }
     });
 
     test('clicking dismiss removes notification', async ({ page }) => {
-      const notification = page.locator('wb-cardnotification[dismissible="true"]').first();
+      const notification = page.locator('x-cardnotification[dismissible="true"]').first();
       if (await notification.count() > 0) {
-        const closeBtn = notification.locator('.wb-card__notification-dismiss');
+        const closeBtn = notification.locator('.x-card__notification-dismiss');
         await closeBtn.click();
         await page.waitForTimeout(300);
         
@@ -441,17 +441,17 @@ test.describe('Cards Showcase Page', () => {
   // ═══════════════════════════════════════════════════════════════════════
   test.describe('Card File', () => {
     test('file card shows filename', async ({ page }) => {
-      const fileCard = page.locator('wb-cardfile').first();
+      const fileCard = page.locator('x-cardfile').first();
       if (await fileCard.count() > 0) {
         await expect(fileCard).toBeVisible();
         
-        const filename = fileCard.locator('.wb-card__filename');
+        const filename = fileCard.locator('.x-card__filename');
         await expect(filename).toBeVisible();
       }
     });
 
     test('file card shows file type icon', async ({ page }) => {
-      const fileCard = page.locator('wb-cardfile').first();
+      const fileCard = page.locator('x-cardfile').first();
       if (await fileCard.count() > 0) {
         const text = await fileCard.textContent();
         // Should contain an emoji icon
@@ -465,7 +465,7 @@ test.describe('Cards Showcase Page', () => {
   // ═══════════════════════════════════════════════════════════════════════
   test.describe('Card Hero', () => {
     test('hero card has minimum height', async ({ page }) => {
-      const heroCard = page.locator('wb-cardhero').first();
+      const heroCard = page.locator('x-cardhero').first();
       if (await heroCard.count() > 0) {
         await expect(heroCard).toBeVisible();
         
@@ -475,15 +475,15 @@ test.describe('Cards Showcase Page', () => {
     });
 
     test('hero card shows title', async ({ page }) => {
-      const heroCard = page.locator('wb-cardhero').first();
+      const heroCard = page.locator('x-cardhero').first();
       if (await heroCard.count() > 0) {
-        const title = heroCard.locator('.wb-card__hero-title');
+        const title = heroCard.locator('.x-card__hero-title');
         await expect(title).toBeVisible();
       }
     });
 
     test('hero card has background image or gradient', async ({ page }) => {
-      const heroCard = page.locator('wb-cardhero').first();
+      const heroCard = page.locator('x-cardhero').first();
       if (await heroCard.count() > 0) {
         const bgImage = await heroCard.evaluate(el => 
           window.getComputedStyle(el).backgroundImage
@@ -493,9 +493,9 @@ test.describe('Cards Showcase Page', () => {
     });
 
     test('hero card with overlay has overlay element', async ({ page }) => {
-      const heroCard = page.locator('wb-cardhero[overlay="true"]').first();
+      const heroCard = page.locator('x-cardhero[overlay="true"]').first();
       if (await heroCard.count() > 0) {
-        const overlay = heroCard.locator('.wb-card__overlay');
+        const overlay = heroCard.locator('.x-card__overlay');
         await expect(overlay).toBeVisible();
       }
     });
@@ -506,7 +506,7 @@ test.describe('Cards Showcase Page', () => {
   // ═══════════════════════════════════════════════════════════════════════
   test.describe('Card Link', () => {
     test('link card is clickable', async ({ page }) => {
-      const linkCard = page.locator('wb-cardlink').first();
+      const linkCard = page.locator('x-cardlink').first();
       if (await linkCard.count() > 0) {
         await expect(linkCard).toBeVisible();
         
@@ -518,7 +518,7 @@ test.describe('Cards Showcase Page', () => {
     });
 
     test('link card has role link', async ({ page }) => {
-      const linkCard = page.locator('wb-cardlink').first();
+      const linkCard = page.locator('x-cardlink').first();
       if (await linkCard.count() > 0) {
         const role = await linkCard.getAttribute('role');
         expect(role).toBe('link');
@@ -531,7 +531,7 @@ test.describe('Cards Showcase Page', () => {
   // ═══════════════════════════════════════════════════════════════════════
   test.describe('Card Horizontal', () => {
     test('horizontal card uses row layout', async ({ page }) => {
-      const horizCard = page.locator('wb-cardhorizontal').first();
+      const horizCard = page.locator('x-cardhorizontal').first();
       if (await horizCard.count() > 0) {
         await expect(horizCard).toBeVisible();
         
@@ -543,10 +543,10 @@ test.describe('Cards Showcase Page', () => {
     });
 
     test('horizontal card has image and content side by side', async ({ page }) => {
-      const horizCard = page.locator('wb-cardhorizontal[image]').first();
+      const horizCard = page.locator('x-cardhorizontal[image]').first();
       if (await horizCard.count() > 0) {
-        const img = horizCard.locator('.wb-card__figure');
-        const content = horizCard.locator('.wb-card__horizontal-content');
+        const img = horizCard.locator('.x-card__figure');
+        const content = horizCard.locator('.x-card__horizontal-content');
         
         if (await img.count() > 0 && await content.count() > 0) {
           const imgBox = await img.boundingBox();
@@ -566,7 +566,7 @@ test.describe('Cards Showcase Page', () => {
   // ═══════════════════════════════════════════════════════════════════════
   test.describe('Card Overlay', () => {
     test('overlay card has background image', async ({ page }) => {
-      const overlayCard = page.locator('wb-cardoverlay').first();
+      const overlayCard = page.locator('x-cardoverlay').first();
       if (await overlayCard.count() > 0) {
         await expect(overlayCard).toBeVisible();
         
@@ -578,9 +578,9 @@ test.describe('Cards Showcase Page', () => {
     });
 
     test('overlay card has content overlay', async ({ page }) => {
-      const overlayCard = page.locator('wb-cardoverlay').first();
+      const overlayCard = page.locator('x-cardoverlay').first();
       if (await overlayCard.count() > 0) {
-        const content = overlayCard.locator('.wb-card__overlay-content');
+        const content = overlayCard.locator('.x-card__overlay-content');
         await expect(content).toBeVisible();
       }
     });
@@ -591,20 +591,20 @@ test.describe('Cards Showcase Page', () => {
   // ═══════════════════════════════════════════════════════════════════════
   test.describe('Card Expandable', () => {
     test('expandable card has expand button', async ({ page }) => {
-      const expandCard = page.locator('wb-cardexpandable').first();
+      const expandCard = page.locator('x-cardexpandable').first();
       if (await expandCard.count() > 0) {
         await expect(expandCard).toBeVisible();
         
-        const btn = expandCard.locator('.wb-card__expand-btn');
+        const btn = expandCard.locator('.x-card__expand-btn');
         await expect(btn).toBeVisible();
       }
     });
 
     test('clicking expand button toggles content', async ({ page }) => {
-      const expandCard = page.locator('wb-cardexpandable').first();
+      const expandCard = page.locator('x-cardexpandable').first();
       if (await expandCard.count() > 0) {
-        const btn = expandCard.locator('.wb-card__expand-btn');
-        const content = expandCard.locator('.wb-card__expandable-content');
+        const btn = expandCard.locator('.x-card__expand-btn');
+        const content = expandCard.locator('.x-card__expandable-content');
         
         const initialHeight = await content.evaluate(el => el.style.maxHeight);
         
@@ -617,9 +617,9 @@ test.describe('Cards Showcase Page', () => {
     });
 
     test('expand button has aria-expanded attribute', async ({ page }) => {
-      const expandCard = page.locator('wb-cardexpandable').first();
+      const expandCard = page.locator('x-cardexpandable').first();
       if (await expandCard.count() > 0) {
-        const btn = expandCard.locator('.wb-card__expand-btn');
+        const btn = expandCard.locator('.x-card__expand-btn');
         const ariaExpanded = await btn.getAttribute('aria-expanded');
         expect(ariaExpanded).toMatch(/true|false/);
       }
@@ -631,20 +631,20 @@ test.describe('Cards Showcase Page', () => {
   // ═══════════════════════════════════════════════════════════════════════
   test.describe('Card Minimizable', () => {
     test('minimizable card has minimize button', async ({ page }) => {
-      const minCard = page.locator('wb-cardminimizable').first();
+      const minCard = page.locator('x-cardminimizable').first();
       if (await minCard.count() > 0) {
         await expect(minCard).toBeVisible();
         
-        const btn = minCard.locator('.wb-card__minimize-btn');
+        const btn = minCard.locator('.x-card__minimize-btn');
         await expect(btn).toBeVisible();
       }
     });
 
     test('clicking minimize button toggles content', async ({ page }) => {
-      const minCard = page.locator('wb-cardminimizable').first();
+      const minCard = page.locator('x-cardminimizable').first();
       if (await minCard.count() > 0) {
-        const btn = minCard.locator('.wb-card__minimize-btn');
-        const content = minCard.locator('.wb-card__minimizable-content');
+        const btn = minCard.locator('.x-card__minimize-btn');
+        const content = minCard.locator('.x-card__minimizable-content');
         
         const initialOpacity = await content.evaluate(el => 
           window.getComputedStyle(el).opacity
@@ -667,19 +667,19 @@ test.describe('Cards Showcase Page', () => {
   // ═══════════════════════════════════════════════════════════════════════
   test.describe('Card Draggable', () => {
     test('draggable card has drag handle', async ({ page }) => {
-      const dragCard = page.locator('wb-carddraggable').first();
+      const dragCard = page.locator('x-carddraggable').first();
       if (await dragCard.count() > 0) {
         await expect(dragCard).toBeVisible();
         
-        const handle = dragCard.locator('.wb-card__drag-handle');
+        const handle = dragCard.locator('.x-card__drag-handle');
         await expect(handle).toBeVisible();
       }
     });
 
     test('drag handle has grab cursor', async ({ page }) => {
-      const dragCard = page.locator('wb-carddraggable').first();
+      const dragCard = page.locator('x-carddraggable').first();
       if (await dragCard.count() > 0) {
-        const handle = dragCard.locator('.wb-card__drag-handle');
+        const handle = dragCard.locator('.x-card__drag-handle');
         const cursor = await handle.evaluate(el => 
           window.getComputedStyle(el).cursor
         );
@@ -693,7 +693,7 @@ test.describe('Cards Showcase Page', () => {
   // ═══════════════════════════════════════════════════════════════════════
   test.describe('Animations & Effects', () => {
     test('bounce animation class exists', async ({ page }) => {
-      const bounceEl = page.locator('.wb-animate-bounce, [x-bounce]');
+      const bounceEl = page.locator('.x-animate-bounce, [x-bounce]');
       if (await bounceEl.count() > 0) {
         const animation = await bounceEl.first().evaluate(el => 
           window.getComputedStyle(el).animationName
@@ -703,7 +703,7 @@ test.describe('Cards Showcase Page', () => {
     });
 
     test('shake animation class exists', async ({ page }) => {
-      const shakeEl = page.locator('.wb-animate-shake, [x-shake]');
+      const shakeEl = page.locator('.x-animate-shake, [x-shake]');
       if (await shakeEl.count() > 0) {
         const animation = await shakeEl.first().evaluate(el => 
           window.getComputedStyle(el).animationName
@@ -713,7 +713,7 @@ test.describe('Cards Showcase Page', () => {
     });
 
     test('pulse animation class exists', async ({ page }) => {
-      const pulseEl = page.locator('.wb-animate-pulse, [x-pulse]');
+      const pulseEl = page.locator('.x-animate-pulse, [x-pulse]');
       if (await pulseEl.count() > 0) {
         const animation = await pulseEl.first().evaluate(el => 
           window.getComputedStyle(el).animationName
@@ -729,7 +729,7 @@ test.describe('Cards Showcase Page', () => {
         await page.waitForTimeout(100);
         
         // Check if ripple element was created
-        const ripple = rippleEl.locator('.wb-ripple');
+        const ripple = rippleEl.locator('.x-ripple');
         // Ripple may be removed after animation, so we just check the element is clickable
         expect(await rippleEl.isVisible()).toBe(true);
       }
@@ -741,7 +741,7 @@ test.describe('Cards Showcase Page', () => {
         await tooltipEl.hover();
         await page.waitForTimeout(500);
         
-        const tooltip = page.locator('.wb-tooltip');
+        const tooltip = page.locator('.x-tooltip');
         // Tooltip may or may not be visible depending on implementation
         expect(await tooltipEl.isVisible()).toBe(true);
       }
@@ -753,13 +753,13 @@ test.describe('Cards Showcase Page', () => {
   // ═══════════════════════════════════════════════════════════════════════
   test.describe('Code Examples', () => {
     test('code blocks are present after card demos', async ({ page }) => {
-      const codeBlocks = page.locator('wb-mdhtml, pre code');
+      const codeBlocks = page.locator('x-mdhtml, pre code');
       const count = await codeBlocks.count();
       expect(count).toBeGreaterThan(5);
     });
 
     test('code blocks are contained and do not overflow', async ({ page }) => {
-      const codeBlocks = await page.locator('wb-mdhtml pre, pre code').all();
+      const codeBlocks = await page.locator('x-mdhtml pre, pre code').all();
       
       for (const code of codeBlocks) {
         const box = await code.boundingBox();
@@ -791,7 +791,7 @@ test.describe('Cards Showcase Page', () => {
     });
 
     test('notification cards have role=alert', async ({ page }) => {
-      const notifications = await page.locator('wb-cardnotification').all();
+      const notifications = await page.locator('x-cardnotification').all();
       
       for (const notification of notifications) {
         const role = await notification.getAttribute('role');
@@ -800,7 +800,7 @@ test.describe('Cards Showcase Page', () => {
     });
 
     test('expand buttons have aria-expanded', async ({ page }) => {
-      const expandBtns = await page.locator('.wb-card__expand-btn').all();
+      const expandBtns = await page.locator('.x-card__expand-btn').all();
       
       for (const btn of expandBtns) {
         const ariaExpanded = await btn.getAttribute('aria-expanded');
@@ -814,7 +814,7 @@ test.describe('Cards Showcase Page', () => {
   // ═══════════════════════════════════════════════════════════════════════
   test.describe('Responsive Behavior', () => {
     test('cards do not overflow container horizontally', async ({ page }) => {
-      const cards = await page.locator('.wb-card').all();
+      const cards = await page.locator('.x-card').all();
       const viewportWidth = await page.evaluate(() => window.innerWidth);
       
       for (const card of cards.slice(0, 10)) {
@@ -828,7 +828,7 @@ test.describe('Cards Showcase Page', () => {
     test('text does not overflow cards', async ({ page }) => {
       const overflows = await page.evaluate(() => {
         const issues: string[] = [];
-        document.querySelectorAll('.wb-card').forEach(card => {
+        document.querySelectorAll('.x-card').forEach(card => {
           const cardRect = card.getBoundingClientRect();
           card.querySelectorAll('h3, p, span, div').forEach(el => {
             const elRect = el.getBoundingClientRect();

@@ -83,51 +83,51 @@
     
     /* ===========================================
        AUTO-GENERATED CLASSES FROM SCHEMA
-       baseClass: wb-card
+       baseClass: x-card
        Parts: header, title, subtitle, main, footer
-       Classes: wb-card__header, wb-card__title, etc.
+       Classes: x-card__header, x-card__title, etc.
        =========================================== */
     
-    wb-card, .wb-card {
+    x-card, .x-card {
       display: block;
       background: var(--bg-secondary);
       border: 1px solid var(--border-color);
       border-radius: 8px;
       overflow: hidden;
     }
-    .wb-card--elevated {
+    .x-card--elevated {
       box-shadow: 0 4px 12px rgba(0,0,0,0.3);
     }
-    .wb-card--glass {
+    .x-card--glass {
       background: rgba(255,255,255,0.1);
       backdrop-filter: blur(10px);
     }
     
-    .wb-card__header {
+    .x-card__header {
       padding: 1rem;
       border-bottom: 1px solid var(--border-color);
       background: var(--bg-tertiary);
     }
-    .wb-card__title { 
+    .x-card__title { 
       margin: 0; 
       font-size: 1.125rem; 
     }
-    .wb-card__subtitle { 
+    .x-card__subtitle { 
       margin: 0.25rem 0 0; 
       color: var(--text-secondary); 
       font-size: 0.875rem; 
     }
-    .wb-card__main { 
+    .x-card__main { 
       padding: 1rem; 
     }
-    .wb-card__footer { 
+    .x-card__footer { 
       padding: 1rem; 
       border-top: 1px solid var(--border-color); 
       background: var(--bg-tertiary); 
     }
     
     /* Badge - CSS only, no schema needed */
-    wb-badge {
+    x-badge {
       display: inline-flex;
       padding: 0.25em 0.5em;
       border-radius: 4px;
@@ -136,9 +136,9 @@
       background: var(--bg-tertiary);
       color: var(--text-primary);
     }
-    wb-badge[variant="success"] { background: var(--success); color: white; }
-    wb-badge[variant="warning"] { background: var(--warning); color: black; }
-    wb-badge[variant="error"] { background: var(--error); color: white; }
+    x-badge[variant="success"] { background: var(--success); color: white; }
+    x-badge[variant="warning"] { background: var(--warning); color: black; }
+    x-badge[variant="error"] { background: var(--error); color: white; }
     
     .schema-format {
       background: var(--bg-tertiary);
@@ -192,7 +192,7 @@
   <div class="schema-format">
 <pre>{
   "behavior": "card",
-  "baseClass": "wb-card",
+  "baseClass": "x-card",
   
   "properties": {
     "title":   { "type": "string" },
@@ -214,10 +214,10 @@
 }
 
 Classes AUTO-GENERATED: baseClass + "__" + name
-  → wb-card__header
-  → wb-card__title
-  → wb-card__main
-  → wb-card__footer</pre>
+  → x-card__header
+  → x-card__title
+  → x-card__main
+  → x-card__footer</pre>
   </div>
   
   <!-- ============================================ -->
@@ -227,21 +227,21 @@ Classes AUTO-GENERATED: baseClass + "__" + name
     <div class="test-box">
       <h3>Web Component Tags</h3>
       <p>
-        <wb-badge>Default</wb-badge>
-        <wb-badge variant="success">Success</wb-badge>
-        <wb-badge variant="warning">Warning</wb-badge>
-        <wb-badge variant="error">Error</wb-badge>
+        <span x-badge>Default</span>
+        <span x-badge variant="success">Success</span>
+        <span x-badge variant="warning">Warning</span>
+        <span x-badge variant="error">Error</span>
       </p>
       <p style="color: var(--text-tertiary); font-size: 0.8rem; margin-top: 1rem;">
-        CSS styles <code>wb-badge</code> tag directly. No JavaScript, no schema processing.
+        CSS styles <code>x-badge</code> tag directly. No JavaScript, no schema processing.
       </p>
     </div>
     <div class="test-box">
       <h3>HTML Output</h3>
-      <pre>&lt;wb-badge variant="success"&gt;Success&lt;/wb-badge&gt;
+      <pre>&lt;x-badge variant="success"&gt;Success&lt;/x-badge&gt;
 
 CSS:
-wb-badge[variant="success"] { 
+x-badge[variant="success"] { 
   background: var(--success); 
 }</pre>
     </div>
@@ -252,10 +252,10 @@ wb-badge[variant="success"] {
   <!-- ============================================ -->
   <div class="test-section">
     <div class="test-box">
-      <h3>&lt;wb-card&gt; Tag</h3>
-      <wb-card title="Hello World">
+      <h3>&lt;x-card&gt; Tag</h3>
+      <article title="Hello World">
         <p>This content goes in the main slot.</p>
-      </wb-card>
+      </article>
     </div>
     <div class="test-box">
       <h3>Generated DOM</h3>
@@ -268,10 +268,10 @@ wb-badge[variant="success"] {
   <!-- ============================================ -->
   <div class="test-section">
     <div class="test-box">
-      <h3>&lt;wb-card&gt; Tag</h3>
-      <wb-card title="Card Title" subtitle="A helpful subtitle">
+      <h3>&lt;x-card&gt; Tag</h3>
+      <article title="Card Title" subtitle="A helpful subtitle">
         <p>Content with both title and subtitle.</p>
-      </wb-card>
+      </article>
     </div>
     <div class="test-box">
       <h3>Generated DOM</h3>
@@ -284,10 +284,10 @@ wb-badge[variant="success"] {
   <!-- ============================================ -->
   <div class="test-section">
     <div class="test-box">
-      <h3>&lt;wb-card&gt; Tag</h3>
-      <wb-card title="With Footer" footer="Footer text here">
+      <h3>&lt;x-card&gt; Tag</h3>
+      <article title="With Footer" footer="Footer text here">
         <p>This card has a footer section.</p>
-      </wb-card>
+      </article>
     </div>
     <div class="test-box">
       <h3>Generated DOM</h3>
@@ -300,10 +300,10 @@ wb-badge[variant="success"] {
   <!-- ============================================ -->
   <div class="test-section">
     <div class="test-box">
-      <h3>&lt;wb-card&gt; Tag</h3>
-      <wb-card title="Full Example" subtitle="All the parts" footer="© 2025" elevated>
+      <h3>&lt;x-card&gt; Tag</h3>
+      <article title="Full Example" subtitle="All the parts" footer="© 2025" elevated>
         <p>This card demonstrates all $view parts being created.</p>
-      </wb-card>
+      </article>
     </div>
     <div class="test-box">
       <h3>Generated DOM</h3>
@@ -316,10 +316,10 @@ wb-badge[variant="success"] {
   <!-- ============================================ -->
   <div class="test-section">
     <div class="test-box">
-      <h3>&lt;wb-card&gt; Tag</h3>
-      <wb-card>
+      <h3>&lt;x-card&gt; Tag</h3>
+      <article>
         <p>Just content, no title means no header created.</p>
-      </wb-card>
+      </article>
     </div>
     <div class="test-box">
       <h3>Generated DOM</h3>
@@ -333,14 +333,14 @@ wb-badge[variant="success"] {
   <div class="test-section">
     <div class="test-box">
       <h3>Method Binding</h3>
-      <wb-card id="method-test" title="Method Test">
+      <article id="method-test" title="Method Test">
         <p>Click buttons to test $methods.</p>
         <p>
           <button onclick="document.getElementById('method-test').hide?.() || alert('hide() not implemented yet')">Hide</button>
           <button onclick="document.getElementById('method-test').show?.() || alert('show() not implemented yet')">Show</button>
           <button onclick="document.getElementById('method-test').toggle?.() || alert('toggle() not implemented yet')">Toggle</button>
         </p>
-      </wb-card>
+      </article>
     </div>
     <div class="test-box">
       <h3>$methods Definition</h3>
@@ -407,11 +407,11 @@ element.toggle()</pre>
       
       // Show generated DOM for examples
       setTimeout(() => {
-        const card1 = document.querySelectorAll('wb-card')[0];
-        const card2 = document.querySelectorAll('wb-card')[1];
-        const card3 = document.querySelectorAll('wb-card')[2];
-        const card5 = document.querySelectorAll('wb-card')[3];
-        const card6 = document.querySelectorAll('wb-card')[4];
+        const card1 = document.querySelectorAll('x-card')[0];
+        const card2 = document.querySelectorAll('x-card')[1];
+        const card3 = document.querySelectorAll('x-card')[2];
+        const card5 = document.querySelectorAll('x-card')[3];
+        const card6 = document.querySelectorAll('x-card')[4];
 
         if (card1) document.getElementById('dom-output-1').textContent = formatDom(card1);
         if (card2) document.getElementById('dom-output-2').textContent = formatDom(card2);

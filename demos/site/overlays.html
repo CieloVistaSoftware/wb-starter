@@ -21,191 +21,186 @@
   <!-- 1. 🪟 Dialog -->
   <section id="dialog-dialog">
   <h2>🪟 Dialog</h2>
-  <wb-demo columns="1">
-    <wb-dialog title="Basic Dialog" class="demo-open">
-    title=Basic Dialog
-  </wb-dialog>
-  </wb-demo>
-  <wb-demo columns="1">
-    <wb-dialog title="Large" size="lg" class="demo-open">
-    title=Large, size=lg
-  </wb-dialog>
-  </wb-demo>
-  <wb-demo columns="1">
-    <wb-dialog title="No Close" class="demo-open">
-    title=No Close
-  </wb-dialog>
-  </wb-demo>
-  <wb-demo columns="1">
-    <wb-dialog title="Centered" variant="centered" class="demo-open">
-    title=Centered, variant=centered
-  </wb-dialog>
-  </wb-demo>
+  <div x-demo columns="1">
+    <dialog title="Basic Dialog">
+      title=Basic Dialog
+    </dialog>
+  </div>
+  <div x-demo columns="1">
+    <dialog title="Large" size="lg">
+      title=Large, size=lg
+    </dialog>
+  </div>
+  <div x-demo columns="1">
+    <dialog title="No Close">
+      title=No Close
+    </dialog>
+  </div>
+  <div x-demo columns="1">
+    <dialog title="Centered" variant="centered">
+      title=Centered, variant=centered
+    </dialog>
+  </div>
   </section>
 
   <!-- 2. size variants -->
   <section id="dialog-size-variants">
   <h2>size variants</h2>
-  <wb-demo columns="1">
-    <wb-dialog size="sm" class="demo-open">
-    Small dialog (size=sm)
-  </wb-dialog>
-  </wb-demo>
-  <wb-demo columns="1">
-    <wb-dialog size="md" class="demo-open">
-    Medium dialog (size=md)
-  </wb-dialog>
-  </wb-demo>
-  <wb-demo columns="1">
-    <wb-dialog size="lg" class="demo-open">
-    Large dialog (size=lg)
-  </wb-dialog>
-  </wb-demo>
-  <wb-demo columns="1">
-    <wb-dialog size="xl" class="demo-open">
-    Extra-large dialog (size=xl)
-  </wb-dialog>
-  </wb-demo>
-  <wb-demo columns="1">
-    <wb-dialog size="full" class="demo-open">
-    Fullscreen dialog (size=full)
-  </wb-dialog>
-  </wb-demo>
+  <div x-demo columns="1">
+    <dialog size="sm">
+      size=sm
+    </dialog>
+  </div>
+  <div x-demo columns="1">
+    <dialog size="md">
+      size=md
+    </dialog>
+  </div>
+  <div x-demo columns="1">
+    <dialog size="lg">
+      size=lg
+    </dialog>
+  </div>
+  <div x-demo columns="1">
+    <dialog size="xl">
+      size=xl
+    </dialog>
+  </div>
+  <div x-demo columns="1">
+    <dialog size="full">
+      size=full
+    </dialog>
+  </div>
   </section>
 
   <!-- 3. Variants -->
   <section id="dialog-variant-variants">
   <h2>Variants</h2>
-  <wb-demo columns="1">
-    <wb-dialog variant="default" class="demo-open">
-    Default dialog (variant=default)
-  </wb-dialog>
-  </wb-demo>
-  <wb-demo columns="1">
-    <wb-dialog variant="centered" class="demo-open">
-    Centered dialog (variant=centered)
-  </wb-dialog>
-  </wb-demo>
-  <wb-demo columns="1">
-    <wb-dialog variant="fullscreen" class="demo-open">
-    Fullscreen dialog (variant=fullscreen)
-  </wb-dialog>
-  </wb-demo>
+  <div x-demo columns="1">
+    <dialog variant="default">
+      variant=default
+    </dialog>
+  </div>
+  <div x-demo columns="1">
+    <dialog variant="centered">
+      variant=centered
+    </dialog>
+  </div>
+  <div x-demo columns="1">
+    <dialog variant="fullscreen">
+      variant=fullscreen
+    </dialog>
+  </div>
   </section>
 
   <!-- 4. 📜 Drawer -->
   <section id="drawer-drawer">
   <h2>📜 Drawer</h2>
-  <wb-demo columns="1">
-    <wb-drawer title="Right Drawer" position="right" class="demo-open">
-    <wb-badge variant="info">position=right</wb-badge>
-  </wb-drawer>
-  </wb-demo>
-  <wb-demo columns="1">
-    <wb-drawer title="Left Drawer" position="left" class="demo-open">
-    <wb-badge variant="info">position=left</wb-badge>
-  </wb-drawer>
-  </wb-demo>
-  <wb-demo columns="1">
-    <wb-drawer title="Wide" width="400px" class="demo-open">
-    <wb-badge variant="info">width=400px</wb-badge>
-  </wb-drawer>
-  </wb-demo>
+  <div x-demo columns="1">
+    <aside x-drawer title="Right Drawer" position="right">
+      title=Right Drawer, position=right
+    </aside>
+  </div>
+  <div x-demo columns="1">
+    <aside x-drawer title="Left Drawer" position="left">
+      title=Left Drawer, position=left
+    </aside>
+  </div>
+  <div x-demo columns="1">
+    <aside x-drawer title="Wide" width="400px">
+      title=Wide, width=400px
+    </aside>
+  </div>
   </section>
 
   <!-- 5. position variants -->
   <section id="drawer-position-variants">
   <h2>position variants</h2>
-  <wb-demo columns="1">
-    <wb-drawer position="left" class="demo-open">
-    <wb-badge variant="info">Left drawer (position=left)</wb-badge>
-  </wb-drawer>
-  </wb-demo>
-  <wb-demo columns="1">
-    <wb-drawer position="right" class="demo-open">
-    <wb-badge variant="info">Right drawer (position=right)</wb-badge>
-  </wb-drawer>
-  </wb-demo>
-  <wb-demo columns="1">
-    <wb-drawer position="top" class="demo-open">
-    <wb-badge variant="info">Top drawer (position=top)</wb-badge>
-  </wb-drawer>
-  </wb-demo>
-  <wb-demo columns="1">
-    <wb-drawer position="bottom" class="demo-open">
-    <wb-badge variant="info">Bottom drawer (position=bottom)</wb-badge>
-  </wb-drawer>
-  </wb-demo>
+  <div x-demo columns="1">
+    <aside x-drawer position="left">
+      position=left
+    </aside>
+  </div>
+  <div x-demo columns="1">
+    <aside x-drawer position="right">
+      position=right
+    </aside>
+  </div>
+  <div x-demo columns="1">
+    <aside x-drawer position="top">
+      position=top
+    </aside>
+  </div>
+  <div x-demo columns="1">
+    <aside x-drawer position="bottom">
+      position=bottom
+    </aside>
+  </div>
   </section>
 
   <!-- 6. Variants -->
   <section id="drawer-variant-variants">
   <h2>Variants</h2>
-  <wb-demo columns="1">
-    <wb-drawer variant="default" class="demo-open">
-    <wb-badge variant="info">Default drawer (variant=default)</wb-badge>
-  </wb-drawer>
-  </wb-demo>
-  <wb-demo columns="1">
-    <wb-drawer variant="overlay" class="demo-open">
-    <wb-badge variant="info">Overlay drawer (variant=overlay)</wb-badge>
-  </wb-drawer>
-  </wb-demo>
-  <wb-demo columns="1">
-    <wb-drawer variant="push" class="demo-open">
-    <wb-badge variant="info">Push drawer (variant=push)</wb-badge>
-  </wb-drawer>
-  </wb-demo>
+  <div x-demo columns="1">
+    <aside x-drawer variant="default">
+      variant=default
+    </aside>
+  </div>
+  <div x-demo columns="1">
+    <aside x-drawer variant="overlay">
+      variant=overlay
+    </aside>
+  </div>
+  <div x-demo columns="1">
+    <aside x-drawer variant="push">
+      variant=push
+    </aside>
+  </div>
   </section>
 
   <!-- 7. 📋 Dropdown -->
   <section id="dropdown-dropdown">
   <h2>📋 Dropdown</h2>
-  <wb-demo columns="1">
-    <wb-dropdown items="Profile,Settings,Logout" position="bottom-start" label="position=bottom-start" class="demo-open">
-    Bottom-start menu (position=bottom-start)
-  </wb-dropdown>
-  </wb-demo>
-  <wb-demo columns="1">
-    <wb-dropdown items="Profile,Settings,Logout" position="bottom-end" label="position=bottom-end" class="demo-open">
-    Bottom-end menu (position=bottom-end)
-  </wb-dropdown>
-  </wb-demo>
-  <wb-demo columns="1">
-    <wb-dropdown items="Profile,Settings,Logout" trigger="hover" label="trigger=hover" class="demo-open">
-    Hover menu (trigger=hover)
-  </wb-dropdown>
-  </wb-demo>
+  <div x-demo columns="1">
+    <div x-dropdown items="Profile,Settings,Logout" position="bottom-start">
+      position=bottom-start
+    </div>
+  </div>
+  <div x-demo columns="1">
+    <div x-dropdown items="Profile,Settings,Logout" position="bottom-end">
+      position=bottom-end
+    </div>
+  </div>
+  <div x-demo columns="1">
+    <div x-dropdown items="Profile,Settings,Logout" trigger="hover">
+      trigger=hover
+    </div>
+  </div>
   </section>
 
   <!-- 8. position variants -->
   <section id="dropdown-position-variants">
   <h2>position variants</h2>
-  <wb-demo columns="1">
-    <wb-dropdown items="Profile,Settings,Logout" position="top-start" label="position=top-start" class="demo-open">
-    Top-start menu (position=top-start)
-  </wb-dropdown>
-  </wb-demo>
-  <wb-demo columns="1">
-    <wb-dropdown items="Profile,Settings,Logout" position="top-end" label="position=top-end" class="demo-open">
-    Top-end menu (position=top-end)
-  </wb-dropdown>
-  </wb-demo>
+  <div x-demo columns="1">
+    <div x-dropdown items="Profile,Settings,Logout" position="top-start">
+      position=top-start
+    </div>
+  </div>
+  <div x-demo columns="1">
+    <div x-dropdown items="Profile,Settings,Logout" position="top-end">
+      position=top-end
+    </div>
+  </div>
   </section>
 
   <!-- 9. trigger variants -->
   <section id="dropdown-trigger-variants">
   <h2>trigger variants</h2>
-  <wb-demo columns="1">
-    <wb-dropdown items="Profile,Settings,Logout" trigger="click" label="trigger=click" class="demo-open">
-    Click menu (trigger=click)
-  </wb-dropdown>
-  </wb-demo>
-  <wb-demo columns="1">
-    <wb-dropdown items="Profile,Settings,Logout" trigger="hover" label="trigger=hover" class="demo-open">
-    Hover menu (trigger=hover)
-  </wb-dropdown>
-  </wb-demo>
+  <div x-demo columns="2">
+    <div x-dropdown items="Profile,Settings,Logout" trigger="click">
+      trigger=click
+    </div>
+  </div>
   </section>
 
   <script type="module">
@@ -213,8 +208,7 @@
     window.WB = WB;
     await WB.init({ autoInject: true });
     await WB.scan(document.body, { eager: true });
-
-    console.log('Overlays & Popups initialized with labeled demo variants');
+    console.log('Overlays & Popups initialized');
     window.__WB_DEMO_INITIALIZED__ = true;
   </script>
 </body>

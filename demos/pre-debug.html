@@ -4,8 +4,8 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Pre Debug</title>
-  <link rel="stylesheet" href="../src/styles/themes.css?v=3.0.91">
-  <link rel="stylesheet" href="../src/styles/site.css?v=3.0.91">
+  <link rel="stylesheet" href="../src/styles/themes.css?v=4.0.0">
+  <link rel="stylesheet" href="../src/styles/site.css?v=4.0.0">
   <script type="module">
     import WB from '../src/core/wb.js';
     WB.init({ debug: true });
@@ -15,13 +15,13 @@
   <h1>Pre Behavior Debug</h1>
 
   <h2>1. Static Pre</h2>
-  <wb-pre language="js"<code>console.log('Hello World');
+  <pre language="js"<code>console.log('Hello World');
 const x = 10;
 const y = 20;
 console.log(x + y);</code></pre>
 
   <h2>2. Static Pre with Line Numbers</h2>
-  <wb-pre language="js" show-line-numbers="true"<code>function test() {
+  <pre language="js" show-line-numbers="true"<code>function test() {
   return "Line 1";
 }
 // Line 3

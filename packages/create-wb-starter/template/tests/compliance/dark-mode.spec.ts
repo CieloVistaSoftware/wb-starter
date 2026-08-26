@@ -23,7 +23,7 @@ function findHtmlFiles(dir: string, files: string[] = []): string[] {
     // second (third, fourth...) time -- hundreds of duplicate page loads,
     // 21+ minutes for a "fast subset" compliance run (confirmed live).
     if (entry.isDirectory()) {
-      if (!['node_modules', '.git', '.claude', 'wb-overlay-ext', 'data', 'test-results', 'tmp'].includes(entry.name)) {
+      if (!['node_modules', '.git', '.claude', 'x-overlay-ext', 'data', 'test-results', 'tmp'].includes(entry.name)) {
         findHtmlFiles(fullPath, files);
       }
     } else if (entry.name.endsWith('.html')) {
@@ -171,22 +171,31 @@ test.describe('Dark Mode Compliance', () => {
     });
   }
   
-  test('main site pages have data-theme attribute', async ({ page }) => {
-    // Test only main site pages (not demos or test files)
-    const mainPages = relativeHtmlFiles.filter(f => 
-      (f.startsWith('pages/') || f === 'index.html') &&
-      !SKIP_DARK_MODE.some(skip => f.includes(skip))
-    );
-    
-    for (const htmlFile of mainPages) {
+  // #547: this used to be ONE test that looped over all main pages
+  // internally, sharing a single 30s test timeout across ~20 sequential
+  // page.goto() calls. Under full-suite parallel load, cumulative per-page
+  // latency blew that shared budget and the whole test timed out (not an
+  // assertion failure -- a hang). Splitting into one test() per page,
+  // matching the "renders in dark mode without errors" pattern above,
+  // gives every page its own full timeout AND lets Playwright's worker
+  // parallelism run them concurrently instead of serially -- removing the
+  // cumulative-budget failure mode instead of just raising the timeout on
+  // top of it.
+  const mainSitePages = relativeHtmlFiles.filter(f =>
+    (f.startsWith('pages/') || f === 'index.html') &&
+    !SKIP_DARK_MODE.some(skip => f.includes(skip))
+  );
+
+  for (const htmlFile of mainSitePages) {
+    test(`${htmlFile} has data-theme attribute`, async ({ page }) => {
       try {
         await page.goto(`http://localhost:3000/${htmlFile}`);
         await page.waitForTimeout(300);
-        
-        const hasTheme = await page.evaluate(() => 
+
+        const hasTheme = await page.evaluate(() =>
           document.documentElement.hasAttribute('data-theme')
         );
-        
+
         // Main pages should have theme attribute after site-engine loads
         if (!hasTheme) {
           console.warn(`⚠️ ${htmlFile} missing data-theme attribute`);
@@ -194,8 +203,8 @@ test.describe('Dark Mode Compliance', () => {
       } catch {
         console.warn(`⚠️ ${htmlFile} navigation issue — skipping data-theme check`);
       }
-    }
-  });
+    });
+  }
   
   test('theme variables are defined in dark mode', async ({ page }) => {
     await page.goto('http://localhost:3000/');

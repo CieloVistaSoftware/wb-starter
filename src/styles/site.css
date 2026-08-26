@@ -11,8 +11,8 @@
  * confirmed orphaned, zero references anywhere in the repo).
  *
  * layout.css and ui-utils.css stay here as unconditional imports: both are
- * under 1.5KB, and layout.css's real content (.wb-grid--alt-rows) backs
- * <wb-grid>, a genuine custom element that never calls WB.inject() and so
+ * under 1.5KB, and layout.css's real content (.x-grid--alt-rows) backs
+ * <div x-grid>, a genuine custom element that never calls WB.inject() and so
  * never passes through the JIT hook.
  */
 @import url('./behaviors/layout.css');
@@ -21,7 +21,7 @@
 
 /**
  * WB Starter - Site Layout Styles
- * Works with themes.css from wb-behaviors
+ * Works with themes.css from x-behaviors
  */
 
 /* Reset */
@@ -62,11 +62,11 @@ li:last-child { margin-bottom: 0; }
 /* =============================================================================
    SITE LAYOUT
    ============================================================================= */
-.wb-scroll-lock {
+.x-scroll-lock {
   overflow: hidden;
 }
 
-.wb-resizing {
+.x-resizing {
   cursor: ew-resize;
   user-select: none;
 }
@@ -115,30 +115,30 @@ li:last-child { margin-bottom: 0; }
 /* =============================================================================
    CUSTOM LAYOUT ELEMENTS
    ============================================================================= */
-wb-grid, wb-flex, wb-stack, wb-cluster, wb-container,
-wb-row, wb-column,
-wb-sidebar, wb-center, wb-cover, wb-masonry, wb-switcher,
-wb-reel, wb-frame, wb-sticky, wb-drawer, wb-icon,
-wb-audio, wb-cardhero, wb-cardstats, notification-card {
+x-grid, x-flex, x-stack, x-cluster, x-container,
+x-row, x-column,
+x-sidebar, x-center, x-cover, x-masonry, x-switcher,
+x-reel, x-frame, x-sticky, x-drawer, x-icon,
+x-audio, x-cardhero, x-cardstats, notification-card {
   display: block;
 }
 
-wb-drawer {
+x-drawer {
   visibility: hidden;
 }
 /* Duplicate of the same-named rule in behaviors/layout.css (both loaded --
    see the @import note at the top of this file). Kept in sync rather than
    deduplicated here to avoid an unrelated refactor. See layout.css for the
-   full rationale on why .wb-drawer-trigger is included. */
-wb-drawer.wb-drawer-layout,
-wb-drawer.wb-drawer-trigger {
+   full rationale on why .x-drawer-trigger is included. */
+x-drawer.x-drawer-layout,
+x-drawer.x-drawer-trigger {
   visibility: visible;
 }
 
 /* =============================================================================
    HEADER
    ============================================================================= */
-/* Exposed so other fixed-position UI (toast.css's .wb-toast-container) can
+/* Exposed so other fixed-position UI (toast.css's .x-toast-container) can
  * anchor itself below the header instead of duplicating the 64px value.
  * Defaults to 0 so standalone pages with no .site__header aren't pushed
  * down for a header that doesn't exist. */
@@ -209,13 +209,13 @@ body > button[x-copy] {
    SPINNER
    ============================================================================= */
 /* #448: tag selectors -- spinner() no longer adds a redundant
-   classList.add('wb-spinner') that just duplicated the <wb-spinner> tag
+   classList.add('x-spinner') that just duplicated the <span x-spinner> tag
    name. */
-wb-spinner {
+x-spinner {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  /* effects.css also styles the <wb-spinner> ELEMENT as a ring (legacy); the
+  /* effects.css also styles the <span x-spinner> ELEMENT as a ring (legacy); the
      schema builds an inner <div> ring, so neutralize the element ring here to
      avoid a double ring once --border-color is defined (#182). */
   width: auto;
@@ -224,7 +224,7 @@ wb-spinner {
   animation: none;
 }
 
-wb-spinner div {
+x-spinner div {
   /* Explicit longhands instead of the `border` shorthand: if --border-color is
      ever unset, only the color is lost, not the whole border (which previously
      made the ring vanish entirely). #182 */
@@ -233,30 +233,30 @@ wb-spinner div {
   border-color: var(--border-color);
   border-top-color: var(--primary);
   border-radius: 50%;
-  animation: wb-spin 1.2s linear infinite;
+  animation: x-spin 1.2s linear infinite;
 }
 
 /* Spinner Sizes */
-.wb-spinner--xs div { width: 12px; height: 12px; border-width: 1.5px; }
-.wb-spinner--sm div { width: 16px; height: 16px; border-width: 2px; }
-.wb-spinner--md div { width: 24px; height: 24px; border-width: 2px; }
-.wb-spinner--lg div { width: 32px; height: 32px; border-width: 3px; }
-.wb-spinner--xl div { width: 48px; height: 48px; border-width: 4px; }
+.x-spinner--xs div { width: 12px; height: 12px; border-width: 1.5px; }
+.x-spinner--sm div { width: 16px; height: 16px; border-width: 2px; }
+.x-spinner--md div { width: 24px; height: 24px; border-width: 2px; }
+.x-spinner--lg div { width: 32px; height: 32px; border-width: 3px; }
+.x-spinner--xl div { width: 48px; height: 48px; border-width: 4px; }
 
 /* Spinner Speeds */
-.wb-spinner--slow div { animation-duration: 2s; }
-.wb-spinner--medium div { animation-duration: 1.2s; }
-.wb-spinner--fast div { animation-duration: 0.6s; }
+.x-spinner--slow div { animation-duration: 2s; }
+.x-spinner--medium div { animation-duration: 1.2s; }
+.x-spinner--fast div { animation-duration: 0.6s; }
 
 /* Spinner Colors */
-.wb-spinner--primary div { border-top-color: var(--primary); }
-.wb-spinner--secondary div { border-top-color: var(--secondary); }
-.wb-spinner--success div { border-top-color: var(--success-color); }
-.wb-spinner--warning div { border-top-color: var(--warning-color); }
-.wb-spinner--error div { border-top-color: var(--danger-color); }
-.wb-spinner--info div { border-top-color: var(--info-color); }
+.x-spinner--primary div { border-top-color: var(--primary); }
+.x-spinner--secondary div { border-top-color: var(--secondary); }
+.x-spinner--success div { border-top-color: var(--success-color); }
+.x-spinner--warning div { border-top-color: var(--warning-color); }
+.x-spinner--error div { border-top-color: var(--danger-color); }
+.x-spinner--info div { border-top-color: var(--info-color); }
 
-@keyframes wb-spin { to { transform: rotate(360deg); } }
+@keyframes x-spin { to { transform: rotate(360deg); } }
 
 /* Dialog styles → src/styles/behaviors/dialog.css (migrated Phase 2) */
 
@@ -304,6 +304,13 @@ wb-spinner div {
 }
 
 .header__version {
+  /* #821: this is a <button> now, not an <a>, so it needs the button resets —
+     a UA-styled button would arrive with its own background, border, padding
+     and font. */
+  background: none;
+  border: 0;
+  padding: 0;
+  font: inherit;
   margin-left: 0.35rem;
   font-size: 0.7em;
   font-weight: 500;
@@ -762,7 +769,7 @@ h5, h6 {
   }
   
   /* Tables scroll horizontally */
-  .wb-table {
+  .x-table {
     display: block;
     overflow-x: auto;
     -webkit-overflow-scrolling: touch;
@@ -850,7 +857,7 @@ h5, h6 {
   h2 { font-size: 1.25rem; }
   
   /* Full-width buttons on small phones */
-  .btn, .wb-btn-gradient, .wb-btn-glass {
+  .btn, .x-btn-gradient, .x-btn-glass {
     width: 100%;
     justify-content: center;
   }
@@ -986,7 +993,7 @@ h5, h6 {
 /* =============================================================================
    WB EVENTS TOAST ANIMATIONS
 ============================================================================= */
-@keyframes wb-slide-in {
+@keyframes x-slide-in {
   from {
     opacity: 0;
     transform: translateX(100%);
@@ -997,7 +1004,7 @@ h5, h6 {
   }
 }
 
-@keyframes wb-fade-out {
+@keyframes x-fade-out {
   from {
     opacity: 1;
   }
@@ -1021,43 +1028,43 @@ h5, h6 {
 /* =============================================================================
    ANIMATIONS
    ============================================================================= */
-.wb-animate {
+.x-animate {
   animation-fill-mode: both;
 }
 
-@keyframes wb-fade-in { from { opacity: 0; } to { opacity: 1; } }
-/* wb-fade-out is already defined above */
-@keyframes wb-slide-in-left { from { transform: translateX(-100%); opacity: 0; } to { transform: translateX(0); opacity: 1; } }
-@keyframes wb-slide-in-right { from { transform: translateX(100%); opacity: 0; } to { transform: translateX(0); opacity: 1; } }
-@keyframes wb-slide-in-up { from { transform: translateY(100%); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
-@keyframes wb-slide-in-down { from { transform: translateY(-100%); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
-@keyframes wb-zoom-in { from { transform: scale(0); opacity: 0; } to { transform: scale(1); opacity: 1; } }
-@keyframes wb-zoom-out { from { transform: scale(1); opacity: 1; } to { transform: scale(0); opacity: 0; } }
-@keyframes wb-flip { from { transform: perspective(400px) rotateY(90deg); opacity: 0; } to { transform: perspective(400px) rotateY(0deg); opacity: 1; } }
-@keyframes wb-rotate { from { transform: rotate(-180deg); opacity: 0; } to { transform: rotate(0); opacity: 1; } }
-@keyframes wb-bounce { 0%, 20%, 50%, 80%, 100% { transform: translateY(0); } 40% { transform: translateY(-30px); } 60% { transform: translateY(-15px); } }
-@keyframes wb-shake { 0%, 100% { transform: translateX(0); } 10%, 30%, 50%, 70%, 90% { transform: translateX(-10px); } 20%, 40%, 60%, 80% { transform: translateX(10px); } }
-@keyframes wb-pulse { 0% { transform: scale(1); } 50% { transform: scale(1.1); } 100% { transform: scale(1); } }
-@keyframes wb-flash { 0%, 50%, 100% { opacity: 1; } 25%, 75% { opacity: 0; } }
-@keyframes wb-tada { 0% { transform: scale(1); } 10%, 20% { transform: scale(0.9) rotate(-3deg); } 30%, 50%, 70%, 90% { transform: scale(1.1) rotate(3deg); } 40%, 60%, 80% { transform: scale(1.1) rotate(-3deg); } 100% { transform: scale(1) rotate(0); } }
-@keyframes wb-wobble { 0% { transform: translateX(0%); } 15% { transform: translateX(-25%) rotate(-5deg); } 30% { transform: translateX(20%) rotate(3deg); } 45% { transform: translateX(-15%) rotate(-3deg); } 60% { transform: translateX(10%) rotate(2deg); } 75% { transform: translateX(-5%) rotate(-1deg); } 100% { transform: translateX(0%); } }
-@keyframes wb-jello { 11.1% { transform: none; } 22.2% { transform: skewX(-12.5deg) skewY(-12.5deg); } 33.3% { transform: skewX(6.25deg) skewY(6.25deg); } 44.4% { transform: skewX(-3.125deg) skewY(-3.125deg); } 55.5% { transform: skewX(1.5625deg) skewY(1.5625deg); } 66.6% { transform: skewX(-0.78125deg) skewY(-0.78125deg); } 77.7% { transform: skewX(0.390625deg) skewY(0.390625deg); } 88.8% { transform: skewX(-0.1953125deg) skewY(-0.1953125deg); } 100% { transform: none; } }
-@keyframes wb-swing { 20% { transform: rotate(15deg); } 40% { transform: rotate(-10deg); } 60% { transform: rotate(5deg); } 80% { transform: rotate(-5deg); } 100% { transform: rotate(0deg); } }
-@keyframes wb-rubberband { 0% { transform: scale(1); } 30% { transform: scale(1.25, 0.75); } 40% { transform: scale(0.75, 1.25); } 50% { transform: scale(1.15, 0.85); } 65% { transform: scale(0.95, 1.05); } 75% { transform: scale(1.05, 0.95); } 100% { transform: scale(1); } }
-@keyframes wb-heartbeat { 0% { transform: scale(1); } 14% { transform: scale(1.3); } 28% { transform: scale(1); } 42% { transform: scale(1.3); } 70% { transform: scale(1); } }
-@keyframes wb-marquee { 0% { transform: translateX(0); } 100% { transform: translateX(-100%); } }
+@keyframes x-fade-in { from { opacity: 0; } to { opacity: 1; } }
+/* x-fade-out is already defined above */
+@keyframes x-slide-in-left { from { transform: translateX(-100%); opacity: 0; } to { transform: translateX(0); opacity: 1; } }
+@keyframes x-slide-in-right { from { transform: translateX(100%); opacity: 0; } to { transform: translateX(0); opacity: 1; } }
+@keyframes x-slide-in-up { from { transform: translateY(100%); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
+@keyframes x-slide-in-down { from { transform: translateY(-100%); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
+@keyframes x-zoom-in { from { transform: scale(0); opacity: 0; } to { transform: scale(1); opacity: 1; } }
+@keyframes x-zoom-out { from { transform: scale(1); opacity: 1; } to { transform: scale(0); opacity: 0; } }
+@keyframes x-flip { from { transform: perspective(400px) rotateY(90deg); opacity: 0; } to { transform: perspective(400px) rotateY(0deg); opacity: 1; } }
+@keyframes x-rotate { from { transform: rotate(-180deg); opacity: 0; } to { transform: rotate(0); opacity: 1; } }
+@keyframes x-bounce { 0%, 20%, 50%, 80%, 100% { transform: translateY(0); } 40% { transform: translateY(-30px); } 60% { transform: translateY(-15px); } }
+@keyframes x-shake { 0%, 100% { transform: translateX(0); } 10%, 30%, 50%, 70%, 90% { transform: translateX(-10px); } 20%, 40%, 60%, 80% { transform: translateX(10px); } }
+@keyframes x-pulse { 0% { transform: scale(1); } 50% { transform: scale(1.1); } 100% { transform: scale(1); } }
+@keyframes x-flash { 0%, 50%, 100% { opacity: 1; } 25%, 75% { opacity: 0; } }
+@keyframes x-tada { 0% { transform: scale(1); } 10%, 20% { transform: scale(0.9) rotate(-3deg); } 30%, 50%, 70%, 90% { transform: scale(1.1) rotate(3deg); } 40%, 60%, 80% { transform: scale(1.1) rotate(-3deg); } 100% { transform: scale(1) rotate(0); } }
+@keyframes x-wobble { 0% { transform: translateX(0%); } 15% { transform: translateX(-25%) rotate(-5deg); } 30% { transform: translateX(20%) rotate(3deg); } 45% { transform: translateX(-15%) rotate(-3deg); } 60% { transform: translateX(10%) rotate(2deg); } 75% { transform: translateX(-5%) rotate(-1deg); } 100% { transform: translateX(0%); } }
+@keyframes x-jello { 11.1% { transform: none; } 22.2% { transform: skewX(-12.5deg) skewY(-12.5deg); } 33.3% { transform: skewX(6.25deg) skewY(6.25deg); } 44.4% { transform: skewX(-3.125deg) skewY(-3.125deg); } 55.5% { transform: skewX(1.5625deg) skewY(1.5625deg); } 66.6% { transform: skewX(-0.78125deg) skewY(-0.78125deg); } 77.7% { transform: skewX(0.390625deg) skewY(0.390625deg); } 88.8% { transform: skewX(-0.1953125deg) skewY(-0.1953125deg); } 100% { transform: none; } }
+@keyframes x-swing { 20% { transform: rotate(15deg); } 40% { transform: rotate(-10deg); } 60% { transform: rotate(5deg); } 80% { transform: rotate(-5deg); } 100% { transform: rotate(0deg); } }
+@keyframes x-rubberband { 0% { transform: scale(1); } 30% { transform: scale(1.25, 0.75); } 40% { transform: scale(0.75, 1.25); } 50% { transform: scale(1.15, 0.85); } 65% { transform: scale(0.95, 1.05); } 75% { transform: scale(1.05, 0.95); } 100% { transform: scale(1); } }
+@keyframes x-heartbeat { 0% { transform: scale(1); } 14% { transform: scale(1.3); } 28% { transform: scale(1); } 42% { transform: scale(1.3); } 70% { transform: scale(1); } }
+@keyframes x-marquee { 0% { transform: translateX(0); } 100% { transform: translateX(-100%); } }
 
 /* =============================================================================
    RESIZABLE
    ============================================================================= */
-.wb-resizable__handle {
+.x-resizable__handle {
   background-color: rgba(255, 255, 255, 0.2);
   border: 1px solid rgba(255, 255, 255, 0.4);
   border-radius: 50%;
   transition: background-color 0.2s;
 }
 
-.wb-resizable__handle:hover {
+.x-resizable__handle:hover {
   background-color: var(--primary);
 }
 
@@ -1110,7 +1117,7 @@ h5, h6 {
    ============================================================================= */
 
 /* Hero Section */
-.wb-hero {
+.x-hero {
   position: relative;
   min-height: 80vh;
   display: flex;
@@ -1120,7 +1127,7 @@ h5, h6 {
   background: var(--bg-color);
 }
 
-.wb-hero__content {
+.x-hero__content {
   position: relative;
   z-index: 10;
   text-align: center;
@@ -1128,7 +1135,7 @@ h5, h6 {
   padding: 2rem;
 }
 
-.wb-hero__subtitle {
+.x-hero__subtitle {
   font-size: 1.25rem;
   color: var(--text-secondary);
   max-width: 600px;
@@ -1137,7 +1144,7 @@ h5, h6 {
 }
 
 /* Gradient Text */
-.wb-gradient-text {
+.x-gradient-text {
   background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 50%, var(--accent) 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
@@ -1147,32 +1154,32 @@ h5, h6 {
 /* =============================================================================
    FLOATING ORBS
    ============================================================================= */
-.wb-orb {
+.x-orb {
   position: absolute;
   border-radius: 50%;
   filter: blur(80px);
   opacity: 0.5;
-  animation: wb-orb-float 8s ease-in-out infinite;
+  animation: x-orb-float 8s ease-in-out infinite;
   pointer-events: none;
 }
 
-.wb-orb--primary {
+.x-orb--primary {
   background: var(--primary);
 }
 
-.wb-orb--ocean {
+.x-orb--ocean {
   background: var(--info-color);
 }
 
-.wb-orb--sunset {
+.x-orb--sunset {
   background: var(--warning-color);
 }
 
-.wb-orb--cosmic {
+.x-orb--cosmic {
   background: linear-gradient(135deg, var(--primary), var(--secondary), var(--accent));
 }
 
-@keyframes wb-orb-float {
+@keyframes x-orb-float {
   0%, 100% { transform: translate(0, 0) scale(1); }
   33% { transform: translate(30px, -30px) scale(1.05); }
   66% { transform: translate(-20px, 20px) scale(0.95); }
@@ -1181,13 +1188,13 @@ h5, h6 {
 /* =============================================================================
    GRADIENT BUTTONS
    ============================================================================= */
-/* Element-qualified (button.wb-btn-gradient, a.wb-btn-gradient) so this beats
+/* Element-qualified (button.x-btn-gradient, a.x-btn-gradient) so this beats
    themes.css's `[data-theme] button` native-button reset (0-1-1 specificity)
    on <button> usage -- the bare class alone (0-1-0) lost that fight and this
    component's real padding never applied, leaving the reset's 0.5rem 1rem in
    effect (8px, under the >=1rem minimum) instead of the 0.875rem/2rem below. */
-button.wb-btn-gradient,
-a.wb-btn-gradient {
+button.x-btn-gradient,
+a.x-btn-gradient {
   position: relative;
   display: inline-flex;
   align-items: center;
@@ -1204,20 +1211,20 @@ a.wb-btn-gradient {
   overflow: hidden;
   background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 50%, var(--accent) 100%);
   background-size: 200% 200%;
-  animation: wb-gradient-shift 3s ease infinite;
+  animation: x-gradient-shift 3s ease infinite;
   transition: transform 0.2s, box-shadow 0.2s;
 }
 
-.wb-btn-gradient:hover {
+.x-btn-gradient:hover {
   transform: translateY(-2px);
   box-shadow: 0 10px 40px -10px var(--primary);
 }
 
-.wb-btn-gradient:active {
+.x-btn-gradient:active {
   transform: translateY(0);
 }
 
-@keyframes wb-gradient-shift {
+@keyframes x-gradient-shift {
   0%, 100% { background-position: 0% 50%; }
   50% { background-position: 100% 50%; }
 }
@@ -1225,10 +1232,10 @@ a.wb-btn-gradient {
 /* =============================================================================
    GLASS BUTTONS & ELEMENTS
    ============================================================================= */
-/* Element-qualified for the same reason as .wb-btn-gradient above -- beats
+/* Element-qualified for the same reason as .x-btn-gradient above -- beats
    themes.css's `[data-theme] button` reset (0-1-1) on <button> usage. */
-button.wb-btn-glass,
-a.wb-btn-glass {
+button.x-btn-glass,
+a.x-btn-glass {
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -1246,20 +1253,20 @@ a.wb-btn-glass {
   transition: all 0.2s;
 }
 
-.wb-btn-glass:hover {
+.x-btn-glass:hover {
   background: rgba(255, 255, 255, 0.1);
   border-color: rgba(255, 255, 255, 0.2);
   transform: translateY(-2px);
 }
 
-.wb-glass {
+.x-glass {
   background: rgba(255, 255, 255, 0.05);
   backdrop-filter: blur(10px);
   border: 1px solid rgba(255, 255, 255, 0.1);
   border-radius: 16px;
 }
 
-.wb-input-glass {
+.x-input-glass {
   width: 100%;
   padding: 0.75rem 1rem;
   font-size: 1rem;
@@ -1271,19 +1278,19 @@ a.wb-btn-glass {
   transition: all 0.2s;
 }
 
-.wb-input-glass:focus {
+.x-input-glass:focus {
   border-color: var(--primary);
   box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.2);
 }
 
-.wb-input-glass::placeholder {
+.x-input-glass::placeholder {
   color: var(--text-muted);
 }
 
 /* =============================================================================
    BADGES & TAGS
    ============================================================================= */
-.wb-badge-gradient {
+.x-badge-gradient {
   display: inline-flex;
   align-items: center;
   gap: 0.5rem;
@@ -1295,7 +1302,7 @@ a.wb-btn-glass {
   border-radius: 999px;
 }
 
-.wb-tag-glass {
+.x-tag-glass {
   display: inline-flex;
   align-items: center;
   padding: 0.375rem 0.75rem;
@@ -1308,16 +1315,16 @@ a.wb-btn-glass {
 }
 
 /* Pulsing Dot */
-.wb-dot-pulse {
+.x-dot-pulse {
   display: inline-block;
   width: 8px;
   height: 8px;
   background: var(--success-color);
   border-radius: 50%;
-  animation: wb-pulse-dot 2s ease-in-out infinite;
+  animation: x-pulse-dot 2s ease-in-out infinite;
 }
 
-@keyframes wb-pulse-dot {
+@keyframes x-pulse-dot {
   0%, 100% { opacity: 1; transform: scale(1); }
   50% { opacity: 0.5; transform: scale(1.2); }
 }
@@ -1327,26 +1334,26 @@ a.wb-btn-glass {
 /* =============================================================================
    WINDOW CONTROLS (Traffic Lights)
    ============================================================================= */
-.wb-window-controls {
+.x-window-controls {
   display: flex;
   gap: 0.5rem;
   margin-bottom: 1rem;
 }
 
-.wb-window-dot {
+.x-window-dot {
   width: 12px;
   height: 12px;
   border-radius: 50%;
 }
 
-.wb-window-dot--red { background: #ff5f56; }
-.wb-window-dot--yellow { background: #ffbd2e; }
-.wb-window-dot--green { background: #27ca40; }
+.x-window-dot--red { background: #ff5f56; }
+.x-window-dot--yellow { background: #ffbd2e; }
+.x-window-dot--green { background: #27ca40; }
 
 /* =============================================================================
    BADGE GROUP
    ============================================================================= */
-.wb-badge-group {
+.x-badge-group {
   display: flex;
   gap: 0.5rem;
   position: relative;
@@ -1359,7 +1366,7 @@ a.wb-btn-glass {
 /* =============================================================================
    AVATARS
    ============================================================================= */
-.wb-avatar-gradient {
+.x-avatar-gradient {
   position: relative;
   width: 48px;
   height: 48px;
@@ -1368,7 +1375,7 @@ a.wb-btn-glass {
   border-radius: 50%;
 }
 
-.wb-avatar-gradient img {
+.x-avatar-gradient img {
   width: 100%;
   height: 100%;
   object-fit: cover;
@@ -1379,7 +1386,7 @@ a.wb-btn-glass {
 /* =============================================================================
    DIVIDERS
    ============================================================================= */
-.wb-divider-gradient {
+.x-divider-gradient {
   border: none;
   height: 1px;
   background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
@@ -1389,7 +1396,7 @@ a.wb-btn-glass {
 /* =============================================================================
    PERFORMANCE UTILITIES
    ============================================================================= */
-.wb-content-auto {
+.x-content-auto {
   content-visibility: auto;
   contain-intrinsic-size: 1px 1000px; /* Approximate height */
 }
@@ -1413,7 +1420,7 @@ a.wb-btn-glass {
 /* =============================================================================
    RACKMOUNT COMPONENT
    ============================================================================= */
-.wb-rackmount {
+.x-rackmount {
   display: flex;
   flex-direction: column;
   gap: 0.5rem;
@@ -1429,8 +1436,8 @@ a.wb-btn-glass {
 }
 
 /* Rack Ears (Visual Only) */
-.wb-rackmount::before,
-.wb-rackmount::after {
+.x-rackmount::before,
+.x-rackmount::after {
   content: '';
   position: absolute;
   top: 10px;
@@ -1442,19 +1449,19 @@ a.wb-btn-glass {
   box-shadow: inset 0 0 4px rgba(0,0,0,0.8);
 }
 
-.wb-rackmount::before { left: 4px; }
-.wb-rackmount::after { right: 4px; }
+.x-rackmount::before { left: 4px; }
+.x-rackmount::after { right: 4px; }
 
 /* Screw Holes */
-.wb-rackmount-screws,
-.wb-rackmount-screws-right {
+.x-rackmount-screws,
+.x-rackmount-screws-right {
   position: absolute;
   top: 0; bottom: 0; left: 0; right: 0;
   pointer-events: none;
 }
 
-.wb-rackmount-screws::before,
-.wb-rackmount-screws::after {
+.x-rackmount-screws::before,
+.x-rackmount-screws::after {
   content: '⊕';
   position: absolute;
   color: #555;
@@ -1462,11 +1469,11 @@ a.wb-btn-glass {
   line-height: 1;
   left: 6px;
 }
-.wb-rackmount-screws::before { top: 14px; }
-.wb-rackmount-screws::after { bottom: 14px; }
+.x-rackmount-screws::before { top: 14px; }
+.x-rackmount-screws::after { bottom: 14px; }
 
-.wb-rackmount-screws-right::before,
-.wb-rackmount-screws-right::after {
+.x-rackmount-screws-right::before,
+.x-rackmount-screws-right::after {
   content: '⊕';
   position: absolute;
   color: #555;
@@ -1474,18 +1481,18 @@ a.wb-btn-glass {
   line-height: 1;
   right: 6px;
 }
-.wb-rackmount-screws-right::before { top: 14px; }
-.wb-rackmount-screws-right::after { bottom: 14px; }
+.x-rackmount-screws-right::before { top: 14px; }
+.x-rackmount-screws-right::after { bottom: 14px; }
 
 /* Content Area (Padded to avoid ears) */
-.wb-rackmount__content {
+.x-rackmount__content {
   margin: 0 1.5rem;
   display: flex;
   flex-direction: column;
   gap: 0.75rem;
 }
 
-.wb-rackmount__header {
+.x-rackmount__header {
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -1494,7 +1501,7 @@ a.wb-btn-glass {
   margin-bottom: 0.25rem;
 }
 
-.wb-rackmount__title {
+.x-rackmount__title {
   font-size: 0.8rem;
   text-transform: uppercase;
   letter-spacing: 1px;
@@ -1502,7 +1509,7 @@ a.wb-btn-glass {
   font-weight: 700;
 }
 
-.wb-rackmount__status {
+.x-rackmount__status {
   width: 8px;
   height: 8px;
   border-radius: 50%;
@@ -1510,11 +1517,11 @@ a.wb-btn-glass {
   box-shadow: 0 0 5px #22c55e;
 }
 
-.wb-rackmount__status.off { background: #ef4444; box-shadow: 0 0 5px #ef4444; }
-.wb-rackmount__status.warn { background: #eab308; box-shadow: 0 0 5px #eab308; }
+.x-rackmount__status.off { background: #ef4444; box-shadow: 0 0 5px #ef4444; }
+.x-rackmount__status.warn { background: #eab308; box-shadow: 0 0 5px #eab308; }
 
 /* Rackmount Button */
-.wb-btn-rack {
+.x-btn-rack {
   background: #222;
   border: 1px solid #444;
   color: #ccc;
@@ -1527,13 +1534,13 @@ a.wb-btn-glass {
   box-shadow: inset 0 1px 0 rgba(255,255,255,0.05);
 }
 
-.wb-btn-rack:hover {
+.x-btn-rack:hover {
   background: #333;
   color: #fff;
   border-color: #666;
 }
 
-.wb-btn-rack:active {
+.x-btn-rack:active {
   background: #111;
   box-shadow: inset 0 2px 4px rgba(0,0,0,0.5);
   transform: translateY(1px);
@@ -1625,7 +1632,7 @@ a.wb-btn-glass {
 }
 
 /* CODE CAPTIONS (MDHTML) — moved to src/styles/behaviors/mdhtml.css
-   (.wb-mdhtml .code-wrapper / .code-caption), the single canonical source.
+   (.x-mdhtml .code-wrapper / .code-caption), the single canonical source.
    This unscoped duplicate centered every code block horizontally
    (width:fit-content + margin:0 auto), unlike the flush-left surrounding
    prose — see mdhtml.css's own comment for the full story. */
@@ -1754,8 +1761,8 @@ a.wb-btn-glass {
    vertically-centered content + overflow:hidden cropped the top once the title
    wrapped to more lines. Let it grow to fit. */
 @media (max-width: 768px) {
-  wb-hero,
-  .wb-hero {
+  x-hero,
+  .x-hero {
     min-height: auto;
     padding-top: 1.5rem;
     padding-bottom: 1.5rem;
@@ -1833,9 +1840,9 @@ section[id] {
   outline: 2px solid var(--primary);
   outline-offset: 3px;
 }
-/* the descendant wb-card--float already lifts on hover; ensure the whole card
+/* the descendant x-card--float already lifts on hover; ensure the whole card
    reacts to keyboard focus on the anchor too */
-.feature-card-link:focus-visible .wb-card {
+.feature-card-link:focus-visible .x-card {
   border-color: var(--primary);
 }
 
@@ -1907,7 +1914,7 @@ img { max-width: 100%; height: auto; }
      reload action lives on the version number itself now (tap it), so
      there's no separate button left that needs to stay visible here.
      Scoped under .site__header: src/styles/behaviors/header.css (an
-     unrelated <wb-header> component) reuses these exact class names with an
+     unrelated <header> component) reuses these exact class names with an
      unconditional display:flex and is injected into <head> at runtime after
      site.css, so an unscoped same-specificity selector here loses the
      cascade regardless of this media query matching. */
@@ -1957,15 +1964,15 @@ img { max-width: 100%; height: auto; }
      (copyright <-> links) was untouched by the first pass and, once those
      two wrap to separate lines on a narrow screen, that gap applies as
      row-gap too — the single biggest remaining contributor to the height.
-     The <footer> element also carries a "wb-footer" class (added at
+     The <footer> element also carries a "x-footer" class (added at
      runtime by the same tag-name-collision mechanism found earlier on the
      shell's own <header> — a reusable behavior's class landing on native
      <header>/<footer> tags it was never meant to touch). behaviors/footer.css
-     has its OWN (max-width:768px) padding rule for .wb-footer that wins
+     has its OWN (max-width:768px) padding rule for .x-footer that wins
      equal-specificity ties by injection order, silently reintroducing the
      desktop padding this override is trying to remove. Compound selector
      to beat it outright rather than depend on cascade order. */
-  .site__footer.wb-footer {
+  .site__footer.x-footer {
     padding: 0.5rem 1rem;
   }
   .footer__content {

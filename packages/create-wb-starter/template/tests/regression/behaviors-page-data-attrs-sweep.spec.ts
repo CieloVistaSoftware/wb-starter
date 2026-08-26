@@ -39,7 +39,7 @@ test.describe('Behaviors page: data-* attribute sweep stays fixed', () => {
   });
 
   test('alerts show a dismiss control (dismissible worked)', async ({ page }) => {
-    const alerts = page.locator('wb-alert');
+    const alerts = page.locator('x-alert');
     const count = await alerts.count();
     expect(count).toBeGreaterThanOrEqual(4);
     for (let i = 0; i < count; i++) {
@@ -50,15 +50,15 @@ test.describe('Behaviors page: data-* attribute sweep stays fixed', () => {
   });
 
   test('pill badge gets the pill class/shape', async ({ page }) => {
-    const pillBadge = page.locator('wb-badge', { hasText: 'Pill Badge' });
-    await expect(pillBadge).toHaveClass(/wb-badge--pill/);
+    const pillBadge = page.locator('x-badge', { hasText: 'Pill Badge' });
+    await expect(pillBadge).toHaveClass(/x-badge--pill/);
   });
 
   test('modal trigger is visible and opens with correct title/content', async ({ page }) => {
-    const trigger = page.locator('wb-modal', { hasText: 'Open Modal' });
+    const trigger = page.locator('x-modal', { hasText: 'Open Modal' });
     await expect(trigger).toBeVisible();
     await trigger.click();
-    const dialog = page.locator('dialog[open], .wb-dialog[open]').first();
+    const dialog = page.locator('dialog[open], .x-dialog[open]').first();
     await expect(dialog).toBeVisible();
     await expect(dialog).toContainText('Modal Dialog');
     await expect(dialog).toContainText('Press ESC or click outside to close');
@@ -70,13 +70,13 @@ test.describe('Behaviors page: data-* attribute sweep stays fixed', () => {
     for (const label of positions) {
       const btn = page.locator('button', { hasText: label }).first();
       await btn.hover();
-      // .wb-tooltip is the actual popup div (tooltip.js); the trigger button
-      // itself carries `wb-tooltip-trigger`, which also matches a generic
+      // .x-tooltip is the actual popup div (tooltip.js); the trigger button
+      // itself carries `x-tooltip-trigger`, which also matches a generic
       // [class*="tooltip"] substring selector -- be exact.
-      const tooltip = page.locator('.wb-tooltip.wb-tooltip--visible').last();
+      const tooltip = page.locator('.x-tooltip.x-tooltip--visible').last();
       await expect(tooltip).toBeVisible({ timeout: 5000 });
       const cls = await tooltip.getAttribute('class');
-      seen.add((cls || '').replace(/\s*wb-tooltip--visible\s*/, '').trim());
+      seen.add((cls || '').replace(/\s*x-tooltip--visible\s*/, '').trim());
       await page.mouse.move(0, 0);
       await expect(tooltip).toBeHidden({ timeout: 3000 }).catch(() => {});
     }
@@ -147,9 +147,9 @@ test.describe('Behaviors page: data-* attribute sweep stays fixed', () => {
     ];
     for (const c of cases) {
       await page.locator('button', { hasText: c.label }).click();
-      const toast = page.locator('.wb-toast').last();
+      const toast = page.locator('.x-toast').last();
       await expect(toast).toBeVisible();
-      await expect(toast).toHaveClass(new RegExp(`wb-toast--${c.variant}\\b`));
+      await expect(toast).toHaveClass(new RegExp(`x-toast--${c.variant}\\b`));
       await expect(toast).toContainText(c.message);
     }
   });
@@ -181,7 +181,7 @@ test.describe('Behaviors page: data-* attribute sweep stays fixed', () => {
 
   test('truncate "Show more" toggle reveals full, unclamped height', async ({ page }) => {
     const el = page.locator('[x-truncate]');
-    const toggle = page.locator('.wb-truncate__toggle');
+    const toggle = page.locator('.x-truncate__toggle');
     await expect(toggle).toHaveText('Show more');
     const clampedHeight = await el.evaluate((e) => e.getBoundingClientRect().height);
 
@@ -195,14 +195,14 @@ test.describe('Behaviors page: data-* attribute sweep stays fixed', () => {
   });
 
   // #224 follow-up sweep: these four were missed by the original sweep above
-  // (tabs/accordion child markers, wb-audio, and the autosize textarea) --
+  // (tabs/accordion child markers, x-audio, and the autosize textarea) --
   // found and fixed in the same data-* audit. Each was silently ignored:
   // tabs.js/collapse.js only read the plain `tab-title`/`accordion-title`
-  // attribute, wb-audio.js only reads plain `src`/`show-eq`/`volume`, and
+  // attribute, x-audio.js only reads plain `src`/`show-eq`/`volume`, and
   // textarea.js only reads plain `autosize`.
 
   test('tabs show their configured titles, not "Tab 1"/"Tab 2"/"Tab 3"', async ({ page }) => {
-    const tabs = page.locator('.wb-tabs__tab');
+    const tabs = page.locator('.x-tabs__tab');
     await expect(tabs).toHaveCount(3);
     await expect(tabs.nth(0)).toHaveText('Overview');
     await expect(tabs.nth(1)).toHaveText('Features');
@@ -210,23 +210,23 @@ test.describe('Behaviors page: data-* attribute sweep stays fixed', () => {
   });
 
   test('accordion items show their configured titles, not "Accordion Item"', async ({ page }) => {
-    const titles = page.locator('.wb-accordion-title');
+    const titles = page.locator('.x-accordion-title');
     await expect(titles).toHaveCount(3);
     await expect(titles.nth(0)).toHaveText('What is wb-starter?');
     await expect(titles.nth(1)).toHaveText('How do I install it?');
     await expect(titles.nth(2)).toHaveText('Is it production ready?');
   });
 
-  test('wb-audio uses its configured src and shows the EQ, not the default demo track', async ({ page }) => {
-    const audioEl = page.locator('wb-audio audio');
+  test('x-audio uses its configured src and shows the EQ, not the default demo track', async ({ page }) => {
+    const audioEl = page.locator('x-audio audio');
     const src = await audioEl.getAttribute('src');
-    expect(src, 'wb-audio should not have fallen back to the built-in default demo track').toContain('freemusicarchive.org');
+    expect(src, 'x-audio should not have fallen back to the built-in default demo track').toContain('freemusicarchive.org');
     // show-eq requested -> the EQ panel must actually be built.
-    await expect(page.locator('wb-audio .wb-audio__eq-container')).toBeVisible();
+    await expect(page.locator('x-audio .x-audio__eq-container')).toBeVisible();
   });
 
   test('autosize textarea gets the autosize class, not the plain default', async ({ page }) => {
     const textareas = page.locator('#inputs textarea');
-    await expect(textareas.nth(1)).toHaveClass(/wb-textarea--autosize/);
+    await expect(textareas.nth(1)).toHaveClass(/x-textarea--autosize/);
   });
 });

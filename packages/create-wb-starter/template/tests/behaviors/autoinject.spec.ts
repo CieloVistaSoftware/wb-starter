@@ -25,7 +25,7 @@ test.describe('Auto-Inject Demo', () => {
   //    The observable signal is the actual effect: checkbox.js injects a
   //    stylesheet that sets appearance:none; select.js attaches a real
   //    `element.wbSelect` API (getValue/setValue/etc).
-  //  - card.js DOES add a real `wb-card` class — article→card auto-inject
+  //  - card.js DOES add a real `x-card` class — article→card auto-inject
   //    is the one case in this block with an actual wrapper-free class.
   test.describe('Form Elements', () => {
     test.beforeEach(async ({ page }) => {
@@ -37,22 +37,22 @@ test.describe('Auto-Inject Demo', () => {
       const checkbox = page.locator('#fixture-checkbox');
       await expect(checkbox).toBeVisible();
       // No wrapper: the checkbox's own parent is still the <label>, not a
-      // behavior-created .wb-checkbox div.
-      await expect(page.locator('.wb-checkbox')).toHaveCount(0);
+      // behavior-created .x-checkbox div.
+      await expect(page.locator('.x-checkbox')).toHaveCount(0);
       await expect(checkbox).toHaveCSS('appearance', 'none');
     });
 
     test('Select is auto-injected and exposes a real wbSelect API (no wrapper class)', async ({ page }) => {
       const select = page.locator('#fixture-select');
       await expect(select).toBeVisible();
-      await expect(select).not.toHaveClass(/wb-select/);
+      await expect(select).not.toHaveClass(/x-select/);
       const hasApi = await select.evaluate((el: any) => typeof el.wbSelect?.getValue === 'function');
       expect(hasApi, 'select behavior should attach element.wbSelect').toBe(true);
     });
 
-    test('Article is auto-injected as a card (wb-card class)', async ({ page }) => {
+    test('Article is auto-injected as a card (x-card class)', async ({ page }) => {
       const article = page.locator('#fixture-article');
-      await expect(article).toHaveClass(/wb-card/);
+      await expect(article).toHaveClass(/x-card/);
     });
   });
 });

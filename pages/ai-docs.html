@@ -1,3 +1,17 @@
+<script>
+  /* A page fragment opened on its own resolves its CSS and modules relative to
+     /pages/ instead of the site root, so it renders unstyled and never
+     finishes loading. These files are fetched and injected by index.html;
+     opened directly they are simply the wrong URL. Redirect to the route that
+     works. server.js wraps them automatically, so this only fires on a static
+     host. */
+  (function () {
+    var m = location.pathname.match(/\/pages\/([a-z0-9-]+)\.html$/i);
+    if (!m) return;                       // injected by the SPA: nothing to do
+    var root = location.pathname.slice(0, m.index + 1);
+    location.replace(root + '?page=' + m[1] + location.search.replace(/^\?/, '&') + location.hash);
+  })();
+</script>
 <div id="ai-docs-hero" class="page__hero">
   <h1>🤖 A.I. Docs</h1>
   <p>How we work with AI on wb-starter — the practice docs, in reading order.</p>
@@ -9,12 +23,12 @@
        scripts/generate-ai-docs-list.mjs — edit that script, not this list. -->
   <div id="ai-docs-grid" class="page__grid">
     <!-- ai-docs:auto:start -->
-  <wb-card-link title="AI Documentation Tier System" href="public/doc-viewer.html?file=docs/claude/README.md" target="_blank" icon="1️⃣"></wb-card-link>
-  <wb-card-link title="TIER 1 — LAWS (Read Every Session, No Exceptions)" href="public/doc-viewer.html?file=docs/claude/TIER1-LAWS.md" target="_blank" icon="2️⃣"></wb-card-link>
-  <wb-card-link title="TIER 2 — DOMAIN GUIDES (Read When Working In That Area)" href="public/doc-viewer.html?file=docs/claude/TIER2-DOMAIN-GUIDES.md" target="_blank" icon="3️⃣"></wb-card-link>
-  <wb-card-link title="TIER 3 — REFERENCE (Don't Read Unless Specifically Needed)" href="public/doc-viewer.html?file=docs/claude/TIER3-REFERENCE.md" target="_blank" icon="4️⃣"></wb-card-link>
-  <wb-card-link title="Page Generation Pipeline" href="public/doc-viewer.html?file=docs/claude/PAGE-GENERATION.md" target="_blank" icon="5️⃣"></wb-card-link>
-  <wb-card-link title="SCHEMAS — Claude's Guide to Getting It Right" href="public/doc-viewer.html?file=docs/claude/SCHEMAS-GUIDE.md" target="_blank" icon="6️⃣"></wb-card-link>
+  <div x-cardlink title="AI Documentation Tier System" href="public/doc-viewer.html?file=docs/claude/README.md" target="_blank" icon="1️⃣"></div>
+  <div x-cardlink title="TIER 1 — LAWS (Read Every Session, No Exceptions)" href="public/doc-viewer.html?file=docs/claude/TIER1-LAWS.md" target="_blank" icon="2️⃣"></div>
+  <div x-cardlink title="TIER 2 — DOMAIN GUIDES (Read When Working In That Area)" href="public/doc-viewer.html?file=docs/claude/TIER2-DOMAIN-GUIDES.md" target="_blank" icon="3️⃣"></div>
+  <div x-cardlink title="TIER 3 — REFERENCE (Don't Read Unless Specifically Needed)" href="public/doc-viewer.html?file=docs/claude/TIER3-REFERENCE.md" target="_blank" icon="4️⃣"></div>
+  <div x-cardlink title="Page Generation Pipeline" href="public/doc-viewer.html?file=docs/claude/PAGE-GENERATION.md" target="_blank" icon="5️⃣"></div>
+  <div x-cardlink title="SCHEMAS — Claude's Guide to Getting It Right" href="public/doc-viewer.html?file=docs/claude/SCHEMAS-GUIDE.md" target="_blank" icon="6️⃣"></div>
     <!-- ai-docs:auto:end -->
   </div>
 </div>

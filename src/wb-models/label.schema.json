@@ -34,18 +34,18 @@
       {
         "description": "Generates a <label for> pointing at the control, with the attribute's value as its text",
         "selector": "label",
-        "checks": { "hasClass": "wb-label", "textContains": "Label text" }
+        "checks": { "hasClass": "x-label", "textContains": "Label text" }
       },
       {
-        "description": "Required state applies wb-label--required class",
+        "description": "Required state applies x-label--required class",
         "selector": "label",
-        "checks": { "hasClass": "wb-label--required" },
+        "checks": { "hasClass": "x-label--required" },
         "when": { "required": true }
       },
       {
-        "description": "Optional state applies wb-label--optional class",
+        "description": "Optional state applies x-label--optional class",
         "selector": "label",
-        "checks": { "hasClass": "wb-label--optional" },
+        "checks": { "hasClass": "x-label--optional" },
         "when": { "optional": true }
       }
     ]

@@ -3,7 +3,7 @@ import { test, expect } from '@playwright/test';
 /**
  * Standard §19: a declared attribute must actually WORK, not just render. A native
  * <button size="…"/variant="…"> must apply real styling — the button behavior maps
- * the size/variant attribute to its .wb-button--* class (only classes are styled;
+ * the size/variant attribute to its .x-button--* class (only classes are styled;
  * the bare attribute did nothing on a native <button>). #258
  *
  * Rendered on a lightweight served fixture (not the heavy autoinject.html, which
@@ -16,7 +16,7 @@ async function renderButtons(page) {
     <link rel="stylesheet" href="/src/styles/themes.css">
     <link rel="stylesheet" href="/src/styles/site.css">
     <style>
-      /* button.css's .wb-button base rule has transition: all 0.2s ease --
+      /* button.css's .x-button base rule has transition: all 0.2s ease --
          this test asserts the FINAL computed values a size/variant class
          produces, not the animation between them. Without this, reading
          getComputedStyle() right after the class assertion passes can catch
@@ -48,8 +48,8 @@ test.describe('native button size & variant attributes have real effect (§19)',
     await renderButtons(page);
     const xs = page.locator('#b-xs');
     const xl = page.locator('#b-xl');
-    await expect(xs).toHaveClass(/wb-button--xs/, { timeout: 20000 });
-    await expect(xl).toHaveClass(/wb-button--xl/, { timeout: 20000 });
+    await expect(xs).toHaveClass(/x-button--xs/, { timeout: 20000 });
+    await expect(xl).toHaveClass(/x-button--xl/, { timeout: 20000 });
 
     const xsFs = await xs.evaluate((el) => parseFloat(getComputedStyle(el).fontSize));
     const xlFs = await xl.evaluate((el) => parseFloat(getComputedStyle(el).fontSize));
@@ -60,8 +60,8 @@ test.describe('native button size & variant attributes have real effect (§19)',
     await renderButtons(page);
     const primary = page.locator('#b-primary');
     const danger = page.locator('#b-danger');
-    await expect(primary).toHaveClass(/wb-button--primary/, { timeout: 20000 });
-    await expect(danger).toHaveClass(/wb-button--danger/, { timeout: 20000 });
+    await expect(primary).toHaveClass(/x-button--primary/, { timeout: 20000 });
+    await expect(danger).toHaveClass(/x-button--danger/, { timeout: 20000 });
 
     const pBg = await primary.evaluate((el) => getComputedStyle(el).backgroundColor);
     const dBg = await danger.evaluate((el) => getComputedStyle(el).backgroundColor);

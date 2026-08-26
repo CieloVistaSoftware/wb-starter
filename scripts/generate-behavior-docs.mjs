@@ -161,10 +161,25 @@ function sourceFacts(docName) {
 }
 
 /** semanticElement is { tagName, implicitRole } in every schema that has one. */
+/**
+ * Neutral hosts. A schema may name `div` or `span` as its element, but that
+ * is not a SEMANTIC element -- it is the absence of one. `<div>` implies
+ * nothing, which is exactly what makes a behavior "new capability" rather
+ * than "decoration of an element you already reached for".
+ *
+ * Treating them as semantic produced 21 docs claiming things like "x-demo is
+ * the div behavior ... the element you would have reached for anyway", and a
+ * follow-up section reading "use it when the host is not a <div>" directly
+ * above an example showing <div x-demo>.
+ */
+const NEUTRAL_HOSTS = new Set(['div', 'span']);
+
 function semanticTag(schema) {
   const el = schema?.semanticElement;
   if (!el) return null;
-  return typeof el === 'string' ? el : (el.tagName || null);
+  const tag = typeof el === 'string' ? el : (el.tagName || null);
+  if (!tag || NEUTRAL_HOSTS.has(tag)) return null;
+  return tag;
 }
 
 /**
@@ -198,14 +213,74 @@ function buildDoc({ token, docName }) {
 
   const out = [`# ${title}`, '', summary, ''];
 
+  // John: "there are two types: 1) those that use the semantic name and
+  // decorate that element and 2) those which are 100% new function. those two
+  // concepts should be clear to the user."
+  //
+  // It was one buried sentence before. It is the first thing a reader needs,
+  // because it decides whether they write an attribute at all -- and for a
+  // type-1 behavior on its own element the attribute is not merely redundant,
+  // it can suppress the behavior outright (#746).
   const tag = semanticTag(schema);
-  if (tag) {
-    out.push(`Applies to \`<${tag}>\`, and to any element carrying \`${token}\`.`, '');
-  } else {
-    out.push(`Apply \`${token}\` to any element.`, '');
-  }
 
-  out.push('## Usage', '', '```html', usage(token, schema), '```', '');
+  if (tag) {
+    const auto = autoInjects(tag, token);
+    out.push(
+      '## Type — decorates a semantic element',
+      '',
+      `\`${token}\` is the **${tag} behavior**. It attaches to \`<${tag}>\`, the element `
+      + `you would have reached for anyway — there is no new tag to learn.`,
+      '',
+    );
+
+    out.push('### How to write it', '', '```html');
+    if (auto) {
+      out.push(
+        `<!-- Plain semantic HTML. The behavior is injected automatically -->`,
+        `<!-- because the element itself implies it. No attribute needed. -->`,
+        usage(token, schema),
+      );
+    } else {
+      out.push(usage(token, schema));
+    }
+    out.push('```', '');
+
+    out.push(
+      `### On a different element`,
+      '',
+      `Use \`${token}\` when the host is not a \`<${tag}>\` and you want the same behavior:`,
+      '',
+      '```html',
+      `<div ${token}>
+  …
+</div>`,
+      '```',
+      '',
+    );
+
+    if (auto) {
+      out.push(
+        `> Do not write \`<${tag} ${token}>\`. The element already injects it, and the `
+        + `redundant attribute can suppress the behavior (#746).`,
+        '',
+      );
+    }
+  } else {
+    out.push(
+      '## Type — new capability',
+      '',
+      `\`${token}\` adds behavior that no HTML element implies. Nothing about a tag `
+      + `says "ripple" or "tooltip", so this is always opted into by attribute, on `
+      + `whatever element you already chose.`,
+      '',
+      '### How to write it',
+      '',
+      '```html',
+      usage(token, schema),
+      '```',
+      '',
+    );
+  }
 
   const attrs = attributesTable(schema);
   if (attrs) out.push('## Attributes', '', attrs, '');

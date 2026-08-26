@@ -55,7 +55,7 @@ test.describe('Behaviors page — key interactions', () => {
     await page.waitForTimeout(300);
     // a tooltip element/text should become visible somewhere
     const shown = await page.evaluate(() => {
-      const tips = Array.from(document.querySelectorAll('.wb-tooltip, [role="tooltip"], .tooltip'));
+      const tips = Array.from(document.querySelectorAll('.x-tooltip, [role="tooltip"], .tooltip'));
       return tips.some((t) => (t as HTMLElement).offsetParent !== null || getComputedStyle(t).opacity !== '0');
     });
     expect(shown).toBe(true);
@@ -69,7 +69,7 @@ test.describe('Behaviors page — key interactions', () => {
     await opener.click();
     await page.waitForTimeout(300);
     const open = await page.evaluate(() => {
-      const m = document.querySelector('wb-modal, .wb-modal, dialog[open], .modal');
+      const m = document.querySelector('x-modal, .x-modal, dialog[open], .modal');
       return !!m && (m as HTMLElement).offsetParent !== null;
     });
     expect(open).toBe(true);

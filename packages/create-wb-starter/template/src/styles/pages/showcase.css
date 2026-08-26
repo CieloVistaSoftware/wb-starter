@@ -1,36 +1,19 @@
 /* Shared layout for generated component showcase pages. */
-.demo-section__grid {
-  display: grid;
-  gap: 1.5rem;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-}
 
-@media (max-width: 1024px) {
-  .demo-section__grid {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-  }
-}
-
-@media (max-width: 700px) {
-  .demo-section__grid {
-    grid-template-columns: 1fr;
-  }
-}
-
-/* Feedback is a hand-authored consolidated showcase, so its wb-demo grids
+/* Feedback is a hand-authored consolidated showcase, so its x-demo grids
    need the same tablet/mobile behavior as generated showcase wrappers. */
-body.feedback-page .wb-demo__grid {
+body.feedback-page .x-demo__grid {
   grid-template-columns: repeat(3, minmax(0, 1fr));
 }
 
 @media (max-width: 1024px) {
-  body.feedback-page .wb-demo__grid {
+  body.feedback-page .x-demo__grid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 }
 
 @media (max-width: 700px) {
-  body.feedback-page .wb-demo__grid {
+  body.feedback-page .x-demo__grid {
     grid-template-columns: 1fr;
   }
 }

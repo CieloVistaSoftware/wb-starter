@@ -370,7 +370,7 @@ test.describe('Schema Validation: Test Section Completeness', () => {
     expect(issues, `Invalid setup examples:\n${issues.join('\n')}`).toEqual([]);
   });
 
-  // v3 standard is plain attributes; legacy data-wb / data-wb-* in any
+  // v3 standard is plain attributes; legacy data-wb / data-x-* in any
   // setup example (top-level or per-test) is rejected by strict mode (#150).
   test('setup examples use v3 bare attributes (no legacy data-wb)', () => {
     const schemas = getComponentSchemas();
@@ -430,7 +430,7 @@ test.describe('Schema Validation: Test Section Completeness', () => {
         const hasXAttr = xAttrPattern.test(html);
 
         const usesSharedCardMarkup = schema.schemaFor.startsWith('card') &&
-          (html.includes('data-wb="card"') || html.includes('<wb-card'));
+          (html.includes('data-wb="card"') || html.includes('<article'));
 
         if (!hasWbTag && !hasDataWb && !hasXAttr && !usesSharedCardMarkup) {
           issues.push(`${file}: setup[${i}] doesn't use <wb-${schema.schemaFor}>, x-${schema.schemaFor}, or data-wb="${schema.schemaFor}"`);

@@ -1,7 +1,7 @@
 import { test, expect, Page } from '@playwright/test';
 
 /**
- * #415: `<wb-badge dot removable>` rendered NOTHING usable -- `removable`'s
+ * #415: `<span x-badge dot removable>` rendered NOTHING usable -- `removable`'s
  * remove-button construction lived entirely inside feedback.js badge()'s
  * `else` branch (the non-dot branch), so setting `dot` silently swallowed
  * `removable`: no dot visual with any room to show, no remove button, and
@@ -13,9 +13,9 @@ import { test, expect, Page } from '@playwright/test';
  * close/remove affordance. feedback.js's badge() now builds the remove
  * button outside the dot/else split (runs whenever `removable` is true,
  * regardless of `dot`), and badge.css scopes the dot's whole-element 8px
- * circle-collapse to `.wb-badge--dot:not(.wb-badge--removable)` so a
+ * circle-collapse to `.x-badge--dot:not(.x-badge--removable)` so a
  * dot+removable badge keeps normal badge sizing/rounding (respecting
- * size/pill) and renders the dot as a small `.wb-badge__dot` inline
+ * size/pill) and renders the dot as a small `.x-badge__dot` inline
  * indicator instead.
  */
 
@@ -41,7 +41,7 @@ async function inject(page: Page, html: string) {
   await page.waitForFunction(
     (elementIds: string[]) => elementIds.every(id => {
       const el = document.getElementById(id);
-      return el && Array.from(el.classList).some(c => c.startsWith('wb-badge--'));
+      return el && Array.from(el.classList).some(c => c.startsWith('x-badge--'));
     }),
     ids,
     { timeout: 5000 }
@@ -52,29 +52,29 @@ test.describe('Badge — dot + removable (#415)', () => {
 
   test('the exact reported combo (default/xs/pill/dot/outline/removable) shows a dot AND a working remove button', async ({ page }) => {
     await inject(page, `
-      <wb-badge id="b415" label="default-xs-pill-dot-outline-removable" variant="default" size="xs" pill dot outline removable>
+      <span x-badge id="b415" label="default-xs-pill-dot-outline-removable" variant="default" size="xs" pill dot outline removable>
         label=default-xs-pill-dot-outline-removable, variant=default, size=xs, pill, dot, outline, removable
-      </wb-badge>
+      </span>
     `);
 
     const badge = page.locator('#b415');
     await expect(badge).toBeVisible();
-    await expect(badge).toHaveClass(/wb-badge--dot/);
-    await expect(badge).toHaveClass(/wb-badge--outline/);
-    await expect(badge).toHaveClass(/wb-badge--pill/);
-    await expect(badge).toHaveClass(/wb-badge--removable/);
+    await expect(badge).toHaveClass(/x-badge--dot/);
+    await expect(badge).toHaveClass(/x-badge--outline/);
+    await expect(badge).toHaveClass(/x-badge--pill/);
+    await expect(badge).toHaveClass(/x-badge--removable/);
 
     // The dot visual must render as a real, sized element -- not just a
     // class name with no visible box (the pre-fix bug: `dot` cleared all
     // text/children and `removable`'s button-building code never ran).
-    const dotBox = await badge.locator('.wb-badge__dot').boundingBox();
-    expect(dotBox, 'dot indicator (.wb-badge__dot) must render with real dimensions').not.toBeNull();
+    const dotBox = await badge.locator('.x-badge__dot').boundingBox();
+    expect(dotBox, 'dot indicator (.x-badge__dot) must render with real dimensions').not.toBeNull();
     expect(dotBox!.width).toBeGreaterThan(0);
     expect(dotBox!.height).toBeGreaterThan(0);
 
     // The remove button must exist, be visible, and actually be clickable --
     // this element did not exist at all before the fix.
-    const removeBtn = badge.locator('.wb-badge__remove');
+    const removeBtn = badge.locator('.x-badge__remove');
     await expect(removeBtn).toBeVisible();
     const btnBox = await removeBtn.boundingBox();
     expect(btnBox, 'remove button must have real dimensions').not.toBeNull();
@@ -102,12 +102,12 @@ test.describe('Badge — dot + removable (#415)', () => {
 
   test('dot + removable without outline still shows a filled (non-transparent) dot indicator and remove button', async ({ page }) => {
     await inject(page, `
-      <wb-badge id="b415-filled" variant="success" dot removable>Live</wb-badge>
+      <span x-badge id="b415-filled" variant="success" dot removable>Live</span>
     `);
 
     const badge = page.locator('#b415-filled');
-    await expect(badge.locator('.wb-badge__dot')).toBeVisible();
-    await expect(badge.locator('.wb-badge__remove')).toBeVisible();
+    await expect(badge.locator('.x-badge__dot')).toBeVisible();
+    await expect(badge.locator('.x-badge__remove')).toBeVisible();
 
     const bg = await badge.evaluate((el) => getComputedStyle(el).backgroundColor);
     expect(bg, 'non-outline dot+removable badge must keep its filled variant background').not.toBe('rgba(0, 0, 0, 0)');
@@ -115,8 +115,8 @@ test.describe('Badge — dot + removable (#415)', () => {
     // Sanity: outline visibly differs from filled for the same combo (proves
     // outline isn't a no-op on a dot+removable badge).
     await inject(page, `
-      <wb-badge id="b415-filled2" variant="success" dot removable>Live</wb-badge>
-      <wb-badge id="b415-outline2" variant="success" dot outline removable>Live</wb-badge>
+      <span x-badge id="b415-filled2" variant="success" dot removable>Live</span>
+      <span x-badge id="b415-outline2" variant="success" dot outline removable>Live</span>
     `);
     const filledBg = await page.locator('#b415-filled2').evaluate((el) => getComputedStyle(el).backgroundColor);
     const outlineBg = await page.locator('#b415-outline2').evaluate((el) => getComputedStyle(el).backgroundColor);
@@ -126,10 +126,10 @@ test.describe('Badge — dot + removable (#415)', () => {
   test('a plain dot badge (no removable) still collapses to a small circle with no remove button', async ({ page }) => {
     // Guards against a regression in the OTHER direction: fixing dot+removable
     // must not change plain dot-only badges.
-    await inject(page, '<wb-badge id="b415-plain-dot" variant="info" dot></wb-badge>');
+    await inject(page, '<span x-badge id="b415-plain-dot" variant="info" dot></span>');
 
     const badge = page.locator('#b415-plain-dot');
-    await expect(badge.locator('.wb-badge__remove')).toHaveCount(0);
+    await expect(badge.locator('.x-badge__remove')).toHaveCount(0);
     expect((await badge.textContent())?.trim()).toBe('');
 
     const box = await badge.boundingBox();
@@ -137,10 +137,10 @@ test.describe('Badge — dot + removable (#415)', () => {
   });
 
   test('removable without dot is unaffected (remove button still renders on a normal labeled badge)', async ({ page }) => {
-    await inject(page, '<wb-badge id="b415-plain-removable" label="Tag" variant="info" removable></wb-badge>');
+    await inject(page, '<span x-badge id="b415-plain-removable" label="Tag" variant="info" removable></span>');
 
     const badge = page.locator('#b415-plain-removable');
     await expect(badge).toContainText('Tag');
-    await expect(badge.locator('.wb-badge__remove')).toBeVisible();
+    await expect(badge.locator('.x-badge__remove')).toBeVisible();
   });
 });

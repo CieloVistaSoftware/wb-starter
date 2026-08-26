@@ -2,9 +2,11 @@
 
 Behavior applied with x-pre.
 
-Apply `x-pre` to any element.
+## Type — new capability
 
-## Usage
+`x-pre` adds behavior that no HTML element implies. Nothing about a tag says "ripple" or "tooltip", so this is always opted into by attribute, on whatever element you already chose.
+
+### How to write it
 
 ```html
 <pre>npm run test:compliance

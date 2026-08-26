@@ -5,9 +5,9 @@
  * WB.init()) fetches index.json and then every schema it lists, in
  * parallel — regardless of which wb-* tags are actually on the page. A HAR
  * capture of the home page showed 81 unique schema.json requests. The home
- * page only uses a handful of wb-* tags (wb-audio, wb-card, wb-cardhero,
- * wb-cardnotification, wb-cardstats, wb-container, wb-grid, wb-row,
- * wb-stack), and a separate on-demand path (WB.scan() -> processSchema() ->
+ * page only uses a handful of wb-* tags (x-audio, x-card, x-cardhero,
+ * x-cardnotification, x-cardstats, x-container, x-grid, x-row,
+ * x-stack), and a separate on-demand path (WB.scan() -> processSchema() ->
  * loadSchemaFile()) already fetches exactly what's needed per tag actually
  * present. The bulk fetch is pure duplication of that working path.
  *
@@ -49,7 +49,7 @@ test.describe('#312 — schema.json is fetched on-demand, not eagerly for every 
   });
 
   // Follow-up to the on-demand fix above: the home page has several
-  // instances of the same component (multiple <wb-card>-family tags), and
+  // instances of the same component (multiple <article>-family tags), and
   // each independently discovers on scan that the shared schema isn't
   // registered yet — none of them see it as registered until their OWN
   // fetch resolves, so they each started their own redundant fetch. Live

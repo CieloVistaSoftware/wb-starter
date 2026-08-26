@@ -50,8 +50,8 @@ test.describe('Component Attribute Validation', () => {
     htmlFiles.forEach(file => {
       const content = fs.readFileSync(file, 'utf-8');
 
-      // Match <wb-cardhero ...height="XXXpx"...>
-      const heroPattern = /<wb-cardhero[^>]*height="(\d+)px"[^>]*>/g;
+      // Match <div x-cardhero ...height="XXXpx"...>
+      const heroPattern = /<div x-cardhero[^>]*height="(\d+)px"[^>]*>/g;
       let match;
 
       while ((match = heroPattern.exec(content)) !== null) {
@@ -73,15 +73,15 @@ test.describe('Component Attribute Validation', () => {
     ).toBe(0);
   });
 
-  test('wb-progress value must be 0-100', () => {
+  test('x-progress value must be 0-100', () => {
     const htmlFiles = getHtmlFiles();
     const violations: string[] = [];
 
     htmlFiles.forEach(file => {
       const content = fs.readFileSync(file, 'utf-8');
 
-      // Match <wb-progress value="XXX">
-      const progressPattern = /<wb-progress[^>]*value="(\d+(?:\.\d+)?)"[^>]*>/g;
+      // Match <progress value="XXX">
+      const progressPattern = /<progress[^>]*value="(\d+(?:\.\d+)?)"[^>]*>/g;
       let match;
 
       while ((match = progressPattern.exec(content)) !== null) {
@@ -90,7 +90,7 @@ test.describe('Component Attribute Validation', () => {
         if (value < 0 || value > 100) {
           const lineNum = content.substring(0, match.index).split('\n').length;
           violations.push(
-            `${path.relative(htmlDir, file)}:${lineNum}: wb-progress value="${value}" out of range [0-100]`
+            `${path.relative(htmlDir, file)}:${lineNum}: x-progress value="${value}" out of range [0-100]`
           );
         }
       }
@@ -98,19 +98,19 @@ test.describe('Component Attribute Validation', () => {
 
     expect(
       violations.length,
-      `Found ${violations.length} wb-progress values outside range:\n${violations.join('\n')}`
+      `Found ${violations.length} x-progress values outside range:\n${violations.join('\n')}`
     ).toBe(0);
   });
 
-  test('wb-rating value must not exceed max', () => {
+  test('x-rating value must not exceed max', () => {
     const htmlFiles = getHtmlFiles();
     const violations: string[] = [];
 
     htmlFiles.forEach(file => {
       const content = fs.readFileSync(file, 'utf-8');
 
-      // Match <wb-rating value="X" max="Y">
-      const ratingPattern = /<wb-rating[^>]*value="(\d+(?:\.\d+)?)"[^>]*max="(\d+(?:\.\d+)?)"[^>]*>/g;
+      // Match <span x-rating value="X" max="Y">
+      const ratingPattern = /<span x-rating[^>]*value="(\d+(?:\.\d+)?)"[^>]*max="(\d+(?:\.\d+)?)"[^>]*>/g;
       let match;
 
       while ((match = ratingPattern.exec(content)) !== null) {
@@ -120,7 +120,7 @@ test.describe('Component Attribute Validation', () => {
         if (value > max) {
           const lineNum = content.substring(0, match.index).split('\n').length;
           violations.push(
-            `${path.relative(htmlDir, file)}:${lineNum}: wb-rating value="${value}" exceeds max="${max}"`
+            `${path.relative(htmlDir, file)}:${lineNum}: x-rating value="${value}" exceeds max="${max}"`
           );
         }
       }
@@ -128,11 +128,11 @@ test.describe('Component Attribute Validation', () => {
 
     expect(
       violations.length,
-      `Found ${violations.length} wb-rating values exceeding max:\n${violations.join('\n')}`
+      `Found ${violations.length} x-rating values exceeding max:\n${violations.join('\n')}`
     ).toBe(0);
   });
 
-  test('wb-avatar size must be valid (xs, sm, md, lg, xl)', () => {
+  test('x-avatar size must be valid (xs, sm, md, lg, xl)', () => {
     const htmlFiles = getHtmlFiles();
     const violations: string[] = [];
     const validSizes = ['xs', 'sm', 'md', 'lg', 'xl'];
@@ -140,8 +140,8 @@ test.describe('Component Attribute Validation', () => {
     htmlFiles.forEach(file => {
       const content = fs.readFileSync(file, 'utf-8');
 
-      // Match <wb-avatar ...size="XXX"...>
-      const avatarPattern = /<wb-avatar[^>]*size="([^"]+)"[^>]*>/g;
+      // Match <span x-avatar ...size="XXX"...>
+      const avatarPattern = /<span x-avatar[^>]*size="([^"]+)"[^>]*>/g;
       let match;
 
       while ((match = avatarPattern.exec(content)) !== null) {
@@ -150,7 +150,7 @@ test.describe('Component Attribute Validation', () => {
         if (!validSizes.includes(size)) {
           const lineNum = content.substring(0, match.index).split('\n').length;
           violations.push(
-            `${path.relative(htmlDir, file)}:${lineNum}: wb-avatar size="${size}" invalid (must be: ${validSizes.join(', ')})`
+            `${path.relative(htmlDir, file)}:${lineNum}: x-avatar size="${size}" invalid (must be: ${validSizes.join(', ')})`
           );
         }
       }
@@ -158,7 +158,7 @@ test.describe('Component Attribute Validation', () => {
 
     expect(
       violations.length,
-      `Found ${violations.length} wb-avatar size values invalid:\n${violations.join('\n')}`
+      `Found ${violations.length} x-avatar size values invalid:\n${violations.join('\n')}`
     ).toBe(0);
   });
 });

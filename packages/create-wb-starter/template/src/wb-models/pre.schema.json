@@ -1,0 +1,59 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "pre.schema.json",
+  "title": "Pre",
+  "description": "Behavior applied with x-pre.",
+  "schemaFor": "x-pre",
+  "properties": {
+    "language": {
+      "type": "string",
+      "description": "Read by pre()."
+    },
+    "scrollable": {
+      "type": "string",
+      "description": "Read by pre()."
+    },
+    "show-line-numbers": {
+      "type": "string",
+      "description": "Read by pre()."
+    },
+    "max-height": {
+      "type": "string",
+      "description": "Read by pre()."
+    },
+    "wrap": {
+      "type": "boolean",
+      "description": "Read by pre(). Bare attribute.",
+      "default": false
+    },
+    "size": {
+      "type": "string",
+      "description": "Read by pre()."
+    },
+    "show-copy": {
+      "type": "boolean",
+      "description": "Read by pre(). Bare attribute.",
+      "default": false
+    },
+    "data-show-copy": {
+      "type": "boolean",
+      "description": "Read by pre(). Bare attribute.",
+      "default": false
+    },
+    "data-copy": {
+      "type": "boolean",
+      "description": "Read by pre(). Bare attribute.",
+      "default": false
+    },
+    "data-wrap": {
+      "type": "boolean",
+      "description": "Read by pre(). Bare attribute.",
+      "default": false
+    }
+  },
+  "_metadata": {
+    "generatedBy": "scripts/generate-behavior-schemas.mjs (#716)",
+    "derivedFrom": "the behavior implementation — every property here is one the code actually reads",
+    "note": "Expand by hand: enums, richer descriptions and accessibility notes cannot be read from source."
+  }
+}

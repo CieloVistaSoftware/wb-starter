@@ -1,7 +1,7 @@
 import { test, expect, Page } from '@playwright/test';
 
 test.describe('Progress Bar (integration)', () => {
-  test('should render progress bar with wb-progress class', async ({ page }: { page: Page }) => {
+  test('should render progress bar with x-progress class', async ({ page }: { page: Page }) => {
     await page.goto('index.html');
     await page.waitForFunction(() => (window as any).WB && (window as any).WB.behaviors);
     await page.waitForFunction(() => (window as any).WBSite && (window as any).WBSite.currentPage);
@@ -17,7 +17,7 @@ test.describe('Progress Bar (integration)', () => {
     });
     
     const bar = page.locator('#test-progress');
-    await expect(bar).toHaveClass(/wb-progress/);
+    await expect(bar).toHaveClass(/x-progress/);
   });
 
   test('should show progress bar fill', async ({ page }: { page: Page }) => {
@@ -36,7 +36,7 @@ test.describe('Progress Bar (integration)', () => {
       (window as any).WB.scan();
     });
     
-    const fill = page.locator('#test-progress-fill .wb-progress__bar');
+    const fill = page.locator('#test-progress-fill .x-progress__bar');
     await expect(fill).toBeVisible();
     
     // Check the style attribute contains 50%
@@ -109,7 +109,7 @@ test.describe('Progress Bar (integration)', () => {
     // Wait for animation to complete
     await page.waitForTimeout(200);
     
-    const fill = page.locator('#test-progress-anim .wb-progress__bar');
+    const fill = page.locator('#test-progress-anim .x-progress__bar');
     const style = await fill.getAttribute('style');
     
     // Should have transition for smooth animation

@@ -6,7 +6,7 @@
 export function draggable(element, options = {}) {
   // #390: was element.dataset.* (data-handle/data-axis/data-bounds/
   // data-grid) -- but every real usage (demos/site/interactive.html:
-  // `<wb-draggable axis="x">`) authors plain attributes, and Tier-1 Law 11
+  // `<div x-draggable axis="x">`) authors plain attributes, and Tier-1 Law 11
   // forbids data-* on wb-*/x-* elements anyway. dataset.axis was always
   // undefined for these demos, so axis="x"/"y" silently did nothing --
   // every draggable behaved as axis="both" regardless of what was set.
@@ -18,7 +18,7 @@ export function draggable(element, options = {}) {
     ...options
   };
 
-  // #448: no classList.add('wb-draggable') -- no CSS selector anywhere
+  // #448: no classList.add('x-draggable') -- no CSS selector anywhere
   // depends on the bare class.
 
   // Get handle element
@@ -28,7 +28,7 @@ export function draggable(element, options = {}) {
     return () => {};
   }
 
-  handle.classList.add('wb-draggable__handle');
+  handle.classList.add('x-draggable__handle');
   handle.style.cursor = 'grab';
 
   // State
@@ -118,7 +118,7 @@ export function draggable(element, options = {}) {
     initialLeft = parseFloat(element.style.left) || 0;
     initialTop = parseFloat(element.style.top) || 0;
     
-    element.classList.add('wb-draggable--dragging');
+    element.classList.add('x-draggable--dragging');
     handle.style.cursor = 'grabbing';
     
     document.addEventListener('mousemove', onMouseMove);
@@ -168,7 +168,7 @@ export function draggable(element, options = {}) {
     if (!isDragging) return;
     
     isDragging = false;
-    element.classList.remove('wb-draggable--dragging');
+    element.classList.remove('x-draggable--dragging');
     handle.style.cursor = 'grab';
     
     document.removeEventListener('mousemove', onMouseMove);
@@ -211,8 +211,8 @@ export function draggable(element, options = {}) {
   // Mark as ready
   // Cleanup
   return () => {
-    element.classList.remove('wb-draggable', 'wb-draggable--dragging');
-    handle.classList.remove('wb-draggable__handle');
+    element.classList.remove('x-draggable', 'x-draggable--dragging');
+    handle.classList.remove('x-draggable__handle');
     handle.style.cursor = '';
     handle.removeEventListener('mousedown', onMouseDown);
     handle.removeEventListener('touchstart', onTouchStart);

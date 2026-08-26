@@ -6,10 +6,10 @@ Falling snow animation effect.
 
 | Property | Value |
 |----------|-------|
-| Custom Tag | `<wb-snow>` |
+| Custom Tag | `<div x-snow>` |
 | Behavior | `snow` |
 | Semantic | `<div>` |
-| Root CSS Class | `wb-snow` |
+| Root CSS Class | `x-snow` |
 | Category | Effects |
 | Schema | `src/wb-models/snow.schema.json` |
 
@@ -24,24 +24,24 @@ Falling snow animation effect.
 | `delay` | string | `"0s"` | Start delay |
 | `duration` | string | `"8s"` | Fall duration |
 
-Wrapped in `<wb-demo>`, so the live component renders below with its source shown underneath:
+Wrapped in `<div x-demo>`, so the live component renders below with its source shown underneath:
 
-<wb-demo>
-<wb-snow
+<div x-demo>
+<div x-snow
   count="100"
   label="Snow!">
-</wb-snow>
-</wb-demo>
+</div>
+</div>
 
 ## Usage
 
 ### Custom Element
 
 ```html
-<wb-snow
+<div x-snow
   count="100"
   label="Snow!">
-</wb-snow>
+</div>
 ```
 
 ### Data Attribute
@@ -56,30 +56,30 @@ Wrapped in `<wb-demo>`, so the live component renders below with its source show
 ### Background Snow (Auto-Start)
 
 ```html
-<wb-snow
+<div x-snow
   count="100"
   showButton="false"
   repeat>
-</wb-snow>
+</div>
 ```
 
 ### Single Pass (No Loop)
 
 ```html
-<wb-snow
+<div x-snow
   count="50"
   repeat="false">
-</wb-snow>
+</div>
 ```
 
 ## Generated Structure
 
 ```html
-<div class="wb-snow">
+<div class="x-snow">
   <!-- Button (when showButton is true) -->
-  <button class="wb-snow__button">Let it Snow!</button>
+  <button class="x-snow__button">Let it Snow!</button>
   <!-- Snowflake container -->
-  <div class="wb-snow__container">
+  <div class="x-snow__container">
     <!-- Snowflakes are dynamically created -->
   </div>
 </div>
@@ -94,7 +94,7 @@ Wrapped in `<wb-demo>`, so the live component renders below with its source show
 | `toggle()` | Toggles snow on/off |
 
 ```javascript
-const snow = document.querySelector('wb-snow');
+const snow = document.querySelector('x-snow');
 
 // Start snow
 snow.start();
@@ -127,8 +127,8 @@ snow.addEventListener('wb:snow:stop', () => {
 
 | Variable | Default | Description |
 |----------|---------|-------------|
-| `--wb-snow-z-index` | `9999` | Z-index for overlay |
-| `--wb-snow-color` | `#ffffff` | Snowflake color |
+| `--x-snow-z-index` | `9999` | Z-index for overlay |
+| `--x-snow-color` | `#ffffff` | Snowflake color |
 
 ## Schema
 

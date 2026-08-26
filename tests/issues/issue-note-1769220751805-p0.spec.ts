@@ -19,7 +19,7 @@ const CATEGORIES = [
 
 test.describe('Issue note-1769220751805-p0: Category Buttons Scroll Navigation', () => {
   test.beforeEach(async ({ page }) => {
-    await page.goto('http://localhost:3000/?page=behaviors');
+    await page.goto('/?page=behaviors');
     await page.waitForLoadState('networkidle');
   });
 

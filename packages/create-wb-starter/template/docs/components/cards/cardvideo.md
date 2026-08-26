@@ -6,10 +6,10 @@ Card with an embedded video player. Uses `<video>` element with accessibility co
 
 | Property | Value |
 |----------|-------|
-| Custom Tag | `<wb-cardvideo>` |
+| Custom Tag | `<div x-cardvideo>` |
 | Behavior | `cardvideo` |
 | Semantic | `<article>` + `<figure>` + `<video>` |
-| Root CSS Class | `wb-card wb-card-video` |
+| Root CSS Class | `x-card x-card-video` |
 | Composes | card structure + CSS (no base class) |
 
 ## Properties
@@ -25,40 +25,40 @@ Supports every [card property](./card.md) — that shared structure and CSS are 
 | `loop` | boolean | `false` | Loop playback |
 | `controls` | boolean | `true` | Show controls |
 
-Wrapped in `<wb-demo>`, so the live component renders below with its source shown underneath:
+Wrapped in `<div x-demo>`, so the live component renders below with its source shown underneath:
 
-<wb-demo>
-<wb-cardvideo
+<div x-demo>
+<div x-cardvideo
   src="/videos/demo.mp4"
-  poster="/images/poster.jpg"
+  poster="https://picsum.photos/seed/poster/800/450"
   title="Demo Video"
   controls>
-</wb-cardvideo>
-</wb-demo>
+</div>
+</div>
 
 ## Usage
 
 ### Basic Video Card
 
 ```html
-<wb-cardvideo
+<div x-cardvideo
   src="/videos/demo.mp4"
-  poster="/images/poster.jpg"
+  poster="https://picsum.photos/seed/poster/800/450"
   title="Demo Video"
   controls>
-</wb-cardvideo>
+</div>
 ```
 
 ### Autoplay (Muted)
 
 ```html
-<wb-cardvideo
+<div x-cardvideo
   src="/videos/background.mp4"
   autoplay
   muted
   loop
   title="Background Video">
-</wb-cardvideo>
+</div>
 ```
 
 ## Accessibility
@@ -66,7 +66,7 @@ Wrapped in `<wb-demo>`, so the live component renders below with its source show
 Videos without captions will display a warning indicator. Add `<track>` elements for captions:
 
 ```html
-<wb-cardvideo
+<div x-cardvideo
   src="/video.mp4"
   title="Accessible Video">
   <track
@@ -74,7 +74,7 @@ Videos without captions will display a warning indicator. Add `<track>` elements
     src="/captions.vtt"
     srclang="en"
     label="English">
-</wb-cardvideo>
+</div>
 ```
 
 ## Schema

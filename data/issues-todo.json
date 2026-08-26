@@ -102,7 +102,7 @@
     {
       "id": "note-1769212344261-p0",
       "type": "UI",
-      "description": "remove wb-issues refs not in navbar",
+      "description": "remove x-issues refs not in navbar",
       "date": "1/23/2026",
       "fixed": false
     },

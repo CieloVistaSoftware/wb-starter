@@ -35,5 +35,5 @@ results.forEach(r => {
 });
 
 // Write to JSON for easier processing
-fs.writeFileSync('data/data-wb-artifacts.json', JSON.stringify(results, null, 2));
-console.log('\nResults saved to data/data-wb-artifacts.json');
+fs.writeFileSync('data/data-x-artifacts.json', JSON.stringify(results, null, 2));
+console.log('\nResults saved to data/data-x-artifacts.json');

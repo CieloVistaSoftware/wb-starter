@@ -29,11 +29,11 @@ The generator has a renderer per component type found in `$view`:
 
 | $view tag | Renderer | Data source |
 |-----------|----------|-------------|
-| wb-cardhero | renderHero | properties.hero.properties defaults |
-| wb-container | renderContainer | properties.stats, properties.actions defaults + $view.children tree |
-| wb-grid | renderGrid | properties.features defaults |
-| wb-stack | renderStack | properties.notifications defaults (outputs wb-cardnotification) |
-| wb-audio | renderAudio | properties.audio.properties defaults |
+| x-cardhero | renderHero | properties.hero.properties defaults |
+| x-container | renderContainer | properties.stats, properties.actions defaults + $view.children tree |
+| x-grid | renderGrid | properties.features defaults |
+| x-stack | renderStack | properties.notifications defaults (outputs x-cardnotification) |
+| x-audio | renderAudio | properties.audio.properties defaults |
 
 ### Rules enforced at generation time
 - Zero inline `style=` attributes (pageRules.noInlineStyles)
@@ -65,39 +65,39 @@ Row-based system. Each row stacks vertically. Columns collapse to 1 on mobile (m
 
 ## Page Rules
 - `fragment: true` — no DOCTYPE/html/head/body (server wraps it)
-- `showcase: false` — no wb-demo wrappers
+- `showcase: false` — no x-demo wrappers
 - `noInlineStyles: true` — zero style= attributes in generated HTML
 - `noPageSpecificCSS: true` — no page-specific CSS file
 
 ## Components
 
-### Hero (wb-cardhero)
+### Hero (x-cardhero)
 - Variant: cosmic
 - Attributes: pretitle, title, subtitle, cta, cta-secondary
 - The generator outputs an explicit `<h1>` before the hero tag
 
-### Stats (wb-container > wb-row > wb-cardstats ×4)
+### Stats (x-container > x-row > x-cardstats ×4)
 - Four stats: 100+ Behaviors, Light DOM Only, <1s Build Time, 100% Standards
-- Each wb-cardstats has value, label, icon attributes
+- Each x-cardstats has value, label, icon attributes
 - Action buttons below divider: Ripple (x-ripple), Tooltip (x-tooltip), Confetti (x-confetti), Copy (x-copy)
 
-### Features (wb-grid > wb-card[variant=float] ×6)
+### Features (x-grid > x-card[variant=float] ×6)
 - Six feature cards with emoji titles and descriptions
 - Component Library, Behaviors System, Theme Engine, Data Viz, Accessible, Performance
 
-### Notifications (wb-stack > wb-cardnotification ×4)
+### Notifications (x-stack > x-cardnotification ×4)
 - Tag is `<div x-cardnotification>` (NOT notification-card — that tag does not exist)
 - Attribute is `variant` (NOT type — variant is the v3.0 standard)
 - All 4 variants: info, success, warning, error
 - Each has title and message attributes
 
-### Audio (wb-audio)
+### Audio (x-audio)
 - Audio player with EQ visualization
 - Attributes: src, show-eq (boolean presence), volume
 
 ## CSS Dependencies
-- `src/styles/site.css` — provides `display: block` for wb-audio, wb-cardhero, wb-cardstats, notification-card
-- `src/styles/behaviors/audio.css` — wb-audio's self-contained styles (.wb-audio class)
+- `src/styles/site.css` — provides `display: block` for x-audio, x-cardhero, x-cardstats, notification-card
+- `src/styles/behaviors/audio.css` — x-audio's self-contained styles (.x-audio class)
 - `src/styles/behaviors/notification.css` — notification variant colors
 - `.page-layout` class in site.css — flex column with gap for page sections
 
@@ -111,7 +111,7 @@ The intended workflow:
 
 ### Test files
 - **Schema permutation tests:** `tests/behaviors/ui/home-page-permutation.spec.ts`
-  - Layout assertions (no wb-demo, no inline styles, fragment, section order)
+  - Layout assertions (no x-demo, no inline styles, fragment, section order)
   - Component assertions (tag counts, attributes, text content, hydration classes)
   - Mobile-first visual assertions (375px breakpoint, grid collapse, no overflow)
   - Fluent layout assertions (no builder artifacts, stat height, no horizontal scroll)
@@ -128,7 +128,7 @@ The intended workflow:
 - `fluent` — noDashedBorders, noBuilderBackground, noForcedMinHeight, maxStatHeight 300, maxSectionGap 1000
 
 ## Card inventory
-All 19 card types are defined in `src/wb-viewmodels/card.js` (~1900 lines). The home page uses: wb-cardhero, wb-cardstats, wb-card (base with variant=float), wb-cardnotification.
+All 19 card types are defined in `src/wb-viewmodels/card.js` (~1900 lines). The home page uses: x-cardhero, x-cardstats, x-card (base with variant=float), x-cardnotification.
 
 ## RETIRED
 - `page.schema.json` with `requiredZones` (.page__hero, .page__section) — archived to `archive/page.schema.json`

@@ -28,7 +28,7 @@ async function injectAndScan(page: Page, html: string) {
     document.body.appendChild(container);
   }, html);
   await page.locator('#darkmode-test-container').scrollIntoViewIfNeeded();
-  await page.evaluate(() => (window as any).WB.scan(document.getElementById('darkmode-test-container')));
+  await page.evaluate(async () => await (window as any).WB.scan(document.getElementById('darkmode-test-container')));
   await page.waitForTimeout(400);
 }
 
@@ -37,7 +37,7 @@ test.describe('x-darkmode target="self"', () => {
     await injectAndScan(page, '<div id="dm" x-darkmode target="self" theme="cyberpunk">card</div>');
     const el = page.locator('#dm');
     await expect(el).toHaveAttribute('data-theme', 'cyberpunk');
-    await expect(el).toHaveClass(/wb-darkmode/);
+    await expect(el).toHaveClass(/x-darkmode/);
   });
 
   test('stays forced even after the global theme changes', async ({ page }) => {

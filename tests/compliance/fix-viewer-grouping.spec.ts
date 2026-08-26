@@ -42,7 +42,7 @@ test.describe('Fix Viewer Grouping', () => {
 
     await page.goto('/public/fix-viewer.html');
     // #541: explicit 30000ms to match fix-viewer.spec.ts's beforeEach — this
-    // page's client-side render work (WB.init autoInject scan, wb-fix-card
+    // page's client-side render work (WB.init autoInject scan, x-fix-card
     // custom-element upgrade, mdhtml processing) measured 4-13s even under
     // light contention locally, and the full 79-file compliance project's 8
     // parallel workers pushed that past the previous (implicit, un-timed)

@@ -1,0 +1,23 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "fill.schema.json",
+  "title": "Fill",
+  "description": "Makes an element as wide as its container allows, using the property that actually governs width in the parent's layout",
+  "schemaFor": "fill",
+  "baseClass": "x-fill",
+  "semanticElement": {
+    "tagName": "div"
+  },
+  "compliance": {
+    "baseClass": "x-fill",
+    "supportLevel": "stable",
+    "accessibility": "high"
+  },
+  "properties": {
+    "ignoreMaxWidth": {
+      "type": "boolean",
+      "description": "Override an inherited max-width. Off by default: a cap set by a variant class or design token is usually a deliberate constraint, and 'as wide as possible' still means 'as wide as you are allowed to be'. Turn this on when the cap is the thing in the way.",
+      "default": false
+    }
+  }
+}

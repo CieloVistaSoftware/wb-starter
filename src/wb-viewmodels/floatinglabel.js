@@ -34,7 +34,7 @@ let uid = 0;
 
 export function floatinglabel(element, options = {}) {
   const wrapper = document.createElement('div');
-  wrapper.className = 'wb-floating-label';
+  wrapper.className = 'x-floating-label';
   element.parentNode.insertBefore(wrapper, element);
   wrapper.appendChild(element);
 
@@ -54,12 +54,12 @@ export function floatinglabel(element, options = {}) {
     // element.id made the element its own collision match, so the loop never
     // ended and the renderer hung (#786).
     let candidate;
-    do { candidate = `wb-floating-label-${++uid}`; } while (document.getElementById(candidate));
+    do { candidate = `x-floating-label-${++uid}`; } while (document.getElementById(candidate));
     element.id = candidate;
   }
 
   const label = document.createElement('label');
-  label.className = 'wb-floating-label__label';
+  label.className = 'x-floating-label__label';
   label.textContent = text;
   label.htmlFor = element.id;
   wrapper.appendChild(label);
@@ -88,7 +88,7 @@ export function floatinglabel(element, options = {}) {
 
   const checkValue = () => {
     wrapper.classList.toggle(
-      'wb-floating-label--active',
+      'x-floating-label--active',
       Boolean(element.value) || document.activeElement === element,
     );
   };

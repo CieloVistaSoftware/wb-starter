@@ -1,5 +1,5 @@
 {
-  "$extends": "wb-page-defaults",
+  "$extends": "x-page-defaults",
   "title": "🧩 Multi-Component Demo",
   "schemaFor": "multi-component-demo",
   "header": {
@@ -41,11 +41,11 @@
     },
     {
       "heading": "Custom Hand-Authored Section",
-      "tag": "wb-badge",
+      "tag": "x-badge",
       "columns": 2,
       "demos": [
-        { "tag": "wb-badge", "attrs": { "label": "Hand-crafted", "variant": "primary", "pill": true } },
-        { "tag": "wb-badge", "attrs": { "label": "Also custom", "variant": "success", "size": "lg" } }
+        { "tag": "x-badge", "attrs": { "label": "Hand-crafted", "variant": "primary", "pill": true } },
+        { "tag": "x-badge", "attrs": { "label": "Also custom", "variant": "success", "size": "lg" } }
       ]
     }
   ]

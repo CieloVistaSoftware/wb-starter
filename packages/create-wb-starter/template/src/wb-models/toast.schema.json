@@ -2,15 +2,15 @@
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "toast.schema.json",
   "title": "Toast",
-  "description": "Toast notification system for temporary messages. Container (.wb-toast-container, feedback.js's createToast()) is fixed-positioned below the site header rather than the viewport top -- top: calc(var(--site-header-height) + 1rem), so toasts never cover the nav/logo. --site-header-height (site.css) defaults to 0 and is only set to 64px when the page actually has a .site__header, so standalone pages without one are unaffected.",
+  "description": "Toast notification system for temporary messages. Container (.x-toast-container, feedback.js's createToast()) is fixed-positioned below the site header rather than the viewport top -- top: calc(var(--site-header-height) + 1rem), so toasts never cover the nav/logo. --site-header-height (site.css) defaults to 0 and is only set to 64px when the page actually has a .site__header, so standalone pages without one are unaffected.",
   "schemaFor": "toast",
-  "baseClass": "wb-toast",
+  "baseClass": "x-toast",
   "semanticElement": {
     "tagName": "div",
     "implicitRole": "alert"
   },
   "compliance": {
-    "baseClass": "wb-toast",
+    "baseClass": "x-toast",
     "supportLevel": "stable",
     "accessibility": "high"
   },
@@ -36,7 +36,7 @@
         "error"
       ],
       "default": "info",
-      "appliesClass": "wb-toast--{{value}}"
+      "appliesClass": "x-toast--{{value}}"
     },
     "icon": {
       "type": "string",
@@ -212,91 +212,91 @@
     }
   },
   "$cssAPI": {
-    "--wb-toast-min-width": {
+    "--x-toast-min-width": {
       "default": "300px",
       "description": "Minimum toast width"
     },
-    "--wb-toast-max-width": {
+    "--x-toast-max-width": {
       "default": "400px",
       "description": "Maximum toast width"
     },
-    "--wb-toast-padding": {
+    "--x-toast-padding": {
       "default": "1rem",
       "description": "Toast padding"
     },
-    "--wb-toast-radius": {
+    "--x-toast-radius": {
       "default": "8px",
       "description": "Border radius"
     },
-    "--wb-toast-shadow": {
+    "--x-toast-shadow": {
       "default": "0 4px 12px rgba(0,0,0,0.15)",
       "description": "Toast shadow"
     },
-    "--wb-toast-gap": {
+    "--x-toast-gap": {
       "default": "0.75rem",
       "description": "Gap between icon, content, and actions"
     },
-    "--wb-toast-stack-gap": {
+    "--x-toast-stack-gap": {
       "default": "0.5rem",
       "description": "Gap between stacked toasts"
     },
-    "--wb-toast-z-index": {
+    "--x-toast-z-index": {
       "default": "9999",
       "description": "Toast container z-index"
     },
-    "--wb-toast-title-size": {
+    "--x-toast-title-size": {
       "default": "0.875rem",
       "description": "Title font size"
     },
-    "--wb-toast-title-weight": {
+    "--x-toast-title-weight": {
       "default": "600",
       "description": "Title font weight"
     },
-    "--wb-toast-message-size": {
+    "--x-toast-message-size": {
       "default": "0.875rem",
       "description": "Message font size"
     },
-    "--wb-toast-icon-size": {
+    "--x-toast-icon-size": {
       "default": "1.25rem",
       "description": "Icon size"
     },
-    "--wb-toast-info-bg": {
+    "--x-toast-info-bg": {
       "default": "#3b82f6",
       "description": "Info variant background"
     },
-    "--wb-toast-info-color": {
+    "--x-toast-info-color": {
       "default": "#ffffff",
       "description": "Info variant text color"
     },
-    "--wb-toast-success-bg": {
+    "--x-toast-success-bg": {
       "default": "#22c55e",
       "description": "Success variant background"
     },
-    "--wb-toast-success-color": {
+    "--x-toast-success-color": {
       "default": "#ffffff",
       "description": "Success variant text color"
     },
-    "--wb-toast-warning-bg": {
+    "--x-toast-warning-bg": {
       "default": "#f59e0b",
       "description": "Warning variant background"
     },
-    "--wb-toast-warning-color": {
+    "--x-toast-warning-color": {
       "default": "#ffffff",
       "description": "Warning variant text color"
     },
-    "--wb-toast-error-bg": {
+    "--x-toast-error-bg": {
       "default": "#ef4444",
       "description": "Error variant background"
     },
-    "--wb-toast-error-color": {
+    "--x-toast-error-color": {
       "default": "#ffffff",
       "description": "Error variant text color"
     },
-    "--wb-toast-enter-animation": {
+    "--x-toast-enter-animation": {
       "default": "slideIn 0.3s ease",
       "description": "Enter animation"
     },
-    "--wb-toast-exit-animation": {
+    "--x-toast-exit-animation": {
       "default": "slideOut 0.2s ease",
       "description": "Exit animation"
     }
@@ -324,15 +324,15 @@
   },
   "test": {
     "setup": [
-      "<wb-toast>Basic toast content</wb-toast>",
-      "<wb-toast variant=\"info\">variant=info</wb-toast>",
-      "<wb-toast variant=\"success\">variant=success</wb-toast>",
-      "<wb-toast variant=\"warning\">variant=warning</wb-toast>",
-      "<wb-toast position=\"top-right\">position=top-right</wb-toast>",
-      "<wb-toast position=\"top-left\">position=top-left</wb-toast>",
-      "<wb-toast position=\"top-center\">position=top-center</wb-toast>",
-      "<wb-toast dismissible>with dismissible</wb-toast>",
-      "<wb-toast title=\"Test Title\">With title attribute</wb-toast>"
+      "<div x-toast>Basic toast content</div>",
+      "<div x-toast variant=\"info\">variant=info</div>",
+      "<div x-toast variant=\"success\">variant=success</div>",
+      "<div x-toast variant=\"warning\">variant=warning</div>",
+      "<div x-toast position=\"top-right\">position=top-right</div>",
+      "<div x-toast position=\"top-left\">position=top-left</div>",
+      "<div x-toast position=\"top-center\">position=top-center</div>",
+      "<div x-toast dismissible>with dismissible</div>",
+      "<div x-toast title=\"Test Title\">With title attribute</div>"
     ],
     "matrix": {
       "combinations": [
@@ -375,15 +375,15 @@
     },
     "site": {
       "page": "feedback",
-      "tag": "wb-toast",
+      "tag": "x-toast",
       "renders": true,
-      "baseClass": "wb-toast",
+      "baseClass": "x-toast",
       "minInstances": 9,
       "checkText": [
         "Test"
       ],
       "checkClasses": [
-        "wb-toast--success"
+        "x-toast--success"
       ],
       "checkAttributes": [
         "message"

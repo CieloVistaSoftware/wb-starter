@@ -14,7 +14,7 @@ Self-contained, independently distributable content using the `<article>` elemen
 
 ```html
 <!-- Basic article -->
-<wb-article>
+<div x-article>
   <header>
     <h2>Article Title</h2>
     <p>Article subtitle or excerpt</p>
@@ -23,17 +23,17 @@ Self-contained, independently distributable content using the `<article>` elemen
   <footer>
     <time datetime="2024-12-15">December 15, 2024</time>
   </footer>
-</wb-article>
+</div>
 <!-- Card as article -->
-<wb-card variant="article">
-  <wb-card-header>
-    <wb-card-title>Blog Post Title</wb-card-title>
-    <wb-card-subtitle>By Author Name</wb-card-subtitle>
-  </wb-card-header>
-  <wb-card-content>
+<article variant="article">
+  <div>
+    <div>Blog Post Title</div>
+    <div>By Author Name</div>
+  </div>
+  <div>
     <p>Article content...</p>
-  </wb-card-content>
-</wb-card>
+  </div>
+</article>
 ```
 
 ### Accessibility Features
@@ -53,7 +53,7 @@ Tangentially related content and supplementary information using the `<aside>` e
 
 ```html
 <!-- Sidebar content -->
-<wb-aside>
+<aside>
   <h3>Related Links</h3>
   <ul>
     <li>
@@ -63,15 +63,15 @@ Tangentially related content and supplementary information using the `<aside>` e
       <a href="#link2">Related Article 2</a>
     </li>
   </ul>
-</wb-aside>
+</aside>
 <!-- Notification aside -->
-<wb-aside role="alert">
-  <wb-alert
+<aside role="alert">
+  <div x-alert
     type="info"
     title="Important Notice">
     This information is supplementary to the main content.
-  </wb-alert>
-</wb-aside>
+  </div>
+</aside>
 ```
 
 ### Accessibility Features
@@ -91,20 +91,20 @@ Self-contained media with optional caption using `<figure>` and `<figcaption>` e
 
 ```html
 <!-- Image with caption -->
-<wb-figure>
+<figure>
   <img
-    src="diagram.png"
+    src="https://picsum.photos/seed/diagram/600/400"
     alt="Process flow diagram">
-  <wb-figcaption>Figure 1: Overview of the process flow</wb-figcaption>
-</wb-figure>
+  <figcaption>Figure 1: Overview of the process flow</figcaption>
+</figure>
 <!-- Code block figure -->
-<wb-figure>
+<figure>
   <pre><code>// Example code
 function hello() {
   console.log('Hello, World!');
 }</code></pre>
-  <wb-figcaption>Listing 1: Basic JavaScript function</wb-figcaption>
-</wb-figure>
+  <figcaption>Listing 1: Basic JavaScript function</figcaption>
+</figure>
 ```
 
 ### Best Practices
@@ -124,22 +124,22 @@ Contact information for the author or organization using the `<address>` element
 
 ```html
 <!-- Author contact info -->
-<wb-address>
+<address>
   <strong>John Doe</strong>
   <br>
   <a href="mailto:john@example.com">john@example.com</a>
   <br>
   <a href="tel:+1234567890">(123) 456-7890</a>
   <br> San Francisco, CA
-</wb-address>
+</address>
 <!-- Organization contact -->
-<wb-address>
+<address>
   <strong>Acme Corporation</strong>
   <br> 123 Business St
   <br> Business City, ST 12345
   <br>
   <a href="mailto:info@acme.com">info@acme.com</a>
-</wb-address>
+</address>
 ```
 
 ### Accessibility Features
@@ -159,19 +159,19 @@ Extended quotations with attribution using `<blockquote>` and `<cite>` elements.
 
 ```html
 <!-- Testimonial blockquote -->
-<wb-blockquote cite="https://example.com/source">
+<blockquote cite="https://example.com/source">
   <p>"This product has completely transformed our workflow. The ease of use and powerful features make it indispensable for our team."</p>
   <footer>
-    <wb-cite>— Sarah Johnson, CTO at TechCorp</wb-cite>
+    <div>— Sarah Johnson, CTO at TechCorp</div>
   </footer>
-</wb-blockquote>
+</blockquote>
 <!-- Quote with source -->
-<wb-blockquote>
+<blockquote>
   <p>"The best way to predict the future is to create it."</p>
   <footer>
-    <wb-cite>— Peter Drucker</wb-cite>
+    <div>— Peter Drucker</div>
   </footer>
-</wb-blockquote>
+</blockquote>
 ```
 
 ### Best Practices
@@ -191,15 +191,15 @@ Machine-readable value linked to human-readable content using the `<data>` eleme
 
 ```html
 <!-- Statistics -->
-<wb-data value="1234567">1.2M</wb-data> users <!-- Metrics -->
+<data value="1234567">1.2M</data> users <!-- Metrics -->
 <div class="stats">
-  <wb-data value="95">95%</wb-data> uptime <wb-data value="1500000">$1.5M</wb-data> revenue <wb-data value="50000">50K</wb-data> downloads
+  <data value="95">95%</data> uptime <data value="1500000">$1.5M</data> revenue <data value="50000">50K</data> downloads
 </div>
 <!-- Progress data -->
-<wb-progress
+<progress
   value="75"
   max="100">
-  <wb-data value="75">75%</wb-data> complete </wb-progress>
+  <data value="75">75%</data> complete </progress>
 ```
 
 ### Accessibility Features
@@ -219,15 +219,15 @@ Machine-readable date/time using the `<time>` element.
 
 ```html
 <!-- Publication date -->
-<wb-time datetime="2024-12-15T10:30:00Z"> Published December 15, 2024 </wb-time>
+<time datetime="2024-12-15T10:30:00Z"> Published December 15, 2024 </time>
 <!-- Event date -->
-<wb-time datetime="2024-06-15T19:00:00"> June 15, 2024 at 7:00 PM </wb-time>
+<time datetime="2024-06-15T19:00:00"> June 15, 2024 at 7:00 PM </time>
 <!-- Relative time -->
-<wb-time
+<time
   datetime="2024-12-10T08:00:00Z"
   title="December 10, 2024">
   5 days ago
-</wb-time>
+</time>
 ```
 
 ### Best Practices
@@ -247,21 +247,21 @@ Navigation links section using the `<nav>` element.
 
 ```html
 <!-- Main navigation -->
-<wb-nav aria-label="Main navigation">
-  <wb-menu>
-    <wb-menu-item href="/">Home</wb-menu-item>
-    <wb-menu-item href="/about">About</wb-menu-item>
-    <wb-menu-item href="/contact">Contact</wb-menu-item>
-  </wb-menu>
-</wb-nav>
+<nav aria-label="Main navigation">
+  <menu>
+    <li href="/">Home</li>
+    <li href="/about">About</li>
+    <li href="/contact">Contact</li>
+  </menu>
+</nav>
 <!-- Breadcrumb navigation -->
-<wb-nav aria-label="Breadcrumb">
-  <wb-breadcrumb>
-    <wb-breadcrumb-item href="/">Home</wb-breadcrumb-item>
-    <wb-breadcrumb-item href="/docs">Documentation</wb-breadcrumb-item>
-    <wb-breadcrumb-item>Semantic HTML</wb-breadcrumb-item>
-  </wb-breadcrumb>
-</wb-nav>
+<nav aria-label="Breadcrumb">
+  <div x-breadcrumb>
+    <li href="/">Home</li>
+    <li href="/docs">Documentation</li>
+    <li>Semantic HTML</li>
+  </div>
+</nav>
 ```
 
 ### Accessibility Features
@@ -281,21 +281,21 @@ Task completion indicator using the native `<progress>` element.
 
 ```html
 <!-- File upload progress -->
-<wb-progress
+<progress
   value="70"
   max="100"
   label="Uploading file...">
   70% complete
-</wb-progress>
+</progress>
 <!-- Task completion -->
-<wb-progress
+<progress
   value="3"
   max="5"
   label="Setup progress">
   Step 3 of 5
-</wb-progress>
+</progress>
 <!-- Indeterminate progress -->
-<wb-progress label="Loading..."> Please wait... </wb-progress>
+<progress label="Loading..."> Please wait... </progress>
 ```
 
 ### Accessibility Features
@@ -315,37 +315,37 @@ Interactive dialog box/modal using the `<dialog>` element.
 
 ```html
 <!-- Modal dialog -->
-<wb-dialog aria-labelledby="dialog-title">
-  <wb-dialog-header>
+<dialog aria-labelledby="dialog-title">
+  <div>
     <h2 id="dialog-title">Confirm Action</h2>
-    <wb-button
+    <button
       variant="ghost"
-      onclick="this.closest('wb-dialog').close()">
+      onclick="this.closest('x-dialog').close()">
       ✕
-    </wb-button>
-  </wb-dialog-header>
-  <wb-dialog-body>
+    </button>
+  </div>
+  <div>
     <p>Are you sure you want to delete this item?</p>
-  </wb-dialog-body>
-  <wb-dialog-footer>
-    <wb-button
+  </div>
+  <div>
+    <button
       variant="outline"
-      onclick="this.closest('wb-dialog').close()">
+      onclick="this.closest('x-dialog').close()">
       Cancel
-    </wb-button>
-    <wb-button
+    </button>
+    <button
       variant="primary"
       onclick="confirmDelete()">
       Delete
-    </wb-button>
-  </wb-dialog-footer>
-</wb-dialog>
+    </button>
+  </div>
+</dialog>
 ```
 
 ### Programmatic API
 
 ```javascript
-const dialog = document.querySelector('wb-dialog');
+const dialog = document.querySelector('x-dialog');
 
 // Open as modal (with backdrop)
 dialog.showModal();
@@ -465,6 +465,6 @@ Semantic components use CSS custom properties for theming:
 
 ## Implementation
 - **Components**: Located in `src/wb-viewmodels/` (article.js, aside.js, figure.js, etc.)
-- **Styles**: [src/styles/components/semantic.css](../../src/styles/components/semantic.css)
+- **Styles**: [src/styles/components/semantic.css](../../../src/styles/behaviors/article.css)
 - **Schemas**: Semantic component schemas in `src/wb-models/`
 - **Tests**: Semantic tests in `tests/behaviors/ui/semantic.spec.ts`

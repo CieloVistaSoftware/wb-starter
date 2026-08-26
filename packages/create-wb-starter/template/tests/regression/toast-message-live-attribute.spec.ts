@@ -29,14 +29,14 @@ test.describe('x-toast reads live attribute values on every click, not just at b
     const expected = ['Count is now 1', 'Count is now 2', 'Count is now 3'];
     for (const text of expected) {
       await button.click();
-      const toasts = page.locator('.wb-toast-container .wb-toast');
+      const toasts = page.locator('.x-toast-container .x-toast');
       await expect(toasts.last(), `toast after clicking to reach "${text}"`).toHaveText(text, { timeout: 3000 });
     }
 
     // All three toasts are distinct -- none of them repeat the first
     // click's message, which is exactly the bug this test guards against
     // (before the fix, all three would read "Count is now 1").
-    const allTexts = await page.locator('.wb-toast-container .wb-toast').allTextContents();
+    const allTexts = await page.locator('.x-toast-container .x-toast').allTextContents();
     expect(new Set(allTexts).size, 'each toast should show a distinct, current count').toBe(3);
   });
 
@@ -60,12 +60,12 @@ test.describe('x-toast reads live attribute values on every click, not just at b
 
     const el = page.locator('#toast-live-attr-test');
     await el.click();
-    await expect(page.locator('.wb-toast-container .wb-toast').last()).toHaveText('first');
+    await expect(page.locator('.x-toast-container .x-toast').last()).toHaveText('first');
 
     await page.evaluate(() => {
       document.getElementById('toast-live-attr-test')!.setAttribute('message', 'second');
     });
     await el.click();
-    await expect(page.locator('.wb-toast-container .wb-toast').last()).toHaveText('second');
+    await expect(page.locator('.x-toast-container .x-toast').last()).toHaveText('second');
   });
 });

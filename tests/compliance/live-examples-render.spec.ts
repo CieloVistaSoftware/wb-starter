@@ -14,18 +14,18 @@ import { globSync } from 'glob';
  *
  * `tests/regression/component-index-doc-coverage.spec.ts` already does
  * this same check ("real rendered content, not empty/placeholder") for
- * every component DOC page (docs/components/**\/*.md, driven by
+ * every component DOC page (docs/behaviors/**\/*.md, driven by
  * data/component-index.json). This test generalizes the same check to the
- * plain demos/**\/*.html and pages/**\/*.html files that render `<wb-demo>`
+ * plain demos/**\/*.html and pages/**\/*.html files that render `<div x-demo>`
  * DIRECTLY (no doc-viewer/mdhtml involved) -- a different rendering path
  * component-index-doc-coverage.spec.ts never exercises, and the one demo.js
  * calls first-class per §16 ("The `demos/` folder exists so users can see
  * how it's done in HTML").
  *
  * Two checks per file:
- *   1. No uncaught page error while the page (and every <wb-demo> on it,
+ *   1. No uncaught page error while the page (and every <div x-demo> on it,
  *      including lazily-built ones) renders.
- *   2. EVERY `<wb-demo>` block's `.wb-demo__grid` renders at least one
+ *   2. EVERY `<div x-demo>` block's `.x-demo__grid` renders at least one
  *      REAL, VISIBLE child -- not empty, not a 0x0 placeholder. A demo
  *      that upgrades to nothing (a typo'd tag name, a behavior that threw
  *      during init and left the grid empty) is exactly the "not empty, not
@@ -42,7 +42,7 @@ const toPosix = (f: string) => f.split(path.sep).join('/');
 
 function hasWbDemo(file: string): boolean {
   try {
-    return fs.readFileSync(file, 'utf8').includes('<wb-demo');
+    return fs.readFileSync(file, 'utf8').includes('<div x-demo');
   } catch {
     return false;
   }
@@ -56,19 +56,19 @@ const HTML_PAGES = [
   .filter((f) => hasWbDemo(path.join(ROOT, f)))
   .sort();
 
-test.describe('Live examples render — every <wb-demo> shows real content, no page errors', () => {
+test.describe('Live examples render — every <div x-demo> shows real content, no page errors', () => {
   for (const rel of HTML_PAGES) {
-    test(`${rel}: every wb-demo renders real content with no page errors`, async ({ page }) => {
+    test(`${rel}: every [x-demo] renders real content with no page errors`, async ({ page }) => {
       const pageErrors: string[] = [];
       page.on('pageerror', (e) => pageErrors.push(String(e)));
 
       await page.goto('/' + rel, { waitUntil: 'domcontentloaded' });
 
-      const demos = page.locator('wb-demo');
+      const demos = page.locator('[x-demo]');
       const demoCount = await demos.count();
-      if (demoCount === 0) test.skip(true, 'no <wb-demo> blocks actually rendered on this page');
+      if (demoCount === 0) test.skip(true, 'no <div x-demo> blocks actually rendered on this page');
 
-      // wb-demo.js only builds the first EAGER_BUILD_COUNT (5) blocks
+      // x-demo.js only builds the first EAGER_BUILD_COUNT (5) blocks
       // synchronously; the rest wait for an IntersectionObserver against the
       // real scroll container. Scroll each into view so lazily-built demos
       // further down the page are actually checked, not silently skipped.
@@ -88,15 +88,15 @@ test.describe('Live examples render — every <wb-demo> shows real content, no p
 
       const emptyDemos = await page.evaluate(() => {
         const problems: string[] = [];
-        document.querySelectorAll('wb-demo').forEach((demo, i) => {
-          const grid = demo.querySelector('.wb-demo__grid');
+        document.querySelectorAll('[x-demo]').forEach((demo, i) => {
+          const grid = demo.querySelector('.x-demo__grid');
           if (!grid) {
-            problems.push(`wb-demo[${i}]: no .wb-demo__grid was built at all`);
+            problems.push(`[x-demo][${i}]: no .x-demo__grid was built at all`);
             return;
           }
           const kids = Array.from(grid.children) as HTMLElement[];
           if (kids.length === 0) {
-            problems.push(`wb-demo[${i}]: .wb-demo__grid built but has zero rendered children`);
+            problems.push(`[x-demo][${i}]: .x-demo__grid built but has zero rendered children`);
             return;
           }
           const anyVisible = kids.some((k) => {
@@ -105,7 +105,7 @@ test.describe('Live examples render — every <wb-demo> shows real content, no p
           });
           if (!anyVisible) {
             const label = (demo.textContent || '').trim().slice(0, 50);
-            problems.push(`wb-demo[${i}] "${label}": has ${kids.length} child(ren) but none has a non-zero rendered size (upgrade likely failed silently)`);
+            problems.push(`x-demo[${i}] "${label}": has ${kids.length} child(ren) but none has a non-zero rendered size (upgrade likely failed silently)`);
           }
         });
         return problems;

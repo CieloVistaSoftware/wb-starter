@@ -49,7 +49,7 @@ test.describe('doc-viewer: narrow-viewport wrap (#295)', () => {
 
     // A table (or a code block) is explicitly allowed to be logically wider
     // than the viewport -- mdhtml.css deliberately gives wide tables their
-    // OWN scrollable wrapper (.wb-mdhtml__table-wrap) rather than forcing
+    // OWN scrollable wrapper (.x-mdhtml__table-wrap) rather than forcing
     // columns to squeeze illegibly (§ the issue's "tables either wrap their
     // cell content or scroll within their own bounded container" fix note).
     // What must never happen is that overflow LEAKING past the page edge --
@@ -115,25 +115,25 @@ test.describe('doc-viewer: narrow-viewport wrap (#295)', () => {
     }
   });
 
-  test('.wb-mdhtml does not allow mid-word breaks (word-break: normal, not break-word)', async ({ page }) => {
+  test('.x-mdhtml does not allow mid-word breaks (word-break: normal, not break-word)', async ({ page }) => {
     await gotoDocAtNarrowWidth(page);
 
     // #448: this container is public/doc-viewer.html's own plain
     // <div id="content"> (mdhtml() is called on it directly, not on a
-    // <wb-mdhtml> tag), so it still carries the `.wb-mdhtml` class -- only
-    // a literal <wb-mdhtml> host has that class removed in favor of the tag.
+    // <div x-mdhtml> tag), so it still carries the `.x-mdhtml` class -- only
+    // a literal <div x-mdhtml> host has that class removed in favor of the tag.
     const style = await page.evaluate(() => {
-      const el = document.querySelector('.wb-mdhtml');
+      const el = document.querySelector('.x-mdhtml');
       if (!el) return null;
       const cs = getComputedStyle(el);
       return { wordBreak: cs.wordBreak, overflowWrap: cs.overflowWrap };
     });
 
-    expect(style, '.wb-mdhtml container should exist').not.toBeNull();
+    expect(style, '.x-mdhtml container should exist').not.toBeNull();
     // break-word / anywhere on the CONTAINER would permit splitting at every
     // opportunity (including inside otherwise-unbreakable hyphenated
     // tokens' surrounding run); the container level must stay "normal" so
     // only real word boundaries wrap, matching the token-protection fix.
-    expect(style!.wordBreak, '.wb-mdhtml word-break should be "normal", not "break-word"').toBe('normal');
+    expect(style!.wordBreak, '.x-mdhtml word-break should be "normal", not "break-word"').toBe('normal');
   });
 });

@@ -82,7 +82,7 @@ Read when: modifying schemas, schema-builder, or MVVM migration work
 | `docs/MVVM-MIGRATION.md` | MVVM migration overview |
 | `docs/MVVM-MIGRATION-PLAN.md` | MVVM migration detailed plan |
 | `docs/architecture/WBVIEWS.md` | WB Views system ($view in schemas) |
-| `docs/wb-parts-spec.md` | `<wb-part>` template system |
+| `docs/wb-parts-spec.md` | `<div>` template system |
 | `docs/property-viewer.md` | Property viewer panel |
 
 ---

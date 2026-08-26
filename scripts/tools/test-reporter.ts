@@ -78,22 +78,47 @@ function stripAnsi(str: string): string {
   return str.replace(/\u001b\[[0-9;]*m/g, '');
 }
 
-// Extract clean error message (first meaningful line)
+/**
+ * Extract a clean error message.
+ *
+ * This used to return ONLY the first meaningful line. Fine for a one-line
+ * assertion -- but the richest specs here collect many findings and report
+ * them together. permutation-compliance.spec.ts raises ONE error whose first
+ * line is "card compliance failures:" and whose actual content is every line
+ * after it. Keeping one line reduced that to a label announcing that a failure
+ * exists, with the reason thrown away.
+ *
+ * The cost was not theoretical: a run reported 109 failures, failures.json
+ * recorded "<name> compliance failures:" 109 times, and it took three wrong
+ * hypotheses to find they were all a single crash on one line. The body would
+ * have said so immediately.
+ *
+ * Stack frames are still dropped -- noise here, and file:line is stored
+ * separately.
+ */
+const MAX_ERROR_LINES = 15;
+const MAX_ERROR_CHARS = 2000;
+
 function cleanErrorMessage(error: any): string {
   if (!error) return 'Unknown error';
-  
+
   const message = error.message || String(error);
   const cleaned = stripAnsi(message);
-  
-  // Get first non-empty line that isn't just "Error:"
+
   const lines = cleaned.split('\n').filter(line => {
     const trimmed = line.trim();
     return trimmed && trimmed !== 'Error:' && !trimmed.startsWith('at ');
   });
-  
-  // Return first line, truncated if too long
-  const firstLine = lines[0] || 'Unknown error';
-  return firstLine.length > 200 ? firstLine.substring(0, 200) + '...' : firstLine;
+
+  if (!lines.length) return 'Unknown error';
+
+  const kept = lines.slice(0, MAX_ERROR_LINES);
+  if (lines.length > MAX_ERROR_LINES) {
+    kept.push(`… ${lines.length - MAX_ERROR_LINES} more line(s)`);
+  }
+
+  const out = kept.join('\n');
+  return out.length > MAX_ERROR_CHARS ? out.substring(0, MAX_ERROR_CHARS) + '…' : out;
 }
 
 class WBTestReporter implements Reporter {

@@ -2,14 +2,14 @@ import { test, expect } from '@playwright/test';
 
 /**
  * x-help Behavior Compliance Tests
- * - Applies wb-help class
+ * - Applies x-help class
  * - Sets role="note"
  * - Renders help text
  * - Accessible
  */
 
 test.describe('x-help behavior', () => {
-  test('applies wb-help class and role', async ({ page }) => {
+  test('applies x-help class and role', async ({ page }) => {
     await page.goto('index.html');
     await page.evaluate(() => {
       const el = document.createElement('span');
@@ -19,7 +19,7 @@ test.describe('x-help behavior', () => {
       (window as any).WB.scan(el);
     });
     const help = page.locator('span[x-help]');
-    await expect(help).toHaveClass(/wb-help/);
+    await expect(help).toHaveClass(/x-help/);
     await expect(help).toHaveAttribute('role', 'note');
     await expect(help).toHaveText('This is help text');
   });
@@ -36,7 +36,7 @@ test.describe('x-help behavior', () => {
         (window as any).WB.scan(el);
       }, txt);
       const help = page.locator('div[x-help]', { hasText: txt });
-      await expect(help).toHaveClass(/wb-help/);
+      await expect(help).toHaveClass(/x-help/);
       await expect(help).toHaveAttribute('role', 'note');
       await expect(help).toHaveText(txt);
       await help.evaluate((el) => el.remove());

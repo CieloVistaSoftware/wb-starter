@@ -4,13 +4,13 @@
   "title": "Minimizable Card",
   "description": "Card with minimize/expand toggle button in header",
   "schemaFor": "cardminimizable",
-  "baseClass": "wb-card-minimizable",
+  "baseClass": "x-card-minimizable",
   "semanticElement": {
     "tagName": "article",
     "implicitRole": "article"
   },
   "compliance": {
-    "baseClass": "wb-card-minimizable",
+    "baseClass": "x-card-minimizable",
     "supportLevel": "stable",
     "accessibility": "high"
   },
@@ -30,7 +30,7 @@
       "type": "boolean",
       "description": "Initial minimized state",
       "default": false,
-      "appliesClass": "wb-card-minimizable--minimized"
+      "appliesClass": "x-card-minimizable--minimized"
     },
     "variant": {
       "type": "string",
@@ -40,7 +40,7 @@
         "bordered"
       ],
       "default": "default",
-      "appliesClass": "wb-card-minimizable--{{value}}"
+      "appliesClass": "x-card-minimizable--{{value}}"
     }
   },
   "$view": [
@@ -95,19 +95,19 @@
     }
   },
   "$cssAPI": {
-    "--wb-card-minimizable-padding": {
+    "--x-card-minimizable-padding": {
       "default": "1rem",
       "description": "Card padding"
     },
-    "--wb-card-minimizable-radius": {
+    "--x-card-minimizable-radius": {
       "default": "8px",
       "description": "Border radius"
     },
-    "--wb-card-minimizable-transition": {
+    "--x-card-minimizable-transition": {
       "default": "all 0.3s ease",
       "description": "Minimize transition"
     },
-    "--wb-card-minimizable-btn-size": {
+    "--x-card-minimizable-btn-size": {
       "default": "24px",
       "description": "Button size"
     }
@@ -122,14 +122,14 @@
   },
   "test": {
     "setup": [
-      "<wb-cardminimizable>Basic cardminimizable content</wb-cardminimizable>",
-      "<wb-cardminimizable variant=\"default\">variant=default</wb-cardminimizable>",
-      "<wb-cardminimizable variant=\"elevated\">variant=elevated</wb-cardminimizable>",
-      "<wb-cardminimizable variant=\"bordered\">variant=bordered</wb-cardminimizable>",
-      "<wb-cardminimizable minimized>with minimized</wb-cardminimizable>",
-      "<wb-cardminimizable title=\"Sample title\">title=\"Sample title\"</wb-cardminimizable>",
-      "<wb-cardminimizable content=\"Sample content\">content=\"Sample content\"</wb-cardminimizable>",
-      "<wb-card-minimizable title=\"Panel\">Content</wb-card-minimizable>"
+      "<div x-cardminimizable>Basic cardminimizable content</div>",
+      "<div x-cardminimizable variant=\"default\">variant=default</div>",
+      "<div x-cardminimizable variant=\"elevated\">variant=elevated</div>",
+      "<div x-cardminimizable variant=\"bordered\">variant=bordered</div>",
+      "<div x-cardminimizable minimized>with minimized</div>",
+      "<div x-cardminimizable title=\"Sample title\">title=\"Sample title\"</div>",
+      "<div x-cardminimizable content=\"Sample content\">content=\"Sample content\"</div>",
+      "<div x-cardminimizable title=\"Panel\">Content</div>"
     ],
     "matrix": {
       "combinations": [
@@ -146,16 +146,16 @@
     },
     "site": {
       "page": "cards",
-      "tag": "wb-cardminimizable",
+      "tag": "x-cardminimizable",
       "renders": true,
-      "baseClass": "wb-card-minimizable",
+      "baseClass": "x-card-minimizable",
       "minInstances": 2,
       "checkText": [
         "Basic",
         "Minimized"
       ],
       "checkClasses": [
-        "wb-card-minimizable--elevated"
+        "x-card-minimizable--elevated"
       ],
       "checkAttributes": [
         "title",

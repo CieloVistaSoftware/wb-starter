@@ -23,7 +23,7 @@
   "properties": {
     "hero": {
       "type": "object",
-      "description": "Hero section using wb-cardhero.",
+      "description": "Hero section using x-cardhero.",
       "required": true,
       "properties": {
         "variant": { "type": "string", "default": "cosmic" },
@@ -38,7 +38,7 @@
     },
     "stats": {
       "type": "array",
-      "description": "Stats row using wb-cardstats inside wb-container.",
+      "description": "Stats row using x-cardstats inside x-container.",
       "minItems": 4,
       "maxItems": 4,
       "items": {
@@ -75,7 +75,7 @@
     },
     "features": {
       "type": "array",
-      "description": "Feature cards in a wb-grid layout.",
+      "description": "Feature cards in a x-grid layout.",
       "minItems": 6,
       "items": {
         "type": "object",
@@ -128,13 +128,13 @@
     "supportLevel": "stable",
     "accessibility": "high",
     "requiredChildren": {
-      "wb-cardhero": { "required": true },
-      "wb-cardstats": { "minCount": 4 },
-      "wb-card[variant=float]": { "minCount": 6 },
-      "wb-grid": { "required": true },
-      "wb-container": { "required": true },
-      "wb-audio": { "required": true },
-      "wb-cardnotification": { "minCount": 4 }
+      "x-cardhero": { "required": true },
+      "x-cardstats": { "minCount": 4 },
+      "x-card[variant=float]": { "minCount": 6 },
+      "x-grid": { "required": true },
+      "x-container": { "required": true },
+      "x-audio": { "required": true },
+      "x-cardnotification": { "minCount": 4 }
     }
   },
   "interactions": {
@@ -148,7 +148,7 @@
   "$view": [
     {
       "name": "hero",
-      "tag": "wb-cardhero",
+      "tag": "x-cardhero",
       "public": true,
       "required": true,
       "description": "Hero banner. Full-bleed width.",
@@ -164,7 +164,7 @@
     },
     {
       "name": "stats",
-      "tag": "wb-container",
+      "tag": "x-container",
       "public": true,
       "required": true,
       "description": "Stats panel. Contained at 900px.",
@@ -174,18 +174,18 @@
       ],
       "children": [
         {
-          "tag": "wb-grid",
+          "tag": "x-grid",
           "required": true,
           "attributes": [
             { "name": "columns", "example": "4" }
           ],
           "children": [
-            { "tag": "wb-cardstats", "required": true, "minCount": 4 }
+            { "tag": "x-cardstats", "required": true, "minCount": 4 }
           ]
         },
-        { "tag": "div", "className": "wb-divider", "required": true },
+        { "tag": "div", "className": "x-divider", "required": true },
         {
-          "tag": "wb-row",
+          "tag": "x-row",
           "required": true,
           "attributes": [
             { "name": "justify", "example": "center" },
@@ -199,27 +199,27 @@
     },
     {
       "name": "features",
-      "tag": "wb-grid",
+      "tag": "x-grid",
       "public": true,
       "required": true,
       "description": "Feature cards. Contained width.",
       "children": [
-        { "tag": "wb-card", "required": true, "minCount": 6, "attributes": [{ "name": "variant", "example": "float" }] }
+        { "tag": "x-card", "required": true, "minCount": 6, "attributes": [{ "name": "variant", "example": "float" }] }
       ]
     },
     {
       "name": "notifications",
-      "tag": "wb-stack",
+      "tag": "x-stack",
       "public": true,
       "required": true,
       "description": "Notification cards stacked vertically.",
       "children": [
-        { "tag": "wb-cardnotification", "required": true, "minCount": 4 }
+        { "tag": "x-cardnotification", "required": true, "minCount": 4 }
       ]
     },
     {
       "name": "audio",
-      "tag": "wb-audio",
+      "tag": "x-audio",
       "public": true,
       "required": true,
       "description": "Audio player with EQ.",
@@ -243,11 +243,11 @@
   },
   "test": {
     "setup": [
-      "<wb-cardhero variant='cosmic' title='Build stunning UIs' subtitle='just HTML' cta='Explore'></wb-cardhero>",
-      "<wb-container max-width='900px' padding='2rem'><wb-row><wb-cardstats value='100+' label='Behaviors' icon='🧩'></wb-cardstats></wb-row></wb-container>",
-      "<wb-grid><wb-card variant='float'><h3>🧩 Title</h3><p>Description</p></wb-card></wb-grid>",
-      "<wb-stack><wb-cardnotification variant='info' title='Test' message='Message'></wb-cardnotification></wb-stack>",
-      "<wb-audio src='https://archive.org/download/nineinchnails_ghosts_I_IV/01_Ghosts_I.mp3' show-eq volume='0.5'></wb-audio>"
+      "<div x-cardhero variant='cosmic' title='Build stunning UIs' subtitle='just HTML' cta='Explore'></div>",
+      "<div x-container max-width='900px' padding='2rem'><div x-flex><div x-cardstats value='100+' label='Behaviors' icon='🧩'></div></div></div>",
+      "<div x-grid><article variant='float'><h3>🧩 Title</h3><p>Description</p></article></div>",
+      "<div x-stack><div x-cardnotification variant='info' title='Test' message='Message'></div></div>",
+      "<audio src='https://archive.org/download/nineinchnails_ghosts_I_IV/01_Ghosts_I.mp3' show-eq volume='0.5'></audio>"
     ],
     "matrix": {
       "combinations": [
@@ -270,7 +270,7 @@
           "variant": "cosmic",
           "title": "Build stunning UIs",
           "pretitle": "100 Components",
-          "background": "hero.jpg"
+          "background": "/images/dachshund-puppy-image-960x540.jpg"
         },
         {
           "_section": "stats",
@@ -331,26 +331,26 @@
       "renders": true,
       "sections": {
         "hero": {
-          "tag": "wb-cardhero",
+          "tag": "x-cardhero",
           "minInstances": 1,
-          "checkClasses": ["wb-hero"],
+          "checkClasses": ["x-hero"],
           "checkAttributes": ["variant", "title", "cta"],
           "checkText": ["Build stunning UIs", "Explore Components"]
         },
         "stats": {
-          "tag": "wb-cardstats",
+          "tag": "x-cardstats",
           "minInstances": 4,
-          "checkClasses": ["wb-stats"],
+          "checkClasses": ["x-stats"],
           "checkAttributes": ["value", "label", "icon"],
           "checkText": ["100+", "Behaviors", "Light", "DOM Only", "Build Time", "Standards"]
         },
         "container": {
-          "tag": "wb-container",
+          "tag": "x-container",
           "minInstances": 1,
           "checkAttributes": ["max-width", "padding"]
         },
         "divider": {
-          "selector": ".wb-divider",
+          "selector": ".x-divider",
           "minInstances": 1
         },
         "actions": {
@@ -359,43 +359,43 @@
           "checkText": ["Ripple", "Tooltip", "Confetti", "Copy"]
         },
         "features": {
-          "tag": "wb-card",
+          "tag": "x-card",
           "minInstances": 6,
-          "checkClasses": ["wb-card--float"],
+          "checkClasses": ["x-card--float"],
           "checkAttributes": ["variant"],
           "checkText": ["Component Library", "Behaviors System", "Theme Engine", "Data Viz", "Accessible", "Performance"]
         },
         "grid": {
-          "tag": "wb-grid",
+          "tag": "x-grid",
           "minInstances": 2,
-          "checkClasses": ["wb-grid"],
-          "note": "2 grids: stats grid (inside wb-container, columns=4) + features grid (body > wb-grid)"
+          "checkClasses": ["x-grid"],
+          "note": "2 grids: stats grid (inside x-container, columns=4) + features grid (body > x-grid)"
         },
         "notifications": {
-          "tag": "wb-cardnotification",
+          "tag": "x-cardnotification",
           "minInstances": 4,
           "checkAttributes": ["variant", "title", "message"],
           "checkText": ["System Update", "Complete", "Attention", "Failure"]
         },
         "audio": {
-        "tag": "wb-audio",
+        "tag": "x-audio",
         "minInstances": 1,
         "checkAttributes": ["src", "show-eq", "volume"],
           "checkChildren": {
         "playButton": {
-          "selector": ".wb-audio__play-btn",
+          "selector": ".x-audio__play-btn",
           "required": true,
           "visible": true,
           "clickable": true
         },
         "display": {
-          "selector": ".wb-audio__display",
+          "selector": ".x-audio__display",
           "required": true,
           "visible": true,
           "hasText": true
         },
         "displayTime": {
-          "selector": ".wb-audio__display-time",
+          "selector": ".x-audio__display-time",
           "required": true,
           "matchesPattern": "^\\d+:\\d{2}"
         }

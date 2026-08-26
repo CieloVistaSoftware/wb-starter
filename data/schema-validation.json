@@ -411,12 +411,12 @@
       "issues": []
     },
     {
-      "file": "wb-control.schema.json",
+      "file": "x-control.schema.json",
       "status": "PASS",
       "issues": []
     },
     {
-      "file": "wb-repeater.schema.json",
+      "file": "x-repeater.schema.json",
       "status": "PASS",
       "issues": []
     },

@@ -49,13 +49,13 @@ test.describe('Behaviors Showcase Page', () => {
       // .behavior-card/.demo-area were the old standalone
       // demos/behaviors-showcase.html's grid-card layout; the schema-generated
       // page (behaviors.schema.json -> generate-behaviors-page.js) uses
-      // <section id="..."> + <wb-demo> instead. Same intent, current markup.
+      // <section id="..."> + <div x-demo> instead. Same intent, current markup.
       const sections = await page.locator('main section[id], section[id]').all();
       expect(sections.length).toBeGreaterThan(5);
 
       for (const section of sections) {
         // Sections use several different demo-container conventions
-        // (<wb-demo>, .demo-grid-*, .demo-row, .alerts-stack,
+        // (<div x-demo>, .demo-grid-*, .demo-row, .alerts-stack,
         // .progress-stack, ...) depending on whether the behavior is a
         // custom wb-* element or a native element being enhanced in place --
         // rather than enumerate every container class name (guaranteed to
@@ -116,7 +116,7 @@ test.describe('Behaviors Showcase Page', () => {
       
       // Get the sidebar text element
       const sidebarText = drawerCard.locator('.demo-area [x-drawer-layout] > div:first-child');
-      const toggleButton = drawerCard.locator('.wb-drawer-toggle');
+      const toggleButton = drawerCard.locator('.x-drawer-toggle');
       
       if (await toggleButton.count() > 0) {
         const sidebarRect = await sidebarText.boundingBox();
@@ -153,8 +153,8 @@ test.describe('Behaviors Showcase Page', () => {
   });
 
   // behaviors.schema.json (generate-behaviors-page.js's source of truth for
-  // pages/behaviors.html) has no demo section for wb-dropdown/drawer-layout/
-  // wb-toggle/wb-masonry -- none of these tags exist on the page at all.
+  // pages/behaviors.html) has no demo section for x-dropdown/drawer-layout/
+  // x-toggle/x-masonry -- none of these tags exist on the page at all.
   // These describe blocks were written against the old standalone
   // demos/behaviors-showcase.html (removed once its content migrated into
   // the schema-generated SPA page). Their "all(...)" locators quietly
@@ -164,15 +164,15 @@ test.describe('Behaviors Showcase Page', () => {
   // section in the schema.
   test.describe.skip('Dropdown Behavior', () => {
     test('dropdown should have items attribute OR proper children structure', async ({ page }) => {
-      const dropdowns = await page.locator('wb-dropdown').all();
+      const dropdowns = await page.locator('x-dropdown').all();
       
       for (const dropdown of dropdowns) {
         // Check if data-items is set
         const hasItems = await dropdown.getAttribute('items');
         
         // Check if proper child structure exists
-        const hasTrigger = await dropdown.locator('.wb-dropdown-trigger, .wb-dropdown__trigger').count() > 0;
-        const hasMenu = await dropdown.locator('.wb-dropdown-menu, .wb-dropdown__menu').count() > 0;
+        const hasTrigger = await dropdown.locator('.x-dropdown-trigger, .x-dropdown__trigger').count() > 0;
+        const hasMenu = await dropdown.locator('.x-dropdown-menu, .x-dropdown__menu').count() > 0;
         
         // One of these patterns must be true
         const isValid = hasItems !== null || (hasTrigger && hasMenu);
@@ -188,14 +188,14 @@ test.describe('Behaviors Showcase Page', () => {
     });
 
     test('dropdown shows menu when clicked', async ({ page }) => {
-      const dropdown = page.locator('wb-dropdown').first();
+      const dropdown = page.locator('x-dropdown').first();
       
       // Click the dropdown
       await dropdown.click();
       await page.waitForTimeout(200);
       
       // Check if menu is visible
-      const menu = dropdown.locator('.wb-dropdown__menu, .wb-dropdown-menu');
+      const menu = dropdown.locator('.x-dropdown__menu, .x-dropdown-menu');
       if (await menu.count() > 0) {
         await expect(menu).toBeVisible();
       } else {
@@ -207,7 +207,7 @@ test.describe('Behaviors Showcase Page', () => {
 
   test.describe('Tabs Behavior', () => {
     test('tabs children should use tab-title attribute', async ({ page }) => {
-      const tabContainers = await page.locator('wb-tabs').all();
+      const tabContainers = await page.locator('x-tabs').all();
       
       for (const tabs of tabContainers) {
         const children = await tabs.locator('> div[tab-title], > div[tab]').all();
@@ -228,13 +228,13 @@ test.describe('Behaviors Showcase Page', () => {
     });
 
     test('tabs generate tab buttons', async ({ page }) => {
-      const tabContainers = await page.locator('wb-tabs').all();
+      const tabContainers = await page.locator('x-tabs').all();
       
       for (const tabs of tabContainers) {
-        const nav = tabs.locator('.wb-tabs__nav');
+        const nav = tabs.locator('.x-tabs__nav');
         await expect(nav).toBeVisible();
         
-        const tabButtons = tabs.locator('.wb-tabs__tab');
+        const tabButtons = tabs.locator('.x-tabs__tab');
         const buttonCount = await tabButtons.count();
         
         expect(buttonCount).toBeGreaterThan(0);
@@ -242,7 +242,7 @@ test.describe('Behaviors Showcase Page', () => {
     });
 
     test('tab buttons are properly sized (not too tall)', async ({ page }) => {
-      const tabButtons = await page.locator('.wb-tabs__tab').all();
+      const tabButtons = await page.locator('.x-tabs__tab').all();
       
       for (const button of tabButtons) {
         const box = await button.boundingBox();
@@ -254,19 +254,19 @@ test.describe('Behaviors Showcase Page', () => {
     });
 
     test('clicking tab shows corresponding panel', async ({ page }) => {
-      const tabContainer = page.locator('wb-tabs').first();
+      const tabContainer = page.locator('x-tabs').first();
       
       // Click second tab
-      const secondTab = tabContainer.locator('.wb-tabs__tab').nth(1);
+      const secondTab = tabContainer.locator('.x-tabs__tab').nth(1);
       await secondTab.click();
       await page.waitForTimeout(100);
       
       // Second panel should be visible
-      const secondPanel = tabContainer.locator('.wb-tabs__panel').nth(1);
+      const secondPanel = tabContainer.locator('.x-tabs__panel').nth(1);
       await expect(secondPanel).toBeVisible();
       
       // First panel should be hidden
-      const firstPanel = tabContainer.locator('.wb-tabs__panel').first();
+      const firstPanel = tabContainer.locator('.x-tabs__panel').first();
       await expect(firstPanel).toBeHidden();
     });
   });
@@ -276,13 +276,13 @@ test.describe('Behaviors Showcase Page', () => {
     test('drawer-layout behavior initializes', async ({ page }) => {
       const drawer = page.locator('[x-drawer-layout]').first();
       
-      // Should have wb-drawer class after initialization
-      await expect(drawer).toHaveClass(/wb-drawer/);
+      // Should have x-drawer class after initialization
+      await expect(drawer).toHaveClass(/x-drawer/);
     });
 
     test('drawer toggle button is visible and accessible', async ({ page }) => {
       const drawerCard = page.locator('.behavior-card:has(.behavior-title:has-text("Drawer"))');
-      const toggleButton = drawerCard.locator('.wb-drawer-toggle');
+      const toggleButton = drawerCard.locator('.x-drawer-toggle');
       
       if (await toggleButton.count() > 0) {
         await expect(toggleButton).toBeVisible();
@@ -315,7 +315,7 @@ test.describe('Behaviors Showcase Page', () => {
   // See the skip note on 'Dropdown Behavior' above -- same situation.
   test.describe.skip('Toggle Behavior', () => {
     test('toggle button has visible styling', async ({ page }) => {
-      const toggleButton = page.locator('wb-toggle').first();
+      const toggleButton = page.locator('x-toggle').first();
       
       // Get computed styles
       const styles = await toggleButton.evaluate(el => {
@@ -338,7 +338,7 @@ test.describe('Behaviors Showcase Page', () => {
     });
 
     test('toggle toggles class on target', async ({ page }) => {
-      const toggleButton = page.locator('wb-toggle[target="#toggle-box"]');
+      const toggleButton = page.locator('x-toggle[target="#toggle-box"]');
       const target = page.locator('#toggle-box');
       
       // Initial state
@@ -357,7 +357,7 @@ test.describe('Behaviors Showcase Page', () => {
   // See the skip note on 'Dropdown Behavior' above -- same situation.
   test.describe.skip('Masonry Layout', () => {
     test('masonry container uses column layout', async ({ page }) => {
-      const masonry = page.locator('wb-masonry').first();
+      const masonry = page.locator('x-masonry').first();
       
       const styles = await masonry.evaluate(el => {
         const computed = window.getComputedStyle(el);
@@ -372,7 +372,7 @@ test.describe('Behaviors Showcase Page', () => {
     });
 
     test('masonry children are visible', async ({ page }) => {
-      const masonry = page.locator('wb-masonry').first();
+      const masonry = page.locator('x-masonry').first();
       const children = await masonry.locator('> *').all();
       
       expect(children.length).toBeGreaterThan(0);
@@ -383,7 +383,7 @@ test.describe('Behaviors Showcase Page', () => {
     });
 
     test('masonry items have correct break-inside', async ({ page }) => {
-      const masonry = page.locator('wb-masonry').first();
+      const masonry = page.locator('x-masonry').first();
       const firstChild = masonry.locator('> *').first();
       
       const breakInside = await firstChild.evaluate(el => {
@@ -404,9 +404,9 @@ test.describe('Behaviors Showcase Page', () => {
         const cardBox = await card.boundingBox();
         if (!cardBox) continue;
         
-        // #448: wb-mdhtml no longer carries a same-named `.wb-mdhtml` class
+        // #448: x-mdhtml no longer carries a same-named `.x-mdhtml` class
         // -- select the tag directly too.
-        const codeBlocks = await card.locator('pre, code, wb-mdhtml, .wb-mdhtml').all();
+        const codeBlocks = await card.locator('pre, code, x-mdhtml, .x-mdhtml').all();
         
         for (const code of codeBlocks) {
           const codeBox = await code.boundingBox();
@@ -437,7 +437,7 @@ test.describe('Behaviors Showcase Page', () => {
     });
 
     test('line numbers column is narrow', async ({ page }) => {
-      const lineNumbers = await page.locator('.wb-pre__line-numbers').all();
+      const lineNumbers = await page.locator('.x-pre__line-numbers').all();
       
       for (const ln of lineNumbers) {
         const box = await ln.boundingBox();
@@ -453,9 +453,9 @@ test.describe('Behaviors Showcase Page', () => {
     test('all behavior elements are initialized', async ({ page }) => {
       const uninitializedCount = await page.evaluate(() => {
         let count = 0;
-        document.querySelectorAll('.wb-ready').forEach(el => {
-          // Check for wb-ready or class starting with wb-
-          const hasReady = el.classList.contains("wb-ready");
+        document.querySelectorAll('.x-ready').forEach(el => {
+          // Check for x-ready or class starting with wb-
+          const hasReady = el.classList.contains("x-ready");
           const hasWbClass = Array.from(el.classList).some(c => c.startsWith('wb-'));
           
           if (!hasReady && !hasWbClass) {
@@ -496,13 +496,13 @@ test.describe('Behaviors Showcase Page', () => {
     });
 
     test('spinners are animating', async ({ page }) => {
-      const spinners = await page.locator('wb-spinner').all();
+      const spinners = await page.locator('x-spinner').all();
       
       expect(spinners.length).toBeGreaterThan(0);
       
       for (const spinner of spinners) {
         // spinner() (feedback.js) builds a plain <div> ring, not an <svg> --
-        // the outer <wb-spinner> itself has animation:none (site.css, #182,
+        // the outer <span x-spinner> itself has animation:none (site.css, #182,
         // avoids a double ring); the actual spin animation lives on the
         // child <div>.
         const hasAnimation = await spinner.evaluate(el => {

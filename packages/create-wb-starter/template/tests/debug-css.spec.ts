@@ -8,8 +8,8 @@ test('debug css loading', async ({ page }) => {
       <link rel="stylesheet" href="/src/styles/behaviors/stock.css">
     </head>
     <body>
-      <div id="test" class="wb-stock">Test</div>
-      <wb-stock id="test-attr">Test Attribute</wb-stock>
+      <div id="test" class="x-stock">Test</div>
+      <div id="test-attr">Test Attribute</div>
     </body>
     </html>
   `);

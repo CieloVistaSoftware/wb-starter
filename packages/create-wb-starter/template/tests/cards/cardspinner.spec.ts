@@ -16,18 +16,18 @@ test.describe('Spinner (integration)', () => {
       (window as any).WB.scan();
     });
     
-    // The spinner behavior adds wb-spinner class
+    // The spinner behavior adds x-spinner class
     const spinner = page.locator('#test-spinner');
-    await expect(spinner).toHaveClass(/wb-spinner/);
+    await expect(spinner).toHaveClass(/x-spinner/);
     
     // Check the inner spinning div exists and has animation
     const innerDiv = spinner.locator('div');
     await expect(innerDiv).toBeVisible();
     
-    // Verify animation is applied (wb-spin)
+    // Verify animation is applied (x-spin)
     const style = await innerDiv.getAttribute('style');
     expect(style).toContain('animation');
-    expect(style).toContain('wb-spin');
+    expect(style).toContain('x-spin');
   });
 
   test('should have border-radius for circular spinner', async ({ page }: { page: Page }) => {

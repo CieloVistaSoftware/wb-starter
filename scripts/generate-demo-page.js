@@ -70,7 +70,7 @@ function generatePage(schema) {
   for (let i = 0; i < sections.length; i++) {
     const s = sections[i];
     const hLvl = s.headingLevel || 2;
-    const wrap = s.wrapper || 'wb-demo';
+    const wrap = s.wrapper || 'x-demo';
     const wAttrs = {};
     if (s.columns) wAttrs.columns = s.columns;
     if (s.wrapperAttrs) Object.assign(wAttrs, s.wrapperAttrs);

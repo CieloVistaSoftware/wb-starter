@@ -22,7 +22,7 @@ test.describe('x-search focus/blur/input do not recurse (Behaviors page)', () =>
 
     await page.goto('http://localhost:3000/?page=behaviors');
     const input = page.locator('input[x-search]').first();
-    await expect(input).toHaveClass(/wb-search__input/, { timeout: 10_000 });
+    await expect(input).toHaveClass(/x-search__input/, { timeout: 10_000 });
 
     await input.click();
     await input.fill('hello world');

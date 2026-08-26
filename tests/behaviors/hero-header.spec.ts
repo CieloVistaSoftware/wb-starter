@@ -7,7 +7,7 @@ import { test, expect } from '@playwright/test';
 
 test.describe('#179 — behaviors hero clears the sticky header', () => {
   test('hero title is fully below the header with a gap (not clipped)', async ({ page }) => {
-    await page.goto('http://localhost:3000/?page=behaviors');
+    await page.goto('/?page=behaviors');
     await page.waitForSelector('#mainPage-behaviors', { timeout: 20000 });
     await page.waitForTimeout(1500);
     // ensure we're at the very top
@@ -32,7 +32,7 @@ test.describe('#179 — behaviors hero clears the sticky header', () => {
   });
 
   test('hero h1 has line-height room for the emoji ascent', async ({ page }) => {
-    await page.goto('http://localhost:3000/?page=behaviors');
+    await page.goto('/?page=behaviors');
     await page.waitForSelector('#mainPage-behaviors h1', { timeout: 20000 });
     const ratio = await page.evaluate(() => {
       const h1 = document.querySelector('#mainPage-behaviors h1') as HTMLElement;

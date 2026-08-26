@@ -26,7 +26,7 @@
  */
 import { test, expect } from '@playwright/test';
 
-const BASE = process.env.WB_BASE || 'http://localhost:3000';
+const BASE = process.env.WB_BASE || '';
 
 test('WB.inject() does not crash when its element is removed mid-import', async ({ page }) => {
   // The crash is caught internally by inject()'s own try/catch (which logs

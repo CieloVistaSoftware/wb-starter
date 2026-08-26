@@ -3,13 +3,13 @@
 > **Updated:** 2026-02-13
 
 ## Overview
-`mdhtml` is a WB-Starter component that converts Markdown to HTML in the browser. It is used via the `<wb-mdhtml>` custom element and supports both inline markdown and external markdown files.
+`mdhtml` is a WB-Starter component that converts Markdown to HTML in the browser. It is used via the `<div x-mdhtml>` custom element and supports both inline markdown and external markdown files.
 
-Wrapped in `<wb-demo>`, so the live component renders below with its source shown underneath:
+Wrapped in `<div x-demo>`, so the live component renders below with its source shown underneath:
 
-<wb-demo>
-<wb-mdhtml> # Hello World This is **bold** and *italic*. </wb-mdhtml>
-</wb-demo>
+<div x-demo>
+<div x-mdhtml> # Hello World This is **bold** and *italic*. </div>
+</div>
 
 ---
 
@@ -17,12 +17,12 @@ Wrapped in `<wb-demo>`, so the live component renders below with its source show
 
 ### 1. Inline Markdown
 ```html
-<wb-mdhtml> # Hello World This is **bold** and *italic*. </wb-mdhtml>
+<div x-mdhtml> # Hello World This is **bold** and *italic*. </div>
 ```
 
 ### 2. Load Markdown from File
 ```html
-<wb-mdhtml src="./docs/readme.md"></wb-mdhtml>
+<div x-mdhtml src="./docs/readme.md"></div>
 ```
 - `src` can be a relative or absolute path, or a full URL.
 
@@ -34,7 +34,7 @@ Wrapped in `<wb-demo>`, so the live component renders below with its source show
 - **GFM, breaks, header IDs**: All supported via attributes or options
 - **Code block captions**: Auto-numbers code blocks by section
 - **Events**: Emits `wb:mdhtml:loaded`, `wb:mdhtml:error`, `wb:mdhtml:hydrated`
-- **Styling**: Uses `.wb-mdhtml` CSS class (see `src/styles/behaviors/mdhtml.css`)
+- **Styling**: Uses `.x-mdhtml` CSS class (see `src/styles/behaviors/mdhtml.css`)
 
 ---
 
@@ -55,14 +55,14 @@ Wrapped in `<wb-demo>`, so the live component renders below with its source show
 
 ## Example: Full Options
 ```html
-<wb-mdhtml
+<div x-mdhtml
   src="/docs/guide.md"
   sanitize="true"
   breaks="true"
   gfm="true"
   header-ids="true"
   size="md">
-</wb-mdhtml>
+</div>
 ```
 
 Single newlines inside a paragraph are treated as normal whitespace so prose
@@ -80,7 +80,7 @@ their own whitespace.
 ---
 
 ## Styling
-- All content is wrapped in `.wb-mdhtml` for easy CSS targeting
+- All content is wrapped in `.x-mdhtml` for easy CSS targeting
 - See `src/styles/behaviors/mdhtml.css` for default styles
 
 ---

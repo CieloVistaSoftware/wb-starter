@@ -6,20 +6,20 @@
  */
 import { test, expect, Page } from '@playwright/test';
 
-const BASE = process.env.WB_BASE || 'http://localhost:3000';
+const BASE = process.env.WB_BASE || '';
 const URL = `${BASE.replace(/\/$/, '')}/?page=behaviors`;
 
 test.describe('Button sizes — the demo labels must match reality', () => {
   test.beforeEach(async ({ page }) => {
     await page.goto(URL, { waitUntil: 'domcontentloaded' });
-    await page.waitForSelector('#buttons .wb-btn, #buttons button', { timeout: 25000 });
+    await page.waitForSelector('#buttons .x-btn, #buttons button', { timeout: 25000 });
     await page.waitForTimeout(1500);
   });
 
   test('Small < Medium < Large in rendered size', async ({ page }) => {
     const sizes = await page.evaluate(() => {
       const byLabel = (label: string) => {
-        const btn = [...document.querySelectorAll('#buttons button, #buttons .wb-btn')].find(
+        const btn = [...document.querySelectorAll('#buttons button, #buttons .x-btn')].find(
           (b) => (b.textContent || '').trim().toLowerCase() === label
         ) as HTMLElement | undefined;
         if (!btn) return null;
@@ -48,7 +48,7 @@ test.describe('Button sizes — the demo labels must match reality', () => {
   test('each size button carries an effective size class', async ({ page }) => {
     const r = await page.evaluate(() => {
       const get = (label: string) => {
-        const btn = [...document.querySelectorAll('#buttons button, #buttons .wb-btn')].find(
+        const btn = [...document.querySelectorAll('#buttons button, #buttons .x-btn')].find(
           (b) => (b.textContent || '').trim().toLowerCase() === label
         ) as HTMLElement | undefined;
         return btn ? btn.className : null;

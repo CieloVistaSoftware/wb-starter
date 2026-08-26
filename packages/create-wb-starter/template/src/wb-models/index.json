@@ -85,8 +85,8 @@
     "toggle.schema.json",
     "tooltip.schema.json",
     "views.schema.json",
-    "wb-control.schema.json",
-    "wb-repeater.schema.json"
+    "x-control.schema.json",
+    "x-repeater.schema.json"
   ],
   
   "categories": {

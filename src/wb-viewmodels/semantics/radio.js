@@ -10,7 +10,7 @@ function injectStyles() {
   if (stylesInjected) return;
   const style = document.createElement('style');
   style.textContent = `
-    .wb-radio-wrapper {
+    .x-radio-wrapper {
       display: inline-flex;
       align-items: center;
       gap: 0.5rem;
@@ -19,7 +19,7 @@ function injectStyles() {
       vertical-align: middle;
     }
     
-    .wb-radio {
+    .x-radio {
       accent-color: var(--primary, #6366f1);
       width: 1.125rem;
       height: 1.125rem;
@@ -29,14 +29,14 @@ function injectStyles() {
     }
 
     /* Variants */
-    .wb-radio--success { accent-color: var(--success-color, #22c55e); }
-    .wb-radio--warning { accent-color: var(--warning-color, #f59e0b); }
-    .wb-radio--danger { accent-color: var(--danger-color, #ef4444); }
-    .wb-radio--info { accent-color: var(--info-color, #3b82f6); }
+    .x-radio--success { accent-color: var(--success-color, #22c55e); }
+    .x-radio--warning { accent-color: var(--warning-color, #f59e0b); }
+    .x-radio--danger { accent-color: var(--danger-color, #ef4444); }
+    .x-radio--info { accent-color: var(--info-color, #3b82f6); }
 
     /* Sizes */
-    .wb-radio--sm { width: 0.875rem; height: 0.875rem; }
-    .wb-radio--lg { width: 1.5rem; height: 1.5rem; }
+    .x-radio--sm { width: 0.875rem; height: 0.875rem; }
+    .x-radio--lg { width: 1.5rem; height: 1.5rem; }
   `;
   document.head.appendChild(style);
   stylesInjected = true;
@@ -58,37 +58,37 @@ export function radio(element, options = {}) {
     ...options
   };
 
-  element.classList.add('wb-radio');
+  element.classList.add('x-radio');
 
   // Wrap in label if label text provided
   let wrapper = null;
   if (config.label && element.parentElement?.tagName !== 'LABEL') {
     wrapper = document.createElement('label');
-    wrapper.className = 'wb-radio-wrapper';
+    wrapper.className = 'x-radio-wrapper';
     
     element.parentNode.insertBefore(wrapper, element);
     wrapper.appendChild(element);
 
     const labelText = document.createElement('span');
-    labelText.className = 'wb-radio-label';
+    labelText.className = 'x-radio-label';
     labelText.textContent = config.label;
     wrapper.appendChild(labelText);
   } else if (element.parentElement?.tagName === 'LABEL') {
-    element.parentElement.classList.add('wb-radio-wrapper');
+    element.parentElement.classList.add('x-radio-wrapper');
   }
 
   // Apply size variant
   if (config.size) {
-    element.classList.add(`wb-radio--${config.size}`);
+    element.classList.add(`x-radio--${config.size}`);
   }
 
   // Apply visual variant
   if (config.variant) {
-    element.classList.add(`wb-radio--${config.variant}`);
+    element.classList.add(`x-radio--${config.variant}`);
   }
 
   return () => {
-    element.classList.remove('wb-radio', `wb-radio--${config.variant}`, `wb-radio--${config.size}`);
+    element.classList.remove('x-radio', `x-radio--${config.variant}`, `x-radio--${config.size}`);
     if (wrapper && wrapper.parentNode) {
       wrapper.parentNode.insertBefore(element, wrapper);
       wrapper.remove();

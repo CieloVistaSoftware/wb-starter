@@ -7,15 +7,15 @@ test.describe('Pseudo-Custom Elements (PCE) v3.0', () => {
     await setupBehaviorTest(page);
   });
 
-  test('wb-cardprofile is recognized as PCE', async ({ page }) => {
+  test('[x-cardprofile] is recognized as PCE', async ({ page }) => {
     const element = await setupTestContainer(
       page,
-      `<wb-cardprofile 
+      `<div x-cardprofile 
           data-name="John Doe" 
           data-role="Developer" 
           data-bio="Coding all day" 
           data-avatar="avatar.jpg">
-       </wb-cardprofile>`
+       </div>`
     );
 
     // Wait for lazy loading
@@ -26,20 +26,20 @@ test.describe('Pseudo-Custom Elements (PCE) v3.0', () => {
     await expect(element).toHaveAttribute('data-name', 'John Doe');
     await expect(element).toHaveAttribute('data-role', 'Developer');
     
-    // Check if behavior was applied (may add .wb-ready class)
-    const wbReady = await element.classList.contains('wb-ready');
-    // Behavior either adds .wb-ready class or adds content
+    // Check if behavior was applied (may add .x-ready class)
+    const wbReady = await element.classList.contains('x-ready');
+    // Behavior either adds .x-ready class or adds content
     const hasContent = (await element.textContent())?.trim().length > 0;
     expect(wbReady !== null || hasContent).toBeTruthy();
   });
 
-  test('profile-card alias also works', async ({ page }) => {
+  test('[x-cardprofile] alias also works', async ({ page }) => {
     const element = await setupTestContainer(
       page,
-      `<profile-card 
+      `<div x-cardprofile 
           data-name="Jane Smith" 
           data-role="Designer">
-       </profile-card>`
+       </div>`
     );
 
     await page.waitForTimeout(500);
@@ -50,14 +50,14 @@ test.describe('Pseudo-Custom Elements (PCE) v3.0', () => {
     await expect(element).toHaveAttribute('data-role', 'Designer');
   });
 
-  test('wb-cardhero is recognized as PCE', async ({ page }) => {
+  test('[x-cardhero] is recognized as PCE', async ({ page }) => {
     const element = await setupTestContainer(
       page,
-      `<wb-cardhero 
+      `<div x-cardhero 
           data-title="Hero Title" 
           data-subtitle="Hero Subtitle" 
           data-align="center">
-       </wb-cardhero>`
+       </div>`
     );
 
     await page.waitForTimeout(500);
@@ -67,16 +67,16 @@ test.describe('Pseudo-Custom Elements (PCE) v3.0', () => {
     await expect(element).toHaveAttribute('data-subtitle', 'Hero Subtitle');
   });
 
-  test('wb-cardstats is recognized as PCE', async ({ page }) => {
+  test('[x-cardstats] is recognized as PCE', async ({ page }) => {
     const element = await setupTestContainer(
       page,
-      `<wb-cardstats 
+      `<div x-cardstats 
           data-label="Users" 
           data-value="1000" 
           data-icon="👤" 
           data-trend="up" 
           data-trend-value="10%">
-       </wb-cardstats>`
+       </div>`
     );
 
     await page.waitForTimeout(500);
@@ -88,14 +88,14 @@ test.describe('Pseudo-Custom Elements (PCE) v3.0', () => {
     await expect(element).toHaveAttribute('data-trend', 'up');
   });
 
-  test('wb-cardnotification is recognized as PCE', async ({ page }) => {
+  test('[x-cardnotification] is recognized as PCE', async ({ page }) => {
     const element = await setupTestContainer(
       page,
-      `<wb-cardnotification 
+      `<div x-cardnotification 
           data-type="info" 
           data-title="Info" 
           data-message="This is info">
-       </wb-cardnotification>`
+       </div>`
     );
 
     await page.waitForTimeout(500);
@@ -128,12 +128,12 @@ test.describe('Pseudo-Custom Elements (PCE) v3.0', () => {
     expect(tooltipCount >= 0).toBeTruthy();
   });
 
-  test('wb-card basic element works', async ({ page }) => {
+  test('.x-card basic element works', async ({ page }) => {
     const element = await setupTestContainer(
       page,
-      `<wb-card data-title="Test Card">
+      `<article data-title="Test Card">
          <p>Card content</p>
-       </wb-card>`
+       </article>`
     );
 
     await page.waitForTimeout(500);
@@ -155,9 +155,9 @@ test.describe('Pseudo-Custom Elements (PCE) v3.0', () => {
         </script>
       </head>
       <body>
-        <wb-cardstats data-label="Stat 1" data-value="100"></wb-cardstats>
-        <wb-cardstats data-label="Stat 2" data-value="200"></wb-cardstats>
-        <wb-cardstats data-label="Stat 3" data-value="300"></wb-cardstats>
+        <div x-cardstats data-label="Stat 1" data-value="100"></div>
+        <div x-cardstats data-label="Stat 2" data-value="200"></div>
+        <div x-cardstats data-label="Stat 3" data-value="300"></div>
       </body>
       </html>
     `);
@@ -166,7 +166,7 @@ test.describe('Pseudo-Custom Elements (PCE) v3.0', () => {
     await page.waitForFunction(() => (window as any).WBSite && (window as any).WBSite.currentPage, { timeout: 20000 });
     await page.waitForTimeout(1000);
 
-    const stats = page.locator('wb-cardstats');
+    const stats = page.locator('[x-cardstats]');
     await expect(stats).toHaveCount(3);
     
     await expect(stats.nth(0)).toHaveAttribute('data-value', '100');
@@ -187,12 +187,12 @@ test.describe('Pseudo-Custom Elements (PCE) v3.0', () => {
         </script>
         <style>
           .spacer { height: 200vh; }
-          wb-cardprofile { display: block; }
+          x-cardprofile { display: block; }
         </style>
       </head>
       <body>
         <div class="spacer">Scroll down...</div>
-        <wb-cardprofile id="lazy-profile" data-name="Lazy User"></wb-cardprofile>
+        <div x-cardprofile id="lazy-profile" data-name="Lazy User"></div>
       </body>
       </html>
     `);

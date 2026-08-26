@@ -1,3 +1,4 @@
+import { readAttr } from '../core/read-attr.js';
 /**
  * Search Component
  * Complete search input with icon, clear button, and debounced events
@@ -5,11 +6,11 @@
 export function search(element, options = {}) {
   // Guard against re-wrapping an element that's already wrapped -- confirmed
   // live this ran twice on the same <input x-search>, nesting a second
-  // wb-search__wrapper around the first (with input()'s wrapper sandwiched
+  // x-search__wrapper around the first (with input()'s wrapper sandwiched
   // between them, "concentric rings"). Whatever re-triggers it (a
   // MutationObserver seeing the wrapper insertion as a fresh node, most
   // likely), re-wrapping an already-wrapped element is never correct.
-  if (element.closest('.wb-search__wrapper')) {
+  if (element.closest('.x-search__wrapper')) {
     return () => {};
   }
 
@@ -17,7 +18,7 @@ export function search(element, options = {}) {
     placeholder: options.placeholder || element.getAttribute('placeholder') || 'Search...',
     value: options.value || element.getAttribute('value') || '',
     name: options.name || element.getAttribute('name') || '',
-    debounce: parseInt(options.debounce || element.dataset.debounce || '300'),
+    debounce: parseInt(options.debounce || readAttr(element, 'debounce') || '300'),
     instant: options.instant ?? element.hasAttribute('instant'),
     disabled: options.disabled ?? element.hasAttribute('disabled'),
     size: options.size || element.getAttribute('size') || 'md',
@@ -29,33 +30,33 @@ export function search(element, options = {}) {
   };
 
   // Apply base classes
-  element.classList.add('wb-search');
+  element.classList.add('x-search');
 
   if (config.size !== 'md') {
-    element.classList.add(`wb-search--${config.size}`);
+    element.classList.add(`x-search--${config.size}`);
   }
 
   if (config.variant !== 'default') {
-    element.classList.add(`wb-search--${config.variant}`);
+    element.classList.add(`x-search--${config.variant}`);
   }
 
   if (config.disabled) {
-    element.classList.add('wb-search--disabled');
+    element.classList.add('x-search--disabled');
   }
 
   if (config.loading) {
-    element.classList.add('wb-search--loading');
+    element.classList.add('x-search--loading');
   }
 
   // Create wrapper
   const wrapper = document.createElement('div');
-  wrapper.className = 'wb-search__wrapper';
+  wrapper.className = 'x-search__wrapper';
   element.parentNode.insertBefore(wrapper, element);
   wrapper.appendChild(element);
 
   // Create icon
   const icon = document.createElement('span');
-  icon.className = 'wb-search__icon';
+  icon.className = 'x-search__icon';
   icon.textContent = config.icon;
   wrapper.insertBefore(icon, element);
 
@@ -65,14 +66,14 @@ export function search(element, options = {}) {
   element.value = config.value;
   element.name = config.name;
   element.disabled = config.disabled;
-  element.classList.add('wb-search__input');
+  element.classList.add('x-search__input');
 
   // Create clear button
   let clearBtn = null;
   if (config.clearable) {
     clearBtn = document.createElement('button');
     clearBtn.type = 'button';
-    clearBtn.className = 'wb-search__clear';
+    clearBtn.className = 'x-search__clear';
     clearBtn.textContent = '✕';
     clearBtn.title = 'Clear search';
     clearBtn.style.display = config.value ? 'block' : 'none';
@@ -94,7 +95,7 @@ export function search(element, options = {}) {
   let loadingSpan = null;
   if (config.loading) {
     loadingSpan = document.createElement('span');
-    loadingSpan.className = 'wb-search__loading';
+    loadingSpan.className = 'x-search__loading';
     loadingSpan.textContent = '⏳';
     wrapper.appendChild(loadingSpan);
   }
@@ -208,7 +209,7 @@ export function search(element, options = {}) {
     search: () => triggerSearch(true),
     setLoading: (loading) => {
       config.loading = loading;
-      element.classList.toggle('wb-search--loading', loading);
+      element.classList.toggle('x-search--loading', loading);
       if (loadingSpan) {
         loadingSpan.style.display = loading ? 'block' : 'none';
       }
@@ -219,8 +220,8 @@ export function search(element, options = {}) {
         wrapper.parentNode.insertBefore(element, wrapper);
         wrapper.remove();
       }
-      element.classList.remove('wb-search', `wb-search--${config.size}`, `wb-search--${config.variant}`, 'wb-search--disabled', 'wb-search--loading');
-      element.classList.remove('wb-search__input');
+      element.classList.remove('x-search', `x-search--${config.size}`, `x-search--${config.variant}`, 'x-search--disabled', 'x-search--loading');
+      element.classList.remove('x-search__input');
     }
   };
 }
@@ -228,11 +229,11 @@ export function search(element, options = {}) {
 /**
  * Search Field (container form)
  * -----------------------------------------------------------------------------
- * Custom Tag: <wb-search> — a CONTAINER, not an input itself. Finds (or
+ * Custom Tag: <div x-searchfield> — a CONTAINER, not an input itself. Finds (or
  * creates) a child <input>, applies search() to that input, and exposes the
  * imperative API on the container as `element.wbSearch` (mirrors the pattern
  * collapse() uses for `element.wbCollapse`) so external code can still call
- * `document.querySelector('wb-search').wbSearch.clear()` etc. — replaces the
+ * `document.querySelector('x-search').wbSearch.clear()` etc. — replaces the
  * `extends HTMLElement` class removed in #279, which did the same thing via
  * connectedCallback/instance methods.
  * -----------------------------------------------------------------------------
@@ -251,24 +252,24 @@ export function searchField(element, options = {}) {
     element.appendChild(input);
   }
 
-  // search() only classes whatever element IT was given -- for a <wb-search>
+  // search() only classes whatever element IT was given -- for a <div x-searchfield>
   // host with no pre-existing <input> child, that's this freshly-created
   // inner input, not the host itself. CSS selectors targeting the variant
-  // directly on the host (.wb-search--<variant>, not the
-  // .wb-search--<variant> .wb-search__wrapper descendant form) never
+  // directly on the host (.x-search--<variant>, not the
+  // .x-search--<variant> .x-search__wrapper descendant form) never
   // matched, so host-level styling silently never applied (#359).
   const size = element.getAttribute('size') || 'md';
   const variant = element.getAttribute('variant') || 'default';
-  // #448: no bare 'wb-search' token on this CONTAINER host -- it just
-  // duplicated the <wb-search> tag name. search.css's `.wb-search` class
+  // #448: no bare 'x-search' token on this CONTAINER host -- it just
+  // duplicated the <div x-searchfield> tag name. search.css's `.x-search` class
   // rule stays fully intact and unconverted: it's still legitimately
   // needed below, since search(input, ...) (the child <input> this
   // container wraps) independently adds that same class to itself, and
-  // that input's tag is never `wb-search`.
-  if (size !== 'md') element.classList.add(`wb-search--${size}`);
-  if (variant !== 'default') element.classList.add(`wb-search--${variant}`);
-  if (element.hasAttribute('disabled')) element.classList.add('wb-search--disabled');
-  if (element.hasAttribute('loading')) element.classList.add('wb-search--loading');
+  // that input's tag is never `x-search`.
+  if (size !== 'md') element.classList.add(`x-search--${size}`);
+  if (variant !== 'default') element.classList.add(`x-search--${variant}`);
+  if (element.hasAttribute('disabled')) element.classList.add('x-search--disabled');
+  if (element.hasAttribute('loading')) element.classList.add('x-search--loading');
 
   const api = search(input, {
     placeholder: element.getAttribute('placeholder') || 'Search...',

@@ -5,7 +5,7 @@ import { readFlag, readAttr } from '../core/read-attr.js';
  * Structural layout primitives for building responsive interfaces.
  * Includes Grid, Flex, Stack, Cluster, and Masonry layouts.
  * 
- * Custom Tag: <wb-layout>
+ * Custom Tag: <div>
  * -----------------------------------------------------------------------------
  * 
  * Usage:
@@ -15,7 +15,7 @@ import { readFlag, readAttr } from '../core/read-attr.js';
 
 /**
  * Grid - CSS Grid layout
- * Custom Tag: <wb-grid>
+ * Custom Tag: <div x-grid>
  */
 export function grid(element, options = {}) {
   const config = {
@@ -32,9 +32,15 @@ export function grid(element, options = {}) {
     ...options
   };
 
-  // #448: no classList.add('wb-grid') -- layout.css already selects the
-  // `wb-grid` TAG directly (grid-template-columns default etc.), so the
+  // #448: no classList.add('x-grid') -- layout.css already selects the
+  // `x-grid` TAG directly (grid-template-columns default etc.), so the
   // class never did anything a tag selector couldn't.
+  // #448 removed this class outright; restored WITH the tag-name guard.
+  // permutation-compliance requires compliance.baseClass to cover the host
+  // (classList.contains(cls) || tagName === cls), and on an attribute host
+  // like <div x-grid> the tag is "div" -- so without the class nothing covers
+  // it. Guarded so a literal <x-grid> tag does not get a redundant class.
+  if (element.tagName.toLowerCase() !== 'x-grid') element.classList.add('x-grid');
   element.style.display = 'grid';
   element.style.gap = config.gap;
 
@@ -65,29 +71,29 @@ export function grid(element, options = {}) {
   }
 
   if (config.altRows) {
-    element.classList.add('wb-grid--alt-rows');
+    element.classList.add('x-grid--alt-rows');
   }
 
   // Guard against re-wrapping on a second scan (re-running the behavior on an
   // already-processed element would otherwise duplicate the header cells).
-  if (config.headers && !element.querySelector(':scope > .wb-grid__header')) {
+  if (config.headers && !element.querySelector(':scope > .x-grid__header')) {
     const headerNames = config.headers.split(',').map((h) => h.trim()).filter(Boolean);
     const frag = document.createDocumentFragment();
     headerNames.forEach((name) => {
       const cell = document.createElement('div');
-      cell.className = 'wb-grid__header';
+      cell.className = 'x-grid__header';
       cell.textContent = name;
       frag.appendChild(cell);
     });
     element.insertBefore(frag, element.firstChild);
   }
 
-  return () => element.classList.remove('wb-grid--alt-rows');
+  return () => element.classList.remove('x-grid--alt-rows');
 }
 
 /**
  * Flex - Flexbox layout
- * Custom Tag: <wb-flex> or <wb-row>
+ * Custom Tag: <div x-flex> or <div>
  */
 export function flex(element, options = {}) {
   const config = {
@@ -99,7 +105,7 @@ export function flex(element, options = {}) {
     ...options
   };
 
-  element.classList.add('wb-flex');
+  element.classList.add('x-flex');
   element.style.display = 'flex';
   element.style.flexDirection = config.direction;
   element.style.flexWrap = config.wrap;
@@ -107,14 +113,14 @@ export function flex(element, options = {}) {
   element.style.alignItems = config.align;
   element.style.gap = config.gap;
 
-  return () => element.classList.remove('wb-flex');
+  return () => element.classList.remove('x-flex');
 }
 
 /**
  * Container - Full-featured layout container
  * Supports: Stack (column), Row (horizontal), Grid (columns > 1)
  * User controls: direction, columns, gap, align, justify, wrap, padding
- * Custom Tag: <wb-container>
+ * Custom Tag: <div x-container>
  */
 export function container(element, options = {}) {
   const config = {
@@ -129,8 +135,14 @@ export function container(element, options = {}) {
     ...options
   };
 
-  // #448: no classList.add('wb-container') -- effects.css's .wb-container
-  // selector was converted to the `wb-container` TAG selector.
+  // #448: no classList.add('x-container') -- effects.css's .x-container
+  // selector was converted to the `x-container` TAG selector.
+  // #448 removed this class outright; restored WITH the tag-name guard.
+  // permutation-compliance requires compliance.baseClass to cover the host
+  // (classList.contains(cls) || tagName === cls), and on an attribute host
+  // like <div x-container> the tag is "div" -- so without the class nothing covers
+  // it. Guarded so a literal <x-container> tag does not get a redundant class.
+  if (element.tagName.toLowerCase() !== 'x-container') element.classList.add('x-container');
 
   // Map align/justify values to CSS
   const alignMap = { start: 'flex-start', center: 'center', end: 'flex-end', stretch: 'stretch' };
@@ -173,34 +185,51 @@ export function container(element, options = {}) {
 
 /**
  * Stack - Vertical stack layout
- * Custom Tag: <wb-stack> or <wb-column>
+ * Custom Tag: <div x-stack> or <div>
  */
 export function stack(element, options = {}) {
   const config = {
     gap: options.gap || readAttr(element, 'gap') || element.getAttribute('gap') || '1rem',
-    // Parity with the retired <wb-column> custom element (v3: behavior, not a
+    // Parity with the retired <div> custom element (v3: behavior, not a
     // class that `extends HTMLElement`). These are optional.
     justify: options.justify || element.getAttribute('justify') || '',
     align: options.align || element.getAttribute('align') || '',
     wrap: options.wrap || element.getAttribute('wrap') || '',
+    // stack.schema.json declares these three with descriptions and worked
+    // examples, so the docs and showcase have always offered them -- and
+    // nothing read them (#861). Pass-through CSS values by design: the schema
+    // says "any valid CSS colour / padding / border-radius", so there is no
+    // enum to validate against and no modifier class to mint.
+    bg: options.bg || element.getAttribute('bg') || '',
+    pad: options.pad || element.getAttribute('pad') || '',
+    radius: options.radius || element.getAttribute('radius') || '',
     ...options
   };
 
-  // #448: no classList.add('wb-stack') -- no CSS selector anywhere depends
+  // #448: no classList.add('x-stack') -- no CSS selector anywhere depends
   // on the bare class.
+  // #448 removed this class outright; restored WITH the tag-name guard.
+  // permutation-compliance requires compliance.baseClass to cover the host
+  // (classList.contains(cls) || tagName === cls), and on an attribute host
+  // like <div x-stack> the tag is "div" -- so without the class nothing covers
+  // it. Guarded so a literal <x-stack> tag does not get a redundant class.
+  if (element.tagName.toLowerCase() !== 'x-stack') element.classList.add('x-stack');
   element.style.display = 'flex';
   element.style.flexDirection = 'column';
   element.style.gap = config.gap;
   if (config.justify) element.style.justifyContent = config.justify;
   if (config.align) element.style.alignItems = config.align;
   if (config.wrap) element.style.flexWrap = config.wrap;
+  if (config.bg) element.style.background = config.bg;
+  if (config.pad) element.style.padding = config.pad;
+  if (config.radius) element.style.borderRadius = config.radius;
 
   return () => {};
 }
 
 /**
  * Cluster - Horizontal cluster layout
- * Custom Tag: <wb-cluster>
+ * Custom Tag: <div x-cluster>
  */
 export function cluster(element, options = {}) {
   const config = {
@@ -210,8 +239,14 @@ export function cluster(element, options = {}) {
     ...options
   };
 
-  // #448: no classList.add('wb-cluster') -- no CSS selector anywhere
+  // #448: no classList.add('x-cluster') -- no CSS selector anywhere
   // depends on the bare class.
+  // #448 removed this class outright; restored WITH the tag-name guard.
+  // permutation-compliance requires compliance.baseClass to cover the host
+  // (classList.contains(cls) || tagName === cls), and on an attribute host
+  // like <div x-cluster> the tag is "div" -- so without the class nothing covers
+  // it. Guarded so a literal <x-cluster> tag does not get a redundant class.
+  if (element.tagName.toLowerCase() !== 'x-cluster') element.classList.add('x-cluster');
   element.style.display = 'flex';
   element.style.flexWrap = 'wrap';
   element.style.gap = config.gap;
@@ -223,7 +258,7 @@ export function cluster(element, options = {}) {
 
 /**
  * Center - Center content
- * Custom Tag: <wb-center>
+ * Custom Tag: <div x-center>
  */
 export function center(element, options = {}) {
   const config = {
@@ -233,7 +268,7 @@ export function center(element, options = {}) {
     ...options
   };
 
-  element.classList.add('wb-center');
+  element.classList.add('x-center');
   
   if (config.intrinsic) {
     element.style.display = 'flex';
@@ -248,12 +283,12 @@ export function center(element, options = {}) {
     element.style.paddingRight = config.gutters;
   }
 
-  return () => element.classList.remove('wb-center');
+  return () => element.classList.remove('x-center');
 }
 
 /**
  * Sidebar Layout - Main content with sidebar
- * Custom Tag: <wb-sidebar>
+ * Custom Tag: <div>
  */
 export function sidebarlayout(element, options = {}) {
   const config = {
@@ -264,7 +299,7 @@ export function sidebarlayout(element, options = {}) {
     ...options
   };
 
-  element.classList.add('wb-sidebar-layout');
+  element.classList.add('x-sidebar-layout');
   element.style.display = 'flex';
   element.style.flexWrap = 'wrap';
   element.style.gap = config.gap;
@@ -280,12 +315,12 @@ export function sidebarlayout(element, options = {}) {
     children[mainIndex].style.minWidth = config.contentMin;
   }
 
-  return () => element.classList.remove('wb-sidebar-layout');
+  return () => element.classList.remove('x-sidebar-layout');
 }
 
 /**
  * Switcher - Responsive switch layout
- * Custom Tag: <wb-switcher>
+ * Custom Tag: <div x-switcher>
  */
 export function switcher(element, options = {}) {
   const config = {
@@ -295,12 +330,12 @@ export function switcher(element, options = {}) {
     ...options
   };
 
-  // #557: only a host whose tag ISN'T already wb-switcher needs the class --
-  // the tag selector already covers styling for real <wb-switcher> elements,
+  // #557: only a host whose tag ISN'T already x-switcher needs the class --
+  // the tag selector already covers styling for real <div x-switcher> elements,
   // so adding it unconditionally trips no-redundant-tag-name-class.spec.ts
   // (demos/layout-test.html). Same guard pattern as article()/articles()
   // (src/wb-viewmodels/article.js, #523/#528) and chip() (feedback.js, #521).
-  if (element.tagName.toLowerCase() !== 'wb-switcher') element.classList.add('wb-switcher');
+  if (element.tagName.toLowerCase() !== 'x-switcher') element.classList.add('x-switcher');
   element.style.display = 'flex';
   element.style.flexWrap = 'wrap';
   element.style.gap = config.gap;
@@ -311,12 +346,12 @@ export function switcher(element, options = {}) {
     child.style.flexBasis = `calc((${config.threshold} - 100%) * 999)`;
   });
 
-  return () => element.classList.remove('wb-switcher');
+  return () => element.classList.remove('x-switcher');
 }
 
 /**
  * Masonry - Masonry layout
- * Custom Tag: <wb-masonry>
+ * Custom Tag: <div>
  */
 export function masonry(element, options = {}) {
   const config = {
@@ -325,7 +360,7 @@ export function masonry(element, options = {}) {
     ...options
   };
 
-  element.classList.add('wb-masonry');
+  element.classList.add('x-masonry');
   element.style.columnCount = config.columns;
   element.style.columnGap = config.gap;
 
@@ -335,12 +370,12 @@ export function masonry(element, options = {}) {
     item.style.marginBottom = config.gap;
   }
 
-  return () => element.classList.remove('wb-masonry');
+  return () => element.classList.remove('x-masonry');
 }
 
 /**
  * Sticky - Sticky positioning
- * Custom Tag: <wb-sticky>
+ * Custom Tag: <div x-sticky>
  */
 export function sticky(element, options = {}) {
   const config = {
@@ -350,13 +385,13 @@ export function sticky(element, options = {}) {
     ...options
   };
 
-  element.classList.add('wb-sticky');
+  element.classList.add('x-sticky');
   element.style.position = 'sticky';
   if (config.top) element.style.top = config.top;
   if (config.bottom) element.style.bottom = config.bottom;
   element.style.zIndex = config.zIndex;
 
-  return () => element.classList.remove('wb-sticky');
+  return () => element.classList.remove('x-sticky');
 }
 
 /**
@@ -370,7 +405,7 @@ export function fixed(element, options = {}) {
     ...options
   };
 
-  element.classList.add('wb-fixed');
+  element.classList.add('x-fixed');
   element.style.position = 'fixed';
   element.style.zIndex = config.zIndex;
 
@@ -386,7 +421,7 @@ export function fixed(element, options = {}) {
 
   Object.assign(element.style, positions[config.position] || positions['bottom-right']);
 
-  return () => element.classList.remove('wb-fixed');
+  return () => element.classList.remove('x-fixed');
 }
 
 /**
@@ -400,7 +435,7 @@ export function scrollable(element, options = {}) {
     ...options
   };
 
-  element.classList.add('wb-scrollable');
+  element.classList.add('x-scrollable');
   
   if (config.direction === 'vertical' || config.direction === 'both') {
     element.style.overflowY = 'auto';
@@ -411,12 +446,12 @@ export function scrollable(element, options = {}) {
     if (config.maxWidth) element.style.maxWidth = config.maxWidth;
   }
 
-  return () => element.classList.remove('wb-scrollable');
+  return () => element.classList.remove('x-scrollable');
 }
 
 /**
  * Cover - Cover layout
- * Custom Tag: <wb-cover>
+ * Custom Tag: <div x-cover>
  */
 export function cover(element, options = {}) {
   const config = {
@@ -425,7 +460,7 @@ export function cover(element, options = {}) {
     ...options
   };
 
-  element.classList.add('wb-cover');
+  element.classList.add('x-cover');
   element.style.display = 'flex';
   element.style.flexDirection = 'column';
   element.style.minHeight = config.minHeight;
@@ -437,12 +472,12 @@ export function cover(element, options = {}) {
     principal.style.marginBottom = 'auto';
   }
 
-  return () => element.classList.remove('wb-cover');
+  return () => element.classList.remove('x-cover');
 }
 
 /**
  * Frame - Aspect ratio frame
- * Custom Tag: <wb-frame>
+ * Custom Tag: <div x-frame>
  */
 export function frame(element, options = {}) {
   const config = {
@@ -450,7 +485,7 @@ export function frame(element, options = {}) {
     ...options
   };
 
-  element.classList.add('wb-frame');
+  element.classList.add('x-frame');
   element.style.aspectRatio = config.ratio;
   element.style.overflow = 'hidden';
 
@@ -461,12 +496,12 @@ export function frame(element, options = {}) {
     child.style.objectFit = 'cover';
   }
 
-  return () => element.classList.remove('wb-frame');
+  return () => element.classList.remove('x-frame');
 }
 
 /**
  * Reel - Horizontal scroll reel
- * Custom Tag: <wb-reel>
+ * Custom Tag: <div x-reel>
  */
 export function reel(element, options = {}) {
   const config = {
@@ -475,7 +510,7 @@ export function reel(element, options = {}) {
     ...options
   };
 
-  element.classList.add('wb-reel');
+  element.classList.add('x-reel');
   element.style.display = 'flex';
   element.style.overflowX = 'auto';
   element.style.gap = config.gap;
@@ -488,7 +523,7 @@ export function reel(element, options = {}) {
     if (config.itemWidth !== 'auto') child.style.width = config.itemWidth;
   }
 
-  return () => element.classList.remove('wb-reel');
+  return () => element.classList.remove('x-reel');
 }
 
 /**
@@ -501,7 +536,7 @@ export function imposter(element, options = {}) {
     ...options
   };
 
-  element.classList.add('wb-imposter');
+  element.classList.add('x-imposter');
   element.style.position = config.breakout ? 'fixed' : 'absolute';
   element.style.top = '50%';
   element.style.left = '50%';
@@ -512,12 +547,12 @@ export function imposter(element, options = {}) {
     element.style.overflow = 'auto';
   }
 
-  return () => element.classList.remove('wb-imposter');
+  return () => element.classList.remove('x-imposter');
 }
 
 /**
  * Icon - Icon layout helper
- * Custom Tag: <wb-icon>
+ * Custom Tag: <span x-icon>
  */
 export function icon(element, options = {}) {
   const config = {
@@ -526,7 +561,7 @@ export function icon(element, options = {}) {
     ...options
   };
 
-  element.classList.add('wb-icon');
+  element.classList.add('x-icon');
   element.style.display = 'inline-flex';
   element.style.alignItems = 'center';
   element.style.gap = config.space;
@@ -537,12 +572,12 @@ export function icon(element, options = {}) {
     svg.style.height = config.size;
   }
 
-  return () => element.classList.remove('wb-icon');
+  return () => element.classList.remove('x-icon');
 }
 
 /**
  * Drawer Layout - Collapsible container that pulls to the edge
- * Custom Tag: <wb-drawer>
+ * Custom Tag: <div x-drawer>
  */
 export function drawerLayout(element, options = {}) {
   const config = {
@@ -561,18 +596,24 @@ export function drawerLayout(element, options = {}) {
     ...options
   };
 
-  // #448: no classList.add('wb-drawer-layout') -- no CSS selector anywhere
-  // depends on the bare class (layout.css already selects `wb-drawer-layout`
-  // only in compound form alongside a DIFFERENT tag, `wb-drawer.wb-drawer-layout`,
-  // which this element never matches). 'wb-drawer' (below) is kept -- it's a
-  // genuinely different class name than this tag (`wb-drawer-layout`), not
-  // a self-matching duplicate, and layout.css's wb-drawer visibility rules
+  // #448: no classList.add('x-drawer-layout') -- no CSS selector anywhere
+  // depends on the bare class (layout.css already selects `x-drawer-layout`
+  // only in compound form alongside a DIFFERENT tag, `x-drawer.x-drawer-layout`,
+  // which this element never matches). 'x-drawer' (below) is kept -- it's a
+  // genuinely different class name than this tag (`x-drawer-layout`), not
+  // a self-matching duplicate, and layout.css's x-drawer visibility rules
   // rely on it.
-  element.classList.add('wb-drawer');
+  // #448 removed this class outright; restored WITH the tag-name guard.
+  // permutation-compliance requires compliance.baseClass to cover the host
+  // (classList.contains(cls) || tagName === cls), and on an attribute host
+  // like <div x-drawer-layout> the tag is "div" -- so without the class nothing covers
+  // it. Guarded so a literal <x-drawer-layout> tag does not get a redundant class.
+  if (element.tagName.toLowerCase() !== 'x-drawer-layout') element.classList.add('x-drawer-layout');
+  element.classList.add('x-drawer');
   
   const isVertical = config.position === 'top' || config.position === 'bottom';
-  const storageKeyWidth = `wb-drawer-${config.id}-width`;
-  const storageKeyCollapsed = `wb-drawer-${config.id}-collapsed`;
+  const storageKeyWidth = `x-drawer-${config.id}-width`;
+  const storageKeyCollapsed = `x-drawer-${config.id}-collapsed`;
   
   // Restore state
   let savedWidth = config.saveState ? localStorage.getItem(storageKeyWidth) : null;
@@ -678,7 +719,7 @@ export function drawerLayout(element, options = {}) {
   } else {
     // Create default toggle button
     toggleBtn = document.createElement('button');
-    toggleBtn.className = 'wb-drawer-toggle';
+    toggleBtn.className = 'x-drawer-toggle';
     
     toggleBtn.innerHTML = getArrow(isCollapsed);
     
@@ -740,7 +781,7 @@ export function drawerLayout(element, options = {}) {
       handle = document.querySelector(config.handleSelector);
     } else {
       handle = document.createElement('div');
-      handle.className = 'wb-drawer-handle';
+      handle.className = 'x-drawer-handle';
       // Style based on position
       const size = '8px';
       const styles = { position: 'absolute', zIndex: '20', background: 'transparent' };
@@ -777,7 +818,7 @@ export function drawerLayout(element, options = {}) {
         
         // Create overlay for cursor handling (Compliance: No body.style modification)
         const overlay = document.createElement('div');
-        overlay.id = 'wb-resize-overlay';
+        overlay.id = 'x-resize-overlay';
         overlay.style.cssText = `
           position: fixed; top: 0; left: 0; right: 0; bottom: 0;
           z-index: 9999; cursor: ${isVertical ? 'row-resize' : 'col-resize'};
@@ -868,7 +909,7 @@ export function drawerLayout(element, options = {}) {
           }
           
           // Remove overlay
-          const resizeOverlay = document.getElementById('wb-resize-overlay');
+          const resizeOverlay = document.getElementById('x-resize-overlay');
           if (resizeOverlay) resizeOverlay.remove();
           
           element.classList.remove('resizing');
@@ -894,7 +935,7 @@ export function drawerLayout(element, options = {}) {
   }
 
   return () => {
-    element.classList.remove('wb-drawer-layout', 'wb-drawer', 'collapsed', 'resizing');
+    element.classList.remove('x-drawer-layout', 'x-drawer', 'collapsed', 'resizing');
     if (toggleBtn && !config.toggleSelector) toggleBtn.remove();
     if (config.toggleSelector && toggleBtn) toggleBtn.removeEventListener('click', toggle);
     if (resizeCleanup) resizeCleanup();

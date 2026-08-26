@@ -56,14 +56,14 @@ test.describe('Stock Market Indicator Spacing Compliance', () => {
         
         // Find all stock market indicator elements
         const stockSelectors = [
-          'wb-stock',
-          'wb-ticker',
-          'wb-market',
-          'wb-stockticker',
-          'wb-marketindicator',
-          '.wb-stock',
-          '.wb-ticker',
-          '.wb-market',
+          'x-stock',
+          'x-ticker',
+          'x-market',
+          'x-stockticker',
+          'x-marketindicator',
+          '.x-stock',
+          '.x-ticker',
+          '.x-market',
           '.stock-indicator',
           '.market-widget',
         ];
@@ -184,7 +184,7 @@ test.describe('Stock Market Indicator Spacing Compliance', () => {
             '4. Apply the fix from violation.fix.code',
             '5. Re-run tests to verify fix'
           ],
-          globalFix: `/* Global fix for all stock indicators */\nwb-stock,\nwb-ticker,\nwb-market,\n.wb-stock,\n.wb-ticker {\n  padding-left: 1rem;\n  padding-right: 1rem;\n}`
+          globalFix: `/* Global fix for all stock indicators */\nwb-stock,\nwb-ticker,\nwb-market,\n.x-stock,\n.x-ticker {\n  padding-left: 1rem;\n  padding-right: 1rem;\n}`
         }
       });
       
@@ -222,12 +222,12 @@ test.describe('Stock Market Indicator Spacing Compliance', () => {
       
       // Check for stock-related selectors
       const stockSelectors = [
-        '.wb-stock',
-        '.wb-ticker', 
-        '.wb-market',
-        'wb-stock',
-        'wb-ticker',
-        'wb-market',
+        '.x-stock',
+        '.x-ticker', 
+        '.x-market',
+        'x-stock',
+        'x-ticker',
+        'x-market',
       ];
       
       for (const selector of stockSelectors) {
@@ -259,7 +259,7 @@ test.describe('Stock Market Indicator Spacing Compliance', () => {
       console.warn('\n⚠️ CSS files with potentially missing 1rem padding:');
       missingPadding.forEach(m => console.warn(`   ${m}`));
       console.warn('\n🔧 Suggested global fix:');
-      console.warn(`   .wb-stock, .wb-ticker, .wb-market { padding: 1rem; }`);
+      console.warn(`   .x-stock, .x-ticker, .x-market { padding: 1rem; }`);
     }
   });
 });
@@ -286,7 +286,7 @@ test.describe('Stock Indicator Spacing - Live Component Check', () => {
       </head>
       <body>
         <div class="test-container">
-          <wb-stock id="stock-test-1" symbol="AAPL" price="150.00" change="+2.5%">
+          <div id="stock-test-1" symbol="AAPL" price="150.00" change="+2.5%">
             <span class="stock-symbol">AAPL</span>
             <span class="stock-price">$150.00</span>
             <span class="stock-change">+2.5%</span>
@@ -294,7 +294,7 @@ test.describe('Stock Indicator Spacing - Live Component Check', () => {
         </div>
         
         <div class="test-container">
-          <wb-ticker id="ticker-test-1">
+          <div id="ticker-test-1">
             <img src="/assets/icons/chart.svg" alt="chart" style="width: 24px;">
             <span>Market Update</span>
           </div>
@@ -357,8 +357,8 @@ test.describe('Stock Indicator Spacing - Live Component Check', () => {
       violations.forEach(v => console.log(`   ${v}`));
       console.log('\n🤖 AI AUTO-FIX SUGGESTION:');
       console.log(`   Add to src/behaviors/css/stock.css:`);
-      console.log(`   .wb-stock, wb-stock { padding: 1rem; }`);
-      console.log(`   .wb-ticker, wb-ticker { padding: 1rem; }`);
+      console.log(`   .x-stock, x-stock { padding: 1rem; }`);
+      console.log(`   .x-ticker, x-ticker { padding: 1rem; }`);
     }
     
     // Soft fail - log issues but don't break build for this new test

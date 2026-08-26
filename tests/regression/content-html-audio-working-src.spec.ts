@@ -1,19 +1,19 @@
 /**
- * REGRESSION: demos/site/content.html had 8 <wb-audio src="../audio.mp3">
+ * REGRESSION: demos/site/content.html had 8 <audio src="../audio.mp3">
  * instances pointing at demos/audio.mp3 -- a 13-byte placeholder file, not
  * real audio. Fixed by pointing at a real, known-working external URL
  * (matching the pattern already used elsewhere on this same page for the
- * "Studio EQ Player" example). This test asserts every audio/wb-audio src
+ * "Studio EQ Player" example). This test asserts every audio/x-audio src
  * on the page actually resolves to a real, non-trivial audio resource.
  */
 import { test, expect } from '@playwright/test';
 
-test('every audio/wb-audio src on content.html resolves to a real, working resource', async ({ page, request }) => {
+test('every audio/x-audio src on content.html resolves to a real, working resource', async ({ page, request }) => {
   await page.goto('/demos/site/content.html');
   await page.waitForTimeout(500);
 
   const srcs = await page.evaluate(() => {
-    const els = Array.from(document.querySelectorAll('wb-audio[src], audio[src]'));
+    const els = Array.from(document.querySelectorAll('.x-audio[src], audio[src]'));
     return [...new Set(els.map(el => el.getAttribute('src')))];
   });
 

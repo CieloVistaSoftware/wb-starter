@@ -4,8 +4,8 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>WB Views Registry Browser</title>
-  <link rel="stylesheet" href="../src/styles/themes.css">
-  <link rel="stylesheet" href="../src/styles/site.css">
+  <link rel="stylesheet" href="../src/styles/themes.css?v=3.0.91">
+  <link rel="stylesheet" href="../src/styles/site.css?v=3.0.91">
   <link rel="stylesheet" href="wb-views-demo.css">
   <style>
     /* Registry Browser Specific Styles */
@@ -115,18 +115,18 @@
       max-height: 150px;
     }
 
-    /* Each registry row's "Live Example" wb-demo block renders a REGISTERED
-       VIEW tag (alert-box, badge-tag, ...), not a wb-card* element, so
+    /* Each registry row's "Live Example" x-demo block renders a REGISTERED
+       VIEW tag (alert-box, badge-tag, ...), not a x-card* element, so
        demo.js's per-card corner badge (attachCardDocLink -> the
-       wb-demo__card-doc-link class, see src/styles/behaviors/demo.css)
+       x-demo__card-doc-link class, see src/styles/behaviors/demo.css)
        never fires here -- that path only watches grid children whose tag
-       starts with "wb-card". Whenever a row's view DOES resolve to a real
+       starts with "x-card". Whenever a row's view DOES resolve to a real
        documented wb-* component, demo.js still falls back to appending the
-       shared wb-demo__links "Docs: ..." line below the grid. John asked for
+       shared x-demo__links "Docs: ..." line below the grid. John asked for
        the docs link in the upper-right corner on this page specifically --
        reposition that shared line the same way demo.css positions its
        per-card badge, scoped to this page only so other pages using a
-       wb-demo block keep the original below-the-grid line.
+       x-demo block keep the original below-the-grid line.
        (docs/standards/DEMOS-AND-DOCS-STANDARDS.md §24 allows this: a corner
        badge is an intentionally out-of-flow, opted-in overlap.)
        CAUTION: never spell the demo custom element's tag name here with
@@ -137,10 +137,10 @@
        syntax -- a stray mention in this comment previously matched as a
        bogus opening tag and swallowed everything up to the real element's
        closing tag as the usage-example's shown source (confirmed live). */
-    #registry-container wb-demo {
+    #registry-container x-demo {
       position: relative;
     }
-    #registry-container wb-demo > .wb-demo__links {
+    #registry-container x-demo > .x-demo__links {
       position: absolute;
       top: -0.5rem;
       right: -0.5rem;
@@ -168,15 +168,15 @@
     <div class="demo-section">
       <div class="section-content">
         <h2>What is a registered view?</h2>
-        <p>A <strong>view</strong> is a reusable HTML template registered once under a name — <code>badge</code>, <code>alert-box</code>, <code>file-toolbar</code> — and then usable anywhere as its own custom tag. Change the template in one place and every instance on the page updates. Templates support <code>{{attribute}}</code> interpolation and <code>wb-for</code>/<code>wb-if</code> for lists and conditionals.</p>
-        <p>Single-word names get a <code>wb-</code> prefix as a tag (<code>badge</code> → <code>&lt;wb-badge&gt;</code>); hyphenated names are used as-is (<code>alert-box</code> → <code>&lt;alert-box&gt;</code>). Each view's real tag name is shown under its name in the table below.</p>
+        <p>A <strong>view</strong> is a reusable HTML template registered once under a name — <code>badge</code>, <code>alert-box</code>, <code>file-toolbar</code> — and then usable anywhere as its own custom tag. Change the template in one place and every instance on the page updates. Templates support <code>{{attribute}}</code> interpolation and <code>x-for</code>/<code>x-if</code> for lists and conditionals.</p>
+        <p>Single-word names get a <code>wb-</code> prefix as a tag (<code>badge</code> → <code>&lt;x-badge&gt;</code>); hyphenated names are used as-is (<code>alert-box</code> → <code>&lt;alert-box&gt;</code>). Each view's real tag name is shown under its name in the table below.</p>
 
         <h3>How to use a registered view</h3>
         <p>Pick any view from the table below (its tag name is shown under the view name), then use it as a normal HTML element with its listed attributes:</p>
 
-        <wb-demo id="usage-example">
-          <wb-badge label="New" variant="primary"></wb-badge>
-        </wb-demo>
+        <div x-demo id="usage-example">
+          <span x-badge label="New" variant="primary"></span>
+        </div>
       </div>
     </div>
 
@@ -195,7 +195,7 @@
     WB.init({ scan: false }); // We'll scan manually after content load
 
     // #263: this page never called initViews() — the wb-views template
-    // system that actually registers custom tags (<badge>, <alert-box>,
+    // system that actually registers custom tags (<badge>, <div>,
     // etc.) from the registry was never initialized, so the "how to use"
     // live example below couldn't have worked even with correct markup.
     await initViews({ registry: '../src/wb-views/views-registry.json' });
@@ -210,7 +210,7 @@
     // literal opening/closing tag pair, and a stray mention in a comment
     // gets matched as if it were real markup.)
     // { eager: true } -- this is the page's single above-the-fold "how to
-    // use" example (same rationale as wb-demo.js's own EAGER_BUILD_COUNT):
+    // use" example (same rationale as x-demo.js's own EAGER_BUILD_COUNT):
     // default lazy injection defers building until an IntersectionObserver
     // reports the element near-viewport, which never fired in time here.
     await WB.scan(document.getElementById('usage-example').parentElement, { eager: true });
@@ -242,7 +242,7 @@
     // (icon=""), and getViewData's own bare-boolean-attribute convention
     // (`value === '' -> value = true`) can't tell that apart from a
     // genuinely bare boolean attribute -- it reads icon="" as icon=true,
-    // so badge-tag's `wb-if="icon"` shows and `{{icon}}` interpolates the
+    // so badge-tag's `x-if="icon"` shows and `{{icon}}` interpolates the
     // literal word "true" (confirmed live). Out of scope for this page to
     // fix in wb-views.js itself; sidestepped here by always supplying a
     // real icon value.
@@ -261,9 +261,9 @@
     // of their own) render as an empty, content-less box unless given some
     // body content to slot in -- fill those with a small realistic example.
     const BODY_OVERRIDES = {
-      'button-group': '<wb-button variant="primary">OK</wb-button><wb-button variant="ghost">Cancel</wb-button>',
-      'toolbar': '<wb-button variant="ghost">Action</wb-button>',
-      'stat-row': '<stat-tile value="42" label="Users"></stat-tile><stat-tile value="87%" label="Uptime"></stat-tile>',
+      'button-group': '<button variant="primary">OK</button><button variant="ghost">Cancel</button>',
+      'toolbar': '<button variant="ghost">Action</button>',
+      'stat-row': '<div value="42" label="Users"></div><div value="87%" label="Uptime"></div>',
       'demo-section': '<p>Section content goes here.</p>'
     };
 
@@ -323,25 +323,42 @@
       const tag = key.includes('-') ? key : 'wb-' + key;
       const attrs = [];
       const attributes = view.attributes || {};
+      // Tracks what THIS row actually set/left unset for every declared
+      // attribute -- John: "when using variables, put a Where explanation
+      // ... this doesn't tell the user where {{behavior}} came from."
+      // Handed back alongside the markup so the caller can build a legend
+      // mapping each {{placeholder}} in the template to the real value (or
+      // explicit 'not set' / schema default) driving THIS row's render.
+      const resolved = {};
 
       for (const [attrName, details] of Object.entries(attributes)) {
-        if (!details || !details.required) continue;
+        if (!details || !details.required) { resolved[attrName] = { set: false, reason: 'optional, left unset for this example' }; continue; }
 
         if (details.type === 'boolean') {
           attrs.push(attrName); // bare boolean attribute (Standard §20)
+          resolved[attrName] = { set: true, value: true, source: 'required boolean attribute' };
           continue;
         }
 
         let value;
         if (details.type === 'array') {
           const override = ARRAY_ATTR_OVERRIDES[key] && ARRAY_ATTR_OVERRIDES[key][attrName];
-          value = JSON.stringify(override || ['Example', 'Sample']);
+          // Pretty-printed (2-space indent), not one long unbroken line --
+          // John: "start each row of an array on a new line indented
+          // properly." A newline inside a quoted HTML attribute value is
+          // valid, and JSON.parse (getViewData's array-attribute path)
+          // tolerates the extra whitespace between tokens fine.
+          value = JSON.stringify(override || ['Example', 'Sample'], null, 2);
+          resolved[attrName] = { set: true, value, source: override ? 'ARRAY_ATTR_OVERRIDES (this page)' : 'generic placeholder array (this page)' };
         } else if (Array.isArray(details.enum) && details.enum.length) {
           value = details.enum[0];
+          resolved[attrName] = { set: true, value, source: `first enum value (schema: ${JSON.stringify(details.enum)})` };
         } else if (details.default !== undefined) {
           value = String(details.default);
+          resolved[attrName] = { set: true, value, source: 'schema-declared default (views-registry.json)' };
         } else {
           value = placeholderText(attrName);
+          resolved[attrName] = { set: true, value, source: 'generic placeholder text (this page, no schema default)' };
         }
         attrs.push(`${attrName}="${escapeAttr(value)}"`);
       }
@@ -350,12 +367,33 @@
       if (extras) {
         for (const [attrName, value] of Object.entries(extras)) {
           attrs.push(`${attrName}="${escapeAttr(value)}"`);
+          resolved[attrName] = { set: true, value, source: 'EXTRA_ATTR_OVERRIDES (this page)' };
         }
       }
 
       const body = BODY_OVERRIDES[key] || '';
       const attrStr = attrs.length ? ' ' + attrs.join(' ') : '';
-      return `<${tag}${attrStr}>${body}</${tag}>`;
+      return { markup: `<${tag}${attrStr}>${body}</${tag}>`, resolved };
+    }
+
+    // Every {{name}} / {{name || 'default'}} / {{name ? a : b}} placeholder
+    // referenced in a template, matched against `resolved` (buildLiveViewMarkup's
+    // per-attribute trace) to explain where each one's value for THIS row
+    // actually comes from. John: "when using variables, put a Where
+    // explanation ... this doesn't tell the user where {{behavior}} came
+    // from."
+    function explainTemplateVariables(template, resolved) {
+      const names = [...new Set(
+        Array.from(template.matchAll(/\{\{\s*([a-zA-Z_][a-zA-Z0-9_]*)/g), m => m[1])
+      )];
+      if (!names.length) return '';
+      const lines = names.map(name => {
+        const r = resolved[name];
+        if (!r) return `Where {{${escapeAttr(name)}}} = (not a declared attribute -- check the template for a typo)`;
+        if (!r.set) return `Where {{${escapeAttr(name)}}} = unset for this example (${escapeAttr(r.reason)}) -- the template's own \`|| 'default'\`/\`x-if\` fallback applies`;
+        return `Where {{${escapeAttr(name)}}} = ${escapeAttr(JSON.stringify(r.value))} (${escapeAttr(r.source)})`;
+      });
+      return lines.join('\n');
     }
 
     async function loadRegistry() {
@@ -374,7 +412,7 @@
         // Parallel to sortedKeys -- the exact live markup generated for each
         // row's demo block, in document order. Handed to each row's demo
         // element as its own "_rawSource" below (the same short-circuit
-        // wb-demo.js's real custom element uses, see demo.js) so the source
+        // x-demo.js's real custom element uses, see demo.js) so the source
         // panel shows this EXACT authored markup instead of falling back to
         // demo.js's page-source network-fetch-and-regex-scan path -- that
         // path only finds a genuinely reliable match for the page's single
@@ -416,15 +454,17 @@
             attributesHtml += '</div>';
           }
 
-          const liveMarkup = buildLiveViewMarkup(key, view);
+          const { markup: liveMarkup, resolved } = buildLiveViewMarkup(key, view);
           rowLiveMarkup.push(liveMarkup);
+          const tagName = key.includes('-') ? key : 'wb-' + key;
+          const whereExplanation = explainTemplateVariables(view.template, resolved);
 
           html += `
             <tr>
               <td data-label="View Name">
                 <div class="view-name">${key}</div>
                 <div style="margin-top:0.5rem; font-size: 0.75rem; color: var(--text-muted);">
-                   &lt;${key.includes('-') ? key : 'wb-' + key}&gt;
+                   &lt;${tagName}&gt;
                 </div>
               </td>
               <td data-label="Description &amp; Attributes">
@@ -432,7 +472,17 @@
                 ${attributesHtml}
               </td>
               <td data-label="Live Example">
-                <wb-demo columns="1">${liveMarkup}</wb-demo>
+                <details style="margin-bottom:0.5rem;">
+                  <summary style="cursor:pointer; font-size:0.75rem; color: var(--text-muted);">① Template <span style="opacity:0.7;">(views-registry.json, as authored -- this is \`&lt;${tagName}&gt;\`'s one and only definition; every other section on this row is derived from it)</span></summary>
+                  <pre style="margin-top:0.5rem; padding:0.75rem; font-size:0.75rem; overflow-x:auto; background: var(--bg-tertiary); border-radius:4px; border:1px solid var(--border-color);"><code>${escapeAttr(view.template)}</code></pre>
+                  ${whereExplanation ? `<pre style="margin-top:0.5rem; padding:0.75rem; font-size:0.75rem; overflow-x:auto; background: var(--bg-tertiary); border-radius:4px; border:1px dashed var(--border-color); color: var(--text-muted);"><code>${escapeAttr(whereExplanation)}</code></pre>` : ''}
+                </details>
+                <div style="font-size:0.75rem; color: var(--text-muted); margin-bottom:0.25rem;">② Usage <span style="opacity:0.7;">(this row's attributes applied -- \`&lt;${tagName}&gt;\` itself is defined in step ① above, not here)</span></div>
+                <div x-demo columns="1">${liveMarkup}</div>
+                <details class="rendered-output-details" style="margin-top:0.5rem;">
+                  <summary style="cursor:pointer; font-size:0.75rem; color: var(--text-muted);">③ Rendered Output <span style="opacity:0.7;">(final DOM, behaviors attached)</span></summary>
+                  <pre style="margin-top:0.5rem; padding:0.75rem; font-size:0.75rem; overflow-x:auto; background: var(--bg-tertiary); border-radius:4px; border:1px solid var(--border-color);"><code class="rendered-output-code">(rendering…)</code></pre>
+                </details>
               </td>
             </tr>
           `;
@@ -446,13 +496,34 @@
         // more reliable than demo.js's page-source fallback for
         // runtime-built rows. Document order here matches rowLiveMarkup's
         // push order (both driven by the same sortedKeys.forEach above).
-        container.querySelectorAll('wb-demo').forEach((el, i) => {
+        container.querySelectorAll('x-demo').forEach((el, i) => {
           el._rawSource = rowLiveMarkup[i];
         });
 
         // Scan for new behaviors
         await WB.scan(container);
-        
+
+        // Fill in step ③ "Rendered Output" -- the actual final DOM after
+        // template interpolation AND behavior attachment (x-ripple,
+        // x-draggable, schema-driven components, ...), not just the
+        // authored usage from step ②. John: "we must show compositional
+        // steps to get the elements we are using" -- template -> usage ->
+        // rendered result, the same 3-step shape this page's own static
+        // "How It Works" example already used for one hand-picked case,
+        // now per row. A short settle wait: wb-views' renderView() and
+        // several behaviors (schema-driven components, x-demo's own grid
+        // build) finish asynchronously after WB.scan(container) itself
+        // already resolved.
+        await new Promise(resolve => setTimeout(resolve, 300));
+        container.querySelectorAll('.rendered-output-details').forEach(details => {
+          const demo = details.previousElementSibling;
+          const rendered = demo?.querySelector(':scope > .x-demo__grid > *');
+          const codeEl = details.querySelector('.rendered-output-code');
+          if (rendered && codeEl) {
+            codeEl.textContent = rendered.outerHTML;
+          }
+        });
+
       } catch (err) {
         container.innerHTML = `<div class="alert alert--error">
           <span class="alert__icon">❌</span>

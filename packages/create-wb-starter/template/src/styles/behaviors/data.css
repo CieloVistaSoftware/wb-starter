@@ -16,20 +16,33 @@
    ============================================================================= */
 
 /* Responsive wrapper — allows horizontal scroll on narrow viewports.
-   #448: `wb-table` TAG selector added alongside the `.wb-table` class --
-   table() (semantics/table.js) skips adding `.wb-table` only when the host
-   IS the literal <wb-table> tag (used with no nested <table> child); a
-   native <table> (autoInject, or the child a <wb-table> wraps) still gets
-   the class, since a `table` tag can never match a `wb-table` selector. */
-wb-table,
-.wb-table {
+   #448: `x-table` TAG selector added alongside the `.x-table` class --
+   table() (semantics/table.js) skips adding `.x-table` only when the host
+   IS the literal <table> tag (used with no nested <table> child); a
+   native <table> (autoInject, or the child a <table> wraps) still gets
+   the class, since a `table` tag can never match a `x-table` selector.
+   #589: John, "TABLES CANNOT HAVE HORIZONTAL SCROLLBARS UNLESS NECESSARY" --
+   reported a small (~8px) horizontal scrollbar on every table.md example
+   even when content clearly fit. Setting ONLY `overflow-x` here left
+   `overflow-y` at its UA-default `visible` -- per the CSS Overflow spec,
+   a box with one axis non-visible and the other `visible` computes the
+   `visible` axis to `auto` too (confirmed live: getComputedStyle on a
+   <table> reported `overflow-y: auto` despite this rule never setting
+   it), turning this into an unintended two-axis scroll container. This
+   wrapper is horizontal-only by design (vertical scrolling is the page's
+   job, never a table wrapper's) -- pin overflow-y explicitly so the box
+   can never pick up a spurious auto scrollbar/scroll-affordance on the
+   axis it was never meant to manage. */
+x-table,
+.x-table {
   display: block;
   overflow-x: auto;
+  overflow-y: hidden;
   -webkit-overflow-scrolling: touch;
 }
 
-/* When wb-table IS the <table> element directly */
-table.wb-table {
+/* When x-table IS the <table> element directly */
+table.x-table {
   display: table;
   width: 100%;
   border-collapse: collapse;
@@ -37,25 +50,30 @@ table.wb-table {
   color: var(--text-primary);
 }
 
-/* When wb-table wraps a <table> child */
-.wb-table > table {
+/* When x-table wraps a <table> child */
+.x-table > table {
   width: 100%;
   border-collapse: collapse;
   margin-bottom: 1rem;
   color: var(--text-primary);
 }
 
-wb-table th,
-wb-table td,
-.wb-table th,
-.wb-table td {
-  padding: 0.75rem 1rem;
+x-table th,
+x-table td,
+.x-table th,
+.x-table td {
+  /* #545: was 0.75rem 1rem (12px vertical) -- th has its own distinct
+     background (see rule below), so it reads as a content panel and needs
+     the full 1rem to clear the site's content-panel-edge minimum (confirmed
+     live: a "Name" header cell flagged at 12px on its tightest side). td
+     stays matched to th so header/body row padding doesn't visibly split. */
+  padding: 1rem;
   text-align: left;
   border-bottom: 1px solid var(--border-color);
 }
 
-wb-table th,
-.wb-table th {
+x-table th,
+.x-table th {
   font-weight: 600;
   background-color: var(--bg-tertiary);
   color: var(--text-primary);
@@ -64,42 +82,121 @@ wb-table th,
 
 /* --- Variants ------------------------------------------------------------ */
 
-.wb-table--striped tbody tr:nth-of-type(odd) {
-  background-color: var(--bg-secondary);
+/* #672 -- John: "not enough contrast on striped rows".
+   Only the odd rows used to get a colour; the even rows were transparent, so
+   the stripe was "--bg-secondary vs whatever surface the table sits on". On the
+   Behaviors showcase that surface is itself close to --bg-secondary, so the
+   striping nearly vanished. Both parities are painted explicitly now, which
+   makes the delta a property of the theme rather than of the backdrop, and the
+   pair is one step further apart than --bg-primary/--bg-secondary was. */
+.x-table--striped tbody tr:nth-of-type(even) {
+  background-color: var(--bg-primary);
 }
 
-.wb-table--hover tbody tr:hover {
+.x-table--striped tbody tr:nth-of-type(odd) {
+  background-color: var(--bg-tertiary);
+}
+
+.x-table--hover tbody tr:hover {
   background-color: var(--bg-tertiary);
 }
 
 /* Active row (from components.css) */
-wb-table tbody tr.active,
-.wb-table tbody tr.active {
+x-table tbody tr.active,
+.x-table tbody tr.active {
   background-color: var(--bg-tertiary);
   border-left: 3px solid var(--primary);
 }
 
-.wb-table--bordered {
+.x-table--bordered {
   border: 1px solid var(--border-color);
 }
 
-.wb-table--bordered th,
-.wb-table--bordered td {
+.x-table--bordered th,
+.x-table--bordered td {
   border: 1px solid var(--border-color);
 }
 
-.wb-table--compact th,
-.wb-table--compact td {
+.x-table--compact th,
+.x-table--compact td {
   padding: 0.5rem;
 }
 
+/* #433: search input created by table.js when `searchable` is set (no
+   markup authoring needed). Sits directly above the table it filters. */
+.x-table__search {
+  display: block;
+  width: 100%;
+  padding: 0.5rem 0.75rem;
+  margin-bottom: 0.75rem;
+  border: 1px solid var(--border-color);
+  border-radius: 4px;
+  background-color: var(--bg-primary);
+  color: var(--text-primary);
+  font: inherit;
+}
+
+.x-table__search:focus {
+  outline: 2px solid var(--primary);
+  outline-offset: 1px;
+}
+
 /* Sort indicators (from components.css) */
-.wb-table--sorted-asc::after {
+.x-table--sorted-asc::after {
   content: " ↑";
   opacity: 0.5;
 }
 
-.wb-table--sorted-desc::after {
+.x-table--sorted-desc::after {
   content: " ↓";
   opacity: 0.5;
+}
+
+/* --- Pagination (#669) ---------------------------------------------------- */
+/* `paginated` and `pageSize` were declared in table.schema.json but read
+   nowhere, so <table paginated> rendered every row and no controls. */
+
+.x-table__pager {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 0.75rem;
+  padding: 0.75rem 1rem;
+  border: 1px solid var(--border-color);
+  border-top: none;
+  background-color: var(--bg-primary);
+}
+
+.x-table__pager-status {
+  color: var(--text-primary);
+  font-size: 0.875rem;
+  margin-right: auto;
+}
+
+.x-table__pager-btn {
+  padding: 0.375rem 0.875rem;
+  border: 1px solid var(--border-color);
+  border-radius: 0.25rem;
+  background-color: var(--bg-tertiary);
+  color: var(--text-primary);
+  font-size: 0.875rem;
+  cursor: pointer;
+}
+
+.x-table__pager-btn:hover:not(:disabled) {
+  border-color: var(--primary);
+}
+
+.x-table__pager-btn:disabled {
+  opacity: 0.45;
+  cursor: default;
+}
+
+/* §13, content-panel edge minimum: a plain <table> that never received the
+   `x-table` class (a raw table in a doc or an autoInject demo) still renders
+   real content panels, and its cells were inheriting the browser's ~8px.
+   :where() keeps this at zero specificity so every component rule above --
+   and .x-table--compact's deliberate 0.5rem -- still wins. */
+:where(th, td) {
+  padding: 1rem;
 }

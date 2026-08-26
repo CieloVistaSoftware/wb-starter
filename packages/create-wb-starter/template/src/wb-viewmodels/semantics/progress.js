@@ -1,15 +1,16 @@
+import { readFlag, readAttr } from '../../core/read-attr.js';
 /**
  * Progress - Enhanced <progress> element
  * Adds animations, colors, labels, indeterminate state
  * Helper Attribute: [x-behavior="progress"]
  */
 export function progress(element, options = {}) {
-  // Anything that ISN'T a literal native <progress> tag (custom <wb-progress>,
+  // Anything that ISN'T a literal native <progress> tag (custom <progress>,
   // or a plain <div x-progress>) can't paint a fill via
   // ::-webkit-progress-value -- there's no such pseudo-element on a
   // non-native element. Render an explicit fill child instead. (issue #127;
   // gate widened from tagName==='WB-PROGRESS' so x-progress on any element
-  // gets the same rich rendering, not just the <wb-progress> tag form — #279.)
+  // gets the same rich rendering, not just the <progress> tag form — #279.)
   if (element.tagName !== 'PROGRESS') {
     const authoredValue = (element._wbOriginalSlot || element.textContent || '').trim();
     const value = parseFloat(options.value ?? element.getAttribute('value') ?? authoredValue ?? 0);
@@ -19,10 +20,10 @@ export function progress(element, options = {}) {
     const striped = options.striped ?? element.hasAttribute('striped');
     // Schema declares animated/indeterminate (progress.schema.json) but this
     // branch never read either — only the native <progress>+x-progress path
-    // below did, via .wb-progress::-webkit-progress-value pseudo-elements
-    // that don't exist on this custom tag at all. Result: <wb-progress> —
+    // below did, via .x-progress::-webkit-progress-value pseudo-elements
+    // that don't exist on this custom tag at all. Result: <progress> —
     // the tag every demo/showcase actually uses — had zero animation
-    // capability. CSS for both already existed on .wb-progress__bar
+    // capability. CSS for both already existed on .x-progress__bar
     // (progress.css) and was simply unreachable.
     const animated = options.animated ?? (element.getAttribute('animated') !== 'false');
     const indeterminate = options.indeterminate ?? element.hasAttribute('indeterminate');
@@ -40,20 +41,20 @@ export function progress(element, options = {}) {
       ? (showValue ? `${customLabel} ${Math.round(pct)}%` : customLabel)
       : `${Math.round(pct)}%`;
 
-    // #448: skip the bare 'wb-progress' token on a literal <wb-progress>
-    // host -- progress.css selects the `wb-progress` TAG directly for that
+    // #448: skip the bare 'x-progress' token on a literal <progress>
+    // host -- progress.css selects the `x-progress` TAG directly for that
     // case now. Still added for every OTHER host (x-progress/x-progressbar
     // on a plain <div>, per this file's own docs), since progress.css's
-    // `.wb-progress` rules still select those by class. The size/variant
+    // `.x-progress` rules still select those by class. The size/variant
     // modifier classes are never redundant either way and always apply.
-    if (element.tagName.toLowerCase() !== 'wb-progress') element.classList.add('wb-progress');
-    element.classList.add(`wb-progress--${size}`, `wb-progress--${variant}`);
-    if (showLabel) element.classList.add('wb-progress--labeled');
-    if (indeterminate) element.classList.add('wb-progress--indeterminate');
-    // .wb-progress--animated is a DESCENDANT selector in progress.css
-    // (`.wb-progress--animated .wb-progress__bar { ... }`) — it must live on
+    if (element.tagName.toLowerCase() !== 'x-progress') element.classList.add('x-progress');
+    element.classList.add(`x-progress--${size}`, `x-progress--${variant}`);
+    if (showLabel) element.classList.add('x-progress--labeled');
+    if (indeterminate) element.classList.add('x-progress--indeterminate');
+    // .x-progress--animated is a DESCENDANT selector in progress.css
+    // (`.x-progress--animated .x-progress__bar { ... }`) — it must live on
     // the host, same as the size/variant classes above, not on the bar div.
-    if (animated && !indeterminate) element.classList.add('wb-progress--animated');
+    if (animated && !indeterminate) element.classList.add('x-progress--animated');
     element.setAttribute('role', 'progressbar');
     element.setAttribute('aria-valuenow', String(value));
     element.setAttribute('aria-valuemin', '0');
@@ -61,41 +62,41 @@ export function progress(element, options = {}) {
 
     element.innerHTML = '';
     const bar = document.createElement('div');
-    bar.className = 'wb-progress__bar' + (striped ? ' wb-progress__bar--striped' : '');
+    bar.className = 'x-progress__bar' + (striped ? ' x-progress__bar--striped' : '');
     bar.style.width = indeterminate ? '' : `${pct}%`;
     element.appendChild(bar);
 
     if (showLabel && !indeterminate) {
       const label = document.createElement('span');
-      label.className = 'wb-progress__label';
+      label.className = 'x-progress__label';
       label.textContent = labelText;
       element.appendChild(label);
     }
 
     return () => {
       element.innerHTML = '';
-      element.classList.remove('wb-progress', `wb-progress--${size}`, `wb-progress--${variant}`, 'wb-progress--labeled', 'wb-progress--indeterminate', 'wb-progress--animated');
+      element.classList.remove('x-progress', `x-progress--${size}`, `x-progress--${variant}`, 'x-progress--labeled', 'x-progress--indeterminate', 'x-progress--animated');
     };
   }
 
   const config = {
-    value: parseFloat(options.value || element.value || element.dataset.value || 0),
-    max: parseFloat(options.max || element.max || element.dataset.max || 100),
-    showLabel: options.showLabel ?? element.hasAttribute('data-show-label'),
-    animated: options.animated ?? element.dataset.animated !== 'false',
-    variant: options.variant || element.dataset.variant || 'primary',
-    size: options.size || element.dataset.size || 'md',
-    indeterminate: options.indeterminate ?? element.hasAttribute('data-indeterminate'),
+    value: parseFloat(options.value || element.value || readAttr(element, 'value') || 0),
+    max: parseFloat(options.max || element.max || readAttr(element, 'max') || 100),
+    showLabel: options.showLabel ?? readFlag(element, 'show-label'),
+    animated: options.animated ?? readAttr(element, 'animated') !== 'false',
+    variant: options.variant || readAttr(element, 'variant') || 'primary',
+    size: options.size || readAttr(element, 'size') || 'md',
+    indeterminate: options.indeterminate ?? readFlag(element, 'indeterminate'),
     ...options
   };
 
-  element.classList.add('wb-progress');
-  element.classList.add(`wb-progress--${config.size}`);
-  element.classList.add(`wb-progress--${config.variant}`);
+  element.classList.add('x-progress');
+  element.classList.add(`x-progress--${config.size}`);
+  element.classList.add(`x-progress--${config.variant}`);
   
   if (config.indeterminate) {
     element.removeAttribute('value');
-    element.classList.add('wb-progress--indeterminate');
+    element.classList.add('x-progress--indeterminate');
   } else {
     element.value = config.value;
     element.max = config.max;
@@ -134,9 +135,9 @@ export function progress(element, options = {}) {
   let label = null;
   
   if (config.showLabel) {
-    if (!wrapper.classList.contains('wb-progress__wrapper')) {
+    if (!wrapper.classList.contains('x-progress__wrapper')) {
       wrapper = document.createElement('div');
-      wrapper.className = 'wb-progress__wrapper';
+      wrapper.className = 'x-progress__wrapper';
       Object.assign(wrapper.style, {
         position: 'relative',
         width: '100%'
@@ -146,7 +147,7 @@ export function progress(element, options = {}) {
     }
     
     label = document.createElement('span');
-    label.className = 'wb-progress__label';
+    label.className = 'x-progress__label';
     Object.assign(label.style, {
       position: 'absolute',
       top: '50%',
@@ -170,7 +171,7 @@ export function progress(element, options = {}) {
 
   // Animation class
   if (config.animated && !config.indeterminate) {
-    element.classList.add('wb-progress--animated');
+    element.classList.add('x-progress--animated');
   }
 
   // API
@@ -189,56 +190,56 @@ export function progress(element, options = {}) {
       config.indeterminate = indeterminate;
       if (indeterminate) {
         element.removeAttribute('value');
-        element.classList.add('wb-progress--indeterminate');
+        element.classList.add('x-progress--indeterminate');
       } else {
         element.value = config.value;
-        element.classList.remove('wb-progress--indeterminate');
+        element.classList.remove('x-progress--indeterminate');
       }
     }
   };
 
   return () => {
-    element.classList.remove('wb-progress', `wb-progress--${config.size}`, `wb-progress--${config.variant}`);
+    element.classList.remove('x-progress', `x-progress--${config.size}`, `x-progress--${config.variant}`);
     if (label) label.remove();
   };
 }
 
 function injectProgressStyles() {
-  if (document.getElementById('wb-progress-css')) return;
+  if (document.getElementById('x-progress-css')) return;
   
   const style = document.createElement('style');
-  style.id = 'wb-progress-css';
+  style.id = 'x-progress-css';
   style.textContent = `
-    .wb-progress::-webkit-progress-bar {
+    .x-progress::-webkit-progress-bar {
       background: transparent;
       border-radius: inherit;
     }
-    .wb-progress::-webkit-progress-value {
+    .x-progress::-webkit-progress-value {
       background: var(--primary, #6366f1);
       border-radius: inherit;
       transition: width 0.3s ease;
     }
-    .wb-progress::-moz-progress-bar {
+    .x-progress::-moz-progress-bar {
       background: var(--primary, #6366f1);
       border-radius: inherit;
     }
-    .wb-progress--primary::-webkit-progress-value { background: var(--primary, #6366f1); }
-    .wb-progress--success::-webkit-progress-value { background: var(--success, #22c55e); }
-    .wb-progress--warning::-webkit-progress-value { background: var(--warning, #f59e0b); }
-    .wb-progress--danger::-webkit-progress-value { background: var(--danger, #ef4444); }
-    .wb-progress--info::-webkit-progress-value { background: var(--info, #3b82f6); }
+    .x-progress--primary::-webkit-progress-value { background: var(--primary, #6366f1); }
+    .x-progress--success::-webkit-progress-value { background: var(--success, #22c55e); }
+    .x-progress--warning::-webkit-progress-value { background: var(--warning, #f59e0b); }
+    .x-progress--danger::-webkit-progress-value { background: var(--danger, #ef4444); }
+    .x-progress--info::-webkit-progress-value { background: var(--info, #3b82f6); }
     
-    .wb-progress--indeterminate::-webkit-progress-value {
+    .x-progress--indeterminate::-webkit-progress-value {
       background: linear-gradient(90deg, transparent, var(--primary, #6366f1), transparent);
-      animation: wb-progress-indeterminate 1.5s ease-in-out infinite;
+      animation: x-progress-indeterminate 1.5s ease-in-out infinite;
     }
     
-    @keyframes wb-progress-stripes {
+    @keyframes x-progress-stripes {
       from { background-position: 1rem 0; }
       to { background-position: 0 0; }
     }
     
-    @keyframes wb-progress-indeterminate {
+    @keyframes x-progress-indeterminate {
       0% { margin-left: -100%; width: 100%; }
       50% { margin-left: 0%; width: 100%; }
       100% { margin-left: 100%; width: 100%; }

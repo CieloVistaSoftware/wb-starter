@@ -18,10 +18,10 @@ export function ul(element, options = {}) {
     ...options
   };
 
-  element.classList.add('wb-ul');
+  element.classList.add('x-ul');
 
   // Apply variant
-  element.classList.add(`wb-ul--${config.variant}`);
+  element.classList.add(`x-ul--${config.variant}`);
 
   // Base list styling
   element.style.listStyleType = config.marker;
@@ -30,7 +30,7 @@ export function ul(element, options = {}) {
   // Apply gap between items
   const items = element.querySelectorAll(':scope > li');
   items.forEach((li, index) => {
-    li.classList.add('wb-ul__item');
+    li.classList.add('x-ul__item');
     if (index < items.length - 1) {
       li.style.marginBottom = config.gap;
     }
@@ -47,7 +47,7 @@ export function ul(element, options = {}) {
       li.style.gap = '0.5rem';
 
       const checkbox = document.createElement('span');
-      checkbox.className = 'wb-ul__checkbox';
+      checkbox.className = 'x-ul__checkbox';
       checkbox.textContent = readFlag(li, 'checked') ? '✓' : '○';
       checkbox.style.color = readFlag(li, 'checked')
         ? 'var(--success, #22c55e)'
@@ -67,7 +67,7 @@ export function ul(element, options = {}) {
       li.style.gap = '0.5rem';
 
       const icon = document.createElement('span');
-      icon.className = 'wb-ul__icon';
+      icon.className = 'x-ul__icon';
       icon.textContent = readAttr(li, 'icon') || '▸';
       icon.style.color = 'var(--primary, #6366f1)';
       icon.style.minWidth = '1rem';
@@ -80,11 +80,11 @@ export function ul(element, options = {}) {
   }
 
   return () => {
-    element.classList.remove('wb-ul', `wb-ul--${config.variant}`);
+    element.classList.remove('x-ul', `x-ul--${config.variant}`);
     items.forEach(li => {
-      li.classList.remove('wb-ul__item');
-      li.querySelector('.wb-ul__checkbox')?.remove();
-      li.querySelector('.wb-ul__icon')?.remove();
+      li.classList.remove('x-ul__item');
+      li.querySelector('.x-ul__checkbox')?.remove();
+      li.querySelector('.x-ul__icon')?.remove();
     });
   };
 }

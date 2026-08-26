@@ -4,13 +4,13 @@
   "title": "Drawer",
   "description": "Slide-out panel overlay from screen edge",
   "schemaFor": "drawer",
-  "baseClass": "wb-drawer",
+  "baseClass": "x-drawer",
   "semanticElement": {
     "tagName": "aside",
     "implicitRole": "complementary"
   },
   "compliance": {
-    "baseClass": "wb-drawer",
+    "baseClass": "x-drawer",
     "supportLevel": "stable",
     "accessibility": "high"
   },
@@ -34,7 +34,7 @@
         "bottom"
       ],
       "default": "right",
-      "appliesClass": "wb-drawer--{{value}}"
+      "appliesClass": "x-drawer--{{value}}"
     },
     "width": {
       "type": "string",
@@ -69,7 +69,7 @@
         "push"
       ],
       "default": "overlay",
-      "appliesClass": "wb-drawer--{{value}}"
+      "appliesClass": "x-drawer--{{value}}"
     }
   },
   "$view": [
@@ -151,43 +151,43 @@
     }
   },
   "$cssAPI": {
-    "--wb-drawer-width": {
+    "--x-drawer-width": {
       "default": "320px",
       "description": "Drawer width"
     },
-    "--wb-drawer-max-width": {
+    "--x-drawer-max-width": {
       "default": "100vw",
       "description": "Max width"
     },
-    "--wb-drawer-bg": {
+    "--x-drawer-bg": {
       "default": "var(--bg-surface, #ffffff)",
       "description": "Background"
     },
-    "--wb-drawer-shadow": {
+    "--x-drawer-shadow": {
       "default": "-4px 0 20px rgba(0,0,0,0.15)",
       "description": "Box shadow"
     },
-    "--wb-drawer-padding": {
+    "--x-drawer-padding": {
       "default": "1.5rem",
       "description": "Content padding"
     },
-    "--wb-drawer-header-gap": {
+    "--x-drawer-header-gap": {
       "default": "1rem",
       "description": "Header gap"
     },
-    "--wb-drawer-title-size": {
+    "--x-drawer-title-size": {
       "default": "1.125rem",
       "description": "Title font size"
     },
-    "--wb-drawer-backdrop-bg": {
+    "--x-drawer-backdrop-bg": {
       "default": "rgba(0,0,0,0.5)",
       "description": "Backdrop background"
     },
-    "--wb-drawer-transition": {
+    "--x-drawer-transition": {
       "default": "transform 0.3s ease",
       "description": "Slide transition"
     },
-    "--wb-drawer-z-index": {
+    "--x-drawer-z-index": {
       "default": "1000",
       "description": "Z-index"
     }
@@ -203,15 +203,15 @@
   "test": {
     "functional": true,
     "setup": [
-      "<wb-drawer>Basic drawer content</wb-drawer>",
-      "<wb-drawer position=\"left\">position=left</wb-drawer>",
-      "<wb-drawer position=\"right\">position=right</wb-drawer>",
-      "<wb-drawer position=\"top\">position=top</wb-drawer>",
-      "<wb-drawer variant=\"default\">variant=default</wb-drawer>",
-      "<wb-drawer variant=\"overlay\">variant=overlay</wb-drawer>",
-      "<wb-drawer variant=\"push\">variant=push</wb-drawer>",
-      "<wb-drawer close-on-backdrop>with closeOnBackdrop</wb-drawer>",
-      "<wb-drawer title=\"Test Title\">With title attribute</wb-drawer>"
+      "<div x-drawer>Basic drawer content</div>",
+      "<div x-drawer position=\"left\">position=left</div>",
+      "<div x-drawer position=\"right\">position=right</div>",
+      "<div x-drawer position=\"top\">position=top</div>",
+      "<div x-drawer variant=\"default\">variant=default</div>",
+      "<div x-drawer variant=\"overlay\">variant=overlay</div>",
+      "<div x-drawer variant=\"push\">variant=push</div>",
+      "<div x-drawer close-on-backdrop>with closeOnBackdrop</div>",
+      "<div x-drawer title=\"Test Title\">With title attribute</div>"
     ],
     "matrix": {
       "combinations": [
@@ -231,9 +231,9 @@
     },
     "site": {
       "page": "overlays",
-      "tag": "wb-drawer",
+      "tag": "x-drawer",
       "renders": true,
-      "baseClass": "wb-drawer",
+      "baseClass": "x-drawer",
       "minInstances": 3,
       "checkText": [
         "Right Drawer",
@@ -241,8 +241,8 @@
         "Wide"
       ],
       "checkClasses": [
-        "wb-drawer--left",
-        "wb-drawer--default"
+        "x-drawer--left",
+        "x-drawer--default"
       ],
       "checkAttributes": [
         "title",

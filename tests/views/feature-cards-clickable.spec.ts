@@ -5,7 +5,7 @@
 import { test, expect } from '@playwright/test';
 
 const EXPECTED = [
-  { title: 'Component Library', href: '?page=components' },
+  { title: 'Component Library', href: '?page=behaviors' },
   { title: 'Behaviors System', href: '?page=behaviors' },
   { title: 'Theme Engine', href: '?page=themes' },
   { title: 'Data Viz', href: '?page=demos' },
@@ -15,7 +15,7 @@ const EXPECTED = [
 
 test.describe('#184 — home feature cards are clickable', () => {
   test.beforeEach(async ({ page }) => {
-    await page.goto('http://localhost:3000/?page=home');
+    await page.goto('/?page=home');
     await page.waitForSelector('.feature-card-link', { timeout: 20000 });
     await page.waitForTimeout(1000);
   });
@@ -25,7 +25,7 @@ test.describe('#184 — home feature cards are clickable', () => {
       [...document.querySelectorAll('.feature-card-link')].map((a) => ({
         href: a.getAttribute('href'),
         title: (a.querySelector('h3')?.textContent || '').replace(/^[^A-Za-z]+/, '').trim(),
-        hasCard: !!a.querySelector('wb-card'),
+        hasCard: !!a.querySelector('.x-card'),
         underline: getComputedStyle(a as HTMLElement).textDecorationLine,
       }))
     );
@@ -34,15 +34,15 @@ test.describe('#184 — home feature cards are clickable', () => {
       const found = links.find((l) => l.title.startsWith(exp.title));
       expect(found, `feature card "${exp.title}" not found`).toBeTruthy();
       expect(found!.href, `"${exp.title}" links to wrong route`).toBe(exp.href);
-      expect(found!.hasCard, `"${exp.title}" anchor does not wrap a wb-card`).toBe(true);
+      expect(found!.hasCard, `"${exp.title}" anchor does not wrap a x-card`).toBe(true);
       expect(found!.underline, 'feature card link should not be underlined').toBe('none');
     }
   });
 
   test('clicking a feature card navigates via the SPA', async ({ page }) => {
-    await page.click('.feature-card-link[href="?page=components"]');
+    await page.click('.feature-card-link[href="?page=behaviors"]');
     await page.waitForTimeout(800);
     const url = await page.evaluate(() => location.search);
-    expect(url, 'clicking the Component Library card did not navigate').toContain('page=components');
+    expect(url, 'clicking the Component Library card did not navigate').toContain('page=behaviors');
   });
 });

@@ -2,14 +2,29 @@
 
 Pricing tier card with plan name, price, features list, and CTA
 
-Applies to `<article>`, and to any element carrying `x-cardpricing`.
+## Type — decorates a semantic element
 
-## Usage
+`x-cardpricing` is the **article behavior**. It attaches to `<article>`, the element you would have reached for anyway — there is no new tag to learn.
+
+### How to write it
 
 ```html
-<article x-cardpricing>
+<article x-cardpricing
+  plan="Team"
+  price="$18"
+  period="per user / month"
+  description="For teams that need shared history and SSO."
+  features="Unlimited projects,Audit log,SSO,Priority support"></article>
+```
+
+### On a different element
+
+Use `x-cardpricing` when the host is not a `<article>` and you want the same behavior:
+
+```html
+<div x-cardpricing>
   …
-</article>
+</div>
 ```
 
 ## Attributes

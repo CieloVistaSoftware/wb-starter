@@ -1,3 +1,4 @@
+import { readAttr } from '../core/read-attr.js';
 /**
  * Notes Behavior
  * -----------------------------------------------------------------------------
@@ -7,7 +8,7 @@
  * an image directly into a note, pick/attach a reference to any element on
  * the page, searchable lookup of past notes, resize up to 50vw.
  *
- * Custom Tag: <wb-notes>
+ * Custom Tag: <div x-notes>
  * -----------------------------------------------------------------------------
  *
  * v3.0 Changes (this session):
@@ -30,19 +31,19 @@
  * - No dedicated Copy button (still available as the wbNotes.copy() API).
  */
 
-const NOTES_STORAGE_KEY = 'wb-notes';
+const NOTES_STORAGE_KEY = 'x-notes';
 const NOTES_FILE_PATH = '/data/notes.json';
 
 export function notes(element, options = {}) {
   // Plain attributes are canonical (Law 11); data-* accepted for back-compat only.
   const config = {
-    position: options.position || element.getAttribute('position') || element.dataset.position || 'left',
-    maxWidth: options.maxWidth || element.getAttribute('max-width') || element.dataset.maxWidth || '50vw',
-    minWidth: options.minWidth || element.getAttribute('min-width') || element.dataset.minWidth || '200px',
-    defaultWidth: options.defaultWidth || element.getAttribute('default-width') || element.dataset.defaultWidth || '320px',
-    autoSave: options.autoSave ?? (element.getAttribute('auto-save') !== 'false' && element.dataset.autoSave !== 'false'),
+    position: options.position || element.getAttribute('position') || readAttr(element, 'position') || 'left',
+    maxWidth: options.maxWidth || element.getAttribute('max-width') || readAttr(element, 'maxWidth') || '50vw',
+    minWidth: options.minWidth || element.getAttribute('min-width') || readAttr(element, 'minWidth') || '200px',
+    defaultWidth: options.defaultWidth || element.getAttribute('default-width') || readAttr(element, 'defaultWidth') || '320px',
+    autoSave: options.autoSave ?? (element.getAttribute('auto-save') !== 'false' && readAttr(element, 'autoSave') !== 'false'),
     savePath: options.savePath || element.getAttribute('save-path') || element.dataset.savePath || NOTES_FILE_PATH,
-    placeholder: options.placeholder || element.getAttribute('placeholder') || element.dataset.placeholder || 'Add your notes here...',
+    placeholder: options.placeholder || element.getAttribute('placeholder') || readAttr(element, 'placeholder') || 'Add your notes here...',
     restoreState: false,
     ...options
   };
@@ -62,9 +63,9 @@ export function notes(element, options = {}) {
   let dragStart = { x: 0, y: 0 };
   let resizeStart = { x: 0, y: 0, width: 0, height: 0 };
 
-  // #448: no bare 'wb-notes' token -- notes.css/site.css select the
-  // `wb-notes` TAG directly now, so it just duplicated the tag name.
-  element.classList.add(`wb-notes--${config.position}`);
+  // #448: no bare 'x-notes' token -- notes.css/site.css select the
+  // `x-notes` TAG directly now, so it just duplicated the tag name.
+  element.classList.add(`x-notes--${config.position}`);
   element.style.setProperty('--notes-max-width', config.maxWidth);
   element.style.setProperty('--notes-min-width', config.minWidth);
   element.style.width = config.defaultWidth;
@@ -74,46 +75,46 @@ export function notes(element, options = {}) {
   // in their own toolbar below the header so the close button isn't
   // competing with a button row for the corner.
   element.innerHTML = `
-    <div class="wb-notes__backdrop"></div>
-    <div class="wb-notes__drawer">
-      <div class="wb-notes__resize-handle" title="Drag to resize (max 50vw)"></div>
-      <div class="wb-notes__resize-handle-modal" title="Drag to resize"></div>
-      <header class="wb-notes__header">
-        <span class="wb-notes__title">📝 Notes</span>
-        <button class="wb-notes__close-corner" data-action="close" title="Close">✕</button>
+    <div class="x-notes__backdrop"></div>
+    <div class="x-notes__drawer">
+      <div class="x-notes__resize-handle" title="Drag to resize (max 50vw)"></div>
+      <div class="x-notes__resize-handle-modal" title="Drag to resize"></div>
+      <header class="x-notes__header">
+        <span class="x-notes__title">📝 Notes</span>
+        <button class="x-notes__close-corner" data-action="close" title="Close">✕</button>
       </header>
-      <div class="wb-notes__actions">
-        <div class="wb-notes__btn-row">
-          <button class="wb-notes__wide-btn" data-action="collapse-left" title="Collapse Left">«</button>
-          <button class="wb-notes__wide-btn" data-pos="left" title="Dock Left">Left</button>
-          <button class="wb-notes__wide-btn" data-pos="modal" title="Float Modal">Modal</button>
-          <button class="wb-notes__wide-btn" data-pos="right" title="Dock Right">Right</button>
-          <button class="wb-notes__wide-btn" data-action="collapse-right" title="Collapse Right">»</button>
+      <div class="x-notes__actions">
+        <div class="x-notes__btn-row">
+          <button class="x-notes__wide-btn" data-action="collapse-left" title="Collapse Left">«</button>
+          <button class="x-notes__wide-btn" data-pos="left" title="Dock Left">Left</button>
+          <button class="x-notes__wide-btn" data-pos="modal" title="Float Modal">Modal</button>
+          <button class="x-notes__wide-btn" data-pos="right" title="Dock Right">Right</button>
+          <button class="x-notes__wide-btn" data-action="collapse-right" title="Collapse Right">»</button>
         </div>
-        <div class="wb-notes__btn-row">
-          <button class="wb-notes__wide-btn" data-action="pick" title="Pick an element on the page to attach to this note">🎯 Pick</button>
-          <button class="wb-notes__wide-btn" data-action="view" title="Look up saved notes">🔍 Lookup</button>
+        <div class="x-notes__btn-row">
+          <button class="x-notes__wide-btn" data-action="pick" title="Pick an element on the page to attach to this note">🎯 Pick</button>
+          <button class="x-notes__wide-btn" data-action="view" title="Look up saved notes">🔍 Lookup</button>
         </div>
       </div>
-      <textarea class="wb-notes__textarea" placeholder="${config.placeholder}"></textarea>
-      <footer class="wb-notes__footer">
-        <div class="wb-notes__btn-row">
-          <button class="wb-notes__wide-btn wb-notes__wide-btn--save" data-action="save" title="Save to File">💾 Save</button>
-          <button class="wb-notes__wide-btn wb-notes__wide-btn--new" data-action="new" title="Save this note and start a new one">➕ New</button>
+      <textarea class="x-notes__textarea" placeholder="${config.placeholder}"></textarea>
+      <footer class="x-notes__footer">
+        <div class="x-notes__btn-row">
+          <button class="x-notes__wide-btn x-notes__wide-btn--save" data-action="save" title="Save to File">💾 Save</button>
+          <button class="x-notes__wide-btn x-notes__wide-btn--new" data-action="new" title="Save this note and start a new one">➕ New</button>
         </div>
-        <span class="wb-notes__status"></span>
+        <span class="x-notes__status"></span>
       </footer>
     </div>
   `;
 
   // Get elements
-  const backdrop = element.querySelector('.wb-notes__backdrop');
-  const drawer = element.querySelector('.wb-notes__drawer');
-  const header = element.querySelector('.wb-notes__header');
-  const textarea = element.querySelector('.wb-notes__textarea');
-  const resizeHandle = element.querySelector('.wb-notes__resize-handle');
-  const resizeHandleModal = element.querySelector('.wb-notes__resize-handle-modal');
-  const statusEl = element.querySelector('.wb-notes__status');
+  const backdrop = element.querySelector('.x-notes__backdrop');
+  const drawer = element.querySelector('.x-notes__drawer');
+  const header = element.querySelector('.x-notes__header');
+  const textarea = element.querySelector('.x-notes__textarea');
+  const resizeHandle = element.querySelector('.x-notes__resize-handle');
+  const resizeHandleModal = element.querySelector('.x-notes__resize-handle-modal');
+  const statusEl = element.querySelector('.x-notes__status');
 
   // Load saved notes (local draft only -- the file-backed history lives on
   // the server, fetched on demand by Lookup, not preloaded here).
@@ -213,10 +214,10 @@ export function notes(element, options = {}) {
   // Show status message
   const showStatus = (msg, type = 'info') => {
     statusEl.textContent = msg;
-    statusEl.className = 'wb-notes__status wb-notes__status--' + type;
+    statusEl.className = 'x-notes__status x-notes__status--' + type;
     setTimeout(() => {
       statusEl.textContent = '';
-      statusEl.className = 'wb-notes__status';
+      statusEl.className = 'x-notes__status';
     }, 3000);
   };
 
@@ -255,7 +256,7 @@ export function notes(element, options = {}) {
       textarea.value = logLine + '\n' + textarea.value;
     }
 
-    element.classList.add('wb-notes--open');
+    element.classList.add('x-notes--open');
     if (currentPosition === 'modal') {
       backdrop.classList.add('visible');
       applyModalTransform();
@@ -266,7 +267,7 @@ export function notes(element, options = {}) {
 
   const close = () => {
     isOpen = false;
-    element.classList.remove('wb-notes--open');
+    element.classList.remove('x-notes--open');
     backdrop.classList.remove('visible');
     saveToLocal();
     element.dispatchEvent(new CustomEvent('wb:notes:close', { bubbles: true }));
@@ -276,11 +277,11 @@ export function notes(element, options = {}) {
 
   // Set position
   const setPosition = (pos) => {
-    element.classList.remove(`wb-notes--${currentPosition}`);
+    element.classList.remove(`x-notes--${currentPosition}`);
     currentPosition = pos;
-    element.classList.add(`wb-notes--${pos}`);
+    element.classList.add(`x-notes--${pos}`);
 
-    element.querySelectorAll('.wb-notes__wide-btn[data-pos]').forEach(btn => {
+    element.querySelectorAll('.x-notes__wide-btn[data-pos]').forEach(btn => {
       btn.classList.toggle('active', btn.dataset.pos === pos);
     });
 
@@ -314,7 +315,7 @@ export function notes(element, options = {}) {
   const describeElement = (el) => {
     let selector = el.tagName.toLowerCase();
     if (el.id) selector += `#${el.id}`;
-    const classes = [...el.classList].filter(c => !c.startsWith('wb-notes'));
+    const classes = [...el.classList].filter(c => !c.startsWith('x-notes'));
     if (classes.length) selector += `.${classes.slice(0, 2).join('.')}`;
     const text = (el.textContent || '').trim().replace(/\s+/g, ' ').slice(0, 60);
     return { selector, tag: el.tagName.toLowerCase(), text };
@@ -398,9 +399,9 @@ export function notes(element, options = {}) {
     viewerHeader.innerHTML = `
       <div style="display:flex;justify-content:space-between;align-items:center;">
         <h3 style="margin:0;color:var(--text-primary,#f9fafb);">Saved Notes (${allNotes.length})</h3>
-        <button class="wb-notes__lookup-close" style="background:none;border:none;color:var(--text-secondary,#9ca3af);cursor:pointer;font-size:1.5rem;line-height:1;">×</button>
+        <button class="x-notes__lookup-close" style="background:none;border:none;color:var(--text-secondary,#9ca3af);cursor:pointer;font-size:1.5rem;line-height:1;">×</button>
       </div>
-      <input type="search" class="wb-notes__lookup-search" placeholder="Search notes by content or page..." style="width:100%;padding:0.5rem 0.75rem;border-radius:6px;border:1px solid var(--border-color,#374151);background:var(--bg-primary,#0f172a);color:var(--text-primary,#f9fafb);font-size:0.875rem;">
+      <input type="search" class="x-notes__lookup-search" placeholder="Search notes by content or page..." style="width:100%;padding:0.5rem 0.75rem;border-radius:6px;border:1px solid var(--border-color,#374151);background:var(--bg-primary,#0f172a);color:var(--text-primary,#f9fafb);font-size:0.875rem;">
     `;
 
     const body = document.createElement('div');
@@ -439,11 +440,11 @@ export function notes(element, options = {}) {
     viewerContent.appendChild(body);
     viewer.appendChild(viewerContent);
 
-    const searchInput = viewerHeader.querySelector('.wb-notes__lookup-search');
+    const searchInput = viewerHeader.querySelector('.x-notes__lookup-search');
     searchInput.addEventListener('input', () => renderList(searchInput.value));
 
     const closeViewer = () => viewer.remove();
-    viewerHeader.querySelector('.wb-notes__lookup-close').onclick = closeViewer;
+    viewerHeader.querySelector('.x-notes__lookup-close').onclick = closeViewer;
     viewer.onclick = (e) => { if (e.target === viewer) closeViewer(); };
 
     document.body.appendChild(viewer);
@@ -569,10 +570,10 @@ export function notes(element, options = {}) {
 
   // Button click handler (delegated)
   element.addEventListener('click', (e) => {
-    const btn = e.target.closest('.wb-notes__wide-btn, .wb-notes__close-corner');
+    const btn = e.target.closest('.x-notes__wide-btn, .x-notes__close-corner');
     if (!btn) return;
 
-    const action = btn.dataset.action;
+    const action = readAttr(btn, 'action');
     const pos = btn.dataset.pos;
 
     if (action === 'collapse-left') collapseToSide('left');
@@ -683,14 +684,14 @@ export function notes(element, options = {}) {
   loadNotes();
 
   // Set initial active state for buttons
-  element.querySelectorAll(`.wb-notes__wide-btn[data-pos="${currentPosition}"]`).forEach(btn => {
+  element.querySelectorAll(`.x-notes__wide-btn[data-pos="${currentPosition}"]`).forEach(btn => {
     btn.classList.add('active');
   });
 
   // Cleanup
   return () => {
     stopPicking();
-    element.classList.remove(`wb-notes--${currentPosition}`, 'wb-notes--open');
+    element.classList.remove(`x-notes--${currentPosition}`, 'x-notes--open');
     resizeHandle.removeEventListener('mousedown', onResizeStart);
     resizeHandleModal.removeEventListener('mousedown', onModalResizeStart);
     header.removeEventListener('mousedown', onDragStart);

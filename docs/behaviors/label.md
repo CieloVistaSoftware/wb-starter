@@ -14,7 +14,7 @@ form control — no separate `<label for="...">` to write by hand.
   The value is the label text. The behavior creates the `<label>`, wires up
   `for`/`id` (assigning an id to the control if it doesn't have one), and
   inserts it right before the control (so it renders to its left). Add `required` / `optional` for the
-  matching `wb-label--required` / `wb-label--optional` style:
+  matching `x-label--required` / `x-label--optional` style:
   ```html
   <input
     x-label="Email"

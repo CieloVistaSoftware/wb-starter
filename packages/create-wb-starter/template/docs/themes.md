@@ -32,7 +32,7 @@ You can apply a different theme to any section of the page by adding `data-theme
   class="section"
   data-theme="forest">
   <!-- Everything inside here uses Forest theme variables -->
-  <button class="wb-button wb-button--primary">Forest Button</button>
+  <button class="x-button x-button--primary">Forest Button</button>
 </div>
 ```
 

@@ -142,7 +142,7 @@ function setsStyle(funcBody, styleProp) {
 
 function addsClass(funcBody, className) {
   // Special case for cardBase inheritance
-  if (className === 'wb-card' && funcBody.includes('cardBase')) {
+  if (className === 'x-card' && funcBody.includes('cardBase')) {
     return true;
   }
   const pattern1 = new RegExp(`classList\\.add\\s*\\(\\s*['"]${className}['"]`, 'i');

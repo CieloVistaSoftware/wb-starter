@@ -1,3 +1,4 @@
+import { readFlag } from '../../core/read-attr.js';
 import { createToast } from '../feedback.js';
 
 /**
@@ -7,25 +8,130 @@ import { createToast } from '../feedback.js';
  */
 export function table(element, options = {}) {
   const config = {
-    striped: options.striped ?? (element.hasAttribute('striped') || element.hasAttribute('data-striped')),
-    hover: options.hover ?? (element.getAttribute('hover') !== 'false'),
+    striped: options.striped ?? (element.hasAttribute('striped') || readFlag(element, 'striped')),
+    // #669: the schema publishes `hoverable`, this only ever read `hover`, so
+    // the documented name silently did nothing. Accept both.
+    hover: options.hover ?? (
+      element.getAttribute('hover') !== 'false' &&
+      element.getAttribute('hoverable') !== 'false'
+    ),
+    // #669: paginated and pageSize were declared and read NOWHERE, so
+    // <table paginated> produced no pagination at all -- exactly what John
+    // reported. pageSize accepts the schema spelling and the hyphenated one.
+    paginated: options.paginated ?? (
+      element.hasAttribute('paginated') && element.getAttribute('paginated') !== 'false'
+    ),
+    pageSize: Number(
+      options.pageSize ?? element.getAttribute('page-size') ?? element.getAttribute('pagesize') ?? 10
+    ) || 10,
     bordered: options.bordered ?? element.hasAttribute('bordered'),
     compact: options.compact ?? element.hasAttribute('compact'),
     sortable: options.sortable ?? (element.getAttribute('sortable') !== 'false'),
-    searchable: options.searchable ?? element.hasAttribute('searchable'),
+    // #669: the schema publishes `filterable`; this only read `searchable`.
+    searchable: options.searchable ?? (
+      element.hasAttribute('searchable') ||
+      (element.hasAttribute('filterable') && element.getAttribute('filterable') !== 'false')
+    ),
     copyable: options.copyable ?? element.hasAttribute('copyable'),
     selectable: options.selectable ?? element.hasAttribute('selectable'),
     ...options
   };
 
-  // Logic removed - structure is now handled by ui-table.html template
-  // We assume the table structure (thead, tbody) exists.
-  
   const tableEl = element.querySelector('table') || element;
-  let searchInput = element.querySelector('.wb-table__search');
+  // Detect an existing search input in either of the two places it can
+  // legitimately live: nested inside `element` (the <table> host acting
+  // as its own table, or a wrapped native <table> child), OR as the bare
+  // native <table>'s own previous sibling (see the insertion logic below --
+  // an <input> can't be a valid child of a real <table>).
+  let searchInput = element.querySelector('.x-table__search') ||
+    (tableEl.previousElementSibling && tableEl.previousElementSibling.classList &&
+      tableEl.previousElementSibling.classList.contains('x-table__search')
+      ? tableEl.previousElementSibling : null);
 
-  // If searchable but no input found (and we are not the wrapper), we might need to look around or just skip
-  // But since we are moving to templates, the template should have rendered the input.
+  // #433: `searchable` was computed above but nothing ever created the
+  // input -- table.js only ever looked for one a schema/$view template was
+  // assumed to have already rendered, which was never actually true for
+  // either a bare <table searchable> (table.schema.json's $view has no
+  // "search" part -- only an unrelated "filter" part gated on a different
+  // property, `filterable`, that this file doesn't read at all) or a native
+  // <table searchable> (no schema involvement for native tags at all).
+  // Confirmed live: `searchable` rendered no search box on every documented
+  // example. Build one here, the same self-sufficient pattern every other
+  // boolean attribute in this file already uses (striped/hover/bordered/
+  // compact all render their own effect with no author-supplied markup).
+  if (config.searchable && !searchInput) {
+    searchInput = document.createElement('input');
+    searchInput.type = 'search';
+    searchInput.className = 'x-table__search';
+    searchInput.placeholder = 'Search...';
+    searchInput.setAttribute('aria-label', 'Search table');
+    if (tableEl.tagName.toLowerCase() === 'table' && tableEl.parentNode) {
+      // A real <table> only permits table-content children (thead/tbody/
+      // tr/...) -- an <input> placed inside it would be invalid content-
+      // model-wise. Insert as the table's own previous sibling instead,
+      // still directly above the rows it filters.
+      tableEl.parentNode.insertBefore(searchInput, tableEl);
+    } else {
+      // <table> acting as its own table host (no nested <table> child)
+      // -- a custom element has no HTML content-model restriction, so the
+      // search box can be a real first child, ahead of its <thead>.
+      element.insertBefore(searchInput, element.firstChild);
+    }
+  }
+
+  // schema-builder.js's processSchema() unconditionally wipes a schema-built
+  // element's original content before rebuilding table.schema.json's $view
+  // (an empty <thead>/<tbody> pair -- the schema declares no row-building
+  // logic at all) -- the wiped content is stashed as element._wbOriginalSlot
+  // ("nothing reads this unless a behavior explicitly opts in", per
+  // schema-builder.js's own comment). table.js never opted in: the comment
+  // it used to have here ("Logic removed... assume the table structure
+  // exists") assumed something else would populate rows, but nothing ever
+  // did. Confirmed live: every <table> on docs/components/semantics/
+  // table.md rendered a completely empty table (0 <tr> elements) regardless
+  // of whether rows were authored as slotted <thead>/<tbody> markup,
+  // headers/rows attributes, or the schema's own data/columns properties.
+  // Populate real rows here, trying each authoring method in turn --
+  // same "read back the pre-wipe original content" pattern overlay.js's
+  // drawer() already uses for its own title text.
+  const tableElForBuild = element.querySelector('table') || element;
+  const theadForBuild = tableElForBuild.querySelector('thead');
+  const tbodyForBuild = tableElForBuild.querySelector('tbody');
+  if (theadForBuild && tbodyForBuild && !tbodyForBuild.querySelector('tr')) {
+    const headersAttr = element.getAttribute('headers');
+    const rowsAttr = element.getAttribute('rows');
+    const dataAttr = element.getAttribute('data');
+    const columnsAttr = element.getAttribute('columns');
+
+    if (headersAttr && rowsAttr) {
+      try {
+        const headers = headersAttr.split(',').map(h => h.trim());
+        const rows = JSON.parse(rowsAttr);
+        populateTableRows(theadForBuild, tbodyForBuild, headers, rows);
+      } catch (e) {
+        console.warn(`[WB Table] failed to parse headers/rows attributes: ${e.message}`);
+      }
+    } else if (dataAttr && columnsAttr) {
+      try {
+        const data = JSON.parse(dataAttr);
+        const columns = JSON.parse(columnsAttr);
+        const headers = columns.map(c => c.label || c.key);
+        const rows = data.map(row => columns.map(c => row[c.key]));
+        populateTableRows(theadForBuild, tbodyForBuild, headers, rows);
+      } catch (e) {
+        console.warn(`[WB Table] failed to parse data/columns attributes: ${e.message}`);
+      }
+    } else if (element._wbOriginalHTML && element._wbOriginalHTML.trim()) {
+      // _wbOriginalSlot (schema-builder.js) is TEXT-only and can't carry
+      // real markup -- _wbOriginalHTML is the actual pre-wipe innerHTML.
+      const temp = document.createElement('div');
+      temp.innerHTML = element._wbOriginalHTML;
+      const originalThead = temp.querySelector('thead');
+      const originalTbody = temp.querySelector('tbody');
+      if (originalThead) theadForBuild.innerHTML = originalThead.innerHTML;
+      if (originalTbody) tbodyForBuild.innerHTML = originalTbody.innerHTML;
+    }
+  }
 
   let currentData = [];
   let filteredData = [];
@@ -35,24 +141,24 @@ export function table(element, options = {}) {
   // Initialize data from DOM
   const tbody = tableEl.querySelector('tbody');
   if (tbody) {
-    currentData = Array.from(tbody.querySelectorAll('tr')).map(tr => 
+    currentData = Array.from(tbody.querySelectorAll('tr')).map(tr =>
       Array.from(tr.querySelectorAll('td')).map(td => td.textContent) // Use textContent instead of innerHTML
     );
     filteredData = [...currentData];
   }
 
-  // #448: skip the class specifically when tableEl IS the <wb-table> HOST
-  // itself (a <wb-table> used with no nested <table> child) -- data.css
-  // selects the `wb-table` TAG directly for that case now. Still added when
+  // #448: skip the class specifically when tableEl IS the <table> HOST
+  // itself (a <table> used with no nested <table> child) -- data.css
+  // selects the `x-table` TAG directly for that case now. Still added when
   // tableEl is a native <table> (either autoInject's native.table entry, or
-  // the child <table> a <wb-table> wraps), since data.css's `table.wb-table`/
-  // `.wb-table > table` rules still need the class there (a native `table`
-  // tag can never match a `wb-table` tag selector).
-  if (tableEl.tagName.toLowerCase() !== 'wb-table') tableEl.classList.add('wb-table');
-  if (config.striped) tableEl.classList.add('wb-table--striped');
-  if (config.hover) tableEl.classList.add('wb-table--hover');
-  if (config.bordered) tableEl.classList.add('wb-table--bordered');
-  if (config.compact) tableEl.classList.add('wb-table--compact');
+  // the child <table> a <table> wraps), since data.css's `table.x-table`/
+  // `.x-table > table` rules still need the class there (a native `table`
+  // tag can never match a `x-table` tag selector).
+  if (tableEl.tagName.toLowerCase() !== 'x-table') tableEl.classList.add('x-table');
+  if (config.striped) tableEl.classList.add('x-table--striped');
+  if (config.hover) tableEl.classList.add('x-table--hover');
+  if (config.bordered) tableEl.classList.add('x-table--bordered');
+  if (config.compact) tableEl.classList.add('x-table--compact');
 
   // Search Logic
   if (searchInput) {
@@ -82,8 +188,8 @@ export function table(element, options = {}) {
         }
         
         // Update UI
-        headers.forEach(h => h.classList.remove('wb-table--sorted-asc', 'wb-table--sorted-desc'));
-        th.classList.add(sortDir === 'asc' ? 'wb-table--sorted-asc' : 'wb-table--sorted-desc');
+        headers.forEach(h => h.classList.remove('x-table--sorted-asc', 'x-table--sorted-desc'));
+        th.classList.add(sortDir === 'asc' ? 'x-table--sorted-asc' : 'x-table--sorted-desc');
         
         // Sort Rows
         const dataRows = Array.from(tbody.querySelectorAll('tr'));
@@ -122,8 +228,18 @@ export function table(element, options = {}) {
       tr.style.cursor = 'pointer';
       tr.onclick = (e) => {
         if (e.target.closest('a, button, input')) return;
-        tableRows.forEach(r => r.classList.remove('active'));
-        tr.classList.add('active');
+        // #592: the demo hint text ("Hold Ctrl/Cmd to multi-select") was
+        // never implemented -- this handler unconditionally cleared every
+        // other row's `active` class on every click. Only clear the rest
+        // when NEITHER modifier is held; when one is, toggle just the
+        // clicked row so a second Ctrl/Cmd-click ADDS to the selection
+        // instead of replacing it.
+        if (e.ctrlKey || e.metaKey) {
+          tr.classList.toggle('active');
+        } else {
+          tableRows.forEach(r => r.classList.remove('active'));
+          tr.classList.add('active');
+        }
         element.dispatchEvent(new CustomEvent('wb:table:select', {
           detail: { row: tr, index },
           bubbles: true
@@ -146,9 +262,99 @@ export function table(element, options = {}) {
     tableEl.style.cursor = 'pointer';
   }
 
+  // #669: pagination. Built after sorting and search wiring so it sees the final row
+  // set, and re-derived from the live <tbody> each time rather than a cached
+  // array -- sorting reorders those same nodes in place.
+  let pagerCleanup = null;
+  if (config.paginated) pagerCleanup = buildPager(element, tableEl, config.pageSize);
+
   return () => {
-    tableEl.classList.remove('wb-table', 'wb-table--striped', 'wb-table--hover', 'wb-table--bordered', 'wb-table--compact');
+    if (pagerCleanup) pagerCleanup();
+    tableEl.classList.remove('x-table', 'x-table--striped', 'x-table--hover', 'x-table--bordered', 'x-table--compact');
   };
+}
+
+/**
+ * Shows one page of rows at a time with Prev/Next controls (#669).
+ *
+ * Rows are hidden with `hidden` rather than removed: sorting, searching and any
+ * row-level listeners keep working on the same nodes, and nothing has to be
+ * rebuilt when the page changes.
+ */
+function buildPager(element, tableEl, pageSize) {
+  const tbody = tableEl.querySelector('tbody');
+  if (!tbody) return null;
+
+  const pager = document.createElement('nav');
+  pager.className = 'x-table__pager';
+  pager.setAttribute('aria-label', 'Table pagination');
+
+  const prev = document.createElement('button');
+  prev.type = 'button';
+  prev.className = 'x-table__pager-btn';
+  prev.textContent = 'Previous';
+
+  const status = document.createElement('span');
+  status.className = 'x-table__pager-status';
+  status.setAttribute('aria-live', 'polite');
+
+  const next = document.createElement('button');
+  next.type = 'button';
+  next.className = 'x-table__pager-btn';
+  next.textContent = 'Next';
+
+  pager.append(prev, status, next);
+  // A <nav> is not valid inside <table>, so mount it after the table.
+  (tableEl.parentElement || element).insertBefore(pager, tableEl.nextSibling);
+
+  let page = 0;
+  const render = () => {
+    const rows = [...tbody.querySelectorAll('tr')];
+    const pages = Math.max(1, Math.ceil(rows.length / pageSize));
+    if (page > pages - 1) page = pages - 1;
+    rows.forEach((tr, i) => {
+      tr.hidden = i < page * pageSize || i >= (page + 1) * pageSize;
+    });
+    status.textContent = `Page ${page + 1} of ${pages} — ${rows.length} rows`;
+    prev.disabled = page === 0;
+    next.disabled = page >= pages - 1;
+  };
+
+  const onPrev = () => { if (page > 0) { page--; render(); } };
+  const onNext = () => { page++; render(); };
+  prev.addEventListener('click', onPrev);
+  next.addEventListener('click', onNext);
+  render();
+
+  return () => {
+    prev.removeEventListener('click', onPrev);
+    next.removeEventListener('click', onNext);
+    [...tbody.querySelectorAll('tr')].forEach((tr) => { tr.hidden = false; });
+    pager.remove();
+  };
+}
+
+/** Builds real <tr>/<th>/<td> rows into an already-created (empty) thead/tbody pair. textContent, not innerHTML -- row data is untrusted string/JSON input, not markup. */
+function populateTableRows(thead, tbody, headers, rows) {
+  thead.innerHTML = '';
+  const headerRow = document.createElement('tr');
+  headers.forEach(h => {
+    const th = document.createElement('th');
+    th.textContent = h;
+    headerRow.appendChild(th);
+  });
+  thead.appendChild(headerRow);
+
+  tbody.innerHTML = '';
+  rows.forEach(row => {
+    const tr = document.createElement('tr');
+    row.forEach(cell => {
+      const td = document.createElement('td');
+      td.textContent = String(cell);
+      tr.appendChild(td);
+    });
+    tbody.appendChild(tr);
+  });
 }
 
 export default { table };

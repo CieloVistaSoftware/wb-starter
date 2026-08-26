@@ -11,7 +11,7 @@ const SECTION_IDS = ['buttons', 'inputs', 'selection', 'feedback', 'overlays', '
 
 test.describe('#181 — section nav links', () => {
   test.beforeEach(async ({ page }) => {
-    await page.goto('http://localhost:3000/?page=behaviors');
+    await page.goto('/?page=behaviors');
     await page.waitForSelector('.nav-links', { timeout: 20000 });
     await page.waitForTimeout(2500);
   });

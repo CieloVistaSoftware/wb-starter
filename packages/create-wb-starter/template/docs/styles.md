@@ -6,9 +6,9 @@
 - **HTML5 semantic elements** (e.g., `<section>`, `<header>`, `<main>`, `<footer>`, `<nav>`) must be used for all page structure. Avoid generic `<div>` for major page regions.
 - **Prohibited:**
   - Page-specific, BEM, or context-coupled class names (e.g., `home-hero`, `page__feature`, `about-section`, `main-content--dark`).
-  - `.wb-*` classes in global CSS or markup. These are reserved strictly for internal styles within custom elements (e.g., `<wb-demo>`). Do **not** use `.wb-*` classes in any global stylesheet or outside their component's shadow scope.
+  - `.wb-*` classes in global CSS or markup. These are reserved strictly for internal styles within custom elements (e.g., `<div x-demo>`). Do **not** use `.wb-*` classes in any global stylesheet or outside their component's shadow scope.
 - **No BEM or OOCSS prefixes**: Do not use double underscores, double hyphens, or page/component prefixes in class names.
-- **Component classes**: Custom elements (e.g., `<wb-demo>`) may use internal classes prefixed with their tag (e.g., `.wb-demo-feature`), but these must not leak into global or page-level markup or CSS.
+- **Component classes**: Custom elements (e.g., `<div x-demo>`) may use internal classes prefixed with their tag (e.g., `.x-demo-feature`), but these must not leak into global or page-level markup or CSS.
 - **Rationale:** This ensures maximum reusability, maintainability, and clarity across all pages and components.
 
 **Example (Correct):**
@@ -22,8 +22,8 @@
 
 **Example (Incorrect):**
 ```html
-<section class="wb-hero">
-  <div class="wb-demo-feature"> ... </div>
+<section class="x-hero">
+  <div class="x-demo-feature"> ... </div>
 </section>
 ```
 
@@ -84,7 +84,7 @@ This document serves as the supreme law for styling in the WB-Starter library. I
 *   **Principle:** All colors, spacing, and typography are defined as CSS variables in `themes.css`.
 *   **Reference:** See [Themes Documentation](themes.md).
 *   **Rule:** **NEVER hardcode a hex code.** Always use `var(--primary)`, `var(--bg-color)`, etc.
-*   **Rule:** **NO ALIASES.** Do not create `--wb-bg-primary` when `--bg-primary` exists.
+*   **Rule:** **NO ALIASES.** Do not create `--x-bg-primary` when `--bg-primary` exists.
 
 ### 3. Behavioral Integrity
 *   **Principle:** Styles exist to *support* behavior, not wreck it.

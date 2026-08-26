@@ -7,21 +7,21 @@ test, it is — run `npm test` (which now includes the `integration` project).
 
 ---
 
-## 1. Live examples use `<wb-demo>`
+## 1. Live examples use `<div x-demo>`
 
-Every component example is a `<wb-demo>` — it renders the **live control** AND shows its
+Every component example is a `<div x-demo>` — it renders the **live control** AND shows its
 **source** underneath. One tag gives both.
 
-- In `.md` docs: embed a **raw** `<wb-demo>…</wb-demo>` directly in the Markdown. Do NOT
+- In `.md` docs: embed a **raw** `<div x-demo>…</div>` directly in the Markdown. Do NOT
   use a ` ```demo ` fence (retired) — the doc-viewer renders embedded `<wb-*>` / `x-*`.
-- In `.html` demos: use `<wb-demo>` the same way.
+- In `.html` demos: use `<div x-demo>` the same way.
 
 ## 2. One code sample per rendered element (strict 1:1)
 
 - **Never** show more than one code sample for a single rendered element.
 - **Never** show one code sample for multiple rendered elements (e.g. one snippet under
   three pricing cards).
-- Each rendered element gets **its own** `<wb-demo>`, with its source directly beneath it.
+- Each rendered element gets **its own** `<div x-demo>`, with its source directly beneath it.
 
 ## 3. Demos are vertical — never side-by-side
 
@@ -41,10 +41,10 @@ Every component example is a `<wb-demo>` — it renders the **live control** AND
 - One tag per line; each child element indented under its parent. Preserve the source
   line breaks (never collapse a multi-line block onto one line).
 - A **multi-attribute element** renders **each attribute on its own line** — never a
-  single long horizontal line. A `<wb-demo>` whose rendered source is one long line
+  single long horizontal line. A `<div x-demo>` whose rendered source is one long line
   (forcing a horizontal scroll) violates this. (Tracked project-wide; see #254.)
 - **Short-tag exception:** an element whose whole tag is short (roughly **under 25
-  characters**, e.g. `<wb-badge label="New">`) stays on ONE line — one element per
+  characters**, e.g. `<span x-badge label="New">`) stays on ONE line — one element per
   line. Don't split short tags pointlessly. There is **no "inline format" override**
   beyond this; vertical is the only format.
 - **Array-valued attributes must start each row on its own indented line** — e.g.
@@ -55,9 +55,9 @@ Every component example is a `<wb-demo>` — it renders the **live control** AND
 ## 6. Code text never wraps — ever
 
 - **Superseded (#583/#589 session):** this rule used to require wrapping (`white-space:
-  pre-wrap`) with a carve-out for `<wb-demo>` panels only. John's direct, repeated
+  pre-wrap`) with a carve-out for `<div x-demo>` panels only. John's direct, repeated
   instruction — "CODE TEXT CANNOT WRAP EVER" — reverses that: **no code text wraps,
-  anywhere, on any element that displays code** (`<pre x-behavior="pre">`, `<wb-demo>`
+  anywhere, on any element that displays code** (`<pre x-behavior="pre">`, `<div x-demo>`
   panels, `<div x-mdhtml>`-rendered fenced code blocks, hand-written `<pre language="…">`
   samples). Long lines get horizontal scroll instead (`white-space: pre`; `overflow-x:
   auto`) — this is `pre.css`'s own editor-style default (`pre.js`, `defaultWrap=false`,
@@ -165,27 +165,27 @@ Every component example is a `<wb-demo>` — it renders the **live control** AND
 
 - The `demos/` folder exists so users can **see how it's done in HTML**. Therefore
   **every file in `demos/`** must present BOTH a **working live demo** AND the **source
-  code** that produced it — never one without the other. `<wb-demo>` is the ideal tool
+  code** that produced it — never one without the other. `<div x-demo>` is the ideal tool
   (it renders the live control and shows its source in one tag). A demo page with a live
   example but no code — or code with no live example — is a defect.
 - **Every canonical demo includes a MIXED-BEHAVIORS example**: `x-*` attributes composed
-  onto the element — including onto `<wb-*>` tags (wb-tags take x-attributes too). This
+  onto the element — including onto `<wb-*>` tags (x-tags take x-attributes too). This
   shows developers how to add function to markup already in place. All of it inside
-  `<wb-demo>`.
+  `<div x-demo>`.
 
 ## 17. Grouped controls are ONE demo (exception to §2)
 
 - Some controls belong to a **single logical group** — e.g. radio buttons that share a
   `name`, or a set of related checkboxes. For a group, the **whole group** is the unit:
-  put the entire group in **one** `<wb-demo>` with one code sample. Do NOT split each
+  put the entire group in **one** `<div x-demo>` with one code sample. Do NOT split each
   individual `<input>`/control into its own demo. This is the intended exception to §2
   ("one code sample per rendered element") — for a group, the group IS the element.
 
-## 18. Many controls go in a `<wb-container>`
+## 18. Many controls go in a `<div x-container>`
 
 - When a demo displays **many controls or items together** (a set of related controls,
-  a list of examples), wrap them in a `<wb-container>` so they get consistent, contained
-  layout instead of loose free-floating markup. Reach for `<wb-container>` whenever you'd
+  a list of examples), wrap them in a `<div x-container>` so they get consistent, contained
+  layout instead of loose free-floating markup. Reach for `<div x-container>` whenever you'd
   otherwise show a large ungrouped block of controls.
 
 ## 19. Every declared attribute must be tested to actually WORK
@@ -211,7 +211,7 @@ Every component example is a `<wb-demo>` — it renders the **live control** AND
 
 - A valueless behavior attribute is written `x-ripple`, **never** `x-ripple=""`. The
   `=""` adds no value, lengthens the markup, and teaches users to type a useless string.
-  Applies to all source HTML and all code samples (the `<wb-demo>` pretty-printer
+  Applies to all source HTML and all code samples (the `<div x-demo>` pretty-printer
   already emits bare names for empty values). Enforced by
   `tests/compliance/no-empty-x-attr-values.spec.ts`; fix with
   `node scripts/remove-empty-x-attr-values.mjs`.
@@ -221,7 +221,7 @@ Every component example is a `<wb-demo>` — it renders the **live control** AND
 - When a switch demo's label names an actual effect (e.g. "Notifications", "Dark Mode"),
   turning it ON must **actually demonstrate that effect** — not just flip visually with no
   observable result. A "Notifications" toggle that does nothing on activation doesn't show
-  what it does. Use `<wb-switch notify-control>` to fire a real toast when switched ON
+  what it does. Use `<div x-switch notify-control>` to fire a real toast when switched ON
   (see `src/wb-viewmodels/semantics/switch.js`); `theme-control` is the existing precedent
   for the same idea applied to the "Dark Mode" switch.
 
@@ -230,10 +230,10 @@ Every component example is a `<wb-demo>` — it renders the **live control** AND
 - A table cell must never split a word/identifier mid-character (e.g. `wb:details:tog` /
   `gle` across two lines). Prose wraps at word boundaries; unbroken tokens (event names,
   `code` identifiers, class names) must either fit on one line or the table scrolls
-  horizontally (`overflow-x: auto`, already standard — see `.wb-mdhtml table`) — they must
+  horizontally (`overflow-x: auto`, already standard — see `.x-mdhtml table`) — they must
   never be force-broken via `overflow-wrap: anywhere`. If a table is cramped, the fix is a
-  smaller font-size or a horizontal scroll, not a broken word. `.wb-mdhtml td code` /
-  `.wb-mdhtml th code` are `white-space: nowrap` for exactly this reason
+  smaller font-size or a horizontal scroll, not a broken word. `.x-mdhtml td code` /
+  `.x-mdhtml th code` are `white-space: nowrap` for exactly this reason
   (`src/styles/behaviors/mdhtml.css`).
 
 ## 24. Elements must never unintentionally overlap
@@ -254,17 +254,17 @@ Every component example is a `<wb-demo>` — it renders the **live control** AND
   the footer) is not a real collision — scoping to leaf content elements avoids that class
   of false positive without pixel-diffing. See `tests/integration/overlap.spec.ts` (#274).
 
-## 25. `<wb-demo>` exception: source that can't run without a build step
+## 25. `<div x-demo>` exception: source that can't run without a build step
 
-- §1/§16 require `<wb-demo>` because it renders the **exact same markup** it shows as
+- §1/§16 require `<div x-demo>` because it renders the **exact same markup** it shows as
   "source" — the live control and the code below it are structurally guaranteed to
   match. That guarantee breaks for **framework-integration snippets** whose instructive
   source only produces DOM after a compile step — wrapping the post-mount HTML (or the
-  mounting `<script>`) in `<wb-demo>` would show something other than what a developer
-  using that framework would actually write, losing the pedagogical content `<wb-demo>`
+  mounting `<script>`) in `<div x-demo>` would show something other than what a developer
+  using that framework would actually write, losing the pedagogical content `<div x-demo>`
   exists to preserve. This does NOT mean "no live render" — React, Vue, Svelte, and
   SolidJS all get a real live render on `demos/frameworks.html` (see below); they're
-  just not wrapped in `<wb-demo>` specifically, because `<wb-demo>` additionally
+  just not wrapped in `<div x-demo>` specifically, because `<div x-demo>` additionally
   requires the rendered markup and the shown "source" to be 1:1 identical, which
   compiled framework output never is.
 - **What counts as "requires a build step" narrowed (#460):** originally this section
@@ -306,19 +306,19 @@ Every component example is a `<wb-demo>` — it renders the **live control** AND
 - This is NOT a blanket exception for anything merely inconvenient to wrap. If the
   snippet is plain, framework-agnostic HTML/attributes that already runs with no build
   step (e.g. an HTMX example — real HTML, `hx-*`/`x-*` attributes, no compiler), it
-  MUST use `<wb-demo>` like any other component example — only genuinely non-executable
+  MUST use `<div x-demo>` like any other component example — only genuinely non-executable
   source is exempt. See `demos/frameworks.html` for all cases side by side: the HTMX
-  section uses `<wb-demo>`; React/Vue/Svelte/SolidJS render live but aren't wrapped in
-  `<wb-demo>` (compiled/mounted output isn't 1:1 with the shown source); Angular is the
+  section uses `<div x-demo>`; React/Vue/Svelte/SolidJS render live but aren't wrapped in
+  `<div x-demo>` (compiled/mounted output isn't 1:1 with the shown source); Angular is the
   sole remaining labeled "no live render" exception. Tracked: #324, #460.
 
-## 26. `<wb-demo>` code panel is full width on mobile — no layout shift between demos
+## 26. `<div x-demo>` code panel is full width on mobile — no layout shift between demos
 
-- **Mobile only (≤700px).** Below that width, the **code sample** portion of `<wb-demo>`
+- **Mobile only (≤700px).** Below that width, the **code sample** portion of `<div x-demo>`
   (distinct from the rendered control governed by §7) must span the **full width** of its
   container, even when the rendered control above it is narrow.
 - Goal: eliminate "window slop" — the page width, scrollbar, or demo container resizing/
-  shifting as different `<wb-demo>` blocks (with shorter or longer code) scroll into view
+  shifting as different `<div x-demo>` blocks (with shorter or longer code) scroll into view
   on a long mobile page.
 - The rendered control still follows §7 (sized to what it renders); only the code panel
   underneath is stretched full width, so the page's horizontal footprint stays constant
@@ -331,11 +331,11 @@ Every component example is a `<wb-demo>` — it renders the **live control** AND
 
 ## 27. A demo whose control fires a custom event should teach how to listen for it
 
-- `<wb-demo>` shows a control's markup, but markup alone doesn't teach a reader how to
+- `<div x-demo>` shows a control's markup, but markup alone doesn't teach a reader how to
   react to what the control **does** afterward. When a demoed control fires one or more
   documented `wb:*`/`x:*` custom events (see `docs/behaviors-reference.md`'s Events
   table), add an `events` attribute listing them:
-  `<wb-demo events="wb:switch:change">`.
+  `<div x-demo events="wb:switch:change">`.
 - This adds two things, automatically, right below the existing source panel — no
   hand-written prose required:
   1. An example `addEventListener` code sample, syntax-highlighted and copyable like any
@@ -344,20 +344,20 @@ Every component example is a `<wb-demo>` — it renders the **live control** AND
      interacts with the rendered control above it — proof, not just claims.
 - Not every demo needs this — a control with no interesting event (e.g. a static
   `<div x-badge>`) doesn't gain anything from an empty events section, so the attribute is
-  opt-in, not mandatory on every `<wb-demo>`. Add it where a reader would plausibly want
+  opt-in, not mandatory on every `<div x-demo>`. Add it where a reader would plausibly want
   to hook into the control's behavior in their own code (form controls, toggles, tabs,
   search, anything with a meaningful `detail` payload). Tracked: #385.
 
 ## 28. Code panel width is customizable per demo
 
-- The `<wb-demo>` code panel (the `<pre>` source block below each rendered control)
-  defaults to **full width of its `wb-demo` container** at all viewport sizes. This
+- The `<div x-demo>` code panel (the `<pre>` source block below each rendered control)
+  defaults to **full width of its `x-demo` container** at all viewport sizes. This
   ensures consistent horizontal layout and prevents code samples from appearing
   cramped or artificially narrow relative to the rendered component above.
 - **Long lines flow naturally (no wrapping).** If a code line is longer than the
   container, the code panel provides a **horizontal scrollbar** — never forces a
   word-wrap that breaks identifiers mid-line (see §5 & §23). This applies to
-  `<wb-demo>`-generated code panels specifically (see §6 carve-out).
+  `<div x-demo>`-generated code panels specifically (see §6 carve-out).
 - **Per-demo width control:** Use `data-code-width` attribute to constrain a specific
   demo's code panel. Presets:
   - `data-code-width="narrow"` — max 400px (tight code samples)
@@ -365,15 +365,15 @@ Every component example is a `<wb-demo>` — it renders the **live control** AND
   - `data-code-width="wide"` — max 800px (generous spacing)
   - `data-code-width="full"` — 100% (default, full container width)
   - Or use CSS: `style="--demo-code-max-width: 500px;"` for custom widths.
-- **Example:** `<wb-demo data-code-width="narrow">...</wb-demo>`
-- **CSS:** `.wb-demo__code { width: 100%; max-width: var(--demo-code-max-width, 100%); overflow-x: auto; }`
+- **Example:** `<div x-demo data-code-width="narrow">...</div>`
+- **CSS:** `.x-demo__code { width: 100%; max-width: var(--demo-code-max-width, 100%); overflow-x: auto; }`
   (enforced in `src/styles/behaviors/demo.css`).
 
 ---
 
 ## 29. No placeholder asset paths — ever
 
-- Every `src`/`image`/`background` in a live-rendered example (a `<wb-demo>`, or raw markup a doc
+- Every `src`/`image`/`background` in a live-rendered example (a `<div x-demo>`, or raw markup a doc
   auto-promotes) must resolve to a real, working asset. `/images/feature.jpg`, `"Sample image"`,
   `"Sample background"`, `music.mp3` — anything that *reads* like a path but was never actually placed in
   the repo or a real remote URL — is not "illustrative," it's a broken control that ships (2026-08-15
@@ -385,7 +385,7 @@ Every component example is a `<wb-demo>` — it renders the **live control** AND
 - Never invent a local path unless the file is actually committed to the repo at that exact path — verify
   with a file-existence check, not by eye.
 - Test: `tests/compliance/docs-live-media-assets-exist.spec.ts` (markdown docs),
-  `tests/compliance/wb-audio-has-resolvable-src.spec.ts` (audio specifically, all `.html`/`.md`).
+  `tests/compliance/x-audio-has-resolvable-src.spec.ts` (audio specifically, all `.html`/`.md`).
 
 ## 30. Broken media must throw + log — never fail silently
 
@@ -431,7 +431,7 @@ Every component example is a `<wb-demo>` — it renders the **live control** AND
 - **When writing a new example**: write plain semantic HTML first (`<table>`, `<article>`, `<button>`,
   `<audio>`, ...) with no `x-*` attribute at all, and confirm live that it gets enhanced automatically. Only
   reach for an explicit `<wb-*>` tag or `x-*` attribute when the semantic element genuinely doesn't exist
-  for what you're building (there's no native `<x-cardexpandable>` equivalent) or the page has deliberately
+  for what you're building (there's no native `<div x-cardexpandable>` equivalent) or the page has deliberately
   opted out of autoInject.
 - **When reviewing an existing example**: if it uses an explicit `x-*` attribute on a tag that has a native
   semantic equivalent (`x-table` on `<table>`, `x-card`/`x-cardXxx` on `<article>`, `x-audio` on `<audio>`),
@@ -447,7 +447,7 @@ Every component example is a `<wb-demo>` — it renders the **live control** AND
 
 | Rule | Test / reference |
 |------|------------------|
-| 1, 2 (wb-demo, 1:1) | `tests/integration/doc-viewer-wb-demo.spec.ts` |
+| 1, 2 (x-demo, 1:1) | `tests/integration/doc-viewer-x-demo.spec.ts` |
 | 4 (highlighted + copy) | `tests/integration/frameworks-demo.spec.ts`, `demo-compare-code-blocks.spec.ts` (#241) |
 | 3, 5 (vertical) | `tests/integration/demo-compare-code-blocks.spec.ts` |
 | 5, 8 (no double-parse) | `tests/integration/doc-viewer-code-multiline.spec.ts`; `docs/_today/ROOT-CAUSE-md-double-parse.md` |
@@ -455,9 +455,9 @@ Every component example is a `<wb-demo>` — it renders the **live control** AND
 | 11 (colors) | `tests/compliance/css-oop-compliance.spec.ts` |
 | 22 (switch invokes effect) | `tests/behaviors/notify-control-switch.spec.ts` |
 | 24 (no unintended overlap) | `tests/integration/overlap.spec.ts` (#274) |
-| 1, 16, 25 (wb-demo / build-step exception) | `tests/integration/frameworks-demo.spec.ts` (#324) |
-| 28 (code panel full width) | `src/styles/behaviors/demo.css` (`.wb-demo__code` rule) |
-| 29 (no placeholder assets) | `tests/compliance/docs-live-media-assets-exist.spec.ts`, `tests/compliance/wb-audio-has-resolvable-src.spec.ts` |
+| 1, 16, 25 (x-demo / build-step exception) | `tests/integration/frameworks-demo.spec.ts` (#324) |
+| 28 (code panel full width) | `src/styles/behaviors/demo.css` (`.x-demo__code` rule) |
+| 29 (no placeholder assets) | `tests/compliance/docs-live-media-assets-exist.spec.ts`, `tests/compliance/x-audio-has-resolvable-src.spec.ts` |
 | 30 (broken media throws) | `src/wb-viewmodels/card.js` (`cardhero`/`cardhorizontal`/`cardoverlay`/`cardimage` probe pattern), `src/wb-viewmodels/semantics/audio.js` |
 | 31 (kebab-case attributes) | `tests/regression/cardhorizontal-attribute-casing-tolerance.spec.ts` (reference pattern for tolerant reading) |
 | 32 (autoInject on, favor semantic HTML) | `src/core/config.js` (`autoInject: true` default), `tests/compliance/no-redundant-x-attribute-on-native-tag.spec.ts` |

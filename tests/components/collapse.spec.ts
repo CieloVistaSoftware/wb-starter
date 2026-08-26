@@ -25,14 +25,14 @@ async function injectAndScan(page: Page, html: string) {
     container.innerHTML = h;
     
     // Force eager loading
-    const elements = container.querySelectorAll('.wb-ready');
+    const elements = container.querySelectorAll('.x-ready');
     elements.forEach(el => el.setAttribute('', ''));
     
     document.body.appendChild(container);
   }, html);
   
-  await page.evaluate(() => {
-    (window as any).WB.scan(document.getElementById('test-container'));
+  await page.evaluate(async () => {
+    await (window as any).WB.scan(document.getElementById('test-container'));
   });
   
   await page.waitForTimeout(500);
@@ -45,11 +45,11 @@ test.describe('collapse Behavior', () => {
     page.on('pageerror', (err) => errors.push(err.message));
     
     const setupHtml = [
-      "<wb-collapse>Basic collapse content</wb-collapse>",
-      "<wb-collapse expanded>with expanded</wb-collapse>",
-      "<wb-collapse>Test permutation 3</wb-collapse>",
-      "<wb-collapse>Test permutation 4</wb-collapse>",
-      "<wb-collapse>Test permutation 5</wb-collapse>"
+      "<div x-collapse>Basic collapse content</div>",
+      "<div x-collapse expanded>with expanded</div>",
+      "<div x-collapse>Test permutation 3</div>",
+      "<div x-collapse>Test permutation 4</div>",
+      "<div x-collapse>Test permutation 5</div>"
     ];
     
     await injectAndScan(page, setupHtml.join('\n'));
@@ -65,10 +65,10 @@ test.describe('collapse Behavior', () => {
   });
 
   test('element is visible after scan', async ({ page }) => {
-    const html = "<wb-collapse>Basic collapse content</wb-collapse>";
+    const html = "<div x-collapse>Basic collapse content</div>";
     await injectAndScan(page, html);
 
-    const el = page.locator('#test-container wb-collapse, #test-container wb-collapse').first();
+    const el = page.locator('#test-container [x-collapse], #test-container [x-collapse]').first();
     const isPresent = await el.count() > 0;
 
     if (isPresent) {
@@ -97,10 +97,10 @@ test.describe('collapse Behavior', () => {
     const viaOpen = page.locator('#via-open');
     const viaExpanded = page.locator('#via-expanded');
 
-    await expect(viaOpen).toHaveClass(/wb-collapse--open/);
-    await expect(viaExpanded).toHaveClass(/wb-collapse--open/);
-    await expect(viaOpen.locator('.wb-collapse__trigger')).toHaveAttribute('aria-expanded', 'true');
-    await expect(viaExpanded.locator('.wb-collapse__trigger')).toHaveAttribute('aria-expanded', 'true');
+    await expect(viaOpen).toHaveClass(/x-collapse--open/);
+    await expect(viaExpanded).toHaveClass(/x-collapse--open/);
+    await expect(viaOpen.locator('.x-collapse__trigger')).toHaveAttribute('aria-expanded', 'true');
+    await expect(viaExpanded.locator('.x-collapse__trigger')).toHaveAttribute('aria-expanded', 'true');
   });
 
 });

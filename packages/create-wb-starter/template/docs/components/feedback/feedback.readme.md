@@ -23,30 +23,30 @@ Static alert message for displaying important information to users.
 
 ```html
 <!-- Basic info alert -->
-<wb-alert
+<div x-alert
   type="info"
   title="Information">
   This is an informational message.
-</wb-alert>
+</div>
 <!-- Success alert with dismiss -->
-<wb-alert
+<div x-alert
   type="success"
   title="Success!"
   dismissible>
   Your changes have been saved successfully.
-</wb-alert>
+</div>
 <!-- Warning alert -->
-<wb-alert
+<div x-alert
   type="warning"
   title="Warning">
   Please review your input before continuing.
-</wb-alert>
+</div>
 <!-- Error alert -->
-<wb-alert
+<div x-alert
   type="error"
   title="Error">
   An error occurred while processing your request.
-</wb-alert>
+</div>
 ```
 
 ### Alert Types
@@ -78,17 +78,17 @@ Temporary notification popup that appears and disappears automatically.
 
 ```html
 <!-- Basic toast -->
-<wb-toast
+<div x-toast
   message="Item saved successfully"
   type="success">
-</wb-toast>
+</div>
 <!-- Toast with custom duration -->
-<wb-toast
+<div x-toast
   message="Please check your email"
   type="info"
   duration="5000"
   position="top-center">
-</wb-toast>
+</div>
 ```
 
 ### Toast Positions
@@ -100,7 +100,7 @@ Temporary notification popup that appears and disappears automatically.
 
 ```javascript
 // Show toast programmatically
-const toast = document.createElement('wb-toast');
+const toast = document.createElement('x-toast');
 toast.setAttribute('message', 'Operation completed!');
 toast.setAttribute('type', 'success');
 document.body.appendChild(toast);
@@ -125,18 +125,18 @@ Native HTML progress bar for showing task completion.
 
 ```html
 <!-- Basic progress bar -->
-<wb-progress
+<progress
   value="75"
   max="100"
   label="Upload progress">
-</wb-progress>
+</progress>
 <!-- Progress with percentage display -->
-<wb-progress
+<progress
   value="45"
   max="100"
   show-value
   label="Loading...">
-</wb-progress>
+</progress>
 ```
 
 ---
@@ -158,18 +158,18 @@ Loading indicator with multiple animation styles.
 
 ```html
 <!-- Basic spinner -->
-<wb-spinner label="Loading..."></wb-spinner>
+<span x-spinner label="Loading..."></span>
 <!-- Large border spinner -->
-<wb-spinner
+<span x-spinner
   size="large"
   variant="border"
   label="Processing...">
-</wb-spinner>
+</span>
 <!-- Dots spinner -->
-<wb-spinner
+<span x-spinner
   variant="dots"
   size="small">
-</wb-spinner>
+</span>
 ```
 
 ### Spinner Variants
@@ -200,26 +200,26 @@ Loading placeholder that mimics the structure of content being loaded.
 
 ```html
 <!-- Text skeleton -->
-<wb-skeleton
+<div x-skeleton
   variant="text"
   lines="3">
-</wb-skeleton>
+</div>
 <!-- Circular avatar skeleton -->
-<wb-skeleton
+<div x-skeleton
   variant="circle"
   width="48px"
   height="48px">
-</wb-skeleton>
+</div>
 <!-- Image placeholder -->
-<wb-skeleton
+<div x-skeleton
   variant="rectangle"
   height="200px">
-</wb-skeleton>
+</div>
 <!-- Card skeleton -->
-<wb-skeleton
+<div x-skeleton
   variant="card"
   animation="wave">
-</wb-skeleton>
+</div>
 ```
 
 ---
@@ -242,26 +242,26 @@ Small status indicator for displaying counts, labels, or status.
 
 ```html
 <!-- Text badge -->
-<wb-badge
+<span x-badge
   text="New"
   variant="primary">
-</wb-badge>
+</span>
 <!-- Pill badge -->
-<wb-badge
+<span x-badge
   text="Beta"
   pill
   variant="warning">
-</wb-badge>
+</span>
 <!-- Dot indicator -->
-<wb-badge
+<span x-badge
   dot
   variant="success">
-</wb-badge>
+</span>
 <!-- Count badge -->
-<wb-badge
+<span x-badge
   text="5"
   size="small">
-</wb-badge>
+</span>
 ```
 
 ---
@@ -326,6 +326,6 @@ Feedback components use CSS custom properties for theming:
 
 ## Implementation
 - **Components**: Located in `src/wb-viewmodels/` (alert.js, toast.js, spinner.js, etc.)
-- **Styles**: [src/styles/components/feedback.css](../../src/styles/components/feedback.css)
+- **Styles**: [src/styles/components/feedback.css](../../../src/styles/behaviors/alert.css)
 - **Schemas**: Feedback component schemas in `src/wb-models/`
 - **Tests**: Feedback tests in `tests/behaviors/ui/feedback.spec.ts`

@@ -11,7 +11,7 @@ an `x-move` container swap their item with the adjacent one when clicked.
 | Behavior | `move` |
 | Container attribute | `x-move` |
 | Direction attributes | `x-moveup`, `x-movedown`, `x-moveleft`, `x-moveright` |
-| Custom Tag | `<div x-move>` |
+| Attribute form | `<div x-move>` |
 | Applies to | a grid/flex container (`x-move`) with descendant buttons (`x-move{direction}`) |
 | Category | Interactive |
 | Schema | `src/wb-models/move.schema.json` |
@@ -52,7 +52,7 @@ non-grid (flex/list) container is treated as a single column, so `x-moveup`/
 
 ### Grid reorder buttons
 
-<wb-demo>
+<div x-demo>
 <div x-move style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 0.5rem;">
   <div style="padding: 1rem; border: 1px solid var(--border-color);">
     Item 1 <button x-moveright>→</button>
@@ -64,12 +64,12 @@ non-grid (flex/list) container is treated as a single column, so `x-moveup`/
     Item 3 <button x-moveleft>←</button>
   </div>
 </div>
-</wb-demo>
+</div>
 
-### Custom Tag
+### Attribute form
 
-<wb-demo>
-<wb-move style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 0.5rem;">
+<div x-demo>
+<div x-move style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 0.5rem;">
   <div style="padding: 1rem; border: 1px solid var(--border-color);">
     A <button x-moveright>→</button>
   </div>
@@ -77,13 +77,13 @@ non-grid (flex/list) container is treated as a single column, so `x-moveup`/
     B <button x-moveleft>←</button>
   </div>
 </div>
-</wb-demo>
+</div>
 
 ## CSS Classes
 
 | Class | Applied When | Description |
 |-------|--------------|--------------|
-| `.wb-move` | Always, on the `x-move` container | Marker class; no dedicated stylesheet rules ship for it |
+| `.x-move` | Always, on the `x-move` container | Marker class; no dedicated stylesheet rules ship for it |
 
 ## Events
 

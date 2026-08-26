@@ -3,10 +3,10 @@ import { test, expect } from '@playwright/test';
 /**
  * REGRESSION (#455): two separate reports on the same page --
  * tests/fixtures/cards-permutation-matrix.html's "imagePosition variants"
- * and "variant variants" sections for wb-cardhorizontal:
+ * and "variant variants" sections for x-cardhorizontal:
  *
  * 1. "no images" -- the imagePosition-variants markup
- *    (`<wb-cardhorizontal image-position="left">image-position=left</wb-cardhorizontal>`)
+ *    (`<div x-cardhorizontal image-position="left">image-position=left</div>`)
  *    never carried an `image="..."` attribute at all. cardhorizontal()
  *    (src/wb-viewmodels/card.js) only builds a <figure><img> when
  *    config.image is truthy, so these two cards rendered as empty gray
@@ -21,7 +21,7 @@ import { test, expect } from '@playwright/test';
  *    as a `content` fallback the way card()/cardimage()/cardvideo() all
  *    do, so `element.innerHTML = ''` (cardhorizontal(), right after config
  *    is built) permanently wiped that text before it was ever captured.
- *    This is a real component bug: ANY wb-cardhorizontal relying on plain
+ *    This is a real component bug: ANY x-cardhorizontal relying on plain
  *    inner text for its body loses it, not just this fixture.
  *
  * Both are fixed together: cardhorizontal() now captures innerHTML as a
@@ -29,7 +29,7 @@ import { test, expect } from '@playwright/test';
  * a real image= attribute on the imagePosition-variants cards plus
  * descriptive body copy on the variant-variants cards.
  */
-test.describe('wb-cardhorizontal permutation-matrix examples actually render (#455)', () => {
+test.describe('[x-cardhorizontal] permutation-matrix examples actually render (#455)', () => {
   test('imagePosition variants render a real, visible <img>', async ({ page }) => {
     await page.goto('/tests/fixtures/cards-permutation-matrix.html');
 
@@ -37,7 +37,7 @@ test.describe('wb-cardhorizontal permutation-matrix examples actually render (#4
     await expect(section, 'the matrix fixture should still have the imagePosition variants section').toHaveCount(1);
     await section.scrollIntoViewIfNeeded();
 
-    const cards = section.locator('wb-cardhorizontal');
+    const cards = section.locator('[x-cardhorizontal]');
     await expect(cards).toHaveCount(2);
 
     for (let i = 0; i < 2; i++) {
@@ -57,13 +57,13 @@ test.describe('wb-cardhorizontal permutation-matrix examples actually render (#4
     await expect(section, 'the matrix fixture should still have the variant variants section').toHaveCount(1);
     await section.scrollIntoViewIfNeeded();
 
-    const cards = section.locator('wb-cardhorizontal');
+    const cards = section.locator('[x-cardhorizontal]');
     await expect(cards).toHaveCount(4);
 
     const seenTexts = new Set<string>();
     for (let i = 0; i < 4; i++) {
       const card = cards.nth(i);
-      const body = card.locator('.wb-card__horiz-body');
+      const body = card.locator('.x-card__horiz-body');
       await expect(body, `card ${i} must render a body element, not silently drop its content`).toHaveCount(1);
       await expect(body, `card ${i} body must actually be visible`).toBeVisible();
 

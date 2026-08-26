@@ -1,5 +1,5 @@
 /**
- * full-data-wb-audit.mjs
+ * full-data-x-audit.mjs
  * Scans ENTIRE project for all data-wb references.
  * Categorizes by directory and type for migration planning.
  * Excludes: node_modules, .git, dist, build, coverage
@@ -34,7 +34,7 @@ walk('.', (filePath) => {
   const lines = content.split('\n');
   
   lines.forEach((line, i) => {
-    // Match data-wb (exact), data-wb-*, data-wb="*", dataset.wb*
+    // Match data-wb (exact), data-x-*, data-wb="*", dataset.wb*
     if (line.includes('data-wb') || line.match(/dataset\.wb[A-Z]/)) {
       const trimmed = line.trim();
       
@@ -65,10 +65,10 @@ walk('.', (filePath) => {
         pattern = 'string-reference';
       } else if (trimmed.includes('[data-wb')) {
         pattern = 'css-or-selector';
-      } else if (trimmed.includes('data-wb-error')) {
+      } else if (trimmed.includes('data-x-error')) {
         pattern = 'error-marker';
-      } else if (trimmed.includes('data-wb-')) {
-        pattern = 'data-wb-prefixed';
+      } else if (trimmed.includes('data-x-')) {
+        pattern = 'data-x-prefixed';
       } else if (trimmed.includes('data-wb')) {
         pattern = 'generic-data-wb';
       }
@@ -112,7 +112,7 @@ const report = {
   hits
 };
 
-writeFileSync('data/full-data-wb-audit.json', JSON.stringify(report, null, 2));
+writeFileSync('data/full-data-x-audit.json', JSON.stringify(report, null, 2));
 
 console.log(`\nFull audit: ${hits.length} total hits\n`);
 console.log('By Area:');
@@ -125,4 +125,4 @@ for (const [k, v] of Object.entries(byPattern).sort((a, b) => b[1] - a[1])) {
 }
 console.log('\nTop 15 Files:');
 topFiles.slice(0, 15).forEach(f => console.log(`  ${f.count}x  ${f.file}`));
-console.log('\nFull report: data/full-data-wb-audit.json');
+console.log('\nFull report: data/full-data-x-audit.json');

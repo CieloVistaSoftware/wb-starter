@@ -6,21 +6,21 @@ import { test, expect } from '@playwright/test';
  * demos/site/feedback.html renders a "shape variants" and "size variants"
  * section for each enum value -- but src/styles/behaviors/avatar.css only
  * had attribute-selector rules for size="sm"/"md"/"lg"/"xl" (missing xs and
- * 2xl) and had ZERO rules for `shape` at all: every <wb-avatar> was
+ * 2xl) and had ZERO rules for `shape` at all: every <span x-avatar> was
  * hardcoded to border-radius:50% on the base tag selector. Every shape
  * variant rendered as an identical circle regardless of shape="square" /
  * shape="rounded", and size="xs"/size="2xl" silently fell back to the
  * default 40px. Confirmed live (screenshot) before the fix: three
  * "shape variants" avatars, all circles.
  */
-test.describe('wb-avatar shape and size (feedback demo page)', () => {
+test.describe('[x-avatar] shape and size (feedback demo page)', () => {
   test('shape="circle"/"square"/"rounded" render visibly distinct border-radius', async ({ page }) => {
-    await page.goto('http://localhost:3000/demos/site/feedback.html');
-    await page.waitForSelector('wb-avatar[shape="circle"]');
+    await page.goto('/demos/site/feedback.html');
+    await page.waitForSelector('x-avatar[shape="circle"]');
 
-    const circle = page.locator('wb-avatar[shape="circle"]').first();
-    const square = page.locator('wb-avatar[shape="square"]').first();
-    const rounded = page.locator('wb-avatar[shape="rounded"]').first();
+    const circle = page.locator('x-avatar[shape="circle"]').first();
+    const square = page.locator('x-avatar[shape="square"]').first();
+    const rounded = page.locator('x-avatar[shape="rounded"]').first();
 
     const [circleRadius, squareRadius, roundedRadius] = await Promise.all([
       circle.evaluate((el) => getComputedStyle(el).borderRadius),
@@ -35,12 +35,12 @@ test.describe('wb-avatar shape and size (feedback demo page)', () => {
   });
 
   test('size="xs" and size="2xl" render visibly distinct dimensions from the default', async ({ page }) => {
-    await page.goto('http://localhost:3000/demos/site/feedback.html');
-    await page.waitForSelector('wb-avatar[size="xs"]');
+    await page.goto('/demos/site/feedback.html');
+    await page.waitForSelector('x-avatar[size="xs"]');
 
-    const xs = page.locator('wb-avatar[size="xs"]').first();
-    const md = page.locator('wb-avatar[size="md"]').first();
-    const xxl = page.locator('wb-avatar[size="2xl"]').first();
+    const xs = page.locator('x-avatar[size="xs"]').first();
+    const md = page.locator('x-avatar[size="md"]').first();
+    const xxl = page.locator('x-avatar[size="2xl"]').first();
 
     const [xsWidth, mdWidth, xxlWidth] = await Promise.all([
       xs.evaluate((el) => getComputedStyle(el).width),

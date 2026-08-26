@@ -7,7 +7,7 @@
 export function tags(element, options = {}) {
   const isInput = element.tagName === 'INPUT';
   const wrapper = document.createElement('div');
-  wrapper.className = 'wb-tags';
+  wrapper.className = 'x-tags';
   element.parentNode.insertBefore(wrapper, element);
   wrapper.appendChild(element);
 
@@ -16,16 +16,16 @@ export function tags(element, options = {}) {
     input.type = 'text';
     wrapper.appendChild(input);
   }
-  input.classList.add('wb-tags__input');
+  input.classList.add('x-tags__input');
 
   const tagList = document.createElement('div');
-  tagList.className = 'wb-tags__list';
+  tagList.className = 'x-tags__list';
   wrapper.appendChild(tagList);
 
   function addTag(tag) {
     if (!tag) return;
     const tagEl = document.createElement('span');
-    tagEl.className = 'wb-tags__tag';
+    tagEl.className = 'x-tags__tag';
     tagEl.textContent = tag;
     tagEl.onclick = () => {
       tagEl.remove();
@@ -41,8 +41,8 @@ export function tags(element, options = {}) {
     }
   });
   return () => {
-    wrapper.classList.remove('wb-tags');
-    input.classList.remove('wb-tags__input');
+    wrapper.classList.remove('x-tags');
+    input.classList.remove('x-tags__input');
     if (wrapper.parentNode) {
       wrapper.parentNode.insertBefore(element, wrapper);
       wrapper.remove();

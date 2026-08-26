@@ -2,14 +2,27 @@
 
 Card with collapsible/expandable content section
 
-Applies to `<article>`, and to any element carrying `x-cardexpandable`.
+## Type — decorates a semantic element
 
-## Usage
+`x-cardexpandable` is the **article behavior**. It attaches to `<article>`, the element you would have reached for anyway — there is no new tag to learn.
+
+### How to write it
 
 ```html
-<article x-cardexpandable>
+<article x-cardexpandable
+  title="What changed in 3.0"
+  content="Composition replaced inheritance: a tag maps to a behavior function that decorates the element in place, in light DOM. There is no component base class any more, and no shadow boundary to reach through."
+  lines="2"></article>
+```
+
+### On a different element
+
+Use `x-cardexpandable` when the host is not a `<article>` and you want the same behavior:
+
+```html
+<div x-cardexpandable>
   …
-</article>
+</div>
 ```
 
 ## Attributes

@@ -6,10 +6,10 @@ User profile card with avatar, name, role, and bio.
 
 | Property | Value |
 |----------|-------|
-| Custom Tag | `<wb-cardprofile>` |
+| Custom Tag | `<div x-cardprofile>` |
 | Behavior | `cardprofile` |
 | Semantic | `<article>` |
-| Root CSS Class | `wb-card wb-card--profile` |
+| Root CSS Class | `x-card x-card--profile` |
 | Composes | card structure + CSS (no base class) |
 
 ## Properties
@@ -24,56 +24,56 @@ Supports every [card property](./card.md) — that shared structure and CSS are 
 | `bio` | string | `""` | Biography text |
 | `cover` | string | `""` | Cover/banner image URL |
 
-Wrapped in `<wb-demo>`, so the live component renders below with its source shown underneath:
+Wrapped in `<div x-demo>`, so the live component renders below with its source shown underneath:
 
-<wb-demo>
-<wb-cardprofile
+<div x-demo>
+<div x-cardprofile
   name="John Doe"
   role="Software Engineer"
-  avatar="/images/avatar.jpg">
-</wb-cardprofile>
-</wb-demo>
+  avatar="https://picsum.photos/seed/avatar/200/200">
+</div>
+</div>
 
 ## Usage
 
 ### Basic Profile
 
 ```html
-<wb-cardprofile
+<div x-cardprofile
   name="John Doe"
   role="Software Engineer"
-  avatar="/images/avatar.jpg">
-</wb-cardprofile>
+  avatar="https://picsum.photos/seed/avatar/200/200">
+</div>
 ```
 
 ### With Bio and Cover
 
 ```html
-<wb-cardprofile
+<div x-cardprofile
   name="Jane Smith"
   role="Product Designer"
-  avatar="/images/jane.jpg"
-  cover="/images/cover.jpg"
+  avatar="https://picsum.photos/seed/jane/200/200"
+  cover="https://picsum.photos/seed/cover/800/500"
   bio="Passionate about creating beautiful, user-friendly interfaces.">
-</wb-cardprofile>
+</div>
 ```
 
 ## Generated Structure
 
 ```html
-<article class="wb-card wb-card--profile">
+<article class="x-card x-card--profile">
   <figure
-    class="wb-card__figure wb-card__cover"
+    class="x-card__figure x-card__cover"
     style="background-image: url(...)">
   </figure>
-  <header class="wb-card__profile-content">
+  <header class="x-card__profile-content">
     <img
-      class="wb-card__avatar"
+      class="x-card__avatar"
       src="..."
       alt="...">
-    <h3 class="wb-card__title wb-card__name">Name</h3>
-    <p class="wb-card__subtitle wb-card__role">Role</p>
-    <p class="wb-card__bio">Bio text...</p>
+    <h3 class="x-card__title x-card__name">Name</h3>
+    <p class="x-card__subtitle x-card__role">Role</p>
+    <p class="x-card__bio">Bio text...</p>
   </header>
 </article>
 ```

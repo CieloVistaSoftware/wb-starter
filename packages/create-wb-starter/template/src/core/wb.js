@@ -4,7 +4,7 @@ if (typeof window !== 'undefined' && typeof window.WB === 'undefined') {
   /** @type {any} */ (window).WB = undefined;
 }
 
-// Debug logging — silent unless localStorage['wb-debug'] names a category
+// Debug logging — silent unless localStorage['x-debug'] names a category
 // (or is '1' for everything). Was forced true|| project-wide for a while
 // ("turn the tracing on until I tell you to turn it off") but that flooded
 // the console with [WB.scan]/[WB.observe] noise unrelated to whatever was
@@ -16,7 +16,7 @@ if (typeof window !== 'undefined' && typeof window.WB === 'undefined') {
 const _wbClog = console.log.bind(console);
 const dlog = makeDlog(_wbClog);
 
-// Trace lines that only print a tag name (e.g. "wb-card") are useless for
+// Trace lines that only print a tag name (e.g. "x-card") are useless for
 // telling apart multiple instances of the same tag on one page. elLabel()
 // always includes an identifier: the element's real id if it has one,
 // otherwise a stable auto-assigned trace id (assigned once per element on
@@ -126,8 +126,8 @@ function traceMediaLoads() {
  * - $cssAPI documentation support
  * 
  * Usage:
- *   <wb-card  data-title="Hello">Content</div>
- *   <wb-card title="Hello">Content</wb-card>
+ *   <article  data-title="Hello">Content</div>
+ *   <article title="Hello">Content</article>
  *   
  *   <script type="module">
  *     import WB from './wb.js';
@@ -144,12 +144,12 @@ import { semanticPropertyMappings } from './semantic-attributes.js';
 import { makeDlog, traceStatusLabel } from './debug-trace.js';
 
 // Register Layout Custom Elements
-import '../wb-viewmodels/wb-grid.js';
-// wb-column/wb-cluster/wb-stack/wb-row/wb-search/wb-accordion are BEHAVIORS
+import '../wb-viewmodels/x-grid.js';
+// x-column/x-cluster/x-stack/x-row/x-search/x-accordion are BEHAVIORS
 // (cluster/stack/flex/searchfield/accordion), not classes that
 // `extends HTMLElement` (v3) — the extends-HTMLElement wrappers were removed
 // (#279). Mapped to their behaviors in tag-map.js / wb-lazy.js.
-import '../wb-viewmodels/wb-demo.js';
+import '../wb-viewmodels/x-demo.js';
 
 import { getConfig, setConfig } from './config.js';
 import { setupGlobalErrorHandler } from './error-logger.js';
@@ -222,11 +222,22 @@ function getAutoInjectBehavior(element) {
   // variant showed the identical unstyled background.
   if (!getConfig('autoInject') && !element.hasAttribute('variant')) return null;
 
-  // Check if candidate is already explicitly applied
-  // We don't need to check here because inject() handles duplicates.
-  // But we might want to avoid the call if we know it's there.
+  // #745: `x-{candidate}` naming the SAME behavior must NOT disqualify the
+  // element. This used to `return null` on it, on the assumption that the
+  // explicit attribute path would apply the behavior instead — it does not,
+  // so writing the attribute the docs teach turned the behavior OFF. Measured
+  // live, side by side, at 3.0.66:
+  //
+  //   <button x-button variant="outline" icon size>  -> class "", no icon
+  //   <button         variant="outline" icon size>  -> "x-button
+  //                                       x-button--md x-button--outline",
+  //                                       icon rendered
+  //
+  // Duplicate application is already impossible: inject() dedupes via the
+  // `applied`/`pending` maps, which is what the original comment here relied
+  // on. A DIFFERENT x-{behavior} still disqualifies — that check is the loop
+  // below, which correctly tests `other !== candidate`.
   const prefix = getConfig('prefix') || 'x';
-  if (element.hasAttribute(`${prefix}-${candidate}`)) return null;
   if (element.hasAttribute(candidate) && !RESERVED_ATTRIBUTES.has(candidate)) return null;
   if (element.hasAttribute(`x-${candidate}-init`)) return null;
 
@@ -238,14 +249,121 @@ function getAutoInjectBehavior(element) {
   // additive with genuinely independent modifiers (x-ripple on an
   // <article>, say) but not with another IS-A-ish behavior for the same
   // element.
+  // #763: this used to require `behaviors[other]` — i.e. the OTHER behavior had
+  // to be registered at this exact moment. Under the lazy runtime it usually is
+  // not, so the guard missed and BOTH ran: `<article x-cardportfolio>` got
+  // cardportfolio() from the attribute AND card() from autoInject, building two
+  // complete cards into one element. Reported as "showing two examples of the
+  // same thing"; input.js already documented the same race for x-search /
+  // x-password ("concentric rings") and worked around it locally.
+  //
+  // x- IS the behavior namespace, so an x- attribute that is not one of the
+  // framework's own directives names a behavior whether it has loaded yet or
+  // not. Deciding on the attribute rather than the registry makes this
+  // independent of load order, which is the only way the race actually closes.
+  const DIRECTIVES = new Set(['behavior', 'eager', 'hydrated', 'ignore', 'cloak']);
   const prefixAttr = `${prefix}-`;
   for (const attr of element.attributes) {
     if (!attr.name.startsWith(prefixAttr)) continue;
     const other = attr.name.slice(prefixAttr.length);
-    if (other !== candidate && behaviors[other]) return null;
+    if (other === candidate) continue;                 // its own attribute (#746)
+    if (DIRECTIVES.has(other) || other.endsWith('-init')) continue;
+    if (other.startsWith('as-')) continue;             // morph alias, handled elsewhere
+
+    // #765 -- John: "when autoinject is true, <article x-ripple> gets two
+    // behaviors."
+    //
+    // Two different things wear the same syntax:
+    //
+    //   REPLACEMENT  <article x-cardportfolio>  cardportfolio IS a card. Both
+    //                build a whole card into the element, so running both
+    //                renders it twice -- 67 examples did exactly that.
+    //   ADDITIVE     <article x-ripple>         ripple is not an alternative
+    //                to card, it decorates one. Blocking autoInject here means
+    //                asking for a card with a ripple and getting only a ripple.
+    //
+    // A replacement is a member of the tag behavior's own family, which the
+    // naming already encodes: card -> cardportfolio, cardimage, cardhero.
+    // Anything else is a modifier and stacks. Checked against every example in
+    // the catalogue: 17 family pairs, 49 modifier pairs, no ambiguous ones.
+    if (other.startsWith(candidate)) return null;
   }
 
   return candidate;
+}
+
+/**
+ * #770: the declared-attribute applier.
+ *
+ * The schema index (data/schema-index.json) already lists every behavior's
+ * properties and its baseClass. Enum and boolean properties render as a
+ * modifier class -- exactly what button(), input() and select() write by hand
+ * -- so do it once, for every behavior, instead of 101 times or not at all.
+ *
+ * Loaded lazily and cached. If it has not arrived yet the call is a no-op and
+ * the next scan applies it: a missing modifier class is a cosmetic delay, and
+ * blocking every injection on a fetch is not worth that.
+ */
+let schemaIndex = null;
+let schemaIndexPending = null;
+
+function loadSchemaIndex() {
+  if (schemaIndex || schemaIndexPending) return schemaIndexPending;
+  if (typeof fetch !== 'function') return null;
+  // schemaPath points at src/wb-models; the index sits at the site root in
+  // data/. Resolving relative to the DOCUMENT is what works under both the
+  // site root and /wb-starter/ on Pages, and cannot throw the way an
+  // unvalidated base can.
+  let url;
+  try {
+    url = new URL('data/schema-index.json', document.baseURI).href;
+  } catch {
+    schemaIndex = {};
+    return null;
+  }
+  schemaIndexPending = fetch(url)
+    .then((r) => (r.ok ? r.json() : null))
+    .then((idx) => {
+      schemaIndex = {};
+      for (const sc of (idx && idx.schemas) || []) {
+        if (sc && sc.name) schemaIndex[sc.name] = sc;
+      }
+      return schemaIndex;
+    })
+    .catch(() => { schemaIndex = {}; return schemaIndex; });
+  return schemaIndexPending;
+}
+
+/** `iconPosition` -> `icon-position`, which is what the DOM carries. */
+function attrNameFor(prop) {
+  return prop.replace(/[A-Z]/g, (c) => '-' + c.toLowerCase());
+}
+
+function applyDeclaredModifiers(element, behaviorName) {
+  if (!schemaIndex) { loadSchemaIndex(); return; }
+  const schema = schemaIndex[behaviorName];
+  const props = schema && schema.properties;
+  if (!props) return;
+
+  const base = schema.baseClass || `wb-${behaviorName}`;
+  for (const [prop, def] of Object.entries(props)) {
+    if (!def || typeof def !== 'object') continue;
+    const attr = attrNameFor(prop);
+    const raw = element.getAttribute(attr) ?? element.getAttribute(prop);
+    if (raw === null) continue;
+
+    if (Array.isArray(def.enum) && def.enum.length) {
+      // Only a declared value becomes a class. A typo must not mint a class
+      // that silently matches no CSS and looks like it worked.
+      if (!def.enum.includes(raw)) continue;
+      element.classList.add(`${base}--${raw}`);
+    } else if (def.type === 'boolean') {
+      // "false"/"0" mean OFF (#747): a bare presence check reads the string
+      // "false" as true, which is the opposite of what the markup says.
+      if (raw === 'false' || raw === '0') continue;
+      element.classList.add(`${base}--${attr}`);
+    }
+  }
 }
 
 // Track applied behaviors for cleanup
@@ -301,7 +419,7 @@ const WB = {
     // wb-* tag behavior loop (line ~696), the semantic-property loop
     // (~714), and the generic x-behavior dispatch loop (~751) all call
     // WB.inject() directly and never went through that check -- so
-    // <wb-chip x-ignore> (or any x-ignore'd element reached by those
+    // <span x-chip x-ignore> (or any x-ignore'd element reached by those
     // unconditional loops) still got its behavior injected despite the
     // attribute (found auditing #521, alongside the identical gap in
     // schema-builder.js's processElement()). WB.inject() is the one real
@@ -351,6 +469,29 @@ const WB = {
       if (result instanceof Promise) {
         cleanup = await result;
       }
+
+      // #770: apply the attributes the schema DECLARES, generically.
+      //
+      // 386 of 633 declared attributes across 101 behaviors did nothing: they
+      // were in the schema, generated into the docs, written in the examples,
+      // and read by no one. Every fix so far was one behavior at a time
+      // (#697 fieldset, #751 form, #754 input) because each was reported one
+      // at a time.
+      //
+      // Enum and boolean properties have a mechanical rendering -- the
+      // modifier class -- which button/input/select already hand-roll
+      // identically. Doing it here means a behavior only writes code for what
+      // is genuinely bespoke, and `size`/`variant`/`position` work everywhere
+      // by default.
+      //
+      // Deliberately NOT applied: string and number properties. Those are
+      // content or configuration (title="Trail conditions"), and turning them
+      // into class names produces garbage. They still need real handling.
+      // Wrapped: this is a convenience layer, not the behavior. If it throws
+      // -- a bad schema, a URL that will not resolve -- injection must still
+      // complete. Left unguarded it took the whole behavior down with it, and
+      // the sweep went from 104 failures to 127.
+      try { applyDeclaredModifiers(element, behaviorName); } catch { /* never break inject */ }
 
       // Track for cleanup
       elementBehaviors.push({ name: behaviorName, cleanup });
@@ -435,7 +576,7 @@ const WB = {
     // widen this to "every tag with a behavior" again without reading each
     // new tag's behavior source first.
     //
-    // wb-modal's "Open Modal" trigger (#305 -- the dialog schema's $view
+    // x-modal's "Open Modal" trigger (#305 -- the dialog schema's $view
     // unconditionally rebuilt the trigger's children before dialog.js's
     // TRIGGER mode ever got a chance to attach its click handler; gated on
     // the modal-title/modal-content attributes, not just the tag, since
@@ -445,7 +586,7 @@ const WB = {
       return;
     }
 
-    // wb-demo (#312 -- pre.js's "view source" toggle silently stopped
+    // x-demo (#312 -- pre.js's "view source" toggle silently stopped
     // responding whenever WB.scan()'s schema loop raced WBDemo.
     // connectedCallback(), because buildStructure()'s empty-$view fallback
     // re-parses element.innerHTML as a string, producing a listener-less
@@ -454,7 +595,7 @@ const WB = {
       return;
     }
 
-    // wb-details (#305/#336 -- schema's "content" node type discarded the
+    // x-details (#305/#336 -- schema's "content" node type discarded the
     // element's real children into an empty div, which details() then
     // wrapped as if it were the real content -- summary duplicated, real
     // answer text gone).
@@ -462,13 +603,13 @@ const WB = {
       return;
     }
 
-    // wb-cluster/wb-stack/wb-row/wb-search/wb-accordion are owned entirely
+    // x-cluster/x-stack/x-row/x-search/x-accordion are owned entirely
     // by their behaviors (cluster/stack/flex/searchfield/accordion --
     // tag-map.js) since their `extends HTMLElement` wrapper classes were
     // removed (#279). _detectSchemaName() below derives a schema name from
     // tag-map.js's BEHAVIOR name regardless of whether a schema.json
     // actually exists for it -- for these 5 tags that's either a dead fetch
-    // that just 404s (confirmed live: "flex.schema.json 404" from <wb-row>)
+    // that just 404s (confirmed live: "flex.schema.json 404" from <div x-flex>)
     // or a REAL schema.json that silently double-processes the element
     // (stack.schema.json).
     if (element.tagName === 'WB-CLUSTER' || element.tagName === 'WB-STACK' ||
@@ -477,14 +618,14 @@ const WB = {
       return;
     }
 
-    // wb-article/wb-articles: article.js now builds their entire structure
+    // x-article/x-articles: article.js now builds their entire structure
     // itself, unconditionally (same self-sufficient pattern as the card
     // family below) -- matches schema-builder.js's own SCHEMA_EXCLUDED_TAGS.
     if (element.tagName === 'WB-ARTICLE' || element.tagName === 'WB-ARTICLES') {
       return;
     }
 
-    // wb-select: semantics/select.js now builds a REAL <select>/<option>
+    // x-select: semantics/select.js now builds a REAL <select>/<option>
     // tree for this tag itself (self-sufficient) -- matches
     // schema-builder.js's own SCHEMA_EXCLUDED_TAGS. Schema's old $view
     // built a fake <button>/<div>/<ul> widget with no real <select>
@@ -493,7 +634,7 @@ const WB = {
       return;
     }
 
-    // wb-card*: every card-family function (card.js) owns its DOM
+    // x-card*: every card-family function (card.js) owns its DOM
     // completely (unconditional element.innerHTML='' + full rebuild, none
     // schema-dependent -- confirmed by reading every one of the 19 card
     // functions). loadSchemaFile()'s async fetch resolving AFTER the real
@@ -507,7 +648,7 @@ const WB = {
       return;
     }
 
-    // wb-skeleton: skeleton.schema.json has a real, non-empty $view; skeleton()
+    // x-skeleton: skeleton.schema.json has a real, non-empty $view; skeleton()
     // (feedback.js) unconditionally rebuilds via element.innerHTML='' with no
     // schemaProcessed-aware cooperation — same latent race as the card family,
     // found auditing schemas during this same investigation (not a live
@@ -516,33 +657,33 @@ const WB = {
       return;
     }
 
-    // wb-dialog (#387 audit, docs/audits/HOST-CHILD-DISPATCH-AUDIT.md): the
+    // x-dialog (#387 audit, docs/audits/HOST-CHILD-DISPATCH-AUDIT.md): the
     // real interactive modal dialog.js (semantics/dialog.js) builds is
     // ALREADY a genuine native <dialog>+showModal() — created fresh via
     // document.createElement('dialog') and appended to document.body on
-    // trigger, never written into the <wb-dialog> host's own innerHTML. So
+    // trigger, never written into the <dialog> host's own innerHTML. So
     // dialog.schema.json's $view (div/header/h2/button/main/footer built
     // straight into the host) can never race a host-owned rebuild the way
     // card/skeleton do — but it also never gets USED: it's dead, stale
     // markup that mismatches what dialog.js actually delivers, currently
     // latent only because no schema-builder-driven page (pages/*.html) uses
-    // <wb-dialog> yet (only wb-lazy.js demo pages do, which have zero schema
+    // <dialog> yet (only wb-lazy.js demo pages do, which have zero schema
     // support). Excluding here is independent of, and does not resolve, the
-    // separate "does wb-dialog eagerly deliver a real <dialog> tag"
+    // separate "does x-dialog eagerly deliver a real <dialog> tag"
     // semanticElement.tagName question tracked as a known violation in
     // tests/regression/semantic-element-fidelity.spec.ts (dialog.js creates
     // the real <dialog> lazily on click by design, not eagerly on connect —
     // that's a deliberate maintainer-decision-pending question, not this
     // fix). This fix only stops schema from ever writing its stale div-based
-    // chrome into a live <wb-dialog> host. Matches schema-builder.js's own
+    // chrome into a live <dialog> host. Matches schema-builder.js's own
     // SCHEMA_EXCLUDED_TAGS.
     if (element.tagName === 'WB-DIALOG') {
       return;
     }
 
-    // wb-fix-card (#365 audit): WBFixCard (fix-card.js) is a WBCard
+    // x-fix-card (#365 audit): WBFixCard (fix-card.js) is a WBCard
     // subclass, self-sufficient in exactly the same way as the rest of
-    // wb-card* -- unconditionally rebuilds via render() whenever `.data` is
+    // x-card* -- unconditionally rebuilds via render() whenever `.data` is
     // set, never expects schema's $view to have pre-built anything (which
     // is empty anyway). tagName.startsWith('WB-CARD') below does NOT catch
     // this tag (it's "WB-FIX-CARD", not "WB-CARD..."), so it needs its own
@@ -603,7 +744,7 @@ const WB = {
   _detectSchemaName(element) {
     const tagName = element.tagName.toLowerCase();
     
-    // <wb-card> → card (using tag-map.js)
+    // <article> → card (using tag-map.js)
     if (tagName.startsWith('wb-')) {
       const behavior = getElementBehavior(tagName);
       return behavior || null;
@@ -640,7 +781,7 @@ const WB = {
       root.querySelectorAll('*').forEach(el => {
         const htmlEl = /** @type {HTMLElement} */ (el);
         const tag = htmlEl.tagName.toLowerCase();
-        if (tag.startsWith('wb-') && tag !== 'wb-view') {
+        if (tag.startsWith('wb-') && tag !== 'x-view') {
           dlog('scan', `[WB.scan] Found wb-* element: ${elLabel(htmlEl)}`);
           // WB.processSchema is async-capable; collect the promise and allow it to load schemas on-demand
           try {
@@ -684,7 +825,7 @@ const WB = {
 
     // #305: wb-* custom tags that have a REAL behavior but deliberately NO
     // schema (schema-builder.js's own detectSchema() explicitly excludes
-    // wb-modal/wb-stack/wb-grid/wb-accordion/etc — "owned by custom elements
+    // x-modal/x-stack/x-grid/x-accordion/etc — "owned by custom elements
     // / behaviors / CSS", #174) never got their behavior invoked at all: the
     // schema-processing loop above is the ONLY wb-* handling scan() has, and
     // it silently no-ops for these tags (correctly skipping the schema
@@ -697,16 +838,16 @@ const WB = {
     root.querySelectorAll('*').forEach(el => {
       const htmlEl = /** @type {HTMLElement} */ (el);
       const tag = htmlEl.tagName.toLowerCase();
-      // wb-demo is excluded here too: WBDemo's own connectedCallback (#312)
+      // x-demo is excluded here too: WBDemo's own connectedCallback (#312)
       // lazily defers the 'demo' behavior via IntersectionObserver so
       // off-screen demo blocks don't all build eagerly on page load. This
       // unconditional injection loop would otherwise call WB.inject(el,
-      // 'demo') for every wb-demo the instant scan() runs — WB.inject()'s
+      // 'demo') for every x-demo the instant scan() runs — WB.inject()'s
       // own "already applied" guard only fires for calls that went THROUGH
       // WB.inject() (this path bypasses that, since connectedCallback calls
       // demo() directly), so this loop would win the race against the lazy
       // observer for literally every block, defeating the deferral entirely.
-      if (tag.startsWith('wb-') && tag !== 'wb-view' && tag !== 'wb-demo') {
+      if (tag.startsWith('wb-') && tag !== 'x-view' && tag !== 'x-demo') {
         const behaviorName = getElementBehavior(tag);
         if (behaviorName && behaviors[behaviorName]) {
           promises.push(WB.inject(htmlEl, behaviorName));
@@ -742,7 +883,7 @@ const WB = {
       // because `pre`/`code` are ALSO in nativeMap, and autoInject used to
       // leak `true` everywhere (#328) regardless of a page's real config —
       // so the auto-inject path independently caught every <pre>/<code> tag
-      // and papered over this gap. Fixing #328 exposed it: every wb-demo
+      // and papered over this gap. Fixing #328 exposed it: every x-demo
       // code panel on the main SPA (autoInject correctly off there) lost its
       // syntax highlighting entirely, since nothing else was left to invoke
       // pre()/code() for elements tagged only via x-behavior.
@@ -752,7 +893,7 @@ const WB = {
       // call, where `pre` (the exact <pre x-behavior="pre"> just created)
       // IS root. That left pre.js's behavior never invoked, so the code
       // panel never got its `.x-pre` class/wrapper (pre.css's overflow-x:
-      // auto), and its un-wrapped raw-source width fed back into wb-demo's
+      // auto), and its un-wrapped raw-source width fed back into x-demo's
       // own `width: fit-content` sizing (§7) — confirmed live: every
       // single-item demo's outer box was sized to its RAW CODE TEXT's
       // unwrapped width, not the rendered widget it's supposed to hug.
@@ -848,12 +989,12 @@ const WB = {
           // Only skip if explicitly ignored
           if (!htmlEl.hasAttribute('x-ignore')) {
             // A semantic <article> auto-injects as a card and claims its own
-            // <header>/<footer> (rendered as wb-card__header / wb-card__footer).
+            // <header>/<footer> (rendered as x-card__header / x-card__footer).
             // Don't let the generic header/footer behaviors hijack a header or
-            // footer that lives inside an <article>/.wb-card — that produced a
-            // racing wb-header instead of wb-card__header. (#159)
+            // footer that lives inside an <article>/.x-card — that produced a
+            // racing x-header instead of x-card__header. (#159)
             if ((behavior === 'header' || behavior === 'footer') &&
-                htmlEl.parentElement && htmlEl.parentElement.closest('article, .wb-card')) {
+                htmlEl.parentElement && htmlEl.parentElement.closest('article, .x-card')) {
               return;
             }
             // We don't check for other attributes here anymore.
@@ -913,7 +1054,7 @@ const WB = {
           dlog('observe', `[WB.observe] Processing added node: ${elLabel(el)}`);
 
           // v3.0: Process wb-* tags through schema builder
-          if (useSchemas && tag.startsWith('wb-') && tag !== 'wb-view') {
+          if (useSchemas && tag.startsWith('wb-') && tag !== 'x-view') {
             dlog('observe', `[WB.observe] Found wb-* element in mutation: ${elLabel(el)}`);
             WB.processSchema(el);
           }
@@ -988,7 +1129,7 @@ const WB = {
             el.querySelectorAll('*').forEach(descendant => {
               const descEl = /** @type {HTMLElement} */ (descendant);
               const elTag = descEl.tagName.toLowerCase();
-              if (elTag.startsWith('wb-') && elTag !== 'wb-view') {
+              if (elTag.startsWith('wb-') && elTag !== 'x-view') {
                 WB.processSchema(descEl);
               }
             });

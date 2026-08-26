@@ -3,7 +3,7 @@
  * ============================================================================
  */
 
-wb-navbar, [x-navbar]{
+x-navbar, [x-navbar]{
   position: sticky;
   top: 0;
   left: 0;
@@ -31,7 +31,7 @@ wb-navbar, [x-navbar]{
    SCROLL STATE - Enhanced shadow on scroll
    ============================================================================ */
 
-wb-navbar.scrolled, [x-navbar].scrolled{
+x-navbar.scrolled, [x-navbar].scrolled{
   background: rgba(15, 23, 42, 0.85);
   backdrop-filter: blur(20px);
   -webkit-backdrop-filter: blur(20px);
@@ -43,8 +43,8 @@ wb-navbar.scrolled, [x-navbar].scrolled{
    BRAND SECTION - Logo + Text
    ============================================================================ */
 
-wb-navbar a[href="#home"], [x-navbar] a[href="#home"],
-wb-navbar a:first-of-type, [x-navbar] a:first-of-type{
+x-navbar a[href="#home"], [x-navbar] a[href="#home"],
+x-navbar a:first-of-type, [x-navbar] a:first-of-type{
   display: flex;
   align-items: center;
   gap: 0.75rem;
@@ -57,22 +57,22 @@ wb-navbar a:first-of-type, [x-navbar] a:first-of-type{
   flex-shrink: 0;
 }
 
-wb-navbar a[href="#home"] img, [x-navbar] a[href="#home"] img,
-wb-navbar a:first-of-type img, [x-navbar] a:first-of-type img{
+x-navbar a[href="#home"] img, [x-navbar] a[href="#home"] img,
+x-navbar a:first-of-type img, [x-navbar] a:first-of-type img{
   width: 40px;
   height: 40px;
   border-radius: 8px;
   transition: all 0.3s ease;
 }
 
-wb-navbar a[href="#home"]:hover, [x-navbar] a[href="#home"]:hover,
-wb-navbar a:first-of-type:hover, [x-navbar] a:first-of-type:hover{
+x-navbar a[href="#home"]:hover, [x-navbar] a[href="#home"]:hover,
+x-navbar a:first-of-type:hover, [x-navbar] a:first-of-type:hover{
   color: #6366f1;
   transform: translateY(-2px);
 }
 
-wb-navbar a[href="#home"]:hover img, [x-navbar] a[href="#home"]:hover img,
-wb-navbar a:first-of-type:hover img, [x-navbar] a:first-of-type:hover img{
+x-navbar a[href="#home"]:hover img, [x-navbar] a[href="#home"]:hover img,
+x-navbar a:first-of-type:hover img, [x-navbar] a:first-of-type:hover img{
   box-shadow: 0 0 20px rgba(99, 102, 241, 0.5);
   transform: scale(1.05);
 }
@@ -81,7 +81,7 @@ wb-navbar a:first-of-type:hover img, [x-navbar] a:first-of-type:hover img{
    NAV LINKS CONTAINER
    ============================================================================ */
 
-wb-navbar > div, [x-navbar] > div{
+x-navbar > div, [x-navbar] > div{
   display: flex;
   align-items: center;
   gap: 0.5rem;
@@ -93,7 +93,7 @@ wb-navbar > div, [x-navbar] > div{
    NAV LINKS - Animated Underline
    ============================================================================ */
 
-wb-navbar a:not(:first-of-type), [x-navbar] a:not(:first-of-type){
+x-navbar a:not(:first-of-type), [x-navbar] a:not(:first-of-type){
   position: relative;
   color: rgba(255, 255, 255, 0.8);
   text-decoration: none;
@@ -105,7 +105,7 @@ wb-navbar a:not(:first-of-type), [x-navbar] a:not(:first-of-type){
 }
 
 /* Animated underline */
-wb-navbar a:not(:first-of-type)::after, [x-navbar] a:not(:first-of-type)::after{
+x-navbar a:not(:first-of-type)::after, [x-navbar] a:not(:first-of-type)::after{
   content: '';
   position: absolute;
   bottom: 0;
@@ -116,21 +116,21 @@ wb-navbar a:not(:first-of-type)::after, [x-navbar] a:not(:first-of-type)::after{
   transition: left 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
 }
 
-wb-navbar a:not(:first-of-type):hover, [x-navbar] a:not(:first-of-type):hover{
+x-navbar a:not(:first-of-type):hover, [x-navbar] a:not(:first-of-type):hover{
   color: #fff;
   transform: translateY(-2px);
 }
 
-wb-navbar a:not(:first-of-type):hover::after, [x-navbar] a:not(:first-of-type):hover::after{
+x-navbar a:not(:first-of-type):hover::after, [x-navbar] a:not(:first-of-type):hover::after{
   left: 0;
 }
 
 /* Active state for second link (Home) */
-wb-navbar a:nth-of-type(2), [x-navbar] a:nth-of-type(2){
+x-navbar a:nth-of-type(2), [x-navbar] a:nth-of-type(2){
   color: #6366f1;
 }
 
-wb-navbar a:nth-of-type(2)::after, [x-navbar] a:nth-of-type(2)::after{
+x-navbar a:nth-of-type(2)::after, [x-navbar] a:nth-of-type(2)::after{
   left: 0;
 }
 
@@ -139,7 +139,7 @@ wb-navbar a:nth-of-type(2)::after, [x-navbar] a:nth-of-type(2)::after{
    ============================================================================ */
 
 .navbar-cta,
-wb-navbar button, [x-navbar] button{
+x-navbar button, [x-navbar] button{
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -165,7 +165,7 @@ wb-navbar button, [x-navbar] button{
 
 /* Hover state - scale + glow */
 .navbar-cta:hover,
-wb-navbar button:hover, [x-navbar] button:hover{
+x-navbar button:hover, [x-navbar] button:hover{
   transform: translateY(-3px) scale(1.05);
   box-shadow: 0 8px 25px rgba(99, 102, 241, 0.6),
               inset 0 1px 0 rgba(255, 255, 255, 0.3),
@@ -174,14 +174,14 @@ wb-navbar button:hover, [x-navbar] button:hover{
 
 /* Active/Click state */
 .navbar-cta:active,
-wb-navbar button:active, [x-navbar] button:active{
+x-navbar button:active, [x-navbar] button:active{
   transform: translateY(-1px) scale(1.02);
   box-shadow: 0 4px 15px rgba(99, 102, 241, 0.4);
 }
 
 /* Animated background shimmer */
 .navbar-cta::before,
-wb-navbar button::before, [x-navbar] button::before{
+x-navbar button::before, [x-navbar] button::before{
   content: '';
   position: absolute;
   top: 0;
@@ -193,7 +193,7 @@ wb-navbar button::before, [x-navbar] button::before{
 }
 
 .navbar-cta:hover::before,
-wb-navbar button:hover::before, [x-navbar] button:hover::before{
+x-navbar button:hover::before, [x-navbar] button:hover::before{
   left: 100%;
 }
 
@@ -201,7 +201,7 @@ wb-navbar button:hover::before, [x-navbar] button:hover::before{
    RIGHT SIDE CONTAINER
    ============================================================================ */
 
-wb-navbar > div:last-of-type, [x-navbar] > div:last-of-type{
+x-navbar > div:last-of-type, [x-navbar] > div:last-of-type{
   display: flex;
   align-items: center;
   gap: 1rem;
@@ -214,18 +214,18 @@ wb-navbar > div:last-of-type, [x-navbar] > div:last-of-type{
    ============================================================================ */
 
 @media (max-width: 768px) {
-  wb-navbar, [x-navbar]{
+  x-navbar, [x-navbar]{
     padding: 0.75rem 1rem;
     gap: 1rem;
   }
   
-  wb-navbar a:not(:first-of-type), [x-navbar] a:not(:first-of-type){
+  x-navbar a:not(:first-of-type), [x-navbar] a:not(:first-of-type){
     padding: 0.4rem 0.75rem;
     font-size: 0.85rem;
   }
   
   .navbar-cta,
-  wb-navbar button, [x-navbar] button{
+  x-navbar button, [x-navbar] button{
     padding: 0.6rem 1.2rem;
     font-size: 0.85rem;
   }
@@ -235,7 +235,7 @@ wb-navbar > div:last-of-type, [x-navbar] > div:last-of-type{
    BRAND NAME & TAGLINE
    ============================================================================ */
 
-wb-navbar [data-brand]::after, [x-navbar] [data-brand]::after{
+x-navbar [data-brand]::after, [x-navbar] [data-brand]::after{
   content: attr(data-tagline);
   display: block;
   font-size: 0.65rem;
@@ -251,11 +251,11 @@ wb-navbar [data-brand]::after, [x-navbar] [data-brand]::after{
    ============================================================================ */
 
 @supports not (backdrop-filter: blur(1px)) {
-  wb-navbar, [x-navbar]{
+  x-navbar, [x-navbar]{
     background: rgba(15, 23, 42, 0.95);
   }
   
-  wb-navbar.scrolled, [x-navbar].scrolled{
+  x-navbar.scrolled, [x-navbar].scrolled{
     background: rgba(15, 23, 42, 0.98);
   }
 }

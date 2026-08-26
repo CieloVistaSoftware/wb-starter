@@ -6,12 +6,12 @@
  * -----------------------------------------------------------------------------
  */
 
-.wb-otp {
+.x-otp {
   display: flex;
   gap: 0.4rem;
 }
 
-.wb-otp input {
+.x-otp input {
   width: 2.5rem;
   height: 2.5rem;
   text-align: center;

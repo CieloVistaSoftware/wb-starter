@@ -2,12 +2,12 @@
  * Header Behavior Styles
  */
 
-/* #448: `wb-header` TAG selector added alongside the `.wb-header` class --
-   header() skips adding `.wb-header` only for a literal <wb-header> host; a
+/* #448: `x-header` TAG selector added alongside the `.x-header` class --
+   header() skips adding `.x-header` only for a literal <header> host; a
    native <header> host (autoInject) still gets the class, and still needs
    it selected here. */
-wb-header,
-.wb-header {
+x-header,
+.x-header {
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -18,7 +18,7 @@ wb-header,
      picked up this class via tag-map's native auto-inject and overflowed
      past its own box into the next element. That specific collision is
      fixed at the source (x-ignore opts a plain, non-navbar <header> out of
-     this class entirely), but a real <wb-header> with a long title/subtitle
+     this class entirely), but a real <header> with a long title/subtitle
      would hit the exact same clipping with a fixed height. */
   min-height: 60px;
   background: var(--bg-primary);
@@ -41,27 +41,27 @@ wb-header,
   font-size: inherit;
 }
 
-.wb-header--sticky {
+.x-header--sticky {
   position: sticky;
   top: 0;
   z-index: 100;
 }
 
-.wb-header__left,
-.wb-header__right {
+.x-header__left,
+.x-header__right {
   display: flex;
   align-items: center;
   gap: 1rem;
 }
 
-.wb-header__center {
+.x-header__center {
   flex: 1;
   display: flex;
   align-items: center;
   justify-content: center;
 }
 
-.wb-header__logo {
+.x-header__logo {
   display: flex;
   align-items: center;
   gap: 0.5rem;
@@ -71,27 +71,27 @@ wb-header,
   font-size: 1.1rem;
 }
 
-.wb-header__logo:hover {
+.x-header__logo:hover {
   color: var(--primary);
 }
 
-.wb-header__icon {
+.x-header__icon {
   font-size: 1.5rem;
   line-height: 1;
 }
 
-.wb-header__title {
+.x-header__title {
   font-weight: 600;
   color: var(--text-primary);
 }
 
-.wb-header__subtitle {
+.x-header__subtitle {
   font-size: 0.875rem;
   color: var(--text-muted);
   margin-left: 0.5rem;
 }
 
-.wb-header__subtitle::before {
+.x-header__subtitle::before {
   content: "·";
   margin-right: 0.5rem;
   color: var(--text-muted);
@@ -99,12 +99,12 @@ wb-header,
 
 /* Responsive */
 @media (max-width: 768px) {
-  wb-header,
-  .wb-header {
+  x-header,
+  .x-header {
     padding: 0 1rem;
   }
   
-  .wb-header__subtitle {
+  .x-header__subtitle {
     display: none;
   }
 }

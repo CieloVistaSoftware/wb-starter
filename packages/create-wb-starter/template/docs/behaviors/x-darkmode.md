@@ -6,7 +6,7 @@ Forces a theme on an element (or the whole page), independent of the global them
 - **Usage:** `[x-darkmode]`
 
 ## Description
-Distinct from `wb-themecontrol` (the global theme-picker dropdown, persisted to localStorage) — `x-darkmode` scopes a *forced* theme to one element, ignoring whatever the global theme currently is. Useful for demoing "this card is always dark" regardless of the page's own theme.
+Distinct from `x-themecontrol` (the global theme-picker dropdown, persisted to localStorage) — `x-darkmode` scopes a *forced* theme to one element, ignoring whatever the global theme currently is. Useful for demoing "this card is always dark" regardless of the page's own theme.
 
 ## Attributes
 | Attribute | Default | Description |

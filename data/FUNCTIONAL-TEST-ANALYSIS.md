@@ -81,7 +81,7 @@ Components needing hover tests:
   "setup": "<span data-wb=\"tooltip\" data-tooltip=\"Help text\">Hover me</span>",
   "action": "hover",
   "expect": {
-    "selector": ".wb-tooltip",
+    "selector": ".x-tooltip",
     "visible": true
   }
 }
@@ -103,7 +103,7 @@ Dialogs and modals need focus trap testing:
   "steps": [
     { "action": "click" },
     { "action": "press", "key": "Tab" },
-    { "expect": { "focused": ".wb-dialog button:first-child" } }
+    { "expect": { "focused": ".x-dialog button:first-child" } }
   ]
 }
 ```
@@ -150,10 +150,10 @@ Many components define keyboard in schema but don't test it.
 {
   "name": "ArrowRight moves to next tab",
   "setup": "<div data-wb=\"tabs\">...</div>",
-  "precondition": { "focused": ".wb-tabs__tab:first-child" },
+  "precondition": { "focused": ".x-tabs__tab:first-child" },
   "key": "ArrowRight",
   "expect": {
-    "focused": ".wb-tabs__tab:nth-child(2)"
+    "focused": ".x-tabs__tab:nth-child(2)"
   }
 }
 ```
@@ -180,7 +180,7 @@ Components that should close on outside click:
   "action": "click",
   "selector": "#outside",
   "expect": {
-    "selector": ".wb-dropdown-menu",
+    "selector": ".x-dropdown-menu",
     "visible": false
   }
 }

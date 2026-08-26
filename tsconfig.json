@@ -1,0 +1,46 @@
+{
+  "//": [
+    "Issue #840. This file exists for ONE reason: @typescript-eslint/no-floating-promises",
+    "needs type information, and type information needs a real TS project.",
+    "",
+    "It is NOT here because the compiler finds unawaited promises. It does not.",
+    "Verified: `tsc --noEmit --strict` on a file containing both a floating async",
+    "call and a genuine type error reports ONLY the type error. Floating promises are",
+    "invisible to tsc at every strictness level. The lint rule is the thing that",
+    "catches them; this config is just the fuel it runs on.",
+    "",
+    "Scope is deliberately tests/**/*.ts only. jsconfig.json still governs the .js",
+    "source tree; widening type-aware linting to src/ is a separate, much larger job.",
+    "The 149-vs-66 unawaited WB.scan() split that motivated #840 was entirely in tests.",
+    "",
+    "strict is OFF on purpose. Turning it on would bury the floating-promise signal",
+    "under thousands of unrelated null/implicit-any errors on 546 never-checked test",
+    "files. no-floating-promises does not need strict. Tighten later, from a green base."
+  ],
+  "compilerOptions": {
+    "target": "ES2022",
+    "module": "ESNext",
+    "moduleResolution": "bundler",
+    "lib": ["ES2022", "DOM", "DOM.Iterable"],
+    "types": ["node"],
+    "allowJs": true,
+    "checkJs": false,
+    "noEmit": true,
+    "strict": false,
+    "skipLibCheck": true,
+    "resolveJsonModule": true,
+    "esModuleInterop": true,
+    "allowSyntheticDefaultImports": true,
+    "allowImportingTsExtensions": true,
+    "forceConsistentCasingInFileNames": true
+  },
+  "include": ["tests/**/*.ts", "global.d.ts"],
+  "exclude": [
+    "node_modules",
+    "dist",
+    "build",
+    "archive",
+    "test-results",
+    "playwright-report"
+  ]
+}

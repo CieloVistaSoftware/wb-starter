@@ -2,14 +2,28 @@
 
 Card with featured image and optional title/subtitle
 
-Applies to `<article>`, and to any element carrying `x-cardimage`.
+## Type — decorates a semantic element
 
-## Usage
+`x-cardimage` is the **article behavior**. It attaches to `<article>`, the element you would have reached for anyway — there is no new tag to learn.
+
+### How to write it
 
 ```html
-<article x-cardimage>
+<article x-cardimage
+  src="https://picsum.photos/seed/harbour/480/300"
+  alt="Fishing boats at the harbour wall"
+  title="Harbour at first light"
+  caption="Shot on the 6am walk-around."></article>
+```
+
+### On a different element
+
+Use `x-cardimage` when the host is not a `<article>` and you want the same behavior:
+
+```html
+<div x-cardimage>
   …
-</article>
+</div>
 ```
 
 ## Attributes

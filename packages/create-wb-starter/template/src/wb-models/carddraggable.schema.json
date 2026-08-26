@@ -4,13 +4,13 @@
   "title": "Draggable Card",
   "description": "Card that can be dragged around the page",
   "schemaFor": "carddraggable",
-  "baseClass": "wb-card-draggable",
+  "baseClass": "x-card-draggable",
   "semanticElement": {
     "tagName": "article",
     "implicitRole": "article"
   },
   "compliance": {
-    "baseClass": "wb-card-draggable",
+    "baseClass": "x-card-draggable",
     "supportLevel": "stable",
     "accessibility": "high"
   },
@@ -57,7 +57,7 @@
         "elevated"
       ],
       "default": "default",
-      "appliesClass": "wb-card-draggable--{{value}}"
+      "appliesClass": "x-card-draggable--{{value}}"
     }
   },
   "$view": [
@@ -112,23 +112,23 @@
     }
   },
   "$cssAPI": {
-    "--wb-card-draggable-padding": {
+    "--x-card-draggable-padding": {
       "default": "1rem",
       "description": "Card padding"
     },
-    "--wb-card-draggable-radius": {
+    "--x-card-draggable-radius": {
       "default": "8px",
       "description": "Border radius"
     },
-    "--wb-card-draggable-handle-cursor": {
+    "--x-card-draggable-handle-cursor": {
       "default": "grab",
       "description": "Handle cursor"
     },
-    "--wb-card-draggable-dragging-opacity": {
+    "--x-card-draggable-dragging-opacity": {
       "default": "0.8",
       "description": "Opacity while dragging"
     },
-    "--wb-card-draggable-dragging-shadow": {
+    "--x-card-draggable-dragging-shadow": {
       "default": "0 8px 24px rgba(0,0,0,0.2)",
       "description": "Shadow while dragging"
     }
@@ -158,16 +158,16 @@
   },
   "test": {
     "setup": [
-      "<wb-carddraggable>Basic carddraggable content</wb-carddraggable>",
-      "<wb-carddraggable constrain=\"none\">constrain=none</wb-carddraggable>",
-      "<wb-carddraggable constrain=\"parent\">constrain=parent</wb-carddraggable>",
-      "<wb-carddraggable constrain=\"viewport\">constrain=viewport</wb-carddraggable>",
-      "<wb-carddraggable axis=\"both\">axis=both</wb-carddraggable>",
-      "<wb-carddraggable axis=\"x\">axis=x</wb-carddraggable>",
-      "<wb-carddraggable axis=\"y\">axis=y</wb-carddraggable>",
-      "<wb-carddraggable variant=\"default\">variant=default</wb-carddraggable>",
-      "<wb-carddraggable title=\"Test Title\">With title attribute</wb-carddraggable>",
-      "<wb-card-draggable title=\"Drag Me\">Content</wb-card-draggable>"
+      "<div x-carddraggable>Basic carddraggable content</div>",
+      "<div x-carddraggable constrain=\"none\">constrain=none</div>",
+      "<div x-carddraggable constrain=\"parent\">constrain=parent</div>",
+      "<div x-carddraggable constrain=\"viewport\">constrain=viewport</div>",
+      "<div x-carddraggable axis=\"both\">axis=both</div>",
+      "<div x-carddraggable axis=\"x\">axis=x</div>",
+      "<div x-carddraggable axis=\"y\">axis=y</div>",
+      "<div x-carddraggable variant=\"default\">variant=default</div>",
+      "<div x-carddraggable title=\"Test Title\">With title attribute</div>",
+      "<div x-carddraggable title=\"Drag Me\">Content</div>"
     ],
     "matrix": {
       "combinations": [
@@ -189,9 +189,9 @@
     },
     "site": {
       "page": "cards",
-      "tag": "wb-carddraggable",
+      "tag": "x-carddraggable",
       "renders": true,
-      "baseClass": "wb-card-draggable",
+      "baseClass": "x-card-draggable",
       "minInstances": 3,
       "checkText": [
         "Basic",
@@ -199,7 +199,7 @@
         "X Only"
       ],
       "checkClasses": [
-        "wb-card-draggable--elevated"
+        "x-card-draggable--elevated"
       ],
       "checkAttributes": [
         "title",

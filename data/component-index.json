@@ -19,7 +19,7 @@
       "title": "Alert",
       "description": "Alert component for displaying messages with severity levels",
       "category": "feedback",
-      "tag": "wb-alert",
+      "tag": "x-alert",
       "docPath": "docs/components/feedback/alert.md",
       "demoPage": null,
       "demoAnchor": null
@@ -59,7 +59,7 @@
       "title": "Avatar",
       "description": "User avatar with image, initials fallback, and status indicator",
       "category": "feedback",
-      "tag": "wb-avatar",
+      "tag": "x-avatar",
       "docPath": "docs/components/feedback/avatar.md",
       "demoPage": "components",
       "demoAnchor": "avatarDemo"
@@ -69,7 +69,7 @@
       "title": "Badge",
       "description": "Small label/tag for status indicators, counts, or categories",
       "category": "feedback",
-      "tag": "wb-badge",
+      "tag": "x-badge",
       "docPath": "docs/components/feedback/badge.md",
       "demoPage": "components",
       "demoAnchor": "badgeDemo"
@@ -89,7 +89,7 @@
       "title": "Button",
       "description": "Interactive button with variants, sizes, and optional icon",
       "category": "forms",
-      "tag": "wb-button",
+      "tag": "x-button",
       "docPath": "docs/components/forms/button.md",
       "demoPage": "components",
       "demoAnchor": "buttonDemo"
@@ -99,7 +99,7 @@
       "title": "Card Component",
       "description": "Card component. IS-A article, HAS-A header, main, footer.",
       "category": "cards",
-      "tag": "wb-card",
+      "tag": "x-card",
       "docPath": "docs/components/cards/card.md",
       "demoPage": "components",
       "demoAnchor": "cardComponentDemo"
@@ -109,7 +109,7 @@
       "title": "Button Card",
       "description": "Card with action buttons in footer",
       "category": "cards",
-      "tag": "wb-cardbutton",
+      "tag": "x-cardbutton",
       "docPath": "docs/components/cards/cardbutton.md",
       "demoPage": null,
       "demoAnchor": null
@@ -119,7 +119,7 @@
       "title": "Draggable Card",
       "description": "Card that can be dragged around the page",
       "category": "cards",
-      "tag": "wb-carddraggable",
+      "tag": "x-carddraggable",
       "docPath": "docs/components/cards/carddraggable.md",
       "demoPage": null,
       "demoAnchor": null
@@ -129,7 +129,7 @@
       "title": "Expandable Card",
       "description": "Card with collapsible/expandable content section",
       "category": "cards",
-      "tag": "wb-cardexpandable",
+      "tag": "x-cardexpandable",
       "docPath": "docs/components/cards/cardexpandable.md",
       "demoPage": null,
       "demoAnchor": null
@@ -139,7 +139,7 @@
       "title": "File Card",
       "description": "File display card with icon, name, size, and download",
       "category": "cards",
-      "tag": "wb-cardfile",
+      "tag": "x-cardfile",
       "docPath": "docs/components/cards/cardfile.md",
       "demoPage": "components",
       "demoAnchor": "fileCardDemo"
@@ -149,7 +149,7 @@
       "title": "Hero Card",
       "description": "Hero banner with background image, title, subtitle, and optional CTA",
       "category": "cards",
-      "tag": "wb-cardhero",
+      "tag": "x-cardhero",
       "docPath": "docs/components/cards/cardhero.md",
       "demoPage": "components",
       "demoAnchor": "heroCardDemo"
@@ -159,7 +159,7 @@
       "title": "Horizontal Card",
       "description": "Card with horizontal layout - image on side, content on other",
       "category": "cards",
-      "tag": "wb-cardhorizontal",
+      "tag": "x-cardhorizontal",
       "docPath": "docs/components/cards/cardhorizontal.md",
       "demoPage": "components",
       "demoAnchor": "horizontalCardDemo"
@@ -169,7 +169,7 @@
       "title": "Image Card",
       "description": "Card with featured image and optional title/subtitle",
       "category": "cards",
-      "tag": "wb-cardimage",
+      "tag": "x-cardimage",
       "docPath": "docs/components/cards/cardimage.md",
       "demoPage": "components",
       "demoAnchor": "imageCardDemo"
@@ -179,7 +179,7 @@
       "title": "Link Card",
       "description": "Clickable card that navigates to a URL",
       "category": "cards",
-      "tag": "wb-cardlink",
+      "tag": "x-cardlink",
       "docPath": "docs/components/cards/cardlink.md",
       "demoPage": "components",
       "demoAnchor": "linkCardDemo"
@@ -189,7 +189,7 @@
       "title": "Minimizable Card",
       "description": "Card with minimize/expand toggle button in header",
       "category": "cards",
-      "tag": "wb-cardminimizable",
+      "tag": "x-cardminimizable",
       "docPath": "docs/components/cards/cardminimizable.md",
       "demoPage": null,
       "demoAnchor": null
@@ -199,7 +199,7 @@
       "title": "Notification Card",
       "description": "Dismissible notification card with variant-based styling",
       "category": "cards",
-      "tag": "wb-cardnotification",
+      "tag": "x-cardnotification",
       "docPath": "docs/components/cards/cardnotification.md",
       "demoPage": "components",
       "demoAnchor": "notificationCardDemo"
@@ -209,7 +209,7 @@
       "title": "Overlay Card",
       "description": "Card with text overlaid on background image",
       "category": "cards",
-      "tag": "wb-cardoverlay",
+      "tag": "x-cardoverlay",
       "docPath": "docs/components/cards/cardoverlay.md",
       "demoPage": "components",
       "demoAnchor": "overlayCardDemo"
@@ -219,7 +219,7 @@
       "title": "Portfolio Card",
       "description": "Full-featured professional portfolio card with skills, experience, projects, and more",
       "category": "cards",
-      "tag": "wb-cardportfolio",
+      "tag": "x-cardportfolio",
       "docPath": "docs/components/cards/cardportfolio.md",
       "demoPage": "components",
       "demoAnchor": "portfolioCardDemo"
@@ -229,7 +229,7 @@
       "title": "Pricing Card",
       "description": "Pricing tier card with plan name, price, features list, and CTA",
       "category": "cards",
-      "tag": "wb-cardpricing",
+      "tag": "x-cardpricing",
       "docPath": "docs/components/cards/cardpricing.md",
       "demoPage": "components",
       "demoAnchor": "pricingCardDemo"
@@ -239,7 +239,7 @@
       "title": "Product Card",
       "description": "E-commerce product card with image, price, rating, and CTA",
       "category": "cards",
-      "tag": "wb-cardproduct",
+      "tag": "x-cardproduct",
       "docPath": "docs/components/cards/cardproduct.md",
       "demoPage": "components",
       "demoAnchor": "productCardDemo"
@@ -249,7 +249,7 @@
       "title": "Card Profile",
       "description": "Simple profile card. INHERITS from card.base (IS-A card), CONTAINS profile elements (HAS-A avatar, name, role, bio, cover).",
       "category": "cards",
-      "tag": "wb-cardprofile",
+      "tag": "x-cardprofile",
       "docPath": "docs/components/cards/cardprofile.md",
       "demoPage": null,
       "demoAnchor": null
@@ -259,7 +259,7 @@
       "title": "Stats Card",
       "description": "Statistics display card with value, label, icon, and trend indicator",
       "category": "cards",
-      "tag": "wb-cardstats",
+      "tag": "x-cardstats",
       "docPath": "docs/components/cards/cardstats.md",
       "demoPage": null,
       "demoAnchor": null
@@ -269,7 +269,7 @@
       "title": "Testimonial Card",
       "description": "Customer testimonial/review card with quote, author, avatar, and rating",
       "category": "cards",
-      "tag": "wb-cardtestimonial",
+      "tag": "x-cardtestimonial",
       "docPath": "docs/components/cards/cardtestimonial.md",
       "demoPage": "components",
       "demoAnchor": "testimonialCardDemo"
@@ -279,7 +279,7 @@
       "title": "Video Card",
       "description": "Card with embedded video player",
       "category": "cards",
-      "tag": "wb-cardvideo",
+      "tag": "x-cardvideo",
       "docPath": "docs/components/cards/cardvideo.md",
       "demoPage": "components",
       "demoAnchor": "videoCardDemo"
@@ -289,7 +289,7 @@
       "title": "Center - wb-starter v3.0",
       "description": "Horizontally centers an element's content, either by constraining and centering the box itself (default) or by centering its children with flexbox (intrinsic)",
       "category": "layout",
-      "tag": "wb-center",
+      "tag": "x-center",
       "docPath": "docs/components/layout/center.md",
       "demoPage": null,
       "demoAnchor": null
@@ -299,7 +299,7 @@
       "title": "Checkbox",
       "description": "Checkbox input with label and custom styling",
       "category": "forms",
-      "tag": "wb-checkbox",
+      "tag": "x-checkbox",
       "docPath": "docs/components/forms/checkbox.md",
       "demoPage": null,
       "demoAnchor": null
@@ -309,7 +309,7 @@
       "title": "Cluster",
       "description": "Moved from layout.readme.md. Update content as needed.",
       "category": "layout",
-      "tag": "wb-cluster",
+      "tag": "x-cluster",
       "docPath": "docs/components/layout/cluster.md",
       "demoPage": null,
       "demoAnchor": null
@@ -329,7 +329,7 @@
       "title": "Confetti",
       "description": "Confetti particle animation effect",
       "category": "effects",
-      "tag": "wb-confetti",
+      "tag": "x-confetti",
       "docPath": "docs/components/effects/confetti.md",
       "demoPage": "behaviors",
       "demoAnchor": null
@@ -339,7 +339,7 @@
       "title": "Container",
       "description": "Moved from layout.readme.md. Update content as needed.",
       "category": "layout",
-      "tag": "wb-container",
+      "tag": "x-container",
       "docPath": "docs/components/layout/container.md",
       "demoPage": null,
       "demoAnchor": null
@@ -349,7 +349,7 @@
       "title": "Cover - wb-starter v3.0",
       "description": "A full-height (or custom-height) flex column that vertically centers one designated \"principal\" child, with any other children pushed to the top and bottom — th",
       "category": "layout",
-      "tag": "wb-cover",
+      "tag": "x-cover",
       "docPath": "docs/components/layout/cover.md",
       "demoPage": null,
       "demoAnchor": null
@@ -369,7 +369,7 @@
       "title": "Demo Container",
       "description": "A container that renders children normally in a CSS grid and shows the raw HTML as a syntax-highlighted, auto-formatted code sample below. Uses fetch for raw page source, formatHtml for consistent 2-space indentation, and textContent to prevent browser inflation.",
       "category": "demo",
-      "tag": "wb-demo",
+      "tag": "x-demo",
       "docPath": "docs/components/demo/demo.md",
       "demoPage": null,
       "demoAnchor": null
@@ -409,7 +409,7 @@
       "title": "Drawer",
       "description": "Slide-out panel overlay from screen edge",
       "category": "components",
-      "tag": "wb-drawer",
+      "tag": "x-drawer",
       "docPath": "docs/components/drawer.md",
       "demoPage": "components",
       "demoAnchor": "drawerDemo"
@@ -429,7 +429,7 @@
       "title": "Fireworks",
       "description": "Fireworks particle burst animation effect",
       "category": "effects",
-      "tag": "wb-fireworks",
+      "tag": "x-fireworks",
       "docPath": "docs/components/effects/fireworks.md",
       "demoPage": "behaviors",
       "demoAnchor": null
@@ -439,7 +439,7 @@
       "title": "Flex",
       "description": "Moved from layout.readme.md. Update content as needed.",
       "category": "layout",
-      "tag": "wb-flex",
+      "tag": "x-flex",
       "docPath": "docs/components/layout/flex.md",
       "demoPage": null,
       "demoAnchor": null
@@ -459,7 +459,7 @@
       "title": "Grid",
       "description": "Moved from layout.readme.md. Update content as needed.",
       "category": "layout",
-      "tag": "wb-grid",
+      "tag": "x-grid",
       "docPath": "docs/components/layout/grid.md",
       "demoPage": null,
       "demoAnchor": null
@@ -469,7 +469,7 @@
       "title": "Header",
       "description": "Page header with logo, title, and optional navigation",
       "category": "layout",
-      "tag": "wb-header",
+      "tag": "x-header",
       "docPath": "docs/components/layout/header.md",
       "demoPage": null,
       "demoAnchor": null
@@ -479,7 +479,7 @@
       "title": "Icon - wb-starter v3.0",
       "description": "A small layout helper for pairing an inline <svg> icon with adjacent text — sets up an inline-flex row with consistent spacing and sizes the first <svg> chi",
       "category": "layout",
-      "tag": "wb-icon",
+      "tag": "x-icon",
       "docPath": "docs/components/layout/icon.md",
       "demoPage": null,
       "demoAnchor": null
@@ -499,7 +499,7 @@
       "title": "Input",
       "description": "Text input field with label, helper text, and validation states",
       "category": "forms",
-      "tag": "wb-input",
+      "tag": "x-input",
       "docPath": "docs/components/forms/input.md",
       "demoPage": "components",
       "demoAnchor": "inputDemo"
@@ -519,7 +519,7 @@
       "title": "Masonry - wb-starter v3.0",
       "description": "Pinterest-style masonry grid using native CSS multi-column layout — items flow top-to-bottom within a column, then wrap to the next column, with no gaps between",
       "category": "layout",
-      "tag": "wb-masonry",
+      "tag": "x-masonry",
       "docPath": "docs/components/layout/masonry.md",
       "demoPage": null,
       "demoAnchor": null
@@ -529,7 +529,7 @@
       "title": "Markdown to HTML",
       "description": "Renders Markdown content as HTML, either from inline content or external source",
       "category": "components",
-      "tag": "wb-mdhtml",
+      "tag": "x-mdhtml",
       "docPath": "docs/components/mdhtml.md",
       "demoPage": null,
       "demoAnchor": null
@@ -559,7 +559,7 @@
       "title": "Progress",
       "description": "Progress bar with determinate and indeterminate states",
       "category": "feedback",
-      "tag": "wb-progress",
+      "tag": "x-progress",
       "docPath": "docs/components/feedback/progress.md",
       "demoPage": "components",
       "demoAnchor": "progressDemo"
@@ -599,7 +599,7 @@
       "title": "Reel - wb-starter v3.0",
       "description": "A horizontally scrolling row with CSS scroll-snap — each child snaps into place as the user scrolls or swipes, the way a carousel of cards often works without a",
       "category": "layout",
-      "tag": "wb-reel",
+      "tag": "x-reel",
       "docPath": "docs/components/layout/reel.md",
       "demoPage": null,
       "demoAnchor": null
@@ -609,7 +609,7 @@
       "title": "Scrollable - wb-starter v3.0",
       "description": "Turns an element into a scrollable region with an optional size cap, so its content scrolls internally instead of growing the page.",
       "category": "layout",
-      "tag": "wb-scrollable",
+      "tag": "x-scrollable",
       "docPath": "docs/components/layout/scrollable.md",
       "demoPage": null,
       "demoAnchor": null
@@ -619,7 +619,7 @@
       "title": "Select",
       "description": "Enhanced select dropdown with search, clear, and multi-select",
       "category": "forms",
-      "tag": "wb-select",
+      "tag": "x-select",
       "docPath": "docs/components/forms/select.md",
       "demoPage": "components",
       "demoAnchor": "selectDemo"
@@ -629,7 +629,7 @@
       "title": "Sidebar Layout - wb-starter v3.0",
       "description": "A two-column layout: a fixed-ish sidebar next to a main content area that grows to fill the remaining space. Built on flexbox with the [Every Layout \"sidebar\" p",
       "category": "layout",
-      "tag": "wb-sidebarlayout",
+      "tag": "x-sidebarlayout",
       "docPath": "docs/components/layout/sidebarlayout.md",
       "demoPage": null,
       "demoAnchor": null
@@ -639,7 +639,7 @@
       "title": "Snow",
       "description": "Falling snowflake animation effect",
       "category": "effects",
-      "tag": "wb-snow",
+      "tag": "x-snow",
       "docPath": "docs/components/effects/snow.md",
       "demoPage": "behaviors",
       "demoAnchor": null
@@ -649,7 +649,7 @@
       "title": "Spinner",
       "description": "Loading spinner indicator",
       "category": "feedback",
-      "tag": "wb-spinner",
+      "tag": "x-spinner",
       "docPath": "docs/components/feedback/spinner.md",
       "demoPage": "components",
       "demoAnchor": "spinnerDemo"
@@ -659,7 +659,7 @@
       "title": "Sticky",
       "description": "Makes element stick to viewport on scroll",
       "category": "layout",
-      "tag": "wb-sticky",
+      "tag": "x-sticky",
       "docPath": "docs/components/layout/sticky.md",
       "demoPage": null,
       "demoAnchor": null
@@ -669,7 +669,7 @@
       "title": "Switch",
       "description": "Toggle switch for boolean settings",
       "category": "forms",
-      "tag": "wb-switch",
+      "tag": "x-switch",
       "docPath": "docs/components/forms/switch.md",
       "demoPage": null,
       "demoAnchor": null
@@ -679,7 +679,7 @@
       "title": "Switcher - wb-starter v3.0",
       "description": "A responsive layout that switches between a horizontal row and a stacked column based on available space, with no media query — each child's flex-basis is com",
       "category": "layout",
-      "tag": "wb-switcher",
+      "tag": "x-switcher",
       "docPath": "docs/components/layout/switcher.md",
       "demoPage": null,
       "demoAnchor": null
@@ -699,7 +699,7 @@
       "title": "Tabs",
       "description": "Tab navigation for switching between content panels",
       "category": "components",
-      "tag": "wb-tabs",
+      "tag": "x-tabs",
       "docPath": "docs/components/tabs.md",
       "demoPage": "components",
       "demoAnchor": "tabsDemo"
@@ -709,7 +709,7 @@
       "title": "Textarea",
       "description": "Multi-line text input with autosize and character count",
       "category": "forms",
-      "tag": "wb-textarea",
+      "tag": "x-textarea",
       "docPath": "docs/components/forms/textarea.md",
       "demoPage": "behaviors",
       "demoAnchor": null

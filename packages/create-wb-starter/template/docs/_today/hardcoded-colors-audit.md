@@ -44,7 +44,7 @@ These need **new semantic tokens** (there is no theme var today, so they can't b
 
 **Lower priority (dev tools / demos / page-specific):**
 - `src/styles/pages/ai-permutation-test.css` — 216 (one throwaway test page — biggest single count, lowest value)
-- `src/core/wb-devconsole.js` 37, `error-logger.js` 25, `events.js` 24, `api/setup.js` 33 (dev/diagnostic UI)
+- `src/core/x-devconsole.js` 37, `error-logger.js` 25, `events.js` 24, `api/setup.js` 33 (dev/diagnostic UI)
 - `src/styles/code-themes/*` — grayscale code themes (arguably *are* a palette; may be exempt like themes.css)
 
 ## Recommendations

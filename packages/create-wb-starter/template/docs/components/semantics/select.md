@@ -6,10 +6,10 @@ Enhanced select dropdown with search, clear, and multi-select.
 
 | Property | Value |
 |----------|-------|
-| Custom Tag | `<wb-select>` |
+| Custom Tag | `<select>` |
 | Behavior | `select` |
 | Semantic | `<div>` (role="combobox") |
-| Root CSS Class | `wb-select` |
+| Root CSS Class | `x-select` |
 | Category | Forms |
 | Schema | `src/wb-models/select.schema.json` |
 
@@ -30,136 +30,136 @@ Enhanced select dropdown with search, clear, and multi-select.
 | `size` | string | `"md"` | Size: `sm`, `md`, `lg` |
 | `variant` | string | `"default"` | Variant: `default`, `success`, `error` |
 
-Wrapped in `<wb-demo>`, so the live component renders below with its source shown underneath:
+Wrapped in `<div x-demo>`, so the live component renders below with its source shown underneath:
 
-<wb-demo>
-<wb-select
+<div x-demo>
+<select
   label="Country"
   options='[{"value":"us","label":"United States"},{"value":"uk","label":"United Kingdom"}]'>
-</wb-select>
-</wb-demo>
+</select>
+</div>
 
 ## Usage
 
 ### Custom Element
 
-<wb-demo>
-<wb-select
+<div x-demo>
+<select
   label="Country"
   options='[{"value":"us","label":"United States"},{"value":"uk","label":"United Kingdom"}]'>
-</wb-select>
-</wb-demo>
+</select>
+</div>
 
 ### Native Select (Enhanced)
 
 `autoInjectComponents` is on by default — a plain `<select>` is enhanced
 automatically, no `x-select` attribute needed.
 
-<wb-demo>
+<div x-demo>
 <select>
   <option value="1">Option 1</option>
   <option value="2">Option 2</option>
   <option value="3">Option 3</option>
 </select>
-</wb-demo>
+</div>
 
 ### With Label
 
-<wb-demo>
-<wb-select
+<div x-demo>
+<select
   label="Choose a language"
   placeholder="Select language..."
   options='[{"value":"en","label":"English"},{"value":"es","label":"Spanish"},{"value":"fr","label":"French"}]'>
-</wb-select>
-</wb-demo>
+</select>
+</div>
 
 ### Searchable
 
-<wb-demo>
-<wb-select
+<div x-demo>
+<select
   label="Country"
   searchable
   options='[{"value":"us","label":"United States"},{"value":"uk","label":"United Kingdom"},{"value":"ca","label":"Canada"}]'>
-</wb-select>
-</wb-demo>
+</select>
+</div>
 
 ### Clearable
 
-<wb-demo>
-<wb-select
+<div x-demo>
+<select
   label="Priority"
   clearable
   options='[{"value":"low","label":"Low"},{"value":"medium","label":"Medium"},{"value":"high","label":"High"}]'>
-</wb-select>
-</wb-demo>
+</select>
+</div>
 
 ### Multi-Select
 
-<wb-demo>
-<wb-select
+<div x-demo>
+<select
   label="Tags"
   multiple
   options='[{"value":"bug","label":"Bug"},{"value":"feature","label":"Feature"},{"value":"docs","label":"Documentation"}]'>
-</wb-select>
-</wb-demo>
+</select>
+</div>
 
 ### Sizes
 
-<wb-demo>
-<wb-select
+<div x-demo>
+<select
   label="Small"
   size="sm"
   options='[{"value":"a","label":"Alpha"},{"value":"b","label":"Beta"}]'>
-</wb-select>
-<wb-select
+</select>
+<select
   label="Medium"
   size="md"
   options='[{"value":"a","label":"Alpha"},{"value":"b","label":"Beta"}]'>
-</wb-select>
-<wb-select
+</select>
+<select
   label="Large"
   size="lg"
   options='[{"value":"a","label":"Alpha"},{"value":"b","label":"Beta"}]'>
-</wb-select>
-</wb-demo>
+</select>
+</div>
 
 ### Validation States
 
-<wb-demo>
-<wb-select
+<div x-demo>
+<select
   label="Valid"
   variant="success"
   options='[{"value":"a","label":"Alpha"},{"value":"b","label":"Beta"}]'>
-</wb-select>
-<wb-select
+</select>
+<select
   label="Error"
   variant="error"
   options='[{"value":"a","label":"Alpha"},{"value":"b","label":"Beta"}]'>
-</wb-select>
-</wb-demo>
+</select>
+</div>
 
 ## Generated Structure
 
 ```html
-<div class="wb-select">
-  <label class="wb-select__label">Label</label>
-  <button class="wb-select__trigger">
-    <span class="wb-select__value">Selected value</span>
-    <button class="wb-select__clear">×</button>
-    <span class="wb-select__arrow">▼</span>
+<div class="x-select">
+  <label class="x-select__label">Label</label>
+  <button class="x-select__trigger">
+    <span class="x-select__value">Selected value</span>
+    <button class="x-select__clear">×</button>
+    <span class="x-select__arrow">▼</span>
   </button>
-  <div class="wb-select__dropdown">
+  <div class="x-select__dropdown">
     <input
-      class="wb-select__search"
+      class="x-select__search"
       placeholder="Search...">
-    <ul class="wb-select__options">
+    <ul class="x-select__options">
       <li
-        class="wb-select__option"
+        class="x-select__option"
         value="1">
         Option 1
       </li>
       <li
-        class="wb-select__option wb-select__option--selected"
+        class="x-select__option x-select__option--selected"
         value="2">
         Option 2
       </li>
@@ -172,16 +172,16 @@ automatically, no `x-select` attribute needed.
 
 | Class | Applied When | Description |
 |-------|--------------|-------------|
-| `.wb-select` | Always | Base styling |
-| `.wb-select--open` | Dropdown open | Open state |
-| `.wb-select--searchable` | `searchable` | Has search |
-| `.wb-select--clearable` | `clearable` | Has clear button |
-| `.wb-select--multiple` | `multiple` | Multi-select mode |
-| `.wb-select--sm` | `size="sm"` | Small size |
-| `.wb-select--md` | `size="md"` | Medium size |
-| `.wb-select--lg` | `size="lg"` | Large size |
-| `.wb-select--success` | `variant="success"` | Success state |
-| `.wb-select--error` | `variant="error"` | Error state |
+| `.x-select` | Always | Base styling |
+| `.x-select--open` | Dropdown open | Open state |
+| `.x-select--searchable` | `searchable` | Has search |
+| `.x-select--clearable` | `clearable` | Has clear button |
+| `.x-select--multiple` | `multiple` | Multi-select mode |
+| `.x-select--sm` | `size="sm"` | Small size |
+| `.x-select--md` | `size="md"` | Medium size |
+| `.x-select--lg` | `size="lg"` | Large size |
+| `.x-select--success` | `variant="success"` | Success state |
+| `.x-select--error` | `variant="error"` | Error state |
 
 ## Methods
 
@@ -199,7 +199,7 @@ automatically, no `x-select` attribute needed.
 | `setOptions(options)` | Updates options | - |
 
 ```javascript
-const select = document.querySelector('wb-select');
+const select = document.querySelector('x-select');
 
 // Get/set value
 const value = select.getValue();
@@ -242,19 +242,19 @@ select.addEventListener('wb:select:open', () => {
 
 | Variable | Default | Description |
 |----------|---------|-------------|
-| `--wb-select-height` | `2.5rem` | Select height |
-| `--wb-select-padding` | `0 0.75rem` | Select padding |
-| `--wb-select-radius` | `4px` | Border radius |
-| `--wb-select-bg` | `var(--bg-surface, #ffffff)` | Background |
-| `--wb-select-border` | `1px solid var(--border-color)` | Border |
-| `--wb-select-focus-border` | `var(--primary, #6366f1)` | Focus border |
-| `--wb-select-focus-ring` | `0 0 0 3px rgba(99, 102, 241, 0.2)` | Focus ring |
-| `--wb-select-dropdown-bg` | `var(--bg-surface, #ffffff)` | Dropdown background |
-| `--wb-select-dropdown-shadow` | `0 4px 12px rgba(0,0,0,0.15)` | Dropdown shadow |
-| `--wb-select-dropdown-radius` | `4px` | Dropdown radius |
-| `--wb-select-option-padding` | `0.5rem 0.75rem` | Option padding |
-| `--wb-select-option-hover-bg` | `var(--bg-secondary)` | Option hover background |
-| `--wb-select-option-selected-bg` | `var(--primary-light)` | Selected option background |
+| `--x-select-height` | `2.5rem` | Select height |
+| `--x-select-padding` | `0 0.75rem` | Select padding |
+| `--x-select-radius` | `4px` | Border radius |
+| `--x-select-bg` | `var(--bg-surface, #ffffff)` | Background |
+| `--x-select-border` | `1px solid var(--border-color)` | Border |
+| `--x-select-focus-border` | `var(--primary, #6366f1)` | Focus border |
+| `--x-select-focus-ring` | `0 0 0 3px rgba(99, 102, 241, 0.2)` | Focus ring |
+| `--x-select-dropdown-bg` | `var(--bg-surface, #ffffff)` | Dropdown background |
+| `--x-select-dropdown-shadow` | `0 4px 12px rgba(0,0,0,0.15)` | Dropdown shadow |
+| `--x-select-dropdown-radius` | `4px` | Dropdown radius |
+| `--x-select-option-padding` | `0.5rem 0.75rem` | Option padding |
+| `--x-select-option-hover-bg` | `var(--bg-secondary)` | Option hover background |
+| `--x-select-option-selected-bg` | `var(--primary-light)` | Selected option background |
 
 ## Accessibility
 

@@ -18,43 +18,43 @@ hand-authored children are replaced, not merged. **Note:** it does not
 support a caption; there's no `<figcaption>` in the rendered output. Use
 `title`/`subtitle` (rendered in the card header) for a label instead.
 
-<wb-demo>
+<div x-demo>
 <article
   x-cardimage
   src="https://picsum.photos/seed/sunset/400/225"
   alt="Sunset over the Pacific Ocean"
   title="Card Title">
 </article>
-</wb-demo>
+</div>
 
 ### 2. Card Video (`cardvideo`)
 
 Same pattern as `cardimage`: `x-cardvideo` builds its own `<figure><video></figure>`
 from `src`/`poster`. **Note:** no `<figcaption>` support here either.
 
-<wb-demo>
+<div x-demo>
 <article
   x-cardvideo
   src="https://interactive-examples.mdn.mozilla.net/media/cc0-videos/flower.mp4"
   title="Product Demo Video">
 </article>
-</wb-demo>
+</div>
 
 ### 3. Card File (`cardfile`)
 
 **Note:** `cardfile` does not use `<figure>`/`<figcaption>` at all — it
-renders a plain icon `<span>` + `<h3 class="wb-card__filename">` instead.
+renders a plain icon `<span>` + `<h3 class="x-card__filename">` instead.
 Listed here only because it's the closest analog to a file-preview figure;
 included for completeness, not as a `<figure>` usage example.
 
-<wb-demo>
+<div x-demo>
 <article
   x-cardfile
   filename="report.pdf"
   type="pdf"
   size="2.4 MB">
 </article>
-</wb-demo>
+</div>
 
 ### 4. Card Product (`cardproduct`)
 
@@ -62,14 +62,14 @@ included for completeness, not as a `<figure>` usage example.
 **Note:** it reads a `badge` attribute but never renders it — currently dead
 config, not a supported feature.
 
-<wb-demo>
+<div x-demo>
 <article
   x-cardproduct
   image="https://picsum.photos/seed/product/400/267"
   title="Product Name"
   price="$49.99">
 </article>
-</wb-demo>
+</div>
 
 ## Accessibility Considerations
 
@@ -82,12 +82,12 @@ config, not a supported feature.
 
 ## Example: Image Gallery with Figures
 
-<wb-demo>
+<div x-demo>
 <div
   class="gallery"
   role="group"
   aria-label="Photo Gallery">
-  <figure class="wb-card__figure">
+  <figure class="x-card__figure">
     <img
       src="https://picsum.photos/seed/alpine/300/200"
       alt="Mountain landscape at sunrise">
@@ -96,7 +96,7 @@ config, not a supported feature.
       <span>Rocky Mountains, Colorado</span>
     </figcaption>
   </figure>
-  <figure class="wb-card__figure">
+  <figure class="x-card__figure">
     <img
       src="https://picsum.photos/seed/coast/300/200"
       alt="Ocean waves crashing on rocks">
@@ -106,20 +106,20 @@ config, not a supported feature.
     </figcaption>
   </figure>
 </div>
-</wb-demo>
+</div>
 
 ## CSS Styling
 
 ```css
-figure.wb-card__figure {
+figure.x-card__figure {
   margin: 0; /* Reset browser default margin */
   position: relative;
   overflow: hidden;
   border-radius: var(--radius-md);
 }
 
-figure.wb-card__figure img,
-figure.wb-card__figure video {
+figure.x-card__figure img,
+figure.x-card__figure video {
   width: 100%;
   height: auto;
   display: block;
@@ -134,7 +134,7 @@ figcaption {
 }
 
 /* Overlay caption style */
-figure.wb-card__figure--overlay figcaption {
+figure.x-card__figure--overlay figcaption {
   position: absolute;
   bottom: 0;
   left: 0;

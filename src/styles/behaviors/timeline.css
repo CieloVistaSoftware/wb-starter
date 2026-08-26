@@ -6,25 +6,25 @@
  * -----------------------------------------------------------------------------
  */
 
-/* #448: `wb-timeline` TAG selector added alongside the `.wb-timeline`
-   class -- timeline() still adds `.wb-timeline` for the x-timeline-on-any-
+/* #448: `x-timeline` TAG selector added alongside the `.x-timeline`
+   class -- timeline() still adds `.x-timeline` for the x-timeline-on-any-
    element case (e.g. demos/playground.html's `<div x-timeline>`), but skips
-   it for a literal <wb-timeline> host, which now matches via tag instead. */
-wb-timeline, [x-timeline],
-.wb-timeline {
-  /* <wb-timeline> is a custom element with no built-in display -- the
+   it for a literal <div x-timeline> host, which now matches via tag instead. */
+x-timeline, [x-timeline],
+.x-timeline {
+  /* <div x-timeline> is a custom element with no built-in display -- the
      browser default for an unknown tag is `inline`, which breaks the
      ::before connecting line's geometry below (an inline containing
      block doesn't give `top:0;bottom:0` a sane block height) and mixes
-     badly with this element's `display:block` .wb-timeline-item
+     badly with this element's `display:block` .x-timeline-item
      children. */
   display: block;
   position: relative;
   padding-left: 1.5rem;
 }
 
-wb-timeline::before, [x-timeline]::before,
-.wb-timeline::before {
+x-timeline::before, [x-timeline]::before,
+.x-timeline::before {
   content: '';
   position: absolute;
   left: 0.4rem;
@@ -34,12 +34,12 @@ wb-timeline::before, [x-timeline]::before,
   background: var(--border-color);
 }
 
-.wb-timeline-item {
+.x-timeline-item {
   position: relative;
   padding-bottom: 1rem;
 }
 
-.wb-timeline-item::before {
+.x-timeline-item::before {
   content: '';
   position: absolute;
   left: -1.1rem;

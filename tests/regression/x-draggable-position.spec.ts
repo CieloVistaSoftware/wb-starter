@@ -1,7 +1,7 @@
 import { test, expect, Page } from '@playwright/test';
 
 /**
- * #390: <wb-draggable> (and bare x-draggable) jumped to a wildly wrong
+ * #390: <div x-draggable> (and bare x-draggable) jumped to a wildly wrong
  * position on every drag instead of tracking the mouse 1:1. Root cause,
  * traced in src/wb-viewmodels/draggable.js: `initialLeft/Top` were read
  * from `element.offsetLeft/offsetTop` (position within the offsetParent,

@@ -1,6 +1,6 @@
 /**
  * Figure - Enhanced figure with caption positioning and zoom
- * Custom Tag: <wb-figure>, or auto-injected onto native <figure>
+ * Custom Tag: <figure>, or auto-injected onto native <figure>
  *
  * Migrated from the old media.js grab-bag file to match this project's
  * one-file-per-semantic-element convention (audio.js, table.js, ...).
@@ -17,7 +17,7 @@ export function figure(element, options = {}) {
     ...options
   };
 
-  element.classList.add('wb-figure');
+  element.classList.add('x-figure');
 
   let caption = element.querySelector('figcaption');
   if (config.caption) {
@@ -29,7 +29,7 @@ export function figure(element, options = {}) {
   }
 
   if (config.captionPosition === 'overlay') {
-    element.classList.add('wb-figure--overlay');
+    element.classList.add('x-figure--overlay');
     element.style.position = 'relative';
     if (caption) {
       Object.assign(caption.style, {
@@ -39,9 +39,25 @@ export function figure(element, options = {}) {
         right: '0',
         background: 'rgba(0,0,0,0.7)',
         color: '#fff',
-        padding: '0.5rem 1rem',
+        // #545: was '0.5rem 1rem' (8px vertical) -- below the site's 1rem
+        // content-panel-edge minimum once the overlay bar is wide/tall
+        // enough to read as a panel (confirmed live: a "Technology and
+        // Nature" overlay caption flagged at 8px on its tightest side).
+        padding: '1rem',
         margin: '0'
       });
+      // #556: caption-position="overlay" means EXACTLY what it says -- the
+      // caption is deliberately painted on top of the image's bottom edge
+      // (a photo-caption bar, not a layout bug). no-element-overlap.spec.ts
+      // (§22) has no way to know that from geometry alone, so it correctly
+      // flagged demos/site/content.html's own "Overlay Caption" demo
+      // (<img class="x-img"> vs its <figcaption>) as a violation. Marking
+      // the deliberately-overlapping element is this codebase's own
+      // established escape hatch for exactly this case (see that spec's
+      // "data-allow-overlap" doc comment) -- same category as
+      // x-card__overlay's scrim, just per-instance instead of a shared
+      // class since only THIS caption-position value overlays.
+      caption.setAttribute('data-allow-overlap', '');
     }
   }
 
@@ -52,7 +68,7 @@ export function figure(element, options = {}) {
   }
 
   return () => {
-    element.classList.remove('wb-figure', 'wb-figure--overlay');
+    element.classList.remove('x-figure', 'x-figure--overlay');
     if (img) img.onclick = null;
   };
 }

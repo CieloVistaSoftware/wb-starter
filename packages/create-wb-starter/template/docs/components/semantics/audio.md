@@ -6,10 +6,10 @@ Audio player with optional 15-band graphic equalizer.
 
 | Property | Value |
 |----------|-------|
-| Custom Tag | `<wb-audio>` |
+| Custom Tag | `<audio>` |
 | Behavior | `audio` |
 | Semantic | `<div>` |
-| Root CSS Class | `wb-audio` |
+| Root CSS Class | `x-audio` |
 | Category | Media |
 | Schema | `src/wb-models/audio.schema.json` |
 
@@ -17,38 +17,35 @@ Audio player with optional 15-band graphic equalizer.
 
 | Property | Type | Default | Description |
 |----------|------|---------|-------------|
-| `src` | string | Optional | Audio source URL (defaults to pleasant royalty-free demo) |
+| `src` | string | Required | Audio source URL -- no playback without one |
 | `volume` | number | `0.8` | Initial volume (0-1) |
 | `loop` | boolean | `false` | Loop playback |
 | `autoplay` | boolean | `false` | Auto-play (requires muted) |
 | `muted` | boolean | `false` | Start muted |
-| `showEq` | boolean | `false` | Show 15-band equalizer |
+| `show-eq` | boolean | `false` | Show 15-band equalizer |
 | `bass` | number | `0` | Bass boost (-12 to 12 dB) |
 | `treble` | number | `0` | Treble boost (-12 to 12 dB) |
 
-Wrapped in `<wb-demo>`, so the live component renders below with its source shown underneath:
+Wrapped in `<div x-demo>`, so the live component renders below with its source shown underneath:
 
-<wb-demo>
-<wb-audio></wb-audio>
-</wb-demo>
+<div x-demo>
+<audio src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3"></audio>
+</div>
 
 ## Usage
 
 ### Custom Element
 
 ```html
-<!-- Uses default pleasant royalty-free demo track -->
-<wb-audio></wb-audio>
-
-<!-- Or provide your own source -->
-<wb-audio src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3"></wb-audio>
+<audio src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3"></audio>
 ```
 
 ### Native Audio (Enhanced)
 
 ```html
+<!-- x-audio is auto-injected onto native <audio> tags when autoInject is
+     on -- no attribute needed. -->
 <audio
-  x-audio
   src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3"
   controls>
 </audio>
@@ -57,54 +54,54 @@ Wrapped in `<wb-demo>`, so the live component renders below with its source show
 ### With Equalizer
 
 ```html
-<wb-audio
+<audio
   src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3"
-  showEq>
-</wb-audio>
+  show-eq>
+</audio>
 ```
 
 ### Background Audio
 
 ```html
-<!-- No src = uses default demo, muted loop in background -->
-<wb-audio
+<audio
+  src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3"
   autoplay
   muted
   loop>
-</wb-audio>
+</audio>
 ```
 
 ### With Bass/Treble Boost
 
 ```html
-<wb-audio
+<audio
   src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3"
   bass="6"
   treble="3">
-</wb-audio>
+</audio>
 ```
 
 ## Generated Structure
 
 ```html
-<div class="wb-audio">
+<div class="x-audio">
   <audio
-    class="wb-audio__player"
+    class="x-audio__player"
     src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3"
     controls>
   </audio>
-  <!-- EQ Panel (when showEq is true) -->
-  <div class="wb-audio__eq">
-    <div class="wb-audio__eq-sliders">
+  <!-- EQ Panel (when show-eq is present) -->
+  <div class="x-audio__eq">
+    <div class="x-audio__eq-sliders">
       <!-- 15 band sliders -->
     </div>
-    <div class="wb-audio__presets">
+    <div class="x-audio__presets">
       <button>Flat</button>
       <button>Bass</button>
       <button>Treble</button>
     </div>
     <input
-      class="wb-audio__master"
+      class="x-audio__master"
       type="range">
   </div>
 </div>
@@ -114,9 +111,9 @@ Wrapped in `<wb-demo>`, so the live component renders below with its source show
 
 | Class | Applied When | Description |
 |-------|--------------|-------------|
-| `.wb-audio` | Always | Base styling |
-| `.wb-audio--eq-visible` | `showEq` | EQ panel visible |
-| `.wb-audio--playing` | Playing | Playback active |
+| `.x-audio` | Always | Base styling |
+| `.x-audio--eq-visible` | `show-eq` | EQ panel visible |
+| `.x-audio--playing` | Playing | Playback active |
 
 ## Methods
 
@@ -133,7 +130,7 @@ Wrapped in `<wb-demo>`, so the live component renders below with its source show
 | `resetEq()` | Resets all EQ bands | - |
 
 ```javascript
-const audio = document.querySelector('wb-audio');
+const audio = document.querySelector('x-audio');
 
 // Playback control
 audio.play();
@@ -173,13 +170,13 @@ audio.addEventListener('wb:audio:eqchange', (e) => {
 
 | Variable | Default | Description |
 |----------|---------|-------------|
-| `--wb-audio-bg` | `linear-gradient(135deg, #1a1a2e, #16213e)` | Player background |
-| `--wb-audio-radius` | `16px` | Border radius |
-| `--wb-audio-padding` | `1rem` | Padding |
-| `--wb-audio-eq-slider-width` | `24px` | EQ slider width |
-| `--wb-audio-eq-slider-height` | `120px` | EQ slider height |
-| `--wb-audio-eq-slider-bg` | `#333` | Slider track background |
-| `--wb-audio-eq-slider-fill` | `#6366f1` | Slider fill color |
+| `--x-audio-bg` | `linear-gradient(135deg, #1a1a2e, #16213e)` | Player background |
+| `--x-audio-radius` | `16px` | Border radius |
+| `--x-audio-padding` | `1rem` | Padding |
+| `--x-audio-eq-slider-width` | `24px` | EQ slider width |
+| `--x-audio-eq-slider-height` | `120px` | EQ slider height |
+| `--x-audio-eq-slider-bg` | `#333` | Slider track background |
+| `--x-audio-eq-slider-fill` | `#6366f1` | Slider fill color |
 
 ## EQ Presets
 

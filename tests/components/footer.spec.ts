@@ -25,14 +25,14 @@ async function injectAndScan(page: Page, html: string) {
     container.innerHTML = h;
     
     // Force eager loading
-    const elements = container.querySelectorAll('.wb-ready');
+    const elements = container.querySelectorAll('.x-ready');
     elements.forEach(el => el.setAttribute('', ''));
     
     document.body.appendChild(container);
   }, html);
   
-  await page.evaluate(() => {
-    (window as any).WB.scan(document.getElementById('test-container'));
+  await page.evaluate(async () => {
+    await (window as any).WB.scan(document.getElementById('test-container'));
   });
   
   await page.waitForTimeout(500);
@@ -45,13 +45,13 @@ test.describe('footer Behavior', () => {
     page.on('pageerror', (err) => errors.push(err.message));
     
     const setupHtml = [
-      "<wb-footer>Basic footer content</wb-footer>",
-      "<wb-footer sticky>with sticky</wb-footer>",
-      "<wb-footer copyright=\"Sample copyright\">copyright=\"Sample copyright\"</wb-footer>",
-      "<wb-footer brand=\"Sample brand\">brand=\"Sample brand\"</wb-footer>",
-      "<wb-footer links=\"Sample links\">links=\"Sample links\"</wb-footer>",
-      "<wb-footer social=\"Sample social\">social=\"Sample social\"</wb-footer>",
-      "<wb-footer copyright=\"© 2025 Acme\"></wb-footer>"
+      "<footer>Basic footer content</footer>",
+      "<footer sticky>with sticky</footer>",
+      "<footer copyright=\"Sample copyright\">copyright=\"Sample copyright\"</footer>",
+      "<footer brand=\"Sample brand\">brand=\"Sample brand\"</footer>",
+      "<footer links=\"Sample links\">links=\"Sample links\"</footer>",
+      "<footer social=\"Sample social\">social=\"Sample social\"</footer>",
+      "<footer copyright=\"© 2025 Acme\"></footer>"
     ];
     
     await injectAndScan(page, setupHtml.join('\n'));
@@ -67,10 +67,10 @@ test.describe('footer Behavior', () => {
   });
 
   test('element is visible after scan', async ({ page }) => {
-    const html = "<wb-footer>Basic footer content</wb-footer>";
+    const html = "<footer>Basic footer content</footer>";
     await injectAndScan(page, html);
     
-    const el = page.locator('#test-container wb-footer, #test-container wb-footer').first();
+    const el = page.locator('#test-container .x-footer, #test-container .x-footer').first();
     const isPresent = await el.count() > 0;
     
     if (isPresent) {
@@ -84,20 +84,20 @@ test.describe('footer Behavior', () => {
   });
 
   test('matrix combo 1: copyright=© 2025', async ({ page }) => {
-    await injectAndScan(page, "<wb-footer copyright=\"© 2025\">Test</wb-footer>");
-    const el = page.locator('#test-container wb-footer, #test-container wb-footer').first();
+    await injectAndScan(page, "<footer copyright=\"© 2025\">Test</footer>");
+    const el = page.locator('#test-container .x-footer, #test-container .x-footer').first();
     await expect(el).toBeVisible({ timeout: 5000 });
   });
 
   test('matrix combo 2: brand=Acme, copyright=© 2025', async ({ page }) => {
-    await injectAndScan(page, "<wb-footer brand=\"Acme\" copyright=\"© 2025\">Test</wb-footer>");
-    const el = page.locator('#test-container wb-footer, #test-container wb-footer').first();
+    await injectAndScan(page, "<footer brand=\"Acme\" copyright=\"© 2025\">Test</footer>");
+    const el = page.locator('#test-container .x-footer, #test-container .x-footer').first();
     await expect(el).toBeVisible({ timeout: 5000 });
   });
 
   test('matrix combo 3: copyright=© 2025, sticky=true', async ({ page }) => {
-    await injectAndScan(page, "<wb-footer copyright=\"© 2025\" sticky=\"true\">Test</wb-footer>");
-    const el = page.locator('#test-container wb-footer, #test-container wb-footer').first();
+    await injectAndScan(page, "<footer copyright=\"© 2025\" sticky=\"true\">Test</footer>");
+    const el = page.locator('#test-container .x-footer, #test-container .x-footer').first();
     await expect(el).toBeVisible({ timeout: 5000 });
   });
 });

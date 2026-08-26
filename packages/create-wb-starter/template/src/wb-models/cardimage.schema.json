@@ -4,13 +4,13 @@
   "title": "Image Card",
   "description": "Card with featured image and optional title/subtitle",
   "schemaFor": "cardimage",
-  "baseClass": "wb-card-image",
+  "baseClass": "x-card-image",
   "semanticElement": {
     "tagName": "article",
     "implicitRole": "article"
   },
   "compliance": {
-    "baseClass": "wb-card-image",
+    "baseClass": "x-card-image",
     "supportLevel": "stable",
     "accessibility": "high"
   },
@@ -69,7 +69,7 @@
         "right"
       ],
       "default": "top",
-      "appliesClass": "wb-card-image--{{value}}"
+      "appliesClass": "x-card-image--{{value}}"
     },
     "fit": {
       "type": "string",
@@ -101,7 +101,7 @@
         "minimal"
       ],
       "default": "default",
-      "appliesClass": "wb-card-image--{{value}}"
+      "appliesClass": "x-card-image--{{value}}"
     }
   },
   "$view": [
@@ -190,89 +190,89 @@
     }
   },
   "$cssAPI": {
-    "--wb-card-image-radius": {
+    "--x-card-image-radius": {
       "default": "8px",
       "description": "Card border radius"
     },
-    "--wb-card-image-bg": {
+    "--x-card-image-bg": {
       "default": "var(--bg-surface, #ffffff)",
       "description": "Card background"
     },
-    "--wb-card-image-border": {
+    "--x-card-image-border": {
       "default": "none",
       "description": "Card border"
     },
-    "--wb-card-image-shadow": {
+    "--x-card-image-shadow": {
       "default": "none",
       "description": "Card shadow"
     },
-    "--wb-card-image-img-radius": {
+    "--x-card-image-img-radius": {
       "default": "8px 8px 0 0",
       "description": "Image border radius (top position)"
     },
-    "--wb-card-image-aspect": {
+    "--x-card-image-aspect": {
       "default": "16/9",
       "description": "Image aspect ratio"
     },
-    "--wb-card-image-content-padding": {
+    "--x-card-image-content-padding": {
       "default": "1rem",
       "description": "Content area padding"
     },
-    "--wb-card-image-content-gap": {
+    "--x-card-image-content-gap": {
       "default": "0.5rem",
       "description": "Gap between title and subtitle"
     },
-    "--wb-card-image-title-size": {
+    "--x-card-image-title-size": {
       "default": "1.125rem",
       "description": "Title font size"
     },
-    "--wb-card-image-title-weight": {
+    "--x-card-image-title-weight": {
       "default": "600",
       "description": "Title font weight"
     },
-    "--wb-card-image-title-color": {
+    "--x-card-image-title-color": {
       "default": "var(--text-primary, #1a1a1a)",
       "description": "Title text color"
     },
-    "--wb-card-image-subtitle-size": {
+    "--x-card-image-subtitle-size": {
       "default": "0.875rem",
       "description": "Subtitle font size"
     },
-    "--wb-card-image-subtitle-color": {
+    "--x-card-image-subtitle-color": {
       "default": "var(--text-secondary, #666)",
       "description": "Subtitle text color"
     },
-    "--wb-card-image-caption-size": {
+    "--x-card-image-caption-size": {
       "default": "0.75rem",
       "description": "Caption font size"
     },
-    "--wb-card-image-caption-color": {
+    "--x-card-image-caption-color": {
       "default": "var(--text-tertiary, #999)",
       "description": "Caption text color"
     },
-    "--wb-card-image-hover-transform": {
+    "--x-card-image-hover-transform": {
       "default": "translateY(-2px)",
       "description": "Hover transform effect"
     },
-    "--wb-card-image-hover-shadow": {
+    "--x-card-image-hover-shadow": {
       "default": "0 4px 12px rgba(0,0,0,0.15)",
       "description": "Hover shadow"
     }
   },
   "test": {
     "setup": [
-      "<wb-cardimage>Basic cardimage content</wb-cardimage>",
-      "<wb-cardimage aspect=\"16/9\">aspect=16/9</wb-cardimage>",
-      "<wb-cardimage aspect=\"4/3\">aspect=4/3</wb-cardimage>",
-      "<wb-cardimage aspect=\"1/1\">aspect=1/1</wb-cardimage>",
-      "<wb-cardimage position=\"top\">position=top</wb-cardimage>",
-      "<wb-cardimage position=\"bottom\">position=bottom</wb-cardimage>",
-      "<wb-cardimage position=\"left\">position=left</wb-cardimage>",
-      "<wb-cardimage fit=\"cover\">fit=cover</wb-cardimage>",
-      "<wb-cardimage title=\"Test Title\">With title attribute</wb-cardimage>",
-      "<wb-cardimage variant=\"default\">Variant: default</wb-cardimage>",
-      "<wb-card-image src=\"photo.jpg\" alt=\"Photo\"></wb-card-image>",
-      "<wb-card-image src=\"photo.jpg\" title=\"Beautiful Scene\" subtitle=\"Nature photography\"></wb-card-image>"
+      "<div x-cardimage>Basic cardimage content</div>",
+      "<div x-cardimage aspect=\"16/9\">aspect=16/9</div>",
+      "<div x-cardimage aspect=\"4/3\">aspect=4/3</div>",
+      "<div x-cardimage aspect=\"1/1\">aspect=1/1</div>",
+      "<div x-cardimage position=\"top\">position=top</div>",
+      "<div x-cardimage position=\"bottom\">position=bottom</div>",
+      "<div x-cardimage position=\"left\">position=left</div>",
+      "<div x-cardimage fit=\"cover\">fit=cover</div>",
+      "<div x-cardimage title=\"Test Title\">With title attribute</div>",
+      "<div x-cardimage variant=\"default\">Variant: default</div>",
+      "<div x-cardimage src=\"photo.jpg\" alt=\"Photo\"></div>",
+      "<div x-cardimage src=\"photo.jpg\" title=\"Beautiful Scene\" subtitle=\"Nature photography\"></div>"
     ],
     "matrix": {
       "combinations": [
@@ -313,17 +313,17 @@
     },
     "site": {
       "page": "cards",
-      "tag": "wb-cardimage",
+      "tag": "x-cardimage",
       "renders": true,
-      "baseClass": "wb-card-image",
+      "baseClass": "x-card-image",
       "minInstances": 8,
       "checkText": [
         "Title",
         "Subtitle"
       ],
       "checkClasses": [
-        "wb-card-image--bottom",
-        "wb-card-image--elevated"
+        "x-card-image--bottom",
+        "x-card-image--elevated"
       ],
       "checkAttributes": [
         "src"

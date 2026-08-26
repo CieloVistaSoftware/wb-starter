@@ -17,7 +17,7 @@ test.describe('service worker: audio range requests do not throw unhandled rejec
       if (msg.type() === 'error') consoleErrors.push(msg.text());
     });
 
-    await page.goto('http://localhost:3000/');
+    await page.goto('/');
     await page.waitForSelector('#mainPage-home', { timeout: 20000 });
 
     // Fresh SW registration so this test exercises the current sw.js, not a

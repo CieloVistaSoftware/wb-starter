@@ -17,7 +17,7 @@ import { test, expect } from '@playwright/test';
 test.describe('pages/behaviors.html: every x-* behavior demo shows a Docs: link (#475)', () => {
   test('layout decoration forms are registered and link to their dedicated docs', async ({ page }) => {
     await page.goto('/public/doc-viewer.html?file=' + encodeURIComponent('docs/behaviors-reference.md'));
-    await page.waitForSelector('wb-demo .wb-demo__grid', { timeout: 10000 });
+    await page.waitForSelector('x-demo .x-demo__grid', { timeout: 10000 });
     await page.waitForTimeout(1000);
 
     const registry = await page.evaluate(async () => {
@@ -26,18 +26,18 @@ test.describe('pages/behaviors.html: every x-* behavior demo shows a Docs: link 
     });
     expect(registry).toEqual({ stack: 'stack', cluster: 'cluster' });
 
-    for (const [attribute, docName] of [['x-stack', 'wb-stack.md'], ['x-cluster', 'wb-cluster.md']]) {
-      const host = page.locator(`wb-demo:has([${attribute}])`).first();
-      await expect(host, `no <wb-demo> found containing [${attribute}]`).toHaveCount(1);
-      const badge = host.locator('.wb-demo__card-doc-link');
-      await expect(badge, `${attribute}'s wb-demo has no per-element docs link`).toHaveCount(1, { timeout: 5000 });
+    for (const [attribute, docName] of [['x-stack', 'x-stack.md'], ['x-cluster', 'x-cluster.md']]) {
+      const host = page.locator(`x-demo:has([${attribute}])`).first();
+      await expect(host, `no <div x-demo> found containing [${attribute}]`).toHaveCount(1);
+      const badge = host.locator('.x-demo__card-doc-link');
+      await expect(badge, `${attribute}'s x-demo has no per-element docs link`).toHaveCount(1, { timeout: 5000 });
       await expect(badge).toHaveAttribute('href', new RegExp(`docs%2Fbehaviors%2F${docName}$`));
     }
   });
 
   test('a representative sample of x-* decorated demos each render a working Docs: link', async ({ page }) => {
     await page.goto('/pages/behaviors.html');
-    await page.waitForSelector('wb-demo .wb-demo__grid', { timeout: 10000 });
+    await page.waitForSelector('x-demo .x-demo__grid', { timeout: 10000 });
     // Settle time for wb-lazy.js's IntersectionObserver-driven lazy
     // injection + the doc-link build's own manifest fetch, matching the
     // wait used elsewhere in this suite for the same async path.
@@ -49,11 +49,11 @@ test.describe('pages/behaviors.html: every x-* behavior demo shows a Docs: link 
     const behaviors = ['x-ripple', 'x-toast', 'x-tooltip', 'x-masked', 'x-search', 'x-colorpicker'];
 
     for (const attr of behaviors) {
-      const demo = page.locator(`wb-demo:has([${attr}])`).first();
-      await expect(demo, `no <wb-demo> found containing an [${attr}] element`).toHaveCount(1);
+      const demo = page.locator(`x-demo:has([${attr}])`).first();
+      await expect(demo, `no <div x-demo> found containing an [${attr}] element`).toHaveCount(1);
 
-      const link = demo.locator('.wb-demo__links a');
-      await expect(link, `${attr}'s wb-demo has no Docs: link at all`).toHaveCount(1, { timeout: 5000 });
+      const link = demo.locator('.x-demo__links a');
+      await expect(link, `${attr}'s x-demo has no Docs: link at all`).toHaveCount(1, { timeout: 5000 });
 
       const label = (await link.textContent())?.trim() || '';
       expect(label, `${attr}'s Docs: link label`).toBe(attr);
@@ -68,14 +68,14 @@ test.describe('pages/behaviors.html: every x-* behavior demo shows a Docs: link 
 
   test('an x-* behavior with no dedicated doc still falls back to behaviors-reference.md, never a dead link', async ({ page }) => {
     await page.goto('/pages/behaviors.html');
-    await page.waitForSelector('wb-demo .wb-demo__grid', { timeout: 10000 });
+    await page.waitForSelector('x-demo .x-demo__grid', { timeout: 10000 });
     await page.waitForTimeout(1000);
 
     // x-ripple has no dedicated per-behavior doc file (confirmed: only a
     // table row inside behaviors-reference.md) — its link must still
     // resolve there rather than being silently omitted.
-    const demo = page.locator('wb-demo:has([x-ripple])').first();
-    const link = demo.locator('.wb-demo__links a');
+    const demo = page.locator('x-demo:has([x-ripple])').first();
+    const link = demo.locator('.x-demo__links a');
     const href = await link.getAttribute('href');
     expect(href).toContain('behaviors-reference.md');
 

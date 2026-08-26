@@ -2,12 +2,16 @@
 
 On click, plays the zoom-in animation for 0.4s.
 
-Apply `x-zoomin` to any element.
+## Type — new capability
 
-## Usage
+`x-zoomin` adds behavior that no HTML element implies. Nothing about a tag says "ripple" or "tooltip", so this is always opted into by attribute, on whatever element you already chose.
+
+### How to write it
 
 ```html
-<button class="effect-demo" x-zoomin>Zoomin</button>
+<button class="effect-demo" x-zoomin>
+  x-zoomin
+</button>
 ```
 
 ## Live example

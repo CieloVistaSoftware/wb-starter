@@ -5,11 +5,11 @@ import { readFlag } from '../core/read-attr.js';
  * Provides responsive navigation components including navbars, sidebars,
  * menus, breadcrumbs, and pagination steps.
  * 
- * Custom Tag: <wb-navigation>
+ * Custom Tag: <div>
  * -----------------------------------------------------------------------------
  * 
  * Usage:
- *   <wb-navbar  data-logo="MySite">...</nav>
+ *   <div x-navbar  data-logo="MySite">...</nav>
  *   <aside data-items='[...]'>...</aside>
  * -----------------------------------------------------------------------------
  * 
@@ -21,7 +21,7 @@ import { readFlag } from '../core/read-attr.js';
 
 /**
  * Navbar - Navigation bar from data attributes
- * Custom Tag: <wb-navbar>
+ * Custom Tag: <div x-navbar>
  * 
  * Attributes:
  * - data-brand: Brand name text
@@ -43,8 +43,14 @@ export function navbar(element, options = {}) {
     ...options
   };
 
-  // #448: no classList.add('wb-navbar') -- no CSS selector anywhere depends
+  // #448: no classList.add('x-navbar') -- no CSS selector anywhere depends
   // on the bare class.
+  // #448 removed this class outright; restored WITH the tag-name guard.
+  // permutation-compliance requires compliance.baseClass to cover the host
+  // (classList.contains(cls) || tagName === cls), and on an attribute host
+  // like <div x-navbar> the tag is "div" -- so without the class nothing covers
+  // it. Guarded so a literal <x-navbar> tag does not get a redundant class.
+  if (element.tagName.toLowerCase() !== 'x-navbar') element.classList.add('x-navbar');
   element.style.display = 'flex';
   element.style.alignItems = 'center';
   element.style.justifyContent = 'space-between';
@@ -70,21 +76,21 @@ export function navbar(element, options = {}) {
       ">` : '';
     
     const brandTextHTML = config.brand ? 
-      `<span class="wb-navbar__brand-text">${config.brand}</span>` : '';
+      `<span class="x-navbar__brand-text">${config.brand}</span>` : '';
     
     const taglineHTML = config.tagline ?
-      `<span class="wb-navbar__tagline" style="font-size: 0.75rem; opacity: 0.7; font-weight: 400;">${config.tagline}</span>` : '';
+      `<span class="x-navbar__tagline" style="font-size: 0.75rem; opacity: 0.7; font-weight: 400;">${config.tagline}</span>` : '';
     
     // Brand is always a link
     const hasTextContent = config.brand || config.tagline;
     const textWrapperHTML = hasTextContent ? `
-      <div class="wb-navbar__brand-wrap" style="display: flex; flex-direction: column; line-height: 1.2;">
+      <div class="x-navbar__brand-wrap" style="display: flex; flex-direction: column; line-height: 1.2;">
         ${brandTextHTML}
         ${taglineHTML}
       </div>` : '';
     
     return `
-      <a class="wb-navbar__brand" href="${config.brandHref}" style="
+      <a class="x-navbar__brand" href="${config.brandHref}" style="
         font-weight: 700;
         white-space: nowrap;
         flex-shrink: 0;
@@ -103,7 +109,7 @@ export function navbar(element, options = {}) {
 
   // Helper to apply navbar item styling to any link element
   const styleNavbarItem = (link) => {
-    link.classList.add('wb-navbar__item');
+    link.classList.add('x-navbar__item');
     link.style.opacity = '0.8';
     link.style.textDecoration = 'none';
     link.style.color = 'inherit';
@@ -120,7 +126,7 @@ export function navbar(element, options = {}) {
 
   // Check for existing custom children (links dropped by user in builder)
   const existingChildren = Array.from(element.children).filter(child => {
-    // Direct child is a link/wb-link, OR a link/wb-link sits nested inside
+    // Direct child is a link/x-link, OR a link/x-link sits nested inside
     // it (e.g. a wrapper <div><a>...</a></div>) -- was querySelector('a,
     // []'), an invalid selector ('[]' has no attribute name) that threw on
     // every navbar render.
@@ -133,7 +139,7 @@ export function navbar(element, options = {}) {
   if ((config.items.length > 0 || config.brand || config.logo) && existingChildren.length === 0) {
     element.innerHTML = `
       ${buildBrandHTML()}
-      <div class="wb-navbar__menu" style="
+      <div class="x-navbar__menu" style="
         display: flex;
         gap: 1.5rem;
         flex: 1;
@@ -151,7 +157,7 @@ export function navbar(element, options = {}) {
           }
           
           return `
-          <a class="wb-navbar__item" href="${href}" style="
+          <a class="x-navbar__item" href="${href}" style="
             opacity: 0.8;
             text-decoration: none;
             color: inherit;
@@ -166,11 +172,11 @@ export function navbar(element, options = {}) {
   } else if (existingChildren.length > 0) {
     // Has custom children - style them to match navbar items
     // First, ensure we have a brand if configured
-    let menu = element.querySelector('.wb-navbar__menu');
+    let menu = element.querySelector('.x-navbar__menu');
     if (!menu) {
       // Create menu container for the items
       menu = document.createElement('div');
-      menu.className = 'wb-navbar__menu';
+      menu.className = 'x-navbar__menu';
       menu.style.display = 'flex';
       menu.style.gap = '1.5rem';
       menu.style.flex = '1';
@@ -195,7 +201,7 @@ export function navbar(element, options = {}) {
     // throwing on every navbar render that reaches this custom-children branch.
     element.querySelectorAll('a, [wb="link"]').forEach(link => {
       // Don't style the brand link
-      if (!link.classList.contains('wb-navbar__brand')) {
+      if (!link.classList.contains('x-navbar__brand')) {
         styleNavbarItem(link);
       }
     });
@@ -237,12 +243,12 @@ export function navbar(element, options = {}) {
     }
   }
 
-  return () => element.classList.remove('wb-navbar');
+  return () => element.classList.remove('x-navbar');
 }
 
 /**
  * Sidebar - Vertical navigation from data-items
- * Custom Tag: <wb-sidebar>
+ * Custom Tag: <div>
  */
 export function sidebar(element, options = {}) {
   // Initial config
@@ -253,7 +259,7 @@ export function sidebar(element, options = {}) {
     ...options
   };
 
-  element.classList.add('wb-sidebar');
+  element.classList.add('x-sidebar');
   element.style.display = 'flex';
   element.style.flexDirection = 'column';
   element.style.gap = '0.5rem';
@@ -281,7 +287,7 @@ export function sidebar(element, options = {}) {
       const tooltipAttrs = config.collapsed ? `x-tooltip data-tooltip="${label}" data-tooltip-position="right"` : `title="${label}"`;
       
       return `
-        <a class="wb-sidebar__item" href="${href}" ${tooltipAttrs} style="
+        <a class="x-sidebar__item" href="${href}" ${tooltipAttrs} style="
           padding: 0.6rem 0.75rem;
           border-radius: 4px;
           text-decoration: none;
@@ -332,13 +338,13 @@ export function sidebar(element, options = {}) {
 
   return () => {
     observer.disconnect();
-    element.classList.remove('wb-sidebar');
+    element.classList.remove('x-sidebar');
   };
 }
 
 /**
  * Menu - Clickable menu from data-items
- * Custom Tag: <wb-menu>
+ * Custom Tag: <div>
  * FIXED: Proper flex layout, correct spacing, better hover states
  */
 export function menu(element, options = {}) {
@@ -347,7 +353,7 @@ export function menu(element, options = {}) {
     ...options
   };
 
-  element.classList.add('wb-menu');
+  element.classList.add('x-menu');
   element.setAttribute('role', 'menu');
   element.style.display = 'flex';
   element.style.flexDirection = 'column';
@@ -369,7 +375,7 @@ export function menu(element, options = {}) {
     }
 
     return `
-    <div class="wb-menu__item" role="menuitem" tabindex="0" data-index="${idx}" data-value="${value}" style="
+    <div class="x-menu__item" role="menuitem" tabindex="0" data-index="${idx}" data-value="${value}" style="
       padding: 0.6rem 0.75rem;
       border-radius: 4px;
       cursor: pointer;
@@ -387,7 +393,7 @@ export function menu(element, options = {}) {
   `}).join('');
 
   // Add keyboard navigation
-  const items = element.querySelectorAll('.wb-menu__item');
+  const items = element.querySelectorAll('.x-menu__item');
   items.forEach((item, idx) => {
     item.addEventListener('click', (e) => {
       element.dispatchEvent(new CustomEvent('wb:menu:select', {
@@ -414,18 +420,18 @@ export function menu(element, options = {}) {
     });
   });
 
-  return () => element.classList.remove('wb-menu');
+  return () => element.classList.remove('x-menu');
 }
 
 /**
  * Pagination - Page navigation from data-pages
- * Custom Tag: <wb-pagination>
+ * Custom Tag: <div>
  */
 /**
  * Pagination
  * CSS: src/styles/behaviors/pagination.css
  * Uses <span role="button"> to avoid button auto-inject collision.
- * No wb-ready, no component classes added by JS.
+ * No x-ready, no component classes added by JS.
  */
 export function pagination(element, options = {}) {
   const total = parseInt(options.total || element.getAttribute('total') || '0');
@@ -487,7 +493,7 @@ export function pagination(element, options = {}) {
 
 /**
  * Steps - Step indicator from data-items
- * Custom Tag: <wb-steps>
+ * Custom Tag: <div>
  */
 export function steps(element, options = {}) {
   const config = {
@@ -496,7 +502,7 @@ export function steps(element, options = {}) {
     ...options
   };
 
-  element.classList.add('wb-steps');
+  element.classList.add('x-steps');
   element.style.display = 'flex';
   element.style.alignItems = 'center';
   element.style.gap = '1rem';
@@ -508,7 +514,7 @@ export function steps(element, options = {}) {
     const isActive = step === config.current;
     
     return `
-      <div class="wb-steps__item" style="display: flex; align-items: center; gap: 0.5rem;">
+      <div class="x-steps__item" style="display: flex; align-items: center; gap: 0.5rem;">
         <div style="
           width: 28px;
           height: 28px;
@@ -529,12 +535,12 @@ export function steps(element, options = {}) {
     `;
   }).join('');
 
-  return () => element.classList.remove('wb-steps');
+  return () => element.classList.remove('x-steps');
 }
 
 /**
  * Treeview - Hierarchical tree from JSON
- * Custom Tag: <wb-treeview>
+ * Custom Tag: <div>
  */
 export function treeview(element, options = {}) {
   const config = {
@@ -542,7 +548,7 @@ export function treeview(element, options = {}) {
     ...options
   };
 
-  element.classList.add('wb-treeview');
+  element.classList.add('x-treeview');
   element.setAttribute('role', 'tree');
   element.style.fontSize = '0.875rem';
   element.style.padding = '0.5rem';
@@ -552,7 +558,7 @@ export function treeview(element, options = {}) {
     const padding = depth * 1.5;
     
     return `
-      <div class="wb-treeview__item" role="treeitem" style="margin-bottom: 0.25rem;">
+      <div class="x-treeview__item" role="treeitem" style="margin-bottom: 0.25rem;">
         <div style="
           display: flex;
           align-items: center;
@@ -562,11 +568,11 @@ export function treeview(element, options = {}) {
           padding-left: ${padding}rem;
           border-radius: 3px;
           transition: background 0.15s ease;
-        " class="wb-treeview__node" onmouseenter="this.style.background='var(--bg-tertiary,#374151)'" onmouseleave="this.style.background=''">
-          ${hasChildren ? '<span class="wb-treeview__toggle" style="width: 16px; font-size: 0.7rem; transition: transform 0.15s ease;">▶</span>' : '<span style="width: 16px;"></span>'}
-          <span class="wb-treeview__label">${node.name}</span>
+        " class="x-treeview__node" onmouseenter="this.style.background='var(--bg-tertiary,#374151)'" onmouseleave="this.style.background=''">
+          ${hasChildren ? '<span class="x-treeview__toggle" style="width: 16px; font-size: 0.7rem; transition: transform 0.15s ease;">▶</span>' : '<span style="width: 16px;"></span>'}
+          <span class="x-treeview__label">${node.name}</span>
         </div>
-        ${hasChildren ? `<div class="wb-treeview__children" style="display: none;">${node.children.map(c => renderNode(c, depth + 1)).join('')}</div>` : ''}
+        ${hasChildren ? `<div class="x-treeview__children" style="display: none;">${node.children.map(c => renderNode(c, depth + 1)).join('')}</div>` : ''}
       </div>
     `;
   };
@@ -575,11 +581,11 @@ export function treeview(element, options = {}) {
 
   // Toggle children visibility
   element.addEventListener('click', (e) => {
-    const toggle = e.target.closest('.wb-treeview__toggle');
+    const toggle = e.target.closest('.x-treeview__toggle');
     if (!toggle) return;
     
-    const item = toggle.closest('.wb-treeview__item');
-    const children = item?.querySelector('.wb-treeview__children');
+    const item = toggle.closest('.x-treeview__item');
+    const children = item?.querySelector('.x-treeview__children');
     
     if (children) {
       const isOpen = children.style.display !== 'none';
@@ -588,12 +594,12 @@ export function treeview(element, options = {}) {
     }
   });
 
-  return () => element.classList.remove('wb-treeview');
+  return () => element.classList.remove('x-treeview');
 }
 
 /**
  * BackToTop - Scroll to top button
- * Custom Tag: <wb-backtotop>
+ * Custom Tag: <div>
  */
 export function backtotop(element, options = {}) {
   const config = {
@@ -601,7 +607,7 @@ export function backtotop(element, options = {}) {
     ...options
   };
 
-  element.classList.add('wb-backtotop');
+  element.classList.add('x-backtotop');
   element.style.cursor = 'pointer';
   element.style.transition = 'opacity 0.3s ease';
 
@@ -618,14 +624,14 @@ export function backtotop(element, options = {}) {
   };
 
   return () => {
-    element.classList.remove('wb-backtotop');
+    element.classList.remove('x-backtotop');
     window.removeEventListener('scroll', updateVisibility);
   };
 }
 
 /**
  * Link - Clickable link that navigates to internal sections or external URLs
- * Custom Tag: <wb-link>
+ * Custom Tag: <div>
  * Validates URLs on click - turns red and logs error if invalid
  */
 export function link(element, options = {}) {
@@ -636,7 +642,7 @@ export function link(element, options = {}) {
     ...options
   };
 
-  element.classList.add('wb-link');
+  element.classList.add('x-link');
   element.style.cursor = 'pointer';
   element.style.color = 'var(--primary, #6366f1)';
   element.style.textDecoration = 'underline';
@@ -661,7 +667,7 @@ export function link(element, options = {}) {
   // Mark link as invalid (red)
   const markInvalid = (reason) => {
     element.style.color = 'var(--danger-color, #ef4444)';
-    element.classList.add('wb-link--invalid');
+    element.classList.add('x-link--invalid');
     element.title = reason;
     
     // Log to Events if available (builder debug log)
@@ -675,7 +681,7 @@ export function link(element, options = {}) {
   // Mark link as valid (restore color)
   const markValid = () => {
     element.style.color = 'var(--primary, #6366f1)';
-    element.classList.remove('wb-link--invalid');
+    element.classList.remove('x-link--invalid');
     element.title = '';
   };
 
@@ -752,12 +758,12 @@ export function link(element, options = {}) {
     }
   };
 
-  return () => element.classList.remove('wb-link');
+  return () => element.classList.remove('x-link');
 }
 
 /**
  * Statusbar - Bottom status bar
- * Custom Tag: <wb-statusbar>
+ * Custom Tag: <div>
  */
 export function statusbar(element, options = {}) {
   const config = {
@@ -766,7 +772,7 @@ export function statusbar(element, options = {}) {
     ...options
   };
 
-  element.classList.add('wb-statusbar');
+  element.classList.add('x-statusbar');
   element.style.display = 'flex';
   element.style.alignItems = 'center';
   element.style.justifyContent = 'space-between';
@@ -798,10 +804,10 @@ export function statusbar(element, options = {}) {
   }
 
   // Create message area
-  let messageArea = element.querySelector('.wb-statusbar__message');
+  let messageArea = element.querySelector('.x-statusbar__message');
   if (!messageArea) {
     messageArea = document.createElement('span');
-    messageArea.className = 'wb-statusbar__message';
+    messageArea.className = 'x-statusbar__message';
     messageArea.style.flex = '1';
     messageArea.style.textAlign = 'center';
     messageArea.style.fontWeight = '500';
@@ -864,7 +870,7 @@ export function statusbar(element, options = {}) {
   document.addEventListener('wb:status:message', handleStatusMessage);
 
   return () => {
-    element.classList.remove('wb-statusbar');
+    element.classList.remove('x-statusbar');
     document.removeEventListener('wb:status:message', handleStatusMessage);
   };
 }
