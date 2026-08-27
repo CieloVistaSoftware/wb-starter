@@ -7,13 +7,15 @@
   "properties": {
     "data-title": {
       "type": "boolean",
-      "description": "Read by accordion(). Bare attribute.",
-      "default": false
+      "description": "Read by accordion(). Bare attribute. Set on each accordion SECTION, not on the accordion element.",
+      "default": false,
+      "scope": "child"
     },
     "accordion-title": {
       "type": "boolean",
-      "description": "Read by accordion(). Bare attribute.",
-      "default": false
+      "description": "Read by accordion(). Bare attribute. Set on each accordion SECTION, not on the accordion element.",
+      "default": false,
+      "scope": "child"
     },
     "open": {
       "type": "boolean",
@@ -26,7 +28,8 @@
   },
   "_metadata": {
     "generatedBy": "scripts/generate-behavior-schemas.mjs (#716)",
-    "derivedFrom": "the behavior implementation — every property here is one the code actually reads",
+    "derivedFrom": "the behavior implementation \u2014 every property here is one the code actually reads",
     "note": "Expand by hand: enums, richer descriptions and accessibility notes cannot be read from source."
-  }
+  },
+  "_scopeNote": "Properties marked scope:\"child\" are read off each section, not off the host. collapse.js reads them via `child`/`sec`. They were scraped into this schema as host options by generate-behavior-schemas.mjs, which does not check the receiver (#861 category c) -- so every generated test set them on the host, where they can do nothing, and reported the behavior as broken."
 }

@@ -262,5 +262,20 @@
     "icon": "\ud83d\udcca",
     "since": "1.0.0",
     "status": "stable"
-  }
+  },
+  "dependentRequired": {
+    "headers": [
+      "rows"
+    ],
+    "rows": [
+      "headers"
+    ],
+    "data": [
+      "columns"
+    ],
+    "columns": [
+      "data"
+    ]
+  },
+  "_dependentRequiredNote": "headers renders nothing without rows, and rows nothing without headers -- same for data/columns. Declared so the generated permutation tests exercise the pair, instead of setting one attribute alone and concluding it does nothing."
 }

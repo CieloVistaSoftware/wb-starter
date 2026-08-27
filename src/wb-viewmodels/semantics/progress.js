@@ -1,3 +1,4 @@
+import { readFlag } from '../../core/read-attr.js';
 /**
  * Progress - a labeled, variant-colored fill bar
  * Helper Attribute: [x-behavior="progress"]
@@ -66,11 +67,17 @@ export function progress(element, options = {}) {
   const state = {
     value: parseFloat(options.value ?? host.getAttribute('value') ?? authoredValue ?? 0),
     max: parseFloat(options.max ?? host.getAttribute('max') ?? 100),
-    striped: options.striped ?? host.hasAttribute('striped'),
+    // readFlag, not hasAttribute: a bare `striped` must switch stripes ON and
+    // striped="false" must switch them OFF (#747). hasAttribute() got the
+    // first half right and the second backwards -- it sees the STRING "false"
+    // as presence, so striped="false" painted stripes.
+    striped: options.striped ?? readFlag(host, 'striped'),
     // Schema declares animated/indeterminate/showValue (progress.schema.json);
     // all three are read here, on the only path that renders.
-    animated: options.animated ?? (host.getAttribute('animated') !== 'false'),
-    indeterminate: options.indeterminate ?? host.hasAttribute('indeterminate'),
+    // animated's schema default is true, so an absent attribute stays on --
+    // but "false"/"0" now switch it off via the same shared helper.
+    animated: options.animated ?? readFlag(host, 'animated', true),
+    indeterminate: options.indeterminate ?? readFlag(host, 'indeterminate'),
     // The % label is built in by default (#280) -- no external .progress-label
     // span needed. `label="..."` overrides the text; `show-label="false"` hides
     // it. showValue appends the percentage alongside a CUSTOM label instead of

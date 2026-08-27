@@ -2226,6 +2226,41 @@
 
     input.addEventListener('input', () => applyFilter(input.value));
 
+    /**
+     * Type-to-search.
+     *
+     * John, pointing at the browse list: "typing keys here should filter eg
+     * prog should show all with that string etc."
+     *
+     * Making the bar sticky keeps it on screen, but a reader scrolling the
+     * list still has focus nowhere, so the first keystrokes were dropped until
+     * they thought to click the box first. Route a printable key straight to
+     * the search input, the way a file browser or a long <select> does.
+     *
+     * Deliberately narrow, so it cannot hijack anything:
+     *   - only printable single characters, so Tab/Escape/arrows still work
+     *   - no Ctrl/Meta/Alt, so Ctrl+F, Cmd+R and friends are untouched
+     *   - never while the reader is already in a field, which is what would
+     *     otherwise make the theme picker and every future input untypable
+     */
+    document.addEventListener('keydown', (e) => {
+      if (e.ctrlKey || e.metaKey || e.altKey) return;
+      if (e.key.length !== 1) return;
+      if (document.activeElement === input) return;
+
+      const el = document.activeElement;
+      const tag = el && el.tagName ? el.tagName.toLowerCase() : '';
+      if (tag === 'input' || tag === 'textarea' || tag === 'select' || (el && el.isContentEditable)) return;
+
+      // Focus AND append the character: letting the keystroke through on its
+      // own is unreliable across browsers, and swallowing it loses the first
+      // letter the reader typed, which is its own small bug.
+      e.preventDefault();
+      input.focus();
+      input.value += e.key;
+      applyFilter(input.value);
+    });
+
     // #766: changing the filter re-runs the same query, so the search text and
     // the form choice compose instead of overriding each other.
     //

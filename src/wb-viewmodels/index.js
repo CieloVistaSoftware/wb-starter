@@ -44,7 +44,9 @@ const exportAliases = {
   searchfield: 'searchField',
   // x-copybutton (#291) — copy.js exports the function as `copyButton`
   // (camelCase), but the behavior/attribute name is lowercase `copybutton`.
-  copybutton: 'copyButton'
+  copybutton: 'copyButton',
+  // progressbar resolves to semantics/progress.js, whose export is progress().
+  progressbar: 'progress'
 };
 
 /**
@@ -85,7 +87,16 @@ const behaviorModules = {
 
   // UI Core
   demo: 'demo',
-  progressbar: 'progressbar',
+  // x-progressbar is the SAME control as x-progress, not a second one.
+  // tag-map.js:136 already resolves '[x-progressbar]' -> 'progress', so a
+  // normal scan got semantics/progress.js. But anything that derives the
+  // name by stripping the x- prefix (the behaviors showcase does exactly
+  // that) landed on 'progressbar' and loaded a SECOND, divergent module:
+  // different class names (x-progress-bar vs x-progress__bar), inline
+  // styles instead of CSS, and a `striped` that only responded to
+  // striped="true" -- so a bare `striped` rendered a plain bar on the
+  // showcase while working everywhere else. One behavior, one module.
+  progressbar: 'semantics/progress',
   modal: 'semantics/dialog',
   dialog: 'semantics/dialog',
   tooltip: 'tooltip',

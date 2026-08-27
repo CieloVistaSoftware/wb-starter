@@ -21,12 +21,29 @@
    show all of them" -- JS lives inline at the bottom of behaviors.html
    (matches each x-demo's captured _rawSource against the query).
    ═══════════════════════════════════════════════════════════════════ */
+/* John: "typing keys here should filter eg prog should show all with that
+   string etc."
+
+   The filter always worked -- what did not was reaching it. This was
+   `position: static`, so scrolling into the list took the search box off
+   screen entirely (measured at top:-444 in a 720px viewport), focus went
+   nowhere, and every keystroke fell on the floor. A feature that works and
+   cannot be reached is, to the person using it, broken.
+
+   Sticky keeps it in place while the 754-row list scrolls under it. The
+   background is required: a transparent sticky bar lets rows scroll visibly
+   through the text. */
 .behaviors-search {
   display: flex;
   align-items: center;
   gap: var(--space-md, 1rem);
   margin-top: var(--space-lg, 1.5rem);
   max-width: 40rem;
+  position: sticky;
+  top: 0;
+  z-index: 5;
+  background: var(--bg-primary);
+  padding-block: var(--space-sm, 0.5rem);
 }
 
 .behaviors-search input[type="search"] {
@@ -688,11 +705,28 @@ footer a:hover {
      content is a content panel like any other -- the top was 0 and the first
      heading sat flush against the summary divider. */
   padding: 1rem;
-  max-height: 24rem;
+  /* John: "when docs, or api are pressed... the element that pops up must
+     expand to take up all the space."
+
+     This was a flat `max-height: 24rem` -- a fixed cap that ignored how much
+     room the panel actually had, so a full-height screen still showed a short
+     box with its own scrollbar and most of the doc hidden. Tie the cap to the
+     VIEWPORT instead, so the panel uses the space in front of the reader and
+     only scrolls once the document genuinely exceeds it. The subtraction
+     leaves room for the site header, the search row and the panel chrome
+     above it. */
+  max-height: calc(100vh - 14rem);
   overflow-y: auto;
   text-align: left;
   font-size: 0.85rem;
   line-height: 1.6;
+}
+
+/* Same for the API table: opened, it should fill the panel rather than sit in
+   a short window of its own. */
+.behaviors-live__api-body {
+  max-height: calc(100vh - 14rem);
+  overflow-y: auto;
 }
 
 /* Rendered markdown needs normal flow, and must not inherit the hero's
@@ -1542,4 +1576,3 @@ main.site__main:has(#mainPage-behaviors) {
 #behaviors-hero.page__hero {
   padding-top: 0;
 }
-

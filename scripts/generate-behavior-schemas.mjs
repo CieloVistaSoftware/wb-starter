@@ -111,23 +111,42 @@ function analyse(name) {
 
   const properties = {};
 
+  // The RECEIVER decides whether this is an option on the host at all.
+  //
+  // These patterns used to match a bare `getAttribute('x')` with no idea what
+  // it was called on, so an attribute the behavior reads off a CHILD landed
+  // here as if it were a host option -- #861 category (c). Every generated
+  // test then set it on the host, where it can do nothing, and reported the
+  // behavior as broken. Capture the receiver and say which element the
+  // attribute belongs to instead of guessing it is the host.
+  const HOST_RECEIVER = /^(element|host|el|this)$/i;
+  const scopeFor = (receiver) => (HOST_RECEIVER.test(receiver) ? undefined : 'child');
+  const noteFor = (receiver) =>
+    HOST_RECEIVER.test(receiver) ? '' : ` Set on each child (read via \`${receiver}\`), not on the host.`;
+
   // `getAttribute('speed') || '40'`  /  `?? 'left'` -> a default we can state.
-  for (const m of body.matchAll(/getAttribute\(\s*'([^']+)'\s*\)\s*(?:\|\||\?\?)\s*'([^']*)'/g)) {
-    const attr = kebab(m[1]);
+  for (const m of body.matchAll(/([A-Za-z_$][\w$]*)\s*\.\s*getAttribute\(\s*'([^']+)'\s*\)\s*(?:\|\||\?\?)\s*'([^']*)'/g)) {
+    const attr = kebab(m[2]);
     if (NOT_OPTIONS.has(attr)) continue;
-    properties[attr] = { type: 'string', description: `Read by ${name}().`, default: m[2] };
+    const scope = scopeFor(m[1]);
+    properties[attr] = { type: 'string', description: `Read by ${name}().${noteFor(m[1])}`, default: m[3] };
+    if (scope) properties[attr].scope = scope;
   }
   // Any other getAttribute -> a string option with no stated default.
-  for (const m of body.matchAll(/getAttribute\(\s*'([^']+)'/g)) {
-    const attr = kebab(m[1]);
+  for (const m of body.matchAll(/([A-Za-z_$][\w$]*)\s*\.\s*getAttribute\(\s*'([^']+)'/g)) {
+    const attr = kebab(m[2]);
     if (NOT_OPTIONS.has(attr) || properties[attr]) continue;
-    properties[attr] = { type: 'string', description: `Read by ${name}().` };
+    const scope = scopeFor(m[1]);
+    properties[attr] = { type: 'string', description: `Read by ${name}().${noteFor(m[1])}` };
+    if (scope) properties[attr].scope = scope;
   }
   // hasAttribute -> a bare boolean (§20).
-  for (const m of body.matchAll(/hasAttribute\(\s*'([^']+)'/g)) {
-    const attr = kebab(m[1]);
-    if (NOT_OPTIONS.has(attr)) continue;
-    properties[attr] = { type: 'boolean', description: `Read by ${name}(). Bare attribute.`, default: false };
+  for (const m of body.matchAll(/([A-Za-z_$][\w$]*)\s*\.\s*hasAttribute\(\s*'([^']+)'/g)) {
+    const attr = kebab(m[2]);
+    if (NOT_OPTIONS.has(attr) || properties[attr]) continue;
+    const scope = scopeFor(m[1]);
+    properties[attr] = { type: 'boolean', description: `Read by ${name}(). Bare attribute.${noteFor(m[1])}`, default: false };
+    if (scope) properties[attr].scope = scope;
   }
 
   const events = [...new Set([...body.matchAll(/CustomEvent\(\s*'([^']+)'/g)].map((m) => m[1]))];

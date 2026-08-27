@@ -1,4 +1,5 @@
 import { test, expect, Page, Locator } from '@playwright/test';
+import { pairwiseCases } from '../../scripts/lib/pairwise.mjs';
 import * as fs from 'fs';
 import * as path from 'path';
 
@@ -282,7 +283,14 @@ function loadSchemas(): Map<string, Schema> {
 // behavior through auto-injection, and testing the semantic host is more
 // faithful than forcing a div on it.
 function generateHtml(behavior: string, props: Record<string, any>, content: string = 'Test Content', tagName?: string): string {
-  const bare = behavior.replace(/^wb-/, '');
+  // Strip an existing x- prefix as well as the retired wb-.
+  //
+  // Schemas whose schemaFor already begins with x- (x-clock, x-flex, x-img,
+  // x-gallery, x-notify, ...) were rendered as `<div x-x-clock>` -- an
+  // attribute no behavior is registered under, so NOTHING attached and the
+  // probe reported every one of them as broken. #861 named this exact defect
+  // and it was still live here.
+  const bare = behavior.replace(/^(?:wb-|x-)/, '');
   // An explicit semantic element from the schema wins; otherwise a neutral
   // host carrying x-<behavior>.
   const semantic = tagName && tagName !== 'div' ? tagName : null;
@@ -299,10 +307,43 @@ function generateHtml(behavior: string, props: Record<string, any>, content: str
     if (typeof value === 'boolean') {
       if (value) attrs += ` ${attrName}`;
     } else {
-      attrs += ` ${attrName}="${value}"`;
+      // ESCAPE. A value containing a double quote used to end the attribute
+      // early and turn the rest into garbage attributes -- the same defect
+      // that made <table rows='[["a"]]'> render an empty table. Schema
+      // defaults and examples include JSON, so this is not hypothetical.
+      const safe = String(value).replace(/&/g, '&amp;').replace(/"/g, '&quot;');
+      attrs += ` ${attrName}="${safe}"`;
     }
   }
-  return `<${tag}${attrs}>${content}</${tag}>`;
+  return `<${tag}${attrs}>${childContent(behavior, content)}</${tag}>`;
+}
+
+/**
+ * Content for the generated host.
+ *
+ * A bare text node is wrong for every behavior that BUILDS from child
+ * elements -- accordion reads its sections, tabs its panels, articles its
+ * items. Handed only text, those behaviors correctly build nothing, and the
+ * probe then reports them as broken. That is what produced 28 false failures
+ * the first time combinations were switched on.
+ *
+ * Keyed off what the behavior actually consumes, not a guess per name.
+ */
+const CHILD_BUILDERS: Record<string, string> = {
+  accordion: '<div accordion-title="One">First body</div><div accordion-title="Two">Second body</div>',
+  collapse: '<div accordion-title="One">First body</div>',
+  tabs: '<div tab-title="One">First panel</div><div tab-title="Two">Second panel</div>',
+  articles: '<article x-article title="One"></article><article x-article title="Two"></article>',
+  cluster: '<span>one</span><span>two</span>',
+  stack: '<span>one</span><span>two</span>',
+  grid: '<span>one</span><span>two</span>',
+  list: '<li>one</li><li>two</li>',
+  steps: '<div>Step one</div><div>Step two</div>',
+  timeline: '<div>Event one</div><div>Event two</div>',
+};
+
+function childContent(behavior: string, fallback: string): string {
+  return CHILD_BUILDERS[behavior.replace(/^x-/, '')] ?? fallback;
 }
 
 /**
@@ -584,6 +625,10 @@ test.describe('Component Compliance', () => {
       for (const [propName, propDef] of Object.entries(schema.properties || {})) {
         // Schema plumbing and sibling behavior tokens are not options.
         if (/^[$_]/.test(propName) || /^x-/.test(propName)) continue;
+        // scope:"child" means the behavior reads this off a SECTION, not off
+        // the host (#861 category c). Setting it on the host tests nothing and
+        // then blames the behavior for not reacting.
+        if ((propDef as any).scope === 'child') continue;
 
         // No `if (!propDef.permutations) continue;` any more -- that skipped
         // every one of the 639 declared properties, because none declares the
@@ -626,6 +671,74 @@ test.describe('Component Compliance', () => {
         }
       }
       
+      // ========== CHECK 5b: Pairwise Combinations ==========
+      //
+      // John: "but our permutation formula should have taken care of that?"
+      //
+      // It should have, and there was no formula -- CHECK 5 above sets ONE
+      // attribute at a time, so no two attributes were ever present together.
+      // <table headers rows> was therefore never rendered: headers alone shows
+      // nothing and rows alone shows nothing, so both scored as inert while
+      // the documented pair worked perfectly.
+      //
+      // Pairwise, not exhaustive: table declares 15 attributes, which is 32,768
+      // renders at two values each. All-pairs guarantees every pair of
+      // attribute-values appears together at least once -- the depth these
+      // bugs actually live at -- in tens of cases instead.
+      {
+        const params = Object.entries(schema.properties || {})
+          .filter(([n]) => !/^[$_]/.test(n) && !/^x-/.test(n))
+          // Child-scoped attributes belong on a section, not the host.
+          .filter(([, d]: [string, any]) => d?.scope !== 'child')
+          .map(([n, d]: [string, any]) => ({ name: n, values: getPermutationValues(d) }))
+          .filter((p) => p.values.length > 0);
+
+        if (params.length > 1) {
+          const { cases, coveredPairs, totalPairs, truncated } = pairwiseCases(params, {
+            max: 40,
+            dependentRequired: schema.dependentRequired || {},
+          });
+
+          // No silent caps: say what was dropped rather than reporting a clean
+          // run over a subset.
+          if (truncated) {
+            console.log(
+              `[PAIRWISE] ${behaviorName}: capped at 40 cases — ` +
+              `${coveredPairs}/${totalPairs} attribute pairs covered`,
+            );
+          }
+
+          for (const combo of cases) {
+            const html = generateHtml(behaviorName, combo, 'Test Content', schema.element);
+            const el = await setupTestContainer(page, html);
+
+            // "Initialized" must cover every way a behavior can leave a mark.
+            //
+            // A whole family of layout behaviors (#448) deliberately adds NO
+            // class and builds NO children -- x-masonry, x-cluster and friends
+            // only set inline styles on the host. Judging them by class or
+            // children reported working controls as broken, which is how this
+            // probe manufactured false failures before.
+            //
+            // generateHtml never emits a style attribute, so any inline style
+            // present after the scan was written by the behavior.
+            const initialized = await el.evaluate((e, cls) =>
+              (cls ? e.classList.contains(cls) : false) ||
+              e.hasAttribute('x-schema') ||
+              e.children.length > 0 ||
+              /x-/.test(e.className || '') ||
+              (e.getAttribute('style') || '').trim().length > 0,
+            schema.compliance?.baseClass || '');
+
+            if (!initialized) {
+              allErrors.push(
+                `[PAIRWISE] ${JSON.stringify(combo)}: component did not initialize`,
+              );
+            }
+          }
+        }
+      }
+
       // ========== CHECK 6: Matrix Combinations ==========
       if (schema.test?.matrix?.combinations) {
         for (const combo of schema.test.matrix.combinations) {
@@ -660,7 +773,9 @@ test.describe('Component Compliance', () => {
             if (btnTest.steps && Array.isArray(btnTest.steps)) {
               for (const step of btnTest.steps) {
                 if (step.action === 'click') {
-                  const stepBtn = await el.locator(step.selector).first();
+                  // locator() returns a Locator, not a Promise -- awaiting it is a
+                  // no-op that reads as if the query were async.
+                  const stepBtn = el.locator(step.selector).first();
                   await stepBtn.click();
                   await page.waitForTimeout(100);
                 }

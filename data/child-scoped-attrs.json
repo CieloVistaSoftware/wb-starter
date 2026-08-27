@@ -1,0 +1,17 @@
+[
+  {
+    "behavior": "accordion",
+    "prop": "data-title",
+    "receivers": [
+      "sec"
+    ]
+  },
+  {
+    "behavior": "accordion",
+    "prop": "accordion-title",
+    "receivers": [
+      "child",
+      "sec"
+    ]
+  }
+]
