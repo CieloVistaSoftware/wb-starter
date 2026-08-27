@@ -52,7 +52,7 @@
 
         code { font-family: "Fira Code", monospace; font-size: 0.9rem; color: var(--code-text); }
 
-        /* Toggle button styles handled by inline styles or button component */
+        /* Toggle button styles handled by inline styles or button behavior */
 
         /* Demo Helpers */
         .box {

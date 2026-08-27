@@ -312,22 +312,22 @@ test.describe('Site Schema — Page Entries', () => {
         expect(typeof page.title).toBe('string');
       });
 
-      test(`${label} — has required components (array)`, () => {
-        expect(Array.isArray(page.components), `"components" must be an array`).toBe(true);
-        expect(page.components.length, `must list at least 1 component`).toBeGreaterThan(0);
+      test(`${label} — has required behaviors (array)`, () => {
+        expect(Array.isArray(page.behaviors), `"behaviors" must be an array`).toBe(true);
+        expect(page.behaviors.length, `must list at least 1 behavior`).toBeGreaterThan(0);
       });
     }
   }
 });
 
-test.describe('Site Schema — Component References Exist', () => {
+test.describe('Site Schema — Behavior References Exist', () => {
   for (const { name, data } of siteFiles) {
     for (let i = 0; i < (data.pages?.length ?? 0); i++) {
       const page = data.pages[i];
-      if (!Array.isArray(page.components)) continue;
+      if (!Array.isArray(page.behaviors)) continue;
 
-      for (const comp of page.components) {
-        test(`${name} pages[${i}] "${page.id}" — component "${comp}" has a schema`, () => {
+      for (const comp of page.behaviors) {
+        test(`${name} pages[${i}] "${page.id}" — behavior "${comp}" has a schema`, () => {
           const schema = loadComponentSchema(comp);
           expect(schema, `${comp}.schema.json not found`).toBeTruthy();
         });

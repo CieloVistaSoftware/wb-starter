@@ -8,13 +8,13 @@ test('content.html visibly demonstrates featured articles and article layouts', 
   await page.goto('/demos/site/content.html');
   await page.waitForSelector('x-article .x-article__content');
 
-  const featured = page.locator('#article-article-component x-article[featured]').first();
+  const featured = page.locator('#article-article-behavior x-article[featured]').first();
   await expect(featured.locator('.x-article__title')).toHaveText('The Future of Web Standards');
   await expect(featured.locator('.x-article__media img')).toBeVisible();
   await expect(featured.locator('.x-article__meta')).toContainText('Web Platform');
   await expect(featured.locator('.x-article__content')).toContainText('featured story');
 
-  const articleLists = page.locator('#articles-articles-list-component x-articles');
+  const articleLists = page.locator('#articles-articles-list-behavior x-articles');
   await expect(articleLists).toHaveCount(3);
   await expect(articleLists.nth(0).locator('.x-articles__header h2')).toHaveText('Grid layout');
   await expect(articleLists.nth(0).locator('.x-articles__list')).toHaveClass(/x-articles--grid/);

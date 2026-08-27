@@ -4,7 +4,7 @@ Turns a set of titled child sections into independently expandable/collapsible i
 
 > ⚠️ **Deprecated.** `<div x-accordion>` / `x-accordion` still work and are documented
 > here for existing markup, but new pages should use the native
-> [`<details>`/`<summary>`](../components/semantics/details.md) element instead —
+> [`<details>`/`<summary>`](../behaviors/semantics/details.md) element instead —
 > it needs no JavaScript, works out of the box with assistive tech, and doesn't
 > carry the quirks described below. Using `<div x-accordion>` specifically also logs
 > a one-time `console.warn` in the browser console.
@@ -16,7 +16,7 @@ Turns a set of titled child sections into independently expandable/collapsible i
 | Attribute | `x-accordion` |
 | Attribute form | `<div x-accordion>` |
 | Behavior function | `accordion()` — module `collapse` (`src/wb-viewmodels/collapse.js`) |
-| Recommended replacement | `<details>`/`<summary>` — see [details](../components/semantics/details.md) |
+| Recommended replacement | `<details>`/`<summary>` — see [details](../behaviors/semantics/details.md) |
 | Root CSS Class | `<div x-accordion>` (host), `.x-accordion-item` (each item) |
 | Category | Interactive |
 | Schema | none (no `accordion.schema.json`) |

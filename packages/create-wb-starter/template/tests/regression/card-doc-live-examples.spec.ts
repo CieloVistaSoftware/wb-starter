@@ -1,10 +1,10 @@
 import { test, expect } from '@playwright/test';
 import { readFileSync } from 'fs';
 
-const CARD_DOC = 'docs/components/cards/card.md';
+const CARD_DOC = 'docs/behaviors/cards/card.md';
 const RENDERABLE = /<(wb-[a-z-]+)[\s>]|\sx-[a-z][a-z0-9-]*(=|[\s>])/;
 
-test.describe('card component documentation examples (#419)', () => {
+test.describe('card behavior documentation examples (#419)', () => {
   test('keeps executable examples live and generated structure explanatory', () => {
     const text = readFileSync(CARD_DOC, 'utf8');
     const demos = [...text.matchAll(/<div x-demo\b[^>]*>([\s\S]*?)<\/x-demo>/gi)]

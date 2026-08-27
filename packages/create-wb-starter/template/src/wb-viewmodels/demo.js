@@ -80,7 +80,7 @@ function parseEventNames(raw) {
         .filter(Boolean);
 }
 
-// John, live on docs/components/semantics/table.md's row-click example:
+// John, live on docs/behaviors/semantics/table.md's row-click example:
 // x-table's `wb:table:select` event carries `{ row: <tr>, index }` --
 // `JSON.stringify(e.detail)` on that serializes the real DOM element to
 // `{}` (Element has no own enumerable properties), so the events-log entry
@@ -152,7 +152,7 @@ function loadDocsManifest() {
     return _docsManifestPromise;
 }
 
-// Find the doc file (relative to docs/) for a component name, by basename match:
+// Find the doc file (relative to docs/) for a behavior name, by basename match:
 // 'card' → …/card.md, 'column' → …/x-column.md. Returns null when no doc exists.
 function findDocFile(manifest, comp) {
     if (!manifest || !Array.isArray(manifest.categories)) return null;
@@ -199,7 +199,7 @@ function findXBehaviors(html) {
 }
 
 // Same basename-match strategy as findDocFile, plus a fallback: unlike
-// wb-* components (one doc file per component), most x-* behaviors are
+// wb-* behaviors (one doc file per behavior), most x-* behaviors are
 // documented as a table ROW inside docs/behaviors-reference.md rather than
 // their own page (only a handful -- tooltip, autosize, x-collapse, etc. --
 // get a dedicated file). Falling back to that shared reference page keeps
@@ -223,16 +223,16 @@ function findBehaviorDocFile(manifest, name) {
 }
 
 // #388/#390: attach a small top-right doc-link "badge" directly onto ONE
-// component instance, instead of relying on the single shared
+// behavior instance, instead of relying on the single shared
 // '.x-demo__links' line below the whole grid (which reads as detached from
 // any individual instance once a demo holds more than one). Originally
-// card-only (#388); generalized to every wb-* component (#390) after the
+// card-only (#388); generalized to every wb-* behavior (#390) after the
 // same "Docs: x-dialog" shared-line pattern read just as detached on
 // non-card demos (dialog/drawer/dropdown, demos/site/overlays.html) --
 // same problem, same fix, no reason to treat cards specially here.
 //
 // Why a self-healing MutationObserver instead of a single appendChild: a
-// component's own behavior (card.js, overlay.js, dropdown.js, etc.) is
+// behavior's own behavior (card.js, overlay.js, dropdown.js, etc.) is
 // applied lazily via WB's IntersectionObserver-driven injection (wb-lazy.js)
 // on its own schedule, independent of this demo's build order -- and many
 // behaviors rebuild via `element.innerHTML = ''` before laying out their
@@ -269,11 +269,11 @@ function attachInstanceDocLink(hostEl, file, label, root, anchorEl) {
     // plain x-alert, ...) are position:static. With no positioned
     // ancestor at all, the badge's containing block falls back to the
     // *viewport* (the initial containing block), so it renders pinned near
-    // the top-right of the whole page instead of the small component it's
+    // the top-right of the whole page instead of the small behavior it's
     // meant to label -- confirmed live: overflowed the page by 9px at
     // 375px on docs/V3-GUIDE.md's embedded <div x-demo>. Force a positioning
     // context only when one doesn't already exist, so this is a no-op for
-    // every component (like x-card) that already provides one.
+    // every behavior (like x-card) that already provides one.
     if (getComputedStyle(anchor).position === 'static') {
         anchor.style.position = 'relative';
     }
@@ -283,7 +283,7 @@ function attachInstanceDocLink(hostEl, file, label, root, anchorEl) {
         // outer <div x-demo> now (see above), shared by every instance in the
         // grid, so a same-file dedup is what collapses e.g. six x-badge
         // variants pointing at the same badge.md down to ONE icon. A grid
-        // mixing genuinely different components (rare) still gets one icon
+        // mixing genuinely different behaviors (rare) still gets one icon
         // per distinct file -- see demo.css's `~` sibling offset for how a
         // second, different-file icon avoids stacking on top of the first.
         const existing = Array.from(anchor.querySelectorAll(':scope > a.x-demo__card-doc-link'));
@@ -425,15 +425,15 @@ export async function demo(element, options = {}) {
     // Add doc links. (#262: the old '?page=docs#wb-…' hrefs were
     // dead on EVERY surface — page-relative, so inside the doc-viewer they hit
     // doc-viewer.html?page=docs, and pages/docs.html has no #wb-* anchors anyway.)
-    // Link each component to its REAL doc opened in the doc-viewer, resolved from
-    // docs/manifest.json. Components with no doc get NO link — never a dead link.
+    // Link each behavior to its REAL doc opened in the doc-viewer, resolved from
+    // docs/manifest.json. Behaviors with no doc get NO link — never a dead link.
     //
     // #388/#390: any wb-* child of the grid gets its OWN top-right link
     // (attachInstanceDocLink above) instead of being folded into the
     // generic shared line — a multi-instance demo used to read as one
     // detached caption under the whole group, not tied to any individual
     // element. Originally card-only (#388); generalized to every wb-*
-    // component (#390) so a page like demos/site/overlays.html
+    // behavior (#390) so a page like demos/site/overlays.html
     // (dialog/drawer/dropdown, no cards at all) gets the same per-instance
     // placement instead of falling back to the shared line. Only things
     // that never resolve to a real wb-* element in the grid (a plain
@@ -451,10 +451,10 @@ export async function demo(element, options = {}) {
     // confirmed live, both anchors reachable. Re-included per explicit
     // request: "put all links on the card itself, upper right hand
     // corner" -- no carve-outs, every card including cardlink gets one.
-    // #434: querySelectorAll('*'), not grid.children -- a wb-* component
+    // #434: querySelectorAll('*'), not grid.children -- a wb-* behavior
     // wrapped inside a plain <div> (e.g. bundled alongside a stylesheet
     // link/script as a self-contained "view source" example) is a real,
-    // documented component just as much as a direct grid child, but
+    // documented behavior just as much as a direct grid child, but
     // grid.children only sees the wrapping <div>, silently falling through
     // to the deprecated shared "Docs: x-x" line below the grid instead of
     // its own per-instance corner badge (confirmed live: pages/home.html's
@@ -485,8 +485,8 @@ export async function demo(element, options = {}) {
         // (WB-* tags), so every x-* behavior fell through to the shared
         // "Docs: x-toast" text line below the whole grid instead. Give each
         // ELEMENT THAT ACTUALLY CARRIES the attribute its own corner badge,
-        // the same as a wb-* component gets, instead of a second, different
-        // treatment for behaviors vs. components. `x-as-{name}` (morphing
+        // the same as a wb-* behavior gets, instead of a second, different
+        // treatment for behaviors vs. behaviors. `x-as-{name}` (morphing
         // syntax) needs its own selector -- `[x-${name}]` alone won't match it.
         const resolvedXBehaviorNames = new Set();
         xBehaviors.forEach((name) => {
@@ -841,7 +841,7 @@ export async function demo(element, options = {}) {
                     // the pre-gutter width is itself steady for several ticks
                     // it reads as "stable" and gets locked in -- the panel
                     // then reports scrollWidth > clientWidth forever after.
-                    // Confirmed live: docs/components/semantic/address.md,
+                    // Confirmed live: docs/behaviors/semantic/address.md,
                     // scrollWidth=474 against clientWidth=460 on a sample
                     // whose longest line is only 48 characters.
                     //

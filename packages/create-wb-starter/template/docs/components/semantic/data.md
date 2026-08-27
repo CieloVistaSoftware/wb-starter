@@ -8,7 +8,7 @@ The `<data>` element links content with a machine-readable value. In WB-Starter,
 - The `value` attribute contains the machine-readable form
 - Useful for numbers, codes, prices, measurements
 
-## WB Components Using `<data>`
+## WB Behaviors Using `<data>`
 
 ### 1. Card Stats (`cardstats`)
 

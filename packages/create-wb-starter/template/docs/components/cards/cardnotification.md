@@ -34,7 +34,7 @@ The behavior does **not** rebuild the DOM when the schema has already processed 
 | `icon` | string | auto | Custom icon (overrides variant-based letter) |
 | `elevated` | boolean | `false` | Add shadow elevation |
 
-Wrapped in `<div x-demo>`, so the live component renders below with its source shown underneath:
+Wrapped in `<div x-demo>`, so the live behavior renders below with its source shown underneath:
 
 <div x-demo>
 <div x-cardnotification

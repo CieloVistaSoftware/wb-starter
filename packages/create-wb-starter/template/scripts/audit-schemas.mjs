@@ -1,7 +1,7 @@
 /**
  * Schema Compliance Audit v2 — Tier-Aware
  * Checks every .schema.json against schema.schema.json requirements
- * respecting schemaType: "component" | "base" | "definition"
+ * respecting schemaType: "behavior" | "base" | "definition"
  */
 import fs from 'fs';
 import path from 'path';
@@ -13,14 +13,14 @@ function auditFile(filePath, relativePath) {
   try {
     const content = JSON.parse(fs.readFileSync(filePath, 'utf8'));
     const issues = [];
-    const tier = content.schemaType || 'component';
+    const tier = content.schemaType || 'behavior';
 
     // ALL tiers require title + description
     if (!content.title) issues.push('missing title');
     if (!content.description) issues.push('missing description');
 
-    // Component tier: full rules
-    if (tier === 'component') {
+    // Behavior tier: full rules
+    if (tier === 'behavior') {
       if (!content.properties) issues.push('missing properties');
       if (content.$view === undefined) issues.push('missing $view');
       if (content.$methods === undefined) issues.push('missing $methods');
@@ -32,9 +32,9 @@ function auditFile(filePath, relativePath) {
       if (!content.properties) issues.push('missing properties');
     }
 
-    // Component + Base: check property type + default. Behavior schemas are
-    // metadata for x-* modifiers, not component property contracts.
-    if ((tier === 'component' || tier === 'base') && content.properties && typeof content.properties === 'object') {
+    // Behavior + Base: check property type + default. Behavior schemas are
+    // metadata for x-* modifiers, not behavior property contracts.
+    if ((tier === 'behavior' || tier === 'base') && content.properties && typeof content.properties === 'object') {
       for (const [propName, propDef] of Object.entries(content.properties)) {
         if (propName.startsWith('$') || propName.startsWith('_')) continue;
         if (typeof propDef !== 'object' || propDef === null) continue;
@@ -70,7 +70,7 @@ function walkDir(dir, base) {
 walkDir(modelsDir, modelsDir);
 
 // Tier counts
-const tierCounts = { component: 0, base: 0, definition: 0 };
+const tierCounts = { behavior: 0, base: 0, definition: 0 };
 for (const p of results.pass) tierCounts[p.tier]++;
 for (const f of results.fail) if (tierCounts[f.tier] !== undefined) tierCounts[f.tier]++;
 
@@ -79,7 +79,7 @@ console.log(`Total: ${results.pass.length + results.fail.length}`);
 console.log(`Pass:  ${results.pass.length}`);
 console.log(`Fail:  ${results.fail.length}`);
 console.log(`\nBy Tier:`);
-console.log(`  Component:  ${tierCounts.component}`);
+console.log(`  Behavior:  ${tierCounts.behavior}`);
 console.log(`  Base:       ${tierCounts.base}`);
 console.log(`  Definition: ${tierCounts.definition}`);
 

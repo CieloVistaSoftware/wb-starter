@@ -2,7 +2,7 @@
 
 A premium custom audio player with a 15-band graphic equalizer, Web Audio API support, and advanced controls. Requires a `src` -- there is no default track (a src-less `<audio>` throws, #433).
 
-Wrapped in `<div x-demo>`, so the live component renders below with its source shown underneath:
+Wrapped in `<div x-demo>`, so the live behavior renders below with its source shown underneath:
 
 <div x-demo>
 <audio src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3"></audio>

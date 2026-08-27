@@ -3,7 +3,7 @@
  * Fixes minor demo violations:
  * - Missing <title> tags
  * - Missing data-theme
- * - Missing WB import for wb-* component usage
+ * - Missing WB import for wb-* behavior usage
  */
 import { readFileSync, writeFileSync } from 'fs';
 import { join } from 'path';

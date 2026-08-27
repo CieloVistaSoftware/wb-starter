@@ -2,7 +2,7 @@
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "timeline.schema.json",
   "title": "Timeline",
-  "description": "Vertical timeline component for displaying sequential events",
+  "description": "Vertical timeline behavior for displaying sequential events",
   "schemaFor": "timeline",
   "baseClass": "x-timeline",
   "semanticElement": {

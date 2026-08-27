@@ -225,7 +225,7 @@ export function drawer(element, options = {}) {
     // Plain title/content match drawer.schema.json's actual property names.
     // drawer-title/drawer-content stay as a fallback for the legacy
     // [x-drawer] attribute usage (plain <button x-drawer drawer-title="…">,
-    // e.g. pages/components.html) which predates the schema and never used
+    // e.g. pages/behaviors.html) which predates the schema and never used
     // the schema's naming.
     //
     // No more hardcoded 'Drawer'/'Drawer content' placeholders (#overlays.html
@@ -378,7 +378,7 @@ export function drawer(element, options = {}) {
     // drawer is the reference pattern; drawerLayout() in layouts.js is a
     // different, persistent sidebar primitive with no page-push behavior to
     // borrow from, confirmed by reading it). 'default' and 'overlay' both
-    // use the dimming backdrop -- docs/components/drawer.md documents no
+    // use the dimming backdrop -- docs/behaviors/drawer.md documents no
     // distinct treatment for 'default', and the schema's own declared
     // default IS 'overlay', so 'default' is treated as an explicit alias
     // for 'overlay' rather than inventing a third undocumented interaction.

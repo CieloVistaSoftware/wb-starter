@@ -32,7 +32,7 @@ import { tooltip as tooltipBehavior } from './tooltip.js';
 
 // Always-on, dedicated cardimage/cardvideo load tracing -- this exact failure
 // ("video/image cards not rendering") keeps recurring, especially on the
-// FIRST navigation to Components coming from Home/Behaviors, and needs to
+// FIRST navigation to Behaviors coming from Home/Behaviors, and needs to
 // stay traceable rather than re-diagnosed from scratch each time. Separate
 // from media-load-retry.js's own tracing (which only fires on a genuine
 // 'error'/timeout) -- this ALSO catches the "built fine, then silently
@@ -99,7 +99,7 @@ const VAR_BG_TERTIARY = 'var(--bg-tertiary,#1e293b)';
 const VAR_BG_SECONDARY = 'var(--bg-secondary,#1f2937)';
 const VAR_PRIMARY = 'var(--primary,#6366f1)';
 
-// Common Component Styles
+// Common Behavior Styles
 // flex-shrink:0 -- without it, the CSS flexbox spec's automatic minimum
 // size (min-height:auto) is ignored on a flex item whose ancestor sets
 // overflow:hidden (the card does), letting this header shrink below its
@@ -757,7 +757,7 @@ export function composeCard(element, options = {}) {
 }
 
 /**
- * Card Component
+ * Card Behavior
  * Custom Tag: <article>
  */
 export function card(element, options = {}) {
@@ -823,7 +823,7 @@ export function card(element, options = {}) {
 }
 
 /**
- * Card Image Component
+ * Card Image Behavior
  * Custom Tag: <div x-cardimage>
  */
 export function cardimage(element, options = {}) {
@@ -889,7 +889,7 @@ export function cardimage(element, options = {}) {
 }
 
 /**
- * Card Video Component
+ * Card Video Behavior
  * Custom Tag: <div x-cardvideo>
  */
 export function cardvideo(element, options = {}) {
@@ -957,7 +957,7 @@ export function cardvideo(element, options = {}) {
 }
 
 /**
- * Card Button Component
+ * Card Button Behavior
  * Custom Tag: <div x-cardbutton>
  */
 export function cardbutton(element, options = {}) {
@@ -992,7 +992,7 @@ export function cardbutton(element, options = {}) {
     // .x-card__btn-footer... so this costs nothing" -- that migration was
     // written but never finished; these three inline styles were the reason.
     // Buttons with no *Href just sat inert -- no click handler at all, so
-    // clicking e.g. "Confirm Delete" did visibly nothing. A component
+    // clicking e.g. "Confirm Delete" did visibly nothing. A behavior
     // library button can't know the app's confirm/save logic, but it must
     // signal the click happened -- same bubbling wb:{behavior}:{action}
     // convention as cardnotification/cardproduct/etc (card.js) -- so a real
@@ -1029,7 +1029,7 @@ export function cardbutton(element, options = {}) {
 }
 
 /**
- * Card Hero Component
+ * Card Hero Behavior
  * Custom Tag: <div x-cardhero>
  */
 export function cardhero(element, options = {}) {
@@ -1204,7 +1204,7 @@ export function cardhero(element, options = {}) {
 }
 
 /**
- * Card Profile Component
+ * Card Profile Behavior
  * Custom Tag: <div x-cardprofile>
  */
 export function cardprofile(element, options = {}) {
@@ -1321,7 +1321,7 @@ export function cardprofile(element, options = {}) {
 }
 
 /**
- * Card Pricing Component
+ * Card Pricing Behavior
  * Custom Tag: <div x-cardpricing>
  */
 export function cardpricing(element, options = {}) {
@@ -1435,7 +1435,7 @@ export function cardpricing(element, options = {}) {
 }
 
 /**
- * Card Stats Component
+ * Card Stats Behavior
  * Custom Tag: <div x-cardstats>
  */
 export function cardstats(element, options = {}) {
@@ -1527,7 +1527,7 @@ export function cardstats(element, options = {}) {
 }
 
 /**
- * Card Testimonial Component
+ * Card Testimonial Behavior
  * Custom Tag: <div x-cardtestimonial>
  */
 export function cardtestimonial(element, options = {}) {
@@ -1607,7 +1607,7 @@ export function cardtestimonial(element, options = {}) {
 }
 
 /**
- * Card Product Component
+ * Card Product Behavior
  * Custom Tag: <div x-cardproduct>
  */
 export function cardproduct(element, options = {}) {
@@ -1766,7 +1766,7 @@ export function cardproduct(element, options = {}) {
 }
 
 /**
- * Card Notification Component
+ * Card Notification Behavior
  * Custom Tag: <div x-cardnotification>
  *
  * v3.0 MVVM:
@@ -1899,7 +1899,7 @@ export function cardnotification(element, options = {}) {
 }
 
 /**
- * Card File Component
+ * Card File Behavior
  * Custom Tag: <div x-cardfile>
  */
 export function cardfile(element, options = {}) {
@@ -2004,7 +2004,7 @@ export function cardfile(element, options = {}) {
     };
   } else if (config.downloadable) {
     // downloadable but no href: silently doing nothing on click is
-    // confusing for anyone authoring/testing this component -- surface it
+    // confusing for anyone authoring/testing this behavior -- surface it
     // visibly instead of leaving it a silent dead end.
     const warning = document.createElement('div');
     warning.className = 'x-card__file-warning';
@@ -2019,7 +2019,7 @@ export function cardfile(element, options = {}) {
 }
 
 /**
- * Card Link Component
+ * Card Link Behavior
  * Custom Tag: <div x-cardlink>
  */
 export function cardlink(element, options = {}) {
@@ -2137,7 +2137,7 @@ export function cardlink(element, options = {}) {
 }
 
 /**
- * Card Horizontal Component
+ * Card Horizontal Behavior
  * Custom Tag: <div x-cardhorizontal>
  */
 export function cardhorizontal(element, options = {}) {
@@ -2193,7 +2193,7 @@ export function cardhorizontal(element, options = {}) {
     // 'error' event had no listener at all, so a 404/unreachable image
     // rendered as nothing but the browser's own broken-image icon, with
     // zero console/error-log signal (confirmed live:
-    // docs/components/cards/cardhorizontal.md's own examples pointed at
+    // docs/behaviors/cards/cardhorizontal.md's own examples pointed at
     // nonexistent /images/feature.jpg and /images/wide.jpg). Same
     // fail-loud pattern already used elsewhere in THIS file for a broken
     // image-like resource -- cardhero's background-image probe just above
@@ -2247,7 +2247,7 @@ export function cardhorizontal(element, options = {}) {
 }
 
 /**
- * Card Overlay Component
+ * Card Overlay Behavior
  * Custom Tag: <div x-cardoverlay>
  */
 export function cardoverlay(element, options = {}) {
@@ -2369,7 +2369,7 @@ export function cardoverlay(element, options = {}) {
 }
 
 /**
- * Card Expandable Component
+ * Card Expandable Behavior
  * Custom Tag: <div x-cardexpandable>
  */
 export function cardexpandable(element, options = {}) {
@@ -2510,7 +2510,7 @@ export function cardexpandable(element, options = {}) {
 }
 
 /**
- * Card Minimizable Component
+ * Card Minimizable Behavior
  * Custom Tag: <div x-cardminimizable>
  */
 export function cardminimizable(element, options = {}) {
@@ -2629,7 +2629,7 @@ export function cardminimizable(element, options = {}) {
 }
 
 /**
- * Card Draggable Component
+ * Card Draggable Behavior
  * Custom Tag: <div x-carddraggable>
  */
 export function carddraggable(element, options = {}) {

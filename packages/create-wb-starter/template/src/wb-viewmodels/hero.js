@@ -13,7 +13,7 @@ import { readAttr } from '../core/read-attr.js';
  */
 
 /**
- * Hero Component
+ * Hero Behavior
  * Custom Tag: <div x-hero>
  */
 export function hero(element, options = {}) {

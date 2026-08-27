@@ -1,5 +1,5 @@
 {
-  "generated": "2026-08-27T02:01:53.465Z",
+  "generated": "2026-08-27T02:14:39.958Z",
   "totalFiles": 264,
   "categories": [
     "_today",
@@ -58,7 +58,7 @@
       },
       {
         "path": "docs/card.md",
-        "title": "Card Component Documentation",
+        "title": "Card Behavior Documentation",
         "name": "card",
         "category": "root"
       },
@@ -76,7 +76,7 @@
       },
       {
         "path": "docs/container-pattern.md",
-        "title": "Container Components Pattern",
+        "title": "Container Behaviors Pattern",
         "name": "container-pattern",
         "category": "root"
       },
@@ -154,7 +154,7 @@
       },
       {
         "path": "docs/NOTES-V3-GUIDE.md",
-        "title": "Notes Component v3.0 - Updates Summary",
+        "title": "Notes Behavior v3.0 - Updates Summary",
         "name": "NOTES-V3-GUIDE",
         "category": "root"
       },
@@ -202,7 +202,7 @@
       },
       {
         "path": "docs/schema.md",
-        "title": "Schema Standards for WB-Starter Components & Pages",
+        "title": "Schema Standards for WB-Starter Behaviors & Pages",
         "name": "schema",
         "category": "root"
       },
@@ -220,7 +220,7 @@
       },
       {
         "path": "docs/search.md",
-        "title": "Search Component Documentation",
+        "title": "Search Behavior Documentation",
         "name": "search",
         "category": "root"
       },
@@ -382,7 +382,7 @@
       },
       {
         "path": "docs/behaviors/article.md",
-        "title": "Article Component",
+        "title": "Article Behavior",
         "name": "article",
         "category": "behaviors"
       },
@@ -700,7 +700,7 @@
       },
       {
         "path": "docs/behaviors/dl.md",
-        "title": "DL (Description List) Component Design & User Guide",
+        "title": "DL (Description List) Behavior Design & User Guide",
         "name": "dl",
         "category": "behaviors"
       },
@@ -928,7 +928,7 @@
       },
       {
         "path": "docs/behaviors/list.md",
-        "title": "List Component",
+        "title": "List Behavior",
         "name": "list",
         "category": "behaviors"
       },
@@ -988,7 +988,7 @@
       },
       {
         "path": "docs/behaviors/ol.md",
-        "title": "OL (Ordered List) Component Design & User Guide",
+        "title": "OL (Ordered List) Behavior Design & User Guide",
         "name": "ol",
         "category": "behaviors"
       },
@@ -1048,7 +1048,7 @@
       },
       {
         "path": "docs/behaviors/radio.md",
-        "title": "Radio Component Design & User Guide",
+        "title": "Radio Behavior Design & User Guide",
         "name": "radio",
         "category": "behaviors"
       },
@@ -1060,7 +1060,7 @@
       },
       {
         "path": "docs/behaviors/range.md",
-        "title": "Range Component Design & User Guide",
+        "title": "Range Behavior Design & User Guide",
         "name": "range",
         "category": "behaviors"
       },
@@ -1204,7 +1204,7 @@
       },
       {
         "path": "docs/behaviors/stack.md",
-        "title": "Stack Layout Component",
+        "title": "Stack Layout Behavior",
         "name": "stack",
         "category": "behaviors"
       },
@@ -1330,7 +1330,7 @@
       },
       {
         "path": "docs/behaviors/ul.md",
-        "title": "UL (Unordered List) Component Design & User Guide",
+        "title": "UL (Unordered List) Behavior Design & User Guide",
         "name": "ul",
         "category": "behaviors"
       },
@@ -1853,7 +1853,7 @@
     },
     {
       "path": "docs/behaviors/article.md",
-      "title": "Article Component",
+      "title": "Article Behavior",
       "name": "article",
       "category": "behaviors"
     },
@@ -2171,7 +2171,7 @@
     },
     {
       "path": "docs/behaviors/dl.md",
-      "title": "DL (Description List) Component Design & User Guide",
+      "title": "DL (Description List) Behavior Design & User Guide",
       "name": "dl",
       "category": "behaviors"
     },
@@ -2399,7 +2399,7 @@
     },
     {
       "path": "docs/behaviors/list.md",
-      "title": "List Component",
+      "title": "List Behavior",
       "name": "list",
       "category": "behaviors"
     },
@@ -2459,7 +2459,7 @@
     },
     {
       "path": "docs/behaviors/ol.md",
-      "title": "OL (Ordered List) Component Design & User Guide",
+      "title": "OL (Ordered List) Behavior Design & User Guide",
       "name": "ol",
       "category": "behaviors"
     },
@@ -2519,7 +2519,7 @@
     },
     {
       "path": "docs/behaviors/radio.md",
-      "title": "Radio Component Design & User Guide",
+      "title": "Radio Behavior Design & User Guide",
       "name": "radio",
       "category": "behaviors"
     },
@@ -2531,7 +2531,7 @@
     },
     {
       "path": "docs/behaviors/range.md",
-      "title": "Range Component Design & User Guide",
+      "title": "Range Behavior Design & User Guide",
       "name": "range",
       "category": "behaviors"
     },
@@ -2675,7 +2675,7 @@
     },
     {
       "path": "docs/behaviors/stack.md",
-      "title": "Stack Layout Component",
+      "title": "Stack Layout Behavior",
       "name": "stack",
       "category": "behaviors"
     },
@@ -2801,7 +2801,7 @@
     },
     {
       "path": "docs/behaviors/ul.md",
-      "title": "UL (Unordered List) Component Design & User Guide",
+      "title": "UL (Unordered List) Behavior Design & User Guide",
       "name": "ul",
       "category": "behaviors"
     },
@@ -2903,7 +2903,7 @@
     },
     {
       "path": "docs/card.md",
-      "title": "Card Component Documentation",
+      "title": "Card Behavior Documentation",
       "name": "card",
       "category": "root"
     },
@@ -2963,7 +2963,7 @@
     },
     {
       "path": "docs/container-pattern.md",
-      "title": "Container Components Pattern",
+      "title": "Container Behaviors Pattern",
       "name": "container-pattern",
       "category": "root"
     },
@@ -3047,7 +3047,7 @@
     },
     {
       "path": "docs/NOTES-V3-GUIDE.md",
-      "title": "Notes Component v3.0 - Updates Summary",
+      "title": "Notes Behavior v3.0 - Updates Summary",
       "name": "NOTES-V3-GUIDE",
       "category": "root"
     },
@@ -3095,7 +3095,7 @@
     },
     {
       "path": "docs/schema.md",
-      "title": "Schema Standards for WB-Starter Components & Pages",
+      "title": "Schema Standards for WB-Starter Behaviors & Pages",
       "name": "schema",
       "category": "root"
     },
@@ -3113,7 +3113,7 @@
     },
     {
       "path": "docs/search.md",
-      "title": "Search Component Documentation",
+      "title": "Search Behavior Documentation",
       "name": "search",
       "category": "root"
     },

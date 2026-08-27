@@ -41,7 +41,7 @@ Enhances an element without changing its fundamental structure.
 | `<img>` | `image` | Lazy loading, fade-in, lightbox |
 
 ### 2. Morphing (`x-as-{behavior}`)
-Transforms an element into a complex component. The `-as-` infix is required for morphing behaviors to make the transformation explicit.
+Transforms an element into a complex behavior. The `-as-` infix is required for morphing behaviors to make the transformation explicit.
 
 <div x-demo>
 <article x-as-card>
@@ -54,9 +54,9 @@ Transforms an element into a complex component. The `-as-` infix is required for
 
 | Element | Behavior | Result |
 |---------|----------|--------|
-| `<article>` | `card` | Morphs into card component |
+| `<article>` | `card` | Morphs into card behavior |
 | `<nav>` | `navbar` | Morphs into navigation bar |
-| `<aside>` | `sidebar` | Morphs into sidebar component |
+| `<aside>` | `sidebar` | Morphs into sidebar behavior |
 
 ### 3. Configuration (Optional)
 If the `x-` prefix conflicts with other libraries (like Alpine.js), you can change it globally.
@@ -97,25 +97,25 @@ Enhances standard HTML elements with better styling and functionality.
 
 | Behavior | Element | Type | Description |
 |----------|---------|------|-------------|
-| [`audio`](components/semantics/audio.md) | `<audio>` | Decorate | Enhanced audio player styling |
-| [`video`](components/semantics/video.md) | `<video>` | Decorate | Enhanced video player styling |
-| [`img`](components/semantics/img.md) | `<img>` | **Morph** → `image` | Lazy loading, fade-in, lightbox |
-| [`figure`](components/semantics/figure.md) | `<figure>` | Decorate | Figure with caption styling |
-| [`table`](components/semantics/table.md) | `<table>` | Decorate | Sortable headers, striped rows |
-| [`code`](components/semantics/code.md) | `<code>` | Decorate | Inline code styling |
-| [`pre`](components/semantics/pre.md) | `<pre>` | Decorate | Code block with copy button |
-| [`input`](components/semantics/input.md) | `<input>` | Decorate | Styled input with variants |
-| [`textarea`](components/semantics/textarea.md) | `<textarea>` | Decorate | Auto-resize, counter |
-| [`select`](components/semantics/select.md) | `<select>` | Decorate | Custom dropdown styling |
-| [`checkbox`](components/semantics/checkbox.md) | `<input type="checkbox">` | Decorate | Custom checkbox styling |
-| [`radio`](components/semantics/radio.md) | `<input type="radio">` | Decorate | Custom radio styling |
-| [`button`](components/semantics/button.md) | `<button>` | Decorate | Variants, sizes, loading state |
-| [`switch`](components/semantics/switch.md) | `<input type="checkbox">` | Decorate | Toggle switch UI |
-| [`range`](components/semantics/range.md) | `<input type="range">` | Decorate | Custom track/thumb styling |
-| [`rating`](components/semantics/rating.md) | `<div>` | - | Star rating input |
-| [`form`](components/semantics/form.md) | `<form>` | Decorate | Validation UI, loading states |
-| [`details`](components/semantics/details.md) | `<details>` | Decorate | Smooth expand/collapse animation |
-| [`dialog`](components/semantics/dialog.md) | `<dialog>` | Decorate | Backdrop, close button, animations |
+| [`audio`](behaviors/semantics/audio.md) | `<audio>` | Decorate | Enhanced audio player styling |
+| [`video`](behaviors/semantics/video.md) | `<video>` | Decorate | Enhanced video player styling |
+| [`img`](behaviors/semantics/img.md) | `<img>` | **Morph** → `image` | Lazy loading, fade-in, lightbox |
+| [`figure`](behaviors/semantics/figure.md) | `<figure>` | Decorate | Figure with caption styling |
+| [`table`](behaviors/semantics/table.md) | `<table>` | Decorate | Sortable headers, striped rows |
+| [`code`](behaviors/semantics/code.md) | `<code>` | Decorate | Inline code styling |
+| [`pre`](behaviors/semantics/pre.md) | `<pre>` | Decorate | Code block with copy button |
+| [`input`](behaviors/semantics/input.md) | `<input>` | Decorate | Styled input with variants |
+| [`textarea`](behaviors/semantics/textarea.md) | `<textarea>` | Decorate | Auto-resize, counter |
+| [`select`](behaviors/semantics/select.md) | `<select>` | Decorate | Custom dropdown styling |
+| [`checkbox`](behaviors/semantics/checkbox.md) | `<input type="checkbox">` | Decorate | Custom checkbox styling |
+| [`radio`](behaviors/semantics/radio.md) | `<input type="radio">` | Decorate | Custom radio styling |
+| [`button`](behaviors/semantics/button.md) | `<button>` | Decorate | Variants, sizes, loading state |
+| [`switch`](behaviors/semantics/switch.md) | `<input type="checkbox">` | Decorate | Toggle switch UI |
+| [`range`](behaviors/semantics/range.md) | `<input type="range">` | Decorate | Custom track/thumb styling |
+| [`rating`](behaviors/semantics/rating.md) | `<div>` | - | Star rating input |
+| [`form`](behaviors/semantics/form.md) | `<form>` | Decorate | Validation UI, loading states |
+| [`details`](behaviors/semantics/details.md) | `<details>` | Decorate | Smooth expand/collapse animation |
+| [`dialog`](behaviors/semantics/dialog.md) | `<dialog>` | Decorate | Backdrop, close button, animations |
 
 #### Live Examples
 
@@ -232,19 +232,19 @@ Enhances standard HTML elements with better styling and functionality.
 <button>Click Me</button>
 </div>
 
-`figure`, `table`, `pre`, `radio`, and `range` don't yet have a dedicated component doc
+`figure`, `table`, `pre`, `radio`, and `range` don't yet have a dedicated behavior doc
 with a live example to pull from — tracked as remaining work, not guessed here.
 
-### 2. UI Components
-Rich interactive components.
+### 2. UI Behaviors
+Rich interactive behaviors.
 
 | Behavior | Element | Type | Description |
 |----------|---------|------|-------------|
-| `hero` | `<section>` | - | Hero section component |
-| [`card`](components/cards/card.md) | `<article>` | - | Card component |
+| `hero` | `<section>` | - | Hero section behavior |
+| [`card`](behaviors/cards/card.md) | `<article>` | - | Card behavior |
 | `cardlink` | `<article href>` | - | Clickable card |
-| [`card*`](components/cards/cards.index.md) | `<article>` | - | Card variants (image, video, etc.) |
-| [`progressbar`](components/semantics/progress.md) | `<progress>` | Decorate | Progress bar styling |
+| [`card*`](behaviors/cards/cards.index.md) | `<article>` | - | Card variants (image, video, etc.) |
+| [`progressbar`](behaviors/semantics/progress.md) | `<progress>` | Decorate | Progress bar styling |
 | `spinner` | `<div>` | - | Loading spinner |
 | [`toast`](behaviors/toast.md) | `<div>` | - | Toast notification |
 | `notify` | `<div>` | - | Cycling notification |
@@ -258,9 +258,9 @@ Rich interactive components.
 | [`tooltip`](behaviors/tooltip.md) | any | - | Tooltip on hover |
 | [`dropdown`](behaviors/dropdown.md) | `<div>` | - | Dropdown menu |
 | [`accordion`](behaviors/accordion.md) | `<div>` | - | Accordion list (deprecated — prefer `<details>`) |
-| [`tabs`](components/tabs.md) | `<div>` | - | Tabbed interface |
+| [`tabs`](behaviors/tabs.md) | `<div>` | - | Tabbed interface |
 | `navbar` | `<nav>` | - | Navigation bar |
-| `sidebar` | `<aside>` | - | Sidebar component |
+| `sidebar` | `<aside>` | - | Sidebar behavior |
 | `menu` | `<menu>` | Decorate | Menu list styling |
 | `pagination` | `<nav>` | - | Pagination controls |
 | `steps` | `<div>` | - | Step wizard |
@@ -342,7 +342,7 @@ Rich interactive components.
 
 `hero`, `card*` variants, `spinner`, `notify`, `badge`, `alert`, `divider`,
 `breadcrumb`, `avatar`, `navbar`, `sidebar`, `menu`, `pagination`, and `steps`
-don't yet have a dedicated component doc with a live example to pull from —
+don't yet have a dedicated behavior doc with a live example to pull from —
 tracked as remaining work, not guessed here.
 
 ### 3. Layout & Structure
@@ -361,14 +361,14 @@ Tools for arranging content.
 | `sticky` | `<div x-sticky>` | - | Sticky positioning |
 | `scrollable` | `<div>` | - | Scrollable area |
 | [`fill`](behaviors/fill.md) | `[x-fill]` | - | As wide as the container allows — picks flex/grid/block sizing from the parent |
-| [`drawerLayout`](components/drawer.md) | `<div x-drawer>` | - | App layout with drawer |
+| [`drawerLayout`](behaviors/drawer.md) | `<div x-drawer>` | - | App layout with drawer |
 | `sidebarlayout` | `<div x-sidebarlayout>` | - | Sidebar layout |
 | `switcher` | `<div x-switcher>` | - | Responsive switcher |
 | `cover` | `<div x-cover>` | - | Full-screen cover |
 | `frame` | `<div x-frame>` | - | Aspect ratio frame |
 | `reel` | `<div x-reel>` | - | Horizontal reel |
 | `icon` | `<span x-icon>` | - | Icon wrapper |
-| [`draggable`](components/cards/carddraggable.md) | any | - | Draggable element |
+| [`draggable`](behaviors/cards/carddraggable.md) | any | - | Draggable element |
 | `resizable` | any | - | Resizable element |
 
 #### Live Examples
@@ -424,7 +424,7 @@ Tools for arranging content.
 
 `grid`, `flex`, `container`, `center`, `masonry`, `sticky`, `scrollable`,
 `sidebarlayout`, `switcher`, `cover`, `frame`, `reel`, `icon`, and `resizable` don't yet
-have a dedicated component doc with a live example to pull from — tracked as remaining
+have a dedicated behavior doc with a live example to pull from — tracked as remaining
 work, not guessed here.
 
 ### 4. Media & Overlays
@@ -437,7 +437,7 @@ Handling media content and overlaying views.
 | `vimeo` | `<div>` | - | Vimeo embed |
 | `carousel` | `<div>` | - | Image/Content carousel |
 | `popover` | any | - | Popover content |
-| [`drawer`](components/drawer.md) | `<div>` | - | Slide-out drawer |
+| [`drawer`](behaviors/drawer.md) | `<div>` | - | Slide-out drawer |
 | `lightbox` | `<img>` | - | Image lightbox |
 | `offcanvas` | `<div>` | - | Off-canvas sidebar |
 | `sheet` | `<div>` | - | Bottom sheet |
@@ -456,7 +456,7 @@ Handling media content and overlaying views.
 </div>
 
 `gallery`, `youtube`, `vimeo`, `carousel`, `popover`, `lightbox`, `offcanvas`, and
-`sheet` don't yet have a dedicated component doc with a live example to pull from —
+`sheet` don't yet have a dedicated behavior doc with a live example to pull from —
 tracked as remaining work, not guessed here.
 
 ### 5. Utilities & Helpers
@@ -482,7 +482,7 @@ Functional utilities.
 | `visible` | any | - | Visibility observer |
 | `validator` | `<input>` | - | Input validator |
 | `notes` | `<div>` | - | Notes system |
-| [`mdhtml`](components/mdhtml.md) | `<div>` | - | Markdown renderer |
+| [`mdhtml`](behaviors/mdhtml.md) | `<div>` | - | Markdown renderer |
 | `builder` | `<div>` | - | Page builder container |
 
 #### Live Examples
@@ -501,7 +501,7 @@ Functional utilities.
 
 `copy`, `toggle`, `ripple`, `darkmode`, `lazy`, `print`, `share`, `fullscreen`,
 `scroll`, `truncate`, `highlight`, `countdown`, `clock`, `relativetime`, `visible`,
-`validator`, `notes`, and `builder` don't yet have a dedicated component doc with a
+`validator`, `notes`, and `builder` don't yet have a dedicated behavior doc with a
 live example to pull from — tracked as remaining work, not guessed here.
 
 ### 6. Animations (Effects)
@@ -517,7 +517,7 @@ Apply animations to elements.
 | `shake` | any | - | Shake effect |
 | `pulse` | any | - | Pulse effect |
 | `flip` | any | - | Flip effect |
-| [`confetti`](components/effects/confetti.md) | any | - | Confetti explosion |
+| [`confetti`](behaviors/effects/confetti.md) | any | - | Confetti explosion |
 | `sparkle` | any | - | Sparkle effect |
 | `glow` | any | - | Glow effect |
 | `rainbow` | any | - | Rainbow text/bg |
@@ -538,7 +538,7 @@ Apply animations to elements.
 
 `animate`, `fadein`, `slidein`, `zoomin`, `bounce`, `shake`, `pulse`, `flip`,
 `sparkle`, `glow`, `rainbow`, `typewriter`, `parallax`, and `reveal` don't yet have a
-dedicated component doc with a live example to pull from — tracked as remaining work,
+dedicated behavior doc with a live example to pull from — tracked as remaining work,
 not guessed here.
 
 ## Events
@@ -569,8 +569,8 @@ document.addEventListener('wb:search', (e) => {
 
 ### Full event inventory
 
-Events that fire with **no `detail`** are listed with `—`. `component.md` docs marked in
-the last column carry the authoritative per-component write-up (full attribute list,
+Events that fire with **no `detail`** are listed with `—`. `behavior.md` docs marked in
+the last column carry the authoritative per-behavior write-up (full attribute list,
 schema, styling) — this table is the cross-behavior index.
 
 **Buttons, toggles & selection**
@@ -637,10 +637,10 @@ schema, styling) — this table is the cross-behavior index.
 
 **Forms** — `wb:form:submit` / `wb:form:success` / `wb:form:error` fire from **two**
 independent implementations, so the exact `detail` shape depends on which one enhanced
-your form: the `<form ajax>` component (`form.js`: `{ formData }` / `{ data }` /
+your form: the `<form ajax>` behavior (`form.js`: `{ formData }` / `{ data }` /
 `{ error }`) and native `<form>` auto-enhancement (`semantics/form.js` /
 `enhancements.js`: `{ response }` / `{ error }`). See
-[components/semantics/form.md](components/semantics/form.md) for the authoritative,
+[behaviors/semantics/form.md](behaviors/semantics/form.md) for the authoritative,
 per-implementation breakdown.
 
 **Cards**
@@ -754,11 +754,11 @@ document.querySelectorAll('x-card, x-cardproduct, x-cardnotification').forEach((
 });
 ```
 
-Every component's own doc under `components/` also documents its events in an "Events"
+Every behavior's own doc under `behaviors/` also documents its events in an "Events"
 section with the full attribute/schema context — e.g.
-[components/semantics/details.md](components/semantics/details.md),
-[components/cards/cardproduct.md](components/cards/cardproduct.md),
-[components/tabs.md](components/tabs.md), and [search.md](search.md). This section exists
+[behaviors/semantics/details.md](behaviors/semantics/details.md),
+[behaviors/cards/cardproduct.md](behaviors/cards/cardproduct.md),
+[behaviors/tabs.md](behaviors/tabs.md), and [search.md](search.md). This section exists
 so you don't have to open a dozen files to see what's available across the whole library.
 
 ---
@@ -767,20 +767,20 @@ so you don't have to open a dozen files to see what's available across the whole
 
 | Element | Behavior | Type |
 |---------|----------|------|
-| `<img>` | [`image`](components/semantics/img.md) | Decorate |
-| `<audio>` | [`audio`](components/semantics/audio.md) | Decorate |
-| `<video>` | [`video`](components/semantics/video.md) | Decorate |
-| `<figure>` | [`figure`](components/semantics/figure.md) | Decorate |
-| `<table>` | [`table`](components/semantics/table.md) | Decorate |
-| `<code>` | [`code`](components/semantics/code.md) | Decorate |
-| `<pre>` | [`pre`](components/semantics/pre.md) | Decorate |
-| `<input>` | [`input`](components/semantics/input.md) | Decorate |
-| `<textarea>` | [`textarea`](components/semantics/textarea.md) | Decorate |
-| `<select>` | [`select`](components/semantics/select.md) | Decorate |
-| `<button>` | [`button`](components/semantics/button.md) | Decorate |
-| `<form>` | [`form`](components/semantics/form.md) | Decorate |
-| `<details>` | [`details`](components/semantics/details.md) | Decorate |
-| `<dialog>` | [`dialog`](components/semantics/dialog.md) | Decorate |
+| `<img>` | [`image`](behaviors/semantics/img.md) | Decorate |
+| `<audio>` | [`audio`](behaviors/semantics/audio.md) | Decorate |
+| `<video>` | [`video`](behaviors/semantics/video.md) | Decorate |
+| `<figure>` | [`figure`](behaviors/semantics/figure.md) | Decorate |
+| `<table>` | [`table`](behaviors/semantics/table.md) | Decorate |
+| `<code>` | [`code`](behaviors/semantics/code.md) | Decorate |
+| `<pre>` | [`pre`](behaviors/semantics/pre.md) | Decorate |
+| `<input>` | [`input`](behaviors/semantics/input.md) | Decorate |
+| `<textarea>` | [`textarea`](behaviors/semantics/textarea.md) | Decorate |
+| `<select>` | [`select`](behaviors/semantics/select.md) | Decorate |
+| `<button>` | [`button`](behaviors/semantics/button.md) | Decorate |
+| `<form>` | [`form`](behaviors/semantics/form.md) | Decorate |
+| `<details>` | [`details`](behaviors/semantics/details.md) | Decorate |
+| `<dialog>` | [`dialog`](behaviors/semantics/dialog.md) | Decorate |
 
 ---
 

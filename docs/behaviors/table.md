@@ -12,7 +12,7 @@ Data table with sorting, filtering, and pagination
 <!-- Plain semantic HTML. The behavior is injected automatically -->
 <!-- because the element itself implies it. No attribute needed. -->
 <table
-  headers="Component,Behavior,Variants"
+  headers="Behavior,Behavior,Variants"
   rows='[["alert","alert","4"],["badge","badge","9"],["button","button","8"],["card","card","4"],["code","code","12"],["dialog","dialog","3"],["details","details","2"],["audio","audio","6"],["table","table","5"],["tabs","tabs","3"],["toast","toast","4"],["tooltip","tooltip","4"]]'>
 </table>
 ```

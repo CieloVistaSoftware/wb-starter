@@ -9,7 +9,7 @@
  * "Visual Effects Playground".
  *
  * This script scans demos/**\/*.html (top-level demos/*.html plus the
- * generated component catalog demos/site/*.html), extracts meaningful
+ * generated behavior catalog demos/site/*.html), extracts meaningful
  * searchable text per file — visible text content, wb-* custom element tag
  * names, and x-* behavior attribute names, NOT raw markup/attribute noise —
  * and writes data/demos-search-index.json. pages/demos.html fetches this at

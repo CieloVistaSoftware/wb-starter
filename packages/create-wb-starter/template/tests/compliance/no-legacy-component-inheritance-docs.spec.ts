@@ -3,15 +3,15 @@ import * as fs from 'fs';
 import * as path from 'path';
 
 /**
- * Docs must not teach LEGACY COMPONENT INHERITANCE.
+ * Docs must not teach LEGACY BEHAVIOR INHERITANCE.
  *
- * wb-starter components are composition + schema driven (Light DOM, x-* behaviors,
- * wb-* tags). There is no component base class that variants subclass. Yet some
+ * wb-starter behaviors are composition + schema driven (Light DOM, x-* behaviors,
+ * wb-* tags). There is no behavior base class that variants subclass. Yet some
  * docs still describe a class hierarchy — "all card variants inherit from
  * cardBase", `class WbCardImage extends cardBase`, "is-a relationship", "Why
  * Inheritance Matters". That's the old model; flag it so it can't creep back.
  *
- * This targets COMPONENT-to-COMPONENT inheritance only. It deliberately does NOT
+ * This targets BEHAVIOR-to-BEHAVIOR inheritance only. It deliberately does NOT
  * flag:
  *   - `extends HTMLElement` / `extends HTML*Element` — every custom element does that
  *   - schema inheritance (`_inheritance.schema.json`, "schema inheritance chain")
@@ -40,22 +40,22 @@ function mdFiles(): string[] {
   return [...new Set(out)];
 }
 
-// Each pattern is a distinct "legacy component inheritance" tell.
+// Each pattern is a distinct "legacy behavior inheritance" tell.
 const LEGACY_PATTERNS: { re: RegExp; why: string }[] = [
-  { re: /class\s+\w+\s+extends\s+(?!HTMLElement\b|HTML[A-Z]\w*Element\b|LitElement\b)\w*(?:Base|Card|Component)\b/,
-    why: 'component subclasses another component/base class (use composition, not a class hierarchy)' },
+  { re: /class\s+\w+\s+extends\s+(?!HTMLElement\b|HTML[A-Z]\w*Element\b|LitElement\b)\w*(?:Base|Card|Behavior)\b/,
+    why: 'behavior subclasses another behavior/base class (use composition, not a class hierarchy)' },
   { re: /\bextends\s+cardBase\b/i, why: 'extends cardBase (there is no cardBase to subclass)' },
-  { re: /\b(?:card\s+)?variants?\s+inherit\s+from/i, why: '"variants inherit from …" — components compose, they do not inherit' },
+  { re: /\b(?:card\s+)?variants?\s+inherit\s+from/i, why: '"variants inherit from …" — behaviors compose, they do not inherit' },
   { re: /\binherit(?:s|ing)?\s+(?:all\s+)?(?:core\s+)?(?:card\s+)?logic\b/i, why: '"inherit core logic" — describes a class hierarchy' },
   { re: /\bis-a\s+relationship\b/i, why: '"is-a relationship" — inheritance framing' },
-  { re: /\bWhy\s+Inheritance\s+Matters\b/i, why: 'section promotes component inheritance' },
+  { re: /\bWhy\s+Inheritance\s+Matters\b/i, why: 'section promotes behavior inheritance' },
   { re: /\binherit(?:s|ing)?\s+from\s+[`'"]?cardBase\b/i, why: 'inherits from cardBase' },
 ];
 
-test.describe('docs must not teach legacy component inheritance', () => {
-  test('no .md doc describes a component inheritance hierarchy', () => {
+test.describe('docs must not teach legacy behavior inheritance', () => {
+  test('no .md doc describes a behavior inheritance hierarchy', () => {
     // Schema inheritance ($inherits / *.schema.json / the "lowest schema wins"
-    // hierarchy) is a legitimate, unrelated concept — never a component-class tell.
+    // hierarchy) is a legitimate, unrelated concept — never a behavior-class tell.
     const SCHEMA_LINE = /\$inherits|schema\.json|\.schema\b|schema\s+inheritance/i;
     // The standards docs DEFINE the anti-pattern — they legitimately quote the
     // forbidden phrases ("Why Inheritance Matters", "is-a", …) in order to forbid
@@ -77,7 +77,7 @@ test.describe('docs must not teach legacy component inheritance', () => {
     }
     expect(
       offenders,
-      `these docs teach legacy component inheritance (use composition instead):\n  ${offenders.join('\n  ')}`,
+      `these docs teach legacy behavior inheritance (use composition instead):\n  ${offenders.join('\n  ')}`,
     ).toEqual([]);
   });
 

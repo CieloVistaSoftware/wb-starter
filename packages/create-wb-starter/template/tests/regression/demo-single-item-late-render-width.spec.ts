@@ -2,7 +2,7 @@ import { test, expect } from '@playwright/test';
 
 /**
  * demo.js's single-item width measurement (§7/#486, "--x-demo-shrink-width")
- * is a genuine race, not a flicker -- confirmed live on pages/components.html's
+ * is a genuine race, not a flicker -- confirmed live on pages/behaviors.html's
  * standalone <div x-cardhero>: identical navigations sometimes measured a correct
  * ~760px width and sometimes collapsed to a ~45px sliver with text wrapping
  * one letter per line, no code change between attempts.
@@ -33,7 +33,7 @@ test('single-item demo self-corrects width after its lazily-loaded control rende
   const client = await page.context().newCDPSession(page);
   await client.send('Emulation.setCPUThrottlingRate', { rate: 6 });
 
-  await page.goto('/?page=components', { waitUntil: 'domcontentloaded' });
+  await page.goto('/?page=behaviors', { waitUntil: 'domcontentloaded' });
 
   const hero = page.locator('x-cardhero').first();
   await expect(hero).toBeVisible({ timeout: 15000 });

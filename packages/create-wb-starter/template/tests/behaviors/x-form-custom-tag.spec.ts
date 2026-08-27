@@ -4,7 +4,7 @@ import { test, expect, Page } from '@playwright/test';
  * <form> never worked at all — no mapping existed in tag-map.js or
  * wb-lazy.js's customElementMappings, so the `form` behavior never ran on
  * it (confirmed live: no class, no submit handler, completely inert).
- * Found while investigating docs/components/semantics/form.md, whose own
+ * Found while investigating docs/behaviors/semantics/form.md, whose own
  * "AJAX Submission"/"Auto-Save"/"Custom Success Message" examples all use
  * <form> exclusively.
  *

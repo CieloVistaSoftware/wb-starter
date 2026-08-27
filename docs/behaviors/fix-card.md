@@ -1,6 +1,6 @@
 # Fix Card
 
-Component for displaying fix/remediation details.
+Behavior for displaying fix/remediation details.
 
 ## Type — new capability
 

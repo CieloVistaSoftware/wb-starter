@@ -35,7 +35,7 @@ import { readFlag } from '../core/read-attr.js';
  * WHAT IT DELIBERATELY DOES NOT DO
  *
  * It does not strip a max-width. A variant class or design token that caps a
- * component at, say, 40rem is a deliberate constraint, and "as wide as
+ * behavior at, say, 40rem is a deliberate constraint, and "as wide as
  * possible" still means "as wide as you are allowed to be". Pass
  * `ignore-max-width` to override that when the cap is the thing in the way.
  */

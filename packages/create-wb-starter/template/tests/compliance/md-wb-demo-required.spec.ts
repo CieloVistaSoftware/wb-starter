@@ -7,7 +7,7 @@
  * legacy files remain an explicit migration baseline; a new all-static doc is
  * a failure, while partial conversions continue to be reported for follow-up.
  *
- * Heuristic: a fence "shows real component usage" if it contains a wb-*
+ * Heuristic: a fence "shows real behavior usage" if it contains a wb-*
  * custom tag or an x-* attribute. CSS/JS fences, reference tables, and
  * intentionally-invalid markup (no wb-* / x-* content) are not flagged.
  */
@@ -45,21 +45,21 @@ const LEGACY_ZERO_DEMO_FILES = new Set([
   'behaviors/x-control.md',
   'behaviors/x-repeater.md',
   'behaviors/x-search.md',
-  'components/cards/cards.readme.md',
-  'components/feedback/feedback.readme.md',
-  'components/forms/forms.readme.md',
-  'components/layout/layout.readme.md',
-  'components/navigation/navigation.readme.md',
-  'components/README.md',
-  'components/semantic/semantic.readme.md',
-  'components/semantics/dl.md',
-  'components/semantics/figure.md',
-  'components/semantics/list.md',
-  'components/semantics/ol.md',
-  'components/semantics/pre.md',
-  'components/semantics/radio.md',
-  'components/semantics/range.md',
-  'components/semantics/ul.md',
+  'behaviors/cards/cards.readme.md',
+  'behaviors/feedback/feedback.readme.md',
+  'behaviors/forms/forms.readme.md',
+  'behaviors/layout/layout.readme.md',
+  'behaviors/navigation/navigation.readme.md',
+  'behaviors/README.md',
+  'behaviors/semantic/semantic.readme.md',
+  'behaviors/semantics/dl.md',
+  'behaviors/semantics/figure.md',
+  'behaviors/semantics/list.md',
+  'behaviors/semantics/ol.md',
+  'behaviors/semantics/pre.md',
+  'behaviors/semantics/radio.md',
+  'behaviors/semantics/range.md',
+  'behaviors/semantics/ul.md',
   'escape-hatches.md',
   'guides/search-index.md',
   'linkedin-standards-article.md',
@@ -76,7 +76,7 @@ const LEGACY_ZERO_DEMO_FILES = new Set([
 
   // Issue #554 (#307): these two are a different bucket than the #423 migration
   // debt above — not "not yet converted," but permanently exempt because their
-  // fences are not real component usage:
+  // fences are not real behavior usage:
   // - claude/TIER1-LAWS.md's Law 11 fence intentionally nests an unclosed
   //   "WRONG" x-alert/x-stepper/x-toast example against a "CORRECT" one to
   //   teach AI agents the attribute-naming rule. Making a rule-violation

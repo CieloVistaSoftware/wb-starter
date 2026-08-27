@@ -39,13 +39,13 @@ re-invoke the native-`<select>` enhancement path on it.
 
 ## Confirmed, code-verified
 
-| Component | Variant | Status |
+| Behavior | Variant | Status |
 |---|---|---|
 | `x-select` | fake widget, no real `<select>` | ✅ Fixed — [#360](https://github.com/CieloVistaSoftware/wb-starter/issues/360), closed |
 | `x-switch` | missing `type` on `$view` input + cross-collision with `checkbox.js`'s global style injector | ✅ Fixed — [#361](https://github.com/CieloVistaSoftware/wb-starter/issues/361), closed |
 | `x-textarea` | same-name self-collision: host never reflected `placeholder`/`rows`/`variant` onto its built `<textarea>` | ✅ Fixed — [#362](https://github.com/CieloVistaSoftware/wb-starter/issues/362), closed |
 | `x-checkbox` | missing `type="checkbox"` on `$view` input node (identical root cause to #361), plus a self-collision with checkbox.js's own visual styling, plus zero pre-existing CSS for its box/check visual | ✅ Fixed — [#366](https://github.com/CieloVistaSoftware/wb-starter/issues/366), closed |
-| `x-input` | same-name self-collision, no host guard at all — dispatching `input()` on the `<div x-input>` host wrapped/styled the whole already-built component as if it were a bare input; separately, `placeholder`/`value`/`name`/`type` never reached the real built `<input>` at all; a duplicate clear button was a third symptom of the same root cause | ✅ Fixed — [#367](https://github.com/CieloVistaSoftware/wb-starter/issues/367), closed |
+| `x-input` | same-name self-collision, no host guard at all — dispatching `input()` on the `<div x-input>` host wrapped/styled the whole already-built behavior as if it were a bare input; separately, `placeholder`/`value`/`name`/`type` never reached the real built `<input>` at all; a duplicate clear button was a third symptom of the same root cause | ✅ Fixed — [#367](https://github.com/CieloVistaSoftware/wb-starter/issues/367), closed |
 
 ## Suspected, needs live verification (not yet filed)
 
@@ -103,12 +103,12 @@ skip live verification.
   (`nativeMap['button'] = 'button'`) does still get dispatched additively on these
   child buttons, which is a **different, lower-priority question** — whether the
   generic button behavior is safe to apply on top of an already-fully-styled
-  component button — not audited here.
+  behavior button — not audited here.
 
 ## Follow-up: the observer schema-build race (#362)
 
 Fixing #362 (x-textarea) surfaced a fourth, more general failure mode than the three
-in the pattern above — and it's specific to *how a component was inserted*, not to
+in the pattern above — and it's specific to *how a behavior was inserted*, not to
 any one schema:
 
 `WB.observe()`'s MutationObserver added-node handler calls `WB.processSchema(el)`
@@ -158,7 +158,7 @@ separate bugs:
   `src/wb-views/views-registry.json` (a separate generic templating feature) had its
   own views literally named `badge`/`button`/`card`, and `wb-views.js` auto-registers
   `customElements.define('wb-' + name, ...)` for any non-hyphenated view name —
-  silently overriding the real components' custom-element identity. Confirmed this is
+  silently overriding the real behaviors' custom-element identity. Confirmed this is
   why `element.click()` silently no-op'd on `<button>` (fixed by switching to
   `dispatchEvent()` in #368). **Fixed** — closed. Three-layer fix: removed the three
   colliding (and, for `button`/`card`, already-dead — see the issue for the #202

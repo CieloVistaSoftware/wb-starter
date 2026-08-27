@@ -150,7 +150,7 @@ function renderAudio(viewDef) {
 
 // ─── Page Assembly ────────────────────────────────────────────────────────────
 // ZERO inline styles. Uses .page-layout class from site.css for gap.
-// Components are direct children — no wrapper divs/sections.
+// Behaviors are direct children — no wrapper divs/sections.
 // This keeps the DOM flat so tests can find elements as body > tag.
 
 function generatePage() {

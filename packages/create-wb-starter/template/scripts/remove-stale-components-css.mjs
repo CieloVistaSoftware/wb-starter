@@ -1,11 +1,11 @@
 /**
- * remove-stale-components-css.mjs
+ * remove-stale-behaviors-css.mjs
  *
- * Removes the dead `.../src/styles/components.css` stylesheet reference from
+ * Removes the dead `.../src/styles/behaviors.css` stylesheet reference from
  * page/site schema JSON. That file was consolidated into the behavior CSS
  * (button/input/data/dialog/progress/themecontrol.css), all imported globally
  * by src/styles/site.css — so the reference just 404s on every page. Leaves
- * `src/styles/pages/components.css` (the components-page CSS) untouched.
+ * `src/styles/pages/behaviors.css` (the behaviors-page CSS) untouched.
  *
  * Line-based edit to preserve surrounding formatting; fixes the trailing comma
  * when the removed entry was the last array element.
@@ -20,14 +20,14 @@ const files = [
   'src/wb-models/pages/cardnotification-showcase.page.json',
   'src/wb-models/pages/cardportfolio-showcase.page.json',
   'src/wb-models/pages/defaults/x-page-defaults.json',
-  'src/wb-models/pages/multi-component-demo.page.json',
+  'src/wb-models/pages/multi-behavior-demo.page.json',
   'src/wb-models/pages/progress-showcase.page.json',
   'src/wb-models/sites/x-library.site.json',
 ];
 
-// Matches the stale ref but NOT .../styles/pages/components.css
-const STALE = /styles\/components\.css",?\s*$/;
-const isPages = (s) => /styles\/pages\/components\.css/.test(s);
+// Matches the stale ref but NOT .../styles/pages/behaviors.css
+const STALE = /styles\/behaviors\.css",?\s*$/;
+const isPages = (s) => /styles\/pages\/behaviors\.css/.test(s);
 
 let changed = 0;
 for (const rel of files) {
@@ -55,4 +55,4 @@ for (const rel of files) {
   changed++;
   console.log(`fixed ${rel}`);
 }
-console.log(`\nRemoved stale components.css ref from ${changed} file(s).`);
+console.log(`\nRemoved stale behaviors.css ref from ${changed} file(s).`);

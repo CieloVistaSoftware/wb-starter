@@ -26,7 +26,7 @@ import { waitForWB } from '../base';
  * completely different mechanism from `text-align`. That is exactly why the
  * prior investigation's `getComputedStyle().textAlign` check found nothing
  * wrong: it correctly read "left" the entire time. Confirmed live
- * (pages/components.html's "This is the title" / "This is the footer"
+ * (pages/behaviors.html's "This is the title" / "This is the footer"
  * card, the only place that exact footer text exists) at a 500px viewport:
  * leftGap and rightGap were both ~124.6px -- genuinely centered -- despite
  * computed text-align:left.
@@ -76,7 +76,7 @@ for (const { width, height, label } of VIEWPORTS) {
   test.describe(`card footer text stays left-aligned at ${label} (#350)`, () => {
     test.beforeEach(async ({ page }) => {
       await page.setViewportSize({ width, height });
-      await page.goto('/pages/components.html');
+      await page.goto('/pages/behaviors.html');
       await waitForWB(page);
     });
 
@@ -87,7 +87,7 @@ for (const { width, height, label } of VIEWPORTS) {
             const holder = document.createElement('div');
             holder.innerHTML = html;
             const el = holder.firstElementChild as HTMLElement;
-            document.querySelector('#autogen-components-html-0')!.appendChild(el);
+            document.querySelector('#autogen-behaviors-html-0')!.appendChild(el);
             if ((window as any).WB?.scan) {
               await (window as any).WB.scan(el);
             }

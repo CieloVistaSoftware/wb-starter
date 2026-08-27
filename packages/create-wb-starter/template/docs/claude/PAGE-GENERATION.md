@@ -6,10 +6,10 @@
 
 ## Overview
 
-Three scripts form a pipeline that turns WB-Starter component schemas into validated, pixel-perfect HTML pages. Every generated page passes validation before a single line of HTML is written.
+Three scripts form a pipeline that turns WB-Starter behavior schemas into validated, pixel-perfect HTML pages. Every generated page passes validation before a single line of HTML is written.
 
 ```
-Component Schema (.schema.json)
+Behavior Schema (.schema.json)
         │
         ▼
 auto-showcase.mjs ──► Page Schema (.page.json)
@@ -27,12 +27,12 @@ auto-showcase.mjs ──► Page Schema (.page.json)
 
 ### `scripts/validate-page-schema.mjs`
 
-Cross-references every attribute in a `.page.json` demo against the component's `.schema.json`.
+Cross-references every attribute in a `.page.json` demo against the behavior's `.schema.json`.
 
 **Catches:**
 - Unknown/typo attributes (not in schema properties)
 - Invalid enum values (e.g., `align="middle"` when only `left|center` allowed)
-- Unknown component tags (no matching schema found)
+- Unknown behavior tags (no matching schema found)
 - Boolean attrs on non-boolean properties
 - Missing required attrs
 
@@ -71,7 +71,7 @@ node scripts/generate-page.mjs src/wb-models/pages/badge-showcase.page.json --sk
 
 ### `scripts/auto-showcase.mjs`
 
-The big one. Feed it a component name, get a full validated showcase page automatically.
+The big one. Feed it a behavior name, get a full validated showcase page automatically.
 
 **Demo sources (priority order):**
 1. `test.matrix.combinations` — real-world usage combos (best demos)
@@ -80,14 +80,14 @@ The big one. Feed it a component name, get a full validated showcase page automa
 4. Property defaults — fallback when no matrix exists
 
 ```bash
-# By component name
+# By behavior name
 node scripts/auto-showcase.mjs badge
 node scripts/auto-showcase.mjs cardnotification
 
 # By schema file path
 node scripts/auto-showcase.mjs src/wb-models/badge.schema.json
 
-# List all 86 components with matrix availability
+# List all 86 behaviors with matrix availability
 node scripts/auto-showcase.mjs --list
 ```
 
@@ -146,7 +146,7 @@ node scripts/auto-showcase.mjs --list
 
 | What | Where |
 |------|-------|
-| Component schemas | `src/wb-models/*.schema.json` |
+| Behavior schemas | `src/wb-models/*.schema.json` |
 | Page schemas | `src/wb-models/pages/*.page.json` |
 | Generated HTML | `demos/*-showcase.html` or `demos/*-generated.html` |
 | Validation results | `data/page-schema-validation.json` |
@@ -157,7 +157,7 @@ node scripts/auto-showcase.mjs --list
 
 ## Common Tasks
 
-### "Generate a showcase for component X"
+### "Generate a showcase for behavior X"
 ```bash
 node scripts/auto-showcase.mjs X
 ```
@@ -169,13 +169,13 @@ Done. Validates automatically.
 3. Generate: `node scripts/generate-page.mjs <path>`
 
 ### "Validation says UNKNOWN_ATTR — is it a bug?"
-Check the component's `.schema.json` properties. The attr might:
+Check the behavior's `.schema.json` properties. The attr might:
 - Be camelCase in schema but you used kebab-case (auto-handled)
 - Be genuinely missing from the schema → add it to the schema
 - Be a typo → fix the page schema
 
-### "I added a new property to a component schema"
-Re-run validation on any page schemas that use that component to confirm they're still valid. Then re-generate.
+### "I added a new property to a behavior schema"
+Re-run validation on any page schemas that use that behavior to confirm they're still valid. Then re-generate.
 
 ---
 
@@ -187,13 +187,13 @@ Generates an entire set of pages from one master `.site.json` schema. One comman
 
 ```bash
 # Full build — all pages + index
-node scripts/generate-site.mjs src/wb-models/pages/x-component-library.site.json
+node scripts/generate-site.mjs src/wb-models/pages/x-behavior-library.site.json
 
 # Dry run — validate only, no files written
-node scripts/generate-site.mjs src/wb-models/pages/x-component-library.site.json --dry-run
+node scripts/generate-site.mjs src/wb-models/pages/x-behavior-library.site.json --dry-run
 
 # Regenerate index only (after manual edits to pages)
-node scripts/generate-site.mjs src/wb-models/pages/x-component-library.site.json --index-only
+node scripts/generate-site.mjs src/wb-models/pages/x-behavior-library.site.json --index-only
 ```
 
 **Output:**
@@ -205,17 +205,17 @@ node scripts/generate-site.mjs src/wb-models/pages/x-component-library.site.json
 
 ```json
 {
-  "title": "WB Component Library",
+  "title": "WB Behavior Library",
   "description": "...",
   "outputDir": "demos/site",
   "generateIndex": true,
   "pages": [
     {
       "id": "cards",
-      "title": "Card Components",
+      "title": "Card Behaviors",
       "description": "All card variants",
       "icon": "🃏",
-      "components": ["card", "cardbutton", "cardexpandable", "..."]
+      "behaviors": ["card", "cardbutton", "cardexpandable", "..."]
     },
     {
       "id": "custom",
@@ -227,14 +227,14 @@ node scripts/generate-site.mjs src/wb-models/pages/x-component-library.site.json
 ```
 
 **Page types:**
-- `components` array → auto-showcases all listed components onto one page (matrix → enums → booleans → defaults)
+- `behaviors` array → auto-showcases all listed behaviors onto one page (matrix → enums → booleans → defaults)
 - `schema` path → uses an existing `.page.json` (with full compose + validate pipeline)
 
 ### Default Site Schema
 
-`src/wb-models/pages/x-component-library.site.json` groups 70 components into 8 categories:
+`src/wb-models/pages/x-behavior-library.site.json` groups 70 behaviors into 8 categories:
 
-| Page | Components | Demos |
+| Page | Behaviors | Demos |
 |------|-----------|-------|
 | 🃏 Cards | 19 | 248 |
 | 🔔 Feedback & Status | 10 | 174 |
@@ -252,6 +252,6 @@ node scripts/generate-site.mjs src/wb-models/pages/x-component-library.site.json
 - ❌ Write page HTML by hand — use the pipeline
 - ❌ Skip validation — it exists to prevent broken pages
 - ❌ Put camelCase attrs in page schemas — use kebab-case (HTML convention)
-- ❌ Forget to add new component properties to the schema before using them in page schemas
+- ❌ Forget to add new behavior properties to the schema before using them in page schemas
 - ❌ Edit generated files in demos/site/ — they get overwritten on rebuild
 - ❌ Reference `page.schema.json` — it is RETIRED. Page rules are now in `schema.schema.json` (page schemaType) and per-page `$layout` definitions

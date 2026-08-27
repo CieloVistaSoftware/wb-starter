@@ -14,7 +14,7 @@ Behaviors should handle invalid values gracefully:
 const size = element.getAttribute('size');
 const validSizes = ['xs', 'sm', 'md', 'lg', 'xl'];
 if (size && !validSizes.includes(size)) {
-  console.warn(`[component] Invalid size "${size}". Using default "md".`);
+  console.warn(`[behavior] Invalid size "${size}". Using default "md".`);
 }
 ```
 
@@ -50,7 +50,7 @@ if (!src) {
 All errors are captured and logged using a global error handler and the error-logger system:
 
 - Errors are logged with fields: `timestamp`, `type`, `context`, `message`, `stack`, `filename`, `lineno`, `colno`, `url`, `userAgent`, and now `to` (see src/index.js and src/core/error-logger.js).
-- The `to` field is used to clarify where the error message was intended for (e.g., a handler, module, or UI component).
+- The `to` field is used to clarify where the error message was intended for (e.g., a handler, module, or UI behavior).
 - Errors are displayed in a UI panel and saved to `data/errors.json`.
 - All errors include context, file, line, stack trace, and (optionally) a `to` field for traceability.
 
@@ -77,7 +77,7 @@ All errors are captured and logged using a global error handler and the error-lo
 
 ---
 
-- Always use clear, component-prefixed warnings (e.g., `[component] ...`).
+- Always use clear, behavior-prefixed warnings (e.g., `[behavior] ...`).
 - Never crash on user error—fallback or warn.
 - Use the `errorMessage` property in schemas for validation errors.
 - See this file for all error message conventions and the error-logger structure.

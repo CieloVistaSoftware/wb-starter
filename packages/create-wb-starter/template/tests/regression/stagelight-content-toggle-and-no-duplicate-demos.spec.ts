@@ -7,7 +7,7 @@ import { test, expect } from '@playwright/test';
  *        innerHTML = ''). Fixed by adding x-stagelight to SCHEMA_EXCLUDED_TAGS.
  * #657 — demos/site/effects.html rendered the identical <div x-snow> demo twice.
  * #658 — the spotlight had no off switch, though the fixture variant of the
- *        same component has toggled since it shipped.
+ *        same behavior has toggled since it shipped.
  */
 
 test.describe('x-stagelight renders content, builds one overlay, and toggles (#656/#658)', () => {

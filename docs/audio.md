@@ -152,5 +152,5 @@ cause, not the player.
 - Schema — `src/wb-models/audio.schema.json`
 - Styles — `src/styles/behaviors/audio.css`
 
-`src/wb-viewmodels/x-audio.js` is a thin wrapper kept from the component era;
+`src/wb-viewmodels/x-audio.js` is a thin wrapper kept from the behavior era;
 the registry maps `audio` to `semantics/audio`, which is what actually runs.

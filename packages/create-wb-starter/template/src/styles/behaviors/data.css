@@ -1,8 +1,8 @@
 /**
- * Data Component Styles
+ * Data Behavior Styles
  * -----------------------------------------------------------------------------
- * Tables, timelines, stats, accordion, gallery, and data display components.
- * Consolidated from site.css, components.css, and demo.css (Phase 1 migration).
+ * Tables, timelines, stats, accordion, gallery, and data display behaviors.
+ * Consolidated from site.css, behaviors.css, and demo.css (Phase 1 migration).
  * 
  * Inherits from: themes.css (via index.html or direct import)
  * -----------------------------------------------------------------------------
@@ -11,7 +11,7 @@
 /* =============================================================================
    TABLE
    Consolidated from: site.css (base + responsive + variants),
-                      components.css (base + variants + sorted + active),
+                      behaviors.css (base + variants + sorted + active),
                       demo.css (base)
    ============================================================================= */
 
@@ -101,7 +101,7 @@ x-table th,
   background-color: var(--bg-tertiary);
 }
 
-/* Active row (from components.css) */
+/* Active row (from behaviors.css) */
 x-table tbody tr.active,
 .x-table tbody tr.active {
   background-color: var(--bg-tertiary);
@@ -141,7 +141,7 @@ x-table tbody tr.active,
   outline-offset: 1px;
 }
 
-/* Sort indicators (from components.css) */
+/* Sort indicators (from behaviors.css) */
 .x-table--sorted-asc::after {
   content: " ↑";
   opacity: 0.5;
@@ -195,7 +195,7 @@ x-table tbody tr.active,
 /* §13, content-panel edge minimum: a plain <table> that never received the
    `x-table` class (a raw table in a doc or an autoInject demo) still renders
    real content panels, and its cells were inheriting the browser's ~8px.
-   :where() keeps this at zero specificity so every component rule above --
+   :where() keeps this at zero specificity so every behavior rule above --
    and .x-table--compact's deliberate 0.5rem -- still wins. */
 :where(th, td) {
   padding: 1rem;

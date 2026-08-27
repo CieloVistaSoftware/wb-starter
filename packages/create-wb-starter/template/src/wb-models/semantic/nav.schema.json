@@ -85,7 +85,7 @@
     "button"
   ],
   "wbComponents": {
-    "description": "WB components that extend nav",
+    "description": "WB behaviors that extend nav",
     "list": [
       "breadcrumb",
       "menu",

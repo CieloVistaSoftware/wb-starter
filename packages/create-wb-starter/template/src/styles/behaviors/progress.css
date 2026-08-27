@@ -1,7 +1,7 @@
 /**
  * Progress Behavior Styles
  * -----------------------------------------------------------------------------
- * Consolidated from demo.css + components.css + site.css (Phase 2 migration)
+ * Consolidated from demo.css + behaviors.css + site.css (Phase 2 migration)
  * Works with src/wb-viewmodels/semantics/progress.js
  * -----------------------------------------------------------------------------
  */
@@ -85,7 +85,7 @@ x-progress,
 }
 
 /* ═══════════════════════════════════════════════════════════════════════════
-   ANIMATE-ON-LOAD (from components.css)
+   ANIMATE-ON-LOAD (from behaviors.css)
    `animated` (schema default: true) means the fill grows in on first paint —
    it previously drew the SAME scrolling diagonal-stripe texture as `striped`
    (below), so every default <progress> (animated=true unless explicitly

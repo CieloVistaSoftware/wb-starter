@@ -75,6 +75,6 @@
   "_metadata": {
     "extends": "html-element",
     "category": "sectioning",
-    "components": ["card", "cardimage", "cardprofile", "cardpricing", "hero", "sidebar", "nav", "breadcrumb"]
+    "behaviors": ["card", "cardimage", "cardprofile", "cardpricing", "hero", "sidebar", "nav", "breadcrumb"]
   }
 }

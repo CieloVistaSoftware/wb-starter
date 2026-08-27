@@ -1,7 +1,7 @@
 {
   "name": "WB Starter",
   "short_name": "WB Starter",
-  "description": "A config-driven web component library with 230+ behaviors",
+  "description": "A config-driven behavior library with 230+ behaviors",
   "start_url": ".",
   "display": "standalone",
   "background_color": "#1a1a2e",
@@ -64,9 +64,9 @@
   ],
   "shortcuts": [
     {
-      "name": "Components",
-      "url": "./?page=components",
-      "description": "Browse component library"
+      "name": "Behaviors",
+      "url": "./?page=behaviors",
+      "description": "Browse behavior library"
     },
     {
       "name": "Documentation",

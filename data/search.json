@@ -4054,8 +4054,8 @@
       "modified": "2026-08-07T16:32:02.532Z"
     },
     {
-      "id": "demos/multi-component-demo-generated",
-      "url": "/demos/multi-component-demo-generated",
+      "id": "demos/multi-behavior-demo-generated",
+      "url": "/demos/multi-behavior-demo-generated",
       "title": "🧩 Multi-Component Demo",
       "description": null,
       "headings": [
@@ -7105,7 +7105,7 @@
       "demos/frameworks",
       "demos/index",
       "demos/landing-page-showcase",
-      "demos/multi-component-demo-generated",
+      "demos/multi-behavior-demo-generated",
       "demos/schema-first-architecture",
       "demos/wb-views-demo",
       "demos/site/cards",
@@ -8254,7 +8254,7 @@
       "docs/components/semantic/time",
       "docs/components/semantics/details",
       "demos/frameworks",
-      "demos/multi-component-demo-generated"
+      "demos/multi-behavior-demo-generated"
     ],
     "wired": [
       "pages/about",
@@ -8738,7 +8738,7 @@
     "combos": [
       "pages/ai-permutation-test",
       "docs/claude/PAGE-GENERATION",
-      "demos/multi-component-demo-generated"
+      "demos/multi-behavior-demo-generated"
     ],
     "engine": [
       "pages/ai-permutation-test",
@@ -9194,7 +9194,7 @@
       "docs/claude/PAGE-GENERATION",
       "docs/architecture/standards/ATTRIBUTE-NAMING-STANDARD",
       "docs/architecture/standards/ERROR-MESSAGE",
-      "demos/multi-component-demo-generated",
+      "demos/multi-behavior-demo-generated",
       "demos/schema-first-architecture"
     ],
     "boolean": [
@@ -10800,7 +10800,7 @@
       "docs/claude/PAGE-GENERATION",
       "docs/claude/SCHEMAS-GUIDE",
       "docs/compliance/iso-42001-alignment",
-      "demos/multi-component-demo-generated"
+      "demos/multi-behavior-demo-generated"
     ],
     "shown": [
       "pages/ai-permutation-test",
@@ -11558,7 +11558,7 @@
       "docs/components/semantics/ul",
       "demos/autoinject",
       "demos/index",
-      "demos/multi-component-demo-generated",
+      "demos/multi-behavior-demo-generated",
       "demos/wb-views-demo",
       "demos/site/cards",
       "demos/site/content",
@@ -14699,7 +14699,7 @@
       "docs/components/semantic/semantic.readme",
       "docs/components/semantics/details",
       "docs/components/semantics/select",
-      "demos/multi-component-demo-generated",
+      "demos/multi-behavior-demo-generated",
       "demos/schema-first-architecture"
     ],
     "stepper": [
@@ -14739,7 +14739,7 @@
       "docs/components/semantic/semantic.index",
       "docs/components/semantic/semantic.readme",
       "demos/autoinject",
-      "demos/multi-component-demo-generated"
+      "demos/multi-behavior-demo-generated"
     ],
     "alerts": [
       "pages/behaviors",
@@ -14763,7 +14763,7 @@
       "docs/behaviors/x-card",
       "demos/index",
       "demos/landing-page-showcase",
-      "demos/multi-component-demo-generated",
+      "demos/multi-behavior-demo-generated",
       "demos/playground",
       "demos/wb-views-demo",
       "demos/site/feedback",
@@ -14797,7 +14797,7 @@
       "docs/components/semantics/progress",
       "demos/index",
       "demos/landing-page-showcase",
-      "demos/multi-component-demo-generated",
+      "demos/multi-behavior-demo-generated",
       "demos/site/feedback",
       "demos/site/index"
     ],
@@ -16311,7 +16311,7 @@
       "docs/components/semantics/ul",
       "docs/components/semantics/video",
       "demos/autoinject",
-      "demos/multi-component-demo-generated",
+      "demos/multi-behavior-demo-generated",
       "demos/registry-browser",
       "demos/wb-views-demo",
       "demos/site/content"
@@ -17765,7 +17765,7 @@
       "docs/components/semantic/figure",
       "docs/components/semantic/semantic.readme",
       "docs/components/semantic/time",
-      "demos/multi-component-demo-generated",
+      "demos/multi-behavior-demo-generated",
       "demos/site/content"
     ],
     "script": [
@@ -17931,7 +17931,7 @@
       "docs/components/semantics/radio",
       "docs/components/semantics/ul",
       "demos/frameworks",
-      "demos/multi-component-demo-generated",
+      "demos/multi-behavior-demo-generated",
       "demos/wb-views-demo",
       "demos/site/content"
     ],
@@ -19698,7 +19698,7 @@
       "docs/components/semantics/switch",
       "docs/components/semantics/textarea",
       "demos/autoinject",
-      "demos/multi-component-demo-generated",
+      "demos/multi-behavior-demo-generated",
       "demos/wb-views-demo",
       "demos/site/cards",
       "demos/site/feedback",
@@ -20708,7 +20708,7 @@
       "docs/components/semantic/semantic.readme",
       "docs/components/semantics/details",
       "demos/frameworks",
-      "demos/multi-component-demo-generated"
+      "demos/multi-behavior-demo-generated"
     ],
     "original": [
       "pages/hero-variants",
@@ -20950,7 +20950,7 @@
       "demos/frameworks",
       "demos/index",
       "demos/layout-test",
-      "demos/multi-component-demo-generated",
+      "demos/multi-behavior-demo-generated",
       "demos/wb-views-demo"
     ],
     "particles": [
@@ -22859,7 +22859,7 @@
       "pages/services",
       "pages/whats-new",
       "docs/claude/PAGE-GENERATION",
-      "demos/multi-component-demo-generated"
+      "demos/multi-behavior-demo-generated"
     ],
     "together": [
       "pages/services",
@@ -23721,7 +23721,7 @@
       "docs/guides/search-index",
       "docs/architecture/historical/X-PREFIX-MIGRATION-PHASE1",
       "demos/index",
-      "demos/multi-component-demo-generated",
+      "demos/multi-behavior-demo-generated",
       "demos/schema-first-architecture"
     ],
     "blues": [
@@ -26163,7 +26163,7 @@
       "docs/components/semantic/address",
       "docs/components/semantic/article",
       "docs/components/semantic/semantic.index",
-      "demos/multi-component-demo-generated"
+      "demos/multi-behavior-demo-generated"
     ],
     "compact": [
       "pages/whats-new",
@@ -27595,7 +27595,7 @@
       "docs/components/semantics/textarea",
       "docs/components/semantics/ul",
       "demos/index",
-      "demos/multi-component-demo-generated"
+      "demos/multi-behavior-demo-generated"
     ],
     "reasoning": [
       "docs/AI",
@@ -27676,7 +27676,7 @@
       "docs/claude/PAGE-GENERATION",
       "docs/guides/search-index",
       "docs/components/semantic/blockquote",
-      "demos/multi-component-demo-generated"
+      "demos/multi-behavior-demo-generated"
     ],
     "sometimes": [
       "docs/AI"
@@ -33272,7 +33272,7 @@
       "docs/components/semantics/progress",
       "docs/components/semantics/radio",
       "docs/components/semantics/video",
-      "demos/multi-component-demo-generated",
+      "demos/multi-behavior-demo-generated",
       "demos/wb-views-demo"
     ],
     "respects": [
@@ -38484,7 +38484,7 @@
       "docs/schema.migration",
       "docs/testing-runbook",
       "demos/frameworks",
-      "demos/multi-component-demo-generated"
+      "demos/multi-behavior-demo-generated"
     ],
     "reflect": [
       "docs/schema.migration"
@@ -41382,7 +41382,7 @@
     "extends": [
       "docs/claude/TIER1-LAWS",
       "docs/standards/DEMOS-AND-DOCS-STANDARDS",
-      "demos/multi-component-demo-generated"
+      "demos/multi-behavior-demo-generated"
     ],
     "htmlelement": [
       "docs/claude/TIER1-LAWS",
@@ -42021,7 +42021,7 @@
     ],
     "composed": [
       "docs/components/README",
-      "demos/multi-component-demo-generated"
+      "demos/multi-behavior-demo-generated"
     ],
     "subclassed": [
       "docs/components/README"
@@ -43781,7 +43781,7 @@
       "docs/components/semantic/figure",
       "docs/components/semantic/time",
       "demos/frameworks",
-      "demos/multi-component-demo-generated"
+      "demos/multi-behavior-demo-generated"
     ],
     "mailto": [
       "docs/components/semantic/address",

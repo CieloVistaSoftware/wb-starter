@@ -1,12 +1,12 @@
-# Semantic HTML Components Documentation
+# Semantic HTML Behaviors Documentation
 [Edit this file](./semantic.readme.md)
 
 ## Overview
-WB-Starter components use proper semantic HTML elements to ensure accessibility, SEO, and meaningful document structure. All components follow semantic HTML standards and include appropriate ARIA attributes.
+WB-Starter behaviors use proper semantic HTML elements to ensure accessibility, SEO, and meaningful document structure. All behaviors follow semantic HTML standards and include appropriate ARIA attributes.
 
 ---
 
-## Article Component
+## Article Behavior
 
 Self-contained, independently distributable content using the `<article>` element.
 
@@ -45,7 +45,7 @@ Self-contained, independently distributable content using the `<article>` elemen
 
 ---
 
-## Aside Component
+## Aside Behavior
 
 Tangentially related content and supplementary information using the `<aside>` element.
 
@@ -83,7 +83,7 @@ Tangentially related content and supplementary information using the `<aside>` e
 
 ---
 
-## Figure Component
+## Figure Behavior
 
 Self-contained media with optional caption using `<figure>` and `<figcaption>` elements.
 
@@ -116,7 +116,7 @@ function hello() {
 
 ---
 
-## Address Component
+## Address Behavior
 
 Contact information for the author or organization using the `<address>` element.
 
@@ -151,7 +151,7 @@ Contact information for the author or organization using the `<address>` element
 
 ---
 
-## Blockquote Component
+## Blockquote Behavior
 
 Extended quotations with attribution using `<blockquote>` and `<cite>` elements.
 
@@ -183,7 +183,7 @@ Extended quotations with attribution using `<blockquote>` and `<cite>` elements.
 
 ---
 
-## Data Component
+## Data Behavior
 
 Machine-readable value linked to human-readable content using the `<data>` element.
 
@@ -211,7 +211,7 @@ Machine-readable value linked to human-readable content using the `<data>` eleme
 
 ---
 
-## Time Component
+## Time Behavior
 
 Machine-readable date/time using the `<time>` element.
 
@@ -239,7 +239,7 @@ Machine-readable date/time using the `<time>` element.
 
 ---
 
-## Nav Component
+## Nav Behavior
 
 Navigation links section using the `<nav>` element.
 
@@ -273,7 +273,7 @@ Navigation links section using the `<nav>` element.
 
 ---
 
-## Progress Component
+## Progress Behavior
 
 Task completion indicator using the native `<progress>` element.
 
@@ -307,7 +307,7 @@ Task completion indicator using the native `<progress>` element.
 
 ---
 
-## Dialog Component
+## Dialog Behavior
 
 Interactive dialog box/modal using the `<dialog>` element.
 
@@ -390,9 +390,9 @@ console.log(dialog.open); // true/false
 
 ## Events
 
-Semantic components emit appropriate events:
+Semantic behaviors emit appropriate events:
 
-| Event | Component | Description | Detail |
+| Event | Behavior | Description | Detail |
 |-------|-----------|-------------|--------|
 | `wb:dialog:open` | Dialog | Dialog opened | `{ dialog }` |
 | `wb:dialog:close` | Dialog | Dialog closed | `{ dialog }` |
@@ -431,7 +431,7 @@ Semantic components emit appropriate events:
 
 ## Styling
 
-Semantic components use CSS custom properties for theming:
+Semantic behaviors use CSS custom properties for theming:
 
 ```css
 :root {
@@ -464,7 +464,7 @@ Semantic components use CSS custom properties for theming:
 ---
 
 ## Implementation
-- **Components**: Located in `src/wb-viewmodels/` (article.js, aside.js, figure.js, etc.)
-- **Styles**: [src/styles/components/semantic.css](../../../src/styles/behaviors/article.css)
-- **Schemas**: Semantic component schemas in `src/wb-models/`
+- **Behaviors**: Located in `src/wb-viewmodels/` (article.js, aside.js, figure.js, etc.)
+- **Styles**: [src/styles/behaviors/semantic.css](../../../src/styles/behaviors/article.css)
+- **Schemas**: Semantic behavior schemas in `src/wb-models/`
 - **Tests**: Semantic tests in `tests/behaviors/ui/semantic.spec.ts`

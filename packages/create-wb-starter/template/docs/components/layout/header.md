@@ -145,7 +145,7 @@ None. `header()` dispatches no custom events.
 | `--x-header-title-weight` | `700` | Title font weight |
 | `--x-header-icon-size` | `1.5rem` | Icon font size |
 
-Confirmed in `src/styles/behaviors/header.css`; the shipped rules primarily read `--bg-primary`, `--border-color`, `--primary`, and `--text-primary`/`--text-muted` directly rather than the dedicated `--x-header-*` tokens above -- both are valid override points depending on whether you're theming the whole site or this component specifically.
+Confirmed in `src/styles/behaviors/header.css`; the shipped rules primarily read `--bg-primary`, `--border-color`, `--primary`, and `--text-primary`/`--text-muted` directly rather than the dedicated `--x-header-*` tokens above -- both are valid override points depending on whether you're theming the whole site or this behavior specifically.
 
 ## Accessibility
 

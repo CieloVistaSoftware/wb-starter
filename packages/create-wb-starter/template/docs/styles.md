@@ -2,14 +2,14 @@
 
 ## Prime Directive: Generic, Reusable, Semantic
 
-- **Only use generic, reusable class names** for all layout and component styling. Examples: `.hero`, `.section`, `.features`, `.feature-grid`.
+- **Only use generic, reusable class names** for all layout and behavior styling. Examples: `.hero`, `.section`, `.features`, `.feature-grid`.
 - **HTML5 semantic elements** (e.g., `<section>`, `<header>`, `<main>`, `<footer>`, `<nav>`) must be used for all page structure. Avoid generic `<div>` for major page regions.
 - **Prohibited:**
   - Page-specific, BEM, or context-coupled class names (e.g., `home-hero`, `page__feature`, `about-section`, `main-content--dark`).
-  - `.wb-*` classes in global CSS or markup. These are reserved strictly for internal styles within custom elements (e.g., `<div x-demo>`). Do **not** use `.wb-*` classes in any global stylesheet or outside their component's shadow scope.
-- **No BEM or OOCSS prefixes**: Do not use double underscores, double hyphens, or page/component prefixes in class names.
-- **Component classes**: Custom elements (e.g., `<div x-demo>`) may use internal classes prefixed with their tag (e.g., `.x-demo-feature`), but these must not leak into global or page-level markup or CSS.
-- **Rationale:** This ensures maximum reusability, maintainability, and clarity across all pages and components.
+  - `.wb-*` classes in global CSS or markup. These are reserved strictly for internal styles within custom elements (e.g., `<div x-demo>`). Do **not** use `.wb-*` classes in any global stylesheet or outside their behavior's shadow scope.
+- **No BEM or OOCSS prefixes**: Do not use double underscores, double hyphens, or page/behavior prefixes in class names.
+- **Behavior classes**: Custom elements (e.g., `<div x-demo>`) may use internal classes prefixed with their tag (e.g., `.x-demo-feature`), but these must not leak into global or page-level markup or CSS.
+- **Rationale:** This ensures maximum reusability, maintainability, and clarity across all pages and behaviors.
 
 **Example (Correct):**
 ```html
@@ -67,7 +67,7 @@ This document serves as the supreme law for styling in the WB-Starter library. I
 **Behaviors must NEVER modify global layout containers or styles outside their direct scope.**
 
 *   **Violation Example:** The `scrollalong` behavior modified `.site__body` (a global container) to enable sticky positioning, which broke the entire app shell layout.
-*   **Correct Approach:** A behavior should only modify the specific element it is attached to. If a behavior requires a specific global layout to function, it is likely incompatible with the current architecture or requires a dedicated layout component, not a side-effect.
+*   **Correct Approach:** A behavior should only modify the specific element it is attached to. If a behavior requires a specific global layout to function, it is likely incompatible with the current architecture or requires a dedicated layout behavior, not a side-effect.
 
 **Rule:** If your style or behavior touches `body`, `html`, `.site`, `.site__body`, or `.site__main`, **STOP**. You are likely breaking the architecture.
 
@@ -88,14 +88,14 @@ This document serves as the supreme law for styling in the WB-Starter library. I
 
 ### 3. Behavioral Integrity
 *   **Principle:** Styles exist to *support* behavior, not wreck it.
-*   **Rule:** A component's style must be self-contained. It should not rely on or affect the positioning of its siblings or parents (unless it is explicitly a Layout component).
+*   **Rule:** A behavior's style must be self-contained. It should not rely on or affect the positioning of its siblings or parents (unless it is explicitly a Layout behavior).
 
 ---
 
 ## 📜 The Strict Rules List
 
 ### 1. No Global Side Effects (The "Scrollalong" Rule)
-As stated in the Prime Directive, components and behaviors are strictly forbidden from modifying the global DOM structure or styles of parent containers (`.site__body`, etc.).
+As stated in the Prime Directive, behaviors and behaviors are strictly forbidden from modifying the global DOM structure or styles of parent containers (`.site__body`, etc.).
 
 ### 2. The "Two-File" Foundation
 The `index.html` head must only load **TWO** CSS files for the foundation:
@@ -114,8 +114,8 @@ The `index.html` head must only load **TWO** CSS files for the foundation:
 
 ### 5. File Responsibility
 *   **`themes.css`**: Variables ONLY. No layout.
-*   **`site.css`**: Global shell layout ONLY. No component styles.
-*   **`src/behaviors/css/*.css`**: Component styles ONLY. Grouped by function (e.g., `card.css`, `inputs.css`).
+*   **`site.css`**: Global shell layout ONLY. No behavior styles.
+*   **`src/behaviors/css/*.css`**: Behavior styles ONLY. Grouped by function (e.g., `card.css`, `inputs.css`).
 
 ---
 
@@ -125,7 +125,7 @@ The `index.html` head must only load **TWO** CSS files for the foundation:
 |-----------------------|---------------|
 | A new color or font size | `src/styles/themes.css` (as a variable) |
 | The main header or sidebar layout | `styles/site.css` |
-| A specific component (e.g., Card, Button) | `src/behaviors/css/[group].css` |
+| A specific behavior (e.g., Card, Button) | `src/behaviors/css/[group].css` |
 | A standalone page (e.g., Builder) | `pages/[page].css` (loaded manually) |
 | A one-off tweak for a specific demo | Inline `<style>` (only if absolutely necessary) |
 

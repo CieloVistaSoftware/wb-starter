@@ -77,7 +77,7 @@ const RELOAD_IGNORE_DIRS = new Set([
   // .spec.ts file under tests/ -- each run was spuriously triggering a
   // full-page reload (and full module re-fetch) per file, even though none
   // of their mtimes had actually changed. Confirmed live: a burst of
-  // "[File Changed] tests\components\*.spec.ts" messages during test runs,
+  // "[File Changed] tests\behaviors\*.spec.ts" messages during test runs,
   // none of which had been edited (user-reported, read as "bogged down
   // network").
   'tests',
@@ -292,7 +292,7 @@ app.get('/pages/:page', (req, res, next) => {
       // standalone wrap (confirmed by dark-mode.spec.ts, which navigates
       // directly here) while working fine via the real SPA-injection
       // consumer. Added a generic wb-[a-z0-9-]+ alternative so every
-      // src/href-bearing <wb-*> component (x-audio, x-avatar, x-cardimage,
+      // src/href-bearing <wb-*> behavior (x-audio, x-avatar, x-cardimage,
       // x-cardvideo today, any future one) is covered, not just today's
       // known offenders.
       const RESOURCE_REF = /(<(?:link|script|img|source|audio|video|wb-[a-z0-9-]+)\b[^>]*?\b(?:href|src)\s*=\s*")([^"]+)(")/gi;
@@ -471,7 +471,7 @@ app.post('/api/markdown', express.text({ type: '*/*' }), (req, res) => {
 // PICKER wearing an upload label -- nothing in the codebase could send a file
 // anywhere. This gives it a real round trip to complete.
 //
-// Deliberately accept-and-report, never persist: a component showcase has no
+// Deliberately accept-and-report, never persist: a behavior showcase has no
 // business writing a reader's files into the repo, and a discarded upload
 // still exercises the whole path (pick -> POST -> progress -> response).
 // express.raw() so the bytes arrive untouched and the reported size is the
@@ -749,7 +749,7 @@ app.post("/api/notes/append", (req, res) => {
       return res.json({ success: true, duplicate: true, notes });
     }
 
-    // tests/components/notes*.spec.ts drives every notes test against this
+    // tests/behaviors/notes*.spec.ts drives every notes test against this
     // SAME dev server (demos/test-harness.html), not an isolated instance --
     // without this guard, every test run would spam a real GitHub issue per
     // test note. The test harness is the only real-world caller whose

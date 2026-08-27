@@ -5,8 +5,8 @@
 import fs from 'fs';
 import path from 'path';
 
-// Components that become <wb-*> tags
-const COMPONENTS = [
+// Behaviors that become <wb-*> tags
+const BEHAVIORS = [
   'card', 'badge', 'button', 'modal', 'alert', 'avatar', 'chip', 'progress',
   'spinner', 'skeleton', 'rating', 'switch', 'tabs', 'accordion', 'drawer',
   'dropdown', 'tooltip', 'toast', 'navbar', 'footer', 'header', 'hero',
@@ -135,5 +135,5 @@ console.log('='.repeat(60));
 console.log(`Files processed: ${stats.filesProcessed}`);
 console.log(`Files modified: ${stats.filesModified}`);
 console.log(`Total replacements: ${stats.replacements}`);
-console.log('\nNote: Complex component conversions (div -> <article>)');
+console.log('\nNote: Complex behavior conversions (div -> <article>)');
 console.log('require manual review or a more sophisticated parser.');

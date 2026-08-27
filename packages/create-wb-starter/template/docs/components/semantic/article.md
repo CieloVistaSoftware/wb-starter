@@ -1,6 +1,6 @@
 # Article Element - wb-starter v3.0
 
-The `<article>` element is the semantic foundation for all card components.
+The `<article>` element is the semantic foundation for all card behaviors.
 
 ## Overview
 
@@ -40,11 +40,11 @@ Use `<article>` when content:
 </article>
 ```
 
-## WB-Starter Components Using Article
+## WB-Starter Behaviors Using Article
 
-All card components use the `<article>` semantic element:
+All card behaviors use the `<article>` semantic element:
 
-| Component | Custom Tag | Usage |
+| Behavior | Custom Tag | Usage |
 |-----------|------------|-------|
 | card | `<article>` | Default card |
 | cardimage | `<div x-cardimage>` | Image card |

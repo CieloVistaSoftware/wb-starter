@@ -54,7 +54,7 @@ Enhances an element without changing its fundamental structure.
 
 ### 2. Morphing (`x-as-{behavior}`) — REMOVED (#783)
 
-There is no `-as-` infix any more. A behavior that builds out a component's
+There is no `-as-` infix any more. A behavior that builds out a behavior's
 internals is applied exactly like any other: the attribute name **is** the
 behavior name, and on a semantic element it is injected for you.
 
@@ -247,16 +247,16 @@ Enhances standard HTML elements with better styling and functionality.
 <button>Click Me</button>
 </div>
 
-`figure`, `table`, `pre`, `radio`, and `range` don't yet have a dedicated component doc
+`figure`, `table`, `pre`, `radio`, and `range` don't yet have a dedicated behavior doc
 with a live example to pull from — tracked as remaining work, not guessed here.
 
-### 2. UI Components
-Rich interactive components.
+### 2. UI Behaviors
+Rich interactive behaviors.
 
 | Behavior | Element | Type | Description |
 |----------|---------|------|-------------|
-| `hero` | `<section>` | - | Hero section component |
-| [`card`](card.md) | `<article>` | - | Card component |
+| `hero` | `<section>` | - | Hero section behavior |
+| [`card`](card.md) | `<article>` | - | Card behavior |
 | `cardlink` | `<article href>` | - | Clickable card |
 | `card*` | `<article>` | - | Card variants — [cardimage](behaviors/cardimage.md), [cardvideo](behaviors/cardvideo.md), [cardpricing](behaviors/cardpricing.md), [cardprofile](behaviors/cardprofile.md), … one page each under `docs/behaviors/` |
 | [`progressbar`](behaviors/progress.md) | `<progress>` | Decorate | Progress bar styling |
@@ -275,7 +275,7 @@ Rich interactive components.
 | [`accordion`](behaviors/accordion.md) | `<div>` | - | Accordion list (deprecated — prefer `<details>`) |
 | [`tabs`](behaviors/tabs.md) | `<div>` | - | Tabbed interface |
 | `navbar` | `<nav>` | - | Navigation bar |
-| `sidebar` | `<aside>` | - | Sidebar component |
+| `sidebar` | `<aside>` | - | Sidebar behavior |
 | `menu` | `<menu>` | Decorate | Menu list styling |
 | `pagination` | `<nav>` | - | Pagination controls |
 | `steps` | `<div>` | - | Step wizard |
@@ -357,7 +357,7 @@ Rich interactive components.
 
 `hero`, `card*` variants, `spinner`, `notify`, `badge`, `alert`, `divider`,
 `breadcrumb`, `avatar`, `navbar`, `sidebar`, `menu`, `pagination`, and `steps`
-don't yet have a dedicated component doc with a live example to pull from —
+don't yet have a dedicated behavior doc with a live example to pull from —
 tracked as remaining work, not guessed here.
 
 ### 3. Layout & Structure
@@ -439,7 +439,7 @@ Tools for arranging content.
 
 `grid`, `flex`, `container`, `center`, `masonry`, `sticky`, `scrollable`,
 `sidebarlayout`, `switcher`, `cover`, `frame`, `reel`, `icon`, and `resizable` don't yet
-have a dedicated component doc with a live example to pull from — tracked as remaining
+have a dedicated behavior doc with a live example to pull from — tracked as remaining
 work, not guessed here.
 
 ### 4. Media & Overlays
@@ -471,7 +471,7 @@ Handling media content and overlaying views.
 </div>
 
 `gallery`, `youtube`, `vimeo`, `carousel`, `popover`, `lightbox`, `offcanvas`, and
-`sheet` don't yet have a dedicated component doc with a live example to pull from —
+`sheet` don't yet have a dedicated behavior doc with a live example to pull from —
 tracked as remaining work, not guessed here.
 
 ### 5. Utilities & Helpers
@@ -516,7 +516,7 @@ Functional utilities.
 
 `copy`, `toggle`, `ripple`, `darkmode`, `lazy`, `print`, `share`, `fullscreen`,
 `scroll`, `truncate`, `highlight`, `countdown`, `clock`, `relativetime`, `visible`,
-`validator`, `notes`, and `builder` don't yet have a dedicated component doc with a
+`validator`, `notes`, and `builder` don't yet have a dedicated behavior doc with a
 live example to pull from — tracked as remaining work, not guessed here.
 
 ### 6. Animations (Effects)
@@ -553,7 +553,7 @@ Apply animations to elements.
 
 `animate`, `fadein`, `slidein`, `zoomin`, `bounce`, `shake`, `pulse`, `flip`,
 `sparkle`, `glow`, `rainbow`, `typewriter`, `parallax`, and `reveal` don't yet have a
-dedicated component doc with a live example to pull from — tracked as remaining work,
+dedicated behavior doc with a live example to pull from — tracked as remaining work,
 not guessed here.
 
 ## Events
@@ -584,8 +584,8 @@ document.addEventListener('wb:search', (e) => {
 
 ### Full event inventory
 
-Events that fire with **no `detail`** are listed with `—`. `component.md` docs marked in
-the last column carry the authoritative per-component write-up (full attribute list,
+Events that fire with **no `detail`** are listed with `—`. `behavior.md` docs marked in
+the last column carry the authoritative per-behavior write-up (full attribute list,
 schema, styling) — this table is the cross-behavior index.
 
 **Buttons, toggles & selection**
@@ -652,10 +652,10 @@ schema, styling) — this table is the cross-behavior index.
 
 **Forms** — `wb:form:submit` / `wb:form:success` / `wb:form:error` fire from **two**
 independent implementations, so the exact `detail` shape depends on which one enhanced
-your form: the `<form ajax>` component (`form.js`: `{ formData }` / `{ data }` /
+your form: the `<form ajax>` behavior (`form.js`: `{ formData }` / `{ data }` /
 `{ error }`) and native `<form>` auto-enhancement (`semantics/form.js` /
 `enhancements.js`: `{ response }` / `{ error }`). See
-[components/semantics/form.md](behaviors/form.md) for the authoritative,
+[behaviors/semantics/form.md](behaviors/form.md) for the authoritative,
 per-implementation breakdown.
 
 **Cards**
@@ -769,11 +769,11 @@ document.querySelectorAll('x-card, x-cardproduct, x-cardnotification').forEach((
 });
 ```
 
-Every component's own doc under `components/` also documents its events in an "Events"
+Every behavior's own doc under `behaviors/` also documents its events in an "Events"
 section with the full attribute/schema context — e.g.
-[components/semantics/details.md](behaviors/details.md),
-[components/cards/cardproduct.md](behaviors/cardproduct.md),
-[components/tabs.md](behaviors/tabs.md), and [search.md](search.md). This section exists
+[behaviors/semantics/details.md](behaviors/details.md),
+[behaviors/cards/cardproduct.md](behaviors/cardproduct.md),
+[behaviors/tabs.md](behaviors/tabs.md), and [search.md](search.md). This section exists
 so you don't have to open a dozen files to see what's available across the whole library.
 
 ---

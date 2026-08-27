@@ -1,6 +1,6 @@
 /**
  * validate-schemas.mjs
- * Validates all component schemas against schema.schema.json
+ * Validates all behavior schemas against schema.schema.json
  * Usage: node scripts/validate-schemas.mjs [optional-schema-name]
  * 
  * Output: data/schema-validation.json
@@ -71,7 +71,7 @@ console.log(`\nFull results: ${outputPath}`);
 
 
 /**
- * Validate a component schema against our rules.
+ * Validate a behavior schema against our rules.
  * We do this manually instead of using ajv because:
  *  1. No npm install needed
  *  2. Better error messages

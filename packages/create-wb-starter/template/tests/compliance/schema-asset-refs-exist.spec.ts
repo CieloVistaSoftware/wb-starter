@@ -7,7 +7,7 @@ import * as path from 'path';
  * schema (src/wb-models/**\/*.json) must resolve to a real file.
  *
  * page.json / site.json list `stylesheets` and `scripts` the page loader injects.
- * A stale entry — e.g. `../src/styles/components.css` after that file was
+ * A stale entry — e.g. `../src/styles/behaviors.css` after that file was
  * consolidated into site.css's behavior imports — 404s on EVERY page that
  * inherits it (page defaults), silently. Nothing caught it because no test
  * checked that these referenced files exist. This does.

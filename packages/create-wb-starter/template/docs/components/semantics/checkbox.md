@@ -27,7 +27,7 @@ Checkbox input with label and custom styling.
 | `size` | string | `"md"` | Size: `sm`, `md`, `lg` |
 | `variant` | string | `"default"` | Variant: `default`, `primary`, `success` |
 
-Wrapped in `<div x-demo>`, so the live component renders below with its source shown underneath:
+Wrapped in `<div x-demo>`, so the live behavior renders below with its source shown underneath:
 
 <div x-demo>
 <div x-checkbox label="I agree to the terms"></div>

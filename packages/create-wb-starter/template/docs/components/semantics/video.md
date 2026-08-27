@@ -24,7 +24,7 @@ Enhanced HTML5 video player with configurable defaults.
 | `loop` | boolean | `false` | Loop playback |
 | `playsInline` | boolean | `true` | Play inline on mobile |
 
-Wrapped in `<div x-demo>`, so the live component renders below with its source shown underneath:
+Wrapped in `<div x-demo>`, so the live behavior renders below with its source shown underneath:
 
 <div x-demo>
 <video src="https://interactive-examples.mdn.mozilla.net/media/cc0-videos/flower.mp4"></video>

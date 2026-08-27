@@ -6,7 +6,7 @@ import { test, expect, Page } from '@playwright/test';
  * Standard §13 requires:
  * - ≥1rem vertical spacing between examples
  * - ≥1rem padding inside example/demo containers
- * - All card components must have proper internal padding (header/main/footer)
+ * - All card behaviors must have proper internal padding (header/main/footer)
  *
  * This test validates that cards.html demo renders with proper spacing
  * and that card CSS enforces 1rem padding on all card parts.
@@ -16,7 +16,7 @@ test.describe('Card Spacing — Standard §13 Compliance', () => {
   test('card demo page loads without errors', async ({ page }) => {
     await page.goto('/demos/site/cards.html');
 
-    // Wait for WB components to initialize
+    // Wait for WB behaviors to initialize
     await page.waitForFunction(
       () => (window as any).WB && (window as any).WB.behaviors && Object.keys((window as any).WB.behaviors).length > 0,
       { timeout: 10000 }

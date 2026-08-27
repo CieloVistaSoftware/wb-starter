@@ -7,14 +7,14 @@ import { test, expect } from '@playwright/test';
  * connecting line (an inline containing block gives `top:0;bottom:0` no
  * sane block height to span) and mixed badly with the `display:block`
  * .x-timeline-item children built by src/wb-viewmodels/semantics/timeline.js.
- * Confirmed live on ?page=components: the items rendered (text was there)
+ * Confirmed live on ?page=behaviors: the items rendered (text was there)
  * but the timeline read as broken/unstyled -- "why is this not working?".
  * Fixed by adding `display: block` to `.x-timeline`.
  */
 
 test.describe('x-timeline renders as a real block with a visible connecting line', () => {
-  test('?page=components: x-timeline is display:block with a real-height ::before line', async ({ page }) => {
-    await page.goto('/?page=components');
+  test('?page=behaviors: x-timeline is display:block with a real-height ::before line', async ({ page }) => {
+    await page.goto('/?page=behaviors');
     await page.waitForFunction(() => (window as any).WB && (window as any).WB.behaviors, { timeout: 20000 });
 
     const timeline = page.locator('x-timeline').first();

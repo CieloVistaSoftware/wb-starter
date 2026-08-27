@@ -71,7 +71,7 @@
        mechanism), so ANY example that uses fixed positioning -- stagelight,
        a modal/dialog demo, etc. -- now sizes/positions relative to the
        preview box instead of the viewport, which is also just the more
-       correct behavior for a component playground generally. */
+       correct behavior for a behavior playground generally. */
     /* #778 -- John: "the search light shit is flashing at start up."
        `contain: layout` makes this a containing block for fixed descendants,
        which stops the spotlight overlay from being POSITIONED against the
@@ -136,7 +136,7 @@
        (e.g. a hero title wrapping "config" + "ure" instead of just moving
        "configure" down) — `break-word` only breaks as a last resort. */
     /* :where() keeps this selector's specificity at ZERO despite the #id, so it
-       never outranks a real component class like .x-card--xs's own max-width —
+       never outranks a real behavior class like .x-card--xs's own max-width —
        otherwise this safety net silently defeats legitimate size styling and
        misrepresents real behavior to anyone testing sizes in the playground. */
     #pg-preview { max-width: 100%; overflow-wrap: break-word; }
@@ -152,7 +152,7 @@
 <body>
   <h1>🧪 Playground</h1>
   <p class="pg-sub">Paste any HTML on the left — see it rendered live on the right. <code>&lt;wb-*&gt;</code>
-    components and <code>x-*</code> behaviors are upgraded automatically.</p>
+    behaviors and <code>x-*</code> behaviors are upgraded automatically.</p>
 
   <div class="pg-grid">
     <div class="pg-panel">
@@ -217,7 +217,7 @@
       line-height: 1.6; overflow-x: auto;"></div>
   </div>
 
-  <!-- #780 -- John: "Playground shouldn't show component gallery."
+  <!-- #780 -- John: "Playground shouldn't show behavior gallery."
        A 290-line static gallery of 53 <div x-demo> blocks used to live here,
        below the editor. It is a different thing from a playground -- the
        playground is for pasting your own markup and seeing it render -- and
@@ -587,7 +587,7 @@
       });
     });
 
-    // Theme control — the real <div x-themecontrol> component (never a one-off
+    // Theme control — the real <div x-themecontrol> behavior (never a one-off
     // hand-rolled select). It lives outside #pg-preview, so it isn't wiped by
     // render()'s innerHTML swap; scan it once, here, on load.
     ensureWB().then(() => WB.scan(document.getElementById('pg-themecontrol'), { eager: true }));
@@ -626,10 +626,10 @@
     // array's own wrap point instead of repeating in lockstep.
     function oneTwentyHeroes() {
       const CONTENT = [
-        ['Launch', 'Build faster with wb-starter', 'Schema-first, zero-build web components.', 'Get Started', 'View Docs'],
+        ['Launch', 'Build faster with wb-starter', 'Schema-first, zero-build behaviors.', 'Get Started', 'View Docs'],
         ['New', 'Compose, don\'t configure', 'Stack x-* behaviors on any element.', 'Try it', 'Learn more'],
         ['v3', 'Themeable to the core', 'Every color flows from one theme system.', 'Explore themes', null],
-        ['Open Source', 'Own your components', 'Light DOM, no shadow boundaries.', 'Star on GitHub', 'Read the guide'],
+        ['Open Source', 'Own your behaviors', 'Light DOM, no shadow boundaries.', 'Star on GitHub', 'Read the guide'],
         ['Fast', 'No build step. Ever.', 'Drop a script tag and go.', 'Get Started', null],
         ['Accessible', 'Semantics by default', 'Native elements, enhanced.', 'See a11y', 'Docs'],
         ['Zero Build.', 'Infinite Possibility.', 'The web framework that doesn’t need a framework.', 'Try the Playground', 'Read the Guide'],
@@ -740,9 +740,9 @@
         "<div x-card title=\"Trailhead access\" subtitle=\"Updated this morning\" elevated>\n  The north gate is open. Parking fills by 9am on weekends \u2014 the overflow lot adds\n  about ten minutes on foot.\n</div>",
         "<article x-cardbutton\n  title=\"Upgrade to Team\"\n  content=\"Shared workspaces, audit history and SSO.\"\n  primary=\"Start free trial\"\n  secondary=\"Compare plans\"></article>",
         "<article x-carddraggable title=\"Drag me\" content=\"Pick this card up and move it \u2014 the position sticks.\" constrain axis=\"both\"></article>",
-        "<article x-cardexpandable\n  title=\"What changed in 3.0\"\n  content=\"Composition replaced inheritance: a tag maps to a behavior function that decorates the element in place, in light DOM. There is no component base class any more, and no shadow boundary to reach through.\"\n  lines=\"2\"></article>",
+        "<article x-cardexpandable\n  title=\"What changed in 3.0\"\n  content=\"Composition replaced inheritance: a tag maps to a behavior function that decorates the element in place, in light DOM. There is no behavior base class any more, and no shadow boundary to reach through.\"\n  lines=\"2\"></article>",
         "<article x-cardfile filename=\"quarterly-report.pdf\" file-type=\"pdf\" size=\"2.4 MB\" date=\"2026-08-14\" href=\"#\"></article>",
-        "<section x-cardhero\n  pretitle=\"Release 3.0\"\n  title=\"Zero build. Real components.\"\n  subtitle=\"Light DOM, no shadow boundaries, no class hierarchy.\"\n  cta=\"Read the guide\"\n  cta-href=\"#\"\n  height=\"320px\"></section>",
+        "<section x-cardhero\n  pretitle=\"Release 3.0\"\n  title=\"Zero build. Real behaviors.\"\n  subtitle=\"Light DOM, no shadow boundaries, no class hierarchy.\"\n  cta=\"Read the guide\"\n  cta-href=\"#\"\n  height=\"320px\"></section>",
         "<article x-cardhorizontal\n  image=\"https://picsum.photos/seed/trail/320/240\"\n  image-alt=\"Pine trail at dawn\"\n  image-position=\"start\"\n  title=\"Ridge loop, 8km\"\n  subtitle=\"Moderate \u00b7 3h\"></article>",
         "<article x-cardimage\n  src=\"https://picsum.photos/seed/harbour/480/300\"\n  alt=\"Fishing boats at the harbour wall\"\n  title=\"Harbour at first light\"\n  caption=\"Shot on the 6am walk-around.\"></article>",
         "<article x-cardlink\n  href=\"#\"\n  title=\"Attribute naming standard\"\n  description=\"Why every attribute is kebab-case, and what breaks when it is not.\"\n  badge=\"Standard\"></article>",
@@ -755,7 +755,7 @@
         "<article x-cardprofile\n  name=\"Grace Hopper\"\n  role=\"Compiler pioneer\"\n  avatar=\"https://picsum.photos/seed/grace/96/96\"\n  bio=\"Wrote the first compiler, then spent a career arguing that people should not have to write machine code.\"></article>",
         "<article x-cardstats value=\"1,284\" label=\"Builds this month\" trend=\"up\" trend-value=\"12%\"></article>",
         "<article x-cardtestimonial\n  quote=\"We deleted the build step and shipped faster the same week.\"\n  author=\"Katherine Johnson\"\n  role=\"Platform lead\"\n  avatar=\"https://picsum.photos/seed/katherine/96/96\"\n  rating=\"5\"></article>",
-        "<article x-cardvideo\n  src=\"https://www.w3schools.com/html/mov_bbb.mp4\"\n  poster=\"https://picsum.photos/seed/screening/480/270\"\n  title=\"Behaviors in 90 seconds\"\n  description=\"What replaced the component base class, and why.\"></article>",
+        "<article x-cardvideo\n  src=\"https://www.w3schools.com/html/mov_bbb.mp4\"\n  poster=\"https://picsum.photos/seed/screening/480/270\"\n  title=\"Behaviors in 90 seconds\"\n  description=\"What replaced the behavior base class, and why.\"></article>",
 
         // Attention/animation effects (button — most of these are click-triggered)
         '<button x-ripple>Ripple</button>',
@@ -793,7 +793,7 @@
 
         // Utilities
         '<button x-copy copy-text="npm install wb-starter">Copy Install Command</button>',
-        '<button x-share share-title="wb-starter" share-text="Zero-build web components" share-url="https://cielovistasoftware.github.io/wb-starter/">Share</button>',
+        '<button x-share share-title="wb-starter" share-text="Zero-build behaviors" share-url="https://cielovistasoftware.github.io/wb-starter/">Share</button>',
         '<button x-print label="🖨️ Print this page"></button>',
         '<button x-fullscreen label="⛶ Go Fullscreen"></button>',
         '<p x-truncate lines="1">This paragraph is much longer than the space allows and gets truncated to a single line with an ellipsis at the end so the layout never breaks.</p>',
@@ -1031,7 +1031,7 @@
     });
 
     // #659: the preview pane is ~41% of the browser (563px of 1280 measured),
-    // so a full-bleed component can never be seen at real width here, and
+    // so a full-bleed behavior can never be seen at real width here, and
     // resizing the window resizes the LAYOUT rather than the element. Hand the
     // current markup to a bare full-bleed page in a new tab instead.
     // localStorage rather than the URL: no length limit, no server round-trip.

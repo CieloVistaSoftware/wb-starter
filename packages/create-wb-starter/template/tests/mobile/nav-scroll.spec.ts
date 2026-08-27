@@ -13,7 +13,7 @@
  */
 import { test, expect, Page } from '@playwright/test';
 
-const LINKS = ['home', 'components', 'behaviors', 'themes', 'docs', 'about'];
+const LINKS = ['home', 'behaviors', 'behaviors', 'themes', 'docs', 'about'];
 
 async function clickNav(page: Page, id: string) {
   // The links live in the off-canvas drawer on mobile (not pointer-actionable),
@@ -79,7 +79,7 @@ test.describe('Nav link scroll behavior', () => {
       const before = await page.evaluate(() => window.scrollY);
       test.skip(before < 50, `${id}: page too short to scroll; restore N/A`);
 
-      const other = id === 'home' ? 'components' : 'home';
+      const other = id === 'home' ? 'behaviors' : 'home';
       await clickNav(page, other);
       await clickNav(page, id);
 

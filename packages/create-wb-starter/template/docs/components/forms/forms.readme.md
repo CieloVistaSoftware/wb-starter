@@ -1,12 +1,12 @@
-# Form Components Documentation
+# Form Behaviors Documentation
 [Edit this file](./forms.readme.md)
 
 ## Overview
-WB-Starter provides accessible, styled form controls with validation support. All form components use semantic HTML and follow accessibility standards.
+WB-Starter provides accessible, styled form controls with validation support. All form behaviors use semantic HTML and follow accessibility standards.
 
 ---
 
-## Input Component
+## Input Behavior
 
 Text input field with various types and validation.
 
@@ -53,7 +53,7 @@ Text input field with various types and validation.
 
 ---
 
-## Textarea Component
+## Textarea Behavior
 
 Multi-line text input with auto-resize capability.
 
@@ -88,7 +88,7 @@ Multi-line text input with auto-resize capability.
 
 ---
 
-## Checkbox Component
+## Checkbox Behavior
 
 Checkbox input with custom styling and indeterminate state support.
 
@@ -124,9 +124,9 @@ Checkbox input with custom styling and indeterminate state support.
 
 ---
 
-## Switch Component
+## Switch Behavior
 
-Toggle switch component (styled checkbox alternative).
+Toggle switch behavior (styled checkbox alternative).
 
 ### Attributes
 
@@ -153,7 +153,7 @@ Toggle switch component (styled checkbox alternative).
 
 ---
 
-## Select Component
+## Select Behavior
 
 Dropdown select with search and multi-select support.
 
@@ -190,9 +190,9 @@ Dropdown select with search and multi-select support.
 
 ---
 
-## Rating Component
+## Rating Behavior
 
-Star rating input component.
+Star rating input behavior.
 
 ### Attributes
 
@@ -222,7 +222,7 @@ Star rating input component.
 
 ## Form Validation
 
-All form components support HTML5 validation with custom error messages.
+All form behaviors support HTML5 validation with custom error messages.
 
 ### Validation Attributes
 
@@ -269,7 +269,7 @@ All form components support HTML5 validation with custom error messages.
 
 ## Events
 
-All form components emit standard events plus WB-specific events:
+All form behaviors emit standard events plus WB-specific events:
 
 | Event | Description | Detail |
 |-------|-------------|--------|
@@ -308,7 +308,7 @@ document.querySelector('form').addEventListener('submit', (e) => {
 
 ## Accessibility
 
-All form components include:
+All form behaviors include:
 
 - **Semantic HTML**: Proper `<label>`, `<input>`, `<textarea>` elements
 - **ARIA Support**: `aria-label`, `aria-describedby`, `aria-invalid`
@@ -320,7 +320,7 @@ All form components include:
 
 ## Styling
 
-Form components use CSS custom properties for consistent theming:
+Form behaviors use CSS custom properties for consistent theming:
 
 ```css
 :root {
@@ -343,7 +343,7 @@ Form components use CSS custom properties for consistent theming:
 ---
 
 ## Implementation
-- **Components**: Located in `src/wb-viewmodels/` (input.js, textarea.js, etc.)
-- **Styles**: [src/styles/components/forms.css](../../../src/styles/behaviors/input.css)
-- **Schemas**: Form component schemas in `src/wb-models/`
+- **Behaviors**: Located in `src/wb-viewmodels/` (input.js, textarea.js, etc.)
+- **Styles**: [src/styles/behaviors/forms.css](../../../src/styles/behaviors/input.css)
+- **Schemas**: Form behavior schemas in `src/wb-models/`
 - **Tests**: Form tests in `tests/behaviors/ui/forms.spec.ts`

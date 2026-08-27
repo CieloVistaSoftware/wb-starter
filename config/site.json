@@ -115,8 +115,8 @@
   ],
   "companyInfo": {
     "businessName": "Cielo Vista Software",
-    "businessTagline": "Zero-build web components",
-    "businessDescription": "Cielo Vista Software builds wb-starter, a zero-build, schema-first web-component framework. Compose UIs from wb-* tags and x-* behaviors in plain HTML \u2014 no bundler, no build step, no lock-in.",
+    "businessTagline": "Zero-build behaviors",
+    "businessDescription": "Cielo Vista Software builds wb-starter, a zero-build, schema-first web-behavior framework. Compose UIs from wb-* tags and x-* behaviors in plain HTML \u2014 no bundler, no build step, no lock-in.",
     "valueProposition": "Zero build, composition over inheritance, Light DOM, schema-first, fully themeable"
   },
   "contactInfo": {
@@ -188,10 +188,10 @@
     }
   ],
   "searchEngineOptimization": {
-    "pageTitle": "wb-starter v4.0.0 - Zero Build Web Components",
-    "pageDescription": "170+ behaviors, 50 themes, zero build process. The professional web component library.",
+    "pageTitle": "wb-starter v4.0.0 - Zero Build Behaviors",
+    "pageDescription": "170+ behaviors, 50 themes, zero build process. The professional behavior library.",
     "seoKeywords": [
-      "web components",
+      "behaviors",
       "framework",
       "behaviors",
       "themes",

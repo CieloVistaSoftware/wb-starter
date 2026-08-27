@@ -106,8 +106,8 @@ The `index` object maps words to document IDs for instant lookup:
 ```json
 {
   "index": {
-    "card": ["docs/components/card", "pages/components"],
-    "button": ["docs/components/button", "demos/buttons"],
+    "card": ["docs/behaviors/card", "pages/behaviors"],
+    "button": ["docs/behaviors/button", "demos/buttons"],
     "framework": ["pages/home", "docs/getting-started"]
   }
 }
@@ -151,11 +151,11 @@ function search(query, options = {}) {
 }
 
 // Example
-const results = search('card component');
-// → [{ id: 'docs/components/card', title: 'Card', score: 3 }, ...]
+const results = search('card behavior');
+// → [{ id: 'docs/behaviors/card', title: 'Card', score: 3 }, ...]
 ```
 
-### With WB Search Component
+### With WB Search Behavior
 
 ```html
 <div x-searchfield
@@ -172,7 +172,7 @@ const results = search('card component');
 | `page` | 📄 | Main site pages |
 | `doc` | 📖 | Documentation |
 | `demo` | 🎮 | Interactive demos |
-| `component` | 🧩 | Component reference |
+| `behavior` | 🧩 | Behavior reference |
 | `api` | ⚡ | API documentation |
 
 ## Best Practices
@@ -231,6 +231,6 @@ Add to `package.json`:
 
 ## Related
 
-- [Search Component](../search.md) - UI component for search
+- [Search Behavior](../search.md) - UI behavior for search
 - Site Configuration - Full config reference
 - [Schema Reference](../../src/wb-models/search-index.schema.json) - JSON Schema

@@ -14,7 +14,7 @@ x-code-card {
   overflow: hidden;
   /* Standard §13: >= 1rem padding inside example/demo containers. Was
      missing entirely (0 -- rendered content sat flush against the demo
-     box edge, relying only on whatever padding the rendered component
+     box edge, relying only on whatever padding the rendered behavior
      itself happened to have). demo-container-spacing.spec.ts's CSS-source
      check didn't catch this: it only flags padding that's PRESENT but
      under 1rem, not padding that's missing/0 -- fixed alongside this. */
@@ -157,7 +157,7 @@ x-demo[data-code-width="50vw"] .x-demo__code {
    requested width: min-width always wins over the JS-set `width` in the
    box model, so the demo (and everything width:100% inside it) grows to
    50vw regardless of how narrow the control's own shrink-measurement was.
-   Confirmed live: pages/components.html's "This is the title" card demo
+   Confirmed live: pages/behaviors.html's "This is the title" card demo
    was rendering source at ~250px with a horizontal scrollbar cutting off
    every attribute value mid-word. */
 x-demo[data-code-width="50vw"] {
@@ -251,7 +251,7 @@ x-demo.x-demo--full-width .x-demo__grid {
 }
 
 /* Standard §26 (#390), MOBILE ONLY: below 700px a page like
-   pages/components.html is a long vertical scroll past dozens of demos --
+   pages/behaviors.html is a long vertical scroll past dozens of demos --
    there, letting each single-item demo's outer footprint shrink to its own
    content width (the §7 rule above) makes the page's horizontal edge jump
    left/right as you scroll past narrow vs. wide demos ("window slop"),
@@ -373,13 +373,13 @@ x-demo > .x-pre-wrapper {
    the top edge, offset OUTSIDE the right edge (top:0; right:-2rem) -- but
    `.x-card`'s own `overflow:hidden` (needed for its rounded corners)
    clips anything positioned past its own bounds, making the badge
-   completely invisible on every x-card* component (confirmed live on
+   completely invisible on every x-card* behavior (confirmed live on
    demos/site/cards.html: 293 links existed in the DOM, Playwright reported
    every sampled one "visible", but a real screenshot showed zero of them
    -- clipped, not hidden by opacity/display). Settled on an INSET
    (top/right: 0.5rem) instead -- still at the top, still toward the right,
    but never past either edge, so no ancestor's overflow:hidden could clip
-   it regardless of component type.
+   it regardless of behavior type.
 
    John: "move it to be all the way on the upper right side of that
    element." -- flush with the corner (top:0; right:0), not inset by
@@ -432,7 +432,7 @@ x-demo:has(> .x-demo__card-doc-link) {
   padding-top: 5rem;
 }
 
-/* A grid mixing genuinely different components/behaviors (rare -- most
+/* A grid mixing genuinely different behaviors/behaviors (rare -- most
    demo blocks are one file's own instances) gets one icon per distinct
    doc file instead of silently dropping the second (see the href-based
    dedup in attachInstanceDocLink). Offset a later icon left so it doesn't

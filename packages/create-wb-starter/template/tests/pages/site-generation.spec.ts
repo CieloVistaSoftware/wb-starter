@@ -9,7 +9,7 @@ import * as path from 'path';
  * Validates:
  *   1. Index page loads with all category cards
  *   2. Each category page loads, has correct x-demo sections
- *   3. Components render inside x-demo containers
+ *   3. Behaviors render inside x-demo containers
  *   4. No critical JS errors
  *   5. Back-to-index navigation works
  */
@@ -34,7 +34,7 @@ interface SiteResult {
     componentCount?: number;
     sectionCount?: number;
     totalDemos?: number;
-    components?: Array<{
+    behaviors?: Array<{
       name: string;
       status: string;
       sections: number;
@@ -57,7 +57,7 @@ test.describe('Site Generation — Phase 4', () => {
 
     test('loads and displays site title', async ({ page }) => {
       await page.goto(`${SITE_DIR}/index.html`);
-      await expect(page.locator('h1')).toContainText('WB Component Library');
+      await expect(page.locator('h1')).toContainText('WB Behavior Library');
     });
 
     test('shows correct stats', async ({ page }) => {
@@ -164,11 +164,11 @@ test.describe('Site Generation — Phase 4', () => {
         expect(emptyCount, `${emptyCount}/${checkCount} demos were empty`).toBeLessThan(checkCount);
       });
 
-      // Per-component spot checks for pages with component data
-      if (pg.components && pg.components.length > 0) {
-        const okComponents = pg.components.filter(c => c.status === 'ok');
+      // Per-behavior spot checks for pages with behavior data
+      if (pg.behaviors && pg.behaviors.length > 0) {
+        const okComponents = pg.behaviors.filter(c => c.status === 'ok');
 
-        test(`has wb-* tags for ${okComponents.length} components`, async ({ page }) => {
+        test(`has wb-* tags for ${okComponents.length} behaviors`, async ({ page }) => {
           await page.goto(`${SITE_DIR}/${pg.filename}`);
           await page.waitForFunction(() => (window as any).WB, null, { timeout: 10000 }).catch(() => {});
 
@@ -180,10 +180,10 @@ test.describe('Site Generation — Phase 4', () => {
             if (elCount > 0) foundCount++;
           }
 
-          // Most components should be present — allow a few missing
-          // (some components might share a tag, e.g. drawerLayout → x-drawerlayout)
+          // Most behaviors should be present — allow a few missing
+          // (some behaviors might share a tag, e.g. drawerLayout → x-drawerlayout)
           const threshold = Math.max(1, Math.floor(okComponents.length * 0.6));
-          expect(foundCount, `Only ${foundCount}/${okComponents.length} component tags found`).toBeGreaterThanOrEqual(threshold);
+          expect(foundCount, `Only ${foundCount}/${okComponents.length} behavior tags found`).toBeGreaterThanOrEqual(threshold);
         });
       }
 
@@ -227,7 +227,7 @@ test.describe('Site Generation — Phase 4', () => {
 
         // Click back link
         await page.locator('a[href="index.html"]').click();
-        await expect(page.locator('h1')).toContainText('WB Component Library');
+        await expect(page.locator('h1')).toContainText('WB Behavior Library');
       }
     });
   });

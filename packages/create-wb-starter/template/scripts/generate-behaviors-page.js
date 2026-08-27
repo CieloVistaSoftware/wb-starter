@@ -5,9 +5,9 @@
  * Creates a complete showcase page with all behavior categories and demos
  *
  * IMPORTANT (#484): pages/behaviors.html was hand-fixed after #304/#390 to
- * (a) contain zero wb-* custom-component demos (they belong on
- * pages/components.html instead -- gated by
- * tests/compliance/behaviors-page-no-wb-components.spec.ts), (b) wrap each
+ * (a) contain zero wb-* custom-behavior demos (they belong on
+ * pages/behaviors.html instead -- gated by
+ * tests/compliance/behaviors-page-no-wb-behaviors.spec.ts), (b) wrap each
  * distinctly-configured element in its own <div x-demo> rather than grouping
  * multiple elements into one (gated by
  * tests/compliance/demo-layout-standards.spec.ts's "no permutation-matrix"
@@ -174,18 +174,18 @@ function generateCategorySection(category, behaviors) {
   };
 
   // NOTE: some notes below deliberately call out which behaviors in this
-  // category are wb-* components (and therefore demoed on
-  // pages/components.html instead, not here) -- see the file-header
-  // comment and tests/compliance/behaviors-page-no-wb-components.spec.ts.
+  // category are wb-* behaviors (and therefore demoed on
+  // pages/behaviors.html instead, not here) -- see the file-header
+  // comment and tests/compliance/behaviors-page-no-wb-behaviors.spec.ts.
   const sectionNotes = {
     buttons: 'Button behaviors: Variants, sizes, and interactive effects like ripple and toast.',
     inputs: 'Input behaviors: Auto-enhanced inputs with validation variants, password toggle, and masking.',
-    selection: 'Selection behaviors: Checkboxes, radios, selects, and steppers. (Switches and ratings are wb-* components — see <a href="?page=components">Components</a>.)',
-    feedback: 'Feedback behaviors: Toast notifications. (Alerts, badges, progress bars, and spinners are wb-* components — see <a href="?page=components">Components</a>.)',
-    overlays: 'Overlay behaviors: Tooltips, popovers, confirm dialogs, and lightboxes. (Modals and drawers are wb-* components — see <a href="?page=components">Components</a>.)',
-    navigation: 'Navigation behaviors: Breadcrumbs, pagination, and step wizards. (Tabs and accordion are wb-* components — see <a href="?page=components">Components</a>.)',
+    selection: 'Selection behaviors: Checkboxes, radios, selects, and steppers. (Switches and ratings are wb-* behaviors — see <a href="?page=behaviors">Behaviors</a>.)',
+    feedback: 'Feedback behaviors: Toast notifications. (Alerts, badges, progress bars, and spinners are wb-* behaviors — see <a href="?page=behaviors">Behaviors</a>.)',
+    overlays: 'Overlay behaviors: Tooltips, popovers, confirm dialogs, and lightboxes. (Modals and drawers are wb-* behaviors — see <a href="?page=behaviors">Behaviors</a>.)',
+    navigation: 'Navigation behaviors: Breadcrumbs, pagination, and step wizards. (Tabs and accordion are wb-* behaviors — see <a href="?page=behaviors">Behaviors</a>.)',
     data: 'Data behaviors: Avatars, skeletons, timelines, and keyboard keys.',
-    media: 'Media behaviors: Images with lazy loading, galleries, and YouTube embeds. (Audio player is a wb-* component — see <a href="?page=components">Components</a>.)',
+    media: 'Media behaviors: Images with lazy loading, galleries, and YouTube embeds. (Audio player is a wb-* behavior — see <a href="?page=behaviors">Behaviors</a>.)',
     effects: 'Effect behaviors: Attention seekers, entrance animations, particle effects, and ripples.',
     utilities: 'Utility behaviors: Copy, share, print, fullscreen, clock, countdown, and dark mode toggle.'
   };
@@ -309,7 +309,7 @@ function generateInputDemos(behaviors) {
 // One <div x-demo> per distinctly-configured element, EXCEPT the radio group
 // (all share name="demo-radio" -- one actual control group, per Standard
 // §17) which stays in a single <div x-demo>. x-switch and x-rating are
-// wb-* components -- demoed on pages/components.html instead, not here.
+// wb-* behaviors -- demoed on pages/behaviors.html instead, not here.
 function generateSelectionDemos(behaviors) {
   let html = '';
 
@@ -356,9 +356,9 @@ function generateSelectionDemos(behaviors) {
 }
 
 // Generate feedback demos.
-// x-alert/x-badge/x-progress/x-spinner are wb-* components -- demoed
-// on pages/components.html instead, not here. Only the x-toast behavior
-// (a real attribute-behavior, not a component) belongs on this page.
+// x-alert/x-badge/x-progress/x-spinner are wb-* behaviors -- demoed
+// on pages/behaviors.html instead, not here. Only the x-toast behavior
+// (a real attribute-behavior, not a behavior) belongs on this page.
 function generateFeedbackDemos(behaviors) {
   let html = '';
 
@@ -382,7 +382,7 @@ function generateFeedbackDemos(behaviors) {
 }
 
 // Generate overlay demos.
-// x-modal/x-drawer are wb-* components -- demoed on pages/components.html
+// x-modal/x-drawer are wb-* behaviors -- demoed on pages/behaviors.html
 // instead, not here. One <div x-demo> per distinctly-configured element.
 function generateOverlayDemos(behaviors) {
   let html = '';
@@ -420,8 +420,8 @@ function generateOverlayDemos(behaviors) {
 }
 
 // Generate navigation demos.
-// x-tabs/x-accordion are wb-* components -- demoed on
-// pages/components.html instead, not here.
+// x-tabs/x-accordion are wb-* behaviors -- demoed on
+// pages/behaviors.html instead, not here.
 function generateNavigationDemos(behaviors) {
   let html = '';
 
@@ -448,10 +448,10 @@ function generateDataDemos(behaviors) {
   let html = '';
 
   // x-avatar and x-skeleton are catalogued as type:"element" in
-  // behaviors.schema.json's "data" category -- real wb-* components with no
+  // behaviors.schema.json's "data" category -- real wb-* behaviors with no
   // x-* attribute form at all, not behaviors. This page exists to show one
-  // demo per x-* behavior; genuine components already have their own demos
-  // on pages/components.html (confirmed present there). Rendering them here
+  // demo per x-* behavior; genuine behaviors already have their own demos
+  // on pages/behaviors.html (confirmed present there). Rendering them here
   // too made the Behaviors page show wb-* custom elements mixed in with
   // behaviors, contradicting its own purpose.
 
@@ -469,7 +469,7 @@ function generateDataDemos(behaviors) {
 }
 
 // Generate media demos.
-// x-audio is a wb-* component -- demoed on pages/components.html instead,
+// x-audio is a wb-* behavior -- demoed on pages/behaviors.html instead,
 // not here. Gallery stays a single <div x-demo> since x-gallery's multiple
 // <img> children are ONE configured instance, not several distinct demos.
 function generateMediaDemos(behaviors) {

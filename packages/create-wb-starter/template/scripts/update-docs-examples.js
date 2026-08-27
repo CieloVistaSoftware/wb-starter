@@ -5,7 +5,7 @@ import { fileURLToPath } from 'url';
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
-const cardsDir = path.join(__dirname, '../docs/components/cards');
+const cardsDir = path.join(__dirname, '../docs/behaviors/cards');
 const files = fs.readdirSync(cardsDir).filter(f => f.endsWith('.md') && f.startsWith('card'));
 
 console.log(`Scanning ${files.length} files in ${cardsDir}...`);

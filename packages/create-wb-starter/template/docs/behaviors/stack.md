@@ -1,6 +1,6 @@
-# Stack Layout Component
+# Stack Layout Behavior
 
-Vertical stack layout component. Renders children in a column with configurable gap, background color, padding, and border radius.
+Vertical stack layout behavior. Renders children in a column with configurable gap, background color, padding, and border radius.
 
 Apply `x-stack` to any element.
 

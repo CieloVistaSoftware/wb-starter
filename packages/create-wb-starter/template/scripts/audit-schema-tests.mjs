@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 /**
  * WB Framework - Schema Test Audit
- * Checks component schemas have at least 5 setup tests using their declared
+ * Checks behavior schemas have at least 5 setup tests using their declared
  * wb-* or x-* surface.
  * 
  * Run: node scripts/audit-schema-tests.mjs
@@ -144,7 +144,7 @@ function auditSchemas() {
   for (const fullPath of files) {
     const file = path.relative(SCHEMA_DIR, fullPath);
     const schema = JSON.parse(fs.readFileSync(fullPath, 'utf8'));
-    if (!schema || (schema.schemaType || 'component') !== 'component' || file.includes('.base.')) continue;
+    if (!schema || (schema.schemaType || 'behavior') !== 'behavior' || file.includes('.base.')) continue;
     
     const behavior = schema.behavior || schema.schemaFor;
     if (!behavior) continue;

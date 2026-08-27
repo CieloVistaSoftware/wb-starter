@@ -21,7 +21,7 @@ import { globSync } from 'glob';
  *
  * DISCOVERY: rather than hand-listing every file (the same "doesn't scale
  * to future usage" problem docs-live-media-assets-exist.spec.ts avoided by
- * driving off component-index.json), this greps for `<div x-demo[^>]*\bevents=`
+ * driving off behavior-index.json), this greps for `<div x-demo[^>]*\bevents=`
  * across demos/**\/*.html, pages/**\/*.html, and docs/**\/*.md (fenced code
  * and inline spans stripped in .md first, matching every other test in
  * this session's audit pass -- an `events=` attribute shown as inline
@@ -29,10 +29,10 @@ import { globSync } from 'glob';
  * live control). As of this pass there are 6 real usages across 5 files;
  * any future `events=` usage is automatically picked up.
  *
- * INTERACTION: the control behind an `events=` demo varies by component
+ * INTERACTION: the control behind an `events=` demo varies by behavior
  * (a button, a switch, a tab, a table row, ...) and this test does not
  * hand-pick a selector per file -- it tries a small, ordered cascade of
- * generic candidate selectors (the shapes real components in this repo
+ * generic candidate selectors (the shapes real behaviors in this repo
  * actually expose: a real `<button>`, `[role=switch]`, `[role=tab]`, a
  * `<tr>`, then a last-resort click on the first rendered child) and stops
  * at the first one that actually moves the event log. This generalizes to

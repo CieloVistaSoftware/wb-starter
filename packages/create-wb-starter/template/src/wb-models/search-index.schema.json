@@ -131,14 +131,14 @@
             "page",
             "doc",
             "demo",
-            "component",
+            "behavior",
             "api"
           ],
           "description": "Document type for filtering/icons"
         },
         "category": {
           "type": "string",
-          "description": "Category for grouping results (e.g., 'Components', 'Guides')"
+          "description": "Category for grouping results (e.g., 'Behaviors', 'Guides')"
         },
         "modified": {
           "type": "string",
@@ -190,26 +190,26 @@
               "id": "getting-started"
             }
           ],
-          "content": "Welcome to the WB Behaviors. A modern component library...",
+          "content": "Welcome to the WB Behaviors. A modern behavior library...",
           "keywords": [
             "home",
             "welcome",
             "framework",
-            "components"
+            "behaviors"
           ],
           "type": "page",
           "category": "Main",
           "boost": 2
         },
         {
-          "id": "docs/components/card",
-          "url": "/docs/components/card.html",
-          "title": "Card Component",
+          "id": "docs/behaviors/card",
+          "url": "/docs/behaviors/card.html",
+          "title": "Card Behavior",
           "description": "Versatile container for content display",
           "headings": [
             {
               "level": 1,
-              "text": "Card Component"
+              "text": "Card Behavior"
             },
             {
               "level": 2,
@@ -222,22 +222,22 @@
               "id": "properties"
             }
           ],
-          "content": "The card component is a versatile container...",
+          "content": "The card behavior is a versatile container...",
           "keywords": [
             "card",
             "container",
-            "component",
+            "behavior",
             "layout"
           ],
-          "type": "component",
-          "category": "Components",
+          "type": "behavior",
+          "category": "Behaviors",
           "boost": 1.5
         }
       ],
       "index": {
         "card": [
-          "docs/components/card",
-          "pages/components"
+          "docs/behaviors/card",
+          "pages/behaviors"
         ],
         "welcome": [
           "pages/home"

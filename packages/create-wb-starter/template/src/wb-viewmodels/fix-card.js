@@ -2,7 +2,7 @@ import { WBCard } from './x-card.js';
 import { mdhtml } from './mdhtml.js';
 
 /**
- * Fix Card Component
+ * Fix Card Behavior
  * -----------------------------------------------------------------------------
  * Special card for displaying fix details.
  * 
@@ -197,7 +197,7 @@ export class WBFixCard extends WBCard {
     
     const hasCause = fix.cause && fix.cause.trim().length > 0;
     const isMissingBehavior = fix.errorSignature && fix.errorSignature.includes('Unknown behavior');
-    const redHoverText = isMissingBehavior ? 'title="CRITICAL: This error indicates a missing behavior file or registration issue, which prevents the component from functioning entirely."' : '';
+    const redHoverText = isMissingBehavior ? 'title="CRITICAL: This error indicates a missing behavior file or registration issue, which prevents the behavior from functioning entirely."' : '';
     
     const causeHtml = hasCause 
       ? `<div class="detail-content ${isMissingBehavior ? 'glow-red' : ''}" ${redHoverText}>${this.escapeHtml(fix.cause)}</div>`
@@ -206,10 +206,10 @@ export class WBFixCard extends WBCard {
     const errorSignature = (() => {
       const sig = fix.errorSignature || 'No signature provided';
       if (sig.includes('Enhancement')) {
-        // Try to find a component doc link - use direct path for simplicity
-        const compName = (fix.component || '').split('/').pop().replace('.js', '');
+        // Try to find a behavior doc link - use direct path for simplicity
+        const compName = (fix.behavior || '').split('/').pop().replace('.js', '');
         if (compName) {
-          return `<a href="/docs/components/semantics/${this.escapeHtml(compName)}.md" target="_blank" style="color: var(--primary); text-decoration: none; border-bottom: 1px dashed var(--primary);">Enhancement: See ${this.escapeHtml(compName)}.md</a>`;
+          return `<a href="/docs/behaviors/semantics/${this.escapeHtml(compName)}.md" target="_blank" style="color: var(--primary); text-decoration: none; border-bottom: 1px dashed var(--primary);">Enhancement: See ${this.escapeHtml(compName)}.md</a>`;
         }
         return this.escapeHtml(sig);
       }
@@ -236,7 +236,7 @@ export class WBFixCard extends WBCard {
     const mainContent = `
       <div class="fix-meta" style="display:flex;gap:1rem;margin-bottom:1rem;padding-bottom:1rem;border-bottom:1px solid var(--border-color);">
         <div class="meta-item" style="display:flex;align-items:center;gap:0.5rem;font-size:0.9rem;color:var(--text-secondary);">
-          <span>📦</span> ${this.escapeHtml(fix.component || 'Global')}
+          <span>📦</span> ${this.escapeHtml(fix.behavior || 'Global')}
         </div>
         <div class="meta-item" style="display:flex;align-items:center;gap:0.5rem;font-size:0.9rem;color:var(--text-secondary);">
           <span>📅</span> ${dateStr}

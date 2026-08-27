@@ -89,7 +89,7 @@ test.describe('HTML Validity', () => {
   });
 
   test('x-demo code panels contain valid HTML markup', async ({ page }) => {
-    // Test the content.html page which has many demo components
+    // Test the content.html page which has many demo behaviors
     await page.goto('http://localhost:3000/demos/site/content.html');
 
     const codePanels = page.locator('.x-demo__code');

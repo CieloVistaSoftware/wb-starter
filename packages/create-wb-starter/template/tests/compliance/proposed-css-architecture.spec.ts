@@ -6,7 +6,7 @@ import { PATHS, fileExists, readFile } from '../base';
 /**
  * PROPOSED CSS ARCHITECTURE TESTS
  * ===============================
- * These tests verify the migration from monolithic components.css 
+ * These tests verify the migration from monolithic behaviors.css 
  * to modular behavior-specific CSS files.
  * 
  * TODO: Enable these tests when migration is ready.
@@ -14,9 +14,9 @@ import { PATHS, fileExists, readFile } from '../base';
 
 test.describe('Proposed CSS Architecture', () => {
   
-  // This test expects components.css to be gone or empty
-  test.skip('monolithic components.css should be deprecated', () => {
-    const componentsCssPath = path.join(PATHS.styles, 'components.css');
+  // This test expects behaviors.css to be gone or empty
+  test.skip('monolithic behaviors.css should be deprecated', () => {
+    const componentsCssPath = path.join(PATHS.styles, 'behaviors.css');
     
     if (fileExists(componentsCssPath)) {
       const content = readFile(componentsCssPath);

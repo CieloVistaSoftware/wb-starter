@@ -1,7 +1,7 @@
 {
   "generated": "2026-07-30T22:39:51.228Z",
   "schemaSource": "C:\\Users\\jwpmi\\Downloads\\AI\\wb-starter\\src\\wb-models\\pages\\multi-component-demo.page.json",
-  "outputFile": "demos/multi-component-demo-generated.html",
+  "outputFile": "demos/multi-behavior-demo-generated.html",
   "sectionCount": 8,
   "totalDemos": 41,
   "lineCount": 199

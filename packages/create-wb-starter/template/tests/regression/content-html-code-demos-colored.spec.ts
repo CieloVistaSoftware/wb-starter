@@ -1,6 +1,6 @@
 /**
  * REGRESSION: demos/site/content.html includes a <div x-codecontrol> (same
- * component fixed in #431 -- see codecontrol-theme-cdn-url.spec.ts). This
+ * behavior fixed in #431 -- see codecontrol-theme-cdn-url.spec.ts). This
  * test asserts the actual visible effect on THIS page specifically: every
  * <div x-demo> code panel must render with real, non-default syntax colors,
  * not just that the theme <link> resolves correctly in isolation.

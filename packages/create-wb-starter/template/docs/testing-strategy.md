@@ -15,8 +15,8 @@ Your test suite is organized into strict tiers, enforced by Playwright and npm s
 - Stops if Tier 1 fails
 
 **Tier 3: Decorated Behaviors**
-- Location: tests/behaviors/, tests/cards/, tests/components/, tests/pages/, tests/semantics/
-- Full component tests, permutations, interactions, events
+- Location: tests/behaviors/, tests/cards/, tests/behaviors/, tests/pages/, tests/semantics/
+- Full behavior tests, permutations, interactions, events
 - Requires browser/server
 - Stops if Tier 1 or 2 fail
 
@@ -53,7 +53,7 @@ tests/
 ├── behaviors/
 │   ├── permutation-compliance.spec.ts   # Schema-driven permutation tests
 │   └── ui/
-│       ├── audio.spec.ts                # Component-specific tests
+│       ├── audio.spec.ts                # Behavior-specific tests
 │       ├── card.spec.ts
 │       └── ...
 ├── compliance/
@@ -82,7 +82,7 @@ Required fields:
 - `id`: BUG-YYYY-MM-DD-NNN
 - `title`: Brief description
 - `severity`: HIGH | MEDIUM | LOW
-- `component`: Affected file
+- `behavior`: Affected file
 - `function`: Affected function
 - `rootCause`: Why it happened
 - `symptom`: What user saw
@@ -115,7 +115,7 @@ Every schema SHOULD have a `test` section:
 {
   "test": {
     "setup": [
-      "<div x-behavior=\"component\" prop=\"value\"></div>"
+      "<div x-behavior=\"behavior\" prop=\"value\"></div>"
     ],
     "matrix": {
       "combinations": [
@@ -196,7 +196,7 @@ npx playwright test --ui
 ## Coverage Requirements
 
 1. **Bug Registry**: 100% test coverage (untestedBugs = 0)
-2. **Critical Components**: Must have dedicated test files
+2. **Critical Behaviors**: Must have dedicated test files
 3. **Enum Properties**: Must have permutation coverage
 4. **Boolean Properties**: Should have true/false tests
 5. **Regression Tests**: Must exist for all bug IDs
@@ -214,7 +214,7 @@ Bug found: Audio src goes to wrong place
   "id": "BUG-2024-12-19-001",
   "title": "Audio src attribute set on div instead of dataset",
   "severity": "HIGH",
-  "component": "builder.js",
+  "behavior": "builder.js",
   "function": "mkEl()",
   "affectedComponents": ["audio", "video", "cardimage"],
   "regressionTests": ["tests/regression/regression-tests.spec.ts"],
@@ -272,7 +272,7 @@ test('Audio: src goes to dataset.src NOT native src attribute', async ({ page })
 |------|-------|----------|
 | Bug tracking | `data/bug-registry.json` | YES |
 | Regression tests | `tests/regression/` | YES |
-| Component tests | `tests/behaviors/ui/` | CRITICAL |
+| Behavior tests | `tests/behaviors/ui/` | CRITICAL |
 | Permutation tests | `tests/behaviors/permutation-compliance.spec.ts` | YES |
 | Schema test section | `src/behaviors/schema/*.schema.json` | RECOMMENDED |
 | Coverage validation | `tests/compliance/test-coverage-compliance.spec.ts` | AUTO |

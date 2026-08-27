@@ -22,7 +22,7 @@ interface Bug {
   dateFound: string;
   severity: string;
   status: string;
-  component: string;
+  behavior: string;
   function: string;
   description: string;
   rootCause: string;
@@ -520,9 +520,9 @@ test.describe.skip('Attribute Routing Permutations (needs rewrite)', () => {
 });
 
 // =============================================================================
-// AUDIO COMPONENT SPECIFIC REGRESSION TESTS
+// AUDIO BEHAVIOR SPECIFIC REGRESSION TESTS
 // =============================================================================
-test.describe.skip('Audio Component Regression Suite (needs rewrite)', () => {
+test.describe.skip('Audio Behavior Regression Suite (needs rewrite)', () => {
   test.beforeEach(async ({ page }) => {
   });
 
@@ -712,7 +712,7 @@ test.describe('Regression Coverage Report', () => {
       console.log(`\n  ${bug.id}: ${bug.title}`);
       console.log(`    Status: ${bug.status}`);
       console.log(`    Severity: ${bug.severity}`);
-      console.log(`    Component: ${bug.component}`);
+      console.log(`    Behavior: ${bug.behavior}`);
       console.log(`    Test Cases: ${bug.testCases.length}`);
     }
     

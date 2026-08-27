@@ -73,7 +73,7 @@
 
 ---
 
-## Component Mapping
+## Behavior Mapping
 
 ### Cards (ALL variants)
 

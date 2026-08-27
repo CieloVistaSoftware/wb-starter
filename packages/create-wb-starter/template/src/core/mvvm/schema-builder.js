@@ -2,7 +2,7 @@
  * WB Schema Builder - MVVM Core
  * =============================
  * Builds DOM structure from JSON Schema definitions.
- * NO innerHTML in component classes. Schema IS the template.
+ * NO innerHTML in behavior classes. Schema IS the template.
  * 
  * @version 3.0.0 - $view format with $methods support
  * 
@@ -14,7 +14,7 @@
  * v3.0 Syntax Strategy:
  * =====================
  * PRIMARY (use in new code):
- *   1. x-card title="Hello"> - Web component tags for components
+ *   1. x-card title="Hello"> - Web behavior tags for behaviors
  *   2. <button x-ripple> - x- prefix for adding behaviors
  * 
  * DEPRECATED (legacy fallback):
@@ -133,7 +133,7 @@ export function registerSchema(schema, filename) {
  * Load a single schema file and register it (fallback for runtime/hydration races)
  * Returns true if the schema was fetched & registered, false otherwise.
  */
-// A page with several instances of the same component (e.g. multiple
+// A page with several instances of the same behavior (e.g. multiple
 // <article>-family tags on one page) each independently discover, on scan,
 // that the shared schema isn't registered yet and race to fetch it — none
 // of them see it as registered until their own fetch resolves. Observed
@@ -230,7 +230,7 @@ function extractData(element, schema) {
       const key = attr.name.slice(5).replace(/-([a-z])/g, (_, c) => c.toUpperCase());
       data[key] = parseValue(attr.value);
     } else if (!['class', 'style', 'id', 'x-behavior'].includes(attr.name)) {
-      // Direct attributes (for web component style)
+      // Direct attributes (for behavior style)
       const key = attr.name.replace(/-([a-z])/g, (_, c) => c.toUpperCase());
       data[key] = parseValue(attr.value);
     }
@@ -315,10 +315,10 @@ function buildStructure(element, schema, data) {
   // Apply base class -- skip when the host tag already IS baseClass (e.g.
   // <div x-mdhtml> getting classList.add('x-mdhtml')); redundant, and flagged
   // by tests/compliance/no-redundant-tag-name-class.spec.ts (#478). Every
-  // per-component behavior fn's OWN identical guard (card.js, checkbox.js,
+  // per-behavior behavior fn's OWN identical guard (card.js, checkbox.js,
   // mdhtml.js, ...) only covers ITS OWN classList.add call -- this generic
   // schema-driven path adds the same class independently and needs the same
-  // guard, or a component's own correct guard gets silently bypassed here.
+  // guard, or a behavior's own correct guard gets silently bypassed here.
   if (element.tagName.toLowerCase() !== baseClass) element.classList.add(baseClass);
   
   // Apply additional classes (for variants like x-card--profile)
@@ -329,7 +329,7 @@ function buildStructure(element, schema, data) {
   // Apply variant/modifier classes from data
   applyVariantClasses(element, schema, data);
 
-  // Empty $view means the component's BEHAVIOR owns all DOM content, not
+  // Empty $view means the behavior's BEHAVIOR owns all DOM content, not
   // the schema (card #202, demo, alert, button). NEVER touch innerHTML in
   // that case. This used to always wipe element.innerHTML then restore it
   // from data.slot (element.innerHTML captured as a string BEFORE the
@@ -645,7 +645,7 @@ function interpolate(template, data) {
 /**
  * Bind $methods from schema to element
  * @param {HTMLElement} element - Target element
- * @param {Object} schema - Component schema
+ * @param {Object} schema - Behavior schema
  * @param {Object} viewModel - ViewModel instance with method implementations
  */
 export function bindMethods(element, schema, viewModel) {
@@ -821,7 +821,7 @@ function bindSchemaMethodsToElement(element, schema, data) {
  * Detect schema from element
  * 
  * v3.0 Priority:
- *   1. x-card> - Web component tag (PRIMARY)
+ *   1. x-card> - Web behavior tag (PRIMARY)
  *   2. - Data attribute (DEPRECATED - legacy fallback)
  * 
  * Note: Class detection was removed - classes are for CSS only
@@ -974,7 +974,7 @@ function detectXAttributeSchema(element) {
 function detectSchema(element) {
   const tagName = element.tagName.toLowerCase();
 
-  // 1. Web component tag: x-card>
+  // 1. Web behavior tag: x-card>
   if (tagName.startsWith('wb-')) {
     if (SCHEMA_EXCLUDED_TAGS.has(tagName)) return null;
     const mapped = tagToSchema.get(tagName);

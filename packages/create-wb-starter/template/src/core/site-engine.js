@@ -101,7 +101,7 @@ export default class WBSite {
             this.navigateTo(page);
           } else if (href && href.length > 1 && href.startsWith('#')) {
             // In-page anchor (e.g. the behaviors-page section nav). Native anchor
-            // scrolling was unreliable in the SPA — lazy-injected components reflow
+            // scrolling was unreliable in the SPA — lazy-injected behaviors reflow
             // the page after the jump, leaving the link looking dead (#181). Drive
             // the scroll explicitly; scroll-margin-top on the target clears the
             // sticky header.
@@ -110,7 +110,7 @@ export default class WBSite {
               e.preventDefault();
               // #181's own fix (scrollIntoView instead of native anchor
               // jump) still isn't enough on a page as long/image-heavy as
-              // components.html's: dozens of <div x-cardimage>/<div x-cardhero>
+              // behaviors.html's: dozens of <div x-cardimage>/<div x-cardhero>
               // external images ABOVE a lower target keep loading and
               // growing the page's total height for SECONDS after this
               // fires (confirmed live on a 47,500px-tall render: a fixed
@@ -142,14 +142,14 @@ export default class WBSite {
                 setTimeout(poll, POLL_MS);
               };
               poll();
-              // pushState (not replaceState): a link like the component
+              // pushState (not replaceState): a link like the behavior
               // index's "View demo" jumps from a scroll position way up the
-              // page down to a specific component -- that jump must be a
+              // page down to a specific behavior -- that jump must be a
               // real, back-navigable step. replaceState overwrote the
               // CURRENT history entry instead of adding one, so Back skipped
               // straight past the click's origin to whatever page loaded
               // before this one entirely, not back to the pre-click scroll
-              // position. Confirmed live report: the components page's own
+              // position. Confirmed live report: the behaviors page's own
               // table of "View demo" links did exactly this.
               history.pushState(null, '', href);
             }

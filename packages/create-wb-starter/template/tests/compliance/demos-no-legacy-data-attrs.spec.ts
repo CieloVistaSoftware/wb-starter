@@ -6,7 +6,7 @@ import * as path from 'path';
  * COMPLIANCE GATE: demo files must use plain v3 attributes, not deprecated
  * `data-*` config attributes.
  *
- * Demos render a component AND show their own markup as a code sample, so a
+ * Demos render a behavior AND show their own markup as a code sample, so a
  * `data-variant="primary"` in a demo teaches every reader the deprecated syntax
  * — the "code generation is all wrong" report. v3 uses plain attributes
  * (variant, size, tooltip, value-suffix, …) declared straight on the element.
@@ -14,7 +14,7 @@ import * as path from 'path';
  * ALLOWED: framework-level hooks that are never WB behavior config --
  *   - `data-theme` : read by src/core/theme.js via documentElement.dataset.theme.
  *   - `data-code-width` : a CSS attribute-selector hook (src/styles/behaviors/demo.css,
- *     Standard §28), same exception already codified for pages/components.html in
+ *     Standard §28), same exception already codified for pages/behaviors.html in
  *     tests/compliance/legacy-attr-compliance.spec.ts (#200) -- controls the demo's
  *     code-panel width preset via `x-demo[data-code-width="…"]`, never read by JS.
  *     content.html's demos also participate in tests/regression/code-panel-width-
@@ -22,7 +22,7 @@ import * as path from 'path';
  *     exact attribute name -- renaming it would regress those (#550).
  *   - `data-x-expected-errors` : a framework/test-infra hook on `<html>`, read by
  *     src/core/error-logger.js via `documentElement.hasAttribute(...)`, structurally
- *     identical to `data-theme` (documentElement flag, not wb-* / x-* component config).
+ *     identical to `data-theme` (documentElement flag, not wb-* / x-* behavior config).
  *     tests/regression/expected-error-log-suppression.spec.ts asserts this exact
  *     attribute name -- renaming it would regress that test (#550).
  *

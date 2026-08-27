@@ -1,7 +1,7 @@
 /**
  * Button Behavior Styles
  * -----------------------------------------------------------------------------
- * Extracted from components.css (Post-Phase 3 cleanup)
+ * Extracted from behaviors.css (Post-Phase 3 cleanup)
  * Works with src/wb-viewmodels/semantics/button.js
  * -----------------------------------------------------------------------------
  */
@@ -171,7 +171,7 @@ button-tooltip[disabled] {
    this file: every rule below is a compound `.x-btn.x-btn--*` selector, so a
    bare `.x-btn` rendered invisible (confirmed live on <dialog class="x-btn">
    and <div x-drawer class="x-btn"> trigger elements in pages/behaviors.html and
-   pages/components.html — neither is a <button> or <button>, so button.js's
+   pages/behaviors.html — neither is a <button> or <button>, so button.js's
    variant/size attribute wiring never touches them; and every `.x-btn` on a
    native <button> paired with an x-* behavior (x-toast, x-drawer, x-confirm,
    x-prompt, x-lightbox, x-popover, x-copy, x-share, x-print, x-fullscreen,

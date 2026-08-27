@@ -2,7 +2,7 @@ import { test, expect } from '@playwright/test';
 
 test.describe('Button Toast Notifications', () => {
   test.beforeEach(async ({ page }) => {
-    await page.goto('file://' + process.cwd() + '/pages/components.html');
+    await page.goto('file://' + process.cwd() + '/pages/behaviors.html');
   });
 
   test('Modal button should trigger toast', async ({ page }) => {

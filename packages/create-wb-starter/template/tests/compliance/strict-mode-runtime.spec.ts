@@ -23,7 +23,7 @@ test.describe('Strict Mode Runtime Compliance', () => {
       { message: 'Should log error for legacy syntax', timeout: 5000 }
     ).toBeTruthy();
 
-    // 2. Check that Modern component processed. card() (card.js) — the real
+    // 2. Check that Modern behavior processed. card() (card.js) — the real
     // behavior that owns <article>'s DOM — always adds the 'x-card' class;
     // 'x-schema' was only ever set by schema-driven buildStructure(), which
     // <article> (and the rest of the card family) no longer goes through at
@@ -34,7 +34,7 @@ test.describe('Strict Mode Runtime Compliance', () => {
     const modernCard = page.locator('#modern-card');
     await expect(modernCard).toHaveClass(/x-card/);
 
-    // 3. Check that Legacy component is NOT processed/upgraded
+    // 3. Check that Legacy behavior is NOT processed/upgraded
     const legacyCard = page.locator('#legacy-card');
 
     // Should verify it has the error marker

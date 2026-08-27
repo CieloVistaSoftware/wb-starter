@@ -2,7 +2,7 @@ import { readFlag } from '../core/read-attr.js';
 /**
  * Feedback Behaviors
  * -----------------------------------------------------------------------------
- * User feedback components: toasts, badges, alerts, spinners,
+ * User feedback behaviors: toasts, badges, alerts, spinners,
  * progress indicators, skeletons, dividers, breadcrumbs, notifications.
  *
  * RULE: Zero inline styles. CSS targets tags and attributes directly.

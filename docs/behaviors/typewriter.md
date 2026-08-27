@@ -9,7 +9,7 @@ Behavior applied with x-typewriter.
 ### How to write it
 
 ```html
-<p x-typewriter speed="45">Zero build. Real components. Light DOM only.</p>
+<p x-typewriter speed="45">Zero build. Real behaviors. Light DOM only.</p>
 ```
 
 ## Attributes

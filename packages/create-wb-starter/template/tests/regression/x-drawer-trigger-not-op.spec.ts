@@ -1,7 +1,7 @@
 import { test, expect } from '@playwright/test';
 
 /**
- * A native button using x-drawer (pages/components.html) must remain a
+ * A native button using x-drawer (pages/behaviors.html) must remain a
  * visible, working "Left Drawer" trigger.
  *
  * Root cause (two competing DOM owners for the same element):
@@ -21,7 +21,7 @@ import { test, expect } from '@playwright/test';
  */
 
 async function ready(page) {
-  await page.goto('/?page=components');
+  await page.goto('/?page=behaviors');
   await page.waitForFunction(() => (window as any).WB && (window as any).WB.behaviors, { timeout: 20000 });
   await page.waitForFunction(() => (window as any).WBSite && (window as any).WBSite.currentPage, { timeout: 20000 });
   await page.waitForTimeout(1000);

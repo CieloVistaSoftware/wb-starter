@@ -92,7 +92,7 @@ test.describe('Template Rendering', () => {
 
   test('basic interpolation works', async ({ page }) => {
     // Used to check <button>'s x-button--primary CLASS here -- but
-    // x-button is a real MVVM component (src/wb-viewmodels/semantics/
+    // x-button is a real MVVM behavior (src/wb-viewmodels/semantics/
     // button.js), not a wb-views template, as this test's own comment
     // already admitted; that was never actually exercising wb-views'
     // {{...}} interpolation, just src/core/mvvm/schema-builder.js's
@@ -195,7 +195,7 @@ test.describe('Tag Naming Convention', () => {
     // <div> internally, rendered live as part of "Toolbar with
     // Slots"). x-button/x-card used to stand in for this check, but
     // neither is actually processed through wb-views' registration path --
-    // both are REAL premade components (tag-map.js's elementMap) that
+    // both are REAL premade behaviors (tag-map.js's elementMap) that
     // wb-views.js's registerViewAsElement() explicitly refuses to touch
     // (confirmed live via its own console warning for <article>) -- their
     // presence never proved the wb- prefix rule, it just coincided with it
@@ -223,13 +223,13 @@ test.describe('Tag Naming Convention', () => {
     const navLink = page.locator('nav-link');
     expect(await navLink.count()).toBeGreaterThan(0);
     
-    // component-tile stays component-tile
-    const componentTile = page.locator('component-tile');
+    // behavior-tile stays behavior-tile
+    const componentTile = page.locator('behavior-tile');
     expect(await componentTile.count()).toBeGreaterThan(0);
   });
 
   test('custom elements are properly registered', async ({ page }) => {
-    // <button> (and every other real MVVM component tag reachable from
+    // <button> (and every other real MVVM behavior tag reachable from
     // this page's runtime, e.g. <article>) is NOT registered via
     // customElements.define() here -- architecture v3
     // (docs/claude/TIER1-LAWS.md #2) applies capability via behavior
@@ -240,10 +240,10 @@ test.describe('Tag Naming Convention', () => {
     // shim class -- wb-lazy.js's own comment confirms it dispatches
     // <article> "as an ordinary injected behavior" instead of registering
     // it. wb-views.js's registerViewAsElement() also explicitly REFUSES to
-    // claim any tag already owned by a real component (elementMap in
+    // claim any tag already owned by a real behavior (elementMap in
     // tag-map.js includes both 'x-button' and 'x-card') -- confirmed live
     // via its console warning for <article>. So no real (non-view)
-    // component tag is a genuine Custom Element on this page; only the
+    // behavior tag is a genuine Custom Element on this page; only the
     // wb-views system tags (user-avatar/alert-box/stat-tile/nav-link) are,
     // via wb-views.js's own customElements.define() calls.
     //
@@ -277,7 +277,7 @@ test.describe('View Composition', () => {
     await expect(userCard).toBeVisible();
 
     // user-card's template (views-registry.json) nests <user-avatar> -- the
-    // wb-views "user-avatar" VIEW -- not the real <span x-avatar> MVVM component
+    // wb-views "user-avatar" VIEW -- not the real <span x-avatar> MVVM behavior
     // (a same-named-but-different tag would collide with tag-map.js's
     // elementMap and get refused by wb-views.js's registerViewAsElement()
     // guard, same as the "card" view does for <article>). user-avatar's own
@@ -306,12 +306,12 @@ test.describe('View Composition', () => {
 
   // "x-card renders body slot with nested views" used to live here,
   // rendering a <article> with nested <button> children. Removed along
-  // with its subject: x-card is a real premade component, not a x-view
+  // with its subject: x-card is a real premade behavior, not a x-view
   // (wb-views.js's registerViewAsElement() explicitly refuses to register
   // it -- confirmed live via its own console warning), so demos/wb-views-
   // demo.html no longer renders one anywhere (John: "DON'T SHOW NON
   // WB-VIEWS ON THE WB-VIEWS PAGE"). Coverage for "a x-view slots in real
-  // nested components/views" isn't lost -- it's exactly what the
+  // nested behaviors/views" isn't lost -- it's exactly what the
   // button-group test above (nested <button>) and the user-card test
   // above (nested <user-avatar>, itself another x-view) already check.
 
@@ -339,7 +339,7 @@ test.describe('Attribute Handling', () => {
   });
 
   test('string attributes interpolate correctly', async ({ page }) => {
-    const tile = page.locator('component-tile[icon="📝"]').first();
+    const tile = page.locator('behavior-tile[icon="📝"]').first();
     await expect(tile).toBeVisible();
     
     const icon = await tile.evaluate(el => {
@@ -451,7 +451,7 @@ test.describe('Variant Classes', () => {
   test('user-avatar sizes apply correct classes', async ({ page }) => {
     // The demo's "👤 Avatars" section renders <user-avatar size="sm|md|lg">
     // -- the wb-views "user-avatar" VIEW -- not the real <span x-avatar> MVVM
-    // component (no <span x-avatar> is ever actually used/rendered live on this
+    // behavior (no <span x-avatar> is ever actually used/rendered live on this
     // page; the tag only appears as escaped documentation text inside the
     // "Composition" example's code samples). user-avatar's own template
     // renders a nested <div class="avatar avatar--{{size}}">.

@@ -47,22 +47,22 @@ ny.
 
 ## Finding Specific Docs
 
-Component documentation is organized by feature and location:
+Behavior documentation is organized by feature and location:
 
-- **Component docs:** `docs/components/{category}/{component}.md`
+- **Behavior docs:** `docs/behaviors/{category}/{behavior}.md`
 - **Schemas:** `src/wb-models/{name}.schema.json`
 - **Behaviors/logic:** `src/wb-viewmodels/{name}.js`
 - **Styles:** `src/styles/behaviors/{name}.css`
 
-To find docs for a specific component:
-1. Identify the component name (e.g., `button`, `input`).
-2. Look in `docs/components/` for the relevant category (e.g., `forms`, `layout`).
-3. Open `{component}.md` for detailed usage, attributes, and examples.
+To find docs for a specific behavior:
+1. Identify the behavior name (e.g., `button`, `input`).
+2. Look in `docs/behaviors/` for the relevant category (e.g., `forms`, `layout`).
+3. Open `{behavior}.md` for detailed usage, attributes, and examples.
 
 For schema or behavior details, check the matching file in `src/wb-models/` or `src/wb-viewmodels/`.
 
 If you need to locate a doc file quickly:
-- Use workspace search for `{component}.md` or `{name}.schema.json`.
+- Use workspace search for `{behavior}.md` or `{name}.schema.json`.
 - Refer to the `WB_DOC_MAP` in `src/wb-viewmodels/demo-docmap.js` for doc mapping logic.
 
 ---

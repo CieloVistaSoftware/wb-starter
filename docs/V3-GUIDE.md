@@ -1,7 +1,7 @@
 # wb-starter v3 — Complete Guide
 
-wb-starter is a **zero-build, light-DOM web component framework**. You write plain
-HTML, include one script, and elements upgrade themselves into rich components.
+wb-starter is a **zero-build, light-DOM behavior framework**. You write plain
+HTML, include one script, and elements upgrade themselves into rich behaviors.
 No bundler, no JSX, no Shadow DOM — the browser does the work.
 
 This guide covers **how to use it** and **how it works internally**.
@@ -10,7 +10,7 @@ This guide covers **how to use it** and **how it works internally**.
 
 1. [Mental model](#1-mental-model)
 2. [Quick start](#2-quick-start)
-3. [Using components (custom tags)](#3-using-components-custom-tags)
+3. [Using behaviors (custom tags)](#3-using-behaviors-custom-tags)
 4. [Using behaviors (x-* attributes)](#4-using-behaviors-x-attributes)
 5. [Auto-enhanced plain elements](#5-auto-enhanced-plain-elements)
 6. [Theming](#6-theming)
@@ -31,7 +31,7 @@ There are three ways UI gets enhanced, all by the same runtime:
 | **Plain element** — `<input type="text">` (with `autoInject`) | Native elements are auto-enhanced |
 
 A **behavior** is just a function that receives an element and decorates it.
-A **schema** (optional) describes a component's structure declaratively. The
+A **schema** (optional) describes a behavior's structure declaratively. The
 **runtime** (`WB`) scans the DOM, maps tags/attributes to behaviors, and injects
 them lazily as they scroll into view.
 
@@ -128,7 +128,7 @@ into the live example above:
 
 ---
 
-## 3. Using components (custom tags)
+## 3. Using behaviors (custom tags)
 
 Custom `wb-*` tags map to behaviors. Pass **plain attributes**; children are slotted as content.
 
@@ -187,12 +187,12 @@ Custom `wb-*` tags map to behaviors. Pass **plain attributes**; children are slo
 
 <div x-demo>
 <div x-accordion title="What is wb-starter?">
-  <p>A zero-build component library.</p>
+  <p>A zero-build behavior library.</p>
 </div>
 </div>
 
 Card variants come from the schema (`default`, `glass`, `elevated`, `float`, …).
-Each component's exact attributes live in its schema at `src/wb-models/<name>.schema.json`.
+Each behavior's exact attributes live in its schema at `src/wb-models/<name>.schema.json`.
 
 ---
 
@@ -277,7 +277,7 @@ WB.lazyInject(el, name)       // apply when the element scrolls into view
 WB.scan(root = document.body) // find & schedule behaviors under root
 WB.observe(root)              // MutationObserver for dynamically-added elements
 WB.has(name) / WB.list()      // registry introspection
-WB.render(json, container)    // build DOM from a JSON component definition
+WB.render(json, container)    // build DOM from a JSON behavior definition
 ```
 
 ### The lifecycle of one element
@@ -322,10 +322,10 @@ write the function, register the name in `index.js`, and map a selector in
 
 ### Schemas — `src/wb-models/*.schema.json`
 
-Components can be **schema-driven**: a `*.schema.json` declares the component's
+Behaviors can be **schema-driven**: a `*.schema.json` declares the behavior's
 `$view` (DOM structure), attributes, variants, and `test.setup` examples. The
 **schema builder** (`src/core/mvvm/schema-builder.js`) loads them (listed in
-`src/wb-models/index.json`) and builds the component's DOM before behaviors run.
+`src/wb-models/index.json`) and builds the behavior's DOM before behaviors run.
 This is how a `<article>` knows its header/body/footer structure declaratively.
 Processed elements are marked `x-schema="<name>"`; legacy `x-behavior=` usage is
 rejected with a console error in strict mode.
@@ -342,7 +342,7 @@ src/
   wb-viewmodels/        ← behaviors (one concern per file)
     index.js            ← behavior name → module registry
     feedback.js, card.js, navigation.js, effects.js, …
-  wb-models/            ← *.schema.json component definitions (+ index.json)
+  wb-models/            ← *.schema.json behavior definitions (+ index.json)
   styles/
     themes.css          ← theme tokens (the ONLY place with color literals)
     site.css, behaviors/<name>.css
@@ -391,9 +391,9 @@ That's the whole loop — no build, no registration boilerplate beyond those map
 
 ## See also
 
-- Per-component reference: `docs/components/…` and each `src/wb-models/*.schema.json`.
+- Per-behavior reference: `docs/behaviors/…` and each `src/wb-models/*.schema.json`.
 - Behaviors reference: `docs/behaviors-reference.md`.
 - The `?page=behaviors` showcase exercises every behavior with copy-ready markup.
 
-> Note: `docs/NOTES-V3-GUIDE.md` is **release notes for the Notes drawer component's
+> Note: `docs/NOTES-V3-GUIDE.md` is **release notes for the Notes drawer behavior's
 > TODO feature** — not this framework guide. (It's mislabeled.)

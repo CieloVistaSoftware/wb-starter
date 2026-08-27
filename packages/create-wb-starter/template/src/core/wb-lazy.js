@@ -460,7 +460,7 @@ const WB = {
   *    - Use a proper HTML5 element (e.g., <div>, <section>, <article>, <aside>, <header>, <footer>, <main>, <nav>) as the base.
   *    - Reference it by selector (e.g., '#myElem') or pass the element directly.
   *
-  * 2. Choose the behavior/component to inject (e.g., 'card', 'stack', 'repeater').
+  * 2. Choose the behavior/behavior to inject (e.g., 'card', 'stack', 'repeater').
   *
   * 3. Select the injection method:
   *    a) Inject by URL:
@@ -888,7 +888,7 @@ const WB = {
     // Set autoInject — ONLY when the caller explicitly passed it, not
     // unconditionally. #461 (found while investigating #460): WB.init() is
     // meant to be called defensively/idempotently by every independent
-    // component that uses WB — see any
+    // behavior that uses WB — see any
     // framework code sample on demos/frameworks.html (React's useEffect,
     // Vue's/Svelte's onMount(ed), Angular's ngOnInit, Solid's onMount): each
     // calls a bare `WB.init()` with no options, on top of whatever the
@@ -910,7 +910,7 @@ const WB = {
     // `{ autoInject: false }` still forces it off (tests/compliance/
     // autoinject-default-false.spec.ts), and config.js's own module-level
     // default (false) still applies when NO call on the page ever passes it
-    // at all — but a defensive, options-less re-init from one component
+    // at all — but a defensive, options-less re-init from one behavior
     // never stomps on a value a DIFFERENT call already explicitly set.
     if ('autoInject' in options) setConfig('autoInject', autoInject);
 
@@ -953,7 +953,7 @@ const WB = {
 
   /**
    * Render JSON definition to DOM elements
-   * @param {Object|Array} data - Component definition(s)
+   * @param {Object|Array} data - Behavior definition(s)
    * @param {HTMLElement} container - Target container (appends to it)
    * @returns {HTMLElement|HTMLElement[]} The created element(s)
    */

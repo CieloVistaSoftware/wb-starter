@@ -8,7 +8,7 @@
  * directly in hero.css. This is the systemic half: a single place that
  * defines what "readable" means, so any theme -- the 23 that exist today
  * or any added later -- gets checked against the same number instead of
- * each page/component silently deciding contrast for itself.
+ * each page/behavior silently deciding contrast for itself.
  */
 
 // WCAG 2.1 AA for normal-size text. Change this ONE value to retune the

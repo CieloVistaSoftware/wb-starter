@@ -22,7 +22,7 @@ appended inside it).
   placeholder="Start typing a fruit…">
 ```
 
-Wrapped in `<div x-demo>`, so the live component renders below with its source shown underneath:
+Wrapped in `<div x-demo>`, so the live behavior renders below with its source shown underneath:
 
 <div x-demo>
 <input type="text" x-autocomplete items="Apple,Banana,Cherry,Date,Elderberry" placeholder="Start typing a fruit…">

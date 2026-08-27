@@ -2,13 +2,13 @@
  * Page Schema Validator
  * =====================
  * Cross-references every attribute in a .page.json demo against
- * the component's .schema.json properties.
+ * the behavior's .schema.json properties.
  *
  * Catches:
- *   - Invalid/typo attrs (attr not in component schema properties)
+ *   - Invalid/typo attrs (attr not in behavior schema properties)
  *   - Missing required attrs
  *   - Invalid enum values
- *   - Unknown component tags (no matching schema)
+ *   - Unknown behavior tags (no matching schema)
  *   - Boolean attrs used on non-boolean properties
  *
  * Usage:
@@ -25,7 +25,7 @@ const MODELS_DIR = resolve('src/wb-models');
 const PAGES_DIR = resolve('src/wb-models/pages');
 const OUTPUT_FILE = resolve('data/page-schema-validation.json');
 
-// ─── Load all component schemas into a map: behaviorName → schema ───
+// ─── Load all behavior schemas into a map: behaviorName → schema ───
 
 function loadComponentSchemas() {
   const map = new Map();
@@ -99,7 +99,7 @@ function validateDemo(demo, sectionIndex, demoIndex, componentSchemas) {
     return { errors, warnings };
   }
 
-  // Find component schema
+  // Find behavior schema
   const schema = componentSchemas.get(behavior);
   if (!schema) {
     // Try without hyphens: card-profile → cardprofile
@@ -252,7 +252,7 @@ if (!arg) {
 }
 
 const componentSchemas = loadComponentSchemas();
-console.log(`📦 Loaded ${componentSchemas.size} component schemas`);
+console.log(`📦 Loaded ${componentSchemas.size} behavior schemas`);
 
 let results = [];
 

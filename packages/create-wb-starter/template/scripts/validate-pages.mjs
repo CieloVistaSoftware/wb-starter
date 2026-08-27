@@ -235,11 +235,11 @@ function validateDemo(html, filename) {
     issues.push('MISSING: No data-theme attribute on <html> — demos should set a default theme');
   }
 
-  // --- CHECK: If uses wb-* components, must have WB import ---
+  // --- CHECK: If uses wb-* behaviors, must have WB import ---
   const usesWBComponents = /<wb-[a-z]/i.test(html);
   const hasWBImport = /wb-lazy\.js|wb\.js/i.test(html);
   if (usesWBComponents && !hasWBImport) {
-    issues.push('MISSING: Uses wb-* components but no WB import found — add <script type="module"> with WB.init()');
+    issues.push('MISSING: Uses wb-* behaviors but no WB import found — add <script type="module"> with WB.init()');
   }
 
   // --- CHECK: Has server dependency comment if using /api/ ---

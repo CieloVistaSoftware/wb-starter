@@ -12,7 +12,7 @@ import { test, expect } from '@playwright/test';
  *    config.image is truthy, so these two cards rendered as empty gray
  *    boxes -- confirmed live via screenshot, zero <img> elements present.
  *    Root cause: fixture-authoring gap (every other section in this file
- *    passes a real image= attribute), not a component defect.
+ *    passes a real image= attribute), not a behavior defect.
  *
  * 2. "none of this text is shwoing" -- the variant-variants markup relies
  *    on plain inner text ("variant=default" etc.) as the card body, but
@@ -21,7 +21,7 @@ import { test, expect } from '@playwright/test';
  *    as a `content` fallback the way card()/cardimage()/cardvideo() all
  *    do, so `element.innerHTML = ''` (cardhorizontal(), right after config
  *    is built) permanently wiped that text before it was ever captured.
- *    This is a real component bug: ANY x-cardhorizontal relying on plain
+ *    This is a real behavior bug: ANY x-cardhorizontal relying on plain
  *    inner text for its body loses it, not just this fixture.
  *
  * Both are fixed together: cardhorizontal() now captures innerHTML as a

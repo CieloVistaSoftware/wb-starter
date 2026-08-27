@@ -18,7 +18,7 @@ Applies to `<section>`, and to any element carrying `x-cardhero`.
 | --- | --- | --- | --- |
 | `background` | `string` | — | Background image URL |
 | `title` | `string` | — | Hero headline |
-| `pretitle` | `string` | — | Small label or count shown above the title (e.g. '100 Components') |
+| `pretitle` | `string` | — | Small label or count shown above the title (e.g. '100 Behaviors') |
 | `subtitle` | `string` | — | Hero tagline/subheadline |
 | `content` | `string` | — | HTML content rendered in the hero content area (allows attribute-only usage instead of slots) |
 | `cta` | `string` | — | Call-to-action button text |

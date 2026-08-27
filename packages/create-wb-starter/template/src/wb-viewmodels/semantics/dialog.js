@@ -219,7 +219,7 @@ export function dialog(element, options = {}) {
   // A bare <dialog id="x"> with no trigger attributes previously only
   // ever opened itself on click -- no method was assigned at all, so an
   // external `document.getElementById('x').open()` (the pattern this
-  // component's own docs teach) threw "open is not a function". Both names
+  // behavior's own docs teach) threw "open is not a function". Both names
   // are exposed for the same reason the other two branches expose them.
   // (#531)
   element.open = showDialog;

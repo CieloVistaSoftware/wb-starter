@@ -87,7 +87,7 @@ export function table(element, options = {}) {
   // schema-builder.js's own comment). table.js never opted in: the comment
   // it used to have here ("Logic removed... assume the table structure
   // exists") assumed something else would populate rows, but nothing ever
-  // did. Confirmed live: every <table> on docs/components/semantics/
+  // did. Confirmed live: every <table> on docs/behaviors/semantics/
   // table.md rendered a completely empty table (0 <tr> elements) regardless
   // of whether rows were authored as slotted <thead>/<tbody> markup,
   // headers/rows attributes, or the schema's own data/columns properties.

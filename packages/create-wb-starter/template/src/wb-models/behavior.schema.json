@@ -212,7 +212,7 @@
     "description": "Complete catalog of all WB behaviors with metadata",
     "types": {
       "element": {
-        "description": "Standalone components with a preferred HTML element",
+        "description": "Standalone behaviors with a preferred HTML element",
         "examples": [
           "card",
           "button",
@@ -227,7 +227,7 @@
         }
       },
       "container": {
-        "description": "Components that hold child elements with drop zones",
+        "description": "Behaviors that hold child elements with drop zones",
         "examples": [
           "accordion",
           "tabs",
@@ -273,7 +273,7 @@
     },
     "categories": {
       "cards": {
-        "description": "Card-based content components",
+        "description": "Card-based content behaviors",
         "behaviors": [
           "card",
           "cardimage",
@@ -297,7 +297,7 @@
         ]
       },
       "forms": {
-        "description": "Form input and control components",
+        "description": "Form input and control behaviors",
         "behaviors": [
           "input",
           "textarea",
@@ -327,7 +327,7 @@
         ]
       },
       "navigation": {
-        "description": "Navigation and wayfinding components",
+        "description": "Navigation and wayfinding behaviors",
         "behaviors": [
           "breadcrumb",
           "navbar",
@@ -342,7 +342,7 @@
         ]
       },
       "feedback": {
-        "description": "User feedback and notification components",
+        "description": "User feedback and notification behaviors",
         "behaviors": [
           "badge",
           "avatar",
@@ -358,7 +358,7 @@
         ]
       },
       "layout": {
-        "description": "Layout and container components",
+        "description": "Layout and container behaviors",
         "behaviors": [
           "container",
           "grid",
@@ -378,7 +378,7 @@
         ]
       },
       "media": {
-        "description": "Media display components",
+        "description": "Media display behaviors",
         "behaviors": [
           "image",
           "video",
@@ -395,7 +395,7 @@
         ]
       },
       "overlays": {
-        "description": "Overlay and modal components",
+        "description": "Overlay and modal behaviors",
         "behaviors": [
           "modal",
           "dialog",
@@ -445,7 +445,7 @@
         ]
       },
       "actions": {
-        "description": "Action trigger components",
+        "description": "Action trigger behaviors",
         "behaviors": [
           "copy",
           "clipboard",
@@ -461,7 +461,7 @@
         ]
       },
       "data": {
-        "description": "Data display components",
+        "description": "Data display behaviors",
         "behaviors": [
           "table",
           "list",
@@ -478,7 +478,7 @@
         ]
       },
       "time": {
-        "description": "Time-related components",
+        "description": "Time-related behaviors",
         "behaviors": [
           "clock",
           "countdown",

@@ -3,23 +3,23 @@
  * ==================
  * Adds test.site validation rules to every schema referenced in the site config.
  * These rules define what the Playwright site tests should verify:
- *   - renders: component should be visible
+ *   - renders: behavior should be visible
  *   - baseClass: expected CSS class on the element
  *   - checkText: text strings that should appear in at least one instance
  *   - checkAttributes: attributes that should exist on rendered instances
- *   - minInstances: minimum number of component instances expected
+ *   - minInstances: minimum number of behavior instances expected
  */
 import { readFileSync, writeFileSync } from 'fs';
 import { resolve, join } from 'path';
 
 const MODELS = resolve('src/wb-models');
-const site = JSON.parse(readFileSync(resolve('src/wb-models/pages/x-component-library.site.json'), 'utf-8'));
+const site = JSON.parse(readFileSync(resolve('src/wb-models/pages/x-behavior-library.site.json'), 'utf-8'));
 
-// Build page→component map
+// Build page→behavior map
 const pageMap = {};
 for (const page of site.pages) {
-  if (!page.components) continue;
-  for (const comp of page.components) {
+  if (!page.behaviors) continue;
+  for (const comp of page.behaviors) {
     pageMap[comp] = page.id;
   }
 }

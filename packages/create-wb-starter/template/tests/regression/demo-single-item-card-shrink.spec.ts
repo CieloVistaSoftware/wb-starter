@@ -1,8 +1,8 @@
 import { test, expect } from '@playwright/test';
 
 const CASES = [
-  { name: 'pricing', file: 'docs/components/cards/cardpricing.md', selector: 'x-cardpricing' },
-  { name: 'stats', file: 'docs/components/cards/cardstats.md', selector: 'x-cardstats' },
+  { name: 'pricing', file: 'docs/behaviors/cards/cardpricing.md', selector: 'x-cardpricing' },
+  { name: 'stats', file: 'docs/behaviors/cards/cardstats.md', selector: 'x-cardstats' },
 ];
 
 for (const cardCase of CASES) {

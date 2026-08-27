@@ -1,8 +1,8 @@
-# Card Component Documentation
+# Card Behavior Documentation
 [Edit this file](./card.md)
 
 ## Overview
-The Card component is a flexible UI container for displaying grouped content. It is the foundation for **19 specialized variants**, ranging from simple content containers to complex interactive elements like draggable cards, product displays, and portfolios.
+The Card behavior is a flexible UI container for displaying grouped content. It is the foundation for **19 specialized variants**, ranging from simple content containers to complex interactive elements like draggable cards, product displays, and portfolios.
 
 ---
 
@@ -57,12 +57,12 @@ Supported attributes:
 - Supports additional classes for hoverable, clickable, elevated, and custom variants.
 
 ### Semantic HTML Relationship
-The card component is designed to work seamlessly with semantic HTML.
+The card behavior is designed to work seamlessly with semantic HTML.
 - **Preferred Tag:** `<article>` (represents a self-contained composition)
 - **Alternative Tag:** `<section>` (represents a generic section)
 - **Fallback Tag:** `<div>` (generic container)
 
-When using `<article>` or `<section>`, the component will automatically enhance existing `<header>`, `<main>`, and `<footer>` children instead of overwriting them, preserving your semantic structure.
+When using `<article>` or `<section>`, the behavior will automatically enhance existing `<header>`, `<main>`, and `<footer>` children instead of overwriting them, preserving your semantic structure.
 
 ---
 

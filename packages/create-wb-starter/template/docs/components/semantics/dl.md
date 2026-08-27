@@ -1,8 +1,8 @@
-# DL (Description List) Component Design & User Guide
+# DL (Description List) Behavior Design & User Guide
 
 ## 1. Design Philosophy
 
-The `dl` component enhances the standard `<dl>` (Description List) element, which is often underused due to its default styling limitations. This component transforms it into a powerful layout tool for key-value pairs, supporting grids, stripes, and borders.
+The `dl` behavior enhances the standard `<dl>` (Description List) element, which is often underused due to its default styling limitations. This behavior transforms it into a powerful layout tool for key-value pairs, supporting grids, stripes, and borders.
 
 ### Key Features
 - **Layout Variants**: Switch between vertical (stacked) and horizontal (grid) layouts.
@@ -64,4 +64,4 @@ Good for sidebars or summaries.
 </div>
 
 ## 4. Why It Works
-For the `horizontal` variant, the component applies `display: grid` with a 2-column template (`auto 1fr`). This ensures terms align perfectly regardless of their length. The `striped` option uses JavaScript to iterate through the pairs and apply background colors to every other row.
+For the `horizontal` variant, the behavior applies `display: grid` with a 2-column template (`auto 1fr`). This ensures terms align perfectly regardless of their length. The `striped` option uses JavaScript to iterate through the pairs and apply background colors to every other row.

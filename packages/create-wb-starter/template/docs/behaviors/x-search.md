@@ -1,6 +1,6 @@
 # x-search
 
-A search component for filtering or finding content.
+A search behavior for filtering or finding content.
 
 - **Usage:**
   ```html

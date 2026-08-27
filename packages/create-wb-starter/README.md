@@ -1,6 +1,6 @@
 # create-wb-starter
 
-Scaffold a full copy of [wb-starter](https://github.com/CieloVistaSoftware/wb-starter) — zero-build web components, schema-first MVVM — into a new project directory.
+Scaffold a full copy of [wb-starter](https://github.com/CieloVistaSoftware/wb-starter) — zero-build behaviors, schema-first MVVM — into a new project directory.
 
 ## Usage
 

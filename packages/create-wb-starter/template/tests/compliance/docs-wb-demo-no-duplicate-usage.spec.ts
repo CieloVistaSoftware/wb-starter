@@ -10,7 +10,7 @@ import { globSync } from 'glob';
 
 const FILES = [
   ...globSync('docs/behaviors/*.md', { cwd: process.cwd() }),
-  'docs/components/cards/card.md',
+  'docs/behaviors/cards/card.md',
 ].sort();
 const DEMO_BLOCK = new RegExp(
   String.fromCharCode(60) + 'x-demo\\b[^>]*>([\\s\\S]*?)' + String.fromCharCode(60) + '\\/x-demo>',

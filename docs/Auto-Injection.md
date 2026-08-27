@@ -41,7 +41,7 @@ The following HTML elements are automatically mapped to WB behaviors:
 ### Structure & Layout
 | HTML Tag | Injected Behavior | Description |
 |----------|-------------------|-------------|
-| `<article>` | `card` | Becomes a card component |
+| `<article>` | `card` | Becomes a card behavior |
 | `<nav>` | `navbar` | Becomes a responsive navigation bar |
 | `<aside>` | `sidebar` | Becomes a sidebar/drawer |
 | `<table>` | `table` | Adds sorting and responsive styling |
@@ -75,7 +75,7 @@ The following HTML elements are automatically mapped to WB behaviors:
 
 ## Examples
 
-### 1. Card Component
+### 1. Card Behavior
 **Explicit (Shorthand):**
 ```html
 <article x-as-card>

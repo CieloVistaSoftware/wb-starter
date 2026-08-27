@@ -114,7 +114,7 @@ function traceMediaLoads() {
  * WB - Web Behavior
  * =================
  * Pure JavaScript behavior injection library.
- * No web components. No classes. Just functions that enhance HTML.
+ * No behaviors. No classes. Just functions that enhance HTML.
  * 
  * @version 3.0.0
  * @license MIT
@@ -641,7 +641,7 @@ const WB = {
     // behavior already built (and, for cardimage/cardvideo, already
     // LOADED) the real content wipes it via that same innerHTML=''. This
     // was the "cardimage/cardvideo not showing, esp. first nav to
-    // Components from Home/Behaviors" bug -- confirmed live via
+    // Behaviors from Home/Behaviors" bug -- confirmed live via
     // [WB:card-media] tracing (card.js): PAINTED succeeds, then a stale
     // check ~2s later shows the element removed from the DOM entirely.
     if (element.tagName.startsWith('WB-CARD')) {
@@ -803,7 +803,7 @@ const WB = {
             // No error may be silently swallowed in this system -- surface
             // every behavior-init failure through the real error overlay
             // (error-logger.js's logError), not just a console.warn nobody
-            // reliably sees. One component throwing must not stop the rest
+            // reliably sees. One behavior throwing must not stop the rest
             // of the page's scan from completing, so this stays caught here
             // rather than left to propagate -- but it must always be seen.
             logError(err && err.message || String(err), { file: tag, stack: err && err.stack });
@@ -1338,7 +1338,7 @@ const WB = {
     // introduced a DIFFERENT bug once
     // config.js's own default was corrected to `false` (see config.js):
     // WB.init() is meant to be called defensively/idempotently by every
-    // independent component that uses WB — see any framework code sample on
+    // independent behavior that uses WB — see any framework code sample on
     // demos/frameworks.html (React's useEffect, Vue's/Svelte's
     // onMount(ed), Angular's ngOnInit, Solid's onMount): each calls a bare
     // `WB.init()` with no options, on top of whatever the page's own
@@ -1359,7 +1359,7 @@ const WB = {
     // `{ autoInject: false }` still forces it off (tests/compliance/
     // autoinject-default-false.spec.ts), and config.js's own module-level
     // default (false) still applies when NO call on the page ever passes it
-    // at all — but a defensive, options-less re-init from one component
+    // at all — but a defensive, options-less re-init from one behavior
     // never stomps on a value a DIFFERENT call already explicitly set.
     if ('autoInject' in options) setConfig('autoInject', autoInject);
 

@@ -15,13 +15,13 @@ function processFile(filePath) {
     if (!content.includes('x-behavior')) return;
     
     // HTML-encoded examples: &lt;div -> &lt;x-card
-    const components = [
+    const behaviors = [
       'card', 'cardimage', 'cardstats', 'cardpricing', 'cardprofile', 
       'cardproduct', 'cardhero', 'cardtestimonial', 'button', 'input',
       'details', 'figure', 'audio', 'video', 'modal', 'alert', 'badge'
     ];
     
-    components.forEach(c => {
+    behaviors.forEach(c => {
       // &lt;div -> &lt;x-card
       content = content.replace(
         new RegExp(`&lt;(div|section|article)\\s+x-legacy=["']${c}["']`, 'gi'),
@@ -59,7 +59,7 @@ function processFile(filePath) {
     );
     
     // Fix mvvm-test.html headers
-    content = content.replace(/<h3>data-wb Attribute<\/h3>/g, '<h3>Web Component Tags</h3>');
+    content = content.replace(/<h3>data-wb Attribute<\/h3>/g, '<h3>Behavior Tags</h3>');
     
     // Remove x-ignore (legitimate opt-out, keep as is)
     // content = content.replace(/x-ignore/g, 'x-wb-ignore');

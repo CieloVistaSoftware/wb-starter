@@ -13,13 +13,13 @@ All project docs are organized into 3 tiers. See `docs/claude/README.md` for the
 | Tier | When | What |
 |------|------|------|
 | **Tier 1 — LAWS** | Every session | 10 rules that prevent regressions |
-| **Tier 2 — DOMAIN GUIDES** | When task touches that area | Component specs, testing, CSS, builder, schemas, etc. |
+| **Tier 2 — DOMAIN GUIDES** | When task touches that area | Behavior specs, testing, CSS, builder, schemas, etc. |
 | **Tier 3 — REFERENCE** | Only if John points you there | Articles, audits, migration history |
 
 ## Quick Reference
 
 **Owner:** John (Cielo Vista Software)  
-**Architecture:** WBServices pattern, Light DOM only, composition over inheritance — capability is applied to an element by behavior functions, never acquired by subclassing a component base class  
+**Architecture:** WBServices pattern, Light DOM only, composition over inheritance — capability is applied to an element by behavior functions, never acquired by subclassing a behavior base class  
 **Project location:** `C:\Users\jwpmi\Downloads\AI\wb-starter`
 
 ### Core Stack
@@ -29,7 +29,7 @@ All project docs are organized into 3 tiers. See `docs/claude/README.md` for the
 
 ### File Structure
 ```
-src/wb-models/{name}.schema.json   — Component schemas
+src/wb-models/{name}.schema.json   — Behavior schemas
 src/wb-viewmodels/{name}.js        — Behavior/logic
 src/styles/behaviors/{name}.css    — Styles
 docs/claude/TIER1-LAWS.md          — Read every session
@@ -39,7 +39,7 @@ docs/_today/CURRENT-STATUS.md      — Current work status
 ### Critical Rules (see Tier 1 for full details)
 - **Light DOM only** — never use Shadow DOM
 - **ES Modules only** — never use `require()` or `module.exports`
-- **Components:** `<wb-*>` custom element tags
+- **Behaviors:** `<wb-*>` custom element tags
 - **Behaviors:** `x-*` attributes on existing elements
 - **No build tools** — browser runs source code directly
 - **Never run tests synchronously** — use `npm run test:async` only

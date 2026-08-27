@@ -11,7 +11,7 @@ This document defines formatting standards for code examples in documentation, d
 ### Rule 1: ALL HTML attributes MUST start on their own line - NO EXCEPTIONS
 
 When writing HTML code examples, **every attribute** must be placed on its own line with proper indentation (2 spaces from the tag). This applies to:
-- Component config attributes (`title`, `variant`, `size`, `value`, …) — plain v3 attributes, **never** `data-*` (deprecated)
+- Behavior config attributes (`title`, `variant`, `size`, `value`, …) — plain v3 attributes, **never** `data-*` (deprecated)
 - `id`, `class`, `style` attributes
 - `type`, `name`, `value` attributes
 - Event handlers (`onclick`, etc.)
@@ -53,7 +53,7 @@ actually renders.
 The only exception: a block illustrating something that genuinely isn't renderable in
 isolation — a CSS-only snippet, a JS-only snippet, an accessibility attribute reference
 table, or intentionally-invalid markup demonstrating what NOT to do. Those stay as plain
-fenced code. If the block shows a real component/behavior usage, it must be `<div x-demo>`.
+fenced code. If the block shows a real behavior/behavior usage, it must be `<div x-demo>`.
 
 ---
 
@@ -186,9 +186,9 @@ Each code example should include an explanatory note in xs font:
 </p>
 ```
 
-### Note Templates by Component Type
+### Note Templates by Behavior Type
 
-| Component | Note Text |
+| Behavior | Note Text |
 |-----------|-----------|
 | Button | `ℹ️ Auto-injects via <button>. Explicit: x-button` |
 | Card | `ℹ️ Auto-injects via <article>. Explicit: x-card` |
@@ -300,7 +300,7 @@ This standard is checked by:
 - CSS Standards - CSS architecture and layering
 - [Semantic Standard](./semantic-standard.md) - HTML semantic structure
 - [Auto-Injection](./Auto-Injection.md) - Auto-inject behavior system
-- [Test Schema Standard](./test-schema-standard.md) - Component schema testing
+- [Test Schema Standard](./test-schema-standard.md) - Behavior schema testing
 
 ---
 

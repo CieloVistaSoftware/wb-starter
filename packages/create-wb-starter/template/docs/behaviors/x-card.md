@@ -70,7 +70,7 @@ The WB Card System includes a wide range of card types, each with its own tag an
 
 ## Card Examples Demo
 
-All live card examples are now available in the consolidated Card Components category page:
+All live card examples are now available in the consolidated Card Behaviors category page:
 
 **View all card examples at:**
 

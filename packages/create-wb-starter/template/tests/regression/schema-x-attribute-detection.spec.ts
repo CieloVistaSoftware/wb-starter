@@ -4,7 +4,7 @@ import { setupBehaviorTest, setupTestContainer } from '../base';
 /**
  * #521 (docs/architecture/proposals/remove-wb-prefix-authoring-surface.md):
  * schema-builder.js's detectSchema() previously only recognized composite
- * components via `wb-*` tag-name-prefix matching. Any element carrying an
+ * behaviors via `wb-*` tag-name-prefix matching. Any element carrying an
  * `x-{name}` attribute matching a registered schema now ALSO resolves --
  * dual-maintained alongside `wb-*` tags indefinitely, by design (not a
  * deprecation/replacement). `<span x-chip>` and `<span x-chip>` must build

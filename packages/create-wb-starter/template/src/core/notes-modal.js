@@ -1,4 +1,4 @@
-// NotesModal Component Module
+// NotesModal Behavior Module
 // Encapsulates all logic for the notes modal
 
 export class NotesModal {

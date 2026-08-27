@@ -4,7 +4,7 @@
  * Validates all .schema.json files are complete and well-formed.
  * 
  * Respects schemaType tiers:
- *   "component" (default) — full rules: title, description, properties, $view, $methods, behavior/schemaFor
+ *   "behavior" (default) — full rules: title, description, properties, $view, $methods, behavior/schemaFor
  *   "base"               — abstract/inherited: title, description, properties (type+default on props)
  *   "definition"         — reference docs: title, description only
  */
@@ -20,7 +20,7 @@ import {
 // HELPERS — Schema Type Resolution
 // ═══════════════════════════════════════════════════════════════════════════
 
-type SchemaType = 'component' | 'base' | 'definition' | 'behavior' | 'page';
+type SchemaType = 'behavior' | 'base' | 'definition' | 'behavior' | 'page';
 
 /**
  * Get all schema files recursively (including subdirs like semantic/, _base/)
@@ -49,7 +49,7 @@ function loadSchemaFull(relPath: string): any | null {
 }
 
 function getSchemaType(schema: any): SchemaType {
-  return schema?.schemaType || 'component';
+  return schema?.schemaType || 'behavior';
 }
 
 // ═══════════════════════════════════════════════════════════════════════════
@@ -82,18 +82,18 @@ test.describe('Schema Validation: SchemaType Tiers', () => {
     expect(issues, `Missing title/description:\n${issues.join('\n')}`).toEqual([]);
   });
 
-  test('component schemas have required fields (properties, $view, $methods, behavior/schemaFor)', () => {
+  test('behavior schemas have required fields (properties, $view, $methods, behavior/schemaFor)', () => {
     const files = getAllSchemaFiles();
     const issues: string[] = [];
     for (const file of files) {
       const schema = loadSchemaFull(file);
-      if (!schema || getSchemaType(schema) !== 'component') continue;
-      if (!schema.properties) issues.push(`${file}: component missing "properties"`);
-      if (schema.$view === undefined) issues.push(`${file}: component missing "$view"`);
-      if (schema.$methods === undefined) issues.push(`${file}: component missing "$methods"`);
-      if (!schema.behavior && !schema.schemaFor) issues.push(`${file}: component missing "behavior" or "schemaFor"`);
+      if (!schema || getSchemaType(schema) !== 'behavior') continue;
+      if (!schema.properties) issues.push(`${file}: behavior missing "properties"`);
+      if (schema.$view === undefined) issues.push(`${file}: behavior missing "$view"`);
+      if (schema.$methods === undefined) issues.push(`${file}: behavior missing "$methods"`);
+      if (!schema.behavior && !schema.schemaFor) issues.push(`${file}: behavior missing "behavior" or "schemaFor"`);
     }
-    expect(issues, `Component schema violations:\n${issues.join('\n')}`).toEqual([]);
+    expect(issues, `Behavior schema violations:\n${issues.join('\n')}`).toEqual([]);
   });
 
   test('base schemas have required fields (properties)', () => {
@@ -109,7 +109,7 @@ test.describe('Schema Validation: SchemaType Tiers', () => {
 
   test('schemaType field is valid when present', () => {
     const files = getAllSchemaFiles();
-    const valid = ['component', 'base', 'definition', 'behavior', 'page'];
+    const valid = ['behavior', 'base', 'definition', 'behavior', 'page'];
     const issues: string[] = [];
     for (const file of files) {
       const schema = loadSchemaFull(file);
@@ -143,22 +143,22 @@ test.describe('Schema Validation: SchemaType Tiers', () => {
 
 test.describe('Schema Validation: Required Sections', () => {
   
-  test('component schemas have "schemaFor" field', () => {
+  test('behavior schemas have "schemaFor" field', () => {
     const files = getSchemaFiles();
     const missing: string[] = [];
     
     for (const file of files) {
       const schema = loadSchema(file) as any;
       if (!schema) continue;
-      // Skip non-component schemas (base, definition)
-      if (schema.schemaType && schema.schemaType !== 'component') continue;
+      // Skip non-behavior schemas (base, definition)
+      if (schema.schemaType && schema.schemaType !== 'behavior') continue;
       if (!schema.schemaFor) missing.push(file);
     }
     
     expect(missing, `Schemas missing "schemaFor" field: ${missing.join(', ')}`).toEqual([]);
   });
   
-  test('component schemas have "compliance" section', () => {
+  test('behavior schemas have "compliance" section', () => {
     const schemas = getComponentSchemas();
     const missing: string[] = [];
     
@@ -184,7 +184,7 @@ test.describe('Schema Validation: Required Sections', () => {
     expect(missing, `Schemas with compliance but missing baseClass: ${missing.join(', ')}`).toEqual([]);
   });
   
-  test('component schemas have "test" section', () => {
+  test('behavior schemas have "test" section', () => {
     const schemas = getComponentSchemas();
     const missing: string[] = [];
     
@@ -215,7 +215,7 @@ test.describe('Schema Validation: Required Sections', () => {
 
 test.describe('Schema Validation: Property Definitions', () => {
   
-  test('properties have "type" field (component + base tiers)', () => {
+  test('properties have "type" field (behavior + base tiers)', () => {
     const files = getAllSchemaFiles();
     const issues: string[] = [];
     
@@ -237,7 +237,7 @@ test.describe('Schema Validation: Property Definitions', () => {
     expect(issues, `Properties missing type:\n${issues.join('\n')}`).toEqual([]);
   });
 
-  test('properties have "default" field (component + base tiers)', () => {
+  test('properties have "default" field (behavior + base tiers)', () => {
     const files = getAllSchemaFiles();
     const issues: string[] = [];
     
@@ -245,7 +245,7 @@ test.describe('Schema Validation: Property Definitions', () => {
       const schema = loadSchemaFull(file);
       if (!schema?.properties) continue;
       const tier = getSchemaType(schema);
-      // Behaviors/modifiers describe attributes, not stateful component props —
+      // Behaviors/modifiers describe attributes, not stateful behavior props —
       // a "default" is not meaningful for them (same exemption as definitions).
       if (tier === 'definition' || tier === 'behavior') continue;
 
@@ -476,7 +476,7 @@ test.describe('Schema Validation: Summary', () => {
   test('schema inventory', () => {
     const schemas = getComponentSchemas();
     
-    console.log(`\n📋 Schema Inventory: ${schemas.size} component schemas found`);
+    console.log(`\n📋 Schema Inventory: ${schemas.size} behavior schemas found`);
     
     let complete = 0;
     let incomplete = 0;

@@ -1,6 +1,6 @@
 # Rating
 
-Star rating component for displaying or collecting ratings
+Star rating behavior for displaying or collecting ratings
 
 Applies to `<div>`, and to any element carrying `x-rating`.
 

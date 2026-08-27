@@ -41,7 +41,7 @@ import { test, expect, type Page } from '@playwright/test';
  *      (badge, tooltip, popover, dropdown, resizer, shimmer, glass,
  *      backdrop, skeleton, spinner, ripple, indicator, handle, caret,
  *      chevron, ribbon, toast, corner) — covers a legitimate normal-flow
- *      component that still plays a decorative/overlay role.
+ *      behavior that still plays a decorative/overlay role.
  *
  * Geometry itself uses `getClientRects()` (per-line boxes), not
  * `getBoundingClientRect()` — a wrapped multi-line inline element's overall
@@ -67,7 +67,7 @@ type OverlapHit = {
 
 const TARGET_PAGES: { name: string; url: string }[] = [
   { name: 'pages/behaviors', url: '/?page=behaviors' },
-  { name: 'pages/components', url: '/?page=components' },
+  { name: 'pages/behaviors', url: '/?page=behaviors' },
   { name: 'demos/site/cards', url: '/demos/site/cards.html' },
   { name: 'demos/site/content', url: '/demos/site/content.html' },
   { name: 'demos/site/effects', url: '/demos/site/effects.html' },

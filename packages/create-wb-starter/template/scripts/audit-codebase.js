@@ -76,18 +76,18 @@ async function auditCodebase() {
     console.log(`   Scanned ${viewFiles.length} JS files in src/wb-viewmodels\n`);
 
     if (violations.length > 0) {
-        console.log(`❌ Violations Found (${violations.length} components missing Intellisense):`);
+        console.log(`❌ Violations Found (${violations.length} behaviors missing Intellisense):`);
         violations.forEach(v => {
             console.log(`   - [ ] ${v.tagName} (from ${v.file})`);
             console.log(`         Missing: ${!v.hasSchema ? 'Schema file' : ''} ${!v.hasIntellisense ? 'VS Code Definition' : ''}`);
         });
-        console.log('\nSuggested Fix: Create schema files for these components and run update-intellisense.cjs');
+        console.log('\nSuggested Fix: Create schema files for these behaviors and run update-intellisense.cjs');
     } else {
-        console.log(`✅ No violations found. All detected components have Intellisense/Schema.`);
+        console.log(`✅ No violations found. All detected behaviors have Intellisense/Schema.`);
     }
 
     if (unknownFiles.length > 0) {
-        console.log(`\nℹ️  Skipped ${unknownFiles.length} helper/logic files (no component definition detected).`);
+        console.log(`\nℹ️  Skipped ${unknownFiles.length} helper/logic files (no behavior definition detected).`);
     }
 }
 

@@ -2,7 +2,7 @@
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "_base/html-element.schema.json",
   "title": "HTMLElement Base",
-  "description": "Base schema for ALL HTML elements. Every component inherits these properties.",
+  "description": "Base schema for ALL HTML elements. Every behavior inherits these properties.",
   "schemaType": "base",
   
   "type": "object",

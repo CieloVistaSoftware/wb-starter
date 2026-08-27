@@ -14,7 +14,7 @@ const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const PROJECT_DIR = path.resolve(__dirname, '..');
 const SCHEMA_DIR = path.join(PROJECT_DIR, 'src/wb-models');
 
-// Schemas to skip (not components or special cases)
+// Schemas to skip (not behaviors or special cases)
 const SKIP_SCHEMAS = [
   'behavior.schema.json',
   'views.schema.json', 

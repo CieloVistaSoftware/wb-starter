@@ -7,7 +7,7 @@ This document describes the structure and usage of the `templates.json` file, wh
 
 ## Purpose
 
-The `templates.json` file acts as a registry of pre-defined page layouts and component combinations. It allows users to quickly bootstrap new pages or sections by selecting from a categorized list of templates.
+The `templates.json` file acts as a registry of pre-defined page layouts and behavior combinations. It allows users to quickly bootstrap new pages or sections by selecting from a categorized list of templates.
 
 ## Structure
 
@@ -55,18 +55,18 @@ Templates define the actual content to be generated.
 | `category` | string | Must match a category `id`. |
 | `description` | string | Description of the template. |
 | `tags` | string[] | Keywords for search/filtering. |
-| `components` | object[] | Array of component definitions (shorthand format). |
+| `behaviors` | object[] | Array of behavior definitions (shorthand format). |
 
-#### Component Definition (Shorthand)
+#### Behavior Definition (Shorthand)
 
-Templates use a shorthand JSON format to define components:
+Templates use a shorthand JSON format to define behaviors:
 
 | Field | Description | Example |
 |-------|-------------|---------|
 | `b` | **Behavior** name | `"cardhero"` |
 | `t` | **Tag** name (optional, defaults to div/custom element) | `"nav"` |
 | `d` | **Data** attributes (props) | `{ "title": "Hello" }` |
-| `children` | Array of child components | `[ ... ]` |
+| `children` | Array of child behaviors | `[ ... ]` |
 | `behaviors` | Array of additional behaviors | `["sticky"]` |
 
 **Example Template:**
@@ -77,7 +77,7 @@ Templates use a shorthand JSON format to define components:
   "category": "heroes",
   "description": "Clean, text-focused hero",
   "tags": ["hero", "minimal"],
-  "components": [
+  "behaviors": [
     { 
       "b": "cardhero", 
       "d": { 
@@ -93,12 +93,12 @@ Templates use a shorthand JSON format to define components:
 ## Adding a New Template
 
 1.  **Choose a Category**: Pick an existing category ID from the `categories` list.
-2.  **Define Components**: Construct the component tree using the shorthand format.
+2.  **Define Behaviors**: Construct the behavior tree using the shorthand format.
 3.  **Add to JSON**: Append your new template object to the `templates` array in `data/templates.json`.
 
 ## Usage in Builder
 
 The Builder application reads this file to populate the "Templates" modal or sidebar. When a user selects a template:
-1.  The `components` array is read.
+1.  The `behaviors` array is read.
 2.  The Builder converts the shorthand JSON into the internal Builder Page JSON format.
-3.  The components are appended to the current page or replace the current selection.
+3.  The behaviors are appended to the current page or replace the current selection.

@@ -13,8 +13,8 @@
 | ✅ Valid | [docs/_today/CURRENT-STATUS.md](../_today/CURRENT-STATUS.md) | 83 | `x-sticky` | `│  &lt;header x-sticky&gt;                                      │` |
 | ✅ Valid | [docs/_today/CURRENT-STATUS.md](../_today/CURRENT-STATUS.md) | 139 | `x-ripple` | `\| `x-ripple` \| Add behaviors \| `&lt;button x-ripple&gt;` \| ✅ PRIMARY \|` |
 | ✅ Valid | [docs/_today/CURRENT-STATUS.md](../_today/CURRENT-STATUS.md) | 139 | `x-ripple` | `\| `x-ripple` \| Add behaviors \| `&lt;button x-ripple&gt;` \| ✅ PRIMARY \|` |
-| ✅ Valid | [docs/_today/TODO.md](../_today/TODO.md) | 134 | `x-behavior` | `- Custom element naming: `&lt;component-name&gt;`, `x-behavior`, `x-as-morph`` |
-| ⚠️ Invalid Morph Target | [docs/_today/TODO.md](../_today/TODO.md) | 134 | `x-as-morph` | `- Custom element naming: `&lt;component-name&gt;`, `x-behavior`, `x-as-morph`` |
+| ✅ Valid | [docs/_today/TODO.md](../_today/TODO.md) | 134 | `x-behavior` | `- Custom element naming: `&lt;behavior-name&gt;`, `x-behavior`, `x-as-morph`` |
+| ⚠️ Invalid Morph Target | [docs/_today/TODO.md](../_today/TODO.md) | 134 | `x-as-morph` | `- Custom element naming: `&lt;behavior-name&gt;`, `x-behavior`, `x-as-morph`` |
 | ✅ Valid | [docs/_today/TODO.md](../_today/TODO.md) | 140 | `x-ripple` | `- Extensions (HAS-A): `x-ripple`, `x-tooltip="tip"`` |
 | ✅ Valid | [docs/_today/TODO.md](../_today/TODO.md) | 140 | `x-tooltip` | `- Extensions (HAS-A): `x-ripple`, `x-tooltip="tip"`` |
 | ✅ Valid | [docs/_today/TODO.md](../_today/TODO.md) | 141 | `x-as-card` | `- Morphing (BECOMES): `x-as-card`` |
@@ -22,8 +22,8 @@
 | ✅ Valid | docs/architecture.md | 164 | `x-as-card` | `&lt;article x-as-card&gt;` |
 | ✅ Valid | [docs/architecture/ATTRIBUTE-NAMING-STANDARD.md](../architecture/standards/ATTRIBUTE-NAMING-STANDARD.md) | 100 | `x-behavior` | `\| `x-behavior` \| **HAS-A** \| Extensions (adds capability) \| `x-ripple` \|` |
 | ✅ Valid | [docs/architecture/ATTRIBUTE-NAMING-STANDARD.md](../architecture/standards/ATTRIBUTE-NAMING-STANDARD.md) | 100 | `x-ripple` | `\| `x-behavior` \| **HAS-A** \| Extensions (adds capability) \| `x-ripple` \|` |
-| ⚠️ Invalid Morph Target | [docs/architecture/ATTRIBUTE-NAMING-STANDARD.md](../architecture/standards/ATTRIBUTE-NAMING-STANDARD.md) | 101 | `x-as-component` | `\| `x-as-component` \| **BECOMES** \| Morphing (transforms element) \| `x-as-card` \|` |
-| ✅ Valid | [docs/architecture/ATTRIBUTE-NAMING-STANDARD.md](../architecture/standards/ATTRIBUTE-NAMING-STANDARD.md) | 101 | `x-as-card` | `\| `x-as-component` \| **BECOMES** \| Morphing (transforms element) \| `x-as-card` \|` |
+| ⚠️ Invalid Morph Target | [docs/architecture/ATTRIBUTE-NAMING-STANDARD.md](../architecture/standards/ATTRIBUTE-NAMING-STANDARD.md) | 101 | `x-as-behavior` | `\| `x-as-behavior` \| **BECOMES** \| Morphing (transforms element) \| `x-as-card` \|` |
+| ✅ Valid | [docs/architecture/ATTRIBUTE-NAMING-STANDARD.md](../architecture/standards/ATTRIBUTE-NAMING-STANDARD.md) | 101 | `x-as-card` | `\| `x-as-behavior` \| **BECOMES** \| Morphing (transforms element) \| `x-as-card` \|` |
 | ✅ Valid | [docs/architecture/ATTRIBUTE-NAMING-STANDARD.md](../architecture/standards/ATTRIBUTE-NAMING-STANDARD.md) | 108 | `x-ripple` | `&lt;button x-ripple x-tooltip="Save changes"&gt;Save&lt;/button&gt;` |
 | ✅ Valid | [docs/architecture/ATTRIBUTE-NAMING-STANDARD.md](../architecture/standards/ATTRIBUTE-NAMING-STANDARD.md) | 108 | `x-tooltip` | `&lt;button x-ripple x-tooltip="Save changes"&gt;Save&lt;/button&gt;` |
 | ✅ Valid | [docs/architecture/ATTRIBUTE-NAMING-STANDARD.md](../architecture/standards/ATTRIBUTE-NAMING-STANDARD.md) | 111 | `x-as-card` | `&lt;article x-as-card&gt;Plain article becomes styled card&lt;/article&gt;` |

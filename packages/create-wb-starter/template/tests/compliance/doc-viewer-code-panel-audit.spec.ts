@@ -72,7 +72,7 @@ const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '../..')
  * authors a `<div x-demo` block (or mdhtml.js's auto-live-render promotes a
  * ```html fence containing one — same literal substring either way, since
  * the fence source itself doesn't contain "<div x-demo" but the CONTENT it
- * promotes might contain a live component; auto-live-render candidates
+ * promotes might contain a live behavior; auto-live-render candidates
  * without an authored <div x-demo> tag are rare and already covered by the
  * #583 report's "Incidental finding" for V3-STANDARDS.md — not re-derived
  * here, this is a fast pre-filter, not a precise one, and false inclusions
@@ -163,7 +163,7 @@ async function collectPanelReports(page: import('@playwright/test').Page, url: s
   // until every panel that EXISTS has its line-number gutter fully built
   // (count matches its own text's line count, every number positioned). A
   // demo with ZERO `.x-demo__code` panels (e.g. a §25 boilerplate-only
-  // example, or a live-rendered component that legitimately has no source
+  // example, or a live-rendered behavior that legitimately has no source
   // sample) is vacuously satisfied here — waiting for a panel that will
   // never exist would just burn the timeout.
   await page.waitForFunction(

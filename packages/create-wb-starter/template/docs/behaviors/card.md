@@ -1,6 +1,6 @@
-# Card Component
+# Card Behavior
 
-Card component. IS-A article, HAS-A header, main, footer.
+Card behavior. IS-A article, HAS-A header, main, footer.
 
 Applies to `<article>`, and to any element carrying `x-card`.
 

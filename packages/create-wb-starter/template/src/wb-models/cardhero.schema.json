@@ -29,7 +29,7 @@
     },
     "pretitle": {
       "type": "string",
-      "description": "Small label or count shown above the title (e.g. '100 Components')",
+      "description": "Small label or count shown above the title (e.g. '100 Behaviors')",
       "default": ""
     },
     "subtitle": {
@@ -274,7 +274,7 @@
       "<div x-cardhero xalign=\"right\">xalign=right</div>",
       "<div x-cardhero overlay>with overlay</div>",
       "<div x-cardhero title=\"Test Title\">With title attribute</div>",
-      "<div x-cardhero pretitle='100 Components' title='Build <span class=\"x-gradient-text\">stunning UIs</span>' subtitle='just HTML' cta='Explore Components'></div>",
+      "<div x-cardhero pretitle='100 Behaviors' title='Build <span class=\"x-gradient-text\">stunning UIs</span>' subtitle='just HTML' cta='Explore Behaviors'></div>",
       "<div x-cardhero background=\"hero.jpg\" title=\"Welcome\"></div>",
       "<div x-cardhero background=\"hero.jpg\" title=\"Explore\" subtitle=\"Your journey\" cta=\"Get Started\"></div>"
     ],

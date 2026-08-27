@@ -34,15 +34,15 @@ test.describe('Home page — link integrity', () => {
   test('hero CTAs point to real routes and navigate', async ({ page }) => {
     await loadHome(page);
 
-    const explore = page.getByRole('link', { name: /explore components/i });
+    const explore = page.getByRole('link', { name: /explore behaviors/i });
     const docs = page.getByRole('link', { name: /documentation/i });
 
-    await expect(explore).toHaveAttribute('href', '?page=components');
+    await expect(explore).toHaveAttribute('href', '?page=behaviors');
     await expect(docs).toHaveAttribute('href', '?page=docs');
 
-    // Clicking "Explore Components" routes to the components page.
+    // Clicking "Explore Behaviors" routes to the behaviors page.
     await explore.click();
-    await expect(page).toHaveURL(/\?page=components/);
+    await expect(page).toHaveURL(/\?page=behaviors/);
     await page.waitForTimeout(300);
 
     // Back home, then "Documentation" routes to the docs page.

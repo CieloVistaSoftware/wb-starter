@@ -121,7 +121,7 @@
        x-demo__card-doc-link class, see src/styles/behaviors/demo.css)
        never fires here -- that path only watches grid children whose tag
        starts with "x-card". Whenever a row's view DOES resolve to a real
-       documented wb-* component, demo.js still falls back to appending the
+       documented wb-* behavior, demo.js still falls back to appending the
        shared x-demo__links "Docs: ..." line below the grid. John asked for
        the docs link in the upper-right corner on this page specifically --
        reposition that shared line the same way demo.css positions its
@@ -269,7 +269,7 @@
 
     // Some views have NO required attributes at all (alert-box) or leave
     // their main visible/slotted content on an OPTIONAL attribute
-    // (badge-tag's text, component-tile's text, user-avatar/user-card's
+    // (badge-tag's text, behavior-tile's text, user-avatar/user-card's
     // initials, nav-link's icon) -- filling only REQUIRED attributes would
     // render those as a technically-live but visually blank/empty example.
     // These are genuinely optional per the schema (not required), so they
@@ -279,7 +279,7 @@
     const EXTRA_ATTR_OVERRIDES = {
       'alert-box': { heading: 'Heads up', message: 'This is an example alert message.' },
       'badge-tag': { text: 'Badge' },
-      'component-tile': { text: 'Label' },
+      'behavior-tile': { text: 'Label' },
       'empty-state': { message: 'Try adjusting your filters.' },
       'nav-link': { icon: '🏠' },
       'user-avatar': { initials: 'JD' },
@@ -505,13 +505,13 @@
 
         // Fill in step ③ "Rendered Output" -- the actual final DOM after
         // template interpolation AND behavior attachment (x-ripple,
-        // x-draggable, schema-driven components, ...), not just the
+        // x-draggable, schema-driven behaviors, ...), not just the
         // authored usage from step ②. John: "we must show compositional
         // steps to get the elements we are using" -- template -> usage ->
         // rendered result, the same 3-step shape this page's own static
         // "How It Works" example already used for one hand-picked case,
         // now per row. A short settle wait: wb-views' renderView() and
-        // several behaviors (schema-driven components, x-demo's own grid
+        // several behaviors (schema-driven behaviors, x-demo's own grid
         // build) finish asynchronously after WB.scan(container) itself
         // already resolved.
         await new Promise(resolve => setTimeout(resolve, 300));

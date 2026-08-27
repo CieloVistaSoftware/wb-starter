@@ -21,7 +21,7 @@ The `<time>` element represents a specific period in time. In WB-Starter, it's u
 | Year | `YYYY` | `2024` |
 | Week | `YYYY-W[n]` | `2024-W50` |
 
-## WB Components Using `<time>`
+## WB Behaviors Using `<time>`
 
 ### 1. Card File (`cardfile`)
 
@@ -53,7 +53,7 @@ Shown here as illustrative markup only; it will render without a timestamp.
 </aside>
 ```
 
-### 3. Timeline Component
+### 3. Timeline Behavior
 
 `x-timeline` only adds a `<div x-as-timeline>` class hook — it doesn't rebuild
 children, so hand-authored markup (including real `<time>` elements) renders
@@ -74,7 +74,7 @@ as-is.
 </div>
 </div>
 
-### 4. Relative Time Component (`relativetime`)
+### 4. Relative Time Behavior (`relativetime`)
 
 `x-relativetime` computes its own live "time ago" text from `datetime` (or
 `date`) on load and refreshes it periodically — the element's own content is

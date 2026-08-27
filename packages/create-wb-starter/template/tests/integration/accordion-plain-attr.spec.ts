@@ -5,7 +5,7 @@ import { test, expect } from '@playwright/test';
  * data-*. Effect-based (§19): items build and toggle on click.
  *
  * Uses a static served fixture (tests/fixtures/accordion-plain.html) — the heavy
- * components page (36 x-demos) flaked under load (#269), and setContent after
+ * behaviors page (36 x-demos) flaked under load (#269), and setContent after
  * goto pre-defines the custom element so it upgrades before its children parse
  * (single-item fallback). A real served file parses all children first.
  */

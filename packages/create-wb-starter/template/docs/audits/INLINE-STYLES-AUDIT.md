@@ -65,7 +65,7 @@ an element that never got the class-only treatment to begin with.
 
 ## Recommended approach (not started)
 
-Given the size (250+ occurrences, one component library's worth of behaviors), this
+Given the size (250+ occurrences, one behavior library's worth of behaviors), this
 needs to be its own dedicated, scoped effort — not folded into an unrelated bug-fix
 session. Suggested order:
 

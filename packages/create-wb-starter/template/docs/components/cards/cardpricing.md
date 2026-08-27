@@ -27,7 +27,7 @@ Supports every [card property](./card.md) — that shared structure and CSS are 
 | `featured` | boolean | `false` | Highlight as featured |
 | `background` | string | `""` | Background image URL |
 
-Wrapped in `<div x-demo>`, so the live component renders below with its source shown underneath:
+Wrapped in `<div x-demo>`, so the live behavior renders below with its source shown underneath:
 
 <div x-demo>
 <div x-cardpricing

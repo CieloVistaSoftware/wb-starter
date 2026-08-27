@@ -110,7 +110,7 @@ for (const file of pageFiles) {
       const showcaseLimits: Record<string, number> = {
         'hero-variants.html': 120,
         'themes.html': 50,
-        'components.html': 50
+        'behaviors.html': 50
       };
       const limit = showcaseLimits[file] || 3;
       expect(significantInline.length).toBeLessThanOrEqual(limit);

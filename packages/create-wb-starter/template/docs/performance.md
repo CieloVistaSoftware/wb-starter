@@ -20,7 +20,7 @@ This document tracks the performance optimization strategy and the work complete
 - [x] **Compression:** Enable Gzip/Brotli compression in `server.js`.
 
 ### 4. Rendering Performance
-- [x] **CSS Containment:** Apply `contain` property to complex components (like Cards) to isolate layout recalculations.
+- [x] **CSS Containment:** Apply `contain` property to complex behaviors (like Cards) to isolate layout recalculations.
 - [x] **Content Visibility:** Use `content-visibility: auto` for off-screen content (e.g., long lists of cards).
 
 ---

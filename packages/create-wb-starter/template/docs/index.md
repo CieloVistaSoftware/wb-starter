@@ -1,6 +1,6 @@
 # WB-Starter Documentation
 
-> A comprehensive web component library featuring 41+ custom components, Harmonic Color System, and Light DOM architecture.
+> A comprehensive behavior library featuring 41+ custom behaviors, Harmonic Color System, and Light DOM architecture.
 
 ---
 

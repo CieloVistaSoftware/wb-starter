@@ -26,8 +26,8 @@ try {
     
     let report = `# Intellisense Tooltip Audit Report\n\n`;
     report += `**Date:** ${new Date().toLocaleString()}\n`;
-    report += `**Total Components:** ${tags.length}\n\n`;
-    report += `This report records exactly what is displayed in the VS Code hover tooltip for each component.\n\n`;
+    report += `**Total Behaviors:** ${tags.length}\n\n`;
+    report += `This report records exactly what is displayed in the VS Code hover tooltip for each behavior.\n\n`;
     report += `--- \n\n`;
 
     let missingDescriptions = 0;
@@ -60,11 +60,11 @@ try {
     // Write Report
     fs.writeFileSync(outputPath, report);
 
-    console.log(`\n✅ **SUCCESS**: Verified ${tags.length} components.`);
+    console.log(`\n✅ **SUCCESS**: Verified ${tags.length} behaviors.`);
     if (missingDescriptions > 0) {
-        console.warn(`⚠️  **WARNING**: ${missingDescriptions} components have empty tooltips.`);
+        console.warn(`⚠️  **WARNING**: ${missingDescriptions} behaviors have empty tooltips.`);
     } else {
-        console.log(`✨  **PERFECT**: All components have tooltip content.`);
+        console.log(`✨  **PERFECT**: All behaviors have tooltip content.`);
     }
     console.log(`📄 Tooltip report recorded at: ${outputPath}`);
 

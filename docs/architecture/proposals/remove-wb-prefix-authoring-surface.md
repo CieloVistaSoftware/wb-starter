@@ -23,9 +23,9 @@ None of this is close to a weekend job — see §7 for a phased estimate.
 You said it directly: *"for every tag that attaches behavior to a semantic element we don't
 want to expose wb- prefixes, rather the concept of autoinjection"* and *"because we have opt
 out ability, getting rid of x-prefixes keeps the customer focused on plain old html."*
-The autoInject system already proves this works for the 32 native-tag components (`<button>`,
+The autoInject system already proves this works for the 32 native-tag behaviors (`<button>`,
 `<table>`, `<address>`, …) — `config/site.json`'s `autoInjectComponents: true` wires behavior
-onto bare semantic tags today with zero custom tags. The 52 composite components (card, modal,
+onto bare semantic tags today with zero custom tags. The 52 composite behaviors (card, modal,
 cardhero, …) are the exception, not because they need something HTML can't express, but
 because the system that builds their internal DOM (`schema-builder.js`) happens to key its
 detection off a tag-name string prefix instead of an attribute. That's an implementation
@@ -52,7 +52,7 @@ wb-starter runs **two parallel detection systems** today:
 | Gate | Requires `getConfig('autoInject')` **or** a `variant` attribute (`src/core/wb.js:223`) | Unconditional — no gate at all |
 | Opt-out | `x-ignore` attribute (`src/core/wb.js:204`, mirrored in `wb-lazy.js:285,700`) | **None.** `x-ignore` is never checked in `schema-builder.js` — confirmed by reading `detectSchema()`, `scan()`, `processElement()`, and `WB.inject()`. `<article x-ignore>` is fully built and injected today; the attribute is silently ignored. |
 | Registration | `nativeMap` (`tag-map.js`) | `registerSchema()`, `src/core/mvvm/schema-builder.js:118-130` — derives `` `wb-${name}` `` as the tag key (line 126) |
-| Count | 32 of 84 catalogued components | 52 of 84 (81 distinct tags total; `<article>` appears twice in the catalog under two categories) |
+| Count | 32 of 84 catalogued behaviors | 52 of 84 (81 distinct tags total; `<article>` appears twice in the catalog under two categories) |
 
 Of the 52 `wb-*` tags, **only 3 are real registered Custom Elements**: `<article>`
 (`src/wb-viewmodels/x-card.js:51`), `x-demo` (`x-demo.js:137`), `x-grid` (`x-grid.js:36`).
@@ -60,12 +60,12 @@ The other ~48 are plain elements the schema builder detects and constructs purel
 prefix — nothing in the platform's Custom Elements registry knows they exist. Three more real
 Custom Elements (`<audio>`, `<div x-control>`, `<div x-fix-card>`) exist in the codebase but sit outside
 the 52-tag catalog scope (`<audio>` is the enhanced-EQ wrapper around the native
-`<audio x-behavior="audio">` component, not a catalog entry itself).
+`<audio x-behavior="audio">` behavior, not a catalog entry itself).
 
 `SCHEMA_EXCLUDED_TAGS` (`schema-builder.js:872-880`, 22 entries, all of `x-card*`'s 13-tag
 family plus `x-demo`, `<dialog>`, `<div x-searchfield>`, others) is hand-maintained tribal knowledge —
 its own comment (lines 801-871) warns *"do not widen this to 'every tag with a behavior'
-again."* This set exists to stop the schema builder racing a component's own DOM-building code;
+again."* This set exists to stop the schema builder racing a behavior's own DOM-building code;
 its job survives this proposal unchanged, it just gets rekeyed by behavior name instead of tag
 name.
 
@@ -80,8 +80,8 @@ working mechanism.
 ### 1. One detection rule, one attribute convention
 
 Replace `tagName.startsWith('wb-')` with: *does this element carry an `x-{behaviorName}`
-attribute matching a registered schema?* This is the same convention native-tag components
-already use (`x-ripple`, `x-password`, etc.) — composite components stop being a separate
+attribute matching a registered schema?* This is the same convention native-tag behaviors
+already use (`x-ripple`, `x-password`, etc.) — composite behaviors stop being a separate
 authoring mental model.
 
 ```html
@@ -137,7 +137,7 @@ happen incrementally, file by file, without waiting on the detection change.
 `customElements.define()`-registered classes with their own lifecycle. You can't rename their
 tag without either (a) keeping the class registered under its current tag name and having a
 plain-tag wrapper delegate to it, or (b) reworking each one to attach its behavior to
-whatever host tag the author used (closer to how the schema-driven components would work, but
+whatever host tag the author used (closer to how the schema-driven behaviors would work, but
 requires touching real class-based code, not just detection logic). Recommend treating these
 as a **follow-up decision per tag**, not blocking the other 48 — `x-demo` in particular is
 internal tooling (wraps every code-panel demo on the docs site itself) and has the weakest
@@ -176,7 +176,7 @@ questionable.
    authoring form real without breaking a single existing page, demo, or test. This is the
    concrete next chunk of work; see below.
 4. **New authoring — `x-*` form — becomes the one taught in docs/demos going forward.**
-   Existing `docs/components/**/*.md` pages and `pages/*.html`/`demos/*.html` instances are
+   Existing `docs/behaviors/**/*.md` pages and `pages/*.html`/`demos/*.html` instances are
    migrated opportunistically (e.g. whenever a page is touched for another reason) rather than
    in one 66-file sweep, now that both forms genuinely coexist with no deadline forcing a rush.
 5. **Test suite catches up as pages migrate** — no separate 50-file sweep either; a test only

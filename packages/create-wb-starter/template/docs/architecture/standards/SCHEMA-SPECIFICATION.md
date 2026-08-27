@@ -30,12 +30,12 @@ Every `.schema.json` file has a `schemaType` that determines what's required:
 
 | Type | Purpose | Required Fields |
 |------|---------|----------------|
-| `component` | Real components users interact with | title, description, properties, $view, $methods, behavior |
+| `behavior` | Real behaviors users interact with | title, description, properties, $view, $methods, behavior |
 | `base` | Abstract schemas inherited by others | title, description, properties |
 | `definition` | Pure reference documents | title, description |
 | `page` | Page-level layout and content placement | title, description, pageRules, $layout |
 
-Component schemas define **what a component is**. Page schemas define **how components are arranged on a page**.
+Behavior schemas define **what a behavior is**. Page schemas define **how behaviors are arranged on a page**.
 
 ---
 
@@ -61,7 +61,7 @@ Page-level rules that govern generation and validation:
 | `showcase` | boolean | If true, all sections wrap in `x-demo` (shows source code). False for production pages. |
 | `fragment` | boolean | Page is a fragment — no DOCTYPE/html/head/body. Server shell wraps it. |
 | `noInlineStyles` | boolean | No inline styles allowed on any element. |
-| `noPageSpecificCSS` | boolean | No page-specific CSS file. All styling from component CSS. |
+| `noPageSpecificCSS` | boolean | No page-specific CSS file. All styling from behavior CSS. |
 
 ### $layout — Row-Based Layout System
 
@@ -201,7 +201,7 @@ Page schemas include test sections for layout validation:
 > **Attribute name = what it is for**  
 > **Schema = where it goes**
 
-Users provide simple attribute values. The schema defines how those values become DOM structure. **Users should never need to know component internals.**
+Users provide simple attribute values. The schema defines how those values become DOM structure. **Users should never need to know behavior internals.**
 
 ```html
 <!-- ✅ CLEAN: User just sets values -->
@@ -231,12 +231,12 @@ Users provide simple attribute values. The schema defines how those values becom
 ```json
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "$id": "component.schema.json",
-  "title": "Component Name",
-  "description": "Component description",
+  "$id": "behavior.schema.json",
+  "title": "Behavior Name",
+  "description": "Behavior description",
   
-  "behavior": "component",
-  "baseClass": "x-component",
+  "behavior": "behavior",
+  "baseClass": "x-behavior",
   
   "semanticElement": {
     "tagName": "article",
@@ -260,7 +260,7 @@ Users provide simple attribute values. The schema defines how those values becom
 | `behavior` | ✅ | string | Behavior name (kebab-case) |
 | `baseClass` | ✅ | string | Base CSS class (BEM block) |
 | `title` | ✅ | string | Human-readable name |
-| `description` | ✅ | string | Component description |
+| `description` | ✅ | string | Behavior description |
 | `semanticElement` | 🔶 | object | Default HTML element mapping |
 | `properties` | ✅ | object | Model - data inputs (attributes) |
 | `$view` | ✅ | array | View - DOM structure |
@@ -432,11 +432,11 @@ The `$methods` section defines **callable functions** bound to the element.
 {
   "$methods": {
     "show": {
-      "description": "Shows the component",
+      "description": "Shows the behavior",
       "params": []
     },
     "hide": {
-      "description": "Hides the component",
+      "description": "Hides the behavior",
       "params": []
     },
     "toggle": {
@@ -444,12 +444,12 @@ The `$methods` section defines **callable functions** bound to the element.
       "params": []
     },
     "update": {
-      "description": "Updates component properties",
+      "description": "Updates behavior properties",
       "params": ["options"],
       "returns": "void"
     },
     "dismiss": {
-      "description": "Dismisses and removes the component",
+      "description": "Dismisses and removes the behavior",
       "params": [],
       "returns": "Promise"
     }
@@ -467,12 +467,12 @@ The `$methods` section defines **callable functions** bound to the element.
 
 ### Standard Methods
 
-All components should implement these base methods:
+All behaviors should implement these base methods:
 
 | Method | Description |
 |--------|-------------|
-| `show()` | Shows the component |
-| `hide()` | Hides the component |
+| `show()` | Shows the behavior |
+| `hide()` | Hides the behavior |
 | `toggle()` | Toggles visibility |
 | `update(options)` | Updates properties |
 
@@ -565,8 +565,8 @@ x-card {
 ### Naming Convention
 
 ```
-Public:  .wb-{component}__{name}
-Private: .wb-{component}__-{name}   ← Note the dash prefix
+Public:  .wb-{behavior}__{name}
+Private: .wb-{behavior}__-{name}   ← Note the dash prefix
 ```
 
 ### Example
@@ -608,7 +608,7 @@ Private: .wb-{component}__-{name}   ← Note the dash prefix
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "alert.schema.json",
   "title": "Alert",
-  "description": "Alert component for displaying messages with severity levels",
+  "description": "Alert behavior for displaying messages with severity levels",
   
   "behavior": "alert",
   "baseClass": "x-alert",
@@ -773,7 +773,7 @@ Private: .wb-{component}__-{name}   ← Note the dash prefix
 
 ## Test Configuration
 
-The `test` section defines how the component is tested, including setup HTML and the permutation matrix.
+The `test` section defines how the behavior is tested, including setup HTML and the permutation matrix.
 
 ```json
 {
@@ -797,7 +797,7 @@ The `test` section defines how the component is tested, including setup HTML and
 
 | Field | Type | Description |
 |-------|------|-------------|
-| `setup` | array | HTML strings used to instantiate the component for testing |
+| `setup` | array | HTML strings used to instantiate the behavior for testing |
 | `matrix.combinations` | array | Array of attribute objects — each is one test permutation |
 
 ### Test Coverage Requirements
@@ -898,7 +898,7 @@ The `test` section defines how the component is tested, including setup HTML and
 
 ## Migration Status
 
-**All 54 component schemas have been converted to v3.0 format.**
+**All 54 behavior schemas have been converted to v3.0 format.**
 
 | Category | Count | Schemas |
 |----------|-------|--------|

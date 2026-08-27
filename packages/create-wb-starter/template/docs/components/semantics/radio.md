@@ -1,8 +1,8 @@
-# Radio Component Design & User Guide
+# Radio Behavior Design & User Guide
 
 ## 1. Design Philosophy
 
-The `radio` component modernizes the `<input type="radio">` element. Like the checkbox component, it focuses on providing a consistent, custom appearance while maintaining the native radio group behavior and accessibility.
+The `radio` behavior modernizes the `<input type="radio">` element. Like the checkbox behavior, it focuses on providing a consistent, custom appearance while maintaining the native radio group behavior and accessibility.
 
 ### Key Features
 - **Custom Styling**: Replaces browser defaults with a clean, scalable design.

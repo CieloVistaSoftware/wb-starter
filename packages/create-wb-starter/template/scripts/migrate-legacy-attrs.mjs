@@ -47,7 +47,7 @@ const MAP = {
 const files = process.argv.slice(2);
 const targets = files.length
   ? files.map((f) => path.resolve(ROOT, f))
-  : ['pages/components.html', 'pages/behaviors.html', 'pages/newbehaviors.html'].map((f) => path.join(ROOT, f));
+  : ['pages/behaviors.html', 'pages/behaviors.html', 'pages/newbehaviors.html'].map((f) => path.join(ROOT, f));
 
 let grandTotal = 0;
 for (const file of targets) {

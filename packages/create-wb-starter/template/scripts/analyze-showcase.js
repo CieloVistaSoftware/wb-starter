@@ -12,10 +12,10 @@ sections.forEach(s => {
   console.log(s + ': ' + (ids.includes(s) ? 'YES' : 'NO'));
 });
 
-// Check for key components
+// Check for key behaviors
 console.log('---');
-const components = ['x-tabs','x-accordion','x-alert','x-badge','x-progress','x-spinner','x-avatar','x-rating','x-modal','x-drawer','x-audio','x-switch','x-demo'];
-components.forEach(c => {
+const behaviors = ['x-tabs','x-accordion','x-alert','x-badge','x-progress','x-spinner','x-avatar','x-rating','x-modal','x-drawer','x-audio','x-switch','x-demo'];
+behaviors.forEach(c => {
   const re = new RegExp('<' + c + '[\\s>]', 'gi');
   const count = (html.match(re) || []).length;
   console.log(c + ': ' + count);

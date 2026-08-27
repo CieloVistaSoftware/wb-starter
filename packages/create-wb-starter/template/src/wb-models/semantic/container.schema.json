@@ -239,7 +239,7 @@
     }
   },
   "wbComponents": {
-    "description": "WB components that extend container",
+    "description": "WB behaviors that extend container",
     "list": [
       "container",
       "flex",

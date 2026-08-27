@@ -12,7 +12,7 @@
 > **Attribute name = what it is for**  
 > **Schema = where it goes**
 
-Users provide simple attribute values. The schema defines how those values become DOM structure. Users should **never need to know component internals**.
+Users provide simple attribute values. The schema defines how those values become DOM structure. Users should **never need to know behavior internals**.
 
 ### The Principle
 
@@ -84,7 +84,7 @@ cta="Click"     →   "tag": "button"    →   <button>Click</button>
 12. [Error Handling](#error-handling)
 13. [IDE Support](#ide-support)
 14. [Quick Reference](#quick-reference)
-15. [Examples by Component](#examples-by-component)
+15. [Examples by Behavior](#examples-by-behavior)
 
 ---
 
@@ -94,9 +94,9 @@ WB uses three patterns for applying behaviors:
 
 | Pattern | Meaning | Use Case | Example |
 |---------|---------|----------|---------|
-| `<wb-{name}>` | **IS-A** | Standalone components | `<div x-cardpricing>` |
+| `<wb-{name}>` | **IS-A** | Standalone behaviors | `<div x-cardpricing>` |
 | `x-behavior` | **HAS-A** | Extensions (adds capability) | `x-ripple` |
-| `x-as-component` | **BECOMES** | Morphing (transforms element) | `x-as-card` |
+| `x-as-behavior` | **BECOMES** | Morphing (transforms element) | `x-as-card` |
 
 > **IS-A here is a naming rule, not a class relationship.** It answers "does this thing
 > get its own tag, or does it decorate a tag that already exists?" — nothing subclasses
@@ -140,10 +140,10 @@ These native HTML attributes should be used **with the same meaning** on custom 
 | Attribute | Native Element | Meaning | Use On |
 |-----------|---------------|---------|--------|
 | `placeholder` | `<input>`, `<textarea>` | Hint text | `<div x-searchfield>`, `<input>` |
-| `disabled` | Form elements | Disabled state | Any interactive component |
+| `disabled` | Form elements | Disabled state | Any interactive behavior |
 | `readonly` | `<input>`, `<textarea>` | Read-only state | `<input>` |
-| `required` | Form elements | Required field | Form components |
-| `name` | Form elements | Form field name | Form components |
+| `required` | Form elements | Required field | Form behaviors |
+| `name` | Form elements | Form field name | Form behaviors |
 | `value` | Form elements | Current value | `<span x-rating>`, `<div x-slider>` |
 | `checked` | `<input type="checkbox/radio">` | Checked state | `<input type="checkbox">`, `<div x-switch>` |
 | `min` | `<input type="number/range">` | Minimum value | `<input x-stepper>`, `<div x-slider>` |
@@ -156,7 +156,7 @@ These native HTML attributes should be used **with the same meaning** on custom 
 ### Boolean Attributes
 | Attribute | Native Element | Meaning | Use On |
 |-----------|---------------|---------|--------|
-| `hidden` | Global | Hide element | Any component |
+| `hidden` | Global | Hide element | Any behavior |
 | `open` | `<details>`, `<dialog>` | Open state | `<div x-collapse>`, `<dialog>` |
 | `autoplay` | `<video>`, `<audio>` | Auto-start | `<video>`, `<audio>` |
 | `loop` | `<video>`, `<audio>` | Loop playback | `<video>`, `<audio>` |
@@ -166,27 +166,27 @@ These native HTML attributes should be used **with the same meaning** on custom 
 ### Layout Attributes
 | Attribute | Native Element | Meaning | Use On |
 |-----------|---------------|---------|--------|
-| `width` | Various | Element width | Media components |
-| `height` | Various | Element height | Media components |
+| `width` | Various | Element width | Media behaviors |
+| `height` | Various | Element height | Media behaviors |
 | `loading` | `<img>`, `<iframe>` | Loading strategy | `<div x-cardimage>` |
 
 ---
 
 ## Native Attributes to AVOID
 
-These native attributes have meanings that **conflict** with typical component usage:
+These native attributes have meanings that **conflict** with typical behavior usage:
 
 ### ❌ `title` - DO NOT USE for headings
 
 > Note: `<article>`'s own real schema currently uses `title` for its heading text
 > (see `src/wb-models/card.schema.json`) — this rule describes the intended
-> convention, not every shipped component. Tracked under #222 (docs-wide
+> convention, not every shipped behavior. Tracked under #222 (docs-wide
 > attribute-naming audit).
 
 ```html
 <!-- BAD: Creates browser tooltip, not a heading -->
 <div x-cardpricing title="Pro Plan">
-  <!-- GOOD: Use 'heading' or component-specific name -->
+  <!-- GOOD: Use 'heading' or behavior-specific name -->
   <div x-cardpricing heading="Pro Plan">
     <div x-cardpricing plan="Pro">
 ```
@@ -448,7 +448,7 @@ Boolean attributes follow HTML5 convention - **presence = true, absence = false*
 
 ### Enum Values
 
-Use consistent enum values across all components:
+Use consistent enum values across all behaviors:
 
 **Variants (style):**
 ```
@@ -501,11 +501,11 @@ ARIA attributes should pass through unchanged:
 </div>
 ```
 
-### Component-Managed ARIA
+### Behavior-Managed ARIA
 
 Some ARIA attributes are set automatically by behaviors:
 
-| Component | Auto-Set ARIA |
+| Behavior | Auto-Set ARIA |
 |-----------|---------------|
 | `<div x-alert>` | `role="alert"` |
 | `<dialog>` | `role="dialog"`, `aria-modal="true"` |
@@ -593,7 +593,7 @@ Display values can include formatting - they're strings, not numbers:
 
 ## Content (Children)
 
-wb-starter is light DOM only — composition over inheritance, no Shadow DOM, no `<slot>` mechanism. Element children ARE the component's body content, exactly as authored:
+wb-starter is light DOM only — composition over inheritance, no Shadow DOM, no `<slot>` mechanism. Element children ARE the behavior's body content, exactly as authored:
 
 ```html
 <article heading="Title">
@@ -604,7 +604,7 @@ wb-starter is light DOM only — composition over inheritance, no Shadow DOM, no
 </div>
 ```
 
-There's no named-slot equivalent for routing children into specific internal regions (a header area, a footer area, etc.) — that's what dedicated attributes are for (`heading`, `subheading`, `footer`, ...; see [Standard Custom Attributes](#standard-custom-attributes)). If a component needs to place content in more than one internal region, give it more than one attribute — never a `slot="…"` attribute.
+There's no named-slot equivalent for routing children into specific internal regions (a header area, a footer area, etc.) — that's what dedicated attributes are for (`heading`, `subheading`, `footer`, ...; see [Standard Custom Attributes](#standard-custom-attributes)). If a behavior needs to place content in more than one internal region, give it more than one attribute — never a `slot="…"` attribute.
 
 ---
 
@@ -612,19 +612,19 @@ There's no named-slot equivalent for routing children into specific internal reg
 
 ### Naming Convention
 
-Components should expose CSS custom properties for theming:
+Behaviors should expose CSS custom properties for theming:
 
 ```css
-/* Pattern: --{component}-{property} */
+/* Pattern: --{behavior}-{property} */
 --card-padding: 1rem;
 --card-radius: 8px;
 --card-shadow: 0 2px 8px rgba(0,0,0,0.1);
 
-/* Pattern: --{component}-{element}-{property} */
+/* Pattern: --{behavior}-{element}-{property} */
 --card-header-padding: 0.75rem 1rem;
 --card-header-background: var(--bg-secondary);
 
-/* Pattern: --{component}-{state}-{property} */
+/* Pattern: --{behavior}-{state}-{property} */
 --card-hover-shadow: 0 4px 16px rgba(0,0,0,0.15);
 --card-active-border-color: var(--primary);
 ```
@@ -767,7 +767,7 @@ name         attribute with DIFFERENT meaning?
 
 ---
 
-## Examples by Component
+## Examples by Behavior
 
 ### Cards
 ```html
@@ -938,7 +938,7 @@ name         attribute with DIFFERENT meaning?
 
 ## Validation Rules
 
-When adding new components or attributes:
+When adding new behaviors or attributes:
 
 1. **Check native HTML first** - Does this attribute exist natively?
 2. **Same meaning = same name** - If native attr fits, use it

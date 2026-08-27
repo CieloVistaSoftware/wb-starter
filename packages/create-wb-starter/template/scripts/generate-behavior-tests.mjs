@@ -5,7 +5,7 @@
  * spec file for uncovered behaviors. Each test:
  * 1. Navigates to page, waits for WB
  * 2. Injects the schema's test.setup HTML
- * 3. Verifies the component renders (visible, no crash)
+ * 3. Verifies the behavior renders (visible, no crash)
  * 4. Checks for console errors
  * 
  * DRY RUN by default — pass --apply to write files.
@@ -39,8 +39,8 @@ function getTestFolder(name) {
   if (name.startsWith('card') || name === 'x-card') return 'cards';
   // Builder-related
   if (name.startsWith('builder')) return 'builder';
-  // Everything else → components
-  return 'components';
+  // Everything else → behaviors
+  return 'behaviors';
 }
 
 // Read all viewmodel JS files to find uncovered behaviors

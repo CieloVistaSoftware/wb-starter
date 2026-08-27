@@ -20,7 +20,7 @@ test.describe('Code Panel Width Compliance (Standard §28)', () => {
     // Check for demos that should have narrow width
     const narrowPatterns = [
       '.x-link',      // Single line link styling
-      '.x-badge',     // Short badge component
+      '.x-badge',     // Short badge behavior
       '.x-button',    // Single button example
       'class="wb-',    // Other single-line examples
     ];

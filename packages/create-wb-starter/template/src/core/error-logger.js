@@ -275,7 +275,7 @@ let globalHandlerInstalled = false;
 /**
  * Setup global error catching. Safe to call more than once (WB.init() is
  * meant to be called defensively/idempotently by every independent
- * component that uses WB, per wb.js's own init() -- without this guard,
+ * behavior that uses WB, per wb.js's own init() -- without this guard,
  * each extra call would attach a duplicate pair of listeners, logging every
  * real error once per WB.init() call on the page instead of once).
  */

@@ -1,8 +1,8 @@
-# Figure Component Design & User Guide
+# Figure Behavior Design & User Guide
 
 ## 1. Design Philosophy
 
-The `figure` component upgrades the standard `<figure>` and `<figcaption>` elements into interactive media containers. It solves common needs like image zooming, lightboxes, and stylish caption overlays without requiring heavy external libraries.
+The `figure` behavior upgrades the standard `<figure>` and `<figcaption>` elements into interactive media containers. It solves common needs like image zooming, lightboxes, and stylish caption overlays without requiring heavy external libraries.
 
 ### Key Features
 - **Lightbox**: Built-in full-screen image viewer.
@@ -61,4 +61,4 @@ A card-like figure with text overlay.
 ```
 
 ## 4. Why It Works
-The component attaches event listeners to the image for the lightbox functionality. When clicked, it creates a temporary overlay `div` with a cloned, high-resolution version of the image. The caption styling is handled via dynamic CSS injection, allowing for the "overlay" effect where the text sits on top of the image with a gradient background.
+The behavior attaches event listeners to the image for the lightbox functionality. When clicked, it creates a temporary overlay `div` with a cloned, high-resolution version of the image. The caption styling is handled via dynamic CSS injection, allowing for the "overlay" effect where the text sits on top of the image with a gradient background.

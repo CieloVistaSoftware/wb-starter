@@ -9,7 +9,7 @@ declare global {
 import { test, expect } from '@playwright/test';
 import { safeScrollIntoView } from '../base';
 
-test.describe('WB Components & Behaviors', () => {
+test.describe('WB Behaviors & Behaviors', () => {
 
   test.beforeEach(async ({ page }) => {
     // Navigate to the behaviors demo page
@@ -23,7 +23,7 @@ test.describe('WB Components & Behaviors', () => {
     });
   });
 
-  test.describe('Feedback Components', () => {
+  test.describe('Feedback Behaviors', () => {
     test('Spinner renders', async ({ page }) => {
       const el = page.locator('x-spinner').first();
       await safeScrollIntoView(el);
@@ -59,7 +59,7 @@ test.describe('WB Components & Behaviors', () => {
     });
   });
 
-  test.describe('Layout Components', () => {
+  test.describe('Layout Behaviors', () => {
     test('Stack behaviour works', async ({ page }) => {
       const el = page.locator('[x-stack]').first();
       await expect(el).toBeVisible();
@@ -72,13 +72,13 @@ test.describe('WB Components & Behaviors', () => {
       await expect(el).toBeVisible();
     });
 
-    test('Grid component works', async ({ page }) => {
+    test('Grid behavior works', async ({ page }) => {
       const el = page.locator('x-grid').first();
       await safeScrollIntoView(el);
       await expect(el).toBeVisible();
     });
     
-    test('Masonry component works', async ({ page }) => {
+    test('Masonry behavior works', async ({ page }) => {
        const el = page.locator('[data-columns][style*="width: 100%"]').first(); // Masonry demo uses div with data-columns, explicitly checking implicit masonry or x-masonry if used
 
        // This relies on implicit behavior injection or just layout classes. 
@@ -106,7 +106,7 @@ test.describe('WB Components & Behaviors', () => {
     });
   });
   
-  test.describe('Navigation Components', () => {
+  test.describe('Navigation Behaviors', () => {
     test('Breadcrumb renders', async ({ page }) => {
       const el = page.locator('nav[x-breadcrumb]').first();
       await safeScrollIntoView(el);

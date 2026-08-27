@@ -3,16 +3,16 @@
 
 ## Overview
 
-WBServices is the central service registry and initialization pattern for all components in the wb-starter v3.0 architecture. It ensures every component uses Light DOM, composition (behavior functions applied to elements rather than a component class hierarchy), and ES Modules, while providing a unified way to register, initialize, and share services or logic across components.
+WBServices is the central service registry and initialization pattern for all behaviors in the wb-starter v3.0 architecture. It ensures every behavior uses Light DOM, composition (behavior functions applied to elements rather than a behavior class hierarchy), and ES Modules, while providing a unified way to register, initialize, and share services or logic across behaviors.
 
 ---
 
 ## Key Principles
 
-- **Central Registry:** All components and services are registered via `WBServices.register()`.
-- **No Shadow DOM:** Components render in Light DOM for full CSS cascade and accessibility.
-- **Composition, Not Inheritance:** A component's capability comes from a behavior function that decorates the element in place. There is no component base class to subclass, and no shared logic is reached through a parent class — reuse happens through exported helper functions, semantic HTML, and design tokens.
-- **Schema-Driven:** Each component has a JSON schema describing its properties and structure.
+- **Central Registry:** All behaviors and services are registered via `WBServices.register()`.
+- **No Shadow DOM:** Behaviors render in Light DOM for full CSS cascade and accessibility.
+- **Composition, Not Inheritance:** A behavior's capability comes from a behavior function that decorates the element in place. There is no behavior base class to subclass, and no shared logic is reached through a parent class — reuse happens through exported helper functions, semantic HTML, and design tokens.
+- **Schema-Driven:** Each behavior has a JSON schema describing its properties and structure.
 - **ES Modules Only:** All logic is imported/exported using ESM syntax.
 
 ---
@@ -20,21 +20,21 @@ WBServices is the central service registry and initialization pattern for all co
 ## How It Works
 
 1. **Registration:**
-   - Each component or service calls `WBServices.register(name, definition)`.
-   - This adds the component/service to the central registry.
+   - Each behavior or service calls `WBServices.register(name, definition)`.
+   - This adds the behavior/service to the central registry.
 
 2. **Initialization:**
    - On page load, the bootstrapper scans the DOM for `<wb-*>` tags.
    - For each, it loads the schema, logic, and styles, then registers the custom element if not already present.
    - Shared services (e.g., event bus, theme manager) are also registered and injected as needed.
 
-3. **Usage in Components:**
-   - Components can access shared services via the registry, e.g. `WBServices.get('theme')`.
-   - This enables dependency injection and loose coupling between components.
+3. **Usage in Behaviors:**
+   - Behaviors can access shared services via the registry, e.g. `WBServices.get('theme')`.
+   - This enables dependency injection and loose coupling between behaviors.
 
 ---
 
-## Example: Registering a Component
+## Example: Registering a Behavior
 
 ```js
 import { WBServices } from '../core/x-services.js';
@@ -55,7 +55,7 @@ class ThemeService {
 WBServices.register('theme', new ThemeService());
 ```
 
-## Example: Accessing a Service in a Component
+## Example: Accessing a Service in a Behavior
 
 ```js
 const theme = WBServices.get('theme');
@@ -66,61 +66,61 @@ theme.setTheme('dark');
 
 ## Why WBServices?
 
-- **Consistency:** All components/services use the same registration and lookup pattern.
+- **Consistency:** All behaviors/services use the same registration and lookup pattern.
 - **Testability:** Services can be mocked or swapped for testing.
-- **Extensibility:** New services can be added without modifying existing components.
+- **Extensibility:** New services can be added without modifying existing behaviors.
 - **No Global Pollution:** Everything is managed through the registry, not global variables.
 
 ---
 
 ## Best Practices
 
-- Always register components/services via `WBServices.register()`.
-- Never introduce a component base class — compose behaviors onto the element instead, and factor shared logic into exported helper functions.
-- Use schemas for all component properties.
+- Always register behaviors/services via `WBServices.register()`.
+- Never introduce a behavior base class — compose behaviors onto the element instead, and factor shared logic into exported helper functions.
+- Use schemas for all behavior properties.
 - Prefer dependency injection via WBServices over direct imports for shared logic.
 
 ---
 
 ## References
 - See also: `docs/claude/TIER1-LAWS.md` (Law #2)
-- Architecture overview: `docs/components/README.md`
+- Architecture overview: `docs/behaviors/README.md`
 - Example usage: `src/core/x-services.js`, `src/wb-viewmodels/`
 
 ---
 
 ## Artifacts Generated by Registration
 
-When you register a component or service via `WBServices.register()`, the following artifacts are generated or updated (in memory):
+When you register a behavior or service via `WBServices.register()`, the following artifacts are generated or updated (in memory):
 
 1. **Registry Entry:**
-   - The component or service is added to the central WBServices registry (an in-memory JS object or Map).
+   - The behavior or service is added to the central WBServices registry (an in-memory JS object or Map).
    - Includes the name (e.g., 'x-card', 'theme') and the class or instance.
 
-2. **Custom Element Definition (for components):**
-   - For components, `customElements.define()` is called for the `<wb-*>` tag.
+2. **Custom Element Definition (for behaviors):**
+   - For behaviors, `customElements.define()` is called for the `<wb-*>` tag.
    - The browser recognizes the tag as a valid custom element.
 
-3. **Schema Association (for components):**
-   - The component’s JSON schema (from `src/wb-models/`) is linked to the registry entry for property validation and documentation.
+3. **Schema Association (for behaviors):**
+   - The behavior’s JSON schema (from `src/wb-models/`) is linked to the registry entry for property validation and documentation.
 
 4. **Service Instance (for services):**
-   - For services, the singleton instance is stored and made available to all components via `WBServices.get()`.
+   - For services, the singleton instance is stored and made available to all behaviors via `WBServices.get()`.
 
 5. **DevTools/Debug Info:**
-   - The registry can be inspected at runtime for debugging, showing all registered components and services.
+   - The registry can be inspected at runtime for debugging, showing all registered behaviors and services.
 
-**Note:** No files are written to disk at runtime—these artifacts exist in memory for the duration of the app session. The registry enables dynamic lookup, dependency injection, and ensures all components/services are discoverable and testable.
+**Note:** No files are written to disk at runtime—these artifacts exist in memory for the duration of the app session. The registry enables dynamic lookup, dependency injection, and ensures all behaviors/services are discoverable and testable.
 
 ### Example: Registry Entry
 
-When you register a component or service, the registry entry might look like this (conceptually):
+When you register a behavior or service, the registry entry might look like this (conceptually):
 
 ```js
 // After WBServices.register('x-card', WbCard)
 WBServices._registry = {
    'x-card': WbCard,
-   // ...other components/services
+   // ...other behaviors/services
 }
 
 // After WBServices.register('theme', new ThemeService())
@@ -145,18 +145,18 @@ You only need to include `wb-bootstrap.js` once in your HTML, regardless of how 
 
 - Runs the bootstrap logic a single time (e.g., `WB.init()`)
 - Scans the entire DOM for all `<wb-*>` elements and `x-*` attributes in one pass
-- Registers and initializes every component and behavior found
+- Registers and initializes every behavior and behavior found
 
 This means:
 - The scan and registration process happens just once, right after the script loads
-- You do NOT need to include or call the bootstrapper for each component
+- You do NOT need to include or call the bootstrapper for each behavior
 - If new elements are added dynamically, MutationObserver logic in the bootstrapper will detect and initialize them automatically
 
 ---
 
 ## x-Behaviors: What They Are and How They Work
 
-**x-behaviors** are attribute-based enhancements that add logic, interactivity, or effects to any element (including <wb-*> components and standard HTML tags) without requiring custom elements or a class hierarchy.
+**x-behaviors** are attribute-based enhancements that add logic, interactivity, or effects to any element (including <wb-*> behaviors and standard HTML tags) without requiring custom elements or a class hierarchy.
 
 ### What Are x-Behaviors?
 - Declared as attributes like `x-ripple`, `x-tooltip`, `x-badge`, etc.
@@ -187,5 +187,5 @@ This means:
 
 ### Key Points
 - x-behaviors are additive: you can use multiple on the same element.
-- They work on any element, not just x-components.
+- They work on any element, not just x-behaviors.
 - Behaviors are pure composition: no class hierarchy and no custom element registration is required.

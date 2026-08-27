@@ -1,6 +1,6 @@
-# Article Component
+# Article Behavior
 
-Semantic article component for blog posts, news, and documentation pages.
+Semantic article behavior for blog posts, news, and documentation pages.
 
 Applies to `<article>`, and to any element carrying `x-article`.
 

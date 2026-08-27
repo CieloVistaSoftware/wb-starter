@@ -24,7 +24,7 @@ test.describe('mdhtml() autoLiveRender option', () => {
     '```\n' +
     '\nMore text.';
 
-  test('default (docs) behavior: a real component example gets promoted to a live x-demo', async ({ page }) => {
+  test('default (docs) behavior: a real behavior example gets promoted to a live x-demo', async ({ page }) => {
     await page.goto('/demos/test-harness.html');
     const result = await page.evaluate(async (md) => {
       const { mdhtml } = await import('/src/wb-viewmodels/mdhtml.js');

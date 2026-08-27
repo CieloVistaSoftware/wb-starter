@@ -365,7 +365,7 @@ function generatePlaywrightTest(tests) {
 
 import { test, expect } from '@playwright/test';
 
-test.describe('${behavior} component', () => {
+test.describe('${behavior} behavior', () => {
   test.beforeEach(async ({ page }) => {
     await page.goto('/src/core/mvvm-test.html');
     await page.waitForSelector('[data-testid="schema-ready"]', { timeout: 5000 }).catch(() => {});
@@ -454,7 +454,7 @@ function main() {
   console.log('═══════════════════════════════════════════════════════════\n');
   
   for (const [behavior, schema] of Object.entries(schemas)) {
-    // Skip base schemas and non-component schemas
+    // Skip base schemas and non-behavior schemas
     if (schema.isBase || !schema.$containment && !schema.properties) {
       continue;
     }

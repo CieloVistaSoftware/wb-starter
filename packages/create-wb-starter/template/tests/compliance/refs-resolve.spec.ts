@@ -35,7 +35,7 @@ import { fileURLToPath } from 'url';
  *   - A `#fragment`-only href (same-page anchor) is NOT statically
  *     verified as a hard failure -- many target ids are generated at
  *     RUNTIME (mdhtml.js's heading-id generation from markdown headings
- *     doesn't exist in the raw .md source; JS-built component internals
+ *     doesn't exist in the raw .md source; JS-built behavior internals
  *     add ids after upgrade) and a static text scan would produce a wall
  *     of false positives. It's still worth surfacing as a signal, so
  *     fragment-only hrefs with no statically-findable id/name are reported
@@ -219,7 +219,7 @@ test.describe('Links resolve to real files (#refs-render-properly audit)', () =>
           continue;
         }
 
-        // Query strings on a relative path (e.g. "components.html?tab=x")
+        // Query strings on a relative path (e.g. "behaviors.html?tab=x")
         // don't change which FILE it targets -- strip before resolving.
         const pathOnly = pathPart.split('?')[0];
         if (!pathOnly) continue;

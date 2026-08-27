@@ -34,13 +34,13 @@ interface SpacingViolation {
 test.describe('Stock Market Indicator Spacing Compliance', () => {
   
   test('all text and images have minimum 1rem left spacing', async ({ page }) => {
-    // Find all stock indicator demo/component pages
+    // Find all stock indicator demo/behavior pages
     const indicatorPages = [
       '/demos/stock.html',
       '/demos/ticker.html', 
       '/demos/market.html',
       '/public/stock-demo.html',
-      '/?page=components&filter=stock',
+      '/?page=behaviors&filter=stock',
     ];
     
     const violations: SpacingViolation[] = [];
@@ -206,7 +206,7 @@ test.describe('Stock Market Indicator Spacing Compliance', () => {
     // Check the CSS file directly for proper defaults
     const cssFiles = [
       'src/styles/site.css',
-      'src/styles/components.css',
+      'src/styles/behaviors.css',
       'src/behaviors/css/stock.css',
       'src/behaviors/css/ticker.css',
       'src/behaviors/css/market.css',
@@ -264,7 +264,7 @@ test.describe('Stock Market Indicator Spacing Compliance', () => {
   });
 });
 
-test.describe('Stock Indicator Spacing - Live Component Check', () => {
+test.describe('Stock Indicator Spacing - Live Behavior Check', () => {
   
   test('dynamically created stock indicators have proper spacing', async ({ page }) => {
     // Create a test page with stock indicators

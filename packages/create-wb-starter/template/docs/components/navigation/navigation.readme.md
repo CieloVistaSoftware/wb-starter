@@ -1,12 +1,12 @@
-# Navigation Components Documentation
+# Navigation Behaviors Documentation
 [Edit this file](./navigation.readme.md)
 
 ## Overview
-WB-Starter provides accessible navigation components using semantic HTML elements. All navigation components follow ARIA standards and support keyboard navigation.
+WB-Starter provides accessible navigation behaviors using semantic HTML elements. All navigation behaviors follow ARIA standards and support keyboard navigation.
 
 ---
 
-## Tabs Component
+## Tabs Behavior
 
 Tabbed content interface with keyboard navigation and ARIA support.
 
@@ -58,7 +58,7 @@ tabs.addEventListener('wb:tabs:change', (event) => {
 
 ---
 
-## Accordion Component
+## Accordion Behavior
 
 Collapsible content sections with smooth animations.
 
@@ -92,7 +92,7 @@ Collapsible content sections with smooth animations.
 
 ---
 
-## Breadcrumb Component
+## Breadcrumb Behavior
 
 Navigation breadcrumb trail with semantic markup.
 
@@ -116,14 +116,14 @@ Navigation breadcrumb trail with semantic markup.
 <div x-breadcrumb separator=">">
   <li href="/">Home</li>
   <li href="/docs">Documentation</li>
-  <li href="/docs/components">Components</li>
+  <li href="/docs/behaviors">Behaviors</li>
   <li>Breadcrumb</li>
 </div>
 ```
 
 ---
 
-## Menu Component
+## Menu Behavior
 
 Navigation menu with optional submenus.
 
@@ -160,7 +160,7 @@ Navigation menu with optional submenus.
 
 ---
 
-## Pagination Component
+## Pagination Behavior
 
 Page navigation with customizable display options.
 
@@ -216,7 +216,7 @@ pagination.addEventListener('wb:pagination:change', (event) => {
 
 ---
 
-## Stepper Component
+## Stepper Behavior
 
 Multi-step progress indicator for wizards and processes.
 
@@ -258,7 +258,7 @@ Multi-step progress indicator for wizards and processes.
 
 ---
 
-## Steps Component
+## Steps Behavior
 
 Simple numbered step indicator.
 
@@ -288,7 +288,7 @@ Simple numbered step indicator.
 
 ---
 
-## Link Component
+## Link Behavior
 
 Smooth scroll anchor link with offset support.
 
@@ -315,7 +315,7 @@ Smooth scroll anchor link with offset support.
 
 ---
 
-## Back to Top Component
+## Back to Top Behavior
 
 Scroll to top button that appears after scrolling.
 
@@ -346,9 +346,9 @@ Scroll to top button that appears after scrolling.
 
 ## Events
 
-Navigation components emit events for interaction:
+Navigation behaviors emit events for interaction:
 
-| Event | Component | Description | Detail |
+| Event | Behavior | Description | Detail |
 |-------|-----------|-------------|--------|
 | `wb:tabs:change` | Tabs | Tab selection changed | `{ index, tab }` |
 | `wb:accordion:toggle` | Accordion | Section opened/closed | `{ index, open }` |
@@ -360,7 +360,7 @@ Navigation components emit events for interaction:
 
 ## Keyboard Navigation
 
-All navigation components support comprehensive keyboard navigation:
+All navigation behaviors support comprehensive keyboard navigation:
 
 ### Tabs
 | Key | Action |
@@ -390,7 +390,7 @@ All navigation components support comprehensive keyboard navigation:
 
 ## Accessibility
 
-Navigation components include comprehensive accessibility features:
+Navigation behaviors include comprehensive accessibility features:
 
 - **Semantic HTML**: Proper use of `<nav>`, `<ul>`, `<ol>`, `<li>` elements
 - **ARIA Support**: `role`, `aria-selected`, `aria-expanded`, `aria-current` attributes
@@ -402,7 +402,7 @@ Navigation components include comprehensive accessibility features:
 
 ## Styling
 
-Navigation components use CSS custom properties for theming:
+Navigation behaviors use CSS custom properties for theming:
 
 ```css
 :root {
@@ -440,7 +440,7 @@ Navigation components use CSS custom properties for theming:
 ---
 
 ## Implementation
-- **Components**: Located in `src/wb-viewmodels/` (tabs.js, accordion.js, menu.js, etc.)
-- **Styles**: [src/styles/components/navigation.css](../../../src/styles/behaviors/navbar.css)
-- **Schemas**: Navigation component schemas in `src/wb-models/`
+- **Behaviors**: Located in `src/wb-viewmodels/` (tabs.js, accordion.js, menu.js, etc.)
+- **Styles**: [src/styles/behaviors/navigation.css](../../../src/styles/behaviors/navbar.css)
+- **Schemas**: Navigation behavior schemas in `src/wb-models/`
 - **Tests**: Navigation tests in `tests/behaviors/ui/navigation.spec.ts`

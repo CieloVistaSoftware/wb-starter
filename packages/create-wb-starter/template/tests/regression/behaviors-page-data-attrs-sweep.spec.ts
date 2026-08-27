@@ -5,7 +5,7 @@ import { test, expect } from '@playwright/test';
  * demo elements (masked inputs, stepper, alert dismiss, badge pill, modal,
  * tooltip, popover, confirm/prompt, breadcrumb, pagination, steps, timeline,
  * gallery, slidein, copy, share, relativetime, truncate) -- a Tier-1 Law 11
- * violation ("No data-* Attributes on wb-* Components", docs/claude/
+ * violation ("No data-* Attributes on wb-* Behaviors", docs/claude/
  * TIER1-LAWS.md). Every one of these behavior handlers only reads the PLAIN
  * attribute name (a few also tolerate the specific `data-` spelling as a
  * compat shim, most do not) -- so each demo silently rendered with defaults

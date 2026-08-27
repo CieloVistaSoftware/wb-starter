@@ -1,7 +1,7 @@
 /**
  * Slider Behavior
  * -----------------------------------------------------------------------------
- * A slider component for selecting a value from a range.
+ * A slider behavior for selecting a value from a range.
  * 
  * Custom Tag: <div x-slider>
  * -----------------------------------------------------------------------------

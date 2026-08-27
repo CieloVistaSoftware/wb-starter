@@ -81,7 +81,7 @@
     "br"
   ],
   "wbComponents": {
-    "description": "WB components that extend address",
+    "description": "WB behaviors that extend address",
     "list": [
       "cardportfolio",
       "cardprofile"

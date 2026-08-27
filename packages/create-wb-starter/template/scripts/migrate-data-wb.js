@@ -21,7 +21,7 @@ const args = process.argv.slice(2);
 const DRY_RUN = args.includes('--dry-run');
 const FILE_FILTER = args.find(a => a.startsWith('--file='))?.split('=')[1];
 
-// Components that become <wb-*> custom elements
+// Behaviors that become <wb-*> custom elements
 const COMPONENT_MAP = {
   'card': 'x-card',
   'cardimage': 'x-cardimage',
@@ -186,7 +186,7 @@ function processFile(filePath) {
   let content = fs.readFileSync(fullPath, 'utf-8');
   let modified = false;
   
-  // Convert components
+  // Convert behaviors
   for (const [behavior, tagName] of Object.entries(COMPONENT_MAP)) {
     if (content.includes(``)) {
       content = convertToCustomElement(content, behavior, tagName);
@@ -257,7 +257,7 @@ function migrate() {
   console.log('='.repeat(60));
   console.log(`Files processed: ${stats.filesProcessed}`);
   console.log(`Files modified: ${stats.filesModified}`);
-  console.log(`Components converted: ${stats.componentsConverted}`);
+  console.log(`Behaviors converted: ${stats.componentsConverted}`);
   console.log(`Behaviors converted: ${stats.behaviorsConverted}`);
   console.log(`Properties renamed: ${stats.propertiesRenamed}`);
   

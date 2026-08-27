@@ -24,7 +24,7 @@ Supports every [card property](./card.md) — that shared structure and CSS are 
 | `avatar` | string | `""` | Author avatar URL |
 | `rating` | number | `""` | Star rating (1-5) |
 
-Wrapped in `<div x-demo>`, so the live component renders below with its source shown underneath:
+Wrapped in `<div x-demo>`, so the live behavior renders below with its source shown underneath:
 
 <div x-demo>
 <div x-cardtestimonial

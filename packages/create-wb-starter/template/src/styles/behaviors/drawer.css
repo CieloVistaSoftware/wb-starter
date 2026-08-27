@@ -166,7 +166,7 @@
 
 /* variant="default" and variant="overlay" are intentionally identical
    interactively (both use the dimming .x-drawer__backdrop above) --
-   docs/components/drawer.md documents no distinct treatment for "default",
+   docs/behaviors/drawer.md documents no distinct treatment for "default",
    and drawer.schema.json's own declared property default IS "overlay", so
    "default" is treated as an explicit alias rather than inventing a third
    undocumented interaction. The x-drawer--default/x-drawer--overlay

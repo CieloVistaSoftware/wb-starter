@@ -4,7 +4,7 @@ import { test, expect } from '@playwright/test';
  * mdhtml.js originally read element.getAttribute('data-src') as a fallback
  * (added for issue #140 -- see tests/behaviors/doc-viewer.spec.ts, which
  * covers the doc-viewer.html page-level symptom of this exact bug). Commit
- * 8afed94 ("eager-scan root cause + widespread component/CSS/test-scope
+ * 8afed94 ("eager-scan root cause + widespread behavior/CSS/test-scope
  * bugs") deleted that fallback while removing what it believed were dead
  * `data-*` reads (#224: "zero data-* attributes anywhere") -- an audit that
  * only checked static HTML markup and missed that public/doc-viewer.html

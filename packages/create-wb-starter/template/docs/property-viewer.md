@@ -6,20 +6,20 @@ The **Property Viewer** refers to the dynamic right-hand panel in the WB-Starter
 
 ## Split View UX
 
-Instead of toggling between the Component Tree and Properties Panel, the default "Tree" view (🌳) now displays **both simultaneously**:
+Instead of toggling between the Behavior Tree and Properties Panel, the default "Tree" view (🌳) now displays **both simultaneously**:
 
-1.  **Top Section (Component Tree)**:
+1.  **Top Section (Behavior Tree)**:
     *   Occupies the upper 50% of the panel (flex-grow).
     *   Scrolls independently.
-    *   Shows the hierarchy of all components on the page.
+    *   Shows the hierarchy of all behaviors on the page.
     *   Allows for drag-and-drop reordering.
 
 2.  **Bottom Section (Properties Panel)**:
     *   Occupies the lower 50% of the panel.
     *   Scrolls independently.
     *   **Dynamic State**:
-        *   **Empty State**: Shows "Select a component" when nothing is selected.
-        *   **Active State**: Instantly populates with controls when a component is clicked in the Tree or Canvas.
+        *   **Empty State**: Shows "Select a behavior" when nothing is selected.
+        *   **Active State**: Instantly populates with controls when a behavior is clicked in the Tree or Canvas.
 
 ## Key Features
 
@@ -69,7 +69,7 @@ The rendering function manages the "subtitle" state to keep the UI clean:
 ```javascript
 function renderProps(w, scrollToProperty = null) {
   // ...
-  // Hide the "Select a component" subtitle when content is loaded
+  // Hide the "Select a behavior" subtitle when content is loaded
   const propsHeader = document.getElementById('propsHeader');
   if (propsHeader) {
      const subtitle = propsHeader.querySelector('span');

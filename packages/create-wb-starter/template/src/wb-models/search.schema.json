@@ -2,7 +2,7 @@
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "search.schema.json",
   "title": "Search",
-  "description": "Search input component with icon and debounced search events",
+  "description": "Search input behavior with icon and debounced search events",
   "schemaFor": "search",
   "baseClass": "x-search",
   "semanticElement": {

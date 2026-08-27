@@ -26,7 +26,7 @@ function getContextualName(variable, funcName, lineNum, occurrenceIndex, filePat
   const contextMap = {
     // Single letter variables - expand to descriptive
     'a': ['anchorEl', 'linkElement', 'anchorTag'],
-    'c': ['component', 'childComponent', 'containerComponent', 'configComponent', 'clonedComponent', 'currentComponent'],
+    'c': ['behavior', 'childComponent', 'containerComponent', 'configComponent', 'clonedComponent', 'currentComponent'],
     'w': ['wrapper', 'widgetWrapper', 'wrapperEl', 'workWrapper', 'windowWrapper', 'webWrapper', 'wrapperContainer'],
     'el': ['element', 'targetElement', 'sourceElement', 'clonedElement', 'selectedElement', 'activeElement', 'domElement', 'newElement'],
     

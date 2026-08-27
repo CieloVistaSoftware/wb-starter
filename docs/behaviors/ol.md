@@ -1,8 +1,8 @@
-# OL (Ordered List) Component Design & User Guide
+# OL (Ordered List) Behavior Design & User Guide
 
 ## 1. Design Philosophy
 
-The `ol` component transforms the standard ordered list into a versatile tool for displaying sequences. It goes beyond simple numbering to support complex visualizations like step-by-step guides and timelines, all while maintaining semantic HTML structure.
+The `ol` behavior transforms the standard ordered list into a versatile tool for displaying sequences. It goes beyond simple numbering to support complex visualizations like step-by-step guides and timelines, all while maintaining semantic HTML structure.
 
 ### Key Features
 - **Variants**: `default`, `stepped` (circular numbers), `timeline` (vertical line).
@@ -65,4 +65,4 @@ Visualizing a history or log.
 ```
 
 ## 4. Why It Works
-For the `stepped` and `timeline` variants, the component suppresses the default list styling (`list-style-type: none`) and uses CSS counters and pseudo-elements (`::before`) to draw the custom markers. This allows for complete styling control over the numbers/bullets, which is not possible with standard CSS list styles.
+For the `stepped` and `timeline` variants, the behavior suppresses the default list styling (`list-style-type: none`) and uses CSS counters and pseudo-elements (`::before`) to draw the custom markers. This allows for complete styling control over the numbers/bullets, which is not possible with standard CSS list styles.

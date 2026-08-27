@@ -23,7 +23,7 @@ test.describe('x-cardvideo Aspect Ratio Parity (#482)', () => {
     `;
 
     await page.addInitScript(() => {
-      // Ensure card components are loaded
+      // Ensure card behaviors are loaded
       if (!customElements.get('card-video')) {
         window.location.reload();
       }

@@ -189,7 +189,7 @@ export function input(element, options = {}) {
   // with attributes that only the field builder can honour is different --
   // it means the author asked for a label/helper/error/input-type and this
   // path cannot produce any of them. Silently returning is what made
-  // `<div x-input label="Repository">` look like a broken component instead
+  // `<div x-input label="Repository">` look like a broken behavior instead
   // of an unsupported host, and cost a bug report to discover.
   // #777: a native <input> IS the field. It has nothing to build, so telling
   // the author it "cannot build a field" is wrong -- and `input-type` on one

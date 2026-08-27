@@ -6,7 +6,7 @@
  * The earlier audit (audit-schema-vs-behavior.mjs) reported 45 schemas as
  * "no behavior source found", but that was a FILENAME-matching artifact --
  * several behaviors legitimately live in grouped files (alert in feedback.js,
- * and so on). Deleting on that basis would remove working components.
+ * and so on). Deleting on that basis would remove working behaviors.
  *
  * This checks for a real implementation by four independent routes:
  *   1. `export function <name>` anywhere under src/wb-viewmodels
@@ -44,7 +44,7 @@ const tagMap = fs.readFileSync(path.join(CORE, 'tag-map.js'), 'utf8');
 const lazy = fs.readFileSync(path.join(CORE, 'wb-lazy.js'), 'utf8');
 
 /**
- * Schemas that are NOT components and must never be treated as deletable:
+ * Schemas that are NOT behaviors and must never be treated as deletable:
  *
  *   demofile  -- the declared source of truth for
  *                tests/compliance/demo-file-validation.spec.ts, which cites it
@@ -58,7 +58,7 @@ const lazy = fs.readFileSync(path.join(CORE, 'wb-lazy.js'), 'utf8');
  * and still have a job.
  */
 
-/** Schema names that are not components at all. */
+/** Schema names that are not behaviors at all. */
 const NOT_COMPONENTS = new Set([
   'schema', 'views', 'search-index', 'home-page', 'behaviors',
   'x-behavior', 'x-collapse', 'x-copy', 'x-draggable', 'x-effects', 'x-enhancements',

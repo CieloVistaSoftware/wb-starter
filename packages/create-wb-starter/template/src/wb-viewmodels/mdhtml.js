@@ -405,9 +405,9 @@ export async function mdhtml(element, options = {}) {
     // 0. Auto-live-render eligible ```html fenced blocks. John: "all of
     // these examples must use x-demo" -- a doc's usage examples were
     // read-only syntax-highlighted TEXT (the x-pre/x-code marking below
-    // makes them look nice but never actually renders the component), so
+    // makes them look nice but never actually renders the behavior), so
     // a reader had to take the markup on faith instead of seeing it work.
-    // Only convert a block that's UNAMBIGUOUSLY real, renderable component
+    // Only convert a block that's UNAMBIGUOUSLY real, renderable behavior
     // markup -- language must be html, and it must contain at least one
     // element that's either a <wb-*> tag or carries an x-* attribute (the
     // two conventions WB.scan() actually dispatches on). A plain <div>/
@@ -441,7 +441,7 @@ export async function mdhtml(element, options = {}) {
         // V3-GUIDE.md's boilerplate <link href="src/styles/themes.css">
         // 404'd at /public/src/styles/themes.css. Document-level tags are
         // the unambiguous signal this is a whole-file illustration, not a
-        // component snippet.
+        // behavior snippet.
         if (/<\s*(!doctype|html|head|body)\b/i.test(raw)) return;
         let tpl;
         try {

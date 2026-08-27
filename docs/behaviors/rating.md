@@ -1,6 +1,6 @@
 # Rating
 
-Star rating component for displaying or collecting ratings
+Star rating behavior for displaying or collecting ratings
 
 ## Type — new capability
 

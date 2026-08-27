@@ -3,8 +3,8 @@ import { test, expect, request as pwRequest } from '@playwright/test';
 /**
  * #262: the `Docs: wb-<comp>` links under every <div x-demo> must WORK. The old
  * '?page=docs#wb-…' hrefs were dead on every surface (page-relative + no such
- * anchors). Now each link opens the component's REAL doc in the doc-viewer,
- * resolved from docs/manifest.json; components with no doc get NO link.
+ * anchors). Now each link opens the behavior's REAL doc in the doc-viewer,
+ * resolved from docs/manifest.json; behaviors with no doc get NO link.
  *
  * #388: cards no longer use the shared '.x-demo__links' line at all — each
  * card grid child gets its OWN link attached directly to it
@@ -45,8 +45,8 @@ async function assertAllResolve(hrefs: string[], baseURL: string | undefined) {
 }
 
 test.describe('x-demo Docs: links resolve to real docs (#262)', () => {
-  test('SPA components page: every Docs: link opens a real doc', async ({ page, baseURL }) => {
-    await page.goto('/?page=components', { waitUntil: 'domcontentloaded' });
+  test('SPA behaviors page: every Docs: link opens a real doc', async ({ page, baseURL }) => {
+    await page.goto('/?page=behaviors', { waitUntil: 'domcontentloaded' });
     const hrefs = await collectDocsLinks(page);
     await assertAllResolve(hrefs, baseURL);
   });

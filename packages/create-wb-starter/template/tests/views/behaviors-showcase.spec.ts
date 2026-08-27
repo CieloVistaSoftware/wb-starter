@@ -1,7 +1,7 @@
 /**
  * WB Behaviors Showcase - Comprehensive Tests
  * ============================================
- * Tests every section, component, and code example on behaviors-showcase.html
+ * Tests every section, behavior, and code example on behaviors-showcase.html
  */
 
 import { test, expect, Page } from '@playwright/test';
@@ -11,7 +11,7 @@ const BEHAVIORS_URL = '/?page=behaviors';
 // Helper: Wait for WB to initialize
 async function waitForWB(page: Page) {
   await page.waitForFunction(() => (window as any).WB, { timeout: 15000 });
-  await page.waitForTimeout(1000); // Give components time to render
+  await page.waitForTimeout(1000); // Give behaviors time to render
 }
 
 // ═══════════════════════════════════════════════════════════════════════════
@@ -192,7 +192,7 @@ test.describe('Selection Section', () => {
     await expect(select).toBeVisible();
   });
 
-  test('rating components render', async ({ page }) => {
+  test('rating behaviors render', async ({ page }) => {
     const ratings = page.locator('#selection [x-rating]');
     expect(await ratings.count()).toBeGreaterThanOrEqual(3);
   });
@@ -391,7 +391,7 @@ test.describe('Navigation Section', () => {
     await waitForWB(page);
   });
 
-  test('tabs component renders with content', async ({ page }) => {
+  test('tabs behavior renders with content', async ({ page }) => {
     const tabs = page.locator('#navigation [x-tabs]').first();
     await expect(tabs).toBeVisible();
     
@@ -403,7 +403,7 @@ test.describe('Navigation Section', () => {
     expect(await panels.count()).toBeGreaterThanOrEqual(2);
   });
 
-  test('accordion component renders with sections', async ({ page }) => {
+  test('accordion behavior renders with sections', async ({ page }) => {
     const accordion = page.locator('#navigation x-accordion').first();
     await expect(accordion).toBeVisible();
     

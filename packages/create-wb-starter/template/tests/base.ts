@@ -32,7 +32,7 @@ export const PATHS = {
 
 export const DATA_FILES = {
   fixes: path.join(PATHS.data, 'fixes.json'),
-  components: path.join(PATHS.data, 'components.json'),
+  behaviors: path.join(PATHS.data, 'behaviors.json'),
   propertyConfig: path.join(PATHS.data, 'propertyconfig.json'),
   behaviorInventory: path.join(PATHS.data, 'behavior-inventory.json'),
 } as const;
@@ -46,10 +46,10 @@ export const DATA_FILES = {
 //
 // x-overlay-ext is a wholly separate, untracked Chrome extension (its own
 // manifest.json, .crx/.pem signing files) that happens to live under src/ --
-// not part of the wb-starter component library, so its CSS/HTML isn't
+// not part of the wb-starter behavior library, so its CSS/HTML isn't
 // subject to this project's theming/OOP conventions. Confirmed live:
 // css-oop-compliance flagged its popup CSS for hardcoded colors that are
-// legitimate there (a browser-extension UI, not a themed component).
+// legitimate there (a browser-extension UI, not a themed behavior).
 //
 // packages/create-wb-starter/template (#543) is a machine-generated,
 // byte-for-byte copy of src/ (and pages/, demos/, etc.) produced by
@@ -237,15 +237,15 @@ export function loadSchema(filename: string): Schema | null {
 }
 
 /**
- * Get all component schemas as a Map
+ * Get all behavior schemas as a Map
  */
 export function getComponentSchemas(): Map<string, Schema> {
   const schemas = new Map<string, Schema>();
   for (const file of getSchemaFiles()) {
     const schema = loadSchema(file) as any;
-    // Only true component schemas. Non-component tiers (behavior, page, base,
-    // definition) carry a schemaFor but must not be held to component-grade rules.
-    if (schema?.schemaFor && (!schema.schemaType || schema.schemaType === 'component')) {
+    // Only true behavior schemas. Non-behavior tiers (behavior, page, base,
+    // definition) carry a schemaFor but must not be held to behavior-grade rules.
+    if (schema?.schemaFor && (!schema.schemaType || schema.schemaType === 'behavior')) {
       schemas.set(file, schema);
     }
   }
@@ -296,7 +296,7 @@ export function stripDynamicContent(html: string): string {
   let result = html;
   // Remove <script>...</script> blocks
   result = result.replace(/<script[^>]*>[\s\S]*?<\/script>/gi, '');
-  // Remove content inside x-mdhtml elements or x-mdhtml components
+  // Remove content inside x-mdhtml elements or x-mdhtml behaviors
   result = result.replace(/x-mdhtml[^>]*>[\s\S]*?<\/div>/gi, '');
   result = result.replace(/<div x-mdhtml[^>]*>[\s\S]*?<\/x-mdhtml>/gi, '');
   // Remove markdown code blocks

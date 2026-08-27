@@ -2,7 +2,7 @@ import { readFlag } from '../core/read-attr.js';
 /**
  * Navigation Behaviors
  * -----------------------------------------------------------------------------
- * Provides responsive navigation components including navbars, sidebars,
+ * Provides responsive navigation behaviors including navbars, sidebars,
  * menus, breadcrumbs, and pagination steps.
  * 
  * Custom Tag: <div>
@@ -14,9 +14,9 @@ import { readFlag } from '../core/read-attr.js';
  * -----------------------------------------------------------------------------
  * 
  * FIXED: v2.0
- * - Menu component: Proper flex layout with correct spacing
- * - Navbar component: Better responsive design
- * - Sidebar component: Fixed item layout and hover states
+ * - Menu behavior: Proper flex layout with correct spacing
+ * - Navbar behavior: Better responsive design
+ * - Sidebar behavior: Fixed item layout and hover states
  */
 
 /**
@@ -425,7 +425,7 @@ export function menu(element, options = {}) {
  * Pagination
  * CSS: src/styles/behaviors/pagination.css
  * Uses <span role="button"> to avoid button auto-inject collision.
- * No x-ready, no component classes added by JS.
+ * No x-ready, no behavior classes added by JS.
  */
 export function pagination(element, options = {}) {
   const total = parseInt(options.total || element.getAttribute('total') || '0');
@@ -726,7 +726,7 @@ export function link(element, options = {}) {
       const targetId = href.slice(1);
       
       // Check if it's a page reference or element ID
-      const validPages = ['home', 'about', 'components', 'contact', 'docs', 'features', 'newpage'];
+      const validPages = ['home', 'about', 'behaviors', 'contact', 'docs', 'features', 'newpage'];
       const target = document.querySelector(href);
       
       if (target) {

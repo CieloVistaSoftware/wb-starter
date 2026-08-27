@@ -1,7 +1,7 @@
 /**
- * WBGrid Component
+ * WBGrid Behavior
  * -----------------------------------------------------------------------------
- * Grid layout component.
+ * Grid layout behavior.
  * 
  * Custom Tag: <div x-grid>
  * -----------------------------------------------------------------------------

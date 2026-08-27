@@ -291,23 +291,23 @@
     </div>
     <div id="fixviewer-div-12" class="controls">
       <div id="fixviewer-div-search">
-        <input type="text" id="search-input" placeholder="Search fixes..." title="Search fixes by ID, Issue, Component, or Error Signature." style="min-width: 200px;">
+        <input type="text" id="search-input" placeholder="Search fixes..." title="Search fixes by ID, Issue, Behavior, or Error Signature." style="min-width: 200px;">
       </div>
       <div id="fixviewer-div-13">
         <label id="fixviewer-label-14" for="sort-by" style="font-size: 0.75rem; color: var(--text-muted); margin-right: 0.5rem;">Sort by:</label>
         <select id="sort-by" title="Change the order of fixes. Selection resets Group and Status filters.">
           <option id="fixviewer-option-15" value="date-desc">Date (Newest)</option>
           <option id="fixviewer-option-16" value="date-asc">Date (Oldest)</option>
-          <option id="fixviewer-option-17" value="component">Component</option>
+          <option id="fixviewer-option-17" value="behavior">Behavior</option>
           <option id="fixviewer-option-18" value="status">Status</option>
           <option id="fixviewer-option-19" value="id">Error ID</option>
         </select>
       </div>
       <div id="fixviewer-div-20">
         <label id="fixviewer-label-21" for="group-by" style="font-size: 0.75rem; color: var(--text-muted); margin-right: 0.5rem;">Group by:</label>
-        <select id="group-by" title="Group fixes by Component, Status, or Date. Selection resets Sort and Status filters.">
+        <select id="group-by" title="Group fixes by Behavior, Status, or Date. Selection resets Sort and Status filters.">
           <option id="fixviewer-option-22" value="none">None</option>
-          <option id="fixviewer-option-23" value="component">Component</option>
+          <option id="fixviewer-option-23" value="behavior">Behavior</option>
           <option id="fixviewer-option-24" value="status">Status</option>
           <option id="fixviewer-option-25" value="date">Date</option>
         </select>
@@ -397,8 +397,8 @@
         case 'date-desc':
         case 'date-asc':
           return new Date(fix.date).getTime();
-        case 'component':
-          return (fix.component || '').toLowerCase();
+        case 'behavior':
+          return (fix.behavior || '').toLowerCase();
         case 'status':
           return (fix.status || 'INCOMPLETE').toLowerCase();
         case 'id':
@@ -428,7 +428,7 @@
       const groups = {};
       fixes.forEach(fix => {
         let key = 'Unknown';
-        if (groupType === 'component') key = fix.component || 'Unknown';
+        if (groupType === 'behavior') key = fix.behavior || 'Unknown';
         else if (groupType === 'status') {
           // Match logic in fix-card.js
           let effectiveStatus = fix.status || 'INCOMPLETE';
@@ -451,7 +451,7 @@
         const text = [
           fix.errorId,
           fix.issue,
-          fix.component,
+          fix.behavior,
           fix.errorSignature,
           fix.cause,
           fix.fix?.action,
@@ -468,7 +468,7 @@
       const lowerQuery = query.toLowerCase();
       const id = (fix.errorId || '').toLowerCase();
       const issue = (fix.issue || '').toLowerCase();
-      const component = (fix.component || '').toLowerCase();
+      const behavior = (fix.behavior || '').toLowerCase();
       
       // Exact ID match is highest
       if (id === lowerQuery) return 100;
@@ -480,8 +480,8 @@
       if (issue.startsWith(lowerQuery)) return 70;
       // Issue contains query
       if (issue.includes(lowerQuery)) return 60;
-      // Component match
-      if (component.includes(lowerQuery)) return 50;
+      // Behavior match
+      if (behavior.includes(lowerQuery)) return 50;
       
       return 10; // Found in other fields
     }
@@ -544,7 +544,7 @@
       // Sort group keys if needed (e.g. dates)
       const groupKeys = Object.keys(grouped).sort((a, b) => {
         if (groupType === 'date') return new Date(b) - new Date(a); // Newest dates first
-        if (groupType === 'component') {
+        if (groupType === 'behavior') {
           // Sort by count descending (most fixes first)
           const countDiff = grouped[b].length - grouped[a].length;
           if (countDiff !== 0) return countDiff;
@@ -610,8 +610,8 @@
            
            Let's look at the specific request: "wHEN STATUS IS SELECTED AND ANOTHER DROP DOWN FILTER IS PICKED RESET THE STATUS DROPDOWN"
            
-           Scenario A: Status is "Failed". User changes Group to "Component". Status should reset to "All"?
-           Scenario B: Group is "Component". User changes Status to "Failed". Group should reset to "None"?
+           Scenario A: Status is "Failed". User changes Group to "Behavior". Status should reset to "All"?
+           Scenario B: Group is "Behavior". User changes Status to "Failed". Group should reset to "None"?
            
            This sounds like they want to avoid complex intersectional logic or just want a clean slate.
            However, Sort is usually independent. Grouping and Filtering are often coupled.

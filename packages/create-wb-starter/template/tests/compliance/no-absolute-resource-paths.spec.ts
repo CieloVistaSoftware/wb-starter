@@ -8,7 +8,7 @@ import * as path from 'path';
  * The site is a GitHub PROJECT Pages deploy served under a sub-path (`/wb-starter/`).
  * Any `fetch('/src/…')`, `import '/src/…'`, `link.href = '/src/…'`, manifest icon
  * `"/assets/…"`, or registry `"/src/…"` resolves to the DOMAIN ROOT there and 404s —
- * which silently blanks schema components, view partials, page CSS, and icons.
+ * which silently blanks schema behaviors, view partials, page CSS, and icons.
  * Local dev serves at `/`, so absolute paths pass by luck — which is exactly why
  * no prior test caught it. This gate catches it in source, at any base.
  *

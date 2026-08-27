@@ -3,7 +3,7 @@ import { test, expect, Page } from '@playwright/test';
 /**
  * Standard §5 (#254) + §6 (#248): every `<div x-demo>` source panel is VERTICAL —
  * a multi-attribute element renders one attribute per line — and NEVER shows a
- * horizontal scrollbar (it wraps). Enforced on the components page, which has the
+ * horizontal scrollbar (it wraps). Enforced on the behaviors page, which has the
  * most x-demos; the fix is systemic in `src/wb-viewmodels/demo.js`.
  *
  * x-demo.js (#312) only builds the first few blocks eagerly and lazy-builds
@@ -36,7 +36,7 @@ async function scrollAllDemosIntoView(page: Page) {
 
 test.describe('x-demo source is vertical + never horizontally scrolls (#254, #248)', () => {
   test('§6 — no x-demo source panel horizontally scrolls', async ({ page }) => {
-    await page.goto('/?page=components', { waitUntil: 'domcontentloaded' });
+    await page.goto('/?page=behaviors', { waitUntil: 'domcontentloaded' });
     await expect
       .poll(() => page.locator('x-demo pre').count(), { timeout: 20000 })
       .toBeGreaterThan(0);
@@ -60,7 +60,7 @@ test.describe('x-demo source is vertical + never horizontally scrolls (#254, #24
   });
 
   test('§5 — a multi-attribute element renders one attribute per line', async ({ page }) => {
-    await page.goto('/?page=components', { waitUntil: 'domcontentloaded' });
+    await page.goto('/?page=behaviors', { waitUntil: 'domcontentloaded' });
     await scrollAllDemosIntoView(page);
     const pricingSrc = page
       .locator('x-demo pre code')
@@ -77,7 +77,7 @@ test.describe('x-demo source is vertical + never horizontally scrolls (#254, #24
   });
 
   test('§20 — rendered source never shows a worthless x-*="" (#261)', async ({ page }) => {
-    await page.goto('/?page=components', { waitUntil: 'domcontentloaded' });
+    await page.goto('/?page=behaviors', { waitUntil: 'domcontentloaded' });
     await scrollAllDemosIntoView(page);
     await expect
       .poll(() => page.locator('x-demo pre code').count(), { timeout: 20000 })

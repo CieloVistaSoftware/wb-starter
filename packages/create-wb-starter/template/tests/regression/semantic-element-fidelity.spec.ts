@@ -5,7 +5,7 @@ import { setupBehaviorTest, setupTestContainer } from '../base';
 
 /**
  * Every schema.json may declare `semanticElement.tagName` -- a promise that
- * the live component is a superset of that real native element (the way
+ * the live behavior is a superset of that real native element (the way
  * <select> must be a superset of <select>, not a replacement for it --
  * see #360). Nothing has ever enforced that promise: found live via a
  * systemic audit (docs/audits/HOST-CHILD-DISPATCH-AUDIT.md) after #360 and
@@ -19,7 +19,7 @@ import { setupBehaviorTest, setupTestContainer } from '../base';
  * select/table/dialog/details/textarea get real browser behavior (keyboard
  * handling, native pickers, form participation) that role="..." alone
  * cannot replicate. Generic div/span semanticElement declarations are
- * skipped: virtually every component nests a div/span somewhere, so
+ * skipped: virtually every behavior nests a div/span somewhere, so
  * checking for one is not a meaningful assertion.
  *
  * `button` and `progress` are deliberately NOT in this list even though
@@ -37,7 +37,7 @@ import { setupBehaviorTest, setupTestContainer } from '../base';
  */
 const STRICT_TAGS = new Set(['select', 'table', 'dialog', 'details', 'textarea']);
 
-// schemaFor -> tracking issue. Remove an entry only once the component is
+// schemaFor -> tracking issue. Remove an entry only once the behavior is
 // verified (via its own regression test) to actually deliver the tag.
 const KNOWN_VIOLATIONS: Record<string, string> = {
   dialog: 'declares tagName:"dialog" but the live element stays a custom tag with no showModal() -- flagged in HOST-CHILD-DISPATCH-AUDIT.md, fix pending maintainer go-ahead',

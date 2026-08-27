@@ -3,7 +3,7 @@
 
 ## Overview
 
-The **WB (Web Behavior)** system is a functional, progressive enhancement library that injects behaviors into native HTML elements. Unlike Web Components or class-based frameworks, WB uses **pure functions** that enhance existing DOM elements with additional capabilities.
+The **WB (Web Behavior)** system is a functional, progressive enhancement library that injects behaviors into native HTML elements. Unlike Behaviors or class-based frameworks, WB uses **pure functions** that enhance existing DOM elements with additional capabilities.
 
 ---
 
@@ -478,7 +478,7 @@ export function img(element, options = {}) {
 export default { img };
 ```
 
-### Key Components
+### Key Behaviors
 
 1. **Config Merging** - Combine options + data attributes
 2. **Element Enhancement** - Add classes, styles, listeners
@@ -913,7 +913,7 @@ export function button(element, options) {
 - **Testing Standard**: `docs/test-schema-standard.md`
 - **Semantic Standard**: `docs/semantic-standard.md`
 - **CSS Standards**: `docs/css-standards.md`
-- **Component Docs**: `docs/components/`
+- **Behavior Docs**: `docs/behaviors/`
 
 ---
 

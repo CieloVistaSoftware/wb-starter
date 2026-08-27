@@ -1,8 +1,8 @@
-# Range Component Design & User Guide
+# Range Behavior Design & User Guide
 
 ## 1. Design Philosophy
 
-The `range` component improves the `<input type="range">` slider by adding contextual information that is often missing: the current value and the min/max bounds. This makes the slider more usable for precise input without requiring custom JavaScript from the developer.
+The `range` behavior improves the `<input type="range">` slider by adding contextual information that is often missing: the current value and the min/max bounds. This makes the slider more usable for precise input without requiring custom JavaScript from the developer.
 
 ### Key Features
 - **Value Display**: Real-time update of the selected value.
@@ -60,4 +60,4 @@ A slider with currency formatting and bounds.
 ```
 
 ## 4. Why It Works
-The component wraps the input in a container and injects an `<output>` element for the value and `<span>` elements for the labels. It attaches an `input` event listener to the range slider to update the text content of the `<output>` element in real-time.
+The behavior wraps the input in a container and injects an `<output>` element for the value and `<span>` elements for the labels. It attaches an `input` event listener to the range slider to update the text content of the `<output>` element in real-time.

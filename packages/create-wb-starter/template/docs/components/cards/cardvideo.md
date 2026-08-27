@@ -25,7 +25,7 @@ Supports every [card property](./card.md) — that shared structure and CSS are 
 | `loop` | boolean | `false` | Loop playback |
 | `controls` | boolean | `true` | Show controls |
 
-Wrapped in `<div x-demo>`, so the live component renders below with its source shown underneath:
+Wrapped in `<div x-demo>`, so the live behavior renders below with its source shown underneath:
 
 <div x-demo>
 <div x-cardvideo

@@ -1,7 +1,7 @@
 import { test, expect, Page, Locator } from '@playwright/test';
 
 /**
- * docs/components/cards/cardhorizontal.md: John asked for unit tests on
+ * docs/behaviors/cards/cardhorizontal.md: John asked for unit tests on
  * every live demo rendered on this doc page
  * (public/doc-viewer.html?file=docs%2Fcomponents%2Fcards%2Fcardhorizontal.md).
  * mdhtml.js's auto-live-render promotes the doc's one hand-authored
@@ -33,14 +33,14 @@ import { test, expect, Page, Locator } from '@playwright/test';
  *    figure measured ~40% (the default) instead of 60%. Fixed to
  *    kebab-case (`image-position`, `image-width`) site-wide in this doc.
  *
- * Separately (not a docs issue -- a real component gap): cardhorizontal()'s
+ * Separately (not a docs issue -- a real behavior gap): cardhorizontal()'s
  * <img> had no 'error' handler at all, so a broken image src rendered as a
  * silent broken-image icon with zero console/error-log signal. See
  * tests/regression/x-cardhorizontal-image-error-on-broken-src.spec.ts for
  * the fix + dedicated regression coverage of that behavior.
  */
 
-const DOC_FILE = 'docs/components/cards/cardhorizontal.md';
+const DOC_FILE = 'docs/behaviors/cards/cardhorizontal.md';
 const DOC_URL = `/public/doc-viewer.html?file=${encodeURIComponent(DOC_FILE)}`;
 const EXPECTED_DEMO_COUNT = 5;
 
@@ -122,7 +122,7 @@ async function assertNoPageHorizontalScroll(page: Page, label: string): Promise<
   expect(overflow, `${label}: page must not have horizontal overflow`).toBe(false);
 }
 
-test.describe('docs/components/cards/cardhorizontal.md live demos (doc-viewer)', () => {
+test.describe('docs/behaviors/cards/cardhorizontal.md live demos (doc-viewer)', () => {
   test('demo 1 -- <div x-demo> block (Overview): Basic Horizontal Card renders correctly', async ({ page }) => {
     await gotoDoc(page);
     const label = 'demo 1 (x-demo block)';

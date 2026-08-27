@@ -64,7 +64,7 @@
     "figure"
   ],
   "wbComponents": {
-    "description": "WB components that extend blockquote",
+    "description": "WB behaviors that extend blockquote",
     "list": [
       "cardtestimonial"
     ]

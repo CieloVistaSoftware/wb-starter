@@ -127,13 +127,13 @@ test.describe('No element overlap (§22) — project-wide detection', () => {
             // deliberately sized/positioned to sit exactly under the visible
             // .x-switch__thumb/.x-switch__track it controls, same
             // "invisible input behind a styled visual" pattern countless
-            // custom checkbox/switch/radio components use. Confirmed live on
+            // custom checkbox/switch/radio behaviors use. Confirmed live on
             // demos/site/forms.html: isVisible()'s opacity===0 check misses
             // this element for its `disabled` demo instance specifically
             // (Chromium's own disabled-control rendering reports a non-zero
             // effective opacity there, no author CSS involved), so it still
             // reached the candidate set and got flagged as "overlapping"
-            // its own thumb -- the same element pair, on the SAME component,
+            // its own thumb -- the same element pair, on the SAME behavior,
             // that opacity:0 already correctly excludes for every OTHER
             // (non-disabled) switch on the page.
             'x-switch__input',
@@ -156,7 +156,7 @@ test.describe('No element overlap (§22) — project-wide detection', () => {
           // anchored to whitespace/string edges), not a plain substring
           // like every entry above -- unanchored, it would ALSO swallow
           // the unrelated x-card__overlay-content/-title/-subtitle classes
-          // from cardoverlay() (card.js's separate image-caption component,
+          // from cardoverlay() (card.js's separate image-caption behavior,
           // src/wb-viewmodels/card.js ~L2130-2168), whose text is real
           // visible content sitting on an image, not a decorative layer
           // behind other content -- those must stay checked.

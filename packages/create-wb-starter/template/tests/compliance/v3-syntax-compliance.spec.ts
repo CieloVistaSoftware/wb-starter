@@ -9,7 +9,7 @@
  * 3. `x-ripple` for behaviors avoids the data- prefix entirely
  * 
  * ✅ PRIMARY (v3.0):
- *   - <article> - Web component tags for components
+ *   - <article> - Web behavior tags for behaviors
  *   - x-ripple, x-draggable - Prefix for adding behaviors to elements
  * 
  * ⚠️ DEPRECATED:
@@ -67,12 +67,12 @@ function scanHtmlFile(filePath: string): SyntaxViolation[] {
     // Skip if in code block
     if (inCodeBlock) return;
     
-    // Check for data-wb="component" pattern (not data-wb="behavior behavior")
+    // Check for data-wb="behavior" pattern (not data-wb="behavior behavior")
     // This catches: data-wb="card", data-wb="button", etc.
     const dataWbMatch = line.match(/data-wb="(\w+)"/);
     if (dataWbMatch) {
       const value = dataWbMatch[1];
-      // Single word = likely a component that should be <wb-*>
+      // Single word = likely a behavior that should be <wb-*>
       if (!value.includes(' ')) {
         violations.push({
           file: filePath,
@@ -109,7 +109,7 @@ function scanDirectory(dir: string): SyntaxViolation[] {
 
 test.describe('v3.0 Syntax Compliance', () => {
   
-  test('pages/ uses <wb-*> tags instead of data-wb for components', () => {
+  test('pages/ uses <wb-*> tags instead of data-wb for behaviors', () => {
     const violations = scanDirectory(PAGES_DIR);
     
     if (violations.length > 0) {
@@ -126,7 +126,7 @@ test.describe('v3.0 Syntax Compliance', () => {
     expect(violations.length, `Found ${violations.length} data-wb usages that should be <wb-*> tags`).toBeLessThanOrEqual(200);
   });
   
-  test('demos/ uses <wb-*> tags instead of data-wb for components', () => {
+  test('demos/ uses <wb-*> tags instead of data-wb for behaviors', () => {
     const violations = scanDirectory(DEMOS_DIR);
     
     if (violations.length > 0) {
@@ -144,7 +144,7 @@ test.describe('v3.0 Syntax Compliance', () => {
     expect(violations.length).toBeLessThanOrEqual(300);
   });
   
-  test('public/ uses <wb-*> tags instead of data-wb for components', () => {
+  test('public/ uses <wb-*> tags instead of data-wb for behaviors', () => {
     const violations = scanDirectory(PUBLIC_DIR);
     
     if (violations.length > 0) {
@@ -160,19 +160,19 @@ test.describe('v3.0 Syntax Compliance', () => {
 
 test.describe('v3.0 Schema Format Compliance', () => {
   
-  // Helper: skip non-component schemas (definition schemas, base schemas, meta schemas)
+  // Helper: skip non-behavior schemas (definition schemas, base schemas, meta schemas)
   // Uses schemaType field — "definition" and "base" schemas don't have $view/$methods/$cssAPI
   function isComponentSchema(file: string, schemasDir: string): boolean {
     const schema = JSON.parse(fs.readFileSync(path.join(schemasDir, file), 'utf-8'));
     // Skip schemas with schemaType = "definition", "base", or "behavior" —
-    // these are meta/structural or attribute-modifiers, not DOM-building components.
+    // these are meta/structural or attribute-modifiers, not DOM-building behaviors.
     if (['definition', 'base', 'behavior'].includes(schema.schemaType)) return false;
     // Skip if it has a .demo field (demo-only schema)
     if (schema.demo) return false;
     return true;
   }
 
-  test('all component schemas have $view section', () => {
+  test('all behavior schemas have $view section', () => {
     const schemasDir = 'src/wb-models';
     const files = fs.readdirSync(schemasDir).filter(f => f.endsWith('.schema.json'));
     const missing: string[] = [];
@@ -188,7 +188,7 @@ test.describe('v3.0 Schema Format Compliance', () => {
     expect(missing, `Schemas missing $view: ${missing.join(', ')}`).toEqual([]);
   });
   
-  test('all component schemas have $methods section', () => {
+  test('all behavior schemas have $methods section', () => {
     const schemasDir = 'src/wb-models';
     const files = fs.readdirSync(schemasDir).filter(f => f.endsWith('.schema.json'));
     const missing: string[] = [];
@@ -204,7 +204,7 @@ test.describe('v3.0 Schema Format Compliance', () => {
     expect(missing, `Schemas missing $methods: ${missing.join(', ')}`).toEqual([]);
   });
   
-  test('all component schemas have $cssAPI section', () => {
+  test('all behavior schemas have $cssAPI section', () => {
     const schemasDir = 'src/wb-models';
     const files = fs.readdirSync(schemasDir).filter(f => f.endsWith('.schema.json'));
     const missing: string[] = [];

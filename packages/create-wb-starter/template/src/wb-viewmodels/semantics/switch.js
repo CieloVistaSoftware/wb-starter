@@ -1,5 +1,5 @@
 /**
- * Switch - Toggle switch component
+ * Switch - Toggle switch behavior
  * Helper Attribute: [x-behavior="switch"]
  *
  * Wires the schema-built <div x-switch> host: its inner <input> becomes a real
@@ -58,7 +58,7 @@ export function switchInput(element, options = {}) {
   // on those pages (confirmed live: <div x-switch size="lg" variant="success">
   // built correctly as input+track+thumb but with class="x-switch" only,
   // no x-switch--lg/--success). Reading and applying them here directly
-  // matches the pattern every other component in this file (card.js,
+  // matches the pattern every other behavior in this file (card.js,
   // badge(), progress()) already uses, and is idempotent alongside
   // schema-builder's own class application on pages where it DOES run.
   if (!isBareCheckbox) {

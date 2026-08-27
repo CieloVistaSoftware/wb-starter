@@ -224,9 +224,9 @@
     }
     import(siteRoot() + 'src/core/tag-map.js')
       .then(async (mod) => {
-        // #665: extensionMap, NOT elementMap. elementMap maps wb-* COMPONENT
+        // #665: extensionMap, NOT elementMap. elementMap maps wb-* BEHAVIOR
         // TAGS to behavior names (x-card, x-button, x-badge, ...), so
-        // prefixing its values with "x-" produced a list of components wearing
+        // prefixing its values with "x-" produced a list of behaviors wearing
         // behavior names -- x-card, x-button, x-cardbutton -- on a page titled
         // "WB Behaviors Showcase", while the ~105 real behaviors never
         // appeared at all. extensionMap is the actual x-* behavior registry:
@@ -240,7 +240,7 @@
         nativeMap = mod.nativeMap || {};
         // John: "do not include any as- behaviors" -- x-as-{name} is the
         // MORPHING form (x-as-card), which re-renders an element AS another
-        // component rather than adding behavior to it.
+        // behavior rather than adding behavior to it.
         //
         // And: "in cases where we fully inject into a semantic element like
         // audio we do not need to list the x-audio as it's autoinjected" --
@@ -914,7 +914,7 @@
       // this page goes through siteRoot() precisely because the page can be
       // served from a subpath, so this one sample was the only link that broke
       // off-root. target="_blank" keeps the reader's place in the gallery --
-      // a component demo that ejects you from the gallery reads as broken even
+      // a behavior demo that ejects you from the gallery reads as broken even
       // when the navigation itself succeeds.
       'button:variant:link': ` href="${siteRoot()}pages/docs.html" target="_blank"`,
     };

@@ -1,7 +1,7 @@
 // Copyright (c) CieloVista Software. All rights reserved.
 //
 // Codemod: convert deprecated `data-*` config attributes in demo HTML to plain
-// v3 attributes (drop the `data-` prefix). v3 components read plain attributes
+// v3 attributes (drop the `data-` prefix). v3 behaviors read plain attributes
 // (variant, size, tooltip, value-suffix, …), not `data-*`.
 //
 // Rules:

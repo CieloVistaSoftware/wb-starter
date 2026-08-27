@@ -1,7 +1,7 @@
-# Audio Component
+# Audio Behavior
 
 ## Overview
-The Audio component provides advanced audio playback and a 15-band graphic equalizer UI for user-controlled sound shaping. It is designed for integration into the builder and supports both basic and advanced audio features.
+The Audio behavior provides advanced audio playback and a 15-band graphic equalizer UI for user-controlled sound shaping. It is designed for integration into the builder and supports both basic and advanced audio features.
 
 ## Features
 - Audio playback (HTML5 audio)

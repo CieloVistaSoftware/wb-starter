@@ -111,7 +111,7 @@ export function dropdown(element, options = {}) {
       child.classList.add('x-dropdown__item');
       Object.assign(child.style, {
         // #707: the menu is sized to its content, so an option never needs to
-        // wrap -- and a wrapped label misrepresents the component.
+        // wrap -- and a wrapped label misrepresents the behavior.
         whiteSpace: 'nowrap',
         // #701: flex, not block -- an item can carry an avatar or icon next to
         // its label (the showcase example does), and block left the image and

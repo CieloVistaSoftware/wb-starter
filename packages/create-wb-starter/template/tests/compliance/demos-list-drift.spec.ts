@@ -55,7 +55,7 @@ test('pages/demos.html + demos/index.html match generate-demos-list.mjs output (
 });
 
 /**
- * The per-category "N components · M demos" line on each site-category card is
+ * The per-category "N behaviors · M demos" line on each site-category card is
  * DERIVED — generate-demos-list.mjs reads it out of data/site-generator-result.json,
  * which generate-site.mjs computes by counting the real demos it emitted. This
  * asserts no one has typed a stat into pages/demos.html by hand: every stat
@@ -63,11 +63,11 @@ test('pages/demos.html + demos/index.html match generate-demos-list.mjs output (
  */
 test('demos page stat counts come from data/site-generator-result.json, never hardcoded (#501)', () => {
   const html = fs.readFileSync(PAGE, 'utf8');
-  const onPage = [...html.matchAll(/(\d+) components · (\d+) demos/g)].map((m) => `${m[1]} components · ${m[2]} demos`);
+  const onPage = [...html.matchAll(/(\d+) behaviors · (\d+) demos/g)].map((m) => `${m[1]} behaviors · ${m[2]} demos`);
 
   const report = fs.existsSync(RESULT) ? JSON.parse(fs.readFileSync(RESULT, 'utf8')) : { pages: [] };
   const fromReport = new Set(
-    (report.pages ?? []).map((p: { componentCount: number; totalDemos: number }) => `${p.componentCount} components · ${p.totalDemos} demos`)
+    (report.pages ?? []).map((p: { componentCount: number; totalDemos: number }) => `${p.componentCount} behaviors · ${p.totalDemos} demos`)
   );
 
   const unbacked = onPage.filter((s) => !fromReport.has(s));
@@ -75,7 +75,7 @@ test('demos page stat counts come from data/site-generator-result.json, never ha
     unbacked,
     `pages/demos.html shows stat counts that data/site-generator-result.json does not back:\n  ${unbacked.join('\n  ')}\n` +
       `Stats must be generated, not typed. Rebuild the report with ` +
-      `\`node scripts/generate-site.mjs src/wb-models/pages/x-component-library.site.json\`, ` +
+      `\`node scripts/generate-site.mjs src/wb-models/pages/x-behavior-library.site.json\`, ` +
       `then \`node scripts/generate-demos-list.mjs\`.`
   ).toEqual([]);
 });

@@ -1,8 +1,8 @@
 import { test, expect } from '@playwright/test';
 
 /**
- * demos/multi-component-demo-generated.html's "Progress — All Enum Variants"
- * section (generated from src/wb-models/pages/multi-component-demo.page.json
+ * demos/multi-behavior-demo-generated.html's "Progress — All Enum Variants"
+ * section (generated from src/wb-models/pages/multi-behavior-demo.page.json
  * via scripts/compose-page.mjs) enumerated every `variant`/`size` value with
  * NO `value` attribute set -- x-progress defaults `value` to its schema
  * minimum (0), so every bar rendered at 0% width. A 0-width fill paints no
@@ -20,9 +20,9 @@ import { test, expect } from '@playwright/test';
  * itself.
  */
 
-test.describe('multi-component-demo-generated.html: progress enum sweep is actually visible', () => {
+test.describe('multi-behavior-demo-generated.html: progress enum sweep is actually visible', () => {
   test('every x-progress demo in the enum-variants section has a non-zero value/fill', async ({ page }) => {
-    await page.goto('/demos/multi-component-demo-generated.html', { waitUntil: 'domcontentloaded' });
+    await page.goto('/demos/multi-behavior-demo-generated.html', { waitUntil: 'domcontentloaded' });
 
     const heading = page.getByRole('heading', { name: /Progress — All Enum Variants/i });
     await expect(heading).toBeVisible({ timeout: 20000 });

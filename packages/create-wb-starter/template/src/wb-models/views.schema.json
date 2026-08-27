@@ -138,7 +138,7 @@
       "version": "1.0.0",
       "views": {
         "btn": {
-          "description": "Button component",
+          "description": "Button behavior",
           "template": "<button class=\"btn btn--{{variant || 'primary'}}\"><slot>{{body}}</slot></button>",
           "attributes": {
             "variant": {

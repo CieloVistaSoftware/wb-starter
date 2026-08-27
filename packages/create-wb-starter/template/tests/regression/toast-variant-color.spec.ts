@@ -2,7 +2,7 @@ import { test, expect } from '@playwright/test';
 
 /**
  * Regression: pages/behaviors.html, pages/newbehaviors.html,
- * pages/components.html, demos/buttons.html, demos/feedback-demo.html, and
+ * pages/behaviors.html, demos/buttons.html, demos/feedback-demo.html, and
  * demos/frameworks.html all triggered toasts via `type="success"` (or, in
  * frameworks.html's React-prop object, `'type': 'info'`) -- but
  * feedback.js's toast() never reads `type` at all. Its real, documented

@@ -1,8 +1,8 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "article.schema.json",
-  "title": "Article Component",
-  "description": "Semantic article component for blog posts, news, and documentation pages.",
+  "title": "Article Behavior",
+  "description": "Semantic article behavior for blog posts, news, and documentation pages.",
   "schemaFor": "article",
   "baseClass": "x-article",
   "semanticElement": {

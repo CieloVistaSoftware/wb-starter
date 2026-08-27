@@ -31,7 +31,7 @@ test.describe('x-cardexpandable actually shows more/less content on click', () =
   test('collapsed state clips content shorter than its natural height', async ({ page }) => {
     await setupTestContainer(
       page,
-      '<div x-demo columns="1"><div x-cardexpandable size="sm" title="FAQ" subtitle="Click to reveal" content="The card system uses a behavior-based architecture. Each variant is an independent component that composes the shared card structure and CSS — there is no base class to inherit from."></div></div>'
+      '<div x-demo columns="1"><div x-cardexpandable size="sm" title="FAQ" subtitle="Click to reveal" content="The card system uses a behavior-based architecture. Each variant is an independent behavior that composes the shared card structure and CSS — there is no base class to inherit from."></div></div>'
     );
 
     const content = page.locator('.x-card__expandable-content');
@@ -47,7 +47,7 @@ test.describe('x-cardexpandable actually shows more/less content on click', () =
   test('clicking the expand button visibly grows the content area', async ({ page }) => {
     await setupTestContainer(
       page,
-      '<div x-demo columns="1"><div x-cardexpandable size="sm" title="FAQ" subtitle="Click to reveal" content="The card system uses a behavior-based architecture. Each variant is an independent component that composes the shared card structure and CSS — there is no base class to inherit from."></div></div>'
+      '<div x-demo columns="1"><div x-cardexpandable size="sm" title="FAQ" subtitle="Click to reveal" content="The card system uses a behavior-based architecture. Each variant is an independent behavior that composes the shared card structure and CSS — there is no base class to inherit from."></div></div>'
     );
 
     const content = page.locator('.x-card__expandable-content');

@@ -7,7 +7,7 @@ Apply `x-typewriter` to any element.
 ## Usage
 
 ```html
-<p x-typewriter speed="45">Zero build. Real components. Light DOM only.</p>
+<p x-typewriter speed="45">Zero build. Real behaviors. Light DOM only.</p>
 ```
 
 ## Attributes

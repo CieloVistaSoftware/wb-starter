@@ -9,7 +9,7 @@ import { setupBehaviorTest, setupTestContainer } from '../base';
  * ['input']), but semantics/input.js has NO guard for which one it's
  * looking at (unlike switch.js/select.js/textarea.js) -- confirmed live:
  * dispatched on the host, it wraps the ENTIRE already-built <div x-input>
- * component in a second bogus wrapper div's worth of classes/inline styles
+ * behavior in a second bogus wrapper div's worth of classes/inline styles
  * applied directly to the host tag itself (x-input__field class, width/
  * flex/padding inline styles meant for a bare text input). Separately, the
  * $view's "input" node never bound placeholder/value/name/type at all, so

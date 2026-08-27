@@ -6,7 +6,7 @@ import { test, expect } from '@playwright/test';
  * HORIZONTAL SCROLLBARS UNLESS NECESSARY."
  *
  * Reported live via doc-viewer: every <table> example on
- * docs/components/semantics/table.md measured scrollWidth exceeding
+ * docs/behaviors/semantics/table.md measured scrollWidth exceeding
  * clientWidth by a consistent ~8px regardless of column count/content --
  * not real content-driven overflow (which would scale with content), a
  * fixed box-model/measurement gap instead. data.css's unconditional
@@ -17,8 +17,8 @@ import { test, expect } from '@playwright/test';
  * VISIBLE <table> on the page.
  */
 test.describe('x-table never shows an unnecessary horizontal scrollbar (#589)', () => {
-  test('docs/components/semantics/table.md: every visible <table> content fits its own box', async ({ page }) => {
-    await page.goto('/public/doc-viewer.html?file=' + encodeURIComponent('docs/components/semantics/table.md'), {
+  test('docs/behaviors/semantics/table.md: every visible <table> content fits its own box', async ({ page }) => {
+    await page.goto('/public/doc-viewer.html?file=' + encodeURIComponent('docs/behaviors/semantics/table.md'), {
       waitUntil: 'domcontentloaded',
     });
 

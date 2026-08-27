@@ -42,7 +42,7 @@
        .x-mdhtml itself can't close: an absolutely-positioned descendant
        whose containing block resolves to the *viewport* (e.g. a
        <div x-demo> per-instance doc-link badge -- demo.js's
-       attachInstanceDocLink -- attached to a wb-* component that isn't
+       attachInstanceDocLink -- attached to a wb-* behavior that isn't
        itself position:relative) lays out relative to the initial
        containing block, escaping every ancestor's overflow clipping,
        including .x-mdhtml's own. Confirmed live at 375px on
@@ -357,7 +357,7 @@
     // often what first brings the remaining lazy blocks within the 1200px
     // margin, so the page keeps growing for a beat right after landing,
     // stranding the user above the true bottom with no re-trigger (confirmed
-    // live on docs/components/cards/card.md: 10 <div x-demo> blocks, the last 5
+    // live on docs/behaviors/cards/card.md: 10 <div x-demo> blocks, the last 5
     // lazy — a single End press landed at the OLD pre-growth bottom every
     // time, exactly reproducing the filed report).
     //
@@ -478,7 +478,7 @@
           await WB.init({ scan: false, observe: false });
           await WB.scan(docEl);
         } catch (e) {
-          console.warn('[doc-viewer] live component render failed:', e);
+          console.warn('[doc-viewer] live behavior render failed:', e);
         }
       }
 
@@ -505,7 +505,7 @@
       // #466: everything an End-key press needs (docHasWbContent's <div x-demo>
       // upgrade + eager builds) has happened by this point — unblock
       // scrollToTrueBottom()'s contentReady() wait, unconditionally (even if
-      // the live-component render above failed, or this doc has none).
+      // the live-behavior render above failed, or this doc has none).
       resolveContentReady();
     });
     

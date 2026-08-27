@@ -6,7 +6,7 @@
   <title>Schema-First Architecture: A Deterministic Framework for AI-Driven Web Development</title>
   <meta name="description" content="A research paper on how Schema First Architecture solves AI hallucination in web development.">
   
-  <!-- Import project styles for functional components, but we will override heavily -->
+  <!-- Import project styles for functional behaviors, but we will override heavily -->
   <link rel="stylesheet" href="../../src/styles/themes.css">
   <link rel="stylesheet" href="../../src/styles/site.css">
   
@@ -230,7 +230,7 @@
     <div class="abstract-box">
       <span class="abstract-title">Abstract</span>
       <p style="text-indent: 0;">
-        Large Language Models (LLMs) have demonstrated remarkable capability in code generation, yet they suffer from a critical failure mode known as "hallucination." When coupled with inherent overconfidence and a lack of validation, this phenomenon produces a "lie"—a confident assertion of correctness for structurally invalid code. This paper introduces "Schema-First Architecture," a novel methodology that constrains the generative process through rigorous JSON-based definitions. By decoupling structure (Schema) from implementation (Behavior), we demonstrate a deterministic framework where AI agents can generate complex UI components with zero hallucination. We present the three pillars of this architecture—Site, Component, and Semantic Schemas—and provide empirical evidence of their efficacy in the WB Starter project.
+        Large Language Models (LLMs) have demonstrated remarkable capability in code generation, yet they suffer from a critical failure mode known as "hallucination." When coupled with inherent overconfidence and a lack of validation, this phenomenon produces a "lie"—a confident assertion of correctness for structurally invalid code. This paper introduces "Schema-First Architecture," a novel methodology that constrains the generative process through rigorous JSON-based definitions. By decoupling structure (Schema) from implementation (Behavior), we demonstrate a deterministic framework where AI agents can generate complex UI behaviors with zero hallucination. We present the three pillars of this architecture—Site, Behavior, and Semantic Schemas—and provide empirical evidence of their efficacy in the WB Starter project.
       </p>
     </div>
 
@@ -258,10 +258,10 @@
 
       <h3>2.1. The Site Schema</h3>
       <p>
-        The macroscopic structure of the application is defined not in code, but in data. The `site.json` file serves as the immutable source of truth for navigation, routing, and global configuration. This allows an AI to modify the entire site structure by manipulating a single JSON object, avoiding the complexities of file-system routing or component imports.
+        The macroscopic structure of the application is defined not in code, but in data. The `site.json` file serves as the immutable source of truth for navigation, routing, and global configuration. This allows an AI to modify the entire site structure by manipulating a single JSON object, avoiding the complexities of file-system routing or behavior imports.
       </p>
 
-      <h3>2.2. The Component Schema</h3>
+      <h3>2.2. The Behavior Schema</h3>
       <p>
         Every UI element is governed by a strict JSON schema defining its properties, allowed values, and accessibility requirements. This is the contract between the AI and the UI.
       </p>
@@ -277,7 +277,7 @@
     "requiredChildren": [".x-card__header"]
   }
 }</div>
-        <figcaption>Fig 1. A simplified Component Schema for a Card element.</figcaption>
+        <figcaption>Fig 1. A simplified Behavior Schema for a Card element.</figcaption>
       </figure>
 
       <h3>2.3. The Semantic Schema</h3>
@@ -299,18 +299,18 @@
         <div class="demo-box">
           <span class="demo-label">Live Interactive Figure 2: Schema-Driven Rendering</span>
           <div style="display: flex; flex-direction: column; gap: 1rem; align-items: center; justify-content: center; padding: 1rem; background: #f5f5f5; transform: scale(0.6); transform-origin: center;">
-            <!-- These are real working components -->
+            <!-- These are real working behaviors -->
             <button variant="primary" size="xs">Schema Valid</button>
             <button variant="outlined" size="xs">Schema Valid</button>
             <button class="btn-fake-hallucination" style="padding: 2px 6px; font-size: 0.7rem; border: 1px solid red; color: red; background: transparent;" x-toast type="error" message="Error: Schema Validation Failed. Missing required child '.x-card__header'.">Hallucination (Invalid)</button>
           </div>
         </div>
-        <figcaption>Fig 2. Visual comparison of schema-compliant components vs. unstyled hallucination.</figcaption>
+        <figcaption>Fig 2. Visual comparison of schema-compliant behaviors vs. unstyled hallucination.</figcaption>
       </figure>
 
       <h3>3.2. Self-Validation</h3>
       <p>
-        Because the schema exists as a machine-readable definition, the system can self-validate. We developed a runtime auditor that compares the DOM against the schema. If an AI generates a component that violates the schema (e.g., missing a required child), the system flags it immediately.
+        Because the schema exists as a machine-readable definition, the system can self-validate. We developed a runtime auditor that compares the DOM against the schema. If an AI generates a behavior that violates the schema (e.g., missing a required child), the system flags it immediately.
       </p>
 
       <h3>3.3. Auto-Fix Generation</h3>
@@ -349,12 +349,12 @@
 
       <h3>4.4. Zero-Shot Test Generation</h3>
       <p>
-        The deterministic nature of the schema extends to quality assurance. Traditionally, tests are written manually to verify intent. In our architecture, the schema <em>is</em> the intent. Therefore, test suites are not written; they are derived. The system parses the Component Schema to automatically generate rigorous specifications that verify structural compliance, accessibility standards, and property validation. This ensures that every component is born with a comprehensive test suite that evolves in lockstep with its definition.
+        The deterministic nature of the schema extends to quality assurance. Traditionally, tests are written manually to verify intent. In our architecture, the schema <em>is</em> the intent. Therefore, test suites are not written; they are derived. The system parses the Behavior Schema to automatically generate rigorous specifications that verify structural compliance, accessibility standards, and property validation. This ensures that every behavior is born with a comprehensive test suite that evolves in lockstep with its definition.
       </p>
 
       <h3>4.5. The Governance of Generation Rules</h3>
       <p>
-        Crucially, this generative power is not unbounded. All generation is strictly governed by a set of immutable "Generation Rules." While the schema defines the <em>what</em> (the structural contract), these rules define the <em>how</em> (the implementation standards). Whether generating tests, repairing CSS, or scaffolding components, the AI is forced to adhere to explicit coding standards, naming conventions, and architectural patterns. This dual-constraint system—Schema plus Rules—ensures that the output is not only correct but stylistically uniform, preventing the "drift" often seen in unconstrained AI codebases.
+        Crucially, this generative power is not unbounded. All generation is strictly governed by a set of immutable "Generation Rules." While the schema defines the <em>what</em> (the structural contract), these rules define the <em>how</em> (the implementation standards). Whether generating tests, repairing CSS, or scaffolding behaviors, the AI is forced to adhere to explicit coding standards, naming conventions, and architectural patterns. This dual-constraint system—Schema plus Rules—ensures that the output is not only correct but stylistically uniform, preventing the "drift" often seen in unconstrained AI codebases.
       </p>
 
       <h2>5. Conclusion</h2>

@@ -2,7 +2,7 @@ import { test, expect } from '@playwright/test';
 
 /**
  * docs/behavior-cross-reference.md must follow DEMOS-AND-DOCS-STANDARDS.md
- * §1/§16 — every renderable component example is a live <div x-demo> (renders
+ * §1/§16 — every renderable behavior example is a live <div x-demo> (renders
  * the control AND shows its source), never a static, non-live code fence.
  * Converted from 37 plain ```html fences to live <div x-demo> blocks (per
  * docs/code-examples-standard.md Rule 4); the remaining plain fences on this

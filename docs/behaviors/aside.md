@@ -8,7 +8,7 @@ The `<aside>` element represents content that is tangentially related to the con
 - Typically rendered as a sidebar or callout
 - Should relate to surrounding content but not be essential to understanding it
 
-## WB Components Using `<aside>`
+## WB Behaviors Using `<aside>`
 
 ### 1. Card Notification (`cardnotification`)
 

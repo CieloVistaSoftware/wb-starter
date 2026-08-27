@@ -39,7 +39,7 @@ function processFile(filePath) {
     });
     
     // 2. All on div/etc -> <div>
-    const components = [
+    const behaviors = [
       'card', 'badge', 'button', 'modal', 'alert', 'avatar', 'chip', 'progress',
       'spinner', 'skeleton', 'rating', 'switch', 'tabs', 'accordion', 'drawer',
       'dropdown', 'navbar', 'footer', 'header', 'hero', 'container',
@@ -53,7 +53,7 @@ function processFile(filePath) {
       'statusbar', 'mdhtml', 'sheet', 'builder'
     ];
     
-    components.forEach(c => {
+    behaviors.forEach(c => {
       // <article  -> <article
       content = content.replace(
         new RegExp(`<(div|section|article|span|nav|aside|main|header|footer|details|pre|ul|ol|dl|button|a|p|figure)([^>]*)\\bx-legacy=["']${c}["']`, 'gi'),
@@ -63,14 +63,14 @@ function processFile(filePath) {
     
     // 3. CSS selectors: [] -> wb-X or [x-X]
     content = content.replace(/\[x-legacy=["'](\w+)["']\]/g, (match, name) => {
-      if (components.includes(name)) return `wb-${name}`;
+      if (behaviors.includes(name)) return `wb-${name}`;
       if (behaviors.includes(name)) return `[x-${name}]`;
       return match;
     });
     
     // 4. dataset.wb references in JS
     content = content.replace(/\.dataset\.wb\s*===?\s*["'](\w+)["']/g, (match, name) => {
-      if (components.includes(name)) return `.tagName.toLowerCase() === 'wb-${name}'`;
+      if (behaviors.includes(name)) return `.tagName.toLowerCase() === 'wb-${name}'`;
       return match;
     });
     

@@ -1,10 +1,10 @@
 import { test, expect } from '@playwright/test';
 
 // #562: this used to `page.goto()` the bare fragment directly
-// (http://localhost:3000/pages/components.html) instead of through the SPA
-// shell (`/?page=components`, the pattern every other compliance spec uses --
+// (http://localhost:3000/pages/behaviors.html) instead of through the SPA
+// shell (`/?page=behaviors`, the pattern every other compliance spec uses --
 // see hero-no-nested-sections.spec.ts, footer-viewport-anchor.spec.ts,
-// stock-indicator-spacing.spec.ts). pages/components.html's own <audio
+// stock-indicator-spacing.spec.ts). pages/behaviors.html's own <audio
 // src="demos/sample.wav"> is intentionally base-relative (#531/9b183bc --
 // absolute breaks under GitHub Pages' /wb-starter/ sub-path), which only
 // resolves correctly when the fragment is loaded at the site root. Navigated
@@ -16,7 +16,7 @@ import { test, expect } from '@playwright/test';
 // side-effect page-load error.
 test.describe('Runtime hydration markers', () => {
   test('x-mdhtml sets hydration marker when present', async ({ page }) => {
-    await page.goto('/?page=components', { waitUntil: 'networkidle' });
+    await page.goto('/?page=behaviors', { waitUntil: 'networkidle' });
     const md = page.locator('x-mdhtml').first();
     const count = await md.count();
     test.skip(count === 0, 'x-mdhtml example not present');
@@ -30,7 +30,7 @@ test.describe('Runtime hydration markers', () => {
   });
 
   test('x-cardstats marks hydrated when present', async ({ page }) => {
-    await page.goto('/?page=components', { waitUntil: 'networkidle' });
+    await page.goto('/?page=behaviors', { waitUntil: 'networkidle' });
     const stats = page.locator('x-cardstats').first();
     const count = await stats.count();
     test.skip(count === 0, 'x-cardstats example not present');

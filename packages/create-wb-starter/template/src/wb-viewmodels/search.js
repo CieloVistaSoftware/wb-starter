@@ -1,6 +1,6 @@
 import { readAttr } from '../core/read-attr.js';
 /**
- * Search Component
+ * Search Behavior
  * Complete search input with icon, clear button, and debounced events
  */
 export function search(element, options = {}) {

@@ -4,7 +4,7 @@ import { test, expect } from '@playwright/test';
  * §19: interactive triggers must actually work. Clicking a dialog/modal trigger
  * must OPEN a dialog. Covers both dialog trigger styles:
  *  - autoinject.html: a native <button onclick> that calls a <dialog>.showModal()
- *  - components.html: a <dialog modal-title="…"> trigger (fixed for #251)
+ *  - behaviors.html: a <dialog modal-title="…"> trigger (fixed for #251)
  */
 test.describe('dialog triggers open a dialog on click (§19)', () => {
   test('autoinject "Open Dialog" opens the dialog', async ({ page }) => {

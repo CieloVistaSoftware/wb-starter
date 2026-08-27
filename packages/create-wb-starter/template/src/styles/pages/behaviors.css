@@ -1,7 +1,7 @@
 /* ═══════════════════════════════════════════════════════════════════
    BEHAVIORS SHOWCASE - PAGE LAYOUT
    Page-specific layout for the behaviors showcase page.
-   Component styles come from site.css → behaviors/*.css
+   Behavior styles come from site.css → behaviors/*.css
    ═══════════════════════════════════════════════════════════════════ */
 
 /* ═══════════════════════════════════════════════════════════════════
@@ -662,7 +662,7 @@ footer a:hover {
 
 /* #666: the behavior's own docs/behaviors/{name}.md, rendered inline under the
    example and its source. Collapsed by default -- a full doc is often longer
-   than the example, and the running component is what the reader came for. */
+   than the example, and the running behavior is what the reader came for. */
 .behaviors-live__doc {
   border-top: 1px solid var(--border-color, #374151);
   background: var(--bg-secondary, #1f2937);

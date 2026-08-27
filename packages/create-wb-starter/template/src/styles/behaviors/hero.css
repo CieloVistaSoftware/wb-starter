@@ -1,5 +1,5 @@
 /**
- * Hero Component Styles
+ * Hero Behavior Styles
  * Handles height, layout, and responsiveness
  */
 
@@ -16,7 +16,7 @@ x-hero {
 x-cardhero {
   /* Fill the container, NOT the viewport. The previous 100vw + negative-margin
      full-bleed broke the cardhero out of its grid cell and overlapped
-     neighbouring cards (e.g. the overlay card in the components demo).
+     neighbouring cards (e.g. the overlay card in the behaviors demo).
      Opt into edge-to-edge with the .x-cardhero--fullbleed modifier instead. */
   width: 100%;
   /* Title/subtitle size off the hero's OWN width (cqi), not the viewport

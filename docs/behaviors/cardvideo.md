@@ -13,7 +13,7 @@ Card with embedded video player
   src="https://www.w3schools.com/html/mov_bbb.mp4"
   poster="https://picsum.photos/seed/screening/480/270"
   title="Behaviors in 90 seconds"
-  description="What replaced the component base class, and why."></article>
+  description="What replaced the behavior base class, and why."></article>
 ```
 
 ### On a different element

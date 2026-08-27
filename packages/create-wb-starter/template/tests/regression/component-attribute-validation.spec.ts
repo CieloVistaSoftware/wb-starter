@@ -4,18 +4,18 @@ import * as path from 'path';
 import { fileURLToPath } from 'url';
 
 /**
- * Component Attribute Validation — REGRESSION TEST
+ * Behavior Attribute Validation — REGRESSION TEST
  *
- * Ensures wb-* component attributes conform to expected ranges and standards.
+ * Ensures wb-* behavior attributes conform to expected ranges and standards.
  * Suspicious values (e.g., 360px for cardhero height when 400-600px is norm)
  * are flagged for manual review.
  *
  * Root cause of bug #4: demos/site/cards.html had cardhero with height="360px"
  * which is suspiciously small (other cardheros use 400-500px).
- * Prevention: validate component attributes against known ranges.
+ * Prevention: validate behavior attributes against known ranges.
  */
 
-test.describe('Component Attribute Validation', () => {
+test.describe('Behavior Attribute Validation', () => {
   const __dirname = path.dirname(fileURLToPath(import.meta.url));
   const htmlDir = path.join(__dirname, '../../');
 

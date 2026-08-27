@@ -4,7 +4,7 @@ import { setupBehaviorTest, setupTestContainer } from '../base';
 /**
  * John, live report (cards.html screenshot): the Horizontal Card demo's
  * title text appeared to overlap the image. Live inspection found the
- * image itself loads correctly (placehold.co bakes "Web Components" text
+ * image itself loads correctly (placehold.co bakes "Behaviors" text
  * directly INTO the 400x300 image, which is a separate element from the
  * title) and the real title/subtitle/body render cleanly beside it, not
  * on top of it -- no actual DOM/CSS overlap bug found live at the time of
@@ -20,7 +20,7 @@ test.describe('x-cardhorizontal image and content never overlap, content is not 
   test('figure and content boxes do not overlap', async ({ page }) => {
     await setupTestContainer(
       page,
-      '<div x-demo columns="1"><div x-cardhorizontal image="https://placehold.co/400x300/0f172a/e2e8f0?text=Web+Components" title="Featured Article" subtitle="The Future of Web Components" content="Web components are evolving rapidly with native browser APIs."></div></div>'
+      '<div x-demo columns="1"><div x-cardhorizontal image="https://placehold.co/400x300/0f172a/e2e8f0?text=Web+Behaviors" title="Featured Article" subtitle="The Future of Behaviors" content="Web behaviors are evolving rapidly with native browser APIs."></div></div>'
     );
 
     const figure = page.locator('.x-card__horizontal-figure');
@@ -41,7 +41,7 @@ test.describe('x-cardhorizontal image and content never overlap, content is not 
   test('content padding meets Standard §13 (>= 1rem)', async ({ page }) => {
     await setupTestContainer(
       page,
-      '<div x-demo columns="1"><div x-cardhorizontal image="https://placehold.co/400x300/0f172a/e2e8f0?text=Web+Components" title="Featured Article" subtitle="The Future of Web Components" content="Web components are evolving rapidly with native browser APIs."></div></div>'
+      '<div x-demo columns="1"><div x-cardhorizontal image="https://placehold.co/400x300/0f172a/e2e8f0?text=Web+Behaviors" title="Featured Article" subtitle="The Future of Behaviors" content="Web behaviors are evolving rapidly with native browser APIs."></div></div>'
     );
 
     const content = page.locator('.x-card__horizontal-content');
@@ -63,7 +63,7 @@ test.describe('x-cardhorizontal image and content never overlap, content is not 
   test('title, subtitle, and body text are all fully present and visible, none clipped', async ({ page }) => {
     await setupTestContainer(
       page,
-      '<div x-demo columns="1"><div x-cardhorizontal image="https://placehold.co/400x300/0f172a/e2e8f0?text=Web+Components" title="Featured Article" subtitle="The Future of Web Components" content="Web components are evolving rapidly with native browser APIs."></div></div>'
+      '<div x-demo columns="1"><div x-cardhorizontal image="https://placehold.co/400x300/0f172a/e2e8f0?text=Web+Behaviors" title="Featured Article" subtitle="The Future of Behaviors" content="Web behaviors are evolving rapidly with native browser APIs."></div></div>'
     );
 
     const title = page.locator('.x-card__horizontal-title, .x-card__title');
@@ -73,8 +73,8 @@ test.describe('x-cardhorizontal image and content never overlap, content is not 
     await expect(title).toBeVisible();
     await expect(title).toHaveText('Featured Article');
     await expect(subtitle).toBeVisible();
-    await expect(subtitle).toHaveText('The Future of Web Components');
+    await expect(subtitle).toHaveText('The Future of Behaviors');
     await expect(body).toBeVisible();
-    await expect(body).toContainText('Web components are evolving rapidly');
+    await expect(body).toContainText('Web behaviors are evolving rapidly');
   });
 });

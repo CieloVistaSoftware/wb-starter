@@ -60,7 +60,7 @@ const templatePkg = {
   name: '__PROJECT_NAME__',
   version: '0.1.0',
   type: sourcePkg.type,
-  description: 'A website built with wb-starter -- zero-build web components, schema-first MVVM.',
+  description: 'A website built with wb-starter -- zero-build behaviors, schema-first MVVM.',
   main: sourcePkg.main,
   scripts: sourcePkg.scripts,
   'scripts-info': sourcePkg['scripts-info'],

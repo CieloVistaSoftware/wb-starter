@@ -12,13 +12,13 @@ import { globSync } from 'glob';
  * checks the LIVE half of that pair directly (the code-panel half is
  * doc-viewer-code-panel-audit.spec.ts).
  *
- * `tests/regression/component-index-doc-coverage.spec.ts` already does
+ * `tests/regression/behavior-index-doc-coverage.spec.ts` already does
  * this same check ("real rendered content, not empty/placeholder") for
- * every component DOC page (docs/components/**\/*.md, driven by
- * data/component-index.json). This test generalizes the same check to the
+ * every behavior DOC page (docs/behaviors/**\/*.md, driven by
+ * data/behavior-index.json). This test generalizes the same check to the
  * plain demos/**\/*.html and pages/**\/*.html files that render `<div x-demo>`
  * DIRECTLY (no doc-viewer/mdhtml involved) -- a different rendering path
- * component-index-doc-coverage.spec.ts never exercises, and the one demo.js
+ * behavior-index-doc-coverage.spec.ts never exercises, and the one demo.js
  * calls first-class per §16 ("The `demos/` folder exists so users can see
  * how it's done in HTML").
  *

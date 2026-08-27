@@ -134,7 +134,7 @@ document.querySelector('input[type="checkbox"]').addEventListener('change', (e) 
 | `--border-color` | Unchecked border | Falls back to `#d1d5db` |
 | `--primary` | Checked background/border | Falls back to `#6366f1` |
 | `--success-color` / `--warning-color` / `--danger-color` | `variant="success"`/`"warning"`/`"danger"` | Checked/indeterminate accent + focus ring |
-| `--text-primary` | N/A (reserved) | Declared in the component's schema `$cssAPI` |
+| `--text-primary` | N/A (reserved) | Declared in the behavior's schema `$cssAPI` |
 
 ## Accessibility
 

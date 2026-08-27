@@ -300,7 +300,7 @@ export function pre(element, options = {}) {
       // Skip past leading spaces/tabs (never past a real newline -- an
       // all-whitespace/blank source line has nothing better to anchor to)
       // so the measured position always lands on real content when there
-      // is any. Confirmed live: without this, docs/components/semantics/
+      // is any. Confirmed live: without this, docs/behaviors/semantics/
       // audio.md's "With Bass/Treble Boost" sample (long src="https://…"
       // attribute) showed exactly this at a narrow effective row width.
       const firstContentOffset = (nodeIndex, offset) => {

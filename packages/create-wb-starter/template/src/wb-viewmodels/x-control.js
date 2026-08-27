@@ -3,7 +3,7 @@ import move from './move.js';
 /**
  * <div x-control>
  * -----------------------------------------------------------------------------
- * Wraps move behaviors in a consistent component.
+ * Wraps move behaviors in a consistent behavior.
  * 
  * Custom Tag: <div x-control>
  * -----------------------------------------------------------------------------

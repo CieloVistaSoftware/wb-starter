@@ -6,17 +6,17 @@
  *
  * Site Schema Format:
  *   {
- *     "title": "WB Component Library",
+ *     "title": "WB Behavior Library",
  *     "outputDir": "demos/site",          // where HTML goes
  *     "defaults": "x-page-defaults",     // $extends for all pages
  *     "generateIndex": true,              // create index.html with links
  *     "pages": [
  *       {
  *         "id": "cards",
- *         "title": "Card Components",
+ *         "title": "Card Behaviors",
  *         "description": "All card variants",
  *         "icon": "🃏",
- *         "components": ["card", "cardbutton", ...],   // auto-showcase these
+ *         "behaviors": ["card", "cardbutton", ...],   // auto-showcase these
  *         "columns": 3
  *       },
  *       {
@@ -78,7 +78,7 @@ function findSchema(name) {
   return null;
 }
 
-// ─── Generate sections for a single component (same logic as auto-showcase) ───
+// ─── Generate sections for a single behavior (same logic as auto-showcase) ───
 
 // Every generated instance needs SOME children, regardless of whether its
 // behavior self-generates content (avatar/badge/chip clear+rebuild
@@ -104,24 +104,24 @@ function findSchema(name) {
 // (Children)"), body content should be genuinely distinct copy, not an
 // echo of the attributes -- e.g. `<div x-alert variant="warning"><strong>
 // Warning:</strong> This is the alert content.</div>`. A generator
-// can't hand-write per-component prose, but it can stay non-empty (still
+// can't hand-write per-behavior prose, but it can stay non-empty (still
 // solving the original 0-height problem) without parroting the attrs.
 function placeholderChildren(schema) {
-  const label = (schema.title || schema.schemaFor || 'component').toLowerCase();
+  const label = (schema.title || schema.schemaFor || 'behavior').toLowerCase();
   return `This is example ${label} content.`;
 }
 
-// #490: components whose resting render is a CLOSED trigger -- the
+// #490: behaviors whose resting render is a CLOSED trigger -- the
 // position/variant-differentiated panel only exists after a click
 // (src/wb-viewmodels/overlay.js show(), dialog.js, dropdown.js). With the
 // generic shared placeholder above, every demo box on a showcase page is
 // pixel-identical at rest (John, live: "There is no difference in these
-// three elements, why?"). For these components the children text doubles as
+// three elements, why?"). For these behaviors the children text doubles as
 // the trigger's visible label AND the panel body, so echo the instance's
 // own attrs (e.g. "position=left") to make each box legible without
 // clicking it. This is the documented exception to #413's "don't parrot the
-// attrs" rule: #413 assumed the component's resting render already shows
-// its difference, which is true for every normally-visible component but
+// attrs" rule: #413 assumed the behavior's resting render already shows
+// its difference, which is true for every normally-visible behavior but
 // definitionally false for a closed overlay trigger.
 const TRIGGER_COMPONENTS = new Set(['dialog', 'drawer', 'dropdown', 'popover', 'offcanvas', 'sheet']);
 
@@ -137,7 +137,7 @@ const DEMO_EXTRA_ATTRS = {
   dropdown: { items: 'Profile,Settings,Logout' }
 };
 
-// Build one demo instance: attr-echo children for closed-trigger components
+// Build one demo instance: attr-echo children for closed-trigger behaviors
 // (#490), generic placeholder for everything else (#413), plus any
 // functional extra attrs (which never override the showcased attrs and
 // never appear in the label).
@@ -171,7 +171,7 @@ function generateComponentSections(schema) {
     const columns = demos.length <= 2 ? demos.length : demos.length <= 4 ? 2 : 3;
     sections.push({
       heading: `${schema.schemaFor} — Combinations`,
-      component: schema.schemaFor,
+      behavior: schema.schemaFor,
       tag,
       columns,
       demos
@@ -204,7 +204,7 @@ function generateComponentSections(schema) {
       // tests/regression/drawer-path-b-content-position-variant.spec.ts's
       // #drawer-variant-variants). Ids are API; headings are copy.
       id: slugify(`${schema.schemaFor}-${attrName}-variants`),
-      component: schema.schemaFor,
+      behavior: schema.schemaFor,
       tag,
       columns,
       demos
@@ -233,7 +233,7 @@ function generateComponentSections(schema) {
       // shorter heading that matches the one-word style used elsewhere
       // ("Variants").
       heading: `Toggles`,
-      component: schema.schemaFor,
+      behavior: schema.schemaFor,
       tag,
       columns,
       demos
@@ -253,7 +253,7 @@ function generateComponentSections(schema) {
     if (Object.keys(defaultAttrs).length > 0) {
       sections.push({
         heading: `${schema.schemaFor} — Defaults`,
-        component: schema.schemaFor,
+        behavior: schema.schemaFor,
         tag,
         columns: 1,
         demos: [buildDemo(schema, tag, defaultAttrs)]
@@ -279,13 +279,13 @@ function deduplicateSections(sections) {
   return sections.filter(s => s.demos.length > 0);
 }
 
-// ─── Build a multi-component page schema ───
+// ─── Build a multi-behavior page schema ───
 
 function buildMultiComponentPage(pageDef, defaults) {
   const allSections = [];
   const componentResults = [];
 
-  for (const componentName of (pageDef.components || [])) {
+  for (const componentName of (pageDef.behaviors || [])) {
     const schema = findSchema(componentName);
     if (!schema) {
       console.warn(`  ⚠️ Schema not found: ${componentName} — skipping`);
@@ -302,10 +302,10 @@ function buildMultiComponentPage(pageDef, defaults) {
       demos: demoCount
     });
 
-    // Add a component separator heading
+    // Add a behavior separator heading
     const icon = schema._metadata?.icon || '📦';
     if (sections.length > 0) {
-      // Prefix the first section heading with the component name
+      // Prefix the first section heading with the behavior name
       sections[0].heading = `${icon} ${schema.title || schema.schemaFor}`;
     }
     allSections.push(...sections);
@@ -330,7 +330,7 @@ function buildMultiComponentPage(pageDef, defaults) {
 
   const pageSchema = {
     title: pageDef.title,
-    description: pageDef.description || `Showcase for: ${(pageDef.components || []).join(', ')}`,
+    description: pageDef.description || `Showcase for: ${(pageDef.behaviors || []).join(', ')}`,
     schemaFor: pageDef.id,
     page: {
       lang: 'en',
@@ -352,7 +352,7 @@ function buildMultiComponentPage(pageDef, defaults) {
       content: `${pageDef.icon || '📦'} ${pageDef.title}`,
       subtitle: {
         tag: 'p',
-        content: pageDef.description || `Showcasing ${(pageDef.components || []).length} components`
+        content: pageDef.description || `Showcasing ${(pageDef.behaviors || []).length} behaviors`
       }
     },
     sections: deduplicated
@@ -407,7 +407,7 @@ function generateIndexHtml(siteSchema, pageResults) {
   const totalPages = pageResults.filter(p => p.status === 'ok').length;
   const totalComponents = pageResults.reduce((s, p) => s + (p.componentCount || 0), 0);
   const totalDemos = pageResults.reduce((s, p) => s + (p.totalDemos || 0), 0);
-  lines.push(`    <div class="site-stats">${totalPages} pages · ${totalComponents} components · ${totalDemos} demos</div>`);
+  lines.push(`    <div class="site-stats">${totalPages} pages · ${totalComponents} behaviors · ${totalDemos} demos</div>`);
 
   lines.push('    <div class="page-grid">');
   for (const page of pageResults) {
@@ -418,7 +418,7 @@ function generateIndexHtml(siteSchema, pageResults) {
     if (page.description) {
       lines.push(`          <p>${page.description}</p>`);
     }
-    lines.push(`          <span class="stats">${page.componentCount || 0} components · ${page.sectionCount || 0} sections · ${page.totalDemos || 0} demos</span>`);
+    lines.push(`          <span class="stats">${page.componentCount || 0} behaviors · ${page.sectionCount || 0} sections · ${page.totalDemos || 0} demos</span>`);
     lines.push('        </a>');
     lines.push('      </div>');
   }
@@ -462,7 +462,7 @@ function generatePageHtml(pageSchema) {
   lines.push('</head>');
   lines.push('');
   // #274/live report: was a bare <body> -- these standalone pages aren't
-  // routed through the .site/.site__body app shell (see components.html),
+  // routed through the .site/.site__body app shell (see behaviors.html),
   // so with no page-level padding class their content sat flush against
   // the viewport edge (headings, code blocks, everything at x=0). site.css
   // already declares `.demo-page` for exactly this; it just never got
@@ -487,7 +487,7 @@ function generatePageHtml(pageSchema) {
     const seenIds = new Set();
     for (let i = 0; i < pageSchema.sections.length; i++) {
       const section = pageSchema.sections[i];
-      let sectionId = section.id || slugify(section.component ? `${section.component}-${section.heading}` : section.heading);
+      let sectionId = section.id || slugify(section.behavior ? `${section.behavior}-${section.heading}` : section.heading);
       if (seenIds.has(sectionId)) sectionId = `${sectionId}-${i}`;
       seenIds.add(sectionId);
       lines.push(`  <!-- ${i + 1}. ${section.heading} -->`);
@@ -525,7 +525,7 @@ function generatePageHtml(pageSchema) {
       if (demos.length > 1) {
         // §2 "one code sample per rendered element (strict 1:1)": a section
         // sweeping several differently-configured instances of the same
-        // component (enum variants, boolean toggles, matrix combinations)
+        // behavior (enum variants, boolean toggles, matrix combinations)
         // must not bundle them all under one shared <div x-demo> code sample --
         // that's the exact "permutation matrix" anti-pattern §2 forbids. One
         // <div x-demo> per instance instead, each with its own code sample.
@@ -616,8 +616,8 @@ for (const pageDef of (siteSchema.pages || [])) {
   const pageId = pageDef.id;
   console.log(`\n─── Page: ${pageDef.icon || '📦'} ${pageDef.title} (${pageId}) ───`);
 
-  // Option A: Components list → auto-generate multi-component page
-  if (pageDef.components && pageDef.components.length > 0) {
+  // Option A: Behaviors list → auto-generate multi-behavior page
+  if (pageDef.behaviors && pageDef.behaviors.length > 0) {
     const { pageSchema, componentResults } = buildMultiComponentPage(pageDef, siteSchema.defaults);
 
     const foundCount = componentResults.filter(c => c.status === 'ok').length;
@@ -625,7 +625,7 @@ for (const pageDef of (siteSchema.pages || [])) {
     const sectionCount = pageSchema.sections.length;
     const totalDemos = pageSchema.sections.reduce((s, sec) => s + (sec.demos?.length || 0), 0);
 
-    console.log(`  Components: ${foundCount} found, ${missingCount} missing`);
+    console.log(`  Behaviors: ${foundCount} found, ${missingCount} missing`);
     console.log(`  Sections: ${sectionCount}, Demos: ${totalDemos}`);
 
     if (missingCount > 0) {
@@ -645,7 +645,7 @@ for (const pageDef of (siteSchema.pages || [])) {
         componentCount: foundCount,
         sectionCount,
         totalDemos,
-        components: componentResults
+        behaviors: componentResults
       });
       continue;
     }
@@ -663,7 +663,7 @@ for (const pageDef of (siteSchema.pages || [])) {
         componentCount: foundCount,
         sectionCount,
         totalDemos,
-        components: componentResults
+        behaviors: componentResults
       });
       continue;
     }
@@ -694,7 +694,7 @@ for (const pageDef of (siteSchema.pages || [])) {
       componentCount: foundCount,
       sectionCount,
       totalDemos,
-      components: componentResults
+      behaviors: componentResults
     });
   }
   // Option B: Reference an existing page schema
@@ -751,7 +751,7 @@ for (const pageDef of (siteSchema.pages || [])) {
     }
   }
   else {
-    console.warn(`  ⚠️ Page "${pageId}" has no components or schema — skipping`);
+    console.warn(`  ⚠️ Page "${pageId}" has no behaviors or schema — skipping`);
     pageResults.push({ id: pageId, title: pageDef.title, status: 'skipped' });
   }
 }
@@ -796,7 +796,7 @@ console.log(`\n═════════════════════�
 console.log(`  🌐 Site Generation Complete`);
 console.log(`  Pages: ${okCount}/${siteSchema.pages?.length || 0} generated`);
 if (errCount > 0) console.log(`  Errors: ${errCount}`);
-console.log(`  Components: ${result.summary.totalComponents}`);
+console.log(`  Behaviors: ${result.summary.totalComponents}`);
 console.log(`  Sections: ${result.summary.totalSections}`);
 console.log(`  Demos: ${result.summary.totalDemos}`);
 console.log(`  Time: ${elapsed}s`);

@@ -14,7 +14,7 @@ https://cielovistasoftware.github.io/wb-starter/
 
 ## The design point: semantic first
 
-Most component libraries ask you to give up your markup. You stop writing
+Most behavior libraries ask you to give up your markup. You stop writing
 `<article>` and start writing `<Card>`, `<x-card>` or `<div class="card">`.
 The framework's vocabulary replaces the browser's.
 
@@ -58,7 +58,7 @@ The framework's job is to add capability to your markup, never to replace it.
 ## Injection: how behaviour gets attached
 
 One idea sits underneath everything: **a behavior is a plain function applied to
-an element.** Not a base class, not a wrapper component. There are three ways to
+an element.** Not a base class, not a wrapper behavior. There are three ways to
 attach one, and all three resolve through `src/core/tag-map.js` to the same
 function:
 
@@ -74,7 +74,7 @@ function:
 
 Both produce the same card behaviour. Neither "is a" the other.
 
-> **`<wb-*>` component tags are deprecated.** 104 of them are still registered
+> **`<wb-*>` behavior tags are deprecated.** 104 of them are still registered
 > and still work, but they are not the way to write new markup — the direction
 > is x-attributes on real elements. They are listed in `elementMap` for
 > back-compat and runtime parity, not as a third authoring surface.
@@ -131,9 +131,9 @@ exists anywhere.
 |---|---:|---|
 | Behavior modules | **73** | `src/wb-viewmodels/` |
 | `x-*` behavior attributes | **106** | `extensionMap` in `src/core/tag-map.js` |
-| `wb-*` component tags *(deprecated)* | 104 | `elementMap` — back-compat only |
+| `wb-*` behavior tags *(deprecated)* | 104 | `elementMap` — back-compat only |
 | Native elements auto-upgraded | **26** | `nativeMap` |
-| Component schemas | **162** | `src/wb-models/*.schema.json` |
+| Behavior schemas | **162** | `src/wb-models/*.schema.json` |
 | Themes | **50** | `src/styles/themes.css` |
 | Per-behavior stylesheets | **57** | `src/styles/behaviors/` |
 
@@ -166,7 +166,7 @@ Schema-first MVVM, in plain files the browser loads directly:
 
 | Layer | Directory | What it holds |
 |---|---|---|
-| **Model** | `src/wb-models/` | 162 `*.schema.json` files — each component's declared attributes, defaults and `$view` |
+| **Model** | `src/wb-models/` | 162 `*.schema.json` files — each behavior's declared attributes, defaults and `$view` |
 | **ViewModel** | `src/wb-viewmodels/` | 73 behavior modules — the runtime logic that upgrades an element |
 | **View** | `src/wb-views/` | Registered view templates |
 | **Engine** | `src/core/` | `wb.js` / `wb-lazy.js` runtime, `tag-map.js`, and `core/mvvm/` (the schema builder) |
@@ -190,12 +190,12 @@ tracked:
 
 | Holdover | Extent | Issue |
 |---|---|---|
-| `WBFixCard extends WBCard` | 1 class — the only component that inherits from another | #660 |
+| `WBFixCard extends WBCard` | 1 class — the only behavior that inherits from another | #660 |
 | `$extends` / `$inheritance` schema metadata, `card.base.schema.json` | 1 schema of 162 | #465, #462, #418 |
 
 ### Who builds the DOM
 
-A component is built by **either** its schema **or** its behavior — never both.
+A behavior is built by **either** its schema **or** its behavior — never both.
 Where a behavior constructs its own complete DOM, its tag is listed in
 `SCHEMA_EXCLUDED_TAGS` (`src/core/mvvm/schema-builder.js`) so the schema pass
 leaves it alone. Running both is a race: `processSchema()` clears an element's
@@ -232,7 +232,7 @@ wb-starter/
 ├── server.js             # Dev server (error logging, Visual Builder saves)
 ├── config/
 │   └── site.json         # Site configuration (nav, branding, footer)
-├── pages/                # Page content (home, components, behaviors, docs, …)
+├── pages/                # Page content (home, behaviors, behaviors, docs, …)
 ├── demos/                # Standalone demos, incl. playground.html
 ├── public/               # Tools (doc-viewer.html, schema-viewer.html, fix-viewer.html)
 ├── docs/                 # Guides, standards, behavior reference
@@ -241,7 +241,7 @@ wb-starter/
 └── src/
     ├── core/             # Runtime engine — wb.js, wb-lazy.js, tag-map.js
     │   └── mvvm/         # Schema builder
-    ├── wb-models/        # *.schema.json — component definitions
+    ├── wb-models/        # *.schema.json — behavior definitions
     ├── wb-viewmodels/    # Behavior modules
     ├── wb-views/         # View templates
     └── styles/           # themes.css (50 themes), site.css, per-behavior CSS

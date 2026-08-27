@@ -11,7 +11,7 @@ optional heading and static pagination controls. Implemented by `articles()` in
 | Attribute | `x-articles` |
 | Attribute form | `<div x-as-articles>` |
 | Behavior function | `articles()` — `src/wb-viewmodels/article.js` |
-| Pairs with | [`article`](../components/semantic/article.md) / `x-article` for each child |
+| Pairs with | [`article`](../behaviors/semantic/article.md) / `x-article` for each child |
 | Semantic element | `<section role="feed">` (schema default; the behavior itself doesn't add a role) |
 | Root CSS Class | `<section x-articles>` |
 | Category | Layout |
@@ -44,7 +44,7 @@ optional heading and static pagination controls. Implemented by `articles()` in
 <div x-demo columns="1">
 <div x-articles title="Grid layout" layout="grid" columns="2">
   <div x-article title="TypeScript Mastery">TypeScript transforms JavaScript development with type safety: generics, unions, interfaces, and decorators.</div>
-  <div x-article title="React Hooks Deep Dive">Master modern React with Hooks — useState, useEffect, useContext, and custom hooks for cleaner components.</div>
+  <div x-article title="React Hooks Deep Dive">Master modern React with Hooks — useState, useEffect, useContext, and custom hooks for cleaner behaviors.</div>
 </div>
 </div>
 
@@ -91,5 +91,5 @@ optional heading and static pagination controls. Implemented by `articles()` in
 
 `articles()` does not dispatch any custom events.
 
-- [Demo](../../demos/site/content.html#articles-articles-list-component)
+- [Demo](../../demos/site/content.html#articles-articles-list-behavior)
 - [Schema](../../src/wb-models/articles.schema.json)

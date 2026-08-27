@@ -1,15 +1,15 @@
 /**
- * COMPONENT INDEX GENERATOR
+ * BEHAVIOR INDEX GENERATOR
  * =========================
- * Generates data/component-index.json — one entry per real, documented
- * component (docs/components/**\/*.md), cross-referenced against its
+ * Generates data/behavior-index.json — one entry per real, documented
+ * behavior (docs/behaviors/**\/*.md), cross-referenced against its
  * schema (title/description/category) and checked against pages/
- * components.html + pages/behaviors.html for a live demo location.
+ * behaviors.html + pages/behaviors.html for a live demo location.
  *
- * Powers the sortable component table at the top of pages/components.html.
+ * Powers the sortable behavior table at the top of pages/behaviors.html.
  *
  * Usage:
- *   node scripts/generate-component-index.mjs [--verbose]
+ *   node scripts/generate-behavior-index.mjs [--verbose]
  */
 
 import fs from 'fs';
@@ -21,24 +21,24 @@ const __dirname = path.dirname(__filename);
 const ROOT = path.resolve(__dirname, '..');
 const VERBOSE = process.argv.includes('--verbose');
 
-// Overview/index docs that describe a CATEGORY, not a single component —
+// Overview/index docs that describe a CATEGORY, not a single behavior —
 // excluded from the list.
 const OVERVIEW_FILES = new Set([
-  'README.md', 'components.md', 'cards.index.md', 'cards.readme.md',
+  'README.md', 'behaviors.md', 'cards.index.md', 'cards.readme.md',
   'feedback.readme.md', 'forms.readme.md', 'layout.readme.md',
   'navigation.readme.md', 'semantic.index.md', 'semantic.readme.md',
 ]);
 
 // John: anchor ids should read like "pricingCardDemo"/"portfolioCardDemo",
-// not the generic "component-{tag}" scheme this used before -- derived from
-// the component's own display TITLE (already human-readable), camelCased,
+// not the generic "behavior-{tag}" scheme this used before -- derived from
+// the behavior's own display TITLE (already human-readable), camelCased,
 // with a "Demo" suffix. "Pricing Card" -> "pricingCardDemo".
 const usedAnchorIds = new Set();
 function toDemoAnchorId(title, fallbackName) {
   const words = title.replace(/[^a-zA-Z0-9]+/g, ' ').trim().split(/\s+/).filter(Boolean);
   const camel = words.map((w, i) => (i === 0 ? w.toLowerCase() : w[0].toUpperCase() + w.slice(1).toLowerCase())).join('');
   let id = `${camel}Demo`;
-  // Collision fallback: extremely unlikely (two different components with
+  // Collision fallback: extremely unlikely (two different behaviors with
   // the same display title) but must never silently produce a duplicate id.
   if (usedAnchorIds.has(id)) id = `${camel}${fallbackName[0].toUpperCase()}${fallbackName.slice(1)}Demo`;
   usedAnchorIds.add(id);
@@ -81,7 +81,7 @@ function readMdFallback(mdPath) {
   };
 }
 
-const componentsHtml = fs.readFileSync(path.join(ROOT, 'pages/components.html'), 'utf8');
+const componentsHtml = fs.readFileSync(path.join(ROOT, 'pages/behaviors.html'), 'utf8');
 const behaviorsHtml = fs.readFileSync(path.join(ROOT, 'pages/behaviors.html'), 'utf8');
 
 /**
@@ -114,7 +114,7 @@ const componentsDemoBlocks = demoBlocks(componentsHtml);
 const behaviorsDemoBlocks = demoBlocks(behaviorsHtml);
 
 /**
- * Which <div x-demo> block (if any) on which page demonstrates this component?
+ * Which <div x-demo> block (if any) on which page demonstrates this behavior?
  * A block counts as a match on two signals, either is good evidence:
  *   1. A `<wb-{name}>` custom element or `x-{name}` attribute ANYWHERE
  *      inside it -- both are unambiguous, deliberate markers.
@@ -125,10 +125,10 @@ const behaviorsDemoBlocks = demoBlocks(behaviorsHtml);
  *      block") matters: confirmed live, a Tabs demo's panel content
  *      happened to include an unrelated `<ul>` bullet list several levels
  *      deep, which an "anywhere" search wrongly credited as the `ul`
- *      component's demo. Every real demo in this codebase puts the
- *      component being demonstrated first in its block.
- * `claimed` excludes blocks another component already matched -- two
- * component names should never point at the same one block.
+ *      behavior's demo. Every real demo in this codebase puts the
+ *      behavior being demonstrated first in its block.
+ * `claimed` excludes blocks another behavior already matched -- two
+ * behavior names should never point at the same one block.
  */
 function findDemoBlock(blocks, name, claimed) {
   const explicit = [new RegExp(`<wb-${name}[ >]`), new RegExp(`\\bx-${name}\\b`)];
@@ -147,7 +147,7 @@ function findDemoLocation(name) {
   const inComponents = findDemoBlock(componentsDemoBlocks, name, claimedComponentsBlocks);
   if (inComponents) {
     claimedComponentsBlocks.add(inComponents.openStart);
-    return { page: 'components', block: inComponents };
+    return { page: 'behaviors', block: inComponents };
   }
   const inBehaviors = findDemoBlock(behaviorsDemoBlocks, name, claimedBehaviorsBlocks);
   if (inBehaviors) {
@@ -157,23 +157,23 @@ function findDemoLocation(name) {
   return null;
 }
 
-const docs = walk(path.join(ROOT, 'docs/components'))
+const docs = walk(path.join(ROOT, 'docs/behaviors'))
   .filter((p) => !OVERVIEW_FILES.has(path.basename(p)));
 
-const components = [];
+const behaviors = [];
 // Positions (in componentsHtml) where an id needs injecting into the
 // matched <div x-demo ...> opening tag. Collected during the loop, applied
 // afterward (in one pass, position-descending) so earlier injections don't
 // shift the offsets of later ones.
 const idInjections = [];
 
-// Bug (found live, alongside the demoAnchor fix above): docs/components/
-// cards/card.md and docs/components/forms/card.md both document a
-// component literally named "card" -- two doc files, same name, no
+// Bug (found live, alongside the demoAnchor fix above): docs/behaviors/
+// cards/card.md and docs/behaviors/forms/card.md both document a
+// behavior literally named "card" -- two doc files, same name, no
 // de-dup, so the catalog had TWO "card" entries, each independently
 // calling findDemoLocation('card') and (once the demoAnchor bug above
 // was fixed) each claiming AND getting an id injected into a DIFFERENT
-// components.html block -- two blocks both landing id="component-card",
+// behaviors.html block -- two blocks both landing id="behavior-card",
 // invalid duplicate HTML ids. Keep only the first doc file found for a
 // given name; a genuine cross-listing (if that's what these two files
 // are) needs a real "see also" link between them, not two catalog rows.
@@ -194,19 +194,19 @@ for (const docPath of docs) {
   const tag = category === 'semantic' || category === 'semantics' ? name : `wb-${schema?.schemaFor || name}`;
 
   const demo = findDemoLocation(name);
-  // Only components.html gets a precise scroll-to anchor -- it's the page
+  // Only behaviors.html gets a precise scroll-to anchor -- it's the page
   // hosting this table, so the common case (same-page scroll) needs no SPA
   // page transition at all. A behaviors.html match still gets a real link,
   // just to the page as a whole (existing SPA nav handles that link type
   // already); adding cross-page anchor-after-transition handling wasn't
   // worth the added surface for the less common case. findDemoLocation()
-  // already guarantees each block is claimed by at most one component, so
+  // already guarantees each block is claimed by at most one behavior, so
   // an id is injected (and therefore promised in the JSON) for every
-  // components.html match, no further dedup needed here.
-  const onComponentsPage = demo?.page === 'components';
+  // behaviors.html match, no further dedup needed here.
+  const onComponentsPage = demo?.page === 'behaviors';
   // demoAnchor is always derived here (not conditionally on "did this run
-  // inject it") -- it must reflect "will this component have an anchor
-  // id" the instant it's matched to a components.html block, whether that
+  // inject it") -- it must reflect "will this behavior have an anchor
+  // id" the instant it's matched to a behaviors.html block, whether that
   // id already exists in the HTML from a prior run or still needs
   // injecting this run. Bug history (#521-adjacent): an earlier version
   // only set this on first injection, so every subsequent regeneration
@@ -219,7 +219,7 @@ for (const docPath of docs) {
     idInjections.push({ pos: demo.block.openStart, anchorId: demoAnchor });
   }
 
-  components.push({
+  behaviors.push({
     name,
     title,
     description,
@@ -231,7 +231,7 @@ for (const docPath of docs) {
   });
 }
 
-components.sort((a, b) => a.name.localeCompare(b.name));
+behaviors.sort((a, b) => a.name.localeCompare(b.name));
 
 if (idInjections.length) {
   idInjections.sort((a, b) => b.pos - a.pos); // descending, so splicing doesn't shift earlier offsets
@@ -240,22 +240,22 @@ if (idInjections.length) {
     const insertAt = pos + '<div x-demo'.length;
     html = html.slice(0, insertAt) + ` id="${anchorId}"` + html.slice(insertAt);
   }
-  fs.writeFileSync(path.join(ROOT, 'pages/components.html'), html);
-  console.log(`Injected ${idInjections.length} anchor id(s) into pages/components.html.`);
+  fs.writeFileSync(path.join(ROOT, 'pages/behaviors.html'), html);
+  console.log(`Injected ${idInjections.length} anchor id(s) into pages/behaviors.html.`);
 }
 
-const withDemo = components.filter((c) => c.demoPage).length;
+const withDemo = behaviors.filter((c) => c.demoPage).length;
 const output = {
   generated: new Date().toISOString(),
-  total: components.length,
+  total: behaviors.length,
   withDemo,
-  withoutDemo: components.length - withDemo,
-  components,
+  withoutDemo: behaviors.length - withDemo,
+  behaviors,
 };
 
-fs.writeFileSync(path.join(ROOT, 'data/component-index.json'), JSON.stringify(output, null, 2) + '\n');
+fs.writeFileSync(path.join(ROOT, 'data/behavior-index.json'), JSON.stringify(output, null, 2) + '\n');
 
-console.log(`component-index: ${components.length} components, ${withDemo} with a live demo, ${components.length - withDemo} without.`);
+console.log(`behavior-index: ${behaviors.length} behaviors, ${withDemo} with a live demo, ${behaviors.length - withDemo} without.`);
 if (VERBOSE) {
-  console.log('Without a demo:', components.filter((c) => !c.demoPage).map((c) => c.name).join(', '));
+  console.log('Without a demo:', behaviors.filter((c) => !c.demoPage).map((c) => c.name).join(', '));
 }

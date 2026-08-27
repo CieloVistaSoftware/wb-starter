@@ -2,7 +2,7 @@ import { test, expect } from '@playwright/test';
 
 /**
  * #323: docs/behaviors-reference.md must follow DEMOS-AND-DOCS-STANDARDS.md §1/§16 —
- * every component example is a live <div x-demo> (renders the control AND shows its
+ * every behavior example is a live <div x-demo> (renders the control AND shows its
  * source), never a static, non-live code fence.
  *
  * This file has MANY <div x-demo> blocks (intro syntax examples + a "Live Examples"

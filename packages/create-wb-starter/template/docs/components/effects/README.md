@@ -2,13 +2,13 @@
 
 This folder contains documentation for the decorative effect behaviors.
 
-`docs/components/README.md` and `docs/components/components.md` both link here as
+`docs/behaviors/README.md` and `docs/behaviors/behaviors.md` both link here as
 `[Effects](./effects/)`. Every sibling folder resolves that form through its own
 `README.md`; this one had none, so both links were dead.
 
 ## Quick Reference
 
-| Component | Tag | Purpose |
+| Behavior | Tag | Purpose |
 |-----------|-----|---------|
 | [confetti](./confetti.md) | `<div x-confetti>` | Burst of confetti on click |
 | [fireworks](./fireworks.md) | `<div x-fireworks>` | Firework bursts |

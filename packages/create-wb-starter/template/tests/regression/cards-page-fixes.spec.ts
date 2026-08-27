@@ -76,11 +76,11 @@ test.describe('demos/site/cards.html: full-page fixes', () => {
     await expect(card.locator('a.x-demo__card-doc-link')).toHaveCount(1);
   });
 
-  test('?page=components: inline <code> tag-name chip does not wrap mid-word', async ({ page }) => {
-    await page.goto('/?page=components', { waitUntil: 'domcontentloaded' });
+  test('?page=behaviors: inline <code> tag-name chip does not wrap mid-word', async ({ page }) => {
+    await page.goto('/?page=behaviors', { waitUntil: 'domcontentloaded' });
     await page.waitForFunction(() => (window as any).WB, { timeout: 20000 });
 
-    const hero = page.locator('#components-hero');
+    const hero = page.locator('#behaviors-hero');
     const codeChip = hero.locator('code', { hasText: 'x-card' }).first();
     await expect(codeChip).toBeVisible({ timeout: 10000 });
     await expect(codeChip).toHaveCSS('white-space', 'nowrap');

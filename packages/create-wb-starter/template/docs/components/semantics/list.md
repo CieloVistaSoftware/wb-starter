@@ -1,6 +1,6 @@
-# List Component
+# List Behavior
 
-The List component (`semantics/list.js`) is a utility behavior that populates a list (`<ul>` or `<ol>`) from a `items` attribute.
+The List behavior (`semantics/list.js`) is a utility behavior that populates a list (`<ul>` or `<ol>`) from a `items` attribute.
 
 ## Usage
 

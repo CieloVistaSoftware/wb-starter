@@ -8,7 +8,7 @@
  *   $extends  (page-level)    — Inherit page defaults (stylesheets, scripts, theme)
  *   $ref      (section-level) — Pull a named section from another page schema
  *   $include  (section-level) — Pull ALL sections from another page schema
- *   $generate (section-level) — Auto-generate section from component schema
+ *   $generate (section-level) — Auto-generate section from behavior schema
  * 
  * Usage:
  *   node scripts/compose-page.mjs <input.page.json> [output.page.json]
@@ -73,7 +73,7 @@ function findComponentSchema(componentName) {
   for (const c of candidates) {
     if (existsSync(c)) return loadJSON(c);
   }
-  throw new Error(`Component schema not found: ${componentName}`);
+  throw new Error(`Behavior schema not found: ${componentName}`);
 }
 
 // Deep merge: target ← source (source wins for scalars, arrays replace, objects recurse)
@@ -95,12 +95,12 @@ function toKebab(str) {
   return str.replace(/([a-z0-9])([A-Z])/g, '$1-$2').toLowerCase();
 }
 
-// ─── $generate: Auto-create section from component schema ───
+// ─── $generate: Auto-create section from behavior schema ───
 
 function generateSection(directive) {
-  const { component, source = 'matrix', heading, columns = 3, baseAttrs = {}, limit } = directive;
-  const schema = findComponentSchema(component);
-  const tag = `wb-${schema.schemaFor || component.replace(/^wb-/, '')}`;
+  const { behavior, source = 'matrix', heading, columns = 3, baseAttrs = {}, limit } = directive;
+  const schema = findComponentSchema(behavior);
+  const tag = `wb-${schema.schemaFor || behavior.replace(/^wb-/, '')}`;
   const props = schema.properties || {};
   const demos = [];
 
@@ -150,14 +150,14 @@ function generateSection(directive) {
     demos.push({ tag, attrs: { ...baseAttrs } });
   }
 
-  // Component test matrices grow over time as coverage is added — without a
+  // Behavior test matrices grow over time as coverage is added — without a
   // cap, a page generated against an 8-combination matrix today silently
   // balloons to dozens of demos once the matrix grows, even though nothing
   // about the page itself changed.
   const finalDemos = typeof limit === 'number' ? demos.slice(0, limit) : demos;
 
   return {
-    heading: heading || `${schema.schemaFor || component} — ${source}`,
+    heading: heading || `${schema.schemaFor || behavior} — ${source}`,
     tag,
     columns,
     demos: finalDemos
@@ -230,9 +230,9 @@ function composePage(inputSchema) {
         }
         stats.includesResolved++;
       }
-      // $generate — auto-create section from component schema
+      // $generate — auto-create section from behavior schema
       else if (section.$generate) {
-        console.log(`  ⚙️ $generate: ${section.$generate.component} (${section.$generate.source || 'matrix'})`);
+        console.log(`  ⚙️ $generate: ${section.$generate.behavior} (${section.$generate.source || 'matrix'})`);
         const generated = generateSection(section.$generate);
         // Allow overrides
         if (section.heading) generated.heading = section.heading;
@@ -268,20 +268,20 @@ const showExample = flags.includes('--example');
 if (showExample) {
   const example = {
     "$extends": "x-page-defaults",
-    "title": "Multi-Component Demo",
+    "title": "Multi-Behavior Demo",
     "schemaFor": "multi-demo",
     "header": {
       "tag": "h1",
-      "content": "Multi-Component Demo",
+      "content": "Multi-Behavior Demo",
       "subtitle": { "tag": "p", "content": "Composed from multiple sources" }
     },
     "sections": [
       {
-        "$generate": { "component": "badge", "source": "matrix", "columns": 4 },
+        "$generate": { "behavior": "badge", "source": "matrix", "columns": 4 },
         "heading": "Badges — From Matrix"
       },
       {
-        "$generate": { "component": "cardnotification", "source": "enums" },
+        "$generate": { "behavior": "cardnotification", "source": "enums" },
         "heading": "Notifications — All Variants"
       },
       {
@@ -308,7 +308,7 @@ if (showExample) {
   console.log('  $extends  — inherit page defaults (stylesheets, scripts, theme)');
   console.log('  $ref      — pull a section from another page schema (by index or heading)');
   console.log('  $include  — pull ALL sections from another page schema');
-  console.log('  $generate — auto-create section from component schema (matrix/enums/all)');
+  console.log('  $generate — auto-create section from behavior schema (matrix/enums/all)');
   process.exit(0);
 }
 

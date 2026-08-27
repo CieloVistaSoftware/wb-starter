@@ -1,7 +1,7 @@
 import { test, expect } from '@playwright/test';
 
 /**
- * FEEDBACK COMPONENT VISUAL TESTS
+ * FEEDBACK BEHAVIOR VISUAL TESTS
  * ===============================
  * Tests for progress bars, spinners, skeleton loaders
  * Creates test elements directly rather than relying on page structure

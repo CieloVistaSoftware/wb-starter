@@ -2,7 +2,7 @@
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "main.schema.json",
   "title": "Main Semantic Element",
-  "description": "Primary content of the document or component. The dominant content area.",
+  "description": "Primary content of the document or behavior. The dominant content area.",
   "$inheritance": {
     "extends": "_element.base.schema.json",
     "reason": "Main IS-A element with all base properties"
@@ -10,7 +10,7 @@
   "htmlTag": "main",
   "role": "main",
   "semanticMeaning": {
-    "description": "The dominant content of the document/component - unique content that is not repeated",
+    "description": "The dominant content of the document/behavior - unique content that is not repeated",
     "examples": [
       "Page main content",
       "Card body",
@@ -42,7 +42,7 @@
     "notes": "Main can contain text content AND child elements"
   },
   "containerBehavior": {
-    "description": "Main is a DROP ZONE for child components",
+    "description": "Main is a DROP ZONE for child behaviors",
     "acceptsChildren": true,
     "childTypes": "any",
     "dropZoneSelector": ".wb-*__main, main"
@@ -51,7 +51,7 @@
     "landmarkRole": "main",
     "requirements": [
       "Only one main element per document (at page level)",
-      "Can have multiple main elements in components (card main, article main)"
+      "Can have multiple main elements in behaviors (card main, article main)"
     ]
   },
   "canContain": [

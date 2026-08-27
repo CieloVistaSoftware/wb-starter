@@ -17,8 +17,8 @@ Every behavior schema MUST define tests that guarantee **100% functional complia
 ```json
 {
   "$schema": "http://json-schema.org/draft-07/schema#",
-  "title": "Component Name",
-  "description": "What this component does",
+  "title": "Behavior Name",
+  "description": "What this behavior does",
   "behavior": "behaviorname",
   
   "properties": {
@@ -68,14 +68,14 @@ Every property MUST define permutations with specific assertions:
     "default": {
       "selector": "element",
       "checks": {
-        "hasClass": "x-component--default",
+        "hasClass": "x-behavior--default",
         "backgroundColor": "rgb(31, 41, 55)"
       }
     },
     "primary": {
       "selector": "element",
       "checks": {
-        "hasClass": "x-component--primary",
+        "hasClass": "x-behavior--primary",
         "backgroundColor": "rgb(99, 102, 241)"
       }
     }
@@ -230,7 +230,7 @@ Defines ALL clickable/interactive elements and expected behavior:
 
 ## 5. EVENTS Section
 
-All custom events the component dispatches:
+All custom events the behavior dispatches:
 
 ```json
 "events": {
@@ -590,7 +590,7 @@ The test runner (`permutation-compliance.spec.ts`) must:
 - [ ] `test.matrix.combinations` covers edge cases
 - [ ] `test.functional.buttons` tests every button click
 - [ ] `test.functional.interactions` tests hover/focus
-- [ ] `test.api.methods` tests component API (if any)
+- [ ] `test.api.methods` tests behavior API (if any)
 
 ---
 

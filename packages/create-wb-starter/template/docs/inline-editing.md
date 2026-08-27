@@ -79,7 +79,7 @@ function enableTextEditing(el) {
 
 ### Data Synchronization
 
-When editing completes, sync changes back to the component's data:
+When editing completes, sync changes back to the behavior's data:
 
 ```javascript
 function syncToDataAttribute(el) {
@@ -90,7 +90,7 @@ function syncToDataAttribute(el) {
   const key = el.dataset.editableKey || 'text';
   const newValue = el.textContent.trim();
   
-  // Update component data
+  // Update behavior data
   if (c.d) {
     c.d[key] = newValue;
     wrapper.dataset.c = JSON.stringify(c);
@@ -112,7 +112,7 @@ function syncToDataAttribute(el) {
 
 ## Marking Elements as Editable
 
-Components should mark their editable areas:
+Behaviors should mark their editable areas:
 
 ```javascript
 // In card.js behavior
@@ -219,9 +219,9 @@ function showMiniEditor(el) {
 }
 ```
 
-## Editable Components Matrix
+## Editable Behaviors Matrix
 
-| Component | Editable Elements | Edit Type |
+| Behavior | Editable Elements | Edit Type |
 |-----------|-------------------|-----------|
 | card | title, subtitle, content | text |
 | cardbutton | title, subtitle, button labels | text |

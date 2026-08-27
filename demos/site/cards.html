@@ -4,7 +4,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Card Components</title>
+  <title>Card Behaviors</title>
   <link rel="stylesheet" href="../../src/styles/themes.css">
   <link rel="stylesheet" href="../../src/styles/site.css">
   <link rel="stylesheet" href="../../src/styles/pages/showcase.css">
@@ -15,7 +15,7 @@
   <nav style="margin-bottom: 1rem;">
     <a href="index.html" style="color: var(--text-secondary, #aaa); text-decoration: none;">← Back to Index</a>
   </nav>
-  <h1>🃏 Card Components</h1>
+  <h1>🃏 Card Behaviors</h1>
   <p>18 card variants — from simple to portfolio, pricing to testimonials</p>
 
   <!-- 1. 🃏 Curated Card Gallery — one example per variant -->
@@ -95,7 +95,7 @@
     <h2>Testimonial Card</h2>
     <div id="demo-testimonial" class="demo-section__grid demo-section__grid--cols-2">
     <div x-demo columns="1">
-      <div x-cardtestimonial quote="This framework completely transformed how we build web components." author="Alex Rivera" role="Lead Developer, TechCorp" avatar="https://i.pravatar.cc/150?u=alex" rating="5"></div>
+      <div x-cardtestimonial quote="This framework completely transformed how we build behaviors." author="Alex Rivera" role="Lead Developer, TechCorp" avatar="https://i.pravatar.cc/150?u=alex" rating="5"></div>
     </div>
     <div x-demo columns="1">
       <div x-cardtestimonial quote="Clean API, great docs, incredibly comprehensive." author="Maria Chen" role="CTO, StartupLab" avatar="https://i.pravatar.cc/150?u=maria" rating="5"></div>
@@ -150,12 +150,12 @@
 
     <h2>Horizontal Card</h2>
     <div x-demo id="demo-horizontal" columns="1">
-      <div x-cardhorizontal image="https://picsum.photos/seed/horiz88/400/300" title="Featured Article" subtitle="The Future of Web Components" content="Web components are evolving rapidly with native browser APIs."></div>
+      <div x-cardhorizontal image="https://picsum.photos/seed/horiz88/400/300" title="Featured Article" subtitle="The Future of Behaviors" content="Web behaviors are evolving rapidly with native browser APIs."></div>
     </div>
 
     <h2>Expandable Card</h2>
     <div x-demo id="demo-expandable" columns="1">
-      <div x-cardexpandable size="sm" title="FAQ: How does it work?" subtitle="Click to reveal the answer" content="The card system uses a behavior-based architecture. Each variant is an independent component that composes the shared card structure and CSS — there is no base class to inherit from. Variants CONTAIN specialized content rather than inheriting it, so a change to the shared structure propagates to every variant automatically."></div>
+      <div x-cardexpandable size="sm" title="FAQ: How does it work?" subtitle="Click to reveal the answer" content="The card system uses a behavior-based architecture. Each variant is an independent behavior that composes the shared card structure and CSS — there is no base class to inherit from. Variants CONTAIN specialized content rather than inheriting it, so a change to the shared structure propagates to every variant automatically."></div>
     </div>
 
     <h2>Minimizable Card</h2>
@@ -180,53 +180,53 @@
 
     <h2>Portfolio Card</h2>
     <div x-demo id="demo-portfolio" columns="1">
-      <div x-cardportfolio name="Jane Doe" title="Senior UI Engineer" company="Cielo Vista Software" location="Rochester, MN" avatar="https://i.pravatar.cc/150?u=portfolio" cover="https://picsum.photos/seed/wbcover/800/300" bio="Full-stack developer with 10+ years experience." skills="JavaScript,TypeScript,Web Components,CSS" email="jane@example.com" website="https://example.com" github="https://github.com" linkedin="https://linkedin.com" cta="View Full Profile" availability="available" tagline="Building the web, one component at a time"></div>
+      <div x-cardportfolio name="Jane Doe" title="Senior UI Engineer" company="Cielo Vista Software" location="Rochester, MN" avatar="https://i.pravatar.cc/150?u=portfolio" cover="https://picsum.photos/seed/wbcover/800/300" bio="Full-stack developer with 10+ years experience." skills="JavaScript,TypeScript,Behaviors,CSS" email="jane@example.com" website="https://example.com" github="https://github.com" linkedin="https://linkedin.com" cta="View Full Profile" availability="available" tagline="Building the web, one behavior at a time"></div>
     </div>
 
   </div>
   </section>
 
-  <!-- 2. 🃏 Card Component -->
-  <section id="card-card-component">
-  <h2>🃏 Card Component</h2>
+  <!-- 2. 🃏 Card Behavior -->
+  <section id="card-card-behavior">
+  <h2>🃏 Card Behavior</h2>
   <div x-demo columns="1">
     <article x-card title="Default Card" subtitle="A simple card" footer="Card footer">
-      This is example card component content.
+      This is example card behavior content.
     </article>
   </div>
   <div x-demo columns="1">
     <article x-card title="Glass Card" variant="glass" subtitle="With glass effect">
-      This is example card component content.
+      This is example card behavior content.
     </article>
   </div>
   <div x-demo columns="1">
     <article x-card title="Bordered Card" variant="bordered" footer="Bordered style">
-      This is example card component content.
+      This is example card behavior content.
     </article>
   </div>
   <div x-demo columns="1">
     <article x-card title="Flat Card" variant="flat" subtitle="Minimal look">
-      This is example card component content.
+      This is example card behavior content.
     </article>
   </div>
   <div x-demo columns="1">
     <article x-card title="Elevated Card" elevated subtitle="With shadow">
-      This is example card component content.
+      This is example card behavior content.
     </article>
   </div>
   <div x-demo columns="1">
     <article x-card title="Clickable Card" clickable subtitle="Click me" footer="Interactive">
-      This is example card component content.
+      This is example card behavior content.
     </article>
   </div>
   <div x-demo columns="1">
     <article x-card title="Small Card" size="sm" subtitle="Compact size">
-      This is example card component content.
+      This is example card behavior content.
     </article>
   </div>
   <div x-demo columns="1">
     <article x-card title="Large Card" size="lg" subtitle="Spacious layout" footer="Extra room">
-      This is example card component content.
+      This is example card behavior content.
     </article>
   </div>
   </section>
@@ -236,22 +236,22 @@
   <h2>Variants</h2>
   <div x-demo columns="1">
     <article x-card variant="default">
-      This is example card component content.
+      This is example card behavior content.
     </article>
   </div>
   <div x-demo columns="1">
     <article x-card variant="glass">
-      This is example card component content.
+      This is example card behavior content.
     </article>
   </div>
   <div x-demo columns="1">
     <article x-card variant="bordered">
-      This is example card component content.
+      This is example card behavior content.
     </article>
   </div>
   <div x-demo columns="1">
     <article x-card variant="flat">
-      This is example card component content.
+      This is example card behavior content.
     </article>
   </div>
   </section>
@@ -261,37 +261,37 @@
   <h2>size variants</h2>
   <div x-demo columns="1">
     <article x-card size="xs">
-      This is example card component content.
+      This is example card behavior content.
     </article>
   </div>
   <div x-demo columns="1">
     <article x-card size="sm">
-      This is example card component content.
+      This is example card behavior content.
     </article>
   </div>
   <div x-demo columns="1">
     <article x-card size="md">
-      This is example card component content.
+      This is example card behavior content.
     </article>
   </div>
   <div x-demo columns="1">
     <article x-card size="lg">
-      This is example card component content.
+      This is example card behavior content.
     </article>
   </div>
   <div x-demo columns="1">
     <article x-card size="xl">
-      This is example card component content.
+      This is example card behavior content.
     </article>
   </div>
   <div x-demo columns="1">
     <article x-card size="full">
-      This is example card component content.
+      This is example card behavior content.
     </article>
   </div>
   <div x-demo columns="1">
     <article x-card size="auto">
-      This is example card component content.
+      This is example card behavior content.
     </article>
   </div>
   </section>
@@ -301,12 +301,12 @@
   <h2>Toggles</h2>
   <div x-demo columns="1">
     <article x-card elevated>
-      This is example card component content.
+      This is example card behavior content.
     </article>
   </div>
   <div x-demo columns="1">
     <article x-card clickable>
-      This is example card component content.
+      This is example card behavior content.
     </article>
   </div>
   </section>
@@ -1811,7 +1811,7 @@
     window.WB = WB;
     await WB.init({ autoInject: true });
     await WB.scan(document.body, { eager: true });
-    console.log('Card Components initialized');
+    console.log('Card Behaviors initialized');
     window.__WB_DEMO_INITIALIZED__ = true;
   </script>
 </body>

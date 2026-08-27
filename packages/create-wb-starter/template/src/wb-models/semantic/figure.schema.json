@@ -112,7 +112,7 @@
     "code"
   ],
   "wbComponents": {
-    "description": "WB components that extend figure",
+    "description": "WB behaviors that extend figure",
     "list": [
       "image",
       "cardimage",

@@ -84,4 +84,4 @@ Please attach the generated `trace.zip` to the PR when reporting flaky failures.
 1. **No broken links** - All CSS/JS/image paths must be valid
 2. **No unregistered behaviors** - All `data-wb` values must exist in `src/behaviors/index.js`
 3. **No CSS imports in pages** - Theme variables only in `src/styles/themes.css`
-4. **Schema-first** - Components must have schemas before implementation
+4. **Schema-first** - Behaviors must have schemas before implementation

@@ -6,7 +6,7 @@
  *
  * A single delegated document-level listener, not per-element auto-inject
  * registration -- card CTAs render as real <button>/<a> elements inside
- * dozens of different x-card-family components (card.js builds them
+ * dozens of different x-card-family behaviors (card.js builds them
  * internally), so matching the resulting DOM shape at click time (a
  * button, or an element marked clickable) covers every card type without
  * enumerating each one by name.
@@ -82,7 +82,7 @@ if (typeof document !== 'undefined') {
     // meaningful for.
     if (target.closest('.x-demo__links, .x-demo__card-doc-link, x-themecontrol')) return;
 
-    // Most x-card-family components (cardbutton, cardproduct, cardfile,
+    // Most x-card-family behaviors (cardbutton, cardproduct, cardfile,
     // cardexpandable, cardminimizable, a plain clickable card, ...) already
     // call createToast() directly inside their own click handling
     // (card.js) -- NOT via the x-toast attribute, so the check above never
@@ -97,7 +97,7 @@ if (typeof document !== 'undefined') {
     // synchronous, so a toast it just created already exists in the DOM
     // RIGHT NOW too. Defer one tick (setTimeout 0) and re-check: if the
     // toast count grew since this click started, something else already
-    // confirmed it -- skip, rather than maintain a brittle per-component
+    // confirmed it -- skip, rather than maintain a brittle per-behavior
     // exclusion list that has to be updated every time a new card variant
     // adds its own toast.
     const toastCountBefore = document.querySelectorAll('.x-toast').length;

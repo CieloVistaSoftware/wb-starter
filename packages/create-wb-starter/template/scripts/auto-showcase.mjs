@@ -1,7 +1,7 @@
 /**
  * Auto-Showcase Generator
  * =======================
- * Reads a component .schema.json and automatically generates a .page.json
+ * Reads a behavior .schema.json and automatically generates a .page.json
  * showcase demonstrating all variants, then generates the HTML page.
  *
  * Data sources (priority order):
@@ -11,10 +11,10 @@
  *   4. Constructed defaults from property definitions
  *
  * Usage:
- *   node scripts/auto-showcase.mjs <component-schema>
+ *   node scripts/auto-showcase.mjs <behavior-schema>
  *   node scripts/auto-showcase.mjs cardnotification
  *   node scripts/auto-showcase.mjs src/wb-models/badge.schema.json
- *   node scripts/auto-showcase.mjs --list   (show all available components)
+ *   node scripts/auto-showcase.mjs --list   (show all available behaviors)
  *
  * Output:
  *   src/wb-models/pages/{name}-showcase.page.json
@@ -48,16 +48,16 @@ function resolveSchemaPath(input) {
   return null;
 }
 
-// ─── List all available component schemas ───
+// ─── List all available behavior schemas ───
 
 function listComponents() {
   const files = readdirSync(MODELS_DIR).filter(f => f.endsWith('.schema.json'));
-  const components = [];
+  const behaviors = [];
   for (const f of files) {
     try {
       const s = JSON.parse(readFileSync(join(MODELS_DIR, f), 'utf-8'));
       if (s.schemaFor) {
-        components.push({
+        behaviors.push({
           name: s.schemaFor,
           title: s.title || s.schemaFor,
           icon: s._metadata?.icon || '📦',
@@ -68,7 +68,7 @@ function listComponents() {
       }
     } catch { /* skip */ }
   }
-  return components.sort((a, b) => a.name.localeCompare(b.name));
+  return behaviors.sort((a, b) => a.name.localeCompare(b.name));
 }
 
 // ─── Convert camelCase to kebab for HTML attrs ───
@@ -79,7 +79,7 @@ function camelToKebab(str) {
 
 // ─── Section heading for an enum-variant sweep (#411) ───
 // A property literally named `variant` produced "variant variants" --
-// the common case, since most components (buttons, cards, alerts...) name
+// the common case, since most behaviors (buttons, cards, alerts...) name
 // their variant-selector property exactly that. Special-case it to a
 // natural "Variants" heading; other property names (e.g. `size`) keep the
 // existing "{propName} variants" phrasing, which already reads fine.
@@ -242,7 +242,7 @@ function buildPageSchema(schema) {
   const pageSchema = {
     "$extends": "x-page-defaults",
     "title": title,
-    "description": `Auto-generated showcase for ${schema.schemaFor} component — all variants, combinations, and toggles.`,
+    "description": `Auto-generated showcase for ${schema.schemaFor} behavior — all variants, combinations, and toggles.`,
     "schemaFor": `${schema.schemaFor}-showcase`,
 
     "page": {
@@ -279,15 +279,15 @@ const arg = process.argv[2];
 
 if (!arg) {
   console.error('Usage:');
-  console.error('  node scripts/auto-showcase.mjs <component-name-or-path>');
+  console.error('  node scripts/auto-showcase.mjs <behavior-name-or-path>');
   console.error('  node scripts/auto-showcase.mjs --list');
   process.exit(1);
 }
 
 if (arg === '--list') {
-  const components = listComponents();
-  console.log(`\n📦 ${components.length} component schemas available:\n`);
-  for (const c of components) {
+  const behaviors = listComponents();
+  console.log(`\n📦 ${behaviors.length} behavior schemas available:\n`);
+  for (const c of behaviors) {
     const matrix = c.hasMatrix ? `✅ matrix(${c.matrixCount})` : '   no matrix';
     console.log(`  ${c.icon} ${c.name.padEnd(25)} ${c.propCount} props  ${matrix}`);
   }
@@ -299,7 +299,7 @@ const schemaPath = resolveSchemaPath(arg);
 if (!schemaPath) {
   console.error(`❌ Could not find schema for "${arg}"`);
   console.error(`   Tried: ${arg}, ${arg}.schema.json`);
-  console.error(`   Run with --list to see available components`);
+  console.error(`   Run with --list to see available behaviors`);
   process.exit(1);
 }
 
@@ -328,7 +328,7 @@ try {
   const valResult = JSON.parse(readFileSync(resolve('data/page-schema-validation.json'), 'utf-8'));
   if (!valResult.allValid) {
     console.error('❌ Generated page schema has validation errors!');
-    console.error('   Fix the component schema or adjust the generator.');
+    console.error('   Fix the behavior schema or adjust the generator.');
     console.error(`   Errors: ${valResult.totalErrors}, Warnings: ${valResult.totalWarnings}`);
     // Don't exit — still generate, but warn
     console.warn('⚠️  Generating anyway — review the output carefully.\n');
@@ -357,7 +357,7 @@ const result = {
   sourceSchema: schemaPath,
   pageSchema: pageSchemaPath,
   outputHtml: outputHtml,
-  component: schema.schemaFor,
+  behavior: schema.schemaFor,
   sections: pageSchema.sections.length,
   totalDemos: pageSchema._metadata.totalDemos
 };
@@ -365,7 +365,7 @@ writeFileSync(resolve('data/auto-showcase-result.json'), JSON.stringify(result, 
 
 console.log(`\n══════════════════════════════════════`);
 console.log(`  ✅ Auto-showcase complete`);
-console.log(`  Component: ${schema.schemaFor}`);
+console.log(`  Behavior: ${schema.schemaFor}`);
 console.log(`  Sections:  ${result.sections}`);
 console.log(`  Demos:     ${result.totalDemos}`);
 console.log(`  Page JSON: ${pageSchemaPath}`);

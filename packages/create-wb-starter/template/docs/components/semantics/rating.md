@@ -1,6 +1,6 @@
 # Rating - wb-starter v3.0
 
-Star rating component for displaying or collecting ratings.
+Star rating behavior for displaying or collecting ratings.
 
 ## Overview
 
@@ -25,7 +25,7 @@ Star rating component for displaying or collecting ratings.
 | `size` | string | `"md"` | Size: `sm`, `md`, `lg` |
 | `icon` | string | `"★"` | Custom icon (emoji or symbol) |
 
-Wrapped in `<div x-demo>`, so the live component renders below with its source shown underneath:
+Wrapped in `<div x-demo>`, so the live behavior renders below with its source shown underneath:
 
 <div x-demo>
 <span x-rating value="3"></span>

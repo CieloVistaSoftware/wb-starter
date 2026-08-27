@@ -1,6 +1,6 @@
 # Alert
 
-Alert component for displaying messages with severity levels
+Alert behavior for displaying messages with severity levels
 
 ## Type — new capability
 

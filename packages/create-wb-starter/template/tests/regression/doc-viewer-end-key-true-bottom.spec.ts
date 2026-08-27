@@ -2,7 +2,7 @@ import { test, expect } from '@playwright/test';
 
 /**
  * REGRESSION (#466): pressing End on a long doc-viewer.html page (e.g.
- * ?file=docs/components/cards/card.md, which embeds 10 <div x-demo> blocks)
+ * ?file=docs/behaviors/cards/card.md, which embeds 10 <div x-demo> blocks)
  * used to leave scrollTop stranded well short of the page's true bottom —
  * confirmed via a real, native `page.keyboard.press('End')` (not a synthetic
  * dispatchEvent, which never triggers the browser's actual default action).
@@ -41,7 +41,7 @@ test.describe('doc-viewer.html End key reaches the true page bottom (#466)', () 
     // page BEFORE all lazy <div x-demo> blocks have settled — matching how a
     // real, fast reader hits End almost as soon as the page appears, which
     // is exactly the timing the original bug report reproduced under.
-    await page.goto('/public/doc-viewer.html?file=docs/components/cards/card.md', { waitUntil: 'load' });
+    await page.goto('/public/doc-viewer.html?file=docs/behaviors/cards/card.md', { waitUntil: 'load' });
     await page.waitForTimeout(50);
 
     const demoCount = await page.locator('x-demo').count();

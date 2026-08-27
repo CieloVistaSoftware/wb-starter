@@ -1,6 +1,6 @@
 import { readFlag } from '../core/read-attr.js';
 /**
- * WBAudio Component
+ * WBAudio Behavior
  * =================
  * Custom Tag: <audio>
  * 

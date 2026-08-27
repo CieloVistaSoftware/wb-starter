@@ -16,7 +16,7 @@ import {
 // Demo/showcase/test pages that intentionally display raw color values as
 // content (e.g. a hue-spectrum color wheel, permutation test harness) — not
 // product UI subject to theming. Same convention as demo.css.
-const COLOR_EXCEPTION_FILES = ['themes.css', 'x-signature.css', 'variables.css', 'demo.css', 'components.css', 'site.css', 'transitions.css', 'x-grayscale.css', 'x-grayscale-dark.css', 'hero.css', 'navbar.css', 'wizard.css', 'themes-showcase.css', 'ai-permutation-test.css', 'frameworks.css'];
+const COLOR_EXCEPTION_FILES = ['themes.css', 'x-signature.css', 'variables.css', 'demo.css', 'behaviors.css', 'site.css', 'transitions.css', 'x-grayscale.css', 'x-grayscale-dark.css', 'hero.css', 'navbar.css', 'wizard.css', 'themes-showcase.css', 'ai-permutation-test.css', 'frameworks.css'];
 
 // Patterns that violate OOP
 const FORBIDDEN_PATTERNS = {
@@ -27,7 +27,7 @@ const FORBIDDEN_PATTERNS = {
 test.describe('CSS OOP Compliance', () => {
   
   test('forbidden files should not exist', () => {
-    const forbidden = ['styles/x-components.css'];
+    const forbidden = ['styles/x-behaviors.css'];
     for (const file of forbidden) {
       if (fileExists(path.join(ROOT, file))) {
         console.warn(`⚠️ OOP VIOLATION: ${file} should be deleted`);

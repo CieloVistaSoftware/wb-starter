@@ -1,14 +1,14 @@
 /**
  * Input, Textarea & Select Behavior Styles
  * -----------------------------------------------------------------------------
- * Extracted from components.css (Post-Phase 3 cleanup)
+ * Extracted from behaviors.css (Post-Phase 3 cleanup)
  * Works with src/wb-viewmodels/semantics/input.js
  *
  * #448: `x-select` below is a TAG selector, not a class -- select()
  * (semantics/select.js) no longer adds a classList.add('x-select') that
  * just duplicated the <select> tag name (that container is only ever
  * the <select> custom tag itself; a native <select> never reaches that
- * code path at all). `.x-input`/`.x-textarea` are unrelated components,
+ * code path at all). `.x-input`/`.x-textarea` are unrelated behaviors,
  * untouched.
  * -----------------------------------------------------------------------------
  */
@@ -158,7 +158,7 @@ select[data-variant="error"] { border: 1px solid var(--danger-color); }
  * and were falling back to the browser-native white box on dark themes. Theme
  * them from the active theme so they are dark on dark, light on light. Excludes
  * range/checkbox/radio/color (they have their own theming via accent-color).
- * Low specificity so .x-input and component-specific rules still win.
+ * Low specificity so .x-input and behavior-specific rules still win.
  * --------------------------------------------------------------------------- */
 input:where(:not([type="range"]):not([type="checkbox"]):not([type="radio"]):not([type="color"]):not([type="file"])),
 textarea,

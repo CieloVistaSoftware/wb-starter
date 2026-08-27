@@ -1,6 +1,6 @@
 /**
  * fix-missing-defaults.mjs
- * Adds missing 'default' values to all component schema properties.
+ * Adds missing 'default' values to all behavior schema properties.
  * 
  * Rules:
  *   string  → ""

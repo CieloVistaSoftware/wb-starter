@@ -207,7 +207,7 @@
       "demos": [
         { "tag": "x-cardtestimonial", "attrs": { "quote": "This framework changed how we build UIs.", "author": "Sarah Kim", "role": "CTO, TechCorp", "avatar": "https://i.pravatar.cc/48?img=10", "rating": "5" } },
         { "tag": "x-cardtestimonial", "attrs": { "quote": "Clean, fast, and easy to use. Highly recommend.", "author": "Marcus Lee", "role": "Frontend Lead", "avatar": "https://i.pravatar.cc/48?img=11", "rating": "4" } },
-        { "tag": "x-cardtestimonial", "attrs": { "quote": "The best component library I've worked with.", "author": "Priya Patel", "role": "Developer", "avatar": "https://i.pravatar.cc/48?img=16", "rating": "5" } }
+        { "tag": "x-cardtestimonial", "attrs": { "quote": "The best behavior library I've worked with.", "author": "Priya Patel", "role": "Developer", "avatar": "https://i.pravatar.cc/48?img=16", "rating": "5" } }
       ]
     },
     {

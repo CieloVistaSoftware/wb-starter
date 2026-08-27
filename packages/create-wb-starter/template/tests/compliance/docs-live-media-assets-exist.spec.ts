@@ -19,7 +19,7 @@
  *     shows a WORKING live demo AND its code").
  *
  * #500 fixed this by hand for `docs/behaviors/x-audio.md` and
- * `docs/components/semantics/audio.md`, but missed `docs/behaviors-reference.md`
+ * `docs/behaviors/semantics/audio.md`, but missed `docs/behaviors-reference.md`
  * -- the same defect was refiled 2 days later as #514. Hand-auditing doc srcs
  * does not scale; this gate is the systemic fix.
  *
@@ -88,10 +88,10 @@ function mdFiles(dir: string, acc: string[] = []): string[] {
 // scope. Remove an entry here only once #519 has actually fixed that file.
 //
 // #519 fixed all three: docs/behavior-cross-reference.md and
-// docs/components/semantics/img.md now point their live <div x-demo> media at
+// docs/behaviors/semantics/img.md now point their live <div x-demo> media at
 // https://placehold.co / https://ui-avatars.com URLs (the same remote-asset
 // convention already proven in demos/site/cards.html);
-// docs/components/semantics/video.md points its live <div x-demo> at a real,
+// docs/behaviors/semantics/video.md points its live <div x-demo> at a real,
 // stable CC0 sample video (MDN's flower.mp4) rather than the dead 13-byte
 // demos/movie.mp4 placeholder.
 const KNOWN_BROKEN_PENDING_519 = new Set<string>([]);

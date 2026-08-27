@@ -39,7 +39,7 @@ li:last-child { margin-bottom: 0; }
    STANDALONE DEMO PAGE CONTAINER
    ============================================================================= */
 /* demos/site/*.html pages are standalone (not routed through .site/.site__body,
-   which is the app shell used by pages/*.html — see components.html). Without
+   which is the app shell used by pages/*.html — see behaviors.html). Without
    this, their content sits flush against the viewport edge with zero page
    margin, unlike every shell-routed page. index.html already worked around
    this with its own one-off inline <style>; this class gives every other
@@ -1184,7 +1184,7 @@ h5, h6 {
 /* Element-qualified (button.x-btn-gradient, a.x-btn-gradient) so this beats
    themes.css's `[data-theme] button` native-button reset (0-1-1 specificity)
    on <button> usage -- the bare class alone (0-1-0) lost that fight and this
-   component's real padding never applied, leaving the reset's 0.5rem 1rem in
+   behavior's real padding never applied, leaving the reset's 0.5rem 1rem in
    effect (8px, under the >=1rem minimum) instead of the 0.875rem/2rem below. */
 button.x-btn-gradient,
 a.x-btn-gradient {
@@ -1411,7 +1411,7 @@ a.x-btn-glass {
 /* Striped progress styles → src/styles/behaviors/progress.css (migrated Phase 2) */
 
 /* =============================================================================
-   RACKMOUNT COMPONENT
+   RACKMOUNT BEHAVIOR
    ============================================================================= */
 .x-rackmount {
   display: flex;
@@ -1907,7 +1907,7 @@ img { max-width: 100%; height: auto; }
      reload action lives on the version number itself now (tap it), so
      there's no separate button left that needs to stay visible here.
      Scoped under .site__header: src/styles/behaviors/header.css (an
-     unrelated <header> component) reuses these exact class names with an
+     unrelated <header> behavior) reuses these exact class names with an
      unconditional display:flex and is injected into <head> at runtime after
      site.css, so an unscoped same-specificity selector here loses the
      cascade regardless of this media query matching. */

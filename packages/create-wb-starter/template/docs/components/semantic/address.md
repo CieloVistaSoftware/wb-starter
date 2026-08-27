@@ -87,7 +87,7 @@ address a:hover {
 
 ## Related
 
-Components that build their own `<address>` block internally from
+Behaviors that build their own `<address>` block internally from
 structured attributes (rather than hand-authored `<address>` markup, which
 they replace, not merge) document their own contact-info behavior on their
 own page, not here:

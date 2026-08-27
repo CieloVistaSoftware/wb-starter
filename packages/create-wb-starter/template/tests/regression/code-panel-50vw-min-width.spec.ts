@@ -8,7 +8,7 @@ import { test, expect } from '@playwright/test';
  * code panel just as cramped, even though `.x-demo__code`'s own max-width
  * already allows up to 50vw: a max-width can never make an element WIDER
  * than its constrained parent, only narrower. Live report: pages/
- * components.html's "This is the title" card demo rendered source at
+ * behaviors.html's "This is the title" card demo rendered source at
  * ~250px with a horizontal scrollbar cutting off every attribute value
  * mid-word.
  *
@@ -18,8 +18,8 @@ import { test, expect } from '@playwright/test';
  * grows to 50vw regardless of how narrow the shrink-measurement was.
  */
 test.describe('x-demo[data-code-width="50vw"] actually reaches 50vw', () => {
-  test('components.html: the "This is the title" card demo code panel is not cramped', async ({ page }) => {
-    await page.goto('/?page=components', { waitUntil: 'domcontentloaded' });
+  test('behaviors.html: the "This is the title" card demo code panel is not cramped', async ({ page }) => {
+    await page.goto('/?page=behaviors', { waitUntil: 'domcontentloaded' });
     await page.waitForSelector('#cardComponentDemo', { timeout: 20000 });
     await page.waitForTimeout(1500); // shrink-width rAF measurement + settle
 

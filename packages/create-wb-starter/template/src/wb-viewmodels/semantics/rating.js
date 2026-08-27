@@ -3,7 +3,7 @@ import { readAttr } from '../../core/read-attr.js';
  * Rating Behavior
  * ===============
  * 
- * Interactive star rating component.
+ * Interactive star rating behavior.
  * 
  * ATTRIBUTES:
  * - data-max: Number of stars (default: 5)

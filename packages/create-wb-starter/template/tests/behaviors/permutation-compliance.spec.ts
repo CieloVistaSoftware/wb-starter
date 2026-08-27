@@ -230,34 +230,34 @@ function loadSchemas(): Map<string, Schema> {
     try {
       const schema = JSON.parse(content) as Schema;
       // v3 schemas use `schemaFor`; the schema-builder treats it as `behavior`.
-      // The runner used to only honor `behavior`, so ~89% of components (97 of
+      // The runner used to only honor `behavior`, so ~89% of behaviors (97 of
       // 109, all using `schemaFor`) were silently SKIPPED and never tested —
       // which is why functional regressions (switch, alert, card, …) shipped.
       if (!schema.behavior && (schema as any).schemaFor) {
         schema.behavior = (schema as any).schemaFor;
       }
-      // Only load schemas with a behavior/schemaFor (true component schemas).
+      // Only load schemas with a behavior/schemaFor (true behavior schemas).
       if (!schema.behavior) {
-        console.log(`Skipping non-component schema: ${file}`);
+        console.log(`Skipping non-behavior schema: ${file}`);
         continue;
       }
       // schemaType is the project-wide "is this a real single-element
-      // component" signal (see tests/compliance/schema-validation.spec.ts,
-      // which already tiers on it: 'component' [default] vs 'base' /
+      // behavior" signal (see tests/compliance/schema-validation.spec.ts,
+      // which already tiers on it: 'behavior' [default] vs 'base' /
       // 'definition' / 'behavior' / 'page'). This runner used to test EVERY
       // schema with a behavior/schemaFor as if it were a live <wb-*> custom
       // element -- but behavior.schema.json (schemaType 'behavior': the
       // master metadata catalog for ALL behaviors), home-page.schema.json
       // (schemaType 'page': a page-layout composition), search-index.schema.json
       // and views.schema.json (schemaType 'definition': data-file formats for
-      // the search index / views registry, not components) all declare
+      // the search index / views registry, not behaviors) all declare
       // schemaFor for cross-referencing purposes but were never meant to be
       // instantiated as <div>/<div>/<div>/
       // <div> tags -- no such custom elements exist. Testing them here
       // generated fake tags, then reported real elements/classes/children as
       // "missing" for structures that were never supposed to exist.
-      if (schema.schemaType && schema.schemaType !== 'component') {
-        console.log(`Skipping non-component schema (schemaType=${schema.schemaType}): ${file}`);
+      if (schema.schemaType && schema.schemaType !== 'behavior') {
+        console.log(`Skipping non-behavior schema (schemaType=${schema.schemaType}): ${file}`);
         continue;
       }
       const name = schema.behavior || file.replace('.schema.json', '');
@@ -270,9 +270,9 @@ function loadSchemas(): Map<string, Schema> {
 }
 
 // Generate HTML for testing.
-// v3: components are wb-* TAGS with PLAIN attributes (e.g. <article variant="x">),
+// v3: behaviors are wb-* TAGS with PLAIN attributes (e.g. <article variant="x">),
 // NOT the legacy <div x-behavior data-prop>. Generating the old form meant the
-// element never became the component, so baseClass was "missing" — a false
+// element never became the behavior, so baseClass was "missing" — a false
 // positive. Also strip a leading wb- from the name to avoid x-wb-control.
 function generateHtml(behavior: string, props: Record<string, any>, content: string = 'Test Content', tagName?: string): string {
   const bare = behavior.replace(/^wb-/, '');
@@ -396,7 +396,7 @@ async function setupTestContainer(page: Page, html: string): Promise<Locator> {
 const schemas = loadSchemas();
 
 // CONSOLIDATED: ONE test per behavior validates EVERYTHING
-test.describe('Component Compliance', () => {
+test.describe('Behavior Compliance', () => {
   for (const [behaviorName, schema] of schemas) {
     test(`${behaviorName}: comprehensive compliance`, async ({ page }) => {
       await page.goto('index.html');
@@ -497,14 +497,14 @@ test.describe('Component Compliance', () => {
           
           const el = await setupTestContainer(page, html);
           
-          // Check if component rendered - look for baseClass OR .x-ready class
+          // Check if behavior rendered - look for baseClass OR .x-ready class
           const hasBaseClass = schema.compliance?.baseClass 
             ? await el.evaluate((e, cls) => e.classList.contains(cls), schema.compliance.baseClass)
             : true;
           const wbReady = await el.classList.contains('x-ready');
           
           if (!hasBaseClass && !wbReady) {
-            allErrors.push(`[PERMUTATION] ${propName}=${JSON.stringify(value)}: Component did not initialize`);
+            allErrors.push(`[PERMUTATION] ${propName}=${JSON.stringify(value)}: Behavior did not initialize`);
             continue;
           }
           
@@ -523,10 +523,10 @@ test.describe('Component Compliance', () => {
           const html = generateHtml(behaviorName, combo, 'Test Content', schema.element);
           const el = await setupTestContainer(page, html);
 
-          // "Initialized" = ANY sign the component was processed: its baseClass,
+          // "Initialized" = ANY sign the behavior was processed: its baseClass,
           // the x-schema marker, any wb-* class, or built child structure. (The
           // old check required the exact baseClass OR a non-existent .x-ready
-          // class, so it failed working components — a false positive.)
+          // class, so it failed working behaviors — a false positive.)
           const initialized = await el.evaluate((e, cls) =>
             (cls ? e.classList.contains(cls) : false) ||
             e.hasAttribute('x-schema') ||
@@ -536,7 +536,7 @@ test.describe('Component Compliance', () => {
           schema.compliance?.baseClass || '');
 
           if (!initialized) {
-            allErrors.push(`[MATRIX] Combo ${JSON.stringify(combo)}: Component did not initialize`);
+            allErrors.push(`[MATRIX] Combo ${JSON.stringify(combo)}: Behavior did not initialize`);
           }
         }
       }
@@ -565,7 +565,7 @@ test.describe('Component Compliance', () => {
             }
             // Handle single-click tests
             else if (btnTest.selector) {
-              // 'element'/'' mean "the component root itself" -- the same
+              // 'element'/'' mean "the behavior root itself" -- the same
               // convention runAssertions() (CHECK 5) and the visual check
               // (CHECK 9) already honor. Without this, any schema whose
               // button test targets the host element directly (e.g.
@@ -644,7 +644,7 @@ test.describe('Component Compliance', () => {
           try {
             if (visTest.expect) {
               // No selector (input.schema.json's "Error State"/"Helper Text",
-              // among others) means "the component root itself", same as the
+              // among others) means "the behavior root itself", same as the
               // explicit 'element' convention CHECK 5/7 use -- `el.locator(undefined)`
               // isn't a no-op, it's a hard Playwright error ("Cannot read
               // properties of undefined (reading '_frame')"), which is why

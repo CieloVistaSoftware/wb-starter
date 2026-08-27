@@ -2,18 +2,18 @@
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "_inheritance.schema.json",
   "title": "WB Inheritance Rules",
-  "description": "Defines what IS-A inheritance means in the WB system. ALL components must follow these rules.",
+  "description": "Defines what IS-A inheritance means in the WB system. ALL behaviors must follow these rules.",
   "schemaType": "definition",
   
   "version": "1.0.0",
   
   "fundamentalPrinciple": {
-    "statement": "ALL WB components inherit from at least one semantic HTML element",
-    "reason": "Semantic elements define base properties, structure, and accessibility. Our components IMPROVE on them.",
+    "statement": "ALL WB behaviors inherit from at least one semantic HTML element",
+    "reason": "Semantic elements define base properties, structure, and accessibility. Our behaviors IMPROVE on them.",
     "hierarchy": [
       "1. Semantic Element (article, section, aside, nav, etc.) - defines BASE",
-      "2. WB Component (card, alert, modal, etc.) - IS-A semantic element, ADDS behavior",
-      "3. WB Variant (cardbutton, cardimage, etc.) - IS-A component, ADDS specialization"
+      "2. WB Behavior (card, alert, modal, etc.) - IS-A semantic element, ADDS behavior",
+      "3. WB Variant (cardbutton, cardimage, etc.) - IS-A behavior, ADDS specialization"
     ]
   },
 
@@ -68,7 +68,7 @@
   },
 
   "textPropertyRules": {
-    "description": "Rules for text content across ALL components",
+    "description": "Rules for text content across ALL behaviors",
     
     "rule_AlwaysEditable": {
       "statement": "If an element displays text, that text MUST be editable",

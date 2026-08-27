@@ -1,38 +1,38 @@
-<!-- Page styles: src/styles/pages/components.css -->
-<link rel="stylesheet" href="src/styles/pages/components.css?v=3.0.91">
+<!-- Page styles: src/styles/pages/behaviors.css -->
+<link rel="stylesheet" href="src/styles/pages/behaviors.css?v=3.0.91">
 
-<div id="components-hero" class="page__hero">
-  <h1>🧩 Components Library</h1>
+<div id="behaviors-hero" class="page__hero">
+  <h1>🧩 Behaviors Library</h1>
   <div>wb-starter <span x-release format="v{version}" reload="false"></span> • Interactive demos with copy-ready code</div>
   <p style="max-width: 640px; margin: 1rem auto 0;">
-    Every component below is a real <code>&lt;wb-*&gt;</code> custom element —
+    Every behavior below is a real <code>&lt;wb-*&gt;</code> custom element —
     <code>&lt;x-card&gt;</code>, <code>&lt;x-progress&gt;</code>,
     <code>&lt;x-modal&gt;</code>, and the rest. Drop the tag in, no build step,
     no base class to extend. And it all lives in <strong>Light DOM</strong> — no
     Shadow DOM, no encapsulation boundary — so your theme's CSS, your own
-    selectors, and the browser's devtools reach straight into every component
+    selectors, and the browser's devtools reach straight into every behavior
     exactly the way they reach into plain HTML.
   </p>
 </div>
 
-<div id="component-index" class="component-index">
-  <div class="component-index__toolbar">
-    <label for="component-index-search" class="component-index__label">Search components</label>
-    <input type="search" id="component-index-search" class="component-index__search"
+<div id="behavior-index" class="behavior-index">
+  <div class="behavior-index__toolbar">
+    <label for="behavior-index-search" class="behavior-index__label">Search behaviors</label>
+    <input type="search" id="behavior-index-search" class="behavior-index__search"
       placeholder="Filter by name, category, or description…" autocomplete="off">
-    <span id="component-index-summary" class="component-index__summary"></span>
+    <span id="behavior-index-summary" class="behavior-index__summary"></span>
   </div>
-  <p id="component-index-status" class="component-index__status">Loading component index…</p>
-  <table id="component-index-table" class="component-index__table" hidden>
+  <p id="behavior-index-status" class="behavior-index__status">Loading behavior index…</p>
+  <table id="behavior-index-table" class="behavior-index__table" hidden>
     <thead>
       <tr>
-        <th sort="name" tabindex="0" role="button" aria-sort="none">Component</th>
+        <th sort="name" tabindex="0" role="button" aria-sort="none">Behavior</th>
         <th sort="category" tabindex="0" role="button" aria-sort="none">Category</th>
         <th>Description</th>
         <th sort="demoPage" tabindex="0" role="button" aria-sort="none">Demo</th>
       </tr>
     </thead>
-    <tbody id="component-index-tbody"></tbody>
+    <tbody id="behavior-index-tbody"></tbody>
   </table>
 </div>
 
@@ -46,25 +46,25 @@
   }
   function demoHref(c) {
     if (!c.demoPage) return null;
-    if (c.demoPage === 'components') return `#${c.demoAnchor}`;
+    if (c.demoPage === 'behaviors') return `#${c.demoAnchor}`;
     return `?page=${c.demoPage}`;
   }
   function escapeHtml(s) {
     return String(s).replace(/[&<>"']/g, (ch) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[ch]));
   }
 
-  const state = { components: [], sortKey: 'name', sortDir: 'asc', query: '' };
+  const state = { behaviors: [], sortKey: 'name', sortDir: 'asc', query: '' };
   const els = {
-    search: document.getElementById('component-index-search'),
-    summary: document.getElementById('component-index-summary'),
-    status: document.getElementById('component-index-status'),
-    table: document.getElementById('component-index-table'),
-    tbody: document.getElementById('component-index-tbody'),
+    search: document.getElementById('behavior-index-search'),
+    summary: document.getElementById('behavior-index-summary'),
+    status: document.getElementById('behavior-index-status'),
+    table: document.getElementById('behavior-index-table'),
+    tbody: document.getElementById('behavior-index-tbody'),
   };
 
   function render() {
     const q = state.query.trim().toLowerCase();
-    const filtered = state.components.filter((c) => {
+    const filtered = state.behaviors.filter((c) => {
       if (!q) return true;
       return (
         c.name.toLowerCase().includes(q) ||
@@ -85,8 +85,8 @@
       .map((c) => {
         const demo = demoHref(c);
         const demoCell = demo
-          ? `<a href="${escapeHtml(demo)}">${escapeHtml(c.demoPage === 'components' ? 'View demo' : c.demoPage)}</a>`
-          : '<span class="component-index__muted">No demo</span>';
+          ? `<a href="${escapeHtml(demo)}">${escapeHtml(c.demoPage === 'behaviors' ? 'View demo' : c.demoPage)}</a>`
+          : '<span class="behavior-index__muted">No demo</span>';
         return `<tr>
           <td><a href="${escapeHtml(docHref(c.docPath))}"><strong>${escapeHtml(c.title)}</strong></a></td>
           <td>${escapeHtml(c.category)}</td>
@@ -96,8 +96,8 @@
       })
       .join('');
 
-    els.summary.textContent = `${filtered.length} of ${state.components.length} components`;
-    document.querySelectorAll('#component-index-table th[sort]').forEach((th) => {
+    els.summary.textContent = `${filtered.length} of ${state.behaviors.length} behaviors`;
+    document.querySelectorAll('#behavior-index-table th[sort]').forEach((th) => {
       const key = th.getAttribute('sort');
       th.setAttribute('aria-sort', key === state.sortKey ? (state.sortDir === 'asc' ? 'ascending' : 'descending') : 'none');
     });
@@ -105,14 +105,14 @@
 
   async function init() {
     try {
-      const res = await fetch(`${siteRoot()}data/component-index.json`);
+      const res = await fetch(`${siteRoot()}data/behavior-index.json`);
       const data = await res.json();
-      state.components = data.components || [];
+      state.behaviors = data.behaviors || [];
       els.status.hidden = true;
       els.table.hidden = false;
       render();
     } catch (err) {
-      els.status.textContent = 'Could not load the component index.';
+      els.status.textContent = 'Could not load the behavior index.';
     }
   }
 
@@ -121,7 +121,7 @@
     render();
   });
 
-  document.querySelectorAll('#component-index-table th[sort]').forEach((th) => {
+  document.querySelectorAll('#behavior-index-table th[sort]').forEach((th) => {
     const key = th.getAttribute('sort');
     const activate = () => {
       if (state.sortKey === key) {
@@ -147,7 +147,7 @@
 <!-- ═══════════════════════════════════════════════════════════════════════════
      CARDS
      ═══════════════════════════════════════════════════════════════════════════ -->
-<section class="component-section" id="autogen-components-html-0">
+<section class="behavior-section" id="autogen-behaviors-html-0">
   <h2>📇 Cards</h2>
   
   <!-- Basic Cards -->
@@ -424,8 +424,8 @@
 <!-- ═══════════════════════════════════════════════════════════════════════════
      FEEDBACK
      ═══════════════════════════════════════════════════════════════════════════ -->
-<section class="component-section" id="autogen-components-html-1">
-  <h2>💬 Feedback Components</h2>
+<section class="behavior-section" id="autogen-behaviors-html-1">
+  <h2>💬 Feedback Behaviors</h2>
   
   <!-- Badges -->
   <h3>Badges</h3>
@@ -577,7 +577,7 @@
 <!-- ═══════════════════════════════════════════════════════════════════════════
      OVERLAYS
      ═══════════════════════════════════════════════════════════════════════════ -->
-<section class="component-section" id="autogen-components-html-2">
+<section class="behavior-section" id="autogen-behaviors-html-2">
   <h2>🪟 Overlays &amp; Dialogs</h2>
   
   <h3>Modal</h3>
@@ -651,7 +651,7 @@
 <!-- ═══════════════════════════════════════════════════════════════════════════
      NAVIGATION
      ═══════════════════════════════════════════════════════════════════════════ -->
-<section class="component-section" id="autogen-components-html-3">
+<section class="behavior-section" id="autogen-behaviors-html-3">
   <h2>🧭 Navigation</h2>
 
   <!-- Tabs -->
@@ -667,7 +667,7 @@
         <h4>Key Features</h4>
         <ul style="margin: 1rem 0; padding-left: 1.5rem;">
           <li>Zero-build architecture</li>
-          <li>Light DOM components</li>
+          <li>Light DOM behaviors</li>
           <li>Accessible by default</li>
         </ul>
       </div>
@@ -683,14 +683,14 @@
   <h3>Details / Accordion</h3>
   <div x-demo id="detailsDemo">
     <details summary="What is wb-starter?">
-      <div> wb-starter is a zero-build web component library that provides
-      modern, accessible UI components using native web standards.</div>
+      <div> wb-starter is a zero-build behavior library that provides
+      modern, accessible UI behaviors using native web standards.</div>
     </details>
   </div>
   <div x-demo>
     <details summary="How do I install it?">
       <div> No installation needed! Just include the script tag in your HTML and
-      start using the components immediately.</div>
+      start using the behaviors immediately.</div>
     </details>
   </div>
   <div x-demo>
@@ -722,8 +722,8 @@
 <!-- ═══════════════════════════════════════════════════════════════════════════
      FORMS
      ═══════════════════════════════════════════════════════════════════════════ -->
-<section class="component-section" id="autogen-components-html-4">
-  <h2>📝 Form Components</h2>
+<section class="behavior-section" id="autogen-behaviors-html-4">
+  <h2>📝 Form Behaviors</h2>
   
   <!-- Text Inputs -->
   <h3>Text Inputs</h3>
@@ -764,7 +764,7 @@
 <!-- ═══════════════════════════════════════════════════════════════════════════
      DATA DISPLAY
      ═══════════════════════════════════════════════════════════════════════════ -->
-<section class="component-section" id="autogen-components-html-5">
+<section class="behavior-section" id="autogen-behaviors-html-5">
   <h2>📊 Data Display</h2>
 
   <!-- Timeline -->
@@ -796,7 +796,7 @@
 <!-- ═══════════════════════════════════════════════════════════════════════════
      MEDIA
      ═══════════════════════════════════════════════════════════════════════════ -->
-<section class="component-section" id="autogen-components-html-6">
+<section class="behavior-section" id="autogen-behaviors-html-6">
   <h2>🖼️ Media</h2>
 
   <!-- Gallery -->
@@ -830,7 +830,7 @@
 <!-- ═══════════════════════════════════════════════════════════════════════════
      UTILITIES
      ═══════════════════════════════════════════════════════════════════════════ -->
-<section class="component-section" id="autogen-components-html-7">
+<section class="behavior-section" id="autogen-behaviors-html-7">
   <h2>🔧 Utilities</h2>
 
   <!-- Tooltips -->

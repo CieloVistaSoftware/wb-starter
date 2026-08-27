@@ -2,7 +2,7 @@
 [Edit this file](./schema-first-architecture.md)
 
 ## Overview
-**Schema-First MVVM** is our architectural pattern where the **View (HTML)** and **ViewModel (JS)** together serve as the source of truth for the component. We adopt a strict **Model-View-ViewModel (MVVM)** separation to ensure scalability, maintainability, and a clear separation of concerns.
+**Schema-First MVVM** is our architectural pattern where the **View (HTML)** and **ViewModel (JS)** together serve as the source of truth for the behavior. We adopt a strict **Model-View-ViewModel (MVVM)** separation to ensure scalability, maintainability, and a clear separation of concerns.
 
 ## The MVVM Triad
 
@@ -29,8 +29,8 @@
 ---
 
 ## Core Philosophy
-1.  **View is King**: The HTML Template defines *what* a component looks like. The ViewModel must respect this structure.
-2.  **ViewModel is the Servant**: The JavaScript logic defines *how* a component acts. It "hydrates" the existing View.
+1.  **View is King**: The HTML Template defines *what* a behavior looks like. The ViewModel must respect this structure.
+2.  **ViewModel is the Servant**: The JavaScript logic defines *how* a behavior acts. It "hydrates" the existing View.
 3.  **No DOM Destruction**: The ViewModel must never blindly overwrite the inner HTML of a View. It must attach to the existing structure (Enhancer Pattern).
 
 ## The "Enhancer" Pattern
@@ -65,7 +65,7 @@ src/
 
 ### Phase 2: Semantic Alignment
 Ensure that Views and ViewModels speak the same language (Semantic HTML).
-*   **Standard**: Define the "Contract" for each component.
+*   **Standard**: Define the "Contract" for each behavior.
     *   *Example*: A Card View MUST use `<article>`, `<header>`, `<main>`, `<footer>`.
 *   **Action**: Update all `wb-views` templates to use these semantic tags.
 *   **Action**: Update ViewModels to query these tags (e.g., `querySelector('header')`).

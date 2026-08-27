@@ -1,6 +1,6 @@
 # Semantic HTML Elements - wb-starter v3.0
 
-wb-starter uses semantic HTML elements as the foundation for all components, ensuring accessibility, SEO benefits, and meaningful document structure.
+wb-starter uses semantic HTML elements as the foundation for all behaviors, ensuring accessibility, SEO benefits, and meaningful document structure.
 
 ## Architecture
 
@@ -30,9 +30,9 @@ wb-starter uses semantic HTML elements as the foundation for all components, ens
 └─────────────────────────────────────────────────────────────┘
 ```
 
-## Component → Element Mapping
+## Behavior → Element Mapping
 
-| Component | Custom Tag | Primary Element | Secondary Elements |
+| Behavior | Custom Tag | Primary Element | Secondary Elements |
 |-----------|------------|----------------|-------------------|
 | card | `<article>` | `<article>` | header, main, footer |
 | cardtestimonial | `<div x-cardtestimonial>` | `<article>` | blockquote, cite, figure |

@@ -2,7 +2,7 @@ import { test, expect } from '@playwright/test';
 
 /**
  * #279 — <div x-cardimage>/<div x-cardvideo> intermittently rendered as empty
- * cards, most reliably on the FIRST navigation to Components from Home or
+ * cards, most reliably on the FIRST navigation to Behaviors from Home or
  * Behaviors in a fresh session. Root cause: cardimage.schema.json/
  * cardvideo.schema.json each have a real, non-empty $view that builds an
  * empty (src-less) <img>/<video>. cardimage()/cardvideo() (card.js) build
@@ -20,9 +20,9 @@ import { test, expect } from '@playwright/test';
  * tracing (BUILD/PAINTED/STALE CHECK) for this exact failure mode — this
  * test asserts on the DOM state directly rather than parsing console output.
  */
-test('cardimage/cardvideo survive a fresh nav to Components without being wiped', async ({ page }) => {
+test('cardimage/cardvideo survive a fresh nav to Behaviors without being wiped', async ({ page }) => {
   await page.goto('http://localhost:3000/?page=home', { waitUntil: 'networkidle' });
-  await page.click('a.nav__item[href="?page=components"]');
+  await page.click('a.nav__item[href="?page=behaviors"]');
 
   // Give the real behavior time to build + load, AND give a stale/cold
   // schema fetch time to resolve and (if the bug regressed) wipe it — the
@@ -44,8 +44,8 @@ test('cardimage/cardvideo survive a fresh nav to Components without being wiped'
     };
   });
 
-  expect(survived.imageCount, 'no <div x-cardimage> images found on Components page').toBeGreaterThan(0);
-  expect(survived.videoCount, 'no <div x-cardvideo> videos found on Components page').toBeGreaterThan(0);
+  expect(survived.imageCount, 'no <div x-cardimage> images found on Behaviors page').toBeGreaterThan(0);
+  expect(survived.videoCount, 'no <div x-cardvideo> videos found on Behaviors page').toBeGreaterThan(0);
   for (const img of survived.images) {
     expect(img.inDom, 'cardimage <img> was removed from the DOM (schema/behavior race)').toBe(true);
     expect(img.hasCard, 'cardimage <img> is orphaned from its x-cardimage card').toBe(true);

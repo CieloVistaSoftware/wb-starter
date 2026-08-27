@@ -6,7 +6,7 @@ import { test, expect } from '@playwright/test';
  * both actually ship) never loaded a video. youtube() (src/wb-viewmodels/
  * semantics/youtube.js) only read element.getAttribute('video-id') -- a
  * FOURTH attribute-name mismatch on top of lightbox (#374), alert (#375),
- * countdown (#376): pages/components.html uses video-id (matches!),
+ * countdown (#376): pages/behaviors.html uses video-id (matches!),
  * pages/behaviors.html + pages/newbehaviors.html use plain id, and the
  * generator (scripts/generate-behaviors-page.js) emits data-id. With no id
  * resolved, config.id is null, youtube() logs a console.warn and returns
@@ -18,7 +18,7 @@ test.describe('x-youtube reads id="..." as the video ID (#377)', () => {
     const warnings: string[] = [];
     page.on('console', msg => { if (msg.type() === 'warning' || msg.type() === 'error') warnings.push(msg.text()); });
 
-    // demos/test-harness.html already boots WB (see tests/components/overlay.spec.ts's
+    // demos/test-harness.html already boots WB (see tests/behaviors/overlay.spec.ts's
     // injectAndScan pattern) -- inject the real page markup into it and scan eagerly.
     await page.goto('/demos/test-harness.html');
     await page.waitForFunction(

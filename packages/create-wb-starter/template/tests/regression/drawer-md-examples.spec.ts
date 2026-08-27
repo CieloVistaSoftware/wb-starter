@@ -1,7 +1,7 @@
 import { test, expect } from '@playwright/test';
 
 /**
- * Full coverage of every live example on docs/components/drawer.md, per
+ * Full coverage of every live example on docs/behaviors/drawer.md, per
  * John's request: "write a full unit test to test each example, write a new
  * issue for every failure naming the test that found the failure, make the
  * fix retest." Loaded through doc-viewer.html exactly as a reader sees it --
@@ -31,7 +31,7 @@ import { test, expect } from '@playwright/test';
  * live above it -- mdhtml.js's auto-live-render promotes it too, so the doc
  * rendered the identical live sidebar demo twice in a row. The doc's own
  * prose right above the first demo ("Wrapped in <div x-demo>, so the live
- * component renders below with its source shown underneath") confirms the
+ * behavior renders below with its source shown underneath") confirms the
  * Usage section was always redundant -- the x-demo already shows the exact
  * same source in its own auto-generated code panel. Fixed by removing the
  * redundant "### Usage" section entirely.

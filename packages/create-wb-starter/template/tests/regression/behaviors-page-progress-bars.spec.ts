@@ -3,7 +3,7 @@ import { test, expect } from '@playwright/test';
 /**
  * pages/behaviors.html's Progress Bars demo used `data-value="25"` /
  * `data-striped` on `<progress>` -- a Tier-1 Law 11 violation
- * (docs/claude/TIER1-LAWS.md: "No data-* Attributes on wb-* Components").
+ * (docs/claude/TIER1-LAWS.md: "No data-* Attributes on wb-* Behaviors").
  * The live behavior handler for `x-progress` (tag-map.js maps it to
  * `semantics/progress.js`'s `progress()`) only ever reads the PLAIN
  * `value`/`striped` attributes via `element.getAttribute()` -- it never reads

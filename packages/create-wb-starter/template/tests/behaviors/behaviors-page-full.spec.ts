@@ -1,6 +1,6 @@
 /**
  * Comprehensive unit tests for the ENTIRE WB Behaviors showcase page.
- * One test per component category so a failure names exactly what is broken.
+ * One test per behavior category so a failure names exactly what is broken.
  *
  * Base URL is configurable: WB_BASE=https://cielovistasoftware.github.io/wb-starter
  * to run against the live GitHub Pages deploy; defaults to localhost for the
@@ -199,11 +199,11 @@ test.describe('Behaviors page — full coverage', () => {
     expect(r.highlighted, 'code blocks not highlighted').toBeGreaterThan(5);
   });
 
-  test('no component left in an error state', async ({ page }) => {
+  test('no behavior left in an error state', async ({ page }) => {
     const errs = await page.evaluate(() =>
       [...document.querySelectorAll('#mainPage-behaviors [x-error]')].map((e) => e.tagName.toLowerCase() + ':' + e.getAttribute('x-error'))
     );
-    expect(errs, `components in x-error: ${errs.join(', ')}`).toEqual([]);
+    expect(errs, `behaviors in x-error: ${errs.join(', ')}`).toEqual([]);
   });
 
   test('no "Schema not found" or uncaught errors on load', async ({ page }) => {

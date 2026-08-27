@@ -10,7 +10,7 @@
  *   1. Full document structure: <!DOCTYPE html>, <html lang data-theme>, 
  *      charset, viewport, title, <head>, <body>, </html>
  *   2. Stylesheet loading: themes.css + site.css required
- *   3. WB loader: wb-lazy.js or wb-bootstrap.js if using wb-* components
+ *   3. WB loader: wb-lazy.js or wb-bootstrap.js if using wb-* behaviors
  *   4. Partial detection: fragments must declare parent via <!-- Parent: filename.html -->
  *   5. No orphan partials: declared parent must exist and be a full document
  */
@@ -47,12 +47,12 @@ function loadDemoFiles(): { name: string; relPath: string; html: string }[] {
 const demoFiles = loadDemoFiles();
 // index.html (#237) is the demos/ directory's own plain listing page — deliberately
 // self-contained with no site.css/WB dependency (see demos-directory-index.spec.ts),
-// not a component "demo" subject to the demo file contract.
+// not a behavior "demo" subject to the demo file contract.
 const fullDemos = demoFiles.filter(d => d.name !== 'index.html' && /<!doctype\s+html>/i.test(d.html));
 const partialDemos = demoFiles.filter(d => !/<!doctype\s+html>/i.test(d.html));
 
 // #695: full-bleed stages must NOT load site.css -- its page gutters and
-// max-width are exactly what stops a component from reaching the browser
+// max-width are exactly what stops a behavior from reaching the browser
 // edges, which is the one thing these two demos exist to show. Each says so
 // in its own source. Named per file, with the reason, so a NEW demo that
 // drops site.css by accident still fails.
@@ -150,7 +150,7 @@ test.describe('Demo Files — WB Loader', () => {
     if (usesWB) {
       test(`${relPath} — loads WB (wb-lazy.js, wb-bootstrap.js, or wb.js)`, () => {
         const loadsWB = /wb-lazy\.js|wb-bootstrap\.js|wb\.js/i.test(html);
-        expect(loadsWB, `uses WB components but doesn't load WB`).toBe(true);
+        expect(loadsWB, `uses WB behaviors but doesn't load WB`).toBe(true);
       });
     }
   }

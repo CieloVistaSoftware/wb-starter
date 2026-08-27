@@ -23,7 +23,7 @@ export const elementMap = {
   // flex()'s own default direction is 'row' (layouts.js), so no special
   // options are needed to reproduce x-row.js's hardcoded direction:'row'.
   'x-row': 'flex',
-  // Components
+  // Behaviors
   'x-alert': 'alert',
   'x-article': 'article',
   'x-articles': 'articles',
@@ -281,7 +281,7 @@ export const extensionMap = {
 
   // #626: every other behavior in this table gets its own dedicated
   // x-{name} attribute (x-drawer, x-popover, x-confirm, ...) -- 'card' never
-  // did, so docs/components/cards/card.md's semantic rewrite had to fall
+  // did, so docs/behaviors/cards/card.md's semantic rewrite had to fall
   // back to the lower-level generic x-behavior="card" attribute instead of
   // the pattern every other doc uses. John: "shouldn't all of our behaviors
   // be addressable via x-behaviorname vs x-behavior=''" -- yes. Adding the
@@ -419,7 +419,7 @@ export const extensionMap = {
   'x-gallery': 'gallery',
   'x-toast': 'toast',
   'x-toggle': 'toggle',
-  // x-timeline renders a real timeline component -- adjacent to, but not a
+  // x-timeline renders a real timeline behavior -- adjacent to, but not a
   // collision with, 'x-as-timeline' in the Morphing section above (a
   // morph-only form that rewrites an existing element's semantics).
   'x-timeline': 'timeline',

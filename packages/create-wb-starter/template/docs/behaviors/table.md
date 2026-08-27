@@ -8,7 +8,7 @@ Applies to `<table>`, and to any element carrying `x-table`.
 
 ```html
 <table
-  headers="Component,Behavior,Variants"
+  headers="Behavior,Behavior,Variants"
   rows='[["x-alert","alert","4"],["x-badge","badge","9"],["x-button","button","8"],["x-card","card","4"],["x-code","code","12"],["x-dialog","dialog","3"],["x-details","details","2"],["x-audio","audio","6"],["x-table","table","5"],["x-tabs","tabs","3"],["x-toast","toast","4"],["x-tooltip","tooltip","4"]]'>
 </table>
 ```

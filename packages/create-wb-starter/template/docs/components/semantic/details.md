@@ -12,7 +12,7 @@ attribute required) for consistent styling and toggle events.
 - Built-in keyboard support (Enter/Space) and accessibility — no ARIA needed
 - Works with JavaScript disabled; WB only adds styling and events on top
 
-## WB Components Using `<details>`
+## WB Behaviors Using `<details>`
 
 ### Auto-Enhanced (no attribute needed)
 
@@ -25,7 +25,7 @@ see below.)
 <div x-demo>
 <details>
   <summary>What is WB-Starter?</summary>
-  <p>A schema-first MVVM site starter with zero build step — components are
+  <p>A schema-first MVVM site starter with zero build step — behaviors are
   plain custom elements enhanced by small, composable behaviors.</p>
 </details>
 </div>

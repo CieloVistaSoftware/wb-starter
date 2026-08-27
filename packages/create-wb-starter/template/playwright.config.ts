@@ -48,8 +48,8 @@ const complianceCategories: Record<string, string[]> = JSON.parse(
  * ┌─────────────────────────────────────────────────────────────────┐
  * │ TIER 3: DECORATED BEHAVIORS (browser required)                 │
  * │ Location: tests/behaviors/                                      │
- * │ - Permutation compliance (full component tests)                 │
- * │ - Individual component tests                                    │
+ * │ - Permutation compliance (full behavior tests)                 │
+ * │ - Individual behavior tests                                    │
  * │ - Interaction tests                                             │
  * └─────────────────────────────────────────────────────────────────┘
  */
@@ -173,13 +173,13 @@ export default defineConfig({
     
     // ═══════════════════════════════════════════════════════════════
     // TIER 3: DECORATED BEHAVIORS
-    // Full component testing - all variants, interactions, events
+    // Full behavior testing - all variants, interactions, events
     // GATE: compliance + base must pass first (enforced by npm scripts)
     //
     // Auto-discovers all .spec.ts files in these directories:
     // - behaviors/ (all behavior tests)
     // - cards/ (card variant tests)
-    // - components/ (component tests)
+    // - behaviors/ (behavior tests)
     // - pages/ (page integration tests)
     // - semantics/ (semantic rendering tests)
     // Plus root-level darkmode-standard.spec.ts
@@ -191,7 +191,7 @@ export default defineConfig({
         'behaviors/behavior-verification.spec.ts',
         'behaviors/**/*.spec.ts',
         'cards/**/*.spec.ts',
-        'components/**/*.spec.ts',
+        'behaviors/**/*.spec.ts',
         'pages/**/*.spec.ts',
         'semantics/**/*.spec.ts',
         'demos/**/*.spec.ts',
@@ -227,7 +227,7 @@ export default defineConfig({
       name: 'integration',
       testDir: './tests/integration',
       testMatch: '**/*.spec.ts',
-      // The components page hydrates 38 x-demos (page-source fetch + WB.scan +
+      // The behaviors page hydrates 38 x-demos (page-source fetch + WB.scan +
       // hljs each); under a full parallel run browsers are CPU-starved and the
       // default 30s timeout flakes. 60s absorbs the contention — the underlying
       // hydration latency is tracked as a performance issue.
@@ -262,7 +262,7 @@ export default defineConfig({
       testMatch: [
         'cards/card.spec.ts',
         'behaviors/behaviors.spec.ts',
-        'pages/all-components.spec.ts',
+        'pages/all-behaviors.spec.ts',
       ],
       use: { ...devices['Desktop Firefox'] },
     },
@@ -272,7 +272,7 @@ export default defineConfig({
       testMatch: [
         'cards/card.spec.ts',
         'behaviors/behaviors.spec.ts',
-        'pages/all-components.spec.ts',
+        'pages/all-behaviors.spec.ts',
       ],
       use: { ...devices['Desktop Safari'] },
     },

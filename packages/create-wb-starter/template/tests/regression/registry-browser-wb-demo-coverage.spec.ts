@@ -138,7 +138,7 @@ test.describe('registry-browser.html: every row gets a live x-demo, not just a c
     expect(codeText).not.toContain('attachCardDocLink');
   });
 
-  test('rows whose view resolves to a real documented component get a corner-pinned doc link', async ({ page }) => {
+  test('rows whose view resolves to a real documented behavior get a corner-pinned doc link', async ({ page }) => {
     test.setTimeout(90000);
     await ready(page);
     await collectRowReport(page); // forces every row's x-demo to build
@@ -146,9 +146,9 @@ test.describe('registry-browser.html: every row gets a live x-demo, not just a c
     const links = page.locator('#registry-container x-demo > .x-demo__links');
     const count = await links.count();
     // The registry's "button-group" and "toolbar" views both compose a real
-    // <button>, which resolves to a real documented component -- so this
+    // <button>, which resolves to a real documented behavior -- so this
     // page is expected to produce at least one corner doc link deterministically.
-    expect(count, 'expected at least one row to resolve a real component doc link').toBeGreaterThan(0);
+    expect(count, 'expected at least one row to resolve a real behavior doc link').toBeGreaterThan(0);
 
     for (let i = 0; i < count; i++) {
       const link = links.nth(i);

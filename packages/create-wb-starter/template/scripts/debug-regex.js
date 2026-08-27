@@ -5,7 +5,7 @@ import { fileURLToPath } from 'url';
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
-const filePath = path.join(__dirname, '../docs/components/cards/carddraggable.md');
+const filePath = path.join(__dirname, '../docs/behaviors/cards/carddraggable.md');
 const content = fs.readFileSync(filePath, 'utf-8');
 
 const regex = /(#{2,3} [^\n]+)\n\n```html\n([\s\S]+?)\n```/g;

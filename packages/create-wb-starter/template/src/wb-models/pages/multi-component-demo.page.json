@@ -14,13 +14,13 @@
         "init": "WB.init({ autoInject: true })"
       }
     ],
-    "title": "🧩 Multi-Component Demo"
+    "title": "🧩 Multi-Behavior Demo"
   },
-  "title": "🧩 Multi-Component Demo",
-  "schemaFor": "multi-component-demo",
+  "title": "🧩 Multi-Behavior Demo",
+  "schemaFor": "multi-behavior-demo",
   "header": {
     "tag": "h1",
-    "content": "🧩 Multi-Component Demo",
+    "content": "🧩 Multi-Behavior Demo",
     "subtitle": {
       "tag": "p",
       "content": "Composed from multiple sources using $extends, $generate, $ref, and $include"
@@ -382,7 +382,7 @@
     }
   ],
   "_composed": {
-    "source": "src/wb-models/pages/multi-component-demo.page.json",
+    "source": "src/wb-models/pages/multi-behavior-demo.page.json",
     "composedAt": "2026-07-30T22:39:51.036Z",
     "stats": {
       "extendsResolved": false,

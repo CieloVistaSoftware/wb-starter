@@ -1,7 +1,7 @@
 import { test, expect } from '@playwright/test';
 
 /**
- * Regression: pages/components.html's "Text Inputs" demo had bare
+ * Regression: pages/behaviors.html's "Text Inputs" demo had bare
  * <input type="text" variant="success"/"error"> with no x-input attribute.
  * input[type="text"] is not in tag-map.js's nativeMap (unlike checkbox/
  * radio/range), so without x-input the input() behavior never ran at all
@@ -11,9 +11,9 @@ import { test, expect } from '@playwright/test';
  * getComputedStyle before the fix: identical borderColor across Basic/
  * Success/Error. Fixed by adding x-input to each bare text input.
  */
-test.describe('Text input variant coloring (Components page)', () => {
+test.describe('Text input variant coloring (Behaviors page)', () => {
   test('success variant renders a green border, error a red border, distinct from the unvaried input', async ({ page }) => {
-    await page.goto('/?page=components');
+    await page.goto('/?page=behaviors');
 
     const basic = page.locator('input[placeholder="Basic input"]');
     const success = page.locator('input[placeholder="Success"]');

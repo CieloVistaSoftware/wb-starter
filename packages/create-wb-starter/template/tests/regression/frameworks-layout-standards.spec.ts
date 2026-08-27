@@ -10,7 +10,7 @@ const FRAMEWORKS_HTML = path.resolve(__dirname, '../../demos/frameworks.html');
  * demos/frameworks.html previously carried a 35-line <style> block in its
  * <head> plus ~29 inline style="..." attributes across every section --
  * both forbidden by Tier-1 Law 9 ("no inline styles, no <style> blocks or
- * page-local copies of component styles in HTML files") and
+ * page-local copies of behavior styles in HTML files") and
  * docs/standards/V3-STANDARDS.md's "File Layout" section (page-specific
  * layout belongs in src/styles/pages/{page}.css). Moved to
  * src/styles/pages/frameworks.css; these tests guard the regression.

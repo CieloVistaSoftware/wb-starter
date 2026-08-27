@@ -57,7 +57,7 @@ for (const key in fixes) {
         } else if (fix.action.includes('Renamed variable in cleanup')) {
              fix.code = "return function cleanupWrapper() {\n  // ...\n};";
         } else if (fix.action.includes('Created missing configuration files')) {
-             fix.code = "{\n  \"components\": []\n}";
+             fix.code = "{\n  \"behaviors\": []\n}";
         } else if (fix.action.includes('Updated server.js')) {
              fix.code = "app.post('/api/log-issues', (req, res) => { ... });";
         } else if (fix.action.includes('Created list behavior')) {

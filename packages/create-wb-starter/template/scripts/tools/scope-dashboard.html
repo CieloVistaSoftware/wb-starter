@@ -92,34 +92,34 @@
     .tab:hover { background: var(--bg-tertiary, #334155); color: var(--text-primary); }
     .tab.active { background: var(--primary, #6366f1); color: white; }
     
-    /* Component Grid */
-    .components {
+    /* Behavior Grid */
+    .behaviors {
       display: grid;
       grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
       gap: 1rem;
     }
-    .component {
+    .behavior {
       background: var(--bg-secondary, #1e293b);
       border: 1px solid var(--border-color, #334155);
       border-radius: 12px;
       padding: 1rem;
       transition: all 0.2s;
     }
-    .component:hover {
+    .behavior:hover {
       border-color: var(--primary, #6366f1);
       transform: translateY(-2px);
     }
-    .component-header {
+    .behavior-header {
       display: flex;
       justify-content: space-between;
       align-items: center;
       margin-bottom: 0.75rem;
     }
-    .component-name {
+    .behavior-name {
       font-weight: 600;
       font-size: 1rem;
     }
-    .component-badge {
+    .behavior-badge {
       padding: 0.25rem 0.5rem;
       border-radius: 6px;
       font-size: 0.75rem;
@@ -129,7 +129,7 @@
     .badge--partial { background: rgba(245, 158, 11, 0.2); color: #f59e0b; }
     .badge--missing { background: rgba(239, 68, 68, 0.2); color: #ef4444; }
     
-    .component-checks {
+    .behavior-checks {
       display: flex;
       flex-wrap: wrap;
       gap: 0.5rem;
@@ -145,7 +145,7 @@
     .check.pass { color: #22c55e; }
     .check.fail { color: #ef4444; }
     
-    .component-actions {
+    .behavior-actions {
       display: flex;
       gap: 0.5rem;
     }
@@ -336,7 +336,7 @@
       <div id="scopedashboard-div-20" class="progress-bar">
         <div class="progress-fill" id="progress-fill" style="width: 0%"></div>
       </div>
-      <p id="scopedashboard-p-21" class="progress-text"><span id="progress-complete">0</span> of 21 components complete (<span id="progress-percent">0</span>%)</p>
+      <p id="scopedashboard-p-21" class="progress-text"><span id="progress-complete">0</span> of 21 behaviors complete (<span id="progress-percent">0</span>%)</p>
     </div>
     
     <!-- Metrics -->
@@ -368,24 +368,24 @@
       <button id="scopedashboard-button-35" class="tab" data-filter="feedback">💬 Feedback</button>
     </div>
     
-    <!-- Phase 1 Components -->
+    <!-- Phase 1 Behaviors -->
     <div class="category" id="phase1-category">
       <div id="scopedashboard-div-36" class="category-header">
         <span id="scopedashboard-span-37" class="category-icon">🎯</span>
-        <span id="scopedashboard-span-38" class="category-title">Phase 1 Components</span>
+        <span id="scopedashboard-span-38" class="category-title">Phase 1 Behaviors</span>
         <span id="scopedashboard-span-39" class="category-count">20</span>
       </div>
-      <div class="components" id="phase1-components"></div>
+      <div class="behaviors" id="phase1-behaviors"></div>
     </div>
     
-    <!-- All Components -->
+    <!-- All Behaviors -->
     <div class="category" id="all-category" style="display:none;">
       <div id="scopedashboard-div-40" class="category-header">
         <span id="scopedashboard-span-41" class="category-icon">📦</span>
         <span id="scopedashboard-span-42" class="category-title">All Schemas</span>
         <span class="category-count" id="all-count">0</span>
       </div>
-      <div class="components" id="all-components"></div>
+      <div class="behaviors" id="all-behaviors"></div>
     </div>
     
     <!-- Command Box -->
@@ -425,7 +425,7 @@
   </div>
   
   <script id="scopedashboard-script-62">
-    // Phase 1 components (the 20 priority components)
+    // Phase 1 behaviors (the 20 priority behaviors)
     const PHASE1_COMPONENTS = [
       { name: 'button', category: 'core' },
       { name: 'input', category: 'inputs' },
@@ -530,8 +530,8 @@
     }
     
     function renderComponents() {
-      const phase1Container = document.getElementById('phase1-components');
-      const allContainer = document.getElementById('all-components');
+      const phase1Container = document.getElementById('phase1-behaviors');
+      const allContainer = document.getElementById('all-behaviors');
       
       phase1Container.innerHTML = schemas.map(renderComponentCard).join('');
       allContainer.innerHTML = schemas.map(renderComponentCard).join('');
@@ -540,27 +540,27 @@
     
     function renderComponentCard(schema) {
       const statusBadge = {
-        complete: '<span id="scopedashboard-span-63" class="component-badge badge--complete">✅ Complete</span>',
-        partial: '<span id="scopedashboard-span-64" class="component-badge badge--partial">⚠️ Partial</span>',
-        missing: '<span id="scopedashboard-span-65" class="component-badge badge--missing">❌ Missing</span>'
+        complete: '<span id="scopedashboard-span-63" class="behavior-badge badge--complete">✅ Complete</span>',
+        partial: '<span id="scopedashboard-span-64" class="behavior-badge badge--partial">⚠️ Partial</span>',
+        missing: '<span id="scopedashboard-span-65" class="behavior-badge badge--missing">❌ Missing</span>'
       }[schema.status] || '';
       
       const checks = schema.status !== 'missing' ? `
-        <div id="scopedashboard-div-66" class="component-checks">
+        <div id="scopedashboard-div-66" class="behavior-checks">
           <span id="scopedashboard-span-67" class="check ${schema.hasTest ? 'pass' : 'fail'}">${schema.hasTest ? '✓' : '✗'} Tests</span>
           <span id="scopedashboard-span-68" class="check ${schema.hasCompliance ? 'pass' : 'fail'}">${schema.hasCompliance ? '✓' : '✗'} Compliance</span>
           <span id="scopedashboard-span-69" class="check ${schema.hasInteractions ? 'pass' : 'fail'}">${schema.hasInteractions ? '✓' : '✗'} Interactions</span>
         </div>
-      ` : '<div id="scopedashboard-div-70" class="component-checks"><span id="scopedashboard-span-71" class="check fail">Schema not found</span></div>';
+      ` : '<div id="scopedashboard-div-70" class="behavior-checks"><span id="scopedashboard-span-71" class="check fail">Schema not found</span></div>';
       
       return `
-        <div id="scopedashboard-div-72" class="component" data-status="${schema.status}" data-name="${schema.name}" data-category="${schema.category}">
-          <div id="scopedashboard-div-73" class="component-header">
-            <span id="scopedashboard-span-74" class="component-name">${schema.name}</span>
+        <div id="scopedashboard-div-72" class="behavior" data-status="${schema.status}" data-name="${schema.name}" data-category="${schema.category}">
+          <div id="scopedashboard-div-73" class="behavior-header">
+            <span id="scopedashboard-span-74" class="behavior-name">${schema.name}</span>
             ${statusBadge}
           </div>
           ${checks}
-          <div id="scopedashboard-div-75" class="component-actions">
+          <div id="scopedashboard-div-75" class="behavior-actions">
             ${schema.status !== 'missing' 
               ? `<button id="scopedashboard-button-76" class="btn btn-secondary" onclick="viewSchema('${schema.name}')">👁️ View</button>
                  <button id="scopedashboard-button-77" class="btn btn-primary" onclick="editSchema('${schema.name}')">✏️ Edit</button>`
@@ -602,7 +602,7 @@
         phase1Cat.style.display = 'none';
         allCat.style.display = 'block';
         
-        document.querySelectorAll('#all-components .component').forEach(el => {
+        document.querySelectorAll('#all-behaviors .behavior').forEach(el => {
           if (filter === 'all') {
             el.style.display = 'block';
           } else {
@@ -645,7 +645,7 @@
       const template = {
         "$schema": "http://json-schema.org/draft-07/schema#",
         "title": name.charAt(0).toUpperCase() + name.slice(1),
-        "description": `${name} component`,
+        "description": `${name} behavior`,
         "behavior": name,
         "properties": {},
         "compliance": {

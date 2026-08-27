@@ -1,8 +1,8 @@
-# wb-starter v3.0 - Component Library
+# wb-starter v3.0 - Behavior Library
 
 ## Overview
 
-The wb-starter provides 41+ components using **Light DOM architecture** and the **WBServices** pattern. Components are **composed, not subclassed**: a `<wb-*>` tag maps to a behavior function that decorates the element in place, and shared structure comes from semantic HTML, helper functions, and design tokens. Everything ships as ES Modules.
+The wb-starter provides 41+ behaviors using **Light DOM architecture** and the **WBServices** pattern. Behaviors are **composed, not subclassed**: a `<wb-*>` tag maps to a behavior function that decorates the element in place, and shared structure comes from semantic HTML, helper functions, and design tokens. Everything ships as ES Modules.
 
 ## Architecture (v3.0)
 
@@ -33,20 +33,20 @@ decorates the element that is already in the page.
 
 ### Key Principles
 
-1. **Custom Elements**: All components use `<wb-*>` tags
+1. **Custom Elements**: All behaviors use `<wb-*>` tags
 2. **Light DOM Only**: No Shadow DOM - styles cascade naturally
-3. **Composition, Not Inheritance**: capability is applied by behavior functions `(element, options)` — there is no component base class to subclass
+3. **Composition, Not Inheritance**: capability is applied by behavior functions `(element, options)` — there is no behavior base class to subclass
 4. **ES Modules Only**: No CommonJS (require/module.exports)
-5. **Schema-Driven**: JSON schemas define component properties
+5. **Schema-Driven**: JSON schemas define behavior properties
 
-## Component Categories
+## Behavior Categories
 
 ### Cards (19 variants)
-All card variants are independent components that share structure via semantic HTML and composition (no base class).
+All card variants are independent behaviors that share structure via semantic HTML and composition (no base class).
 
-| Component | Custom Tag | Description |
+| Behavior | Custom Tag | Description |
 |-----------|------------|-------------|
-| card | `<article>` | Card component |
+| card | `<article>` | Card behavior |
 | cardimage | `<div x-cardimage>` | Card with featured image |
 | cardvideo | `<div x-cardvideo>` | Card with video player |
 | cardbutton | `<div x-cardbutton>` | Card with action buttons |
@@ -66,8 +66,8 @@ All card variants are independent components that share structure via semantic H
 | carddraggable | `<div x-carddraggable>` | Draggable card |
 | cardportfolio | `<div x-cardportfolio>` | Portfolio/contact |
 
-### Form Components
-| Component | Custom Tag | Description |
+### Form Behaviors
+| Behavior | Custom Tag | Description |
 |-----------|------------|-------------|
 | input | `<div x-input>` | Text input field |
 | textarea | `<textarea>` | Multi-line text |
@@ -77,15 +77,15 @@ All card variants are independent components that share structure via semantic H
 | search | `<div x-searchfield>` | Search input with results |
 | rating | `<span x-rating>` | Star rating |
 
-### Navigation Components
-| Component | Custom Tag | Description |
+### Navigation Behaviors
+| Behavior | Custom Tag | Description |
 |-----------|------------|-------------|
 | tabs | `<div x-tabs>` | Tabbed interface |
 | drawer | `<div x-drawer>` | Slide-in drawer |
 | navbar | `<div x-navbar>` | Navigation bar |
 
-### Feedback Components
-| Component | Custom Tag | Description |
+### Feedback Behaviors
+| Behavior | Custom Tag | Description |
 |-----------|------------|-------------|
 | alert | `<div x-alert>` | Alert message |
 | toast | `<div x-toast>` | Toast notification |
@@ -94,14 +94,14 @@ All card variants are independent components that share structure via semantic H
 | progress | `<progress>` | Progress bar |
 
 ### Effects
-| Component | Custom Tag | Description |
+| Behavior | Custom Tag | Description |
 |-----------|------------|-------------|
 | confetti | `<div x-confetti>` | Confetti animation |
 | fireworks | `<div x-fireworks>` | Fireworks effect |
 | snow | `<div x-snow>` | Snow animation |
 
-### Overlay Components
-| Component | Custom Tag | Description |
+### Overlay Behaviors
+| Behavior | Custom Tag | Description |
 |-----------|------------|-------------|
 | dialog | `<dialog>` | Modal dialog |
 | tooltip | `<span x-tooltip>` | Tooltip popup |
@@ -149,36 +149,36 @@ src/
 │   ├── search.schema.json
 │   ├── cardimage.schema.json
 │   └── ...
-├── wb-viewmodels/          # Component logic (JavaScript)
+├── wb-viewmodels/          # Behavior logic (JavaScript)
 │   ├── card.js
 │   ├── x-search.js
 │   ├── search.js
 │   └── ...
 └── styles/
-    └── components/         # Component CSS
+    └── behaviors/         # Behavior CSS
         ├── card.css
         ├── search.css
         └── ...
 
 docs/
-└── components/             # Documentation
+└── behaviors/             # Documentation
     ├── README.md           # This file
-    ├── cards/              # Card component docs
+    ├── cards/              # Card behavior docs
     └── ...
 ```
 
 ## Schema Structure (v3.0)
 
-Each component has a JSON schema in `src/wb-models/`:
+Each behavior has a JSON schema in `src/wb-models/`:
 
 ```json
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "$id": "component.schema.json",
-  "title": "Component Name",
-  "description": "Component description",
+  "$id": "behavior.schema.json",
+  "title": "Behavior Name",
+  "description": "Behavior description",
   "behavior": "componentname",
-  "baseClass": "x-component",
+  "baseClass": "x-behavior",
   "semanticElement": {
     "tagName": "article",
     "implicitRole": "article"
@@ -198,7 +198,7 @@ Each component has a JSON schema in `src/wb-models/`:
 
 ## Semantic HTML Foundation
 
-WB-Starter components use proper semantic HTML:
+WB-Starter behaviors use proper semantic HTML:
 
 | Element | Used By | Purpose |
 |---------|---------|---------|
@@ -215,7 +215,7 @@ WB-Starter components use proper semantic HTML:
 
 ## CSS Variables (Design Tokens)
 
-All components use CSS variables for theming:
+All behaviors use CSS variables for theming:
 
 ```css
 /* Colors */
@@ -246,6 +246,6 @@ All components use CSS variables for theming:
 
 - [Cards Overview](./cards/cards.index.md)
 - [Card](./cards/card.md)
-- [Search Component](../search.md)
+- [Search Behavior](../search.md)
 - [Semantic Elements](./semantic/semantic.index.md)
 - [Effects](./effects/README.md)

@@ -69,7 +69,7 @@
     "*"
   ],
   "wbComponents": {
-    "description": "WB components that extend aside",
+    "description": "WB behaviors that extend aside",
     "list": [
       "alert",
       "cardnotification",

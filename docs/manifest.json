@@ -50,7 +50,7 @@
         {
           "file": "linkedin-update-article.md",
           "title": "wb-starter v3.0.3 Update (LinkedIn)",
-          "description": "Article: 70 components, zero build, and the Light DOM correction"
+          "description": "Article: 70 behaviors, zero build, and the Light DOM correction"
         },
         {
           "file": "standards/V3-STANDARDS.md",
@@ -60,7 +60,7 @@
         {
           "file": "standards/DEMOS-AND-DOCS-STANDARDS.md",
           "title": "Demos & Documentation Standards",
-          "description": "Rules for how every demo and .md doc shows components and code: x-demo, one code sample per rendered element, vertical + highlighted code, no horizontal scrollbars, themed Markdown, composition over inheritance, mobile-first."
+          "description": "Rules for how every demo and .md doc shows behaviors and code: x-demo, one code sample per rendered element, vertical + highlighted code, no horizontal scrollbars, themed Markdown, composition over inheritance, mobile-first."
         },
         {
           "file": "AI.md",
@@ -223,7 +223,7 @@
         {
           "file": "testing-strategy.md",
           "title": "Testing Strategy",
-          "description": "How to test WB components"
+          "description": "How to test WB behaviors"
         },
         {
           "file": "test-schema-standard.md",
@@ -397,7 +397,7 @@
         {
           "file": "escape-hatches.md",
           "title": "Escape Hatches",
-          "description": "Override and customize WB component behavior"
+          "description": "Override and customize WB behavior behavior"
         },
         {
           "file": "mcp.md",
@@ -432,7 +432,7 @@
         {
           "file": "architecture/proposals/remove-wb-prefix-authoring-surface.md",
           "title": "Proposal: Drop the wb- Tag Prefix from the Authoring Surface",
-          "description": "Proposal to author components as plain HTML plus an x-* attribute instead of wb-* custom tags, keeping the wb- prefix internal to CSS/registry naming"
+          "description": "Proposal to author behaviors as plain HTML plus an x-* attribute instead of wb-* custom tags, keeping the wb- prefix internal to CSS/registry naming"
         },
         {
           "file": "architecture/standards/ATTRIBUTE-NAMING-STANDARD.md",

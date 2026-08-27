@@ -196,7 +196,7 @@ export function code(element, options = {}) {
       // line -- `white-space: normal` lets the browser wrap at the hyphen
       // inside "x-card" like a hyphenated English word, splitting "<wb-"
       // onto one line and "card>" onto the next (confirmed live on
-      // pages/components.html). `overflow:hidden` is a no-op on a plain
+      // pages/behaviors.html). `overflow:hidden` is a no-op on a plain
       // `display:inline` box, so `nowrap` here can't cause clipping -- it
       // just lets the token run as one atomic unit on its line, same as
       // block/pre code already does via `pre`/`pre-wrap`.

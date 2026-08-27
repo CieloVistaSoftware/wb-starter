@@ -42,14 +42,14 @@ All three are equivalent and produce the same result.
 | **Light DOM Only** | No Shadow DOM - elements enhanced in standard DOM |
 | **Lazy Loading** | Behaviors loaded on-demand via IntersectionObserver |
 | **WBServices Pattern** | Dependency injection for shared services |
-| **Composition over Inheritance** | Capability is applied by behavior functions `(element, options)`; no component base class |
+| **Composition over Inheritance** | Capability is applied by behavior functions `(element, options)`; no behavior base class |
 | **x-behavior Attribute** | Standard attribute for behavior declaration |
 
 ---
 
-## Component Registry
+## Behavior Registry
 
-### Card Components
+### Card Behaviors
 
 | Tag (wb-*) | Tag (noun-first) | Behavior | Description |
 |------------|------------------|----------|-------------|
@@ -71,7 +71,7 @@ All three are equivalent and produce the same result.
 | `<div x-cardminimizable>` | - | `cardminimizable` | Minimizable to title bar |
 | `<div x-carddraggable>` | - | `carddraggable` | Draggable card |
 
-### Layout Components
+### Layout Behaviors
 
 | Tag | Behavior | Description |
 |-----|----------|-------------|
@@ -90,7 +90,7 @@ All three are equivalent and produce the same result.
 | `<div x-sticky>` | `sticky` | Sticky positioning |
 | `<div x-drawer>` | `drawerLayout` | Drawer/off-canvas |
 
-### Feedback Components
+### Feedback Behaviors
 
 | Tag | Behavior | Description |
 |-----|----------|-------------|
@@ -103,7 +103,7 @@ All three are equivalent and produce the same result.
 | `<div x-tabs>` | `tabs` | Tabbed interface |
 | `<div x-switch>` | `switch` | Toggle switch |
 
-### Other Components
+### Other Behaviors
 
 | Tag | Behavior | Description |
 |-----|----------|-------------|
@@ -163,12 +163,12 @@ const customElementMappings = [
 
 ---
 
-## Adding New PCE Components
+## Adding New PCE Behaviors
 
 1. **Add mapping** to `customElementMappings` in `src/core/wb-lazy.js`:
    ```javascript
    { selector: 'x-mycomponent', behavior: 'mycomponent' },
-   { selector: 'my-component', behavior: 'mycomponent' },  // optional alias
+   { selector: 'my-behavior', behavior: 'mycomponent' },  // optional alias
    ```
 
 2. **Create behavior** in `src/wb-viewmodels/mycomponent.js`:
@@ -205,7 +205,7 @@ const customElementMappings = [
 |--------|-------------|-------------------|
 | Initial JS Load | ~200KB | ~15KB (core only) |
 | Time to Interactive | ~2s | ~0.3s |
-| Component Load | All upfront | On-demand |
+| Behavior Load | All upfront | On-demand |
 | Memory Usage | High | Low (only visible) |
 
 ---

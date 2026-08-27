@@ -59,7 +59,7 @@
     "withRole": "<cite>{{author}}, {{role}}</cite>"
   },
   "wbComponents": {
-    "description": "WB components that use cite",
+    "description": "WB behaviors that use cite",
     "list": [
       "cardtestimonial"
     ]

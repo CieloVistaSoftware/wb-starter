@@ -22,7 +22,7 @@ export const SEMANTIC_PROPERTY_ATTRIBUTES = {
   badge: 'badge',
 };
 
-// Every x-card* family tag treats `badge` AND `tooltip` as its own component
+// Every x-card* family tag treats `badge` AND `tooltip` as its own behavior
 // props (composeCard renders `badge` as an internal .x-card__badge span, and
 // wires `tooltip`/`hoverText` straight to the same themed tooltip.js behavior
 // itself -- #283). The bare [badge]/[tooltip] selectors below would
@@ -38,7 +38,7 @@ export const SEMANTIC_PROPERTY_ATTRIBUTES = {
 // already-stripped `title` attribute and silently drop the card's heading
 // (confirmed live: <article title="…" tooltip="…"> intermittently rendered
 // with no header at all, depending on import timing). Excluded explicitly so
-// card components keep sole ownership of their own `badge`/`tooltip`
+// card behaviors keep sole ownership of their own `badge`/`tooltip`
 // attributes.
 export const CARD_TAGS = [
   'x-card', 'x-cardbutton', 'x-carddraggable', 'x-cardexpandable', 'x-cardfile',
@@ -51,7 +51,7 @@ export const CARD_TAGS = [
 // CUSTOM TAGS -- it has no way to recognize a semantic
 // <article x-behavior="card">/<article x-card> (the now-preferred,
 // semantic-HTML-first way to author a card per John's "pull away from our
-// wb tags" directive). Confirmed live: docs/components/cards/card.md's own
+// wb tags" directive). Confirmed live: docs/behaviors/cards/card.md's own
 // "Card anatomy" example, rewritten to <article x-behavior="card"
 // badge="LIVE">, picked up x-badge/x-badge--live classes on the ROOT
 // element -- the exact double-application bug this file's own CARD_TAGS

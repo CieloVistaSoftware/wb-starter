@@ -1,6 +1,6 @@
 /**
- * Behaviors page (?page=behaviors) — component coverage suite.
- * Loads the real SPA route and asserts each section's components actually
+ * Behaviors page (?page=behaviors) — behavior coverage suite.
+ * Loads the real SPA route and asserts each section's behaviors actually
  * upgrade and render. Behaviors lazy-load on scroll, so each check scrolls
  * its target into view first.
  */
@@ -158,5 +158,5 @@ test.describe('Behaviors page — Data & Selection', () => {
     await expect(r.first()).not.toHaveAttribute('x-error', 'true');
   });
 
-  // (input data-variant demo lives on the Components page — covered by input-variant.spec.ts)
+  // (input data-variant demo lives on the Behaviors page — covered by input-variant.spec.ts)
 });

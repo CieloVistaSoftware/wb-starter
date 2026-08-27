@@ -6,7 +6,7 @@ import * as path from 'path';
  * REGRESSION (#196 / #200 / #204 / #205): overlay demo markup must use the
  * canonical PLAIN attributes that the overlay behaviors actually read.
  *
- * The old demos used data-* attributes the components never read — e.g.
+ * The old demos used data-* attributes the behaviors never read — e.g.
  * `x-drawer data-position="left"` was ignored, so x-drawer fell back to its
  * default `position: 'right'` and BOTH drawer buttons opened to the right
  * (#204/#205). Likewise data-title/data-content/data-message rendered the
@@ -36,7 +36,7 @@ const FORBIDDEN_OVERLAY_ATTRS = [
 // process.cwd() (not __dirname, unavailable in ESM) — matches tests/base.ts's
 // own PATHS convention; Playwright always runs from the project root.
 const ROOT  = process.cwd();
-const PAGES = ['pages/components.html', 'pages/behaviors.html', 'pages/newbehaviors.html'];
+const PAGES = ['pages/behaviors.html', 'pages/behaviors.html', 'pages/newbehaviors.html'];
 
 // Extract opening tags of overlay triggers (x-modal — legacy custom-element
 // tag form, still checked for any remaining archived pages — or any element
@@ -55,7 +55,7 @@ function overlayTriggerTags(html: string): string[] {
 
 test.describe('Overlay demo markup uses canonical plain attributes (#196/#200/#204/#205)', () => {
   for (const rel of PAGES) {
-    test(`${rel}: overlay triggers avoid data-* attributes the components never read`, () => {
+    test(`${rel}: overlay triggers avoid data-* attributes the behaviors never read`, () => {
       const html = fs.readFileSync(path.join(ROOT, rel), 'utf8');
       const tags = overlayTriggerTags(html);
 

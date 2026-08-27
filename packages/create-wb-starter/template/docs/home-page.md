@@ -25,7 +25,7 @@ node scripts/generate-page-from-schema.mjs src/wb-models/home-page.schema.json p
 - Second argument overrides output path: `... pages/custom.html`
 
 ### Renderers
-The generator has a renderer per component type found in `$view`:
+The generator has a renderer per behavior type found in `$view`:
 
 | $view tag | Renderer | Data source |
 |-----------|----------|-------------|
@@ -42,16 +42,16 @@ The generator has a renderer per component type found in `$view`:
 
 ## Schema
 - **File:** `src/wb-models/home-page.schema.json`
-- **Type:** `page` (defines layout rows, not a component)
+- **Type:** `page` (defines layout rows, not a behavior)
 - **Validated by:** `tests/behaviors/ui/home-page-permutation.spec.ts` + `tests/pages/page-fragment-compliance.spec.ts`
 
 ### Key schema sections
 - `pageRules` — fragment, showcase, noInlineStyles, noPageSpecificCSS
 - `$layout` — row definitions with columns, width, headings, gap
-- `$view` — component tree with tags, attributes, children
+- `$view` — behavior tree with tags, attributes, children
 - `properties` — default values for all content (stats data, feature text, notification messages)
 - `test.site` — assertions the generated page must pass (sections, layout, mobileFirst, fluent)
-- `test.matrix` — 12 permutation combinations for component-level testing
+- `test.matrix` — 12 permutation combinations for behavior-level testing
 
 ## Layout ($layout)
 Row-based system. Each row stacks vertically. Columns collapse to 1 on mobile (mobile-first).
@@ -69,7 +69,7 @@ Row-based system. Each row stacks vertically. Columns collapse to 1 on mobile (m
 - `noInlineStyles: true` — zero style= attributes in generated HTML
 - `noPageSpecificCSS: true` — no page-specific CSS file
 
-## Components
+## Behaviors
 
 ### Hero (x-cardhero)
 - Variant: cosmic
@@ -83,7 +83,7 @@ Row-based system. Each row stacks vertically. Columns collapse to 1 on mobile (m
 
 ### Features (x-grid > x-card[variant=float] ×6)
 - Six feature cards with emoji titles and descriptions
-- Component Library, Behaviors System, Theme Engine, Data Viz, Accessible, Performance
+- Behavior Library, Behaviors System, Theme Engine, Data Viz, Accessible, Performance
 
 ### Notifications (x-stack > x-cardnotification ×4)
 - Tag is `x-cardnotification` (NOT notification-card — that tag does not exist)
@@ -112,7 +112,7 @@ The intended workflow:
 ### Test files
 - **Schema permutation tests:** `tests/behaviors/ui/home-page-permutation.spec.ts`
   - Layout assertions (no x-demo, no inline styles, fragment, section order)
-  - Component assertions (tag counts, attributes, text content, hydration classes)
+  - Behavior assertions (tag counts, attributes, text content, hydration classes)
   - Mobile-first visual assertions (375px breakpoint, grid collapse, no overflow)
   - Fluent layout assertions (no builder artifacts, stat height, no horizontal scroll)
   - Interaction assertions (ripple, tooltip, confetti, copy buttons)

@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>wb-starter — Zero-build web components for developers</title>
+  <title>wb-starter — Zero-build behaviors for developers</title>
   <link rel="stylesheet" href="../src/styles/themes.css?v=3.0.91">
   <link rel="stylesheet" href="../src/styles/site.css?v=3.0.91">
   <script type="module">
@@ -22,7 +22,7 @@
     // did nothing) -- x-button renders a real <button> internally
     // (button.schema.json's semanticElement.tagName), so wrapping it in an
     // <a> would nest a button inside a link (invalid HTML); navigating on
-    // click is the correct approach for a real component instead.
+    // click is the correct approach for a real behavior instead.
     document.getElementById('lp-cta-start')?.addEventListener('click', () => {
       // doc-viewer.html prefixes any bare (no-slash) filename with 'docs/'
       // (its own comment: legacy links passed bare names meaning a docs/
@@ -30,8 +30,8 @@
       // the real repo-root README via /api/markdown's plain rootDir join.
       window.location.href = '/public/doc-viewer.html?file=./README.md';
     });
-    document.getElementById('lp-cta-components')?.addEventListener('click', () => {
-      window.location.href = '/?page=components';
+    document.getElementById('lp-cta-behaviors')?.addEventListener('click', () => {
+      window.location.href = '/?page=behaviors';
     });
   </script>
   <style>
@@ -56,11 +56,11 @@
   <section class="lp-hero">
     <span x-badge id="lp-version-badge" label="v3.0 — zero build step" variant="primary" pill></span>
     <h1>Ship real UI.<br>No bundler required.</h1>
-    <p class="lead">wb-starter is a composition-based web component library. Drop an attribute on a semantic element — <code>x-ripple</code>, <code>x-card</code>, <code>x-typewriter</code> — and it just works. No React, no build step, no framework lock-in.</p>
+    <p class="lead">wb-starter is a composition-based behavior library. Drop an attribute on a semantic element — <code>x-ripple</code>, <code>x-card</code>, <code>x-typewriter</code> — and it just works. No React, no build step, no framework lock-in.</p>
     <pre class="lp-prompt"><code class="language-html">&lt;button x-ripple x-tooltip="Click me"&gt;Ship it&lt;/button&gt;</code></pre>
     <div class="lp-cta">
       <button id="lp-cta-start" variant="primary" x-ripple>Get Started</button>
-      <button id="lp-cta-components" variant="secondary" x-ripple x-tooltip="18 card variants, 23 themes, 100+ behaviors">See the Components</button>
+      <button id="lp-cta-behaviors" variant="secondary" x-ripple x-tooltip="18 card variants, 23 themes, 100+ behaviors">See the Behaviors</button>
     </div>
   </section>
 
@@ -86,7 +86,7 @@
         Every color is a CSS variable. Switch the whole page's look with one attribute — try the picker below.
       </article>
       <article title="Light DOM" subtitle="No Shadow DOM boundary" variant="glass" elevated>
-        Your own CSS, your own selectors, and devtools reach straight into every component — exactly like plain HTML.
+        Your own CSS, your own selectors, and devtools reach straight into every behavior — exactly like plain HTML.
       </article>
     </div>
   </section>
@@ -116,9 +116,9 @@
     </div>
   </section>
 
-  <!-- COMPONENT GALLERY -->
+  <!-- BEHAVIOR GALLERY -->
   <section class="lp-section">
-    <h2>The component library</h2>
+    <h2>The behavior library</h2>
     <p class="sub">A slice of what ships in the box — every piece below is live, not a screenshot.</p>
     <div style="display:flex;flex-wrap:wrap;gap:0.75rem;justify-content:center;align-items:center;margin-bottom:2rem;">
       <span x-badge label="Default" variant="default"></span>
@@ -139,7 +139,7 @@
   <!-- CODE SAMPLE -->
   <section class="lp-section">
     <h2>What the markup actually looks like</h2>
-    <p class="sub">Every component on this page, in the same handful of lines.</p>
+    <p class="sub">Every behavior on this page, in the same handful of lines.</p>
     <pre style="max-width:700px;margin:0 auto;border-radius:8px;overflow:hidden;"><code class="language-html">&lt;x-card title="Themeable" variant="glass" elevated&gt;
   Every color is a CSS variable.
 &lt;/x-card&gt;

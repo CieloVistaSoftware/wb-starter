@@ -1,9 +1,9 @@
 # Intellisense Tooltip Audit Report
 
 **Date:** 1/5/2026, 8:37:47 PM
-**Total Components:** 89
+**Total Behaviors:** 89
 
-This report records exactly what is displayed in the VS Code hover tooltip for each component.
+This report records exactly what is displayed in the VS Code hover tooltip for each behavior.
 
 --- 
 
@@ -35,7 +35,7 @@ Attributes:
 ```text
 Alert
 
-Alert component for displaying messages with severity levels
+Alert behavior for displaying messages with severity levels
 
 Variants:
 - info
@@ -178,7 +178,7 @@ Schema for behaviors-showcase.html - validates all behaviors render correctly
 ```text
 Builder Schema
 
-Unified schema for builder components and UI interactions.
+Unified schema for builder behaviors and UI interactions.
 ```
 
 <details><summary>View 4 Attribute Tooltips</summary>
@@ -187,7 +187,7 @@ Unified schema for builder components and UI interactions.
 |-----------|---------|
 | `label` | label |
 | `icon` | icon |
-| `components` | List of components in the builder. |
+| `behaviors` | List of behaviors in the builder. |
 | `meta` | Builder-level metadata (optional) |
 
 </details>
@@ -238,7 +238,7 @@ CSS Rules:
 
 **Tooltip Output:**
 ```text
-A generic card component. Use this for basic content containers.
+A generic card behavior. Use this for basic content containers.
 
 For specialized cards, use:
 - <div x-cardhero> (Hero/Banner)
@@ -293,7 +293,7 @@ File attachment card.
 
 **Tooltip Output:**
 ```text
-Hero/Banner card component with background image and overlay.
+Hero/Banner card behavior with background image and overlay.
 
 Attributes:
 - background: Image URL
@@ -439,7 +439,7 @@ Pricing table card with price point, features, and CTA.
 
 **Tooltip Output:**
 ```text
-Product card component with image, price, rating, and CTA.
+Product card behavior with image, price, rating, and CTA.
 
 Attributes:
 - image: Product image
@@ -1288,7 +1288,7 @@ Attributes:
 
 **Tooltip Output:**
 ```text
-A column layout component that arranges items vertically using Flexbox.
+A column layout behavior that arranges items vertically using Flexbox.
 
 Use for:
 - Card stacks
@@ -1400,9 +1400,9 @@ Attributes:
 
 **Tooltip Output:**
 ```text
-Demo Component
+Demo Behavior
 
-A component to display a live demo and its source code.
+A behavior to display a live demo and its source code.
 ```
 
 <details><summary>View 3 Attribute Tooltips</summary>
@@ -1485,7 +1485,7 @@ CSS Rules:
 
 **Tooltip Output:**
 ```text
-A drawer component.
+A drawer behavior.
 
 Attributes:
 - open: true, false
@@ -1577,7 +1577,7 @@ Fireworks particle burst animation effect
 
 **Tooltip Output:**
 ```text
-A flexible box layout component (Low-level wrapper).
+A flexible box layout behavior (Low-level wrapper).
 
 Attributes:
 - align: start, center, end, stretch, baseline
@@ -1628,7 +1628,7 @@ Page footer with copyright, links, and social icons
 
 **Tooltip Output:**
 ```text
-A component that maintains a specific aspect ratio.
+A behavior that maintains a specific aspect ratio.
 
 Attributes:
 - ratio: ratio
@@ -1648,7 +1648,7 @@ Attributes:
 
 **Tooltip Output:**
 ```text
-A layout component that creates a responsive CSS Grid.
+A layout behavior that creates a responsive CSS Grid.
 
 Key Feature: The `min-width` attribute enables 'Auto-Fit' columns - no media queries needed.
 
@@ -1700,7 +1700,7 @@ Page header with logo, title, and optional navigation
 
 **Tooltip Output:**
 ```text
-An icon component.
+An icon behavior.
 
 Attributes:
 - color: string
@@ -1765,7 +1765,7 @@ CSS Rules:
 
 **Tooltip Output:**
 ```text
-A masonry layout component.
+A masonry layout behavior.
 
 Attributes:
 - columns: number
@@ -1849,7 +1849,7 @@ WB Part - Reusable HTML template. First boolean attribute specifies the part nam
 
 | Attribute | Tooltip |
 |-----------|---------|
-| `card-tile` | Use the card-tile part template. Draggable component tile for sidebar/palette |
+| `card-tile` | Use the card-tile part template. Draggable behavior tile for sidebar/palette |
 | `alert-box` | Use the alert-box part template. Alert/notification message box |
 | `stat-tile` | Use the stat-tile part template. Statistics display tile with trend indicator |
 | `nav-link` | Use the nav-link part template. Navigation link item |
@@ -1939,7 +1939,7 @@ CSS Rules:
 ```text
 Rating
 
-Star rating component for displaying or collecting ratings
+Star rating behavior for displaying or collecting ratings
 ```
 
 <details><summary>View 7 Attribute Tooltips</summary>
@@ -2007,7 +2007,7 @@ Material Design ripple effect on click
 
 **Tooltip Output:**
 ```text
-A row layout component that arranges items horizontally using Flexbox.
+A row layout behavior that arranges items horizontally using Flexbox.
 
 Defaults to wrapping items.
 
@@ -2233,7 +2233,7 @@ CSS Rules:
 
 **Tooltip Output:**
 ```text
-A vertical stack layout component (Alternative to x-flex direction=column).
+A vertical stack layout behavior (Alternative to x-flex direction=column).
 
 Use for:
 - Vertical lists
@@ -2257,7 +2257,7 @@ Attributes:
 
 **Tooltip Output:**
 ```text
-A sticky component.
+A sticky behavior.
 
 Attributes:
 - bottom: size

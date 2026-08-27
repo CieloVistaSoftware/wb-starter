@@ -49,7 +49,7 @@ test.describe('#312 — schema.json is fetched on-demand, not eagerly for every 
   });
 
   // Follow-up to the on-demand fix above: the home page has several
-  // instances of the same component (multiple <article>-family tags), and
+  // instances of the same behavior (multiple <article>-family tags), and
   // each independently discovers on scan that the shared schema isn't
   // registered yet — none of them see it as registered until their OWN
   // fetch resolves, so they each started their own redundant fetch. Live

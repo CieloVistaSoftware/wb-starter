@@ -7,7 +7,7 @@
  *   2. Have <html> with data-theme
  *   3. Have <meta charset> and <meta viewport>
  *   4. Have <title>
- *   5. If uses wb-* components, must import WB
+ *   5. If uses wb-* behaviors, must import WB
  */
 import { test, expect } from '@playwright/test';
 import fs from 'fs';
@@ -48,7 +48,7 @@ for (const file of demoFiles) {
       expect(html).toMatch(/<title>/i);
     });
 
-    test('if uses wb-* components, must import WB', () => {
+    test('if uses wb-* behaviors, must import WB', () => {
       const usesWB = /<wb-[a-z]/i.test(html);
       if (usesWB) {
         const hasImport = /wb-lazy\.js|wb\.js/i.test(html);

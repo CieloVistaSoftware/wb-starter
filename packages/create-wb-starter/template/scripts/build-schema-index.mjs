@@ -1,7 +1,7 @@
 /**
  * Build Schema Index (Phase 5)
  * ============================
- * Bundles all component schemas into a single data/schema-index.json
+ * Bundles all behavior schemas into a single data/schema-index.json
  * for the Interactive Schema Wizard to consume in the browser.
  *
  * Output: data/schema-index.json
@@ -58,5 +58,5 @@ const index = {
 writeFileSync(OUTPUT, JSON.stringify(index, null, 2), 'utf-8');
 
 console.log(`\n📋 Schema Index Built`);
-console.log(`   Components: ${schemas.length}`);
+console.log(`   Behaviors: ${schemas.length}`);
 console.log(`   Output: ${OUTPUT}\n`);

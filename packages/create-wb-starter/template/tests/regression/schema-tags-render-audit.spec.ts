@@ -2,7 +2,7 @@ import { test, expect, Page } from '@playwright/test';
 
 /**
  * Issue #365: an audit created a bare `<wb-{tag}></wb-{tag}>` for each of 96
- * component schemas, ran `WB.scan()`, and flagged 20 as completely inert
+ * behavior schemas, ran `WB.scan()`, and flagged 20 as completely inert
  * (empty className + zero children after a settle delay). x-skeleton was
  * confirmed a false positive (its CSS is intentionally tag-selector-only).
  * The other 19 were assumed dead/unused as a batch and deprioritized without
@@ -110,7 +110,7 @@ test.describe('x-fix-card actually upgrades and renders (#365)', () => {
       el.data = {
         errorId: 'TEST-365',
         issue: 'Regression check',
-        component: 'schema-tags-render-audit.spec.ts',
+        behavior: 'schema-tags-render-audit.spec.ts',
         date: new Date().toISOString(),
         status: 'FIXED',
         cause: 'fix-card.js was never imported anywhere',

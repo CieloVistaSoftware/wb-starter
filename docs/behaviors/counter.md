@@ -14,7 +14,7 @@ enforces the limit via the native `maxlength`. See
 <input type="text" x-counter max="50" placeholder="Type here — counts up to 50">
 ```
 
-Wrapped in `<div x-demo>`, so the live component renders below with its source shown underneath:
+Wrapped in `<div x-demo>`, so the live behavior renders below with its source shown underneath:
 
 <div x-demo>
 <input type="text" x-counter max="50" placeholder="Type here — counts up to 50">

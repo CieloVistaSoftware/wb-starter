@@ -2,7 +2,7 @@
 
 A layout utility for horizontal row alignment.
 
-Wrapped in `<div x-demo>`, so the live component renders below with its source shown underneath:
+Wrapped in `<div x-demo>`, so the live behavior renders below with its source shown underneath:
 
 <div x-demo>
 <div class="x-row">

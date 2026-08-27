@@ -19,10 +19,10 @@ Based on the project assessment (Dec 2025), here are strategic improvements to c
 
 ## 4. Ecosystem
 - **Theme Marketplace:** Allow community contributions of themes (`site.json` + CSS variables).
-- **Component Gallery:** A visual showcase of what's possible, beyond the current demos, perhaps featuring full page templates.
+- **Behavior Gallery:** A visual showcase of what's possible, beyond the current demos, perhaps featuring full page templates.
 
 ## 5. Testing & Stability
-- **Automated Visual Regression Testing:** Since this is a UI library, automated screenshots of components across different themes would ensure updates don't break styles.
+- **Automated Visual Regression Testing:** Since this is a UI library, automated screenshots of behaviors across different themes would ensure updates don't break styles.
 - **E2E Testing for Builder:** Automated tests to verify drag-and-drop functionality and property updates in the builder.
 
 ## 6. Fix Viewer Enhancements

@@ -108,7 +108,7 @@ function validateSemanticContainer(element, behaviorName) {
 2. **Fix tabs.js** - Use `<nav>` for tab list, `<section>` for panels
 3. **Fix dropdown.js** - Use `<menu>` for dropdown menu
 4. **Update remaining schemas** - Add semantic section to all card variant schemas
-5. **Update builder.js** - Ensure components are created with correct element tags
+5. **Update builder.js** - Ensure behaviors are created with correct element tags
 
 ---
 

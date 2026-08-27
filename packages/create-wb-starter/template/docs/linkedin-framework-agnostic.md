@@ -20,7 +20,7 @@ AI agents thrive on **Determinism**. When an AI writes code, it shouldn't have t
 ### 2. Schema-First is the AI "Contract"
 
 In our architecture, we don't just write code; we define **Schemas**.
-By defining components via strict JSON schemas rather than loose code, we give the AI a rigid contract.
+By defining behaviors via strict JSON schemas rather than loose code, we give the AI a rigid contract.
 *   **The Input:** The AI reads `propertyconfig.schema.json`.
 *   **The process:** It sees exactly what properties a `card-hero` accepts.
 *   **The Output:** It generates perfect, valid JSON configuration every time.
@@ -30,7 +30,7 @@ Use AI to generate the data, and let the agnostic platform render the view.
 ### 3. State Isolation (The "No-Cascade" Rule)
 
 To allow AI to refactor code safely, we separate the **View Model** (Logic) from the **View** (Rendering).
-*   **Traditional:** Logic and UI are tightly coupled in component files (JSX). A change to logic often breaks the layout.
+*   **Traditional:** Logic and UI are tightly coupled in behavior files (JSX). A change to logic often breaks the layout.
 *   **Agnostic:** The logic lives in pure JavaScript modules. The UI lives in standard HTML/CSS.
 
 This allows an AI to strictly optimize business logic without ever risking a pixel-shift in the UI.

@@ -5,13 +5,13 @@ import * as path from 'path';
 /**
  * #390 / #304: pages/behaviors.html ("?page=behaviors") is meant to
  * showcase x-* attribute behaviors on plain/native elements — NOT full
- * wb-* custom component demos, which already have their own home
- * (pages/components.html, "Components Library"). It had drifted to mix
- * 12+ wb-* component demos in (x-alert, x-badge, x-progress,
+ * wb-* custom behavior demos, which already have their own home
+ * (pages/behaviors.html, "Behaviors Library"). It had drifted to mix
+ * 12+ wb-* behavior demos in (x-alert, x-badge, x-progress,
  * x-spinner, x-modal, x-drawer, x-tabs, x-accordion, x-audio,
  * x-rating, x-switch), reported live twice by John and previously
- * filed as #304 but never fixed. Cleaned up (component demos removed,
- * section notes updated to point at Components instead) alongside this
+ * filed as #304 but never fixed. Cleaned up (behavior demos removed,
+ * section notes updated to point at Behaviors instead) alongside this
  * test, which is the actual build-time gate preventing it drifting back.
  *
  * `<div x-demo>` itself and the header's single functional `<div x-themecontrol>`
@@ -19,7 +19,7 @@ import * as path from 'path';
  */
 const EXEMPT_TAGS = new Set(['x-demo', 'x-themecontrol']);
 
-test('behaviors.html contains no wb-* custom component demos', () => {
+test('behaviors.html contains no wb-* custom behavior demos', () => {
   const filePath = path.join(process.cwd(), 'pages', 'behaviors.html');
   const html = fs.readFileSync(filePath, 'utf8');
   const tags = new Set<string>();

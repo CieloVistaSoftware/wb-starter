@@ -1,5 +1,5 @@
 /**
- * WBDemo Component
+ * WBDemo Behavior
  * -----------------------------------------------------------------------------
  * Custom Tag: <div x-demo>
  * Must be registered BEFORE x-card so innerHTML is still raw at
@@ -67,7 +67,7 @@ function getLazyObserver() {
       // it doesn't show a pop-in. 400px wasn't enough margin for a fast
       // scroll/jump (e.g. a nav-link jump straight to a section) to outrun
       // the observer callback -- confirmed live, #390: jumping to "Pricing
-      // Cards" on pages/components.html showed the raw unbuilt
+      // Cards" on pages/behaviors.html showed the raw unbuilt
       // <div x-cardpricing> (collapsed, near-zero size before its behavior
       // JS runs) for a beat before it rendered. 1200px gives a much larger
       // head start without going back to eager-building everything.
@@ -84,7 +84,7 @@ function getLazyObserver() {
 // there (nobody's deferring 44 blocks) but breaks "the demo is just there,"
 // which readers and tests both expect. Build the first few unconditionally;
 // only defer beyond that, where a real many-block page (behaviors.html,
-// components.html) actually benefits.
+// behaviors.html) actually benefits.
 const EAGER_BUILD_COUNT = 5;
 
 export class WBDemo extends HTMLElement {

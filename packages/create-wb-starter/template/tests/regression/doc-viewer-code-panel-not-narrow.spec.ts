@@ -1,7 +1,7 @@
 import { test, expect } from '@playwright/test';
 
 /**
- * #560: "docs/components/semantic/article.md: doc-viewer code panels render
+ * #560: "docs/behaviors/semantic/article.md: doc-viewer code panels render
  * too narrow" -- reported live on public/doc-viewer.html, whose
  * `<div x-demo>`-wrapped examples (Standard Semantic Article / WB Card /
  * WB Card Data Attributes) render through the exact SAME demo.js
@@ -28,9 +28,9 @@ import { test, expect } from '@playwright/test';
  * caught.
  */
 const DOCS = [
-  'docs/components/semantic/article.md',
-  'docs/components/semantic/figure.md',
-  'docs/components/semantics/table.md',
+  'docs/behaviors/semantic/article.md',
+  'docs/behaviors/semantic/figure.md',
+  'docs/behaviors/semantics/table.md',
 ];
 
 test.describe('doc-viewer.html code panels are never narrower than their own content (#560)', () => {
@@ -70,7 +70,7 @@ test.describe('doc-viewer.html code panels are never narrower than their own con
   }
 
   test('article.md: a plain (non-wb-demo) fenced code block spans the full reading column, not a cramped sliver', async ({ page }) => {
-    await page.goto('/public/doc-viewer.html?file=' + encodeURIComponent('docs/components/semantic/article.md'), {
+    await page.goto('/public/doc-viewer.html?file=' + encodeURIComponent('docs/behaviors/semantic/article.md'), {
       waitUntil: 'domcontentloaded',
     });
 

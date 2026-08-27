@@ -60,7 +60,7 @@ test.describe('Fix Verification Tests', () => {
   });
 
   // WB_FIGURE_CAPTION_021
-  test('Figure component renders caption from caption attribute', async ({ page }) => {
+  test('Figure behavior renders caption from caption attribute', async ({ page }) => {
     // x-media doesn't exist -- media.js was split into per-tag
     // semantics/img.js, video.js, audio.js, figure.js (behaviorModules,
     // src/wb-viewmodels/index.js); figure.js reads a bare `caption`
@@ -91,7 +91,7 @@ test.describe('Fix Verification Tests', () => {
     // when given a bare <audio> directly, that self-hide takes the
     // transport/EQ container down with it (both got appendChild'd onto the
     // element being hidden). Every real usage (pages/behaviors.html,
-    // pages/components.html) uses the <audio> wrapper tag instead, where
+    // pages/behaviors.html) uses the <audio> wrapper tag instead, where
     // the internal <audio> is a separate hidden child and the custom UI
     // stays visible. demos/audio.mp3 is a real local asset.
     await mount(page, `<audio id="test-eq" src="/demos/audio.mp3" show-eq controls></audio>`);

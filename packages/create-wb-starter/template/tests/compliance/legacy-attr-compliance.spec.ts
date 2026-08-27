@@ -32,7 +32,7 @@ const ALLOWED = new Set([
 ]);
 
 // Live pages only. behaviors.html / newbehaviors.html are archived legacy dumps.
-const PAGES = ['pages/components.html'];
+const PAGES = ['pages/behaviors.html'];
 const ROOT = process.cwd();
 
 test.describe('No legacy behavior-config data-* attributes in live demos (#200)', () => {

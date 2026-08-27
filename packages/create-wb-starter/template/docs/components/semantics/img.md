@@ -1,6 +1,6 @@
 # Image - wb-starter v3.0
 
-Enhanced image component with lazy loading, aspect ratio, and fallback support.
+Enhanced image behavior with lazy loading, aspect ratio, and fallback support.
 
 ## Overview
 
@@ -24,7 +24,7 @@ Enhanced image component with lazy loading, aspect ratio, and fallback support.
 | `fallback` | string | `""` | URL of fallback image on error |
 | `fit` | string | `"cover"` | Object-fit: `cover`, `contain`, `fill` |
 
-Wrapped in `<div x-demo>`, so the live component renders below with its source shown underneath:
+Wrapped in `<div x-demo>`, so the live behavior renders below with its source shown underneath:
 
 <div x-demo>
 <img

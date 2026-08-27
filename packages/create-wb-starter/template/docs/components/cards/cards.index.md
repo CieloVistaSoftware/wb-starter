@@ -1,4 +1,4 @@
-# Card Components - wb-starter v3.0
+# Card Behaviors - wb-starter v3.0
 
 All card variants use the **WBServices pattern** with **Light DOM architecture**.
 
@@ -6,7 +6,7 @@ All card variants use the **WBServices pattern** with **Light DOM architecture**
 
 All card variants compose the shared `card` behavior and Light-DOM markup:
 
-- card            - Card component
+- card            - Card behavior
 - cardimage       - Card with featured image
 - cardvideo       - Card with video player
 - cardbutton      - Card with action buttons
@@ -162,7 +162,7 @@ src/wb-viewmodels/
 ## Documentation
 
 ### Card & Common
-- [card.md](./card.md) - Card component
+- [card.md](./card.md) - Card behavior
 - [cardbutton.md](./cardbutton.md) - Action buttons
 - [cardimage.md](./cardimage.md) - Featured image
 - [cardvideo.md](./cardvideo.md) - Video player

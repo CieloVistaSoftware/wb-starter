@@ -2,14 +2,14 @@
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "schema.schema.json",
   "schemaType": "definition",
-  "title": "WB Component Schema Meta-Schema",
-  "description": "Validates WB schema files across 3 tiers. Component schemas (default) require all fields. Base schemas (inherited from, never instantiated) relax $view/$methods/behavior. Definition schemas (pure reference docs) require only title + description. Enforces v3.0 rules: every property must have type + default, enums must be arrays, $view items need name + tag.",
+  "title": "WB Behavior Schema Meta-Schema",
+  "description": "Validates WB schema files across 3 tiers. Behavior schemas (default) require all fields. Base schemas (inherited from, never instantiated) relax $view/$methods/behavior. Definition schemas (pure reference docs) require only title + description. Enforces v3.0 rules: every property must have type + default, enums must be arrays, $view items need name + tag.",
 
   "type": "object",
 
   "_schemaTypes": {
-    "component": {
-      "description": "Default. Real components users interact with. Full rules apply.",
+    "behavior": {
+      "description": "Default. Real behaviors users interact with. Full rules apply.",
       "required": ["title", "description", "properties", "$view", "$methods"],
       "requiresBehaviorOrSchemaFor": true,
       "propertyRules": "type + default mandatory on every property"
@@ -21,13 +21,13 @@
       "propertyRules": "type + default mandatory on every property"
     },
     "definition": {
-      "description": "Pure reference documents defining rules or contracts. Not components.",
+      "description": "Pure reference documents defining rules or contracts. Not behaviors.",
       "required": ["title", "description"],
       "requiresBehaviorOrSchemaFor": false,
       "propertyRules": "none — properties section optional"
     },
     "page": {
-      "description": "Page-level schema. Defines layout rows, page rules, and content placement. Not a component.",
+      "description": "Page-level schema. Defines layout rows, page rules, and content placement. Not a behavior.",
       "required": ["title", "description", "pageRules", "$layout"],
       "requiresBehaviorOrSchemaFor": false,
       "propertyRules": "type + default on data properties"
@@ -52,9 +52,9 @@
 
     "schemaType": {
       "type": "string",
-      "enum": ["component", "base", "definition", "page"],
-      "default": "component",
-      "description": "Schema tier. 'component' (default) = full rules. 'base' = abstract/inherited, $view/$methods optional. 'definition' = reference doc, only title+description required."
+      "enum": ["behavior", "base", "definition", "page"],
+      "default": "behavior",
+      "description": "Schema tier. 'behavior' (default) = full rules. 'base' = abstract/inherited, $view/$methods optional. 'definition' = reference doc, only title+description required."
     },
     "$schema": {
       "type": "string",
@@ -68,12 +68,12 @@
     "title": {
       "type": "string",
       "minLength": 1,
-      "description": "Human-readable component name"
+      "description": "Human-readable behavior name"
     },
     "description": {
       "type": "string",
       "minLength": 1,
-      "description": "What this component does"
+      "description": "What this behavior does"
     },
 
     "behavior": {
@@ -204,7 +204,7 @@
 
     "componentProperty": {
       "type": "object",
-      "description": "A single component property (attribute). Must have type and default.",
+      "description": "A single behavior property (attribute). Must have type and default.",
       "required": ["type", "default"],
       "properties": {
         "type": {
@@ -353,7 +353,7 @@
 
     "methodItem": {
       "type": "object",
-      "description": "A callable method on the component.",
+      "description": "A callable method on the behavior.",
       "required": ["description"],
       "properties": {
         "description": {
@@ -413,7 +413,7 @@
         "noPageSpecificCSS": {
           "type": "boolean",
           "default": true,
-          "description": "No page-specific CSS file. All styling comes from component CSS."
+          "description": "No page-specific CSS file. All styling comes from behavior CSS."
         }
       }
     },
@@ -510,7 +510,7 @@
 
     "testConfig": {
       "type": "object",
-      "description": "Test configuration for the component.",
+      "description": "Test configuration for the behavior.",
       "properties": {
         "functional": {
           "type": "boolean",
@@ -519,7 +519,7 @@
         "setup": {
           "type": "array",
           "items": { "type": "string" },
-          "description": "HTML strings to instantiate the component for testing"
+          "description": "HTML strings to instantiate the behavior for testing"
         },
         "matrix": {
           "type": "object",
@@ -540,7 +540,7 @@
           "properties": {
             "page": {
               "type": "string",
-              "description": "Which page this component appears on"
+              "description": "Which page this behavior appears on"
             },
             "tag": {
               "type": "string",
@@ -548,7 +548,7 @@
             },
             "renders": {
               "type": "boolean",
-              "description": "Whether the component renders on the page"
+              "description": "Whether the behavior renders on the page"
             },
             "baseClass": {
               "type": "string",

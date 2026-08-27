@@ -76,7 +76,7 @@ structural tokens already work today.
 
 - ~~Does `--space-2xl` continue the golden-ratio chain~~ Resolved (#472):
   yes, continues to `~4.236rem`.
-- ~~Do any existing components rely on the *current* `--space-lg`/`--space-xl`
+- ~~Do any existing behaviors rely on the *current* `--space-lg`/`--space-xl`
   pixel values~~ Resolved (#472): checked via `demo-layout-standards.spec.ts`
   content-panel padding gate before adopting — no new failures vs. the
   pre-existing baseline.
@@ -90,7 +90,7 @@ structural tokens already work today.
 An earlier AI conversation (Copilot) elaborated this into a "three-tier
 multiplier system" (element/context/theme multipliers), a numbered
 `Section 1.6.18`, and a `/spec/v4/` folder tree with a dozen files
-(`component-model.md`, `flow-model.md`, `hydration.md`, etc.). None of that
+(`behavior-model.md`, `flow-model.md`, `hydration.md`, etc.). None of that
 exists in the source document, in wb-starter, or anywhere else checked —
 it was generated, not recalled. It's not reproduced here. If a fuller
 multiplier system is wanted, it should be designed fresh and marked as new

@@ -11,7 +11,7 @@ test.describe('External Markdown Code Block Injection', () => {
     // Assuming Playwright's baseURL is set to the root, or we use a relative path
     await page.goto('/articles/resilience-through-separation.html');
 
-    // Wait for the x-mdhtml component to load. The page has two <div x-mdhtml>
+    // Wait for the x-mdhtml behavior to load. The page has two <div x-mdhtml>
     // elements (code + decoupled); target the code one explicitly to avoid a
     // strict-mode ambiguity. It adds the class 'x-mdhtml--loaded' when done.
     const mdhtml = page.locator('x-mdhtml[src="resilience-through-separation-code.md"]');

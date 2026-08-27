@@ -26,7 +26,7 @@ async function createTestPage(page: Page, html: string): Promise<void> {
     <head>
       <meta charset="UTF-8">
       <link rel="stylesheet" href="/src/styles/themes.css">
-      <link rel="stylesheet" href="/src/styles/components.css">
+      <link rel="stylesheet" href="/src/styles/behaviors.css">
     </head>
     <body style="padding: 2rem; background: var(--bg-color);">
       ${html}

@@ -10,7 +10,7 @@ export const Theme = {
       document.documentElement.dataset.theme = theme;
       localStorage.setItem('x-theme', theme);
 
-      // Ensure critical CSS custom-property aliases exist so tests and components relying on
+      // Ensure critical CSS custom-property aliases exist so tests and behaviors relying on
       // shorthand tokens (--text-primary, --primary, --accent, etc.) never observe an empty value.
       try {
         const cs = getComputedStyle(document.documentElement);

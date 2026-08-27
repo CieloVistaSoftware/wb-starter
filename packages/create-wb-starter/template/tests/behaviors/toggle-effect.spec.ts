@@ -1,7 +1,7 @@
 /**
  * x-toggle — effect-based coverage (Standard #19: every declared attribute
  * must be tested to actually WORK, not merely that the element renders).
- * The auto-generated tests/components/toggle.spec.ts only checks render +
+ * The auto-generated tests/behaviors/toggle.spec.ts only checks render +
  * no-console-errors; this file asserts the real behavior of toggle.js:
  * class toggling (self and `target`), aria-pressed, keyboard activation,
  * and the wb:toggle event.

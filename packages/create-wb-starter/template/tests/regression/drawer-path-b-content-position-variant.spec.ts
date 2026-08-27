@@ -34,7 +34,7 @@ import { test, expect } from '@playwright/test';
  * and applied: 'push' translates the page's `body > .page` wrapper aside
  * with no dimming backdrop (Material "push" navigation drawer pattern);
  * 'default' and 'overlay' both use the existing dimming-backdrop behavior
- * (docs/components/drawer.md documents no distinct treatment for
+ * (docs/behaviors/drawer.md documents no distinct treatment for
  * "default", and the schema's own declared default IS "overlay", so
  * "default" is an explicit alias) but still carry distinct
  * x-drawer--default/x-drawer--overlay classes on the panel.

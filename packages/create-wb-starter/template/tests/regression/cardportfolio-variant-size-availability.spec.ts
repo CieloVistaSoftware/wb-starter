@@ -2,7 +2,7 @@ import { test, expect } from '@playwright/test';
 
 /**
  * x-cardportfolio (card.js → cardportfolio(), CSS in card.css) had three
- * related bugs, all found live on demos/multi-component-demo-generated.html
+ * related bugs, all found live on demos/multi-behavior-demo-generated.html
  * (the auto-generated page that renders one <div x-demo> per enum value):
  *
  * 1. variant="compact"/"horizontal"/"full" added a `x-portfolio--{variant}`

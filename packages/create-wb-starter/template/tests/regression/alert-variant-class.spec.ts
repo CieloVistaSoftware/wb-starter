@@ -3,7 +3,7 @@ import { test, expect } from '@playwright/test';
 /**
  * REGRESSION (#375 / BUG-2026-07-27-002): plain <div x-alert variant="...">
  * triggers (the form pages/behaviors.html and scripts/generate-behaviors-page.js
- * emit, distinct from the schema-driven <div x-alert type="..."> component
+ * emit, distinct from the schema-driven <div x-alert type="..."> behavior
  * already covered by tests/behaviors/alerts-variants.spec.ts) rendered with
  * NO styling at all -- alert() in src/wb-viewmodels/feedback.js set a
  * `variant` attribute but never added the `.x-alert` base class or the

@@ -148,4 +148,4 @@ Column count, gap, and min-width are set directly from attributes as inline styl
 
 ## Accessibility
 
-`<div x-grid>` is a purely presentational layout container -- it sets no ARIA role or attributes. When used to lay out tabular data, consider pairing it with real table semantics (see the [Table component](../semantics/table.md)) instead, or add `role="table"`/`role="row"`/`role="cell"` to the grid and its children yourself.
+`<div x-grid>` is a purely presentational layout container -- it sets no ARIA role or attributes. When used to lay out tabular data, consider pairing it with real table semantics (see the [Table behavior](../semantics/table.md)) instead, or add `role="table"`/`role="row"`/`role="cell"` to the grid and its children yourself.

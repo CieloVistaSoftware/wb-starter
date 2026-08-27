@@ -10,7 +10,7 @@ import { test, expect } from '@playwright/test';
  * matched as "opti|ons='...") got silently eaten from there through the
  * next quote. This is not cosmetic: the resulting DOM element is missing
  * the attribute entirely (confirmed live on docs/behaviors-reference.md
- * and docs/components/semantics/select.md -- <select options="..."> lost
+ * and docs/behaviors/semantics/select.md -- <select options="..."> lost
  * its whole `options` attribute, so the dropdown only ever showed its
  * "Select..." placeholder with zero real entries).
  *
@@ -65,9 +65,9 @@ test.describe('mdhtml.js sanitizer: on* stripping does not eat unrelated attribu
     await expect(select.locator('select')).toContainText('United Kingdom');
   });
 
-  test('docs/components/semantics/select.md: every x-select example renders its real options, not just the placeholder', async ({ page }) => {
+  test('docs/behaviors/semantics/select.md: every x-select example renders its real options, not just the placeholder', async ({ page }) => {
     await page.goto(
-      '/public/doc-viewer.html?file=' + encodeURIComponent('docs/components/semantics/select.md'),
+      '/public/doc-viewer.html?file=' + encodeURIComponent('docs/behaviors/semantics/select.md'),
       { waitUntil: 'domcontentloaded' }
     );
 

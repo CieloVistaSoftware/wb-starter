@@ -55,7 +55,7 @@ pages.forEach(page => {
     f === testName || 
     f === `${pageName}.spec.ts` || 
     f === `${pageName}-page.spec.ts` ||
-    (page === 'components.html' && f === 'components-page.spec.ts') ||
+    (page === 'behaviors.html' && f === 'behaviors-page.spec.ts') ||
     (page === 'hero-variants.html' && f === 'cardhero.spec.ts')
   );
   

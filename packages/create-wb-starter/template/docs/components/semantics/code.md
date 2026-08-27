@@ -21,7 +21,7 @@ Enhanced code display with copy button and language badge.
 | `variant` | string | `"inline"` | Display style: `inline`, `block` |
 | `scrollable` | boolean | `false` | Enable horizontal scrolling |
 
-Wrapped in `<div x-demo>`, so the live component renders below with its source shown underneath:
+Wrapped in `<div x-demo>`, so the live behavior renders below with its source shown underneath:
 
 <div x-demo>
 <code

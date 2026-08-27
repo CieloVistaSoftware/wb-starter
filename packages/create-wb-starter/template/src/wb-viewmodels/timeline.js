@@ -1,7 +1,7 @@
 /**
  * WB Timeline Behavior
  * -----------------------------------------------------------------------------
- * Timeline component from items attribute
+ * Timeline behavior from items attribute
  *
  * Custom Tag: <div x-timeline>
  * -----------------------------------------------------------------------------

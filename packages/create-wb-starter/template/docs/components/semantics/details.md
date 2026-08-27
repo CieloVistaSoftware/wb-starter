@@ -1,6 +1,6 @@
 # Details - wb-starter v3.0
 
-Enhanced accordion/disclosure component with smooth animations.
+Enhanced accordion/disclosure behavior with smooth animations.
 
 ## Overview
 
@@ -20,7 +20,7 @@ Enhanced accordion/disclosure component with smooth animations.
 | `open` | boolean | `false` | Open by default |
 | `animated` | boolean | `true` | Enable smooth transitions |
 
-Wrapped in `<div x-demo>`, so the live component renders below with its source shown underneath:
+Wrapped in `<div x-demo>`, so the live behavior renders below with its source shown underneath:
 
 <div x-demo>
 <details summary="More Information">

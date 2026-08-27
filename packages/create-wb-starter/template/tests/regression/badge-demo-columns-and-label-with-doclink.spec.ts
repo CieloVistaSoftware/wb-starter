@@ -1,7 +1,7 @@
 import { test, expect, Page } from '@playwright/test';
 
 /**
- * #617/#618/#619: John, live on docs/components/feedback/badge.md's "Color
+ * #617/#618/#619: John, live on docs/behaviors/feedback/badge.md's "Color
  * Variants" section (screenshot, red annotation "What is this bullshit?") --
  * 6 <span x-badge> elements, a plain fenced ```html block auto-promoted by
  * mdhtml.js into a live <div x-demo> with no way to ever declare

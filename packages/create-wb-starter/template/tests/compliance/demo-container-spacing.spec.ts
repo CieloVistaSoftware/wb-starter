@@ -10,7 +10,7 @@ import { fileURLToPath } from 'url';
  *
  * Scans src/styles/**\/*.css for rules whose selector names a demo/example
  * container (class names containing "demo", "example", or naming a known
- * container like component-box/code-example) and asserts any `gap`/
+ * container like behavior-box/code-example) and asserts any `gap`/
  * `padding` value on those rules is >= 1rem (16px) — not a live-DOM sweep of
  * every rendered page, but the CSS-source-level equivalent: catches the
  * class of bug found in #249 (`.demo-stack { gap: 0.75rem }`) and prevents
@@ -42,8 +42,8 @@ const SKIP_DIRS = new Set(['node_modules', '.git']);
 // bare custom-element TAG selectors like "x-demo" or "x-code-card" at
 // all -- the entire test (not just the new check) silently skipped
 // x-demo.css's own top-level rule since day one. "." is now optional.
-const CONTAINER_NAME_RE = /\.?(?:[\w-]*demo[\w-]*|[\w-]*example[\w-]*|component-box|code-example)\b/i;
-const BASE_CONTAINER_RE = /^(?:x-demo|x-code-card|\.component-box|\.code-example)$/i;
+const CONTAINER_NAME_RE = /\.?(?:[\w-]*demo[\w-]*|[\w-]*example[\w-]*|behavior-box|code-example)\b/i;
+const BASE_CONTAINER_RE = /^(?:x-demo|x-code-card|\.behavior-box|\.code-example)$/i;
 const MIN_REM = 1;
 
 // Standard §13 targets "example/demo containers" (the box), not every

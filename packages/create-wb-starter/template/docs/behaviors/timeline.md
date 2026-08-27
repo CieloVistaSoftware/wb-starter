@@ -1,6 +1,6 @@
 # Timeline
 
-Vertical timeline component for displaying sequential events
+Vertical timeline behavior for displaying sequential events
 
 Applies to `<div>`, and to any element carrying `x-timeline`.
 

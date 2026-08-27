@@ -1,7 +1,7 @@
 /**
  * Card Behavior Styles
  * -----------------------------------------------------------------------------
- * Styles for the x-card component and its variants.
+ * Styles for the x-card behavior and its variants.
  * Working in tandem with src/wb-viewmodels/card.js
  * 
  * CRITICAL RULE: ALL CARDS MUST HAVE 1REM PADDING LEFT AND RIGHT
@@ -1120,7 +1120,7 @@ x-card.x-card--auto,
 }
 
 /* ═══════════════════════════════════════════════════════════════════════════
-   COMPONENT SPECIFICS
+   BEHAVIOR SPECIFICS
    ═══════════════════════════════════════════════════════════════════════════ */
 
 .x-card__hero-title {
@@ -1327,7 +1327,7 @@ x-card.x-card--auto,
    `[data-theme] button { background-color: var(--bg-secondary); ... }`
    reset at (0,0,1,1), which otherwise wins the specificity tie-break over a
    single class selector (0,0,1,0) since its class-count ties (1=1) and its
-   extra element-type component then decides it. This is exactly why the old
+   extra element-type behavior then decides it. This is exactly why the old
    inline `style.cssText` (always wins regardless of specificity) was the
    only reason these buttons ever showed their primary/secondary colors
    correctly (Law 9 migration, #370) -- markup always carries both classes
@@ -1724,7 +1724,7 @@ x-cardfile {
 }
 
 /* Scoped (0,0,2,0) -- overrides the shared `.x-card__footer` (0,0,1,0)
-   padding/border-top for this component specifically. */
+   padding/border-top for this behavior specifically. */
 .x-card-expandable .x-card__footer {
   padding: 0.75rem 1rem;
   border-top: 1px solid var(--border-color);
@@ -1763,7 +1763,7 @@ x-cardfile {
    ═══════════════════════════════════════════════════════════════════════════ */
 
 /* Scoped (0,0,2,0) -- overrides the shared `.x-card__header` padding/
-   align-items for this component specifically. */
+   align-items for this behavior specifically. */
 .x-card-minimizable .x-card__header {
   padding: 1rem;
   align-items: center;

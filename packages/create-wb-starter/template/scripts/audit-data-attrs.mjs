@@ -17,7 +17,7 @@ import { fileURLToPath } from 'url';
 
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 
-// Legit / framework data-* that are NOT component config — keep these.
+// Legit / framework data-* that are NOT behavior config — keep these.
 const ALLOW = new Set([
   'data-theme',       // theme hook (documentElement.dataset.theme)
   'data-page',        // SPA page marker

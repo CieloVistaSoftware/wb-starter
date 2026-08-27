@@ -43,7 +43,7 @@ test.describe('x-details', () => {
   // (it has no concept of "preserve original children"), and details()'s
   // own "wrap content" logic then wrapped that already-content-less schema
   // output as if it were the real content -- confirmed live on
-  // pages/components.html: the summary text duplicated (once correctly
+  // pages/behaviors.html: the summary text duplicated (once correctly
   // wrapped in the outer <summary>, once raw and unstyled nested inside the
   // content div) and the real answer text was silently discarded entirely.
   // Same fix pattern as x-demo/x-modal (#305): excluded via
@@ -58,7 +58,7 @@ test.describe('x-details', () => {
   // concurrent wb-* elements competing for schema fetches, does -- so this
   // test loads the actual page the bug was found on instead.
   test('does not get double-processed by schema + native behavior (no nested summary, no duplicate class)', async ({ page }) => {
-    await page.goto('/?page=components');
+    await page.goto('/?page=behaviors');
     await page.waitForFunction(() => (window as any).WBSite !== undefined, { timeout: 15000 });
 
     const detailsEl = page.locator('details.x-details').first();
@@ -74,8 +74,8 @@ test.describe('x-details', () => {
     // the content div.
     await expect(detailsEl.locator('summary')).toHaveCount(1);
 
-    // The real content ("What is wb-starter?"'s answer, pages/components.html)
+    // The real content ("What is wb-starter?"'s answer, pages/behaviors.html)
     // must survive, not be discarded by the schema's content-less $view.
-    await expect(detailsEl.locator('.x-details__content')).toContainText('zero-build web component library');
+    await expect(detailsEl.locator('.x-details__content')).toContainText('zero-build behavior library');
   });
 });

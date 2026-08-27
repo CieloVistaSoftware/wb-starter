@@ -1,6 +1,6 @@
 # Timeline
 
-Vertical timeline component for displaying sequential events
+Vertical timeline behavior for displaying sequential events
 
 ## Type — new capability
 

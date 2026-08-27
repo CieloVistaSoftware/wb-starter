@@ -2,7 +2,7 @@
   "name": "__PROJECT_NAME__",
   "version": "0.1.0",
   "type": "module",
-  "description": "A website built with wb-starter -- zero-build web components, schema-first MVVM.",
+  "description": "A website built with wb-starter -- zero-build behaviors, schema-first MVVM.",
   "main": "index.html",
   "scripts": {
     "release": "node scripts/release.mjs",
@@ -113,7 +113,7 @@
     "starter",
     "template",
     "wb-starter",
-    "Components",
+    "Behaviors",
     "generator",
     "no-build",
     "config-driven"

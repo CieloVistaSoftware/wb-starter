@@ -24,10 +24,10 @@
       "pageToLoad": "home"
     },
     {
-      "menuItemId": "components",
-      "menuItemText": "Components",
+      "menuItemId": "behaviors",
+      "menuItemText": "Behaviors",
       "menuItemEmoji": "🧩",
-      "pageToLoad": "components"
+      "pageToLoad": "behaviors"
     },
     {
       "menuItemId": "behaviors",
@@ -128,8 +128,8 @@
 
   "companyInfo": {
     "businessName": "Cielo Vista Software",
-    "businessTagline": "Zero-build web components",
-    "businessDescription": "Cielo Vista Software builds wb-starter, a zero-build, schema-first web-component framework. Compose UIs from wb-* tags and x-* behaviors in plain HTML — no bundler, no build step, no lock-in.",
+    "businessTagline": "Zero-build behaviors",
+    "businessDescription": "Cielo Vista Software builds wb-starter, a zero-build, schema-first web-behavior framework. Compose UIs from wb-* tags and x-* behaviors in plain HTML — no bundler, no build step, no lock-in.",
     "valueProposition": "Zero build, composition over inheritance, Light DOM, schema-first, fully themeable"
   },
 
@@ -207,8 +207,8 @@
   ],
 
   "searchEngineOptimization": {
-    "pageTitle": "wb-starter v3.0 - Zero Build Web Components",
-    "pageDescription": "170+ behaviors, 50 themes, zero build process. The professional web component library.",
-    "seoKeywords": ["web components", "framework", "behaviors", "themes", "no-build"]
+    "pageTitle": "wb-starter v3.0 - Zero Build Behaviors",
+    "pageDescription": "170+ behaviors, 50 themes, zero build process. The professional behavior library.",
+    "seoKeywords": ["behaviors", "framework", "behaviors", "themes", "no-build"]
   }
 }

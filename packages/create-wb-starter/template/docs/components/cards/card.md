@@ -1,4 +1,4 @@
-# Card Component Overview
+# Card Behavior Overview
 
 The wb-starter card system is built on **composition, not a class hierarchy, and on
 semantic HTML, not custom tags**. A card is a plain `<article>` decorated with the
@@ -295,7 +295,7 @@ Located at `src/wb-models/card.schema.json`:
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "card.schema.json",
-  "title": "Card Component",
+  "title": "Card Behavior",
   "behavior": "card",
   "baseClass": "x-card",
   "semanticElement": {
@@ -319,5 +319,5 @@ Located at `src/wb-models/card.schema.json`:
 
 ## Related
 
-- [Cards Overview](./cards.index.md) - All card components
+- [Cards Overview](./cards.index.md) - All card behaviors
 - [Article Element](../semantic/article.md) - Semantic foundation

@@ -35,11 +35,11 @@ test('?page=themes: harmony-formula code boxes wrap instead of overflowing their
   }
 });
 
-test('?page=components: single-token inline code chip still never wraps mid-word (no regression)', async ({ page }) => {
-  await page.goto('/?page=components', { waitUntil: 'domcontentloaded' });
+test('?page=behaviors: single-token inline code chip still never wraps mid-word (no regression)', async ({ page }) => {
+  await page.goto('/?page=behaviors', { waitUntil: 'domcontentloaded' });
   await page.waitForFunction(() => (window as any).WB, { timeout: 20000 });
 
-  const hero = page.locator('#components-hero');
+  const hero = page.locator('#behaviors-hero');
   const codeChip = hero.locator('code', { hasText: 'x-card' }).first();
   await expect(codeChip).toBeVisible({ timeout: 10000 });
   await expect(codeChip).toHaveCSS('white-space', 'nowrap');

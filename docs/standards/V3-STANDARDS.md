@@ -3,20 +3,20 @@
 ## Purpose
 
 WB-Starter v3 is a composition-only system. Behavior functions receive an existing
-DOM element and apply capability to it in Light DOM. There is no component base
-class, no component inheritance hierarchy, and no Shadow DOM.
+DOM element and apply capability to it in Light DOM. There is no behavior base
+class, no behavior inheritance hierarchy, and no Shadow DOM.
 
-The words **component** and **behavior** describe the contract of the markup and
+The words **behavior** and **behavior** describe the contract of the markup and
 the responsibility of the function. They do not describe two different runtime
 mechanisms: both are resolved by the WB registry and invoked as functions.
 
-## Component vs. Behavior
+## Behavior vs. Behavior
 
-### Component
+### Behavior
 
-Use a component when the markup needs a named WB-Starter boundary with a defined
-presentation or structure. Components use an autonomous `<wb-*>` tag. The mapped
-behavior may create or normalize the component's internal Light DOM, apply its
+Use a behavior when the markup needs a named WB-Starter boundary with a defined
+presentation or structure. Behaviors use an autonomous `<wb-*>` tag. The mapped
+behavior may create or normalize the behavior's internal Light DOM, apply its
 classes, bind events, and expose its API.
 
 <div x-demo>
@@ -31,12 +31,12 @@ classes, bind events, and expose its API.
 </dialog>
 </div>
 
-The tag is the component's public boundary. It is not a class instance that must
+The tag is the behavior's public boundary. It is not a class instance that must
 extend a shared base class. A `<wb-*>` tag is mapped to a behavior in
 `src/core/tag-map.js`; registration shims required by the Custom Elements API do
-not create an inheritance model or hold shared component logic.
+not create an inheritance model or hold shared behavior logic.
 
-Component schemas live in `src/wb-models/{name}.schema.json`. Component behavior
+Behavior schemas live in `src/wb-models/{name}.schema.json`. Behavior behavior
 functions live in `src/wb-viewmodels/{name}.js`, and their styles live in the
 appropriate file under `src/styles/behaviors/`.
 
@@ -102,7 +102,7 @@ Use this order when authoring markup:
 
 1. Choose the correct native semantic element when it expresses the requirement.
 2. Add an `x-*` behavior when an existing element needs an explicit enhancement.
-3. Use a `<wb-*>` component when a named WB-Starter component boundary or owned
+3. Use a `<wb-*>` behavior when a named WB-Starter behavior boundary or owned
    structure is required.
 
 Do not use a `<wb-*>` tag merely to style an element, and do not use a generic
@@ -115,7 +115,7 @@ combination is intentional and supported. More-specific mappings, such as
 
 ### Tags and behavior attributes
 
-- Components use lowercase `<div>` tags.
+- Behaviors use lowercase `<div>` tags.
 - Explicit behaviors use lowercase `x-behavior-name` attributes.
 - Behavior attributes may be boolean or carry the behavior's configuration value.
 
@@ -130,7 +130,7 @@ combination is intentional and supported. More-specific mappings, such as
 ### Configuration attributes
 
 Configuration attributes use clean names. Do not add `x-` or `data-` to a
-component or behavior property:
+behavior or behavior property:
 
 <div x-demo>
 <article title="Hello" variant="glass" hoverable></article>
@@ -142,35 +142,35 @@ component or behavior property:
 ```
 
 `data-*` is not the canonical configuration API for `<wb-*>` or `x-*` elements.
-Follow the component schema or behavior documentation for the accepted property
+Follow the behavior schema or behavior documentation for the accepted property
 names and values. Do not use `data-*` attributes as a substitute for declared
 properties.
 
 ## Light DOM and Composition Rules
 
 - Never use `attachShadow()`, `this.shadowRoot`, or `ShadowRoot`.
-- Never create or extend `WBBaseComponent` or another shared component base class.
+- Never create or extend `WBBaseComponent` or another shared behavior base class.
 - Behavior functions receive `(element, options)` and operate on that element.
 - Put reusable logic in exported helper functions, behaviors, schemas, and design
   tokens rather than parent classes.
-- Preserve existing child content unless the component contract explicitly owns
+- Preserve existing child content unless the behavior contract explicitly owns
   and transforms it.
 - Generate per-instance IDs when ARIA relationships require them; never hardcode
-  an ID inside reusable component behavior.
+  an ID inside reusable behavior behavior.
 - Use ES modules (`import` and `export`) throughout the implementation.
 
 ## File Layout
 
 | Concern | Location |
 | --- | --- |
-| Component schema | `src/wb-models/{name}.schema.json` |
+| Behavior schema | `src/wb-models/{name}.schema.json` |
 | Behavior function | `src/wb-viewmodels/{name}.js` |
 | Behavior registry/index | `src/wb-viewmodels/index.js` |
 | Tag and selector mappings | `src/core/tag-map.js` |
 | Behavior styles | `src/styles/behaviors/{name}.css` |
 
-Keep component and behavior CSS in the existing behavior style files. Do not add
-inline style blocks or page-local copies of component styles.
+Keep behavior and behavior CSS in the existing behavior style files. Do not add
+inline style blocks or page-local copies of behavior styles.
 
 ## Runtime Dispatch
 
@@ -178,18 +178,18 @@ The WB runtime discovers declarations through three maps:
 
 | Markup | Map | Meaning |
 | --- | --- | --- |
-| `<article>` | `elementMap` | Named component boundary |
+| `<article>` | `elementMap` | Named behavior boundary |
 | `<button x-ripple>` | `extensionMap` | Explicit enhancement |
 | `<button>`, `<details>`, `<table>` | `nativeMap` | Optional semantic auto-injection |
 
 `WB.init()` scans existing markup and can observe dynamically added markup.
 `WB.inject(element, name, options)` applies a resolved behavior once to the host
 element. The dispatch path is shared, but the markup contract determines whether
-the function is being used as a component or as an enhancement.
+the function is being used as a behavior or as an enhancement.
 
 ## Examples
 
-### Component with semantic children
+### Behavior with semantic children
 
 <div x-demo>
 <div x-as-article>
@@ -204,7 +204,7 @@ the function is being used as a component or as an enhancement.
 </div>
 </div>
 
-The `<div x-as-article>` boundary identifies the component, while its internal
+The `<div x-as-article>` boundary identifies the behavior, while its internal
 `<header>`, heading, paragraph, footer, and `<time>` elements retain their native
 meaning.
 
@@ -232,8 +232,8 @@ elements in place. The markup remains valid and meaningful without WB.
 
 ## Migration from Legacy Syntax
 
-Legacy v2 component declarations used behavior attributes for structures that are
-now named components. Convert the structure to a `<wb-*>` tag, while retaining
+Legacy v2 behavior declarations used behavior attributes for structures that are
+now named behaviors. Convert the structure to a `<wb-*>` tag, while retaining
 `x-*` for genuine enhancements:
 
 ```html
@@ -252,7 +252,7 @@ native form and use `nativeMap` or an explicit `x-*` behavior as appropriate.
 ## Quick Reference
 
 ```text
-COMPONENT BOUNDARY
+BEHAVIOR BOUNDARY
 <article title="..." variant="glass">...</article>
 
 EXPLICIT ENHANCEMENT

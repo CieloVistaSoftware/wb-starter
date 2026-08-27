@@ -11,7 +11,7 @@ test.describe('Fix Viewer Compliance', () => {
           fixes: {
             "TEST_FIX_001": {
               errorId: "TEST_FIX_001",
-              component: "test-component",
+              behavior: "test-behavior",
               errorSignature: "Test error signature",
               issue: "Test issue description",
               cause: "Test cause",
@@ -26,7 +26,7 @@ test.describe('Fix Viewer Compliance', () => {
             },
             "TEST_FIX_MISSING_TEST": {
               errorId: "TEST_FIX_MISSING_TEST",
-              component: "test-component",
+              behavior: "test-behavior",
               errorSignature: "Error without test",
               issue: "Issue without test verification",
               cause: "Cause unknown",
@@ -35,7 +35,7 @@ test.describe('Fix Viewer Compliance', () => {
             },
             "TEST_FIX_ENHANCEMENT": {
               errorId: "TEST_FIX_ENHANCEMENT",
-              component: "semantics/list.js",
+              behavior: "semantics/list.js",
               errorSignature: "Enhancement: Add feature",
               issue: "Enhancement request",
               cause: "Feature missing",
@@ -97,7 +97,7 @@ test.describe('Fix Viewer Compliance', () => {
       
       await expect(signatureBlock).toContainText('Enhancement: See list.md');
       const link = signatureBlock.locator('a');
-      await expect(link).toHaveAttribute('href', '/docs/components/semantics/list.md');
+      await expect(link).toHaveAttribute('href', '/docs/behaviors/semantics/list.md');
     });
 
     test('should have valid enhancement links', async ({ page }) => {
@@ -107,7 +107,7 @@ test.describe('Fix Viewer Compliance', () => {
       // Check if link is visible and has correct href
       await expect(link).toBeVisible();
       const href = await link.getAttribute('href');
-      expect(href).toBe('/docs/components/semantics/list.md');
+      expect(href).toBe('/docs/behaviors/semantics/list.md');
     });
 
     test('should have consistent card layout', async ({ page }) => {
@@ -132,7 +132,7 @@ test.describe('Fix Viewer Compliance', () => {
           fixes: {
             "MASSIVE_FIX": {
               errorId: "MASSIVE_FIX",
-              component: "test",
+              behavior: "test",
               errorSignature: "Error",
               issue: "Massive stack trace",
               stackTrace: "Line\n".repeat(2000), // 2000 lines would be huge without max-height

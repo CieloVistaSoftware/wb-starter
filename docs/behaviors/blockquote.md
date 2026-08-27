@@ -8,7 +8,7 @@ The `<blockquote>` element represents an extended quotation from another source.
 - Should include citation when source is known
 - Typically indented or visually distinct from regular content
 
-## WB Components Using `<blockquote>`
+## WB Behaviors Using `<blockquote>`
 
 ### Card Testimonial (`cardtestimonial`)
 

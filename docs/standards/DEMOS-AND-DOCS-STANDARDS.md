@@ -2,14 +2,14 @@
 
 **These rules apply to EVERY demo (`demos/**/*.html`, `pages/**/*.html`) and EVERY
 Markdown document (`docs/**/*.md`, `*.md`) in wb-starter.** They are the single source
-of truth for how we show components and code. When something here can be enforced by a
+of truth for how we show behaviors and code. When something here can be enforced by a
 test, it is — run `npm test` (which now includes the `integration` project).
 
 ---
 
 ## 1. Live examples use `<div x-demo>`
 
-Every component example is a `<div x-demo>` — it renders the **live control** AND shows its
+Every behavior example is a `<div x-demo>` — it renders the **live control** AND shows its
 **source** underneath. One tag gives both.
 
 - In `.md` docs: embed a **raw** `<div x-demo>…</div>` directly in the Markdown. Do NOT
@@ -72,7 +72,7 @@ Every component example is a `<div x-demo>` — it renders the **live control** 
 
 ## 7. A demo is only as wide as what it renders
 
-- Card/component demos are sized to the element, **not** stretched to full screen.
+- Card/behavior demos are sized to the element, **not** stretched to full screen.
 
 ## 8. Never render a `.md` without the theme
 
@@ -84,17 +84,17 @@ Every component example is a `<div x-demo>` — it renders the **live control** 
 
 ## 9. Composition over inheritance
 
-- Components compose via `<wb-*>` tags + `x-*` behaviors. There is **no** component
+- Behaviors compose via `<wb-*>` tags + `x-*` behaviors. There is **no** behavior
   base-class hierarchy. Do not write "is-a relationship", "variants inherit from
   "card base class", or "Why Inheritance Matters" — reframe as composition.
 - Say what actually happens: capability is **applied to** an element by a behavior
   function `(element, options)`; it is never **acquired by** subclassing. Shared
   structure comes from semantic HTML, exported helper functions, and design tokens.
   Never present inheritance as a virtue of this architecture.
-- In component reference tables use **"Root CSS Class"** (or BEM "Block"), never
+- In behavior reference tables use **"Root CSS Class"** (or BEM "Block"), never
   "Base Class", and **"Composes"**, never "Inherits".
 - Diagrams follow the same rule: no class/inheritance trees. A chain of `↓` arrows
-  between component names reads as a hierarchy — draw composition as elements plus
+  between behavior names reads as a hierarchy — draw composition as elements plus
   the behaviors applied to them, and label dispatch arrows ("calls", "decorates") so
   they can't be misread as "extends".
 - **Two exceptions, both narrow and both out of scope for this rule.** They describe
@@ -106,11 +106,11 @@ Every component example is a `<div x-demo>` — it renders the **live control** 
      IS-A/HAS-A naming convention in
      `docs/architecture/standards/ATTRIBUTE-NAMING-STANDARD.md`. This is a deliberate
      data-layer design tracked by **issue #465** — do not rewrite it under this rule.
-  When either appears, say which mechanism you mean so it can't be read as a component
+  When either appears, say which mechanism you mean so it can't be read as a behavior
   class hierarchy.
 - **HTML `extends` is purged.** The old design (customized built-ins:
   `class X extends HTMLButtonElement`, `customElements.define(…, { extends: 'button' })`,
-  `is="…"`) is gone. Docs and demos must not show `extends`-based component code —
+  `is="…"`) is gone. Docs and demos must not show `extends`-based behavior code —
   **not even as a counter-example** (it still teaches the pattern). Describe other
   frameworks' class approaches in prose if a comparison is needed.
   Enforced by `tests/compliance/no-html-extends-docs.spec.ts`.
@@ -127,7 +127,7 @@ Every component example is a `<div x-demo>` — it renders the **live control** 
 
 ## 12. Anatomy docs label every part
 
-- When documenting a component's structure, name each element plainly
+- When documenting a behavior's structure, name each element plainly
   ("this is the header / title / main — the body / footer").
 
 ## 13. Every example has proper margins & padding
@@ -147,7 +147,7 @@ Every component example is a `<div x-demo>` — it renders the **live control** 
 
 - An `<img>`, `<video>`, `<iframe>` or `<svg>` in a rendered example must never be wider
   than the container it renders in, and must never be **upscaled past its natural size**.
-  A 480px image stretched across a 900px panel is blurry and misrepresents the component.
+  A 480px image stretched across a 900px panel is blurry and misrepresents the behavior.
 - `max-width: 100%` alone is not enough — it caps the width but still allows an upscale
   when a rule sets `width: 100%`. Both constraints are required.
 - §15 covers floating layers (popovers, tooltips, menus). This rule covers ordinary
@@ -275,7 +275,7 @@ Every component example is a `<div x-demo>` — it renders the **live control** 
   or bundler**:
   - **Svelte**: `svelte/compiler` is plain JS. Loaded from a CDN (e.g. esm.sh) in a
     `<script type="module">`, it compiles the exact `.svelte`-equivalent source shown
-    in the page's code sample into a real Svelte component, which is then mounted
+    in the page's code sample into a real Svelte behavior, which is then mounted
     (after rewriting the compiled output's bare `svelte/internal` import specifiers to
     resolvable URLs and loading it via a `Blob` + dynamic `import()`).
   - **SolidJS**: the actual JSX-to-DOM transform Solid ships is a Babel plugin,
@@ -306,7 +306,7 @@ Every component example is a `<div x-demo>` — it renders the **live control** 
 - This is NOT a blanket exception for anything merely inconvenient to wrap. If the
   snippet is plain, framework-agnostic HTML/attributes that already runs with no build
   step (e.g. an HTMX example — real HTML, `hx-*`/`x-*` attributes, no compiler), it
-  MUST use `<div x-demo>` like any other component example — only genuinely non-executable
+  MUST use `<div x-demo>` like any other behavior example — only genuinely non-executable
   source is exempt. See `demos/frameworks.html` for all cases side by side: the HTMX
   section uses `<div x-demo>`; React/Vue/Svelte/SolidJS render live but aren't wrapped in
   `<div x-demo>` (compiled/mounted output isn't 1:1 with the shown source); Angular is the
@@ -353,7 +353,7 @@ Every component example is a `<div x-demo>` — it renders the **live control** 
 - The `<div x-demo>` code panel (the `<pre>` source block below each rendered control)
   defaults to **full width of its `x-demo` container** at all viewport sizes. This
   ensures consistent horizontal layout and prevents code samples from appearing
-  cramped or artificially narrow relative to the rendered component above.
+  cramped or artificially narrow relative to the rendered behavior above.
 - **Long lines flow naturally (no wrapping).** If a code line is longer than the
   container, the code panel provides a **horizontal scrollbar** — never forces a
   word-wrap that breaks identifiers mid-line (see §5 & §23). This applies to
@@ -393,9 +393,9 @@ Every component example is a `<div x-demo>` — it renders the **live control** 
   thrown so the global error handler (`src/core/error-logger.js`) catches and logs it — not a silent
   broken-image icon or an invisible CSS background that just never appears. This is `audio.js`'s original
   convention (#433); by 2026-08-15 the same fix had to be independently rediscovered and re-applied to
-  `cardhero` (#534), `cardhorizontal` (#604), and `cardoverlay` (#605) — three components, same missing
+  `cardhero` (#534), `cardhorizontal` (#604), and `cardoverlay` (#605) — three behaviors, same missing
   pattern, three separate issues.
-- **When building a new card/media component, wire this up from the start**: a plain `<img>` gets this for
+- **When building a new card/media behavior, wire this up from the start**: a plain `<img>` gets this for
   free via its native `error` event (just add a listener that throws); a CSS `background-image` has no
   native failure signal at all and needs a preload `new Image()` probe (see `cardhero`'s implementation in
   `src/wb-viewmodels/card.js` for the reference pattern — preload, on error clear the broken background and
@@ -451,7 +451,7 @@ Every component example is a `<div x-demo>` — it renders the **live control** 
 | 4 (highlighted + copy) | `tests/integration/frameworks-demo.spec.ts`, `demo-compare-code-blocks.spec.ts` (#241) |
 | 3, 5 (vertical) | `tests/integration/demo-compare-code-blocks.spec.ts` |
 | 5, 8 (no double-parse) | `tests/integration/doc-viewer-code-multiline.spec.ts`; `docs/_today/ROOT-CAUSE-md-double-parse.md` |
-| 9 (composition) | `tests/compliance/no-legacy-component-inheritance-docs.spec.ts` |
+| 9 (composition) | `tests/compliance/no-legacy-behavior-inheritance-docs.spec.ts` |
 | 11 (colors) | `tests/compliance/css-oop-compliance.spec.ts` |
 | 22 (switch invokes effect) | `tests/behaviors/notify-control-switch.spec.ts` |
 | 24 (no unintended overlap) | `tests/integration/overlap.spec.ts` (#274) |
@@ -464,4 +464,4 @@ Every component example is a `<div x-demo>` — it renders the **live control** 
 
 Open work to bring existing surfaces to this standard: #246 (behaviors-showcase selects),
 #247 (behaviors-showcase mobile nav), #248 (no horizontal scrollbars), and the remaining
-`pages/components.html` sections (Feedback/Overlays).
+`pages/behaviors.html` sections (Feedback/Overlays).

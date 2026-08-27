@@ -24,7 +24,7 @@ Enhanced form with AJAX submission, validation, and auto-save.
 | `loadingText` | string | `"Submitting..."` | Button text during submit |
 | `successMessage` | string | `"Success!"` | Message on success |
 
-Wrapped in `<div x-demo>`, so the live component renders below with its source shown underneath:
+Wrapped in `<div x-demo>`, so the live behavior renders below with its source shown underneath:
 
 <div x-demo>
 <form action="/api/submit">
@@ -216,7 +216,7 @@ form.addEventListener('wb:form:error', (e) => {
 
 ## Accessibility
 
-The form component maintains native form accessibility:
+The form behavior maintains native form accessibility:
 - `novalidate` attribute when using custom validation
 - ARIA attributes for validation states
 - Focus management on validation errors

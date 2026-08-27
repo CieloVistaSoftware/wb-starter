@@ -11,7 +11,7 @@ import { test, expect } from '@playwright/test';
  * every popover project-wide.
  */
 test('popover announces itself to assistive tech via ARIA (#209)', async ({ page }) => {
-  await page.goto('/?page=components', { waitUntil: 'domcontentloaded' });
+  await page.goto('/?page=behaviors', { waitUntil: 'domcontentloaded' });
   await page.waitForFunction(() => !!(window as any).WB, { timeout: 20000 });
 
   await page.evaluate(async () => {

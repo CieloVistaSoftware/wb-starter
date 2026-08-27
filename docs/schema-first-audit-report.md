@@ -1,7 +1,7 @@
 # Schema-First Architecture Audit Report
 [Edit this file](./schema-first-audit-report.md)
 
-This report identifies components that need to be refactored to comply with the **Schema-First Architecture**.
+This report identifies behaviors that need to be refactored to comply with the **Schema-First Architecture**.
 The goal is to ensure that JavaScript behaviors act as **Enhancers** (hydrating existing DOM) rather than **Builders** (overwriting DOM).
 
 | Attribute Name | File Location | Schema Update Needed | Steps to Convert |
@@ -28,5 +28,5 @@ The goal is to ensure that JavaScript behaviors act as **Enhancers** (hydrating 
     *   `WB Parts` → `WB Views`.
     *   Attribute `<template x-part="...">` → `<template x-view="...">`.
 3.  **Centralize Templates**: Move all `<template x-view="...">` definitions to `src/templates/` (or keep in `wb-views` if they are file-based).
-4.  **Refactor Components**: Systematically go through the "TRUE" items above and implement the "Steps to Convert".
+4.  **Refactor Behaviors**: Systematically go through the "TRUE" items above and implement the "Steps to Convert".
 5.  **Verify**: Run tests to ensure that manually written HTML (matching the schema) is correctly enhanced without being destroyed.

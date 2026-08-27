@@ -1,13 +1,13 @@
-# Search Component Documentation
+# Search Behavior Documentation
 [Edit this file](./search.md)
 
 ## Overview
-The Search component provides a complete search interface with debounced input, keyboard navigation, and interactive result handling. It combines the `x-search` behavior with a custom element wrapper for enhanced functionality and styling.
+The Search behavior provides a complete search interface with debounced input, keyboard navigation, and interactive result handling. It combines the `x-search` behavior with a custom element wrapper for enhanced functionality and styling.
 
 ---
 
 ## Variants
-The search component supports multiple visual variants and sizes for different use cases:
+The search behavior supports multiple visual variants and sizes for different use cases:
 
 | Variant | Description | Use Case |
 |---------|-------------|----------|
@@ -182,15 +182,15 @@ x-search {
 
 ## Schema
 - See: [src/wb-models/search.schema.json](../src/wb-models/search.schema.json)
-- Defines component properties, variants, and test scenarios
+- Defines behavior properties, variants, and test scenarios
 
 ---
 
 ## Implementation
 - **Custom Element**: [src/wb-viewmodels/x-search.js](../src/wb-viewmodels/search.js)
 - **Behavior**: [src/wb-viewmodels/search.js](../src/wb-viewmodels/search.js)
-- **Styles**: [src/styles/components/search.css](../src/styles/components/search.css)
-- **Tests**: Component tests located in `tests/behaviors/ui/search.spec.ts`
+- **Styles**: [src/styles/behaviors/search.css](../src/styles/behaviors/search.css)
+- **Tests**: Behavior tests located in `tests/behaviors/ui/search.spec.ts`
 
 ---
 

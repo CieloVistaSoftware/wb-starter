@@ -8,7 +8,7 @@ import { globSync } from 'glob';
  * "These rules apply to EVERY demo... and EVERY Markdown document").
  *
  * §2 "One code sample per rendered element (strict 1:1)": a <div x-demo> must
- * not bundle several DIFFERENTLY-CONFIGURED instances of the same component
+ * not bundle several DIFFERENTLY-CONFIGURED instances of the same behavior
  * under one shared code sample (the "permutation matrix" anti-pattern
  * already fixed elsewhere this session for cards.html/cards-permutation-
  * matrix.html). §17 is the one exception: a single logical GROUP sharing a
@@ -170,7 +170,7 @@ test.describe('Demo layout standards (§7) — single-item demos are not full wi
         const TOLERANCE_PX = 24; // padding rounding + border slack
         document.querySelectorAll('x-demo').forEach((demo, i) => {
           // #563 follow-up: `full-width` is a deliberate, documented escape
-          // hatch (demo.css's `x-demo.x-demo--full-width`) for components
+          // hatch (demo.css's `x-demo.x-demo--full-width`) for behaviors
           // that are meant to fill their container by design (page heroes,
           // banner-style alerts) -- not a bug this check should ever flag.
           if (demo.classList.contains('x-demo--full-width')) return;

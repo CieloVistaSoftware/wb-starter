@@ -6,9 +6,9 @@
 
 ## Why Schemas Matter
 
-Schemas are the **single source of truth** for every component in WB-Starter. They define what a component accepts (properties), what it renders ($view), what it can do ($methods), and how it's styled ($cssAPI). Everything flows from the schema — docs, IDE intellisense, tests, validation, and the builder UI.
+Schemas are the **single source of truth** for every behavior in WB-Starter. They define what a behavior accepts (properties), what it renders ($view), what it can do ($methods), and how it's styled ($cssAPI). Everything flows from the schema — docs, IDE intellisense, tests, validation, and the builder UI.
 
-**When the schema is wrong, everything downstream is wrong.** A missing `behavior` field means the component can't be registered. A missing `default` on a property means the engine can't determine baseline state. A wrong `baseClass` means CSS doesn't apply.
+**When the schema is wrong, everything downstream is wrong.** A missing `behavior` field means the behavior can't be registered. A missing `default` on a property means the engine can't determine baseline state. A wrong `baseClass` means CSS doesn't apply.
 
 ---
 
@@ -16,7 +16,7 @@ Schemas are the **single source of truth** for every component in WB-Starter. Th
 
 ```
 src/wb-models/                        ← All schema files live here
-src/wb-models/{name}.schema.json      ← One file per component
+src/wb-models/{name}.schema.json      ← One file per behavior
 src/wb-models/schema.schema.json      ← THE META-SCHEMA (defines all schemas)
 src/wb-models/_base/                  ← Base/shared schema fragments
 src/wb-models/semantic/               ← Semantic HTML wrapper schemas
@@ -27,24 +27,24 @@ src/wb-models/pages/                  ← Page-level schemas
 
 ## The 3 Schema Tiers
 
-Every `.schema.json` file has a `schemaType` field that controls which rules apply. If `schemaType` is absent, it defaults to `"component"`.
+Every `.schema.json` file has a `schemaType` field that controls which rules apply. If `schemaType` is absent, it defaults to `"behavior"`.
 
 | Tier | `schemaType` | Required Fields | Property Rules | Validated By | Examples |
 |------|-------------|-----------------|---------------|-------------|----------|
-| **Component** | `"component"` (default) | title, description, properties, $view, $methods, behavior/schemaFor | type + default mandatory on every property | `schema-validation.spec.ts` (full suite) | alert, badge, card variants, button, dialog |
+| **Behavior** | `"behavior"` (default) | title, description, properties, $view, $methods, behavior/schemaFor | type + default mandatory on every property | `schema-validation.spec.ts` (full suite) | alert, badge, card variants, button, dialog |
 | **Base** | `"base"` | title, description, properties | type + default mandatory on every property | `schema-validation.spec.ts` (tier checks + property checks) | _base/html-element, _base/sectioning, semantic/*, card.base |
 | **Definition** | `"definition"` | title, description | none — properties section optional | `schema-validation.spec.ts` (tier checks only) | _inheritance.schema.json, schema.schema.json |
 | **Page** | `"page"` | title, description, pageRules, $layout | type + default on data properties | `page-fragment-compliance.spec.ts` + page permutation tests | home-page.schema.json |
 
-**Component** — Real components users interact with. Full rules apply. This is the vast majority of schemas.
+**Behavior** — Real behaviors users interact with. Full rules apply. This is the vast majority of schemas.
 
-**Base** — Abstract schemas inherited by other schemas, never instantiated directly. They define shared properties that flow down to components. `$view`, `$methods`, and `behavior`/`schemaFor` are not required because base schemas aren't registered as components.
+**Base** — Abstract schemas inherited by other schemas, never instantiated directly. They define shared properties that flow down to behaviors. `$view`, `$methods`, and `behavior`/`schemaFor` are not required because base schemas aren't registered as behaviors.
 
-**Definition** — Pure reference documents defining rules or contracts. Not components, not inherited. They document structural expectations (inheritance rules, the meta-schema itself).
+**Definition** — Pure reference documents defining rules or contracts. Not behaviors, not inherited. They document structural expectations (inheritance rules, the meta-schema itself).
 
-**Page** — Page-level schemas defining layout rows, page rules, and content placement. Not components. They require `pageRules` (showcase, fragment, noInlineStyles) and `$layout` (row-based system with columns, ratios, headings, and gap). The old `page.schema.json` with `requiredZones` (.page__hero, .page__section) is RETIRED — page structure is now defined per-page via `$layout` rows with headings.
+**Page** — Page-level schemas defining layout rows, page rules, and content placement. Not behaviors. They require `pageRules` (showcase, fragment, noInlineStyles) and `$layout` (row-based system with columns, ratios, headings, and gap). The old `page.schema.json` with `requiredZones` (.page__hero, .page__section) is RETIRED — page structure is now defined per-page via `$layout` rows with headings.
 
-**When creating a NEW schema, ask:** "Will this be instantiated as a component?" If yes → component. If it exists to be inherited from → base. If it's a reference doc → definition. If it defines a page layout with rows and sections → page.
+**When creating a NEW schema, ask:** "Will this be instantiated as a behavior?" If yes → behavior. If it exists to be inherited from → base. If it's a reference doc → definition. If it defines a page layout with rows and sections → page.
 
 ---
 
@@ -52,10 +52,10 @@ Every `.schema.json` file has a `schemaType` field that controls which rules app
 
 The file `schema.schema.json` defines the structure that every `*.schema.json` file must follow. It is the self-referential root of the system — a schema that validates schemas.
 
-It enforces (for component-tier schemas):
+It enforces (for behavior-tier schemas):
 
 - **Required top-level fields:** `title`, `description`, `properties`, `$view`, `$methods`
-- **Must have either `behavior` or `schemaFor`** (identifies the component)
+- **Must have either `behavior` or `schemaFor`** (identifies the behavior)
 - **Every property must have `type` + `default`** — no exceptions
 - **`baseClass` pattern:** must start with `wb-` followed by lowercase kebab-case
 - **`behavior` pattern:** lowercase kebab-case only
@@ -76,9 +76,9 @@ Beyond `schema.schema.json`, several other schemas define and validate specific 
 | File | What It Validates | Validated By |
 |------|-------------------|-------------|
 | `src/wb-models/schema.schema.json` | **ALL** `.schema.json` files (the root enforcer) | `schema-validation.spec.ts` (tier-aware, 16+ checks) |
-| `src/wb-models/behavior.schema.json` | Behavior definitions, types, categories, interactions, events, accessibility | `schema-validation.spec.ts` (as a component schema) + `source-schema-compliance.spec.ts` |
-| `src/wb-models/views.schema.json` | Views registry — reusable HTML templates with auto-registration | `schema-validation.spec.ts` (as a component schema) |
-| `src/wb-models/search-index.schema.json` | Client-side search index (documents, stats, inverted index) | `schema-validation.spec.ts` (as a component schema) |
+| `src/wb-models/behavior.schema.json` | Behavior definitions, types, categories, interactions, events, accessibility | `schema-validation.spec.ts` (as a behavior schema) + `source-schema-compliance.spec.ts` |
+| `src/wb-models/views.schema.json` | Views registry — reusable HTML templates with auto-registration | `schema-validation.spec.ts` (as a behavior schema) |
+| `src/wb-models/search-index.schema.json` | Client-side search index (documents, stats, inverted index) | `schema-validation.spec.ts` (as a behavior schema) |
 | `data/propertyconfig.schema.json` | Property configuration system for builder/property panel UI | Manual — no automated test yet |
 | `data/simple-spa.schema.json` | Simple SPA page layout configuration | Manual — no automated test yet |
 | `scripts/audit-schemas.mjs` | **Standalone audit** — tier-aware compliance check across all 101 schemas | Run directly: `node scripts/audit-schemas.mjs` |
@@ -93,7 +93,7 @@ When we first ran the tier-aware audit, `schema.schema.json` rules exposed **17 
 - `semantic/_inheritance.schema.json` — missing `properties`, `$view`, `$methods`, `behavior`/`schemaFor`
 - `schema.schema.json` itself — no `schemaFor`
 
-The fix was the 3-tier system: base/definition schemas don't need component-only fields. After adding `schemaType` to the 17 files and fixing missing `type`/`default` on properties, all 101 schemas now pass. **This is why the meta-schema matters — silent violations accumulate until something enforces the rules.**
+The fix was the 3-tier system: base/definition schemas don't need behavior-only fields. After adding `schemaType` to the 17 files and fixing missing `type`/`default` on properties, all 101 schemas now pass. **This is why the meta-schema matters — silent violations accumulate until something enforces the rules.**
 
 Consult these meta-schemas when working in their respective domains. If you touch a meta-schema, re-run both the test and the audit.
 
@@ -101,11 +101,11 @@ Consult these meta-schemas when working in their respective domains. If you touc
 
 ## Schema Inheritance Hierarchy — The Lowest Wins
 
-> **This is data-layer schema layering, not component inheritance.** The project's
-> component architecture is composition-only: there is no component base class, and
+> **This is data-layer schema layering, not behavior inheritance.** The project's
+> behavior architecture is composition-only: there is no behavior base class, and
 > `<wb-*>` capability comes from behavior functions applied to an element (see
 > `docs/claude/TIER1-LAWS.md` §2). What follows describes a *separate* mechanism —
-> JSON documents merged by `allOf` / `$ref` / `$inherits` before a component is ever
+> JSON documents merged by `allOf` / `$ref` / `$inherits` before a behavior is ever
 > rendered. No runtime object inherits from another here; the loader flattens several
 > JSON files into one effective schema.
 >
@@ -175,15 +175,15 @@ Level 3: cardbutton.schema.json                ← Specific variants OVERRIDE pa
 
 ## Required Fields by Tier
 
-### Component schemas (the default)
+### Behavior schemas (the default)
 
 | Field | Type | Example | Why Required |
 |-------|------|---------|--------------|
-| `schemaFor` | string | `"alert"` | Identifies which component this schema describes |
+| `schemaFor` | string | `"alert"` | Identifies which behavior this schema describes |
 | `behavior` | string | `"alert"` | Maps schema to behavior function — registration fails without it |
 | `title` | string | `"Alert"` | Human-readable name for docs/IDE |
-| `description` | string | `"Alert component..."` | Docs, tooltips, builder UI |
-| `properties` | object | `{ variant: {...} }` | All attributes the component accepts |
+| `description` | string | `"Alert behavior..."` | Docs, tooltips, builder UI |
+| `properties` | object | `{ variant: {...} }` | All attributes the behavior accepts |
 | `$view` | array | `[{ name: "root", tag: "div" }]` | DOM structure definition |
 | `$methods` | object | `{}` | Public methods (can be empty) |
 
@@ -192,7 +192,7 @@ Level 3: cardbutton.schema.json                ← Specific variants OVERRIDE pa
 | Field | When Required |
 |-------|--------------|
 | `baseClass` | When `compliance` section exists — CSS won't work without it |
-| `compliance` | Goal: every component schema should have one |
+| `compliance` | Goal: every behavior schema should have one |
 | `test.setup` | When `test` section exists — must be valid HTML with `<wb-*>` or `x-behavior` |
 
 ### Base schemas
@@ -231,11 +231,11 @@ Require only: `title`, `description`. Everything else is optional.
 }
 ```
 
-This applies to **component AND base** tier schemas. Definition schemas are exempt.
+This applies to **behavior AND base** tier schemas. Definition schemas are exempt.
 
 ### Skip dollar-prefixed properties
 
-Properties starting with `$` (like `$inherited`, `$view`, `$methods`) are meta-directives, not component attributes. The test suite skips them — so should you.
+Properties starting with `$` (like `$inherited`, `$view`, `$methods`) are meta-directives, not behavior attributes. The test suite skips them — so should you.
 
 ### Don't use `type` as a property name
 
@@ -254,20 +254,20 @@ The schema validation test (`tests/compliance/schema-validation.spec.ts`) runs t
 ### Tier-Aware Checks (all schemas, respects `schemaType`)
 
 1. **All schemas have title and description** — required for every tier
-2. **Component schemas have full required fields** — properties, $view, $methods, behavior/schemaFor
+2. **Behavior schemas have full required fields** — properties, $view, $methods, behavior/schemaFor
 3. **Base schemas have properties** — must define the properties they pass down
-4. **`schemaType` values are valid** — must be `component`, `base`, or `definition`
+4. **`schemaType` values are valid** — must be `behavior`, `base`, or `definition`
 5. **Tier inventory** — reports counts per tier
 
-### Component-Specific Checks
+### Behavior-Specific Checks
 
-6. **`schemaFor` field present** — every component schema identifies itself
+6. **`schemaFor` field present** — every behavior schema identifies itself
 7. **`compliance` section exists** — progress tracked (goal: all schemas)
 8. **`baseClass` in compliance** — if compliance exists, baseClass must too
 9. **`test` section exists** — progress tracked (goal: all schemas)
 10. **`test.setup` validity** — setup HTML must contain `<wb-*>` or `x-behavior=`
 11. **Setup references correct behavior** — `alert.schema.json` setup must use `<div x-alert>` or `x-alert`
-12. **Property `type` and `default` fields** — every property needs both (component + base tiers)
+12. **Property `type` and `default` fields** — every property needs both (behavior + base tiers)
 13. **Enum consistency** — if permutations say `ALL_ENUM`, the `enum` array must exist
 14. **Interactions consistency** — clickable elements need `click` actions
 15. **Events consistency** — events referenced in interactions must be defined in `events` section
@@ -292,12 +292,12 @@ These tighten over time as schemas improve:
 
 ### Step 1: Read the existing schema first
 ```
-src/wb-models/{component}.schema.json
+src/wb-models/{behavior}.schema.json
 ```
 Never create a schema from scratch if one already exists. Extend what's there.
 
 ### Step 2: Determine the tier
-- Is it a real component? → `"component"` (or omit `schemaType` — it defaults)
+- Is it a real behavior? → `"behavior"` (or omit `schemaType` — it defaults)
 - Is it meant to be inherited from? → `"schemaType": "base"`
 - Is it a reference/rules document? → `"schemaType": "definition"`
 
@@ -305,17 +305,17 @@ Never create a schema from scratch if one already exists. Extend what's there.
 ```json
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "$id": "{component}.schema.json",
-  "title": "Component Name",
+  "$id": "{behavior}.schema.json",
+  "title": "Behavior Name",
   "description": "What it does",
-  "schemaFor": "{component}",
-  "behavior": "{component}",
-  "baseClass": "wb-{component}",
+  "schemaFor": "{behavior}",
+  "behavior": "{behavior}",
+  "baseClass": "wb-{behavior}",
   "properties": { ... },
   "$view": [],
   "$methods": {},
   "test": {
-    "setup": ["<wb-{component} ...></wb-{component}>"]
+    "setup": ["<wb-{behavior} ...></wb-{behavior}>"]
   }
 }
 ```
@@ -328,7 +328,7 @@ npm_test_async with filter: tests/compliance/schema-validation.spec.ts
 ### Step 5: Check for cascading failures
 Schema changes can break other tests. After schema edits, also run:
 - `tests/compliance/` — all compliance tests
-- Any component-specific test that references the schema
+- Any behavior-specific test that references the schema
 
 ---
 
@@ -336,11 +336,11 @@ Schema changes can break other tests. After schema edits, also run:
 
 1. **Wrong `behavior` value.** Must match the behavior function name, not the filename. For `cardprofile.schema.json`, behavior is `"cardprofile"` — not `"card-profile"`, not `"profile"`.
 
-2. **Forgetting that a card variant's SCHEMA layers on `card.base.schema.json`.** (The variant *component* does not subclass anything — only the JSON documents merge.) Don't duplicate the shared properties — use `"$inherits": "card.base.schema.json#compliance"`.
+2. **Forgetting that a card variant's SCHEMA layers on `card.base.schema.json`.** (The variant *behavior* does not subclass anything — only the JSON documents merge.) Don't duplicate the shared properties — use `"$inherits": "card.base.schema.json#compliance"`.
 
-3. **Using `x-behavior` in setup when component is a `<wb-*>` tag.** If registered as a custom element (`<div x-alert>`), the setup must use that tag. Only use `x-alert` for behavior-only attachment to arbitrary elements.
+3. **Using `x-behavior` in setup when behavior is a `<wb-*>` tag.** If registered as a custom element (`<div x-alert>`), the setup must use that tag. Only use `x-alert` for behavior-only attachment to arbitrary elements.
 
-4. **Creating schemas for non-component files.** Files like `views.schema.json` and `behavior.schema.json` are meta-schemas. Don't add `behavior` or `compliance` to these — they should be `"schemaType": "base"` or `"definition"`.
+4. **Creating schemas for non-behavior files.** Files like `views.schema.json` and `behavior.schema.json` are meta-schemas. Don't add `behavior` or `compliance` to these — they should be `"schemaType": "base"` or `"definition"`.
 
 5. **Not running schema validation after changes.** ALWAYS run `tests/compliance/schema-validation.spec.ts` after any schema edit.
 
@@ -358,7 +358,7 @@ Schema changes can break other tests. After schema edits, also run:
 | `docs/schemaTestValue.md` | Test value conventions | N/A (docs only) |
 | `tests/compliance/schema-validation.spec.ts` | The validation test (tier-aware, 16+ checks) | Itself — always re-run after editing |
 | `tests/compliance/source-schema-compliance.spec.ts` | Validates JS source matches schema requirements | After changing any behavior JS or schema |
-| `src/wb-models/alert.schema.json` | Good example of a complete component schema | `schema-validation.spec.ts` |
+| `src/wb-models/alert.schema.json` | Good example of a complete behavior schema | `schema-validation.spec.ts` |
 | `scripts/audit-schemas.mjs` | Standalone tier-aware audit (all 101 schemas) | `node scripts/audit-schemas.mjs` → `data/schema-audit.json` |
 
 ---

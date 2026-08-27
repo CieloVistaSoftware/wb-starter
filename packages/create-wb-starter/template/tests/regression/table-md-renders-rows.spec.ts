@@ -8,7 +8,7 @@ import { test, expect } from '@playwright/test';
  * <thead>/<tbody> pair, since the schema declares no row-building logic),
  * and nothing ever populated real rows into that empty pair. Fixed by
  * having table.js read the documented headers/rows or data/columns
- * attributes (see docs/components/semantics/table.md's "Authoring note")
+ * attributes (see docs/behaviors/semantics/table.md's "Authoring note")
  * and build real <tr>/<th>/<td> rows at render time via
  * populateTableRows().
  *
@@ -19,8 +19,8 @@ import { test, expect } from '@playwright/test';
  * requirements list), and specifically NOT the 0-rows regression.
  */
 test.describe('table.md: every x-table example renders real rows (#585)', () => {
-  test('docs/components/semantics/table.md: no x-table example has 0 rows', async ({ page }) => {
-    await page.goto('/public/doc-viewer.html?file=' + encodeURIComponent('docs/components/semantics/table.md'), {
+  test('docs/behaviors/semantics/table.md: no x-table example has 0 rows', async ({ page }) => {
+    await page.goto('/public/doc-viewer.html?file=' + encodeURIComponent('docs/behaviors/semantics/table.md'), {
       waitUntil: 'domcontentloaded',
     });
 

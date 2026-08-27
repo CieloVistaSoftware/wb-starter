@@ -25,7 +25,7 @@ Fireworks burst explosion effect.
 | `duration` | string | `"1.5s"` | Animation duration |
 | `colors` | string | `'["#ff0","#f00","#0ff","#f0f"]'` | Particle colors as JSON array |
 
-Wrapped in `<div x-demo>`, so the live component renders below with its source shown underneath:
+Wrapped in `<div x-demo>`, so the live behavior renders below with its source shown underneath:
 
 <div x-demo>
 <div x-fireworks

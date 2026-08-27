@@ -1,6 +1,6 @@
 # Search
 
-Search input component with icon and debounced search events
+Search input behavior with icon and debounced search events
 
 ## Type — new capability
 

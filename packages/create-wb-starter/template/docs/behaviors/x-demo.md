@@ -1,6 +1,6 @@
 # x-demo
 
-A wrapper for demoing components or behaviors: it renders the **live control** and
+A wrapper for demoing behaviors or behaviors: it renders the **live control** and
 shows its **source** underneath. Drop it straight into a Markdown doc or an HTML
 page — no build step.
 

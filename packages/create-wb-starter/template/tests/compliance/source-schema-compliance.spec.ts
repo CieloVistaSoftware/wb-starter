@@ -13,14 +13,14 @@ import {
 } from '../base';
 
 // Schemas that don't have JS functions -- these document/describe the
-// SYSTEM rather than a single behavioral component, so they can never have
+// SYSTEM rather than a single behavioral behavior, so they can never have
 // a matching `export function <behavior>()` (#344 triage):
 //   - button: no dedicated JS function (native <button> + attribute
 //     behaviors handle it)
-//   - css-oop: documents CSS architecture rules, not a component
+//   - css-oop: documents CSS architecture rules, not a behavior
 //   - behaviors: "Master schema defining all behavior metadata" -- meta,
 //     documents the behavior SYSTEM itself, same as css-oop
-//   - home-page: schemaType "page" -- composes other components (cardhero,
+//   - home-page: schemaType "page" -- composes other behaviors (cardhero,
 //     cardstats, etc.) via $layout; the page has no behavior of its own
 const NON_FUNCTIONAL_SCHEMAS = ['button', 'css-oop', 'behaviors', 'home-page'];
 

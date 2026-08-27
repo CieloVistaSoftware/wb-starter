@@ -8,7 +8,7 @@ import { test, expect } from '@playwright/test';
  *
  * The defect this pins: demo.js sized a single-item <div x-demo> to its CONTROL's
  * width and the code panel is width:100% of that box, so a narrow control gave
- * its code panel a narrow window. Measured live on pages/components.html before
+ * its code panel a narrow window. Measured live on pages/behaviors.html before
  * the fix: a 305px <article> left its code panel a 303px viewport holding 421px
  * of source — a 5-line example only readable by dragging a scrollbar.
  *
@@ -23,7 +23,7 @@ import { test, expect } from '@playwright/test';
  * content column; the 50vw rule is about the single-item shrink-to-fit path.
  */
 
-const PAGES = ['/pages/components.html', '/demos/site/cards.html', '/?page=behaviors'];
+const PAGES = ['/pages/behaviors.html', '/demos/site/cards.html', '/?page=behaviors'];
 
 // Sub-pixel layout rounding; a panel 1px over its content is not a defect.
 const TOL = 2;

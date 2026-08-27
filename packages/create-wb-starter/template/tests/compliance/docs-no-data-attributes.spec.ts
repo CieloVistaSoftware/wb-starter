@@ -1,13 +1,13 @@
 /**
  * v3 docs must use PLAIN attributes, not data-* (#222).
  *
- * v3 components read bare attributes (title, variant, size, message, …); the
+ * v3 behaviors read bare attributes (title, variant, size, message, …); the
  * legacy data-* / data-wb syntax is back-compat only and must not appear in
  * documentation examples. This audit scans every markdown file under docs/
  * and demos/, plus CONTRIBUTING.md/README.md at the repo root (the locations
  * #222 called out), and fails with the full list of offenders.
  *
- * Genuinely-legitimate data-* (not WB component conventions) are allowlisted:
+ * Genuinely-legitimate data-* (not WB behavior conventions) are allowlisted:
  *  - data-theme       — the theme system attribute on <html>
  *  - data-page        — SPA route marker
  *  - data-code-width  — <div x-demo>'s code-panel width preset. Verified (#553)

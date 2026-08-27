@@ -1,8 +1,8 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "stack.schema.json",
-  "title": "Stack Layout Component",
-  "description": "Vertical stack layout component. Renders children in a column with configurable gap, background color, padding, and border radius.",
+  "title": "Stack Layout Behavior",
+  "description": "Vertical stack layout behavior. Renders children in a column with configurable gap, background color, padding, and border radius.",
   "schemaFor": "stack",
   "baseClass": "x-stack",
   "compliance": {

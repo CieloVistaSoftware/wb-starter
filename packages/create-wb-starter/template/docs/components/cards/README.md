@@ -1,10 +1,10 @@
 # wb-starter v3.0 - Cards
 
-This folder contains documentation for all card components.
+This folder contains documentation for all card behaviors.
 
 ## Quick Reference
 
-| Component | Tag | Purpose |
+| Behavior | Tag | Purpose |
 |-----------|-----|---------|
 | [card](./card.md) | `<article>` | Default card |
 | [cardimage](./cardimage.md) | `<div x-cardimage>` | Image card |

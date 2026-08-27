@@ -69,7 +69,7 @@ test.describe('Schema Viewer Rendering Tests', () => {
       const errors = await page.evaluate(() => (window as any).testErrors || []);
       expect(errors.length).toBe(0);
 
-      // Check that the component info is displayed
+      // Check that the behavior info is displayed
       const componentInfo = page.locator('.sv-info h2');
       await expect(componentInfo).toBeVisible();
       await expect(componentInfo).toContainText(schemaName.charAt(0).toUpperCase() + schemaName.slice(1));

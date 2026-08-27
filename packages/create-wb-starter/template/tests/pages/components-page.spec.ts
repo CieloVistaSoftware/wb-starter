@@ -1,6 +1,6 @@
 /**
- * Components Page Tests
- * Comprehensive tests for the /pages/components.html showcase page
+ * Behaviors Page Tests
+ * Comprehensive tests for the /pages/behaviors.html showcase page
  */
 import { test, expect } from '@playwright/test';
 // Lazy helper loader — avoids static import issues in some worker environments.
@@ -24,10 +24,10 @@ async function safeScrollIntoView(locator: any, timeout = 3000) {
   return __safeScrollImpl(locator, timeout);
 }
 
-test.describe('Components Page', () => {
+test.describe('Behaviors Page', () => {
   
   test.beforeEach(async ({ page }) => {
-    await page.goto('http://localhost:3000/pages/components.html');
+    await page.goto('http://localhost:3000/pages/behaviors.html');
     // Wait for WB to initialize
     await page.waitForTimeout(500);
   });
@@ -38,7 +38,7 @@ test.describe('Components Page', () => {
   test.describe('Page Structure', () => {
     
     test('page loads successfully', async ({ page }) => {
-      await expect(page).toHaveURL(/components/);
+      await expect(page).toHaveURL(/behaviors/);
       const content = page.locator('.page__hero');
       await expect(content).toBeVisible();
     });
@@ -46,16 +46,16 @@ test.describe('Components Page', () => {
     test('has hero section with title', async ({ page }) => {
       const hero = page.locator('.page__hero');
       await expect(hero).toBeVisible();
-      await expect(hero.locator('h1')).toContainText('Components Library');
+      await expect(hero.locator('h1')).toContainText('Behaviors Library');
     });
 
     test('has all major sections', async ({ page }) => {
       const sections = [
         'Cards',
-        'Feedback Components',
+        'Feedback Behaviors',
         'Overlays & Dialogs',
         'Navigation',
-        'Form Components',
+        'Form Behaviors',
         'Data Display',
         'Media',
         'Utilities'
@@ -164,7 +164,7 @@ test.describe('Components Page', () => {
   test.describe('Feedback Section', () => {
     
     test('badges render with variants', async ({ page }) => {
-      await safeScrollIntoView(page.locator('h2:has-text("Feedback Components")'));
+      await safeScrollIntoView(page.locator('h2:has-text("Feedback Behaviors")'));
       const badges = page.locator('x-badge');
       await badges.first().waitFor({ state: 'attached' });
       await safeScrollIntoView(badges.first());
@@ -174,7 +174,7 @@ test.describe('Components Page', () => {
     test('alerts render all types', async ({ page }) => {
       // Scroll to the Feedback section header first to avoid calling scroll on
       // an element that may not yet be attached (causes protocol errors).
-      const header = page.locator('h2:has-text("Feedback Components")').first();
+      const header = page.locator('h2:has-text("Feedback Behaviors")').first();
       await safeScrollIntoView(header);
 
       const alerts = page.locator('.preview-container x-alert, #feedback x-alert, x-alert');
@@ -272,13 +272,13 @@ test.describe('Components Page', () => {
   // =========================================================================
   test.describe('Navigation Section', () => {
     
-    test('tabs component renders', async ({ page }) => {
+    test('tabs behavior renders', async ({ page }) => {
       const tabs = page.locator('x-tabs');
       await safeScrollIntoView(tabs);
       await expect(tabs).toBeVisible();
     });
 
-    test('accordion component renders', async ({ page }) => {
+    test('accordion behavior renders', async ({ page }) => {
       const accordion = page.locator('x-accordion');
       if (await accordion.count() === 0) {
         test.skip(true, 'x-accordion not present on this page');
@@ -304,7 +304,7 @@ test.describe('Components Page', () => {
       await expect(pagination).toHaveAttribute('per-page', /\d+/);
     });
 
-    test('steps component renders', async ({ page }) => {
+    test('steps behavior renders', async ({ page }) => {
       const steps = page.locator('div[x-steps]');
       await safeScrollIntoView(steps);
       // Steps can be collapsed in narrow viewports — verify semantic attributes.
@@ -330,7 +330,7 @@ test.describe('Components Page', () => {
       await expect(passwordInput).toBeVisible();
     });
 
-    test('switch component exists', async ({ page }) => {
+    test('switch behavior exists', async ({ page }) => {
       const switchComp = page.locator('x-switch');
       await safeScrollIntoView(switchComp);
       const switchCount = await switchComp.count();
@@ -338,13 +338,13 @@ test.describe('Components Page', () => {
       expect(switchCount).toBeGreaterThan(0);
     });
 
-    test('rating component exists', async ({ page }) => {
+    test('rating behavior exists', async ({ page }) => {
       const ratings = page.locator('x-rating');
       await safeScrollIntoView(ratings.first());
       await expect(ratings.count()).resolves.toBeGreaterThanOrEqual(2);
     });
 
-    test('stepper component exists', async ({ page }) => {
+    test('stepper behavior exists', async ({ page }) => {
       const stepper = page.locator('div[x-stepper]');
       await safeScrollIntoView(stepper);
       await expect(stepper).toHaveAttribute('value');
@@ -389,7 +389,7 @@ test.describe('Components Page', () => {
       await expect(jsonViewer).toBeVisible();
     });
 
-    test('keyboard key components render', async ({ page }) => {
+    test('keyboard key behaviors render', async ({ page }) => {
       const kbdElements = page.locator('span[x-kbd]');
       await safeScrollIntoView(kbdElements.first());
       await expect(kbdElements.count()).resolves.toBeGreaterThan(0);
@@ -401,7 +401,7 @@ test.describe('Components Page', () => {
   // =========================================================================
   test.describe('Media Section', () => {
     
-    test('gallery component renders', async ({ page }) => {
+    test('gallery behavior renders', async ({ page }) => {
       const gallery = page.locator('div[x-gallery]');
       await safeScrollIntoView(gallery);
       await expect(gallery).toBeVisible();
@@ -465,13 +465,13 @@ test.describe('Components Page', () => {
       await expect(themeControl).toBeVisible();
     });
 
-    test('clock component renders', async ({ page }) => {
+    test('clock behavior renders', async ({ page }) => {
       const clock = page.locator('div[x-clock]');
       await safeScrollIntoView(clock);
       await expect(clock).toBeVisible();
     });
 
-    test('countdown component renders', async ({ page }) => {
+    test('countdown behavior renders', async ({ page }) => {
       const countdown = page.locator('div[x-countdown]');
       await safeScrollIntoView(countdown);
       await expect(countdown).toBeVisible();
@@ -538,7 +538,7 @@ test.describe('Components Page', () => {
       }
     });
 
-    await page.goto('http://localhost:3000/pages/components.html');
+    await page.goto('http://localhost:3000/pages/behaviors.html');
     await page.waitForTimeout(1000);
     
     // Filter out expected errors (like network errors for external images)

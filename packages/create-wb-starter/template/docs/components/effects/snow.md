@@ -24,7 +24,7 @@ Falling snow animation effect.
 | `delay` | string | `"0s"` | Start delay |
 | `duration` | string | `"8s"` | Fall duration |
 
-Wrapped in `<div x-demo>`, so the live component renders below with its source shown underneath:
+Wrapped in `<div x-demo>`, so the live behavior renders below with its source shown underneath:
 
 <div x-demo>
 <div x-snow

@@ -1,28 +1,28 @@
 
-# wb-starter v3.0 - Component Library
+# wb-starter v3.0 - Behavior Library
 
 ## Overview
 
-The wb-starter provides 41+ components built on **composition**: Light-DOM custom
+The wb-starter provides 41+ behaviors built on **composition**: Light-DOM custom
 elements (`<wb-*>`) whose capabilities come from small, stackable `x-*` behaviors
 rather than a class hierarchy. No build step, no Shadow DOM, no framework lock-in.
 
 ### Key Principles
 
-1. **Composition over inheritance**: capabilities come from stacking `x-*` behaviors on any element — not from subclassing a base component
-2. **Custom Elements**: components are plain `<wb-*>` tags
+1. **Composition over inheritance**: capabilities come from stacking `x-*` behaviors on any element — not from subclassing a base behavior
+2. **Custom Elements**: behaviors are plain `<wb-*>` tags
 3. **Light DOM Only**: no Shadow DOM — styles cascade, and everything stays inspectable and themeable
 4. **ES Modules Only**: no CommonJS (require/module.exports)
-5. **Schema-Driven**: JSON schemas define component properties
+5. **Schema-Driven**: JSON schemas define behavior properties
 
 ## Why composition is a better design
 
-Traditional component libraries lean on **inheritance**: a base `Component` class,
-subclasses for every variant, and wrapper components (`<RippleButton>`,
+Traditional behavior libraries lean on **inheritance**: a base `Behavior` class,
+subclasses for every variant, and wrapper behaviors (`<RippleButton>`,
 `<TooltipButton>`) to combine features. That model is rigid — features can't be mixed
 freely, and every new combination needs a new class.
 
-wb-starter uses **composition** instead. A component is a plain `<wb-*>` element, and
+wb-starter uses **composition** instead. A behavior is a plain `<wb-*>` element, and
 you add capabilities by stacking `x-*` behaviors:
 
 <div x-demo>
@@ -30,7 +30,7 @@ you add capabilities by stacking `x-*` behaviors:
 </div>
 
 Each `x-` attribute adds one capability. They **compose** — stack as many as you want,
-in any order, with no wrapper components and no JavaScript. And because behaviors
+in any order, with no wrapper behaviors and no JavaScript. And because behaviors
 attach to *any* element, the same `x-ripple` / `x-tooltip` works on a button, a card,
 an image, or a plain `<div>`.
 
@@ -38,17 +38,17 @@ an image, or a plain `<div>`.
 
 - **No build step** — open an HTML file and it works. No bundler, no compile.
 - **Mix and match** — any behavior on any element; no combinatorial explosion of variant classes.
-- **No lock-in** — components are standard custom elements; nothing ties you to a framework.
+- **No lock-in** — behaviors are standard custom elements; nothing ties you to a framework.
 - **Light DOM** — no Shadow DOM, so styles cascade, dev-tools show real elements, and everything is themeable (20+ themes, zero hardcoded colors).
-- **Schema-first** — components are described in data, so tooling and AI can generate and validate them deterministically.
-- **Testable & portable** — behaviors are pure functions over an element; components behave like standard DOM nodes.
+- **Schema-first** — behaviors are described in data, so tooling and AI can generate and validate them deterministically.
+- **Testable & portable** — behaviors are pure functions over an element; behaviors behave like standard DOM nodes.
 
 ## Architecture (v3.0)
 [WBServices](../wbservices.md)
 ```
 ┌─────────────────────────────────────────────────────────┐
 │                    WBServices                           │
-│  Central service registry for component initialization  │
+│  Central service registry for behavior initialization  │
 └─────────────────────────────────────────────────────────┘
                            │
          ┌─────────────────┼─────────────────┐
@@ -69,36 +69,36 @@ src/
 │   ├── search.schema.json
 │   ├── cardimage.schema.json
 │   └── ...
-├── wb-viewmodels/          # Component logic (JavaScript)
+├── wb-viewmodels/          # Behavior logic (JavaScript)
 │   ├── card.js
 │   ├── x-search.js
 │   ├── search.js
 │   └── ...
 └── styles/
-    └── components/         # Component CSS
+    └── behaviors/         # Behavior CSS
         ├── card.css
         ├── search.css
         └── ...
 
 
-└── components/             # Documentation
-    ├── components.readme.md # This file
-    ├── cards/              # Card component docs
+└── behaviors/             # Documentation
+    ├── behaviors.readme.md # This file
+    ├── cards/              # Card behavior docs
     └── ...
 ```
 
 ## Schema Structure (v3.0)
 
-Each component has a JSON schema in `src/wb-models/`:
+Each behavior has a JSON schema in `src/wb-models/`:
 
 ```json
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "$id": "component.schema.json",
-  "title": "Component Name",
-  "description": "Component description",
+  "$id": "behavior.schema.json",
+  "title": "Behavior Name",
+  "description": "Behavior description",
   "behavior": "componentname",
-  "baseClass": "x-component",
+  "baseClass": "x-behavior",
   "semanticElement": {
     "tagName": "article",
     "implicitRole": "article"
@@ -118,7 +118,7 @@ Each component has a JSON schema in `src/wb-models/`:
 
 ## Semantic HTML Foundation
 
-WB-Starter components use proper semantic HTML:
+WB-Starter behaviors use proper semantic HTML:
 
 | Element | Used By | Purpose |
 |---------|---------|---------|
@@ -135,7 +135,7 @@ WB-Starter components use proper semantic HTML:
 
 ## CSS Variables (Design Tokens)
 
-All components use CSS variables for theming:
+All behaviors use CSS variables for theming:
 
 ```css
 /* Colors */
@@ -162,14 +162,14 @@ All components use CSS variables for theming:
 --radius-lg: 8px;
 ```
 
-## Component Categories
+## Behavior Categories
 
 ### Cards (19 variants)
-All card variants are independent components that share structure via semantic HTML and composition (no base class).
+All card variants are independent behaviors that share structure via semantic HTML and composition (no base class).
 
-| Component | Custom Tag | Description | Doc Link |
+| Behavior | Custom Tag | Description | Doc Link |
 |-----------|------------|-------------|---------|
-| card | `<article>` | Card component | [card.md](./cards/card.md) |
+| card | `<article>` | Card behavior | [card.md](./cards/card.md) |
 | cardimage | `<div x-cardimage>` | Card with featured image | [cardimage.md](./cards/cardimage.md) |
 | cardvideo | `<div x-cardvideo>` | Card with video player | [cardvideo.md](./cards/cardvideo.md) |
 | cardbutton | `<div x-cardbutton>` | Card with action buttons | [cardbutton.md](./cards/cardbutton.md) |
@@ -189,8 +189,8 @@ All card variants are independent components that share structure via semantic H
 | carddraggable | `<div x-carddraggable>` | Draggable card | [carddraggable.md](./cards/carddraggable.md) |
 | cardportfolio | `<div x-cardportfolio>` | Portfolio/contact | [cardportfolio.md](./cards/cardportfolio.md) |
 
-### Form Components
-| Component | Custom Tag | Description |
+### Form Behaviors
+| Behavior | Custom Tag | Description |
 |-----------|------------|-------------|
 | input | `<div x-input>` | Text input field |
 | textarea | `<textarea>` | Multi-line text |
@@ -200,15 +200,15 @@ All card variants are independent components that share structure via semantic H
 | search | `<div x-searchfield>` | Search input with results |
 | rating | `<span x-rating>` | Star rating |
 
-### Navigation Components
-| Component | Custom Tag | Description |
+### Navigation Behaviors
+| Behavior | Custom Tag | Description |
 |-----------|------------|-------------|
 | tabs | `<div x-tabs>` | Tabbed interface |
 | drawer | `<div x-drawer>` | Slide-in drawer |
 | navbar | `<div x-navbar>` | Navigation bar |
 
-### Feedback Components
-| Component | Custom Tag | Description |
+### Feedback Behaviors
+| Behavior | Custom Tag | Description |
 |-----------|------------|-------------|
 | alert | `<div x-alert>` | Alert message |
 | toast | `<div x-toast>` | Toast notification |
@@ -217,14 +217,14 @@ All card variants are independent components that share structure via semantic H
 | progress | `<progress>` | Progress bar |
 
 ### Effects
-| Component | Custom Tag | Description |
+| Behavior | Custom Tag | Description |
 |-----------|------------|-------------|
 | confetti | `<div x-confetti>` | Confetti animation |
 | fireworks | `<div x-fireworks>` | Fireworks effect |
 | snow | `<div x-snow>` | Snow animation |
 
-### Overlay Components
-| Component | Custom Tag | Description |
+### Overlay Behaviors
+| Behavior | Custom Tag | Description |
 |-----------|------------|-------------|
 | dialog | `<dialog>` | Modal dialog |
 | tooltip | `<span x-tooltip>` | Tooltip popup |
@@ -263,15 +263,15 @@ All card variants are independent components that share structure via semantic H
 </div>
 ```
 
-## Component Creation & Initialization: Step-by-Step
+## Behavior Creation & Initialization: Step-by-Step
 
-This section explains, with code samples, how WB components are created and initialized in the browser.
+This section explains, with code samples, how WB behaviors are created and initialized in the browser.
 
 ---
 
-### 1. Add the Component Tag to HTML
+### 1. Add the Behavior Tag to HTML
 
-Write your component in HTML using the <wb-*> tag:
+Write your behavior in HTML using the <wb-*> tag:
 
 ```html
 <article
@@ -292,7 +292,7 @@ Add the WB bootstrap loader to your HTML (usually in <head> or before </body>):
 </script>
 ```
 
-### 3. Bootstrap Scans and Registers Components
+### 3. Bootstrap Scans and Registers Behaviors
 
 When the page loads, wb-bootstrap.js calls the WB.init({ scan: true }) function, which:
 - Scans the DOM for all <wb-*> tags
@@ -301,7 +301,7 @@ When the page loads, wb-bootstrap.js calls the WB.init({ scan: true }) function,
 
 ### 4. Behaviors via x-* Attributes (Optional)
 
-You can enhance any element (including <wb-*> components) with x-* behaviors:
+You can enhance any element (including <wb-*> behaviors) with x-* behaviors:
 
 ```html
 <article
@@ -314,7 +314,7 @@ You can enhance any element (including <wb-*> components) with x-* behaviors:
 
 The scanner finds all x-* attributes and injects the corresponding behavior logic from the behaviors registry.
 
-### 5. Result: Live, Enhanced Components
+### 5. Result: Live, Enhanced Behaviors
 
 After initialization, all <wb-*> tags are fully functional custom elements, and any x-* behaviors are active.
 
@@ -328,7 +328,7 @@ After initialization, all <wb-*> tags are fully functional custom elements, and 
 
   <head>
     <meta charset="UTF-8">
-    <title>WB Component Example</title>
+    <title>WB Behavior Example</title>
     <script
       type="module"
       src="../src/core/wb-bootstrap.js">
@@ -352,7 +352,7 @@ After initialization, all <wb-*> tags are fully functional custom elements, and 
 
 - [Cards Overview](./cards/cards.index.md)
 - [Card](./cards/card.md)
-- [Search Component](../search.md)
+- [Search Behavior](../search.md)
 - [Semantic Elements](./semantic/semantic.index.md)
 - [Effects](./effects/README.md)
 - [Semantic Elements](./semantic/semantic.index.md)

@@ -33,7 +33,7 @@ Text input field with label, helper text, and validation states.
 | `iconPosition` | string | `"start"` | Icon position: `start`, `end` |
 | `clearable` | boolean | `false` | Show clear button |
 
-Wrapped in `<div x-demo>`, so the live component renders below with its source shown underneath:
+Wrapped in `<div x-demo>`, so the live behavior renders below with its source shown underneath:
 
 <div x-demo>
 <div x-input

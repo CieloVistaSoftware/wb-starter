@@ -13,7 +13,7 @@ import { logError } from '../../core/error-logger.js';
  * <select> is a SUPERSET of <select>, not a replacement for it: given a
  * non-<select> host (the <select> custom tag), this builds a real
  * <select>/<option> tree from the host's attributes, then re-invokes itself
- * on that real element so every x-component and a bare <select> share
+ * on that real element so every x-behavior and a bare <select> share
  * IDENTICAL enhancement logic. This used to be schema-driven (select.schema.json's
  * $view built a fake dropdown out of <button>/<div>/<ul> -- no real <select>
  * anywhere in it, so keyboard nav/mobile picker/form submission/screen
@@ -97,7 +97,7 @@ function buildWbSelect(element, options) {
   const label = options.label || element.getAttribute('label') || '';
   const placeholder = options.placeholder || element.getAttribute('placeholder') || 'Select...';
   // Real <option> children (the documented, HTML-native usage -- see this
-  // file's own header comment and docs/components/forms/forms.readme.md)
+  // file's own header comment and docs/behaviors/forms/forms.readme.md)
   // take priority over the options="[...]" JSON attribute. Must be read
   // BEFORE `element.innerHTML = ''` below wipes them -- that line used to
   // run first, silently destroying any authored <option> children with

@@ -70,13 +70,13 @@ test.describe('Home Page — Schema Permutation Tests', () => {
     const hero = page.locator('x-cardhero');
     await expect(hero).toHaveAttribute('variant', 'cosmic');
     await expect(hero).toHaveAttribute('title', 'Build stunning UIs');
-    await expect(hero).toHaveAttribute('cta', 'Explore Components');
+    await expect(hero).toHaveAttribute('cta', 'Explore Behaviors');
   });
 
   test('Hero: renders expected text', async ({ page }) => {
     const hero = page.locator('x-cardhero');
     await expect(hero).toContainText('Build stunning UIs');
-    await expect(hero).toContainText('Explore Components');
+    await expect(hero).toContainText('Explore Behaviors');
   });
 
   test('Hero: has x-hero class after hydration', async ({ page }) => {
@@ -160,7 +160,7 @@ test.describe('Home Page — Schema Permutation Tests', () => {
   test('Features: cards contain expected text', async ({ page }) => {
     // Use the features grid (direct child of body, not inside container)
     const featuresGrid = page.locator('body > x-grid');
-    for (const text of ['Component Library', 'Behaviors System', 'Theme Engine', 'Data Viz', 'Accessible', 'Performance']) {
+    for (const text of ['Behavior Library', 'Behaviors System', 'Theme Engine', 'Data Viz', 'Accessible', 'Performance']) {
       await expect(featuresGrid).toContainText(text);
     }
   });

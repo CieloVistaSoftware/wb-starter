@@ -1,4 +1,4 @@
-# Schema Standards for WB-Starter Components & Pages
+# Schema Standards for WB-Starter Behaviors & Pages
 
 ## Purpose
 This document defines the standard structure and conventions for all JSON schemas used in the WB project.
@@ -11,7 +11,7 @@ All schemas live in `src/wb-models/` and are validated by the meta-schema `schem
 
 | Type | `schemaType` | Required Fields | Examples |
 |------|-------------|-----------------|----------|
-| **Component** | `"component"` (default) | title, description, properties, $view, $methods, behavior/schemaFor | alert, badge, card variants |
+| **Behavior** | `"behavior"` (default) | title, description, properties, $view, $methods, behavior/schemaFor | alert, badge, card variants |
 | **Base** | `"base"` | title, description, properties | _base/html-element, card.base |
 | **Definition** | `"definition"` | title, description | _inheritance.schema.json, schema.schema.json |
 | **Page** | `"page"` | title, description, pageRules, $layout | home-page.schema.json |
@@ -25,8 +25,8 @@ All schemas live in `src/wb-models/` and are validated by the meta-schema `schem
 | `$schema` | string | JSON Schema version reference |
 | `title` | string | Human-readable name |
 | `description` | string | Short description |
-| `schemaFor` | string | Unique name of the component or page |
-| `schemaType` | string | One of: component, base, definition, page |
+| `schemaFor` | string | Unique name of the behavior or page |
+| `schemaType` | string | One of: behavior, base, definition, page |
 
 ---
 
@@ -65,7 +65,7 @@ Row properties: `columns`, `rows` (fixed count), `direction` (row/column), `rati
 
 ## 5. Property Rules
 
-Every property in component and base schemas MUST have `type` and `default`:
+Every property in behavior and base schemas MUST have `type` and `default`:
 
 ```json
 "variant": {

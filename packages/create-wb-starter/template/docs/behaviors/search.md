@@ -1,6 +1,6 @@
 # Search
 
-Search input component with icon and debounced search events
+Search input behavior with icon and debounced search events
 
 Applies to `<div>`, and to any element carrying `x-search`.
 

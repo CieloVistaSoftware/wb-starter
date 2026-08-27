@@ -74,7 +74,7 @@ test.describe('frameworks demo: code examples highlighted + copyable (#241)', ()
  * #324 / #460 — DEMOS-AND-DOCS-STANDARDS.md §1/§16/§25.
  *
  * HTMX needs no build step, so it's real, executable HTML and MUST use <div x-demo>
- * like any other component example (§25's own carve-out for what stays exempt).
+ * like any other behavior example (§25's own carve-out for what stays exempt).
  * The React/Vue/Svelte/Angular/SolidJS sections mount via framework-specific
  * script/compiler output that <div x-demo> can't represent as 1:1 source — they keep
  * the hand-rolled highlighted <pre> pattern (already covered by the #241 test
@@ -82,7 +82,7 @@ test.describe('frameworks demo: code examples highlighted + copyable (#241)', ()
  *
  * #460 now covers all five framework sections: React and Vue use CDN UMD builds;
  * Svelte and SolidJS compile client-side at runtime; Angular bootstraps a real
- * standalone component from its pinned browser ESM packages. None needs a repo
+ * standalone behavior from its pinned browser ESM packages. None needs a repo
  * build dependency, and each keeps its author-facing source block below the live
  * mount because compiled framework output is not 1:1 with that source.
  */
@@ -144,7 +144,7 @@ test.describe('frameworks demo: x-demo / build-step exception (§25, #324, #460)
     await page.goto('/demos/frameworks.html', { waitUntil: 'domcontentloaded' });
 
     const button = page.locator('#svelte-root button');
-    await expect(button, 'svelte/compiler (loaded from esm.sh) must compile and mount a real component').toBeVisible({ timeout: 15000 });
+    await expect(button, 'svelte/compiler (loaded from esm.sh) must compile and mount a real behavior').toBeVisible({ timeout: 15000 });
     await expect(button).toHaveText('Svelte Button');
 
     // #591: clicking the button must also update a persistent, visible
@@ -187,7 +187,7 @@ test.describe('frameworks demo: x-demo / build-step exception (§25, #324, #460)
     await page.goto('/demos/frameworks.html', { waitUntil: 'domcontentloaded' });
 
     const button = page.locator('#solid-root button');
-    await expect(button, 'babel-plugin-jsx-dom-expressions (loaded from esm.sh via @babel/standalone) must compile and mount a real component').toBeVisible({ timeout: 15000 });
+    await expect(button, 'babel-plugin-jsx-dom-expressions (loaded from esm.sh via @babel/standalone) must compile and mount a real behavior').toBeVisible({ timeout: 15000 });
     await expect(button).toHaveText('SolidJS Button');
 
     // #591: clicking the button must also update a persistent, visible
@@ -218,7 +218,7 @@ test.describe('frameworks demo: x-demo / build-step exception (§25, #324, #460)
     expect(errs, `no page errors while compiling/mounting the SolidJS demo: ${errs.join(' | ')}`).toEqual([]);
   });
 
-  test('Angular section bootstraps a live standalone component from browser ESM packages (#460)', async ({ page }) => {
+  test('Angular section bootstraps a live standalone behavior from browser ESM packages (#460)', async ({ page }) => {
     const errs: string[] = [];
     page.on('pageerror', (e) => errs.push(String(e)));
 
@@ -228,7 +228,7 @@ test.describe('frameworks demo: x-demo / build-step exception (§25, #324, #460)
     try {
       await expect(button).toBeVisible({ timeout: 20000 });
     } catch (error) {
-      throw new Error(`Angular must bootstrap and render a real component. ${error instanceof Error ? error.message : String(error)} Page errors: ${errs.join(' | ')}`);
+      throw new Error(`Angular must bootstrap and render a real behavior. ${error instanceof Error ? error.message : String(error)} Page errors: ${errs.join(' | ')}`);
     }
     await expect(button).toHaveText('Increment + WB Magic');
     await expect(page.locator('#angular-root h3')).toHaveText('Angular Count: 0');

@@ -1,12 +1,12 @@
-# Feedback Components Documentation
+# Feedback Behaviors Documentation
 [Edit this file](./feedback.readme.md)
 
 ## Overview
-WB-Starter provides components for user feedback, notifications, and loading states. All feedback components are accessible and follow semantic HTML standards.
+WB-Starter provides behaviors for user feedback, notifications, and loading states. All feedback behaviors are accessible and follow semantic HTML standards.
 
 ---
 
-## Alert Component
+## Alert Behavior
 
 Static alert message for displaying important information to users.
 
@@ -60,7 +60,7 @@ Static alert message for displaying important information to users.
 
 ---
 
-## Toast Component
+## Toast Behavior
 
 Temporary notification popup that appears and disappears automatically.
 
@@ -108,7 +108,7 @@ document.body.appendChild(toast);
 
 ---
 
-## Progress Component
+## Progress Behavior
 
 Native HTML progress bar for showing task completion.
 
@@ -141,7 +141,7 @@ Native HTML progress bar for showing task completion.
 
 ---
 
-## Spinner Component
+## Spinner Behavior
 
 Loading indicator with multiple animation styles.
 
@@ -182,7 +182,7 @@ Loading indicator with multiple animation styles.
 
 ---
 
-## Skeleton Component
+## Skeleton Behavior
 
 Loading placeholder that mimics the structure of content being loaded.
 
@@ -224,7 +224,7 @@ Loading placeholder that mimics the structure of content being loaded.
 
 ---
 
-## Badge Component
+## Badge Behavior
 
 Small status indicator for displaying counts, labels, or status.
 
@@ -268,9 +268,9 @@ Small status indicator for displaying counts, labels, or status.
 
 ## Events
 
-All feedback components emit appropriate events:
+All feedback behaviors emit appropriate events:
 
-| Event | Component | Description | Detail |
+| Event | Behavior | Description | Detail |
 |-------|-----------|-------------|--------|
 | `wb:alert:dismiss` | Alert | Alert dismissed by user | `{ alert }` |
 | `wb:toast:show` | Toast | Toast displayed | `{ toast }` |
@@ -281,7 +281,7 @@ All feedback components emit appropriate events:
 
 ## Accessibility
 
-Feedback components include comprehensive accessibility features:
+Feedback behaviors include comprehensive accessibility features:
 
 - **Semantic HTML**: Proper use of `<aside>`, `<output>`, `<progress>` elements
 - **ARIA Support**: `aria-label`, `aria-live`, `aria-atomic` attributes
@@ -293,7 +293,7 @@ Feedback components include comprehensive accessibility features:
 
 ## Styling
 
-Feedback components use CSS custom properties for theming:
+Feedback behaviors use CSS custom properties for theming:
 
 ```css
 :root {
@@ -325,7 +325,7 @@ Feedback components use CSS custom properties for theming:
 ---
 
 ## Implementation
-- **Components**: Located in `src/wb-viewmodels/` (alert.js, toast.js, spinner.js, etc.)
-- **Styles**: [src/styles/components/feedback.css](../../../src/styles/behaviors/alert.css)
-- **Schemas**: Feedback component schemas in `src/wb-models/`
+- **Behaviors**: Located in `src/wb-viewmodels/` (alert.js, toast.js, spinner.js, etc.)
+- **Styles**: [src/styles/behaviors/feedback.css](../../../src/styles/behaviors/alert.css)
+- **Schemas**: Feedback behavior schemas in `src/wb-models/`
 - **Tests**: Feedback tests in `tests/behaviors/ui/feedback.spec.ts`

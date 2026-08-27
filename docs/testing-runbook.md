@@ -63,6 +63,6 @@ Related docs
 - `CONTRIBUTING.md` — test / artifact publishing details
 - `docs/CommittingFixes.md` — PR & validation workflow
 - `docs/mcp.md` — MCP usage for tests
-- `docs/builder-testing.md` — component-level test guidance
+- `docs/builder-testing.md` — behavior-level test guidance
 
 If you'd like, I can also add VS Code tasks / keyboard shortcuts for the common commands (fast run, full run, trace).

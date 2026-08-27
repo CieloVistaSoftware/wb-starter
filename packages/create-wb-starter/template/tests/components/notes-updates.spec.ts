@@ -2,8 +2,8 @@ import { test, expect, Page } from '@playwright/test';
 
 // This file previously drove the notes drawer via a stale selector
 // (`buttonwb-sheet[data-title="My Notes"]`) that never matched anything real
-// on pages/components.html -- rewritten against the same self-contained
-// injectNotes() pattern tests/components/notes.spec.ts uses, and against the
+// on pages/behaviors.html -- rewritten against the same self-contained
+// injectNotes() pattern tests/behaviors/notes.spec.ts uses, and against the
 // current UI (searchable Lookup list, not a raw <pre> JSON dump).
 const BASE_URL = '/demos/test-harness.html';
 

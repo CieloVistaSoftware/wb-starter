@@ -2,7 +2,7 @@ import { test, expect } from '@playwright/test';
 
 /**
  * pages/behaviors.html's hero `<header id="header">` (H1 + subtitle +
- * theme control) is a plain semantic tag, not a `<header>` component --
+ * theme control) is a plain semantic tag, not a `<header>` behavior --
  * but tag-map.js's nativeMap auto-injects the generic header() behavior
  * onto EVERY bare <header> site-wide, adding class="x-header"
  * (src/styles/behaviors/header.css: fixed height:60px, padding:0 1.5rem).

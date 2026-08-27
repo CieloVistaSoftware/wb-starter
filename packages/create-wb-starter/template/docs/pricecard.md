@@ -4,10 +4,10 @@
 The original implementation of the Web Behavior (WB) system relied heavily on `div` elements with `x-behavior` attributes (e.g., `<div x-cardpricing>`). While functional, this approach led to:
 1.  **"HTML Mess"**: Nested divs with numerous data attributes made the markup difficult to read and maintain.
 2.  **IntelliSense Clutter**: The VS Code autocomplete list was populated with every single `data-` attribute ever used, making it hard to find relevant attributes.
-3.  **Lack of Semantics**: Generic divs provided no semantic meaning to the developer about the component's purpose.
+3.  **Lack of Semantics**: Generic divs provided no semantic meaning to the developer about the behavior's purpose.
 
 ## The Request
-The goal was to simplify the usage of complex components like Pricing Cards and Product Cards by allowing custom tag names, such as `<div x-cardpricing>` and `<div x-cardproduct>`, while retaining the underlying behavior logic.
+The goal was to simplify the usage of complex behaviors like Pricing Cards and Product Cards by allowing custom tag names, such as `<div x-cardpricing>` and `<div x-cardproduct>`, while retaining the underlying behavior logic.
 
 ## The Solution: Pseudo-Custom Elements (PCE)
 

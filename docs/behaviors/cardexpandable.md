@@ -11,7 +11,7 @@ Card with collapsible/expandable content section
 ```html
 <article x-cardexpandable
   title="What changed in 3.0"
-  content="Composition replaced inheritance: a tag maps to a behavior function that decorates the element in place, in light DOM. There is no component base class any more, and no shadow boundary to reach through."
+  content="Composition replaced inheritance: a tag maps to a behavior function that decorates the element in place, in light DOM. There is no behavior base class any more, and no shadow boundary to reach through."
   lines="2"></article>
 ```
 

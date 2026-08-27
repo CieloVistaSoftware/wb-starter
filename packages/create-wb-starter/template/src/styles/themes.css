@@ -6,7 +6,7 @@
  * Example: <html data-theme="ocean">
  * 
  * All themes derive from HCS (Harmonic Color System) definitions
- * Source: components/x-control-panel/config/themes-hcs.json
+ * Source: behaviors/x-control-panel/config/themes-hcs.json
  * 
  * @version 1.0.0
  */
@@ -170,7 +170,7 @@
   --md-font-size: 1rem;
 
   /* Spacing + type scale — several pages (behaviors-showcase.html,
-     pages/behaviors.css, components.css) already reference these by name
+     pages/behaviors.css, behaviors.css) already reference these by name
      (some with a matching fallback, e.g. `var(--space-lg, 1.5rem)`), but the
      tokens themselves were never actually defined here, so every rule using
      them without a fallback silently computed to nothing (no spacing at all).

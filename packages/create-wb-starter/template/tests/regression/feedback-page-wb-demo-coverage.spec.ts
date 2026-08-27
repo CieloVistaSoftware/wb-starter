@@ -3,7 +3,7 @@ import { test, expect } from '@playwright/test';
 /**
  * demos/site/feedback.html: John asked that every rendered example on this
  * page live inside a <div x-demo> (docs/standards/DEMOS-AND-DOCS-STANDARDS.md
- * §1 -- "Every component example is a <div x-demo>"), same sweep already done
+ * §1 -- "Every behavior example is a <div x-demo>"), same sweep already done
  * for demos/site/overlays.html and pages/behaviors.html. Auditing the page's
  * own markup, every example section (Alert/Avatar/Badge/Chip/Progress/
  * Rating/Skeleton/Spinner/Toast/Tooltip, plus the x-tooltip/x-progressbar/

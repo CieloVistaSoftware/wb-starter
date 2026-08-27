@@ -1,8 +1,8 @@
-# Pre Component Design & User Guide
+# Pre Behavior Design & User Guide
 
 ## 1. Design Philosophy
 
-The `pre` component upgrades the `<pre>` element to be a full-featured code block container. It addresses the needs of technical documentation by adding line numbers, copy functionality, and proper overflow handling, making code snippets easier to read and use.
+The `pre` behavior upgrades the `<pre>` element to be a full-featured code block container. It addresses the needs of technical documentation by adding line numbers, copy functionality, and proper overflow handling, making code snippets easier to read and use.
 
 ### Key Features
 - **Line Numbers**: Automatic line numbering for easy reference.
@@ -62,4 +62,4 @@ A scrollable container for long text output.
 ```
 
 ## 4. Why It Works
-The component wraps the `<pre>` in a relative container to position the absolute elements (copy button, language badge). For line numbers, it splits the text content by newline characters (`\n`) and generates a separate column of numbers, ensuring they align perfectly with the text lines even when scrolling.
+The behavior wraps the `<pre>` in a relative container to position the absolute elements (copy button, language badge). For line numbers, it splits the text content by newline characters (`\n`) and generates a separate column of numbers, ensuring they align perfectly with the text lines even when scrolling.

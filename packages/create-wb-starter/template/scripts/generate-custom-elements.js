@@ -2,7 +2,7 @@
  * Generate Custom Elements Manifest
  * ==================================
  * Creates a custom-elements.json file for VS Code Custom Elements Language Server
- * This enables "Go to Definition" and intellisense for wb-starter components.
+ * This enables "Go to Definition" and intellisense for wb-starter behaviors.
  * 
  * Run: node scripts/generate-custom-elements.js
  * Output: data/custom-elements.json
@@ -38,7 +38,7 @@ const customElementMappings = [
   { selector: 'x-cardminimizable', behavior: 'cardminimizable' },
   { selector: 'x-carddraggable', behavior: 'carddraggable' },
   
-  // Feedback Components
+  // Feedback Behaviors
   { selector: 'x-spinner', behavior: 'spinner' },
   { selector: 'x-avatar', behavior: 'avatar' },
   { selector: 'x-badge', behavior: 'badge' },
@@ -150,7 +150,7 @@ async function generateManifest() {
       name: selector,
       tagName: selector,
       customElement: true,
-      description: schema?.description || `wb-starter ${behavior} component`,
+      description: schema?.description || `wb-starter ${behavior} behavior`,
       attributes: attributes,
       slots: [
         {
@@ -202,9 +202,9 @@ async function main() {
   const outputPath = path.join(rootDir, 'data/custom-elements.json');
   fs.writeFileSync(outputPath, JSON.stringify(manifest, null, 2));
   
-  console.log(`✅ Generated ${manifest.modules.length} component definitions`);
+  console.log(`✅ Generated ${manifest.modules.length} behavior definitions`);
   console.log(`📄 Output: ${outputPath}`);
-  console.log(`\n💡 Restart VS Code to enable "Go to Definition" for WB components`);
+  console.log(`\n💡 Restart VS Code to enable "Go to Definition" for WB behaviors`);
 }
 
 main().catch(err => {

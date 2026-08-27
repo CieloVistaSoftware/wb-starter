@@ -34,15 +34,15 @@ Supports every [card property](./card.md) — that shared structure and CSS are 
 
 ### Attribute-only example
 
-Wrapped in `<div x-demo>`, so the live component renders below with its source shown underneath:
+Wrapped in `<div x-demo>`, so the live behavior renders below with its source shown underneath:
 
 <div x-demo full-width>
 <div x-cardhero
-  pretitle="100 Components"
+  pretitle="100 Behaviors"
   title='Build <span class="x-gradient-text">stunning UIs</span>'
   subtitle="just HTML — no build step"
-  cta="Explore Components"
-  cta-href="#components"
+  cta="Explore Behaviors"
+  cta-href="#behaviors"
   variant="cosmic">
 </div>
 </div>
@@ -53,7 +53,7 @@ Wrapped in `<div x-demo>`, so the live component renders below with its source s
 
 ### Basic Hero
 
-With no `background` supplied, the component renders its own themed
+With no `background` supplied, the behavior renders its own themed
 gradient (`hero.css`'s `x-cardhero:not([background])` rule) -- there is no
 `/images/hero-bg.jpg` asset in this repo, and pointing this example at one
 that doesn't exist just 404s silently (#534).

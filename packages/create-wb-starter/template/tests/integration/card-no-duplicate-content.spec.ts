@@ -6,13 +6,13 @@ import { test, expect } from '@playwright/test';
  * AND a legacy MVVM template (schema $view / views-registry / partial → .card__*),
  * nesting → duplicate title/footer.
  *
- * It only reproduced on a SCHEMA-PROCESSED page (the SPA components page, where WB
+ * It only reproduced on a SCHEMA-PROCESSED page (the SPA behaviors page, where WB
  * assigns x-schema="card"), NOT the playground — the earlier test missed it by not
  * exercising that path (and by having its duplicate assertion trimmed out). These
  * assert on the schema-processed page.
  */
 test('x-card injects no phantom placeholder content (no "Lorem ipsum") (#202)', async ({ page }) => {
-  await page.goto('/?page=components', { waitUntil: 'domcontentloaded' });
+  await page.goto('/?page=behaviors', { waitUntil: 'domcontentloaded' });
 
   const imgCard = page.locator('x-cardimage').filter({ hasText: 'Image Card' }).first();
   await expect(imgCard).toBeVisible({ timeout: 20000 });
@@ -22,7 +22,7 @@ test('x-card injects no phantom placeholder content (no "Lorem ipsum") (#202)', 
 });
 
 test('cards render title/footer exactly once on the schema-processed page (#202)', async ({ page }) => {
-  await page.goto('/?page=components', { waitUntil: 'domcontentloaded' });
+  await page.goto('/?page=behaviors', { waitUntil: 'domcontentloaded' });
 
   await expect
     .poll(() => page.locator('x-card .x-card__title').count(), { timeout: 20000 })

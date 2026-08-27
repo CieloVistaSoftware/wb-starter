@@ -26,7 +26,7 @@ Audio player with optional 15-band graphic equalizer.
 | `bass` | number | `0` | Bass boost (-12 to 12 dB) |
 | `treble` | number | `0` | Treble boost (-12 to 12 dB) |
 
-Wrapped in `<div x-demo>`, so the live component renders below with its source shown underneath:
+Wrapped in `<div x-demo>`, so the live behavior renders below with its source shown underneath:
 
 <div x-demo>
 <audio src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3"></audio>

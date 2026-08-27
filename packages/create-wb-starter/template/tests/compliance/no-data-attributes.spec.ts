@@ -15,7 +15,7 @@ import * as path from 'path';
  * offending attribute per file. Fix with `node scripts/migrate-legacy-attrs.mjs`.
  *
  * ALLOWED is EMPTY = absolute zero. If `theme` / `page` are ratified as framework
- * state hooks (not component config), add them here explicitly with a comment —
+ * state hooks (not behavior config), add them here explicitly with a comment —
  * nothing else is exempt.
  */
 const ALLOWED = new Set<string>([
@@ -44,8 +44,8 @@ function walk(dir: string, exts: string[], out: string[]): void {
 
 // The full surface users see, copy from, OR that regenerates markup:
 //  - live HTML: pages/*, demos/*, public/papers/*
-//  - docs: README, CONTRIBUTING, docs/**, component .md, demo .md
-//  - JSON SOURCE: component schemas (src/wb-models/*.schema.json), config, and the
+//  - docs: README, CONTRIBUTING, docs/**, behavior .md, demo .md
+//  - JSON SOURCE: behavior schemas (src/wb-models/*.schema.json), config, and the
 //    IntelliSense manifests. A `data-*` in a schema/example regenerates back into
 //    pages; a `"data-*"` declared in the manifest makes IntelliSense *suggest*
 //    legacy syntax. (#222 / #224)

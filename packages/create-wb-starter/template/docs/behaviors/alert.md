@@ -1,6 +1,6 @@
 # Alert
 
-Alert component for displaying messages with severity levels
+Alert behavior for displaying messages with severity levels
 
 Applies to `<div>`, and to any element carrying `x-alert`.
 

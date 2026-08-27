@@ -23,7 +23,7 @@ Supports every [card property](./card.md) — that shared structure and CSS are 
 | `gradient` | boolean | `true` | Show gradient overlay for readability |
 | `height` | string | `"300px"` | Card height |
 
-Wrapped in `<div x-demo>`, so the live component renders below with its source shown underneath:
+Wrapped in `<div x-demo>`, so the live behavior renders below with its source shown underneath:
 
 <div x-demo>
 <div x-cardoverlay

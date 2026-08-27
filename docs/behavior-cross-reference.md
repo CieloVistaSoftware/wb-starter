@@ -2225,13 +2225,13 @@ $ npm test
 
 ## Morphing Behaviors (Different Name)
 
-These behaviors transform the element into a component.
+These behaviors transform the element into a behavior.
 
 ---
 
 ### article → card
 **Module:** `card.js`  
-**Element:** `<article>` morphs into card component
+**Element:** `<article>` morphs into card behavior
 
 **What it adds:**
 - Class: `<article>`
@@ -2897,7 +2897,7 @@ Documentation sidebar:
     <a href="/docs/behaviors">Behaviors</a>
     <a href="/docs/auto-inject">Auto Injection</a>
     <a href="/docs/themes">Theming</a>
-    <strong style="margin-top: 1rem; display: block;">Components</strong>
+    <strong style="margin-top: 1rem; display: block;">Behaviors</strong>
     <a href="/docs/buttons">Buttons</a>
     <a href="/docs/forms">Forms</a>
     <a href="/docs/cards">Cards</a>
@@ -2980,7 +2980,7 @@ Admin sidebar with icons:
 | `<header>` | header | header.js |
 | `<footer>` | footer | footer.js |
 
-### Morphing (element becomes a component)
+### Morphing (element becomes a behavior)
 
 | Element | Behavior | Module |
 |---------|----------|--------|
@@ -3039,11 +3039,11 @@ Admin sidebar with icons:
 
 ---
 
-## Custom Tags: Not Web Components!
+## Custom Tags: Not Behaviors!
 
 WB Behaviors supports custom tag names like `<div x-grid>` and `<div x-cardpricing>`. Here's the important thing:
 
-**These are NOT Web Components.**
+**These are NOT Behaviors.**
 
 - ❌ No `customElements.define()`
 - ❌ No Shadow DOM
@@ -3108,14 +3108,14 @@ customElementMappings.forEach(({ selector, behavior }) => {
 });
 ```
 
-### Why Not Real Web Components?
+### Why Not Real Behaviors?
 
-| Web Components | WB Custom Tags |
+| Behaviors | WB Custom Tags |
 |----------------|----------------|
 | Requires `customElements.define()` | No registration needed |
 | Shadow DOM isolation | Light DOM - CSS works normally |
 | Class-based boilerplate | Just functions |
-| One component = one class | Many behaviors in one module |
+| One behavior = one class | Many behaviors in one module |
 | Slots, templates required | Plain HTML children |
 | Must wait for definition | Works immediately |
 
@@ -3372,7 +3372,7 @@ panel built from those attributes. (An earlier version of this doc showed
 `<div x-drawer>` as a static, always-visible sidebar with `resizable`/
 `save-state` attributes that don't exist on this behavior — that pattern is
 `<div x-drawer-layout>`, a different tag/behavior; see
-[Drawer Components](components/drawer.md).)
+[Drawer Behaviors](behaviors/drawer.md).)
 
 <div x-demo>
 <div x-drawer

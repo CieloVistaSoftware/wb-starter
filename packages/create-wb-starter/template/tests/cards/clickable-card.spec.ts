@@ -1,12 +1,12 @@
 import { test, expect } from '@playwright/test';
 
 test.describe('Clickable Card Fix', () => {
-  test('Clickable card in components page should trigger toast', async ({ page }) => {
-    // Navigate to components page
-    await page.goto('/pages/components.html');
+  test('Clickable card in behaviors page should trigger toast', async ({ page }) => {
+    // Navigate to behaviors page
+    await page.goto('/pages/behaviors.html');
 
     // Find the clickable card
-    const card = page.locator('#components-div-12');
+    const card = page.locator('#behaviors-div-12');
     await expect(card).toBeVisible();
     
     // Verify it has the correct data attributes

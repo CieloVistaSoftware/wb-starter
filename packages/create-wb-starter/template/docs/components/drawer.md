@@ -1,4 +1,4 @@
-# Drawer Components - wb-starter v3.0
+# Drawer Behaviors - wb-starter v3.0
 
 Two distinct drawer types with different purposes.
 
@@ -27,7 +27,7 @@ A structural sidebar container that pushes content or sits alongside it.
 | `maxWidth` | string | `"50vw"` | Maximum width |
 | `maxHeight` | string | `"50vh"` | Maximum height |
 
-Wrapped in `<div x-demo>`, so the live component renders below with its source shown underneath:
+Wrapped in `<div x-demo>`, so the live behavior renders below with its source shown underneath:
 
 <div x-demo>
 <div x-drawer-layout

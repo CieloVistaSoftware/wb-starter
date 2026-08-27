@@ -133,7 +133,7 @@
       margin-bottom: 0.5rem;
     }
     
-    /* Component Info */
+    /* Behavior Info */
     .sv-info {
       margin-bottom: 1.5rem;
     }
@@ -296,7 +296,7 @@
     <h1>📋 Schema Viewer</h1>
     <div class="sv-header-actions">
       <select class="sv-select" id="schemaSelector">
-        <option value="">Select a component...</option>
+        <option value="">Select a behavior...</option>
       </select>
       <button class="sv-btn sv-btn-secondary" id="formatBtn">Format</button>
       <button class="sv-btn sv-btn-primary" id="saveBtn">💾 Save</button>
@@ -314,7 +314,7 @@
       <div class="sv-panel-content" id="previewPanel">
         <div class="sv-empty">
           <span>📦</span>
-          <p>Select a component to preview</p>
+          <p>Select a behavior to preview</p>
         </div>
       </div>
     </div>
@@ -384,7 +384,7 @@
         panel.innerHTML = `
           <div class="sv-empty">
             <span>📦</span>
-            <p>Select a component to preview</p>
+            <p>Select a behavior to preview</p>
           </div>
         `;
         return;
@@ -436,7 +436,7 @@
       }
 
       panel.innerHTML = `
-        <!-- Component Info -->
+        <!-- Behavior Info -->
         <div class="sv-info">
           <h2>${schema.title || componentName}</h2>
           <p>${schema.description || 'No description available.'}</p>

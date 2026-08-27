@@ -3,9 +3,9 @@
 > **Updated:** 2026-02-13
 
 ## Overview
-`mdhtml` is a WB-Starter component that converts Markdown to HTML in the browser. It is used via the `<div x-mdhtml>` custom element and supports both inline markdown and external markdown files.
+`mdhtml` is a WB-Starter behavior that converts Markdown to HTML in the browser. It is used via the `<div x-mdhtml>` custom element and supports both inline markdown and external markdown files.
 
-Wrapped in `<div x-demo>`, so the live component renders below with its source shown underneath:
+Wrapped in `<div x-demo>`, so the live behavior renders below with its source shown underneath:
 
 <div x-demo>
 <div x-mdhtml> # Hello World This is **bold** and *italic*. </div>

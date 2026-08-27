@@ -24,7 +24,7 @@
     "md-wb-demo-required.spec.ts",
     "no-absolute-paths-in-md.spec.ts",
     "no-html-extends-docs.spec.ts",
-    "no-legacy-component-inheritance-docs.spec.ts",
+    "no-legacy-behavior-inheritance-docs.spec.ts",
     "terminology.spec.ts",
     "terminology-wb-starter.spec.ts",
     "powershell-snippets.spec.ts"

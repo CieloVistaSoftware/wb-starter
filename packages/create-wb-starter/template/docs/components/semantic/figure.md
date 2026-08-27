@@ -9,7 +9,7 @@ The `<figure>` element represents self-contained content with an optional captio
 - Optional `<figcaption>` provides caption/label
 - Can contain: images, videos, code, diagrams, charts
 
-## WB Components Using `<figure>`
+## WB Behaviors Using `<figure>`
 
 ### 1. Card Image (`cardimage`)
 

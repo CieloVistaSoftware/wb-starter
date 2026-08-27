@@ -24,7 +24,7 @@ test('three sibling accordions, each with its distinct answer (not the title)', 
   expect(await page.locator('x-accordion').count()).toBeGreaterThanOrEqual(3);
 
   // each distinct answer renders on the page (proves bodies hold answers, not duplicated titles)
-  await expect(page.locator('body')).toContainText('zero-build web component library');
+  await expect(page.locator('body')).toContainText('zero-build behavior library');
   await expect(page.locator('body')).toContainText('No installation needed');
   await expect(page.locator('body')).toContainText('enterprise hardened');
 

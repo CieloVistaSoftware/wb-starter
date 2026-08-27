@@ -39,7 +39,7 @@ function loadSchemas() {
     schema: JSON.parse(fs.readFileSync(file, 'utf8')),
   })).filter(({ file, schema }) => {
     const behavior = schema.behavior || schema.schemaFor;
-    return (schema.schemaType || 'component') === 'component' &&
+    return (schema.schemaType || 'behavior') === 'behavior' &&
       !path.basename(file).includes('.base.') &&
       behavior && !NON_COMPONENT_SCHEMAS.has(behavior);
   });
@@ -72,7 +72,7 @@ function behaviorSurface(behavior: string) {
 }
 
 test.describe('Schema/behavior completeness audit (#344)', () => {
-  test('component schemas resolve through the behavior registry and source exports', () => {
+  test('behavior schemas resolve through the behavior registry and source exports', () => {
     const registry = registryKeys();
     const source = allViewmodelSource();
     const missingRegistry: string[] = [];
@@ -91,7 +91,7 @@ test.describe('Schema/behavior completeness audit (#344)', () => {
     expect(missingFunctions, `Missing exported functions:\n${missingFunctions.join('\n')}`).toEqual([]);
   });
 
-  test('component setup entries use their declared behavior surface', () => {
+  test('behavior setup entries use their declared behavior surface', () => {
     const mismatches: string[] = [];
     const coverageGaps: string[] = [];
 

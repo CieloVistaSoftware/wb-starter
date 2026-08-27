@@ -1,12 +1,12 @@
-# Layout Components Documentation
+# Layout Behaviors Documentation
 [Edit this file](./layout.readme.md)
 
 ## Overview
-WB-Starter provides flexible layout components using CSS Grid and Flexbox. All layout components are responsive and follow semantic HTML standards.
+WB-Starter provides flexible layout behaviors using CSS Grid and Flexbox. All layout behaviors are responsive and follow semantic HTML standards.
 
 ---
 
-## Container Component
+## Container Behavior
 
 Flexible container with max-width and padding for content centering.
 
@@ -45,7 +45,7 @@ Flexible container with max-width and padding for content centering.
 
 ---
 
-## Grid Component
+## Grid Behavior
 
 CSS Grid layout with responsive columns and flexible item placement.
 
@@ -103,7 +103,7 @@ CSS Grid layout with responsive columns and flexible item placement.
 
 ---
 
-## Flex Component
+## Flex Behavior
 
 Flexbox layout container for flexible item arrangement.
 
@@ -149,7 +149,7 @@ Flexbox layout container for flexible item arrangement.
 
 ---
 
-## Stack Component
+## Stack Behavior
 
 Vertical stack layout (shorthand for flex column).
 
@@ -173,7 +173,7 @@ Vertical stack layout (shorthand for flex column).
 
 ---
 
-## Center Component
+## Center Behavior
 
 Center content both horizontally and vertically.
 
@@ -212,7 +212,7 @@ Center content both horizontally and vertically.
 
 ---
 
-## Sidebar Layout Component
+## Sidebar Layout Behavior
 
 Two-column layout with sidebar and main content area.
 
@@ -254,7 +254,7 @@ Two-column layout with sidebar and main content area.
 
 ---
 
-## Sidebar Component
+## Sidebar Behavior
 
 Semantic sidebar container with optional collapse functionality.
 
@@ -286,7 +286,7 @@ Semantic sidebar container with optional collapse functionality.
 
 ---
 
-## Fieldset Component
+## Fieldset Behavior
 
 Semantic form grouping container.
 
@@ -326,7 +326,7 @@ Semantic form grouping container.
 
 ---
 
-## Divider Component
+## Divider Behavior
 
 Horizontal or vertical divider line with optional text.
 
@@ -352,7 +352,7 @@ Horizontal or vertical divider line with optional text.
 
 ---
 
-## Spacer Component
+## Spacer Behavior
 
 Flexible spacing element for layout control.
 
@@ -379,7 +379,7 @@ Flexible spacing element for layout control.
 
 ## Responsive Breakpoints
 
-All layout components support responsive attributes:
+All layout behaviors support responsive attributes:
 
 | Breakpoint | Width | Suffix | Example |
 |------------|-------|--------|---------|
@@ -405,9 +405,9 @@ All layout components support responsive attributes:
 
 ## Events
 
-Layout components emit events for interaction:
+Layout behaviors emit events for interaction:
 
-| Event | Component | Description | Detail |
+| Event | Behavior | Description | Detail |
 |-------|-----------|-------------|--------|
 | `wb:sidebar:toggle` | Sidebar | Sidebar collapsed/expanded | `{ collapsed: boolean }` |
 | `wb:sidebar-layout:resize` | Sidebar Layout | Sidebar resized | `{ width: string }` |
@@ -416,7 +416,7 @@ Layout components emit events for interaction:
 
 ## Accessibility
 
-Layout components include comprehensive accessibility features:
+Layout behaviors include comprehensive accessibility features:
 
 - **Semantic HTML**: Proper use of `<main>`, `<aside>`, `<nav>`, `<fieldset>`, `<legend>` elements
 - **ARIA Support**: `aria-label`, `aria-expanded`, `aria-controls` attributes
@@ -428,7 +428,7 @@ Layout components include comprehensive accessibility features:
 
 ## Styling
 
-Layout components use CSS custom properties for theming:
+Layout behaviors use CSS custom properties for theming:
 
 ```css
 :root {
@@ -458,7 +458,7 @@ Layout components use CSS custom properties for theming:
 ---
 
 ## Implementation
-- **Components**: Located in `src/wb-viewmodels/` (container.js, grid.js, flex.js, etc.)
-- **Styles**: [src/styles/components/layout.css](../../../src/styles/behaviors/layout.css)
-- **Schemas**: Layout component schemas in `src/wb-models/`
+- **Behaviors**: Located in `src/wb-viewmodels/` (container.js, grid.js, flex.js, etc.)
+- **Styles**: [src/styles/behaviors/layout.css](../../../src/styles/behaviors/layout.css)
+- **Schemas**: Layout behavior schemas in `src/wb-models/`
 - **Tests**: Layout tests in `tests/behaviors/ui/layout.spec.ts`

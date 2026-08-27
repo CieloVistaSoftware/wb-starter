@@ -25,7 +25,7 @@ Modal dialog using native HTML5 dialog element.
 | `showClose` | boolean | `true` | Show close button |
 | `variant` | string | `"default"` | Variant: `default`, `centered`, `fullscreen` |
 
-Wrapped in `<div x-demo>`, so the live component renders below with its source shown underneath:
+Wrapped in `<div x-demo>`, so the live behavior renders below with its source shown underneath:
 
 <div x-demo>
 <dialog

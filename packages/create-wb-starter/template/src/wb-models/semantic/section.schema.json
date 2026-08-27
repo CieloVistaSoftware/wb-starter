@@ -53,7 +53,7 @@
     ]
   },
   "wbComponents": {
-    "description": "WB components that extend section",
+    "description": "WB behaviors that extend section",
     "list": [
       "collapse",
       "accordion-panel",

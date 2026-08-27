@@ -1,6 +1,6 @@
 import { readAttr } from '../core/read-attr.js';
 /**
- * Stage Light Component
+ * Stage Light Behavior
  * -----------------------------------------------------------------------------
  * Provides three stage lighting effects:
  * 1. Beam: Decorative sweeping beam (CSS animation)
@@ -88,7 +88,7 @@ function injectStyles() {
     .x-stagelight--spotlight {
       position: relative;
       /* A spotlight with zero area is meaningless. The host is often empty
-         (the component consumes its text), and inside a single-item demo grid
+         (the behavior consumes its text), and inside a single-item demo grid
          "width: fit-content" then resolves to 0 -- the effect had nothing to
          paint on. It previously hid this by covering the whole viewport
          instead, which is the bug. Give it a real canvas by default. */
@@ -307,7 +307,7 @@ export default function stagelight(element, options = {}) {
 
     // #658: let a viewer switch the effect off and read the content plainly.
     // The fixture variant already toggles (click its housing); spotlight had no
-    // way to stop, which is an inconsistency between variants of one component.
+    // way to stop, which is an inconsistency between variants of one behavior.
     let isOn = !element.hasAttribute('off');
     const applyState = () => {
       if (isOn) element.removeAttribute('data-x-stagelight-off');

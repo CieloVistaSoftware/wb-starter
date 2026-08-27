@@ -1,10 +1,10 @@
-# Tabs Component Documentation
+# Tabs Behavior Documentation
 [Edit this file](./tabs.md)
 
 ## Overview
-The Tabs component provides a flexible tabbed interface for organizing content into switchable panels. It uses semantic HTML with proper accessibility features and keyboard navigation.
+The Tabs behavior provides a flexible tabbed interface for organizing content into switchable panels. It uses semantic HTML with proper accessibility features and keyboard navigation.
 
-Wrapped in `<div x-demo>`, so the live component renders below with its source shown underneath:
+Wrapped in `<div x-demo>`, so the live behavior renders below with its source shown underneath:
 
 <div x-demo>
 <div x-tabs>
@@ -106,7 +106,7 @@ const count = tabs.getTabCount();
 
 ## Accessibility
 
-The component automatically provides:
+The behavior automatically provides:
 
 - **Semantic HTML**: Uses `<nav>` for tab list and `<section>` for panels
 - **ARIA Roles**: `tablist`, `tab`, `tabpanel` roles
@@ -222,12 +222,12 @@ x-tabs {
 
 ## Schema
 - See: [src/wb-models/tabs.schema.json](../../src/wb-models/tabs.schema.json)
-- Defines component properties, accessibility features, and test scenarios
+- Defines behavior properties, accessibility features, and test scenarios
 
 ---
 
 ## Implementation
 - **Custom Element**: [src/wb-viewmodels/x-tabs.js](../../src/wb-viewmodels/tabs.js)
 - **Behavior**: [src/wb-viewmodels/tabs.js](../../src/wb-viewmodels/tabs.js)
-- **Styles**: src/styles/components/tabs.css
-- **Tests**: Component tests located in `tests/behaviors/ui/tabs.spec.ts`
+- **Styles**: src/styles/behaviors/tabs.css
+- **Tests**: Behavior tests located in `tests/behaviors/ui/tabs.spec.ts`

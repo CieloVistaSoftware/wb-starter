@@ -30,7 +30,7 @@ camelCase form in markup (e.g. <code>imagePosition="right"</code>) is
 silently ignored — it never matches, and the default applies instead with
 no error.
 
-Wrapped in `<div x-demo>`, so the live component renders below with its source shown underneath:
+Wrapped in `<div x-demo>`, so the live behavior renders below with its source shown underneath:
 
 <div x-demo>
 <div x-cardhorizontal

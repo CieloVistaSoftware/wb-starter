@@ -1,8 +1,8 @@
-# Container Components Pattern
+# Container Behaviors Pattern
 
 ## Overview
 
-Container components are components that can accept other components as children. This enables building complex nested layouts like:
+Container behaviors are behaviors that can accept other behaviors as children. This enables building complex nested layouts like:
 
 ```
 details
@@ -12,7 +12,7 @@ details
 
 ## Schema Definition
 
-Container components declare their capability in the schema:
+Container behaviors declare their capability in the schema:
 
 ```json
 {
@@ -32,8 +32,8 @@ Container components declare their capability in the schema:
 
 | Property | Type | Description |
 |----------|------|-------------|
-| `enabled` | boolean | Whether this component accepts children |
-| `dropZone` | string | CSS selector for the droppable area within the component |
+| `enabled` | boolean | Whether this behavior accepts children |
+| `dropZone` | string | CSS selector for the droppable area within the behavior |
 | `accepts` | string[] | List of behaviors that can be dropped, or `["all"]` |
 | `rejects` | string[] | List of behaviors that cannot be dropped |
 | `maxChildren` | number\|null | Maximum number of children, or `null` for unlimited |
@@ -41,12 +41,12 @@ Container components declare their capability in the schema:
 
 ## Builder Configuration
 
-In `builder.js`, container components are marked with `container: true`. The configuration uses abbreviated keys for compactness:
+In `builder.js`, container behaviors are marked with `container: true`. The configuration uses abbreviated keys for compactness:
 
 | Key | Full Name | Description |
 |-----|-----------|-------------|
-| `n` | Name | Display name in the component palette |
-| `i` | Icon | Emoji or icon for the component |
+| `n` | Name | Display name in the behavior palette |
+| `i` | Icon | Emoji or icon for the behavior |
 | `b` | Behavior | The WB-Starter identifier |
 | `d` | Data | Default properties object |
 
@@ -65,10 +65,10 @@ In `builder.js`, container components are marked with `container: true`. The con
 
 ## Drop Zone Detection
 
-When a component is dragged over the canvas, the builder checks:
+When a behavior is dragged over the canvas, the builder checks:
 
-1. Is the drop target inside a container component?
-2. If yes, is the dragged component in the `accepts` list?
+1. Is the drop target inside a container behavior?
+2. If yes, is the dragged behavior in the `accepts` list?
 3. If yes, is `maxChildren` not exceeded?
 4. If all pass, highlight the drop zone and allow drop
 
@@ -98,11 +98,11 @@ function handleDrop(e, draggedComponent) {
 }
 ```
 
-### Container Components List
+### Container Behaviors List
 
-Current container components:
+Current container behaviors:
 - `details` - Content area accepts children
-- `tabs` - Each tab panel can contain any components
+- `tabs` - Each tab panel can contain any behaviors
 - `card` - Main content area accepts children
 - `modal` - Body content accepts children
 - `drawer` - Content area accepts children
@@ -116,7 +116,7 @@ Current container components:
 When dragging over a container:
 1. Container gets `drag-over-container` class
 2. Drop zone gets `drop-zone-active` class
-3. Visual indicator shows where component will be inserted
+3. Visual indicator shows where behavior will be inserted
 
 ## CSS for Drop Zones
 

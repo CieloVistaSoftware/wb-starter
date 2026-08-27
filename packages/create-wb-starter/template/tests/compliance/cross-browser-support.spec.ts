@@ -406,7 +406,7 @@ test.describe('Cross-Browser Support Infrastructure', () => {
     expect(ignored).toBe(true);
   });
 
-  test('CSS custom properties can override component styles', async ({ page }) => {
+  test('CSS custom properties can override behavior styles', async ({ page }) => {
     const overrideWorks = await page.evaluate(() => {
       // Create a card with custom property override
       const card = document.createElement('x-card');

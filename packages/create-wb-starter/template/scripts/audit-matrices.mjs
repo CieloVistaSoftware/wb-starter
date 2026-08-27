@@ -1,8 +1,8 @@
 import { readFileSync, writeFileSync } from 'fs';
 import { join, resolve } from 'path';
 
-const site = JSON.parse(readFileSync('src/wb-models/pages/x-component-library.site.json', 'utf-8'));
-const allComponents = site.pages.flatMap(p => p.components || []);
+const site = JSON.parse(readFileSync('src/wb-models/pages/x-behavior-library.site.json', 'utf-8'));
+const allComponents = site.pages.flatMap(p => p.behaviors || []);
 const dir = resolve('src/wb-models');
 
 const results = [];

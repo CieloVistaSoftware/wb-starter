@@ -6,7 +6,7 @@ import { test, expect, Page } from '@playwright/test';
  * `element.innerHTML = ''` before anything ever read the authored
  * <option> children, and only ever populated options from a JSON-string
  * `options="[...]"` attribute -- never from children. Every documented
- * example (docs/components/forms/forms.readme.md, demos/site/forms.html)
+ * example (docs/behaviors/forms/forms.readme.md, demos/site/forms.html)
  * used real <option> children, so every one of them rendered an empty
  * dropdown (just the placeholder) despite being "correct" per the docs.
  *

@@ -9,7 +9,7 @@ import * as fs from 'fs';
 import * as path from 'path';
 import { ROOT, PATHS, getSchemaFiles, loadSchema, readFile, fileExists, readJson } from '../base';
 
-const TEST_DIR = path.join(ROOT, 'tests/components');
+const TEST_DIR = path.join(ROOT, 'tests/behaviors');
 const REGRESSION_DIR = path.join(ROOT, 'tests/regression');
 const COMPLIANCE_DIR = path.join(ROOT, 'tests/compliance');
 const PERM_TEST_FILE = path.join(ROOT, 'tests/behaviors/permutation-compliance.spec.ts');
@@ -98,24 +98,24 @@ test.describe('Bug Registry Compliance', () => {
     expect(missing, `Missing regression test files:\n${missing.join('\n')}`).toEqual([]);
   });
 
-  test('affected components have test coverage', () => {
+  test('affected behaviors have test coverage', () => {
     const registry = loadBugRegistry();
     if (!registry) { test.skip(); return; }
     
     const uncovered: string[] = [];
     for (const bug of registry.bugs) {
-      for (const component of bug.affectedComponents || []) {
-        const hasTest = testFileExistsForBehavior(component) !== null;
-        const inPermTests = isInPermutationTests(component);
-        const inRegressionTests = isInRegressionTests(component);
+      for (const behavior of bug.affectedComponents || []) {
+        const hasTest = testFileExistsForBehavior(behavior) !== null;
+        const inPermTests = isInPermutationTests(behavior);
+        const inRegressionTests = isInRegressionTests(behavior);
         
         if (!hasTest && !inPermTests && !inRegressionTests) {
-          uncovered.push(`${bug.id} affects "${component}" which has no test coverage`);
+          uncovered.push(`${bug.id} affects "${behavior}" which has no test coverage`);
         }
       }
     }
     
-    expect(uncovered.length, 'All affected components should have tests').toBe(0);
+    expect(uncovered.length, 'All affected behaviors should have tests').toBe(0);
   });
 
   test('zero untested bugs allowed', () => {

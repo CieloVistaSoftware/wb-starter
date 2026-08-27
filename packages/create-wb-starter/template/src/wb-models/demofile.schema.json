@@ -62,7 +62,7 @@
         "required": true
       },
       "siteCSS": {
-        "description": "Must link to site.css for base component styles",
+        "description": "Must link to site.css for base behavior styles",
         "pattern": "href=\"...site.css\"",
         "required": true
       }
@@ -89,7 +89,7 @@
     "description": "How demos load JavaScript",
     "wbComponents": {
       "description": "Demos that use <wb-*> tags or data-wb= attributes MUST load WB",
-      "required": "conditional — only if demo uses WB components",
+      "required": "conditional — only if demo uses WB behaviors",
       "acceptedLoaders": [
         "src/core/wb-lazy.js",
         "src/core/wb-bootstrap.js"

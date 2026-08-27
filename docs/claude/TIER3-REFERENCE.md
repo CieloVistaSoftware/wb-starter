@@ -58,16 +58,16 @@ Only relevant when deploying or configuring infrastructure.
 
 ---
 
-## 📖 COMPONENT DEEP-DIVES (Specific)
+## 📖 BEHAVIOR DEEP-DIVES (Specific)
 
-Individual component docs that are only relevant if working on that exact component. Most of these duplicate info in the component folder READMEs.
+Individual behavior docs that are only relevant if working on that exact behavior. Most of these duplicate info in the behavior folder READMEs.
 
 | File | What It Is |
 |------|-----------|
-| `docs/card.md` | Card component deep-dive |
+| `docs/card.md` | Card behavior deep-dive |
 | `docs/pricecard.md` | Price card specifics |
-| `docs/audio.md` | Audio component |
-| `docs/search.md` | Search component |
+| `docs/audio.md` | Audio behavior |
+| `docs/search.md` | Search behavior |
 | `docs/inline-editing.md` | Inline editing feature |
 | `docs/templates.md` | Template system |
 | `demos/code.md` | Code demo notes |

@@ -20,7 +20,7 @@ import { test, expect } from '@playwright/test';
 test.describe('footer anchors to viewport bottom (site.css)', () => {
   const PAGES = [
     { url: '/', label: 'home (short content)' },
-    { url: '/?page=components', label: 'components (long content, code blocks)' },
+    { url: '/?page=behaviors', label: 'behaviors (long content, code blocks)' },
   ];
 
   for (const { url, label } of PAGES) {
@@ -58,7 +58,7 @@ test.describe('footer anchors to viewport bottom (site.css)', () => {
 
   test('mobile width (375px): footer still anchors, no page-level horizontal scroll', async ({ page }) => {
     await page.setViewportSize({ width: 375, height: 812 });
-    await page.goto('/?page=components', { waitUntil: 'networkidle' });
+    await page.goto('/?page=behaviors', { waitUntil: 'networkidle' });
     await page.waitForSelector('.site__footer', { timeout: 15000 });
 
     const result = await page.evaluate(() => {

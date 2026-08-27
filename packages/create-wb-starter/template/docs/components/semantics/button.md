@@ -28,7 +28,7 @@ Interactive button with variants, sizes, and optional icon.
 
 Button text is set via the element's content (children), not an attribute.
 
-Wrapped in `<div x-demo>`, so the live component renders below with its source shown underneath:
+Wrapped in `<div x-demo>`, so the live behavior renders below with its source shown underneath:
 
 <div x-demo>
 <button>Click Me</button>

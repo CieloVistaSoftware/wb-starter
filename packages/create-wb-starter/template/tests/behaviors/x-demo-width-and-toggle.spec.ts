@@ -127,7 +127,7 @@ test.describe('<div x-demo> single-item shrink works for stretchy content, not j
   // doesn't -- confirmed live (manual repro) that a real <div x-cardimage>
   // shrinks correctly, but the isolated mock in this test harness kept
   // computing a wide grid regardless. Rather than fight a mock that
-  // doesn't actually represent the real component, test the real thing:
+  // doesn't actually represent the real behavior, test the real thing:
   // <article class="x-card--auto"> (card.js's actual "no constraints,
   // fills container" size variant, card.css).
   test('a real <article class="x-card--auto"> still hugs its content, not the grid track', async ({ page }) => {

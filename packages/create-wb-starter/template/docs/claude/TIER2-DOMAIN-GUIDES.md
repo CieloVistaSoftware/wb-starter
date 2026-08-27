@@ -8,7 +8,7 @@
 
 ## 🔧 CORE ARCHITECTURE
 
-Read when: modifying `src/core/`, component registration, behavior system, or WB.js
+Read when: modifying `src/core/`, behavior registration, behavior system, or WB.js
 
 | File | What It Covers |
 |------|---------------|
@@ -18,34 +18,34 @@ Read when: modifying `src/core/`, component registration, behavior system, or WB
 | `docs/architecture/standards/SCHEMA-SPECIFICATION.md` | Schema JSON structure spec |
 | `docs/WB_BEHAVIOR_SYSTEM.md` | How behaviors attach to elements |
 | `docs/Auto-Injection.md` | How CSS/JS auto-loading works |
-| `docs/container-pattern.md` | Container component pattern |
+| `docs/container-pattern.md` | Container behavior pattern |
 | `docs/escape-hatches.md` | How to override framework defaults |
 | `docs/architecture/proposals/proposed-custom-elements.md` | Custom elements proposals |
 | `docs/architecture/historical/X-PREFIX-MIGRATION-PHASE1.md` | X-prefix migration history |
 
 ---
 
-## 🧩 COMPONENTS
+## 🧩 BEHAVIORS
 
-Read when: working on a specific `<wb-*>` component or `x-*` behavior
+Read when: working on a specific `<wb-*>` behavior or `x-*` behavior
 
 | File | What It Covers |
 |------|---------------|
-| `docs/components/README.md` | Component catalog overview |
-| `docs/components/cards/` | 20+ card variant specs (card, cardhero, cardimage, etc.) |
-| `docs/components/semantic/` | Semantic HTML wrappers (address, article, aside, blockquote, etc.) |
-| `docs/components/semantics/` | Form/interactive elements (button, checkbox, dialog, input, etc.) |
-| `docs/components/effects/` | Visual effects (confetti, fireworks, snow) |
-| `docs/components/feedback/` | Feedback components |
-| `docs/components/forms/` | Form components |
-| `docs/components/layout/` | Layout components |
-| `docs/components/navigation/` | Navigation components |
-| `docs/components/demo/` | Demo and showcase components |
-| `docs/components/drawer.md` | Drawer component |
-| `docs/components/tabs.md` | Tabs component |
+| `docs/behaviors/README.md` | Behavior catalog overview |
+| `docs/behaviors/cards/` | 20+ card variant specs (card, cardhero, cardimage, etc.) |
+| `docs/behaviors/semantic/` | Semantic HTML wrappers (address, article, aside, blockquote, etc.) |
+| `docs/behaviors/semantics/` | Form/interactive elements (button, checkbox, dialog, input, etc.) |
+| `docs/behaviors/effects/` | Visual effects (confetti, fireworks, snow) |
+| `docs/behaviors/feedback/` | Feedback behaviors |
+| `docs/behaviors/forms/` | Form behaviors |
+| `docs/behaviors/layout/` | Layout behaviors |
+| `docs/behaviors/navigation/` | Navigation behaviors |
+| `docs/behaviors/demo/` | Demo and showcase behaviors |
+| `docs/behaviors/drawer.md` | Drawer behavior |
+| `docs/behaviors/tabs.md` | Tabs behavior |
 | `docs/behaviors-reference.md` | All behaviors cross-reference |
-| `docs/behavior-cross-reference.md` | Behavior ↔ component mapping |
-| `docs/properties.md` | Component property patterns |
+| `docs/behavior-cross-reference.md` | Behavior ↔ behavior mapping |
+| `docs/properties.md` | Behavior property patterns |
 
 ---
 
@@ -151,15 +151,15 @@ Read when: starting a session (CURRENT-STATUS.md is Tier 1), or when John points
 
 ## 🪄 WIZARD (removed)
 
-The Component Wizard app (demos/wizard.html, docs/wizard.md) was deprecated (#337) and has been removed entirely — no replacement workflow currently exists for guided component/page creation.
+The Behavior Wizard app (demos/wizard.html, docs/wizard.md) was deprecated (#337) and has been removed entirely — no replacement workflow currently exists for guided behavior/page creation.
 
 ---
 
 ## How To Use This
 
-1. John says "fix the badge component" → Read **Components** (badge docs) + **Testing**
+1. John says "fix the badge behavior" → Read **Behaviors** (badge docs) + **Testing**
 2. John says "work on CSS migration" → Read **CSS & Styles** 
-3. John says "fix a test" → Read **Testing** + check if the component has docs in **Components**
+3. John says "fix a test" → Read **Testing** + check if the behavior has docs in **Behaviors**
 4. John says "schema issue" → Read **Schemas & MVVM**
 5. John says "builder work" → Read **Builder** (and remember Tier 1: don't touch without permission)
 6. John says "generate a showcase" → Read **Page Generation**

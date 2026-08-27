@@ -5,7 +5,7 @@
 import { test, expect } from '@playwright/test';
 
 const EXPECTED = [
-  { title: 'Component Library', href: '?page=components' },
+  { title: 'Behavior Library', href: '?page=behaviors' },
   { title: 'Behaviors System', href: '?page=behaviors' },
   { title: 'Theme Engine', href: '?page=themes' },
   { title: 'Data Viz', href: '?page=demos' },
@@ -40,9 +40,9 @@ test.describe('#184 — home feature cards are clickable', () => {
   });
 
   test('clicking a feature card navigates via the SPA', async ({ page }) => {
-    await page.click('.feature-card-link[href="?page=components"]');
+    await page.click('.feature-card-link[href="?page=behaviors"]');
     await page.waitForTimeout(800);
     const url = await page.evaluate(() => location.search);
-    expect(url, 'clicking the Component Library card did not navigate').toContain('page=components');
+    expect(url, 'clicking the Behavior Library card did not navigate').toContain('page=behaviors');
   });
 });

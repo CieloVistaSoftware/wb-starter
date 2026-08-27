@@ -10,7 +10,7 @@ import { fileURLToPath } from 'url';
  * not relative paths (path/to/file). Relative paths fail to resolve correctly when
  * served from different base URLs.
  *
- * Root cause of bug #1, #2: pages/components.html and pages/home.html referenced
+ * Root cause of bug #1, #2: pages/behaviors.html and pages/home.html referenced
  * audio files with relative paths ('demos/sample.wav') which didn't resolve.
  * Fix: all paths must start with / (absolute from domain root).
  */

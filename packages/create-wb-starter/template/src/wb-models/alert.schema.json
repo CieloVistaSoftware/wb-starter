@@ -2,7 +2,7 @@
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "alert.schema.json",
   "title": "Alert",
-  "description": "Alert component for displaying messages with severity levels",
+  "description": "Alert behavior for displaying messages with severity levels",
   "schemaFor": "alert",
   "baseClass": "x-alert",
   "semanticElement": {

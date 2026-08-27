@@ -1,7 +1,7 @@
 {
   "$schema": "http://json-schema.org/draft-07/schema#",
   "title": "Home Page",
-  "description": "Schema for the home page layout and component structure.",
+  "description": "Schema for the home page layout and behavior structure.",
   "schemaType": "page",
   "schemaFor": "home-page",
   "pageRules": {
@@ -28,10 +28,10 @@
       "properties": {
         "variant": { "type": "string", "default": "cosmic" },
         "background": { "type": "string" },
-        "pretitle": { "type": "string", "default": "100 Components" },
+        "pretitle": { "type": "string", "default": "100 Behaviors" },
         "title": { "type": "string", "default": "Build stunning UIs" },
         "subtitle": { "type": "string", "default": "just HTML — no build step" },
-        "cta": { "type": "string", "default": "Explore Components" },
+        "cta": { "type": "string", "default": "Explore Behaviors" },
         "ctaSecondary": { "type": "string", "default": "Documentation" }
       },
       "default": {}
@@ -85,11 +85,11 @@
         }
       },
       "default": [
-        { "title": "🧩 Component Library", "description": "Over 40 ready-to-use UI components including Cards, Modals, Drawers, and Navigation." },
+        { "title": "🧩 Behavior Library", "description": "Over 40 ready-to-use UI behaviors including Cards, Modals, Drawers, and Navigation." },
         { "title": "⚡ Behaviors System", "description": "Compose interactions like Lego bricks. Add x-fade-in, x-sticky, or x-validate to any element." },
         { "title": "🎨 Theme Engine", "description": "23 built-in themes with CSS Variable support. Dark mode, Light mode, and Auto detection out of the box." },
         { "title": "📊 Data Viz", "description": "Built-in charts, stats cards, and audio visualizations powered by Web Standards." },
-        { "title": "♿ Accessible", "description": "ARIA attributes and keyboard navigation are baked into every component by default." },
+        { "title": "♿ Accessible", "description": "ARIA attributes and keyboard navigation are baked into every behavior by default." },
         { "title": "🚀 Performance", "description": "Zero-runtime compilation. Browsers are fast now. We let them do their job." }
       ]
     },
@@ -155,10 +155,10 @@
       "attributes": [
         { "name": "variant", "required": true, "example": "cosmic" },
         { "name": "background", "required": false },
-        { "name": "pretitle", "required": false, "example": "100 Components" },
+        { "name": "pretitle", "required": false, "example": "100 Behaviors" },
         { "name": "title", "required": true, "example": "Build stunning UIs" },
         { "name": "subtitle", "required": false, "example": "just HTML — no build step" },
-        { "name": "cta", "required": true, "example": "Explore Components" },
+        { "name": "cta", "required": true, "example": "Explore Behaviors" },
         { "name": "cta-secondary", "required": false, "example": "Documentation" }
       ]
     },
@@ -255,21 +255,21 @@
           "_section": "hero",
           "variant": "cosmic",
           "title": "Build stunning UIs",
-          "cta": "Explore Components"
+          "cta": "Explore Behaviors"
         },
         {
           "_section": "hero",
           "variant": "cosmic",
           "title": "Build stunning UIs",
           "subtitle": "just HTML — no build step",
-          "cta": "Explore Components",
+          "cta": "Explore Behaviors",
           "cta-secondary": "Documentation"
         },
         {
           "_section": "hero",
           "variant": "cosmic",
           "title": "Build stunning UIs",
-          "pretitle": "100 Components",
+          "pretitle": "100 Behaviors",
           "background": "hero.jpg"
         },
         {
@@ -298,8 +298,8 @@
         },
         {
           "_section": "features",
-          "title": "🧩 Component Library",
-          "description": "Over 40 ready-to-use UI components."
+          "title": "🧩 Behavior Library",
+          "description": "Over 40 ready-to-use UI behaviors."
         },
         {
           "_section": "features",
@@ -335,7 +335,7 @@
           "minInstances": 1,
           "checkClasses": ["x-hero"],
           "checkAttributes": ["variant", "title", "cta"],
-          "checkText": ["Build stunning UIs", "Explore Components"]
+          "checkText": ["Build stunning UIs", "Explore Behaviors"]
         },
         "stats": {
           "tag": "x-cardstats",
@@ -363,7 +363,7 @@
           "minInstances": 6,
           "checkClasses": ["x-card--float"],
           "checkAttributes": ["variant"],
-          "checkText": ["Component Library", "Behaviors System", "Theme Engine", "Data Viz", "Accessible", "Performance"]
+          "checkText": ["Behavior Library", "Behaviors System", "Theme Engine", "Data Viz", "Accessible", "Performance"]
         },
         "grid": {
           "tag": "x-grid",

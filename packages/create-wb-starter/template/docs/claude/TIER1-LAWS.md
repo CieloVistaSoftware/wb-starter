@@ -7,24 +7,24 @@
 
 ## 1. LIGHT DOM ONLY — No Shadow DOM, Ever
 
-Shadow DOM causes silent failures. Components render empty, tests still pass because the element exists but has no content. This has burned us multiple times.
+Shadow DOM causes silent failures. Behaviors render empty, tests still pass because the element exists but has no content. This has burned us multiple times.
 
 - Never use `this.shadowRoot`, `attachShadow()`, or `ShadowRoot`
-- Every `<wb-*>` component renders directly into Light DOM
+- Every `<wb-*>` behavior renders directly into Light DOM
 - If you see Shadow DOM in existing code, it's a bug — don't copy it
 
-## 2. Composition — WBServices Pattern, Never A Component Base Class
+## 2. Composition — WBServices Pattern, Never A Behavior Base Class
 
 Architecture v3.0 is composition, not inheritance. Capability is **applied to** an
 element by behavior functions; it is never **acquired by** subclassing.
 
-- Never create or extend `WBBaseComponent` — there is no component base class
+- Never create or extend `WBBaseComponent` — there is no behavior base class
 - A `<wb-*>` tag maps to a behavior function (`src/core/tag-map.js`), which decorates
   the element in place in Light DOM
-- Components are registered via `WBServices.register()`
+- Behaviors are registered via `WBServices.register()`
 - Behavior functions receive `(element, options)` — they don't use `this`
 - The few tags that still keep an `extends HTMLElement` class are registration shims
-  the Custom Elements API requires. They hold no shared component logic and are not a
+  the Custom Elements API requires. They hold no shared behavior logic and are not a
   hierarchy to inherit from — most were removed in #279 in favor of behaviors
 - Shared logic lives in exported helper functions and CSS/design tokens, not in a
   parent class
@@ -105,11 +105,11 @@ Every session, before doing anything:
 **Never create inline styles, new CSS classes, or duplicate existing styles.** This is how `x-btn` ended up duplicating `x-button` across two files, and dark mode broke because styles didn't match.
 
 Before writing ANY CSS or class name:
-1. Search `src/styles/behaviors/` — does a style file already exist for this component?
+1. Search `src/styles/behaviors/` — does a style file already exist for this behavior?
 2. Search `site.css` imports — is it already loaded?
 3. If the class exists, USE IT. Don't invent a new name (`x-btn` vs `x-button`).
 4. If new styles are genuinely needed, add them to the existing behavior CSS file.
-5. Page-specific layout goes in `src/styles/pages/{pagename}.css` — but ONLY layout, never component styles.
+5. Page-specific layout goes in `src/styles/pages/{pagename}.css` — but ONLY layout, never behavior styles.
 6. Never put `<link rel="stylesheet">` in page fragments — the server injects `site.css`.
 7. Never put `<style>` blocks or extensive inline styles in HTML files.
 
@@ -140,14 +140,14 @@ Every `.spec.ts` file must live in a directory that a Playwright project's `test
 - `tests/compliance/` → auto-discovered by the `compliance` project (`**/*.spec.ts`)
 - `tests/behaviors/` → covered by `behaviors` project
 - `tests/cards/` → covered by `base` and `behaviors` projects
-- `tests/components/`, `tests/pages/`, `tests/semantics/` → covered by `behaviors` project
+- `tests/behaviors/`, `tests/pages/`, `tests/semantics/` → covered by `behaviors` project
 - `tests/regression/` → covered by `regression` project
 - `tests/integration/` → covered by `integration` project
 - `tests/views/` → covered by `views` project
 
 If a test isn't in one of these directories, it won't run. Check `playwright.config.ts` before creating tests in new locations.
 
-## 11. No data- Attributes on wb-* Components
+## 11. No data- Attributes on wb-* Behaviors
 
 **Never use `data-` attributes on `<wb-*>` custom elements or `x-*` behavior elements.** Use plain attributes instead. This applies to HTML pages, tests, demos, and behavior JS code.
 
@@ -193,28 +193,28 @@ If a test isn't in one of these directories, it won't run. Check `playwright.con
 - Status tracking: ONE file only → `docs/_today/CURRENT-STATUS.md`
 - Never create duplicate status files
 
-## 14. Reusable Components Never Hardcode `id` — Generate It, or Don't Use One
+## 14. Reusable Behaviors Never Hardcode `id` — Generate It, or Don't Use One
 
-**A hardcoded `id` inside a behavior/component function collides the moment
-that component appears twice in the same DOM.** Found live in `dialog.js`:
+**A hardcoded `id` inside a behavior/behavior function collides the moment
+that behavior appears twice in the same DOM.** Found live in `dialog.js`:
 `title.id = 'x-dialog-title'` was set on every dialog instance, so two
 dialogs open (or even just present) in the same DOM meant `aria-labelledby`
 pointed screen readers at whichever title happened to be first — silently
 wrong for every instance after the first.
 
 - Never write `el.id = 'fixed-string'` inside a function that creates a
-  per-instance element (a component's own title, body, generated content).
+  per-instance element (a behavior's own title, body, generated content).
 - If you need an `id` for `aria-*` linkage, generate a unique one per call:
   `` `x-dialog-title-${Math.random().toString(36).slice(2, 9)}` `` — this
   pattern is already established in `card.js`, `tooltip.js`, `overlay.js`,
   `enhancements.js`. Reuse it, don't reinvent it.
 - If you don't need `id` for ARIA/anchor linking, don't add one — use a
-  class or scope a `querySelector` to the component's own root element
+  class or scope a `querySelector` to the behavior's own root element
   instead.
 - **Exception:** a hardcoded id IS correct for genuine page-level
   singletons — e.g. `style.id = 'x-ripple-styles'` guards "only inject
   this stylesheet once," which is the intended behavior even if the
-  component using it appears many times. The test: could this element
+  behavior using it appears many times. The test: could this element
   legitimately exist more than once in the DOM at the same time? If yes,
   the id must be generated, not hardcoded.
 

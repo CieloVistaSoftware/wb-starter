@@ -45,18 +45,18 @@ const MOVES = {
   'behaviors/cards-showcase.spec.ts':          'cards/cards-showcase.spec.ts',
   'behaviors/clickable-card.spec.ts':          'cards/clickable-card.spec.ts',
 
-  // Component tests → tests/components/
-  'behaviors/ui/audio.spec.ts':                'components/audio.spec.ts',
-  'behaviors/ui/figure.spec.ts':               'components/figure.spec.ts',
-  'behaviors/ui/notes.spec.ts':                'components/notes.spec.ts',
-  'behaviors/notes-updates.spec.ts':           'components/notes-updates.spec.ts',
-  'behaviors/datepicker.spec.ts':              'components/datepicker.spec.ts',
-  'behaviors/timepicker.spec.ts':              'components/timepicker.spec.ts',
-  'behaviors/input-switch.spec.ts':            'components/input-switch.spec.ts',
-  'behaviors/pill-shortcut.spec.ts':           'components/pill-shortcut.spec.ts',
-  'behaviors/ui/feedback-visual.spec.ts':      'components/feedback-visual.spec.ts',
-  'behaviors/diff.spec.ts':                    'components/diff.spec.ts',
-  'behaviors/button-toasts.spec.ts':           'components/button-toasts.spec.ts',
+  // Behavior tests → tests/behaviors/
+  'behaviors/ui/audio.spec.ts':                'behaviors/audio.spec.ts',
+  'behaviors/ui/figure.spec.ts':               'behaviors/figure.spec.ts',
+  'behaviors/ui/notes.spec.ts':                'behaviors/notes.spec.ts',
+  'behaviors/notes-updates.spec.ts':           'behaviors/notes-updates.spec.ts',
+  'behaviors/datepicker.spec.ts':              'behaviors/datepicker.spec.ts',
+  'behaviors/timepicker.spec.ts':              'behaviors/timepicker.spec.ts',
+  'behaviors/input-switch.spec.ts':            'behaviors/input-switch.spec.ts',
+  'behaviors/pill-shortcut.spec.ts':           'behaviors/pill-shortcut.spec.ts',
+  'behaviors/ui/feedback-visual.spec.ts':      'behaviors/feedback-visual.spec.ts',
+  'behaviors/diff.spec.ts':                    'behaviors/diff.spec.ts',
+  'behaviors/button-toasts.spec.ts':           'behaviors/button-toasts.spec.ts',
 
   // Semantics tests → tests/semantics/
   'behaviors/semantics-new.spec.ts':           'semantics/semantics-new.spec.ts',
@@ -64,10 +64,10 @@ const MOVES = {
   'behaviors/js-syntax-compliance.spec.ts':    'semantics/js-syntax-compliance.spec.ts',
 
   // Page-level tests → tests/pages/
-  'behaviors/components-page.spec.ts':         'pages/components-page.spec.ts',
+  'behaviors/behaviors-page.spec.ts':         'pages/behaviors-page.spec.ts',
   'behaviors/header.spec.ts':                  'pages/header.spec.ts',
   'behaviors/hero-variants-page.spec.ts':      'pages/hero-variants-page.spec.ts',
-  'behaviors/ui/all-components.spec.ts':       'pages/all-components.spec.ts',
+  'behaviors/ui/all-behaviors.spec.ts':       'pages/all-behaviors.spec.ts',
 
   // Behavior framework tests → tests/behaviors/ (stays, slimmed)
   'behaviors/behavior-validation.spec.ts':     'behaviors/behavior-validation.spec.ts',
@@ -134,7 +134,7 @@ for (const [from, to] of Object.entries(MOVES)) {
 
 // Also move .bak and .html files
 const extras = [
-  'behaviors/components-page.spec.ts.bak',
+  'behaviors/behaviors-page.spec.ts.bak',
   'behaviors/fix-card-layout.html',
 ];
 for (const f of extras) {

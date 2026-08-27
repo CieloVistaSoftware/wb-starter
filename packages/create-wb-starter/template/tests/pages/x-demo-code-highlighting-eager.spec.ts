@@ -23,8 +23,8 @@
 import { test, expect } from '@playwright/test';
 
 test.describe('x-demo code panel is syntax-highlighted on the eager (main SPA) runtime', () => {
-  test('a <div x-demo> code block on pages/components.html gets real hljs spans', async ({ page }) => {
-    await page.goto('/?page=components');
+  test('a <div x-demo> code block on pages/behaviors.html gets real hljs spans', async ({ page }) => {
+    await page.goto('/?page=behaviors');
     await page.waitForTimeout(1000);
 
     const codeEl = page.locator('x-demo code').first();
@@ -40,7 +40,7 @@ test.describe('x-demo code panel is syntax-highlighted on the eager (main SPA) r
 
   test('multiple <div x-demo> code blocks on the same page all get highlighted', async ({ page }) => {
     test.slow();
-    await page.goto('/?page=components');
+    await page.goto('/?page=behaviors');
 
     // <div x-demo> builds its code panel lazily (IntersectionObserver-gated,
     // a deliberate perf optimization — see demo.js) regardless of which WB
@@ -67,7 +67,7 @@ test.describe('x-demo code panel is syntax-highlighted on the eager (main SPA) r
   });
 
   test('the pre panel chrome (copy button) also renders via x-behavior="pre"', async ({ page }) => {
-    await page.goto('/?page=components');
+    await page.goto('/?page=behaviors');
     await page.waitForTimeout(1000);
 
     const demo = page.locator('x-demo').filter({ has: page.locator('pre.x-demo__code') }).first();

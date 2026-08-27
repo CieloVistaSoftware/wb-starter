@@ -46,7 +46,7 @@ test.describe('demos/site/cards.html: single-item x-demo code panels are never c
     // its x-cardexpandable/x-cardvideo demos are among the eagerly-built
     // ones (EAGER_BUILD_COUNT=5) and reproduced on nearly every load without
     // any scrolling. Scroll each relevant section into view anyway (cheap,
-    // and also exercises the lazy-build path for the same components
+    // and also exercises the lazy-build path for the same behaviors
     // further down the page) and give the width-measurement poll (up to 5s
     // per demo.js's own MAX_MS) time to fully settle.
     const sectionIds = [

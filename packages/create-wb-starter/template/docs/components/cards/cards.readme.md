@@ -1,16 +1,16 @@
-# Cards Components Documentation
+# Cards Behaviors Documentation
 [Edit this file](./cards.readme.md)
 
 ## Overview
-The Cards component library provides 19 specialized card variants for displaying content in organized, visually appealing containers. All card components compose the shared `card` behavior and use semantic HTML.
+The Cards behavior library provides 19 specialized card variants for displaying content in organized, visually appealing containers. All card behaviors compose the shared `card` behavior and use semantic HTML.
 
 ---
 
-## Component Variants
+## Behavior Variants
 
-| Component | Custom Tag | Description |
+| Behavior | Custom Tag | Description |
 |-----------|------------|-------------|
-| [card](./card.md) | `<article>` | Card component |
+| [card](./card.md) | `<article>` | Card behavior |
 | [cardimage](./cardimage.md) | `<div x-cardimage>` | Card with featured image |
 | [cardvideo](./cardvideo.md) | `<div x-cardvideo>` | Card with video player |
 | [cardbutton](./cardbutton.md) | `<div x-cardbutton>` | Card with action buttons |
@@ -34,7 +34,7 @@ The Cards component library provides 19 specialized card variants for displaying
 
 ## Common Attributes
 
-All card components support these common attributes:
+All card behaviors support these common attributes:
 
 | Attribute | Type | Default | Description |
 |-----------|------|---------|-------------|
@@ -97,8 +97,8 @@ All card variants share the `card` behavior and compose additional functionality
 
 ## Implementation
 - **Shared Behavior**: [src/wb-viewmodels/card.js](../../../src/wb-viewmodels/card.js)
-- **Styles**: [src/styles/components/card.css](../../../src/styles/behaviors/card.css)
-- **Tests**: Component tests in `tests/behaviors/ui/card.spec.ts`
+- **Styles**: [src/styles/behaviors/card.css](../../../src/styles/behaviors/card.css)
+- **Tests**: Behavior tests in `tests/behaviors/ui/card.spec.ts`
 
 ---
 

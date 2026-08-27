@@ -8,8 +8,8 @@ import path from 'path';
 const stats = { files: 0, replacements: 0 };
 const SKIP = ['node_modules', '.git', 'dist', 'coverage'];
 
-// Component mappings: -> <wb-X>
-const COMPONENTS = [
+// Behavior mappings: -> <wb-X>
+const BEHAVIORS = [
   'card', 'badge', 'button', 'modal', 'alert', 'avatar', 'chip', 'progress',
   'spinner', 'skeleton', 'rating', 'switch', 'tabs', 'accordion', 'drawer',
   'dropdown', 'tooltip', 'navbar', 'footer', 'header', 'hero', 'container',
@@ -46,8 +46,8 @@ function fixContent(content, filePath) {
   // === HTML FILES ===
   if (filePath.endsWith('.html')) {
     
-    // 1. Convert component tags: <article  ...> -> <article ...>
-    COMPONENTS.forEach(comp => {
+    // 1. Convert behavior tags: <article  ...> -> <article ...>
+    BEHAVIORS.forEach(comp => {
       // Match any HTML tag with
       const pattern = new RegExp(
         `<(div|section|article|span|nav|aside|main|header|footer|details|pre|ul|ol|dl|button|a|p|figure)([^>]*)\\bx-legacy=["']${comp}["']([^>]*)>`,
@@ -84,7 +84,7 @@ function fixContent(content, filePath) {
   if (filePath.endsWith('.js')) {
     // Update selector strings
     result = result.replace(/\[x-legacy=["'](\w+)["']\]/g, (match, name) => {
-      if (COMPONENTS.includes(name)) {
+      if (BEHAVIORS.includes(name)) {
         changes++;
         return `wb-${name}`;
       }
@@ -105,7 +105,7 @@ function fixContent(content, filePath) {
   // === MD FILES - Update code examples ===
   if (filePath.endsWith('.md')) {
     // Update examples in markdown
-    COMPONENTS.forEach(comp => {
+    BEHAVIORS.forEach(comp => {
       const pattern = new RegExp(`x-legacy=["']${comp}["']`, 'gi');
       if (pattern.test(result)) {
         // In docs, show the new syntax

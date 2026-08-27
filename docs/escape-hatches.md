@@ -1,10 +1,10 @@
 # wb-starter Escape Hatches
 
-Override or customize any WB-Starter component behavior when defaults don't fit your needs.
+Override or customize any WB-Starter behavior behavior when defaults don't fit your needs.
 
 ## CSS Custom Properties
 
-Every component respects CSS variables for styling overrides:
+Every behavior respects CSS variables for styling overrides:
 
 ```css
 /* Override card styling */
@@ -21,7 +21,7 @@ button[x-behavior="button"] {
   --btn-radius: 999px;
 }
 
-/* Override any component's gap */
+/* Override any behavior's gap */
 x-grid {
   --gap: 2rem;
 }
@@ -69,7 +69,7 @@ Pass options via `data-*` attributes:
 
 ## Override Injected CSS
 
-WB components inject minimal CSS. Override with higher specificity:
+WB behaviors inject minimal CSS. Override with higher specificity:
 
 ```css
 /* Override injected styles */

@@ -32,7 +32,7 @@ const ROOT = path.join(path.dirname(fileURLToPath(import.meta.url)), '..');
 const MODELS = path.join(ROOT, 'src', 'wb-models');
 const VM = path.join(ROOT, 'src', 'wb-viewmodels');
 
-/** Properties every component gets for free / handled generically. */
+/** Properties every behavior gets for free / handled generically. */
 const IGNORED = new Set(['data', 'columns', 'content', 'class', 'id', 'style', 'children']);
 
 /** Every .js under wb-viewmodels, so a behavior can live in a subfolder. */

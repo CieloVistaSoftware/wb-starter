@@ -11,7 +11,7 @@ import { test, expect } from '@playwright/test';
  * the popover stays inside the viewport.
  */
 test('popover clamps to the viewport when its trigger is at the edge (#252, §15)', async ({ page }) => {
-  await page.goto('/?page=components', { waitUntil: 'domcontentloaded' });
+  await page.goto('/?page=behaviors', { waitUntil: 'domcontentloaded' });
   await page.waitForFunction(() => !!(window as any).WB, { timeout: 20000 });
 
   // Inject a popover trigger hard against the right edge and upgrade it.

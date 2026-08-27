@@ -1,4 +1,4 @@
-# Notes Component v3.0 - Updates Summary
+# Notes Behavior v3.0 - Updates Summary
 
 ## ✅ What's New
 

@@ -6,7 +6,7 @@
 
 ## Overview
 
-The WB Behaviors Property System provides a unified configuration for all component properties in the Page Builder. This document describes each property, its UI control type, default values, and available options.
+The WB Behaviors Property System provides a unified configuration for all behavior properties in the Page Builder. This document describes each property, its UI control type, default values, and available options.
 
 ---
 
@@ -31,13 +31,13 @@ The WB Behaviors Property System provides a unified configuration for all compon
    - [Display Properties](#display-properties)
    - [Embed Properties](#embed-properties)
    - [Effects Properties](#effects-properties)
-4. [Component Defaults](#component-defaults)
+4. [Behavior Defaults](#behavior-defaults)
 
 ---
 
 ## UI Control Types
 
-| Type | Component | Description |
+| Type | Behavior | Description |
 |------|-----------|-------------|
 | `text` | `<input type="text">` | Single-line text input |
 | `number` | `<input type="number">` | Numeric input with arrows |
@@ -77,7 +77,7 @@ The WB Behaviors Property System provides a unified configuration for all compon
 | Behavior | ⚙️ | Interactive settings |
 | Buttons | 🔘 | Button labels and actions |
 | File | 📁 | File-related properties |
-| Pricing | 💰 | Pricing component fields |
+| Pricing | 💰 | Pricing behavior fields |
 | Data | 📊 | Data sources and formats |
 | Contact | 📇 | Contact information |
 | Feedback | 📈 | Ratings and statistics |
@@ -95,7 +95,7 @@ The WB Behaviors Property System provides a unified configuration for all compon
 - Improved visual feedback for active states.
 
 ### 2. Property Visibility
-- The property panel now displays **all available properties** for a component, not just those with set values.
+- The property panel now displays **all available properties** for a behavior, not just those with set values.
 - Default values are merged with current values to provide a complete view of configuration options.
 
 ### 3. Smart Placeholders
@@ -109,8 +109,8 @@ The WB Behaviors Property System provides a unified configuration for all compon
 
 ### 5. Two-Way Synchronization
 - **Canvas to Panel:** Editing text on the canvas updates the corresponding property panel input in real-time.
-- **Panel to Canvas:** Changing a property in the panel immediately updates the component on the canvas.
-- **Scroll Sync:** Clicking a component element on the canvas automatically scrolls the property panel to the relevant control.
+- **Panel to Canvas:** Changing a property in the panel immediately updates the behavior on the canvas.
+- **Scroll Sync:** Clicking a behavior element on the canvas automatically scrolls the property panel to the relevant control.
 
 ### 6. Improved Inline Editing
 - **Tab Navigation:** Pressing `Tab` while editing text on the canvas automatically saves changes and moves focus to the next editable element.
@@ -195,7 +195,7 @@ When using `image`, `audio`, or `video` UI types:
 | Property | UI | Default | Options |
 |----------|-----|---------|---------|
 | `type` | Select | "info" | info, success, warning, error |
-| `variant` | Select | "default" | (varies by component) |
+| `variant` | Select | "default" | (varies by behavior) |
 | `size` | Select | "md" | xs, sm, md, lg, xl |
 | `align` | Select | "center" | left, center, right |
 | `valign` | Select | "center" | top, center, bottom |
@@ -488,9 +488,9 @@ When using `image`, `audio`, or `video` UI types:
 
 ---
 
-## Component Defaults
+## Behavior Defaults
 
-Each component has predefined defaults loaded from `propertyconfig.json`. When a component is dropped onto the canvas, these values are automatically applied.
+Each behavior has predefined defaults loaded from `propertyconfig.json`. When a behavior is dropped onto the canvas, these values are automatically applied.
 
 ### Example: Card Pricing
 
@@ -582,7 +582,7 @@ Each component has predefined defaults loaded from `propertyconfig.json`. When a
 }
 ```
 
-2. Add to relevant component in `componentDefaults`:
+2. Add to relevant behavior in `componentDefaults`:
 
 ```json
 "mycomponent": {
@@ -596,7 +596,7 @@ Each component has predefined defaults loaded from `propertyconfig.json`. When a
 
 ```json
 "myType": {
-  "component": "custom",
+  "behavior": "custom",
   "customComponent": "MyCustomEditor"
 }
 ```
