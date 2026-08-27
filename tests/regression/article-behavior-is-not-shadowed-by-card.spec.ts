@@ -57,18 +57,23 @@ test.describe('x-article loads its own behavior', () => {
     const el = host.locator('#a');
     await expect(el).toBeVisible({ timeout: 10000 });
 
-    const cls = await el.getAttribute('class');
-    expect(
-      cls,
-      `x-article produced class="${cls}". article.schema.json declares baseClass x-article; ` +
-      'a card class here means the card module attached instead.',
-    ).toContain('x-article');
-
-    // The metadata attributes are article's own -- if card.js were running,
-    // none of these would be read by anything.
+    // NOT asserted by class. An <article> IS a card here and card markup
+    // carries no injected classes at all any more -- styling is specificity
+    // over semantic tags. Asserting class="x-article" would fail a correct
+    // render and pass an empty one, which is the wrong test in both
+    // directions. What matters is that the DECLARED attributes render.
     const text = (await el.textContent()) || '';
+    expect(text, 'title was not rendered').toContain('Ada on Engines');
     expect(text, 'author was not rendered').toContain('Ada Lovelace');
     expect(text, 'category was not rendered').toContain('Computing');
+    expect(text, 'date was not rendered').toContain('1843-10-01');
+
+    // Each metadata field gets its own semantic tag, which is what card.css
+    // targets. A blob of text in one <p> would satisfy the checks above.
+    const tags = await el.evaluate((n: Element) =>
+      Array.from(n.querySelectorAll('header > *')).map((c) => c.tagName.toLowerCase()));
+    expect(tags, 'the date must be a <time> element').toContain('time');
+    expect(tags, 'the byline must be an <address> element').toContain('address');
   });
 
   test('articles (plural) still resolves to the same module', async ({ page }) => {

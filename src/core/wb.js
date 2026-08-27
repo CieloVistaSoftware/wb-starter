@@ -136,6 +136,7 @@ function traceMediaLoads() {
  */
 
 import { behaviors } from '../wb-viewmodels/index.js';
+import { styleSheetDefinesClass } from './style-registry.js';
 import { Events } from './events.js';
 import { matchingElements } from './dom-query.js';
 import './click-confirm.js';
@@ -221,6 +222,28 @@ function getAutoInjectBehavior(element) {
   // documented, correct default per #328) -- confirmed live: every button
   // variant showed the identical unstyled background.
   if (!getConfig('autoInject') && !element.hasAttribute('variant')) return null;
+
+  // A landmark INSIDE a component is that component's chrome, not the page's.
+  //
+  // John: "cards are simply an article with headers, main and footers."
+  // That is the model: a card's structure IS semantic HTML, so card.js builds
+  // real <header>/<footer> elements. But <header> and <footer> also map to the
+  // page-level header()/footer() behaviors, so every card header was getting
+  // x-header and the site navbar treatment on top of its own -- producing
+  // class="x-card__header x-header" and a 2rem block margin inside the card.
+  //
+  // Scoped by CONTEXT rather than by an opt-out attribute. An earlier attempt
+  // stamped x-ignore on all 12 places card.js builds chrome, which fixed the
+  // symptom by writing a marker into every card's markup for a reader to trip
+  // over. Where the element sits already answers the question.
+  const LANDMARKS = new Set(['header', 'footer', 'nav', 'aside']);
+  if (LANDMARKS.has(element.tagName.toLowerCase())) {
+    // A component host is an element carrying a behavior of its own -- a card,
+    // an article, a notes panel. Only a landmark at page level is a landmark.
+    if (element.parentElement && element.parentElement.closest('article, [class*="x-card"], [class*="__"]')) {
+      return null;
+    }
+  }
 
   // #745: `x-{candidate}` naming the SAME behavior must NOT disqualify the
   // element. This used to `return null` on it, on the assumption that the
@@ -359,12 +382,18 @@ function applyDeclaredModifiers(element, behaviorName) {
       // Only a declared value becomes a class. A typo must not mint a class
       // that silently matches no CSS and looks like it worked.
       if (!def.enum.includes(raw)) continue;
-      element.classList.add(`${base}--${raw}`);
+      // #885: only if some stylesheet actually defines it. `size`/`variant`
+      // do; `icon="star"` and `target="_self"` do not, and never did.
+      const cls = `${base}--${raw}`;
+      if (!styleSheetDefinesClass(cls)) continue;
+      element.classList.add(cls);
     } else if (def.type === 'boolean') {
       // "false"/"0" mean OFF (#747): a bare presence check reads the string
       // "false" as true, which is the opposite of what the markup says.
       if (raw === 'false' || raw === '0') continue;
-      element.classList.add(`${base}--${attr}`);
+      const boolCls = `${base}--${attr}`;
+      if (!styleSheetDefinesClass(boolCls)) continue;
+      element.classList.add(boolCls);
     }
   }
 }

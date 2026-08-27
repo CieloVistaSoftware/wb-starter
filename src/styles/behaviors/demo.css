@@ -115,7 +115,7 @@ x-demo:has(.x-dropdown.open), [x-demo]:has(.x-dropdown.open){
      labels measure under 100px, well inside "genuinely tiny" territory
      too).
      --demo-code-min-width stays a variable (not now-unused) because
-     x-demo[data-code-width="50vw"] below still explicitly OPTS IN to a, [x-demo][data-code-width="50vw"] below still explicitly OPTS IN to a
+     [x-demo][data-code-width="50vw"] below still explicitly OPTS IN to a
      50vw floor for pages that want a wider code panel on purpose --
      unaffected by this change, since it sets the variable itself rather
      than relying on the fallback. */
@@ -299,7 +299,14 @@ x-demo.x-demo--full-width .x-demo__grid, [x-demo].x-demo--full-width .x-demo__gr
 .x-demo__grid--cols-5 { grid-template-columns: repeat(5, 1fr); }
 .x-demo__grid--cols-6 { grid-template-columns: repeat(6, 1fr); }
 
-.x-demo__grid > * {
+/* :where(), so this reset carries ZERO specificity.
+   As a plain `.x-demo__grid > *` (0,0,1,0) it tied with every card's own
+   deliberate min-width and won on source order, silently flattening them
+   back to 0 -- card.css documents that trap twice (#390, and again for the
+   size variants) and worked around it locally each time by compounding
+   selectors. The reset is a floor for items that have no opinion, so it
+   should lose to any item that does. */
+:where(.x-demo__grid) > * {
   min-width: 0;
 }
 

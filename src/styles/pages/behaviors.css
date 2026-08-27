@@ -157,7 +157,13 @@
 /* ═══════════════════════════════════════════════════════════════════
    HEADER ENHANCEMENTS
    ═══════════════════════════════════════════════════════════════════ */
-header {
+/* The SITE header, named directly.
+   This was a bare `header` selector, so it styled every <header> on the page:
+   the site header, the live-panel head, x-notes' header, and the one card.js
+   builds inside every card -- which is where its 2rem block margin came from
+   (41.89px measured inside a card). Page chrome belongs to the page's own
+   element, so say which element that is. */
+#siteHeader {
   display: flex;
   justify-content: space-between;
   /* flex-start, not center: John asked for the theme control in the
@@ -178,7 +184,7 @@ header {
   gap: var(--space-md, 1rem);
 }
 
-header h1 {
+#siteHeader h1 {
   margin: 0;
   font-size: 2rem;
 }
@@ -389,7 +395,11 @@ x-demo button {
 /* ═══════════════════════════════════════════════════════════════════
    FOOTER
    ═══════════════════════════════════════════════════════════════════ */
-footer {
+/* Same leak as the header rule above: a bare `footer` selector styled the
+   <footer> card.js builds for a card's button row, giving it the page
+   footer's 2rem top margin and 2rem padding inside the card. */
+#footer,
+#siteFooter {
   margin-top: var(--space-xl, 2rem);
   padding: var(--space-xl, 2rem);
   text-align: center;

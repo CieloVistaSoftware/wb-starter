@@ -62,7 +62,15 @@ export const CARD_TAGS = [
 // always-available generic fallback -- either can be used, so both must be
 // excluded here).
 const CARD_BEHAVIOR_NAMES = ['card']; // extend as more card variants migrate to semantic HTML + x-behavior
+// <article> is the third form, and the one the docs now use. It IS a card by
+// auto-injection (tag-map's nativeMap), so it owns its own `badge` exactly as
+// <x-card> and [x-card] do -- but it is not a card TAG and carries no x-card
+// attribute, so neither existing exclusion caught it. The result was
+// `<article badge="NEW">` getting x-badge and x-badge--glass painted onto the
+// CARD, which is the same double-application this file already documents
+// twice, surfacing a third time now that the plain semantic form is primary.
 const CARD_TAG_EXCLUSIONS = CARD_TAGS.map(tag => `:not(${tag})`).join('')
+  + ':not(article)'
   + CARD_BEHAVIOR_NAMES.map(b => `:not([x-behavior~="${b}"])`).join('')
   + CARD_BEHAVIOR_NAMES.map(b => `:not([x-${b}])`).join('');
 

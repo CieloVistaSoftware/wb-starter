@@ -88,42 +88,13 @@ const getAttr = (element, options, name) => {
   return options[name] || element.dataset[name] || element.getAttribute(name) || '';
 };
 
-// Semantic element validation
-const PREFERRED_TAGS = ['ARTICLE', 'SECTION'];
-
-// Common CSS Variables
+// Common CSS Variables. Only the ones still read from JS survive -- every
+// other constant here described styling that card.css now owns by selector,
+// and a dead style constant is a second, silently-diverging definition of a
+// rule that already lives in one place.
 const VAR_TEXT_PRIMARY = 'var(--text-primary,#f9fafb)';
 const VAR_TEXT_SECONDARY = 'var(--text-secondary,#9ca3af)';
-const VAR_BORDER_COLOR = 'var(--border-color,#374151)';
 const VAR_BG_TERTIARY = 'var(--bg-tertiary,#1e293b)';
-const VAR_BG_SECONDARY = 'var(--bg-secondary,#1f2937)';
-const VAR_PRIMARY = 'var(--primary,#6366f1)';
-
-// Common Component Styles
-// flex-shrink:0 -- without it, the CSS flexbox spec's automatic minimum
-// size (min-height:auto) is ignored on a flex item whose ancestor sets
-// overflow:hidden (the card does), letting this header shrink below its
-// own content's natural height when a sibling (e.g. an aspect-ratio image
-// figure) claims most of the flex column's space. That silently clipped
-// the header's own bottom padding -- title/subtitle text sat flush against
-// the card's border with no visible gap. Confirmed live via screenshot.
-// padding-bottom:0, not 1rem -- title/subtitle each already carry their
-// own margin-bottom:0.5rem (STYLE_TITLE/STYLE_SUBTITLE below), so a full
-// 1rem of header padding UNDERNEATH that stacked into a 24-25px gap
-// instead of the 0.5rem John asked for. Top/left/right stay 1rem (the
-// only clearance source for the header's top edge; nothing else supplies
-// it). Bottom clearance now comes entirely from the last child's own
-// 0.5rem margin -- exactly the value asked for, no double-counting.
-const STYLE_HEADER = `padding:1rem 1rem 0 1rem;border-bottom:1px solid ${VAR_BORDER_COLOR};background:${VAR_BG_TERTIARY};display:flex;justify-content:space-between;align-items:flex-start;gap:1rem;flex-shrink:0;`;
-const STYLE_FOOTER = `padding:1rem;border-top:1px solid ${VAR_BORDER_COLOR};background:${VAR_BG_TERTIARY};font-size:0.875rem;color:${VAR_TEXT_SECONDARY};`;
-const STYLE_MAIN = `padding:1rem;flex:1;color:${VAR_TEXT_PRIMARY};`;
-// margin-bottom:0.5rem (not 0) -- title and subtitle sat almost touching
-// (title had zero bottom margin, subtitle only 0.25rem top margin, and
-// block-level siblings collapse to the larger of the two, not the sum).
-// John: "there must be .5rem bottom gaps here" (screenshot, base card gallery).
-const STYLE_TITLE = `margin:0 0 0.5rem;font-size:1.1rem;font-weight:600;color:${VAR_TEXT_PRIMARY};`;
-const STYLE_SUBTITLE = `margin:0.25rem 0 0.5rem;font-size:0.875rem;color:${VAR_TEXT_SECONDARY};`;
-const STYLE_BADGE = `display:inline-block;padding:0.25rem 0.75rem;border-radius:999px;font-size:0.75rem;font-weight:600;background:${VAR_PRIMARY};color:white;white-space:nowrap;`;
 
 
 function validateSemanticContainer(element, behaviorName) {
@@ -181,6 +152,29 @@ export function composeCard(element, options = {}) {
     behavior: options.behavior || 'card',
     title: options.title || readAttr(element, 'title') || element.getAttribute('title') || '',
     subtitle: options.subtitle || readAttr(element, 'subtitle') || element.getAttribute('subtitle') || '',
+    // article.schema.json declares author/date/category/reading-time, and
+    // nativeMap routes <article> to THIS module -- so these have to render
+    // here or not at all. They previously lived only in article.js's
+    // article(), which `article: 'card'` makes unreachable, leaving four
+    // declared attributes silently ignored (#861).
+    author: options.author || readAttr(element, 'author') || element.getAttribute('author') || '',
+    date: options.date || readAttr(element, 'date') || element.getAttribute('date') || '',
+    category: options.category || readAttr(element, 'category') || element.getAttribute('category') || '',
+    readingTime: options.readingTime || readAttr(element, 'readingTime')
+      || element.getAttribute('reading-time') || '',
+    // #886 follow-up. John: "featured is something to print on a price tag
+    // when items are featured this week. Something has to identify this is
+    // the thing." A heavier border says "this one is different"; it does not
+    // say WHY. The marker is the label that does.
+    // Bare `featured` gives the default word; `featured="Deal of the week"`
+    // prints that instead, so the same attribute carries the reason.
+    featuredLabel: (() => {
+      if (!element.hasAttribute('featured') && !options.featured) return '';
+      const raw = String(options.featured ?? element.getAttribute('featured') ?? '').trim();
+      if (raw === 'false' || raw === '0') return '';
+      // A bare attribute parses to "", and "true" is the boolean spelled out.
+      return (raw === '' || raw === 'true') ? 'Featured' : raw;
+    })(),
     content: options.content || readAttr(element, 'content') || element.getAttribute('content') || authoredContent,
     footer: options.footer || readAttr(element, 'footer') || element.getAttribute('footer') || '',
     variant: options.variant || readAttr(element, 'variant') || element.getAttribute('variant') || 'default',
@@ -228,7 +222,7 @@ export function composeCard(element, options = {}) {
   // (<div x-cardimage>, <article> auto-inject, ...) still needs the class since
   // its own tag name isn't "x-card" -- shared card.css rules have nothing
   // else to select there.
-  if (element.tagName.toLowerCase() !== 'x-card') element.classList.add('x-card');
+  if (element.tagName.toLowerCase() !== 'x-card') // No base class: card.css matches `article` and `[x-card]` directly.
   if (config.behavior !== 'card') {
     element.classList.add(`x-card--${config.behavior.replace('card', '')}`);
   }
@@ -304,14 +298,16 @@ export function composeCard(element, options = {}) {
   
   // Variant class
   if (config.variant !== 'default') {
-    element.classList.add(`x-card--${config.variant}`);
+    // No variant class: card.css reads [variant="..."] straight off the element.
   }
   
   // Size class (max/min-width scale, card.css) — 'xs' was missing from the
   // allowlist so <article size="xs"> silently did nothing (#282). 'auto'
   // (a real schema-declared enum value, matching .x-card--auto in
   // card.css) was missing too, for the same reason.
-  if (config.size && ['xs','sm','md','lg','xl','full','auto'].includes(config.size)) {
+  // 'auto' is the default, and card.css declares it on the base class, so a
+  // --auto modifier would appear on every card and mean nothing.
+  if (config.size && config.size !== 'auto' && ['xs','sm','md','lg','xl','full'].includes(config.size)) {
     element.classList.add(`x-card--${config.size}`);
   }
   
@@ -322,7 +318,7 @@ export function composeCard(element, options = {}) {
   // rule can win against an inline style"). With the inline gone the class is
   // enough, and the !important can be dropped separately. (#779)
   if (config.elevated) {
-    element.classList.add('x-card--elevated');
+    // No class: card.css reads the [elevated] attribute.
   }
 
   // Hoverable -- `.x-card--hoverable:hover` (card.css:520) declares exactly
@@ -337,13 +333,13 @@ export function composeCard(element, options = {}) {
   // colour back overrode `flat`'s border:none and `glass`'s themed border on
   // the first hover. With no inline write there is nothing to override and
   // nothing to guard.
-  if (config.hoverable) {
-    element.classList.add('x-card--hoverable');
-  }
+  // No --hoverable class: hover is the default, and the opt-out already lives
+  // on the element as hoverable="false", which card.css reads directly.
+  // Stamping a class onto 100% of cards restated a fact nothing had asked for.
+
   
   if (config.clickable) {
-    element.classList.add('x-card--clickable');
-    element.style.cursor = 'pointer';
+    // No class: card.css reads the [clickable] attribute.
     element.setAttribute('tabindex', '0');
     element.setAttribute('role', 'button');
 
@@ -364,7 +360,6 @@ export function composeCard(element, options = {}) {
   // LOGIC: Dynamic onClick handler (v3.1)
   if (config.onClick) {
     // Ensure element looks interactive
-    element.style.cursor = 'pointer';
     if (!element.hasAttribute('role')) element.setAttribute('role', 'button');
     if (!element.hasAttribute('tabindex')) element.setAttribute('tabindex', '0');
 
@@ -436,14 +431,14 @@ export function composeCard(element, options = {}) {
       // blank-line problem of #608 with the content loss of #678 on top.
       // Only fill it when it is empty: a main with real content in it is
       // somebody else's, and overwriting it would be a different bug.
-      const existing = element.querySelector(':scope > .x-card__main');
+      const existing = element.querySelector(':scope > main');
       if (existing) {
         if (existing.innerHTML.trim()) return null;
         existing.innerHTML = config.content;
         return existing;
       }
       const body = document.createElement('main');
-      body.className = 'x-card__main';
+      // card.css targets `article > main`.
       body.innerHTML = config.content;
       element.appendChild(body);
       return body;
@@ -459,37 +454,42 @@ export function composeCard(element, options = {}) {
      */
     createHeader: (extraContent = '') => {
       const h = document.createElement('header');
-      h.className = 'x-card__header';
+      // No class: card.css targets `article > header` / `[x-card] > header`.
+      // The tag already says what this element is.
       
-      const contentDiv = document.createElement('div');
-      contentDiv.className = 'x-card__header-content';
-      contentDiv.style.cssText = 'flex:1;min-width:0;';
-
+      // No wrapper div. John: "its sad that we have a div html tag to inject a
+      // class and nothing else."
+      //
+      // .x-card__header-content existed only to keep title/subtitle stacked on
+      // one side while the badge sat on the other -- a flexbox limitation, not
+      // a piece of the card's meaning. card.css uses grid on the header now, so
+      // the title and subtitle are children of the <header> itself and the
+      // badge takes its own column. One less element, and the structure reads
+      // as what it is.
       if (config.title) {
         const titleEl = document.createElement('h3');
-        titleEl.className = 'x-card__title';
+        
         titleEl.textContent = config.title;
-        contentDiv.appendChild(titleEl);
+        h.appendChild(titleEl);
       }
-      
+
       if (config.subtitle) {
-        const subtitleEl = document.createElement('div');
-        subtitleEl.className = 'x-card__subtitle';
+        const subtitleEl = document.createElement('p');
+        
         subtitleEl.textContent = config.subtitle;
-        contentDiv.appendChild(subtitleEl);
+        h.appendChild(subtitleEl);
       }
-      
+
       if (extraContent) {
         const extra = document.createElement('div');
+        extra.className = 'x-card__header-extra';
         extra.innerHTML = extraContent;
-        contentDiv.appendChild(extra);
+        h.appendChild(extra);
       }
-      
-      h.appendChild(contentDiv);
 
       if (config.badge) {
         const badgeEl = document.createElement('span');
-        badgeEl.className = 'x-card__badge';
+        // card.css targets `article > header > span`.
         badgeEl.textContent = config.badge;
         h.appendChild(badgeEl);
       }
@@ -502,7 +502,7 @@ export function composeCard(element, options = {}) {
      */
     createMain: (content = '') => {
       const m = document.createElement('main');
-      m.className = 'x-card__main';
+      // card.css targets `article > main`.
       
       // Use config.content if no content passed
       const finalContent = content || config.content;
@@ -537,7 +537,6 @@ export function composeCard(element, options = {}) {
       const fig = document.createElement('figure');
     
       fig.className = 'x-card__figure';
-      fig.style.cssText = 'margin:0;overflow:hidden;';
       
       return fig;
     },
@@ -561,41 +560,82 @@ export function composeCard(element, options = {}) {
       
       // HEADER - show if title/subtitle/badge config exists OR a semantic
       // <header> is already present (enhance it to x-card__header). (#159)
-      if (showHeader && (header || config.title || config.subtitle || headerContent || config.badge)) {
+      if (showHeader && (header || config.title || config.subtitle || headerContent || config.badge
+          || config.author || config.date || config.category || config.readingTime
+          || config.featuredLabel)) {
         if (!header) {
           const headerEl = document.createElement('header');
-          headerEl.className = 'x-card__header';
+          // See createHeader: the tag names it, card.css targets the tag.
           
-          const headerContentWrap = document.createElement('div');
-          headerContentWrap.className = 'x-card__header-content';
-          headerContentWrap.style.cssText = 'flex:1;min-width:0;';
-
+          // Children of the <header> itself -- see createHeader above for why
+          // the wrapper div is gone.
           if (config.title) {
             const titleElem = document.createElement('h3');
-            titleElem.className = 'x-card__title';
+            
             titleElem.textContent = config.title;
-            headerContentWrap.appendChild(titleElem);
+            headerEl.appendChild(titleElem);
           }
-          
+
           if (config.subtitle) {
-            const subtitleElem = document.createElement('div');
-            subtitleElem.className = 'x-card__subtitle';
+            const subtitleElem = document.createElement('p');
+            
             subtitleElem.textContent = config.subtitle;
-            headerContentWrap.appendChild(subtitleElem);
+            headerEl.appendChild(subtitleElem);
           }
-          
+
+          if (config.featuredLabel) {
+            const featuredEl = document.createElement('mark');
+            featuredEl.textContent = config.featuredLabel;
+            // Before the title, not after it: the point of the marker is to
+            // be read BEFORE you read what the card is about.
+            headerEl.insertBefore(featuredEl, headerEl.firstChild);
+          }
+
+          // Article metadata. Distinct semantic tags rather than classes:
+          // card.css reaches each one as `article > header > time`,
+          // `> address`, `> small`.
+          if (config.category) {
+            const categoryEl = document.createElement('small');
+            categoryEl.textContent = config.category;
+            headerEl.appendChild(categoryEl);
+          }
+
+          if (config.date) {
+            const dateEl = document.createElement('time');
+            dateEl.setAttribute('datetime', config.date);
+            dateEl.textContent = config.date;
+            headerEl.appendChild(dateEl);
+          }
+
+          if (config.readingTime) {
+            // <data>, not a second <small>: category is already the <small>,
+            // and two identical tags in the header make the order ambiguous
+            // to CSS -- which is what selects these now.
+            const readingEl = document.createElement('data');
+            readingEl.setAttribute('value', String(config.readingTime));
+            readingEl.textContent = config.readingTime;
+            headerEl.appendChild(readingEl);
+          }
+
+          if (config.author) {
+            const bylineEl = document.createElement('address');
+            bylineEl.textContent = `By ${config.author}`;
+            headerEl.appendChild(bylineEl);
+          }
+
           if (headerContent) {
             const extraDiv = document.createElement('div');
             extraDiv.className = 'x-card__header-extra';
             extraDiv.innerHTML = headerContent;
-            headerContentWrap.appendChild(extraDiv);
+            headerEl.appendChild(extraDiv);
           }
 
-          headerEl.appendChild(headerContentWrap);
-
-          if (config.badge) {
+          // #884: cardproduct already painted this same badge= over its
+          // figure, and it builds before the header is inserted. Emitting it
+          // here too rendered "SALE" twice in one card.
+          if (config.badge && !badgeAlreadyRendered(element, config.badge)) {
             const headerBadge = document.createElement('span');
-            headerBadge.className = 'x-card__badge';
+            // card.css targets `article > header > span`.
             headerBadge.textContent = config.badge;
             headerEl.appendChild(headerBadge);
           }
@@ -608,15 +648,11 @@ export function composeCard(element, options = {}) {
           }
         } else {
           // Enhance existing header
-          header.classList.add('x-card__header');
-          header.style.padding = header.style.padding || '1rem';
-          header.style.borderBottom = header.style.borderBottom || '1px solid var(--border-color,#374151)';
-          header.style.background = header.style.background || VAR_BG_TERTIARY;
-          
+          // Already a <header> inside the card -- card.css matches the tag.
           // Inject badge if missing
-          if (config.badge && !header.querySelector('.x-card__badge')) {
+          if (config.badge && !badgeAlreadyRendered(element, config.badge)) {
             const existingHeaderBadge = document.createElement('span');
-            existingHeaderBadge.className = 'x-card__badge';
+            // card.css targets `article > header > span`.
             existingHeaderBadge.textContent = config.badge;
             header.appendChild(existingHeaderBadge);
           }
@@ -630,7 +666,7 @@ export function composeCard(element, options = {}) {
         const mainText = mainContent || config.content;
         if (!main && mainText) {
           const mainEl = document.createElement('main');
-          mainEl.className = 'x-card__main';
+          // card.css targets `article > main`.
           mainEl.innerHTML = mainText;
           main = mainEl;
           if (footer) {
@@ -657,7 +693,7 @@ export function composeCard(element, options = {}) {
             main.remove();
             main = null;
           } else {
-            main.classList.add('x-card__main');
+            // Already a <main> inside the card -- card.css matches the tag.
             main.style.padding = main.style.padding || '1rem';
             main.style.flex = main.style.flex || '1';
             main.style.color = main.style.color || VAR_TEXT_PRIMARY;
@@ -708,6 +744,24 @@ export function composeCard(element, options = {}) {
  * Card Component
  * Custom Tag: <article>
  */
+/**
+ * Has this card already painted its badge= somewhere of its own?
+ *
+ * #884: several card variants (cardproduct on its figure, cardlink in its
+ * title group) build a badge themselves and run BEFORE the shared header is
+ * inserted, so the header builder would render the same value a second time.
+ * Matching on the rendered TEXT rather than on a class or a position keeps
+ * this true for any variant that grows its own badge later.
+ */
+function badgeAlreadyRendered(element, badge) {
+  if (!badge) return false;
+  const wanted = String(badge).trim();
+  if (!wanted) return false;
+  return Array.from(element.querySelectorAll('*')).some(
+    (node) => node.children.length === 0 && (node.textContent || '').trim() === wanted,
+  );
+}
+
 export function card(element, options = {}) {
   // #202: a legacy MVVM template (schema $view / views-registry / partial) may
   // have ALREADY wrapped our content in a competing `.card` structure
@@ -723,7 +777,7 @@ export function card(element, options = {}) {
 
   // FIX: Un-wrap auto-generated main if it contains semantic elements
   // This happens because SchemaBuilder wraps ALL content in the 'main' part defined in schema
-  const autoMain = element.querySelector(':scope > .x-card__main');
+  const autoMain = element.querySelector(':scope > main');
   if (autoMain && (autoMain.querySelector('header') || autoMain.querySelector('main'))) {
     const fragment = document.createDocumentFragment();
     while (autoMain.firstChild) {
@@ -1101,7 +1155,7 @@ export function cardhero(element, options = {}) {
 
   // Title.
   if (slots.title) {
-    slots.title.classList.add('x-card__title', 'x-card__hero-title');
+    slots.title.classList.add('x-card__hero-title');
     content.appendChild(slots.title);
   } else if (base.config.title) {
     // A page hero is usually the page's main heading, but a hero can also sit
@@ -1121,7 +1175,7 @@ export function cardhero(element, options = {}) {
 
   // Subtitle.
   if (slots.subtitle) {
-    slots.subtitle.classList.add('x-card__subtitle', 'x-card__hero-subtitle');
+    slots.subtitle.classList.add('x-card__hero-subtitle');
     content.appendChild(slots.subtitle);
   } else if (base.config.subtitle) {
     const subtitleEl = document.createElement('div');
@@ -1431,7 +1485,7 @@ export function cardstats(element, options = {}) {
     // specificity) `.x-stats.x-card--compact/--large`'s own padding when
     // neither class is present, silently forcing 1rem on every variant
     // (confirmed live).
-    header.className = 'x-card__header';
+    // card.css targets the tag, not a class.
 
     const iconEl = document.createElement('span');
     iconEl.className = 'x-card__icon';
@@ -1444,7 +1498,7 @@ export function cardstats(element, options = {}) {
 
   // Semantic: Main content
   const content = document.createElement('main');
-  content.className = 'x-card__main';
+  // card.css targets `article > main`.
 
   if (config.value) {
     const valueEl = document.createElement('data');
@@ -1597,12 +1651,10 @@ export function cardproduct(element, options = {}) {
   // Product image
   if (config.image) {
     const figure = base.createFigure();
-    figure.style.position = 'relative';
     
     const img = document.createElement('img');
     img.src = config.image;
     img.alt = base.config.title || 'Product';
-    img.style.cssText = 'width:100%;aspect-ratio:3/2;object-fit:cover;display:block;';
     figure.appendChild(img);
 
     if (config.badge) {
@@ -1611,8 +1663,7 @@ export function cardproduct(element, options = {}) {
       // logic elsewhere in this file) -- it never calls that path, so the
       // badge has to render here or not at all (#380).
       const badgeEl = document.createElement('span');
-      badgeEl.className = 'x-card__badge';
-      badgeEl.style.cssText = STYLE_BADGE + 'position:absolute;top:0.5rem;left:0.5rem;';
+      // card.css targets `article > header > span`.
       badgeEl.textContent = config.badge;
       figure.appendChild(badgeEl);
     }
@@ -1899,7 +1950,7 @@ export function cardfile(element, options = {}) {
 
   // Info
   const info = document.createElement('div');
-  info.style.cssText = 'flex:1;min-width:0;';
+  info.className = 'x-card__file-info';
 
   if (config.filename) {
     const nameEl = document.createElement('h3');
@@ -2027,7 +2078,7 @@ export function cardlink(element, options = {}) {
     
     if (base.config.title) {
       const titleEl = document.createElement('h3');
-      titleEl.className = 'x-card__title';
+      
       titleEl.textContent = base.config.title;
       titleRow.appendChild(titleEl);
     }
@@ -2180,7 +2231,7 @@ export function cardhorizontal(element, options = {}) {
 
   if (base.config.title) {
     const titleEl = document.createElement('h3');
-    titleEl.className = 'x-card__title';
+    
     titleEl.style.cssText = 'margin:0;color:var(--text-primary,#f9fafb);';
     titleEl.textContent = base.config.title;
     content.appendChild(titleEl);
@@ -2188,7 +2239,7 @@ export function cardhorizontal(element, options = {}) {
 
   if (base.config.subtitle) {
     const subtitleEl = document.createElement('div');
-    subtitleEl.className = 'x-card__subtitle';
+    
     subtitleEl.style.cssText = 'margin:0.25rem 0 0.5rem;color:var(--text-secondary,#9ca3af);';
     subtitleEl.textContent = base.config.subtitle;
     content.appendChild(subtitleEl);
@@ -2493,15 +2544,15 @@ export function cardminimizable(element, options = {}) {
 
   // Header with minimize button
   const header = document.createElement('header');
-  header.className = 'x-card__header';
+  // card.css targets the tag, not a class.
   header.style.cssText = 'padding:1rem;border-bottom:1px solid var(--border-color,#374151);background:var(--bg-tertiary,#1e293b);display:flex;align-items:center;gap:0.75rem;';
 
   const titleWrap = document.createElement('div');
-  titleWrap.style.cssText = 'flex:1;min-width:0;';
+  titleWrap.className = 'x-card__title-wrap';
 
   if (base.config.title) {
     const titleEl = document.createElement('h3');
-    titleEl.className = 'x-card__title';
+    
     titleEl.style.cssText = 'margin:0;color:var(--text-primary,#f9fafb);';
     titleEl.textContent = base.config.title;
     titleWrap.appendChild(titleEl);
@@ -2509,7 +2560,7 @@ export function cardminimizable(element, options = {}) {
 
   if (base.config.subtitle) {
     const subtitleEl = document.createElement('div');
-    subtitleEl.className = 'x-card__subtitle';
+    
     subtitleEl.style.cssText = 'margin:0.25rem 0 0.5rem;color:var(--text-secondary,#9ca3af);font-size:0.85rem;';
     subtitleEl.textContent = base.config.subtitle;
     titleWrap.appendChild(subtitleEl);
@@ -2636,7 +2687,7 @@ export function carddraggable(element, options = {}) {
 
   if (base.config.title) {
     const titleEl = document.createElement('h3');
-    titleEl.className = 'x-card__title';
+    
     titleEl.style.cssText = 'margin:0;flex:1;color:var(--text-primary,#f9fafb);';
     titleEl.textContent = base.config.title;
     headerEl.appendChild(titleEl);

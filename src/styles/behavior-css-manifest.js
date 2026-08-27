@@ -54,7 +54,13 @@ export const BEHAVIOR_CSS_MAP = {
   cardstats: ['card.css'],
   cardtestimonial: ['card.css'],
   cardvideo: ['card.css'],
-  article: ['article.css'],
+  // An <article> IS a card: index.js routes the `article` behavior to card.js,
+  // so the element gets card markup and needs card.css. Mapping it to
+  // article.css alone meant an auto-injected <article> ran card() while
+  // loading the wrong stylesheet -- .x-card__header-content had no rule at
+  // all, which is why card.js was setting `flex:1;min-width:0` inline to
+  // compensate for a stylesheet that was never fetched.
+  article: ['card.css', 'article.css'],
   articles: ['article.css'],
 
   hero: ['hero.css'],

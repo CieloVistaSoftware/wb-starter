@@ -167,8 +167,13 @@ export const extensionMap = {
   // dedicated key for consistency; x-behavior="card" still works too (it's
   // the always-available generic fallback every registered behavior name
   // supports, not being removed here).
-  // Kept: 'card' says what you get, for a host that is not an <article>.
-  'x-card': 'article',
+  // 'card' says what you get, for a host that is not an <article>.
+  //
+  // Names the `card` behavior directly. It used to say 'article', which worked
+  // only because index.js routes `article` to card.js -- true, but indirect:
+  // it made <div x-card> depend on a mapping two files away that is about
+  // <article> auto-injection, not about this attribute.
+  'x-card': 'card',
 
   // #631: an audit (John: "how many x-tags do we have and whether or not
   // they all have an equivalent x-attribute") found 65 of the 104 wb-* tags

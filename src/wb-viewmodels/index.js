@@ -54,21 +54,30 @@ const exportAliases = {
  * Maps behavior names to their module paths
  */
 const behaviorModules = {
-  // Article / Articles List → article.js
-  article: 'article', articles: 'article',
+  // An <article> IS a card in this system.
+  //
+  // John: "an article is a card in this system. with autoinjection on and no
+  // opt out, articles show up as cards."
+  //
+  // This key WAS declared twice -- `article: 'article'` here and
+  // `article: 'card'` further down -- and the later one won, so `article`
+  // resolved to card.js. #880 called that a duplicate-declaration bug and
+  // kept the FIRST entry. Wrong survivor: the duplicate was real, but the
+  // winning value was the correct one. Routing article to article.js made
+  // every <article> render article markup instead of a card, and on an
+  // <article x-card> both ran and built two titles into one element.
+  //
+  // One declaration now, with the intended target.
+  article: 'card',
+  // The plural is a different thing: articles() is the grid/list WRAPPER that
+  // lays out article children, and it does live in article.js.
+  articles: 'article',
 
   // Hero → hero.js
   hero: 'hero',
   
-  // Cards (19) → card.js
-  //
-  // `article` is deliberately NOT in this list. It used to be, re-declared as
-  // `article: 'card'` AFTER `article: 'article'` above — and the later key in
-  // an object literal wins, so x-article loaded card.js, which exports no
-  // `article` function at all. The behavior silently never ran. That is why
-  // article's own attributes (author, date, category, image, image-alt,
-  // reading-time, featured) all measured as "declared but ignored" in #861.
-  // One behavior, one mapping (#880).
+  // Cards (19) → card.js. `article` is declared once, above, and points here:
+  // auto-injection makes a bare <article> a card.
   card: 'card', cardimage: 'card', cardvideo: 'card', cardbutton: 'card',
   cardhero: 'card', cardprofile: 'card', cardpricing: 'card', cardstats: 'card',
   cardtestimonial: 'card', cardproduct: 'card', cardnotification: 'card',
