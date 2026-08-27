@@ -1576,3 +1576,26 @@ main.site__main:has(#mainPage-behaviors) {
 #behaviors-hero.page__hero {
   padding-top: 0;
 }
+
+/* John: "When clicking api or docs, this panel should fill to the bottom."
+
+   The existing rule already positions the open body correctly:
+   `position:absolute; top:100%` against .behaviors-live__head, which puts it
+   immediately under the header row. What it lacked was a HEIGHT -- it fell
+   back to .behaviors-live__doc-body's max-height, a flat 24rem, so it stopped
+   short no matter how much panel was left below it.
+
+   An earlier attempt here made #behaviors-live the containing block. That
+   broke `top:100%` -- 100% of a 1006px panel instead of a 127px header --
+   and collapsed the body to 31px. The containing block is deliberately the
+   header; only the height was missing.
+
+   --x-live-body-h is published by behaviors.html as (panel height - header
+   height), measured rather than assumed, so the row wrapping to two lines
+   does not push the bottom off the panel. */
+.behaviors-live__panels > details[open] > .behaviors-live__doc-body,
+.behaviors-live__panels > details[open] > .behaviors-live__api-body {
+  height: var(--x-live-body-h, 24rem);
+  max-height: var(--x-live-body-h, 24rem);
+  overflow-y: auto;
+}

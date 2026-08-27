@@ -638,13 +638,40 @@
      * two would ping-pong.
      */
     function exclusivePanels(panels) {
+      /**
+       * John: "When clicking api or docs, this panel should fill to the bottom."
+       *
+       * The open body is absolutely positioned against #behaviors-live so it
+       * can escape the header strip it is anchored in. Its `top` has to clear
+       * the real header -- a constant breaks the moment the control row wraps
+       * to two lines, which it does on a narrow panel -- so publish the header's
+       * measured height and let CSS position against that.
+       */
+      const publishHeadHeight = () => {
+        const panelEl = document.getElementById('behaviors-live');
+        const head = panelEl && panelEl.querySelector('.behaviors-live__head');
+        if (!panelEl || !head) return;
+        // The open body is absolute at top:100% of the HEADER, so the space
+        // left for it is the panel minus that header. Measured, not assumed:
+        // the control row wraps to two lines on a narrow panel.
+        const avail = Math.max(0, Math.round(panelEl.getBoundingClientRect().height - head.getBoundingClientRect().height));
+        panelEl.style.setProperty('--x-live-body-h', avail + 'px');
+      };
+
       panels.forEach((panel) => {
         if (!panel) return;
         panel.addEventListener('toggle', () => {
           if (!panel.open) return;
           panels.forEach((other) => { if (other && other !== panel) other.open = false; });
+          // Measure AFTER the exclusive close, so a closing sibling is not
+          // still contributing its own height to the row.
+          requestAnimationFrame(publishHeadHeight);
         });
       });
+
+      // The row wraps at narrow widths, which changes the header height with
+      // no toggle involved.
+      window.addEventListener('resize', publishHeadHeight);
     }
     exclusivePanels([liveApi, liveDoc]);
 
