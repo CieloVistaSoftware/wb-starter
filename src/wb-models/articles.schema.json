@@ -1,8 +1,8 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "articles.schema.json",
-  "title": "Articles List Component",
-  "description": "A wrapper component to display a list or grid of articles.",
+  "title": "Articles List",
+  "description": "A wrapper behavior to display a list or grid of articles.",
   "schemaFor": "articles",
   "baseClass": "x-articles",
   "semanticElement": {

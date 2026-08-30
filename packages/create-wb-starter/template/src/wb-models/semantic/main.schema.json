@@ -3,10 +3,6 @@
   "$id": "main.schema.json",
   "title": "Main Semantic Element",
   "description": "Primary content of the document or behavior. The dominant content area.",
-  "$inheritance": {
-    "extends": "_element.base.schema.json",
-    "reason": "Main IS-A element with all base properties"
-  },
   "htmlTag": "main",
   "role": "main",
   "semanticMeaning": {

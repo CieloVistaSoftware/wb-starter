@@ -9,7 +9,7 @@ Behavior applied with x-img.
 ### How to write it
 
 ```html
-<img x-img src="https://picsum.photos/seed/lens/480/320" alt="Prime lens on a wooden desk">
+<img src="https://picsum.photos/seed/lens/480/320" alt="Prime lens on a wooden desk">
 ```
 
 ## Attributes

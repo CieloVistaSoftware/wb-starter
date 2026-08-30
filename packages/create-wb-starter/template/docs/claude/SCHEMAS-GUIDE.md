@@ -33,7 +33,7 @@ Every `.schema.json` file has a `schemaType` field that controls which rules app
 |------|-------------|-----------------|---------------|-------------|----------|
 | **Behavior** | `"behavior"` (default) | title, description, properties, $view, $methods, behavior/schemaFor | type + default mandatory on every property | `schema-validation.spec.ts` (full suite) | alert, badge, card variants, button, dialog |
 | **Base** | `"base"` | title, description, properties | type + default mandatory on every property | `schema-validation.spec.ts` (tier checks + property checks) | _base/html-element, _base/sectioning, semantic/*, card.base |
-| **Definition** | `"definition"` | title, description | none — properties section optional | `schema-validation.spec.ts` (tier checks only) | _inheritance.schema.json, schema.schema.json |
+| **Definition** | `"definition"` | title, description | none — properties section optional | `schema-validation.spec.ts` (tier checks only) | schema.schema.json |
 | **Page** | `"page"` | title, description, pageRules, $layout | type + default on data properties | `page-fragment-compliance.spec.ts` + page permutation tests | home-page.schema.json |
 
 **Behavior** — Real behaviors users interact with. Full rules apply. This is the vast majority of schemas.
@@ -109,9 +109,10 @@ Consult these meta-schemas when working in their respective domains. If you touc
 > rendered. No runtime object inherits from another here; the loader flattens several
 > JSON files into one effective schema.
 >
-> Whether this layer should keep the words "inheritance" / `$inherits` / IS-A /
-> HAS-A, or be renamed to "schema composition" / "schema layering", is tracked
-> separately in **issue #465** — do not rename it as part of #418.
+> Renamed under **#465**: this layer is "schema composition" / "schema layering".
+> The words "inheritance" / `$inherits` / IS-A / HAS-A are not used for it — the
+> architecture is composition-only, so the vocabulary follows it rather than
+> describing it in the terms it rejects.
 
 Schemas form a layering chain. **The most specific (lowest) schema takes precedence.** If a lower schema defines a property that also exists in a layer above it, the lower definition wins.
 

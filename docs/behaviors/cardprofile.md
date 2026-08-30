@@ -1,6 +1,6 @@
 # Card Profile
 
-Simple profile card. INHERITS from card.base (IS-A card), CONTAINS profile elements (HAS-A avatar, name, role, bio, cover).
+Simple profile card. Composes the shared card structure and adds profile elements (avatar, name, role, bio, cover).
 
 ## Type — new capability
 

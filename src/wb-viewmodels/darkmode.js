@@ -67,7 +67,7 @@ export function darkmode(element, options = {}) {
     if (originalTheme) {
       targetEl.setAttribute('data-theme', originalTheme);
     } else {
-      delete targetEl.getAttribute('data-theme');
+      targetEl.removeAttribute('data-theme');
     }
   };
 }

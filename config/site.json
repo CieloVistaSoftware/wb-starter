@@ -18,62 +18,56 @@
     {
       "menuItemId": "home",
       "menuItemText": "Home",
-      "menuItemEmoji": "\ud83c\udfe0",
+      "menuItemEmoji": "🏠",
       "pageToLoad": "home"
     },
     {
       "menuItemId": "behaviors",
       "menuItemText": "Behaviors",
-      "menuItemEmoji": "\u26a1",
+      "menuItemEmoji": "⚡",
       "pageToLoad": "behaviors"
     },
     {
       "menuItemId": "demos",
       "menuItemText": "Demos",
-      "menuItemEmoji": "\ud83c\udfae",
+      "menuItemEmoji": "🎮",
       "pageToLoad": "demos"
     },
     {
       "menuItemId": "themes",
       "menuItemText": "Themes",
-      "menuItemEmoji": "\ud83c\udfa8",
+      "menuItemEmoji": "🎨",
       "pageToLoad": "themes"
     },
     {
       "menuItemId": "docs",
       "menuItemText": "Docs",
-      "menuItemEmoji": "\ud83d\udcd6",
+      "menuItemEmoji": "📖",
       "pageToLoad": "docs"
     },
     {
       "menuItemId": "ai-docs",
       "menuItemText": "A.I. Docs",
-      "menuItemEmoji": "\ud83e\udd16",
+      "menuItemEmoji": "🤖",
       "pageToLoad": "ai-docs"
     },
     {
       "menuItemId": "about",
       "menuItemText": "About",
-      "menuItemEmoji": "\u2139\ufe0f",
+      "menuItemEmoji": "ℹ️",
       "pageToLoad": "about"
     },
     {
       "menuItemId": "whats-new",
       "menuItemText": "What's New",
-      "menuItemEmoji": "\ud83c\udd95",
+      "menuItemEmoji": "🆕",
       "pageToLoad": "whats-new"
     },
     {
       "menuItemId": "issues",
       "menuItemText": "Issues",
-      "menuItemEmoji": "\ud83d\udc1b",
+      "menuItemEmoji": "🐛",
       "pageToLoad": "issues"
-    },
-    {
-      "menuItemId": "error-log",
-      "menuItemText": "Error Log",
-      "menuItemEmoji": "\ud83d\udea8",
-      "href": "errors-viewer.html"
     }
   ],
   "navigationLayout": {
@@ -83,7 +77,7 @@
     "navigationStartCollapsed": false
   },
   "footerSettings": {
-    "footerCopyrightText": "\u00a9 2025 Cielo Vista Software",
+    "footerCopyrightText": "© 2025 Cielo Vista Software",
     "displaySocialMediaLinks": true
   },
   "socialMediaLinks": [
@@ -116,7 +110,7 @@
   "companyInfo": {
     "businessName": "Cielo Vista Software",
     "businessTagline": "Zero-build behaviors",
-    "businessDescription": "Cielo Vista Software builds wb-starter, a zero-build, schema-first web-behavior framework. Compose UIs from wb-* tags and x-* behaviors in plain HTML \u2014 no bundler, no build step, no lock-in.",
+    "businessDescription": "Cielo Vista Software builds wb-starter, a zero-build, schema-first web-behavior framework. Compose UIs from wb-* tags and x-* behaviors in plain HTML — no bundler, no build step, no lock-in.",
     "valueProposition": "Zero build, composition over inheritance, Light DOM, schema-first, fully themeable"
   },
   "contactInfo": {
@@ -127,35 +121,35 @@
   },
   "servicesList": [
     {
-      "serviceIcon": "\ud83c\udfa8",
+      "serviceIcon": "🎨",
       "serviceName": "Web Design",
       "serviceDescription": "Beautiful, modern interfaces crafted to engage and convert your users."
     },
     {
-      "serviceIcon": "\u2699\ufe0f",
+      "serviceIcon": "⚙️",
       "serviceName": "Development",
       "serviceDescription": "Robust, scalable applications built with modern technologies and best practices."
     },
     {
-      "serviceIcon": "\ud83d\ude80",
+      "serviceIcon": "🚀",
       "serviceName": "Deployment",
       "serviceDescription": "Fast, secure deployment with continuous monitoring and optimization."
     },
     {
-      "serviceIcon": "\ud83d\udcde",
+      "serviceIcon": "📞",
       "serviceName": "Support",
       "serviceDescription": "Comprehensive support and maintenance to keep your platform running smoothly."
     }
   ],
   "teamMembers": [
     {
-      "memberAvatar": "\ud83d\udc69\u200d\ud83d\udcbc",
+      "memberAvatar": "👩‍💼",
       "memberName": "Sarah Johnson",
       "memberRole": "CEO & Founder",
       "memberBio": "Visionary leader with 15+ years in tech and a passion for innovation."
     },
     {
-      "memberAvatar": "\ud83d\udc68\u200d\ud83d\udcbb",
+      "memberAvatar": "👨‍💻",
       "memberName": "Mike Chen",
       "memberRole": "CTO",
       "memberBio": "Full-stack expert and architecture wizard building tomorrow's solutions."

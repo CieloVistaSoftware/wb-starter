@@ -3,10 +3,6 @@
   "$id": "aside.schema.json",
   "title": "Aside Semantic Element",
   "description": "Content tangentially related to main content - sidebars, callouts, notes, notifications.",
-  "$inheritance": {
-    "extends": "_element.base.schema.json",
-    "reason": "Aside IS-A element with all base properties"
-  },
   "htmlTag": "aside",
   "role": "complementary",
   "semanticMeaning": {

@@ -50,7 +50,7 @@ const spinners = (html.match(/<span x-spinner/gi) || []).length;
 console.log(`\nwb-spinner total: ${spinners}`);
 
 // Check if alerts have type attribute
-const alertTypes = [...html.matchAll(/<div[^>]*x-alert[^>]*type="([^"]+)"/gi)].map(m => m[1]);
+const alertTypes = [...html.matchAll(/<div\b[^>]*\bx-alert\b[^>]*type="([^"]+)"/gi)].map(m => m[1]);
 console.log('Alert types found:', alertTypes.join(', '));
 
 // Check toast button attributes 

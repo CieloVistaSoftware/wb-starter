@@ -4,10 +4,8 @@
   "title": "Demo File Contract",
   "description": "Defines the structural contract for HTML demo files in demos/. Demos are self-contained full HTML documents that run 100% on their own — no server wrapping, no fragment loading. This is the SINGLE SOURCE OF TRUTH for what a valid demo file looks like.",
   "schemaType": "definition",
-
   "fileLocation": "demos/",
   "filePattern": "*.html",
-
   "required": {
     "doctype": {
       "description": "Must start with <!DOCTYPE html> — demos are full documents, not fragments",
@@ -17,7 +15,10 @@
     "htmlTag": {
       "description": "Must have <html lang='en' data-theme='...'> — lang for accessibility, data-theme for theming",
       "pattern": "<html lang=\"en\" data-theme=\"...\">",
-      "requiredAttributes": ["lang", "data-theme"],
+      "requiredAttributes": [
+        "lang",
+        "data-theme"
+      ],
       "required": true
     },
     "charset": {
@@ -36,7 +37,13 @@
       "required": true,
       "validation": {
         "minLength": 3,
-        "forbiddenValues": ["untitled", "document", "page", "test", "demo"]
+        "forbiddenValues": [
+          "untitled",
+          "document",
+          "page",
+          "test",
+          "demo"
+        ]
       }
     },
     "headSection": {
@@ -52,7 +59,6 @@
       "required": true
     }
   },
-
   "stylesheets": {
     "description": "How demos load styles — themes.css and site.css are mandatory for consistent theming",
     "required": {
@@ -62,7 +68,7 @@
         "required": true
       },
       "siteCSS": {
-        "description": "Must link to site.css for base component styles",
+        "description": "Must link to site.css for base behavior styles",
         "pattern": "href=\"...site.css\"",
         "required": true
       }
@@ -84,7 +90,6 @@
       }
     }
   },
-
   "scripts": {
     "description": "How demos load JavaScript",
     "wbComponents": {
@@ -102,16 +107,18 @@
     },
     "backendDependency": {
       "description": "If a demo calls backend APIs (e.g. /api/save, /api/markdown), document this in a comment at the top",
-      "values": ["none", "optional", "required"],
+      "values": [
+        "none",
+        "optional",
+        "required"
+      ],
       "guidance": "Add <!-- Server dependency: required|optional --> as first comment"
     }
   },
-
   "selfContained": {
     "description": "Demos MUST work when opened directly in a browser or served by the backend. They do NOT rely on the server's fragment-wrapping. If you open demos/site/feedback.html in a browser, it must render correctly.",
     "value": true
   },
-
   "partials": {
     "description": "A demo file WITHOUT <!DOCTYPE html> is a partial/fragment. Partials cannot stand alone — they MUST be loaded by a parent demo that provides the shell (imports, CSS, JS). Every partial must declare its parent.",
     "detection": "Absence of <!DOCTYPE html> at start of file",
@@ -135,7 +142,6 @@
       }
     }
   },
-
   "naming": {
     "description": "Demo file naming conventions",
     "pattern": "kebab-case.html",

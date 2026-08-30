@@ -304,7 +304,18 @@ export function button(element, options = {}) {
 
   // Native <button> — add .x-button class for styling
   // Skip if already styled by another system
-  const hasExistingStyle = element.className.match(/x-btn--|x-button--/);
+  // `x-btn--` only. `x-button--` is THIS behavior's own modifier naming, and
+  // by the time button() runs on a `<div x-button>` the schema builder has
+  // already applied those classes -- so the guard read its own output as
+  // evidence that a foreign system owned the element, and bailed before the
+  // icon was injected. Traced live: at the guard, className was
+  // "x-button x-button--star x-button--start x-button--primary x-button--md
+  // x-button--_self" and hasExistingStyle was true. The element still LOOKED
+  // styled, which is why this reads as "the icon broke" rather than "the
+  // behavior never ran". John: "you broke the icon".
+  // Same shape as #746, which fixed the sibling guard below for `x-button`:
+  // a behavior must not treat its own marks as somebody else's.
+  const hasExistingStyle = element.className.match(/x-btn--/);
   // #746: `x-button` is this behavior's OWN dispatch attribute, not evidence
   // that something else owns the element — counting it here made the button
   // bail on itself, so `<button x-button variant="outline" icon="download">`
@@ -312,7 +323,15 @@ export function button(element, options = {}) {
   // attribute rendered fully. Measured live at 3.0.68, and now pinned by
   // tests/behaviors/button-permutations.spec.ts, which asserts both authoring
   // forms produce identical classes across all variant x size pairs.
-  const OWN_ATTRS = new Set(['x-behavior', 'x-eager', 'x-hydrated', 'x-button']);
+  // `x-schema` belongs here for the same reason `x-button` does: the schema
+  // builder stamps it on a host IT processed for THIS behavior, so it is this
+  // behavior's own marker, not evidence that another system owns the element.
+  // Counting it as foreign made `<div x-button icon="star">` bail before the
+  // icon was injected -- the element still LOOKED styled because the schema
+  // builder had already mapped every attribute to a modifier class, including
+  // the nonsense `x-button--star` and `x-button--_self`. John: "you broke the
+  // icon". This is #746 a second time, on a different attribute.
+  const OWN_ATTRS = new Set(['x-behavior', 'x-eager', 'x-hydrated', 'x-button', 'x-schema']);
   const hasOtherBehaviors = Array.from(element.attributes).some(
     a => a.name.startsWith('x-') && !OWN_ATTRS.has(a.name)
   );

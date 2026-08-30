@@ -3,10 +3,6 @@
   "$id": "article.schema.json",
   "title": "Article Semantic Element",
   "description": "Self-contained composition - cards, posts, comments, widgets. The PREFERRED container for card behaviors.",
-  "$inheritance": {
-    "extends": "_element.base.schema.json",
-    "reason": "Article IS-A element with all base properties"
-  },
   "htmlTag": "article",
   "role": "article",
   "semanticMeaning": {

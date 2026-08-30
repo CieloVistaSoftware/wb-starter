@@ -247,7 +247,7 @@ function getAutoInjectBehavior(element) {
   // never ALSO the generic native-auto-inject input() wrapper racing to
   // wrap the same element a second time. Generic native auto-inject is
   // additive with genuinely independent modifiers (x-ripple on an
-  // <article>, say) but not with another IS-A-ish behavior for the same
+  // <article>, say) but not with another standalone behavior for the same
   // element.
   // #763: this used to require `behaviors[other]` — i.e. the OTHER behavior had
   // to be registered at this exact moment. Under the lazy runtime it usually is

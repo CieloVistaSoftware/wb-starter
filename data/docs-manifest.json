@@ -1,6 +1,6 @@
 {
-  "generated": "2026-08-27T02:14:39.958Z",
-  "totalFiles": 264,
+  "generated": "2026-08-30T19:47:30.727Z",
+  "totalFiles": 265,
   "categories": [
     "_today",
     "architecture",
@@ -450,6 +450,12 @@
         "path": "docs/behaviors/button.md",
         "title": "Button",
         "name": "button",
+        "category": "behaviors"
+      },
+      {
+        "path": "docs/behaviors/card.md",
+        "title": "Card",
+        "name": "card",
         "category": "behaviors"
       },
       {
@@ -1921,6 +1927,12 @@
       "path": "docs/behaviors/button.md",
       "title": "Button",
       "name": "button",
+      "category": "behaviors"
+    },
+    {
+      "path": "docs/behaviors/card.md",
+      "title": "Card",
+      "name": "card",
       "category": "behaviors"
     },
     {

@@ -2,7 +2,7 @@
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "rating.schema.json",
   "title": "Rating",
-  "description": "Star rating component for displaying or collecting ratings",
+  "description": "Star rating behavior for displaying or collecting ratings",
   "schemaFor": "rating",
   "baseClass": "x-rating",
   "semanticElement": {

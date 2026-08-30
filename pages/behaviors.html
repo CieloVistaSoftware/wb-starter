@@ -84,12 +84,12 @@
              chips -- the header grows rather than the example being pushed
              off screen. -->
         <div class="behaviors-live__panels">
-          <details id="behaviors-live-api" class="behaviors-live__api" x-details summary="API">
+          <details id="behaviors-live-api" class="behaviors-live__api" summary="API">
             <summary class="behaviors-live__api-summary">API</summary>
             <div id="behaviors-live-api-body" class="behaviors-live__api-body"></div>
           </details>
   
-          <details id="behaviors-live-doc" class="behaviors-live__doc" x-details summary="Documentation">
+          <details id="behaviors-live-doc" class="behaviors-live__doc" summary="Documentation">
             <summary class="behaviors-live__doc-summary">Documentation</summary>
             <div id="behaviors-live-doc-body" class="behaviors-live__doc-body"></div>
           </details>
@@ -339,7 +339,7 @@
             //
             // An auto-injected behavior is labelled by its semantic host, so
             // `dialog` reads as `dialog` -- correct when the example IS a bare
-            // <dialog>, and the whole point of not teaching <dialog x-dialog>.
+            // <dialog>, and the whole point of not teaching <dialog>.
             //
             // But some behaviors cannot be demonstrated on their own host: a
             // bare <dialog> is invisible until something opens it, so its
@@ -1479,13 +1479,13 @@
       // Auto-injected behaviors need NO attribute -- writing the semantic
       // element is the whole authoring form (John: "<button variant='primary'>
       // ... this is because we created a module for the semantic button").
-      // Emitting `<button x-button>` here would demonstrate exactly the
+      // Emitting `<button>` here would demonstrate exactly the
       // duplication we are removing.
       // #753 -- John: "don't use x-figure in a figure tag."
       //
       // `label` is a DISPLAY string and is empty for several behaviors, so a
       // falsy label sent <figure> down the attribute branch and emitted
-      // `<figure x-figure>` -- the duplication the comment above says must not
+      // `<figure>` -- the duplication the comment above says must not
       // be emitted. Whether the host auto-injects is a fact about the tag->
       // behavior map, not about whether someone wrote a label, so ask the map:
       // nativeByBehavior is already built from tag-map's nativeMap by

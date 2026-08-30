@@ -1,7 +1,7 @@
 {
   "generatedBy": "scripts/build-behavior-examples.mjs",
   "source": "pages/behaviors.html",
-  "count": 146,
+  "count": 157,
   "demoBlocks": 88,
   "examples": {
     "x-ripple": {
@@ -269,7 +269,7 @@
       "alternates": []
     },
     "x-cardexpandable": {
-      "source": "<article x-cardexpandable\n  title=\"What changed in 3.0\"\n  content=\"Composition replaced inheritance: a tag maps to a behavior function that decorates the element in place, in light DOM. There is no component base class any more, and no shadow boundary to reach through.\"\n  lines=\"2\"></article>",
+      "source": "<article x-cardexpandable\n  title=\"What changed in 4.0\"\n  content=\"Composition replaced inheritance: a tag maps to a behavior function that decorates the element in place, in light DOM. There is no component base class any more, and no shadow boundary to reach through.\"\n  lines=\"2\"></article>",
       "alternates": []
     },
     "x-cardfile": {
@@ -547,7 +547,7 @@
       ]
     },
     "x-img": {
-      "source": "<img x-img src=\"https://picsum.photos/seed/lens/480/320\" alt=\"Prime lens on a wooden desk\">",
+      "source": "<img src=\"https://picsum.photos/seed/lens/480/320\" alt=\"Prime lens on a wooden desk\">",
       "alternates": []
     },
     "x-figure": {
@@ -625,7 +625,7 @@
       "alternates": []
     },
     "x-article": {
-      "source": "<article x-article title=\"Ridge loop, 8km\" subtitle=\"Moderate · 3h\" author=\"Ada Lovelace\" date=\"2026-08-20\" category=\"Trails\">\n  The north gate is open and the creek crossing is dry. Parking fills by 9am on\n  weekends — the overflow lot adds about ten minutes on foot.\n</article>",
+      "source": "<article title=\"Ridge loop, 8km\" subtitle=\"Moderate · 3h\" author=\"Ada Lovelace\" date=\"2026-08-20\" category=\"Trails\">\n  The north gate is open and the creek crossing is dry. Parking fills by 9am on\n  weekends — the overflow lot adds about ten minutes on foot.\n</article>",
       "alternates": []
     },
     "x-articles": {
@@ -667,6 +667,69 @@
     "x-fill": {
       "source": "<div id=\"fill-demo-row\" x-cluster gap=\"0.5rem\">\n  <button id=\"fill-demo-target\" x-fill>Fills the rest of the row</button>\n  <button id=\"fill-demo-sibling\">Natural width</button>\n</div>",
       "alternates": []
+    },
+    "x-center": {
+      "source": "<div x-center max-width=\"40ch\" gutters=\"1rem\">\n  <h3>Centred measure</h3>\n  <p>This column stops at 40 characters and keeps a 1rem gutter on each side, however wide the page gets.</p>\n</div>",
+      "alternates": [
+        "<div x-center max-width=\"60ch\" gutters=\"2rem\">\n  <p>A wider measure with roomier gutters.</p>\n</div>"
+      ]
+    },
+    "x-container": {
+      "source": "<div x-container direction=\"row\" gap=\"1rem\" justify=\"space-between\" align=\"center\">\n  <span>Left</span>\n  <span>Middle</span>\n  <span>Right</span>\n</div>",
+      "alternates": [
+        "<div x-container direction=\"column\" gap=\"0.5rem\">\n  <span>Stacked one</span>\n  <span>Stacked two</span>\n  <span>Stacked three</span>\n</div>",
+        "<div x-container max-width=\"50ch\" padding=\"1rem\">\n  <p>Constrained and padded.</p>\n</div>"
+      ]
+    },
+    "x-cover": {
+      "source": "<div x-cover min-height=\"14rem\" padding=\"1rem\">\n  <h3>Vertically centred</h3>\n  <p>The cover keeps this centred in at least 14rem of height.</p>\n</div>",
+      "alternates": [
+        "<div x-cover min-height=\"20rem\" padding=\"2rem\">\n  <h3>Taller cover</h3>\n</div>"
+      ]
+    },
+    "x-frame": {
+      "source": "<div x-frame ratio=\"16:9\">\n  <img src=\"https://picsum.photos/seed/frame/640/360\" alt=\"Landscape held at 16:9\">\n</div>",
+      "alternates": [
+        "<div x-frame ratio=\"1:1\">\n  <img src=\"https://picsum.photos/seed/square/400/400\" alt=\"Cropped to a square\">\n</div>",
+        "<div x-frame ratio=\"4:3\">\n  <img src=\"https://picsum.photos/seed/classic/480/360\" alt=\"Held at 4:3\">\n</div>"
+      ]
+    },
+    "x-grid": {
+      "source": "<div x-grid columns=\"3\" gap=\"1rem\">\n  <article title=\"One\" subtitle=\"First cell\"></article>\n  <article title=\"Two\" subtitle=\"Second cell\"></article>\n  <article title=\"Three\" subtitle=\"Third cell\"></article>\n  <article title=\"Four\" subtitle=\"Wraps to row two\"></article>\n  <article title=\"Five\" subtitle=\"Fifth cell\"></article>\n  <article title=\"Six\" subtitle=\"Sixth cell\"></article>\n</div>",
+      "alternates": [
+        "<div x-grid min-width=\"12rem\" gap=\"0.75rem\">\n  <article title=\"Auto-fit\"></article>\n  <article title=\"No column count\"></article>\n  <article title=\"Fits to width\"></article>\n</div>"
+      ]
+    },
+    "x-icon": {
+      "source": "<span x-icon size=\"1.25em\" space=\"0.5em\">\n  <svg viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" aria-hidden=\"true\"><path d=\"M20 6 9 17l-5-5\"/></svg>\n  Saved\n</span>",
+      "alternates": [
+        "<span x-icon size=\"2em\" space=\"0.75em\">\n  <svg viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" aria-hidden=\"true\"><circle cx=\"12\" cy=\"12\" r=\"10\"/><path d=\"M12 8v4l3 2\"/></svg>\n  Pending\n</span>"
+      ]
+    },
+    "x-reel": {
+      "source": "<div x-reel item-width=\"14rem\" gap=\"1rem\">\n  <article title=\"Scroll me\" subtitle=\"Item one\"></article>\n  <article title=\"Keep going\" subtitle=\"Item two\"></article>\n  <article title=\"Still more\" subtitle=\"Item three\"></article>\n  <article title=\"Last one\" subtitle=\"Item four\"></article>\n</div>",
+      "alternates": [
+        "<div x-reel item-width=\"8rem\" gap=\"0.5rem\">\n  <article title=\"Narrow\"></article>\n  <article title=\"Reel\"></article>\n  <article title=\"Items\"></article>\n</div>"
+      ]
+    },
+    "x-sidebarlayout": {
+      "source": "<div x-sidebarlayout side=\"left\" side-width=\"14rem\" content-min=\"50%\" gap=\"1rem\">\n  <nav>\n    <p><strong>Sidebar</strong></p>\n    <p>Fixed at 14rem until the content hits its minimum.</p>\n  </nav>\n  <main>\n    <h3>Main content</h3>\n    <p>Takes the rest, and wraps below the sidebar when it can no longer keep half the width.</p>\n  </main>\n</div>",
+      "alternates": [
+        "<div x-sidebarlayout side=\"right\" side-width=\"12rem\" gap=\"1.5rem\">\n  <main>\n    <h3>Content first</h3>\n    <p>The sidebar sits on the right.</p>\n  </main>\n  <aside><p>Aside</p></aside>\n</div>"
+      ]
+    },
+    "x-stat": {
+      "source": "<div x-stat value=\"1,284\" label=\"Active installs\"></div>",
+      "alternates": [
+        "<div x-stat value=\"99.9%\" label=\"Uptime\" variant=\"success\"></div>",
+        "<div x-stat value=\"42ms\" label=\"p95 latency\"></div>"
+      ]
+    },
+    "x-switcher": {
+      "source": "<div x-switcher threshold=\"30rem\" gap=\"1rem\">\n  <article title=\"Side by side\" subtitle=\"Above 30rem\"></article>\n  <article title=\"Then stacked\" subtitle=\"Below 30rem\"></article>\n</div>",
+      "alternates": [
+        "<div x-switcher threshold=\"20rem\" limit=\"3\" gap=\"0.75rem\">\n  <article title=\"One\"></article>\n  <article title=\"Two\"></article>\n  <article title=\"Three\"></article>\n</div>"
+      ]
     }
   }
 }

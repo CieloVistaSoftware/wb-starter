@@ -29,19 +29,13 @@ export function tabs(element, options = {}) {
     nav = document.createElement('nav');
     nav.className = 'x-tabs__nav';
     nav.setAttribute('role', 'tablist');
-    Object.assign(nav.style, {
-      display: 'flex',
-      gap: '0',
-      borderBottom: '1px solid var(--border-color, #374151)',
-      marginBottom: '0.5rem'
-    });
+    // Appearance lives in src/styles/behaviors/tabs.css (#902). Writing it
+    // inline here beat every stylesheet rule, which is why variant/size/
+    // vertical/full-width could never be implemented.
 
     panelsContainer = document.createElement('div');
     panelsContainer.className = 'x-tabs__panels';
-    Object.assign(panelsContainer.style, {
-      width: '100%',
-      marginTop: '0.5rem'
-    });
+
 
     // tabs.schema.json declares activeTab ("Initially active tab index",
     // default 0), which the docs render as `active-tab`. The opening tab was
@@ -77,18 +71,7 @@ export function tabs(element, options = {}) {
       button.id = `tab-${i}`;
       button.textContent = title;
       
-      Object.assign(button.style, {
-        padding: '0.25rem 0.75rem',
-        background: 'none',
-        border: 'none',
-        cursor: 'pointer',
-        color: 'inherit',
-        fontSize: '0.8rem',
-        borderBottom: `2px solid ${isActive ? 'var(--primary, #6366f1)' : 'transparent'}`,
-        marginBottom: '-1px',
-        fontWeight: isActive ? '600' : '400',
-        opacity: isActive ? '1' : '0.7'
-      });
+
 
       nav.appendChild(button);
 
@@ -103,13 +86,9 @@ export function tabs(element, options = {}) {
       panelWrapper.setAttribute('index', i);
       panelWrapper.id = `panel-${i}`;
       panelWrapper.setAttribute('aria-labelledby', `tab-${i}`);
-      Object.assign(panelWrapper.style, {
-        padding: '1rem',
-        border: '1px solid var(--border-color, #e0e0e0)',
-        borderRadius: '4px',
-        background: 'var(--bg-primary, #fff)',
-        display: isActive ? 'block' : 'none'
-      });
+      // Appearance is in tabs.css (#902). Only visibility stays here: which
+      // panel is showing is state, not style.
+      panelWrapper.style.display = isActive ? 'block' : 'none';
       
       // Move all children of the original panel to the new wrapper
       while (panel.firstChild) {
@@ -135,10 +114,10 @@ export function tabs(element, options = {}) {
     // Update tabs
     nav.querySelectorAll('.x-tabs__tab').forEach((t, i) => {
       const active = i === index;
+      // The class carries the whole active look now (tabs.css). Writing it
+      // inline as well beat every variant rule -- variant="pills" could never
+      // colour its active tab while these three lines existed (#902).
       t.classList.toggle('x-tabs__tab--active', active);
-      t.style.borderBottomColor = active ? 'var(--primary, #6366f1)' : 'transparent';
-      t.style.fontWeight = active ? '600' : '400';
-      t.style.opacity = active ? '1' : '0.7';
       t.setAttribute('aria-selected', active);
     });
 

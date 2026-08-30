@@ -1,0 +1,169 @@
+/**
+ * x-tabs
+ * =============================================================================
+ * Until #902 there was no tabs stylesheet at all. tabs.js wrote every visual
+ * property inline -- padding, border, font-size, and the active state on each
+ * switch. That is the pattern a8a7362e removed from cards ("none of those
+ * classes are needed, deferring to specificity") and that TIER1-LAWS §9
+ * forbids.
+ *
+ * It also made the declared modifiers impossible: tabs.schema.json declares
+ * variant, size, vertical and fullWidth, IntelliSense offers them and the docs
+ * list them -- but an inline style beats every stylesheet rule, so no variant
+ * rule could ever have taken effect even if one had been written.
+ *
+ * The base rules below reproduce exactly what tabs.js used to write inline, so
+ * this is not a restyle. The modifiers are new, and follow the established
+ * `.x-name--variant, [variant="…"]` pairing from card.css.
+ */
+
+
+/* SPECIFICITY NOTE
+ * ----------------
+ * Every rule below is scoped under the host (`.x-tabs` / `[x-tabs]`) rather
+ * than written as a bare `.x-tabs__tab`.
+ *
+ * A tab is a real <button>, and a <button> IS the button behavior under
+ * auto-injection, so each tab also carries `.x-button` and is matched by an
+ * injected `.x-button { font-size: inherit; border-bottom-color: transparent }`
+ * rule. That rule has the same specificity as a bare `.x-tabs__tab` and lands
+ * later in the cascade, so it won: the first version of this file left the
+ * active tab with no underline and the wrong font size.
+ *
+ * Host-scoping makes these 0,2,0 and settles it without !important.
+ */
+
+/* ── structure ───────────────────────────────────────────────────────────── */
+
+.x-tabs .x-tabs__nav, [x-tabs] .x-tabs__nav {
+  display: flex;
+  gap: 0;
+  border-bottom: 1px solid var(--border-color, #374151);
+  margin-bottom: 0.5rem;
+}
+
+.x-tabs .x-tabs__panels, [x-tabs] .x-tabs__panels {
+  width: 100%;
+  margin-top: 0.5rem;
+}
+
+.x-tabs .x-tabs__tab, [x-tabs] .x-tabs__tab {
+  padding: 0.25rem 0.75rem;
+  background: none;
+  border: none;
+  border-bottom: 2px solid transparent;
+  margin-bottom: -1px;
+  cursor: pointer;
+  color: inherit;
+  font-size: 0.8rem;
+  font-weight: 400;
+  opacity: 0.7;
+}
+
+/* The class is applied by tabs.js and has been correct since #859. The look it
+   carries is the same one that used to be assigned inline on every switch. */
+.x-tabs .x-tabs__tab--active, [x-tabs] .x-tabs__tab--active {
+  border-bottom-color: var(--primary, #6366f1);
+  font-weight: 600;
+  opacity: 1;
+}
+
+.x-tabs .x-tabs__tab:hover:not(.x-tabs__tab--active), [x-tabs] .x-tabs__tab:hover:not(.x-tabs__tab--active) { opacity: 0.9; }
+.x-tabs .x-tabs__tab:focus-visible, [x-tabs] .x-tabs__tab:focus-visible {
+  outline: 2px solid var(--primary, #6366f1);
+  outline-offset: -2px;
+}
+
+.x-tabs .x-tabs__panel, [x-tabs] .x-tabs__panel {
+  padding: 1rem;
+  border: 1px solid var(--border-color, #e0e0e0);
+  border-radius: var(--radius-md, 4px);
+  background: var(--bg-primary, #fff);
+}
+
+/* ── size (schema: sm | md | lg, default md) ─────────────────────────────── */
+
+.x-tabs--sm .x-tabs__tab, [x-tabs][size="sm"] .x-tabs__tab {
+  font-size: var(--text-xs, 0.7rem);
+  padding: 0.15rem 0.5rem;
+}
+.x-tabs--md .x-tabs__tab, [x-tabs][size="md"] .x-tabs__tab {
+  font-size: var(--text-sm, 0.8rem);
+  padding: 0.25rem 0.75rem;
+}
+.x-tabs--lg .x-tabs__tab, [x-tabs][size="lg"] .x-tabs__tab {
+  font-size: var(--text-base, 1rem);
+  padding: 0.5rem 1.25rem;
+}
+
+/* ── variant (schema: default | underline | pills | bordered) ────────────── */
+
+/* `default` and `underline` are the same look -- the underline IS the default
+   presentation. Named explicitly so authoring variant="underline" is honoured
+   rather than silently falling through to the base rules. */
+.x-tabs--underline .x-tabs__tab--active, [x-tabs][variant="underline"] .x-tabs__tab--active {
+  border-bottom-color: var(--primary, #6366f1);
+}
+
+/* pills -- matches the existing x-badge--pill treatment rather than inventing
+   a second pill shape for the project. */
+.x-tabs--pills .x-tabs__nav, [x-tabs][variant="pills"] .x-tabs__nav {
+  border-bottom: none;
+  gap: var(--space-xs, 0.25rem);
+}
+.x-tabs--pills .x-tabs__tab, [x-tabs][variant="pills"] .x-tabs__tab {
+  border-bottom: none;
+  border-radius: 999px;
+  margin-bottom: 0;
+}
+.x-tabs--pills .x-tabs__tab--active, [x-tabs][variant="pills"] .x-tabs__tab--active {
+  background: var(--primary, #6366f1);
+  color: var(--text-on-accent, #fff);
+}
+
+/* bordered -- the tab reads as a folder tab joined to the panel below. */
+.x-tabs--bordered .x-tabs__tab, [x-tabs][variant="bordered"] .x-tabs__tab {
+  border: 1px solid transparent;
+  border-radius: var(--radius-md, 4px) var(--radius-md, 4px) 0 0;
+  margin-bottom: -1px;
+}
+.x-tabs--bordered .x-tabs__tab--active, [x-tabs][variant="bordered"] .x-tabs__tab--active {
+  border-color: var(--border-color, #374151);
+  border-bottom-color: var(--bg-primary, #fff);
+  background: var(--bg-primary, #fff);
+}
+
+/* ── vertical (schema: boolean) ──────────────────────────────────────────── */
+
+.x-tabs--vertical, [x-tabs][vertical] {
+  display: flex;
+  gap: var(--space-md, 1rem);
+}
+.x-tabs--vertical .x-tabs__nav, [x-tabs][vertical] .x-tabs__nav {
+  flex-direction: column;
+  border-bottom: none;
+  border-right: 1px solid var(--border-color, #374151);
+  margin-bottom: 0;
+}
+.x-tabs--vertical .x-tabs__tab, [x-tabs][vertical] .x-tabs__tab {
+  border-bottom: none;
+  border-right: 2px solid transparent;
+  margin-bottom: 0;
+  margin-right: -1px;
+  text-align: left;
+}
+.x-tabs--vertical .x-tabs__tab--active, [x-tabs][vertical] .x-tabs__tab--active {
+  border-right-color: var(--primary, #6366f1);
+}
+.x-tabs--vertical .x-tabs__panels, [x-tabs][vertical] .x-tabs__panels {
+  margin-top: 0;
+}
+
+/* ── full-width (schema: fullWidth) ──────────────────────────────────────── */
+
+.x-tabs--full-width .x-tabs__tab,
+[x-tabs][full-width] .x-tabs__tab,
+[x-tabs][fullwidth] .x-tabs__tab {
+  flex: 1 1 0;
+  text-align: center;
+}

@@ -101,11 +101,11 @@ Every behavior example is a `<div x-demo>` — it renders the **live control** A
   different mechanisms that happen to reuse the word:
   1. **CSS inheritance / the cascade** — a real browser mechanism (`docs/styles.md`,
      `docs/themes.md`). Correct terminology; leave it.
-  2. **Schema-layer `$inherits` / `$extends` / IS-A / HAS-A** — JSON documents merged
-     into one effective schema before render (`docs/claude/SCHEMAS-GUIDE.md`), and the
-     IS-A/HAS-A naming convention in
-     `docs/architecture/standards/ATTRIBUTE-NAMING-STANDARD.md`. This is a deliberate
-     data-layer design tracked by **issue #465** — do not rewrite it under this rule.
+  2. **Schema-layer `$extends`** — JSON documents merged into one effective schema
+     before render (`docs/claude/SCHEMAS-GUIDE.md`). Still a real, live mechanism:
+     `compose-page.mjs` resolves `$extends` on PAGE schemas to inherit page defaults.
+     Call it schema composition / layering. The IS-A / HAS-A naming convention that
+     used to sit alongside it was renamed to Standalone / Modifier under **#465**.
   When either appears, say which mechanism you mean so it can't be read as a behavior
   class hierarchy.
 - **HTML `extends` is purged.** The old design (customized built-ins:

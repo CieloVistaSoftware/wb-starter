@@ -3,10 +3,6 @@
   "$id": "figure.schema.json",
   "title": "Figure Semantic Element",
   "description": "Self-contained content with optional caption - images, diagrams, code snippets, illustrations.",
-  "$inheritance": {
-    "extends": "_element.base.schema.json",
-    "reason": "Figure IS-A element with all base properties"
-  },
   "htmlTag": "figure",
   "role": "figure",
   "semanticMeaning": {
@@ -112,7 +108,7 @@
     "code"
   ],
   "wbComponents": {
-    "description": "WB components that extend figure",
+    "description": "WB behaviors that extend figure",
     "list": [
       "image",
       "cardimage",

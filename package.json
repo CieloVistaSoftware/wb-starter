@@ -59,7 +59,7 @@
     "audit:page-fragments": "node scripts/audit-page-fragments.mjs",
     "audit:behavior-registry": "node scripts/audit-behavior-registry.mjs",
     "test:x-demo-integrity": "node scripts/test-wb-demo-integrity.mjs",
-    "test": "npm run test:lock-guards && npm run test:summary-parse && npm run test:duplicates && npm run test:x-demo-integrity && npx playwright test --project=compliance && npx playwright test --project=regression && npx playwright test --project=integration && npx playwright test --project=base && npx playwright test --project=behaviors",
+    "test": "npm run test:collection && npm run test:lock-guards && npm run test:summary-parse && npm run test:duplicates && npm run test:x-demo-integrity && npx playwright test --project=compliance && npx playwright test --project=regression && npx playwright test --project=integration && npx playwright test --project=base && npx playwright test --project=behaviors",
     "test:fast": "npx playwright test --max-failures=1",
     "test:dev": "npx playwright test --project=base --project=behaviors",
     "test:inc": "node scripts/test-incremental.js",
@@ -67,7 +67,7 @@
     "test:stop": "node scripts/test-async.mjs --stop",
     "test:ui": "npx playwright test --ui",
     "test:single": "npx playwright test --workers=1",
-    "test:compliance": "npm run test:x-demo-integrity && npx playwright test --project=compliance",
+    "test:compliance": "npm run test:collection && npm run test:x-demo-integrity && npx playwright test --project=compliance",
     "test:compliance:css": "npx playwright test --project=compliance-css",
     "test:compliance:docs": "npx playwright test --project=compliance-docs",
     "test:compliance:demos": "npx playwright test --project=compliance-demos",
@@ -106,7 +106,8 @@
     "typecheck": "tsc -p tsconfig.json --noEmit",
     "lint:baseline": "node .husky/lint-ratchet.mjs --baseline",
     "lint:ratchet": "node .husky/lint-ratchet.mjs --all",
-    "lint:staged": "node .husky/lint-ratchet.mjs --staged"
+    "lint:staged": "node .husky/lint-ratchet.mjs --staged",
+    "test:collection": "node scripts/check-test-collection.mjs"
   },
   "scripts-info": {
     "start": "Start site (update docs manifest then run express server)",

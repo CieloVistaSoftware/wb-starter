@@ -77,6 +77,31 @@ const siteFiles = loadSiteFiles();
 //  PAGE SCHEMAS (*.page.json)
 // ################################################################
 
+/**
+ * A page-schema tag is valid when it is NOT the retired `wb-` prefix (#890).
+ *
+ * These two assertions used to demand `startsWith('wb-')`, which was correct
+ * before 4.0.0 renamed the authoring surface to `x-`. They were never updated,
+ * so they failed once per section and once per demo — 500 tests from two lines,
+ * every one of them reporting `tag "x-badge" must start with "wb-"`.
+ *
+ * That message points a reader straight at the wrong fix. Renaming the 253 tags
+ * in src/wb-models/pages/ back to `wb-` would satisfy this file and immediately
+ * break tests/compliance/wb-prefix-cannot-return.spec.ts, which asserts the
+ * `wb-` TAG count at exactly zero. The two specs were mutually unsatisfiable.
+ *
+ * Bare tags are deliberately allowed. Under auto-injection a semantic tag IS
+ * its behavior, so `h1` and `p` (14 of them today) are legitimate page-schema
+ * tags and must not be forced to carry a prefix.
+ */
+function assertNotRetiredPrefix(tag: string, what: string): void {
+  expect(
+    tag.startsWith('wb-'),
+    `${what} "${tag}" uses the retired "wb-" prefix, removed in 4.0.0 — ` +
+      `use the "x-" behavior tag or a bare semantic tag`,
+  ).toBe(false);
+}
+
 test.describe('Page Schema — Required Fields ($defs/pageSchemaJSON)', () => {
   for (const { name, data } of pageFiles) {
     test(`${name} — has title (string, non-empty)`, () => {
@@ -142,8 +167,8 @@ test.describe('Page Schema — Section Structure ($defs/pageSection)', () => {
       });
 
       if (section.tag) {
-        test(`${label} — section tag starts with wb-`, () => {
-          expect(section.tag.startsWith('wb-'), `tag "${section.tag}" must start with "wb-"`).toBe(true);
+        test(`${label} — section tag does not use the retired wb- prefix`, () => {
+          assertNotRetiredPrefix(section.tag, 'section tag');
         });
       }
     }
@@ -165,8 +190,8 @@ test.describe('Page Schema — Demo Items ($defs/demoItem)', () => {
           expect(typeof demo.tag).toBe('string');
         });
 
-        test(`${label} — tag starts with wb-`, () => {
-          expect(demo.tag.startsWith('wb-'), `"${demo.tag}" must start with "wb-"`).toBe(true);
+        test(`${label} — tag does not use the retired wb- prefix`, () => {
+          assertNotRetiredPrefix(demo.tag, 'demo tag');
         });
 
         test(`${label} — has required attrs (object)`, () => {

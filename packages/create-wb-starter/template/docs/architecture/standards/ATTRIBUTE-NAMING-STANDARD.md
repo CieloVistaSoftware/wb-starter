@@ -94,25 +94,28 @@ WB uses three patterns for applying behaviors:
 
 | Pattern | Meaning | Use Case | Example |
 |---------|---------|----------|---------|
-| `<wb-{name}>` | **IS-A** | Standalone behaviors | `<div x-cardpricing>` |
-| `x-behavior` | **HAS-A** | Extensions (adds capability) | `x-ripple` |
+| `<wb-{name}>` | **Standalone** | Behavior gets its own tag | `<div x-cardpricing>` |
+| `x-behavior` | **Modifier** | Behavior decorates an existing tag | `x-ripple` |
 | `x-as-behavior` | **BECOMES** | Morphing (transforms element) | `x-as-card` |
 
-> **IS-A here is a naming rule, not a class relationship.** It answers "does this thing
-> get its own tag, or does it decorate a tag that already exists?" — nothing subclasses
-> anything. `<div x-cardpricing>` does not extend a `card` class; the `cardpricing` behavior
-> function decorates the element in place, exactly as `x-ripple` does. This IS-A/HAS-A
-> vocabulary is also used by the schema layer, which is a deliberate design tracked in
-> **issue #465**.
+> **Both are composition.** The split is only about where the behavior is named —
+> whether it gets its own tag or decorates a tag that already exists. Nothing
+> subclasses anything: `<div x-cardpricing>` does not extend a `card` class, the
+> `cardpricing` behavior function decorates the element in place, exactly as
+> `x-ripple` does.
+>
+> This used to be labelled IS-A / HAS-A and needed a paragraph explaining that the
+> label did not mean what it says. Renamed under **#465**: the architecture is
+> composition, so the vocabulary is too.
 
 ```html
-<!-- IS-A: Custom element (noun) -->
+<!-- Standalone: gets its own tag (noun) -->
 <div x-cardstats
   value="1,234"
   label="Users"
   trend="up">
 </div>
-<!-- HAS-A: Extension (verb/modifier) -->
+<!-- Modifier: decorates an existing tag (verb) -->
 <button
   x-ripple
   x-tooltip="Save changes">
@@ -667,7 +670,7 @@ Behaviors should expose CSS custom properties for theming:
 </div>
 ```
 
-Modifier behaviors (HAS-A, applied to any element) didn't change — they were
+Modifier behaviors (applied to any element) didn't change — they were
 already the direct `x-{name}` form, not `x-behavior="{name}"`:
 ```html
 <button x-ripple x-tooltip="Click me">

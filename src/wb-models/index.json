@@ -1,7 +1,7 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "title": "WB Models Index - Complete",
-  "description": "Complete index of all component schemas for MVVM architecture (v3.0)",
+  "description": "Complete index of all behavior schemas for MVVM architecture (v3.0)",
   "version": "3.0.0",
   "updated": "2026-01-12",
   "schemas": [
@@ -164,7 +164,7 @@
   ],
   "categories": {
     "cards": {
-      "description": "Card-based content components",
+      "description": "Card-based content behaviors",
       "count": 20,
       "schemas": [
         "card.schema.json",
@@ -190,7 +190,7 @@
       ]
     },
     "forms": {
-      "description": "Form input and control components",
+      "description": "Form input and control behaviors",
       "count": 7,
       "schemas": [
         "button.schema.json",
@@ -203,7 +203,7 @@
       ]
     },
     "feedback": {
-      "description": "User feedback and notification components",
+      "description": "User feedback and notification behaviors",
       "count": 11,
       "schemas": [
         "alert.schema.json",
@@ -220,7 +220,7 @@
       ]
     },
     "overlay": {
-      "description": "Overlay and modal components",
+      "description": "Overlay and modal behaviors",
       "count": 3,
       "schemas": [
         "dialog.schema.json",
@@ -229,7 +229,7 @@
       ]
     },
     "navigation": {
-      "description": "Navigation and layout components",
+      "description": "Navigation and layout behaviors",
       "count": 2,
       "schemas": [
         "navbar.schema.json",
@@ -237,7 +237,7 @@
       ]
     },
     "layout": {
-      "description": "Layout and structural components",
+      "description": "Layout and structural behaviors",
       "count": 9,
       "schemas": [
         "details.schema.json",
@@ -252,7 +252,7 @@
       ]
     },
     "effects": {
-      "description": "Visual effect components",
+      "description": "Visual effect behaviors",
       "count": 5,
       "schemas": [
         "confetti.schema.json",
@@ -263,14 +263,14 @@
       ]
     },
     "media": {
-      "description": "Media playback components",
+      "description": "Media playback behaviors",
       "count": 1,
       "schemas": [
         "audio.schema.json"
       ]
     },
     "interactive": {
-      "description": "Interactive and control components",
+      "description": "Interactive and control behaviors",
       "count": 8,
       "schemas": [
         "collapse.schema.json",
@@ -284,7 +284,7 @@
       ]
     },
     "utility": {
-      "description": "Utility and content components",
+      "description": "Utility and content behaviors",
       "count": 5,
       "schemas": [
         "notes.schema.json",
@@ -295,7 +295,7 @@
       ]
     },
     "content": {
-      "description": "Content and documentation components",
+      "description": "Content and documentation behaviors",
       "count": 3,
       "schemas": [
         "article.schema.json",
@@ -305,7 +305,7 @@
     }
   },
   "meta": {
-    "description": "Meta/system schemas (not components)",
+    "description": "Meta/system schemas (not behaviors)",
     "schemas": [
       "behavior.schema.json",
       "card.base.schema.json",

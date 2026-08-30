@@ -1,5 +1,4 @@
 {
-  "$extends": "x-page-defaults",
   "title": "🧩 Multi-Behavior Demo",
   "schemaFor": "multi-behavior-demo",
   "header": {
@@ -15,7 +14,9 @@
       "$generate": {
         "behavior": "badge",
         "source": "matrix",
-        "baseAttrs": { "label": "Badge" },
+        "baseAttrs": {
+          "label": "Badge"
+        },
         "limit": 8
       },
       "heading": "Badges — From Matrix",
@@ -25,7 +26,9 @@
       "$generate": {
         "behavior": "cardnotification",
         "source": "matrix",
-        "baseAttrs": { "message": "Notification message" }
+        "baseAttrs": {
+          "message": "Notification message"
+        }
       },
       "heading": "Notifications — Matrix Combos"
     },
@@ -44,8 +47,22 @@
       "tag": "x-badge",
       "columns": 2,
       "demos": [
-        { "tag": "x-badge", "attrs": { "label": "Hand-crafted", "variant": "primary", "pill": true } },
-        { "tag": "x-badge", "attrs": { "label": "Also custom", "variant": "success", "size": "lg" } }
+        {
+          "tag": "x-badge",
+          "attrs": {
+            "label": "Hand-crafted",
+            "variant": "primary",
+            "pill": true
+          }
+        },
+        {
+          "tag": "x-badge",
+          "attrs": {
+            "label": "Also custom",
+            "variant": "success",
+            "size": "lg"
+          }
+        }
       ]
     }
   ]

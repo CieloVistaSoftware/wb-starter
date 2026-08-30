@@ -14,9 +14,9 @@
         "init": "WB.init({ autoInject: true })"
       }
     ],
-    "title": "🧩 Multi-Component Demo"
+    "title": "🧩 Multi-Behavior Demo"
   },
-  "title": "🧩 Multi-Component Demo",
+  "title": "🧩 Multi-Behavior Demo",
   "schemaFor": "multi-component-demo",
   "header": {
     "tag": "h1",

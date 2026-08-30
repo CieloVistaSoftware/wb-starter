@@ -3,15 +3,15 @@
   "issues": "#779 (inline styles), #790 (hardcoded colours inside them)",
   "standard": "No inline styles anywhere. Unqualified — overridability is a consequence, not a condition.",
   "behaviorsWithInlineStyles": 56,
-  "totalDeclarations": 1035,
-  "colourLiteralDeclarations": 35,
+  "totalDeclarations": 992,
+  "colourLiteralDeclarations": 34,
   "classification": {
     "COVERED": {
-      "count": 626,
+      "count": 608,
       "meaning": "a stylesheet already supplies this exact value — delete the inline write, no CSS to author"
     },
     "UNCOVERED": {
-      "count": 409,
+      "count": 384,
       "meaning": "the inline is the only source — a rule must be written before it can be removed"
     },
     "DYNAMIC": {
@@ -29,9 +29,9 @@
     },
     {
       "behavior": "x-cardminimizable",
-      "total": 73,
-      "covered": 70,
-      "uncovered": 3,
+      "total": 69,
+      "covered": 64,
+      "uncovered": 5,
       "dynamic": 0
     },
     {
@@ -98,13 +98,6 @@
       "dynamic": 0
     },
     {
-      "behavior": "x-progressbar",
-      "total": 36,
-      "covered": 12,
-      "uncovered": 24,
-      "dynamic": 0
-    },
-    {
       "behavior": "x-cardoverlay",
       "total": 25,
       "covered": 23,
@@ -114,8 +107,8 @@
     {
       "behavior": "x-cardportfolio",
       "total": 25,
-      "covered": 18,
-      "uncovered": 7,
+      "covered": 19,
+      "uncovered": 6,
       "dynamic": 0
     },
     {
@@ -142,8 +135,8 @@
     {
       "behavior": "x-carddraggable",
       "total": 22,
-      "covered": 19,
-      "uncovered": 3,
+      "covered": 16,
+      "uncovered": 6,
       "dynamic": 0
     },
     {
@@ -151,13 +144,6 @@
       "total": 20,
       "covered": 6,
       "uncovered": 14,
-      "dynamic": 0
-    },
-    {
-      "behavior": "x-cardfile",
-      "total": 16,
-      "covered": 12,
-      "uncovered": 4,
       "dynamic": 0
     },
     {
@@ -186,6 +172,13 @@
       "total": 13,
       "covered": 13,
       "uncovered": 0,
+      "dynamic": 0
+    },
+    {
+      "behavior": "x-cardfile",
+      "total": 12,
+      "covered": 11,
+      "uncovered": 1,
       "dynamic": 0
     },
     {
@@ -289,8 +282,8 @@
     {
       "behavior": "x-stagelight",
       "total": 4,
-      "covered": 0,
-      "uncovered": 4,
+      "covered": 3,
+      "uncovered": 1,
       "dynamic": 0
     },
     {
@@ -372,6 +365,13 @@
     },
     {
       "behavior": "x-ratio",
+      "total": 1,
+      "covered": 0,
+      "uncovered": 1,
+      "dynamic": 0
+    },
+    {
+      "behavior": "x-repeater",
       "total": 1,
       "covered": 0,
       "uncovered": 1,
@@ -610,7 +610,7 @@
       "elements": [
         {
           "path": ":host",
-          "classes": "x-draggable__handle",
+          "classes": "x-draggable x-draggable__handle",
           "declarations": [
             {
               "prop": "cursor",
@@ -632,7 +632,7 @@
       "elements": [
         {
           "path": ":host",
-          "classes": "",
+          "classes": "x-resizable",
           "declarations": [
             {
               "prop": "position",
@@ -690,7 +690,7 @@
       "elements": [
         {
           "path": ":host",
-          "classes": "",
+          "classes": "x-scrollalong",
           "declarations": [
             {
               "prop": "position",
@@ -713,209 +713,11 @@
       "total": 3
     },
     {
-      "behavior": "x-progressbar",
-      "elements": [
-        {
-          "path": ":host",
-          "classes": "x-progress",
-          "declarations": [
-            {
-              "prop": "background-image",
-              "value": "",
-              "classification": "COVERED"
-            },
-            {
-              "prop": "background-position-x",
-              "value": "",
-              "classification": "COVERED"
-            },
-            {
-              "prop": "background-position-y",
-              "value": "",
-              "classification": "COVERED"
-            },
-            {
-              "prop": "background-size",
-              "value": "",
-              "classification": "COVERED"
-            },
-            {
-              "prop": "background-repeat",
-              "value": "",
-              "classification": "COVERED"
-            },
-            {
-              "prop": "background-attachment",
-              "value": "",
-              "classification": "COVERED"
-            },
-            {
-              "prop": "background-origin",
-              "value": "",
-              "classification": "COVERED"
-            },
-            {
-              "prop": "background-clip",
-              "value": "",
-              "classification": "COVERED"
-            },
-            {
-              "prop": "background-color",
-              "value": "",
-              "classification": "UNCOVERED"
-            },
-            {
-              "prop": "border-top-left-radius",
-              "value": "999px",
-              "classification": "UNCOVERED"
-            },
-            {
-              "prop": "border-top-right-radius",
-              "value": "999px",
-              "classification": "UNCOVERED"
-            },
-            {
-              "prop": "border-bottom-right-radius",
-              "value": "999px",
-              "classification": "UNCOVERED"
-            },
-            {
-              "prop": "border-bottom-left-radius",
-              "value": "999px",
-              "classification": "UNCOVERED"
-            },
-            {
-              "prop": "height",
-              "value": "1.5rem",
-              "classification": "UNCOVERED"
-            },
-            {
-              "prop": "width",
-              "value": "100%",
-              "classification": "COVERED"
-            },
-            {
-              "prop": "position",
-              "value": "relative",
-              "classification": "UNCOVERED"
-            },
-            {
-              "prop": "overflow-x",
-              "value": "hidden",
-              "classification": "UNCOVERED"
-            },
-            {
-              "prop": "overflow-y",
-              "value": "hidden",
-              "classification": "UNCOVERED"
-            }
-          ]
-        },
-        {
-          "path": "div[0]",
-          "classes": "x-progress-bar",
-          "declarations": [
-            {
-              "prop": "background-color",
-              "value": "var(--primary, #6366f1)",
-              "classification": "UNCOVERED"
-            },
-            {
-              "prop": "width",
-              "value": "0%",
-              "classification": "UNCOVERED"
-            },
-            {
-              "prop": "height",
-              "value": "100%",
-              "classification": "UNCOVERED"
-            },
-            {
-              "prop": "border-top-left-radius",
-              "value": "999px",
-              "classification": "UNCOVERED"
-            },
-            {
-              "prop": "border-top-right-radius",
-              "value": "999px",
-              "classification": "UNCOVERED"
-            },
-            {
-              "prop": "border-bottom-right-radius",
-              "value": "999px",
-              "classification": "UNCOVERED"
-            },
-            {
-              "prop": "border-bottom-left-radius",
-              "value": "999px",
-              "classification": "UNCOVERED"
-            },
-            {
-              "prop": "transition-behavior",
-              "value": "normal",
-              "classification": "COVERED"
-            },
-            {
-              "prop": "transition-duration",
-              "value": "0.3s",
-              "classification": "UNCOVERED"
-            },
-            {
-              "prop": "transition-timing-function",
-              "value": "ease",
-              "classification": "COVERED"
-            },
-            {
-              "prop": "transition-delay",
-              "value": "0s",
-              "classification": "COVERED"
-            },
-            {
-              "prop": "transition-property",
-              "value": "width",
-              "classification": "UNCOVERED"
-            },
-            {
-              "prop": "display",
-              "value": "flex",
-              "classification": "UNCOVERED"
-            },
-            {
-              "prop": "align-items",
-              "value": "center",
-              "classification": "UNCOVERED"
-            },
-            {
-              "prop": "justify-content",
-              "value": "center",
-              "classification": "UNCOVERED"
-            },
-            {
-              "prop": "color",
-              "value": "white",
-              "classification": "UNCOVERED"
-            },
-            {
-              "prop": "font-size",
-              "value": "0.75rem",
-              "classification": "UNCOVERED"
-            },
-            {
-              "prop": "font-weight",
-              "value": "bold",
-              "classification": "UNCOVERED"
-            }
-          ]
-        }
-      ],
-      "total": 36
-    },
-    {
       "behavior": "x-confetti",
       "elements": [
         {
           "path": ":host",
-          "classes": "x-confetti-trigger",
+          "classes": "x-confetti-trigger x-confetti",
           "declarations": [
             {
               "prop": "cursor",
@@ -1227,7 +1029,7 @@
       "elements": [
         {
           "path": ":host",
-          "classes": "x-fireworks-trigger",
+          "classes": "x-fireworks-trigger x-fireworks",
           "declarations": [
             {
               "prop": "cursor",
@@ -1359,7 +1161,7 @@
       "elements": [
         {
           "path": ":host",
-          "classes": "x-snow-trigger",
+          "classes": "x-snow-trigger x-snow",
           "declarations": [
             {
               "prop": "cursor",
@@ -1491,22 +1293,22 @@
       "elements": [
         {
           "path": ":host",
-          "classes": "x-stagelight--beam",
+          "classes": "x-stagelight x-stagelight--beam",
           "declarations": [
             {
               "prop": "--x-stagelight-color",
               "value": "#ffffff",
-              "classification": "UNCOVERED"
+              "classification": "COVERED"
             },
             {
               "prop": "--x-stagelight-size",
               "value": "300px",
-              "classification": "UNCOVERED"
+              "classification": "COVERED"
             },
             {
               "prop": "--x-stagelight-intensity",
               "value": "0.5",
-              "classification": "UNCOVERED"
+              "classification": "COVERED"
             },
             {
               "prop": "--speed",
@@ -1523,7 +1325,7 @@
       "elements": [
         {
           "path": ":host",
-          "classes": "",
+          "classes": "x-stack",
           "declarations": [
             {
               "prop": "display",
@@ -1555,7 +1357,7 @@
       "elements": [
         {
           "path": ":host",
-          "classes": "",
+          "classes": "x-cluster",
           "declarations": [
             {
               "prop": "display",
@@ -1868,7 +1670,7 @@
       "elements": [
         {
           "path": ":host",
-          "classes": "",
+          "classes": "x-demo",
           "declarations": [
             {
               "prop": "--x-demo-shrink-width",
@@ -2341,7 +2143,7 @@
       "elements": [
         {
           "path": ":host",
-          "classes": "",
+          "classes": "x-navbar",
           "declarations": [
             {
               "prop": "display",
@@ -2768,6 +2570,23 @@
             {
               "prop": "aspect-ratio",
               "value": "16 / 9",
+              "classification": "UNCOVERED"
+            }
+          ]
+        }
+      ],
+      "total": 1
+    },
+    {
+      "behavior": "x-repeater",
+      "elements": [
+        {
+          "path": ":host",
+          "classes": "x-repeater",
+          "declarations": [
+            {
+              "prop": "display",
+              "value": "contents",
               "classification": "UNCOVERED"
             }
           ]
@@ -3286,7 +3105,7 @@
       "elements": [
         {
           "path": "header[0]",
-          "classes": "x-card__header x-card__drag-handle x-header",
+          "classes": "x-card__header x-card__drag-handle",
           "declarations": [
             {
               "prop": "padding-top",
@@ -3376,7 +3195,7 @@
             {
               "prop": "display",
               "value": "flex",
-              "classification": "COVERED"
+              "classification": "UNCOVERED"
             },
             {
               "prop": "align-items",
@@ -3386,12 +3205,12 @@
             {
               "prop": "row-gap",
               "value": "0.5rem",
-              "classification": "COVERED"
+              "classification": "UNCOVERED"
             },
             {
               "prop": "column-gap",
               "value": "0.5rem",
-              "classification": "COVERED"
+              "classification": "UNCOVERED"
             }
           ]
         },
@@ -3480,7 +3299,7 @@
         },
         {
           "path": "footer[1]",
-          "classes": "x-card__footer x-footer",
+          "classes": "x-card__footer",
           "declarations": [
             {
               "prop": "padding-top",
@@ -3779,7 +3598,7 @@
       "elements": [
         {
           "path": ":host",
-          "classes": "x-card x-card--file x-card--auto x-card-file",
+          "classes": "x-card--file x-card-file",
           "declarations": [
             {
               "prop": "padding-top",
@@ -3835,32 +3654,6 @@
           ]
         },
         {
-          "path": "div[1]",
-          "classes": "",
-          "declarations": [
-            {
-              "prop": "flex-grow",
-              "value": "1",
-              "classification": "UNCOVERED"
-            },
-            {
-              "prop": "flex-shrink",
-              "value": "1",
-              "classification": "COVERED"
-            },
-            {
-              "prop": "flex-basis",
-              "value": "0%",
-              "classification": "UNCOVERED"
-            },
-            {
-              "prop": "min-width",
-              "value": "0px",
-              "classification": "UNCOVERED"
-            }
-          ]
-        },
-        {
           "path": "div[2]",
           "classes": "x-card__file-warning",
           "declarations": [
@@ -3882,14 +3675,14 @@
           ]
         }
       ],
-      "total": 16
+      "total": 12
     },
     {
       "behavior": "x-cardhero",
       "elements": [
         {
           "path": ":host",
-          "classes": "x-card x-card--hero x-card--auto x-hero x-card--xalign-center",
+          "classes": "x-card--hero x-hero x-card--xalign-center",
           "declarations": [
             {
               "prop": "min-height",
@@ -3906,7 +3699,7 @@
       "elements": [
         {
           "path": ":host",
-          "classes": "x-card x-card--horizontal x-card--auto x-card--hoverable x-card-horizontal",
+          "classes": "x-card--horizontal x-card-horizontal",
           "declarations": [
             {
               "prop": "flex-direction",
@@ -3995,7 +3788,7 @@
       "elements": [
         {
           "path": ":host",
-          "classes": "x-card x-card--link x-card--auto x-card--hoverable x-card-link",
+          "classes": "x-card--link x-card-link",
           "declarations": [
             {
               "prop": "cursor",
@@ -4089,7 +3882,7 @@
       "elements": [
         {
           "path": "header[0]",
-          "classes": "x-card__header x-header",
+          "classes": "",
           "declarations": [
             {
               "prop": "padding-top",
@@ -4104,7 +3897,7 @@
             {
               "prop": "padding-bottom",
               "value": "1rem",
-              "classification": "COVERED"
+              "classification": "UNCOVERED"
             },
             {
               "prop": "padding-left",
@@ -4174,47 +3967,21 @@
             {
               "prop": "display",
               "value": "flex",
-              "classification": "COVERED"
+              "classification": "UNCOVERED"
             },
             {
               "prop": "align-items",
               "value": "center",
-              "classification": "COVERED"
+              "classification": "UNCOVERED"
             },
             {
               "prop": "row-gap",
               "value": "0.75rem",
-              "classification": "COVERED"
+              "classification": "UNCOVERED"
             },
             {
               "prop": "column-gap",
               "value": "0.75rem",
-              "classification": "COVERED"
-            }
-          ]
-        },
-        {
-          "path": "header[0] > div[0]",
-          "classes": "",
-          "declarations": [
-            {
-              "prop": "flex-grow",
-              "value": "1",
-              "classification": "UNCOVERED"
-            },
-            {
-              "prop": "flex-shrink",
-              "value": "1",
-              "classification": "COVERED"
-            },
-            {
-              "prop": "flex-basis",
-              "value": "0%",
-              "classification": "UNCOVERED"
-            },
-            {
-              "prop": "min-width",
-              "value": "0px",
               "classification": "UNCOVERED"
             }
           ]
@@ -4477,14 +4244,14 @@
           ]
         }
       ],
-      "total": 73
+      "total": 69
     },
     {
       "behavior": "x-cardoverlay",
       "elements": [
         {
           "path": ":host",
-          "classes": "x-card x-card--overlay x-card--auto x-card-overlay x-card--overlay-card x-card--overlay-bottom",
+          "classes": "x-card--overlay x-card-overlay x-card--overlay-card x-card--overlay-bottom",
           "declarations": [
             {
               "prop": "height",
@@ -4627,7 +4394,7 @@
       "elements": [
         {
           "path": ":host",
-          "classes": "x-card x-card--portfolio x-card--auto x-portfolio",
+          "classes": "x-card--portfolio x-portfolio",
           "declarations": [
             {
               "prop": "max-width",
@@ -4638,7 +4405,7 @@
         },
         {
           "path": "header[0]",
-          "classes": "x-portfolio__header x-header",
+          "classes": "x-portfolio__header",
           "declarations": [
             {
               "prop": "height",
@@ -4713,7 +4480,7 @@
             {
               "prop": "font-size",
               "value": "1rem",
-              "classification": "UNCOVERED"
+              "classification": "COVERED"
             }
           ]
         },
@@ -4776,7 +4543,7 @@
       "elements": [
         {
           "path": ":host",
-          "classes": "x-card x-card--pricing x-card--auto x-card--hoverable x-pricing",
+          "classes": "x-card--pricing x-pricing",
           "declarations": [
             {
               "prop": "text-align",
@@ -4812,7 +4579,7 @@
         },
         {
           "path": "header[0]",
-          "classes": "x-card__header x-header",
+          "classes": "",
           "declarations": [
             {
               "prop": "text-align",
@@ -4859,7 +4626,7 @@
         },
         {
           "path": "main[1]",
-          "classes": "x-card__main",
+          "classes": "",
           "declarations": [
             {
               "prop": "text-align",
@@ -5066,7 +4833,7 @@
         },
         {
           "path": "footer[2]",
-          "classes": "x-card__footer x-footer",
+          "classes": "x-card__footer",
           "declarations": [
             {
               "prop": "background-image",
@@ -5253,7 +5020,7 @@
       "elements": [
         {
           "path": ":host",
-          "classes": "x-card x-card--testimonial x-card--auto x-testimonial",
+          "classes": "x-card--testimonial x-testimonial",
           "declarations": [
             {
               "prop": "padding-top",
@@ -5351,7 +5118,7 @@
         },
         {
           "path": "footer[2]",
-          "classes": "x-card__footer x-footer",
+          "classes": "x-card__footer",
           "declarations": [
             {
               "prop": "display",
@@ -5533,7 +5300,7 @@
       "elements": [
         {
           "path": ":host",
-          "classes": "",
+          "classes": "x-container",
           "declarations": [
             {
               "prop": "display",
@@ -5600,7 +5367,7 @@
       "elements": [
         {
           "path": ":host",
-          "classes": "",
+          "classes": "x-grid",
           "declarations": [
             {
               "prop": "display",
@@ -5946,7 +5713,7 @@
       "elements": [
         {
           "path": ":host",
-          "classes": "",
+          "classes": "x-copy",
           "declarations": [
             {
               "prop": "cursor",
@@ -5963,7 +5730,7 @@
       "elements": [
         {
           "path": ":host",
-          "classes": "x-drawer",
+          "classes": "x-drawer-layout x-drawer",
           "declarations": [
             {
               "prop": "position",
@@ -6561,7 +6328,7 @@
       "elements": [
         {
           "path": ":host",
-          "classes": "",
+          "classes": "x-toggle",
           "declarations": [
             {
               "prop": "cursor",

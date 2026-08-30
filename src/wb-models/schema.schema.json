@@ -2,40 +2,57 @@
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "schema.schema.json",
   "schemaType": "definition",
-  "title": "WB Component Schema Meta-Schema",
-  "description": "Validates WB schema files across 3 tiers. Component schemas (default) require all fields. Base schemas (inherited from, never instantiated) relax $view/$methods/behavior. Definition schemas (pure reference docs) require only title + description. Enforces v3.0 rules: every property must have type + default, enums must be arrays, $view items need name + tag.",
-
+  "title": "WB Behavior Schema Meta-Schema",
+  "description": "Validates WB schema files across 3 tiers. Behavior schemas (default) require all fields. Base schemas (inherited from, never instantiated) relax $view/$methods/behavior. Definition schemas (pure reference docs) require only title + description. Enforces v3.0 rules: every property must have type + default, enums must be arrays, $view items need name + tag.",
   "type": "object",
-
   "_schemaTypes": {
     "component": {
-      "description": "Default. Real components users interact with. Full rules apply.",
-      "required": ["title", "description", "properties", "$view", "$methods"],
+      "description": "Default. Real behaviors users interact with. Full rules apply.",
+      "required": [
+        "title",
+        "description",
+        "properties",
+        "$view",
+        "$methods"
+      ],
       "requiresBehaviorOrSchemaFor": true,
       "propertyRules": "type + default mandatory on every property"
     },
     "base": {
       "description": "Abstract schemas inherited by other schemas. Never instantiated directly.",
-      "required": ["title", "description", "properties"],
+      "required": [
+        "title",
+        "description",
+        "properties"
+      ],
       "requiresBehaviorOrSchemaFor": false,
       "propertyRules": "type + default mandatory on every property"
     },
     "definition": {
-      "description": "Pure reference documents defining rules or contracts. Not components.",
-      "required": ["title", "description"],
+      "description": "Pure reference documents defining rules or contracts. Not behaviors.",
+      "required": [
+        "title",
+        "description"
+      ],
       "requiresBehaviorOrSchemaFor": false,
       "propertyRules": "none — properties section optional"
     },
     "page": {
-      "description": "Page-level schema. Defines layout rows, page rules, and content placement. Not a component.",
-      "required": ["title", "description", "pageRules", "$layout"],
+      "description": "Page-level schema. Defines layout rows, page rules, and content placement. Not a behavior.",
+      "required": [
+        "title",
+        "description",
+        "pageRules",
+        "$layout"
+      ],
       "requiresBehaviorOrSchemaFor": false,
       "propertyRules": "type + default on data properties"
     }
   },
-
-  "required": ["title", "description"],
-
+  "required": [
+    "title",
+    "description"
+  ],
   "properties": {
     "src": {
       "type": "string",
@@ -49,12 +66,16 @@
       "type": "string",
       "description": "Unique identifier for the behavior"
     },
-
     "schemaType": {
       "type": "string",
-      "enum": ["component", "base", "definition", "page"],
+      "enum": [
+        "component",
+        "base",
+        "definition",
+        "page"
+      ],
       "default": "component",
-      "description": "Schema tier. 'component' (default) = full rules. 'base' = abstract/inherited, $view/$methods optional. 'definition' = reference doc, only title+description required."
+      "description": "Schema tier. 'behavior' (default) = full rules. 'base' = abstract/inherited, $view/$methods optional. 'definition' = reference doc, only title+description required."
     },
     "$schema": {
       "type": "string",
@@ -68,14 +89,13 @@
     "title": {
       "type": "string",
       "minLength": 1,
-      "description": "Human-readable component name"
+      "description": "Human-readable behavior name"
     },
     "description": {
       "type": "string",
       "minLength": 1,
-      "description": "What this component does"
+      "description": "What this behavior does"
     },
-
     "behavior": {
       "type": "string",
       "pattern": "^[a-z][a-z0-9-]*$",
@@ -91,7 +111,6 @@
       "pattern": "^wb-[a-z][a-z0-9-]*$",
       "description": "Base CSS class (BEM block). Must start with wb-"
     },
-
     "semanticElement": {
       "type": "object",
       "properties": {
@@ -105,25 +124,36 @@
           "description": "WAI-ARIA implicit role"
         }
       },
-      "required": ["tagName"]
+      "required": [
+        "tagName"
+      ]
     },
-
     "compliance": {
       "type": "object",
       "description": "Legacy compliance section (retained for backward compat)",
       "properties": {
-        "baseClass": { "type": "string" },
+        "baseClass": {
+          "type": "string"
+        },
         "supportLevel": {
           "type": "string",
-          "enum": ["stable", "experimental", "deprecated"]
+          "enum": [
+            "stable",
+            "experimental",
+            "deprecated"
+          ]
         },
         "accessibility": {
           "type": "string",
-          "enum": ["high", "medium", "low", "none"]
+          "enum": [
+            "high",
+            "medium",
+            "low",
+            "none"
+          ]
         }
       }
     },
-
     "properties": {
       "type": "object",
       "description": "Model — data inputs (attributes). Every property MUST have type + default.",
@@ -131,7 +161,6 @@
         "$ref": "#/$defs/componentProperty"
       }
     },
-
     "$view": {
       "type": "array",
       "description": "View — DOM structure. Array of view items (can be empty).",
@@ -139,7 +168,6 @@
         "$ref": "#/$defs/viewItem"
       }
     },
-
     "$methods": {
       "type": "object",
       "description": "ViewModel — callable functions bound to the element.",
@@ -147,7 +175,6 @@
         "$ref": "#/$defs/methodItem"
       }
     },
-
     "$cssAPI": {
       "type": "object",
       "description": "Public CSS custom properties for theming.",
@@ -155,61 +182,91 @@
         "$ref": "#/$defs/cssApiItem"
       }
     },
-
     "accessibility": {
       "type": "object",
       "description": "Accessibility configuration",
       "properties": {
-        "role": { "type": "string" },
-        "ariaValueMin": { "type": "string" },
-        "ariaValueMax": { "type": "string" },
-        "ariaValueNow": { "type": "string" },
-        "ariaLabel": { "type": "string" }
+        "role": {
+          "type": "string"
+        },
+        "ariaValueMin": {
+          "type": "string"
+        },
+        "ariaValueMax": {
+          "type": "string"
+        },
+        "ariaValueNow": {
+          "type": "string"
+        },
+        "ariaLabel": {
+          "type": "string"
+        }
       }
     },
-
     "pageRules": {
       "$ref": "#/$defs/pageRules"
     },
-
     "$layout": {
       "$ref": "#/$defs/pageLayout"
     },
-
     "test": {
       "$ref": "#/$defs/testConfig"
     },
-
     "_metadata": {
       "type": "object",
       "description": "Categorization, icons, versioning",
       "properties": {
-        "category": { "type": "string" },
-        "icon": { "type": "string" },
-        "since": { "type": "string" },
+        "category": {
+          "type": "string"
+        },
+        "icon": {
+          "type": "string"
+        },
+        "since": {
+          "type": "string"
+        },
         "status": {
           "type": "string",
-          "enum": ["stable", "experimental", "deprecated"]
+          "enum": [
+            "stable",
+            "experimental",
+            "deprecated"
+          ]
         }
       }
     }
   },
-
   "anyOf": [
-    { "required": ["behavior"] },
-    { "required": ["schemaFor"] }
+    {
+      "required": [
+        "behavior"
+      ]
+    },
+    {
+      "required": [
+        "schemaFor"
+      ]
+    }
   ],
-
   "$defs": {
-
     "componentProperty": {
       "type": "object",
-      "description": "A single component property (attribute). Must have type and default.",
-      "required": ["type", "default"],
+      "description": "A single behavior property (attribute). Must have type and default.",
+      "required": [
+        "type",
+        "default"
+      ],
       "properties": {
         "type": {
           "type": "string",
-          "enum": ["string", "boolean", "number", "integer", "array", "object"],
+          "enum": [
+            "string",
+            "boolean",
+            "number",
+            "integer",
+            "array",
+            "object"
+          ],
           "description": "Data type"
         },
         "description": {
@@ -244,34 +301,61 @@
       "allOf": [
         {
           "if": {
-            "properties": { "type": { "const": "string" } },
-            "required": ["type"]
+            "properties": {
+              "type": {
+                "const": "string"
+              }
+            },
+            "required": [
+              "type"
+            ]
           },
           "then": {
             "properties": {
-              "default": { "type": "string" }
+              "default": {
+                "type": "string"
+              }
             }
           }
         },
         {
           "if": {
-            "properties": { "type": { "const": "boolean" } },
-            "required": ["type"]
+            "properties": {
+              "type": {
+                "const": "boolean"
+              }
+            },
+            "required": [
+              "type"
+            ]
           },
           "then": {
             "properties": {
-              "default": { "type": "boolean" }
+              "default": {
+                "type": "boolean"
+              }
             }
           }
         },
         {
           "if": {
-            "properties": { "type": { "enum": ["number", "integer"] } },
-            "required": ["type"]
+            "properties": {
+              "type": {
+                "enum": [
+                  "number",
+                  "integer"
+                ]
+              }
+            },
+            "required": [
+              "type"
+            ]
           },
           "then": {
             "properties": {
-              "default": { "type": "number" }
+              "default": {
+                "type": "number"
+              }
             }
           }
         },
@@ -280,11 +364,18 @@
             "properties": {
               "minimum": true
             },
-            "required": ["minimum"]
+            "required": [
+              "minimum"
+            ]
           },
           "then": {
             "properties": {
-              "type": { "enum": ["number", "integer"] }
+              "type": {
+                "enum": [
+                  "number",
+                  "integer"
+                ]
+              }
             }
           }
         },
@@ -293,21 +384,30 @@
             "properties": {
               "maximum": true
             },
-            "required": ["maximum"]
+            "required": [
+              "maximum"
+            ]
           },
           "then": {
             "properties": {
-              "type": { "enum": ["number", "integer"] }
+              "type": {
+                "enum": [
+                  "number",
+                  "integer"
+                ]
+              }
             }
           }
         }
       ]
     },
-
     "viewItem": {
       "type": "object",
       "description": "A single element in the $view DOM structure.",
-      "required": ["name", "tag"],
+      "required": [
+        "name",
+        "tag"
+      ],
       "properties": {
         "name": {
           "type": "string",
@@ -350,11 +450,12 @@
         }
       }
     },
-
     "methodItem": {
       "type": "object",
-      "description": "A callable method on the component.",
-      "required": ["description"],
+      "description": "A callable method on the behavior.",
+      "required": [
+        "description"
+      ],
       "properties": {
         "description": {
           "type": "string",
@@ -362,7 +463,9 @@
         },
         "params": {
           "type": "array",
-          "items": { "type": "string" },
+          "items": {
+            "type": "string"
+          },
           "description": "Parameter names"
         },
         "returns": {
@@ -371,11 +474,13 @@
         }
       }
     },
-
     "cssApiItem": {
       "type": "object",
       "description": "A public CSS custom property.",
-      "required": ["default", "description"],
+      "required": [
+        "default",
+        "description"
+      ],
       "properties": {
         "default": {
           "type": "string",
@@ -391,11 +496,13 @@
         }
       }
     },
-
     "pageRules": {
       "type": "object",
       "description": "Page-level rules that govern how the page is generated and validated.",
-      "required": ["showcase", "fragment"],
+      "required": [
+        "showcase",
+        "fragment"
+      ],
       "properties": {
         "showcase": {
           "type": "boolean",
@@ -413,15 +520,17 @@
         "noPageSpecificCSS": {
           "type": "boolean",
           "default": true,
-          "description": "No page-specific CSS file. All styling comes from component CSS."
+          "description": "No page-specific CSS file. All styling comes from behavior CSS."
         }
       }
     },
-
     "layoutRow": {
       "type": "object",
       "description": "A single row in the page layout. Rows stack vertically. Each row has 1+ columns.",
-      "required": ["columns", "content"],
+      "required": [
+        "columns",
+        "content"
+      ],
       "properties": {
         "columns": {
           "type": "integer",
@@ -435,7 +544,10 @@
         },
         "direction": {
           "type": "string",
-          "enum": ["row", "column"],
+          "enum": [
+            "row",
+            "column"
+          ],
           "default": "row",
           "description": "Fill order. 'row' = left to right then wrap. 'column' = top to bottom then wrap."
         },
@@ -451,7 +563,12 @@
         },
         "align": {
           "type": "string",
-          "enum": ["top", "center", "bottom", "stretch"],
+          "enum": [
+            "top",
+            "center",
+            "bottom",
+            "stretch"
+          ],
           "default": "stretch",
           "description": "Vertical alignment of items within this row."
         },
@@ -476,18 +593,22 @@
         },
         "content": {
           "type": "array",
-          "items": { "type": "string" },
+          "items": {
+            "type": "string"
+          },
           "minItems": 1,
           "maxItems": 3,
           "description": "Section names placed in this row's columns. Must match $view section names."
         }
       }
     },
-
     "pageLayout": {
       "type": "object",
       "description": "Page layout definition. Rows stacked vertically, each row 1-3 columns. Mobile-first: all columns collapse to 1 on small screens.",
-      "required": ["gap", "rows"],
+      "required": [
+        "gap",
+        "rows"
+      ],
       "properties": {
         "gap": {
           "type": "string",
@@ -501,16 +622,17 @@
         },
         "rows": {
           "type": "array",
-          "items": { "$ref": "#/$defs/layoutRow" },
+          "items": {
+            "$ref": "#/$defs/layoutRow"
+          },
           "minItems": 1,
           "description": "Ordered list of layout rows. Each row stacks on top of the next."
         }
       }
     },
-
     "testConfig": {
       "type": "object",
-      "description": "Test configuration for the component.",
+      "description": "Test configuration for the behavior.",
       "properties": {
         "functional": {
           "type": "boolean",
@@ -518,8 +640,10 @@
         },
         "setup": {
           "type": "array",
-          "items": { "type": "string" },
-          "description": "HTML strings to instantiate the component for testing"
+          "items": {
+            "type": "string"
+          },
+          "description": "HTML strings to instantiate the behavior for testing"
         },
         "matrix": {
           "type": "object",
@@ -527,12 +651,16 @@
           "properties": {
             "combinations": {
               "type": "array",
-              "items": { "type": "object" },
+              "items": {
+                "type": "object"
+              },
               "minItems": 1,
               "description": "Array of attribute objects — each is one test permutation. Single source of truth for what is tested."
             }
           },
-          "required": ["combinations"]
+          "required": [
+            "combinations"
+          ]
         },
         "site": {
           "type": "object",
@@ -540,7 +668,7 @@
           "properties": {
             "page": {
               "type": "string",
-              "description": "Which page this component appears on"
+              "description": "Which page this behavior appears on"
             },
             "tag": {
               "type": "string",
@@ -548,7 +676,7 @@
             },
             "renders": {
               "type": "boolean",
-              "description": "Whether the component renders on the page"
+              "description": "Whether the behavior renders on the page"
             },
             "baseClass": {
               "type": "string",
@@ -561,29 +689,43 @@
             },
             "checkText": {
               "type": "array",
-              "items": { "type": "string" },
+              "items": {
+                "type": "string"
+              },
               "description": "Text content to verify exists"
             },
             "checkClasses": {
               "type": "array",
-              "items": { "type": "string" },
+              "items": {
+                "type": "string"
+              },
               "description": "CSS classes to verify exist"
             },
             "checkAttributes": {
               "type": "array",
-              "items": { "type": "string" },
+              "items": {
+                "type": "string"
+              },
               "description": "Attributes to verify exist"
             },
             "layout": {
               "type": "object",
               "description": "Layout rule assertions for page tests.",
               "properties": {
-                "noWbDemo": { "type": "boolean" },
-                "noInlineStyles": { "type": "boolean" },
-                "isFragment": { "type": "boolean" },
+                "noWbDemo": {
+                  "type": "boolean"
+                },
+                "noInlineStyles": {
+                  "type": "boolean"
+                },
+                "isFragment": {
+                  "type": "boolean"
+                },
                 "sectionOrder": {
                   "type": "array",
-                  "items": { "type": "string" }
+                  "items": {
+                    "type": "string"
+                  }
                 }
               }
             },
@@ -591,23 +733,53 @@
               "type": "object",
               "description": "Mobile-first visual assertions.",
               "properties": {
-                "breakpoint": { "type": "integer", "description": "Mobile viewport width in px (e.g. 375)" },
-                "noOverflow": { "type": "boolean", "description": "No element wider than viewport" },
-                "gridCollapses": { "type": "boolean", "description": "Grid collapses to single column" },
-                "statsWrap": { "type": "boolean", "description": "Stats row wraps on mobile" },
-                "noHorizontalScroll": { "type": "boolean", "description": "No horizontal scrollbar" }
+                "breakpoint": {
+                  "type": "integer",
+                  "description": "Mobile viewport width in px (e.g. 375)"
+                },
+                "noOverflow": {
+                  "type": "boolean",
+                  "description": "No element wider than viewport"
+                },
+                "gridCollapses": {
+                  "type": "boolean",
+                  "description": "Grid collapses to single column"
+                },
+                "statsWrap": {
+                  "type": "boolean",
+                  "description": "Stats row wraps on mobile"
+                },
+                "noHorizontalScroll": {
+                  "type": "boolean",
+                  "description": "No horizontal scrollbar"
+                }
               }
             },
             "fluent": {
               "type": "object",
               "description": "Fluent layout assertions — no visual artifacts.",
               "properties": {
-                "noDashedBorders": { "type": "boolean" },
-                "noBuilderBackground": { "type": "boolean" },
-                "noForcedMinHeight": { "type": "boolean" },
-                "maxStatHeight": { "type": "integer", "description": "Max pixel height for stat cards" },
-                "minSectionGap": { "type": "integer", "description": "Min px gap between sections (1rem = 16px)" },
-                "maxSectionGap": { "type": "integer", "description": "Max px gap between sections" }
+                "noDashedBorders": {
+                  "type": "boolean"
+                },
+                "noBuilderBackground": {
+                  "type": "boolean"
+                },
+                "noForcedMinHeight": {
+                  "type": "boolean"
+                },
+                "maxStatHeight": {
+                  "type": "integer",
+                  "description": "Max pixel height for stat cards"
+                },
+                "minSectionGap": {
+                  "type": "integer",
+                  "description": "Min px gap between sections (1rem = 16px)"
+                },
+                "maxSectionGap": {
+                  "type": "integer",
+                  "description": "Max px gap between sections"
+                }
               }
             }
           }

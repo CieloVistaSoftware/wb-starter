@@ -86,6 +86,20 @@ test.describe('Every page loads without errors', () => {
       // miss exactly the class of bug this exists for.
       await page.waitForTimeout(1500);
 
+      // A page that does not EXIST also throws nothing: the missing-page
+      // fallback catches the 404, prints a placeholder and raises no console
+      // error, so "did not throw" cannot tell a working page from an absent
+      // one. error-log sat dead in the nav while this spec was green (#894).
+      const body = (await page.locator('body').innerText()).trim();
+      expect(
+        body,
+        `${pageId} rendered the missing-page placeholder — it is in the nav but has no pages/${pageId}.html`,
+      ).not.toMatch(/Page not found/i);
+      expect(
+        body.length,
+        `${pageId} rendered almost nothing (${body.length} chars)`,
+      ).toBeGreaterThan(200);
+
       expect(
         errors.filter((e) => !ignored(e)),
         `${pageId} threw while loading.\n\n`

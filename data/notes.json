@@ -615,7 +615,151 @@
       "createdAt": "2026-08-26T17:34:28.453Z",
       "updatedAt": "2026-08-26T17:34:28.453Z",
       "issueUrl": null
+    },
+    {
+      "id": "note-1787862079914",
+      "page": null,
+      "content": "Test note content 1787862079414",
+      "selectedElement": null,
+      "createdAt": "2026-08-27T20:21:19.914Z",
+      "updatedAt": "2026-08-27T20:21:19.914Z",
+      "issueUrl": null
+    },
+    {
+      "id": "note-1787862107593",
+      "page": null,
+      "content": "Test note content 1787862107152",
+      "selectedElement": null,
+      "createdAt": "2026-08-27T20:21:47.593Z",
+      "updatedAt": "2026-08-27T20:21:47.593Z",
+      "issueUrl": null
+    },
+    {
+      "id": "note-1787862108650",
+      "page": null,
+      "content": "Duplicate test 1787862108304",
+      "selectedElement": null,
+      "createdAt": "2026-08-27T20:21:48.650Z",
+      "updatedAt": "2026-08-27T20:21:48.650Z",
+      "issueUrl": null
+    },
+    {
+      "id": "note-1787862120710",
+      "page": null,
+      "content": "Outgoing note 1787862120497",
+      "selectedElement": null,
+      "createdAt": "2026-08-27T20:22:00.710Z",
+      "updatedAt": "2026-08-27T20:22:00.710Z",
+      "issueUrl": null
+    },
+    {
+      "id": "note-1787865235709",
+      "page": null,
+      "content": "Test note content 1787865235459",
+      "selectedElement": null,
+      "createdAt": "2026-08-27T21:13:55.709Z",
+      "updatedAt": "2026-08-27T21:13:55.709Z",
+      "issueUrl": null
+    },
+    {
+      "id": "note-1787865245962",
+      "page": null,
+      "content": "Test note content 1787865245340",
+      "selectedElement": null,
+      "createdAt": "2026-08-27T21:14:05.962Z",
+      "updatedAt": "2026-08-27T21:14:05.962Z",
+      "issueUrl": null
+    },
+    {
+      "id": "note-1787865248404",
+      "page": null,
+      "content": "Duplicate test 1787865247928",
+      "selectedElement": null,
+      "createdAt": "2026-08-27T21:14:08.404Z",
+      "updatedAt": "2026-08-27T21:14:08.404Z",
+      "issueUrl": null
+    },
+    {
+      "id": "note-1787865249608",
+      "page": null,
+      "content": "Outgoing note 1787865249390",
+      "selectedElement": null,
+      "createdAt": "2026-08-27T21:14:09.608Z",
+      "updatedAt": "2026-08-27T21:14:09.608Z",
+      "issueUrl": null
+    },
+    {
+      "id": "note-1787957979773",
+      "page": null,
+      "content": "Test note content 1787957979501",
+      "selectedElement": null,
+      "createdAt": "2026-08-28T22:59:39.773Z",
+      "updatedAt": "2026-08-28T22:59:39.773Z",
+      "issueUrl": null
+    },
+    {
+      "id": "note-1787957987821",
+      "page": null,
+      "content": "Duplicate test 1787957987499",
+      "selectedElement": null,
+      "createdAt": "2026-08-28T22:59:47.821Z",
+      "updatedAt": "2026-08-28T22:59:47.821Z",
+      "issueUrl": null
+    },
+    {
+      "id": "note-1787957989773",
+      "page": null,
+      "content": "Outgoing note 1787957989280",
+      "selectedElement": null,
+      "createdAt": "2026-08-28T22:59:49.773Z",
+      "updatedAt": "2026-08-28T22:59:49.773Z",
+      "issueUrl": null
+    },
+    {
+      "id": "note-1787957992135",
+      "page": null,
+      "content": "Test note content 1787957991110",
+      "selectedElement": null,
+      "createdAt": "2026-08-28T22:59:52.135Z",
+      "updatedAt": "2026-08-28T22:59:52.135Z",
+      "issueUrl": null
+    },
+    {
+      "id": "note-1788054416929",
+      "page": null,
+      "content": "Test note content 1788054416539",
+      "selectedElement": null,
+      "createdAt": "2026-08-30T01:46:56.929Z",
+      "updatedAt": "2026-08-30T01:46:56.930Z",
+      "issueUrl": null
+    },
+    {
+      "id": "note-1788054424228",
+      "page": null,
+      "content": "Test note content 1788054423847",
+      "selectedElement": null,
+      "createdAt": "2026-08-30T01:47:04.228Z",
+      "updatedAt": "2026-08-30T01:47:04.228Z",
+      "issueUrl": null
+    },
+    {
+      "id": "note-1788054424691",
+      "page": null,
+      "content": "Duplicate test 1788054424263",
+      "selectedElement": null,
+      "createdAt": "2026-08-30T01:47:04.691Z",
+      "updatedAt": "2026-08-30T01:47:04.691Z",
+      "issueUrl": null
+    },
+    {
+      "id": "note-1788054425580",
+      "page": null,
+      "content": "Outgoing note 1788054425256",
+      "selectedElement": null,
+      "createdAt": "2026-08-30T01:47:05.581Z",
+      "updatedAt": "2026-08-30T01:47:05.581Z",
+      "issueUrl": null
     }
   ],
-  "lastUpdated": "2026-08-26T17:34:28.457Z"
+  "lastUpdated": "2026-08-30T01:47:05.583Z"
 }

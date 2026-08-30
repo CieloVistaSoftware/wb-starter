@@ -27,7 +27,15 @@ x-cardhero, [x-cardhero]{
   container-type: inline-size;
   position: relative;
   display: flex;
-  align-items: center;
+  /* STRETCH, not center. This is a row-direction flex, so `align-items` here
+     governs the content column's HEIGHT -- but the hero switches to a column
+     layout for its own stacking, and centering on the cross axis made the
+     content column shrink-wrap to its longest child instead of taking the
+     hero's width. Measured: a 622px hero held a 483px content column holding a
+     355px title. The column centres itself through `max-width: 46rem` plus
+     `margin-inline: auto` below, which centres a FULL-WIDTH column rather than
+     shrinking it. */
+  align-items: stretch;
   justify-content: center;
   overflow: hidden;
   isolation: isolate;
@@ -66,25 +74,55 @@ x-cardhero .x-card__overlay, [x-cardhero] .x-card__overlay{
   background: linear-gradient(180deg, hsl(var(--overlay-dark-hsl) / 0.20), hsl(var(--overlay-dark-hsl) / 0.55));
 }
 
-/* Content column — centered, breathable, animates in. */
+/* Content column — breathable, animates in.
+   TEXT-ALIGN aligns, not align-items. In a COLUMN flex container the cross
+   axis is horizontal, so `align-items: center | flex-start | flex-end` makes
+   every child shrink to its own fit-content width instead of filling the
+   column. Measured across the playground's 120 heroes: the title box came out
+   at 43-56% of the hero at every variant and every xalign, and once a heading
+   is that narrow the card's `overflow-wrap: break-word` starts splitting words
+   mid-character — "Compose, don't configure" rendered as
+   "Com/pose/don'/t/confi/gure". John: "we should have never see the narrow
+   ones."
+   `align-items: stretch` (the default) lets each child take the column's full
+   width; `text-align` then does the aligning, which is what it is for, and the
+   heading keeps a whole line's worth of room to break on word boundaries. */
 x-cardhero .x-card__hero-content, [x-cardhero] .x-card__hero-content{
   position: relative;
   z-index: 1;
   display: flex;
   flex-direction: column;
-  align-items: center;
+  align-items: stretch;
   text-align: center;
   gap: 0.35rem;
   max-width: 46rem;
+  /* Centres the column now that the hero stretches instead of centring. */
+  margin-inline: auto;
+  width: 100%;
   padding: clamp(2rem, 5vw, 4rem);
   color: var(--text-on-accent, #fff);
   animation: x-cardhero-in 0.6s cubic-bezier(0.2, 0.7, 0.2, 1) both;
 }
+/* The pretitle is a PILL and must hug its own text. It is a direct child of
+   the content column, so the column's `align-items: stretch` (which the title
+   and subtitle need, so they get a full line to wrap on) would stretch it into
+   a full-width bar. `width: fit-content` opts this one child back out, and
+   `margin-inline` follows whatever the hero's alignment is — the same job
+   `text-align` does for the text around it. */
+x-cardhero .x-card__hero-pretitle, [x-cardhero] .x-card__hero-pretitle{
+  width: fit-content;
+  margin-inline: auto;
+}
+[x-cardhero].x-card--xalign-left  .x-card__hero-pretitle { margin-inline: 0 auto; }
+[x-cardhero].x-card--xalign-right .x-card__hero-pretitle { margin-inline: auto 0; }
+[x-cardhero].x-cardhero--split    .x-card__hero-pretitle { margin-inline: 0 auto; }
+[x-cardhero].x-cardhero--split.x-card--xalign-right .x-card__hero-pretitle { margin-inline: auto 0; }
+
 @keyframes x-cardhero-in { from { opacity: 0; transform: translateY(1rem); } }
 @media (prefers-reduced-motion: reduce) { x-cardhero .x-card__hero-content { animation: none; } }
 
-[x-cardhero].x-card--xalign-left  .x-card__hero-content { align-items: flex-start; text-align: left; margin-right: auto; }
-[x-cardhero].x-card--xalign-right .x-card__hero-content { align-items: flex-end;   text-align: right; margin-left: auto; }
+[x-cardhero].x-card--xalign-left  .x-card__hero-content { text-align: left;  margin-right: auto; }
+[x-cardhero].x-card--xalign-right .x-card__hero-content { text-align: right; margin-left: auto; }
 
 /* Eyebrow / pretitle — a frosted pill. */
 x-cardhero .x-card__hero-pretitle, [x-cardhero] .x-card__hero-pretitle{
@@ -230,7 +268,6 @@ x-cardhero.x-cardhero--split, [x-cardhero].x-cardhero--split{
   justify-content: flex-start;
 }
 x-cardhero.x-cardhero--split .x-card__hero-content, [x-cardhero].x-cardhero--split .x-card__hero-content{
-  align-items: flex-start;
   text-align: left;
   max-width: 46%;
   margin-right: auto;
@@ -239,10 +276,34 @@ x-cardhero.x-cardhero--split.x-card--xalign-right, [x-cardhero].x-cardhero--spli
   justify-content: flex-end;
 }
 x-cardhero.x-cardhero--split.x-card--xalign-right .x-card__hero-content, [x-cardhero].x-cardhero--split.x-card--xalign-right .x-card__hero-content{
-  align-items: flex-end;
   text-align: right;
   margin-right: 0;
   margin-left: auto;
+}
+
+/* A split needs room for two halves. Below that, it has nothing to split.
+   John: "doesn't render correct too narrow / variant of split doesn't work
+   layout wise". `max-width: 46%` above is a fixed fraction with no floor, so
+   in the playground's 562px preview pane the content column measured 224px
+   and the text wrapped until the hero stood 774px tall against its own
+   height="440px".
+   A container query, not a media query: what decides whether two halves fit
+   is the HERO's width, not the viewport's -- the reported case was a narrow
+   pane inside a 1280px window, where a viewport query would have said
+   "plenty of room". The hero already establishes a container for its own
+   fluid type (`container-type: inline-size`, top of this file), so the
+   question is answerable exactly where it is asked.
+   40rem is where 46% stops being a usable measure: below it the column is
+   under ~18rem, narrower than the title alone wants. */
+@container (max-width: 40rem) {
+  x-cardhero.x-cardhero--split .x-card__hero-content,
+  [x-cardhero].x-cardhero--split .x-card__hero-content,
+  x-cardhero.x-cardhero--split.x-card--xalign-right .x-card__hero-content,
+  [x-cardhero].x-cardhero--split.x-card--xalign-right .x-card__hero-content {
+    max-width: 100%;
+    margin-left: 0;
+    margin-right: 0;
+  }
 }
 
 /* minimal — flat theme surface, no sheen sweep, no legibility scrim, no

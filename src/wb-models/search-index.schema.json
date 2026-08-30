@@ -138,7 +138,7 @@
         },
         "category": {
           "type": "string",
-          "description": "Category for grouping results (e.g., 'Components', 'Guides')"
+          "description": "Category for grouping results (e.g., 'Behaviors', 'Guides')"
         },
         "modified": {
           "type": "string",
@@ -204,7 +204,7 @@
         {
           "id": "docs/components/card",
           "url": "/docs/components/card.html",
-          "title": "Card Component",
+          "title": "Card Behavior",
           "description": "Versatile container for content display",
           "headings": [
             {

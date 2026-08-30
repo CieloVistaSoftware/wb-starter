@@ -3,10 +3,6 @@
   "$id": "nav.schema.json",
   "title": "Nav Semantic Element",
   "description": "Navigation section with links to other pages or sections within the page.",
-  "$inheritance": {
-    "extends": "_element.base.schema.json",
-    "reason": "Nav IS-A element with all base properties"
-  },
   "htmlTag": "nav",
   "role": "navigation",
   "semanticMeaning": {

@@ -3,10 +3,6 @@
   "$id": "container.schema.json",
   "title": "Container Semantic Element",
   "description": "Layout container for child elements. Supports row, column, and grid layouts.",
-  "$inheritance": {
-    "extends": "_element.base.schema.json",
-    "reason": "Container IS-A element with all base properties"
-  },
   "htmlTag": "div",
   "role": "group",
   "semanticMeaning": {
@@ -239,7 +235,7 @@
     }
   },
   "wbComponents": {
-    "description": "WB components that extend container",
+    "description": "WB behaviors that extend container",
     "list": [
       "container",
       "flex",

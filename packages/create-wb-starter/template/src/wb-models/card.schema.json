@@ -2,7 +2,7 @@
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "card.schema.json",
   "title": "Card Behavior",
-  "description": "Card behavior. IS-A article, HAS-A header, main, footer.",
+  "description": "Card. Composes an article with a header, main and footer.",
   "schemaFor": "card",
   "baseClass": "x-card",
   "semanticElement": {

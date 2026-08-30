@@ -13,14 +13,23 @@
   <link rel="stylesheet" href="../src/styles/themes.css?v=4.0.0">
   <link rel="stylesheet" href="../src/styles/site.css?v=4.0.0">
   <style>
-    body { max-width: 1200px; margin: 0 auto; padding: 1.5rem; background: var(--bg-color);
+    /* 1200px is a prose measure, and this page is a tool, not an article.
+       Capped there, the preview pane was 562px on a 1280px window -- half a
+       page for a full-bleed banner. John, on a cardhero previewed here:
+       "doesn't render correct too narrow". The editor column keeps a fixed
+       comfortable measure; the preview takes everything left over, so what
+       it shows is closer to the width the markup will really get. */
+    body { max-width: 1800px; margin: 0 auto; padding: 1.5rem; background: var(--bg-color);
       color: var(--text-primary); line-height: 1.6; }
     h1 { margin: 0 0 0.25rem; }
     .pg-sub { color: var(--text-secondary); margin: 0 0 1.5rem; }
 
     /* Mobile-first: stack; two columns on wider screens. */
     .pg-grid { display: grid; grid-template-columns: 1fr; gap: 1.5rem; align-items: start; }
-    @media (min-width: 860px) { .pg-grid { grid-template-columns: 1fr 1fr; } }
+    /* The editor needs a readable code measure and no more; the preview needs
+       every remaining pixel. `1fr 1fr` gave the editor half a wide screen it
+       had no use for while the preview went short. */
+    @media (min-width: 860px) { .pg-grid { grid-template-columns: minmax(0, 34rem) minmax(0, 1fr); } }
 
     .pg-panel { border: 1px solid var(--border-color); border-radius: 10px; overflow: hidden;
       background: var(--bg-secondary); display: flex; flex-direction: column; }
@@ -739,7 +748,7 @@
         "<div x-card title=\"Trailhead access\" subtitle=\"Updated this morning\" elevated>\n  The north gate is open. Parking fills by 9am on weekends \u2014 the overflow lot adds\n  about ten minutes on foot.\n</div>",
         "<article x-cardbutton\n  title=\"Upgrade to Team\"\n  content=\"Shared workspaces, audit history and SSO.\"\n  primary=\"Start free trial\"\n  secondary=\"Compare plans\"></article>",
         "<article x-carddraggable title=\"Drag me\" content=\"Pick this card up and move it \u2014 the position sticks.\" constrain axis=\"both\"></article>",
-        "<article x-cardexpandable\n  title=\"What changed in 3.0\"\n  content=\"Composition replaced inheritance: a tag maps to a behavior function that decorates the element in place, in light DOM. There is no behavior base class any more, and no shadow boundary to reach through.\"\n  lines=\"2\"></article>",
+        "<article x-cardexpandable\n  title=\"What changed in 4.0\"\n  content=\"Composition replaced inheritance: a tag maps to a behavior function that decorates the element in place, in light DOM. There is no behavior base class any more, and no shadow boundary to reach through.\"\n  lines=\"2\"></article>",
         "<article x-cardfile filename=\"quarterly-report.pdf\" file-type=\"pdf\" size=\"2.4 MB\" date=\"2026-08-14\" href=\"#\"></article>",
         "<section x-cardhero\n  pretitle=\"Release 3.0\"\n  title=\"Zero build. Real behaviors.\"\n  subtitle=\"Light DOM, no shadow boundaries, no class hierarchy.\"\n  cta=\"Read the guide\"\n  cta-href=\"#\"\n  height=\"320px\"></section>",
         "<article x-cardhorizontal\n  image=\"https://picsum.photos/seed/trail/320/240\"\n  image-alt=\"Pine trail at dawn\"\n  image-position=\"start\"\n  title=\"Ridge loop, 8km\"\n  subtitle=\"Moderate \u00b7 3h\"></article>",

@@ -3,10 +3,6 @@
   "$id": "section.schema.json",
   "title": "Section Semantic Element",
   "description": "Generic thematic grouping of content. Used when article is not appropriate.",
-  "$inheritance": {
-    "extends": "_element.base.schema.json",
-    "reason": "Section IS-A element with all base properties"
-  },
   "htmlTag": "section",
   "role": "region (when labelled)",
   "semanticMeaning": {
@@ -53,7 +49,7 @@
     ]
   },
   "wbComponents": {
-    "description": "WB components that extend section",
+    "description": "WB behaviors that extend section",
     "list": [
       "collapse",
       "accordion-panel",

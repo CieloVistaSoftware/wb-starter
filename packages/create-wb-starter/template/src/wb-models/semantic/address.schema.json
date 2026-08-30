@@ -3,10 +3,6 @@
   "$id": "address.schema.json",
   "title": "Address Semantic Element",
   "description": "Contact information for people or organizations. NOT for postal addresses.",
-  "$inheritance": {
-    "extends": "_element.base.schema.json",
-    "reason": "Address IS-A element with all base properties"
-  },
   "htmlTag": "address",
   "role": "group",
   "semanticMeaning": {

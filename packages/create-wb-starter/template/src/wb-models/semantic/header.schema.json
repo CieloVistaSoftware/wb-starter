@@ -3,10 +3,6 @@
   "$id": "header.schema.json",
   "title": "Header Semantic Element",
   "description": "Introductory content - titles, subtitles, navigation, logos. Used within article, section, or body.",
-  "$inheritance": {
-    "extends": "_element.base.schema.json",
-    "reason": "Header IS-A element with all base properties"
-  },
   "htmlTag": "header",
   "role": "banner (when child of body) or generic",
   "semanticMeaning": {

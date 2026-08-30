@@ -46,6 +46,7 @@
 // declared inline across nine separate schemas, which made "these two
 // spellings mean the same option" a promise repeated nine times.
 import { aliasesFor } from '../attribute-aliases.js';
+import { styleSheetDefinesClass } from '../style-registry.js';
 
 // =============================================================================
 // SCHEMA REGISTRY
@@ -614,8 +615,14 @@ function applyVariantClasses(element, schema, data) {
     // emoji icon. Only emit the modifier class when the value is itself a
     // valid CSS identifier segment; free-text values that fall outside the
     // enum's known set are content, not a variant, and get no class.
+    // #885: and only when a stylesheet actually defines the resulting class.
+    // The identifier check above rejects an emoji icon but happily minted
+    // `x-button--star` and `x-button--_self`, which no CSS has ever matched --
+    // wb.js's applyDeclaredModifiers() had the identical gap, from an
+    // identical copy of this mapping. Both now ask the one shared registry.
     if (prop.enum && typeof value === 'string' && value !== 'default' && /^[a-zA-Z0-9_-]+$/.test(value)) {
-      element.classList.add(`${baseClass}--${value}`);
+      const cls = `${baseClass}--${value}`;
+      if (styleSheetDefinesClass(cls)) element.classList.add(cls);
     }
   }
 }

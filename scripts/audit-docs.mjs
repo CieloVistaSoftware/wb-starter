@@ -56,7 +56,7 @@ const OLD_OPEN = '<' + 'wb-';
 const DEAD_SUBJECTS = [
   {
     name: 'components',
-    re: /components?/i,
+    re: /\bcomponents?\b/i,
     strong: new RegExp(OLD_OPEN + '[a-z-]+|pages/components\.html|docs/components/'),
   },
   {
@@ -165,7 +165,7 @@ for (const file of walk(DOCS)) {
   const SPENT_SHAPE = /(audit|plan|report|retrospective|\d{6,8})/i;
   const spentNote = rel.startsWith('docs/_today/')
     && !LIVING_TODAY.test(rel)
-    && (SPENT_SHAPE.test(path.basename(rel)) || /(completed|closed)/i.test(heading));
+    && (SPENT_SHAPE.test(path.basename(rel)) || /\b(completed|closed)\b/i.test(heading));
 
   if (generated) {
     verdict = 'GENERATED';

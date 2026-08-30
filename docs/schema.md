@@ -13,7 +13,7 @@ All schemas live in `src/wb-models/` and are validated by the meta-schema `schem
 |------|-------------|-----------------|----------|
 | **Behavior** | `"behavior"` (default) | title, description, properties, $view, $methods, behavior/schemaFor | alert, badge, card variants |
 | **Base** | `"base"` | title, description, properties | _base/html-element, card.base |
-| **Definition** | `"definition"` | title, description | _inheritance.schema.json, schema.schema.json |
+| **Definition** | `"definition"` | title, description | schema.schema.json |
 | **Page** | `"page"` | title, description, pageRules, $layout | home-page.schema.json |
 
 ---

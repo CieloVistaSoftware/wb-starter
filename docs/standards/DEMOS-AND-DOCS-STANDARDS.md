@@ -3,7 +3,13 @@
 **These rules apply to EVERY demo (`demos/**/*.html`, `pages/**/*.html`) and EVERY
 Markdown document (`docs/**/*.md`, `*.md`) in wb-starter.** They are the single source
 of truth for how we show behaviors and code. When something here can be enforced by a
-test, it is — run `npm test` (which now includes the `integration` project).
+test, it is — run `npm test` (which runs the compliance, regression, integration, base
+and behaviors projects).
+
+> **Numbering is historical, not sequential.** Sections are numbered in the order they
+> were written, so §15a sits before §15 and §21 before §20. A rule keeps its number for
+> life — they are cited from commits, issues and test names, and renumbering would break
+> every one of those references. Read the headings, not the order.
 
 ---
 
@@ -13,7 +19,7 @@ Every behavior example is a `<div x-demo>` — it renders the **live control** A
 **source** underneath. One tag gives both.
 
 - In `.md` docs: embed a **raw** `<div x-demo>…</div>` directly in the Markdown. Do NOT
-  use a ` ```demo ` fence (retired) — the doc-viewer renders embedded `<wb-*>` / `x-*`.
+  use a ` ```demo ` fence (retired) — the doc-viewer renders embedded `x-*` markup.
 - In `.html` demos: use `<div x-demo>` the same way.
 
 ## 2. One code sample per rendered element (strict 1:1)
@@ -70,9 +76,25 @@ Every behavior example is a `<div x-demo>` — it renders the **live control** A
   `demos/frameworks.html`'s 5 framework samples under the old carve-out regime — still
   valid, just no longer the only place this applies).
 
-## 7. A demo is only as wide as what it renders
+## 7. A demo is only as wide as what it renders — but a layout container has a floor
 
 - Card/behavior demos are sized to the element, **not** stretched to full screen.
+- **This applies to CONTROLS, not to layout containers.** A button should hug its label.
+  A card's intrinsic width is whatever its shortest line of text happens to be, which is
+  not a width anyone asked for. Stated without that limit, this rule produced pricing
+  cards measuring **0px** and heroes measuring **34px** inside a single-item `x-demo`
+  (2026-08-26; ~50 cards across 14 behaviors at once). Every fix before that one had
+  patched a single variant, so the next variant reproduced it — John: "this is the 3rd or
+  4th time I've seen this."
+- A card therefore carries a minimum width (`card.css`, on the default `auto` size) and
+  never declares `min-width: 0`. `auto` means "size to your content", not "collapse to
+  nothing".
+- A blanket `min-width: 0` reset in a container's own stylesheet defeats this: it ties on
+  specificity with the card's floor and wins on source order. Write such a reset as
+  `:where(...)` so it carries zero specificity and loses to any element that has an
+  opinion about its own width.
+- Test: `tests/regression/cards-are-never-too-narrow.spec.ts` (sweeps every card on
+  `demos/site/cards.html`; exempts a card the author explicitly sized down with `size=`).
 
 ## 8. Never render a `.md` without the theme
 
@@ -84,7 +106,7 @@ Every behavior example is a `<div x-demo>` — it renders the **live control** A
 
 ## 9. Composition over inheritance
 
-- Behaviors compose via `<wb-*>` tags + `x-*` behaviors. There is **no** behavior
+- Behaviors compose via semantic HTML + `x-*` attributes. There is **no** behavior
   base-class hierarchy. Do not write "is-a relationship", "variants inherit from
   "card base class", or "Why Inheritance Matters" — reframe as composition.
 - Say what actually happens: capability is **applied to** an element by a behavior
@@ -101,11 +123,11 @@ Every behavior example is a `<div x-demo>` — it renders the **live control** A
   different mechanisms that happen to reuse the word:
   1. **CSS inheritance / the cascade** — a real browser mechanism (`docs/styles.md`,
      `docs/themes.md`). Correct terminology; leave it.
-  2. **Schema-layer `$inherits` / `$extends` / IS-A / HAS-A** — JSON documents merged
-     into one effective schema before render (`docs/claude/SCHEMAS-GUIDE.md`), and the
-     IS-A/HAS-A naming convention in
-     `docs/architecture/standards/ATTRIBUTE-NAMING-STANDARD.md`. This is a deliberate
-     data-layer design tracked by **issue #465** — do not rewrite it under this rule.
+  2. **Schema-layer `$extends`** — JSON documents merged into one effective schema
+     before render (`docs/claude/SCHEMAS-GUIDE.md`). Still a real, live mechanism:
+     `compose-page.mjs` resolves `$extends` on PAGE schemas to inherit page defaults.
+     Call it schema composition / layering. The IS-A / HAS-A naming convention that
+     used to sit alongside it was renamed to Standalone / Modifier under **#465**.
   When either appears, say which mechanism you mean so it can't be read as a behavior
   class hierarchy.
 - **HTML `extends` is purged.** The old design (customized built-ins:
@@ -168,10 +190,9 @@ Every behavior example is a `<div x-demo>` — it renders the **live control** A
   code** that produced it — never one without the other. `<div x-demo>` is the ideal tool
   (it renders the live control and shows its source in one tag). A demo page with a live
   example but no code — or code with no live example — is a defect.
-- **Every canonical demo includes a MIXED-BEHAVIORS example**: `x-*` attributes composed
-  onto the element — including onto `<wb-*>` tags (x-tags take x-attributes too). This
-  shows developers how to add function to markup already in place. All of it inside
-  `<div x-demo>`.
+- **Every canonical demo includes a MIXED-BEHAVIORS example**: several `x-*` attributes
+  composed onto one semantic element. This shows developers how to add function to
+  markup already in place. All of it inside `<div x-demo>`.
 
 ## 17. Grouped controls are ONE demo (exception to §2)
 
@@ -196,8 +217,11 @@ Every behavior example is a `<div x-demo>` — it renders the **live control** A
 - Tests are **effect-based**, not presence-based: e.g. `<button size="xs">` and
   `<button size="xl">` must have **different computed sizes**; `variant="primary"` vs
   `variant="danger"` must differ visibly. A demo that shows `size="xs"` while the button
-  renders at default size is a defect the test must catch. Cover BOTH the custom element
-  (`<button>`) and the native element (`<button>`) paths.
+  renders at default size is a defect the test must catch. Cover BOTH authoring forms —
+  the attribute host (`<div x-button size="xs">`) and the native element
+  (`<button size="xs">`) — because they take different code paths and have already drifted
+  apart twice: #746 (classes differed between the two) and the button `icon=` regression,
+  where the native form rendered its icon and the attribute form silently rendered none.
 
 ## 21. Watch CI after every push — local-green is not done
 
@@ -430,28 +454,28 @@ Every behavior example is a `<div x-demo>` — it renders the **live control** A
   (off) is why so many docs/demos accumulated explicit `x-*` attributes that are now redundant.
 - **When writing a new example**: write plain semantic HTML first (`<table>`, `<article>`, `<button>`,
   `<audio>`, ...) with no `x-*` attribute at all, and confirm live that it gets enhanced automatically. Only
-  reach for an explicit `<wb-*>` tag or `x-*` attribute when the semantic element genuinely doesn't exist
-  for what you're building (there's no native `<div x-cardexpandable>` equivalent) or the page has deliberately
-  opted out of autoInject.
+  reach for an explicit `x-*` attribute when no semantic element exists for what you're building
+  (there is no native equivalent of `x-cardexpandable`) or the page has deliberately opted out of
+  autoInject.
 - **When reviewing an existing example**: if it uses an explicit `x-*` attribute on a tag that has a native
   semantic equivalent (`x-table` on `<table>`, `x-card`/`x-cardXxx` on `<article>`, `x-audio` on `<audio>`),
   verify live whether it's now redundant post-flip, and remove it if so — matches the existing §
   "no-redundant-x-attribute" compliance pattern, just with a much larger surface now that the default
   changed.
-- This does **not** mean deleting the `<wb-*>` custom-tag form from docs entirely — both forms are
-  documented (see e.g. `table.md`'s "Custom Element" vs "Native Table" sections) since some authors prefer
-  the explicit tag. It means the semantic-HTML form should be presented as the *primary*, not an
-  afterthought, and should never need an `x-*` attribute to work.
+- The explicit `x-*` attribute form stays documented — it is the only way to reach a behavior with no
+  semantic equivalent, and it is how a behavior is placed on a host that is not its native tag (see
+  `docs/behaviors/table.md`'s "On a different element"). It means the semantic-HTML form is the
+  *primary* presentation, not an afterthought, and should never need an `x-*` attribute to work.
 
 ## Enforcement & references
 
 | Rule | Test / reference |
 |------|------------------|
-| 1, 2 (x-demo, 1:1) | `tests/integration/doc-viewer-x-demo.spec.ts` |
-| 4 (highlighted + copy) | `tests/integration/frameworks-demo.spec.ts`, `demo-compare-code-blocks.spec.ts` (#241) |
-| 3, 5 (vertical) | `tests/integration/demo-compare-code-blocks.spec.ts` |
+| 1, 2 (x-demo, 1:1) | `tests/integration/doc-viewer-wb-demo.spec.ts` |
+| 4 (highlighted + copy) | `tests/integration/frameworks-demo.spec.ts` (#241) |
+| 3, 5 (vertical) | `tests/integration/x-demo-source-vertical.spec.ts` |
 | 5, 8 (no double-parse) | `tests/integration/doc-viewer-code-multiline.spec.ts`; `docs/_today/ROOT-CAUSE-md-double-parse.md` |
-| 9 (composition) | `tests/compliance/no-legacy-behavior-inheritance-docs.spec.ts` |
+| 9 (composition) | `tests/compliance/no-legacy-component-inheritance-docs.spec.ts` |
 | 11 (colors) | `tests/compliance/css-oop-compliance.spec.ts` |
 | 22 (switch invokes effect) | `tests/behaviors/notify-control-switch.spec.ts` |
 | 24 (no unintended overlap) | `tests/integration/overlap.spec.ts` (#274) |

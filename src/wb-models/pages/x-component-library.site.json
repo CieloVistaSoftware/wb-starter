@@ -1,12 +1,12 @@
 {
-  "title": "WB Component Library",
-  "description": "Complete showcase of all WB-Starter components, organized by category",
+  "title": "WB Behavior Library",
+  "description": "Complete showcase of all WB-Starter behaviors, organized by category",
   "outputDir": "demos/site",
   "generateIndex": true,
   "pages": [
     {
       "id": "cards",
-      "title": "Card Components",
+      "title": "Card Behaviors",
       "description": "18 card variants — from simple to portfolio, pricing to testimonials",
       "icon": "🃏",
       "components": [

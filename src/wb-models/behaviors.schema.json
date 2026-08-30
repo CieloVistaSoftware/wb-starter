@@ -120,7 +120,7 @@
     },
     "dependencies": {
       "type": "array",
-      "description": "Other behaviors or components this behavior depends on",
+      "description": "Other behaviors or behaviors this behavior depends on",
       "items": {
         "type": "string"
       },
@@ -168,8 +168,13 @@
       "default": []
     }
   },
-  "required": ["name", "type", "src", "category", "description"],
- 
+  "required": [
+    "name",
+    "type",
+    "src",
+    "category",
+    "description"
+  ],
   "behaviorInventory": {
     "categories": {
       "buttons": [
@@ -279,7 +284,7 @@
           "name": "x-rating",
           "type": "element",
           "category": "selection",
-          "description": "Star rating component",
+          "description": "Star rating behavior",
           "src": "src/wb-viewmodels/semantics/rating.js"
         },
         {
@@ -306,12 +311,12 @@
         {
           "name": "x-alert",
           "type": "element",
-          "description": "Alert/notification component"
+          "description": "Alert/notification behavior"
         },
         {
           "name": "x-badge",
           "type": "element",
-          "description": "Badge component"
+          "description": "Badge behavior"
         },
         {
           "name": "x-progress",

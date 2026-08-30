@@ -15,8 +15,10 @@ import { readFlag, readAttr } from '../core/read-attr.js';
  * - Variants CONTAIN specialized content (images, profiles, etc.)
  * - Shared structure changes propagate to ALL variants automatically
  * 
- * INHERITANCE: cardimage IS-A card
- * CONTAINMENT: cardimage HAS-A image (figure element)
+ * cardimage composes the shared card structure and adds a <figure>. It does
+ * not inherit anything: composeCard() is a function this file calls, not a
+ * base class it descends from. (The IS-A / HAS-A wording that used to sit here
+ * described a schema-layer inheritance model that no code ever implemented.)
  * 
  * SEMANTIC STANDARD (MANDATORY):
  * - Container: <article> (preferred) or <section>

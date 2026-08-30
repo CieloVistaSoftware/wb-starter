@@ -2,11 +2,7 @@
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "article.schema.json",
   "title": "Article Semantic Element",
-  "description": "Self-contained composition - cards, posts, comments, widgets. The PREFERRED container for card components.",
-  "$inheritance": {
-    "extends": "_element.base.schema.json",
-    "reason": "Article IS-A element with all base properties"
-  },
+  "description": "Self-contained composition - cards, posts, comments, widgets. The PREFERRED container for card behaviors.",
   "htmlTag": "article",
   "role": "article",
   "semanticMeaning": {
@@ -69,7 +65,7 @@
     ]
   },
   "wbComponents": {
-    "description": "WB components that extend article",
+    "description": "WB behaviors that extend article",
     "list": [
       "card",
       "cardimage",

@@ -2,13 +2,10 @@
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "_base/html-element.schema.json",
   "title": "HTMLElement Base",
-  "description": "Base schema for ALL HTML elements. Every component inherits these properties.",
+  "description": "Base schema for ALL HTML elements. Every behavior inherits these properties.",
   "schemaType": "base",
-  
   "type": "object",
-  
   "properties": {
-    
     "_identity": {
       "title": "Identity",
       "type": "object",
@@ -19,26 +16,41 @@
           "native": true
         },
         "class": {
-          "type": "string", 
+          "type": "string",
           "description": "CSS class names (space-separated)",
           "native": true
         }
       }
     },
-    
     "_layout": {
       "title": "Layout",
       "type": "object",
       "properties": {
         "display": {
           "type": "string",
-          "enum": ["block", "inline", "inline-block", "flex", "inline-flex", "grid", "inline-grid", "none", "contents"],
+          "enum": [
+            "block",
+            "inline",
+            "inline-block",
+            "flex",
+            "inline-flex",
+            "grid",
+            "inline-grid",
+            "none",
+            "contents"
+          ],
           "default": "block",
           "css": true
         },
         "position": {
           "type": "string",
-          "enum": ["static", "relative", "absolute", "fixed", "sticky"],
+          "enum": [
+            "static",
+            "relative",
+            "absolute",
+            "fixed",
+            "sticky"
+          ],
           "default": "static",
           "css": true
         },
@@ -80,34 +92,76 @@
           "default": "0",
           "css": true
         },
-        "marginTop": { "type": "string", "css": true },
-        "marginRight": { "type": "string", "css": true },
-        "marginBottom": { "type": "string", "css": true },
-        "marginLeft": { "type": "string", "css": true },
+        "marginTop": {
+          "type": "string",
+          "css": true
+        },
+        "marginRight": {
+          "type": "string",
+          "css": true
+        },
+        "marginBottom": {
+          "type": "string",
+          "css": true
+        },
+        "marginLeft": {
+          "type": "string",
+          "css": true
+        },
         "padding": {
           "type": "string",
           "description": "Inner spacing (shorthand or individual)",
           "default": "0",
           "css": true
         },
-        "paddingTop": { "type": "string", "css": true },
-        "paddingRight": { "type": "string", "css": true },
-        "paddingBottom": { "type": "string", "css": true },
-        "paddingLeft": { "type": "string", "css": true },
+        "paddingTop": {
+          "type": "string",
+          "css": true
+        },
+        "paddingRight": {
+          "type": "string",
+          "css": true
+        },
+        "paddingBottom": {
+          "type": "string",
+          "css": true
+        },
+        "paddingLeft": {
+          "type": "string",
+          "css": true
+        },
         "overflow": {
           "type": "string",
-          "enum": ["visible", "hidden", "scroll", "auto", "clip"],
+          "enum": [
+            "visible",
+            "hidden",
+            "scroll",
+            "auto",
+            "clip"
+          ],
           "default": "visible",
           "css": true
         },
         "overflowX": {
           "type": "string",
-          "enum": ["visible", "hidden", "scroll", "auto", "clip"],
+          "enum": [
+            "visible",
+            "hidden",
+            "scroll",
+            "auto",
+            "clip"
+          ],
           "css": true
         },
         "overflowY": {
           "type": "string",
-          "enum": ["visible", "hidden", "scroll", "auto", "clip"],
+          "enum": [
+            "visible",
+            "hidden",
+            "scroll",
+            "auto",
+            "clip"
+          ],
           "css": true
         },
         "zIndex": {
@@ -118,7 +172,6 @@
         }
       }
     },
-    
     "_flexChild": {
       "title": "Flex Child",
       "description": "Properties when element is a child of a flex container",
@@ -142,7 +195,14 @@
         },
         "alignSelf": {
           "type": "string",
-          "enum": ["auto", "flex-start", "flex-end", "center", "baseline", "stretch"],
+          "enum": [
+            "auto",
+            "flex-start",
+            "flex-end",
+            "center",
+            "baseline",
+            "stretch"
+          ],
           "default": "auto",
           "css": true
         },
@@ -153,17 +213,28 @@
         }
       }
     },
-    
     "_gridChild": {
       "title": "Grid Child",
       "description": "Properties when element is a child of a grid container",
       "type": "object",
       "contextual": "parent:display=grid",
       "properties": {
-        "gridColumnStart": { "type": "string", "css": true },
-        "gridColumnEnd": { "type": "string", "css": true },
-        "gridRowStart": { "type": "string", "css": true },
-        "gridRowEnd": { "type": "string", "css": true },
+        "gridColumnStart": {
+          "type": "string",
+          "css": true
+        },
+        "gridColumnEnd": {
+          "type": "string",
+          "css": true
+        },
+        "gridRowStart": {
+          "type": "string",
+          "css": true
+        },
+        "gridRowEnd": {
+          "type": "string",
+          "css": true
+        },
         "gridColumn": {
           "type": "string",
           "description": "Column span (e.g., 'span 2' or '1 / 3')",
@@ -176,19 +247,30 @@
         },
         "justifySelf": {
           "type": "string",
-          "enum": ["auto", "start", "end", "center", "stretch"],
+          "enum": [
+            "auto",
+            "start",
+            "end",
+            "center",
+            "stretch"
+          ],
           "default": "auto",
           "css": true
         },
         "alignSelf": {
           "type": "string",
-          "enum": ["auto", "start", "end", "center", "stretch"],
+          "enum": [
+            "auto",
+            "start",
+            "end",
+            "center",
+            "stretch"
+          ],
           "default": "auto",
           "css": true
         }
       }
     },
-    
     "_accessibility": {
       "title": "Accessibility",
       "type": "object",
@@ -246,7 +328,6 @@
         }
       }
     },
-    
     "_behavior": {
       "title": "Behavior",
       "type": "object",
@@ -271,15 +352,34 @@
       }
     }
   },
-  
   "_metadata": {
     "categories": {
-      "_identity": { "order": 1, "collapsed": false },
-      "_layout": { "order": 2, "collapsed": true },
-      "_flexChild": { "order": 3, "collapsed": true, "contextual": true },
-      "_gridChild": { "order": 4, "collapsed": true, "contextual": true },
-      "_accessibility": { "order": 5, "collapsed": true },
-      "_behavior": { "order": 6, "collapsed": true }
+      "_identity": {
+        "order": 1,
+        "collapsed": false
+      },
+      "_layout": {
+        "order": 2,
+        "collapsed": true
+      },
+      "_flexChild": {
+        "order": 3,
+        "collapsed": true,
+        "contextual": true
+      },
+      "_gridChild": {
+        "order": 4,
+        "collapsed": true,
+        "contextual": true
+      },
+      "_accessibility": {
+        "order": 5,
+        "collapsed": true
+      },
+      "_behavior": {
+        "order": 6,
+        "collapsed": true
+      }
     }
   }
 }

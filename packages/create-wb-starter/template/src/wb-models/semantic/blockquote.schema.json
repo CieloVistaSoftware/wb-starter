@@ -3,10 +3,6 @@
   "$id": "blockquote.schema.json",
   "title": "Blockquote Semantic Element",
   "description": "Extended quotation from another source. Used for testimonials, reviews, cited content.",
-  "$inheritance": {
-    "extends": "_element.base.schema.json",
-    "reason": "Blockquote IS-A element with all base properties"
-  },
   "htmlTag": "blockquote",
   "role": "blockquote",
   "semanticMeaning": {

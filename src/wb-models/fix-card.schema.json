@@ -2,7 +2,7 @@
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "fix-card.schema.json",
   "title": "Fix Card",
-  "description": "Component for displaying fix/remediation details.",
+  "description": "Behavior for displaying fix/remediation details.",
   "schemaFor": "fix-card",
   "compliance": {
     "baseClass": "x-fix-card",

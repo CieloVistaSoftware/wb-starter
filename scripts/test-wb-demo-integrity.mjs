@@ -182,7 +182,7 @@ export function scanHtml(rawHtml) {
   const html = stripComments(rawHtml);
   const issues = [];
 
-  const openCount = (html.match(/<div[^>]*x-demo[^>]*>/gi) || []).length;
+  const openCount = (html.match(/<div\b[^>]*\bx-demo\b[^>]*>/gi) || []).length;
   const blocks = extractDemoBlocks(html);
   if (blocks.length !== openCount) {
     issues.push(

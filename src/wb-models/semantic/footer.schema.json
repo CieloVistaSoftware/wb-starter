@@ -3,10 +3,6 @@
   "$id": "footer.schema.json",
   "title": "Footer Semantic Element",
   "description": "Footer content - actions, author info, related links, timestamps. Used within article, section, or body.",
-  "$inheritance": {
-    "extends": "_element.base.schema.json",
-    "reason": "Footer IS-A element with all base properties"
-  },
   "htmlTag": "footer",
   "role": "contentinfo (when child of body) or generic",
   "semanticMeaning": {

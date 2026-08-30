@@ -29,7 +29,7 @@
     },
     "pretitle": {
       "type": "string",
-      "description": "Small label or count shown above the title (e.g. '100 Components')",
+      "description": "Small label or count shown above the title (e.g. '100 Behaviors')",
       "default": ""
     },
     "subtitle": {
@@ -354,7 +354,7 @@
   },
   "_metadata": {
     "category": "cards",
-    "icon": "\ud83e\uddb8",
+    "icon": "🦸",
     "since": "1.0.0",
     "status": "stable"
   }

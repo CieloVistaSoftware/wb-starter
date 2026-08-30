@@ -121,7 +121,11 @@ test.describe('Demo Files — Required Document Structure', () => {
 test.describe('Demo Files — Stylesheet Loading', () => {
   for (const { relPath, html } of fullDemos) {
     test(`${relPath} — loads themes.css`, () => {
-      expect(html).toMatch(/href=["'][^"']*themes\.css["']/i);
+    // The href may carry a cache-busting query (the demos use
+    // "../src/styles/themes.css?v=4.0.0"). The old pattern required the
+    // closing quote immediately after ".css", so a versioned link read as
+    // a MISSING stylesheet on 15 demos that load it correctly (#899).
+      expect(html).toMatch(/href=["'][^"']*themes\.css(\?[^"']*)?["']/i);
     });
 
     const siteCssExempt = Object.entries(NO_SITE_CSS).find(([f]) => relPath.endsWith(f))?.[1];
@@ -130,10 +134,10 @@ test.describe('Demo Files — Stylesheet Loading', () => {
         // Assert the exemption is real, not a silent skip: the file must still
         // load themes.css and must genuinely have no site.css link.
         expect(html, `${relPath} is exempt (${siteCssExempt}) but does load site.css — remove it from NO_SITE_CSS`)
-          .not.toMatch(/href=["'][^"']*site\.css["']/i);
+          .not.toMatch(/href=["'][^"']*site\.css(\?[^"']*)?["']/i);
         return;
       }
-      expect(html).toMatch(/href=["'][^"']*site\.css["']/i);
+      expect(html).toMatch(/href=["'][^"']*site\.css(\?[^"']*)?["']/i);
     });
   }
 });

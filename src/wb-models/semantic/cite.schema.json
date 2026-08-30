@@ -3,10 +3,6 @@
   "$id": "cite.schema.json",
   "title": "Cite Semantic Element",
   "description": "Attribution for a quotation or reference. Author name, work title, source.",
-  "$inheritance": {
-    "extends": "_element.base.schema.json",
-    "reason": "Cite IS-A element with all base properties"
-  },
   "htmlTag": "cite",
   "role": "none (inline element)",
   "semanticMeaning": {
@@ -59,7 +55,7 @@
     "withRole": "<cite>{{author}}, {{role}}</cite>"
   },
   "wbComponents": {
-    "description": "WB components that use cite",
+    "description": "WB behaviors that use cite",
     "list": [
       "cardtestimonial"
     ]

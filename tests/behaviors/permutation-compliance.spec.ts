@@ -726,7 +726,7 @@ test.describe('Component Compliance', () => {
               (cls ? e.classList.contains(cls) : false) ||
               e.hasAttribute('x-schema') ||
               e.children.length > 0 ||
-              /x-/.test(e.className || '') ||
+              /\bx-/.test(e.className || '') ||
               (e.getAttribute('style') || '').trim().length > 0,
             schema.compliance?.baseClass || '');
 

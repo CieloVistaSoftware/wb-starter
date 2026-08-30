@@ -1,7 +1,7 @@
 {
   "$schema": "http://json-schema.org/draft-07/schema#",
   "title": "Home Page",
-  "description": "Schema for the home page layout and component structure.",
+  "description": "Schema for the home page layout and behavior structure.",
   "schemaType": "page",
   "schemaFor": "home-page",
   "pageRules": {
@@ -14,10 +14,44 @@
     "gap": "2rem",
     "maxWidth": "1200px",
     "rows": [
-      { "columns": 1, "width": "full-bleed", "headingLevel": 1, "content": ["hero"] },
-      { "columns": 1, "width": "900px", "heading": "By the Numbers", "headingLevel": 2, "content": ["stats"] },
-      { "columns": 1, "width": "1200px", "heading": "Features", "headingLevel": 2, "subheading": "Everything you need to build modern UIs", "content": ["features"] },
-      { "columns": 2, "ratio": "60/40", "width": "1200px", "heading": "Notification Card Examples", "headingLevel": 2, "content": ["notifications", "audio"] }
+      {
+        "columns": 1,
+        "width": "full-bleed",
+        "headingLevel": 1,
+        "content": [
+          "hero"
+        ]
+      },
+      {
+        "columns": 1,
+        "width": "900px",
+        "heading": "By the Numbers",
+        "headingLevel": 2,
+        "content": [
+          "stats"
+        ]
+      },
+      {
+        "columns": 1,
+        "width": "1200px",
+        "heading": "Features",
+        "headingLevel": 2,
+        "subheading": "Everything you need to build modern UIs",
+        "content": [
+          "features"
+        ]
+      },
+      {
+        "columns": 2,
+        "ratio": "60/40",
+        "width": "1200px",
+        "heading": "Notification Card Examples",
+        "headingLevel": 2,
+        "content": [
+          "notifications",
+          "audio"
+        ]
+      }
     ]
   },
   "properties": {
@@ -26,13 +60,33 @@
       "description": "Hero section using x-cardhero.",
       "required": true,
       "properties": {
-        "variant": { "type": "string", "default": "cosmic" },
-        "background": { "type": "string" },
-        "pretitle": { "type": "string", "default": "100 Components" },
-        "title": { "type": "string", "default": "Build stunning UIs" },
-        "subtitle": { "type": "string", "default": "just HTML — no build step" },
-        "cta": { "type": "string", "default": "Explore Components" },
-        "ctaSecondary": { "type": "string", "default": "Documentation" }
+        "variant": {
+          "type": "string",
+          "default": "cosmic"
+        },
+        "background": {
+          "type": "string"
+        },
+        "pretitle": {
+          "type": "string",
+          "default": "100 Components"
+        },
+        "title": {
+          "type": "string",
+          "default": "Build stunning UIs"
+        },
+        "subtitle": {
+          "type": "string",
+          "default": "just HTML — no build step"
+        },
+        "cta": {
+          "type": "string",
+          "default": "Explore Components"
+        },
+        "ctaSecondary": {
+          "type": "string",
+          "default": "Documentation"
+        }
       },
       "default": {}
     },
@@ -44,16 +98,38 @@
       "items": {
         "type": "object",
         "properties": {
-          "value": { "type": "string" },
-          "label": { "type": "string" },
-          "icon": { "type": "string" }
+          "value": {
+            "type": "string"
+          },
+          "label": {
+            "type": "string"
+          },
+          "icon": {
+            "type": "string"
+          }
         }
       },
       "default": [
-        { "value": "100+", "label": "Behaviors", "icon": "🧩" },
-        { "value": "Light", "label": "DOM Only", "icon": "☀️" },
-        { "value": "<1s", "label": "Build Time", "icon": "⚡" },
-        { "value": "100%", "label": "Standards", "icon": "✅" }
+        {
+          "value": "100+",
+          "label": "Behaviors",
+          "icon": "🧩"
+        },
+        {
+          "value": "Light",
+          "label": "DOM Only",
+          "icon": "☀️"
+        },
+        {
+          "value": "<1s",
+          "label": "Build Time",
+          "icon": "⚡"
+        },
+        {
+          "value": "100%",
+          "label": "Standards",
+          "icon": "✅"
+        }
       ]
     },
     "actions": {
@@ -62,15 +138,31 @@
       "items": {
         "type": "object",
         "properties": {
-          "label": { "type": "string" },
-          "behavior": { "type": "string" }
+          "label": {
+            "type": "string"
+          },
+          "behavior": {
+            "type": "string"
+          }
         }
       },
       "default": [
-        { "label": "✨ Ripple", "behavior": "x-ripple" },
-        { "label": "💬 Tooltip", "behavior": "x-tooltip" },
-        { "label": "🎉 Confetti", "behavior": "x-confetti" },
-        { "label": "📋 Copy", "behavior": "x-copy" }
+        {
+          "label": "✨ Ripple",
+          "behavior": "x-ripple"
+        },
+        {
+          "label": "💬 Tooltip",
+          "behavior": "x-tooltip"
+        },
+        {
+          "label": "🎉 Confetti",
+          "behavior": "x-confetti"
+        },
+        {
+          "label": "📋 Copy",
+          "behavior": "x-copy"
+        }
       ]
     },
     "features": {
@@ -80,17 +172,39 @@
       "items": {
         "type": "object",
         "properties": {
-          "title": { "type": "string" },
-          "description": { "type": "string" }
+          "title": {
+            "type": "string"
+          },
+          "description": {
+            "type": "string"
+          }
         }
       },
       "default": [
-        { "title": "🧩 Component Library", "description": "Over 40 ready-to-use UI components including Cards, Modals, Drawers, and Navigation." },
-        { "title": "⚡ Behaviors System", "description": "Compose interactions like Lego bricks. Add x-fade-in, x-sticky, or x-validate to any element." },
-        { "title": "🎨 Theme Engine", "description": "23 built-in themes with CSS Variable support. Dark mode, Light mode, and Auto detection out of the box." },
-        { "title": "📊 Data Viz", "description": "Built-in charts, stats cards, and audio visualizations powered by Web Standards." },
-        { "title": "♿ Accessible", "description": "ARIA attributes and keyboard navigation are baked into every component by default." },
-        { "title": "🚀 Performance", "description": "Zero-runtime compilation. Browsers are fast now. We let them do their job." }
+        {
+          "title": "🧩 Behavior Library",
+          "description": "Over 40 ready-to-use UI behaviors including Cards, Modals, Drawers, and Navigation."
+        },
+        {
+          "title": "⚡ Behaviors System",
+          "description": "Compose interactions like Lego bricks. Add x-fade-in, x-sticky, or x-validate to any element."
+        },
+        {
+          "title": "🎨 Theme Engine",
+          "description": "23 built-in themes with CSS Variable support. Dark mode, Light mode, and Auto detection out of the box."
+        },
+        {
+          "title": "📊 Data Viz",
+          "description": "Built-in charts, stats cards, and audio visualizations powered by Web Standards."
+        },
+        {
+          "title": "♿ Accessible",
+          "description": "ARIA attributes and keyboard navigation are baked into every behavior by default."
+        },
+        {
+          "title": "🚀 Performance",
+          "description": "Zero-runtime compilation. Browsers are fast now. We let them do their job."
+        }
       ]
     },
     "notifications": {
@@ -101,25 +215,61 @@
       "items": {
         "type": "object",
         "properties": {
-          "variant": { "type": "string", "enum": ["info", "success", "warning", "error"] },
-          "title": { "type": "string" },
-          "message": { "type": "string" }
+          "variant": {
+            "type": "string",
+            "enum": [
+              "info",
+              "success",
+              "warning",
+              "error"
+            ]
+          },
+          "title": {
+            "type": "string"
+          },
+          "message": {
+            "type": "string"
+          }
         }
       },
       "default": [
-        { "variant": "info", "title": "System Update", "message": "Downloading patch v3.1..." },
-        { "variant": "success", "title": "Complete", "message": "Installation finished successfully." },
-        { "variant": "warning", "title": "Attention", "message": "Check your settings." },
-        { "variant": "error", "title": "Failure", "message": "Something went wrong." }
+        {
+          "variant": "info",
+          "title": "System Update",
+          "message": "Downloading patch v3.1..."
+        },
+        {
+          "variant": "success",
+          "title": "Complete",
+          "message": "Installation finished successfully."
+        },
+        {
+          "variant": "warning",
+          "title": "Attention",
+          "message": "Check your settings."
+        },
+        {
+          "variant": "error",
+          "title": "Failure",
+          "message": "Something went wrong."
+        }
       ]
     },
     "audio": {
       "type": "object",
       "description": "Audio player with EQ visualization.",
       "properties": {
-        "src": { "type": "string" },
-        "showEq": { "type": "boolean", "default": true },
-        "volume": { "type": "number", "default": 0.5 }
+        "src": {
+          "type": "string"
+        },
+        "showEq": {
+          "type": "boolean",
+          "default": true
+        },
+        "volume": {
+          "type": "number",
+          "default": 0.5
+        }
       },
       "default": {}
     }
@@ -128,21 +278,43 @@
     "supportLevel": "stable",
     "accessibility": "high",
     "requiredChildren": {
-      "x-cardhero": { "required": true },
-      "x-cardstats": { "minCount": 4 },
-      "x-card[variant=float]": { "minCount": 6 },
-      "x-grid": { "required": true },
-      "x-container": { "required": true },
-      "x-audio": { "required": true },
-      "x-cardnotification": { "minCount": 4 }
+      "x-cardhero": {
+        "required": true
+      },
+      "x-cardstats": {
+        "minCount": 4
+      },
+      "x-card[variant=float]": {
+        "minCount": 6
+      },
+      "x-grid": {
+        "required": true
+      },
+      "x-container": {
+        "required": true
+      },
+      "x-audio": {
+        "required": true
+      },
+      "x-cardnotification": {
+        "minCount": 4
+      }
     }
   },
   "interactions": {
     "elements": {
-      "button[x-ripple]": { "clickable": true },
-      "button[x-tooltip]": { "hoverable": true },
-      "button[x-confetti]": { "clickable": true },
-      "button[x-copy]": { "clickable": true }
+      "button[x-ripple]": {
+        "clickable": true
+      },
+      "button[x-tooltip]": {
+        "hoverable": true
+      },
+      "button[x-confetti]": {
+        "clickable": true
+      },
+      "button[x-copy]": {
+        "clickable": true
+      }
     }
   },
   "$view": [
@@ -153,13 +325,40 @@
       "required": true,
       "description": "Hero banner. Full-bleed width.",
       "attributes": [
-        { "name": "variant", "required": true, "example": "cosmic" },
-        { "name": "background", "required": false },
-        { "name": "pretitle", "required": false, "example": "100 Components" },
-        { "name": "title", "required": true, "example": "Build stunning UIs" },
-        { "name": "subtitle", "required": false, "example": "just HTML — no build step" },
-        { "name": "cta", "required": true, "example": "Explore Components" },
-        { "name": "cta-secondary", "required": false, "example": "Documentation" }
+        {
+          "name": "variant",
+          "required": true,
+          "example": "cosmic"
+        },
+        {
+          "name": "background",
+          "required": false
+        },
+        {
+          "name": "pretitle",
+          "required": false,
+          "example": "100 Components"
+        },
+        {
+          "name": "title",
+          "required": true,
+          "example": "Build stunning UIs"
+        },
+        {
+          "name": "subtitle",
+          "required": false,
+          "example": "just HTML — no build step"
+        },
+        {
+          "name": "cta",
+          "required": true,
+          "example": "Explore Components"
+        },
+        {
+          "name": "cta-secondary",
+          "required": false,
+          "example": "Documentation"
+        }
       ]
     },
     {
@@ -169,30 +368,59 @@
       "required": true,
       "description": "Stats panel. Contained at 900px.",
       "attributes": [
-        { "name": "max-width", "required": true, "example": "900px" },
-        { "name": "padding", "required": true, "example": "2rem" }
+        {
+          "name": "max-width",
+          "required": true,
+          "example": "900px"
+        },
+        {
+          "name": "padding",
+          "required": true,
+          "example": "2rem"
+        }
       ],
       "children": [
         {
           "tag": "x-grid",
           "required": true,
           "attributes": [
-            { "name": "columns", "example": "4" }
+            {
+              "name": "columns",
+              "example": "4"
+            }
           ],
           "children": [
-            { "tag": "x-cardstats", "required": true, "minCount": 4 }
+            {
+              "tag": "x-cardstats",
+              "required": true,
+              "minCount": 4
+            }
           ]
         },
-        { "tag": "div", "className": "x-divider", "required": true },
+        {
+          "tag": "div",
+          "className": "x-divider",
+          "required": true
+        },
         {
           "tag": "x-row",
           "required": true,
           "attributes": [
-            { "name": "justify", "example": "center" },
-            { "name": "gap", "example": "1rem" }
+            {
+              "name": "justify",
+              "example": "center"
+            },
+            {
+              "name": "gap",
+              "example": "1rem"
+            }
           ],
           "children": [
-            { "tag": "button", "required": true, "minCount": 4 }
+            {
+              "tag": "button",
+              "required": true,
+              "minCount": 4
+            }
           ]
         }
       ]
@@ -204,7 +432,17 @@
       "required": true,
       "description": "Feature cards. Contained width.",
       "children": [
-        { "tag": "x-card", "required": true, "minCount": 6, "attributes": [{ "name": "variant", "example": "float" }] }
+        {
+          "tag": "x-card",
+          "required": true,
+          "minCount": 6,
+          "attributes": [
+            {
+              "name": "variant",
+              "example": "float"
+            }
+          ]
+        }
       ]
     },
     {
@@ -214,7 +452,11 @@
       "required": true,
       "description": "Notification cards stacked vertically.",
       "children": [
-        { "tag": "x-cardnotification", "required": true, "minCount": 4 }
+        {
+          "tag": "x-cardnotification",
+          "required": true,
+          "minCount": 4
+        }
       ]
     },
     {
@@ -224,22 +466,43 @@
       "required": true,
       "description": "Audio player with EQ.",
       "attributes": [
-        { "name": "src", "required": true },
-        { "name": "show-eq", "required": true },
-        { "name": "volume", "required": false, "example": "0.5" }
+        {
+          "name": "src",
+          "required": true
+        },
+        {
+          "name": "show-eq",
+          "required": true
+        },
+        {
+          "name": "volume",
+          "required": false,
+          "example": "0.5"
+        }
       ]
     }
   ],
   "$methods": {
     "scrollToSection": {
       "description": "Scrolls to a named section on the page",
-      "params": ["sectionName"]
+      "params": [
+        "sectionName"
+      ]
     }
   },
   "$cssAPI": {
-    "--home-hero-height": { "default": "100vh", "description": "Hero section height" },
-    "--home-section-gap": { "default": "4rem", "description": "Gap between page sections" },
-    "--home-feature-columns": { "default": "3", "description": "Number of feature card columns" }
+    "--home-hero-height": {
+      "default": "100vh",
+      "description": "Hero section height"
+    },
+    "--home-section-gap": {
+      "default": "4rem",
+      "description": "Gap between page sections"
+    },
+    "--home-feature-columns": {
+      "default": "3",
+      "description": "Number of feature card columns"
+    }
   },
   "test": {
     "setup": [
@@ -298,8 +561,8 @@
         },
         {
           "_section": "features",
-          "title": "🧩 Component Library",
-          "description": "Over 40 ready-to-use UI components."
+          "title": "🧩 Behavior Library",
+          "description": "Over 40 ready-to-use UI behaviors."
         },
         {
           "_section": "features",
@@ -333,21 +596,46 @@
         "hero": {
           "tag": "x-cardhero",
           "minInstances": 1,
-          "checkClasses": ["x-hero"],
-          "checkAttributes": ["variant", "title", "cta"],
-          "checkText": ["Build stunning UIs", "Explore Components"]
+          "checkClasses": [
+            "x-hero"
+          ],
+          "checkAttributes": [
+            "variant",
+            "title",
+            "cta"
+          ],
+          "checkText": [
+            "Build stunning UIs",
+            "Explore Components"
+          ]
         },
         "stats": {
           "tag": "x-cardstats",
           "minInstances": 4,
-          "checkClasses": ["x-stats"],
-          "checkAttributes": ["value", "label", "icon"],
-          "checkText": ["100+", "Behaviors", "Light", "DOM Only", "Build Time", "Standards"]
+          "checkClasses": [
+            "x-stats"
+          ],
+          "checkAttributes": [
+            "value",
+            "label",
+            "icon"
+          ],
+          "checkText": [
+            "100+",
+            "Behaviors",
+            "Light",
+            "DOM Only",
+            "Build Time",
+            "Standards"
+          ]
         },
         "container": {
           "tag": "x-container",
           "minInstances": 1,
-          "checkAttributes": ["max-width", "padding"]
+          "checkAttributes": [
+            "max-width",
+            "padding"
+          ]
         },
         "divider": {
           "selector": ".x-divider",
@@ -356,57 +644,94 @@
         "actions": {
           "selector": "button[x-ripple], button[x-tooltip], button[x-confetti], button[x-copy]",
           "minInstances": 4,
-          "checkText": ["Ripple", "Tooltip", "Confetti", "Copy"]
+          "checkText": [
+            "Ripple",
+            "Tooltip",
+            "Confetti",
+            "Copy"
+          ]
         },
         "features": {
           "tag": "x-card",
           "minInstances": 6,
-          "checkClasses": ["x-card--float"],
-          "checkAttributes": ["variant"],
-          "checkText": ["Component Library", "Behaviors System", "Theme Engine", "Data Viz", "Accessible", "Performance"]
+          "checkClasses": [
+            "x-card--float"
+          ],
+          "checkAttributes": [
+            "variant"
+          ],
+          "checkText": [
+            "Component Library",
+            "Behaviors System",
+            "Theme Engine",
+            "Data Viz",
+            "Accessible",
+            "Performance"
+          ]
         },
         "grid": {
           "tag": "x-grid",
           "minInstances": 2,
-          "checkClasses": ["x-grid"],
+          "checkClasses": [
+            "x-grid"
+          ],
           "note": "2 grids: stats grid (inside x-container, columns=4) + features grid (body > x-grid)"
         },
         "notifications": {
           "tag": "x-cardnotification",
           "minInstances": 4,
-          "checkAttributes": ["variant", "title", "message"],
-          "checkText": ["System Update", "Complete", "Attention", "Failure"]
+          "checkAttributes": [
+            "variant",
+            "title",
+            "message"
+          ],
+          "checkText": [
+            "System Update",
+            "Complete",
+            "Attention",
+            "Failure"
+          ]
         },
         "audio": {
-        "tag": "x-audio",
-        "minInstances": 1,
-        "checkAttributes": ["src", "show-eq", "volume"],
+          "tag": "x-audio",
+          "minInstances": 1,
+          "checkAttributes": [
+            "src",
+            "show-eq",
+            "volume"
+          ],
           "checkChildren": {
-        "playButton": {
-          "selector": ".x-audio__play-btn",
-          "required": true,
-          "visible": true,
-          "clickable": true
-        },
-        "display": {
-          "selector": ".x-audio__display",
-          "required": true,
-          "visible": true,
-          "hasText": true
-        },
-        "displayTime": {
-          "selector": ".x-audio__display-time",
-          "required": true,
-          "matchesPattern": "^\\d+:\\d{2}"
+            "playButton": {
+              "selector": ".x-audio__play-btn",
+              "required": true,
+              "visible": true,
+              "clickable": true
+            },
+            "display": {
+              "selector": ".x-audio__display",
+              "required": true,
+              "visible": true,
+              "hasText": true
+            },
+            "displayTime": {
+              "selector": ".x-audio__display-time",
+              "required": true,
+              "matchesPattern": "^\\d+:\\d{2}"
+            }
+          }
         }
-      }
-    }
       },
       "layout": {
         "noWbDemo": true,
         "noInlineStyles": true,
         "isFragment": true,
-        "sectionOrder": ["hero", "stats", "features", "notifications", "audio"]
+        "sectionOrder": [
+          "hero",
+          "stats",
+          "features",
+          "notifications",
+          "audio"
+        ]
       },
       "mobileFirst": {
         "breakpoint": 375,

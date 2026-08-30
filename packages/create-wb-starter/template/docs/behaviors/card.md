@@ -1,6 +1,6 @@
 # Card Behavior
 
-Card behavior. IS-A article, HAS-A header, main, footer.
+Card. Composes an article with a header, main and footer.
 
 Applies to `<article>`, and to any element carrying `x-card`.
 
