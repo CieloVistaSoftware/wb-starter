@@ -17,12 +17,17 @@
   <p>What's actually live on this site right now — every push to <code>main</code> deploys straight to <a href="https://cielovistasoftware.github.io/wb-starter/" target="_blank" rel="noopener">cielovistasoftware.github.io/wb-starter</a>, so this list is the real changelog, not a promise of a future release.</p>
 </div>
 
-<section id="whats-new-2026-09-03">
-  <h2>Performance — 2026-09-03</h2>
-  <p><strong>Live now.</strong> Demo pages were freezing the browser while they built, and code panels rendered
-  uncoloured and then visibly grew. All three turned out to be one chain: the page built every demo before you
-  could touch it, highlighting arrived after the code had already painted, and the width measurement kept
-  chasing content that highlighting rewrote underneath it.</p>
+<section id="whats-new-4-0-1">
+  <h2>4.0.1 — 2026-09-03</h2>
+  <p><strong>The first patch on 4.0.0.</strong> Nine changes: three that stop the demo pages freezing, two that
+  repair what the 4.0.0 rename broke, and four that fix pages rendering wrong — or, in one case, a gate that had
+  not been running at all.</p>
+
+  <h3>Performance</h3>
+  <p>Demo pages were freezing the browser while they built, and code panels rendered uncoloured and then visibly
+  grew. All three turned out to be one chain: the page built every demo before you could touch it, highlighting
+  arrived after the code had already painted, and the width measurement kept chasing content that highlighting
+  rewrote underneath it.</p>
   <ul>
     <li class="wn-item wn-fix"><span class="wn-tag">Fix</span> <strong>The cards page no longer freezes.</strong>
     <code>demos/site/cards.html</code> built all 293 demos before the page was interactive — measured at
@@ -43,6 +48,66 @@
   </ul>
   <p><em>Known:</em> a page grows in height as demos build below you, so the scrollbar shrinks while you scroll —
   the trade for not building 293 demos up front.</p>
+
+  <h3>Testing — the compliance gate was not running</h3>
+  <ul>
+    <li class="wn-item wn-fix"><span class="wn-tag">Fix</span> <strong>Compliance collected zero tests for
+    twelve days.</strong> A spec built a regex containing <code>[x-demo]</code> at module scope. That is a
+    character <em>class</em>, so <code>x-d</code> reads as a range from <code>x</code> (120) to <code>d</code>
+    (100) — endpoints reversed — and constructing it threw <code>SyntaxError: Range out of order in character
+    class</code> at load. Playwright treats a collection-time throw as fatal for the whole project, so
+    <code>test:compliance</code> reported <strong>“Total: 0 tests”</strong> and exited having checked nothing.
+    The gate looked green because it never ran. CI had been red on every <code>main</code> run since 2026-08-21
+    for this reason, and every branch cut from <code>main</code> in that window was effectively ungated.
+    <em>(#975)</em></li>
+  </ul>
+
+  <h3>Fallout from the 4.0.0 rename</h3>
+  <ul>
+    <li class="wn-item wn-new"><span class="wn-tag">Change</span> <strong>“Component” is gone from the
+    vocabulary.</strong> 4.0.0 deleted every custom element; there is no Shadow DOM and no <code>&lt;wb-*&gt;</code>
+    or <code>&lt;x-*&gt;</code> tag left, so the word described nothing that still exists — “Web Components”
+    included. Reader-facing occurrences went <strong>2,068 → 168</strong> (92%), with 3,665 renames across 636
+    files.</li>
+
+    <li class="wn-item wn-fix"><span class="wn-tag">Fix</span> <strong>Angular’s API name was renamed too, and
+    the demo threw.</strong> That sweep reached executable code referencing a third-party API:
+    <code>@angular/core</code> exports <code>Component</code> and has never exported <code>Behavior</code>, so
+    the frameworks demo died on load with <code>Behavior is not a function</code>. Restored at all four sites in
+    both copies. The template copy is the one that mattered — it ships, so every project scaffolded by
+    <code>create-wb-starter</code> got a demo page that threw. <em>(#971)</em></li>
+  </ul>
+
+  <h3>Pages that were rendering wrong</h3>
+  <ul>
+    <li class="wn-item wn-fix"><span class="wn-tag">Fix</span> <strong>The behaviors reference hung the
+    renderer.</strong> <code>docs/behaviors-reference.md</code> closed three <code>&lt;div&gt;</code> elements
+    with <code>&lt;/input&gt;</code>. <code>input</code> is a void element with no closing tag, so the parser
+    discarded each one, leaving the divs open and the document nesting wrong from that point down.</li>
+
+    <li class="wn-item wn-fix"><span class="wn-tag">Fix</span> <strong>The table behavior rendered an empty
+    table.</strong> The showcase decodes HTML entities for display and re-injects the result — and decoded, the
+    JSON quotes in <code>rows="[[&amp;quot;alert&amp;quot;,…]]"</code> collide with the attribute delimiter, so
+    the value terminated at <code>[[</code> and the behavior received nothing. <em>(#861)</em></li>
+
+    <li class="wn-item wn-fix"><span class="wn-tag">Fix</span> <strong>Progress bars ignored
+    <code>striped</code>.</strong> Two implementations existed: the tag map resolved <code>[x-progressbar]</code>
+    to one module, while anything deriving the name by stripping <code>x-</code> loaded a second one with
+    different classes, inline styles, and a <code>striped</code> that only answered to <code>striped="true"</code>.
+    The showcase derives it that way, so a bare <code>striped</code> rendered plain there while working
+    everywhere else. Search typing now filters, and a permutation check that never actually permuted was
+    repaired.</li>
+
+    <li class="wn-item wn-fix"><span class="wn-tag">Fix</span> <strong>API and Docs panels now fill the live
+    panel and cover the example.</strong> Previously they opened at the right position but stopped short of the
+    bottom, leaving the example visible underneath.</li>
+
+    <li class="wn-item wn-fix"><span class="wn-tag">Fix</span> <strong>The site still said v3.0, and the home
+    page had no <code>&lt;h1&gt;</code>.</strong> The title was declared in four places — three in
+    <code>index.html</code> (<code>&lt;title&gt;</code>, <code>og:title</code>, <code>twitter:title</code>) and
+    once in <code>config/site.json</code> — and <code>site-engine.js</code> overwrote
+    <code>document.title</code> at runtime from the config, so fixing any one place did nothing.</li>
+  </ul>
 </section>
 
 <section id="whats-new-4-0-0">
