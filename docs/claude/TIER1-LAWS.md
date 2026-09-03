@@ -237,11 +237,14 @@ origin smokes the PREVIOUS deploy and returns a confident, meaningless pass),
 then runs `site-smoke` against the live site. Green = done. Anything else = the
 site is broken and you fix it before you say a word about anything else.
 
-**The URL comes from the system environment**, per John's rule that all
-environment variables are stored and used at the system level. `SMOKE_BASE_URL`
-is set at the user level on this machine; the script reads it and never
-invents one. If it is missing the script says so and stops rather than
-guessing. `--url <address>` overrides for a one-off run against somewhere else.
+**The published URL lives in the repo**, in `scripts/smoke-deployed.mjs`,
+under version control — it is public, identical for every clone, and works on a
+fresh checkout with no setup. `--url <address>` overrides for a one-off run
+against a staging copy or a fork.
+
+It is deliberately NOT a system environment variable. **System environment
+variables hold secrets** (John's rule); a public URL is not one, and putting it
+there breaks the gate on every machine that has not had it set by hand.
 
 ### What does NOT count as verification
 

@@ -20,32 +20,22 @@
 import { execSync, spawnSync } from 'child_process';
 
 /*
- * The URL comes from the SYSTEM environment, never from a value invented here.
- * John's rule: all environment variables are stored and used at the system
- * level. This script READS SMOKE_BASE_URL; it does not manufacture one and
- * inject it into the child process.
+ * The published URL lives HERE, in the repo, under version control.
  *
- * Set it once, permanently, then never think about it again:
+ * It is public, it is the same for every clone, and it is not a secret --
+ * system environment variables are for secrets (John's rule), and this is not
+ * one. Putting it there also broke the gate for anyone whose machine had not
+ * had the variable set by hand, which is every machine but one.
  *
- *   setx SMOKE_BASE_URL "https://cielovistasoftware.github.io/wb-starter/"
- *
- * (setx writes to the user environment; open a NEW shell for it to be visible.)
+ * --url overrides for a one-off run against somewhere else (a staging copy, a
+ * fork's Pages site).
  */
+const PUBLISHED_URL = 'https://cielovistasoftware.github.io/wb-starter/';
+
 const argIdx = process.argv.indexOf('--url');
 const override = argIdx !== -1 ? process.argv[argIdx + 1] : null;
-const url = override || process.env.SMOKE_BASE_URL;
+const url = override || PUBLISHED_URL;
 const skipWait = process.argv.includes('--no-wait');
-
-if (!url) {
-  console.error(
-    '\n❌ SMOKE_BASE_URL is not set in the system environment.\n\n' +
-      '   Set it once, at the system level:\n\n' +
-      '     setx SMOKE_BASE_URL "https://cielovistasoftware.github.io/wb-starter/"\n\n' +
-      '   Then open a new shell and re-run. (--url <address> overrides it for a\n' +
-      '   one-off run against somewhere else, e.g. a staging copy.)\n'
-  );
-  process.exit(1);
-}
 
 const REPO = 'CieloVistaSoftware/wb-starter';
 const POLL_MS = 15_000;
@@ -94,10 +84,10 @@ if (!skipWait) await waitForBuild();
 const res = spawnSync(
   'npx',
   ['playwright', 'test', 'site-smoke', '--project=compliance', '--reporter=line'],
-  // Inherit the system environment as-is. The only case that adds anything is
-  // an explicit --url override for a one-off run; the normal path passes the
-  // ambient SMOKE_BASE_URL straight through, unmodified.
-  { stdio: 'inherit', env: override ? { ...process.env, SMOKE_BASE_URL: override } : process.env, shell: true }
+  // SMOKE_BASE_URL is a process-local handoff to the spec, set for this child
+  // only. It is deliberately NOT a system environment variable: those hold
+  // secrets, and a public URL is not one.
+  { stdio: 'inherit', env: { ...process.env, SMOKE_BASE_URL: url }, shell: true }
 );
 
 if (res.status === 0) {
