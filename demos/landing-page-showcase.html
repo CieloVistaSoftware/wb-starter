@@ -16,7 +16,7 @@
     if (versionBadge) versionBadge.setAttribute('label', `v${VERSION.version} — zero build step`);
     window.WB = WB;
     await WB.init({ autoInject: true });
-    await WB.scan(document.body, { eager: true });
+    await WB.scan(document.body);
 
     // Neither CTA had a destination at all (live report: clicking either
     // did nothing) -- x-button renders a real <button> internally

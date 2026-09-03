@@ -1397,7 +1397,7 @@
     import WB from '../../src/core/wb-lazy.js';
     window.WB = WB;
     await WB.init({ autoInject: true });
-    await WB.scan(document.body, { eager: true });
+    await WB.scan(document.body);
     console.log('Form Controls initialized');
     window.__WB_DEMO_INITIALIZED__ = true;
   </script>

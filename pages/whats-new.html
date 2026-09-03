@@ -17,6 +17,34 @@
   <p>What's actually live on this site right now — every push to <code>main</code> deploys straight to <a href="https://cielovistasoftware.github.io/wb-starter/" target="_blank" rel="noopener">cielovistasoftware.github.io/wb-starter</a>, so this list is the real changelog, not a promise of a future release.</p>
 </div>
 
+<section id="whats-new-2026-09-03">
+  <h2>Performance — 2026-09-03</h2>
+  <p><strong>Live now.</strong> Demo pages were freezing the browser while they built, and code panels rendered
+  uncoloured and then visibly grew. All three turned out to be one chain: the page built every demo before you
+  could touch it, highlighting arrived after the code had already painted, and the width measurement kept
+  chasing content that highlighting rewrote underneath it.</p>
+  <ul>
+    <li class="wn-item wn-fix"><span class="wn-tag">Fix</span> <strong>The cards page no longer freezes.</strong>
+    <code>demos/site/cards.html</code> built all 293 demos before the page was interactive — measured at
+    <strong>13,680ms of total main-thread blocking, including one unbroken 9,110ms task</strong>. The page painted
+    in 112ms and then locked up. It now builds what is on screen and the rest as you reach them:
+    <strong>952ms of blocking, longest task 346ms</strong>, 48 demos at load instead of 293. The same change is on
+    eleven sibling demo pages.</li>
+
+    <li class="wn-item wn-fix"><span class="wn-tag">Fix</span> <strong>Code renders coloured on the first frame.</strong>
+    A code panel used to appear as plain text at 234ms and only get syntax highlighting at 741ms — half a second of
+    unstyled monospace. The panel is now held back until it has been highlighted, so there is no uncoloured frame
+    at all. Measured cost of the change: <strong>1ms</strong>.</li>
+
+    <li class="wn-item wn-fix"><span class="wn-tag">Fix</span> <strong>Code panels stopped creeping wider.</strong>
+    The shrink-to-fit measurement wrote its answer on every one of up to 25 polls, so each intermediate width was
+    painted and the box visibly stepped outward while you read it. The value is now committed once, when it stops
+    moving.</li>
+  </ul>
+  <p><em>Known:</em> a page grows in height as demos build below you, so the scrollbar shrinks while you scroll —
+  the trade for not building 293 demos up front.</p>
+</section>
+
 <section id="whats-new-4-0-0">
   <h2><a href="https://github.com/CieloVistaSoftware/wb-starter/releases/tag/v4.0.0" target="_blank" rel="noopener" title="release v4.0.0">4.0.0</a> — 2026-08-25</h2>
   <p><strong>Breaking.</strong> Every <code>&lt;wb-*&gt;</code> component tag is gone. Nothing in this repo writes components any more — you write real HTML and add behavior with an <code>x-</code> attribute.</p>
