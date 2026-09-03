@@ -1800,20 +1800,49 @@
       return (def && def.description) ? def.description : '';
     }
 
+    // #994 — articleFor / shows / occludingChild / describeCover live in
+    // src/wb-viewmodels/live-note.js. They were inline, and the first
+    // regression test written for this fix PASSED with the bug reintroduced:
+    // the only way to reach them was through the page, and the page rebuilds
+    // its example on every selection, resetting any geometry a test set up. A
+    // guard that cannot fail is not a guard. In a module they are testable
+    // directly. Safe fallbacks below keep the page working if the import 404s.
+    let articleFor = (w) => /^[aeiou]/i.test(String(w || '')) ? 'an' : 'a';
+    let shows = (n, t) => `shows ${articleFor(n)} ${n}${t ? ' ' + t : ''}`;
+    let occludingChild = () => null;
+    let describeCover = () => null;
+    import(siteRoot() + 'src/wb-viewmodels/live-note.js')
+      .then((m) => { articleFor = m.articleFor; shows = m.shows; occludingChild = m.occludingChild; describeCover = m.describeCover; })
+      .catch(() => { /* keep the fallbacks above */ });
+
+    /** Opaque enough that nothing behind it is visible. */
+    function isOpaqueColour(value) {
+      const c = parseRgb(value);
+      return !!(c && c.a > 0.85);
+    }
+
     function summarise(el) {
       if (!el) return '';
       const cs = getComputedStyle(el);
       const bg = parseRgb(cs.backgroundColor);
       if (cs.backgroundImage && cs.backgroundImage !== 'none') return 'shows a gradient background';
-      if (bg && bg.a > 0.85) return `shows a ${colourName(bg.r, bg.g, bg.b)} background`;
-      if (bg && bg.a > 0.05) return `shows a translucent ${colourName(bg.r, bg.g, bg.b)} background`;
+
+      // Describe the background only when it is what is actually on screen.
+      const covered = occludingChild(el, isOpaqueColour);
+      const coverText = describeCover(covered);
+      if (coverText) return coverText;
+      if (!covered) {
+        if (bg && bg.a > 0.85) return shows(colourName(bg.r, bg.g, bg.b), 'background');
+        if (bg && bg.a > 0.05) return `shows a translucent ${colourName(bg.r, bg.g, bg.b)} background`;
+      }
+
       const bw = parseFloat(cs.borderTopWidth) || 0;
       if (bw > 0) {
         const bc = parseRgb(cs.borderTopColor);
-        return bc ? `shows a ${colourName(bc.r, bc.g, bc.b)} border` : 'shows a border';
+        return bc ? shows(colourName(bc.r, bc.g, bc.b), 'border') : 'shows a border';
       }
       if (cs.boxShadow && cs.boxShadow !== 'none') return 'shows a raised shadow';
-      return 'no background or border — plain';
+      return covered ? 'shows its own content' : 'no background or border — plain';
     }
 
     const eventsLog = document.getElementById('behaviors-live-events-log');
