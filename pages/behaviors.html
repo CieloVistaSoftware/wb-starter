@@ -2315,6 +2315,19 @@
       if (focus) row.focus({ preventScroll: true });
       showLive(row.dataset.browseToken, row.dataset.variant || '', row.dataset.label || '',
                row.dataset.prop || '', row.dataset.boolean === '1', row.dataset.form || 'attribute');
+      // John, several times: "when clicking the left, (nav), the content must
+      // show in exact same position as shown here."
+      //
+      // #992 gave the panel a fixed height and its own scrollbar. That fixed
+      // the overflow and introduced this: the scroll position PERSISTED across
+      // selections, so a new example rendered wherever the last one was left.
+      // Measured -- scroll to 200, then pick three behaviors: scrollTop stayed
+      // 207 and the header sat at -206, above the visible area, every time.
+      //
+      // Set BEFORE the settled signal, so anything waiting on
+      // wb:layout-settled measures the position the reader actually sees.
+      liveEl.scrollTop = 0;
+
       // #992 / Law 18 -- every selection must produce a settled signal.
       syncListHeight();
       // #686 -- John, on a phone: "doesn't show the sample code and result".
