@@ -1623,12 +1623,15 @@ main.site__main:has(#mainPage-behaviors) {
   text-align: left;
 }
 
-/* x-details builds the label and the arrow itself. Style what it made rather
-   than authoring competing markup — a hand-built <summary> is rewritten. */
+/* x-details builds the label and the arrow itself. Style what it made
+   rather than authoring competing markup — a hand-built <summary> is
+   rewritten. The count reads `name (6)`: one space, per John. No
+   white-space override — a single space needs none, and the earlier
+   `pre` rule was not matching anyway (computed white-space stayed
+   `normal`), so it was decoration that did nothing. */
 .behaviors-search-results__summary .x-details__label {
   font-family: var(--font-mono, monospace);
   font-size: 0.9rem;
-  white-space: pre;          /* keeps the gap before the (count) */
 }
 
 .behaviors-search-results__summary:hover,

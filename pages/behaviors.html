@@ -573,7 +573,7 @@
         // one .x-details__label plus its own icon, so two spans arrived
         // concatenated — "audio6" — and its flex layout overrode the grid.
         // Law 4b: the tag IS the behavior; work with it, not around it.
-        details.setAttribute('summary', `${entry.label}  (${built.length})`);
+        details.setAttribute('summary', `${entry.label} (${built.length})`);
         // Collapsed by default — "the user must expand it first". A query must
         // still show its matches, or search reports hits it then hides.
         if (q) details.open = true;
