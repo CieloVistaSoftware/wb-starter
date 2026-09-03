@@ -1,5 +1,5 @@
 import { WB_DOC_MAP } from './demo-docmap.js';
-import { getPageSource, extractAttrBlock } from './page-source-cache.js';
+import { getPageSource, extractTagBlock } from './page-source-cache.js';
 /**
  * Demo Container Behavior
  * -----------------------------------------------------------------------------
@@ -464,7 +464,7 @@ export async function demo(element, options = {}) {
             // for them.
             const allDemos = document.querySelectorAll('[x-demo]');
             const idx = Array.from(allDemos).indexOf(element);
-            rawBlock = extractAttrBlock(pageSource, 'x-demo', idx, allDemos.length);
+            rawBlock = extractTagBlock(pageSource, 'x-demo', idx, allDemos.length);
         } catch (e) {
             // ignore fetch errors
         }
