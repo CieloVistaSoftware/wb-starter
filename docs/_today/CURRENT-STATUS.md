@@ -2,6 +2,84 @@
 
 ## 🅿️ PARKING LOT
 
+**Parked 2026-09-03.** Everything below is committed. Nothing is half-done.
+
+### Where things are
+
+| | |
+|---|---|
+| deployed | **4.0.1**, `built @ b657e4bd`, smoke green |
+| working branch | `fix/cards-specificity-and-tooling-corruption`, **4 ahead of main, 0 behind** |
+| port 3000 | now the latest code — synced this session |
+| pre-sync recovery | `git reset --hard wip/pre-sync-2026-09-03` |
+
+### Closed today (each logs plain-English cause + a clickable test link)
+
+`#988` site-down import · `#990` smoke test + Law 17 · `#992` container sizing ·
+`#993` API panel + HTML formatting · `#994` false colour description ·
+`#995` grouped list · `#999` collapsible fieldset deleted
+
+### Open, in the order I would take them
+
+1. **#1003 — 802 inline styles.** The panel half is fixed and pushed. The
+   remaining half: behaviors write `element.style.*` 802 times (373 in
+   `card.js` + `layouts.js`), so **a theme cannot restyle a card image** and
+   `!important` becomes the only escape. Three inline-style specs already exist
+   and none of them cover GENERATED DOM — that is the hole. Start with
+   `card.js`.
+2. **#1001 — real routing** (`/behaviors`, not `?page=behaviors`). John asked
+   for it directly. Note GitHub Pages has no rewrites: a generated
+   `behaviors/index.html` per route is the honest shape; using `404.html` as a
+   router serves every deep link with a 404 status.
+3. **#997 — minimum 5 examples per behavior.** Blocked on nothing now that
+   #993 is settled. Cheapest first step: declare the real enums — `variant`,
+   `size`, `scrollable` are typed `string` with no enum, which is why they
+   generate no rows.
+4. **#989 — deploys invisible for 10 minutes.** `max-age=600` on unversioned
+   JS. Cost us ~20 minutes today arguing with a cached file.
+5. **#991 — `release.mjs` corrupts package-lock.json.** Unanchored replace
+   bumped 5 real dependencies. Next release breaks `npm ci`.
+6. **#996** native `<details>` does not collapse · **#998** `featured` colour
+   (John: "could be just h3" — note the card title is ALREADY an h3, so a
+   second one damages the outline; take the h3 token, not the tag)
+
+### Guards added today — they exist because each one failed first
+
+- **Law 17** — a push is not done until the DEPLOYED site boots.
+  `npm run test:smoke:deployed`. It now waits for the RIGHT COMMIT: it used to
+  wait only for status `built`, so right after a push it smoked the PREVIOUS
+  deploy and reported green over a dead page.
+- **Law 18 — NO POLLING.** The page announces `wb:layout-settled`; tests wait
+  for it. Replacing a 120ms sleep with the notification immediately exposed
+  that the sync did not run on every selection — the flakiness was a missing
+  signal, not an impatient test.
+- **Version tells the truth.** `npm start` re-stamps; the badge shows
+  `⚠ N behind origin/main` / `dirty`. Silence now means the number names the
+  code being served.
+- **Nav parity.** A menu item present on `main` cannot be missing here. Error
+  Log vanished twice, the second time in a CLEAN auto-merge that reported
+  success.
+
+### The lesson that cost the most today
+
+**Local green means nothing.** In one session: a smoke test passed over a dead
+page, a regression test passed with its bug reintroduced (twice), and a
+deployed test failed because it never installed the handler it was testing.
+Every fix now gets fault-injected before it is believed — if the test does not
+go red on the bug, it is not a test.
+
+### One trap still armed
+
+`pages/behaviors.html`, `behaviors.css` and `forms.html` in this checkout carry
+parked edits. **Never copy a whole file from here to a clean tree** — doing
+exactly that took the site down (`4278fcf7`), and a port script slicing to the
+wrong brace took it down again (`ce6d6139`). Apply the change; do not copy the
+file.
+
+---
+
+## 🅿️ PREVIOUS PARKING LOT
+
 **Status: DEPLOYED AND LIVE.** Parked 2026-09-03 at John's direction.
 
 **Live now** at https://cielovistasoftware.github.io/wb-starter/ — Pages
