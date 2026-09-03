@@ -91,7 +91,11 @@ test.describe('site smoke', () => {
     await page.goto(BASE + '/', { waitUntil: 'domcontentloaded' });
 
     const shown = await page.evaluate(async () => {
-      const m = await import('/src/core/version.js').catch(() => null as any);
+      // Resolve against the PAGE, not the origin root: deployed, the site lives
+      // under /wb-starter/, so an absolute '/src/...' is a 404 and this test
+      // fails claiming the site is broken when it is fine.
+      const href = new URL('./src/core/version.js', location.href).href;
+      const m = await import(href).catch(() => null as any);
       return m?.VERSION?.version ?? null;
     });
 

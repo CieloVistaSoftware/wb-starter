@@ -226,16 +226,22 @@ Pushing to `main` publishes live to
 https://cielovistasoftware.github.io/wb-starter/. **The push is not the
 deliverable. A booting site is.**
 
-After every push to `main`, run the smoke test against the DEPLOYED origin:
+After every push to `main`:
 
 ```bash
-SMOKE_BASE_URL=https://cielovistasoftware.github.io/wb-starter/   npx playwright test site-smoke --project=compliance
+npm run test:smoke:deployed
 ```
 
-Wait for the Pages build to finish first (`gh api
-repos/CieloVistaSoftware/wb-starter/pages/builds/latest --jq .status` must read
-`built`, not `building`). Green = done. Anything else = the site is broken and
-you fix it before you say a word about anything else.
+It waits for the Pages build to report `built` (running against a `building`
+origin smokes the PREVIOUS deploy and returns a confident, meaningless pass),
+then runs `site-smoke` against the live site. Green = done. Anything else = the
+site is broken and you fix it before you say a word about anything else.
+
+**The URL comes from the system environment**, per John's rule that all
+environment variables are stored and used at the system level. `SMOKE_BASE_URL`
+is set at the user level on this machine; the script reads it and never
+invents one. If it is missing the script says so and stops rather than
+guessing. `--url <address>` overrides for a one-off run against somewhere else.
 
 ### What does NOT count as verification
 
