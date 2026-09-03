@@ -1,0 +1,28 @@
+<!doctype html>
+<meta charset="utf-8">
+<title>Error Log — wb-starter</title>
+<!--
+  #1000 — John: "cielovistasoftware.github.io/wb-starter/errors-viewer.html
+  shows a 404".
+
+  The viewer lives at public/errors-viewer.html. The bare path worked locally
+  because server.js routes it (#516) — and GitHub Pages is static, so that route
+  does not exist where it matters. #516 was closed on a fix that never reached
+  the deployed site.
+
+  This is the route, expressed the only way a static host understands one: a
+  real file at the URL people type. It forwards rather than duplicating the
+  viewer, so there is one viewer to maintain.
+
+  location.replace, not href: a bookmarked /errors-viewer.html should not leave
+  a dead entry in the reader's history to bounce back through.
+-->
+<meta http-equiv="refresh" content="0; url=public/errors-viewer.html">
+<link rel="canonical" href="public/errors-viewer.html">
+<script>
+  // The meta refresh is the no-JS floor; this makes it immediate.
+  location.replace(new URL('public/errors-viewer.html' + location.search + location.hash, location.href));
+</script>
+<p style="font:1rem system-ui;padding:2rem">
+  Opening the <a href="public/errors-viewer.html">error log</a>…
+</p>

@@ -66,18 +66,71 @@ function initErrorDisplay() {
     
     const header = `=== ${errors.length} Error(s) at ${new Date().toLocaleString()} ===\nPage: ${window.location.href}\n\n`;
     
-    try {
-      await navigator.clipboard.writeText(header + errorText);
-      copyBtn.textContent = '✅ Copied!';
-      copyBtn.style.background = '#22c55e';
+    // #1000 -- John: "copy doesn't copy". There was no fallback: one call to
+    // navigator.clipboard, and the entire recovery was a button label that
+    // reverted after two seconds. That API rejects whenever the document is not
+    // focused -- clicking this with devtools focused is enough -- so the button
+    // failed exactly when someone was trying to hand the error over, and said
+    // nothing about why. The same fallback pattern already exists in
+    // pages/behaviors.html.
+    const payload = header + errorText;
+
+    const viaExecCommand = () => {
+      // Deprecated, but it works without focus and without permission, which is
+      // the whole point of a fallback.
+      const ta = document.createElement('textarea');
+      ta.value = payload;
+      ta.setAttribute('readonly', '');
+      ta.style.cssText = 'position:fixed;top:0;left:-9999px;opacity:0';
+      document.body.appendChild(ta);
+      ta.select();
+      let ok = false;
+      try {
+        ok = document.execCommand('copy');
+      } catch {
+        ok = false;
+      }
+      ta.remove();
+      return ok;
+    };
+
+    const done = (label, bg) => {
+      copyBtn.textContent = label;
+      copyBtn.style.background = bg;
       setTimeout(() => {
         copyBtn.textContent = '📋 Copy';
         copyBtn.style.background = '#3b82f6';
-      }, 2000);
-    } catch (e) {
-      copyBtn.textContent = '❌ Failed';
-      setTimeout(() => copyBtn.textContent = '📋 Copy', 2000);
+      }, 2500);
+    };
+
+    let copied = false;
+    try {
+      await navigator.clipboard.writeText(payload);
+      copied = true;
+    } catch {
+      copied = viaExecCommand();
     }
+
+    if (copied) {
+      done('✅ Copied!', '#22c55e');
+      return;
+    }
+
+    // Both routes refused. Say so, and still get the text to the reader --
+    // selected in a visible box they can copy by hand beats a shrug.
+    done('❌ Blocked — text selected below', '#ef4444');
+    const esc = document.getElementById('x-error-copy-fallback');
+    if (esc) esc.remove();
+    const box = document.createElement('textarea');
+    box.id = 'x-error-copy-fallback';
+    box.value = payload;
+    box.readOnly = true;
+    box.style.cssText =
+      'width:100%;height:8rem;margin-top:6px;font:0.6875rem/1.4 monospace;' +
+      'background:#111827;color:#e5e7eb;border:1px solid #ef4444;border-radius:4px;padding:6px;';
+    copyBtn.parentElement?.parentElement?.appendChild(box);
+    box.focus();
+    box.select();
   };
   
   // Clear button
@@ -183,19 +236,65 @@ export async function logError(message, details = {}) {
  * endpoint, which lost entries under concurrent pages/workers -- appending
  * server-side, one error at a time, is race-free instead).
  */
-async function appendErrorToLog(error) {
-  try {
-    const response = await fetch('/api/error-log/append', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ error })
-    });
+/**
+ * #1000 -- John, on the deployed site: "the entry is not in the error log".
+ *
+ * Correct, and it never could be. This POSTs to a server endpoint; GitHub Pages
+ * is static and answers 405 Method Not Allowed. That 405 sat in the console
+ * right beside the error it failed to record, and the only reaction was a
+ * console.warn nobody reads -- so the log stayed empty and looked fine.
+ *
+ * Where there is no API, the browser keeps the log itself, in the same shape as
+ * the file so errors-viewer.html reads either without caring which it got.
+ */
+const LOCAL_KEY = 'wb:error-log';
+let serverLogging = true;   // flipped off the first time the API refuses
 
-    if (!response.ok) {
-      console.warn('[ErrorLogger] Failed to save error log');
+function localLog() {
+  try {
+    return JSON.parse(localStorage.getItem(LOCAL_KEY) || '{"errors":[]}');
+  } catch {
+    return { errors: [] };
+  }
+}
+
+function appendLocally(error) {
+  try {
+    const log = localLog();
+    log.errors.push(error);
+    // A page throwing in a loop must not fill the quota.
+    if (log.errors.length > 200) log.errors = log.errors.slice(-200);
+    localStorage.setItem(LOCAL_KEY, JSON.stringify(log));
+    return true;
+  } catch {
+    return false;   // private mode, quota, storage disabled
+  }
+}
+
+/** True when errors are kept in the browser rather than on a server. */
+export function isLocalOnly() {
+  return !serverLogging;
+}
+
+async function appendErrorToLog(error) {
+  if (serverLogging) {
+    try {
+      const response = await fetch('/api/error-log/append', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ error })
+      });
+      if (response.ok) return;
+      // 405 on a static host, 404 behind a different mount. Either way there is
+      // no endpoint here: stop asking, keep the log locally.
+      serverLogging = false;
+    } catch {
+      serverLogging = false;
     }
-  } catch (e) {
-    console.warn('[ErrorLogger] Could not save to file:', e);
+  }
+
+  if (!appendLocally(error)) {
+    console.warn('[ErrorLogger] No server API and no localStorage - this error is recorded nowhere.');
   }
 }
 
@@ -207,12 +306,15 @@ async function appendErrorToLog(error) {
 async function clearErrorLogFile() {
   try {
     const response = await fetch('/api/error-log/clear', { method: 'POST' });
-    if (!response.ok) {
-      console.warn('[ErrorLogger] Failed to clear error log');
-    }
+    if (!response.ok) serverLogging = false;
   } catch (e) {
-    console.warn('[ErrorLogger] Could not clear error log:', e);
+    serverLogging = false;
   }
+  // Clear the local copy too, or "Clear" leaves entries the viewer still shows
+  // -- the same silent mismatch #1000 is about.
+  try {
+    localStorage.removeItem(LOCAL_KEY);
+  } catch { /* storage unavailable; nothing to clear */ }
 }
 
 /**
@@ -223,13 +325,19 @@ export async function loadErrorLog() {
     const response = await fetch(`/${ERROR_LOG_PATH}?t=${Date.now()}`);
     if (response.ok) {
       const data = await response.json();
-      errors = data.errors || [];
-      return data;
+      if (data && Array.isArray(data.errors) && data.errors.length) {
+        errors = data.errors;
+        return data;
+      }
     }
   } catch (e) {
-    console.warn('[ErrorLogger] Could not load error log:', e);
+    /* fall through to the local log */
   }
-  return { errors: [] };
+  // #1000: on a static host the file is absent or empty and the real log lives
+  // in the browser. Reading only the file is why the viewer showed nothing.
+  const local = localLog();
+  errors = local.errors || [];
+  return local;
 }
 
 /**
@@ -275,7 +383,7 @@ let globalHandlerInstalled = false;
 /**
  * Setup global error catching. Safe to call more than once (WB.init() is
  * meant to be called defensively/idempotently by every independent
- * behavior that uses WB, per wb.js's own init() -- without this guard,
+ * component that uses WB, per wb.js's own init() -- without this guard,
  * each extra call would attach a duplicate pair of listeners, logging every
  * real error once per WB.init() call on the page instead of once).
  */
