@@ -138,37 +138,27 @@
   <h2>📑 Tabs</h2>
   <div x-demo columns="1">
     <div x-tabs active-tab="0">
-      <div tab-title="Overview">Overview panel content.</div>
-      <div tab-title="Details">Details panel content.</div>
-      <div tab-title="Settings">Settings panel content.</div>
+      This is example tabs content.
     </div>
   </div>
   <div x-demo columns="1">
     <div x-tabs active-tab="1">
-      <div tab-title="Overview">Overview panel content.</div>
-      <div tab-title="Details">Details panel content.</div>
-      <div tab-title="Settings">Settings panel content.</div>
+      This is example tabs content.
     </div>
   </div>
   <div x-demo columns="1">
     <div x-tabs variant="pills">
-      <div tab-title="Overview">Overview panel content.</div>
-      <div tab-title="Details">Details panel content.</div>
-      <div tab-title="Settings">Settings panel content.</div>
+      This is example tabs content.
     </div>
   </div>
   <div x-demo columns="1">
     <div x-tabs variant="underline">
-      <div tab-title="Overview">Overview panel content.</div>
-      <div tab-title="Details">Details panel content.</div>
-      <div tab-title="Settings">Settings panel content.</div>
+      This is example tabs content.
     </div>
   </div>
   <div x-demo columns="1">
     <div x-tabs full-width>
-      <div tab-title="Overview">Overview panel content.</div>
-      <div tab-title="Details">Details panel content.</div>
-      <div tab-title="Settings">Settings panel content.</div>
+      This is example tabs content.
     </div>
   </div>
   </section>
@@ -177,17 +167,13 @@
   <section id="tabs-variant-variants">
   <h2>Variants</h2>
   <div x-demo columns="1">
-    <div x-tabs>
-      <div tab-title="Overview">Overview panel content.</div>
-      <div tab-title="Details">Details panel content.</div>
-      <div tab-title="Settings">Settings panel content.</div>
+    <div x-tabs variant="default">
+      This is example tabs content.
     </div>
   </div>
   <div x-demo columns="1">
     <div x-tabs variant="bordered">
-      <div tab-title="Overview">Overview panel content.</div>
-      <div tab-title="Details">Details panel content.</div>
-      <div tab-title="Settings">Settings panel content.</div>
+      This is example tabs content.
     </div>
   </div>
   </section>
@@ -197,23 +183,17 @@
   <h2>size variants</h2>
   <div x-demo columns="1">
     <div x-tabs size="sm">
-      <div tab-title="Overview">Overview panel content.</div>
-      <div tab-title="Details">Details panel content.</div>
-      <div tab-title="Settings">Settings panel content.</div>
+      This is example tabs content.
     </div>
   </div>
   <div x-demo columns="1">
     <div x-tabs size="md">
-      <div tab-title="Overview">Overview panel content.</div>
-      <div tab-title="Details">Details panel content.</div>
-      <div tab-title="Settings">Settings panel content.</div>
+      This is example tabs content.
     </div>
   </div>
   <div x-demo columns="1">
     <div x-tabs size="lg">
-      <div tab-title="Overview">Overview panel content.</div>
-      <div tab-title="Details">Details panel content.</div>
-      <div tab-title="Settings">Settings panel content.</div>
+      This is example tabs content.
     </div>
   </div>
   </section>
@@ -223,9 +203,7 @@
   <h2>Toggles</h2>
   <div x-demo columns="1">
     <div x-tabs vertical>
-      <div tab-title="Overview">Overview panel content.</div>
-      <div tab-title="Details">Details panel content.</div>
-      <div tab-title="Settings">Settings panel content.</div>
+      This is example tabs content.
     </div>
   </div>
   </section>
@@ -285,17 +263,17 @@
   <h2>📐 Drawer Layout</h2>
   <div x-demo columns="1">
     <aside x-drawer-layout position="left">
-      This is an aside with x-drawer-layout and position left.
+      This is example drawer layout content.
     </aside>
   </div>
   <div x-demo columns="1">
     <aside x-drawer-layout position="right">
-      This is an aside with x-drawer-layout and position right.
+      This is example drawer layout content.
     </aside>
   </div>
   <div x-demo columns="1">
     <aside x-drawer-layout collapsed>
-      This is an aside with x-drawer-layout and collapsed.
+      This is example drawer layout content.
     </aside>
   </div>
   </section>
@@ -305,7 +283,7 @@
   <h2>📜 ScrollAlong</h2>
   <div x-demo columns="1">
     <aside x-scrollalong>
-      This is an aside with x-scrollalong.
+      This is example scrollalong content.
     </aside>
   </div>
   </section>
@@ -315,17 +293,17 @@
   <h2>📌 Sticky</h2>
   <div x-demo columns="1">
     <div x-sticky>
-      This is a div with x-sticky.
+      This is example sticky content.
     </div>
   </div>
   <div x-demo columns="1">
     <div x-sticky offset="60">
-      This is a div with x-sticky and offset 60.
+      This is example sticky content.
     </div>
   </div>
   <div x-demo columns="1">
     <div x-sticky animated>
-      This is a div with x-sticky and animated.
+      This is example sticky content.
     </div>
   </div>
   </section>
@@ -335,17 +313,17 @@
   <h2>📅 Timeline</h2>
   <div x-demo columns="1">
     <div x-timeline items="Project Kickoff,Design Phase,Development,Testing,Launch">
-      This is a div with x-timeline.
+      This is example timeline content.
     </div>
   </div>
   <div x-demo columns="1">
     <div x-timeline items="Q1 Planning,Q2 Execution,Q3 Review,Q4 Delivery">
-      This is a div with x-timeline.
+      This is example timeline content.
     </div>
   </div>
   <div x-demo columns="1">
     <div x-timeline items="Research,Prototype,Build,Ship">
-      This is a div with x-timeline.
+      This is example timeline content.
     </div>
   </div>
   </section>
@@ -353,13 +331,7 @@
   <script type="module">
     import WB from '../../src/core/wb-lazy.js';
     window.WB = WB;
-    // #970: init() already scans — a second walk races it. One scan, one path.
-    await WB.init({ autoInject: true, scan: false });
-    // #987: was { eager: true }, which overrode x-demo's IntersectionObserver
-    // path and built every demo on the page before it could be interacted with.
-    // Measured on the worst case (cards.html, 293 demos): 13,680ms of total
-    // main-thread blocking including one unbroken 9,110ms task — frozen, not
-    // just slow. Viewport-first lets EAGER_BUILD_COUNT + the observer work.
+    await WB.init({ autoInject: true });
     await WB.scan(document.body);
     console.log('Layout & Navigation initialized');
     window.__WB_DEMO_INITIALIZED__ = true;

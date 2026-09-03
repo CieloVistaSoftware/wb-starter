@@ -16,7 +16,7 @@
      wb-starter - BEHAVIORS SHOWCASE
      Auto-generated from behaviors.schema.json
      ═══════════════════════════════════════════════════════════════════════════ -->
-<link rel="stylesheet" href="src/styles/pages/behaviors.css?v=4.0.0">
+<link rel="stylesheet" href="src/styles/pages/behaviors.css?v=4.0.1">
 
 <div id="behaviors-hero" class="page__hero">
   <!-- #774 -- John: "remove these ... We already know where we are."
@@ -84,12 +84,12 @@
              chips -- the header grows rather than the example being pushed
              off screen. -->
         <div class="behaviors-live__panels">
-          <details id="behaviors-live-api" class="behaviors-live__api" summary="API">
+          <details id="behaviors-live-api" class="behaviors-live__api" x-details summary="API">
             <summary class="behaviors-live__api-summary">API</summary>
             <div id="behaviors-live-api-body" class="behaviors-live__api-body"></div>
           </details>
   
-          <details id="behaviors-live-doc" class="behaviors-live__doc" summary="Documentation">
+          <details id="behaviors-live-doc" class="behaviors-live__doc" x-details summary="Documentation">
             <summary class="behaviors-live__doc-summary">Documentation</summary>
             <div id="behaviors-live-doc-body" class="behaviors-live__doc-body"></div>
           </details>
@@ -339,7 +339,7 @@
             //
             // An auto-injected behavior is labelled by its semantic host, so
             // `dialog` reads as `dialog` -- correct when the example IS a bare
-            // <dialog>, and the whole point of not teaching <dialog>.
+            // <dialog>, and the whole point of not teaching <dialog x-dialog>.
             //
             // But some behaviors cannot be demonstrated on their own host: a
             // bare <dialog> is invisible until something opens it, so its
@@ -510,14 +510,11 @@
         // #995 — John: "put same named links into dropdown, the use must
         // expand it first to view the items in the list." A behavior with
         // several options repeated its own name on every row: x-avatar alone
-        // occupied twelve consecutive rows out of 603, so scrolling was
-        // dominated by repetition rather than by distinct behaviors.
+        // filled twelve of 603 rows, so scrolling was dominated by repetition
+        // rather than by distinct behaviors.
         //
-        // Build this entry's rows first, then decide the shape: one option
-        // stays a plain row (there is no repetition to collapse), several
-        // become a <details> whose <summary> is the name. <details> because it
-        // IS the disclosure element (Law 0) — keyboard, aria-expanded and
-        // screen-reader support come with the tag, not from us.
+        // Build this entry's rows first, then choose the shape: one option
+        // stays a plain row (nothing to collapse), several become a <details>.
         const built = [];
         variantsFor(entry.attr).forEach((opt) => {
           const variant = opt.value;
@@ -571,22 +568,20 @@
         li.className = 'behaviors-search-results__group';
         const details = document.createElement('details');
         // The label goes through the `summary` ATTRIBUTE, which is x-details's
-        // own API (the same form #behaviors-live-api uses). Authoring a
-        // <summary> child here does not survive: the behavior rewrites the
-        // summary's internals into a single .x-details__label plus its own
-        // icon, so two hand-built spans arrived concatenated -- "audio6" -- and
-        // the grid columns were overridden by its flex layout. Law 4b: the tag
-        // IS the behavior; work with it rather than around it.
+        // own API (the form #behaviors-live-api already uses). A hand-built
+        // <summary> does not survive: the behavior rewrites its internals into
+        // one .x-details__label plus its own icon, so two spans arrived
+        // concatenated — "audio6" — and its flex layout overrode the grid.
+        // Law 4b: the tag IS the behavior; work with it, not around it.
         details.setAttribute('summary', `${entry.label} (${built.length})`);
-        // Collapsed by default -- "the user must expand it first". While a
-        // query is active the matches must be visible, or search would report
-        // hits it then hides.
+        // Collapsed by default — "the user must expand it first". A query must
+        // still show its matches, or search reports hits it then hides.
         if (q) details.open = true;
         const inner = document.createElement('ul');
         inner.className = 'behaviors-search-results__options';
-        built.forEach((btn) => {
+        built.forEach((b) => {
           const row = document.createElement('li');
-          row.appendChild(btn);
+          row.appendChild(b);
           inner.appendChild(row);
         });
         details.appendChild(inner);
@@ -913,7 +908,16 @@
       // yank the reader back to the top.
       if (pendingScrollReset) {
         pendingScrollReset = false;
-        liveEl.scrollTop = 0;
+        // Resetting scroll HERE does not hold: showLive() above injects the
+      // example, its doc and its code panel asynchronously, and that later
+      // insertion scrolls the container after this line has run. Measured with
+      // a synchronous reset in place: #siteBody still ended at 497 and the
+      // header at y=88, versus y=506 for the first selection.
+      //
+      // So the reset is REQUESTED here and performed once the layout has
+      // settled, in syncListHeight() below -- the one place that knows the
+      // sizing is finished (Law 18).
+      pendingScrollReset = true;
         if (scrollerEl) scrollerEl.scrollTop = 0;
       }
       // Law 18 -- NO POLLING. Only this code knows when the layout is settled,
@@ -1129,7 +1133,7 @@
       if (usageEl && window.WB && typeof window.WB.scan === 'function') {
         try {
           window.WB.scan(usageEl, { eager: true });
-        } catch {
+        } catch (err) {
           /* highlighting is a nicety; never let it break the panel */
         }
       }
@@ -1516,7 +1520,7 @@
       tr: `
   <td>Cell</td>`,
       figure: `
-  <img src="/images/placeholder-mountain.svg" alt="Sample">
+  <img src="https://picsum.photos/seed/x-figure/600/400" alt="Sample">
   <figcaption>Example caption</figcaption>`,
       details: `
   <summary>Example summary</summary>
@@ -1621,13 +1625,13 @@
       // Auto-injected behaviors need NO attribute -- writing the semantic
       // element is the whole authoring form (John: "<button variant='primary'>
       // ... this is because we created a module for the semantic button").
-      // Emitting `<button>` here would demonstrate exactly the
+      // Emitting `<button x-button>` here would demonstrate exactly the
       // duplication we are removing.
       // #753 -- John: "don't use x-figure in a figure tag."
       //
       // `label` is a DISPLAY string and is empty for several behaviors, so a
       // falsy label sent <figure> down the attribute branch and emitted
-      // `<figure>` -- the duplication the comment above says must not
+      // `<figure x-figure>` -- the duplication the comment above says must not
       // be emitted. Whether the host auto-injects is a fact about the tag->
       // behavior map, not about whether someone wrote a label, so ask the map:
       // nativeByBehavior is already built from tag-map's nativeMap by
@@ -1948,14 +1952,14 @@
     // the only way to reach them was through the page, and the page rebuilds
     // its example on every selection, resetting any geometry a test set up. A
     // guard that cannot fail is not a guard. In a module they are testable
-    // directly. Loaded alongside tag-map below and assigned here.
+    // directly. Safe fallbacks below keep the page working if the import 404s.
     let articleFor = (w) => /^[aeiou]/i.test(String(w || '')) ? 'an' : 'a';
     let shows = (n, t) => `shows ${articleFor(n)} ${n}${t ? ' ' + t : ''}`;
     let occludingChild = () => null;
     let describeCover = () => null;
     import(siteRoot() + 'src/wb-viewmodels/live-note.js')
       .then((m) => { articleFor = m.articleFor; shows = m.shows; occludingChild = m.occludingChild; describeCover = m.describeCover; })
-      .catch(() => { /* keep the safe fallbacks above */ });
+      .catch(() => { /* keep the fallbacks above */ });
 
     /** Opaque enough that nothing behind it is visible. */
     function isOpaqueColour(value) {
@@ -2199,12 +2203,9 @@
       const behaviorName = extensionMap[token] || token.replace(/^x-/, '');
       showApi(behaviorName);
       showDoc(behaviorName);
-      // #951: this used to restate optionLabel()'s rule inline and dropped its
-      // boolean-OFF branch, so `isBool ? prop` collapsed true and false to the
-      // bare flag name -- the header read "table · hoverable" above a sample
-      // that emitted hoverable="false", stating the opposite of the demo.
-      // One rule, one place.
-      const optionText = optionLabel({ prop, value: variant, boolean: isBool });
+      const optionText = variant
+        ? (isBool ? prop : (prop && prop !== 'variant' ? `${prop}=${variant}` : variant))
+        : '';
       liveToken.textContent = optionText ? `${shown} · ${optionText}` : shown;
 
       if (!src) {
@@ -2299,15 +2300,15 @@
     // navigates, and without it a screen-reader user has no way to tell which
     // of 228 rows the panel is showing.
     function rowsInOrder() {
-      // #995 — rows inside a collapsed <details> are still in the DOM but are
-      // not on screen. Arrowing must not step onto something invisible, so the
+      // #995 — rows inside a collapsed <details> are still in the DOM but not
+      // on screen. Arrowing must not step onto something invisible, so the
       // navigable set is the VISIBLE rows. offsetParent is null for anything
       // inside a closed <details>, which is exactly the test needed.
       return [...resultsEl.querySelectorAll('.behaviors-search-results__row')]
         .filter((r) => r.offsetParent !== null);
     }
 
-    /** Open the group containing this row, so a selection is never hidden. */
+    /** Open the group holding this row, so a selection is never hidden. */
     function revealRow(row) {
       if (!row) return;
       const d = row.closest('details');
@@ -2316,7 +2317,7 @@
 
     function selectRow(row, { focus = true, reveal = false } = {}) {
       if (!row) return;
-      revealRow(row);   // #995: selecting a row inside a collapsed group opens it
+      revealRow(row);   // #995: selecting inside a collapsed group opens it
       rowsInOrder().forEach((r) => r.removeAttribute('aria-current'));
       row.setAttribute('aria-current', 'true');
       // Scroll the LIST only, by hand. scrollIntoView({block:'nearest'}) still
@@ -2339,36 +2340,20 @@
       if (focus) row.focus({ preventScroll: true });
       showLive(row.dataset.browseToken, row.dataset.variant || '', row.dataset.label || '',
                row.dataset.prop || '', row.dataset.boolean === '1', row.dataset.form || 'attribute');
-      // #998 follow-up — John, having asked several times: "when clicking the
-      // left, (nav), the content must show in exact same position as shown
-      // here."
+      // John, several times: "when clicking the left, (nav), the content must
+      // show in exact same position as shown here."
       //
-      // #992 gave the panel a fixed height and its own scrollbar, which fixed
-      // the overflow but introduced this: the scroll position PERSISTED across
-      // selections. Measured — scroll the panel to 200, then pick three
-      // different behaviors: scrollTop stayed 207 every time and the header sat
-      // at -206, scrolled off the top. Every example after the first appeared
-      // somewhere different from the one before it.
+      // #992 gave the panel a fixed height and its own scrollbar. That fixed
+      // the overflow and introduced this: the scroll position PERSISTED across
+      // selections, so a new example rendered wherever the last one was left.
+      // Measured -- scroll to 200, then pick three behaviors: scrollTop stayed
+      // 207 and the header sat at -206, above the visible area, every time.
       //
-      // A new selection is new content, so it starts where content starts. Set
-      // BEFORE the settled signal below, so anything waiting on
+      // Set BEFORE the settled signal, so anything waiting on
       // wb:layout-settled measures the position the reader actually sees.
-      // Resetting scroll HERE does not hold: showLive() above injects the
-      // example, its doc and its code panel asynchronously, and that later
-      // insertion scrolls the container after this line has run. Measured with
-      // a synchronous reset in place: #siteBody still ended at 497 and the
-      // header at y=88, versus y=506 for the first selection.
-      //
-      // So the reset is REQUESTED here and performed once the layout has
-      // settled, in syncListHeight() below -- the one place that knows the
-      // sizing is finished (Law 18).
-      pendingScrollReset = true;
+      liveEl.scrollTop = 0;
 
-      // #992 / Law 18 -- every selection must produce a settled signal. Adding
-      // the notification exposed that this was NOT true: the sync only ran when
-      // the ResizeObserver happened to fire, and arrowing often changes nothing
-      // it watches, so waiters were left hanging ("wb:layout-settled never
-      // fired"). The flakiness blamed on the test was this missing signal.
+      // #992 / Law 18 -- every selection must produce a settled signal.
       syncListHeight();
       // #686 -- John, on a phone: "doesn't show the sample code and result".
       // Stacked, the panel starts ~300px past the bottom of #siteBody (measured

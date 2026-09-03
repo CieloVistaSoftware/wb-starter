@@ -22,13 +22,13 @@
   <p>Fresh styles, bold colors. This is the real page the cardhero "Shop Now" CTA on <a href="cards.html">cards.html</a> links to.</p>
 
   <div x-demo columns="3">
-    <article x-cardproduct image="/images/placeholder-scene.svg" title="Bold Print Tee" description="Lightweight cotton, vivid summer print" price="$34" rating="4.6" reviews="89"></article>
+    <div x-cardproduct image="https://picsum.photos/seed/summer-tee/400/300" title="Bold Print Tee" description="Lightweight cotton, vivid summer print" price="$34" rating="4.6" reviews="89"></div>
   </div>
   <div x-demo columns="3">
-    <article x-cardproduct image="/images/placeholder-scene.svg" title="Linen Shorts" description="Breathable linen blend, relaxed fit" price="$42" rating="4.4" reviews="52"></article>
+    <div x-cardproduct image="https://picsum.photos/seed/summer-shorts/400/300" title="Linen Shorts" description="Breathable linen blend, relaxed fit" price="$42" rating="4.4" reviews="52"></div>
   </div>
   <div x-demo columns="3">
-    <article x-cardproduct image="/images/placeholder-scene.svg" title="Wide Brim Hat" description="UPF 50+ sun protection, packable" price="$28" rating="4.8" reviews="134"></article>
+    <div x-cardproduct image="https://picsum.photos/seed/summer-hat/400/300" title="Wide Brim Hat" description="UPF 50+ sun protection, packable" price="$28" rating="4.8" reviews="134"></div>
   </div>
 
   </div>
@@ -36,13 +36,7 @@
   <script type="module">
     import WB from '../../src/core/wb-lazy.js';
     window.WB = WB;
-    // #970: init() already scans — a second walk races it. One scan, one path.
-    await WB.init({ autoInject: true, scan: false });
-    // #987: was { eager: true }, which overrode x-demo's IntersectionObserver
-    // path and built every demo on the page before it could be interacted with.
-    // Measured on the worst case (cards.html, 293 demos): 13,680ms of total
-    // main-thread blocking including one unbroken 9,110ms task — frozen, not
-    // just slow. Viewport-first lets EAGER_BUILD_COUNT + the observer work.
+    await WB.init({ autoInject: true });
     await WB.scan(document.body);
   </script>
 </body>

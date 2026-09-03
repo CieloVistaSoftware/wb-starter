@@ -157,13 +157,7 @@
 /* ═══════════════════════════════════════════════════════════════════
    HEADER ENHANCEMENTS
    ═══════════════════════════════════════════════════════════════════ */
-/* The SITE header, named directly.
-   This was a bare `header` selector, so it styled every <header> on the page:
-   the site header, the live-panel head, x-notes' header, and the one card.js
-   builds inside every card -- which is where its 2rem block margin came from
-   (41.89px measured inside a card). Page chrome belongs to the page's own
-   element, so say which element that is. */
-#siteHeader {
+header {
   display: flex;
   justify-content: space-between;
   /* flex-start, not center: John asked for the theme control in the
@@ -184,7 +178,7 @@
   gap: var(--space-md, 1rem);
 }
 
-#siteHeader h1 {
+header h1 {
   margin: 0;
   font-size: 2rem;
 }
@@ -395,11 +389,7 @@ x-demo button {
 /* ═══════════════════════════════════════════════════════════════════
    FOOTER
    ═══════════════════════════════════════════════════════════════════ */
-/* Same leak as the header rule above: a bare `footer` selector styled the
-   <footer> card.js builds for a card's button row, giving it the page
-   footer's 2rem top margin and 2rem padding inside the card. */
-#footer,
-#siteFooter {
+footer {
   margin-top: var(--space-xl, 2rem);
   padding: var(--space-xl, 2rem);
   text-align: center;
@@ -1419,9 +1409,10 @@ details[open] > .behaviors-live__doc-summary {
      left margin. */
   text-align: left;
   margin: 0 0 0.9rem;
-  padding: 0.75rem 0.9rem 0.75rem 2.5rem;   /* left: the line-number
-     gutter pre.css reserves (2rem) plus its 0.5rem padding. Without it the
-     numbers render on top of the code -- `<audio` lost its opening bracket. */
+  /* Left padding is the line-number gutter pre.css reserves (2rem) plus its
+     0.5rem padding. Without it the numbers render on top of the code and
+     `<audio` loses its opening bracket. */
+  padding: 0.75rem 0.9rem 0.75rem 2.5rem;
   border: 1px solid var(--border-color);
   border-radius: 0.375rem;
   background: var(--bg-primary, var(--bg-secondary));

@@ -4,8 +4,8 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>wb-starter — Zero-build behaviors for developers</title>
-  <link rel="stylesheet" href="../src/styles/themes.css?v=4.0.0">
-  <link rel="stylesheet" href="../src/styles/site.css?v=4.0.0">
+  <link rel="stylesheet" href="../src/styles/themes.css?v=4.0.1">
+  <link rel="stylesheet" href="../src/styles/site.css?v=4.0.1">
   <script type="module">
     import WB from '../src/core/wb-lazy.js';
     import { VERSION } from '../src/core/version.js';
@@ -15,13 +15,7 @@
     const versionBadge = document.getElementById('lp-version-badge');
     if (versionBadge) versionBadge.setAttribute('label', `v${VERSION.version} — zero build step`);
     window.WB = WB;
-    // #970: init() already scans — a second walk races it. One scan, one path.
-    await WB.init({ autoInject: true, scan: false });
-    // #987: was { eager: true }, which overrode x-demo's IntersectionObserver
-    // path and built every demo on the page before it could be interacted with.
-    // Measured on the worst case (cards.html, 293 demos): 13,680ms of total
-    // main-thread blocking including one unbroken 9,110ms task — frozen, not
-    // just slow. Viewport-first lets EAGER_BUILD_COUNT + the observer work.
+    await WB.init({ autoInject: true });
     await WB.scan(document.body);
 
     // Neither CTA had a destination at all (live report: clicking either
@@ -133,7 +127,7 @@
       <span x-badge label="Warning" variant="warning" pill></span>
       <span x-badge label="Error" variant="error" outline></span>
       <span x-badge variant="info" dot></span>
-      <span x-avatar src="/images/avatar.svg" alt="User avatar"></span>
+      <span x-avatar src="https://i.pravatar.cc/80?img=12" alt="User avatar"></span>
       <button class="x-btn" x-tooltip="Tooltips, for free" x-ripple>Hover + click me</button>
     </div>
     <div style="max-width:640px;margin:0 auto;">

@@ -5,49 +5,6 @@
 
 ---
 
-## 0. SEMANTIC ELEMENTS FIRST — That Is The Architecture
-
-This project evolved to a **semantic-elements-first** architecture. Read that as the
-starting point for every decision, not as a style preference.
-
-The HTML element IS the thing. `<article>` is a card. `<figure>` is a figure.
-`<nav>` is navigation. A behavior does not create a widget — it enhances an element
-that already means something.
-
-**WHY, in John's words: "users will know html5 by default."**
-
-That is the whole design. An author already knows `<article>`, `<figure>`, `<nav>`,
-`<table>`, `<details>`. They learned it once, from the platform, and it does not
-change. Every custom tag, invented class name or bespoke wrapper this project ships
-is vocabulary a user has to learn INSTEAD of what they already know — and forget
-again when they move to the next project.
-
-So the measure for any addition is: **does this make someone learn something new to
-express something HTML already expresses?** If yes, it is the wrong shape. That single
-question is behind every rule below — no custom elements (new tags to learn), no
-injected classes (invented names for facts the DOM already states), attributes over
-wrappers (no extra structure to memorise), `<figure>` over `<div x-demo>` (one is
-already known, one has to be explained).
-
-**What follows from it, and what people keep getting wrong:**
-
-- **Reach for the closest semantic element, always.** `<div>` is the last resort,
-  including in examples and demos. A `<div>` says nothing about what it holds.
-- **The attribute is the behavior; the host tag is the author's choice.**
-  `<div x-pagination>`, `<nav x-pagination>` and `<section x-pagination>` are all
-  valid. Never pin a tag in a selector, a test, or a stylesheet
-  (`nav[x-pagination]` left `<div x-pagination>` unstyled — #909).
-- **Do not inject a class that restates the element.** The tag and the attribute
-  are already in the DOM; a class repeating them is duplication, and CSS can select
-  the attribute or the native pseudo-class directly (`:checked`, `[multiple]`).
-  a8a7362e removed that from cards; #913 removed the requirement entirely.
-- **Semantic injection runs first** — see §4b.
-
-If a decision starts with "what wrapper do I need", the answer is usually "none —
-which element already means this?"
-
----
-
 ## 1. LIGHT DOM ONLY — No Shadow DOM, Ever
 
 Shadow DOM causes silent failures. Behaviors render empty, tests still pass because the element exists but has no content. This has burned us multiple times.
@@ -105,49 +62,6 @@ each launched a full suite believing they were alone — and the whole machine
 froze. Self-reported pass/fail numbers from those runs were also meaningless,
 because the agents silently shared one dev server port (#643).
 
-## 4b. Auto-Injection Is ON, And Semantic Runs First — Always
-
-Two facts. Neither is negotiable, neither needs re-deriving, and both have been
-explained repeatedly:
-
-1. **`autoInject` is ON by default.** `src/core/config.js` sets `autoInject: true`.
-   A page opts OUT with `WB.init({ autoInject: false })`. Never assume it is off.
-
-2. **Semantic injection happens first, every time.** A semantic tag IS its
-   behavior (`<article>` is a card, `<figure>` is a figure). That injection runs,
-   and THEN any explicit `x-*` attribute behavior runs on the already-injected
-   element. `<figure x-demo>` is normal and correct: figure first, then demo.
-
-**There is no race between them. Do not invent one.** If you find a comment
-suggesting otherwise, the comment is stale — `src/core/wb.js` carried
-"the main SPA (autoInject correctly off there)" long after the default flipped,
-and it has misled more than one reader into the wrong diagnosis.
-
-Corollary: if a behavior does not appear to run, the question is never "do these
-two behaviors conflict?" It is "did auto-injection run on this page at all?" --
-check a plain semantic tag with no attributes as your control.
-
-**WHY it is on by default, in John's words: "autoinject on means they get all of
-our extras for free."**
-
-This is the payoff half of Law 0. Law 0 says the author only has to know HTML5;
-auto-injection is what makes knowing HTML5 *sufficient*. Someone writes plain
-`<article>`, `<figure>`, `<table>`, `<details>` -- markup they would have written
-with no framework at all -- and the styling, keyboard handling, responsive
-behavior and accessibility wiring arrive without a single line of opt-in. No
-registration call, no import, no class to remember, no attribute to add.
-
-Two consequences follow, and they bind harder than they look:
-
-- **Opt-out, never opt-in.** Any proposal that makes an author *add* something to
-  receive a default is backwards -- it converts a free extra into a thing to
-  learn, which is exactly what Law 0 forbids. The extras are the floor, not an
-  upgrade.
-- **A bare semantic tag is a shipping surface.** Because every `<article>` on
-  every page gets the card treatment whether or not its author asked, a
-  regression in a semantic default is not a demo bug -- it reaches pages nobody
-  edited. Weight them accordingly.
-
 ## 5. Verify The Test Before Fixing The Code
 
 **This is the #1 source of regressions.** Old tests enforce old specs (v1/v2 patterns). When AI makes an old test pass, it reverts code to deprecated patterns and breaks current functionality.
@@ -185,15 +99,6 @@ Every session, before doing anything:
 3. Read `docs/_today/CURRENT-STATUS.md`
 4. Use `recent_chats` to read last conversation — continue from where it left off
 5. Never ask John to upload files or explain what he's working on
-
-**And before writing ANY script, gate, reporter or analysis tool:
-read [`docs/claude/TOOLING-INVENTORY.md`](TOOLING-INVENTORY.md) first.**
-
-That file lists what already exists — the machine-readable test output, the
-three ratchets and their baselines, the attribute readers. It exists because
-each of those has been reinvented at least once by someone who did not know
-it was there, and a second mechanism measuring the same thing drifts from the
-first until the two disagree with nobody noticing.
 
 ## 9. No One-Off Styles — Use Existing CSS or Extend It
 
@@ -288,78 +193,6 @@ If a test isn't in one of these directories, it won't run. Check `playwright.con
 - Status tracking: ONE file only → `docs/_today/CURRENT-STATUS.md`
 - Never create duplicate status files
 
-## 16. No Inline Styles. No `!important`. Anywhere.
-
-**John: "those are both signs of weakness."** They are not style preferences —
-they are the two ways a stylesheet gets overruled, and each one makes the next
-override necessary.
-
-Current debt, measured: **831 inline declarations across 56 behaviors**, **140
-`!important` in CSS**, **60 `!important` written from JS**. Every one is a
-target; none is a precedent.
-
-**Why they accumulate — the #965 lesson.** 67% of `card.css` was being discarded
-by the browser (13 selectors carried a stray `)` from the `:is()` migration, and
-an invalid selector makes the parser drop that rule *and* everything after it).
-With the stylesheet silently dead, nothing written in CSS rendered, so the only
-thing that worked was an inline style — and when two inline styles collided, the
-escalation was `!important`. The weakness was never the cascade. It was a
-stylesheet that could not parse, and nothing measuring whether it had.
-
-So when reaching for either, the honest question is: *what is overriding me, and
-why?* An inline style or an `!important` answers "make this win now" while
-leaving "why was it losing?" permanently unanswered — and the answer is
-sometimes that the rule you are fighting does not even exist.
-
-**The rule**
-
-- Styling belongs in CSS, selected by tag, attribute or class.
-- The only inline style that survives review is a genuinely per-instance value
-  the author supplies — a user's cover-photo URL, a computed drag offset. Not
-  layout, not colour, not spacing.
-- `!important` is not an escape hatch. If a rule is losing, fix its specificity
-  or fix the rule that is beating it.
-- A "migration" that COPIES styles into CSS without deleting the inline original
-  has done nothing: inline still wins. card.css claims link-card styles were
-  "moved here from cardlink()'s inline cssText" while `card.js` still writes
-  them — so the CSS was dead weight and the comment was false.
-
-## 15. Source Code Is Never Authored Through A Shell Heredoc Or A Python String
-
-**Write and Edit put exact bytes on disk. A heredoc does not.** Text that
-passes through Python → shell → a JS/TS string literal crosses three escaping
-layers, and every one of them eats backslashes.
-
-This is not hypothetical. In a single session it produced five defects:
-
-- `\s` collapsed to `s` **three times**, giving `(?:^|s)` — a regex that
-  matched nothing, in code whose whole job was matching.
-- `\n` inside a generated JS string became a **real newline**, producing an
-  unterminated string literal that would not parse.
-- An `eslint-disable-next-line` landed one line above the code it was meant to
-  cover, because the inserted comment was two lines long. Result: the
-  suppression did nothing *and* added an "unused directive" warning.
-
-The failure mode is what makes it dangerous: the corrupted code is still
-**valid syntax**. A regex that matches nothing throws no error. It silently
-reports "no problems found" forever — the same class of defect as #923's
-dead guard and #946's unreachable fallback.
-
-**The rule**
-
-- Authoring or modifying **code** (`.js`, `.mjs`, `.ts`, `.css`, `.html`)
-  → use **Write** or **Edit**. Never a heredoc, never `sed -i`, never a
-  Python `str.replace` that emits code.
-- Scripted edits are for **bulk data** — regenerating a `data/*.json`,
-  rewriting 200 files mechanically. Not for hand-written logic.
-- **Any patch containing a backslash is read back and verified before moving
-  on** — `grep -n 'pattern' file | cat -v` shows you the real bytes. This is
-  the tripwire; it catches every case above.
-
-If a scripted edit is genuinely unavoidable, build the string with explicit
-character codes (`chr(92)`, `String.fromCharCode(27)`) rather than trusting
-escapes to survive the trip.
-
 ## 14. Reusable Behaviors Never Hardcode `id` — Generate It, or Don't Use One
 
 **A hardcoded `id` inside a behavior/behavior function collides the moment
@@ -387,47 +220,65 @@ wrong for every instance after the first.
 
 ---
 
-## 18. NO POLLING. Use A Notification.
+## 17. A Push To `.io` Is Not Done Until The Deployed Site Boots
 
-**John: "NO POLLING ALLOWED us notifications instead."**
+Pushing to `main` publishes live to
+https://cielovistasoftware.github.io/wb-starter/. **The push is not the
+deliverable. A booting site is.**
 
-Never sleep, never poll a timer, never spin on `requestAnimationFrame` waiting
-for something to become true. If code needs to know when something finished,
-the thing that finishes must **say so**.
+After every push to `main`:
 
-- Product code: dispatch an event (`wb:layout-settled`) and/or set `x-ready`
-  when the work completes. Clear the flag when new work is queued, so nobody
-  can read a stale signal.
-- Tests: wait for that event or `x-ready`, never `waitForTimeout`. If the signal
-  does not arrive, fail loudly and say the signal is missing.
-- Waiting on a condition you cannot be notified about is a design gap in the
-  thing you are waiting on. Fix that, do not paper over it with a delay.
+```bash
+npm run test:smoke:deployed
+```
+
+It waits for the Pages build to report `built` (running against a `building`
+origin smokes the PREVIOUS deploy and returns a confident, meaningless pass),
+then runs `site-smoke` against the live site. Green = done. Anything else = the
+site is broken and you fix it before you say a word about anything else.
+
+**The published URL lives in the repo**, in `scripts/smoke-deployed.mjs`,
+under version control — it is public, identical for every clone, and works on a
+fresh checkout with no setup. `--url <address>` overrides for a one-off run
+against a staging copy or a fork.
+
+It is deliberately NOT a system environment variable. **System environment
+variables hold secrets** (John's rule); a public URL is not one, and putting it
+there breaks the gate on every machine that has not had it set by hand.
+
+### What does NOT count as verification
+
+- **Grepping the served HTML.** This is what was actually done, and it passed
+  while the site was dead.
+- **A 200 on every asset.** Every file was served correctly during the outage.
+- **The local suite.** It runs against localhost and cannot see a bad deploy.
+- **CI being green.** CI does not load the deployed origin either.
+- **"The file I pushed has the right content."** It did. The site was still
+  down.
 
 ### Why this is a law
 
-The #992 test slept 120ms after each keypress and was flaky **2 runs in 5**. The
-instinct was to lengthen the wait. That would have buried a real defect.
+`4278fcf7` shipped one unresolved named import. That is a **module-level
+`SyntaxError`**, so nothing evaluated, and every route on the live site showed
+the literal text `Loading...` — for every visitor, indefinitely. The HTML was
+correct. The CSS was correct. Every asset returned 200. The deploy was declared
+good on that basis.
 
-Replacing the sleep with a `wb:layout-settled` notification immediately produced:
+**John found it, on his phone.** Three layers of gate — pre-commit, CI, and my
+own check — all passed a total outage, because not one of them ran the page.
 
-```
-Error: wb:layout-settled never fired — the page stopped announcing layout completion
-```
+The smoke test (`tests/compliance/site-smoke.spec.ts`, #990) exists precisely
+for this. It listens on `pageerror` as well as `console`, because a
+module-level `SyntaxError` never reaches `console`. It fails if the body is
+still `Loading...`. It was proven by fault injection, not by passing.
 
-The sizing sync **did not run on every selection** — arrowing sometimes changed
-nothing the ResizeObserver watched. The flakiness was never the test being
-impatient; it was the product having no signal to give. A longer timeout would
-have hidden that indefinitely.
+### One more trap
 
-A poll can only ever tell you "not yet, as far as I know". It cannot tell the
-difference between *slow* and *never*. A notification can, and that difference
-is usually the bug.
-
-### The one exception
-
-Polling an **external** system that offers no callback — a remote HTTP endpoint,
-a build service. Anything inside this codebase can be made to announce itself,
-so make it.
+A deployed fix can be **invisible for ten minutes**. JS is served
+`Cache-Control: max-age=600` at URLs with no content hash (#989), so a browser
+that loaded the broken build will keep it. If the smoke test fails right after
+a push, re-fetch with `{cache:'reload'}` before concluding the fix did not
+land — and never tell John it is live when you have only checked the origin.
 
 ---
 
