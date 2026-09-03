@@ -1133,7 +1133,10 @@
       if (usageEl && window.WB && typeof window.WB.scan === 'function') {
         try {
           window.WB.scan(usageEl, { eager: true });
-    
+        } catch (err) {
+          /* highlighting is a nicety; never let it break the panel */
+        }
+      }
     }
 
     async function showDoc(behavior) {
