@@ -1087,7 +1087,7 @@
       const usage = buildUsageSnippet(behavior, props);
 
       liveApiBody.innerHTML =
-        '<pre class="behaviors-live__api-usage"><code>' + esc(usage) + '</code></pre>' +
+        '<pre class="behaviors-live__api-usage"><code language="html">' + esc(usage) + '</code></pre>' +
         '<div class="behaviors-live__api-scroll">' +
         '<table id="behaviors-live-api-table" class="behaviors-live__api-table">' +
         '<thead><tr>' +
@@ -1098,6 +1098,20 @@
         '<p class="behaviors-live__api-note">' + names.length +
         ' attribute' + (names.length === 1 ? '' : 's') +
         ' · from <code>src/wb-models/' + esc(behavior) + '.schema.json</code></p>';
+
+      // #993 follow-up — John: "on api, when clicked format the content in this
+      // case HTML". The usage snippet was plain unhighlighted text, while the
+      // demo panel's own view-source block a few pixels below it is syntax
+      // highlighted: the same content, two treatments, on one screen. It is
+      // marked language="html" above and scanned here so the `code` behavior
+      // treats it exactly as demo.js treats its panel. Eager, because a lazily
+      // deferred snippet sits unstyled for an indeterminate time inside a panel
+      // the reader has just opened on purpose.
+      const usageEl = liveApiBody.querySelector('.behaviors-live__api-usage');
+      if (usageEl && window.WB && typeof window.WB.scan === 'function') {
+        try {
+          window.WB.scan(usageEl, { eager: true });
+    
     }
 
     async function showDoc(behavior) {

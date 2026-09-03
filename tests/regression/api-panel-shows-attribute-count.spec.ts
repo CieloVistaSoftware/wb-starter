@@ -112,4 +112,45 @@ test.describe('the API panel states its attribute count (#993)', () => {
     expect(label === 'API' || /^API \(\d+\)$/.test(label)).toBe(true);
     expect(label, 'an empty panel must not advertise a count').not.toBe('API (0)');
   });
+
+  test('the usage snippet is formatted HTML, not plain centred text', async ({ page }) => {
+    // #993 follow-up — John: "on api, when clicked format the content in this
+    // case HTML". It rendered as unhighlighted text, CENTRED, because the panel
+    // sits inside #behaviors-hero which centres its text — while the demo
+    // panel's own view-source block a few pixels below was highlighted and
+    // left-aligned. Same content, two treatments, one screen.
+    await select(page, 'x-audio');
+
+    const usage = await page.evaluate(async () => {
+      const sum = document.querySelector('#behaviors-live-api .behaviors-live__api-summary');
+      (sum as HTMLElement | null)?.click();
+      await new Promise((r) => setTimeout(r, 1200));
+      const u = document.querySelector('.behaviors-live__api-usage') as HTMLElement | null;
+      if (!u) return null;
+      const cs = getComputedStyle(u);
+      return {
+        textAlign: cs.textAlign,
+        paddingLeft: parseFloat(cs.paddingLeft),
+        highlightSpans: u.querySelectorAll('[class*="hljs"]').length,
+        firstLine: (u.textContent || '').trim().split(String.fromCharCode(10))[0],
+      };
+    });
+
+    expect(usage, 'the API panel must render a usage snippet').not.toBeNull();
+    expect(usage!.textAlign, 'code is read from a left margin, not centred').toBe('left');
+    expect(
+      usage!.highlightSpans,
+      'the snippet must be syntax highlighted like every other code block on the page'
+    ).toBeGreaterThan(0);
+    // pre.css reserves a 2.5rem gutter for line numbers. Without it the numbers
+    // render on top of the code and `<audio` loses its opening bracket.
+    expect(
+      usage!.paddingLeft,
+      'the line-number gutter must have room, or the numbers overlap the code'
+    ).toBeGreaterThanOrEqual(36);
+    expect(
+      usage!.firstLine,
+      'the opening bracket must survive — it was being covered by the gutter'
+    ).toContain('<');
+  });
 });

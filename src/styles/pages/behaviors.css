@@ -1404,8 +1404,15 @@ details[open] > .behaviors-live__doc-summary {
    Sits above the attribute table: the reader gets something copyable first,
    then the reference explaining each value. */
 .behaviors-live__api-usage {
+  /* #993 follow-up: this panel sits inside #behaviors-hero, which centres its
+     text, so every line of the snippet rendered centred. Code is read from a
+     left margin. */
+  text-align: left;
   margin: 0 0 0.9rem;
-  padding: 0.75rem 0.9rem;
+  /* Left padding is the line-number gutter pre.css reserves (2rem) plus its
+     0.5rem padding. Without it the numbers render on top of the code and
+     `<audio` loses its opening bracket. */
+  padding: 0.75rem 0.9rem 0.75rem 2.5rem;
   border: 1px solid var(--border-color);
   border-radius: 0.375rem;
   background: var(--bg-primary, var(--bg-secondary));
