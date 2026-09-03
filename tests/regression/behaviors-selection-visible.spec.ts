@@ -186,4 +186,54 @@ test.describe('browse surface fits its scroller (#992)', () => {
       'when the floor forces overflow, the scroller must be able to reach it'
     ).toBe(true);
   });
+
+  test('every selection lands the content in the same position', async ({ page }) => {
+    // John, several times over: "when clicking the left, (nav), the content must
+    // show in exact same position as shown here."
+    //
+    // #992 gave the panel a fixed height and its own scrollbar, which fixed the
+    // overflow but introduced this: the scroll position PERSISTED across
+    // selections. Measured before the fix — scroll the panel to 200, then pick
+    // three behaviors: scrollTop stayed 207 every time and the header sat at
+    // -206, scrolled off the top, so every example after the first appeared
+    // somewhere different from the one before it.
+    await ready(page);
+
+    const positions = await page.evaluate(async ({ LIST, ROW, PANEL }) => {
+      const l = document.querySelector(LIST)!;
+      const live = document.querySelector(PANEL)! as HTMLElement;
+      const rows = (Array.from(l.querySelectorAll(ROW)) as HTMLElement[]).filter(
+        (r) => r.offsetParent !== null
+      );
+      rows[0].click();
+      await new Promise((r) => setTimeout(r, 700));
+
+      // Scroll the panel as a reader would, then change selection.
+      live.scrollTop = 200;
+      await new Promise((r) => setTimeout(r, 200));
+
+      const seen: number[] = [];
+      for (let i = 1; i < 5 && i < rows.length; i++) {
+        rows[i].click();
+        await new Promise((r) => setTimeout(r, 700));
+        const head = live.querySelector('.behaviors-live__head');
+        seen.push(
+          head
+            ? Math.round(head.getBoundingClientRect().top - live.getBoundingClientRect().top)
+            : NaN
+        );
+      }
+      return { seen, finalScrollTop: live.scrollTop };
+    }, { LIST, ROW, PANEL });
+
+    expect(
+      positions.finalScrollTop,
+      'a new selection is new content — the panel must start at the top, not where the last one was left'
+    ).toBe(0);
+
+    expect(
+      new Set(positions.seen).size,
+      `the panel header landed at ${JSON.stringify(positions.seen)} — every selection must place it identically`
+    ).toBe(1);
+  });
 });
