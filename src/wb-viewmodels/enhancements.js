@@ -58,29 +58,12 @@ export function form(element, options = {}) {
 /**
  * Fieldset - Form field group
  */
-export function fieldset(element, options = {}) {
-  const config = {
-    // #697: the plain attribute is the v3 form (TIER1-LAWS 11). data-collapsible
-    // is kept as a fallback so markup already authored against it keeps working.
-    collapsible: options.collapsible
-      ?? (element.hasAttribute('collapsible') || readFlag(element, 'collapsible')),
-    collapsed: options.collapsed ?? readFlag(element, 'collapsed'),
-    ...options
-  };
-
+export function fieldset(element) {
+  // #999 — `collapsible`/`collapsed` deleted. A fieldset groups controls; it
+  // has no disclosure semantics, and this was the SECOND implementation of an
+  // inert toggle (see src/wb-viewmodels/fieldset.js). Both assigned
+  // legend.onclick, so one silently overwrote the other.
   element.classList.add('x-fieldset');
-
-  const legend = element.querySelector('legend');
-  if (legend && config.collapsible) {
-    legend.classList.add('x-fieldset__legend', 'x-fieldset__legend--collapsible');
-    
-    if (config.collapsed) element.classList.add('x-fieldset--collapsed');
-    
-    legend.onclick = () => {
-      element.classList.toggle('x-fieldset--collapsed');
-    };
-  }
-
   return () => element.classList.remove('x-fieldset');
 }
 

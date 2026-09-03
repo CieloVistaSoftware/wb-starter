@@ -1,34 +1,21 @@
-// Standalone fieldset behavior extracted from enhancements.js
-export function fieldset(element, options = {}) {
-  // #753: read the PLAIN attribute as well as the data-* form. Every example
-  // and doc writes `<fieldset collapsible>` -- the documented spelling -- while
-  // this read only `data-collapsible`, so nothing collapsed and the demo showed
-  // a plain fieldset. Same gap as #697 and #751 (form's `ajax`).
-  //
-  // `"false"` counts as false (#747): a string attribute value is truthy in JS,
-  // so `collapsible="false"` read as a bare presence check means ON.
-  const flag = (name) => {
-    for (const n of [name, `data-${name}`]) {
-      if (!element.hasAttribute(n)) continue;
-      const v = element.getAttribute(n);
-      return !(v === 'false' || v === '0');
-    }
-    return false;
-  };
-
-  const config = {
-    collapsible: options.collapsible ?? flag('collapsible'),
-    collapsed: options.collapsed ?? flag('collapsed'),
-    ...options
-  };
+// fieldset — a group of form controls. Nothing more.
+//
+// #999 — John: "I've never heard of a collapsible field set." Nor has the
+// platform. <fieldset> groups controls; it has no disclosure semantics. The
+// element for disclosure is <details>/<summary>, which this framework already
+// auto-injects (Law 0 — the tag IS the behavior).
+//
+// `collapsible` / `collapsed` were removed here. They were implemented TWICE —
+// this file and enhancements.js — both assigning `legend.onclick`, which is a
+// property rather than a listener, so whichever module ran second silently
+// erased the first. Measured before removal: the class `x-fieldset--collapsed`
+// was applied to a fieldset that was not collapsed, the legend had
+// `cursor: auto`, and clicking it changed the height not at all (73px -> 73px,
+// both rows still visible). #697 and #752 each "fixed" the attribute reading
+// and left the behavior inert; What's New announced it working twice.
+//
+// If a group genuinely needs to collapse, wrap it: <details><fieldset>…
+export function fieldset(element) {
   element.classList.add('x-fieldset');
-  const legend = element.querySelector('legend');
-  if (legend && config.collapsible) {
-    legend.classList.add('x-fieldset__legend', 'x-fieldset__legend--collapsible');
-    if (config.collapsed) element.classList.add('x-fieldset--collapsed');
-    legend.onclick = () => {
-      element.classList.toggle('x-fieldset--collapsed');
-    };
-  }
   return () => element.classList.remove('x-fieldset');
 }
